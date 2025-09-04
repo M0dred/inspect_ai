@@ -113228,13 +113228,14 @@ categories: ${categories.join(" ")}`;
     };
     const kLogsPaginationId = "logs-list-pagination";
     const kDefaultPageSize = 30;
-    const LogsPanel = () => {
+    const LogsPanel = ({ maybeShowSingleLog }) => {
       const loading = useStore((state) => state.app.status.loading);
       const { loadLogs } = useLogs();
       const logs = useStore((state) => state.logs.logs);
       const logHeaders = useStore((state) => state.logs.logOverviews);
       const headersLoading = useStore((state) => state.logs.logOverviewsLoading);
       const watchedLogs = useStore((state) => state.logs.listing.watchedLogs);
+      const navigate = useNavigate();
       const { unloadLog } = useUnloadLog();
       reactExports.useEffect(() => {
         unloadLog();
@@ -113312,6 +113313,12 @@ categories: ${categories.join(" ")}`;
         };
         exec2();
       }, [loadLogs]);
+      reactExports.useEffect(() => {
+        if (maybeShowSingleLog && logItems.length === 1) {
+          const onlyItem = logItems[0];
+          navigate(onlyItem.url);
+        }
+      }, [logItems, maybeShowSingleLog]);
       return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$15.panel), children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(Navbar, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(LogsFilterInput, {}) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(ProgressBar, { animating: loading || headersLoading }),
@@ -153615,7 +153622,7 @@ Supported expressions:
             {
               index: true,
               // This will match exactly the "/" path
-              element: /* @__PURE__ */ jsxRuntimeExports.jsx(LogsPanel, {})
+              element: /* @__PURE__ */ jsxRuntimeExports.jsx(LogsPanel, { maybeShowSingleLog: true })
             },
             {
               path: kLogsRoutUrlPattern,
