@@ -101845,11 +101845,6 @@ self.onmessage = function (e) {
       params.append("last_eval_time", String(last_eval_time.valueOf()));
       return (await api$2("GET", `/api/events?${params.toString()}`)).parsed;
     }
-    async function eval_logs$1() {
-      const logs = await api$2("GET", `/api/logs`);
-      last_eval_time = Date.now();
-      return logs.parsed;
-    }
     async function eval_log$1(file, headerOnly, _capabilities) {
       return await api$2(
         "GET",
@@ -102053,19 +102048,27 @@ self.onmessage = function (e) {
     }
     async function open_log_file$1() {
     }
-    const browserApi = {
-      client_events: client_events$1,
-      eval_logs: eval_logs$1,
-      eval_log: eval_log$1,
-      eval_log_size: eval_log_size$1,
-      eval_log_bytes: eval_log_bytes$1,
-      eval_log_overviews: eval_log_headers,
-      log_message: log_message$1,
-      download_file: download_file$1,
-      open_log_file: open_log_file$1,
-      eval_pending_samples: eval_pending_samples$1,
-      eval_log_sample_data: eval_log_sample_data$1
-    };
+    function createBrowserApi(options2 = {}) {
+      const { log_dir } = options2;
+      return {
+        client_events: client_events$1,
+        eval_logs: async () => {
+          const path = log_dir ? `/api/logs?log_dir=${encodeURIComponent(log_dir)}` : "/api/logs";
+          const logs = await api$2("GET", path);
+          last_eval_time = Date.now();
+          return logs.parsed;
+        },
+        eval_log: eval_log$1,
+        eval_log_size: eval_log_size$1,
+        eval_log_bytes: eval_log_bytes$1,
+        eval_log_overviews: eval_log_headers,
+        log_message: log_message$1,
+        download_file: download_file$1,
+        open_log_file: open_log_file$1,
+        eval_pending_samples: eval_pending_samples$1,
+        eval_log_sample_data: eval_log_sample_data$1
+      };
+    }
     var ch2 = {};
     var wk = (function(c2, id, msg, transfer, cb) {
       var w = new Worker(ch2[id] || (ch2[id] = URL.createObjectURL(new Blob([
@@ -103703,13 +103706,22 @@ self.onmessage = function (e) {
         const urlParams = new URLSearchParams(window.location.search);
         const log_file = urlParams.get("log_file");
         const log_dir = urlParams.get("log_dir");
-        if (log_file !== null || log_dir !== null) {
-          const resolved_log_dir = log_dir === null ? void 0 : log_dir;
-          const resolved_log_file = log_file === null ? void 0 : log_file;
-          const api2 = simpleHttpApi(resolved_log_dir, resolved_log_file);
-          return clientApi(api2, resolved_log_file);
+        const forceBrowserApi = urlParams.get("inspect_server") === "true";
+        const resolved_log_dir = log_dir ?? void 0;
+        const resolved_log_file = log_file ?? void 0;
+        if (forceBrowserApi) {
+          return clientApi(
+            createBrowserApi({ log_dir: resolved_log_dir }),
+            resolved_log_file
+          );
         }
-        return clientApi(browserApi);
+        if (resolved_log_dir !== void 0 || resolved_log_file !== void 0) {
+          return clientApi(
+            simpleHttpApi(resolved_log_dir, resolved_log_file),
+            resolved_log_file
+          );
+        }
+        return clientApi(createBrowserApi());
       }
     };
     const api = resolveApi();
