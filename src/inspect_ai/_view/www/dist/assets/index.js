@@ -101837,27 +101837,38 @@ self.onmessage = function (e) {
       document.body.removeChild(link2);
       URL.revokeObjectURL(link2.href);
     }
+    const API_BASE_URL = "/api";
     const loaded_time = Date.now();
     let last_eval_time = 0;
+    function buildApiUrl(path) {
+      const base2 = API_BASE_URL.endsWith("/") ? API_BASE_URL.slice(0, -1) : API_BASE_URL;
+      const cleanPath = path.startsWith("/") ? path : `/${path}`;
+      return base2 + cleanPath;
+    }
+    function isApiCrossOrigin() {
+      return Boolean(
+        new URL(API_BASE_URL).origin !== window.location.origin
+      );
+    }
     async function client_events$1() {
       const params = new URLSearchParams();
       params.append("loaded_time", String(loaded_time.valueOf()));
       params.append("last_eval_time", String(last_eval_time.valueOf()));
-      return (await api$2("GET", `/api/events?${params.toString()}`)).parsed;
+      return (await api$2("GET", `/events?${params.toString()}`)).parsed;
     }
     async function eval_log$1(file, headerOnly, _capabilities) {
       return await api$2(
         "GET",
-        `/api/logs/${encodeURIComponent(file)}?header-only=${headerOnly}`
+        `/logs/${encodeURIComponent(file)}?header-only=${headerOnly}`
       );
     }
     async function eval_log_size$1(file) {
-      return (await api$2("GET", `/api/log-size/${encodeURIComponent(file)}`)).parsed;
+      return (await api$2("GET", `/log-size/${encodeURIComponent(file)}`)).parsed;
     }
     async function eval_log_bytes$1(file, start2, end2) {
       return await api_bytes(
         "GET",
-        `/api/log-bytes/${encodeURIComponent(file)}?start=${start2}&end=${end2}`
+        `/log-bytes/${encodeURIComponent(file)}?start=${start2}&end=${end2}`
       );
     }
     async function eval_log_headers(files) {
@@ -101865,7 +101876,7 @@ self.onmessage = function (e) {
       for (const file of files) {
         params.append("file", file);
       }
-      return (await api$2("GET", `/api/log-headers?${params.toString()}`)).parsed;
+      return (await api$2("GET", `/log-headers?${params.toString()}`)).parsed;
     }
     async function eval_pending_samples$1(log_file, etag) {
       const params = new URLSearchParams();
@@ -101897,7 +101908,7 @@ self.onmessage = function (e) {
       };
       const result2 = (await apiRequest(
         "GET",
-        `/api/pending-samples?${params.toString()}`,
+        `/pending-samples?${params.toString()}`,
         request
       )).parsed;
       return result2;
@@ -101936,7 +101947,7 @@ self.onmessage = function (e) {
       };
       const result2 = (await apiRequest(
         "GET",
-        `/api/pending-sample-data?${params.toString()}`,
+        `/pending-sample-data?${params.toString()}`,
         request
       )).parsed;
       return result2;
@@ -101956,13 +101967,10 @@ self.onmessage = function (e) {
           return;
         }
       };
-      await apiRequest(
-        "GET",
-        `/api/log-message?${params.toString()}`,
-        request
-      );
+      await apiRequest("GET", `/log-message?${params.toString()}`, request);
     }
     async function apiRequest(method, path, request) {
+      const url = buildApiUrl(path);
       const responseHeaders = {
         Accept: "application/json",
         Pragma: "no-cache",
@@ -101973,10 +101981,11 @@ self.onmessage = function (e) {
       if (request.body) {
         responseHeaders["Content-Type"] = "application/json";
       }
-      const response = await fetch(`${path}`, {
+      const response = await fetch(url, {
         method,
         headers: responseHeaders,
-        body: request.body
+        body: request.body,
+        credentials: isApiCrossOrigin() ? "include" : "same-origin"
       });
       if (response.ok) {
         const text2 = await response.text();
@@ -102001,6 +102010,7 @@ self.onmessage = function (e) {
       }
     }
     async function api$2(method, path, headers, body2) {
+      const url = buildApiUrl(path);
       const responseHeaders = {
         Accept: "application/json",
         Pragma: "no-cache",
@@ -102008,10 +102018,11 @@ self.onmessage = function (e) {
         ["Cache-Control"]: "no-cache",
         ...headers
       };
-      const response = await fetch(`${path}`, {
+      const response = await fetch(url, {
         method,
         headers: responseHeaders,
-        body: body2
+        body: body2,
+        credentials: isApiCrossOrigin() ? "include" : "same-origin"
       });
       if (response.ok) {
         const text2 = await response.text();
@@ -102028,13 +102039,18 @@ self.onmessage = function (e) {
       }
     }
     async function api_bytes(method, path) {
+      const url = buildApiUrl(path);
       const headers = {
         Accept: "application/octet-stream",
         Pragma: "no-cache",
         Expires: "0",
         ["Cache-Control"]: "no-cache"
       };
-      const response = await fetch(`${path}`, { method, headers });
+      const response = await fetch(url, {
+        method,
+        headers,
+        credentials: isApiCrossOrigin() ? "include" : "same-origin"
+      });
       if (response.ok) {
         const buffer2 = await response.arrayBuffer();
         return new Uint8Array(buffer2);
@@ -102048,12 +102064,12 @@ self.onmessage = function (e) {
     }
     async function open_log_file$1() {
     }
-    function createBrowserApi(options2 = {}) {
+    function createViewServerApi(options2 = {}) {
       const { log_dir } = options2;
       return {
         client_events: client_events$1,
         eval_logs: async () => {
-          const path = log_dir ? `/api/logs?log_dir=${encodeURIComponent(log_dir)}` : "/api/logs";
+          const path = log_dir ? `/logs?log_dir=${encodeURIComponent(log_dir)}` : "/logs";
           const logs = await api$2("GET", path);
           last_eval_time = Date.now();
           return logs.parsed;
@@ -103706,12 +103722,12 @@ self.onmessage = function (e) {
         const urlParams = new URLSearchParams(window.location.search);
         const log_file = urlParams.get("log_file");
         const log_dir = urlParams.get("log_dir");
-        const forceBrowserApi = urlParams.get("inspect_server") === "true";
+        const forceViewServerApi = urlParams.get("inspect_server") === "true";
         const resolved_log_dir = log_dir ?? void 0;
         const resolved_log_file = log_file ?? void 0;
-        if (forceBrowserApi) {
+        if (forceViewServerApi) {
           return clientApi(
-            createBrowserApi({ log_dir: resolved_log_dir }),
+            createViewServerApi({ log_dir: resolved_log_dir }),
             resolved_log_file
           );
         }
@@ -103721,7 +103737,7 @@ self.onmessage = function (e) {
             resolved_log_file
           );
         }
-        return clientApi(createBrowserApi());
+        return clientApi(createViewServerApi());
       }
     };
     const api = resolveApi();
