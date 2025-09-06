@@ -23733,7 +23733,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               if (!existing) {
                 return !isLoading;
               }
-              if (existing.status === "started" || existing.status === "error") {
+              if (existing.status === "started") {
                 return !isLoading;
               }
               return false;
@@ -23746,12 +23746,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 state2.logs.loadingFiles.add(logFile.name);
               });
             });
-            const wasLoading = get2().logs.logOverviewsLoading;
-            if (!wasLoading) {
-              set2((state2) => {
-                state2.logs.logOverviewsLoading = true;
-              });
-            }
+            set2((state2) => {
+              state2.logs.logOverviewsLoading = true;
+            });
             try {
               log$7.debug(`LOADING LOG OVERVIEWS for ${filesToLoad.length} files`);
               const headers = await api2.get_log_overviews(
@@ -23773,9 +23770,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 filesToLoad.forEach((logFile) => {
                   state2.logs.loadingFiles.delete(logFile.name);
                 });
-                if (state2.logs.loadingFiles.size === 0) {
-                  state2.logs.logOverviewsLoading = false;
-                }
+                state2.logs.logOverviewsLoading = false;
               });
               return headers;
             } catch (error2) {
@@ -23784,9 +23779,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 filesToLoad.forEach((logFile) => {
                   state2.logs.loadingFiles.delete(logFile.name);
                 });
-                if (state2.logs.loadingFiles.size === 0) {
-                  state2.logs.logOverviewsLoading = false;
-                }
+                state2.logs.logOverviewsLoading = false;
               });
               return [];
             }
@@ -26640,8 +26633,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       const sourceCode = reactExports.useMemo(() => {
         return json || JSON.stringify(resolveBase64(data), void 0, 2);
       }, [json, data]);
-      const prismParentRef = usePrismHighlight(sourceCode);
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: prismParentRef, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      const sourceCodeRef = reactExports.useRef(null);
+      usePrismHighlight(sourceCodeRef, sourceCode.length);
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: sourceCodeRef, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         "pre",
         {
           className: clsx("json-panel", simple ? "simple" : "", className2),
@@ -101554,30 +101548,43 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const styles$1D = {
       content: content$3
     };
-    const Preformatted = ({
-      text: text2,
-      style: style2,
-      className: className2
-    }) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "pre",
-        {
-          className: clsx(styles$1D.content, "text-size-smaller", className2),
-          style: style2,
-          children: text2
-        }
-      );
-    };
-    const RenderedText = reactExports.forwardRef(
-      ({ markdown, style: style2, className: className2, forceRender }) => {
-        const displayMode = useStore((state) => state.app.displayMode);
-        if (forceRender || displayMode === "rendered") {
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownDiv, { markdown, style: style2, className: className2 });
-        } else {
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(Preformatted, { text: markdown, style: style2, className: className2 });
-        }
+    const Preformatted = reactExports.forwardRef(
+      ({ text: text2, style: style2, className: className2 }, ref) => {
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "pre",
+          {
+            ref,
+            className: clsx(styles$1D.content, "text-size-smaller", className2),
+            style: style2,
+            children: text2
+          }
+        );
       }
     );
+    const RenderedText = reactExports.forwardRef(({ markdown, style: style2, className: className2, forceRender }, ref) => {
+      const displayMode = useStore((state) => state.app.displayMode);
+      if (forceRender || displayMode === "rendered") {
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          MarkdownDiv,
+          {
+            ref,
+            markdown,
+            style: style2,
+            className: className2
+          }
+        );
+      } else {
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Preformatted,
+          {
+            ref,
+            text: markdown,
+            style: style2,
+            className: className2
+          }
+        );
+      }
+    });
     const webSearch = "_webSearch_1376z_1";
     const query$1 = "_query_1376z_8";
     const styles$1C = {
@@ -101892,9 +101899,13 @@ self.onmessage = function (e) {
       return base2 + cleanPath;
     }
     function isApiCrossOrigin() {
-      return Boolean(
-        new URL(API_BASE_URL).origin !== window.location.origin
-      );
+      try {
+        return Boolean(
+          API_BASE_URL && new URL(API_BASE_URL).origin !== window.location.origin
+        );
+      } catch (TypeError2) {
+        return false;
+      }
     }
     async function client_events$1() {
       const params = new URLSearchParams();
@@ -104090,10 +104101,10 @@ ${citation.url}` : citation.url,
     const ValueDiv = ({ children: children2 }) => {
       return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-smaller"), children: children2 });
     };
-    const toolImage = "_toolImage_bv5nm_1";
-    const output = "_output_bv5nm_6";
-    const textOutput = "_textOutput_bv5nm_10";
-    const textCode = "_textCode_bv5nm_18";
+    const toolImage = "_toolImage_1wvgr_1";
+    const output = "_output_1wvgr_6";
+    const textOutput = "_textOutput_1wvgr_10";
+    const textCode = "_textCode_1wvgr_18";
     const styles$1u = {
       toolImage,
       output,
@@ -104520,14 +104531,16 @@ ${citation.url}` : citation.url,
     };
     const ToolInput = (props) => {
       const { contentType, contents: contents2, toolCallView: toolCallView2, className: className2 } = props;
-      const prismParentRef = usePrismHighlight(toolCallView2?.content);
+      const sourceCodeRef = reactExports.useRef(null);
+      const sourceCodeLength = toolCallView2 ? toolCallView2.content.length : contents2 ? typeof contents2 === "string" ? contents2.length : JSON.stringify(contents2).length : 0;
+      usePrismHighlight(sourceCodeRef, sourceCodeLength);
       if (!contents2 && !toolCallView2?.content) return null;
       if (toolCallView2) {
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           RenderedText,
           {
             markdown: toolCallView2.content,
-            ref: prismParentRef,
+            ref: sourceCodeRef,
             className: clsx("tool-output", styles$1s.toolView, className2)
           }
         );
@@ -104537,7 +104550,7 @@ ${citation.url}` : citation.url,
           {
             contents: contents2,
             contentType: contentType || "",
-            parentRef: prismParentRef,
+            parentRef: sourceCodeRef,
             className: className2
           }
         );
@@ -109050,22 +109063,20 @@ categories: ${categories.join(" ")}`;
       return ref.current;
     };
     const kPrismRenderMaxSize = 25e4;
-    const usePrismHighlight = (toolCallContent) => {
-      const toolViewRef = reactExports.useRef(null);
+    const usePrismHighlight = (containerRef, contentLength) => {
       reactExports.useEffect(() => {
-        if (toolCallContent && toolViewRef.current && toolCallContent.length <= kPrismRenderMaxSize) {
-          requestAnimationFrame(() => {
-            const codeBlocks = toolViewRef.current?.querySelectorAll("pre code");
+        requestAnimationFrame(() => {
+          if (contentLength > 0 && containerRef.current !== null && contentLength <= kPrismRenderMaxSize) {
+            const codeBlocks = containerRef.current?.querySelectorAll("pre code");
             codeBlocks?.forEach((block2) => {
               if (block2.className.includes("language-")) {
                 block2.classList.add("sourceCode");
                 prismExports.highlightElement(block2);
               }
             });
-          });
-        }
-      }, [toolCallContent]);
-      return toolViewRef;
+          }
+        });
+      }, [contentLength, containerRef]);
     };
     const useSamplePopover = (id) => {
       const setVisiblePopover = useStore(
@@ -112835,11 +112846,16 @@ categories: ${categories.join(" ")}`;
       const setWatchedLogs = useStore((state) => state.logsActions.setWatchedLogs);
       const logHeaders = useStore((state) => state.logs.logOverviews);
       const sortingRef = reactExports.useRef(sorting);
-      const loadAllHeadersForItems = reactExports.useCallback(async () => {
-        const logFiles = items.filter((item2) => item2.type === "file").map((item2) => item2.logFile).filter((file) => file !== void 0);
-        await loadHeaders(logFiles);
-        setWatchedLogs(logFiles);
-      }, [loadHeaders, items, setWatchedLogs]);
+      const logFiles = reactExports.useMemo(() => {
+        return items.filter((item2) => item2.type === "file").map((item2) => item2.logFile).filter((file) => file !== void 0);
+      }, [items]);
+      const loadAllHeadersForItems = reactExports.useCallback(
+        async (files) => {
+          await loadHeaders(files);
+          setWatchedLogs(files);
+        },
+        [loadHeaders, setWatchedLogs]
+      );
       reactExports.useEffect(() => {
         sortingRef.current = sorting;
       }, [sorting]);
@@ -112873,13 +112889,13 @@ categories: ${categories.join(" ")}`;
         },
         rowCount: items.length,
         onSortingChange: async (updater) => {
-          await loadAllHeadersForItems();
+          await loadAllHeadersForItems(logFiles);
           setSorting(
             typeof updater === "function" ? updater(sorting || []) : updater
           );
         },
         onColumnFiltersChange: async (updater) => {
-          await loadAllHeadersForItems();
+          await loadAllHeadersForItems(logFiles);
           setFiltering(
             typeof updater === "function" ? updater(filtering || []) : updater
           );
@@ -112910,23 +112926,28 @@ categories: ${categories.join(" ")}`;
         const filteredRowCount = table2.getFilteredRowModel().rows.length;
         setFilteredCount(filteredRowCount);
       }, [table2.getFilteredRowModel().rows.length, setFilteredCount]);
+      const filterText = reactExports.useRef(globalFilter);
       reactExports.useEffect(() => {
-        if (globalFilter && globalFilter.trim()) {
-          loadAllHeadersForItems();
-        }
-      }, [globalFilter, loadAllHeadersForItems]);
+        const timeoutId = setTimeout(() => {
+          if (globalFilter && globalFilter.trim() && filterText.current !== globalFilter) {
+            loadAllHeadersForItems(logFiles);
+            filterText.current = globalFilter;
+          }
+        }, 200);
+        return () => clearTimeout(timeoutId);
+      }, [globalFilter, logFiles, loadAllHeadersForItems]);
       reactExports.useEffect(() => {
         const exec2 = async () => {
           const startIndex = page * itemsPerPage;
           const endIndex = startIndex + itemsPerPage;
           const currentPageItems = items.slice(startIndex, endIndex);
           const fileItems = currentPageItems.filter((item2) => item2.type === "file");
-          const logFiles = fileItems.map((item2) => item2.logFile).filter((file) => file !== void 0);
-          const filesToLoad = logFiles.filter((file) => !logHeaders[file.name]);
+          const logFiles2 = fileItems.map((item2) => item2.logFile).filter((file) => file !== void 0);
+          const filesToLoad = logFiles2.filter((file) => !logHeaders[file.name]);
           if (filesToLoad.length > 0) {
             await loadHeaders(filesToLoad);
           }
-          setWatchedLogs(logFiles);
+          setWatchedLogs(logFiles2);
         };
         exec2();
       }, [page, itemsPerPage, items, loadHeaders, setWatchedLogs, logHeaders]);
@@ -113205,7 +113226,7 @@ categories: ${categories.join(" ")}`;
       hidden: hidden$2
     };
     const TextInput = reactExports.forwardRef(
-      ({ value: value2, onChange, icon: icon2, placeholder, className: className2 }, ref) => {
+      ({ value: value2, onChange, onFocus, icon: icon2, placeholder, className: className2 }, ref) => {
         return /* @__PURE__ */ jsxRuntimeExports.jsxs(
           "div",
           {
@@ -113224,7 +113245,8 @@ categories: ${categories.join(" ")}`;
                   onChange,
                   ref,
                   placeholder,
-                  className: clsx(styles$17.input)
+                  className: clsx(styles$17.input),
+                  onFocus
                 }
               ),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -113254,27 +113276,33 @@ categories: ${categories.join(" ")}`;
     const styles$16 = {
       filterInput
     };
-    const LogsFilterInput = () => {
-      const { globalFilter, setGlobalFilter } = useLogsListing();
-      const debouncedUpdate = reactExports.useCallback(
-        async (value2) => {
-          setGlobalFilter(value2);
-        },
-        [setGlobalFilter]
-      );
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(
-        TextInput,
-        {
-          icon: ApplicationIcons.filter,
-          value: globalFilter || "",
-          onChange: (e) => {
-            debouncedUpdate(e.target.value);
+    const LogsFilterInput = reactExports.forwardRef(
+      (_props, ref) => {
+        const { globalFilter, setGlobalFilter } = useLogsListing();
+        const handleChange = reactExports.useCallback(
+          async (value2) => {
+            setGlobalFilter(value2);
           },
-          placeholder: "Filter...",
-          className: clsx(styles$16.filterInput)
-        }
-      );
-    };
+          [setGlobalFilter]
+        );
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          TextInput,
+          {
+            ref,
+            icon: ApplicationIcons.filter,
+            value: globalFilter || "",
+            onChange: (e) => {
+              handleChange(e.target.value);
+            },
+            onFocus: (e) => {
+              e.target.select();
+            },
+            placeholder: "Filter...",
+            className: clsx(styles$16.filterInput)
+          }
+        );
+      }
+    );
     const panel$3 = "_panel_18nhs_1";
     const list = "_list_18nhs_8";
     const styles$15 = {
@@ -113298,6 +113326,8 @@ categories: ${categories.join(" ")}`;
       const headersLoading = useStore((state) => state.logs.logOverviewsLoading);
       const watchedLogs = useStore((state) => state.logs.listing.watchedLogs);
       const navigate = useNavigate();
+      const filterRef = reactExports.useRef(null);
+      const rootRef = reactExports.useRef(null);
       const { unloadLog } = useUnloadLog();
       reactExports.useEffect(() => {
         unloadLog();
@@ -113323,6 +113353,11 @@ categories: ${categories.join(" ")}`;
           previousWatchedLogs.current = watchedLogs;
         }
       }, [watchedLogs]);
+      reactExports.useEffect(() => {
+        setTimeout(() => {
+          rootRef.current?.focus();
+        }, 10);
+      }, []);
       const logItems = reactExports.useMemo(() => {
         const logItems2 = [];
         const processedFolders = /* @__PURE__ */ new Set();
@@ -113381,19 +113416,36 @@ categories: ${categories.join(" ")}`;
           navigate(onlyItem.url);
         }
       }, [logItems, maybeShowSingleLog]);
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$15.panel), children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Navbar, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(LogsFilterInput, {}) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(ProgressBar, { animating: loading || headersLoading }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$15.list, "text-size-smaller"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(LogListGrid, { items: logItems }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          LogListFooter,
-          {
-            logDir: currentDir,
-            itemCount: logItems.length,
-            progressText: loading ? "Loading logs" : headersLoading ? "Loading data" : void 0
-          }
-        )
-      ] });
+      function handleKeyDown(e) {
+        if (e.key === "f" && (e.metaKey || e.ctrlKey)) {
+          e.preventDefault();
+          filterRef.current?.focus();
+        }
+      }
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "div",
+        {
+          ref: rootRef,
+          className: clsx(styles$15.panel),
+          onKeyDown: (e) => {
+            handleKeyDown(e);
+          },
+          tabIndex: 0,
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Navbar, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(LogsFilterInput, { ref: filterRef }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(ProgressBar, { animating: loading || headersLoading }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$15.list, "text-size-smaller"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(LogListGrid, { items: logItems }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              LogListFooter,
+              {
+                logDir: currentDir,
+                itemCount: logItems.length,
+                progressText: loading ? "Loading logs" : headersLoading ? "Loading data" : void 0
+              }
+            )
+          ]
+        }
+      );
     };
     const FindBand = () => {
       const searchBoxRef = reactExports.useRef(null);
@@ -115219,12 +115271,12 @@ categories: ${categories.join(" ")}`;
       );
       return scorerDescriptor?.render(scoreData.value);
     };
-    const container$a = "_container_181fj_1";
-    const cell$1 = "_cell_181fj_9";
-    const fullWidth = "_fullWidth_181fj_13";
-    const separator$2 = "_separator_181fj_25";
-    const separatorPadded = "_separatorPadded_181fj_30";
-    const headerSep = "_headerSep_181fj_35";
+    const container$a = "_container_kwhbh_1";
+    const cell$1 = "_cell_kwhbh_9";
+    const fullWidth = "_fullWidth_kwhbh_13";
+    const separator$2 = "_separator_kwhbh_25";
+    const separatorPadded = "_separatorPadded_kwhbh_30";
+    const headerSep = "_headerSep_kwhbh_35";
     const styles$M = {
       container: container$a,
       cell: cell$1,
@@ -119377,11 +119429,12 @@ categories: ${categories.join(" ")}`;
       const sourceCode = reactExports.useMemo(() => {
         return JSON.stringify(contents2, void 0, 2);
       }, [contents2]);
-      const prismParentRef = usePrismHighlight(sourceCode);
+      const sourceCodeRef = reactExports.useRef(null);
+      usePrismHighlight(sourceCodeRef, sourceCode.length);
       if (!contents2) {
         return null;
       }
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: prismParentRef, className: clsx("model-call"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$z.codePre), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: sourceCodeRef, className: clsx("model-call"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$z.codePre), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         "code",
         {
           id,
@@ -127759,6 +127812,11 @@ ${events}
         },
         [eventNodes]
       );
+      const contextWithToolEvents = reactExports.useMemo(() => ({ hasToolEvents: true }), []);
+      const contextWithoutToolEvents = reactExports.useMemo(
+        () => ({ hasToolEvents: false }),
+        []
+      );
       const renderRow = reactExports.useCallback(
         (index, item2) => {
           const paddingClass = index === 0 ? styles$p.first : void 0;
@@ -127772,6 +127830,7 @@ ${events}
           const attachedChildClass = attached2 ? styles$p.attachedChild : void 0;
           const attachedParentClass = attachedParent2 ? styles$p.attachedParent : void 0;
           const hasToolEvents = hasToolEventsAtCurrentDepth(index);
+          const context = hasToolEvents ? contextWithToolEvents : contextWithoutToolEvents;
           return /* @__PURE__ */ jsxRuntimeExports.jsx(
             "div",
             {
@@ -127787,14 +127846,19 @@ ${events}
                   node: item2,
                   next,
                   className: clsx(attachedParentClass, attachedChildClass),
-                  context: { hasToolEvents }
+                  context
                 }
               )
             },
             item2.id
           );
         },
-        [eventNodes]
+        [
+          eventNodes,
+          hasToolEventsAtCurrentDepth,
+          contextWithToolEvents,
+          contextWithoutToolEvents
+        ]
       );
       return /* @__PURE__ */ jsxRuntimeExports.jsx(
         LiveVirtualList,
@@ -128110,7 +128174,11 @@ ${events}
         }
       );
     });
-    const SampleDisplay = ({ id, scrollRef }) => {
+    const SampleDisplay = ({
+      id,
+      scrollRef,
+      focusOnLoad
+    }) => {
       const baseId = `sample-dialog`;
       const filteredSamples = useFilteredSamples();
       const selectedSampleIndex = useStore(
@@ -128157,6 +128225,13 @@ ${events}
         sampleId: urlSampleId,
         epoch: urlEpoch
       } = useLogRouteParams();
+      reactExports.useEffect(() => {
+        setTimeout(() => {
+          if (focusOnLoad) {
+            scrollRef.current?.focus();
+          }
+        }, 10);
+      }, []);
       const onSelectedTab = reactExports.useCallback(
         (e) => {
           const el2 = e.currentTarget;
@@ -128392,7 +128467,7 @@ ${events}
                   title: "JSON",
                   onSelected: onSelectedTab,
                   selected: effectiveSelectedTab === kSampleJsonTabId,
-                  children: !sample2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: "JSON not available" }) : estimateSize(sample2.events) > 25e4 ? /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: "JSON too large to display" }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$P.padded, styles$P.fullWidth), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  children: !sample2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: "JSON not available" }) : estimateSize(sample2.events) > 25 * 1024 * 1024 ? /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: "JSON too large to display" }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$P.padded, styles$P.fullWidth), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                     JSONPanel,
                     {
                       data: sample2,
@@ -128835,7 +128910,7 @@ ${events}
           },
           showProgress: sampleData.status === "loading" || sampleData.status === "streaming",
           scrollRef,
-          children: sampleData.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(ErrorPanel, { title: "Sample Error", error: sampleData.error }) : /* @__PURE__ */ jsxRuntimeExports.jsx(SampleDisplay, { id, scrollRef })
+          children: sampleData.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(ErrorPanel, { title: "Sample Error", error: sampleData.error }) : /* @__PURE__ */ jsxRuntimeExports.jsx(SampleDisplay, { id, scrollRef, focusOnLoad: true })
         }
       );
     };
