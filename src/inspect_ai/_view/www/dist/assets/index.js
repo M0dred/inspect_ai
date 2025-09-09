@@ -114157,8 +114157,8 @@ categories: ${categories.join(" ")}`;
         )
       ] }) });
     };
-    const toolButton = "_toolButton_w9m2e_1";
-    const latched = "_latched_w9m2e_5";
+    const toolButton = "_toolButton_nu8dt_1";
+    const latched = "_latched_nu8dt_13";
     const styles$Z = {
       toolButton,
       latched
@@ -114723,6 +114723,12 @@ categories: ${categories.join(" ")}`;
         const prev = selectedSampleIndex - 1;
         navigateSampleIndex(prev);
       }, [selectedSampleIndex, navigateSampleIndex]);
+      const firstSample = reactExports.useCallback(() => {
+        navigateSampleIndex(0);
+      }, [navigateSampleIndex]);
+      const lastSample = reactExports.useCallback(() => {
+        navigateSampleIndex(sampleSummaries.length - 1);
+      }, [navigateSampleIndex, sampleSummaries]);
       const getSampleUrl = reactExports.useCallback(
         (sampleId, epoch, specificSampleTabId) => {
           const resolvedPath = resolveLogPath();
@@ -114753,6 +114759,8 @@ categories: ${categories.join(" ")}`;
         nextSample,
         previousEnabled: selectedSampleIndex > 0,
         previousSample,
+        firstSample,
+        lastSample,
         getSampleUrl,
         clearSampleUrl
       };
@@ -114825,6 +114833,7 @@ categories: ${categories.join(" ")}`;
     };
     const LiveVirtualList = ({
       id,
+      listHandle,
       className: className2,
       data,
       renderRow,
@@ -114835,7 +114844,6 @@ categories: ${categories.join(" ")}`;
       offsetTop,
       components
     }) => {
-      const listHandle = reactExports.useRef(null);
       const { getRestoreState, isScrolling } = useVirtuosoState(
         listHandle,
         `live-virtual-list-${id}`
@@ -114909,15 +114917,17 @@ categories: ${categories.join(" ")}`;
           return () => parent.removeEventListener("scroll", handleScroll);
         }
       }, [scrollRef, handleScroll]);
+      const hasScrolled = reactExports.useRef(false);
       reactExports.useEffect(() => {
         if (initialTopMostItemIndex !== void 0 && listHandle.current) {
           const timer = setTimeout(() => {
             listHandle.current?.scrollToIndex({
               index: initialTopMostItemIndex,
               align: "start",
-              behavior: "smooth",
+              behavior: !hasScrolled.current ? "auto" : "smooth",
               offset: offsetTop ? -offsetTop : void 0
             });
+            hasScrolled.current = true;
           }, 50);
           return () => clearTimeout(timer);
         }
@@ -114932,7 +114942,7 @@ categories: ${categories.join(" ")}`;
           defaultItemHeight: 250,
           itemContent: renderRow,
           increaseViewportBy: { top: 1e3, bottom: 1e3 },
-          overscan: { main: 2, reverse: 2 },
+          overscan: { main: 5, reverse: 5 },
           className: clsx("transcript", className2),
           isScrolling,
           restoreStateFrom: getRestoreState(),
@@ -114951,6 +114961,71 @@ categories: ${categories.join(" ")}`;
     const ChatViewVirtualList = reactExports.memo(
       ({
         id,
+        messages,
+        initialMessageId,
+        topOffset,
+        className: className2,
+        toolCallStyle,
+        indented: indented2,
+        numbered = true,
+        scrollRef,
+        running
+      }) => {
+        const listHandle = reactExports.useRef(null);
+        reactExports.useEffect(() => {
+          const handleKeyDown = (event) => {
+            if (event.metaKey || event.ctrlKey) {
+              if (event.key === "ArrowUp") {
+                listHandle.current?.scrollToIndex({ index: 0, align: "center" });
+                event.preventDefault();
+              } else if (event.key === "ArrowDown") {
+                listHandle.current?.scrollToIndex({
+                  index: Math.min(messages.length - 5, 0),
+                  align: "center"
+                });
+                setTimeout(() => {
+                  listHandle.current?.scrollToIndex({
+                    index: messages.length - 1,
+                    align: "end"
+                  });
+                }, 250);
+                event.preventDefault();
+              }
+            }
+          };
+          const scrollElement = scrollRef?.current;
+          if (scrollElement) {
+            scrollElement.addEventListener("keydown", handleKeyDown);
+            if (!scrollElement.hasAttribute("tabIndex")) {
+              scrollElement.setAttribute("tabIndex", "0");
+            }
+            return () => {
+              scrollElement.removeEventListener("keydown", handleKeyDown);
+            };
+          }
+        }, [scrollRef, messages]);
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          ChatViewVirtualListComponent,
+          {
+            id,
+            listHandle,
+            className: className2,
+            scrollRef,
+            messages,
+            initialMessageId,
+            topOffset,
+            toolCallStyle,
+            indented: indented2,
+            numbered,
+            running
+          }
+        );
+      }
+    );
+    const ChatViewVirtualListComponent = reactExports.memo(
+      ({
+        id,
+        listHandle,
         messages,
         initialMessageId,
         topOffset,
@@ -115014,6 +115089,7 @@ categories: ${categories.join(" ")}`;
           LiveVirtualList,
           {
             id: "chat-virtual-list",
+            listHandle,
             className: className2,
             scrollRef,
             data: collapsedMessages,
@@ -119677,10 +119753,12 @@ categories: ${categories.join(" ")}`;
         contents2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Contents", children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExpandablePanel, { id: `${id}-file`, collapse: false, children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { children: contents2 }) }) }) : void 0
       ] });
     };
-    const explanation = "_explanation_1ww42_1";
-    const separator = "_separator_1ww42_8";
+    const explanation = "_explanation_1k2k0_1";
+    const wrappingContent = "_wrappingContent_1k2k0_8";
+    const separator = "_separator_1k2k0_13";
     const styles$v = {
       explanation,
+      wrappingContent,
       separator
     };
     const ScoreEventView = ({
@@ -119708,10 +119786,10 @@ categories: ${categories.join(" ")}`;
               ] }) : "",
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$v.separator) }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Answer" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.score.answer || "" }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$v.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.score.answer || "" }) }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$v.separator) }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Explanation" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.score.explanation || "" }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$v.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.score.explanation || "" }) }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$v.separator) }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Score" }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: renderScore(event.score.value) }),
@@ -127781,6 +127859,7 @@ ${events}
     };
     const TranscriptVirtualListComponent = ({
       id,
+      listHandle,
       eventNodes,
       scrollRef,
       running,
@@ -127863,6 +127942,7 @@ ${events}
       return /* @__PURE__ */ jsxRuntimeExports.jsx(
         LiveVirtualList,
         {
+          listHandle,
           className: className2,
           id,
           scrollRef,
@@ -127880,32 +127960,18 @@ ${events}
           id,
           scrollRef,
           eventNodes,
-          defaultCollapsedIds,
+          listHandle,
           running,
           initialEventId,
           offsetTop,
           className: className2
         } = props;
-        const collapsedEvents = useStore((state) => state.sample.collapsedEvents);
-        const setCollapsedEvents = useStore(
-          (state) => state.sampleActions.setCollapsedEvents
-        );
-        const flattenedNodes = reactExports.useMemo(() => {
-          return flatTree(
-            eventNodes,
-            (collapsedEvents ? collapsedEvents[kTranscriptCollapseScope] : void 0) || defaultCollapsedIds
-          );
-        }, [eventNodes, collapsedEvents, defaultCollapsedIds]);
-        reactExports.useEffect(() => {
-          if (!collapsedEvents && Object.keys(defaultCollapsedIds).length > 0) {
-            setCollapsedEvents(kTranscriptCollapseScope, defaultCollapsedIds);
-          }
-        }, [defaultCollapsedIds, collapsedEvents, setCollapsedEvents]);
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           TranscriptVirtualListComponent,
           {
             id,
-            eventNodes: flattenedNodes,
+            listHandle,
+            eventNodes,
             initialEventId,
             offsetTop,
             scrollRef,
@@ -128116,11 +128182,60 @@ ${events}
         filteredEvents,
         running === true
       );
+      const collapsedEvents = useStore((state) => state.sample.collapsedEvents);
+      const setCollapsedEvents = useStore(
+        (state) => state.sampleActions.setCollapsedEvents
+      );
+      const flattenedNodes = reactExports.useMemo(() => {
+        return flatTree(
+          eventNodes,
+          (collapsedEvents ? collapsedEvents[kTranscriptCollapseScope] : void 0) || defaultCollapsedIds
+        );
+      }, [eventNodes, collapsedEvents, defaultCollapsedIds]);
+      reactExports.useEffect(() => {
+        if (!collapsedEvents && Object.keys(defaultCollapsedIds).length > 0) {
+          setCollapsedEvents(kTranscriptCollapseScope, defaultCollapsedIds);
+        }
+      }, [defaultCollapsedIds, collapsedEvents, setCollapsedEvents]);
       const { logPath } = useLogRouteParams();
       const [collapsed2, setCollapsed] = useCollapsedState(
         `transcript-panel-${logPath || "na"}`,
         false
       );
+      const listHandle = reactExports.useRef(null);
+      reactExports.useEffect(() => {
+        const handleKeyDown = (event) => {
+          if (event.metaKey || event.ctrlKey) {
+            if (event.key === "ArrowUp") {
+              listHandle.current?.scrollToIndex({ index: 0, align: "center" });
+              event.preventDefault();
+            } else if (event.key === "ArrowDown") {
+              listHandle.current?.scrollToIndex({
+                index: Math.max(flattenedNodes.length - 5, 0),
+                align: "center",
+                behavior: "auto"
+              });
+              setTimeout(() => {
+                listHandle.current?.scrollToIndex({
+                  index: Math.max(flattenedNodes.length - 1, 0),
+                  align: "end",
+                  behavior: "auto"
+                });
+              }, 250);
+            }
+          }
+        };
+        const scrollElement = scrollRef.current;
+        if (scrollElement) {
+          scrollElement.addEventListener("keydown", handleKeyDown);
+          if (!scrollElement.hasAttribute("tabIndex")) {
+            scrollElement.setAttribute("tabIndex", "0");
+          }
+          return () => {
+            scrollElement.removeEventListener("keydown", handleKeyDown);
+          };
+        }
+      }, [scrollRef, flattenedNodes]);
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
         {
@@ -128161,8 +128276,8 @@ ${events}
               TranscriptVirtualList,
               {
                 id,
-                eventNodes,
-                defaultCollapsedIds,
+                listHandle,
+                eventNodes: flattenedNodes,
                 scrollRef,
                 running,
                 initialEventId: initialEventId === void 0 ? null : initialEventId,
@@ -151946,12 +152061,30 @@ Supported expressions:
         (e) => {
           switch (e.key) {
             case "ArrowUp":
-              sampleNavigation.previousSample();
+              if (e.metaKey || e.ctrlKey) {
+                sampleNavigation.firstSample();
+                listHandle.current?.scrollToIndex({
+                  index: 0,
+                  align: "start",
+                  behavior: "auto"
+                });
+              } else {
+                sampleNavigation.previousSample();
+              }
               e.preventDefault();
               e.stopPropagation();
               break;
             case "ArrowDown":
-              sampleNavigation.nextSample();
+              if (e.metaKey || e.ctrlKey) {
+                sampleNavigation.lastSample();
+                listHandle.current?.scrollToIndex({
+                  index: items.length - 1,
+                  align: "end",
+                  behavior: "auto"
+                });
+              } else {
+                sampleNavigation.nextSample();
+              }
               e.preventDefault();
               e.stopPropagation();
               break;
@@ -151974,7 +152107,8 @@ Supported expressions:
           selectedSampleIndex,
           sampleNavigation.nextSample,
           sampleNavigation.previousSample,
-          sampleNavigation.showSample
+          sampleNavigation.showSample,
+          listHandle
         ]
       );
       const gridColumnsTemplate = reactExports.useMemo(() => {
