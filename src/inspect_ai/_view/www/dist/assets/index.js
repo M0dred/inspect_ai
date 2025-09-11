@@ -23116,6 +23116,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       },
       scrollPositions: {},
       listPositions: {},
+      visibleRanges: {},
       collapsed: {},
       messages: {},
       propertyBags: {},
@@ -23246,6 +23247,31 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 app: {
                   ...state.app,
                   listPositions: newListPositions
+                }
+              };
+            });
+          },
+          getVisibleRange: (name2) => {
+            const state = get2();
+            if (Object.keys(state.app.visibleRanges).includes(name2)) {
+              return state.app.visibleRanges[name2];
+            } else {
+              return { startIndex: 0, endIndex: 0 };
+            }
+          },
+          setVisibleRange: (name2, value2) => {
+            set2((state) => {
+              state.app.visibleRanges[name2] = value2;
+            });
+          },
+          clearVisibleRange: (name2) => {
+            set2((state) => {
+              const newVisibleRanges = { ...state.app.visibleRanges };
+              delete newVisibleRanges[name2];
+              return {
+                app: {
+                  ...state.app,
+                  visibleRanges: newVisibleRanges
                 }
               };
             });
@@ -30210,7 +30236,23 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         stateRef.current = restoreState;
       }, [restoreState]);
       const getRestoreState = reactExports.useCallback(() => stateRef.current, []);
-      return { getRestoreState, isScrolling };
+      const setVisibleRangeRaw = useStore(
+        (state) => state.appActions.setVisibleRange
+      );
+      const setVisibleRange = reactExports.useCallback(
+        (value2) => {
+          setVisibleRangeRaw(elementKey, value2);
+        },
+        [setVisibleRangeRaw, elementKey]
+      );
+      const visibleRanges = useStore((state) => state.app.visibleRanges);
+      const visibleRange = reactExports.useMemo(() => {
+        return visibleRanges[elementKey] || {
+          startIndex: 0,
+          endIndex: 0
+        };
+      }, [visibleRanges, elementKey]);
+      return { getRestoreState, isScrolling, visibleRange, setVisibleRange };
     };
     function useRafThrottle(callback, dependencies = []) {
       const rafRef = reactExports.useRef(null);
@@ -30911,7 +30953,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       if (!targetLogPath && log_file) {
         targetLogPath = makeLogPath(log_file, log_dir);
       }
-      const eventUrl = reactExports.useMemo(() => {
+      const messageUrl = reactExports.useMemo(() => {
         return messageId && targetLogPath ? sampleMessageUrl(
           messageId,
           targetLogPath,
@@ -30919,7 +30961,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           urlEpoch
         ) : void 0;
       }, [targetLogPath, messageId, sampleId, urlSampleId, sampleEpoch, urlEpoch]);
-      return eventUrl;
+      return messageUrl;
     };
     const useSampleEventUrl = (eventId, sampleId, sampleEpoch) => {
       const {
@@ -37327,12 +37369,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       })(Attributes);
       return Attributes;
     }
-    var Node = {};
+    var Node$1 = {};
     var hasRequiredNode$1;
     function requireNode$1() {
-      if (hasRequiredNode$1) return Node;
+      if (hasRequiredNode$1) return Node$1;
       hasRequiredNode$1 = 1;
-      var __extends2 = Node && Node.__extends || /* @__PURE__ */ (function() {
+      var __extends2 = Node$1 && Node$1.__extends || /* @__PURE__ */ (function() {
         var extendStatics2 = function(d, b) {
           extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d2, b2) {
             d2.__proto__ = b2;
@@ -37351,7 +37393,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
         };
       })();
-      var __assign2 = Node && Node.__assign || function() {
+      var __assign2 = Node$1 && Node$1.__assign || function() {
         __assign2 = Object.assign || function(t2) {
           for (var s, i2 = 1, n = arguments.length; i2 < n; i2++) {
             s = arguments[i2];
@@ -37362,7 +37404,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         };
         return __assign2.apply(this, arguments);
       };
-      var __values2 = Node && Node.__values || function(o) {
+      var __values2 = Node$1 && Node$1.__values || function(o) {
         var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i2 = 0;
         if (m) return m.call(o);
         if (o && typeof o.length === "number") return {
@@ -37373,8 +37415,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         };
         throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
       };
-      Object.defineProperty(Node, "__esModule", { value: true });
-      Node.AbstractEmptyNode = Node.AbstractNode = void 0;
+      Object.defineProperty(Node$1, "__esModule", { value: true });
+      Node$1.AbstractEmptyNode = Node$1.AbstractNode = void 0;
       var AbstractNode = (function() {
         function AbstractNode2(factory, properties, children2) {
           var e_1, _a2;
@@ -37550,7 +37592,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         };
         return AbstractNode2;
       })();
-      Node.AbstractNode = AbstractNode;
+      Node$1.AbstractNode = AbstractNode;
       var AbstractEmptyNode = (function(_super) {
         __extends2(AbstractEmptyNode2, _super);
         function AbstractEmptyNode2() {
@@ -37576,8 +37618,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         };
         return AbstractEmptyNode2;
       })(AbstractNode);
-      Node.AbstractEmptyNode = AbstractEmptyNode;
-      return Node;
+      Node$1.AbstractEmptyNode = AbstractEmptyNode;
+      return Node$1;
     }
     var hasRequiredMmlNode;
     function requireMmlNode() {
@@ -104812,86 +104854,82 @@ ${citation.url}` : citation.url,
         return result2;
       }
     };
-    const ChatMessage = ({
-      id,
-      message: message2,
-      toolMessages,
-      indented: indented2,
-      toolCallStyle
-    }) => {
-      const messageUrl = useSampleMessageUrl(message2.id);
-      const collapse = message2.role === "system" || message2.role === "user";
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        "div",
-        {
-          className: clsx(
-            message2.role,
-            "text-size-base",
-            styles$1E.message,
-            message2.role === "system" ? styles$1E.systemRole : void 0,
-            message2.role === "user" ? styles$1E.userRole : void 0
-          ),
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1E.messageGrid, "text-style-label"), children: [
+    const ChatMessage = reactExports.memo(
+      ({ id, message: message2, toolMessages, indented: indented2, toolCallStyle }) => {
+        const messageUrl = useSampleMessageUrl(message2.id);
+        const collapse = message2.role === "system" || message2.role === "user";
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: clsx(
               message2.role,
-              message2.role === "tool" ? `: ${message2.function}` : "",
-              supportsLinking() && messageUrl ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-                CopyButton,
+              "text-size-base",
+              styles$1E.message,
+              message2.role === "system" ? styles$1E.systemRole : void 0,
+              message2.role === "user" ? styles$1E.userRole : void 0
+            ),
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1E.messageGrid, "text-style-label"), children: [
+                message2.role,
+                message2.role === "tool" ? `: ${message2.function}` : "",
+                supportsLinking() && messageUrl ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  CopyButton,
+                  {
+                    icon: ApplicationIcons.link,
+                    value: toFullUrl(messageUrl),
+                    className: clsx(styles$1E.copyLink)
+                  }
+                ) : ""
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                "div",
                 {
-                  icon: ApplicationIcons.link,
-                  value: toFullUrl(messageUrl),
-                  className: clsx(styles$1E.copyLink)
-                }
-              ) : ""
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs(
-              "div",
-              {
-                className: clsx(
-                  styles$1E.messageContents,
-                  indented2 ? styles$1E.indented : void 0
-                ),
-                children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    ExpandablePanel,
-                    {
-                      id: `${id}-message`,
-                      collapse,
-                      lines: collapse ? 15 : 25,
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-                        MessageContents,
-                        {
-                          id: `${id}-contents`,
-                          message: message2,
-                          toolMessages,
-                          toolCallStyle
-                        },
-                        `${id}-contents`
-                      )
-                    }
+                  className: clsx(
+                    styles$1E.messageContents,
+                    indented2 ? styles$1E.indented : void 0
                   ),
-                  message2.metadata && Object.keys(message2.metadata).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    LabeledValue,
-                    {
-                      label: "Metadata",
-                      className: clsx(styles$1E.metadataLabel, "text-size-smaller"),
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-                        RecordTree,
-                        {
-                          record: message2.metadata,
-                          id: `${id}-metadata`,
-                          defaultExpandLevel: 0
-                        }
-                      )
-                    }
-                  ) : ""
-                ]
-              }
-            )
-          ]
-        }
-      );
-    };
+                  children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      ExpandablePanel,
+                      {
+                        id: `${id}-message`,
+                        collapse,
+                        lines: collapse ? 15 : 25,
+                        children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                          MessageContents,
+                          {
+                            id: `${id}-contents`,
+                            message: message2,
+                            toolMessages,
+                            toolCallStyle
+                          },
+                          `${id}-contents`
+                        )
+                      }
+                    ),
+                    message2.metadata && Object.keys(message2.metadata).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      LabeledValue,
+                      {
+                        label: "Metadata",
+                        className: clsx(styles$1E.metadataLabel, "text-size-smaller"),
+                        children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                          RecordTree,
+                          {
+                            record: message2.metadata,
+                            id: `${id}-metadata`,
+                            defaultExpandLevel: 0
+                          }
+                        )
+                      }
+                    ) : ""
+                  ]
+                }
+              )
+            ]
+          }
+        );
+      }
+    );
     const grid$9 = "_grid_rmdrx_1";
     const number$1 = "_number_rmdrx_7";
     const user = "_user_rmdrx_11";
@@ -109445,6 +109483,7 @@ categories: ${categories.join(" ")}`;
         {
           className: clsx("text-size-smaller", styles$1j.header),
           "aria-label": "breadcrumb",
+          "data-unsearchable": true,
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1j.left), children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: backUrl, className: clsx(styles$1j.toolbarButton), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.navbar.back) }) }),
@@ -113447,13 +113486,99 @@ categories: ${categories.join(" ")}`;
         }
       );
     };
+    const ExtendedFindContext = reactExports.createContext(null);
+    const ExtendedFindProvider = ({
+      children: children2
+    }) => {
+      const virtualLists = reactExports.useRef(/* @__PURE__ */ new Map());
+      const extendedFindTerm = reactExports.useCallback(
+        async (term, direction) => {
+          for (const [, searchFn] of virtualLists.current) {
+            const found = await new Promise((resolve) => {
+              let callbackFired = false;
+              const onContentReady = () => {
+                if (!callbackFired) {
+                  callbackFired = true;
+                  resolve(true);
+                }
+              };
+              searchFn(term, direction, onContentReady).then((found2) => {
+                if (!found2 && !callbackFired) {
+                  callbackFired = true;
+                  resolve(false);
+                }
+              }).catch(() => {
+                if (!callbackFired) {
+                  callbackFired = true;
+                  resolve(false);
+                }
+              });
+            });
+            if (found) {
+              return true;
+            }
+          }
+          return false;
+        },
+        []
+      );
+      const registerVirtualList = reactExports.useCallback(
+        (id, searchFn) => {
+          virtualLists.current.set(id, searchFn);
+          return () => {
+            virtualLists.current.delete(id);
+          };
+        },
+        []
+      );
+      const contextValue = {
+        extendedFindTerm,
+        registerVirtualList
+      };
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(ExtendedFindContext.Provider, { value: contextValue, children: children2 });
+    };
+    const useExtendedFind = () => {
+      const context = reactExports.useContext(ExtendedFindContext);
+      if (!context) {
+        throw new Error("useSearch must be used within a SearchProvider");
+      }
+      return context;
+    };
+    const findConfig = {
+      caseSensitive: false,
+      wrapAround: false,
+      wholeWord: false,
+      searchInFrames: false,
+      showDialog: false
+    };
     const FindBand = () => {
       const searchBoxRef = reactExports.useRef(null);
       const storeHideFind = useStore((state) => state.appActions.hideFind);
+      const { extendedFindTerm } = useExtendedFind();
+      const lastFoundItem = reactExports.useRef(null);
+      const currentSearchTerm = reactExports.useRef("");
       reactExports.useEffect(() => {
         setTimeout(() => {
           searchBoxRef.current?.focus();
+          searchBoxRef.current?.select();
         }, 10);
+        const handleGlobalKeydown = (e) => {
+          if ((e.ctrlKey || e.metaKey) && e.key === "f") {
+            e.preventDefault();
+            e.stopPropagation();
+            searchBoxRef.current?.focus();
+            searchBoxRef.current?.select();
+          } else if ((e.ctrlKey || e.metaKey) && e.key === "g") {
+            e.preventDefault();
+            e.stopPropagation();
+            const back = e.shiftKey;
+            handleSearch(back);
+          }
+        };
+        document.addEventListener("keydown", handleGlobalKeydown, true);
+        return () => {
+          document.removeEventListener("keydown", handleGlobalKeydown, true);
+        };
       }, []);
       const getParentExpandablePanel = reactExports.useCallback(
         (selection) => {
@@ -113469,36 +113594,48 @@ categories: ${categories.join(" ")}`;
         []
       );
       const handleSearch = reactExports.useCallback(
-        (back = false) => {
+        async (back = false) => {
           const searchTerm = searchBoxRef.current?.value ?? "";
+          if (!searchTerm) {
+            return;
+          }
+          if (currentSearchTerm.current !== searchTerm) {
+            lastFoundItem.current = null;
+            currentSearchTerm.current = searchTerm;
+          }
           const focusedElement = document.activeElement;
-          const result2 = window.find(
+          let result2 = await findExtendedInDOM(
             searchTerm,
-            false,
             back,
-            false,
-            false,
-            true,
-            false
+            lastFoundItem.current,
+            extendedFindTerm
           );
           const noResultEl = document.getElementById("inspect-find-no-results");
-          if (!noResultEl) return;
+          if (!noResultEl) {
+            return;
+          }
           noResultEl.style.opacity = result2 ? "0" : "1";
           if (result2) {
             const selection = window.getSelection();
             if (selection && selection.rangeCount > 0) {
+              const range2 = selection.getRangeAt(0);
+              const parentElement = range2.startContainer.parentElement || range2.commonAncestorContainer;
+              lastFoundItem.current = {
+                text: range2.toString(),
+                offset: range2.startOffset,
+                parentElement
+              };
               const parentPanel = getParentExpandablePanel(selection);
               if (parentPanel) {
                 parentPanel.style.display = "block";
                 parentPanel.style.webkitLineClamp = "";
                 parentPanel.style.webkitBoxOrient = "";
               }
-              const range2 = selection.getRangeAt(0);
               const element = range2.startContainer.parentElement;
               if (element) {
                 setTimeout(() => {
                   element.scrollIntoView({
-                    behavior: "smooth",
+                    behavior: "auto",
                     block: "center"
                   });
                 }, 100);
@@ -113507,14 +113644,20 @@ categories: ${categories.join(" ")}`;
           }
           focusedElement?.focus();
         },
-        [getParentExpandablePanel]
+        [getParentExpandablePanel, extendedFindTerm]
       );
       const handleKeyDown = reactExports.useCallback(
         (e) => {
           if (e.key === "Escape") {
             storeHideFind();
           } else if (e.key === "Enter") {
-            handleSearch(false);
+            handleSearch(e.shiftKey);
+          } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "g") {
+            e.preventDefault();
+            handleSearch(!e.shiftKey);
+          } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "f") {
+            searchBoxRef.current?.focus();
+            searchBoxRef.current?.select();
           }
         },
         [storeHideFind, handleSearch]
@@ -113525,7 +113668,7 @@ categories: ${categories.join(" ")}`;
       const hideSearch = reactExports.useCallback(() => {
         handleSearch(false);
       }, [handleSearch]);
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "findBand", children: [
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-unsearchable": "true", className: clsx("findBand"), children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "input",
           {
@@ -113568,6 +113711,81 @@ categories: ${categories.join(" ")}`;
         )
       ] });
     };
+    async function findExtendedInDOM(searchTerm, back, lastFoundItem, extendedFindTerm) {
+      let result2 = false;
+      let attempts = 0;
+      let hasTriedExtendedSearch = false;
+      const maxAttempts = 25;
+      do {
+        result2 = window.find(
+          searchTerm,
+          findConfig.caseSensitive,
+          back,
+          findConfig.wrapAround,
+          findConfig.wholeWord,
+          findConfig.searchInFrames,
+          findConfig.showDialog
+        );
+        if (result2) {
+          const selection = window.getSelection();
+          if (selection && selection.rangeCount > 0) {
+            const range2 = selection.getRangeAt(0);
+            let isUnsearchable = inUnsearchableElement(range2);
+            const isSameAsLast = isLastFoundItem(range2, lastFoundItem);
+            if (!isUnsearchable && !isSameAsLast) {
+              break;
+            }
+          }
+        } else if (!hasTriedExtendedSearch) {
+          hasTriedExtendedSearch = true;
+          const foundInVirtual = await extendedFindTerm(
+            searchTerm,
+            back ? "backward" : "forward"
+          );
+          if (foundInVirtual) ;
+          else {
+            break;
+          }
+        } else {
+          break;
+        }
+        attempts++;
+      } while (attempts < maxAttempts);
+      return result2;
+    }
+    function isLastFoundItem(range2, lastFoundItem) {
+      if (!lastFoundItem) return false;
+      const currentText = range2.toString();
+      const currentOffset = range2.startOffset;
+      const currentParentElement = range2.startContainer.parentElement || range2.commonAncestorContainer;
+      return currentText === lastFoundItem.text && currentOffset === lastFoundItem.offset && currentParentElement === lastFoundItem.parentElement;
+    }
+    function inUnsearchableElement(range2) {
+      let element = selectionParentElement(range2);
+      let isUnsearchable = false;
+      while (element) {
+        if (element.hasAttribute("data-unsearchable") || getComputedStyle(element).userSelect === "none") {
+          isUnsearchable = true;
+          break;
+        }
+        element = element.parentElement;
+      }
+      return isUnsearchable;
+    }
+    function selectionParentElement(range2) {
+      let element = null;
+      if (range2.startContainer.nodeType === Node.ELEMENT_NODE) {
+        element = range2.startContainer;
+      } else {
+        element = range2.startContainer.parentElement;
+      }
+      if (!element && range2.commonAncestorContainer.nodeType === Node.ELEMENT_NODE) {
+        element = range2.commonAncestorContainer;
+      } else if (!element && range2.commonAncestorContainer.parentElement) {
+        element = range2.commonAncestorContainer.parentElement;
+      }
+      return element;
+    }
     const EmptyPanel = ({ children: children2 }) => {
       return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "empty-panel", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: children2 }) }) });
     };
@@ -113623,7 +113841,7 @@ categories: ${categories.join(" ")}`;
                   index,
                   type,
                   tab: tab2,
-                  className: tabControlsClassName
+                  className: clsx(tabControlsClassName)
                 },
                 tab2.props.id
               )),
@@ -114842,12 +115060,13 @@ categories: ${categories.join(" ")}`;
       showProgress,
       initialTopMostItemIndex,
       offsetTop,
-      components
+      components,
+      searchInItem
     }) => {
-      const { getRestoreState, isScrolling } = useVirtuosoState(
-        listHandle,
-        `live-virtual-list-${id}`
-      );
+      const { getRestoreState, isScrolling, visibleRange, setVisibleRange } = useVirtuosoState(listHandle, `live-virtual-list-${id}`);
+      const { registerVirtualList } = useExtendedFind();
+      const pendingSearchCallback = reactExports.useRef(null);
+      const [isCurrentlyScrolling, setIsCurrentlyScrolling] = reactExports.useState(false);
       const [followOutput, setFollowOutput] = useProperty(
         id,
         "follow",
@@ -114907,6 +115126,44 @@ categories: ${categories.join(" ")}`;
       }, []);
       const [, forceRender] = reactExports.useState({});
       const forceUpdate = reactExports.useCallback(() => forceRender({}), []);
+      const defaultSearchInItem = reactExports.useCallback(
+        (item2, searchTerm) => {
+          const searchLower = searchTerm.toLowerCase();
+          try {
+            const itemString = JSON.stringify(item2).toLowerCase();
+            return itemString.includes(searchLower);
+          } catch {
+            return false;
+          }
+        },
+        []
+      );
+      const searchInData = reactExports.useCallback(
+        async (term, direction, onContentReady) => {
+          if (!data.length || !term) return false;
+          const searchFn = searchInItem || defaultSearchInItem;
+          const currentIndex = direction === "forward" ? visibleRange.endIndex : visibleRange.startIndex;
+          const searchStart = direction === "forward" ? Math.max(0, currentIndex + 1) : Math.min(data.length - 1, currentIndex - 1);
+          const step = direction === "forward" ? 1 : -1;
+          for (let i2 = searchStart; i2 >= 0 && i2 < data.length; i2 += step) {
+            if (searchFn(data[i2], term)) {
+              pendingSearchCallback.current = onContentReady;
+              listHandle.current?.scrollToIndex({
+                index: i2,
+                behavior: "auto",
+                align: "center"
+              });
+              return true;
+            }
+          }
+          return false;
+        },
+        [data, searchInItem, defaultSearchInItem, visibleRange]
+      );
+      reactExports.useEffect(() => {
+        const unregister = registerVirtualList(id, searchInData);
+        return unregister;
+      }, [id, registerVirtualList, searchInData]);
       const Footer = () => {
         return showProgress ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$R.progressContainer), children: /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false, size: "medium" }) }) : void 0;
       };
@@ -114932,6 +115189,22 @@ categories: ${categories.join(" ")}`;
           return () => clearTimeout(timer);
         }
       }, [initialTopMostItemIndex]);
+      reactExports.useEffect(() => {
+        if (!isCurrentlyScrolling && pendingSearchCallback.current) {
+          setTimeout(() => {
+            const callback = pendingSearchCallback.current;
+            pendingSearchCallback.current = null;
+            callback?.();
+          }, 100);
+        }
+      }, [isCurrentlyScrolling]);
+      const handleScrollingChange = reactExports.useCallback(
+        (scrolling) => {
+          setIsCurrentlyScrolling(scrolling);
+          isScrolling(scrolling);
+        },
+        [isScrolling]
+      );
       return /* @__PURE__ */ jsxRuntimeExports.jsx(
         qr,
         {
@@ -114939,12 +115212,15 @@ categories: ${categories.join(" ")}`;
           customScrollParent: scrollRef?.current ? scrollRef.current : void 0,
           style: { height: "100%", width: "100%" },
           data,
-          defaultItemHeight: 250,
+          defaultItemHeight: 500,
           itemContent: renderRow,
           increaseViewportBy: { top: 1e3, bottom: 1e3 },
           overscan: { main: 5, reverse: 5 },
           className: clsx("transcript", className2),
-          isScrolling,
+          isScrolling: handleScrollingChange,
+          rangeChanged: (range2) => {
+            setVisibleRange(range2);
+          },
           restoreStateFrom: getRestoreState(),
           totalListHeightChanged: heightChanged,
           components: {
@@ -115054,20 +115330,23 @@ categories: ${categories.join(" ")}`;
           });
           return index !== -1 ? index : void 0;
         }, [initialMessageId, collapsedMessages]);
-        const renderRow = (index, item2) => {
-          const number2 = collapsedMessages.length > 1 && numbered ? index + 1 : void 0;
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(
-            ChatMessageRow,
-            {
-              parentName: id || "chat-virtual-list",
-              number: number2,
-              resolvedMessage: item2,
-              indented: indented2,
-              toolCallStyle,
-              highlightUserMessage: true
-            }
-          );
-        };
+        const renderRow = reactExports.useCallback(
+          (index, item2) => {
+            const number2 = collapsedMessages.length > 1 && numbered ? index + 1 : void 0;
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(
+              ChatMessageRow,
+              {
+                parentName: id || "chat-virtual-list",
+                number: number2,
+                resolvedMessage: item2,
+                indented: indented2,
+                toolCallStyle,
+                highlightUserMessage: true
+              }
+            );
+          },
+          [id, numbered, indented2, toolCallStyle, collapsedMessages]
+        );
         const Item = ({
           children: children2,
           ...props
@@ -115312,6 +115591,7 @@ categories: ${categories.join(" ")}`;
                     col.center ? styles$N.centerLabel : void 0
                   ),
                   title: col.title,
+                  "data-unsearchable": true,
                   children: col.label
                 },
                 `sample-summ-lbl-${idx}`
@@ -115327,6 +115607,7 @@ categories: ${categories.join(" ")}`;
                     col.clamp ? "three-line-clamp" : void 0,
                     col.center ? styles$N.centerValue : void 0
                   ),
+                  "data-unsearchable": true,
                   children: col.value
                 },
                 `sample-summ-val-${idx}`
@@ -118281,6 +118562,7 @@ categories: ${categories.join(" ")}`;
               selected2 ? styles$J.selected : ""
             ),
             style: { paddingLeft: `${node2.depth * 0.4}em` },
+            "data-unsearchable": true,
             children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "div",
@@ -118728,7 +119010,7 @@ categories: ${categories.join(" ")}`;
             return /* @__PURE__ */ jsxRuntimeExports.jsx(
               "div",
               {
-                className: styles$I.eventPadding,
+                className: clsx(styles$I.eventPadding),
                 style: { height: "2em" }
               },
               node2.id
@@ -153698,7 +153980,6 @@ Supported expressions:
     };
     const LogViewLayout = () => {
       const appStatus = useStore((state) => state.app.status);
-      const nativeFind = useStore((state) => state.capabilities.nativeFind);
       const showFind = useStore((state) => state.app.showFind);
       const setShowFind = useStore((state) => state.appActions.setShowFind);
       const hideFind = useStore((state) => state.appActions.hideFind);
@@ -153706,20 +153987,24 @@ Supported expressions:
       const logs = useStore((state) => state.logs.logs);
       const mainAppRef = reactExports.useRef(null);
       const fullScreen = logs.files.length === 1 && !logs.log_dir;
-      const handleKeyboard = reactExports.useCallback(
-        (e) => {
-          if (nativeFind || !setShowFind) {
-            return;
-          }
+      reactExports.useEffect(() => {
+        const handleGlobalKeyDown = (e) => {
           if ((e.ctrlKey || e.metaKey) && e.key === "f") {
-            setShowFind(true);
+            e.preventDefault();
+            e.stopPropagation();
+            if (setShowFind) {
+              setShowFind(true);
+            }
           } else if (e.key === "Escape") {
             hideFind();
           }
-        },
-        [nativeFind, setShowFind, hideFind]
-      );
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        };
+        document.addEventListener("keydown", handleGlobalKeyDown, true);
+        return () => {
+          document.removeEventListener("keydown", handleGlobalKeyDown, true);
+        };
+      }, [setShowFind, hideFind]);
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(ExtendedFindProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
         {
           ref: mainAppRef,
@@ -153730,9 +154015,8 @@ Supported expressions:
             "log-view"
           ),
           tabIndex: 0,
-          onKeyDown: handleKeyboard,
           children: [
-            !nativeFind && showFind ? /* @__PURE__ */ jsxRuntimeExports.jsx(FindBand, {}) : "",
+            showFind ? /* @__PURE__ */ jsxRuntimeExports.jsx(FindBand, {}) : "",
             !singleFileMode ? /* @__PURE__ */ jsxRuntimeExports.jsx(Navbar, {}) : "",
             /* @__PURE__ */ jsxRuntimeExports.jsx(ProgressBar, { animating: appStatus.loading }),
             appStatus.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(
