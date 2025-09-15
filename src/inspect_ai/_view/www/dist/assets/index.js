@@ -147569,7 +147569,7 @@ ${events}
         let parseEnd = this.stoppedAt == null ? this.to : Math.min(this.to, this.stoppedAt);
         let end2 = Math.min(
           parseEnd,
-          this.chunkStart + 2048
+          this.chunkStart + 512
           /* C.ChunkSize */
         );
         if (context)
@@ -147674,7 +147674,7 @@ ${events}
           length: this.parsedPos - this.chunkStart,
           nodeSet,
           topID: 0,
-          maxBufferLength: 2048,
+          maxBufferLength: 512,
           reused: this.chunkReused
         });
         tree = new Tree(tree.type, tree.children, tree.positions, tree.length, [[this.lang.stateAfter, this.lang.streamParser.copyState(this.state)]]);
