@@ -101932,52 +101932,191 @@ self.onmessage = function (e) {
       document.body.removeChild(link2);
       URL.revokeObjectURL(link2.href);
     }
-    const API_BASE_URL = "/api";
-    const loaded_time = Date.now();
-    let last_eval_time = 0;
-    function buildApiUrl(path) {
-      const base2 = API_BASE_URL.endsWith("/") ? API_BASE_URL.slice(0, -1) : API_BASE_URL;
-      const cleanPath = path.startsWith("/") ? path : `/${path}`;
-      return base2 + cleanPath;
-    }
-    function isApiCrossOrigin() {
-      try {
-        return Boolean(
-          API_BASE_URL && new URL(API_BASE_URL).origin !== window.location.origin
-        );
-      } catch (TypeError2) {
-        return false;
+    const LOADED_TIME = Date.now();
+    let lastEvalTime = 0;
+    function createServerFetchApi(apiBaseUrl, headerProvider) {
+      const apiUrl = apiBaseUrl;
+      function buildApiUrl(path) {
+        const base2 = apiUrl.endsWith("/") ? apiUrl.slice(0, -1) : apiUrl;
+        const cleanPath = path.startsWith("/") ? path : `/${path}`;
+        return base2 + cleanPath;
       }
+      function isApiCrossOrigin() {
+        try {
+          return Boolean(
+            apiUrl && new URL(apiUrl).origin !== window.location.origin
+          );
+        } catch (error2) {
+          return false;
+        }
+      }
+      async function apiRequest(method, path, request) {
+        const url = buildApiUrl(path);
+        const responseHeaders = {
+          Accept: "application/json",
+          Pragma: "no-cache",
+          Expires: "0",
+          "Cache-Control": "no-cache",
+          ...request.headers
+        };
+        if (headerProvider) {
+          const globalHeaders = await headerProvider();
+          Object.assign(responseHeaders, globalHeaders);
+        }
+        if (request.body) {
+          responseHeaders["Content-Type"] = "application/json";
+        }
+        const response = await fetch(url, {
+          method,
+          headers: responseHeaders,
+          body: request.body,
+          credentials: isApiCrossOrigin() ? "include" : "same-origin"
+        });
+        if (!response.ok) {
+          const errorResponse = request.handleError?.(response.status);
+          if (errorResponse) {
+            return {
+              raw: response.statusText,
+              parsed: errorResponse
+            };
+          }
+          const message2 = await response.text() || response.statusText;
+          throw new Error(`API Error ${response.status}: ${message2}`);
+        }
+        const text2 = await response.text();
+        const parse2 = request.parse || asyncJsonParse;
+        return {
+          parsed: await parse2(text2),
+          raw: text2
+        };
+      }
+      async function api2(method, path, headers, body2) {
+        const url = buildApiUrl(path);
+        const requestHeaders = {
+          Accept: "application/json",
+          Pragma: "no-cache",
+          Expires: "0",
+          "Cache-Control": "no-cache",
+          ...headers
+        };
+        if (headerProvider) {
+          const globalHeaders = await headerProvider();
+          Object.assign(requestHeaders, globalHeaders);
+        }
+        if (body2) {
+          requestHeaders["Content-Type"] = "application/json";
+        }
+        const response = await fetch(url, {
+          method,
+          headers: requestHeaders,
+          body: body2,
+          credentials: isApiCrossOrigin() ? "include" : "same-origin"
+        });
+        if (response.ok) {
+          const text2 = await response.text();
+          return {
+            parsed: await asyncJsonParse(text2),
+            raw: text2
+          };
+        }
+        const message2 = await response.text() || response.statusText;
+        throw new Error(`HTTP ${response.status}: ${message2}`);
+      }
+      async function apiBytes(method, path) {
+        const url = buildApiUrl(path);
+        const headers = {
+          Accept: "application/octet-stream",
+          Pragma: "no-cache",
+          Expires: "0",
+          "Cache-Control": "no-cache"
+        };
+        const response = await fetch(url, {
+          method,
+          headers,
+          credentials: isApiCrossOrigin() ? "include" : "same-origin"
+        });
+        if (!response.ok) {
+          const message2 = await response.text() || response.statusText;
+          throw new Error(`HTTP ${response.status}: ${message2}`);
+        }
+        const buffer2 = await response.arrayBuffer();
+        return new Uint8Array(buffer2);
+      }
+      return {
+        fetchString: api2,
+        fetchBytes: apiBytes,
+        fetchType: apiRequest
+      };
     }
-    async function client_events$1() {
+    async function open_log_file$1() {
+    }
+    const clientEvents = (fetchApi) => async () => {
       const params = new URLSearchParams();
-      params.append("loaded_time", String(loaded_time.valueOf()));
-      params.append("last_eval_time", String(last_eval_time.valueOf()));
-      return (await api$2("GET", `/events?${params.toString()}`)).parsed;
-    }
-    async function eval_log$1(file, headerOnly, _capabilities) {
-      return await api$2(
+      params.append("loaded_time", String(LOADED_TIME.valueOf()));
+      params.append("last_eval_time", String(lastEvalTime.valueOf()));
+      const result2 = await fetchApi.fetchString(
+        "GET",
+        `/events?${params.toString()}`
+      );
+      return result2.parsed;
+    };
+    const evalLogs = (fetchApi, logDir) => async () => {
+      const path = logDir ? `/logs?log_dir=${encodeURIComponent(logDir)}` : "/logs";
+      const logs = await fetchApi.fetchString("GET", path);
+      lastEvalTime = Date.now();
+      return logs.parsed;
+    };
+    const evalLog = (fetchApi) => async (file, headerOnly, _capabilities) => {
+      const result2 = await fetchApi.fetchString(
         "GET",
         `/logs/${encodeURIComponent(file)}?header-only=${headerOnly}`
       );
-    }
-    async function eval_log_size$1(file) {
-      return (await api$2("GET", `/log-size/${encodeURIComponent(file)}`)).parsed;
-    }
-    async function eval_log_bytes$1(file, start2, end2) {
-      return await api_bytes(
+      return result2;
+    };
+    const evalLogSize = (fetchApi) => async (file) => {
+      const result2 = await fetchApi.fetchString(
         "GET",
-        `/log-bytes/${encodeURIComponent(file)}?start=${start2}&end=${end2}`
+        `/log-size/${encodeURIComponent(file)}`
       );
-    }
-    async function eval_log_headers(files) {
+      return result2.parsed;
+    };
+    const evalLogBytes = (fetchApi) => async (file, start2, end2) => fetchApi.fetchBytes(
+      "GET",
+      `/log-bytes/${encodeURIComponent(file)}?start=${start2}&end=${end2}`
+    );
+    const evalLogOverviews = (fetchApi) => async (files) => {
       const params = new URLSearchParams();
       for (const file of files) {
         params.append("file", file);
       }
-      return (await api$2("GET", `/log-headers?${params.toString()}`)).parsed;
-    }
-    async function eval_pending_samples$1(log_file, etag) {
+      const result2 = await fetchApi.fetchString(
+        "GET",
+        `/log-headers?${params.toString()}`
+      );
+      return result2.parsed;
+    };
+    const logMessage = (fetchApi) => async (log_file, message2) => {
+      const params = new URLSearchParams();
+      params.append("log_file", log_file);
+      params.append("message", message2);
+      const request = {
+        headers: {
+          "Content-Type": "text/plain"
+        },
+        parse: async (text2) => {
+          if (text2 !== "") {
+            throw new Error(`Unexpected response from log_message: ${text2}`);
+          }
+          return;
+        }
+      };
+      await fetchApi.fetchType(
+        "GET",
+        `/log-message?${params.toString()}`,
+        request
+      );
+    };
+    const evalPendingSamples = (fetchApi) => async (log_file, etag) => {
       const params = new URLSearchParams();
       params.append("log", log_file);
       const headers = {};
@@ -102005,14 +102144,14 @@ self.onmessage = function (e) {
           }
         }
       };
-      const result2 = (await apiRequest(
+      const result2 = await fetchApi.fetchType(
         "GET",
         `/pending-samples?${params.toString()}`,
         request
-      )).parsed;
-      return result2;
-    }
-    async function eval_log_sample_data$1(log_file, id, epoch, last_event, last_attachment) {
+      );
+      return result2.parsed;
+    };
+    const evalLogSampleData = (fetchApi) => async (log_file, id, epoch, last_event, last_attachment) => {
       const params = new URLSearchParams();
       params.append("log", log_file);
       params.append("id", String(id));
@@ -102026,10 +102165,10 @@ self.onmessage = function (e) {
       const request = {
         headers: {},
         parse: async (text2) => {
-          const pendingSamples = await asyncJsonParse(text2);
+          const sampleData = await asyncJsonParse(text2);
           return {
             status: "OK",
-            sampleData: pendingSamples
+            sampleData
           };
         },
         handleError: (status2) => {
@@ -102044,144 +102183,32 @@ self.onmessage = function (e) {
           }
         }
       };
-      const result2 = (await apiRequest(
+      const result2 = await fetchApi.fetchType(
         "GET",
         `/pending-sample-data?${params.toString()}`,
         request
-      )).parsed;
-      return result2;
-    }
-    async function log_message$1(log_file, message2) {
-      const params = new URLSearchParams();
-      params.append("log_file", log_file);
-      params.append("message", message2);
-      const request = {
-        headers: {
-          "Content-Type": "text/plain"
-        },
-        parse: async (text2) => {
-          if (text2 !== "") {
-            throw new Error(`Unexpected response from log_message: ${text2}`);
-          }
-          return;
-        }
-      };
-      await apiRequest("GET", `/log-message?${params.toString()}`, request);
-    }
-    async function apiRequest(method, path, request) {
-      const url = buildApiUrl(path);
-      const responseHeaders = {
-        Accept: "application/json",
-        Pragma: "no-cache",
-        Expires: "0",
-        ["Cache-Control"]: "no-cache",
-        ...request.headers
-      };
-      if (request.body) {
-        responseHeaders["Content-Type"] = "application/json";
-      }
-      const response = await fetch(url, {
-        method,
-        headers: responseHeaders,
-        body: request.body,
-        credentials: isApiCrossOrigin() ? "include" : "same-origin"
-      });
-      if (response.ok) {
-        const text2 = await response.text();
-        const parse2 = request.parse || asyncJsonParse;
-        return {
-          parsed: await parse2(text2),
-          raw: text2
-        };
-      } else if (response.status !== 200) {
-        const errorResponse = request.handleError ? request.handleError(response.status) : void 0;
-        if (errorResponse) {
-          return {
-            raw: response.statusText,
-            parsed: errorResponse
-          };
-        }
-        const message2 = await response.text() || response.statusText;
-        const error2 = new Error(`Error: ${response.status}: ${message2})`);
-        throw error2;
-      } else {
-        throw new Error(`${response.status} - ${response.statusText} `);
-      }
-    }
-    async function api$2(method, path, headers, body2) {
-      const url = buildApiUrl(path);
-      const responseHeaders = {
-        Accept: "application/json",
-        Pragma: "no-cache",
-        Expires: "0",
-        ["Cache-Control"]: "no-cache",
-        ...headers
-      };
-      const response = await fetch(url, {
-        method,
-        headers: responseHeaders,
-        body: body2,
-        credentials: isApiCrossOrigin() ? "include" : "same-origin"
-      });
-      if (response.ok) {
-        const text2 = await response.text();
-        return {
-          parsed: await asyncJsonParse(text2),
-          raw: text2
-        };
-      } else if (response.status !== 200) {
-        const message2 = await response.text() || response.statusText;
-        const error2 = new Error(`${message2}`);
-        throw error2;
-      } else {
-        throw new Error(`${response.status} - ${response.statusText} `);
-      }
-    }
-    async function api_bytes(method, path) {
-      const url = buildApiUrl(path);
-      const headers = {
-        Accept: "application/octet-stream",
-        Pragma: "no-cache",
-        Expires: "0",
-        ["Cache-Control"]: "no-cache"
-      };
-      const response = await fetch(url, {
-        method,
-        headers,
-        credentials: isApiCrossOrigin() ? "include" : "same-origin"
-      });
-      if (response.ok) {
-        const buffer2 = await response.arrayBuffer();
-        return new Uint8Array(buffer2);
-      } else if (response.status !== 200) {
-        const message2 = await response.text() || response.statusText;
-        const error2 = new Error(`Error: ${response.status}: ${message2})`);
-        throw error2;
-      } else {
-        throw new Error(`${response.status} - ${response.statusText} `);
-      }
-    }
-    async function open_log_file$1() {
-    }
+      );
+      return result2.parsed;
+    };
     function createViewServerApi(options2 = {}) {
-      const { log_dir } = options2;
+      const { headerProvider } = options2;
+      const logDir = options2.logDir;
+      const fetchApi = createServerFetchApi(
+        options2.apiBaseUrl || "/api",
+        headerProvider
+      );
       return {
-        client_events: client_events$1,
-        eval_logs: async () => {
-          const path = log_dir ? `/logs?log_dir=${encodeURIComponent(log_dir)}` : "/logs";
-          const logs = await api$2("GET", path);
-          last_eval_time = Date.now();
-          return logs.parsed;
-        },
-        eval_log: eval_log$1,
-        eval_log_size: eval_log_size$1,
-        eval_log_bytes: eval_log_bytes$1,
-        eval_log_overviews: eval_log_headers,
-        log_message: log_message$1,
+        client_events: clientEvents(fetchApi),
+        eval_logs: evalLogs(fetchApi, logDir),
+        eval_log: evalLog(fetchApi),
+        eval_log_size: evalLogSize(fetchApi),
+        eval_log_bytes: evalLogBytes(fetchApi),
+        eval_log_overviews: evalLogOverviews(fetchApi),
+        log_message: logMessage(fetchApi),
         download_file: download_file$1,
         open_log_file: open_log_file$1,
-        eval_pending_samples: eval_pending_samples$1,
-        eval_log_sample_data: eval_log_sample_data$1
+        eval_pending_samples: evalPendingSamples(fetchApi),
+        eval_log_sample_data: evalLogSampleData(fetchApi)
       };
     }
     var ch2 = {};
@@ -103540,7 +103567,7 @@ self.onmessage = function (e) {
          * Reads the complete log file.
          */
         readCompleteLog: async () => {
-          const [evalLog, samples] = await Promise.all([
+          const [evalLog2, samples] = await Promise.all([
             readHeader(),
             listSamples().then(
               (sampleIds) => Promise.all(
@@ -103553,12 +103580,12 @@ self.onmessage = function (e) {
             )
           ]);
           return {
-            status: evalLog.status,
-            eval: evalLog.eval,
-            plan: evalLog.plan,
-            results: evalLog.results,
-            stats: evalLog.stats,
-            error: evalLog.error,
+            status: evalLog2.status,
+            eval: evalLog2.eval,
+            plan: evalLog2.plan,
+            results: evalLog2.results,
+            stats: evalLog2.stats,
+            error: evalLog2.error,
             samples
           };
         }
@@ -103826,7 +103853,7 @@ self.onmessage = function (e) {
         const resolved_log_file = log_file ?? void 0;
         if (forceViewServerApi) {
           return clientApi(
-            createViewServerApi({ log_dir: resolved_log_dir }),
+            createViewServerApi({ logDir: resolved_log_dir }),
             resolved_log_file
           );
         }
@@ -109481,7 +109508,7 @@ categories: ${categories.join(" ")}`;
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "nav",
         {
-          className: clsx("text-size-smaller", styles$1j.header),
+          className: clsx("text-size-smaller", "header-nav", styles$1j.header),
           "aria-label": "breadcrumb",
           "data-unsearchable": true,
           children: [
