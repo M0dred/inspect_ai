@@ -105038,10 +105038,10 @@ ${citation.url}` : citation.url,
         );
       }
     };
-    const resolveMessages = (messages) => {
+    const resolveMessages = (messages2) => {
       const resolvedMessages = [];
       let index = 0;
-      for (const message2 of messages) {
+      for (const message2 of messages2) {
         if (message2.role === "tool") {
           if (resolvedMessages.length > 0) {
             const msg = resolvedMessages[resolvedMessages.length - 1];
@@ -105096,35 +105096,35 @@ ${citation.url}` : citation.url,
       }
     };
     const messagesFromEvents = (runningEvents) => {
-      const messages = /* @__PURE__ */ new Map();
+      const messages2 = /* @__PURE__ */ new Map();
       runningEvents.filter((e) => e.event === "model").forEach((e) => {
         for (const m of e.input) {
           const inputMessage = m;
-          if (inputMessage.id && !messages.has(inputMessage.id)) {
-            messages.set(inputMessage.id, inputMessage);
+          if (inputMessage.id && !messages2.has(inputMessage.id)) {
+            messages2.set(inputMessage.id, inputMessage);
           }
         }
         const outputMessage = e.output.choices[0].message;
         if (outputMessage.id) {
-          messages.set(outputMessage.id, outputMessage);
+          messages2.set(outputMessage.id, outputMessage);
         }
       });
-      if (messages.size > 0) {
-        return messages.values().toArray();
+      if (messages2.size > 0) {
+        return messages2.values().toArray();
       } else {
         return [];
       }
     };
     const ChatView = ({
       id,
-      messages,
+      messages: messages2,
       toolCallStyle = "complete",
       resolveToolCallsIntoPreviousMessage = true,
       indented: indented2,
       numbered = true,
       className: className2
     }) => {
-      const collapsedMessages = resolveToolCallsIntoPreviousMessage ? resolveMessages(messages) : messages.map((msg) => {
+      const collapsedMessages = resolveToolCallsIntoPreviousMessage ? resolveMessages(messages2) : messages2.map((msg) => {
         return {
           message: msg,
           toolMessages: []
@@ -105161,9 +105161,9 @@ ${citation.url}` : citation.url,
         };
       }
     };
-    const ChatSummary = ({ id, messages }) => {
+    const ChatSummary = ({ id, messages: messages2 }) => {
       const summaryMessages = [];
-      for (const message2 of messages.slice().reverse()) {
+      for (const message2 of messages2.slice().reverse()) {
         summaryMessages.unshift(message2);
         if (message2.role === "user") {
           break;
@@ -115264,7 +115264,7 @@ categories: ${categories.join(" ")}`;
     const ChatViewVirtualList = reactExports.memo(
       ({
         id,
-        messages,
+        messages: messages2,
         initialMessageId,
         topOffset,
         className: className2,
@@ -115283,12 +115283,12 @@ categories: ${categories.join(" ")}`;
                 event.preventDefault();
               } else if (event.key === "ArrowDown") {
                 listHandle.current?.scrollToIndex({
-                  index: Math.min(messages.length - 5, 0),
+                  index: Math.min(messages2.length - 5, 0),
                   align: "center"
                 });
                 setTimeout(() => {
                   listHandle.current?.scrollToIndex({
-                    index: messages.length - 1,
+                    index: messages2.length - 1,
                     align: "end"
                   });
                 }, 250);
@@ -115306,7 +115306,7 @@ categories: ${categories.join(" ")}`;
               scrollElement.removeEventListener("keydown", handleKeyDown);
             };
           }
-        }, [scrollRef, messages]);
+        }, [scrollRef, messages2]);
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           ChatViewVirtualListComponent,
           {
@@ -115314,7 +115314,7 @@ categories: ${categories.join(" ")}`;
             listHandle,
             className: className2,
             scrollRef,
-            messages,
+            messages: messages2,
             initialMessageId,
             topOffset,
             toolCallStyle,
@@ -115329,7 +115329,7 @@ categories: ${categories.join(" ")}`;
       ({
         id,
         listHandle,
-        messages,
+        messages: messages2,
         initialMessageId,
         topOffset,
         className: className2,
@@ -115340,8 +115340,8 @@ categories: ${categories.join(" ")}`;
         running
       }) => {
         const collapsedMessages = reactExports.useMemo(() => {
-          return resolveMessages(messages);
-        }, [messages]);
+          return resolveMessages(messages2);
+        }, [messages2]);
         const initialMessageIndex = reactExports.useMemo(() => {
           if (initialMessageId === null || initialMessageId === void 0) {
             return void 0;
@@ -127298,8 +127298,8 @@ ${events}
         add: ["/messages/1"]
       },
       render: (_changes, resolvedState) => {
-        const messages = resolvedState["messages"];
-        const message2 = messages[0];
+        const messages2 = resolvedState["messages"];
+        const message2 = messages2[0];
         if (typeof message2 !== "object" || !message2) {
           return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, {});
         }
@@ -127334,6 +127334,29 @@ ${events}
       },
       render: (changes, resolvedState) => {
         return renderTools(changes, resolvedState);
+      }
+    };
+    const messages = {
+      type: "messages",
+      match: (changes) => {
+        const allMessages = changes.every((change) => {
+          if (change.op === "add" && change.path.match(/\/messages\/\d+/)) {
+            return typeof change.value["role"] === "string" && ["user", "assistant", "system", "tool"].includes(change.value["role"]);
+          }
+          return false;
+        });
+        return allMessages;
+      },
+      render: (changes) => {
+        const messages2 = changes.map((c2) => c2.value);
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          ChatView,
+          {
+            id: "system_msg_event_preview",
+            messages: messages2
+          },
+          "system_msg_event_preview"
+        );
       }
     };
     const humanAgentKey = (key2) => {
@@ -127476,7 +127499,8 @@ ${events}
       createMessageRenderer("assistant_msg", "assistant"),
       createMessageRenderer("user_msg", "user"),
       use_tools,
-      add_tools
+      add_tools,
+      messages
     ];
     const StoreSpecificRenderableTypes = [
       human_baseline_session
