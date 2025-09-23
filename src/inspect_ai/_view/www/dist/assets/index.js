@@ -103317,8 +103317,15 @@ self.onmessage = function (e) {
           return void 0;
         },
         eval_set: async (dir) => {
+          const dirSegments = [];
+          if (log_dir) {
+            dirSegments.push(log_dir);
+          }
+          if (dir) {
+            dirSegments.push(dir);
+          }
           return await fetchJsonFile(
-            joinURI(log_dir || "", dir || "", "eval-set.json")
+            joinURI(...dirSegments, "eval-set.json")
           );
         },
         log_message: async (log_file, message2) => {
@@ -113004,7 +113011,7 @@ categories: ${categories.join(" ")}`;
         sortingRef.current = sorting;
       }, [sorting]);
       reactExports.useEffect(() => {
-        setSorting([{ id: "icon", desc: true }]);
+        setSorting([{ id: "icon", desc: false }]);
       }, []);
       reactExports.useEffect(() => {
         const currentSort = sortingRef.current?.find(
@@ -113471,6 +113478,7 @@ categories: ${categories.join(" ")}`;
       const headersLoading = useStore((state) => state.logs.logOverviewsLoading);
       const watchedLogs = useStore((state) => state.logs.listing.watchedLogs);
       const navigate = useNavigate();
+      const { setPage } = usePagination(kLogsPaginationId, kDefaultPageSize);
       const filterRef = reactExports.useRef(null);
       const rootRef = reactExports.useRef(null);
       const { unloadLog } = useUnloadLog();
@@ -113573,6 +113581,9 @@ categories: ${categories.join(" ")}`;
         };
         exec2();
       }, [loadLogs, logPath]);
+      reactExports.useEffect(() => {
+        setPage(0);
+      }, [currentDir]);
       reactExports.useEffect(() => {
         if (maybeShowSingleLog && logItems.length === 1) {
           const onlyItem = logItems[0];
