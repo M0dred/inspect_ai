@@ -21646,7 +21646,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     var NOTHING = Symbol.for("immer-nothing");
     var DRAFTABLE = Symbol.for("immer-draftable");
     var DRAFT_STATE = Symbol.for("immer-state");
-    function die$2(error2, ...args2) {
+    function die$1(error2, ...args2) {
       throw new Error(
         `[Immer] minified error nr: ${error2}. Full error at: https://bit.ly/3cXEKWf`
       );
@@ -21766,7 +21766,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return obj;
     }
     function dontMutateFrozenCollections() {
-      die$2(2);
+      die$1(2);
     }
     function isFrozen(obj) {
       return Object.isFrozen(obj);
@@ -21775,7 +21775,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     function getPlugin(pluginKey) {
       const plugin = plugins[pluginKey];
       if (!plugin) {
-        die$2(0, pluginKey);
+        die$1(0, pluginKey);
       }
       return plugin;
     }
@@ -21833,7 +21833,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       if (isReplaced) {
         if (baseDraft[DRAFT_STATE].modified_) {
           revokeScope(scope);
-          die$2(4);
+          die$1(4);
         }
         if (isDraftable(result2)) {
           result2 = finalize(scope, result2);
@@ -22043,13 +22043,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         };
       },
       defineProperty() {
-        die$2(11);
+        die$1(11);
       },
       getPrototypeOf(state) {
         return getPrototypeOf(state.base_);
       },
       setPrototypeOf() {
-        die$2(12);
+        die$1(12);
       }
     };
     var arrayTraps = {};
@@ -22120,9 +22120,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             };
           }
           if (typeof recipe !== "function")
-            die$2(6);
+            die$1(6);
           if (patchListener !== void 0 && typeof patchListener !== "function")
-            die$2(7);
+            die$1(7);
           let result2;
           if (isDraftable(base2)) {
             const scope = enterScope(this);
@@ -22155,7 +22155,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             }
             return result2;
           } else
-            die$2(1, base2);
+            die$1(1, base2);
         };
         this.produceWithPatches = (base2, recipe) => {
           if (typeof base2 === "function") {
@@ -22175,7 +22175,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
       createDraft(base2) {
         if (!isDraftable(base2))
-          die$2(8);
+          die$1(8);
         if (isDraft(base2))
           base2 = current(base2);
         const scope = enterScope(this);
@@ -22187,7 +22187,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       finishDraft(draft, patchListener) {
         const state = draft && draft[DRAFT_STATE];
         if (!state || !state.isManual_)
-          die$2(9);
+          die$1(9);
         const { scope_: scope } = state;
         usePatchesInScope(scope, patchListener);
         return processResult(void 0, scope);
@@ -22238,7 +22238,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     function current(value2) {
       if (!isDraft(value2))
-        die$2(10, value2);
+        die$1(10, value2);
       return currentImpl(value2);
     }
     function currentImpl(value2) {
@@ -22506,7 +22506,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
       function assertUnrevoked(state) {
         if (state.revoked_)
-          die$2(3, JSON.stringify(latest(state)));
+          die$1(3, JSON.stringify(latest(state)));
       }
       loadPlugin("MapSet", { proxyMap_, proxySet_ });
     }
@@ -27024,7 +27024,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     function fo(t2) {
       t2();
     }
-    function ne$2(t2, e) {
+    function ne$1(t2, e) {
       return (n) => t2(e(n));
     }
     function an(t2, e) {
@@ -27096,7 +27096,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       };
     }
     function E(t2) {
-      return (e) => ne$2(e, t2);
+      return (e) => ne$1(e, t2);
     }
     function Rt(t2) {
       return (e) => () => {
@@ -27487,12 +27487,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           return o;
         {
           const [s, i2] = Vn(o);
-          return ge$2(st(t2, { k: s, l: zn(o), v: i2 }));
+          return ge$1(st(t2, { k: s, l: zn(o), v: i2 }));
         }
-      } else return e < n ? ge$2(st(t2, { l: ze(o, e) })) : ge$2(st(t2, { r: ze(r2, e) }));
+      } else return e < n ? ge$1(st(t2, { l: ze(o, e) })) : ge$1(st(t2, { r: ze(r2, e) }));
     }
-    function Gt$2(t2) {
-      return j(t2) ? [] : [...Gt$2(t2.l), { k: t2.k, v: t2.v }, ...Gt$2(t2.r)];
+    function Gt$1(t2) {
+      return j(t2) ? [] : [...Gt$1(t2.l), { k: t2.k, v: t2.v }, ...Gt$1(t2.r)];
     }
     function Ve(t2, e, n) {
       if (j(t2))
@@ -27501,7 +27501,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       let l = [];
       return o > e && (l = l.concat(Ve(r2, e, n))), o >= e && o <= n && l.push({ k: o, v: i2 }), o <= n && (l = l.concat(Ve(s, e, n))), l;
     }
-    function ge$2(t2) {
+    function ge$1(t2) {
       const { l: e, lvl: n, r: o } = t2;
       if (o.lvl >= n - 1 && e.lvl >= n - 1)
         return t2;
@@ -27545,7 +27545,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       );
     }
     function zn(t2) {
-      return j(t2.r) ? t2.l : ge$2(st(t2, { r: zn(t2.r) }));
+      return j(t2.r) ? t2.l : ge$1(st(t2, { r: zn(t2.r) }));
     }
     function Ee(t2) {
       return j(t2) || t2.lvl > t2.r.lvl;
@@ -27609,7 +27609,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     function vt$1(t2, e) {
       return Math.round(t2.getBoundingClientRect()[e]);
     }
-    function Re$2(t2) {
+    function Re$1(t2) {
       return !j(t2.groupOffsetTree);
     }
     function $e({ index: t2 }, e) {
@@ -27657,7 +27657,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return l > 0 ? l + n : l;
     }
     function Gn(t2, e) {
-      if (!Re$2(e))
+      if (!Re$1(e))
         return t2;
       let n = 0;
       for (; e.groupIndices[n] <= t2 + n; )
@@ -27699,7 +27699,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       };
     }
     function Fo(t2) {
-      return Gt$2(t2).map(({ k: e, v: n }, o, r2) => {
+      return Gt$1(t2).map(({ k: e, v: n }, o, r2) => {
         const s = r2[o + 1];
         return { endIndex: s ? s.k - 1 : 1 / 0, size: n, startIndex: e };
       });
@@ -27866,7 +27866,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                     startIndex: F + 1
                   }), _++, z += Y + 1;
                 }
-                const J = Gt$2(d.sizeTree);
+                const J = Gt$1(d.sizeTree);
                 return z !== f && J.shift(), J.reduce(
                   (F, { k: Y, v: it2 }) => {
                     let dt = F.ranges;
@@ -27890,7 +27890,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                   }
                 ).ranges;
               }
-              return Gt$2(d.sizeTree).reduce(
+              return Gt$1(d.sizeTree).reduce(
                 (L, { k: z, v: _ }) => ({
                   prevIndex: z + f,
                   prevSize: _,
@@ -27932,7 +27932,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                   const F = L[_ + 1] - J - 1;
                   _++, z += F + 1;
                 }
-                if (k = Gt$2(d.sizeTree).reduce((F, { k: Y, v: it2 }) => pt(F, Math.max(0, Y + f), it2), k), z !== -f) {
+                if (k = Gt$1(d.sizeTree).reduce((F, { k: Y, v: it2 }) => pt(F, Math.max(0, Y + f), it2), k), z !== -f) {
                   const F = re(d.sizeTree, J);
                   k = pt(k, 0, F);
                   const Y = wt(d.sizeTree, -f + 1)[1];
@@ -27944,7 +27944,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                   ...Ae(d.offsetTree, 0, k, y)
                 };
               } else {
-                const k = Gt$2(d.sizeTree).reduce((L, { k: z, v: _ }) => pt(L, Math.max(0, z + f), _), jt());
+                const k = Gt$1(d.sizeTree).reduce((L, { k: z, v: _ }) => pt(L, Math.max(0, z + f), _), jt());
                 return {
                   ...d,
                   sizeTree: k,
@@ -28006,7 +28006,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         ), O(
           x$1(
             rt(r2, e, o),
-            A(([c2, a]) => Re$2(a)),
+            A(([c2, a]) => Re$1(a)),
             E(([c2, a, m]) => wt(a.groupOffsetTree, Math.max(c2 - m, 0), "v")[0]),
             Z$1(),
             E((c2) => [c2])
@@ -28164,7 +28164,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     function $n(t2, e) {
       return Math.abs(t2 - e) < 1.01;
     }
-    const le$2 = "up", te = "down", Mo = "none", Wo = {
+    const le$1 = "up", te = "down", Mo = "none", Wo = {
       atBottom: false,
       notAtBottomBecause: "NOT_SHOWING_LAST_ITEM",
       state: {
@@ -28267,7 +28267,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           E(({ scrollTop: u }) => u),
           Z$1(),
           bt(
-            (u, T) => ot(I) ? { direction: u.direction, prevScrollTop: T } : { direction: T < u.prevScrollTop ? le$2 : te, prevScrollTop: T },
+            (u, T) => ot(I) ? { direction: u.direction, prevScrollTop: T } : { direction: T < u.prevScrollTop ? le$1 : te, prevScrollTop: T },
             { direction: te, prevScrollTop: 0 }
           ),
           E((u) => u.direction)
@@ -28307,7 +28307,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       };
     }, X(at)), xe = "top", Te = "bottom", hn = "none";
     function gn(t2, e, n) {
-      return typeof t2 == "number" ? n === le$2 && e === xe || n === te && e === Te ? t2 : 0 : n === le$2 ? e === xe ? t2.main : t2.reverse : e === Te ? t2.main : t2.reverse;
+      return typeof t2 == "number" ? n === le$1 && e === xe || n === te && e === Te ? t2 : 0 : n === le$1 ? e === xe ? t2.main : t2.reverse : e === Te ? t2.main : t2.reverse;
     }
     function In(t2, e) {
       var n;
@@ -28343,7 +28343,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 const b = m - u, f = h + p, d = Math.max(g - b, 0);
                 let y = hn;
                 const B = In(T, xe), k = In(T, Te);
-                return I -= u, I += g + p, w += g + p, w -= u, I > m + f - B && (y = le$2), w < m - d + S + k && (y = te), y !== hn ? [
+                return I -= u, I += g + p, w += g + p, w -= u, I > m + f - B && (y = le$1), w < m - d + S + k && (y = te), y !== hn ? [
                   Math.max(b - g - gn(v, xe, y) - B, 0),
                   b - d - p + S + gn(v, Te, y) + k
                 ] : null;
@@ -28368,7 +28368,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       { singleton: true }
     );
     function _o(t2, e, n) {
-      if (Re$2(e)) {
+      if (Re$1(e)) {
         const o = Gn(t2, e);
         return [
           { index: wt(e.groupOffsetTree, o)[0], offset: 0, size: 0 },
@@ -28428,7 +28428,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     function Sn(t2, e, n) {
       if (t2.length === 0)
         return [];
-      if (!Re$2(e))
+      if (!Re$1(e))
         return t2.map((a) => ({ ...a, index: a.index + n, originalIndex: a.index }));
       const o = t2[0].index, r2 = t2[t2.length - 1].index, s = [], i2 = ye(e.groupOffsetTree, o, r2);
       let l, c2 = 0;
@@ -28991,7 +28991,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             ),
             A(([p]) => p !== 0),
             N(o, l, n, r2, I, w),
-            A(([, p, u, T, , , b]) => !b && !T && p !== 0 && u === le$2),
+            A(([, p, u, T, , , b]) => !b && !T && p !== 0 && u === le$1),
             E(([[p], , , , , u]) => (u("Upward scrolling compensation", { amount: p }, mt.DEBUG), p))
           )
         );
@@ -29343,11 +29343,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         ScrollSeekPlaceholder: i2("ScrollSeekPlaceholder"),
         TopItemListComponent: i2("TopItemList")
       };
-    }), or$2 = /* @__PURE__ */ U(
+    }), or$1 = /* @__PURE__ */ U(
       ([t2, e]) => ({ ...t2, ...e }),
       X(Xn, nr)
     ), rr = ({ height: t2 }) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { height: t2 } }), sr = { overflowAnchor: "none", position: Ze(), zIndex: 1 }, eo = { overflowAnchor: "none" }, ir = { ...eo, display: "inline-block", height: "100%" }, Cn = /* @__PURE__ */ H.memo(function({ showTopList: e = false }) {
-      const n = M("listState"), o = gt$6("sizeRanges"), r2 = M("useWindowScroll"), s = M("customScrollParent"), i2 = gt$6("windowScrollContainerState"), l = gt$6("scrollContainerState"), c2 = s || r2 ? i2 : l, a = M("itemContent"), m = M("context"), S = M("groupContent"), g = M("trackItemSizes"), I = M("itemSize"), w = M("log"), v = gt$6("gap"), h = M("horizontalDirection"), { callbackRef: p } = On(
+      const n = M("listState"), o = gt$3("sizeRanges"), r2 = M("useWindowScroll"), s = M("customScrollParent"), i2 = gt$3("windowScrollContainerState"), l = gt$3("scrollContainerState"), c2 = s || r2 ? i2 : l, a = M("itemContent"), m = M("context"), S = M("groupContent"), g = M("trackItemSizes"), I = M("itemSize"), w = M("log"), v = gt$3("gap"), h = M("horizontalDirection"), { callbackRef: p } = On(
         o,
         I,
         g,
@@ -29454,7 +29454,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return { item: typeof t2 == "string" ? void 0 : e };
     }
     const ar = /* @__PURE__ */ H.memo(function() {
-      const e = M("HeaderComponent"), n = gt$6("headerHeight"), o = M("HeaderFooterTag"), r2 = Ht(
+      const e = M("HeaderComponent"), n = gt$3("headerHeight"), o = M("HeaderFooterTag"), r2 = Ht(
         H.useMemo(
           () => (i2) => {
             n(vt$1(i2, "height"));
@@ -29466,7 +29466,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       ), s = M("context");
       return e ? /* @__PURE__ */ jsxRuntimeExports.jsx(o, { ref: r2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(e, { ...q(e, s) }) }) : null;
     }), dr = /* @__PURE__ */ H.memo(function() {
-      const e = M("FooterComponent"), n = gt$6("footerHeight"), o = M("HeaderFooterTag"), r2 = Ht(
+      const e = M("FooterComponent"), n = gt$3("footerHeight"), o = M("HeaderFooterTag"), r2 = Ht(
         H.useMemo(
           () => (i2) => {
             n(vt$1(i2, "height"));
@@ -29531,15 +29531,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       });
     }
     const fr = ({ children: t2 }) => {
-      const e = H.useContext(be), n = gt$6("viewportHeight"), o = gt$6("fixedItemHeight"), r2 = M("alignToBottom"), s = M("horizontalDirection"), i2 = H.useMemo(
-        () => ne$2(n, (c2) => vt$1(c2, s ? "width" : "height")),
+      const e = H.useContext(be), n = gt$3("viewportHeight"), o = gt$3("fixedItemHeight"), r2 = M("alignToBottom"), s = M("horizontalDirection"), i2 = H.useMemo(
+        () => ne$1(n, (c2) => vt$1(c2, s ? "width" : "height")),
         [n, s]
       ), l = Ht(i2, true, M("skipAnimationFrameInResizeObserver"));
       return H.useEffect(() => {
         e && (n(e.viewportHeight), o(e.itemHeight));
       }, [e, n, o]), /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-viewport-type": "element", ref: l, style: Zt(r2), children: t2 });
     }, mr = ({ children: t2 }) => {
-      const e = H.useContext(be), n = gt$6("windowViewportRect"), o = gt$6("fixedItemHeight"), r2 = M("customScrollParent"), s = Ne(
+      const e = H.useContext(be), n = gt$3("windowViewportRect"), o = gt$3("fixedItemHeight"), r2 = M("customScrollParent"), s = Ne(
         n,
         r2,
         M("skipAnimationFrameInResizeObserver")
@@ -29547,13 +29547,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return H.useEffect(() => {
         e && (o(e.itemHeight), n({ offsetTop: 0, visibleHeight: e.viewportHeight, visibleWidth: 100 }));
       }, [e, n, o]), /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-viewport-type": "window", ref: s, style: Zt(i2), children: t2 });
-    }, pr$2 = ({ children: t2 }) => {
+    }, pr$1 = ({ children: t2 }) => {
       const e = M("TopItemListComponent") || "div", n = M("headerHeight"), o = { ...ur, marginTop: `${n}px` }, r2 = M("context");
       return /* @__PURE__ */ jsxRuntimeExports.jsx(e, { style: o, ...q(e, r2), children: t2 });
     }, hr$1 = /* @__PURE__ */ H.memo(function(e) {
       const n = M("useWindowScroll"), o = M("topItemsIndexes").length > 0, r2 = M("customScrollParent"), s = M("context"), i2 = r2 || n ? Ir : gr, l = r2 || n ? mr : fr;
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(i2, { ...e, ...q(i2, s), children: [
-        o && /* @__PURE__ */ jsxRuntimeExports.jsx(pr$2, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Cn, { showTopList: true }) }),
+        o && /* @__PURE__ */ jsxRuntimeExports.jsx(pr$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Cn, { showTopList: true }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs(l, { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(ar, {}),
           /* @__PURE__ */ jsxRuntimeExports.jsx(Cn, {}),
@@ -29564,9 +29564,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       Component: oo,
       useEmitter: tn,
       useEmitterValue: M,
-      usePublisher: gt$6
+      usePublisher: gt$3
     } = /* @__PURE__ */ Ye(
-      or$2,
+      or$1,
       {
         required: {},
         optional: {
@@ -29624,7 +29624,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
       },
       hr$1
-    ), gr = /* @__PURE__ */ Je({ useEmitter: tn, useEmitterValue: M, usePublisher: gt$6 }), Ir = /* @__PURE__ */ Qe({ useEmitter: tn, useEmitterValue: M, usePublisher: gt$6 }), qr = oo, Sr = /* @__PURE__ */ U(() => {
+    ), gr = /* @__PURE__ */ Je({ useEmitter: tn, useEmitterValue: M, usePublisher: gt$3 }), Ir = /* @__PURE__ */ Qe({ useEmitter: tn, useEmitterValue: M, usePublisher: gt$3 }), qr = oo, Sr = /* @__PURE__ */ U(() => {
       const t2 = C$1((a) => /* @__PURE__ */ jsxRuntimeExports.jsxs("td", { children: [
         "Item $",
         a
@@ -29681,7 +29681,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       offsetBottom: 0,
       offsetTop: 0,
       top: 0
-    }, { ceil: Rn, floor: Ce, max: ee$2, min: Oe, round: bn } = Math;
+    }, { ceil: Rn, floor: Ce, max: ee$1, min: Oe, round: bn } = Math;
     function Hn(t2, e, n) {
       return Array.from({ length: e - t2 + 1 }).map((o, r2) => ({ data: n === null ? null : n[r2 + t2], index: r2 + t2 }));
     }
@@ -29697,7 +29697,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     function Fr(t2, e) {
       return t2 && t2.column === e.column && t2.row === e.row;
     }
-    const Or$2 = /* @__PURE__ */ U(
+    const Or$1 = /* @__PURE__ */ U(
       ([
         { increaseViewportBy: t2, listBoundary: e, overscan: n, visibleRange: o },
         { footerHeight: r2, headerHeight: s, scrollBy: i2, scrollContainerState: l, scrollTo: c2, scrollTop: a, smoothScrollTargetReached: m, viewportHeight: S },
@@ -29806,7 +29806,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 }
                 const me = so(nn, He, Lt2);
                 let Kt, Wt;
-                de ? D === 0 && Q === 0 && Ut > 0 ? (Kt = 0, Wt = Ut - 1) : (Kt = me * Ce((D + Qt) / (fe + Qt)), Wt = me * Rn((Q + Qt) / (fe + Qt)) - 1, Wt = Oe(R - 1, ee$2(Wt, me - 1)), Kt = Oe(Wt, ee$2(0, Kt))) : (Kt = 0, Wt = -1);
+                de ? D === 0 && Q === 0 && Ut > 0 ? (Kt = 0, Wt = Ut - 1) : (Kt = me * Ce((D + Qt) / (fe + Qt)), Wt = me * Rn((Q + Qt) / (fe + Qt)) - 1, Wt = Oe(R - 1, ee$1(Wt, me - 1)), Kt = Oe(Wt, ee$1(0, Kt))) : (Kt = 0, Wt = -1);
                 const on = Hn(Kt, Wt, Jt), { bottom: rn, top: sn } = En(Ft, lt2, tt, on), ln = Rn(R / me), lo = ln * fe + (ln - 1) * Qt - rn;
                 return { bottom: rn, itemHeight: fe, items: on, itemWidth: He, offsetBottom: lo, offsetTop: sn, top: sn };
               }
@@ -29880,7 +29880,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             E(([R, D, Q, lt2, tt]) => {
               const Ft = Dn(R), { align: Jt, behavior: Ut, offset: de } = Ft;
               let Ot = Ft.index;
-              Ot === "LAST" && (Ot = lt2 - 1), Ot = ee$2(0, Ot, Oe(lt2 - 1, Ot));
+              Ot === "LAST" && (Ot = lt2 - 1), Ot = ee$1(0, Ot, Oe(lt2 - 1, Ot));
               let Lt2 = Me(D, tt, Q, Ot);
               return Jt === "end" ? Lt2 = bn(Lt2 - D.height + Q.height) : Jt === "center" && (Lt2 = bn(Lt2 - D.height / 2 + Q.height / 2)), de && (Lt2 += de), { behavior: Ut, top: Lt2 };
             })
@@ -29945,7 +29945,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       X(je, at, ae, Yn, Pt, qe, Vt$1)
     );
     function so(t2, e, n) {
-      return ee$2(1, Ce((t2 + n) / (Ce(e) + n)));
+      return ee$1(1, Ce((t2 + n) / (Ce(e) + n)));
     }
     function En(t2, e, n, o) {
       const { height: r2 } = n;
@@ -29955,7 +29955,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return { bottom: Me(t2, e, n, o[o.length - 1].index) + r2, top: s };
     }
     function Me(t2, e, n, o) {
-      const r2 = so(t2.width, n.width, e.column), s = Ce(o / r2), i2 = s * n.height + ee$2(0, s - 1) * e.row;
+      const r2 = so(t2.width, n.width, e.column), s = Ce(o / r2), i2 = s * n.height + ee$1(0, s - 1) * e.row;
       return i2 > 0 ? i2 + e.row : i2;
     }
     const Lr = /* @__PURE__ */ U(() => {
@@ -29987,7 +29987,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       };
     }), zr = /* @__PURE__ */ U(
       ([t2, e]) => ({ ...t2, ...e }),
-      X(Or$2, Lr)
+      X(Or$1, Lr)
     ), Vr = /* @__PURE__ */ H.memo(function() {
       const e = et$1("gridState"), n = et$1("listClassName"), o = et$1("itemClassName"), r2 = et$1("itemContent"), s = et$1("computeItemKey"), i2 = et$1("isSeeking"), l = It("scrollHeight"), c2 = et$1("ItemComponent"), a = et$1("ListComponent"), m = et$1("ScrollSeekPlaceholder"), S = et$1("context"), g = It("itemDimensions"), I = It("gap"), w = et$1("log"), v = et$1("stateRestoreInProgress"), h = It("reportReadyState"), p = Ht(
         H.useMemo(
@@ -30043,7 +30043,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           })
         }
       );
-    }), Pr$2 = H.memo(function() {
+    }), Pr$1 = H.memo(function() {
       const e = et$1("HeaderComponent"), n = It("headerHeight"), o = et$1("headerFooterTag"), r2 = Ht(
         H.useMemo(
           () => (i2) => {
@@ -30089,7 +30089,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }, Gr = /* @__PURE__ */ H.memo(function({ ...e }) {
       const n = et$1("useWindowScroll"), o = et$1("customScrollParent"), r2 = o || n ? Dr : Nr, s = o || n ? Wr : Mr, i2 = et$1("context");
       return /* @__PURE__ */ jsxRuntimeExports.jsx(r2, { ...e, ...q(r2, i2), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(s, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Pr$2, {}),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Pr$1, {}),
         /* @__PURE__ */ jsxRuntimeExports.jsx(Vr, {}),
         /* @__PURE__ */ jsxRuntimeExports.jsx(Ar, {})
       ] }) });
@@ -30402,13 +30402,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const keyPairContainer = "_keyPairContainer_qjlxf_1";
     const keyPairBordered = "_keyPairBordered_qjlxf_9";
     const key = "_key_qjlxf_1";
-    const pre$2 = "_pre_qjlxf_19";
+    const pre$1 = "_pre_qjlxf_19";
     const treeIcon = "_treeIcon_qjlxf_23";
     const styles$1F = {
       keyPairContainer,
       keyPairBordered,
       key,
-      pre: pre$2,
+      pre: pre$1,
       treeIcon
     };
     const kStoreInstanceKey = /^(.+)?:([a-zA-Z0-9]{22}):instance$/;
@@ -31430,7 +31430,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       // prettier-ignore
       "Ȁaglq	\x1Bɭ\0\0p;䀦os;䀧t;䀾t;䀼uot;䀢".split("").map((c2) => c2.charCodeAt(0))
     );
-    var _a$2;
+    var _a$5;
     const decodeMap = /* @__PURE__ */ new Map([
       [0, 65533],
       // C1 Unicode control character reference replacements
@@ -31464,7 +31464,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ]);
     const fromCodePoint$2 = (
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, node/no-unsupported-features/es-builtins
-      (_a$2 = String.fromCodePoint) !== null && _a$2 !== void 0 ? _a$2 : function(codePoint) {
+      (_a$5 = String.fromCodePoint) !== null && _a$5 !== void 0 ? _a$5 : function(codePoint) {
         let output2 = "";
         if (codePoint > 65535) {
           codePoint -= 65536;
@@ -32608,7 +32608,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       str2 = str2.replace(NULL_RE, "�");
       state.src = str2;
     }
-    function block$2(state) {
+    function block$1(state) {
       let token2;
       if (state.inlineMode) {
         token2 = new state.Token("inline", "", 0);
@@ -32962,7 +32962,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     const _rules$2 = [
       ["normalize", normalize],
-      ["block", block$2],
+      ["block", block$1],
       ["inline", inline$1],
       ["linkify", linkify$1],
       ["replacements", replace$1],
@@ -34861,7 +34861,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       state.posMax = max2;
       return true;
     }
-    function image$3(state, silent) {
+    function image$2(state, silent) {
       let code2, content2, label2, pos2, ref, res, title2, start2;
       let href = "";
       const oldPos = state.pos;
@@ -35196,7 +35196,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       ["strikethrough", r_strikethrough.tokenize],
       ["emphasis", r_emphasis.tokenize],
       ["link", link],
-      ["image", image$3],
+      ["image", image$2],
       ["autolink", autolink],
       ["html_inline", html_inline],
       ["entity", entity]
@@ -35704,7 +35704,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     function error$3(type) {
       throw new RangeError(errors[type]);
     }
-    function map$2(array, callback) {
+    function map$1(array, callback) {
       const result2 = [];
       let length = array.length;
       while (length--) {
@@ -35721,7 +35721,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
       domain = domain.replace(regexSeparators, ".");
       const labels = domain.split(".");
-      const encoded = map$2(labels, callback).join(".");
+      const encoded = map$1(labels, callback).join(".");
       return result2 + encoded;
     }
     function ucs2decode(string2) {
@@ -67107,12 +67107,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return NodeMixin;
     }
     var Document = {};
-    var Element$3 = {};
+    var Element$2 = {};
     var hasRequiredElement;
     function requireElement() {
-      if (hasRequiredElement) return Element$3;
+      if (hasRequiredElement) return Element$2;
       hasRequiredElement = 1;
-      var __assign2 = Element$3 && Element$3.__assign || function() {
+      var __assign2 = Element$2 && Element$2.__assign || function() {
         __assign2 = Object.assign || function(t2) {
           for (var s, i2 = 1, n = arguments.length; i2 < n; i2++) {
             s = arguments[i2];
@@ -67123,7 +67123,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         };
         return __assign2.apply(this, arguments);
       };
-      var __read2 = Element$3 && Element$3.__read || function(o, n) {
+      var __read2 = Element$2 && Element$2.__read || function(o, n) {
         var m = typeof Symbol === "function" && o[Symbol.iterator];
         if (!m) return o;
         var i2 = m.call(o), r2, ar2 = [], e;
@@ -67140,7 +67140,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
         return ar2;
       };
-      var __spreadArray2 = Element$3 && Element$3.__spreadArray || function(to2, from, pack) {
+      var __spreadArray2 = Element$2 && Element$2.__spreadArray || function(to2, from, pack) {
         if (pack || arguments.length === 2) for (var i2 = 0, l = from.length, ar2; i2 < l; i2++) {
           if (ar2 || !(i2 in from)) {
             if (!ar2) ar2 = Array.prototype.slice.call(from, 0, i2);
@@ -67149,7 +67149,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
         return to2.concat(ar2 || Array.prototype.slice.call(from));
       };
-      var __values2 = Element$3 && Element$3.__values || function(o) {
+      var __values2 = Element$2 && Element$2.__values || function(o) {
         var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i2 = 0;
         if (m) return m.call(o);
         if (o && typeof o.length === "number") return {
@@ -67160,8 +67160,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         };
         throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
       };
-      Object.defineProperty(Element$3, "__esModule", { value: true });
-      Element$3.LiteElement = void 0;
+      Object.defineProperty(Element$2, "__esModule", { value: true });
+      Element$2.LiteElement = void 0;
       var LiteElement = /* @__PURE__ */ (function() {
         function LiteElement2(kind, attributes2, children2) {
           var e_1, _a2;
@@ -67192,8 +67192,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
         return LiteElement2;
       })();
-      Element$3.LiteElement = LiteElement;
-      return Element$3;
+      Element$2.LiteElement = LiteElement;
+      return Element$2;
     }
     var hasRequiredDocument;
     function requireDocument() {
@@ -68161,7 +68161,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       liteAdaptor.liteAdaptor = liteAdaptor$1;
       return liteAdaptor;
     }
-    var html$2 = {};
+    var html$1 = {};
     var HTMLHandler = {};
     var Handler = {};
     var MathDocument = {};
@@ -70506,12 +70506,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       HTMLHandler.HTMLHandler = HTMLHandler$1;
       return HTMLHandler;
     }
-    var hasRequiredHtml$2;
-    function requireHtml$2() {
-      if (hasRequiredHtml$2) return html$2;
-      hasRequiredHtml$2 = 1;
-      Object.defineProperty(html$2, "__esModule", { value: true });
-      html$2.RegisterHTMLHandler = void 0;
+    var hasRequiredHtml$1;
+    function requireHtml$1() {
+      if (hasRequiredHtml$1) return html$1;
+      hasRequiredHtml$1 = 1;
+      Object.defineProperty(html$1, "__esModule", { value: true });
+      html$1.RegisterHTMLHandler = void 0;
       var mathjax_js_1 = requireMathjax();
       var HTMLHandler_js_1 = requireHTMLHandler();
       function RegisterHTMLHandler(adaptor) {
@@ -70519,8 +70519,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         mathjax_js_1.mathjax.handlers.register(handler);
         return handler;
       }
-      html$2.RegisterHTMLHandler = RegisterHTMLHandler;
-      return html$2;
+      html$1.RegisterHTMLHandler = RegisterHTMLHandler;
+      return html$1;
     }
     var AllPackages = {};
     var ActionConfiguration = {};
@@ -81171,7 +81171,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       __values,
       default: tslib_es6
     }, Symbol.toStringTag, { value: "Module" }));
-    const require$$0$4 = /* @__PURE__ */ getAugmentedNamespace(tslib_es6$1);
+    const require$$0$2 = /* @__PURE__ */ getAugmentedNamespace(tslib_es6$1);
     var types$1 = {};
     var hasRequiredTypes;
     function requireTypes() {
@@ -81188,7 +81188,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       hasRequiredOptions = 1;
       Object.defineProperty(options, "__esModule", { value: true });
       options.flatten = void 0;
-      var tslib_1 = require$$0$4;
+      var tslib_1 = require$$0$2;
       var defaultOpts = {
         xml: false,
         decodeEntities: true
@@ -81690,7 +81690,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       parse: parse$5,
       stringify: stringify$2
     }, Symbol.toStringTag, { value: "Module" }));
-    const require$$0$3 = /* @__PURE__ */ getAugmentedNamespace(es);
+    const require$$0$1 = /* @__PURE__ */ getAugmentedNamespace(es);
     var lib$9 = {};
     var lib$8 = {};
     var stringify$1 = {};
@@ -82299,7458 +82299,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     var lib$5 = {};
     var lib$4 = {};
     var decode = {};
-    const Aacute$3 = "Á";
-    const aacute$3 = "á";
-    const Abreve$1 = "Ă";
-    const abreve$1 = "ă";
-    const ac$1 = "∾";
-    const acd$1 = "∿";
-    const acE$1 = "∾̳";
-    const Acirc$3 = "Â";
-    const acirc$3 = "â";
-    const acute$3 = "´";
-    const Acy$1 = "А";
-    const acy$1 = "а";
-    const AElig$3 = "Æ";
-    const aelig$3 = "æ";
-    const af$1 = "⁡";
-    const Afr$1 = "𝔄";
-    const afr$1 = "𝔞";
-    const Agrave$3 = "À";
-    const agrave$3 = "à";
-    const alefsym$1 = "ℵ";
-    const aleph$1 = "ℵ";
-    const Alpha$1 = "Α";
-    const alpha$1 = "α";
-    const Amacr$1 = "Ā";
-    const amacr$1 = "ā";
-    const amalg$1 = "⨿";
-    const amp$5 = "&";
-    const AMP$3 = "&";
-    const andand$1 = "⩕";
-    const And$1 = "⩓";
-    const and$1 = "∧";
-    const andd$1 = "⩜";
-    const andslope$1 = "⩘";
-    const andv$1 = "⩚";
-    const ang$1 = "∠";
-    const ange$1 = "⦤";
-    const angle$1 = "∠";
-    const angmsdaa$1 = "⦨";
-    const angmsdab$1 = "⦩";
-    const angmsdac$1 = "⦪";
-    const angmsdad$1 = "⦫";
-    const angmsdae$1 = "⦬";
-    const angmsdaf$1 = "⦭";
-    const angmsdag$1 = "⦮";
-    const angmsdah$1 = "⦯";
-    const angmsd$1 = "∡";
-    const angrt$1 = "∟";
-    const angrtvb$1 = "⊾";
-    const angrtvbd$1 = "⦝";
-    const angsph$1 = "∢";
-    const angst$1 = "Å";
-    const angzarr$1 = "⍼";
-    const Aogon$1 = "Ą";
-    const aogon$1 = "ą";
-    const Aopf$1 = "𝔸";
-    const aopf$1 = "𝕒";
-    const apacir$1 = "⩯";
-    const ap$1 = "≈";
-    const apE$1 = "⩰";
-    const ape$1 = "≊";
-    const apid$1 = "≋";
-    const apos$3 = "'";
-    const ApplyFunction$1 = "⁡";
-    const approx$1 = "≈";
-    const approxeq$1 = "≊";
-    const Aring$3 = "Å";
-    const aring$3 = "å";
-    const Ascr$1 = "𝒜";
-    const ascr$1 = "𝒶";
-    const Assign$1 = "≔";
-    const ast$1 = "*";
-    const asymp$1 = "≈";
-    const asympeq$1 = "≍";
-    const Atilde$3 = "Ã";
-    const atilde$3 = "ã";
-    const Auml$3 = "Ä";
-    const auml$3 = "ä";
-    const awconint$1 = "∳";
-    const awint$1 = "⨑";
-    const backcong$1 = "≌";
-    const backepsilon$1 = "϶";
-    const backprime$1 = "‵";
-    const backsim$1 = "∽";
-    const backsimeq$1 = "⋍";
-    const Backslash$1 = "∖";
-    const Barv$1 = "⫧";
-    const barvee$1 = "⊽";
-    const barwed$1 = "⌅";
-    const Barwed$1 = "⌆";
-    const barwedge$1 = "⌅";
-    const bbrk$1 = "⎵";
-    const bbrktbrk$1 = "⎶";
-    const bcong$1 = "≌";
-    const Bcy$1 = "Б";
-    const bcy$1 = "б";
-    const bdquo$1 = "„";
-    const becaus$1 = "∵";
-    const because$1 = "∵";
-    const Because$1 = "∵";
-    const bemptyv$1 = "⦰";
-    const bepsi$1 = "϶";
-    const bernou$1 = "ℬ";
-    const Bernoullis$1 = "ℬ";
-    const Beta$1 = "Β";
-    const beta$1 = "β";
-    const beth$1 = "ℶ";
-    const between$1 = "≬";
-    const Bfr$1 = "𝔅";
-    const bfr$1 = "𝔟";
-    const bigcap$1 = "⋂";
-    const bigcirc$1 = "◯";
-    const bigcup$1 = "⋃";
-    const bigodot$1 = "⨀";
-    const bigoplus$1 = "⨁";
-    const bigotimes$1 = "⨂";
-    const bigsqcup$1 = "⨆";
-    const bigstar$1 = "★";
-    const bigtriangledown$1 = "▽";
-    const bigtriangleup$1 = "△";
-    const biguplus$1 = "⨄";
-    const bigvee$1 = "⋁";
-    const bigwedge$1 = "⋀";
-    const bkarow$1 = "⤍";
-    const blacklozenge$1 = "⧫";
-    const blacksquare$1 = "▪";
-    const blacktriangle$1 = "▴";
-    const blacktriangledown$1 = "▾";
-    const blacktriangleleft$1 = "◂";
-    const blacktriangleright$1 = "▸";
-    const blank$1 = "␣";
-    const blk12$1 = "▒";
-    const blk14$1 = "░";
-    const blk34$1 = "▓";
-    const block$1 = "█";
-    const bne$1 = "=⃥";
-    const bnequiv$1 = "≡⃥";
-    const bNot$1 = "⫭";
-    const bnot$1 = "⌐";
-    const Bopf$1 = "𝔹";
-    const bopf$1 = "𝕓";
-    const bot$1 = "⊥";
-    const bottom$2 = "⊥";
-    const bowtie$1 = "⋈";
-    const boxbox$1 = "⧉";
-    const boxdl$1 = "┐";
-    const boxdL$1 = "╕";
-    const boxDl$1 = "╖";
-    const boxDL$1 = "╗";
-    const boxdr$1 = "┌";
-    const boxdR$1 = "╒";
-    const boxDr$1 = "╓";
-    const boxDR$1 = "╔";
-    const boxh$1 = "─";
-    const boxH$1 = "═";
-    const boxhd$1 = "┬";
-    const boxHd$1 = "╤";
-    const boxhD$1 = "╥";
-    const boxHD$1 = "╦";
-    const boxhu$1 = "┴";
-    const boxHu$1 = "╧";
-    const boxhU$1 = "╨";
-    const boxHU$1 = "╩";
-    const boxminus$1 = "⊟";
-    const boxplus$1 = "⊞";
-    const boxtimes$1 = "⊠";
-    const boxul$1 = "┘";
-    const boxuL$1 = "╛";
-    const boxUl$1 = "╜";
-    const boxUL$1 = "╝";
-    const boxur$1 = "└";
-    const boxuR$1 = "╘";
-    const boxUr$1 = "╙";
-    const boxUR$1 = "╚";
-    const boxv$1 = "│";
-    const boxV$1 = "║";
-    const boxvh$1 = "┼";
-    const boxvH$1 = "╪";
-    const boxVh$1 = "╫";
-    const boxVH$1 = "╬";
-    const boxvl$1 = "┤";
-    const boxvL$1 = "╡";
-    const boxVl$1 = "╢";
-    const boxVL$1 = "╣";
-    const boxvr$1 = "├";
-    const boxvR$1 = "╞";
-    const boxVr$1 = "╟";
-    const boxVR$1 = "╠";
-    const bprime$1 = "‵";
-    const breve$1 = "˘";
-    const Breve$1 = "˘";
-    const brvbar$3 = "¦";
-    const bscr$1 = "𝒷";
-    const Bscr$1 = "ℬ";
-    const bsemi$1 = "⁏";
-    const bsim$1 = "∽";
-    const bsime$1 = "⋍";
-    const bsolb$1 = "⧅";
-    const bsol$1 = "\\";
-    const bsolhsub$1 = "⟈";
-    const bull$1 = "•";
-    const bullet$1 = "•";
-    const bump$1 = "≎";
-    const bumpE$1 = "⪮";
-    const bumpe$1 = "≏";
-    const Bumpeq$1 = "≎";
-    const bumpeq$1 = "≏";
-    const Cacute$1 = "Ć";
-    const cacute$1 = "ć";
-    const capand$1 = "⩄";
-    const capbrcup$1 = "⩉";
-    const capcap$1 = "⩋";
-    const cap$1 = "∩";
-    const Cap$1 = "⋒";
-    const capcup$1 = "⩇";
-    const capdot$1 = "⩀";
-    const CapitalDifferentialD$1 = "ⅅ";
-    const caps$1 = "∩︀";
-    const caret$1 = "⁁";
-    const caron$1 = "ˇ";
-    const Cayleys$1 = "ℭ";
-    const ccaps$1 = "⩍";
-    const Ccaron$1 = "Č";
-    const ccaron$1 = "č";
-    const Ccedil$3 = "Ç";
-    const ccedil$3 = "ç";
-    const Ccirc$1 = "Ĉ";
-    const ccirc$1 = "ĉ";
-    const Cconint$1 = "∰";
-    const ccups$1 = "⩌";
-    const ccupssm$1 = "⩐";
-    const Cdot$1 = "Ċ";
-    const cdot$1 = "ċ";
-    const cedil$3 = "¸";
-    const Cedilla$1 = "¸";
-    const cemptyv$1 = "⦲";
-    const cent$3 = "¢";
-    const centerdot$1 = "·";
-    const CenterDot$1 = "·";
-    const cfr$1 = "𝔠";
-    const Cfr$1 = "ℭ";
-    const CHcy$1 = "Ч";
-    const chcy$1 = "ч";
-    const check$1 = "✓";
-    const checkmark$1 = "✓";
-    const Chi$1 = "Χ";
-    const chi$1 = "χ";
-    const circ$1 = "ˆ";
-    const circeq$1 = "≗";
-    const circlearrowleft$1 = "↺";
-    const circlearrowright$1 = "↻";
-    const circledast$1 = "⊛";
-    const circledcirc$1 = "⊚";
-    const circleddash$1 = "⊝";
-    const CircleDot$1 = "⊙";
-    const circledR$1 = "®";
-    const circledS$1 = "Ⓢ";
-    const CircleMinus$1 = "⊖";
-    const CirclePlus$1 = "⊕";
-    const CircleTimes$1 = "⊗";
-    const cir$1 = "○";
-    const cirE$1 = "⧃";
-    const cire$1 = "≗";
-    const cirfnint$1 = "⨐";
-    const cirmid$1 = "⫯";
-    const cirscir$1 = "⧂";
-    const ClockwiseContourIntegral$1 = "∲";
-    const CloseCurlyDoubleQuote$1 = "”";
-    const CloseCurlyQuote$1 = "’";
-    const clubs$1 = "♣";
-    const clubsuit$1 = "♣";
-    const colon$1 = ":";
-    const Colon$1 = "∷";
-    const Colone$1 = "⩴";
-    const colone$1 = "≔";
-    const coloneq$1 = "≔";
-    const comma$1 = ",";
-    const commat$1 = "@";
-    const comp$1 = "∁";
-    const compfn$1 = "∘";
-    const complement$1 = "∁";
-    const complexes$1 = "ℂ";
-    const cong$1 = "≅";
-    const congdot$1 = "⩭";
-    const Congruent$1 = "≡";
-    const conint$1 = "∮";
-    const Conint$1 = "∯";
-    const ContourIntegral$1 = "∮";
-    const copf$1 = "𝕔";
-    const Copf$1 = "ℂ";
-    const coprod$1 = "∐";
-    const Coproduct$1 = "∐";
-    const copy$3 = "©";
-    const COPY$3 = "©";
-    const copysr$1 = "℗";
-    const CounterClockwiseContourIntegral$1 = "∳";
-    const crarr$1 = "↵";
-    const cross$1 = "✗";
-    const Cross$1 = "⨯";
-    const Cscr$1 = "𝒞";
-    const cscr$1 = "𝒸";
-    const csub$1 = "⫏";
-    const csube$1 = "⫑";
-    const csup$1 = "⫐";
-    const csupe$1 = "⫒";
-    const ctdot$1 = "⋯";
-    const cudarrl$1 = "⤸";
-    const cudarrr$1 = "⤵";
-    const cuepr$1 = "⋞";
-    const cuesc$1 = "⋟";
-    const cularr$1 = "↶";
-    const cularrp$1 = "⤽";
-    const cupbrcap$1 = "⩈";
-    const cupcap$1 = "⩆";
-    const CupCap$1 = "≍";
-    const cup$1 = "∪";
-    const Cup$1 = "⋓";
-    const cupcup$1 = "⩊";
-    const cupdot$1 = "⊍";
-    const cupor$1 = "⩅";
-    const cups$1 = "∪︀";
-    const curarr$1 = "↷";
-    const curarrm$1 = "⤼";
-    const curlyeqprec$1 = "⋞";
-    const curlyeqsucc$1 = "⋟";
-    const curlyvee$1 = "⋎";
-    const curlywedge$1 = "⋏";
-    const curren$3 = "¤";
-    const curvearrowleft$1 = "↶";
-    const curvearrowright$1 = "↷";
-    const cuvee$1 = "⋎";
-    const cuwed$1 = "⋏";
-    const cwconint$1 = "∲";
-    const cwint$1 = "∱";
-    const cylcty$1 = "⌭";
-    const dagger$1 = "†";
-    const Dagger$1 = "‡";
-    const daleth$1 = "ℸ";
-    const darr$1 = "↓";
-    const Darr$1 = "↡";
-    const dArr$1 = "⇓";
-    const dash$1 = "‐";
-    const Dashv$1 = "⫤";
-    const dashv$1 = "⊣";
-    const dbkarow$1 = "⤏";
-    const dblac$1 = "˝";
-    const Dcaron$1 = "Ď";
-    const dcaron$1 = "ď";
-    const Dcy$1 = "Д";
-    const dcy$1 = "д";
-    const ddagger$1 = "‡";
-    const ddarr$1 = "⇊";
-    const DD$1 = "ⅅ";
-    const dd$1 = "ⅆ";
-    const DDotrahd$1 = "⤑";
-    const ddotseq$1 = "⩷";
-    const deg$3 = "°";
-    const Del$1 = "∇";
-    const Delta$1 = "Δ";
-    const delta$1 = "δ";
-    const demptyv$1 = "⦱";
-    const dfisht$1 = "⥿";
-    const Dfr$1 = "𝔇";
-    const dfr$1 = "𝔡";
-    const dHar$1 = "⥥";
-    const dharl$1 = "⇃";
-    const dharr$1 = "⇂";
-    const DiacriticalAcute$1 = "´";
-    const DiacriticalDot$1 = "˙";
-    const DiacriticalDoubleAcute$1 = "˝";
-    const DiacriticalGrave$1 = "`";
-    const DiacriticalTilde$1 = "˜";
-    const diam$1 = "⋄";
-    const diamond$1 = "⋄";
-    const Diamond$1 = "⋄";
-    const diamondsuit$1 = "♦";
-    const diams$1 = "♦";
-    const die$1 = "¨";
-    const DifferentialD$1 = "ⅆ";
-    const digamma$1 = "ϝ";
-    const disin$1 = "⋲";
-    const div$1 = "÷";
-    const divide$3 = "÷";
-    const divideontimes$1 = "⋇";
-    const divonx$1 = "⋇";
-    const DJcy$1 = "Ђ";
-    const djcy$1 = "ђ";
-    const dlcorn$1 = "⌞";
-    const dlcrop$1 = "⌍";
-    const dollar$1 = "$";
-    const Dopf$1 = "𝔻";
-    const dopf$1 = "𝕕";
-    const Dot$1 = "¨";
-    const dot$2 = "˙";
-    const DotDot$1 = "⃜";
-    const doteq$1 = "≐";
-    const doteqdot$1 = "≑";
-    const DotEqual$1 = "≐";
-    const dotminus$1 = "∸";
-    const dotplus$1 = "∔";
-    const dotsquare$1 = "⊡";
-    const doublebarwedge$1 = "⌆";
-    const DoubleContourIntegral$1 = "∯";
-    const DoubleDot$1 = "¨";
-    const DoubleDownArrow$1 = "⇓";
-    const DoubleLeftArrow$1 = "⇐";
-    const DoubleLeftRightArrow$1 = "⇔";
-    const DoubleLeftTee$1 = "⫤";
-    const DoubleLongLeftArrow$1 = "⟸";
-    const DoubleLongLeftRightArrow$1 = "⟺";
-    const DoubleLongRightArrow$1 = "⟹";
-    const DoubleRightArrow$1 = "⇒";
-    const DoubleRightTee$1 = "⊨";
-    const DoubleUpArrow$1 = "⇑";
-    const DoubleUpDownArrow$1 = "⇕";
-    const DoubleVerticalBar$1 = "∥";
-    const DownArrowBar$1 = "⤓";
-    const downarrow$1 = "↓";
-    const DownArrow$1 = "↓";
-    const Downarrow$1 = "⇓";
-    const DownArrowUpArrow$1 = "⇵";
-    const DownBreve$1 = "̑";
-    const downdownarrows$1 = "⇊";
-    const downharpoonleft$1 = "⇃";
-    const downharpoonright$1 = "⇂";
-    const DownLeftRightVector$1 = "⥐";
-    const DownLeftTeeVector$1 = "⥞";
-    const DownLeftVectorBar$1 = "⥖";
-    const DownLeftVector$1 = "↽";
-    const DownRightTeeVector$1 = "⥟";
-    const DownRightVectorBar$1 = "⥗";
-    const DownRightVector$1 = "⇁";
-    const DownTeeArrow$1 = "↧";
-    const DownTee$1 = "⊤";
-    const drbkarow$1 = "⤐";
-    const drcorn$1 = "⌟";
-    const drcrop$1 = "⌌";
-    const Dscr$1 = "𝒟";
-    const dscr$1 = "𝒹";
-    const DScy$1 = "Ѕ";
-    const dscy$1 = "ѕ";
-    const dsol$1 = "⧶";
-    const Dstrok$1 = "Đ";
-    const dstrok$1 = "đ";
-    const dtdot$1 = "⋱";
-    const dtri$1 = "▿";
-    const dtrif$1 = "▾";
-    const duarr$1 = "⇵";
-    const duhar$1 = "⥯";
-    const dwangle$1 = "⦦";
-    const DZcy$1 = "Џ";
-    const dzcy$1 = "џ";
-    const dzigrarr$1 = "⟿";
-    const Eacute$3 = "É";
-    const eacute$3 = "é";
-    const easter$1 = "⩮";
-    const Ecaron$1 = "Ě";
-    const ecaron$1 = "ě";
-    const Ecirc$3 = "Ê";
-    const ecirc$3 = "ê";
-    const ecir$1 = "≖";
-    const ecolon$1 = "≕";
-    const Ecy$1 = "Э";
-    const ecy$1 = "э";
-    const eDDot$1 = "⩷";
-    const Edot$1 = "Ė";
-    const edot$1 = "ė";
-    const eDot$1 = "≑";
-    const ee$1 = "ⅇ";
-    const efDot$1 = "≒";
-    const Efr$1 = "𝔈";
-    const efr$1 = "𝔢";
-    const eg$1 = "⪚";
-    const Egrave$3 = "È";
-    const egrave$3 = "è";
-    const egs$1 = "⪖";
-    const egsdot$1 = "⪘";
-    const el$1 = "⪙";
-    const Element$2 = "∈";
-    const elinters$1 = "⏧";
-    const ell$1 = "ℓ";
-    const els$1 = "⪕";
-    const elsdot$1 = "⪗";
-    const Emacr$1 = "Ē";
-    const emacr$1 = "ē";
-    const empty$1 = "∅";
-    const emptyset$1 = "∅";
-    const EmptySmallSquare$1 = "◻";
-    const emptyv$1 = "∅";
-    const EmptyVerySmallSquare$1 = "▫";
-    const emsp13$1 = " ";
-    const emsp14$1 = " ";
-    const emsp$1 = " ";
-    const ENG$1 = "Ŋ";
-    const eng$1 = "ŋ";
-    const ensp$1 = " ";
-    const Eogon$1 = "Ę";
-    const eogon$1 = "ę";
-    const Eopf$1 = "𝔼";
-    const eopf$1 = "𝕖";
-    const epar$1 = "⋕";
-    const eparsl$1 = "⧣";
-    const eplus$1 = "⩱";
-    const epsi$1 = "ε";
-    const Epsilon$2 = "Ε";
-    const epsilon$1 = "ε";
-    const epsiv$1 = "ϵ";
-    const eqcirc$1 = "≖";
-    const eqcolon$1 = "≕";
-    const eqsim$1 = "≂";
-    const eqslantgtr$1 = "⪖";
-    const eqslantless$1 = "⪕";
-    const Equal$1 = "⩵";
-    const equals$2 = "=";
-    const EqualTilde$1 = "≂";
-    const equest$1 = "≟";
-    const Equilibrium$1 = "⇌";
-    const equiv$1 = "≡";
-    const equivDD$1 = "⩸";
-    const eqvparsl$1 = "⧥";
-    const erarr$1 = "⥱";
-    const erDot$1 = "≓";
-    const escr$1 = "ℯ";
-    const Escr$1 = "ℰ";
-    const esdot$1 = "≐";
-    const Esim$1 = "⩳";
-    const esim$1 = "≂";
-    const Eta$1 = "Η";
-    const eta$1 = "η";
-    const ETH$3 = "Ð";
-    const eth$3 = "ð";
-    const Euml$3 = "Ë";
-    const euml$3 = "ë";
-    const euro$1 = "€";
-    const excl$1 = "!";
-    const exist$1 = "∃";
-    const Exists$1 = "∃";
-    const expectation$1 = "ℰ";
-    const exponentiale$1 = "ⅇ";
-    const ExponentialE$1 = "ⅇ";
-    const fallingdotseq$1 = "≒";
-    const Fcy$1 = "Ф";
-    const fcy$1 = "ф";
-    const female$1 = "♀";
-    const ffilig$1 = "ﬃ";
-    const fflig$1 = "ﬀ";
-    const ffllig$1 = "ﬄ";
-    const Ffr$1 = "𝔉";
-    const ffr$1 = "𝔣";
-    const filig$1 = "ﬁ";
-    const FilledSmallSquare$1 = "◼";
-    const FilledVerySmallSquare$1 = "▪";
-    const fjlig$1 = "fj";
-    const flat$1 = "♭";
-    const fllig$1 = "ﬂ";
-    const fltns$1 = "▱";
-    const fnof$1 = "ƒ";
-    const Fopf$1 = "𝔽";
-    const fopf$1 = "𝕗";
-    const forall$1 = "∀";
-    const ForAll$1 = "∀";
-    const fork$1 = "⋔";
-    const forkv$1 = "⫙";
-    const Fouriertrf$1 = "ℱ";
-    const fpartint$1 = "⨍";
-    const frac12$3 = "½";
-    const frac13$1 = "⅓";
-    const frac14$3 = "¼";
-    const frac15$1 = "⅕";
-    const frac16$1 = "⅙";
-    const frac18$1 = "⅛";
-    const frac23$1 = "⅔";
-    const frac25$1 = "⅖";
-    const frac34$3 = "¾";
-    const frac35$1 = "⅗";
-    const frac38$1 = "⅜";
-    const frac45$1 = "⅘";
-    const frac56$1 = "⅚";
-    const frac58$1 = "⅝";
-    const frac78$1 = "⅞";
-    const frasl$1 = "⁄";
-    const frown$1 = "⌢";
-    const fscr$1 = "𝒻";
-    const Fscr$1 = "ℱ";
-    const gacute$1 = "ǵ";
-    const Gamma$1 = "Γ";
-    const gamma$1 = "γ";
-    const Gammad$1 = "Ϝ";
-    const gammad$1 = "ϝ";
-    const gap$1 = "⪆";
-    const Gbreve$1 = "Ğ";
-    const gbreve$1 = "ğ";
-    const Gcedil$1 = "Ģ";
-    const Gcirc$1 = "Ĝ";
-    const gcirc$1 = "ĝ";
-    const Gcy$1 = "Г";
-    const gcy$1 = "г";
-    const Gdot$1 = "Ġ";
-    const gdot$1 = "ġ";
-    const ge$1 = "≥";
-    const gE$1 = "≧";
-    const gEl$1 = "⪌";
-    const gel$1 = "⋛";
-    const geq$1 = "≥";
-    const geqq$1 = "≧";
-    const geqslant$1 = "⩾";
-    const gescc$1 = "⪩";
-    const ges$1 = "⩾";
-    const gesdot$1 = "⪀";
-    const gesdoto$1 = "⪂";
-    const gesdotol$1 = "⪄";
-    const gesl$1 = "⋛︀";
-    const gesles$1 = "⪔";
-    const Gfr$1 = "𝔊";
-    const gfr$1 = "𝔤";
-    const gg$1 = "≫";
-    const Gg$1 = "⋙";
-    const ggg$1 = "⋙";
-    const gimel$1 = "ℷ";
-    const GJcy$1 = "Ѓ";
-    const gjcy$1 = "ѓ";
-    const gla$1 = "⪥";
-    const gl$1 = "≷";
-    const glE$1 = "⪒";
-    const glj$1 = "⪤";
-    const gnap$1 = "⪊";
-    const gnapprox$1 = "⪊";
-    const gne$1 = "⪈";
-    const gnE$1 = "≩";
-    const gneq$1 = "⪈";
-    const gneqq$1 = "≩";
-    const gnsim$1 = "⋧";
-    const Gopf$1 = "𝔾";
-    const gopf$1 = "𝕘";
-    const grave$1 = "`";
-    const GreaterEqual$1 = "≥";
-    const GreaterEqualLess$1 = "⋛";
-    const GreaterFullEqual$1 = "≧";
-    const GreaterGreater$1 = "⪢";
-    const GreaterLess$1 = "≷";
-    const GreaterSlantEqual$1 = "⩾";
-    const GreaterTilde$1 = "≳";
-    const Gscr$1 = "𝒢";
-    const gscr$1 = "ℊ";
-    const gsim$1 = "≳";
-    const gsime$1 = "⪎";
-    const gsiml$1 = "⪐";
-    const gtcc$1 = "⪧";
-    const gtcir$1 = "⩺";
-    const gt$5 = ">";
-    const GT$3 = ">";
-    const Gt$1 = "≫";
-    const gtdot$1 = "⋗";
-    const gtlPar$1 = "⦕";
-    const gtquest$1 = "⩼";
-    const gtrapprox$1 = "⪆";
-    const gtrarr$1 = "⥸";
-    const gtrdot$1 = "⋗";
-    const gtreqless$1 = "⋛";
-    const gtreqqless$1 = "⪌";
-    const gtrless$1 = "≷";
-    const gtrsim$1 = "≳";
-    const gvertneqq$1 = "≩︀";
-    const gvnE$1 = "≩︀";
-    const Hacek$1 = "ˇ";
-    const hairsp$1 = " ";
-    const half$1 = "½";
-    const hamilt$1 = "ℋ";
-    const HARDcy$1 = "Ъ";
-    const hardcy$1 = "ъ";
-    const harrcir$1 = "⥈";
-    const harr$1 = "↔";
-    const hArr$1 = "⇔";
-    const harrw$1 = "↭";
-    const Hat$1 = "^";
-    const hbar$1 = "ℏ";
-    const Hcirc$1 = "Ĥ";
-    const hcirc$1 = "ĥ";
-    const hearts$1 = "♥";
-    const heartsuit$1 = "♥";
-    const hellip$1 = "…";
-    const hercon$1 = "⊹";
-    const hfr$1 = "𝔥";
-    const Hfr$1 = "ℌ";
-    const HilbertSpace$1 = "ℋ";
-    const hksearow$1 = "⤥";
-    const hkswarow$1 = "⤦";
-    const hoarr$1 = "⇿";
-    const homtht$1 = "∻";
-    const hookleftarrow$1 = "↩";
-    const hookrightarrow$1 = "↪";
-    const hopf$1 = "𝕙";
-    const Hopf$1 = "ℍ";
-    const horbar$1 = "―";
-    const HorizontalLine$1 = "─";
-    const hscr$1 = "𝒽";
-    const Hscr$1 = "ℋ";
-    const hslash$1 = "ℏ";
-    const Hstrok$1 = "Ħ";
-    const hstrok$1 = "ħ";
-    const HumpDownHump$1 = "≎";
-    const HumpEqual$1 = "≏";
-    const hybull$1 = "⁃";
-    const hyphen$1 = "‐";
-    const Iacute$3 = "Í";
-    const iacute$3 = "í";
-    const ic$1 = "⁣";
-    const Icirc$3 = "Î";
-    const icirc$3 = "î";
-    const Icy$1 = "И";
-    const icy$1 = "и";
-    const Idot$1 = "İ";
-    const IEcy$1 = "Е";
-    const iecy$1 = "е";
-    const iexcl$3 = "¡";
-    const iff$1 = "⇔";
-    const ifr$1 = "𝔦";
-    const Ifr$1 = "ℑ";
-    const Igrave$3 = "Ì";
-    const igrave$3 = "ì";
-    const ii$1 = "ⅈ";
-    const iiiint$1 = "⨌";
-    const iiint$1 = "∭";
-    const iinfin$1 = "⧜";
-    const iiota$1 = "℩";
-    const IJlig$1 = "Ĳ";
-    const ijlig$1 = "ĳ";
-    const Imacr$1 = "Ī";
-    const imacr$1 = "ī";
-    const image$2 = "ℑ";
-    const ImaginaryI$1 = "ⅈ";
-    const imagline$1 = "ℐ";
-    const imagpart$1 = "ℑ";
-    const imath$1 = "ı";
-    const Im$1 = "ℑ";
-    const imof$1 = "⊷";
-    const imped$1 = "Ƶ";
-    const Implies$1 = "⇒";
-    const incare$1 = "℅";
-    const infin$1 = "∞";
-    const infintie$1 = "⧝";
-    const inodot$1 = "ı";
-    const intcal$1 = "⊺";
-    const int$1 = "∫";
-    const Int$1 = "∬";
-    const integers$1 = "ℤ";
-    const Integral$1 = "∫";
-    const intercal$1 = "⊺";
-    const Intersection$1 = "⋂";
-    const intlarhk$1 = "⨗";
-    const intprod$1 = "⨼";
-    const InvisibleComma$1 = "⁣";
-    const InvisibleTimes$1 = "⁢";
-    const IOcy$1 = "Ё";
-    const iocy$1 = "ё";
-    const Iogon$1 = "Į";
-    const iogon$1 = "į";
-    const Iopf$1 = "𝕀";
-    const iopf$1 = "𝕚";
-    const Iota$1 = "Ι";
-    const iota$1 = "ι";
-    const iprod$1 = "⨼";
-    const iquest$3 = "¿";
-    const iscr$1 = "𝒾";
-    const Iscr$1 = "ℐ";
-    const isin$1 = "∈";
-    const isindot$1 = "⋵";
-    const isinE$1 = "⋹";
-    const isins$1 = "⋴";
-    const isinsv$1 = "⋳";
-    const isinv$1 = "∈";
-    const it$1 = "⁢";
-    const Itilde$1 = "Ĩ";
-    const itilde$1 = "ĩ";
-    const Iukcy$1 = "І";
-    const iukcy$1 = "і";
-    const Iuml$3 = "Ï";
-    const iuml$3 = "ï";
-    const Jcirc$1 = "Ĵ";
-    const jcirc$1 = "ĵ";
-    const Jcy$1 = "Й";
-    const jcy$1 = "й";
-    const Jfr$1 = "𝔍";
-    const jfr$1 = "𝔧";
-    const jmath$1 = "ȷ";
-    const Jopf$1 = "𝕁";
-    const jopf$1 = "𝕛";
-    const Jscr$1 = "𝒥";
-    const jscr$1 = "𝒿";
-    const Jsercy$1 = "Ј";
-    const jsercy$1 = "ј";
-    const Jukcy$1 = "Є";
-    const jukcy$1 = "є";
-    const Kappa$1 = "Κ";
-    const kappa$1 = "κ";
-    const kappav$1 = "ϰ";
-    const Kcedil$1 = "Ķ";
-    const kcedil$1 = "ķ";
-    const Kcy$1 = "К";
-    const kcy$1 = "к";
-    const Kfr$1 = "𝔎";
-    const kfr$1 = "𝔨";
-    const kgreen$1 = "ĸ";
-    const KHcy$1 = "Х";
-    const khcy$1 = "х";
-    const KJcy$1 = "Ќ";
-    const kjcy$1 = "ќ";
-    const Kopf$1 = "𝕂";
-    const kopf$1 = "𝕜";
-    const Kscr$1 = "𝒦";
-    const kscr$1 = "𝓀";
-    const lAarr$1 = "⇚";
-    const Lacute$1 = "Ĺ";
-    const lacute$1 = "ĺ";
-    const laemptyv$1 = "⦴";
-    const lagran$1 = "ℒ";
-    const Lambda$1 = "Λ";
-    const lambda$1 = "λ";
-    const lang$1 = "⟨";
-    const Lang$1 = "⟪";
-    const langd$1 = "⦑";
-    const langle$1 = "⟨";
-    const lap$1 = "⪅";
-    const Laplacetrf$1 = "ℒ";
-    const laquo$3 = "«";
-    const larrb$1 = "⇤";
-    const larrbfs$1 = "⤟";
-    const larr$1 = "←";
-    const Larr$1 = "↞";
-    const lArr$1 = "⇐";
-    const larrfs$1 = "⤝";
-    const larrhk$1 = "↩";
-    const larrlp$1 = "↫";
-    const larrpl$1 = "⤹";
-    const larrsim$1 = "⥳";
-    const larrtl$1 = "↢";
-    const latail$1 = "⤙";
-    const lAtail$1 = "⤛";
-    const lat$1 = "⪫";
-    const late$1 = "⪭";
-    const lates$1 = "⪭︀";
-    const lbarr$1 = "⤌";
-    const lBarr$1 = "⤎";
-    const lbbrk$1 = "❲";
-    const lbrace$1 = "{";
-    const lbrack$1 = "[";
-    const lbrke$1 = "⦋";
-    const lbrksld$1 = "⦏";
-    const lbrkslu$1 = "⦍";
-    const Lcaron$1 = "Ľ";
-    const lcaron$1 = "ľ";
-    const Lcedil$1 = "Ļ";
-    const lcedil$1 = "ļ";
-    const lceil$1 = "⌈";
-    const lcub$1 = "{";
-    const Lcy$1 = "Л";
-    const lcy$1 = "л";
-    const ldca$1 = "⤶";
-    const ldquo$1 = "“";
-    const ldquor$1 = "„";
-    const ldrdhar$1 = "⥧";
-    const ldrushar$1 = "⥋";
-    const ldsh$1 = "↲";
-    const le$1 = "≤";
-    const lE$1 = "≦";
-    const LeftAngleBracket$1 = "⟨";
-    const LeftArrowBar$1 = "⇤";
-    const leftarrow$1 = "←";
-    const LeftArrow$1 = "←";
-    const Leftarrow$1 = "⇐";
-    const LeftArrowRightArrow$1 = "⇆";
-    const leftarrowtail$1 = "↢";
-    const LeftCeiling$1 = "⌈";
-    const LeftDoubleBracket$1 = "⟦";
-    const LeftDownTeeVector$1 = "⥡";
-    const LeftDownVectorBar$1 = "⥙";
-    const LeftDownVector$1 = "⇃";
-    const LeftFloor$1 = "⌊";
-    const leftharpoondown$1 = "↽";
-    const leftharpoonup$1 = "↼";
-    const leftleftarrows$1 = "⇇";
-    const leftrightarrow$1 = "↔";
-    const LeftRightArrow$1 = "↔";
-    const Leftrightarrow$1 = "⇔";
-    const leftrightarrows$1 = "⇆";
-    const leftrightharpoons$1 = "⇋";
-    const leftrightsquigarrow$1 = "↭";
-    const LeftRightVector$1 = "⥎";
-    const LeftTeeArrow$1 = "↤";
-    const LeftTee$1 = "⊣";
-    const LeftTeeVector$1 = "⥚";
-    const leftthreetimes$1 = "⋋";
-    const LeftTriangleBar$1 = "⧏";
-    const LeftTriangle$1 = "⊲";
-    const LeftTriangleEqual$1 = "⊴";
-    const LeftUpDownVector$1 = "⥑";
-    const LeftUpTeeVector$1 = "⥠";
-    const LeftUpVectorBar$1 = "⥘";
-    const LeftUpVector$1 = "↿";
-    const LeftVectorBar$1 = "⥒";
-    const LeftVector$1 = "↼";
-    const lEg$1 = "⪋";
-    const leg$1 = "⋚";
-    const leq$1 = "≤";
-    const leqq$1 = "≦";
-    const leqslant$1 = "⩽";
-    const lescc$1 = "⪨";
-    const les$1 = "⩽";
-    const lesdot$1 = "⩿";
-    const lesdoto$1 = "⪁";
-    const lesdotor$1 = "⪃";
-    const lesg$1 = "⋚︀";
-    const lesges$1 = "⪓";
-    const lessapprox$1 = "⪅";
-    const lessdot$1 = "⋖";
-    const lesseqgtr$1 = "⋚";
-    const lesseqqgtr$1 = "⪋";
-    const LessEqualGreater$1 = "⋚";
-    const LessFullEqual$1 = "≦";
-    const LessGreater$1 = "≶";
-    const lessgtr$1 = "≶";
-    const LessLess$1 = "⪡";
-    const lesssim$1 = "≲";
-    const LessSlantEqual$1 = "⩽";
-    const LessTilde$1 = "≲";
-    const lfisht$1 = "⥼";
-    const lfloor$1 = "⌊";
-    const Lfr$1 = "𝔏";
-    const lfr$1 = "𝔩";
-    const lg$1 = "≶";
-    const lgE$1 = "⪑";
-    const lHar$1 = "⥢";
-    const lhard$1 = "↽";
-    const lharu$1 = "↼";
-    const lharul$1 = "⥪";
-    const lhblk$1 = "▄";
-    const LJcy$1 = "Љ";
-    const ljcy$1 = "љ";
-    const llarr$1 = "⇇";
-    const ll$1 = "≪";
-    const Ll$1 = "⋘";
-    const llcorner$1 = "⌞";
-    const Lleftarrow$1 = "⇚";
-    const llhard$1 = "⥫";
-    const lltri$1 = "◺";
-    const Lmidot$1 = "Ŀ";
-    const lmidot$1 = "ŀ";
-    const lmoustache$1 = "⎰";
-    const lmoust$1 = "⎰";
-    const lnap$1 = "⪉";
-    const lnapprox$1 = "⪉";
-    const lne$1 = "⪇";
-    const lnE$1 = "≨";
-    const lneq$1 = "⪇";
-    const lneqq$1 = "≨";
-    const lnsim$1 = "⋦";
-    const loang$1 = "⟬";
-    const loarr$1 = "⇽";
-    const lobrk$1 = "⟦";
-    const longleftarrow$1 = "⟵";
-    const LongLeftArrow$1 = "⟵";
-    const Longleftarrow$1 = "⟸";
-    const longleftrightarrow$1 = "⟷";
-    const LongLeftRightArrow$1 = "⟷";
-    const Longleftrightarrow$1 = "⟺";
-    const longmapsto$1 = "⟼";
-    const longrightarrow$1 = "⟶";
-    const LongRightArrow$1 = "⟶";
-    const Longrightarrow$1 = "⟹";
-    const looparrowleft$1 = "↫";
-    const looparrowright$1 = "↬";
-    const lopar$1 = "⦅";
-    const Lopf$1 = "𝕃";
-    const lopf$1 = "𝕝";
-    const loplus$1 = "⨭";
-    const lotimes$1 = "⨴";
-    const lowast$1 = "∗";
-    const lowbar$1 = "_";
-    const LowerLeftArrow$1 = "↙";
-    const LowerRightArrow$1 = "↘";
-    const loz$1 = "◊";
-    const lozenge$1 = "◊";
-    const lozf$1 = "⧫";
-    const lpar$1 = "(";
-    const lparlt$1 = "⦓";
-    const lrarr$1 = "⇆";
-    const lrcorner$1 = "⌟";
-    const lrhar$1 = "⇋";
-    const lrhard$1 = "⥭";
-    const lrm$1 = "‎";
-    const lrtri$1 = "⊿";
-    const lsaquo$1 = "‹";
-    const lscr$1 = "𝓁";
-    const Lscr$1 = "ℒ";
-    const lsh$1 = "↰";
-    const Lsh$1 = "↰";
-    const lsim$1 = "≲";
-    const lsime$1 = "⪍";
-    const lsimg$1 = "⪏";
-    const lsqb$1 = "[";
-    const lsquo$1 = "‘";
-    const lsquor$1 = "‚";
-    const Lstrok$1 = "Ł";
-    const lstrok$1 = "ł";
-    const ltcc$1 = "⪦";
-    const ltcir$1 = "⩹";
-    const lt$5 = "<";
-    const LT$3 = "<";
-    const Lt$1 = "≪";
-    const ltdot$1 = "⋖";
-    const lthree$1 = "⋋";
-    const ltimes$1 = "⋉";
-    const ltlarr$1 = "⥶";
-    const ltquest$1 = "⩻";
-    const ltri$1 = "◃";
-    const ltrie$1 = "⊴";
-    const ltrif$1 = "◂";
-    const ltrPar$1 = "⦖";
-    const lurdshar$1 = "⥊";
-    const luruhar$1 = "⥦";
-    const lvertneqq$1 = "≨︀";
-    const lvnE$1 = "≨︀";
-    const macr$3 = "¯";
-    const male$1 = "♂";
-    const malt$1 = "✠";
-    const maltese$1 = "✠";
-    const map$1 = "↦";
-    const mapsto$1 = "↦";
-    const mapstodown$1 = "↧";
-    const mapstoleft$1 = "↤";
-    const mapstoup$1 = "↥";
-    const marker$1 = "▮";
-    const mcomma$1 = "⨩";
-    const Mcy$1 = "М";
-    const mcy$1 = "м";
-    const mdash$1 = "—";
-    const mDDot$1 = "∺";
-    const measuredangle$1 = "∡";
-    const MediumSpace$1 = " ";
-    const Mellintrf$1 = "ℳ";
-    const Mfr$1 = "𝔐";
-    const mfr$1 = "𝔪";
-    const mho$1 = "℧";
-    const micro$3 = "µ";
-    const midast$1 = "*";
-    const midcir$1 = "⫰";
-    const mid$1 = "∣";
-    const middot$3 = "·";
-    const minusb$1 = "⊟";
-    const minus$1 = "−";
-    const minusd$1 = "∸";
-    const minusdu$1 = "⨪";
-    const MinusPlus$1 = "∓";
-    const mlcp$1 = "⫛";
-    const mldr$1 = "…";
-    const mnplus$1 = "∓";
-    const models$1 = "⊧";
-    const Mopf$1 = "𝕄";
-    const mopf$1 = "𝕞";
-    const mp$1 = "∓";
-    const mscr$1 = "𝓂";
-    const Mscr$1 = "ℳ";
-    const mstpos$1 = "∾";
-    const Mu$1 = "Μ";
-    const mu$1 = "μ";
-    const multimap$1 = "⊸";
-    const mumap$1 = "⊸";
-    const nabla$1 = "∇";
-    const Nacute$1 = "Ń";
-    const nacute$1 = "ń";
-    const nang$1 = "∠⃒";
-    const nap$1 = "≉";
-    const napE$1 = "⩰̸";
-    const napid$1 = "≋̸";
-    const napos$1 = "ŉ";
-    const napprox$1 = "≉";
-    const natural$1 = "♮";
-    const naturals$1 = "ℕ";
-    const natur$1 = "♮";
-    const nbsp$3 = " ";
-    const nbump$1 = "≎̸";
-    const nbumpe$1 = "≏̸";
-    const ncap$1 = "⩃";
-    const Ncaron$1 = "Ň";
-    const ncaron$1 = "ň";
-    const Ncedil$1 = "Ņ";
-    const ncedil$1 = "ņ";
-    const ncong$1 = "≇";
-    const ncongdot$1 = "⩭̸";
-    const ncup$1 = "⩂";
-    const Ncy$1 = "Н";
-    const ncy$1 = "н";
-    const ndash$1 = "–";
-    const nearhk$1 = "⤤";
-    const nearr$1 = "↗";
-    const neArr$1 = "⇗";
-    const nearrow$1 = "↗";
-    const ne$1 = "≠";
-    const nedot$1 = "≐̸";
-    const NegativeMediumSpace$1 = "​";
-    const NegativeThickSpace$1 = "​";
-    const NegativeThinSpace$1 = "​";
-    const NegativeVeryThinSpace$1 = "​";
-    const nequiv$1 = "≢";
-    const nesear$1 = "⤨";
-    const nesim$1 = "≂̸";
-    const NestedGreaterGreater$1 = "≫";
-    const NestedLessLess$1 = "≪";
-    const NewLine$1 = "\n";
-    const nexist$1 = "∄";
-    const nexists$1 = "∄";
-    const Nfr$1 = "𝔑";
-    const nfr$1 = "𝔫";
-    const ngE$1 = "≧̸";
-    const nge$1 = "≱";
-    const ngeq$1 = "≱";
-    const ngeqq$1 = "≧̸";
-    const ngeqslant$1 = "⩾̸";
-    const nges$1 = "⩾̸";
-    const nGg$1 = "⋙̸";
-    const ngsim$1 = "≵";
-    const nGt$1 = "≫⃒";
-    const ngt$1 = "≯";
-    const ngtr$1 = "≯";
-    const nGtv$1 = "≫̸";
-    const nharr$1 = "↮";
-    const nhArr$1 = "⇎";
-    const nhpar$1 = "⫲";
-    const ni$1 = "∋";
-    const nis$1 = "⋼";
-    const nisd$1 = "⋺";
-    const niv$1 = "∋";
-    const NJcy$1 = "Њ";
-    const njcy$1 = "њ";
-    const nlarr$1 = "↚";
-    const nlArr$1 = "⇍";
-    const nldr$1 = "‥";
-    const nlE$1 = "≦̸";
-    const nle$1 = "≰";
-    const nleftarrow$1 = "↚";
-    const nLeftarrow$1 = "⇍";
-    const nleftrightarrow$1 = "↮";
-    const nLeftrightarrow$1 = "⇎";
-    const nleq$1 = "≰";
-    const nleqq$1 = "≦̸";
-    const nleqslant$1 = "⩽̸";
-    const nles$1 = "⩽̸";
-    const nless$1 = "≮";
-    const nLl$1 = "⋘̸";
-    const nlsim$1 = "≴";
-    const nLt$1 = "≪⃒";
-    const nlt$1 = "≮";
-    const nltri$1 = "⋪";
-    const nltrie$1 = "⋬";
-    const nLtv$1 = "≪̸";
-    const nmid$1 = "∤";
-    const NoBreak$1 = "⁠";
-    const NonBreakingSpace$1 = " ";
-    const nopf$1 = "𝕟";
-    const Nopf$1 = "ℕ";
-    const Not$1 = "⫬";
-    const not$3 = "¬";
-    const NotCongruent$1 = "≢";
-    const NotCupCap$1 = "≭";
-    const NotDoubleVerticalBar$1 = "∦";
-    const NotElement$1 = "∉";
-    const NotEqual$1 = "≠";
-    const NotEqualTilde$1 = "≂̸";
-    const NotExists$1 = "∄";
-    const NotGreater$1 = "≯";
-    const NotGreaterEqual$1 = "≱";
-    const NotGreaterFullEqual$1 = "≧̸";
-    const NotGreaterGreater$1 = "≫̸";
-    const NotGreaterLess$1 = "≹";
-    const NotGreaterSlantEqual$1 = "⩾̸";
-    const NotGreaterTilde$1 = "≵";
-    const NotHumpDownHump$1 = "≎̸";
-    const NotHumpEqual$1 = "≏̸";
-    const notin$1 = "∉";
-    const notindot$1 = "⋵̸";
-    const notinE$1 = "⋹̸";
-    const notinva$1 = "∉";
-    const notinvb$1 = "⋷";
-    const notinvc$1 = "⋶";
-    const NotLeftTriangleBar$1 = "⧏̸";
-    const NotLeftTriangle$1 = "⋪";
-    const NotLeftTriangleEqual$1 = "⋬";
-    const NotLess$1 = "≮";
-    const NotLessEqual$1 = "≰";
-    const NotLessGreater$1 = "≸";
-    const NotLessLess$1 = "≪̸";
-    const NotLessSlantEqual$1 = "⩽̸";
-    const NotLessTilde$1 = "≴";
-    const NotNestedGreaterGreater$1 = "⪢̸";
-    const NotNestedLessLess$1 = "⪡̸";
-    const notni$1 = "∌";
-    const notniva$1 = "∌";
-    const notnivb$1 = "⋾";
-    const notnivc$1 = "⋽";
-    const NotPrecedes$1 = "⊀";
-    const NotPrecedesEqual$1 = "⪯̸";
-    const NotPrecedesSlantEqual$1 = "⋠";
-    const NotReverseElement$1 = "∌";
-    const NotRightTriangleBar$1 = "⧐̸";
-    const NotRightTriangle$1 = "⋫";
-    const NotRightTriangleEqual$1 = "⋭";
-    const NotSquareSubset$1 = "⊏̸";
-    const NotSquareSubsetEqual$1 = "⋢";
-    const NotSquareSuperset$1 = "⊐̸";
-    const NotSquareSupersetEqual$1 = "⋣";
-    const NotSubset$1 = "⊂⃒";
-    const NotSubsetEqual$1 = "⊈";
-    const NotSucceeds$1 = "⊁";
-    const NotSucceedsEqual$1 = "⪰̸";
-    const NotSucceedsSlantEqual$1 = "⋡";
-    const NotSucceedsTilde$1 = "≿̸";
-    const NotSuperset$1 = "⊃⃒";
-    const NotSupersetEqual$1 = "⊉";
-    const NotTilde$1 = "≁";
-    const NotTildeEqual$1 = "≄";
-    const NotTildeFullEqual$1 = "≇";
-    const NotTildeTilde$1 = "≉";
-    const NotVerticalBar$1 = "∤";
-    const nparallel$1 = "∦";
-    const npar$1 = "∦";
-    const nparsl$1 = "⫽⃥";
-    const npart$1 = "∂̸";
-    const npolint$1 = "⨔";
-    const npr$1 = "⊀";
-    const nprcue$1 = "⋠";
-    const nprec$1 = "⊀";
-    const npreceq$1 = "⪯̸";
-    const npre$1 = "⪯̸";
-    const nrarrc$1 = "⤳̸";
-    const nrarr$1 = "↛";
-    const nrArr$1 = "⇏";
-    const nrarrw$1 = "↝̸";
-    const nrightarrow$1 = "↛";
-    const nRightarrow$1 = "⇏";
-    const nrtri$1 = "⋫";
-    const nrtrie$1 = "⋭";
-    const nsc$1 = "⊁";
-    const nsccue$1 = "⋡";
-    const nsce$1 = "⪰̸";
-    const Nscr$1 = "𝒩";
-    const nscr$1 = "𝓃";
-    const nshortmid$1 = "∤";
-    const nshortparallel$1 = "∦";
-    const nsim$1 = "≁";
-    const nsime$1 = "≄";
-    const nsimeq$1 = "≄";
-    const nsmid$1 = "∤";
-    const nspar$1 = "∦";
-    const nsqsube$1 = "⋢";
-    const nsqsupe$1 = "⋣";
-    const nsub$1 = "⊄";
-    const nsubE$1 = "⫅̸";
-    const nsube$1 = "⊈";
-    const nsubset$1 = "⊂⃒";
-    const nsubseteq$1 = "⊈";
-    const nsubseteqq$1 = "⫅̸";
-    const nsucc$1 = "⊁";
-    const nsucceq$1 = "⪰̸";
-    const nsup$1 = "⊅";
-    const nsupE$1 = "⫆̸";
-    const nsupe$1 = "⊉";
-    const nsupset$1 = "⊃⃒";
-    const nsupseteq$1 = "⊉";
-    const nsupseteqq$1 = "⫆̸";
-    const ntgl$1 = "≹";
-    const Ntilde$3 = "Ñ";
-    const ntilde$3 = "ñ";
-    const ntlg$1 = "≸";
-    const ntriangleleft$1 = "⋪";
-    const ntrianglelefteq$1 = "⋬";
-    const ntriangleright$1 = "⋫";
-    const ntrianglerighteq$1 = "⋭";
-    const Nu$1 = "Ν";
-    const nu$1 = "ν";
-    const num$2 = "#";
-    const numero$1 = "№";
-    const numsp$1 = " ";
-    const nvap$1 = "≍⃒";
-    const nvdash$1 = "⊬";
-    const nvDash$1 = "⊭";
-    const nVdash$1 = "⊮";
-    const nVDash$1 = "⊯";
-    const nvge$1 = "≥⃒";
-    const nvgt$1 = ">⃒";
-    const nvHarr$1 = "⤄";
-    const nvinfin$1 = "⧞";
-    const nvlArr$1 = "⤂";
-    const nvle$1 = "≤⃒";
-    const nvlt$1 = "<⃒";
-    const nvltrie$1 = "⊴⃒";
-    const nvrArr$1 = "⤃";
-    const nvrtrie$1 = "⊵⃒";
-    const nvsim$1 = "∼⃒";
-    const nwarhk$1 = "⤣";
-    const nwarr$1 = "↖";
-    const nwArr$1 = "⇖";
-    const nwarrow$1 = "↖";
-    const nwnear$1 = "⤧";
-    const Oacute$3 = "Ó";
-    const oacute$3 = "ó";
-    const oast$1 = "⊛";
-    const Ocirc$3 = "Ô";
-    const ocirc$3 = "ô";
-    const ocir$1 = "⊚";
-    const Ocy$1 = "О";
-    const ocy$1 = "о";
-    const odash$1 = "⊝";
-    const Odblac$1 = "Ő";
-    const odblac$1 = "ő";
-    const odiv$1 = "⨸";
-    const odot$1 = "⊙";
-    const odsold$1 = "⦼";
-    const OElig$1 = "Œ";
-    const oelig$1 = "œ";
-    const ofcir$1 = "⦿";
-    const Ofr$1 = "𝔒";
-    const ofr$1 = "𝔬";
-    const ogon$1 = "˛";
-    const Ograve$3 = "Ò";
-    const ograve$3 = "ò";
-    const ogt$1 = "⧁";
-    const ohbar$1 = "⦵";
-    const ohm$1 = "Ω";
-    const oint$1 = "∮";
-    const olarr$1 = "↺";
-    const olcir$1 = "⦾";
-    const olcross$1 = "⦻";
-    const oline$1 = "‾";
-    const olt$1 = "⧀";
-    const Omacr$1 = "Ō";
-    const omacr$1 = "ō";
-    const Omega$1 = "Ω";
-    const omega$1 = "ω";
-    const Omicron$1 = "Ο";
-    const omicron$1 = "ο";
-    const omid$1 = "⦶";
-    const ominus$1 = "⊖";
-    const Oopf$1 = "𝕆";
-    const oopf$1 = "𝕠";
-    const opar$1 = "⦷";
-    const OpenCurlyDoubleQuote$1 = "“";
-    const OpenCurlyQuote$1 = "‘";
-    const operp$1 = "⦹";
-    const oplus$1 = "⊕";
-    const orarr$1 = "↻";
-    const Or$1 = "⩔";
-    const or$1 = "∨";
-    const ord$1 = "⩝";
-    const order$2 = "ℴ";
-    const orderof$1 = "ℴ";
-    const ordf$3 = "ª";
-    const ordm$3 = "º";
-    const origof$1 = "⊶";
-    const oror$1 = "⩖";
-    const orslope$1 = "⩗";
-    const orv$1 = "⩛";
-    const oS$1 = "Ⓢ";
-    const Oscr$1 = "𝒪";
-    const oscr$1 = "ℴ";
-    const Oslash$3 = "Ø";
-    const oslash$3 = "ø";
-    const osol$1 = "⊘";
-    const Otilde$3 = "Õ";
-    const otilde$3 = "õ";
-    const otimesas$1 = "⨶";
-    const Otimes$1 = "⨷";
-    const otimes$1 = "⊗";
-    const Ouml$3 = "Ö";
-    const ouml$3 = "ö";
-    const ovbar$1 = "⌽";
-    const OverBar$1 = "‾";
-    const OverBrace$1 = "⏞";
-    const OverBracket$1 = "⎴";
-    const OverParenthesis$1 = "⏜";
-    const para$3 = "¶";
-    const parallel$1 = "∥";
-    const par$1 = "∥";
-    const parsim$1 = "⫳";
-    const parsl$1 = "⫽";
-    const part$1 = "∂";
-    const PartialD$1 = "∂";
-    const Pcy$1 = "П";
-    const pcy$1 = "п";
-    const percnt$1 = "%";
-    const period$1 = ".";
-    const permil$1 = "‰";
-    const perp$1 = "⊥";
-    const pertenk$1 = "‱";
-    const Pfr$1 = "𝔓";
-    const pfr$1 = "𝔭";
-    const Phi$1 = "Φ";
-    const phi$1 = "φ";
-    const phiv$1 = "ϕ";
-    const phmmat$1 = "ℳ";
-    const phone$1 = "☎";
-    const Pi$1 = "Π";
-    const pi$1 = "π";
-    const pitchfork$1 = "⋔";
-    const piv$1 = "ϖ";
-    const planck$1 = "ℏ";
-    const planckh$1 = "ℎ";
-    const plankv$1 = "ℏ";
-    const plusacir$1 = "⨣";
-    const plusb$1 = "⊞";
-    const pluscir$1 = "⨢";
-    const plus$1 = "+";
-    const plusdo$1 = "∔";
-    const plusdu$1 = "⨥";
-    const pluse$1 = "⩲";
-    const PlusMinus$1 = "±";
-    const plusmn$3 = "±";
-    const plussim$1 = "⨦";
-    const plustwo$1 = "⨧";
-    const pm$1 = "±";
-    const Poincareplane$1 = "ℌ";
-    const pointint$1 = "⨕";
-    const popf$1 = "𝕡";
-    const Popf$1 = "ℙ";
-    const pound$3 = "£";
-    const prap$1 = "⪷";
-    const Pr$1 = "⪻";
-    const pr$1 = "≺";
-    const prcue$1 = "≼";
-    const precapprox$1 = "⪷";
-    const prec$2 = "≺";
-    const preccurlyeq$1 = "≼";
-    const Precedes$1 = "≺";
-    const PrecedesEqual$1 = "⪯";
-    const PrecedesSlantEqual$1 = "≼";
-    const PrecedesTilde$1 = "≾";
-    const preceq$1 = "⪯";
-    const precnapprox$1 = "⪹";
-    const precneqq$1 = "⪵";
-    const precnsim$1 = "⋨";
-    const pre$1 = "⪯";
-    const prE$1 = "⪳";
-    const precsim$1 = "≾";
-    const prime$1 = "′";
-    const Prime$1 = "″";
-    const primes$1 = "ℙ";
-    const prnap$1 = "⪹";
-    const prnE$1 = "⪵";
-    const prnsim$1 = "⋨";
-    const prod$1 = "∏";
-    const Product$1 = "∏";
-    const profalar$1 = "⌮";
-    const profline$1 = "⌒";
-    const profsurf$1 = "⌓";
-    const prop$1 = "∝";
-    const Proportional$1 = "∝";
-    const Proportion$1 = "∷";
-    const propto$1 = "∝";
-    const prsim$1 = "≾";
-    const prurel$1 = "⊰";
-    const Pscr$1 = "𝒫";
-    const pscr$1 = "𝓅";
-    const Psi$1 = "Ψ";
-    const psi$1 = "ψ";
-    const puncsp$1 = " ";
-    const Qfr$1 = "𝔔";
-    const qfr$1 = "𝔮";
-    const qint$1 = "⨌";
-    const qopf$1 = "𝕢";
-    const Qopf$1 = "ℚ";
-    const qprime$1 = "⁗";
-    const Qscr$1 = "𝒬";
-    const qscr$1 = "𝓆";
-    const quaternions$1 = "ℍ";
-    const quatint$1 = "⨖";
-    const quest$1 = "?";
-    const questeq$1 = "≟";
-    const quot$5 = '"';
-    const QUOT$3 = '"';
-    const rAarr$1 = "⇛";
-    const race$1 = "∽̱";
-    const Racute$1 = "Ŕ";
-    const racute$1 = "ŕ";
-    const radic$1 = "√";
-    const raemptyv$1 = "⦳";
-    const rang$1 = "⟩";
-    const Rang$1 = "⟫";
-    const rangd$1 = "⦒";
-    const range$1 = "⦥";
-    const rangle$1 = "⟩";
-    const raquo$3 = "»";
-    const rarrap$1 = "⥵";
-    const rarrb$1 = "⇥";
-    const rarrbfs$1 = "⤠";
-    const rarrc$1 = "⤳";
-    const rarr$1 = "→";
-    const Rarr$1 = "↠";
-    const rArr$1 = "⇒";
-    const rarrfs$1 = "⤞";
-    const rarrhk$1 = "↪";
-    const rarrlp$1 = "↬";
-    const rarrpl$1 = "⥅";
-    const rarrsim$1 = "⥴";
-    const Rarrtl$1 = "⤖";
-    const rarrtl$1 = "↣";
-    const rarrw$1 = "↝";
-    const ratail$1 = "⤚";
-    const rAtail$1 = "⤜";
-    const ratio$1 = "∶";
-    const rationals$1 = "ℚ";
-    const rbarr$1 = "⤍";
-    const rBarr$1 = "⤏";
-    const RBarr$1 = "⤐";
-    const rbbrk$1 = "❳";
-    const rbrace$1 = "}";
-    const rbrack$1 = "]";
-    const rbrke$1 = "⦌";
-    const rbrksld$1 = "⦎";
-    const rbrkslu$1 = "⦐";
-    const Rcaron$1 = "Ř";
-    const rcaron$1 = "ř";
-    const Rcedil$1 = "Ŗ";
-    const rcedil$1 = "ŗ";
-    const rceil$1 = "⌉";
-    const rcub$1 = "}";
-    const Rcy$1 = "Р";
-    const rcy$1 = "р";
-    const rdca$1 = "⤷";
-    const rdldhar$1 = "⥩";
-    const rdquo$1 = "”";
-    const rdquor$1 = "”";
-    const rdsh$1 = "↳";
-    const real$1 = "ℜ";
-    const realine$1 = "ℛ";
-    const realpart$1 = "ℜ";
-    const reals$1 = "ℝ";
-    const Re$1 = "ℜ";
-    const rect$1 = "▭";
-    const reg$3 = "®";
-    const REG$3 = "®";
-    const ReverseElement$1 = "∋";
-    const ReverseEquilibrium$1 = "⇋";
-    const ReverseUpEquilibrium$1 = "⥯";
-    const rfisht$1 = "⥽";
-    const rfloor$1 = "⌋";
-    const rfr$1 = "𝔯";
-    const Rfr$1 = "ℜ";
-    const rHar$1 = "⥤";
-    const rhard$1 = "⇁";
-    const rharu$1 = "⇀";
-    const rharul$1 = "⥬";
-    const Rho$1 = "Ρ";
-    const rho$1 = "ρ";
-    const rhov$1 = "ϱ";
-    const RightAngleBracket$1 = "⟩";
-    const RightArrowBar$1 = "⇥";
-    const rightarrow$1 = "→";
-    const RightArrow$1 = "→";
-    const Rightarrow$1 = "⇒";
-    const RightArrowLeftArrow$1 = "⇄";
-    const rightarrowtail$1 = "↣";
-    const RightCeiling$1 = "⌉";
-    const RightDoubleBracket$1 = "⟧";
-    const RightDownTeeVector$1 = "⥝";
-    const RightDownVectorBar$1 = "⥕";
-    const RightDownVector$1 = "⇂";
-    const RightFloor$1 = "⌋";
-    const rightharpoondown$1 = "⇁";
-    const rightharpoonup$1 = "⇀";
-    const rightleftarrows$1 = "⇄";
-    const rightleftharpoons$1 = "⇌";
-    const rightrightarrows$1 = "⇉";
-    const rightsquigarrow$1 = "↝";
-    const RightTeeArrow$1 = "↦";
-    const RightTee$1 = "⊢";
-    const RightTeeVector$1 = "⥛";
-    const rightthreetimes$1 = "⋌";
-    const RightTriangleBar$1 = "⧐";
-    const RightTriangle$1 = "⊳";
-    const RightTriangleEqual$1 = "⊵";
-    const RightUpDownVector$1 = "⥏";
-    const RightUpTeeVector$1 = "⥜";
-    const RightUpVectorBar$1 = "⥔";
-    const RightUpVector$1 = "↾";
-    const RightVectorBar$1 = "⥓";
-    const RightVector$1 = "⇀";
-    const ring$1 = "˚";
-    const risingdotseq$1 = "≓";
-    const rlarr$1 = "⇄";
-    const rlhar$1 = "⇌";
-    const rlm$1 = "‏";
-    const rmoustache$1 = "⎱";
-    const rmoust$1 = "⎱";
-    const rnmid$1 = "⫮";
-    const roang$1 = "⟭";
-    const roarr$1 = "⇾";
-    const robrk$1 = "⟧";
-    const ropar$1 = "⦆";
-    const ropf$1 = "𝕣";
-    const Ropf$1 = "ℝ";
-    const roplus$1 = "⨮";
-    const rotimes$1 = "⨵";
-    const RoundImplies$1 = "⥰";
-    const rpar$1 = ")";
-    const rpargt$1 = "⦔";
-    const rppolint$1 = "⨒";
-    const rrarr$1 = "⇉";
-    const Rrightarrow$1 = "⇛";
-    const rsaquo$1 = "›";
-    const rscr$1 = "𝓇";
-    const Rscr$1 = "ℛ";
-    const rsh$1 = "↱";
-    const Rsh$1 = "↱";
-    const rsqb$1 = "]";
-    const rsquo$1 = "’";
-    const rsquor$1 = "’";
-    const rthree$1 = "⋌";
-    const rtimes$1 = "⋊";
-    const rtri$1 = "▹";
-    const rtrie$1 = "⊵";
-    const rtrif$1 = "▸";
-    const rtriltri$1 = "⧎";
-    const RuleDelayed$1 = "⧴";
-    const ruluhar$1 = "⥨";
-    const rx$1 = "℞";
-    const Sacute$1 = "Ś";
-    const sacute$1 = "ś";
-    const sbquo$1 = "‚";
-    const scap$1 = "⪸";
-    const Scaron$1 = "Š";
-    const scaron$1 = "š";
-    const Sc$1 = "⪼";
-    const sc$1 = "≻";
-    const sccue$1 = "≽";
-    const sce$1 = "⪰";
-    const scE$1 = "⪴";
-    const Scedil$1 = "Ş";
-    const scedil$1 = "ş";
-    const Scirc$1 = "Ŝ";
-    const scirc$1 = "ŝ";
-    const scnap$1 = "⪺";
-    const scnE$1 = "⪶";
-    const scnsim$1 = "⋩";
-    const scpolint$1 = "⨓";
-    const scsim$1 = "≿";
-    const Scy$1 = "С";
-    const scy$1 = "с";
-    const sdotb$1 = "⊡";
-    const sdot$1 = "⋅";
-    const sdote$1 = "⩦";
-    const searhk$1 = "⤥";
-    const searr$1 = "↘";
-    const seArr$1 = "⇘";
-    const searrow$1 = "↘";
-    const sect$3 = "§";
-    const semi$1 = ";";
-    const seswar$1 = "⤩";
-    const setminus$1 = "∖";
-    const setmn$1 = "∖";
-    const sext$1 = "✶";
-    const Sfr$1 = "𝔖";
-    const sfr$1 = "𝔰";
-    const sfrown$1 = "⌢";
-    const sharp$1 = "♯";
-    const SHCHcy$1 = "Щ";
-    const shchcy$1 = "щ";
-    const SHcy$1 = "Ш";
-    const shcy$1 = "ш";
-    const ShortDownArrow$1 = "↓";
-    const ShortLeftArrow$1 = "←";
-    const shortmid$1 = "∣";
-    const shortparallel$1 = "∥";
-    const ShortRightArrow$1 = "→";
-    const ShortUpArrow$1 = "↑";
-    const shy$3 = "­";
-    const Sigma$1 = "Σ";
-    const sigma$1 = "σ";
-    const sigmaf$1 = "ς";
-    const sigmav$1 = "ς";
-    const sim$1 = "∼";
-    const simdot$1 = "⩪";
-    const sime$1 = "≃";
-    const simeq$1 = "≃";
-    const simg$1 = "⪞";
-    const simgE$1 = "⪠";
-    const siml$1 = "⪝";
-    const simlE$1 = "⪟";
-    const simne$1 = "≆";
-    const simplus$1 = "⨤";
-    const simrarr$1 = "⥲";
-    const slarr$1 = "←";
-    const SmallCircle$1 = "∘";
-    const smallsetminus$1 = "∖";
-    const smashp$1 = "⨳";
-    const smeparsl$1 = "⧤";
-    const smid$1 = "∣";
-    const smile$1 = "⌣";
-    const smt$1 = "⪪";
-    const smte$1 = "⪬";
-    const smtes$1 = "⪬︀";
-    const SOFTcy$1 = "Ь";
-    const softcy$1 = "ь";
-    const solbar$1 = "⌿";
-    const solb$1 = "⧄";
-    const sol$1 = "/";
-    const Sopf$1 = "𝕊";
-    const sopf$1 = "𝕤";
-    const spades$1 = "♠";
-    const spadesuit$1 = "♠";
-    const spar$1 = "∥";
-    const sqcap$1 = "⊓";
-    const sqcaps$1 = "⊓︀";
-    const sqcup$1 = "⊔";
-    const sqcups$1 = "⊔︀";
-    const Sqrt$1 = "√";
-    const sqsub$1 = "⊏";
-    const sqsube$1 = "⊑";
-    const sqsubset$1 = "⊏";
-    const sqsubseteq$1 = "⊑";
-    const sqsup$1 = "⊐";
-    const sqsupe$1 = "⊒";
-    const sqsupset$1 = "⊐";
-    const sqsupseteq$1 = "⊒";
-    const square$1 = "□";
-    const Square$1 = "□";
-    const SquareIntersection$1 = "⊓";
-    const SquareSubset$1 = "⊏";
-    const SquareSubsetEqual$1 = "⊑";
-    const SquareSuperset$1 = "⊐";
-    const SquareSupersetEqual$1 = "⊒";
-    const SquareUnion$1 = "⊔";
-    const squarf$1 = "▪";
-    const squ$1 = "□";
-    const squf$1 = "▪";
-    const srarr$1 = "→";
-    const Sscr$1 = "𝒮";
-    const sscr$1 = "𝓈";
-    const ssetmn$1 = "∖";
-    const ssmile$1 = "⌣";
-    const sstarf$1 = "⋆";
-    const Star$1 = "⋆";
-    const star$1 = "☆";
-    const starf$1 = "★";
-    const straightepsilon$1 = "ϵ";
-    const straightphi$1 = "ϕ";
-    const strns$1 = "¯";
-    const sub$1 = "⊂";
-    const Sub$1 = "⋐";
-    const subdot$1 = "⪽";
-    const subE$1 = "⫅";
-    const sube$1 = "⊆";
-    const subedot$1 = "⫃";
-    const submult$1 = "⫁";
-    const subnE$1 = "⫋";
-    const subne$1 = "⊊";
-    const subplus$1 = "⪿";
-    const subrarr$1 = "⥹";
-    const subset$1 = "⊂";
-    const Subset$1 = "⋐";
-    const subseteq$1 = "⊆";
-    const subseteqq$1 = "⫅";
-    const SubsetEqual$1 = "⊆";
-    const subsetneq$1 = "⊊";
-    const subsetneqq$1 = "⫋";
-    const subsim$1 = "⫇";
-    const subsub$1 = "⫕";
-    const subsup$1 = "⫓";
-    const succapprox$1 = "⪸";
-    const succ$1 = "≻";
-    const succcurlyeq$1 = "≽";
-    const Succeeds$1 = "≻";
-    const SucceedsEqual$1 = "⪰";
-    const SucceedsSlantEqual$1 = "≽";
-    const SucceedsTilde$1 = "≿";
-    const succeq$1 = "⪰";
-    const succnapprox$1 = "⪺";
-    const succneqq$1 = "⪶";
-    const succnsim$1 = "⋩";
-    const succsim$1 = "≿";
-    const SuchThat$1 = "∋";
-    const sum$2 = "∑";
-    const Sum$1 = "∑";
-    const sung$1 = "♪";
-    const sup1$3 = "¹";
-    const sup2$3 = "²";
-    const sup3$3 = "³";
-    const sup$1 = "⊃";
-    const Sup$1 = "⋑";
-    const supdot$1 = "⪾";
-    const supdsub$1 = "⫘";
-    const supE$1 = "⫆";
-    const supe$1 = "⊇";
-    const supedot$1 = "⫄";
-    const Superset$1 = "⊃";
-    const SupersetEqual$1 = "⊇";
-    const suphsol$1 = "⟉";
-    const suphsub$1 = "⫗";
-    const suplarr$1 = "⥻";
-    const supmult$1 = "⫂";
-    const supnE$1 = "⫌";
-    const supne$1 = "⊋";
-    const supplus$1 = "⫀";
-    const supset$1 = "⊃";
-    const Supset$1 = "⋑";
-    const supseteq$1 = "⊇";
-    const supseteqq$1 = "⫆";
-    const supsetneq$1 = "⊋";
-    const supsetneqq$1 = "⫌";
-    const supsim$1 = "⫈";
-    const supsub$1 = "⫔";
-    const supsup$1 = "⫖";
-    const swarhk$1 = "⤦";
-    const swarr$1 = "↙";
-    const swArr$1 = "⇙";
-    const swarrow$1 = "↙";
-    const swnwar$1 = "⤪";
-    const szlig$3 = "ß";
-    const Tab$2 = "	";
-    const target$2 = "⌖";
-    const Tau$1 = "Τ";
-    const tau$1 = "τ";
-    const tbrk$1 = "⎴";
-    const Tcaron$1 = "Ť";
-    const tcaron$1 = "ť";
-    const Tcedil$1 = "Ţ";
-    const tcedil$1 = "ţ";
-    const Tcy$1 = "Т";
-    const tcy$1 = "т";
-    const tdot$1 = "⃛";
-    const telrec$1 = "⌕";
-    const Tfr$1 = "𝔗";
-    const tfr$1 = "𝔱";
-    const there4$1 = "∴";
-    const therefore$1 = "∴";
-    const Therefore$1 = "∴";
-    const Theta$1 = "Θ";
-    const theta$1 = "θ";
-    const thetasym$1 = "ϑ";
-    const thetav$1 = "ϑ";
-    const thickapprox$1 = "≈";
-    const thicksim$1 = "∼";
-    const ThickSpace$1 = "  ";
-    const ThinSpace$1 = " ";
-    const thinsp$1 = " ";
-    const thkap$1 = "≈";
-    const thksim$1 = "∼";
-    const THORN$3 = "Þ";
-    const thorn$3 = "þ";
-    const tilde$1 = "˜";
-    const Tilde$1 = "∼";
-    const TildeEqual$1 = "≃";
-    const TildeFullEqual$1 = "≅";
-    const TildeTilde$1 = "≈";
-    const timesbar$1 = "⨱";
-    const timesb$1 = "⊠";
-    const times$3 = "×";
-    const timesd$1 = "⨰";
-    const tint$1 = "∭";
-    const toea$1 = "⤨";
-    const topbot$1 = "⌶";
-    const topcir$1 = "⫱";
-    const top$3 = "⊤";
-    const Topf$1 = "𝕋";
-    const topf$1 = "𝕥";
-    const topfork$1 = "⫚";
-    const tosa$1 = "⤩";
-    const tprime$1 = "‴";
-    const trade$1 = "™";
-    const TRADE$1 = "™";
-    const triangle$1 = "▵";
-    const triangledown$1 = "▿";
-    const triangleleft$1 = "◃";
-    const trianglelefteq$1 = "⊴";
-    const triangleq$1 = "≜";
-    const triangleright$1 = "▹";
-    const trianglerighteq$1 = "⊵";
-    const tridot$1 = "◬";
-    const trie$1 = "≜";
-    const triminus$1 = "⨺";
-    const TripleDot$1 = "⃛";
-    const triplus$1 = "⨹";
-    const trisb$1 = "⧍";
-    const tritime$1 = "⨻";
-    const trpezium$1 = "⏢";
-    const Tscr$1 = "𝒯";
-    const tscr$1 = "𝓉";
-    const TScy$1 = "Ц";
-    const tscy$1 = "ц";
-    const TSHcy$1 = "Ћ";
-    const tshcy$1 = "ћ";
-    const Tstrok$1 = "Ŧ";
-    const tstrok$1 = "ŧ";
-    const twixt$1 = "≬";
-    const twoheadleftarrow$1 = "↞";
-    const twoheadrightarrow$1 = "↠";
-    const Uacute$3 = "Ú";
-    const uacute$3 = "ú";
-    const uarr$1 = "↑";
-    const Uarr$1 = "↟";
-    const uArr$1 = "⇑";
-    const Uarrocir$1 = "⥉";
-    const Ubrcy$1 = "Ў";
-    const ubrcy$1 = "ў";
-    const Ubreve$1 = "Ŭ";
-    const ubreve$1 = "ŭ";
-    const Ucirc$3 = "Û";
-    const ucirc$3 = "û";
-    const Ucy$1 = "У";
-    const ucy$1 = "у";
-    const udarr$1 = "⇅";
-    const Udblac$1 = "Ű";
-    const udblac$1 = "ű";
-    const udhar$1 = "⥮";
-    const ufisht$1 = "⥾";
-    const Ufr$1 = "𝔘";
-    const ufr$1 = "𝔲";
-    const Ugrave$3 = "Ù";
-    const ugrave$3 = "ù";
-    const uHar$1 = "⥣";
-    const uharl$1 = "↿";
-    const uharr$1 = "↾";
-    const uhblk$1 = "▀";
-    const ulcorn$1 = "⌜";
-    const ulcorner$1 = "⌜";
-    const ulcrop$1 = "⌏";
-    const ultri$1 = "◸";
-    const Umacr$1 = "Ū";
-    const umacr$1 = "ū";
-    const uml$3 = "¨";
-    const UnderBar$1 = "_";
-    const UnderBrace$1 = "⏟";
-    const UnderBracket$1 = "⎵";
-    const UnderParenthesis$1 = "⏝";
-    const Union$1 = "⋃";
-    const UnionPlus$1 = "⊎";
-    const Uogon$1 = "Ų";
-    const uogon$1 = "ų";
-    const Uopf$1 = "𝕌";
-    const uopf$1 = "𝕦";
-    const UpArrowBar$1 = "⤒";
-    const uparrow$1 = "↑";
-    const UpArrow$1 = "↑";
-    const Uparrow$1 = "⇑";
-    const UpArrowDownArrow$1 = "⇅";
-    const updownarrow$1 = "↕";
-    const UpDownArrow$1 = "↕";
-    const Updownarrow$1 = "⇕";
-    const UpEquilibrium$1 = "⥮";
-    const upharpoonleft$1 = "↿";
-    const upharpoonright$1 = "↾";
-    const uplus$1 = "⊎";
-    const UpperLeftArrow$1 = "↖";
-    const UpperRightArrow$1 = "↗";
-    const upsi$1 = "υ";
-    const Upsi$1 = "ϒ";
-    const upsih$1 = "ϒ";
-    const Upsilon$1 = "Υ";
-    const upsilon$1 = "υ";
-    const UpTeeArrow$1 = "↥";
-    const UpTee$1 = "⊥";
-    const upuparrows$1 = "⇈";
-    const urcorn$1 = "⌝";
-    const urcorner$1 = "⌝";
-    const urcrop$1 = "⌎";
-    const Uring$1 = "Ů";
-    const uring$1 = "ů";
-    const urtri$1 = "◹";
-    const Uscr$1 = "𝒰";
-    const uscr$1 = "𝓊";
-    const utdot$1 = "⋰";
-    const Utilde$1 = "Ũ";
-    const utilde$1 = "ũ";
-    const utri$1 = "▵";
-    const utrif$1 = "▴";
-    const uuarr$1 = "⇈";
-    const Uuml$3 = "Ü";
-    const uuml$3 = "ü";
-    const uwangle$1 = "⦧";
-    const vangrt$1 = "⦜";
-    const varepsilon$1 = "ϵ";
-    const varkappa$1 = "ϰ";
-    const varnothing$1 = "∅";
-    const varphi$1 = "ϕ";
-    const varpi$1 = "ϖ";
-    const varpropto$1 = "∝";
-    const varr$1 = "↕";
-    const vArr$1 = "⇕";
-    const varrho$1 = "ϱ";
-    const varsigma$1 = "ς";
-    const varsubsetneq$1 = "⊊︀";
-    const varsubsetneqq$1 = "⫋︀";
-    const varsupsetneq$1 = "⊋︀";
-    const varsupsetneqq$1 = "⫌︀";
-    const vartheta$1 = "ϑ";
-    const vartriangleleft$1 = "⊲";
-    const vartriangleright$1 = "⊳";
-    const vBar$1 = "⫨";
-    const Vbar$1 = "⫫";
-    const vBarv$1 = "⫩";
-    const Vcy$1 = "В";
-    const vcy$1 = "в";
-    const vdash$1 = "⊢";
-    const vDash$1 = "⊨";
-    const Vdash$1 = "⊩";
-    const VDash$1 = "⊫";
-    const Vdashl$1 = "⫦";
-    const veebar$1 = "⊻";
-    const vee$1 = "∨";
-    const Vee$1 = "⋁";
-    const veeeq$1 = "≚";
-    const vellip$1 = "⋮";
-    const verbar$1 = "|";
-    const Verbar$1 = "‖";
-    const vert$1 = "|";
-    const Vert$1 = "‖";
-    const VerticalBar$1 = "∣";
-    const VerticalLine$1 = "|";
-    const VerticalSeparator$1 = "❘";
-    const VerticalTilde$1 = "≀";
-    const VeryThinSpace$1 = " ";
-    const Vfr$1 = "𝔙";
-    const vfr$1 = "𝔳";
-    const vltri$1 = "⊲";
-    const vnsub$1 = "⊂⃒";
-    const vnsup$1 = "⊃⃒";
-    const Vopf$1 = "𝕍";
-    const vopf$1 = "𝕧";
-    const vprop$1 = "∝";
-    const vrtri$1 = "⊳";
-    const Vscr$1 = "𝒱";
-    const vscr$1 = "𝓋";
-    const vsubnE$1 = "⫋︀";
-    const vsubne$1 = "⊊︀";
-    const vsupnE$1 = "⫌︀";
-    const vsupne$1 = "⊋︀";
-    const Vvdash$1 = "⊪";
-    const vzigzag$1 = "⦚";
-    const Wcirc$1 = "Ŵ";
-    const wcirc$1 = "ŵ";
-    const wedbar$1 = "⩟";
-    const wedge$1 = "∧";
-    const Wedge$1 = "⋀";
-    const wedgeq$1 = "≙";
-    const weierp$1 = "℘";
-    const Wfr$1 = "𝔚";
-    const wfr$1 = "𝔴";
-    const Wopf$1 = "𝕎";
-    const wopf$1 = "𝕨";
-    const wp$1 = "℘";
-    const wr$1 = "≀";
-    const wreath$1 = "≀";
-    const Wscr$1 = "𝒲";
-    const wscr$1 = "𝓌";
-    const xcap$1 = "⋂";
-    const xcirc$1 = "◯";
-    const xcup$1 = "⋃";
-    const xdtri$1 = "▽";
-    const Xfr$1 = "𝔛";
-    const xfr$1 = "𝔵";
-    const xharr$1 = "⟷";
-    const xhArr$1 = "⟺";
-    const Xi$1 = "Ξ";
-    const xi$1 = "ξ";
-    const xlarr$1 = "⟵";
-    const xlArr$1 = "⟸";
-    const xmap$1 = "⟼";
-    const xnis$1 = "⋻";
-    const xodot$1 = "⨀";
-    const Xopf$1 = "𝕏";
-    const xopf$1 = "𝕩";
-    const xoplus$1 = "⨁";
-    const xotime$1 = "⨂";
-    const xrarr$1 = "⟶";
-    const xrArr$1 = "⟹";
-    const Xscr$1 = "𝒳";
-    const xscr$1 = "𝓍";
-    const xsqcup$1 = "⨆";
-    const xuplus$1 = "⨄";
-    const xutri$1 = "△";
-    const xvee$1 = "⋁";
-    const xwedge$1 = "⋀";
-    const Yacute$3 = "Ý";
-    const yacute$3 = "ý";
-    const YAcy$1 = "Я";
-    const yacy$1 = "я";
-    const Ycirc$1 = "Ŷ";
-    const ycirc$1 = "ŷ";
-    const Ycy$1 = "Ы";
-    const ycy$1 = "ы";
-    const yen$3 = "¥";
-    const Yfr$1 = "𝔜";
-    const yfr$1 = "𝔶";
-    const YIcy$1 = "Ї";
-    const yicy$1 = "ї";
-    const Yopf$1 = "𝕐";
-    const yopf$1 = "𝕪";
-    const Yscr$1 = "𝒴";
-    const yscr$1 = "𝓎";
-    const YUcy$1 = "Ю";
-    const yucy$1 = "ю";
-    const yuml$3 = "ÿ";
-    const Yuml$1 = "Ÿ";
-    const Zacute$1 = "Ź";
-    const zacute$1 = "ź";
-    const Zcaron$1 = "Ž";
-    const zcaron$1 = "ž";
-    const Zcy$1 = "З";
-    const zcy$1 = "з";
-    const Zdot$1 = "Ż";
-    const zdot$1 = "ż";
-    const zeetrf$1 = "ℨ";
-    const ZeroWidthSpace$1 = "​";
-    const Zeta$1 = "Ζ";
-    const zeta$1 = "ζ";
-    const zfr$1 = "𝔷";
-    const Zfr$1 = "ℨ";
-    const ZHcy$1 = "Ж";
-    const zhcy$1 = "ж";
-    const zigrarr$1 = "⇝";
-    const zopf$1 = "𝕫";
-    const Zopf$1 = "ℤ";
-    const Zscr$1 = "𝒵";
-    const zscr$1 = "𝓏";
-    const zwj$1 = "‍";
-    const zwnj$1 = "‌";
-    const require$$1$2 = {
-      Aacute: Aacute$3,
-      aacute: aacute$3,
-      Abreve: Abreve$1,
-      abreve: abreve$1,
-      ac: ac$1,
-      acd: acd$1,
-      acE: acE$1,
-      Acirc: Acirc$3,
-      acirc: acirc$3,
-      acute: acute$3,
-      Acy: Acy$1,
-      acy: acy$1,
-      AElig: AElig$3,
-      aelig: aelig$3,
-      af: af$1,
-      Afr: Afr$1,
-      afr: afr$1,
-      Agrave: Agrave$3,
-      agrave: agrave$3,
-      alefsym: alefsym$1,
-      aleph: aleph$1,
-      Alpha: Alpha$1,
-      alpha: alpha$1,
-      Amacr: Amacr$1,
-      amacr: amacr$1,
-      amalg: amalg$1,
-      amp: amp$5,
-      AMP: AMP$3,
-      andand: andand$1,
-      And: And$1,
-      and: and$1,
-      andd: andd$1,
-      andslope: andslope$1,
-      andv: andv$1,
-      ang: ang$1,
-      ange: ange$1,
-      angle: angle$1,
-      angmsdaa: angmsdaa$1,
-      angmsdab: angmsdab$1,
-      angmsdac: angmsdac$1,
-      angmsdad: angmsdad$1,
-      angmsdae: angmsdae$1,
-      angmsdaf: angmsdaf$1,
-      angmsdag: angmsdag$1,
-      angmsdah: angmsdah$1,
-      angmsd: angmsd$1,
-      angrt: angrt$1,
-      angrtvb: angrtvb$1,
-      angrtvbd: angrtvbd$1,
-      angsph: angsph$1,
-      angst: angst$1,
-      angzarr: angzarr$1,
-      Aogon: Aogon$1,
-      aogon: aogon$1,
-      Aopf: Aopf$1,
-      aopf: aopf$1,
-      apacir: apacir$1,
-      ap: ap$1,
-      apE: apE$1,
-      ape: ape$1,
-      apid: apid$1,
-      apos: apos$3,
-      ApplyFunction: ApplyFunction$1,
-      approx: approx$1,
-      approxeq: approxeq$1,
-      Aring: Aring$3,
-      aring: aring$3,
-      Ascr: Ascr$1,
-      ascr: ascr$1,
-      Assign: Assign$1,
-      ast: ast$1,
-      asymp: asymp$1,
-      asympeq: asympeq$1,
-      Atilde: Atilde$3,
-      atilde: atilde$3,
-      Auml: Auml$3,
-      auml: auml$3,
-      awconint: awconint$1,
-      awint: awint$1,
-      backcong: backcong$1,
-      backepsilon: backepsilon$1,
-      backprime: backprime$1,
-      backsim: backsim$1,
-      backsimeq: backsimeq$1,
-      Backslash: Backslash$1,
-      Barv: Barv$1,
-      barvee: barvee$1,
-      barwed: barwed$1,
-      Barwed: Barwed$1,
-      barwedge: barwedge$1,
-      bbrk: bbrk$1,
-      bbrktbrk: bbrktbrk$1,
-      bcong: bcong$1,
-      Bcy: Bcy$1,
-      bcy: bcy$1,
-      bdquo: bdquo$1,
-      becaus: becaus$1,
-      because: because$1,
-      Because: Because$1,
-      bemptyv: bemptyv$1,
-      bepsi: bepsi$1,
-      bernou: bernou$1,
-      Bernoullis: Bernoullis$1,
-      Beta: Beta$1,
-      beta: beta$1,
-      beth: beth$1,
-      between: between$1,
-      Bfr: Bfr$1,
-      bfr: bfr$1,
-      bigcap: bigcap$1,
-      bigcirc: bigcirc$1,
-      bigcup: bigcup$1,
-      bigodot: bigodot$1,
-      bigoplus: bigoplus$1,
-      bigotimes: bigotimes$1,
-      bigsqcup: bigsqcup$1,
-      bigstar: bigstar$1,
-      bigtriangledown: bigtriangledown$1,
-      bigtriangleup: bigtriangleup$1,
-      biguplus: biguplus$1,
-      bigvee: bigvee$1,
-      bigwedge: bigwedge$1,
-      bkarow: bkarow$1,
-      blacklozenge: blacklozenge$1,
-      blacksquare: blacksquare$1,
-      blacktriangle: blacktriangle$1,
-      blacktriangledown: blacktriangledown$1,
-      blacktriangleleft: blacktriangleleft$1,
-      blacktriangleright: blacktriangleright$1,
-      blank: blank$1,
-      blk12: blk12$1,
-      blk14: blk14$1,
-      blk34: blk34$1,
-      block: block$1,
-      bne: bne$1,
-      bnequiv: bnequiv$1,
-      bNot: bNot$1,
-      bnot: bnot$1,
-      Bopf: Bopf$1,
-      bopf: bopf$1,
-      bot: bot$1,
-      bottom: bottom$2,
-      bowtie: bowtie$1,
-      boxbox: boxbox$1,
-      boxdl: boxdl$1,
-      boxdL: boxdL$1,
-      boxDl: boxDl$1,
-      boxDL: boxDL$1,
-      boxdr: boxdr$1,
-      boxdR: boxdR$1,
-      boxDr: boxDr$1,
-      boxDR: boxDR$1,
-      boxh: boxh$1,
-      boxH: boxH$1,
-      boxhd: boxhd$1,
-      boxHd: boxHd$1,
-      boxhD: boxhD$1,
-      boxHD: boxHD$1,
-      boxhu: boxhu$1,
-      boxHu: boxHu$1,
-      boxhU: boxhU$1,
-      boxHU: boxHU$1,
-      boxminus: boxminus$1,
-      boxplus: boxplus$1,
-      boxtimes: boxtimes$1,
-      boxul: boxul$1,
-      boxuL: boxuL$1,
-      boxUl: boxUl$1,
-      boxUL: boxUL$1,
-      boxur: boxur$1,
-      boxuR: boxuR$1,
-      boxUr: boxUr$1,
-      boxUR: boxUR$1,
-      boxv: boxv$1,
-      boxV: boxV$1,
-      boxvh: boxvh$1,
-      boxvH: boxvH$1,
-      boxVh: boxVh$1,
-      boxVH: boxVH$1,
-      boxvl: boxvl$1,
-      boxvL: boxvL$1,
-      boxVl: boxVl$1,
-      boxVL: boxVL$1,
-      boxvr: boxvr$1,
-      boxvR: boxvR$1,
-      boxVr: boxVr$1,
-      boxVR: boxVR$1,
-      bprime: bprime$1,
-      breve: breve$1,
-      Breve: Breve$1,
-      brvbar: brvbar$3,
-      bscr: bscr$1,
-      Bscr: Bscr$1,
-      bsemi: bsemi$1,
-      bsim: bsim$1,
-      bsime: bsime$1,
-      bsolb: bsolb$1,
-      bsol: bsol$1,
-      bsolhsub: bsolhsub$1,
-      bull: bull$1,
-      bullet: bullet$1,
-      bump: bump$1,
-      bumpE: bumpE$1,
-      bumpe: bumpe$1,
-      Bumpeq: Bumpeq$1,
-      bumpeq: bumpeq$1,
-      Cacute: Cacute$1,
-      cacute: cacute$1,
-      capand: capand$1,
-      capbrcup: capbrcup$1,
-      capcap: capcap$1,
-      cap: cap$1,
-      Cap: Cap$1,
-      capcup: capcup$1,
-      capdot: capdot$1,
-      CapitalDifferentialD: CapitalDifferentialD$1,
-      caps: caps$1,
-      caret: caret$1,
-      caron: caron$1,
-      Cayleys: Cayleys$1,
-      ccaps: ccaps$1,
-      Ccaron: Ccaron$1,
-      ccaron: ccaron$1,
-      Ccedil: Ccedil$3,
-      ccedil: ccedil$3,
-      Ccirc: Ccirc$1,
-      ccirc: ccirc$1,
-      Cconint: Cconint$1,
-      ccups: ccups$1,
-      ccupssm: ccupssm$1,
-      Cdot: Cdot$1,
-      cdot: cdot$1,
-      cedil: cedil$3,
-      Cedilla: Cedilla$1,
-      cemptyv: cemptyv$1,
-      cent: cent$3,
-      centerdot: centerdot$1,
-      CenterDot: CenterDot$1,
-      cfr: cfr$1,
-      Cfr: Cfr$1,
-      CHcy: CHcy$1,
-      chcy: chcy$1,
-      check: check$1,
-      checkmark: checkmark$1,
-      Chi: Chi$1,
-      chi: chi$1,
-      circ: circ$1,
-      circeq: circeq$1,
-      circlearrowleft: circlearrowleft$1,
-      circlearrowright: circlearrowright$1,
-      circledast: circledast$1,
-      circledcirc: circledcirc$1,
-      circleddash: circleddash$1,
-      CircleDot: CircleDot$1,
-      circledR: circledR$1,
-      circledS: circledS$1,
-      CircleMinus: CircleMinus$1,
-      CirclePlus: CirclePlus$1,
-      CircleTimes: CircleTimes$1,
-      cir: cir$1,
-      cirE: cirE$1,
-      cire: cire$1,
-      cirfnint: cirfnint$1,
-      cirmid: cirmid$1,
-      cirscir: cirscir$1,
-      ClockwiseContourIntegral: ClockwiseContourIntegral$1,
-      CloseCurlyDoubleQuote: CloseCurlyDoubleQuote$1,
-      CloseCurlyQuote: CloseCurlyQuote$1,
-      clubs: clubs$1,
-      clubsuit: clubsuit$1,
-      colon: colon$1,
-      Colon: Colon$1,
-      Colone: Colone$1,
-      colone: colone$1,
-      coloneq: coloneq$1,
-      comma: comma$1,
-      commat: commat$1,
-      comp: comp$1,
-      compfn: compfn$1,
-      complement: complement$1,
-      complexes: complexes$1,
-      cong: cong$1,
-      congdot: congdot$1,
-      Congruent: Congruent$1,
-      conint: conint$1,
-      Conint: Conint$1,
-      ContourIntegral: ContourIntegral$1,
-      copf: copf$1,
-      Copf: Copf$1,
-      coprod: coprod$1,
-      Coproduct: Coproduct$1,
-      copy: copy$3,
-      COPY: COPY$3,
-      copysr: copysr$1,
-      CounterClockwiseContourIntegral: CounterClockwiseContourIntegral$1,
-      crarr: crarr$1,
-      cross: cross$1,
-      Cross: Cross$1,
-      Cscr: Cscr$1,
-      cscr: cscr$1,
-      csub: csub$1,
-      csube: csube$1,
-      csup: csup$1,
-      csupe: csupe$1,
-      ctdot: ctdot$1,
-      cudarrl: cudarrl$1,
-      cudarrr: cudarrr$1,
-      cuepr: cuepr$1,
-      cuesc: cuesc$1,
-      cularr: cularr$1,
-      cularrp: cularrp$1,
-      cupbrcap: cupbrcap$1,
-      cupcap: cupcap$1,
-      CupCap: CupCap$1,
-      cup: cup$1,
-      Cup: Cup$1,
-      cupcup: cupcup$1,
-      cupdot: cupdot$1,
-      cupor: cupor$1,
-      cups: cups$1,
-      curarr: curarr$1,
-      curarrm: curarrm$1,
-      curlyeqprec: curlyeqprec$1,
-      curlyeqsucc: curlyeqsucc$1,
-      curlyvee: curlyvee$1,
-      curlywedge: curlywedge$1,
-      curren: curren$3,
-      curvearrowleft: curvearrowleft$1,
-      curvearrowright: curvearrowright$1,
-      cuvee: cuvee$1,
-      cuwed: cuwed$1,
-      cwconint: cwconint$1,
-      cwint: cwint$1,
-      cylcty: cylcty$1,
-      dagger: dagger$1,
-      Dagger: Dagger$1,
-      daleth: daleth$1,
-      darr: darr$1,
-      Darr: Darr$1,
-      dArr: dArr$1,
-      dash: dash$1,
-      Dashv: Dashv$1,
-      dashv: dashv$1,
-      dbkarow: dbkarow$1,
-      dblac: dblac$1,
-      Dcaron: Dcaron$1,
-      dcaron: dcaron$1,
-      Dcy: Dcy$1,
-      dcy: dcy$1,
-      ddagger: ddagger$1,
-      ddarr: ddarr$1,
-      DD: DD$1,
-      dd: dd$1,
-      DDotrahd: DDotrahd$1,
-      ddotseq: ddotseq$1,
-      deg: deg$3,
-      Del: Del$1,
-      Delta: Delta$1,
-      delta: delta$1,
-      demptyv: demptyv$1,
-      dfisht: dfisht$1,
-      Dfr: Dfr$1,
-      dfr: dfr$1,
-      dHar: dHar$1,
-      dharl: dharl$1,
-      dharr: dharr$1,
-      DiacriticalAcute: DiacriticalAcute$1,
-      DiacriticalDot: DiacriticalDot$1,
-      DiacriticalDoubleAcute: DiacriticalDoubleAcute$1,
-      DiacriticalGrave: DiacriticalGrave$1,
-      DiacriticalTilde: DiacriticalTilde$1,
-      diam: diam$1,
-      diamond: diamond$1,
-      Diamond: Diamond$1,
-      diamondsuit: diamondsuit$1,
-      diams: diams$1,
-      die: die$1,
-      DifferentialD: DifferentialD$1,
-      digamma: digamma$1,
-      disin: disin$1,
-      div: div$1,
-      divide: divide$3,
-      divideontimes: divideontimes$1,
-      divonx: divonx$1,
-      DJcy: DJcy$1,
-      djcy: djcy$1,
-      dlcorn: dlcorn$1,
-      dlcrop: dlcrop$1,
-      dollar: dollar$1,
-      Dopf: Dopf$1,
-      dopf: dopf$1,
-      Dot: Dot$1,
-      dot: dot$2,
-      DotDot: DotDot$1,
-      doteq: doteq$1,
-      doteqdot: doteqdot$1,
-      DotEqual: DotEqual$1,
-      dotminus: dotminus$1,
-      dotplus: dotplus$1,
-      dotsquare: dotsquare$1,
-      doublebarwedge: doublebarwedge$1,
-      DoubleContourIntegral: DoubleContourIntegral$1,
-      DoubleDot: DoubleDot$1,
-      DoubleDownArrow: DoubleDownArrow$1,
-      DoubleLeftArrow: DoubleLeftArrow$1,
-      DoubleLeftRightArrow: DoubleLeftRightArrow$1,
-      DoubleLeftTee: DoubleLeftTee$1,
-      DoubleLongLeftArrow: DoubleLongLeftArrow$1,
-      DoubleLongLeftRightArrow: DoubleLongLeftRightArrow$1,
-      DoubleLongRightArrow: DoubleLongRightArrow$1,
-      DoubleRightArrow: DoubleRightArrow$1,
-      DoubleRightTee: DoubleRightTee$1,
-      DoubleUpArrow: DoubleUpArrow$1,
-      DoubleUpDownArrow: DoubleUpDownArrow$1,
-      DoubleVerticalBar: DoubleVerticalBar$1,
-      DownArrowBar: DownArrowBar$1,
-      downarrow: downarrow$1,
-      DownArrow: DownArrow$1,
-      Downarrow: Downarrow$1,
-      DownArrowUpArrow: DownArrowUpArrow$1,
-      DownBreve: DownBreve$1,
-      downdownarrows: downdownarrows$1,
-      downharpoonleft: downharpoonleft$1,
-      downharpoonright: downharpoonright$1,
-      DownLeftRightVector: DownLeftRightVector$1,
-      DownLeftTeeVector: DownLeftTeeVector$1,
-      DownLeftVectorBar: DownLeftVectorBar$1,
-      DownLeftVector: DownLeftVector$1,
-      DownRightTeeVector: DownRightTeeVector$1,
-      DownRightVectorBar: DownRightVectorBar$1,
-      DownRightVector: DownRightVector$1,
-      DownTeeArrow: DownTeeArrow$1,
-      DownTee: DownTee$1,
-      drbkarow: drbkarow$1,
-      drcorn: drcorn$1,
-      drcrop: drcrop$1,
-      Dscr: Dscr$1,
-      dscr: dscr$1,
-      DScy: DScy$1,
-      dscy: dscy$1,
-      dsol: dsol$1,
-      Dstrok: Dstrok$1,
-      dstrok: dstrok$1,
-      dtdot: dtdot$1,
-      dtri: dtri$1,
-      dtrif: dtrif$1,
-      duarr: duarr$1,
-      duhar: duhar$1,
-      dwangle: dwangle$1,
-      DZcy: DZcy$1,
-      dzcy: dzcy$1,
-      dzigrarr: dzigrarr$1,
-      Eacute: Eacute$3,
-      eacute: eacute$3,
-      easter: easter$1,
-      Ecaron: Ecaron$1,
-      ecaron: ecaron$1,
-      Ecirc: Ecirc$3,
-      ecirc: ecirc$3,
-      ecir: ecir$1,
-      ecolon: ecolon$1,
-      Ecy: Ecy$1,
-      ecy: ecy$1,
-      eDDot: eDDot$1,
-      Edot: Edot$1,
-      edot: edot$1,
-      eDot: eDot$1,
-      ee: ee$1,
-      efDot: efDot$1,
-      Efr: Efr$1,
-      efr: efr$1,
-      eg: eg$1,
-      Egrave: Egrave$3,
-      egrave: egrave$3,
-      egs: egs$1,
-      egsdot: egsdot$1,
-      el: el$1,
-      Element: Element$2,
-      elinters: elinters$1,
-      ell: ell$1,
-      els: els$1,
-      elsdot: elsdot$1,
-      Emacr: Emacr$1,
-      emacr: emacr$1,
-      empty: empty$1,
-      emptyset: emptyset$1,
-      EmptySmallSquare: EmptySmallSquare$1,
-      emptyv: emptyv$1,
-      EmptyVerySmallSquare: EmptyVerySmallSquare$1,
-      emsp13: emsp13$1,
-      emsp14: emsp14$1,
-      emsp: emsp$1,
-      ENG: ENG$1,
-      eng: eng$1,
-      ensp: ensp$1,
-      Eogon: Eogon$1,
-      eogon: eogon$1,
-      Eopf: Eopf$1,
-      eopf: eopf$1,
-      epar: epar$1,
-      eparsl: eparsl$1,
-      eplus: eplus$1,
-      epsi: epsi$1,
-      Epsilon: Epsilon$2,
-      epsilon: epsilon$1,
-      epsiv: epsiv$1,
-      eqcirc: eqcirc$1,
-      eqcolon: eqcolon$1,
-      eqsim: eqsim$1,
-      eqslantgtr: eqslantgtr$1,
-      eqslantless: eqslantless$1,
-      Equal: Equal$1,
-      equals: equals$2,
-      EqualTilde: EqualTilde$1,
-      equest: equest$1,
-      Equilibrium: Equilibrium$1,
-      equiv: equiv$1,
-      equivDD: equivDD$1,
-      eqvparsl: eqvparsl$1,
-      erarr: erarr$1,
-      erDot: erDot$1,
-      escr: escr$1,
-      Escr: Escr$1,
-      esdot: esdot$1,
-      Esim: Esim$1,
-      esim: esim$1,
-      Eta: Eta$1,
-      eta: eta$1,
-      ETH: ETH$3,
-      eth: eth$3,
-      Euml: Euml$3,
-      euml: euml$3,
-      euro: euro$1,
-      excl: excl$1,
-      exist: exist$1,
-      Exists: Exists$1,
-      expectation: expectation$1,
-      exponentiale: exponentiale$1,
-      ExponentialE: ExponentialE$1,
-      fallingdotseq: fallingdotseq$1,
-      Fcy: Fcy$1,
-      fcy: fcy$1,
-      female: female$1,
-      ffilig: ffilig$1,
-      fflig: fflig$1,
-      ffllig: ffllig$1,
-      Ffr: Ffr$1,
-      ffr: ffr$1,
-      filig: filig$1,
-      FilledSmallSquare: FilledSmallSquare$1,
-      FilledVerySmallSquare: FilledVerySmallSquare$1,
-      fjlig: fjlig$1,
-      flat: flat$1,
-      fllig: fllig$1,
-      fltns: fltns$1,
-      fnof: fnof$1,
-      Fopf: Fopf$1,
-      fopf: fopf$1,
-      forall: forall$1,
-      ForAll: ForAll$1,
-      fork: fork$1,
-      forkv: forkv$1,
-      Fouriertrf: Fouriertrf$1,
-      fpartint: fpartint$1,
-      frac12: frac12$3,
-      frac13: frac13$1,
-      frac14: frac14$3,
-      frac15: frac15$1,
-      frac16: frac16$1,
-      frac18: frac18$1,
-      frac23: frac23$1,
-      frac25: frac25$1,
-      frac34: frac34$3,
-      frac35: frac35$1,
-      frac38: frac38$1,
-      frac45: frac45$1,
-      frac56: frac56$1,
-      frac58: frac58$1,
-      frac78: frac78$1,
-      frasl: frasl$1,
-      frown: frown$1,
-      fscr: fscr$1,
-      Fscr: Fscr$1,
-      gacute: gacute$1,
-      Gamma: Gamma$1,
-      gamma: gamma$1,
-      Gammad: Gammad$1,
-      gammad: gammad$1,
-      gap: gap$1,
-      Gbreve: Gbreve$1,
-      gbreve: gbreve$1,
-      Gcedil: Gcedil$1,
-      Gcirc: Gcirc$1,
-      gcirc: gcirc$1,
-      Gcy: Gcy$1,
-      gcy: gcy$1,
-      Gdot: Gdot$1,
-      gdot: gdot$1,
-      ge: ge$1,
-      gE: gE$1,
-      gEl: gEl$1,
-      gel: gel$1,
-      geq: geq$1,
-      geqq: geqq$1,
-      geqslant: geqslant$1,
-      gescc: gescc$1,
-      ges: ges$1,
-      gesdot: gesdot$1,
-      gesdoto: gesdoto$1,
-      gesdotol: gesdotol$1,
-      gesl: gesl$1,
-      gesles: gesles$1,
-      Gfr: Gfr$1,
-      gfr: gfr$1,
-      gg: gg$1,
-      Gg: Gg$1,
-      ggg: ggg$1,
-      gimel: gimel$1,
-      GJcy: GJcy$1,
-      gjcy: gjcy$1,
-      gla: gla$1,
-      gl: gl$1,
-      glE: glE$1,
-      glj: glj$1,
-      gnap: gnap$1,
-      gnapprox: gnapprox$1,
-      gne: gne$1,
-      gnE: gnE$1,
-      gneq: gneq$1,
-      gneqq: gneqq$1,
-      gnsim: gnsim$1,
-      Gopf: Gopf$1,
-      gopf: gopf$1,
-      grave: grave$1,
-      GreaterEqual: GreaterEqual$1,
-      GreaterEqualLess: GreaterEqualLess$1,
-      GreaterFullEqual: GreaterFullEqual$1,
-      GreaterGreater: GreaterGreater$1,
-      GreaterLess: GreaterLess$1,
-      GreaterSlantEqual: GreaterSlantEqual$1,
-      GreaterTilde: GreaterTilde$1,
-      Gscr: Gscr$1,
-      gscr: gscr$1,
-      gsim: gsim$1,
-      gsime: gsime$1,
-      gsiml: gsiml$1,
-      gtcc: gtcc$1,
-      gtcir: gtcir$1,
-      gt: gt$5,
-      GT: GT$3,
-      Gt: Gt$1,
-      gtdot: gtdot$1,
-      gtlPar: gtlPar$1,
-      gtquest: gtquest$1,
-      gtrapprox: gtrapprox$1,
-      gtrarr: gtrarr$1,
-      gtrdot: gtrdot$1,
-      gtreqless: gtreqless$1,
-      gtreqqless: gtreqqless$1,
-      gtrless: gtrless$1,
-      gtrsim: gtrsim$1,
-      gvertneqq: gvertneqq$1,
-      gvnE: gvnE$1,
-      Hacek: Hacek$1,
-      hairsp: hairsp$1,
-      half: half$1,
-      hamilt: hamilt$1,
-      HARDcy: HARDcy$1,
-      hardcy: hardcy$1,
-      harrcir: harrcir$1,
-      harr: harr$1,
-      hArr: hArr$1,
-      harrw: harrw$1,
-      Hat: Hat$1,
-      hbar: hbar$1,
-      Hcirc: Hcirc$1,
-      hcirc: hcirc$1,
-      hearts: hearts$1,
-      heartsuit: heartsuit$1,
-      hellip: hellip$1,
-      hercon: hercon$1,
-      hfr: hfr$1,
-      Hfr: Hfr$1,
-      HilbertSpace: HilbertSpace$1,
-      hksearow: hksearow$1,
-      hkswarow: hkswarow$1,
-      hoarr: hoarr$1,
-      homtht: homtht$1,
-      hookleftarrow: hookleftarrow$1,
-      hookrightarrow: hookrightarrow$1,
-      hopf: hopf$1,
-      Hopf: Hopf$1,
-      horbar: horbar$1,
-      HorizontalLine: HorizontalLine$1,
-      hscr: hscr$1,
-      Hscr: Hscr$1,
-      hslash: hslash$1,
-      Hstrok: Hstrok$1,
-      hstrok: hstrok$1,
-      HumpDownHump: HumpDownHump$1,
-      HumpEqual: HumpEqual$1,
-      hybull: hybull$1,
-      hyphen: hyphen$1,
-      Iacute: Iacute$3,
-      iacute: iacute$3,
-      ic: ic$1,
-      Icirc: Icirc$3,
-      icirc: icirc$3,
-      Icy: Icy$1,
-      icy: icy$1,
-      Idot: Idot$1,
-      IEcy: IEcy$1,
-      iecy: iecy$1,
-      iexcl: iexcl$3,
-      iff: iff$1,
-      ifr: ifr$1,
-      Ifr: Ifr$1,
-      Igrave: Igrave$3,
-      igrave: igrave$3,
-      ii: ii$1,
-      iiiint: iiiint$1,
-      iiint: iiint$1,
-      iinfin: iinfin$1,
-      iiota: iiota$1,
-      IJlig: IJlig$1,
-      ijlig: ijlig$1,
-      Imacr: Imacr$1,
-      imacr: imacr$1,
-      image: image$2,
-      ImaginaryI: ImaginaryI$1,
-      imagline: imagline$1,
-      imagpart: imagpart$1,
-      imath: imath$1,
-      Im: Im$1,
-      imof: imof$1,
-      imped: imped$1,
-      Implies: Implies$1,
-      incare: incare$1,
-      "in": "∈",
-      infin: infin$1,
-      infintie: infintie$1,
-      inodot: inodot$1,
-      intcal: intcal$1,
-      int: int$1,
-      Int: Int$1,
-      integers: integers$1,
-      Integral: Integral$1,
-      intercal: intercal$1,
-      Intersection: Intersection$1,
-      intlarhk: intlarhk$1,
-      intprod: intprod$1,
-      InvisibleComma: InvisibleComma$1,
-      InvisibleTimes: InvisibleTimes$1,
-      IOcy: IOcy$1,
-      iocy: iocy$1,
-      Iogon: Iogon$1,
-      iogon: iogon$1,
-      Iopf: Iopf$1,
-      iopf: iopf$1,
-      Iota: Iota$1,
-      iota: iota$1,
-      iprod: iprod$1,
-      iquest: iquest$3,
-      iscr: iscr$1,
-      Iscr: Iscr$1,
-      isin: isin$1,
-      isindot: isindot$1,
-      isinE: isinE$1,
-      isins: isins$1,
-      isinsv: isinsv$1,
-      isinv: isinv$1,
-      it: it$1,
-      Itilde: Itilde$1,
-      itilde: itilde$1,
-      Iukcy: Iukcy$1,
-      iukcy: iukcy$1,
-      Iuml: Iuml$3,
-      iuml: iuml$3,
-      Jcirc: Jcirc$1,
-      jcirc: jcirc$1,
-      Jcy: Jcy$1,
-      jcy: jcy$1,
-      Jfr: Jfr$1,
-      jfr: jfr$1,
-      jmath: jmath$1,
-      Jopf: Jopf$1,
-      jopf: jopf$1,
-      Jscr: Jscr$1,
-      jscr: jscr$1,
-      Jsercy: Jsercy$1,
-      jsercy: jsercy$1,
-      Jukcy: Jukcy$1,
-      jukcy: jukcy$1,
-      Kappa: Kappa$1,
-      kappa: kappa$1,
-      kappav: kappav$1,
-      Kcedil: Kcedil$1,
-      kcedil: kcedil$1,
-      Kcy: Kcy$1,
-      kcy: kcy$1,
-      Kfr: Kfr$1,
-      kfr: kfr$1,
-      kgreen: kgreen$1,
-      KHcy: KHcy$1,
-      khcy: khcy$1,
-      KJcy: KJcy$1,
-      kjcy: kjcy$1,
-      Kopf: Kopf$1,
-      kopf: kopf$1,
-      Kscr: Kscr$1,
-      kscr: kscr$1,
-      lAarr: lAarr$1,
-      Lacute: Lacute$1,
-      lacute: lacute$1,
-      laemptyv: laemptyv$1,
-      lagran: lagran$1,
-      Lambda: Lambda$1,
-      lambda: lambda$1,
-      lang: lang$1,
-      Lang: Lang$1,
-      langd: langd$1,
-      langle: langle$1,
-      lap: lap$1,
-      Laplacetrf: Laplacetrf$1,
-      laquo: laquo$3,
-      larrb: larrb$1,
-      larrbfs: larrbfs$1,
-      larr: larr$1,
-      Larr: Larr$1,
-      lArr: lArr$1,
-      larrfs: larrfs$1,
-      larrhk: larrhk$1,
-      larrlp: larrlp$1,
-      larrpl: larrpl$1,
-      larrsim: larrsim$1,
-      larrtl: larrtl$1,
-      latail: latail$1,
-      lAtail: lAtail$1,
-      lat: lat$1,
-      late: late$1,
-      lates: lates$1,
-      lbarr: lbarr$1,
-      lBarr: lBarr$1,
-      lbbrk: lbbrk$1,
-      lbrace: lbrace$1,
-      lbrack: lbrack$1,
-      lbrke: lbrke$1,
-      lbrksld: lbrksld$1,
-      lbrkslu: lbrkslu$1,
-      Lcaron: Lcaron$1,
-      lcaron: lcaron$1,
-      Lcedil: Lcedil$1,
-      lcedil: lcedil$1,
-      lceil: lceil$1,
-      lcub: lcub$1,
-      Lcy: Lcy$1,
-      lcy: lcy$1,
-      ldca: ldca$1,
-      ldquo: ldquo$1,
-      ldquor: ldquor$1,
-      ldrdhar: ldrdhar$1,
-      ldrushar: ldrushar$1,
-      ldsh: ldsh$1,
-      le: le$1,
-      lE: lE$1,
-      LeftAngleBracket: LeftAngleBracket$1,
-      LeftArrowBar: LeftArrowBar$1,
-      leftarrow: leftarrow$1,
-      LeftArrow: LeftArrow$1,
-      Leftarrow: Leftarrow$1,
-      LeftArrowRightArrow: LeftArrowRightArrow$1,
-      leftarrowtail: leftarrowtail$1,
-      LeftCeiling: LeftCeiling$1,
-      LeftDoubleBracket: LeftDoubleBracket$1,
-      LeftDownTeeVector: LeftDownTeeVector$1,
-      LeftDownVectorBar: LeftDownVectorBar$1,
-      LeftDownVector: LeftDownVector$1,
-      LeftFloor: LeftFloor$1,
-      leftharpoondown: leftharpoondown$1,
-      leftharpoonup: leftharpoonup$1,
-      leftleftarrows: leftleftarrows$1,
-      leftrightarrow: leftrightarrow$1,
-      LeftRightArrow: LeftRightArrow$1,
-      Leftrightarrow: Leftrightarrow$1,
-      leftrightarrows: leftrightarrows$1,
-      leftrightharpoons: leftrightharpoons$1,
-      leftrightsquigarrow: leftrightsquigarrow$1,
-      LeftRightVector: LeftRightVector$1,
-      LeftTeeArrow: LeftTeeArrow$1,
-      LeftTee: LeftTee$1,
-      LeftTeeVector: LeftTeeVector$1,
-      leftthreetimes: leftthreetimes$1,
-      LeftTriangleBar: LeftTriangleBar$1,
-      LeftTriangle: LeftTriangle$1,
-      LeftTriangleEqual: LeftTriangleEqual$1,
-      LeftUpDownVector: LeftUpDownVector$1,
-      LeftUpTeeVector: LeftUpTeeVector$1,
-      LeftUpVectorBar: LeftUpVectorBar$1,
-      LeftUpVector: LeftUpVector$1,
-      LeftVectorBar: LeftVectorBar$1,
-      LeftVector: LeftVector$1,
-      lEg: lEg$1,
-      leg: leg$1,
-      leq: leq$1,
-      leqq: leqq$1,
-      leqslant: leqslant$1,
-      lescc: lescc$1,
-      les: les$1,
-      lesdot: lesdot$1,
-      lesdoto: lesdoto$1,
-      lesdotor: lesdotor$1,
-      lesg: lesg$1,
-      lesges: lesges$1,
-      lessapprox: lessapprox$1,
-      lessdot: lessdot$1,
-      lesseqgtr: lesseqgtr$1,
-      lesseqqgtr: lesseqqgtr$1,
-      LessEqualGreater: LessEqualGreater$1,
-      LessFullEqual: LessFullEqual$1,
-      LessGreater: LessGreater$1,
-      lessgtr: lessgtr$1,
-      LessLess: LessLess$1,
-      lesssim: lesssim$1,
-      LessSlantEqual: LessSlantEqual$1,
-      LessTilde: LessTilde$1,
-      lfisht: lfisht$1,
-      lfloor: lfloor$1,
-      Lfr: Lfr$1,
-      lfr: lfr$1,
-      lg: lg$1,
-      lgE: lgE$1,
-      lHar: lHar$1,
-      lhard: lhard$1,
-      lharu: lharu$1,
-      lharul: lharul$1,
-      lhblk: lhblk$1,
-      LJcy: LJcy$1,
-      ljcy: ljcy$1,
-      llarr: llarr$1,
-      ll: ll$1,
-      Ll: Ll$1,
-      llcorner: llcorner$1,
-      Lleftarrow: Lleftarrow$1,
-      llhard: llhard$1,
-      lltri: lltri$1,
-      Lmidot: Lmidot$1,
-      lmidot: lmidot$1,
-      lmoustache: lmoustache$1,
-      lmoust: lmoust$1,
-      lnap: lnap$1,
-      lnapprox: lnapprox$1,
-      lne: lne$1,
-      lnE: lnE$1,
-      lneq: lneq$1,
-      lneqq: lneqq$1,
-      lnsim: lnsim$1,
-      loang: loang$1,
-      loarr: loarr$1,
-      lobrk: lobrk$1,
-      longleftarrow: longleftarrow$1,
-      LongLeftArrow: LongLeftArrow$1,
-      Longleftarrow: Longleftarrow$1,
-      longleftrightarrow: longleftrightarrow$1,
-      LongLeftRightArrow: LongLeftRightArrow$1,
-      Longleftrightarrow: Longleftrightarrow$1,
-      longmapsto: longmapsto$1,
-      longrightarrow: longrightarrow$1,
-      LongRightArrow: LongRightArrow$1,
-      Longrightarrow: Longrightarrow$1,
-      looparrowleft: looparrowleft$1,
-      looparrowright: looparrowright$1,
-      lopar: lopar$1,
-      Lopf: Lopf$1,
-      lopf: lopf$1,
-      loplus: loplus$1,
-      lotimes: lotimes$1,
-      lowast: lowast$1,
-      lowbar: lowbar$1,
-      LowerLeftArrow: LowerLeftArrow$1,
-      LowerRightArrow: LowerRightArrow$1,
-      loz: loz$1,
-      lozenge: lozenge$1,
-      lozf: lozf$1,
-      lpar: lpar$1,
-      lparlt: lparlt$1,
-      lrarr: lrarr$1,
-      lrcorner: lrcorner$1,
-      lrhar: lrhar$1,
-      lrhard: lrhard$1,
-      lrm: lrm$1,
-      lrtri: lrtri$1,
-      lsaquo: lsaquo$1,
-      lscr: lscr$1,
-      Lscr: Lscr$1,
-      lsh: lsh$1,
-      Lsh: Lsh$1,
-      lsim: lsim$1,
-      lsime: lsime$1,
-      lsimg: lsimg$1,
-      lsqb: lsqb$1,
-      lsquo: lsquo$1,
-      lsquor: lsquor$1,
-      Lstrok: Lstrok$1,
-      lstrok: lstrok$1,
-      ltcc: ltcc$1,
-      ltcir: ltcir$1,
-      lt: lt$5,
-      LT: LT$3,
-      Lt: Lt$1,
-      ltdot: ltdot$1,
-      lthree: lthree$1,
-      ltimes: ltimes$1,
-      ltlarr: ltlarr$1,
-      ltquest: ltquest$1,
-      ltri: ltri$1,
-      ltrie: ltrie$1,
-      ltrif: ltrif$1,
-      ltrPar: ltrPar$1,
-      lurdshar: lurdshar$1,
-      luruhar: luruhar$1,
-      lvertneqq: lvertneqq$1,
-      lvnE: lvnE$1,
-      macr: macr$3,
-      male: male$1,
-      malt: malt$1,
-      maltese: maltese$1,
-      "Map": "⤅",
-      map: map$1,
-      mapsto: mapsto$1,
-      mapstodown: mapstodown$1,
-      mapstoleft: mapstoleft$1,
-      mapstoup: mapstoup$1,
-      marker: marker$1,
-      mcomma: mcomma$1,
-      Mcy: Mcy$1,
-      mcy: mcy$1,
-      mdash: mdash$1,
-      mDDot: mDDot$1,
-      measuredangle: measuredangle$1,
-      MediumSpace: MediumSpace$1,
-      Mellintrf: Mellintrf$1,
-      Mfr: Mfr$1,
-      mfr: mfr$1,
-      mho: mho$1,
-      micro: micro$3,
-      midast: midast$1,
-      midcir: midcir$1,
-      mid: mid$1,
-      middot: middot$3,
-      minusb: minusb$1,
-      minus: minus$1,
-      minusd: minusd$1,
-      minusdu: minusdu$1,
-      MinusPlus: MinusPlus$1,
-      mlcp: mlcp$1,
-      mldr: mldr$1,
-      mnplus: mnplus$1,
-      models: models$1,
-      Mopf: Mopf$1,
-      mopf: mopf$1,
-      mp: mp$1,
-      mscr: mscr$1,
-      Mscr: Mscr$1,
-      mstpos: mstpos$1,
-      Mu: Mu$1,
-      mu: mu$1,
-      multimap: multimap$1,
-      mumap: mumap$1,
-      nabla: nabla$1,
-      Nacute: Nacute$1,
-      nacute: nacute$1,
-      nang: nang$1,
-      nap: nap$1,
-      napE: napE$1,
-      napid: napid$1,
-      napos: napos$1,
-      napprox: napprox$1,
-      natural: natural$1,
-      naturals: naturals$1,
-      natur: natur$1,
-      nbsp: nbsp$3,
-      nbump: nbump$1,
-      nbumpe: nbumpe$1,
-      ncap: ncap$1,
-      Ncaron: Ncaron$1,
-      ncaron: ncaron$1,
-      Ncedil: Ncedil$1,
-      ncedil: ncedil$1,
-      ncong: ncong$1,
-      ncongdot: ncongdot$1,
-      ncup: ncup$1,
-      Ncy: Ncy$1,
-      ncy: ncy$1,
-      ndash: ndash$1,
-      nearhk: nearhk$1,
-      nearr: nearr$1,
-      neArr: neArr$1,
-      nearrow: nearrow$1,
-      ne: ne$1,
-      nedot: nedot$1,
-      NegativeMediumSpace: NegativeMediumSpace$1,
-      NegativeThickSpace: NegativeThickSpace$1,
-      NegativeThinSpace: NegativeThinSpace$1,
-      NegativeVeryThinSpace: NegativeVeryThinSpace$1,
-      nequiv: nequiv$1,
-      nesear: nesear$1,
-      nesim: nesim$1,
-      NestedGreaterGreater: NestedGreaterGreater$1,
-      NestedLessLess: NestedLessLess$1,
-      NewLine: NewLine$1,
-      nexist: nexist$1,
-      nexists: nexists$1,
-      Nfr: Nfr$1,
-      nfr: nfr$1,
-      ngE: ngE$1,
-      nge: nge$1,
-      ngeq: ngeq$1,
-      ngeqq: ngeqq$1,
-      ngeqslant: ngeqslant$1,
-      nges: nges$1,
-      nGg: nGg$1,
-      ngsim: ngsim$1,
-      nGt: nGt$1,
-      ngt: ngt$1,
-      ngtr: ngtr$1,
-      nGtv: nGtv$1,
-      nharr: nharr$1,
-      nhArr: nhArr$1,
-      nhpar: nhpar$1,
-      ni: ni$1,
-      nis: nis$1,
-      nisd: nisd$1,
-      niv: niv$1,
-      NJcy: NJcy$1,
-      njcy: njcy$1,
-      nlarr: nlarr$1,
-      nlArr: nlArr$1,
-      nldr: nldr$1,
-      nlE: nlE$1,
-      nle: nle$1,
-      nleftarrow: nleftarrow$1,
-      nLeftarrow: nLeftarrow$1,
-      nleftrightarrow: nleftrightarrow$1,
-      nLeftrightarrow: nLeftrightarrow$1,
-      nleq: nleq$1,
-      nleqq: nleqq$1,
-      nleqslant: nleqslant$1,
-      nles: nles$1,
-      nless: nless$1,
-      nLl: nLl$1,
-      nlsim: nlsim$1,
-      nLt: nLt$1,
-      nlt: nlt$1,
-      nltri: nltri$1,
-      nltrie: nltrie$1,
-      nLtv: nLtv$1,
-      nmid: nmid$1,
-      NoBreak: NoBreak$1,
-      NonBreakingSpace: NonBreakingSpace$1,
-      nopf: nopf$1,
-      Nopf: Nopf$1,
-      Not: Not$1,
-      not: not$3,
-      NotCongruent: NotCongruent$1,
-      NotCupCap: NotCupCap$1,
-      NotDoubleVerticalBar: NotDoubleVerticalBar$1,
-      NotElement: NotElement$1,
-      NotEqual: NotEqual$1,
-      NotEqualTilde: NotEqualTilde$1,
-      NotExists: NotExists$1,
-      NotGreater: NotGreater$1,
-      NotGreaterEqual: NotGreaterEqual$1,
-      NotGreaterFullEqual: NotGreaterFullEqual$1,
-      NotGreaterGreater: NotGreaterGreater$1,
-      NotGreaterLess: NotGreaterLess$1,
-      NotGreaterSlantEqual: NotGreaterSlantEqual$1,
-      NotGreaterTilde: NotGreaterTilde$1,
-      NotHumpDownHump: NotHumpDownHump$1,
-      NotHumpEqual: NotHumpEqual$1,
-      notin: notin$1,
-      notindot: notindot$1,
-      notinE: notinE$1,
-      notinva: notinva$1,
-      notinvb: notinvb$1,
-      notinvc: notinvc$1,
-      NotLeftTriangleBar: NotLeftTriangleBar$1,
-      NotLeftTriangle: NotLeftTriangle$1,
-      NotLeftTriangleEqual: NotLeftTriangleEqual$1,
-      NotLess: NotLess$1,
-      NotLessEqual: NotLessEqual$1,
-      NotLessGreater: NotLessGreater$1,
-      NotLessLess: NotLessLess$1,
-      NotLessSlantEqual: NotLessSlantEqual$1,
-      NotLessTilde: NotLessTilde$1,
-      NotNestedGreaterGreater: NotNestedGreaterGreater$1,
-      NotNestedLessLess: NotNestedLessLess$1,
-      notni: notni$1,
-      notniva: notniva$1,
-      notnivb: notnivb$1,
-      notnivc: notnivc$1,
-      NotPrecedes: NotPrecedes$1,
-      NotPrecedesEqual: NotPrecedesEqual$1,
-      NotPrecedesSlantEqual: NotPrecedesSlantEqual$1,
-      NotReverseElement: NotReverseElement$1,
-      NotRightTriangleBar: NotRightTriangleBar$1,
-      NotRightTriangle: NotRightTriangle$1,
-      NotRightTriangleEqual: NotRightTriangleEqual$1,
-      NotSquareSubset: NotSquareSubset$1,
-      NotSquareSubsetEqual: NotSquareSubsetEqual$1,
-      NotSquareSuperset: NotSquareSuperset$1,
-      NotSquareSupersetEqual: NotSquareSupersetEqual$1,
-      NotSubset: NotSubset$1,
-      NotSubsetEqual: NotSubsetEqual$1,
-      NotSucceeds: NotSucceeds$1,
-      NotSucceedsEqual: NotSucceedsEqual$1,
-      NotSucceedsSlantEqual: NotSucceedsSlantEqual$1,
-      NotSucceedsTilde: NotSucceedsTilde$1,
-      NotSuperset: NotSuperset$1,
-      NotSupersetEqual: NotSupersetEqual$1,
-      NotTilde: NotTilde$1,
-      NotTildeEqual: NotTildeEqual$1,
-      NotTildeFullEqual: NotTildeFullEqual$1,
-      NotTildeTilde: NotTildeTilde$1,
-      NotVerticalBar: NotVerticalBar$1,
-      nparallel: nparallel$1,
-      npar: npar$1,
-      nparsl: nparsl$1,
-      npart: npart$1,
-      npolint: npolint$1,
-      npr: npr$1,
-      nprcue: nprcue$1,
-      nprec: nprec$1,
-      npreceq: npreceq$1,
-      npre: npre$1,
-      nrarrc: nrarrc$1,
-      nrarr: nrarr$1,
-      nrArr: nrArr$1,
-      nrarrw: nrarrw$1,
-      nrightarrow: nrightarrow$1,
-      nRightarrow: nRightarrow$1,
-      nrtri: nrtri$1,
-      nrtrie: nrtrie$1,
-      nsc: nsc$1,
-      nsccue: nsccue$1,
-      nsce: nsce$1,
-      Nscr: Nscr$1,
-      nscr: nscr$1,
-      nshortmid: nshortmid$1,
-      nshortparallel: nshortparallel$1,
-      nsim: nsim$1,
-      nsime: nsime$1,
-      nsimeq: nsimeq$1,
-      nsmid: nsmid$1,
-      nspar: nspar$1,
-      nsqsube: nsqsube$1,
-      nsqsupe: nsqsupe$1,
-      nsub: nsub$1,
-      nsubE: nsubE$1,
-      nsube: nsube$1,
-      nsubset: nsubset$1,
-      nsubseteq: nsubseteq$1,
-      nsubseteqq: nsubseteqq$1,
-      nsucc: nsucc$1,
-      nsucceq: nsucceq$1,
-      nsup: nsup$1,
-      nsupE: nsupE$1,
-      nsupe: nsupe$1,
-      nsupset: nsupset$1,
-      nsupseteq: nsupseteq$1,
-      nsupseteqq: nsupseteqq$1,
-      ntgl: ntgl$1,
-      Ntilde: Ntilde$3,
-      ntilde: ntilde$3,
-      ntlg: ntlg$1,
-      ntriangleleft: ntriangleleft$1,
-      ntrianglelefteq: ntrianglelefteq$1,
-      ntriangleright: ntriangleright$1,
-      ntrianglerighteq: ntrianglerighteq$1,
-      Nu: Nu$1,
-      nu: nu$1,
-      num: num$2,
-      numero: numero$1,
-      numsp: numsp$1,
-      nvap: nvap$1,
-      nvdash: nvdash$1,
-      nvDash: nvDash$1,
-      nVdash: nVdash$1,
-      nVDash: nVDash$1,
-      nvge: nvge$1,
-      nvgt: nvgt$1,
-      nvHarr: nvHarr$1,
-      nvinfin: nvinfin$1,
-      nvlArr: nvlArr$1,
-      nvle: nvle$1,
-      nvlt: nvlt$1,
-      nvltrie: nvltrie$1,
-      nvrArr: nvrArr$1,
-      nvrtrie: nvrtrie$1,
-      nvsim: nvsim$1,
-      nwarhk: nwarhk$1,
-      nwarr: nwarr$1,
-      nwArr: nwArr$1,
-      nwarrow: nwarrow$1,
-      nwnear: nwnear$1,
-      Oacute: Oacute$3,
-      oacute: oacute$3,
-      oast: oast$1,
-      Ocirc: Ocirc$3,
-      ocirc: ocirc$3,
-      ocir: ocir$1,
-      Ocy: Ocy$1,
-      ocy: ocy$1,
-      odash: odash$1,
-      Odblac: Odblac$1,
-      odblac: odblac$1,
-      odiv: odiv$1,
-      odot: odot$1,
-      odsold: odsold$1,
-      OElig: OElig$1,
-      oelig: oelig$1,
-      ofcir: ofcir$1,
-      Ofr: Ofr$1,
-      ofr: ofr$1,
-      ogon: ogon$1,
-      Ograve: Ograve$3,
-      ograve: ograve$3,
-      ogt: ogt$1,
-      ohbar: ohbar$1,
-      ohm: ohm$1,
-      oint: oint$1,
-      olarr: olarr$1,
-      olcir: olcir$1,
-      olcross: olcross$1,
-      oline: oline$1,
-      olt: olt$1,
-      Omacr: Omacr$1,
-      omacr: omacr$1,
-      Omega: Omega$1,
-      omega: omega$1,
-      Omicron: Omicron$1,
-      omicron: omicron$1,
-      omid: omid$1,
-      ominus: ominus$1,
-      Oopf: Oopf$1,
-      oopf: oopf$1,
-      opar: opar$1,
-      OpenCurlyDoubleQuote: OpenCurlyDoubleQuote$1,
-      OpenCurlyQuote: OpenCurlyQuote$1,
-      operp: operp$1,
-      oplus: oplus$1,
-      orarr: orarr$1,
-      Or: Or$1,
-      or: or$1,
-      ord: ord$1,
-      order: order$2,
-      orderof: orderof$1,
-      ordf: ordf$3,
-      ordm: ordm$3,
-      origof: origof$1,
-      oror: oror$1,
-      orslope: orslope$1,
-      orv: orv$1,
-      oS: oS$1,
-      Oscr: Oscr$1,
-      oscr: oscr$1,
-      Oslash: Oslash$3,
-      oslash: oslash$3,
-      osol: osol$1,
-      Otilde: Otilde$3,
-      otilde: otilde$3,
-      otimesas: otimesas$1,
-      Otimes: Otimes$1,
-      otimes: otimes$1,
-      Ouml: Ouml$3,
-      ouml: ouml$3,
-      ovbar: ovbar$1,
-      OverBar: OverBar$1,
-      OverBrace: OverBrace$1,
-      OverBracket: OverBracket$1,
-      OverParenthesis: OverParenthesis$1,
-      para: para$3,
-      parallel: parallel$1,
-      par: par$1,
-      parsim: parsim$1,
-      parsl: parsl$1,
-      part: part$1,
-      PartialD: PartialD$1,
-      Pcy: Pcy$1,
-      pcy: pcy$1,
-      percnt: percnt$1,
-      period: period$1,
-      permil: permil$1,
-      perp: perp$1,
-      pertenk: pertenk$1,
-      Pfr: Pfr$1,
-      pfr: pfr$1,
-      Phi: Phi$1,
-      phi: phi$1,
-      phiv: phiv$1,
-      phmmat: phmmat$1,
-      phone: phone$1,
-      Pi: Pi$1,
-      pi: pi$1,
-      pitchfork: pitchfork$1,
-      piv: piv$1,
-      planck: planck$1,
-      planckh: planckh$1,
-      plankv: plankv$1,
-      plusacir: plusacir$1,
-      plusb: plusb$1,
-      pluscir: pluscir$1,
-      plus: plus$1,
-      plusdo: plusdo$1,
-      plusdu: plusdu$1,
-      pluse: pluse$1,
-      PlusMinus: PlusMinus$1,
-      plusmn: plusmn$3,
-      plussim: plussim$1,
-      plustwo: plustwo$1,
-      pm: pm$1,
-      Poincareplane: Poincareplane$1,
-      pointint: pointint$1,
-      popf: popf$1,
-      Popf: Popf$1,
-      pound: pound$3,
-      prap: prap$1,
-      Pr: Pr$1,
-      pr: pr$1,
-      prcue: prcue$1,
-      precapprox: precapprox$1,
-      prec: prec$2,
-      preccurlyeq: preccurlyeq$1,
-      Precedes: Precedes$1,
-      PrecedesEqual: PrecedesEqual$1,
-      PrecedesSlantEqual: PrecedesSlantEqual$1,
-      PrecedesTilde: PrecedesTilde$1,
-      preceq: preceq$1,
-      precnapprox: precnapprox$1,
-      precneqq: precneqq$1,
-      precnsim: precnsim$1,
-      pre: pre$1,
-      prE: prE$1,
-      precsim: precsim$1,
-      prime: prime$1,
-      Prime: Prime$1,
-      primes: primes$1,
-      prnap: prnap$1,
-      prnE: prnE$1,
-      prnsim: prnsim$1,
-      prod: prod$1,
-      Product: Product$1,
-      profalar: profalar$1,
-      profline: profline$1,
-      profsurf: profsurf$1,
-      prop: prop$1,
-      Proportional: Proportional$1,
-      Proportion: Proportion$1,
-      propto: propto$1,
-      prsim: prsim$1,
-      prurel: prurel$1,
-      Pscr: Pscr$1,
-      pscr: pscr$1,
-      Psi: Psi$1,
-      psi: psi$1,
-      puncsp: puncsp$1,
-      Qfr: Qfr$1,
-      qfr: qfr$1,
-      qint: qint$1,
-      qopf: qopf$1,
-      Qopf: Qopf$1,
-      qprime: qprime$1,
-      Qscr: Qscr$1,
-      qscr: qscr$1,
-      quaternions: quaternions$1,
-      quatint: quatint$1,
-      quest: quest$1,
-      questeq: questeq$1,
-      quot: quot$5,
-      QUOT: QUOT$3,
-      rAarr: rAarr$1,
-      race: race$1,
-      Racute: Racute$1,
-      racute: racute$1,
-      radic: radic$1,
-      raemptyv: raemptyv$1,
-      rang: rang$1,
-      Rang: Rang$1,
-      rangd: rangd$1,
-      range: range$1,
-      rangle: rangle$1,
-      raquo: raquo$3,
-      rarrap: rarrap$1,
-      rarrb: rarrb$1,
-      rarrbfs: rarrbfs$1,
-      rarrc: rarrc$1,
-      rarr: rarr$1,
-      Rarr: Rarr$1,
-      rArr: rArr$1,
-      rarrfs: rarrfs$1,
-      rarrhk: rarrhk$1,
-      rarrlp: rarrlp$1,
-      rarrpl: rarrpl$1,
-      rarrsim: rarrsim$1,
-      Rarrtl: Rarrtl$1,
-      rarrtl: rarrtl$1,
-      rarrw: rarrw$1,
-      ratail: ratail$1,
-      rAtail: rAtail$1,
-      ratio: ratio$1,
-      rationals: rationals$1,
-      rbarr: rbarr$1,
-      rBarr: rBarr$1,
-      RBarr: RBarr$1,
-      rbbrk: rbbrk$1,
-      rbrace: rbrace$1,
-      rbrack: rbrack$1,
-      rbrke: rbrke$1,
-      rbrksld: rbrksld$1,
-      rbrkslu: rbrkslu$1,
-      Rcaron: Rcaron$1,
-      rcaron: rcaron$1,
-      Rcedil: Rcedil$1,
-      rcedil: rcedil$1,
-      rceil: rceil$1,
-      rcub: rcub$1,
-      Rcy: Rcy$1,
-      rcy: rcy$1,
-      rdca: rdca$1,
-      rdldhar: rdldhar$1,
-      rdquo: rdquo$1,
-      rdquor: rdquor$1,
-      rdsh: rdsh$1,
-      real: real$1,
-      realine: realine$1,
-      realpart: realpart$1,
-      reals: reals$1,
-      Re: Re$1,
-      rect: rect$1,
-      reg: reg$3,
-      REG: REG$3,
-      ReverseElement: ReverseElement$1,
-      ReverseEquilibrium: ReverseEquilibrium$1,
-      ReverseUpEquilibrium: ReverseUpEquilibrium$1,
-      rfisht: rfisht$1,
-      rfloor: rfloor$1,
-      rfr: rfr$1,
-      Rfr: Rfr$1,
-      rHar: rHar$1,
-      rhard: rhard$1,
-      rharu: rharu$1,
-      rharul: rharul$1,
-      Rho: Rho$1,
-      rho: rho$1,
-      rhov: rhov$1,
-      RightAngleBracket: RightAngleBracket$1,
-      RightArrowBar: RightArrowBar$1,
-      rightarrow: rightarrow$1,
-      RightArrow: RightArrow$1,
-      Rightarrow: Rightarrow$1,
-      RightArrowLeftArrow: RightArrowLeftArrow$1,
-      rightarrowtail: rightarrowtail$1,
-      RightCeiling: RightCeiling$1,
-      RightDoubleBracket: RightDoubleBracket$1,
-      RightDownTeeVector: RightDownTeeVector$1,
-      RightDownVectorBar: RightDownVectorBar$1,
-      RightDownVector: RightDownVector$1,
-      RightFloor: RightFloor$1,
-      rightharpoondown: rightharpoondown$1,
-      rightharpoonup: rightharpoonup$1,
-      rightleftarrows: rightleftarrows$1,
-      rightleftharpoons: rightleftharpoons$1,
-      rightrightarrows: rightrightarrows$1,
-      rightsquigarrow: rightsquigarrow$1,
-      RightTeeArrow: RightTeeArrow$1,
-      RightTee: RightTee$1,
-      RightTeeVector: RightTeeVector$1,
-      rightthreetimes: rightthreetimes$1,
-      RightTriangleBar: RightTriangleBar$1,
-      RightTriangle: RightTriangle$1,
-      RightTriangleEqual: RightTriangleEqual$1,
-      RightUpDownVector: RightUpDownVector$1,
-      RightUpTeeVector: RightUpTeeVector$1,
-      RightUpVectorBar: RightUpVectorBar$1,
-      RightUpVector: RightUpVector$1,
-      RightVectorBar: RightVectorBar$1,
-      RightVector: RightVector$1,
-      ring: ring$1,
-      risingdotseq: risingdotseq$1,
-      rlarr: rlarr$1,
-      rlhar: rlhar$1,
-      rlm: rlm$1,
-      rmoustache: rmoustache$1,
-      rmoust: rmoust$1,
-      rnmid: rnmid$1,
-      roang: roang$1,
-      roarr: roarr$1,
-      robrk: robrk$1,
-      ropar: ropar$1,
-      ropf: ropf$1,
-      Ropf: Ropf$1,
-      roplus: roplus$1,
-      rotimes: rotimes$1,
-      RoundImplies: RoundImplies$1,
-      rpar: rpar$1,
-      rpargt: rpargt$1,
-      rppolint: rppolint$1,
-      rrarr: rrarr$1,
-      Rrightarrow: Rrightarrow$1,
-      rsaquo: rsaquo$1,
-      rscr: rscr$1,
-      Rscr: Rscr$1,
-      rsh: rsh$1,
-      Rsh: Rsh$1,
-      rsqb: rsqb$1,
-      rsquo: rsquo$1,
-      rsquor: rsquor$1,
-      rthree: rthree$1,
-      rtimes: rtimes$1,
-      rtri: rtri$1,
-      rtrie: rtrie$1,
-      rtrif: rtrif$1,
-      rtriltri: rtriltri$1,
-      RuleDelayed: RuleDelayed$1,
-      ruluhar: ruluhar$1,
-      rx: rx$1,
-      Sacute: Sacute$1,
-      sacute: sacute$1,
-      sbquo: sbquo$1,
-      scap: scap$1,
-      Scaron: Scaron$1,
-      scaron: scaron$1,
-      Sc: Sc$1,
-      sc: sc$1,
-      sccue: sccue$1,
-      sce: sce$1,
-      scE: scE$1,
-      Scedil: Scedil$1,
-      scedil: scedil$1,
-      Scirc: Scirc$1,
-      scirc: scirc$1,
-      scnap: scnap$1,
-      scnE: scnE$1,
-      scnsim: scnsim$1,
-      scpolint: scpolint$1,
-      scsim: scsim$1,
-      Scy: Scy$1,
-      scy: scy$1,
-      sdotb: sdotb$1,
-      sdot: sdot$1,
-      sdote: sdote$1,
-      searhk: searhk$1,
-      searr: searr$1,
-      seArr: seArr$1,
-      searrow: searrow$1,
-      sect: sect$3,
-      semi: semi$1,
-      seswar: seswar$1,
-      setminus: setminus$1,
-      setmn: setmn$1,
-      sext: sext$1,
-      Sfr: Sfr$1,
-      sfr: sfr$1,
-      sfrown: sfrown$1,
-      sharp: sharp$1,
-      SHCHcy: SHCHcy$1,
-      shchcy: shchcy$1,
-      SHcy: SHcy$1,
-      shcy: shcy$1,
-      ShortDownArrow: ShortDownArrow$1,
-      ShortLeftArrow: ShortLeftArrow$1,
-      shortmid: shortmid$1,
-      shortparallel: shortparallel$1,
-      ShortRightArrow: ShortRightArrow$1,
-      ShortUpArrow: ShortUpArrow$1,
-      shy: shy$3,
-      Sigma: Sigma$1,
-      sigma: sigma$1,
-      sigmaf: sigmaf$1,
-      sigmav: sigmav$1,
-      sim: sim$1,
-      simdot: simdot$1,
-      sime: sime$1,
-      simeq: simeq$1,
-      simg: simg$1,
-      simgE: simgE$1,
-      siml: siml$1,
-      simlE: simlE$1,
-      simne: simne$1,
-      simplus: simplus$1,
-      simrarr: simrarr$1,
-      slarr: slarr$1,
-      SmallCircle: SmallCircle$1,
-      smallsetminus: smallsetminus$1,
-      smashp: smashp$1,
-      smeparsl: smeparsl$1,
-      smid: smid$1,
-      smile: smile$1,
-      smt: smt$1,
-      smte: smte$1,
-      smtes: smtes$1,
-      SOFTcy: SOFTcy$1,
-      softcy: softcy$1,
-      solbar: solbar$1,
-      solb: solb$1,
-      sol: sol$1,
-      Sopf: Sopf$1,
-      sopf: sopf$1,
-      spades: spades$1,
-      spadesuit: spadesuit$1,
-      spar: spar$1,
-      sqcap: sqcap$1,
-      sqcaps: sqcaps$1,
-      sqcup: sqcup$1,
-      sqcups: sqcups$1,
-      Sqrt: Sqrt$1,
-      sqsub: sqsub$1,
-      sqsube: sqsube$1,
-      sqsubset: sqsubset$1,
-      sqsubseteq: sqsubseteq$1,
-      sqsup: sqsup$1,
-      sqsupe: sqsupe$1,
-      sqsupset: sqsupset$1,
-      sqsupseteq: sqsupseteq$1,
-      square: square$1,
-      Square: Square$1,
-      SquareIntersection: SquareIntersection$1,
-      SquareSubset: SquareSubset$1,
-      SquareSubsetEqual: SquareSubsetEqual$1,
-      SquareSuperset: SquareSuperset$1,
-      SquareSupersetEqual: SquareSupersetEqual$1,
-      SquareUnion: SquareUnion$1,
-      squarf: squarf$1,
-      squ: squ$1,
-      squf: squf$1,
-      srarr: srarr$1,
-      Sscr: Sscr$1,
-      sscr: sscr$1,
-      ssetmn: ssetmn$1,
-      ssmile: ssmile$1,
-      sstarf: sstarf$1,
-      Star: Star$1,
-      star: star$1,
-      starf: starf$1,
-      straightepsilon: straightepsilon$1,
-      straightphi: straightphi$1,
-      strns: strns$1,
-      sub: sub$1,
-      Sub: Sub$1,
-      subdot: subdot$1,
-      subE: subE$1,
-      sube: sube$1,
-      subedot: subedot$1,
-      submult: submult$1,
-      subnE: subnE$1,
-      subne: subne$1,
-      subplus: subplus$1,
-      subrarr: subrarr$1,
-      subset: subset$1,
-      Subset: Subset$1,
-      subseteq: subseteq$1,
-      subseteqq: subseteqq$1,
-      SubsetEqual: SubsetEqual$1,
-      subsetneq: subsetneq$1,
-      subsetneqq: subsetneqq$1,
-      subsim: subsim$1,
-      subsub: subsub$1,
-      subsup: subsup$1,
-      succapprox: succapprox$1,
-      succ: succ$1,
-      succcurlyeq: succcurlyeq$1,
-      Succeeds: Succeeds$1,
-      SucceedsEqual: SucceedsEqual$1,
-      SucceedsSlantEqual: SucceedsSlantEqual$1,
-      SucceedsTilde: SucceedsTilde$1,
-      succeq: succeq$1,
-      succnapprox: succnapprox$1,
-      succneqq: succneqq$1,
-      succnsim: succnsim$1,
-      succsim: succsim$1,
-      SuchThat: SuchThat$1,
-      sum: sum$2,
-      Sum: Sum$1,
-      sung: sung$1,
-      sup1: sup1$3,
-      sup2: sup2$3,
-      sup3: sup3$3,
-      sup: sup$1,
-      Sup: Sup$1,
-      supdot: supdot$1,
-      supdsub: supdsub$1,
-      supE: supE$1,
-      supe: supe$1,
-      supedot: supedot$1,
-      Superset: Superset$1,
-      SupersetEqual: SupersetEqual$1,
-      suphsol: suphsol$1,
-      suphsub: suphsub$1,
-      suplarr: suplarr$1,
-      supmult: supmult$1,
-      supnE: supnE$1,
-      supne: supne$1,
-      supplus: supplus$1,
-      supset: supset$1,
-      Supset: Supset$1,
-      supseteq: supseteq$1,
-      supseteqq: supseteqq$1,
-      supsetneq: supsetneq$1,
-      supsetneqq: supsetneqq$1,
-      supsim: supsim$1,
-      supsub: supsub$1,
-      supsup: supsup$1,
-      swarhk: swarhk$1,
-      swarr: swarr$1,
-      swArr: swArr$1,
-      swarrow: swarrow$1,
-      swnwar: swnwar$1,
-      szlig: szlig$3,
-      Tab: Tab$2,
-      target: target$2,
-      Tau: Tau$1,
-      tau: tau$1,
-      tbrk: tbrk$1,
-      Tcaron: Tcaron$1,
-      tcaron: tcaron$1,
-      Tcedil: Tcedil$1,
-      tcedil: tcedil$1,
-      Tcy: Tcy$1,
-      tcy: tcy$1,
-      tdot: tdot$1,
-      telrec: telrec$1,
-      Tfr: Tfr$1,
-      tfr: tfr$1,
-      there4: there4$1,
-      therefore: therefore$1,
-      Therefore: Therefore$1,
-      Theta: Theta$1,
-      theta: theta$1,
-      thetasym: thetasym$1,
-      thetav: thetav$1,
-      thickapprox: thickapprox$1,
-      thicksim: thicksim$1,
-      ThickSpace: ThickSpace$1,
-      ThinSpace: ThinSpace$1,
-      thinsp: thinsp$1,
-      thkap: thkap$1,
-      thksim: thksim$1,
-      THORN: THORN$3,
-      thorn: thorn$3,
-      tilde: tilde$1,
-      Tilde: Tilde$1,
-      TildeEqual: TildeEqual$1,
-      TildeFullEqual: TildeFullEqual$1,
-      TildeTilde: TildeTilde$1,
-      timesbar: timesbar$1,
-      timesb: timesb$1,
-      times: times$3,
-      timesd: timesd$1,
-      tint: tint$1,
-      toea: toea$1,
-      topbot: topbot$1,
-      topcir: topcir$1,
-      top: top$3,
-      Topf: Topf$1,
-      topf: topf$1,
-      topfork: topfork$1,
-      tosa: tosa$1,
-      tprime: tprime$1,
-      trade: trade$1,
-      TRADE: TRADE$1,
-      triangle: triangle$1,
-      triangledown: triangledown$1,
-      triangleleft: triangleleft$1,
-      trianglelefteq: trianglelefteq$1,
-      triangleq: triangleq$1,
-      triangleright: triangleright$1,
-      trianglerighteq: trianglerighteq$1,
-      tridot: tridot$1,
-      trie: trie$1,
-      triminus: triminus$1,
-      TripleDot: TripleDot$1,
-      triplus: triplus$1,
-      trisb: trisb$1,
-      tritime: tritime$1,
-      trpezium: trpezium$1,
-      Tscr: Tscr$1,
-      tscr: tscr$1,
-      TScy: TScy$1,
-      tscy: tscy$1,
-      TSHcy: TSHcy$1,
-      tshcy: tshcy$1,
-      Tstrok: Tstrok$1,
-      tstrok: tstrok$1,
-      twixt: twixt$1,
-      twoheadleftarrow: twoheadleftarrow$1,
-      twoheadrightarrow: twoheadrightarrow$1,
-      Uacute: Uacute$3,
-      uacute: uacute$3,
-      uarr: uarr$1,
-      Uarr: Uarr$1,
-      uArr: uArr$1,
-      Uarrocir: Uarrocir$1,
-      Ubrcy: Ubrcy$1,
-      ubrcy: ubrcy$1,
-      Ubreve: Ubreve$1,
-      ubreve: ubreve$1,
-      Ucirc: Ucirc$3,
-      ucirc: ucirc$3,
-      Ucy: Ucy$1,
-      ucy: ucy$1,
-      udarr: udarr$1,
-      Udblac: Udblac$1,
-      udblac: udblac$1,
-      udhar: udhar$1,
-      ufisht: ufisht$1,
-      Ufr: Ufr$1,
-      ufr: ufr$1,
-      Ugrave: Ugrave$3,
-      ugrave: ugrave$3,
-      uHar: uHar$1,
-      uharl: uharl$1,
-      uharr: uharr$1,
-      uhblk: uhblk$1,
-      ulcorn: ulcorn$1,
-      ulcorner: ulcorner$1,
-      ulcrop: ulcrop$1,
-      ultri: ultri$1,
-      Umacr: Umacr$1,
-      umacr: umacr$1,
-      uml: uml$3,
-      UnderBar: UnderBar$1,
-      UnderBrace: UnderBrace$1,
-      UnderBracket: UnderBracket$1,
-      UnderParenthesis: UnderParenthesis$1,
-      Union: Union$1,
-      UnionPlus: UnionPlus$1,
-      Uogon: Uogon$1,
-      uogon: uogon$1,
-      Uopf: Uopf$1,
-      uopf: uopf$1,
-      UpArrowBar: UpArrowBar$1,
-      uparrow: uparrow$1,
-      UpArrow: UpArrow$1,
-      Uparrow: Uparrow$1,
-      UpArrowDownArrow: UpArrowDownArrow$1,
-      updownarrow: updownarrow$1,
-      UpDownArrow: UpDownArrow$1,
-      Updownarrow: Updownarrow$1,
-      UpEquilibrium: UpEquilibrium$1,
-      upharpoonleft: upharpoonleft$1,
-      upharpoonright: upharpoonright$1,
-      uplus: uplus$1,
-      UpperLeftArrow: UpperLeftArrow$1,
-      UpperRightArrow: UpperRightArrow$1,
-      upsi: upsi$1,
-      Upsi: Upsi$1,
-      upsih: upsih$1,
-      Upsilon: Upsilon$1,
-      upsilon: upsilon$1,
-      UpTeeArrow: UpTeeArrow$1,
-      UpTee: UpTee$1,
-      upuparrows: upuparrows$1,
-      urcorn: urcorn$1,
-      urcorner: urcorner$1,
-      urcrop: urcrop$1,
-      Uring: Uring$1,
-      uring: uring$1,
-      urtri: urtri$1,
-      Uscr: Uscr$1,
-      uscr: uscr$1,
-      utdot: utdot$1,
-      Utilde: Utilde$1,
-      utilde: utilde$1,
-      utri: utri$1,
-      utrif: utrif$1,
-      uuarr: uuarr$1,
-      Uuml: Uuml$3,
-      uuml: uuml$3,
-      uwangle: uwangle$1,
-      vangrt: vangrt$1,
-      varepsilon: varepsilon$1,
-      varkappa: varkappa$1,
-      varnothing: varnothing$1,
-      varphi: varphi$1,
-      varpi: varpi$1,
-      varpropto: varpropto$1,
-      varr: varr$1,
-      vArr: vArr$1,
-      varrho: varrho$1,
-      varsigma: varsigma$1,
-      varsubsetneq: varsubsetneq$1,
-      varsubsetneqq: varsubsetneqq$1,
-      varsupsetneq: varsupsetneq$1,
-      varsupsetneqq: varsupsetneqq$1,
-      vartheta: vartheta$1,
-      vartriangleleft: vartriangleleft$1,
-      vartriangleright: vartriangleright$1,
-      vBar: vBar$1,
-      Vbar: Vbar$1,
-      vBarv: vBarv$1,
-      Vcy: Vcy$1,
-      vcy: vcy$1,
-      vdash: vdash$1,
-      vDash: vDash$1,
-      Vdash: Vdash$1,
-      VDash: VDash$1,
-      Vdashl: Vdashl$1,
-      veebar: veebar$1,
-      vee: vee$1,
-      Vee: Vee$1,
-      veeeq: veeeq$1,
-      vellip: vellip$1,
-      verbar: verbar$1,
-      Verbar: Verbar$1,
-      vert: vert$1,
-      Vert: Vert$1,
-      VerticalBar: VerticalBar$1,
-      VerticalLine: VerticalLine$1,
-      VerticalSeparator: VerticalSeparator$1,
-      VerticalTilde: VerticalTilde$1,
-      VeryThinSpace: VeryThinSpace$1,
-      Vfr: Vfr$1,
-      vfr: vfr$1,
-      vltri: vltri$1,
-      vnsub: vnsub$1,
-      vnsup: vnsup$1,
-      Vopf: Vopf$1,
-      vopf: vopf$1,
-      vprop: vprop$1,
-      vrtri: vrtri$1,
-      Vscr: Vscr$1,
-      vscr: vscr$1,
-      vsubnE: vsubnE$1,
-      vsubne: vsubne$1,
-      vsupnE: vsupnE$1,
-      vsupne: vsupne$1,
-      Vvdash: Vvdash$1,
-      vzigzag: vzigzag$1,
-      Wcirc: Wcirc$1,
-      wcirc: wcirc$1,
-      wedbar: wedbar$1,
-      wedge: wedge$1,
-      Wedge: Wedge$1,
-      wedgeq: wedgeq$1,
-      weierp: weierp$1,
-      Wfr: Wfr$1,
-      wfr: wfr$1,
-      Wopf: Wopf$1,
-      wopf: wopf$1,
-      wp: wp$1,
-      wr: wr$1,
-      wreath: wreath$1,
-      Wscr: Wscr$1,
-      wscr: wscr$1,
-      xcap: xcap$1,
-      xcirc: xcirc$1,
-      xcup: xcup$1,
-      xdtri: xdtri$1,
-      Xfr: Xfr$1,
-      xfr: xfr$1,
-      xharr: xharr$1,
-      xhArr: xhArr$1,
-      Xi: Xi$1,
-      xi: xi$1,
-      xlarr: xlarr$1,
-      xlArr: xlArr$1,
-      xmap: xmap$1,
-      xnis: xnis$1,
-      xodot: xodot$1,
-      Xopf: Xopf$1,
-      xopf: xopf$1,
-      xoplus: xoplus$1,
-      xotime: xotime$1,
-      xrarr: xrarr$1,
-      xrArr: xrArr$1,
-      Xscr: Xscr$1,
-      xscr: xscr$1,
-      xsqcup: xsqcup$1,
-      xuplus: xuplus$1,
-      xutri: xutri$1,
-      xvee: xvee$1,
-      xwedge: xwedge$1,
-      Yacute: Yacute$3,
-      yacute: yacute$3,
-      YAcy: YAcy$1,
-      yacy: yacy$1,
-      Ycirc: Ycirc$1,
-      ycirc: ycirc$1,
-      Ycy: Ycy$1,
-      ycy: ycy$1,
-      yen: yen$3,
-      Yfr: Yfr$1,
-      yfr: yfr$1,
-      YIcy: YIcy$1,
-      yicy: yicy$1,
-      Yopf: Yopf$1,
-      yopf: yopf$1,
-      Yscr: Yscr$1,
-      yscr: yscr$1,
-      YUcy: YUcy$1,
-      yucy: yucy$1,
-      yuml: yuml$3,
-      Yuml: Yuml$1,
-      Zacute: Zacute$1,
-      zacute: zacute$1,
-      Zcaron: Zcaron$1,
-      zcaron: zcaron$1,
-      Zcy: Zcy$1,
-      zcy: zcy$1,
-      Zdot: Zdot$1,
-      zdot: zdot$1,
-      zeetrf: zeetrf$1,
-      ZeroWidthSpace: ZeroWidthSpace$1,
-      Zeta: Zeta$1,
-      zeta: zeta$1,
-      zfr: zfr$1,
-      Zfr: Zfr$1,
-      ZHcy: ZHcy$1,
-      zhcy: zhcy$1,
-      zigrarr: zigrarr$1,
-      zopf: zopf$1,
-      Zopf: Zopf$1,
-      Zscr: Zscr$1,
-      zscr: zscr$1,
-      zwj: zwj$1,
-      zwnj: zwnj$1
-    };
-    const Aacute$2 = "Á";
-    const aacute$2 = "á";
-    const Acirc$2 = "Â";
-    const acirc$2 = "â";
-    const acute$2 = "´";
-    const AElig$2 = "Æ";
-    const aelig$2 = "æ";
-    const Agrave$2 = "À";
-    const agrave$2 = "à";
-    const amp$4 = "&";
-    const AMP$2 = "&";
-    const Aring$2 = "Å";
-    const aring$2 = "å";
-    const Atilde$2 = "Ã";
-    const atilde$2 = "ã";
-    const Auml$2 = "Ä";
-    const auml$2 = "ä";
-    const brvbar$2 = "¦";
-    const Ccedil$2 = "Ç";
-    const ccedil$2 = "ç";
-    const cedil$2 = "¸";
-    const cent$2 = "¢";
-    const copy$2 = "©";
-    const COPY$2 = "©";
-    const curren$2 = "¤";
-    const deg$2 = "°";
-    const divide$2 = "÷";
-    const Eacute$2 = "É";
-    const eacute$2 = "é";
-    const Ecirc$2 = "Ê";
-    const ecirc$2 = "ê";
-    const Egrave$2 = "È";
-    const egrave$2 = "è";
-    const ETH$2 = "Ð";
-    const eth$2 = "ð";
-    const Euml$2 = "Ë";
-    const euml$2 = "ë";
-    const frac12$2 = "½";
-    const frac14$2 = "¼";
-    const frac34$2 = "¾";
-    const gt$4 = ">";
-    const GT$2 = ">";
-    const Iacute$2 = "Í";
-    const iacute$2 = "í";
-    const Icirc$2 = "Î";
-    const icirc$2 = "î";
-    const iexcl$2 = "¡";
-    const Igrave$2 = "Ì";
-    const igrave$2 = "ì";
-    const iquest$2 = "¿";
-    const Iuml$2 = "Ï";
-    const iuml$2 = "ï";
-    const laquo$2 = "«";
-    const lt$4 = "<";
-    const LT$2 = "<";
-    const macr$2 = "¯";
-    const micro$2 = "µ";
-    const middot$2 = "·";
-    const nbsp$2 = " ";
-    const not$2 = "¬";
-    const Ntilde$2 = "Ñ";
-    const ntilde$2 = "ñ";
-    const Oacute$2 = "Ó";
-    const oacute$2 = "ó";
-    const Ocirc$2 = "Ô";
-    const ocirc$2 = "ô";
-    const Ograve$2 = "Ò";
-    const ograve$2 = "ò";
-    const ordf$2 = "ª";
-    const ordm$2 = "º";
-    const Oslash$2 = "Ø";
-    const oslash$2 = "ø";
-    const Otilde$2 = "Õ";
-    const otilde$2 = "õ";
-    const Ouml$2 = "Ö";
-    const ouml$2 = "ö";
-    const para$2 = "¶";
-    const plusmn$2 = "±";
-    const pound$2 = "£";
-    const quot$4 = '"';
-    const QUOT$2 = '"';
-    const raquo$2 = "»";
-    const reg$2 = "®";
-    const REG$2 = "®";
-    const sect$2 = "§";
-    const shy$2 = "­";
-    const sup1$2 = "¹";
-    const sup2$2 = "²";
-    const sup3$2 = "³";
-    const szlig$2 = "ß";
-    const THORN$2 = "Þ";
-    const thorn$2 = "þ";
-    const times$2 = "×";
-    const Uacute$2 = "Ú";
-    const uacute$2 = "ú";
-    const Ucirc$2 = "Û";
-    const ucirc$2 = "û";
-    const Ugrave$2 = "Ù";
-    const ugrave$2 = "ù";
-    const uml$2 = "¨";
-    const Uuml$2 = "Ü";
-    const uuml$2 = "ü";
-    const Yacute$2 = "Ý";
-    const yacute$2 = "ý";
-    const yen$2 = "¥";
-    const yuml$2 = "ÿ";
-    const require$$1$1 = {
-      Aacute: Aacute$2,
-      aacute: aacute$2,
-      Acirc: Acirc$2,
-      acirc: acirc$2,
-      acute: acute$2,
-      AElig: AElig$2,
-      aelig: aelig$2,
-      Agrave: Agrave$2,
-      agrave: agrave$2,
-      amp: amp$4,
-      AMP: AMP$2,
-      Aring: Aring$2,
-      aring: aring$2,
-      Atilde: Atilde$2,
-      atilde: atilde$2,
-      Auml: Auml$2,
-      auml: auml$2,
-      brvbar: brvbar$2,
-      Ccedil: Ccedil$2,
-      ccedil: ccedil$2,
-      cedil: cedil$2,
-      cent: cent$2,
-      copy: copy$2,
-      COPY: COPY$2,
-      curren: curren$2,
-      deg: deg$2,
-      divide: divide$2,
-      Eacute: Eacute$2,
-      eacute: eacute$2,
-      Ecirc: Ecirc$2,
-      ecirc: ecirc$2,
-      Egrave: Egrave$2,
-      egrave: egrave$2,
-      ETH: ETH$2,
-      eth: eth$2,
-      Euml: Euml$2,
-      euml: euml$2,
-      frac12: frac12$2,
-      frac14: frac14$2,
-      frac34: frac34$2,
-      gt: gt$4,
-      GT: GT$2,
-      Iacute: Iacute$2,
-      iacute: iacute$2,
-      Icirc: Icirc$2,
-      icirc: icirc$2,
-      iexcl: iexcl$2,
-      Igrave: Igrave$2,
-      igrave: igrave$2,
-      iquest: iquest$2,
-      Iuml: Iuml$2,
-      iuml: iuml$2,
-      laquo: laquo$2,
-      lt: lt$4,
-      LT: LT$2,
-      macr: macr$2,
-      micro: micro$2,
-      middot: middot$2,
-      nbsp: nbsp$2,
-      not: not$2,
-      Ntilde: Ntilde$2,
-      ntilde: ntilde$2,
-      Oacute: Oacute$2,
-      oacute: oacute$2,
-      Ocirc: Ocirc$2,
-      ocirc: ocirc$2,
-      Ograve: Ograve$2,
-      ograve: ograve$2,
-      ordf: ordf$2,
-      ordm: ordm$2,
-      Oslash: Oslash$2,
-      oslash: oslash$2,
-      Otilde: Otilde$2,
-      otilde: otilde$2,
-      Ouml: Ouml$2,
-      ouml: ouml$2,
-      para: para$2,
-      plusmn: plusmn$2,
-      pound: pound$2,
-      quot: quot$4,
-      QUOT: QUOT$2,
-      raquo: raquo$2,
-      reg: reg$2,
-      REG: REG$2,
-      sect: sect$2,
-      shy: shy$2,
-      sup1: sup1$2,
-      sup2: sup2$2,
-      sup3: sup3$2,
-      szlig: szlig$2,
-      THORN: THORN$2,
-      thorn: thorn$2,
-      times: times$2,
-      Uacute: Uacute$2,
-      uacute: uacute$2,
-      Ucirc: Ucirc$2,
-      ucirc: ucirc$2,
-      Ugrave: Ugrave$2,
-      ugrave: ugrave$2,
-      uml: uml$2,
-      Uuml: Uuml$2,
-      uuml: uuml$2,
-      Yacute: Yacute$2,
-      yacute: yacute$2,
-      yen: yen$2,
-      yuml: yuml$2
-    };
-    const amp$3 = "&";
-    const apos$2 = "'";
-    const gt$3 = ">";
-    const lt$3 = "<";
-    const quot$3 = '"';
-    const require$$0$2 = {
-      amp: amp$3,
-      apos: apos$2,
-      gt: gt$3,
-      lt: lt$3,
-      quot: quot$3
-    };
-    var decode_codepoint$1 = {};
-    const require$$0$1 = {
-      "0": 65533,
-      "128": 8364,
-      "130": 8218,
-      "131": 402,
-      "132": 8222,
-      "133": 8230,
-      "134": 8224,
-      "135": 8225,
-      "136": 710,
-      "137": 8240,
-      "138": 352,
-      "139": 8249,
-      "140": 338,
-      "142": 381,
-      "145": 8216,
-      "146": 8217,
-      "147": 8220,
-      "148": 8221,
-      "149": 8226,
-      "150": 8211,
-      "151": 8212,
-      "152": 732,
-      "153": 8482,
-      "154": 353,
-      "155": 8250,
-      "156": 339,
-      "158": 382,
-      "159": 376
-    };
-    var hasRequiredDecode_codepoint$1;
-    function requireDecode_codepoint$1() {
-      if (hasRequiredDecode_codepoint$1) return decode_codepoint$1;
-      hasRequiredDecode_codepoint$1 = 1;
-      var __importDefault2 = decode_codepoint$1 && decode_codepoint$1.__importDefault || function(mod2) {
-        return mod2 && mod2.__esModule ? mod2 : { "default": mod2 };
-      };
-      Object.defineProperty(decode_codepoint$1, "__esModule", { value: true });
-      var decode_json_1 = __importDefault2(require$$0$1);
-      var fromCodePoint2 = (
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        String.fromCodePoint || function(codePoint) {
-          var output2 = "";
-          if (codePoint > 65535) {
-            codePoint -= 65536;
-            output2 += String.fromCharCode(codePoint >>> 10 & 1023 | 55296);
-            codePoint = 56320 | codePoint & 1023;
-          }
-          output2 += String.fromCharCode(codePoint);
-          return output2;
-        }
-      );
-      function decodeCodePoint(codePoint) {
-        if (codePoint >= 55296 && codePoint <= 57343 || codePoint > 1114111) {
-          return "�";
-        }
-        if (codePoint in decode_json_1.default) {
-          codePoint = decode_json_1.default[codePoint];
-        }
-        return fromCodePoint2(codePoint);
-      }
-      decode_codepoint$1.default = decodeCodePoint;
-      return decode_codepoint$1;
-    }
-    var hasRequiredDecode;
-    function requireDecode() {
-      if (hasRequiredDecode) return decode;
-      hasRequiredDecode = 1;
-      var __importDefault2 = decode && decode.__importDefault || function(mod2) {
-        return mod2 && mod2.__esModule ? mod2 : { "default": mod2 };
-      };
-      Object.defineProperty(decode, "__esModule", { value: true });
-      decode.decodeHTML = decode.decodeHTMLStrict = decode.decodeXML = void 0;
-      var entities_json_1 = __importDefault2(require$$1$2);
-      var legacy_json_1 = __importDefault2(require$$1$1);
-      var xml_json_1 = __importDefault2(require$$0$2);
-      var decode_codepoint_1 = __importDefault2(/* @__PURE__ */ requireDecode_codepoint$1());
-      var strictEntityRe = /&(?:[a-zA-Z0-9]+|#[xX][\da-fA-F]+|#\d+);/g;
-      decode.decodeXML = getStrictDecoder(xml_json_1.default);
-      decode.decodeHTMLStrict = getStrictDecoder(entities_json_1.default);
-      function getStrictDecoder(map2) {
-        var replace2 = getReplacer(map2);
-        return function(str2) {
-          return String(str2).replace(strictEntityRe, replace2);
-        };
-      }
-      var sorter = function(a, b) {
-        return a < b ? 1 : -1;
-      };
-      decode.decodeHTML = (function() {
-        var legacy2 = Object.keys(legacy_json_1.default).sort(sorter);
-        var keys = Object.keys(entities_json_1.default).sort(sorter);
-        for (var i2 = 0, j2 = 0; i2 < keys.length; i2++) {
-          if (legacy2[j2] === keys[i2]) {
-            keys[i2] += ";?";
-            j2++;
-          } else {
-            keys[i2] += ";";
-          }
-        }
-        var re2 = new RegExp("&(?:" + keys.join("|") + "|#[xX][\\da-fA-F]+;?|#\\d+;?)", "g");
-        var replace2 = getReplacer(entities_json_1.default);
-        function replacer(str2) {
-          if (str2.substr(-1) !== ";")
-            str2 += ";";
-          return replace2(str2);
-        }
-        return function(str2) {
-          return String(str2).replace(re2, replacer);
-        };
-      })();
-      function getReplacer(map2) {
-        return function replace2(str2) {
-          if (str2.charAt(1) === "#") {
-            var secondChar = str2.charAt(2);
-            if (secondChar === "X" || secondChar === "x") {
-              return decode_codepoint_1.default(parseInt(str2.substr(3), 16));
-            }
-            return decode_codepoint_1.default(parseInt(str2.substr(2), 10));
-          }
-          return map2[str2.slice(1, -1)] || str2;
-        };
-      }
-      return decode;
-    }
-    var encode = {};
-    var hasRequiredEncode;
-    function requireEncode() {
-      if (hasRequiredEncode) return encode;
-      hasRequiredEncode = 1;
-      var __importDefault2 = encode && encode.__importDefault || function(mod2) {
-        return mod2 && mod2.__esModule ? mod2 : { "default": mod2 };
-      };
-      Object.defineProperty(encode, "__esModule", { value: true });
-      encode.escapeUTF8 = encode.escape = encode.encodeNonAsciiHTML = encode.encodeHTML = encode.encodeXML = void 0;
-      var xml_json_1 = __importDefault2(require$$0$2);
-      var inverseXML = getInverseObj(xml_json_1.default);
-      var xmlReplacer = getInverseReplacer(inverseXML);
-      encode.encodeXML = getASCIIEncoder(inverseXML);
-      var entities_json_1 = __importDefault2(require$$1$2);
-      var inverseHTML = getInverseObj(entities_json_1.default);
-      var htmlReplacer = getInverseReplacer(inverseHTML);
-      encode.encodeHTML = getInverse(inverseHTML, htmlReplacer);
-      encode.encodeNonAsciiHTML = getASCIIEncoder(inverseHTML);
-      function getInverseObj(obj) {
-        return Object.keys(obj).sort().reduce(function(inverse, name2) {
-          inverse[obj[name2]] = "&" + name2 + ";";
-          return inverse;
-        }, {});
-      }
-      function getInverseReplacer(inverse) {
-        var single = [];
-        var multiple = [];
-        for (var _i = 0, _a2 = Object.keys(inverse); _i < _a2.length; _i++) {
-          var k = _a2[_i];
-          if (k.length === 1) {
-            single.push("\\" + k);
-          } else {
-            multiple.push(k);
-          }
-        }
-        single.sort();
-        for (var start2 = 0; start2 < single.length - 1; start2++) {
-          var end2 = start2;
-          while (end2 < single.length - 1 && single[end2].charCodeAt(1) + 1 === single[end2 + 1].charCodeAt(1)) {
-            end2 += 1;
-          }
-          var count2 = 1 + end2 - start2;
-          if (count2 < 3)
-            continue;
-          single.splice(start2, count2, single[start2] + "-" + single[end2]);
-        }
-        multiple.unshift("[" + single.join("") + "]");
-        return new RegExp(multiple.join("|"), "g");
-      }
-      var reNonASCII = /(?:[\x80-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])/g;
-      var getCodePoint = (
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        String.prototype.codePointAt != null ? (
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          function(str2) {
-            return str2.codePointAt(0);
-          }
-        ) : (
-          // http://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
-          function(c2) {
-            return (c2.charCodeAt(0) - 55296) * 1024 + c2.charCodeAt(1) - 56320 + 65536;
-          }
-        )
-      );
-      function singleCharReplacer(c2) {
-        return "&#x" + (c2.length > 1 ? getCodePoint(c2) : c2.charCodeAt(0)).toString(16).toUpperCase() + ";";
-      }
-      function getInverse(inverse, re2) {
-        return function(data) {
-          return data.replace(re2, function(name2) {
-            return inverse[name2];
-          }).replace(reNonASCII, singleCharReplacer);
-        };
-      }
-      var reEscapeChars = new RegExp(xmlReplacer.source + "|" + reNonASCII.source, "g");
-      function escape2(data) {
-        return data.replace(reEscapeChars, singleCharReplacer);
-      }
-      encode.escape = escape2;
-      function escapeUTF8(data) {
-        return data.replace(xmlReplacer, singleCharReplacer);
-      }
-      encode.escapeUTF8 = escapeUTF8;
-      function getASCIIEncoder(obj) {
-        return function(data) {
-          return data.replace(reEscapeChars, function(c2) {
-            return obj[c2] || singleCharReplacer(c2);
-          });
-        };
-      }
-      return encode;
-    }
-    var hasRequiredLib$9;
-    function requireLib$9() {
-      if (hasRequiredLib$9) return lib$4;
-      hasRequiredLib$9 = 1;
-      (function(exports2) {
-        Object.defineProperty(exports2, "__esModule", { value: true });
-        exports2.decodeXMLStrict = exports2.decodeHTML5Strict = exports2.decodeHTML4Strict = exports2.decodeHTML5 = exports2.decodeHTML4 = exports2.decodeHTMLStrict = exports2.decodeHTML = exports2.decodeXML = exports2.encodeHTML5 = exports2.encodeHTML4 = exports2.escapeUTF8 = exports2.escape = exports2.encodeNonAsciiHTML = exports2.encodeHTML = exports2.encodeXML = exports2.encode = exports2.decodeStrict = exports2.decode = void 0;
-        var decode_1 = /* @__PURE__ */ requireDecode();
-        var encode_1 = /* @__PURE__ */ requireEncode();
-        function decode2(data, level) {
-          return (!level || level <= 0 ? decode_1.decodeXML : decode_1.decodeHTML)(data);
-        }
-        exports2.decode = decode2;
-        function decodeStrict(data, level) {
-          return (!level || level <= 0 ? decode_1.decodeXML : decode_1.decodeHTMLStrict)(data);
-        }
-        exports2.decodeStrict = decodeStrict;
-        function encode2(data, level) {
-          return (!level || level <= 0 ? encode_1.encodeXML : encode_1.encodeHTML)(data);
-        }
-        exports2.encode = encode2;
-        var encode_2 = /* @__PURE__ */ requireEncode();
-        Object.defineProperty(exports2, "encodeXML", { enumerable: true, get: function() {
-          return encode_2.encodeXML;
-        } });
-        Object.defineProperty(exports2, "encodeHTML", { enumerable: true, get: function() {
-          return encode_2.encodeHTML;
-        } });
-        Object.defineProperty(exports2, "encodeNonAsciiHTML", { enumerable: true, get: function() {
-          return encode_2.encodeNonAsciiHTML;
-        } });
-        Object.defineProperty(exports2, "escape", { enumerable: true, get: function() {
-          return encode_2.escape;
-        } });
-        Object.defineProperty(exports2, "escapeUTF8", { enumerable: true, get: function() {
-          return encode_2.escapeUTF8;
-        } });
-        Object.defineProperty(exports2, "encodeHTML4", { enumerable: true, get: function() {
-          return encode_2.encodeHTML;
-        } });
-        Object.defineProperty(exports2, "encodeHTML5", { enumerable: true, get: function() {
-          return encode_2.encodeHTML;
-        } });
-        var decode_2 = /* @__PURE__ */ requireDecode();
-        Object.defineProperty(exports2, "decodeXML", { enumerable: true, get: function() {
-          return decode_2.decodeXML;
-        } });
-        Object.defineProperty(exports2, "decodeHTML", { enumerable: true, get: function() {
-          return decode_2.decodeHTML;
-        } });
-        Object.defineProperty(exports2, "decodeHTMLStrict", { enumerable: true, get: function() {
-          return decode_2.decodeHTMLStrict;
-        } });
-        Object.defineProperty(exports2, "decodeHTML4", { enumerable: true, get: function() {
-          return decode_2.decodeHTML;
-        } });
-        Object.defineProperty(exports2, "decodeHTML5", { enumerable: true, get: function() {
-          return decode_2.decodeHTML;
-        } });
-        Object.defineProperty(exports2, "decodeHTML4Strict", { enumerable: true, get: function() {
-          return decode_2.decodeHTMLStrict;
-        } });
-        Object.defineProperty(exports2, "decodeHTML5Strict", { enumerable: true, get: function() {
-          return decode_2.decodeHTMLStrict;
-        } });
-        Object.defineProperty(exports2, "decodeXMLStrict", { enumerable: true, get: function() {
-          return decode_2.decodeXML;
-        } });
-      })(lib$4);
-      return lib$4;
-    }
-    var foreignNames = {};
-    var hasRequiredForeignNames;
-    function requireForeignNames() {
-      if (hasRequiredForeignNames) return foreignNames;
-      hasRequiredForeignNames = 1;
-      Object.defineProperty(foreignNames, "__esModule", { value: true });
-      foreignNames.attributeNames = foreignNames.elementNames = void 0;
-      foreignNames.elementNames = /* @__PURE__ */ new Map([
-        ["altglyph", "altGlyph"],
-        ["altglyphdef", "altGlyphDef"],
-        ["altglyphitem", "altGlyphItem"],
-        ["animatecolor", "animateColor"],
-        ["animatemotion", "animateMotion"],
-        ["animatetransform", "animateTransform"],
-        ["clippath", "clipPath"],
-        ["feblend", "feBlend"],
-        ["fecolormatrix", "feColorMatrix"],
-        ["fecomponenttransfer", "feComponentTransfer"],
-        ["fecomposite", "feComposite"],
-        ["feconvolvematrix", "feConvolveMatrix"],
-        ["fediffuselighting", "feDiffuseLighting"],
-        ["fedisplacementmap", "feDisplacementMap"],
-        ["fedistantlight", "feDistantLight"],
-        ["fedropshadow", "feDropShadow"],
-        ["feflood", "feFlood"],
-        ["fefunca", "feFuncA"],
-        ["fefuncb", "feFuncB"],
-        ["fefuncg", "feFuncG"],
-        ["fefuncr", "feFuncR"],
-        ["fegaussianblur", "feGaussianBlur"],
-        ["feimage", "feImage"],
-        ["femerge", "feMerge"],
-        ["femergenode", "feMergeNode"],
-        ["femorphology", "feMorphology"],
-        ["feoffset", "feOffset"],
-        ["fepointlight", "fePointLight"],
-        ["fespecularlighting", "feSpecularLighting"],
-        ["fespotlight", "feSpotLight"],
-        ["fetile", "feTile"],
-        ["feturbulence", "feTurbulence"],
-        ["foreignobject", "foreignObject"],
-        ["glyphref", "glyphRef"],
-        ["lineargradient", "linearGradient"],
-        ["radialgradient", "radialGradient"],
-        ["textpath", "textPath"]
-      ]);
-      foreignNames.attributeNames = /* @__PURE__ */ new Map([
-        ["definitionurl", "definitionURL"],
-        ["attributename", "attributeName"],
-        ["attributetype", "attributeType"],
-        ["basefrequency", "baseFrequency"],
-        ["baseprofile", "baseProfile"],
-        ["calcmode", "calcMode"],
-        ["clippathunits", "clipPathUnits"],
-        ["diffuseconstant", "diffuseConstant"],
-        ["edgemode", "edgeMode"],
-        ["filterunits", "filterUnits"],
-        ["glyphref", "glyphRef"],
-        ["gradienttransform", "gradientTransform"],
-        ["gradientunits", "gradientUnits"],
-        ["kernelmatrix", "kernelMatrix"],
-        ["kernelunitlength", "kernelUnitLength"],
-        ["keypoints", "keyPoints"],
-        ["keysplines", "keySplines"],
-        ["keytimes", "keyTimes"],
-        ["lengthadjust", "lengthAdjust"],
-        ["limitingconeangle", "limitingConeAngle"],
-        ["markerheight", "markerHeight"],
-        ["markerunits", "markerUnits"],
-        ["markerwidth", "markerWidth"],
-        ["maskcontentunits", "maskContentUnits"],
-        ["maskunits", "maskUnits"],
-        ["numoctaves", "numOctaves"],
-        ["pathlength", "pathLength"],
-        ["patterncontentunits", "patternContentUnits"],
-        ["patterntransform", "patternTransform"],
-        ["patternunits", "patternUnits"],
-        ["pointsatx", "pointsAtX"],
-        ["pointsaty", "pointsAtY"],
-        ["pointsatz", "pointsAtZ"],
-        ["preservealpha", "preserveAlpha"],
-        ["preserveaspectratio", "preserveAspectRatio"],
-        ["primitiveunits", "primitiveUnits"],
-        ["refx", "refX"],
-        ["refy", "refY"],
-        ["repeatcount", "repeatCount"],
-        ["repeatdur", "repeatDur"],
-        ["requiredextensions", "requiredExtensions"],
-        ["requiredfeatures", "requiredFeatures"],
-        ["specularconstant", "specularConstant"],
-        ["specularexponent", "specularExponent"],
-        ["spreadmethod", "spreadMethod"],
-        ["startoffset", "startOffset"],
-        ["stddeviation", "stdDeviation"],
-        ["stitchtiles", "stitchTiles"],
-        ["surfacescale", "surfaceScale"],
-        ["systemlanguage", "systemLanguage"],
-        ["tablevalues", "tableValues"],
-        ["targetx", "targetX"],
-        ["targety", "targetY"],
-        ["textlength", "textLength"],
-        ["viewbox", "viewBox"],
-        ["viewtarget", "viewTarget"],
-        ["xchannelselector", "xChannelSelector"],
-        ["ychannelselector", "yChannelSelector"],
-        ["zoomandpan", "zoomAndPan"]
-      ]);
-      return foreignNames;
-    }
-    var hasRequiredLib$8;
-    function requireLib$8() {
-      if (hasRequiredLib$8) return lib$5;
-      hasRequiredLib$8 = 1;
-      var __assign2 = lib$5 && lib$5.__assign || function() {
-        __assign2 = Object.assign || function(t2) {
-          for (var s, i2 = 1, n = arguments.length; i2 < n; i2++) {
-            s = arguments[i2];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-              t2[p] = s[p];
-          }
-          return t2;
-        };
-        return __assign2.apply(this, arguments);
-      };
-      var __createBinding2 = lib$5 && lib$5.__createBinding || (Object.create ? (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        Object.defineProperty(o, k2, { enumerable: true, get: function() {
-          return m[k];
-        } });
-      }) : (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        o[k2] = m[k];
-      }));
-      var __setModuleDefault2 = lib$5 && lib$5.__setModuleDefault || (Object.create ? (function(o, v) {
-        Object.defineProperty(o, "default", { enumerable: true, value: v });
-      }) : function(o, v) {
-        o["default"] = v;
-      });
-      var __importStar2 = lib$5 && lib$5.__importStar || function(mod2) {
-        if (mod2 && mod2.__esModule) return mod2;
-        var result2 = {};
-        if (mod2 != null) {
-          for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
-        }
-        __setModuleDefault2(result2, mod2);
-        return result2;
-      };
-      Object.defineProperty(lib$5, "__esModule", { value: true });
-      var ElementType = __importStar2(/* @__PURE__ */ requireLib$b());
-      var entities_1 = /* @__PURE__ */ requireLib$9();
-      var foreignNames_1 = /* @__PURE__ */ requireForeignNames();
-      var unencodedElements = /* @__PURE__ */ new Set([
-        "style",
-        "script",
-        "xmp",
-        "iframe",
-        "noembed",
-        "noframes",
-        "plaintext",
-        "noscript"
-      ]);
-      function formatAttributes(attributes2, opts) {
-        if (!attributes2)
-          return;
-        return Object.keys(attributes2).map(function(key2) {
-          var _a2, _b2;
-          var value2 = (_a2 = attributes2[key2]) !== null && _a2 !== void 0 ? _a2 : "";
-          if (opts.xmlMode === "foreign") {
-            key2 = (_b2 = foreignNames_1.attributeNames.get(key2)) !== null && _b2 !== void 0 ? _b2 : key2;
-          }
-          if (!opts.emptyAttrs && !opts.xmlMode && value2 === "") {
-            return key2;
-          }
-          return key2 + '="' + (opts.decodeEntities !== false ? entities_1.encodeXML(value2) : value2.replace(/"/g, "&quot;")) + '"';
-        }).join(" ");
-      }
-      var singleTag = /* @__PURE__ */ new Set([
-        "area",
-        "base",
-        "basefont",
-        "br",
-        "col",
-        "command",
-        "embed",
-        "frame",
-        "hr",
-        "img",
-        "input",
-        "isindex",
-        "keygen",
-        "link",
-        "meta",
-        "param",
-        "source",
-        "track",
-        "wbr"
-      ]);
-      function render2(node2, options2) {
-        if (options2 === void 0) {
-          options2 = {};
-        }
-        var nodes = "length" in node2 ? node2 : [node2];
-        var output2 = "";
-        for (var i2 = 0; i2 < nodes.length; i2++) {
-          output2 += renderNode(nodes[i2], options2);
-        }
-        return output2;
-      }
-      lib$5.default = render2;
-      function renderNode(node2, options2) {
-        switch (node2.type) {
-          case ElementType.Root:
-            return render2(node2.children, options2);
-          case ElementType.Directive:
-          case ElementType.Doctype:
-            return renderDirective(node2);
-          case ElementType.Comment:
-            return renderComment(node2);
-          case ElementType.CDATA:
-            return renderCdata(node2);
-          case ElementType.Script:
-          case ElementType.Style:
-          case ElementType.Tag:
-            return renderTag(node2, options2);
-          case ElementType.Text:
-            return renderText(node2, options2);
-        }
-      }
-      var foreignModeIntegrationPoints = /* @__PURE__ */ new Set([
-        "mi",
-        "mo",
-        "mn",
-        "ms",
-        "mtext",
-        "annotation-xml",
-        "foreignObject",
-        "desc",
-        "title"
-      ]);
-      var foreignElements = /* @__PURE__ */ new Set(["svg", "math"]);
-      function renderTag(elem, opts) {
-        var _a2;
-        if (opts.xmlMode === "foreign") {
-          elem.name = (_a2 = foreignNames_1.elementNames.get(elem.name)) !== null && _a2 !== void 0 ? _a2 : elem.name;
-          if (elem.parent && foreignModeIntegrationPoints.has(elem.parent.name)) {
-            opts = __assign2(__assign2({}, opts), { xmlMode: false });
-          }
-        }
-        if (!opts.xmlMode && foreignElements.has(elem.name)) {
-          opts = __assign2(__assign2({}, opts), { xmlMode: "foreign" });
-        }
-        var tag = "<" + elem.name;
-        var attribs = formatAttributes(elem.attribs, opts);
-        if (attribs) {
-          tag += " " + attribs;
-        }
-        if (elem.children.length === 0 && (opts.xmlMode ? (
-          // In XML mode or foreign mode, and user hasn't explicitly turned off self-closing tags
-          opts.selfClosingTags !== false
-        ) : (
-          // User explicitly asked for self-closing tags, even in HTML mode
-          opts.selfClosingTags && singleTag.has(elem.name)
-        ))) {
-          if (!opts.xmlMode)
-            tag += " ";
-          tag += "/>";
-        } else {
-          tag += ">";
-          if (elem.children.length > 0) {
-            tag += render2(elem.children, opts);
-          }
-          if (opts.xmlMode || !singleTag.has(elem.name)) {
-            tag += "</" + elem.name + ">";
-          }
-        }
-        return tag;
-      }
-      function renderDirective(elem) {
-        return "<" + elem.data + ">";
-      }
-      function renderText(elem, opts) {
-        var data = elem.data || "";
-        if (opts.decodeEntities !== false && !(!opts.xmlMode && elem.parent && unencodedElements.has(elem.parent.name))) {
-          data = entities_1.encodeXML(data);
-        }
-        return data;
-      }
-      function renderCdata(elem) {
-        return "<![CDATA[" + elem.children[0].data + "]]>";
-      }
-      function renderComment(elem) {
-        return "<!--" + elem.data + "-->";
-      }
-      return lib$5;
-    }
-    var hasRequiredStringify$1;
-    function requireStringify$1() {
-      if (hasRequiredStringify$1) return stringify$1;
-      hasRequiredStringify$1 = 1;
-      var __importDefault2 = stringify$1 && stringify$1.__importDefault || function(mod2) {
-        return mod2 && mod2.__esModule ? mod2 : { "default": mod2 };
-      };
-      Object.defineProperty(stringify$1, "__esModule", { value: true });
-      stringify$1.innerText = stringify$1.textContent = stringify$1.getText = stringify$1.getInnerHTML = stringify$1.getOuterHTML = void 0;
-      var domhandler_1 = /* @__PURE__ */ requireLib$a();
-      var dom_serializer_1 = __importDefault2(/* @__PURE__ */ requireLib$8());
-      var domelementtype_1 = /* @__PURE__ */ requireLib$b();
-      function getOuterHTML(node2, options2) {
-        return (0, dom_serializer_1.default)(node2, options2);
-      }
-      stringify$1.getOuterHTML = getOuterHTML;
-      function getInnerHTML(node2, options2) {
-        return (0, domhandler_1.hasChildren)(node2) ? node2.children.map(function(node3) {
-          return getOuterHTML(node3, options2);
-        }).join("") : "";
-      }
-      stringify$1.getInnerHTML = getInnerHTML;
-      function getText(node2) {
-        if (Array.isArray(node2))
-          return node2.map(getText).join("");
-        if ((0, domhandler_1.isTag)(node2))
-          return node2.name === "br" ? "\n" : getText(node2.children);
-        if ((0, domhandler_1.isCDATA)(node2))
-          return getText(node2.children);
-        if ((0, domhandler_1.isText)(node2))
-          return node2.data;
-        return "";
-      }
-      stringify$1.getText = getText;
-      function textContent(node2) {
-        if (Array.isArray(node2))
-          return node2.map(textContent).join("");
-        if ((0, domhandler_1.hasChildren)(node2) && !(0, domhandler_1.isComment)(node2)) {
-          return textContent(node2.children);
-        }
-        if ((0, domhandler_1.isText)(node2))
-          return node2.data;
-        return "";
-      }
-      stringify$1.textContent = textContent;
-      function innerText(node2) {
-        if (Array.isArray(node2))
-          return node2.map(innerText).join("");
-        if ((0, domhandler_1.hasChildren)(node2) && (node2.type === domelementtype_1.ElementType.Tag || (0, domhandler_1.isCDATA)(node2))) {
-          return innerText(node2.children);
-        }
-        if ((0, domhandler_1.isText)(node2))
-          return node2.data;
-        return "";
-      }
-      stringify$1.innerText = innerText;
-      return stringify$1;
-    }
-    var traversal = {};
-    var hasRequiredTraversal;
-    function requireTraversal() {
-      if (hasRequiredTraversal) return traversal;
-      hasRequiredTraversal = 1;
-      Object.defineProperty(traversal, "__esModule", { value: true });
-      traversal.prevElementSibling = traversal.nextElementSibling = traversal.getName = traversal.hasAttrib = traversal.getAttributeValue = traversal.getSiblings = traversal.getParent = traversal.getChildren = void 0;
-      var domhandler_1 = /* @__PURE__ */ requireLib$a();
-      var emptyArray = [];
-      function getChildren2(elem) {
-        var _a2;
-        return (_a2 = elem.children) !== null && _a2 !== void 0 ? _a2 : emptyArray;
-      }
-      traversal.getChildren = getChildren2;
-      function getParent(elem) {
-        return elem.parent || null;
-      }
-      traversal.getParent = getParent;
-      function getSiblings(elem) {
-        var _a2, _b2;
-        var parent = getParent(elem);
-        if (parent != null)
-          return getChildren2(parent);
-        var siblings = [elem];
-        var prev = elem.prev, next = elem.next;
-        while (prev != null) {
-          siblings.unshift(prev);
-          _a2 = prev, prev = _a2.prev;
-        }
-        while (next != null) {
-          siblings.push(next);
-          _b2 = next, next = _b2.next;
-        }
-        return siblings;
-      }
-      traversal.getSiblings = getSiblings;
-      function getAttributeValue(elem, name2) {
-        var _a2;
-        return (_a2 = elem.attribs) === null || _a2 === void 0 ? void 0 : _a2[name2];
-      }
-      traversal.getAttributeValue = getAttributeValue;
-      function hasAttrib(elem, name2) {
-        return elem.attribs != null && Object.prototype.hasOwnProperty.call(elem.attribs, name2) && elem.attribs[name2] != null;
-      }
-      traversal.hasAttrib = hasAttrib;
-      function getName(elem) {
-        return elem.name;
-      }
-      traversal.getName = getName;
-      function nextElementSibling(elem) {
-        var _a2;
-        var next = elem.next;
-        while (next !== null && !(0, domhandler_1.isTag)(next))
-          _a2 = next, next = _a2.next;
-        return next;
-      }
-      traversal.nextElementSibling = nextElementSibling;
-      function prevElementSibling(elem) {
-        var _a2;
-        var prev = elem.prev;
-        while (prev !== null && !(0, domhandler_1.isTag)(prev))
-          _a2 = prev, prev = _a2.prev;
-        return prev;
-      }
-      traversal.prevElementSibling = prevElementSibling;
-      return traversal;
-    }
-    var manipulation$1 = {};
-    var hasRequiredManipulation$1;
-    function requireManipulation$1() {
-      if (hasRequiredManipulation$1) return manipulation$1;
-      hasRequiredManipulation$1 = 1;
-      Object.defineProperty(manipulation$1, "__esModule", { value: true });
-      manipulation$1.prepend = manipulation$1.prependChild = manipulation$1.append = manipulation$1.appendChild = manipulation$1.replaceElement = manipulation$1.removeElement = void 0;
-      function removeElement(elem) {
-        if (elem.prev)
-          elem.prev.next = elem.next;
-        if (elem.next)
-          elem.next.prev = elem.prev;
-        if (elem.parent) {
-          var childs = elem.parent.children;
-          childs.splice(childs.lastIndexOf(elem), 1);
-        }
-      }
-      manipulation$1.removeElement = removeElement;
-      function replaceElement(elem, replacement) {
-        var prev = replacement.prev = elem.prev;
-        if (prev) {
-          prev.next = replacement;
-        }
-        var next = replacement.next = elem.next;
-        if (next) {
-          next.prev = replacement;
-        }
-        var parent = replacement.parent = elem.parent;
-        if (parent) {
-          var childs = parent.children;
-          childs[childs.lastIndexOf(elem)] = replacement;
-        }
-      }
-      manipulation$1.replaceElement = replaceElement;
-      function appendChild(elem, child) {
-        removeElement(child);
-        child.next = null;
-        child.parent = elem;
-        if (elem.children.push(child) > 1) {
-          var sibling = elem.children[elem.children.length - 2];
-          sibling.next = child;
-          child.prev = sibling;
-        } else {
-          child.prev = null;
-        }
-      }
-      manipulation$1.appendChild = appendChild;
-      function append(elem, next) {
-        removeElement(next);
-        var parent = elem.parent;
-        var currNext = elem.next;
-        next.next = currNext;
-        next.prev = elem;
-        elem.next = next;
-        next.parent = parent;
-        if (currNext) {
-          currNext.prev = next;
-          if (parent) {
-            var childs = parent.children;
-            childs.splice(childs.lastIndexOf(currNext), 0, next);
-          }
-        } else if (parent) {
-          parent.children.push(next);
-        }
-      }
-      manipulation$1.append = append;
-      function prependChild(elem, child) {
-        removeElement(child);
-        child.parent = elem;
-        child.prev = null;
-        if (elem.children.unshift(child) !== 1) {
-          var sibling = elem.children[1];
-          sibling.prev = child;
-          child.next = sibling;
-        } else {
-          child.next = null;
-        }
-      }
-      manipulation$1.prependChild = prependChild;
-      function prepend(elem, prev) {
-        removeElement(prev);
-        var parent = elem.parent;
-        if (parent) {
-          var childs = parent.children;
-          childs.splice(childs.indexOf(elem), 0, prev);
-        }
-        if (elem.prev) {
-          elem.prev.next = prev;
-        }
-        prev.parent = parent;
-        prev.prev = elem.prev;
-        prev.next = elem;
-        elem.prev = prev;
-      }
-      manipulation$1.prepend = prepend;
-      return manipulation$1;
-    }
-    var querying = {};
-    var hasRequiredQuerying;
-    function requireQuerying() {
-      if (hasRequiredQuerying) return querying;
-      hasRequiredQuerying = 1;
-      Object.defineProperty(querying, "__esModule", { value: true });
-      querying.findAll = querying.existsOne = querying.findOne = querying.findOneChild = querying.find = querying.filter = void 0;
-      var domhandler_1 = /* @__PURE__ */ requireLib$a();
-      function filter(test, node2, recurse, limit) {
-        if (recurse === void 0) {
-          recurse = true;
-        }
-        if (limit === void 0) {
-          limit = Infinity;
-        }
-        if (!Array.isArray(node2))
-          node2 = [node2];
-        return find2(test, node2, recurse, limit);
-      }
-      querying.filter = filter;
-      function find2(test, nodes, recurse, limit) {
-        var result2 = [];
-        for (var _i = 0, nodes_1 = nodes; _i < nodes_1.length; _i++) {
-          var elem = nodes_1[_i];
-          if (test(elem)) {
-            result2.push(elem);
-            if (--limit <= 0)
-              break;
-          }
-          if (recurse && (0, domhandler_1.hasChildren)(elem) && elem.children.length > 0) {
-            var children2 = find2(test, elem.children, recurse, limit);
-            result2.push.apply(result2, children2);
-            limit -= children2.length;
-            if (limit <= 0)
-              break;
-          }
-        }
-        return result2;
-      }
-      querying.find = find2;
-      function findOneChild(test, nodes) {
-        return nodes.find(test);
-      }
-      querying.findOneChild = findOneChild;
-      function findOne(test, nodes, recurse) {
-        if (recurse === void 0) {
-          recurse = true;
-        }
-        var elem = null;
-        for (var i2 = 0; i2 < nodes.length && !elem; i2++) {
-          var checked = nodes[i2];
-          if (!(0, domhandler_1.isTag)(checked)) {
-            continue;
-          } else if (test(checked)) {
-            elem = checked;
-          } else if (recurse && checked.children.length > 0) {
-            elem = findOne(test, checked.children);
-          }
-        }
-        return elem;
-      }
-      querying.findOne = findOne;
-      function existsOne(test, nodes) {
-        return nodes.some(function(checked) {
-          return (0, domhandler_1.isTag)(checked) && (test(checked) || checked.children.length > 0 && existsOne(test, checked.children));
-        });
-      }
-      querying.existsOne = existsOne;
-      function findAll(test, nodes) {
-        var _a2;
-        var result2 = [];
-        var stack2 = nodes.filter(domhandler_1.isTag);
-        var elem;
-        while (elem = stack2.shift()) {
-          var children2 = (_a2 = elem.children) === null || _a2 === void 0 ? void 0 : _a2.filter(domhandler_1.isTag);
-          if (children2 && children2.length > 0) {
-            stack2.unshift.apply(stack2, children2);
-          }
-          if (test(elem))
-            result2.push(elem);
-        }
-        return result2;
-      }
-      querying.findAll = findAll;
-      return querying;
-    }
-    var legacy = {};
-    var hasRequiredLegacy;
-    function requireLegacy() {
-      if (hasRequiredLegacy) return legacy;
-      hasRequiredLegacy = 1;
-      Object.defineProperty(legacy, "__esModule", { value: true });
-      legacy.getElementsByTagType = legacy.getElementsByTagName = legacy.getElementById = legacy.getElements = legacy.testElement = void 0;
-      var domhandler_1 = /* @__PURE__ */ requireLib$a();
-      var querying_1 = /* @__PURE__ */ requireQuerying();
-      var Checks = {
-        tag_name: function(name2) {
-          if (typeof name2 === "function") {
-            return function(elem) {
-              return (0, domhandler_1.isTag)(elem) && name2(elem.name);
-            };
-          } else if (name2 === "*") {
-            return domhandler_1.isTag;
-          }
-          return function(elem) {
-            return (0, domhandler_1.isTag)(elem) && elem.name === name2;
-          };
-        },
-        tag_type: function(type) {
-          if (typeof type === "function") {
-            return function(elem) {
-              return type(elem.type);
-            };
-          }
-          return function(elem) {
-            return elem.type === type;
-          };
-        },
-        tag_contains: function(data) {
-          if (typeof data === "function") {
-            return function(elem) {
-              return (0, domhandler_1.isText)(elem) && data(elem.data);
-            };
-          }
-          return function(elem) {
-            return (0, domhandler_1.isText)(elem) && elem.data === data;
-          };
-        }
-      };
-      function getAttribCheck(attrib, value2) {
-        if (typeof value2 === "function") {
-          return function(elem) {
-            return (0, domhandler_1.isTag)(elem) && value2(elem.attribs[attrib]);
-          };
-        }
-        return function(elem) {
-          return (0, domhandler_1.isTag)(elem) && elem.attribs[attrib] === value2;
-        };
-      }
-      function combineFuncs(a, b) {
-        return function(elem) {
-          return a(elem) || b(elem);
-        };
-      }
-      function compileTest(options2) {
-        var funcs = Object.keys(options2).map(function(key2) {
-          var value2 = options2[key2];
-          return Object.prototype.hasOwnProperty.call(Checks, key2) ? Checks[key2](value2) : getAttribCheck(key2, value2);
-        });
-        return funcs.length === 0 ? null : funcs.reduce(combineFuncs);
-      }
-      function testElement(options2, node2) {
-        var test = compileTest(options2);
-        return test ? test(node2) : true;
-      }
-      legacy.testElement = testElement;
-      function getElements(options2, nodes, recurse, limit) {
-        if (limit === void 0) {
-          limit = Infinity;
-        }
-        var test = compileTest(options2);
-        return test ? (0, querying_1.filter)(test, nodes, recurse, limit) : [];
-      }
-      legacy.getElements = getElements;
-      function getElementById(id, nodes, recurse) {
-        if (recurse === void 0) {
-          recurse = true;
-        }
-        if (!Array.isArray(nodes))
-          nodes = [nodes];
-        return (0, querying_1.findOne)(getAttribCheck("id", id), nodes, recurse);
-      }
-      legacy.getElementById = getElementById;
-      function getElementsByTagName(tagName, nodes, recurse, limit) {
-        if (recurse === void 0) {
-          recurse = true;
-        }
-        if (limit === void 0) {
-          limit = Infinity;
-        }
-        return (0, querying_1.filter)(Checks.tag_name(tagName), nodes, recurse, limit);
-      }
-      legacy.getElementsByTagName = getElementsByTagName;
-      function getElementsByTagType(type, nodes, recurse, limit) {
-        if (recurse === void 0) {
-          recurse = true;
-        }
-        if (limit === void 0) {
-          limit = Infinity;
-        }
-        return (0, querying_1.filter)(Checks.tag_type(type), nodes, recurse, limit);
-      }
-      legacy.getElementsByTagType = getElementsByTagType;
-      return legacy;
-    }
-    var helpers$1 = {};
-    var hasRequiredHelpers$1;
-    function requireHelpers$1() {
-      if (hasRequiredHelpers$1) return helpers$1;
-      hasRequiredHelpers$1 = 1;
-      Object.defineProperty(helpers$1, "__esModule", { value: true });
-      helpers$1.uniqueSort = helpers$1.compareDocumentPosition = helpers$1.removeSubsets = void 0;
-      var domhandler_1 = /* @__PURE__ */ requireLib$a();
-      function removeSubsets(nodes) {
-        var idx = nodes.length;
-        while (--idx >= 0) {
-          var node2 = nodes[idx];
-          if (idx > 0 && nodes.lastIndexOf(node2, idx - 1) >= 0) {
-            nodes.splice(idx, 1);
-            continue;
-          }
-          for (var ancestor = node2.parent; ancestor; ancestor = ancestor.parent) {
-            if (nodes.includes(ancestor)) {
-              nodes.splice(idx, 1);
-              break;
-            }
-          }
-        }
-        return nodes;
-      }
-      helpers$1.removeSubsets = removeSubsets;
-      function compareDocumentPosition(nodeA, nodeB) {
-        var aParents = [];
-        var bParents = [];
-        if (nodeA === nodeB) {
-          return 0;
-        }
-        var current2 = (0, domhandler_1.hasChildren)(nodeA) ? nodeA : nodeA.parent;
-        while (current2) {
-          aParents.unshift(current2);
-          current2 = current2.parent;
-        }
-        current2 = (0, domhandler_1.hasChildren)(nodeB) ? nodeB : nodeB.parent;
-        while (current2) {
-          bParents.unshift(current2);
-          current2 = current2.parent;
-        }
-        var maxIdx = Math.min(aParents.length, bParents.length);
-        var idx = 0;
-        while (idx < maxIdx && aParents[idx] === bParents[idx]) {
-          idx++;
-        }
-        if (idx === 0) {
-          return 1;
-        }
-        var sharedParent = aParents[idx - 1];
-        var siblings = sharedParent.children;
-        var aSibling = aParents[idx];
-        var bSibling = bParents[idx];
-        if (siblings.indexOf(aSibling) > siblings.indexOf(bSibling)) {
-          if (sharedParent === nodeB) {
-            return 4 | 16;
-          }
-          return 4;
-        }
-        if (sharedParent === nodeA) {
-          return 2 | 8;
-        }
-        return 2;
-      }
-      helpers$1.compareDocumentPosition = compareDocumentPosition;
-      function uniqueSort(nodes) {
-        nodes = nodes.filter(function(node2, i2, arr2) {
-          return !arr2.includes(node2, i2 + 1);
-        });
-        nodes.sort(function(a, b) {
-          var relative = compareDocumentPosition(a, b);
-          if (relative & 2) {
-            return -1;
-          } else if (relative & 4) {
-            return 1;
-          }
-          return 0;
-        });
-        return nodes;
-      }
-      helpers$1.uniqueSort = uniqueSort;
-      return helpers$1;
-    }
-    var feeds = {};
-    var hasRequiredFeeds;
-    function requireFeeds() {
-      if (hasRequiredFeeds) return feeds;
-      hasRequiredFeeds = 1;
-      Object.defineProperty(feeds, "__esModule", { value: true });
-      feeds.getFeed = void 0;
-      var stringify_1 = /* @__PURE__ */ requireStringify$1();
-      var legacy_1 = /* @__PURE__ */ requireLegacy();
-      function getFeed(doc2) {
-        var feedRoot = getOneElement(isValidFeed, doc2);
-        return !feedRoot ? null : feedRoot.name === "feed" ? getAtomFeed(feedRoot) : getRssFeed(feedRoot);
-      }
-      feeds.getFeed = getFeed;
-      function getAtomFeed(feedRoot) {
-        var _a2;
-        var childs = feedRoot.children;
-        var feed = {
-          type: "atom",
-          items: (0, legacy_1.getElementsByTagName)("entry", childs).map(function(item2) {
-            var _a3;
-            var children2 = item2.children;
-            var entry = { media: getMediaElements(children2) };
-            addConditionally(entry, "id", "id", children2);
-            addConditionally(entry, "title", "title", children2);
-            var href2 = (_a3 = getOneElement("link", children2)) === null || _a3 === void 0 ? void 0 : _a3.attribs.href;
-            if (href2) {
-              entry.link = href2;
-            }
-            var description2 = fetch2("summary", children2) || fetch2("content", children2);
-            if (description2) {
-              entry.description = description2;
-            }
-            var pubDate = fetch2("updated", children2);
-            if (pubDate) {
-              entry.pubDate = new Date(pubDate);
-            }
-            return entry;
-          })
-        };
-        addConditionally(feed, "id", "id", childs);
-        addConditionally(feed, "title", "title", childs);
-        var href = (_a2 = getOneElement("link", childs)) === null || _a2 === void 0 ? void 0 : _a2.attribs.href;
-        if (href) {
-          feed.link = href;
-        }
-        addConditionally(feed, "description", "subtitle", childs);
-        var updated = fetch2("updated", childs);
-        if (updated) {
-          feed.updated = new Date(updated);
-        }
-        addConditionally(feed, "author", "email", childs, true);
-        return feed;
-      }
-      function getRssFeed(feedRoot) {
-        var _a2, _b2;
-        var childs = (_b2 = (_a2 = getOneElement("channel", feedRoot.children)) === null || _a2 === void 0 ? void 0 : _a2.children) !== null && _b2 !== void 0 ? _b2 : [];
-        var feed = {
-          type: feedRoot.name.substr(0, 3),
-          id: "",
-          items: (0, legacy_1.getElementsByTagName)("item", feedRoot.children).map(function(item2) {
-            var children2 = item2.children;
-            var entry = { media: getMediaElements(children2) };
-            addConditionally(entry, "id", "guid", children2);
-            addConditionally(entry, "title", "title", children2);
-            addConditionally(entry, "link", "link", children2);
-            addConditionally(entry, "description", "description", children2);
-            var pubDate = fetch2("pubDate", children2);
-            if (pubDate)
-              entry.pubDate = new Date(pubDate);
-            return entry;
-          })
-        };
-        addConditionally(feed, "title", "title", childs);
-        addConditionally(feed, "link", "link", childs);
-        addConditionally(feed, "description", "description", childs);
-        var updated = fetch2("lastBuildDate", childs);
-        if (updated) {
-          feed.updated = new Date(updated);
-        }
-        addConditionally(feed, "author", "managingEditor", childs, true);
-        return feed;
-      }
-      var MEDIA_KEYS_STRING = ["url", "type", "lang"];
-      var MEDIA_KEYS_INT = [
-        "fileSize",
-        "bitrate",
-        "framerate",
-        "samplingrate",
-        "channels",
-        "duration",
-        "height",
-        "width"
-      ];
-      function getMediaElements(where) {
-        return (0, legacy_1.getElementsByTagName)("media:content", where).map(function(elem) {
-          var attribs = elem.attribs;
-          var media = {
-            medium: attribs.medium,
-            isDefault: !!attribs.isDefault
-          };
-          for (var _i = 0, MEDIA_KEYS_STRING_1 = MEDIA_KEYS_STRING; _i < MEDIA_KEYS_STRING_1.length; _i++) {
-            var attrib = MEDIA_KEYS_STRING_1[_i];
-            if (attribs[attrib]) {
-              media[attrib] = attribs[attrib];
-            }
-          }
-          for (var _a2 = 0, MEDIA_KEYS_INT_1 = MEDIA_KEYS_INT; _a2 < MEDIA_KEYS_INT_1.length; _a2++) {
-            var attrib = MEDIA_KEYS_INT_1[_a2];
-            if (attribs[attrib]) {
-              media[attrib] = parseInt(attribs[attrib], 10);
-            }
-          }
-          if (attribs.expression) {
-            media.expression = attribs.expression;
-          }
-          return media;
-        });
-      }
-      function getOneElement(tagName, node2) {
-        return (0, legacy_1.getElementsByTagName)(tagName, node2, true, 1)[0];
-      }
-      function fetch2(tagName, where, recurse) {
-        if (recurse === void 0) {
-          recurse = false;
-        }
-        return (0, stringify_1.textContent)((0, legacy_1.getElementsByTagName)(tagName, where, recurse, 1)).trim();
-      }
-      function addConditionally(obj, prop2, tagName, where, recurse) {
-        if (recurse === void 0) {
-          recurse = false;
-        }
-        var val = fetch2(tagName, where, recurse);
-        if (val)
-          obj[prop2] = val;
-      }
-      function isValidFeed(value2) {
-        return value2 === "rss" || value2 === "feed" || value2 === "rdf:RDF";
-      }
-      return feeds;
-    }
-    var hasRequiredLib$7;
-    function requireLib$7() {
-      if (hasRequiredLib$7) return lib$8;
-      hasRequiredLib$7 = 1;
-      (function(exports2) {
-        var __createBinding2 = lib$8 && lib$8.__createBinding || (Object.create ? (function(o, m, k, k2) {
-          if (k2 === void 0) k2 = k;
-          Object.defineProperty(o, k2, { enumerable: true, get: function() {
-            return m[k];
-          } });
-        }) : (function(o, m, k, k2) {
-          if (k2 === void 0) k2 = k;
-          o[k2] = m[k];
-        }));
-        var __exportStar2 = lib$8 && lib$8.__exportStar || function(m, exports3) {
-          for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p)) __createBinding2(exports3, m, p);
-        };
-        Object.defineProperty(exports2, "__esModule", { value: true });
-        exports2.hasChildren = exports2.isDocument = exports2.isComment = exports2.isText = exports2.isCDATA = exports2.isTag = void 0;
-        __exportStar2(/* @__PURE__ */ requireStringify$1(), exports2);
-        __exportStar2(/* @__PURE__ */ requireTraversal(), exports2);
-        __exportStar2(/* @__PURE__ */ requireManipulation$1(), exports2);
-        __exportStar2(/* @__PURE__ */ requireQuerying(), exports2);
-        __exportStar2(/* @__PURE__ */ requireLegacy(), exports2);
-        __exportStar2(/* @__PURE__ */ requireHelpers$1(), exports2);
-        __exportStar2(/* @__PURE__ */ requireFeeds(), exports2);
-        var domhandler_1 = /* @__PURE__ */ requireLib$a();
-        Object.defineProperty(exports2, "isTag", { enumerable: true, get: function() {
-          return domhandler_1.isTag;
-        } });
-        Object.defineProperty(exports2, "isCDATA", { enumerable: true, get: function() {
-          return domhandler_1.isCDATA;
-        } });
-        Object.defineProperty(exports2, "isText", { enumerable: true, get: function() {
-          return domhandler_1.isText;
-        } });
-        Object.defineProperty(exports2, "isComment", { enumerable: true, get: function() {
-          return domhandler_1.isComment;
-        } });
-        Object.defineProperty(exports2, "isDocument", { enumerable: true, get: function() {
-          return domhandler_1.isDocument;
-        } });
-        Object.defineProperty(exports2, "hasChildren", { enumerable: true, get: function() {
-          return domhandler_1.hasChildren;
-        } });
-      })(lib$8);
-      return lib$8;
-    }
-    var boolbase;
-    var hasRequiredBoolbase;
-    function requireBoolbase() {
-      if (hasRequiredBoolbase) return boolbase;
-      hasRequiredBoolbase = 1;
-      boolbase = {
-        trueFunc: function trueFunc() {
-          return true;
-        },
-        falseFunc: function falseFunc() {
-          return false;
-        }
-      };
-      return boolbase;
-    }
-    var compile$1 = {};
-    var sort = {};
-    var procedure = {};
-    var hasRequiredProcedure;
-    function requireProcedure() {
-      if (hasRequiredProcedure) return procedure;
-      hasRequiredProcedure = 1;
-      (function(exports2) {
-        Object.defineProperty(exports2, "__esModule", { value: true });
-        exports2.isTraversal = exports2.procedure = void 0;
-        exports2.procedure = {
-          universal: 50,
-          tag: 30,
-          attribute: 1,
-          pseudo: 0,
-          "pseudo-element": 0,
-          "column-combinator": -1,
-          descendant: -1,
-          child: -1,
-          parent: -1,
-          sibling: -1,
-          adjacent: -1,
-          _flexibleDescendant: -1
-        };
-        function isTraversal2(t2) {
-          return exports2.procedure[t2.type] < 0;
-        }
-        exports2.isTraversal = isTraversal2;
-      })(procedure);
-      return procedure;
-    }
-    var hasRequiredSort;
-    function requireSort() {
-      if (hasRequiredSort) return sort;
-      hasRequiredSort = 1;
-      Object.defineProperty(sort, "__esModule", { value: true });
-      var css_what_1 = require$$0$3;
-      var procedure_1 = requireProcedure();
-      var attributes2 = {
-        exists: 10,
-        equals: 8,
-        not: 7,
-        start: 6,
-        end: 6,
-        any: 5,
-        hyphen: 4,
-        element: 4
-      };
-      function sortByProcedure(arr2) {
-        var procs = arr2.map(getProcedure);
-        for (var i2 = 1; i2 < arr2.length; i2++) {
-          var procNew = procs[i2];
-          if (procNew < 0)
-            continue;
-          for (var j2 = i2 - 1; j2 >= 0 && procNew < procs[j2]; j2--) {
-            var token2 = arr2[j2 + 1];
-            arr2[j2 + 1] = arr2[j2];
-            arr2[j2] = token2;
-            procs[j2 + 1] = procs[j2];
-            procs[j2] = procNew;
-          }
-        }
-      }
-      sort.default = sortByProcedure;
-      function getProcedure(token2) {
-        var proc = procedure_1.procedure[token2.type];
-        if (token2.type === css_what_1.SelectorType.Attribute) {
-          proc = attributes2[token2.action];
-          if (proc === attributes2.equals && token2.name === "id") {
-            proc = 9;
-          }
-          if (token2.ignoreCase) {
-            proc >>= 1;
-          }
-        } else if (token2.type === css_what_1.SelectorType.Pseudo) {
-          if (!token2.data) {
-            proc = 3;
-          } else if (token2.name === "has" || token2.name === "contains") {
-            proc = 0;
-          } else if (Array.isArray(token2.data)) {
-            proc = 0;
-            for (var i2 = 0; i2 < token2.data.length; i2++) {
-              if (token2.data[i2].length !== 1)
-                continue;
-              var cur2 = getProcedure(token2.data[i2][0]);
-              if (cur2 === 0) {
-                proc = 0;
-                break;
-              }
-              if (cur2 > proc)
-                proc = cur2;
-            }
-            if (token2.data.length > 1 && proc > 0)
-              proc -= 1;
-          } else {
-            proc = 1;
-          }
-        }
-        return proc;
-      }
-      return sort;
-    }
-    var general = {};
-    var attributes$1 = {};
-    var hasRequiredAttributes$1;
-    function requireAttributes$1() {
-      if (hasRequiredAttributes$1) return attributes$1;
-      hasRequiredAttributes$1 = 1;
-      Object.defineProperty(attributes$1, "__esModule", { value: true });
-      attributes$1.attributeRules = void 0;
-      var boolbase_1 = requireBoolbase();
-      var reChars = /[-[\]{}()*+?.,\\^$|#\s]/g;
-      function escapeRegex(value2) {
-        return value2.replace(reChars, "\\$&");
-      }
-      var caseInsensitiveAttributes = /* @__PURE__ */ new Set([
-        "accept",
-        "accept-charset",
-        "align",
-        "alink",
-        "axis",
-        "bgcolor",
-        "charset",
-        "checked",
-        "clear",
-        "codetype",
-        "color",
-        "compact",
-        "declare",
-        "defer",
-        "dir",
-        "direction",
-        "disabled",
-        "enctype",
-        "face",
-        "frame",
-        "hreflang",
-        "http-equiv",
-        "lang",
-        "language",
-        "link",
-        "media",
-        "method",
-        "multiple",
-        "nohref",
-        "noresize",
-        "noshade",
-        "nowrap",
-        "readonly",
-        "rel",
-        "rev",
-        "rules",
-        "scope",
-        "scrolling",
-        "selected",
-        "shape",
-        "target",
-        "text",
-        "type",
-        "valign",
-        "valuetype",
-        "vlink"
-      ]);
-      function shouldIgnoreCase(selector2, options2) {
-        return typeof selector2.ignoreCase === "boolean" ? selector2.ignoreCase : selector2.ignoreCase === "quirks" ? !!options2.quirksMode : !options2.xmlMode && caseInsensitiveAttributes.has(selector2.name);
-      }
-      attributes$1.attributeRules = {
-        equals: function(next, data, options2) {
-          var adapter = options2.adapter;
-          var name2 = data.name;
-          var value2 = data.value;
-          if (shouldIgnoreCase(data, options2)) {
-            value2 = value2.toLowerCase();
-            return function(elem) {
-              var attr = adapter.getAttributeValue(elem, name2);
-              return attr != null && attr.length === value2.length && attr.toLowerCase() === value2 && next(elem);
-            };
-          }
-          return function(elem) {
-            return adapter.getAttributeValue(elem, name2) === value2 && next(elem);
-          };
-        },
-        hyphen: function(next, data, options2) {
-          var adapter = options2.adapter;
-          var name2 = data.name;
-          var value2 = data.value;
-          var len = value2.length;
-          if (shouldIgnoreCase(data, options2)) {
-            value2 = value2.toLowerCase();
-            return function hyphenIC(elem) {
-              var attr = adapter.getAttributeValue(elem, name2);
-              return attr != null && (attr.length === len || attr.charAt(len) === "-") && attr.substr(0, len).toLowerCase() === value2 && next(elem);
-            };
-          }
-          return function hyphen2(elem) {
-            var attr = adapter.getAttributeValue(elem, name2);
-            return attr != null && (attr.length === len || attr.charAt(len) === "-") && attr.substr(0, len) === value2 && next(elem);
-          };
-        },
-        element: function(next, data, options2) {
-          var adapter = options2.adapter;
-          var name2 = data.name, value2 = data.value;
-          if (/\s/.test(value2)) {
-            return boolbase_1.falseFunc;
-          }
-          var regex2 = new RegExp("(?:^|\\s)".concat(escapeRegex(value2), "(?:$|\\s)"), shouldIgnoreCase(data, options2) ? "i" : "");
-          return function element(elem) {
-            var attr = adapter.getAttributeValue(elem, name2);
-            return attr != null && attr.length >= value2.length && regex2.test(attr) && next(elem);
-          };
-        },
-        exists: function(next, _a2, _b2) {
-          var name2 = _a2.name;
-          var adapter = _b2.adapter;
-          return function(elem) {
-            return adapter.hasAttrib(elem, name2) && next(elem);
-          };
-        },
-        start: function(next, data, options2) {
-          var adapter = options2.adapter;
-          var name2 = data.name;
-          var value2 = data.value;
-          var len = value2.length;
-          if (len === 0) {
-            return boolbase_1.falseFunc;
-          }
-          if (shouldIgnoreCase(data, options2)) {
-            value2 = value2.toLowerCase();
-            return function(elem) {
-              var attr = adapter.getAttributeValue(elem, name2);
-              return attr != null && attr.length >= len && attr.substr(0, len).toLowerCase() === value2 && next(elem);
-            };
-          }
-          return function(elem) {
-            var _a2;
-            return !!((_a2 = adapter.getAttributeValue(elem, name2)) === null || _a2 === void 0 ? void 0 : _a2.startsWith(value2)) && next(elem);
-          };
-        },
-        end: function(next, data, options2) {
-          var adapter = options2.adapter;
-          var name2 = data.name;
-          var value2 = data.value;
-          var len = -value2.length;
-          if (len === 0) {
-            return boolbase_1.falseFunc;
-          }
-          if (shouldIgnoreCase(data, options2)) {
-            value2 = value2.toLowerCase();
-            return function(elem) {
-              var _a2;
-              return ((_a2 = adapter.getAttributeValue(elem, name2)) === null || _a2 === void 0 ? void 0 : _a2.substr(len).toLowerCase()) === value2 && next(elem);
-            };
-          }
-          return function(elem) {
-            var _a2;
-            return !!((_a2 = adapter.getAttributeValue(elem, name2)) === null || _a2 === void 0 ? void 0 : _a2.endsWith(value2)) && next(elem);
-          };
-        },
-        any: function(next, data, options2) {
-          var adapter = options2.adapter;
-          var name2 = data.name, value2 = data.value;
-          if (value2 === "") {
-            return boolbase_1.falseFunc;
-          }
-          if (shouldIgnoreCase(data, options2)) {
-            var regex_1 = new RegExp(escapeRegex(value2), "i");
-            return function anyIC(elem) {
-              var attr = adapter.getAttributeValue(elem, name2);
-              return attr != null && attr.length >= value2.length && regex_1.test(attr) && next(elem);
-            };
-          }
-          return function(elem) {
-            var _a2;
-            return !!((_a2 = adapter.getAttributeValue(elem, name2)) === null || _a2 === void 0 ? void 0 : _a2.includes(value2)) && next(elem);
-          };
-        },
-        not: function(next, data, options2) {
-          var adapter = options2.adapter;
-          var name2 = data.name;
-          var value2 = data.value;
-          if (value2 === "") {
-            return function(elem) {
-              return !!adapter.getAttributeValue(elem, name2) && next(elem);
-            };
-          } else if (shouldIgnoreCase(data, options2)) {
-            value2 = value2.toLowerCase();
-            return function(elem) {
-              var attr = adapter.getAttributeValue(elem, name2);
-              return (attr == null || attr.length !== value2.length || attr.toLowerCase() !== value2) && next(elem);
-            };
-          }
-          return function(elem) {
-            return adapter.getAttributeValue(elem, name2) !== value2 && next(elem);
-          };
-        }
-      };
-      return attributes$1;
-    }
-    var pseudoSelectors = {};
-    var filters = {};
-    var lib$3 = {};
-    var parse$4 = {};
-    var hasRequiredParse$1;
-    function requireParse$1() {
-      if (hasRequiredParse$1) return parse$4;
-      hasRequiredParse$1 = 1;
-      Object.defineProperty(parse$4, "__esModule", { value: true });
-      parse$4.parse = void 0;
-      var whitespace = /* @__PURE__ */ new Set([9, 10, 12, 13, 32]);
-      var ZERO = "0".charCodeAt(0);
-      var NINE = "9".charCodeAt(0);
-      function parse2(formula) {
-        formula = formula.trim().toLowerCase();
-        if (formula === "even") {
-          return [2, 0];
-        } else if (formula === "odd") {
-          return [2, 1];
-        }
-        var idx = 0;
-        var a = 0;
-        var sign2 = readSign();
-        var number2 = readNumber();
-        if (idx < formula.length && formula.charAt(idx) === "n") {
-          idx++;
-          a = sign2 * (number2 !== null && number2 !== void 0 ? number2 : 1);
-          skipWhitespace();
-          if (idx < formula.length) {
-            sign2 = readSign();
-            skipWhitespace();
-            number2 = readNumber();
-          } else {
-            sign2 = number2 = 0;
-          }
-        }
-        if (number2 === null || idx < formula.length) {
-          throw new Error("n-th rule couldn't be parsed ('".concat(formula, "')"));
-        }
-        return [a, sign2 * number2];
-        function readSign() {
-          if (formula.charAt(idx) === "-") {
-            idx++;
-            return -1;
-          }
-          if (formula.charAt(idx) === "+") {
-            idx++;
-          }
-          return 1;
-        }
-        function readNumber() {
-          var start2 = idx;
-          var value2 = 0;
-          while (idx < formula.length && formula.charCodeAt(idx) >= ZERO && formula.charCodeAt(idx) <= NINE) {
-            value2 = value2 * 10 + (formula.charCodeAt(idx) - ZERO);
-            idx++;
-          }
-          return idx === start2 ? null : value2;
-        }
-        function skipWhitespace() {
-          while (idx < formula.length && whitespace.has(formula.charCodeAt(idx))) {
-            idx++;
-          }
-        }
-      }
-      parse$4.parse = parse2;
-      return parse$4;
-    }
-    var compile = {};
-    var hasRequiredCompile$1;
-    function requireCompile$1() {
-      if (hasRequiredCompile$1) return compile;
-      hasRequiredCompile$1 = 1;
-      var __importDefault2 = compile && compile.__importDefault || function(mod2) {
-        return mod2 && mod2.__esModule ? mod2 : { "default": mod2 };
-      };
-      Object.defineProperty(compile, "__esModule", { value: true });
-      compile.generate = compile.compile = void 0;
-      var boolbase_1 = __importDefault2(requireBoolbase());
-      function compile$12(parsed) {
-        var a = parsed[0];
-        var b = parsed[1] - 1;
-        if (b < 0 && a <= 0)
-          return boolbase_1.default.falseFunc;
-        if (a === -1)
-          return function(index) {
-            return index <= b;
-          };
-        if (a === 0)
-          return function(index) {
-            return index === b;
-          };
-        if (a === 1)
-          return b < 0 ? boolbase_1.default.trueFunc : function(index) {
-            return index >= b;
-          };
-        var absA = Math.abs(a);
-        var bMod = (b % absA + absA) % absA;
-        return a > 1 ? function(index) {
-          return index >= b && index % absA === bMod;
-        } : function(index) {
-          return index <= b && index % absA === bMod;
-        };
-      }
-      compile.compile = compile$12;
-      function generate(parsed) {
-        var a = parsed[0];
-        var b = parsed[1] - 1;
-        var n = 0;
-        if (a < 0) {
-          var aPos_1 = -a;
-          var minValue_1 = (b % aPos_1 + aPos_1) % aPos_1;
-          return function() {
-            var val = minValue_1 + aPos_1 * n++;
-            return val > b ? null : val;
-          };
-        }
-        if (a === 0)
-          return b < 0 ? (
-            // There are no result — always return `null`
-            function() {
-              return null;
-            }
-          ) : (
-            // Return `b` exactly once
-            function() {
-              return n++ === 0 ? b : null;
-            }
-          );
-        if (b < 0) {
-          b += a * Math.ceil(-b / a);
-        }
-        return function() {
-          return a * n++ + b;
-        };
-      }
-      compile.generate = generate;
-      return compile;
-    }
-    var hasRequiredLib$6;
-    function requireLib$6() {
-      if (hasRequiredLib$6) return lib$3;
-      hasRequiredLib$6 = 1;
-      (function(exports2) {
-        Object.defineProperty(exports2, "__esModule", { value: true });
-        exports2.sequence = exports2.generate = exports2.compile = exports2.parse = void 0;
-        var parse_js_1 = /* @__PURE__ */ requireParse$1();
-        Object.defineProperty(exports2, "parse", { enumerable: true, get: function() {
-          return parse_js_1.parse;
-        } });
-        var compile_js_1 = /* @__PURE__ */ requireCompile$1();
-        Object.defineProperty(exports2, "compile", { enumerable: true, get: function() {
-          return compile_js_1.compile;
-        } });
-        Object.defineProperty(exports2, "generate", { enumerable: true, get: function() {
-          return compile_js_1.generate;
-        } });
-        function nthCheck(formula) {
-          return (0, compile_js_1.compile)((0, parse_js_1.parse)(formula));
-        }
-        exports2.default = nthCheck;
-        function sequence(formula) {
-          return (0, compile_js_1.generate)((0, parse_js_1.parse)(formula));
-        }
-        exports2.sequence = sequence;
-      })(lib$3);
-      return lib$3;
-    }
-    var hasRequiredFilters;
-    function requireFilters() {
-      if (hasRequiredFilters) return filters;
-      hasRequiredFilters = 1;
-      (function(exports2) {
-        var __importDefault2 = filters && filters.__importDefault || function(mod2) {
-          return mod2 && mod2.__esModule ? mod2 : { "default": mod2 };
-        };
-        Object.defineProperty(exports2, "__esModule", { value: true });
-        exports2.filters = void 0;
-        var nth_check_1 = __importDefault2(/* @__PURE__ */ requireLib$6());
-        var boolbase_1 = requireBoolbase();
-        function getChildFunc(next, adapter) {
-          return function(elem) {
-            var parent = adapter.getParent(elem);
-            return parent != null && adapter.isTag(parent) && next(elem);
-          };
-        }
-        exports2.filters = {
-          contains: function(next, text2, _a2) {
-            var adapter = _a2.adapter;
-            return function contains2(elem) {
-              return next(elem) && adapter.getText(elem).includes(text2);
-            };
-          },
-          icontains: function(next, text2, _a2) {
-            var adapter = _a2.adapter;
-            var itext = text2.toLowerCase();
-            return function icontains(elem) {
-              return next(elem) && adapter.getText(elem).toLowerCase().includes(itext);
-            };
-          },
-          // Location specific methods
-          "nth-child": function(next, rule, _a2) {
-            var adapter = _a2.adapter, equals2 = _a2.equals;
-            var func = (0, nth_check_1.default)(rule);
-            if (func === boolbase_1.falseFunc)
-              return boolbase_1.falseFunc;
-            if (func === boolbase_1.trueFunc)
-              return getChildFunc(next, adapter);
-            return function nthChild(elem) {
-              var siblings = adapter.getSiblings(elem);
-              var pos2 = 0;
-              for (var i2 = 0; i2 < siblings.length; i2++) {
-                if (equals2(elem, siblings[i2]))
-                  break;
-                if (adapter.isTag(siblings[i2])) {
-                  pos2++;
-                }
-              }
-              return func(pos2) && next(elem);
-            };
-          },
-          "nth-last-child": function(next, rule, _a2) {
-            var adapter = _a2.adapter, equals2 = _a2.equals;
-            var func = (0, nth_check_1.default)(rule);
-            if (func === boolbase_1.falseFunc)
-              return boolbase_1.falseFunc;
-            if (func === boolbase_1.trueFunc)
-              return getChildFunc(next, adapter);
-            return function nthLastChild(elem) {
-              var siblings = adapter.getSiblings(elem);
-              var pos2 = 0;
-              for (var i2 = siblings.length - 1; i2 >= 0; i2--) {
-                if (equals2(elem, siblings[i2]))
-                  break;
-                if (adapter.isTag(siblings[i2])) {
-                  pos2++;
-                }
-              }
-              return func(pos2) && next(elem);
-            };
-          },
-          "nth-of-type": function(next, rule, _a2) {
-            var adapter = _a2.adapter, equals2 = _a2.equals;
-            var func = (0, nth_check_1.default)(rule);
-            if (func === boolbase_1.falseFunc)
-              return boolbase_1.falseFunc;
-            if (func === boolbase_1.trueFunc)
-              return getChildFunc(next, adapter);
-            return function nthOfType(elem) {
-              var siblings = adapter.getSiblings(elem);
-              var pos2 = 0;
-              for (var i2 = 0; i2 < siblings.length; i2++) {
-                var currentSibling = siblings[i2];
-                if (equals2(elem, currentSibling))
-                  break;
-                if (adapter.isTag(currentSibling) && adapter.getName(currentSibling) === adapter.getName(elem)) {
-                  pos2++;
-                }
-              }
-              return func(pos2) && next(elem);
-            };
-          },
-          "nth-last-of-type": function(next, rule, _a2) {
-            var adapter = _a2.adapter, equals2 = _a2.equals;
-            var func = (0, nth_check_1.default)(rule);
-            if (func === boolbase_1.falseFunc)
-              return boolbase_1.falseFunc;
-            if (func === boolbase_1.trueFunc)
-              return getChildFunc(next, adapter);
-            return function nthLastOfType(elem) {
-              var siblings = adapter.getSiblings(elem);
-              var pos2 = 0;
-              for (var i2 = siblings.length - 1; i2 >= 0; i2--) {
-                var currentSibling = siblings[i2];
-                if (equals2(elem, currentSibling))
-                  break;
-                if (adapter.isTag(currentSibling) && adapter.getName(currentSibling) === adapter.getName(elem)) {
-                  pos2++;
-                }
-              }
-              return func(pos2) && next(elem);
-            };
-          },
-          // TODO determine the actual root element
-          root: function(next, _rule, _a2) {
-            var adapter = _a2.adapter;
-            return function(elem) {
-              var parent = adapter.getParent(elem);
-              return (parent == null || !adapter.isTag(parent)) && next(elem);
-            };
-          },
-          scope: function(next, rule, options2, context) {
-            var equals2 = options2.equals;
-            if (!context || context.length === 0) {
-              return exports2.filters.root(next, rule, options2);
-            }
-            if (context.length === 1) {
-              return function(elem) {
-                return equals2(context[0], elem) && next(elem);
-              };
-            }
-            return function(elem) {
-              return context.includes(elem) && next(elem);
-            };
-          },
-          hover: dynamicStatePseudo("isHovered"),
-          visited: dynamicStatePseudo("isVisited"),
-          active: dynamicStatePseudo("isActive")
-        };
-        function dynamicStatePseudo(name2) {
-          return function dynamicPseudo(next, _rule, _a2) {
-            var adapter = _a2.adapter;
-            var func = adapter[name2];
-            if (typeof func !== "function") {
-              return boolbase_1.falseFunc;
-            }
-            return function active(elem) {
-              return func(elem) && next(elem);
-            };
-          };
-        }
-      })(filters);
-      return filters;
-    }
-    var pseudos = {};
-    var hasRequiredPseudos;
-    function requirePseudos() {
-      if (hasRequiredPseudos) return pseudos;
-      hasRequiredPseudos = 1;
-      Object.defineProperty(pseudos, "__esModule", { value: true });
-      pseudos.verifyPseudoArgs = pseudos.pseudos = void 0;
-      pseudos.pseudos = {
-        empty: function(elem, _a2) {
-          var adapter = _a2.adapter;
-          return !adapter.getChildren(elem).some(function(elem2) {
-            return adapter.isTag(elem2) || adapter.getText(elem2) !== "";
-          });
-        },
-        "first-child": function(elem, _a2) {
-          var adapter = _a2.adapter, equals2 = _a2.equals;
-          var firstChild = adapter.getSiblings(elem).find(function(elem2) {
-            return adapter.isTag(elem2);
-          });
-          return firstChild != null && equals2(elem, firstChild);
-        },
-        "last-child": function(elem, _a2) {
-          var adapter = _a2.adapter, equals2 = _a2.equals;
-          var siblings = adapter.getSiblings(elem);
-          for (var i2 = siblings.length - 1; i2 >= 0; i2--) {
-            if (equals2(elem, siblings[i2]))
-              return true;
-            if (adapter.isTag(siblings[i2]))
-              break;
-          }
-          return false;
-        },
-        "first-of-type": function(elem, _a2) {
-          var adapter = _a2.adapter, equals2 = _a2.equals;
-          var siblings = adapter.getSiblings(elem);
-          var elemName = adapter.getName(elem);
-          for (var i2 = 0; i2 < siblings.length; i2++) {
-            var currentSibling = siblings[i2];
-            if (equals2(elem, currentSibling))
-              return true;
-            if (adapter.isTag(currentSibling) && adapter.getName(currentSibling) === elemName) {
-              break;
-            }
-          }
-          return false;
-        },
-        "last-of-type": function(elem, _a2) {
-          var adapter = _a2.adapter, equals2 = _a2.equals;
-          var siblings = adapter.getSiblings(elem);
-          var elemName = adapter.getName(elem);
-          for (var i2 = siblings.length - 1; i2 >= 0; i2--) {
-            var currentSibling = siblings[i2];
-            if (equals2(elem, currentSibling))
-              return true;
-            if (adapter.isTag(currentSibling) && adapter.getName(currentSibling) === elemName) {
-              break;
-            }
-          }
-          return false;
-        },
-        "only-of-type": function(elem, _a2) {
-          var adapter = _a2.adapter, equals2 = _a2.equals;
-          var elemName = adapter.getName(elem);
-          return adapter.getSiblings(elem).every(function(sibling) {
-            return equals2(elem, sibling) || !adapter.isTag(sibling) || adapter.getName(sibling) !== elemName;
-          });
-        },
-        "only-child": function(elem, _a2) {
-          var adapter = _a2.adapter, equals2 = _a2.equals;
-          return adapter.getSiblings(elem).every(function(sibling) {
-            return equals2(elem, sibling) || !adapter.isTag(sibling);
-          });
-        }
-      };
-      function verifyPseudoArgs(func, name2, subselect) {
-        if (subselect === null) {
-          if (func.length > 2) {
-            throw new Error("pseudo-selector :".concat(name2, " requires an argument"));
-          }
-        } else if (func.length === 2) {
-          throw new Error("pseudo-selector :".concat(name2, " doesn't have any arguments"));
-        }
-      }
-      pseudos.verifyPseudoArgs = verifyPseudoArgs;
-      return pseudos;
-    }
-    var aliases = {};
-    var hasRequiredAliases;
-    function requireAliases() {
-      if (hasRequiredAliases) return aliases;
-      hasRequiredAliases = 1;
-      Object.defineProperty(aliases, "__esModule", { value: true });
-      aliases.aliases = void 0;
-      aliases.aliases = {
-        // Links
-        "any-link": ":is(a, area, link)[href]",
-        link: ":any-link:not(:visited)",
-        // Forms
-        // https://html.spec.whatwg.org/multipage/scripting.html#disabled-elements
-        disabled: ":is(\n        :is(button, input, select, textarea, optgroup, option)[disabled],\n        optgroup[disabled] > option,\n        fieldset[disabled]:not(fieldset[disabled] legend:first-of-type *)\n    )",
-        enabled: ":not(:disabled)",
-        checked: ":is(:is(input[type=radio], input[type=checkbox])[checked], option:selected)",
-        required: ":is(input, select, textarea)[required]",
-        optional: ":is(input, select, textarea):not([required])",
-        // JQuery extensions
-        // https://html.spec.whatwg.org/multipage/form-elements.html#concept-option-selectedness
-        selected: "option:is([selected], select:not([multiple]):not(:has(> option[selected])) > :first-of-type)",
-        checkbox: "[type=checkbox]",
-        file: "[type=file]",
-        password: "[type=password]",
-        radio: "[type=radio]",
-        reset: "[type=reset]",
-        image: "[type=image]",
-        submit: "[type=submit]",
-        parent: ":not(:empty)",
-        header: ":is(h1, h2, h3, h4, h5, h6)",
-        button: ":is(button, input[type=button])",
-        input: ":is(input, textarea, select, button)",
-        text: "input:is(:not([type!='']), [type=text])"
-      };
-      return aliases;
-    }
-    var subselects = {};
-    var hasRequiredSubselects;
-    function requireSubselects() {
-      if (hasRequiredSubselects) return subselects;
-      hasRequiredSubselects = 1;
-      (function(exports2) {
-        var __spreadArray2 = subselects && subselects.__spreadArray || function(to2, from, pack) {
-          if (pack || arguments.length === 2) for (var i2 = 0, l = from.length, ar2; i2 < l; i2++) {
-            if (ar2 || !(i2 in from)) {
-              if (!ar2) ar2 = Array.prototype.slice.call(from, 0, i2);
-              ar2[i2] = from[i2];
-            }
-          }
-          return to2.concat(ar2 || Array.prototype.slice.call(from));
-        };
-        Object.defineProperty(exports2, "__esModule", { value: true });
-        exports2.subselects = exports2.getNextSiblings = exports2.ensureIsTag = exports2.PLACEHOLDER_ELEMENT = void 0;
-        var boolbase_1 = requireBoolbase();
-        var procedure_1 = requireProcedure();
-        exports2.PLACEHOLDER_ELEMENT = {};
-        function ensureIsTag(next, adapter) {
-          if (next === boolbase_1.falseFunc)
-            return boolbase_1.falseFunc;
-          return function(elem) {
-            return adapter.isTag(elem) && next(elem);
-          };
-        }
-        exports2.ensureIsTag = ensureIsTag;
-        function getNextSiblings(elem, adapter) {
-          var siblings = adapter.getSiblings(elem);
-          if (siblings.length <= 1)
-            return [];
-          var elemIndex = siblings.indexOf(elem);
-          if (elemIndex < 0 || elemIndex === siblings.length - 1)
-            return [];
-          return siblings.slice(elemIndex + 1).filter(adapter.isTag);
-        }
-        exports2.getNextSiblings = getNextSiblings;
-        var is2 = function(next, token2, options2, context, compileToken) {
-          var opts = {
-            xmlMode: !!options2.xmlMode,
-            adapter: options2.adapter,
-            equals: options2.equals
-          };
-          var func = compileToken(token2, opts, context);
-          return function(elem) {
-            return func(elem) && next(elem);
-          };
-        };
-        exports2.subselects = {
-          is: is2,
-          /**
-           * `:matches` and `:where` are aliases for `:is`.
-           */
-          matches: is2,
-          where: is2,
-          not: function(next, token2, options2, context, compileToken) {
-            var opts = {
-              xmlMode: !!options2.xmlMode,
-              adapter: options2.adapter,
-              equals: options2.equals
-            };
-            var func = compileToken(token2, opts, context);
-            if (func === boolbase_1.falseFunc)
-              return next;
-            if (func === boolbase_1.trueFunc)
-              return boolbase_1.falseFunc;
-            return function not2(elem) {
-              return !func(elem) && next(elem);
-            };
-          },
-          has: function(next, subselect, options2, _context, compileToken) {
-            var adapter = options2.adapter;
-            var opts = {
-              xmlMode: !!options2.xmlMode,
-              adapter,
-              equals: options2.equals
-            };
-            var context = subselect.some(function(s) {
-              return s.some(procedure_1.isTraversal);
-            }) ? [exports2.PLACEHOLDER_ELEMENT] : void 0;
-            var compiled = compileToken(subselect, opts, context);
-            if (compiled === boolbase_1.falseFunc)
-              return boolbase_1.falseFunc;
-            if (compiled === boolbase_1.trueFunc) {
-              return function(elem) {
-                return adapter.getChildren(elem).some(adapter.isTag) && next(elem);
-              };
-            }
-            var hasElement = ensureIsTag(compiled, adapter);
-            var _a2 = compiled.shouldTestNextSiblings, shouldTestNextSiblings = _a2 === void 0 ? false : _a2;
-            if (context) {
-              return function(elem) {
-                context[0] = elem;
-                var childs = adapter.getChildren(elem);
-                var nextElements = shouldTestNextSiblings ? __spreadArray2(__spreadArray2([], childs, true), getNextSiblings(elem, adapter), true) : childs;
-                return next(elem) && adapter.existsOne(hasElement, nextElements);
-              };
-            }
-            return function(elem) {
-              return next(elem) && adapter.existsOne(hasElement, adapter.getChildren(elem));
-            };
-          }
-        };
-      })(subselects);
-      return subselects;
-    }
-    var hasRequiredPseudoSelectors;
-    function requirePseudoSelectors() {
-      if (hasRequiredPseudoSelectors) return pseudoSelectors;
-      hasRequiredPseudoSelectors = 1;
-      (function(exports2) {
-        Object.defineProperty(exports2, "__esModule", { value: true });
-        exports2.compilePseudoSelector = exports2.aliases = exports2.pseudos = exports2.filters = void 0;
-        var boolbase_1 = requireBoolbase();
-        var css_what_1 = require$$0$3;
-        var filters_1 = requireFilters();
-        Object.defineProperty(exports2, "filters", { enumerable: true, get: function() {
-          return filters_1.filters;
-        } });
-        var pseudos_1 = requirePseudos();
-        Object.defineProperty(exports2, "pseudos", { enumerable: true, get: function() {
-          return pseudos_1.pseudos;
-        } });
-        var aliases_1 = requireAliases();
-        Object.defineProperty(exports2, "aliases", { enumerable: true, get: function() {
-          return aliases_1.aliases;
-        } });
-        var subselects_1 = requireSubselects();
-        function compilePseudoSelector(next, selector2, options2, context, compileToken) {
-          var name2 = selector2.name, data = selector2.data;
-          if (Array.isArray(data)) {
-            return subselects_1.subselects[name2](next, data, options2, context, compileToken);
-          }
-          if (name2 in aliases_1.aliases) {
-            if (data != null) {
-              throw new Error("Pseudo ".concat(name2, " doesn't have any arguments"));
-            }
-            var alias = (0, css_what_1.parse)(aliases_1.aliases[name2]);
-            return subselects_1.subselects.is(next, alias, options2, context, compileToken);
-          }
-          if (name2 in filters_1.filters) {
-            return filters_1.filters[name2](next, data, options2, context);
-          }
-          if (name2 in pseudos_1.pseudos) {
-            var pseudo_1 = pseudos_1.pseudos[name2];
-            (0, pseudos_1.verifyPseudoArgs)(pseudo_1, name2, data);
-            return pseudo_1 === boolbase_1.falseFunc ? boolbase_1.falseFunc : next === boolbase_1.trueFunc ? function(elem) {
-              return pseudo_1(elem, options2, data);
-            } : function(elem) {
-              return pseudo_1(elem, options2, data) && next(elem);
-            };
-          }
-          throw new Error("unmatched pseudo-class :".concat(name2));
-        }
-        exports2.compilePseudoSelector = compilePseudoSelector;
-      })(pseudoSelectors);
-      return pseudoSelectors;
-    }
-    var hasRequiredGeneral;
-    function requireGeneral() {
-      if (hasRequiredGeneral) return general;
-      hasRequiredGeneral = 1;
-      Object.defineProperty(general, "__esModule", { value: true });
-      general.compileGeneralSelector = void 0;
-      var attributes_1 = requireAttributes$1();
-      var pseudo_selectors_1 = requirePseudoSelectors();
-      var css_what_1 = require$$0$3;
-      function compileGeneralSelector(next, selector2, options2, context, compileToken) {
-        var adapter = options2.adapter, equals2 = options2.equals;
-        switch (selector2.type) {
-          case css_what_1.SelectorType.PseudoElement: {
-            throw new Error("Pseudo-elements are not supported by css-select");
-          }
-          case css_what_1.SelectorType.ColumnCombinator: {
-            throw new Error("Column combinators are not yet supported by css-select");
-          }
-          case css_what_1.SelectorType.Attribute: {
-            if (selector2.namespace != null) {
-              throw new Error("Namespaced attributes are not yet supported by css-select");
-            }
-            if (!options2.xmlMode || options2.lowerCaseAttributeNames) {
-              selector2.name = selector2.name.toLowerCase();
-            }
-            return attributes_1.attributeRules[selector2.action](next, selector2, options2);
-          }
-          case css_what_1.SelectorType.Pseudo: {
-            return (0, pseudo_selectors_1.compilePseudoSelector)(next, selector2, options2, context, compileToken);
-          }
-          // Tags
-          case css_what_1.SelectorType.Tag: {
-            if (selector2.namespace != null) {
-              throw new Error("Namespaced tag names are not yet supported by css-select");
-            }
-            var name_1 = selector2.name;
-            if (!options2.xmlMode || options2.lowerCaseTags) {
-              name_1 = name_1.toLowerCase();
-            }
-            return function tag(elem) {
-              return adapter.getName(elem) === name_1 && next(elem);
-            };
-          }
-          // Traversal
-          case css_what_1.SelectorType.Descendant: {
-            if (options2.cacheResults === false || typeof WeakSet === "undefined") {
-              return function descendant(elem) {
-                var current2 = elem;
-                while (current2 = adapter.getParent(current2)) {
-                  if (adapter.isTag(current2) && next(current2)) {
-                    return true;
-                  }
-                }
-                return false;
-              };
-            }
-            var isFalseCache_1 = /* @__PURE__ */ new WeakSet();
-            return function cachedDescendant(elem) {
-              var current2 = elem;
-              while (current2 = adapter.getParent(current2)) {
-                if (!isFalseCache_1.has(current2)) {
-                  if (adapter.isTag(current2) && next(current2)) {
-                    return true;
-                  }
-                  isFalseCache_1.add(current2);
-                }
-              }
-              return false;
-            };
-          }
-          case "_flexibleDescendant": {
-            return function flexibleDescendant(elem) {
-              var current2 = elem;
-              do {
-                if (adapter.isTag(current2) && next(current2))
-                  return true;
-              } while (current2 = adapter.getParent(current2));
-              return false;
-            };
-          }
-          case css_what_1.SelectorType.Parent: {
-            return function parent(elem) {
-              return adapter.getChildren(elem).some(function(elem2) {
-                return adapter.isTag(elem2) && next(elem2);
-              });
-            };
-          }
-          case css_what_1.SelectorType.Child: {
-            return function child(elem) {
-              var parent = adapter.getParent(elem);
-              return parent != null && adapter.isTag(parent) && next(parent);
-            };
-          }
-          case css_what_1.SelectorType.Sibling: {
-            return function sibling(elem) {
-              var siblings = adapter.getSiblings(elem);
-              for (var i2 = 0; i2 < siblings.length; i2++) {
-                var currentSibling = siblings[i2];
-                if (equals2(elem, currentSibling))
-                  break;
-                if (adapter.isTag(currentSibling) && next(currentSibling)) {
-                  return true;
-                }
-              }
-              return false;
-            };
-          }
-          case css_what_1.SelectorType.Adjacent: {
-            if (adapter.prevElementSibling) {
-              return function adjacent(elem) {
-                var previous = adapter.prevElementSibling(elem);
-                return previous != null && next(previous);
-              };
-            }
-            return function adjacent(elem) {
-              var siblings = adapter.getSiblings(elem);
-              var lastElement;
-              for (var i2 = 0; i2 < siblings.length; i2++) {
-                var currentSibling = siblings[i2];
-                if (equals2(elem, currentSibling))
-                  break;
-                if (adapter.isTag(currentSibling)) {
-                  lastElement = currentSibling;
-                }
-              }
-              return !!lastElement && next(lastElement);
-            };
-          }
-          case css_what_1.SelectorType.Universal: {
-            if (selector2.namespace != null && selector2.namespace !== "*") {
-              throw new Error("Namespaced universal selectors are not yet supported by css-select");
-            }
-            return next;
-          }
-        }
-      }
-      general.compileGeneralSelector = compileGeneralSelector;
-      return general;
-    }
-    var hasRequiredCompile;
-    function requireCompile() {
-      if (hasRequiredCompile) return compile$1;
-      hasRequiredCompile = 1;
-      var __importDefault2 = compile$1 && compile$1.__importDefault || function(mod2) {
-        return mod2 && mod2.__esModule ? mod2 : { "default": mod2 };
-      };
-      Object.defineProperty(compile$1, "__esModule", { value: true });
-      compile$1.compileToken = compile$1.compileUnsafe = compile$1.compile = void 0;
-      var css_what_1 = require$$0$3;
-      var boolbase_1 = requireBoolbase();
-      var sort_1 = __importDefault2(requireSort());
-      var procedure_1 = requireProcedure();
-      var general_1 = requireGeneral();
-      var subselects_1 = requireSubselects();
-      function compile2(selector2, options2, context) {
-        var next = compileUnsafe(selector2, options2, context);
-        return (0, subselects_1.ensureIsTag)(next, options2.adapter);
-      }
-      compile$1.compile = compile2;
-      function compileUnsafe(selector2, options2, context) {
-        var token2 = typeof selector2 === "string" ? (0, css_what_1.parse)(selector2) : selector2;
-        return compileToken(token2, options2, context);
-      }
-      compile$1.compileUnsafe = compileUnsafe;
-      function includesScopePseudo(t2) {
-        return t2.type === "pseudo" && (t2.name === "scope" || Array.isArray(t2.data) && t2.data.some(function(data) {
-          return data.some(includesScopePseudo);
-        }));
-      }
-      var DESCENDANT_TOKEN = { type: css_what_1.SelectorType.Descendant };
-      var FLEXIBLE_DESCENDANT_TOKEN = {
-        type: "_flexibleDescendant"
-      };
-      var SCOPE_TOKEN = {
-        type: css_what_1.SelectorType.Pseudo,
-        name: "scope",
-        data: null
-      };
-      function absolutize(token2, _a2, context) {
-        var adapter = _a2.adapter;
-        var hasContext = !!(context === null || context === void 0 ? void 0 : context.every(function(e) {
-          var parent = adapter.isTag(e) && adapter.getParent(e);
-          return e === subselects_1.PLACEHOLDER_ELEMENT || parent && adapter.isTag(parent);
-        }));
-        for (var _i = 0, token_1 = token2; _i < token_1.length; _i++) {
-          var t2 = token_1[_i];
-          if (t2.length > 0 && (0, procedure_1.isTraversal)(t2[0]) && t2[0].type !== "descendant") ;
-          else if (hasContext && !t2.some(includesScopePseudo)) {
-            t2.unshift(DESCENDANT_TOKEN);
-          } else {
-            continue;
-          }
-          t2.unshift(SCOPE_TOKEN);
-        }
-      }
-      function compileToken(token2, options2, context) {
-        var _a2;
-        token2 = token2.filter(function(t2) {
-          return t2.length > 0;
-        });
-        token2.forEach(sort_1.default);
-        context = (_a2 = options2.context) !== null && _a2 !== void 0 ? _a2 : context;
-        var isArrayContext = Array.isArray(context);
-        var finalContext = context && (Array.isArray(context) ? context : [context]);
-        absolutize(token2, options2, finalContext);
-        var shouldTestNextSiblings = false;
-        var query2 = token2.map(function(rules) {
-          if (rules.length >= 2) {
-            var first = rules[0], second = rules[1];
-            if (first.type !== "pseudo" || first.name !== "scope") ;
-            else if (isArrayContext && second.type === "descendant") {
-              rules[1] = FLEXIBLE_DESCENDANT_TOKEN;
-            } else if (second.type === "adjacent" || second.type === "sibling") {
-              shouldTestNextSiblings = true;
-            }
-          }
-          return compileRules(rules, options2, finalContext);
-        }).reduce(reduceRules, boolbase_1.falseFunc);
-        query2.shouldTestNextSiblings = shouldTestNextSiblings;
-        return query2;
-      }
-      compile$1.compileToken = compileToken;
-      function compileRules(rules, options2, context) {
-        var _a2;
-        return rules.reduce(function(previous, rule) {
-          return previous === boolbase_1.falseFunc ? boolbase_1.falseFunc : (0, general_1.compileGeneralSelector)(previous, rule, options2, context, compileToken);
-        }, (_a2 = options2.rootFunc) !== null && _a2 !== void 0 ? _a2 : boolbase_1.trueFunc);
-      }
-      function reduceRules(a, b) {
-        if (b === boolbase_1.falseFunc || a === boolbase_1.trueFunc) {
-          return a;
-        }
-        if (a === boolbase_1.falseFunc || b === boolbase_1.trueFunc) {
-          return b;
-        }
-        return function combine(elem) {
-          return a(elem) || b(elem);
-        };
-      }
-      return compile$1;
-    }
-    var hasRequiredLib$5;
-    function requireLib$5() {
-      if (hasRequiredLib$5) return lib$9;
-      hasRequiredLib$5 = 1;
-      (function(exports2) {
-        var __createBinding2 = lib$9 && lib$9.__createBinding || (Object.create ? (function(o, m, k, k2) {
-          if (k2 === void 0) k2 = k;
-          var desc = Object.getOwnPropertyDescriptor(m, k);
-          if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-            desc = { enumerable: true, get: function() {
-              return m[k];
-            } };
-          }
-          Object.defineProperty(o, k2, desc);
-        }) : (function(o, m, k, k2) {
-          if (k2 === void 0) k2 = k;
-          o[k2] = m[k];
-        }));
-        var __setModuleDefault2 = lib$9 && lib$9.__setModuleDefault || (Object.create ? (function(o, v) {
-          Object.defineProperty(o, "default", { enumerable: true, value: v });
-        }) : function(o, v) {
-          o["default"] = v;
-        });
-        var __importStar2 = lib$9 && lib$9.__importStar || function(mod2) {
-          if (mod2 && mod2.__esModule) return mod2;
-          var result2 = {};
-          if (mod2 != null) {
-            for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
-          }
-          __setModuleDefault2(result2, mod2);
-          return result2;
-        };
-        Object.defineProperty(exports2, "__esModule", { value: true });
-        exports2.aliases = exports2.pseudos = exports2.filters = exports2.is = exports2.selectOne = exports2.selectAll = exports2.prepareContext = exports2._compileToken = exports2._compileUnsafe = exports2.compile = void 0;
-        var DomUtils = __importStar2(/* @__PURE__ */ requireLib$7());
-        var boolbase_1 = requireBoolbase();
-        var compile_1 = requireCompile();
-        var subselects_1 = requireSubselects();
-        var defaultEquals = function(a, b) {
-          return a === b;
-        };
-        var defaultOptions2 = {
-          adapter: DomUtils,
-          equals: defaultEquals
-        };
-        function convertOptionFormats(options2) {
-          var _a2, _b2, _c, _d;
-          var opts = options2 !== null && options2 !== void 0 ? options2 : defaultOptions2;
-          (_a2 = opts.adapter) !== null && _a2 !== void 0 ? _a2 : opts.adapter = DomUtils;
-          (_b2 = opts.equals) !== null && _b2 !== void 0 ? _b2 : opts.equals = (_d = (_c = opts.adapter) === null || _c === void 0 ? void 0 : _c.equals) !== null && _d !== void 0 ? _d : defaultEquals;
-          return opts;
-        }
-        function wrapCompile(func) {
-          return function addAdapter(selector2, options2, context) {
-            var opts = convertOptionFormats(options2);
-            return func(selector2, opts, context);
-          };
-        }
-        exports2.compile = wrapCompile(compile_1.compile);
-        exports2._compileUnsafe = wrapCompile(compile_1.compileUnsafe);
-        exports2._compileToken = wrapCompile(compile_1.compileToken);
-        function getSelectorFunc(searchFunc) {
-          return function select(query2, elements, options2) {
-            var opts = convertOptionFormats(options2);
-            if (typeof query2 !== "function") {
-              query2 = (0, compile_1.compileUnsafe)(query2, opts, elements);
-            }
-            var filteredElements = prepareContext(elements, opts.adapter, query2.shouldTestNextSiblings);
-            return searchFunc(query2, filteredElements, opts);
-          };
-        }
-        function prepareContext(elems, adapter, shouldTestNextSiblings) {
-          if (shouldTestNextSiblings === void 0) {
-            shouldTestNextSiblings = false;
-          }
-          if (shouldTestNextSiblings) {
-            elems = appendNextSiblings(elems, adapter);
-          }
-          return Array.isArray(elems) ? adapter.removeSubsets(elems) : adapter.getChildren(elems);
-        }
-        exports2.prepareContext = prepareContext;
-        function appendNextSiblings(elem, adapter) {
-          var elems = Array.isArray(elem) ? elem.slice(0) : [elem];
-          var elemsLength = elems.length;
-          for (var i2 = 0; i2 < elemsLength; i2++) {
-            var nextSiblings = (0, subselects_1.getNextSiblings)(elems[i2], adapter);
-            elems.push.apply(elems, nextSiblings);
-          }
-          return elems;
-        }
-        exports2.selectAll = getSelectorFunc(function(query2, elems, options2) {
-          return query2 === boolbase_1.falseFunc || !elems || elems.length === 0 ? [] : options2.adapter.findAll(query2, elems);
-        });
-        exports2.selectOne = getSelectorFunc(function(query2, elems, options2) {
-          return query2 === boolbase_1.falseFunc || !elems || elems.length === 0 ? null : options2.adapter.findOne(query2, elems);
-        });
-        function is2(elem, query2, options2) {
-          var opts = convertOptionFormats(options2);
-          return (typeof query2 === "function" ? query2 : (0, compile_1.compile)(query2, opts))(elem);
-        }
-        exports2.is = is2;
-        exports2.default = exports2.selectAll;
-        var pseudo_selectors_1 = requirePseudoSelectors();
-        Object.defineProperty(exports2, "filters", { enumerable: true, get: function() {
-          return pseudo_selectors_1.filters;
-        } });
-        Object.defineProperty(exports2, "pseudos", { enumerable: true, get: function() {
-          return pseudo_selectors_1.pseudos;
-        } });
-        Object.defineProperty(exports2, "aliases", { enumerable: true, get: function() {
-          return pseudo_selectors_1.aliases;
-        } });
-      })(lib$9);
-      return lib$9;
-    }
-    var helpers = {};
-    var positionals = {};
-    var hasRequiredPositionals;
-    function requirePositionals() {
-      if (hasRequiredPositionals) return positionals;
-      hasRequiredPositionals = 1;
-      (function(exports2) {
-        Object.defineProperty(exports2, "__esModule", { value: true });
-        exports2.getLimit = exports2.isFilter = exports2.filterNames = void 0;
-        exports2.filterNames = /* @__PURE__ */ new Set([
-          "first",
-          "last",
-          "eq",
-          "gt",
-          "nth",
-          "lt",
-          "even",
-          "odd"
-        ]);
-        function isFilter(s) {
-          if (s.type !== "pseudo")
-            return false;
-          if (exports2.filterNames.has(s.name))
-            return true;
-          if (s.name === "not" && Array.isArray(s.data)) {
-            return s.data.some(function(s2) {
-              return s2.some(isFilter);
-            });
-          }
-          return false;
-        }
-        exports2.isFilter = isFilter;
-        function getLimit(filter, data) {
-          var num2 = data != null ? parseInt(data, 10) : NaN;
-          switch (filter) {
-            case "first":
-              return 1;
-            case "nth":
-            case "eq":
-              return isFinite(num2) ? num2 >= 0 ? num2 + 1 : Infinity : 0;
-            case "lt":
-              return isFinite(num2) ? num2 >= 0 ? num2 : Infinity : 0;
-            case "gt":
-              return isFinite(num2) ? Infinity : 0;
-            default:
-              return Infinity;
-          }
-        }
-        exports2.getLimit = getLimit;
-      })(positionals);
-      return positionals;
-    }
-    var hasRequiredHelpers;
-    function requireHelpers() {
-      if (hasRequiredHelpers) return helpers;
-      hasRequiredHelpers = 1;
-      Object.defineProperty(helpers, "__esModule", { value: true });
-      helpers.groupSelectors = helpers.getDocumentRoot = void 0;
-      var positionals_1 = /* @__PURE__ */ requirePositionals();
-      function getDocumentRoot(node2) {
-        while (node2.parent)
-          node2 = node2.parent;
-        return node2;
-      }
-      helpers.getDocumentRoot = getDocumentRoot;
-      function groupSelectors(selectors) {
-        var filteredSelectors = [];
-        var plainSelectors = [];
-        for (var _i = 0, selectors_1 = selectors; _i < selectors_1.length; _i++) {
-          var selector2 = selectors_1[_i];
-          if (selector2.some(positionals_1.isFilter)) {
-            filteredSelectors.push(selector2);
-          } else {
-            plainSelectors.push(selector2);
-          }
-        }
-        return [plainSelectors, filteredSelectors];
-      }
-      helpers.groupSelectors = groupSelectors;
-      return helpers;
-    }
-    var hasRequiredLib$4;
-    function requireLib$4() {
-      if (hasRequiredLib$4) return lib$a;
-      hasRequiredLib$4 = 1;
-      (function(exports2) {
-        var __assign2 = lib$a && lib$a.__assign || function() {
-          __assign2 = Object.assign || function(t2) {
-            for (var s, i2 = 1, n = arguments.length; i2 < n; i2++) {
-              s = arguments[i2];
-              for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t2[p] = s[p];
-            }
-            return t2;
-          };
-          return __assign2.apply(this, arguments);
-        };
-        var __createBinding2 = lib$a && lib$a.__createBinding || (Object.create ? (function(o, m, k, k2) {
-          if (k2 === void 0) k2 = k;
-          var desc = Object.getOwnPropertyDescriptor(m, k);
-          if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-            desc = { enumerable: true, get: function() {
-              return m[k];
-            } };
-          }
-          Object.defineProperty(o, k2, desc);
-        }) : (function(o, m, k, k2) {
-          if (k2 === void 0) k2 = k;
-          o[k2] = m[k];
-        }));
-        var __setModuleDefault2 = lib$a && lib$a.__setModuleDefault || (Object.create ? (function(o, v) {
-          Object.defineProperty(o, "default", { enumerable: true, value: v });
-        }) : function(o, v) {
-          o["default"] = v;
-        });
-        var __importStar2 = lib$a && lib$a.__importStar || function(mod2) {
-          if (mod2 && mod2.__esModule) return mod2;
-          var result2 = {};
-          if (mod2 != null) {
-            for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
-          }
-          __setModuleDefault2(result2, mod2);
-          return result2;
-        };
-        var __spreadArray2 = lib$a && lib$a.__spreadArray || function(to2, from, pack) {
-          if (pack || arguments.length === 2) for (var i2 = 0, l = from.length, ar2; i2 < l; i2++) {
-            if (ar2 || !(i2 in from)) {
-              if (!ar2) ar2 = Array.prototype.slice.call(from, 0, i2);
-              ar2[i2] = from[i2];
-            }
-          }
-          return to2.concat(ar2 || Array.prototype.slice.call(from));
-        };
-        Object.defineProperty(exports2, "__esModule", { value: true });
-        exports2.select = exports2.filter = exports2.some = exports2.is = exports2.aliases = exports2.pseudos = exports2.filters = void 0;
-        var css_what_1 = require$$0$3;
-        var css_select_1 = requireLib$5();
-        var DomUtils = __importStar2(/* @__PURE__ */ requireLib$7());
-        var helpers_1 = /* @__PURE__ */ requireHelpers();
-        var positionals_1 = /* @__PURE__ */ requirePositionals();
-        var css_select_2 = requireLib$5();
-        Object.defineProperty(exports2, "filters", { enumerable: true, get: function() {
-          return css_select_2.filters;
-        } });
-        Object.defineProperty(exports2, "pseudos", { enumerable: true, get: function() {
-          return css_select_2.pseudos;
-        } });
-        Object.defineProperty(exports2, "aliases", { enumerable: true, get: function() {
-          return css_select_2.aliases;
-        } });
-        var SCOPE_PSEUDO = {
-          type: css_what_1.SelectorType.Pseudo,
-          name: "scope",
-          data: null
-        };
-        var CUSTOM_SCOPE_PSEUDO = __assign2({}, SCOPE_PSEUDO);
-        var UNIVERSAL_SELECTOR = {
-          type: css_what_1.SelectorType.Universal,
-          namespace: null
-        };
-        function is2(element, selector2, options2) {
-          if (options2 === void 0) {
-            options2 = {};
-          }
-          return some([element], selector2, options2);
-        }
-        exports2.is = is2;
-        function some(elements, selector2, options2) {
-          if (options2 === void 0) {
-            options2 = {};
-          }
-          if (typeof selector2 === "function")
-            return elements.some(selector2);
-          var _a2 = (0, helpers_1.groupSelectors)((0, css_what_1.parse)(selector2)), plain = _a2[0], filtered = _a2[1];
-          return plain.length > 0 && elements.some((0, css_select_1._compileToken)(plain, options2)) || filtered.some(function(sel) {
-            return filterBySelector(sel, elements, options2).length > 0;
-          });
-        }
-        exports2.some = some;
-        function filterByPosition(filter2, elems, data, options2) {
-          var num2 = typeof data === "string" ? parseInt(data, 10) : NaN;
-          switch (filter2) {
-            case "first":
-            case "lt":
-              return elems;
-            case "last":
-              return elems.length > 0 ? [elems[elems.length - 1]] : elems;
-            case "nth":
-            case "eq":
-              return isFinite(num2) && Math.abs(num2) < elems.length ? [num2 < 0 ? elems[elems.length + num2] : elems[num2]] : [];
-            case "gt":
-              return isFinite(num2) ? elems.slice(num2 + 1) : [];
-            case "even":
-              return elems.filter(function(_, i2) {
-                return i2 % 2 === 0;
-              });
-            case "odd":
-              return elems.filter(function(_, i2) {
-                return i2 % 2 === 1;
-              });
-            case "not": {
-              var filtered_1 = new Set(filterParsed(data, elems, options2));
-              return elems.filter(function(e) {
-                return !filtered_1.has(e);
-              });
-            }
-          }
-        }
-        function filter(selector2, elements, options2) {
-          if (options2 === void 0) {
-            options2 = {};
-          }
-          return filterParsed((0, css_what_1.parse)(selector2), elements, options2);
-        }
-        exports2.filter = filter;
-        function filterParsed(selector2, elements, options2) {
-          if (elements.length === 0)
-            return [];
-          var _a2 = (0, helpers_1.groupSelectors)(selector2), plainSelectors = _a2[0], filteredSelectors = _a2[1];
-          var found;
-          if (plainSelectors.length) {
-            var filtered = filterElements(elements, plainSelectors, options2);
-            if (filteredSelectors.length === 0) {
-              return filtered;
-            }
-            if (filtered.length) {
-              found = new Set(filtered);
-            }
-          }
-          for (var i2 = 0; i2 < filteredSelectors.length && (found === null || found === void 0 ? void 0 : found.size) !== elements.length; i2++) {
-            var filteredSelector = filteredSelectors[i2];
-            var missing = found ? elements.filter(function(e) {
-              return DomUtils.isTag(e) && !found.has(e);
-            }) : elements;
-            if (missing.length === 0)
-              break;
-            var filtered = filterBySelector(filteredSelector, elements, options2);
-            if (filtered.length) {
-              if (!found) {
-                if (i2 === filteredSelectors.length - 1) {
-                  return filtered;
-                }
-                found = new Set(filtered);
-              } else {
-                filtered.forEach(function(el2) {
-                  return found.add(el2);
-                });
-              }
-            }
-          }
-          return typeof found !== "undefined" ? found.size === elements.length ? elements : (
-            // Filter elements to preserve order
-            elements.filter(function(el2) {
-              return found.has(el2);
-            })
-          ) : [];
-        }
-        function filterBySelector(selector2, elements, options2) {
-          var _a2;
-          if (selector2.some(css_what_1.isTraversal)) {
-            var root2 = (_a2 = options2.root) !== null && _a2 !== void 0 ? _a2 : (0, helpers_1.getDocumentRoot)(elements[0]);
-            var sel = __spreadArray2(__spreadArray2([], selector2, true), [CUSTOM_SCOPE_PSEUDO], false);
-            return findFilterElements(root2, sel, options2, true, elements);
-          }
-          return findFilterElements(elements, selector2, options2, false);
-        }
-        function select(selector2, root2, options2) {
-          if (options2 === void 0) {
-            options2 = {};
-          }
-          if (typeof selector2 === "function") {
-            return find2(root2, selector2);
-          }
-          var _a2 = (0, helpers_1.groupSelectors)((0, css_what_1.parse)(selector2)), plain = _a2[0], filtered = _a2[1];
-          var results = filtered.map(function(sel) {
-            return findFilterElements(root2, sel, options2, true);
-          });
-          if (plain.length) {
-            results.push(findElements(root2, plain, options2, Infinity));
-          }
-          if (results.length === 0) {
-            return [];
-          }
-          if (results.length === 1) {
-            return results[0];
-          }
-          return DomUtils.uniqueSort(results.reduce(function(a, b) {
-            return __spreadArray2(__spreadArray2([], a, true), b, true);
-          }));
-        }
-        exports2.select = select;
-        var specialTraversal = /* @__PURE__ */ new Set([
-          css_what_1.SelectorType.Descendant,
-          css_what_1.SelectorType.Adjacent
-        ]);
-        function includesScopePseudo(t2) {
-          return t2 !== SCOPE_PSEUDO && t2.type === "pseudo" && (t2.name === "scope" || Array.isArray(t2.data) && t2.data.some(function(data) {
-            return data.some(includesScopePseudo);
-          }));
-        }
-        function addContextIfScope(selector2, options2, scopeContext) {
-          return scopeContext && selector2.some(includesScopePseudo) ? __assign2(__assign2({}, options2), { context: scopeContext }) : options2;
-        }
-        function findFilterElements(root2, selector2, options2, queryForSelector, scopeContext) {
-          var filterIndex = selector2.findIndex(positionals_1.isFilter);
-          var sub2 = selector2.slice(0, filterIndex);
-          var filter2 = selector2[filterIndex];
-          var limit = (0, positionals_1.getLimit)(filter2.name, filter2.data);
-          if (limit === 0)
-            return [];
-          var subOpts = addContextIfScope(sub2, options2, scopeContext);
-          var elemsNoLimit = sub2.length === 0 && !Array.isArray(root2) ? DomUtils.getChildren(root2).filter(DomUtils.isTag) : sub2.length === 0 || sub2.length === 1 && sub2[0] === SCOPE_PSEUDO ? (Array.isArray(root2) ? root2 : [root2]).filter(DomUtils.isTag) : queryForSelector || sub2.some(css_what_1.isTraversal) ? findElements(root2, [sub2], subOpts, limit) : filterElements(root2, [sub2], subOpts);
-          var elems = elemsNoLimit.slice(0, limit);
-          var result2 = filterByPosition(filter2.name, elems, filter2.data, options2);
-          if (result2.length === 0 || selector2.length === filterIndex + 1) {
-            return result2;
-          }
-          var remainingSelector = selector2.slice(filterIndex + 1);
-          var remainingHasTraversal = remainingSelector.some(css_what_1.isTraversal);
-          var remainingOpts = addContextIfScope(remainingSelector, options2, scopeContext);
-          if (remainingHasTraversal) {
-            if (specialTraversal.has(remainingSelector[0].type)) {
-              remainingSelector.unshift(UNIVERSAL_SELECTOR);
-            }
-            remainingSelector.unshift(SCOPE_PSEUDO);
-          }
-          return remainingSelector.some(positionals_1.isFilter) ? findFilterElements(result2, remainingSelector, options2, false, scopeContext) : remainingHasTraversal ? (
-            // Query existing elements to resolve traversal.
-            findElements(result2, [remainingSelector], remainingOpts, Infinity)
-          ) : (
-            // If we don't have any more traversals, simply filter elements.
-            filterElements(result2, [remainingSelector], remainingOpts)
-          );
-        }
-        function findElements(root2, sel, options2, limit) {
-          if (limit === 0)
-            return [];
-          var query2 = (0, css_select_1._compileToken)(sel, options2, root2);
-          return find2(root2, query2, limit);
-        }
-        function find2(root2, query2, limit) {
-          if (limit === void 0) {
-            limit = Infinity;
-          }
-          var elems = (0, css_select_1.prepareContext)(root2, DomUtils, query2.shouldTestNextSiblings);
-          return DomUtils.find(function(node2) {
-            return DomUtils.isTag(node2) && query2(node2);
-          }, elems, true, limit);
-        }
-        function filterElements(elements, sel, options2) {
-          var els2 = (Array.isArray(elements) ? elements : [elements]).filter(DomUtils.isTag);
-          if (els2.length === 0)
-            return els2;
-          var query2 = (0, css_select_1._compileToken)(sel, options2);
-          return els2.filter(query2);
-        }
-      })(lib$a);
-      return lib$a;
-    }
-    var lib$2 = {};
-    var Parser$1 = {};
-    var Tokenizer = {};
-    var decode_codepoint = {};
-    const require$$0 = {
-      "0": 65533,
-      "128": 8364,
-      "130": 8218,
-      "131": 402,
-      "132": 8222,
-      "133": 8230,
-      "134": 8224,
-      "135": 8225,
-      "136": 710,
-      "137": 8240,
-      "138": 352,
-      "139": 8249,
-      "140": 338,
-      "142": 381,
-      "145": 8216,
-      "146": 8217,
-      "147": 8220,
-      "148": 8221,
-      "149": 8226,
-      "150": 8211,
-      "151": 8212,
-      "152": 732,
-      "153": 8482,
-      "154": 353,
-      "155": 8250,
-      "156": 339,
-      "158": 382,
-      "159": 376
-    };
-    var hasRequiredDecode_codepoint;
-    function requireDecode_codepoint() {
-      if (hasRequiredDecode_codepoint) return decode_codepoint;
-      hasRequiredDecode_codepoint = 1;
-      var __importDefault2 = decode_codepoint && decode_codepoint.__importDefault || function(mod2) {
-        return mod2 && mod2.__esModule ? mod2 : { "default": mod2 };
-      };
-      Object.defineProperty(decode_codepoint, "__esModule", { value: true });
-      var decode_json_1 = __importDefault2(require$$0);
-      var fromCodePoint2 = (
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        String.fromCodePoint || function(codePoint) {
-          var output2 = "";
-          if (codePoint > 65535) {
-            codePoint -= 65536;
-            output2 += String.fromCharCode(codePoint >>> 10 & 1023 | 55296);
-            codePoint = 56320 | codePoint & 1023;
-          }
-          output2 += String.fromCharCode(codePoint);
-          return output2;
-        }
-      );
-      function decodeCodePoint(codePoint) {
-        if (codePoint >= 55296 && codePoint <= 57343 || codePoint > 1114111) {
-          return "�";
-        }
-        if (codePoint in decode_json_1.default) {
-          codePoint = decode_json_1.default[codePoint];
-        }
-        return fromCodePoint2(codePoint);
-      }
-      decode_codepoint.default = decodeCodePoint;
-      return decode_codepoint;
-    }
     const Aacute$1 = "Á";
     const aacute$1 = "á";
     const Abreve = "Ă";
@@ -94227,6 +86775,2917 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       lt,
       quot
     };
+    var decode_codepoint = {};
+    const require$$0 = {
+      "0": 65533,
+      "128": 8364,
+      "130": 8218,
+      "131": 402,
+      "132": 8222,
+      "133": 8230,
+      "134": 8224,
+      "135": 8225,
+      "136": 710,
+      "137": 8240,
+      "138": 352,
+      "139": 8249,
+      "140": 338,
+      "142": 381,
+      "145": 8216,
+      "146": 8217,
+      "147": 8220,
+      "148": 8221,
+      "149": 8226,
+      "150": 8211,
+      "151": 8212,
+      "152": 732,
+      "153": 8482,
+      "154": 353,
+      "155": 8250,
+      "156": 339,
+      "158": 382,
+      "159": 376
+    };
+    var hasRequiredDecode_codepoint;
+    function requireDecode_codepoint() {
+      if (hasRequiredDecode_codepoint) return decode_codepoint;
+      hasRequiredDecode_codepoint = 1;
+      var __importDefault2 = decode_codepoint && decode_codepoint.__importDefault || function(mod2) {
+        return mod2 && mod2.__esModule ? mod2 : { "default": mod2 };
+      };
+      Object.defineProperty(decode_codepoint, "__esModule", { value: true });
+      var decode_json_1 = __importDefault2(require$$0);
+      var fromCodePoint2 = (
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        String.fromCodePoint || function(codePoint) {
+          var output2 = "";
+          if (codePoint > 65535) {
+            codePoint -= 65536;
+            output2 += String.fromCharCode(codePoint >>> 10 & 1023 | 55296);
+            codePoint = 56320 | codePoint & 1023;
+          }
+          output2 += String.fromCharCode(codePoint);
+          return output2;
+        }
+      );
+      function decodeCodePoint(codePoint) {
+        if (codePoint >= 55296 && codePoint <= 57343 || codePoint > 1114111) {
+          return "�";
+        }
+        if (codePoint in decode_json_1.default) {
+          codePoint = decode_json_1.default[codePoint];
+        }
+        return fromCodePoint2(codePoint);
+      }
+      decode_codepoint.default = decodeCodePoint;
+      return decode_codepoint;
+    }
+    var hasRequiredDecode;
+    function requireDecode() {
+      if (hasRequiredDecode) return decode;
+      hasRequiredDecode = 1;
+      var __importDefault2 = decode && decode.__importDefault || function(mod2) {
+        return mod2 && mod2.__esModule ? mod2 : { "default": mod2 };
+      };
+      Object.defineProperty(decode, "__esModule", { value: true });
+      decode.decodeHTML = decode.decodeHTMLStrict = decode.decodeXML = void 0;
+      var entities_json_1 = __importDefault2(require$$1);
+      var legacy_json_1 = __importDefault2(require$$2);
+      var xml_json_1 = __importDefault2(require$$3);
+      var decode_codepoint_1 = __importDefault2(/* @__PURE__ */ requireDecode_codepoint());
+      var strictEntityRe = /&(?:[a-zA-Z0-9]+|#[xX][\da-fA-F]+|#\d+);/g;
+      decode.decodeXML = getStrictDecoder(xml_json_1.default);
+      decode.decodeHTMLStrict = getStrictDecoder(entities_json_1.default);
+      function getStrictDecoder(map2) {
+        var replace2 = getReplacer(map2);
+        return function(str2) {
+          return String(str2).replace(strictEntityRe, replace2);
+        };
+      }
+      var sorter = function(a, b) {
+        return a < b ? 1 : -1;
+      };
+      decode.decodeHTML = (function() {
+        var legacy2 = Object.keys(legacy_json_1.default).sort(sorter);
+        var keys = Object.keys(entities_json_1.default).sort(sorter);
+        for (var i2 = 0, j2 = 0; i2 < keys.length; i2++) {
+          if (legacy2[j2] === keys[i2]) {
+            keys[i2] += ";?";
+            j2++;
+          } else {
+            keys[i2] += ";";
+          }
+        }
+        var re2 = new RegExp("&(?:" + keys.join("|") + "|#[xX][\\da-fA-F]+;?|#\\d+;?)", "g");
+        var replace2 = getReplacer(entities_json_1.default);
+        function replacer(str2) {
+          if (str2.substr(-1) !== ";")
+            str2 += ";";
+          return replace2(str2);
+        }
+        return function(str2) {
+          return String(str2).replace(re2, replacer);
+        };
+      })();
+      function getReplacer(map2) {
+        return function replace2(str2) {
+          if (str2.charAt(1) === "#") {
+            var secondChar = str2.charAt(2);
+            if (secondChar === "X" || secondChar === "x") {
+              return decode_codepoint_1.default(parseInt(str2.substr(3), 16));
+            }
+            return decode_codepoint_1.default(parseInt(str2.substr(2), 10));
+          }
+          return map2[str2.slice(1, -1)] || str2;
+        };
+      }
+      return decode;
+    }
+    var encode = {};
+    var hasRequiredEncode;
+    function requireEncode() {
+      if (hasRequiredEncode) return encode;
+      hasRequiredEncode = 1;
+      var __importDefault2 = encode && encode.__importDefault || function(mod2) {
+        return mod2 && mod2.__esModule ? mod2 : { "default": mod2 };
+      };
+      Object.defineProperty(encode, "__esModule", { value: true });
+      encode.escapeUTF8 = encode.escape = encode.encodeNonAsciiHTML = encode.encodeHTML = encode.encodeXML = void 0;
+      var xml_json_1 = __importDefault2(require$$3);
+      var inverseXML = getInverseObj(xml_json_1.default);
+      var xmlReplacer = getInverseReplacer(inverseXML);
+      encode.encodeXML = getASCIIEncoder(inverseXML);
+      var entities_json_1 = __importDefault2(require$$1);
+      var inverseHTML = getInverseObj(entities_json_1.default);
+      var htmlReplacer = getInverseReplacer(inverseHTML);
+      encode.encodeHTML = getInverse(inverseHTML, htmlReplacer);
+      encode.encodeNonAsciiHTML = getASCIIEncoder(inverseHTML);
+      function getInverseObj(obj) {
+        return Object.keys(obj).sort().reduce(function(inverse, name2) {
+          inverse[obj[name2]] = "&" + name2 + ";";
+          return inverse;
+        }, {});
+      }
+      function getInverseReplacer(inverse) {
+        var single = [];
+        var multiple = [];
+        for (var _i = 0, _a2 = Object.keys(inverse); _i < _a2.length; _i++) {
+          var k = _a2[_i];
+          if (k.length === 1) {
+            single.push("\\" + k);
+          } else {
+            multiple.push(k);
+          }
+        }
+        single.sort();
+        for (var start2 = 0; start2 < single.length - 1; start2++) {
+          var end2 = start2;
+          while (end2 < single.length - 1 && single[end2].charCodeAt(1) + 1 === single[end2 + 1].charCodeAt(1)) {
+            end2 += 1;
+          }
+          var count2 = 1 + end2 - start2;
+          if (count2 < 3)
+            continue;
+          single.splice(start2, count2, single[start2] + "-" + single[end2]);
+        }
+        multiple.unshift("[" + single.join("") + "]");
+        return new RegExp(multiple.join("|"), "g");
+      }
+      var reNonASCII = /(?:[\x80-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])/g;
+      var getCodePoint = (
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        String.prototype.codePointAt != null ? (
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          function(str2) {
+            return str2.codePointAt(0);
+          }
+        ) : (
+          // http://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
+          function(c2) {
+            return (c2.charCodeAt(0) - 55296) * 1024 + c2.charCodeAt(1) - 56320 + 65536;
+          }
+        )
+      );
+      function singleCharReplacer(c2) {
+        return "&#x" + (c2.length > 1 ? getCodePoint(c2) : c2.charCodeAt(0)).toString(16).toUpperCase() + ";";
+      }
+      function getInverse(inverse, re2) {
+        return function(data) {
+          return data.replace(re2, function(name2) {
+            return inverse[name2];
+          }).replace(reNonASCII, singleCharReplacer);
+        };
+      }
+      var reEscapeChars = new RegExp(xmlReplacer.source + "|" + reNonASCII.source, "g");
+      function escape2(data) {
+        return data.replace(reEscapeChars, singleCharReplacer);
+      }
+      encode.escape = escape2;
+      function escapeUTF8(data) {
+        return data.replace(xmlReplacer, singleCharReplacer);
+      }
+      encode.escapeUTF8 = escapeUTF8;
+      function getASCIIEncoder(obj) {
+        return function(data) {
+          return data.replace(reEscapeChars, function(c2) {
+            return obj[c2] || singleCharReplacer(c2);
+          });
+        };
+      }
+      return encode;
+    }
+    var hasRequiredLib$9;
+    function requireLib$9() {
+      if (hasRequiredLib$9) return lib$4;
+      hasRequiredLib$9 = 1;
+      (function(exports2) {
+        Object.defineProperty(exports2, "__esModule", { value: true });
+        exports2.decodeXMLStrict = exports2.decodeHTML5Strict = exports2.decodeHTML4Strict = exports2.decodeHTML5 = exports2.decodeHTML4 = exports2.decodeHTMLStrict = exports2.decodeHTML = exports2.decodeXML = exports2.encodeHTML5 = exports2.encodeHTML4 = exports2.escapeUTF8 = exports2.escape = exports2.encodeNonAsciiHTML = exports2.encodeHTML = exports2.encodeXML = exports2.encode = exports2.decodeStrict = exports2.decode = void 0;
+        var decode_1 = /* @__PURE__ */ requireDecode();
+        var encode_1 = /* @__PURE__ */ requireEncode();
+        function decode2(data, level) {
+          return (!level || level <= 0 ? decode_1.decodeXML : decode_1.decodeHTML)(data);
+        }
+        exports2.decode = decode2;
+        function decodeStrict(data, level) {
+          return (!level || level <= 0 ? decode_1.decodeXML : decode_1.decodeHTMLStrict)(data);
+        }
+        exports2.decodeStrict = decodeStrict;
+        function encode2(data, level) {
+          return (!level || level <= 0 ? encode_1.encodeXML : encode_1.encodeHTML)(data);
+        }
+        exports2.encode = encode2;
+        var encode_2 = /* @__PURE__ */ requireEncode();
+        Object.defineProperty(exports2, "encodeXML", { enumerable: true, get: function() {
+          return encode_2.encodeXML;
+        } });
+        Object.defineProperty(exports2, "encodeHTML", { enumerable: true, get: function() {
+          return encode_2.encodeHTML;
+        } });
+        Object.defineProperty(exports2, "encodeNonAsciiHTML", { enumerable: true, get: function() {
+          return encode_2.encodeNonAsciiHTML;
+        } });
+        Object.defineProperty(exports2, "escape", { enumerable: true, get: function() {
+          return encode_2.escape;
+        } });
+        Object.defineProperty(exports2, "escapeUTF8", { enumerable: true, get: function() {
+          return encode_2.escapeUTF8;
+        } });
+        Object.defineProperty(exports2, "encodeHTML4", { enumerable: true, get: function() {
+          return encode_2.encodeHTML;
+        } });
+        Object.defineProperty(exports2, "encodeHTML5", { enumerable: true, get: function() {
+          return encode_2.encodeHTML;
+        } });
+        var decode_2 = /* @__PURE__ */ requireDecode();
+        Object.defineProperty(exports2, "decodeXML", { enumerable: true, get: function() {
+          return decode_2.decodeXML;
+        } });
+        Object.defineProperty(exports2, "decodeHTML", { enumerable: true, get: function() {
+          return decode_2.decodeHTML;
+        } });
+        Object.defineProperty(exports2, "decodeHTMLStrict", { enumerable: true, get: function() {
+          return decode_2.decodeHTMLStrict;
+        } });
+        Object.defineProperty(exports2, "decodeHTML4", { enumerable: true, get: function() {
+          return decode_2.decodeHTML;
+        } });
+        Object.defineProperty(exports2, "decodeHTML5", { enumerable: true, get: function() {
+          return decode_2.decodeHTML;
+        } });
+        Object.defineProperty(exports2, "decodeHTML4Strict", { enumerable: true, get: function() {
+          return decode_2.decodeHTMLStrict;
+        } });
+        Object.defineProperty(exports2, "decodeHTML5Strict", { enumerable: true, get: function() {
+          return decode_2.decodeHTMLStrict;
+        } });
+        Object.defineProperty(exports2, "decodeXMLStrict", { enumerable: true, get: function() {
+          return decode_2.decodeXML;
+        } });
+      })(lib$4);
+      return lib$4;
+    }
+    var foreignNames = {};
+    var hasRequiredForeignNames;
+    function requireForeignNames() {
+      if (hasRequiredForeignNames) return foreignNames;
+      hasRequiredForeignNames = 1;
+      Object.defineProperty(foreignNames, "__esModule", { value: true });
+      foreignNames.attributeNames = foreignNames.elementNames = void 0;
+      foreignNames.elementNames = /* @__PURE__ */ new Map([
+        ["altglyph", "altGlyph"],
+        ["altglyphdef", "altGlyphDef"],
+        ["altglyphitem", "altGlyphItem"],
+        ["animatecolor", "animateColor"],
+        ["animatemotion", "animateMotion"],
+        ["animatetransform", "animateTransform"],
+        ["clippath", "clipPath"],
+        ["feblend", "feBlend"],
+        ["fecolormatrix", "feColorMatrix"],
+        ["fecomponenttransfer", "feComponentTransfer"],
+        ["fecomposite", "feComposite"],
+        ["feconvolvematrix", "feConvolveMatrix"],
+        ["fediffuselighting", "feDiffuseLighting"],
+        ["fedisplacementmap", "feDisplacementMap"],
+        ["fedistantlight", "feDistantLight"],
+        ["fedropshadow", "feDropShadow"],
+        ["feflood", "feFlood"],
+        ["fefunca", "feFuncA"],
+        ["fefuncb", "feFuncB"],
+        ["fefuncg", "feFuncG"],
+        ["fefuncr", "feFuncR"],
+        ["fegaussianblur", "feGaussianBlur"],
+        ["feimage", "feImage"],
+        ["femerge", "feMerge"],
+        ["femergenode", "feMergeNode"],
+        ["femorphology", "feMorphology"],
+        ["feoffset", "feOffset"],
+        ["fepointlight", "fePointLight"],
+        ["fespecularlighting", "feSpecularLighting"],
+        ["fespotlight", "feSpotLight"],
+        ["fetile", "feTile"],
+        ["feturbulence", "feTurbulence"],
+        ["foreignobject", "foreignObject"],
+        ["glyphref", "glyphRef"],
+        ["lineargradient", "linearGradient"],
+        ["radialgradient", "radialGradient"],
+        ["textpath", "textPath"]
+      ]);
+      foreignNames.attributeNames = /* @__PURE__ */ new Map([
+        ["definitionurl", "definitionURL"],
+        ["attributename", "attributeName"],
+        ["attributetype", "attributeType"],
+        ["basefrequency", "baseFrequency"],
+        ["baseprofile", "baseProfile"],
+        ["calcmode", "calcMode"],
+        ["clippathunits", "clipPathUnits"],
+        ["diffuseconstant", "diffuseConstant"],
+        ["edgemode", "edgeMode"],
+        ["filterunits", "filterUnits"],
+        ["glyphref", "glyphRef"],
+        ["gradienttransform", "gradientTransform"],
+        ["gradientunits", "gradientUnits"],
+        ["kernelmatrix", "kernelMatrix"],
+        ["kernelunitlength", "kernelUnitLength"],
+        ["keypoints", "keyPoints"],
+        ["keysplines", "keySplines"],
+        ["keytimes", "keyTimes"],
+        ["lengthadjust", "lengthAdjust"],
+        ["limitingconeangle", "limitingConeAngle"],
+        ["markerheight", "markerHeight"],
+        ["markerunits", "markerUnits"],
+        ["markerwidth", "markerWidth"],
+        ["maskcontentunits", "maskContentUnits"],
+        ["maskunits", "maskUnits"],
+        ["numoctaves", "numOctaves"],
+        ["pathlength", "pathLength"],
+        ["patterncontentunits", "patternContentUnits"],
+        ["patterntransform", "patternTransform"],
+        ["patternunits", "patternUnits"],
+        ["pointsatx", "pointsAtX"],
+        ["pointsaty", "pointsAtY"],
+        ["pointsatz", "pointsAtZ"],
+        ["preservealpha", "preserveAlpha"],
+        ["preserveaspectratio", "preserveAspectRatio"],
+        ["primitiveunits", "primitiveUnits"],
+        ["refx", "refX"],
+        ["refy", "refY"],
+        ["repeatcount", "repeatCount"],
+        ["repeatdur", "repeatDur"],
+        ["requiredextensions", "requiredExtensions"],
+        ["requiredfeatures", "requiredFeatures"],
+        ["specularconstant", "specularConstant"],
+        ["specularexponent", "specularExponent"],
+        ["spreadmethod", "spreadMethod"],
+        ["startoffset", "startOffset"],
+        ["stddeviation", "stdDeviation"],
+        ["stitchtiles", "stitchTiles"],
+        ["surfacescale", "surfaceScale"],
+        ["systemlanguage", "systemLanguage"],
+        ["tablevalues", "tableValues"],
+        ["targetx", "targetX"],
+        ["targety", "targetY"],
+        ["textlength", "textLength"],
+        ["viewbox", "viewBox"],
+        ["viewtarget", "viewTarget"],
+        ["xchannelselector", "xChannelSelector"],
+        ["ychannelselector", "yChannelSelector"],
+        ["zoomandpan", "zoomAndPan"]
+      ]);
+      return foreignNames;
+    }
+    var hasRequiredLib$8;
+    function requireLib$8() {
+      if (hasRequiredLib$8) return lib$5;
+      hasRequiredLib$8 = 1;
+      var __assign2 = lib$5 && lib$5.__assign || function() {
+        __assign2 = Object.assign || function(t2) {
+          for (var s, i2 = 1, n = arguments.length; i2 < n; i2++) {
+            s = arguments[i2];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+              t2[p] = s[p];
+          }
+          return t2;
+        };
+        return __assign2.apply(this, arguments);
+      };
+      var __createBinding2 = lib$5 && lib$5.__createBinding || (Object.create ? (function(o, m, k, k2) {
+        if (k2 === void 0) k2 = k;
+        Object.defineProperty(o, k2, { enumerable: true, get: function() {
+          return m[k];
+        } });
+      }) : (function(o, m, k, k2) {
+        if (k2 === void 0) k2 = k;
+        o[k2] = m[k];
+      }));
+      var __setModuleDefault2 = lib$5 && lib$5.__setModuleDefault || (Object.create ? (function(o, v) {
+        Object.defineProperty(o, "default", { enumerable: true, value: v });
+      }) : function(o, v) {
+        o["default"] = v;
+      });
+      var __importStar2 = lib$5 && lib$5.__importStar || function(mod2) {
+        if (mod2 && mod2.__esModule) return mod2;
+        var result2 = {};
+        if (mod2 != null) {
+          for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
+        }
+        __setModuleDefault2(result2, mod2);
+        return result2;
+      };
+      Object.defineProperty(lib$5, "__esModule", { value: true });
+      var ElementType = __importStar2(/* @__PURE__ */ requireLib$b());
+      var entities_1 = /* @__PURE__ */ requireLib$9();
+      var foreignNames_1 = /* @__PURE__ */ requireForeignNames();
+      var unencodedElements = /* @__PURE__ */ new Set([
+        "style",
+        "script",
+        "xmp",
+        "iframe",
+        "noembed",
+        "noframes",
+        "plaintext",
+        "noscript"
+      ]);
+      function formatAttributes(attributes2, opts) {
+        if (!attributes2)
+          return;
+        return Object.keys(attributes2).map(function(key2) {
+          var _a2, _b2;
+          var value2 = (_a2 = attributes2[key2]) !== null && _a2 !== void 0 ? _a2 : "";
+          if (opts.xmlMode === "foreign") {
+            key2 = (_b2 = foreignNames_1.attributeNames.get(key2)) !== null && _b2 !== void 0 ? _b2 : key2;
+          }
+          if (!opts.emptyAttrs && !opts.xmlMode && value2 === "") {
+            return key2;
+          }
+          return key2 + '="' + (opts.decodeEntities !== false ? entities_1.encodeXML(value2) : value2.replace(/"/g, "&quot;")) + '"';
+        }).join(" ");
+      }
+      var singleTag = /* @__PURE__ */ new Set([
+        "area",
+        "base",
+        "basefont",
+        "br",
+        "col",
+        "command",
+        "embed",
+        "frame",
+        "hr",
+        "img",
+        "input",
+        "isindex",
+        "keygen",
+        "link",
+        "meta",
+        "param",
+        "source",
+        "track",
+        "wbr"
+      ]);
+      function render2(node2, options2) {
+        if (options2 === void 0) {
+          options2 = {};
+        }
+        var nodes = "length" in node2 ? node2 : [node2];
+        var output2 = "";
+        for (var i2 = 0; i2 < nodes.length; i2++) {
+          output2 += renderNode(nodes[i2], options2);
+        }
+        return output2;
+      }
+      lib$5.default = render2;
+      function renderNode(node2, options2) {
+        switch (node2.type) {
+          case ElementType.Root:
+            return render2(node2.children, options2);
+          case ElementType.Directive:
+          case ElementType.Doctype:
+            return renderDirective(node2);
+          case ElementType.Comment:
+            return renderComment(node2);
+          case ElementType.CDATA:
+            return renderCdata(node2);
+          case ElementType.Script:
+          case ElementType.Style:
+          case ElementType.Tag:
+            return renderTag(node2, options2);
+          case ElementType.Text:
+            return renderText(node2, options2);
+        }
+      }
+      var foreignModeIntegrationPoints = /* @__PURE__ */ new Set([
+        "mi",
+        "mo",
+        "mn",
+        "ms",
+        "mtext",
+        "annotation-xml",
+        "foreignObject",
+        "desc",
+        "title"
+      ]);
+      var foreignElements = /* @__PURE__ */ new Set(["svg", "math"]);
+      function renderTag(elem, opts) {
+        var _a2;
+        if (opts.xmlMode === "foreign") {
+          elem.name = (_a2 = foreignNames_1.elementNames.get(elem.name)) !== null && _a2 !== void 0 ? _a2 : elem.name;
+          if (elem.parent && foreignModeIntegrationPoints.has(elem.parent.name)) {
+            opts = __assign2(__assign2({}, opts), { xmlMode: false });
+          }
+        }
+        if (!opts.xmlMode && foreignElements.has(elem.name)) {
+          opts = __assign2(__assign2({}, opts), { xmlMode: "foreign" });
+        }
+        var tag = "<" + elem.name;
+        var attribs = formatAttributes(elem.attribs, opts);
+        if (attribs) {
+          tag += " " + attribs;
+        }
+        if (elem.children.length === 0 && (opts.xmlMode ? (
+          // In XML mode or foreign mode, and user hasn't explicitly turned off self-closing tags
+          opts.selfClosingTags !== false
+        ) : (
+          // User explicitly asked for self-closing tags, even in HTML mode
+          opts.selfClosingTags && singleTag.has(elem.name)
+        ))) {
+          if (!opts.xmlMode)
+            tag += " ";
+          tag += "/>";
+        } else {
+          tag += ">";
+          if (elem.children.length > 0) {
+            tag += render2(elem.children, opts);
+          }
+          if (opts.xmlMode || !singleTag.has(elem.name)) {
+            tag += "</" + elem.name + ">";
+          }
+        }
+        return tag;
+      }
+      function renderDirective(elem) {
+        return "<" + elem.data + ">";
+      }
+      function renderText(elem, opts) {
+        var data = elem.data || "";
+        if (opts.decodeEntities !== false && !(!opts.xmlMode && elem.parent && unencodedElements.has(elem.parent.name))) {
+          data = entities_1.encodeXML(data);
+        }
+        return data;
+      }
+      function renderCdata(elem) {
+        return "<![CDATA[" + elem.children[0].data + "]]>";
+      }
+      function renderComment(elem) {
+        return "<!--" + elem.data + "-->";
+      }
+      return lib$5;
+    }
+    var hasRequiredStringify$1;
+    function requireStringify$1() {
+      if (hasRequiredStringify$1) return stringify$1;
+      hasRequiredStringify$1 = 1;
+      var __importDefault2 = stringify$1 && stringify$1.__importDefault || function(mod2) {
+        return mod2 && mod2.__esModule ? mod2 : { "default": mod2 };
+      };
+      Object.defineProperty(stringify$1, "__esModule", { value: true });
+      stringify$1.innerText = stringify$1.textContent = stringify$1.getText = stringify$1.getInnerHTML = stringify$1.getOuterHTML = void 0;
+      var domhandler_1 = /* @__PURE__ */ requireLib$a();
+      var dom_serializer_1 = __importDefault2(/* @__PURE__ */ requireLib$8());
+      var domelementtype_1 = /* @__PURE__ */ requireLib$b();
+      function getOuterHTML(node2, options2) {
+        return (0, dom_serializer_1.default)(node2, options2);
+      }
+      stringify$1.getOuterHTML = getOuterHTML;
+      function getInnerHTML(node2, options2) {
+        return (0, domhandler_1.hasChildren)(node2) ? node2.children.map(function(node3) {
+          return getOuterHTML(node3, options2);
+        }).join("") : "";
+      }
+      stringify$1.getInnerHTML = getInnerHTML;
+      function getText(node2) {
+        if (Array.isArray(node2))
+          return node2.map(getText).join("");
+        if ((0, domhandler_1.isTag)(node2))
+          return node2.name === "br" ? "\n" : getText(node2.children);
+        if ((0, domhandler_1.isCDATA)(node2))
+          return getText(node2.children);
+        if ((0, domhandler_1.isText)(node2))
+          return node2.data;
+        return "";
+      }
+      stringify$1.getText = getText;
+      function textContent(node2) {
+        if (Array.isArray(node2))
+          return node2.map(textContent).join("");
+        if ((0, domhandler_1.hasChildren)(node2) && !(0, domhandler_1.isComment)(node2)) {
+          return textContent(node2.children);
+        }
+        if ((0, domhandler_1.isText)(node2))
+          return node2.data;
+        return "";
+      }
+      stringify$1.textContent = textContent;
+      function innerText(node2) {
+        if (Array.isArray(node2))
+          return node2.map(innerText).join("");
+        if ((0, domhandler_1.hasChildren)(node2) && (node2.type === domelementtype_1.ElementType.Tag || (0, domhandler_1.isCDATA)(node2))) {
+          return innerText(node2.children);
+        }
+        if ((0, domhandler_1.isText)(node2))
+          return node2.data;
+        return "";
+      }
+      stringify$1.innerText = innerText;
+      return stringify$1;
+    }
+    var traversal = {};
+    var hasRequiredTraversal;
+    function requireTraversal() {
+      if (hasRequiredTraversal) return traversal;
+      hasRequiredTraversal = 1;
+      Object.defineProperty(traversal, "__esModule", { value: true });
+      traversal.prevElementSibling = traversal.nextElementSibling = traversal.getName = traversal.hasAttrib = traversal.getAttributeValue = traversal.getSiblings = traversal.getParent = traversal.getChildren = void 0;
+      var domhandler_1 = /* @__PURE__ */ requireLib$a();
+      var emptyArray = [];
+      function getChildren2(elem) {
+        var _a2;
+        return (_a2 = elem.children) !== null && _a2 !== void 0 ? _a2 : emptyArray;
+      }
+      traversal.getChildren = getChildren2;
+      function getParent(elem) {
+        return elem.parent || null;
+      }
+      traversal.getParent = getParent;
+      function getSiblings(elem) {
+        var _a2, _b2;
+        var parent = getParent(elem);
+        if (parent != null)
+          return getChildren2(parent);
+        var siblings = [elem];
+        var prev = elem.prev, next = elem.next;
+        while (prev != null) {
+          siblings.unshift(prev);
+          _a2 = prev, prev = _a2.prev;
+        }
+        while (next != null) {
+          siblings.push(next);
+          _b2 = next, next = _b2.next;
+        }
+        return siblings;
+      }
+      traversal.getSiblings = getSiblings;
+      function getAttributeValue(elem, name2) {
+        var _a2;
+        return (_a2 = elem.attribs) === null || _a2 === void 0 ? void 0 : _a2[name2];
+      }
+      traversal.getAttributeValue = getAttributeValue;
+      function hasAttrib(elem, name2) {
+        return elem.attribs != null && Object.prototype.hasOwnProperty.call(elem.attribs, name2) && elem.attribs[name2] != null;
+      }
+      traversal.hasAttrib = hasAttrib;
+      function getName(elem) {
+        return elem.name;
+      }
+      traversal.getName = getName;
+      function nextElementSibling(elem) {
+        var _a2;
+        var next = elem.next;
+        while (next !== null && !(0, domhandler_1.isTag)(next))
+          _a2 = next, next = _a2.next;
+        return next;
+      }
+      traversal.nextElementSibling = nextElementSibling;
+      function prevElementSibling(elem) {
+        var _a2;
+        var prev = elem.prev;
+        while (prev !== null && !(0, domhandler_1.isTag)(prev))
+          _a2 = prev, prev = _a2.prev;
+        return prev;
+      }
+      traversal.prevElementSibling = prevElementSibling;
+      return traversal;
+    }
+    var manipulation$1 = {};
+    var hasRequiredManipulation$1;
+    function requireManipulation$1() {
+      if (hasRequiredManipulation$1) return manipulation$1;
+      hasRequiredManipulation$1 = 1;
+      Object.defineProperty(manipulation$1, "__esModule", { value: true });
+      manipulation$1.prepend = manipulation$1.prependChild = manipulation$1.append = manipulation$1.appendChild = manipulation$1.replaceElement = manipulation$1.removeElement = void 0;
+      function removeElement(elem) {
+        if (elem.prev)
+          elem.prev.next = elem.next;
+        if (elem.next)
+          elem.next.prev = elem.prev;
+        if (elem.parent) {
+          var childs = elem.parent.children;
+          childs.splice(childs.lastIndexOf(elem), 1);
+        }
+      }
+      manipulation$1.removeElement = removeElement;
+      function replaceElement(elem, replacement) {
+        var prev = replacement.prev = elem.prev;
+        if (prev) {
+          prev.next = replacement;
+        }
+        var next = replacement.next = elem.next;
+        if (next) {
+          next.prev = replacement;
+        }
+        var parent = replacement.parent = elem.parent;
+        if (parent) {
+          var childs = parent.children;
+          childs[childs.lastIndexOf(elem)] = replacement;
+        }
+      }
+      manipulation$1.replaceElement = replaceElement;
+      function appendChild(elem, child) {
+        removeElement(child);
+        child.next = null;
+        child.parent = elem;
+        if (elem.children.push(child) > 1) {
+          var sibling = elem.children[elem.children.length - 2];
+          sibling.next = child;
+          child.prev = sibling;
+        } else {
+          child.prev = null;
+        }
+      }
+      manipulation$1.appendChild = appendChild;
+      function append(elem, next) {
+        removeElement(next);
+        var parent = elem.parent;
+        var currNext = elem.next;
+        next.next = currNext;
+        next.prev = elem;
+        elem.next = next;
+        next.parent = parent;
+        if (currNext) {
+          currNext.prev = next;
+          if (parent) {
+            var childs = parent.children;
+            childs.splice(childs.lastIndexOf(currNext), 0, next);
+          }
+        } else if (parent) {
+          parent.children.push(next);
+        }
+      }
+      manipulation$1.append = append;
+      function prependChild(elem, child) {
+        removeElement(child);
+        child.parent = elem;
+        child.prev = null;
+        if (elem.children.unshift(child) !== 1) {
+          var sibling = elem.children[1];
+          sibling.prev = child;
+          child.next = sibling;
+        } else {
+          child.next = null;
+        }
+      }
+      manipulation$1.prependChild = prependChild;
+      function prepend(elem, prev) {
+        removeElement(prev);
+        var parent = elem.parent;
+        if (parent) {
+          var childs = parent.children;
+          childs.splice(childs.indexOf(elem), 0, prev);
+        }
+        if (elem.prev) {
+          elem.prev.next = prev;
+        }
+        prev.parent = parent;
+        prev.prev = elem.prev;
+        prev.next = elem;
+        elem.prev = prev;
+      }
+      manipulation$1.prepend = prepend;
+      return manipulation$1;
+    }
+    var querying = {};
+    var hasRequiredQuerying;
+    function requireQuerying() {
+      if (hasRequiredQuerying) return querying;
+      hasRequiredQuerying = 1;
+      Object.defineProperty(querying, "__esModule", { value: true });
+      querying.findAll = querying.existsOne = querying.findOne = querying.findOneChild = querying.find = querying.filter = void 0;
+      var domhandler_1 = /* @__PURE__ */ requireLib$a();
+      function filter(test, node2, recurse, limit) {
+        if (recurse === void 0) {
+          recurse = true;
+        }
+        if (limit === void 0) {
+          limit = Infinity;
+        }
+        if (!Array.isArray(node2))
+          node2 = [node2];
+        return find2(test, node2, recurse, limit);
+      }
+      querying.filter = filter;
+      function find2(test, nodes, recurse, limit) {
+        var result2 = [];
+        for (var _i = 0, nodes_1 = nodes; _i < nodes_1.length; _i++) {
+          var elem = nodes_1[_i];
+          if (test(elem)) {
+            result2.push(elem);
+            if (--limit <= 0)
+              break;
+          }
+          if (recurse && (0, domhandler_1.hasChildren)(elem) && elem.children.length > 0) {
+            var children2 = find2(test, elem.children, recurse, limit);
+            result2.push.apply(result2, children2);
+            limit -= children2.length;
+            if (limit <= 0)
+              break;
+          }
+        }
+        return result2;
+      }
+      querying.find = find2;
+      function findOneChild(test, nodes) {
+        return nodes.find(test);
+      }
+      querying.findOneChild = findOneChild;
+      function findOne(test, nodes, recurse) {
+        if (recurse === void 0) {
+          recurse = true;
+        }
+        var elem = null;
+        for (var i2 = 0; i2 < nodes.length && !elem; i2++) {
+          var checked = nodes[i2];
+          if (!(0, domhandler_1.isTag)(checked)) {
+            continue;
+          } else if (test(checked)) {
+            elem = checked;
+          } else if (recurse && checked.children.length > 0) {
+            elem = findOne(test, checked.children);
+          }
+        }
+        return elem;
+      }
+      querying.findOne = findOne;
+      function existsOne(test, nodes) {
+        return nodes.some(function(checked) {
+          return (0, domhandler_1.isTag)(checked) && (test(checked) || checked.children.length > 0 && existsOne(test, checked.children));
+        });
+      }
+      querying.existsOne = existsOne;
+      function findAll(test, nodes) {
+        var _a2;
+        var result2 = [];
+        var stack2 = nodes.filter(domhandler_1.isTag);
+        var elem;
+        while (elem = stack2.shift()) {
+          var children2 = (_a2 = elem.children) === null || _a2 === void 0 ? void 0 : _a2.filter(domhandler_1.isTag);
+          if (children2 && children2.length > 0) {
+            stack2.unshift.apply(stack2, children2);
+          }
+          if (test(elem))
+            result2.push(elem);
+        }
+        return result2;
+      }
+      querying.findAll = findAll;
+      return querying;
+    }
+    var legacy = {};
+    var hasRequiredLegacy;
+    function requireLegacy() {
+      if (hasRequiredLegacy) return legacy;
+      hasRequiredLegacy = 1;
+      Object.defineProperty(legacy, "__esModule", { value: true });
+      legacy.getElementsByTagType = legacy.getElementsByTagName = legacy.getElementById = legacy.getElements = legacy.testElement = void 0;
+      var domhandler_1 = /* @__PURE__ */ requireLib$a();
+      var querying_1 = /* @__PURE__ */ requireQuerying();
+      var Checks = {
+        tag_name: function(name2) {
+          if (typeof name2 === "function") {
+            return function(elem) {
+              return (0, domhandler_1.isTag)(elem) && name2(elem.name);
+            };
+          } else if (name2 === "*") {
+            return domhandler_1.isTag;
+          }
+          return function(elem) {
+            return (0, domhandler_1.isTag)(elem) && elem.name === name2;
+          };
+        },
+        tag_type: function(type) {
+          if (typeof type === "function") {
+            return function(elem) {
+              return type(elem.type);
+            };
+          }
+          return function(elem) {
+            return elem.type === type;
+          };
+        },
+        tag_contains: function(data) {
+          if (typeof data === "function") {
+            return function(elem) {
+              return (0, domhandler_1.isText)(elem) && data(elem.data);
+            };
+          }
+          return function(elem) {
+            return (0, domhandler_1.isText)(elem) && elem.data === data;
+          };
+        }
+      };
+      function getAttribCheck(attrib, value2) {
+        if (typeof value2 === "function") {
+          return function(elem) {
+            return (0, domhandler_1.isTag)(elem) && value2(elem.attribs[attrib]);
+          };
+        }
+        return function(elem) {
+          return (0, domhandler_1.isTag)(elem) && elem.attribs[attrib] === value2;
+        };
+      }
+      function combineFuncs(a, b) {
+        return function(elem) {
+          return a(elem) || b(elem);
+        };
+      }
+      function compileTest(options2) {
+        var funcs = Object.keys(options2).map(function(key2) {
+          var value2 = options2[key2];
+          return Object.prototype.hasOwnProperty.call(Checks, key2) ? Checks[key2](value2) : getAttribCheck(key2, value2);
+        });
+        return funcs.length === 0 ? null : funcs.reduce(combineFuncs);
+      }
+      function testElement(options2, node2) {
+        var test = compileTest(options2);
+        return test ? test(node2) : true;
+      }
+      legacy.testElement = testElement;
+      function getElements(options2, nodes, recurse, limit) {
+        if (limit === void 0) {
+          limit = Infinity;
+        }
+        var test = compileTest(options2);
+        return test ? (0, querying_1.filter)(test, nodes, recurse, limit) : [];
+      }
+      legacy.getElements = getElements;
+      function getElementById(id, nodes, recurse) {
+        if (recurse === void 0) {
+          recurse = true;
+        }
+        if (!Array.isArray(nodes))
+          nodes = [nodes];
+        return (0, querying_1.findOne)(getAttribCheck("id", id), nodes, recurse);
+      }
+      legacy.getElementById = getElementById;
+      function getElementsByTagName(tagName, nodes, recurse, limit) {
+        if (recurse === void 0) {
+          recurse = true;
+        }
+        if (limit === void 0) {
+          limit = Infinity;
+        }
+        return (0, querying_1.filter)(Checks.tag_name(tagName), nodes, recurse, limit);
+      }
+      legacy.getElementsByTagName = getElementsByTagName;
+      function getElementsByTagType(type, nodes, recurse, limit) {
+        if (recurse === void 0) {
+          recurse = true;
+        }
+        if (limit === void 0) {
+          limit = Infinity;
+        }
+        return (0, querying_1.filter)(Checks.tag_type(type), nodes, recurse, limit);
+      }
+      legacy.getElementsByTagType = getElementsByTagType;
+      return legacy;
+    }
+    var helpers$1 = {};
+    var hasRequiredHelpers$1;
+    function requireHelpers$1() {
+      if (hasRequiredHelpers$1) return helpers$1;
+      hasRequiredHelpers$1 = 1;
+      Object.defineProperty(helpers$1, "__esModule", { value: true });
+      helpers$1.uniqueSort = helpers$1.compareDocumentPosition = helpers$1.removeSubsets = void 0;
+      var domhandler_1 = /* @__PURE__ */ requireLib$a();
+      function removeSubsets(nodes) {
+        var idx = nodes.length;
+        while (--idx >= 0) {
+          var node2 = nodes[idx];
+          if (idx > 0 && nodes.lastIndexOf(node2, idx - 1) >= 0) {
+            nodes.splice(idx, 1);
+            continue;
+          }
+          for (var ancestor = node2.parent; ancestor; ancestor = ancestor.parent) {
+            if (nodes.includes(ancestor)) {
+              nodes.splice(idx, 1);
+              break;
+            }
+          }
+        }
+        return nodes;
+      }
+      helpers$1.removeSubsets = removeSubsets;
+      function compareDocumentPosition(nodeA, nodeB) {
+        var aParents = [];
+        var bParents = [];
+        if (nodeA === nodeB) {
+          return 0;
+        }
+        var current2 = (0, domhandler_1.hasChildren)(nodeA) ? nodeA : nodeA.parent;
+        while (current2) {
+          aParents.unshift(current2);
+          current2 = current2.parent;
+        }
+        current2 = (0, domhandler_1.hasChildren)(nodeB) ? nodeB : nodeB.parent;
+        while (current2) {
+          bParents.unshift(current2);
+          current2 = current2.parent;
+        }
+        var maxIdx = Math.min(aParents.length, bParents.length);
+        var idx = 0;
+        while (idx < maxIdx && aParents[idx] === bParents[idx]) {
+          idx++;
+        }
+        if (idx === 0) {
+          return 1;
+        }
+        var sharedParent = aParents[idx - 1];
+        var siblings = sharedParent.children;
+        var aSibling = aParents[idx];
+        var bSibling = bParents[idx];
+        if (siblings.indexOf(aSibling) > siblings.indexOf(bSibling)) {
+          if (sharedParent === nodeB) {
+            return 4 | 16;
+          }
+          return 4;
+        }
+        if (sharedParent === nodeA) {
+          return 2 | 8;
+        }
+        return 2;
+      }
+      helpers$1.compareDocumentPosition = compareDocumentPosition;
+      function uniqueSort(nodes) {
+        nodes = nodes.filter(function(node2, i2, arr2) {
+          return !arr2.includes(node2, i2 + 1);
+        });
+        nodes.sort(function(a, b) {
+          var relative = compareDocumentPosition(a, b);
+          if (relative & 2) {
+            return -1;
+          } else if (relative & 4) {
+            return 1;
+          }
+          return 0;
+        });
+        return nodes;
+      }
+      helpers$1.uniqueSort = uniqueSort;
+      return helpers$1;
+    }
+    var feeds = {};
+    var hasRequiredFeeds;
+    function requireFeeds() {
+      if (hasRequiredFeeds) return feeds;
+      hasRequiredFeeds = 1;
+      Object.defineProperty(feeds, "__esModule", { value: true });
+      feeds.getFeed = void 0;
+      var stringify_1 = /* @__PURE__ */ requireStringify$1();
+      var legacy_1 = /* @__PURE__ */ requireLegacy();
+      function getFeed(doc2) {
+        var feedRoot = getOneElement(isValidFeed, doc2);
+        return !feedRoot ? null : feedRoot.name === "feed" ? getAtomFeed(feedRoot) : getRssFeed(feedRoot);
+      }
+      feeds.getFeed = getFeed;
+      function getAtomFeed(feedRoot) {
+        var _a2;
+        var childs = feedRoot.children;
+        var feed = {
+          type: "atom",
+          items: (0, legacy_1.getElementsByTagName)("entry", childs).map(function(item2) {
+            var _a3;
+            var children2 = item2.children;
+            var entry = { media: getMediaElements(children2) };
+            addConditionally(entry, "id", "id", children2);
+            addConditionally(entry, "title", "title", children2);
+            var href2 = (_a3 = getOneElement("link", children2)) === null || _a3 === void 0 ? void 0 : _a3.attribs.href;
+            if (href2) {
+              entry.link = href2;
+            }
+            var description2 = fetch2("summary", children2) || fetch2("content", children2);
+            if (description2) {
+              entry.description = description2;
+            }
+            var pubDate = fetch2("updated", children2);
+            if (pubDate) {
+              entry.pubDate = new Date(pubDate);
+            }
+            return entry;
+          })
+        };
+        addConditionally(feed, "id", "id", childs);
+        addConditionally(feed, "title", "title", childs);
+        var href = (_a2 = getOneElement("link", childs)) === null || _a2 === void 0 ? void 0 : _a2.attribs.href;
+        if (href) {
+          feed.link = href;
+        }
+        addConditionally(feed, "description", "subtitle", childs);
+        var updated = fetch2("updated", childs);
+        if (updated) {
+          feed.updated = new Date(updated);
+        }
+        addConditionally(feed, "author", "email", childs, true);
+        return feed;
+      }
+      function getRssFeed(feedRoot) {
+        var _a2, _b2;
+        var childs = (_b2 = (_a2 = getOneElement("channel", feedRoot.children)) === null || _a2 === void 0 ? void 0 : _a2.children) !== null && _b2 !== void 0 ? _b2 : [];
+        var feed = {
+          type: feedRoot.name.substr(0, 3),
+          id: "",
+          items: (0, legacy_1.getElementsByTagName)("item", feedRoot.children).map(function(item2) {
+            var children2 = item2.children;
+            var entry = { media: getMediaElements(children2) };
+            addConditionally(entry, "id", "guid", children2);
+            addConditionally(entry, "title", "title", children2);
+            addConditionally(entry, "link", "link", children2);
+            addConditionally(entry, "description", "description", children2);
+            var pubDate = fetch2("pubDate", children2);
+            if (pubDate)
+              entry.pubDate = new Date(pubDate);
+            return entry;
+          })
+        };
+        addConditionally(feed, "title", "title", childs);
+        addConditionally(feed, "link", "link", childs);
+        addConditionally(feed, "description", "description", childs);
+        var updated = fetch2("lastBuildDate", childs);
+        if (updated) {
+          feed.updated = new Date(updated);
+        }
+        addConditionally(feed, "author", "managingEditor", childs, true);
+        return feed;
+      }
+      var MEDIA_KEYS_STRING = ["url", "type", "lang"];
+      var MEDIA_KEYS_INT = [
+        "fileSize",
+        "bitrate",
+        "framerate",
+        "samplingrate",
+        "channels",
+        "duration",
+        "height",
+        "width"
+      ];
+      function getMediaElements(where) {
+        return (0, legacy_1.getElementsByTagName)("media:content", where).map(function(elem) {
+          var attribs = elem.attribs;
+          var media = {
+            medium: attribs.medium,
+            isDefault: !!attribs.isDefault
+          };
+          for (var _i = 0, MEDIA_KEYS_STRING_1 = MEDIA_KEYS_STRING; _i < MEDIA_KEYS_STRING_1.length; _i++) {
+            var attrib = MEDIA_KEYS_STRING_1[_i];
+            if (attribs[attrib]) {
+              media[attrib] = attribs[attrib];
+            }
+          }
+          for (var _a2 = 0, MEDIA_KEYS_INT_1 = MEDIA_KEYS_INT; _a2 < MEDIA_KEYS_INT_1.length; _a2++) {
+            var attrib = MEDIA_KEYS_INT_1[_a2];
+            if (attribs[attrib]) {
+              media[attrib] = parseInt(attribs[attrib], 10);
+            }
+          }
+          if (attribs.expression) {
+            media.expression = attribs.expression;
+          }
+          return media;
+        });
+      }
+      function getOneElement(tagName, node2) {
+        return (0, legacy_1.getElementsByTagName)(tagName, node2, true, 1)[0];
+      }
+      function fetch2(tagName, where, recurse) {
+        if (recurse === void 0) {
+          recurse = false;
+        }
+        return (0, stringify_1.textContent)((0, legacy_1.getElementsByTagName)(tagName, where, recurse, 1)).trim();
+      }
+      function addConditionally(obj, prop2, tagName, where, recurse) {
+        if (recurse === void 0) {
+          recurse = false;
+        }
+        var val = fetch2(tagName, where, recurse);
+        if (val)
+          obj[prop2] = val;
+      }
+      function isValidFeed(value2) {
+        return value2 === "rss" || value2 === "feed" || value2 === "rdf:RDF";
+      }
+      return feeds;
+    }
+    var hasRequiredLib$7;
+    function requireLib$7() {
+      if (hasRequiredLib$7) return lib$8;
+      hasRequiredLib$7 = 1;
+      (function(exports2) {
+        var __createBinding2 = lib$8 && lib$8.__createBinding || (Object.create ? (function(o, m, k, k2) {
+          if (k2 === void 0) k2 = k;
+          Object.defineProperty(o, k2, { enumerable: true, get: function() {
+            return m[k];
+          } });
+        }) : (function(o, m, k, k2) {
+          if (k2 === void 0) k2 = k;
+          o[k2] = m[k];
+        }));
+        var __exportStar2 = lib$8 && lib$8.__exportStar || function(m, exports3) {
+          for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p)) __createBinding2(exports3, m, p);
+        };
+        Object.defineProperty(exports2, "__esModule", { value: true });
+        exports2.hasChildren = exports2.isDocument = exports2.isComment = exports2.isText = exports2.isCDATA = exports2.isTag = void 0;
+        __exportStar2(/* @__PURE__ */ requireStringify$1(), exports2);
+        __exportStar2(/* @__PURE__ */ requireTraversal(), exports2);
+        __exportStar2(/* @__PURE__ */ requireManipulation$1(), exports2);
+        __exportStar2(/* @__PURE__ */ requireQuerying(), exports2);
+        __exportStar2(/* @__PURE__ */ requireLegacy(), exports2);
+        __exportStar2(/* @__PURE__ */ requireHelpers$1(), exports2);
+        __exportStar2(/* @__PURE__ */ requireFeeds(), exports2);
+        var domhandler_1 = /* @__PURE__ */ requireLib$a();
+        Object.defineProperty(exports2, "isTag", { enumerable: true, get: function() {
+          return domhandler_1.isTag;
+        } });
+        Object.defineProperty(exports2, "isCDATA", { enumerable: true, get: function() {
+          return domhandler_1.isCDATA;
+        } });
+        Object.defineProperty(exports2, "isText", { enumerable: true, get: function() {
+          return domhandler_1.isText;
+        } });
+        Object.defineProperty(exports2, "isComment", { enumerable: true, get: function() {
+          return domhandler_1.isComment;
+        } });
+        Object.defineProperty(exports2, "isDocument", { enumerable: true, get: function() {
+          return domhandler_1.isDocument;
+        } });
+        Object.defineProperty(exports2, "hasChildren", { enumerable: true, get: function() {
+          return domhandler_1.hasChildren;
+        } });
+      })(lib$8);
+      return lib$8;
+    }
+    var boolbase;
+    var hasRequiredBoolbase;
+    function requireBoolbase() {
+      if (hasRequiredBoolbase) return boolbase;
+      hasRequiredBoolbase = 1;
+      boolbase = {
+        trueFunc: function trueFunc() {
+          return true;
+        },
+        falseFunc: function falseFunc() {
+          return false;
+        }
+      };
+      return boolbase;
+    }
+    var compile$1 = {};
+    var sort = {};
+    var procedure = {};
+    var hasRequiredProcedure;
+    function requireProcedure() {
+      if (hasRequiredProcedure) return procedure;
+      hasRequiredProcedure = 1;
+      (function(exports2) {
+        Object.defineProperty(exports2, "__esModule", { value: true });
+        exports2.isTraversal = exports2.procedure = void 0;
+        exports2.procedure = {
+          universal: 50,
+          tag: 30,
+          attribute: 1,
+          pseudo: 0,
+          "pseudo-element": 0,
+          "column-combinator": -1,
+          descendant: -1,
+          child: -1,
+          parent: -1,
+          sibling: -1,
+          adjacent: -1,
+          _flexibleDescendant: -1
+        };
+        function isTraversal2(t2) {
+          return exports2.procedure[t2.type] < 0;
+        }
+        exports2.isTraversal = isTraversal2;
+      })(procedure);
+      return procedure;
+    }
+    var hasRequiredSort;
+    function requireSort() {
+      if (hasRequiredSort) return sort;
+      hasRequiredSort = 1;
+      Object.defineProperty(sort, "__esModule", { value: true });
+      var css_what_1 = require$$0$1;
+      var procedure_1 = requireProcedure();
+      var attributes2 = {
+        exists: 10,
+        equals: 8,
+        not: 7,
+        start: 6,
+        end: 6,
+        any: 5,
+        hyphen: 4,
+        element: 4
+      };
+      function sortByProcedure(arr2) {
+        var procs = arr2.map(getProcedure);
+        for (var i2 = 1; i2 < arr2.length; i2++) {
+          var procNew = procs[i2];
+          if (procNew < 0)
+            continue;
+          for (var j2 = i2 - 1; j2 >= 0 && procNew < procs[j2]; j2--) {
+            var token2 = arr2[j2 + 1];
+            arr2[j2 + 1] = arr2[j2];
+            arr2[j2] = token2;
+            procs[j2 + 1] = procs[j2];
+            procs[j2] = procNew;
+          }
+        }
+      }
+      sort.default = sortByProcedure;
+      function getProcedure(token2) {
+        var proc = procedure_1.procedure[token2.type];
+        if (token2.type === css_what_1.SelectorType.Attribute) {
+          proc = attributes2[token2.action];
+          if (proc === attributes2.equals && token2.name === "id") {
+            proc = 9;
+          }
+          if (token2.ignoreCase) {
+            proc >>= 1;
+          }
+        } else if (token2.type === css_what_1.SelectorType.Pseudo) {
+          if (!token2.data) {
+            proc = 3;
+          } else if (token2.name === "has" || token2.name === "contains") {
+            proc = 0;
+          } else if (Array.isArray(token2.data)) {
+            proc = 0;
+            for (var i2 = 0; i2 < token2.data.length; i2++) {
+              if (token2.data[i2].length !== 1)
+                continue;
+              var cur2 = getProcedure(token2.data[i2][0]);
+              if (cur2 === 0) {
+                proc = 0;
+                break;
+              }
+              if (cur2 > proc)
+                proc = cur2;
+            }
+            if (token2.data.length > 1 && proc > 0)
+              proc -= 1;
+          } else {
+            proc = 1;
+          }
+        }
+        return proc;
+      }
+      return sort;
+    }
+    var general = {};
+    var attributes$1 = {};
+    var hasRequiredAttributes$1;
+    function requireAttributes$1() {
+      if (hasRequiredAttributes$1) return attributes$1;
+      hasRequiredAttributes$1 = 1;
+      Object.defineProperty(attributes$1, "__esModule", { value: true });
+      attributes$1.attributeRules = void 0;
+      var boolbase_1 = requireBoolbase();
+      var reChars = /[-[\]{}()*+?.,\\^$|#\s]/g;
+      function escapeRegex(value2) {
+        return value2.replace(reChars, "\\$&");
+      }
+      var caseInsensitiveAttributes = /* @__PURE__ */ new Set([
+        "accept",
+        "accept-charset",
+        "align",
+        "alink",
+        "axis",
+        "bgcolor",
+        "charset",
+        "checked",
+        "clear",
+        "codetype",
+        "color",
+        "compact",
+        "declare",
+        "defer",
+        "dir",
+        "direction",
+        "disabled",
+        "enctype",
+        "face",
+        "frame",
+        "hreflang",
+        "http-equiv",
+        "lang",
+        "language",
+        "link",
+        "media",
+        "method",
+        "multiple",
+        "nohref",
+        "noresize",
+        "noshade",
+        "nowrap",
+        "readonly",
+        "rel",
+        "rev",
+        "rules",
+        "scope",
+        "scrolling",
+        "selected",
+        "shape",
+        "target",
+        "text",
+        "type",
+        "valign",
+        "valuetype",
+        "vlink"
+      ]);
+      function shouldIgnoreCase(selector2, options2) {
+        return typeof selector2.ignoreCase === "boolean" ? selector2.ignoreCase : selector2.ignoreCase === "quirks" ? !!options2.quirksMode : !options2.xmlMode && caseInsensitiveAttributes.has(selector2.name);
+      }
+      attributes$1.attributeRules = {
+        equals: function(next, data, options2) {
+          var adapter = options2.adapter;
+          var name2 = data.name;
+          var value2 = data.value;
+          if (shouldIgnoreCase(data, options2)) {
+            value2 = value2.toLowerCase();
+            return function(elem) {
+              var attr = adapter.getAttributeValue(elem, name2);
+              return attr != null && attr.length === value2.length && attr.toLowerCase() === value2 && next(elem);
+            };
+          }
+          return function(elem) {
+            return adapter.getAttributeValue(elem, name2) === value2 && next(elem);
+          };
+        },
+        hyphen: function(next, data, options2) {
+          var adapter = options2.adapter;
+          var name2 = data.name;
+          var value2 = data.value;
+          var len = value2.length;
+          if (shouldIgnoreCase(data, options2)) {
+            value2 = value2.toLowerCase();
+            return function hyphenIC(elem) {
+              var attr = adapter.getAttributeValue(elem, name2);
+              return attr != null && (attr.length === len || attr.charAt(len) === "-") && attr.substr(0, len).toLowerCase() === value2 && next(elem);
+            };
+          }
+          return function hyphen2(elem) {
+            var attr = adapter.getAttributeValue(elem, name2);
+            return attr != null && (attr.length === len || attr.charAt(len) === "-") && attr.substr(0, len) === value2 && next(elem);
+          };
+        },
+        element: function(next, data, options2) {
+          var adapter = options2.adapter;
+          var name2 = data.name, value2 = data.value;
+          if (/\s/.test(value2)) {
+            return boolbase_1.falseFunc;
+          }
+          var regex2 = new RegExp("(?:^|\\s)".concat(escapeRegex(value2), "(?:$|\\s)"), shouldIgnoreCase(data, options2) ? "i" : "");
+          return function element(elem) {
+            var attr = adapter.getAttributeValue(elem, name2);
+            return attr != null && attr.length >= value2.length && regex2.test(attr) && next(elem);
+          };
+        },
+        exists: function(next, _a2, _b2) {
+          var name2 = _a2.name;
+          var adapter = _b2.adapter;
+          return function(elem) {
+            return adapter.hasAttrib(elem, name2) && next(elem);
+          };
+        },
+        start: function(next, data, options2) {
+          var adapter = options2.adapter;
+          var name2 = data.name;
+          var value2 = data.value;
+          var len = value2.length;
+          if (len === 0) {
+            return boolbase_1.falseFunc;
+          }
+          if (shouldIgnoreCase(data, options2)) {
+            value2 = value2.toLowerCase();
+            return function(elem) {
+              var attr = adapter.getAttributeValue(elem, name2);
+              return attr != null && attr.length >= len && attr.substr(0, len).toLowerCase() === value2 && next(elem);
+            };
+          }
+          return function(elem) {
+            var _a2;
+            return !!((_a2 = adapter.getAttributeValue(elem, name2)) === null || _a2 === void 0 ? void 0 : _a2.startsWith(value2)) && next(elem);
+          };
+        },
+        end: function(next, data, options2) {
+          var adapter = options2.adapter;
+          var name2 = data.name;
+          var value2 = data.value;
+          var len = -value2.length;
+          if (len === 0) {
+            return boolbase_1.falseFunc;
+          }
+          if (shouldIgnoreCase(data, options2)) {
+            value2 = value2.toLowerCase();
+            return function(elem) {
+              var _a2;
+              return ((_a2 = adapter.getAttributeValue(elem, name2)) === null || _a2 === void 0 ? void 0 : _a2.substr(len).toLowerCase()) === value2 && next(elem);
+            };
+          }
+          return function(elem) {
+            var _a2;
+            return !!((_a2 = adapter.getAttributeValue(elem, name2)) === null || _a2 === void 0 ? void 0 : _a2.endsWith(value2)) && next(elem);
+          };
+        },
+        any: function(next, data, options2) {
+          var adapter = options2.adapter;
+          var name2 = data.name, value2 = data.value;
+          if (value2 === "") {
+            return boolbase_1.falseFunc;
+          }
+          if (shouldIgnoreCase(data, options2)) {
+            var regex_1 = new RegExp(escapeRegex(value2), "i");
+            return function anyIC(elem) {
+              var attr = adapter.getAttributeValue(elem, name2);
+              return attr != null && attr.length >= value2.length && regex_1.test(attr) && next(elem);
+            };
+          }
+          return function(elem) {
+            var _a2;
+            return !!((_a2 = adapter.getAttributeValue(elem, name2)) === null || _a2 === void 0 ? void 0 : _a2.includes(value2)) && next(elem);
+          };
+        },
+        not: function(next, data, options2) {
+          var adapter = options2.adapter;
+          var name2 = data.name;
+          var value2 = data.value;
+          if (value2 === "") {
+            return function(elem) {
+              return !!adapter.getAttributeValue(elem, name2) && next(elem);
+            };
+          } else if (shouldIgnoreCase(data, options2)) {
+            value2 = value2.toLowerCase();
+            return function(elem) {
+              var attr = adapter.getAttributeValue(elem, name2);
+              return (attr == null || attr.length !== value2.length || attr.toLowerCase() !== value2) && next(elem);
+            };
+          }
+          return function(elem) {
+            return adapter.getAttributeValue(elem, name2) !== value2 && next(elem);
+          };
+        }
+      };
+      return attributes$1;
+    }
+    var pseudoSelectors = {};
+    var filters = {};
+    var lib$3 = {};
+    var parse$4 = {};
+    var hasRequiredParse$1;
+    function requireParse$1() {
+      if (hasRequiredParse$1) return parse$4;
+      hasRequiredParse$1 = 1;
+      Object.defineProperty(parse$4, "__esModule", { value: true });
+      parse$4.parse = void 0;
+      var whitespace = /* @__PURE__ */ new Set([9, 10, 12, 13, 32]);
+      var ZERO = "0".charCodeAt(0);
+      var NINE = "9".charCodeAt(0);
+      function parse2(formula) {
+        formula = formula.trim().toLowerCase();
+        if (formula === "even") {
+          return [2, 0];
+        } else if (formula === "odd") {
+          return [2, 1];
+        }
+        var idx = 0;
+        var a = 0;
+        var sign2 = readSign();
+        var number2 = readNumber();
+        if (idx < formula.length && formula.charAt(idx) === "n") {
+          idx++;
+          a = sign2 * (number2 !== null && number2 !== void 0 ? number2 : 1);
+          skipWhitespace();
+          if (idx < formula.length) {
+            sign2 = readSign();
+            skipWhitespace();
+            number2 = readNumber();
+          } else {
+            sign2 = number2 = 0;
+          }
+        }
+        if (number2 === null || idx < formula.length) {
+          throw new Error("n-th rule couldn't be parsed ('".concat(formula, "')"));
+        }
+        return [a, sign2 * number2];
+        function readSign() {
+          if (formula.charAt(idx) === "-") {
+            idx++;
+            return -1;
+          }
+          if (formula.charAt(idx) === "+") {
+            idx++;
+          }
+          return 1;
+        }
+        function readNumber() {
+          var start2 = idx;
+          var value2 = 0;
+          while (idx < formula.length && formula.charCodeAt(idx) >= ZERO && formula.charCodeAt(idx) <= NINE) {
+            value2 = value2 * 10 + (formula.charCodeAt(idx) - ZERO);
+            idx++;
+          }
+          return idx === start2 ? null : value2;
+        }
+        function skipWhitespace() {
+          while (idx < formula.length && whitespace.has(formula.charCodeAt(idx))) {
+            idx++;
+          }
+        }
+      }
+      parse$4.parse = parse2;
+      return parse$4;
+    }
+    var compile = {};
+    var hasRequiredCompile$1;
+    function requireCompile$1() {
+      if (hasRequiredCompile$1) return compile;
+      hasRequiredCompile$1 = 1;
+      var __importDefault2 = compile && compile.__importDefault || function(mod2) {
+        return mod2 && mod2.__esModule ? mod2 : { "default": mod2 };
+      };
+      Object.defineProperty(compile, "__esModule", { value: true });
+      compile.generate = compile.compile = void 0;
+      var boolbase_1 = __importDefault2(requireBoolbase());
+      function compile$12(parsed) {
+        var a = parsed[0];
+        var b = parsed[1] - 1;
+        if (b < 0 && a <= 0)
+          return boolbase_1.default.falseFunc;
+        if (a === -1)
+          return function(index) {
+            return index <= b;
+          };
+        if (a === 0)
+          return function(index) {
+            return index === b;
+          };
+        if (a === 1)
+          return b < 0 ? boolbase_1.default.trueFunc : function(index) {
+            return index >= b;
+          };
+        var absA = Math.abs(a);
+        var bMod = (b % absA + absA) % absA;
+        return a > 1 ? function(index) {
+          return index >= b && index % absA === bMod;
+        } : function(index) {
+          return index <= b && index % absA === bMod;
+        };
+      }
+      compile.compile = compile$12;
+      function generate(parsed) {
+        var a = parsed[0];
+        var b = parsed[1] - 1;
+        var n = 0;
+        if (a < 0) {
+          var aPos_1 = -a;
+          var minValue_1 = (b % aPos_1 + aPos_1) % aPos_1;
+          return function() {
+            var val = minValue_1 + aPos_1 * n++;
+            return val > b ? null : val;
+          };
+        }
+        if (a === 0)
+          return b < 0 ? (
+            // There are no result — always return `null`
+            function() {
+              return null;
+            }
+          ) : (
+            // Return `b` exactly once
+            function() {
+              return n++ === 0 ? b : null;
+            }
+          );
+        if (b < 0) {
+          b += a * Math.ceil(-b / a);
+        }
+        return function() {
+          return a * n++ + b;
+        };
+      }
+      compile.generate = generate;
+      return compile;
+    }
+    var hasRequiredLib$6;
+    function requireLib$6() {
+      if (hasRequiredLib$6) return lib$3;
+      hasRequiredLib$6 = 1;
+      (function(exports2) {
+        Object.defineProperty(exports2, "__esModule", { value: true });
+        exports2.sequence = exports2.generate = exports2.compile = exports2.parse = void 0;
+        var parse_js_1 = /* @__PURE__ */ requireParse$1();
+        Object.defineProperty(exports2, "parse", { enumerable: true, get: function() {
+          return parse_js_1.parse;
+        } });
+        var compile_js_1 = /* @__PURE__ */ requireCompile$1();
+        Object.defineProperty(exports2, "compile", { enumerable: true, get: function() {
+          return compile_js_1.compile;
+        } });
+        Object.defineProperty(exports2, "generate", { enumerable: true, get: function() {
+          return compile_js_1.generate;
+        } });
+        function nthCheck(formula) {
+          return (0, compile_js_1.compile)((0, parse_js_1.parse)(formula));
+        }
+        exports2.default = nthCheck;
+        function sequence(formula) {
+          return (0, compile_js_1.generate)((0, parse_js_1.parse)(formula));
+        }
+        exports2.sequence = sequence;
+      })(lib$3);
+      return lib$3;
+    }
+    var hasRequiredFilters;
+    function requireFilters() {
+      if (hasRequiredFilters) return filters;
+      hasRequiredFilters = 1;
+      (function(exports2) {
+        var __importDefault2 = filters && filters.__importDefault || function(mod2) {
+          return mod2 && mod2.__esModule ? mod2 : { "default": mod2 };
+        };
+        Object.defineProperty(exports2, "__esModule", { value: true });
+        exports2.filters = void 0;
+        var nth_check_1 = __importDefault2(/* @__PURE__ */ requireLib$6());
+        var boolbase_1 = requireBoolbase();
+        function getChildFunc(next, adapter) {
+          return function(elem) {
+            var parent = adapter.getParent(elem);
+            return parent != null && adapter.isTag(parent) && next(elem);
+          };
+        }
+        exports2.filters = {
+          contains: function(next, text2, _a2) {
+            var adapter = _a2.adapter;
+            return function contains2(elem) {
+              return next(elem) && adapter.getText(elem).includes(text2);
+            };
+          },
+          icontains: function(next, text2, _a2) {
+            var adapter = _a2.adapter;
+            var itext = text2.toLowerCase();
+            return function icontains(elem) {
+              return next(elem) && adapter.getText(elem).toLowerCase().includes(itext);
+            };
+          },
+          // Location specific methods
+          "nth-child": function(next, rule, _a2) {
+            var adapter = _a2.adapter, equals2 = _a2.equals;
+            var func = (0, nth_check_1.default)(rule);
+            if (func === boolbase_1.falseFunc)
+              return boolbase_1.falseFunc;
+            if (func === boolbase_1.trueFunc)
+              return getChildFunc(next, adapter);
+            return function nthChild(elem) {
+              var siblings = adapter.getSiblings(elem);
+              var pos2 = 0;
+              for (var i2 = 0; i2 < siblings.length; i2++) {
+                if (equals2(elem, siblings[i2]))
+                  break;
+                if (adapter.isTag(siblings[i2])) {
+                  pos2++;
+                }
+              }
+              return func(pos2) && next(elem);
+            };
+          },
+          "nth-last-child": function(next, rule, _a2) {
+            var adapter = _a2.adapter, equals2 = _a2.equals;
+            var func = (0, nth_check_1.default)(rule);
+            if (func === boolbase_1.falseFunc)
+              return boolbase_1.falseFunc;
+            if (func === boolbase_1.trueFunc)
+              return getChildFunc(next, adapter);
+            return function nthLastChild(elem) {
+              var siblings = adapter.getSiblings(elem);
+              var pos2 = 0;
+              for (var i2 = siblings.length - 1; i2 >= 0; i2--) {
+                if (equals2(elem, siblings[i2]))
+                  break;
+                if (adapter.isTag(siblings[i2])) {
+                  pos2++;
+                }
+              }
+              return func(pos2) && next(elem);
+            };
+          },
+          "nth-of-type": function(next, rule, _a2) {
+            var adapter = _a2.adapter, equals2 = _a2.equals;
+            var func = (0, nth_check_1.default)(rule);
+            if (func === boolbase_1.falseFunc)
+              return boolbase_1.falseFunc;
+            if (func === boolbase_1.trueFunc)
+              return getChildFunc(next, adapter);
+            return function nthOfType(elem) {
+              var siblings = adapter.getSiblings(elem);
+              var pos2 = 0;
+              for (var i2 = 0; i2 < siblings.length; i2++) {
+                var currentSibling = siblings[i2];
+                if (equals2(elem, currentSibling))
+                  break;
+                if (adapter.isTag(currentSibling) && adapter.getName(currentSibling) === adapter.getName(elem)) {
+                  pos2++;
+                }
+              }
+              return func(pos2) && next(elem);
+            };
+          },
+          "nth-last-of-type": function(next, rule, _a2) {
+            var adapter = _a2.adapter, equals2 = _a2.equals;
+            var func = (0, nth_check_1.default)(rule);
+            if (func === boolbase_1.falseFunc)
+              return boolbase_1.falseFunc;
+            if (func === boolbase_1.trueFunc)
+              return getChildFunc(next, adapter);
+            return function nthLastOfType(elem) {
+              var siblings = adapter.getSiblings(elem);
+              var pos2 = 0;
+              for (var i2 = siblings.length - 1; i2 >= 0; i2--) {
+                var currentSibling = siblings[i2];
+                if (equals2(elem, currentSibling))
+                  break;
+                if (adapter.isTag(currentSibling) && adapter.getName(currentSibling) === adapter.getName(elem)) {
+                  pos2++;
+                }
+              }
+              return func(pos2) && next(elem);
+            };
+          },
+          // TODO determine the actual root element
+          root: function(next, _rule, _a2) {
+            var adapter = _a2.adapter;
+            return function(elem) {
+              var parent = adapter.getParent(elem);
+              return (parent == null || !adapter.isTag(parent)) && next(elem);
+            };
+          },
+          scope: function(next, rule, options2, context) {
+            var equals2 = options2.equals;
+            if (!context || context.length === 0) {
+              return exports2.filters.root(next, rule, options2);
+            }
+            if (context.length === 1) {
+              return function(elem) {
+                return equals2(context[0], elem) && next(elem);
+              };
+            }
+            return function(elem) {
+              return context.includes(elem) && next(elem);
+            };
+          },
+          hover: dynamicStatePseudo("isHovered"),
+          visited: dynamicStatePseudo("isVisited"),
+          active: dynamicStatePseudo("isActive")
+        };
+        function dynamicStatePseudo(name2) {
+          return function dynamicPseudo(next, _rule, _a2) {
+            var adapter = _a2.adapter;
+            var func = adapter[name2];
+            if (typeof func !== "function") {
+              return boolbase_1.falseFunc;
+            }
+            return function active(elem) {
+              return func(elem) && next(elem);
+            };
+          };
+        }
+      })(filters);
+      return filters;
+    }
+    var pseudos = {};
+    var hasRequiredPseudos;
+    function requirePseudos() {
+      if (hasRequiredPseudos) return pseudos;
+      hasRequiredPseudos = 1;
+      Object.defineProperty(pseudos, "__esModule", { value: true });
+      pseudos.verifyPseudoArgs = pseudos.pseudos = void 0;
+      pseudos.pseudos = {
+        empty: function(elem, _a2) {
+          var adapter = _a2.adapter;
+          return !adapter.getChildren(elem).some(function(elem2) {
+            return adapter.isTag(elem2) || adapter.getText(elem2) !== "";
+          });
+        },
+        "first-child": function(elem, _a2) {
+          var adapter = _a2.adapter, equals2 = _a2.equals;
+          var firstChild = adapter.getSiblings(elem).find(function(elem2) {
+            return adapter.isTag(elem2);
+          });
+          return firstChild != null && equals2(elem, firstChild);
+        },
+        "last-child": function(elem, _a2) {
+          var adapter = _a2.adapter, equals2 = _a2.equals;
+          var siblings = adapter.getSiblings(elem);
+          for (var i2 = siblings.length - 1; i2 >= 0; i2--) {
+            if (equals2(elem, siblings[i2]))
+              return true;
+            if (adapter.isTag(siblings[i2]))
+              break;
+          }
+          return false;
+        },
+        "first-of-type": function(elem, _a2) {
+          var adapter = _a2.adapter, equals2 = _a2.equals;
+          var siblings = adapter.getSiblings(elem);
+          var elemName = adapter.getName(elem);
+          for (var i2 = 0; i2 < siblings.length; i2++) {
+            var currentSibling = siblings[i2];
+            if (equals2(elem, currentSibling))
+              return true;
+            if (adapter.isTag(currentSibling) && adapter.getName(currentSibling) === elemName) {
+              break;
+            }
+          }
+          return false;
+        },
+        "last-of-type": function(elem, _a2) {
+          var adapter = _a2.adapter, equals2 = _a2.equals;
+          var siblings = adapter.getSiblings(elem);
+          var elemName = adapter.getName(elem);
+          for (var i2 = siblings.length - 1; i2 >= 0; i2--) {
+            var currentSibling = siblings[i2];
+            if (equals2(elem, currentSibling))
+              return true;
+            if (adapter.isTag(currentSibling) && adapter.getName(currentSibling) === elemName) {
+              break;
+            }
+          }
+          return false;
+        },
+        "only-of-type": function(elem, _a2) {
+          var adapter = _a2.adapter, equals2 = _a2.equals;
+          var elemName = adapter.getName(elem);
+          return adapter.getSiblings(elem).every(function(sibling) {
+            return equals2(elem, sibling) || !adapter.isTag(sibling) || adapter.getName(sibling) !== elemName;
+          });
+        },
+        "only-child": function(elem, _a2) {
+          var adapter = _a2.adapter, equals2 = _a2.equals;
+          return adapter.getSiblings(elem).every(function(sibling) {
+            return equals2(elem, sibling) || !adapter.isTag(sibling);
+          });
+        }
+      };
+      function verifyPseudoArgs(func, name2, subselect) {
+        if (subselect === null) {
+          if (func.length > 2) {
+            throw new Error("pseudo-selector :".concat(name2, " requires an argument"));
+          }
+        } else if (func.length === 2) {
+          throw new Error("pseudo-selector :".concat(name2, " doesn't have any arguments"));
+        }
+      }
+      pseudos.verifyPseudoArgs = verifyPseudoArgs;
+      return pseudos;
+    }
+    var aliases = {};
+    var hasRequiredAliases;
+    function requireAliases() {
+      if (hasRequiredAliases) return aliases;
+      hasRequiredAliases = 1;
+      Object.defineProperty(aliases, "__esModule", { value: true });
+      aliases.aliases = void 0;
+      aliases.aliases = {
+        // Links
+        "any-link": ":is(a, area, link)[href]",
+        link: ":any-link:not(:visited)",
+        // Forms
+        // https://html.spec.whatwg.org/multipage/scripting.html#disabled-elements
+        disabled: ":is(\n        :is(button, input, select, textarea, optgroup, option)[disabled],\n        optgroup[disabled] > option,\n        fieldset[disabled]:not(fieldset[disabled] legend:first-of-type *)\n    )",
+        enabled: ":not(:disabled)",
+        checked: ":is(:is(input[type=radio], input[type=checkbox])[checked], option:selected)",
+        required: ":is(input, select, textarea)[required]",
+        optional: ":is(input, select, textarea):not([required])",
+        // JQuery extensions
+        // https://html.spec.whatwg.org/multipage/form-elements.html#concept-option-selectedness
+        selected: "option:is([selected], select:not([multiple]):not(:has(> option[selected])) > :first-of-type)",
+        checkbox: "[type=checkbox]",
+        file: "[type=file]",
+        password: "[type=password]",
+        radio: "[type=radio]",
+        reset: "[type=reset]",
+        image: "[type=image]",
+        submit: "[type=submit]",
+        parent: ":not(:empty)",
+        header: ":is(h1, h2, h3, h4, h5, h6)",
+        button: ":is(button, input[type=button])",
+        input: ":is(input, textarea, select, button)",
+        text: "input:is(:not([type!='']), [type=text])"
+      };
+      return aliases;
+    }
+    var subselects = {};
+    var hasRequiredSubselects;
+    function requireSubselects() {
+      if (hasRequiredSubselects) return subselects;
+      hasRequiredSubselects = 1;
+      (function(exports2) {
+        var __spreadArray2 = subselects && subselects.__spreadArray || function(to2, from, pack) {
+          if (pack || arguments.length === 2) for (var i2 = 0, l = from.length, ar2; i2 < l; i2++) {
+            if (ar2 || !(i2 in from)) {
+              if (!ar2) ar2 = Array.prototype.slice.call(from, 0, i2);
+              ar2[i2] = from[i2];
+            }
+          }
+          return to2.concat(ar2 || Array.prototype.slice.call(from));
+        };
+        Object.defineProperty(exports2, "__esModule", { value: true });
+        exports2.subselects = exports2.getNextSiblings = exports2.ensureIsTag = exports2.PLACEHOLDER_ELEMENT = void 0;
+        var boolbase_1 = requireBoolbase();
+        var procedure_1 = requireProcedure();
+        exports2.PLACEHOLDER_ELEMENT = {};
+        function ensureIsTag(next, adapter) {
+          if (next === boolbase_1.falseFunc)
+            return boolbase_1.falseFunc;
+          return function(elem) {
+            return adapter.isTag(elem) && next(elem);
+          };
+        }
+        exports2.ensureIsTag = ensureIsTag;
+        function getNextSiblings(elem, adapter) {
+          var siblings = adapter.getSiblings(elem);
+          if (siblings.length <= 1)
+            return [];
+          var elemIndex = siblings.indexOf(elem);
+          if (elemIndex < 0 || elemIndex === siblings.length - 1)
+            return [];
+          return siblings.slice(elemIndex + 1).filter(adapter.isTag);
+        }
+        exports2.getNextSiblings = getNextSiblings;
+        var is2 = function(next, token2, options2, context, compileToken) {
+          var opts = {
+            xmlMode: !!options2.xmlMode,
+            adapter: options2.adapter,
+            equals: options2.equals
+          };
+          var func = compileToken(token2, opts, context);
+          return function(elem) {
+            return func(elem) && next(elem);
+          };
+        };
+        exports2.subselects = {
+          is: is2,
+          /**
+           * `:matches` and `:where` are aliases for `:is`.
+           */
+          matches: is2,
+          where: is2,
+          not: function(next, token2, options2, context, compileToken) {
+            var opts = {
+              xmlMode: !!options2.xmlMode,
+              adapter: options2.adapter,
+              equals: options2.equals
+            };
+            var func = compileToken(token2, opts, context);
+            if (func === boolbase_1.falseFunc)
+              return next;
+            if (func === boolbase_1.trueFunc)
+              return boolbase_1.falseFunc;
+            return function not2(elem) {
+              return !func(elem) && next(elem);
+            };
+          },
+          has: function(next, subselect, options2, _context, compileToken) {
+            var adapter = options2.adapter;
+            var opts = {
+              xmlMode: !!options2.xmlMode,
+              adapter,
+              equals: options2.equals
+            };
+            var context = subselect.some(function(s) {
+              return s.some(procedure_1.isTraversal);
+            }) ? [exports2.PLACEHOLDER_ELEMENT] : void 0;
+            var compiled = compileToken(subselect, opts, context);
+            if (compiled === boolbase_1.falseFunc)
+              return boolbase_1.falseFunc;
+            if (compiled === boolbase_1.trueFunc) {
+              return function(elem) {
+                return adapter.getChildren(elem).some(adapter.isTag) && next(elem);
+              };
+            }
+            var hasElement = ensureIsTag(compiled, adapter);
+            var _a2 = compiled.shouldTestNextSiblings, shouldTestNextSiblings = _a2 === void 0 ? false : _a2;
+            if (context) {
+              return function(elem) {
+                context[0] = elem;
+                var childs = adapter.getChildren(elem);
+                var nextElements = shouldTestNextSiblings ? __spreadArray2(__spreadArray2([], childs, true), getNextSiblings(elem, adapter), true) : childs;
+                return next(elem) && adapter.existsOne(hasElement, nextElements);
+              };
+            }
+            return function(elem) {
+              return next(elem) && adapter.existsOne(hasElement, adapter.getChildren(elem));
+            };
+          }
+        };
+      })(subselects);
+      return subselects;
+    }
+    var hasRequiredPseudoSelectors;
+    function requirePseudoSelectors() {
+      if (hasRequiredPseudoSelectors) return pseudoSelectors;
+      hasRequiredPseudoSelectors = 1;
+      (function(exports2) {
+        Object.defineProperty(exports2, "__esModule", { value: true });
+        exports2.compilePseudoSelector = exports2.aliases = exports2.pseudos = exports2.filters = void 0;
+        var boolbase_1 = requireBoolbase();
+        var css_what_1 = require$$0$1;
+        var filters_1 = requireFilters();
+        Object.defineProperty(exports2, "filters", { enumerable: true, get: function() {
+          return filters_1.filters;
+        } });
+        var pseudos_1 = requirePseudos();
+        Object.defineProperty(exports2, "pseudos", { enumerable: true, get: function() {
+          return pseudos_1.pseudos;
+        } });
+        var aliases_1 = requireAliases();
+        Object.defineProperty(exports2, "aliases", { enumerable: true, get: function() {
+          return aliases_1.aliases;
+        } });
+        var subselects_1 = requireSubselects();
+        function compilePseudoSelector(next, selector2, options2, context, compileToken) {
+          var name2 = selector2.name, data = selector2.data;
+          if (Array.isArray(data)) {
+            return subselects_1.subselects[name2](next, data, options2, context, compileToken);
+          }
+          if (name2 in aliases_1.aliases) {
+            if (data != null) {
+              throw new Error("Pseudo ".concat(name2, " doesn't have any arguments"));
+            }
+            var alias = (0, css_what_1.parse)(aliases_1.aliases[name2]);
+            return subselects_1.subselects.is(next, alias, options2, context, compileToken);
+          }
+          if (name2 in filters_1.filters) {
+            return filters_1.filters[name2](next, data, options2, context);
+          }
+          if (name2 in pseudos_1.pseudos) {
+            var pseudo_1 = pseudos_1.pseudos[name2];
+            (0, pseudos_1.verifyPseudoArgs)(pseudo_1, name2, data);
+            return pseudo_1 === boolbase_1.falseFunc ? boolbase_1.falseFunc : next === boolbase_1.trueFunc ? function(elem) {
+              return pseudo_1(elem, options2, data);
+            } : function(elem) {
+              return pseudo_1(elem, options2, data) && next(elem);
+            };
+          }
+          throw new Error("unmatched pseudo-class :".concat(name2));
+        }
+        exports2.compilePseudoSelector = compilePseudoSelector;
+      })(pseudoSelectors);
+      return pseudoSelectors;
+    }
+    var hasRequiredGeneral;
+    function requireGeneral() {
+      if (hasRequiredGeneral) return general;
+      hasRequiredGeneral = 1;
+      Object.defineProperty(general, "__esModule", { value: true });
+      general.compileGeneralSelector = void 0;
+      var attributes_1 = requireAttributes$1();
+      var pseudo_selectors_1 = requirePseudoSelectors();
+      var css_what_1 = require$$0$1;
+      function compileGeneralSelector(next, selector2, options2, context, compileToken) {
+        var adapter = options2.adapter, equals2 = options2.equals;
+        switch (selector2.type) {
+          case css_what_1.SelectorType.PseudoElement: {
+            throw new Error("Pseudo-elements are not supported by css-select");
+          }
+          case css_what_1.SelectorType.ColumnCombinator: {
+            throw new Error("Column combinators are not yet supported by css-select");
+          }
+          case css_what_1.SelectorType.Attribute: {
+            if (selector2.namespace != null) {
+              throw new Error("Namespaced attributes are not yet supported by css-select");
+            }
+            if (!options2.xmlMode || options2.lowerCaseAttributeNames) {
+              selector2.name = selector2.name.toLowerCase();
+            }
+            return attributes_1.attributeRules[selector2.action](next, selector2, options2);
+          }
+          case css_what_1.SelectorType.Pseudo: {
+            return (0, pseudo_selectors_1.compilePseudoSelector)(next, selector2, options2, context, compileToken);
+          }
+          // Tags
+          case css_what_1.SelectorType.Tag: {
+            if (selector2.namespace != null) {
+              throw new Error("Namespaced tag names are not yet supported by css-select");
+            }
+            var name_1 = selector2.name;
+            if (!options2.xmlMode || options2.lowerCaseTags) {
+              name_1 = name_1.toLowerCase();
+            }
+            return function tag(elem) {
+              return adapter.getName(elem) === name_1 && next(elem);
+            };
+          }
+          // Traversal
+          case css_what_1.SelectorType.Descendant: {
+            if (options2.cacheResults === false || typeof WeakSet === "undefined") {
+              return function descendant(elem) {
+                var current2 = elem;
+                while (current2 = adapter.getParent(current2)) {
+                  if (adapter.isTag(current2) && next(current2)) {
+                    return true;
+                  }
+                }
+                return false;
+              };
+            }
+            var isFalseCache_1 = /* @__PURE__ */ new WeakSet();
+            return function cachedDescendant(elem) {
+              var current2 = elem;
+              while (current2 = adapter.getParent(current2)) {
+                if (!isFalseCache_1.has(current2)) {
+                  if (adapter.isTag(current2) && next(current2)) {
+                    return true;
+                  }
+                  isFalseCache_1.add(current2);
+                }
+              }
+              return false;
+            };
+          }
+          case "_flexibleDescendant": {
+            return function flexibleDescendant(elem) {
+              var current2 = elem;
+              do {
+                if (adapter.isTag(current2) && next(current2))
+                  return true;
+              } while (current2 = adapter.getParent(current2));
+              return false;
+            };
+          }
+          case css_what_1.SelectorType.Parent: {
+            return function parent(elem) {
+              return adapter.getChildren(elem).some(function(elem2) {
+                return adapter.isTag(elem2) && next(elem2);
+              });
+            };
+          }
+          case css_what_1.SelectorType.Child: {
+            return function child(elem) {
+              var parent = adapter.getParent(elem);
+              return parent != null && adapter.isTag(parent) && next(parent);
+            };
+          }
+          case css_what_1.SelectorType.Sibling: {
+            return function sibling(elem) {
+              var siblings = adapter.getSiblings(elem);
+              for (var i2 = 0; i2 < siblings.length; i2++) {
+                var currentSibling = siblings[i2];
+                if (equals2(elem, currentSibling))
+                  break;
+                if (adapter.isTag(currentSibling) && next(currentSibling)) {
+                  return true;
+                }
+              }
+              return false;
+            };
+          }
+          case css_what_1.SelectorType.Adjacent: {
+            if (adapter.prevElementSibling) {
+              return function adjacent(elem) {
+                var previous = adapter.prevElementSibling(elem);
+                return previous != null && next(previous);
+              };
+            }
+            return function adjacent(elem) {
+              var siblings = adapter.getSiblings(elem);
+              var lastElement;
+              for (var i2 = 0; i2 < siblings.length; i2++) {
+                var currentSibling = siblings[i2];
+                if (equals2(elem, currentSibling))
+                  break;
+                if (adapter.isTag(currentSibling)) {
+                  lastElement = currentSibling;
+                }
+              }
+              return !!lastElement && next(lastElement);
+            };
+          }
+          case css_what_1.SelectorType.Universal: {
+            if (selector2.namespace != null && selector2.namespace !== "*") {
+              throw new Error("Namespaced universal selectors are not yet supported by css-select");
+            }
+            return next;
+          }
+        }
+      }
+      general.compileGeneralSelector = compileGeneralSelector;
+      return general;
+    }
+    var hasRequiredCompile;
+    function requireCompile() {
+      if (hasRequiredCompile) return compile$1;
+      hasRequiredCompile = 1;
+      var __importDefault2 = compile$1 && compile$1.__importDefault || function(mod2) {
+        return mod2 && mod2.__esModule ? mod2 : { "default": mod2 };
+      };
+      Object.defineProperty(compile$1, "__esModule", { value: true });
+      compile$1.compileToken = compile$1.compileUnsafe = compile$1.compile = void 0;
+      var css_what_1 = require$$0$1;
+      var boolbase_1 = requireBoolbase();
+      var sort_1 = __importDefault2(requireSort());
+      var procedure_1 = requireProcedure();
+      var general_1 = requireGeneral();
+      var subselects_1 = requireSubselects();
+      function compile2(selector2, options2, context) {
+        var next = compileUnsafe(selector2, options2, context);
+        return (0, subselects_1.ensureIsTag)(next, options2.adapter);
+      }
+      compile$1.compile = compile2;
+      function compileUnsafe(selector2, options2, context) {
+        var token2 = typeof selector2 === "string" ? (0, css_what_1.parse)(selector2) : selector2;
+        return compileToken(token2, options2, context);
+      }
+      compile$1.compileUnsafe = compileUnsafe;
+      function includesScopePseudo(t2) {
+        return t2.type === "pseudo" && (t2.name === "scope" || Array.isArray(t2.data) && t2.data.some(function(data) {
+          return data.some(includesScopePseudo);
+        }));
+      }
+      var DESCENDANT_TOKEN = { type: css_what_1.SelectorType.Descendant };
+      var FLEXIBLE_DESCENDANT_TOKEN = {
+        type: "_flexibleDescendant"
+      };
+      var SCOPE_TOKEN = {
+        type: css_what_1.SelectorType.Pseudo,
+        name: "scope",
+        data: null
+      };
+      function absolutize(token2, _a2, context) {
+        var adapter = _a2.adapter;
+        var hasContext = !!(context === null || context === void 0 ? void 0 : context.every(function(e) {
+          var parent = adapter.isTag(e) && adapter.getParent(e);
+          return e === subselects_1.PLACEHOLDER_ELEMENT || parent && adapter.isTag(parent);
+        }));
+        for (var _i = 0, token_1 = token2; _i < token_1.length; _i++) {
+          var t2 = token_1[_i];
+          if (t2.length > 0 && (0, procedure_1.isTraversal)(t2[0]) && t2[0].type !== "descendant") ;
+          else if (hasContext && !t2.some(includesScopePseudo)) {
+            t2.unshift(DESCENDANT_TOKEN);
+          } else {
+            continue;
+          }
+          t2.unshift(SCOPE_TOKEN);
+        }
+      }
+      function compileToken(token2, options2, context) {
+        var _a2;
+        token2 = token2.filter(function(t2) {
+          return t2.length > 0;
+        });
+        token2.forEach(sort_1.default);
+        context = (_a2 = options2.context) !== null && _a2 !== void 0 ? _a2 : context;
+        var isArrayContext = Array.isArray(context);
+        var finalContext = context && (Array.isArray(context) ? context : [context]);
+        absolutize(token2, options2, finalContext);
+        var shouldTestNextSiblings = false;
+        var query2 = token2.map(function(rules) {
+          if (rules.length >= 2) {
+            var first = rules[0], second = rules[1];
+            if (first.type !== "pseudo" || first.name !== "scope") ;
+            else if (isArrayContext && second.type === "descendant") {
+              rules[1] = FLEXIBLE_DESCENDANT_TOKEN;
+            } else if (second.type === "adjacent" || second.type === "sibling") {
+              shouldTestNextSiblings = true;
+            }
+          }
+          return compileRules(rules, options2, finalContext);
+        }).reduce(reduceRules, boolbase_1.falseFunc);
+        query2.shouldTestNextSiblings = shouldTestNextSiblings;
+        return query2;
+      }
+      compile$1.compileToken = compileToken;
+      function compileRules(rules, options2, context) {
+        var _a2;
+        return rules.reduce(function(previous, rule) {
+          return previous === boolbase_1.falseFunc ? boolbase_1.falseFunc : (0, general_1.compileGeneralSelector)(previous, rule, options2, context, compileToken);
+        }, (_a2 = options2.rootFunc) !== null && _a2 !== void 0 ? _a2 : boolbase_1.trueFunc);
+      }
+      function reduceRules(a, b) {
+        if (b === boolbase_1.falseFunc || a === boolbase_1.trueFunc) {
+          return a;
+        }
+        if (a === boolbase_1.falseFunc || b === boolbase_1.trueFunc) {
+          return b;
+        }
+        return function combine(elem) {
+          return a(elem) || b(elem);
+        };
+      }
+      return compile$1;
+    }
+    var hasRequiredLib$5;
+    function requireLib$5() {
+      if (hasRequiredLib$5) return lib$9;
+      hasRequiredLib$5 = 1;
+      (function(exports2) {
+        var __createBinding2 = lib$9 && lib$9.__createBinding || (Object.create ? (function(o, m, k, k2) {
+          if (k2 === void 0) k2 = k;
+          var desc = Object.getOwnPropertyDescriptor(m, k);
+          if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+            desc = { enumerable: true, get: function() {
+              return m[k];
+            } };
+          }
+          Object.defineProperty(o, k2, desc);
+        }) : (function(o, m, k, k2) {
+          if (k2 === void 0) k2 = k;
+          o[k2] = m[k];
+        }));
+        var __setModuleDefault2 = lib$9 && lib$9.__setModuleDefault || (Object.create ? (function(o, v) {
+          Object.defineProperty(o, "default", { enumerable: true, value: v });
+        }) : function(o, v) {
+          o["default"] = v;
+        });
+        var __importStar2 = lib$9 && lib$9.__importStar || function(mod2) {
+          if (mod2 && mod2.__esModule) return mod2;
+          var result2 = {};
+          if (mod2 != null) {
+            for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
+          }
+          __setModuleDefault2(result2, mod2);
+          return result2;
+        };
+        Object.defineProperty(exports2, "__esModule", { value: true });
+        exports2.aliases = exports2.pseudos = exports2.filters = exports2.is = exports2.selectOne = exports2.selectAll = exports2.prepareContext = exports2._compileToken = exports2._compileUnsafe = exports2.compile = void 0;
+        var DomUtils = __importStar2(/* @__PURE__ */ requireLib$7());
+        var boolbase_1 = requireBoolbase();
+        var compile_1 = requireCompile();
+        var subselects_1 = requireSubselects();
+        var defaultEquals = function(a, b) {
+          return a === b;
+        };
+        var defaultOptions2 = {
+          adapter: DomUtils,
+          equals: defaultEquals
+        };
+        function convertOptionFormats(options2) {
+          var _a2, _b2, _c, _d;
+          var opts = options2 !== null && options2 !== void 0 ? options2 : defaultOptions2;
+          (_a2 = opts.adapter) !== null && _a2 !== void 0 ? _a2 : opts.adapter = DomUtils;
+          (_b2 = opts.equals) !== null && _b2 !== void 0 ? _b2 : opts.equals = (_d = (_c = opts.adapter) === null || _c === void 0 ? void 0 : _c.equals) !== null && _d !== void 0 ? _d : defaultEquals;
+          return opts;
+        }
+        function wrapCompile(func) {
+          return function addAdapter(selector2, options2, context) {
+            var opts = convertOptionFormats(options2);
+            return func(selector2, opts, context);
+          };
+        }
+        exports2.compile = wrapCompile(compile_1.compile);
+        exports2._compileUnsafe = wrapCompile(compile_1.compileUnsafe);
+        exports2._compileToken = wrapCompile(compile_1.compileToken);
+        function getSelectorFunc(searchFunc) {
+          return function select(query2, elements, options2) {
+            var opts = convertOptionFormats(options2);
+            if (typeof query2 !== "function") {
+              query2 = (0, compile_1.compileUnsafe)(query2, opts, elements);
+            }
+            var filteredElements = prepareContext(elements, opts.adapter, query2.shouldTestNextSiblings);
+            return searchFunc(query2, filteredElements, opts);
+          };
+        }
+        function prepareContext(elems, adapter, shouldTestNextSiblings) {
+          if (shouldTestNextSiblings === void 0) {
+            shouldTestNextSiblings = false;
+          }
+          if (shouldTestNextSiblings) {
+            elems = appendNextSiblings(elems, adapter);
+          }
+          return Array.isArray(elems) ? adapter.removeSubsets(elems) : adapter.getChildren(elems);
+        }
+        exports2.prepareContext = prepareContext;
+        function appendNextSiblings(elem, adapter) {
+          var elems = Array.isArray(elem) ? elem.slice(0) : [elem];
+          var elemsLength = elems.length;
+          for (var i2 = 0; i2 < elemsLength; i2++) {
+            var nextSiblings = (0, subselects_1.getNextSiblings)(elems[i2], adapter);
+            elems.push.apply(elems, nextSiblings);
+          }
+          return elems;
+        }
+        exports2.selectAll = getSelectorFunc(function(query2, elems, options2) {
+          return query2 === boolbase_1.falseFunc || !elems || elems.length === 0 ? [] : options2.adapter.findAll(query2, elems);
+        });
+        exports2.selectOne = getSelectorFunc(function(query2, elems, options2) {
+          return query2 === boolbase_1.falseFunc || !elems || elems.length === 0 ? null : options2.adapter.findOne(query2, elems);
+        });
+        function is2(elem, query2, options2) {
+          var opts = convertOptionFormats(options2);
+          return (typeof query2 === "function" ? query2 : (0, compile_1.compile)(query2, opts))(elem);
+        }
+        exports2.is = is2;
+        exports2.default = exports2.selectAll;
+        var pseudo_selectors_1 = requirePseudoSelectors();
+        Object.defineProperty(exports2, "filters", { enumerable: true, get: function() {
+          return pseudo_selectors_1.filters;
+        } });
+        Object.defineProperty(exports2, "pseudos", { enumerable: true, get: function() {
+          return pseudo_selectors_1.pseudos;
+        } });
+        Object.defineProperty(exports2, "aliases", { enumerable: true, get: function() {
+          return pseudo_selectors_1.aliases;
+        } });
+      })(lib$9);
+      return lib$9;
+    }
+    var helpers = {};
+    var positionals = {};
+    var hasRequiredPositionals;
+    function requirePositionals() {
+      if (hasRequiredPositionals) return positionals;
+      hasRequiredPositionals = 1;
+      (function(exports2) {
+        Object.defineProperty(exports2, "__esModule", { value: true });
+        exports2.getLimit = exports2.isFilter = exports2.filterNames = void 0;
+        exports2.filterNames = /* @__PURE__ */ new Set([
+          "first",
+          "last",
+          "eq",
+          "gt",
+          "nth",
+          "lt",
+          "even",
+          "odd"
+        ]);
+        function isFilter(s) {
+          if (s.type !== "pseudo")
+            return false;
+          if (exports2.filterNames.has(s.name))
+            return true;
+          if (s.name === "not" && Array.isArray(s.data)) {
+            return s.data.some(function(s2) {
+              return s2.some(isFilter);
+            });
+          }
+          return false;
+        }
+        exports2.isFilter = isFilter;
+        function getLimit(filter, data) {
+          var num2 = data != null ? parseInt(data, 10) : NaN;
+          switch (filter) {
+            case "first":
+              return 1;
+            case "nth":
+            case "eq":
+              return isFinite(num2) ? num2 >= 0 ? num2 + 1 : Infinity : 0;
+            case "lt":
+              return isFinite(num2) ? num2 >= 0 ? num2 : Infinity : 0;
+            case "gt":
+              return isFinite(num2) ? Infinity : 0;
+            default:
+              return Infinity;
+          }
+        }
+        exports2.getLimit = getLimit;
+      })(positionals);
+      return positionals;
+    }
+    var hasRequiredHelpers;
+    function requireHelpers() {
+      if (hasRequiredHelpers) return helpers;
+      hasRequiredHelpers = 1;
+      Object.defineProperty(helpers, "__esModule", { value: true });
+      helpers.groupSelectors = helpers.getDocumentRoot = void 0;
+      var positionals_1 = /* @__PURE__ */ requirePositionals();
+      function getDocumentRoot(node2) {
+        while (node2.parent)
+          node2 = node2.parent;
+        return node2;
+      }
+      helpers.getDocumentRoot = getDocumentRoot;
+      function groupSelectors(selectors) {
+        var filteredSelectors = [];
+        var plainSelectors = [];
+        for (var _i = 0, selectors_1 = selectors; _i < selectors_1.length; _i++) {
+          var selector2 = selectors_1[_i];
+          if (selector2.some(positionals_1.isFilter)) {
+            filteredSelectors.push(selector2);
+          } else {
+            plainSelectors.push(selector2);
+          }
+        }
+        return [plainSelectors, filteredSelectors];
+      }
+      helpers.groupSelectors = groupSelectors;
+      return helpers;
+    }
+    var hasRequiredLib$4;
+    function requireLib$4() {
+      if (hasRequiredLib$4) return lib$a;
+      hasRequiredLib$4 = 1;
+      (function(exports2) {
+        var __assign2 = lib$a && lib$a.__assign || function() {
+          __assign2 = Object.assign || function(t2) {
+            for (var s, i2 = 1, n = arguments.length; i2 < n; i2++) {
+              s = arguments[i2];
+              for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t2[p] = s[p];
+            }
+            return t2;
+          };
+          return __assign2.apply(this, arguments);
+        };
+        var __createBinding2 = lib$a && lib$a.__createBinding || (Object.create ? (function(o, m, k, k2) {
+          if (k2 === void 0) k2 = k;
+          var desc = Object.getOwnPropertyDescriptor(m, k);
+          if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+            desc = { enumerable: true, get: function() {
+              return m[k];
+            } };
+          }
+          Object.defineProperty(o, k2, desc);
+        }) : (function(o, m, k, k2) {
+          if (k2 === void 0) k2 = k;
+          o[k2] = m[k];
+        }));
+        var __setModuleDefault2 = lib$a && lib$a.__setModuleDefault || (Object.create ? (function(o, v) {
+          Object.defineProperty(o, "default", { enumerable: true, value: v });
+        }) : function(o, v) {
+          o["default"] = v;
+        });
+        var __importStar2 = lib$a && lib$a.__importStar || function(mod2) {
+          if (mod2 && mod2.__esModule) return mod2;
+          var result2 = {};
+          if (mod2 != null) {
+            for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
+          }
+          __setModuleDefault2(result2, mod2);
+          return result2;
+        };
+        var __spreadArray2 = lib$a && lib$a.__spreadArray || function(to2, from, pack) {
+          if (pack || arguments.length === 2) for (var i2 = 0, l = from.length, ar2; i2 < l; i2++) {
+            if (ar2 || !(i2 in from)) {
+              if (!ar2) ar2 = Array.prototype.slice.call(from, 0, i2);
+              ar2[i2] = from[i2];
+            }
+          }
+          return to2.concat(ar2 || Array.prototype.slice.call(from));
+        };
+        Object.defineProperty(exports2, "__esModule", { value: true });
+        exports2.select = exports2.filter = exports2.some = exports2.is = exports2.aliases = exports2.pseudos = exports2.filters = void 0;
+        var css_what_1 = require$$0$1;
+        var css_select_1 = requireLib$5();
+        var DomUtils = __importStar2(/* @__PURE__ */ requireLib$7());
+        var helpers_1 = /* @__PURE__ */ requireHelpers();
+        var positionals_1 = /* @__PURE__ */ requirePositionals();
+        var css_select_2 = requireLib$5();
+        Object.defineProperty(exports2, "filters", { enumerable: true, get: function() {
+          return css_select_2.filters;
+        } });
+        Object.defineProperty(exports2, "pseudos", { enumerable: true, get: function() {
+          return css_select_2.pseudos;
+        } });
+        Object.defineProperty(exports2, "aliases", { enumerable: true, get: function() {
+          return css_select_2.aliases;
+        } });
+        var SCOPE_PSEUDO = {
+          type: css_what_1.SelectorType.Pseudo,
+          name: "scope",
+          data: null
+        };
+        var CUSTOM_SCOPE_PSEUDO = __assign2({}, SCOPE_PSEUDO);
+        var UNIVERSAL_SELECTOR = {
+          type: css_what_1.SelectorType.Universal,
+          namespace: null
+        };
+        function is2(element, selector2, options2) {
+          if (options2 === void 0) {
+            options2 = {};
+          }
+          return some([element], selector2, options2);
+        }
+        exports2.is = is2;
+        function some(elements, selector2, options2) {
+          if (options2 === void 0) {
+            options2 = {};
+          }
+          if (typeof selector2 === "function")
+            return elements.some(selector2);
+          var _a2 = (0, helpers_1.groupSelectors)((0, css_what_1.parse)(selector2)), plain = _a2[0], filtered = _a2[1];
+          return plain.length > 0 && elements.some((0, css_select_1._compileToken)(plain, options2)) || filtered.some(function(sel) {
+            return filterBySelector(sel, elements, options2).length > 0;
+          });
+        }
+        exports2.some = some;
+        function filterByPosition(filter2, elems, data, options2) {
+          var num2 = typeof data === "string" ? parseInt(data, 10) : NaN;
+          switch (filter2) {
+            case "first":
+            case "lt":
+              return elems;
+            case "last":
+              return elems.length > 0 ? [elems[elems.length - 1]] : elems;
+            case "nth":
+            case "eq":
+              return isFinite(num2) && Math.abs(num2) < elems.length ? [num2 < 0 ? elems[elems.length + num2] : elems[num2]] : [];
+            case "gt":
+              return isFinite(num2) ? elems.slice(num2 + 1) : [];
+            case "even":
+              return elems.filter(function(_, i2) {
+                return i2 % 2 === 0;
+              });
+            case "odd":
+              return elems.filter(function(_, i2) {
+                return i2 % 2 === 1;
+              });
+            case "not": {
+              var filtered_1 = new Set(filterParsed(data, elems, options2));
+              return elems.filter(function(e) {
+                return !filtered_1.has(e);
+              });
+            }
+          }
+        }
+        function filter(selector2, elements, options2) {
+          if (options2 === void 0) {
+            options2 = {};
+          }
+          return filterParsed((0, css_what_1.parse)(selector2), elements, options2);
+        }
+        exports2.filter = filter;
+        function filterParsed(selector2, elements, options2) {
+          if (elements.length === 0)
+            return [];
+          var _a2 = (0, helpers_1.groupSelectors)(selector2), plainSelectors = _a2[0], filteredSelectors = _a2[1];
+          var found;
+          if (plainSelectors.length) {
+            var filtered = filterElements(elements, plainSelectors, options2);
+            if (filteredSelectors.length === 0) {
+              return filtered;
+            }
+            if (filtered.length) {
+              found = new Set(filtered);
+            }
+          }
+          for (var i2 = 0; i2 < filteredSelectors.length && (found === null || found === void 0 ? void 0 : found.size) !== elements.length; i2++) {
+            var filteredSelector = filteredSelectors[i2];
+            var missing = found ? elements.filter(function(e) {
+              return DomUtils.isTag(e) && !found.has(e);
+            }) : elements;
+            if (missing.length === 0)
+              break;
+            var filtered = filterBySelector(filteredSelector, elements, options2);
+            if (filtered.length) {
+              if (!found) {
+                if (i2 === filteredSelectors.length - 1) {
+                  return filtered;
+                }
+                found = new Set(filtered);
+              } else {
+                filtered.forEach(function(el2) {
+                  return found.add(el2);
+                });
+              }
+            }
+          }
+          return typeof found !== "undefined" ? found.size === elements.length ? elements : (
+            // Filter elements to preserve order
+            elements.filter(function(el2) {
+              return found.has(el2);
+            })
+          ) : [];
+        }
+        function filterBySelector(selector2, elements, options2) {
+          var _a2;
+          if (selector2.some(css_what_1.isTraversal)) {
+            var root2 = (_a2 = options2.root) !== null && _a2 !== void 0 ? _a2 : (0, helpers_1.getDocumentRoot)(elements[0]);
+            var sel = __spreadArray2(__spreadArray2([], selector2, true), [CUSTOM_SCOPE_PSEUDO], false);
+            return findFilterElements(root2, sel, options2, true, elements);
+          }
+          return findFilterElements(elements, selector2, options2, false);
+        }
+        function select(selector2, root2, options2) {
+          if (options2 === void 0) {
+            options2 = {};
+          }
+          if (typeof selector2 === "function") {
+            return find2(root2, selector2);
+          }
+          var _a2 = (0, helpers_1.groupSelectors)((0, css_what_1.parse)(selector2)), plain = _a2[0], filtered = _a2[1];
+          var results = filtered.map(function(sel) {
+            return findFilterElements(root2, sel, options2, true);
+          });
+          if (plain.length) {
+            results.push(findElements(root2, plain, options2, Infinity));
+          }
+          if (results.length === 0) {
+            return [];
+          }
+          if (results.length === 1) {
+            return results[0];
+          }
+          return DomUtils.uniqueSort(results.reduce(function(a, b) {
+            return __spreadArray2(__spreadArray2([], a, true), b, true);
+          }));
+        }
+        exports2.select = select;
+        var specialTraversal = /* @__PURE__ */ new Set([
+          css_what_1.SelectorType.Descendant,
+          css_what_1.SelectorType.Adjacent
+        ]);
+        function includesScopePseudo(t2) {
+          return t2 !== SCOPE_PSEUDO && t2.type === "pseudo" && (t2.name === "scope" || Array.isArray(t2.data) && t2.data.some(function(data) {
+            return data.some(includesScopePseudo);
+          }));
+        }
+        function addContextIfScope(selector2, options2, scopeContext) {
+          return scopeContext && selector2.some(includesScopePseudo) ? __assign2(__assign2({}, options2), { context: scopeContext }) : options2;
+        }
+        function findFilterElements(root2, selector2, options2, queryForSelector, scopeContext) {
+          var filterIndex = selector2.findIndex(positionals_1.isFilter);
+          var sub2 = selector2.slice(0, filterIndex);
+          var filter2 = selector2[filterIndex];
+          var limit = (0, positionals_1.getLimit)(filter2.name, filter2.data);
+          if (limit === 0)
+            return [];
+          var subOpts = addContextIfScope(sub2, options2, scopeContext);
+          var elemsNoLimit = sub2.length === 0 && !Array.isArray(root2) ? DomUtils.getChildren(root2).filter(DomUtils.isTag) : sub2.length === 0 || sub2.length === 1 && sub2[0] === SCOPE_PSEUDO ? (Array.isArray(root2) ? root2 : [root2]).filter(DomUtils.isTag) : queryForSelector || sub2.some(css_what_1.isTraversal) ? findElements(root2, [sub2], subOpts, limit) : filterElements(root2, [sub2], subOpts);
+          var elems = elemsNoLimit.slice(0, limit);
+          var result2 = filterByPosition(filter2.name, elems, filter2.data, options2);
+          if (result2.length === 0 || selector2.length === filterIndex + 1) {
+            return result2;
+          }
+          var remainingSelector = selector2.slice(filterIndex + 1);
+          var remainingHasTraversal = remainingSelector.some(css_what_1.isTraversal);
+          var remainingOpts = addContextIfScope(remainingSelector, options2, scopeContext);
+          if (remainingHasTraversal) {
+            if (specialTraversal.has(remainingSelector[0].type)) {
+              remainingSelector.unshift(UNIVERSAL_SELECTOR);
+            }
+            remainingSelector.unshift(SCOPE_PSEUDO);
+          }
+          return remainingSelector.some(positionals_1.isFilter) ? findFilterElements(result2, remainingSelector, options2, false, scopeContext) : remainingHasTraversal ? (
+            // Query existing elements to resolve traversal.
+            findElements(result2, [remainingSelector], remainingOpts, Infinity)
+          ) : (
+            // If we don't have any more traversals, simply filter elements.
+            filterElements(result2, [remainingSelector], remainingOpts)
+          );
+        }
+        function findElements(root2, sel, options2, limit) {
+          if (limit === 0)
+            return [];
+          var query2 = (0, css_select_1._compileToken)(sel, options2, root2);
+          return find2(root2, query2, limit);
+        }
+        function find2(root2, query2, limit) {
+          if (limit === void 0) {
+            limit = Infinity;
+          }
+          var elems = (0, css_select_1.prepareContext)(root2, DomUtils, query2.shouldTestNextSiblings);
+          return DomUtils.find(function(node2) {
+            return DomUtils.isTag(node2) && query2(node2);
+          }, elems, true, limit);
+        }
+        function filterElements(elements, sel, options2) {
+          var els2 = (Array.isArray(elements) ? elements : [elements]).filter(DomUtils.isTag);
+          if (els2.length === 0)
+            return els2;
+          var query2 = (0, css_select_1._compileToken)(sel, options2);
+          return els2.filter(query2);
+        }
+      })(lib$a);
+      return lib$a;
+    }
+    var lib$2 = {};
+    var Parser$1 = {};
+    var Tokenizer = {};
     var hasRequiredTokenizer$1;
     function requireTokenizer$1() {
       if (hasRequiredTokenizer$1) return Tokenizer;
@@ -97979,12 +93438,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       tokenizer = Tokenizer2;
       return tokenizer;
     }
-    var html$1 = {};
-    var hasRequiredHtml$1;
-    function requireHtml$1() {
-      if (hasRequiredHtml$1) return html$1;
-      hasRequiredHtml$1 = 1;
-      const NS = html$1.NAMESPACES = {
+    var html = {};
+    var hasRequiredHtml;
+    function requireHtml() {
+      if (hasRequiredHtml) return html;
+      hasRequiredHtml = 1;
+      const NS = html.NAMESPACES = {
         HTML: "http://www.w3.org/1999/xhtml",
         MATHML: "http://www.w3.org/1998/Math/MathML",
         SVG: "http://www.w3.org/2000/svg",
@@ -97992,7 +93451,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         XML: "http://www.w3.org/XML/1998/namespace",
         XMLNS: "http://www.w3.org/2000/xmlns/"
       };
-      html$1.ATTRS = {
+      html.ATTRS = {
         TYPE: "type",
         ACTION: "action",
         ENCODING: "encoding",
@@ -98002,12 +93461,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         FACE: "face",
         SIZE: "size"
       };
-      html$1.DOCUMENT_MODE = {
+      html.DOCUMENT_MODE = {
         NO_QUIRKS: "no-quirks",
         QUIRKS: "quirks",
         LIMITED_QUIRKS: "limited-quirks"
       };
-      const $2 = html$1.TAG_NAMES = {
+      const $2 = html.TAG_NAMES = {
         A: "a",
         ADDRESS: "address",
         ANNOTATION_XML: "annotation-xml",
@@ -98131,7 +93590,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         WBR: "wbr",
         XMP: "xmp"
       };
-      html$1.SPECIAL_ELEMENTS = {
+      html.SPECIAL_ELEMENTS = {
         [NS.HTML]: {
           [$2.ADDRESS]: true,
           [$2.APPLET]: true,
@@ -98229,14 +93688,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           [$2.DESC]: true
         }
       };
-      return html$1;
+      return html;
     }
     var openElementStack;
     var hasRequiredOpenElementStack;
     function requireOpenElementStack() {
       if (hasRequiredOpenElementStack) return openElementStack;
       hasRequiredOpenElementStack = 1;
-      const HTML = requireHtml$1();
+      const HTML = requireHtml();
       const $2 = HTML.TAG_NAMES;
       const NS = HTML.NAMESPACES;
       function isImpliedEndTagRequired(tn2) {
@@ -98961,7 +94420,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       const Tokenizer2 = requireTokenizer();
       const LocationInfoTokenizerMixin = requireTokenizerMixin$1();
       const LocationInfoOpenElementStackMixin = requireOpenElementStackMixin();
-      const HTML = requireHtml$1();
+      const HTML = requireHtml();
       const $2 = HTML.TAG_NAMES;
       class LocationInfoParserMixin extends Mixin {
         constructor(parser2) {
@@ -99248,7 +94707,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     function require_default() {
       if (hasRequired_default) return _default;
       hasRequired_default = 1;
-      const { DOCUMENT_MODE } = requireHtml$1();
+      const { DOCUMENT_MODE } = requireHtml();
       _default.createDocument = function() {
         return {
           nodeName: "#document",
@@ -99436,12 +94895,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       };
       return mergeOptions;
     }
-    var doctype$1 = {};
-    var hasRequiredDoctype$1;
-    function requireDoctype$1() {
-      if (hasRequiredDoctype$1) return doctype$1;
-      hasRequiredDoctype$1 = 1;
-      const { DOCUMENT_MODE } = requireHtml$1();
+    var doctype = {};
+    var hasRequiredDoctype;
+    function requireDoctype() {
+      if (hasRequiredDoctype) return doctype;
+      hasRequiredDoctype = 1;
+      const { DOCUMENT_MODE } = requireHtml();
       const VALID_DOCTYPE_NAME = "html";
       const VALID_SYSTEM_ID = "about:legacy-compat";
       const QUIRKS_MODE_SYSTEM_ID = "http://www.ibm.com/data/dtd/v11/ibmxhtml1-transitional.dtd";
@@ -99524,10 +94983,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
         return false;
       }
-      doctype$1.isConforming = function(token2) {
+      doctype.isConforming = function(token2) {
         return token2.name === VALID_DOCTYPE_NAME && token2.publicId === null && (token2.systemId === null || token2.systemId === VALID_SYSTEM_ID);
       };
-      doctype$1.getDocumentMode = function(token2) {
+      doctype.getDocumentMode = function(token2) {
         if (token2.name !== VALID_DOCTYPE_NAME) {
           return DOCUMENT_MODE.QUIRKS;
         }
@@ -99552,7 +95011,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
         return DOCUMENT_MODE.NO_QUIRKS;
       };
-      doctype$1.serializeContent = function(name2, publicId, systemId) {
+      doctype.serializeContent = function(name2, publicId, systemId) {
         let str2 = "!DOCTYPE ";
         if (name2) {
           str2 += name2;
@@ -99567,7 +95026,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
         return str2;
       };
-      return doctype$1;
+      return doctype;
     }
     var foreignContent = {};
     var hasRequiredForeignContent;
@@ -99575,7 +95034,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       if (hasRequiredForeignContent) return foreignContent;
       hasRequiredForeignContent = 1;
       const Tokenizer2 = requireTokenizer();
-      const HTML = requireHtml$1();
+      const HTML = requireHtml();
       const $2 = HTML.TAG_NAMES;
       const NS = HTML.NAMESPACES;
       const ATTRS = HTML.ATTRS;
@@ -99818,11 +95277,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       const Mixin = requireMixin();
       const defaultTreeAdapter = require_default();
       const mergeOptions2 = requireMergeOptions();
-      const doctype2 = requireDoctype$1();
+      const doctype2 = requireDoctype();
       const foreignContent2 = requireForeignContent();
       const ERR = requireErrorCodes();
       const unicode2 = requireUnicode();
-      const HTML = requireHtml$1();
+      const HTML = requireHtml();
       const $2 = HTML.TAG_NAMES;
       const NS = HTML.NAMESPACES;
       const ATTRS = HTML.ATTRS;
@@ -102063,8 +97522,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       hasRequiredSerializer = 1;
       const defaultTreeAdapter = require_default();
       const mergeOptions2 = requireMergeOptions();
-      const doctype2 = requireDoctype$1();
-      const HTML = requireHtml$1();
+      const doctype2 = requireDoctype();
+      const HTML = requireHtml();
       const $2 = HTML.TAG_NAMES;
       const NS = HTML.NAMESPACES;
       const DEFAULT_OPTIONS2 = {
@@ -102199,391 +97658,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return lib$1;
     }
     var lib = {};
-    var doctype = {};
-    var html = {};
-    var hasRequiredHtml;
-    function requireHtml() {
-      if (hasRequiredHtml) return html;
-      hasRequiredHtml = 1;
-      const NS = html.NAMESPACES = {
-        HTML: "http://www.w3.org/1999/xhtml",
-        MATHML: "http://www.w3.org/1998/Math/MathML",
-        SVG: "http://www.w3.org/2000/svg",
-        XLINK: "http://www.w3.org/1999/xlink",
-        XML: "http://www.w3.org/XML/1998/namespace",
-        XMLNS: "http://www.w3.org/2000/xmlns/"
-      };
-      html.ATTRS = {
-        TYPE: "type",
-        ACTION: "action",
-        ENCODING: "encoding",
-        PROMPT: "prompt",
-        NAME: "name",
-        COLOR: "color",
-        FACE: "face",
-        SIZE: "size"
-      };
-      html.DOCUMENT_MODE = {
-        NO_QUIRKS: "no-quirks",
-        QUIRKS: "quirks",
-        LIMITED_QUIRKS: "limited-quirks"
-      };
-      const $2 = html.TAG_NAMES = {
-        A: "a",
-        ADDRESS: "address",
-        ANNOTATION_XML: "annotation-xml",
-        APPLET: "applet",
-        AREA: "area",
-        ARTICLE: "article",
-        ASIDE: "aside",
-        B: "b",
-        BASE: "base",
-        BASEFONT: "basefont",
-        BGSOUND: "bgsound",
-        BIG: "big",
-        BLOCKQUOTE: "blockquote",
-        BODY: "body",
-        BR: "br",
-        BUTTON: "button",
-        CAPTION: "caption",
-        CENTER: "center",
-        CODE: "code",
-        COL: "col",
-        COLGROUP: "colgroup",
-        DD: "dd",
-        DESC: "desc",
-        DETAILS: "details",
-        DIALOG: "dialog",
-        DIR: "dir",
-        DIV: "div",
-        DL: "dl",
-        DT: "dt",
-        EM: "em",
-        EMBED: "embed",
-        FIELDSET: "fieldset",
-        FIGCAPTION: "figcaption",
-        FIGURE: "figure",
-        FONT: "font",
-        FOOTER: "footer",
-        FOREIGN_OBJECT: "foreignObject",
-        FORM: "form",
-        FRAME: "frame",
-        FRAMESET: "frameset",
-        H1: "h1",
-        H2: "h2",
-        H3: "h3",
-        H4: "h4",
-        H5: "h5",
-        H6: "h6",
-        HEAD: "head",
-        HEADER: "header",
-        HGROUP: "hgroup",
-        HR: "hr",
-        HTML: "html",
-        I: "i",
-        IMG: "img",
-        IMAGE: "image",
-        INPUT: "input",
-        IFRAME: "iframe",
-        KEYGEN: "keygen",
-        LABEL: "label",
-        LI: "li",
-        LINK: "link",
-        LISTING: "listing",
-        MAIN: "main",
-        MALIGNMARK: "malignmark",
-        MARQUEE: "marquee",
-        MATH: "math",
-        MENU: "menu",
-        META: "meta",
-        MGLYPH: "mglyph",
-        MI: "mi",
-        MO: "mo",
-        MN: "mn",
-        MS: "ms",
-        MTEXT: "mtext",
-        NAV: "nav",
-        NOBR: "nobr",
-        NOFRAMES: "noframes",
-        NOEMBED: "noembed",
-        NOSCRIPT: "noscript",
-        OBJECT: "object",
-        OL: "ol",
-        OPTGROUP: "optgroup",
-        OPTION: "option",
-        P: "p",
-        PARAM: "param",
-        PLAINTEXT: "plaintext",
-        PRE: "pre",
-        RB: "rb",
-        RP: "rp",
-        RT: "rt",
-        RTC: "rtc",
-        RUBY: "ruby",
-        S: "s",
-        SCRIPT: "script",
-        SECTION: "section",
-        SELECT: "select",
-        SOURCE: "source",
-        SMALL: "small",
-        SPAN: "span",
-        STRIKE: "strike",
-        STRONG: "strong",
-        STYLE: "style",
-        SUB: "sub",
-        SUMMARY: "summary",
-        SUP: "sup",
-        TABLE: "table",
-        TBODY: "tbody",
-        TEMPLATE: "template",
-        TEXTAREA: "textarea",
-        TFOOT: "tfoot",
-        TD: "td",
-        TH: "th",
-        THEAD: "thead",
-        TITLE: "title",
-        TR: "tr",
-        TRACK: "track",
-        TT: "tt",
-        U: "u",
-        UL: "ul",
-        SVG: "svg",
-        VAR: "var",
-        WBR: "wbr",
-        XMP: "xmp"
-      };
-      html.SPECIAL_ELEMENTS = {
-        [NS.HTML]: {
-          [$2.ADDRESS]: true,
-          [$2.APPLET]: true,
-          [$2.AREA]: true,
-          [$2.ARTICLE]: true,
-          [$2.ASIDE]: true,
-          [$2.BASE]: true,
-          [$2.BASEFONT]: true,
-          [$2.BGSOUND]: true,
-          [$2.BLOCKQUOTE]: true,
-          [$2.BODY]: true,
-          [$2.BR]: true,
-          [$2.BUTTON]: true,
-          [$2.CAPTION]: true,
-          [$2.CENTER]: true,
-          [$2.COL]: true,
-          [$2.COLGROUP]: true,
-          [$2.DD]: true,
-          [$2.DETAILS]: true,
-          [$2.DIR]: true,
-          [$2.DIV]: true,
-          [$2.DL]: true,
-          [$2.DT]: true,
-          [$2.EMBED]: true,
-          [$2.FIELDSET]: true,
-          [$2.FIGCAPTION]: true,
-          [$2.FIGURE]: true,
-          [$2.FOOTER]: true,
-          [$2.FORM]: true,
-          [$2.FRAME]: true,
-          [$2.FRAMESET]: true,
-          [$2.H1]: true,
-          [$2.H2]: true,
-          [$2.H3]: true,
-          [$2.H4]: true,
-          [$2.H5]: true,
-          [$2.H6]: true,
-          [$2.HEAD]: true,
-          [$2.HEADER]: true,
-          [$2.HGROUP]: true,
-          [$2.HR]: true,
-          [$2.HTML]: true,
-          [$2.IFRAME]: true,
-          [$2.IMG]: true,
-          [$2.INPUT]: true,
-          [$2.LI]: true,
-          [$2.LINK]: true,
-          [$2.LISTING]: true,
-          [$2.MAIN]: true,
-          [$2.MARQUEE]: true,
-          [$2.MENU]: true,
-          [$2.META]: true,
-          [$2.NAV]: true,
-          [$2.NOEMBED]: true,
-          [$2.NOFRAMES]: true,
-          [$2.NOSCRIPT]: true,
-          [$2.OBJECT]: true,
-          [$2.OL]: true,
-          [$2.P]: true,
-          [$2.PARAM]: true,
-          [$2.PLAINTEXT]: true,
-          [$2.PRE]: true,
-          [$2.SCRIPT]: true,
-          [$2.SECTION]: true,
-          [$2.SELECT]: true,
-          [$2.SOURCE]: true,
-          [$2.STYLE]: true,
-          [$2.SUMMARY]: true,
-          [$2.TABLE]: true,
-          [$2.TBODY]: true,
-          [$2.TD]: true,
-          [$2.TEMPLATE]: true,
-          [$2.TEXTAREA]: true,
-          [$2.TFOOT]: true,
-          [$2.TH]: true,
-          [$2.THEAD]: true,
-          [$2.TITLE]: true,
-          [$2.TR]: true,
-          [$2.TRACK]: true,
-          [$2.UL]: true,
-          [$2.WBR]: true,
-          [$2.XMP]: true
-        },
-        [NS.MATHML]: {
-          [$2.MI]: true,
-          [$2.MO]: true,
-          [$2.MN]: true,
-          [$2.MS]: true,
-          [$2.MTEXT]: true,
-          [$2.ANNOTATION_XML]: true
-        },
-        [NS.SVG]: {
-          [$2.TITLE]: true,
-          [$2.FOREIGN_OBJECT]: true,
-          [$2.DESC]: true
-        }
-      };
-      return html;
-    }
-    var hasRequiredDoctype;
-    function requireDoctype() {
-      if (hasRequiredDoctype) return doctype;
-      hasRequiredDoctype = 1;
-      const { DOCUMENT_MODE } = requireHtml();
-      const VALID_DOCTYPE_NAME = "html";
-      const VALID_SYSTEM_ID = "about:legacy-compat";
-      const QUIRKS_MODE_SYSTEM_ID = "http://www.ibm.com/data/dtd/v11/ibmxhtml1-transitional.dtd";
-      const QUIRKS_MODE_PUBLIC_ID_PREFIXES = [
-        "+//silmaril//dtd html pro v0r11 19970101//",
-        "-//as//dtd html 3.0 aswedit + extensions//",
-        "-//advasoft ltd//dtd html 3.0 aswedit + extensions//",
-        "-//ietf//dtd html 2.0 level 1//",
-        "-//ietf//dtd html 2.0 level 2//",
-        "-//ietf//dtd html 2.0 strict level 1//",
-        "-//ietf//dtd html 2.0 strict level 2//",
-        "-//ietf//dtd html 2.0 strict//",
-        "-//ietf//dtd html 2.0//",
-        "-//ietf//dtd html 2.1e//",
-        "-//ietf//dtd html 3.0//",
-        "-//ietf//dtd html 3.2 final//",
-        "-//ietf//dtd html 3.2//",
-        "-//ietf//dtd html 3//",
-        "-//ietf//dtd html level 0//",
-        "-//ietf//dtd html level 1//",
-        "-//ietf//dtd html level 2//",
-        "-//ietf//dtd html level 3//",
-        "-//ietf//dtd html strict level 0//",
-        "-//ietf//dtd html strict level 1//",
-        "-//ietf//dtd html strict level 2//",
-        "-//ietf//dtd html strict level 3//",
-        "-//ietf//dtd html strict//",
-        "-//ietf//dtd html//",
-        "-//metrius//dtd metrius presentational//",
-        "-//microsoft//dtd internet explorer 2.0 html strict//",
-        "-//microsoft//dtd internet explorer 2.0 html//",
-        "-//microsoft//dtd internet explorer 2.0 tables//",
-        "-//microsoft//dtd internet explorer 3.0 html strict//",
-        "-//microsoft//dtd internet explorer 3.0 html//",
-        "-//microsoft//dtd internet explorer 3.0 tables//",
-        "-//netscape comm. corp.//dtd html//",
-        "-//netscape comm. corp.//dtd strict html//",
-        "-//o'reilly and associates//dtd html 2.0//",
-        "-//o'reilly and associates//dtd html extended 1.0//",
-        "-//o'reilly and associates//dtd html extended relaxed 1.0//",
-        "-//sq//dtd html 2.0 hotmetal + extensions//",
-        "-//softquad software//dtd hotmetal pro 6.0::19990601::extensions to html 4.0//",
-        "-//softquad//dtd hotmetal pro 4.0::19971010::extensions to html 4.0//",
-        "-//spyglass//dtd html 2.0 extended//",
-        "-//sun microsystems corp.//dtd hotjava html//",
-        "-//sun microsystems corp.//dtd hotjava strict html//",
-        "-//w3c//dtd html 3 1995-03-24//",
-        "-//w3c//dtd html 3.2 draft//",
-        "-//w3c//dtd html 3.2 final//",
-        "-//w3c//dtd html 3.2//",
-        "-//w3c//dtd html 3.2s draft//",
-        "-//w3c//dtd html 4.0 frameset//",
-        "-//w3c//dtd html 4.0 transitional//",
-        "-//w3c//dtd html experimental 19960712//",
-        "-//w3c//dtd html experimental 970421//",
-        "-//w3c//dtd w3 html//",
-        "-//w3o//dtd w3 html 3.0//",
-        "-//webtechs//dtd mozilla html 2.0//",
-        "-//webtechs//dtd mozilla html//"
-      ];
-      const QUIRKS_MODE_NO_SYSTEM_ID_PUBLIC_ID_PREFIXES = QUIRKS_MODE_PUBLIC_ID_PREFIXES.concat([
-        "-//w3c//dtd html 4.01 frameset//",
-        "-//w3c//dtd html 4.01 transitional//"
-      ]);
-      const QUIRKS_MODE_PUBLIC_IDS = ["-//w3o//dtd w3 html strict 3.0//en//", "-/w3c/dtd html 4.0 transitional/en", "html"];
-      const LIMITED_QUIRKS_PUBLIC_ID_PREFIXES = ["-//w3c//dtd xhtml 1.0 frameset//", "-//w3c//dtd xhtml 1.0 transitional//"];
-      const LIMITED_QUIRKS_WITH_SYSTEM_ID_PUBLIC_ID_PREFIXES = LIMITED_QUIRKS_PUBLIC_ID_PREFIXES.concat([
-        "-//w3c//dtd html 4.01 frameset//",
-        "-//w3c//dtd html 4.01 transitional//"
-      ]);
-      function enquoteDoctypeId(id) {
-        const quote = id.indexOf('"') !== -1 ? "'" : '"';
-        return quote + id + quote;
-      }
-      function hasPrefix(publicId, prefixes) {
-        for (let i2 = 0; i2 < prefixes.length; i2++) {
-          if (publicId.indexOf(prefixes[i2]) === 0) {
-            return true;
-          }
-        }
-        return false;
-      }
-      doctype.isConforming = function(token2) {
-        return token2.name === VALID_DOCTYPE_NAME && token2.publicId === null && (token2.systemId === null || token2.systemId === VALID_SYSTEM_ID);
-      };
-      doctype.getDocumentMode = function(token2) {
-        if (token2.name !== VALID_DOCTYPE_NAME) {
-          return DOCUMENT_MODE.QUIRKS;
-        }
-        const systemId = token2.systemId;
-        if (systemId && systemId.toLowerCase() === QUIRKS_MODE_SYSTEM_ID) {
-          return DOCUMENT_MODE.QUIRKS;
-        }
-        let publicId = token2.publicId;
-        if (publicId !== null) {
-          publicId = publicId.toLowerCase();
-          if (QUIRKS_MODE_PUBLIC_IDS.indexOf(publicId) > -1) {
-            return DOCUMENT_MODE.QUIRKS;
-          }
-          let prefixes = systemId === null ? QUIRKS_MODE_NO_SYSTEM_ID_PUBLIC_ID_PREFIXES : QUIRKS_MODE_PUBLIC_ID_PREFIXES;
-          if (hasPrefix(publicId, prefixes)) {
-            return DOCUMENT_MODE.QUIRKS;
-          }
-          prefixes = systemId === null ? LIMITED_QUIRKS_PUBLIC_ID_PREFIXES : LIMITED_QUIRKS_WITH_SYSTEM_ID_PUBLIC_ID_PREFIXES;
-          if (hasPrefix(publicId, prefixes)) {
-            return DOCUMENT_MODE.LIMITED_QUIRKS;
-          }
-        }
-        return DOCUMENT_MODE.NO_QUIRKS;
-      };
-      doctype.serializeContent = function(name2, publicId, systemId) {
-        let str2 = "!DOCTYPE ";
-        if (name2) {
-          str2 += name2;
-        }
-        if (publicId) {
-          str2 += " PUBLIC " + enquoteDoctypeId(publicId);
-        } else if (systemId) {
-          str2 += " SYSTEM";
-        }
-        if (systemId !== null) {
-          str2 += " " + enquoteDoctypeId(systemId);
-        }
-        return str2;
-      };
-      return doctype;
-    }
     var hasRequiredLib$1;
     function requireLib$1() {
       if (hasRequiredLib$1) return lib;
@@ -102871,7 +97945,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       hasRequiredParse5Adapter = 1;
       Object.defineProperty(parse5Adapter, "__esModule", { value: true });
       parse5Adapter.render = parse5Adapter.parse = void 0;
-      var tslib_1 = require$$0$4;
+      var tslib_1 = require$$0$2;
       var domhandler_1 = /* @__PURE__ */ requireLib$a();
       var parse5_1 = requireLib$2();
       var parse5_htmlparser2_tree_adapter_1 = tslib_1.__importDefault(requireLib$1());
@@ -102930,7 +98004,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       hasRequired_static = 1;
       Object.defineProperty(_static, "__esModule", { value: true });
       _static.merge = _static.contains = _static.root = _static.parseHTML = _static.text = _static.xml = _static.html = void 0;
-      var tslib_1 = require$$0$4;
+      var tslib_1 = require$$0$2;
       var options_1 = tslib_1.__importStar(requireOptions());
       var cheerio_select_1 = /* @__PURE__ */ requireLib$4();
       var htmlparser2_1 = /* @__PURE__ */ requireLib$3();
@@ -103530,7 +98604,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       hasRequiredTraversing = 1;
       Object.defineProperty(traversing, "__esModule", { value: true });
       traversing.addBack = traversing.add = traversing.end = traversing.slice = traversing.index = traversing.toArray = traversing.get = traversing.eq = traversing.last = traversing.first = traversing.has = traversing.not = traversing.is = traversing.filterArray = traversing.filter = traversing.map = traversing.each = traversing.contents = traversing.children = traversing.siblings = traversing.prevUntil = traversing.prevAll = traversing.prev = traversing.nextUntil = traversing.nextAll = traversing.next = traversing.closest = traversing.parentsUntil = traversing.parents = traversing.parent = traversing.find = void 0;
-      var tslib_1 = require$$0$4;
+      var tslib_1 = require$$0$2;
       var domhandler_1 = /* @__PURE__ */ requireLib$a();
       var select = tslib_1.__importStar(/* @__PURE__ */ requireLib$4());
       var utils_1 = requireUtils$1();
@@ -103865,7 +98939,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       hasRequiredManipulation = 1;
       Object.defineProperty(manipulation, "__esModule", { value: true });
       manipulation.clone = manipulation.text = manipulation.toString = manipulation.html = manipulation.empty = manipulation.replaceWith = manipulation.remove = manipulation.insertBefore = manipulation.before = manipulation.insertAfter = manipulation.after = manipulation.wrapAll = manipulation.unwrap = manipulation.wrapInner = manipulation.wrap = manipulation.prepend = manipulation.append = manipulation.prependTo = manipulation.appendTo = manipulation._makeDomArray = void 0;
-      var tslib_1 = require$$0$4;
+      var tslib_1 = require$$0$2;
       var domhandler_1 = /* @__PURE__ */ requireLib$a();
       var domhandler_2 = /* @__PURE__ */ requireLib$a();
       var parse_1 = tslib_1.__importStar(requireParse());
@@ -104342,7 +99416,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       hasRequiredCheerio$1 = 1;
       Object.defineProperty(cheerio, "__esModule", { value: true });
       cheerio.Cheerio = void 0;
-      var tslib_1 = require$$0$4;
+      var tslib_1 = require$$0$2;
       var parse_1 = tslib_1.__importDefault(requireParse());
       var options_1 = tslib_1.__importDefault(requireOptions());
       var utils_1 = requireUtils$1();
@@ -104433,7 +99507,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       hasRequiredLoad = 1;
       Object.defineProperty(load, "__esModule", { value: true });
       load.load = void 0;
-      var tslib_1 = require$$0$4;
+      var tslib_1 = require$$0$2;
       var options_1 = tslib_1.__importStar(requireOptions());
       var staticMethods = tslib_1.__importStar(require_static());
       var cheerio_1 = requireCheerio$1();
@@ -104485,7 +99559,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       (function(exports2) {
         Object.defineProperty(exports2, "__esModule", { value: true });
         exports2.root = exports2.parseHTML = exports2.merge = exports2.contains = void 0;
-        var tslib_1 = require$$0$4;
+        var tslib_1 = require$$0$2;
         tslib_1.__exportStar(requireTypes(), exports2);
         tslib_1.__exportStar(requireLoad(), exports2);
         var load_1 = requireLoad();
@@ -106251,7 +101325,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       const tex_js_1 = requireTex$2();
       const svg_js_1 = requireSvg();
       const liteAdaptor_js_1 = requireLiteAdaptor();
-      const html_js_1 = requireHtml$2();
+      const html_js_1 = requireHtml$1();
       const AllPackages_js_1 = requireAllPackages();
       const assistive_mml_js_1 = requireAssistiveMml();
       const client_1 = __importDefault2(requireClient());
@@ -107021,7 +102095,7 @@ self.onmessage = function (e) {
       }
       return { b, r: r2 };
     };
-    var _a$1 = freb(fleb, 2), fl = _a$1.b, revfl = _a$1.r;
+    var _a$4 = freb(fleb, 2), fl = _a$4.b, revfl = _a$4.r;
     fl[28] = 258, revfl[258] = 28;
     var _b = freb(fdeb, 0), fd = _b.b;
     var rev = new u16(32768);
@@ -109316,10 +104390,12 @@ ${citation.url}` : citation.url,
       reasoning: {
         render: (key2, content2, isLast, _context) => {
           const r2 = content2;
-          if (!r2.reasoning && !r2.redacted) {
-            return void 0;
+          let text2 = r2.reasoning;
+          if (r2.redacted) {
+            text2 = "Reasoning encrypted by model provider.";
+          } else if (!text2) {
+            text2 = "Reasoning text not provided.";
           }
-          const text2 = r2.redacted ? "Reasoning encrypted by model provider." : r2.reasoning;
           return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1w.reasoning, "text-size-small"), children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "div",
@@ -133604,7 +128680,7 @@ ${events}
           }
         });
         setCollapsedEvents(kTranscriptCollapseScope, collapseIds);
-      }, [collapsedMode]);
+      }, [collapsedMode, events, allNodesList]);
       const { logPath } = useLogRouteParams();
       const [collapsed2, setCollapsed] = useCollapsedState(
         `transcript-panel-${logPath || "na"}`,
@@ -149749,15 +144825,10 @@ ${events}
       { tag: tags.invalid, class: "tok-invalid" },
       { tag: tags.punctuation, class: "tok-punctuation" }
     ]);
-    var _a;
-    const languageDataProp = /* @__PURE__ */ new NodeProp();
-    function defineLanguageFacet(baseData) {
-      return Facet.define({
-        combine: baseData ? (values) => values.concat(baseData) : void 0
-      });
-    }
-    const sublanguageProp = /* @__PURE__ */ new NodeProp();
-    class Language {
+    var _a$3;
+    const languageDataProp$3 = /* @__PURE__ */ new NodeProp();
+    const sublanguageProp$3 = /* @__PURE__ */ new NodeProp();
+    let Language$3 = class Language {
       /**
       Construct a language object. If you need to invoke this
       directly, first define a data facet with
@@ -149770,16 +144841,16 @@ ${events}
         this.name = name2;
         if (!EditorState.prototype.hasOwnProperty("tree"))
           Object.defineProperty(EditorState.prototype, "tree", { get() {
-            return syntaxTree(this);
+            return syntaxTree$3(this);
           } });
         this.parser = parser2;
         this.extension = [
-          language$1.of(this),
+          language$4.of(this),
           EditorState.languageData.of((state, pos2, side) => {
-            let top2 = topNodeAt(state, pos2, side), data2 = top2.type.prop(languageDataProp);
+            let top2 = topNodeAt$3(state, pos2, side), data2 = top2.type.prop(languageDataProp$3);
             if (!data2)
               return [];
-            let base2 = state.facet(data2), sub2 = top2.type.prop(sublanguageProp);
+            let base2 = state.facet(data2), sub2 = top2.type.prop(sublanguageProp$3);
             if (sub2) {
               let innerNode = top2.resolve(pos2 - top2.from, side);
               for (let sublang of sub2)
@@ -149796,7 +144867,7 @@ ${events}
       Query whether this language is active at the given position.
       */
       isActiveAt(state, pos2, side = -1) {
-        return topNodeAt(state, pos2, side).type.prop(languageDataProp) == this.data;
+        return topNodeAt$3(state, pos2, side).type.prop(languageDataProp$3) == this.data;
       }
       /**
       Find the document regions that were parsed using this language.
@@ -149804,20 +144875,20 @@ ${events}
       in this language, when those exist.
       */
       findRegions(state) {
-        let lang2 = state.facet(language$1);
+        let lang2 = state.facet(language$4);
         if ((lang2 === null || lang2 === void 0 ? void 0 : lang2.data) == this.data)
           return [{ from: 0, to: state.doc.length }];
         if (!lang2 || !lang2.allowsNesting)
           return [];
         let result2 = [];
         let explore = (tree, from) => {
-          if (tree.prop(languageDataProp) == this.data) {
+          if (tree.prop(languageDataProp$3) == this.data) {
             result2.push({ from, to: from + tree.length });
             return;
           }
           let mount2 = tree.prop(NodeProp.mounted);
           if (mount2) {
-            if (mount2.tree.prop(languageDataProp) == this.data) {
+            if (mount2.tree.prop(languageDataProp$3) == this.data) {
               if (mount2.overlay)
                 for (let r2 of mount2.overlay)
                   result2.push({ from: r2.from + from, to: r2.to + from });
@@ -149837,7 +144908,7 @@ ${events}
               explore(ch3, tree.positions[i2] + from);
           }
         };
-        explore(syntaxTree(state), 0);
+        explore(syntaxTree$3(state), 0);
         return result2;
       }
       /**
@@ -149847,10 +144918,10 @@ ${events}
       get allowsNesting() {
         return true;
       }
-    }
-    Language.setState = /* @__PURE__ */ StateEffect.define();
-    function topNodeAt(state, pos2, side) {
-      let topLang = state.facet(language$1), tree = syntaxTree(state).topNode;
+    };
+    Language$3.setState = /* @__PURE__ */ StateEffect.define();
+    function topNodeAt$3(state, pos2, side) {
+      let topLang = state.facet(language$4), tree = syntaxTree$3(state).topNode;
       if (!topLang || topLang.allowsNesting) {
         for (let node2 = tree; node2; node2 = node2.enter(pos2, side, IterMode.ExcludeBuffers))
           if (node2.type.isTop)
@@ -149858,11 +144929,11 @@ ${events}
       }
       return tree;
     }
-    function syntaxTree(state) {
-      let field = state.field(Language.state, false);
+    function syntaxTree$3(state) {
+      let field = state.field(Language$3.state, false);
       return field ? field.tree : Tree.empty;
     }
-    class DocInput {
+    let DocInput$3 = class DocInput {
       /**
       Create an input object for the given document.
       */
@@ -149894,9 +144965,9 @@ ${events}
         else
           return this.string.slice(from - stringStart, to2 - stringStart);
       }
-    }
-    let currentContext = null;
-    class ParseContext {
+    };
+    let currentContext$3 = null;
+    let ParseContext$3 = class ParseContext2 {
       constructor(parser2, state, fragments = [], tree, treeLen, viewport2, skipped, scheduleOn) {
         this.parser = parser2;
         this.state = state;
@@ -149913,10 +144984,10 @@ ${events}
       @internal
       */
       static create(parser2, state, viewport2) {
-        return new ParseContext(parser2, state, [], Tree.empty, 0, viewport2, [], null);
+        return new ParseContext2(parser2, state, [], Tree.empty, 0, viewport2, [], null);
       }
       startParse() {
-        return this.parser.startParse(new DocInput(this.state.doc), this.fragments);
+        return this.parser.startParse(new DocInput$3(this.state.doc), this.fragments);
       }
       /**
       @internal
@@ -149974,17 +145045,17 @@ ${events}
         }
       }
       withContext(f) {
-        let prev = currentContext;
-        currentContext = this;
+        let prev = currentContext$3;
+        currentContext$3 = this;
         try {
           return f();
         } finally {
-          currentContext = prev;
+          currentContext$3 = prev;
         }
       }
       withoutTempSkipped(fragments) {
         for (let r2; r2 = this.tempSkipped.pop(); )
-          fragments = cutFragments(fragments, r2.from, r2.to);
+          fragments = cutFragments$3(fragments, r2.from, r2.to);
         return fragments;
       }
       /**
@@ -150009,7 +145080,7 @@ ${events}
             }
           }
         }
-        return new ParseContext(this.parser, newState, fragments, tree, treeLen, viewport2, skipped, this.scheduleOn);
+        return new ParseContext2(this.parser, newState, fragments, tree, treeLen, viewport2, skipped, this.scheduleOn);
       }
       /**
       @internal
@@ -150022,7 +145093,7 @@ ${events}
         for (let i2 = 0; i2 < this.skipped.length; i2++) {
           let { from, to: to2 } = this.skipped[i2];
           if (from < viewport2.to && to2 > viewport2.from) {
-            this.fragments = cutFragments(this.fragments, from, to2);
+            this.fragments = cutFragments$3(this.fragments, from, to2);
             this.skipped.splice(i2--, 1);
           }
         }
@@ -150064,7 +145135,7 @@ ${events}
             let parser2 = {
               parsedPos: from,
               advance() {
-                let cx = currentContext;
+                let cx = currentContext$3;
                 if (cx) {
                   for (let r2 of ranges)
                     cx.tempSkipped.push(r2);
@@ -150095,13 +145166,13 @@ ${events}
       parse is in progress.
       */
       static get() {
-        return currentContext;
+        return currentContext$3;
       }
-    }
-    function cutFragments(fragments, from, to2) {
+    };
+    function cutFragments$3(fragments, from, to2) {
       return TreeFragment.applyChanges(fragments, [{ fromA: from, toA: to2, fromB: from, toB: to2 }]);
     }
-    class LanguageState {
+    let LanguageState$3 = class LanguageState2 {
       constructor(context) {
         this.context = context;
         this.tree = context.tree;
@@ -150113,28 +145184,28 @@ ${events}
         let upto = this.context.treeLen == tr2.startState.doc.length ? void 0 : Math.max(tr2.changes.mapPos(this.context.treeLen), newCx.viewport.to);
         if (!newCx.work(20, upto))
           newCx.takeTree();
-        return new LanguageState(newCx);
+        return new LanguageState2(newCx);
       }
       static init(state) {
         let vpTo = Math.min(3e3, state.doc.length);
-        let parseState2 = ParseContext.create(state.facet(language$1).parser, state, { from: 0, to: vpTo });
+        let parseState2 = ParseContext$3.create(state.facet(language$4).parser, state, { from: 0, to: vpTo });
         if (!parseState2.work(20, vpTo))
           parseState2.takeTree();
-        return new LanguageState(parseState2);
+        return new LanguageState2(parseState2);
       }
-    }
-    Language.state = /* @__PURE__ */ StateField.define({
-      create: LanguageState.init,
+    };
+    Language$3.state = /* @__PURE__ */ StateField.define({
+      create: LanguageState$3.init,
       update(value2, tr2) {
         for (let e of tr2.effects)
-          if (e.is(Language.setState))
+          if (e.is(Language$3.setState))
             return e.value;
-        if (tr2.startState.facet(language$1) != tr2.state.facet(language$1))
-          return LanguageState.init(tr2.state);
+        if (tr2.startState.facet(language$4) != tr2.state.facet(language$4))
+          return LanguageState$3.init(tr2.state);
         return value2.apply(tr2);
       }
     });
-    let requestIdle = (callback) => {
+    let requestIdle$3 = (callback) => {
       let timeout = setTimeout(
         () => callback(),
         500
@@ -150143,7 +145214,7 @@ ${events}
       return () => clearTimeout(timeout);
     };
     if (typeof requestIdleCallback != "undefined")
-      requestIdle = (callback) => {
+      requestIdle$3 = (callback) => {
         let idle = -1, timeout = setTimeout(
           () => {
             idle = requestIdleCallback(callback, {
@@ -150156,8 +145227,8 @@ ${events}
         );
         return () => idle < 0 ? clearTimeout(timeout) : cancelIdleCallback(idle);
       };
-    const isInputPending = typeof navigator != "undefined" && ((_a = navigator.scheduling) === null || _a === void 0 ? void 0 : _a.isInputPending) ? () => navigator.scheduling.isInputPending() : null;
-    const parseWorker = /* @__PURE__ */ ViewPlugin.fromClass(class ParseWorker {
+    const isInputPending$3 = typeof navigator != "undefined" && ((_a$3 = navigator.scheduling) === null || _a$3 === void 0 ? void 0 : _a$3.isInputPending) ? () => navigator.scheduling.isInputPending() : null;
+    const parseWorker$3 = /* @__PURE__ */ ViewPlugin.fromClass(class ParseWorker {
       constructor(view) {
         this.view = view;
         this.working = null;
@@ -150168,7 +145239,7 @@ ${events}
         this.scheduleWork();
       }
       update(update) {
-        let cx = this.view.state.field(Language.state).context;
+        let cx = this.view.state.field(Language$3.state).context;
         if (cx.updateViewport(update.view.viewport) || this.view.viewport.to > cx.treeLen)
           this.scheduleWork();
         if (update.docChanged || update.selectionSet) {
@@ -150181,9 +145252,9 @@ ${events}
       scheduleWork() {
         if (this.working)
           return;
-        let { state } = this.view, field = state.field(Language.state);
+        let { state } = this.view, field = state.field(Language$3.state);
         if (field.tree != field.context.tree || !field.context.isDone(state.doc.length))
-          this.working = requestIdle(this.work);
+          this.working = requestIdle$3(this.work);
       }
       work(deadline) {
         this.working = null;
@@ -150194,21 +145265,21 @@ ${events}
         }
         if (this.chunkBudget <= 0)
           return;
-        let { state, viewport: { to: vpTo } } = this.view, field = state.field(Language.state);
+        let { state, viewport: { to: vpTo } } = this.view, field = state.field(Language$3.state);
         if (field.tree == field.context.tree && field.context.isDone(
           vpTo + 1e5
           /* Work.MaxParseAhead */
         ))
           return;
-        let endTime = Date.now() + Math.min(this.chunkBudget, 100, deadline && !isInputPending ? Math.max(25, deadline.timeRemaining() - 5) : 1e9);
+        let endTime = Date.now() + Math.min(this.chunkBudget, 100, deadline && !isInputPending$3 ? Math.max(25, deadline.timeRemaining() - 5) : 1e9);
         let viewportFirst = field.context.treeLen < vpTo && state.doc.length > vpTo + 1e3;
         let done = field.context.work(() => {
-          return isInputPending && isInputPending() || Date.now() > endTime;
+          return isInputPending$3 && isInputPending$3() || Date.now() > endTime;
         }, vpTo + (viewportFirst ? 0 : 1e5));
         this.chunkBudget -= Date.now() - now;
         if (done || this.chunkBudget <= 0) {
           field.context.takeTree();
-          this.view.dispatch({ effects: Language.setState.of(new LanguageState(field.context)) });
+          this.view.dispatch({ effects: Language$3.setState.of(new LanguageState$3(field.context)) });
         }
         if (this.chunkBudget > 0 && !(done && !viewportFirst))
           this.scheduleWork();
@@ -150233,1051 +145304,24 @@ ${events}
         this.scheduleWork();
       } }
     });
-    const language$1 = /* @__PURE__ */ Facet.define({
+    const language$4 = /* @__PURE__ */ Facet.define({
       combine(languages) {
         return languages.length ? languages[0] : null;
       },
       enables: (language2) => [
-        Language.state,
-        parseWorker,
+        Language$3.state,
+        parseWorker$3,
         EditorView.contentAttributes.compute([language2], (state) => {
           let lang2 = state.facet(language2);
           return lang2 && lang2.name ? { "data-language": lang2.name } : {};
         })
       ]
     });
-    const indentService = /* @__PURE__ */ Facet.define();
-    const indentUnit = /* @__PURE__ */ Facet.define({
-      combine: (values) => {
-        if (!values.length)
-          return "  ";
-        let unit = values[0];
-        if (!unit || /\S/.test(unit) || Array.from(unit).some((e) => e != unit[0]))
-          throw new Error("Invalid indent unit: " + JSON.stringify(values[0]));
-        return unit;
-      }
-    });
-    function getIndentUnit(state) {
-      let unit = state.facet(indentUnit);
-      return unit.charCodeAt(0) == 9 ? state.tabSize * unit.length : unit.length;
-    }
-    function indentString(state, cols) {
-      let result2 = "", ts = state.tabSize, ch3 = state.facet(indentUnit)[0];
-      if (ch3 == "	") {
-        while (cols >= ts) {
-          result2 += "	";
-          cols -= ts;
-        }
-        ch3 = " ";
-      }
-      for (let i2 = 0; i2 < cols; i2++)
-        result2 += ch3;
-      return result2;
-    }
-    function getIndentation(context, pos2) {
-      if (context instanceof EditorState)
-        context = new IndentContext(context);
-      for (let service of context.state.facet(indentService)) {
-        let result2 = service(context, pos2);
-        if (result2 !== void 0)
-          return result2;
-      }
-      let tree = syntaxTree(context.state);
-      return tree.length >= pos2 ? syntaxIndentation(context, tree, pos2) : null;
-    }
-    class IndentContext {
-      /**
-      Create an indent context.
-      */
-      constructor(state, options2 = {}) {
-        this.state = state;
-        this.options = options2;
-        this.unit = getIndentUnit(state);
-      }
-      /**
-      Get a description of the line at the given position, taking
-      [simulated line
-      breaks](https://codemirror.net/6/docs/ref/#language.IndentContext.constructor^options.simulateBreak)
-      into account. If there is such a break at `pos`, the `bias`
-      argument determines whether the part of the line line before or
-      after the break is used.
-      */
-      lineAt(pos2, bias = 1) {
-        let line2 = this.state.doc.lineAt(pos2);
-        let { simulateBreak, simulateDoubleBreak } = this.options;
-        if (simulateBreak != null && simulateBreak >= line2.from && simulateBreak <= line2.to) {
-          if (simulateDoubleBreak && simulateBreak == pos2)
-            return { text: "", from: pos2 };
-          else if (bias < 0 ? simulateBreak < pos2 : simulateBreak <= pos2)
-            return { text: line2.text.slice(simulateBreak - line2.from), from: simulateBreak };
-          else
-            return { text: line2.text.slice(0, simulateBreak - line2.from), from: line2.from };
-        }
-        return line2;
-      }
-      /**
-      Get the text directly after `pos`, either the entire line
-      or the next 100 characters, whichever is shorter.
-      */
-      textAfterPos(pos2, bias = 1) {
-        if (this.options.simulateDoubleBreak && pos2 == this.options.simulateBreak)
-          return "";
-        let { text: text2, from } = this.lineAt(pos2, bias);
-        return text2.slice(pos2 - from, Math.min(text2.length, pos2 + 100 - from));
-      }
-      /**
-      Find the column for the given position.
-      */
-      column(pos2, bias = 1) {
-        let { text: text2, from } = this.lineAt(pos2, bias);
-        let result2 = this.countColumn(text2, pos2 - from);
-        let override = this.options.overrideIndentation ? this.options.overrideIndentation(from) : -1;
-        if (override > -1)
-          result2 += override - this.countColumn(text2, text2.search(/\S|$/));
-        return result2;
-      }
-      /**
-      Find the column position (taking tabs into account) of the given
-      position in the given string.
-      */
-      countColumn(line2, pos2 = line2.length) {
-        return countColumn(line2, this.state.tabSize, pos2);
-      }
-      /**
-      Find the indentation column of the line at the given point.
-      */
-      lineIndent(pos2, bias = 1) {
-        let { text: text2, from } = this.lineAt(pos2, bias);
-        let override = this.options.overrideIndentation;
-        if (override) {
-          let overriden = override(from);
-          if (overriden > -1)
-            return overriden;
-        }
-        return this.countColumn(text2, text2.search(/\S|$/));
-      }
-      /**
-      Returns the [simulated line
-      break](https://codemirror.net/6/docs/ref/#language.IndentContext.constructor^options.simulateBreak)
-      for this context, if any.
-      */
-      get simulatedBreak() {
-        return this.options.simulateBreak || null;
-      }
-    }
-    const indentNodeProp = /* @__PURE__ */ new NodeProp();
-    function syntaxIndentation(cx, ast2, pos2) {
-      let stack2 = ast2.resolveStack(pos2);
-      let inner = ast2.resolveInner(pos2, -1).resolve(pos2, 0).enterUnfinishedNodesBefore(pos2);
-      if (inner != stack2.node) {
-        let add2 = [];
-        for (let cur2 = inner; cur2 && !(cur2.from < stack2.node.from || cur2.to > stack2.node.to || cur2.from == stack2.node.from && cur2.type == stack2.node.type); cur2 = cur2.parent)
-          add2.push(cur2);
-        for (let i2 = add2.length - 1; i2 >= 0; i2--)
-          stack2 = { node: add2[i2], next: stack2 };
-      }
-      return indentFor(stack2, cx, pos2);
-    }
-    function indentFor(stack2, cx, pos2) {
-      for (let cur2 = stack2; cur2; cur2 = cur2.next) {
-        let strategy = indentStrategy(cur2.node);
-        if (strategy)
-          return strategy(TreeIndentContext.create(cx, pos2, cur2));
-      }
-      return 0;
-    }
-    function ignoreClosed(cx) {
-      return cx.pos == cx.options.simulateBreak && cx.options.simulateDoubleBreak;
-    }
-    function indentStrategy(tree) {
-      let strategy = tree.type.prop(indentNodeProp);
-      if (strategy)
-        return strategy;
-      let first = tree.firstChild, close2;
-      if (first && (close2 = first.type.prop(NodeProp.closedBy))) {
-        let last = tree.lastChild, closed = last && close2.indexOf(last.name) > -1;
-        return (cx) => delimitedStrategy(cx, true, 1, void 0, closed && !ignoreClosed(cx) ? last.from : void 0);
-      }
-      return tree.parent == null ? topIndent : null;
-    }
-    function topIndent() {
-      return 0;
-    }
-    class TreeIndentContext extends IndentContext {
-      constructor(base2, pos2, context) {
-        super(base2.state, base2.options);
-        this.base = base2;
-        this.pos = pos2;
-        this.context = context;
-      }
-      /**
-      The syntax tree node to which the indentation strategy
-      applies.
-      */
-      get node() {
-        return this.context.node;
-      }
-      /**
-      @internal
-      */
-      static create(base2, pos2, context) {
-        return new TreeIndentContext(base2, pos2, context);
-      }
-      /**
-      Get the text directly after `this.pos`, either the entire line
-      or the next 100 characters, whichever is shorter.
-      */
-      get textAfter() {
-        return this.textAfterPos(this.pos);
-      }
-      /**
-      Get the indentation at the reference line for `this.node`, which
-      is the line on which it starts, unless there is a node that is
-      _not_ a parent of this node covering the start of that line. If
-      so, the line at the start of that node is tried, again skipping
-      on if it is covered by another such node.
-      */
-      get baseIndent() {
-        return this.baseIndentFor(this.node);
-      }
-      /**
-      Get the indentation for the reference line of the given node
-      (see [`baseIndent`](https://codemirror.net/6/docs/ref/#language.TreeIndentContext.baseIndent)).
-      */
-      baseIndentFor(node2) {
-        let line2 = this.state.doc.lineAt(node2.from);
-        for (; ; ) {
-          let atBreak = node2.resolve(line2.from);
-          while (atBreak.parent && atBreak.parent.from == atBreak.from)
-            atBreak = atBreak.parent;
-          if (isParent(atBreak, node2))
-            break;
-          line2 = this.state.doc.lineAt(atBreak.from);
-        }
-        return this.lineIndent(line2.from);
-      }
-      /**
-      Continue looking for indentations in the node's parent nodes,
-      and return the result of that.
-      */
-      continue() {
-        return indentFor(this.context.next, this.base, this.pos);
-      }
-    }
-    function isParent(parent, of) {
-      for (let cur2 = of; cur2; cur2 = cur2.parent)
-        if (parent == cur2)
-          return true;
-      return false;
-    }
-    function bracketedAligned(context) {
-      let tree = context.node;
-      let openToken = tree.childAfter(tree.from), last = tree.lastChild;
-      if (!openToken)
-        return null;
-      let sim2 = context.options.simulateBreak;
-      let openLine = context.state.doc.lineAt(openToken.from);
-      let lineEnd = sim2 == null || sim2 <= openLine.from ? openLine.to : Math.min(openLine.to, sim2);
-      for (let pos2 = openToken.to; ; ) {
-        let next = tree.childAfter(pos2);
-        if (!next || next == last)
-          return null;
-        if (!next.type.isSkipped) {
-          if (next.from >= lineEnd)
-            return null;
-          let space = /^ */.exec(openLine.text.slice(openToken.to - openLine.from))[0].length;
-          return { from: openToken.from, to: openToken.to + space };
-        }
-        pos2 = next.to;
-      }
-    }
-    function delimitedStrategy(context, align, units, closing, closedAt) {
-      let after = context.textAfter, space = after.match(/^\s*/)[0].length;
-      let closed = closing && after.slice(space, space + closing.length) == closing || closedAt == context.pos + space;
-      let aligned = bracketedAligned(context);
-      if (aligned)
-        return closed ? context.column(aligned.from) : context.column(aligned.to);
-      return context.baseIndent + (closed ? 0 : context.unit * units);
-    }
-    class HighlightStyle {
-      constructor(specs, options2) {
-        this.specs = specs;
-        let modSpec;
-        function def(spec) {
-          let cls = StyleModule.newName();
-          (modSpec || (modSpec = /* @__PURE__ */ Object.create(null)))["." + cls] = spec;
-          return cls;
-        }
-        const all2 = typeof options2.all == "string" ? options2.all : options2.all ? def(options2.all) : void 0;
-        const scopeOpt = options2.scope;
-        this.scope = scopeOpt instanceof Language ? (type) => type.prop(languageDataProp) == scopeOpt.data : scopeOpt ? (type) => type == scopeOpt : void 0;
-        this.style = tagHighlighter(specs.map((style2) => ({
-          tag: style2.tag,
-          class: style2.class || def(Object.assign({}, style2, { tag: null }))
-        })), {
-          all: all2
-        }).style;
-        this.module = modSpec ? new StyleModule(modSpec) : null;
-        this.themeType = options2.themeType;
-      }
-      /**
-      Create a highlighter style that associates the given styles to
-      the given tags. The specs must be objects that hold a style tag
-      or array of tags in their `tag` property, and either a single
-      `class` property providing a static CSS class (for highlighter
-      that rely on external styling), or a
-      [`style-mod`](https://github.com/marijnh/style-mod#documentation)-style
-      set of CSS properties (which define the styling for those tags).
-      
-      The CSS rules created for a highlighter will be emitted in the
-      order of the spec's properties. That means that for elements that
-      have multiple tags associated with them, styles defined further
-      down in the list will have a higher CSS precedence than styles
-      defined earlier.
-      */
-      static define(specs, options2) {
-        return new HighlightStyle(specs, options2 || {});
-      }
-    }
-    const highlighterFacet = /* @__PURE__ */ Facet.define();
-    const fallbackHighlighter = /* @__PURE__ */ Facet.define({
-      combine(values) {
-        return values.length ? [values[0]] : null;
-      }
-    });
-    function getHighlighters(state) {
-      let main2 = state.facet(highlighterFacet);
-      return main2.length ? main2 : state.facet(fallbackHighlighter);
-    }
-    function syntaxHighlighting(highlighter, options2) {
-      let ext = [treeHighlighter], themeType;
-      if (highlighter instanceof HighlightStyle) {
-        if (highlighter.module)
-          ext.push(EditorView.styleModule.of(highlighter.module));
-        themeType = highlighter.themeType;
-      }
-      if (options2 === null || options2 === void 0 ? void 0 : options2.fallback)
-        ext.push(fallbackHighlighter.of(highlighter));
-      else if (themeType)
-        ext.push(highlighterFacet.computeN([EditorView.darkTheme], (state) => {
-          return state.facet(EditorView.darkTheme) == (themeType == "dark") ? [highlighter] : [];
-        }));
-      else
-        ext.push(highlighterFacet.of(highlighter));
-      return ext;
-    }
-    class TreeHighlighter {
-      constructor(view) {
-        this.markCache = /* @__PURE__ */ Object.create(null);
-        this.tree = syntaxTree(view.state);
-        this.decorations = this.buildDeco(view, getHighlighters(view.state));
-        this.decoratedTo = view.viewport.to;
-      }
-      update(update) {
-        let tree = syntaxTree(update.state), highlighters = getHighlighters(update.state);
-        let styleChange = highlighters != getHighlighters(update.startState);
-        let { viewport: viewport2 } = update.view, decoratedToMapped = update.changes.mapPos(this.decoratedTo, 1);
-        if (tree.length < viewport2.to && !styleChange && tree.type == this.tree.type && decoratedToMapped >= viewport2.to) {
-          this.decorations = this.decorations.map(update.changes);
-          this.decoratedTo = decoratedToMapped;
-        } else if (tree != this.tree || update.viewportChanged || styleChange) {
-          this.tree = tree;
-          this.decorations = this.buildDeco(update.view, highlighters);
-          this.decoratedTo = viewport2.to;
-        }
-      }
-      buildDeco(view, highlighters) {
-        if (!highlighters || !this.tree.length)
-          return Decoration.none;
-        let builder = new RangeSetBuilder();
-        for (let { from, to: to2 } of view.visibleRanges) {
-          highlightTree(this.tree, highlighters, (from2, to3, style2) => {
-            builder.add(from2, to3, this.markCache[style2] || (this.markCache[style2] = Decoration.mark({ class: style2 })));
-          }, from, to2);
-        }
-        return builder.finish();
-      }
-    }
-    const treeHighlighter = /* @__PURE__ */ Prec.high(/* @__PURE__ */ ViewPlugin.fromClass(TreeHighlighter, {
-      decorations: (v) => v.decorations
-    }));
-    const defaultHighlightStyle = /* @__PURE__ */ HighlightStyle.define([
-      {
-        tag: tags.meta,
-        color: "#404740"
-      },
-      {
-        tag: tags.link,
-        textDecoration: "underline"
-      },
-      {
-        tag: tags.heading,
-        textDecoration: "underline",
-        fontWeight: "bold"
-      },
-      {
-        tag: tags.emphasis,
-        fontStyle: "italic"
-      },
-      {
-        tag: tags.strong,
-        fontWeight: "bold"
-      },
-      {
-        tag: tags.strikethrough,
-        textDecoration: "line-through"
-      },
-      {
-        tag: tags.keyword,
-        color: "#708"
-      },
-      {
-        tag: [tags.atom, tags.bool, tags.url, tags.contentSeparator, tags.labelName],
-        color: "#219"
-      },
-      {
-        tag: [tags.literal, tags.inserted],
-        color: "#164"
-      },
-      {
-        tag: [tags.string, tags.deleted],
-        color: "#a11"
-      },
-      {
-        tag: [tags.regexp, tags.escape, /* @__PURE__ */ tags.special(tags.string)],
-        color: "#e40"
-      },
-      {
-        tag: /* @__PURE__ */ tags.definition(tags.variableName),
-        color: "#00f"
-      },
-      {
-        tag: /* @__PURE__ */ tags.local(tags.variableName),
-        color: "#30a"
-      },
-      {
-        tag: [tags.typeName, tags.namespace],
-        color: "#085"
-      },
-      {
-        tag: tags.className,
-        color: "#167"
-      },
-      {
-        tag: [/* @__PURE__ */ tags.special(tags.variableName), tags.macroName],
-        color: "#256"
-      },
-      {
-        tag: /* @__PURE__ */ tags.definition(tags.propertyName),
-        color: "#00c"
-      },
-      {
-        tag: tags.comment,
-        color: "#940"
-      },
-      {
-        tag: tags.invalid,
-        color: "#f00"
-      }
-    ]);
-    const baseTheme$2 = /* @__PURE__ */ EditorView.baseTheme({
-      "&.cm-focused .cm-matchingBracket": { backgroundColor: "#328c8252" },
-      "&.cm-focused .cm-nonmatchingBracket": { backgroundColor: "#bb555544" }
-    });
-    const DefaultScanDist = 1e4, DefaultBrackets = "()[]{}";
-    const bracketMatchingConfig = /* @__PURE__ */ Facet.define({
-      combine(configs) {
-        return combineConfig(configs, {
-          afterCursor: true,
-          brackets: DefaultBrackets,
-          maxScanDistance: DefaultScanDist,
-          renderMatch: defaultRenderMatch
-        });
-      }
-    });
-    const matchingMark = /* @__PURE__ */ Decoration.mark({ class: "cm-matchingBracket" }), nonmatchingMark = /* @__PURE__ */ Decoration.mark({ class: "cm-nonmatchingBracket" });
-    function defaultRenderMatch(match) {
-      let decorations2 = [];
-      let mark = match.matched ? matchingMark : nonmatchingMark;
-      decorations2.push(mark.range(match.start.from, match.start.to));
-      if (match.end)
-        decorations2.push(mark.range(match.end.from, match.end.to));
-      return decorations2;
-    }
-    const bracketMatchingState = /* @__PURE__ */ StateField.define({
-      create() {
-        return Decoration.none;
-      },
-      update(deco, tr2) {
-        if (!tr2.docChanged && !tr2.selection)
-          return deco;
-        let decorations2 = [];
-        let config2 = tr2.state.facet(bracketMatchingConfig);
-        for (let range2 of tr2.state.selection.ranges) {
-          if (!range2.empty)
-            continue;
-          let match = matchBrackets(tr2.state, range2.head, -1, config2) || range2.head > 0 && matchBrackets(tr2.state, range2.head - 1, 1, config2) || config2.afterCursor && (matchBrackets(tr2.state, range2.head, 1, config2) || range2.head < tr2.state.doc.length && matchBrackets(tr2.state, range2.head + 1, -1, config2));
-          if (match)
-            decorations2 = decorations2.concat(config2.renderMatch(match, tr2.state));
-        }
-        return Decoration.set(decorations2, true);
-      },
-      provide: (f) => EditorView.decorations.from(f)
-    });
-    const bracketMatchingUnique = [
-      bracketMatchingState,
-      baseTheme$2
-    ];
-    function bracketMatching(config2 = {}) {
-      return [bracketMatchingConfig.of(config2), bracketMatchingUnique];
-    }
-    const bracketMatchingHandle = /* @__PURE__ */ new NodeProp();
-    function matchingNodes(node2, dir, brackets) {
-      let byProp = node2.prop(dir < 0 ? NodeProp.openedBy : NodeProp.closedBy);
-      if (byProp)
-        return byProp;
-      if (node2.name.length == 1) {
-        let index = brackets.indexOf(node2.name);
-        if (index > -1 && index % 2 == (dir < 0 ? 1 : 0))
-          return [brackets[index + dir]];
-      }
-      return null;
-    }
-    function findHandle(node2) {
-      let hasHandle = node2.type.prop(bracketMatchingHandle);
-      return hasHandle ? hasHandle(node2.node) : node2;
-    }
-    function matchBrackets(state, pos2, dir, config2 = {}) {
-      let maxScanDistance = config2.maxScanDistance || DefaultScanDist, brackets = config2.brackets || DefaultBrackets;
-      let tree = syntaxTree(state), node2 = tree.resolveInner(pos2, dir);
-      for (let cur2 = node2; cur2; cur2 = cur2.parent) {
-        let matches = matchingNodes(cur2.type, dir, brackets);
-        if (matches && cur2.from < cur2.to) {
-          let handle = findHandle(cur2);
-          if (handle && (dir > 0 ? pos2 >= handle.from && pos2 < handle.to : pos2 > handle.from && pos2 <= handle.to))
-            return matchMarkedBrackets(state, pos2, dir, cur2, handle, matches, brackets);
-        }
-      }
-      return matchPlainBrackets(state, pos2, dir, tree, node2.type, maxScanDistance, brackets);
-    }
-    function matchMarkedBrackets(_state, _pos, dir, token2, handle, matching, brackets) {
-      let parent = token2.parent, firstToken = { from: handle.from, to: handle.to };
-      let depth = 0, cursor = parent === null || parent === void 0 ? void 0 : parent.cursor();
-      if (cursor && (dir < 0 ? cursor.childBefore(token2.from) : cursor.childAfter(token2.to)))
-        do {
-          if (dir < 0 ? cursor.to <= token2.from : cursor.from >= token2.to) {
-            if (depth == 0 && matching.indexOf(cursor.type.name) > -1 && cursor.from < cursor.to) {
-              let endHandle = findHandle(cursor);
-              return { start: firstToken, end: endHandle ? { from: endHandle.from, to: endHandle.to } : void 0, matched: true };
-            } else if (matchingNodes(cursor.type, dir, brackets)) {
-              depth++;
-            } else if (matchingNodes(cursor.type, -dir, brackets)) {
-              if (depth == 0) {
-                let endHandle = findHandle(cursor);
-                return {
-                  start: firstToken,
-                  end: endHandle && endHandle.from < endHandle.to ? { from: endHandle.from, to: endHandle.to } : void 0,
-                  matched: false
-                };
-              }
-              depth--;
-            }
-          }
-        } while (dir < 0 ? cursor.prevSibling() : cursor.nextSibling());
-      return { start: firstToken, matched: false };
-    }
-    function matchPlainBrackets(state, pos2, dir, tree, tokenType, maxScanDistance, brackets) {
-      let startCh = dir < 0 ? state.sliceDoc(pos2 - 1, pos2) : state.sliceDoc(pos2, pos2 + 1);
-      let bracket2 = brackets.indexOf(startCh);
-      if (bracket2 < 0 || bracket2 % 2 == 0 != dir > 0)
-        return null;
-      let startToken = { from: dir < 0 ? pos2 - 1 : pos2, to: dir > 0 ? pos2 + 1 : pos2 };
-      let iter = state.doc.iterRange(pos2, dir > 0 ? state.doc.length : 0), depth = 0;
-      for (let distance = 0; !iter.next().done && distance <= maxScanDistance; ) {
-        let text2 = iter.value;
-        if (dir < 0)
-          distance += text2.length;
-        let basePos = pos2 + distance * dir;
-        for (let pos3 = dir > 0 ? 0 : text2.length - 1, end2 = dir > 0 ? text2.length : -1; pos3 != end2; pos3 += dir) {
-          let found = brackets.indexOf(text2[pos3]);
-          if (found < 0 || tree.resolveInner(basePos + pos3, 1).type != tokenType)
-            continue;
-          if (found % 2 == 0 == dir > 0) {
-            depth++;
-          } else if (depth == 1) {
-            return { start: startToken, end: { from: basePos + pos3, to: basePos + pos3 + 1 }, matched: found >> 1 == bracket2 >> 1 };
-          } else {
-            depth--;
-          }
-        }
-        if (dir > 0)
-          distance += text2.length;
-      }
-      return iter.done ? { start: startToken, matched: false } : null;
-    }
-    function countCol(string2, end2, tabSize, startIndex = 0, startValue = 0) {
-      if (end2 == null) {
-        end2 = string2.search(/[^\s\u00a0]/);
-        if (end2 == -1)
-          end2 = string2.length;
-      }
-      let n = startValue;
-      for (let i2 = startIndex; i2 < end2; i2++) {
-        if (string2.charCodeAt(i2) == 9)
-          n += tabSize - n % tabSize;
-        else
-          n++;
-      }
-      return n;
-    }
-    class StringStream {
-      /**
-      Create a stream.
-      */
-      constructor(string2, tabSize, indentUnit2, overrideIndent) {
-        this.string = string2;
-        this.tabSize = tabSize;
-        this.indentUnit = indentUnit2;
-        this.overrideIndent = overrideIndent;
-        this.pos = 0;
-        this.start = 0;
-        this.lastColumnPos = 0;
-        this.lastColumnValue = 0;
-      }
-      /**
-      True if we are at the end of the line.
-      */
-      eol() {
-        return this.pos >= this.string.length;
-      }
-      /**
-      True if we are at the start of the line.
-      */
-      sol() {
-        return this.pos == 0;
-      }
-      /**
-      Get the next code unit after the current position, or undefined
-      if we're at the end of the line.
-      */
-      peek() {
-        return this.string.charAt(this.pos) || void 0;
-      }
-      /**
-      Read the next code unit and advance `this.pos`.
-      */
-      next() {
-        if (this.pos < this.string.length)
-          return this.string.charAt(this.pos++);
-      }
-      /**
-      Match the next character against the given string, regular
-      expression, or predicate. Consume and return it if it matches.
-      */
-      eat(match) {
-        let ch3 = this.string.charAt(this.pos);
-        let ok;
-        if (typeof match == "string")
-          ok = ch3 == match;
-        else
-          ok = ch3 && (match instanceof RegExp ? match.test(ch3) : match(ch3));
-        if (ok) {
-          ++this.pos;
-          return ch3;
-        }
-      }
-      /**
-      Continue matching characters that match the given string,
-      regular expression, or predicate function. Return true if any
-      characters were consumed.
-      */
-      eatWhile(match) {
-        let start2 = this.pos;
-        while (this.eat(match)) {
-        }
-        return this.pos > start2;
-      }
-      /**
-      Consume whitespace ahead of `this.pos`. Return true if any was
-      found.
-      */
-      eatSpace() {
-        let start2 = this.pos;
-        while (/[\s\u00a0]/.test(this.string.charAt(this.pos)))
-          ++this.pos;
-        return this.pos > start2;
-      }
-      /**
-      Move to the end of the line.
-      */
-      skipToEnd() {
-        this.pos = this.string.length;
-      }
-      /**
-      Move to directly before the given character, if found on the
-      current line.
-      */
-      skipTo(ch3) {
-        let found = this.string.indexOf(ch3, this.pos);
-        if (found > -1) {
-          this.pos = found;
-          return true;
-        }
-      }
-      /**
-      Move back `n` characters.
-      */
-      backUp(n) {
-        this.pos -= n;
-      }
-      /**
-      Get the column position at `this.pos`.
-      */
-      column() {
-        if (this.lastColumnPos < this.start) {
-          this.lastColumnValue = countCol(this.string, this.start, this.tabSize, this.lastColumnPos, this.lastColumnValue);
-          this.lastColumnPos = this.start;
-        }
-        return this.lastColumnValue;
-      }
-      /**
-      Get the indentation column of the current line.
-      */
-      indentation() {
-        var _a2;
-        return (_a2 = this.overrideIndent) !== null && _a2 !== void 0 ? _a2 : countCol(this.string, null, this.tabSize);
-      }
-      /**
-      Match the input against the given string or regular expression
-      (which should start with a `^`). Return true or the regexp match
-      if it matches.
-      
-      Unless `consume` is set to `false`, this will move `this.pos`
-      past the matched text.
-      
-      When matching a string `caseInsensitive` can be set to true to
-      make the match case-insensitive.
-      */
-      match(pattern, consume, caseInsensitive) {
-        if (typeof pattern == "string") {
-          let cased = (str2) => caseInsensitive ? str2.toLowerCase() : str2;
-          let substr = this.string.substr(this.pos, pattern.length);
-          if (cased(substr) == cased(pattern)) {
-            if (consume !== false)
-              this.pos += pattern.length;
-            return true;
-          } else
-            return null;
-        } else {
-          let match = this.string.slice(this.pos).match(pattern);
-          if (match && match.index > 0)
-            return null;
-          if (match && consume !== false)
-            this.pos += match[0].length;
-          return match;
-        }
-      }
-      /**
-      Get the current token.
-      */
-      current() {
-        return this.string.slice(this.start, this.pos);
-      }
-    }
-    function fullParser(spec) {
-      return {
-        name: spec.name || "",
-        token: spec.token,
-        blankLine: spec.blankLine || (() => {
-        }),
-        startState: spec.startState || (() => true),
-        copyState: spec.copyState || defaultCopyState,
-        indent: spec.indent || (() => null),
-        languageData: spec.languageData || {},
-        tokenTable: spec.tokenTable || noTokens,
-        mergeTokens: spec.mergeTokens !== false
-      };
-    }
-    function defaultCopyState(state) {
-      if (typeof state != "object")
-        return state;
-      let newState = {};
-      for (let prop2 in state) {
-        let val = state[prop2];
-        newState[prop2] = val instanceof Array ? val.slice() : val;
-      }
-      return newState;
-    }
-    const IndentedFrom = /* @__PURE__ */ new WeakMap();
-    class StreamLanguage extends Language {
-      constructor(parser2) {
-        let data = defineLanguageFacet(parser2.languageData);
-        let p = fullParser(parser2), self2;
-        let impl = new class extends Parser {
-          createParse(input2, fragments, ranges) {
-            return new Parse(self2, input2, fragments, ranges);
-          }
-        }();
-        super(data, impl, [], parser2.name);
-        this.topNode = docID(data, this);
-        self2 = this;
-        this.streamParser = p;
-        this.stateAfter = new NodeProp({ perNode: true });
-        this.tokenTable = parser2.tokenTable ? new TokenTable(p.tokenTable) : defaultTokenTable;
-      }
-      /**
-      Define a stream language.
-      */
-      static define(spec) {
-        return new StreamLanguage(spec);
-      }
-      /**
-      @internal
-      */
-      getIndent(cx) {
-        let from = void 0;
-        let { overrideIndentation } = cx.options;
-        if (overrideIndentation) {
-          from = IndentedFrom.get(cx.state);
-          if (from != null && from < cx.pos - 1e4)
-            from = void 0;
-        }
-        let start2 = findState(this, cx.node.tree, cx.node.from, cx.node.from, from !== null && from !== void 0 ? from : cx.pos), statePos, state;
-        if (start2) {
-          state = start2.state;
-          statePos = start2.pos + 1;
-        } else {
-          state = this.streamParser.startState(cx.unit);
-          statePos = cx.node.from;
-        }
-        if (cx.pos - statePos > 1e4)
-          return null;
-        while (statePos < cx.pos) {
-          let line3 = cx.state.doc.lineAt(statePos), end2 = Math.min(cx.pos, line3.to);
-          if (line3.length) {
-            let indentation = overrideIndentation ? overrideIndentation(line3.from) : -1;
-            let stream = new StringStream(line3.text, cx.state.tabSize, cx.unit, indentation < 0 ? void 0 : indentation);
-            while (stream.pos < end2 - line3.from)
-              readToken(this.streamParser.token, stream, state);
-          } else {
-            this.streamParser.blankLine(state, cx.unit);
-          }
-          if (end2 == cx.pos)
-            break;
-          statePos = line3.to + 1;
-        }
-        let line2 = cx.lineAt(cx.pos);
-        if (overrideIndentation && from == null)
-          IndentedFrom.set(cx.state, line2.from);
-        return this.streamParser.indent(state, /^\s*(.*)/.exec(line2.text)[1], cx);
-      }
-      get allowsNesting() {
-        return false;
-      }
-    }
-    function findState(lang2, tree, off, startPos, before) {
-      let state = off >= startPos && off + tree.length <= before && tree.prop(lang2.stateAfter);
-      if (state)
-        return { state: lang2.streamParser.copyState(state), pos: off + tree.length };
-      for (let i2 = tree.children.length - 1; i2 >= 0; i2--) {
-        let child = tree.children[i2], pos2 = off + tree.positions[i2];
-        let found = child instanceof Tree && pos2 < before && findState(lang2, child, pos2, startPos, before);
-        if (found)
-          return found;
-      }
-      return null;
-    }
-    function cutTree(lang2, tree, from, to2, inside2) {
-      if (inside2 && from <= 0 && to2 >= tree.length)
-        return tree;
-      if (!inside2 && from == 0 && tree.type == lang2.topNode)
-        inside2 = true;
-      for (let i2 = tree.children.length - 1; i2 >= 0; i2--) {
-        let pos2 = tree.positions[i2], child = tree.children[i2], inner;
-        if (pos2 < to2 && child instanceof Tree) {
-          if (!(inner = cutTree(lang2, child, from - pos2, to2 - pos2, inside2)))
-            break;
-          return !inside2 ? inner : new Tree(tree.type, tree.children.slice(0, i2).concat(inner), tree.positions.slice(0, i2 + 1), pos2 + inner.length);
-        }
-      }
-      return null;
-    }
-    function findStartInFragments(lang2, fragments, startPos, endPos, editorState) {
-      for (let f of fragments) {
-        let from = f.from + (f.openStart ? 25 : 0), to2 = f.to - (f.openEnd ? 25 : 0);
-        let found = from <= startPos && to2 > startPos && findState(lang2, f.tree, 0 - f.offset, startPos, to2), tree;
-        if (found && found.pos <= endPos && (tree = cutTree(lang2, f.tree, startPos + f.offset, found.pos + f.offset, false)))
-          return { state: found.state, tree };
-      }
-      return { state: lang2.streamParser.startState(editorState ? getIndentUnit(editorState) : 4), tree: Tree.empty };
-    }
-    class Parse {
-      constructor(lang2, input2, fragments, ranges) {
-        this.lang = lang2;
-        this.input = input2;
-        this.fragments = fragments;
-        this.ranges = ranges;
-        this.stoppedAt = null;
-        this.chunks = [];
-        this.chunkPos = [];
-        this.chunk = [];
-        this.chunkReused = void 0;
-        this.rangeIndex = 0;
-        this.to = ranges[ranges.length - 1].to;
-        let context = ParseContext.get(), from = ranges[0].from;
-        let { state, tree } = findStartInFragments(lang2, fragments, from, this.to, context === null || context === void 0 ? void 0 : context.state);
-        this.state = state;
-        this.parsedPos = this.chunkStart = from + tree.length;
-        for (let i2 = 0; i2 < tree.children.length; i2++) {
-          this.chunks.push(tree.children[i2]);
-          this.chunkPos.push(tree.positions[i2]);
-        }
-        if (context && this.parsedPos < context.viewport.from - 1e5 && ranges.some((r2) => r2.from <= context.viewport.from && r2.to >= context.viewport.from)) {
-          this.state = this.lang.streamParser.startState(getIndentUnit(context.state));
-          context.skipUntilInView(this.parsedPos, context.viewport.from);
-          this.parsedPos = context.viewport.from;
-        }
-        this.moveRangeIndex();
-      }
-      advance() {
-        let context = ParseContext.get();
-        let parseEnd = this.stoppedAt == null ? this.to : Math.min(this.to, this.stoppedAt);
-        let end2 = Math.min(
-          parseEnd,
-          this.chunkStart + 512
-          /* C.ChunkSize */
-        );
-        if (context)
-          end2 = Math.min(end2, context.viewport.to);
-        while (this.parsedPos < end2)
-          this.parseLine(context);
-        if (this.chunkStart < this.parsedPos)
-          this.finishChunk();
-        if (this.parsedPos >= parseEnd)
-          return this.finish();
-        if (context && this.parsedPos >= context.viewport.to) {
-          context.skipUntilInView(this.parsedPos, parseEnd);
-          return this.finish();
-        }
-        return null;
-      }
-      stopAt(pos2) {
-        this.stoppedAt = pos2;
-      }
-      lineAfter(pos2) {
-        let chunk = this.input.chunk(pos2);
-        if (!this.input.lineChunks) {
-          let eol = chunk.indexOf("\n");
-          if (eol > -1)
-            chunk = chunk.slice(0, eol);
-        } else if (chunk == "\n") {
-          chunk = "";
-        }
-        return pos2 + chunk.length <= this.to ? chunk : chunk.slice(0, this.to - pos2);
-      }
-      nextLine() {
-        let from = this.parsedPos, line2 = this.lineAfter(from), end2 = from + line2.length;
-        for (let index = this.rangeIndex; ; ) {
-          let rangeEnd2 = this.ranges[index].to;
-          if (rangeEnd2 >= end2)
-            break;
-          line2 = line2.slice(0, rangeEnd2 - (end2 - line2.length));
-          index++;
-          if (index == this.ranges.length)
-            break;
-          let rangeStart = this.ranges[index].from;
-          let after = this.lineAfter(rangeStart);
-          line2 += after;
-          end2 = rangeStart + after.length;
-        }
-        return { line: line2, end: end2 };
-      }
-      skipGapsTo(pos2, offset2, side) {
-        for (; ; ) {
-          let end2 = this.ranges[this.rangeIndex].to, offPos = pos2 + offset2;
-          if (side > 0 ? end2 > offPos : end2 >= offPos)
-            break;
-          let start2 = this.ranges[++this.rangeIndex].from;
-          offset2 += start2 - end2;
-        }
-        return offset2;
-      }
-      moveRangeIndex() {
-        while (this.ranges[this.rangeIndex].to < this.parsedPos)
-          this.rangeIndex++;
-      }
-      emitToken(id, from, to2, offset2) {
-        let size = 4;
-        if (this.ranges.length > 1) {
-          offset2 = this.skipGapsTo(from, offset2, 1);
-          from += offset2;
-          let len0 = this.chunk.length;
-          offset2 = this.skipGapsTo(to2, offset2, -1);
-          to2 += offset2;
-          size += this.chunk.length - len0;
-        }
-        let last = this.chunk.length - 4;
-        if (this.lang.streamParser.mergeTokens && size == 4 && last >= 0 && this.chunk[last] == id && this.chunk[last + 2] == from)
-          this.chunk[last + 2] = to2;
-        else
-          this.chunk.push(id, from, to2, size);
-        return offset2;
-      }
-      parseLine(context) {
-        let { line: line2, end: end2 } = this.nextLine(), offset2 = 0, { streamParser } = this.lang;
-        let stream = new StringStream(line2, context ? context.state.tabSize : 4, context ? getIndentUnit(context.state) : 2);
-        if (stream.eol()) {
-          streamParser.blankLine(this.state, stream.indentUnit);
-        } else {
-          while (!stream.eol()) {
-            let token2 = readToken(streamParser.token, stream, this.state);
-            if (token2)
-              offset2 = this.emitToken(this.lang.tokenTable.resolve(token2), this.parsedPos + stream.start, this.parsedPos + stream.pos, offset2);
-            if (stream.start > 1e4)
-              break;
-          }
-        }
-        this.parsedPos = end2;
-        this.moveRangeIndex();
-        if (this.parsedPos < this.to)
-          this.parsedPos++;
-      }
-      finishChunk() {
-        let tree = Tree.build({
-          buffer: this.chunk,
-          start: this.chunkStart,
-          length: this.parsedPos - this.chunkStart,
-          nodeSet,
-          topID: 0,
-          maxBufferLength: 512,
-          reused: this.chunkReused
-        });
-        tree = new Tree(tree.type, tree.children, tree.positions, tree.length, [[this.lang.stateAfter, this.lang.streamParser.copyState(this.state)]]);
-        this.chunks.push(tree);
-        this.chunkPos.push(this.chunkStart - this.ranges[0].from);
-        this.chunk = [];
-        this.chunkReused = void 0;
-        this.chunkStart = this.parsedPos;
-      }
-      finish() {
-        return new Tree(this.lang.topNode, this.chunks, this.chunkPos, this.parsedPos - this.ranges[0].from).balance();
-      }
-    }
-    function readToken(token2, stream, state) {
-      stream.start = stream.pos;
-      for (let i2 = 0; i2 < 10; i2++) {
-        let result2 = token2(stream, state);
-        if (stream.pos > stream.start)
-          return result2;
-      }
-      throw new Error("Stream parser failed to advance stream.");
-    }
-    const noTokens = /* @__PURE__ */ Object.create(null);
-    const typeArray = [NodeType.none];
-    const nodeSet = /* @__PURE__ */ new NodeSet(typeArray);
-    const warned = [];
-    const byTag = /* @__PURE__ */ Object.create(null);
-    const defaultTable = /* @__PURE__ */ Object.create(null);
+    const noTokens$3 = /* @__PURE__ */ Object.create(null);
+    const typeArray$3 = [NodeType.none];
+    const warned$3 = [];
+    const byTag$3 = /* @__PURE__ */ Object.create(null);
+    const defaultTable$3 = /* @__PURE__ */ Object.create(null);
     for (let [legacyName, name2] of [
       ["variable", "variableName"],
       ["variable-2", "variableName.special"],
@@ -151292,39 +145336,29 @@ ${events}
       ["header", "heading"],
       ["property", "propertyName"]
     ])
-      defaultTable[legacyName] = /* @__PURE__ */ createTokenType(noTokens, name2);
-    class TokenTable {
-      constructor(extra) {
-        this.extra = extra;
-        this.table = Object.assign(/* @__PURE__ */ Object.create(null), defaultTable);
-      }
-      resolve(tag) {
-        return !tag ? 0 : this.table[tag] || (this.table[tag] = createTokenType(this.extra, tag));
-      }
-    }
-    const defaultTokenTable = /* @__PURE__ */ new TokenTable(noTokens);
-    function warnForPart(part2, msg) {
-      if (warned.indexOf(part2) > -1)
+      defaultTable$3[legacyName] = /* @__PURE__ */ createTokenType$3(noTokens$3, name2);
+    function warnForPart$3(part2, msg) {
+      if (warned$3.indexOf(part2) > -1)
         return;
-      warned.push(part2);
+      warned$3.push(part2);
       console.warn(msg);
     }
-    function createTokenType(extra, tagStr) {
+    function createTokenType$3(extra, tagStr) {
       let tags$1 = [];
       for (let name3 of tagStr.split(" ")) {
         let found = [];
         for (let part2 of name3.split(".")) {
           let value2 = extra[part2] || tags[part2];
           if (!value2) {
-            warnForPart(part2, `Unknown highlighting tag ${part2}`);
+            warnForPart$3(part2, `Unknown highlighting tag ${part2}`);
           } else if (typeof value2 == "function") {
             if (!found.length)
-              warnForPart(part2, `Modifier ${part2} used at start of tag`);
+              warnForPart$3(part2, `Modifier ${part2} used at start of tag`);
             else
               found = found.map(value2);
           } else {
             if (found.length)
-              warnForPart(part2, `Tag ${part2} used as modifier`);
+              warnForPart$3(part2, `Tag ${part2} used as modifier`);
             else
               found = Array.isArray(value2) ? value2 : [value2];
           }
@@ -151335,24 +145369,16 @@ ${events}
       if (!tags$1.length)
         return 0;
       let name2 = tagStr.replace(/ /g, "_"), key2 = name2 + " " + tags$1.map((t2) => t2.id);
-      let known = byTag[key2];
+      let known = byTag$3[key2];
       if (known)
         return known.id;
-      let type = byTag[key2] = NodeType.define({
-        id: typeArray.length,
+      let type = byTag$3[key2] = NodeType.define({
+        id: typeArray$3.length,
         name: name2,
         props: [styleTags({ [name2]: tags$1 })]
       });
-      typeArray.push(type);
+      typeArray$3.push(type);
       return type.id;
-    }
-    function docID(data, lang2) {
-      let type = NodeType.define({ id: typeArray.length, name: "Document", props: [
-        languageDataProp.add(() => data),
-        indentNodeProp.add(() => (cx) => lang2.getIndent(cx))
-      ], top: true });
-      typeArray.push(type);
-      return type;
     }
     ({
       rtl: /* @__PURE__ */ Decoration.mark({ class: "cm-iso", inclusive: true, attributes: { dir: "rtl" }, bidiIsolate: Direction.RTL }),
@@ -151377,7 +145403,7 @@ ${events}
       token before `this.pos`.
       */
       tokenBefore(types2) {
-        let token2 = syntaxTree(this.state).resolveInner(this.pos, -1);
+        let token2 = syntaxTree$3(this.state).resolveInner(this.pos, -1);
         while (token2 && types2.indexOf(token2.name) < 0)
           token2 = token2.parent;
         return token2 ? {
@@ -152541,7 +146567,7 @@ ${events}
         return false;
       }
     }));
-    const baseTheme$1 = /* @__PURE__ */ EditorView.baseTheme({
+    const baseTheme$2 = /* @__PURE__ */ EditorView.baseTheme({
       ".cm-tooltip.cm-tooltip-autocomplete": {
         "& > ul": {
           fontFamily: "monospace",
@@ -152676,7 +146702,7 @@ ${events}
         completionConfig.of(config2),
         completionPlugin,
         completionKeymapExt,
-        baseTheme$1
+        baseTheme$2
       ];
     }
     const completionKeymap = [
@@ -152690,6 +146716,1296 @@ ${events}
       { key: "Enter", run: acceptCompletion }
     ];
     const completionKeymapExt = /* @__PURE__ */ Prec.highest(/* @__PURE__ */ keymap.computeN([completionConfig], (state) => state.facet(completionConfig).defaultKeymap ? [completionKeymap] : []));
+    var _a$2;
+    const languageDataProp$2 = /* @__PURE__ */ new NodeProp();
+    function defineLanguageFacet(baseData) {
+      return Facet.define({
+        combine: baseData ? (values) => values.concat(baseData) : void 0
+      });
+    }
+    const sublanguageProp$2 = /* @__PURE__ */ new NodeProp();
+    let Language$2 = class Language {
+      /**
+      Construct a language object. If you need to invoke this
+      directly, first define a data facet with
+      [`defineLanguageFacet`](https://codemirror.net/6/docs/ref/#language.defineLanguageFacet), and then
+      configure your parser to [attach](https://codemirror.net/6/docs/ref/#language.languageDataProp) it
+      to the language's outer syntax node.
+      */
+      constructor(data, parser2, extraExtensions = [], name2 = "") {
+        this.data = data;
+        this.name = name2;
+        if (!EditorState.prototype.hasOwnProperty("tree"))
+          Object.defineProperty(EditorState.prototype, "tree", { get() {
+            return syntaxTree$2(this);
+          } });
+        this.parser = parser2;
+        this.extension = [
+          language$3.of(this),
+          EditorState.languageData.of((state, pos2, side) => {
+            let top2 = topNodeAt$2(state, pos2, side), data2 = top2.type.prop(languageDataProp$2);
+            if (!data2)
+              return [];
+            let base2 = state.facet(data2), sub2 = top2.type.prop(sublanguageProp$2);
+            if (sub2) {
+              let innerNode = top2.resolve(pos2 - top2.from, side);
+              for (let sublang of sub2)
+                if (sublang.test(innerNode, state)) {
+                  let data3 = state.facet(sublang.facet);
+                  return sublang.type == "replace" ? data3 : data3.concat(base2);
+                }
+            }
+            return base2;
+          })
+        ].concat(extraExtensions);
+      }
+      /**
+      Query whether this language is active at the given position.
+      */
+      isActiveAt(state, pos2, side = -1) {
+        return topNodeAt$2(state, pos2, side).type.prop(languageDataProp$2) == this.data;
+      }
+      /**
+      Find the document regions that were parsed using this language.
+      The returned regions will _include_ any nested languages rooted
+      in this language, when those exist.
+      */
+      findRegions(state) {
+        let lang2 = state.facet(language$3);
+        if ((lang2 === null || lang2 === void 0 ? void 0 : lang2.data) == this.data)
+          return [{ from: 0, to: state.doc.length }];
+        if (!lang2 || !lang2.allowsNesting)
+          return [];
+        let result2 = [];
+        let explore = (tree, from) => {
+          if (tree.prop(languageDataProp$2) == this.data) {
+            result2.push({ from, to: from + tree.length });
+            return;
+          }
+          let mount2 = tree.prop(NodeProp.mounted);
+          if (mount2) {
+            if (mount2.tree.prop(languageDataProp$2) == this.data) {
+              if (mount2.overlay)
+                for (let r2 of mount2.overlay)
+                  result2.push({ from: r2.from + from, to: r2.to + from });
+              else
+                result2.push({ from, to: from + tree.length });
+              return;
+            } else if (mount2.overlay) {
+              let size = result2.length;
+              explore(mount2.tree, mount2.overlay[0].from + from);
+              if (result2.length > size)
+                return;
+            }
+          }
+          for (let i2 = 0; i2 < tree.children.length; i2++) {
+            let ch3 = tree.children[i2];
+            if (ch3 instanceof Tree)
+              explore(ch3, tree.positions[i2] + from);
+          }
+        };
+        explore(syntaxTree$2(state), 0);
+        return result2;
+      }
+      /**
+      Indicates whether this language allows nested languages. The
+      default implementation returns true.
+      */
+      get allowsNesting() {
+        return true;
+      }
+    };
+    Language$2.setState = /* @__PURE__ */ StateEffect.define();
+    function topNodeAt$2(state, pos2, side) {
+      let topLang = state.facet(language$3), tree = syntaxTree$2(state).topNode;
+      if (!topLang || topLang.allowsNesting) {
+        for (let node2 = tree; node2; node2 = node2.enter(pos2, side, IterMode.ExcludeBuffers))
+          if (node2.type.isTop)
+            tree = node2;
+      }
+      return tree;
+    }
+    function syntaxTree$2(state) {
+      let field = state.field(Language$2.state, false);
+      return field ? field.tree : Tree.empty;
+    }
+    let DocInput$2 = class DocInput {
+      /**
+      Create an input object for the given document.
+      */
+      constructor(doc2) {
+        this.doc = doc2;
+        this.cursorPos = 0;
+        this.string = "";
+        this.cursor = doc2.iter();
+      }
+      get length() {
+        return this.doc.length;
+      }
+      syncTo(pos2) {
+        this.string = this.cursor.next(pos2 - this.cursorPos).value;
+        this.cursorPos = pos2 + this.string.length;
+        return this.cursorPos - this.string.length;
+      }
+      chunk(pos2) {
+        this.syncTo(pos2);
+        return this.string;
+      }
+      get lineChunks() {
+        return true;
+      }
+      read(from, to2) {
+        let stringStart = this.cursorPos - this.string.length;
+        if (from < stringStart || to2 >= this.cursorPos)
+          return this.doc.sliceString(from, to2);
+        else
+          return this.string.slice(from - stringStart, to2 - stringStart);
+      }
+    };
+    let currentContext$2 = null;
+    let ParseContext$2 = class ParseContext2 {
+      constructor(parser2, state, fragments = [], tree, treeLen, viewport2, skipped, scheduleOn) {
+        this.parser = parser2;
+        this.state = state;
+        this.fragments = fragments;
+        this.tree = tree;
+        this.treeLen = treeLen;
+        this.viewport = viewport2;
+        this.skipped = skipped;
+        this.scheduleOn = scheduleOn;
+        this.parse = null;
+        this.tempSkipped = [];
+      }
+      /**
+      @internal
+      */
+      static create(parser2, state, viewport2) {
+        return new ParseContext2(parser2, state, [], Tree.empty, 0, viewport2, [], null);
+      }
+      startParse() {
+        return this.parser.startParse(new DocInput$2(this.state.doc), this.fragments);
+      }
+      /**
+      @internal
+      */
+      work(until, upto) {
+        if (upto != null && upto >= this.state.doc.length)
+          upto = void 0;
+        if (this.tree != Tree.empty && this.isDone(upto !== null && upto !== void 0 ? upto : this.state.doc.length)) {
+          this.takeTree();
+          return true;
+        }
+        return this.withContext(() => {
+          var _a2;
+          if (typeof until == "number") {
+            let endTime = Date.now() + until;
+            until = () => Date.now() > endTime;
+          }
+          if (!this.parse)
+            this.parse = this.startParse();
+          if (upto != null && (this.parse.stoppedAt == null || this.parse.stoppedAt > upto) && upto < this.state.doc.length)
+            this.parse.stopAt(upto);
+          for (; ; ) {
+            let done = this.parse.advance();
+            if (done) {
+              this.fragments = this.withoutTempSkipped(TreeFragment.addTree(done, this.fragments, this.parse.stoppedAt != null));
+              this.treeLen = (_a2 = this.parse.stoppedAt) !== null && _a2 !== void 0 ? _a2 : this.state.doc.length;
+              this.tree = done;
+              this.parse = null;
+              if (this.treeLen < (upto !== null && upto !== void 0 ? upto : this.state.doc.length))
+                this.parse = this.startParse();
+              else
+                return true;
+            }
+            if (until())
+              return false;
+          }
+        });
+      }
+      /**
+      @internal
+      */
+      takeTree() {
+        let pos2, tree;
+        if (this.parse && (pos2 = this.parse.parsedPos) >= this.treeLen) {
+          if (this.parse.stoppedAt == null || this.parse.stoppedAt > pos2)
+            this.parse.stopAt(pos2);
+          this.withContext(() => {
+            while (!(tree = this.parse.advance())) {
+            }
+          });
+          this.treeLen = pos2;
+          this.tree = tree;
+          this.fragments = this.withoutTempSkipped(TreeFragment.addTree(this.tree, this.fragments, true));
+          this.parse = null;
+        }
+      }
+      withContext(f) {
+        let prev = currentContext$2;
+        currentContext$2 = this;
+        try {
+          return f();
+        } finally {
+          currentContext$2 = prev;
+        }
+      }
+      withoutTempSkipped(fragments) {
+        for (let r2; r2 = this.tempSkipped.pop(); )
+          fragments = cutFragments$2(fragments, r2.from, r2.to);
+        return fragments;
+      }
+      /**
+      @internal
+      */
+      changes(changes, newState) {
+        let { fragments, tree, treeLen, viewport: viewport2, skipped } = this;
+        this.takeTree();
+        if (!changes.empty) {
+          let ranges = [];
+          changes.iterChangedRanges((fromA, toA, fromB, toB) => ranges.push({ fromA, toA, fromB, toB }));
+          fragments = TreeFragment.applyChanges(fragments, ranges);
+          tree = Tree.empty;
+          treeLen = 0;
+          viewport2 = { from: changes.mapPos(viewport2.from, -1), to: changes.mapPos(viewport2.to, 1) };
+          if (this.skipped.length) {
+            skipped = [];
+            for (let r2 of this.skipped) {
+              let from = changes.mapPos(r2.from, 1), to2 = changes.mapPos(r2.to, -1);
+              if (from < to2)
+                skipped.push({ from, to: to2 });
+            }
+          }
+        }
+        return new ParseContext2(this.parser, newState, fragments, tree, treeLen, viewport2, skipped, this.scheduleOn);
+      }
+      /**
+      @internal
+      */
+      updateViewport(viewport2) {
+        if (this.viewport.from == viewport2.from && this.viewport.to == viewport2.to)
+          return false;
+        this.viewport = viewport2;
+        let startLen = this.skipped.length;
+        for (let i2 = 0; i2 < this.skipped.length; i2++) {
+          let { from, to: to2 } = this.skipped[i2];
+          if (from < viewport2.to && to2 > viewport2.from) {
+            this.fragments = cutFragments$2(this.fragments, from, to2);
+            this.skipped.splice(i2--, 1);
+          }
+        }
+        if (this.skipped.length >= startLen)
+          return false;
+        this.reset();
+        return true;
+      }
+      /**
+      @internal
+      */
+      reset() {
+        if (this.parse) {
+          this.takeTree();
+          this.parse = null;
+        }
+      }
+      /**
+      Notify the parse scheduler that the given region was skipped
+      because it wasn't in view, and the parse should be restarted
+      when it comes into view.
+      */
+      skipUntilInView(from, to2) {
+        this.skipped.push({ from, to: to2 });
+      }
+      /**
+      Returns a parser intended to be used as placeholder when
+      asynchronously loading a nested parser. It'll skip its input and
+      mark it as not-really-parsed, so that the next update will parse
+      it again.
+      
+      When `until` is given, a reparse will be scheduled when that
+      promise resolves.
+      */
+      static getSkippingParser(until) {
+        return new class extends Parser {
+          createParse(input2, fragments, ranges) {
+            let from = ranges[0].from, to2 = ranges[ranges.length - 1].to;
+            let parser2 = {
+              parsedPos: from,
+              advance() {
+                let cx = currentContext$2;
+                if (cx) {
+                  for (let r2 of ranges)
+                    cx.tempSkipped.push(r2);
+                  if (until)
+                    cx.scheduleOn = cx.scheduleOn ? Promise.all([cx.scheduleOn, until]) : until;
+                }
+                this.parsedPos = to2;
+                return new Tree(NodeType.none, [], [], to2 - from);
+              },
+              stoppedAt: null,
+              stopAt() {
+              }
+            };
+            return parser2;
+          }
+        }();
+      }
+      /**
+      @internal
+      */
+      isDone(upto) {
+        upto = Math.min(upto, this.state.doc.length);
+        let frags = this.fragments;
+        return this.treeLen >= upto && frags.length && frags[0].from == 0 && frags[0].to >= upto;
+      }
+      /**
+      Get the context for the current parse, or `null` if no editor
+      parse is in progress.
+      */
+      static get() {
+        return currentContext$2;
+      }
+    };
+    function cutFragments$2(fragments, from, to2) {
+      return TreeFragment.applyChanges(fragments, [{ fromA: from, toA: to2, fromB: from, toB: to2 }]);
+    }
+    let LanguageState$2 = class LanguageState2 {
+      constructor(context) {
+        this.context = context;
+        this.tree = context.tree;
+      }
+      apply(tr2) {
+        if (!tr2.docChanged && this.tree == this.context.tree)
+          return this;
+        let newCx = this.context.changes(tr2.changes, tr2.state);
+        let upto = this.context.treeLen == tr2.startState.doc.length ? void 0 : Math.max(tr2.changes.mapPos(this.context.treeLen), newCx.viewport.to);
+        if (!newCx.work(20, upto))
+          newCx.takeTree();
+        return new LanguageState2(newCx);
+      }
+      static init(state) {
+        let vpTo = Math.min(3e3, state.doc.length);
+        let parseState2 = ParseContext$2.create(state.facet(language$3).parser, state, { from: 0, to: vpTo });
+        if (!parseState2.work(20, vpTo))
+          parseState2.takeTree();
+        return new LanguageState2(parseState2);
+      }
+    };
+    Language$2.state = /* @__PURE__ */ StateField.define({
+      create: LanguageState$2.init,
+      update(value2, tr2) {
+        for (let e of tr2.effects)
+          if (e.is(Language$2.setState))
+            return e.value;
+        if (tr2.startState.facet(language$3) != tr2.state.facet(language$3))
+          return LanguageState$2.init(tr2.state);
+        return value2.apply(tr2);
+      }
+    });
+    let requestIdle$2 = (callback) => {
+      let timeout = setTimeout(
+        () => callback(),
+        500
+        /* Work.MaxPause */
+      );
+      return () => clearTimeout(timeout);
+    };
+    if (typeof requestIdleCallback != "undefined")
+      requestIdle$2 = (callback) => {
+        let idle = -1, timeout = setTimeout(
+          () => {
+            idle = requestIdleCallback(callback, {
+              timeout: 500 - 100
+              /* Work.MinPause */
+            });
+          },
+          100
+          /* Work.MinPause */
+        );
+        return () => idle < 0 ? clearTimeout(timeout) : cancelIdleCallback(idle);
+      };
+    const isInputPending$2 = typeof navigator != "undefined" && ((_a$2 = navigator.scheduling) === null || _a$2 === void 0 ? void 0 : _a$2.isInputPending) ? () => navigator.scheduling.isInputPending() : null;
+    const parseWorker$2 = /* @__PURE__ */ ViewPlugin.fromClass(class ParseWorker {
+      constructor(view) {
+        this.view = view;
+        this.working = null;
+        this.workScheduled = 0;
+        this.chunkEnd = -1;
+        this.chunkBudget = -1;
+        this.work = this.work.bind(this);
+        this.scheduleWork();
+      }
+      update(update) {
+        let cx = this.view.state.field(Language$2.state).context;
+        if (cx.updateViewport(update.view.viewport) || this.view.viewport.to > cx.treeLen)
+          this.scheduleWork();
+        if (update.docChanged || update.selectionSet) {
+          if (this.view.hasFocus)
+            this.chunkBudget += 50;
+          this.scheduleWork();
+        }
+        this.checkAsyncSchedule(cx);
+      }
+      scheduleWork() {
+        if (this.working)
+          return;
+        let { state } = this.view, field = state.field(Language$2.state);
+        if (field.tree != field.context.tree || !field.context.isDone(state.doc.length))
+          this.working = requestIdle$2(this.work);
+      }
+      work(deadline) {
+        this.working = null;
+        let now = Date.now();
+        if (this.chunkEnd < now && (this.chunkEnd < 0 || this.view.hasFocus)) {
+          this.chunkEnd = now + 3e4;
+          this.chunkBudget = 3e3;
+        }
+        if (this.chunkBudget <= 0)
+          return;
+        let { state, viewport: { to: vpTo } } = this.view, field = state.field(Language$2.state);
+        if (field.tree == field.context.tree && field.context.isDone(
+          vpTo + 1e5
+          /* Work.MaxParseAhead */
+        ))
+          return;
+        let endTime = Date.now() + Math.min(this.chunkBudget, 100, deadline && !isInputPending$2 ? Math.max(25, deadline.timeRemaining() - 5) : 1e9);
+        let viewportFirst = field.context.treeLen < vpTo && state.doc.length > vpTo + 1e3;
+        let done = field.context.work(() => {
+          return isInputPending$2 && isInputPending$2() || Date.now() > endTime;
+        }, vpTo + (viewportFirst ? 0 : 1e5));
+        this.chunkBudget -= Date.now() - now;
+        if (done || this.chunkBudget <= 0) {
+          field.context.takeTree();
+          this.view.dispatch({ effects: Language$2.setState.of(new LanguageState$2(field.context)) });
+        }
+        if (this.chunkBudget > 0 && !(done && !viewportFirst))
+          this.scheduleWork();
+        this.checkAsyncSchedule(field.context);
+      }
+      checkAsyncSchedule(cx) {
+        if (cx.scheduleOn) {
+          this.workScheduled++;
+          cx.scheduleOn.then(() => this.scheduleWork()).catch((err2) => logException(this.view.state, err2)).then(() => this.workScheduled--);
+          cx.scheduleOn = null;
+        }
+      }
+      destroy() {
+        if (this.working)
+          this.working();
+      }
+      isWorking() {
+        return !!(this.working || this.workScheduled > 0);
+      }
+    }, {
+      eventHandlers: { focus() {
+        this.scheduleWork();
+      } }
+    });
+    const language$3 = /* @__PURE__ */ Facet.define({
+      combine(languages) {
+        return languages.length ? languages[0] : null;
+      },
+      enables: (language2) => [
+        Language$2.state,
+        parseWorker$2,
+        EditorView.contentAttributes.compute([language2], (state) => {
+          let lang2 = state.facet(language2);
+          return lang2 && lang2.name ? { "data-language": lang2.name } : {};
+        })
+      ]
+    });
+    const indentUnit$1 = /* @__PURE__ */ Facet.define({
+      combine: (values) => {
+        if (!values.length)
+          return "  ";
+        let unit = values[0];
+        if (!unit || /\S/.test(unit) || Array.from(unit).some((e) => e != unit[0]))
+          throw new Error("Invalid indent unit: " + JSON.stringify(values[0]));
+        return unit;
+      }
+    });
+    function getIndentUnit$1(state) {
+      let unit = state.facet(indentUnit$1);
+      return unit.charCodeAt(0) == 9 ? state.tabSize * unit.length : unit.length;
+    }
+    const indentNodeProp$1 = /* @__PURE__ */ new NodeProp();
+    let HighlightStyle$1 = class HighlightStyle2 {
+      constructor(specs, options2) {
+        this.specs = specs;
+        let modSpec;
+        function def(spec) {
+          let cls = StyleModule.newName();
+          (modSpec || (modSpec = /* @__PURE__ */ Object.create(null)))["." + cls] = spec;
+          return cls;
+        }
+        const all2 = typeof options2.all == "string" ? options2.all : options2.all ? def(options2.all) : void 0;
+        const scopeOpt = options2.scope;
+        this.scope = scopeOpt instanceof Language$2 ? (type) => type.prop(languageDataProp$2) == scopeOpt.data : scopeOpt ? (type) => type == scopeOpt : void 0;
+        this.style = tagHighlighter(specs.map((style2) => ({
+          tag: style2.tag,
+          class: style2.class || def(Object.assign({}, style2, { tag: null }))
+        })), {
+          all: all2
+        }).style;
+        this.module = modSpec ? new StyleModule(modSpec) : null;
+        this.themeType = options2.themeType;
+      }
+      /**
+      Create a highlighter style that associates the given styles to
+      the given tags. The specs must be objects that hold a style tag
+      or array of tags in their `tag` property, and either a single
+      `class` property providing a static CSS class (for highlighter
+      that rely on external styling), or a
+      [`style-mod`](https://github.com/marijnh/style-mod#documentation)-style
+      set of CSS properties (which define the styling for those tags).
+      
+      The CSS rules created for a highlighter will be emitted in the
+      order of the spec's properties. That means that for elements that
+      have multiple tags associated with them, styles defined further
+      down in the list will have a higher CSS precedence than styles
+      defined earlier.
+      */
+      static define(specs, options2) {
+        return new HighlightStyle2(specs, options2 || {});
+      }
+    };
+    const highlighterFacet$1 = /* @__PURE__ */ Facet.define();
+    const fallbackHighlighter$1 = /* @__PURE__ */ Facet.define({
+      combine(values) {
+        return values.length ? [values[0]] : null;
+      }
+    });
+    function getHighlighters$1(state) {
+      let main2 = state.facet(highlighterFacet$1);
+      return main2.length ? main2 : state.facet(fallbackHighlighter$1);
+    }
+    function syntaxHighlighting$1(highlighter, options2) {
+      let ext = [treeHighlighter$1], themeType;
+      if (highlighter instanceof HighlightStyle$1) {
+        if (highlighter.module)
+          ext.push(EditorView.styleModule.of(highlighter.module));
+        themeType = highlighter.themeType;
+      }
+      if (themeType)
+        ext.push(highlighterFacet$1.computeN([EditorView.darkTheme], (state) => {
+          return state.facet(EditorView.darkTheme) == (themeType == "dark") ? [highlighter] : [];
+        }));
+      else
+        ext.push(highlighterFacet$1.of(highlighter));
+      return ext;
+    }
+    let TreeHighlighter$1 = class TreeHighlighter {
+      constructor(view) {
+        this.markCache = /* @__PURE__ */ Object.create(null);
+        this.tree = syntaxTree$2(view.state);
+        this.decorations = this.buildDeco(view, getHighlighters$1(view.state));
+        this.decoratedTo = view.viewport.to;
+      }
+      update(update) {
+        let tree = syntaxTree$2(update.state), highlighters = getHighlighters$1(update.state);
+        let styleChange = highlighters != getHighlighters$1(update.startState);
+        let { viewport: viewport2 } = update.view, decoratedToMapped = update.changes.mapPos(this.decoratedTo, 1);
+        if (tree.length < viewport2.to && !styleChange && tree.type == this.tree.type && decoratedToMapped >= viewport2.to) {
+          this.decorations = this.decorations.map(update.changes);
+          this.decoratedTo = decoratedToMapped;
+        } else if (tree != this.tree || update.viewportChanged || styleChange) {
+          this.tree = tree;
+          this.decorations = this.buildDeco(update.view, highlighters);
+          this.decoratedTo = viewport2.to;
+        }
+      }
+      buildDeco(view, highlighters) {
+        if (!highlighters || !this.tree.length)
+          return Decoration.none;
+        let builder = new RangeSetBuilder();
+        for (let { from, to: to2 } of view.visibleRanges) {
+          highlightTree(this.tree, highlighters, (from2, to3, style2) => {
+            builder.add(from2, to3, this.markCache[style2] || (this.markCache[style2] = Decoration.mark({ class: style2 })));
+          }, from, to2);
+        }
+        return builder.finish();
+      }
+    };
+    const treeHighlighter$1 = /* @__PURE__ */ Prec.high(/* @__PURE__ */ ViewPlugin.fromClass(TreeHighlighter$1, {
+      decorations: (v) => v.decorations
+    }));
+    const baseTheme$1 = /* @__PURE__ */ EditorView.baseTheme({
+      "&.cm-focused .cm-matchingBracket": { backgroundColor: "#328c8252" },
+      "&.cm-focused .cm-nonmatchingBracket": { backgroundColor: "#bb555544" }
+    });
+    const DefaultScanDist$1 = 1e4, DefaultBrackets$1 = "()[]{}";
+    const bracketMatchingConfig = /* @__PURE__ */ Facet.define({
+      combine(configs) {
+        return combineConfig(configs, {
+          afterCursor: true,
+          brackets: DefaultBrackets$1,
+          maxScanDistance: DefaultScanDist$1,
+          renderMatch: defaultRenderMatch
+        });
+      }
+    });
+    const matchingMark = /* @__PURE__ */ Decoration.mark({ class: "cm-matchingBracket" }), nonmatchingMark = /* @__PURE__ */ Decoration.mark({ class: "cm-nonmatchingBracket" });
+    function defaultRenderMatch(match) {
+      let decorations2 = [];
+      let mark = match.matched ? matchingMark : nonmatchingMark;
+      decorations2.push(mark.range(match.start.from, match.start.to));
+      if (match.end)
+        decorations2.push(mark.range(match.end.from, match.end.to));
+      return decorations2;
+    }
+    const bracketMatchingState = /* @__PURE__ */ StateField.define({
+      create() {
+        return Decoration.none;
+      },
+      update(deco, tr2) {
+        if (!tr2.docChanged && !tr2.selection)
+          return deco;
+        let decorations2 = [];
+        let config2 = tr2.state.facet(bracketMatchingConfig);
+        for (let range2 of tr2.state.selection.ranges) {
+          if (!range2.empty)
+            continue;
+          let match = matchBrackets$1(tr2.state, range2.head, -1, config2) || range2.head > 0 && matchBrackets$1(tr2.state, range2.head - 1, 1, config2) || config2.afterCursor && (matchBrackets$1(tr2.state, range2.head, 1, config2) || range2.head < tr2.state.doc.length && matchBrackets$1(tr2.state, range2.head + 1, -1, config2));
+          if (match)
+            decorations2 = decorations2.concat(config2.renderMatch(match, tr2.state));
+        }
+        return Decoration.set(decorations2, true);
+      },
+      provide: (f) => EditorView.decorations.from(f)
+    });
+    const bracketMatchingUnique = [
+      bracketMatchingState,
+      baseTheme$1
+    ];
+    function bracketMatching(config2 = {}) {
+      return [bracketMatchingConfig.of(config2), bracketMatchingUnique];
+    }
+    const bracketMatchingHandle$1 = /* @__PURE__ */ new NodeProp();
+    function matchingNodes$1(node2, dir, brackets) {
+      let byProp = node2.prop(dir < 0 ? NodeProp.openedBy : NodeProp.closedBy);
+      if (byProp)
+        return byProp;
+      if (node2.name.length == 1) {
+        let index = brackets.indexOf(node2.name);
+        if (index > -1 && index % 2 == (dir < 0 ? 1 : 0))
+          return [brackets[index + dir]];
+      }
+      return null;
+    }
+    function findHandle$1(node2) {
+      let hasHandle = node2.type.prop(bracketMatchingHandle$1);
+      return hasHandle ? hasHandle(node2.node) : node2;
+    }
+    function matchBrackets$1(state, pos2, dir, config2 = {}) {
+      let maxScanDistance = config2.maxScanDistance || DefaultScanDist$1, brackets = config2.brackets || DefaultBrackets$1;
+      let tree = syntaxTree$2(state), node2 = tree.resolveInner(pos2, dir);
+      for (let cur2 = node2; cur2; cur2 = cur2.parent) {
+        let matches = matchingNodes$1(cur2.type, dir, brackets);
+        if (matches && cur2.from < cur2.to) {
+          let handle = findHandle$1(cur2);
+          if (handle && (dir > 0 ? pos2 >= handle.from && pos2 < handle.to : pos2 > handle.from && pos2 <= handle.to))
+            return matchMarkedBrackets$1(state, pos2, dir, cur2, handle, matches, brackets);
+        }
+      }
+      return matchPlainBrackets$1(state, pos2, dir, tree, node2.type, maxScanDistance, brackets);
+    }
+    function matchMarkedBrackets$1(_state, _pos, dir, token2, handle, matching, brackets) {
+      let parent = token2.parent, firstToken = { from: handle.from, to: handle.to };
+      let depth = 0, cursor = parent === null || parent === void 0 ? void 0 : parent.cursor();
+      if (cursor && (dir < 0 ? cursor.childBefore(token2.from) : cursor.childAfter(token2.to)))
+        do {
+          if (dir < 0 ? cursor.to <= token2.from : cursor.from >= token2.to) {
+            if (depth == 0 && matching.indexOf(cursor.type.name) > -1 && cursor.from < cursor.to) {
+              let endHandle = findHandle$1(cursor);
+              return { start: firstToken, end: endHandle ? { from: endHandle.from, to: endHandle.to } : void 0, matched: true };
+            } else if (matchingNodes$1(cursor.type, dir, brackets)) {
+              depth++;
+            } else if (matchingNodes$1(cursor.type, -dir, brackets)) {
+              if (depth == 0) {
+                let endHandle = findHandle$1(cursor);
+                return {
+                  start: firstToken,
+                  end: endHandle && endHandle.from < endHandle.to ? { from: endHandle.from, to: endHandle.to } : void 0,
+                  matched: false
+                };
+              }
+              depth--;
+            }
+          }
+        } while (dir < 0 ? cursor.prevSibling() : cursor.nextSibling());
+      return { start: firstToken, matched: false };
+    }
+    function matchPlainBrackets$1(state, pos2, dir, tree, tokenType, maxScanDistance, brackets) {
+      let startCh = dir < 0 ? state.sliceDoc(pos2 - 1, pos2) : state.sliceDoc(pos2, pos2 + 1);
+      let bracket2 = brackets.indexOf(startCh);
+      if (bracket2 < 0 || bracket2 % 2 == 0 != dir > 0)
+        return null;
+      let startToken = { from: dir < 0 ? pos2 - 1 : pos2, to: dir > 0 ? pos2 + 1 : pos2 };
+      let iter = state.doc.iterRange(pos2, dir > 0 ? state.doc.length : 0), depth = 0;
+      for (let distance = 0; !iter.next().done && distance <= maxScanDistance; ) {
+        let text2 = iter.value;
+        if (dir < 0)
+          distance += text2.length;
+        let basePos = pos2 + distance * dir;
+        for (let pos3 = dir > 0 ? 0 : text2.length - 1, end2 = dir > 0 ? text2.length : -1; pos3 != end2; pos3 += dir) {
+          let found = brackets.indexOf(text2[pos3]);
+          if (found < 0 || tree.resolveInner(basePos + pos3, 1).type != tokenType)
+            continue;
+          if (found % 2 == 0 == dir > 0) {
+            depth++;
+          } else if (depth == 1) {
+            return { start: startToken, end: { from: basePos + pos3, to: basePos + pos3 + 1 }, matched: found >> 1 == bracket2 >> 1 };
+          } else {
+            depth--;
+          }
+        }
+        if (dir > 0)
+          distance += text2.length;
+      }
+      return iter.done ? { start: startToken, matched: false } : null;
+    }
+    function countCol(string2, end2, tabSize, startIndex = 0, startValue = 0) {
+      if (end2 == null) {
+        end2 = string2.search(/[^\s\u00a0]/);
+        if (end2 == -1)
+          end2 = string2.length;
+      }
+      let n = startValue;
+      for (let i2 = startIndex; i2 < end2; i2++) {
+        if (string2.charCodeAt(i2) == 9)
+          n += tabSize - n % tabSize;
+        else
+          n++;
+      }
+      return n;
+    }
+    class StringStream {
+      /**
+      Create a stream.
+      */
+      constructor(string2, tabSize, indentUnit2, overrideIndent) {
+        this.string = string2;
+        this.tabSize = tabSize;
+        this.indentUnit = indentUnit2;
+        this.overrideIndent = overrideIndent;
+        this.pos = 0;
+        this.start = 0;
+        this.lastColumnPos = 0;
+        this.lastColumnValue = 0;
+      }
+      /**
+      True if we are at the end of the line.
+      */
+      eol() {
+        return this.pos >= this.string.length;
+      }
+      /**
+      True if we are at the start of the line.
+      */
+      sol() {
+        return this.pos == 0;
+      }
+      /**
+      Get the next code unit after the current position, or undefined
+      if we're at the end of the line.
+      */
+      peek() {
+        return this.string.charAt(this.pos) || void 0;
+      }
+      /**
+      Read the next code unit and advance `this.pos`.
+      */
+      next() {
+        if (this.pos < this.string.length)
+          return this.string.charAt(this.pos++);
+      }
+      /**
+      Match the next character against the given string, regular
+      expression, or predicate. Consume and return it if it matches.
+      */
+      eat(match) {
+        let ch3 = this.string.charAt(this.pos);
+        let ok;
+        if (typeof match == "string")
+          ok = ch3 == match;
+        else
+          ok = ch3 && (match instanceof RegExp ? match.test(ch3) : match(ch3));
+        if (ok) {
+          ++this.pos;
+          return ch3;
+        }
+      }
+      /**
+      Continue matching characters that match the given string,
+      regular expression, or predicate function. Return true if any
+      characters were consumed.
+      */
+      eatWhile(match) {
+        let start2 = this.pos;
+        while (this.eat(match)) {
+        }
+        return this.pos > start2;
+      }
+      /**
+      Consume whitespace ahead of `this.pos`. Return true if any was
+      found.
+      */
+      eatSpace() {
+        let start2 = this.pos;
+        while (/[\s\u00a0]/.test(this.string.charAt(this.pos)))
+          ++this.pos;
+        return this.pos > start2;
+      }
+      /**
+      Move to the end of the line.
+      */
+      skipToEnd() {
+        this.pos = this.string.length;
+      }
+      /**
+      Move to directly before the given character, if found on the
+      current line.
+      */
+      skipTo(ch3) {
+        let found = this.string.indexOf(ch3, this.pos);
+        if (found > -1) {
+          this.pos = found;
+          return true;
+        }
+      }
+      /**
+      Move back `n` characters.
+      */
+      backUp(n) {
+        this.pos -= n;
+      }
+      /**
+      Get the column position at `this.pos`.
+      */
+      column() {
+        if (this.lastColumnPos < this.start) {
+          this.lastColumnValue = countCol(this.string, this.start, this.tabSize, this.lastColumnPos, this.lastColumnValue);
+          this.lastColumnPos = this.start;
+        }
+        return this.lastColumnValue;
+      }
+      /**
+      Get the indentation column of the current line.
+      */
+      indentation() {
+        var _a2;
+        return (_a2 = this.overrideIndent) !== null && _a2 !== void 0 ? _a2 : countCol(this.string, null, this.tabSize);
+      }
+      /**
+      Match the input against the given string or regular expression
+      (which should start with a `^`). Return true or the regexp match
+      if it matches.
+      
+      Unless `consume` is set to `false`, this will move `this.pos`
+      past the matched text.
+      
+      When matching a string `caseInsensitive` can be set to true to
+      make the match case-insensitive.
+      */
+      match(pattern, consume, caseInsensitive) {
+        if (typeof pattern == "string") {
+          let cased = (str2) => caseInsensitive ? str2.toLowerCase() : str2;
+          let substr = this.string.substr(this.pos, pattern.length);
+          if (cased(substr) == cased(pattern)) {
+            if (consume !== false)
+              this.pos += pattern.length;
+            return true;
+          } else
+            return null;
+        } else {
+          let match = this.string.slice(this.pos).match(pattern);
+          if (match && match.index > 0)
+            return null;
+          if (match && consume !== false)
+            this.pos += match[0].length;
+          return match;
+        }
+      }
+      /**
+      Get the current token.
+      */
+      current() {
+        return this.string.slice(this.start, this.pos);
+      }
+    }
+    function fullParser(spec) {
+      return {
+        name: spec.name || "",
+        token: spec.token,
+        blankLine: spec.blankLine || (() => {
+        }),
+        startState: spec.startState || (() => true),
+        copyState: spec.copyState || defaultCopyState,
+        indent: spec.indent || (() => null),
+        languageData: spec.languageData || {},
+        tokenTable: spec.tokenTable || noTokens$2,
+        mergeTokens: spec.mergeTokens !== false
+      };
+    }
+    function defaultCopyState(state) {
+      if (typeof state != "object")
+        return state;
+      let newState = {};
+      for (let prop2 in state) {
+        let val = state[prop2];
+        newState[prop2] = val instanceof Array ? val.slice() : val;
+      }
+      return newState;
+    }
+    const IndentedFrom = /* @__PURE__ */ new WeakMap();
+    class StreamLanguage extends Language$2 {
+      constructor(parser2) {
+        let data = defineLanguageFacet(parser2.languageData);
+        let p = fullParser(parser2), self2;
+        let impl = new class extends Parser {
+          createParse(input2, fragments, ranges) {
+            return new Parse(self2, input2, fragments, ranges);
+          }
+        }();
+        super(data, impl, [], parser2.name);
+        this.topNode = docID(data, this);
+        self2 = this;
+        this.streamParser = p;
+        this.stateAfter = new NodeProp({ perNode: true });
+        this.tokenTable = parser2.tokenTable ? new TokenTable(p.tokenTable) : defaultTokenTable;
+      }
+      /**
+      Define a stream language.
+      */
+      static define(spec) {
+        return new StreamLanguage(spec);
+      }
+      /**
+      @internal
+      */
+      getIndent(cx) {
+        let from = void 0;
+        let { overrideIndentation } = cx.options;
+        if (overrideIndentation) {
+          from = IndentedFrom.get(cx.state);
+          if (from != null && from < cx.pos - 1e4)
+            from = void 0;
+        }
+        let start2 = findState(this, cx.node.tree, cx.node.from, cx.node.from, from !== null && from !== void 0 ? from : cx.pos), statePos, state;
+        if (start2) {
+          state = start2.state;
+          statePos = start2.pos + 1;
+        } else {
+          state = this.streamParser.startState(cx.unit);
+          statePos = cx.node.from;
+        }
+        if (cx.pos - statePos > 1e4)
+          return null;
+        while (statePos < cx.pos) {
+          let line3 = cx.state.doc.lineAt(statePos), end2 = Math.min(cx.pos, line3.to);
+          if (line3.length) {
+            let indentation = overrideIndentation ? overrideIndentation(line3.from) : -1;
+            let stream = new StringStream(line3.text, cx.state.tabSize, cx.unit, indentation < 0 ? void 0 : indentation);
+            while (stream.pos < end2 - line3.from)
+              readToken(this.streamParser.token, stream, state);
+          } else {
+            this.streamParser.blankLine(state, cx.unit);
+          }
+          if (end2 == cx.pos)
+            break;
+          statePos = line3.to + 1;
+        }
+        let line2 = cx.lineAt(cx.pos);
+        if (overrideIndentation && from == null)
+          IndentedFrom.set(cx.state, line2.from);
+        return this.streamParser.indent(state, /^\s*(.*)/.exec(line2.text)[1], cx);
+      }
+      get allowsNesting() {
+        return false;
+      }
+    }
+    function findState(lang2, tree, off, startPos, before) {
+      let state = off >= startPos && off + tree.length <= before && tree.prop(lang2.stateAfter);
+      if (state)
+        return { state: lang2.streamParser.copyState(state), pos: off + tree.length };
+      for (let i2 = tree.children.length - 1; i2 >= 0; i2--) {
+        let child = tree.children[i2], pos2 = off + tree.positions[i2];
+        let found = child instanceof Tree && pos2 < before && findState(lang2, child, pos2, startPos, before);
+        if (found)
+          return found;
+      }
+      return null;
+    }
+    function cutTree(lang2, tree, from, to2, inside2) {
+      if (inside2 && from <= 0 && to2 >= tree.length)
+        return tree;
+      if (!inside2 && from == 0 && tree.type == lang2.topNode)
+        inside2 = true;
+      for (let i2 = tree.children.length - 1; i2 >= 0; i2--) {
+        let pos2 = tree.positions[i2], child = tree.children[i2], inner;
+        if (pos2 < to2 && child instanceof Tree) {
+          if (!(inner = cutTree(lang2, child, from - pos2, to2 - pos2, inside2)))
+            break;
+          return !inside2 ? inner : new Tree(tree.type, tree.children.slice(0, i2).concat(inner), tree.positions.slice(0, i2 + 1), pos2 + inner.length);
+        }
+      }
+      return null;
+    }
+    function findStartInFragments(lang2, fragments, startPos, endPos, editorState) {
+      for (let f of fragments) {
+        let from = f.from + (f.openStart ? 25 : 0), to2 = f.to - (f.openEnd ? 25 : 0);
+        let found = from <= startPos && to2 > startPos && findState(lang2, f.tree, 0 - f.offset, startPos, to2), tree;
+        if (found && found.pos <= endPos && (tree = cutTree(lang2, f.tree, startPos + f.offset, found.pos + f.offset, false)))
+          return { state: found.state, tree };
+      }
+      return { state: lang2.streamParser.startState(editorState ? getIndentUnit$1(editorState) : 4), tree: Tree.empty };
+    }
+    class Parse {
+      constructor(lang2, input2, fragments, ranges) {
+        this.lang = lang2;
+        this.input = input2;
+        this.fragments = fragments;
+        this.ranges = ranges;
+        this.stoppedAt = null;
+        this.chunks = [];
+        this.chunkPos = [];
+        this.chunk = [];
+        this.chunkReused = void 0;
+        this.rangeIndex = 0;
+        this.to = ranges[ranges.length - 1].to;
+        let context = ParseContext$2.get(), from = ranges[0].from;
+        let { state, tree } = findStartInFragments(lang2, fragments, from, this.to, context === null || context === void 0 ? void 0 : context.state);
+        this.state = state;
+        this.parsedPos = this.chunkStart = from + tree.length;
+        for (let i2 = 0; i2 < tree.children.length; i2++) {
+          this.chunks.push(tree.children[i2]);
+          this.chunkPos.push(tree.positions[i2]);
+        }
+        if (context && this.parsedPos < context.viewport.from - 1e5 && ranges.some((r2) => r2.from <= context.viewport.from && r2.to >= context.viewport.from)) {
+          this.state = this.lang.streamParser.startState(getIndentUnit$1(context.state));
+          context.skipUntilInView(this.parsedPos, context.viewport.from);
+          this.parsedPos = context.viewport.from;
+        }
+        this.moveRangeIndex();
+      }
+      advance() {
+        let context = ParseContext$2.get();
+        let parseEnd = this.stoppedAt == null ? this.to : Math.min(this.to, this.stoppedAt);
+        let end2 = Math.min(
+          parseEnd,
+          this.chunkStart + 512
+          /* C.ChunkSize */
+        );
+        if (context)
+          end2 = Math.min(end2, context.viewport.to);
+        while (this.parsedPos < end2)
+          this.parseLine(context);
+        if (this.chunkStart < this.parsedPos)
+          this.finishChunk();
+        if (this.parsedPos >= parseEnd)
+          return this.finish();
+        if (context && this.parsedPos >= context.viewport.to) {
+          context.skipUntilInView(this.parsedPos, parseEnd);
+          return this.finish();
+        }
+        return null;
+      }
+      stopAt(pos2) {
+        this.stoppedAt = pos2;
+      }
+      lineAfter(pos2) {
+        let chunk = this.input.chunk(pos2);
+        if (!this.input.lineChunks) {
+          let eol = chunk.indexOf("\n");
+          if (eol > -1)
+            chunk = chunk.slice(0, eol);
+        } else if (chunk == "\n") {
+          chunk = "";
+        }
+        return pos2 + chunk.length <= this.to ? chunk : chunk.slice(0, this.to - pos2);
+      }
+      nextLine() {
+        let from = this.parsedPos, line2 = this.lineAfter(from), end2 = from + line2.length;
+        for (let index = this.rangeIndex; ; ) {
+          let rangeEnd2 = this.ranges[index].to;
+          if (rangeEnd2 >= end2)
+            break;
+          line2 = line2.slice(0, rangeEnd2 - (end2 - line2.length));
+          index++;
+          if (index == this.ranges.length)
+            break;
+          let rangeStart = this.ranges[index].from;
+          let after = this.lineAfter(rangeStart);
+          line2 += after;
+          end2 = rangeStart + after.length;
+        }
+        return { line: line2, end: end2 };
+      }
+      skipGapsTo(pos2, offset2, side) {
+        for (; ; ) {
+          let end2 = this.ranges[this.rangeIndex].to, offPos = pos2 + offset2;
+          if (side > 0 ? end2 > offPos : end2 >= offPos)
+            break;
+          let start2 = this.ranges[++this.rangeIndex].from;
+          offset2 += start2 - end2;
+        }
+        return offset2;
+      }
+      moveRangeIndex() {
+        while (this.ranges[this.rangeIndex].to < this.parsedPos)
+          this.rangeIndex++;
+      }
+      emitToken(id, from, to2, offset2) {
+        let size = 4;
+        if (this.ranges.length > 1) {
+          offset2 = this.skipGapsTo(from, offset2, 1);
+          from += offset2;
+          let len0 = this.chunk.length;
+          offset2 = this.skipGapsTo(to2, offset2, -1);
+          to2 += offset2;
+          size += this.chunk.length - len0;
+        }
+        let last = this.chunk.length - 4;
+        if (this.lang.streamParser.mergeTokens && size == 4 && last >= 0 && this.chunk[last] == id && this.chunk[last + 2] == from)
+          this.chunk[last + 2] = to2;
+        else
+          this.chunk.push(id, from, to2, size);
+        return offset2;
+      }
+      parseLine(context) {
+        let { line: line2, end: end2 } = this.nextLine(), offset2 = 0, { streamParser } = this.lang;
+        let stream = new StringStream(line2, context ? context.state.tabSize : 4, context ? getIndentUnit$1(context.state) : 2);
+        if (stream.eol()) {
+          streamParser.blankLine(this.state, stream.indentUnit);
+        } else {
+          while (!stream.eol()) {
+            let token2 = readToken(streamParser.token, stream, this.state);
+            if (token2)
+              offset2 = this.emitToken(this.lang.tokenTable.resolve(token2), this.parsedPos + stream.start, this.parsedPos + stream.pos, offset2);
+            if (stream.start > 1e4)
+              break;
+          }
+        }
+        this.parsedPos = end2;
+        this.moveRangeIndex();
+        if (this.parsedPos < this.to)
+          this.parsedPos++;
+      }
+      finishChunk() {
+        let tree = Tree.build({
+          buffer: this.chunk,
+          start: this.chunkStart,
+          length: this.parsedPos - this.chunkStart,
+          nodeSet,
+          topID: 0,
+          maxBufferLength: 512,
+          reused: this.chunkReused
+        });
+        tree = new Tree(tree.type, tree.children, tree.positions, tree.length, [[this.lang.stateAfter, this.lang.streamParser.copyState(this.state)]]);
+        this.chunks.push(tree);
+        this.chunkPos.push(this.chunkStart - this.ranges[0].from);
+        this.chunk = [];
+        this.chunkReused = void 0;
+        this.chunkStart = this.parsedPos;
+      }
+      finish() {
+        return new Tree(this.lang.topNode, this.chunks, this.chunkPos, this.parsedPos - this.ranges[0].from).balance();
+      }
+    }
+    function readToken(token2, stream, state) {
+      stream.start = stream.pos;
+      for (let i2 = 0; i2 < 10; i2++) {
+        let result2 = token2(stream, state);
+        if (stream.pos > stream.start)
+          return result2;
+      }
+      throw new Error("Stream parser failed to advance stream.");
+    }
+    const noTokens$2 = /* @__PURE__ */ Object.create(null);
+    const typeArray$2 = [NodeType.none];
+    const nodeSet = /* @__PURE__ */ new NodeSet(typeArray$2);
+    const warned$2 = [];
+    const byTag$2 = /* @__PURE__ */ Object.create(null);
+    const defaultTable$2 = /* @__PURE__ */ Object.create(null);
+    for (let [legacyName, name2] of [
+      ["variable", "variableName"],
+      ["variable-2", "variableName.special"],
+      ["string-2", "string.special"],
+      ["def", "variableName.definition"],
+      ["tag", "tagName"],
+      ["attribute", "attributeName"],
+      ["type", "typeName"],
+      ["builtin", "variableName.standard"],
+      ["qualifier", "modifier"],
+      ["error", "invalid"],
+      ["header", "heading"],
+      ["property", "propertyName"]
+    ])
+      defaultTable$2[legacyName] = /* @__PURE__ */ createTokenType$2(noTokens$2, name2);
+    class TokenTable {
+      constructor(extra) {
+        this.extra = extra;
+        this.table = Object.assign(/* @__PURE__ */ Object.create(null), defaultTable$2);
+      }
+      resolve(tag) {
+        return !tag ? 0 : this.table[tag] || (this.table[tag] = createTokenType$2(this.extra, tag));
+      }
+    }
+    const defaultTokenTable = /* @__PURE__ */ new TokenTable(noTokens$2);
+    function warnForPart$2(part2, msg) {
+      if (warned$2.indexOf(part2) > -1)
+        return;
+      warned$2.push(part2);
+      console.warn(msg);
+    }
+    function createTokenType$2(extra, tagStr) {
+      let tags$1 = [];
+      for (let name3 of tagStr.split(" ")) {
+        let found = [];
+        for (let part2 of name3.split(".")) {
+          let value2 = extra[part2] || tags[part2];
+          if (!value2) {
+            warnForPart$2(part2, `Unknown highlighting tag ${part2}`);
+          } else if (typeof value2 == "function") {
+            if (!found.length)
+              warnForPart$2(part2, `Modifier ${part2} used at start of tag`);
+            else
+              found = found.map(value2);
+          } else {
+            if (found.length)
+              warnForPart$2(part2, `Tag ${part2} used as modifier`);
+            else
+              found = Array.isArray(value2) ? value2 : [value2];
+          }
+        }
+        for (let tag of found)
+          tags$1.push(tag);
+      }
+      if (!tags$1.length)
+        return 0;
+      let name2 = tagStr.replace(/ /g, "_"), key2 = name2 + " " + tags$1.map((t2) => t2.id);
+      let known = byTag$2[key2];
+      if (known)
+        return known.id;
+      let type = byTag$2[key2] = NodeType.define({
+        id: typeArray$2.length,
+        name: name2,
+        props: [styleTags({ [name2]: tags$1 })]
+      });
+      typeArray$2.push(type);
+      return type.id;
+    }
+    function docID(data, lang2) {
+      let type = NodeType.define({ id: typeArray$2.length, name: "Document", props: [
+        languageDataProp$2.add(() => data),
+        indentNodeProp$1.add(() => (cx) => lang2.getIndent(cx))
+      ], top: true });
+      typeArray$2.push(type);
+      return type;
+    }
+    ({
+      rtl: /* @__PURE__ */ Decoration.mark({ class: "cm-iso", inclusive: true, attributes: { dir: "rtl" }, bidiIsolate: Direction.RTL }),
+      ltr: /* @__PURE__ */ Decoration.mark({ class: "cm-iso", inclusive: true, attributes: { dir: "ltr" }, bidiIsolate: Direction.LTR })
+    });
     function crelt() {
       var elt = arguments[0];
       if (typeof elt == "string") elt = document.createElement(elt);
@@ -153316,6 +148632,1643 @@ ${events}
       /* @__PURE__ */ hoverTooltip(lintTooltip, { hideOn: hideTooltip }),
       baseTheme
     ];
+    var _a$1;
+    const languageDataProp$1 = /* @__PURE__ */ new NodeProp();
+    const sublanguageProp$1 = /* @__PURE__ */ new NodeProp();
+    let Language$1 = class Language {
+      /**
+      Construct a language object. If you need to invoke this
+      directly, first define a data facet with
+      [`defineLanguageFacet`](https://codemirror.net/6/docs/ref/#language.defineLanguageFacet), and then
+      configure your parser to [attach](https://codemirror.net/6/docs/ref/#language.languageDataProp) it
+      to the language's outer syntax node.
+      */
+      constructor(data, parser2, extraExtensions = [], name2 = "") {
+        this.data = data;
+        this.name = name2;
+        if (!EditorState.prototype.hasOwnProperty("tree"))
+          Object.defineProperty(EditorState.prototype, "tree", { get() {
+            return syntaxTree$1(this);
+          } });
+        this.parser = parser2;
+        this.extension = [
+          language$2.of(this),
+          EditorState.languageData.of((state, pos2, side) => {
+            let top2 = topNodeAt$1(state, pos2, side), data2 = top2.type.prop(languageDataProp$1);
+            if (!data2)
+              return [];
+            let base2 = state.facet(data2), sub2 = top2.type.prop(sublanguageProp$1);
+            if (sub2) {
+              let innerNode = top2.resolve(pos2 - top2.from, side);
+              for (let sublang of sub2)
+                if (sublang.test(innerNode, state)) {
+                  let data3 = state.facet(sublang.facet);
+                  return sublang.type == "replace" ? data3 : data3.concat(base2);
+                }
+            }
+            return base2;
+          })
+        ].concat(extraExtensions);
+      }
+      /**
+      Query whether this language is active at the given position.
+      */
+      isActiveAt(state, pos2, side = -1) {
+        return topNodeAt$1(state, pos2, side).type.prop(languageDataProp$1) == this.data;
+      }
+      /**
+      Find the document regions that were parsed using this language.
+      The returned regions will _include_ any nested languages rooted
+      in this language, when those exist.
+      */
+      findRegions(state) {
+        let lang2 = state.facet(language$2);
+        if ((lang2 === null || lang2 === void 0 ? void 0 : lang2.data) == this.data)
+          return [{ from: 0, to: state.doc.length }];
+        if (!lang2 || !lang2.allowsNesting)
+          return [];
+        let result2 = [];
+        let explore = (tree, from) => {
+          if (tree.prop(languageDataProp$1) == this.data) {
+            result2.push({ from, to: from + tree.length });
+            return;
+          }
+          let mount2 = tree.prop(NodeProp.mounted);
+          if (mount2) {
+            if (mount2.tree.prop(languageDataProp$1) == this.data) {
+              if (mount2.overlay)
+                for (let r2 of mount2.overlay)
+                  result2.push({ from: r2.from + from, to: r2.to + from });
+              else
+                result2.push({ from, to: from + tree.length });
+              return;
+            } else if (mount2.overlay) {
+              let size = result2.length;
+              explore(mount2.tree, mount2.overlay[0].from + from);
+              if (result2.length > size)
+                return;
+            }
+          }
+          for (let i2 = 0; i2 < tree.children.length; i2++) {
+            let ch3 = tree.children[i2];
+            if (ch3 instanceof Tree)
+              explore(ch3, tree.positions[i2] + from);
+          }
+        };
+        explore(syntaxTree$1(state), 0);
+        return result2;
+      }
+      /**
+      Indicates whether this language allows nested languages. The
+      default implementation returns true.
+      */
+      get allowsNesting() {
+        return true;
+      }
+    };
+    Language$1.setState = /* @__PURE__ */ StateEffect.define();
+    function topNodeAt$1(state, pos2, side) {
+      let topLang = state.facet(language$2), tree = syntaxTree$1(state).topNode;
+      if (!topLang || topLang.allowsNesting) {
+        for (let node2 = tree; node2; node2 = node2.enter(pos2, side, IterMode.ExcludeBuffers))
+          if (node2.type.isTop)
+            tree = node2;
+      }
+      return tree;
+    }
+    function syntaxTree$1(state) {
+      let field = state.field(Language$1.state, false);
+      return field ? field.tree : Tree.empty;
+    }
+    let DocInput$1 = class DocInput {
+      /**
+      Create an input object for the given document.
+      */
+      constructor(doc2) {
+        this.doc = doc2;
+        this.cursorPos = 0;
+        this.string = "";
+        this.cursor = doc2.iter();
+      }
+      get length() {
+        return this.doc.length;
+      }
+      syncTo(pos2) {
+        this.string = this.cursor.next(pos2 - this.cursorPos).value;
+        this.cursorPos = pos2 + this.string.length;
+        return this.cursorPos - this.string.length;
+      }
+      chunk(pos2) {
+        this.syncTo(pos2);
+        return this.string;
+      }
+      get lineChunks() {
+        return true;
+      }
+      read(from, to2) {
+        let stringStart = this.cursorPos - this.string.length;
+        if (from < stringStart || to2 >= this.cursorPos)
+          return this.doc.sliceString(from, to2);
+        else
+          return this.string.slice(from - stringStart, to2 - stringStart);
+      }
+    };
+    let currentContext$1 = null;
+    let ParseContext$1 = class ParseContext2 {
+      constructor(parser2, state, fragments = [], tree, treeLen, viewport2, skipped, scheduleOn) {
+        this.parser = parser2;
+        this.state = state;
+        this.fragments = fragments;
+        this.tree = tree;
+        this.treeLen = treeLen;
+        this.viewport = viewport2;
+        this.skipped = skipped;
+        this.scheduleOn = scheduleOn;
+        this.parse = null;
+        this.tempSkipped = [];
+      }
+      /**
+      @internal
+      */
+      static create(parser2, state, viewport2) {
+        return new ParseContext2(parser2, state, [], Tree.empty, 0, viewport2, [], null);
+      }
+      startParse() {
+        return this.parser.startParse(new DocInput$1(this.state.doc), this.fragments);
+      }
+      /**
+      @internal
+      */
+      work(until, upto) {
+        if (upto != null && upto >= this.state.doc.length)
+          upto = void 0;
+        if (this.tree != Tree.empty && this.isDone(upto !== null && upto !== void 0 ? upto : this.state.doc.length)) {
+          this.takeTree();
+          return true;
+        }
+        return this.withContext(() => {
+          var _a2;
+          if (typeof until == "number") {
+            let endTime = Date.now() + until;
+            until = () => Date.now() > endTime;
+          }
+          if (!this.parse)
+            this.parse = this.startParse();
+          if (upto != null && (this.parse.stoppedAt == null || this.parse.stoppedAt > upto) && upto < this.state.doc.length)
+            this.parse.stopAt(upto);
+          for (; ; ) {
+            let done = this.parse.advance();
+            if (done) {
+              this.fragments = this.withoutTempSkipped(TreeFragment.addTree(done, this.fragments, this.parse.stoppedAt != null));
+              this.treeLen = (_a2 = this.parse.stoppedAt) !== null && _a2 !== void 0 ? _a2 : this.state.doc.length;
+              this.tree = done;
+              this.parse = null;
+              if (this.treeLen < (upto !== null && upto !== void 0 ? upto : this.state.doc.length))
+                this.parse = this.startParse();
+              else
+                return true;
+            }
+            if (until())
+              return false;
+          }
+        });
+      }
+      /**
+      @internal
+      */
+      takeTree() {
+        let pos2, tree;
+        if (this.parse && (pos2 = this.parse.parsedPos) >= this.treeLen) {
+          if (this.parse.stoppedAt == null || this.parse.stoppedAt > pos2)
+            this.parse.stopAt(pos2);
+          this.withContext(() => {
+            while (!(tree = this.parse.advance())) {
+            }
+          });
+          this.treeLen = pos2;
+          this.tree = tree;
+          this.fragments = this.withoutTempSkipped(TreeFragment.addTree(this.tree, this.fragments, true));
+          this.parse = null;
+        }
+      }
+      withContext(f) {
+        let prev = currentContext$1;
+        currentContext$1 = this;
+        try {
+          return f();
+        } finally {
+          currentContext$1 = prev;
+        }
+      }
+      withoutTempSkipped(fragments) {
+        for (let r2; r2 = this.tempSkipped.pop(); )
+          fragments = cutFragments$1(fragments, r2.from, r2.to);
+        return fragments;
+      }
+      /**
+      @internal
+      */
+      changes(changes, newState) {
+        let { fragments, tree, treeLen, viewport: viewport2, skipped } = this;
+        this.takeTree();
+        if (!changes.empty) {
+          let ranges = [];
+          changes.iterChangedRanges((fromA, toA, fromB, toB) => ranges.push({ fromA, toA, fromB, toB }));
+          fragments = TreeFragment.applyChanges(fragments, ranges);
+          tree = Tree.empty;
+          treeLen = 0;
+          viewport2 = { from: changes.mapPos(viewport2.from, -1), to: changes.mapPos(viewport2.to, 1) };
+          if (this.skipped.length) {
+            skipped = [];
+            for (let r2 of this.skipped) {
+              let from = changes.mapPos(r2.from, 1), to2 = changes.mapPos(r2.to, -1);
+              if (from < to2)
+                skipped.push({ from, to: to2 });
+            }
+          }
+        }
+        return new ParseContext2(this.parser, newState, fragments, tree, treeLen, viewport2, skipped, this.scheduleOn);
+      }
+      /**
+      @internal
+      */
+      updateViewport(viewport2) {
+        if (this.viewport.from == viewport2.from && this.viewport.to == viewport2.to)
+          return false;
+        this.viewport = viewport2;
+        let startLen = this.skipped.length;
+        for (let i2 = 0; i2 < this.skipped.length; i2++) {
+          let { from, to: to2 } = this.skipped[i2];
+          if (from < viewport2.to && to2 > viewport2.from) {
+            this.fragments = cutFragments$1(this.fragments, from, to2);
+            this.skipped.splice(i2--, 1);
+          }
+        }
+        if (this.skipped.length >= startLen)
+          return false;
+        this.reset();
+        return true;
+      }
+      /**
+      @internal
+      */
+      reset() {
+        if (this.parse) {
+          this.takeTree();
+          this.parse = null;
+        }
+      }
+      /**
+      Notify the parse scheduler that the given region was skipped
+      because it wasn't in view, and the parse should be restarted
+      when it comes into view.
+      */
+      skipUntilInView(from, to2) {
+        this.skipped.push({ from, to: to2 });
+      }
+      /**
+      Returns a parser intended to be used as placeholder when
+      asynchronously loading a nested parser. It'll skip its input and
+      mark it as not-really-parsed, so that the next update will parse
+      it again.
+      
+      When `until` is given, a reparse will be scheduled when that
+      promise resolves.
+      */
+      static getSkippingParser(until) {
+        return new class extends Parser {
+          createParse(input2, fragments, ranges) {
+            let from = ranges[0].from, to2 = ranges[ranges.length - 1].to;
+            let parser2 = {
+              parsedPos: from,
+              advance() {
+                let cx = currentContext$1;
+                if (cx) {
+                  for (let r2 of ranges)
+                    cx.tempSkipped.push(r2);
+                  if (until)
+                    cx.scheduleOn = cx.scheduleOn ? Promise.all([cx.scheduleOn, until]) : until;
+                }
+                this.parsedPos = to2;
+                return new Tree(NodeType.none, [], [], to2 - from);
+              },
+              stoppedAt: null,
+              stopAt() {
+              }
+            };
+            return parser2;
+          }
+        }();
+      }
+      /**
+      @internal
+      */
+      isDone(upto) {
+        upto = Math.min(upto, this.state.doc.length);
+        let frags = this.fragments;
+        return this.treeLen >= upto && frags.length && frags[0].from == 0 && frags[0].to >= upto;
+      }
+      /**
+      Get the context for the current parse, or `null` if no editor
+      parse is in progress.
+      */
+      static get() {
+        return currentContext$1;
+      }
+    };
+    function cutFragments$1(fragments, from, to2) {
+      return TreeFragment.applyChanges(fragments, [{ fromA: from, toA: to2, fromB: from, toB: to2 }]);
+    }
+    let LanguageState$1 = class LanguageState2 {
+      constructor(context) {
+        this.context = context;
+        this.tree = context.tree;
+      }
+      apply(tr2) {
+        if (!tr2.docChanged && this.tree == this.context.tree)
+          return this;
+        let newCx = this.context.changes(tr2.changes, tr2.state);
+        let upto = this.context.treeLen == tr2.startState.doc.length ? void 0 : Math.max(tr2.changes.mapPos(this.context.treeLen), newCx.viewport.to);
+        if (!newCx.work(20, upto))
+          newCx.takeTree();
+        return new LanguageState2(newCx);
+      }
+      static init(state) {
+        let vpTo = Math.min(3e3, state.doc.length);
+        let parseState2 = ParseContext$1.create(state.facet(language$2).parser, state, { from: 0, to: vpTo });
+        if (!parseState2.work(20, vpTo))
+          parseState2.takeTree();
+        return new LanguageState2(parseState2);
+      }
+    };
+    Language$1.state = /* @__PURE__ */ StateField.define({
+      create: LanguageState$1.init,
+      update(value2, tr2) {
+        for (let e of tr2.effects)
+          if (e.is(Language$1.setState))
+            return e.value;
+        if (tr2.startState.facet(language$2) != tr2.state.facet(language$2))
+          return LanguageState$1.init(tr2.state);
+        return value2.apply(tr2);
+      }
+    });
+    let requestIdle$1 = (callback) => {
+      let timeout = setTimeout(
+        () => callback(),
+        500
+        /* Work.MaxPause */
+      );
+      return () => clearTimeout(timeout);
+    };
+    if (typeof requestIdleCallback != "undefined")
+      requestIdle$1 = (callback) => {
+        let idle = -1, timeout = setTimeout(
+          () => {
+            idle = requestIdleCallback(callback, {
+              timeout: 500 - 100
+              /* Work.MinPause */
+            });
+          },
+          100
+          /* Work.MinPause */
+        );
+        return () => idle < 0 ? clearTimeout(timeout) : cancelIdleCallback(idle);
+      };
+    const isInputPending$1 = typeof navigator != "undefined" && ((_a$1 = navigator.scheduling) === null || _a$1 === void 0 ? void 0 : _a$1.isInputPending) ? () => navigator.scheduling.isInputPending() : null;
+    const parseWorker$1 = /* @__PURE__ */ ViewPlugin.fromClass(class ParseWorker {
+      constructor(view) {
+        this.view = view;
+        this.working = null;
+        this.workScheduled = 0;
+        this.chunkEnd = -1;
+        this.chunkBudget = -1;
+        this.work = this.work.bind(this);
+        this.scheduleWork();
+      }
+      update(update) {
+        let cx = this.view.state.field(Language$1.state).context;
+        if (cx.updateViewport(update.view.viewport) || this.view.viewport.to > cx.treeLen)
+          this.scheduleWork();
+        if (update.docChanged || update.selectionSet) {
+          if (this.view.hasFocus)
+            this.chunkBudget += 50;
+          this.scheduleWork();
+        }
+        this.checkAsyncSchedule(cx);
+      }
+      scheduleWork() {
+        if (this.working)
+          return;
+        let { state } = this.view, field = state.field(Language$1.state);
+        if (field.tree != field.context.tree || !field.context.isDone(state.doc.length))
+          this.working = requestIdle$1(this.work);
+      }
+      work(deadline) {
+        this.working = null;
+        let now = Date.now();
+        if (this.chunkEnd < now && (this.chunkEnd < 0 || this.view.hasFocus)) {
+          this.chunkEnd = now + 3e4;
+          this.chunkBudget = 3e3;
+        }
+        if (this.chunkBudget <= 0)
+          return;
+        let { state, viewport: { to: vpTo } } = this.view, field = state.field(Language$1.state);
+        if (field.tree == field.context.tree && field.context.isDone(
+          vpTo + 1e5
+          /* Work.MaxParseAhead */
+        ))
+          return;
+        let endTime = Date.now() + Math.min(this.chunkBudget, 100, deadline && !isInputPending$1 ? Math.max(25, deadline.timeRemaining() - 5) : 1e9);
+        let viewportFirst = field.context.treeLen < vpTo && state.doc.length > vpTo + 1e3;
+        let done = field.context.work(() => {
+          return isInputPending$1 && isInputPending$1() || Date.now() > endTime;
+        }, vpTo + (viewportFirst ? 0 : 1e5));
+        this.chunkBudget -= Date.now() - now;
+        if (done || this.chunkBudget <= 0) {
+          field.context.takeTree();
+          this.view.dispatch({ effects: Language$1.setState.of(new LanguageState$1(field.context)) });
+        }
+        if (this.chunkBudget > 0 && !(done && !viewportFirst))
+          this.scheduleWork();
+        this.checkAsyncSchedule(field.context);
+      }
+      checkAsyncSchedule(cx) {
+        if (cx.scheduleOn) {
+          this.workScheduled++;
+          cx.scheduleOn.then(() => this.scheduleWork()).catch((err2) => logException(this.view.state, err2)).then(() => this.workScheduled--);
+          cx.scheduleOn = null;
+        }
+      }
+      destroy() {
+        if (this.working)
+          this.working();
+      }
+      isWorking() {
+        return !!(this.working || this.workScheduled > 0);
+      }
+    }, {
+      eventHandlers: { focus() {
+        this.scheduleWork();
+      } }
+    });
+    const language$2 = /* @__PURE__ */ Facet.define({
+      combine(languages) {
+        return languages.length ? languages[0] : null;
+      },
+      enables: (language2) => [
+        Language$1.state,
+        parseWorker$1,
+        EditorView.contentAttributes.compute([language2], (state) => {
+          let lang2 = state.facet(language2);
+          return lang2 && lang2.name ? { "data-language": lang2.name } : {};
+        })
+      ]
+    });
+    class HighlightStyle {
+      constructor(specs, options2) {
+        this.specs = specs;
+        let modSpec;
+        function def(spec) {
+          let cls = StyleModule.newName();
+          (modSpec || (modSpec = /* @__PURE__ */ Object.create(null)))["." + cls] = spec;
+          return cls;
+        }
+        const all2 = typeof options2.all == "string" ? options2.all : options2.all ? def(options2.all) : void 0;
+        const scopeOpt = options2.scope;
+        this.scope = scopeOpt instanceof Language$1 ? (type) => type.prop(languageDataProp$1) == scopeOpt.data : scopeOpt ? (type) => type == scopeOpt : void 0;
+        this.style = tagHighlighter(specs.map((style2) => ({
+          tag: style2.tag,
+          class: style2.class || def(Object.assign({}, style2, { tag: null }))
+        })), {
+          all: all2
+        }).style;
+        this.module = modSpec ? new StyleModule(modSpec) : null;
+        this.themeType = options2.themeType;
+      }
+      /**
+      Create a highlighter style that associates the given styles to
+      the given tags. The specs must be objects that hold a style tag
+      or array of tags in their `tag` property, and either a single
+      `class` property providing a static CSS class (for highlighter
+      that rely on external styling), or a
+      [`style-mod`](https://github.com/marijnh/style-mod#documentation)-style
+      set of CSS properties (which define the styling for those tags).
+      
+      The CSS rules created for a highlighter will be emitted in the
+      order of the spec's properties. That means that for elements that
+      have multiple tags associated with them, styles defined further
+      down in the list will have a higher CSS precedence than styles
+      defined earlier.
+      */
+      static define(specs, options2) {
+        return new HighlightStyle(specs, options2 || {});
+      }
+    }
+    const highlighterFacet = /* @__PURE__ */ Facet.define();
+    const fallbackHighlighter = /* @__PURE__ */ Facet.define({
+      combine(values) {
+        return values.length ? [values[0]] : null;
+      }
+    });
+    function getHighlighters(state) {
+      let main2 = state.facet(highlighterFacet);
+      return main2.length ? main2 : state.facet(fallbackHighlighter);
+    }
+    function syntaxHighlighting(highlighter, options2) {
+      let ext = [treeHighlighter], themeType;
+      if (highlighter instanceof HighlightStyle) {
+        if (highlighter.module)
+          ext.push(EditorView.styleModule.of(highlighter.module));
+        themeType = highlighter.themeType;
+      }
+      if (options2 === null || options2 === void 0 ? void 0 : options2.fallback)
+        ext.push(fallbackHighlighter.of(highlighter));
+      else if (themeType)
+        ext.push(highlighterFacet.computeN([EditorView.darkTheme], (state) => {
+          return state.facet(EditorView.darkTheme) == (themeType == "dark") ? [highlighter] : [];
+        }));
+      else
+        ext.push(highlighterFacet.of(highlighter));
+      return ext;
+    }
+    class TreeHighlighter {
+      constructor(view) {
+        this.markCache = /* @__PURE__ */ Object.create(null);
+        this.tree = syntaxTree$1(view.state);
+        this.decorations = this.buildDeco(view, getHighlighters(view.state));
+        this.decoratedTo = view.viewport.to;
+      }
+      update(update) {
+        let tree = syntaxTree$1(update.state), highlighters = getHighlighters(update.state);
+        let styleChange = highlighters != getHighlighters(update.startState);
+        let { viewport: viewport2 } = update.view, decoratedToMapped = update.changes.mapPos(this.decoratedTo, 1);
+        if (tree.length < viewport2.to && !styleChange && tree.type == this.tree.type && decoratedToMapped >= viewport2.to) {
+          this.decorations = this.decorations.map(update.changes);
+          this.decoratedTo = decoratedToMapped;
+        } else if (tree != this.tree || update.viewportChanged || styleChange) {
+          this.tree = tree;
+          this.decorations = this.buildDeco(update.view, highlighters);
+          this.decoratedTo = viewport2.to;
+        }
+      }
+      buildDeco(view, highlighters) {
+        if (!highlighters || !this.tree.length)
+          return Decoration.none;
+        let builder = new RangeSetBuilder();
+        for (let { from, to: to2 } of view.visibleRanges) {
+          highlightTree(this.tree, highlighters, (from2, to3, style2) => {
+            builder.add(from2, to3, this.markCache[style2] || (this.markCache[style2] = Decoration.mark({ class: style2 })));
+          }, from, to2);
+        }
+        return builder.finish();
+      }
+    }
+    const treeHighlighter = /* @__PURE__ */ Prec.high(/* @__PURE__ */ ViewPlugin.fromClass(TreeHighlighter, {
+      decorations: (v) => v.decorations
+    }));
+    const defaultHighlightStyle = /* @__PURE__ */ HighlightStyle.define([
+      {
+        tag: tags.meta,
+        color: "#404740"
+      },
+      {
+        tag: tags.link,
+        textDecoration: "underline"
+      },
+      {
+        tag: tags.heading,
+        textDecoration: "underline",
+        fontWeight: "bold"
+      },
+      {
+        tag: tags.emphasis,
+        fontStyle: "italic"
+      },
+      {
+        tag: tags.strong,
+        fontWeight: "bold"
+      },
+      {
+        tag: tags.strikethrough,
+        textDecoration: "line-through"
+      },
+      {
+        tag: tags.keyword,
+        color: "#708"
+      },
+      {
+        tag: [tags.atom, tags.bool, tags.url, tags.contentSeparator, tags.labelName],
+        color: "#219"
+      },
+      {
+        tag: [tags.literal, tags.inserted],
+        color: "#164"
+      },
+      {
+        tag: [tags.string, tags.deleted],
+        color: "#a11"
+      },
+      {
+        tag: [tags.regexp, tags.escape, /* @__PURE__ */ tags.special(tags.string)],
+        color: "#e40"
+      },
+      {
+        tag: /* @__PURE__ */ tags.definition(tags.variableName),
+        color: "#00f"
+      },
+      {
+        tag: /* @__PURE__ */ tags.local(tags.variableName),
+        color: "#30a"
+      },
+      {
+        tag: [tags.typeName, tags.namespace],
+        color: "#085"
+      },
+      {
+        tag: tags.className,
+        color: "#167"
+      },
+      {
+        tag: [/* @__PURE__ */ tags.special(tags.variableName), tags.macroName],
+        color: "#256"
+      },
+      {
+        tag: /* @__PURE__ */ tags.definition(tags.propertyName),
+        color: "#00c"
+      },
+      {
+        tag: tags.comment,
+        color: "#940"
+      },
+      {
+        tag: tags.invalid,
+        color: "#f00"
+      }
+    ]);
+    const noTokens$1 = /* @__PURE__ */ Object.create(null);
+    const typeArray$1 = [NodeType.none];
+    const warned$1 = [];
+    const byTag$1 = /* @__PURE__ */ Object.create(null);
+    const defaultTable$1 = /* @__PURE__ */ Object.create(null);
+    for (let [legacyName, name2] of [
+      ["variable", "variableName"],
+      ["variable-2", "variableName.special"],
+      ["string-2", "string.special"],
+      ["def", "variableName.definition"],
+      ["tag", "tagName"],
+      ["attribute", "attributeName"],
+      ["type", "typeName"],
+      ["builtin", "variableName.standard"],
+      ["qualifier", "modifier"],
+      ["error", "invalid"],
+      ["header", "heading"],
+      ["property", "propertyName"]
+    ])
+      defaultTable$1[legacyName] = /* @__PURE__ */ createTokenType$1(noTokens$1, name2);
+    function warnForPart$1(part2, msg) {
+      if (warned$1.indexOf(part2) > -1)
+        return;
+      warned$1.push(part2);
+      console.warn(msg);
+    }
+    function createTokenType$1(extra, tagStr) {
+      let tags$1 = [];
+      for (let name3 of tagStr.split(" ")) {
+        let found = [];
+        for (let part2 of name3.split(".")) {
+          let value2 = extra[part2] || tags[part2];
+          if (!value2) {
+            warnForPart$1(part2, `Unknown highlighting tag ${part2}`);
+          } else if (typeof value2 == "function") {
+            if (!found.length)
+              warnForPart$1(part2, `Modifier ${part2} used at start of tag`);
+            else
+              found = found.map(value2);
+          } else {
+            if (found.length)
+              warnForPart$1(part2, `Tag ${part2} used as modifier`);
+            else
+              found = Array.isArray(value2) ? value2 : [value2];
+          }
+        }
+        for (let tag of found)
+          tags$1.push(tag);
+      }
+      if (!tags$1.length)
+        return 0;
+      let name2 = tagStr.replace(/ /g, "_"), key2 = name2 + " " + tags$1.map((t2) => t2.id);
+      let known = byTag$1[key2];
+      if (known)
+        return known.id;
+      let type = byTag$1[key2] = NodeType.define({
+        id: typeArray$1.length,
+        name: name2,
+        props: [styleTags({ [name2]: tags$1 })]
+      });
+      typeArray$1.push(type);
+      return type.id;
+    }
+    ({
+      rtl: /* @__PURE__ */ Decoration.mark({ class: "cm-iso", inclusive: true, attributes: { dir: "rtl" }, bidiIsolate: Direction.RTL }),
+      ltr: /* @__PURE__ */ Decoration.mark({ class: "cm-iso", inclusive: true, attributes: { dir: "ltr" }, bidiIsolate: Direction.LTR })
+    });
+    var _a;
+    const languageDataProp = /* @__PURE__ */ new NodeProp();
+    const sublanguageProp = /* @__PURE__ */ new NodeProp();
+    class Language {
+      /**
+      Construct a language object. If you need to invoke this
+      directly, first define a data facet with
+      [`defineLanguageFacet`](https://codemirror.net/6/docs/ref/#language.defineLanguageFacet), and then
+      configure your parser to [attach](https://codemirror.net/6/docs/ref/#language.languageDataProp) it
+      to the language's outer syntax node.
+      */
+      constructor(data, parser2, extraExtensions = [], name2 = "") {
+        this.data = data;
+        this.name = name2;
+        if (!EditorState.prototype.hasOwnProperty("tree"))
+          Object.defineProperty(EditorState.prototype, "tree", { get() {
+            return syntaxTree(this);
+          } });
+        this.parser = parser2;
+        this.extension = [
+          language$1.of(this),
+          EditorState.languageData.of((state, pos2, side) => {
+            let top2 = topNodeAt(state, pos2, side), data2 = top2.type.prop(languageDataProp);
+            if (!data2)
+              return [];
+            let base2 = state.facet(data2), sub2 = top2.type.prop(sublanguageProp);
+            if (sub2) {
+              let innerNode = top2.resolve(pos2 - top2.from, side);
+              for (let sublang of sub2)
+                if (sublang.test(innerNode, state)) {
+                  let data3 = state.facet(sublang.facet);
+                  return sublang.type == "replace" ? data3 : data3.concat(base2);
+                }
+            }
+            return base2;
+          })
+        ].concat(extraExtensions);
+      }
+      /**
+      Query whether this language is active at the given position.
+      */
+      isActiveAt(state, pos2, side = -1) {
+        return topNodeAt(state, pos2, side).type.prop(languageDataProp) == this.data;
+      }
+      /**
+      Find the document regions that were parsed using this language.
+      The returned regions will _include_ any nested languages rooted
+      in this language, when those exist.
+      */
+      findRegions(state) {
+        let lang2 = state.facet(language$1);
+        if ((lang2 === null || lang2 === void 0 ? void 0 : lang2.data) == this.data)
+          return [{ from: 0, to: state.doc.length }];
+        if (!lang2 || !lang2.allowsNesting)
+          return [];
+        let result2 = [];
+        let explore = (tree, from) => {
+          if (tree.prop(languageDataProp) == this.data) {
+            result2.push({ from, to: from + tree.length });
+            return;
+          }
+          let mount2 = tree.prop(NodeProp.mounted);
+          if (mount2) {
+            if (mount2.tree.prop(languageDataProp) == this.data) {
+              if (mount2.overlay)
+                for (let r2 of mount2.overlay)
+                  result2.push({ from: r2.from + from, to: r2.to + from });
+              else
+                result2.push({ from, to: from + tree.length });
+              return;
+            } else if (mount2.overlay) {
+              let size = result2.length;
+              explore(mount2.tree, mount2.overlay[0].from + from);
+              if (result2.length > size)
+                return;
+            }
+          }
+          for (let i2 = 0; i2 < tree.children.length; i2++) {
+            let ch3 = tree.children[i2];
+            if (ch3 instanceof Tree)
+              explore(ch3, tree.positions[i2] + from);
+          }
+        };
+        explore(syntaxTree(state), 0);
+        return result2;
+      }
+      /**
+      Indicates whether this language allows nested languages. The
+      default implementation returns true.
+      */
+      get allowsNesting() {
+        return true;
+      }
+    }
+    Language.setState = /* @__PURE__ */ StateEffect.define();
+    function topNodeAt(state, pos2, side) {
+      let topLang = state.facet(language$1), tree = syntaxTree(state).topNode;
+      if (!topLang || topLang.allowsNesting) {
+        for (let node2 = tree; node2; node2 = node2.enter(pos2, side, IterMode.ExcludeBuffers))
+          if (node2.type.isTop)
+            tree = node2;
+      }
+      return tree;
+    }
+    function syntaxTree(state) {
+      let field = state.field(Language.state, false);
+      return field ? field.tree : Tree.empty;
+    }
+    class DocInput {
+      /**
+      Create an input object for the given document.
+      */
+      constructor(doc2) {
+        this.doc = doc2;
+        this.cursorPos = 0;
+        this.string = "";
+        this.cursor = doc2.iter();
+      }
+      get length() {
+        return this.doc.length;
+      }
+      syncTo(pos2) {
+        this.string = this.cursor.next(pos2 - this.cursorPos).value;
+        this.cursorPos = pos2 + this.string.length;
+        return this.cursorPos - this.string.length;
+      }
+      chunk(pos2) {
+        this.syncTo(pos2);
+        return this.string;
+      }
+      get lineChunks() {
+        return true;
+      }
+      read(from, to2) {
+        let stringStart = this.cursorPos - this.string.length;
+        if (from < stringStart || to2 >= this.cursorPos)
+          return this.doc.sliceString(from, to2);
+        else
+          return this.string.slice(from - stringStart, to2 - stringStart);
+      }
+    }
+    let currentContext = null;
+    class ParseContext {
+      constructor(parser2, state, fragments = [], tree, treeLen, viewport2, skipped, scheduleOn) {
+        this.parser = parser2;
+        this.state = state;
+        this.fragments = fragments;
+        this.tree = tree;
+        this.treeLen = treeLen;
+        this.viewport = viewport2;
+        this.skipped = skipped;
+        this.scheduleOn = scheduleOn;
+        this.parse = null;
+        this.tempSkipped = [];
+      }
+      /**
+      @internal
+      */
+      static create(parser2, state, viewport2) {
+        return new ParseContext(parser2, state, [], Tree.empty, 0, viewport2, [], null);
+      }
+      startParse() {
+        return this.parser.startParse(new DocInput(this.state.doc), this.fragments);
+      }
+      /**
+      @internal
+      */
+      work(until, upto) {
+        if (upto != null && upto >= this.state.doc.length)
+          upto = void 0;
+        if (this.tree != Tree.empty && this.isDone(upto !== null && upto !== void 0 ? upto : this.state.doc.length)) {
+          this.takeTree();
+          return true;
+        }
+        return this.withContext(() => {
+          var _a2;
+          if (typeof until == "number") {
+            let endTime = Date.now() + until;
+            until = () => Date.now() > endTime;
+          }
+          if (!this.parse)
+            this.parse = this.startParse();
+          if (upto != null && (this.parse.stoppedAt == null || this.parse.stoppedAt > upto) && upto < this.state.doc.length)
+            this.parse.stopAt(upto);
+          for (; ; ) {
+            let done = this.parse.advance();
+            if (done) {
+              this.fragments = this.withoutTempSkipped(TreeFragment.addTree(done, this.fragments, this.parse.stoppedAt != null));
+              this.treeLen = (_a2 = this.parse.stoppedAt) !== null && _a2 !== void 0 ? _a2 : this.state.doc.length;
+              this.tree = done;
+              this.parse = null;
+              if (this.treeLen < (upto !== null && upto !== void 0 ? upto : this.state.doc.length))
+                this.parse = this.startParse();
+              else
+                return true;
+            }
+            if (until())
+              return false;
+          }
+        });
+      }
+      /**
+      @internal
+      */
+      takeTree() {
+        let pos2, tree;
+        if (this.parse && (pos2 = this.parse.parsedPos) >= this.treeLen) {
+          if (this.parse.stoppedAt == null || this.parse.stoppedAt > pos2)
+            this.parse.stopAt(pos2);
+          this.withContext(() => {
+            while (!(tree = this.parse.advance())) {
+            }
+          });
+          this.treeLen = pos2;
+          this.tree = tree;
+          this.fragments = this.withoutTempSkipped(TreeFragment.addTree(this.tree, this.fragments, true));
+          this.parse = null;
+        }
+      }
+      withContext(f) {
+        let prev = currentContext;
+        currentContext = this;
+        try {
+          return f();
+        } finally {
+          currentContext = prev;
+        }
+      }
+      withoutTempSkipped(fragments) {
+        for (let r2; r2 = this.tempSkipped.pop(); )
+          fragments = cutFragments(fragments, r2.from, r2.to);
+        return fragments;
+      }
+      /**
+      @internal
+      */
+      changes(changes, newState) {
+        let { fragments, tree, treeLen, viewport: viewport2, skipped } = this;
+        this.takeTree();
+        if (!changes.empty) {
+          let ranges = [];
+          changes.iterChangedRanges((fromA, toA, fromB, toB) => ranges.push({ fromA, toA, fromB, toB }));
+          fragments = TreeFragment.applyChanges(fragments, ranges);
+          tree = Tree.empty;
+          treeLen = 0;
+          viewport2 = { from: changes.mapPos(viewport2.from, -1), to: changes.mapPos(viewport2.to, 1) };
+          if (this.skipped.length) {
+            skipped = [];
+            for (let r2 of this.skipped) {
+              let from = changes.mapPos(r2.from, 1), to2 = changes.mapPos(r2.to, -1);
+              if (from < to2)
+                skipped.push({ from, to: to2 });
+            }
+          }
+        }
+        return new ParseContext(this.parser, newState, fragments, tree, treeLen, viewport2, skipped, this.scheduleOn);
+      }
+      /**
+      @internal
+      */
+      updateViewport(viewport2) {
+        if (this.viewport.from == viewport2.from && this.viewport.to == viewport2.to)
+          return false;
+        this.viewport = viewport2;
+        let startLen = this.skipped.length;
+        for (let i2 = 0; i2 < this.skipped.length; i2++) {
+          let { from, to: to2 } = this.skipped[i2];
+          if (from < viewport2.to && to2 > viewport2.from) {
+            this.fragments = cutFragments(this.fragments, from, to2);
+            this.skipped.splice(i2--, 1);
+          }
+        }
+        if (this.skipped.length >= startLen)
+          return false;
+        this.reset();
+        return true;
+      }
+      /**
+      @internal
+      */
+      reset() {
+        if (this.parse) {
+          this.takeTree();
+          this.parse = null;
+        }
+      }
+      /**
+      Notify the parse scheduler that the given region was skipped
+      because it wasn't in view, and the parse should be restarted
+      when it comes into view.
+      */
+      skipUntilInView(from, to2) {
+        this.skipped.push({ from, to: to2 });
+      }
+      /**
+      Returns a parser intended to be used as placeholder when
+      asynchronously loading a nested parser. It'll skip its input and
+      mark it as not-really-parsed, so that the next update will parse
+      it again.
+      
+      When `until` is given, a reparse will be scheduled when that
+      promise resolves.
+      */
+      static getSkippingParser(until) {
+        return new class extends Parser {
+          createParse(input2, fragments, ranges) {
+            let from = ranges[0].from, to2 = ranges[ranges.length - 1].to;
+            let parser2 = {
+              parsedPos: from,
+              advance() {
+                let cx = currentContext;
+                if (cx) {
+                  for (let r2 of ranges)
+                    cx.tempSkipped.push(r2);
+                  if (until)
+                    cx.scheduleOn = cx.scheduleOn ? Promise.all([cx.scheduleOn, until]) : until;
+                }
+                this.parsedPos = to2;
+                return new Tree(NodeType.none, [], [], to2 - from);
+              },
+              stoppedAt: null,
+              stopAt() {
+              }
+            };
+            return parser2;
+          }
+        }();
+      }
+      /**
+      @internal
+      */
+      isDone(upto) {
+        upto = Math.min(upto, this.state.doc.length);
+        let frags = this.fragments;
+        return this.treeLen >= upto && frags.length && frags[0].from == 0 && frags[0].to >= upto;
+      }
+      /**
+      Get the context for the current parse, or `null` if no editor
+      parse is in progress.
+      */
+      static get() {
+        return currentContext;
+      }
+    }
+    function cutFragments(fragments, from, to2) {
+      return TreeFragment.applyChanges(fragments, [{ fromA: from, toA: to2, fromB: from, toB: to2 }]);
+    }
+    class LanguageState {
+      constructor(context) {
+        this.context = context;
+        this.tree = context.tree;
+      }
+      apply(tr2) {
+        if (!tr2.docChanged && this.tree == this.context.tree)
+          return this;
+        let newCx = this.context.changes(tr2.changes, tr2.state);
+        let upto = this.context.treeLen == tr2.startState.doc.length ? void 0 : Math.max(tr2.changes.mapPos(this.context.treeLen), newCx.viewport.to);
+        if (!newCx.work(20, upto))
+          newCx.takeTree();
+        return new LanguageState(newCx);
+      }
+      static init(state) {
+        let vpTo = Math.min(3e3, state.doc.length);
+        let parseState2 = ParseContext.create(state.facet(language$1).parser, state, { from: 0, to: vpTo });
+        if (!parseState2.work(20, vpTo))
+          parseState2.takeTree();
+        return new LanguageState(parseState2);
+      }
+    }
+    Language.state = /* @__PURE__ */ StateField.define({
+      create: LanguageState.init,
+      update(value2, tr2) {
+        for (let e of tr2.effects)
+          if (e.is(Language.setState))
+            return e.value;
+        if (tr2.startState.facet(language$1) != tr2.state.facet(language$1))
+          return LanguageState.init(tr2.state);
+        return value2.apply(tr2);
+      }
+    });
+    let requestIdle = (callback) => {
+      let timeout = setTimeout(
+        () => callback(),
+        500
+        /* Work.MaxPause */
+      );
+      return () => clearTimeout(timeout);
+    };
+    if (typeof requestIdleCallback != "undefined")
+      requestIdle = (callback) => {
+        let idle = -1, timeout = setTimeout(
+          () => {
+            idle = requestIdleCallback(callback, {
+              timeout: 500 - 100
+              /* Work.MinPause */
+            });
+          },
+          100
+          /* Work.MinPause */
+        );
+        return () => idle < 0 ? clearTimeout(timeout) : cancelIdleCallback(idle);
+      };
+    const isInputPending = typeof navigator != "undefined" && ((_a = navigator.scheduling) === null || _a === void 0 ? void 0 : _a.isInputPending) ? () => navigator.scheduling.isInputPending() : null;
+    const parseWorker = /* @__PURE__ */ ViewPlugin.fromClass(class ParseWorker {
+      constructor(view) {
+        this.view = view;
+        this.working = null;
+        this.workScheduled = 0;
+        this.chunkEnd = -1;
+        this.chunkBudget = -1;
+        this.work = this.work.bind(this);
+        this.scheduleWork();
+      }
+      update(update) {
+        let cx = this.view.state.field(Language.state).context;
+        if (cx.updateViewport(update.view.viewport) || this.view.viewport.to > cx.treeLen)
+          this.scheduleWork();
+        if (update.docChanged || update.selectionSet) {
+          if (this.view.hasFocus)
+            this.chunkBudget += 50;
+          this.scheduleWork();
+        }
+        this.checkAsyncSchedule(cx);
+      }
+      scheduleWork() {
+        if (this.working)
+          return;
+        let { state } = this.view, field = state.field(Language.state);
+        if (field.tree != field.context.tree || !field.context.isDone(state.doc.length))
+          this.working = requestIdle(this.work);
+      }
+      work(deadline) {
+        this.working = null;
+        let now = Date.now();
+        if (this.chunkEnd < now && (this.chunkEnd < 0 || this.view.hasFocus)) {
+          this.chunkEnd = now + 3e4;
+          this.chunkBudget = 3e3;
+        }
+        if (this.chunkBudget <= 0)
+          return;
+        let { state, viewport: { to: vpTo } } = this.view, field = state.field(Language.state);
+        if (field.tree == field.context.tree && field.context.isDone(
+          vpTo + 1e5
+          /* Work.MaxParseAhead */
+        ))
+          return;
+        let endTime = Date.now() + Math.min(this.chunkBudget, 100, deadline && !isInputPending ? Math.max(25, deadline.timeRemaining() - 5) : 1e9);
+        let viewportFirst = field.context.treeLen < vpTo && state.doc.length > vpTo + 1e3;
+        let done = field.context.work(() => {
+          return isInputPending && isInputPending() || Date.now() > endTime;
+        }, vpTo + (viewportFirst ? 0 : 1e5));
+        this.chunkBudget -= Date.now() - now;
+        if (done || this.chunkBudget <= 0) {
+          field.context.takeTree();
+          this.view.dispatch({ effects: Language.setState.of(new LanguageState(field.context)) });
+        }
+        if (this.chunkBudget > 0 && !(done && !viewportFirst))
+          this.scheduleWork();
+        this.checkAsyncSchedule(field.context);
+      }
+      checkAsyncSchedule(cx) {
+        if (cx.scheduleOn) {
+          this.workScheduled++;
+          cx.scheduleOn.then(() => this.scheduleWork()).catch((err2) => logException(this.view.state, err2)).then(() => this.workScheduled--);
+          cx.scheduleOn = null;
+        }
+      }
+      destroy() {
+        if (this.working)
+          this.working();
+      }
+      isWorking() {
+        return !!(this.working || this.workScheduled > 0);
+      }
+    }, {
+      eventHandlers: { focus() {
+        this.scheduleWork();
+      } }
+    });
+    const language$1 = /* @__PURE__ */ Facet.define({
+      combine(languages) {
+        return languages.length ? languages[0] : null;
+      },
+      enables: (language2) => [
+        Language.state,
+        parseWorker,
+        EditorView.contentAttributes.compute([language2], (state) => {
+          let lang2 = state.facet(language2);
+          return lang2 && lang2.name ? { "data-language": lang2.name } : {};
+        })
+      ]
+    });
+    const indentService = /* @__PURE__ */ Facet.define();
+    const indentUnit = /* @__PURE__ */ Facet.define({
+      combine: (values) => {
+        if (!values.length)
+          return "  ";
+        let unit = values[0];
+        if (!unit || /\S/.test(unit) || Array.from(unit).some((e) => e != unit[0]))
+          throw new Error("Invalid indent unit: " + JSON.stringify(values[0]));
+        return unit;
+      }
+    });
+    function getIndentUnit(state) {
+      let unit = state.facet(indentUnit);
+      return unit.charCodeAt(0) == 9 ? state.tabSize * unit.length : unit.length;
+    }
+    function indentString(state, cols) {
+      let result2 = "", ts = state.tabSize, ch3 = state.facet(indentUnit)[0];
+      if (ch3 == "	") {
+        while (cols >= ts) {
+          result2 += "	";
+          cols -= ts;
+        }
+        ch3 = " ";
+      }
+      for (let i2 = 0; i2 < cols; i2++)
+        result2 += ch3;
+      return result2;
+    }
+    function getIndentation(context, pos2) {
+      if (context instanceof EditorState)
+        context = new IndentContext(context);
+      for (let service of context.state.facet(indentService)) {
+        let result2 = service(context, pos2);
+        if (result2 !== void 0)
+          return result2;
+      }
+      let tree = syntaxTree(context.state);
+      return tree.length >= pos2 ? syntaxIndentation(context, tree, pos2) : null;
+    }
+    class IndentContext {
+      /**
+      Create an indent context.
+      */
+      constructor(state, options2 = {}) {
+        this.state = state;
+        this.options = options2;
+        this.unit = getIndentUnit(state);
+      }
+      /**
+      Get a description of the line at the given position, taking
+      [simulated line
+      breaks](https://codemirror.net/6/docs/ref/#language.IndentContext.constructor^options.simulateBreak)
+      into account. If there is such a break at `pos`, the `bias`
+      argument determines whether the part of the line line before or
+      after the break is used.
+      */
+      lineAt(pos2, bias = 1) {
+        let line2 = this.state.doc.lineAt(pos2);
+        let { simulateBreak, simulateDoubleBreak } = this.options;
+        if (simulateBreak != null && simulateBreak >= line2.from && simulateBreak <= line2.to) {
+          if (simulateDoubleBreak && simulateBreak == pos2)
+            return { text: "", from: pos2 };
+          else if (bias < 0 ? simulateBreak < pos2 : simulateBreak <= pos2)
+            return { text: line2.text.slice(simulateBreak - line2.from), from: simulateBreak };
+          else
+            return { text: line2.text.slice(0, simulateBreak - line2.from), from: line2.from };
+        }
+        return line2;
+      }
+      /**
+      Get the text directly after `pos`, either the entire line
+      or the next 100 characters, whichever is shorter.
+      */
+      textAfterPos(pos2, bias = 1) {
+        if (this.options.simulateDoubleBreak && pos2 == this.options.simulateBreak)
+          return "";
+        let { text: text2, from } = this.lineAt(pos2, bias);
+        return text2.slice(pos2 - from, Math.min(text2.length, pos2 + 100 - from));
+      }
+      /**
+      Find the column for the given position.
+      */
+      column(pos2, bias = 1) {
+        let { text: text2, from } = this.lineAt(pos2, bias);
+        let result2 = this.countColumn(text2, pos2 - from);
+        let override = this.options.overrideIndentation ? this.options.overrideIndentation(from) : -1;
+        if (override > -1)
+          result2 += override - this.countColumn(text2, text2.search(/\S|$/));
+        return result2;
+      }
+      /**
+      Find the column position (taking tabs into account) of the given
+      position in the given string.
+      */
+      countColumn(line2, pos2 = line2.length) {
+        return countColumn(line2, this.state.tabSize, pos2);
+      }
+      /**
+      Find the indentation column of the line at the given point.
+      */
+      lineIndent(pos2, bias = 1) {
+        let { text: text2, from } = this.lineAt(pos2, bias);
+        let override = this.options.overrideIndentation;
+        if (override) {
+          let overriden = override(from);
+          if (overriden > -1)
+            return overriden;
+        }
+        return this.countColumn(text2, text2.search(/\S|$/));
+      }
+      /**
+      Returns the [simulated line
+      break](https://codemirror.net/6/docs/ref/#language.IndentContext.constructor^options.simulateBreak)
+      for this context, if any.
+      */
+      get simulatedBreak() {
+        return this.options.simulateBreak || null;
+      }
+    }
+    const indentNodeProp = /* @__PURE__ */ new NodeProp();
+    function syntaxIndentation(cx, ast2, pos2) {
+      let stack2 = ast2.resolveStack(pos2);
+      let inner = ast2.resolveInner(pos2, -1).resolve(pos2, 0).enterUnfinishedNodesBefore(pos2);
+      if (inner != stack2.node) {
+        let add2 = [];
+        for (let cur2 = inner; cur2 && !(cur2.from == stack2.node.from && cur2.type == stack2.node.type); cur2 = cur2.parent)
+          add2.push(cur2);
+        for (let i2 = add2.length - 1; i2 >= 0; i2--)
+          stack2 = { node: add2[i2], next: stack2 };
+      }
+      return indentFor(stack2, cx, pos2);
+    }
+    function indentFor(stack2, cx, pos2) {
+      for (let cur2 = stack2; cur2; cur2 = cur2.next) {
+        let strategy = indentStrategy(cur2.node);
+        if (strategy)
+          return strategy(TreeIndentContext.create(cx, pos2, cur2));
+      }
+      return 0;
+    }
+    function ignoreClosed(cx) {
+      return cx.pos == cx.options.simulateBreak && cx.options.simulateDoubleBreak;
+    }
+    function indentStrategy(tree) {
+      let strategy = tree.type.prop(indentNodeProp);
+      if (strategy)
+        return strategy;
+      let first = tree.firstChild, close2;
+      if (first && (close2 = first.type.prop(NodeProp.closedBy))) {
+        let last = tree.lastChild, closed = last && close2.indexOf(last.name) > -1;
+        return (cx) => delimitedStrategy(cx, true, 1, void 0, closed && !ignoreClosed(cx) ? last.from : void 0);
+      }
+      return tree.parent == null ? topIndent : null;
+    }
+    function topIndent() {
+      return 0;
+    }
+    class TreeIndentContext extends IndentContext {
+      constructor(base2, pos2, context) {
+        super(base2.state, base2.options);
+        this.base = base2;
+        this.pos = pos2;
+        this.context = context;
+      }
+      /**
+      The syntax tree node to which the indentation strategy
+      applies.
+      */
+      get node() {
+        return this.context.node;
+      }
+      /**
+      @internal
+      */
+      static create(base2, pos2, context) {
+        return new TreeIndentContext(base2, pos2, context);
+      }
+      /**
+      Get the text directly after `this.pos`, either the entire line
+      or the next 100 characters, whichever is shorter.
+      */
+      get textAfter() {
+        return this.textAfterPos(this.pos);
+      }
+      /**
+      Get the indentation at the reference line for `this.node`, which
+      is the line on which it starts, unless there is a node that is
+      _not_ a parent of this node covering the start of that line. If
+      so, the line at the start of that node is tried, again skipping
+      on if it is covered by another such node.
+      */
+      get baseIndent() {
+        return this.baseIndentFor(this.node);
+      }
+      /**
+      Get the indentation for the reference line of the given node
+      (see [`baseIndent`](https://codemirror.net/6/docs/ref/#language.TreeIndentContext.baseIndent)).
+      */
+      baseIndentFor(node2) {
+        let line2 = this.state.doc.lineAt(node2.from);
+        for (; ; ) {
+          let atBreak = node2.resolve(line2.from);
+          while (atBreak.parent && atBreak.parent.from == atBreak.from)
+            atBreak = atBreak.parent;
+          if (isParent(atBreak, node2))
+            break;
+          line2 = this.state.doc.lineAt(atBreak.from);
+        }
+        return this.lineIndent(line2.from);
+      }
+      /**
+      Continue looking for indentations in the node's parent nodes,
+      and return the result of that.
+      */
+      continue() {
+        return indentFor(this.context.next, this.base, this.pos);
+      }
+    }
+    function isParent(parent, of) {
+      for (let cur2 = of; cur2; cur2 = cur2.parent)
+        if (parent == cur2)
+          return true;
+      return false;
+    }
+    function bracketedAligned(context) {
+      let tree = context.node;
+      let openToken = tree.childAfter(tree.from), last = tree.lastChild;
+      if (!openToken)
+        return null;
+      let sim2 = context.options.simulateBreak;
+      let openLine = context.state.doc.lineAt(openToken.from);
+      let lineEnd = sim2 == null || sim2 <= openLine.from ? openLine.to : Math.min(openLine.to, sim2);
+      for (let pos2 = openToken.to; ; ) {
+        let next = tree.childAfter(pos2);
+        if (!next || next == last)
+          return null;
+        if (!next.type.isSkipped) {
+          if (next.from >= lineEnd)
+            return null;
+          let space = /^ */.exec(openLine.text.slice(openToken.to - openLine.from))[0].length;
+          return { from: openToken.from, to: openToken.to + space };
+        }
+        pos2 = next.to;
+      }
+    }
+    function delimitedStrategy(context, align, units, closing, closedAt) {
+      let after = context.textAfter, space = after.match(/^\s*/)[0].length;
+      let closed = closing && after.slice(space, space + closing.length) == closing || closedAt == context.pos + space;
+      let aligned = bracketedAligned(context);
+      if (aligned)
+        return closed ? context.column(aligned.from) : context.column(aligned.to);
+      return context.baseIndent + (closed ? 0 : context.unit * units);
+    }
+    const DefaultScanDist = 1e4, DefaultBrackets = "()[]{}";
+    const bracketMatchingHandle = /* @__PURE__ */ new NodeProp();
+    function matchingNodes(node2, dir, brackets) {
+      let byProp = node2.prop(dir < 0 ? NodeProp.openedBy : NodeProp.closedBy);
+      if (byProp)
+        return byProp;
+      if (node2.name.length == 1) {
+        let index = brackets.indexOf(node2.name);
+        if (index > -1 && index % 2 == (dir < 0 ? 1 : 0))
+          return [brackets[index + dir]];
+      }
+      return null;
+    }
+    function findHandle(node2) {
+      let hasHandle = node2.type.prop(bracketMatchingHandle);
+      return hasHandle ? hasHandle(node2.node) : node2;
+    }
+    function matchBrackets(state, pos2, dir, config2 = {}) {
+      let maxScanDistance = config2.maxScanDistance || DefaultScanDist, brackets = config2.brackets || DefaultBrackets;
+      let tree = syntaxTree(state), node2 = tree.resolveInner(pos2, dir);
+      for (let cur2 = node2; cur2; cur2 = cur2.parent) {
+        let matches = matchingNodes(cur2.type, dir, brackets);
+        if (matches && cur2.from < cur2.to) {
+          let handle = findHandle(cur2);
+          if (handle && (dir > 0 ? pos2 >= handle.from && pos2 < handle.to : pos2 > handle.from && pos2 <= handle.to))
+            return matchMarkedBrackets(state, pos2, dir, cur2, handle, matches, brackets);
+        }
+      }
+      return matchPlainBrackets(state, pos2, dir, tree, node2.type, maxScanDistance, brackets);
+    }
+    function matchMarkedBrackets(_state, _pos, dir, token2, handle, matching, brackets) {
+      let parent = token2.parent, firstToken = { from: handle.from, to: handle.to };
+      let depth = 0, cursor = parent === null || parent === void 0 ? void 0 : parent.cursor();
+      if (cursor && (dir < 0 ? cursor.childBefore(token2.from) : cursor.childAfter(token2.to)))
+        do {
+          if (dir < 0 ? cursor.to <= token2.from : cursor.from >= token2.to) {
+            if (depth == 0 && matching.indexOf(cursor.type.name) > -1 && cursor.from < cursor.to) {
+              let endHandle = findHandle(cursor);
+              return { start: firstToken, end: endHandle ? { from: endHandle.from, to: endHandle.to } : void 0, matched: true };
+            } else if (matchingNodes(cursor.type, dir, brackets)) {
+              depth++;
+            } else if (matchingNodes(cursor.type, -dir, brackets)) {
+              if (depth == 0) {
+                let endHandle = findHandle(cursor);
+                return {
+                  start: firstToken,
+                  end: endHandle && endHandle.from < endHandle.to ? { from: endHandle.from, to: endHandle.to } : void 0,
+                  matched: false
+                };
+              }
+              depth--;
+            }
+          }
+        } while (dir < 0 ? cursor.prevSibling() : cursor.nextSibling());
+      return { start: firstToken, matched: false };
+    }
+    function matchPlainBrackets(state, pos2, dir, tree, tokenType, maxScanDistance, brackets) {
+      let startCh = dir < 0 ? state.sliceDoc(pos2 - 1, pos2) : state.sliceDoc(pos2, pos2 + 1);
+      let bracket2 = brackets.indexOf(startCh);
+      if (bracket2 < 0 || bracket2 % 2 == 0 != dir > 0)
+        return null;
+      let startToken = { from: dir < 0 ? pos2 - 1 : pos2, to: dir > 0 ? pos2 + 1 : pos2 };
+      let iter = state.doc.iterRange(pos2, dir > 0 ? state.doc.length : 0), depth = 0;
+      for (let distance = 0; !iter.next().done && distance <= maxScanDistance; ) {
+        let text2 = iter.value;
+        if (dir < 0)
+          distance += text2.length;
+        let basePos = pos2 + distance * dir;
+        for (let pos3 = dir > 0 ? 0 : text2.length - 1, end2 = dir > 0 ? text2.length : -1; pos3 != end2; pos3 += dir) {
+          let found = brackets.indexOf(text2[pos3]);
+          if (found < 0 || tree.resolveInner(basePos + pos3, 1).type != tokenType)
+            continue;
+          if (found % 2 == 0 == dir > 0) {
+            depth++;
+          } else if (depth == 1) {
+            return { start: startToken, end: { from: basePos + pos3, to: basePos + pos3 + 1 }, matched: found >> 1 == bracket2 >> 1 };
+          } else {
+            depth--;
+          }
+        }
+        if (dir > 0)
+          distance += text2.length;
+      }
+      return iter.done ? { start: startToken, matched: false } : null;
+    }
+    const noTokens = /* @__PURE__ */ Object.create(null);
+    const typeArray = [NodeType.none];
+    const warned = [];
+    const byTag = /* @__PURE__ */ Object.create(null);
+    const defaultTable = /* @__PURE__ */ Object.create(null);
+    for (let [legacyName, name2] of [
+      ["variable", "variableName"],
+      ["variable-2", "variableName.special"],
+      ["string-2", "string.special"],
+      ["def", "variableName.definition"],
+      ["tag", "tagName"],
+      ["attribute", "attributeName"],
+      ["type", "typeName"],
+      ["builtin", "variableName.standard"],
+      ["qualifier", "modifier"],
+      ["error", "invalid"],
+      ["header", "heading"],
+      ["property", "propertyName"]
+    ])
+      defaultTable[legacyName] = /* @__PURE__ */ createTokenType(noTokens, name2);
+    function warnForPart(part2, msg) {
+      if (warned.indexOf(part2) > -1)
+        return;
+      warned.push(part2);
+      console.warn(msg);
+    }
+    function createTokenType(extra, tagStr) {
+      let tags$1 = [];
+      for (let name3 of tagStr.split(" ")) {
+        let found = [];
+        for (let part2 of name3.split(".")) {
+          let value2 = extra[part2] || tags[part2];
+          if (!value2) {
+            warnForPart(part2, `Unknown highlighting tag ${part2}`);
+          } else if (typeof value2 == "function") {
+            if (!found.length)
+              warnForPart(part2, `Modifier ${part2} used at start of tag`);
+            else
+              found = found.map(value2);
+          } else {
+            if (found.length)
+              warnForPart(part2, `Tag ${part2} used as modifier`);
+            else
+              found = Array.isArray(value2) ? value2 : [value2];
+          }
+        }
+        for (let tag of found)
+          tags$1.push(tag);
+      }
+      if (!tags$1.length)
+        return 0;
+      let name2 = tagStr.replace(/ /g, "_"), key2 = name2 + " " + tags$1.map((t2) => t2.id);
+      let known = byTag[key2];
+      if (known)
+        return known.id;
+      let type = byTag[key2] = NodeType.define({
+        id: typeArray.length,
+        name: name2,
+        props: [styleTags({ [name2]: tags$1 })]
+      });
+      typeArray.push(type);
+      return type.id;
+    }
+    ({
+      rtl: /* @__PURE__ */ Decoration.mark({ class: "cm-iso", inclusive: true, attributes: { dir: "rtl" }, bidiIsolate: Direction.RTL }),
+      ltr: /* @__PURE__ */ Decoration.mark({ class: "cm-iso", inclusive: true, attributes: { dir: "ltr" }, bidiIsolate: Direction.LTR })
+    });
     const toggleComment = (target2) => {
       let { state } = target2, line2 = state.doc.lineAt(state.selection.main.from), config2 = getConfig(target2.state, line2.from);
       return config2.line ? toggleLineComment(target2) : config2.block ? toggleBlockCommentByLine(target2) : false;
@@ -154878,7 +151831,7 @@ Supported expressions:
   • Set operations: in, not in; e.g. "x in (2, 3, 5)"
   • Functions: min, max, abs, round, floor, ceil, sqrt, log, log2, log10
 `.trim();
-    const highlightStyle = HighlightStyle.define([
+    const highlightStyle = HighlightStyle$1.define([
       { tag: tags.string, class: "token string" },
       { tag: tags.number, class: "token number" },
       { tag: tags.keyword, class: "token keyword" }
@@ -155021,7 +151974,7 @@ Supported expressions:
               updateListenerCompartment.current.of(makeUpdateListener()),
               EditorView.domEventHandlers({ focus: handleFocus }),
               language,
-              syntaxHighlighting(highlightStyle),
+              syntaxHighlighting$1(highlightStyle),
               autocompletionCompartment.current.of(makeAutocompletion()),
               linterCompartment.current.of(makeLinter())
             ]
