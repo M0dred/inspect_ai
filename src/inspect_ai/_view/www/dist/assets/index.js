@@ -103506,6 +103506,10 @@ self.onmessage = function (e) {
           Expires: "0",
           "Cache-Control": "no-cache"
         };
+        if (getHeaders) {
+          const globalHeaders = await getHeaders();
+          Object.assign(headers, globalHeaders);
+        }
         const response = await fetch(url, {
           method,
           headers,
@@ -103802,7 +103806,7 @@ self.onmessage = function (e) {
       }
     }
     async function eval_set() {
-      throw new Error("TODO: Eval set is not supported in VS Code");
+      return void 0;
     }
     async function eval_log(log_file, headerOnly, capabilities2) {
       const response = await vscodeClient(kMethodEvalLog, [log_file, headerOnly]);
@@ -104582,9 +104586,25 @@ ${citation.url}` : citation.url,
           descriptionArg: "description",
           contentType: "bash"
         };
+      } else if (toolName === "shell") {
+        return {
+          inputArg: "command",
+          contentType: "bash",
+          inputToStr: (input2) => {
+            if (Array.isArray(input2)) {
+              return input2.join(" ");
+            }
+            return void 0;
+          }
+        };
       } else if (toolName == "TodoWrite") {
         return {
           inputArg: "todos",
+          contentType: kToolTodoContentType
+        };
+      } else if (toolName == "update_plan") {
+        return {
+          inputArg: "plan",
           contentType: kToolTodoContentType
         };
       } else {
@@ -104606,7 +104626,7 @@ ${citation.url}` : citation.url,
         const base2 = {};
         if (inputDescriptor.inputArg && args2[inputDescriptor.inputArg]) {
           filterKeys.add(inputDescriptor.inputArg);
-          base2.input = args2[inputDescriptor.inputArg];
+          base2.input = inputDescriptor.inputToStr ? inputDescriptor.inputToStr(args2[inputDescriptor.inputArg]) || args2[inputDescriptor.inputArg] : args2[inputDescriptor.inputArg];
         }
         if (inputDescriptor.descriptionArg && args2[inputDescriptor.descriptionArg]) {
           filterKeys.add(inputDescriptor.descriptionArg);
@@ -104649,8 +104669,15 @@ ${citation.url}` : citation.url,
       inProgress
     };
     const toToolTodos = (obj) => {
-      if (Array.isArray(obj) && obj.every((item2) => typeof item2 === "object") && obj.every((item2) => item2 !== null && "content" in item2 && "status" in item2)) {
-        return obj;
+      if (Array.isArray(obj) && obj.every((item2) => typeof item2 === "object") && obj.every(
+        (item2) => item2 !== null && ("content" in item2 || "step" in item2) && "status" in item2
+      )) {
+        return obj.map((o) => {
+          return {
+            content: o.content || o.step || "",
+            status: o.status
+          };
+        });
       } else {
         return [];
       }
@@ -116008,9 +116035,11 @@ categories: ${categories.join(" ")}`;
       approval: "Approval",
       input: "Input",
       score: "Score",
+      score_edit: "Score Edit",
       error: "Error",
       logger: "Logger",
       info: "Info",
+      step: "Step",
       subtask: "Subtask"
     };
     const useTranscriptFilter = () => {
