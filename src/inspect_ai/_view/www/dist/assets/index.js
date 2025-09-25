@@ -103552,6 +103552,7 @@ self.onmessage = function (e) {
         return logs.parsed;
       };
       const eval_set2 = async (dir) => {
+        if (logDir) dir ??= logDir;
         const path = dir ? `/eval-set?dir=${encodeURIComponent(dir)}` : "/eval-set";
         try {
           const result2 = await requestApi.fetchString("GET", path);
