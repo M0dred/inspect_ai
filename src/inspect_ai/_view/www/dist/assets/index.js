@@ -21758,11 +21758,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       if (isFrozen(obj) || isDraft(obj) || !isDraftable(obj))
         return obj;
       if (getArchtype(obj) > 1) {
-        obj.set = obj.add = obj.clear = obj.delete = dontMutateFrozenCollections;
+        Object.defineProperties(obj, {
+          set: { value: dontMutateFrozenCollections },
+          add: { value: dontMutateFrozenCollections },
+          clear: { value: dontMutateFrozenCollections },
+          delete: { value: dontMutateFrozenCollections }
+        });
       }
       Object.freeze(obj);
       if (deep)
-        Object.entries(obj).forEach(([key2, value2]) => freeze(value2, true));
+        Object.values(obj).forEach((value2) => freeze(value2, true));
       return obj;
     }
     function dontMutateFrozenCollections() {
@@ -21919,7 +21924,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           return;
         }
         finalize(rootScope, childValue);
-        if ((!parentState || !parentState.scope_.parent_) && typeof prop2 !== "symbol" && Object.prototype.propertyIsEnumerable.call(targetObject, prop2))
+        if ((!parentState || !parentState.scope_.parent_) && typeof prop2 !== "symbol" && (isMap(targetObject) ? targetObject.has(prop2) : Object.prototype.propertyIsEnumerable.call(targetObject, prop2)))
           maybeFreeze(rootScope, childValue);
       }
     }
@@ -22512,14 +22517,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     var immer$1 = new Immer2();
     var produce = immer$1.produce;
-    immer$1.produceWithPatches.bind(
-      immer$1
-    );
-    immer$1.setAutoFreeze.bind(immer$1);
-    immer$1.setUseStrictShallowCopy.bind(immer$1);
-    immer$1.applyPatches.bind(immer$1);
-    immer$1.createDraft.bind(immer$1);
-    immer$1.finishDraft.bind(immer$1);
     const createStoreImpl = (createState) => {
       let state;
       const listeners = /* @__PURE__ */ new Set();
