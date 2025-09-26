@@ -145589,15 +145589,19 @@ ${events}
     const pickedCompletion = /* @__PURE__ */ Annotation.define();
     function insertCompletionText(state, text2, from, to2) {
       let { main: main2 } = state.selection, fromOff = from - main2.from, toOff = to2 - main2.from;
-      return Object.assign(Object.assign({}, state.changeByRange((range2) => {
-        if (range2 != main2 && from != to2 && state.sliceDoc(range2.from + fromOff, range2.from + toOff) != state.sliceDoc(from, to2))
-          return { range: range2 };
-        let lines = state.toText(text2);
-        return {
-          changes: { from: range2.from + fromOff, to: to2 == main2.from ? range2.to : range2.from + toOff, insert: lines },
-          range: EditorSelection.cursor(range2.from + fromOff + lines.length)
-        };
-      })), { scrollIntoView: true, userEvent: "input.complete" });
+      return {
+        ...state.changeByRange((range2) => {
+          if (range2 != main2 && from != to2 && state.sliceDoc(range2.from + fromOff, range2.from + toOff) != state.sliceDoc(from, to2))
+            return { range: range2 };
+          let lines = state.toText(text2);
+          return {
+            changes: { from: range2.from + fromOff, to: to2 == main2.from ? range2.to : range2.from + toOff, insert: lines },
+            range: EditorSelection.cursor(range2.from + fromOff + lines.length)
+          };
+        }),
+        scrollIntoView: true,
+        userEvent: "input.complete"
+      };
     }
     const SourceCache = /* @__PURE__ */ new WeakMap();
     function asSource(source2) {
@@ -146117,7 +146121,7 @@ ${events}
     }
     function sortOptions(active, state) {
       let options2 = [];
-      let sections = null;
+      let sections = null, dynamicSectionScore = null;
       let addOption = (option) => {
         options2.push(option);
         let { section: section2 } = option.completion;
@@ -146143,15 +146147,21 @@ ${events}
             for (let option of a.result.options)
               if (match = matcher.match(option.label)) {
                 let matched = !option.displayLabel ? match.matched : getMatch ? getMatch(option, match.matched) : [];
-                addOption(new Option(option, a.source, matched, match.score + (option.boost || 0)));
+                let score2 = match.score + (option.boost || 0);
+                addOption(new Option(option, a.source, matched, score2));
+                if (typeof option.section == "object" && option.section.rank === "dynamic") {
+                  let { name: name2 } = option.section;
+                  if (!dynamicSectionScore)
+                    dynamicSectionScore = /* @__PURE__ */ Object.create(null);
+                  dynamicSectionScore[name2] = Math.max(score2, dynamicSectionScore[name2] || -1e9);
+                }
               }
           }
         }
       if (sections) {
         let sectionOrder = /* @__PURE__ */ Object.create(null), pos2 = 0;
         let cmp = (a, b) => {
-          var _a2, _b2;
-          return ((_a2 = a.rank) !== null && _a2 !== void 0 ? _a2 : 1e9) - ((_b2 = b.rank) !== null && _b2 !== void 0 ? _b2 : 1e9) || (a.name < b.name ? -1 : 1);
+          return (a.rank === "dynamic" && b.rank === "dynamic" ? dynamicSectionScore[b.name] - dynamicSectionScore[a.name] : 0) || (typeof a.rank == "number" ? a.rank : 1e9) - (typeof b.rank == "number" ? b.rank : 1e9) || (a.name < b.name ? -1 : 1);
         };
         for (let s of sections.sort(cmp)) {
           pos2 -= 1e5;
@@ -146209,7 +146219,7 @@ ${events}
         }, prev ? prev.timestamp : Date.now(), selected2, false);
       }
       map(changes) {
-        return new CompletionDialog(this.options, this.attrs, Object.assign(Object.assign({}, this.tooltip), { pos: changes.mapPos(this.tooltip.pos) }), this.timestamp, this.selected, this.disabled);
+        return new CompletionDialog(this.options, this.attrs, { ...this.tooltip, pos: changes.mapPos(this.tooltip.pos) }, this.timestamp, this.selected, this.disabled);
       }
       setDisabled() {
         return new CompletionDialog(this.options, this.attrs, this.tooltip, this.timestamp, this.selected, true);
@@ -146437,7 +146447,10 @@ ${events}
       if (!(result2 instanceof ActiveResult))
         return false;
       if (typeof apply == "string")
-        view.dispatch(Object.assign(Object.assign({}, insertCompletionText(view.state, apply, result2.from, result2.to)), { annotations: pickedCompletion.of(option.completion) }));
+        view.dispatch({
+          ...insertCompletionText(view.state, apply, result2.from, result2.to),
+          annotations: pickedCompletion.of(option.completion)
+        });
       else
         apply(view, option.completion, result2.from, result2.to);
       return true;
@@ -146798,6 +146811,7 @@ ${events}
     const completionKeymap = [
       { key: "Ctrl-Space", run: startCompletion },
       { mac: "Alt-`", run: startCompletion },
+      { mac: "Alt-i", run: startCompletion },
       { key: "Escape", run: closeCompletion },
       { key: "ArrowDown", run: /* @__PURE__ */ moveCompletionSelection(true) },
       { key: "ArrowUp", run: /* @__PURE__ */ moveCompletionSelection(false) },
