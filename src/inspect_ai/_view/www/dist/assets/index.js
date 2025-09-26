@@ -118220,345 +118220,6 @@ categories: ${categories.join(" ")}`;
         this.depth = depth;
       }
     }
-    function treeifyEvents(events, depth) {
-      const useSpans = hasSpans(events);
-      const pathIndices = [];
-      const rootNodes = [];
-      const stack2 = [];
-      const treeifyFn = getTreeifyFunction();
-      const addNode = (event) => {
-        const currentDepth = stack2.length;
-        if (pathIndices.length <= currentDepth) {
-          pathIndices.push(0);
-        } else {
-          pathIndices[currentDepth]++;
-          pathIndices.length = currentDepth + 1;
-        }
-        const idPath = pathIndices.slice(0, currentDepth + 1).join(".");
-        const event_id = event.uuid || `event_node_${idPath}`;
-        const node2 = new EventNode(event_id, event, currentDepth + depth);
-        if (stack2.length > 0) {
-          const parentNode = stack2[stack2.length - 1];
-          parentNode.children.push(node2);
-        } else {
-          rootNodes.push(node2);
-        }
-        return node2;
-      };
-      const pushStack = (node2) => {
-        stack2.push(node2);
-      };
-      const popStack = () => {
-        stack2.pop();
-        pathIndices.pop();
-      };
-      events = injectScorersSpan(events);
-      events.forEach((event) => {
-        treeifyFn(event, addNode, pushStack, popStack);
-      });
-      if (useSpans) {
-        return transformTree(rootNodes);
-      } else {
-        return rootNodes;
-      }
-    }
-    const kBeginScorerId = "E617087FA405";
-    const kEndScorerId = "C39922B09481";
-    const kScorersSpanId = "C5A831026F2C";
-    const injectScorersSpan = (events) => {
-      const results = [];
-      const collectedScorerEvents = [];
-      let hasCollectedScorers = false;
-      let collecting = null;
-      const flushCollected = () => {
-        if (collectedScorerEvents.length > 0) {
-          const beginSpan = {
-            name: "scorers",
-            id: kBeginScorerId,
-            span_id: kScorersSpanId,
-            event: SPAN_BEGIN,
-            type: TYPE_SCORERS,
-            timestamp: collectedScorerEvents[0].timestamp,
-            working_start: collectedScorerEvents[0].working_start,
-            pending: false,
-            parent_id: null,
-            uuid: null,
-            metadata: null
-          };
-          const scoreEvents = collectedScorerEvents.map((event) => {
-            return {
-              ...event,
-              parent_id: event.event === "span_begin" ? event.parent_id || kScorersSpanId : null
-            };
-          });
-          const endSpan = {
-            id: kEndScorerId,
-            span_id: kScorersSpanId,
-            event: SPAN_END,
-            pending: false,
-            working_start: collectedScorerEvents[collectedScorerEvents.length - 1].working_start,
-            timestamp: collectedScorerEvents[collectedScorerEvents.length - 1].timestamp,
-            uuid: null,
-            metadata: null
-          };
-          collectedScorerEvents.length = 0;
-          hasCollectedScorers = true;
-          return [beginSpan, ...scoreEvents, endSpan];
-        }
-        return [];
-      };
-      for (const event of events) {
-        if (event.event === SPAN_BEGIN && event.type === TYPE_SCORERS) {
-          return events;
-        }
-        if (event.event === SPAN_BEGIN && event.type === TYPE_SCORER && !hasCollectedScorers) {
-          collecting = event.span_id;
-        }
-        if (collecting) {
-          if (event.event === SPAN_END && event.span_id === collecting) {
-            collecting = null;
-            results.push(...flushCollected());
-            results.push(event);
-          } else {
-            collectedScorerEvents.push(event);
-          }
-        } else {
-          results.push(event);
-        }
-      }
-      return results;
-    };
-    const getTreeifyFunction = () => {
-      const treeifyFn = (event, addNode, pushStack, popStack) => {
-        switch (event.event) {
-          case STEP:
-            if (event.action === ACTION_BEGIN) {
-              const node2 = addNode(event);
-              pushStack(node2);
-            } else {
-              popStack();
-            }
-            break;
-          case SPAN_BEGIN: {
-            const node2 = addNode(event);
-            pushStack(node2);
-            break;
-          }
-          case SPAN_END: {
-            popStack();
-            break;
-          }
-          case TOOL:
-            {
-              const node2 = addNode(event);
-              if (event.events.length > 0 && (event.events[0].event !== SPAN_BEGIN || event.events[0].type !== TYPE_TOOL)) {
-                pushStack(node2);
-                for (const child of event.events) {
-                  treeifyFn(child, addNode, pushStack, popStack);
-                }
-                popStack();
-              }
-            }
-            break;
-          case SUBTASK:
-            {
-              const node2 = addNode(event);
-              if (event.events.length > 0 && (event.events[0].event !== SPAN_BEGIN || event.events[0].type !== TYPE_SUBTASK)) {
-                pushStack(node2);
-                for (const child of event.events) {
-                  treeifyFn(child, addNode, pushStack, popStack);
-                }
-                popStack();
-              }
-            }
-            break;
-          default:
-            addNode(event);
-            break;
-        }
-      };
-      return treeifyFn;
-    };
-    const transformTree = (roots) => {
-      const treeNodeTransformers = transformers();
-      const visitNode = (node2) => {
-        let currentNodes = [node2];
-        currentNodes = currentNodes.map((n) => {
-          n.children = n.children.flatMap(visitNode);
-          return n;
-        });
-        for (const transformer of treeNodeTransformers) {
-          const nextNodes = [];
-          for (const currentNode of currentNodes) {
-            if (transformer.matches(currentNode)) {
-              const result2 = transformer.process(currentNode);
-              if (Array.isArray(result2)) {
-                nextNodes.push(...result2);
-              } else {
-                nextNodes.push(result2);
-              }
-            } else {
-              nextNodes.push(currentNode);
-            }
-          }
-          currentNodes = nextNodes;
-        }
-        return currentNodes.length === 1 ? currentNodes[0] : currentNodes;
-      };
-      const processedRoots = roots.flatMap(visitNode);
-      const flushedNodes = [];
-      for (const transformer of treeNodeTransformers) {
-        if (transformer.flush) {
-          const flushResults = transformer.flush();
-          if (flushResults && flushResults.length > 0) {
-            flushedNodes.push(...flushResults);
-          }
-        }
-      }
-      return [...processedRoots, ...flushedNodes];
-    };
-    const transformers = () => {
-      const treeNodeTransformers = [
-        {
-          name: "unwrap_tools",
-          matches: (node2) => node2.event.event === SPAN_BEGIN && node2.event.type === TYPE_TOOL,
-          process: (node2) => elevateChildNode(node2, TYPE_TOOL) || node2
-        },
-        {
-          name: "unwrap_subtasks",
-          matches: (node2) => node2.event.event === SPAN_BEGIN && node2.event.type === TYPE_SUBTASK,
-          process: (node2) => elevateChildNode(node2, TYPE_SUBTASK) || node2
-        },
-        {
-          name: "unwrap_agent_solver",
-          matches: (node2) => node2.event.event === SPAN_BEGIN && node2.event["type"] === TYPE_SOLVER && node2.children.length === 2 && node2.children[0].event.event === SPAN_BEGIN && node2.children[0].event.type === TYPE_AGENT && node2.children[1].event.event === STATE,
-          process: (node2) => skipFirstChildNode(node2)
-        },
-        {
-          name: "unwrap_agent_solver w/store",
-          matches: (node2) => node2.event.event === SPAN_BEGIN && node2.event["type"] === TYPE_SOLVER && node2.children.length === 3 && node2.children[0].event.event === SPAN_BEGIN && node2.children[0].event.type === TYPE_AGENT && node2.children[1].event.event === STATE && node2.children[2].event.event === STORE,
-          process: (node2) => skipFirstChildNode(node2)
-        },
-        {
-          name: "unwrap_handoff",
-          matches: (node2) => {
-            const isHandoffNode = node2.event.event === SPAN_BEGIN && node2.event["type"] === TYPE_HANDOFF;
-            if (!isHandoffNode) {
-              return false;
-            }
-            if (node2.children.length === 1) {
-              return node2.children[0].event.event === TOOL && !!node2.children[0].event.agent;
-            } else {
-              return node2.children.length === 2 && node2.children[0].event.event === TOOL && node2.children[1].event.event === STORE && node2.children[0].children.length === 2 && node2.children[0].children[0].event.event === SPAN_BEGIN && node2.children[0].children[0].event.type === TYPE_AGENT;
-            }
-          },
-          process: (node2) => skipThisNode(node2)
-        },
-        {
-          name: "discard_solvers_span",
-          matches: (Node2) => Node2.event.event === SPAN_BEGIN && Node2.event.type === TYPE_SOLVERS,
-          process: (node2) => {
-            const nodes = discardNode(node2);
-            return nodes;
-          }
-        }
-      ];
-      return treeNodeTransformers;
-    };
-    const elevateChildNode = (node2, childEventType) => {
-      const targetIndex = node2.children.findIndex(
-        (child) => child.event.event === childEventType
-      );
-      if (targetIndex === -1) {
-        console.log(
-          `No ${childEventType} event found in a span, this is very unexpected.`
-        );
-        return null;
-      }
-      const targetNode = { ...node2.children[targetIndex] };
-      const remainingChildren = node2.children.filter((_, i2) => i2 !== targetIndex);
-      targetNode.depth = node2.depth;
-      targetNode.children = setDepth(remainingChildren, node2.depth + 1);
-      return targetNode;
-    };
-    const skipFirstChildNode = (node2) => {
-      const agentSpan = node2.children.splice(0, 1)[0];
-      node2.children.unshift(...reduceDepth(agentSpan.children));
-      return node2;
-    };
-    const skipThisNode = (node2) => {
-      const newNode = { ...node2.children[0] };
-      newNode.depth = node2.depth;
-      newNode.children = reduceDepth(newNode.children, 2);
-      return newNode;
-    };
-    const discardNode = (node2) => {
-      const nodes = reduceDepth(node2.children, 1);
-      return nodes;
-    };
-    const reduceDepth = (nodes, depth = 1) => {
-      return nodes.map((node2) => {
-        if (node2.children.length > 0) {
-          node2.children = reduceDepth(node2.children, 1);
-        }
-        node2.depth = node2.depth - depth;
-        return node2;
-      });
-    };
-    const setDepth = (nodes, depth) => {
-      return nodes.map((node2) => {
-        if (node2.children.length > 0) {
-          node2.children = setDepth(node2.children, depth + 1);
-        }
-        node2.depth = depth;
-        return node2;
-      });
-    };
-    const flatTree = (eventNodes, collapsed2, visitors, parentNode) => {
-      const result2 = [];
-      for (const node2 of eventNodes) {
-        if (visitors && visitors.length > 0) {
-          let pendingNodes = [{ ...node2 }];
-          for (const visitor of visitors) {
-            const allResults = [];
-            for (const pendingNode of pendingNodes) {
-              const visitorResult = visitor.visit(pendingNode);
-              if (parentNode) {
-                parentNode.children = visitorResult;
-              }
-              allResults.push(...visitorResult);
-            }
-            pendingNodes = allResults;
-          }
-          for (const pendingNode of pendingNodes) {
-            const children2 = flatTree(
-              pendingNode.children,
-              collapsed2,
-              visitors,
-              pendingNode
-            );
-            pendingNode.children = children2;
-            result2.push(pendingNode);
-            if (collapsed2 === null || collapsed2[pendingNode.id] !== true) {
-              result2.push(...children2);
-            }
-          }
-          for (const visitor of visitors) {
-            if (visitor.flush) {
-              const finalNodes = visitor.flush();
-              result2.push(...finalNodes);
-            }
-          }
-        } else {
-          result2.push(node2);
-          const children2 = flatTree(node2.children, collapsed2, visitors, node2);
-          if (collapsed2 === null || collapsed2[node2.id] !== true) {
-            result2.push(...children2);
-          }
-        }
-      }
-      return result2;
-    };
     const kSandboxSignalName = "53787D8A-D3FC-426D-B383-9F880B70E4AA";
     const fixupEventStream = (events, filterPending = true) => {
       const collapsed2 = processPendingEvents(events, filterPending);
@@ -118699,6 +118360,51 @@ categories: ${categories.join(" ")}`;
         uuid: null,
         metadata: null
       };
+    };
+    const flatTree = (eventNodes, collapsed2, visitors, parentNode) => {
+      const result2 = [];
+      for (const node2 of eventNodes) {
+        if (visitors && visitors.length > 0) {
+          let pendingNodes = [{ ...node2 }];
+          for (const visitor of visitors) {
+            const allResults = [];
+            for (const pendingNode of pendingNodes) {
+              const visitorResult = visitor.visit(pendingNode);
+              if (parentNode) {
+                parentNode.children = visitorResult;
+              }
+              allResults.push(...visitorResult);
+            }
+            pendingNodes = allResults;
+          }
+          for (const pendingNode of pendingNodes) {
+            const children2 = flatTree(
+              pendingNode.children,
+              collapsed2,
+              visitors,
+              pendingNode
+            );
+            pendingNode.children = children2;
+            result2.push(pendingNode);
+            if (collapsed2 === null || collapsed2[pendingNode.id] !== true) {
+              result2.push(...children2);
+            }
+          }
+          for (const visitor of visitors) {
+            if (visitor.flush) {
+              const finalNodes = visitor.flush();
+              result2.push(...finalNodes);
+            }
+          }
+        } else {
+          result2.push(node2);
+          const children2 = flatTree(node2.children, collapsed2, visitors, node2);
+          if (collapsed2 === null || collapsed2[node2.id] !== true) {
+            result2.push(...children2);
+          }
+        }
+      }
+      return result2;
     };
     const parsePackageName = (name2) => {
       if (name2.includes("/")) {
@@ -128617,6 +128323,360 @@ ${events}
         }
       }
     );
+    const transformTree = (roots) => {
+      const treeNodeTransformers = transformers();
+      const visitNode = (node2) => {
+        let currentNodes = [node2];
+        currentNodes = currentNodes.map((n) => {
+          n.children = n.children.flatMap(visitNode);
+          return n;
+        });
+        for (const transformer of treeNodeTransformers) {
+          const nextNodes = [];
+          for (const currentNode of currentNodes) {
+            if (transformer.matches(currentNode)) {
+              const result2 = transformer.process(currentNode);
+              if (Array.isArray(result2)) {
+                nextNodes.push(...result2);
+              } else {
+                nextNodes.push(result2);
+              }
+            } else {
+              nextNodes.push(currentNode);
+            }
+          }
+          currentNodes = nextNodes;
+        }
+        return currentNodes.length === 1 ? currentNodes[0] : currentNodes;
+      };
+      const processedRoots = roots.flatMap(visitNode);
+      const flushedNodes = [];
+      for (const transformer of treeNodeTransformers) {
+        if (transformer.flush) {
+          const flushResults = transformer.flush();
+          if (flushResults && flushResults.length > 0) {
+            flushedNodes.push(...flushResults);
+          }
+        }
+      }
+      return [...processedRoots, ...flushedNodes];
+    };
+    const transformers = () => {
+      const treeNodeTransformers = [
+        {
+          name: "unwrap_tools",
+          matches: (node2) => node2.event.event === SPAN_BEGIN && node2.event.type === TYPE_TOOL,
+          process: (node2) => elevateChildNode(node2, TYPE_TOOL) || node2
+        },
+        {
+          name: "unwrap_subtasks",
+          matches: (node2) => node2.event.event === SPAN_BEGIN && node2.event.type === TYPE_SUBTASK,
+          process: (node2) => elevateChildNode(node2, TYPE_SUBTASK) || node2
+        },
+        {
+          name: "unwrap_agent_solver",
+          matches: (node2) => node2.event.event === SPAN_BEGIN && node2.event["type"] === TYPE_SOLVER && node2.children.length === 2 && node2.children[0].event.event === SPAN_BEGIN && node2.children[0].event.type === TYPE_AGENT && node2.children[1].event.event === STATE,
+          process: (node2) => skipFirstChildNode(node2)
+        },
+        {
+          name: "unwrap_agent_solver w/store",
+          matches: (node2) => node2.event.event === SPAN_BEGIN && node2.event["type"] === TYPE_SOLVER && node2.children.length === 3 && node2.children[0].event.event === SPAN_BEGIN && node2.children[0].event.type === TYPE_AGENT && node2.children[1].event.event === STATE && node2.children[2].event.event === STORE,
+          process: (node2) => skipFirstChildNode(node2)
+        },
+        {
+          name: "unwrap_handoff",
+          matches: (node2) => {
+            const isHandoffNode = node2.event.event === SPAN_BEGIN && node2.event["type"] === TYPE_HANDOFF;
+            if (!isHandoffNode) {
+              return false;
+            }
+            if (node2.children.length === 1) {
+              return node2.children[0].event.event === TOOL && !!node2.children[0].event.agent;
+            } else {
+              return node2.children.length === 2 && node2.children[0].event.event === TOOL && node2.children[1].event.event === STORE && node2.children[0].children.length === 2 && node2.children[0].children[0].event.event === SPAN_BEGIN && node2.children[0].children[0].event.type === TYPE_AGENT;
+            }
+          },
+          process: (node2) => skipThisNode(node2)
+        },
+        {
+          name: "discard_solvers_span",
+          matches: (Node2) => Node2.event.event === SPAN_BEGIN && Node2.event.type === TYPE_SOLVERS,
+          process: (node2) => {
+            const nodes = discardNode(node2);
+            return nodes;
+          }
+        }
+      ];
+      return treeNodeTransformers;
+    };
+    const elevateChildNode = (node2, childEventType) => {
+      const targetIndex = node2.children.findIndex(
+        (child) => child.event.event === childEventType
+      );
+      if (targetIndex === -1) {
+        console.log(
+          `No ${childEventType} event found in a span, this is very unexpected.`
+        );
+        return null;
+      }
+      const targetNode = { ...node2.children[targetIndex] };
+      const remainingChildren = node2.children.filter((_, i2) => i2 !== targetIndex);
+      targetNode.depth = node2.depth;
+      targetNode.children = setDepth(remainingChildren, node2.depth + 1);
+      return targetNode;
+    };
+    const skipFirstChildNode = (node2) => {
+      const agentSpan = node2.children.splice(0, 1)[0];
+      node2.children.unshift(...reduceDepth(agentSpan.children));
+      return node2;
+    };
+    const skipThisNode = (node2) => {
+      const newNode = { ...node2.children[0] };
+      newNode.depth = node2.depth;
+      newNode.children = reduceDepth(newNode.children, 2);
+      return newNode;
+    };
+    const discardNode = (node2) => {
+      const nodes = reduceDepth(node2.children, 1);
+      return nodes;
+    };
+    const reduceDepth = (nodes, depth = 1) => {
+      return nodes.map((node2) => {
+        if (node2.children.length > 0) {
+          node2.children = reduceDepth(node2.children, 1);
+        }
+        node2.depth = node2.depth - depth;
+        return node2;
+      });
+    };
+    const setDepth = (nodes, depth) => {
+      return nodes.map((node2) => {
+        if (node2.children.length > 0) {
+          node2.children = setDepth(node2.children, depth + 1);
+        }
+        node2.depth = depth;
+        return node2;
+      });
+    };
+    function treeifyEvents(events, depth) {
+      const useSpans = hasSpans(events);
+      events = injectScorersSpan(events);
+      const nodes = useSpans ? treeifyWithSpans(events, depth) : treeifyWithSteps(events, depth);
+      return useSpans ? transformTree(nodes) : nodes;
+    }
+    const treeifyWithSpans = (events, depth) => {
+      const { rootNodes, createNode } = createNodeFactory(depth);
+      const spanNodes = /* @__PURE__ */ new Map();
+      const processEvent = (event, parentOverride) => {
+        if (event.event === SPAN_END) {
+          const spanId = getEventSpanId(event);
+          if (spanId !== null) {
+            spanNodes.delete(spanId);
+          }
+          return;
+        }
+        if (event.event === STEP && event.action !== ACTION_BEGIN) {
+          return;
+        }
+        const resolvedParent = parentOverride !== void 0 ? parentOverride : resolveParentForEvent(event, spanNodes);
+        const parentNode = resolvedParent ?? null;
+        const node2 = createNode(event, parentNode);
+        if (event.event === SPAN_BEGIN) {
+          const spanId = getEventSpanId(event);
+          if (spanId !== null) {
+            spanNodes.set(spanId, node2);
+          }
+        }
+        if (event.event === TOOL) {
+          if (shouldExpandToolChildren(event)) {
+            for (const child of event.events) {
+              processEvent(child, node2);
+            }
+          }
+        } else if (event.event === SUBTASK) {
+          if (shouldExpandSubtaskChildren(event)) {
+            for (const child of event.events) {
+              processEvent(child, node2);
+            }
+          }
+        }
+      };
+      events.forEach((event) => processEvent(event));
+      return rootNodes;
+    };
+    const treeifyWithSteps = (events, depth) => {
+      const { rootNodes, createNode } = createNodeFactory(depth);
+      const stack2 = [];
+      const pushStack = (node2) => {
+        stack2.push(node2);
+      };
+      const popStack = () => {
+        if (stack2.length > 0) {
+          stack2.pop();
+        }
+      };
+      const processEvent = (event) => {
+        const parent = stack2.length > 0 ? stack2[stack2.length - 1] : null;
+        switch (event.event) {
+          case STEP:
+            if (event.action === ACTION_BEGIN) {
+              const node2 = createNode(event, parent);
+              pushStack(node2);
+            } else {
+              popStack();
+            }
+            break;
+          case SPAN_BEGIN: {
+            const node2 = createNode(event, parent);
+            pushStack(node2);
+            break;
+          }
+          case SPAN_END:
+            popStack();
+            break;
+          case TOOL: {
+            const node2 = createNode(event, parent);
+            if (shouldExpandToolChildren(event)) {
+              pushStack(node2);
+              for (const child of event.events) {
+                processEvent(child);
+              }
+              popStack();
+            }
+            break;
+          }
+          case SUBTASK: {
+            const node2 = createNode(event, parent);
+            if (shouldExpandSubtaskChildren(event)) {
+              pushStack(node2);
+              for (const child of event.events) {
+                processEvent(child);
+              }
+              popStack();
+            }
+            break;
+          }
+          default:
+            createNode(event, parent);
+            break;
+        }
+      };
+      events.forEach(processEvent);
+      return rootNodes;
+    };
+    const createNodeFactory = (depth) => {
+      const rootNodes = [];
+      const childCounts = /* @__PURE__ */ new Map();
+      const pathByNode = /* @__PURE__ */ new Map();
+      const createNode = (event, parent) => {
+        const parentKey = parent ?? null;
+        const nextIndex = childCounts.get(parentKey) ?? 0;
+        childCounts.set(parentKey, nextIndex + 1);
+        const parentPath = parent ? pathByNode.get(parent) : void 0;
+        const path = parentPath !== void 0 ? `${parentPath}.${nextIndex}` : `${nextIndex}`;
+        const eventId = event.uuid || `event_node_${path}`;
+        const nodeDepth = parent ? parent.depth + 1 : depth;
+        const node2 = new EventNode(eventId, event, nodeDepth);
+        pathByNode.set(node2, path);
+        if (parent) {
+          parent.children.push(node2);
+        } else {
+          rootNodes.push(node2);
+        }
+        return node2;
+      };
+      return { rootNodes, createNode };
+    };
+    const resolveParentForEvent = (event, spanNodes) => {
+      if (event.event === SPAN_BEGIN) {
+        const parentId = event.parent_id;
+        if (parentId) {
+          return spanNodes.get(parentId) ?? null;
+        }
+        return null;
+      }
+      const spanId = getEventSpanId(event);
+      if (spanId !== null) {
+        return spanNodes.get(spanId) ?? null;
+      }
+      return null;
+    };
+    const getEventSpanId = (event) => {
+      const spanId = event.span_id;
+      return spanId ?? null;
+    };
+    const shouldExpandToolChildren = (event) => {
+      return event.events.length > 0 && (event.events[0].event !== SPAN_BEGIN || event.events[0].type !== TYPE_TOOL);
+    };
+    const shouldExpandSubtaskChildren = (event) => {
+      return event.events.length > 0 && (event.events[0].event !== SPAN_BEGIN || event.events[0].type !== TYPE_SUBTASK);
+    };
+    const kBeginScorerId = "E617087FA405";
+    const kEndScorerId = "C39922B09481";
+    const kScorersSpanId = "C5A831026F2C";
+    const injectScorersSpan = (events) => {
+      const results = [];
+      const collectedScorerEvents = [];
+      let hasCollectedScorers = false;
+      let collecting = null;
+      const flushCollected = () => {
+        if (collectedScorerEvents.length > 0) {
+          const beginSpan = {
+            name: "scorers",
+            id: kBeginScorerId,
+            span_id: kScorersSpanId,
+            event: SPAN_BEGIN,
+            type: TYPE_SCORERS,
+            timestamp: collectedScorerEvents[0].timestamp,
+            working_start: collectedScorerEvents[0].working_start,
+            pending: false,
+            parent_id: null,
+            uuid: null,
+            metadata: null
+          };
+          const scoreEvents = collectedScorerEvents.map((event) => {
+            return {
+              ...event,
+              parent_id: event.event === "span_begin" ? event.parent_id || kScorersSpanId : null
+            };
+          });
+          const endSpan = {
+            id: kEndScorerId,
+            span_id: kScorersSpanId,
+            event: SPAN_END,
+            pending: false,
+            working_start: collectedScorerEvents[collectedScorerEvents.length - 1].working_start,
+            timestamp: collectedScorerEvents[collectedScorerEvents.length - 1].timestamp,
+            uuid: null,
+            metadata: null
+          };
+          collectedScorerEvents.length = 0;
+          hasCollectedScorers = true;
+          return [beginSpan, ...scoreEvents, endSpan];
+        }
+        return [];
+      };
+      for (const event of events) {
+        if (event.event === SPAN_BEGIN && event.type === TYPE_SCORERS) {
+          return events;
+        }
+        if (event.event === SPAN_BEGIN && event.type === TYPE_SCORER && !hasCollectedScorers) {
+          collecting = event.span_id;
+        }
+        if (collecting) {
+          if (event.event === SPAN_END && event.span_id === collecting) {
+            collecting = null;
+            results.push(...flushCollected());
+            results.push(event);
+          } else {
+            collectedScorerEvents.push(event);
+          }
+        } else {
+          results.push(event);
+        }
+      }
+      return results;
+    };
     const useEventNodes = (events, running) => {
       const { eventTree, defaultCollapsedIds } = reactExports.useMemo(() => {
         const resolvedEvents = fixupEventStream(events, !running);
