@@ -21758,16 +21758,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       if (isFrozen(obj) || isDraft(obj) || !isDraftable(obj))
         return obj;
       if (getArchtype(obj) > 1) {
-        Object.defineProperties(obj, {
-          set: { value: dontMutateFrozenCollections },
-          add: { value: dontMutateFrozenCollections },
-          clear: { value: dontMutateFrozenCollections },
-          delete: { value: dontMutateFrozenCollections }
-        });
+        obj.set = obj.add = obj.clear = obj.delete = dontMutateFrozenCollections;
       }
       Object.freeze(obj);
       if (deep)
-        Object.values(obj).forEach((value2) => freeze(value2, true));
+        Object.entries(obj).forEach(([key2, value2]) => freeze(value2, true));
       return obj;
     }
     function dontMutateFrozenCollections() {
@@ -21924,7 +21919,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           return;
         }
         finalize(rootScope, childValue);
-        if ((!parentState || !parentState.scope_.parent_) && typeof prop2 !== "symbol" && (isMap(targetObject) ? targetObject.has(prop2) : Object.prototype.propertyIsEnumerable.call(targetObject, prop2)))
+        if ((!parentState || !parentState.scope_.parent_) && typeof prop2 !== "symbol" && Object.prototype.propertyIsEnumerable.call(targetObject, prop2))
           maybeFreeze(rootScope, childValue);
       }
     }
@@ -22517,6 +22512,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     var immer$1 = new Immer2();
     var produce = immer$1.produce;
+    immer$1.produceWithPatches.bind(
+      immer$1
+    );
+    immer$1.setAutoFreeze.bind(immer$1);
+    immer$1.setUseStrictShallowCopy.bind(immer$1);
+    immer$1.applyPatches.bind(immer$1);
+    immer$1.createDraft.bind(immer$1);
+    immer$1.finishDraft.bind(immer$1);
     const createStoreImpl = (createState) => {
       let state;
       const listeners = /* @__PURE__ */ new Set();
@@ -31045,17 +31048,19 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const toFullUrl = (path) => {
       return `${window.location.origin}${window.location.pathname}#${path}`;
     };
-    const message$1 = "_message_1ivu3_1";
-    const systemRole = "_systemRole_1ivu3_8";
-    const messageGrid = "_messageGrid_1ivu3_12";
-    const messageContents = "_messageContents_1ivu3_20";
-    const indented = "_indented_1ivu3_25";
-    const copyLink$1 = "_copyLink_1ivu3_29";
-    const metadataLabel = "_metadataLabel_1ivu3_39";
+    const message$1 = "_message_1o9fy_1";
+    const systemRole = "_systemRole_1o9fy_8";
+    const messageGrid = "_messageGrid_1o9fy_12";
+    const toolMessageGrid = "_toolMessageGrid_1o9fy_20";
+    const messageContents = "_messageContents_1o9fy_24";
+    const indented = "_indented_1o9fy_29";
+    const copyLink$1 = "_copyLink_1o9fy_33";
+    const metadataLabel = "_metadataLabel_1o9fy_43";
     const styles$1E = {
       message: message$1,
       systemRole,
       messageGrid,
+      toolMessageGrid,
       messageContents,
       indented,
       copyLink: copyLink$1,
@@ -104019,7 +104024,7 @@ self.onmessage = function (e) {
         }
       );
     };
-    const jsonMessage = "_jsonMessage_4pkcz_1";
+    const jsonMessage = "_jsonMessage_oxf8d_1";
     const styles$1y = {
       jsonMessage
     };
@@ -104298,6 +104303,10 @@ ${citation.url}` : citation.url,
       return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1u.output, className2), children: outputs });
     };
     const ToolTextOutput = ({ text: text2 }) => {
+      if (isJson(text2)) {
+        const obj = JSON.parse(text2);
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(JsonMessageContent, { id: `1-json`, json: obj });
+      }
       return /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1u.textOutput, "tool-output"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("sourceCode", styles$1u.textCode), children: text2.trim() }) });
     };
     const isMessageContent = (content2) => {
@@ -105004,18 +105013,28 @@ ${citation.url}` : citation.url,
               message2.role === "user" ? styles$1E.userRole : void 0
             ),
             children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1E.messageGrid, "text-style-label"), children: [
-                message2.role,
-                message2.role === "tool" ? `: ${message2.function}` : "",
-                supportsLinking() && messageUrl ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  CopyButton,
-                  {
-                    icon: ApplicationIcons.link,
-                    value: toFullUrl(messageUrl),
-                    className: clsx(styles$1E.copyLink)
-                  }
-                ) : ""
-              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                "div",
+                {
+                  className: clsx(
+                    styles$1E.messageGrid,
+                    message2.role === "tool" ? styles$1E.toolMessageGrid : void 0,
+                    "text-style-label"
+                  ),
+                  children: [
+                    message2.role,
+                    message2.role === "tool" ? `: ${message2.function}` : "",
+                    supportsLinking() && messageUrl ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      CopyButton,
+                      {
+                        icon: ApplicationIcons.link,
+                        value: toFullUrl(messageUrl),
+                        className: clsx(styles$1E.copyLink)
+                      }
+                    ) : ""
+                  ]
+                }
+              ),
               /* @__PURE__ */ jsxRuntimeExports.jsxs(
                 "div",
                 {
@@ -116032,11 +116051,9 @@ categories: ${categories.join(" ")}`;
       approval: "Approval",
       input: "Input",
       score: "Score",
-      score_edit: "Score Edit",
       error: "Error",
       logger: "Logger",
       info: "Info",
-      step: "Step",
       subtask: "Subtask"
     };
     const useTranscriptFilter = () => {
@@ -145586,19 +145603,15 @@ ${events}
     const pickedCompletion = /* @__PURE__ */ Annotation.define();
     function insertCompletionText(state, text2, from, to2) {
       let { main: main2 } = state.selection, fromOff = from - main2.from, toOff = to2 - main2.from;
-      return {
-        ...state.changeByRange((range2) => {
-          if (range2 != main2 && from != to2 && state.sliceDoc(range2.from + fromOff, range2.from + toOff) != state.sliceDoc(from, to2))
-            return { range: range2 };
-          let lines = state.toText(text2);
-          return {
-            changes: { from: range2.from + fromOff, to: to2 == main2.from ? range2.to : range2.from + toOff, insert: lines },
-            range: EditorSelection.cursor(range2.from + fromOff + lines.length)
-          };
-        }),
-        scrollIntoView: true,
-        userEvent: "input.complete"
-      };
+      return Object.assign(Object.assign({}, state.changeByRange((range2) => {
+        if (range2 != main2 && from != to2 && state.sliceDoc(range2.from + fromOff, range2.from + toOff) != state.sliceDoc(from, to2))
+          return { range: range2 };
+        let lines = state.toText(text2);
+        return {
+          changes: { from: range2.from + fromOff, to: to2 == main2.from ? range2.to : range2.from + toOff, insert: lines },
+          range: EditorSelection.cursor(range2.from + fromOff + lines.length)
+        };
+      })), { scrollIntoView: true, userEvent: "input.complete" });
     }
     const SourceCache = /* @__PURE__ */ new WeakMap();
     function asSource(source2) {
@@ -146118,7 +146131,7 @@ ${events}
     }
     function sortOptions(active, state) {
       let options2 = [];
-      let sections = null, dynamicSectionScore = null;
+      let sections = null;
       let addOption = (option) => {
         options2.push(option);
         let { section: section2 } = option.completion;
@@ -146144,21 +146157,15 @@ ${events}
             for (let option of a.result.options)
               if (match = matcher.match(option.label)) {
                 let matched = !option.displayLabel ? match.matched : getMatch ? getMatch(option, match.matched) : [];
-                let score2 = match.score + (option.boost || 0);
-                addOption(new Option(option, a.source, matched, score2));
-                if (typeof option.section == "object" && option.section.rank === "dynamic") {
-                  let { name: name2 } = option.section;
-                  if (!dynamicSectionScore)
-                    dynamicSectionScore = /* @__PURE__ */ Object.create(null);
-                  dynamicSectionScore[name2] = Math.max(score2, dynamicSectionScore[name2] || -1e9);
-                }
+                addOption(new Option(option, a.source, matched, match.score + (option.boost || 0)));
               }
           }
         }
       if (sections) {
         let sectionOrder = /* @__PURE__ */ Object.create(null), pos2 = 0;
         let cmp = (a, b) => {
-          return (a.rank === "dynamic" && b.rank === "dynamic" ? dynamicSectionScore[b.name] - dynamicSectionScore[a.name] : 0) || (typeof a.rank == "number" ? a.rank : 1e9) - (typeof b.rank == "number" ? b.rank : 1e9) || (a.name < b.name ? -1 : 1);
+          var _a2, _b2;
+          return ((_a2 = a.rank) !== null && _a2 !== void 0 ? _a2 : 1e9) - ((_b2 = b.rank) !== null && _b2 !== void 0 ? _b2 : 1e9) || (a.name < b.name ? -1 : 1);
         };
         for (let s of sections.sort(cmp)) {
           pos2 -= 1e5;
@@ -146216,7 +146223,7 @@ ${events}
         }, prev ? prev.timestamp : Date.now(), selected2, false);
       }
       map(changes) {
-        return new CompletionDialog(this.options, this.attrs, { ...this.tooltip, pos: changes.mapPos(this.tooltip.pos) }, this.timestamp, this.selected, this.disabled);
+        return new CompletionDialog(this.options, this.attrs, Object.assign(Object.assign({}, this.tooltip), { pos: changes.mapPos(this.tooltip.pos) }), this.timestamp, this.selected, this.disabled);
       }
       setDisabled() {
         return new CompletionDialog(this.options, this.attrs, this.tooltip, this.timestamp, this.selected, true);
@@ -146444,10 +146451,7 @@ ${events}
       if (!(result2 instanceof ActiveResult))
         return false;
       if (typeof apply == "string")
-        view.dispatch({
-          ...insertCompletionText(view.state, apply, result2.from, result2.to),
-          annotations: pickedCompletion.of(option.completion)
-        });
+        view.dispatch(Object.assign(Object.assign({}, insertCompletionText(view.state, apply, result2.from, result2.to)), { annotations: pickedCompletion.of(option.completion) }));
       else
         apply(view, option.completion, result2.from, result2.to);
       return true;
@@ -146808,7 +146812,6 @@ ${events}
     const completionKeymap = [
       { key: "Ctrl-Space", run: startCompletion },
       { mac: "Alt-`", run: startCompletion },
-      { mac: "Alt-i", run: startCompletion },
       { key: "Escape", run: closeCompletion },
       { key: "ArrowDown", run: /* @__PURE__ */ moveCompletionSelection(true) },
       { key: "ArrowUp", run: /* @__PURE__ */ moveCompletionSelection(false) },
