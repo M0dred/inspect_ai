@@ -104403,9 +104403,9 @@ ${citation.url}` : citation.url,
           const r2 = content2;
           let text2 = r2.reasoning;
           if (r2.redacted) {
-            text2 = "Reasoning encrypted by model provider.";
+            text2 = r2.summary || "Reasoning encrypted by model provider.";
           } else if (!text2) {
-            text2 = "Reasoning text not provided.";
+            text2 = r2.summary || "Reasoning text not provided.";
           }
           return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1w.reasoning, "text-size-small"), children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(
