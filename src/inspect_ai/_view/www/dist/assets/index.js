@@ -26884,13 +26884,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }, [callback]);
       return elementRef;
     };
-    const expandablePanel = "_expandablePanel_elrou_1";
-    const expandableBordered = "_expandableBordered_elrou_5";
-    const expandableCollapsed = "_expandableCollapsed_elrou_18";
-    const moreToggle = "_moreToggle_elrou_22";
-    const bordered = "_bordered_elrou_35";
-    const moreToggleButton = "_moreToggleButton_elrou_39";
-    const separator$5 = "_separator_elrou_45";
+    const expandablePanel = "_expandablePanel_1cl3h_1";
+    const expandableBordered = "_expandableBordered_1cl3h_5";
+    const expandableCollapsed = "_expandableCollapsed_1cl3h_18";
+    const moreToggle = "_moreToggle_1cl3h_22";
+    const bordered = "_bordered_1cl3h_32";
+    const moreToggleButton = "_moreToggleButton_1cl3h_36";
+    const separator$5 = "_separator_1cl3h_42";
+    const inlineRight = "_inlineRight_1cl3h_48";
+    const blockLeft = "_blockLeft_1cl3h_54";
     const styles$1G = {
       expandablePanel,
       expandableBordered,
@@ -26898,10 +26900,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       moreToggle,
       bordered,
       moreToggleButton,
-      separator: separator$5
+      separator: separator$5,
+      inlineRight,
+      blockLeft
     };
     const ExpandablePanel = reactExports.memo(
-      ({ id, collapse, border, lines = 15, children: children2, className: className2 }) => {
+      ({
+        id,
+        collapse,
+        border,
+        lines = 15,
+        children: children2,
+        className: className2,
+        togglePosition: layout = "inline-right"
+      }) => {
         const [collapsed2, setCollapsed] = useCollapsedState(id, collapse);
         const [showToggle, setShowToggle] = reactExports.useState(false);
         const baseFontSizeRef = reactExports.useRef(0);
@@ -26941,18 +26953,28 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               ),
               children: [
                 children2,
-                showToggle && /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                showToggle && layout == "inline-right" && /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                   MoreToggle,
                   {
                     collapsed: collapsed2,
                     setCollapsed,
-                    border: !border
+                    border: !border,
+                    position: "inline-right"
                   }
                 ) })
               ]
             }
           ),
-          showToggle && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1G.separator) })
+          showToggle && layout === "block-left" && /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            MoreToggle,
+            {
+              collapsed: collapsed2,
+              setCollapsed,
+              border: !border,
+              position: "block-left"
+            }
+          ) }),
+          showToggle && layout == "inline-right" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1G.separator) })
         ] });
       }
     );
@@ -26960,7 +26982,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       collapsed: collapsed2,
       border,
       setCollapsed,
-      style: style2
+      style: style2,
+      position
     }) => {
       const text2 = collapsed2 ? "more" : "less";
       const handleClick = reactExports.useCallback(() => {
@@ -26969,7 +26992,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
         {
-          className: clsx(styles$1G.moreToggle, border ? styles$1G.bordered : void 0),
+          className: clsx(
+            styles$1G.moreToggle,
+            border ? styles$1G.bordered : void 0,
+            position === "inline-right" ? styles$1G.inlineRight : styles$1G.blockLeft
+          ),
           style: style2,
           children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
             "button",
@@ -30631,14 +30658,23 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 }
               ),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: item2.value !== null && (!item2.hasChildren || collapsedIds?.[item2.id]) ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-                RenderedContent,
+                ExpandablePanel,
                 {
-                  id: `${id}-value-${item2.id}`,
-                  entry: {
-                    name: item2.key,
-                    value: item2.value
-                  },
-                  renderOptions: { renderString: "pre" }
+                  id: `${id}-collapse-${item2.id}`,
+                  collapse: true,
+                  lines: 15,
+                  togglePosition: "block-left",
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    RenderedContent,
+                    {
+                      id: `${id}-value-${item2.id}`,
+                      entry: {
+                        name: item2.key,
+                        value: item2.value
+                      },
+                      renderOptions: { renderString: "pre" }
+                    }
+                  )
                 }
               ) : void 0 })
             ]
@@ -104802,7 +104838,8 @@ ${citation.url}` : citation.url,
       contentType,
       view,
       output: output2,
-      mode
+      mode,
+      collapsible = true
     }) => {
       function isContentImage(value2) {
         if (value2 && typeof value2 === "object") {
@@ -104854,7 +104891,7 @@ ${citation.url}` : citation.url,
             }
           )
         ] }),
-        hasContent ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+        hasContent && collapsible ? /* @__PURE__ */ jsxRuntimeExports.jsx(
           ExpandablePanel,
           {
             id: `${id}-tool-input`,
@@ -104864,7 +104901,7 @@ ${citation.url}` : citation.url,
             className: clsx("text-size-small"),
             children: /* @__PURE__ */ jsxRuntimeExports.jsx(MessageContent, { contents: normalizedContent, context })
           }
-        ) : void 0
+        ) : /* @__PURE__ */ jsxRuntimeExports.jsx(MessageContent, { contents: normalizedContent, context })
       ] });
     };
     const normalizeContent$1 = (output2) => {
@@ -104934,7 +104971,8 @@ ${citation.url}` : citation.url,
                 input: input2,
                 description: description2,
                 contentType,
-                output: resolvedToolOutput
+                output: resolvedToolOutput,
+                collapsible: false
               },
               `tool-call-${idx}`
             );
