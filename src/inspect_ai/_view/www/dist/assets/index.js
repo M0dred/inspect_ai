@@ -24858,26 +24858,57 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return n;
     }
     const wrapper$4 = "_wrapper_1tajk_1";
-    const container$k = "_container_1tajk_12";
+    const container$l = "_container_1tajk_12";
     const animate = "_animate_1tajk_21";
-    const styles$1L = {
+    const styles$1M = {
       wrapper: wrapper$4,
-      container: container$k,
+      container: container$l,
       animate
     };
-    const ProgressBar = ({ animating }) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1L.wrapper), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    const ActivityBar = ({ animating }) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1M.wrapper), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
         {
-          className: clsx(styles$1L.container),
+          className: clsx(styles$1M.container),
           role: "progressbar",
-          "aria-label": "Basic example",
+          "aria-label": "Progress bar",
           "aria-valuenow": 25,
           "aria-valuemin": 0,
           "aria-valuemax": 100,
-          children: animating && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1L.animate })
+          children: animating && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1M.animate })
         }
       ) });
+    };
+    const container$k = "_container_1n7pm_1";
+    const label$a = "_label_1n7pm_7";
+    const outer = "_outer_1n7pm_11";
+    const inner = "_inner_1n7pm_20";
+    const styles$1L = {
+      container: container$k,
+      label: label$a,
+      outer,
+      inner
+    };
+    const ProgressBar = ({
+      min: min2,
+      max: max2,
+      value: value2,
+      width = "100px"
+    }) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1L.container), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1L.outer), style: { width }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: clsx(styles$1L.inner),
+            style: { width: `${(value2 - min2) / (max2 - min2) * 100}%` }
+          }
+        ) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1L.label, "text-size-smallest"), children: [
+          value2,
+          " / ",
+          max2
+        ] })
+      ] });
     };
     const log$3 = createLogger("Client-Events-Service");
     const kRetries = 10;
@@ -31081,14 +31112,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const toFullUrl = (path) => {
       return `${window.location.origin}${window.location.pathname}${window.location.search}#${path}`;
     };
-    const message$1 = "_message_1o9fy_1";
-    const systemRole = "_systemRole_1o9fy_8";
-    const messageGrid = "_messageGrid_1o9fy_12";
-    const toolMessageGrid = "_toolMessageGrid_1o9fy_20";
-    const messageContents = "_messageContents_1o9fy_24";
-    const indented = "_indented_1o9fy_29";
-    const copyLink$1 = "_copyLink_1o9fy_33";
-    const metadataLabel = "_metadataLabel_1o9fy_43";
+    const message$1 = "_message_b8oe1_1";
+    const systemRole = "_systemRole_b8oe1_8";
+    const messageGrid = "_messageGrid_b8oe1_12";
+    const toolMessageGrid = "_toolMessageGrid_b8oe1_20";
+    const messageContents = "_messageContents_b8oe1_24";
+    const indented = "_indented_b8oe1_29";
+    const copyLink$1 = "_copyLink_b8oe1_33";
+    const metadataLabel = "_metadataLabel_b8oe1_43";
+    const hover$1 = "_hover_b8oe1_47";
     const styles$1E = {
       message: message$1,
       systemRole,
@@ -31097,7 +31129,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       messageContents,
       indented,
       copyLink: copyLink$1,
-      metadataLabel
+      metadataLabel,
+      hover: hover$1
     };
     const decodeCache = {};
     function getDecodeCache(exclude) {
@@ -41944,12 +41977,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       Object.defineProperty(Stack, "__esModule", { value: true });
       var NodeUtil_js_1 = __importDefault2(requireNodeUtil());
       var Stack$1 = (function() {
-        function Stack2(_factory, _env, inner) {
+        function Stack2(_factory, _env, inner2) {
           this._factory = _factory;
           this._env = _env;
           this.global = {};
           this.stack = [];
-          this.global = { isInner: inner };
+          this.global = { isInner: inner2 };
           this.stack = [this._factory.create("start", this.global)];
           if (_env) {
             this.stack[0].env = _env;
@@ -42092,7 +42125,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           this.macroCount = 0;
           this.i = 0;
           this.currentCS = "";
-          var inner = env.hasOwnProperty("isInner");
+          var inner2 = env.hasOwnProperty("isInner");
           var isInner = env["isInner"];
           delete env["isInner"];
           var ENV;
@@ -42114,7 +42147,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             }
           }
           this.configuration.pushParser(this);
-          this.stack = new Stack_js_1.default(this.itemFactory, ENV, inner ? isInner : true);
+          this.stack = new Stack_js_1.default(this.itemFactory, ENV, inner2 ? isInner : true);
           this.Parse();
           this.Push(this.itemFactory.create("stop"));
         }
@@ -72033,17 +72066,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           return _super.prototype.checkItem.call(this, item2);
         };
         BraketItem2.prototype.toMml = function() {
-          var inner = _super.prototype.toMml.call(this);
+          var inner2 = _super.prototype.toMml.call(this);
           var open = this.getProperty("open");
           var close2 = this.getProperty("close");
           if (this.getProperty("stretchy")) {
-            return ParseUtil_js_1.default.fenced(this.factory.configuration, open, inner, close2);
+            return ParseUtil_js_1.default.fenced(this.factory.configuration, open, inner2, close2);
           }
           var attrs = { fence: true, stretchy: false, symmetric: true, texClass: MmlNode_js_1.TEXCLASS.OPEN };
           var openNode = this.create("token", "mo", attrs, open);
           attrs.texClass = MmlNode_js_1.TEXCLASS.CLOSE;
           var closeNode = this.create("token", "mo", attrs, close2);
-          var mrow2 = this.create("node", "mrow", [openNode, inner, closeNode], { open, close: close2, texClass: MmlNode_js_1.TEXCLASS.INNER });
+          var mrow2 = this.create("node", "mrow", [openNode, inner2, closeNode], { open, close: close2, texClass: MmlNode_js_1.TEXCLASS.INNER });
           return mrow2;
         };
         return BraketItem2;
@@ -81072,7 +81105,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     function __addDisposableResource(env, value2, async) {
       if (value2 !== null && value2 !== void 0) {
         if (typeof value2 !== "object" && typeof value2 !== "function") throw new TypeError("Object expected.");
-        var dispose2, inner;
+        var dispose2, inner2;
         if (async) {
           if (!Symbol.asyncDispose) throw new TypeError("Symbol.asyncDispose is not defined.");
           dispose2 = value2[Symbol.asyncDispose];
@@ -81080,12 +81113,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         if (dispose2 === void 0) {
           if (!Symbol.dispose) throw new TypeError("Symbol.dispose is not defined.");
           dispose2 = value2[Symbol.dispose];
-          if (async) inner = dispose2;
+          if (async) inner2 = dispose2;
         }
         if (typeof dispose2 !== "function") throw new TypeError("Object not disposable.");
-        if (inner) dispose2 = function() {
+        if (inner2) dispose2 = function() {
           try {
-            inner.call(this);
+            inner2.call(this);
           } catch (e) {
             return Promise.reject(e);
           }
@@ -105034,9 +105067,17 @@ ${citation.url}` : citation.url,
       }
     };
     const ChatMessage = reactExports.memo(
-      ({ id, message: message2, toolMessages, indented: indented2, toolCallStyle }) => {
+      ({
+        id,
+        message: message2,
+        toolMessages,
+        indented: indented2,
+        toolCallStyle,
+        allowLinking = true
+      }) => {
         const messageUrl = useSampleMessageUrl(message2.id);
         const collapse = message2.role === "system" || message2.role === "user";
+        const [mouseOver, setMouseOver] = reactExports.useState(false);
         return /* @__PURE__ */ jsxRuntimeExports.jsxs(
           "div",
           {
@@ -105045,8 +105086,11 @@ ${citation.url}` : citation.url,
               "text-size-base",
               styles$1E.message,
               message2.role === "system" ? styles$1E.systemRole : void 0,
-              message2.role === "user" ? styles$1E.userRole : void 0
+              message2.role === "user" ? styles$1E.userRole : void 0,
+              mouseOver ? styles$1E.hover : void 0
             ),
+            onMouseEnter: () => setMouseOver(true),
+            onMouseLeave: () => setMouseOver(false),
             children: [
               /* @__PURE__ */ jsxRuntimeExports.jsxs(
                 "div",
@@ -105059,7 +105103,7 @@ ${citation.url}` : citation.url,
                   children: [
                     message2.role,
                     message2.role === "tool" ? `: ${message2.function}` : "",
-                    supportsLinking() && messageUrl ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    supportsLinking() && messageUrl && allowLinking ? /* @__PURE__ */ jsxRuntimeExports.jsx(
                       CopyButton,
                       {
                         icon: ApplicationIcons.link,
@@ -105135,7 +105179,8 @@ ${citation.url}` : citation.url,
       resolvedMessage,
       toolCallStyle,
       indented: indented2,
-      highlightUserMessage
+      highlightUserMessage,
+      allowLinking = true
     }) => {
       if (number2) {
         return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
@@ -105166,7 +105211,8 @@ ${citation.url}` : citation.url,
                     message: resolvedMessage.message,
                     toolMessages: resolvedMessage.toolMessages,
                     indented: indented2,
-                    toolCallStyle
+                    toolCallStyle,
+                    allowLinking
                   }
                 )
               ]
@@ -105191,7 +105237,8 @@ ${citation.url}` : citation.url,
                   message: resolvedMessage.message,
                   toolMessages: resolvedMessage.toolMessages,
                   indented: indented2,
-                  toolCallStyle
+                  toolCallStyle,
+                  allowLinking
                 }
               ),
               resolvedMessage.message.role === "user" ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { height: "10px" } }) : void 0
@@ -105284,7 +105331,8 @@ ${citation.url}` : citation.url,
       resolveToolCallsIntoPreviousMessage = true,
       indented: indented2,
       numbered = true,
-      className: className2
+      className: className2,
+      allowLinking = true
     }) => {
       const collapsedMessages = resolveToolCallsIntoPreviousMessage ? resolveMessages(messages2) : messages2.map((msg) => {
         return {
@@ -105301,7 +105349,8 @@ ${citation.url}` : citation.url,
             number: number2,
             resolvedMessage: msg,
             indented: indented2,
-            toolCallStyle
+            toolCallStyle,
+            allowLinking
           },
           `${id}-msg-${index}`
         );
@@ -105318,7 +105367,15 @@ ${citation.url}` : citation.url,
         return {
           rendered: /* @__PURE__ */ jsxRuntimeExports.jsxs(NavPills, { id: `${id}-navpills`, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(ChatSummary, { title: "Last Turn", id, messages: entry.value }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(ChatView, { title: "All", id, messages: entry.value })
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              ChatView,
+              {
+                title: "All",
+                id,
+                messages: entry.value,
+                allowLinking: false
+              }
+            )
           ] })
         };
       }
@@ -113404,7 +113461,8 @@ categories: ${categories.join(" ")}`;
     };
     const LogListFooter = ({
       itemCount,
-      progressText
+      progressText,
+      progressBar
     }) => {
       const { page, itemsPerPage } = usePagination(
         kLogsPaginationId,
@@ -113438,7 +113496,7 @@ categories: ${categories.join(" ")}`;
           ] })
         ] }) : void 0 }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$19.center), children: /* @__PURE__ */ jsxRuntimeExports.jsx(LogPager, { itemCount: effectiveItemCount }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$19.right), children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: effectiveItemCount === 0 ? "" : filteredCount !== void 0 && filteredCount !== itemCount ? `${startItem} - ${endItem} / ${effectiveItemCount} (${itemCount} total)` : `${startItem} - ${endItem} / ${effectiveItemCount}` }) })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$19.right), children: progressBar || /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: effectiveItemCount === 0 ? "" : filteredCount !== void 0 && filteredCount !== itemCount ? `${startItem} - ${endItem} / ${effectiveItemCount} (${itemCount} total)` : `${startItem} - ${endItem} / ${effectiveItemCount}` }) })
       ] });
     };
     const container$h = "_container_e1pcq_1";
@@ -113650,6 +113708,22 @@ categories: ${categories.join(" ")}`;
         logItems2.push(...pendingTasks);
         return logItems2;
       }, [logPath, logs.files, logHeaders, evalSet]);
+      const progress2 = reactExports.useMemo(() => {
+        let pending = 0;
+        let total = 0;
+        for (const item2 of logItems) {
+          if (item2.type === "file" || item2.type === "pending-task") {
+            total += 1;
+            if (item2.type === "pending-task" || item2.logOverview?.status === "started") {
+              pending += 1;
+            }
+          }
+        }
+        return {
+          complete: total - pending,
+          total
+        };
+      }, [logItems]);
       reactExports.useEffect(() => {
         const exec2 = async () => {
           await loadLogs(logPath);
@@ -113684,14 +113758,23 @@ categories: ${categories.join(" ")}`;
           tabIndex: 0,
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(Navbar, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(LogsFilterInput, { ref: filterRef }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(ProgressBar, { animating: loading || headersLoading }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(ActivityBar, { animating: loading || headersLoading }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$15.list, "text-size-smaller"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(LogListGrid, { items: logItems }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               LogListFooter,
               {
                 logDir: currentDir,
                 itemCount: logItems.length,
-                progressText: loading ? "Loading logs" : headersLoading ? "Loading data" : void 0
+                progressText: loading ? "Loading logs" : headersLoading ? "Loading data" : void 0,
+                progressBar: progress2.total !== progress2.complete ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  ProgressBar,
+                  {
+                    min: 0,
+                    max: progress2.total,
+                    value: progress2.complete,
+                    width: "100px"
+                  }
+                ) : void 0
               }
             )
           ]
@@ -115472,7 +115555,8 @@ categories: ${categories.join(" ")}`;
         indented: indented2,
         numbered = true,
         scrollRef,
-        running
+        running,
+        allowLinking = true
       }) => {
         const listHandle = reactExports.useRef(null);
         reactExports.useEffect(() => {
@@ -115520,7 +115604,8 @@ categories: ${categories.join(" ")}`;
             toolCallStyle,
             indented: indented2,
             numbered,
-            running
+            running,
+            allowLinking
           }
         );
       }
@@ -115537,7 +115622,8 @@ categories: ${categories.join(" ")}`;
         indented: indented2,
         numbered = true,
         scrollRef,
-        running
+        running,
+        allowLinking = true
       }) => {
         const collapsedMessages = reactExports.useMemo(() => {
           return resolveMessages(messages2);
@@ -115568,7 +115654,8 @@ categories: ${categories.join(" ")}`;
                 resolvedMessage: item2,
                 indented: indented2,
                 toolCallStyle,
-                highlightUserMessage: true
+                highlightUserMessage: true,
+                allowLinking
               }
             );
           },
@@ -119136,16 +119223,16 @@ categories: ${categories.join(" ")}`;
         }
       );
     };
-    const label$6 = "_label_1i908_1";
-    const navs = "_navs_1i908_6";
-    const card = "_card_1i908_12";
-    const cardContent = "_cardContent_1i908_20";
-    const hidden$1 = "_hidden_1i908_25";
-    const copyLink = "_copyLink_1i908_33";
-    const hover = "_hover_1i908_41";
-    const root$1 = "_root_1i908_45";
-    const bottomDongle = "_bottomDongle_1i908_50";
-    const dongleIcon = "_dongleIcon_1i908_67";
+    const label$6 = "_label_1nn7f_1";
+    const navs = "_navs_1nn7f_6";
+    const card = "_card_1nn7f_12";
+    const cardContent = "_cardContent_1nn7f_20";
+    const hidden$1 = "_hidden_1nn7f_25";
+    const copyLink = "_copyLink_1nn7f_33";
+    const hover = "_hover_1nn7f_41";
+    const root$1 = "_root_1nn7f_45";
+    const bottomDongle = "_bottomDongle_1nn7f_50";
+    const dongleIcon = "_dongleIcon_1nn7f_67";
     const styles$D = {
       label: label$6,
       navs,
@@ -119665,7 +119752,8 @@ categories: ${categories.join(" ")}`;
                   messages: [...userMessages, ...outputMessages || []],
                   numbered: false,
                   toolCallStyle: showToolCalls ? "complete" : "omit",
-                  resolveToolCallsIntoPreviousMessage: context?.hasToolEvents !== false
+                  resolveToolCallsIntoPreviousMessage: context?.hasToolEvents !== false,
+                  allowLinking: false
                 }
               ),
               event.pending ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$z.progress), children: /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false, size: "medium" }) }) : void 0
@@ -119696,7 +119784,8 @@ categories: ${categories.join(" ")}`;
                 {
                   id: `${eventNode.id}-model-input-full`,
                   messages: [...event.input, ...outputMessages || []],
-                  resolveToolCallsIntoPreviousMessage: context?.hasToolEvents !== false
+                  resolveToolCallsIntoPreviousMessage: context?.hasToolEvents !== false,
+                  allowLinking: false
                 }
               ) })
             ] }),
@@ -119808,7 +119897,13 @@ categories: ${categories.join(" ")}`;
           subTitle: formatDateTime(new Date(event.timestamp)),
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Sample", className: styles$x.sample, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(ChatView, { messages: stateObj["messages"] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                ChatView,
+                {
+                  messages: stateObj["messages"],
+                  allowLinking: false
+                }
+              ),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
                 event.sample.choices ? event.sample.choices.map((choice, index) => {
                   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
@@ -123488,9 +123583,9 @@ ${events}
       return value2.toString(16).padStart(2, "0");
     }
     class BinaryReader {
-      constructor(inner) {
+      constructor(inner2) {
         let offset2 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 0;
-        this.inner = inner;
+        this.inner = inner2;
         this.offset = offset2;
       }
       forward(delta2) {
@@ -127219,7 +127314,8 @@ ${events}
           ChatView,
           {
             id: "system_msg_event_preview",
-            messages: [message2]
+            messages: [message2],
+            allowLinking: false
           },
           "system_msg_event_preview"
         );
@@ -127265,7 +127361,8 @@ ${events}
           ChatView,
           {
             id: "system_msg_event_preview",
-            messages: messages2
+            messages: messages2,
+            allowLinking: false
           },
           "system_msg_event_preview"
         );
@@ -127399,7 +127496,8 @@ ${events}
             ChatView,
             {
               id: "system_msg_event_preview",
-              messages: [message2]
+              messages: [message2],
+              allowLinking: false
             },
             "system_msg_event_preview"
           );
@@ -127956,7 +128054,8 @@ ${events}
                 id: `${eventNode.id}-toolcall-chatmessage`,
                 messages: lastModelNode.event.output.choices.map((m) => m.message),
                 numbered: false,
-                toolCallStyle: "compact"
+                toolCallStyle: "compact",
+                allowLinking: false
               }
             ) : void 0,
             approvalNode ? /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -129418,7 +129517,7 @@ ${events}
       const scrollRef = reactExports.useRef(null);
       return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$o.container, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
-          ProgressBar,
+          ActivityBar,
           {
             animating: sampleData.status === "loading" || sampleData.status === "streaming"
           }
@@ -129533,7 +129632,7 @@ ${events}
                     }
                   )
                 ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(ProgressBar, { animating: showProgress }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(ActivityBar, { animating: showProgress }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("modal-body", classNames?.body), ref: scrollRef, children: children2 }),
                 modalFooter
               ] })
@@ -129893,16 +129992,16 @@ ${events}
       When `from` and `to` are given, they should be 1-based line numbers.
       */
       iterLines(from, to2) {
-        let inner;
+        let inner2;
         if (from == null) {
-          inner = this.iter();
+          inner2 = this.iter();
         } else {
           if (to2 == null)
             to2 = this.lines + 1;
           let start2 = this.line(from).from;
-          inner = this.iterRange(start2, Math.max(start2, to2 == this.lines + 1 ? this.length : to2 <= 1 ? 0 : this.line(to2 - 1).to));
+          inner2 = this.iterRange(start2, Math.max(start2, to2 == this.lines + 1 ? this.length : to2 <= 1 ? 0 : this.line(to2 - 1).to));
         }
-        return new LineCursor(inner);
+        return new LineCursor(inner2);
       }
       /**
       Return the document as a string, using newline characters to
@@ -130277,8 +130376,8 @@ ${events}
       }
     }
     class LineCursor {
-      constructor(inner) {
-        this.inner = inner;
+      constructor(inner2) {
+        this.inner = inner2;
         this.afterBreak = true;
         this.value = "";
         this.done = false;
@@ -131479,8 +131578,8 @@ ${events}
       lowest: /* @__PURE__ */ prec(Prec_.lowest)
     };
     class PrecExtension {
-      constructor(inner, prec2) {
-        this.inner = inner;
+      constructor(inner2, prec2) {
+        this.inner = inner2;
         this.prec = prec2;
       }
     }
@@ -131508,9 +131607,9 @@ ${events}
       }
     }
     class CompartmentInstance {
-      constructor(compartment, inner) {
+      constructor(compartment, inner2) {
         this.compartment = compartment;
-        this.inner = inner;
+        this.inner = inner2;
       }
     }
     class Configuration {
@@ -131585,7 +131684,7 @@ ${events}
     function flatten(extension, compartments, newCompartments) {
       let result2 = [[], [], [], [], []];
       let seen = /* @__PURE__ */ new Map();
-      function inner(ext, prec2) {
+      function inner2(ext, prec2) {
         let known = seen.get(ext);
         if (known != null) {
           if (known <= prec2)
@@ -131599,31 +131698,31 @@ ${events}
         seen.set(ext, prec2);
         if (Array.isArray(ext)) {
           for (let e of ext)
-            inner(e, prec2);
+            inner2(e, prec2);
         } else if (ext instanceof CompartmentInstance) {
           if (newCompartments.has(ext.compartment))
             throw new RangeError(`Duplicate use of compartment in extensions`);
           let content2 = compartments.get(ext.compartment) || ext.inner;
           newCompartments.set(ext.compartment, content2);
-          inner(content2, prec2);
+          inner2(content2, prec2);
         } else if (ext instanceof PrecExtension) {
-          inner(ext.inner, ext.prec);
+          inner2(ext.inner, ext.prec);
         } else if (ext instanceof StateField) {
           result2[prec2].push(ext);
           if (ext.provides)
-            inner(ext.provides, prec2);
+            inner2(ext.provides, prec2);
         } else if (ext instanceof FacetProvider) {
           result2[prec2].push(ext);
           if (ext.facet.extensions)
-            inner(ext.facet.extensions, Prec_.default);
+            inner2(ext.facet.extensions, Prec_.default);
         } else {
           let content2 = ext.extension;
           if (!content2)
             throw new Error(`Unrecognized extension value in extension set (${ext}). This sometimes happens because multiple instances of @codemirror/state are loaded, breaking instanceof checks.`);
-          inner(content2, prec2);
+          inner2(content2, prec2);
         }
       }
-      inner(extension, Prec_.default);
+      inner2(extension, Prec_.default);
       return result2.reduce((a, b) => a.concat(b));
     }
     function ensureAddr(state, addr) {
@@ -143167,10 +143266,10 @@ ${events}
             node2 = parent;
         }
       for (; ; ) {
-        let inner = node2.enter(pos2, side, mode);
-        if (!inner)
+        let inner2 = node2.enter(pos2, side, mode);
+        if (!inner2)
           return node2;
-        node2 = inner;
+        node2 = inner2;
       }
     }
     class BaseNode {
@@ -143248,8 +143347,8 @@ ${events}
               let mounted;
               if (!(mode & IterMode.IgnoreMounts) && (mounted = MountedTree.get(next)) && !mounted.overlay)
                 return new TreeNode(mounted.tree, start2, i2, parent);
-              let inner = new TreeNode(next, start2, i2, parent);
-              return mode & IterMode.IncludeAnonymous || !inner.type.isAnonymous ? inner : inner.nextChild(dir < 0 ? next.children.length - 1 : 0, dir, pos2, side);
+              let inner2 = new TreeNode(next, start2, i2, parent);
+              return mode & IterMode.IncludeAnonymous || !inner2.type.isAnonymous ? inner2 : inner2.nextChild(dir < 0 ? next.children.length - 1 : 0, dir, pos2, side);
             }
           }
           if (mode & IterMode.IncludeAnonymous || !parent.type.isAnonymous)
@@ -143533,21 +143632,21 @@ ${events}
       }
     }
     function stackIterator(tree, pos2, side) {
-      let inner = tree.resolveInner(pos2, side), layers = null;
-      for (let scan = inner instanceof TreeNode ? inner : inner.context.parent; scan; scan = scan.parent) {
+      let inner2 = tree.resolveInner(pos2, side), layers = null;
+      for (let scan = inner2 instanceof TreeNode ? inner2 : inner2.context.parent; scan; scan = scan.parent) {
         if (scan.index < 0) {
           let parent = scan.parent;
-          (layers || (layers = [inner])).push(parent.resolve(pos2, side));
+          (layers || (layers = [inner2])).push(parent.resolve(pos2, side));
           scan = parent;
         } else {
           let mount2 = MountedTree.get(scan.tree);
           if (mount2 && mount2.overlay && mount2.overlay[0].from <= pos2 && mount2.overlay[mount2.overlay.length - 1].to >= pos2) {
             let root2 = new TreeNode(mount2.tree, mount2.overlay[0].from + scan.from, -1, scan);
-            (layers || (layers = [inner])).push(resolveNode(root2, pos2, side, false));
+            (layers || (layers = [inner2])).push(resolveNode(root2, pos2, side, false));
           }
         }
       }
-      return layers ? iterStack(layers) : inner;
+      return layers ? iterStack(layers) : inner2;
     }
     class TreeCursor {
       /**
@@ -144392,11 +144491,11 @@ ${events}
                 throw new RangeError("Invalid path: " + part2);
               rest = part2.slice(pos2);
             }
-            let last = pieces.length - 1, inner = pieces[last];
-            if (!inner)
+            let last = pieces.length - 1, inner2 = pieces[last];
+            if (!inner2)
               throw new RangeError("Invalid path: " + part2);
             let rule = new Rule(tags2, mode, last > 0 ? pieces.slice(0, last) : null);
-            byName[inner] = rule.sort(byName[inner]);
+            byName[inner2] = rule.sort(byName[inner2]);
           }
       }
       return ruleNodeProp.add(byName);
@@ -144509,7 +144608,7 @@ ${events}
           return;
         let mounted = cursor.tree && cursor.tree.prop(NodeProp.mounted);
         if (mounted && mounted.overlay) {
-          let inner = cursor.node.enter(mounted.overlay[0].from + start2, 1);
+          let inner2 = cursor.node.enter(mounted.overlay[0].from + start2, 1);
           let innerHighlighters = this.highlighters.filter((h) => !h.scope || h.scope(mounted.tree.type));
           let hasChild2 = cursor.firstChild();
           for (let i2 = 0, pos2 = start2; ; i2++) {
@@ -144528,7 +144627,7 @@ ${events}
               break;
             pos2 = next.to + start2;
             if (pos2 > from) {
-              this.highlightRange(inner.cursor(), Math.max(from, next.from + start2), Math.min(to2, pos2), "", innerHighlighters);
+              this.highlightRange(inner2.cursor(), Math.max(from, next.from + start2), Math.min(to2, pos2), "", innerHighlighters);
               this.startSpan(Math.min(to2, pos2), cls);
             }
           }
@@ -147890,11 +147989,11 @@ ${events}
       if (!inside2 && from == 0 && tree.type == lang2.topNode)
         inside2 = true;
       for (let i2 = tree.children.length - 1; i2 >= 0; i2--) {
-        let pos2 = tree.positions[i2], child = tree.children[i2], inner;
+        let pos2 = tree.positions[i2], child = tree.children[i2], inner2;
         if (pos2 < to2 && child instanceof Tree) {
-          if (!(inner = cutTree(lang2, child, from - pos2, to2 - pos2, inside2)))
+          if (!(inner2 = cutTree(lang2, child, from - pos2, to2 - pos2, inside2)))
             break;
-          return !inside2 ? inner : new Tree(tree.type, tree.children.slice(0, i2).concat(inner), tree.positions.slice(0, i2 + 1), pos2 + inner.length);
+          return !inside2 ? inner2 : new Tree(tree.type, tree.children.slice(0, i2).concat(inner2), tree.positions.slice(0, i2 + 1), pos2 + inner2.length);
         }
       }
       return null;
@@ -150135,10 +150234,10 @@ ${events}
     const indentNodeProp = /* @__PURE__ */ new NodeProp();
     function syntaxIndentation(cx, ast2, pos2) {
       let stack2 = ast2.resolveStack(pos2);
-      let inner = ast2.resolveInner(pos2, -1).resolve(pos2, 0).enterUnfinishedNodesBefore(pos2);
-      if (inner != stack2.node) {
+      let inner2 = ast2.resolveInner(pos2, -1).resolve(pos2, 0).enterUnfinishedNodesBefore(pos2);
+      if (inner2 != stack2.node) {
         let add2 = [];
-        for (let cur2 = inner; cur2 && !(cur2.from == stack2.node.from && cur2.type == stack2.node.type); cur2 = cur2.parent)
+        for (let cur2 = inner2; cur2 && !(cur2.from == stack2.node.from && cur2.type == stack2.node.type); cur2 = cur2.parent)
           add2.push(cur2);
         for (let i2 = add2.length - 1; i2 >= 0; i2--)
           stack2 = { node: add2[i2], next: stack2 };
@@ -154390,7 +154489,7 @@ Supported expressions:
           children: [
             showFind ? /* @__PURE__ */ jsxRuntimeExports.jsx(FindBand, {}) : "",
             !singleFileMode ? /* @__PURE__ */ jsxRuntimeExports.jsx(Navbar, {}) : "",
-            /* @__PURE__ */ jsxRuntimeExports.jsx(ProgressBar, { animating: appStatus.loading }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(ActivityBar, { animating: appStatus.loading }),
             appStatus.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(
               ErrorPanel,
               {
