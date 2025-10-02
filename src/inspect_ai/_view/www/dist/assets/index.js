@@ -23852,8 +23852,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           refreshLogs: async () => {
             log$7.debug("REFRESH LOGS");
             const state = get2();
+            const currentLog = state.logs.selectedLogIndex > -1 ? state.logs.logs.files[state.logs.selectedLogIndex] : void 0;
             const refreshedLogs = await state.logsActions.loadLogs();
-            const currentLog = state.logs.logs.files[state.logs.selectedLogIndex > -1 ? state.logs.selectedLogIndex : 0];
             state.logsActions.setLogs(refreshedLogs || kEmptyLogs);
             if (currentLog) {
               const newIndex = refreshedLogs?.files.findIndex(
@@ -109530,21 +109530,6 @@ categories: ${categories.join(" ")}`;
         cleanup
       };
     }
-    const useUnloadLog = () => {
-      const clearSelectedLogSummary = useStore(
-        (state) => state.logActions.clearSelectedLogSummary
-      );
-      const setSelectedLogIndex = useStore(
-        (state) => state.logsActions.setSelectedLogIndex
-      );
-      const clearLog = useStore((state) => state.logActions.clearLog);
-      const unloadLog = reactExports.useCallback(() => {
-        clearSelectedLogSummary();
-        setSelectedLogIndex(-1);
-        clearLog();
-      }, [clearLog, clearSelectedLogSummary, setSelectedLogIndex]);
-      return { unloadLog };
-    };
     const header$3 = "_header_1fu9w_1";
     const breadcrumbs = "_breadcrumbs_1fu9w_12";
     const ellipsis = "_ellipsis_1fu9w_23";
@@ -113575,10 +113560,6 @@ categories: ${categories.join(" ")}`;
       const { setPage } = usePagination(kLogsPaginationId, kDefaultPageSize);
       const filterRef = reactExports.useRef(null);
       const rootRef = reactExports.useRef(null);
-      const { unloadLog } = useUnloadLog();
-      reactExports.useEffect(() => {
-        unloadLog();
-      }, []);
       const { logPath } = useLogRouteParams();
       const currentDir = join(logPath || "", logs.log_dir);
       const { startPolling, stopPolling } = useClientEvents();
@@ -113716,6 +113697,21 @@ categories: ${categories.join(" ")}`;
           ]
         }
       );
+    };
+    const useUnloadLog = () => {
+      const clearSelectedLogSummary = useStore(
+        (state) => state.logActions.clearSelectedLogSummary
+      );
+      const setSelectedLogIndex = useStore(
+        (state) => state.logsActions.setSelectedLogIndex
+      );
+      const clearLog = useStore((state) => state.logActions.clearLog);
+      const unloadLog = reactExports.useCallback(() => {
+        clearSelectedLogSummary();
+        setSelectedLogIndex(-1);
+        clearLog();
+      }, [clearLog, clearSelectedLogSummary, setSelectedLogIndex]);
+      return { unloadLog };
     };
     const ExtendedFindContext = reactExports.createContext(null);
     const ExtendedFindProvider = ({
@@ -154436,6 +154432,12 @@ Supported expressions:
       const navigate = useNavigate();
       const sampleSummaries = useSampleSummaries();
       const [searchParams] = useSearchParams();
+      const { unloadLog } = useUnloadLog();
+      reactExports.useEffect(() => {
+        return () => {
+          unloadLog();
+        };
+      }, []);
       reactExports.useEffect(() => {
         if (logPath && sampleUuid && sampleSummaries) {
           const sample2 = sampleSummaries.find((s) => s.uuid === sampleUuid);
