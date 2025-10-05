@@ -118319,7 +118319,6 @@ categories: ${categories.join(" ")}`;
     const SPAN_BEGIN = "span_begin";
     const SPAN_END = "span_end";
     const TOOL = "tool";
-    const SUBTASK = "subtask";
     const STORE = "store";
     const STATE = "state";
     const TYPE_TOOL = "tool";
@@ -128622,26 +128621,13 @@ ${events}
         if (event.event === STEP && event.action !== ACTION_BEGIN) {
           return;
         }
-        const resolvedParent = parentOverride !== void 0 ? parentOverride : resolveParentForEvent(event, spanNodes);
+        const resolvedParent = resolveParentForEvent(event, spanNodes);
         const parentNode = resolvedParent ?? null;
         const node2 = createNode(event, parentNode);
         if (event.event === SPAN_BEGIN) {
           const spanId = getEventSpanId(event);
           if (spanId !== null) {
             spanNodes.set(spanId, node2);
-          }
-        }
-        if (event.event === TOOL) {
-          if (shouldExpandToolChildren(event)) {
-            for (const child of event.events) {
-              processEvent(child, node2);
-            }
-          }
-        } else if (event.event === SUBTASK) {
-          if (shouldExpandSubtaskChildren(event)) {
-            for (const child of event.events) {
-              processEvent(child, node2);
-            }
           }
         }
       };
@@ -128678,28 +128664,6 @@ ${events}
           case SPAN_END:
             popStack();
             break;
-          case TOOL: {
-            const node2 = createNode(event, parent);
-            if (shouldExpandToolChildren(event)) {
-              pushStack(node2);
-              for (const child of event.events) {
-                processEvent(child);
-              }
-              popStack();
-            }
-            break;
-          }
-          case SUBTASK: {
-            const node2 = createNode(event, parent);
-            if (shouldExpandSubtaskChildren(event)) {
-              pushStack(node2);
-              for (const child of event.events) {
-                processEvent(child);
-              }
-              popStack();
-            }
-            break;
-          }
           default:
             createNode(event, parent);
             break;
@@ -128748,12 +128712,6 @@ ${events}
     const getEventSpanId = (event) => {
       const spanId = event.span_id;
       return spanId ?? null;
-    };
-    const shouldExpandToolChildren = (event) => {
-      return event.events.length > 0 && (event.events[0].event !== SPAN_BEGIN || event.events[0].type !== TYPE_TOOL);
-    };
-    const shouldExpandSubtaskChildren = (event) => {
-      return event.events.length > 0 && (event.events[0].event !== SPAN_BEGIN || event.events[0].type !== TYPE_SUBTASK);
     };
     const kBeginScorerId = "E617087FA405";
     const kEndScorerId = "C39922B09481";
