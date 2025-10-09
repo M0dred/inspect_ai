@@ -23050,12 +23050,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const kLogViewInfoTabId = "info";
     const kLogViewModelsTabId = "models";
     const kLogViewTaskTabId = "task";
+    const kLogViewErrorTabId = "error";
     const kWorkspaceTabs = [
       kLogViewSamplesTabId,
       kLogViewJsonTabId,
       kLogViewInfoTabId,
       kLogViewModelsTabId,
-      kLogViewTaskTabId
+      kLogViewTaskTabId,
+      kLogViewErrorTabId
     ];
     const kSampleMessagesTabId = `messages`;
     const kSampleTranscriptTabId = `transcript`;
@@ -31113,7 +31115,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const toFullUrl = (path) => {
       return `${window.location.origin}${window.location.pathname}${window.location.search}#${path}`;
     };
-    const message$1 = "_message_b8oe1_1";
+    const message$2 = "_message_b8oe1_1";
     const systemRole = "_systemRole_b8oe1_8";
     const messageGrid = "_messageGrid_b8oe1_12";
     const toolMessageGrid = "_toolMessageGrid_b8oe1_20";
@@ -31123,7 +31125,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const metadataLabel = "_metadataLabel_b8oe1_43";
     const hover$1 = "_hover_b8oe1_47";
     const styles$1F = {
-      message: message$1,
+      message: message$2,
       systemRole,
       messageGrid,
       toolMessageGrid,
@@ -114270,34 +114272,6 @@ categories: ${categories.join(" ")}`;
       tabs,
       tabPanels
     };
-    const MessageBand = ({
-      id,
-      message: message2,
-      type,
-      scope = "eval"
-    }) => {
-      const className2 = [type];
-      const [visible2, setVisible] = useMessageVisibility(id, scope);
-      const handleClick = reactExports.useCallback(() => {
-        setVisible(false);
-      }, [setVisible]);
-      if (!visible2) {
-        className2.push("hidden");
-      }
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("message-band", className2), children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.logging[type] }),
-        message2,
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            className: clsx("btn", "message-band-btn", type),
-            title: "Close",
-            onClick: handleClick,
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.close })
-          }
-        )
-      ] });
-    };
     const CardHeader = ({
       id,
       icon: icon2,
@@ -114341,8 +114315,107 @@ categories: ${categories.join(" ")}`;
     const Card = ({ id, children: children2, className: className2 }) => {
       return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("card", className2), id, children: children2 });
     };
-    const item$2 = "_item_1uzhd_1";
+    const message$1 = "_message_1gb2h_5";
     const styles$14 = {
+      "task-error-display": "_task-error-display_1gb2h_1",
+      message: message$1
+    };
+    const TaskErrorCard = ({ error: error2 }) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          CardHeader,
+          {
+            icon: ApplicationIcons.error,
+            label: `Task Failed`
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(CardBody, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            ExpandablePanel,
+            {
+              id: "task-error-collapse",
+              collapse: true,
+              className: clsx("text-size-smaller", styles$14.message),
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                RenderedContent,
+                {
+                  id: "task-error-message",
+                  entry: { name: "error", value: error2.message }
+                }
+              )
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            ANSIDisplay,
+            {
+              output: error2.traceback_ansi,
+              className: styles$14["task-error-display"]
+            }
+          )
+        ] })
+      ] });
+    };
+    const useErrorTabConfig = (evalError) => {
+      const scrollRef = reactExports.useRef(null);
+      return reactExports.useMemo(() => {
+        return {
+          id: kLogViewErrorTabId,
+          label: "Error",
+          scrollable: true,
+          component: ErrorTab,
+          componentProps: {
+            evalError,
+            scrollRef
+          },
+          scrollRef
+        };
+      }, [evalError]);
+    };
+    const ErrorTab = ({ evalError }) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "0.5em 1em 0 1em", width: "100%" }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          TaskErrorCard,
+          {
+            error: evalError || {
+              message: "Unknown error",
+              traceback: "",
+              traceback_ansi: ""
+            }
+          }
+        ),
+        " "
+      ] }) });
+    };
+    const MessageBand = ({
+      id,
+      message: message2,
+      type,
+      scope = "eval"
+    }) => {
+      const className2 = [type];
+      const [visible2, setVisible] = useMessageVisibility(id, scope);
+      const handleClick = reactExports.useCallback(() => {
+        setVisible(false);
+      }, [setVisible]);
+      if (!visible2) {
+        className2.push("hidden");
+      }
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("message-band", className2), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.logging[type] }),
+        message2,
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            className: clsx("btn", "message-band-btn", type),
+            title: "Close",
+            onClick: handleClick,
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.close })
+          }
+        )
+      ] });
+    };
+    const item$2 = "_item_1uzhd_1";
+    const styles$13 = {
       item: item$2
     };
     const DatasetDetailView = ({
@@ -114353,12 +114426,12 @@ categories: ${categories.join(" ")}`;
         Object.entries(dataset).filter(([key2]) => key2 !== "sample_ids")
       );
       if (!dataset || Object.keys(filtered).length === 0) {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-size-base", styles$14.item), style: style2, children: "No dataset information available" });
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-size-base", styles$13.item), style: style2, children: "No dataset information available" });
       }
       return /* @__PURE__ */ jsxRuntimeExports.jsx(
         MetaDataGrid,
         {
-          className: clsx("text-size-base", styles$14.item),
+          className: clsx("text-size-base", styles$13.item),
           entries: filtered,
           style: style2,
           plain: true
@@ -114368,7 +114441,7 @@ categories: ${categories.join(" ")}`;
     const icon$2 = "_icon_59zaz_1";
     const container$h = "_container_59zaz_5";
     const metadata$1 = "_metadata_59zaz_11";
-    const styles$13 = {
+    const styles$12 = {
       icon: icon$2,
       container: container$h,
       metadata: metadata$1
@@ -114379,22 +114452,22 @@ categories: ${categories.join(" ")}`;
       params,
       className: className2
     }) => {
-      const iconHtml = icon2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, styles$13.icon) }) : "";
+      const iconHtml = icon2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, styles$12.icon) }) : "";
       return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2), children: [
         iconHtml,
         " ",
         name2,
-        params && Object.keys(params).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$13.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        params && Object.keys(params).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$12.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           MetaDataGrid,
           {
             entries: params,
-            className: clsx("text-size-small", styles$13.metadata)
+            className: clsx("text-size-small", styles$12.metadata)
           }
         ) }) : ""
       ] });
     };
     const item$1 = "_item_leq25_1";
-    const styles$12 = {
+    const styles$11 = {
       item: item$1
     };
     const ScorerDetailView = ({
@@ -114411,38 +114484,38 @@ categories: ${categories.join(" ")}`;
           icon: ApplicationIcons.scorer,
           name: name2,
           params,
-          className: clsx(styles$12.item, "text-size-base")
+          className: clsx(styles$11.item, "text-size-base")
         }
       );
     };
     const container$g = "_container_12j2k_1";
     const separator$5 = "_separator_12j2k_11";
-    const styles$11 = {
+    const styles$10 = {
       container: container$g,
       separator: separator$5
     };
     const SolversDetailView = ({ steps }) => {
-      const separator2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$11.items, "text-size-small", styles$11.separator), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.arrows.right }) });
+      const separator2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$10.items, "text-size-small", styles$10.separator), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.arrows.right }) });
       const details = steps?.map((step, index) => {
         return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             DetailStep,
             {
               name: step.solver,
-              className: clsx(styles$11.items, "text-size-small")
+              className: clsx(styles$10.items, "text-size-small")
             }
           ),
           index < steps.length - 1 ? separator2 : ""
         ] }, `solver-step-${index}`);
       });
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$11.container, children: details });
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$10.container, children: details });
     };
     const floatingCol = "_floatingCol_1n79r_1";
     const wideCol = "_wideCol_1n79r_9";
     const planCol = "_planCol_1n79r_24";
     const container$f = "_container_1n79r_29";
     const grid$6 = "_grid_1n79r_35";
-    const styles$10 = {
+    const styles$$ = {
       floatingCol,
       wideCol,
       planCol,
@@ -114461,13 +114534,13 @@ categories: ${categories.join(" ")}`;
       const taskColumns = [];
       taskColumns.push({
         title: "Dataset",
-        className: styles$10.floatingCol,
+        className: styles$$.floatingCol,
         contents: /* @__PURE__ */ jsxRuntimeExports.jsx(DatasetDetailView, { dataset: evaluation.dataset })
       });
       if (steps) {
         taskColumns.push({
           title: "Solvers",
-          className: styles$10.wideCol,
+          className: styles$$.wideCol,
           contents: /* @__PURE__ */ jsxRuntimeExports.jsx(SolversDetailView, { steps })
         });
       }
@@ -114501,15 +114574,15 @@ categories: ${categories.join(" ")}`;
           });
           taskColumns.push({
             title: label2,
-            className: styles$10.floatingCol,
+            className: styles$$.floatingCol,
             contents: scorerPanels
           });
         }
       }
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$10.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$$.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
         {
-          className: styles$10.grid,
+          className: styles$$.grid,
           style: {
             gridTemplateColumns: `repeat(${taskColumns.length}, fit-content(50%))`
           },
@@ -114537,7 +114610,7 @@ categories: ${categories.join(" ")}`;
               "text-size-small",
               "text-style-label",
               "text-style-secondary",
-              styles$10.planCol
+              styles$$.planCol
             ),
             children: title2
           }
@@ -114577,28 +114650,7 @@ categories: ${categories.join(" ")}`;
         ] })
       ] });
     };
-    const styles$$ = {
-      "task-error-display": "_task-error-display_1624b_1"
-    };
-    const TaskErrorCard = ({ error: error2 }) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          CardHeader,
-          {
-            icon: ApplicationIcons.error,
-            label: "Task Failed: ${error.message}"
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-          ANSIDisplay,
-          {
-            output: error2.traceback_ansi,
-            className: styles$$["task-error-display"]
-          }
-        ) })
-      ] });
-    };
-    const useInfoTabConfig = (evalSpec, evalPlan, evalError, evalResults) => {
+    const useInfoTabConfig = (evalSpec, evalPlan, evalError, evalResults, evalStatus) => {
       const scrollRef = reactExports.useRef(null);
       const totalSampleCount = useTotalSampleCount();
       return reactExports.useMemo(() => {
@@ -114612,6 +114664,7 @@ categories: ${categories.join(" ")}`;
             evalPlan,
             evalError,
             evalResults,
+            evalStatus,
             sampleCount: totalSampleCount,
             scrollRef
           },
@@ -114624,7 +114677,6 @@ categories: ${categories.join(" ")}`;
       evalPlan,
       evalResults,
       evalStatus,
-      evalError,
       sampleCount,
       scrollRef
     }) => {
@@ -114638,18 +114690,15 @@ categories: ${categories.join(" ")}`;
             type: "warning"
           }
         ) : "",
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "0.5em 1em 0 1em", width: "100%" }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            PlanCard,
-            {
-              evalSpec,
-              evalPlan,
-              scores: evalResults?.scores,
-              scrollRef
-            }
-          ),
-          evalStatus === "error" && evalError ? /* @__PURE__ */ jsxRuntimeExports.jsx(TaskErrorCard, { error: evalError }) : void 0
-        ] })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { padding: "0.5em 1em 0 1em", width: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          PlanCard,
+          {
+            evalSpec,
+            evalPlan,
+            scores: evalResults?.scores,
+            scrollRef
+          }
+        ) })
       ] });
     };
     const DownloadButton = ({
@@ -154410,12 +154459,14 @@ Supported expressions:
         selectedLogSummary?.status,
         refreshLog
       );
-      const configTabConfig = useInfoTabConfig(
+      const intoTabConfig = useInfoTabConfig(
         evalSpec,
         selectedLogSummary?.plan,
         selectedLogSummary?.error,
-        selectedLogSummary?.results
+        selectedLogSummary?.results,
+        selectedLogSummary?.status
       );
+      const errorTabConfig = useErrorTabConfig(selectedLogSummary?.error);
       const taskTabConfig = useTaskTabConfig(evalSpec, selectedLogSummary?.stats);
       const modelsTabConfig = useModelsTab(
         evalSpec,
@@ -154435,7 +154486,8 @@ Supported expressions:
         ...samplesTabConfig ? { samples: samplesTabConfig } : {},
         task: taskTabConfig,
         model: modelsTabConfig,
-        config: configTabConfig,
+        config: intoTabConfig,
+        ...selectedLogSummary?.error ? { error: errorTabConfig } : {},
         json: jsonTabConfig
       };
       const selectedTab = useStore((state) => state.app.tabs.workspace);
