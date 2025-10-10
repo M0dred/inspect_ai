@@ -15794,7 +15794,7 @@ var require_assets = __commonJS({
     var reactExports = requireReact();
     const H = /* @__PURE__ */ getDefaultExportFromCjs(reactExports);
     /**
-     * react-router v7.8.2
+     * react-router v7.9.4
      *
      * Copyright (c) Remix Software Inc.
      *
@@ -16031,9 +16031,9 @@ var require_assets = __commonJS({
       return new URL(href, base2);
     }
     var _map;
-    var unstable_RouterContextProvider = class {
+    var RouterContextProvider = class {
       /**
-       * Create a new `unstable_RouterContextProvider` instance
+       * Create a new `RouterContextProvider` instance
        * @param init An optional initial context map to populate the provider with
        */
       constructor(init) {
@@ -16093,7 +16093,7 @@ var require_assets = __commonJS({
       "path",
       "id",
       "index",
-      "unstable_middleware",
+      "middleware",
       "children"
     ]);
     function isUnsupportedLazyRouteFunctionKey(key2) {
@@ -16654,7 +16654,7 @@ var require_assets = __commonJS({
           }
         } else if (initialMatches.some((m) => m.route.lazy)) {
           initialized = false;
-        } else if (!initialMatches.some((m) => m.route.loader)) {
+        } else if (!initialMatches.some((m) => routeHasLoaderOrMiddleware(m.route))) {
           initialized = true;
         } else {
           let loaderData = init.hydrationData ? init.hydrationData.loaderData : null;
@@ -17066,7 +17066,7 @@ var require_assets = __commonJS({
           pendingNavigationController.signal,
           opts && opts.submission
         );
-        let scopedContext = init.unstable_getContext ? await init.unstable_getContext() : new unstable_RouterContextProvider();
+        let scopedContext = init.getContext ? await init.getContext() : new RouterContextProvider();
         let pendingActionResult;
         if (opts && opts.pendingError) {
           pendingActionResult = [
@@ -17356,7 +17356,9 @@ var require_assets = __commonJS({
           pendingActionResult
         );
         pendingNavigationLoadId = ++incrementingLoadId;
-        if (!init.dataStrategy && !dsMatches.some((m) => m.shouldLoad) && !dsMatches.some((m) => m.route.unstable_middleware) && revalidatingFetchers.length === 0) {
+        if (!init.dataStrategy && !dsMatches.some((m) => m.shouldLoad) && !dsMatches.some(
+          (m) => m.route.middleware && m.route.middleware.length > 0
+        ) && revalidatingFetchers.length === 0) {
           let updatedFetchers2 = markFetchRedirectsDone();
           completeNavigation(
             location2,
@@ -17510,7 +17512,7 @@ var require_assets = __commonJS({
           setFetcherError(key2, routeId, error2, { flushSync });
           return;
         }
-        let scopedContext = init.unstable_getContext ? await init.unstable_getContext() : new unstable_RouterContextProvider();
+        let scopedContext = init.getContext ? await init.getContext() : new RouterContextProvider();
         let preventScrollReset = (opts && opts.preventScrollReset) === true;
         if (submission && isMutationMethod(submission.formMethod)) {
           await handleFetcherAction(
@@ -18037,6 +18039,10 @@ var require_assets = __commonJS({
         }
         return state.fetchers.get(key2) || IDLE_FETCHER;
       }
+      function resetFetcher(key2, opts) {
+        abortFetcher(key2, opts?.reason);
+        updateFetcherState(key2, getDoneFetcher(null));
+      }
       function deleteFetcher(key2) {
         let fetcher = state.fetchers.get(key2);
         if (fetchControllers.has(key2) && !(fetcher && fetcher.state === "loading" && fetchReloadIds.has(key2))) {
@@ -18059,10 +18065,10 @@ var require_assets = __commonJS({
         }
         updateState({ fetchers: new Map(state.fetchers) });
       }
-      function abortFetcher(key2) {
+      function abortFetcher(key2, reason) {
         let controller = fetchControllers.get(key2);
         if (controller) {
-          controller.abort();
+          controller.abort(reason);
           fetchControllers.delete(key2);
         }
       }
@@ -18326,6 +18332,7 @@ var require_assets = __commonJS({
         createHref: (to2) => init.history.createHref(to2),
         encodeLocation: (to2) => init.history.encodeLocation(to2),
         getFetcher,
+        resetFetcher,
         deleteFetcher: queueFetcherForDeletion,
         dispose: dispose2,
         getBlocker,
@@ -18525,7 +18532,7 @@ var require_assets = __commonJS({
           forceShouldLoad = false;
         } else if (route.lazy) {
           forceShouldLoad = true;
-        } else if (route.loader == null) {
+        } else if (!routeHasLoaderOrMiddleware(route)) {
           forceShouldLoad = false;
         } else if (initialHydration) {
           forceShouldLoad = shouldLoadRouteOnHydration(
@@ -18657,11 +18664,14 @@ var require_assets = __commonJS({
       });
       return { dsMatches, revalidatingFetchers };
     }
+    function routeHasLoaderOrMiddleware(route) {
+      return route.loader != null || route.middleware != null && route.middleware.length > 0;
+    }
     function shouldLoadRouteOnHydration(route, loaderData, errors2) {
       if (route.lazy) {
         return true;
       }
-      if (!route.loader) {
+      if (!routeHasLoaderOrMiddleware(route)) {
         return false;
       }
       let hasData = loaderData != null && route.id in loaderData;
@@ -18936,7 +18946,7 @@ var require_assets = __commonJS({
       return keyedResults;
     }
     async function defaultDataStrategyWithMiddleware(args2) {
-      if (!args2.matches.some((m) => m.route.unstable_middleware)) {
+      if (!args2.matches.some((m) => m.route.middleware)) {
         return defaultDataStrategy(args2);
       }
       return runClientMiddlewarePipeline(args2, () => defaultDataStrategy(args2));
@@ -18961,9 +18971,15 @@ var require_assets = __commonJS({
           let { matches } = args2;
           let maxBoundaryIdx = Math.min(
             // Throwing route
-            matches.findIndex((m) => m.route.id === routeId) || 0,
+            Math.max(
+              matches.findIndex((m) => m.route.id === routeId),
+              0
+            ),
             // or the shallowest route that needs to load data
-            matches.findIndex((m) => m.unstable_shouldCallHandler()) || 0
+            Math.max(
+              matches.findIndex((m) => m.unstable_shouldCallHandler()),
+              0
+            )
           );
           let boundaryRouteId = findNearestBoundary(
             matches,
@@ -18978,7 +18994,7 @@ var require_assets = __commonJS({
     async function runMiddlewarePipeline(args2, handler, processResult2, isResult, errorHandler) {
       let { matches, request, params, context } = args2;
       let tuples = matches.flatMap(
-        (m) => m.route.unstable_middleware ? m.route.unstable_middleware.map((fn2) => [m.route.id, fn2]) : []
+        (m) => m.route.middleware ? m.route.middleware.map((fn2) => [m.route.id, fn2]) : []
       );
       let result2 = await callRouteMiddleware(
         { request, params, context },
@@ -19041,7 +19057,7 @@ var require_assets = __commonJS({
     }
     function getDataStrategyMatchLazyPromises(mapRouteProperties2, manifest, request, match, lazyRoutePropertiesToSkip) {
       let lazyMiddlewarePromise = loadLazyRouteProperty({
-        key: "unstable_middleware",
+        key: "middleware",
         route: match.route,
         manifest,
         mapRouteProperties: mapRouteProperties2
@@ -19087,7 +19103,10 @@ var require_assets = __commonJS({
           return shouldRevalidateLoader(match, unstable_shouldRevalidateArgs);
         },
         resolve(handlerOverride) {
-          if (isUsingNewApi || shouldLoad || handlerOverride && !isMutationMethod(request.method) && (match.route.lazy || match.route.loader)) {
+          let { lazy, loader, middleware } = match.route;
+          let callHandler = isUsingNewApi || shouldLoad || handlerOverride && !isMutationMethod(request.method) && (lazy || loader);
+          let isMiddlewareOnlyRoute = middleware && middleware.length > 0 && !loader && !lazy;
+          if (callHandler && !isMiddlewareOnlyRoute) {
             return callLoaderOrAction({
               request,
               match,
@@ -19141,15 +19160,15 @@ var require_assets = __commonJS({
         context: scopedContext,
         matches
       };
-      let unstable_runClientMiddleware = (cb) => {
+      let runClientMiddleware = (cb) => {
         let typedDataStrategyArgs = dataStrategyArgs;
         return runClientMiddlewarePipeline(typedDataStrategyArgs, () => {
           return cb({
             ...typedDataStrategyArgs,
             fetcherKey,
-            unstable_runClientMiddleware: () => {
+            runClientMiddleware: () => {
               throw new Error(
-                "Cannot call `unstable_runClientMiddleware()` from within an `unstable_runClientMiddleware` handler"
+                "Cannot call `runClientMiddleware()` from within an `runClientMiddleware` handler"
               );
             }
           });
@@ -19158,7 +19177,7 @@ var require_assets = __commonJS({
       let results = await dataStrategyImpl({
         ...dataStrategyArgs,
         fetcherKey,
-        unstable_runClientMiddleware
+        runClientMiddleware
       });
       try {
         await Promise.all(
@@ -19961,10 +19980,10 @@ var require_assets = __commonJS({
     var OutletContext = reactExports.createContext(null);
     function useOutlet(context) {
       let outlet = reactExports.useContext(RouteContext).outlet;
-      if (outlet) {
-        return /* @__PURE__ */ reactExports.createElement(OutletContext.Provider, { value: context }, outlet);
-      }
-      return outlet;
+      return reactExports.useMemo(
+        () => outlet && /* @__PURE__ */ reactExports.createElement(OutletContext.Provider, { value: context }, outlet),
+        [outlet, context]
+      );
     }
     function useParams() {
       let { matches } = reactExports.useContext(RouteContext);
@@ -20038,13 +20057,23 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             params: Object.assign({}, parentParams, match.params),
             pathname: joinPaths([
               parentPathnameBase,
-              // Re-encode pathnames that were decoded inside matchRoutes
-              navigator2.encodeLocation ? navigator2.encodeLocation(match.pathname).pathname : match.pathname
+              // Re-encode pathnames that were decoded inside matchRoutes.
+              // Pre-encode `?` and `#` ahead of `encodeLocation` because it uses
+              // `new URL()` internally and we need to prevent it from treating
+              // them as separators
+              navigator2.encodeLocation ? navigator2.encodeLocation(
+                match.pathname.replace(/\?/g, "%3F").replace(/#/g, "%23")
+              ).pathname : match.pathname
             ]),
             pathnameBase: match.pathnameBase === "/" ? parentPathnameBase : joinPaths([
               parentPathnameBase,
               // Re-encode pathnames that were decoded inside matchRoutes
-              navigator2.encodeLocation ? navigator2.encodeLocation(match.pathnameBase).pathname : match.pathnameBase
+              // Pre-encode `?` and `#` ahead of `encodeLocation` because it uses
+              // `new URL()` internally and we need to prevent it from treating
+              // them as separators
+              navigator2.encodeLocation ? navigator2.encodeLocation(
+                match.pathnameBase.replace(/\?/g, "%3F").replace(/#/g, "%23")
+              ).pathname : match.pathnameBase
             ])
           })
         ),
@@ -21210,14 +21239,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     try {
       if (isBrowser) {
         window.__reactRouterVersion = // @ts-expect-error
-        "7.8.2";
+        "7.9.4";
       }
     } catch (e) {
     }
     function createHashRouter(routes, opts) {
       return createRouter({
         basename: opts?.basename,
-        unstable_getContext: opts?.unstable_getContext,
+        getContext: opts?.getContext,
         future: opts?.future,
         history: createHashHistory({ window: opts?.window }),
         hydrationData: opts?.hydrationData || parseHydrationData(),
