@@ -113679,10 +113679,10 @@ categories: ${categories.join(" ")}`;
       const logItems = reactExports.useMemo(() => {
         const logItems2 = [];
         const processedFolders = /* @__PURE__ */ new Set();
-        const runningOrFinishedTasks = /* @__PURE__ */ new Set();
+        const existingLogTaskIds = /* @__PURE__ */ new Set();
         for (const logFile of logs.files) {
           if (logFile.task_id) {
-            runningOrFinishedTasks.add(logFile.task_id);
+            existingLogTaskIds.add(logFile.task_id);
           }
           const name2 = logFile.name;
           const cleanDir = currentDir.endsWith("/") ? currentDir.slice(0, -1) : currentDir;
@@ -113725,20 +113725,8 @@ categories: ${categories.join(" ")}`;
             }
           }
         }
-        const pendingTasks = new Array();
-        for (const task of evalSet?.tasks || []) {
-          if (!runningOrFinishedTasks.has(task.task_id)) {
-            pendingTasks.push({
-              id: task.task_id,
-              name: task.name || "<unknown>",
-              model: task.model,
-              type: "pending-task"
-            });
-          }
-        }
-        pendingTasks.sort((a, b) => a.name.localeCompare(b.name));
-        logItems2.push(...pendingTasks);
-        return logItems2;
+        const collapsedLogItems = collapseLogItems(evalSet, logItems2);
+        return appendPendingItems(evalSet, existingLogTaskIds, collapsedLogItems);
       }, [logPath, logs.files, logHeaders, evalSet]);
       const progress2 = reactExports.useMemo(() => {
         let pending = 0;
@@ -113812,6 +113800,70 @@ categories: ${categories.join(" ")}`;
           ]
         }
       );
+    };
+    const collapseLogItems = (evalSet, logItems) => {
+      if (!evalSet) {
+        return logItems;
+      }
+      const taskIdToItems = /* @__PURE__ */ new Map();
+      for (const item2 of logItems) {
+        if (item2.type === "file" && item2.logFile.task_id) {
+          const taskId = item2.logFile.task_id;
+          if (!taskIdToItems.has(taskId)) {
+            taskIdToItems.set(taskId, []);
+          }
+          taskIdToItems.get(taskId).push(item2);
+        } else if (item2.type === "folder" || item2.type === "file") ;
+      }
+      const selectedItems = /* @__PURE__ */ new Map();
+      for (const [taskId, items] of taskIdToItems) {
+        let bestItem = items[0];
+        for (const item2 of items) {
+          const currentStatus = item2.logOverview?.status;
+          const bestStatus = bestItem.logOverview?.status;
+          if (currentStatus === "started" && bestStatus !== "started") {
+            bestItem = item2;
+          } else if (currentStatus === "success" && bestStatus === "error") {
+            bestItem = item2;
+          } else if (currentStatus === bestStatus) {
+            bestItem = item2;
+          }
+        }
+        selectedItems.set(taskId, bestItem);
+      }
+      const collapsedLogItems = [];
+      const processedTaskIds = /* @__PURE__ */ new Set();
+      for (const item2 of logItems) {
+        if (item2.type === "file" && item2.logFile.task_id) {
+          const taskId = item2.logFile.task_id;
+          if (!processedTaskIds.has(taskId)) {
+            const selectedItem = selectedItems.get(taskId);
+            if (selectedItem) {
+              collapsedLogItems.push(selectedItem);
+            }
+            processedTaskIds.add(taskId);
+          }
+        } else {
+          collapsedLogItems.push(item2);
+        }
+      }
+      return collapsedLogItems;
+    };
+    const appendPendingItems = (evalSet, tasksWithLogFiles, collapsedLogItems) => {
+      const pendingTasks = new Array();
+      for (const task of evalSet?.tasks || []) {
+        if (!tasksWithLogFiles.has(task.task_id)) {
+          pendingTasks.push({
+            id: task.task_id,
+            name: task.name || "<unknown>",
+            model: task.model,
+            type: "pending-task"
+          });
+        }
+      }
+      pendingTasks.sort((a, b) => a.name.localeCompare(b.name));
+      collapsedLogItems.push(...pendingTasks);
+      return collapsedLogItems;
     };
     const useUnloadLog = () => {
       const clearSelectedLogSummary = useStore(
