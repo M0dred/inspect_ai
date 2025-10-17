@@ -153646,7 +153646,24 @@ Supported expressions:
       }
       return clusterValue;
     };
-    const metricModifiers = [clusterMetricModifier];
+    const groupMetricModifier = (metric) => {
+      const groupKey = (metric.params || {})["group_key"];
+      if (groupKey === void 0 || typeof groupKey !== "string") {
+        return void 0;
+      }
+      console.log({ metric });
+      const metricRaw = (metric.params || {})["metric"];
+      if (metricRaw === void 0 || typeof metricRaw !== "object") {
+        return void 0;
+      }
+      const metricObj = metricRaw;
+      const name2 = metricObj["name"];
+      return name2;
+    };
+    const metricModifiers = [
+      clusterMetricModifier,
+      groupMetricModifier
+    ];
     const toDisplayScorers = (scores2) => {
       if (!scores2) {
         return [];
