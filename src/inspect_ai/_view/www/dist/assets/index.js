@@ -23975,6 +23975,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             set2((state) => {
               state.logs.listing.watchedLogs = void 0;
             });
+          },
+          setSelectedRowIndex: (index) => {
+            set2((state) => {
+              state.logs.listing.selectedRowIndex = index;
+            });
           }
         }
       };
@@ -109535,6 +109540,12 @@ categories: ${categories.join(" ")}`;
       const setFilteredCount = useStore(
         (state) => state.logsActions.setFilteredCount
       );
+      const selectedRowIndex = useStore(
+        (state) => state.logs.listing.selectedRowIndex
+      );
+      const setSelectedRowIndex = useStore(
+        (state) => state.logsActions.setSelectedRowIndex
+      );
       return {
         sorting,
         setSorting,
@@ -109547,7 +109558,9 @@ categories: ${categories.join(" ")}`;
         columnSizes,
         setColumnSize,
         filteredCount,
-        setFilteredCount
+        setFilteredCount,
+        selectedRowIndex,
+        setSelectedRowIndex
       };
     };
     const useDocumentTitle = () => {
@@ -112776,18 +112789,19 @@ categories: ${categories.join(" ")}`;
       }));
       return tableRef.current;
     }
-    const gridContainer = "_gridContainer_12ksy_1";
-    const grid$7 = "_grid_12ksy_1";
-    const headerRow = "_headerRow_12ksy_15";
-    const headerCell = "_headerCell_12ksy_26";
-    const sortable = "_sortable_12ksy_42";
-    const sortIndicator = "_sortIndicator_12ksy_51";
-    const resizer = "_resizer_12ksy_58";
-    const isResizing = "_isResizing_12ksy_74";
-    const bodyContainer$1 = "_bodyContainer_12ksy_83";
-    const bodyRow = "_bodyRow_12ksy_91";
-    const bodyCell = "_bodyCell_12ksy_99";
-    const emptyMessage = "_emptyMessage_12ksy_111";
+    const gridContainer = "_gridContainer_1bo5m_1";
+    const grid$7 = "_grid_1bo5m_1";
+    const headerRow = "_headerRow_1bo5m_16";
+    const headerCell = "_headerCell_1bo5m_27";
+    const sortable = "_sortable_1bo5m_43";
+    const sortIndicator = "_sortIndicator_1bo5m_52";
+    const resizer = "_resizer_1bo5m_59";
+    const isResizing = "_isResizing_1bo5m_75";
+    const bodyContainer$1 = "_bodyContainer_1bo5m_84";
+    const bodyRow = "_bodyRow_1bo5m_92";
+    const selectedRow = "_selectedRow_1bo5m_107";
+    const bodyCell = "_bodyCell_1bo5m_117";
+    const emptyMessage = "_emptyMessage_1bo5m_129";
     const styles$1j = {
       gridContainer,
       grid: grid$7,
@@ -112799,6 +112813,7 @@ categories: ${categories.join(" ")}`;
       isResizing,
       bodyContainer: bodyContainer$1,
       bodyRow,
+      selectedRow,
       bodyCell,
       emptyMessage
     };
@@ -113142,236 +113157,336 @@ categories: ${categories.join(" ")}`;
       ];
       return allColumns;
     };
-    const LogListGrid = ({ items }) => {
-      const {
-        sorting,
-        setSorting,
-        filtering,
-        setFiltering,
-        globalFilter,
-        setGlobalFilter,
-        columnResizeMode,
-        setFilteredCount,
-        columnSizes,
-        setColumnSize
-      } = useLogsListing();
-      const { loadHeaders } = useLogs();
-      const { page, itemsPerPage, setPage } = usePagination(
-        kLogsPaginationId,
-        kDefaultPageSize
-      );
-      const headersLoading = useStore((state) => state.logs.logOverviewsLoading);
-      const loading = useStore((state) => state.app.status.loading);
-      const setWatchedLogs = useStore((state) => state.logsActions.setWatchedLogs);
-      const logHeaders = useStore((state) => state.logs.logOverviews);
-      const sortingRef = reactExports.useRef(sorting);
-      const logFiles = reactExports.useMemo(() => {
-        return items.filter((item2) => item2.type === "file").map((item2) => item2.logFile).filter((file) => file !== void 0);
-      }, [items]);
-      const loadAllHeadersForItems = reactExports.useCallback(
-        async (files) => {
-          await loadHeaders(files);
-          setWatchedLogs(files);
-        },
-        [loadHeaders, setWatchedLogs]
-      );
-      reactExports.useEffect(() => {
-        sortingRef.current = sorting;
-      }, [sorting]);
-      reactExports.useEffect(() => {
-        setSorting([{ id: "icon", desc: false }]);
-      }, []);
-      reactExports.useEffect(() => {
-        const currentSort = sortingRef.current?.find(
-          (sort2) => sort2.id === "task" || sort2.id === "model" || sort2.id === "score"
-        );
-        if (currentSort) {
-          setSorting([...sortingRef.current || []]);
-        }
-      }, [logHeaders]);
-      const columns = reactExports.useMemo(() => {
-        return getColumns();
-      }, []);
-      const table2 = useReactTable({
-        data: items,
-        columns,
-        columnResizeMode: columnResizeMode || "onChange",
-        state: {
+    const LogListGrid = reactExports.forwardRef(
+      ({ items }, ref) => {
+        const {
           sorting,
-          columnFilters: filtering,
+          setSorting,
+          filtering,
+          setFiltering,
           globalFilter,
-          pagination: {
-            pageIndex: page,
-            pageSize: itemsPerPage
+          setGlobalFilter,
+          columnResizeMode,
+          setFilteredCount,
+          columnSizes,
+          setColumnSize,
+          selectedRowIndex,
+          setSelectedRowIndex
+        } = useLogsListing();
+        const { loadHeaders } = useLogs();
+        const { page, itemsPerPage, setPage } = usePagination(
+          kLogsPaginationId,
+          kDefaultPageSize
+        );
+        const headersLoading = useStore((state) => state.logs.logOverviewsLoading);
+        const loading = useStore((state) => state.app.status.loading);
+        const setWatchedLogs = useStore(
+          (state) => state.logsActions.setWatchedLogs
+        );
+        const logHeaders = useStore((state) => state.logs.logOverviews);
+        const sortingRef = reactExports.useRef(sorting);
+        const navigate = useNavigate();
+        const gridRef = reactExports.useRef(null);
+        reactExports.useImperativeHandle(ref, () => ({
+          focus: () => {
+            gridRef.current?.focus();
+          }
+        }));
+        const logFiles = reactExports.useMemo(() => {
+          return items.filter((item2) => item2.type === "file").map((item2) => item2.logFile).filter((file) => file !== void 0);
+        }, [items]);
+        const loadAllHeadersForItems = reactExports.useCallback(
+          async (files) => {
+            await loadHeaders(files);
+            setWatchedLogs(files);
           },
-          columnSizing: columnSizes || {}
-        },
-        rowCount: items.length,
-        onSortingChange: async (updater) => {
-          await loadAllHeadersForItems(logFiles);
-          setSorting(
-            typeof updater === "function" ? updater(sorting || []) : updater
+          [loadHeaders, setWatchedLogs]
+        );
+        reactExports.useEffect(() => {
+          sortingRef.current = sorting;
+        }, [sorting]);
+        reactExports.useEffect(() => {
+          setSorting([{ id: "icon", desc: false }]);
+        }, []);
+        reactExports.useEffect(() => {
+          const currentSort = sortingRef.current?.find(
+            (sort2) => sort2.id === "task" || sort2.id === "model" || sort2.id === "score"
           );
-        },
-        onColumnFiltersChange: async (updater) => {
-          await loadAllHeadersForItems(logFiles);
-          setFiltering(
-            typeof updater === "function" ? updater(filtering || []) : updater
-          );
-        },
-        onGlobalFilterChange: (updater) => {
-          setGlobalFilter(
-            typeof updater === "function" ? updater(globalFilter || "") : updater
-          );
-        },
-        onPaginationChange: (updater) => {
-          const newPagination = typeof updater === "function" ? updater({ pageIndex: page, pageSize: itemsPerPage }) : updater;
-          setPage(newPagination.pageIndex);
-        },
-        onColumnSizingChange: (updater) => {
-          const newSizes = typeof updater === "function" ? updater(table2.getState().columnSizing || {}) : updater;
-          for (const [columnId, size] of Object.entries(newSizes)) {
-            setColumnSize(columnId, size);
+          if (currentSort) {
+            setSorting([...sortingRef.current || []]);
           }
-        },
-        getCoreRowModel: getCoreRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        getFilteredRowModel: getFilteredRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-        enableColumnResizing: true,
-        autoResetPageIndex: false
-      });
-      reactExports.useEffect(() => {
-        const filteredRowCount = table2.getFilteredRowModel().rows.length;
-        setFilteredCount(filteredRowCount);
-      }, [table2.getFilteredRowModel().rows.length, setFilteredCount]);
-      const filterText = reactExports.useRef(globalFilter);
-      reactExports.useEffect(() => {
-        const timeoutId = setTimeout(() => {
-          if (globalFilter && globalFilter.trim() && filterText.current !== globalFilter) {
-            loadAllHeadersForItems(logFiles);
-            filterText.current = globalFilter;
-          }
-        }, 200);
-        return () => clearTimeout(timeoutId);
-      }, [globalFilter, logFiles, loadAllHeadersForItems]);
-      reactExports.useEffect(() => {
-        const exec2 = async () => {
-          const startIndex = page * itemsPerPage;
-          const endIndex = startIndex + itemsPerPage;
-          const currentPageItems = items.slice(startIndex, endIndex);
-          const fileItems = currentPageItems.filter((item2) => item2.type === "file");
-          const logFiles2 = fileItems.map((item2) => item2.logFile).filter((file) => file !== void 0);
-          const filesToLoad = logFiles2.filter((file) => !logHeaders[file.name]);
-          if (filesToLoad.length > 0) {
-            await loadHeaders(filesToLoad);
-          }
-          setWatchedLogs(logFiles2);
-        };
-        exec2();
-      }, [page, itemsPerPage, items, loadHeaders, setWatchedLogs, logHeaders]);
-      const placeholderText = reactExports.useMemo(() => {
-        if (headersLoading || loading) {
-          if (globalFilter) {
-            return "searching...";
+        }, [logHeaders]);
+        const columns = reactExports.useMemo(() => {
+          return getColumns();
+        }, []);
+        const table2 = useReactTable({
+          data: items,
+          columns,
+          columnResizeMode: columnResizeMode || "onChange",
+          state: {
+            sorting,
+            columnFilters: filtering,
+            globalFilter,
+            pagination: {
+              pageIndex: page,
+              pageSize: itemsPerPage
+            },
+            columnSizing: columnSizes || {}
+          },
+          rowCount: items.length,
+          onSortingChange: async (updater) => {
+            await loadAllHeadersForItems(logFiles);
+            setSorting(
+              typeof updater === "function" ? updater(sorting || []) : updater
+            );
+          },
+          onColumnFiltersChange: async (updater) => {
+            await loadAllHeadersForItems(logFiles);
+            setFiltering(
+              typeof updater === "function" ? updater(filtering || []) : updater
+            );
+          },
+          onGlobalFilterChange: (updater) => {
+            setGlobalFilter(
+              typeof updater === "function" ? updater(globalFilter || "") : updater
+            );
+          },
+          onPaginationChange: (updater) => {
+            const newPagination = typeof updater === "function" ? updater({ pageIndex: page, pageSize: itemsPerPage }) : updater;
+            setPage(newPagination.pageIndex);
+          },
+          onColumnSizingChange: (updater) => {
+            const newSizes = typeof updater === "function" ? updater(table2.getState().columnSizing || {}) : updater;
+            for (const [columnId, size] of Object.entries(newSizes)) {
+              setColumnSize(columnId, size);
+            }
+          },
+          getCoreRowModel: getCoreRowModel(),
+          getSortedRowModel: getSortedRowModel(),
+          getFilteredRowModel: getFilteredRowModel(),
+          getPaginationRowModel: getPaginationRowModel(),
+          enableColumnResizing: true,
+          autoResetPageIndex: false
+        });
+        reactExports.useEffect(() => {
+          const filteredRowCount = table2.getFilteredRowModel().rows.length;
+          setFilteredCount(filteredRowCount);
+        }, [table2.getFilteredRowModel().rows.length, setFilteredCount]);
+        const filterText = reactExports.useRef(globalFilter);
+        reactExports.useEffect(() => {
+          const timeoutId = setTimeout(() => {
+            if (globalFilter && globalFilter.trim() && filterText.current !== globalFilter) {
+              loadAllHeadersForItems(logFiles);
+              filterText.current = globalFilter;
+            }
+          }, 200);
+          return () => clearTimeout(timeoutId);
+        }, [globalFilter, logFiles, loadAllHeadersForItems]);
+        reactExports.useEffect(() => {
+          const exec2 = async () => {
+            const startIndex = page * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const currentPageItems = items.slice(startIndex, endIndex);
+            const fileItems = currentPageItems.filter(
+              (item2) => item2.type === "file"
+            );
+            const logFiles2 = fileItems.map((item2) => item2.logFile).filter((file) => file !== void 0);
+            const filesToLoad = logFiles2.filter((file) => !logHeaders[file.name]);
+            if (filesToLoad.length > 0) {
+              await loadHeaders(filesToLoad);
+            }
+            setWatchedLogs(logFiles2);
+          };
+          exec2();
+        }, [page, itemsPerPage, items, loadHeaders, setWatchedLogs, logHeaders]);
+        const placeholderText = reactExports.useMemo(() => {
+          if (headersLoading || loading) {
+            if (globalFilter) {
+              return "searching...";
+            } else {
+              return "loading...";
+            }
           } else {
-            return "loading...";
+            if (globalFilter) {
+              return "no matching logs";
+            } else {
+              return "no logs";
+            }
           }
-        } else {
-          if (globalFilter) {
-            return "no matching logs";
-          } else {
-            return "no logs";
-          }
-        }
-      }, [headersLoading, loading, globalFilter]);
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1j.gridContainer, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1j.grid, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
+        }, [headersLoading, loading, globalFilter]);
+        const handleKeyDown = reactExports.useCallback(
+          (e) => {
+            const rowCount = table2.getRowModel().rows.length;
+            const totalPages = table2.getPageCount();
+            if (rowCount === 0) return;
+            if (e.key === "ArrowDown") {
+              e.preventDefault();
+              if (selectedRowIndex === null || selectedRowIndex === void 0) {
+                setSelectedRowIndex(0);
+              } else if (selectedRowIndex >= rowCount - 1) {
+                setSelectedRowIndex(0);
+              } else {
+                setSelectedRowIndex(selectedRowIndex + 1);
+              }
+            } else if (e.key === "ArrowUp") {
+              e.preventDefault();
+              if (selectedRowIndex === null || selectedRowIndex === void 0) {
+                setSelectedRowIndex(rowCount - 1);
+              } else if (selectedRowIndex === 0) {
+                setSelectedRowIndex(rowCount - 1);
+              } else {
+                setSelectedRowIndex(selectedRowIndex - 1);
+              }
+            } else if (e.key === "ArrowLeft") {
+              e.preventDefault();
+              if (page > 0) {
+                setPage(page - 1);
+                setSelectedRowIndex(null);
+              }
+            } else if (e.key === "ArrowRight") {
+              e.preventDefault();
+              if (page < totalPages - 1) {
+                setPage(page + 1);
+                setSelectedRowIndex(null);
+              }
+            } else if (e.key === "Home") {
+              e.preventDefault();
+              if (e.ctrlKey || e.metaKey) {
+                setPage(0);
+                setSelectedRowIndex(null);
+              } else {
+                setSelectedRowIndex(0);
+              }
+            } else if (e.key === "End") {
+              e.preventDefault();
+              if (e.ctrlKey || e.metaKey) {
+                setPage(totalPages - 1);
+                setSelectedRowIndex(null);
+              } else {
+                setSelectedRowIndex(rowCount - 1);
+              }
+            } else if (e.key === "Enter") {
+              e.preventDefault();
+              if (selectedRowIndex !== null && selectedRowIndex !== void 0 && selectedRowIndex >= 0) {
+                const selectedRow2 = table2.getRowModel().rows[selectedRowIndex];
+                const item2 = selectedRow2?.original;
+                if (item2?.url) {
+                  navigate(item2.url);
+                }
+              }
+            }
+          },
+          [table2, page, setPage, selectedRowIndex, navigate, setSelectedRowIndex]
+        );
+        reactExports.useEffect(() => {
+          setSelectedRowIndex(null);
+        }, [page, setSelectedRowIndex]);
+        reactExports.useEffect(() => {
+          gridRef.current?.focus();
+        }, []);
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
-            className: styles$1j.headerRow,
-            style: {
-              gridTemplateColumns: table2.getHeaderGroups()[0]?.headers.map((header2) => `${header2.getSize()}px`).join(" ") || "40px 0.5fr 0.25fr 0.25fr 0.1fr"
-            },
-            children: table2.getHeaderGroups().map(
-              (headerGroup) => headerGroup.headers.map((header2) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            ref: gridRef,
+            className: styles$1j.gridContainer,
+            onKeyDown: handleKeyDown,
+            tabIndex: 0,
+            role: "grid",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1j.grid, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "div",
                 {
-                  className: clsx(styles$1j.headerCell, {
-                    [styles$1j.sortable]: header2.column.getCanSort(),
-                    [styles$1j.resizing]: header2.column.getIsResizing()
-                  }),
-                  onClick: (event) => {
-                    header2.column.getToggleSortingHandler()?.(event);
-                  },
+                  className: styles$1j.headerRow,
                   style: {
-                    width: header2.getSize(),
-                    position: "relative"
+                    gridTemplateColumns: table2.getHeaderGroups()[0]?.headers.map((header2) => `${header2.getSize()}px`).join(" ") || "40px 0.5fr 0.25fr 0.25fr 0.1fr"
                   },
-                  children: [
-                    header2.isPlaceholder ? null : flexRender(
-                      header2.column.columnDef.header,
-                      header2.getContext()
-                    ),
-                    header2.column.getCanSort() && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1j.sortIndicator, children: {
-                      asc: " ↑",
-                      desc: " ↓"
-                    }[header2.column.getIsSorted()] ?? "" }),
-                    header2.column.getCanResize() && /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  children: table2.getHeaderGroups().map(
+                    (headerGroup) => headerGroup.headers.map((header2) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
                       "div",
                       {
-                        onMouseDown: (e) => {
-                          e.stopPropagation();
-                          header2.getResizeHandler()(e);
+                        className: clsx(styles$1j.headerCell, {
+                          [styles$1j.sortable]: header2.column.getCanSort(),
+                          [styles$1j.resizing]: header2.column.getIsResizing()
+                        }),
+                        onClick: (event) => {
+                          header2.column.getToggleSortingHandler()?.(event);
                         },
-                        onTouchStart: (e) => {
-                          e.stopPropagation();
-                          header2.getResizeHandler()(e);
+                        style: {
+                          width: header2.getSize(),
+                          position: "relative"
                         },
-                        onClick: (e) => {
-                          e.stopPropagation();
+                        children: [
+                          header2.isPlaceholder ? null : flexRender(
+                            header2.column.columnDef.header,
+                            header2.getContext()
+                          ),
+                          header2.column.getCanSort() && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1j.sortIndicator, children: {
+                            asc: " ↑",
+                            desc: " ↓"
+                          }[header2.column.getIsSorted()] ?? "" }),
+                          header2.column.getCanResize() && /* @__PURE__ */ jsxRuntimeExports.jsx(
+                            "div",
+                            {
+                              onMouseDown: (e) => {
+                                e.stopPropagation();
+                                header2.getResizeHandler()(e);
+                              },
+                              onTouchStart: (e) => {
+                                e.stopPropagation();
+                                header2.getResizeHandler()(e);
+                              },
+                              onClick: (e) => {
+                                e.stopPropagation();
+                              },
+                              className: clsx(styles$1j.resizer, {
+                                [styles$1j.isResizing]: header2.column.getIsResizing()
+                              })
+                            }
+                          )
+                        ]
+                      },
+                      header2.id
+                    ))
+                  )
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1j.bodyContainer, children: [
+                table2.getRowModel().rows.length === 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1j.emptyMessage, children: placeholderText }),
+                table2.getRowModel().rows.map((row2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "div",
+                  {
+                    className: clsx(styles$1j.bodyRow, {
+                      [styles$1j.selectedRow]: selectedRowIndex === index
+                    }),
+                    style: {
+                      gridTemplateColumns: row2.getVisibleCells().map((cell2) => `${cell2.column.getSize()}px`).join(" ")
+                    },
+                    "data-testid": selectedRowIndex === index ? `row-${index}-selected` : void 0,
+                    onClick: () => setSelectedRowIndex(index),
+                    children: row2.getVisibleCells().map((cell2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "div",
+                      {
+                        className: clsx(
+                          styles$1j.bodyCell,
+                          styles$1j[`${cell2.column.id}Cell`]
+                        ),
+                        style: {
+                          width: cell2.column.getSize()
                         },
-                        className: clsx(styles$1j.resizer, {
-                          [styles$1j.isResizing]: header2.column.getIsResizing()
-                        })
-                      }
-                    )
-                  ]
-                },
-                header2.id
-              ))
-            )
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1j.bodyContainer, children: [
-          table2.getRowModel().rows.length === 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1j.emptyMessage, children: placeholderText }),
-          table2.getRowModel().rows.map((row2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "div",
-            {
-              className: styles$1j.bodyRow,
-              style: {
-                gridTemplateColumns: row2.getVisibleCells().map((cell2) => `${cell2.column.getSize()}px`).join(" ")
-              },
-              children: row2.getVisibleCells().map((cell2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "div",
-                {
-                  className: clsx(
-                    styles$1j.bodyCell,
-                    styles$1j[`${cell2.column.id}Cell`]
-                  ),
-                  style: {
-                    width: cell2.column.getSize()
+                        children: flexRender(cell2.column.columnDef.cell, cell2.getContext())
+                      },
+                      cell2.id
+                    ))
                   },
-                  children: flexRender(cell2.column.columnDef.cell, cell2.getContext())
-                },
-                cell2.id
-              ))
-            },
-            row2.id
-          ))
-        ] })
-      ] }) });
-    };
+                  row2.id
+                ))
+              ] })
+            ] })
+          }
+        );
+      }
+    );
+    LogListGrid.displayName = "LogListGrid";
     const footer$1 = "_footer_14uod_1";
     const spinnerContainer$1 = "_spinnerContainer_14uod_11";
     const spinner$2 = "_spinner_14uod_11";
@@ -113649,7 +113764,7 @@ categories: ${categories.join(" ")}`;
       const navigate = useNavigate();
       const { setPage } = usePagination(kLogsPaginationId, kDefaultPageSize);
       const filterRef = reactExports.useRef(null);
-      const rootRef = reactExports.useRef(null);
+      const gridRef = reactExports.useRef(null);
       const { logPath } = useLogRouteParams();
       const currentDir = join(logPath || "", logs.log_dir);
       const { startPolling, stopPolling } = useClientEvents();
@@ -113671,11 +113786,6 @@ categories: ${categories.join(" ")}`;
           previousWatchedLogs.current = watchedLogs;
         }
       }, [watchedLogs]);
-      reactExports.useEffect(() => {
-        setTimeout(() => {
-          rootRef.current?.focus();
-        }, 10);
-      }, []);
       const logItems = reactExports.useMemo(() => {
         const logItems2 = [];
         const processedFolders = /* @__PURE__ */ new Set();
@@ -113765,21 +113875,22 @@ categories: ${categories.join(" ")}`;
         if (e.key === "f" && (e.metaKey || e.ctrlKey)) {
           e.preventDefault();
           filterRef.current?.focus();
+        } else if (e.key === "Escape" && document.activeElement === filterRef.current) {
+          e.preventDefault();
+          gridRef.current?.focus();
         }
       }
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
         {
-          ref: rootRef,
           className: clsx(styles$16.panel),
           onKeyDown: (e) => {
             handleKeyDown(e);
           },
-          tabIndex: 0,
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(Navbar, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(LogsFilterInput, { ref: filterRef }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx(ActivityBar, { animating: loading || headersLoading }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.list, "text-size-smaller"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(LogListGrid, { items: logItems }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.list, "text-size-smaller"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(LogListGrid, { ref: gridRef, items: logItems }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               LogListFooter,
               {
@@ -153651,7 +153762,6 @@ Supported expressions:
       if (groupKey === void 0 || typeof groupKey !== "string") {
         return void 0;
       }
-      console.log({ metric });
       const metricRaw = (metric.params || {})["metric"];
       if (metricRaw === void 0 || typeof metricRaw !== "object") {
         return void 0;
