@@ -119795,25 +119795,31 @@ categories: ${categories.join(" ")}`;
         }
       );
     };
-    const container$9 = "_container_1brs9_1";
-    const title$1 = "_title_1brs9_5";
+    const container$9 = "_container_1ww70_1";
+    const titleRow = "_titleRow_1ww70_5";
+    const title$1 = "_title_1ww70_5";
     const styles$B = {
       container: container$9,
+      titleRow,
       title: title$1
     };
     const EventSection = ({
       title: title2,
       children: children2,
+      copyContent,
       className: className2
     }) => {
       return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$B.container, className2), children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$B.titleRow), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
           "div",
           {
             className: clsx("text-size-small", "text-style-label", styles$B.title),
-            children: title2
+            children: [
+              title2,
+              copyContent ? /* @__PURE__ */ jsxRuntimeExports.jsx(CopyButton, { value: copyContent, ariaLabel: "Copy to clipboard" }) : null
+            ]
           }
-        ),
+        ) }),
         children2
       ] });
     };
@@ -120045,21 +120051,24 @@ categories: ${categories.join(" ")}`;
       );
     };
     const APIView = ({ call, className: className2 }) => {
+      const requestCode = reactExports.useMemo(() => {
+        return JSON.stringify(call.request, void 0, 2);
+      }, [call.request]);
+      const responseCode = reactExports.useMemo(() => {
+        return JSON.stringify(call.response, void 0, 2);
+      }, [call.response]);
       if (!call) {
         return null;
       }
       return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2), children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Request", children: /* @__PURE__ */ jsxRuntimeExports.jsx(APICodeCell, { contents: call.request }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Response", children: /* @__PURE__ */ jsxRuntimeExports.jsx(APICodeCell, { contents: call.response }) })
+        /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Request", copyContent: requestCode, children: /* @__PURE__ */ jsxRuntimeExports.jsx(APICodeCell, { sourceCode: requestCode }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Response", copyContent: responseCode, children: /* @__PURE__ */ jsxRuntimeExports.jsx(APICodeCell, { sourceCode: responseCode }) })
       ] });
     };
-    const APICodeCell = ({ id, contents: contents2 }) => {
-      const sourceCode = reactExports.useMemo(() => {
-        return JSON.stringify(contents2, void 0, 2);
-      }, [contents2]);
+    const APICodeCell = ({ id, sourceCode }) => {
       const sourceCodeRef = reactExports.useRef(null);
       usePrismHighlight(sourceCodeRef, sourceCode.length);
-      if (!contents2) {
+      if (!sourceCode) {
         return null;
       }
       return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: sourceCodeRef, className: clsx("model-call"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$A.codePre), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
