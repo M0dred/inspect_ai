@@ -23620,7 +23620,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       filterError: void 0,
       epoch: "all",
       sort: kDefaultSort,
-      score: void 0,
+      selectedScores: void 0,
       scores: void 0
     };
     const createLogSlice = (set2, get2, _store) => {
@@ -23636,6 +23636,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           setSelectedLogSummary: (selectedLogSummary) => {
             set2((state) => {
               state.log.selectedLogSummary = selectedLogSummary;
+              state.log.selectedScores = void 0;
             });
             if (selectedLogSummary.status !== "started" && selectedLogSummary.sampleSummaries.length === 0) {
               get2().appActions.setWorkspaceTab(kLogViewInfoTabId);
@@ -23666,8 +23667,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           setSort: (sort2) => set2((state) => {
             state.log.sort = sort2;
           }),
-          setScore: (score2) => set2((state) => {
-            state.log.score = score2;
+          setSelectedScores: (scores2) => set2((state) => {
+            state.log.selectedScores = scores2;
           }),
           setScores: (scores2) => set2((state) => {
             state.log.scores = scores2;
@@ -23677,7 +23678,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             state.log.filterError = void 0;
             state.log.epoch = "all";
             state.log.sort = kDefaultSort;
-            state.log.score = void 0;
+            state.log.selectedScores = state.log.scores?.slice(0, 1);
           }),
           loadLog: async (logFileName) => {
             const state = get2();
@@ -24804,6 +24805,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       link: "bi bi-link-45deg",
       logging: loggingIcons,
       metadata: "bi bi-table",
+      metrics: "bi bi-clipboard-data",
       model: "bi bi-grid-3x3-gap",
       navbar: {
         home: "ii inspect-icon-home",
@@ -24895,11 +24897,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return n;
     }
     const wrapper$4 = "_wrapper_1tajk_1";
-    const container$m = "_container_1tajk_12";
+    const container$n = "_container_1tajk_12";
     const animate = "_animate_1tajk_21";
     const styles$1N = {
       wrapper: wrapper$4,
-      container: container$m,
+      container: container$n,
       animate
     };
     const ActivityBar = ({ animating }) => {
@@ -24916,13 +24918,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
       ) });
     };
-    const container$l = "_container_1n7pm_1";
-    const label$a = "_label_1n7pm_7";
+    const container$m = "_container_1n7pm_1";
+    const label$9 = "_label_1n7pm_7";
     const outer = "_outer_1n7pm_11";
     const inner = "_inner_1n7pm_20";
     const styles$1M = {
-      container: container$l,
-      label: label$a,
+      container: container$m,
+      label: label$9,
       outer,
       inner
     };
@@ -25264,11 +25266,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
       };
     };
-    const container$k = "_container_1ramc_1";
+    const container$l = "_container_1ramc_1";
     const key$1 = "_key_1ramc_12";
     const value$2 = "_value_1ramc_16";
     const styles$1K = {
-      container: container$k,
+      container: container$l,
       key: key$1,
       value: value$2
     };
@@ -105200,15 +105202,15 @@ ${citation.url}` : citation.url,
         );
       }
     );
-    const grid$9 = "_grid_rmdrx_1";
+    const grid$a = "_grid_rmdrx_1";
     const number$1 = "_number_rmdrx_7";
     const user = "_user_rmdrx_11";
-    const container$j = "_container_rmdrx_16";
+    const container$k = "_container_rmdrx_16";
     const styles$1p = {
-      grid: grid$9,
+      grid: grid$a,
       number: number$1,
       user,
-      container: container$j
+      container: container$k
     };
     const ChatMessageRow = ({
       parentName,
@@ -105427,10 +105429,10 @@ ${citation.url}` : citation.url,
       }
       return /* @__PURE__ */ jsxRuntimeExports.jsx(ChatView, { id, messages: summaryMessages });
     };
-    const grid$8 = "_grid_14885_1";
+    const grid$9 = "_grid_14885_1";
     const cell$2 = "_cell_14885_8";
     const styles$1o = {
-      grid: grid$8,
+      grid: grid$9,
       cell: cell$2
     };
     const MetaDataGrid = ({
@@ -106113,25 +106115,30 @@ ${citation.url}` : citation.url,
         scoreAnswer
       };
     };
-    const createSamplesDescriptor = (samples, evalDescriptor, selectedScore) => {
+    const createSamplesDescriptor = (samples, evalDescriptor, selectedScores) => {
       const sizes = samples.reduce(
         (previous, current2) => {
           const text2 = inputString(current2.input).join(" ");
-          const score2 = selectedScore ? evalDescriptor.score(current2, selectedScore) : void 0;
-          const scoreValue = score2?.value;
-          const scoreText = scoreValue ? String(scoreValue) : current2.error ? String(current2.error) : "";
+          let maxScoreTextLength = 0;
+          let maxAnswerLength = 0;
+          if (selectedScores.length > 0) {
+            selectedScores.forEach((scoreLabel) => {
+              const score2 = evalDescriptor.score(current2, scoreLabel);
+              const scoreValue = score2?.value;
+              const scoreText = scoreValue ? String(scoreValue) : current2.error ? String(current2.error) : "";
+              maxScoreTextLength = Math.max(maxScoreTextLength, scoreText.length);
+              maxAnswerLength = Math.max(
+                maxAnswerLength,
+                evalDescriptor.scoreAnswer(current2, scoreLabel)?.length || 0
+              );
+            });
+          }
           previous[0] = Math.min(Math.max(previous[0], text2.length), 200);
           previous[1] = Math.min(
             Math.max(previous[1], arrayToString(current2.target).length),
             300
           );
-          previous[2] = Math.min(
-            Math.max(
-              previous[2],
-              selectedScore ? evalDescriptor.scoreAnswer(current2, selectedScore)?.length || 0 : 0
-            ),
-            300
-          );
+          previous[2] = Math.min(Math.max(previous[2], maxAnswerLength), 300);
           previous[3] = Math.min(
             Math.max(previous[3], current2.limit ? current2.limit.length : 0),
             50
@@ -106147,7 +106154,7 @@ ${citation.url}` : citation.url,
             Math.max(previous[5], String(current2.id).length),
             10
           );
-          previous[6] = Math.min(Math.max(previous[6], scoreText.length), 30);
+          previous[6] = Math.min(Math.max(previous[6], maxScoreTextLength), 30);
           return previous;
         },
         [0, 0, 0, 0, 0, 0, 0]
@@ -106185,11 +106192,12 @@ ${citation.url}` : citation.url,
           score: maxSizes.score / base2
         }
       };
+      const firstSelectedScore = selectedScores?.[0];
       return {
         evalDescriptor,
         messageShape,
-        selectedScore: (sample2) => selectedScore ? evalDescriptor.score(sample2, selectedScore) : void 0,
-        selectedScorerDescriptor: (sample2) => selectedScore ? evalDescriptor.scorerDescriptor(sample2, selectedScore) : void 0
+        selectedScore: (sample2) => firstSelectedScore ? evalDescriptor.score(sample2, firstSelectedScore) : void 0,
+        selectedScorerDescriptor: (sample2) => firstSelectedScore ? evalDescriptor.scorerDescriptor(sample2, firstSelectedScore) : void 0
       };
     };
     const scoreLabelKey = (scoreLabel) => {
@@ -108876,11 +108884,11 @@ categories: ${categories.join(" ")}`;
       });
       return { result: result2, error: error2, allErrors: errorCount === samples.length };
     };
-    const flex$1 = "_flex_1kye9_1";
-    const label$9 = "_label_1kye9_5";
+    const flex = "_flex_1kye9_1";
+    const label$8 = "_label_1kye9_5";
     const styles$1l = {
-      flex: flex$1,
-      label: label$9
+      flex,
+      label: label$8
     };
     const SortFilter = ({ sort: sort2, setSort, epochs }) => {
       const options2 = [
@@ -108953,9 +108961,11 @@ categories: ${categories.join(" ")}`;
         return String(a.id).localeCompare(String(b.id));
       }
     };
-    const sortSamples = (sort2, samples, samplesDescriptor, score2) => {
+    const sortSamples = (sort2, samples, samplesDescriptor, scores2) => {
+      const scoreDescriptors = scores2.map((score2) => samplesDescriptor.evalDescriptor.scoreDescriptor(score2)).filter((scoreDescriptor) => scoreDescriptor !== void 0);
       const sortedSamples = samples.sort((a, b) => {
-        const scoreDescriptor = score2 ? samplesDescriptor.evalDescriptor.scoreDescriptor(score2) : void 0;
+        const aScores = scores2.map((score2) => samplesDescriptor.evalDescriptor.score(a, score2)).filter((score2) => score2 !== void 0);
+        const bScores = scores2.map((score2) => samplesDescriptor.evalDescriptor.score(b, score2)).filter((score2) => score2 !== void 0);
         switch (sort2) {
           case kSampleAscVal: {
             const result2 = sortId(a, b);
@@ -108990,20 +109000,26 @@ categories: ${categories.join(" ")}`;
             }
           }
           case kScoreAscVal: {
-            const aScore = samplesDescriptor.evalDescriptor.score(a, score2);
-            const bScore = samplesDescriptor.evalDescriptor.score(b, score2);
-            if (aScore === void 0 || bScore === void 0 || scoreDescriptor === void 0) {
+            if (aScores.length === 0 || bScores.length === 0 || scoreDescriptors.length === 0) {
               return 0;
             }
-            return scoreDescriptor?.compare(aScore, bScore);
+            return aScores.reduce((cmp, score2, index) => {
+              if (cmp !== 0) {
+                return cmp;
+              }
+              return scoreDescriptors[index]?.compare(score2, bScores[index]);
+            }, 0);
           }
           case kScoreDescVal: {
-            const aScore = samplesDescriptor.evalDescriptor.score(a, score2);
-            const bScore = samplesDescriptor.evalDescriptor.score(b, score2);
-            if (aScore === void 0 || bScore === void 0 || scoreDescriptor == void 0) {
+            if (aScores.length === 0 || bScores.length === 0 || scoreDescriptors.length === 0) {
               return 0;
             }
-            return scoreDescriptor?.compare(bScore, aScore);
+            return bScores.reduce((cmp, score2, index) => {
+              if (cmp !== 0) {
+                return cmp;
+              }
+              return scoreDescriptors[index]?.compare(score2, aScores[index]);
+            }, 0);
           }
           default:
             return 0;
@@ -109107,19 +109123,24 @@ categories: ${categories.join(" ")}`;
         return sampleSummaries.length;
       }, [sampleSummaries]);
     };
-    const useScore = () => {
+    const useSelectedScores = () => {
       const selectedLogSummary = useStore((state) => state.log.selectedLogSummary);
       const sampleSummaries = useSampleSummaries();
-      const score2 = useStore((state) => state.log.score);
+      const selected2 = useStore((state) => state.log.selectedScores);
       return reactExports.useMemo(() => {
-        if (score2) {
-          return score2;
+        if (selected2 !== void 0) {
+          return selected2;
         } else if (selectedLogSummary) {
-          return getDefaultScorer(selectedLogSummary, sampleSummaries);
-        } else {
-          return void 0;
+          const defaultScorer = getDefaultScorer(
+            selectedLogSummary,
+            sampleSummaries
+          );
+          if (defaultScorer) {
+            return [defaultScorer];
+          }
         }
-      }, [selectedLogSummary, sampleSummaries, score2]);
+        return [];
+      }, [selectedLogSummary, sampleSummaries, selected2]);
     };
     const useScores = () => {
       const selectedLogSummary = useStore((state) => state.log.selectedLogSummary);
@@ -109142,10 +109163,10 @@ categories: ${categories.join(" ")}`;
     const useSampleDescriptor = () => {
       const evalDescriptor = useEvalDescriptor();
       const sampleSummaries = useSampleSummaries();
-      const score2 = useScore();
+      const selectedScores = useSelectedScores();
       return reactExports.useMemo(() => {
-        return evalDescriptor ? createSamplesDescriptor(sampleSummaries, evalDescriptor, score2) : void 0;
-      }, [evalDescriptor, sampleSummaries, score2]);
+        return evalDescriptor ? createSamplesDescriptor(sampleSummaries, evalDescriptor, selectedScores) : void 0;
+      }, [evalDescriptor, sampleSummaries, selectedScores]);
     };
     const useFilteredSamples = () => {
       const evalDescriptor = useEvalDescriptor();
@@ -109158,7 +109179,7 @@ categories: ${categories.join(" ")}`;
       const epoch = useStore((state) => state.log.epoch);
       const sort2 = useStore((state) => state.log.sort);
       const samplesDescriptor = useSampleDescriptor();
-      const score2 = useScore();
+      const selectedScores = useSelectedScores();
       return reactExports.useMemo(() => {
         const { result: result2, error: error2, allErrors } = evalDescriptor && filter ? filterSamples(evalDescriptor, sampleSummaries, filter) : { result: sampleSummaries, error: void 0, allErrors: false };
         if (error2 && allErrors) {
@@ -109168,7 +109189,7 @@ categories: ${categories.join(" ")}`;
         }
         const prefiltered = error2 === void 0 || !allErrors ? result2 : sampleSummaries;
         const filtered = epoch && epoch !== "all" ? prefiltered.filter((sample2) => epoch === String(sample2.epoch)) : prefiltered;
-        const sorted = samplesDescriptor ? sortSamples(sort2, filtered, samplesDescriptor, score2) : filtered;
+        const sorted = samplesDescriptor ? sortSamples(sort2, filtered, samplesDescriptor, selectedScores) : filtered;
         return [...sorted];
       }, [
         evalDescriptor,
@@ -109179,7 +109200,7 @@ categories: ${categories.join(" ")}`;
         epoch,
         sort2,
         samplesDescriptor,
-        score2
+        selectedScores
       ]);
     };
     const useGroupBy = () => {
@@ -112790,7 +112811,7 @@ categories: ${categories.join(" ")}`;
       return tableRef.current;
     }
     const gridContainer = "_gridContainer_1bo5m_1";
-    const grid$7 = "_grid_1bo5m_1";
+    const grid$8 = "_grid_1bo5m_1";
     const headerRow = "_headerRow_1bo5m_16";
     const headerCell = "_headerCell_1bo5m_27";
     const sortable = "_sortable_1bo5m_43";
@@ -112804,7 +112825,7 @@ categories: ${categories.join(" ")}`;
     const emptyMessage = "_emptyMessage_1bo5m_129";
     const styles$1j = {
       gridContainer,
-      grid: grid$7,
+      grid: grid$8,
       headerRow,
       headerCell,
       sortable,
@@ -113490,7 +113511,7 @@ categories: ${categories.join(" ")}`;
     const footer$1 = "_footer_14uod_1";
     const spinnerContainer$1 = "_spinnerContainer_14uod_11";
     const spinner$2 = "_spinner_14uod_11";
-    const label$8 = "_label_14uod_25";
+    const label$7 = "_label_14uod_25";
     const right$1 = "_right_14uod_30";
     const left$1 = "_left_14uod_39";
     const center$1 = "_center_14uod_48";
@@ -113498,7 +113519,7 @@ categories: ${categories.join(" ")}`;
       footer: footer$1,
       spinnerContainer: spinnerContainer$1,
       spinner: spinner$2,
-      label: label$8,
+      label: label$7,
       right: right$1,
       left: left$1,
       center: center$1
@@ -113646,14 +113667,14 @@ categories: ${categories.join(" ")}`;
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1a.right), children: progressBar || /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: effectiveItemCount === 0 ? "" : filteredCount !== void 0 && filteredCount !== itemCount ? `${startItem} - ${endItem} / ${effectiveItemCount} (${itemCount} total)` : `${startItem} - ${endItem} / ${effectiveItemCount}` }) })
       ] });
     };
-    const container$i = "_container_e1pcq_1";
+    const container$j = "_container_e1pcq_1";
     const input$1 = "_input_e1pcq_16";
     const withIcon = "_withIcon_e1pcq_23";
     const icon$3 = "_icon_e1pcq_27";
     const clearText = "_clearText_e1pcq_31";
     const hidden$2 = "_hidden_e1pcq_40";
     const styles$18 = {
-      container: container$i,
+      container: container$j,
       input: input$1,
       withIcon,
       icon: icon$3,
@@ -114631,11 +114652,11 @@ categories: ${categories.join(" ")}`;
       );
     };
     const icon$2 = "_icon_59zaz_1";
-    const container$h = "_container_59zaz_5";
+    const container$i = "_container_59zaz_5";
     const metadata$1 = "_metadata_59zaz_11";
     const styles$12 = {
       icon: icon$2,
-      container: container$h,
+      container: container$i,
       metadata: metadata$1
     };
     const DetailStep = ({
@@ -114680,10 +114701,10 @@ categories: ${categories.join(" ")}`;
         }
       );
     };
-    const container$g = "_container_12j2k_1";
+    const container$h = "_container_12j2k_1";
     const separator$5 = "_separator_12j2k_11";
     const styles$10 = {
-      container: container$g,
+      container: container$h,
       separator: separator$5
     };
     const SolversDetailView = ({ steps }) => {
@@ -114705,14 +114726,14 @@ categories: ${categories.join(" ")}`;
     const floatingCol = "_floatingCol_1n79r_1";
     const wideCol = "_wideCol_1n79r_9";
     const planCol = "_planCol_1n79r_24";
-    const container$f = "_container_1n79r_29";
-    const grid$6 = "_grid_1n79r_35";
+    const container$g = "_container_1n79r_29";
+    const grid$7 = "_grid_1n79r_35";
     const styles$$ = {
       floatingCol,
       wideCol,
       planCol,
-      container: container$f,
-      grid: grid$6
+      container: container$g,
+      grid: grid$7
     };
     const PlanDetailView = ({
       evaluation,
@@ -115048,12 +115069,12 @@ categories: ${categories.join(" ")}`;
         return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$Z.jsonTab, children: /* @__PURE__ */ jsxRuntimeExports.jsx(JSONPanel, { id: "task-json-contents", json, simple: true }) });
       }
     };
-    const container$e = "_container_4wzpj_1";
+    const container$f = "_container_4wzpj_1";
     const modelInfo = "_modelInfo_4wzpj_8";
     const role = "_role_4wzpj_15";
     const sep = "_sep_4wzpj_19";
     const styles$Y = {
-      container: container$e,
+      container: container$f,
       modelInfo,
       role,
       sep
@@ -115354,10 +115375,10 @@ categories: ${categories.join(" ")}`;
       ] }) });
     };
     const panel$2 = "_panel_twp3v_1";
-    const container$d = "_container_twp3v_7";
+    const container$e = "_container_twp3v_7";
     const styles$U = {
       panel: panel$2,
-      container: container$d
+      container: container$e
     };
     const NoContentsPanel = ({ text: text2 }) => {
       return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$U.panel), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$U.container, "text-size-smaller"), children: [
@@ -115544,7 +115565,7 @@ categories: ${categories.join(" ")}`;
         event
       };
     };
-    const container$c = "_container_4p85e_2";
+    const container$d = "_container_4p85e_2";
     const dotsContainer = "_dotsContainer_4p85e_8";
     const small = "_small_4p85e_15";
     const medium = "_medium_4p85e_19";
@@ -115554,7 +115575,7 @@ categories: ${categories.join(" ")}`;
     const primary = "_primary_4p85e_40";
     const visuallyHidden = "_visuallyHidden_4p85e_59";
     const styles$T = {
-      container: container$c,
+      container: container$d,
       dotsContainer,
       small,
       medium,
@@ -115983,7 +116004,7 @@ categories: ${categories.join(" ")}`;
     };
     const target = "_target_tv989_1";
     const answer = "_answer_tv989_5";
-    const grid$5 = "_grid_tv989_9";
+    const grid$6 = "_grid_tv989_9";
     const centerLabel = "_centerLabel_tv989_16";
     const centerValue = "_centerValue_tv989_21";
     const wrap = "_wrap_tv989_26";
@@ -115992,7 +116013,7 @@ categories: ${categories.join(" ")}`;
     const styles$O = {
       target,
       answer,
-      grid: grid$5,
+      grid: grid$6,
       centerLabel,
       centerValue,
       wrap,
@@ -116036,7 +116057,7 @@ categories: ${categories.join(" ")}`;
       sample: sample2
     }) => {
       const sampleDescriptor = useSampleDescriptor();
-      const currentScore = useScore();
+      const selectedScores = useSelectedScores();
       if (!sampleDescriptor) {
         return void 0;
       }
@@ -116118,12 +116139,23 @@ categories: ${categories.join(" ")}`;
           center: true
         });
       }
-      columns.push({
-        label: "Score",
-        value: fields.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(FlatSampleError, { message: fields.error }) : sampleDescriptor?.evalDescriptor.score(sample2, currentScore)?.render() || "",
-        size: "fit-content(15em)",
-        center: true
-      });
+      if (selectedScores && selectedScores.length > 0) {
+        selectedScores.forEach((scoreLabel) => {
+          columns.push({
+            label: selectedScores.length === 1 ? "Score" : scoreLabel.name,
+            value: fields.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(FlatSampleError, { message: fields.error }) : sampleDescriptor?.evalDescriptor.score(sample2, scoreLabel)?.render() || "",
+            size: "fit-content(15em)",
+            center: true
+          });
+        });
+      } else {
+        columns.push({
+          label: "Score",
+          value: fields.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(FlatSampleError, { message: fields.error }) : "",
+          size: "fit-content(15em)",
+          center: true
+        });
+      }
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
         {
@@ -116184,14 +116216,14 @@ categories: ${categories.join(" ")}`;
       );
       return scorerDescriptor?.render(scoreData.value);
     };
-    const container$b = "_container_kwhbh_1";
+    const container$c = "_container_kwhbh_1";
     const cell$1 = "_cell_kwhbh_9";
     const fullWidth = "_fullWidth_kwhbh_13";
     const separator$3 = "_separator_kwhbh_25";
     const separatorPadded = "_separatorPadded_kwhbh_30";
     const headerSep = "_headerSep_kwhbh_35";
     const styles$N = {
-      container: container$b,
+      container: container$c,
       cell: cell$1,
       fullWidth,
       separator: separator$3,
@@ -118023,7 +118055,8 @@ categories: ${categories.join(" ")}`;
       className: className2 = "",
       arrowClassName = "",
       usePortal = true,
-      hoverDelay = 250
+      hoverDelay = 250,
+      styles: styles2 = {}
     }) => {
       const popperRef = reactExports.useRef(null);
       const arrowRef = reactExports.useRef(null);
@@ -118145,15 +118178,16 @@ categories: ${categories.join(" ")}`;
           }
         }
       ];
-      const { styles: styles2, attributes: attributes2, state, update } = usePopper(
-        positionEl,
-        popperRef.current,
-        {
-          placement,
-          strategy: "fixed",
-          modifiers: modifiers2
-        }
-      );
+      const {
+        styles: popperStyles,
+        attributes: attributes2,
+        state,
+        update
+      } = usePopper(positionEl, popperRef.current, {
+        placement,
+        strategy: "fixed",
+        modifiers: modifiers2
+      });
       reactExports.useEffect(() => {
         if (update && isOpen && shouldShowPopover) {
           const timer = setTimeout(() => {
@@ -118183,10 +118217,10 @@ categories: ${categories.join(" ")}`;
         return null;
       }
       const positionedStyle = state && state.styles && state.styles.popper ? {
-        ...styles2.popper,
+        ...popperStyles.popper,
         opacity: 1
       } : {
-        ...styles2.popper,
+        ...popperStyles.popper,
         opacity: 0,
         // Position offscreen initially to prevent flicker
         position: "fixed",
@@ -118197,7 +118231,7 @@ categories: ${categories.join(" ")}`;
         "div",
         {
           ref: popperRef,
-          style: { ...defaultPopperStyles, ...positionedStyle },
+          style: { ...defaultPopperStyles, ...positionedStyle, ...styles2 },
           className: clsx(className2),
           ...attributes2.popper,
           children: [
@@ -118216,7 +118250,7 @@ categories: ${categories.join(" ")}`;
                 {
                   className: clsx("popper-arrow-container", arrowClassName),
                   style: {
-                    ...styles2.arrow,
+                    ...popperStyles.arrow,
                     position: "absolute",
                     zIndex: 1,
                     // Size and positioning based on placement - smaller arrow
@@ -118355,13 +118389,13 @@ categories: ${categories.join(" ")}`;
       }
       return popperContent;
     };
-    const grid$4 = "_grid_1q9lc_1";
-    const row$1 = "_row_1q9lc_8";
+    const grid$5 = "_grid_1q9lc_1";
+    const row$2 = "_row_1q9lc_8";
     const links = "_links_1q9lc_21";
     const selected$2 = "_selected_1q9lc_39";
     const styles$L = {
-      grid: grid$4,
-      row: row$1,
+      grid: grid$5,
+      row: row$2,
       links,
       selected: selected$2
     };
@@ -118791,7 +118825,7 @@ categories: ${categories.join(" ")}`;
     const selected$1 = "_selected_1dssq_8";
     const toggle = "_toggle_1dssq_12";
     const eventLink = "_eventLink_1dssq_17";
-    const label$7 = "_label_1dssq_28";
+    const label$6 = "_label_1dssq_28";
     const icon$1 = "_icon_1dssq_34";
     const progress$2 = "_progress_1dssq_38";
     const popover = "_popover_1dssq_42";
@@ -118800,7 +118834,7 @@ categories: ${categories.join(" ")}`;
       selected: selected$1,
       toggle,
       eventLink,
-      label: label$7,
+      label: label$6,
       icon: icon$1,
       progress: progress$2,
       popover
@@ -119321,14 +119355,14 @@ categories: ${categories.join(" ")}`;
         }
       );
     };
-    const container$a = "_container_17sux_1";
+    const container$b = "_container_17sux_1";
     const collapsed = "_collapsed_17sux_9";
     const treeContainer = "_treeContainer_17sux_13";
     const listContainer = "_listContainer_17sux_25";
     const outline = "_outline_17sux_29";
     const outlineToggle = "_outlineToggle_17sux_33";
     const styles$I = {
-      container: container$a,
+      container: container$b,
       collapsed,
       treeContainer,
       listContainer,
@@ -119465,7 +119499,7 @@ categories: ${categories.join(" ")}`;
         }
       );
     };
-    const label$6 = "_label_1nn7f_1";
+    const label$5 = "_label_1nn7f_1";
     const navs = "_navs_1nn7f_6";
     const card = "_card_1nn7f_12";
     const cardContent = "_cardContent_1nn7f_20";
@@ -119476,7 +119510,7 @@ categories: ${categories.join(" ")}`;
     const bottomDongle = "_bottomDongle_1nn7f_50";
     const dongleIcon = "_dongleIcon_1nn7f_67";
     const styles$E = {
-      label: label$6,
+      label: label$5,
       navs,
       card,
       cardContent,
@@ -119768,9 +119802,9 @@ categories: ${categories.join(" ")}`;
         }
       );
     };
-    const grid$3 = "_grid_1eq5o_1";
+    const grid$4 = "_grid_1eq5o_1";
     const styles$C = {
-      grid: grid$3
+      grid: grid$4
     };
     const LoggerEventView = ({
       eventNode,
@@ -119795,11 +119829,11 @@ categories: ${categories.join(" ")}`;
         }
       );
     };
-    const container$9 = "_container_1ww70_1";
+    const container$a = "_container_1ww70_1";
     const titleRow = "_titleRow_1ww70_5";
     const title$1 = "_title_1ww70_5";
     const styles$B = {
-      container: container$9,
+      container: container$a,
       titleRow,
       title: title$1
     };
@@ -119823,7 +119857,7 @@ categories: ${categories.join(" ")}`;
         children2
       ] });
     };
-    const container$8 = "_container_e0l2n_1";
+    const container$9 = "_container_e0l2n_1";
     const all = "_all_e0l2n_6";
     const tableSelection = "_tableSelection_e0l2n_12";
     const codePre = "_codePre_e0l2n_22";
@@ -119832,7 +119866,7 @@ categories: ${categories.join(" ")}`;
     const toolConfig = "_toolConfig_e0l2n_38";
     const toolChoice = "_toolChoice_e0l2n_46";
     const styles$A = {
-      container: container$8,
+      container: container$9,
       all,
       tableSelection,
       codePre,
@@ -128321,14 +128355,14 @@ ${events}
         }
       );
     };
-    const container$7 = "_container_io1r0_1";
+    const container$8 = "_container_io1r0_1";
     const wrappingContent = "_wrappingContent_io1r0_8";
     const separator = "_separator_io1r0_13";
     const unchanged = "_unchanged_io1r0_22";
     const section = "_section_io1r0_27";
     const spacer = "_spacer_io1r0_31";
     const styles$q = {
-      container: container$7,
+      container: container$8,
       wrappingContent,
       separator,
       unchanged,
@@ -129786,10 +129820,10 @@ ${events}
       }
       return false;
     };
-    const container$6 = "_container_ly812_1";
+    const container$7 = "_container_ly812_1";
     const scroller = "_scroller_ly812_7";
     const styles$o = {
-      container: container$6,
+      container: container$7,
       scroller
     };
     const InlineSampleDisplay = () => {
@@ -130079,11 +130113,11 @@ ${events}
         }
       );
     };
-    const container$5 = "_container_15b4r_1";
-    const label$5 = "_label_15b4r_5";
+    const container$6 = "_container_15b4r_1";
+    const label$4 = "_label_15b4r_5";
     const styles$l = {
-      container: container$5,
-      label: label$5
+      container: container$6,
+      label: label$4
     };
     const EpochFilter = ({
       epochs,
@@ -152365,11 +152399,11 @@ ${events}
       if (isLogicalOp(prevToken(1))) return newExpressionCompletions();
       return noCompletions();
     }
-    const label$4 = "_label_jbrqc_1";
+    const label$3 = "_label_jbrqc_1";
     const input = "_input_jbrqc_7";
     const help = "_help_jbrqc_11";
     const styles$k = {
-      label: label$4,
+      label: label$3,
       input,
       help
     };
@@ -152599,161 +152633,114 @@ Supported expressions:
         )
       ] });
     };
-    const flex = "_flex_anstf_1";
-    const label$3 = "_label_anstf_5";
-    const secondSel = "_secondSel_anstf_9";
-    const secondLabel = "_secondLabel_anstf_13";
+    const container$5 = "_container_85z5v_1";
+    const grid$3 = "_grid_85z5v_5";
+    const row$1 = "_row_85z5v_12";
     const styles$j = {
-      flex,
-      label: label$3,
-      secondSel,
-      secondLabel
+      container: container$5,
+      grid: grid$3,
+      row: row$1
     };
     const SelectScorer = ({
       scores: scores2,
-      score: score2,
-      setScore
+      selectedScores,
+      setSelectedScores
     }) => {
-      const scorers = reactExports.useMemo(() => {
-        return scores2.reduce((accum, scorer2) => {
-          if (!accum.find((sc2) => {
-            return scorer2.scorer === sc2.scorer;
-          })) {
-            accum.push(scorer2);
+      const [showing, setShowing] = reactExports.useState(false);
+      const buttonRef = reactExports.useRef(null);
+      const selectedKeys = reactExports.useMemo(() => {
+        return new Set(selectedScores?.map((s) => `${s.scorer}.${s.name}`));
+      }, [selectedScores]);
+      const selectedCount = selectedKeys.size;
+      const label2 = selectedCount === 0 ? "Score" : selectedCount === 1 ? selectedScores?.[0]?.name || "Score" : `${selectedCount} Scores`;
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          ToolButton,
+          {
+            label: label2,
+            icon: ApplicationIcons.metrics,
+            onClick: () => setShowing(!showing),
+            ref: buttonRef,
+            classes: "bg-white"
           }
-          return accum;
-        }, []);
-      }, [scores2]);
-      if (scorers.length === 1) {
-        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$j.flex, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "span",
-            {
-              className: clsx(
-                "select-scorer-label",
-                "text-size-smaller",
-                "text-style-label",
-                "text-style-secondary",
-                styles$j.label
-              ),
-              children: "Score:"
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            ScoreSelector,
-            {
-              scores: scores2,
-              selectedScore: score2,
-              setSelectedScore: setScore
-            }
-          )
-        ] });
-      } else {
-        const scorerScores = scores2.filter((sc2) => {
-          return score2 && sc2.scorer === score2.scorer;
-        });
-        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$j.flex, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "span",
-            {
-              className: clsx(
-                "select-scorer-label",
-                "text-size-smaller",
-                "text-style-label",
-                "text-style-secondary",
-                styles$j.label,
-                styles$j.secondLabel
-              ),
-              children: "Scorer:"
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            ScorerSelector,
-            {
-              scorers,
-              selectedScore: score2,
-              setSelectedScore: setScore
-            }
-          ),
-          scorerScores.length > 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-            ScoreSelector,
-            {
-              className: clsx(styles$j.secondSel),
-              scores: scorerScores,
-              selectedScore: score2,
-              setSelectedScore: setScore
-            }
-          ) : void 0
-        ] });
-      }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          PopOver,
+          {
+            id: "score-selector-popover",
+            positionEl: buttonRef.current,
+            isOpen: showing,
+            setIsOpen: setShowing,
+            placement: "bottom-start",
+            hoverDelay: -1,
+            styles: {
+              padding: "3px 5px"
+            },
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$j.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              ScoreCheckboxes,
+              {
+                scores: scores2,
+                selectedKeys,
+                setSelectedScores
+              }
+            ) })
+          }
+        )
+      ] });
     };
-    const ScoreSelector = ({
+    const ScoreCheckboxes = ({
       scores: scores2,
-      selectedScore,
-      setSelectedScore,
-      className: className2
+      selectedKeys,
+      setSelectedScores
     }) => {
-      const handleChange = reactExports.useCallback(
-        (e) => {
-          const sel = e.target;
-          setSelectedScore(scores2[sel.selectedIndex]);
+      const handleToggle = reactExports.useCallback(
+        (scoreToToggle, currentlyChecked) => {
+          const key2 = `${scoreToToggle.scorer}.${scoreToToggle.name}`;
+          const current2 = new Set(selectedKeys);
+          if (currentlyChecked) {
+            current2.delete(key2);
+          } else {
+            current2.add(key2);
+          }
+          const next = scores2.filter((s) => current2.has(`${s.scorer}.${s.name}`));
+          setSelectedScores(next);
         },
-        [setSelectedScore, scores2]
+        [setSelectedScores, scores2, selectedKeys]
       );
-      const index = scores2.findIndex((sc2) => {
-        return selectedScore && sc2.name === selectedScore.name && sc2.scorer === selectedScore.scorer;
-      });
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "select",
-        {
-          className: clsx(
-            "form-select",
-            "form-select-sm",
-            "text-size-smaller",
-            className2
-          ),
-          "aria-label": ".select-scorer-label",
-          value: scores2[index].name,
-          onChange: handleChange,
-          children: scores2.map((score2) => {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: score2.name, children: score2.name }, score2.name);
-          })
-        }
-      );
-    };
-    const ScorerSelector = ({
-      scorers,
-      selectedScore,
-      setSelectedScore
-    }) => {
-      const handleChange = reactExports.useCallback(
-        (e) => {
-          const sel = e.target;
-          setSelectedScore(scorers[sel.selectedIndex]);
-        },
-        [setSelectedScore, scorers]
-      );
-      const index = scorers.findIndex((sc2) => {
-        return selectedScore && sc2.scorer === selectedScore.scorer;
-      });
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "select",
-        {
-          className: clsx("form-select", "form-select-sm", "text-size-smaller"),
-          "aria-label": ".epoch-filter-label",
-          value: scorers[index].scorer,
-          onChange: handleChange,
-          children: scorers.map((scorer2) => {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: scorer2.scorer, children: scorer2.scorer }, scorer2.scorer);
-          })
-        }
-      );
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$j.grid, "text-size-smaller"), children: scores2.map((sc2) => {
+        const key2 = `${sc2.scorer}.${sc2.name}`;
+        const isChecked = selectedKeys ? selectedKeys.has(key2) : false;
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: clsx(styles$j.row),
+            onClick: () => handleToggle(sc2, isChecked),
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "input",
+                {
+                  type: "checkbox",
+                  checked: isChecked,
+                  onChange: (e) => {
+                    e.stopPropagation();
+                    handleToggle(sc2, isChecked);
+                  }
+                }
+              ),
+              sc2.name
+            ]
+          },
+          key2
+        );
+      }) });
     };
     const SampleTools = () => {
       const selectedLogSummary = useStore((state) => state.log.selectedLogSummary);
       const scores2 = useScores();
-      const score2 = useScore();
-      const setScore = useStore((state) => state.logActions.setScore);
+      const selectedScores = useSelectedScores();
+      const setSelectedScores = useStore(
+        (state) => state.logActions.setSelectedScores
+      );
       const epoch = useStore((state) => state.log.epoch);
       const setEpoch = useStore((state) => state.logActions.setEpoch);
       const sort2 = useStore((state) => state.log.sort);
@@ -152761,19 +152748,35 @@ Supported expressions:
       const epochs = selectedLogSummary?.eval.config.epochs || 1;
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(SampleFilter, {}),
-        scores2?.length > 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(SelectScorer, { scores: scores2, score: score2, setScore }) : void 0,
+        scores2?.length > 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+          SelectScorer,
+          {
+            scores: scores2,
+            selectedScores,
+            setSelectedScores
+          }
+        ) : void 0,
         epochs > 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(EpochFilter, { epoch, setEpoch, epochs }) : void 0,
         /* @__PURE__ */ jsxRuntimeExports.jsx(SortFilter, { sort: sort2, setSort, epochs })
       ] });
     };
     const ScoreFilterTools = () => {
       const scores2 = useScores();
-      const score2 = useScore();
-      const setScore = useStore((state) => state.logActions.setScore);
+      const selectedScores = useSelectedScores();
+      const setSelectedScores = useStore(
+        (state) => state.logActions.setSelectedScores
+      );
       if (scores2.length <= 1) {
         return void 0;
       }
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(SelectScorer, { scores: scores2, score: score2, setScore });
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        SelectScorer,
+        {
+          scores: scores2,
+          selectedScores,
+          setSelectedScores
+        }
+      );
     };
     const kBaseFontSize = 0.9;
     const ScaleBaseFont = (scale) => {
@@ -152879,7 +152882,7 @@ Supported expressions:
       sample: sample2,
       answer: answer2,
       completed,
-      scoreRendered,
+      scoresRendered,
       gridColumnsTemplate,
       height,
       showSample,
@@ -152893,6 +152896,20 @@ Supported expressions:
       );
       const isViewable = completed || streamSampleData;
       const showingSampleDialog = useStore((state) => state.app.dialogs.sample);
+      if (!completed && scoresRendered.length === 0 && Object.keys(sample2.scores || {}).length === 0) {
+        scoresRendered = [null];
+      }
+      const scoreColumnContent = scoresRendered.map((scoreRendered, i2) => {
+        if (!showingSampleDialog && sample2.error) {
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(SampleErrorView, { message: sample2.error });
+        } else if (completed) {
+          return scoreRendered;
+        } else if (i2 === scoresRendered.length - 1) {
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false });
+        } else {
+          return void 0;
+        }
+      });
       const rowContent = /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
         {
@@ -152969,7 +152986,14 @@ Supported expressions:
                 children: !showingSampleDialog && sample2.retries && sample2.retries > 0 ? sample2.retries : void 0
               }
             ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-small", styles$h.cell, styles$h.score), children: !showingSampleDialog && sample2.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(SampleErrorView, { message: sample2.error }) : completed ? scoreRendered : /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false }) })
+            scoreColumnContent.map((scoreColumnContent2, i2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                className: clsx("text-size-small", styles$h.cell, styles$h.score),
+                children: scoreColumnContent2
+              },
+              `score-${i2}`
+            ))
           ]
         }
       );
@@ -153042,7 +153066,7 @@ Supported expressions:
       answer: answer2 = true,
       limit = true,
       retries = false,
-      score: score2 = true,
+      scoreLabels = ["Score"],
       gridColumnsTemplate
     }) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
@@ -153061,7 +153085,7 @@ Supported expressions:
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: answer2 ? "Answer" : "" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: limit ? "Limit" : "" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: retries ? "Retries" : "" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$e.center, children: score2 ? "Score" : "" })
+          scoreLabels.map((label2, i2) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$e.center, children: label2 }, `score-header-${i2}`))
         ]
       }
     );
@@ -153175,9 +153199,11 @@ Supported expressions:
           listHandle
         ]
       );
+      const selectedScores = useSelectedScores();
+      const scores2 = useScores();
       const gridColumnsTemplate = reactExports.useMemo(() => {
-        return gridColumnsValue(samplesDescriptor);
-      }, [samplesDescriptor]);
+        return gridColumnsValue(samplesDescriptor, selectedScores);
+      }, [samplesDescriptor, selectedScores]);
       const renderRow = reactExports.useCallback(
         (_index, item2) => {
           if (item2.type === "sample") {
@@ -153190,7 +153216,7 @@ Supported expressions:
                 height: kSampleHeight,
                 answer: item2.answer,
                 completed: item2.completed,
-                scoreRendered: item2.scoreRendered,
+                scoresRendered: item2.scoresRendered,
                 gridColumnsTemplate,
                 sampleUrl: sampleNavigation.getSampleUrl(
                   item2.data.id,
@@ -153261,6 +153287,7 @@ Supported expressions:
             answer: answer2 !== "0",
             limit: limit !== "0",
             retries: retries !== "0em",
+            scoreLabels: scoreHeaders(selectedScores, scores2),
             gridColumnsTemplate
           }
         ),
@@ -153300,11 +153327,14 @@ Supported expressions:
         )
       ] });
     });
-    const gridColumnsValue = (sampleDescriptor) => {
-      const { input: input2, target: target2, answer: answer2, limit, retries, id, score: score2 } = gridColumns(sampleDescriptor);
-      return `${id} ${input2} ${target2} ${answer2} ${limit} ${retries} ${score2}`;
+    const gridColumnsValue = (sampleDescriptor, selectedScores) => {
+      const { input: input2, target: target2, answer: answer2, limit, retries, id, score: score2 } = gridColumns(
+        sampleDescriptor,
+        selectedScores
+      );
+      return `${id} ${input2} ${target2} ${answer2} ${limit} ${retries} ${score2.join(" ")}`;
     };
-    const gridColumns = (sampleDescriptor) => {
+    const gridColumns = (sampleDescriptor, selectedScores) => {
       const input2 = sampleDescriptor && sampleDescriptor.messageShape.normalized.input > 0 ? Math.max(0.15, sampleDescriptor.messageShape.normalized.input) : 0;
       const target2 = sampleDescriptor && sampleDescriptor.messageShape.normalized.target > 0 ? Math.max(0.15, sampleDescriptor.messageShape.normalized.target) : 0;
       const answer2 = sampleDescriptor && sampleDescriptor.messageShape.normalized.answer > 0 ? Math.max(0.15, sampleDescriptor.messageShape.normalized.answer) : 0;
@@ -153314,10 +153344,10 @@ Supported expressions:
         2,
         Math.min(10, sampleDescriptor?.messageShape.raw.id || 0)
       );
-      const score2 = Math.max(
-        3,
-        Math.min(10, sampleDescriptor?.messageShape.raw.score || 0)
-      );
+      const scoreCount = selectedScores?.length ?? 0;
+      const scoreRaw = sampleDescriptor?.messageShape.raw.score || 0;
+      const scoreSize = Math.max(3, Math.min(10, scoreRaw));
+      const score2 = scoreCount > 0 ? Array.from({ length: scoreCount }).map(() => `${scoreSize}rem`) : [];
       const frSize = (val) => {
         if (val === 0) {
           return "0";
@@ -153332,8 +153362,17 @@ Supported expressions:
         limit: frSize(limit),
         retries: `${retries}em`,
         id: `${id}rem`,
-        score: `${score2}rem`
+        score: score2
       };
+    };
+    const scoreHeaders = (selectedScores, availableScores) => {
+      if (!selectedScores || selectedScores.length === 0) {
+        return [];
+      }
+      if (availableScores && availableScores.length === 1) {
+        return ["Score"];
+      }
+      return selectedScores.map((s) => s.name);
     };
     const panel = "_panel_1yknn_1";
     const container$4 = "_container_1yknn_7";
@@ -153351,22 +153390,29 @@ Supported expressions:
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$c.text), children: "starting...." })
       ] }) });
     };
-    const getSampleProcessor = (samples, epochs, groupBy, groupByOrder, sampleDescriptor, score2) => {
+    const getSampleProcessor = (samples, epochs, groupBy, groupByOrder, sampleDescriptor, selectedScores) => {
+      selectedScores = selectedScores || [];
       if (groupBy == "epoch") {
-        return groupByEpoch(samples, epochs, sampleDescriptor, groupByOrder, score2);
+        return groupByEpoch(
+          samples,
+          epochs,
+          sampleDescriptor,
+          groupByOrder,
+          selectedScores
+        );
       } else if (groupBy === "sample") {
         return groupBySample(
           samples,
           epochs,
           sampleDescriptor,
           groupByOrder,
-          score2
+          selectedScores
         );
       } else {
-        return noGrouping(samples, groupByOrder, sampleDescriptor, score2);
+        return noGrouping(samples, groupByOrder, sampleDescriptor, selectedScores);
       }
     };
-    const noGrouping = (samples, order2, sampleDescriptor, score2) => {
+    const noGrouping = (samples, order2, sampleDescriptor, selectedScores) => {
       const counter = getCounter(samples.length, 1, order2);
       return (sample2, index) => {
         counter.incrementItem();
@@ -153379,13 +153425,15 @@ Supported expressions:
             data: sample2,
             type: "sample",
             answer: sampleDescriptor.selectedScorerDescriptor(sample2)?.answer() || "",
-            scoreRendered: sampleDescriptor.evalDescriptor.score(sample2, score2)?.render(),
+            scoresRendered: selectedScores.map(
+              (sc2) => sampleDescriptor.evalDescriptor.score(sample2, sc2)?.render()
+            ),
             completed: sample2.completed !== void 0 ? sample2.completed : true
           }
         ];
       };
     };
-    const groupBySample = (samples, epochs, sampleDescriptor, order2, score2) => {
+    const groupBySample = (samples, epochs, sampleDescriptor, order2, selectedScores) => {
       samples = samples.sort((a, b) => {
         if (typeof a.id === "string") {
           if (order2 === "asc") {
@@ -153426,13 +153474,15 @@ Supported expressions:
           data: sample2,
           type: "sample",
           answer: sampleDescriptor.selectedScorerDescriptor(sample2)?.answer() || "",
-          scoreRendered: sampleDescriptor.evalDescriptor.score(sample2, score2)?.render(),
+          scoresRendered: selectedScores.map(
+            (sc2) => sampleDescriptor.evalDescriptor.score(sample2, sc2)?.render()
+          ),
           completed: sample2.completed !== void 0 ? sample2.completed : true
         });
         return results;
       };
     };
-    const groupByEpoch = (samples, epochs, sampleDescriptor, order2, score2) => {
+    const groupByEpoch = (samples, epochs, sampleDescriptor, order2, selectedScores) => {
       const groupCount = epochs;
       const itemCount = samples.length / groupCount;
       const counter = getCounter(itemCount, groupCount, order2);
@@ -153458,7 +153508,9 @@ Supported expressions:
           data: sample2,
           type: "sample",
           answer: sampleDescriptor.selectedScorerDescriptor(sample2)?.answer() || "",
-          scoreRendered: sampleDescriptor.evalDescriptor.score(sample2, score2)?.render(),
+          scoresRendered: selectedScores.map(
+            (sc2) => sampleDescriptor.evalDescriptor.score(sample2, sc2)?.render()
+          ),
           completed: sample2.completed !== void 0 ? sample2.completed : true
         });
         return results;
@@ -153543,7 +153595,7 @@ Supported expressions:
       const samplesDescriptor = useSampleDescriptor();
       const groupBy = useGroupBy();
       const groupByOrder = useGroupByOrder();
-      const currentScore = useScore();
+      const selectedScores = useSelectedScores();
       const selectSample = useStore((state) => state.logActions.selectSample);
       const selectedSampleIdentifier = useStore(
         (state) => state.sample.sample_identifier
@@ -153579,7 +153631,7 @@ Supported expressions:
           groupBy,
           groupByOrder,
           samplesDescriptor,
-          currentScore
+          selectedScores
         );
       }, [
         samplesDescriptor,
@@ -153587,7 +153639,7 @@ Supported expressions:
         selectedLogSummary?.eval?.config?.epochs,
         groupBy,
         groupByOrder,
-        currentScore
+        selectedScores
       ]);
       reactExports.useEffect(() => {
         const resolvedSamples = sampleSummaries?.flatMap((sample2, index) => {
