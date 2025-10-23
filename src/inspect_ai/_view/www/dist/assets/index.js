@@ -24919,12 +24919,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       ) });
     };
     const container$m = "_container_1n7pm_1";
-    const label$9 = "_label_1n7pm_7";
+    const label$a = "_label_1n7pm_7";
     const outer = "_outer_1n7pm_11";
     const inner = "_inner_1n7pm_20";
     const styles$1M = {
       container: container$m,
-      label: label$9,
+      label: label$a,
       outer,
       inner
     };
@@ -106119,69 +106119,75 @@ ${citation.url}` : citation.url,
       const sizes = samples.reduce(
         (previous, current2) => {
           const text2 = inputString(current2.input).join(" ");
-          let maxScoreTextLength = 0;
-          let maxAnswerLength = 0;
+          let answerLength = 0;
           if (selectedScores.length > 0) {
-            selectedScores.forEach((scoreLabel) => {
+            selectedScores.forEach((scoreLabel, index) => {
               const score2 = evalDescriptor.score(current2, scoreLabel);
               const scoreValue = score2?.value;
               const scoreText = scoreValue ? String(scoreValue) : current2.error ? String(current2.error) : "";
-              maxScoreTextLength = Math.max(maxScoreTextLength, scoreText.length);
-              maxAnswerLength = Math.max(
-                maxAnswerLength,
-                evalDescriptor.scoreAnswer(current2, scoreLabel)?.length || 0
+              const currentSize = Math.max(
+                scoreText.length,
+                scoreLabel.name.length
+              );
+              previous.scores[index] = Math.max(
+                previous.scores[index] || 0,
+                currentSize
               );
             });
+            answerLength = evalDescriptor.scoreAnswer(current2, selectedScores[0])?.length || 0;
           }
-          previous[0] = Math.min(Math.max(previous[0], text2.length), 200);
-          previous[1] = Math.min(
-            Math.max(previous[1], arrayToString(current2.target).length),
+          previous.input = Math.min(Math.max(previous.input, text2.length), 200);
+          previous.target = Math.min(
+            Math.max(previous.target, arrayToString(current2.target).length),
             300
           );
-          previous[2] = Math.min(Math.max(previous[2], maxAnswerLength), 300);
-          previous[3] = Math.min(
-            Math.max(previous[3], current2.limit ? current2.limit.length : 0),
+          previous.answer = Math.min(Math.max(previous.answer, answerLength), 300);
+          previous.limit = Math.min(
+            Math.max(previous.limit, current2.limit ? current2.limit.length : 0),
             50
           );
-          previous[4] = Math.min(
+          previous.retries = Math.min(
             Math.max(
-              previous[4],
+              previous.retries,
               current2.retries ? String(current2.retries).length : 0
             ),
             50
           );
-          previous[5] = Math.min(
-            Math.max(previous[5], String(current2.id).length),
+          previous.id = Math.min(
+            Math.max(previous.id, String(current2.id).length),
             10
           );
-          previous[6] = Math.min(Math.max(previous[6], maxScoreTextLength), 30);
           return previous;
         },
-        [0, 0, 0, 0, 0, 0, 0]
+        {
+          input: 0,
+          target: 0,
+          answer: 0,
+          limit: 0,
+          retries: 0,
+          id: 0,
+          scores: []
+        }
       );
+      const totalScoreSizes = sizes.scores.reduce((sum2, size) => sum2 + size, 0);
+      const normalizedScoreSizes = totalScoreSizes > 0 ? sizes.scores.map((size) => Math.round(size / totalScoreSizes * 30)) : [];
       const maxSizes = {
-        input: Math.min(sizes[0], 300),
-        target: Math.min(sizes[1], 300),
-        answer: Math.min(sizes[2], 300),
-        limit: Math.min(sizes[3], 50),
-        retries: Math.min(sizes[4], 50),
-        id: Math.min(sizes[5], 10),
-        score: Math.min(sizes[6], 30)
+        input: Math.min(sizes.input, 300),
+        target: Math.min(sizes.target, 300),
+        answer: Math.min(sizes.answer, 300),
+        limit: Math.min(sizes.limit, 50),
+        retries: Math.min(sizes.retries, 50),
+        id: Math.min(sizes.id, 10),
+        score: normalizedScoreSizes
       };
-      const base2 = maxSizes.input + maxSizes.target + maxSizes.answer + maxSizes.limit + maxSizes.retries + maxSizes.id + maxSizes.score || 1;
+      const base2 = maxSizes.input + maxSizes.target + maxSizes.answer + maxSizes.limit + maxSizes.retries + maxSizes.id + maxSizes.score.reduce((sum2, size) => {
+        return sum2 + size;
+      }, 0) || 1;
       const inputNormalized = maxSizes.input / base2;
       const targetNormalized = maxSizes.target / base2 > 0 ? Math.max(maxSizes.target / base2, inputNormalized / 10) : 0;
       const answerNormalized = maxSizes.answer / base2 > 0 ? Math.max(maxSizes.answer / base2, inputNormalized / 10) : 0;
       const messageShape = {
-        raw: {
-          input: sizes[0],
-          target: sizes[1],
-          answer: sizes[2],
-          limit: sizes[3],
-          retries: sizes[4],
-          id: sizes[5],
-          score: sizes[6]
-        },
+        raw: sizes,
         normalized: {
           input: inputNormalized,
           target: targetNormalized,
@@ -106189,7 +106195,9 @@ ${citation.url}` : citation.url,
           limit: maxSizes.limit / base2,
           retries: maxSizes.retries / base2,
           id: maxSizes.id / base2,
-          score: maxSizes.score / base2
+          scores: maxSizes.score.map((val) => {
+            return val / base2;
+          })
         }
       };
       const firstSelectedScore = selectedScores?.[0];
@@ -108885,10 +108893,10 @@ categories: ${categories.join(" ")}`;
       return { result: result2, error: error2, allErrors: errorCount === samples.length };
     };
     const flex = "_flex_1kye9_1";
-    const label$8 = "_label_1kye9_5";
+    const label$9 = "_label_1kye9_5";
     const styles$1l = {
       flex,
-      label: label$8
+      label: label$9
     };
     const SortFilter = ({ sort: sort2, setSort, epochs }) => {
       const options2 = [
@@ -113511,7 +113519,7 @@ categories: ${categories.join(" ")}`;
     const footer$1 = "_footer_14uod_1";
     const spinnerContainer$1 = "_spinnerContainer_14uod_11";
     const spinner$2 = "_spinner_14uod_11";
-    const label$7 = "_label_14uod_25";
+    const label$8 = "_label_14uod_25";
     const right$1 = "_right_14uod_30";
     const left$1 = "_left_14uod_39";
     const center$1 = "_center_14uod_48";
@@ -113519,7 +113527,7 @@ categories: ${categories.join(" ")}`;
       footer: footer$1,
       spinnerContainer: spinnerContainer$1,
       spinner: spinner$2,
-      label: label$7,
+      label: label$8,
       right: right$1,
       left: left$1,
       center: center$1
@@ -116174,7 +116182,7 @@ categories: ${categories.join(" ")}`;
                   className: clsx(
                     "text-style-label",
                     "text-style-secondary",
-                    "text-size-base",
+                    "text-size-smallest",
                     col.title ? styles$O.titled : void 0,
                     col.center ? styles$O.centerLabel : void 0
                   ),
@@ -118389,15 +118397,15 @@ categories: ${categories.join(" ")}`;
       }
       return popperContent;
     };
-    const grid$5 = "_grid_1q9lc_1";
-    const row$2 = "_row_1q9lc_8";
-    const links = "_links_1q9lc_21";
-    const selected$2 = "_selected_1q9lc_39";
+    const grid$5 = "_grid_1ml4j_1";
+    const row$2 = "_row_1ml4j_8";
+    const links$1 = "_links_1ml4j_22";
+    const selected$3 = "_selected_1ml4j_40";
     const styles$L = {
       grid: grid$5,
       row: row$2,
-      links,
-      selected: selected$2
+      links: links$1,
+      selected: selected$3
     };
     const TranscriptFilterPopover = ({
       showing,
@@ -118822,19 +118830,19 @@ categories: ${categories.join(" ")}`;
       return { package: "", module: name2 };
     };
     const eventRow = "_eventRow_1dssq_1";
-    const selected$1 = "_selected_1dssq_8";
+    const selected$2 = "_selected_1dssq_8";
     const toggle = "_toggle_1dssq_12";
     const eventLink = "_eventLink_1dssq_17";
-    const label$6 = "_label_1dssq_28";
+    const label$7 = "_label_1dssq_28";
     const icon$1 = "_icon_1dssq_34";
     const progress$2 = "_progress_1dssq_38";
     const popover = "_popover_1dssq_42";
     const styles$K = {
       eventRow,
-      selected: selected$1,
+      selected: selected$2,
       toggle,
       eventLink,
-      label: label$6,
+      label: label$7,
       icon: icon$1,
       progress: progress$2,
       popover
@@ -119499,7 +119507,7 @@ categories: ${categories.join(" ")}`;
         }
       );
     };
-    const label$5 = "_label_1nn7f_1";
+    const label$6 = "_label_1nn7f_1";
     const navs = "_navs_1nn7f_6";
     const card = "_card_1nn7f_12";
     const cardContent = "_cardContent_1nn7f_20";
@@ -119510,7 +119518,7 @@ categories: ${categories.join(" ")}`;
     const bottomDongle = "_bottomDongle_1nn7f_50";
     const dongleIcon = "_dongleIcon_1nn7f_67";
     const styles$E = {
-      label: label$5,
+      label: label$6,
       navs,
       card,
       cardContent,
@@ -130114,10 +130122,10 @@ ${events}
       );
     };
     const container$6 = "_container_15b4r_1";
-    const label$4 = "_label_15b4r_5";
+    const label$5 = "_label_15b4r_5";
     const styles$l = {
       container: container$6,
-      label: label$4
+      label: label$5
     };
     const EpochFilter = ({
       epochs,
@@ -152399,11 +152407,11 @@ ${events}
       if (isLogicalOp(prevToken(1))) return newExpressionCompletions();
       return noCompletions();
     }
-    const label$3 = "_label_jbrqc_1";
+    const label$4 = "_label_jbrqc_1";
     const input = "_input_jbrqc_7";
     const help = "_help_jbrqc_11";
     const styles$k = {
-      label: label$3,
+      label: label$4,
       input,
       help
     };
@@ -152633,13 +152641,19 @@ Supported expressions:
         )
       ] });
     };
-    const container$5 = "_container_85z5v_1";
-    const grid$3 = "_grid_85z5v_5";
-    const row$1 = "_row_85z5v_12";
+    const container$5 = "_container_19edv_1";
+    const grid$3 = "_grid_19edv_5";
+    const row$1 = "_row_19edv_12";
+    const label$3 = "_label_19edv_26";
+    const links = "_links_19edv_32";
+    const selected$1 = "_selected_19edv_50";
     const styles$j = {
       container: container$5,
       grid: grid$3,
-      row: row$1
+      row: row$1,
+      label: label$3,
+      links,
+      selected: selected$1
     };
     const SelectScorer = ({
       scores: scores2,
@@ -152653,7 +152667,21 @@ Supported expressions:
       }, [selectedScores]);
       const selectedCount = selectedKeys.size;
       const label2 = selectedCount === 0 ? "Score" : selectedCount === 1 ? selectedScores?.[0]?.name || "Score" : `${selectedCount} Scores`;
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      const allScoresSelected = selectedCount === scores2.length;
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex" }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "span",
+          {
+            className: clsx(
+              "sample-filter-label",
+              "text-size-smaller",
+              "text-style-label",
+              "text-style-secondary",
+              styles$j.label
+            ),
+            children: "Scorers:"
+          }
+        ),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           ToolButton,
           {
@@ -152664,7 +152692,7 @@ Supported expressions:
             classes: "bg-white"
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
           PopOver,
           {
             id: "score-selector-popover",
@@ -152676,14 +152704,47 @@ Supported expressions:
             styles: {
               padding: "3px 5px"
             },
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$j.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-              ScoreCheckboxes,
-              {
-                scores: scores2,
-                selectedKeys,
-                setSelectedScores
-              }
-            ) })
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$j.links, "text-size-smaller"), children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "a",
+                  {
+                    className: clsx(
+                      styles$j.link,
+                      !allScoresSelected ? styles$j.selected : void 0
+                    ),
+                    onClick: () => {
+                      if (scores2.length > 0) {
+                        setSelectedScores([scores2[0]]);
+                      }
+                    },
+                    children: "Default"
+                  }
+                ),
+                "|",
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "a",
+                  {
+                    className: clsx(
+                      styles$j.link,
+                      allScoresSelected ? styles$j.selected : void 0
+                    ),
+                    onClick: () => {
+                      setSelectedScores(scores2);
+                    },
+                    children: "All"
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$j.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                ScoreCheckboxes,
+                {
+                  scores: scores2,
+                  selectedKeys,
+                  setSelectedScores
+                }
+              ) })
+            ]
           }
         )
       ] });
@@ -152854,16 +152915,16 @@ Supported expressions:
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$i.message, style: ApplicationStyles.lineClamp(2), children: errorType(message2) })
       ] });
     };
-    const grid$2 = "_grid_fm095_1";
-    const selected = "_selected_fm095_13";
-    const sampleLink = "_sampleLink_fm095_17";
-    const disabledRow = "_disabledRow_fm095_36";
-    const disabled = "_disabled_fm095_36";
-    const cell = "_cell_fm095_46";
-    const wrapAnywhere = "_wrapAnywhere_fm095_51";
-    const noLeft = "_noLeft_fm095_55";
-    const score = "_score_fm095_59";
-    const centered = "_centered_fm095_64";
+    const grid$2 = "_grid_1213u_1";
+    const selected = "_selected_1213u_11";
+    const sampleLink = "_sampleLink_1213u_15";
+    const disabledRow = "_disabledRow_1213u_34";
+    const disabled = "_disabled_1213u_34";
+    const cell = "_cell_1213u_44";
+    const wrapAnywhere = "_wrapAnywhere_1213u_49";
+    const noLeft = "_noLeft_1213u_53";
+    const score = "_score_1213u_57";
+    const centered = "_centered_1213u_62";
     const styles$h = {
       grid: grid$2,
       selected,
@@ -153054,11 +153115,13 @@ Supported expressions:
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: sampleCount < totalSampleCount ? `${sampleCount} / ${totalSampleCount} Samples` : `${sampleCount} Samples` })
       ] });
     };
-    const header$1 = "_header_16ngy_1";
-    const center = "_center_16ngy_11";
+    const header$1 = "_header_1qnb6_1";
+    const center = "_center_1qnb6_9";
+    const shrinkable = "_shrinkable_1qnb6_13";
     const styles$e = {
       header: header$1,
-      center
+      center,
+      shrinkable
     };
     const SampleHeader = ({
       input: input2 = true,
@@ -153073,7 +153136,7 @@ Supported expressions:
       {
         className: clsx(
           styles$e.header,
-          "text-size-smaller",
+          "text-size-smallestest",
           "text-style-label",
           "text-style-secondary"
         ),
@@ -153085,7 +153148,14 @@ Supported expressions:
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: answer2 ? "Answer" : "" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: limit ? "Limit" : "" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: retries ? "Retries" : "" }),
-          scoreLabels.map((label2, i2) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$e.center, children: label2 }, `score-header-${i2}`))
+          scoreLabels.map((label2, i2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "div",
+            {
+              className: clsx(styles$e.center, styles$e.shrinkable),
+              children: label2
+            },
+            `score-header-${i2}`
+          ))
         ]
       }
     );
@@ -153328,11 +153398,12 @@ Supported expressions:
       ] });
     });
     const gridColumnsValue = (sampleDescriptor, selectedScores) => {
-      const { input: input2, target: target2, answer: answer2, limit, retries, id, score: score2 } = gridColumns(
+      const { input: input2, target: target2, answer: answer2, limit, retries, id, scores: scores2 } = gridColumns(
         sampleDescriptor,
         selectedScores
       );
-      return `${id} ${input2} ${target2} ${answer2} ${limit} ${retries} ${score2.join(" ")}`;
+      const result2 = `${id} ${input2} ${target2} ${answer2} ${limit} ${retries} ${scores2.join(" ")}`;
+      return result2;
     };
     const gridColumns = (sampleDescriptor, selectedScores) => {
       const input2 = sampleDescriptor && sampleDescriptor.messageShape.normalized.input > 0 ? Math.max(0.15, sampleDescriptor.messageShape.normalized.input) : 0;
@@ -153345,9 +153416,9 @@ Supported expressions:
         Math.min(10, sampleDescriptor?.messageShape.raw.id || 0)
       );
       const scoreCount = selectedScores?.length ?? 0;
-      const scoreRaw = sampleDescriptor?.messageShape.raw.score || 0;
-      const scoreSize = Math.max(3, Math.min(10, scoreRaw));
-      const score2 = scoreCount > 0 ? Array.from({ length: scoreCount }).map(() => `${scoreSize}rem`) : [];
+      const scoresRaw = sampleDescriptor?.messageShape.raw.scores || [];
+      const scoreSizes = scoresRaw.map((size) => Math.max(3, size));
+      const scores2 = scoreCount > 0 ? scoreSizes.map((size) => `${size / 2}rem`) : [];
       const frSize = (val) => {
         if (val === 0) {
           return "0";
@@ -153362,7 +153433,7 @@ Supported expressions:
         limit: frSize(limit),
         retries: `${retries}em`,
         id: `${id}rem`,
-        score: score2
+        scores: scores2
       };
     };
     const scoreHeaders = (selectedScores, availableScores) => {
