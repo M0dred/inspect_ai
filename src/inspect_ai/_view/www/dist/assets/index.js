@@ -27418,6 +27418,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
       });
     };
+    const sampleIdsEqual = (id, otherId) => {
+      if (id === void 0 && otherId === void 0) {
+        return true;
+      }
+      if (id === void 0 || otherId === void 0) {
+        return false;
+      }
+      return String(id) === String(otherId);
+    };
     const toLogPreview = (header2) => {
       return {
         eval_id: header2.eval.eval_id,
@@ -27644,7 +27653,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const log$8 = createLogger("logSlice");
     const initialState$2 = {
       // Log state
-      selectedSampleIndex: -1,
+      șselectedSampleId: void 0,
+      selectedSampleEpoch: void 0,
       selectedLogDetails: void 0,
       pendingSampleSummaries: void 0,
       loadedLog: void 0,
@@ -27663,9 +27673,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         log: initialState$2,
         // Actions
         logActions: {
-          selectSample: (index) => set2((state) => {
-            state.log.selectedSampleIndex = index;
-          }),
+          selectSample: (sampleId, epoch) => {
+            const currentSample = get2().log.selectedSampleHandle;
+            if (sampleIdsEqual(currentSample?.id, sampleId) && currentSample?.epoch === epoch) {
+              return;
+            }
+            set2((state) => {
+              state.log.selectedSampleHandle = { id: sampleId, epoch };
+            });
+          },
           setSelectedLogDetails: (details) => {
             set2((state) => {
               state.log.selectedScores = void 0;
@@ -28669,10 +28685,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                   `LOADED COMPLETED SAMPLE: ${sampleSummary.id}-${sampleSummary.epoch}`
                 );
                 if (sample2) {
-                  const migratedSample = resolveSample$1(sample2);
                   if (state.sample.sample_identifier?.id !== sample2.id && state.sample.sample_identifier?.epoch !== sample2.epoch) {
                     sampleActions.clearCollapsedEvents();
                   }
+                  const migratedSample = resolveSample$1(sample2);
                   sampleActions.setSelectedSample(migratedSample);
                   sampleActions.setSampleStatus("ok");
                 } else {
@@ -107737,7 +107753,7 @@ self.onmessage = function (e) {
           const logContents = await get_log(log_file2, true);
           if (logContents.parsed.samples && logContents.parsed.samples.length > 0) {
             return logContents.parsed.samples.find((sample2) => {
-              return sample2.id === id && sample2.epoch === epoch;
+              return sampleIdsEqual(sample2.id, id) && sample2.epoch === epoch;
             });
           }
         }
@@ -110791,6 +110807,9 @@ ${citation.url}` : citation.url,
               );
             });
             answerLength = evalDescriptor.scoreAnswer(current2, selectedScores[0])?.length || 0;
+          } else {
+            previous.scores = [];
+            previous.scores[0] = 3;
           }
           previous.input = Math.min(Math.max(previous.input, text2.length), 200);
           previous.target = Math.min(
@@ -113890,11 +113909,16 @@ categories: ${categories.join(" ")}`;
       }, [sort2]);
     };
     const useSelectedSampleSummary = () => {
-      const filteredSamples = useFilteredSamples();
-      const selectedIndex = useStore((state) => state.log.selectedSampleIndex);
+      const sampleSummaries = useSampleSummaries();
+      const selectedSampleHandle = useStore(
+        (state) => state.log.selectedSampleHandle
+      );
       return reactExports.useMemo(() => {
-        return filteredSamples[selectedIndex];
-      }, [filteredSamples, selectedIndex]);
+        const selectedSampleSummary = sampleSummaries.find((sample2) => {
+          return sampleIdsEqual(sample2.id, selectedSampleHandle?.id) && sample2.epoch === selectedSampleHandle?.epoch;
+        });
+        return selectedSampleSummary;
+      }, [selectedSampleHandle, sampleSummaries]);
     };
     const useSampleData = () => {
       const sampleStatus = useStore((state) => state.sample.sampleStatus);
@@ -114004,8 +114028,8 @@ categories: ${categories.join(" ")}`;
         log$1.debug("clear message (eval)", id);
         clearVisible(id);
       }, [selectedLogFile, clearVisible, id]);
-      const selectedSampleIndex = useStore(
-        (state) => state.log.selectedSampleIndex
+      const selectedSampleHandle = useStore(
+        (state) => state.log.selectedSampleHandle
       );
       reactExports.useEffect(() => {
         if (isFirstRender.current) {
@@ -114015,7 +114039,7 @@ categories: ${categories.join(" ")}`;
           log$1.debug("clear message (sample)", id);
           clearVisible(id);
         }
-      }, [selectedSampleIndex, clearVisible, id, scope]);
+      }, [selectedSampleHandle, clearVisible, id, scope]);
       return reactExports.useMemo(() => {
         log$1.debug("visibility", id, visible2);
         const set2 = (visible22) => {
@@ -120403,7 +120427,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.fullWidth, styles$16.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$16.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.140-25-gdb3e012b9" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.140-26-g011cfd444" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.spacer) }),
@@ -122152,19 +122176,24 @@ categories: ${categories.join(" ")}`;
         return void 0;
       }, [logPath, selectedLogFile, logDirectory]);
       const sampleSummaries = useFilteredSamples();
-      const selectedSampleIndex = useStore(
-        (state) => state.log.selectedSampleIndex
+      const selectedSampleHandle = useStore(
+        (state) => state.log.selectedSampleHandle
       );
+      const selectedSampleIndex = reactExports.useMemo(() => {
+        return sampleSummaries.findIndex((summary2) => {
+          return sampleIdsEqual(summary2.id, selectedSampleHandle?.id) && summary2.epoch === selectedSampleHandle?.epoch;
+        });
+      }, [selectedSampleHandle, sampleSummaries]);
       const selectSample = useStore((state) => state.logActions.selectSample);
       const setShowingSampleDialog = useStore(
         (state) => state.appActions.setShowingSampleDialog
       );
       const showingSampleDialog = useStore((state) => state.app.dialogs.sample);
       const showSample = reactExports.useCallback(
-        (index, id, epoch, specifiedSampleTabId) => {
+        (id, epoch, specifiedSampleTabId) => {
           const resolvedPath = resolveLogPath();
           if (resolvedPath) {
-            selectSample(index);
+            selectSample(id, epoch);
             setShowingSampleDialog(true);
             const currentSampleTabId = specifiedSampleTabId || sampleTabId;
             const url = sampleUrl(resolvedPath, id, epoch, currentSampleTabId);
@@ -122197,12 +122226,13 @@ categories: ${categories.join(" ")}`;
                 navigate(url);
               }
             } else {
-              selectSample(index);
+              const summary2 = sampleSummaries[index];
+              selectSample(summary2.id, summary2.epoch);
             }
           }
         },
         [
-          selectedSampleIndex,
+          selectedSampleHandle,
           showSample,
           sampleTabId,
           sampleSummaries,
@@ -134194,10 +134224,6 @@ ${events}
       focusOnLoad
     }) => {
       const baseId = `sample-dialog`;
-      const filteredSamples = useFilteredSamples();
-      const selectedSampleIndex = useStore(
-        (state) => state.log.selectedSampleIndex
-      );
       const sampleData = useSampleData();
       const sample2 = reactExports.useMemo(() => {
         return sampleData.getSelectedSample();
@@ -134221,9 +134247,7 @@ ${events}
         }
         return -1;
       }, [tabsRef.current]);
-      const sampleSummary = reactExports.useMemo(() => {
-        return filteredSamples[selectedSampleIndex];
-      }, [filteredSamples, selectedSampleIndex]);
+      const selectedSampleSummary = useSelectedSampleSummary();
       const sampleEvents = sample2?.events || runningSampleData;
       const sampleMessages = reactExports.useMemo(() => {
         if (sample2?.messages) {
@@ -134347,11 +134371,12 @@ ${events}
         );
       }
       const running = reactExports.useMemo(() => {
-        return isRunning(sampleSummary, runningSampleData);
-      }, [sampleSummary, runningSampleData]);
+        return isRunning(selectedSampleSummary, runningSampleData);
+      }, [selectedSampleSummary, runningSampleData]);
       const sampleDetailNavigation = useSampleDetailNavigation();
+      const displaySample = sample2 || selectedSampleSummary;
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-        sample2 || sampleSummary ? /* @__PURE__ */ jsxRuntimeExports.jsx(SampleSummaryView, { parent_id: id, sample: sample2 || sampleSummary }) : void 0,
+        displaySample ? /* @__PURE__ */ jsxRuntimeExports.jsx(SampleSummaryView, { parent_id: id, sample: displaySample }) : void 0,
         /* @__PURE__ */ jsxRuntimeExports.jsxs(
           TabSet,
           {
@@ -157802,21 +157827,18 @@ Supported expressions:
     };
     const SampleRow = ({
       id,
-      index,
       sample: sample2,
       answer: answer2,
       completed,
       scoresRendered,
       gridColumnsTemplate,
       height,
+      selected: selected2,
       showSample,
       sampleUrl: sampleUrl2
     }) => {
       const streamSampleData = useStore(
         (state) => state.capabilities.streamSampleData
-      );
-      const selectedSampleIndex = useStore(
-        (state) => state.log.selectedSampleIndex
       );
       const isViewable = completed || streamSampleData;
       const showingSampleDialog = useStore((state) => state.app.dialogs.sample);
@@ -157841,7 +157863,7 @@ Supported expressions:
           className: clsx(
             styles$h.grid,
             "text-size-base",
-            selectedSampleIndex === index ? styles$h.selected : void 0,
+            selected2 ? styles$h.selected : void 0,
             !isViewable && !sampleUrl2 ? styles$h.disabled : void 0
           ),
           style: {
@@ -158040,8 +158062,8 @@ Supported expressions:
         listHandle.current?.scrollTo({ top: 0, behavior: "instant" });
       }, [selectedLogIndex]);
       const sampleNavigation = useSampleNavigation();
-      const selectedSampleIndex = useStore(
-        (state) => state.log.selectedSampleIndex
+      const selectedSampleHandle = useStore(
+        (state) => state.log.selectedSampleHandle
       );
       const samplesDescriptor = useSampleDescriptor();
       const [followOutput, setFollowOutput] = useProperty(
@@ -158110,13 +158132,13 @@ Supported expressions:
               e.stopPropagation();
               break;
             case "Enter": {
-              const item2 = items[selectedSampleIndex];
-              if (item2.type === "sample") {
-                sampleNavigation.showSample(
-                  item2.index,
-                  item2.data.id,
-                  item2.data.epoch
-                );
+              const item2 = items.find((item22) => {
+                if (item22.type === "sample") {
+                  return sampleIdsEqual(item22.sampleId, selectedSampleHandle?.id) && item22.sampleEpoch === selectedSampleHandle?.epoch;
+                }
+              });
+              if (item2 && item2.type === "sample") {
+                sampleNavigation.showSample(item2.data.id, item2.data.epoch);
                 e.preventDefault();
                 e.stopPropagation();
               }
@@ -158125,7 +158147,7 @@ Supported expressions:
           }
         },
         [
-          selectedSampleIndex,
+          selectedSampleHandle,
           sampleNavigation.nextSample,
           sampleNavigation.previousSample,
           sampleNavigation.showSample,
@@ -158135,8 +158157,8 @@ Supported expressions:
       const selectedScores = useSelectedScores();
       const scores2 = useScores();
       const gridColumnsTemplate = reactExports.useMemo(() => {
-        return gridColumnsValue(samplesDescriptor, selectedScores);
-      }, [samplesDescriptor, selectedScores]);
+        return gridColumnsValue(samplesDescriptor);
+      }, [samplesDescriptor]);
       const renderRow = reactExports.useCallback(
         (_index, item2) => {
           if (item2.type === "sample") {
@@ -158144,7 +158166,6 @@ Supported expressions:
               SampleRow,
               {
                 id: `${item2.number}`,
-                index: item2.index,
                 sample: item2.data,
                 height: kSampleHeight,
                 answer: item2.answer,
@@ -158155,12 +158176,9 @@ Supported expressions:
                   item2.data.id,
                   item2.data.epoch
                 ),
+                selected: sampleIdsEqual(selectedSampleHandle?.id, item2.sampleId) && selectedSampleHandle?.epoch === item2.sampleEpoch,
                 showSample: () => {
-                  sampleNavigation.showSample(
-                    item2.index,
-                    item2.data.id,
-                    item2.data.epoch
-                  );
+                  sampleNavigation.showSample(item2.data.id, item2.data.epoch);
                 }
               }
             );
@@ -158260,15 +158278,12 @@ Supported expressions:
         )
       ] });
     });
-    const gridColumnsValue = (sampleDescriptor, selectedScores) => {
-      const { input: input2, target: target2, answer: answer2, limit, retries, id, scores: scores2 } = gridColumns(
-        sampleDescriptor,
-        selectedScores
-      );
+    const gridColumnsValue = (sampleDescriptor) => {
+      const { input: input2, target: target2, answer: answer2, limit, retries, id, scores: scores2 } = gridColumns(sampleDescriptor);
       const result2 = `${id} ${input2} ${target2} ${answer2} ${limit} ${retries} ${scores2.join(" ")}`;
       return result2;
     };
-    const gridColumns = (sampleDescriptor, selectedScores) => {
+    const gridColumns = (sampleDescriptor) => {
       const input2 = sampleDescriptor && sampleDescriptor.messageShape.normalized.input > 0 ? Math.max(0.15, sampleDescriptor.messageShape.normalized.input) : 0;
       const target2 = sampleDescriptor && sampleDescriptor.messageShape.normalized.target > 0 ? Math.max(0.15, sampleDescriptor.messageShape.normalized.target) : 0;
       const answer2 = sampleDescriptor && sampleDescriptor.messageShape.normalized.answer > 0 ? Math.max(0.15, sampleDescriptor.messageShape.normalized.answer) : 0;
@@ -158278,10 +158293,9 @@ Supported expressions:
         2,
         Math.min(10, sampleDescriptor?.messageShape.raw.id || 0)
       );
-      const scoreCount = selectedScores?.length ?? 0;
       const scoresRaw = sampleDescriptor?.messageShape.raw.scores || [];
       const scoreSizes = scoresRaw.map((size) => Math.max(3, size));
-      const scores2 = scoreCount > 0 ? scoreSizes.map((size) => `${size / 2}rem`) : [];
+      const scores2 = scoreSizes.length > 0 ? scoreSizes.map((size) => `${size / 2}rem`) : [];
       const frSize = (val) => {
         if (val === 0) {
           return "0";
@@ -158353,6 +158367,8 @@ Supported expressions:
         const itemCount = counter.item();
         return [
           {
+            sampleId: sample2.id,
+            sampleEpoch: sample2.epoch,
             label: `Sample ${sample2.id}`,
             number: itemCount,
             index,
@@ -158402,6 +158418,8 @@ Supported expressions:
         }
         counter.incrementItem();
         results.push({
+          sampleId: sample2.id,
+          sampleEpoch: sample2.epoch,
           label: `Sample ${counter.group()} (Epoch ${counter.item()})`,
           number: counter.item(),
           index,
@@ -158436,6 +158454,8 @@ Supported expressions:
         }
         counter.incrementItem();
         results.push({
+          sampleId: sample2.id,
+          sampleEpoch: sample2.epoch,
           label: `Sample ${sample2.id} (Epoch ${sample2.epoch})`,
           number: counter.item(),
           index,
@@ -158515,8 +158535,8 @@ Supported expressions:
       ]);
     };
     const SamplesTab = ({ running }) => {
-      const selectedSampleIndex = useStore(
-        (state) => state.log.selectedSampleIndex
+      const selectedSampleHandle = useStore(
+        (state) => state.log.selectedSampleHandle
       );
       const sampleSummaries = useFilteredSamples();
       const selectedLogDetails = useStore((state) => state.log.selectedLogDetails);
@@ -158531,32 +158551,7 @@ Supported expressions:
       const groupByOrder = useGroupByOrder();
       const selectedScores = useSelectedScores();
       const selectSample = useStore((state) => state.logActions.selectSample);
-      const selectedSampleIdentifier = useStore(
-        (state) => state.sample.sample_identifier
-      );
-      const [items, setItems] = reactExports.useState([]);
-      const [sampleItems, setSampleItems] = reactExports.useState([]);
       const sampleListHandle = reactExports.useRef(null);
-      reactExports.useEffect(() => {
-        setTimeout(() => {
-          if (sampleListHandle.current) {
-            sampleListHandle.current.scrollIntoView({ index: selectedSampleIndex });
-          }
-        }, 0);
-      }, [selectedSampleIndex]);
-      const showingSampleDialog = useStore((state) => state.app.dialogs.sample);
-      const previousShowingDialogRef = reactExports.useRef(showingSampleDialog);
-      reactExports.useEffect(() => {
-        if (previousShowingDialogRef.current && !showingSampleDialog && sampleListHandle.current) {
-          setTimeout(() => {
-            const element = document.querySelector(".samples-list");
-            if (element instanceof HTMLElement) {
-              element.focus();
-            }
-          }, 10);
-        }
-        previousShowingDialogRef.current = showingSampleDialog;
-      }, [showingSampleDialog]);
       const sampleProcessor = reactExports.useMemo(() => {
         if (!samplesDescriptor) return void 0;
         return getSampleProcessor(
@@ -158575,7 +158570,7 @@ Supported expressions:
         groupByOrder,
         selectedScores
       ]);
-      reactExports.useEffect(() => {
+      const items = reactExports.useMemo(() => {
         const resolvedSamples = sampleSummaries?.flatMap((sample2, index) => {
           const results = [];
           const previousSample = index !== 0 ? sampleSummaries[index - 1] : void 0;
@@ -158583,17 +158578,50 @@ Supported expressions:
           results.push(...items2);
           return results;
         });
-        setItems(resolvedSamples || []);
-        setSampleItems(
-          resolvedSamples ? resolvedSamples.filter((item2) => {
-            return item2.type === "sample";
-          }) : []
-        );
-        if (sampleSummaries.length === 1) {
-          selectSample(0);
-        }
+        return resolvedSamples || [];
       }, [sampleSummaries, sampleProcessor]);
-      const title2 = selectedSampleIndex > -1 && sampleItems.length > selectedSampleIndex ? sampleItems[selectedSampleIndex].label : "";
+      const selectedItemIndex = reactExports.useMemo(() => {
+        return items.findIndex((item2) => {
+          if (item2.type !== "sample") {
+            return false;
+          }
+          return sampleIdsEqual(item2.sampleId, selectedSampleHandle?.id) && item2.sampleEpoch === selectedSampleHandle?.epoch;
+        });
+      }, [selectedSampleHandle, items]);
+      reactExports.useEffect(() => {
+        setTimeout(() => {
+          if (sampleListHandle.current && selectedItemIndex >= 0) {
+            sampleListHandle.current.scrollIntoView({
+              index: selectedItemIndex
+            });
+          }
+        }, 0);
+      }, [selectedItemIndex]);
+      const showingSampleDialog = useStore((state) => state.app.dialogs.sample);
+      const previousShowingDialogRef = reactExports.useRef(showingSampleDialog);
+      reactExports.useEffect(() => {
+        if (previousShowingDialogRef.current && !showingSampleDialog && sampleListHandle.current) {
+          setTimeout(() => {
+            const element = document.querySelector(".samples-list");
+            if (element instanceof HTMLElement) {
+              element.focus();
+            }
+          }, 10);
+        }
+        previousShowingDialogRef.current = showingSampleDialog;
+      }, [showingSampleDialog]);
+      reactExports.useEffect(() => {
+        if (sampleSummaries.length === 1) {
+          const sample2 = sampleSummaries[0];
+          selectSample(sample2.id, sample2.epoch);
+        }
+      }, [sampleSummaries, selectSample]);
+      const title2 = reactExports.useMemo(() => {
+        if (selectedSampleHandle) {
+          return `Sample ${selectedSampleHandle.id} (Epoch ${selectedSampleHandle.epoch})`;
+        }
+        return "";
+      }, [selectedSampleHandle]);
       if (totalSampleCount === 0) {
         if (running) {
           return /* @__PURE__ */ jsxRuntimeExports.jsx(RunningNoSamples, {});
@@ -158615,7 +158643,7 @@ Supported expressions:
           showingSampleDialog && /* @__PURE__ */ jsxRuntimeExports.jsx(
             SampleDialog,
             {
-              id: selectedSampleIdentifier ? `${selectedSampleIdentifier.id}_${selectedSampleIdentifier.epoch}` : "",
+              id: selectedSampleHandle ? `${selectedSampleHandle.id}_${selectedSampleHandle.epoch}` : "",
               title: title2,
               showingSampleDialog
             }
@@ -159917,19 +159945,13 @@ Supported expressions:
       }, [logPath, tabId, selectLogFile, setWorkspaceTab, setSelectedLogIndex]);
       reactExports.useEffect(() => {
         if (sampleId && filteredSamples) {
-          const targetEpoch = epoch ? parseInt(epoch, 10) : void 0;
-          const sampleIndex = filteredSamples.findIndex((sample2) => {
-            const matches = String(sample2.id) === sampleId && (targetEpoch === void 0 || sample2.epoch === targetEpoch);
-            return matches;
-          });
-          if (sampleIndex >= 0) {
-            selectSample(sampleIndex);
-            if (sampleTabId) {
-              setSampleTab(sampleTabId);
-            }
-            if (filteredSamples.length > 1) {
-              setShowingSampleDialog(true);
-            }
+          const targetEpoch = epoch ? parseInt(epoch, 10) : 1;
+          selectSample(sampleId, targetEpoch);
+          if (sampleTabId) {
+            setSampleTab(sampleTabId);
+          }
+          if (filteredSamples.length > 1) {
+            setShowingSampleDialog(true);
           }
         } else {
           setShowingSampleDialog(false);
