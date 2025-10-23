@@ -407,7 +407,7 @@ var require_assets = __commonJS({
     function requireReact_production() {
       if (hasRequiredReact_production) return react_production;
       hasRequiredReact_production = 1;
-      var REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"), REACT_MEMO_TYPE = Symbol.for("react.memo"), REACT_LAZY_TYPE = Symbol.for("react.lazy"), MAYBE_ITERATOR_SYMBOL = Symbol.iterator;
+      var REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"), REACT_MEMO_TYPE = Symbol.for("react.memo"), REACT_LAZY_TYPE = Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = Symbol.for("react.activity"), MAYBE_ITERATOR_SYMBOL = Symbol.iterator;
       function getIteratorFn(maybeIterable) {
         if (null === maybeIterable || "object" !== typeof maybeIterable) return null;
         maybeIterable = MAYBE_ITERATOR_SYMBOL && maybeIterable[MAYBE_ITERATOR_SYMBOL] || maybeIterable["@@iterator"];
@@ -454,26 +454,22 @@ var require_assets = __commonJS({
       pureComponentPrototype.constructor = PureComponent;
       assign2(pureComponentPrototype, Component.prototype);
       pureComponentPrototype.isPureReactComponent = true;
-      var isArrayImpl = Array.isArray, ReactSharedInternals = { H: null, A: null, T: null, S: null, V: null }, hasOwnProperty2 = Object.prototype.hasOwnProperty;
-      function ReactElement(type, key2, self2, source2, owner, props) {
-        self2 = props.ref;
+      var isArrayImpl = Array.isArray;
+      function noop() {
+      }
+      var ReactSharedInternals = { H: null, A: null, T: null, S: null }, hasOwnProperty2 = Object.prototype.hasOwnProperty;
+      function ReactElement(type, key2, props) {
+        var refProp = props.ref;
         return {
           $$typeof: REACT_ELEMENT_TYPE,
           type,
           key: key2,
-          ref: void 0 !== self2 ? self2 : null,
+          ref: void 0 !== refProp ? refProp : null,
           props
         };
       }
       function cloneAndReplaceKey(oldElement, newKey) {
-        return ReactElement(
-          oldElement.type,
-          newKey,
-          void 0,
-          void 0,
-          void 0,
-          oldElement.props
-        );
+        return ReactElement(oldElement.type, newKey, oldElement.props);
       }
       function isValidElement(object) {
         return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
@@ -488,8 +484,6 @@ var require_assets = __commonJS({
       function getElementKey(element, index) {
         return "object" === typeof element && null !== element && null != element.key ? escape2("" + element.key) : index.toString(36);
       }
-      function noop$1() {
-      }
       function resolveThenable(thenable) {
         switch (thenable.status) {
           case "fulfilled":
@@ -497,7 +491,7 @@ var require_assets = __commonJS({
           case "rejected":
             throw thenable.reason;
           default:
-            switch ("string" === typeof thenable.status ? thenable.then(noop$1, noop$1) : (thenable.status = "pending", thenable.then(
+            switch ("string" === typeof thenable.status ? thenable.then(noop, noop) : (thenable.status = "pending", thenable.then(
               function(fulfilledValue) {
                 "pending" === thenable.status && (thenable.status = "fulfilled", thenable.value = fulfilledValue);
               },
@@ -628,10 +622,7 @@ var require_assets = __commonJS({
           return;
         }
         console.error(error2);
-      };
-      function noop() {
-      }
-      react_production.Children = {
+      }, Children = {
         map: mapChildren,
         forEach: function(children2, forEachFunc, forEachContext) {
           mapChildren(
@@ -662,6 +653,8 @@ var require_assets = __commonJS({
           return children2;
         }
       };
+      react_production.Activity = REACT_ACTIVITY_TYPE;
+      react_production.Children = Children;
       react_production.Component = Component;
       react_production.Fragment = REACT_FRAGMENT_TYPE;
       react_production.Profiler = REACT_PROFILER_TYPE;
@@ -680,14 +673,17 @@ var require_assets = __commonJS({
           return fn2.apply(null, arguments);
         };
       };
+      react_production.cacheSignal = function() {
+        return null;
+      };
       react_production.cloneElement = function(element, config2, children2) {
         if (null === element || void 0 === element)
           throw Error(
             "The argument must be a React element, but you passed " + element + "."
           );
-        var props = assign2({}, element.props), key2 = element.key, owner = void 0;
+        var props = assign2({}, element.props), key2 = element.key;
         if (null != config2)
-          for (propName in void 0 !== config2.ref && (owner = void 0), void 0 !== config2.key && (key2 = "" + config2.key), config2)
+          for (propName in void 0 !== config2.key && (key2 = "" + config2.key), config2)
             !hasOwnProperty2.call(config2, propName) || "key" === propName || "__self" === propName || "__source" === propName || "ref" === propName && void 0 === config2.ref || (props[propName] = config2[propName]);
         var propName = arguments.length - 2;
         if (1 === propName) props.children = children2;
@@ -696,7 +692,7 @@ var require_assets = __commonJS({
             childArray[i2] = arguments[i2 + 2];
           props.children = childArray;
         }
-        return ReactElement(element.type, key2, void 0, void 0, owner, props);
+        return ReactElement(element.type, key2, props);
       };
       react_production.createContext = function(defaultValue) {
         defaultValue = {
@@ -729,7 +725,7 @@ var require_assets = __commonJS({
         if (type && type.defaultProps)
           for (propName in childrenLength = type.defaultProps, childrenLength)
             void 0 === props[propName] && (props[propName] = childrenLength[propName]);
-        return ReactElement(type, key2, void 0, void 0, null, props);
+        return ReactElement(type, key2, props);
       };
       react_production.createRef = function() {
         return { current: null };
@@ -762,7 +758,7 @@ var require_assets = __commonJS({
         } catch (error2) {
           reportGlobalError(error2);
         } finally {
-          ReactSharedInternals.T = prevTransition;
+          null !== prevTransition && null !== currentTransition.types && (prevTransition.types = currentTransition.types), ReactSharedInternals.T = prevTransition;
         }
       };
       react_production.unstable_useCacheRefresh = function() {
@@ -785,13 +781,11 @@ var require_assets = __commonJS({
       react_production.useDeferredValue = function(value2, initialValue) {
         return ReactSharedInternals.H.useDeferredValue(value2, initialValue);
       };
-      react_production.useEffect = function(create2, createDeps, update) {
-        var dispatcher = ReactSharedInternals.H;
-        if ("function" === typeof update)
-          throw Error(
-            "useEffect CRUD overload is not enabled in this build of React."
-          );
-        return dispatcher.useEffect(create2, createDeps);
+      react_production.useEffect = function(create2, deps) {
+        return ReactSharedInternals.H.useEffect(create2, deps);
+      };
+      react_production.useEffectEvent = function(callback) {
+        return ReactSharedInternals.H.useEffectEvent(callback);
       };
       react_production.useId = function() {
         return ReactSharedInternals.H.useId();
@@ -830,7 +824,7 @@ var require_assets = __commonJS({
       react_production.useTransition = function() {
         return ReactSharedInternals.H.useTransition();
       };
-      react_production.version = "19.1.1";
+      react_production.version = "19.2.0";
       return react_production;
     }
     var hasRequiredReact;
