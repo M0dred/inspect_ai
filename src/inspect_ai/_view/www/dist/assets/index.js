@@ -153481,6 +153481,7 @@ ${events}
           diagnostics = diagnosticFilter(diagnostics, state);
         let sorted = diagnostics.slice().sort((a, b) => a.from - b.from || a.to - b.to);
         let deco = new RangeSetBuilder(), active = [], pos2 = 0;
+        let scan = state.doc.iter(), scanPos = 0;
         for (let i2 = 0; ; ) {
           let next = i2 == sorted.length ? null : sorted[i2];
           if (!next && !active.length)
@@ -153506,8 +153507,30 @@ ${events}
               break;
             }
           }
+          let widget = false;
+          if (active.some((d) => d.from == from && d.to == to2)) {
+            widget = from == to2;
+            if (!widget && to2 - from < 10) {
+              let behind = from - (scanPos + scan.value.length);
+              if (behind > 0) {
+                scan.next(behind);
+                scanPos = from;
+              }
+              for (let check2 = from; ; ) {
+                if (check2 >= to2) {
+                  widget = true;
+                  break;
+                }
+                if (!scan.lineBreak && scanPos + scan.value.length > check2)
+                  break;
+                check2 = scanPos + scan.value.length;
+                scanPos += scan.value.length;
+                scan.next();
+              }
+            }
+          }
           let sev = maxSeverity(active);
-          if (active.some((d) => d.from == d.to || d.from == d.to - 1 && state.doc.lineAt(d.from).to == d.from)) {
+          if (widget) {
             deco.add(from, from, Decoration.widget({
               widget: new DiagnosticWidget(sev),
               diagnostics: active.slice()
@@ -153691,17 +153714,28 @@ ${events}
     }
     const lintConfig = /* @__PURE__ */ Facet.define({
       combine(input2) {
-        return Object.assign({ sources: input2.map((i2) => i2.source).filter((x2) => x2 != null) }, combineConfig(input2.map((i2) => i2.config), {
-          delay: 750,
-          markerFilter: null,
-          tooltipFilter: null,
-          needsRefresh: null,
-          hideOn: () => null
-        }, {
-          needsRefresh: (a, b) => !a ? b : !b ? a : (u) => a(u) || b(u)
-        }));
+        return {
+          sources: input2.map((i2) => i2.source).filter((x2) => x2 != null),
+          ...combineConfig(input2.map((i2) => i2.config), {
+            delay: 750,
+            markerFilter: null,
+            tooltipFilter: null,
+            needsRefresh: null,
+            hideOn: () => null
+          }, {
+            delay: Math.max,
+            markerFilter: combineFilter,
+            tooltipFilter: combineFilter,
+            needsRefresh: (a, b) => !a ? b : !b ? a : (u) => a(u) || b(u),
+            hideOn: (a, b) => !a ? b : !b ? a : (t2, x2, y) => a(t2, x2, y) || b(t2, x2, y),
+            autoPanel: (a, b) => a || b
+          })
+        };
       }
     });
+    function combineFilter(a, b) {
+      return !a ? b : !b ? a : (d, s) => b(a(d, s), s);
+    }
     function linter(source2, config2 = {}) {
       return [
         lintConfig.of({ source: source2, config: config2 }),
@@ -153743,9 +153777,10 @@ ${events}
           crelt("u", name2.slice(keyIndex, keyIndex + 1)),
           name2.slice(keyIndex + 1)
         ];
+        let markClass = action.markClass ? " " + action.markClass : "";
         return crelt("button", {
           type: "button",
-          class: "cm-diagnosticAction",
+          class: "cm-diagnosticAction" + markClass,
           onclick: click,
           onmousedown: click,
           "aria-label": ` Action: ${name2}${keyIndex < 0 ? "" : ` (access key "${keys[i2]})"`}.`
