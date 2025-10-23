@@ -29162,7 +29162,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         return str2;
       }
       return str2.split(" ").map(
-        (w) => w.length > 0 ? w[0].toUpperCase() + w.substr(1).toLowerCase() : w
+        (w2) => w2.length > 0 ? w2[0].toUpperCase() + w2.substr(1).toLowerCase() : w2
       ).join(" ");
     }
     function formatNoDecimal(num2) {
@@ -31227,7 +31227,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     function Fn(t2, e) {
       return t2 === e;
     }
-    function Z$1(t2 = Fn) {
+    function Y(t2 = Fn) {
       let e;
       return (n) => (o) => {
         t2(e, o) || (e = o, n(o));
@@ -31246,7 +31246,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         e(t2);
       };
     }
-    function x$1(t2, ...e) {
+    function S(t2, ...e) {
       const n = go(...e);
       return (o, r2) => {
         switch (o) {
@@ -31309,7 +31309,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
       };
     }
-    function C$1(t2) {
+    function w(t2) {
       let e = t2;
       const n = $();
       return (o, r2) => {
@@ -31328,7 +31328,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       };
     }
     function ct(t2, e) {
-      return ve(C$1(e), (n) => O(t2, n));
+      return ve(w(e), (n) => O(t2, n));
     }
     function $() {
       const t2 = [];
@@ -31392,7 +31392,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       };
     }
     function V(t2, e = Fn) {
-      return x$1(t2, Z$1(e));
+      return S(t2, Y(e));
     }
     function Le(...t2) {
       return function(e, n) {
@@ -31412,12 +31412,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       2: "warn"
     }, Co = () => typeof globalThis > "u" ? window : globalThis, Vt$1 = U(
       () => {
-        const t2 = C$1(
+        const t2 = w(
           3
           /* ERROR */
         );
         return {
-          log: C$1((n, o, r2 = 1) => {
+          log: w((n, o, r2 = 1) => {
             var i2;
             const s = (i2 = Co().VIRTUOSO_LOG_LEVEL) != null ? i2 : ot(t2);
             r2 >= s && console[To[r2]](
@@ -31455,21 +31455,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     function On(t2, e, n, o, r2, s, i2, l, c2) {
       const a = H.useCallback(
         (m) => {
-          const S = wo(m.children, e, l ? "offsetWidth" : "offsetHeight", r2);
-          let g = m.parentElement;
-          for (; !g.dataset.virtuosoScroller; )
-            g = g.parentElement;
-          const I = g.lastElementChild.dataset.viewportType === "window";
-          let w;
-          I && (w = g.ownerDocument.defaultView);
-          const v = i2 ? l ? i2.scrollLeft : i2.scrollTop : I ? l ? w.scrollX || w.document.documentElement.scrollLeft : w.scrollY || w.document.documentElement.scrollTop : l ? g.scrollLeft : g.scrollTop, h = i2 ? l ? i2.scrollWidth : i2.scrollHeight : I ? l ? w.document.documentElement.scrollWidth : w.document.documentElement.scrollHeight : l ? g.scrollWidth : g.scrollHeight, p = i2 ? l ? i2.offsetWidth : i2.offsetHeight : I ? l ? w.innerWidth : w.innerHeight : l ? g.offsetWidth : g.offsetHeight;
+          const x2 = wo(m.children, e, l ? "offsetWidth" : "offsetHeight", r2);
+          let h = m.parentElement;
+          for (; !h.dataset.virtuosoScroller; )
+            h = h.parentElement;
+          const I = h.lastElementChild.dataset.viewportType === "window";
+          let C2;
+          I && (C2 = h.ownerDocument.defaultView);
+          const v = i2 ? l ? i2.scrollLeft : i2.scrollTop : I ? l ? C2.scrollX || C2.document.documentElement.scrollLeft : C2.scrollY || C2.document.documentElement.scrollTop : l ? h.scrollLeft : h.scrollTop, g = i2 ? l ? i2.scrollWidth : i2.scrollHeight : I ? l ? C2.document.documentElement.scrollWidth : C2.document.documentElement.scrollHeight : l ? h.scrollWidth : h.scrollHeight, p = i2 ? l ? i2.offsetWidth : i2.offsetHeight : I ? l ? C2.innerWidth : C2.innerHeight : l ? h.offsetWidth : h.offsetHeight;
           o({
-            scrollHeight: h,
+            scrollHeight: g,
             scrollTop: Math.max(v, 0),
             viewportHeight: p
           }), s == null || s(
             l ? fn("column-gap", getComputedStyle(m).columnGap, r2) : fn("row-gap", getComputedStyle(m).rowGap, r2)
-          ), S !== null && t2(S);
+          ), x2 !== null && t2(x2);
         },
         [t2, e, r2, s, i2, o, l]
       );
@@ -31487,8 +31487,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         const c2 = parseInt(l.dataset.index), a = parseFloat(l.dataset.knownSize), m = e(l, n);
         if (m === 0 && o("Zero-sized element, this should not happen", { child: l }, mt.ERROR), m === a)
           continue;
-        const S = s[s.length - 1];
-        s.length === 0 || S.size !== m || S.endIndex !== c2 - 1 ? s.push({ endIndex: c2, size: m, startIndex: c2 }) : s[s.length - 1].endIndex++;
+        const x2 = s[s.length - 1];
+        s.length === 0 || x2.size !== m || x2.endIndex !== c2 - 1 ? s.push({ endIndex: c2, size: m, startIndex: c2 }) : s[s.length - 1].endIndex++;
       }
       return s;
     }
@@ -31501,17 +31501,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           if (!(c2 != null && c2.offsetParent))
             return;
           const a = c2.getBoundingClientRect(), m = a.width;
-          let S, g;
+          let x2, h;
           if (e) {
-            const I = e.getBoundingClientRect(), w = a.top - I.top;
-            g = I.height - Math.max(0, w), S = w + e.scrollTop;
+            const I = e.getBoundingClientRect(), C2 = a.top - I.top;
+            h = I.height - Math.max(0, C2), x2 = C2 + e.scrollTop;
           } else {
             const I = i2.current.ownerDocument.defaultView;
-            g = I.innerHeight - Math.max(0, a.top), S = a.top + I.scrollY;
+            h = I.innerHeight - Math.max(0, a.top), x2 = a.top + I.scrollY;
           }
           o.current = {
-            offsetTop: S,
-            visibleHeight: g,
+            offsetTop: x2,
+            visibleHeight: h,
             visibleWidth: m
           }, t2(o.current);
         },
@@ -31540,17 +31540,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     const at = U(
       () => {
-        const t2 = $(), e = $(), n = C$1(0), o = $(), r2 = C$1(0), s = $(), i2 = $(), l = C$1(0), c2 = C$1(0), a = C$1(0), m = C$1(0), S = $(), g = $(), I = C$1(false), w = C$1(false), v = C$1(false);
+        const t2 = $(), e = $(), n = w(0), o = $(), r2 = w(0), s = $(), i2 = $(), l = w(0), c2 = w(0), a = w(0), m = w(0), x2 = $(), h = $(), I = w(false), C2 = w(false), v = w(false);
         return O(
-          x$1(
+          S(
             t2,
-            E(({ scrollTop: h }) => h)
+            E(({ scrollTop: g }) => g)
           ),
           e
         ), O(
-          x$1(
+          S(
             t2,
-            E(({ scrollHeight: h }) => h)
+            E(({ scrollHeight: g }) => g)
           ),
           i2
         ), O(e, r2), {
@@ -31559,14 +31559,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           fixedHeaderHeight: c2,
           footerHeight: m,
           headerHeight: l,
-          horizontalDirection: w,
-          scrollBy: g,
+          horizontalDirection: C2,
+          scrollBy: h,
           // input
           scrollContainerState: t2,
           scrollHeight: i2,
           scrollingInProgress: I,
           // signals
-          scrollTo: S,
+          scrollTo: x2,
           scrollTop: e,
           skipAnimationFrameInResizeObserver: v,
           smoothScrollTargetReached: o,
@@ -31720,7 +31720,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return !!(t2 && t2[0] === e[0] && t2[1] === e[1]);
     }
     const De = U(
-      () => ({ recalcInProgress: C$1(false) }),
+      () => ({ recalcInProgress: w(false) }),
       [],
       { singleton: true }
     );
@@ -31781,8 +31781,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         if (l.some(Lo(o)))
           continue;
         let c2 = false, a = false;
-        for (const { end: m, start: S, value: g } of l)
-          c2 ? (r2 >= S || s === g) && (t2 = ze(t2, S)) : (a = g !== s, c2 = true), m > r2 && r2 >= S && g !== s && (t2 = pt(t2, r2 + 1, g));
+        for (const { end: m, start: x2, value: h } of l)
+          c2 ? (r2 >= x2 || s === h) && (t2 = ze(t2, x2)) : (a = h !== s, c2 = true), m > r2 && r2 >= x2 && h !== s && (t2 = pt(t2, r2 + 1, h));
         a && (t2 = pt(t2, i2, s));
       }
       return [t2, n];
@@ -31824,20 +31824,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       const s = t2.sizeTree;
       let i2 = s, l = 0;
       if (n.length > 0 && j(s) && e.length === 2) {
-        const g = e[0].size, I = e[1].size;
-        i2 = n.reduce((w, v) => pt(pt(w, v, g), v + 1, I), i2);
+        const h = e[0].size, I = e[1].size;
+        i2 = n.reduce((C2, v) => pt(pt(C2, v, h), v + 1, I), i2);
       } else
         [i2, l] = bo(i2, e);
       if (i2 === s)
         return t2;
-      const { lastIndex: c2, lastOffset: a, lastSize: m, offsetTree: S } = Ae(t2.offsetTree, l, i2, r2);
+      const { lastIndex: c2, lastOffset: a, lastSize: m, offsetTree: x2 } = Ae(t2.offsetTree, l, i2, r2);
       return {
         groupIndices: n,
-        groupOffsetTree: n.reduce((g, I) => pt(g, I, ie$2(I, S, r2)), jt()),
+        groupOffsetTree: n.reduce((h, I) => pt(h, I, ie$2(I, x2, r2)), jt()),
         lastIndex: c2,
         lastOffset: a,
         lastSize: m,
-        offsetTree: S,
+        offsetTree: x2,
         sizeTree: i2
       };
     }
@@ -31862,12 +31862,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       } else
         r2 = [];
       for (const { start: a, value: m } of ye(n, e, 1 / 0)) {
-        const S = a - s, g = S * i2 + l + S * o;
+        const x2 = a - s, h = x2 * i2 + l + x2 * o;
         r2.push({
           index: a,
-          offset: g,
+          offset: h,
           size: m
-        }), s = a, l = g, i2 = m;
+        }), s = a, l = h, i2 = m;
       }
       return {
         lastIndex: s,
@@ -31888,13 +31888,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       offsetWidth: "width"
     }, Et = U(
       ([{ log: t2 }, { recalcInProgress: e }]) => {
-        const n = $(), o = $(), r2 = ct(o, 0), s = $(), i2 = $(), l = C$1(0), c2 = C$1([]), a = C$1(void 0), m = C$1(void 0), S = C$1((f, d) => vt$1(f, zo[d])), g = C$1(void 0), I = C$1(0), w = Ro(), v = ct(
-          x$1(n, N(c2, t2, I), bt(ko, w), Z$1()),
-          w
-        ), h = ct(
-          x$1(
+        const n = $(), o = $(), r2 = ct(o, 0), s = $(), i2 = $(), l = w(0), c2 = w([]), a = w(void 0), m = w(void 0), x2 = w((f, d) => vt$1(f, zo[d])), h = w(void 0), I = w(0), C2 = Ro(), v = ct(
+          S(n, N(c2, t2, I), bt(ko, C2), Y()),
+          C2
+        ), g = ct(
+          S(
             c2,
-            Z$1(),
+            Y(),
             bt((f, d) => ({ current: d, prev: f.current }), {
               current: [],
               prev: []
@@ -31904,7 +31904,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           []
         );
         O(
-          x$1(
+          S(
             c2,
             A((f) => f.length > 0),
             N(v, I),
@@ -31919,7 +31919,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           ),
           v
         ), O(
-          x$1(
+          S(
             o,
             N(v),
             A(([f, { lastIndex: d }]) => f < d),
@@ -31934,14 +31934,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           n
         ), O(a, m);
         const p = ct(
-          x$1(
+          S(
             a,
             E((f) => f === void 0)
           ),
           true
         );
         O(
-          x$1(
+          S(
             m,
             A((f) => f !== void 0 && j(ot(v).sizeTree)),
             E((f) => [{ endIndex: 0, size: f, startIndex: 0 }])
@@ -31949,7 +31949,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           n
         );
         const u = ht(
-          x$1(
+          S(
             n,
             N(v),
             bt(
@@ -31957,13 +31957,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 changed: y !== f,
                 sizes: y
               }),
-              { changed: false, sizes: w }
+              { changed: false, sizes: C2 }
             ),
             E((f) => f.changed)
           )
         );
         K(
-          x$1(
+          S(
             l,
             bt(
               (f, d) => ({ diff: f.prev - d, prev: d }),
@@ -31976,11 +31976,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             if (f > 0)
               G(e, true), G(s, f + pn(f, d));
             else if (f < 0) {
-              const y = ot(h);
+              const y = ot(g);
               y.length > 0 && (f -= pn(-f, y)), G(i2, f);
             }
           }
-        ), K(x$1(l, N(t2)), ([f, d]) => {
+        ), K(S(l, N(t2)), ([f, d]) => {
           f < 0 && d(
             "`firstItemIndex` prop should not be set to less than zero. If you don't know the total count, just use a very high value",
             { firstItemIndex: l },
@@ -31989,7 +31989,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         });
         const T = ht(s);
         O(
-          x$1(
+          S(
             s,
             N(v),
             E(([f, d]) => {
@@ -31998,30 +31998,30 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 const L = re(d.sizeTree, 0);
                 let z = 0, _ = 0;
                 for (; z < f; ) {
-                  const F = d.groupIndices[_], Y = d.groupIndices.length === _ + 1 ? 1 / 0 : d.groupIndices[_ + 1] - F - 1;
+                  const F = d.groupIndices[_], q = d.groupIndices.length === _ + 1 ? 1 / 0 : d.groupIndices[_ + 1] - F - 1;
                   B.push({
                     endIndex: F,
                     size: L,
                     startIndex: F
                   }), B.push({
-                    endIndex: F + 1 + Y - 1,
+                    endIndex: F + 1 + q - 1,
                     size: k,
                     startIndex: F + 1
-                  }), _++, z += Y + 1;
+                  }), _++, z += q + 1;
                 }
                 const J = Gt$1(d.sizeTree);
                 return z !== f && J.shift(), J.reduce(
-                  (F, { k: Y, v: it2 }) => {
+                  (F, { k: q, v: it2 }) => {
                     let dt = F.ranges;
                     return F.prevSize !== 0 && (dt = [
                       ...F.ranges,
                       {
-                        endIndex: Y + f - 1,
+                        endIndex: q + f - 1,
                         size: F.prevSize,
                         startIndex: F.prevIndex
                       }
                     ]), {
-                      prevIndex: Y + f,
+                      prevIndex: q + f,
                       prevSize: it2,
                       ranges: dt
                     };
@@ -32050,7 +32050,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           n
         );
         const b = ht(
-          x$1(
+          S(
             i2,
             N(v, I),
             E(([f, { offsetTree: d }, y]) => {
@@ -32060,7 +32060,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           )
         );
         return O(
-          x$1(
+          S(
             i2,
             N(v, I),
             E(([f, d, y]) => {
@@ -32068,18 +32068,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 if (j(d.sizeTree))
                   return d;
                 let k = jt();
-                const L = ot(h);
+                const L = ot(g);
                 let z = 0, _ = 0, J = 0;
                 for (; z < -f; ) {
                   J = L[_];
                   const F = L[_ + 1] - J - 1;
                   _++, z += F + 1;
                 }
-                if (k = Gt$1(d.sizeTree).reduce((F, { k: Y, v: it2 }) => pt(F, Math.max(0, Y + f), it2), k), z !== -f) {
+                if (k = Gt$1(d.sizeTree).reduce((F, { k: q, v: it2 }) => pt(F, Math.max(0, q + f), it2), k), z !== -f) {
                   const F = re(d.sizeTree, J);
                   k = pt(k, 0, F);
-                  const Y = wt(d.sizeTree, -f + 1)[1];
-                  k = pt(k, 1, Y);
+                  const q = wt(d.sizeTree, -f + 1)[1];
+                  k = pt(k, 1, q);
                 }
                 return {
                   ...d,
@@ -32100,13 +32100,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         ), {
           beforeUnshiftWith: T,
           // input
-          data: g,
+          data: h,
           defaultItemSize: m,
           firstItemIndex: l,
           fixedItemSize: a,
           gap: I,
           groupIndices: c2,
-          itemSize: S,
+          itemSize: x2,
           listRefresh: u,
           shiftWith: i2,
           shiftWithOffset: b,
@@ -32133,25 +32133,25 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     const Nn = U(
       ([{ groupIndices: t2, sizes: e, totalCount: n }, { headerHeight: o, scrollTop: r2 }]) => {
-        const s = $(), i2 = $(), l = ht(x$1(s, E(Vo)));
+        const s = $(), i2 = $(), l = ht(S(s, E(Vo)));
         return O(
-          x$1(
+          S(
             l,
             E((c2) => c2.totalCount)
           ),
           n
         ), O(
-          x$1(
+          S(
             l,
             E((c2) => c2.groupIndices)
           ),
           t2
         ), O(
-          x$1(
+          S(
             rt(r2, e, o),
             A(([c2, a]) => Re$1(a)),
             E(([c2, a, m]) => wt(a.groupOffsetTree, Math.max(c2 - m, 0), "v")[0]),
-            Z$1(),
+            Y(),
             E((c2) => [c2])
           ),
           i2
@@ -32160,11 +32160,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       X(Et, at)
     ), Pt = U(
       ([{ log: t2 }]) => {
-        const e = C$1(false), n = ht(
-          x$1(
+        const e = w(false), n = ht(
+          S(
             e,
             A((o) => o),
-            Z$1()
+            Y()
           )
         );
         return K(e, (o) => {
@@ -32189,19 +32189,19 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           scrollingInProgress: c2,
           scrollTo: a,
           smoothScrollTargetReached: m,
-          viewportHeight: S
+          viewportHeight: x2
         },
-        { log: g }
+        { log: h }
       ]) => {
-        const I = $(), w = $(), v = C$1(0);
-        let h = null, p = null, u = null;
+        const I = $(), C2 = $(), v = w(0);
+        let g = null, p = null, u = null;
         function T() {
-          h && (h(), h = null), u && (u(), u = null), p && (clearTimeout(p), p = null), G(c2, false);
+          g && (g(), g = null), u && (u(), u = null), p && (clearTimeout(p), p = null), G(c2, false);
         }
         return O(
-          x$1(
+          S(
             I,
-            N(n, S, o, v, l, i2, g),
+            N(n, x2, o, v, l, i2, h),
             N(t2, s, r2),
             E(
               ([
@@ -32210,21 +32210,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 J,
                 nt
               ]) => {
-                const F = Dn(b), { align: Y, behavior: it2, offset: dt } = F, St = y - 1, ft = _n(F, f, St);
+                const F = Dn(b), { align: q, behavior: it2, offset: dt } = F, St = y - 1, ft = _n(F, f, St);
                 let ut = ie$2(ft, f.offsetTree, _) + k;
-                Y === "end" ? (ut += J + wt(f.sizeTree, ft)[1] - d + nt, ft === St && (ut += L)) : Y === "center" ? ut += (J + wt(f.sizeTree, ft)[1] - d + nt) / 2 : ut -= B, dt && (ut += dt);
+                q === "end" ? (ut += J + wt(f.sizeTree, ft)[1] - d + nt, ft === St && (ut += L)) : q === "center" ? ut += (J + wt(f.sizeTree, ft)[1] - d + nt) / 2 : ut -= B, dt && (ut += dt);
                 const At = (xt) => {
-                  T(), xt ? (z("retrying to scroll to", { location: b }, mt.DEBUG), G(I, b)) : (G(w, true), z("list did not change, scroll successful", {}, mt.DEBUG));
+                  T(), xt ? (z("retrying to scroll to", { location: b }, mt.DEBUG), G(I, b)) : (G(C2, true), z("list did not change, scroll successful", {}, mt.DEBUG));
                 };
                 if (T(), it2 === "smooth") {
                   let xt = false;
                   u = K(e, (Xt) => {
                     xt = xt || Xt;
-                  }), h = Tt(m, () => {
+                  }), g = Tt(m, () => {
                     At(xt);
                   });
                 } else
-                  h = Tt(x$1(e, Ao(150)), At);
+                  g = Tt(S(e, Ao(150)), At);
                 return p = setTimeout(() => {
                   T();
                 }, 1200), G(c2, true), z("scrolling from index to", { behavior: it2, index: ft, top: ut }, mt.DEBUG), { behavior: it2, top: ut };
@@ -32233,7 +32233,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           ),
           a
         ), {
-          scrollTargetReached: w,
+          scrollTargetReached: C2,
           scrollToIndex: I,
           topListHeight: v
         };
@@ -32262,28 +32262,28 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     const ue = U(
       ([{ defaultItemSize: t2, listRefresh: e, sizes: n }, { scrollTop: o }, { scrollTargetReached: r2, scrollToIndex: s }, { didMount: i2 }]) => {
-        const l = C$1(true), c2 = C$1(0), a = C$1(true);
+        const l = w(true), c2 = w(0), a = w(true);
         return O(
-          x$1(
+          S(
             i2,
             N(c2),
-            A(([m, S]) => !!S),
+            A(([m, x2]) => !!x2),
             Rt(false)
           ),
           l
         ), O(
-          x$1(
+          S(
             i2,
             N(c2),
-            A(([m, S]) => !!S),
+            A(([m, x2]) => !!x2),
             Rt(false)
           ),
           a
         ), K(
-          x$1(
+          S(
             rt(e, i2),
             N(l, n, t2, a),
-            A(([[, m], S, { sizeTree: g }, I, w]) => m && (!j(g) || We(I)) && !S && !w),
+            A(([[, m], x2, { sizeTree: h }, I, C2]) => m && (!j(h) || We(I)) && !x2 && !C2),
             N(c2)
           ),
           ([, m]) => {
@@ -32317,26 +32317,26 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         viewportHeight: 0
       }
     }, Go = 0, ae = U(([{ footerHeight: t2, headerHeight: e, scrollBy: n, scrollContainerState: o, scrollTop: r2, viewportHeight: s }]) => {
-      const i2 = C$1(false), l = C$1(true), c2 = $(), a = $(), m = C$1(4), S = C$1(Go), g = ct(
-        x$1(
-          Le(x$1(V(r2), Dt(1), Rt(true)), x$1(V(r2), Dt(1), Rt(false), dn(100))),
-          Z$1()
+      const i2 = w(false), l = w(true), c2 = $(), a = $(), m = w(4), x2 = w(Go), h = ct(
+        S(
+          Le(S(V(r2), Dt(1), Rt(true)), S(V(r2), Dt(1), Rt(false), dn(100))),
+          Y()
         ),
         false
       ), I = ct(
-        x$1(Le(x$1(n, Rt(true)), x$1(n, Rt(false), dn(200))), Z$1()),
+        S(Le(S(n, Rt(true)), S(n, Rt(false), dn(200))), Y()),
         false
       );
       O(
-        x$1(
-          rt(V(r2), V(S)),
+        S(
+          rt(V(r2), V(x2)),
           E(([u, T]) => u <= T),
-          Z$1()
+          Y()
         ),
         l
-      ), O(x$1(l, kt(50)), a);
-      const w = ht(
-        x$1(
+      ), O(S(l, kt(50)), a);
+      const C2 = ht(
+        S(
           rt(o, V(s), V(e), V(t2), V(m)),
           bt((u, [{ scrollHeight: T, scrollTop: b }, f, d, y, B]) => {
             const k = b + f - T > -B, L = {
@@ -32360,10 +32360,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               state: L
             };
           }, Wo),
-          Z$1((u, T) => u && u.atBottom === T.atBottom)
+          Y((u, T) => u && u.atBottom === T.atBottom)
         )
       ), v = ct(
-        x$1(
+        S(
           o,
           bt(
             (u, { scrollHeight: T, scrollTop: b, viewportHeight: f }) => {
@@ -32397,55 +32397,55 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         0
       );
       O(
-        x$1(
-          w,
+        S(
+          C2,
           E((u) => u.atBottom)
         ),
         i2
-      ), O(x$1(i2, kt(50)), c2);
-      const h = C$1(te);
+      ), O(S(i2, kt(50)), c2);
+      const g = w(te);
       O(
-        x$1(
+        S(
           o,
           E(({ scrollTop: u }) => u),
-          Z$1(),
+          Y(),
           bt(
             (u, T) => ot(I) ? { direction: u.direction, prevScrollTop: T } : { direction: T < u.prevScrollTop ? le$1 : te, prevScrollTop: T },
             { direction: te, prevScrollTop: 0 }
           ),
           E((u) => u.direction)
         ),
-        h
-      ), O(x$1(o, kt(50), Rt(Mo)), h);
-      const p = C$1(0);
+        g
+      ), O(S(o, kt(50), Rt(Mo)), g);
+      const p = w(0);
       return O(
-        x$1(
-          g,
+        S(
+          h,
           A((u) => !u),
           Rt(0)
         ),
         p
       ), O(
-        x$1(
+        S(
           r2,
           kt(100),
-          N(g),
+          N(h),
           A(([u, T]) => !!T),
           bt(([u, T], [b]) => [T, b], [0, 0]),
           E(([u, T]) => T - u)
         ),
         p
       ), {
-        atBottomState: w,
+        atBottomState: C2,
         atBottomStateChange: c2,
         atBottomThreshold: m,
         atTopStateChange: a,
-        atTopThreshold: S,
+        atTopThreshold: x2,
         isAtBottom: i2,
         isAtTop: l,
-        isScrolling: g,
+        isScrolling: h,
         lastJumpDueToItemResize: v,
-        scrollDirection: h,
+        scrollDirection: g,
         scrollVelocity: p
       };
     }, X(at)), xe = "top", Te = "bottom", hn = "none";
@@ -32458,8 +32458,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     const je = U(
       ([{ deviation: t2, fixedHeaderHeight: e, headerHeight: n, scrollTop: o, viewportHeight: r2 }]) => {
-        const s = $(), i2 = C$1(0), l = C$1(0), c2 = C$1(0), a = ct(
-          x$1(
+        const s = $(), i2 = w(0), l = w(0), c2 = w(0), a = ct(
+          S(
             rt(
               V(o),
               V(r2),
@@ -32474,26 +32474,26 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             E(
               ([
                 m,
-                S,
-                g,
-                [I, w],
-                v,
+                x2,
                 h,
+                [I, C2],
+                v,
+                g,
                 p,
                 u,
                 T
               ]) => {
-                const b = m - u, f = h + p, d = Math.max(g - b, 0);
+                const b = m - u, f = g + p, d = Math.max(h - b, 0);
                 let y = hn;
                 const B = In(T, xe), k = In(T, Te);
-                return I -= u, I += g + p, w += g + p, w -= u, I > m + f - B && (y = le$1), w < m - d + S + k && (y = te), y !== hn ? [
-                  Math.max(b - g - gn(v, xe, y) - B, 0),
-                  b - d - p + S + gn(v, Te, y) + k
+                return I -= u, I += h + p, C2 += h + p, C2 -= u, I > m + f - B && (y = le$1), C2 < m - d + x2 + k && (y = te), y !== hn ? [
+                  Math.max(b - h - gn(v, xe, y) - B, 0),
+                  b - d - p + x2 + gn(v, Te, y) + k
                 ] : null;
               }
             ),
             A((m) => m != null),
-            Z$1(se)
+            Y(se)
           ),
           [0, 0]
         );
@@ -32539,16 +32539,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         const v = t2[t2.length - 1];
         m = v.offset + v.size;
       }
-      const S = n - i2, g = l + S * c2 + (S - 1) * o, I = a, w = g - m;
+      const x2 = n - i2, h = l + x2 * c2 + (x2 - 1) * o, I = a, C2 = h - m;
       return {
         bottom: m,
         firstItemIndex: s,
         items: Sn(t2, r2, s),
-        offsetBottom: w,
+        offsetBottom: C2,
         offsetTop: a,
         top: I,
         topItems: Sn(e, r2, s),
-        topListHeight: e.reduce((v, h) => h.size + v, 0),
+        topListHeight: e.reduce((v, g) => g.size + v, 0),
         totalCount: n
       };
     }
@@ -32560,9 +32560,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             break;
           i2++;
         }
-      const l = t2 + i2, c2 = Ke(e, l), a = Array.from({ length: l }).map((m, S) => ({
-        data: s[S + c2],
-        index: S + c2,
+      const l = t2 + i2, c2 = Ke(e, l), a = Array.from({ length: l }).map((m, x2) => ({
+        data: s[x2 + c2],
+        index: x2 + c2,
         offset: 0,
         size: 0
       }));
@@ -32600,18 +32600,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         s,
         { listBoundary: i2, topListHeight: l, visibleRange: c2 },
         { initialTopMostItemIndex: a, scrolledToInitialItem: m },
-        { topListHeight: S },
-        g,
+        { topListHeight: x2 },
+        h,
         { didMount: I },
-        { recalcInProgress: w }
+        { recalcInProgress: C2 }
       ]) => {
-        const v = C$1([]), h = C$1(0), p = $();
+        const v = w([]), g = w(0), p = $();
         O(s.topItemsIndexes, v);
         const u = ct(
-          x$1(
+          S(
             rt(
               I,
-              w,
+              C2,
               V(c2, se),
               V(r2),
               V(o),
@@ -32640,18 +32640,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 nt,
                 F
               ]) => {
-                const Y = k, { offsetTree: it2, sizeTree: dt } = Y, St = ot(h);
+                const q = k, { offsetTree: it2, sizeTree: dt } = q, St = ot(g);
                 if (B === 0)
                   return { ...Be, totalCount: B };
                 if (d === 0 && y === 0)
                   return St === 0 ? { ...Be, totalCount: B } : Un(St, L, k, J, nt, F || []);
                 if (j(dt))
                   return St > 0 ? null : Ie(
-                    _o(Ke(L, B), Y, F),
+                    _o(Ke(L, B), q, F),
                     [],
                     B,
                     nt,
-                    Y,
+                    q,
                     J
                   );
                 const ft = [];
@@ -32665,7 +32665,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                   }
                 }
                 if (!z)
-                  return Ie([], ft, B, nt, Y, J);
+                  return Ie([], ft, B, nt, q, J);
                 const ut = _.length > 0 ? _[_.length - 1] + 1 : 0, At = Bo(it2, d, y, ut);
                 if (At.length === 0)
                   return null;
@@ -32685,61 +32685,61 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                       Mt.push({ data: F == null ? void 0 : F[tt], index: tt, offset: R, size: Q }), R += Q + nt;
                   }
                 });
-                return Ie(Xt, ft, B, nt, Y, J);
+                return Ie(Xt, ft, B, nt, q, J);
               }
             ),
             //@ts-expect-error filter needs to be fixed
             A((d) => d !== null),
-            Z$1()
+            Y()
           ),
           Be
         );
         O(
-          x$1(
+          S(
             t2,
             A(We),
             E((d) => d == null ? void 0 : d.length)
           ),
           r2
         ), O(
-          x$1(
+          S(
             u,
             E((d) => d.topListHeight)
           ),
-          S
-        ), O(S, l), O(
-          x$1(
+          x2
+        ), O(x2, l), O(
+          S(
             u,
             E((d) => [d.top, d.bottom])
           ),
           i2
         ), O(
-          x$1(
+          S(
             u,
             E((d) => d.items)
           ),
           p
         );
         const T = ht(
-          x$1(
+          S(
             u,
             A(({ items: d }) => d.length > 0),
             N(r2, t2),
             A(([{ items: d }, y]) => d[d.length - 1].originalIndex === y - 1),
             E(([, d, y]) => [d - 1, y]),
-            Z$1(se),
+            Y(se),
             E(([d]) => d)
           )
         ), b = ht(
-          x$1(
+          S(
             u,
             kt(200),
             A(({ items: d, topItems: y }) => d.length > 0 && d[0].originalIndex === y.length),
             E(({ items: d }) => d[0].index),
-            Z$1()
+            Y()
           )
         ), f = ht(
-          x$1(
+          S(
             u,
             A(({ items: d }) => d.length > 0),
             E(({ items: d }) => {
@@ -32753,10 +32753,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 startIndex: d[y].index
               };
             }),
-            Z$1(Mn)
+            Y(Mn)
           )
         );
-        return { endReached: T, initialItemCount: h, itemsRendered: p, listState: u, rangeChanged: f, startReached: b, topItemsIndexes: v, ...g };
+        return { endReached: T, initialItemCount: g, itemsRendered: p, listState: u, rangeChanged: f, startReached: b, topItemsIndexes: v, ...h };
       },
       X(
         Et,
@@ -32772,9 +32772,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ), Kn = U(
       ([{ fixedFooterHeight: t2, fixedHeaderHeight: e, footerHeight: n, headerHeight: o }, { listState: r2 }]) => {
         const s = $(), i2 = ct(
-          x$1(
+          S(
             rt(n, t2, o, e, r2),
-            E(([l, c2, a, m, S]) => l + c2 + a + m + S.offsetBottom + S.bottom)
+            E(([l, c2, a, m, x2]) => l + c2 + a + m + x2.offsetBottom + x2.bottom)
           ),
           0
         );
@@ -32784,13 +32784,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       { singleton: true }
     ), No = U(
       ([{ viewportHeight: t2 }, { totalListHeight: e }]) => {
-        const n = C$1(false), o = ct(
-          x$1(
+        const n = w(false), o = ct(
+          S(
             rt(n, t2, e),
             A(([r2]) => r2),
             E(([, r2, s]) => Math.max(0, r2 - s)),
             kt(0),
-            Z$1()
+            Y()
           ),
           0
         );
@@ -32799,7 +32799,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       X(at, Kn),
       { singleton: true }
     ), jn = U(() => ({
-      context: C$1(null)
+      context: w(null)
     })), Do = ({
       itemBottom: t2,
       itemTop: e,
@@ -32814,12 +32814,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       ]) => {
         const m = $();
         return O(
-          x$1(
+          S(
             m,
             N(e, c2, n, s, r2, o, l),
             N(t2),
-            E(([[S, g, I, w, v, h, p, u], T]) => {
-              const { align: b, behavior: f, calculateViewLocation: d = Do, done: y, ...B } = S, k = _n(S, g, w - 1), L = ie$2(k, g.offsetTree, T) + v + h, z = L + wt(g.sizeTree, k)[1], _ = u + h, J = u + I - p, nt = d({
+            E(([[x2, h, I, C2, v, g, p, u], T]) => {
+              const { align: b, behavior: f, calculateViewLocation: d = Do, done: y, ...B } = x2, k = _n(x2, h, C2 - 1), L = ie$2(k, h.offsetTree, T) + v + g, z = L + wt(h.sizeTree, k)[1], _ = u + g, J = u + I - p, nt = d({
                 itemBottom: z,
                 itemTop: L,
                 locationParams: { align: b, behavior: f, ...B },
@@ -32827,7 +32827,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 viewportTop: _
               });
               return nt ? y && Tt(
-                x$1(
+                S(
                   i2,
                   A((F) => !F),
                   // skips the initial publish of false, and the cleanup call.
@@ -32837,7 +32837,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 y
               ) : y && y(), nt;
             }),
-            A((S) => S !== null)
+            A((x2) => x2 !== null)
           ),
           a
         ), {
@@ -32858,12 +32858,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         { scrolledToInitialItem: l },
         { didMount: c2, propsReady: a },
         { log: m },
-        { scrollingInProgress: S },
-        { context: g },
+        { scrollingInProgress: x2 },
+        { context: h },
         { scrollIntoView: I }
       ]) => {
-        const w = C$1(false), v = $();
-        let h = null;
+        const C2 = w(false), v = $();
+        let g = null;
         function p(f) {
           G(i2, {
             align: "end",
@@ -32872,9 +32872,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           });
         }
         K(
-          x$1(
-            rt(x$1(V(e), Dt(1)), c2),
-            N(V(w), s, l, S),
+          S(
+            rt(S(V(e), Dt(1)), c2),
+            N(V(C2), s, l, x2),
             E(([[f, d], y, B, k, L]) => {
               let z = d && k, _ = "auto";
               return z && (_ = $o(y, B || L), z = z && !!_), { followOutputBehavior: _, shouldFollow: z, totalCount: f };
@@ -32882,67 +32882,67 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             A(({ shouldFollow: f }) => f)
           ),
           ({ followOutputBehavior: f, totalCount: d }) => {
-            h && (h(), h = null), ot(n) ? requestAnimationFrame(() => {
+            g && (g(), g = null), ot(n) ? requestAnimationFrame(() => {
               ot(m)("following output to ", { totalCount: d }, mt.DEBUG), p(f);
-            }) : h = Tt(t2, () => {
-              ot(m)("following output to ", { totalCount: d }, mt.DEBUG), p(f), h = null;
+            }) : g = Tt(t2, () => {
+              ot(m)("following output to ", { totalCount: d }, mt.DEBUG), p(f), g = null;
             });
           }
         );
         function u(f) {
           const d = Tt(r2, (y) => {
-            f && !y.atBottom && y.notAtBottomBecause === "SIZE_INCREASED" && !h && (ot(m)("scrolling to bottom due to increased size", {}, mt.DEBUG), p("auto"));
+            f && !y.atBottom && y.notAtBottomBecause === "SIZE_INCREASED" && !g && (ot(m)("scrolling to bottom due to increased size", {}, mt.DEBUG), p("auto"));
           });
           setTimeout(d, 100);
         }
         K(
-          x$1(
-            rt(V(w), e, a),
+          S(
+            rt(V(C2), e, a),
             A(([f, , d]) => f && d),
             bt(
               ({ value: f }, [, d]) => ({ refreshed: f === d, value: d }),
               { refreshed: false, value: 0 }
             ),
             A(({ refreshed: f }) => f),
-            N(w, e)
+            N(C2, e)
           ),
           ([, f]) => {
             ot(l) && u(f !== false);
           }
         ), K(v, () => {
-          u(ot(w) !== false);
-        }), K(rt(V(w), r2), ([f, d]) => {
+          u(ot(C2) !== false);
+        }), K(rt(V(C2), r2), ([f, d]) => {
           f && !d.atBottom && d.notAtBottomBecause === "VIEWPORT_HEIGHT_DECREASING" && p("auto");
         });
-        const T = C$1(null), b = $();
+        const T = w(null), b = $();
         return O(
           Le(
-            x$1(
+            S(
               V(o),
               E((f) => {
                 var d;
                 return (d = f == null ? void 0 : f.length) != null ? d : 0;
               })
             ),
-            x$1(V(e))
+            S(V(e))
           ),
           b
         ), K(
-          x$1(
-            rt(x$1(b, Dt(1)), c2),
-            N(V(T), l, S, g),
+          S(
+            rt(S(b, Dt(1)), c2),
+            N(V(T), l, x2, h),
             E(([[f, d], y, B, k, L]) => d && B && (y == null ? void 0 : y({ context: L, totalCount: f, scrollingInProgress: k }))),
             A((f) => !!f),
             kt(0)
           ),
           (f) => {
-            h && (h(), h = null), ot(n) ? requestAnimationFrame(() => {
+            g && (g(), g = null), ot(n) ? requestAnimationFrame(() => {
               ot(m)("scrolling into view", {}), G(I, f);
-            }) : h = Tt(t2, () => {
-              ot(m)("scrolling into view", {}), G(I, f), h = null;
+            }) : g = Tt(t2, () => {
+              ot(m)("scrolling into view", {}), G(I, f), g = null;
             });
           }
-        ), { autoscrollToBottom: v, followOutput: w, scrollIntoViewOnChange: T };
+        ), { autoscrollToBottom: v, followOutput: C2, scrollIntoViewOnChange: T };
       },
       X(
         Et,
@@ -32957,12 +32957,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       )
     ), Ko = U(
       ([{ data: t2, firstItemIndex: e, gap: n, sizes: o }, { initialTopMostItemIndex: r2 }, { initialItemCount: s, listState: i2 }, { didMount: l }]) => (O(
-        x$1(
+        S(
           l,
           N(s),
           A(([, c2]) => c2 !== 0),
           N(r2, o, e, n, t2),
-          E(([[, c2], a, m, S, g, I = []]) => Un(c2, a, m, S, g, I))
+          E(([[, c2], a, m, x2, h, I = []]) => Un(c2, a, m, x2, h, I))
         ),
         i2
       ), {}),
@@ -32970,9 +32970,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       { singleton: true }
     ), jo = U(
       ([{ didMount: t2 }, { scrollTo: e }, { listState: n }]) => {
-        const o = C$1(0);
+        const o = w(0);
         return K(
-          x$1(
+          S(
             t2,
             N(o),
             A(([, r2]) => r2 !== 0),
@@ -32980,7 +32980,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           ),
           (r2) => {
             Tt(
-              x$1(
+              S(
                 n,
                 Dt(1),
                 A((s) => s.items.length > 1)
@@ -33000,9 +33000,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       { singleton: true }
     ), Yn = U(
       ([{ scrollVelocity: t2 }]) => {
-        const e = C$1(false), n = $(), o = C$1(false);
+        const e = w(false), n = $(), o = w(false);
         return O(
-          x$1(
+          S(
             t2,
             N(o, e, n),
             A(([r2, s]) => !!s),
@@ -33015,11 +33015,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 return true;
               return i2;
             }),
-            Z$1()
+            Y()
           ),
           e
         ), K(
-          x$1(rt(e, t2, n), N(o)),
+          S(rt(e, t2, n), N(o)),
           ([[r2, s, i2], l]) => {
             r2 && l && l.change && l.change(s, i2);
           }
@@ -33028,9 +33028,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       X(ae),
       { singleton: true }
     ), qe = U(([{ scrollContainerState: t2, scrollTo: e }]) => {
-      const n = $(), o = $(), r2 = $(), s = C$1(false), i2 = C$1(void 0);
+      const n = $(), o = $(), r2 = $(), s = w(false), i2 = w(void 0);
       return O(
-        x$1(
+        S(
           rt(n, o),
           E(([{ scrollHeight: l, scrollTop: c2, viewportHeight: a }, { offsetTop: m }]) => ({
             scrollHeight: l,
@@ -33040,7 +33040,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         ),
         t2
       ), O(
-        x$1(
+        S(
           e,
           N(o),
           E(([l, { offsetTop: c2 }]) => ({
@@ -33067,22 +33067,22 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         { didMount: s },
         { useWindowScroll: i2, windowScrollContainerState: l, windowViewportRect: c2 }
       ]) => {
-        const a = $(), m = C$1(void 0), S = C$1(null), g = C$1(null);
-        return O(l, S), O(c2, g), K(
-          x$1(
+        const a = $(), m = w(void 0), x2 = w(null), h = w(null);
+        return O(l, x2), O(c2, h), K(
+          S(
             a,
-            N(e, o, i2, S, g, n)
+            N(e, o, i2, x2, h, n)
           ),
-          ([I, w, v, h, p, u, T]) => {
-            const b = Fo(w.sizeTree);
-            h && p !== null && u !== null && (v = p.scrollTop - u.offsetTop), v -= T, I({ ranges: b, scrollTop: v });
+          ([I, C2, v, g, p, u, T]) => {
+            const b = Fo(C2.sizeTree);
+            g && p !== null && u !== null && (v = p.scrollTop - u.offsetTop), v -= T, I({ ranges: b, scrollTop: v });
           }
-        ), O(x$1(m, A(We), E(Yo)), r2), O(
-          x$1(
+        ), O(S(m, A(We), E(Yo)), r2), O(
+          S(
             s,
             N(m),
             A(([, I]) => I !== void 0),
-            Z$1(),
+            Y(),
             E(([, I]) => I.ranges)
           ),
           t2
@@ -33097,9 +33097,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return { align: "start", index: 0, offset: t2.scrollTop };
     }
     const Zo = U(([{ topItemsIndexes: t2 }]) => {
-      const e = C$1(0);
+      const e = w(0);
       return O(
-        x$1(
+        S(
           e,
           A((n) => n >= 0),
           E((n) => Array.from({ length: n }).map((o, r2) => r2))
@@ -33116,12 +33116,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         { deviation: t2, scrollBy: e, scrollingInProgress: n, scrollTop: o },
         { isAtBottom: r2, isScrolling: s, lastJumpDueToItemResize: i2, scrollDirection: l },
         { listState: c2 },
-        { beforeUnshiftWith: a, gap: m, shiftWithOffset: S, sizes: g },
+        { beforeUnshiftWith: a, gap: m, shiftWithOffset: x2, sizes: h },
         { log: I },
-        { recalcInProgress: w }
+        { recalcInProgress: C2 }
       ]) => {
         const v = ht(
-          x$1(
+          S(
             c2,
             N(i2),
             bt(
@@ -33133,34 +33133,34 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               [0, [], 0, 0]
             ),
             A(([p]) => p !== 0),
-            N(o, l, n, r2, I, w),
+            N(o, l, n, r2, I, C2),
             A(([, p, u, T, , , b]) => !b && !T && p !== 0 && u === le$1),
             E(([[p], , , , , u]) => (u("Upward scrolling compensation", { amount: p }, mt.DEBUG), p))
           )
         );
-        function h(p) {
+        function g(p) {
           p > 0 ? (G(e, { behavior: "auto", top: -p }), G(t2, 0)) : (G(t2, 0), G(e, { behavior: "auto", top: -p }));
         }
-        return K(x$1(v, N(t2, s)), ([p, u, T]) => {
-          T && Xo() ? G(t2, u - p) : h(-p);
+        return K(S(v, N(t2, s)), ([p, u, T]) => {
+          T && Xo() ? G(t2, u - p) : g(-p);
         }), K(
-          x$1(
-            rt(ct(s, false), t2, w),
+          S(
+            rt(ct(s, false), t2, C2),
             A(([p, u, T]) => !p && !T && u !== 0),
             E(([p, u]) => u),
             kt(1)
           ),
-          h
+          g
         ), O(
-          x$1(
-            S,
+          S(
+            x2,
             E((p) => ({ top: -p }))
           ),
           e
         ), K(
-          x$1(
+          S(
             a,
-            N(g, m),
+            N(h, m),
             E(([p, { groupIndices: u, lastSize: T, sizeTree: b }, f]) => {
               function d(y) {
                 return y * (T + f);
@@ -33183,7 +33183,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           (p) => {
             G(t2, p), requestAnimationFrame(() => {
               G(e, { top: p }), requestAnimationFrame(() => {
-                G(t2, 0), G(w, false);
+                G(t2, 0), G(C2, false);
               });
             });
           }
@@ -33243,11 +33243,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           sizes: c2,
           statefulTotalCount: a,
           totalCount: m,
-          trackItemSizes: S
+          trackItemSizes: x2
         },
-        { initialItemFinalLocationReached: g, initialTopMostItemIndex: I, scrolledToInitialItem: w },
+        { initialItemFinalLocationReached: h, initialTopMostItemIndex: I, scrolledToInitialItem: C2 },
         v,
-        h,
+        g,
         p,
         { listState: u, topItemsIndexes: T, ...b },
         { scrollToIndex: f },
@@ -33256,7 +33256,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         { groupCounts: B },
         k
       ]) => (O(b.rangeChanged, k.scrollSeekRangeChanged), O(
-        x$1(
+        S(
           k.windowViewportRect,
           E((L) => L.visibleHeight)
         ),
@@ -33268,9 +33268,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         fixedItemHeight: o,
         gap: r2,
         groupCounts: B,
-        initialItemFinalLocationReached: g,
+        initialItemFinalLocationReached: h,
         initialTopMostItemIndex: I,
-        scrolledToInitialItem: w,
+        scrolledToInitialItem: C2,
         sizeRanges: l,
         topItemCount: y,
         topItemsIndexes: T,
@@ -33283,14 +33283,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         scrollToIndex: f,
         // output
         statefulTotalCount: a,
-        trackItemSizes: S,
+        trackItemSizes: x2,
         // exported from stateFlagsSystem
         ...b,
         // the bag of IO from featureGroup1System
         ...k,
         ...v,
         sizes: c2,
-        ...h
+        ...g
       }),
       X(
         Et,
@@ -33341,7 +33341,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       function m(p) {
         return i2.reduce((u, T) => (u[T] = Io(p[e.events[T]]), u), {});
       }
-      const S = H.forwardRef((p, u) => {
+      const x2 = H.forwardRef((p, u) => {
         const { children: T, ...b } = p, [f] = H.useState(() => ve(xo(t2), (B) => {
           c2(B, b);
         })), [d] = H.useState(an(m, f));
@@ -33356,7 +33356,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }), H.useImperativeHandle(u, un(a(f)));
         const y = n;
         return /* @__PURE__ */ jsxRuntimeExports.jsx(l.Provider, { value: f, children: n ? /* @__PURE__ */ jsxRuntimeExports.jsx(y, { ...tr([...o, ...r2, ...i2], b), children: T }) : T });
-      }), g = (p) => {
+      }), h = (p) => {
         const u = H.useContext(l);
         return H.useCallback(
           (T) => {
@@ -33374,7 +33374,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           () => ot(T),
           () => ot(T)
         );
-      }, w = (p) => {
+      }, C2 = (p) => {
         const T = H.useContext(l)[p], [b, f] = H.useState(an(ot, T));
         return pe(
           () => K(T, (d) => {
@@ -33382,15 +33382,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }),
           [T, b]
         ), b;
-      }, v = H.version.startsWith("18") ? I : w;
+      }, v = H.version.startsWith("18") ? I : C2;
       return {
-        Component: S,
+        Component: x2,
         useEmitter: (p, u) => {
           const b = H.useContext(l)[p];
           pe(() => K(b, u), [u, b]);
         },
         useEmitterValue: v,
-        usePublisher: g
+        usePublisher: h
       };
     }
     const be = H.createContext(void 0), Jn = H.createContext(void 0), Qn = typeof document < "u" ? H.useLayoutEffect : H.useEffect;
@@ -33402,54 +33402,54 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     function to(t2, e, n, o = Yt, r2, s) {
       const i2 = H.useRef(null), l = H.useRef(null), c2 = H.useRef(null), a = H.useCallback(
-        (g) => {
-          let I, w, v;
-          const h = g.target;
-          if (er(h) || ke(h)) {
-            const u = ke(h) ? h : h.defaultView;
-            v = s ? u.scrollX : u.scrollY, I = s ? u.document.documentElement.scrollWidth : u.document.documentElement.scrollHeight, w = s ? u.innerWidth : u.innerHeight;
+        (h) => {
+          let I, C2, v;
+          const g = h.target;
+          if (er(g) || ke(g)) {
+            const u = ke(g) ? g : g.defaultView;
+            v = s ? u.scrollX : u.scrollY, I = s ? u.document.documentElement.scrollWidth : u.document.documentElement.scrollHeight, C2 = s ? u.innerWidth : u.innerHeight;
           } else
-            v = s ? h.scrollLeft : h.scrollTop, I = s ? h.scrollWidth : h.scrollHeight, w = s ? h.offsetWidth : h.offsetHeight;
+            v = s ? g.scrollLeft : g.scrollTop, I = s ? g.scrollWidth : g.scrollHeight, C2 = s ? g.offsetWidth : g.offsetHeight;
           const p = () => {
             t2({
               scrollHeight: I,
               scrollTop: Math.max(v, 0),
-              viewportHeight: w
+              viewportHeight: C2
             });
           };
-          g.suppressFlushSync ? p() : ao.flushSync(p), l.current !== null && (v === l.current || v <= 0 || v === I - w) && (l.current = null, e(true), c2.current && (clearTimeout(c2.current), c2.current = null));
+          h.suppressFlushSync ? p() : ao.flushSync(p), l.current !== null && (v === l.current || v <= 0 || v === I - C2) && (l.current = null, e(true), c2.current && (clearTimeout(c2.current), c2.current = null));
         },
         [t2, e, s]
       );
       H.useEffect(() => {
-        const g = r2 || i2.current;
-        return o(r2 || i2.current), a({ suppressFlushSync: true, target: g }), g.addEventListener("scroll", a, { passive: true }), () => {
-          o(null), g.removeEventListener("scroll", a);
+        const h = r2 || i2.current;
+        return o(r2 || i2.current), a({ suppressFlushSync: true, target: h }), h.addEventListener("scroll", a, { passive: true }), () => {
+          o(null), h.removeEventListener("scroll", a);
         };
       }, [i2, a, n, o, r2]);
-      function m(g) {
+      function m(h) {
         const I = i2.current;
         if (!I || (s ? "offsetWidth" in I && I.offsetWidth === 0 : "offsetHeight" in I && I.offsetHeight === 0))
           return;
-        const w = g.behavior === "smooth";
-        let v, h, p;
-        ke(I) ? (h = Math.max(
+        const C2 = h.behavior === "smooth";
+        let v, g, p;
+        ke(I) ? (g = Math.max(
           vt$1(I.document.documentElement, s ? "width" : "height"),
           s ? I.document.documentElement.scrollWidth : I.document.documentElement.scrollHeight
-        ), v = s ? I.innerWidth : I.innerHeight, p = s ? window.scrollX : window.scrollY) : (h = I[s ? "scrollWidth" : "scrollHeight"], v = vt$1(I, s ? "width" : "height"), p = I[s ? "scrollLeft" : "scrollTop"]);
-        const u = h - v;
-        if (g.top = Math.ceil(Math.max(Math.min(u, g.top), 0)), $n(v, h) || g.top === p) {
-          t2({ scrollHeight: h, scrollTop: p, viewportHeight: v }), w && e(true);
+        ), v = s ? I.innerWidth : I.innerHeight, p = s ? window.scrollX : window.scrollY) : (g = I[s ? "scrollWidth" : "scrollHeight"], v = vt$1(I, s ? "width" : "height"), p = I[s ? "scrollLeft" : "scrollTop"]);
+        const u = g - v;
+        if (h.top = Math.ceil(Math.max(Math.min(u, h.top), 0)), $n(v, g) || h.top === p) {
+          t2({ scrollHeight: g, scrollTop: p, viewportHeight: v }), C2 && e(true);
           return;
         }
-        w ? (l.current = g.top, c2.current && clearTimeout(c2.current), c2.current = setTimeout(() => {
+        C2 ? (l.current = h.top, c2.current && clearTimeout(c2.current), c2.current = setTimeout(() => {
           c2.current = null, l.current = null, e(true);
-        }, 1e3)) : l.current = null, s && (g = { behavior: g.behavior, left: g.top }), I.scrollTo(g);
+        }, 1e3)) : l.current = null, s && (h = { behavior: h.behavior, left: h.top }), I.scrollTo(h);
       }
-      function S(g) {
-        s && (g = { behavior: g.behavior, left: g.top }), i2.current.scrollBy(g);
+      function x2(h) {
+        s && (h = { behavior: h.behavior, left: h.top }), i2.current.scrollBy(h);
       }
-      return { scrollByCallback: S, scrollerRef: i2, scrollToCallback: m };
+      return { scrollByCallback: x2, scrollerRef: i2, scrollToCallback: m };
     }
     const Fe = "-webkit-sticky", Tn = "sticky", Ze = Zn(() => {
       if (typeof document > "u")
@@ -33461,11 +33461,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return t2;
     }
     const nr = /* @__PURE__ */ U(() => {
-      const t2 = C$1((l) => `Item ${l}`), e = C$1((l) => `Group ${l}`), n = C$1({}), o = C$1(Xe), r2 = C$1("div"), s = C$1(Yt), i2 = (l, c2 = null) => ct(
-        x$1(
+      const t2 = w((l) => `Item ${l}`), e = w((l) => `Group ${l}`), n = w({}), o = w(Xe), r2 = w("div"), s = w(Yt), i2 = (l, c2 = null) => ct(
+        S(
           n,
           E((a) => a[l]),
-          Z$1()
+          Y()
         ),
         c2
       );
@@ -33490,15 +33490,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       ([t2, e]) => ({ ...t2, ...e }),
       X(Xn, nr)
     ), rr = ({ height: t2 }) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { height: t2 } }), sr = { overflowAnchor: "none", position: Ze(), zIndex: 1 }, eo = { overflowAnchor: "none" }, ir = { ...eo, display: "inline-block", height: "100%" }, Cn = /* @__PURE__ */ H.memo(function({ showTopList: e = false }) {
-      const n = M("listState"), o = gt$3("sizeRanges"), r2 = M("useWindowScroll"), s = M("customScrollParent"), i2 = gt$3("windowScrollContainerState"), l = gt$3("scrollContainerState"), c2 = s || r2 ? i2 : l, a = M("itemContent"), m = M("context"), S = M("groupContent"), g = M("trackItemSizes"), I = M("itemSize"), w = M("log"), v = gt$3("gap"), h = M("horizontalDirection"), { callbackRef: p } = On(
+      const n = M("listState"), o = gt$3("sizeRanges"), r2 = M("useWindowScroll"), s = M("customScrollParent"), i2 = gt$3("windowScrollContainerState"), l = gt$3("scrollContainerState"), c2 = s || r2 ? i2 : l, a = M("itemContent"), m = M("context"), x2 = M("groupContent"), h = M("trackItemSizes"), I = M("itemSize"), C2 = M("log"), v = gt$3("gap"), g = M("horizontalDirection"), { callbackRef: p } = On(
         o,
         I,
-        g,
+        h,
         e ? Yt : c2,
-        w,
+        C2,
         v,
         s,
-        h,
+        g,
         M("skipAnimationFrameInResizeObserver")
       ), [u, T] = H.useState(0);
       tn("deviation", (F) => {
@@ -33506,7 +33506,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       });
       const b = M("EmptyPlaceholder"), f = M("ScrollSeekPlaceholder") || rr, d = M("ListComponent"), y = M("ItemComponent"), B = M("GroupComponent"), k = M("computeItemKey"), L = M("isSeeking"), z = M("groupIndices").length > 0, _ = M("alignToBottom"), J = M("initialItemFinalLocationReached"), nt = e ? {} : {
         boxSizing: "border-box",
-        ...h ? {
+        ...g ? {
           display: "inline-block",
           height: "100%",
           marginLeft: u !== 0 ? u : _ ? "auto" : 0,
@@ -33520,19 +33520,19 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         },
         ...J ? {} : { visibility: "hidden" }
       };
-      return !e && n.totalCount === 0 && b ? /* @__PURE__ */ jsxRuntimeExports.jsx(b, { ...q(b, m) }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+      return !e && n.totalCount === 0 && b ? /* @__PURE__ */ jsxRuntimeExports.jsx(b, { ...Z$1(b, m) }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
         d,
         {
-          ...q(d, m),
+          ...Z$1(d, m),
           "data-testid": e ? "virtuoso-top-item-list" : "virtuoso-item-list",
           ref: p,
           style: nt,
           children: (e ? n.topItems : n.items).map((F) => {
-            const Y = F.originalIndex, it2 = k(Y + n.firstItemIndex, F.data, m);
+            const q = F.originalIndex, it2 = k(q + n.firstItemIndex, F.data, m);
             return L ? /* @__PURE__ */ reactExports.createElement(
               f,
               {
-                ...q(f, m),
+                ...Z$1(f, m),
                 height: F.size,
                 index: F.index,
                 key: it2,
@@ -33542,25 +33542,25 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             ) : F.type === "group" ? /* @__PURE__ */ reactExports.createElement(
               B,
               {
-                ...q(B, m),
-                "data-index": Y,
+                ...Z$1(B, m),
+                "data-index": q,
                 "data-item-index": F.index,
                 "data-known-size": F.size,
                 key: it2,
                 style: sr
               },
-              S(F.index, m)
+              x2(F.index, m)
             ) : /* @__PURE__ */ reactExports.createElement(
               y,
               {
-                ...q(y, m),
+                ...Z$1(y, m),
                 ...no(y, F.data),
-                "data-index": Y,
+                "data-index": q,
                 "data-item-group-index": F.groupIndex,
                 "data-item-index": F.index,
                 "data-known-size": F.size,
                 key: it2,
-                style: h ? ir : eo
+                style: g ? ir : eo
               },
               z ? a(F.index, F.groupIndex, F.data, m) : a(F.index, F.data, m)
             );
@@ -33589,7 +33589,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       width: "100%",
       zIndex: 1
     };
-    function q(t2, e) {
+    function Z$1(t2, e) {
       if (typeof t2 != "string")
         return { context: e };
     }
@@ -33607,7 +33607,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         true,
         M("skipAnimationFrameInResizeObserver")
       ), s = M("context");
-      return e ? /* @__PURE__ */ jsxRuntimeExports.jsx(o, { ref: r2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(e, { ...q(e, s) }) }) : null;
+      return e ? /* @__PURE__ */ jsxRuntimeExports.jsx(o, { ref: r2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(e, { ...Z$1(e, s) }) }) : null;
     }), dr = /* @__PURE__ */ H.memo(function() {
       const e = M("FooterComponent"), n = gt$3("footerHeight"), o = M("HeaderFooterTag"), r2 = Ht(
         H.useMemo(
@@ -33619,55 +33619,55 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         true,
         M("skipAnimationFrameInResizeObserver")
       ), s = M("context");
-      return e ? /* @__PURE__ */ jsxRuntimeExports.jsx(o, { ref: r2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(e, { ...q(e, s) }) }) : null;
+      return e ? /* @__PURE__ */ jsxRuntimeExports.jsx(o, { ref: r2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(e, { ...Z$1(e, s) }) }) : null;
     });
     function Je({ useEmitter: t2, useEmitterValue: e, usePublisher: n }) {
-      return H.memo(function({ children: s, style: i2, ...l }) {
-        const c2 = n("scrollContainerState"), a = e("ScrollerComponent"), m = n("smoothScrollTargetReached"), S = e("scrollerRef"), g = e("context"), I = e("horizontalDirection") || false, { scrollByCallback: w, scrollerRef: v, scrollToCallback: h } = to(
-          c2,
-          m,
+      return H.memo(function({ children: s, style: i2, context: l, ...c2 }) {
+        const a = n("scrollContainerState"), m = e("ScrollerComponent"), x2 = n("smoothScrollTargetReached"), h = e("scrollerRef"), I = e("horizontalDirection") || false, { scrollByCallback: C2, scrollerRef: v, scrollToCallback: g } = to(
           a,
-          S,
+          x2,
+          m,
+          h,
           void 0,
           I
         );
-        return t2("scrollTo", h), t2("scrollBy", w), /* @__PURE__ */ jsxRuntimeExports.jsx(
-          a,
+        return t2("scrollTo", g), t2("scrollBy", C2), /* @__PURE__ */ jsxRuntimeExports.jsx(
+          m,
           {
             "data-testid": "virtuoso-scroller",
             "data-virtuoso-scroller": true,
             ref: v,
             style: { ...I ? cr : lr, ...i2 },
             tabIndex: 0,
-            ...l,
-            ...q(a, g),
+            ...c2,
+            ...Z$1(m, l),
             children: s
           }
         );
       });
     }
     function Qe({ useEmitter: t2, useEmitterValue: e, usePublisher: n }) {
-      return H.memo(function({ children: s, style: i2, ...l }) {
-        const c2 = n("windowScrollContainerState"), a = e("ScrollerComponent"), m = n("smoothScrollTargetReached"), S = e("totalListHeight"), g = e("deviation"), I = e("customScrollParent"), w = e("context"), v = H.useRef(null), h = e("scrollerRef"), { scrollByCallback: p, scrollerRef: u, scrollToCallback: T } = to(
-          c2,
-          m,
+      return H.memo(function({ children: s, style: i2, context: l, ...c2 }) {
+        const a = n("windowScrollContainerState"), m = e("ScrollerComponent"), x2 = n("smoothScrollTargetReached"), h = e("totalListHeight"), I = e("deviation"), C2 = e("customScrollParent"), v = H.useRef(null), g = e("scrollerRef"), { scrollByCallback: p, scrollerRef: u, scrollToCallback: T } = to(
           a,
-          h,
-          I
+          x2,
+          m,
+          g,
+          C2
         );
         return Qn(() => {
           var b;
-          return u.current = I || ((b = v.current) == null ? void 0 : b.ownerDocument.defaultView), () => {
+          return u.current = C2 || ((b = v.current) == null ? void 0 : b.ownerDocument.defaultView), () => {
             u.current = null;
           };
-        }, [u, I]), t2("windowScrollTo", T), t2("scrollBy", p), /* @__PURE__ */ jsxRuntimeExports.jsx(
-          a,
+        }, [u, C2]), t2("windowScrollTo", T), t2("scrollBy", p), /* @__PURE__ */ jsxRuntimeExports.jsx(
+          m,
           {
             ref: v,
             "data-virtuoso-scroller": true,
-            style: { position: "relative", ...i2, ...S !== 0 ? { height: S + g } : {} },
-            ...l,
-            ...q(a, w),
+            style: { position: "relative", ...i2, ...h !== 0 ? { height: h + I } : {} },
+            ...c2,
+            ...Z$1(m, l),
             children: s
           }
         );
@@ -33692,12 +33692,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }, [e, n, o]), /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-viewport-type": "window", ref: s, style: Zt(i2), children: t2 });
     }, pr$1 = ({ children: t2 }) => {
       const e = M("TopItemListComponent") || "div", n = M("headerHeight"), o = { ...ur, marginTop: `${n}px` }, r2 = M("context");
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(e, { style: o, ...q(e, r2), children: t2 });
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(e, { style: o, ...Z$1(e, r2), children: t2 });
     }, hr$1 = /* @__PURE__ */ H.memo(function(e) {
-      const n = M("useWindowScroll"), o = M("topItemsIndexes").length > 0, r2 = M("customScrollParent"), s = M("context"), i2 = r2 || n ? Ir : gr, l = r2 || n ? mr : fr;
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs(i2, { ...e, ...q(i2, s), children: [
+      const n = M("useWindowScroll"), o = M("topItemsIndexes").length > 0, r2 = M("customScrollParent"), s = M("context");
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(r2 || n ? Ir : gr, { ...e, context: s, children: [
         o && /* @__PURE__ */ jsxRuntimeExports.jsx(pr$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Cn, { showTopList: true }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(l, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(r2 || n ? mr : fr, { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(ar, {}),
           /* @__PURE__ */ jsxRuntimeExports.jsx(Cn, {}),
           /* @__PURE__ */ jsxRuntimeExports.jsx(dr, {})
@@ -33768,17 +33768,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       },
       hr$1
     ), gr = /* @__PURE__ */ Je({ useEmitter: tn, useEmitterValue: M, usePublisher: gt$3 }), Ir = /* @__PURE__ */ Qe({ useEmitter: tn, useEmitterValue: M, usePublisher: gt$3 }), qr = oo, Sr = /* @__PURE__ */ U(() => {
-      const t2 = C$1((a) => /* @__PURE__ */ jsxRuntimeExports.jsxs("td", { children: [
+      const t2 = w((a) => /* @__PURE__ */ jsxRuntimeExports.jsxs("td", { children: [
         "Item $",
         a
-      ] })), e = C$1(null), n = C$1((a) => /* @__PURE__ */ jsxRuntimeExports.jsxs("td", { colSpan: 1e3, children: [
+      ] })), e = w(null), n = w((a) => /* @__PURE__ */ jsxRuntimeExports.jsxs("td", { colSpan: 1e3, children: [
         "Group ",
         a
-      ] })), o = C$1(null), r2 = C$1(null), s = C$1({}), i2 = C$1(Xe), l = C$1(Yt), c2 = (a, m = null) => ct(
-        x$1(
+      ] })), o = w(null), r2 = w(null), s = w({}), i2 = w(Xe), l = w(Yt), c2 = (a, m = null) => ct(
+        S(
           s,
-          E((S) => S[a]),
-          Z$1()
+          E((x2) => x2[a]),
+          Y()
         ),
         m
       );
@@ -33843,17 +33843,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const Or$1 = /* @__PURE__ */ U(
       ([
         { increaseViewportBy: t2, listBoundary: e, overscan: n, visibleRange: o },
-        { footerHeight: r2, headerHeight: s, scrollBy: i2, scrollContainerState: l, scrollTo: c2, scrollTop: a, smoothScrollTargetReached: m, viewportHeight: S },
-        g,
+        { footerHeight: r2, headerHeight: s, scrollBy: i2, scrollContainerState: l, scrollTo: c2, scrollTop: a, smoothScrollTargetReached: m, viewportHeight: x2 },
+        h,
         I,
-        { didMount: w, propsReady: v },
-        { customScrollParent: h, useWindowScroll: p, windowScrollContainerState: u, windowScrollTo: T, windowViewportRect: b },
+        { didMount: C2, propsReady: v },
+        { customScrollParent: g, useWindowScroll: p, windowScrollContainerState: u, windowScrollTo: T, windowViewportRect: b },
         f
       ]) => {
-        const d = C$1(0), y = C$1(0), B = C$1(yn), k = C$1({ height: 0, width: 0 }), L = C$1({ height: 0, width: 0 }), z = $(), _ = $(), J = C$1(0), nt = C$1(null), F = C$1({ column: 0, row: 0 }), Y = $(), it2 = $(), dt = C$1(false), St = C$1(0), ft = C$1(true), ut = C$1(false), At = C$1(false);
+        const d = w(0), y = w(0), B = w(yn), k = w({ height: 0, width: 0 }), L = w({ height: 0, width: 0 }), z = $(), _ = $(), J = w(0), nt = w(null), F = w({ column: 0, row: 0 }), q = $(), it2 = $(), dt = w(false), St = w(0), ft = w(true), ut = w(false), At = w(false);
         K(
-          x$1(
-            w,
+          S(
+            C2,
             N(St),
             A(([R, D]) => !!D)
           ),
@@ -33861,43 +33861,43 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             G(ft, false);
           }
         ), K(
-          x$1(
-            rt(w, ft, L, k, St, ut),
+          S(
+            rt(C2, ft, L, k, St, ut),
             A(([R, D, Q, lt2, , tt]) => R && !D && Q.height !== 0 && lt2.height !== 0 && !tt)
           ),
           ([, , , , R]) => {
             G(ut, true), Ue(1, () => {
               G(z, R);
-            }), Tt(x$1(a), () => {
+            }), Tt(S(a), () => {
               G(e, [0, 0]), G(ft, true);
             });
           }
         ), O(
-          x$1(
+          S(
             it2,
             A((R) => R != null && R.scrollTop > 0),
             Rt(0)
           ),
           y
         ), K(
-          x$1(
-            w,
+          S(
+            C2,
             N(it2),
             A(([, R]) => R != null)
           ),
           ([, R]) => {
-            R && (G(k, R.viewport), G(L, R.item), G(F, R.gap), R.scrollTop > 0 && (G(dt, true), Tt(x$1(a, Dt(1)), (D) => {
+            R && (G(k, R.viewport), G(L, R.item), G(F, R.gap), R.scrollTop > 0 && (G(dt, true), Tt(S(a, Dt(1)), (D) => {
               G(dt, false);
             }), G(c2, { top: R.scrollTop })));
           }
         ), O(
-          x$1(
+          S(
             k,
             E(({ height: R }) => R)
           ),
-          S
+          x2
         ), O(
-          x$1(
+          S(
             rt(
               V(k, he),
               V(L, he),
@@ -33911,9 +33911,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               viewport: R
             }))
           ),
-          Y
+          q
         ), O(
-          x$1(
+          S(
             rt(
               V(d),
               o,
@@ -33957,27 +33957,27 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           ),
           B
         ), O(
-          x$1(
+          S(
             nt,
             A((R) => R !== null),
             E((R) => R.length)
           ),
           d
         ), O(
-          x$1(
+          S(
             rt(k, L, B, F),
             A(([R, D, { items: Q }]) => Q.length > 0 && D.height !== 0 && R.height !== 0),
             E(([R, D, { items: Q }, lt2]) => {
               const { bottom: tt, top: Ft } = En(R, lt2, D, Q);
               return [Ft, tt];
             }),
-            Z$1(se)
+            Y(se)
           ),
           e
         );
-        const xt = C$1(false);
+        const xt = w(false);
         O(
-          x$1(
+          S(
             a,
             N(xt),
             E(([R, D]) => D || R !== 0)
@@ -33985,7 +33985,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           xt
         );
         const Xt = ht(
-          x$1(
+          S(
             rt(B, d),
             A(([{ items: R }]) => R.length > 0),
             N(xt),
@@ -33994,17 +33994,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               return (Q || R.bottom > 0 && R.itemHeight > 0 && R.offsetBottom === 0 && R.items.length === D) && tt;
             }),
             E(([[, R]]) => R - 1),
-            Z$1()
+            Y()
           )
         ), Mt = ht(
-          x$1(
+          S(
             V(B),
             A(({ items: R }) => R.length > 0 && R[0].index === 0),
             Rt(0),
-            Z$1()
+            Y()
           )
         ), yt = ht(
-          x$1(
+          S(
             V(B),
             N(dt),
             A(([{ items: R }, D]) => R.length > 0 && !D),
@@ -34012,12 +34012,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               endIndex: R[R.length - 1].index,
               startIndex: R[0].index
             })),
-            Z$1(Mn),
+            Y(Mn),
             kt(0)
           )
         );
         O(yt, I.scrollSeekRangeChanged), O(
-          x$1(
+          S(
             z,
             N(k, L, d, F),
             E(([R, D, Q, lt2, tt]) => {
@@ -34031,20 +34031,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           c2
         );
         const Bt = ct(
-          x$1(
+          S(
             B,
             E((R) => R.offsetBottom + R.bottom)
           ),
           0
         );
         return O(
-          x$1(
+          S(
             b,
             E((R) => ({ height: R.visibleHeight, width: R.visibleWidth }))
           ),
           k
         ), {
-          customScrollParent: h,
+          customScrollParent: g,
           // input
           data: nt,
           deviation: J,
@@ -34075,12 +34075,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           horizontalDirection: At,
           initialTopMostItemIndex: St,
           totalListHeight: Bt,
-          ...g,
+          ...h,
           endReached: Xt,
           propsReady: v,
           rangeChanged: yt,
           startReached: Mt,
-          stateChanged: Y,
+          stateChanged: q,
           stateRestoreInProgress: dt,
           ...f
         };
@@ -34102,14 +34102,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return i2 > 0 ? i2 + e.row : i2;
     }
     const Lr = /* @__PURE__ */ U(() => {
-      const t2 = C$1((S) => `Item ${S}`), e = C$1({}), n = C$1(null), o = C$1("virtuoso-grid-item"), r2 = C$1("virtuoso-grid-list"), s = C$1(Xe), i2 = C$1("div"), l = C$1(Yt), c2 = (S, g = null) => ct(
-        x$1(
+      const t2 = w((x2) => `Item ${x2}`), e = w({}), n = w(null), o = w("virtuoso-grid-item"), r2 = w("virtuoso-grid-list"), s = w(Xe), i2 = w("div"), l = w(Yt), c2 = (x2, h = null) => ct(
+        S(
           e,
-          E((I) => I[S]),
-          Z$1()
+          E((I) => I[x2]),
+          Y()
         ),
-        g
-      ), a = C$1(false), m = C$1(false);
+        h
+      ), a = w(false), m = w(false);
       return O(V(m), a), {
         components: e,
         computeItemKey: s,
@@ -34132,7 +34132,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       ([t2, e]) => ({ ...t2, ...e }),
       X(Or$1, Lr)
     ), Vr = /* @__PURE__ */ H.memo(function() {
-      const e = et$1("gridState"), n = et$1("listClassName"), o = et$1("itemClassName"), r2 = et$1("itemContent"), s = et$1("computeItemKey"), i2 = et$1("isSeeking"), l = It("scrollHeight"), c2 = et$1("ItemComponent"), a = et$1("ListComponent"), m = et$1("ScrollSeekPlaceholder"), S = et$1("context"), g = It("itemDimensions"), I = It("gap"), w = et$1("log"), v = et$1("stateRestoreInProgress"), h = It("reportReadyState"), p = Ht(
+      const e = et$1("gridState"), n = et$1("listClassName"), o = et$1("itemClassName"), r2 = et$1("itemContent"), s = et$1("computeItemKey"), i2 = et$1("isSeeking"), l = It("scrollHeight"), c2 = et$1("ItemComponent"), a = et$1("ListComponent"), m = et$1("ScrollSeekPlaceholder"), x2 = et$1("context"), h = It("itemDimensions"), I = It("gap"), C2 = et$1("log"), v = et$1("stateRestoreInProgress"), g = It("reportReadyState"), p = Ht(
         H.useMemo(
           () => (u) => {
             const T = u.parentElement.parentElement.scrollHeight;
@@ -34140,34 +34140,34 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             const b = u.firstChild;
             if (b) {
               const { height: f, width: d } = b.getBoundingClientRect();
-              g({ height: f, width: d });
+              h({ height: f, width: d });
             }
             I({
-              column: Bn("column-gap", getComputedStyle(u).columnGap, w),
-              row: Bn("row-gap", getComputedStyle(u).rowGap, w)
+              column: Bn("column-gap", getComputedStyle(u).columnGap, C2),
+              row: Bn("row-gap", getComputedStyle(u).rowGap, C2)
             });
           },
-          [l, g, I, w]
+          [l, h, I, C2]
         ),
         true,
         false
       );
       return Qn(() => {
-        e.itemHeight > 0 && e.itemWidth > 0 && h(true);
+        e.itemHeight > 0 && e.itemWidth > 0 && g(true);
       }, [e]), v ? null : /* @__PURE__ */ jsxRuntimeExports.jsx(
         a,
         {
           className: n,
           ref: p,
-          ...q(a, S),
+          ...Z$1(a, x2),
           "data-testid": "virtuoso-item-list",
           style: { paddingBottom: e.offsetBottom, paddingTop: e.offsetTop },
           children: e.items.map((u) => {
-            const T = s(u.index, u.data, S);
+            const T = s(u.index, u.data, x2);
             return i2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
               m,
               {
-                ...q(m, S),
+                ...Z$1(m, x2),
                 height: e.itemHeight,
                 index: u.index,
                 width: e.itemWidth
@@ -34176,12 +34176,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             ) : /* @__PURE__ */ reactExports.createElement(
               c2,
               {
-                ...q(c2, S),
+                ...Z$1(c2, x2),
                 className: o,
                 "data-index": u.index,
                 key: T
               },
-              r2(u.index, u.data, S)
+              r2(u.index, u.data, x2)
             );
           })
         }
@@ -34197,7 +34197,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         true,
         false
       ), s = et$1("context");
-      return e ? /* @__PURE__ */ jsxRuntimeExports.jsx(o, { ref: r2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(e, { ...q(e, s) }) }) : null;
+      return e ? /* @__PURE__ */ jsxRuntimeExports.jsx(o, { ref: r2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(e, { ...Z$1(e, s) }) }) : null;
     }), Ar = H.memo(function() {
       const e = et$1("FooterComponent"), n = It("footerHeight"), o = et$1("headerFooterTag"), r2 = Ht(
         H.useMemo(
@@ -34209,7 +34209,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         true,
         false
       ), s = et$1("context");
-      return e ? /* @__PURE__ */ jsxRuntimeExports.jsx(o, { ref: r2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(e, { ...q(e, s) }) }) : null;
+      return e ? /* @__PURE__ */ jsxRuntimeExports.jsx(o, { ref: r2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(e, { ...Z$1(e, s) }) }) : null;
     }), Mr = ({ children: t2 }) => {
       const e = H.useContext(Jn), n = It("itemDimensions"), o = It("viewportDimensions"), r2 = Ht(
         H.useMemo(
@@ -34231,7 +34231,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }, [e, n, o]), /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: s, style: Zt(false), children: t2 });
     }, Gr = /* @__PURE__ */ H.memo(function({ ...e }) {
       const n = et$1("useWindowScroll"), o = et$1("customScrollParent"), r2 = o || n ? Dr : Nr, s = o || n ? Wr : Mr, i2 = et$1("context");
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(r2, { ...e, ...q(r2, i2), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(s, { children: [
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(r2, { ...e, ...Z$1(r2, i2), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(s, { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(Pr$1, {}),
         /* @__PURE__ */ jsxRuntimeExports.jsx(Vr, {}),
         /* @__PURE__ */ jsxRuntimeExports.jsx(Ar, {})
@@ -39943,7 +39943,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
       for (let index = basic2 > 0 ? basic2 + 1 : 0; index < inputLength; ) {
         const oldi = i2;
-        for (let w = 1, k = base$1; ; k += base$1) {
+        for (let w2 = 1, k = base$1; ; k += base$1) {
           if (index >= inputLength) {
             error$3("invalid-input");
           }
@@ -39951,19 +39951,19 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           if (digit >= base$1) {
             error$3("invalid-input");
           }
-          if (digit > floor((maxInt - i2) / w)) {
+          if (digit > floor((maxInt - i2) / w2)) {
             error$3("overflow");
           }
-          i2 += digit * w;
+          i2 += digit * w2;
           const t2 = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias;
           if (digit < t2) {
             break;
           }
           const baseMinusT = base$1 - t2;
-          if (w > floor(maxInt / baseMinusT)) {
+          if (w2 > floor(maxInt / baseMinusT)) {
             error$3("overflow");
           }
-          w *= baseMinusT;
+          w2 *= baseMinusT;
         }
         const out = output2.length + 1;
         bias = adapt(i2 - oldi, out, oldi == 0);
@@ -40011,20 +40011,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             error$3("overflow");
           }
           if (currentValue === n) {
-            let q2 = delta2;
+            let q = delta2;
             for (let k = base$1; ; k += base$1) {
               const t2 = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias;
-              if (q2 < t2) {
+              if (q < t2) {
                 break;
               }
-              const qMinusT = q2 - t2;
+              const qMinusT = q - t2;
               const baseMinusT = base$1 - t2;
               output2.push(
                 stringFromCharCode(digitToBasic(t2 + qMinusT % baseMinusT, 0))
               );
-              q2 = floor(qMinusT / baseMinusT);
+              q = floor(qMinusT / baseMinusT);
             }
-            output2.push(stringFromCharCode(digitToBasic(q2, 0)));
+            output2.push(stringFromCharCode(digitToBasic(q, 0)));
             bias = adapt(delta2, handledCPCountPlusOne, handledCPCount === basicLength);
             delta2 = 0;
             ++handledCPCount;
@@ -50261,8 +50261,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         parser2.Push(parser2.itemFactory.create("nonscript"));
       };
       BaseMethods$1.Rule = function(parser2, name2, style2) {
-        var w = parser2.GetDimen(name2), h = parser2.GetDimen(name2), d = parser2.GetDimen(name2);
-        var def = { width: w, height: h, depth: d };
+        var w2 = parser2.GetDimen(name2), h = parser2.GetDimen(name2), d = parser2.GetDimen(name2);
+        var def = { width: w2, height: h, depth: d };
         if (style2 !== "blank") {
           def["mathbackground"] = parser2.stack.env["color"] || "black";
         }
@@ -50270,9 +50270,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         parser2.Push(node2);
       };
       BaseMethods$1.rule = function(parser2, name2) {
-        var v = parser2.GetBrackets(name2), w = parser2.GetDimen(name2), h = parser2.GetDimen(name2);
+        var v = parser2.GetBrackets(name2), w2 = parser2.GetDimen(name2), h = parser2.GetDimen(name2);
         var mml = parser2.create("node", "mspace", [], {
-          width: w,
+          width: w2,
           height: h,
           mathbackground: parser2.stack.env["color"] || "black"
         });
@@ -50639,9 +50639,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       BaseMethods$1.MathChoice = function(parser2, name2) {
         var D = parser2.ParseArg(name2);
         var T = parser2.ParseArg(name2);
-        var S = parser2.ParseArg(name2);
+        var S2 = parser2.ParseArg(name2);
         var SS = parser2.ParseArg(name2);
-        parser2.Push(parser2.create("node", "MathChoice", [D, T, S, SS]));
+        parser2.Push(parser2.create("node", "MathChoice", [D, T, S2, SS]));
       };
       BaseMethods.default = BaseMethods$1;
       return BaseMethods;
@@ -52818,9 +52818,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           var adaptor = this.adaptor;
           var family = getFamily ? adaptor.fontFamily(node2) : "";
           var em = adaptor.fontSize(node2);
-          var _a2 = __read2(adaptor.nodeSize(adaptor.childNode(node2, 1)), 2), w = _a2[0], h = _a2[1];
-          var ex = w ? h / 60 : em * this.options.exFactor;
-          var containerWidth = !w ? 1e6 : adaptor.getStyle(node2, "display") === "table" ? adaptor.nodeSize(adaptor.lastChild(node2))[0] - 1 : adaptor.nodeBBox(adaptor.lastChild(node2)).left - adaptor.nodeBBox(adaptor.firstChild(node2)).left - 2;
+          var _a2 = __read2(adaptor.nodeSize(adaptor.childNode(node2, 1)), 2), w2 = _a2[0], h = _a2[1];
+          var ex = w2 ? h / 60 : em * this.options.exFactor;
+          var containerWidth = !w2 ? 1e6 : adaptor.getStyle(node2, "display") === "table" ? adaptor.nodeSize(adaptor.lastChild(node2))[0] - 1 : adaptor.nodeBBox(adaptor.lastChild(node2)).left - adaptor.nodeBBox(adaptor.firstChild(node2)).left - 2;
           var scale = Math.max(this.options.minScale, this.options.matchFontHeight ? ex / this.font.params.x_height / em : 1);
           var lineWidth = 1e6;
           return { em, ex, containerWidth, lineWidth, scale, family };
@@ -52945,12 +52945,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           adaptor.append(this.container, node2);
           var em = this.math.metrics.em * this.math.metrics.scale;
           var _a2 = adaptor.nodeBBox(content2), left2 = _a2.left, right2 = _a2.right, bottom2 = _a2.bottom, top2 = _a2.top;
-          var w = (right2 - left2) / em;
+          var w2 = (right2 - left2) / em;
           var h = (adaptor.nodeBBox(base2).top - top2) / em;
           var d = (bottom2 - top2) / em - h;
           adaptor.remove(this.container);
           adaptor.remove(node2);
-          return { w, h, d };
+          return { w: w2, h, d };
         };
         CommonOutputJax2.prototype.cssFontStyles = function(font, styles2) {
           if (styles2 === void 0) {
@@ -53154,11 +53154,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             y = 0;
           }
           var rscale = cbox.rscale;
-          var w = x2 + rscale * (cbox.w + cbox.L + cbox.R);
+          var w2 = x2 + rscale * (cbox.w + cbox.L + cbox.R);
           var h = y + rscale * cbox.h;
           var d = rscale * cbox.d - y;
-          if (w > this.w)
-            this.w = w;
+          if (w2 > this.w)
+            this.w = w2;
           if (h > this.h)
             this.h = h;
           if (d > this.d)
@@ -53916,10 +53916,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             this.computeBBox(bbox, true);
           }
         };
-        CommonWrapper2.prototype.setChildPWidths = function(recompute, w, clear) {
+        CommonWrapper2.prototype.setChildPWidths = function(recompute, w2, clear) {
           var e_3, _a2;
-          if (w === void 0) {
-            w = null;
+          if (w2 === void 0) {
+            w2 = null;
           }
           if (clear === void 0) {
             clear = true;
@@ -53935,7 +53935,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             for (var _b2 = __values2(this.childNodes), _c = _b2.next(); !_c.done; _c = _b2.next()) {
               var child = _c.value;
               var cbox = child.getOuterBBox();
-              if (cbox.pwidth && child.setChildPWidths(recompute, w === null ? cbox.w : w, clear)) {
+              if (cbox.pwidth && child.setChildPWidths(recompute, w2 === null ? cbox.w : w2, clear)) {
                 changed = true;
               }
             }
@@ -54415,13 +54415,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           var href = this.node.attributes.get("href");
           if (href) {
             parent = this.adaptor.append(parent, this.svg("a", { href }));
-            var _a2 = this.getOuterBBox(), h = _a2.h, d = _a2.d, w = _a2.w;
+            var _a2 = this.getOuterBBox(), h = _a2.h, d = _a2.d, w2 = _a2.w;
             this.adaptor.append(this.element, this.svg("rect", {
               "data-hitbox": true,
               fill: "none",
               stroke: "none",
               "pointer-events": "all",
-              width: this.fixed(w),
+              width: this.fixed(w2),
               height: this.fixed(h + d),
               y: this.fixed(-d)
             }));
@@ -54467,12 +54467,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             adaptor.setAttribute(this.element, "stroke", mathcolor || color);
           }
           if (mathbackground || background || bgcolor) {
-            var _b2 = this.getOuterBBox(), h = _b2.h, d = _b2.d, w = _b2.w;
+            var _b2 = this.getOuterBBox(), h = _b2.h, d = _b2.d, w2 = _b2.w;
             var rect2 = this.svg("rect", {
               fill: mathbackground || background || bgcolor,
               x: this.fixed(-this.dx),
               y: this.fixed(-d),
-              width: this.fixed(w),
+              width: this.fixed(w2),
               height: this.fixed(h + d),
               "data-bgcolor": true
             });
@@ -54513,14 +54513,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
           var f = SVGWrapper2.borderFuzz;
           var bbox = this.getOuterBBox();
-          var _f = __read2([bbox.h + f, bbox.d + f, bbox.w + f], 3), h = _f[0], d = _f[1], w = _f[2];
-          var outerRT = [w, h];
+          var _f = __read2([bbox.h + f, bbox.d + f, bbox.w + f], 3), h = _f[0], d = _f[1], w2 = _f[2];
+          var outerRT = [w2, h];
           var outerLT = [-f, h];
-          var outerRB = [w, -d];
+          var outerRB = [w2, -d];
           var outerLB = [-f, -d];
-          var innerRT = [w - width[1], h - width[0]];
+          var innerRT = [w2 - width[1], h - width[0]];
           var innerLT = [-f + width[3], h - width[0]];
-          var innerRB = [w - width[1], -d + width[2]];
+          var innerRB = [w2 - width[1], -d + width[2]];
           var innerLB = [-f + width[3], -d + width[2]];
           var paths = [
             [outerLT, outerRT, innerRT, innerLT],
@@ -54685,7 +54685,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             variant = this.variant;
           }
           var C2 = n.toString(16).toUpperCase();
-          var _b2 = __read2(this.getVariantChar(variant, n), 4), w = _b2[2], data = _b2[3];
+          var _b2 = __read2(this.getVariantChar(variant, n), 4), w2 = _b2[2], data = _b2[3];
           if ("p" in data) {
             var path = data.p ? "M" + data.p + "Z" : "";
             this.place(x2, y, this.adaptor.append(parent, this.charNode(variant, C2, path)));
@@ -54713,7 +54713,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             this.place(x2, y, text2);
             return this.jax.measureTextNodeWithCache(text2, char, variant).w;
           }
-          return w;
+          return w2;
         };
         SVGWrapper2.prototype.charNode = function(variant, C2, path) {
           var cache = this.jax.options.fontCache;
@@ -54729,19 +54729,19 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           return use2;
         };
         SVGWrapper2.prototype.drawBBox = function() {
-          var _a2 = this.getBBox(), w = _a2.w, h = _a2.h, d = _a2.d;
+          var _a2 = this.getBBox(), w2 = _a2.w, h = _a2.h, d = _a2.d;
           var box = this.svg("g", { style: {
             opacity: 0.25
           } }, [
             this.svg("rect", {
               fill: "red",
               height: this.fixed(h),
-              width: this.fixed(w)
+              width: this.fixed(w2)
             }),
             this.svg("rect", {
               fill: "green",
               height: this.fixed(d),
-              width: this.fixed(w),
+              width: this.fixed(w2),
               y: this.fixed(-d)
             })
           ]);
@@ -54979,15 +54979,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           if (this.bbox.pwidth === BBox_js_1.BBox.fullWidth) {
             this.adaptor.setAttribute(this.jax.container, "width", "full");
             if (this.jax.table) {
-              var _b2 = this.jax.table.getOuterBBox(), L = _b2.L, w = _b2.w, R = _b2.R;
+              var _b2 = this.jax.table.getOuterBBox(), L = _b2.L, w2 = _b2.w, R = _b2.R;
               if (align === "right") {
                 R = Math.max(R || -shift2, -shift2);
               } else if (align === "left") {
                 L = Math.max(L || shift2, shift2);
               } else if (align === "center") {
-                w += 2 * Math.abs(shift2);
+                w2 += 2 * Math.abs(shift2);
               }
-              this.jax.minwidth = Math.max(0, L + w + R);
+              this.jax.minwidth = Math.max(0, L + w2 + R);
             }
           } else {
             this.jax.shift = shift2;
@@ -55023,11 +55023,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         SVGmath2.prototype.getTitleID = function() {
           return "mjx-svg-title-" + String(this.jax.options.titleID++);
         };
-        SVGmath2.prototype.setChildPWidths = function(recompute, w, _clear) {
-          if (w === void 0) {
-            w = null;
+        SVGmath2.prototype.setChildPWidths = function(recompute, w2, _clear) {
+          if (w2 === void 0) {
+            w2 = null;
           }
-          return _super.prototype.setChildPWidths.call(this, recompute, this.parent ? w : this.metrics.containerWidth / this.jax.pxPerEm, false);
+          return _super.prototype.setChildPWidths.call(this, recompute, this.parent ? w2 : this.metrics.containerWidth / this.jax.pxPerEm, false);
         };
         SVGmath2.kind = math_js_2.MmlMath.prototype.kind;
         SVGmath2.styles = {
@@ -55955,15 +55955,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             if (C2.hasOwnProperty("min") && C2.min > D) {
               D = C2.min;
             }
-            var _b2 = __read2(C2.HDW, 3), h = _b2[0], d = _b2[1], w = _b2[2];
+            var _b2 = __read2(C2.HDW, 3), h = _b2[0], d = _b2[1], w2 = _b2[2];
             if (this.stretch.dir === 1) {
               _a3 = __read2(this.getBaseline(WHD, D, C2), 2), h = _a3[0], d = _a3[1];
             } else {
-              w = D;
+              w2 = D;
             }
             this.bbox.h = h;
             this.bbox.d = d;
-            this.bbox.w = w;
+            this.bbox.w = w2;
           };
           class_1.prototype.getBaseline = function(WHD, HD, C2) {
             var hasWHD = WHD.length === 2 && WHD[0] + WHD[1] === HD;
@@ -56127,28 +56127,28 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           return variants;
         };
         SVGmo2.prototype.stretchVertical = function(stretch, variant, bbox) {
-          var h = bbox.h, d = bbox.d, w = bbox.w;
-          var T = this.addTop(stretch[0], variant[0], h, w);
-          var B = this.addBot(stretch[2], variant[2], d, w);
+          var h = bbox.h, d = bbox.d, w2 = bbox.w;
+          var T = this.addTop(stretch[0], variant[0], h, w2);
+          var B = this.addBot(stretch[2], variant[2], d, w2);
           if (stretch.length === 4) {
-            var _a2 = __read2(this.addMidV(stretch[3], variant[3], w), 2), H2 = _a2[0], D = _a2[1];
-            this.addExtV(stretch[1], variant[1], h, 0, T, H2, w);
-            this.addExtV(stretch[1], variant[1], 0, d, D, B, w);
+            var _a2 = __read2(this.addMidV(stretch[3], variant[3], w2), 2), H2 = _a2[0], D = _a2[1];
+            this.addExtV(stretch[1], variant[1], h, 0, T, H2, w2);
+            this.addExtV(stretch[1], variant[1], 0, d, D, B, w2);
           } else {
-            this.addExtV(stretch[1], variant[1], h, d, T, B, w);
+            this.addExtV(stretch[1], variant[1], h, d, T, B, w2);
           }
         };
         SVGmo2.prototype.stretchHorizontal = function(stretch, variant, bbox) {
-          var w = bbox.w;
+          var w2 = bbox.w;
           var L = this.addLeft(stretch[0], variant[0]);
-          var R = this.addRight(stretch[2], variant[2], w);
+          var R = this.addRight(stretch[2], variant[2], w2);
           if (stretch.length === 4) {
-            var _a2 = __read2(this.addMidH(stretch[3], variant[3], w), 2), x1 = _a2[0], x2 = _a2[1];
-            var w2 = w / 2;
-            this.addExtH(stretch[1], variant[1], w2, L, w2 - x1);
-            this.addExtH(stretch[1], variant[1], w2, x2 - w2, R, w2);
+            var _a2 = __read2(this.addMidH(stretch[3], variant[3], w2), 2), x1 = _a2[0], x2 = _a2[1];
+            var w22 = w2 / 2;
+            this.addExtH(stretch[1], variant[1], w22, L, w22 - x1);
+            this.addExtH(stretch[1], variant[1], w22, x2 - w22, R, w22);
           } else {
-            this.addExtH(stretch[1], variant[1], w, L, R);
+            this.addExtH(stretch[1], variant[1], w2, L, R);
           }
         };
         SVGmo2.prototype.getChar = function(n, variant) {
@@ -56164,8 +56164,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         SVGmo2.prototype.addTop = function(n, v, H2, W) {
           if (!n)
             return 0;
-          var _a2 = __read2(this.getChar(n, v), 3), h = _a2[0], d = _a2[1], w = _a2[2];
-          this.addGlyph(n, v, (W - w) / 2, H2 - h);
+          var _a2 = __read2(this.getChar(n, v), 3), h = _a2[0], d = _a2[1], w2 = _a2[2];
+          this.addGlyph(n, v, (W - w2) / 2, H2 - h);
           return h + d;
         };
         SVGmo2.prototype.addExtV = function(n, v, H2, D, T, B, W) {
@@ -56175,18 +56175,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           T = Math.max(0, T - VFUZZ);
           B = Math.max(0, B - VFUZZ);
           var adaptor = this.adaptor;
-          var _a2 = __read2(this.getChar(n, v), 3), h = _a2[0], d = _a2[1], w = _a2[2];
-          var Y = H2 + D - T - B;
-          var s = 1.5 * Y / (h + d);
-          var y = (s * (h - d) - Y) / 2;
-          if (Y <= 0)
+          var _a2 = __read2(this.getChar(n, v), 3), h = _a2[0], d = _a2[1], w2 = _a2[2];
+          var Y2 = H2 + D - T - B;
+          var s = 1.5 * Y2 / (h + d);
+          var y = (s * (h - d) - Y2) / 2;
+          if (Y2 <= 0)
             return;
           var svg2 = this.svg("svg", {
-            width: this.fixed(w),
-            height: this.fixed(Y),
+            width: this.fixed(w2),
+            height: this.fixed(Y2),
             y: this.fixed(B - D),
-            x: this.fixed((W - w) / 2),
-            viewBox: [0, y, w, Y].map(function(x2) {
+            x: this.fixed((W - w2) / 2),
+            viewBox: [0, y, w2, Y2].map(function(x2) {
               return _this.fixed(x2);
             }).join(" ")
           });
@@ -56198,16 +56198,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         SVGmo2.prototype.addBot = function(n, v, D, W) {
           if (!n)
             return 0;
-          var _a2 = __read2(this.getChar(n, v), 3), h = _a2[0], d = _a2[1], w = _a2[2];
-          this.addGlyph(n, v, (W - w) / 2, d - D);
+          var _a2 = __read2(this.getChar(n, v), 3), h = _a2[0], d = _a2[1], w2 = _a2[2];
+          this.addGlyph(n, v, (W - w2) / 2, d - D);
           return h + d;
         };
         SVGmo2.prototype.addMidV = function(n, v, W) {
           if (!n)
             return [0, 0];
-          var _a2 = __read2(this.getChar(n, v), 3), h = _a2[0], d = _a2[1], w = _a2[2];
+          var _a2 = __read2(this.getChar(n, v), 3), h = _a2[0], d = _a2[1], w2 = _a2[2];
           var y = (d - h) / 2 + this.font.params.axis_height;
-          this.addGlyph(n, v, (W - w) / 2, y);
+          this.addGlyph(n, v, (W - w2) / 2, y);
           return [h + y, d - y];
         };
         SVGmo2.prototype.addLeft = function(n, v) {
@@ -56223,19 +56223,19 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           R = Math.max(0, R - HFUZZ);
           L = Math.max(0, L - HFUZZ);
           var adaptor = this.adaptor;
-          var _a2 = __read2(this.getChar(n, v), 3), h = _a2[0], d = _a2[1], w = _a2[2];
+          var _a2 = __read2(this.getChar(n, v), 3), h = _a2[0], d = _a2[1], w2 = _a2[2];
           var X2 = W - L - R;
-          var Y = h + d + 2 * VFUZZ;
-          var s = 1.5 * (X2 / w);
+          var Y2 = h + d + 2 * VFUZZ;
+          var s = 1.5 * (X2 / w2);
           var D = -(d + VFUZZ);
           if (X2 <= 0)
             return;
           var svg2 = this.svg("svg", {
             width: this.fixed(X2),
-            height: this.fixed(Y),
+            height: this.fixed(Y2),
             x: this.fixed(x2 + L),
             y: this.fixed(D),
-            viewBox: [(s * w - X2) / 2, D, X2, Y].map(function(x3) {
+            viewBox: [(s * w2 - X2) / 2, D, X2, Y2].map(function(x3) {
               return _this.fixed(x3);
             }).join(" ")
           });
@@ -56247,15 +56247,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         SVGmo2.prototype.addRight = function(n, v, W) {
           if (!n)
             return 0;
-          var w = this.getChar(n, v)[2];
-          return this.addGlyph(n, v, W - w, 0);
+          var w2 = this.getChar(n, v)[2];
+          return this.addGlyph(n, v, W - w2, 0);
         };
         SVGmo2.prototype.addMidH = function(n, v, W) {
           if (!n)
             return [0, 0];
-          var w = this.getChar(n, v)[2];
-          this.addGlyph(n, v, (W - w) / 2, 0);
-          return [(W - w) / 2, (W + w) / 2];
+          var w2 = this.getChar(n, v)[2];
+          this.addGlyph(n, v, (W - w2) / 2, 0);
+          return [(W - w2) / 2, (W + w2) / 2];
         };
         SVGmo2.kind = mo_js_2.MmlMo.prototype.kind;
         return SVGmo2;
@@ -56864,10 +56864,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
         SVGmerror2.prototype.toSVG = function(parent) {
           var svg2 = this.standardSVGnode(parent);
-          var _a2 = this.getBBox(), h = _a2.h, d = _a2.d, w = _a2.w;
+          var _a2 = this.getBBox(), h = _a2.h, d = _a2.d, w2 = _a2.w;
           this.adaptor.append(this.element, this.svg("rect", {
             "data-background": true,
-            width: this.fixed(w),
+            width: this.fixed(w2),
             height: this.fixed(h + d),
             y: this.fixed(-d)
           }));
@@ -57115,10 +57115,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           class_1.prototype.getDimens = function() {
             var values = this.node.attributes.getList("width", "height", "depth", "lspace", "voffset");
             var bbox = this.childNodes[0].getBBox();
-            var w = bbox.w, h = bbox.h, d = bbox.d;
-            var W = w, H2 = h, D = d, x2 = 0, y = 0, dx = 0;
+            var w2 = bbox.w, h = bbox.h, d = bbox.d;
+            var W = w2, H2 = h, D = d, x2 = 0, y = 0, dx = 0;
             if (values.width !== "")
-              w = this.dimen(values.width, bbox, "w", 0);
+              w2 = this.dimen(values.width, bbox, "w", 0);
             if (values.height !== "")
               h = this.dimen(values.height, bbox, "h", 0);
             if (values.depth !== "")
@@ -57129,9 +57129,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               x2 = this.dimen(values.lspace, bbox);
             var align = this.node.attributes.get("data-align");
             if (align) {
-              dx = this.getAlignX(w, bbox, align);
+              dx = this.getAlignX(w2, bbox, align);
             }
-            return [H2, D, W, h - H2, d - D, w - W, x2, y, dx];
+            return [H2, D, W, h - H2, d - D, w2 - W, x2, y, dx];
           };
           class_1.prototype.dimen = function(length, bbox, d, m) {
             if (d === void 0) {
@@ -57477,22 +57477,22 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             bbox.empty();
             var _a2 = this.node.attributes.getList("linethickness", "bevelled"), linethickness = _a2.linethickness, bevelled = _a2.bevelled;
             var display = this.isDisplay();
-            var w = null;
+            var w2 = null;
             if (bevelled) {
               this.getBevelledBBox(bbox, display);
             } else {
               var thickness = this.length2em(String(linethickness), 0.06);
-              w = -2 * this.pad;
+              w2 = -2 * this.pad;
               if (thickness === 0) {
                 this.getAtopBBox(bbox, display);
               } else {
                 this.getFractionBBox(bbox, display, thickness);
-                w -= 0.2;
+                w2 -= 0.2;
               }
-              w += bbox.w;
+              w2 += bbox.w;
             }
             bbox.clean();
-            this.setChildPWidths(recompute, w);
+            this.setChildPWidths(recompute, w2);
           };
           class_1.prototype.getFractionBBox = function(bbox, display, t2) {
             var nbox = this.childNodes[0].getOuterBBox();
@@ -57526,13 +57526,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             var tex2 = this.font.params;
             var _a2 = __read2(display ? [tex2.num1, tex2.denom1] : [tex2.num3, tex2.denom2], 2), u = _a2[0], v = _a2[1];
             var p = (display ? 7 : 3) * tex2.rule_thickness;
-            var q2 = u - nbox.d * nbox.scale - (dbox.h * dbox.scale - v);
-            if (q2 < p) {
-              u += (p - q2) / 2;
-              v += (p - q2) / 2;
-              q2 = p;
+            var q = u - nbox.d * nbox.scale - (dbox.h * dbox.scale - v);
+            if (q < p) {
+              u += (p - q) / 2;
+              v += (p - q) / 2;
+              q = p;
             }
-            return { u, v, q: q2, nbox, dbox };
+            return { u, v, q, nbox, dbox };
           };
           class_1.prototype.getBevelledBBox = function(bbox, display) {
             var _a2 = this.getBevelData(display), u = _a2.u, v = _a2.v, delta2 = _a2.delta, nbox = _a2.nbox, dbox = _a2.dbox;
@@ -57563,9 +57563,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             if (attributes2.get("bevelled")) {
               return this.childNodes[i2].getOuterBBox().w;
             }
-            var w = this.getBBox().w;
+            var w2 = this.getBBox().w;
             var thickness = this.length2em(attributes2.get("linethickness"));
-            return w - (thickness ? 0.2 : 0) - 2 * this.pad;
+            return w2 - (thickness ? 0.2 : 0) - 2 * this.pad;
           };
           class_1.prototype.getChildAlign = function(i2) {
             var attributes2 = this.node.attributes;
@@ -57795,13 +57795,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           var svg2 = this.element;
           var _a2 = __read2(this.childNodes, 2), num2 = _a2[0], den = _a2[1];
           var _b2 = this.getBevelData(display), u = _b2.u, v = _b2.v, delta2 = _b2.delta, nbox = _b2.nbox, dbox = _b2.dbox;
-          var w = (nbox.L + nbox.w + nbox.R) * nbox.rscale;
+          var w2 = (nbox.L + nbox.w + nbox.R) * nbox.rscale;
           num2.toSVG(svg2);
           this.bevel.toSVG(svg2);
           den.toSVG(svg2);
           num2.place(nbox.L * nbox.rscale, u);
-          this.bevel.place(w - delta2 / 2, 0);
-          den.place(w + this.bevel.getOuterBBox().w + dbox.L * dbox.rscale - delta2, v);
+          this.bevel.place(w2 - delta2 / 2, 0);
+          den.place(w2 + this.bevel.getOuterBBox().w + dbox.L * dbox.rscale - delta2, v);
         };
         SVGmfrac2.kind = mfrac_js_2.MmlMfrac.prototype.kind;
         return SVGmfrac2;
@@ -57913,9 +57913,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             }
             var surdbox = this.childNodes[this.surd].getBBox();
             var basebox = new BBox_js_1.BBox(this.childNodes[this.base].getOuterBBox());
-            var q2 = this.getPQ(surdbox)[1];
+            var q = this.getPQ(surdbox)[1];
             var t2 = this.font.params.rule_thickness;
-            var H2 = basebox.h + q2 + t2;
+            var H2 = basebox.h + q + t2;
             var _a2 = __read2(this.getRootDimens(surdbox, H2), 1), x2 = _a2[0];
             bbox.h = H2 + t2;
             this.combineRootBBox(bbox, surdbox, H2);
@@ -57929,8 +57929,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           class_1.prototype.getPQ = function(sbox) {
             var t2 = this.font.params.rule_thickness;
             var p = this.node.attributes.get("displaystyle") ? this.font.params.x_height : t2;
-            var q2 = sbox.h + sbox.d > this.surdH ? (sbox.h + sbox.d - (this.surdH - 2 * t2 - p / 2)) / 2 : t2 + p / 4;
-            return [p, q2];
+            var q = sbox.h + sbox.d > this.surdH ? (sbox.h + sbox.d - (this.surdH - 2 * t2 - p / 2)) / 2 : t2 + p / 4;
+            return [p, q];
           };
           class_1.prototype.getRootDimens = function(_sbox, _H) {
             return [0, 0, 0, 0];
@@ -58062,9 +58062,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           var root2 = this.root ? this.childNodes[this.root] : null;
           var sbox = surd.getBBox();
           var bbox = base2.getOuterBBox();
-          var q2 = this.getPQ(sbox)[1];
+          var q = this.getPQ(sbox)[1];
           var t2 = this.font.params.rule_thickness * this.bbox.scale;
-          var H2 = bbox.h + q2 + t2;
+          var H2 = bbox.h + q + t2;
           var SVG = this.standardSVGnode(parent);
           var BASE = this.adaptor.append(SVG, this.svg("g"));
           this.addRoot(SVG, root2, sbox, H2);
@@ -58143,9 +58143,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             var surd = this.childNodes[this.surd];
             var bbox = this.childNodes[this.root].getOuterBBox();
             var offset2 = (surd.size < 0 ? 0.5 : 0.6) * sbox.w;
-            var w = bbox.w, rscale = bbox.rscale;
-            var W = Math.max(w, offset2 / rscale);
-            var dx = Math.max(0, W - w);
+            var w2 = bbox.w, rscale = bbox.rscale;
+            var W = Math.max(w2, offset2 / rscale);
+            var dx = Math.max(0, W - w2);
             var h = this.rootHeight(bbox, sbox, surd.size, H2);
             var x2 = W * rscale - offset2;
             return [x2, h, dx];
@@ -58876,10 +58876,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             if (recompute === void 0) {
               recompute = false;
             }
-            var w = this.getBaseWidth();
+            var w2 = this.getBaseWidth();
             var _a3 = __read2(this.getOffset(), 2), x2 = _a3[0], y = _a3[1];
             bbox.append(this.baseChild.getOuterBBox());
-            bbox.combine(this.scriptChild.getOuterBBox(), w + x2, y);
+            bbox.combine(this.scriptChild.getOuterBBox(), w2 + x2, y);
             bbox.w += this.font.params.scriptspace;
             bbox.clean();
             this.setChildPWidths(recompute);
@@ -58944,13 +58944,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               return box.w * box.rscale;
             });
             widths[0] -= this.baseRemoveIc && !this.baseCore.node.attributes.get("largeop") ? this.baseIc : 0;
-            var w = Math.max.apply(Math, __spreadArray2([], __read2(widths), false));
+            var w2 = Math.max.apply(Math, __spreadArray2([], __read2(widths), false));
             var dw = [];
             var m = 0;
             try {
               for (var _c = __values2(widths.keys()), _d = _c.next(); !_d.done; _d = _c.next()) {
                 var i2 = _d.value;
-                dw[i2] = (align === "center" ? (w - widths[i2]) / 2 : align === "right" ? w - widths[i2] : 0) + delta2[i2];
+                dw[i2] = (align === "center" ? (w2 - widths[i2]) / 2 : align === "right" ? w2 - widths[i2] : 0) + delta2[i2];
                 if (dw[i2] < m) {
                   m = -dw[i2];
                 }
@@ -59022,9 +59022,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                   var child = _g.value;
                   var noStretch = child.stretch.dir === 0;
                   if (all2 || noStretch) {
-                    var _h = child.getOuterBBox(noStretch), w = _h.w, rscale = _h.rscale;
-                    if (w * rscale > W)
-                      W = w * rscale;
+                    var _h = child.getOuterBBox(noStretch), w2 = _h.w, rscale = _h.rscale;
+                    if (w2 * rscale > W)
+                      W = w2 * rscale;
                   }
                 }
               } catch (e_5_1) {
@@ -59109,11 +59109,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
         SVGscriptbase2.prototype.toSVG = function(parent) {
           var svg2 = this.standardSVGnode(parent);
-          var w = this.getBaseWidth();
+          var w2 = this.getBaseWidth();
           var _a2 = __read2(this.getOffset(), 2), x2 = _a2[0], v = _a2[1];
           this.baseChild.toSVG(svg2);
           this.scriptChild.toSVG(svg2);
-          this.scriptChild.place(w + x2, v);
+          this.scriptChild.place(w2 + x2, v);
         };
         SVGscriptbase2.kind = "scriptbase";
         return SVGscriptbase2;
@@ -59237,11 +59237,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             var _a3 = __read2([this.subChild.getOuterBBox(), this.supChild.getOuterBBox()], 2), subbox = _a3[0], supbox = _a3[1];
             bbox.empty();
             bbox.append(basebox);
-            var w = this.getBaseWidth();
+            var w2 = this.getBaseWidth();
             var x2 = this.getAdjustedIc();
             var _b2 = __read2(this.getUVQ(), 2), u = _b2[0], v = _b2[1];
-            bbox.combine(subbox, w, v);
-            bbox.combine(supbox, w + x2, u);
+            bbox.combine(subbox, w2, v);
+            bbox.combine(supbox, w2 + x2, u);
             bbox.w += this.font.params.scriptspace;
             bbox.clean();
             this.setChildPWidths(recompute);
@@ -59261,9 +59261,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             var subscriptshift = this.length2em(this.node.attributes.get("subscriptshift"), tex2.sub2);
             var drop = this.baseCharZero(basebox.d * this.baseScale + tex2.sub_drop * subbox.rscale);
             var _a3 = __read2([this.getU(), Math.max(drop, subscriptshift)], 2), u = _a3[0], v = _a3[1];
-            var q2 = u - supbox.d * supbox.rscale - (subbox.h * subbox.rscale - v);
-            if (q2 < t2) {
-              v += t2 - q2;
+            var q = u - supbox.d * supbox.rscale - (subbox.h * subbox.rscale - v);
+            if (q < t2) {
+              v += t2 - q;
               var p = 4 / 5 * tex2.x_height - (u - supbox.d * supbox.rscale);
               if (p > 0) {
                 u += p;
@@ -59272,8 +59272,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             }
             u = Math.max(this.length2em(this.node.attributes.get("superscriptshift"), u), u);
             v = Math.max(this.length2em(this.node.attributes.get("subscriptshift"), v), v);
-            q2 = u - supbox.d * supbox.rscale - (subbox.h * subbox.rscale - v);
-            this.UVQ = [u, -v, q2];
+            q = u - supbox.d * supbox.rscale - (subbox.h * subbox.rscale - v);
+            this.UVQ = [u, -v, q];
             return this.UVQ;
           };
           return class_3;
@@ -59508,14 +59508,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         SVGmsubsup2.prototype.toSVG = function(parent) {
           var svg2 = this.standardSVGnode(parent);
           var _a2 = __read2([this.baseChild, this.supChild, this.subChild], 3), base2 = _a2[0], sup4 = _a2[1], sub2 = _a2[2];
-          var w = this.getBaseWidth();
+          var w2 = this.getBaseWidth();
           var x2 = this.getAdjustedIc();
           var _b2 = __read2(this.getUVQ(), 2), u = _b2[0], v = _b2[1];
           base2.toSVG(svg2);
           sup4.toSVG(svg2);
           sub2.toSVG(svg2);
-          sub2.place(w, v);
-          sup4.place(w + x2, u);
+          sub2.place(w2, v);
+          sup4.place(w2 + x2, u);
         };
         SVGmsubsup2.kind = msubsup_js_4.MmlMsubsup.prototype.kind;
         return SVGmsubsup2;
@@ -60149,9 +60149,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               }
               bbox.append(data.base);
               if (data.numScripts) {
-                var w = bbox.w;
-                bbox.combine(data.sup, w, u);
-                bbox.combine(data.sub, w, v);
+                var w2 = bbox.w;
+                bbox.combine(data.sup, w2, u);
+                bbox.combine(data.sub, w2, v);
                 bbox.w += scriptspace;
               }
               bbox.clean();
@@ -60217,9 +60217,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               for (var i2 = 0; i2 < list1.length; i2++) {
                 var _a2 = __read2(this.getScaledWHD(list1[i2]), 3), w1 = _a2[0], h1 = _a2[1], d1 = _a2[2];
                 var _b2 = __read2(this.getScaledWHD(list2[i2]), 3), w2 = _b2[0], h2 = _b2[1], d2 = _b2[2];
-                var w = Math.max(w1, w2);
-                bbox1.w += w;
-                bbox2.w += w;
+                var w3 = Math.max(w1, w2);
+                bbox1.w += w3;
+                bbox2.w += w3;
                 if (h1 > bbox1.h)
                   bbox1.h = h1;
                 if (d1 > bbox1.d)
@@ -60231,21 +60231,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               }
             };
             class_1.prototype.getScaledWHD = function(bbox) {
-              var w = bbox.w, h = bbox.h, d = bbox.d, rscale = bbox.rscale;
-              return [w * rscale, h * rscale, d * rscale];
+              var w2 = bbox.w, h = bbox.h, d = bbox.d, rscale = bbox.rscale;
+              return [w2 * rscale, h * rscale, d * rscale];
             };
             class_1.prototype.getUVQ = function(subbox, supbox) {
               var _a2;
               if (!this.UVQ) {
-                var _b2 = __read2([0, 0, 0], 3), u = _b2[0], v = _b2[1], q2 = _b2[2];
+                var _b2 = __read2([0, 0, 0], 3), u = _b2[0], v = _b2[1], q = _b2[2];
                 if (subbox.h === 0 && subbox.d === 0) {
                   u = this.getU();
                 } else if (supbox.h === 0 && supbox.d === 0) {
                   u = -this.getV();
                 } else {
-                  _a2 = __read2(_super.prototype.getUVQ.call(this, subbox, supbox), 3), u = _a2[0], v = _a2[1], q2 = _a2[2];
+                  _a2 = __read2(_super.prototype.getUVQ.call(this, subbox, supbox), 3), u = _a2[0], v = _a2[1], q = _a2[2];
                 }
-                this.UVQ = [u, v, q2];
+                this.UVQ = [u, v, q];
               }
               return this.UVQ;
             };
@@ -60476,11 +60476,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           left: function(_w, _W) {
             return 0;
           },
-          center: function(w, W) {
-            return (W - w) / 2;
+          center: function(w2, W) {
+            return (W - w2) / 2;
           },
-          right: function(w, W) {
-            return W - w;
+          right: function(w2, W) {
+            return W - w2;
           }
         }[align] || (function(_w, _W) {
           return 0;
@@ -60525,12 +60525,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             var _a2 = __read2([this.childNodes[i2++], this.childNodes[i2++]], 2), sub2 = _a2[0], sup4 = _a2[1];
             var _b2 = __read2([sub2.getOuterBBox(), sup4.getOuterBBox()], 2), subbox = _b2[0], supbox = _b2[1];
             var _c = __read2([subbox.rscale, supbox.rscale], 2), subr = _c[0], supr = _c[1];
-            var w = Math.max(subbox.w * subr, supbox.w * supr);
+            var w2 = Math.max(subbox.w * subr, supbox.w * supr);
             sub2.toSVG(subRow);
             sup4.toSVG(supRow);
-            sub2.place(dx + alignX(subbox.w * subr, w), 0);
-            sup4.place(dx + alignX(supbox.w * supr, w), 0);
-            dx += w;
+            sub2.place(dx + alignX(subbox.w * subr, w2), 0);
+            sup4.place(dx + alignX(supbox.w * supr, w2), 0);
+            dx += w2;
           }
           return x2 + dx;
         };
@@ -60752,9 +60752,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                       var child = cell2.childNodes[0];
                       var noStretch = child.stretch.dir === 0;
                       if (all2 || noStretch) {
-                        var w = child.getBBox(noStretch).w;
-                        if (w > W) {
-                          W = w;
+                        var w2 = child.getBBox(noStretch).w;
+                        if (w2 > W) {
+                          W = w2;
                         }
                       }
                     }
@@ -60818,12 +60818,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             return this.data;
           };
           class_1.prototype.updateHDW = function(cell2, i2, j2, align, H2, D, W, M2) {
-            var _a2 = cell2.getBBox(), h = _a2.h, d = _a2.d, w = _a2.w;
+            var _a2 = cell2.getBBox(), h = _a2.h, d = _a2.d, w2 = _a2.w;
             var scale = cell2.parent.bbox.rscale;
             if (cell2.parent.bbox.rscale !== 1) {
               h *= scale;
               d *= scale;
-              w *= scale;
+              w2 *= scale;
             }
             if (this.node.getProperty("useHeight")) {
               if (h < 0.75)
@@ -60843,8 +60843,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               D[j2] = d;
             if (m > M2)
               M2 = m;
-            if (W && w > W[i2])
-              W[i2] = w;
+            if (W && w2 > W[i2])
+              W[i2] = w2;
             return M2;
           };
           class_1.prototype.extendHD = function(i2, H2, D, M2) {
@@ -60871,9 +60871,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             height += 2 * (this.fLine + this.fSpace[1]);
             var CW = this.getComputedWidths();
             width = (0, numeric_js_1.sum)(CW.concat(this.cLines, this.cSpace)) + 2 * (this.fLine + this.fSpace[0]);
-            var w = this.node.attributes.get("width");
-            if (w !== "auto") {
-              width = Math.max(this.length2em(w, 0) + 2 * this.fLine, width);
+            var w2 = this.node.attributes.get("width");
+            if (w2 !== "auto") {
+              width = Math.max(this.length2em(w2, 0) + 2 * this.fLine, width);
             }
             var _b2 = __read2(this.getBBoxHD(height), 2), h = _b2[0], d = _b2[1];
             bbox.h = h;
@@ -60882,7 +60882,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             var _c = __read2(this.getBBoxLR(), 2), L = _c[0], R = _c[1];
             bbox.L = L;
             bbox.R = R;
-            if (!(0, string_js_1.isPercent)(w)) {
+            if (!(0, string_js_1.isPercent)(w2)) {
               this.setColumnPWidths();
             }
           };
@@ -60894,9 +60894,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               this.bbox.pwidth = "";
               this.container.bbox.pwidth = "";
             }
-            var _a2 = this.bbox, w = _a2.w, L = _a2.L, R = _a2.R;
+            var _a2 = this.bbox, w2 = _a2.w, L = _a2.L, R = _a2.R;
             var labelInWidth = this.node.attributes.get("data-width-includes-label");
-            var W = Math.max(w, this.length2em(width, Math.max(cwidth, L + w + R))) - (labelInWidth ? L + R : 0);
+            var W = Math.max(w2, this.length2em(width, Math.max(cwidth, L + w2 + R))) - (labelInWidth ? L + R : 0);
             var cols = this.node.attributes.get("equalcolumns") ? Array(this.numCols).fill(this.percent(1 / Math.max(1, this.numCols))) : this.getColumnAttributes("columnwidth", 0);
             this.cWidths = this.getColumnWidthsFixed(cols, W);
             var CW = this.getComputedWidths();
@@ -60905,10 +60905,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               this.bbox.w = this.pWidth;
             }
             this.setColumnPWidths();
-            if (this.pWidth !== w) {
+            if (this.pWidth !== w2) {
               this.parent.invalidateBBox();
             }
-            return this.pWidth !== w;
+            return this.pWidth !== w2;
           };
           class_1.prototype.setColumnPWidths = function() {
             var e_4, _a2;
@@ -61023,8 +61023,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             } else if ((0, string_js_1.isPercent)(width)) {
               cwidth = this.percent(1 / n);
             } else {
-              var w = (0, numeric_js_1.sum)([].concat(this.cLines, this.cSpace)) + 2 * this.fSpace[0];
-              cwidth = Math.max(0, this.length2em(width) - w) / n;
+              var w2 = (0, numeric_js_1.sum)([].concat(this.cLines, this.cSpace)) + 2 * this.fSpace[0];
+              cwidth = Math.max(0, this.length2em(width) - w2) / n;
             }
             return Array(this.numCols).fill(cwidth);
           };
@@ -61536,20 +61536,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         };
         SVGmtable2.prototype.handleFrame = function(svg2) {
           if (this.frame && this.fLine) {
-            var _a2 = this.getBBox(), h = _a2.h, d = _a2.d, w = _a2.w;
+            var _a2 = this.getBBox(), h = _a2.h, d = _a2.d, w2 = _a2.w;
             var style2 = this.node.attributes.get("frame");
-            this.adaptor.append(svg2, this.makeFrame(w, h, d, style2));
+            this.adaptor.append(svg2, this.makeFrame(w2, h, d, style2));
           }
         };
         SVGmtable2.prototype.handlePWidth = function(svg2) {
           if (!this.pWidth) {
             return 0;
           }
-          var _a2 = this.getBBox(), w = _a2.w, L = _a2.L, R = _a2.R;
+          var _a2 = this.getBBox(), w2 = _a2.w, L = _a2.L, R = _a2.R;
           var W = L + this.pWidth + R;
           var align = this.getAlignShift()[0];
           var CW = Math.max(this.isTop ? W : 0, this.container.getWrapWidth(this.containerI)) - L - R;
-          var dw = w - (this.pWidth > CW ? CW : this.pWidth);
+          var dw = w2 - (this.pWidth > CW ? CW : this.pWidth);
           var dx = align === "left" ? 0 : align === "right" ? dw : dw / 2;
           if (dx) {
             var table2 = this.svg("g", {}, this.adaptor.childNodes(svg2));
@@ -61561,12 +61561,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         SVGmtable2.prototype.lineClass = function(style2) {
           return CLASSPREFIX + style2;
         };
-        SVGmtable2.prototype.makeFrame = function(w, h, d, style2) {
+        SVGmtable2.prototype.makeFrame = function(w2, h, d, style2) {
           var t2 = this.fLine;
           return this.svg("rect", this.setLineThickness(t2, style2, {
             "data-frame": true,
             "class": this.lineClass(style2),
-            width: this.fixed(w - t2),
+            width: this.fixed(w2 - t2),
             height: this.fixed(h + d - t2),
             x: this.fixed(t2 / 2),
             y: this.fixed(t2 / 2 - d)
@@ -61586,16 +61586,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }));
         };
         SVGmtable2.prototype.makeHLine = function(y, style2, t2) {
-          var w = this.getBBox().w;
+          var w2 = this.getBBox().w;
           var dt = style2 === "dotted" ? t2 / 2 : 0;
-          var Y = this.fixed(y - t2 / 2);
+          var Y2 = this.fixed(y - t2 / 2);
           return this.svg("line", this.setLineThickness(t2, style2, {
             "data-line": "h",
             "class": this.lineClass(style2),
             x1: this.fixed(dt),
-            y1: Y,
-            x2: this.fixed(w - dt),
-            y2: Y
+            y1: Y2,
+            x2: this.fixed(w2 - dt),
+            y2: Y2
           }));
         };
         SVGmtable2.prototype.setLineThickness = function(t2, style2, properties) {
@@ -61638,8 +61638,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         };
         SVGmtable2.prototype.topTable = function(svg2, labels, side) {
           var adaptor = this.adaptor;
-          var _a2 = this.getBBox(), h = _a2.h, d = _a2.d, w = _a2.w, L = _a2.L, R = _a2.R;
-          var W = L + (this.pWidth || w) + R;
+          var _a2 = this.getBBox(), h = _a2.h, d = _a2.d, w2 = _a2.w, L = _a2.L, R = _a2.R;
+          var W = L + (this.pWidth || w2) + R;
           var LW = this.getTableData().L;
           var _b2 = __read2(this.getPadAlignShift(side), 3), align = _b2[1], shift2 = _b2[2];
           var dx = shift2 + (align === "right" ? -W : align === "center" ? -W / 2 : 0) + L;
@@ -61663,8 +61663,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         };
         SVGmtable2.prototype.subTable = function(svg2, labels, side, dx) {
           var adaptor = this.adaptor;
-          var _a2 = this.getBBox(), w = _a2.w, L = _a2.L, R = _a2.R;
-          var W = L + (this.pWidth || w) + R;
+          var _a2 = this.getBBox(), w2 = _a2.w, L = _a2.L, R = _a2.R;
+          var W = L + (this.pWidth || w2) + R;
           var labelW = this.getTableData().L;
           var align = this.getAlignShift()[0];
           var CW = Math.max(W, this.container.getWrapWidth(this.containerI));
@@ -62167,12 +62167,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
         };
         SVGmtr2.prototype.placeCell = function(cell2, sizes) {
-          var x2 = sizes.x, y = sizes.y, lSpace = sizes.lSpace, w = sizes.w, rSpace = sizes.rSpace, lLine = sizes.lLine, rLine = sizes.rLine;
+          var x2 = sizes.x, y = sizes.y, lSpace = sizes.lSpace, w2 = sizes.w, rSpace = sizes.rSpace, lLine = sizes.lLine, rLine = sizes.rLine;
           var scale = 1 / this.getBBox().rscale;
           var _a2 = __read2([this.H * scale, this.D * scale], 2), h = _a2[0], d = _a2[1];
           var _b2 = __read2([this.tSpace * scale, this.bSpace * scale], 2), t2 = _b2[0], b = _b2[1];
-          var _c = __read2(cell2.placeCell(x2 + lSpace, y, w, h, d), 2), dx = _c[0], dy = _c[1];
-          var W = lSpace + w + rSpace;
+          var _c = __read2(cell2.placeCell(x2 + lSpace, y, w2, h, d), 2), dx = _c[0], dy = _c[1];
+          var W = lSpace + w2 + rSpace;
           cell2.placeColor(-(dx + lSpace + lLine / 2), -(d + b + dy), W + (lLine + rLine) / 2, h + d + t2 + b);
           return W + rLine;
         };
@@ -62684,9 +62684,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         SVGmaction2.prototype.toSVG = function(parent) {
           var svg2 = this.standardSVGnode(parent);
           var child = this.selected;
-          var _a2 = child.getOuterBBox(), h = _a2.h, d = _a2.d, w = _a2.w;
+          var _a2 = child.getOuterBBox(), h = _a2.h, d = _a2.d, w2 = _a2.w;
           this.adaptor.append(this.element, this.svg("rect", {
-            width: this.fixed(w),
+            width: this.fixed(w2),
             height: this.fixed(h + d),
             y: this.fixed(-d),
             fill: "none",
@@ -62885,8 +62885,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         exports2.arrowBBoxHD = arrowBBoxHD;
         var arrowBBoxW = function(node2, TRBL) {
           if (node2.childNodes[0]) {
-            var w = node2.childNodes[0].getBBox().w;
-            TRBL[1] = TRBL[3] = Math.max(0, node2.thickness * node2.arrowhead.y - w / 2);
+            var w2 = node2.childNodes[0].getBBox().w;
+            TRBL[1] = TRBL[3] = Math.max(0, node2.thickness * node2.arrowhead.y - w2 / 2);
           }
           return TRBL;
         };
@@ -63006,8 +63006,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             var _a2 = __read2(exports2.arrowDef[name2], 4), angle2 = _a2[0], double = _a2[1], isVertical = _a2[2], remove2 = _a2[3];
             return [name2 + "arrow", {
               renderer: function(node2, _child) {
-                var _a3 = node2.getBBox(), w = _a3.w, h = _a3.h, d = _a3.d;
-                var _b2 = __read2(isVertical ? [h + d, "X"] : [w, "Y"], 2), W = _b2[0], offset2 = _b2[1];
+                var _a3 = node2.getBBox(), w2 = _a3.w, h = _a3.h, d = _a3.d;
+                var _b2 = __read2(isVertical ? [h + d, "X"] : [w2, "Y"], 2), W = _b2[0], offset2 = _b2[1];
                 var dd2 = node2.getOffset(offset2);
                 var arrow2 = node2.arrow(W, angle2, double, offset2, dd2);
                 render2(node2, arrow2);
@@ -63286,10 +63286,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               return _this.TRBL[i2] - BTRBL[i2];
             });
           };
-          class_1.prototype.maximizeEntries = function(X2, Y) {
+          class_1.prototype.maximizeEntries = function(X2, Y2) {
             for (var i2 = 0; i2 < X2.length; i2++) {
-              if (X2[i2] < Y[i2]) {
-                X2[i2] = Y[i2];
+              if (X2[i2] < Y2[i2]) {
+                X2[i2] = Y2[i2];
               }
             }
           };
@@ -63298,8 +63298,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             var d = (direction === "X" ? R - L : B - T) / 2;
             return Math.abs(d) > 1e-3 ? d : 0;
           };
-          class_1.prototype.getArgMod = function(w, h) {
-            return [Math.atan2(h, w), Math.sqrt(w * w + h * h)];
+          class_1.prototype.getArgMod = function(w2, h) {
+            return [Math.atan2(h, w2), Math.sqrt(w2 * w2 + h * h)];
           };
           class_1.prototype.arrow = function(_w, _a2, _double, _offset, _dist) {
             return null;
@@ -63307,18 +63307,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           class_1.prototype.arrowData = function() {
             var _b2 = __read2([this.padding, this.thickness], 2), p = _b2[0], t2 = _b2[1];
             var r2 = t2 * (this.arrowhead.x + Math.max(1, this.arrowhead.dx));
-            var _c = this.childNodes[0].getBBox(), h = _c.h, d = _c.d, w = _c.w;
+            var _c = this.childNodes[0].getBBox(), h = _c.h, d = _c.d, w2 = _c.w;
             var H2 = h + d;
-            var R = Math.sqrt(H2 * H2 + w * w);
-            var x2 = Math.max(p, r2 * w / R);
+            var R = Math.sqrt(H2 * H2 + w2 * w2);
+            var x2 = Math.max(p, r2 * w2 / R);
             var y = Math.max(p, r2 * H2 / R);
-            var _d = __read2(this.getArgMod(w + 2 * x2, H2 + 2 * y), 2), a = _d[0], W = _d[1];
+            var _d = __read2(this.getArgMod(w2 + 2 * x2, H2 + 2 * y), 2), a = _d[0], W = _d[1];
             return { a, W, x: x2, y };
           };
           class_1.prototype.arrowAW = function() {
-            var _b2 = this.childNodes[0].getBBox(), h = _b2.h, d = _b2.d, w = _b2.w;
+            var _b2 = this.childNodes[0].getBBox(), h = _b2.h, d = _b2.d, w2 = _b2.w;
             var _c = __read2(this.TRBL, 4), T = _c[0], R = _c[1], B = _c[2], L = _c[3];
-            return this.getArgMod(L + w + R, T + h + d + B);
+            return this.getArgMod(L + w2 + R, T + h + d + B);
           };
           class_1.prototype.createMsqrt = function(child) {
             var mmlFactory = this.node.factory;
@@ -63381,38 +63381,38 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         var Notation$12 = __importStar2(requireNotation$1());
         __exportStar2(requireNotation$1(), exports2);
         exports2.computeLineData = {
-          top: function(h, _d, w, t2) {
-            return [0, h - t2, w, h - t2];
+          top: function(h, _d, w2, t2) {
+            return [0, h - t2, w2, h - t2];
           },
-          right: function(h, d, w, t2) {
-            return [w - t2, -d, w - t2, h];
+          right: function(h, d, w2, t2) {
+            return [w2 - t2, -d, w2 - t2, h];
           },
-          bottom: function(_h, d, w, t2) {
-            return [0, t2 - d, w, t2 - d];
+          bottom: function(_h, d, w2, t2) {
+            return [0, t2 - d, w2, t2 - d];
           },
           left: function(h, d, _w, t2) {
             return [t2, -d, t2, h];
           },
-          vertical: function(h, d, w, _t) {
-            return [w / 2, h, w / 2, -d];
+          vertical: function(h, d, w2, _t) {
+            return [w2 / 2, h, w2 / 2, -d];
           },
-          horizontal: function(h, d, w, _t) {
-            return [0, (h - d) / 2, w, (h - d) / 2];
+          horizontal: function(h, d, w2, _t) {
+            return [0, (h - d) / 2, w2, (h - d) / 2];
           },
-          up: function(h, d, w, t2) {
-            return [t2, t2 - d, w - t2, h - t2];
+          up: function(h, d, w2, t2) {
+            return [t2, t2 - d, w2 - t2, h - t2];
           },
-          down: function(h, d, w, t2) {
-            return [t2, h - t2, w - t2, t2 - d];
+          down: function(h, d, w2, t2) {
+            return [t2, h - t2, w2 - t2, t2 - d];
           }
         };
         var lineData = function(node2, kind, offset2) {
           if (offset2 === void 0) {
             offset2 = "";
           }
-          var _a2 = node2.getBBox(), h = _a2.h, d = _a2.d, w = _a2.w;
+          var _a2 = node2.getBBox(), h = _a2.h, d = _a2.d, w2 = _a2.w;
           var t2 = node2.thickness / 2;
-          return (0, exports2.lineOffset)(exports2.computeLineData[kind](h, d, w, t2), node2, offset2);
+          return (0, exports2.lineOffset)(exports2.computeLineData[kind](h, d, w2, t2), node2, offset2);
         };
         exports2.lineData = lineData;
         var lineOffset = function(data, node2, offset2) {
@@ -63680,20 +63680,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           if (dist2 === void 0) {
             dist2 = 0;
           }
-          var _a2 = this.getBBox(), w = _a2.w, h = _a2.h, d = _a2.d;
-          var dw = (W - w) / 2;
+          var _a2 = this.getBBox(), w2 = _a2.w, h = _a2.h, d = _a2.d;
+          var dw = (W - w2) / 2;
           var m = (h - d) / 2;
           var t2 = this.thickness;
           var t22 = t2 / 2;
           var _b2 = __read2([t2 * this.arrowhead.x, t2 * this.arrowhead.y, t2 * this.arrowhead.dx], 3), x2 = _b2[0], y = _b2[1], dx = _b2[2];
-          var arrow2 = double ? this.fill("M", w + dw, m, "l", -(x2 + dx), y, "l", dx, t22 - y, "L", x2 - dw, m + t22, "l", dx, y - t22, "l", -(x2 + dx), -y, "l", x2 + dx, -y, "l", -dx, y - t22, "L", w + dw - x2, m - t22, "l", -dx, t22 - y, "Z") : this.fill("M", w + dw, m, "l", -(x2 + dx), y, "l", dx, t22 - y, "L", -dw, m + t22, "l", 0, -t2, "L", w + dw - x2, m - t22, "l", -dx, t22 - y, "Z");
+          var arrow2 = double ? this.fill("M", w2 + dw, m, "l", -(x2 + dx), y, "l", dx, t22 - y, "L", x2 - dw, m + t22, "l", dx, y - t22, "l", -(x2 + dx), -y, "l", x2 + dx, -y, "l", -dx, y - t22, "L", w2 + dw - x2, m - t22, "l", -dx, t22 - y, "Z") : this.fill("M", w2 + dw, m, "l", -(x2 + dx), y, "l", dx, t22 - y, "L", -dw, m + t22, "l", 0, -t2, "L", w2 + dw - x2, m - t22, "l", -dx, t22 - y, "Z");
           var transform = [];
           if (dist2) {
             transform.push(offset2 === "X" ? "translate(".concat(this.fixed(-dist2), " 0)") : "translate(0 ".concat(this.fixed(dist2), ")"));
           }
           if (a) {
             var A2 = this.jax.fixed(-a * 180 / Math.PI);
-            transform.push("rotate(".concat(A2, " ").concat(this.fixed(w / 2), " ").concat(this.fixed(m), ")"));
+            transform.push("rotate(".concat(A2, " ").concat(this.fixed(w2 / 2), " ").concat(this.fixed(m), ")"));
           }
           if (transform.length) {
             this.adaptor.setAttribute(arrow2, "transform", transform.join(" "));
@@ -63710,7 +63710,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             "stroke-width": this.fixed(this.thickness)
           });
         };
-        SVGmenclose2.prototype.box = function(w, h, d, r2) {
+        SVGmenclose2.prototype.box = function(w2, h, d, r2) {
           if (r2 === void 0) {
             r2 = 0;
           }
@@ -63718,7 +63718,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           var def = {
             x: this.fixed(t2 / 2),
             y: this.fixed(t2 / 2 - d),
-            width: this.fixed(w - t2),
+            width: this.fixed(w2 - t2),
             height: this.fixed(h + d - t2),
             fill: "none",
             "stroke-width": this.fixed(t2)
@@ -63728,12 +63728,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
           return this.svg("rect", def);
         };
-        SVGmenclose2.prototype.ellipse = function(w, h, d) {
+        SVGmenclose2.prototype.ellipse = function(w2, h, d) {
           var t2 = this.thickness;
           return this.svg("ellipse", {
-            rx: this.fixed((w - t2) / 2),
+            rx: this.fixed((w2 - t2) / 2),
             ry: this.fixed((h + d - t2) / 2),
-            cx: this.fixed(w / 2),
+            cx: this.fixed(w2 / 2),
             cy: this.fixed((h - d) / 2),
             "fill": "none",
             "stroke-width": this.fixed(t2)
@@ -63791,8 +63791,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }],
           ["box", {
             renderer: function(node2, _child) {
-              var _a2 = node2.getBBox(), w = _a2.w, h = _a2.h, d = _a2.d;
-              node2.adaptor.append(node2.element, node2.box(w, h, d));
+              var _a2 = node2.getBBox(), w2 = _a2.w, h = _a2.h, d = _a2.d;
+              node2.adaptor.append(node2.element, node2.box(w2, h, d));
             },
             bbox: Notation2.fullBBox,
             border: Notation2.fullBorder,
@@ -63800,27 +63800,27 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }],
           ["roundedbox", {
             renderer: function(node2, _child) {
-              var _a2 = node2.getBBox(), w = _a2.w, h = _a2.h, d = _a2.d;
+              var _a2 = node2.getBBox(), w2 = _a2.w, h = _a2.h, d = _a2.d;
               var r2 = node2.thickness + node2.padding;
-              node2.adaptor.append(node2.element, node2.box(w, h, d, r2));
+              node2.adaptor.append(node2.element, node2.box(w2, h, d, r2));
             },
             bbox: Notation2.fullBBox
           }],
           ["circle", {
             renderer: function(node2, _child) {
-              var _a2 = node2.getBBox(), w = _a2.w, h = _a2.h, d = _a2.d;
-              node2.adaptor.append(node2.element, node2.ellipse(w, h, d));
+              var _a2 = node2.getBBox(), w2 = _a2.w, h = _a2.h, d = _a2.d;
+              node2.adaptor.append(node2.element, node2.ellipse(w2, h, d));
             },
             bbox: Notation2.fullBBox
           }],
           ["phasorangle", {
             renderer: function(node2, _child) {
-              var _a2 = node2.getBBox(), w = _a2.w, h = _a2.h, d = _a2.d;
+              var _a2 = node2.getBBox(), w2 = _a2.w, h = _a2.h, d = _a2.d;
               var a = node2.getArgMod(1.75 * node2.padding, h + d)[0];
               var t2 = node2.thickness / 2;
               var HD = h + d;
               var cos = Math.cos(a);
-              node2.adaptor.append(node2.element, node2.path("mitre", "M", w, t2 - d, "L", t2 + cos * t2, t2 - d, "L", cos * HD + t2, HD - d - t2));
+              node2.adaptor.append(node2.element, node2.path("mitre", "M", w2, t2 - d, "L", t2 + cos * t2, t2 - d, "L", cos * HD + t2, HD - d - t2));
             },
             bbox: function(node2) {
               var p = node2.padding / 2;
@@ -63847,10 +63847,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           Notation2.DiagonalArrow("northwestsoutheast"),
           ["longdiv", {
             renderer: function(node2, _child) {
-              var _a2 = node2.getBBox(), w = _a2.w, h = _a2.h, d = _a2.d;
+              var _a2 = node2.getBBox(), w2 = _a2.w, h = _a2.h, d = _a2.d;
               var t2 = node2.thickness / 2;
               var p = node2.padding;
-              node2.adaptor.append(node2.element, node2.path("round", "M", t2, t2 - d, "a", p - t2 / 2, (h + d) / 2 - 4 * t2, 0, "0,1", 0, h + d - 2 * t2, "L", w - t2, h - t2));
+              node2.adaptor.append(node2.element, node2.path("round", "M", t2, t2 - d, "a", p - t2 / 2, (h + d) / 2 - 4 * t2, 0, "0,1", 0, h + d - 2 * t2, "L", w2 - t2, h - t2));
             },
             bbox: function(node2) {
               var p = node2.padding;
@@ -63913,8 +63913,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
           class_1.prototype.computeBBox = function(bbox, _recompute) {
             if (this.childNodes.length) {
-              var _a2 = this.childNodes[0].getBBox(), w = _a2.w, h = _a2.h, d = _a2.d;
-              bbox.w = w;
+              var _a2 = this.childNodes[0].getBBox(), w2 = _a2.w, h = _a2.h, d = _a2.d;
+              bbox.w = w2;
               bbox.h = h;
               bbox.d = d;
             }
@@ -64117,18 +64117,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           var xml = this.adaptor.clone(this.node.getXML());
           var em = this.jax.math.metrics.em * this.jax.math.metrics.scale;
           var scale = this.fixed(1 / em);
-          var _a2 = this.getBBox(), w = _a2.w, h = _a2.h, d = _a2.d;
+          var _a2 = this.getBBox(), w2 = _a2.w, h = _a2.h, d = _a2.d;
           this.element = this.adaptor.append(parent, this.svg("foreignObject", {
             "data-mjx-xml": true,
             y: this.jax.fixed(-h * em) + "px",
-            width: this.jax.fixed(w * em) + "px",
+            width: this.jax.fixed(w2 * em) + "px",
             height: this.jax.fixed((h + d) * em) + "px",
             transform: "scale(".concat(scale, ") matrix(1 0 0 -1 0 0)")
           }, [xml]));
         };
         SVGxml2.prototype.computeBBox = function(bbox, _recompute) {
-          var _a2 = this.jax.measureXMLnode(this.node.getXML()), w = _a2.w, h = _a2.h, d = _a2.d;
-          bbox.w = w;
+          var _a2 = this.jax.measureXMLnode(this.node.getXML()), w2 = _a2.w, h = _a2.h, d = _a2.d;
+          bbox.w = w2;
           bbox.h = h;
           bbox.d = d;
         };
@@ -64345,10 +64345,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
           var _a2 = this.node.attributes.getList("src", "alt"), src = _a2.src, alt = _a2.alt;
           var h = this.fixed(this.height);
-          var w = this.fixed(this.width);
+          var w2 = this.fixed(this.width);
           var y = this.fixed(this.height + (this.valign || 0));
           var properties = {
-            width: w,
+            width: w2,
             height: h,
             transform: "translate(0 " + y + ") matrix(1 0 0 -1 0 0)",
             preserveAspectRatio: "none",
@@ -64621,24 +64621,24 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             var text2 = this.node.getText();
             if (variant === "-explicitFont") {
               var font = this.jax.getFontData(this.parent.styles);
-              var _b2 = this.jax.measureText(text2, variant, font), w = _b2.w, h = _b2.h, d = _b2.d;
+              var _b2 = this.jax.measureText(text2, variant, font), w2 = _b2.w, h = _b2.h, d = _b2.d;
               bbox.h = h;
               bbox.d = d;
-              bbox.w = w;
+              bbox.w = w2;
             } else {
               var chars = this.remappedText(text2, variant);
               bbox.empty();
               try {
                 for (var chars_1 = __values2(chars), chars_1_1 = chars_1.next(); !chars_1_1.done; chars_1_1 = chars_1.next()) {
                   var char = chars_1_1.value;
-                  var _c = __read2(this.getVariantChar(variant, char), 4), h = _c[0], d = _c[1], w = _c[2], data = _c[3];
+                  var _c = __read2(this.getVariantChar(variant, char), 4), h = _c[0], d = _c[1], w2 = _c[2], data = _c[3];
                   if (data.unknown) {
                     var cbox = this.jax.measureText(String.fromCodePoint(char), variant);
-                    w = cbox.w;
+                    w2 = cbox.w;
                     h = cbox.h;
                     d = cbox.d;
                   }
-                  bbox.w += w;
+                  bbox.w += w2;
                   if (h > bbox.h)
                     bbox.h = h;
                   if (d > bbox.d)
@@ -70878,9 +70878,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             this.container = container2;
           };
           SVG2.prototype.createRoot = function(wrapper2) {
-            var _a2 = wrapper2.getOuterBBox(), w = _a2.w, h = _a2.h, d = _a2.d, pwidth = _a2.pwidth;
+            var _a2 = wrapper2.getOuterBBox(), w2 = _a2.w, h = _a2.h, d = _a2.d, pwidth = _a2.pwidth;
             var px = wrapper2.metrics.em / 1e3;
-            var W = Math.max(w, px);
+            var W = Math.max(w2, px);
             var H2 = Math.max(h + d, px);
             var g = this.svg("g", {
               stroke: "currentColor",
@@ -70900,8 +70900,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             }, [g]));
             if (W === 1e-3) {
               adaptor.setAttribute(svg2, "preserveAspectRatio", "xMidYMid slice");
-              if (w < 0) {
-                adaptor.setStyle(this.container, "margin-right", this.ex(w));
+              if (w2 < 0) {
+                adaptor.setStyle(this.container, "margin-right", this.ex(w2));
               }
             }
             if (pwidth) {
@@ -70992,9 +70992,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               viewBox: [0, 0, ex, ex].join(" ")
             }, [text2]);
             adaptor.append(adaptor.body(adaptor.document), svg2);
-            var w = adaptor.nodeSize(text2, 1e3, true)[0];
+            var w2 = adaptor.nodeSize(text2, 1e3, true)[0];
             adaptor.remove(svg2);
-            return { w, h: 0.75, d: 0.2 };
+            return { w: w2, h: 0.75, d: 0.2 };
           };
           SVG2.NAME = "SVG";
           SVG2.OPTIONS = __assign2(__assign2({}, OutputJax_js_1.CommonOutputJax.OPTIONS), { internalSpeechTitles: true, titleID: 0, fontCache: "local", localID: null });
@@ -76411,10 +76411,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
           var rule = getRule(inf);
           var conc2 = getConclusion(rule, (0, exports2.getProperty)(rule, "inferenceRule"));
-          var w = getSpaces(inf, rule, right2);
+          var w2 = getSpaces(inf, rule, right2);
           var x2 = getBBox(rule);
           var y = getBBox(conc2);
-          return w + (x2 - y) / 2;
+          return w2 + (x2 - y) / 2;
         };
         var addSpace = function(config2, inf, space, right2) {
           if (right2 === void 0) {
@@ -76540,19 +76540,19 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               }
               var adjust = adjustValue(premiseL, true);
               addSpace(config2, premiseL, -adjust, true);
-              var w = getSpaces(inf, rule, true);
+              var w2 = getSpaces(inf, rule, true);
               var maxAdjust = (0, exports2.getProperty)(inf, "maxAdjust");
               if (maxAdjust != null) {
                 adjust = Math.max(adjust, maxAdjust);
               }
               var column2 = void 0;
               if (isProof || !(column2 = getColumn(inf))) {
-                addSpace(config2, (0, exports2.getProperty)(inf, "proof") ? inf : inf.parent, adjust - w, true);
+                addSpace(config2, (0, exports2.getProperty)(inf, "proof") ? inf : inf.parent, adjust - w2, true);
                 continue;
               }
               var sibling = nextSibling(column2);
               if (sibling) {
-                var pos2 = config2.nodeFactory.create("node", "mspace", [], { width: adjust - w + "em" });
+                var pos2 = config2.nodeFactory.create("node", "mspace", [], { width: adjust - w2 + "em" });
                 sibling.appendChild(pos2);
                 inf.removeProperty("maxAdjust");
                 continue;
@@ -85071,7 +85071,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     function __asyncGenerator(thisArg, _arguments, generator) {
       if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
-      var g = generator.apply(thisArg, _arguments || []), i2, q2 = [];
+      var g = generator.apply(thisArg, _arguments || []), i2, q = [];
       return i2 = Object.create((typeof AsyncIterator === "function" ? AsyncIterator : Object).prototype), verb("next"), verb("throw"), verb("return", awaitReturn), i2[Symbol.asyncIterator] = function() {
         return this;
       }, i2;
@@ -85084,7 +85084,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         if (g[n]) {
           i2[n] = function(v) {
             return new Promise(function(a, b) {
-              q2.push([n, v, a, b]) > 1 || resume(n, v);
+              q.push([n, v, a, b]) > 1 || resume(n, v);
             });
           };
           if (f) i2[n] = f(i2[n]);
@@ -85094,11 +85094,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         try {
           step(g[n](v));
         } catch (e) {
-          settle(q2[0][3], e);
+          settle(q[0][3], e);
         }
       }
       function step(r2) {
-        r2.value instanceof __await ? Promise.resolve(r2.value.v).then(fulfill, reject) : settle(q2[0][2], r2);
+        r2.value instanceof __await ? Promise.resolve(r2.value.v).then(fulfill, reject) : settle(q[0][2], r2);
       }
       function fulfill(value2) {
         resume("next", value2);
@@ -85107,7 +85107,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         resume("throw", value2);
       }
       function settle(f, v) {
-        if (f(v), q2.shift(), q2.length) resume(q2[0][0], q2[0][1]);
+        if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]);
       }
     }
     function __asyncDelegator(o) {
@@ -106186,10 +106186,10 @@ self.onmessage = function (e) {
     }
     var ch2 = {};
     var wk = (function(c2, id, msg, transfer, cb) {
-      var w = new Worker(ch2[id] || (ch2[id] = URL.createObjectURL(new Blob([
+      var w2 = new Worker(ch2[id] || (ch2[id] = URL.createObjectURL(new Blob([
         c2 + ';addEventListener("error",function(e){e=e.error;postMessage({$e$:[e.message,e.code,e.stack]})})'
       ], { type: "text/javascript" }))));
-      w.onmessage = function(e) {
+      w2.onmessage = function(e) {
         var d = e.data, ed = d.$e$;
         if (ed) {
           var err2 = new Error(ed[0]);
@@ -106199,8 +106199,8 @@ self.onmessage = function (e) {
         } else
           cb(null, d);
       };
-      w.postMessage(msg, transfer);
-      return w;
+      w2.postMessage(msg, transfer);
+      return w2;
     });
     var u8 = Uint8Array, u16 = Uint16Array, i32 = Int32Array;
     var fleb = new u8([
@@ -106614,13 +106614,13 @@ self.onmessage = function (e) {
       };
     };
     var cbify = function(dat, opts, fns, init, id, cb) {
-      var w = wrkr(fns, init, id, function(err2, dat2) {
-        w.terminate();
+      var w2 = wrkr(fns, init, id, function(err2, dat2) {
+        w2.terminate();
         cb(err2, dat2);
       });
-      w.postMessage([dat, opts], opts.consume ? [dat.buffer] : []);
+      w2.postMessage([dat, opts], opts.consume ? [dat.buffer] : []);
       return function() {
-        w.terminate();
+        w2.terminate();
       };
     };
     var gzs = function(d) {
@@ -151412,7 +151412,7 @@ ${events}
         if (update.transactions.some((tr2) => tr2.effects.some((e) => e.is(startCompletionEffect))))
           this.pendingStart = true;
         let delay = this.pendingStart ? 50 : conf.activateOnTypingDelay;
-        this.debounceUpdate = cState.active.some((a) => a.isPending && !this.running.some((q2) => q2.active.source == a.source)) ? setTimeout(() => this.startUpdate(), delay) : -1;
+        this.debounceUpdate = cState.active.some((a) => a.isPending && !this.running.some((q) => q.active.source == a.source)) ? setTimeout(() => this.startUpdate(), delay) : -1;
         if (this.composing != 0)
           for (let tr2 of update.transactions) {
             if (tr2.isUserEvent("input.type"))
@@ -151448,7 +151448,7 @@ ${events}
         });
       }
       scheduleAccept() {
-        if (this.running.every((q2) => q2.done !== void 0))
+        if (this.running.every((q) => q.done !== void 0))
           this.accept();
         else if (this.debounceAccept < 0)
           this.debounceAccept = setTimeout(() => this.accept(), this.view.state.facet(completionConfig).updateSyncTime);
@@ -153580,9 +153580,9 @@ ${events}
     function maxSeverity(diagnostics) {
       let sev = "hint", weight = 1;
       for (let d of diagnostics) {
-        let w = severityWeight(d.severity);
-        if (w > weight) {
-          weight = w;
+        let w2 = severityWeight(d.severity);
+        if (w2 > weight) {
+          weight = w2;
           sev = d.severity;
         }
       }
