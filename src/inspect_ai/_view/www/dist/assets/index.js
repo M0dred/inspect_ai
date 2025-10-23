@@ -9559,7 +9559,7 @@ var require_assets = __commonJS({
             listenerWrapper = dispatchContinuousEvent;
             break;
           default:
-            listenerWrapper = dispatchEvent;
+            listenerWrapper = dispatchEvent2;
         }
         eventSystemFlags = listenerWrapper.bind(
           null,
@@ -11531,7 +11531,7 @@ var require_assets = __commonJS({
         ReactSharedInternals.T = null;
         var previousPriority = ReactDOMSharedInternals.p;
         try {
-          ReactDOMSharedInternals.p = 2, dispatchEvent(domEventName, eventSystemFlags, container2, nativeEvent);
+          ReactDOMSharedInternals.p = 2, dispatchEvent2(domEventName, eventSystemFlags, container2, nativeEvent);
         } finally {
           ReactDOMSharedInternals.p = previousPriority, ReactSharedInternals.T = prevTransition;
         }
@@ -11541,12 +11541,12 @@ var require_assets = __commonJS({
         ReactSharedInternals.T = null;
         var previousPriority = ReactDOMSharedInternals.p;
         try {
-          ReactDOMSharedInternals.p = 8, dispatchEvent(domEventName, eventSystemFlags, container2, nativeEvent);
+          ReactDOMSharedInternals.p = 8, dispatchEvent2(domEventName, eventSystemFlags, container2, nativeEvent);
         } finally {
           ReactDOMSharedInternals.p = previousPriority, ReactSharedInternals.T = prevTransition;
         }
       }
-      function dispatchEvent(domEventName, eventSystemFlags, targetContainer, nativeEvent) {
+      function dispatchEvent2(domEventName, eventSystemFlags, targetContainer, nativeEvent) {
         if (_enabled) {
           var blockedOn = findInstanceBlockingEvent(nativeEvent);
           if (null === blockedOn)
@@ -23014,6 +23014,3180 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return initializer(store.setState, get2, store);
     };
     const immer = immerImpl;
+    var dexie_min$1 = { exports: {} };
+    var dexie_min = dexie_min$1.exports;
+    var hasRequiredDexie_min;
+    function requireDexie_min() {
+      if (hasRequiredDexie_min) return dexie_min$1.exports;
+      hasRequiredDexie_min = 1;
+      (function(module2, exports2) {
+        (function(e, t2) {
+          module2.exports = t2();
+        })(dexie_min, function() {
+          var s = function(e2, t3) {
+            return (s = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(e3, t4) {
+              e3.__proto__ = t4;
+            } || function(e3, t4) {
+              for (var n2 in t4) Object.prototype.hasOwnProperty.call(t4, n2) && (e3[n2] = t4[n2]);
+            })(e2, t3);
+          };
+          var _ = function() {
+            return (_ = Object.assign || function(e2) {
+              for (var t3, n2 = 1, r3 = arguments.length; n2 < r3; n2++) for (var i3 in t3 = arguments[n2]) Object.prototype.hasOwnProperty.call(t3, i3) && (e2[i3] = t3[i3]);
+              return e2;
+            }).apply(this, arguments);
+          };
+          function i2(e2, t3, n2) {
+            for (var r3, i3 = 0, o2 = t3.length; i3 < o2; i3++) !r3 && i3 in t3 || ((r3 = r3 || Array.prototype.slice.call(t3, 0, i3))[i3] = t3[i3]);
+            return e2.concat(r3 || Array.prototype.slice.call(t3));
+          }
+          var f = "undefined" != typeof globalThis ? globalThis : "undefined" != typeof self ? self : "undefined" != typeof window ? window : commonjsGlobal, O2 = Object.keys, x2 = Array.isArray;
+          function a(t3, n2) {
+            return "object" != typeof n2 || O2(n2).forEach(function(e2) {
+              t3[e2] = n2[e2];
+            }), t3;
+          }
+          "undefined" == typeof Promise || f.Promise || (f.Promise = Promise);
+          var c2 = Object.getPrototypeOf, n = {}.hasOwnProperty;
+          function m(e2, t3) {
+            return n.call(e2, t3);
+          }
+          function r2(t3, n2) {
+            "function" == typeof n2 && (n2 = n2(c2(t3))), ("undefined" == typeof Reflect ? O2 : Reflect.ownKeys)(n2).forEach(function(e2) {
+              l(t3, e2, n2[e2]);
+            });
+          }
+          var u = Object.defineProperty;
+          function l(e2, t3, n2, r3) {
+            u(e2, t3, a(n2 && m(n2, "get") && "function" == typeof n2.get ? { get: n2.get, set: n2.set, configurable: true } : { value: n2, configurable: true, writable: true }, r3));
+          }
+          function o(t3) {
+            return { from: function(e2) {
+              return t3.prototype = Object.create(e2.prototype), l(t3.prototype, "constructor", t3), { extend: r2.bind(null, t3.prototype) };
+            } };
+          }
+          var h = Object.getOwnPropertyDescriptor;
+          var d = [].slice;
+          function b(e2, t3, n2) {
+            return d.call(e2, t3, n2);
+          }
+          function p(e2, t3) {
+            return t3(e2);
+          }
+          function y(e2) {
+            if (!e2) throw new Error("Assertion Failed");
+          }
+          function v(e2) {
+            f.setImmediate ? setImmediate(e2) : setTimeout(e2, 0);
+          }
+          function P2(e2, t3) {
+            if ("string" == typeof t3 && m(e2, t3)) return e2[t3];
+            if (!t3) return e2;
+            if ("string" != typeof t3) {
+              for (var n2 = [], r3 = 0, i3 = t3.length; r3 < i3; ++r3) {
+                var o2 = P2(e2, t3[r3]);
+                n2.push(o2);
+              }
+              return n2;
+            }
+            var a2 = t3.indexOf(".");
+            if (-1 !== a2) {
+              var u2 = e2[t3.substr(0, a2)];
+              return null == u2 ? void 0 : P2(u2, t3.substr(a2 + 1));
+            }
+          }
+          function K2(e2, t3, n2) {
+            if (e2 && void 0 !== t3 && !("isFrozen" in Object && Object.isFrozen(e2))) if ("string" != typeof t3 && "length" in t3) {
+              y("string" != typeof n2 && "length" in n2);
+              for (var r3 = 0, i3 = t3.length; r3 < i3; ++r3) K2(e2, t3[r3], n2[r3]);
+            } else {
+              var o2, a2, u2 = t3.indexOf(".");
+              -1 !== u2 ? (o2 = t3.substr(0, u2), "" === (a2 = t3.substr(u2 + 1)) ? void 0 === n2 ? x2(e2) && !isNaN(parseInt(o2)) ? e2.splice(o2, 1) : delete e2[o2] : e2[o2] = n2 : K2(u2 = !(u2 = e2[o2]) || !m(e2, o2) ? e2[o2] = {} : u2, a2, n2)) : void 0 === n2 ? x2(e2) && !isNaN(parseInt(t3)) ? e2.splice(t3, 1) : delete e2[t3] : e2[t3] = n2;
+            }
+          }
+          function g(e2) {
+            var t3, n2 = {};
+            for (t3 in e2) m(e2, t3) && (n2[t3] = e2[t3]);
+            return n2;
+          }
+          var t2 = [].concat;
+          function w(e2) {
+            return t2.apply([], e2);
+          }
+          var e = "BigUint64Array,BigInt64Array,Array,Boolean,String,Date,RegExp,Blob,File,FileList,FileSystemFileHandle,FileSystemDirectoryHandle,ArrayBuffer,DataView,Uint8ClampedArray,ImageBitmap,ImageData,Map,Set,CryptoKey".split(",").concat(w([8, 16, 32, 64].map(function(t3) {
+            return ["Int", "Uint", "Float"].map(function(e2) {
+              return e2 + t3 + "Array";
+            });
+          }))).filter(function(e2) {
+            return f[e2];
+          }), k = new Set(e.map(function(e2) {
+            return f[e2];
+          }));
+          var E2 = null;
+          function S(e2) {
+            E2 = /* @__PURE__ */ new WeakMap();
+            e2 = (function e3(t3) {
+              if (!t3 || "object" != typeof t3) return t3;
+              var n2 = E2.get(t3);
+              if (n2) return n2;
+              if (x2(t3)) {
+                n2 = [], E2.set(t3, n2);
+                for (var r3 = 0, i3 = t3.length; r3 < i3; ++r3) n2.push(e3(t3[r3]));
+              } else if (k.has(t3.constructor)) n2 = t3;
+              else {
+                var o2, a2 = c2(t3);
+                for (o2 in n2 = a2 === Object.prototype ? {} : Object.create(a2), E2.set(t3, n2), t3) m(t3, o2) && (n2[o2] = e3(t3[o2]));
+              }
+              return n2;
+            })(e2);
+            return E2 = null, e2;
+          }
+          var j2 = {}.toString;
+          function A2(e2) {
+            return j2.call(e2).slice(8, -1);
+          }
+          var C2 = "undefined" != typeof Symbol ? Symbol.iterator : "@@iterator", T = "symbol" == typeof C2 ? function(e2) {
+            var t3;
+            return null != e2 && (t3 = e2[C2]) && t3.apply(e2);
+          } : function() {
+            return null;
+          };
+          function I(e2, t3) {
+            t3 = e2.indexOf(t3);
+            return 0 <= t3 && e2.splice(t3, 1), 0 <= t3;
+          }
+          var q2 = {};
+          function D(e2) {
+            var t3, n2, r3, i3;
+            if (1 === arguments.length) {
+              if (x2(e2)) return e2.slice();
+              if (this === q2 && "string" == typeof e2) return [e2];
+              if (i3 = T(e2)) {
+                for (n2 = []; !(r3 = i3.next()).done; ) n2.push(r3.value);
+                return n2;
+              }
+              if (null == e2) return [e2];
+              if ("number" != typeof (t3 = e2.length)) return [e2];
+              for (n2 = new Array(t3); t3--; ) n2[t3] = e2[t3];
+              return n2;
+            }
+            for (t3 = arguments.length, n2 = new Array(t3); t3--; ) n2[t3] = arguments[t3];
+            return n2;
+          }
+          var B = "undefined" != typeof Symbol ? function(e2) {
+            return "AsyncFunction" === e2[Symbol.toStringTag];
+          } : function() {
+            return false;
+          }, R = ["Unknown", "Constraint", "Data", "TransactionInactive", "ReadOnly", "Version", "NotFound", "InvalidState", "InvalidAccess", "Abort", "Timeout", "QuotaExceeded", "Syntax", "DataClone"], F = ["Modify", "Bulk", "OpenFailed", "VersionChange", "Schema", "Upgrade", "InvalidTable", "MissingAPI", "NoSuchDatabase", "InvalidArgument", "SubTransaction", "Unsupported", "Internal", "DatabaseClosed", "PrematureCommit", "ForeignAwait"].concat(R), M2 = { VersionChanged: "Database version changed by other database connection", DatabaseClosed: "Database has been closed", Abort: "Transaction aborted", TransactionInactive: "Transaction has already completed or failed", MissingAPI: "IndexedDB API missing. Please visit https://tinyurl.com/y2uuvskb" };
+          function N2(e2, t3) {
+            this.name = e2, this.message = t3;
+          }
+          function L(e2, t3) {
+            return e2 + ". Errors: " + Object.keys(t3).map(function(e3) {
+              return t3[e3].toString();
+            }).filter(function(e3, t4, n2) {
+              return n2.indexOf(e3) === t4;
+            }).join("\n");
+          }
+          function U2(e2, t3, n2, r3) {
+            this.failures = t3, this.failedKeys = r3, this.successCount = n2, this.message = L(e2, t3);
+          }
+          function V2(e2, t3) {
+            this.name = "BulkError", this.failures = Object.keys(t3).map(function(e3) {
+              return t3[e3];
+            }), this.failuresByPos = t3, this.message = L(e2, this.failures);
+          }
+          o(N2).from(Error).extend({ toString: function() {
+            return this.name + ": " + this.message;
+          } }), o(U2).from(N2), o(V2).from(N2);
+          var z = F.reduce(function(e2, t3) {
+            return e2[t3] = t3 + "Error", e2;
+          }, {}), W = N2, Y = F.reduce(function(e2, n2) {
+            var r3 = n2 + "Error";
+            function t3(e3, t4) {
+              this.name = r3, e3 ? "string" == typeof e3 ? (this.message = "".concat(e3).concat(t4 ? "\n " + t4 : ""), this.inner = t4 || null) : "object" == typeof e3 && (this.message = "".concat(e3.name, " ").concat(e3.message), this.inner = e3) : (this.message = M2[n2] || r3, this.inner = null);
+            }
+            return o(t3).from(W), e2[n2] = t3, e2;
+          }, {});
+          Y.Syntax = SyntaxError, Y.Type = TypeError, Y.Range = RangeError;
+          var $2 = R.reduce(function(e2, t3) {
+            return e2[t3 + "Error"] = Y[t3], e2;
+          }, {});
+          var Q = F.reduce(function(e2, t3) {
+            return -1 === ["Syntax", "Type", "Range"].indexOf(t3) && (e2[t3 + "Error"] = Y[t3]), e2;
+          }, {});
+          function G2() {
+          }
+          function X2(e2) {
+            return e2;
+          }
+          function H2(t3, n2) {
+            return null == t3 || t3 === X2 ? n2 : function(e2) {
+              return n2(t3(e2));
+            };
+          }
+          function J(e2, t3) {
+            return function() {
+              e2.apply(this, arguments), t3.apply(this, arguments);
+            };
+          }
+          function Z2(i3, o2) {
+            return i3 === G2 ? o2 : function() {
+              var e2 = i3.apply(this, arguments);
+              void 0 !== e2 && (arguments[0] = e2);
+              var t3 = this.onsuccess, n2 = this.onerror;
+              this.onsuccess = null, this.onerror = null;
+              var r3 = o2.apply(this, arguments);
+              return t3 && (this.onsuccess = this.onsuccess ? J(t3, this.onsuccess) : t3), n2 && (this.onerror = this.onerror ? J(n2, this.onerror) : n2), void 0 !== r3 ? r3 : e2;
+            };
+          }
+          function ee2(n2, r3) {
+            return n2 === G2 ? r3 : function() {
+              n2.apply(this, arguments);
+              var e2 = this.onsuccess, t3 = this.onerror;
+              this.onsuccess = this.onerror = null, r3.apply(this, arguments), e2 && (this.onsuccess = this.onsuccess ? J(e2, this.onsuccess) : e2), t3 && (this.onerror = this.onerror ? J(t3, this.onerror) : t3);
+            };
+          }
+          function te2(i3, o2) {
+            return i3 === G2 ? o2 : function(e2) {
+              var t3 = i3.apply(this, arguments);
+              a(e2, t3);
+              var n2 = this.onsuccess, r3 = this.onerror;
+              this.onsuccess = null, this.onerror = null;
+              e2 = o2.apply(this, arguments);
+              return n2 && (this.onsuccess = this.onsuccess ? J(n2, this.onsuccess) : n2), r3 && (this.onerror = this.onerror ? J(r3, this.onerror) : r3), void 0 === t3 ? void 0 === e2 ? void 0 : e2 : a(t3, e2);
+            };
+          }
+          function ne2(e2, t3) {
+            return e2 === G2 ? t3 : function() {
+              return false !== t3.apply(this, arguments) && e2.apply(this, arguments);
+            };
+          }
+          function re2(i3, o2) {
+            return i3 === G2 ? o2 : function() {
+              var e2 = i3.apply(this, arguments);
+              if (e2 && "function" == typeof e2.then) {
+                for (var t3 = this, n2 = arguments.length, r3 = new Array(n2); n2--; ) r3[n2] = arguments[n2];
+                return e2.then(function() {
+                  return o2.apply(t3, r3);
+                });
+              }
+              return o2.apply(this, arguments);
+            };
+          }
+          Q.ModifyError = U2, Q.DexieError = N2, Q.BulkError = V2;
+          var ie2 = "undefined" != typeof location && /^(http|https):\/\/(localhost|127\.0\.0\.1)/.test(location.href);
+          function oe2(e2) {
+            ie2 = e2;
+          }
+          var ae2 = {}, ue2 = 100, e = "undefined" == typeof Promise ? [] : (function() {
+            var e2 = Promise.resolve();
+            if ("undefined" == typeof crypto || !crypto.subtle) return [e2, c2(e2), e2];
+            var t3 = crypto.subtle.digest("SHA-512", new Uint8Array([0]));
+            return [t3, c2(t3), e2];
+          })(), R = e[0], F = e[1], e = e[2], F = F && F.then, se2 = R && R.constructor, ce2 = !!e;
+          var le2 = function(e2, t3) {
+            be2.push([e2, t3]), he2 && (queueMicrotask(Se2), he2 = false);
+          }, fe = true, he2 = true, de = [], pe2 = [], ye2 = X2, ve2 = { id: "global", global: true, ref: 0, unhandleds: [], onunhandled: G2, pgp: false, env: {}, finalize: G2 }, me = ve2, be2 = [], ge2 = 0, we2 = [];
+          function _e2(e2) {
+            if ("object" != typeof this) throw new TypeError("Promises must be constructed via new");
+            this._listeners = [], this._lib = false;
+            var t3 = this._PSD = me;
+            if ("function" != typeof e2) {
+              if (e2 !== ae2) throw new TypeError("Not a function");
+              return this._state = arguments[1], this._value = arguments[2], void (false === this._state && Oe2(this, this._value));
+            }
+            this._state = null, this._value = null, ++t3.ref, (function t4(r3, e3) {
+              try {
+                e3(function(n2) {
+                  if (null === r3._state) {
+                    if (n2 === r3) throw new TypeError("A promise cannot be resolved with itself.");
+                    var e4 = r3._lib && je2();
+                    n2 && "function" == typeof n2.then ? t4(r3, function(e5, t5) {
+                      n2 instanceof _e2 ? n2._then(e5, t5) : n2.then(e5, t5);
+                    }) : (r3._state = true, r3._value = n2, Pe2(r3)), e4 && Ae2();
+                  }
+                }, Oe2.bind(null, r3));
+              } catch (e4) {
+                Oe2(r3, e4);
+              }
+            })(this, e2);
+          }
+          var xe2 = { get: function() {
+            var u2 = me, t3 = Fe2;
+            function e2(n2, r3) {
+              var i3 = this, o2 = !u2.global && (u2 !== me || t3 !== Fe2), a2 = o2 && !Ue2(), e3 = new _e2(function(e4, t4) {
+                Ke2(i3, new ke2(Qe2(n2, u2, o2, a2), Qe2(r3, u2, o2, a2), e4, t4, u2));
+              });
+              return this._consoleTask && (e3._consoleTask = this._consoleTask), e3;
+            }
+            return e2.prototype = ae2, e2;
+          }, set: function(e2) {
+            l(this, "then", e2 && e2.prototype === ae2 ? xe2 : { get: function() {
+              return e2;
+            }, set: xe2.set });
+          } };
+          function ke2(e2, t3, n2, r3, i3) {
+            this.onFulfilled = "function" == typeof e2 ? e2 : null, this.onRejected = "function" == typeof t3 ? t3 : null, this.resolve = n2, this.reject = r3, this.psd = i3;
+          }
+          function Oe2(e2, t3) {
+            var n2, r3;
+            pe2.push(t3), null === e2._state && (n2 = e2._lib && je2(), t3 = ye2(t3), e2._state = false, e2._value = t3, r3 = e2, de.some(function(e3) {
+              return e3._value === r3._value;
+            }) || de.push(r3), Pe2(e2), n2 && Ae2());
+          }
+          function Pe2(e2) {
+            var t3 = e2._listeners;
+            e2._listeners = [];
+            for (var n2 = 0, r3 = t3.length; n2 < r3; ++n2) Ke2(e2, t3[n2]);
+            var i3 = e2._PSD;
+            --i3.ref || i3.finalize(), 0 === ge2 && (++ge2, le2(function() {
+              0 == --ge2 && Ce2();
+            }, []));
+          }
+          function Ke2(e2, t3) {
+            if (null !== e2._state) {
+              var n2 = e2._state ? t3.onFulfilled : t3.onRejected;
+              if (null === n2) return (e2._state ? t3.resolve : t3.reject)(e2._value);
+              ++t3.psd.ref, ++ge2, le2(Ee2, [n2, e2, t3]);
+            } else e2._listeners.push(t3);
+          }
+          function Ee2(e2, t3, n2) {
+            try {
+              var r3, i3 = t3._value;
+              !t3._state && pe2.length && (pe2 = []), r3 = ie2 && t3._consoleTask ? t3._consoleTask.run(function() {
+                return e2(i3);
+              }) : e2(i3), t3._state || -1 !== pe2.indexOf(i3) || (function(e3) {
+                var t4 = de.length;
+                for (; t4; ) if (de[--t4]._value === e3._value) return de.splice(t4, 1);
+              })(t3), n2.resolve(r3);
+            } catch (e3) {
+              n2.reject(e3);
+            } finally {
+              0 == --ge2 && Ce2(), --n2.psd.ref || n2.psd.finalize();
+            }
+          }
+          function Se2() {
+            $e2(ve2, function() {
+              je2() && Ae2();
+            });
+          }
+          function je2() {
+            var e2 = fe;
+            return he2 = fe = false, e2;
+          }
+          function Ae2() {
+            var e2, t3, n2;
+            do {
+              for (; 0 < be2.length; ) for (e2 = be2, be2 = [], n2 = e2.length, t3 = 0; t3 < n2; ++t3) {
+                var r3 = e2[t3];
+                r3[0].apply(null, r3[1]);
+              }
+            } while (0 < be2.length);
+            he2 = fe = true;
+          }
+          function Ce2() {
+            var e2 = de;
+            de = [], e2.forEach(function(e3) {
+              e3._PSD.onunhandled.call(null, e3._value, e3);
+            });
+            for (var t3 = we2.slice(0), n2 = t3.length; n2; ) t3[--n2]();
+          }
+          function Te2(e2) {
+            return new _e2(ae2, false, e2);
+          }
+          function Ie2(n2, r3) {
+            var i3 = me;
+            return function() {
+              var e2 = je2(), t3 = me;
+              try {
+                return We2(i3, true), n2.apply(this, arguments);
+              } catch (e3) {
+                r3 && r3(e3);
+              } finally {
+                We2(t3, false), e2 && Ae2();
+              }
+            };
+          }
+          r2(_e2.prototype, { then: xe2, _then: function(e2, t3) {
+            Ke2(this, new ke2(null, null, e2, t3, me));
+          }, catch: function(e2) {
+            if (1 === arguments.length) return this.then(null, e2);
+            var t3 = e2, n2 = arguments[1];
+            return "function" == typeof t3 ? this.then(null, function(e3) {
+              return (e3 instanceof t3 ? n2 : Te2)(e3);
+            }) : this.then(null, function(e3) {
+              return (e3 && e3.name === t3 ? n2 : Te2)(e3);
+            });
+          }, finally: function(t3) {
+            return this.then(function(e2) {
+              return _e2.resolve(t3()).then(function() {
+                return e2;
+              });
+            }, function(e2) {
+              return _e2.resolve(t3()).then(function() {
+                return Te2(e2);
+              });
+            });
+          }, timeout: function(r3, i3) {
+            var o2 = this;
+            return r3 < 1 / 0 ? new _e2(function(e2, t3) {
+              var n2 = setTimeout(function() {
+                return t3(new Y.Timeout(i3));
+              }, r3);
+              o2.then(e2, t3).finally(clearTimeout.bind(null, n2));
+            }) : this;
+          } }), "undefined" != typeof Symbol && Symbol.toStringTag && l(_e2.prototype, Symbol.toStringTag, "Dexie.Promise"), ve2.env = Ye2(), r2(_e2, { all: function() {
+            var o2 = D.apply(null, arguments).map(Ve2);
+            return new _e2(function(n2, r3) {
+              0 === o2.length && n2([]);
+              var i3 = o2.length;
+              o2.forEach(function(e2, t3) {
+                return _e2.resolve(e2).then(function(e3) {
+                  o2[t3] = e3, --i3 || n2(o2);
+                }, r3);
+              });
+            });
+          }, resolve: function(n2) {
+            return n2 instanceof _e2 ? n2 : n2 && "function" == typeof n2.then ? new _e2(function(e2, t3) {
+              n2.then(e2, t3);
+            }) : new _e2(ae2, true, n2);
+          }, reject: Te2, race: function() {
+            var e2 = D.apply(null, arguments).map(Ve2);
+            return new _e2(function(t3, n2) {
+              e2.map(function(e3) {
+                return _e2.resolve(e3).then(t3, n2);
+              });
+            });
+          }, PSD: { get: function() {
+            return me;
+          }, set: function(e2) {
+            return me = e2;
+          } }, totalEchoes: { get: function() {
+            return Fe2;
+          } }, newPSD: Ne2, usePSD: $e2, scheduler: { get: function() {
+            return le2;
+          }, set: function(e2) {
+            le2 = e2;
+          } }, rejectionMapper: { get: function() {
+            return ye2;
+          }, set: function(e2) {
+            ye2 = e2;
+          } }, follow: function(i3, n2) {
+            return new _e2(function(e2, t3) {
+              return Ne2(function(n3, r3) {
+                var e3 = me;
+                e3.unhandleds = [], e3.onunhandled = r3, e3.finalize = J(function() {
+                  var t4, e4 = this;
+                  t4 = function() {
+                    0 === e4.unhandleds.length ? n3() : r3(e4.unhandleds[0]);
+                  }, we2.push(function e5() {
+                    t4(), we2.splice(we2.indexOf(e5), 1);
+                  }), ++ge2, le2(function() {
+                    0 == --ge2 && Ce2();
+                  }, []);
+                }, e3.finalize), i3();
+              }, n2, e2, t3);
+            });
+          } }), se2 && (se2.allSettled && l(_e2, "allSettled", function() {
+            var e2 = D.apply(null, arguments).map(Ve2);
+            return new _e2(function(n2) {
+              0 === e2.length && n2([]);
+              var r3 = e2.length, i3 = new Array(r3);
+              e2.forEach(function(e3, t3) {
+                return _e2.resolve(e3).then(function(e4) {
+                  return i3[t3] = { status: "fulfilled", value: e4 };
+                }, function(e4) {
+                  return i3[t3] = { status: "rejected", reason: e4 };
+                }).then(function() {
+                  return --r3 || n2(i3);
+                });
+              });
+            });
+          }), se2.any && "undefined" != typeof AggregateError && l(_e2, "any", function() {
+            var e2 = D.apply(null, arguments).map(Ve2);
+            return new _e2(function(n2, r3) {
+              0 === e2.length && r3(new AggregateError([]));
+              var i3 = e2.length, o2 = new Array(i3);
+              e2.forEach(function(e3, t3) {
+                return _e2.resolve(e3).then(function(e4) {
+                  return n2(e4);
+                }, function(e4) {
+                  o2[t3] = e4, --i3 || r3(new AggregateError(o2));
+                });
+              });
+            });
+          }), se2.withResolvers && (_e2.withResolvers = se2.withResolvers));
+          var qe2 = { awaits: 0, echoes: 0, id: 0 }, De2 = 0, Be2 = [], Re2 = 0, Fe2 = 0, Me2 = 0;
+          function Ne2(e2, t3, n2, r3) {
+            var i3 = me, o2 = Object.create(i3);
+            o2.parent = i3, o2.ref = 0, o2.global = false, o2.id = ++Me2, ve2.env, o2.env = ce2 ? { Promise: _e2, PromiseProp: { value: _e2, configurable: true, writable: true }, all: _e2.all, race: _e2.race, allSettled: _e2.allSettled, any: _e2.any, resolve: _e2.resolve, reject: _e2.reject } : {}, t3 && a(o2, t3), ++i3.ref, o2.finalize = function() {
+              --this.parent.ref || this.parent.finalize();
+            };
+            r3 = $e2(o2, e2, n2, r3);
+            return 0 === o2.ref && o2.finalize(), r3;
+          }
+          function Le2() {
+            return qe2.id || (qe2.id = ++De2), ++qe2.awaits, qe2.echoes += ue2, qe2.id;
+          }
+          function Ue2() {
+            return !!qe2.awaits && (0 == --qe2.awaits && (qe2.id = 0), qe2.echoes = qe2.awaits * ue2, true);
+          }
+          function Ve2(e2) {
+            return qe2.echoes && e2 && e2.constructor === se2 ? (Le2(), e2.then(function(e3) {
+              return Ue2(), e3;
+            }, function(e3) {
+              return Ue2(), Xe2(e3);
+            })) : e2;
+          }
+          function ze2() {
+            var e2 = Be2[Be2.length - 1];
+            Be2.pop(), We2(e2, false);
+          }
+          function We2(e2, t3) {
+            var n2, r3 = me;
+            (t3 ? !qe2.echoes || Re2++ && e2 === me : !Re2 || --Re2 && e2 === me) || queueMicrotask(t3 ? (function(e3) {
+              ++Fe2, qe2.echoes && 0 != --qe2.echoes || (qe2.echoes = qe2.awaits = qe2.id = 0), Be2.push(me), We2(e3, true);
+            }).bind(null, e2) : ze2), e2 !== me && (me = e2, r3 === ve2 && (ve2.env = Ye2()), ce2 && (n2 = ve2.env.Promise, t3 = e2.env, (r3.global || e2.global) && (Object.defineProperty(f, "Promise", t3.PromiseProp), n2.all = t3.all, n2.race = t3.race, n2.resolve = t3.resolve, n2.reject = t3.reject, t3.allSettled && (n2.allSettled = t3.allSettled), t3.any && (n2.any = t3.any))));
+          }
+          function Ye2() {
+            var e2 = f.Promise;
+            return ce2 ? { Promise: e2, PromiseProp: Object.getOwnPropertyDescriptor(f, "Promise"), all: e2.all, race: e2.race, allSettled: e2.allSettled, any: e2.any, resolve: e2.resolve, reject: e2.reject } : {};
+          }
+          function $e2(e2, t3, n2, r3, i3) {
+            var o2 = me;
+            try {
+              return We2(e2, true), t3(n2, r3, i3);
+            } finally {
+              We2(o2, false);
+            }
+          }
+          function Qe2(t3, n2, r3, i3) {
+            return "function" != typeof t3 ? t3 : function() {
+              var e2 = me;
+              r3 && Le2(), We2(n2, true);
+              try {
+                return t3.apply(this, arguments);
+              } finally {
+                We2(e2, false), i3 && queueMicrotask(Ue2);
+              }
+            };
+          }
+          function Ge2(e2) {
+            Promise === se2 && 0 === qe2.echoes ? 0 === Re2 ? e2() : enqueueNativeMicroTask(e2) : setTimeout(e2, 0);
+          }
+          -1 === ("" + F).indexOf("[native code]") && (Le2 = Ue2 = G2);
+          var Xe2 = _e2.reject;
+          var He = String.fromCharCode(65535), Je2 = "Invalid key provided. Keys must be of type string, number, Date or Array<string | number | Date>.", Ze2 = "String expected.", et2 = [], tt = "__dbnames", nt = "readonly", rt2 = "readwrite";
+          function it2(e2, t3) {
+            return e2 ? t3 ? function() {
+              return e2.apply(this, arguments) && t3.apply(this, arguments);
+            } : e2 : t3;
+          }
+          var ot2 = { type: 3, lower: -1 / 0, lowerOpen: false, upper: [[]], upperOpen: false };
+          function at2(t3) {
+            return "string" != typeof t3 || /\./.test(t3) ? function(e2) {
+              return e2;
+            } : function(e2) {
+              return void 0 === e2[t3] && t3 in e2 && delete (e2 = S(e2))[t3], e2;
+            };
+          }
+          function ut() {
+            throw Y.Type("Entity instances must never be new:ed. Instances are generated by the framework bypassing the constructor.");
+          }
+          function st2(e2, t3) {
+            try {
+              var n2 = ct2(e2), r3 = ct2(t3);
+              if (n2 !== r3) return "Array" === n2 ? 1 : "Array" === r3 ? -1 : "binary" === n2 ? 1 : "binary" === r3 ? -1 : "string" === n2 ? 1 : "string" === r3 ? -1 : "Date" === n2 ? 1 : "Date" !== r3 ? NaN : -1;
+              switch (n2) {
+                case "number":
+                case "Date":
+                case "string":
+                  return t3 < e2 ? 1 : e2 < t3 ? -1 : 0;
+                case "binary":
+                  return (function(e3, t4) {
+                    for (var n3 = e3.length, r4 = t4.length, i3 = n3 < r4 ? n3 : r4, o2 = 0; o2 < i3; ++o2) if (e3[o2] !== t4[o2]) return e3[o2] < t4[o2] ? -1 : 1;
+                    return n3 === r4 ? 0 : n3 < r4 ? -1 : 1;
+                  })(lt2(e2), lt2(t3));
+                case "Array":
+                  return (function(e3, t4) {
+                    for (var n3 = e3.length, r4 = t4.length, i3 = n3 < r4 ? n3 : r4, o2 = 0; o2 < i3; ++o2) {
+                      var a2 = st2(e3[o2], t4[o2]);
+                      if (0 !== a2) return a2;
+                    }
+                    return n3 === r4 ? 0 : n3 < r4 ? -1 : 1;
+                  })(e2, t3);
+              }
+            } catch (e3) {
+            }
+            return NaN;
+          }
+          function ct2(e2) {
+            var t3 = typeof e2;
+            if ("object" != t3) return t3;
+            if (ArrayBuffer.isView(e2)) return "binary";
+            e2 = A2(e2);
+            return "ArrayBuffer" === e2 ? "binary" : e2;
+          }
+          function lt2(e2) {
+            return e2 instanceof Uint8Array ? e2 : ArrayBuffer.isView(e2) ? new Uint8Array(e2.buffer, e2.byteOffset, e2.byteLength) : new Uint8Array(e2);
+          }
+          function ft(t3, n2, r3) {
+            var e2 = t3.schema.yProps;
+            return e2 ? (n2 && 0 < r3.numFailures && (n2 = n2.filter(function(e3, t4) {
+              return !r3.failures[t4];
+            })), Promise.all(e2.map(function(e3) {
+              e3 = e3.updatesTable;
+              return n2 ? t3.db.table(e3).where("k").anyOf(n2).delete() : t3.db.table(e3).clear();
+            })).then(function() {
+              return r3;
+            })) : r3;
+          }
+          var ht2 = (dt.prototype._trans = function(e2, r3, t3) {
+            var n2 = this._tx || me.trans, i3 = this.name, o2 = ie2 && "undefined" != typeof console && console.createTask && console.createTask("Dexie: ".concat("readonly" === e2 ? "read" : "write", " ").concat(this.name));
+            function a2(e3, t4, n3) {
+              if (!n3.schema[i3]) throw new Y.NotFound("Table " + i3 + " not part of transaction");
+              return r3(n3.idbtrans, n3);
+            }
+            var u2 = je2();
+            try {
+              var s2 = n2 && n2.db._novip === this.db._novip ? n2 === me.trans ? n2._promise(e2, a2, t3) : Ne2(function() {
+                return n2._promise(e2, a2, t3);
+              }, { trans: n2, transless: me.transless || me }) : (function t4(n3, r4, i4, o3) {
+                if (n3.idbdb && (n3._state.openComplete || me.letThrough || n3._vip)) {
+                  var a3 = n3._createTransaction(r4, i4, n3._dbSchema);
+                  try {
+                    a3.create(), n3._state.PR1398_maxLoop = 3;
+                  } catch (e3) {
+                    return e3.name === z.InvalidState && n3.isOpen() && 0 < --n3._state.PR1398_maxLoop ? (console.warn("Dexie: Need to reopen db"), n3.close({ disableAutoOpen: false }), n3.open().then(function() {
+                      return t4(n3, r4, i4, o3);
+                    })) : Xe2(e3);
+                  }
+                  return a3._promise(r4, function(e3, t5) {
+                    return Ne2(function() {
+                      return me.trans = a3, o3(e3, t5, a3);
+                    });
+                  }).then(function(e3) {
+                    if ("readwrite" === r4) try {
+                      a3.idbtrans.commit();
+                    } catch (e4) {
+                    }
+                    return "readonly" === r4 ? e3 : a3._completion.then(function() {
+                      return e3;
+                    });
+                  });
+                }
+                if (n3._state.openComplete) return Xe2(new Y.DatabaseClosed(n3._state.dbOpenError));
+                if (!n3._state.isBeingOpened) {
+                  if (!n3._state.autoOpen) return Xe2(new Y.DatabaseClosed());
+                  n3.open().catch(G2);
+                }
+                return n3._state.dbReadyPromise.then(function() {
+                  return t4(n3, r4, i4, o3);
+                });
+              })(this.db, e2, [this.name], a2);
+              return o2 && (s2._consoleTask = o2, s2 = s2.catch(function(e3) {
+                return console.trace(e3), Xe2(e3);
+              })), s2;
+            } finally {
+              u2 && Ae2();
+            }
+          }, dt.prototype.get = function(t3, e2) {
+            var n2 = this;
+            return t3 && t3.constructor === Object ? this.where(t3).first(e2) : null == t3 ? Xe2(new Y.Type("Invalid argument to Table.get()")) : this._trans("readonly", function(e3) {
+              return n2.core.get({ trans: e3, key: t3 }).then(function(e4) {
+                return n2.hook.reading.fire(e4);
+              });
+            }).then(e2);
+          }, dt.prototype.where = function(o2) {
+            if ("string" == typeof o2) return new this.db.WhereClause(this, o2);
+            if (x2(o2)) return new this.db.WhereClause(this, "[".concat(o2.join("+"), "]"));
+            var n2 = O2(o2);
+            if (1 === n2.length) return this.where(n2[0]).equals(o2[n2[0]]);
+            var e2 = this.schema.indexes.concat(this.schema.primKey).filter(function(t4) {
+              if (t4.compound && n2.every(function(e4) {
+                return 0 <= t4.keyPath.indexOf(e4);
+              })) {
+                for (var e3 = 0; e3 < n2.length; ++e3) if (-1 === n2.indexOf(t4.keyPath[e3])) return false;
+                return true;
+              }
+              return false;
+            }).sort(function(e3, t4) {
+              return e3.keyPath.length - t4.keyPath.length;
+            })[0];
+            if (e2 && this.db._maxKey !== He) {
+              var t3 = e2.keyPath.slice(0, n2.length);
+              return this.where(t3).equals(t3.map(function(e3) {
+                return o2[e3];
+              }));
+            }
+            !e2 && ie2 && console.warn("The query ".concat(JSON.stringify(o2), " on ").concat(this.name, " would benefit from a ") + "compound index [".concat(n2.join("+"), "]"));
+            var a2 = this.schema.idxByName;
+            function u2(e3, t4) {
+              return 0 === st2(e3, t4);
+            }
+            var r3 = n2.reduce(function(e3, t4) {
+              var n3 = e3[0], r4 = e3[1], e3 = a2[t4], i3 = o2[t4];
+              return [n3 || e3, n3 || !e3 ? it2(r4, e3 && e3.multi ? function(e4) {
+                e4 = P2(e4, t4);
+                return x2(e4) && e4.some(function(e5) {
+                  return u2(i3, e5);
+                });
+              } : function(e4) {
+                return u2(i3, P2(e4, t4));
+              }) : r4];
+            }, [null, null]), t3 = r3[0], r3 = r3[1];
+            return t3 ? this.where(t3.name).equals(o2[t3.keyPath]).filter(r3) : e2 ? this.filter(r3) : this.where(n2).equals("");
+          }, dt.prototype.filter = function(e2) {
+            return this.toCollection().and(e2);
+          }, dt.prototype.count = function(e2) {
+            return this.toCollection().count(e2);
+          }, dt.prototype.offset = function(e2) {
+            return this.toCollection().offset(e2);
+          }, dt.prototype.limit = function(e2) {
+            return this.toCollection().limit(e2);
+          }, dt.prototype.each = function(e2) {
+            return this.toCollection().each(e2);
+          }, dt.prototype.toArray = function(e2) {
+            return this.toCollection().toArray(e2);
+          }, dt.prototype.toCollection = function() {
+            return new this.db.Collection(new this.db.WhereClause(this));
+          }, dt.prototype.orderBy = function(e2) {
+            return new this.db.Collection(new this.db.WhereClause(this, x2(e2) ? "[".concat(e2.join("+"), "]") : e2));
+          }, dt.prototype.reverse = function() {
+            return this.toCollection().reverse();
+          }, dt.prototype.mapToClass = function(r3) {
+            var e2, t3 = this.db, n2 = this.name;
+            function i3() {
+              return null !== e2 && e2.apply(this, arguments) || this;
+            }
+            (this.schema.mappedClass = r3).prototype instanceof ut && ((function(e3, t4) {
+              if ("function" != typeof t4 && null !== t4) throw new TypeError("Class extends value " + String(t4) + " is not a constructor or null");
+              function n3() {
+                this.constructor = e3;
+              }
+              s(e3, t4), e3.prototype = null === t4 ? Object.create(t4) : (n3.prototype = t4.prototype, new n3());
+            })(i3, e2 = r3), Object.defineProperty(i3.prototype, "db", { get: function() {
+              return t3;
+            }, enumerable: false, configurable: true }), i3.prototype.table = function() {
+              return n2;
+            }, r3 = i3);
+            for (var o2 = /* @__PURE__ */ new Set(), a2 = r3.prototype; a2; a2 = c2(a2)) Object.getOwnPropertyNames(a2).forEach(function(e3) {
+              return o2.add(e3);
+            });
+            function u2(e3) {
+              if (!e3) return e3;
+              var t4, n3 = Object.create(r3.prototype);
+              for (t4 in e3) if (!o2.has(t4)) try {
+                n3[t4] = e3[t4];
+              } catch (e4) {
+              }
+              return n3;
+            }
+            return this.schema.readHook && this.hook.reading.unsubscribe(this.schema.readHook), this.schema.readHook = u2, this.hook("reading", u2), r3;
+          }, dt.prototype.defineClass = function() {
+            return this.mapToClass(function(e2) {
+              a(this, e2);
+            });
+          }, dt.prototype.add = function(t3, n2) {
+            var r3 = this, e2 = this.schema.primKey, i3 = e2.auto, o2 = e2.keyPath, a2 = t3;
+            return o2 && i3 && (a2 = at2(o2)(t3)), this._trans("readwrite", function(e3) {
+              return r3.core.mutate({ trans: e3, type: "add", keys: null != n2 ? [n2] : null, values: [a2] });
+            }).then(function(e3) {
+              return e3.numFailures ? _e2.reject(e3.failures[0]) : e3.lastResult;
+            }).then(function(e3) {
+              if (o2) try {
+                K2(t3, o2, e3);
+              } catch (e4) {
+              }
+              return e3;
+            });
+          }, dt.prototype.update = function(e2, t3) {
+            if ("object" != typeof e2 || x2(e2)) return this.where(":id").equals(e2).modify(t3);
+            e2 = P2(e2, this.schema.primKey.keyPath);
+            return void 0 === e2 ? Xe2(new Y.InvalidArgument("Given object does not contain its primary key")) : this.where(":id").equals(e2).modify(t3);
+          }, dt.prototype.put = function(t3, n2) {
+            var r3 = this, e2 = this.schema.primKey, i3 = e2.auto, o2 = e2.keyPath, a2 = t3;
+            return o2 && i3 && (a2 = at2(o2)(t3)), this._trans("readwrite", function(e3) {
+              return r3.core.mutate({ trans: e3, type: "put", values: [a2], keys: null != n2 ? [n2] : null });
+            }).then(function(e3) {
+              return e3.numFailures ? _e2.reject(e3.failures[0]) : e3.lastResult;
+            }).then(function(e3) {
+              if (o2) try {
+                K2(t3, o2, e3);
+              } catch (e4) {
+              }
+              return e3;
+            });
+          }, dt.prototype.delete = function(t3) {
+            var n2 = this;
+            return this._trans("readwrite", function(e2) {
+              return n2.core.mutate({ trans: e2, type: "delete", keys: [t3] }).then(function(e3) {
+                return ft(n2, [t3], e3);
+              }).then(function(e3) {
+                return e3.numFailures ? _e2.reject(e3.failures[0]) : void 0;
+              });
+            });
+          }, dt.prototype.clear = function() {
+            var t3 = this;
+            return this._trans("readwrite", function(e2) {
+              return t3.core.mutate({ trans: e2, type: "deleteRange", range: ot2 }).then(function(e3) {
+                return ft(t3, null, e3);
+              });
+            }).then(function(e2) {
+              return e2.numFailures ? _e2.reject(e2.failures[0]) : void 0;
+            });
+          }, dt.prototype.bulkGet = function(t3) {
+            var n2 = this;
+            return this._trans("readonly", function(e2) {
+              return n2.core.getMany({ keys: t3, trans: e2 }).then(function(e3) {
+                return e3.map(function(e4) {
+                  return n2.hook.reading.fire(e4);
+                });
+              });
+            });
+          }, dt.prototype.bulkAdd = function(r3, e2, t3) {
+            var o2 = this, a2 = Array.isArray(e2) ? e2 : void 0, u2 = (t3 = t3 || (a2 ? void 0 : e2)) ? t3.allKeys : void 0;
+            return this._trans("readwrite", function(e3) {
+              var t4 = o2.schema.primKey, n2 = t4.auto, t4 = t4.keyPath;
+              if (t4 && a2) throw new Y.InvalidArgument("bulkAdd(): keys argument invalid on tables with inbound keys");
+              if (a2 && a2.length !== r3.length) throw new Y.InvalidArgument("Arguments objects and keys must have the same length");
+              var i3 = r3.length, t4 = t4 && n2 ? r3.map(at2(t4)) : r3;
+              return o2.core.mutate({ trans: e3, type: "add", keys: a2, values: t4, wantResults: u2 }).then(function(e4) {
+                var t5 = e4.numFailures, n3 = e4.results, r4 = e4.lastResult, e4 = e4.failures;
+                if (0 === t5) return u2 ? n3 : r4;
+                throw new V2("".concat(o2.name, ".bulkAdd(): ").concat(t5, " of ").concat(i3, " operations failed"), e4);
+              });
+            });
+          }, dt.prototype.bulkPut = function(r3, e2, t3) {
+            var o2 = this, a2 = Array.isArray(e2) ? e2 : void 0, u2 = (t3 = t3 || (a2 ? void 0 : e2)) ? t3.allKeys : void 0;
+            return this._trans("readwrite", function(e3) {
+              var t4 = o2.schema.primKey, n2 = t4.auto, t4 = t4.keyPath;
+              if (t4 && a2) throw new Y.InvalidArgument("bulkPut(): keys argument invalid on tables with inbound keys");
+              if (a2 && a2.length !== r3.length) throw new Y.InvalidArgument("Arguments objects and keys must have the same length");
+              var i3 = r3.length, t4 = t4 && n2 ? r3.map(at2(t4)) : r3;
+              return o2.core.mutate({ trans: e3, type: "put", keys: a2, values: t4, wantResults: u2 }).then(function(e4) {
+                var t5 = e4.numFailures, n3 = e4.results, r4 = e4.lastResult, e4 = e4.failures;
+                if (0 === t5) return u2 ? n3 : r4;
+                throw new V2("".concat(o2.name, ".bulkPut(): ").concat(t5, " of ").concat(i3, " operations failed"), e4);
+              });
+            });
+          }, dt.prototype.bulkUpdate = function(t3) {
+            var h2 = this, n2 = this.core, r3 = t3.map(function(e2) {
+              return e2.key;
+            }), i3 = t3.map(function(e2) {
+              return e2.changes;
+            }), d2 = [];
+            return this._trans("readwrite", function(e2) {
+              return n2.getMany({ trans: e2, keys: r3, cache: "clone" }).then(function(c3) {
+                var l2 = [], f2 = [];
+                t3.forEach(function(e3, t4) {
+                  var n3 = e3.key, r4 = e3.changes, i4 = c3[t4];
+                  if (i4) {
+                    for (var o2 = 0, a2 = Object.keys(r4); o2 < a2.length; o2++) {
+                      var u2 = a2[o2], s3 = r4[u2];
+                      if (u2 === h2.schema.primKey.keyPath) {
+                        if (0 !== st2(s3, n3)) throw new Y.Constraint("Cannot update primary key in bulkUpdate()");
+                      } else K2(i4, u2, s3);
+                    }
+                    d2.push(t4), l2.push(n3), f2.push(i4);
+                  }
+                });
+                var s2 = l2.length;
+                return n2.mutate({ trans: e2, type: "put", keys: l2, values: f2, updates: { keys: r3, changeSpecs: i3 } }).then(function(e3) {
+                  var t4 = e3.numFailures, n3 = e3.failures;
+                  if (0 === t4) return s2;
+                  for (var r4 = 0, i4 = Object.keys(n3); r4 < i4.length; r4++) {
+                    var o2, a2 = i4[r4], u2 = d2[Number(a2)];
+                    null != u2 && (o2 = n3[a2], delete n3[a2], n3[u2] = o2);
+                  }
+                  throw new V2("".concat(h2.name, ".bulkUpdate(): ").concat(t4, " of ").concat(s2, " operations failed"), n3);
+                });
+              });
+            });
+          }, dt.prototype.bulkDelete = function(t3) {
+            var r3 = this, i3 = t3.length;
+            return this._trans("readwrite", function(e2) {
+              return r3.core.mutate({ trans: e2, type: "delete", keys: t3 }).then(function(e3) {
+                return ft(r3, t3, e3);
+              });
+            }).then(function(e2) {
+              var t4 = e2.numFailures, n2 = e2.lastResult, e2 = e2.failures;
+              if (0 === t4) return n2;
+              throw new V2("".concat(r3.name, ".bulkDelete(): ").concat(t4, " of ").concat(i3, " operations failed"), e2);
+            });
+          }, dt);
+          function dt() {
+          }
+          function pt2(i3) {
+            function t3(e3, t4) {
+              if (t4) {
+                for (var n3 = arguments.length, r3 = new Array(n3 - 1); --n3; ) r3[n3 - 1] = arguments[n3];
+                return a2[e3].subscribe.apply(null, r3), i3;
+              }
+              if ("string" == typeof e3) return a2[e3];
+            }
+            var a2 = {};
+            t3.addEventType = u2;
+            for (var e2 = 1, n2 = arguments.length; e2 < n2; ++e2) u2(arguments[e2]);
+            return t3;
+            function u2(e3, n3, r3) {
+              if ("object" != typeof e3) {
+                var i4;
+                n3 = n3 || ne2;
+                var o2 = { subscribers: [], fire: r3 = r3 || G2, subscribe: function(e4) {
+                  -1 === o2.subscribers.indexOf(e4) && (o2.subscribers.push(e4), o2.fire = n3(o2.fire, e4));
+                }, unsubscribe: function(t4) {
+                  o2.subscribers = o2.subscribers.filter(function(e4) {
+                    return e4 !== t4;
+                  }), o2.fire = o2.subscribers.reduce(n3, r3);
+                } };
+                return a2[e3] = t3[e3] = o2;
+              }
+              O2(i4 = e3).forEach(function(e4) {
+                var t4 = i4[e4];
+                if (x2(t4)) u2(e4, i4[e4][0], i4[e4][1]);
+                else {
+                  if ("asap" !== t4) throw new Y.InvalidArgument("Invalid event config");
+                  var n4 = u2(e4, X2, function() {
+                    for (var e5 = arguments.length, t5 = new Array(e5); e5--; ) t5[e5] = arguments[e5];
+                    n4.subscribers.forEach(function(e6) {
+                      v(function() {
+                        e6.apply(null, t5);
+                      });
+                    });
+                  });
+                }
+              });
+            }
+          }
+          function yt(e2, t3) {
+            return o(t3).from({ prototype: e2 }), t3;
+          }
+          function vt2(e2, t3) {
+            return !(e2.filter || e2.algorithm || e2.or) && (t3 ? e2.justLimit : !e2.replayFilter);
+          }
+          function mt2(e2, t3) {
+            e2.filter = it2(e2.filter, t3);
+          }
+          function bt2(e2, t3, n2) {
+            var r3 = e2.replayFilter;
+            e2.replayFilter = r3 ? function() {
+              return it2(r3(), t3());
+            } : t3, e2.justLimit = n2 && !r3;
+          }
+          function gt2(e2, t3) {
+            if (e2.isPrimKey) return t3.primaryKey;
+            var n2 = t3.getIndexByKeyPath(e2.index);
+            if (!n2) throw new Y.Schema("KeyPath " + e2.index + " on object store " + t3.name + " is not indexed");
+            return n2;
+          }
+          function wt2(e2, t3, n2) {
+            var r3 = gt2(e2, t3.schema);
+            return t3.openCursor({ trans: n2, values: !e2.keysOnly, reverse: "prev" === e2.dir, unique: !!e2.unique, query: { index: r3, range: e2.range } });
+          }
+          function _t(e2, o2, t3, n2) {
+            var a2 = e2.replayFilter ? it2(e2.filter, e2.replayFilter()) : e2.filter;
+            if (e2.or) {
+              var u2 = {}, r3 = function(e3, t4, n3) {
+                var r4, i3;
+                a2 && !a2(t4, n3, function(e4) {
+                  return t4.stop(e4);
+                }, function(e4) {
+                  return t4.fail(e4);
+                }) || ("[object ArrayBuffer]" === (i3 = "" + (r4 = t4.primaryKey)) && (i3 = "" + new Uint8Array(r4)), m(u2, i3) || (u2[i3] = true, o2(e3, t4, n3)));
+              };
+              return Promise.all([e2.or._iterate(r3, t3), xt(wt2(e2, n2, t3), e2.algorithm, r3, !e2.keysOnly && e2.valueMapper)]);
+            }
+            return xt(wt2(e2, n2, t3), it2(e2.algorithm, a2), o2, !e2.keysOnly && e2.valueMapper);
+          }
+          function xt(e2, r3, i3, o2) {
+            var a2 = Ie2(o2 ? function(e3, t3, n2) {
+              return i3(o2(e3), t3, n2);
+            } : i3);
+            return e2.then(function(n2) {
+              if (n2) return n2.start(function() {
+                var t3 = function() {
+                  return n2.continue();
+                };
+                r3 && !r3(n2, function(e3) {
+                  return t3 = e3;
+                }, function(e3) {
+                  n2.stop(e3), t3 = G2;
+                }, function(e3) {
+                  n2.fail(e3), t3 = G2;
+                }) || a2(n2.value, n2, function(e3) {
+                  return t3 = e3;
+                }), t3();
+              });
+            });
+          }
+          var kt2 = (Ot.prototype.execute = function(e2) {
+            var t3 = this["@@propmod"];
+            if (void 0 !== t3.add) {
+              var n2 = t3.add;
+              if (x2(n2)) return i2(i2([], x2(e2) ? e2 : [], true), n2).sort();
+              if ("number" == typeof n2) return (Number(e2) || 0) + n2;
+              if ("bigint" == typeof n2) try {
+                return BigInt(e2) + n2;
+              } catch (e3) {
+                return BigInt(0) + n2;
+              }
+              throw new TypeError("Invalid term ".concat(n2));
+            }
+            if (void 0 !== t3.remove) {
+              var r3 = t3.remove;
+              if (x2(r3)) return x2(e2) ? e2.filter(function(e3) {
+                return !r3.includes(e3);
+              }).sort() : [];
+              if ("number" == typeof r3) return Number(e2) - r3;
+              if ("bigint" == typeof r3) try {
+                return BigInt(e2) - r3;
+              } catch (e3) {
+                return BigInt(0) - r3;
+              }
+              throw new TypeError("Invalid subtrahend ".concat(r3));
+            }
+            n2 = null === (n2 = t3.replacePrefix) || void 0 === n2 ? void 0 : n2[0];
+            return n2 && "string" == typeof e2 && e2.startsWith(n2) ? t3.replacePrefix[1] + e2.substring(n2.length) : e2;
+          }, Ot);
+          function Ot(e2) {
+            this["@@propmod"] = e2;
+          }
+          var Pt2 = (Kt.prototype._read = function(e2, t3) {
+            var n2 = this._ctx;
+            return n2.error ? n2.table._trans(null, Xe2.bind(null, n2.error)) : n2.table._trans("readonly", e2).then(t3);
+          }, Kt.prototype._write = function(e2) {
+            var t3 = this._ctx;
+            return t3.error ? t3.table._trans(null, Xe2.bind(null, t3.error)) : t3.table._trans("readwrite", e2, "locked");
+          }, Kt.prototype._addAlgorithm = function(e2) {
+            var t3 = this._ctx;
+            t3.algorithm = it2(t3.algorithm, e2);
+          }, Kt.prototype._iterate = function(e2, t3) {
+            return _t(this._ctx, e2, t3, this._ctx.table.core);
+          }, Kt.prototype.clone = function(e2) {
+            var t3 = Object.create(this.constructor.prototype), n2 = Object.create(this._ctx);
+            return e2 && a(n2, e2), t3._ctx = n2, t3;
+          }, Kt.prototype.raw = function() {
+            return this._ctx.valueMapper = null, this;
+          }, Kt.prototype.each = function(t3) {
+            var n2 = this._ctx;
+            return this._read(function(e2) {
+              return _t(n2, t3, e2, n2.table.core);
+            });
+          }, Kt.prototype.count = function(e2) {
+            var i3 = this;
+            return this._read(function(e3) {
+              var t3 = i3._ctx, n2 = t3.table.core;
+              if (vt2(t3, true)) return n2.count({ trans: e3, query: { index: gt2(t3, n2.schema), range: t3.range } }).then(function(e4) {
+                return Math.min(e4, t3.limit);
+              });
+              var r3 = 0;
+              return _t(t3, function() {
+                return ++r3, false;
+              }, e3, n2).then(function() {
+                return r3;
+              });
+            }).then(e2);
+          }, Kt.prototype.sortBy = function(e2, t3) {
+            var n2 = e2.split(".").reverse(), r3 = n2[0], i3 = n2.length - 1;
+            function o2(e3, t4) {
+              return t4 ? o2(e3[n2[t4]], t4 - 1) : e3[r3];
+            }
+            var a2 = "next" === this._ctx.dir ? 1 : -1;
+            function u2(e3, t4) {
+              return st2(o2(e3, i3), o2(t4, i3)) * a2;
+            }
+            return this.toArray(function(e3) {
+              return e3.sort(u2);
+            }).then(t3);
+          }, Kt.prototype.toArray = function(e2) {
+            var o2 = this;
+            return this._read(function(e3) {
+              var t3 = o2._ctx;
+              if ("next" === t3.dir && vt2(t3, true) && 0 < t3.limit) {
+                var n2 = t3.valueMapper, r3 = gt2(t3, t3.table.core.schema);
+                return t3.table.core.query({ trans: e3, limit: t3.limit, values: true, query: { index: r3, range: t3.range } }).then(function(e4) {
+                  e4 = e4.result;
+                  return n2 ? e4.map(n2) : e4;
+                });
+              }
+              var i3 = [];
+              return _t(t3, function(e4) {
+                return i3.push(e4);
+              }, e3, t3.table.core).then(function() {
+                return i3;
+              });
+            }, e2);
+          }, Kt.prototype.offset = function(t3) {
+            var e2 = this._ctx;
+            return t3 <= 0 || (e2.offset += t3, vt2(e2) ? bt2(e2, function() {
+              var n2 = t3;
+              return function(e3, t4) {
+                return 0 === n2 || (1 === n2 ? --n2 : t4(function() {
+                  e3.advance(n2), n2 = 0;
+                }), false);
+              };
+            }) : bt2(e2, function() {
+              var e3 = t3;
+              return function() {
+                return --e3 < 0;
+              };
+            })), this;
+          }, Kt.prototype.limit = function(e2) {
+            return this._ctx.limit = Math.min(this._ctx.limit, e2), bt2(this._ctx, function() {
+              var r3 = e2;
+              return function(e3, t3, n2) {
+                return --r3 <= 0 && t3(n2), 0 <= r3;
+              };
+            }, true), this;
+          }, Kt.prototype.until = function(r3, i3) {
+            return mt2(this._ctx, function(e2, t3, n2) {
+              return !r3(e2.value) || (t3(n2), i3);
+            }), this;
+          }, Kt.prototype.first = function(e2) {
+            return this.limit(1).toArray(function(e3) {
+              return e3[0];
+            }).then(e2);
+          }, Kt.prototype.last = function(e2) {
+            return this.reverse().first(e2);
+          }, Kt.prototype.filter = function(t3) {
+            var e2;
+            return mt2(this._ctx, function(e3) {
+              return t3(e3.value);
+            }), (e2 = this._ctx).isMatch = it2(e2.isMatch, t3), this;
+          }, Kt.prototype.and = function(e2) {
+            return this.filter(e2);
+          }, Kt.prototype.or = function(e2) {
+            return new this.db.WhereClause(this._ctx.table, e2, this);
+          }, Kt.prototype.reverse = function() {
+            return this._ctx.dir = "prev" === this._ctx.dir ? "next" : "prev", this._ondirectionchange && this._ondirectionchange(this._ctx.dir), this;
+          }, Kt.prototype.desc = function() {
+            return this.reverse();
+          }, Kt.prototype.eachKey = function(n2) {
+            var e2 = this._ctx;
+            return e2.keysOnly = !e2.isMatch, this.each(function(e3, t3) {
+              n2(t3.key, t3);
+            });
+          }, Kt.prototype.eachUniqueKey = function(e2) {
+            return this._ctx.unique = "unique", this.eachKey(e2);
+          }, Kt.prototype.eachPrimaryKey = function(n2) {
+            var e2 = this._ctx;
+            return e2.keysOnly = !e2.isMatch, this.each(function(e3, t3) {
+              n2(t3.primaryKey, t3);
+            });
+          }, Kt.prototype.keys = function(e2) {
+            var t3 = this._ctx;
+            t3.keysOnly = !t3.isMatch;
+            var n2 = [];
+            return this.each(function(e3, t4) {
+              n2.push(t4.key);
+            }).then(function() {
+              return n2;
+            }).then(e2);
+          }, Kt.prototype.primaryKeys = function(e2) {
+            var n2 = this._ctx;
+            if ("next" === n2.dir && vt2(n2, true) && 0 < n2.limit) return this._read(function(e3) {
+              var t3 = gt2(n2, n2.table.core.schema);
+              return n2.table.core.query({ trans: e3, values: false, limit: n2.limit, query: { index: t3, range: n2.range } });
+            }).then(function(e3) {
+              return e3.result;
+            }).then(e2);
+            n2.keysOnly = !n2.isMatch;
+            var r3 = [];
+            return this.each(function(e3, t3) {
+              r3.push(t3.primaryKey);
+            }).then(function() {
+              return r3;
+            }).then(e2);
+          }, Kt.prototype.uniqueKeys = function(e2) {
+            return this._ctx.unique = "unique", this.keys(e2);
+          }, Kt.prototype.firstKey = function(e2) {
+            return this.limit(1).keys(function(e3) {
+              return e3[0];
+            }).then(e2);
+          }, Kt.prototype.lastKey = function(e2) {
+            return this.reverse().firstKey(e2);
+          }, Kt.prototype.distinct = function() {
+            var e2 = this._ctx, e2 = e2.index && e2.table.schema.idxByName[e2.index];
+            if (!e2 || !e2.multi) return this;
+            var n2 = {};
+            return mt2(this._ctx, function(e3) {
+              var t3 = e3.primaryKey.toString(), e3 = m(n2, t3);
+              return n2[t3] = true, !e3;
+            }), this;
+          }, Kt.prototype.modify = function(x3) {
+            var n2 = this, k2 = this._ctx;
+            return this._write(function(p2) {
+              var a2, u2, y2;
+              y2 = "function" == typeof x3 ? x3 : (a2 = O2(x3), u2 = a2.length, function(e3) {
+                for (var t4 = false, n3 = 0; n3 < u2; ++n3) {
+                  var r3 = a2[n3], i3 = x3[r3], o2 = P2(e3, r3);
+                  i3 instanceof kt2 ? (K2(e3, r3, i3.execute(o2)), t4 = true) : o2 !== i3 && (K2(e3, r3, i3), t4 = true);
+                }
+                return t4;
+              });
+              var v2 = k2.table.core, e2 = v2.schema.primaryKey, m2 = e2.outbound, b2 = e2.extractKey, g2 = 200, e2 = n2.db._options.modifyChunkSize;
+              e2 && (g2 = "object" == typeof e2 ? e2[v2.name] || e2["*"] || 200 : e2);
+              function w2(e3, t4) {
+                var n3 = t4.failures, t4 = t4.numFailures;
+                c3 += e3 - t4;
+                for (var r3 = 0, i3 = O2(n3); r3 < i3.length; r3++) {
+                  var o2 = i3[r3];
+                  s2.push(n3[o2]);
+                }
+              }
+              var s2 = [], c3 = 0, t3 = [], _2 = x3 === Et2;
+              return n2.clone().primaryKeys().then(function(f2) {
+                function h2(s3) {
+                  var c4 = Math.min(g2, f2.length - s3), l2 = f2.slice(s3, s3 + c4);
+                  return (_2 ? Promise.resolve([]) : v2.getMany({ trans: p2, keys: l2, cache: "immutable" })).then(function(e3) {
+                    var n3 = [], t4 = [], r3 = m2 ? [] : null, i3 = _2 ? l2 : [];
+                    if (!_2) for (var o2 = 0; o2 < c4; ++o2) {
+                      var a3 = e3[o2], u3 = { value: S(a3), primKey: f2[s3 + o2] };
+                      false !== y2.call(u3, u3.value, u3) && (null == u3.value ? i3.push(f2[s3 + o2]) : m2 || 0 === st2(b2(a3), b2(u3.value)) ? (t4.push(u3.value), m2 && r3.push(f2[s3 + o2])) : (i3.push(f2[s3 + o2]), n3.push(u3.value)));
+                    }
+                    return Promise.resolve(0 < n3.length && v2.mutate({ trans: p2, type: "add", values: n3 }).then(function(e4) {
+                      for (var t5 in e4.failures) i3.splice(parseInt(t5), 1);
+                      w2(n3.length, e4);
+                    })).then(function() {
+                      return (0 < t4.length || d2 && "object" == typeof x3) && v2.mutate({ trans: p2, type: "put", keys: r3, values: t4, criteria: d2, changeSpec: "function" != typeof x3 && x3, isAdditionalChunk: 0 < s3 }).then(function(e4) {
+                        return w2(t4.length, e4);
+                      });
+                    }).then(function() {
+                      return (0 < i3.length || d2 && _2) && v2.mutate({ trans: p2, type: "delete", keys: i3, criteria: d2, isAdditionalChunk: 0 < s3 }).then(function(e4) {
+                        return ft(k2.table, i3, e4);
+                      }).then(function(e4) {
+                        return w2(i3.length, e4);
+                      });
+                    }).then(function() {
+                      return f2.length > s3 + c4 && h2(s3 + g2);
+                    });
+                  });
+                }
+                var d2 = vt2(k2) && k2.limit === 1 / 0 && ("function" != typeof x3 || _2) && { index: k2.index, range: k2.range };
+                return h2(0).then(function() {
+                  if (0 < s2.length) throw new U2("Error modifying one or more objects", s2, c3, t3);
+                  return f2.length;
+                });
+              });
+            });
+          }, Kt.prototype.delete = function() {
+            var i3 = this._ctx, n2 = i3.range;
+            return !vt2(i3) || i3.table.schema.yProps || !i3.isPrimKey && 3 !== n2.type ? this.modify(Et2) : this._write(function(e2) {
+              var t3 = i3.table.core.schema.primaryKey, r3 = n2;
+              return i3.table.core.count({ trans: e2, query: { index: t3, range: r3 } }).then(function(n3) {
+                return i3.table.core.mutate({ trans: e2, type: "deleteRange", range: r3 }).then(function(e3) {
+                  var t4 = e3.failures, e3 = e3.numFailures;
+                  if (e3) throw new U2("Could not delete some values", Object.keys(t4).map(function(e4) {
+                    return t4[e4];
+                  }), n3 - e3);
+                  return n3 - e3;
+                });
+              });
+            });
+          }, Kt);
+          function Kt() {
+          }
+          var Et2 = function(e2, t3) {
+            return t3.value = null;
+          };
+          function St(e2, t3) {
+            return e2 < t3 ? -1 : e2 === t3 ? 0 : 1;
+          }
+          function jt2(e2, t3) {
+            return t3 < e2 ? -1 : e2 === t3 ? 0 : 1;
+          }
+          function At(e2, t3, n2) {
+            e2 = e2 instanceof Dt2 ? new e2.Collection(e2) : e2;
+            return e2._ctx.error = new (n2 || TypeError)(t3), e2;
+          }
+          function Ct(e2) {
+            return new e2.Collection(e2, function() {
+              return qt2("");
+            }).limit(0);
+          }
+          function Tt2(e2, s2, n2, r3) {
+            var i3, c3, l2, f2, h2, d2, p2, y2 = n2.length;
+            if (!n2.every(function(e3) {
+              return "string" == typeof e3;
+            })) return At(e2, Ze2);
+            function t3(e3) {
+              i3 = "next" === e3 ? function(e4) {
+                return e4.toUpperCase();
+              } : function(e4) {
+                return e4.toLowerCase();
+              }, c3 = "next" === e3 ? function(e4) {
+                return e4.toLowerCase();
+              } : function(e4) {
+                return e4.toUpperCase();
+              }, l2 = "next" === e3 ? St : jt2;
+              var t4 = n2.map(function(e4) {
+                return { lower: c3(e4), upper: i3(e4) };
+              }).sort(function(e4, t5) {
+                return l2(e4.lower, t5.lower);
+              });
+              f2 = t4.map(function(e4) {
+                return e4.upper;
+              }), h2 = t4.map(function(e4) {
+                return e4.lower;
+              }), p2 = "next" === (d2 = e3) ? "" : r3;
+            }
+            t3("next");
+            e2 = new e2.Collection(e2, function() {
+              return It2(f2[0], h2[y2 - 1] + r3);
+            });
+            e2._ondirectionchange = function(e3) {
+              t3(e3);
+            };
+            var v2 = 0;
+            return e2._addAlgorithm(function(e3, t4, n3) {
+              var r4 = e3.key;
+              if ("string" != typeof r4) return false;
+              var i4 = c3(r4);
+              if (s2(i4, h2, v2)) return true;
+              for (var o2 = null, a2 = v2; a2 < y2; ++a2) {
+                var u2 = (function(e4, t5, n4, r5, i5, o3) {
+                  for (var a3 = Math.min(e4.length, r5.length), u3 = -1, s3 = 0; s3 < a3; ++s3) {
+                    var c4 = t5[s3];
+                    if (c4 !== r5[s3]) return i5(e4[s3], n4[s3]) < 0 ? e4.substr(0, s3) + n4[s3] + n4.substr(s3 + 1) : i5(e4[s3], r5[s3]) < 0 ? e4.substr(0, s3) + r5[s3] + n4.substr(s3 + 1) : 0 <= u3 ? e4.substr(0, u3) + t5[u3] + n4.substr(u3 + 1) : null;
+                    i5(e4[s3], c4) < 0 && (u3 = s3);
+                  }
+                  return a3 < r5.length && "next" === o3 ? e4 + n4.substr(e4.length) : a3 < e4.length && "prev" === o3 ? e4.substr(0, n4.length) : u3 < 0 ? null : e4.substr(0, u3) + r5[u3] + n4.substr(u3 + 1);
+                })(r4, i4, f2[a2], h2[a2], l2, d2);
+                null === u2 && null === o2 ? v2 = a2 + 1 : (null === o2 || 0 < l2(o2, u2)) && (o2 = u2);
+              }
+              return t4(null !== o2 ? function() {
+                e3.continue(o2 + p2);
+              } : n3), false;
+            }), e2;
+          }
+          function It2(e2, t3, n2, r3) {
+            return { type: 2, lower: e2, upper: t3, lowerOpen: n2, upperOpen: r3 };
+          }
+          function qt2(e2) {
+            return { type: 1, lower: e2, upper: e2 };
+          }
+          var Dt2 = (Object.defineProperty(Bt.prototype, "Collection", { get: function() {
+            return this._ctx.table.db.Collection;
+          }, enumerable: false, configurable: true }), Bt.prototype.between = function(e2, t3, n2, r3) {
+            n2 = false !== n2, r3 = true === r3;
+            try {
+              return 0 < this._cmp(e2, t3) || 0 === this._cmp(e2, t3) && (n2 || r3) && (!n2 || !r3) ? Ct(this) : new this.Collection(this, function() {
+                return It2(e2, t3, !n2, !r3);
+              });
+            } catch (e3) {
+              return At(this, Je2);
+            }
+          }, Bt.prototype.equals = function(e2) {
+            return null == e2 ? At(this, Je2) : new this.Collection(this, function() {
+              return qt2(e2);
+            });
+          }, Bt.prototype.above = function(e2) {
+            return null == e2 ? At(this, Je2) : new this.Collection(this, function() {
+              return It2(e2, void 0, true);
+            });
+          }, Bt.prototype.aboveOrEqual = function(e2) {
+            return null == e2 ? At(this, Je2) : new this.Collection(this, function() {
+              return It2(e2, void 0, false);
+            });
+          }, Bt.prototype.below = function(e2) {
+            return null == e2 ? At(this, Je2) : new this.Collection(this, function() {
+              return It2(void 0, e2, false, true);
+            });
+          }, Bt.prototype.belowOrEqual = function(e2) {
+            return null == e2 ? At(this, Je2) : new this.Collection(this, function() {
+              return It2(void 0, e2);
+            });
+          }, Bt.prototype.startsWith = function(e2) {
+            return "string" != typeof e2 ? At(this, Ze2) : this.between(e2, e2 + He, true, true);
+          }, Bt.prototype.startsWithIgnoreCase = function(e2) {
+            return "" === e2 ? this.startsWith(e2) : Tt2(this, function(e3, t3) {
+              return 0 === e3.indexOf(t3[0]);
+            }, [e2], He);
+          }, Bt.prototype.equalsIgnoreCase = function(e2) {
+            return Tt2(this, function(e3, t3) {
+              return e3 === t3[0];
+            }, [e2], "");
+          }, Bt.prototype.anyOfIgnoreCase = function() {
+            var e2 = D.apply(q2, arguments);
+            return 0 === e2.length ? Ct(this) : Tt2(this, function(e3, t3) {
+              return -1 !== t3.indexOf(e3);
+            }, e2, "");
+          }, Bt.prototype.startsWithAnyOfIgnoreCase = function() {
+            var e2 = D.apply(q2, arguments);
+            return 0 === e2.length ? Ct(this) : Tt2(this, function(t3, e3) {
+              return e3.some(function(e4) {
+                return 0 === t3.indexOf(e4);
+              });
+            }, e2, He);
+          }, Bt.prototype.anyOf = function() {
+            var t3 = this, i3 = D.apply(q2, arguments), o2 = this._cmp;
+            try {
+              i3.sort(o2);
+            } catch (e3) {
+              return At(this, Je2);
+            }
+            if (0 === i3.length) return Ct(this);
+            var e2 = new this.Collection(this, function() {
+              return It2(i3[0], i3[i3.length - 1]);
+            });
+            e2._ondirectionchange = function(e3) {
+              o2 = "next" === e3 ? t3._ascending : t3._descending, i3.sort(o2);
+            };
+            var a2 = 0;
+            return e2._addAlgorithm(function(e3, t4, n2) {
+              for (var r3 = e3.key; 0 < o2(r3, i3[a2]); ) if (++a2 === i3.length) return t4(n2), false;
+              return 0 === o2(r3, i3[a2]) || (t4(function() {
+                e3.continue(i3[a2]);
+              }), false);
+            }), e2;
+          }, Bt.prototype.notEqual = function(e2) {
+            return this.inAnyRange([[-1 / 0, e2], [e2, this.db._maxKey]], { includeLowers: false, includeUppers: false });
+          }, Bt.prototype.noneOf = function() {
+            var e2 = D.apply(q2, arguments);
+            if (0 === e2.length) return new this.Collection(this);
+            try {
+              e2.sort(this._ascending);
+            } catch (e3) {
+              return At(this, Je2);
+            }
+            var t3 = e2.reduce(function(e3, t4) {
+              return e3 ? e3.concat([[e3[e3.length - 1][1], t4]]) : [[-1 / 0, t4]];
+            }, null);
+            return t3.push([e2[e2.length - 1], this.db._maxKey]), this.inAnyRange(t3, { includeLowers: false, includeUppers: false });
+          }, Bt.prototype.inAnyRange = function(e2, t3) {
+            var o2 = this, a2 = this._cmp, u2 = this._ascending, n2 = this._descending, s2 = this._min, c3 = this._max;
+            if (0 === e2.length) return Ct(this);
+            if (!e2.every(function(e3) {
+              return void 0 !== e3[0] && void 0 !== e3[1] && u2(e3[0], e3[1]) <= 0;
+            })) return At(this, "First argument to inAnyRange() must be an Array of two-value Arrays [lower,upper] where upper must not be lower than lower", Y.InvalidArgument);
+            var r3 = !t3 || false !== t3.includeLowers, i3 = t3 && true === t3.includeUppers;
+            var l2, f2 = u2;
+            function h2(e3, t4) {
+              return f2(e3[0], t4[0]);
+            }
+            try {
+              (l2 = e2.reduce(function(e3, t4) {
+                for (var n3 = 0, r4 = e3.length; n3 < r4; ++n3) {
+                  var i4 = e3[n3];
+                  if (a2(t4[0], i4[1]) < 0 && 0 < a2(t4[1], i4[0])) {
+                    i4[0] = s2(i4[0], t4[0]), i4[1] = c3(i4[1], t4[1]);
+                    break;
+                  }
+                }
+                return n3 === r4 && e3.push(t4), e3;
+              }, [])).sort(h2);
+            } catch (e3) {
+              return At(this, Je2);
+            }
+            var d2 = 0, p2 = i3 ? function(e3) {
+              return 0 < u2(e3, l2[d2][1]);
+            } : function(e3) {
+              return 0 <= u2(e3, l2[d2][1]);
+            }, y2 = r3 ? function(e3) {
+              return 0 < n2(e3, l2[d2][0]);
+            } : function(e3) {
+              return 0 <= n2(e3, l2[d2][0]);
+            };
+            var v2 = p2, e2 = new this.Collection(this, function() {
+              return It2(l2[0][0], l2[l2.length - 1][1], !r3, !i3);
+            });
+            return e2._ondirectionchange = function(e3) {
+              f2 = "next" === e3 ? (v2 = p2, u2) : (v2 = y2, n2), l2.sort(h2);
+            }, e2._addAlgorithm(function(e3, t4, n3) {
+              for (var r4, i4 = e3.key; v2(i4); ) if (++d2 === l2.length) return t4(n3), false;
+              return !p2(r4 = i4) && !y2(r4) || (0 === o2._cmp(i4, l2[d2][1]) || 0 === o2._cmp(i4, l2[d2][0]) || t4(function() {
+                f2 === u2 ? e3.continue(l2[d2][0]) : e3.continue(l2[d2][1]);
+              }), false);
+            }), e2;
+          }, Bt.prototype.startsWithAnyOf = function() {
+            var e2 = D.apply(q2, arguments);
+            return e2.every(function(e3) {
+              return "string" == typeof e3;
+            }) ? 0 === e2.length ? Ct(this) : this.inAnyRange(e2.map(function(e3) {
+              return [e3, e3 + He];
+            })) : At(this, "startsWithAnyOf() only works with strings");
+          }, Bt);
+          function Bt() {
+          }
+          function Rt2(t3) {
+            return Ie2(function(e2) {
+              return Ft(e2), t3(e2.target.error), false;
+            });
+          }
+          function Ft(e2) {
+            e2.stopPropagation && e2.stopPropagation(), e2.preventDefault && e2.preventDefault();
+          }
+          var Mt = "storagemutated", Nt = "x-storagemutated-1", Lt2 = pt2(null, Mt), Ut = (Vt2.prototype._lock = function() {
+            return y(!me.global), ++this._reculock, 1 !== this._reculock || me.global || (me.lockOwnerFor = this), this;
+          }, Vt2.prototype._unlock = function() {
+            if (y(!me.global), 0 == --this._reculock) for (me.global || (me.lockOwnerFor = null); 0 < this._blockedFuncs.length && !this._locked(); ) {
+              var e2 = this._blockedFuncs.shift();
+              try {
+                $e2(e2[1], e2[0]);
+              } catch (e3) {
+              }
+            }
+            return this;
+          }, Vt2.prototype._locked = function() {
+            return this._reculock && me.lockOwnerFor !== this;
+          }, Vt2.prototype.create = function(t3) {
+            var n2 = this;
+            if (!this.mode) return this;
+            var e2 = this.db.idbdb, r3 = this.db._state.dbOpenError;
+            if (y(!this.idbtrans), !t3 && !e2) switch (r3 && r3.name) {
+              case "DatabaseClosedError":
+                throw new Y.DatabaseClosed(r3);
+              case "MissingAPIError":
+                throw new Y.MissingAPI(r3.message, r3);
+              default:
+                throw new Y.OpenFailed(r3);
+            }
+            if (!this.active) throw new Y.TransactionInactive();
+            return y(null === this._completion._state), (t3 = this.idbtrans = t3 || (this.db.core || e2).transaction(this.storeNames, this.mode, { durability: this.chromeTransactionDurability })).onerror = Ie2(function(e3) {
+              Ft(e3), n2._reject(t3.error);
+            }), t3.onabort = Ie2(function(e3) {
+              Ft(e3), n2.active && n2._reject(new Y.Abort(t3.error)), n2.active = false, n2.on("abort").fire(e3);
+            }), t3.oncomplete = Ie2(function() {
+              n2.active = false, n2._resolve(), "mutatedParts" in t3 && Lt2.storagemutated.fire(t3.mutatedParts);
+            }), this;
+          }, Vt2.prototype._promise = function(n2, r3, i3) {
+            var o2 = this;
+            if ("readwrite" === n2 && "readwrite" !== this.mode) return Xe2(new Y.ReadOnly("Transaction is readonly"));
+            if (!this.active) return Xe2(new Y.TransactionInactive());
+            if (this._locked()) return new _e2(function(e3, t3) {
+              o2._blockedFuncs.push([function() {
+                o2._promise(n2, r3, i3).then(e3, t3);
+              }, me]);
+            });
+            if (i3) return Ne2(function() {
+              var e3 = new _e2(function(e4, t3) {
+                o2._lock();
+                var n3 = r3(e4, t3, o2);
+                n3 && n3.then && n3.then(e4, t3);
+              });
+              return e3.finally(function() {
+                return o2._unlock();
+              }), e3._lib = true, e3;
+            });
+            var e2 = new _e2(function(e3, t3) {
+              var n3 = r3(e3, t3, o2);
+              n3 && n3.then && n3.then(e3, t3);
+            });
+            return e2._lib = true, e2;
+          }, Vt2.prototype._root = function() {
+            return this.parent ? this.parent._root() : this;
+          }, Vt2.prototype.waitFor = function(e2) {
+            var t3, r3 = this._root(), i3 = _e2.resolve(e2);
+            r3._waitingFor ? r3._waitingFor = r3._waitingFor.then(function() {
+              return i3;
+            }) : (r3._waitingFor = i3, r3._waitingQueue = [], t3 = r3.idbtrans.objectStore(r3.storeNames[0]), (function e3() {
+              for (++r3._spinCount; r3._waitingQueue.length; ) r3._waitingQueue.shift()();
+              r3._waitingFor && (t3.get(-1 / 0).onsuccess = e3);
+            })());
+            var o2 = r3._waitingFor;
+            return new _e2(function(t4, n2) {
+              i3.then(function(e3) {
+                return r3._waitingQueue.push(Ie2(t4.bind(null, e3)));
+              }, function(e3) {
+                return r3._waitingQueue.push(Ie2(n2.bind(null, e3)));
+              }).finally(function() {
+                r3._waitingFor === o2 && (r3._waitingFor = null);
+              });
+            });
+          }, Vt2.prototype.abort = function() {
+            this.active && (this.active = false, this.idbtrans && this.idbtrans.abort(), this._reject(new Y.Abort()));
+          }, Vt2.prototype.table = function(e2) {
+            var t3 = this._memoizedTables || (this._memoizedTables = {});
+            if (m(t3, e2)) return t3[e2];
+            var n2 = this.schema[e2];
+            if (!n2) throw new Y.NotFound("Table " + e2 + " not part of transaction");
+            n2 = new this.db.Table(e2, n2, this);
+            return n2.core = this.db.core.table(e2), t3[e2] = n2;
+          }, Vt2);
+          function Vt2() {
+          }
+          function zt2(e2, t3, n2, r3, i3, o2, a2, u2) {
+            return { name: e2, keyPath: t3, unique: n2, multi: r3, auto: i3, compound: o2, src: (n2 && !a2 ? "&" : "") + (r3 ? "*" : "") + (i3 ? "++" : "") + Wt(t3), type: u2 };
+          }
+          function Wt(e2) {
+            return "string" == typeof e2 ? e2 : e2 ? "[" + [].join.call(e2, "+") + "]" : "";
+          }
+          function Yt2(e2, t3, n2) {
+            return { name: e2, primKey: t3, indexes: n2, mappedClass: null, idxByName: (r3 = function(e3) {
+              return [e3.name, e3];
+            }, n2.reduce(function(e3, t4, n3) {
+              n3 = r3(t4, n3);
+              return n3 && (e3[n3[0]] = n3[1]), e3;
+            }, {})) };
+            var r3;
+          }
+          var $t2 = function(e2) {
+            try {
+              return e2.only([[]]), $t2 = function() {
+                return [[]];
+              }, [[]];
+            } catch (e3) {
+              return $t2 = function() {
+                return He;
+              }, He;
+            }
+          };
+          function Qt(t3) {
+            return null == t3 ? function() {
+            } : "string" == typeof t3 ? 1 === (n2 = t3).split(".").length ? function(e2) {
+              return e2[n2];
+            } : function(e2) {
+              return P2(e2, n2);
+            } : function(e2) {
+              return P2(e2, t3);
+            };
+            var n2;
+          }
+          function Gt2(e2) {
+            return [].slice.call(e2);
+          }
+          var Xt = 0;
+          function Ht2(e2) {
+            return null == e2 ? ":id" : "string" == typeof e2 ? e2 : "[".concat(e2.join("+"), "]");
+          }
+          function Jt(e2, i3, t3) {
+            function _2(e3) {
+              if (3 === e3.type) return null;
+              if (4 === e3.type) throw new Error("Cannot convert never type to IDBKeyRange");
+              var t4 = e3.lower, n3 = e3.upper, r4 = e3.lowerOpen, e3 = e3.upperOpen;
+              return void 0 === t4 ? void 0 === n3 ? null : i3.upperBound(n3, !!e3) : void 0 === n3 ? i3.lowerBound(t4, !!r4) : i3.bound(t4, n3, !!r4, !!e3);
+            }
+            function n2(e3) {
+              var h2, w2 = e3.name;
+              return { name: w2, schema: e3, mutate: function(e4) {
+                var y2 = e4.trans, v2 = e4.type, m2 = e4.keys, b2 = e4.values, g2 = e4.range;
+                return new Promise(function(t4, e5) {
+                  t4 = Ie2(t4);
+                  var n3 = y2.objectStore(w2), r4 = null == n3.keyPath, i4 = "put" === v2 || "add" === v2;
+                  if (!i4 && "delete" !== v2 && "deleteRange" !== v2) throw new Error("Invalid operation type: " + v2);
+                  var o3, a3 = (m2 || b2 || { length: 1 }).length;
+                  if (m2 && b2 && m2.length !== b2.length) throw new Error("Given keys array must have same length as given values array.");
+                  if (0 === a3) return t4({ numFailures: 0, failures: {}, results: [], lastResult: void 0 });
+                  function u3(e6) {
+                    ++l2, Ft(e6);
+                  }
+                  var s3 = [], c4 = [], l2 = 0;
+                  if ("deleteRange" === v2) {
+                    if (4 === g2.type) return t4({ numFailures: l2, failures: c4, results: [], lastResult: void 0 });
+                    3 === g2.type ? s3.push(o3 = n3.clear()) : s3.push(o3 = n3.delete(_2(g2)));
+                  } else {
+                    var r4 = i4 ? r4 ? [b2, m2] : [b2, null] : [m2, null], f2 = r4[0], h3 = r4[1];
+                    if (i4) for (var d2 = 0; d2 < a3; ++d2) s3.push(o3 = h3 && void 0 !== h3[d2] ? n3[v2](f2[d2], h3[d2]) : n3[v2](f2[d2])), o3.onerror = u3;
+                    else for (d2 = 0; d2 < a3; ++d2) s3.push(o3 = n3[v2](f2[d2])), o3.onerror = u3;
+                  }
+                  function p2(e6) {
+                    e6 = e6.target.result, s3.forEach(function(e7, t5) {
+                      return null != e7.error && (c4[t5] = e7.error);
+                    }), t4({ numFailures: l2, failures: c4, results: "delete" === v2 ? m2 : s3.map(function(e7) {
+                      return e7.result;
+                    }), lastResult: e6 });
+                  }
+                  o3.onerror = function(e6) {
+                    u3(e6), p2(e6);
+                  }, o3.onsuccess = p2;
+                });
+              }, getMany: function(e4) {
+                var f2 = e4.trans, h3 = e4.keys;
+                return new Promise(function(t4, e5) {
+                  t4 = Ie2(t4);
+                  for (var n3, r4 = f2.objectStore(w2), i4 = h3.length, o3 = new Array(i4), a3 = 0, u3 = 0, s3 = function(e6) {
+                    e6 = e6.target;
+                    o3[e6._pos] = e6.result, ++u3 === a3 && t4(o3);
+                  }, c4 = Rt2(e5), l2 = 0; l2 < i4; ++l2) null != h3[l2] && ((n3 = r4.get(h3[l2]))._pos = l2, n3.onsuccess = s3, n3.onerror = c4, ++a3);
+                  0 === a3 && t4(o3);
+                });
+              }, get: function(e4) {
+                var r4 = e4.trans, i4 = e4.key;
+                return new Promise(function(t4, e5) {
+                  t4 = Ie2(t4);
+                  var n3 = r4.objectStore(w2).get(i4);
+                  n3.onsuccess = function(e6) {
+                    return t4(e6.target.result);
+                  }, n3.onerror = Rt2(e5);
+                });
+              }, query: (h2 = s2, function(f2) {
+                return new Promise(function(n3, e4) {
+                  n3 = Ie2(n3);
+                  var r4, i4, o3, t4 = f2.trans, a3 = f2.values, u3 = f2.limit, s3 = f2.query, c4 = u3 === 1 / 0 ? void 0 : u3, l2 = s3.index, s3 = s3.range, t4 = t4.objectStore(w2), l2 = l2.isPrimaryKey ? t4 : t4.index(l2.name), s3 = _2(s3);
+                  if (0 === u3) return n3({ result: [] });
+                  h2 ? ((c4 = a3 ? l2.getAll(s3, c4) : l2.getAllKeys(s3, c4)).onsuccess = function(e5) {
+                    return n3({ result: e5.target.result });
+                  }, c4.onerror = Rt2(e4)) : (r4 = 0, i4 = !a3 && "openKeyCursor" in l2 ? l2.openKeyCursor(s3) : l2.openCursor(s3), o3 = [], i4.onsuccess = function(e5) {
+                    var t5 = i4.result;
+                    return t5 ? (o3.push(a3 ? t5.value : t5.primaryKey), ++r4 === u3 ? n3({ result: o3 }) : void t5.continue()) : n3({ result: o3 });
+                  }, i4.onerror = Rt2(e4));
+                });
+              }), openCursor: function(e4) {
+                var c4 = e4.trans, o3 = e4.values, a3 = e4.query, u3 = e4.reverse, l2 = e4.unique;
+                return new Promise(function(t4, n3) {
+                  t4 = Ie2(t4);
+                  var e5 = a3.index, r4 = a3.range, i4 = c4.objectStore(w2), i4 = e5.isPrimaryKey ? i4 : i4.index(e5.name), e5 = u3 ? l2 ? "prevunique" : "prev" : l2 ? "nextunique" : "next", s3 = !o3 && "openKeyCursor" in i4 ? i4.openKeyCursor(_2(r4), e5) : i4.openCursor(_2(r4), e5);
+                  s3.onerror = Rt2(n3), s3.onsuccess = Ie2(function(e6) {
+                    var r5, i5, o4, a4, u4 = s3.result;
+                    u4 ? (u4.___id = ++Xt, u4.done = false, r5 = u4.continue.bind(u4), i5 = (i5 = u4.continuePrimaryKey) && i5.bind(u4), o4 = u4.advance.bind(u4), a4 = function() {
+                      throw new Error("Cursor not stopped");
+                    }, u4.trans = c4, u4.stop = u4.continue = u4.continuePrimaryKey = u4.advance = function() {
+                      throw new Error("Cursor not started");
+                    }, u4.fail = Ie2(n3), u4.next = function() {
+                      var e7 = this, t5 = 1;
+                      return this.start(function() {
+                        return t5-- ? e7.continue() : e7.stop();
+                      }).then(function() {
+                        return e7;
+                      });
+                    }, u4.start = function(e7) {
+                      function t5() {
+                        if (s3.result) try {
+                          e7();
+                        } catch (e8) {
+                          u4.fail(e8);
+                        }
+                        else u4.done = true, u4.start = function() {
+                          throw new Error("Cursor behind last entry");
+                        }, u4.stop();
+                      }
+                      var n4 = new Promise(function(t6, e8) {
+                        t6 = Ie2(t6), s3.onerror = Rt2(e8), u4.fail = e8, u4.stop = function(e9) {
+                          u4.stop = u4.continue = u4.continuePrimaryKey = u4.advance = a4, t6(e9);
+                        };
+                      });
+                      return s3.onsuccess = Ie2(function(e8) {
+                        s3.onsuccess = t5, t5();
+                      }), u4.continue = r5, u4.continuePrimaryKey = i5, u4.advance = o4, t5(), n4;
+                    }, t4(u4)) : t4(null);
+                  }, n3);
+                });
+              }, count: function(e4) {
+                var t4 = e4.query, i4 = e4.trans, o3 = t4.index, a3 = t4.range;
+                return new Promise(function(t5, e5) {
+                  var n3 = i4.objectStore(w2), r4 = o3.isPrimaryKey ? n3 : n3.index(o3.name), n3 = _2(a3), r4 = n3 ? r4.count(n3) : r4.count();
+                  r4.onsuccess = Ie2(function(e6) {
+                    return t5(e6.target.result);
+                  }), r4.onerror = Rt2(e5);
+                });
+              } };
+            }
+            var r3, o2, a2, u2 = (o2 = t3, a2 = Gt2((r3 = e2).objectStoreNames), { schema: { name: r3.name, tables: a2.map(function(e3) {
+              return o2.objectStore(e3);
+            }).map(function(t4) {
+              var e3 = t4.keyPath, n3 = t4.autoIncrement, r4 = x2(e3), i4 = {}, n3 = { name: t4.name, primaryKey: { name: null, isPrimaryKey: true, outbound: null == e3, compound: r4, keyPath: e3, autoIncrement: n3, unique: true, extractKey: Qt(e3) }, indexes: Gt2(t4.indexNames).map(function(e4) {
+                return t4.index(e4);
+              }).map(function(e4) {
+                var t5 = e4.name, n4 = e4.unique, r5 = e4.multiEntry, e4 = e4.keyPath, r5 = { name: t5, compound: x2(e4), keyPath: e4, unique: n4, multiEntry: r5, extractKey: Qt(e4) };
+                return i4[Ht2(e4)] = r5;
+              }), getIndexByKeyPath: function(e4) {
+                return i4[Ht2(e4)];
+              } };
+              return i4[":id"] = n3.primaryKey, null != e3 && (i4[Ht2(e3)] = n3.primaryKey), n3;
+            }) }, hasGetAll: 0 < a2.length && "getAll" in o2.objectStore(a2[0]) && !("undefined" != typeof navigator && /Safari/.test(navigator.userAgent) && !/(Chrome\/|Edge\/)/.test(navigator.userAgent) && [].concat(navigator.userAgent.match(/Safari\/(\d*)/))[1] < 604) }), t3 = u2.schema, s2 = u2.hasGetAll, u2 = t3.tables.map(n2), c3 = {};
+            return u2.forEach(function(e3) {
+              return c3[e3.name] = e3;
+            }), { stack: "dbcore", transaction: e2.transaction.bind(e2), table: function(e3) {
+              if (!c3[e3]) throw new Error("Table '".concat(e3, "' not found"));
+              return c3[e3];
+            }, MIN_KEY: -1 / 0, MAX_KEY: $t2(i3), schema: t3 };
+          }
+          function Zt2(e2, t3, n2, r3) {
+            var i3 = n2.IDBKeyRange;
+            return n2.indexedDB, { dbcore: (r3 = Jt(t3, i3, r3), e2.dbcore.reduce(function(e3, t4) {
+              t4 = t4.create;
+              return _(_({}, e3), t4(e3));
+            }, r3)) };
+          }
+          function en(n2, e2) {
+            var t3 = e2.db, e2 = Zt2(n2._middlewares, t3, n2._deps, e2);
+            n2.core = e2.dbcore, n2.tables.forEach(function(e3) {
+              var t4 = e3.name;
+              n2.core.schema.tables.some(function(e4) {
+                return e4.name === t4;
+              }) && (e3.core = n2.core.table(t4), n2[t4] instanceof n2.Table && (n2[t4].core = e3.core));
+            });
+          }
+          function tn2(i3, e2, t3, o2) {
+            t3.forEach(function(n2) {
+              var r3 = o2[n2];
+              e2.forEach(function(e3) {
+                var t4 = (function e4(t5, n3) {
+                  return h(t5, n3) || (t5 = c2(t5)) && e4(t5, n3);
+                })(e3, n2);
+                (!t4 || "value" in t4 && void 0 === t4.value) && (e3 === i3.Transaction.prototype || e3 instanceof i3.Transaction ? l(e3, n2, { get: function() {
+                  return this.table(n2);
+                }, set: function(e4) {
+                  u(this, n2, { value: e4, writable: true, configurable: true, enumerable: true });
+                } }) : e3[n2] = new i3.Table(n2, r3));
+              });
+            });
+          }
+          function nn(n2, e2) {
+            e2.forEach(function(e3) {
+              for (var t3 in e3) e3[t3] instanceof n2.Table && delete e3[t3];
+            });
+          }
+          function rn(e2, t3) {
+            return e2._cfg.version - t3._cfg.version;
+          }
+          function on(n2, r3, i3, e2) {
+            var o2 = n2._dbSchema;
+            i3.objectStoreNames.contains("$meta") && !o2.$meta && (o2.$meta = Yt2("$meta", dn2("")[0], []), n2._storeNames.push("$meta"));
+            var a2 = n2._createTransaction("readwrite", n2._storeNames, o2);
+            a2.create(i3), a2._completion.catch(e2);
+            var u2 = a2._reject.bind(a2), s2 = me.transless || me;
+            Ne2(function() {
+              return me.trans = a2, me.transless = s2, 0 !== r3 ? (en(n2, i3), t3 = r3, ((e3 = a2).storeNames.includes("$meta") ? e3.table("$meta").get("version").then(function(e4) {
+                return null != e4 ? e4 : t3;
+              }) : _e2.resolve(t3)).then(function(e4) {
+                return c3 = e4, l2 = a2, f2 = i3, t4 = [], e4 = (s3 = n2)._versions, h2 = s3._dbSchema = fn2(0, s3.idbdb, f2), 0 !== (e4 = e4.filter(function(e5) {
+                  return e5._cfg.version >= c3;
+                })).length ? (e4.forEach(function(u3) {
+                  t4.push(function() {
+                    var t5 = h2, e5 = u3._cfg.dbschema;
+                    hn2(s3, t5, f2), hn2(s3, e5, f2), h2 = s3._dbSchema = e5;
+                    var n3 = un2(t5, e5);
+                    n3.add.forEach(function(e6) {
+                      sn(f2, e6[0], e6[1].primKey, e6[1].indexes);
+                    }), n3.change.forEach(function(e6) {
+                      if (e6.recreate) throw new Y.Upgrade("Not yet support for changing primary key");
+                      var t6 = f2.objectStore(e6.name);
+                      e6.add.forEach(function(e7) {
+                        return ln(t6, e7);
+                      }), e6.change.forEach(function(e7) {
+                        t6.deleteIndex(e7.name), ln(t6, e7);
+                      }), e6.del.forEach(function(e7) {
+                        return t6.deleteIndex(e7);
+                      });
+                    });
+                    var r4 = u3._cfg.contentUpgrade;
+                    if (r4 && u3._cfg.version > c3) {
+                      en(s3, f2), l2._memoizedTables = {};
+                      var i4 = g(e5);
+                      n3.del.forEach(function(e6) {
+                        i4[e6] = t5[e6];
+                      }), nn(s3, [s3.Transaction.prototype]), tn2(s3, [s3.Transaction.prototype], O2(i4), i4), l2.schema = i4;
+                      var o3, a3 = B(r4);
+                      a3 && Le2();
+                      n3 = _e2.follow(function() {
+                        var e6;
+                        (o3 = r4(l2)) && a3 && (e6 = Ue2.bind(null, null), o3.then(e6, e6));
+                      });
+                      return o3 && "function" == typeof o3.then ? _e2.resolve(o3) : n3.then(function() {
+                        return o3;
+                      });
+                    }
+                  }), t4.push(function(e5) {
+                    var t5, n3, r4 = u3._cfg.dbschema;
+                    t5 = r4, n3 = e5, [].slice.call(n3.db.objectStoreNames).forEach(function(e6) {
+                      return null == t5[e6] && n3.db.deleteObjectStore(e6);
+                    }), nn(s3, [s3.Transaction.prototype]), tn2(s3, [s3.Transaction.prototype], s3._storeNames, s3._dbSchema), l2.schema = s3._dbSchema;
+                  }), t4.push(function(e5) {
+                    s3.idbdb.objectStoreNames.contains("$meta") && (Math.ceil(s3.idbdb.version / 10) === u3._cfg.version ? (s3.idbdb.deleteObjectStore("$meta"), delete s3._dbSchema.$meta, s3._storeNames = s3._storeNames.filter(function(e6) {
+                      return "$meta" !== e6;
+                    })) : e5.objectStore("$meta").put(u3._cfg.version, "version"));
+                  });
+                }), (function e5() {
+                  return t4.length ? _e2.resolve(t4.shift()(l2.idbtrans)).then(e5) : _e2.resolve();
+                })().then(function() {
+                  cn(h2, f2);
+                })) : _e2.resolve();
+                var s3, c3, l2, f2, t4, h2;
+              }).catch(u2)) : (O2(o2).forEach(function(e4) {
+                sn(i3, e4, o2[e4].primKey, o2[e4].indexes);
+              }), en(n2, i3), void _e2.follow(function() {
+                return n2.on.populate.fire(a2);
+              }).catch(u2));
+              var e3, t3;
+            });
+          }
+          function an2(e2, r3) {
+            cn(e2._dbSchema, r3), r3.db.version % 10 != 0 || r3.objectStoreNames.contains("$meta") || r3.db.createObjectStore("$meta").add(Math.ceil(r3.db.version / 10 - 1), "version");
+            var t3 = fn2(0, e2.idbdb, r3);
+            hn2(e2, e2._dbSchema, r3);
+            for (var n2 = 0, i3 = un2(t3, e2._dbSchema).change; n2 < i3.length; n2++) {
+              var o2 = (function(t4) {
+                if (t4.change.length || t4.recreate) return console.warn("Unable to patch indexes of table ".concat(t4.name, " because it has changes on the type of index or primary key.")), { value: void 0 };
+                var n3 = r3.objectStore(t4.name);
+                t4.add.forEach(function(e3) {
+                  ie2 && console.debug("Dexie upgrade patch: Creating missing index ".concat(t4.name, ".").concat(e3.src)), ln(n3, e3);
+                });
+              })(i3[n2]);
+              if ("object" == typeof o2) return o2.value;
+            }
+          }
+          function un2(e2, t3) {
+            var n2, r3 = { del: [], add: [], change: [] };
+            for (n2 in e2) t3[n2] || r3.del.push(n2);
+            for (n2 in t3) {
+              var i3 = e2[n2], o2 = t3[n2];
+              if (i3) {
+                var a2 = { name: n2, def: o2, recreate: false, del: [], add: [], change: [] };
+                if ("" + (i3.primKey.keyPath || "") != "" + (o2.primKey.keyPath || "") || i3.primKey.auto !== o2.primKey.auto) a2.recreate = true, r3.change.push(a2);
+                else {
+                  var u2 = i3.idxByName, s2 = o2.idxByName, c3 = void 0;
+                  for (c3 in u2) s2[c3] || a2.del.push(c3);
+                  for (c3 in s2) {
+                    var l2 = u2[c3], f2 = s2[c3];
+                    l2 ? l2.src !== f2.src && a2.change.push(f2) : a2.add.push(f2);
+                  }
+                  (0 < a2.del.length || 0 < a2.add.length || 0 < a2.change.length) && r3.change.push(a2);
+                }
+              } else r3.add.push([n2, o2]);
+            }
+            return r3;
+          }
+          function sn(e2, t3, n2, r3) {
+            var i3 = e2.db.createObjectStore(t3, n2.keyPath ? { keyPath: n2.keyPath, autoIncrement: n2.auto } : { autoIncrement: n2.auto });
+            return r3.forEach(function(e3) {
+              return ln(i3, e3);
+            }), i3;
+          }
+          function cn(t3, n2) {
+            O2(t3).forEach(function(e2) {
+              n2.db.objectStoreNames.contains(e2) || (ie2 && console.debug("Dexie: Creating missing table", e2), sn(n2, e2, t3[e2].primKey, t3[e2].indexes));
+            });
+          }
+          function ln(e2, t3) {
+            e2.createIndex(t3.name, t3.keyPath, { unique: t3.unique, multiEntry: t3.multi });
+          }
+          function fn2(e2, t3, u2) {
+            var s2 = {};
+            return b(t3.objectStoreNames, 0).forEach(function(e3) {
+              for (var t4 = u2.objectStore(e3), n2 = zt2(Wt(a2 = t4.keyPath), a2 || "", true, false, !!t4.autoIncrement, a2 && "string" != typeof a2, true), r3 = [], i3 = 0; i3 < t4.indexNames.length; ++i3) {
+                var o2 = t4.index(t4.indexNames[i3]), a2 = o2.keyPath, o2 = zt2(o2.name, a2, !!o2.unique, !!o2.multiEntry, false, a2 && "string" != typeof a2, false);
+                r3.push(o2);
+              }
+              s2[e3] = Yt2(e3, n2, r3);
+            }), s2;
+          }
+          function hn2(e2, t3, n2) {
+            for (var r3 = n2.db.objectStoreNames, i3 = 0; i3 < r3.length; ++i3) {
+              var o2 = r3[i3], a2 = n2.objectStore(o2);
+              e2._hasGetAll = "getAll" in a2;
+              for (var u2 = 0; u2 < a2.indexNames.length; ++u2) {
+                var s2 = a2.indexNames[u2], c3 = a2.index(s2).keyPath, l2 = "string" == typeof c3 ? c3 : "[" + b(c3).join("+") + "]";
+                !t3[o2] || (c3 = t3[o2].idxByName[l2]) && (c3.name = s2, delete t3[o2].idxByName[l2], t3[o2].idxByName[s2] = c3);
+              }
+            }
+            "undefined" != typeof navigator && /Safari/.test(navigator.userAgent) && !/(Chrome\/|Edge\/)/.test(navigator.userAgent) && f.WorkerGlobalScope && f instanceof f.WorkerGlobalScope && [].concat(navigator.userAgent.match(/Safari\/(\d*)/))[1] < 604 && (e2._hasGetAll = false);
+          }
+          function dn2(e2) {
+            return e2.split(",").map(function(e3, t3) {
+              var n2 = e3.split(":"), r3 = null === (i3 = n2[1]) || void 0 === i3 ? void 0 : i3.trim(), i3 = (e3 = n2[0].trim()).replace(/([&*]|\+\+)/g, ""), n2 = /^\[/.test(i3) ? i3.match(/^\[(.*)\]$/)[1].split("+") : i3;
+              return zt2(i3, n2 || null, /\&/.test(e3), /\*/.test(e3), /\+\+/.test(e3), x2(n2), 0 === t3, r3);
+            });
+          }
+          var pn2 = (yn2.prototype._createTableSchema = Yt2, yn2.prototype._parseIndexSyntax = dn2, yn2.prototype._parseStoresSpec = function(r3, i3) {
+            var o2 = this;
+            O2(r3).forEach(function(e2) {
+              if (null !== r3[e2]) {
+                var t3 = o2._parseIndexSyntax(r3[e2]), n2 = t3.shift();
+                if (!n2) throw new Y.Schema("Invalid schema for table " + e2 + ": " + r3[e2]);
+                if (n2.unique = true, n2.multi) throw new Y.Schema("Primary key cannot be multiEntry*");
+                t3.forEach(function(e3) {
+                  if (e3.auto) throw new Y.Schema("Only primary key can be marked as autoIncrement (++)");
+                  if (!e3.keyPath) throw new Y.Schema("Index must have a name and cannot be an empty string");
+                });
+                t3 = o2._createTableSchema(e2, n2, t3);
+                i3[e2] = t3;
+              }
+            });
+          }, yn2.prototype.stores = function(e2) {
+            var t3 = this.db;
+            this._cfg.storesSource = this._cfg.storesSource ? a(this._cfg.storesSource, e2) : e2;
+            var e2 = t3._versions, n2 = {}, r3 = {};
+            return e2.forEach(function(e3) {
+              a(n2, e3._cfg.storesSource), r3 = e3._cfg.dbschema = {}, e3._parseStoresSpec(n2, r3);
+            }), t3._dbSchema = r3, nn(t3, [t3._allTables, t3, t3.Transaction.prototype]), tn2(t3, [t3._allTables, t3, t3.Transaction.prototype, this._cfg.tables], O2(r3), r3), t3._storeNames = O2(r3), this;
+          }, yn2.prototype.upgrade = function(e2) {
+            return this._cfg.contentUpgrade = re2(this._cfg.contentUpgrade || G2, e2), this;
+          }, yn2);
+          function yn2() {
+          }
+          function vn(e2, t3) {
+            var n2 = e2._dbNamesDB;
+            return n2 || (n2 = e2._dbNamesDB = new tr2(tt, { addons: [], indexedDB: e2, IDBKeyRange: t3 })).version(1).stores({ dbnames: "name" }), n2.table("dbnames");
+          }
+          function mn2(e2) {
+            return e2 && "function" == typeof e2.databases;
+          }
+          function bn2(e2) {
+            return Ne2(function() {
+              return me.letThrough = true, e2();
+            });
+          }
+          function gn2(e2) {
+            return !("from" in e2);
+          }
+          var wn = function(e2, t3) {
+            if (!this) {
+              var n2 = new wn();
+              return e2 && "d" in e2 && a(n2, e2), n2;
+            }
+            a(this, arguments.length ? { d: 1, from: e2, to: 1 < arguments.length ? t3 : e2 } : { d: 0 });
+          };
+          function _n2(e2, t3, n2) {
+            var r3 = st2(t3, n2);
+            if (!isNaN(r3)) {
+              if (0 < r3) throw RangeError();
+              if (gn2(e2)) return a(e2, { from: t3, to: n2, d: 1 });
+              var i3 = e2.l, r3 = e2.r;
+              if (st2(n2, e2.from) < 0) return i3 ? _n2(i3, t3, n2) : e2.l = { from: t3, to: n2, d: 1, l: null, r: null }, Pn2(e2);
+              if (0 < st2(t3, e2.to)) return r3 ? _n2(r3, t3, n2) : e2.r = { from: t3, to: n2, d: 1, l: null, r: null }, Pn2(e2);
+              st2(t3, e2.from) < 0 && (e2.from = t3, e2.l = null, e2.d = r3 ? r3.d + 1 : 1), 0 < st2(n2, e2.to) && (e2.to = n2, e2.r = null, e2.d = e2.l ? e2.l.d + 1 : 1);
+              n2 = !e2.r;
+              i3 && !e2.l && xn2(e2, i3), r3 && n2 && xn2(e2, r3);
+            }
+          }
+          function xn2(e2, t3) {
+            gn2(t3) || (function e3(t4, n2) {
+              var r3 = n2.from, i3 = n2.to, o2 = n2.l, n2 = n2.r;
+              _n2(t4, r3, i3), o2 && e3(t4, o2), n2 && e3(t4, n2);
+            })(e2, t3);
+          }
+          function kn2(e2, t3) {
+            var n2 = On2(t3), r3 = n2.next();
+            if (r3.done) return false;
+            for (var i3 = r3.value, o2 = On2(e2), a2 = o2.next(i3.from), u2 = a2.value; !r3.done && !a2.done; ) {
+              if (st2(u2.from, i3.to) <= 0 && 0 <= st2(u2.to, i3.from)) return true;
+              st2(i3.from, u2.from) < 0 ? i3 = (r3 = n2.next(u2.from)).value : u2 = (a2 = o2.next(i3.from)).value;
+            }
+            return false;
+          }
+          function On2(e2) {
+            var n2 = gn2(e2) ? null : { s: 0, n: e2 };
+            return { next: function(e3) {
+              for (var t3 = 0 < arguments.length; n2; ) switch (n2.s) {
+                case 0:
+                  if (n2.s = 1, t3) for (; n2.n.l && st2(e3, n2.n.from) < 0; ) n2 = { up: n2, n: n2.n.l, s: 1 };
+                  else for (; n2.n.l; ) n2 = { up: n2, n: n2.n.l, s: 1 };
+                case 1:
+                  if (n2.s = 2, !t3 || st2(e3, n2.n.to) <= 0) return { value: n2.n, done: false };
+                case 2:
+                  if (n2.n.r) {
+                    n2.s = 3, n2 = { up: n2, n: n2.n.r, s: 0 };
+                    continue;
+                  }
+                case 3:
+                  n2 = n2.up;
+              }
+              return { done: true };
+            } };
+          }
+          function Pn2(e2) {
+            var t3, n2, r3 = ((null === (t3 = e2.r) || void 0 === t3 ? void 0 : t3.d) || 0) - ((null === (n2 = e2.l) || void 0 === n2 ? void 0 : n2.d) || 0), i3 = 1 < r3 ? "r" : r3 < -1 ? "l" : "";
+            i3 && (t3 = "r" == i3 ? "l" : "r", n2 = _({}, e2), r3 = e2[i3], e2.from = r3.from, e2.to = r3.to, e2[i3] = r3[i3], n2[i3] = r3[t3], (e2[t3] = n2).d = Kn2(n2)), e2.d = Kn2(e2);
+          }
+          function Kn2(e2) {
+            var t3 = e2.r, e2 = e2.l;
+            return (t3 ? e2 ? Math.max(t3.d, e2.d) : t3.d : e2 ? e2.d : 0) + 1;
+          }
+          function En2(t3, n2) {
+            return O2(n2).forEach(function(e2) {
+              t3[e2] ? xn2(t3[e2], n2[e2]) : t3[e2] = (function e3(t4) {
+                var n3, r3, i3 = {};
+                for (n3 in t4) m(t4, n3) && (r3 = t4[n3], i3[n3] = !r3 || "object" != typeof r3 || k.has(r3.constructor) ? r3 : e3(r3));
+                return i3;
+              })(n2[e2]);
+            }), t3;
+          }
+          function Sn2(t3, n2) {
+            return t3.all || n2.all || Object.keys(t3).some(function(e2) {
+              return n2[e2] && kn2(n2[e2], t3[e2]);
+            });
+          }
+          r2(wn.prototype, ((F = { add: function(e2) {
+            return xn2(this, e2), this;
+          }, addKey: function(e2) {
+            return _n2(this, e2, e2), this;
+          }, addKeys: function(e2) {
+            var t3 = this;
+            return e2.forEach(function(e3) {
+              return _n2(t3, e3, e3);
+            }), this;
+          }, hasKey: function(e2) {
+            var t3 = On2(this).next(e2).value;
+            return t3 && st2(t3.from, e2) <= 0 && 0 <= st2(t3.to, e2);
+          } })[C2] = function() {
+            return On2(this);
+          }, F));
+          var jn2 = {}, An2 = {}, Cn2 = false;
+          function Tn2(e2) {
+            En2(An2, e2), Cn2 || (Cn2 = true, setTimeout(function() {
+              Cn2 = false, In2(An2, !(An2 = {}));
+            }, 0));
+          }
+          function In2(e2, t3) {
+            void 0 === t3 && (t3 = false);
+            var n2 = /* @__PURE__ */ new Set();
+            if (e2.all) for (var r3 = 0, i3 = Object.values(jn2); r3 < i3.length; r3++) qn2(a2 = i3[r3], e2, n2, t3);
+            else for (var o2 in e2) {
+              var a2, u2 = /^idb\:\/\/(.*)\/(.*)\//.exec(o2);
+              u2 && (o2 = u2[1], u2 = u2[2], (a2 = jn2["idb://".concat(o2, "/").concat(u2)]) && qn2(a2, e2, n2, t3));
+            }
+            n2.forEach(function(e3) {
+              return e3();
+            });
+          }
+          function qn2(e2, t3, n2, r3) {
+            for (var i3 = [], o2 = 0, a2 = Object.entries(e2.queries.query); o2 < a2.length; o2++) {
+              for (var u2 = a2[o2], s2 = u2[0], c3 = [], l2 = 0, f2 = u2[1]; l2 < f2.length; l2++) {
+                var h2 = f2[l2];
+                Sn2(t3, h2.obsSet) ? h2.subscribers.forEach(function(e3) {
+                  return n2.add(e3);
+                }) : r3 && c3.push(h2);
+              }
+              r3 && i3.push([s2, c3]);
+            }
+            if (r3) for (var d2 = 0, p2 = i3; d2 < p2.length; d2++) {
+              var y2 = p2[d2], s2 = y2[0], c3 = y2[1];
+              e2.queries.query[s2] = c3;
+            }
+          }
+          function Dn2(f2) {
+            var h2 = f2._state, r3 = f2._deps.indexedDB;
+            if (h2.isBeingOpened || f2.idbdb) return h2.dbReadyPromise.then(function() {
+              return h2.dbOpenError ? Xe2(h2.dbOpenError) : f2;
+            });
+            h2.isBeingOpened = true, h2.dbOpenError = null, h2.openComplete = false;
+            var t3 = h2.openCanceller, d2 = Math.round(10 * f2.verno), p2 = false;
+            function e2() {
+              if (h2.openCanceller !== t3) throw new Y.DatabaseClosed("db.open() was cancelled");
+            }
+            function y2() {
+              return new _e2(function(s2, n3) {
+                if (e2(), !r3) throw new Y.MissingAPI();
+                var c3 = f2.name, l2 = h2.autoSchema || !d2 ? r3.open(c3) : r3.open(c3, d2);
+                if (!l2) throw new Y.MissingAPI();
+                l2.onerror = Rt2(n3), l2.onblocked = Ie2(f2._fireOnBlocked), l2.onupgradeneeded = Ie2(function(e3) {
+                  var t4;
+                  v2 = l2.transaction, h2.autoSchema && !f2._options.allowEmptyDB ? (l2.onerror = Ft, v2.abort(), l2.result.close(), (t4 = r3.deleteDatabase(c3)).onsuccess = t4.onerror = Ie2(function() {
+                    n3(new Y.NoSuchDatabase("Database ".concat(c3, " doesnt exist")));
+                  })) : (v2.onerror = Rt2(n3), e3 = e3.oldVersion > Math.pow(2, 62) ? 0 : e3.oldVersion, m2 = e3 < 1, f2.idbdb = l2.result, p2 && an2(f2, v2), on(f2, e3 / 10, v2, n3));
+                }, n3), l2.onsuccess = Ie2(function() {
+                  v2 = null;
+                  var e3, t4, n4, r4, i4, o2 = f2.idbdb = l2.result, a2 = b(o2.objectStoreNames);
+                  if (0 < a2.length) try {
+                    var u2 = o2.transaction(1 === (r4 = a2).length ? r4[0] : r4, "readonly");
+                    if (h2.autoSchema) t4 = o2, n4 = u2, (e3 = f2).verno = t4.version / 10, n4 = e3._dbSchema = fn2(0, t4, n4), e3._storeNames = b(t4.objectStoreNames, 0), tn2(e3, [e3._allTables], O2(n4), n4);
+                    else if (hn2(f2, f2._dbSchema, u2), ((i4 = un2(fn2(0, (i4 = f2).idbdb, u2), i4._dbSchema)).add.length || i4.change.some(function(e4) {
+                      return e4.add.length || e4.change.length;
+                    })) && !p2) return console.warn("Dexie SchemaDiff: Schema was extended without increasing the number passed to db.version(). Dexie will add missing parts and increment native version number to workaround this."), o2.close(), d2 = o2.version + 1, p2 = true, s2(y2());
+                    en(f2, u2);
+                  } catch (e4) {
+                  }
+                  et2.push(f2), o2.onversionchange = Ie2(function(e4) {
+                    h2.vcFired = true, f2.on("versionchange").fire(e4);
+                  }), o2.onclose = Ie2(function(e4) {
+                    f2.on("close").fire(e4);
+                  }), m2 && (i4 = f2._deps, u2 = c3, o2 = i4.indexedDB, i4 = i4.IDBKeyRange, mn2(o2) || u2 === tt || vn(o2, i4).put({ name: u2 }).catch(G2)), s2();
+                }, n3);
+              }).catch(function(e3) {
+                switch (null == e3 ? void 0 : e3.name) {
+                  case "UnknownError":
+                    if (0 < h2.PR1398_maxLoop) return h2.PR1398_maxLoop--, console.warn("Dexie: Workaround for Chrome UnknownError on open()"), y2();
+                    break;
+                  case "VersionError":
+                    if (0 < d2) return d2 = 0, y2();
+                }
+                return _e2.reject(e3);
+              });
+            }
+            var n2, i3 = h2.dbReadyResolve, v2 = null, m2 = false;
+            return _e2.race([t3, ("undefined" == typeof navigator ? _e2.resolve() : !navigator.userAgentData && /Safari\//.test(navigator.userAgent) && !/Chrom(e|ium)\//.test(navigator.userAgent) && indexedDB.databases ? new Promise(function(e3) {
+              function t4() {
+                return indexedDB.databases().finally(e3);
+              }
+              n2 = setInterval(t4, 100), t4();
+            }).finally(function() {
+              return clearInterval(n2);
+            }) : Promise.resolve()).then(y2)]).then(function() {
+              return e2(), h2.onReadyBeingFired = [], _e2.resolve(bn2(function() {
+                return f2.on.ready.fire(f2.vip);
+              })).then(function e3() {
+                if (0 < h2.onReadyBeingFired.length) {
+                  var t4 = h2.onReadyBeingFired.reduce(re2, G2);
+                  return h2.onReadyBeingFired = [], _e2.resolve(bn2(function() {
+                    return t4(f2.vip);
+                  })).then(e3);
+                }
+              });
+            }).finally(function() {
+              h2.openCanceller === t3 && (h2.onReadyBeingFired = null, h2.isBeingOpened = false);
+            }).catch(function(e3) {
+              h2.dbOpenError = e3;
+              try {
+                v2 && v2.abort();
+              } catch (e4) {
+              }
+              return t3 === h2.openCanceller && f2._close(), Xe2(e3);
+            }).finally(function() {
+              h2.openComplete = true, i3();
+            }).then(function() {
+              var n3;
+              return m2 && (n3 = {}, f2.tables.forEach(function(t4) {
+                t4.schema.indexes.forEach(function(e3) {
+                  e3.name && (n3["idb://".concat(f2.name, "/").concat(t4.name, "/").concat(e3.name)] = new wn(-1 / 0, [[[]]]));
+                }), n3["idb://".concat(f2.name, "/").concat(t4.name, "/")] = n3["idb://".concat(f2.name, "/").concat(t4.name, "/:dels")] = new wn(-1 / 0, [[[]]]);
+              }), Lt2(Mt).fire(n3), In2(n3, true)), f2;
+            });
+          }
+          function Bn2(t3) {
+            function e2(e3) {
+              return t3.next(e3);
+            }
+            var r3 = n2(e2), i3 = n2(function(e3) {
+              return t3.throw(e3);
+            });
+            function n2(n3) {
+              return function(e3) {
+                var t4 = n3(e3), e3 = t4.value;
+                return t4.done ? e3 : e3 && "function" == typeof e3.then ? e3.then(r3, i3) : x2(e3) ? Promise.all(e3).then(r3, i3) : r3(e3);
+              };
+            }
+            return n2(e2)();
+          }
+          function Rn2(e2, t3, n2) {
+            for (var r3 = x2(e2) ? e2.slice() : [e2], i3 = 0; i3 < n2; ++i3) r3.push(t3);
+            return r3;
+          }
+          var Fn2 = { stack: "dbcore", name: "VirtualIndexMiddleware", level: 1, create: function(f2) {
+            return _(_({}, f2), { table: function(e2) {
+              var a2 = f2.table(e2), t3 = a2.schema, u2 = {}, s2 = [];
+              function c3(e3, t4, n3) {
+                var r4 = Ht2(e3), i4 = u2[r4] = u2[r4] || [], o2 = null == e3 ? 0 : "string" == typeof e3 ? 1 : e3.length, a3 = 0 < t4, a3 = _(_({}, n3), { name: a3 ? "".concat(r4, "(virtual-from:").concat(n3.name, ")") : n3.name, lowLevelIndex: n3, isVirtual: a3, keyTail: t4, keyLength: o2, extractKey: Qt(e3), unique: !a3 && n3.unique });
+                return i4.push(a3), a3.isPrimaryKey || s2.push(a3), 1 < o2 && c3(2 === o2 ? e3[0] : e3.slice(0, o2 - 1), t4 + 1, n3), i4.sort(function(e4, t5) {
+                  return e4.keyTail - t5.keyTail;
+                }), a3;
+              }
+              e2 = c3(t3.primaryKey.keyPath, 0, t3.primaryKey);
+              u2[":id"] = [e2];
+              for (var n2 = 0, r3 = t3.indexes; n2 < r3.length; n2++) {
+                var i3 = r3[n2];
+                c3(i3.keyPath, 0, i3);
+              }
+              function l2(e3) {
+                var t4, n3 = e3.query.index;
+                return n3.isVirtual ? _(_({}, e3), { query: { index: n3.lowLevelIndex, range: (t4 = e3.query.range, n3 = n3.keyTail, { type: 1 === t4.type ? 2 : t4.type, lower: Rn2(t4.lower, t4.lowerOpen ? f2.MAX_KEY : f2.MIN_KEY, n3), lowerOpen: true, upper: Rn2(t4.upper, t4.upperOpen ? f2.MIN_KEY : f2.MAX_KEY, n3), upperOpen: true }) } }) : e3;
+              }
+              return _(_({}, a2), { schema: _(_({}, t3), { primaryKey: e2, indexes: s2, getIndexByKeyPath: function(e3) {
+                return (e3 = u2[Ht2(e3)]) && e3[0];
+              } }), count: function(e3) {
+                return a2.count(l2(e3));
+              }, query: function(e3) {
+                return a2.query(l2(e3));
+              }, openCursor: function(t4) {
+                var e3 = t4.query.index, r4 = e3.keyTail, n3 = e3.isVirtual, i4 = e3.keyLength;
+                return n3 ? a2.openCursor(l2(t4)).then(function(e4) {
+                  return e4 && o2(e4);
+                }) : a2.openCursor(t4);
+                function o2(n4) {
+                  return Object.create(n4, { continue: { value: function(e4) {
+                    null != e4 ? n4.continue(Rn2(e4, t4.reverse ? f2.MAX_KEY : f2.MIN_KEY, r4)) : t4.unique ? n4.continue(n4.key.slice(0, i4).concat(t4.reverse ? f2.MIN_KEY : f2.MAX_KEY, r4)) : n4.continue();
+                  } }, continuePrimaryKey: { value: function(e4, t5) {
+                    n4.continuePrimaryKey(Rn2(e4, f2.MAX_KEY, r4), t5);
+                  } }, primaryKey: { get: function() {
+                    return n4.primaryKey;
+                  } }, key: { get: function() {
+                    var e4 = n4.key;
+                    return 1 === i4 ? e4[0] : e4.slice(0, i4);
+                  } }, value: { get: function() {
+                    return n4.value;
+                  } } });
+                }
+              } });
+            } });
+          } };
+          function Mn2(i3, o2, a2, u2) {
+            return a2 = a2 || {}, u2 = u2 || "", O2(i3).forEach(function(e2) {
+              var t3, n2, r3;
+              m(o2, e2) ? (t3 = i3[e2], n2 = o2[e2], "object" == typeof t3 && "object" == typeof n2 && t3 && n2 ? (r3 = A2(t3)) !== A2(n2) ? a2[u2 + e2] = o2[e2] : "Object" === r3 ? Mn2(t3, n2, a2, u2 + e2 + ".") : t3 !== n2 && (a2[u2 + e2] = o2[e2]) : t3 !== n2 && (a2[u2 + e2] = o2[e2])) : a2[u2 + e2] = void 0;
+            }), O2(o2).forEach(function(e2) {
+              m(i3, e2) || (a2[u2 + e2] = o2[e2]);
+            }), a2;
+          }
+          function Nn2(e2, t3) {
+            return "delete" === t3.type ? t3.keys : t3.keys || t3.values.map(e2.extractKey);
+          }
+          var Ln2 = { stack: "dbcore", name: "HooksMiddleware", level: 2, create: function(e2) {
+            return _(_({}, e2), { table: function(r3) {
+              var y2 = e2.table(r3), v2 = y2.schema.primaryKey;
+              return _(_({}, y2), { mutate: function(e3) {
+                var t3 = me.trans, n2 = t3.table(r3).hook, h2 = n2.deleting, d2 = n2.creating, p2 = n2.updating;
+                switch (e3.type) {
+                  case "add":
+                    if (d2.fire === G2) break;
+                    return t3._promise("readwrite", function() {
+                      return a2(e3);
+                    }, true);
+                  case "put":
+                    if (d2.fire === G2 && p2.fire === G2) break;
+                    return t3._promise("readwrite", function() {
+                      return a2(e3);
+                    }, true);
+                  case "delete":
+                    if (h2.fire === G2) break;
+                    return t3._promise("readwrite", function() {
+                      return a2(e3);
+                    }, true);
+                  case "deleteRange":
+                    if (h2.fire === G2) break;
+                    return t3._promise("readwrite", function() {
+                      return (function n3(r4, i3, o2) {
+                        return y2.query({ trans: r4, values: false, query: { index: v2, range: i3 }, limit: o2 }).then(function(e4) {
+                          var t4 = e4.result;
+                          return a2({ type: "delete", keys: t4, trans: r4 }).then(function(e5) {
+                            return 0 < e5.numFailures ? Promise.reject(e5.failures[0]) : t4.length < o2 ? { failures: [], numFailures: 0, lastResult: void 0 } : n3(r4, _(_({}, i3), { lower: t4[t4.length - 1], lowerOpen: true }), o2);
+                          });
+                        });
+                      })(e3.trans, e3.range, 1e4);
+                    }, true);
+                }
+                return y2.mutate(e3);
+                function a2(c3) {
+                  var e4, t4, n3, l2 = me.trans, f2 = c3.keys || Nn2(v2, c3);
+                  if (!f2) throw new Error("Keys missing");
+                  return "delete" !== (c3 = "add" === c3.type || "put" === c3.type ? _(_({}, c3), { keys: f2 }) : _({}, c3)).type && (c3.values = i2([], c3.values)), c3.keys && (c3.keys = i2([], c3.keys)), e4 = y2, n3 = f2, ("add" === (t4 = c3).type ? Promise.resolve([]) : e4.getMany({ trans: t4.trans, keys: n3, cache: "immutable" })).then(function(u2) {
+                    var s2 = f2.map(function(e5, t5) {
+                      var n4, r4, i3, o2 = u2[t5], a3 = { onerror: null, onsuccess: null };
+                      return "delete" === c3.type ? h2.fire.call(a3, e5, o2, l2) : "add" === c3.type || void 0 === o2 ? (n4 = d2.fire.call(a3, e5, c3.values[t5], l2), null == e5 && null != n4 && (c3.keys[t5] = e5 = n4, v2.outbound || K2(c3.values[t5], v2.keyPath, e5))) : (n4 = Mn2(o2, c3.values[t5]), (r4 = p2.fire.call(a3, n4, e5, o2, l2)) && (i3 = c3.values[t5], Object.keys(r4).forEach(function(e6) {
+                        m(i3, e6) ? i3[e6] = r4[e6] : K2(i3, e6, r4[e6]);
+                      }))), a3;
+                    });
+                    return y2.mutate(c3).then(function(e5) {
+                      for (var t5 = e5.failures, n4 = e5.results, r4 = e5.numFailures, e5 = e5.lastResult, i3 = 0; i3 < f2.length; ++i3) {
+                        var o2 = (n4 || f2)[i3], a3 = s2[i3];
+                        null == o2 ? a3.onerror && a3.onerror(t5[i3]) : a3.onsuccess && a3.onsuccess("put" === c3.type && u2[i3] ? c3.values[i3] : o2);
+                      }
+                      return { failures: t5, results: n4, numFailures: r4, lastResult: e5 };
+                    }).catch(function(t5) {
+                      return s2.forEach(function(e5) {
+                        return e5.onerror && e5.onerror(t5);
+                      }), Promise.reject(t5);
+                    });
+                  });
+                }
+              } });
+            } });
+          } };
+          function Un2(e2, t3, n2) {
+            try {
+              if (!t3) return null;
+              if (t3.keys.length < e2.length) return null;
+              for (var r3 = [], i3 = 0, o2 = 0; i3 < t3.keys.length && o2 < e2.length; ++i3) 0 === st2(t3.keys[i3], e2[o2]) && (r3.push(n2 ? S(t3.values[i3]) : t3.values[i3]), ++o2);
+              return r3.length === e2.length ? r3 : null;
+            } catch (e3) {
+              return null;
+            }
+          }
+          var Vn2 = { stack: "dbcore", level: -1, create: function(t3) {
+            return { table: function(e2) {
+              var n2 = t3.table(e2);
+              return _(_({}, n2), { getMany: function(t4) {
+                if (!t4.cache) return n2.getMany(t4);
+                var e3 = Un2(t4.keys, t4.trans._cache, "clone" === t4.cache);
+                return e3 ? _e2.resolve(e3) : n2.getMany(t4).then(function(e4) {
+                  return t4.trans._cache = { keys: t4.keys, values: "clone" === t4.cache ? S(e4) : e4 }, e4;
+                });
+              }, mutate: function(e3) {
+                return "add" !== e3.type && (e3.trans._cache = null), n2.mutate(e3);
+              } });
+            } };
+          } };
+          function zn2(e2, t3) {
+            return "readonly" === e2.trans.mode && !!e2.subscr && !e2.trans.explicit && "disabled" !== e2.trans.db._options.cache && !t3.schema.primaryKey.outbound;
+          }
+          function Wn2(e2, t3) {
+            switch (e2) {
+              case "query":
+                return t3.values && !t3.unique;
+              case "get":
+              case "getMany":
+              case "count":
+              case "openCursor":
+                return false;
+            }
+          }
+          var Yn2 = { stack: "dbcore", level: 0, name: "Observability", create: function(b2) {
+            var g2 = b2.schema.name, w2 = new wn(b2.MIN_KEY, b2.MAX_KEY);
+            return _(_({}, b2), { transaction: function(e2, t3, n2) {
+              if (me.subscr && "readonly" !== t3) throw new Y.ReadOnly("Readwrite transaction in liveQuery context. Querier source: ".concat(me.querier));
+              return b2.transaction(e2, t3, n2);
+            }, table: function(d2) {
+              var p2 = b2.table(d2), y2 = p2.schema, v2 = y2.primaryKey, e2 = y2.indexes, c3 = v2.extractKey, l2 = v2.outbound, m2 = v2.autoIncrement && e2.filter(function(e3) {
+                return e3.compound && e3.keyPath.includes(v2.keyPath);
+              }), t3 = _(_({}, p2), { mutate: function(a2) {
+                function u2(e4) {
+                  return e4 = "idb://".concat(g2, "/").concat(d2, "/").concat(e4), n2[e4] || (n2[e4] = new wn());
+                }
+                var e3, o2, s2, t4 = a2.trans, n2 = a2.mutatedParts || (a2.mutatedParts = {}), r3 = u2(""), i3 = u2(":dels"), c4 = a2.type, l3 = "deleteRange" === a2.type ? [a2.range] : "delete" === a2.type ? [a2.keys] : a2.values.length < 50 ? [Nn2(v2, a2).filter(function(e4) {
+                  return e4;
+                }), a2.values] : [], f3 = l3[0], h2 = l3[1], l3 = a2.trans._cache;
+                return x2(f3) ? (r3.addKeys(f3), (l3 = "delete" === c4 || f3.length === h2.length ? Un2(f3, l3) : null) || i3.addKeys(f3), (l3 || h2) && (e3 = u2, o2 = l3, s2 = h2, y2.indexes.forEach(function(t5) {
+                  var n3 = e3(t5.name || "");
+                  function r4(e4) {
+                    return null != e4 ? t5.extractKey(e4) : null;
+                  }
+                  function i4(e4) {
+                    return t5.multiEntry && x2(e4) ? e4.forEach(function(e5) {
+                      return n3.addKey(e5);
+                    }) : n3.addKey(e4);
+                  }
+                  (o2 || s2).forEach(function(e4, t6) {
+                    var n4 = o2 && r4(o2[t6]), t6 = s2 && r4(s2[t6]);
+                    0 !== st2(n4, t6) && (null != n4 && i4(n4), null != t6 && i4(t6));
+                  });
+                }))) : f3 ? (h2 = { from: null !== (h2 = f3.lower) && void 0 !== h2 ? h2 : b2.MIN_KEY, to: null !== (h2 = f3.upper) && void 0 !== h2 ? h2 : b2.MAX_KEY }, i3.add(h2), r3.add(h2)) : (r3.add(w2), i3.add(w2), y2.indexes.forEach(function(e4) {
+                  return u2(e4.name).add(w2);
+                })), p2.mutate(a2).then(function(o3) {
+                  return !f3 || "add" !== a2.type && "put" !== a2.type || (r3.addKeys(o3.results), m2 && m2.forEach(function(t5) {
+                    for (var e4 = a2.values.map(function(e5) {
+                      return t5.extractKey(e5);
+                    }), n3 = t5.keyPath.findIndex(function(e5) {
+                      return e5 === v2.keyPath;
+                    }), r4 = 0, i4 = o3.results.length; r4 < i4; ++r4) e4[r4][n3] = o3.results[r4];
+                    u2(t5.name).addKeys(e4);
+                  })), t4.mutatedParts = En2(t4.mutatedParts || {}, n2), o3;
+                });
+              } }), e2 = function(e3) {
+                var t4 = e3.query, e3 = t4.index, t4 = t4.range;
+                return [e3, new wn(null !== (e3 = t4.lower) && void 0 !== e3 ? e3 : b2.MIN_KEY, null !== (t4 = t4.upper) && void 0 !== t4 ? t4 : b2.MAX_KEY)];
+              }, f2 = { get: function(e3) {
+                return [v2, new wn(e3.key)];
+              }, getMany: function(e3) {
+                return [v2, new wn().addKeys(e3.keys)];
+              }, count: e2, query: e2, openCursor: e2 };
+              return O2(f2).forEach(function(s2) {
+                t3[s2] = function(i3) {
+                  var e3 = me.subscr, t4 = !!e3, n2 = zn2(me, p2) && Wn2(s2, i3) ? i3.obsSet = {} : e3;
+                  if (t4) {
+                    var r3 = function(e4) {
+                      e4 = "idb://".concat(g2, "/").concat(d2, "/").concat(e4);
+                      return n2[e4] || (n2[e4] = new wn());
+                    }, o2 = r3(""), a2 = r3(":dels"), e3 = f2[s2](i3), t4 = e3[0], e3 = e3[1];
+                    if (("query" === s2 && t4.isPrimaryKey && !i3.values ? a2 : r3(t4.name || "")).add(e3), !t4.isPrimaryKey) {
+                      if ("count" !== s2) {
+                        var u2 = "query" === s2 && l2 && i3.values && p2.query(_(_({}, i3), { values: false }));
+                        return p2[s2].apply(this, arguments).then(function(t5) {
+                          if ("query" === s2) {
+                            if (l2 && i3.values) return u2.then(function(e5) {
+                              e5 = e5.result;
+                              return o2.addKeys(e5), t5;
+                            });
+                            var e4 = i3.values ? t5.result.map(c3) : t5.result;
+                            (i3.values ? o2 : a2).addKeys(e4);
+                          } else if ("openCursor" === s2) {
+                            var n3 = t5, r4 = i3.values;
+                            return n3 && Object.create(n3, { key: { get: function() {
+                              return a2.addKey(n3.primaryKey), n3.key;
+                            } }, primaryKey: { get: function() {
+                              var e5 = n3.primaryKey;
+                              return a2.addKey(e5), e5;
+                            } }, value: { get: function() {
+                              return r4 && o2.addKey(n3.primaryKey), n3.value;
+                            } } });
+                          }
+                          return t5;
+                        });
+                      }
+                      a2.add(w2);
+                    }
+                  }
+                  return p2[s2].apply(this, arguments);
+                };
+              }), t3;
+            } });
+          } };
+          function $n2(e2, t3, n2) {
+            if (0 === n2.numFailures) return t3;
+            if ("deleteRange" === t3.type) return null;
+            var r3 = t3.keys ? t3.keys.length : "values" in t3 && t3.values ? t3.values.length : 1;
+            if (n2.numFailures === r3) return null;
+            t3 = _({}, t3);
+            return x2(t3.keys) && (t3.keys = t3.keys.filter(function(e3, t4) {
+              return !(t4 in n2.failures);
+            })), "values" in t3 && x2(t3.values) && (t3.values = t3.values.filter(function(e3, t4) {
+              return !(t4 in n2.failures);
+            })), t3;
+          }
+          function Qn2(e2, t3) {
+            return n2 = e2, (void 0 === (r3 = t3).lower || (r3.lowerOpen ? 0 < st2(n2, r3.lower) : 0 <= st2(n2, r3.lower))) && (e2 = e2, void 0 === (t3 = t3).upper || (t3.upperOpen ? st2(e2, t3.upper) < 0 : st2(e2, t3.upper) <= 0));
+            var n2, r3;
+          }
+          function Gn2(e2, d2, t3, n2, r3, i3) {
+            if (!t3 || 0 === t3.length) return e2;
+            var o2 = d2.query.index, p2 = o2.multiEntry, y2 = d2.query.range, v2 = n2.schema.primaryKey.extractKey, m2 = o2.extractKey, a2 = (o2.lowLevelIndex || o2).extractKey, t3 = t3.reduce(function(e3, t4) {
+              var n3 = e3, r4 = [];
+              if ("add" === t4.type || "put" === t4.type) for (var i4 = new wn(), o3 = t4.values.length - 1; 0 <= o3; --o3) {
+                var a3, u2 = t4.values[o3], s2 = v2(u2);
+                i4.hasKey(s2) || (a3 = m2(u2), (p2 && x2(a3) ? a3.some(function(e4) {
+                  return Qn2(e4, y2);
+                }) : Qn2(a3, y2)) && (i4.addKey(s2), r4.push(u2)));
+              }
+              switch (t4.type) {
+                case "add":
+                  var c3 = new wn().addKeys(d2.values ? e3.map(function(e4) {
+                    return v2(e4);
+                  }) : e3), n3 = e3.concat(d2.values ? r4.filter(function(e4) {
+                    e4 = v2(e4);
+                    return !c3.hasKey(e4) && (c3.addKey(e4), true);
+                  }) : r4.map(function(e4) {
+                    return v2(e4);
+                  }).filter(function(e4) {
+                    return !c3.hasKey(e4) && (c3.addKey(e4), true);
+                  }));
+                  break;
+                case "put":
+                  var l2 = new wn().addKeys(t4.values.map(function(e4) {
+                    return v2(e4);
+                  }));
+                  n3 = e3.filter(function(e4) {
+                    return !l2.hasKey(d2.values ? v2(e4) : e4);
+                  }).concat(d2.values ? r4 : r4.map(function(e4) {
+                    return v2(e4);
+                  }));
+                  break;
+                case "delete":
+                  var f2 = new wn().addKeys(t4.keys);
+                  n3 = e3.filter(function(e4) {
+                    return !f2.hasKey(d2.values ? v2(e4) : e4);
+                  });
+                  break;
+                case "deleteRange":
+                  var h2 = t4.range;
+                  n3 = e3.filter(function(e4) {
+                    return !Qn2(v2(e4), h2);
+                  });
+              }
+              return n3;
+            }, e2);
+            return t3 === e2 ? e2 : (t3.sort(function(e3, t4) {
+              return st2(a2(e3), a2(t4)) || st2(v2(e3), v2(t4));
+            }), d2.limit && d2.limit < 1 / 0 && (t3.length > d2.limit ? t3.length = d2.limit : e2.length === d2.limit && t3.length < d2.limit && (r3.dirty = true)), i3 ? Object.freeze(t3) : t3);
+          }
+          function Xn2(e2, t3) {
+            return 0 === st2(e2.lower, t3.lower) && 0 === st2(e2.upper, t3.upper) && !!e2.lowerOpen == !!t3.lowerOpen && !!e2.upperOpen == !!t3.upperOpen;
+          }
+          function Hn2(e2, t3) {
+            return (function(e3, t4, n2, r3) {
+              if (void 0 === e3) return void 0 !== t4 ? -1 : 0;
+              if (void 0 === t4) return 1;
+              if (0 === (t4 = st2(e3, t4))) {
+                if (n2 && r3) return 0;
+                if (n2) return 1;
+                if (r3) return -1;
+              }
+              return t4;
+            })(e2.lower, t3.lower, e2.lowerOpen, t3.lowerOpen) <= 0 && 0 <= (function(e3, t4, n2, r3) {
+              if (void 0 === e3) return void 0 !== t4 ? 1 : 0;
+              if (void 0 === t4) return -1;
+              if (0 === (t4 = st2(e3, t4))) {
+                if (n2 && r3) return 0;
+                if (n2) return -1;
+                if (r3) return 1;
+              }
+              return t4;
+            })(e2.upper, t3.upper, e2.upperOpen, t3.upperOpen);
+          }
+          function Jn2(n2, r3, i3, e2) {
+            n2.subscribers.add(i3), e2.addEventListener("abort", function() {
+              var e3, t3;
+              n2.subscribers.delete(i3), 0 === n2.subscribers.size && (e3 = n2, t3 = r3, setTimeout(function() {
+                0 === e3.subscribers.size && I(t3, e3);
+              }, 3e3));
+            });
+          }
+          var Zn2 = { stack: "dbcore", level: 0, name: "Cache", create: function(k2) {
+            var O3 = k2.schema.name;
+            return _(_({}, k2), { transaction: function(g2, w2, e2) {
+              var _2, t3, x3 = k2.transaction(g2, w2, e2);
+              return "readwrite" === w2 && (t3 = (_2 = new AbortController()).signal, e2 = function(b2) {
+                return function() {
+                  if (_2.abort(), "readwrite" === w2) {
+                    for (var t4 = /* @__PURE__ */ new Set(), e3 = 0, n2 = g2; e3 < n2.length; e3++) {
+                      var r3 = n2[e3], i3 = jn2["idb://".concat(O3, "/").concat(r3)];
+                      if (i3) {
+                        var o2 = k2.table(r3), a2 = i3.optimisticOps.filter(function(e4) {
+                          return e4.trans === x3;
+                        });
+                        if (x3._explicit && b2 && x3.mutatedParts) for (var u2 = 0, s2 = Object.values(i3.queries.query); u2 < s2.length; u2++) for (var c3 = 0, l2 = (d2 = s2[u2]).slice(); c3 < l2.length; c3++) Sn2((p2 = l2[c3]).obsSet, x3.mutatedParts) && (I(d2, p2), p2.subscribers.forEach(function(e4) {
+                          return t4.add(e4);
+                        }));
+                        else if (0 < a2.length) {
+                          i3.optimisticOps = i3.optimisticOps.filter(function(e4) {
+                            return e4.trans !== x3;
+                          });
+                          for (var f2 = 0, h2 = Object.values(i3.queries.query); f2 < h2.length; f2++) for (var d2, p2, y2, v2 = 0, m2 = (d2 = h2[f2]).slice(); v2 < m2.length; v2++) null != (p2 = m2[v2]).res && x3.mutatedParts && (b2 && !p2.dirty ? (y2 = Object.isFrozen(p2.res), y2 = Gn2(p2.res, p2.req, a2, o2, p2, y2), p2.dirty ? (I(d2, p2), p2.subscribers.forEach(function(e4) {
+                            return t4.add(e4);
+                          })) : y2 !== p2.res && (p2.res = y2, p2.promise = _e2.resolve({ result: y2 }))) : (p2.dirty && I(d2, p2), p2.subscribers.forEach(function(e4) {
+                            return t4.add(e4);
+                          })));
+                        }
+                      }
+                    }
+                    t4.forEach(function(e4) {
+                      return e4();
+                    });
+                  }
+                };
+              }, x3.addEventListener("abort", e2(false), { signal: t3 }), x3.addEventListener("error", e2(false), { signal: t3 }), x3.addEventListener("complete", e2(true), { signal: t3 })), x3;
+            }, table: function(c3) {
+              var l2 = k2.table(c3), i3 = l2.schema.primaryKey;
+              return _(_({}, l2), { mutate: function(t3) {
+                var e2 = me.trans;
+                if (i3.outbound || "disabled" === e2.db._options.cache || e2.explicit || "readwrite" !== e2.idbtrans.mode) return l2.mutate(t3);
+                var n2 = jn2["idb://".concat(O3, "/").concat(c3)];
+                if (!n2) return l2.mutate(t3);
+                e2 = l2.mutate(t3);
+                return "add" !== t3.type && "put" !== t3.type || !(50 <= t3.values.length || Nn2(i3, t3).some(function(e3) {
+                  return null == e3;
+                })) ? (n2.optimisticOps.push(t3), t3.mutatedParts && Tn2(t3.mutatedParts), e2.then(function(e3) {
+                  0 < e3.numFailures && (I(n2.optimisticOps, t3), (e3 = $n2(0, t3, e3)) && n2.optimisticOps.push(e3), t3.mutatedParts && Tn2(t3.mutatedParts));
+                }), e2.catch(function() {
+                  I(n2.optimisticOps, t3), t3.mutatedParts && Tn2(t3.mutatedParts);
+                })) : e2.then(function(r3) {
+                  var e3 = $n2(0, _(_({}, t3), { values: t3.values.map(function(e4, t4) {
+                    var n3;
+                    if (r3.failures[t4]) return e4;
+                    e4 = null !== (n3 = i3.keyPath) && void 0 !== n3 && n3.includes(".") ? S(e4) : _({}, e4);
+                    return K2(e4, i3.keyPath, r3.results[t4]), e4;
+                  }) }), r3);
+                  n2.optimisticOps.push(e3), queueMicrotask(function() {
+                    return t3.mutatedParts && Tn2(t3.mutatedParts);
+                  });
+                }), e2;
+              }, query: function(t3) {
+                if (!zn2(me, l2) || !Wn2("query", t3)) return l2.query(t3);
+                var i4 = "immutable" === (null === (o2 = me.trans) || void 0 === o2 ? void 0 : o2.db._options.cache), e2 = me, n2 = e2.requery, r3 = e2.signal, o2 = (function(e3, t4, n3, r4) {
+                  var i5 = jn2["idb://".concat(e3, "/").concat(t4)];
+                  if (!i5) return [];
+                  if (!(t4 = i5.queries[n3])) return [null, false, i5, null];
+                  var o3 = t4[(r4.query ? r4.query.index.name : null) || ""];
+                  if (!o3) return [null, false, i5, null];
+                  switch (n3) {
+                    case "query":
+                      var a3 = o3.find(function(e4) {
+                        return e4.req.limit === r4.limit && e4.req.values === r4.values && Xn2(e4.req.query.range, r4.query.range);
+                      });
+                      return a3 ? [a3, true, i5, o3] : [o3.find(function(e4) {
+                        return ("limit" in e4.req ? e4.req.limit : 1 / 0) >= r4.limit && (!r4.values || e4.req.values) && Hn2(e4.req.query.range, r4.query.range);
+                      }), false, i5, o3];
+                    case "count":
+                      a3 = o3.find(function(e4) {
+                        return Xn2(e4.req.query.range, r4.query.range);
+                      });
+                      return [a3, !!a3, i5, o3];
+                  }
+                })(O3, c3, "query", t3), a2 = o2[0], e2 = o2[1], u2 = o2[2], s2 = o2[3];
+                return a2 && e2 ? a2.obsSet = t3.obsSet : (e2 = l2.query(t3).then(function(e3) {
+                  var t4 = e3.result;
+                  if (a2 && (a2.res = t4), i4) {
+                    for (var n3 = 0, r4 = t4.length; n3 < r4; ++n3) Object.freeze(t4[n3]);
+                    Object.freeze(t4);
+                  } else e3.result = S(t4);
+                  return e3;
+                }).catch(function(e3) {
+                  return s2 && a2 && I(s2, a2), Promise.reject(e3);
+                }), a2 = { obsSet: t3.obsSet, promise: e2, subscribers: /* @__PURE__ */ new Set(), type: "query", req: t3, dirty: false }, s2 ? s2.push(a2) : (s2 = [a2], (u2 = u2 || (jn2["idb://".concat(O3, "/").concat(c3)] = { queries: { query: {}, count: {} }, objs: /* @__PURE__ */ new Map(), optimisticOps: [], unsignaledParts: {} })).queries.query[t3.query.index.name || ""] = s2)), Jn2(a2, s2, n2, r3), a2.promise.then(function(e3) {
+                  return { result: Gn2(e3.result, t3, null == u2 ? void 0 : u2.optimisticOps, l2, a2, i4) };
+                });
+              } });
+            } });
+          } };
+          function er2(e2, r3) {
+            return new Proxy(e2, { get: function(e3, t3, n2) {
+              return "db" === t3 ? r3 : Reflect.get(e3, t3, n2);
+            } });
+          }
+          var tr2 = (nr2.prototype.version = function(t3) {
+            if (isNaN(t3) || t3 < 0.1) throw new Y.Type("Given version is not a positive number");
+            if (t3 = Math.round(10 * t3) / 10, this.idbdb || this._state.isBeingOpened) throw new Y.Schema("Cannot add version when database is open");
+            this.verno = Math.max(this.verno, t3);
+            var e2 = this._versions, n2 = e2.filter(function(e3) {
+              return e3._cfg.version === t3;
+            })[0];
+            return n2 || (n2 = new this.Version(t3), e2.push(n2), e2.sort(rn), n2.stores({}), this._state.autoSchema = false, n2);
+          }, nr2.prototype._whenReady = function(e2) {
+            var n2 = this;
+            return this.idbdb && (this._state.openComplete || me.letThrough || this._vip) ? e2() : new _e2(function(e3, t3) {
+              if (n2._state.openComplete) return t3(new Y.DatabaseClosed(n2._state.dbOpenError));
+              if (!n2._state.isBeingOpened) {
+                if (!n2._state.autoOpen) return void t3(new Y.DatabaseClosed());
+                n2.open().catch(G2);
+              }
+              n2._state.dbReadyPromise.then(e3, t3);
+            }).then(e2);
+          }, nr2.prototype.use = function(e2) {
+            var t3 = e2.stack, n2 = e2.create, r3 = e2.level, i3 = e2.name;
+            i3 && this.unuse({ stack: t3, name: i3 });
+            e2 = this._middlewares[t3] || (this._middlewares[t3] = []);
+            return e2.push({ stack: t3, create: n2, level: null == r3 ? 10 : r3, name: i3 }), e2.sort(function(e3, t4) {
+              return e3.level - t4.level;
+            }), this;
+          }, nr2.prototype.unuse = function(e2) {
+            var t3 = e2.stack, n2 = e2.name, r3 = e2.create;
+            return t3 && this._middlewares[t3] && (this._middlewares[t3] = this._middlewares[t3].filter(function(e3) {
+              return r3 ? e3.create !== r3 : !!n2 && e3.name !== n2;
+            })), this;
+          }, nr2.prototype.open = function() {
+            var e2 = this;
+            return $e2(ve2, function() {
+              return Dn2(e2);
+            });
+          }, nr2.prototype._close = function() {
+            this.on.close.fire(new CustomEvent("close"));
+            var n2 = this._state, e2 = et2.indexOf(this);
+            if (0 <= e2 && et2.splice(e2, 1), this.idbdb) {
+              try {
+                this.idbdb.close();
+              } catch (e3) {
+              }
+              this.idbdb = null;
+            }
+            n2.isBeingOpened || (n2.dbReadyPromise = new _e2(function(e3) {
+              n2.dbReadyResolve = e3;
+            }), n2.openCanceller = new _e2(function(e3, t3) {
+              n2.cancelOpen = t3;
+            }));
+          }, nr2.prototype.close = function(e2) {
+            var t3 = (void 0 === e2 ? { disableAutoOpen: true } : e2).disableAutoOpen, e2 = this._state;
+            t3 ? (e2.isBeingOpened && e2.cancelOpen(new Y.DatabaseClosed()), this._close(), e2.autoOpen = false, e2.dbOpenError = new Y.DatabaseClosed()) : (this._close(), e2.autoOpen = this._options.autoOpen || e2.isBeingOpened, e2.openComplete = false, e2.dbOpenError = null);
+          }, nr2.prototype.delete = function(n2) {
+            var i3 = this;
+            void 0 === n2 && (n2 = { disableAutoOpen: true });
+            var o2 = 0 < arguments.length && "object" != typeof arguments[0], a2 = this._state;
+            return new _e2(function(r3, t3) {
+              function e2() {
+                i3.close(n2);
+                var e3 = i3._deps.indexedDB.deleteDatabase(i3.name);
+                e3.onsuccess = Ie2(function() {
+                  var e4, t4, n3;
+                  e4 = i3._deps, t4 = i3.name, n3 = e4.indexedDB, e4 = e4.IDBKeyRange, mn2(n3) || t4 === tt || vn(n3, e4).delete(t4).catch(G2), r3();
+                }), e3.onerror = Rt2(t3), e3.onblocked = i3._fireOnBlocked;
+              }
+              if (o2) throw new Y.InvalidArgument("Invalid closeOptions argument to db.delete()");
+              a2.isBeingOpened ? a2.dbReadyPromise.then(e2) : e2();
+            });
+          }, nr2.prototype.backendDB = function() {
+            return this.idbdb;
+          }, nr2.prototype.isOpen = function() {
+            return null !== this.idbdb;
+          }, nr2.prototype.hasBeenClosed = function() {
+            var e2 = this._state.dbOpenError;
+            return e2 && "DatabaseClosed" === e2.name;
+          }, nr2.prototype.hasFailed = function() {
+            return null !== this._state.dbOpenError;
+          }, nr2.prototype.dynamicallyOpened = function() {
+            return this._state.autoSchema;
+          }, Object.defineProperty(nr2.prototype, "tables", { get: function() {
+            var t3 = this;
+            return O2(this._allTables).map(function(e2) {
+              return t3._allTables[e2];
+            });
+          }, enumerable: false, configurable: true }), nr2.prototype.transaction = function() {
+            var e2 = (function(e3, t3, n2) {
+              var r3 = arguments.length;
+              if (r3 < 2) throw new Y.InvalidArgument("Too few arguments");
+              for (var i3 = new Array(r3 - 1); --r3; ) i3[r3 - 1] = arguments[r3];
+              return n2 = i3.pop(), [e3, w(i3), n2];
+            }).apply(this, arguments);
+            return this._transaction.apply(this, e2);
+          }, nr2.prototype._transaction = function(e2, t3, n2) {
+            var r3 = this, i3 = me.trans;
+            i3 && i3.db === this && -1 === e2.indexOf("!") || (i3 = null);
+            var o2, a2, u2 = -1 !== e2.indexOf("?");
+            e2 = e2.replace("!", "").replace("?", "");
+            try {
+              if (a2 = t3.map(function(e3) {
+                e3 = e3 instanceof r3.Table ? e3.name : e3;
+                if ("string" != typeof e3) throw new TypeError("Invalid table argument to Dexie.transaction(). Only Table or String are allowed");
+                return e3;
+              }), "r" == e2 || e2 === nt) o2 = nt;
+              else {
+                if ("rw" != e2 && e2 != rt2) throw new Y.InvalidArgument("Invalid transaction mode: " + e2);
+                o2 = rt2;
+              }
+              if (i3) {
+                if (i3.mode === nt && o2 === rt2) {
+                  if (!u2) throw new Y.SubTransaction("Cannot enter a sub-transaction with READWRITE mode when parent transaction is READONLY");
+                  i3 = null;
+                }
+                i3 && a2.forEach(function(e3) {
+                  if (i3 && -1 === i3.storeNames.indexOf(e3)) {
+                    if (!u2) throw new Y.SubTransaction("Table " + e3 + " not included in parent transaction.");
+                    i3 = null;
+                  }
+                }), u2 && i3 && !i3.active && (i3 = null);
+              }
+            } catch (n3) {
+              return i3 ? i3._promise(null, function(e3, t4) {
+                t4(n3);
+              }) : Xe2(n3);
+            }
+            var s2 = (function i4(o3, a3, u3, s3, c3) {
+              return _e2.resolve().then(function() {
+                var e3 = me.transless || me, t4 = o3._createTransaction(a3, u3, o3._dbSchema, s3);
+                if (t4.explicit = true, e3 = { trans: t4, transless: e3 }, s3) t4.idbtrans = s3.idbtrans;
+                else try {
+                  t4.create(), t4.idbtrans._explicit = true, o3._state.PR1398_maxLoop = 3;
+                } catch (e4) {
+                  return e4.name === z.InvalidState && o3.isOpen() && 0 < --o3._state.PR1398_maxLoop ? (console.warn("Dexie: Need to reopen db"), o3.close({ disableAutoOpen: false }), o3.open().then(function() {
+                    return i4(o3, a3, u3, null, c3);
+                  })) : Xe2(e4);
+                }
+                var n3, r4 = B(c3);
+                return r4 && Le2(), e3 = _e2.follow(function() {
+                  var e4;
+                  (n3 = c3.call(t4, t4)) && (r4 ? (e4 = Ue2.bind(null, null), n3.then(e4, e4)) : "function" == typeof n3.next && "function" == typeof n3.throw && (n3 = Bn2(n3)));
+                }, e3), (n3 && "function" == typeof n3.then ? _e2.resolve(n3).then(function(e4) {
+                  return t4.active ? e4 : Xe2(new Y.PrematureCommit("Transaction committed too early. See http://bit.ly/2kdckMn"));
+                }) : e3.then(function() {
+                  return n3;
+                })).then(function(e4) {
+                  return s3 && t4._resolve(), t4._completion.then(function() {
+                    return e4;
+                  });
+                }).catch(function(e4) {
+                  return t4._reject(e4), Xe2(e4);
+                });
+              });
+            }).bind(null, this, o2, a2, i3, n2);
+            return i3 ? i3._promise(o2, s2, "lock") : me.trans ? $e2(me.transless, function() {
+              return r3._whenReady(s2);
+            }) : this._whenReady(s2);
+          }, nr2.prototype.table = function(e2) {
+            if (!m(this._allTables, e2)) throw new Y.InvalidTable("Table ".concat(e2, " does not exist"));
+            return this._allTables[e2];
+          }, nr2);
+          function nr2(e2, t3) {
+            var o2 = this;
+            this._middlewares = {}, this.verno = 0;
+            var n2 = nr2.dependencies;
+            this._options = t3 = _({ addons: nr2.addons, autoOpen: true, indexedDB: n2.indexedDB, IDBKeyRange: n2.IDBKeyRange, cache: "cloned" }, t3), this._deps = { indexedDB: t3.indexedDB, IDBKeyRange: t3.IDBKeyRange };
+            n2 = t3.addons;
+            this._dbSchema = {}, this._versions = [], this._storeNames = [], this._allTables = {}, this.idbdb = null, this._novip = this;
+            var a2, r3, u2, i3, s2, c3 = { dbOpenError: null, isBeingOpened: false, onReadyBeingFired: null, openComplete: false, dbReadyResolve: G2, dbReadyPromise: null, cancelOpen: G2, openCanceller: null, autoSchema: true, PR1398_maxLoop: 3, autoOpen: t3.autoOpen };
+            c3.dbReadyPromise = new _e2(function(e3) {
+              c3.dbReadyResolve = e3;
+            }), c3.openCanceller = new _e2(function(e3, t4) {
+              c3.cancelOpen = t4;
+            }), this._state = c3, this.name = e2, this.on = pt2(this, "populate", "blocked", "versionchange", "close", { ready: [re2, G2] }), this.once = function(n3, r4) {
+              var i4 = function() {
+                for (var e3 = [], t4 = 0; t4 < arguments.length; t4++) e3[t4] = arguments[t4];
+                o2.on(n3).unsubscribe(i4), r4.apply(o2, e3);
+              };
+              return o2.on(n3, i4);
+            }, this.on.ready.subscribe = p(this.on.ready.subscribe, function(i4) {
+              return function(n3, r4) {
+                nr2.vip(function() {
+                  var t4, e3 = o2._state;
+                  e3.openComplete ? (e3.dbOpenError || _e2.resolve().then(n3), r4 && i4(n3)) : e3.onReadyBeingFired ? (e3.onReadyBeingFired.push(n3), r4 && i4(n3)) : (i4(n3), t4 = o2, r4 || i4(function e4() {
+                    t4.on.ready.unsubscribe(n3), t4.on.ready.unsubscribe(e4);
+                  }));
+                });
+              };
+            }), this.Collection = (a2 = this, yt(Pt2.prototype, function(e3, t4) {
+              this.db = a2;
+              var n3 = ot2, r4 = null;
+              if (t4) try {
+                n3 = t4();
+              } catch (e4) {
+                r4 = e4;
+              }
+              var i4 = e3._ctx, t4 = i4.table, e3 = t4.hook.reading.fire;
+              this._ctx = { table: t4, index: i4.index, isPrimKey: !i4.index || t4.schema.primKey.keyPath && i4.index === t4.schema.primKey.name, range: n3, keysOnly: false, dir: "next", unique: "", algorithm: null, filter: null, replayFilter: null, justLimit: true, isMatch: null, offset: 0, limit: 1 / 0, error: r4, or: i4.or, valueMapper: e3 !== X2 ? e3 : null };
+            })), this.Table = (r3 = this, yt(ht2.prototype, function(e3, t4, n3) {
+              this.db = r3, this._tx = n3, this.name = e3, this.schema = t4, this.hook = r3._allTables[e3] ? r3._allTables[e3].hook : pt2(null, { creating: [Z2, G2], reading: [H2, X2], updating: [te2, G2], deleting: [ee2, G2] });
+            })), this.Transaction = (u2 = this, yt(Ut.prototype, function(e3, t4, n3, r4, i4) {
+              var o3 = this;
+              "readonly" !== e3 && t4.forEach(function(e4) {
+                e4 = null === (e4 = n3[e4]) || void 0 === e4 ? void 0 : e4.yProps;
+                e4 && (t4 = t4.concat(e4.map(function(e5) {
+                  return e5.updatesTable;
+                })));
+              }), this.db = u2, this.mode = e3, this.storeNames = t4, this.schema = n3, this.chromeTransactionDurability = r4, this.idbtrans = null, this.on = pt2(this, "complete", "error", "abort"), this.parent = i4 || null, this.active = true, this._reculock = 0, this._blockedFuncs = [], this._resolve = null, this._reject = null, this._waitingFor = null, this._waitingQueue = null, this._spinCount = 0, this._completion = new _e2(function(e4, t5) {
+                o3._resolve = e4, o3._reject = t5;
+              }), this._completion.then(function() {
+                o3.active = false, o3.on.complete.fire();
+              }, function(e4) {
+                var t5 = o3.active;
+                return o3.active = false, o3.on.error.fire(e4), o3.parent ? o3.parent._reject(e4) : t5 && o3.idbtrans && o3.idbtrans.abort(), Xe2(e4);
+              });
+            })), this.Version = (i3 = this, yt(pn2.prototype, function(e3) {
+              this.db = i3, this._cfg = { version: e3, storesSource: null, dbschema: {}, tables: {}, contentUpgrade: null };
+            })), this.WhereClause = (s2 = this, yt(Dt2.prototype, function(e3, t4, n3) {
+              if (this.db = s2, this._ctx = { table: e3, index: ":id" === t4 ? null : t4, or: n3 }, this._cmp = this._ascending = st2, this._descending = function(e4, t5) {
+                return st2(t5, e4);
+              }, this._max = function(e4, t5) {
+                return 0 < st2(e4, t5) ? e4 : t5;
+              }, this._min = function(e4, t5) {
+                return st2(e4, t5) < 0 ? e4 : t5;
+              }, this._IDBKeyRange = s2._deps.IDBKeyRange, !this._IDBKeyRange) throw new Y.MissingAPI();
+            })), this.on("versionchange", function(e3) {
+              0 < e3.newVersion ? console.warn("Another connection wants to upgrade database '".concat(o2.name, "'. Closing db now to resume the upgrade.")) : console.warn("Another connection wants to delete database '".concat(o2.name, "'. Closing db now to resume the delete request.")), o2.close({ disableAutoOpen: false });
+            }), this.on("blocked", function(e3) {
+              !e3.newVersion || e3.newVersion < e3.oldVersion ? console.warn("Dexie.delete('".concat(o2.name, "') was blocked")) : console.warn("Upgrade '".concat(o2.name, "' blocked by other connection holding version ").concat(e3.oldVersion / 10));
+            }), this._maxKey = $t2(t3.IDBKeyRange), this._createTransaction = function(e3, t4, n3, r4) {
+              return new o2.Transaction(e3, t4, n3, o2._options.chromeTransactionDurability, r4);
+            }, this._fireOnBlocked = function(t4) {
+              o2.on("blocked").fire(t4), et2.filter(function(e3) {
+                return e3.name === o2.name && e3 !== o2 && !e3._state.vcFired;
+              }).map(function(e3) {
+                return e3.on("versionchange").fire(t4);
+              });
+            }, this.use(Vn2), this.use(Zn2), this.use(Yn2), this.use(Fn2), this.use(Ln2);
+            var l2 = new Proxy(this, { get: function(e3, t4, n3) {
+              if ("_vip" === t4) return true;
+              if ("table" === t4) return function(e4) {
+                return er2(o2.table(e4), l2);
+              };
+              var r4 = Reflect.get(e3, t4, n3);
+              return r4 instanceof ht2 ? er2(r4, l2) : "tables" === t4 ? r4.map(function(e4) {
+                return er2(e4, l2);
+              }) : "_createTransaction" === t4 ? function() {
+                return er2(r4.apply(this, arguments), l2);
+              } : r4;
+            } });
+            this.vip = l2, n2.forEach(function(e3) {
+              return e3(o2);
+            });
+          }
+          var rr2, F = "undefined" != typeof Symbol && "observable" in Symbol ? Symbol.observable : "@@observable", ir2 = (or2.prototype.subscribe = function(e2, t3, n2) {
+            return this._subscribe(e2 && "function" != typeof e2 ? e2 : { next: e2, error: t3, complete: n2 });
+          }, or2.prototype[F] = function() {
+            return this;
+          }, or2);
+          function or2(e2) {
+            this._subscribe = e2;
+          }
+          try {
+            rr2 = { indexedDB: f.indexedDB || f.mozIndexedDB || f.webkitIndexedDB || f.msIndexedDB, IDBKeyRange: f.IDBKeyRange || f.webkitIDBKeyRange };
+          } catch (e2) {
+            rr2 = { indexedDB: null, IDBKeyRange: null };
+          }
+          function ar2(h2) {
+            var d2, p2 = false, e2 = new ir2(function(r3) {
+              var i3 = B(h2);
+              var o2, a2 = false, u2 = {}, s2 = {}, e3 = { get closed() {
+                return a2;
+              }, unsubscribe: function() {
+                a2 || (a2 = true, o2 && o2.abort(), c3 && Lt2.storagemutated.unsubscribe(f2));
+              } };
+              r3.start && r3.start(e3);
+              var c3 = false, l2 = function() {
+                return Ge2(t3);
+              };
+              var f2 = function(e4) {
+                En2(u2, e4), Sn2(s2, u2) && l2();
+              }, t3 = function() {
+                var t4, n2, e4;
+                !a2 && rr2.indexedDB && (u2 = {}, t4 = {}, o2 && o2.abort(), o2 = new AbortController(), e4 = (function(e5) {
+                  var t5 = je2();
+                  try {
+                    i3 && Le2();
+                    var n3 = Ne2(h2, e5);
+                    return n3 = i3 ? n3.finally(Ue2) : n3;
+                  } finally {
+                    t5 && Ae2();
+                  }
+                })(n2 = { subscr: t4, signal: o2.signal, requery: l2, querier: h2, trans: null }), Promise.resolve(e4).then(function(e5) {
+                  p2 = true, d2 = e5, a2 || n2.signal.aborted || (u2 = {}, (function(e6) {
+                    for (var t5 in e6) if (m(e6, t5)) return;
+                    return 1;
+                  })(s2 = t4) || c3 || (Lt2(Mt, f2), c3 = true), Ge2(function() {
+                    return !a2 && r3.next && r3.next(e5);
+                  }));
+                }, function(e5) {
+                  p2 = false, ["DatabaseClosedError", "AbortError"].includes(null == e5 ? void 0 : e5.name) || a2 || Ge2(function() {
+                    a2 || r3.error && r3.error(e5);
+                  });
+                }));
+              };
+              return setTimeout(l2, 0), e3;
+            });
+            return e2.hasValue = function() {
+              return p2;
+            }, e2.getValue = function() {
+              return d2;
+            }, e2;
+          }
+          var ur2 = tr2;
+          function sr2(e2) {
+            var t3 = lr2;
+            try {
+              lr2 = true, Lt2.storagemutated.fire(e2), In2(e2, true);
+            } finally {
+              lr2 = t3;
+            }
+          }
+          r2(ur2, _(_({}, Q), { delete: function(e2) {
+            return new ur2(e2, { addons: [] }).delete();
+          }, exists: function(e2) {
+            return new ur2(e2, { addons: [] }).open().then(function(e3) {
+              return e3.close(), true;
+            }).catch("NoSuchDatabaseError", function() {
+              return false;
+            });
+          }, getDatabaseNames: function(e2) {
+            try {
+              return t3 = ur2.dependencies, n2 = t3.indexedDB, t3 = t3.IDBKeyRange, (mn2(n2) ? Promise.resolve(n2.databases()).then(function(e3) {
+                return e3.map(function(e4) {
+                  return e4.name;
+                }).filter(function(e4) {
+                  return e4 !== tt;
+                });
+              }) : vn(n2, t3).toCollection().primaryKeys()).then(e2);
+            } catch (e3) {
+              return Xe2(new Y.MissingAPI());
+            }
+            var t3, n2;
+          }, defineClass: function() {
+            return function(e2) {
+              a(this, e2);
+            };
+          }, ignoreTransaction: function(e2) {
+            return me.trans ? $e2(me.transless, e2) : e2();
+          }, vip: bn2, async: function(t3) {
+            return function() {
+              try {
+                var e2 = Bn2(t3.apply(this, arguments));
+                return e2 && "function" == typeof e2.then ? e2 : _e2.resolve(e2);
+              } catch (e3) {
+                return Xe2(e3);
+              }
+            };
+          }, spawn: function(e2, t3, n2) {
+            try {
+              var r3 = Bn2(e2.apply(n2, t3 || []));
+              return r3 && "function" == typeof r3.then ? r3 : _e2.resolve(r3);
+            } catch (e3) {
+              return Xe2(e3);
+            }
+          }, currentTransaction: { get: function() {
+            return me.trans || null;
+          } }, waitFor: function(e2, t3) {
+            t3 = _e2.resolve("function" == typeof e2 ? ur2.ignoreTransaction(e2) : e2).timeout(t3 || 6e4);
+            return me.trans ? me.trans.waitFor(t3) : t3;
+          }, Promise: _e2, debug: { get: function() {
+            return ie2;
+          }, set: function(e2) {
+            oe2(e2);
+          } }, derive: o, extend: a, props: r2, override: p, Events: pt2, on: Lt2, liveQuery: ar2, extendObservabilitySet: En2, getByKeyPath: P2, setByKeyPath: K2, delByKeyPath: function(t3, e2) {
+            "string" == typeof e2 ? K2(t3, e2, void 0) : "length" in e2 && [].map.call(e2, function(e3) {
+              K2(t3, e3, void 0);
+            });
+          }, shallowClone: g, deepClone: S, getObjectDiff: Mn2, cmp: st2, asap: v, minKey: -1 / 0, addons: [], connections: et2, errnames: z, dependencies: rr2, cache: jn2, semVer: "4.2.0", version: "4.2.0".split(".").map(function(e2) {
+            return parseInt(e2);
+          }).reduce(function(e2, t3, n2) {
+            return e2 + t3 / Math.pow(10, 2 * n2);
+          }) })), ur2.maxKey = $t2(ur2.dependencies.IDBKeyRange), "undefined" != typeof dispatchEvent && "undefined" != typeof addEventListener && (Lt2(Mt, function(e2) {
+            lr2 || (e2 = new CustomEvent(Nt, { detail: e2 }), lr2 = true, dispatchEvent(e2), lr2 = false);
+          }), addEventListener(Nt, function(e2) {
+            e2 = e2.detail;
+            lr2 || sr2(e2);
+          }));
+          var cr2, lr2 = false, fr2 = function() {
+          };
+          return "undefined" != typeof BroadcastChannel && ((fr2 = function() {
+            (cr2 = new BroadcastChannel(Nt)).onmessage = function(e2) {
+              return e2.data && sr2(e2.data);
+            };
+          })(), "function" == typeof cr2.unref && cr2.unref(), Lt2(Mt, function(e2) {
+            lr2 || cr2.postMessage(e2);
+          })), "undefined" != typeof addEventListener && (addEventListener("pagehide", function(e2) {
+            if (!tr2.disableBfCache && e2.persisted) {
+              ie2 && console.debug("Dexie: handling persisted pagehide"), null != cr2 && cr2.close();
+              for (var t3 = 0, n2 = et2; t3 < n2.length; t3++) n2[t3].close({ disableAutoOpen: false });
+            }
+          }), addEventListener("pageshow", function(e2) {
+            !tr2.disableBfCache && e2.persisted && (ie2 && console.debug("Dexie: handling persisted pageshow"), fr2(), sr2({ all: new wn(-1 / 0, [[]]) }));
+          })), _e2.rejectionMapper = function(e2, t3) {
+            return !e2 || e2 instanceof N2 || e2 instanceof TypeError || e2 instanceof SyntaxError || !e2.name || !$2[e2.name] ? e2 : (t3 = new $2[e2.name](t3 || e2.message, e2), "stack" in e2 && l(t3, "stack", { get: function() {
+              return this.inner.stack;
+            } }), t3);
+          }, oe2(ie2), _(tr2, Object.freeze({ __proto__: null, Dexie: tr2, liveQuery: ar2, Entity: ut, cmp: st2, PropModification: kt2, replacePrefix: function(e2, t3) {
+            return new kt2({ replacePrefix: [e2, t3] });
+          }, add: function(e2) {
+            return new kt2({ add: e2 });
+          }, remove: function(e2) {
+            return new kt2({ remove: e2 });
+          }, default: tr2, RangeSet: wn, mergeRanges: xn2, rangesOverlap: kn2 }), { default: tr2 }), tr2;
+        });
+      })(dexie_min$1);
+      return dexie_min$1.exports;
+    }
+    var dexie_minExports = requireDexie_min();
+    const _Dexie = /* @__PURE__ */ getDefaultExportFromCjs(dexie_minExports);
+    const DexieSymbol = Symbol.for("Dexie");
+    const Dexie = globalThis[DexieSymbol] || (globalThis[DexieSymbol] = _Dexie);
+    if (_Dexie.semVer !== Dexie.semVer) {
+      throw new Error(`Two different versions of Dexie loaded in the same app: ${_Dexie.semVer} and ${Dexie.semVer}`);
+    }
+    const {
+      liveQuery,
+      mergeRanges,
+      rangesOverlap,
+      RangeSet: RangeSet$1,
+      cmp,
+      Entity,
+      PropModification,
+      replacePrefix,
+      add: add$1,
+      remove: remove$1,
+      DexieYProvider
+    } = Dexie;
+    const DB_VERSION = 8;
+    function resolveDBName(logDir2) {
+      const sanitizedDir = logDir2.replace(/[^a-zA-Z0-9_-]/g, "_");
+      const dbName = `InspectAI_${sanitizedDir}`;
+      return dbName;
+    }
+    class AppDatabase extends Dexie {
+      logs;
+      log_previews;
+      log_details;
+      /**
+       * Check if an existing database needs to be recreated due to version mismatch.
+       * Returns true if the database should be deleted and recreated.
+       */
+      static async checkVersionMismatch(logDir2) {
+        const dbName = resolveDBName(logDir2);
+        try {
+          const existingDb = await Dexie.exists(dbName);
+          if (!existingDb) {
+            return false;
+          }
+          const tempDb = new Dexie(dbName);
+          await tempDb.open();
+          const currentVersion = tempDb.verno;
+          tempDb.close();
+          if (currentVersion !== DB_VERSION) {
+            console.log(
+              `Database version mismatch (found v${currentVersion}, expected v${DB_VERSION})`
+            );
+            return true;
+          }
+          return false;
+        } catch (error2) {
+          return false;
+        }
+      }
+      constructor(logDir2) {
+        super(resolveDBName(logDir2));
+        this.version(DB_VERSION).stores({
+          // Basic file listing - indexes for querying and sorting
+          logs: "++id, &file_path, mtime, task, task_id, cached_at",
+          // Log summaries from get_log_summaries() - indexes for common queries
+          log_previews: "file_path, preview.status, preview.task_id, preview.model, cached_at",
+          // Complete log info from get_log_details() - includes samples
+          log_details: "file_path, details.status, cached_at"
+        });
+      }
+    }
     const getEnabledNamespaces = () => {
       return "*".split(",").map((ns) => ns.trim()).filter(Boolean);
     };
@@ -23036,6 +26210,405 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       };
       return logger;
     };
+    const log$b = createLogger("DatabaseManager");
+    class DatabaseManager {
+      database = null;
+      logDir = null;
+      /**
+       * Opens a database for the specified log directory.
+       * If already connected to this directory, returns the existing connection.
+       * If connected to a different directory, closes the current connection first.
+       */
+      async openDatabase(logDir2) {
+        if (this.logDir === logDir2 && this.database) {
+          return this.database;
+        }
+        log$b.debug(`Opening database for log directory: ${logDir2}`);
+        if (this.database && this.logDir !== logDir2) {
+          await this.close();
+        }
+        const needsRecreation = await AppDatabase.checkVersionMismatch(logDir2);
+        if (needsRecreation) {
+          log$b.info(`Recreating database due to version mismatch for: ${logDir2}`);
+          const sanitizedDir = logDir2.replace(/[^a-zA-Z0-9_-]/g, "_");
+          const dbName = `InspectAI_${sanitizedDir}`;
+          await Dexie.delete(dbName);
+          log$b.debug(`Deleted old database: ${dbName}`);
+        }
+        this.database = new AppDatabase(logDir2);
+        this.logDir = logDir2;
+        try {
+          await this.database.open();
+          log$b.debug(`Successfully opened database for: ${logDir2}`);
+          return this.database;
+        } catch (error2) {
+          log$b.error(`Failed to open database for ${logDir2}:`, error2);
+          this.database = null;
+          this.logDir = null;
+          throw error2;
+        }
+      }
+      /**
+       * Get the current database instance.
+       * Returns null if no database is open.
+       */
+      getDatabase() {
+        return this.database;
+      }
+      /**
+       * Get the current log directory.
+       * Returns null if no database is open.
+       */
+      getLogDir() {
+        return this.logDir;
+      }
+      /**
+       * Close the current database connection.
+       */
+      async close() {
+        if (this.database) {
+          log$b.debug(`Closing database for: ${this.logDir}`);
+          this.database.close();
+          this.database = null;
+          this.logDir = null;
+        }
+      }
+      /**
+       * Check if a database is currently open.
+       */
+      isOpen() {
+        return this.database !== null && this.logDir !== null;
+      }
+      /**
+       * Get database info for debugging.
+       */
+      getInfo() {
+        return {
+          logDir: this.logDir,
+          isOpen: this.isOpen()
+        };
+      }
+    }
+    const log$a = createLogger("DatabaseService");
+    class DatabaseService {
+      manager;
+      constructor(manager) {
+        this.manager = manager;
+      }
+      /**
+       * Get the current database instance.
+       * Throws an error if no database is open.
+       */
+      getDb() {
+        const db = this.manager.getDatabase();
+        if (!db) {
+          throw new Error("No database initialized. Call openDatabase first.");
+        }
+        return db;
+      }
+      opened() {
+        return this.manager.getDatabase() !== null;
+      }
+      /**
+       * Open a database for the specified log directory.
+       */
+      async openDatabase(logDir2) {
+        await this.manager.openDatabase(logDir2);
+      }
+      /**
+       * Close the current database connection.
+       */
+      async closeDatabase() {
+        await this.manager.close();
+      }
+      /**
+       * Get the current log directory.
+       */
+      getLogDir() {
+        return this.manager.getLogDir();
+      }
+      async countRows(entity2) {
+        const db = this.getDb();
+        switch (entity2) {
+          case "logs":
+            return db.logs.count();
+          case "logPreviews":
+            return db.log_previews.count();
+          case "logDetails":
+            return db.log_details.count();
+        }
+      }
+      // === LOG FILES ===
+      async writeLogs(logs) {
+        const db = this.getDb();
+        const now = (/* @__PURE__ */ new Date()).toISOString();
+        const existingRecords = await db.logs.toArray();
+        const existingByPath = new Map(
+          existingRecords.map((r2) => [r2.file_path, r2.id])
+        );
+        const records = logs.map((file) => ({
+          id: existingByPath.get(file.name),
+          file_path: file.name,
+          file_name: file.name.split("/").pop() || file.name,
+          task: file.task,
+          task_id: file.task_id,
+          mtime: file.mtime,
+          cached_at: now
+        }));
+        log$a.debug(`Caching ${records.length} log files`);
+        await db.logs.bulkPut(records);
+      }
+      async readLogs() {
+        try {
+          if (!this.opened()) {
+            log$a.debug("Database not open");
+            return null;
+          }
+          const db = this.getDb();
+          let files = await db.logs.toArray();
+          files.sort((a, b) => {
+            if (a.mtime !== void 0 && b.mtime !== void 0) {
+              return b.mtime - a.mtime;
+            }
+            if (a.id !== void 0 && b.id !== void 0) {
+              return a.id - b.id;
+            }
+            return 0;
+          });
+          if (files.length === 0) {
+            log$a.debug("No cached log files found");
+            return [];
+          }
+          log$a.debug(`Retrieved ${files.length} cached log files`);
+          return files.map((file) => ({
+            name: file.file_path,
+            task: file.task,
+            task_id: file.task_id,
+            mtime: file.mtime
+          }));
+        } catch (error2) {
+          log$a.error("Error retrieving cached log files:", error2);
+          return null;
+        }
+      }
+      // === LOG PREVIEWS ===
+      async writeLogPreviews(previews, filePaths) {
+        const db = this.getDb();
+        const now = (/* @__PURE__ */ new Date()).toISOString();
+        const records = previews.map((summary2, index) => ({
+          file_path: filePaths[index],
+          cached_at: now,
+          preview: summary2
+        }));
+        log$a.debug(`Caching ${records.length} log previews`);
+        await db.log_previews.bulkPut(records);
+      }
+      async readLogPreviews(logs) {
+        try {
+          const filePaths = logs.map((log2) => log2.name);
+          const db = this.getDb();
+          const records = await db.log_previews.where("file_path").anyOf(filePaths).toArray();
+          log$a.debug(
+            `Retrieved ${records.length} cached log previews out of ${filePaths.length} requested`
+          );
+          const result2 = {};
+          for (const record of records) {
+            result2[record.file_path] = record.preview;
+          }
+          return result2;
+        } catch (error2) {
+          log$a.error("Error retrieving cached log summaries:", error2);
+          return {};
+        }
+      }
+      async findMissingPreviews(logs) {
+        try {
+          const filePaths = logs.map((log2) => log2.name);
+          const db = this.getDb();
+          const records = await db.log_previews.where("file_path").anyOf(filePaths).toArray();
+          const cachedPaths = new Set(records.map((r2) => r2.file_path));
+          const missing = logs.filter((log2) => !cachedPaths.has(log2.name));
+          log$a.debug(
+            `Found ${missing.length} missing previews out of ${logs.length} requested`
+          );
+          return missing;
+        } catch (error2) {
+          log$a.error("Error finding missing previews:", error2);
+          return logs;
+        }
+      }
+      // === LOG DETAILS ===
+      async writeLogDetails(filePath, info) {
+        const db = this.getDb();
+        const now = (/* @__PURE__ */ new Date()).toISOString();
+        const record = {
+          file_path: filePath,
+          cached_at: now,
+          details: info
+        };
+        log$a.debug(`Caching log info for: ${filePath}`);
+        await db.log_details.put(record);
+      }
+      async readLogDetailsForFile(filePath) {
+        try {
+          const db = this.getDb();
+          const record = await db.log_details.get(filePath);
+          if (!record) {
+            log$a.debug(`No cached log info found for: ${filePath}`);
+            return null;
+          }
+          log$a.debug(`Retrieved cached log info for: ${filePath}`);
+          return record.details;
+        } catch (error2) {
+          log$a.error(`Error retrieving cached log info for ${filePath}:`, error2);
+          return null;
+        }
+      }
+      async readLogDetails(logs) {
+        try {
+          const filePaths = logs.map((log2) => log2.name);
+          const db = this.getDb();
+          const records = await db.log_details.where("file_path").anyOf(filePaths).toArray();
+          log$a.debug(
+            `Retrieved ${records.length} cached log details out of ${filePaths.length} requested`
+          );
+          const result2 = {};
+          for (const record of records) {
+            result2[record.file_path] = record.details;
+          }
+          return result2;
+        } catch (error2) {
+          log$a.error("Error retrieving cached log details:", error2);
+          return {};
+        }
+      }
+      async findMissingDetails(logs) {
+        try {
+          const filePaths = logs.map((log2) => log2.name);
+          const db = this.getDb();
+          const records = await db.log_details.where("file_path").anyOf(filePaths).toArray();
+          const cachedPaths = new Set(records.map((r2) => r2.file_path));
+          const missing = logs.filter((log2) => !cachedPaths.has(log2.name));
+          log$a.debug(
+            `Found ${missing.length} missing details out of ${logs.length} requested`
+          );
+          return missing;
+        } catch (error2) {
+          log$a.error("Error finding missing details:", error2);
+          return logs;
+        }
+      }
+      // === SAMPLE SUMMARIES (extracted from LogDetails) ===
+      async readAllSampleSummaries() {
+        const db = this.getDb();
+        const records = await db.log_details.toArray();
+        const allSummaries = [];
+        for (const record of records) {
+          if (record.details.sampleSummaries) {
+            allSummaries.push(...record.details.sampleSummaries);
+          }
+        }
+        log$a.debug(
+          `Retrieved ${allSummaries.length} sample summaries across all files`
+        );
+        return allSummaries;
+      }
+      async readSampleSummariesForFile(filePath) {
+        const logInfo = await this.readLogDetailsForFile(filePath);
+        if (!logInfo || !logInfo.sampleSummaries) {
+          return [];
+        }
+        return logInfo.sampleSummaries;
+      }
+      async querySampleSummaries(filter) {
+        const allSummaries = await this.readAllSampleSummaries();
+        let filtered = allSummaries;
+        if (filter?.completed !== void 0) {
+          filtered = filtered.filter(
+            (summary2) => summary2.completed === filter.completed
+          );
+        }
+        if (filter?.hasError !== void 0) {
+          filtered = filtered.filter((summary2) => {
+            const hasError = !!summary2.error;
+            return hasError === filter.hasError;
+          });
+        }
+        if (filter?.scoreRange) {
+          const { min: min2, max: max2, scoreName } = filter.scoreRange;
+          filtered = filtered.filter((summary2) => {
+            if (!summary2.scores) return false;
+            if (scoreName) {
+              const score2 = summary2.scores[scoreName];
+              return score2 && typeof score2.value === "number" && score2.value >= min2 && score2.value <= max2;
+            } else {
+              return Object.values(summary2.scores).some(
+                (score2) => score2 && typeof score2.value === "number" && score2.value >= min2 && score2.value <= max2
+              );
+            }
+          });
+        }
+        log$a.debug(
+          `Query returned ${filtered.length} sample summaries (filtered from ${allSummaries.length})`
+        );
+        return filtered;
+      }
+      // === MANAGEMENT ===
+      /**
+       * Clear all cached data from all tables.
+       */
+      async clearAllCaches() {
+        const db = this.getDb();
+        log$a.debug("Clearing all caches");
+        await Promise.all([
+          db.logs.clear(),
+          db.log_previews.clear(),
+          db.log_details.clear()
+        ]);
+      }
+      /**
+       * Clear cache for a specific log file
+       */
+      async clearCacheForFile(filePath) {
+        const db = this.getDb();
+        log$a.debug(`Clearing cache for file: ${filePath}`);
+        await Promise.all([
+          db.logs.where("file_path").equals(filePath).delete(),
+          db.log_previews.where("file_path").equals(filePath).delete(),
+          db.log_details.where("file_path").equals(filePath).delete()
+        ]);
+      }
+      /**
+       * Get cache statistics.
+       */
+      async getCacheStats() {
+        const db = this.getDb();
+        const [logFiles, logSummaries, logInfo] = await Promise.all([
+          db.logs.count(),
+          db.log_previews.count(),
+          db.log_details.count()
+        ]);
+        let sampleSummaries = 0;
+        const logInfoRecords = await db.log_details.toArray();
+        for (const record of logInfoRecords) {
+          if (record.details.sampleSummaries) {
+            sampleSummaries += record.details.sampleSummaries.length;
+          }
+        }
+        return {
+          logFiles,
+          logSummaries,
+          logHeaders: logInfo,
+          // For backward compatibility
+          sampleSummaries,
+          logDir: this.manager.getLogDir()
+        };
+      }
+    }
+    function createDatabaseService() {
+      const manager = new DatabaseManager();
+      return new DatabaseService(manager);
+    }
     function debounce$2(func, wait, options2 = {}) {
       let timeout = null;
       let context;
@@ -23131,7 +26704,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const kDefaultWorkspaceTab = kLogViewSamplesTabId;
     const kDefaultSampleTab = kSampleTranscriptTabId;
     const initialState$3 = {
-      status: { loading: false },
+      status: { loading: 0, syncing: false },
       showFind: false,
       dialogs: {
         sample: false,
@@ -23165,8 +26738,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         capabilities: {},
         // Actions
         appActions: {
-          setStatus: (status2) => set2((state) => {
-            state.app.status = status2;
+          setLoading: (loading, error2) => set2((state) => {
+            state.app.status.loading = Math.max(
+              state.app.status.loading + (loading ? 1 : -1),
+              0
+            );
+            state.app.status.error = error2;
           }),
           setShowFind: (show) => set2((state) => {
             state.app.showFind = show;
@@ -23385,7 +26962,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
       });
     };
-    const toBasicInfo = (header2) => {
+    const toLogPreview = (header2) => {
       return {
         eval_id: header2.eval.eval_id,
         run_id: header2.eval.run_id,
@@ -23494,12 +27071,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
         log$9.debug(`refresh: ${selectedLogFile}`);
         try {
-          const logContents = await api2.get_log_summary(selectedLogFile);
+          const logDetails = await api2.get_log_details(selectedLogFile);
           set2((state2) => {
-            state2.log.selectedLogSummary = logContents;
+            state2.log.selectedLogDetails = logDetails;
             log$9.debug(
-              `Setting refreshed summary ${logContents.sampleSummaries.length} samples`,
-              logContents
+              `Setting refreshed summary ${logDetails.sampleSummaries.length} samples`,
+              logDetails
             );
             if (clearPending) {
               const pendingSampleSummaries = state2.log.pendingSampleSummaries;
@@ -23560,7 +27137,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               return true;
             } else if (pendingSamples.status === "NotFound") {
               log$9.debug(`Stop polling running samples: ${logFileName}`);
-              if (loadedPendingSamples || state.log.selectedLogSummary?.status === "started") {
+              if (loadedPendingSamples || state.log.selectedLogDetails?.status === "started") {
                 log$9.debug(`Refresh log: ${logFileName}`);
                 await refreshLog(logFileName, true);
               }
@@ -23612,7 +27189,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const initialState$2 = {
       // Log state
       selectedSampleIndex: -1,
-      selectedLogSummary: void 0,
+      selectedLogDetails: void 0,
       pendingSampleSummaries: void 0,
       loadedLog: void 0,
       // Filter state
@@ -23633,18 +27210,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           selectSample: (index) => set2((state) => {
             state.log.selectedSampleIndex = index;
           }),
-          setSelectedLogSummary: (selectedLogSummary) => {
+          setSelectedLogDetails: (details) => {
             set2((state) => {
-              state.log.selectedLogSummary = selectedLogSummary;
               state.log.selectedScores = void 0;
+              state.log.selectedLogDetails = details;
             });
-            if (selectedLogSummary.status !== "started" && selectedLogSummary.sampleSummaries.length === 0) {
+            if (details.status !== "started" && details.sampleSummaries.length === 0) {
               get2().appActions.setWorkspaceTab(kLogViewInfoTabId);
             }
           },
-          clearSelectedLogSummary: () => {
+          clearSelectedLogDetails: () => {
             set2((state) => {
-              state.log.selectedLogSummary = void 0;
+              state.log.selectedLogDetails = void 0;
             });
           },
           setPendingSampleSummaries: (pendingSampleSummaries) => set2((state) => {
@@ -23680,7 +27257,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             state.log.sort = kDefaultSort;
             state.log.selectedScores = state.log.scores?.slice(0, 1);
           }),
-          loadLog: async (logFileName) => {
+          syncLog: async (logFileName) => {
             const state = get2();
             const api2 = state.api;
             if (!api2) {
@@ -23688,13 +27265,43 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               return;
             }
             log$8.debug(`Load log: ${logFileName}`);
+            const dbService = state.databaseService;
+            if (dbService && dbService.opened()) {
+              try {
+                const cachedInfo = await dbService.readLogDetailsForFile(logFileName);
+                if (cachedInfo) {
+                  log$8.debug(`Using cached log info for: ${logFileName}`);
+                  state.logActions.setSelectedLogDetails(cachedInfo);
+                  api2.get_log_details(logFileName).then((logDetails) => {
+                    state.logActions.setSelectedLogDetails(logDetails);
+                    dbService.writeLogDetails(logFileName, logDetails).catch(() => {
+                    });
+                  });
+                  const header2 = {
+                    [logFileName]: toLogPreview(cachedInfo)
+                  };
+                  state.logsActions.updateLogPreviews(header2);
+                  set2((state2) => {
+                    state2.log.loadedLog = logFileName;
+                  });
+                  return;
+                }
+              } catch (e) {
+              }
+            }
             try {
-              const logContents = await api2.get_log_summary(logFileName);
-              state.logActions.setSelectedLogSummary(logContents);
+              const logDetails = await api2.get_log_details(logFileName);
+              state.logActions.setSelectedLogDetails(logDetails);
+              if (dbService) {
+                setTimeout(() => {
+                  dbService.writeLogDetails(logFileName, logDetails).catch(() => {
+                  });
+                }, 0);
+              }
               const header2 = {
-                [logFileName]: toBasicInfo(logContents)
+                [logFileName]: toLogPreview(logDetails)
               };
-              state.logsActions.updateLogOverviews(header2);
+              state.logsActions.updateLogPreviews(header2);
               set2((state2) => {
                 state2.log.loadedLog = logFileName;
               });
@@ -23724,8 +27331,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             }
             log$8.debug(`refresh: ${selectedLogFile}`);
             try {
-              const logContents = await api2.get_log_summary(selectedLogFile);
-              state.logActions.setSelectedLogSummary(logContents);
+              const logDetails = await api2.get_log_details(selectedLogFile);
+              state.logActions.setSelectedLogDetails(logDetails);
             } catch (error2) {
               log$8.error("Error refreshing log:", error2);
               throw error2;
@@ -23746,19 +27353,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       });
     };
     const log$7 = createLogger("Log Slice");
-    const kEmptyLogs = {
-      log_dir: "",
-      files: []
-    };
     const initialState$1 = {
-      logs: kEmptyLogs,
-      logOverviews: {},
-      logOverviewsLoading: false,
+      logDir: void 0,
+      logs: [],
+      logPreviews: {},
+      logDetails: {},
       selectedLogIndex: -1,
       selectedLogFile: void 0,
       listing: {},
-      loadingFiles: /* @__PURE__ */ new Set(),
-      pendingRequests: /* @__PURE__ */ new Map()
+      pendingRequests: /* @__PURE__ */ new Map(),
+      dbStats: {
+        logCount: 0,
+        previewCount: 0,
+        detailsCount: 0
+      }
     };
     const createLogsSlice = (set2, get2, _store) => {
       const slice = {
@@ -23766,172 +27374,169 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         logs: initialState$1,
         // Actions
         logsActions: {
-          setLogs: (logs) => {
-            set2((state) => {
-              state.logs.logs = logs;
-              state.logs.selectedLogFile = state.logs.selectedLogIndex > -1 ? logs.files[state.logs.selectedLogIndex]?.name : void 0;
-            });
-          },
-          setLogOverviews: (overviews) => set2((state) => {
-            state.logs.logOverviews = overviews;
+          setLogDir: (logDir2) => set2((state) => {
+            state.logs.logDir = logDir2;
           }),
-          loadLogOverviews: async (logs) => {
+          setLogHandles: (logs) => set2((state) => {
+            state.logs.logs = logs;
+            state.logs.selectedLogFile = state.logs.selectedLogIndex > -1 ? logs[state.logs.selectedLogIndex]?.name : void 0;
+          }),
+          syncLogPreviews: async (logs) => {
             const state = get2();
             const api2 = state.api;
             if (!api2) {
               console.error("API not initialized in LogsStore");
-              return [];
+              return;
             }
-            const filesToLoad = logs.filter((logFile) => {
-              const existing = state.logs.logOverviews[logFile.name];
-              const isLoading = state.logs.loadingFiles.has(logFile.name);
-              if (!existing) {
-                return !isLoading;
-              }
-              if (existing.status === "started") {
-                return !isLoading;
-              }
-              return false;
-            });
-            if (filesToLoad.length === 0) {
-              return [];
+            if (!state.replicationService) {
+              console.error("Replication service not initialized in LogsStore");
+              return;
             }
-            set2((state2) => {
-              filesToLoad.forEach((logFile) => {
-                state2.logs.loadingFiles.add(logFile.name);
-              });
-            });
-            set2((state2) => {
-              state2.logs.logOverviewsLoading = true;
-            });
             try {
-              log$7.debug(`LOADING LOG OVERVIEWS for ${filesToLoad.length} files`);
-              const headers = await api2.get_log_overviews(
-                filesToLoad.map((log2) => log2.name)
-              );
-              const headerMap = {};
-              for (let i2 = 0; i2 < filesToLoad.length; i2++) {
-                const logFile = filesToLoad[i2];
-                const header2 = headers[i2];
-                if (header2) {
-                  headerMap[logFile.name] = header2;
-                }
-              }
-              set2((state2) => {
-                state2.logs.logOverviews = {
-                  ...state2.logs.logOverviews,
-                  ...headerMap
-                };
-                filesToLoad.forEach((logFile) => {
-                  state2.logs.loadingFiles.delete(logFile.name);
-                });
-                state2.logs.logOverviewsLoading = false;
-              });
-              return headers;
-            } catch (error2) {
-              log$7.error("Error loading log headers", error2);
-              set2((state2) => {
-                filesToLoad.forEach((logFile) => {
-                  state2.logs.loadingFiles.delete(logFile.name);
-                });
-                state2.logs.logOverviewsLoading = false;
-              });
-              return [];
+              await state.replicationService?.loadLogPreviews({ logs });
+            } catch (e) {
+              console.error("Failed to sync log previews", e);
             }
           },
-          setLogOverviewsLoading: (loading) => set2((state) => {
-            state.logs.logOverviewsLoading = loading;
+          updateLogPreviews: (previews) => set2((state) => {
+            state.logs.logPreviews = {
+              ...get2().logs.logPreviews,
+              ...previews
+            };
+          }),
+          updateLogDetails: (details) => set2((state) => {
+            state.logs.logDetails = {
+              ...get2().logs.logDetails,
+              ...details
+            };
           }),
           setSelectedLogIndex: (selectedLogIndex) => {
             set2((state) => {
               state.logs.selectedLogIndex = selectedLogIndex;
-              const file = state.logs.logs.files[selectedLogIndex];
+              const file = state.logs.logs[selectedLogIndex];
               state.logs.selectedLogFile = file ? file.name : void 0;
             });
           },
-          updateLogOverviews: (overviews) => set2((state) => {
-            state.logs.logOverviews = {
-              ...get2().logs.logOverviews,
-              ...overviews
-            };
-          }),
-          setSelectedLogFile: (logUrl2) => {
-            const state = get2();
-            const index = state.logs.logs.files.findIndex(
-              (val) => logUrl2.endsWith(val.name)
-            );
-            if (index > -1) {
-              state.logsActions.setSelectedLogIndex(index);
-              state.logs.selectedLogFile = state.logs.logs.files[index]?.name ?? void 0;
-            }
-          },
-          // Helper function to load logs
-          loadLogs: async () => {
+          syncLogs: async () => {
             const api2 = get2().api;
             if (!api2) {
               console.error("API not initialized in LogsStore");
-              return kEmptyLogs;
+              return [];
             }
-            try {
-              log$7.debug("LOADING LOG FILES");
-              return await api2.get_log_paths();
-            } catch (e) {
-              console.log(e);
-              get2().appActions.setStatus({ loading: false, error: e });
-              return kEmptyLogs;
-            }
-          },
-          refreshLogs: async () => {
-            log$7.debug("REFRESH LOGS");
-            const state = get2();
-            const currentLog = state.logs.selectedLogIndex > -1 ? state.logs.logs.files[state.logs.selectedLogIndex] : void 0;
-            const refreshedLogs = await state.logsActions.loadLogs();
-            state.logsActions.setLogs(refreshedLogs || kEmptyLogs);
-            if (currentLog) {
-              const newIndex = refreshedLogs?.files.findIndex(
-                (file) => currentLog.name.endsWith(file.name)
-              );
-              if (newIndex !== void 0 && newIndex !== -1) {
-                state.logsActions.setSelectedLogIndex(newIndex);
+            get2().appActions.setLoading(true);
+            const loadLogDir = async () => {
+              try {
+                return await api2.get_log_dir();
+              } catch (e) {
+                console.log(e);
+                get2().appActions.setLoading(false, e);
+                return void 0;
               }
+            };
+            const logDir2 = await loadLogDir();
+            if (get2().logs.logDir !== logDir2) {
+              get2().logsActions.setLogDir(logDir2);
+              const initializeDatabase = async (logDir22) => {
+                if (!logDir22) {
+                  return void 0;
+                }
+                try {
+                  const databaseService2 = get2().databaseService;
+                  if (!databaseService2) {
+                    return void 0;
+                  }
+                  await databaseService2.openDatabase(logDir22);
+                  return databaseService2;
+                } catch (e) {
+                  console.log(e);
+                  get2().appActions.setLoading(false, e);
+                  return;
+                }
+              };
+              if (!logDir2) {
+                get2().appActions.setLoading(false);
+                return [];
+              }
+              const databaseService = await initializeDatabase(logDir2);
+              if (!databaseService) {
+                throw new Error("Database service not available");
+              }
+              await get2().replicationService?.startReplication(
+                databaseService,
+                api2,
+                {
+                  setLogHandles: (logs) => {
+                    const state = get2();
+                    state.logsActions.setLogHandles(logs);
+                  },
+                  getSelectedLog: () => {
+                    const state = get2();
+                    return state.logs.selectedLogIndex > -1 ? state.logs.logs[state.logs.selectedLogIndex] : void 0;
+                  },
+                  setSelectedLogIndex: (index) => {
+                    const state = get2();
+                    state.logsActions.setSelectedLogIndex(index);
+                  },
+                  updateLogPreviews: (previews) => {
+                    const state = get2();
+                    state.logsActions.updateLogPreviews(previews);
+                  },
+                  updateLogDetails: (details) => {
+                    const state = get2();
+                    state.logsActions.updateLogDetails(details);
+                  },
+                  setLoading(loading) {
+                    const state = get2();
+                    state.appActions.setLoading(loading);
+                  },
+                  setBackgroundSyncing(syncing) {
+                    set2((state) => {
+                      state.app.status.syncing = syncing;
+                    });
+                  },
+                  setDbStats(stats) {
+                    set2((state) => {
+                      state.logs.dbStats = stats;
+                    });
+                  }
+                }
+              );
             }
+            get2().appActions.setLoading(false);
+            return await get2().replicationService?.sync(true) || [];
           },
-          loadEvalSetInfo: async (logPath) => {
+          syncEvalSetInfo: async (logPath) => {
             const api2 = get2().api;
             if (!api2) {
               console.error("API not initialized in LogsStore");
               return void 0;
             }
-            const info = await api2.get_eval_set_info(logPath);
-            return info;
-          },
-          setEvalSetInfo: (info) => {
+            const info = await api2.get_eval_set(logPath);
             set2((state) => {
               state.logs.evalSet = info;
-            });
-          },
-          clearEvalSetInfo: () => {
-            set2((state) => {
-              state.logs.evalSet = void 0;
             });
           },
           // Select a specific log file
           selectLogFile: async (logUrl2) => {
             const state = get2();
-            const index = state.logs.logs.files.findIndex(
+            const index = state.logs.logs.findIndex(
               (val) => val.name.endsWith(logUrl2)
             );
             if (index > -1) {
               state.logsActions.setSelectedLogIndex(index);
             } else {
-              const result2 = await state.logsActions.loadLogs();
-              const idx = result2?.files.findIndex(
-                (file) => file.name.endsWith(logUrl2)
-              );
-              state.logsActions.setLogs(result2 || kEmptyLogs);
-              state.logsActions.setSelectedLogIndex(
-                idx !== void 0 && idx > -1 ? idx : 0
-              );
+              if (state.replicationService?.isReplicating()) {
+                const logHandles = await state.logsActions.syncLogs();
+                const idx = logHandles.findIndex(
+                  (file) => file.name.endsWith(logUrl2)
+                );
+                state.logsActions.setSelectedLogIndex(
+                  idx !== void 0 && idx > -1 ? idx : 0
+                );
+              } else {
+                state.logsActions.setLogHandles([{ name: logUrl2 }]);
+                state.logsActions.setSelectedLogIndex(0);
+              }
             }
           },
           setSorting: (sorting) => {
@@ -23981,6 +27586,37 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             set2((state) => {
               state.logs.listing.selectedRowIndex = index;
             });
+          },
+          // Cross-file sample operations
+          getAllCachedSamples: async () => {
+            try {
+              log$7.debug("LOADING ALL CACHED SAMPLES");
+              const dbService = get2().databaseService;
+              if (!dbService) {
+                throw new Error("Database service not initialized");
+              }
+              const samples = await dbService.readAllSampleSummaries();
+              log$7.debug(`Retrieved ${samples.length} cached samples`);
+              return samples;
+            } catch (e) {
+              log$7.debug("No cached samples available");
+              return [];
+            }
+          },
+          queryCachedSamples: async (filter) => {
+            try {
+              log$7.debug("QUERYING CACHED SAMPLES", filter);
+              const dbService = get2().databaseService;
+              if (!dbService) {
+                throw new Error("Database service not initialized");
+              }
+              const samples = await dbService.querySampleSummaries(filter);
+              log$7.debug(`Query returned ${samples.length} samples`);
+              return samples;
+            } catch (e) {
+              log$7.debug("Sample query failed, returning empty results");
+              return [];
+            }
           }
         }
       };
@@ -24334,7 +27970,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       if (!state) {
         return state;
       }
-      const filters2 = [filterLargeLogSummary];
+      const filters2 = [filterLargeLogDetails];
       return filters2.reduce(
         (filteredState, filter) => filter(filteredState),
         state
@@ -24373,19 +28009,19 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
       return count2;
     }
-    function filterLargeLogSummary(state) {
-      if (!state || !state.log || !state.log.selectedLogSummary) {
+    function filterLargeLogDetails(state) {
+      if (!state || !state.log || !state.log.selectedLogDetails) {
         return state;
       }
       const estimatedSize = estimateSize(
-        state.log.selectedLogSummary.sampleSummaries
+        state.log.selectedLogDetails.sampleSummaries
       );
       if (estimatedSize > 25e4) {
         return {
           ...state,
           log: {
             ...state.log,
-            selectedLogSummary: void 0
+            selectedLogDetails: void 0
           }
         };
       } else {
@@ -24620,6 +28256,414 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
       });
     };
+    var WorkPriority = /* @__PURE__ */ ((WorkPriority2) => {
+      WorkPriority2[WorkPriority2["Low"] = 0] = "Low";
+      WorkPriority2[WorkPriority2["Medium"] = 1] = "Medium";
+      WorkPriority2[WorkPriority2["High"] = 2] = "High";
+      return WorkPriority2;
+    })(WorkPriority || {});
+    class WorkQueue {
+      itemsById = /* @__PURE__ */ new Map();
+      processing = false;
+      consecutiveErrors = 0;
+      options;
+      constructor(options2) {
+        this.options = {
+          processingDelay: 100,
+          maxRetries: 3,
+          onProcessingChanged: (_processing) => {
+          },
+          ...options2
+        };
+      }
+      enqueue(items, priority = 1) {
+        const now = Date.now();
+        for (const item2 of items) {
+          const id = this.options.getId(item2);
+          const existing = this.itemsById.get(id);
+          if (existing) {
+            if (priority > existing.priority) {
+              existing.priority = priority;
+            }
+          } else {
+            this.itemsById.set(id, {
+              id,
+              data: item2,
+              priority,
+              addedAt: now,
+              retries: 0
+            });
+          }
+        }
+        void this.startProcessing();
+      }
+      async processImmediate(items) {
+        const results = await this.options.worker(items);
+        this.options.onComplete(results, items);
+      }
+      async startProcessing() {
+        if (this.processing) {
+          return;
+        }
+        this.processing = true;
+        try {
+          this.options.onProcessingChanged(true);
+        } catch (error2) {
+          console.error("onProcessingChanged callback error:", error2);
+        }
+        try {
+          while (this.itemsById.size > 0) {
+            const batch2 = this.getNextBatch();
+            const inputs = batch2.map((item2) => item2.data);
+            try {
+              const results = await this.options.worker(inputs);
+              await this.options.onComplete(results, inputs);
+              batch2.forEach((item2) => this.itemsById.delete(item2.id));
+              this.consecutiveErrors = 0;
+            } catch (error2) {
+              console.error("Work queue processing error:", error2);
+              for (const item2 of batch2) {
+                if (item2.retries < this.options.maxRetries) {
+                  item2.retries++;
+                } else {
+                  this.itemsById.delete(item2.id);
+                }
+              }
+              this.consecutiveErrors++;
+            }
+            if (this.itemsById.size > 0) {
+              const delay = this.getBackoffDelay();
+              if (delay > 0) {
+                await new Promise((resolve) => setTimeout(resolve, delay));
+              }
+            }
+          }
+        } finally {
+          this.processing = false;
+          try {
+            this.options.onProcessingChanged(false);
+          } catch (error2) {
+            console.error("onProcessingChanged callback error:", error2);
+          }
+        }
+      }
+      getNextBatch() {
+        const items = Array.from(this.itemsById.values()).sort((a, b) => {
+          if (a.priority !== b.priority) {
+            return b.priority - a.priority;
+          }
+          return a.addedAt - b.addedAt;
+        });
+        return items.slice(0, this.options.batchSize);
+      }
+      getBackoffDelay() {
+        if (this.consecutiveErrors === 0) {
+          return this.options.processingDelay;
+        }
+        const multiplier = Math.min(Math.pow(2, this.consecutiveErrors - 1), 16);
+        return multiplier * this.options.processingDelay;
+      }
+      clear() {
+        this.itemsById.clear();
+      }
+      get size() {
+        return this.itemsById.size;
+      }
+      get isProcessing() {
+        return this.processing;
+      }
+    }
+    class ReplicationService {
+      _database = void 0;
+      _api = void 0;
+      _applicationContext = void 0;
+      _previewQueue;
+      _detailQueue;
+      _processingCount;
+      _pendingSync = null;
+      _syncQueued = false;
+      constructor() {
+        this._processingCount = 0;
+        this._previewQueue = new WorkQueue({
+          name: "Log-Preview-Queue",
+          batchSize: 10,
+          processingDelay: 100,
+          onProcessingChanged: this.processingChanged,
+          getId: (log2) => log2.name,
+          worker: async (logHandles) => {
+            if (!this._api) throw new Error("API not available");
+            const previews = await this._api.get_log_summaries(
+              logHandles.map((log2) => log2.name)
+            );
+            return previews;
+          },
+          onComplete: async (previews, inputs) => {
+            const previewMap = {};
+            inputs.forEach((log2, i2) => {
+              if (previews[i2]) {
+                previewMap[log2.name] = previews[i2];
+              }
+            });
+            this._applicationContext?.updateLogPreviews(previewMap);
+            if (this._database && Object.keys(previewMap).length > 0) {
+              await this._database.writeLogPreviews(
+                Object.values(previewMap),
+                Object.keys(previewMap)
+              ).catch(() => {
+              });
+              await this.updateDbStats();
+            }
+          }
+        });
+        this._detailQueue = new WorkQueue({
+          name: "Log-Detail-Queue",
+          batchSize: 3,
+          processingDelay: 50,
+          onProcessingChanged: this.processingChanged,
+          getId: (log2) => log2.name,
+          worker: async (logHandles) => {
+            if (!this._api) throw new Error("API not available");
+            const details = await Promise.all(
+              logHandles.map(async (log2) => {
+                try {
+                  const result2 = await this._api.get_log_details(log2.name);
+                  return result2;
+                } catch {
+                  return void 0;
+                }
+              })
+            );
+            const allResults = details.filter((d) => d !== void 0);
+            return allResults;
+          },
+          onComplete: async (details, inputs) => {
+            if (this._database && details.length > 0) {
+              const detailMap = {};
+              inputs.forEach((log2, i2) => {
+                if (details[i2]) {
+                  detailMap[log2.name] = details[i2];
+                }
+              });
+              this._applicationContext?.updateLogDetails(detailMap);
+              for (const [i2, detail2] of details.entries()) {
+                const input2 = inputs[i2];
+                if (detail2 && input2) {
+                  await this._database.writeLogDetails(input2.name, detail2).catch(() => {
+                  });
+                  this.updateDbStats();
+                }
+              }
+            }
+          }
+        });
+      }
+      processingChanged = (processing2) => {
+        this._processingCount += processing2 ? 1 : -1;
+        if (this._processingCount > 0) {
+          this._applicationContext?.setBackgroundSyncing(true);
+        } else {
+          this._applicationContext?.setBackgroundSyncing(false);
+        }
+      };
+      async updateDbStats() {
+        if (!this._database || !this._applicationContext) return;
+        await Promise.all([
+          this._database.countRows("logs"),
+          this._database.countRows("logPreviews"),
+          this._database.countRows("logDetails")
+        ]).then(([logCount, previewCount, detailsCount]) => {
+          this._applicationContext?.setDbStats({
+            logCount,
+            previewCount,
+            detailsCount
+          });
+        }).catch(() => {
+        });
+      }
+      async startReplication(database, api2, context) {
+        this._database = database;
+        this._api = api2;
+        this._applicationContext = context;
+        const logHandles = await database.readLogs();
+        if (logHandles) {
+          context.setLogHandles(logHandles);
+          const logPreviews = await database.readLogPreviews(logHandles);
+          if (logPreviews && Object.keys(logPreviews).length > 0) {
+            context.updateLogPreviews(logPreviews);
+          }
+          const logDetails = await database.readLogDetails(logHandles);
+          if (logDetails && Object.keys(logDetails).length > 0) {
+            context.updateLogDetails(logDetails);
+          }
+        }
+      }
+      stopReplication() {
+        this._database = void 0;
+        this._api = void 0;
+        this._applicationContext = void 0;
+      }
+      isReplicating() {
+        return !!this._api && !!this._database && !!this._applicationContext;
+      }
+      async sync(progress2) {
+        if (this._pendingSync && this._syncQueued) {
+          return this._pendingSync;
+        }
+        if (this._pendingSync) {
+          this._syncQueued = true;
+          await this._pendingSync;
+          this._syncQueued = false;
+          return this.sync(progress2);
+        }
+        this._pendingSync = this._syncImpl(progress2);
+        try {
+          return await this._pendingSync;
+        } finally {
+          this._pendingSync = null;
+        }
+      }
+      async _syncImpl(progress2) {
+        if (!this._database) {
+          throw new Error("No database available for replication.");
+        }
+        if (!this._api) {
+          throw new Error("No API available for replication.");
+        }
+        if (!this._applicationContext) {
+          throw new Error("No replication context available for replication.");
+        }
+        if (progress2) {
+          this._applicationContext.setLoading(true);
+        }
+        const logFiles = await this._database.readLogs() || [];
+        let mtime = 0;
+        let clientFileCount = 0;
+        if (logFiles && logFiles.length > 0) {
+          mtime = Math.max(...logFiles.map((file) => file.mtime || 0));
+          clientFileCount = logFiles.length;
+        }
+        const staticList = logFiles.length > 0 && mtime === 0;
+        if (staticList) {
+          this._applicationContext?.setLogHandles(logFiles);
+          const previewTasks2 = [];
+          const previews2 = await this._database.findMissingPreviews(logFiles);
+          for (const p of previews2) {
+            if (!previewTasks2.find((t2) => t2.name === p.name)) {
+              previewTasks2.push(p);
+            }
+          }
+          this.queueLogPreviews(previewTasks2);
+          const detailTasks2 = [];
+          const details2 = await this._database.findMissingDetails(logFiles);
+          for (const d of details2) {
+            if (!detailTasks2.find((t2) => t2.name === d.name)) {
+              detailTasks2.push(d);
+            }
+          }
+          this.queueLogDetails(detailTasks2);
+          if (progress2) {
+            this._applicationContext.setLoading(false);
+          }
+          return logFiles;
+        }
+        const response = await this._api.get_logs(mtime, clientFileCount);
+        const updatedLogs = response.files;
+        if (response.response_type === "full") {
+          const deletedFiles = logFiles.filter((current2) => {
+            return !updatedLogs.find((f) => f.name === current2.name);
+          });
+          for (const file of deletedFiles) {
+            this._database?.clearCacheForFile(file.name);
+          }
+        }
+        const toInvalidate = updatedLogs.filter((remoteLog) => {
+          const localCopy = logFiles.find((f) => f.name === remoteLog.name);
+          if (!localCopy) {
+            return true;
+          }
+          if (remoteLog.mtime && localCopy.mtime) {
+            return remoteLog.mtime > localCopy.mtime;
+          }
+          return true;
+        });
+        toInvalidate.map((file) => file.name).map((name2) => this._database?.clearCacheForFile(name2));
+        await this._database.writeLogs(updatedLogs);
+        const currentLogHandle = this._applicationContext.getSelectedLog();
+        const allLogHandles = await this._database.readLogs() || [];
+        this._applicationContext?.setLogHandles(allLogHandles);
+        if (currentLogHandle !== void 0) {
+          const newIndex = allLogHandles.findIndex(
+            (file) => currentLogHandle.name.endsWith(file.name)
+          );
+          if (newIndex !== void 0 && newIndex !== -1) {
+            this._applicationContext.setSelectedLogIndex(newIndex);
+          }
+        }
+        const previewTasks = [...toInvalidate];
+        const previews = await this._database.findMissingPreviews(allLogHandles);
+        for (const p of previews) {
+          if (!previewTasks.find((t2) => t2.name === p.name)) {
+            previewTasks.push(p);
+          }
+        }
+        this.queueLogPreviews(previewTasks);
+        const detailTasks = [...toInvalidate];
+        const details = await this._database.findMissingDetails(allLogHandles);
+        for (const d of details) {
+          if (!detailTasks.find((t2) => t2.name === d.name)) {
+            detailTasks.push(d);
+          }
+        }
+        this.queueLogDetails(detailTasks);
+        if (progress2) {
+          this._applicationContext.setLoading(false);
+        }
+        return allLogHandles;
+      }
+      async loadLogPreviews(context) {
+        this._applicationContext?.setLoading(true);
+        try {
+          if (context.force) {
+            const toLoad = context.logs || await this._database?.readLogs() || [];
+            await this._previewQueue.processImmediate(toLoad);
+          } else {
+            const allLogs = await this._database?.readLogs() || [];
+            const loaded = await this._database?.readLogPreviews(allLogs) || {};
+            const logList = context.logs || allLogs;
+            const filtered = logList.filter((log2) => {
+              const loadedPreview = loaded[log2.name];
+              if (!loadedPreview) {
+                return true;
+              }
+              if (loadedPreview.status === "success") {
+                return false;
+              }
+              return true;
+            });
+            if (Object.keys(loaded).length > 0) {
+              this._applicationContext?.updateLogPreviews(loaded);
+            }
+            if (filtered.length > 0) {
+              this.queueLogPreviews(filtered, WorkPriority.High);
+            }
+          }
+        } finally {
+          this._applicationContext?.setLoading(false);
+        }
+      }
+      clearData() {
+        this._database?.clearAllCaches();
+        this.updateDbStats();
+      }
+      queueLogPreviews(logs, priority = WorkPriority.Medium) {
+        this._previewQueue.enqueue(logs, priority);
+      }
+      count = 0;
+      queueLogDetails(logs, priority = WorkPriority.Medium) {
+        this.count = this.count + logs.length;
+        this._detailQueue.enqueue(logs, priority);
+      }
+    }
     const log$4 = createLogger("store");
     let storeImplementation = null;
     const useStore = ((selector2) => {
@@ -24667,13 +28711,19 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 set2,
                 get2
               );
+              const databaseService = createDatabaseService();
+              const replicationService = new ReplicationService();
               return {
                 // Shared state
                 api: null,
+                databaseService,
+                replicationService,
                 // Initialize
                 initialize: (api22, capabilities22) => {
                   set2((state) => {
                     state.api = api22;
+                    state.databaseService = databaseService;
+                    state.replicationService = replicationService;
                   });
                   initializeAppSlice(
                     set2,
@@ -24694,9 +28744,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 ...logsSlice,
                 ...logSlice,
                 ...sampleSlice,
-                cleanup: () => {
+                cleanup: async () => {
+                  await databaseService.closeDatabase();
                   appCleanup();
-                  logsCleanup();
+                  await logsCleanup();
                   logCleanup();
                   sampleCleanup();
                 }
@@ -24897,33 +28948,33 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return n;
     }
     const wrapper$4 = "_wrapper_1tajk_1";
-    const container$n = "_container_1tajk_12";
+    const container$o = "_container_1tajk_12";
     const animate = "_animate_1tajk_21";
-    const styles$1N = {
+    const styles$1P = {
       wrapper: wrapper$4,
-      container: container$n,
+      container: container$o,
       animate
     };
     const ActivityBar = ({ animating }) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1N.wrapper), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1P.wrapper), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
         {
-          className: clsx(styles$1N.container),
+          className: clsx(styles$1P.container),
           role: "progressbar",
           "aria-label": "Progress bar",
           "aria-valuenow": 25,
           "aria-valuemin": 0,
           "aria-valuemax": 100,
-          children: animating && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1N.animate })
+          children: animating && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1P.animate })
         }
       ) });
     };
-    const container$m = "_container_1n7pm_1";
+    const container$n = "_container_1n7pm_1";
     const label$a = "_label_1n7pm_7";
     const outer = "_outer_1n7pm_11";
     const inner = "_inner_1n7pm_20";
-    const styles$1M = {
-      container: container$m,
+    const styles$1O = {
+      container: container$n,
       label: label$a,
       outer,
       inner
@@ -24934,15 +28985,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       value: value2,
       width = "100px"
     }) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1M.container), children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1M.outer), style: { width }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1O.container), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1O.outer), style: { width }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
-            className: clsx(styles$1M.inner),
+            className: clsx(styles$1O.inner),
             style: { width: `${(value2 - min2) / (max2 - min2) * 100}%` }
           }
         ) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1M.label, "text-size-smallest"), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1O.label, "text-size-smallest"), children: [
           value2,
           " / ",
           max2
@@ -24957,7 +29008,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       currentPolling = null;
       abortController = null;
       isRefreshing = false;
-      pendingLogFiles = /* @__PURE__ */ new Set();
+      pendingLogs = /* @__PURE__ */ new Set();
       onRefreshCallback = null;
       setRefreshCallback(callback) {
         this.onRefreshCallback = callback;
@@ -24968,22 +29019,23 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
         do {
           try {
-            const logFiles = [...this.pendingLogFiles];
-            this.pendingLogFiles.clear();
+            const logFiles = [...this.pendingLogs];
+            this.pendingLogs.clear();
             this.isRefreshing = true;
             await this.onRefreshCallback(logFiles);
           } finally {
             this.isRefreshing = false;
           }
-        } while (this.pendingLogFiles.size > 0);
+        } while (this.pendingLogs.size > 0);
       }
-      async refreshLogFiles(logFiles) {
-        logFiles.forEach((file) => this.pendingLogFiles.add(file));
+      async refreshLogFiles(logs) {
+        logs.forEach((file) => this.pendingLogs.add(file));
         await this.refreshPendingLogFiles();
       }
-      startPolling(logFiles, api2) {
+      startPolling(logs, api2) {
         this.stopPolling();
         this.abortController = new AbortController();
+        let pollingCount = 1;
         this.currentPolling = createPolling(
           `Client-Events`,
           async () => {
@@ -24999,7 +29051,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               return false;
             }
             if ((events || []).includes(kRefreshEvent)) {
-              await this.refreshLogFiles(logFiles);
+              await this.refreshLogFiles(logs);
+            }
+            if (pollingCount++ % 10 === 0) {
+              await this.refreshLogFiles(logs);
             }
             return true;
           },
@@ -25023,7 +29078,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       cleanup() {
         log$3.debug(`Cleanup`);
         this.stopPolling();
-        this.pendingLogFiles.clear();
+        this.pendingLogs.clear();
         this.onRefreshCallback = null;
       }
     }
@@ -25149,7 +29204,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const circle$1 = "_circle_qymy9_1";
     const green$1 = "_green_qymy9_12";
     const red$1 = "_red_qymy9_18";
-    const styles$1L = {
+    const styles$1N = {
       circle: circle$1,
       green: green$1,
       red: red$1
@@ -25165,9 +29220,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             "span",
             {
               className: clsx(
-                styles$1L.circle,
+                styles$1N.circle,
                 "text-size-small",
-                score2 ? styles$1L.green : styles$1L.red
+                score2 ? styles$1N.green : styles$1N.red
               ),
               children: String(score2)
             }
@@ -25266,11 +29321,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
       };
     };
-    const container$l = "_container_1ramc_1";
+    const container$m = "_container_1ramc_1";
     const key$1 = "_key_1ramc_12";
     const value$2 = "_value_1ramc_16";
-    const styles$1K = {
-      container: container$l,
+    const styles$1M = {
+      container: container$m,
       key: key$1,
       value: value$2
     };
@@ -25313,12 +29368,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             ) : String(value2);
             scores2.push(
               /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1K.key, "text-size-smaller"), children: key2 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1K.value, "text-size-base"), children: formattedValue })
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1M.key, "text-size-smaller"), children: key2 }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1M.value, "text-size-base"), children: formattedValue })
               ] })
             );
           });
-          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1K.container), children: scores2 }, `score-value`);
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1M.container), children: scores2 }, `score-value`);
         }
       };
     };
@@ -26795,7 +30850,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const hidden$3 = "_hidden_tm52u_5";
     const pills = "_pills_tm52u_9";
     const pill = "_pill_tm52u_9";
-    const styles$1J = {
+    const styles$1L = {
       visible,
       hidden: hidden$3,
       pills,
@@ -26825,7 +30880,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
-            className: child["props"]?.title === activeItem ? styles$1J.visible : styles$1J.hidden,
+            className: child["props"]?.title === activeItem ? styles$1L.visible : styles$1L.hidden,
             children: child
           },
           `nav-pill-container-${idx}`
@@ -26835,7 +30890,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "ul",
           {
-            className: clsx("nav", "nav-pills", styles$1J.pills),
+            className: clsx("nav", "nav-pills", styles$1L.pills),
             role: "tablist",
             "aria-orientation": "horizontal",
             children: navPills
@@ -26871,7 +30926,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               "nav-link",
               "text-style-label",
               active ? "active " : "",
-              styles$1J.pill
+              styles$1L.pill
             ),
             "data-target": title2,
             onClick: handleClick,
@@ -26887,7 +30942,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       final: 1e3
     };
     const copyButton = "_copyButton_1goi8_1";
-    const styles$1I = {
+    const styles$1K = {
       copyButton
     };
     const CopyButton = ({
@@ -26917,7 +30972,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         "button",
         {
           type: "button",
-          className: clsx("copy-button", styles$1I.copyButton, className2),
+          className: clsx("copy-button", styles$1K.copyButton, className2),
           onClick: handleClick,
           "aria-label": ariaLabel,
           disabled: isCopied,
@@ -26960,7 +31015,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const separator$6 = "_separator_1cl3h_42";
     const inlineRight = "_inlineRight_1cl3h_48";
     const blockLeft = "_blockLeft_1cl3h_54";
-    const styles$1H = {
+    const styles$1J = {
       expandablePanel,
       expandableBordered,
       expandableCollapsed,
@@ -27012,10 +31067,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               style: baseStyles,
               ref: contentRef,
               className: clsx(
-                styles$1H.expandablePanel,
-                collapsed2 ? styles$1H.expandableCollapsed : void 0,
-                border ? styles$1H.expandableBordered : void 0,
-                showToggle ? styles$1H.padBottom : void 0,
+                styles$1J.expandablePanel,
+                collapsed2 ? styles$1J.expandableCollapsed : void 0,
+                border ? styles$1J.expandableBordered : void 0,
+                showToggle ? styles$1J.padBottom : void 0,
                 className2
               ),
               children: [
@@ -27041,7 +31096,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               position: "block-left"
             }
           ) }),
-          showToggle && layout == "inline-right" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1H.separator) })
+          showToggle && layout == "inline-right" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1J.separator) })
         ] });
       }
     );
@@ -27060,15 +31115,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         "div",
         {
           className: clsx(
-            styles$1H.moreToggle,
-            border ? styles$1H.bordered : void 0,
-            position === "inline-right" ? styles$1H.inlineRight : styles$1H.blockLeft
+            styles$1J.moreToggle,
+            border ? styles$1J.bordered : void 0,
+            position === "inline-right" ? styles$1J.inlineRight : styles$1J.blockLeft
           ),
           style: style2,
           children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
             "button",
             {
-              className: clsx("btn", styles$1H.moreToggleButton, "text-size-smallest"),
+              className: clsx("btn", styles$1J.moreToggleButton, "text-size-smallest"),
               onClick: handleClick,
               children: [
                 text2,
@@ -30498,7 +34553,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const key = "_key_qjlxf_1";
     const pre$1 = "_pre_qjlxf_19";
     const treeIcon = "_treeIcon_qjlxf_23";
-    const styles$1G = {
+    const styles$1I = {
       keyPairContainer,
       keyPairBordered,
       key,
@@ -30684,8 +34739,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           "div",
           {
             className: clsx(
-              styles$1G.keyPairContainer,
-              index < items.length - 1 && useBorders ? styles$1G.keyPairBordered : void 0,
+              styles$1I.keyPairContainer,
+              index < items.length - 1 && useBorders ? styles$1I.keyPairBordered : void 0,
               "text-size-small"
             ),
             style: {
@@ -30698,7 +34753,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                   "data-index": index,
                   className: clsx(
                     kRecordTreeKey,
-                    styles$1G.key,
+                    styles$1I.key,
                     "font-monospace",
                     "text-style-secondary"
                   ),
@@ -30708,16 +34763,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                     setCollapsed(item2.id, !collapsedIds?.[item2.id]);
                   },
                   children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: item2.hasChildren ? /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1G.pre), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: item2.hasChildren ? /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1I.pre), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                       "i",
                       {
                         className: clsx(
                           collapsedIds && collapsedIds[item2.id] ? ApplicationIcons.tree.closed : ApplicationIcons.tree.open,
-                          styles$1G.treeIcon
+                          styles$1I.treeIcon
                         )
                       }
                     ) }) : void 0 }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("pre", { className: clsx(styles$1G.pre), children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("pre", { className: clsx(styles$1I.pre), children: [
                       item2.key,
                       ":"
                     ] })
@@ -31084,7 +35139,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         epoch: urlEpoch
       } = useLogRouteParams();
       const log_file = useStore((state) => state.logs.selectedLogFile);
-      const log_dir = useStore((state) => state.logs.logs.log_dir);
+      const log_dir = useStore((state) => state.logs.logDir);
       let targetLogPath = urlLogPath;
       if (!targetLogPath && log_file) {
         targetLogPath = makeLogPath(log_file, log_dir);
@@ -31106,7 +35161,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         epoch: urlEpoch
       } = useLogRouteParams();
       const log_file = useStore((state) => state.logs.selectedLogFile);
-      const log_dir = useStore((state) => state.logs.logs.log_dir);
+      const log_dir = useStore((state) => state.logs.logDir);
       let targetLogPath = urlLogPath;
       if (!targetLogPath && log_file) {
         targetLogPath = makeLogPath(log_file, log_dir);
@@ -31151,7 +35206,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const toFullUrl = (path) => {
       return `${window.location.origin}${window.location.pathname}${window.location.search}#${path}`;
     };
-    const message$2 = "_message_b8oe1_1";
+    const message$3 = "_message_b8oe1_1";
     const systemRole = "_systemRole_b8oe1_8";
     const messageGrid = "_messageGrid_b8oe1_12";
     const toolMessageGrid = "_toolMessageGrid_b8oe1_20";
@@ -31160,8 +35215,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const copyLink$1 = "_copyLink_b8oe1_33";
     const metadataLabel = "_metadataLabel_b8oe1_43";
     const hover$1 = "_hover_b8oe1_47";
-    const styles$1F = {
-      message: message$2,
+    const styles$1H = {
+      message: message$3,
       systemRole,
       messageGrid,
       toolMessageGrid,
@@ -101727,7 +105782,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       );
     }
     const content$3 = "_content_13ihw_1";
-    const styles$1E = {
+    const styles$1G = {
       content: content$3
     };
     const Preformatted = reactExports.forwardRef(
@@ -101736,7 +105791,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           "pre",
           {
             ref,
-            className: clsx(styles$1E.content, "text-size-smaller", className2),
+            className: clsx(styles$1G.content, "text-size-smaller", className2),
             style: style2,
             children: text2
           }
@@ -101769,22 +105824,22 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     });
     const webSearch = "_webSearch_1376z_1";
     const query$1 = "_query_1376z_8";
-    const styles$1D = {
+    const styles$1F = {
       webSearch,
       query: query$1
     };
     const WebSearch = ({ query: query2 }) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1D.webSearch, "text-size-smaller"), children: [
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1F.webSearch, "text-size-smaller"), children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-style-label", "text-style-secondary"), children: "Web Search:" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx(styles$1D.query, "text-size-smallest"), children: query2 })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx(styles$1F.query, "text-size-smallest"), children: query2 })
       ] });
     };
     const contentData = "_contentData_1sd1z_1";
-    const styles$1C = {
+    const styles$1E = {
       contentData
     };
     const result$1 = "_result_1mixg_12";
-    const styles$1B = {
+    const styles$1D = {
       result: result$1
     };
     const WebSearchResults = ({
@@ -101795,7 +105850,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           "div",
           {
             className: clsx(
-              styles$1B.label,
+              styles$1D.label,
               "text-style-label",
               "text-style-secondary",
               "text-size-smaller"
@@ -101803,10 +105858,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             children: "Results"
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("ol", { className: clsx(styles$1B.results, "text-size-smaller"), children: results.map((result2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ol", { className: clsx(styles$1D.results, "text-size-smaller"), children: results.map((result2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
           "li",
           {
-            className: clsx(styles$1B.result, "text-style-secondary"),
+            className: clsx(styles$1D.result, "text-style-secondary"),
             children: /* @__PURE__ */ jsxRuntimeExports.jsx(
               "a",
               {
@@ -101830,17 +105885,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       );
       if (!renderer) {
         const { encrypted_content, ...record } = renderableData;
-        return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1C.contentData), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1E.contentData), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           RecordTree,
           {
             id: `${id}-tree`,
             record,
-            className: clsx(styles$1C.data),
+            className: clsx(styles$1E.data),
             defaultExpandLevel: 0
           }
         ) });
       }
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1C.contentData), children: renderer.render(renderableData) });
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1E.contentData), children: renderer.render(renderableData) });
     };
     const webSearchServerToolRenderer = {
       name: "WebSearch",
@@ -101882,7 +105937,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             {
               id: data.name || "server-tool",
               record: data,
-              className: clsx(styles$1C.data)
+              className: clsx(styles$1E.data)
             }
           )
         ] });
@@ -101957,55 +106012,88 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         return attr.includes("data-vscode-");
       });
     };
-    const asyncJsonParse = async (text2) => {
-      const encoder = new TextEncoder();
-      const encodedText = encoder.encode(text2);
-      const blob = new Blob([kWorkerCode], { type: "application/javascript" });
-      const blobURL = URL.createObjectURL(blob);
-      const worker = new Worker(blobURL);
-      try {
-        const result2 = new Promise((resolve, reject) => {
-          worker.onmessage = function(e) {
-            if (e.data.success) {
-              if (e.data.serialized) {
-                const decoder = new TextDecoder();
-                const resultString = decoder.decode(e.data.result);
-                resolve(JSON.parse(resultString));
-              } else {
-                resolve(e.data.result);
-              }
-            } else {
-              const error2 = new Error(e.data.error);
-              if (e.data.stack) {
-                error2.stack = e.data.stack;
-              }
-              reject(error2);
-            }
-          };
-          worker.onerror = function(error2) {
-            reject(new Error(`Worker error: ${error2.message}`));
-          };
-        });
-        worker.postMessage(
-          {
-            scriptContent: kJson5ScriptBase64,
-            encodedText
-          },
-          [encodedText.buffer]
-        );
-        return await result2;
-      } finally {
-        worker.terminate();
-        URL.revokeObjectURL(blobURL);
+    class JsonWorkerPool {
+      workers = [];
+      blobURL = null;
+      nextRequestId = 0;
+      pendingRequests = /* @__PURE__ */ new Map();
+      poolSize = 4;
+      ensureWorkers() {
+        if (this.workers.length === 0) {
+          const blob = new Blob([kWorkerCode], { type: "application/javascript" });
+          this.blobURL = URL.createObjectURL(blob);
+          for (let i2 = 0; i2 < this.poolSize; i2++) {
+            const worker = new Worker(this.blobURL);
+            worker.onmessage = (e) => this.handleMessage(e);
+            worker.onerror = (error2) => this.handleError(error2);
+            this.workers.push(worker);
+          }
+        }
       }
+      handleMessage(e) {
+        const { requestId, success: success2, serialized, result: result2, error: error2, stack: stack2 } = e.data;
+        const pending = this.pendingRequests.get(requestId);
+        if (!pending) return;
+        this.pendingRequests.delete(requestId);
+        if (success2) {
+          if (serialized) {
+            const decoder = new TextDecoder();
+            const resultString = decoder.decode(result2);
+            pending.resolve(JSON.parse(resultString));
+          } else {
+            pending.resolve(result2);
+          }
+        } else {
+          const err2 = new Error(error2);
+          if (stack2) err2.stack = stack2;
+          pending.reject(err2);
+        }
+      }
+      handleError(error2) {
+        for (const [id, pending] of this.pendingRequests.entries()) {
+          pending.reject(new Error(`Worker error: ${error2.message}`));
+          this.pendingRequests.delete(id);
+        }
+      }
+      async parse(text2) {
+        this.ensureWorkers();
+        const encoder = new TextEncoder();
+        const encodedText = encoder.encode(text2);
+        const requestId = this.nextRequestId++;
+        return new Promise((resolve, reject) => {
+          this.pendingRequests.set(requestId, { resolve, reject });
+          const worker = this.workers[requestId % this.workers.length];
+          worker.postMessage(
+            {
+              requestId,
+              scriptContent: kJson5ScriptBase64,
+              encodedText
+            },
+            [encodedText.buffer]
+          );
+        });
+      }
+      terminate() {
+        this.workers.forEach((w) => w.terminate());
+        this.workers = [];
+        if (this.blobURL) {
+          URL.revokeObjectURL(this.blobURL);
+          this.blobURL = null;
+        }
+        this.pendingRequests.clear();
+      }
+    }
+    const workerPool = new JsonWorkerPool();
+    const asyncJsonParse = async (text2) => {
+      return workerPool.parse(text2);
     };
     const kWorkerCode = `
 // Store the JSON5 parser once loaded
 let JSON5 = null;
 
 self.onmessage = function (e) {
-  const { encodedText, scriptContent } = e.data;
-  
+  const { requestId, encodedText, scriptContent } = e.data;
+
   try {
     // Only load the JSON5 script if we haven't done so yet
     if (!JSON5) {
@@ -102018,37 +106106,41 @@ self.onmessage = function (e) {
       }
       JSON5 = self.JSON5;
     }
-    
+
     // Decode the text using TextDecoder
     const decoder = new TextDecoder();
     const text = decoder.decode(encodedText);
-    
+
     // Parse with JSON5
     const result = JSON5.parse(text);
-    
-    if (result && typeof result === 'object' && 
+
+    if (result && typeof result === 'object' &&
         (Array.isArray(result) ? result.length > 10000 : Object.keys(result).length > 10000)) {
-      
+
       // Large result, use transferrable object
       const resultString = JSON.stringify(result);
       const encoder = new TextEncoder();
       const serialized = encoder.encode(resultString);
-      
+
       postMessage({
-        success: true, 
+      requestId,
+        requestId,
+        success: true,
         serialized: true,
         result: serialized
       }, [serialized.buffer]);
     } else {
       // Small results, send directly
-      postMessage({ 
+      postMessage({
+        requestId,
         success: true, 
         serialized: false, 
         result: result 
       });
     }
   } catch (err) {
-    postMessage({ 
+    postMessage({
+        requestId,
       success: false, 
       error: err.message,
       stack: err.stack || ''
@@ -102738,9 +106830,11 @@ self.onmessage = function (e) {
         if (contentRange !== null) {
           const rangeMatch = contentRange.match(/bytes (\d+)-(\d+)\/(\d+)/);
           if (rangeMatch !== null) {
+            await getResponse.arrayBuffer();
             return Number(rangeMatch[3]);
           }
         }
+        await getResponse.arrayBuffer();
       }
       const contentLength = acceptResponse.headers.get("Content-Length");
       if (contentLength !== null) {
@@ -102901,8 +106995,8 @@ self.onmessage = function (e) {
         try {
           remoteZipFile = await openRemoteZipFile(
             url,
-            api2.eval_log_size,
-            api2.eval_log_bytes
+            api2.get_log_size,
+            api2.get_log_bytes
           );
         } catch {
           retryCount++;
@@ -102974,7 +107068,7 @@ self.onmessage = function (e) {
       };
       const readEvalBasicInfo = async () => {
         const header2 = await readHeader();
-        return toBasicInfo(header2);
+        return toLogPreview(header2);
       };
       const readFallbackSummaries = async () => {
         const summaryFiles = Array.from(
@@ -103080,7 +107174,7 @@ self.onmessage = function (e) {
         Object.setPrototypeOf(this, SampleSizeLimitedExceededError.prototype);
       }
     }
-    const clientApi = (api2, log_file) => {
+    const clientApi = (api2, log_file, debug2 = false) => {
       let current_log = void 0;
       let current_path = void 0;
       const loadedEvalFile = {
@@ -103088,23 +107182,26 @@ self.onmessage = function (e) {
         remoteLog: void 0
       };
       const remoteEvalFile = async (log_file2, cached = false) => {
-        if (!cached || loadedEvalFile.file !== log_file2) {
-          const remoteLog = await openRemoteLogFile(
-            api2,
-            encodePathParts(log_file2),
-            5
-          );
+        if (cached && loadedEvalFile.file === log_file2) {
+          return loadedEvalFile.remoteLog;
+        }
+        const remoteLog = await openRemoteLogFile(
+          api2,
+          encodePathParts(log_file2),
+          5
+        );
+        if (cached) {
           loadedEvalFile.file = log_file2;
           loadedEvalFile.remoteLog = remoteLog;
         }
-        return loadedEvalFile.remoteLog;
+        return remoteLog;
       };
       const get_log = async (log_file2, cached = false) => {
         if (!cached || log_file2 !== current_path || !current_log) {
           if (pending_log_promise) {
             return pending_log_promise;
           }
-          pending_log_promise = api2.eval_log(log_file2, 100).then((log2) => {
+          pending_log_promise = api2.get_log_contents(log_file2, 100).then((log2) => {
             current_log = log2;
             current_path = log_file2;
             pending_log_promise = null;
@@ -103118,7 +107215,7 @@ self.onmessage = function (e) {
         return current_log;
       };
       let pending_log_promise = null;
-      const get_log_summary = async (log_file2) => {
+      const get_log_details = async (log_file2) => {
         if (isEvalFile(log_file2)) {
           const remoteLogFile = await remoteEvalFile(log_file2);
           if (remoteLogFile) {
@@ -103190,9 +107287,9 @@ self.onmessage = function (e) {
         }
         return void 0;
       };
-      const get_eval_log_header = async (log_file2) => {
-        if (api2.eval_log_overview) {
-          return api2.eval_log_overview(log_file2);
+      const read_eval_file_log_summary = async (log_file2) => {
+        if (api2.get_log_summary) {
+          return api2.get_log_summary(log_file2);
         } else {
           const remoteLogFile = await openRemoteLogFile(
             api2,
@@ -103202,7 +107299,7 @@ self.onmessage = function (e) {
           return remoteLogFile.readEvalBasicInfo();
         }
       };
-      const get_log_headers = async (log_files) => {
+      const get_log_summaries2 = async (log_files) => {
         const eval_files = {};
         const json_files = {};
         let index = 0;
@@ -103215,35 +107312,55 @@ self.onmessage = function (e) {
           index++;
         }
         const evalLogHeadersPromises = Object.keys(eval_files).map(
-          (file) => get_eval_log_header(file).then((header2) => ({
+          (file) => read_eval_file_log_summary(file).then((summary2) => ({
             index: eval_files[file],
             // Store original index
-            header: header2
+            summary: summary2
           }))
         );
-        const jsonLogHeadersPromise = api2.eval_log_overviews(Object.keys(json_files)).then(
-          (headers2) => headers2.map((header2, i2) => ({
+        const jsonLogHeadersPromise = api2.get_log_summaries(Object.keys(json_files)).then(
+          (summaries2) => summaries2.map((summary2, i2) => ({
             index: json_files[Object.keys(json_files)[i2]],
             // Store original index
-            header: header2
+            summary: summary2
           }))
         );
-        const headers = await Promise.all([
+        const summaries = await Promise.all([
           ...evalLogHeadersPromises,
           jsonLogHeadersPromise
         ]);
-        const orderedHeaders = headers.flat().sort((a, b) => a.index - b.index);
-        return orderedHeaders.map(({ header: header2 }) => header2);
+        const orderedSummaries = summaries.flat().sort((a, b) => a.index - b.index);
+        return orderedSummaries.map(({ summary: summary2 }) => summary2);
       };
-      const get_log_paths = async () => {
-        const logFiles = await api2.eval_logs();
+      const get_log_dir = async () => {
+        if (api2.get_log_dir) {
+          return await api2.get_log_dir();
+        } else {
+          const logRoot = await api2.get_log_root();
+          return logRoot?.log_dir;
+        }
+      };
+      const get_logs = async (mtime, clientFileCount) => {
+        if (api2.get_logs) {
+          const result2 = await api2.get_logs(mtime, clientFileCount);
+          return result2;
+        } else {
+          const logRoot = await api2.get_log_root();
+          return {
+            files: logRoot?.logs || [],
+            response_type: "full"
+          };
+        }
+      };
+      const get_log_root2 = async () => {
+        const logFiles = await api2.get_log_root();
         if (logFiles) {
           return logFiles;
         } else if (log_file) {
-          const summary2 = await get_log_summary(log_file);
+          const summary2 = await get_log_details(log_file);
           if (summary2) {
             return {
-              files: [
+              logs: [
                 {
                   name: log_file,
                   task: summary2.eval.task,
@@ -103273,32 +107390,69 @@ self.onmessage = function (e) {
           last_attachment
         );
       };
+      const middleware = debug2 ? createMiddlewareWrapper([debugMiddleware]) : (_name, fn2) => fn2;
       return {
-        client_events: () => {
+        client_events: middleware("client_events", () => {
           return api2.client_events();
-        },
-        get_log_paths: () => {
-          return get_log_paths();
-        },
-        get_log_overviews: (log_files) => {
-          return get_log_headers(log_files);
-        },
-        get_eval_set_info: (dir) => {
-          return api2.eval_set(dir);
-        },
-        get_log_summary,
-        get_log_sample,
-        open_log_file: (log_file2, log_dir) => {
+        }),
+        get_log_dir: middleware("get_log_dir", get_log_dir),
+        get_logs: middleware("get_log_files", get_logs),
+        get_log_root: middleware("get_log_root", get_log_root2),
+        get_eval_set: middleware("get_eval_set", (dir) => {
+          return api2.get_eval_set(dir);
+        }),
+        get_log_summaries: middleware("get_log_summaries", get_log_summaries2),
+        get_log_details: middleware("get_log_details", get_log_details),
+        get_log_sample: middleware("get_log_sample", get_log_sample),
+        open_log_file: middleware("open_log_file", (log_file2, log_dir) => {
           return api2.open_log_file(log_file2, log_dir);
-        },
-        download_file: (download_file2, file_contents) => {
-          return api2.download_file(download_file2, file_contents);
-        },
-        log_message: (log_file2, message2) => {
-          return api2.log_message(log_file2, message2);
-        },
-        get_log_pending_samples: api2.eval_pending_samples ? get_log_pending_samples : void 0,
-        get_log_sample_data: api2.eval_log_sample_data ? get_log_sample_data : void 0
+        }),
+        download_file: middleware(
+          "download_file",
+          (download_file2, file_contents) => {
+            return api2.download_file(download_file2, file_contents);
+          }
+        ),
+        log_message: middleware(
+          "log_message",
+          (log_file2, message2) => {
+            return api2.log_message(log_file2, message2);
+          }
+        ),
+        get_log_pending_samples: api2.eval_pending_samples ? middleware("get_log_pending_samples", get_log_pending_samples) : void 0,
+        get_log_sample_data: api2.eval_log_sample_data ? middleware("get_log_sample_data", get_log_sample_data) : void 0
+      };
+    };
+    const debugMiddleware = (name2, _fn, args2, result2) => {
+      if (result2 instanceof Promise) {
+        const startTime = performance.now();
+        return result2.then((returned) => {
+          const duration = performance.now() - startTime;
+          console.log(`[ClientAPI] ${name2}`, {
+            args: args2,
+            returned,
+            duration: `${duration.toFixed(2)}ms`
+          });
+          return returned;
+        });
+      } else {
+        console.log(`[ClientAPI] ${name2}`, { args: args2, returned: result2 });
+        return result2;
+      }
+    };
+    const applyMiddleware = (name2, fn2, middlewares) => {
+      if (middlewares.length === 0) return fn2;
+      return ((...args2) => {
+        let result2 = fn2(...args2);
+        for (const middleware of middlewares) {
+          result2 = middleware(name2, fn2, args2, result2);
+        }
+        return result2;
+      });
+    };
+    const createMiddlewareWrapper = (middlewares) => {
+      return (name2, fn2) => {
+        return applyMiddleware(name2, fn2, middlewares);
       };
     };
     async function download_file$1(filename2, filecontents) {
@@ -103417,7 +107571,7 @@ self.onmessage = function (e) {
         client_events: async () => {
           return Promise.resolve([]);
         },
-        eval_logs: async () => {
+        get_log_root: async () => {
           if (log_dir) {
             const manifest2 = await getManifest();
             if (manifest2) {
@@ -103429,14 +107583,14 @@ self.onmessage = function (e) {
                 };
               });
               return Promise.resolve({
-                files: logs,
+                logs,
                 log_dir
               });
             }
           }
           return void 0;
         },
-        eval_set: async (dir) => {
+        get_eval_set: async (dir) => {
           const dirSegments = [];
           if (log_dir) {
             dirSegments.push(log_dir);
@@ -103451,7 +107605,7 @@ self.onmessage = function (e) {
         log_message: async (log_file, message2) => {
           console.log(`[CLIENT MESSAGE] (${log_file}): ${message2}`);
         },
-        eval_log: async (log_file, _headerOnly, _capabilities) => {
+        get_log_contents: async (log_file, _headerOnly, _capabilities) => {
           const response = await fetchLogFile(log_file);
           if (response) {
             return response;
@@ -103459,13 +107613,13 @@ self.onmessage = function (e) {
             throw new Error(`"Unable to load eval log ${log_file}`);
           }
         },
-        eval_log_size: async (log_file) => {
+        get_log_size: async (log_file) => {
           return await fetchSize(log_file);
         },
-        eval_log_bytes: async (log_file, start2, end2) => {
+        get_log_bytes: async (log_file, start2, end2) => {
           return await fetchRange(log_file, start2, end2);
         },
-        eval_log_overview: async (log_file) => {
+        get_log_summary: async (log_file) => {
           const manifest2 = await getManifest();
           if (manifest2) {
             const manifestAbs = {};
@@ -103479,7 +107633,7 @@ self.onmessage = function (e) {
           }
           throw new Error(`Unable to load eval log header for ${log_file}`);
         },
-        eval_log_overviews: async (files) => {
+        get_log_summaries: async (files) => {
           if (files.length === 0) {
             return [];
           }
@@ -103641,7 +107795,7 @@ self.onmessage = function (e) {
     const LOADED_TIME = Date.now();
     let lastEvalTime = 0;
     function viewServerApi(options2 = {}) {
-      const { apiBaseUrl, logDir, headerProvider } = options2;
+      const { apiBaseUrl, logDir: logDir2, headerProvider } = options2;
       const requestApi = serverRequestApi(
         apiBaseUrl || "/api",
         headerProvider
@@ -103656,44 +107810,84 @@ self.onmessage = function (e) {
         );
         return result2.parsed;
       };
-      const eval_logs2 = async () => {
-        const path = logDir ? `/logs?log_dir=${encodeURIComponent(logDir)}` : "/logs";
+      const get_log_dir = async () => {
+        const obj = (await requestApi.fetchString("GET", "/log-dir")).parsed;
+        return obj.log_dir;
+      };
+      const get_log_root2 = async () => {
+        const path = logDir2 ? `/logs?log_dir=${encodeURIComponent(logDir2)}` : "/logs";
         const logs = await requestApi.fetchString("GET", path);
         lastEvalTime = Date.now();
         return logs.parsed;
       };
-      const eval_set2 = async (dir) => {
-        if (logDir) dir ??= logDir;
+      const get_log_files = async (mtime, clientFileCount) => {
+        const path = logDir2 ? `/log-files?log_dir=${encodeURIComponent(logDir2)}` : "/log-files";
+        const headers = {};
+        const token2 = log_file_token(mtime, clientFileCount);
+        if (token2) {
+          headers["If-None-Match"] = token2;
+        }
+        lastEvalTime = Date.now();
+        const envelope = await requestApi.fetchString("GET", path, headers);
+        return envelope.parsed;
+      };
+      const log_file_token = (mtime, fileCount) => {
+        return `W/"${mtime}-${fileCount}"`;
+      };
+      const get_eval_set2 = async (dir) => {
+        if (logDir2) {
+          dir ??= logDir2;
+        }
         const path = dir ? `/eval-set?dir=${encodeURIComponent(dir)}` : "/eval-set";
         try {
           const result2 = await requestApi.fetchString("GET", path);
           return result2.parsed;
         } catch (error2) {
-          if (error2 instanceof ApiError && error2.status === 404) {
+          if (error2 instanceof ApiError && (error2.status === 404 || error2.status === 403)) {
             return void 0;
           }
           throw error2;
         }
       };
-      const eval_log2 = async (file, headerOnly, _capabilities) => {
+      const get_log_contents2 = async (file, headerOnly, _capabilities) => {
         const result2 = await requestApi.fetchString(
           "GET",
           `/logs/${encodeURIComponent(file)}?header-only=${headerOnly}`
         );
         return result2;
       };
-      const eval_log_size2 = async (file) => {
+      const get_log_size2 = async (file) => {
         const result2 = await requestApi.fetchString(
           "GET",
           `/log-size/${encodeURIComponent(file)}`
         );
         return result2.parsed;
       };
-      const eval_log_bytes2 = async (file, start2, end2) => requestApi.fetchBytes(
+      const toLogPreview2 = (header2) => {
+        const scores2 = Object.values(header2.results?.scores || {});
+        const metric = scores2.length > 0 ? scores2[0].metrics : void 0;
+        const evalMetrics = Object.values(metric || {});
+        const primary_metric = evalMetrics.length > 0 ? evalMetrics[0] : void 0;
+        return {
+          eval_id: header2.eval.eval_id,
+          run_id: header2.eval.run_id,
+          task: header2.eval.task,
+          task_id: header2.eval.task_id,
+          task_version: header2.eval.task_version,
+          version: header2.version,
+          status: header2.status,
+          error: header2.error,
+          model: header2.eval.model,
+          started_at: header2.stats?.started_at,
+          completed_at: header2.stats?.completed_at,
+          primary_metric
+        };
+      };
+      const get_log_bytes2 = async (file, start2, end2) => requestApi.fetchBytes(
         "GET",
         `/log-bytes/${encodeURIComponent(file)}?start=${start2}&end=${end2}`
       );
-      const eval_log_overviews2 = async (files) => {
+      const get_log_summaries2 = async (files) => {
         const params = new URLSearchParams();
         for (const file of files) {
           params.append("file", file);
@@ -103702,7 +107896,8 @@ self.onmessage = function (e) {
           "GET",
           `/log-headers?${params.toString()}`
         );
-        return result2.parsed;
+        const logHeaders = result2.parsed;
+        return logHeaders.map(toLogPreview2);
       };
       const log_message2 = async (log_file, message2) => {
         const params = new URLSearchParams();
@@ -103801,12 +107996,14 @@ self.onmessage = function (e) {
       };
       return {
         client_events: client_events2,
-        eval_logs: eval_logs2,
-        eval_set: eval_set2,
-        eval_log: eval_log2,
-        eval_log_size: eval_log_size2,
-        eval_log_bytes: eval_log_bytes2,
-        eval_log_overviews: eval_log_overviews2,
+        get_log_root: get_log_root2,
+        get_logs: get_log_files,
+        get_log_dir,
+        get_eval_set: get_eval_set2,
+        get_log_contents: get_log_contents2,
+        get_log_size: get_log_size2,
+        get_log_bytes: get_log_bytes2,
+        get_log_summaries: get_log_summaries2,
         log_message: log_message2,
         download_file: download_file$1,
         open_log_file: async () => {
@@ -103896,7 +108093,7 @@ self.onmessage = function (e) {
     async function client_events() {
       return [];
     }
-    async function eval_logs() {
+    async function get_log_root() {
       const response = await vscodeClient(kMethodEvalLogs, []);
       if (response) {
         const parsed = lib$d.parse(response);
@@ -103912,10 +108109,10 @@ self.onmessage = function (e) {
         return void 0;
       }
     }
-    async function eval_set() {
+    async function get_eval_set() {
       return void 0;
     }
-    async function eval_log(log_file, headerOnly, capabilities2) {
+    async function get_log_contents(log_file, headerOnly, capabilities2) {
       const response = await vscodeClient(kMethodEvalLog, [log_file, headerOnly]);
       if (response) {
         let json;
@@ -103932,13 +108129,13 @@ self.onmessage = function (e) {
         throw new Error(`Unable to load eval log ${log_file}.`);
       }
     }
-    async function eval_log_size(log_file) {
+    async function get_log_size(log_file) {
       return await vscodeClient(kMethodEvalLogSize, [log_file]);
     }
-    async function eval_log_bytes(log_file, start2, end2) {
+    async function get_log_bytes(log_file, start2, end2) {
       return await vscodeClient(kMethodEvalLogBytes, [log_file, start2, end2]);
     }
-    async function eval_log_overviews(files) {
+    async function get_log_summaries(files) {
       const response = await vscodeClient(kMethodEvalLogHeaders, [files]);
       if (response) {
         return lib$d.parse(response);
@@ -104010,12 +108207,12 @@ self.onmessage = function (e) {
     }
     const api$1 = {
       client_events,
-      eval_logs,
-      eval_set,
-      eval_log,
-      eval_log_size,
-      eval_log_bytes,
-      eval_log_overviews,
+      get_log_root,
+      get_eval_set,
+      get_log_contents,
+      get_log_size,
+      get_log_bytes,
+      get_log_summaries,
       log_message,
       download_file,
       open_log_file,
@@ -104023,8 +108220,9 @@ self.onmessage = function (e) {
       eval_log_sample_data
     };
     const resolveApi = () => {
+      const debug2 = false;
       if (getVscodeApi()) {
-        return clientApi(api$1);
+        return clientApi(api$1, void 0, debug2);
       } else {
         const scriptEl = document.getElementById("log_dir_context");
         if (scriptEl) {
@@ -104034,7 +108232,7 @@ self.onmessage = function (e) {
             if (data.log_dir || data.log_file) {
               const log_dir2 = data.log_dir || dirname(data.log_file);
               const api2 = staticHttpApi(log_dir2, data.log_file);
-              return clientApi(api2, data.log_file);
+              return clientApi(api2, data.log_file, debug2);
             }
           }
         }
@@ -104047,16 +108245,18 @@ self.onmessage = function (e) {
         if (forceViewServerApi) {
           return clientApi(
             viewServerApi({ logDir: resolved_log_dir }),
-            resolved_log_file
+            resolved_log_file,
+            debug2
           );
         }
         if (resolved_log_dir !== void 0 || resolved_log_file !== void 0) {
           return clientApi(
             staticHttpApi(resolved_log_dir, resolved_log_file),
-            resolved_log_file
+            resolved_log_file,
+            debug2
           );
         }
-        return clientApi(viewServerApi());
+        return clientApi(viewServerApi(), void 0, debug2);
       }
     };
     const api = resolveApi();
@@ -104064,7 +108264,7 @@ self.onmessage = function (e) {
     const documentFrameTitle = "_documentFrameTitle_1576h_9";
     const downloadLink = "_downloadLink_1576h_16";
     const imageDocument = "_imageDocument_1576h_21";
-    const styles$1A = {
+    const styles$1C = {
       documentFrame,
       documentFrameTitle,
       downloadLink,
@@ -104081,7 +108281,7 @@ self.onmessage = function (e) {
         return /* @__PURE__ */ jsxRuntimeExports.jsx(ContentDocumentFrame, { document: document2, downloadable: canDownloadFiles, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           "img",
           {
-            className: clsx(styles$1A.imageDocument),
+            className: clsx(styles$1C.imageDocument),
             src: document2.document,
             alt: document2.filename,
             id
@@ -104106,17 +108306,17 @@ self.onmessage = function (e) {
         "div",
         {
           className: clsx(
-            styles$1A.documentFrame,
+            styles$1C.documentFrame,
             "text-size-small",
             "text-style-secondary"
           ),
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1A.documentFrameTitle), children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1C.documentFrameTitle), children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(iconForMimeType(document2.mime_type)) }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: downloadable ? /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "a",
                 {
-                  className: clsx(styles$1A.downloadLink),
+                  className: clsx(styles$1C.downloadLink),
                   onClick: () => {
                     api.download_file(document2.filename, document2.document);
                   },
@@ -104130,7 +108330,7 @@ self.onmessage = function (e) {
       );
     };
     const jsonMessage = "_jsonMessage_oxf8d_1";
-    const styles$1z = {
+    const styles$1B = {
       jsonMessage
     };
     const JsonMessageContent = ({
@@ -104143,7 +108343,7 @@ self.onmessage = function (e) {
         {
           id,
           record: json,
-          className: clsx(styles$1z.jsonMessage, className2),
+          className: clsx(styles$1B.jsonMessage, className2),
           useBorders: false
         }
       );
@@ -104158,7 +108358,7 @@ self.onmessage = function (e) {
     };
     const citations = "_citations_t2k1z_1";
     const citationLink = "_citationLink_t2k1z_9";
-    const styles$1y = {
+    const styles$1A = {
       citations,
       citationLink
     };
@@ -104166,7 +108366,7 @@ self.onmessage = function (e) {
       if (citations2.length === 0) {
         return void 0;
       }
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1y.citations, "text-size-smallest"), children: citations2.map((citation, index) => /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1A.citations, "text-size-smallest"), children: citations2.map((citation, index) => /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: index + 1 }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(MessageCitation, { citation })
       ] }, index)) });
@@ -104186,7 +108386,7 @@ self.onmessage = function (e) {
         href: citation.url,
         target: "_blank",
         rel: "noopener noreferrer",
-        className: clsx(styles$1y.citationLink),
+        className: clsx(styles$1A.citationLink),
         title: citation.cited_text ? `${citation.cited_text}
 ${citation.url}` : citation.url,
         children: children2
@@ -104195,7 +108395,7 @@ ${citation.url}` : citation.url,
     const OtherCitation = ({ children: children2 }) => /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: children2 });
     const contentImage = "_contentImage_8rgix_1";
     const reasoning = "_reasoning_8rgix_6";
-    const styles$1x = {
+    const styles$1z = {
       contentImage,
       reasoning
     };
@@ -104206,7 +108406,7 @@ ${citation.url}` : citation.url,
     const argLabel = "_argLabel_1792k_31";
     const error$2 = "_error_1792k_35";
     const toolPanel = "_toolPanel_1792k_40";
-    const styles$1w = {
+    const styles$1y = {
       mcpToolUse,
       title: title$3,
       titleText,
@@ -104227,23 +108427,23 @@ ${citation.url}` : citation.url,
       const titleStr = content2.context ? `${content2.context} — ${content2.name}()` : `${content2.name}()`;
       const listToolsResult = maybeListTools(content2);
       const webSearchResult = maybeWebSearchResult(content2);
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id, className: clsx(styles$1w.mcpToolUse, className2), children: [
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id, className: clsx(styles$1y.mcpToolUse, className2), children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs(
           "div",
           {
             className: clsx(
-              styles$1w.title,
+              styles$1y.title,
               "text-size-small",
               "text-style-secondary"
             ),
             children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.role.tool }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$1w.titleText, children: titleStr }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1w.type, children: content2.type })
+              /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$1y.titleText, children: titleStr }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1y.type, children: content2.type })
             ]
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1w.args, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1y.args, children: [
           Object.keys(args2).map((key2, index) => {
             const value2 = args2[key2];
             let valueRecord = void 0;
@@ -104262,7 +108462,7 @@ ${citation.url}` : citation.url,
           }),
           webSearchResult ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(LabelDiv, { label: "results" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(ValueDiv, { children: webSearchResult.result.map((result2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1w.result, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            /* @__PURE__ */ jsxRuntimeExports.jsx(ValueDiv, { children: webSearchResult.result.map((result2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1y.result, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
               "a",
               {
                 href: result2.url,
@@ -104277,7 +108477,7 @@ ${citation.url}` : citation.url,
             {
               id: `${id}-output`,
               collapse: true,
-              className: clsx(styles$1w.toolPanel),
+              className: clsx(styles$1y.toolPanel),
               children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx(LabelDiv, { label: tool2.name }),
                 /* @__PURE__ */ jsxRuntimeExports.jsxs(ValueDiv, { children: [
@@ -104295,7 +108495,7 @@ ${citation.url}` : citation.url,
             }
           ) })) : void 0
         ] }),
-        content2.error ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1w.error, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+        content2.error ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1y.error, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
           "Error: ",
           content2.error
         ] }) }) : !listToolsResult && !webSearchResult ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-small"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExpandablePanel, { id: `${id}-output`, collapse: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -104352,7 +108552,7 @@ ${citation.url}` : citation.url,
         "div",
         {
           className: clsx(
-            styles$1w.argLabel,
+            styles$1y.argLabel,
             "text-style-secondary",
             "text-size-smaller"
           ),
@@ -104367,7 +108567,7 @@ ${citation.url}` : citation.url,
     const output = "_output_1wvgr_6";
     const textOutput = "_textOutput_1wvgr_10";
     const textCode = "_textCode_1wvgr_18";
-    const styles$1v = {
+    const styles$1x = {
       toolImage,
       output,
       textOutput,
@@ -104389,7 +108589,7 @@ ${citation.url}` : citation.url,
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
                   "img",
                   {
-                    className: clsx(styles$1v.toolImage),
+                    className: clsx(styles$1x.toolImage),
                     src: out.image
                   },
                   key2
@@ -104405,14 +108605,14 @@ ${citation.url}` : citation.url,
           /* @__PURE__ */ jsxRuntimeExports.jsx(ToolTextOutput, { text: String(output2) }, "tool-output-single")
         );
       }
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1v.output, className2), children: outputs });
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1x.output, className2), children: outputs });
     };
     const ToolTextOutput = ({ text: text2 }) => {
       if (isJson(text2)) {
         const obj = JSON.parse(text2);
         return /* @__PURE__ */ jsxRuntimeExports.jsx(JsonMessageContent, { id: `1-json`, json: obj });
       }
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1v.textOutput, "tool-output"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("sourceCode", styles$1v.textCode), children: text2.trim() }) });
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1x.textOutput, "tool-output"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("sourceCode", styles$1x.textCode), children: text2.trim() }) });
     };
     const isMessageContent = (content2) => {
       return typeof content2 === "object" && content2 !== null && "type" in content2 && typeof content2.type === "string";
@@ -104512,7 +108712,7 @@ ${citation.url}` : citation.url,
           } else if (!text2) {
             text2 = r2.summary || "Reasoning text not provided.";
           }
-          return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1x.reasoning, "text-size-small"), children: [
+          return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1z.reasoning, "text-size-small"), children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "div",
               {
@@ -104535,7 +108735,7 @@ ${citation.url}` : citation.url,
         render: (key2, content2, _isLast, _context) => {
           const c2 = content2;
           if (c2.image.startsWith("data:")) {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: c2.image, className: styles$1x.contentImage }, key2);
+            return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: c2.image, className: styles$1z.contentImage }, key2);
           } else {
             return /* @__PURE__ */ jsxRuntimeExports.jsx("code", { children: c2.image }, key2);
           }
@@ -104762,20 +108962,20 @@ ${citation.url}` : citation.url,
       }
     };
     const toolCallView = "_toolCallView_l6wae_1";
-    const styles$1u = {
+    const styles$1w = {
       toolCallView
     };
     const outputPre = "_outputPre_1jznn_1";
     const toolView = "_toolView_1jznn_7";
     const outputCode = "_outputCode_1jznn_15";
-    const styles$1t = {
+    const styles$1v = {
       outputPre,
       toolView,
       outputCode
     };
     const todoList = "_todoList_1t8rx_1";
     const inProgress = "_inProgress_1t8rx_9";
-    const styles$1s = {
+    const styles$1u = {
       todoList,
       inProgress
     };
@@ -104795,7 +108995,7 @@ ${citation.url}` : citation.url,
     };
     const TodoWriteInput = ({ contents: contents2, parentRef }) => {
       const todoItems = toToolTodos(contents2);
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: parentRef, className: clsx(styles$1s.todoList), children: todoItems.map((todo) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: parentRef, className: clsx(styles$1u.todoList), children: todoItems.map((todo) => {
         return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "i",
@@ -104810,9 +109010,9 @@ ${citation.url}` : citation.url,
             "span",
             {
               className: clsx(
-                styles$1s.todoItem,
+                styles$1u.todoItem,
                 "text-size-smallest",
-                todo.status === "in_progress" ? styles$1s.inProgress : void 0
+                todo.status === "in_progress" ? styles$1u.inProgress : void 0
               ),
               children: todo.content
             }
@@ -104832,7 +109032,7 @@ ${citation.url}` : citation.url,
           {
             markdown: toolCallView2.content,
             ref: sourceCodeRef,
-            className: clsx("tool-output", styles$1t.toolView, className2)
+            className: clsx("tool-output", styles$1v.toolView, className2)
           }
         );
       } else {
@@ -104862,8 +109062,8 @@ ${citation.url}` : citation.url,
         {
           className: clsx(
             "tool-output",
-            styles$1t.outputPre,
-            styles$1t.bottomMargin,
+            styles$1v.outputPre,
+            styles$1v.bottomMargin,
             className2
           ),
           children: /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -104873,7 +109073,7 @@ ${citation.url}` : citation.url,
                 "source-code",
                 "sourceCode",
                 contentType ? `language-${contentType}` : void 0,
-                styles$1t.outputCode
+                styles$1v.outputCode
               ),
               children: formattedContent
             }
@@ -104884,16 +109084,16 @@ ${citation.url}` : citation.url,
     const image = "_image_1vcac_1";
     const toolTitle = "_toolTitle_1vcac_6";
     const description = "_description_1vcac_10";
-    const styles$1r = {
+    const styles$1t = {
       image,
       toolTitle,
       description
     };
     const ToolTitle = ({ title: title2, description: description2 }) => {
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx("bi", "bi-tools", styles$1r.image) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("text-size-small", styles$1r.toolTitle), children: title2 }),
-        description2 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: clsx(styles$1r.description, "text-size-smallest"), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx("bi", "bi-tools", styles$1t.image) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("text-size-small", styles$1t.toolTitle), children: title2 }),
+        description2 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: clsx(styles$1t.description, "text-size-smallest"), children: [
           "- ",
           description2
         ] }) : void 0
@@ -104942,7 +109142,7 @@ ${citation.url}` : citation.url,
       });
       const contents2 = mode !== "compact" ? input2 : input2 || functionCall;
       const context = defaultContext();
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1u.toolCallView), children: [
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1w.toolCallView), children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
           mode !== "compact" && (!view || view.title) ? /* @__PURE__ */ jsxRuntimeExports.jsx(
             ToolTitle,
@@ -104995,7 +109195,7 @@ ${citation.url}` : citation.url,
     };
     const content$2 = "_content_1b2jp_1";
     const codeCompact = "_codeCompact_1b2jp_5";
-    const styles$1q = {
+    const styles$1s = {
       content: content$2,
       codeCompact
     };
@@ -105025,7 +109225,7 @@ ${citation.url}` : citation.url,
           }
           const resolvedToolOutput = resolveToolMessage(toolMessage);
           if (toolCallStyle === "compact") {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("code", { className: clsx(styles$1q.codeCompact), children: [
+            return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("code", { className: clsx(styles$1s.codeCompact), children: [
               "tool: ",
               functionCall
             ] }) }, `tool-call-${idx}`);
@@ -105048,7 +109248,7 @@ ${citation.url}` : citation.url,
           }
         });
         return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-          message2.content && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1q.content, children: /* @__PURE__ */ jsxRuntimeExports.jsx(MessageContent, { contents: message2.content, context }) }),
+          message2.content && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1s.content, children: /* @__PURE__ */ jsxRuntimeExports.jsx(MessageContent, { contents: message2.content, context }) }),
           toolCalls
         ] });
       } else {
@@ -105123,10 +109323,10 @@ ${citation.url}` : citation.url,
             className: clsx(
               message2.role,
               "text-size-base",
-              styles$1F.message,
-              message2.role === "system" ? styles$1F.systemRole : void 0,
-              message2.role === "user" ? styles$1F.userRole : void 0,
-              mouseOver ? styles$1F.hover : void 0
+              styles$1H.message,
+              message2.role === "system" ? styles$1H.systemRole : void 0,
+              message2.role === "user" ? styles$1H.userRole : void 0,
+              mouseOver ? styles$1H.hover : void 0
             ),
             onMouseEnter: () => setMouseOver(true),
             onMouseLeave: () => setMouseOver(false),
@@ -105135,8 +109335,8 @@ ${citation.url}` : citation.url,
                 "div",
                 {
                   className: clsx(
-                    styles$1F.messageGrid,
-                    message2.role === "tool" ? styles$1F.toolMessageGrid : void 0,
+                    styles$1H.messageGrid,
+                    message2.role === "tool" ? styles$1H.toolMessageGrid : void 0,
                     "text-style-label"
                   ),
                   children: [
@@ -105147,7 +109347,7 @@ ${citation.url}` : citation.url,
                       {
                         icon: ApplicationIcons.link,
                         value: toFullUrl(messageUrl),
-                        className: clsx(styles$1F.copyLink)
+                        className: clsx(styles$1H.copyLink)
                       }
                     ) : ""
                   ]
@@ -105157,8 +109357,8 @@ ${citation.url}` : citation.url,
                 "div",
                 {
                   className: clsx(
-                    styles$1F.messageContents,
-                    indented2 ? styles$1F.indented : void 0
+                    styles$1H.messageContents,
+                    indented2 ? styles$1H.indented : void 0
                   ),
                   children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -105183,7 +109383,7 @@ ${citation.url}` : citation.url,
                       LabeledValue,
                       {
                         label: "Metadata",
-                        className: clsx(styles$1F.metadataLabel, "text-size-smaller"),
+                        className: clsx(styles$1H.metadataLabel, "text-size-smaller"),
                         children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                           RecordTree,
                           {
@@ -105205,12 +109405,12 @@ ${citation.url}` : citation.url,
     const grid$a = "_grid_rmdrx_1";
     const number$1 = "_number_rmdrx_7";
     const user = "_user_rmdrx_11";
-    const container$k = "_container_rmdrx_16";
-    const styles$1p = {
+    const container$l = "_container_rmdrx_16";
+    const styles$1r = {
       grid: grid$a,
       number: number$1,
       user,
-      container: container$k
+      container: container$l
     };
     const ChatMessageRow = ({
       parentName,
@@ -105227,9 +109427,9 @@ ${citation.url}` : citation.url,
             "div",
             {
               className: clsx(
-                styles$1p.grid,
-                styles$1p.container,
-                highlightUserMessage && resolvedMessage.message.role === "user" ? styles$1p.user : void 0
+                styles$1r.grid,
+                styles$1r.container,
+                highlightUserMessage && resolvedMessage.message.role === "user" ? styles$1r.user : void 0
               ),
               children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -105238,7 +109438,7 @@ ${citation.url}` : citation.url,
                     className: clsx(
                       "text-size-smaller",
                       "text-style-secondary",
-                      styles$1p.number
+                      styles$1r.number
                     ),
                     children: number2
                   }
@@ -105264,9 +109464,9 @@ ${citation.url}` : citation.url,
           "div",
           {
             className: clsx(
-              styles$1p.container,
-              styles$1p.simple,
-              highlightUserMessage && resolvedMessage.message.role === "user" ? styles$1p.user : void 0
+              styles$1r.container,
+              styles$1r.simple,
+              highlightUserMessage && resolvedMessage.message.role === "user" ? styles$1r.user : void 0
             ),
             children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -105431,7 +109631,7 @@ ${citation.url}` : citation.url,
     };
     const grid$9 = "_grid_14885_1";
     const cell$2 = "_cell_14885_8";
-    const styles$1o = {
+    const styles$1q = {
       grid: grid$9,
       cell: cell$2
     };
@@ -105462,7 +109662,7 @@ ${citation.url}` : citation.url,
             {
               className: clsx(
                 `${baseId}-key`,
-                styles$1o.cell,
+                styles$1q.cell,
                 "text-style-label",
                 "text-style-secondary",
                 fontStyle
@@ -105470,7 +109670,7 @@ ${citation.url}` : citation.url,
               children: entry?.name
             }
           ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1o.value, `${baseId}-value`, fontStyle), children: entry && /* @__PURE__ */ jsxRuntimeExports.jsx(
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.value, `${baseId}-value`, fontStyle), children: entry && /* @__PURE__ */ jsxRuntimeExports.jsx(
             RenderedContent,
             {
               id: id2,
@@ -105480,7 +109680,7 @@ ${citation.url}` : citation.url,
                   MetaDataGrid,
                   {
                     id: id2,
-                    className: clsx(styles$1o.nested),
+                    className: clsx(styles$1q.nested),
                     entries: obj,
                     size,
                     plain
@@ -105491,7 +109691,7 @@ ${citation.url}` : citation.url,
           ) })
         ] }, `${baseId}-record-${index}`);
       });
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { id, className: clsx(className2, styles$1o.grid), style: style2, children: entryEls });
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { id, className: clsx(className2, styles$1q.grid), style: style2, children: entryEls });
     };
     const entryRecords = (entries) => {
       if (!entries) {
@@ -105509,7 +109709,7 @@ ${citation.url}` : citation.url,
     const summary$3 = "_summary_seqs2_6";
     const preWrap = "_preWrap_seqs2_10";
     const preCompact = "_preCompact_seqs2_15";
-    const styles$1n = {
+    const styles$1p = {
       query,
       summary: summary$3,
       preWrap,
@@ -105627,7 +109827,7 @@ ${citation.url}` : citation.url,
               };
             } else {
               return {
-                rendered: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1n.preWrap, styles$1n.preCompact), children: rendered })
+                rendered: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1p.preWrap, styles$1p.preCompact), children: rendered })
               };
             }
           }
@@ -105676,7 +109876,7 @@ ${citation.url}` : citation.url,
           render: (_id, entry, _options) => {
             const results = [];
             results.push(
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1n.query, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1p.query, children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.search }),
                 " ",
                 entry.value.query
@@ -105688,7 +109888,7 @@ ${citation.url}` : citation.url,
                   /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: result2.url, children: result2.url }) })
                 );
                 results.push(
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-smaller", styles$1n.summary), children: result2.summary })
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-smaller", styles$1p.summary), children: result2.summary })
                 );
               }
             );
@@ -105704,7 +109904,7 @@ ${citation.url}` : citation.url,
           },
           render: (_id, entry, _options) => {
             return {
-              rendered: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$1n.preWrap, children: entry.value })
+              rendered: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$1p.preWrap, children: entry.value })
             };
           }
         },
@@ -105790,7 +109990,7 @@ ${citation.url}` : citation.url,
     const green = "_green_1iagp_12";
     const red = "_red_1iagp_18";
     const orange = "_orange_1iagp_24";
-    const styles$1m = {
+    const styles$1o = {
       circle,
       green,
       red,
@@ -105831,22 +110031,22 @@ ${citation.url}` : citation.url,
             return /* @__PURE__ */ jsxRuntimeExports.jsx(
               "span",
               {
-                className: clsx("text-size-small", styles$1m.circle, styles$1m.green),
+                className: clsx("text-size-small", styles$1o.circle, styles$1o.green),
                 children: "C"
               }
             );
           } else if (score2 === "I") {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-size-small", styles$1m.circle, styles$1m.red), children: "I" });
+            return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-size-small", styles$1o.circle, styles$1o.red), children: "I" });
           } else if (score2 === "P") {
             return /* @__PURE__ */ jsxRuntimeExports.jsx(
               "span",
               {
-                className: clsx("text-size-small", styles$1m.circle, styles$1m.orange),
+                className: clsx("text-size-small", styles$1o.circle, styles$1o.orange),
                 children: "P"
               }
             );
           } else if (score2 === "N") {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-size-small", styles$1m.circle, styles$1m.red), children: "N" });
+            return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-size-small", styles$1o.circle, styles$1o.red), children: "N" });
           } else {
             return String(score2);
           }
@@ -108894,7 +113094,7 @@ categories: ${categories.join(" ")}`;
     };
     const flex = "_flex_1kye9_1";
     const label$9 = "_label_1kye9_5";
-    const styles$1l = {
+    const styles$1n = {
       flex,
       label: label$9
     };
@@ -108928,7 +113128,7 @@ categories: ${categories.join(" ")}`;
         },
         [setSort]
       );
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1l.flex, children: [
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1n.flex, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "span",
           {
@@ -108937,7 +113137,7 @@ categories: ${categories.join(" ")}`;
               "text-size-smaller",
               "text-style-label",
               "text-style-secondary",
-              styles$1l.label
+              styles$1n.label
             ),
             children: "Sort:"
           }
@@ -109011,9 +113211,9 @@ categories: ${categories.join(" ")}`;
             if (aScores.length === 0 || bScores.length === 0 || scoreDescriptors.length === 0) {
               return 0;
             }
-            return aScores.reduce((cmp, score2, index) => {
-              if (cmp !== 0) {
-                return cmp;
+            return aScores.reduce((cmp2, score2, index) => {
+              if (cmp2 !== 0) {
+                return cmp2;
               }
               return scoreDescriptors[index]?.compare(score2, bScores[index]);
             }, 0);
@@ -109022,9 +113222,9 @@ categories: ${categories.join(" ")}`;
             if (aScores.length === 0 || bScores.length === 0 || scoreDescriptors.length === 0) {
               return 0;
             }
-            return bScores.reduce((cmp, score2, index) => {
-              if (cmp !== 0) {
-                return cmp;
+            return bScores.reduce((cmp2, score2, index) => {
+              if (cmp2 !== 0) {
+                return cmp2;
               }
               return scoreDescriptors[index]?.compare(score2, aScores[index]);
             }, 0);
@@ -109094,36 +113294,36 @@ categories: ${categories.join(" ")}`;
     };
     const log$1 = createLogger("hooks");
     const useEvalSpec = () => {
-      const selectedLogSummary = useStore((state) => state.log.selectedLogSummary);
-      return selectedLogSummary?.eval;
+      const selectedLogDetails = useStore((state) => state.log.selectedLogDetails);
+      return selectedLogDetails?.eval;
     };
     const useRefreshLog = () => {
-      const setAppStatus = useStore((state) => state.appActions.setStatus);
+      const setLoading = useStore((state) => state.appActions.setLoading);
       const refreshLog = useStore((state) => state.logActions.refreshLog);
       const resetFiltering = useStore((state) => state.logActions.resetFiltering);
       return reactExports.useCallback(() => {
         try {
-          setAppStatus({ loading: true, error: void 0 });
+          setLoading(true);
           refreshLog();
           resetFiltering();
-          setAppStatus({ loading: false, error: void 0 });
+          setLoading(false);
         } catch (e) {
           console.log(e);
-          setAppStatus({ loading: false, error: e });
+          setLoading(false, e);
         }
-      }, [refreshLog, resetFiltering, setAppStatus]);
+      }, [refreshLog, resetFiltering, setLoading]);
     };
     const useSampleSummaries = () => {
-      const selectedLogSummary = useStore((state) => state.log.selectedLogSummary);
+      const selectedLogDetails = useStore((state) => state.log.selectedLogDetails);
       const pendingSampleSummaries = useStore(
         (state) => state.log.pendingSampleSummaries
       );
       return reactExports.useMemo(() => {
         return mergeSampleSummaries(
-          selectedLogSummary?.sampleSummaries || [],
+          selectedLogDetails?.sampleSummaries || [],
           pendingSampleSummaries?.samples || []
         );
-      }, [selectedLogSummary, pendingSampleSummaries]);
+      }, [selectedLogDetails, pendingSampleSummaries]);
     };
     const useTotalSampleCount = () => {
       const sampleSummaries = useSampleSummaries();
@@ -109132,15 +113332,15 @@ categories: ${categories.join(" ")}`;
       }, [sampleSummaries]);
     };
     const useSelectedScores = () => {
-      const selectedLogSummary = useStore((state) => state.log.selectedLogSummary);
+      const selectedLogDetails = useStore((state) => state.log.selectedLogDetails);
       const sampleSummaries = useSampleSummaries();
       const selected2 = useStore((state) => state.log.selectedScores);
       return reactExports.useMemo(() => {
         if (selected2 !== void 0) {
           return selected2;
-        } else if (selectedLogSummary) {
+        } else if (selectedLogDetails) {
           const defaultScorer = getDefaultScorer(
-            selectedLogSummary,
+            selectedLogDetails,
             sampleSummaries
           );
           if (defaultScorer) {
@@ -109148,18 +113348,18 @@ categories: ${categories.join(" ")}`;
           }
         }
         return [];
-      }, [selectedLogSummary, sampleSummaries, selected2]);
+      }, [selectedLogDetails, sampleSummaries, selected2]);
     };
     const useScores = () => {
-      const selectedLogSummary = useStore((state) => state.log.selectedLogSummary);
+      const selectedLogDetails = useStore((state) => state.log.selectedLogDetails);
       const sampleSummaries = useSampleSummaries();
       return reactExports.useMemo(() => {
-        if (!selectedLogSummary) {
+        if (!selectedLogDetails) {
           return [];
         }
-        const result2 = getAvailableScorers(selectedLogSummary, sampleSummaries) || [];
+        const result2 = getAvailableScorers(selectedLogDetails, sampleSummaries) || [];
         return result2;
-      }, [selectedLogSummary, sampleSummaries]);
+      }, [selectedLogDetails, sampleSummaries]);
     };
     const useEvalDescriptor = () => {
       const scores2 = useScores();
@@ -109212,11 +113412,11 @@ categories: ${categories.join(" ")}`;
       ]);
     };
     const useGroupBy = () => {
-      const selectedLogSummary = useStore((state) => state.log.selectedLogSummary);
+      const selectedLogDetails = useStore((state) => state.log.selectedLogDetails);
       const sort2 = useStore((state) => state.log.sort);
       const epoch = useStore((state) => state.log.epoch);
       return reactExports.useMemo(() => {
-        const epochs = selectedLogSummary?.eval?.config?.epochs || 1;
+        const epochs = selectedLogDetails?.eval?.config?.epochs || 1;
         if (epochs > 1) {
           if (byEpoch(sort2) || epoch !== "all") {
             return "epoch";
@@ -109225,7 +113425,7 @@ categories: ${categories.join(" ")}`;
           }
         }
         return "none";
-      }, [selectedLogSummary, sort2, epoch]);
+      }, [selectedLogDetails, sort2, epoch]);
     };
     const useGroupByOrder = () => {
       const sort2 = useStore((state) => state.log.sort);
@@ -109477,51 +113677,47 @@ categories: ${categories.join(" ")}`;
       };
     };
     const useLogs = () => {
-      const load2 = useStore((state) => state.logsActions.loadLogs);
-      const setLogs = useStore((state) => state.logsActions.setLogs);
-      const loadEvalSetInfo = useStore(
-        (state) => state.logsActions.loadEvalSetInfo
+      const syncLogs = useStore((state) => state.logsActions.syncLogs);
+      const syncEvalSetInfo = useStore(
+        (state) => state.logsActions.syncEvalSetInfo
       );
-      const setEvalSetInfo = useStore((state) => state.logsActions.setEvalSetInfo);
-      const setStatus = useStore((state) => state.appActions.setStatus);
+      const setLoading = useStore((state) => state.appActions.setLoading);
       const loadLogs = reactExports.useCallback(
         async (logPath) => {
           const exec2 = async () => {
-            setStatus({ loading: true, error: void 0 });
-            const logs = await load2();
-            setLogs(logs);
-            const setInfo = await loadEvalSetInfo(logPath);
-            setEvalSetInfo(setInfo);
-            setStatus({ loading: false, error: void 0 });
+            setLoading(true);
+            await syncLogs();
+            await syncEvalSetInfo(logPath);
+            setLoading(false);
           };
           exec2().catch((e) => {
             log$1.error("Error loading logs", e);
-            setStatus({ loading: false, error: e });
+            setLoading(false, e);
           });
         },
-        [load2, setLogs, setStatus]
+        [syncLogs, setLoading, syncEvalSetInfo]
       );
-      const storeLoadHeaders = useStore(
-        (state) => state.logsActions.loadLogOverviews
+      const syncLogPreviews = useStore(
+        (state) => state.logsActions.syncLogPreviews
       );
-      const existingHeaders = useStore((state) => state.logs.logOverviews);
-      const allLogFiles = useStore((state) => state.logs.logs.files);
-      const loadHeaders = reactExports.useCallback(
-        async (logFiles = allLogFiles) => {
-          await storeLoadHeaders(logFiles);
+      const logPreviews = useStore((state) => state.logs.logPreviews);
+      const allLogFiles = useStore((state) => state.logs.logs);
+      const loadLogOverviews = reactExports.useCallback(
+        async (logs = allLogFiles) => {
+          await syncLogPreviews(logs);
         },
-        [storeLoadHeaders, allLogFiles]
+        [syncLogPreviews, allLogFiles]
       );
-      const loadAllHeaders = reactExports.useCallback(async () => {
+      const loadAllLogOverviews = reactExports.useCallback(async () => {
         const logsToLoad = allLogFiles.filter((logFile) => {
-          const existingHeader = existingHeaders[logFile.name];
+          const existingHeader = logPreviews[logFile.name];
           return !existingHeader || existingHeader.status === "started";
         });
         if (logsToLoad.length > 0) {
-          await storeLoadHeaders(logsToLoad);
+          await loadLogOverviews(logsToLoad);
         }
-      }, [storeLoadHeaders, allLogFiles, existingHeaders]);
-      return { loadLogs, loadHeaders, loadAllHeaders };
+      }, [loadLogOverviews, allLogFiles, logPreviews]);
+      return { loadLogs, loadLogOverviews, loadAllLogOverviews };
     };
     const usePagination = (name2, defaultPageSize2) => {
       const page = useStore((state) => state.app.pagination[name2]?.page || 0);
@@ -109613,34 +113809,34 @@ categories: ${categories.join(" ")}`;
     };
     const log = createLogger("Client-Events");
     function useClientEvents() {
-      const refreshLogs = useStore((state) => state.logsActions.refreshLogs);
-      const logHeaders = useStore((state) => state.logs.logOverviews);
+      const syncLogs = useStore((state) => state.logsActions.syncLogs);
+      const logPreviews = useStore((state) => state.logs.logPreviews);
       const api2 = useStore((state) => state.api);
-      const { loadHeaders } = useLogs();
+      const { loadLogOverviews } = useLogs();
       const refreshCallback = reactExports.useCallback(
-        async (logFiles) => {
+        async (logs) => {
           log.debug("Refresh Log Files");
-          await refreshLogs();
+          await syncLogs();
           const toRefresh = [];
-          for (const logFile of logFiles) {
-            const header2 = logHeaders[logFile.name];
+          for (const log2 of logs) {
+            const header2 = logPreviews[log2.name];
             if (!header2 || header2.status === "started") {
-              toRefresh.push(logFile);
+              toRefresh.push(log2);
             }
           }
           if (toRefresh.length > 0) {
             log.debug(`Refreshing ${toRefresh.length} log files`, toRefresh);
-            await loadHeaders(toRefresh);
+            await loadLogOverviews(toRefresh);
           }
         },
-        [logHeaders, refreshLogs, loadHeaders]
+        [logPreviews, syncLogs, loadLogOverviews]
       );
       reactExports.useEffect(() => {
         clientEventsService.setRefreshCallback(refreshCallback);
       }, [refreshCallback]);
       const startPolling = reactExports.useCallback(
-        (logFiles) => {
-          clientEventsService.startPolling(logFiles, api2);
+        (logs) => {
+          clientEventsService.startPolling(logs, api2);
         },
         [api2]
       );
@@ -109668,7 +113864,7 @@ categories: ${categories.join(" ")}`;
     const right$2 = "_right_1fu9w_38";
     const toolbarButton = "_toolbarButton_1fu9w_47";
     const pathContainer = "_pathContainer_1fu9w_55";
-    const styles$1k = {
+    const styles$1m = {
       header: header$3,
       breadcrumbs,
       ellipsis,
@@ -109762,21 +113958,19 @@ categories: ${categories.join(" ")}`;
     };
     const Navbar = ({ children: children2 }) => {
       const { logPath } = useLogRouteParams();
-      const logs = useStore((state) => state.logs.logs);
-      const baseLogDir = dirname(logs.log_dir || "");
-      const baseLogName = basename(logs.log_dir || "");
+      const logDir2 = useStore((state) => state.logs.logDir);
+      const baseLogDir = dirname(logDir2 || "");
+      const baseLogName = basename(logDir2 || "");
       const pathContainerRef = reactExports.useRef(null);
-      const backUrl = logUrl(
-        ensureTrailingSlash(dirname(logPath || "")),
-        logs.log_dir
-      );
+      const { setPage } = usePagination(kLogsPaginationId, kDefaultPageSize);
+      const backUrl = logUrl(ensureTrailingSlash(dirname(logPath || "")), logDir2);
       const segments = reactExports.useMemo(() => {
         const pathSegments = logPath ? logPath.split("/") : [];
         const dirSegments = [];
         const currentSegment = [];
         for (const pathSegment of pathSegments) {
           currentSegment.push(pathSegment);
-          const segmentUrl = logUrl(currentSegment.join("/"), logs.log_dir);
+          const segmentUrl = logUrl(currentSegment.join("/"), logDir2);
           dirSegments.push({
             text: pathSegment,
             url: segmentUrl
@@ -109784,10 +113978,10 @@ categories: ${categories.join(" ")}`;
         }
         return [
           { text: prettyDirUri(baseLogDir) },
-          { text: baseLogName, url: logUrl("", logs.log_dir) },
+          { text: baseLogName, url: logUrl("", logDir2) },
           ...dirSegments
         ];
-      }, [baseLogDir, baseLogName, logPath, logs.log_dir]);
+      }, [baseLogDir, baseLogName, logPath, logDir2]);
       const { visibleSegments, showEllipsis } = useBreadcrumbTruncation(
         segments,
         pathContainerRef
@@ -109795,40 +113989,43 @@ categories: ${categories.join(" ")}`;
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "nav",
         {
-          className: clsx("text-size-smaller", "header-nav", styles$1k.header),
+          className: clsx("text-size-smaller", "header-nav", styles$1m.header),
           "aria-label": "breadcrumb",
           "data-unsearchable": true,
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1k.left), children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: backUrl, className: clsx(styles$1k.toolbarButton), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.navbar.back) }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1m.left), children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: backUrl, className: clsx(styles$1m.toolbarButton), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.navbar.back) }) }),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 Link,
                 {
-                  to: logUrl("", logs.log_dir),
-                  className: clsx(styles$1k.toolbarButton),
+                  to: logUrl("", logDir2),
+                  className: clsx(styles$1m.toolbarButton),
+                  onClick: () => {
+                    setPage(0);
+                  },
                   children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.navbar.home) })
                 }
               ),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1k.pathContainer), ref: pathContainerRef, children: logs.log_dir ? /* @__PURE__ */ jsxRuntimeExports.jsx("ol", { className: clsx("breadcrumb", styles$1k.breadcrumbs), children: visibleSegments?.map((segment, index) => {
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1m.pathContainer), ref: pathContainerRef, children: logDir2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("ol", { className: clsx("breadcrumb", styles$1m.breadcrumbs), children: visibleSegments?.map((segment, index) => {
                 const isLast = index === visibleSegments.length - 1;
                 const shouldShowEllipsis = showEllipsis && index === 1 && visibleSegments.length >= 2;
                 return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-                  shouldShowEllipsis && /* @__PURE__ */ jsxRuntimeExports.jsx("li", { className: clsx("breadcrumb-item", styles$1k.ellipsis), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "..." }) }),
+                  shouldShowEllipsis && /* @__PURE__ */ jsxRuntimeExports.jsx("li", { className: clsx("breadcrumb-item", styles$1m.ellipsis), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "..." }) }),
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
                     "li",
                     {
                       className: clsx(
-                        styles$1k.pathLink,
+                        styles$1m.pathLink,
                         "breadcrumb-item",
                         isLast ? "active" : void 0
                       ),
-                      children: segment.url ? /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: segment.url, children: segment.text }) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx(styles$1k.pathSegment), children: segment.text })
+                      children: segment.url ? /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: segment.url, children: segment.text }) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx(styles$1m.pathSegment), children: segment.text })
                     }
                   )
                 ] }, index);
               }) }) : "" })
             ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1k.right), children: children2 })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1m.right), children: children2 })
           ]
         }
       );
@@ -112831,7 +117028,7 @@ categories: ${categories.join(" ")}`;
     const selectedRow = "_selectedRow_1bo5m_107";
     const bodyCell = "_bodyCell_1bo5m_117";
     const emptyMessage = "_emptyMessage_1bo5m_129";
-    const styles$1j = {
+    const styles$1l = {
       gridContainer,
       grid: grid$8,
       headerRow,
@@ -112847,15 +117044,15 @@ categories: ${categories.join(" ")}`;
       emptyMessage
     };
     const dateCell = "_dateCell_1f2i9_1";
-    const styles$1i = {
+    const styles$1k = {
       dateCell
     };
     const emptyCell = "_emptyCell_17jto_1";
-    const styles$1h = {
+    const styles$1j = {
       emptyCell
     };
     const EmptyCell = () => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1h.emptyCell, children: "-" });
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1j.emptyCell, children: "-" });
     };
     const completedDateColumn = () => {
       return columnHelper.accessor(
@@ -112883,7 +117080,7 @@ categories: ${categories.join(" ")}`;
             if (!timeStr) {
               return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
             }
-            return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1i.dateCell, children: timeStr });
+            return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1k.dateCell, children: timeStr });
           },
           sortingFn: (rowA, rowB) => {
             const itemA = rowA.original;
@@ -112905,11 +117102,11 @@ categories: ${categories.join(" ")}`;
     };
     const itemCompletedAt = (item2) => {
       if (item2.type !== "file") return void 0;
-      return item2.logOverview?.completed_at;
+      return item2.logPreview?.completed_at;
     };
     const nameCell$1 = "_nameCell_arm8o_1";
     const fileLink = "_fileLink_arm8o_8";
-    const styles$1g = {
+    const styles$1i = {
       nameCell: nameCell$1,
       fileLink
     };
@@ -112923,7 +117120,7 @@ categories: ${categories.join(" ")}`;
             return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
           }
           let value2 = basename(item2.name);
-          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1g.nameCell, children: item2.url ? /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: item2.url, className: styles$1g.fileLink, children: value2 }) : value2 });
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1i.nameCell, children: item2.url ? /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: item2.url, className: styles$1i.fileLink, children: value2 }) : value2 });
         },
         enableSorting: true,
         enableGlobalFilter: true,
@@ -112943,14 +117140,14 @@ categories: ${categories.join(" ")}`;
       });
     };
     const iconCell = "_iconCell_1jobp_1";
-    const styles$1f = {
+    const styles$1h = {
       iconCell
     };
     const iconColumn = () => {
       return columnHelper.accessor("type", {
         id: "icon",
         header: "",
-        cell: (info) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1f.iconCell, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        cell: (info) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1h.iconCell, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           "i",
           {
             className: clsx(
@@ -112978,24 +117175,24 @@ categories: ${categories.join(" ")}`;
       });
     };
     const modelCell = "_modelCell_1lo5p_1";
-    const styles$1e = {
+    const styles$1g = {
       modelCell
     };
     const modelColumn = () => {
       return columnHelper.accessor(
         (row2) => {
           if (row2.type !== "file") return "";
-          return row2.logOverview?.model || "";
+          return row2.logPreview?.model || "";
         },
         {
           id: "model",
           header: "Model",
           cell: (info) => {
             const item2 = info.row.original;
-            if (item2.type === "file" && item2.logOverview?.model !== void 0) {
-              return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1e.modelCell, children: item2.logOverview.model });
+            if (item2.type === "file" && item2.logPreview?.model !== void 0) {
+              return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1g.modelCell, children: item2.logPreview.model });
             } else if (item2.type === "pending-task" && item2.model) {
-              return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1e.modelCell, children: item2.model });
+              return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1g.modelCell, children: item2.model });
             }
             return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
           },
@@ -113009,7 +117206,7 @@ categories: ${categories.join(" ")}`;
       );
     };
     const scoreCell = "_scoreCell_1xqe0_1";
-    const styles$1d = {
+    const styles$1f = {
       scoreCell
     };
     const scoreColumn = () => {
@@ -113026,7 +117223,7 @@ categories: ${categories.join(" ")}`;
             if (metric === void 0) {
               return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
             }
-            return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1d.scoreCell, children: formatPrettyDecimal(metric.value) });
+            return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1f.scoreCell, children: formatPrettyDecimal(metric.value) });
           },
           sortingFn: (rowA, rowB) => {
             const itemA = rowA.original;
@@ -113051,13 +117248,13 @@ categories: ${categories.join(" ")}`;
       if (item2.type !== "file") {
         return void 0;
       }
-      return item2.logOverview?.primary_metric;
+      return item2.logPreview?.primary_metric;
     };
     const error$1 = "_error_14ftq_1";
     const started = "_started_14ftq_5";
     const success = "_success_14ftq_9";
     const cancelled = "_cancelled_14ftq_13";
-    const styles$1c = {
+    const styles$1e = {
       error: error$1,
       started,
       success,
@@ -113074,8 +117271,8 @@ categories: ${categories.join(" ")}`;
             return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
           }
           const icon2 = item2.type === "pending-task" ? ApplicationIcons.pendingTask : status2 === "error" ? ApplicationIcons.error : status2 === "started" ? ApplicationIcons.running : status2 === "cancelled" ? ApplicationIcons.cancelled : ApplicationIcons.success;
-          const clz = item2.type === "pending-task" ? styles$1c.started : status2 === "error" ? styles$1c.error : status2 === "started" ? styles$1c.started : status2 === "cancelled" ? styles$1c.cancelled : styles$1c.success;
-          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1c.statusCell, children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, clz) }) });
+          const clz = item2.type === "pending-task" ? styles$1e.started : status2 === "error" ? styles$1e.error : status2 === "started" ? styles$1e.started : status2 === "cancelled" ? styles$1e.cancelled : styles$1e.success;
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1e.statusCell, children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, clz) }) });
         },
         sortingFn: (rowA, rowB) => {
           const itemA = rowA.original;
@@ -113102,7 +117299,7 @@ categories: ${categories.join(" ")}`;
       if (item2.type !== "file") {
         return void 0;
       }
-      const header2 = item2.logOverview;
+      const header2 = item2.logPreview;
       return header2?.status;
     };
     const itemStatusLabel = (item2) => {
@@ -113139,7 +117336,7 @@ categories: ${categories.join(" ")}`;
     };
     const nameCell = "_nameCell_cjd7p_1";
     const logLink = "_logLink_cjd7p_8";
-    const styles$1b = {
+    const styles$1d = {
       nameCell,
       logLink
     };
@@ -113150,7 +117347,7 @@ categories: ${categories.join(" ")}`;
         cell: (info) => {
           const item2 = info.row.original;
           let value2 = itemName(item2);
-          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1b.nameCell, children: item2.url ? /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: item2.url, className: styles$1b.logLink, title: item2.name, children: value2 }) : value2 });
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1d.nameCell, children: item2.url ? /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: item2.url, className: styles$1d.logLink, title: item2.name, children: value2 }) : value2 });
         },
         enableSorting: true,
         enableGlobalFilter: true,
@@ -113169,7 +117366,7 @@ categories: ${categories.join(" ")}`;
     const itemName = (item2) => {
       let value2 = item2.name;
       if (item2.type === "file") {
-        return item2.logOverview?.task || parseLogFileName(item2.name).name;
+        return item2.logPreview?.task || parseLogFileName(item2.name).name;
       }
       return value2;
     };
@@ -113202,17 +117399,16 @@ categories: ${categories.join(" ")}`;
           selectedRowIndex,
           setSelectedRowIndex
         } = useLogsListing();
-        const { loadHeaders } = useLogs();
+        const { loadLogOverviews, loadAllLogOverviews } = useLogs();
         const { page, itemsPerPage, setPage } = usePagination(
           kLogsPaginationId,
           kDefaultPageSize
         );
-        const headersLoading = useStore((state) => state.logs.logOverviewsLoading);
         const loading = useStore((state) => state.app.status.loading);
         const setWatchedLogs = useStore(
           (state) => state.logsActions.setWatchedLogs
         );
-        const logHeaders = useStore((state) => state.logs.logOverviews);
+        const logPreviews = useStore((state) => state.logs.logPreviews);
         const sortingRef = reactExports.useRef(sorting);
         const navigate = useNavigate();
         const gridRef = reactExports.useRef(null);
@@ -113222,14 +117418,14 @@ categories: ${categories.join(" ")}`;
           }
         }));
         const logFiles = reactExports.useMemo(() => {
-          return items.filter((item2) => item2.type === "file").map((item2) => item2.logFile).filter((file) => file !== void 0);
+          return items.filter((item2) => item2.type === "file").map((item2) => item2.log).filter((file) => file !== void 0);
         }, [items]);
         const loadAllHeadersForItems = reactExports.useCallback(
           async (files) => {
-            await loadHeaders(files);
+            await loadAllLogOverviews();
             setWatchedLogs(files);
           },
-          [loadHeaders, setWatchedLogs]
+          [loadAllLogOverviews, setWatchedLogs]
         );
         reactExports.useEffect(() => {
           sortingRef.current = sorting;
@@ -113244,7 +117440,7 @@ categories: ${categories.join(" ")}`;
           if (currentSort) {
             setSorting([...sortingRef.current || []]);
           }
-        }, [logHeaders]);
+        }, [logPreviews]);
         const columns = reactExports.useMemo(() => {
           return getColumns();
         }, []);
@@ -113319,17 +117515,24 @@ categories: ${categories.join(" ")}`;
             const fileItems = currentPageItems.filter(
               (item2) => item2.type === "file"
             );
-            const logFiles2 = fileItems.map((item2) => item2.logFile).filter((file) => file !== void 0);
-            const filesToLoad = logFiles2.filter((file) => !logHeaders[file.name]);
+            const logFiles2 = fileItems.map((item2) => item2.log).filter((file) => file !== void 0);
+            const filesToLoad = logFiles2.filter((file) => !logPreviews[file.name]);
             if (filesToLoad.length > 0) {
-              await loadHeaders(filesToLoad);
+              await loadLogOverviews(filesToLoad);
             }
             setWatchedLogs(logFiles2);
           };
           exec2();
-        }, [page, itemsPerPage, items, loadHeaders, setWatchedLogs, logHeaders]);
+        }, [
+          page,
+          itemsPerPage,
+          items,
+          loadLogOverviews,
+          setWatchedLogs,
+          logPreviews
+        ]);
         const placeholderText = reactExports.useMemo(() => {
-          if (headersLoading || loading) {
+          if (loading) {
             if (globalFilter) {
               return "searching...";
             } else {
@@ -113342,7 +117545,7 @@ categories: ${categories.join(" ")}`;
               return "no logs";
             }
           }
-        }, [headersLoading, loading, globalFilter]);
+        }, [loading, globalFilter]);
         const handleKeyDown = reactExports.useCallback(
           (e) => {
             const rowCount = table2.getRowModel().rows.length;
@@ -113417,15 +117620,15 @@ categories: ${categories.join(" ")}`;
           "div",
           {
             ref: gridRef,
-            className: styles$1j.gridContainer,
+            className: styles$1l.gridContainer,
             onKeyDown: handleKeyDown,
             tabIndex: 0,
             role: "grid",
-            children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1j.grid, children: [
+            children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1l.grid, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "div",
                 {
-                  className: styles$1j.headerRow,
+                  className: styles$1l.headerRow,
                   style: {
                     gridTemplateColumns: table2.getHeaderGroups()[0]?.headers.map((header2) => `${header2.getSize()}px`).join(" ") || "40px 0.5fr 0.25fr 0.25fr 0.1fr"
                   },
@@ -113433,9 +117636,9 @@ categories: ${categories.join(" ")}`;
                     (headerGroup) => headerGroup.headers.map((header2) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
                       "div",
                       {
-                        className: clsx(styles$1j.headerCell, {
-                          [styles$1j.sortable]: header2.column.getCanSort(),
-                          [styles$1j.resizing]: header2.column.getIsResizing()
+                        className: clsx(styles$1l.headerCell, {
+                          [styles$1l.sortable]: header2.column.getCanSort(),
+                          [styles$1l.resizing]: header2.column.getIsResizing()
                         }),
                         onClick: (event) => {
                           header2.column.getToggleSortingHandler()?.(event);
@@ -113449,7 +117652,7 @@ categories: ${categories.join(" ")}`;
                             header2.column.columnDef.header,
                             header2.getContext()
                           ),
-                          header2.column.getCanSort() && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1j.sortIndicator, children: {
+                          header2.column.getCanSort() && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1l.sortIndicator, children: {
                             asc: " ↑",
                             desc: " ↓"
                           }[header2.column.getIsSorted()] ?? "" }),
@@ -113467,8 +117670,8 @@ categories: ${categories.join(" ")}`;
                               onClick: (e) => {
                                 e.stopPropagation();
                               },
-                              className: clsx(styles$1j.resizer, {
-                                [styles$1j.isResizing]: header2.column.getIsResizing()
+                              className: clsx(styles$1l.resizer, {
+                                [styles$1l.isResizing]: header2.column.getIsResizing()
                               })
                             }
                           )
@@ -113479,13 +117682,13 @@ categories: ${categories.join(" ")}`;
                   )
                 }
               ),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1j.bodyContainer, children: [
-                table2.getRowModel().rows.length === 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1j.emptyMessage, children: placeholderText }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1l.bodyContainer, children: [
+                table2.getRowModel().rows.length === 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1l.emptyMessage, children: placeholderText }),
                 table2.getRowModel().rows.map((row2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
                   "div",
                   {
-                    className: clsx(styles$1j.bodyRow, {
-                      [styles$1j.selectedRow]: selectedRowIndex === index
+                    className: clsx(styles$1l.bodyRow, {
+                      [styles$1l.selectedRow]: selectedRowIndex === index
                     }),
                     style: {
                       gridTemplateColumns: row2.getVisibleCells().map((cell2) => `${cell2.column.getSize()}px`).join(" ")
@@ -113496,8 +117699,8 @@ categories: ${categories.join(" ")}`;
                       "div",
                       {
                         className: clsx(
-                          styles$1j.bodyCell,
-                          styles$1j[`${cell2.column.id}Cell`]
+                          styles$1l.bodyCell,
+                          styles$1l[`${cell2.column.id}Cell`]
                         ),
                         style: {
                           width: cell2.column.getSize()
@@ -113523,7 +117726,7 @@ categories: ${categories.join(" ")}`;
     const right$1 = "_right_14uod_30";
     const left$1 = "_left_14uod_39";
     const center$1 = "_center_14uod_48";
-    const styles$1a = {
+    const styles$1c = {
       footer: footer$1,
       spinnerContainer: spinnerContainer$1,
       spinner: spinner$2,
@@ -113534,7 +117737,7 @@ categories: ${categories.join(" ")}`;
     };
     const pager = "_pager_jzegk_1";
     const item$3 = "_item_jzegk_11";
-    const styles$19 = {
+    const styles$1b = {
       pager,
       item: item$3
     };
@@ -113576,8 +117779,8 @@ categories: ${categories.join(" ")}`;
         return segments2;
       };
       const segments = generatePaginationSegments();
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("nav", { "aria-label": "Log Pagination", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { className: clsx("pagination", styles$19.pager), children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("li", { className: clsx(currentPage === 0 ? "disabled" : "", styles$19.item), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("nav", { "aria-label": "Log Pagination", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { className: clsx("pagination", styles$1b.pager), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("li", { className: clsx(currentPage === 0 ? "disabled" : "", styles$1b.item), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           "a",
           {
             className: clsx("page-link"),
@@ -113595,7 +117798,7 @@ categories: ${categories.join(" ")}`;
             className: clsx(
               segment.type === "page" && segment.page === currentPage ? "active" : void 0,
               segment.type === "ellipsis" ? "disabled" : void 0,
-              styles$19.item
+              styles$1b.item
             ),
             children: /* @__PURE__ */ jsxRuntimeExports.jsx(
               "a",
@@ -113617,7 +117820,7 @@ categories: ${categories.join(" ")}`;
           {
             className: clsx(
               currentPage + 1 >= pageCount ? "disabled" : "",
-              styles$19.item
+              styles$1b.item
             ),
             children: /* @__PURE__ */ jsxRuntimeExports.jsx(
               "a",
@@ -113653,12 +117856,12 @@ categories: ${categories.join(" ")}`;
       );
       const startItem = effectiveItemCount > 0 ? currentPage * itemsPerPage + 1 : 0;
       const endItem = startItem + pageItemCount - 1;
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-smaller", styles$1a.footer), children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1a.left), children: progressText ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1a.spinnerContainer), children: [
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-smaller", styles$1c.footer), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1c.left), children: progressText ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1c.spinnerContainer), children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "div",
             {
-              className: clsx("spinner-border", styles$1a.spinner),
+              className: clsx("spinner-border", styles$1c.spinner),
               role: "status",
               children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: clsx("visually-hidden"), children: [
                 progressText,
@@ -113666,23 +117869,23 @@ categories: ${categories.join(" ")}`;
               ] })
             }
           ),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-style-secondary", styles$1a.label), children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-style-secondary", styles$1c.label), children: [
             progressText,
             "..."
           ] })
         ] }) : void 0 }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1a.center), children: /* @__PURE__ */ jsxRuntimeExports.jsx(LogPager, { itemCount: effectiveItemCount }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1a.right), children: progressBar || /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: effectiveItemCount === 0 ? "" : filteredCount !== void 0 && filteredCount !== itemCount ? `${startItem} - ${endItem} / ${effectiveItemCount} (${itemCount} total)` : `${startItem} - ${endItem} / ${effectiveItemCount}` }) })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1c.center), children: /* @__PURE__ */ jsxRuntimeExports.jsx(LogPager, { itemCount: effectiveItemCount }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1c.right), children: progressBar || /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: effectiveItemCount === 0 ? "" : filteredCount !== void 0 && filteredCount !== itemCount ? `${startItem} - ${endItem} / ${effectiveItemCount} (${itemCount} total)` : `${startItem} - ${endItem} / ${effectiveItemCount}` }) })
       ] });
     };
-    const container$j = "_container_e1pcq_1";
+    const container$k = "_container_e1pcq_1";
     const input$1 = "_input_e1pcq_16";
     const withIcon = "_withIcon_e1pcq_23";
     const icon$3 = "_icon_e1pcq_27";
     const clearText = "_clearText_e1pcq_31";
     const hidden$2 = "_hidden_e1pcq_40";
-    const styles$18 = {
-      container: container$j,
+    const styles$1a = {
+      container: container$k,
       input: input$1,
       withIcon,
       icon: icon$3,
@@ -113695,12 +117898,12 @@ categories: ${categories.join(" ")}`;
           "div",
           {
             className: clsx(
-              styles$18.container,
+              styles$1a.container,
               className2,
-              icon2 ? styles$18.withIcon : ""
+              icon2 ? styles$1a.withIcon : ""
             ),
             children: [
-              icon2 && /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, styles$18.icon) }),
+              icon2 && /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, styles$1a.icon) }),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "input",
                 {
@@ -113709,7 +117912,7 @@ categories: ${categories.join(" ")}`;
                   onChange,
                   ref,
                   placeholder,
-                  className: clsx(styles$18.input),
+                  className: clsx(styles$1a.input),
                   onFocus
                 }
               ),
@@ -113717,8 +117920,8 @@ categories: ${categories.join(" ")}`;
                 "i",
                 {
                   className: clsx(
-                    styles$18.clearText,
-                    value2 === "" ? styles$18.hidden : "",
+                    styles$1a.clearText,
+                    value2 === "" ? styles$1a.hidden : "",
                     ApplicationIcons["clear-text"]
                   ),
                   onClick: () => {
@@ -113737,7 +117940,7 @@ categories: ${categories.join(" ")}`;
       }
     );
     const filterInput = "_filterInput_gv8bt_1";
-    const styles$17 = {
+    const styles$19 = {
       filterInput
     };
     const LogsFilterInput = reactExports.forwardRef(
@@ -113762,2771 +117965,42 @@ categories: ${categories.join(" ")}`;
               e.target.select();
             },
             placeholder: "Filter...",
-            className: clsx(styles$17.filterInput)
+            className: clsx(styles$19.filterInput)
           }
         );
       }
     );
     const panel$3 = "_panel_18nhs_1";
     const list = "_list_18nhs_8";
-    const styles$16 = {
+    const styles$18 = {
       panel: panel$3,
       list
     };
-    const rootName = (relativePath) => {
-      const parts = relativePath.split("/");
-      if (parts.length === 0) {
-        return "";
-      }
-      return parts[0];
+    const button$1 = "_button_1p8t5_1";
+    const styles$17 = {
+      button: button$1
     };
-    const kLogsPaginationId = "logs-list-pagination";
-    const kDefaultPageSize = 30;
-    const LogsPanel = ({ maybeShowSingleLog }) => {
-      const loading = useStore((state) => state.app.status.loading);
-      const { loadLogs } = useLogs();
-      const logs = useStore((state) => state.logs.logs);
-      const evalSet = useStore((state) => state.logs.evalSet);
-      const logHeaders = useStore((state) => state.logs.logOverviews);
-      const headersLoading = useStore((state) => state.logs.logOverviewsLoading);
-      const watchedLogs = useStore((state) => state.logs.listing.watchedLogs);
-      const navigate = useNavigate();
-      const { setPage } = usePagination(kLogsPaginationId, kDefaultPageSize);
-      const filterRef = reactExports.useRef(null);
-      const gridRef = reactExports.useRef(null);
-      const { logPath } = useLogRouteParams();
-      const currentDir = join(logPath || "", logs.log_dir);
-      const { startPolling, stopPolling } = useClientEvents();
-      const { setDocumentTitle } = useDocumentTitle();
-      reactExports.useEffect(() => {
-        setDocumentTitle({
-          logDir: logs.log_dir
-        });
-      }, [setDocumentTitle, logs.log_dir]);
-      const previousWatchedLogs = reactExports.useRef(void 0);
-      reactExports.useEffect(() => {
-        const current2 = watchedLogs?.map((log2) => log2.name).sort().join(",") || "";
-        const previous = previousWatchedLogs.current === void 0 ? void 0 : previousWatchedLogs.current?.map((log2) => log2.name).sort().join(",") || "";
-        if (current2 !== previous) {
-          stopPolling();
-          if (watchedLogs !== void 0) {
-            startPolling(watchedLogs);
-          }
-          previousWatchedLogs.current = watchedLogs;
-        }
-      }, [watchedLogs]);
-      const logItems = reactExports.useMemo(() => {
-        const logItems2 = [];
-        const processedFolders = /* @__PURE__ */ new Set();
-        const existingLogTaskIds = /* @__PURE__ */ new Set();
-        for (const logFile of logs.files) {
-          if (logFile.task_id) {
-            existingLogTaskIds.add(logFile.task_id);
-          }
-          const name2 = logFile.name;
-          const cleanDir = currentDir.endsWith("/") ? currentDir.slice(0, -1) : currentDir;
-          const dirWithSlash = !currentDir.endsWith("/") ? currentDir + "/" : currentDir;
-          if (isInDirectory(name2, cleanDir)) {
-            const dirName = directoryRelativeUrl(currentDir, logs.log_dir);
-            const relativePath = directoryRelativeUrl(name2, currentDir);
-            const fileOrFolderName = decodeURIComponent(rootName(relativePath));
-            const path = join(
-              decodeURIComponent(relativePath),
-              decodeURIComponent(dirName)
-            );
-            logItems2.push({
-              id: fileOrFolderName,
-              name: fileOrFolderName,
-              type: "file",
-              url: logUrl(path, logs.log_dir),
-              logFile,
-              logOverview: logHeaders[logFile.name]
-            });
-          } else if (name2.startsWith(dirWithSlash)) {
-            const relativePath = directoryRelativeUrl(name2, currentDir);
-            const dirName = decodeURIComponent(rootName(relativePath));
-            const currentDirRelative = directoryRelativeUrl(
-              currentDir,
-              logs.log_dir
-            );
-            const url = join(dirName, decodeURIComponent(currentDirRelative));
-            if (!processedFolders.has(dirName)) {
-              logItems2.push({
-                id: dirName,
-                name: dirName,
-                type: "folder",
-                url: logUrl(url, logs.log_dir),
-                itemCount: logs.files.filter(
-                  (file) => file.name.startsWith(dirname(name2))
-                ).length
-              });
-              processedFolders.add(dirName);
-            }
-          }
-        }
-        const collapsedLogItems = collapseLogItems(evalSet, logItems2);
-        return appendPendingItems(evalSet, existingLogTaskIds, collapsedLogItems);
-      }, [logPath, logs.files, logHeaders, evalSet]);
-      const progress2 = reactExports.useMemo(() => {
-        let pending = 0;
-        let total = 0;
-        for (const item2 of logItems) {
-          if (item2.type === "file" || item2.type === "pending-task") {
-            total += 1;
-            if (item2.type === "pending-task" || item2.logOverview?.status === "started") {
-              pending += 1;
-            }
-          }
-        }
-        return {
-          complete: total - pending,
-          total
-        };
-      }, [logItems]);
-      reactExports.useEffect(() => {
-        const exec2 = async () => {
-          await loadLogs(logPath);
-        };
-        exec2();
-      }, [loadLogs, logPath]);
-      reactExports.useEffect(() => {
-        setPage(0);
-      }, [currentDir]);
-      reactExports.useEffect(() => {
-        if (maybeShowSingleLog && logItems.length === 1) {
-          const onlyItem = logItems[0];
-          if (onlyItem.url) {
-            navigate(onlyItem.url);
-          }
-        }
-      }, [logItems, maybeShowSingleLog]);
-      function handleKeyDown(e) {
-        if (e.key === "f" && (e.metaKey || e.ctrlKey)) {
-          e.preventDefault();
-          filterRef.current?.focus();
-        } else if (e.key === "Escape" && document.activeElement === filterRef.current) {
-          e.preventDefault();
-          gridRef.current?.focus();
-        }
-      }
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        "div",
-        {
-          className: clsx(styles$16.panel),
-          onKeyDown: (e) => {
-            handleKeyDown(e);
-          },
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Navbar, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(LogsFilterInput, { ref: filterRef }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(ActivityBar, { animating: loading || headersLoading }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.list, "text-size-smaller"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(LogListGrid, { ref: gridRef, items: logItems }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              LogListFooter,
-              {
-                logDir: currentDir,
-                itemCount: logItems.length,
-                progressText: loading ? "Loading logs" : headersLoading ? "Loading data" : void 0,
-                progressBar: progress2.total !== progress2.complete ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  ProgressBar,
-                  {
-                    min: 0,
-                    max: progress2.total,
-                    value: progress2.complete,
-                    width: "100px"
-                  }
-                ) : void 0
-              }
-            )
-          ]
-        }
-      );
-    };
-    const collapseLogItems = (evalSet, logItems) => {
-      if (!evalSet) {
-        return logItems;
-      }
-      const taskIdToItems = /* @__PURE__ */ new Map();
-      for (const item2 of logItems) {
-        if (item2.type === "file" && item2.logFile.task_id) {
-          const taskId = item2.logFile.task_id;
-          if (!taskIdToItems.has(taskId)) {
-            taskIdToItems.set(taskId, []);
-          }
-          taskIdToItems.get(taskId).push(item2);
-        } else if (item2.type === "folder" || item2.type === "file") ;
-      }
-      const selectedItems = /* @__PURE__ */ new Map();
-      for (const [taskId, items] of taskIdToItems) {
-        let bestItem = items[0];
-        for (const item2 of items) {
-          const currentStatus = item2.logOverview?.status;
-          const bestStatus = bestItem.logOverview?.status;
-          if (currentStatus === "started" && bestStatus !== "started") {
-            bestItem = item2;
-          } else if (currentStatus === "success" && bestStatus === "error") {
-            bestItem = item2;
-          } else if (currentStatus === bestStatus) {
-            bestItem = item2;
-          }
-        }
-        selectedItems.set(taskId, bestItem);
-      }
-      const collapsedLogItems = [];
-      const processedTaskIds = /* @__PURE__ */ new Set();
-      for (const item2 of logItems) {
-        if (item2.type === "file" && item2.logFile.task_id) {
-          const taskId = item2.logFile.task_id;
-          if (!processedTaskIds.has(taskId)) {
-            const selectedItem = selectedItems.get(taskId);
-            if (selectedItem) {
-              collapsedLogItems.push(selectedItem);
-            }
-            processedTaskIds.add(taskId);
-          }
-        } else {
-          collapsedLogItems.push(item2);
-        }
-      }
-      return collapsedLogItems;
-    };
-    const appendPendingItems = (evalSet, tasksWithLogFiles, collapsedLogItems) => {
-      const pendingTasks = new Array();
-      for (const task of evalSet?.tasks || []) {
-        if (!tasksWithLogFiles.has(task.task_id)) {
-          pendingTasks.push({
-            id: task.task_id,
-            name: task.name || "<unknown>",
-            model: task.model,
-            type: "pending-task"
-          });
-        }
-      }
-      pendingTasks.sort((a, b) => a.name.localeCompare(b.name));
-      collapsedLogItems.push(...pendingTasks);
-      return collapsedLogItems;
-    };
-    const useUnloadLog = () => {
-      const clearSelectedLogSummary = useStore(
-        (state) => state.logActions.clearSelectedLogSummary
-      );
-      const setSelectedLogIndex = useStore(
-        (state) => state.logsActions.setSelectedLogIndex
-      );
-      const clearLog = useStore((state) => state.logActions.clearLog);
-      const unloadLog = reactExports.useCallback(() => {
-        clearSelectedLogSummary();
-        setSelectedLogIndex(-1);
-        clearLog();
-      }, [clearLog, clearSelectedLogSummary, setSelectedLogIndex]);
-      return { unloadLog };
-    };
-    const ExtendedFindContext = reactExports.createContext(null);
-    const ExtendedFindProvider = ({
-      children: children2
-    }) => {
-      const virtualLists = reactExports.useRef(/* @__PURE__ */ new Map());
-      const extendedFindTerm = reactExports.useCallback(
-        async (term, direction) => {
-          for (const [, searchFn] of virtualLists.current) {
-            const found = await new Promise((resolve) => {
-              let callbackFired = false;
-              const onContentReady = () => {
-                if (!callbackFired) {
-                  callbackFired = true;
-                  resolve(true);
-                }
-              };
-              searchFn(term, direction, onContentReady).then((found2) => {
-                if (!found2 && !callbackFired) {
-                  callbackFired = true;
-                  resolve(false);
-                }
-              }).catch(() => {
-                if (!callbackFired) {
-                  callbackFired = true;
-                  resolve(false);
-                }
-              });
-            });
-            if (found) {
-              return true;
-            }
-          }
-          return false;
-        },
-        []
-      );
-      const registerVirtualList = reactExports.useCallback(
-        (id, searchFn) => {
-          virtualLists.current.set(id, searchFn);
-          return () => {
-            virtualLists.current.delete(id);
-          };
-        },
-        []
-      );
-      const contextValue = {
-        extendedFindTerm,
-        registerVirtualList
-      };
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(ExtendedFindContext.Provider, { value: contextValue, children: children2 });
-    };
-    const useExtendedFind = () => {
-      const context = reactExports.useContext(ExtendedFindContext);
-      if (!context) {
-        throw new Error("useSearch must be used within a SearchProvider");
-      }
-      return context;
-    };
-    const findConfig = {
-      caseSensitive: false,
-      wrapAround: false,
-      wholeWord: false,
-      searchInFrames: false,
-      showDialog: false
-    };
-    const FindBand = () => {
-      const searchBoxRef = reactExports.useRef(null);
-      const storeHideFind = useStore((state) => state.appActions.hideFind);
-      const { extendedFindTerm } = useExtendedFind();
-      const lastFoundItem = reactExports.useRef(null);
-      const currentSearchTerm = reactExports.useRef("");
-      reactExports.useEffect(() => {
-        setTimeout(() => {
-          searchBoxRef.current?.focus();
-          searchBoxRef.current?.select();
-        }, 10);
-        const handleGlobalKeydown = (e) => {
-          if ((e.ctrlKey || e.metaKey) && e.key === "f") {
-            e.preventDefault();
-            e.stopPropagation();
-            searchBoxRef.current?.focus();
-            searchBoxRef.current?.select();
-          } else if ((e.ctrlKey || e.metaKey) && e.key === "g") {
-            e.preventDefault();
-            e.stopPropagation();
-            const back = e.shiftKey;
-            handleSearch(back);
-          }
-        };
-        document.addEventListener("keydown", handleGlobalKeydown, true);
-        return () => {
-          document.removeEventListener("keydown", handleGlobalKeydown, true);
-        };
-      }, []);
-      const getParentExpandablePanel = reactExports.useCallback(
-        (selection) => {
-          let node2 = selection.anchorNode;
-          while (node2) {
-            if (node2 instanceof HTMLElement && node2.classList.contains("expandable-panel")) {
-              return node2;
-            }
-            node2 = node2.parentElement;
-          }
-          return void 0;
-        },
-        []
-      );
-      const handleSearch = reactExports.useCallback(
-        async (back = false) => {
-          const searchTerm = searchBoxRef.current?.value ?? "";
-          if (!searchTerm) {
-            return;
-          }
-          if (currentSearchTerm.current !== searchTerm) {
-            lastFoundItem.current = null;
-            currentSearchTerm.current = searchTerm;
-          }
-          const focusedElement = document.activeElement;
-          let result2 = await findExtendedInDOM(
-            searchTerm,
-            back,
-            lastFoundItem.current,
-            extendedFindTerm
-          );
-          const noResultEl = document.getElementById("inspect-find-no-results");
-          if (!noResultEl) {
-            return;
-          }
-          noResultEl.style.opacity = result2 ? "0" : "1";
-          if (result2) {
-            const selection = window.getSelection();
-            if (selection && selection.rangeCount > 0) {
-              const range2 = selection.getRangeAt(0);
-              const parentElement = range2.startContainer.parentElement || range2.commonAncestorContainer;
-              lastFoundItem.current = {
-                text: range2.toString(),
-                offset: range2.startOffset,
-                parentElement
-              };
-              const parentPanel = getParentExpandablePanel(selection);
-              if (parentPanel) {
-                parentPanel.style.display = "block";
-                parentPanel.style.webkitLineClamp = "";
-                parentPanel.style.webkitBoxOrient = "";
-              }
-              const element = range2.startContainer.parentElement;
-              if (element) {
-                setTimeout(() => {
-                  element.scrollIntoView({
-                    behavior: "auto",
-                    block: "center"
-                  });
-                }, 100);
-              }
-            }
-          }
-          focusedElement?.focus();
-        },
-        [getParentExpandablePanel, extendedFindTerm]
-      );
-      const handleKeyDown = reactExports.useCallback(
-        (e) => {
-          if (e.key === "Escape") {
-            storeHideFind();
-          } else if (e.key === "Enter") {
-            handleSearch(e.shiftKey);
-          } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "g") {
-            e.preventDefault();
-            handleSearch(!e.shiftKey);
-          } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "f") {
-            searchBoxRef.current?.focus();
-            searchBoxRef.current?.select();
-          }
-        },
-        [storeHideFind, handleSearch]
-      );
-      const showSearch = reactExports.useCallback(() => {
-        handleSearch(true);
-      }, [handleSearch]);
-      const hideSearch = reactExports.useCallback(() => {
-        handleSearch(false);
-      }, [handleSearch]);
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-unsearchable": "true", className: clsx("findBand"), children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "input",
-          {
-            type: "text",
-            ref: searchBoxRef,
-            placeholder: "Find",
-            onKeyDown: handleKeyDown
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { id: "inspect-find-no-results", children: "No results" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            type: "button",
-            title: "Previous match",
-            className: "btn next",
-            onClick: showSearch,
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.arrows.up })
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            type: "button",
-            title: "Next match",
-            className: "btn prev",
-            onClick: hideSearch,
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.arrows.down })
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            type: "button",
-            title: "Close",
-            className: "btn close",
-            onClick: storeHideFind,
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.close })
-          }
-        )
-      ] });
-    };
-    async function findExtendedInDOM(searchTerm, back, lastFoundItem, extendedFindTerm) {
-      let result2 = false;
-      let attempts = 0;
-      let hasTriedExtendedSearch = false;
-      const maxAttempts = 25;
-      do {
-        result2 = window.find(
-          searchTerm,
-          findConfig.caseSensitive,
-          back,
-          findConfig.wrapAround,
-          findConfig.wholeWord,
-          findConfig.searchInFrames,
-          findConfig.showDialog
-        );
-        if (result2) {
-          const selection = window.getSelection();
-          if (selection && selection.rangeCount > 0) {
-            const range2 = selection.getRangeAt(0);
-            let isUnsearchable = inUnsearchableElement(range2);
-            const isSameAsLast = isLastFoundItem(range2, lastFoundItem);
-            if (!isUnsearchable && !isSameAsLast) {
-              break;
-            }
-          }
-        } else if (!hasTriedExtendedSearch) {
-          hasTriedExtendedSearch = true;
-          const foundInVirtual = await extendedFindTerm(
-            searchTerm,
-            back ? "backward" : "forward"
-          );
-          if (foundInVirtual) ;
-          else {
-            break;
-          }
-        } else {
-          break;
-        }
-        attempts++;
-      } while (attempts < maxAttempts);
-      return result2;
-    }
-    function isLastFoundItem(range2, lastFoundItem) {
-      if (!lastFoundItem) return false;
-      const currentText = range2.toString();
-      const currentOffset = range2.startOffset;
-      const currentParentElement = range2.startContainer.parentElement || range2.commonAncestorContainer;
-      return currentText === lastFoundItem.text && currentOffset === lastFoundItem.offset && currentParentElement === lastFoundItem.parentElement;
-    }
-    function inUnsearchableElement(range2) {
-      let element = selectionParentElement(range2);
-      let isUnsearchable = false;
-      while (element) {
-        if (element.hasAttribute("data-unsearchable") || getComputedStyle(element).userSelect === "none") {
-          isUnsearchable = true;
-          break;
-        }
-        element = element.parentElement;
-      }
-      return isUnsearchable;
-    }
-    function selectionParentElement(range2) {
-      let element = null;
-      if (range2.startContainer.nodeType === Node.ELEMENT_NODE) {
-        element = range2.startContainer;
-      } else {
-        element = range2.startContainer.parentElement;
-      }
-      if (!element && range2.commonAncestorContainer.nodeType === Node.ELEMENT_NODE) {
-        element = range2.commonAncestorContainer;
-      } else if (!element && range2.commonAncestorContainer.parentElement) {
-        element = range2.commonAncestorContainer.parentElement;
-      }
-      return element;
-    }
-    const EmptyPanel = ({ children: children2 }) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "empty-panel", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: children2 }) }) });
-    };
-    const tabs$1 = "_tabs_jdywf_1";
-    const tabContents = "_tabContents_jdywf_5";
-    const scrollable = "_scrollable_jdywf_10";
-    const tab$1 = "_tab_jdywf_1";
-    const tabItem = "_tabItem_jdywf_24";
-    const tabIcon = "_tabIcon_jdywf_28";
-    const tabTools = "_tabTools_jdywf_32";
-    const tabStyle = "_tabStyle_jdywf_42";
-    const moduleStyles = {
-      tabs: tabs$1,
-      tabContents,
-      scrollable,
-      tab: tab$1,
-      tabItem,
-      tabIcon,
-      tabTools,
-      tabStyle
-    };
-    const TabSet = ({
-      id,
-      type = "tabs",
-      className: className2,
-      tabPanelsClassName,
-      tabControlsClassName,
-      tools: tools2,
-      tabsRef,
-      children: children2
-    }) => {
-      const validTabs = flattenChildren(children2);
-      if (validTabs.length === 0) return null;
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          "ul",
-          {
-            ref: tabsRef,
-            id,
-            className: clsx(
-              "nav",
-              `nav-${type}`,
-              type === "tabs" ? moduleStyles.tabStyle : void 0,
-              className2,
-              moduleStyles.tabs
-            ),
-            role: "tablist",
-            "aria-orientation": "horizontal",
-            children: [
-              validTabs.map((tab2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-                Tab,
-                {
-                  index,
-                  type,
-                  tab: tab2,
-                  className: clsx(tabControlsClassName)
-                },
-                tab2.props.id
-              )),
-              tools2 && /* @__PURE__ */ jsxRuntimeExports.jsx(TabTools, { tools: tools2 })
-            ]
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(TabPanels, { id, tabs: validTabs, className: tabPanelsClassName })
-      ] });
-    };
-    const Tab = ({ type = "tabs", tab: tab2, index, className: className2 }) => {
-      const tabId = tab2.props.id || computeTabId("tabset", index);
-      const tabContentsId = computeTabContentsId(tab2.props.id);
-      const isActive = tab2.props.selected;
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("li", { role: "presentation", className: clsx("nav-item", moduleStyles.tabItem), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    const ViewerOptionsButton = reactExports.forwardRef(({ showing, setShowing }, ref) => {
+      const toggleShowing = reactExports.useCallback(() => {
+        setShowing(!showing);
+      }, [showing, setShowing]);
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         "button",
         {
-          id: tabId,
-          className: clsx(
-            "nav-link",
-            className2,
-            isActive && "active",
-            type === "pills" ? moduleStyles.pill : moduleStyles.tab,
-            "text-size-small",
-            "text-style-label"
-          ),
+          ref,
           type: "button",
-          role: "tab",
-          "aria-controls": tabContentsId,
-          "aria-selected": isActive,
-          onClick: tab2.props.onSelected,
-          children: [
-            tab2.props.icon && /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(tab2.props.icon, moduleStyles.tabIcon) }),
-            tab2.props.title
-          ]
+          className: clsx(styles$17.button),
+          onClick: toggleShowing,
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "i",
+            {
+              ref,
+              className: clsx(ApplicationIcons.info, styles$17.viewerOptions)
+            }
+          )
         }
       ) });
-    };
-    const TabPanels = ({ id, tabs: tabs2, className: className2 }) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("tab-content", className2), id: `${id}-content`, children: tabs2.map((tab2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(TabPanel, { ...tab2.props, index }, tab2.props.id)) });
-    const TabPanel = ({
-      id,
-      selected: selected2,
-      style: style2,
-      scrollable: scrollable2 = true,
-      scrollRef,
-      className: className2,
-      children: children2
-    }) => {
-      const tabContentsId = computeTabContentsId(id);
-      const panelRef = reactExports.useRef(null);
-      const tabContentsRef = scrollRef || panelRef;
-      useStatefulScrollPosition(tabContentsRef, tabContentsId, 1e3, scrollable2);
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "div",
-        {
-          id: tabContentsId,
-          ref: tabContentsRef,
-          className: clsx(
-            "tab-pane",
-            selected2 && "show active",
-            className2,
-            moduleStyles.tabContents,
-            scrollable2 && moduleStyles.scrollable
-          ),
-          style: style2,
-          children: selected2 ? children2 : null
-        }
-      );
-    };
-    const TabTools = ({ tools: tools2 }) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("tab-tools", moduleStyles.tabTools), children: tools2 });
-    const computeTabId = (id, index) => `${id}-${index}`;
-    const computeTabContentsId = (id) => `${id}-contents`;
-    const flattenChildren = (children2) => {
-      return reactExports.Children.toArray(children2).flatMap((child) => {
-        if (reactExports.isValidElement(child)) {
-          const element = child;
-          if (element.type === reactExports.Fragment) {
-            return flattenChildren(element.props.children);
-          }
-          return element;
-        }
-        return [];
-      });
-    };
-    const useLogNavigation = () => {
-      const navigate = useNavigate();
-      const { logPath } = useParams();
-      const logs = useStore((state) => state.logs.logs);
-      const loadedLog = useStore((state) => state.log.loadedLog);
-      const selectTab = reactExports.useCallback(
-        (tabId) => {
-          if (loadedLog && logPath) {
-            const url = logUrlRaw(logPath, tabId);
-            navigate(url);
-          } else if (loadedLog) {
-            const url = logUrl(loadedLog, logs.log_dir, tabId);
-            navigate(url);
-          }
-        },
-        [loadedLog, logPath, logs.log_dir, navigate]
-      );
-      return {
-        selectTab
-      };
-    };
-    const workspace = "_workspace_1r3mu_1";
-    const tabContainer = "_tabContainer_1r3mu_6";
-    const tabSet = "_tabSet_1r3mu_14";
-    const tabs = "_tabs_1r3mu_21";
-    const tabPanels = "_tabPanels_1r3mu_29";
-    const styles$15 = {
-      workspace,
-      tabContainer,
-      tabSet,
-      tabs,
-      tabPanels
-    };
-    const CardHeader = ({
-      id,
-      icon: icon2,
-      label: label2,
-      className: className2,
-      children: children2
-    }) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        "div",
-        {
-          className: clsx("card-header-container", "text-style-label", className2),
-          id: id || "",
-          children: [
-            icon2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx("card-header-icon", icon2) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "card-header-icon" }),
-            label2 ? label2 : "",
-            " ",
-            children2
-          ]
-        }
-      );
-    };
-    const CardBody = ({
-      id,
-      children: children2,
-      className: className2,
-      padded: padded2 = true
-    }) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "div",
-        {
-          className: clsx(
-            "card-body",
-            className2,
-            !padded2 ? "card-no-padding" : void 0
-          ),
-          id: id || "",
-          children: children2
-        }
-      );
-    };
-    const Card = ({ id, children: children2, className: className2 }) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("card", className2), id, children: children2 });
-    };
-    const message$1 = "_message_1gb2h_5";
-    const styles$14 = {
-      "task-error-display": "_task-error-display_1gb2h_1",
-      message: message$1
-    };
-    const TaskErrorCard = ({ error: error2 }) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          CardHeader,
-          {
-            icon: ApplicationIcons.error,
-            label: `Task Failed`
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(CardBody, { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            ExpandablePanel,
-            {
-              id: "task-error-collapse",
-              collapse: true,
-              className: clsx("text-size-smaller", styles$14.message),
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-                RenderedContent,
-                {
-                  id: "task-error-message",
-                  entry: { name: "error", value: error2.message }
-                }
-              )
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            ANSIDisplay,
-            {
-              output: error2.traceback_ansi,
-              className: styles$14["task-error-display"]
-            }
-          )
-        ] })
-      ] });
-    };
-    const useErrorTabConfig = (evalError) => {
-      const scrollRef = reactExports.useRef(null);
-      return reactExports.useMemo(() => {
-        return {
-          id: kLogViewErrorTabId,
-          label: "Error",
-          scrollable: true,
-          component: ErrorTab,
-          componentProps: {
-            evalError,
-            scrollRef
-          },
-          scrollRef
-        };
-      }, [evalError]);
-    };
-    const ErrorTab = ({ evalError }) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "0.5em 1em 0 1em", width: "100%" }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          TaskErrorCard,
-          {
-            error: evalError || {
-              message: "Unknown error",
-              traceback: "",
-              traceback_ansi: ""
-            }
-          }
-        ),
-        " "
-      ] }) });
-    };
-    const MessageBand = ({
-      id,
-      message: message2,
-      type,
-      scope = "eval"
-    }) => {
-      const className2 = [type];
-      const [visible2, setVisible] = useMessageVisibility(id, scope);
-      const handleClick = reactExports.useCallback(() => {
-        setVisible(false);
-      }, [setVisible]);
-      if (!visible2) {
-        className2.push("hidden");
-      }
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("message-band", className2), children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.logging[type] }),
-        message2,
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            className: clsx("btn", "message-band-btn", type),
-            title: "Close",
-            onClick: handleClick,
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.close })
-          }
-        )
-      ] });
-    };
-    const item$2 = "_item_1uzhd_1";
-    const styles$13 = {
-      item: item$2
-    };
-    const DatasetDetailView = ({
-      dataset,
-      style: style2
-    }) => {
-      const filtered = Object.fromEntries(
-        Object.entries(dataset).filter(([key2]) => key2 !== "sample_ids")
-      );
-      if (!dataset || Object.keys(filtered).length === 0) {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-size-base", styles$13.item), style: style2, children: "No dataset information available" });
-      }
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(
-        MetaDataGrid,
-        {
-          className: clsx("text-size-base", styles$13.item),
-          entries: filtered,
-          style: style2,
-          plain: true
-        }
-      );
-    };
-    const icon$2 = "_icon_59zaz_1";
-    const container$i = "_container_59zaz_5";
-    const metadata$1 = "_metadata_59zaz_11";
-    const styles$12 = {
-      icon: icon$2,
-      container: container$i,
-      metadata: metadata$1
-    };
-    const DetailStep = ({
-      icon: icon2,
-      name: name2,
-      params,
-      className: className2
-    }) => {
-      const iconHtml = icon2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, styles$12.icon) }) : "";
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2), children: [
-        iconHtml,
-        " ",
-        name2,
-        params && Object.keys(params).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$12.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-          MetaDataGrid,
-          {
-            entries: params,
-            className: clsx("text-size-small", styles$12.metadata)
-          }
-        ) }) : ""
-      ] });
-    };
-    const item$1 = "_item_leq25_1";
-    const styles$11 = {
-      item: item$1
-    };
-    const ScorerDetailView = ({
-      name: name2,
-      scores: scores2,
-      params
-    }) => {
-      if (scores2.length > 1) {
-        params = { ...params, ["scores"]: scores2 };
-      }
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(
-        DetailStep,
-        {
-          icon: ApplicationIcons.scorer,
-          name: name2,
-          params,
-          className: clsx(styles$11.item, "text-size-base")
-        }
-      );
-    };
-    const container$h = "_container_12j2k_1";
-    const separator$5 = "_separator_12j2k_11";
-    const styles$10 = {
-      container: container$h,
-      separator: separator$5
-    };
-    const SolversDetailView = ({ steps }) => {
-      const separator2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$10.items, "text-size-small", styles$10.separator), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.arrows.right }) });
-      const details = steps?.map((step, index) => {
-        return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            DetailStep,
-            {
-              name: step.solver,
-              className: clsx(styles$10.items, "text-size-small")
-            }
-          ),
-          index < steps.length - 1 ? separator2 : ""
-        ] }, `solver-step-${index}`);
-      });
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$10.container, children: details });
-    };
-    const floatingCol = "_floatingCol_1n79r_1";
-    const wideCol = "_wideCol_1n79r_9";
-    const planCol = "_planCol_1n79r_24";
-    const container$g = "_container_1n79r_29";
-    const grid$7 = "_grid_1n79r_35";
-    const styles$$ = {
-      floatingCol,
-      wideCol,
-      planCol,
-      container: container$g,
-      grid: grid$7
-    };
-    const PlanDetailView = ({
-      evaluation,
-      plan,
-      scores: scores2
-    }) => {
-      if (!evaluation) {
-        return null;
-      }
-      const steps = plan?.steps;
-      const taskColumns = [];
-      taskColumns.push({
-        title: "Dataset",
-        className: styles$$.floatingCol,
-        contents: /* @__PURE__ */ jsxRuntimeExports.jsx(DatasetDetailView, { dataset: evaluation.dataset })
-      });
-      if (steps) {
-        taskColumns.push({
-          title: "Solvers",
-          className: styles$$.wideCol,
-          contents: /* @__PURE__ */ jsxRuntimeExports.jsx(SolversDetailView, { steps })
-        });
-      }
-      if (scores2) {
-        const scorers = scores2.reduce(
-          (accum, score2) => {
-            if (!accum[score2.scorer]) {
-              accum[score2.scorer] = {
-                scores: [score2.name],
-                params: score2.params
-              };
-            } else {
-              accum[score2.scorer].scores.push(score2.name);
-            }
-            return accum;
-          },
-          {}
-        );
-        if (Object.keys(scorers).length > 0) {
-          const label2 = Object.keys(scorers).length === 1 ? "Scorer" : "Scorers";
-          const scorerPanels = Object.keys(scorers).map((key2) => {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx(
-              ScorerDetailView,
-              {
-                name: key2,
-                scores: scorers[key2].scores,
-                params: scorers[key2].params
-              },
-              key2
-            );
-          });
-          taskColumns.push({
-            title: label2,
-            className: styles$$.floatingCol,
-            contents: scorerPanels
-          });
-        }
-      }
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$$.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "div",
-        {
-          className: styles$$.grid,
-          style: {
-            gridTemplateColumns: `repeat(${taskColumns.length}, fit-content(50%))`
-          },
-          children: taskColumns.map((col) => {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx(
-              PlanColumn,
-              {
-                title: col.title,
-                className: col.className,
-                children: col.contents
-              },
-              `plan-col-${col.title}`
-            );
-          })
-        }
-      ) });
-    };
-    const PlanColumn = ({ title: title2, className: className2, children: children2 }) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2), children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "div",
-          {
-            className: clsx(
-              "card-subheading",
-              "text-size-small",
-              "text-style-label",
-              "text-style-secondary",
-              styles$$.planCol
-            ),
-            children: title2
-          }
-        ),
-        children2
-      ] });
-    };
-    const PlanCard = ({
-      evalSpec,
-      evalPlan,
-      scores: scores2,
-      scrollRef
-    }) => {
-      const metadata2 = evalSpec?.metadata || {};
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Summary" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: "task-plan-card-body", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-            PlanDetailView,
-            {
-              evaluation: evalSpec,
-              plan: evalPlan,
-              scores: scores2
-            }
-          ) })
-        ] }),
-        Object.keys(metadata2).length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Metadata" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: "task-metadata`", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-            RecordTree,
-            {
-              id: "plan-md-metadata",
-              record: metadata2,
-              scrollRef
-            }
-          ) })
-        ] })
-      ] });
-    };
-    const useInfoTabConfig = (evalSpec, evalPlan, evalError, evalResults, evalStatus) => {
-      const scrollRef = reactExports.useRef(null);
-      const totalSampleCount = useTotalSampleCount();
-      return reactExports.useMemo(() => {
-        return {
-          id: kLogViewInfoTabId,
-          label: "Info",
-          scrollable: true,
-          component: InfoTab,
-          componentProps: {
-            evalSpec,
-            evalPlan,
-            evalError,
-            evalResults,
-            evalStatus,
-            sampleCount: totalSampleCount,
-            scrollRef
-          },
-          scrollRef
-        };
-      }, [evalSpec, evalPlan, evalError, evalResults, totalSampleCount]);
-    };
-    const InfoTab = ({
-      evalSpec,
-      evalPlan,
-      evalResults,
-      evalStatus,
-      sampleCount,
-      scrollRef
-    }) => {
-      const showWarning = sampleCount === 0 && evalStatus === "success" && evalSpec?.dataset.samples && evalSpec.dataset.samples > 0;
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { width: "100%" }, children: [
-        showWarning ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-          MessageBand,
-          {
-            id: "sample-too-large",
-            message: "Unable to display samples (this evaluation log may be too large).",
-            type: "warning"
-          }
-        ) : "",
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { padding: "0.5em 1em 0 1em", width: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-          PlanCard,
-          {
-            evalSpec,
-            evalPlan,
-            scores: evalResults?.scores,
-            scrollRef
-          }
-        ) })
-      ] });
-    };
-    const DownloadButton = ({
-      label: label2,
-      fileName,
-      fileContents
-    }) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "button",
-        {
-          className: "btn btn-outline-primary download-button",
-          onClick: async () => {
-            await api.download_file(fileName, fileContents);
-          },
-          children: label2
-        }
-      );
-    };
-    const DownloadPanel = ({
-      message: message2,
-      buttonLabel,
-      fileName,
-      fileContents
-    }) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "download-panel", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "download-panel-message", children: message2 }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          DownloadButton,
-          {
-            label: buttonLabel,
-            fileName,
-            fileContents
-          }
-        )
-      ] }) });
-    };
-    const toolButton = "_toolButton_nu8dt_1";
-    const latched = "_latched_nu8dt_13";
-    const styles$_ = {
-      toolButton,
-      latched
-    };
-    const ToolButton = reactExports.forwardRef(
-      ({ label: label2, classes = "", icon: icon2, className: className2, latched: latched2, ...rest }, ref) => {
-        return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          "button",
-          {
-            ref,
-            type: "button",
-            className: clsx(
-              "btn",
-              "btn-tools",
-              styles$_.toolButton,
-              classes,
-              className2,
-              latched2 ? styles$_.latched : void 0
-            ),
-            ...rest,
-            children: [
-              icon2 && /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: `${icon2}` }),
-              label2
-            ]
-          }
-        );
-      }
-    );
-    ToolButton.displayName = "ToolButton";
-    const jsonTab = "_jsonTab_6pq03_1";
-    const styles$Z = {
-      jsonTab
-    };
-    const kJsonMaxSize = 1e7;
-    const useJsonTabConfig = (evalVersion, evalStatus, evalSpec, evalPlan, evalError, evalResults, evalStats) => {
-      const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
-      const selectedTab = useStore((state) => state.app.tabs.workspace);
-      return reactExports.useMemo(() => {
-        const evalHeader = {
-          version: evalVersion,
-          status: evalStatus,
-          eval: evalSpec,
-          plan: evalPlan,
-          error: evalError,
-          results: evalResults,
-          stats: evalStats
-        };
-        return {
-          id: kLogViewJsonTabId,
-          label: "JSON",
-          scrollable: true,
-          component: JsonTab,
-          componentProps: {
-            logFile: selectedLogFile,
-            json: JSON.stringify(evalHeader, null, 2),
-            selected: selectedTab === kLogViewJsonTabId
-          },
-          tools: () => [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              ToolButton,
-              {
-                label: "Copy JSON",
-                icon: ApplicationIcons.copy,
-                className: clsx("task-btn-json-copy", "clipboard-button"),
-                "data-clipboard-target": "#task-json-contents",
-                onClick: copyFeedback
-              },
-              "copy-json"
-            )
-          ]
-        };
-      }, [
-        selectedLogFile,
-        evalVersion,
-        evalStatus,
-        evalSpec,
-        evalPlan,
-        evalError,
-        evalResults,
-        evalStats,
-        selectedTab
-      ]);
-    };
-    const copyFeedback = (e) => {
-      const textEl = e.currentTarget.querySelector(".task-btn-copy-content");
-      const iconEl = e.currentTarget.querySelector("i.bi");
-      if (textEl) {
-        const htmlEl = textEl;
-        const htmlIconEl = iconEl;
-        const oldText = htmlEl.innerText;
-        const oldIconClz = htmlIconEl.className;
-        htmlEl.innerText = "Copied!";
-        htmlIconEl.className = `${ApplicationIcons.confirm}`;
-        setTimeout(() => {
-          window.getSelection()?.removeAllRanges();
-        }, 50);
-        setTimeout(() => {
-          htmlEl.innerText = oldText;
-          htmlIconEl.className = oldIconClz;
-        }, 1250);
-      }
-    };
-    const JsonTab = ({ logFile, json }) => {
-      const downloadFiles = useStore((state) => state.capabilities.downloadFiles);
-      if (logFile && json.length > kJsonMaxSize && downloadFiles) {
-        const file = `${filename(logFile)}.json`;
-        return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$Z.jsonTab, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-          DownloadPanel,
-          {
-            message: "The JSON for this log file is too large to render.",
-            buttonLabel: "Download JSON File",
-            fileName: file,
-            fileContents: json
-          }
-        ) });
-      } else {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$Z.jsonTab, children: /* @__PURE__ */ jsxRuntimeExports.jsx(JSONPanel, { id: "task-json-contents", json, simple: true }) });
-      }
-    };
-    const container$f = "_container_4wzpj_1";
-    const modelInfo = "_modelInfo_4wzpj_8";
-    const role = "_role_4wzpj_15";
-    const sep = "_sep_4wzpj_19";
-    const styles$Y = {
-      container: container$f,
-      modelInfo,
-      role,
-      sep
-    };
-    const ModelCard = ({ evalSpec }) => {
-      if (!evalSpec) {
-        return void 0;
-      }
-      const modelsInfo = {
-        eval: {
-          model: evalSpec.model,
-          base_url: evalSpec.model_base_url,
-          config: evalSpec.model_generate_config,
-          args: evalSpec.model_args
-        },
-        ...evalSpec.model_roles
-      };
-      const noneEl = /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-style-secondary", children: "None" });
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Models" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: "task-model-card-body", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$Y.container, children: Object.keys(modelsInfo || {}).map((modelKey) => {
-          const modelInfo2 = modelsInfo[modelKey];
-          return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            "div",
-            {
-              className: clsx(styles$Y.modelInfo, "text-size-small"),
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  "div",
-                  {
-                    className: clsx(
-                      styles$Y.role,
-                      "text-style-label",
-                      "text-style-secondary"
-                    ),
-                    children: modelKey
-                  }
-                ),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Y.sep) }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Model" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: modelInfo2.model }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Y.sep) }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Base Url" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-size-small", children: modelInfo2.base_url || noneEl }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Y.sep) }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Configuration" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-size-small", children: modelInfo2.config && Object.keys(modelInfo2.config).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  MetaDataGrid,
-                  {
-                    entries: modelInfo2.config
-                  }
-                ) : noneEl }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Y.sep) }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Args" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-size-small", children: Object.keys(modelInfo2.args).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  MetaDataGrid,
-                  {
-                    entries: modelInfo2.args
-                  }
-                ) : noneEl }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Y.sep) })
-              ]
-            },
-            modelKey
-          );
-        }) }) })
-      ] });
-    };
-    const wrapper$3 = "_wrapper_sq96g_1";
-    const col2$2 = "_col2_sq96g_8";
-    const col1_3$1 = "_col1_3_sq96g_12";
-    const col3$1 = "_col3_sq96g_16";
-    const separator$4 = "_separator_sq96g_20";
-    const padded$1 = "_padded_sq96g_26";
-    const styles$X = {
-      wrapper: wrapper$3,
-      col2: col2$2,
-      col1_3: col1_3$1,
-      col3: col3$1,
-      separator: separator$4,
-      padded: padded$1
-    };
-    const ModelUsagePanel = ({ usage, className: className2 }) => {
-      if (!usage) {
-        return null;
-      }
-      const rows = [];
-      if (usage.reasoning_tokens) {
-        rows.push({
-          label: "Reasoning",
-          value: usage.reasoning_tokens,
-          secondary: false,
-          bordered: true
-        });
-        rows.push({
-          label: "---",
-          value: void 0,
-          secondary: false,
-          padded: true
-        });
-      }
-      rows.push({
-        label: "input",
-        value: usage.input_tokens,
-        secondary: false
-      });
-      if (usage.input_tokens_cache_read) {
-        rows.push({
-          label: "cache_read",
-          value: usage.input_tokens_cache_read,
-          secondary: true
-        });
-      }
-      if (usage.input_tokens_cache_write) {
-        rows.push({
-          label: "cache_write",
-          value: usage.input_tokens_cache_write,
-          secondary: true
-        });
-      }
-      rows.push({
-        label: "Output",
-        value: usage.output_tokens,
-        secondary: false,
-        bordered: true
-      });
-      rows.push({
-        label: "---",
-        value: void 0,
-        secondary: false
-      });
-      rows.push({
-        label: "Total",
-        value: usage.total_tokens,
-        secondary: false
-      });
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-small", styles$X.wrapper, className2), children: rows.map((row2, idx) => {
-        if (row2.label === "---") {
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "div",
-            {
-              className: clsx(
-                styles$X.separator,
-                row2.padded ? styles$X.padded : void 0
-              )
-            },
-            `$usage-sep-${idx}`
-          );
-        } else {
-          return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "div",
-              {
-                className: clsx(
-                  "text-style-label",
-                  "text-style-secondary",
-                  row2.secondary ? styles$X.col2 : styles$X.col1_3
-                ),
-                children: row2.label
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$X.col3, children: row2.value ? formatNumber(row2.value) : "" })
-          ] }, `$usage-row-${idx}`);
-        }
-      }) });
-    };
-    const table$1 = "_table_z217i_1";
-    const tableTokens = "_tableTokens_z217i_5";
-    const tableH = "_tableH_z217i_9";
-    const model = "_model_z217i_14";
-    const cellContents = "_cellContents_z217i_18";
-    const styles$W = {
-      table: table$1,
-      tableTokens,
-      tableH,
-      model,
-      cellContents
-    };
-    const TokenTable$1 = ({ className: className2, children: children2 }) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "table",
-        {
-          className: clsx(
-            "table",
-            "table-sm",
-            "text-size-smaller",
-            styles$W.table,
-            className2
-          ),
-          children: children2
-        }
-      );
-    };
-    const TokenHeader = () => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("thead", { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("td", {}),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "td",
-            {
-              colSpan: 3,
-              className: clsx(
-                "card-subheading",
-                styles$W.tableTokens,
-                "text-size-small",
-                "text-style-label",
-                "text-style-secondary"
-              ),
-              align: "center",
-              children: "Tokens"
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "th",
-            {
-              className: clsx(
-                styles$W.tableH,
-                "text-sixe-small",
-                "text-style-label",
-                "text-style-secondary"
-              ),
-              children: "Model"
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "th",
-            {
-              className: clsx(
-                styles$W.tableH,
-                "text-sixe-small",
-                "text-style-label",
-                "text-style-secondary"
-              ),
-              children: "Usage"
-            }
-          )
-        ] })
-      ] });
-    };
-    const TokenRow = ({ model: model2, usage }) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("td", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$W.model, styles$W.cellContents), children: model2 }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("td", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(ModelUsagePanel, { usage, className: clsx(styles$W.cellContents) }) })
-      ] });
-    };
-    const ModelTokenTable = ({
-      model_usage,
-      className: className2
-    }) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs(TokenTable$1, { className: className2, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(TokenHeader, {}),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("tbody", { children: Object.keys(model_usage).map((key2) => {
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(TokenRow, { model: key2, usage: model_usage[key2] }, key2);
-        }) })
-      ] });
-    };
-    const wrapper$2 = "_wrapper_14r3b_1";
-    const col2$1 = "_col2_14r3b_16";
-    const styles$V = {
-      wrapper: wrapper$2,
-      col2: col2$1
-    };
-    const kUsageCardBodyId = "usage-card-body";
-    const UsageCard = ({ stats }) => {
-      if (!stats) {
-        return null;
-      }
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Usage" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: kUsageCardBodyId, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$V.wrapper, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$V.col2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ModelTokenTable, { model_usage: stats.model_usage }) }) }) })
-      ] });
-    };
-    const useModelsTab = (evalSpec, evalStats, evalStatus) => {
-      return reactExports.useMemo(() => {
-        return {
-          id: kLogViewModelsTabId,
-          label: "Models",
-          scrollable: true,
-          component: ModelTab,
-          componentProps: {
-            evalSpec,
-            evalStats,
-            evalStatus
-          }
-        };
-      }, [evalSpec, evalStats]);
-    };
-    const ModelTab = ({
-      evalSpec,
-      evalStats,
-      evalStatus
-    }) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "0.5em 1em 0 1em", width: "100%" }, children: [
-        evalSpec ? /* @__PURE__ */ jsxRuntimeExports.jsx(ModelCard, { evalSpec }) : void 0,
-        evalStatus !== "started" && evalStats?.model_usage && Object.keys(evalStats.model_usage).length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(UsageCard, { stats: evalStats })
-      ] }) });
-    };
-    const panel$2 = "_panel_twp3v_1";
-    const container$e = "_container_twp3v_7";
-    const styles$U = {
-      panel: panel$2,
-      container: container$e
-    };
-    const NoContentsPanel = ({ text: text2 }) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$U.panel), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$U.container, "text-size-smaller"), children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.noSamples }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: text2 })
-      ] }) });
-    };
-    const printHtml = (html2, css2) => {
-      const printWindow = window.open("", "", "height=600,width=800");
-      if (printWindow !== null) {
-        printWindow.document.write("<html><head><title>Print</title>");
-        printWindow.document.write(`
-          <link rel="stylesheet" crossorigin="" href="./assets/index.css">
-          <style>
-            @media print {
-              ${css2}
-            }
-          </style>
-        `);
-        printWindow.document.write("</head><body>");
-        printWindow.document.write(html2);
-        printWindow.document.write("</body></html>");
-        printWindow.document.close();
-        printWindow.onload = function() {
-          printWindow.focus();
-          printWindow.print();
-          printWindow.close();
-        };
-      } else {
-        console.error("Print window failed to open.");
-      }
-    };
-    const printHeadingHtml = () => {
-      const taskEl = document.getElementById("task-title");
-      const modelEl = document.getElementById("task-model");
-      const timeEl = document.getElementById("task-created");
-      if (!taskEl || !modelEl || !timeEl) {
-        throw new Error(
-          "Failed to compute heading HTML. The task, model, or time element can't be found."
-        );
-      }
-      const task = taskEl.innerText;
-      const model2 = modelEl.innerText;
-      const time = timeEl.innerText;
-      const headingHtml = `
-<div style="display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 0.5em; margin-bottom: 2em; justify-content: space-between; border-bottom: solid 1px silver;">
-<div style="font-weight: 600">${task}</div>
-<div style="text-align: center;">${model2}</div>
-<div style="text-align: right;">${time}</div>
-</div>`;
-      return headingHtml;
-    };
-    const useSampleNavigation = () => {
-      const navigate = useNavigate();
-      const logDirectory = useStore((state) => state.logs.logs.log_dir);
-      const { logPath, tabId, sampleTabId } = useLogRouteParams();
-      const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
-      const resolveLogPath = reactExports.useCallback(() => {
-        if (logPath) {
-          return logPath;
-        }
-        if (selectedLogFile) {
-          return directoryRelativeUrl(selectedLogFile, logDirectory);
-        }
-        return void 0;
-      }, [logPath, selectedLogFile, logDirectory]);
-      const sampleSummaries = useFilteredSamples();
-      const selectedSampleIndex = useStore(
-        (state) => state.log.selectedSampleIndex
-      );
-      const selectSample = useStore((state) => state.logActions.selectSample);
-      const setShowingSampleDialog = useStore(
-        (state) => state.appActions.setShowingSampleDialog
-      );
-      const showingSampleDialog = useStore((state) => state.app.dialogs.sample);
-      const showSample = reactExports.useCallback(
-        (index, id, epoch, specifiedSampleTabId) => {
-          const resolvedPath = resolveLogPath();
-          if (resolvedPath) {
-            selectSample(index);
-            setShowingSampleDialog(true);
-            const currentSampleTabId = specifiedSampleTabId || sampleTabId;
-            const url = sampleUrl(resolvedPath, id, epoch, currentSampleTabId);
-            navigate(url);
-          }
-        },
-        [
-          sampleSummaries,
-          resolveLogPath,
-          selectSample,
-          setShowingSampleDialog,
-          navigate,
-          tabId,
-          sampleTabId
-        ]
-      );
-      const navigateSampleIndex = reactExports.useCallback(
-        (index) => {
-          if (index > -1 && index < sampleSummaries.length) {
-            if (showingSampleDialog) {
-              const resolvedPath = resolveLogPath();
-              if (resolvedPath) {
-                const summary2 = sampleSummaries[index];
-                const url = sampleUrl(
-                  resolvedPath,
-                  summary2.id,
-                  summary2.epoch,
-                  sampleTabId
-                );
-                navigate(url);
-              }
-            } else {
-              selectSample(index);
-            }
-          }
-        },
-        [
-          selectedSampleIndex,
-          showSample,
-          sampleTabId,
-          sampleSummaries,
-          showingSampleDialog,
-          resolveLogPath,
-          navigate
-        ]
-      );
-      const nextSample = reactExports.useCallback(() => {
-        const itemsCount = sampleSummaries.length;
-        const next = Math.min(selectedSampleIndex + 1, itemsCount - 1);
-        navigateSampleIndex(next);
-      }, [selectedSampleIndex, navigateSampleIndex, sampleSummaries]);
-      const previousSample = reactExports.useCallback(() => {
-        const prev = selectedSampleIndex - 1;
-        navigateSampleIndex(prev);
-      }, [selectedSampleIndex, navigateSampleIndex]);
-      const firstSample = reactExports.useCallback(() => {
-        navigateSampleIndex(0);
-      }, [navigateSampleIndex]);
-      const lastSample = reactExports.useCallback(() => {
-        navigateSampleIndex(sampleSummaries.length - 1);
-      }, [navigateSampleIndex, sampleSummaries]);
-      const getSampleUrl = reactExports.useCallback(
-        (sampleId, epoch, specificSampleTabId) => {
-          const resolvedPath = resolveLogPath();
-          if (resolvedPath) {
-            const currentSampleTabId = specificSampleTabId || sampleTabId;
-            const url = sampleUrl(
-              resolvedPath,
-              sampleId,
-              epoch,
-              currentSampleTabId
-            );
-            return `#${url}`;
-          }
-          return void 0;
-        },
-        [resolveLogPath, tabId, sampleTabId]
-      );
-      const clearSampleUrl = reactExports.useCallback(() => {
-        const resolvedPath = resolveLogPath();
-        if (resolvedPath) {
-          const url = logUrlRaw(resolvedPath, tabId);
-          navigate(url);
-        }
-      }, [resolveLogPath, navigate, tabId]);
-      return {
-        showSample,
-        nextEnabled: selectedSampleIndex < sampleSummaries.length - 1,
-        nextSample,
-        previousEnabled: selectedSampleIndex > 0,
-        previousSample,
-        firstSample,
-        lastSample,
-        getSampleUrl,
-        clearSampleUrl
-      };
-    };
-    const useSampleDetailNavigation = () => {
-      const [searchParams, _setSearchParams] = useSearchParams();
-      const message2 = searchParams.get("message");
-      const event = searchParams.get("event");
-      return {
-        message: message2,
-        event
-      };
-    };
-    const container$d = "_container_4p85e_2";
-    const dotsContainer = "_dotsContainer_4p85e_8";
-    const small = "_small_4p85e_15";
-    const medium = "_medium_4p85e_19";
-    const large = "_large_4p85e_24";
-    const dot = "_dot_4p85e_8";
-    const subtle = "_subtle_4p85e_36";
-    const primary = "_primary_4p85e_40";
-    const visuallyHidden = "_visuallyHidden_4p85e_59";
-    const styles$T = {
-      container: container$d,
-      dotsContainer,
-      small,
-      medium,
-      large,
-      dot,
-      subtle,
-      primary,
-      visuallyHidden
-    };
-    const PulsingDots = ({
-      text: text2 = "Loading...",
-      dotsCount = 3,
-      subtle: subtle2 = true,
-      size = "small",
-      className: className2
-    }) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        "div",
-        {
-          className: clsx(
-            styles$T.container,
-            size === "small" ? styles$T.small : size === "medium" ? styles$T.medium : styles$T.large,
-            className2
-          ),
-          role: "status",
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$T.dotsContainer, children: [...Array(dotsCount)].map((_, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "div",
-              {
-                className: clsx(
-                  styles$T.dot,
-                  subtle2 ? styles$T.subtle : styles$T.primary
-                ),
-                style: { animationDelay: `${index * 0.2}s` }
-              },
-              index
-            )) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$T.visuallyHidden, children: text2 })
-          ]
-        }
-      );
-    };
-    const progressContainer = "_progressContainer_1cjjr_1";
-    const styles$S = {
-      progressContainer
-    };
-    const LiveVirtualList = ({
-      id,
-      listHandle,
-      className: className2,
-      data,
-      renderRow,
-      scrollRef,
-      live,
-      showProgress,
-      initialTopMostItemIndex,
-      offsetTop,
-      components,
-      searchInItem
-    }) => {
-      const { getRestoreState, isScrolling, visibleRange, setVisibleRange } = useVirtuosoState(listHandle, `live-virtual-list-${id}`);
-      const { registerVirtualList } = useExtendedFind();
-      const pendingSearchCallback = reactExports.useRef(null);
-      const [isCurrentlyScrolling, setIsCurrentlyScrolling] = reactExports.useState(false);
-      const [followOutput, setFollowOutput] = useProperty(
-        id,
-        "follow",
-        {
-          defaultValue: null
-        }
-      );
-      const isAutoScrollingRef = reactExports.useRef(false);
-      reactExports.useEffect(() => {
-        if (followOutput === null) {
-          setFollowOutput(!!live);
-        }
-      }, []);
-      const prevLive = usePrevious(live);
-      reactExports.useEffect(() => {
-        if (!live && prevLive && followOutput && scrollRef?.current) {
-          setFollowOutput(false);
-          setTimeout(() => {
-            if (scrollRef.current) {
-              scrollRef.current.scrollTo({ top: 0, behavior: "instant" });
-            }
-          }, 100);
-        }
-      }, [live, followOutput]);
-      const handleScroll = useRafThrottle(() => {
-        if (isAutoScrollingRef.current) return;
-        if (!live) return;
-        if (scrollRef?.current && listHandle.current) {
-          const parent = scrollRef.current;
-          const isAtBottom = parent.scrollHeight - parent.scrollTop <= parent.clientHeight + 30;
-          if (isAtBottom && !followOutput) {
-            setFollowOutput(true);
-          } else if (!isAtBottom && followOutput) {
-            setFollowOutput(false);
-          }
-        }
-      }, [setFollowOutput, followOutput, live]);
-      const heightChanged = reactExports.useCallback(
-        (height) => {
-          requestAnimationFrame(() => {
-            if (followOutput && live && scrollRef?.current) {
-              isAutoScrollingRef.current = true;
-              listHandle.current?.scrollTo({ top: height });
-              requestAnimationFrame(() => {
-                isAutoScrollingRef.current = false;
-              });
-            }
-          });
-        },
-        [scrollRef, followOutput, live]
-      );
-      reactExports.useEffect(() => {
-        const timer = setTimeout(() => {
-          forceUpdate();
-        }, 0);
-        return () => clearTimeout(timer);
-      }, []);
-      const [, forceRender] = reactExports.useState({});
-      const forceUpdate = reactExports.useCallback(() => forceRender({}), []);
-      const defaultSearchInItem = reactExports.useCallback(
-        (item2, searchTerm) => {
-          const searchLower = searchTerm.toLowerCase();
-          try {
-            const itemString = JSON.stringify(item2).toLowerCase();
-            return itemString.includes(searchLower);
-          } catch {
-            return false;
-          }
-        },
-        []
-      );
-      const searchInData = reactExports.useCallback(
-        async (term, direction, onContentReady) => {
-          if (!data.length || !term) return false;
-          const searchFn = searchInItem || defaultSearchInItem;
-          const currentIndex = direction === "forward" ? visibleRange.endIndex : visibleRange.startIndex;
-          const searchStart = direction === "forward" ? Math.max(0, currentIndex + 1) : Math.min(data.length - 1, currentIndex - 1);
-          const step = direction === "forward" ? 1 : -1;
-          for (let i2 = searchStart; i2 >= 0 && i2 < data.length; i2 += step) {
-            if (searchFn(data[i2], term)) {
-              pendingSearchCallback.current = onContentReady;
-              listHandle.current?.scrollToIndex({
-                index: i2,
-                behavior: "auto",
-                align: "center"
-              });
-              return true;
-            }
-          }
-          return false;
-        },
-        [data, searchInItem, defaultSearchInItem, visibleRange]
-      );
-      reactExports.useEffect(() => {
-        const unregister = registerVirtualList(id, searchInData);
-        return unregister;
-      }, [id, registerVirtualList, searchInData]);
-      const Footer = () => {
-        return showProgress ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$S.progressContainer), children: /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false, size: "medium" }) }) : void 0;
-      };
-      reactExports.useEffect(() => {
-        const parent = scrollRef?.current;
-        if (parent) {
-          parent.addEventListener("scroll", handleScroll);
-          return () => parent.removeEventListener("scroll", handleScroll);
-        }
-      }, [scrollRef, handleScroll]);
-      const hasScrolled = reactExports.useRef(false);
-      reactExports.useEffect(() => {
-        if (initialTopMostItemIndex !== void 0 && listHandle.current) {
-          const timer = setTimeout(() => {
-            listHandle.current?.scrollToIndex({
-              index: initialTopMostItemIndex,
-              align: "start",
-              behavior: !hasScrolled.current ? "auto" : "smooth",
-              offset: offsetTop ? -offsetTop : void 0
-            });
-            hasScrolled.current = true;
-          }, 50);
-          return () => clearTimeout(timer);
-        }
-      }, [initialTopMostItemIndex]);
-      reactExports.useEffect(() => {
-        if (!isCurrentlyScrolling && pendingSearchCallback.current) {
-          setTimeout(() => {
-            const callback = pendingSearchCallback.current;
-            pendingSearchCallback.current = null;
-            callback?.();
-          }, 100);
-        }
-      }, [isCurrentlyScrolling]);
-      const handleScrollingChange = reactExports.useCallback(
-        (scrolling) => {
-          setIsCurrentlyScrolling(scrolling);
-          isScrolling(scrolling);
-        },
-        [isScrolling]
-      );
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(
-        qr,
-        {
-          ref: listHandle,
-          customScrollParent: scrollRef?.current ? scrollRef.current : void 0,
-          style: { height: "100%", width: "100%" },
-          data,
-          defaultItemHeight: 500,
-          itemContent: renderRow,
-          increaseViewportBy: { top: 1e3, bottom: 1e3 },
-          overscan: { main: 5, reverse: 5 },
-          className: clsx("transcript", className2),
-          isScrolling: handleScrollingChange,
-          rangeChanged: (range2) => {
-            setVisibleRange(range2);
-          },
-          restoreStateFrom: getRestoreState(),
-          totalListHeightChanged: heightChanged,
-          components: {
-            Footer,
-            ...components
-          }
-        }
-      );
-    };
-    const item = "_item_5fj0m_6";
-    const styles$R = {
-      item
-    };
-    const ChatViewVirtualList = reactExports.memo(
-      ({
-        id,
-        messages: messages2,
-        initialMessageId,
-        topOffset,
-        className: className2,
-        toolCallStyle,
-        indented: indented2,
-        numbered = true,
-        scrollRef,
-        running,
-        allowLinking = true
-      }) => {
-        const listHandle = reactExports.useRef(null);
-        reactExports.useEffect(() => {
-          const handleKeyDown = (event) => {
-            if (event.metaKey || event.ctrlKey) {
-              if (event.key === "ArrowUp") {
-                listHandle.current?.scrollToIndex({ index: 0, align: "center" });
-                event.preventDefault();
-              } else if (event.key === "ArrowDown") {
-                listHandle.current?.scrollToIndex({
-                  index: Math.min(messages2.length - 5, 0),
-                  align: "center"
-                });
-                setTimeout(() => {
-                  listHandle.current?.scrollToIndex({
-                    index: messages2.length - 1,
-                    align: "end"
-                  });
-                }, 250);
-                event.preventDefault();
-              }
-            }
-          };
-          const scrollElement = scrollRef?.current;
-          if (scrollElement) {
-            scrollElement.addEventListener("keydown", handleKeyDown);
-            if (!scrollElement.hasAttribute("tabIndex")) {
-              scrollElement.setAttribute("tabIndex", "0");
-            }
-            return () => {
-              scrollElement.removeEventListener("keydown", handleKeyDown);
-            };
-          }
-        }, [scrollRef, messages2]);
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(
-          ChatViewVirtualListComponent,
-          {
-            id,
-            listHandle,
-            className: className2,
-            scrollRef,
-            messages: messages2,
-            initialMessageId,
-            topOffset,
-            toolCallStyle,
-            indented: indented2,
-            numbered,
-            running,
-            allowLinking
-          }
-        );
-      }
-    );
-    const ChatViewVirtualListComponent = reactExports.memo(
-      ({
-        id,
-        listHandle,
-        messages: messages2,
-        initialMessageId,
-        topOffset,
-        className: className2,
-        toolCallStyle,
-        indented: indented2,
-        numbered = true,
-        scrollRef,
-        running,
-        allowLinking = true
-      }) => {
-        const collapsedMessages = reactExports.useMemo(() => {
-          return resolveMessages(messages2);
-        }, [messages2]);
-        const initialMessageIndex = reactExports.useMemo(() => {
-          if (initialMessageId === null || initialMessageId === void 0) {
-            return void 0;
-          }
-          const index = collapsedMessages.findIndex((message2) => {
-            const messageId = message2.message.id === initialMessageId;
-            if (messageId) {
-              return true;
-            }
-            if (message2.toolMessages.find((tm) => tm.id === initialMessageId)) {
-              return true;
-            }
-          });
-          return index !== -1 ? index : void 0;
-        }, [initialMessageId, collapsedMessages]);
-        const renderRow = reactExports.useCallback(
-          (index, item2) => {
-            const number2 = collapsedMessages.length > 1 && numbered ? index + 1 : void 0;
-            return /* @__PURE__ */ jsxRuntimeExports.jsx(
-              ChatMessageRow,
-              {
-                parentName: id || "chat-virtual-list",
-                number: number2,
-                resolvedMessage: item2,
-                indented: indented2,
-                toolCallStyle,
-                highlightUserMessage: true,
-                allowLinking
-              }
-            );
-          },
-          [id, numbered, indented2, toolCallStyle, collapsedMessages]
-        );
-        const Item = ({
-          children: children2,
-          ...props
-        }) => {
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "div",
-            {
-              className: clsx(styles$R.item),
-              "data-index": props["data-index"],
-              "data-item-group-index": props["data-item-group-index"],
-              "data-item-index": props["data-item-index"],
-              "data-known-size": props["data-known-size"],
-              style: props.style,
-              children: children2
-            }
-          );
-        };
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(
-          LiveVirtualList,
-          {
-            id: "chat-virtual-list",
-            listHandle,
-            className: className2,
-            scrollRef,
-            data: collapsedMessages,
-            renderRow,
-            initialTopMostItemIndex: initialMessageIndex,
-            offsetTop: topOffset,
-            live: running,
-            showProgress: running,
-            components: { Item }
-          }
-        );
-      }
-    );
-    const tabPanel = "_tabPanel_6o9gh_1";
-    const tabControls = "_tabControls_6o9gh_5";
-    const fullWidth$1 = "_fullWidth_6o9gh_12";
-    const padded = "_padded_6o9gh_25";
-    const error = "_error_6o9gh_30";
-    const ansi = "_ansi_6o9gh_34";
-    const noTop = "_noTop_6o9gh_38";
-    const chat = "_chat_6o9gh_50";
-    const transcriptContainer = "_transcriptContainer_6o9gh_58";
-    const styles$Q = {
-      tabPanel,
-      tabControls,
-      fullWidth: fullWidth$1,
-      padded,
-      error,
-      ansi,
-      noTop,
-      chat,
-      transcriptContainer
-    };
-    const flatBody = "_flatBody_1uw6w_1";
-    const iconSmall$1 = "_iconSmall_1uw6w_9";
-    const lineBase = "_lineBase_1uw6w_15";
-    const styles$P = {
-      flatBody,
-      iconSmall: iconSmall$1,
-      lineBase
-    };
-    const errorType = (message2) => {
-      if (!message2) {
-        return "Error";
-      }
-      if (message2.includes("(")) {
-        return message2.split("(")[0];
-      }
-      return "Error";
-    };
-    const FlatSampleError = ({ message: message2 }) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$P.flatBody), children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.error, styles$P.iconSmall) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$P.lineBase, "text-truncate"), children: errorType(message2) })
-      ] });
-    };
-    const target = "_target_tv989_1";
-    const answer = "_answer_tv989_5";
-    const grid$6 = "_grid_tv989_9";
-    const centerLabel = "_centerLabel_tv989_16";
-    const centerValue = "_centerValue_tv989_21";
-    const wrap = "_wrap_tv989_26";
-    const titled = "_titled_tv989_30";
-    const value$1 = "_value_tv989_34";
-    const styles$O = {
-      target,
-      answer,
-      grid: grid$6,
-      centerLabel,
-      centerValue,
-      wrap,
-      titled,
-      value: value$1
-    };
-    function isEvalSample(sample2) {
-      return "store" in sample2;
-    }
-    const resolveSample = (sample2, sampleDescriptor) => {
-      const input2 = inputString(sample2.input);
-      if (isEvalSample(sample2) && sample2.choices && sample2.choices.length > 0) {
-        input2.push("");
-        input2.push(
-          ...sample2.choices.map((choice, index) => {
-            return `${String.fromCharCode(65 + index)}) ${choice}`;
-          })
-        );
-      }
-      const target2 = sample2.target;
-      const answer2 = sample2 && sampleDescriptor ? sampleDescriptor.selectedScorerDescriptor(sample2)?.answer() : void 0;
-      const limit = isEvalSample(sample2) ? sample2.limit?.type : void 0;
-      const working_time = isEvalSample(sample2) ? sample2.working_time : void 0;
-      const total_time = isEvalSample(sample2) ? sample2.total_time : void 0;
-      const error2 = isEvalSample(sample2) ? sample2.error?.message : void 0;
-      const retries = isEvalSample(sample2) ? sample2.error_retries?.length : sample2.retries;
-      return {
-        id: sample2.id,
-        input: input2,
-        target: target2,
-        answer: answer2,
-        limit,
-        retries,
-        working_time,
-        total_time,
-        error: error2
-      };
-    };
-    const SampleSummaryView = ({
-      parent_id,
-      sample: sample2
-    }) => {
-      const sampleDescriptor = useSampleDescriptor();
-      const selectedScores = useSelectedScores();
-      if (!sampleDescriptor) {
-        return void 0;
-      }
-      const fields = resolveSample(sample2, sampleDescriptor);
-      const limitSize = sampleDescriptor?.messageShape.normalized.limit > 0 ? Math.max(0.15, sampleDescriptor.messageShape.normalized.limit) : 0;
-      const retrySize = sampleDescriptor?.messageShape.normalized.retries > 0 ? 6 : 0;
-      const idSize = Math.max(
-        2,
-        Math.min(10, sampleDescriptor?.messageShape.raw.id)
-      );
-      const columns = [];
-      columns.push({
-        label: "Id",
-        value: fields.id,
-        size: `${idSize}em`
-      });
-      columns.push({
-        label: "Input",
-        value: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: fields.input.join(" ") }),
-        size: `minmax(auto, 5fr)`,
-        clamp: true
-      });
-      if (fields.target) {
-        columns.push({
-          label: "Target",
-          value: /* @__PURE__ */ jsxRuntimeExports.jsx(
-            RenderedText,
-            {
-              markdown: arrayToString(fields?.target || "none"),
-              className: clsx("no-last-para-padding", styles$O.target)
-            }
-          ),
-          size: `minmax(auto, 3fr)`,
-          clamp: true
-        });
-      }
-      if (fields.answer) {
-        columns.push({
-          label: "Answer",
-          value: sample2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-            RenderedText,
-            {
-              markdown: fields.answer || "",
-              className: clsx("no-last-para-padding", styles$O.answer)
-            }
-          ) : "",
-          size: `minmax(auto, 5fr)`,
-          clamp: true
-        });
-      }
-      const toolTip = (working_time) => {
-        if (working_time === void 0 || working_time === null) {
-          return void 0;
-        }
-        return `Working time: ${formatTime$1(working_time)}`;
-      };
-      if (fields.total_time) {
-        columns.push({
-          label: "Time",
-          value: formatTime$1(fields.total_time),
-          size: `fit-content(10rem)`,
-          center: true,
-          title: toolTip(fields.working_time)
-        });
-      }
-      if (fields?.limit && limitSize > 0) {
-        columns.push({
-          label: "Limit",
-          value: fields.limit,
-          size: `fit-content(10rem)`,
-          center: true
-        });
-      }
-      if (fields?.retries && retrySize > 0) {
-        columns.push({
-          label: "Retries",
-          value: fields.retries,
-          size: `fit-content(${retrySize}rem)`,
-          center: true
-        });
-      }
-      if (selectedScores && selectedScores.length > 0) {
-        selectedScores.forEach((scoreLabel) => {
-          columns.push({
-            label: selectedScores.length === 1 ? "Score" : scoreLabel.name,
-            value: fields.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(FlatSampleError, { message: fields.error }) : sampleDescriptor?.evalDescriptor.score(sample2, scoreLabel)?.render() || "",
-            size: "fit-content(15em)",
-            center: true
-          });
-        });
-      } else {
-        columns.push({
-          label: "Score",
-          value: fields.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(FlatSampleError, { message: fields.error }) : "",
-          size: "fit-content(15em)",
-          center: true
-        });
-      }
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        "div",
-        {
-          id: `sample-heading-${parent_id}`,
-          className: clsx(styles$O.grid, "text-size-base"),
-          style: {
-            gridTemplateColumns: `${columns.map((col) => {
-              return col.size;
-            }).join(" ")}`
-          },
-          children: [
-            columns.map((col, idx) => {
-              return /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "div",
-                {
-                  className: clsx(
-                    "text-style-label",
-                    "text-style-secondary",
-                    "text-size-smallest",
-                    col.title ? styles$O.titled : void 0,
-                    col.center ? styles$O.centerLabel : void 0
-                  ),
-                  title: col.title,
-                  "data-unsearchable": true,
-                  children: col.label
-                },
-                `sample-summ-lbl-${idx}`
-              );
-            }),
-            columns.map((col, idx) => {
-              return /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "div",
-                {
-                  className: clsx(
-                    styles$O.value,
-                    styles$O.wrap,
-                    col.clamp ? "three-line-clamp" : void 0,
-                    col.center ? styles$O.centerValue : void 0
-                  ),
-                  "data-unsearchable": true,
-                  children: col.value
-                },
-                `sample-summ-val-${idx}`
-              );
-            })
-          ]
-        }
-      );
-    };
-    const SampleScores = ({ sample: sample2, scorer: scorer2 }) => {
-      const scoreData = sample2.scores?.[scorer2];
-      if (!scoreData) {
-        return void 0;
-      }
-      const scorerDescriptor = getScoreDescriptorForValues(
-        [scoreData.value],
-        [typeof scoreData.value]
-      );
-      return scorerDescriptor?.render(scoreData.value);
-    };
-    const container$c = "_container_kwhbh_1";
-    const cell$1 = "_cell_kwhbh_9";
-    const fullWidth = "_fullWidth_kwhbh_13";
-    const separator$3 = "_separator_kwhbh_25";
-    const separatorPadded = "_separatorPadded_kwhbh_30";
-    const headerSep = "_headerSep_kwhbh_35";
-    const styles$N = {
-      container: container$c,
-      cell: cell$1,
-      fullWidth,
-      separator: separator$3,
-      separatorPadded,
-      headerSep
-    };
-    const SampleScoresGrid = ({
-      evalSample,
-      className: className2,
-      scrollRef
-    }) => {
-      const evalDescriptor = useEvalDescriptor();
-      if (!evalDescriptor) {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyPanel, { children: "No Sample Selected" });
-      }
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2, styles$N.container), children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "div",
-          {
-            className: clsx(
-              "text-size-smaller",
-              "text-style-label",
-              "text-style-secondary"
-            ),
-            children: "Scorer"
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "div",
-          {
-            className: clsx(
-              "text-size-smaller",
-              "text-style-label",
-              "text-style-secondary"
-            ),
-            children: "Answer"
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "div",
-          {
-            className: clsx(
-              "text-size-smaller",
-              "text-style-label",
-              "text-style-secondary"
-            ),
-            children: "Score"
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "div",
-          {
-            className: clsx(
-              "text-size-smaller",
-              "text-style-label",
-              "text-style-secondary"
-            ),
-            children: "Explanation"
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "div",
-          {
-            className: clsx(styles$N.separator, styles$N.fullWidth, styles$N.headerSep)
-          }
-        ),
-        Object.keys(evalSample.scores || {}).map((scorer2) => {
-          if (!evalSample.scores) {
-            return void 0;
-          }
-          const scoreData = evalSample.scores[scorer2];
-          const explanation2 = scoreData.explanation || "(No Explanation)";
-          const answer2 = scoreData.answer;
-          let metadata2 = scoreData.metadata || {};
-          return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-base", styles$N.cell), children: scorer2 }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$N.cell, "text-size-base"), children: answer2 }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$N.cell, "text-size-base"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-              SampleScores,
-              {
-                sample: evalSample,
-                scorer: scorer2
-              }
-            ) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-base", styles$N.cell), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-              RenderedContent,
-              {
-                id: `${scorer2}-explanation`,
-                entry: {
-                  name: "Explanation",
-                  value: explanation2
-                }
-              }
-            ) }),
-            Object.keys(metadata2).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "div",
-                {
-                  className: clsx(
-                    "text-size-smaller",
-                    "text-style-label",
-                    "text-style-secondary",
-                    styles$N.fullWidth
-                  ),
-                  children: "Metadata"
-                }
-              ),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$N.fullWidth), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-                RecordTree,
-                {
-                  id: `${scorer2}-metadataa`,
-                  scrollRef,
-                  record: metadata2,
-                  defaultExpandLevel: 0
-                }
-              ) }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "div",
-                {
-                  className: clsx(
-                    styles$N.separator,
-                    styles$N.separatorPadded,
-                    styles$N.fullWidth
-                  )
-                }
-              )
-            ] }, `${scorer2}-metadata`) : void 0
-          ] }, `${scorer2}-row`);
-        })
-      ] });
-    };
-    const wordBreak = "_wordBreak_las07_9";
-    const scoreCard = "_scoreCard_las07_50";
-    const scores = "_scores_las07_54";
-    const styles$M = {
-      wordBreak,
-      scoreCard,
-      scores
-    };
-    const SampleScoresView = ({
-      sample: sample2,
-      className: className2,
-      scrollRef
-    }) => {
-      const evalDescriptor = useEvalDescriptor();
-      if (!evalDescriptor) {
-        return void 0;
-      }
-      if (!sample2) {
-        return void 0;
-      }
-      const scoreInput = inputString(sample2.input);
-      if (sample2.choices && sample2.choices.length > 0) {
-        scoreInput.push("");
-        scoreInput.push(
-          ...sample2.choices.map((choice, index) => {
-            return `${String.fromCharCode(65 + index)}) ${choice}`;
-          })
-        );
-      }
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "div",
-        {
-          className: clsx(
-            "container-fluid",
-            className2,
-            "font-size-base",
-            styles$M.container
-          ),
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(Card, { className: clsx(styles$M.scoreCard), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardBody, { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "div",
-              {
-                className: clsx(
-                  "text-size-small",
-                  "text-style-label",
-                  "text-style-secondary"
-                ),
-                children: "Input"
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              ExpandablePanel,
-              {
-                lines: 10,
-                id: `sample-score-${sample2.id}-${sample2.epoch}`,
-                collapse: true,
-                children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  RenderedText,
-                  {
-                    markdown: scoreInput.join("\n"),
-                    className: clsx(styles$M.wordBreak, "text-size-base")
-                  }
-                )
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              SampleScoresGrid,
-              {
-                evalSample: sample2,
-                className: clsx(styles$M.scores),
-                scrollRef
-              }
-            )
-          ] }) })
-        }
-      );
-    };
-    const eventTypes = {
-      sample_init: "Sample Init",
-      sample_limit: "Sample Limit",
-      sandbox: "Sandbox",
-      state: "State",
-      store: "Store",
-      model: "Model",
-      tool: "Tool",
-      approval: "Approval",
-      input: "Input",
-      score: "Score",
-      score_edit: "Score Edit",
-      error: "Error",
-      logger: "Logger",
-      info: "Info",
-      subtask: "Subtask"
-    };
-    const useTranscriptFilter = () => {
-      const filtered = useStore((state) => state.sample.eventFilter.filteredTypes);
-      const setFilteredEventTypes = useStore(
-        (state) => state.sampleActions.setFilteredEventTypes
-      );
-      const filterEventType = reactExports.useCallback(
-        (type, isFiltered) => {
-          const newFiltered = new Set(filtered);
-          if (isFiltered) {
-            newFiltered.delete(type);
-          } else {
-            newFiltered.add(type);
-          }
-          setFilteredEventTypes(Array.from(newFiltered));
-        },
-        [filtered]
-      );
-      const setDebugFilter = reactExports.useCallback(() => {
-        setFilteredEventTypes([]);
-      }, [setFilteredEventTypes]);
-      const setDefaultFilter = reactExports.useCallback(() => {
-        setFilteredEventTypes([...kDefaultExcludeEvents]);
-      }, [setFilteredEventTypes]);
-      const isDefaultFilter = reactExports.useMemo(() => {
-        return filtered.length === kDefaultExcludeEvents.length && [...filtered].every((type) => kDefaultExcludeEvents.includes(type));
-      }, [filtered]);
-      const isDebugFilter = reactExports.useMemo(() => {
-        return filtered.length === 0;
-      }, [filtered]);
-      const arrangedEventTypes = reactExports.useCallback((columns = 1) => {
-        const keys = Object.keys(eventTypes);
-        const sortedKeys = keys.sort((a, b) => {
-          const aIsDefault = kDefaultExcludeEvents.includes(a);
-          const bIsDefault = kDefaultExcludeEvents.includes(b);
-          if (aIsDefault && !bIsDefault) return 1;
-          if (!aIsDefault && bIsDefault) return -1;
-          return eventTypes[a].localeCompare(eventTypes[b]);
-        });
-        if (columns === 1) {
-          return sortedKeys;
-        }
-        const itemsPerColumn = Math.ceil(sortedKeys.length / columns);
-        const columnArrays = [];
-        for (let col = 0; col < columns; col++) {
-          const start2 = col * itemsPerColumn;
-          const end2 = Math.min(start2 + itemsPerColumn, sortedKeys.length);
-          columnArrays.push(sortedKeys.slice(start2, end2));
-        }
-        const arrangedKeys = [];
-        const maxItemsInColumn = Math.max(...columnArrays.map((col) => col.length));
-        for (let row2 = 0; row2 < maxItemsInColumn; row2++) {
-          for (let col = 0; col < columns; col++) {
-            if (row2 < columnArrays[col].length) {
-              arrangedKeys.push(columnArrays[col][row2]);
-            }
-          }
-        }
-        return arrangedKeys;
-      }, []);
-      return {
-        filtered,
-        isDefaultFilter,
-        isDebugFilter,
-        setDefaultFilter,
-        setDebugFilter,
-        filterEventType,
-        eventTypes,
-        arrangedEventTypes
-      };
-    };
+    });
     var fromEntries = function fromEntries2(entries) {
       return entries.reduce(function(acc, _ref) {
         var key2 = _ref[0], value2 = _ref[1];
@@ -118396,6 +119870,2904 @@ categories: ${categories.join(" ")}`;
         return reactDomExports.createPortal(popperContent, portalContainer);
       }
       return popperContent;
+    };
+    const container$j = "_container_e3s30_1";
+    const fullWidth$2 = "_fullWidth_e3s30_9";
+    const fullWidthPadded = "_fullWidthPadded_e3s30_13";
+    const spacer$1 = "_spacer_e3s30_18";
+    const logDir = "_logDir_e3s30_38";
+    const clearButton = "_clearButton_e3s30_52";
+    const message$2 = "_message_e3s30_56";
+    const messageSuccess = "_messageSuccess_e3s30_64";
+    const messageError = "_messageError_e3s30_69";
+    const styles$16 = {
+      container: container$j,
+      fullWidth: fullWidth$2,
+      fullWidthPadded,
+      spacer: spacer$1,
+      logDir,
+      clearButton,
+      message: message$2,
+      messageSuccess,
+      messageError
+    };
+    const ViewerOptionsPopover = ({
+      showing,
+      positionEl,
+      setShowing
+    }) => {
+      const [isClearing, setIsClearing] = reactExports.useState(false);
+      const [clearMessage, setClearMessage] = reactExports.useState(null);
+      const replicationService = useStore((state) => state.replicationService);
+      const dbStats = useStore((state) => state.logs.dbStats);
+      const logDir2 = useStore((state) => state.logs.logDir);
+      const handleClearDatabase = async () => {
+        if (!replicationService) {
+          setClearMessage("Database service not available");
+          setTimeout(() => setClearMessage(null), 3e3);
+          return;
+        }
+        setIsClearing(true);
+        setClearMessage(null);
+        try {
+          await replicationService.clearData();
+          setClearMessage("Database cleared successfully");
+          setTimeout(() => setClearMessage(null), 3e3);
+        } catch (error2) {
+          console.error("Failed to clear database:", error2);
+          setClearMessage("Failed to clear database");
+          setTimeout(() => setClearMessage(null), 3e3);
+        } finally {
+          setIsClearing(false);
+        }
+      };
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        PopOver,
+        {
+          id: `viewer-options-filter-popover`,
+          positionEl,
+          isOpen: showing,
+          setIsOpen: setShowing,
+          placement: "auto",
+          hoverDelay: -1,
+          offset: [-10, 5],
+          showArrow: false,
+          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$16.container, "text-size-smaller"), children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                className: clsx(
+                  "text-style-label",
+                  "text-style-secondary",
+                  styles$16.fullWidth
+                ),
+                children: "Log Directory"
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.fullWidth, styles$16.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$16.logDir, children: logDir2 }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.spacer) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.140-99-g0a2ff658c" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.spacer) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Logs" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: dbStats?.logCount || 0 }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Log Previews" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: dbStats?.previewCount || 0 }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Log Details" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: dbStats?.detailsCount || 0 }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.spacer) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Tools" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(), children: [
+              " ",
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "button",
+                {
+                  onClick: handleClearDatabase,
+                  disabled: isClearing,
+                  className: clsx(
+                    "btn",
+                    "btn-tools",
+                    "text-size-smallest",
+                    styles$16.clearButton
+                  ),
+                  children: isClearing ? "Clearing..." : "Clear Local Database"
+                }
+              )
+            ] }),
+            clearMessage && /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                className: clsx(
+                  styles$16.fullWidth,
+                  styles$16.message,
+                  clearMessage.includes("success") ? styles$16.messageSuccess : styles$16.messageError
+                ),
+                children: clearMessage
+              }
+            )
+          ] })
+        }
+      );
+    };
+    const rootName = (relativePath) => {
+      const parts = relativePath.split("/");
+      if (parts.length === 0) {
+        return "";
+      }
+      return parts[0];
+    };
+    const kLogsPaginationId = "logs-list-pagination";
+    const kDefaultPageSize = 30;
+    const LogsPanel = ({ maybeShowSingleLog }) => {
+      const { loadLogs } = useLogs();
+      const logDir2 = useStore((state) => state.logs.logDir);
+      const logFiles = useStore((state) => state.logs.logs);
+      const evalSet = useStore((state) => state.logs.evalSet);
+      const logPreviews = useStore((state) => state.logs.logPreviews);
+      const loading = useStore((state) => state.app.status.loading);
+      const syncing = useStore((state) => state.app.status.syncing);
+      const watchedLogs = useStore((state) => state.logs.listing.watchedLogs);
+      const navigate = useNavigate();
+      const { setPage } = usePagination(kLogsPaginationId, kDefaultPageSize);
+      const filterRef = reactExports.useRef(null);
+      const gridRef = reactExports.useRef(null);
+      const optionsRef = reactExports.useRef(null);
+      const isShowing = useStore((state) => state.app.dialogs.options);
+      const setShowing = useStore(
+        (state) => state.appActions.setShowingOptionsDialog
+      );
+      const { logPath } = useLogRouteParams();
+      const currentDir = join(logPath || "", logDir2);
+      const { startPolling, stopPolling } = useClientEvents();
+      const { setDocumentTitle } = useDocumentTitle();
+      reactExports.useEffect(() => {
+        setDocumentTitle({
+          logDir: logDir2
+        });
+      }, [setDocumentTitle, logDir2]);
+      const previousWatchedLogs = reactExports.useRef(void 0);
+      reactExports.useEffect(() => {
+        const current2 = watchedLogs?.map((log2) => log2.name).sort().join(",") || "";
+        const previous = previousWatchedLogs.current === void 0 ? void 0 : previousWatchedLogs.current?.map((log2) => log2.name).sort().join(",") || "";
+        if (current2 !== previous) {
+          stopPolling();
+          if (watchedLogs !== void 0) {
+            startPolling(watchedLogs);
+          }
+          previousWatchedLogs.current = watchedLogs;
+        }
+      }, [watchedLogs]);
+      const logItems = reactExports.useMemo(() => {
+        const logItems2 = [];
+        const processedFolders = /* @__PURE__ */ new Set();
+        const existingLogTaskIds = /* @__PURE__ */ new Set();
+        for (const logFile of logFiles) {
+          if (logFile.task_id) {
+            existingLogTaskIds.add(logFile.task_id);
+          }
+          const name2 = logFile.name;
+          const cleanDir = currentDir.endsWith("/") ? currentDir.slice(0, -1) : currentDir;
+          const dirWithSlash = !currentDir.endsWith("/") ? currentDir + "/" : currentDir;
+          if (isInDirectory(name2, cleanDir)) {
+            const dirName = directoryRelativeUrl(currentDir, logDir2);
+            const relativePath = directoryRelativeUrl(name2, currentDir);
+            const fileOrFolderName = decodeURIComponent(rootName(relativePath));
+            const path = join(
+              decodeURIComponent(relativePath),
+              decodeURIComponent(dirName)
+            );
+            logItems2.push({
+              id: fileOrFolderName,
+              name: fileOrFolderName,
+              type: "file",
+              url: logUrl(path, logDir2),
+              log: logFile,
+              logPreview: logPreviews[logFile.name]
+            });
+          } else if (name2.startsWith(dirWithSlash)) {
+            const relativePath = directoryRelativeUrl(name2, currentDir);
+            const dirName = decodeURIComponent(rootName(relativePath));
+            const currentDirRelative = directoryRelativeUrl(currentDir, logDir2);
+            const url = join(dirName, decodeURIComponent(currentDirRelative));
+            if (!processedFolders.has(dirName)) {
+              logItems2.push({
+                id: dirName,
+                name: dirName,
+                type: "folder",
+                url: logUrl(url, logDir2),
+                itemCount: logFiles.filter(
+                  (file) => file.name.startsWith(dirname(name2))
+                ).length
+              });
+              processedFolders.add(dirName);
+            }
+          }
+        }
+        const collapsedLogItems = collapseLogItems(evalSet, logItems2);
+        return appendPendingItems(evalSet, existingLogTaskIds, collapsedLogItems);
+      }, [logPath, logFiles, logPreviews, evalSet]);
+      const progress2 = reactExports.useMemo(() => {
+        let pending = 0;
+        let total = 0;
+        for (const item2 of logItems) {
+          if (item2.type === "file" || item2.type === "pending-task") {
+            total += 1;
+            if (item2.type === "pending-task" || item2.logPreview?.status === "started") {
+              pending += 1;
+            }
+          }
+        }
+        return {
+          complete: total - pending,
+          total
+        };
+      }, [logItems]);
+      reactExports.useEffect(() => {
+        const exec2 = async () => {
+          await loadLogs(logPath);
+        };
+        exec2();
+      }, [loadLogs, logPath]);
+      reactExports.useEffect(() => {
+        if (currentDir !== loadedDir.current) {
+          setPage(0);
+        }
+      }, [currentDir]);
+      const loadedDir = reactExports.useRef(currentDir);
+      reactExports.useEffect(() => {
+        if (maybeShowSingleLog && logItems.length === 1) {
+          const onlyItem = logItems[0];
+          if (onlyItem.url) {
+            navigate(onlyItem.url);
+          }
+        }
+      }, [logItems, maybeShowSingleLog]);
+      function handleKeyDown(e) {
+        if (e.key === "f" && (e.metaKey || e.ctrlKey)) {
+          e.preventDefault();
+          filterRef.current?.focus();
+        } else if (e.key === "Escape" && document.activeElement === filterRef.current) {
+          e.preventDefault();
+          gridRef.current?.focus();
+        }
+      }
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "div",
+        {
+          className: clsx(styles$18.panel),
+          onKeyDown: (e) => {
+            handleKeyDown(e);
+          },
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(Navbar, { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(LogsFilterInput, { ref: filterRef }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                ViewerOptionsButton,
+                {
+                  showing: isShowing,
+                  setShowing,
+                  ref: optionsRef
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                ViewerOptionsPopover,
+                {
+                  positionEl: optionsRef.current,
+                  showing: isShowing,
+                  setShowing
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(ActivityBar, { animating: !!loading }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$18.list, "text-size-smaller"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(LogListGrid, { ref: gridRef, items: logItems }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              LogListFooter,
+              {
+                logDir: currentDir,
+                itemCount: logItems.length,
+                progressText: syncing ? "Syncing data" : void 0,
+                progressBar: progress2.total !== progress2.complete ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  ProgressBar,
+                  {
+                    min: 0,
+                    max: progress2.total,
+                    value: progress2.complete,
+                    width: "100px"
+                  }
+                ) : void 0
+              }
+            )
+          ]
+        }
+      );
+    };
+    const collapseLogItems = (evalSet, logItems) => {
+      if (!evalSet) {
+        return logItems;
+      }
+      const taskIdToItems = /* @__PURE__ */ new Map();
+      for (const item2 of logItems) {
+        if (item2.type === "file" && item2.log.task_id) {
+          const taskId = item2.log.task_id;
+          if (!taskIdToItems.has(taskId)) {
+            taskIdToItems.set(taskId, []);
+          }
+          taskIdToItems.get(taskId).push(item2);
+        } else if (item2.type === "folder" || item2.type === "file") ;
+      }
+      const selectedItems = /* @__PURE__ */ new Map();
+      for (const [taskId, items] of taskIdToItems) {
+        let bestItem = items[0];
+        for (const item2 of items) {
+          const currentStatus = item2.logPreview?.status;
+          const bestStatus = bestItem.logPreview?.status;
+          if (currentStatus === "started" && bestStatus !== "started") {
+            bestItem = item2;
+          } else if (currentStatus === "success" && bestStatus === "error") {
+            bestItem = item2;
+          } else if (currentStatus === bestStatus) {
+            bestItem = item2;
+          }
+        }
+        selectedItems.set(taskId, bestItem);
+      }
+      const collapsedLogItems = [];
+      const processedTaskIds = /* @__PURE__ */ new Set();
+      for (const item2 of logItems) {
+        if (item2.type === "file" && item2.log.task_id) {
+          const taskId = item2.log.task_id;
+          if (!processedTaskIds.has(taskId)) {
+            const selectedItem = selectedItems.get(taskId);
+            if (selectedItem) {
+              collapsedLogItems.push(selectedItem);
+            }
+            processedTaskIds.add(taskId);
+          }
+        } else {
+          collapsedLogItems.push(item2);
+        }
+      }
+      return collapsedLogItems;
+    };
+    const appendPendingItems = (evalSet, tasksWithLogFiles, collapsedLogItems) => {
+      const pendingTasks = new Array();
+      for (const task of evalSet?.tasks || []) {
+        if (!tasksWithLogFiles.has(task.task_id)) {
+          pendingTasks.push({
+            id: task.task_id,
+            name: task.name || "<unknown>",
+            model: task.model,
+            type: "pending-task"
+          });
+        }
+      }
+      pendingTasks.sort((a, b) => a.name.localeCompare(b.name));
+      collapsedLogItems.push(...pendingTasks);
+      return collapsedLogItems;
+    };
+    const useUnloadLog = () => {
+      const clearSelectedLogDetails = useStore(
+        (state) => state.logActions.clearSelectedLogDetails
+      );
+      const setSelectedLogIndex = useStore(
+        (state) => state.logsActions.setSelectedLogIndex
+      );
+      const clearLog = useStore((state) => state.logActions.clearLog);
+      const unloadLog = reactExports.useCallback(() => {
+        clearSelectedLogDetails();
+        setSelectedLogIndex(-1);
+        clearLog();
+      }, [clearLog, clearSelectedLogDetails, setSelectedLogIndex]);
+      return { unloadLog };
+    };
+    const ExtendedFindContext = reactExports.createContext(null);
+    const ExtendedFindProvider = ({
+      children: children2
+    }) => {
+      const virtualLists = reactExports.useRef(/* @__PURE__ */ new Map());
+      const extendedFindTerm = reactExports.useCallback(
+        async (term, direction) => {
+          for (const [, searchFn] of virtualLists.current) {
+            const found = await new Promise((resolve) => {
+              let callbackFired = false;
+              const onContentReady = () => {
+                if (!callbackFired) {
+                  callbackFired = true;
+                  resolve(true);
+                }
+              };
+              searchFn(term, direction, onContentReady).then((found2) => {
+                if (!found2 && !callbackFired) {
+                  callbackFired = true;
+                  resolve(false);
+                }
+              }).catch(() => {
+                if (!callbackFired) {
+                  callbackFired = true;
+                  resolve(false);
+                }
+              });
+            });
+            if (found) {
+              return true;
+            }
+          }
+          return false;
+        },
+        []
+      );
+      const registerVirtualList = reactExports.useCallback(
+        (id, searchFn) => {
+          virtualLists.current.set(id, searchFn);
+          return () => {
+            virtualLists.current.delete(id);
+          };
+        },
+        []
+      );
+      const contextValue = {
+        extendedFindTerm,
+        registerVirtualList
+      };
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(ExtendedFindContext.Provider, { value: contextValue, children: children2 });
+    };
+    const useExtendedFind = () => {
+      const context = reactExports.useContext(ExtendedFindContext);
+      if (!context) {
+        throw new Error("useSearch must be used within a SearchProvider");
+      }
+      return context;
+    };
+    const findConfig = {
+      caseSensitive: false,
+      wrapAround: false,
+      wholeWord: false,
+      searchInFrames: false,
+      showDialog: false
+    };
+    const FindBand = () => {
+      const searchBoxRef = reactExports.useRef(null);
+      const storeHideFind = useStore((state) => state.appActions.hideFind);
+      const { extendedFindTerm } = useExtendedFind();
+      const lastFoundItem = reactExports.useRef(null);
+      const currentSearchTerm = reactExports.useRef("");
+      reactExports.useEffect(() => {
+        setTimeout(() => {
+          searchBoxRef.current?.focus();
+          searchBoxRef.current?.select();
+        }, 10);
+        const handleGlobalKeydown = (e) => {
+          if ((e.ctrlKey || e.metaKey) && e.key === "f") {
+            e.preventDefault();
+            e.stopPropagation();
+            searchBoxRef.current?.focus();
+            searchBoxRef.current?.select();
+          } else if ((e.ctrlKey || e.metaKey) && e.key === "g") {
+            e.preventDefault();
+            e.stopPropagation();
+            const back = e.shiftKey;
+            handleSearch(back);
+          }
+        };
+        document.addEventListener("keydown", handleGlobalKeydown, true);
+        return () => {
+          document.removeEventListener("keydown", handleGlobalKeydown, true);
+        };
+      }, []);
+      const getParentExpandablePanel = reactExports.useCallback(
+        (selection) => {
+          let node2 = selection.anchorNode;
+          while (node2) {
+            if (node2 instanceof HTMLElement && node2.classList.contains("expandable-panel")) {
+              return node2;
+            }
+            node2 = node2.parentElement;
+          }
+          return void 0;
+        },
+        []
+      );
+      const handleSearch = reactExports.useCallback(
+        async (back = false) => {
+          const searchTerm = searchBoxRef.current?.value ?? "";
+          if (!searchTerm) {
+            return;
+          }
+          if (currentSearchTerm.current !== searchTerm) {
+            lastFoundItem.current = null;
+            currentSearchTerm.current = searchTerm;
+          }
+          const focusedElement = document.activeElement;
+          let result2 = await findExtendedInDOM(
+            searchTerm,
+            back,
+            lastFoundItem.current,
+            extendedFindTerm
+          );
+          const noResultEl = document.getElementById("inspect-find-no-results");
+          if (!noResultEl) {
+            return;
+          }
+          noResultEl.style.opacity = result2 ? "0" : "1";
+          if (result2) {
+            const selection = window.getSelection();
+            if (selection && selection.rangeCount > 0) {
+              const range2 = selection.getRangeAt(0);
+              const parentElement = range2.startContainer.parentElement || range2.commonAncestorContainer;
+              lastFoundItem.current = {
+                text: range2.toString(),
+                offset: range2.startOffset,
+                parentElement
+              };
+              const parentPanel = getParentExpandablePanel(selection);
+              if (parentPanel) {
+                parentPanel.style.display = "block";
+                parentPanel.style.webkitLineClamp = "";
+                parentPanel.style.webkitBoxOrient = "";
+              }
+              const element = range2.startContainer.parentElement;
+              if (element) {
+                setTimeout(() => {
+                  element.scrollIntoView({
+                    behavior: "auto",
+                    block: "center"
+                  });
+                }, 100);
+              }
+            }
+          }
+          focusedElement?.focus();
+        },
+        [getParentExpandablePanel, extendedFindTerm]
+      );
+      const handleKeyDown = reactExports.useCallback(
+        (e) => {
+          if (e.key === "Escape") {
+            storeHideFind();
+          } else if (e.key === "Enter") {
+            handleSearch(e.shiftKey);
+          } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "g") {
+            e.preventDefault();
+            handleSearch(!e.shiftKey);
+          } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "f") {
+            searchBoxRef.current?.focus();
+            searchBoxRef.current?.select();
+          }
+        },
+        [storeHideFind, handleSearch]
+      );
+      const showSearch = reactExports.useCallback(() => {
+        handleSearch(true);
+      }, [handleSearch]);
+      const hideSearch = reactExports.useCallback(() => {
+        handleSearch(false);
+      }, [handleSearch]);
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-unsearchable": "true", className: clsx("findBand"), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "input",
+          {
+            type: "text",
+            ref: searchBoxRef,
+            placeholder: "Find",
+            onKeyDown: handleKeyDown
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { id: "inspect-find-no-results", children: "No results" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            type: "button",
+            title: "Previous match",
+            className: "btn next",
+            onClick: showSearch,
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.arrows.up })
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            type: "button",
+            title: "Next match",
+            className: "btn prev",
+            onClick: hideSearch,
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.arrows.down })
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            type: "button",
+            title: "Close",
+            className: "btn close",
+            onClick: storeHideFind,
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.close })
+          }
+        )
+      ] });
+    };
+    async function findExtendedInDOM(searchTerm, back, lastFoundItem, extendedFindTerm) {
+      let result2 = false;
+      let attempts = 0;
+      let hasTriedExtendedSearch = false;
+      const maxAttempts = 25;
+      do {
+        result2 = window.find(
+          searchTerm,
+          findConfig.caseSensitive,
+          back,
+          findConfig.wrapAround,
+          findConfig.wholeWord,
+          findConfig.searchInFrames,
+          findConfig.showDialog
+        );
+        if (result2) {
+          const selection = window.getSelection();
+          if (selection && selection.rangeCount > 0) {
+            const range2 = selection.getRangeAt(0);
+            let isUnsearchable = inUnsearchableElement(range2);
+            const isSameAsLast = isLastFoundItem(range2, lastFoundItem);
+            if (!isUnsearchable && !isSameAsLast) {
+              break;
+            }
+          }
+        } else if (!hasTriedExtendedSearch) {
+          hasTriedExtendedSearch = true;
+          const foundInVirtual = await extendedFindTerm(
+            searchTerm,
+            back ? "backward" : "forward"
+          );
+          if (foundInVirtual) ;
+          else {
+            break;
+          }
+        } else {
+          break;
+        }
+        attempts++;
+      } while (attempts < maxAttempts);
+      return result2;
+    }
+    function isLastFoundItem(range2, lastFoundItem) {
+      if (!lastFoundItem) return false;
+      const currentText = range2.toString();
+      const currentOffset = range2.startOffset;
+      const currentParentElement = range2.startContainer.parentElement || range2.commonAncestorContainer;
+      return currentText === lastFoundItem.text && currentOffset === lastFoundItem.offset && currentParentElement === lastFoundItem.parentElement;
+    }
+    function inUnsearchableElement(range2) {
+      let element = selectionParentElement(range2);
+      let isUnsearchable = false;
+      while (element) {
+        if (element.hasAttribute("data-unsearchable") || getComputedStyle(element).userSelect === "none") {
+          isUnsearchable = true;
+          break;
+        }
+        element = element.parentElement;
+      }
+      return isUnsearchable;
+    }
+    function selectionParentElement(range2) {
+      let element = null;
+      if (range2.startContainer.nodeType === Node.ELEMENT_NODE) {
+        element = range2.startContainer;
+      } else {
+        element = range2.startContainer.parentElement;
+      }
+      if (!element && range2.commonAncestorContainer.nodeType === Node.ELEMENT_NODE) {
+        element = range2.commonAncestorContainer;
+      } else if (!element && range2.commonAncestorContainer.parentElement) {
+        element = range2.commonAncestorContainer.parentElement;
+      }
+      return element;
+    }
+    const EmptyPanel = ({ children: children2 }) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "empty-panel", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: children2 }) }) });
+    };
+    const tabs$1 = "_tabs_jdywf_1";
+    const tabContents = "_tabContents_jdywf_5";
+    const scrollable = "_scrollable_jdywf_10";
+    const tab$1 = "_tab_jdywf_1";
+    const tabItem = "_tabItem_jdywf_24";
+    const tabIcon = "_tabIcon_jdywf_28";
+    const tabTools = "_tabTools_jdywf_32";
+    const tabStyle = "_tabStyle_jdywf_42";
+    const moduleStyles = {
+      tabs: tabs$1,
+      tabContents,
+      scrollable,
+      tab: tab$1,
+      tabItem,
+      tabIcon,
+      tabTools,
+      tabStyle
+    };
+    const TabSet = ({
+      id,
+      type = "tabs",
+      className: className2,
+      tabPanelsClassName,
+      tabControlsClassName,
+      tools: tools2,
+      tabsRef,
+      children: children2
+    }) => {
+      const validTabs = flattenChildren(children2);
+      if (validTabs.length === 0) return null;
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "ul",
+          {
+            ref: tabsRef,
+            id,
+            className: clsx(
+              "nav",
+              `nav-${type}`,
+              type === "tabs" ? moduleStyles.tabStyle : void 0,
+              className2,
+              moduleStyles.tabs
+            ),
+            role: "tablist",
+            "aria-orientation": "horizontal",
+            children: [
+              validTabs.map((tab2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Tab,
+                {
+                  index,
+                  type,
+                  tab: tab2,
+                  className: clsx(tabControlsClassName)
+                },
+                tab2.props.id
+              )),
+              tools2 && /* @__PURE__ */ jsxRuntimeExports.jsx(TabTools, { tools: tools2 })
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(TabPanels, { id, tabs: validTabs, className: tabPanelsClassName })
+      ] });
+    };
+    const Tab = ({ type = "tabs", tab: tab2, index, className: className2 }) => {
+      const tabId = tab2.props.id || computeTabId("tabset", index);
+      const tabContentsId = computeTabContentsId(tab2.props.id);
+      const isActive = tab2.props.selected;
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("li", { role: "presentation", className: clsx("nav-item", moduleStyles.tabItem), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "button",
+        {
+          id: tabId,
+          className: clsx(
+            "nav-link",
+            className2,
+            isActive && "active",
+            type === "pills" ? moduleStyles.pill : moduleStyles.tab,
+            "text-size-small",
+            "text-style-label"
+          ),
+          type: "button",
+          role: "tab",
+          "aria-controls": tabContentsId,
+          "aria-selected": isActive,
+          onClick: tab2.props.onSelected,
+          children: [
+            tab2.props.icon && /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(tab2.props.icon, moduleStyles.tabIcon) }),
+            tab2.props.title
+          ]
+        }
+      ) });
+    };
+    const TabPanels = ({ id, tabs: tabs2, className: className2 }) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("tab-content", className2), id: `${id}-content`, children: tabs2.map((tab2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(TabPanel, { ...tab2.props, index }, tab2.props.id)) });
+    const TabPanel = ({
+      id,
+      selected: selected2,
+      style: style2,
+      scrollable: scrollable2 = true,
+      scrollRef,
+      className: className2,
+      children: children2
+    }) => {
+      const tabContentsId = computeTabContentsId(id);
+      const panelRef = reactExports.useRef(null);
+      const tabContentsRef = scrollRef || panelRef;
+      useStatefulScrollPosition(tabContentsRef, tabContentsId, 1e3, scrollable2);
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
+        {
+          id: tabContentsId,
+          ref: tabContentsRef,
+          className: clsx(
+            "tab-pane",
+            selected2 && "show active",
+            className2,
+            moduleStyles.tabContents,
+            scrollable2 && moduleStyles.scrollable
+          ),
+          style: style2,
+          children: selected2 ? children2 : null
+        }
+      );
+    };
+    const TabTools = ({ tools: tools2 }) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("tab-tools", moduleStyles.tabTools), children: tools2 });
+    const computeTabId = (id, index) => `${id}-${index}`;
+    const computeTabContentsId = (id) => `${id}-contents`;
+    const flattenChildren = (children2) => {
+      return reactExports.Children.toArray(children2).flatMap((child) => {
+        if (reactExports.isValidElement(child)) {
+          const element = child;
+          if (element.type === reactExports.Fragment) {
+            return flattenChildren(element.props.children);
+          }
+          return element;
+        }
+        return [];
+      });
+    };
+    const useLogNavigation = () => {
+      const navigate = useNavigate();
+      const { logPath } = useParams();
+      const logDir2 = useStore((state) => state.logs.logDir);
+      const loadedLog = useStore((state) => state.log.loadedLog);
+      const selectTab = reactExports.useCallback(
+        (tabId) => {
+          if (loadedLog && logPath) {
+            const url = logUrlRaw(logPath, tabId);
+            navigate(url);
+          } else if (loadedLog) {
+            const url = logUrl(loadedLog, logDir2, tabId);
+            navigate(url);
+          }
+        },
+        [loadedLog, logPath, logDir2, navigate]
+      );
+      return {
+        selectTab
+      };
+    };
+    const workspace = "_workspace_1r3mu_1";
+    const tabContainer = "_tabContainer_1r3mu_6";
+    const tabSet = "_tabSet_1r3mu_14";
+    const tabs = "_tabs_1r3mu_21";
+    const tabPanels = "_tabPanels_1r3mu_29";
+    const styles$15 = {
+      workspace,
+      tabContainer,
+      tabSet,
+      tabs,
+      tabPanels
+    };
+    const CardHeader = ({
+      id,
+      icon: icon2,
+      label: label2,
+      className: className2,
+      children: children2
+    }) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "div",
+        {
+          className: clsx("card-header-container", "text-style-label", className2),
+          id: id || "",
+          children: [
+            icon2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx("card-header-icon", icon2) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "card-header-icon" }),
+            label2 ? label2 : "",
+            " ",
+            children2
+          ]
+        }
+      );
+    };
+    const CardBody = ({
+      id,
+      children: children2,
+      className: className2,
+      padded: padded2 = true
+    }) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
+        {
+          className: clsx(
+            "card-body",
+            className2,
+            !padded2 ? "card-no-padding" : void 0
+          ),
+          id: id || "",
+          children: children2
+        }
+      );
+    };
+    const Card = ({ id, children: children2, className: className2 }) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("card", className2), id, children: children2 });
+    };
+    const message$1 = "_message_1gb2h_5";
+    const styles$14 = {
+      "task-error-display": "_task-error-display_1gb2h_1",
+      message: message$1
+    };
+    const TaskErrorCard = ({ error: error2 }) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          CardHeader,
+          {
+            icon: ApplicationIcons.error,
+            label: `Task Failed`
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(CardBody, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            ExpandablePanel,
+            {
+              id: "task-error-collapse",
+              collapse: true,
+              className: clsx("text-size-smaller", styles$14.message),
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                RenderedContent,
+                {
+                  id: "task-error-message",
+                  entry: { name: "error", value: error2.message }
+                }
+              )
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            ANSIDisplay,
+            {
+              output: error2.traceback_ansi,
+              className: styles$14["task-error-display"]
+            }
+          )
+        ] })
+      ] });
+    };
+    const useErrorTabConfig = (evalError) => {
+      const scrollRef = reactExports.useRef(null);
+      return reactExports.useMemo(() => {
+        return {
+          id: kLogViewErrorTabId,
+          label: "Error",
+          scrollable: true,
+          component: ErrorTab,
+          componentProps: {
+            evalError,
+            scrollRef
+          },
+          scrollRef
+        };
+      }, [evalError]);
+    };
+    const ErrorTab = ({ evalError }) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "0.5em 1em 0 1em", width: "100%" }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          TaskErrorCard,
+          {
+            error: evalError || {
+              message: "Unknown error",
+              traceback: "",
+              traceback_ansi: ""
+            }
+          }
+        ),
+        " "
+      ] }) });
+    };
+    const MessageBand = ({
+      id,
+      message: message2,
+      type,
+      scope = "eval"
+    }) => {
+      const className2 = [type];
+      const [visible2, setVisible] = useMessageVisibility(id, scope);
+      const handleClick = reactExports.useCallback(() => {
+        setVisible(false);
+      }, [setVisible]);
+      if (!visible2) {
+        className2.push("hidden");
+      }
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("message-band", className2), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.logging[type] }),
+        message2,
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            className: clsx("btn", "message-band-btn", type),
+            title: "Close",
+            onClick: handleClick,
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.close })
+          }
+        )
+      ] });
+    };
+    const item$2 = "_item_1uzhd_1";
+    const styles$13 = {
+      item: item$2
+    };
+    const DatasetDetailView = ({
+      dataset,
+      style: style2
+    }) => {
+      const filtered = Object.fromEntries(
+        Object.entries(dataset).filter(([key2]) => key2 !== "sample_ids")
+      );
+      if (!dataset || Object.keys(filtered).length === 0) {
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-size-base", styles$13.item), style: style2, children: "No dataset information available" });
+      }
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        MetaDataGrid,
+        {
+          className: clsx("text-size-base", styles$13.item),
+          entries: filtered,
+          style: style2,
+          plain: true
+        }
+      );
+    };
+    const icon$2 = "_icon_59zaz_1";
+    const container$i = "_container_59zaz_5";
+    const metadata$1 = "_metadata_59zaz_11";
+    const styles$12 = {
+      icon: icon$2,
+      container: container$i,
+      metadata: metadata$1
+    };
+    const DetailStep = ({
+      icon: icon2,
+      name: name2,
+      params,
+      className: className2
+    }) => {
+      const iconHtml = icon2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, styles$12.icon) }) : "";
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2), children: [
+        iconHtml,
+        " ",
+        name2,
+        params && Object.keys(params).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$12.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          MetaDataGrid,
+          {
+            entries: params,
+            className: clsx("text-size-small", styles$12.metadata)
+          }
+        ) }) : ""
+      ] });
+    };
+    const item$1 = "_item_leq25_1";
+    const styles$11 = {
+      item: item$1
+    };
+    const ScorerDetailView = ({
+      name: name2,
+      scores: scores2,
+      params
+    }) => {
+      if (scores2.length > 1) {
+        params = { ...params, ["scores"]: scores2 };
+      }
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        DetailStep,
+        {
+          icon: ApplicationIcons.scorer,
+          name: name2,
+          params,
+          className: clsx(styles$11.item, "text-size-base")
+        }
+      );
+    };
+    const container$h = "_container_12j2k_1";
+    const separator$5 = "_separator_12j2k_11";
+    const styles$10 = {
+      container: container$h,
+      separator: separator$5
+    };
+    const SolversDetailView = ({ steps }) => {
+      const separator2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$10.items, "text-size-small", styles$10.separator), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.arrows.right }) });
+      const details = steps?.map((step, index) => {
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            DetailStep,
+            {
+              name: step.solver,
+              className: clsx(styles$10.items, "text-size-small")
+            }
+          ),
+          index < steps.length - 1 ? separator2 : ""
+        ] }, `solver-step-${index}`);
+      });
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$10.container, children: details });
+    };
+    const floatingCol = "_floatingCol_1n79r_1";
+    const wideCol = "_wideCol_1n79r_9";
+    const planCol = "_planCol_1n79r_24";
+    const container$g = "_container_1n79r_29";
+    const grid$7 = "_grid_1n79r_35";
+    const styles$$ = {
+      floatingCol,
+      wideCol,
+      planCol,
+      container: container$g,
+      grid: grid$7
+    };
+    const PlanDetailView = ({
+      evaluation,
+      plan,
+      scores: scores2
+    }) => {
+      if (!evaluation) {
+        return null;
+      }
+      const steps = plan?.steps;
+      const taskColumns = [];
+      taskColumns.push({
+        title: "Dataset",
+        className: styles$$.floatingCol,
+        contents: /* @__PURE__ */ jsxRuntimeExports.jsx(DatasetDetailView, { dataset: evaluation.dataset })
+      });
+      if (steps) {
+        taskColumns.push({
+          title: "Solvers",
+          className: styles$$.wideCol,
+          contents: /* @__PURE__ */ jsxRuntimeExports.jsx(SolversDetailView, { steps })
+        });
+      }
+      if (scores2) {
+        const scorers = scores2.reduce(
+          (accum, score2) => {
+            if (!accum[score2.scorer]) {
+              accum[score2.scorer] = {
+                scores: [score2.name],
+                params: score2.params
+              };
+            } else {
+              accum[score2.scorer].scores.push(score2.name);
+            }
+            return accum;
+          },
+          {}
+        );
+        if (Object.keys(scorers).length > 0) {
+          const label2 = Object.keys(scorers).length === 1 ? "Scorer" : "Scorers";
+          const scorerPanels = Object.keys(scorers).map((key2) => {
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(
+              ScorerDetailView,
+              {
+                name: key2,
+                scores: scorers[key2].scores,
+                params: scorers[key2].params
+              },
+              key2
+            );
+          });
+          taskColumns.push({
+            title: label2,
+            className: styles$$.floatingCol,
+            contents: scorerPanels
+          });
+        }
+      }
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$$.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
+        {
+          className: styles$$.grid,
+          style: {
+            gridTemplateColumns: `repeat(${taskColumns.length}, fit-content(50%))`
+          },
+          children: taskColumns.map((col) => {
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(
+              PlanColumn,
+              {
+                title: col.title,
+                className: col.className,
+                children: col.contents
+              },
+              `plan-col-${col.title}`
+            );
+          })
+        }
+      ) });
+    };
+    const PlanColumn = ({ title: title2, className: className2, children: children2 }) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: clsx(
+              "card-subheading",
+              "text-size-small",
+              "text-style-label",
+              "text-style-secondary",
+              styles$$.planCol
+            ),
+            children: title2
+          }
+        ),
+        children2
+      ] });
+    };
+    const PlanCard = ({
+      evalSpec,
+      evalPlan,
+      scores: scores2,
+      scrollRef
+    }) => {
+      const metadata2 = evalSpec?.metadata || {};
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Summary" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: "task-plan-card-body", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            PlanDetailView,
+            {
+              evaluation: evalSpec,
+              plan: evalPlan,
+              scores: scores2
+            }
+          ) })
+        ] }),
+        Object.keys(metadata2).length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Metadata" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: "task-metadata`", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            RecordTree,
+            {
+              id: "plan-md-metadata",
+              record: metadata2,
+              scrollRef
+            }
+          ) })
+        ] })
+      ] });
+    };
+    const useInfoTabConfig = (evalSpec, evalPlan, evalError, evalResults, evalStatus) => {
+      const scrollRef = reactExports.useRef(null);
+      const totalSampleCount = useTotalSampleCount();
+      return reactExports.useMemo(() => {
+        return {
+          id: kLogViewInfoTabId,
+          label: "Info",
+          scrollable: true,
+          component: InfoTab,
+          componentProps: {
+            evalSpec,
+            evalPlan,
+            evalError,
+            evalResults,
+            evalStatus,
+            sampleCount: totalSampleCount,
+            scrollRef
+          },
+          scrollRef
+        };
+      }, [evalSpec, evalPlan, evalError, evalResults, totalSampleCount]);
+    };
+    const InfoTab = ({
+      evalSpec,
+      evalPlan,
+      evalResults,
+      evalStatus,
+      sampleCount,
+      scrollRef
+    }) => {
+      const showWarning = sampleCount === 0 && evalStatus === "success" && evalSpec?.dataset.samples && evalSpec.dataset.samples > 0;
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { width: "100%" }, children: [
+        showWarning ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+          MessageBand,
+          {
+            id: "sample-too-large",
+            message: "Unable to display samples (this evaluation log may be too large).",
+            type: "warning"
+          }
+        ) : "",
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { padding: "0.5em 1em 0 1em", width: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          PlanCard,
+          {
+            evalSpec,
+            evalPlan,
+            scores: evalResults?.scores,
+            scrollRef
+          }
+        ) })
+      ] });
+    };
+    const DownloadButton = ({
+      label: label2,
+      fileName,
+      fileContents
+    }) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "button",
+        {
+          className: "btn btn-outline-primary download-button",
+          onClick: async () => {
+            await api.download_file(fileName, fileContents);
+          },
+          children: label2
+        }
+      );
+    };
+    const DownloadPanel = ({
+      message: message2,
+      buttonLabel,
+      fileName,
+      fileContents
+    }) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "download-panel", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "download-panel-message", children: message2 }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          DownloadButton,
+          {
+            label: buttonLabel,
+            fileName,
+            fileContents
+          }
+        )
+      ] }) });
+    };
+    const toolButton = "_toolButton_nu8dt_1";
+    const latched = "_latched_nu8dt_13";
+    const styles$_ = {
+      toolButton,
+      latched
+    };
+    const ToolButton = reactExports.forwardRef(
+      ({ label: label2, classes = "", icon: icon2, className: className2, latched: latched2, ...rest }, ref) => {
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "button",
+          {
+            ref,
+            type: "button",
+            className: clsx(
+              "btn",
+              "btn-tools",
+              styles$_.toolButton,
+              classes,
+              className2,
+              latched2 ? styles$_.latched : void 0
+            ),
+            ...rest,
+            children: [
+              icon2 && /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: `${icon2}` }),
+              label2
+            ]
+          }
+        );
+      }
+    );
+    ToolButton.displayName = "ToolButton";
+    const jsonTab = "_jsonTab_6pq03_1";
+    const styles$Z = {
+      jsonTab
+    };
+    const kJsonMaxSize = 1e7;
+    const useJsonTabConfig = (evalVersion, evalStatus, evalSpec, evalPlan, evalError, evalResults, evalStats) => {
+      const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
+      const selectedTab = useStore((state) => state.app.tabs.workspace);
+      return reactExports.useMemo(() => {
+        const evalHeader = {
+          version: evalVersion,
+          status: evalStatus,
+          eval: evalSpec,
+          plan: evalPlan,
+          error: evalError,
+          results: evalResults,
+          stats: evalStats
+        };
+        return {
+          id: kLogViewJsonTabId,
+          label: "JSON",
+          scrollable: true,
+          component: JsonTab,
+          componentProps: {
+            logFile: selectedLogFile,
+            json: JSON.stringify(evalHeader, null, 2),
+            selected: selectedTab === kLogViewJsonTabId
+          },
+          tools: () => [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              ToolButton,
+              {
+                label: "Copy JSON",
+                icon: ApplicationIcons.copy,
+                className: clsx("task-btn-json-copy", "clipboard-button"),
+                "data-clipboard-target": "#task-json-contents",
+                onClick: copyFeedback
+              },
+              "copy-json"
+            )
+          ]
+        };
+      }, [
+        selectedLogFile,
+        evalVersion,
+        evalStatus,
+        evalSpec,
+        evalPlan,
+        evalError,
+        evalResults,
+        evalStats,
+        selectedTab
+      ]);
+    };
+    const copyFeedback = (e) => {
+      const textEl = e.currentTarget.querySelector(".task-btn-copy-content");
+      const iconEl = e.currentTarget.querySelector("i.bi");
+      if (textEl) {
+        const htmlEl = textEl;
+        const htmlIconEl = iconEl;
+        const oldText = htmlEl.innerText;
+        const oldIconClz = htmlIconEl.className;
+        htmlEl.innerText = "Copied!";
+        htmlIconEl.className = `${ApplicationIcons.confirm}`;
+        setTimeout(() => {
+          window.getSelection()?.removeAllRanges();
+        }, 50);
+        setTimeout(() => {
+          htmlEl.innerText = oldText;
+          htmlIconEl.className = oldIconClz;
+        }, 1250);
+      }
+    };
+    const JsonTab = ({ logFile, json }) => {
+      const downloadFiles = useStore((state) => state.capabilities.downloadFiles);
+      if (logFile && json.length > kJsonMaxSize && downloadFiles) {
+        const file = `${filename(logFile)}.json`;
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$Z.jsonTab, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          DownloadPanel,
+          {
+            message: "The JSON for this log file is too large to render.",
+            buttonLabel: "Download JSON File",
+            fileName: file,
+            fileContents: json
+          }
+        ) });
+      } else {
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$Z.jsonTab, children: /* @__PURE__ */ jsxRuntimeExports.jsx(JSONPanel, { id: "task-json-contents", json, simple: true }) });
+      }
+    };
+    const container$f = "_container_4wzpj_1";
+    const modelInfo = "_modelInfo_4wzpj_8";
+    const role = "_role_4wzpj_15";
+    const sep = "_sep_4wzpj_19";
+    const styles$Y = {
+      container: container$f,
+      modelInfo,
+      role,
+      sep
+    };
+    const ModelCard = ({ evalSpec }) => {
+      if (!evalSpec) {
+        return void 0;
+      }
+      const modelsInfo = {
+        eval: {
+          model: evalSpec.model,
+          base_url: evalSpec.model_base_url,
+          config: evalSpec.model_generate_config,
+          args: evalSpec.model_args
+        },
+        ...evalSpec.model_roles
+      };
+      const noneEl = /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-style-secondary", children: "None" });
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Models" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: "task-model-card-body", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$Y.container, children: Object.keys(modelsInfo || {}).map((modelKey) => {
+          const modelInfo2 = modelsInfo[modelKey];
+          return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "div",
+            {
+              className: clsx(styles$Y.modelInfo, "text-size-small"),
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "div",
+                  {
+                    className: clsx(
+                      styles$Y.role,
+                      "text-style-label",
+                      "text-style-secondary"
+                    ),
+                    children: modelKey
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Y.sep) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Model" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: modelInfo2.model }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Y.sep) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Base Url" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-size-small", children: modelInfo2.base_url || noneEl }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Y.sep) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Configuration" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-size-small", children: modelInfo2.config && Object.keys(modelInfo2.config).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  MetaDataGrid,
+                  {
+                    entries: modelInfo2.config
+                  }
+                ) : noneEl }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Y.sep) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Args" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-size-small", children: Object.keys(modelInfo2.args).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  MetaDataGrid,
+                  {
+                    entries: modelInfo2.args
+                  }
+                ) : noneEl }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Y.sep) })
+              ]
+            },
+            modelKey
+          );
+        }) }) })
+      ] });
+    };
+    const wrapper$3 = "_wrapper_sq96g_1";
+    const col2$2 = "_col2_sq96g_8";
+    const col1_3$1 = "_col1_3_sq96g_12";
+    const col3$1 = "_col3_sq96g_16";
+    const separator$4 = "_separator_sq96g_20";
+    const padded$1 = "_padded_sq96g_26";
+    const styles$X = {
+      wrapper: wrapper$3,
+      col2: col2$2,
+      col1_3: col1_3$1,
+      col3: col3$1,
+      separator: separator$4,
+      padded: padded$1
+    };
+    const ModelUsagePanel = ({ usage, className: className2 }) => {
+      if (!usage) {
+        return null;
+      }
+      const rows = [];
+      if (usage.reasoning_tokens) {
+        rows.push({
+          label: "Reasoning",
+          value: usage.reasoning_tokens,
+          secondary: false,
+          bordered: true
+        });
+        rows.push({
+          label: "---",
+          value: void 0,
+          secondary: false,
+          padded: true
+        });
+      }
+      rows.push({
+        label: "input",
+        value: usage.input_tokens,
+        secondary: false
+      });
+      if (usage.input_tokens_cache_read) {
+        rows.push({
+          label: "cache_read",
+          value: usage.input_tokens_cache_read,
+          secondary: true
+        });
+      }
+      if (usage.input_tokens_cache_write) {
+        rows.push({
+          label: "cache_write",
+          value: usage.input_tokens_cache_write,
+          secondary: true
+        });
+      }
+      rows.push({
+        label: "Output",
+        value: usage.output_tokens,
+        secondary: false,
+        bordered: true
+      });
+      rows.push({
+        label: "---",
+        value: void 0,
+        secondary: false
+      });
+      rows.push({
+        label: "Total",
+        value: usage.total_tokens,
+        secondary: false
+      });
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-small", styles$X.wrapper, className2), children: rows.map((row2, idx) => {
+        if (row2.label === "---") {
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "div",
+            {
+              className: clsx(
+                styles$X.separator,
+                row2.padded ? styles$X.padded : void 0
+              )
+            },
+            `$usage-sep-${idx}`
+          );
+        } else {
+          return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                className: clsx(
+                  "text-style-label",
+                  "text-style-secondary",
+                  row2.secondary ? styles$X.col2 : styles$X.col1_3
+                ),
+                children: row2.label
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$X.col3, children: row2.value ? formatNumber(row2.value) : "" })
+          ] }, `$usage-row-${idx}`);
+        }
+      }) });
+    };
+    const table$1 = "_table_z217i_1";
+    const tableTokens = "_tableTokens_z217i_5";
+    const tableH = "_tableH_z217i_9";
+    const model = "_model_z217i_14";
+    const cellContents = "_cellContents_z217i_18";
+    const styles$W = {
+      table: table$1,
+      tableTokens,
+      tableH,
+      model,
+      cellContents
+    };
+    const TokenTable$1 = ({ className: className2, children: children2 }) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "table",
+        {
+          className: clsx(
+            "table",
+            "table-sm",
+            "text-size-smaller",
+            styles$W.table,
+            className2
+          ),
+          children: children2
+        }
+      );
+    };
+    const TokenHeader = () => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("thead", { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("td", {}),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "td",
+            {
+              colSpan: 3,
+              className: clsx(
+                "card-subheading",
+                styles$W.tableTokens,
+                "text-size-small",
+                "text-style-label",
+                "text-style-secondary"
+              ),
+              align: "center",
+              children: "Tokens"
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "th",
+            {
+              className: clsx(
+                styles$W.tableH,
+                "text-sixe-small",
+                "text-style-label",
+                "text-style-secondary"
+              ),
+              children: "Model"
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "th",
+            {
+              className: clsx(
+                styles$W.tableH,
+                "text-sixe-small",
+                "text-style-label",
+                "text-style-secondary"
+              ),
+              children: "Usage"
+            }
+          )
+        ] })
+      ] });
+    };
+    const TokenRow = ({ model: model2, usage }) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("td", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$W.model, styles$W.cellContents), children: model2 }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("td", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(ModelUsagePanel, { usage, className: clsx(styles$W.cellContents) }) })
+      ] });
+    };
+    const ModelTokenTable = ({
+      model_usage,
+      className: className2
+    }) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(TokenTable$1, { className: className2, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(TokenHeader, {}),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("tbody", { children: Object.keys(model_usage).map((key2) => {
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(TokenRow, { model: key2, usage: model_usage[key2] }, key2);
+        }) })
+      ] });
+    };
+    const wrapper$2 = "_wrapper_14r3b_1";
+    const col2$1 = "_col2_14r3b_16";
+    const styles$V = {
+      wrapper: wrapper$2,
+      col2: col2$1
+    };
+    const kUsageCardBodyId = "usage-card-body";
+    const UsageCard = ({ stats }) => {
+      if (!stats) {
+        return null;
+      }
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Usage" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: kUsageCardBodyId, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$V.wrapper, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$V.col2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ModelTokenTable, { model_usage: stats.model_usage }) }) }) })
+      ] });
+    };
+    const useModelsTab = (evalSpec, evalStats, evalStatus) => {
+      return reactExports.useMemo(() => {
+        return {
+          id: kLogViewModelsTabId,
+          label: "Models",
+          scrollable: true,
+          component: ModelTab,
+          componentProps: {
+            evalSpec,
+            evalStats,
+            evalStatus
+          }
+        };
+      }, [evalSpec, evalStats]);
+    };
+    const ModelTab = ({
+      evalSpec,
+      evalStats,
+      evalStatus
+    }) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "0.5em 1em 0 1em", width: "100%" }, children: [
+        evalSpec ? /* @__PURE__ */ jsxRuntimeExports.jsx(ModelCard, { evalSpec }) : void 0,
+        evalStatus !== "started" && evalStats?.model_usage && Object.keys(evalStats.model_usage).length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(UsageCard, { stats: evalStats })
+      ] }) });
+    };
+    const panel$2 = "_panel_twp3v_1";
+    const container$e = "_container_twp3v_7";
+    const styles$U = {
+      panel: panel$2,
+      container: container$e
+    };
+    const NoContentsPanel = ({ text: text2 }) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$U.panel), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$U.container, "text-size-smaller"), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.noSamples }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: text2 })
+      ] }) });
+    };
+    const printHtml = (html2, css2) => {
+      const printWindow = window.open("", "", "height=600,width=800");
+      if (printWindow !== null) {
+        printWindow.document.write("<html><head><title>Print</title>");
+        printWindow.document.write(`
+          <link rel="stylesheet" crossorigin="" href="./assets/index.css">
+          <style>
+            @media print {
+              ${css2}
+            }
+          </style>
+        `);
+        printWindow.document.write("</head><body>");
+        printWindow.document.write(html2);
+        printWindow.document.write("</body></html>");
+        printWindow.document.close();
+        printWindow.onload = function() {
+          printWindow.focus();
+          printWindow.print();
+          printWindow.close();
+        };
+      } else {
+        console.error("Print window failed to open.");
+      }
+    };
+    const printHeadingHtml = () => {
+      const taskEl = document.getElementById("task-title");
+      const modelEl = document.getElementById("task-model");
+      const timeEl = document.getElementById("task-created");
+      if (!taskEl || !modelEl || !timeEl) {
+        throw new Error(
+          "Failed to compute heading HTML. The task, model, or time element can't be found."
+        );
+      }
+      const task = taskEl.innerText;
+      const model2 = modelEl.innerText;
+      const time = timeEl.innerText;
+      const headingHtml = `
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 0.5em; margin-bottom: 2em; justify-content: space-between; border-bottom: solid 1px silver;">
+<div style="font-weight: 600">${task}</div>
+<div style="text-align: center;">${model2}</div>
+<div style="text-align: right;">${time}</div>
+</div>`;
+      return headingHtml;
+    };
+    const useSampleNavigation = () => {
+      const navigate = useNavigate();
+      const logDirectory = useStore((state) => state.logs.logDir);
+      const { logPath, tabId, sampleTabId } = useLogRouteParams();
+      const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
+      const resolveLogPath = reactExports.useCallback(() => {
+        if (logPath) {
+          return logPath;
+        }
+        if (selectedLogFile) {
+          return directoryRelativeUrl(selectedLogFile, logDirectory);
+        }
+        return void 0;
+      }, [logPath, selectedLogFile, logDirectory]);
+      const sampleSummaries = useFilteredSamples();
+      const selectedSampleIndex = useStore(
+        (state) => state.log.selectedSampleIndex
+      );
+      const selectSample = useStore((state) => state.logActions.selectSample);
+      const setShowingSampleDialog = useStore(
+        (state) => state.appActions.setShowingSampleDialog
+      );
+      const showingSampleDialog = useStore((state) => state.app.dialogs.sample);
+      const showSample = reactExports.useCallback(
+        (index, id, epoch, specifiedSampleTabId) => {
+          const resolvedPath = resolveLogPath();
+          if (resolvedPath) {
+            selectSample(index);
+            setShowingSampleDialog(true);
+            const currentSampleTabId = specifiedSampleTabId || sampleTabId;
+            const url = sampleUrl(resolvedPath, id, epoch, currentSampleTabId);
+            navigate(url);
+          }
+        },
+        [
+          sampleSummaries,
+          resolveLogPath,
+          selectSample,
+          setShowingSampleDialog,
+          navigate,
+          tabId,
+          sampleTabId
+        ]
+      );
+      const navigateSampleIndex = reactExports.useCallback(
+        (index) => {
+          if (index > -1 && index < sampleSummaries.length) {
+            if (showingSampleDialog) {
+              const resolvedPath = resolveLogPath();
+              if (resolvedPath) {
+                const summary2 = sampleSummaries[index];
+                const url = sampleUrl(
+                  resolvedPath,
+                  summary2.id,
+                  summary2.epoch,
+                  sampleTabId
+                );
+                navigate(url);
+              }
+            } else {
+              selectSample(index);
+            }
+          }
+        },
+        [
+          selectedSampleIndex,
+          showSample,
+          sampleTabId,
+          sampleSummaries,
+          showingSampleDialog,
+          resolveLogPath,
+          navigate
+        ]
+      );
+      const nextSample = reactExports.useCallback(() => {
+        const itemsCount = sampleSummaries.length;
+        const next = Math.min(selectedSampleIndex + 1, itemsCount - 1);
+        navigateSampleIndex(next);
+      }, [selectedSampleIndex, navigateSampleIndex, sampleSummaries]);
+      const previousSample = reactExports.useCallback(() => {
+        const prev = selectedSampleIndex - 1;
+        navigateSampleIndex(prev);
+      }, [selectedSampleIndex, navigateSampleIndex]);
+      const firstSample = reactExports.useCallback(() => {
+        navigateSampleIndex(0);
+      }, [navigateSampleIndex]);
+      const lastSample = reactExports.useCallback(() => {
+        navigateSampleIndex(sampleSummaries.length - 1);
+      }, [navigateSampleIndex, sampleSummaries]);
+      const getSampleUrl = reactExports.useCallback(
+        (sampleId, epoch, specificSampleTabId) => {
+          const resolvedPath = resolveLogPath();
+          if (resolvedPath) {
+            const currentSampleTabId = specificSampleTabId || sampleTabId;
+            const url = sampleUrl(
+              resolvedPath,
+              sampleId,
+              epoch,
+              currentSampleTabId
+            );
+            return `#${url}`;
+          }
+          return void 0;
+        },
+        [resolveLogPath, tabId, sampleTabId]
+      );
+      const clearSampleUrl = reactExports.useCallback(() => {
+        const resolvedPath = resolveLogPath();
+        if (resolvedPath) {
+          const url = logUrlRaw(resolvedPath, tabId);
+          navigate(url);
+        }
+      }, [resolveLogPath, navigate, tabId]);
+      return {
+        showSample,
+        nextEnabled: selectedSampleIndex < sampleSummaries.length - 1,
+        nextSample,
+        previousEnabled: selectedSampleIndex > 0,
+        previousSample,
+        firstSample,
+        lastSample,
+        getSampleUrl,
+        clearSampleUrl
+      };
+    };
+    const useSampleDetailNavigation = () => {
+      const [searchParams, _setSearchParams] = useSearchParams();
+      const message2 = searchParams.get("message");
+      const event = searchParams.get("event");
+      return {
+        message: message2,
+        event
+      };
+    };
+    const container$d = "_container_4p85e_2";
+    const dotsContainer = "_dotsContainer_4p85e_8";
+    const small = "_small_4p85e_15";
+    const medium = "_medium_4p85e_19";
+    const large = "_large_4p85e_24";
+    const dot = "_dot_4p85e_8";
+    const subtle = "_subtle_4p85e_36";
+    const primary = "_primary_4p85e_40";
+    const visuallyHidden = "_visuallyHidden_4p85e_59";
+    const styles$T = {
+      container: container$d,
+      dotsContainer,
+      small,
+      medium,
+      large,
+      dot,
+      subtle,
+      primary,
+      visuallyHidden
+    };
+    const PulsingDots = ({
+      text: text2 = "Loading...",
+      dotsCount = 3,
+      subtle: subtle2 = true,
+      size = "small",
+      className: className2
+    }) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "div",
+        {
+          className: clsx(
+            styles$T.container,
+            size === "small" ? styles$T.small : size === "medium" ? styles$T.medium : styles$T.large,
+            className2
+          ),
+          role: "status",
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$T.dotsContainer, children: [...Array(dotsCount)].map((_, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                className: clsx(
+                  styles$T.dot,
+                  subtle2 ? styles$T.subtle : styles$T.primary
+                ),
+                style: { animationDelay: `${index * 0.2}s` }
+              },
+              index
+            )) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$T.visuallyHidden, children: text2 })
+          ]
+        }
+      );
+    };
+    const progressContainer = "_progressContainer_1cjjr_1";
+    const styles$S = {
+      progressContainer
+    };
+    const LiveVirtualList = ({
+      id,
+      listHandle,
+      className: className2,
+      data,
+      renderRow,
+      scrollRef,
+      live,
+      showProgress,
+      initialTopMostItemIndex,
+      offsetTop,
+      components,
+      searchInItem
+    }) => {
+      const { getRestoreState, isScrolling, visibleRange, setVisibleRange } = useVirtuosoState(listHandle, `live-virtual-list-${id}`);
+      const { registerVirtualList } = useExtendedFind();
+      const pendingSearchCallback = reactExports.useRef(null);
+      const [isCurrentlyScrolling, setIsCurrentlyScrolling] = reactExports.useState(false);
+      const [followOutput, setFollowOutput] = useProperty(
+        id,
+        "follow",
+        {
+          defaultValue: null
+        }
+      );
+      const isAutoScrollingRef = reactExports.useRef(false);
+      reactExports.useEffect(() => {
+        if (followOutput === null) {
+          setFollowOutput(!!live);
+        }
+      }, []);
+      const prevLive = usePrevious(live);
+      reactExports.useEffect(() => {
+        if (!live && prevLive && followOutput && scrollRef?.current) {
+          setFollowOutput(false);
+          setTimeout(() => {
+            if (scrollRef.current) {
+              scrollRef.current.scrollTo({ top: 0, behavior: "instant" });
+            }
+          }, 100);
+        }
+      }, [live, followOutput]);
+      const handleScroll = useRafThrottle(() => {
+        if (isAutoScrollingRef.current) return;
+        if (!live) return;
+        if (scrollRef?.current && listHandle.current) {
+          const parent = scrollRef.current;
+          const isAtBottom = parent.scrollHeight - parent.scrollTop <= parent.clientHeight + 30;
+          if (isAtBottom && !followOutput) {
+            setFollowOutput(true);
+          } else if (!isAtBottom && followOutput) {
+            setFollowOutput(false);
+          }
+        }
+      }, [setFollowOutput, followOutput, live]);
+      const heightChanged = reactExports.useCallback(
+        (height) => {
+          requestAnimationFrame(() => {
+            if (followOutput && live && scrollRef?.current) {
+              isAutoScrollingRef.current = true;
+              listHandle.current?.scrollTo({ top: height });
+              requestAnimationFrame(() => {
+                isAutoScrollingRef.current = false;
+              });
+            }
+          });
+        },
+        [scrollRef, followOutput, live]
+      );
+      reactExports.useEffect(() => {
+        const timer = setTimeout(() => {
+          forceUpdate();
+        }, 0);
+        return () => clearTimeout(timer);
+      }, []);
+      const [, forceRender] = reactExports.useState({});
+      const forceUpdate = reactExports.useCallback(() => forceRender({}), []);
+      const defaultSearchInItem = reactExports.useCallback(
+        (item2, searchTerm) => {
+          const searchLower = searchTerm.toLowerCase();
+          try {
+            const itemString = JSON.stringify(item2).toLowerCase();
+            return itemString.includes(searchLower);
+          } catch {
+            return false;
+          }
+        },
+        []
+      );
+      const searchInData = reactExports.useCallback(
+        async (term, direction, onContentReady) => {
+          if (!data.length || !term) return false;
+          const searchFn = searchInItem || defaultSearchInItem;
+          const currentIndex = direction === "forward" ? visibleRange.endIndex : visibleRange.startIndex;
+          const searchStart = direction === "forward" ? Math.max(0, currentIndex + 1) : Math.min(data.length - 1, currentIndex - 1);
+          const step = direction === "forward" ? 1 : -1;
+          for (let i2 = searchStart; i2 >= 0 && i2 < data.length; i2 += step) {
+            if (searchFn(data[i2], term)) {
+              pendingSearchCallback.current = onContentReady;
+              listHandle.current?.scrollToIndex({
+                index: i2,
+                behavior: "auto",
+                align: "center"
+              });
+              return true;
+            }
+          }
+          return false;
+        },
+        [data, searchInItem, defaultSearchInItem, visibleRange]
+      );
+      reactExports.useEffect(() => {
+        const unregister = registerVirtualList(id, searchInData);
+        return unregister;
+      }, [id, registerVirtualList, searchInData]);
+      const Footer = () => {
+        return showProgress ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$S.progressContainer), children: /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false, size: "medium" }) }) : void 0;
+      };
+      reactExports.useEffect(() => {
+        const parent = scrollRef?.current;
+        if (parent) {
+          parent.addEventListener("scroll", handleScroll);
+          return () => parent.removeEventListener("scroll", handleScroll);
+        }
+      }, [scrollRef, handleScroll]);
+      const hasScrolled = reactExports.useRef(false);
+      reactExports.useEffect(() => {
+        if (initialTopMostItemIndex !== void 0 && listHandle.current) {
+          const timer = setTimeout(() => {
+            listHandle.current?.scrollToIndex({
+              index: initialTopMostItemIndex,
+              align: "start",
+              behavior: !hasScrolled.current ? "auto" : "smooth",
+              offset: offsetTop ? -offsetTop : void 0
+            });
+            hasScrolled.current = true;
+          }, 50);
+          return () => clearTimeout(timer);
+        }
+      }, [initialTopMostItemIndex]);
+      reactExports.useEffect(() => {
+        if (!isCurrentlyScrolling && pendingSearchCallback.current) {
+          setTimeout(() => {
+            const callback = pendingSearchCallback.current;
+            pendingSearchCallback.current = null;
+            callback?.();
+          }, 100);
+        }
+      }, [isCurrentlyScrolling]);
+      const handleScrollingChange = reactExports.useCallback(
+        (scrolling) => {
+          setIsCurrentlyScrolling(scrolling);
+          isScrolling(scrolling);
+        },
+        [isScrolling]
+      );
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        qr,
+        {
+          ref: listHandle,
+          customScrollParent: scrollRef?.current ? scrollRef.current : void 0,
+          style: { height: "100%", width: "100%" },
+          data,
+          defaultItemHeight: 500,
+          itemContent: renderRow,
+          increaseViewportBy: { top: 1e3, bottom: 1e3 },
+          overscan: { main: 5, reverse: 5 },
+          className: clsx("transcript", className2),
+          isScrolling: handleScrollingChange,
+          rangeChanged: (range2) => {
+            setVisibleRange(range2);
+          },
+          restoreStateFrom: getRestoreState(),
+          totalListHeightChanged: heightChanged,
+          components: {
+            Footer,
+            ...components
+          }
+        }
+      );
+    };
+    const item = "_item_5fj0m_6";
+    const styles$R = {
+      item
+    };
+    const ChatViewVirtualList = reactExports.memo(
+      ({
+        id,
+        messages: messages2,
+        initialMessageId,
+        topOffset,
+        className: className2,
+        toolCallStyle,
+        indented: indented2,
+        numbered = true,
+        scrollRef,
+        running,
+        allowLinking = true
+      }) => {
+        const listHandle = reactExports.useRef(null);
+        reactExports.useEffect(() => {
+          const handleKeyDown = (event) => {
+            if (event.metaKey || event.ctrlKey) {
+              if (event.key === "ArrowUp") {
+                listHandle.current?.scrollToIndex({ index: 0, align: "center" });
+                event.preventDefault();
+              } else if (event.key === "ArrowDown") {
+                listHandle.current?.scrollToIndex({
+                  index: Math.min(messages2.length - 5, 0),
+                  align: "center"
+                });
+                setTimeout(() => {
+                  listHandle.current?.scrollToIndex({
+                    index: messages2.length - 1,
+                    align: "end"
+                  });
+                }, 250);
+                event.preventDefault();
+              }
+            }
+          };
+          const scrollElement = scrollRef?.current;
+          if (scrollElement) {
+            scrollElement.addEventListener("keydown", handleKeyDown);
+            if (!scrollElement.hasAttribute("tabIndex")) {
+              scrollElement.setAttribute("tabIndex", "0");
+            }
+            return () => {
+              scrollElement.removeEventListener("keydown", handleKeyDown);
+            };
+          }
+        }, [scrollRef, messages2]);
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          ChatViewVirtualListComponent,
+          {
+            id,
+            listHandle,
+            className: className2,
+            scrollRef,
+            messages: messages2,
+            initialMessageId,
+            topOffset,
+            toolCallStyle,
+            indented: indented2,
+            numbered,
+            running,
+            allowLinking
+          }
+        );
+      }
+    );
+    const ChatViewVirtualListComponent = reactExports.memo(
+      ({
+        id,
+        listHandle,
+        messages: messages2,
+        initialMessageId,
+        topOffset,
+        className: className2,
+        toolCallStyle,
+        indented: indented2,
+        numbered = true,
+        scrollRef,
+        running,
+        allowLinking = true
+      }) => {
+        const collapsedMessages = reactExports.useMemo(() => {
+          return resolveMessages(messages2);
+        }, [messages2]);
+        const initialMessageIndex = reactExports.useMemo(() => {
+          if (initialMessageId === null || initialMessageId === void 0) {
+            return void 0;
+          }
+          const index = collapsedMessages.findIndex((message2) => {
+            const messageId = message2.message.id === initialMessageId;
+            if (messageId) {
+              return true;
+            }
+            if (message2.toolMessages.find((tm) => tm.id === initialMessageId)) {
+              return true;
+            }
+          });
+          return index !== -1 ? index : void 0;
+        }, [initialMessageId, collapsedMessages]);
+        const renderRow = reactExports.useCallback(
+          (index, item2) => {
+            const number2 = collapsedMessages.length > 1 && numbered ? index + 1 : void 0;
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(
+              ChatMessageRow,
+              {
+                parentName: id || "chat-virtual-list",
+                number: number2,
+                resolvedMessage: item2,
+                indented: indented2,
+                toolCallStyle,
+                highlightUserMessage: true,
+                allowLinking
+              }
+            );
+          },
+          [id, numbered, indented2, toolCallStyle, collapsedMessages]
+        );
+        const Item = ({
+          children: children2,
+          ...props
+        }) => {
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "div",
+            {
+              className: clsx(styles$R.item),
+              "data-index": props["data-index"],
+              "data-item-group-index": props["data-item-group-index"],
+              "data-item-index": props["data-item-index"],
+              "data-known-size": props["data-known-size"],
+              style: props.style,
+              children: children2
+            }
+          );
+        };
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          LiveVirtualList,
+          {
+            id: "chat-virtual-list",
+            listHandle,
+            className: className2,
+            scrollRef,
+            data: collapsedMessages,
+            renderRow,
+            initialTopMostItemIndex: initialMessageIndex,
+            offsetTop: topOffset,
+            live: running,
+            showProgress: running,
+            components: { Item }
+          }
+        );
+      }
+    );
+    const tabPanel = "_tabPanel_6o9gh_1";
+    const tabControls = "_tabControls_6o9gh_5";
+    const fullWidth$1 = "_fullWidth_6o9gh_12";
+    const padded = "_padded_6o9gh_25";
+    const error = "_error_6o9gh_30";
+    const ansi = "_ansi_6o9gh_34";
+    const noTop = "_noTop_6o9gh_38";
+    const chat = "_chat_6o9gh_50";
+    const transcriptContainer = "_transcriptContainer_6o9gh_58";
+    const styles$Q = {
+      tabPanel,
+      tabControls,
+      fullWidth: fullWidth$1,
+      padded,
+      error,
+      ansi,
+      noTop,
+      chat,
+      transcriptContainer
+    };
+    const flatBody = "_flatBody_1uw6w_1";
+    const iconSmall$1 = "_iconSmall_1uw6w_9";
+    const lineBase = "_lineBase_1uw6w_15";
+    const styles$P = {
+      flatBody,
+      iconSmall: iconSmall$1,
+      lineBase
+    };
+    const errorType = (message2) => {
+      if (!message2) {
+        return "Error";
+      }
+      if (message2.includes("(")) {
+        return message2.split("(")[0];
+      }
+      return "Error";
+    };
+    const FlatSampleError = ({ message: message2 }) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$P.flatBody), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.error, styles$P.iconSmall) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$P.lineBase, "text-truncate"), children: errorType(message2) })
+      ] });
+    };
+    const target = "_target_tv989_1";
+    const answer = "_answer_tv989_5";
+    const grid$6 = "_grid_tv989_9";
+    const centerLabel = "_centerLabel_tv989_16";
+    const centerValue = "_centerValue_tv989_21";
+    const wrap = "_wrap_tv989_26";
+    const titled = "_titled_tv989_30";
+    const value$1 = "_value_tv989_34";
+    const styles$O = {
+      target,
+      answer,
+      grid: grid$6,
+      centerLabel,
+      centerValue,
+      wrap,
+      titled,
+      value: value$1
+    };
+    function isEvalSample(sample2) {
+      return "store" in sample2;
+    }
+    const resolveSample = (sample2, sampleDescriptor) => {
+      const input2 = inputString(sample2.input);
+      if (isEvalSample(sample2) && sample2.choices && sample2.choices.length > 0) {
+        input2.push("");
+        input2.push(
+          ...sample2.choices.map((choice, index) => {
+            return `${String.fromCharCode(65 + index)}) ${choice}`;
+          })
+        );
+      }
+      const target2 = sample2.target;
+      const answer2 = sample2 && sampleDescriptor ? sampleDescriptor.selectedScorerDescriptor(sample2)?.answer() : void 0;
+      const limit = isEvalSample(sample2) ? sample2.limit?.type : void 0;
+      const working_time = isEvalSample(sample2) ? sample2.working_time : void 0;
+      const total_time = isEvalSample(sample2) ? sample2.total_time : void 0;
+      const error2 = isEvalSample(sample2) ? sample2.error?.message : void 0;
+      const retries = isEvalSample(sample2) ? sample2.error_retries?.length : sample2.retries;
+      return {
+        id: sample2.id,
+        input: input2,
+        target: target2,
+        answer: answer2,
+        limit,
+        retries,
+        working_time,
+        total_time,
+        error: error2
+      };
+    };
+    const SampleSummaryView = ({
+      parent_id,
+      sample: sample2
+    }) => {
+      const sampleDescriptor = useSampleDescriptor();
+      const selectedScores = useSelectedScores();
+      if (!sampleDescriptor) {
+        return void 0;
+      }
+      const fields = resolveSample(sample2, sampleDescriptor);
+      const limitSize = sampleDescriptor?.messageShape.normalized.limit > 0 ? Math.max(0.15, sampleDescriptor.messageShape.normalized.limit) : 0;
+      const retrySize = sampleDescriptor?.messageShape.normalized.retries > 0 ? 6 : 0;
+      const idSize = Math.max(
+        2,
+        Math.min(10, sampleDescriptor?.messageShape.raw.id)
+      );
+      const columns = [];
+      columns.push({
+        label: "Id",
+        value: fields.id,
+        size: `${idSize}em`
+      });
+      columns.push({
+        label: "Input",
+        value: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: fields.input.join(" ") }),
+        size: `minmax(auto, 5fr)`,
+        clamp: true
+      });
+      if (fields.target) {
+        columns.push({
+          label: "Target",
+          value: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            RenderedText,
+            {
+              markdown: arrayToString(fields?.target || "none"),
+              className: clsx("no-last-para-padding", styles$O.target)
+            }
+          ),
+          size: `minmax(auto, 3fr)`,
+          clamp: true
+        });
+      }
+      if (fields.answer) {
+        columns.push({
+          label: "Answer",
+          value: sample2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+            RenderedText,
+            {
+              markdown: fields.answer || "",
+              className: clsx("no-last-para-padding", styles$O.answer)
+            }
+          ) : "",
+          size: `minmax(auto, 5fr)`,
+          clamp: true
+        });
+      }
+      const toolTip = (working_time) => {
+        if (working_time === void 0 || working_time === null) {
+          return void 0;
+        }
+        return `Working time: ${formatTime$1(working_time)}`;
+      };
+      if (fields.total_time) {
+        columns.push({
+          label: "Time",
+          value: formatTime$1(fields.total_time),
+          size: `fit-content(10rem)`,
+          center: true,
+          title: toolTip(fields.working_time)
+        });
+      }
+      if (fields?.limit && limitSize > 0) {
+        columns.push({
+          label: "Limit",
+          value: fields.limit,
+          size: `fit-content(10rem)`,
+          center: true
+        });
+      }
+      if (fields?.retries && retrySize > 0) {
+        columns.push({
+          label: "Retries",
+          value: fields.retries,
+          size: `fit-content(${retrySize}rem)`,
+          center: true
+        });
+      }
+      if (selectedScores && selectedScores.length > 0) {
+        selectedScores.forEach((scoreLabel) => {
+          columns.push({
+            label: selectedScores.length === 1 ? "Score" : scoreLabel.name,
+            value: fields.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(FlatSampleError, { message: fields.error }) : sampleDescriptor?.evalDescriptor.score(sample2, scoreLabel)?.render() || "",
+            size: "fit-content(15em)",
+            center: true
+          });
+        });
+      } else {
+        columns.push({
+          label: "Score",
+          value: fields.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(FlatSampleError, { message: fields.error }) : "",
+          size: "fit-content(15em)",
+          center: true
+        });
+      }
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "div",
+        {
+          id: `sample-heading-${parent_id}`,
+          className: clsx(styles$O.grid, "text-size-base"),
+          style: {
+            gridTemplateColumns: `${columns.map((col) => {
+              return col.size;
+            }).join(" ")}`
+          },
+          children: [
+            columns.map((col, idx) => {
+              return /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  className: clsx(
+                    "text-style-label",
+                    "text-style-secondary",
+                    "text-size-smallest",
+                    col.title ? styles$O.titled : void 0,
+                    col.center ? styles$O.centerLabel : void 0
+                  ),
+                  title: col.title,
+                  "data-unsearchable": true,
+                  children: col.label
+                },
+                `sample-summ-lbl-${idx}`
+              );
+            }),
+            columns.map((col, idx) => {
+              return /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  className: clsx(
+                    styles$O.value,
+                    styles$O.wrap,
+                    col.clamp ? "three-line-clamp" : void 0,
+                    col.center ? styles$O.centerValue : void 0
+                  ),
+                  "data-unsearchable": true,
+                  children: col.value
+                },
+                `sample-summ-val-${idx}`
+              );
+            })
+          ]
+        }
+      );
+    };
+    const SampleScores = ({ sample: sample2, scorer: scorer2 }) => {
+      const scoreData = sample2.scores?.[scorer2];
+      if (!scoreData) {
+        return void 0;
+      }
+      const scorerDescriptor = getScoreDescriptorForValues(
+        [scoreData.value],
+        [typeof scoreData.value]
+      );
+      return scorerDescriptor?.render(scoreData.value);
+    };
+    const container$c = "_container_kwhbh_1";
+    const cell$1 = "_cell_kwhbh_9";
+    const fullWidth = "_fullWidth_kwhbh_13";
+    const separator$3 = "_separator_kwhbh_25";
+    const separatorPadded = "_separatorPadded_kwhbh_30";
+    const headerSep = "_headerSep_kwhbh_35";
+    const styles$N = {
+      container: container$c,
+      cell: cell$1,
+      fullWidth,
+      separator: separator$3,
+      separatorPadded,
+      headerSep
+    };
+    const SampleScoresGrid = ({
+      evalSample,
+      className: className2,
+      scrollRef
+    }) => {
+      const evalDescriptor = useEvalDescriptor();
+      if (!evalDescriptor) {
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyPanel, { children: "No Sample Selected" });
+      }
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2, styles$N.container), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: clsx(
+              "text-size-smaller",
+              "text-style-label",
+              "text-style-secondary"
+            ),
+            children: "Scorer"
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: clsx(
+              "text-size-smaller",
+              "text-style-label",
+              "text-style-secondary"
+            ),
+            children: "Answer"
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: clsx(
+              "text-size-smaller",
+              "text-style-label",
+              "text-style-secondary"
+            ),
+            children: "Score"
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: clsx(
+              "text-size-smaller",
+              "text-style-label",
+              "text-style-secondary"
+            ),
+            children: "Explanation"
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: clsx(styles$N.separator, styles$N.fullWidth, styles$N.headerSep)
+          }
+        ),
+        Object.keys(evalSample.scores || {}).map((scorer2) => {
+          if (!evalSample.scores) {
+            return void 0;
+          }
+          const scoreData = evalSample.scores[scorer2];
+          const explanation2 = scoreData.explanation || "(No Explanation)";
+          const answer2 = scoreData.answer;
+          let metadata2 = scoreData.metadata || {};
+          return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-base", styles$N.cell), children: scorer2 }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$N.cell, "text-size-base"), children: answer2 }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$N.cell, "text-size-base"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              SampleScores,
+              {
+                sample: evalSample,
+                scorer: scorer2
+              }
+            ) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-base", styles$N.cell), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              RenderedContent,
+              {
+                id: `${scorer2}-explanation`,
+                entry: {
+                  name: "Explanation",
+                  value: explanation2
+                }
+              }
+            ) }),
+            Object.keys(metadata2).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  className: clsx(
+                    "text-size-smaller",
+                    "text-style-label",
+                    "text-style-secondary",
+                    styles$N.fullWidth
+                  ),
+                  children: "Metadata"
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$N.fullWidth), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                RecordTree,
+                {
+                  id: `${scorer2}-metadataa`,
+                  scrollRef,
+                  record: metadata2,
+                  defaultExpandLevel: 0
+                }
+              ) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  className: clsx(
+                    styles$N.separator,
+                    styles$N.separatorPadded,
+                    styles$N.fullWidth
+                  )
+                }
+              )
+            ] }, `${scorer2}-metadata`) : void 0
+          ] }, `${scorer2}-row`);
+        })
+      ] });
+    };
+    const wordBreak = "_wordBreak_las07_9";
+    const scoreCard = "_scoreCard_las07_50";
+    const scores = "_scores_las07_54";
+    const styles$M = {
+      wordBreak,
+      scoreCard,
+      scores
+    };
+    const SampleScoresView = ({
+      sample: sample2,
+      className: className2,
+      scrollRef
+    }) => {
+      const evalDescriptor = useEvalDescriptor();
+      if (!evalDescriptor) {
+        return void 0;
+      }
+      if (!sample2) {
+        return void 0;
+      }
+      const scoreInput = inputString(sample2.input);
+      if (sample2.choices && sample2.choices.length > 0) {
+        scoreInput.push("");
+        scoreInput.push(
+          ...sample2.choices.map((choice, index) => {
+            return `${String.fromCharCode(65 + index)}) ${choice}`;
+          })
+        );
+      }
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
+        {
+          className: clsx(
+            "container-fluid",
+            className2,
+            "font-size-base",
+            styles$M.container
+          ),
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(Card, { className: clsx(styles$M.scoreCard), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardBody, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                className: clsx(
+                  "text-size-small",
+                  "text-style-label",
+                  "text-style-secondary"
+                ),
+                children: "Input"
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              ExpandablePanel,
+              {
+                lines: 10,
+                id: `sample-score-${sample2.id}-${sample2.epoch}`,
+                collapse: true,
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  RenderedText,
+                  {
+                    markdown: scoreInput.join("\n"),
+                    className: clsx(styles$M.wordBreak, "text-size-base")
+                  }
+                )
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              SampleScoresGrid,
+              {
+                evalSample: sample2,
+                className: clsx(styles$M.scores),
+                scrollRef
+              }
+            )
+          ] }) })
+        }
+      );
+    };
+    const eventTypes = {
+      sample_init: "Sample Init",
+      sample_limit: "Sample Limit",
+      sandbox: "Sandbox",
+      state: "State",
+      store: "Store",
+      model: "Model",
+      tool: "Tool",
+      approval: "Approval",
+      input: "Input",
+      score: "Score",
+      score_edit: "Score Edit",
+      error: "Error",
+      logger: "Logger",
+      info: "Info",
+      subtask: "Subtask"
+    };
+    const useTranscriptFilter = () => {
+      const filtered = useStore((state) => state.sample.eventFilter.filteredTypes);
+      const setFilteredEventTypes = useStore(
+        (state) => state.sampleActions.setFilteredEventTypes
+      );
+      const filterEventType = reactExports.useCallback(
+        (type, isFiltered) => {
+          const newFiltered = new Set(filtered);
+          if (isFiltered) {
+            newFiltered.delete(type);
+          } else {
+            newFiltered.add(type);
+          }
+          setFilteredEventTypes(Array.from(newFiltered));
+        },
+        [filtered]
+      );
+      const setDebugFilter = reactExports.useCallback(() => {
+        setFilteredEventTypes([]);
+      }, [setFilteredEventTypes]);
+      const setDefaultFilter = reactExports.useCallback(() => {
+        setFilteredEventTypes([...kDefaultExcludeEvents]);
+      }, [setFilteredEventTypes]);
+      const isDefaultFilter = reactExports.useMemo(() => {
+        return filtered.length === kDefaultExcludeEvents.length && [...filtered].every((type) => kDefaultExcludeEvents.includes(type));
+      }, [filtered]);
+      const isDebugFilter = reactExports.useMemo(() => {
+        return filtered.length === 0;
+      }, [filtered]);
+      const arrangedEventTypes = reactExports.useCallback((columns = 1) => {
+        const keys = Object.keys(eventTypes);
+        const sortedKeys = keys.sort((a, b) => {
+          const aIsDefault = kDefaultExcludeEvents.includes(a);
+          const bIsDefault = kDefaultExcludeEvents.includes(b);
+          if (aIsDefault && !bIsDefault) return 1;
+          if (!aIsDefault && bIsDefault) return -1;
+          return eventTypes[a].localeCompare(eventTypes[b]);
+        });
+        if (columns === 1) {
+          return sortedKeys;
+        }
+        const itemsPerColumn = Math.ceil(sortedKeys.length / columns);
+        const columnArrays = [];
+        for (let col = 0; col < columns; col++) {
+          const start2 = col * itemsPerColumn;
+          const end2 = Math.min(start2 + itemsPerColumn, sortedKeys.length);
+          columnArrays.push(sortedKeys.slice(start2, end2));
+        }
+        const arrangedKeys = [];
+        const maxItemsInColumn = Math.max(...columnArrays.map((col) => col.length));
+        for (let row2 = 0; row2 < maxItemsInColumn; row2++) {
+          for (let col = 0; col < columns; col++) {
+            if (row2 < columnArrays[col].length) {
+              arrangedKeys.push(columnArrays[col][row2]);
+            }
+          }
+        }
+        return arrangedKeys;
+      }, []);
+      return {
+        filtered,
+        isDefaultFilter,
+        isDebugFilter,
+        setDefaultFilter,
+        setDebugFilter,
+        filterEventType,
+        eventTypes,
+        arrangedEventTypes
+      };
     };
     const grid$5 = "_grid_1ml4j_1";
     const row$2 = "_row_1ml4j_8";
@@ -125658,7 +130030,7 @@ ${events}
       if (value2 == null) node2.removeAttribute("class");
       else node2.className = value2;
     }
-    function addEventListener(node2, name2, handler, delegate) {
+    function addEventListener$1(node2, name2, handler, delegate) {
       {
         if (Array.isArray(handler)) {
           node2[`$$${name2}`] = handler[0];
@@ -126423,7 +130795,7 @@ ${events}
           },
           get children() {
             const _el$2 = _tmpl$3$1.cloneNode(true);
-            addEventListener(_el$2, "click", e(props.onPlayClick));
+            addEventListener$1(_el$2, "click", e(props.onPlayClick));
             insert$1(_el$2, createComponent(Switch, {
               get children() {
                 return [createComponent(Match, {
@@ -126465,7 +130837,7 @@ ${events}
                 _el$14.$$mousedown = (e2) => {
                   e2._marker = true;
                 };
-                addEventListener(_el$14, "click", seekToMarker(i2()));
+                addEventListener$1(_el$14, "click", seekToMarker(i2()));
                 insert$1(_el$16, () => markerText(m));
                 createRenderEffect((_p$) => {
                   const _v$ = markerPosition(m), _v$2 = !!isPastMarker(m);
@@ -126483,8 +130855,8 @@ ${events}
             return _el$9;
           }
         }));
-        addEventListener(_el$12, "click", e(props.onHelpClick));
-        addEventListener(_el$13, "click", e(props.onFullscreenClick));
+        addEventListener$1(_el$12, "click", e(props.onHelpClick));
+        addEventListener$1(_el$13, "click", e(props.onFullscreenClick));
         createRenderEffect(() => _el$.classList.toggle("ap-seekable", !!props.isSeekable));
         return _el$;
       })();
@@ -126522,7 +130894,7 @@ ${events}
       };
       return (() => {
         const _el$ = _tmpl$$2.cloneNode(true);
-        addEventListener(_el$, "click", e(props.onClick));
+        addEventListener$1(_el$, "click", e(props.onClick));
         return _el$;
       })();
     });
@@ -126542,7 +130914,7 @@ ${events}
       };
       return (() => {
         const _el$ = _tmpl$7.cloneNode(true), _el$2 = _el$.firstChild, _el$3 = _el$2.firstChild, _el$4 = _el$3.firstChild, _el$5 = _el$4.nextSibling, _el$12 = _el$5.firstChild;
-        addEventListener(_el$, "click", e(props.onClose));
+        addEventListener$1(_el$, "click", e(props.onClose));
         _el$2.$$click = (e2) => {
           e2.stopPropagation();
         };
@@ -129375,7 +133747,7 @@ ${events}
         return sampleData.getSelectedSample();
       }, [sampleData.selectedSampleIdentifier, sampleData.getSelectedSample]);
       const runningSampleData = sampleData.running;
-      const evalSpec = useStore((state) => state.log.selectedLogSummary?.eval);
+      const evalSpec = useStore((state) => state.log.selectedLogDetails?.eval);
       const { setDocumentTitle } = useDocumentTitle();
       reactExports.useEffect(() => {
         setDocumentTitle({ evalSpec, sample: sample2 });
@@ -146657,10 +151029,10 @@ ${events}
         }
       if (sections) {
         let sectionOrder = /* @__PURE__ */ Object.create(null), pos2 = 0;
-        let cmp = (a, b) => {
+        let cmp2 = (a, b) => {
           return (a.rank === "dynamic" && b.rank === "dynamic" ? dynamicSectionScore[b.name] - dynamicSectionScore[a.name] : 0) || (typeof a.rank == "number" ? a.rank : 1e9) - (typeof b.rank == "number" ? b.rank : 1e9) || (a.name < b.name ? -1 : 1);
         };
-        for (let s of sections.sort(cmp)) {
+        for (let s of sections.sort(cmp2)) {
           pos2 -= 1e5;
           sectionOrder[s.name] = pos2;
         }
@@ -152527,7 +156899,7 @@ Supported expressions:
       const filter = useStore((state) => state.log.filter);
       const filterError = useStore((state) => state.log.filterError);
       const samples = useStore(
-        (state) => state.log.selectedLogSummary?.sampleSummaries
+        (state) => state.log.selectedLogDetails?.sampleSummaries
       );
       const setFilter = useStore((state) => state.logActions.setFilter);
       const handleFocus = reactExports.useCallback((event, view) => {
@@ -152796,7 +157168,7 @@ Supported expressions:
       }) });
     };
     const SampleTools = () => {
-      const selectedLogSummary = useStore((state) => state.log.selectedLogSummary);
+      const selectedLogDetails = useStore((state) => state.log.selectedLogDetails);
       const scores2 = useScores();
       const selectedScores = useSelectedScores();
       const setSelectedScores = useStore(
@@ -152806,7 +157178,7 @@ Supported expressions:
       const setEpoch = useStore((state) => state.logActions.setEpoch);
       const sort2 = useStore((state) => state.log.sort);
       const setSort = useStore((state) => state.logActions.setSort);
-      const epochs = selectedLogSummary?.eval.config.epochs || 1;
+      const epochs = selectedLogDetails?.eval.config.epochs || 1;
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(SampleFilter, {}),
         scores2?.length > 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -153188,7 +157560,7 @@ Supported expressions:
           defaultValue: !!running
         }
       );
-      const evalSpec = useStore((state) => state.log.selectedLogSummary?.eval);
+      const evalSpec = useStore((state) => state.log.selectedLogDetails?.eval);
       const { setDocumentTitle } = useDocumentTitle();
       reactExports.useEffect(() => {
         setDocumentTitle({ evalSpec });
@@ -153656,12 +158028,12 @@ Supported expressions:
         (state) => state.log.selectedSampleIndex
       );
       const sampleSummaries = useFilteredSamples();
-      const selectedLogSummary = useStore((state) => state.log.selectedLogSummary);
+      const selectedLogDetails = useStore((state) => state.log.selectedLogDetails);
       const evalSampleCount = reactExports.useMemo(() => {
-        const limit = selectedLogSummary?.eval.config.limit;
+        const limit = selectedLogDetails?.eval.config.limit;
         const limitCount = limit === null || limit === void 0 ? void 0 : typeof limit === "number" ? limit : limit[1] - limit[0];
-        return (limitCount || selectedLogSummary?.eval.dataset.samples || 0) * (selectedLogSummary?.eval.config.epochs || 0);
-      }, [selectedLogSummary?.eval.config.limit]);
+        return (limitCount || selectedLogDetails?.eval.dataset.samples || 0) * (selectedLogDetails?.eval.config.epochs || 0);
+      }, [selectedLogDetails?.eval.config.limit]);
       const totalSampleCount = useTotalSampleCount();
       const samplesDescriptor = useSampleDescriptor();
       const groupBy = useGroupBy();
@@ -153698,7 +158070,7 @@ Supported expressions:
         if (!samplesDescriptor) return void 0;
         return getSampleProcessor(
           sampleSummaries || [],
-          selectedLogSummary?.eval?.config?.epochs || 1,
+          selectedLogDetails?.eval?.config?.epochs || 1,
           groupBy,
           groupByOrder,
           samplesDescriptor,
@@ -153707,7 +158079,7 @@ Supported expressions:
       }, [
         samplesDescriptor,
         sampleSummaries,
-        selectedLogSummary?.eval?.config?.epochs,
+        selectedLogDetails?.eval?.config?.epochs,
         groupBy,
         groupByOrder,
         selectedScores
@@ -154790,44 +159162,44 @@ Supported expressions:
       const divRef = reactExports.useRef(null);
       const refreshLog = useRefreshLog();
       const navigation = useLogNavigation();
-      const selectedLogSummary = useStore((state) => state.log.selectedLogSummary);
+      const selectedLogDetails = useStore((state) => state.log.selectedLogDetails);
       const evalSpec = useEvalSpec();
       const runningMetrics = useStore(
         (state) => state.log.pendingSampleSummaries?.metrics
       );
       const samplesTabConfig = useSamplesTabConfig(
-        selectedLogSummary?.status,
+        selectedLogDetails?.status,
         refreshLog
       );
       const intoTabConfig = useInfoTabConfig(
         evalSpec,
-        selectedLogSummary?.plan,
-        selectedLogSummary?.error,
-        selectedLogSummary?.results,
-        selectedLogSummary?.status
+        selectedLogDetails?.plan,
+        selectedLogDetails?.error,
+        selectedLogDetails?.results,
+        selectedLogDetails?.status
       );
-      const errorTabConfig = useErrorTabConfig(selectedLogSummary?.error);
-      const taskTabConfig = useTaskTabConfig(evalSpec, selectedLogSummary?.stats);
+      const errorTabConfig = useErrorTabConfig(selectedLogDetails?.error);
+      const taskTabConfig = useTaskTabConfig(evalSpec, selectedLogDetails?.stats);
       const modelsTabConfig = useModelsTab(
         evalSpec,
-        selectedLogSummary?.stats,
-        selectedLogSummary?.status
+        selectedLogDetails?.stats,
+        selectedLogDetails?.status
       );
       const jsonTabConfig = useJsonTabConfig(
-        selectedLogSummary?.version,
-        selectedLogSummary?.status,
+        selectedLogDetails?.version,
+        selectedLogDetails?.status,
         evalSpec,
-        selectedLogSummary?.plan,
-        selectedLogSummary?.error,
-        selectedLogSummary?.results,
-        selectedLogSummary?.stats
+        selectedLogDetails?.plan,
+        selectedLogDetails?.error,
+        selectedLogDetails?.results,
+        selectedLogDetails?.stats
       );
       const tabs2 = {
         ...samplesTabConfig ? { samples: samplesTabConfig } : {},
         task: taskTabConfig,
         model: modelsTabConfig,
         config: intoTabConfig,
-        ...selectedLogSummary?.error ? { error: errorTabConfig } : {},
+        ...selectedLogDetails?.error ? { error: errorTabConfig } : {},
         json: jsonTabConfig
       };
       const selectedTab = useStore((state) => state.app.tabs.workspace);
@@ -154863,11 +159235,11 @@ Supported expressions:
             TitleView,
             {
               evalSpec,
-              evalPlan: selectedLogSummary?.plan,
-              evalResults: selectedLogSummary?.results,
+              evalPlan: selectedLogDetails?.plan,
+              evalResults: selectedLogDetails?.results,
               runningMetrics,
-              evalStats: selectedLogSummary?.stats,
-              status: selectedLogSummary?.status
+              evalStats: selectedLogDetails?.stats,
+              status: selectedLogDetails?.status
             }
           ),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: divRef, className: clsx("workspace", styles$15.workspace), children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("log-detail", styles$15.tabContainer), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -154908,9 +159280,10 @@ Supported expressions:
       const setShowFind = useStore((state) => state.appActions.setShowFind);
       const hideFind = useStore((state) => state.appActions.hideFind);
       const singleFileMode = useStore((state) => state.app.singleFileMode);
-      const logs = useStore((state) => state.logs.logs);
+      const logDir2 = useStore((state) => state.logs.logDir);
+      const logFiles = useStore((state) => state.logs.logs);
       const mainAppRef = reactExports.useRef(null);
-      const fullScreen = logs.files.length === 1 && !logs.log_dir;
+      const fullScreen = logFiles.length === 1 && !logDir2;
       reactExports.useEffect(() => {
         const handleGlobalKeyDown = (e) => {
           if ((e.ctrlKey || e.metaKey) && e.key === "f") {
@@ -154928,6 +159301,11 @@ Supported expressions:
           document.removeEventListener("keydown", handleGlobalKeyDown, true);
         };
       }, [setShowFind, hideFind]);
+      const optionsRef = reactExports.useRef(null);
+      const isShowing = useStore((state) => state.app.dialogs.options);
+      const setShowing = useStore(
+        (state) => state.appActions.setShowingOptionsDialog
+      );
       return /* @__PURE__ */ jsxRuntimeExports.jsx(ExtendedFindProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
         {
@@ -154941,8 +159319,26 @@ Supported expressions:
           tabIndex: 0,
           children: [
             showFind ? /* @__PURE__ */ jsxRuntimeExports.jsx(FindBand, {}) : "",
-            !singleFileMode ? /* @__PURE__ */ jsxRuntimeExports.jsx(Navbar, {}) : "",
-            /* @__PURE__ */ jsxRuntimeExports.jsx(ActivityBar, { animating: appStatus.loading }),
+            !singleFileMode ? /* @__PURE__ */ jsxRuntimeExports.jsxs(Navbar, { children: [
+              " ",
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                ViewerOptionsButton,
+                {
+                  showing: isShowing,
+                  setShowing,
+                  ref: optionsRef
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                ViewerOptionsPopover,
+                {
+                  positionEl: optionsRef.current,
+                  showing: isShowing,
+                  setShowing
+                }
+              )
+            ] }) : "",
+            /* @__PURE__ */ jsxRuntimeExports.jsx(ActivityBar, { animating: !!appStatus.loading }),
             appStatus.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(
               ErrorPanel,
               {
@@ -154965,16 +159361,14 @@ Supported expressions:
       const setShowingSampleDialog = useStore(
         (state) => state.appActions.setShowingSampleDialog
       );
-      const setStatus = useStore((state) => state.appActions.setStatus);
       const setWorkspaceTab = useStore((state) => state.appActions.setWorkspaceTab);
-      const refreshLogs = useStore((state) => state.logsActions.refreshLogs);
       const selectLogFile = useStore((state) => state.logsActions.selectLogFile);
       const selectSample = useStore((state) => state.logActions.selectSample);
       const setSelectedLogIndex = useStore(
         (state) => state.logsActions.setSelectedLogIndex
       );
       const clearSelectedLogSummary = useStore(
-        (state) => state.logActions.clearSelectedLogSummary
+        (state) => state.logActions.clearSelectedLogDetails
       );
       const clearSelectedSample = useStore(
         (state) => state.sampleActions.clearSelectedSample
@@ -155029,15 +159423,7 @@ Supported expressions:
           }
         };
         loadLogFromPath();
-      }, [
-        logPath,
-        tabId,
-        selectLogFile,
-        refreshLogs,
-        setWorkspaceTab,
-        setSelectedLogIndex,
-        setStatus
-      ]);
+      }, [logPath, tabId, selectLogFile, setWorkspaceTab, setSelectedLogIndex]);
       reactExports.useEffect(() => {
         if (sampleId && filteredSamples) {
           const targetEpoch = epoch ? parseInt(epoch, 10) : void 0;
@@ -155136,16 +159522,18 @@ Supported expressions:
     );
     const App = ({ api: api2 }) => {
       const rehydrated = useStore((state) => state.app.rehydrated);
-      const logs = useStore((state) => state.logs.logs);
+      const logDir2 = useStore((state) => state.logs.logDir);
+      const logFiles = useStore((state) => state.logs.logs);
       const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
       const loadedLogFile = useStore((state) => state.log.loadedLog);
-      const selectedLogSummary = useStore((state) => state.log.selectedLogSummary);
+      const selectedLogDetails = useStore((state) => state.log.selectedLogDetails);
       const setIntialState = useStore((state) => state.appActions.setInitialState);
-      const setAppStatus = useStore((state) => state.appActions.setStatus);
-      const refreshLogs = useStore((state) => state.logsActions.refreshLogs);
-      const setLogs = useStore((state) => state.logsActions.setLogs);
+      const setLoading = useStore((state) => state.appActions.setLoading);
+      const syncLogs = useStore((state) => state.logsActions.syncLogs);
+      const setLogDir = useStore((state) => state.logsActions.setLogDir);
+      const setLogFiles = useStore((state) => state.logsActions.setLogHandles);
       const selectLogFile = useStore((state) => state.logsActions.selectLogFile);
-      const loadLog = useStore((state) => state.logActions.loadLog);
+      const loadLog = useStore((state) => state.logActions.syncLog);
       const pollLog = useStore((state) => state.logActions.pollLog);
       const setSingleFileMode = useStore(
         (state) => state.appActions.setSingleFileMode
@@ -155155,44 +159543,38 @@ Supported expressions:
           if (!selectedLogFile) {
             return;
           }
-          if (selectedLogFile === loadedLogFile && selectedLogSummary) {
+          if (selectedLogFile === loadedLogFile && selectedLogDetails) {
             return;
           }
           try {
-            setAppStatus({ loading: true, error: void 0 });
+            setLoading(true);
             await loadLog(selectedLogFile);
-            setAppStatus({ loading: false, error: void 0 });
+            setLoading(false);
           } catch (e) {
             console.log(e);
-            setAppStatus({ loading: false, error: e });
+            setLoading(false, e);
           }
         };
         loadSpecificLog();
-      }, [
-        selectedLogFile,
-        loadedLogFile,
-        selectedLogSummary,
-        loadLog,
-        setAppStatus
-      ]);
+      }, [selectedLogFile, loadedLogFile, selectedLogDetails, loadLog, setLoading]);
       reactExports.useEffect(() => {
         const doPoll = async () => {
           await pollLog();
         };
-        if (selectedLogSummary?.status === "started") {
+        if (selectedLogDetails?.status === "started") {
           doPoll();
         }
-      }, [pollLog, selectedLogSummary?.status]);
+      }, [pollLog, selectedLogDetails?.status]);
       reactExports.useEffect(() => {
-        if (logs.log_dir && logs.files.length === 0) {
-          setAppStatus({
-            loading: false,
-            error: new Error(
-              `No log files to display in the directory ${logs.log_dir}. Are you sure this is the correct log directory?`
+        if (logDir2 && logFiles.length === 0) {
+          setLoading(
+            false,
+            new Error(
+              `No log files to display in the directory ${logDir2}. Are you sure this is the correct log directory?`
             )
-          });
+          );
         }
-      }, [logs.log_dir, logs.files.length, setAppStatus]);
+      }, [logDir2, logFiles, setLoading]);
       const onMessage = reactExports.useCallback(
         async (e) => {
           switch (e.data.type) {
@@ -155208,19 +159590,19 @@ Supported expressions:
               const log_dir = e.data.log_dir;
               const isFocused = document.hasFocus();
               if (!isFocused) {
-                if (log_dir === logs.log_dir) {
+                if (log_dir === logDir2) {
                   selectLogFile(decodedUrl);
                 } else {
                   api2.open_log_file(e.data.url, e.data.log_dir);
                 }
               } else {
-                refreshLogs();
+                syncLogs();
               }
               break;
             }
           }
         },
-        [logs, selectLogFile, refreshLogs, api2]
+        [logDir2, selectLogFile, syncLogs, api2]
       );
       reactExports.useEffect(() => {
         window.addEventListener("message", onMessage);
@@ -155240,10 +159622,8 @@ Supported expressions:
             const logPath = urlParams.get("task_file");
             const resolvedLogPath = logPath ? logPath.replace(" ", "+") : logPath;
             if (resolvedLogPath) {
-              setLogs({
-                log_dir: "",
-                files: [{ name: resolvedLogPath }]
-              });
+              setLogDir(void 0);
+              setLogFiles([{ name: resolvedLogPath }]);
               setSingleFileMode(true);
             } else {
               const log_file = urlParams.get("log_file");
@@ -155256,7 +159636,7 @@ Supported expressions:
           new ClipboardJS(".clipboard-button,.copy-button");
         };
         loadLogsAndState();
-      }, [setLogs, selectLogFile, refreshLogs, onMessage]);
+      }, [setLogDir, setLogFiles, selectLogFile, syncLogs, onMessage]);
       return /* @__PURE__ */ jsxRuntimeExports.jsx(RouterProvider2, { router: AppRouter });
     };
     const resolveStorage = () => {
@@ -155288,8 +159668,7 @@ Supported expressions:
       downloadFiles: true,
       webWorkers: true,
       streamSamples: !!applicationApi.get_log_pending_samples,
-      streamSampleData: !!applicationApi.get_log_sample_data,
-      nativeFind: !vscode
+      streamSampleData: !!applicationApi.get_log_sample_data
     };
     if (vscode) {
       const extensionVersionEl = document.querySelector(
