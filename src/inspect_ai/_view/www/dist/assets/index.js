@@ -26596,7 +26596,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       remove: remove$1,
       DexieYProvider
     } = Dexie;
-    const DB_VERSION = 8;
+    const DB_VERSION = 9;
     function resolveDBName(logDir2) {
       const sanitizedDir = logDir2.replace(/[^a-zA-Z0-9_-]/g, "_");
       const dbName = `InspectAI_${sanitizedDir}`;
@@ -27453,6 +27453,62 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
       return void 0;
     };
+    const directoryRelativeUrl = (file, dir) => {
+      if (!dir) {
+        return encodeURIComponent(file);
+      }
+      const normalizedFile = file.replace(/\\/g, "/");
+      const normalizedLogDir = dir.replace(/\\/g, "/");
+      const dirWithSlash = normalizedLogDir.endsWith("/") ? normalizedLogDir : normalizedLogDir + "/";
+      if (normalizedFile.startsWith(dirWithSlash)) {
+        const relativePath = normalizedFile.substring(dirWithSlash.length);
+        const segments = relativePath.split("/");
+        const encodedSegments = segments.map(
+          (segment) => encodeURIComponent(segment)
+        );
+        return encodedSegments.join("/");
+      }
+      return encodeURIComponent(file);
+    };
+    const join = (file, dir) => {
+      if (!dir) {
+        return file;
+      }
+      const normalizedFile = file.replace(/\\/g, "/");
+      const normalizedLogDir = dir.replace(/\\/g, "/");
+      const dirWithSlash = normalizedLogDir.endsWith("/") ? normalizedLogDir : normalizedLogDir + "/";
+      return dirWithSlash + normalizedFile;
+    };
+    function encodePathParts(url) {
+      if (!url) return url;
+      try {
+        const fullUrl = new URL(url);
+        fullUrl.pathname = fullUrl.pathname.split("/").map(
+          (segment) => segment ? encodeURIComponent(decodeURIComponent(segment)) : ""
+        ).join("/");
+        return fullUrl.toString();
+      } catch {
+        return url.split("/").map(
+          (segment) => segment ? encodeURIComponent(decodeURIComponent(segment)) : ""
+        ).join("/");
+      }
+    }
+    const isUri = (value2) => {
+      if (!value2) return false;
+      try {
+        new URL(value2);
+        return true;
+      } catch {
+        return false;
+      }
+    };
+    const prettyDirUri = (uri) => {
+      if (uri.startsWith("file://")) {
+        return uri.replace("file://", "");
+      } else {
+        return uri;
+      }
+    };
     const createPolling = (name2, callback, options2) => {
       const log2 = createLogger(`Polling ${name2}`);
       const { maxRetries, interval } = options2;
@@ -27732,21 +27788,26 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           syncLog: async (logFileName) => {
             const state = get2();
             const api2 = state.api;
+            let logDir2 = state.logs.logDir;
+            if (state.logs.logDir === void 0) {
+              logDir2 = await state.logsActions.initLogDir();
+            }
+            const logAbsPath = !isUri(logFileName) ? join(logFileName, logDir2) : logFileName;
             if (!api2) {
               console.error("API not initialized in Store");
               return;
             }
-            log$8.debug(`Load log: ${logFileName}`);
+            log$8.debug(`Load log: ${logAbsPath}`);
             const dbService = state.databaseService;
             if (dbService && dbService.opened()) {
               try {
-                const cachedInfo = await dbService.readLogDetailsForFile(logFileName);
+                const cachedInfo = await dbService.readLogDetailsForFile(logAbsPath);
                 if (cachedInfo) {
-                  log$8.debug(`Using cached log info for: ${logFileName}`);
+                  log$8.debug(`Using cached log info for: ${logAbsPath}`);
                   state.logActions.setSelectedLogDetails(cachedInfo);
-                  api2.get_log_details(logFileName).then((logDetails) => {
+                  api2.get_log_details(logAbsPath).then((logDetails) => {
                     state.logActions.setSelectedLogDetails(logDetails);
-                    dbService.writeLogDetails(logFileName, logDetails).catch(() => {
+                    dbService.writeLogDetails(logAbsPath, logDetails).catch(() => {
                     });
                   });
                   const header2 = {
@@ -27830,7 +27891,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       logs: [],
       logPreviews: {},
       logDetails: {},
-      selectedLogIndex: -1,
       selectedLogFile: void 0,
       listing: {},
       pendingRequests: /* @__PURE__ */ new Map(),
@@ -27851,7 +27911,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }),
           setLogHandles: (logs) => set2((state) => {
             state.logs.logs = logs;
-            state.logs.selectedLogFile = state.logs.selectedLogIndex > -1 ? logs[state.logs.selectedLogIndex]?.name : void 0;
           }),
           syncLogPreviews: async (logs) => {
             const state = get2();
@@ -27882,20 +27941,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               ...details
             };
           }),
-          setSelectedLogIndex: (selectedLogIndex) => {
-            set2((state) => {
-              state.logs.selectedLogIndex = selectedLogIndex;
-              const file = state.logs.logs[selectedLogIndex];
-              state.logs.selectedLogFile = file ? file.name : void 0;
-            });
-          },
-          syncLogs: async () => {
+          initLogDir: async () => {
             const api2 = get2().api;
             if (!api2) {
               console.error("API not initialized in LogsStore");
-              return [];
+              return void 0;
             }
-            get2().appActions.setLoading(true);
             const loadLogDir = async () => {
               try {
                 return await api2.get_log_dir();
@@ -27908,17 +27959,37 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             const logDir2 = await loadLogDir();
             if (get2().logs.logDir !== logDir2) {
               get2().logsActions.setLogDir(logDir2);
+            }
+            return logDir2;
+          },
+          ensureReplication: async () => {
+            const state = get2();
+            if (state.logs.logDir) {
+              await state.logsActions.syncLogs();
+            }
+          },
+          syncLogs: async () => {
+            const api2 = get2().api;
+            if (!api2) {
+              console.error("API not initialized in LogsStore");
+              return [];
+            }
+            get2().appActions.setLoading(true);
+            const logDir2 = await get2().logsActions.initLogDir();
+            const databaseService = get2().databaseService;
+            const initDatabase = !databaseService || databaseService.getLogDir() !== logDir2;
+            if (initDatabase) {
               const initializeDatabase = async (logDir22) => {
                 if (!logDir22) {
                   return void 0;
                 }
                 try {
-                  const databaseService2 = get2().databaseService;
-                  if (!databaseService2) {
+                  const databaseService3 = get2().databaseService;
+                  if (!databaseService3) {
                     return void 0;
                   }
-                  await databaseService2.openDatabase(logDir22);
-                  return databaseService2;
+                  await databaseService3.openDatabase(logDir22);
+                  return databaseService3;
                 } catch (e) {
                   console.log(e);
                   get2().appActions.setLoading(false, e);
@@ -27929,12 +28000,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 get2().appActions.setLoading(false);
                 return [];
               }
-              const databaseService = await initializeDatabase(logDir2);
-              if (!databaseService) {
+              const databaseService2 = await initializeDatabase(logDir2);
+              if (!databaseService2) {
                 throw new Error("Database service not available");
               }
               await get2().replicationService?.startReplication(
-                databaseService,
+                databaseService2,
                 api2,
                 {
                   setLogHandles: (logs) => {
@@ -27943,11 +28014,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                   },
                   getSelectedLog: () => {
                     const state = get2();
-                    return state.logs.selectedLogIndex > -1 ? state.logs.logs[state.logs.selectedLogIndex] : void 0;
+                    if (!state.logs.selectedLogFile) {
+                      return void 0;
+                    }
+                    return state.logs.logs.find((handle) => {
+                      return handle.name.endsWith(state.logs.selectedLogFile);
+                    });
                   },
-                  setSelectedLogIndex: (index) => {
+                  setSelectedLogFile: (logFile) => {
                     const state = get2();
-                    state.logsActions.setSelectedLogIndex(index);
+                    state.logsActions.setSelectedLogFile(logFile);
                   },
                   updateLogPreviews: (previews) => {
                     const state = get2();
@@ -27989,27 +28065,28 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             });
           },
           // Select a specific log file
-          selectLogFile: async (logUrl2) => {
+          setSelectedLogFile: async (logFile) => {
             const state = get2();
-            const index = state.logs.logs.findIndex(
-              (val) => val.name.endsWith(logUrl2)
-            );
-            if (index > -1) {
-              state.logsActions.setSelectedLogIndex(index);
-            } else {
+            const isInFileList = state.logs.logs.findIndex(
+              (val) => val.name.endsWith(logFile)
+            ) !== -1;
+            if (!isInFileList) {
               if (state.replicationService?.isReplicating()) {
-                const logHandles = await state.logsActions.syncLogs();
-                const idx = logHandles.findIndex(
-                  (file) => file.name.endsWith(logUrl2)
+                await state.logsActions.syncLogs();
+                const logHandle = state.logs.logs.find(
+                  (val) => val.name.endsWith(logFile)
                 );
-                state.logsActions.setSelectedLogIndex(
-                  idx !== void 0 && idx > -1 ? idx : 0
-                );
+                if (!logHandle) {
+                  throw new Error(`Log file not found: ${logFile}`);
+                }
               } else {
-                state.logsActions.setLogHandles([{ name: logUrl2 }]);
-                state.logsActions.setSelectedLogIndex(0);
+                state.logsActions.setLogHandles([{ name: logFile }]);
               }
             }
+            set2((state2) => {
+              const absoluteLogfile = isUri(logFile) ? logFile : join(logFile, state2.logs.logDir);
+              state2.logs.selectedLogFile = absoluteLogfile;
+            });
           },
           setSorting: (sorting) => {
             set2((state) => {
@@ -28057,6 +28134,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           setSelectedRowIndex: (index) => {
             set2((state) => {
               state.logs.listing.selectedRowIndex = index;
+            });
+          },
+          clearSelectedLogFile: () => {
+            set2((state) => {
+              state.logs.selectedLogFile = void 0;
             });
           },
           // Cross-file sample operations
@@ -28967,6 +29049,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           if (logDetails && Object.keys(logDetails).length > 0) {
             context.updateLogDetails(logDetails);
           }
+          await this.updateDbStats();
         }
       }
       stopReplication() {
@@ -29060,17 +29143,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         });
         toInvalidate.map((file) => file.name).map((name2) => this._database?.clearCacheForFile(name2));
         await this._database.writeLogs(updatedLogs);
-        const currentLogHandle = this._applicationContext.getSelectedLog();
         const allLogHandles = await this._database.readLogs() || [];
         this._applicationContext?.setLogHandles(allLogHandles);
-        if (currentLogHandle !== void 0) {
-          const newIndex = allLogHandles.findIndex(
-            (file) => currentLogHandle.name.endsWith(file.name)
-          );
-          if (newIndex !== void 0 && newIndex !== -1) {
-            this._applicationContext.setSelectedLogIndex(newIndex);
-          }
-        }
         const previewTasks = [...toInvalidate];
         const previews = await this._database.findMissingPreviews(allLogHandles);
         for (const p of previews) {
@@ -35407,53 +35481,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     };
     const isPrimitiveOrNull = (value2) => {
       return value2 === null || value2 === void 0 || typeof value2 === "string" || typeof value2 === "number" || typeof value2 === "boolean";
-    };
-    const directoryRelativeUrl = (file, dir) => {
-      if (!dir) {
-        return encodeURIComponent(file);
-      }
-      const normalizedFile = file.replace(/\\/g, "/");
-      const normalizedLogDir = dir.replace(/\\/g, "/");
-      const dirWithSlash = normalizedLogDir.endsWith("/") ? normalizedLogDir : normalizedLogDir + "/";
-      if (normalizedFile.startsWith(dirWithSlash)) {
-        const relativePath = normalizedFile.substring(dirWithSlash.length);
-        const segments = relativePath.split("/");
-        const encodedSegments = segments.map(
-          (segment) => encodeURIComponent(segment)
-        );
-        return encodedSegments.join("/");
-      }
-      return encodeURIComponent(file);
-    };
-    const join = (file, dir) => {
-      if (!dir) {
-        return file;
-      }
-      const normalizedFile = file.replace(/\\/g, "/");
-      const normalizedLogDir = dir.replace(/\\/g, "/");
-      const dirWithSlash = normalizedLogDir.endsWith("/") ? normalizedLogDir : normalizedLogDir + "/";
-      return dirWithSlash + normalizedFile;
-    };
-    function encodePathParts(url) {
-      if (!url) return url;
-      try {
-        const fullUrl = new URL(url);
-        fullUrl.pathname = fullUrl.pathname.split("/").map(
-          (segment) => segment ? encodeURIComponent(decodeURIComponent(segment)) : ""
-        ).join("/");
-        return fullUrl.toString();
-      } catch {
-        return url.split("/").map(
-          (segment) => segment ? encodeURIComponent(decodeURIComponent(segment)) : ""
-        ).join("/");
-      }
-    }
-    const prettyDirUri = (uri) => {
-      if (uri.startsWith("file://")) {
-        return uri.replace("file://", "");
-      } else {
-        return uri;
-      }
     };
     const decodeUrlParam = (param) => {
       if (!param) return param;
@@ -120427,7 +120454,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.fullWidth, styles$16.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$16.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.140-30-g74259209f" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.140-35-gbf4191ba3" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.spacer) }),
@@ -120731,15 +120758,15 @@ categories: ${categories.join(" ")}`;
       const clearSelectedLogDetails = useStore(
         (state) => state.logActions.clearSelectedLogDetails
       );
-      const setSelectedLogIndex = useStore(
-        (state) => state.logsActions.setSelectedLogIndex
+      const clearSelectedLogFile = useStore(
+        (state) => state.logsActions.clearSelectedLogFile
       );
       const clearLog = useStore((state) => state.logActions.clearLog);
       const unloadLog = reactExports.useCallback(() => {
         clearSelectedLogDetails();
-        setSelectedLogIndex(-1);
+        clearSelectedLogFile();
         clearLog();
-      }, [clearLog, clearSelectedLogDetails, setSelectedLogIndex]);
+      }, [clearLog, clearSelectedLogDetails, clearSelectedLogFile]);
       return { unloadLog };
     };
     const ExtendedFindContext = reactExports.createContext(null);
@@ -158059,14 +158086,14 @@ Supported expressions:
     const kSampleFollowProp = "sample-list";
     const SampleList = reactExports.memo((props) => {
       const { items, totalItemCount, running, className: className2, listHandle } = props;
-      const selectedLogIndex = useStore((state) => state.logs.selectedLogIndex);
+      const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
       const { getRestoreState, isScrolling } = useVirtuosoState(
         listHandle,
-        `sample-list-${selectedLogIndex}`
+        `sample-list-${selectedLogFile}`
       );
       reactExports.useEffect(() => {
         listHandle.current?.scrollTo({ top: 0, behavior: "instant" });
-      }, [selectedLogIndex]);
+      }, [selectedLogFile]);
       const sampleNavigation = useSampleNavigation();
       const selectedSampleHandle = useStore(
         (state) => state.log.selectedSampleHandle
@@ -159887,10 +159914,9 @@ Supported expressions:
         (state) => state.appActions.setShowingSampleDialog
       );
       const setWorkspaceTab = useStore((state) => state.appActions.setWorkspaceTab);
-      const selectLogFile = useStore((state) => state.logsActions.selectLogFile);
       const selectSample = useStore((state) => state.logActions.selectSample);
-      const setSelectedLogIndex = useStore(
-        (state) => state.logsActions.setSelectedLogIndex
+      const setSelectedLogFile = useStore(
+        (state) => state.logsActions.setSelectedLogFile
       );
       const clearSelectedLogSummary = useStore(
         (state) => state.logActions.clearSelectedLogDetails
@@ -159932,10 +159958,12 @@ Supported expressions:
         }
       }, [initialState2, evalSpec]);
       const prevLogPath = usePrevious(logPath);
+      const syncLogs = useStore((state) => state.logsActions.syncLogs);
       reactExports.useEffect(() => {
         const loadLogFromPath = async () => {
           if (logPath) {
-            await selectLogFile(logPath);
+            await syncLogs();
+            setSelectedLogFile(logPath);
             if (tabId) {
               setWorkspaceTab(tabId);
             } else {
@@ -159948,7 +159976,7 @@ Supported expressions:
           }
         };
         loadLogFromPath();
-      }, [logPath, tabId, selectLogFile, setWorkspaceTab, setSelectedLogIndex]);
+      }, [logPath, tabId, setSelectedLogFile, setWorkspaceTab]);
       reactExports.useEffect(() => {
         if (sampleId && filteredSamples) {
           const targetEpoch = epoch ? parseInt(epoch, 10) : 1;
@@ -160042,7 +160070,6 @@ Supported expressions:
     const App = ({ api: api2 }) => {
       const rehydrated = useStore((state) => state.app.rehydrated);
       const logDir2 = useStore((state) => state.logs.logDir);
-      const logFiles = useStore((state) => state.logs.logs);
       const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
       const loadedLogFile = useStore((state) => state.log.loadedLog);
       const selectedLogDetails = useStore((state) => state.log.selectedLogDetails);
@@ -160051,7 +160078,9 @@ Supported expressions:
       const syncLogs = useStore((state) => state.logsActions.syncLogs);
       const setLogDir = useStore((state) => state.logsActions.setLogDir);
       const setLogFiles = useStore((state) => state.logsActions.setLogHandles);
-      const selectLogFile = useStore((state) => state.logsActions.selectLogFile);
+      const setSelectedLogFile = useStore(
+        (state) => state.logsActions.setSelectedLogFile
+      );
       const loadLog = useStore((state) => state.logActions.syncLog);
       const pollLog = useStore((state) => state.logActions.pollLog);
       const setSingleFileMode = useStore(
@@ -160084,16 +160113,6 @@ Supported expressions:
           doPoll();
         }
       }, [pollLog, selectedLogDetails?.status]);
-      reactExports.useEffect(() => {
-        if (logDir2 && logFiles.length === 0) {
-          setLoading(
-            false,
-            new Error(
-              `No log files to display in the directory ${logDir2}. Are you sure this is the correct log directory?`
-            )
-          );
-        }
-      }, [logDir2, logFiles, setLoading]);
       const onMessage = reactExports.useCallback(
         async (e) => {
           switch (e.data.type) {
@@ -160110,7 +160129,7 @@ Supported expressions:
               const isFocused = document.hasFocus();
               if (!isFocused) {
                 if (log_dir === logDir2) {
-                  selectLogFile(decodedUrl);
+                  setSelectedLogFile(decodedUrl);
                 } else {
                   api2.open_log_file(e.data.url, e.data.log_dir);
                 }
@@ -160121,7 +160140,7 @@ Supported expressions:
             }
           }
         },
-        [logDir2, selectLogFile, syncLogs, api2]
+        [logDir2, setSelectedLogFile, syncLogs, api2]
       );
       reactExports.useEffect(() => {
         window.addEventListener("message", onMessage);
@@ -160147,7 +160166,7 @@ Supported expressions:
             } else {
               const log_file = urlParams.get("log_file");
               if (log_file) {
-                await selectLogFile(log_file);
+                setSelectedLogFile(log_file);
                 setSingleFileMode(true);
               }
             }
@@ -160155,7 +160174,7 @@ Supported expressions:
           new ClipboardJS(".clipboard-button,.copy-button");
         };
         loadLogsAndState();
-      }, [setLogDir, setLogFiles, selectLogFile, syncLogs, onMessage]);
+      }, [setLogDir, setLogFiles, setSelectedLogFile, syncLogs, onMessage]);
       return /* @__PURE__ */ jsxRuntimeExports.jsx(RouterProvider2, { router: AppRouter });
     };
     const resolveStorage = () => {
