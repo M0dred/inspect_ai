@@ -120427,7 +120427,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.fullWidth, styles$16.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$16.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.140-26-g011cfd444" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.140-30-g74259209f" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.spacer) }),
@@ -134165,58 +134165,64 @@ ${events}
           };
         }
       }, [scrollRef, flattenedNodes]);
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        "div",
-        {
-          className: clsx(
-            styles$I.container,
-            collapsed2 ? styles$I.collapsed : void 0
-          ),
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs(
-              StickyScroll,
-              {
-                scrollRef,
-                className: styles$I.treeContainer,
-                offsetTop: topOffset,
-                children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    TranscriptOutline,
-                    {
-                      className: clsx(styles$I.outline),
-                      eventNodes,
-                      running,
-                      defaultCollapsedIds,
-                      scrollRef
-                    }
-                  ),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    "div",
-                    {
-                      className: styles$I.outlineToggle,
-                      onClick: () => setCollapsed(!collapsed2),
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.sidebar })
-                    }
-                  )
-                ]
-              }
+      if (flattenedNodes.length === 0) {
+        const isCompletedFiltered = flattenedNodes.length === 0 && events.length > 0;
+        const message2 = isCompletedFiltered ? "The currently applied filter hides all events." : "No events to display.";
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: message2 });
+      } else {
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: clsx(
+              styles$I.container,
+              collapsed2 ? styles$I.collapsed : void 0
             ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              TranscriptVirtualList,
-              {
-                id,
-                listHandle,
-                eventNodes: flattenedNodes,
-                scrollRef,
-                running,
-                initialEventId: initialEventId === void 0 ? null : initialEventId,
-                offsetTop: topOffset,
-                className: styles$I.listContainer
-              }
-            )
-          ]
-        }
-      );
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                StickyScroll,
+                {
+                  scrollRef,
+                  className: styles$I.treeContainer,
+                  offsetTop: topOffset,
+                  children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      TranscriptOutline,
+                      {
+                        className: clsx(styles$I.outline),
+                        eventNodes,
+                        running,
+                        defaultCollapsedIds,
+                        scrollRef
+                      }
+                    ),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "div",
+                      {
+                        className: styles$I.outlineToggle,
+                        onClick: () => setCollapsed(!collapsed2),
+                        children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.sidebar })
+                      }
+                    )
+                  ]
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                TranscriptVirtualList,
+                {
+                  id,
+                  listHandle,
+                  eventNodes: flattenedNodes,
+                  scrollRef,
+                  running,
+                  initialEventId: initialEventId === void 0 ? null : initialEventId,
+                  offsetTop: topOffset,
+                  className: styles$I.listContainer
+                }
+              )
+            ]
+          }
+        );
+      }
     });
     const SampleDisplay = ({
       id,
