@@ -107831,7 +107831,7 @@ self.onmessage = function (e) {
         const orderedSummaries = summaries.flat().sort((a, b) => a.index - b.index);
         return orderedSummaries.map(({ summary: summary2 }) => summary2);
       };
-      const get_log_dir = async () => {
+      const get_log_dir2 = async () => {
         if (api2.get_log_dir) {
           return await api2.get_log_dir();
         } else {
@@ -107839,7 +107839,7 @@ self.onmessage = function (e) {
           return logRoot?.log_dir;
         }
       };
-      const get_logs = async (mtime, clientFileCount) => {
+      const get_logs2 = async (mtime, clientFileCount) => {
         if (api2.get_logs) {
           const result2 = await api2.get_logs(mtime, clientFileCount);
           return result2;
@@ -107894,8 +107894,8 @@ self.onmessage = function (e) {
         client_events: middleware("client_events", () => {
           return api2.client_events();
         }),
-        get_log_dir: middleware("get_log_dir", get_log_dir),
-        get_logs: middleware("get_log_files", get_logs),
+        get_log_dir: middleware("get_log_dir", get_log_dir2),
+        get_logs: middleware("get_log_files", get_logs2),
         get_log_root: middleware("get_log_root", get_log_root2),
         get_eval_set: middleware("get_eval_set", (dir) => {
           return api2.get_eval_set(dir);
@@ -108309,7 +108309,7 @@ self.onmessage = function (e) {
         );
         return result2.parsed;
       };
-      const get_log_dir = async () => {
+      const get_log_dir2 = async () => {
         const obj = (await requestApi.fetchString("GET", "/log-dir")).parsed;
         return obj.log_dir;
       };
@@ -108319,7 +108319,7 @@ self.onmessage = function (e) {
         lastEvalTime = Date.now();
         return logs.parsed;
       };
-      const get_log_files = async (mtime, clientFileCount) => {
+      const get_logs2 = async (mtime, clientFileCount) => {
         const path = logDir2 ? `/log-files?log_dir=${encodeURIComponent(logDir2)}` : "/log-files";
         const headers = {};
         const token2 = log_file_token(mtime, clientFileCount);
@@ -108496,8 +108496,8 @@ self.onmessage = function (e) {
       return {
         client_events: client_events2,
         get_log_root: get_log_root2,
-        get_logs: get_log_files,
-        get_log_dir,
+        get_logs: get_logs2,
+        get_log_dir: get_log_dir2,
         get_eval_set: get_eval_set2,
         get_log_contents: get_log_contents2,
         get_log_size: get_log_size2,
@@ -108511,7 +108511,9 @@ self.onmessage = function (e) {
         eval_log_sample_data: eval_log_sample_data2
       };
     }
+    const kMethodEvalLogDir = "eval_log_dir";
     const kMethodEvalLogs = "eval_logs";
+    const kMethodEvalLogFiles = "eval_log_files";
     const kMethodEvalLog = "eval_log";
     const kMethodEvalLogSize = "eval_log_size";
     const kMethodEvalLogBytes = "eval_log_bytes";
@@ -108608,6 +108610,26 @@ self.onmessage = function (e) {
         return void 0;
       }
     }
+    const get_log_dir = async () => {
+      const response = await vscodeClient(kMethodEvalLogDir, []);
+      if (response) {
+        const parsed = lib$d.parse(response);
+        return parsed.log_dir;
+      }
+      return void 0;
+    };
+    const get_logs = async (mtime, clientFileCount) => {
+      const response = await vscodeClient(kMethodEvalLogFiles, [
+        mtime,
+        clientFileCount
+      ]);
+      if (response) {
+        const parsed = lib$d.parse(response);
+        return parsed;
+      } else {
+        return [];
+      }
+    };
     async function get_eval_set() {
       return void 0;
     }
@@ -108707,6 +108729,8 @@ self.onmessage = function (e) {
     const api$1 = {
       client_events,
       get_log_root,
+      get_log_dir,
+      get_logs,
       get_eval_set,
       get_log_contents,
       get_log_size,
@@ -108855,8 +108879,8 @@ self.onmessage = function (e) {
       const doc2 = parser2.parseFromString(text2, "text/html");
       return doc2.documentElement.textContent || text2;
     };
-    const citations = "_citations_t2k1z_1";
-    const citationLink = "_citationLink_t2k1z_9";
+    const citations = "_citations_1ggvf_1";
+    const citationLink = "_citationLink_1ggvf_9";
     const styles$1A = {
       citations,
       citationLink
@@ -114364,13 +114388,13 @@ categories: ${categories.join(" ")}`;
         cleanup
       };
     }
-    const header$3 = "_header_1fu9w_1";
-    const breadcrumbs = "_breadcrumbs_1fu9w_12";
-    const ellipsis = "_ellipsis_1fu9w_23";
-    const left$2 = "_left_1fu9w_28";
-    const right$2 = "_right_1fu9w_38";
-    const toolbarButton = "_toolbarButton_1fu9w_47";
-    const pathContainer = "_pathContainer_1fu9w_55";
+    const header$3 = "_header_1rc8d_1";
+    const breadcrumbs = "_breadcrumbs_1rc8d_12";
+    const ellipsis = "_ellipsis_1rc8d_23";
+    const left$2 = "_left_1rc8d_28";
+    const right$2 = "_right_1rc8d_38";
+    const toolbarButton = "_toolbarButton_1rc8d_47";
+    const pathContainer = "_pathContainer_1rc8d_55";
     const styles$1m = {
       header: header$3,
       breadcrumbs,
@@ -118483,9 +118507,11 @@ categories: ${categories.join(" ")}`;
       panel: panel$3,
       list
     };
-    const button$1 = "_button_1p8t5_1";
+    const button$1 = "_button_1bbut_1";
+    const viewerOptions = "_viewerOptions_1bbut_7";
     const styles$17 = {
-      button: button$1
+      button: button$1,
+      viewerOptions
     };
     const ViewerOptionsButton = reactExports.forwardRef(({ showing, setShowing }, ref) => {
       const toggleShowing = reactExports.useCallback(() => {
@@ -120454,7 +120480,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.fullWidth, styles$16.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$16.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.140-35-gbf4191ba3" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.140-37-gb2483d406" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.spacer) }),
@@ -123714,14 +123740,14 @@ categories: ${categories.join(" ")}`;
       }
       return { package: "", module: name2 };
     };
-    const eventRow = "_eventRow_1dssq_1";
-    const selected$2 = "_selected_1dssq_8";
-    const toggle = "_toggle_1dssq_12";
-    const eventLink = "_eventLink_1dssq_17";
-    const label$7 = "_label_1dssq_28";
-    const icon$1 = "_icon_1dssq_34";
-    const progress$2 = "_progress_1dssq_38";
-    const popover = "_popover_1dssq_42";
+    const eventRow = "_eventRow_1j0jk_1";
+    const selected$2 = "_selected_1j0jk_8";
+    const toggle = "_toggle_1j0jk_12";
+    const eventLink = "_eventLink_1j0jk_17";
+    const label$7 = "_label_1j0jk_28";
+    const icon$1 = "_icon_1j0jk_34";
+    const progress$2 = "_progress_1j0jk_38";
+    const popover = "_popover_1j0jk_42";
     const styles$K = {
       eventRow,
       selected: selected$2,
