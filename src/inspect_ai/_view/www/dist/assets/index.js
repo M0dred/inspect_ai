@@ -120480,7 +120480,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.fullWidth, styles$16.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$16.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.140-37-gb2483d406" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.141-2-g5cc57f98f" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.spacer) }),
@@ -134132,6 +134132,7 @@ ${events}
       const filteredEventTypes = useStore(
         (state) => state.sample.eventFilter.filteredTypes
       );
+      const loading = useStore((state) => state.app.status.loading);
       const filteredEvents = reactExports.useMemo(() => {
         if (filteredEventTypes.length === 0) {
           return events;
@@ -134218,6 +134219,9 @@ ${events}
           };
         }
       }, [scrollRef, flattenedNodes]);
+      if (loading && flattenedNodes.length === 0) {
+        return void 0;
+      }
       if (flattenedNodes.length === 0) {
         const isCompletedFiltered = flattenedNodes.length === 0 && events.length > 0;
         const message2 = isCompletedFiltered ? "The currently applied filter hides all events." : "No events to display.";
@@ -159985,11 +159989,13 @@ Supported expressions:
       }, [initialState2, evalSpec]);
       const prevLogPath = usePrevious(logPath);
       const syncLogs = useStore((state) => state.logsActions.syncLogs);
+      const initLogDir = useStore((state) => state.logsActions.initLogDir);
       reactExports.useEffect(() => {
         const loadLogFromPath = async () => {
           if (logPath) {
-            await syncLogs();
+            await initLogDir();
             setSelectedLogFile(logPath);
+            void syncLogs();
             if (tabId) {
               setWorkspaceTab(tabId);
             } else {
