@@ -120221,7 +120221,7 @@ categories: ${categories.join(" ")}`;
         padding: "12px",
         borderRadius: "4px",
         boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
-        border: "1px solid #eee",
+        border: "solid 1px var(--bs-border-color)",
         zIndex: 1200,
         position: "relative",
         // Apply opacity transition to smooth the appearance
@@ -120480,7 +120480,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.fullWidth, styles$16.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$16.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.141-2-g5cc57f98f" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.142-10-g55fae741b" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.spacer) }),
@@ -155715,19 +155715,21 @@ Supported expressions:
         )
       ] });
     };
-    const container$5 = "_container_19edv_1";
-    const grid$3 = "_grid_19edv_5";
-    const row$1 = "_row_19edv_12";
-    const label$3 = "_label_19edv_26";
-    const links = "_links_19edv_32";
-    const selected$1 = "_selected_19edv_50";
+    const container$5 = "_container_uvlpz_1";
+    const grid$3 = "_grid_uvlpz_5";
+    const row$1 = "_row_uvlpz_12";
+    const label$3 = "_label_uvlpz_26";
+    const links = "_links_uvlpz_32";
+    const selected$1 = "_selected_uvlpz_50";
+    const bodyColorButton = "_bodyColorButton_uvlpz_54";
     const styles$j = {
       container: container$5,
       grid: grid$3,
       row: row$1,
       label: label$3,
       links,
-      selected: selected$1
+      selected: selected$1,
+      bodyColorButton
     };
     const SelectScorer = ({
       scores: scores2,
@@ -155763,7 +155765,7 @@ Supported expressions:
             icon: ApplicationIcons.metrics,
             onClick: () => setShowing(!showing),
             ref: buttonRef,
-            classes: "bg-white"
+            className: clsx(styles$j.bodyColorButton)
           }
         ),
         /* @__PURE__ */ jsxRuntimeExports.jsxs(
