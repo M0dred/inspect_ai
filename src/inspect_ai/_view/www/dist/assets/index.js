@@ -36091,7 +36091,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       // prettier-ignore
       "Ȁaglq	\x1Bɭ\0\0p;䀦os;䀧t;䀾t;䀼uot;䀢".split("").map((c2) => c2.charCodeAt(0))
     );
-    var _a$5;
+    var _a$2;
     const decodeMap = /* @__PURE__ */ new Map([
       [0, 65533],
       // C1 Unicode control character reference replacements
@@ -36125,7 +36125,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ]);
     const fromCodePoint$2 = (
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, node/no-unsupported-features/es-builtins
-      (_a$5 = String.fromCodePoint) !== null && _a$5 !== void 0 ? _a$5 : function(codePoint) {
+      (_a$2 = String.fromCodePoint) !== null && _a$2 !== void 0 ? _a$2 : function(codePoint) {
         let output2 = "";
         if (codePoint > 65535) {
           codePoint -= 65536;
@@ -106793,7 +106793,7 @@ self.onmessage = function (e) {
       }
       return { b, r: r2 };
     };
-    var _a$4 = freb(fleb, 2), fl = _a$4.b, revfl = _a$4.r;
+    var _a$1 = freb(fleb, 2), fl = _a$1.b, revfl = _a$1.r;
     fl[28] = 258, revfl[258] = 28;
     var _b = freb(fdeb, 0), fd = _b.b;
     var rev = new u16(32768);
@@ -150328,10 +150328,15 @@ ${events}
       { tag: tags.invalid, class: "tok-invalid" },
       { tag: tags.punctuation, class: "tok-punctuation" }
     ]);
-    var _a$3;
-    const languageDataProp$3 = /* @__PURE__ */ new NodeProp();
-    const sublanguageProp$3 = /* @__PURE__ */ new NodeProp();
-    let Language$3 = class Language {
+    var _a;
+    const languageDataProp = /* @__PURE__ */ new NodeProp();
+    function defineLanguageFacet(baseData) {
+      return Facet.define({
+        combine: baseData ? (values) => values.concat(baseData) : void 0
+      });
+    }
+    const sublanguageProp = /* @__PURE__ */ new NodeProp();
+    class Language {
       /**
       Construct a language object. If you need to invoke this
       directly, first define a data facet with
@@ -150344,16 +150349,16 @@ ${events}
         this.name = name2;
         if (!EditorState.prototype.hasOwnProperty("tree"))
           Object.defineProperty(EditorState.prototype, "tree", { get() {
-            return syntaxTree$3(this);
+            return syntaxTree(this);
           } });
         this.parser = parser2;
         this.extension = [
-          language$4.of(this),
+          language$1.of(this),
           EditorState.languageData.of((state, pos2, side) => {
-            let top2 = topNodeAt$3(state, pos2, side), data2 = top2.type.prop(languageDataProp$3);
+            let top2 = topNodeAt(state, pos2, side), data2 = top2.type.prop(languageDataProp);
             if (!data2)
               return [];
-            let base2 = state.facet(data2), sub2 = top2.type.prop(sublanguageProp$3);
+            let base2 = state.facet(data2), sub2 = top2.type.prop(sublanguageProp);
             if (sub2) {
               let innerNode = top2.resolve(pos2 - top2.from, side);
               for (let sublang of sub2)
@@ -150370,7 +150375,7 @@ ${events}
       Query whether this language is active at the given position.
       */
       isActiveAt(state, pos2, side = -1) {
-        return topNodeAt$3(state, pos2, side).type.prop(languageDataProp$3) == this.data;
+        return topNodeAt(state, pos2, side).type.prop(languageDataProp) == this.data;
       }
       /**
       Find the document regions that were parsed using this language.
@@ -150378,20 +150383,20 @@ ${events}
       in this language, when those exist.
       */
       findRegions(state) {
-        let lang2 = state.facet(language$4);
+        let lang2 = state.facet(language$1);
         if ((lang2 === null || lang2 === void 0 ? void 0 : lang2.data) == this.data)
           return [{ from: 0, to: state.doc.length }];
         if (!lang2 || !lang2.allowsNesting)
           return [];
         let result2 = [];
         let explore = (tree, from) => {
-          if (tree.prop(languageDataProp$3) == this.data) {
+          if (tree.prop(languageDataProp) == this.data) {
             result2.push({ from, to: from + tree.length });
             return;
           }
           let mount2 = tree.prop(NodeProp.mounted);
           if (mount2) {
-            if (mount2.tree.prop(languageDataProp$3) == this.data) {
+            if (mount2.tree.prop(languageDataProp) == this.data) {
               if (mount2.overlay)
                 for (let r2 of mount2.overlay)
                   result2.push({ from: r2.from + from, to: r2.to + from });
@@ -150411,7 +150416,7 @@ ${events}
               explore(ch3, tree.positions[i2] + from);
           }
         };
-        explore(syntaxTree$3(state), 0);
+        explore(syntaxTree(state), 0);
         return result2;
       }
       /**
@@ -150421,10 +150426,10 @@ ${events}
       get allowsNesting() {
         return true;
       }
-    };
-    Language$3.setState = /* @__PURE__ */ StateEffect.define();
-    function topNodeAt$3(state, pos2, side) {
-      let topLang = state.facet(language$4), tree = syntaxTree$3(state).topNode;
+    }
+    Language.setState = /* @__PURE__ */ StateEffect.define();
+    function topNodeAt(state, pos2, side) {
+      let topLang = state.facet(language$1), tree = syntaxTree(state).topNode;
       if (!topLang || topLang.allowsNesting) {
         for (let node2 = tree; node2; node2 = node2.enter(pos2, side, IterMode.ExcludeBuffers))
           if (node2.type.isTop)
@@ -150432,11 +150437,11 @@ ${events}
       }
       return tree;
     }
-    function syntaxTree$3(state) {
-      let field = state.field(Language$3.state, false);
+    function syntaxTree(state) {
+      let field = state.field(Language.state, false);
       return field ? field.tree : Tree.empty;
     }
-    let DocInput$3 = class DocInput {
+    class DocInput {
       /**
       Create an input object for the given document.
       */
@@ -150468,9 +150473,9 @@ ${events}
         else
           return this.string.slice(from - stringStart, to2 - stringStart);
       }
-    };
-    let currentContext$3 = null;
-    let ParseContext$3 = class ParseContext2 {
+    }
+    let currentContext = null;
+    class ParseContext {
       constructor(parser2, state, fragments = [], tree, treeLen, viewport2, skipped, scheduleOn) {
         this.parser = parser2;
         this.state = state;
@@ -150487,10 +150492,10 @@ ${events}
       @internal
       */
       static create(parser2, state, viewport2) {
-        return new ParseContext2(parser2, state, [], Tree.empty, 0, viewport2, [], null);
+        return new ParseContext(parser2, state, [], Tree.empty, 0, viewport2, [], null);
       }
       startParse() {
-        return this.parser.startParse(new DocInput$3(this.state.doc), this.fragments);
+        return this.parser.startParse(new DocInput(this.state.doc), this.fragments);
       }
       /**
       @internal
@@ -150548,17 +150553,17 @@ ${events}
         }
       }
       withContext(f) {
-        let prev = currentContext$3;
-        currentContext$3 = this;
+        let prev = currentContext;
+        currentContext = this;
         try {
           return f();
         } finally {
-          currentContext$3 = prev;
+          currentContext = prev;
         }
       }
       withoutTempSkipped(fragments) {
         for (let r2; r2 = this.tempSkipped.pop(); )
-          fragments = cutFragments$3(fragments, r2.from, r2.to);
+          fragments = cutFragments(fragments, r2.from, r2.to);
         return fragments;
       }
       /**
@@ -150583,7 +150588,7 @@ ${events}
             }
           }
         }
-        return new ParseContext2(this.parser, newState, fragments, tree, treeLen, viewport2, skipped, this.scheduleOn);
+        return new ParseContext(this.parser, newState, fragments, tree, treeLen, viewport2, skipped, this.scheduleOn);
       }
       /**
       @internal
@@ -150596,7 +150601,7 @@ ${events}
         for (let i2 = 0; i2 < this.skipped.length; i2++) {
           let { from, to: to2 } = this.skipped[i2];
           if (from < viewport2.to && to2 > viewport2.from) {
-            this.fragments = cutFragments$3(this.fragments, from, to2);
+            this.fragments = cutFragments(this.fragments, from, to2);
             this.skipped.splice(i2--, 1);
           }
         }
@@ -150638,7 +150643,7 @@ ${events}
             let parser2 = {
               parsedPos: from,
               advance() {
-                let cx = currentContext$3;
+                let cx = currentContext;
                 if (cx) {
                   for (let r2 of ranges)
                     cx.tempSkipped.push(r2);
@@ -150669,13 +150674,13 @@ ${events}
       parse is in progress.
       */
       static get() {
-        return currentContext$3;
+        return currentContext;
       }
-    };
-    function cutFragments$3(fragments, from, to2) {
+    }
+    function cutFragments(fragments, from, to2) {
       return TreeFragment.applyChanges(fragments, [{ fromA: from, toA: to2, fromB: from, toB: to2 }]);
     }
-    let LanguageState$3 = class LanguageState2 {
+    class LanguageState {
       constructor(context) {
         this.context = context;
         this.tree = context.tree;
@@ -150687,28 +150692,28 @@ ${events}
         let upto = this.context.treeLen == tr2.startState.doc.length ? void 0 : Math.max(tr2.changes.mapPos(this.context.treeLen), newCx.viewport.to);
         if (!newCx.work(20, upto))
           newCx.takeTree();
-        return new LanguageState2(newCx);
+        return new LanguageState(newCx);
       }
       static init(state) {
         let vpTo = Math.min(3e3, state.doc.length);
-        let parseState2 = ParseContext$3.create(state.facet(language$4).parser, state, { from: 0, to: vpTo });
+        let parseState2 = ParseContext.create(state.facet(language$1).parser, state, { from: 0, to: vpTo });
         if (!parseState2.work(20, vpTo))
           parseState2.takeTree();
-        return new LanguageState2(parseState2);
+        return new LanguageState(parseState2);
       }
-    };
-    Language$3.state = /* @__PURE__ */ StateField.define({
-      create: LanguageState$3.init,
+    }
+    Language.state = /* @__PURE__ */ StateField.define({
+      create: LanguageState.init,
       update(value2, tr2) {
         for (let e of tr2.effects)
-          if (e.is(Language$3.setState))
+          if (e.is(Language.setState))
             return e.value;
-        if (tr2.startState.facet(language$4) != tr2.state.facet(language$4))
-          return LanguageState$3.init(tr2.state);
+        if (tr2.startState.facet(language$1) != tr2.state.facet(language$1))
+          return LanguageState.init(tr2.state);
         return value2.apply(tr2);
       }
     });
-    let requestIdle$3 = (callback) => {
+    let requestIdle = (callback) => {
       let timeout = setTimeout(
         () => callback(),
         500
@@ -150717,7 +150722,7 @@ ${events}
       return () => clearTimeout(timeout);
     };
     if (typeof requestIdleCallback != "undefined")
-      requestIdle$3 = (callback) => {
+      requestIdle = (callback) => {
         let idle = -1, timeout = setTimeout(
           () => {
             idle = requestIdleCallback(callback, {
@@ -150730,8 +150735,8 @@ ${events}
         );
         return () => idle < 0 ? clearTimeout(timeout) : cancelIdleCallback(idle);
       };
-    const isInputPending$3 = typeof navigator != "undefined" && ((_a$3 = navigator.scheduling) === null || _a$3 === void 0 ? void 0 : _a$3.isInputPending) ? () => navigator.scheduling.isInputPending() : null;
-    const parseWorker$3 = /* @__PURE__ */ ViewPlugin.fromClass(class ParseWorker {
+    const isInputPending = typeof navigator != "undefined" && ((_a = navigator.scheduling) === null || _a === void 0 ? void 0 : _a.isInputPending) ? () => navigator.scheduling.isInputPending() : null;
+    const parseWorker = /* @__PURE__ */ ViewPlugin.fromClass(class ParseWorker {
       constructor(view) {
         this.view = view;
         this.working = null;
@@ -150742,7 +150747,7 @@ ${events}
         this.scheduleWork();
       }
       update(update) {
-        let cx = this.view.state.field(Language$3.state).context;
+        let cx = this.view.state.field(Language.state).context;
         if (cx.updateViewport(update.view.viewport) || this.view.viewport.to > cx.treeLen)
           this.scheduleWork();
         if (update.docChanged || update.selectionSet) {
@@ -150755,9 +150760,9 @@ ${events}
       scheduleWork() {
         if (this.working)
           return;
-        let { state } = this.view, field = state.field(Language$3.state);
+        let { state } = this.view, field = state.field(Language.state);
         if (field.tree != field.context.tree || !field.context.isDone(state.doc.length))
-          this.working = requestIdle$3(this.work);
+          this.working = requestIdle(this.work);
       }
       work(deadline) {
         this.working = null;
@@ -150768,21 +150773,21 @@ ${events}
         }
         if (this.chunkBudget <= 0)
           return;
-        let { state, viewport: { to: vpTo } } = this.view, field = state.field(Language$3.state);
+        let { state, viewport: { to: vpTo } } = this.view, field = state.field(Language.state);
         if (field.tree == field.context.tree && field.context.isDone(
           vpTo + 1e5
           /* Work.MaxParseAhead */
         ))
           return;
-        let endTime = Date.now() + Math.min(this.chunkBudget, 100, deadline && !isInputPending$3 ? Math.max(25, deadline.timeRemaining() - 5) : 1e9);
+        let endTime = Date.now() + Math.min(this.chunkBudget, 100, deadline && !isInputPending ? Math.max(25, deadline.timeRemaining() - 5) : 1e9);
         let viewportFirst = field.context.treeLen < vpTo && state.doc.length > vpTo + 1e3;
         let done = field.context.work(() => {
-          return isInputPending$3 && isInputPending$3() || Date.now() > endTime;
+          return isInputPending && isInputPending() || Date.now() > endTime;
         }, vpTo + (viewportFirst ? 0 : 1e5));
         this.chunkBudget -= Date.now() - now;
         if (done || this.chunkBudget <= 0) {
           field.context.takeTree();
-          this.view.dispatch({ effects: Language$3.setState.of(new LanguageState$3(field.context)) });
+          this.view.dispatch({ effects: Language.setState.of(new LanguageState(field.context)) });
         }
         if (this.chunkBudget > 0 && !(done && !viewportFirst))
           this.scheduleWork();
@@ -150807,24 +150812,1051 @@ ${events}
         this.scheduleWork();
       } }
     });
-    const language$4 = /* @__PURE__ */ Facet.define({
+    const language$1 = /* @__PURE__ */ Facet.define({
       combine(languages) {
         return languages.length ? languages[0] : null;
       },
       enables: (language2) => [
-        Language$3.state,
-        parseWorker$3,
+        Language.state,
+        parseWorker,
         EditorView.contentAttributes.compute([language2], (state) => {
           let lang2 = state.facet(language2);
           return lang2 && lang2.name ? { "data-language": lang2.name } : {};
         })
       ]
     });
-    const noTokens$3 = /* @__PURE__ */ Object.create(null);
-    const typeArray$3 = [NodeType.none];
-    const warned$3 = [];
-    const byTag$3 = /* @__PURE__ */ Object.create(null);
-    const defaultTable$3 = /* @__PURE__ */ Object.create(null);
+    const indentService = /* @__PURE__ */ Facet.define();
+    const indentUnit = /* @__PURE__ */ Facet.define({
+      combine: (values) => {
+        if (!values.length)
+          return "  ";
+        let unit = values[0];
+        if (!unit || /\S/.test(unit) || Array.from(unit).some((e) => e != unit[0]))
+          throw new Error("Invalid indent unit: " + JSON.stringify(values[0]));
+        return unit;
+      }
+    });
+    function getIndentUnit(state) {
+      let unit = state.facet(indentUnit);
+      return unit.charCodeAt(0) == 9 ? state.tabSize * unit.length : unit.length;
+    }
+    function indentString(state, cols) {
+      let result2 = "", ts = state.tabSize, ch3 = state.facet(indentUnit)[0];
+      if (ch3 == "	") {
+        while (cols >= ts) {
+          result2 += "	";
+          cols -= ts;
+        }
+        ch3 = " ";
+      }
+      for (let i2 = 0; i2 < cols; i2++)
+        result2 += ch3;
+      return result2;
+    }
+    function getIndentation(context, pos2) {
+      if (context instanceof EditorState)
+        context = new IndentContext(context);
+      for (let service of context.state.facet(indentService)) {
+        let result2 = service(context, pos2);
+        if (result2 !== void 0)
+          return result2;
+      }
+      let tree = syntaxTree(context.state);
+      return tree.length >= pos2 ? syntaxIndentation(context, tree, pos2) : null;
+    }
+    class IndentContext {
+      /**
+      Create an indent context.
+      */
+      constructor(state, options2 = {}) {
+        this.state = state;
+        this.options = options2;
+        this.unit = getIndentUnit(state);
+      }
+      /**
+      Get a description of the line at the given position, taking
+      [simulated line
+      breaks](https://codemirror.net/6/docs/ref/#language.IndentContext.constructor^options.simulateBreak)
+      into account. If there is such a break at `pos`, the `bias`
+      argument determines whether the part of the line line before or
+      after the break is used.
+      */
+      lineAt(pos2, bias = 1) {
+        let line2 = this.state.doc.lineAt(pos2);
+        let { simulateBreak, simulateDoubleBreak } = this.options;
+        if (simulateBreak != null && simulateBreak >= line2.from && simulateBreak <= line2.to) {
+          if (simulateDoubleBreak && simulateBreak == pos2)
+            return { text: "", from: pos2 };
+          else if (bias < 0 ? simulateBreak < pos2 : simulateBreak <= pos2)
+            return { text: line2.text.slice(simulateBreak - line2.from), from: simulateBreak };
+          else
+            return { text: line2.text.slice(0, simulateBreak - line2.from), from: line2.from };
+        }
+        return line2;
+      }
+      /**
+      Get the text directly after `pos`, either the entire line
+      or the next 100 characters, whichever is shorter.
+      */
+      textAfterPos(pos2, bias = 1) {
+        if (this.options.simulateDoubleBreak && pos2 == this.options.simulateBreak)
+          return "";
+        let { text: text2, from } = this.lineAt(pos2, bias);
+        return text2.slice(pos2 - from, Math.min(text2.length, pos2 + 100 - from));
+      }
+      /**
+      Find the column for the given position.
+      */
+      column(pos2, bias = 1) {
+        let { text: text2, from } = this.lineAt(pos2, bias);
+        let result2 = this.countColumn(text2, pos2 - from);
+        let override = this.options.overrideIndentation ? this.options.overrideIndentation(from) : -1;
+        if (override > -1)
+          result2 += override - this.countColumn(text2, text2.search(/\S|$/));
+        return result2;
+      }
+      /**
+      Find the column position (taking tabs into account) of the given
+      position in the given string.
+      */
+      countColumn(line2, pos2 = line2.length) {
+        return countColumn(line2, this.state.tabSize, pos2);
+      }
+      /**
+      Find the indentation column of the line at the given point.
+      */
+      lineIndent(pos2, bias = 1) {
+        let { text: text2, from } = this.lineAt(pos2, bias);
+        let override = this.options.overrideIndentation;
+        if (override) {
+          let overriden = override(from);
+          if (overriden > -1)
+            return overriden;
+        }
+        return this.countColumn(text2, text2.search(/\S|$/));
+      }
+      /**
+      Returns the [simulated line
+      break](https://codemirror.net/6/docs/ref/#language.IndentContext.constructor^options.simulateBreak)
+      for this context, if any.
+      */
+      get simulatedBreak() {
+        return this.options.simulateBreak || null;
+      }
+    }
+    const indentNodeProp = /* @__PURE__ */ new NodeProp();
+    function syntaxIndentation(cx, ast2, pos2) {
+      let stack2 = ast2.resolveStack(pos2);
+      let inner2 = ast2.resolveInner(pos2, -1).resolve(pos2, 0).enterUnfinishedNodesBefore(pos2);
+      if (inner2 != stack2.node) {
+        let add2 = [];
+        for (let cur2 = inner2; cur2 && !(cur2.from < stack2.node.from || cur2.to > stack2.node.to || cur2.from == stack2.node.from && cur2.type == stack2.node.type); cur2 = cur2.parent)
+          add2.push(cur2);
+        for (let i2 = add2.length - 1; i2 >= 0; i2--)
+          stack2 = { node: add2[i2], next: stack2 };
+      }
+      return indentFor(stack2, cx, pos2);
+    }
+    function indentFor(stack2, cx, pos2) {
+      for (let cur2 = stack2; cur2; cur2 = cur2.next) {
+        let strategy = indentStrategy(cur2.node);
+        if (strategy)
+          return strategy(TreeIndentContext.create(cx, pos2, cur2));
+      }
+      return 0;
+    }
+    function ignoreClosed(cx) {
+      return cx.pos == cx.options.simulateBreak && cx.options.simulateDoubleBreak;
+    }
+    function indentStrategy(tree) {
+      let strategy = tree.type.prop(indentNodeProp);
+      if (strategy)
+        return strategy;
+      let first = tree.firstChild, close2;
+      if (first && (close2 = first.type.prop(NodeProp.closedBy))) {
+        let last = tree.lastChild, closed = last && close2.indexOf(last.name) > -1;
+        return (cx) => delimitedStrategy(cx, true, 1, void 0, closed && !ignoreClosed(cx) ? last.from : void 0);
+      }
+      return tree.parent == null ? topIndent : null;
+    }
+    function topIndent() {
+      return 0;
+    }
+    class TreeIndentContext extends IndentContext {
+      constructor(base2, pos2, context) {
+        super(base2.state, base2.options);
+        this.base = base2;
+        this.pos = pos2;
+        this.context = context;
+      }
+      /**
+      The syntax tree node to which the indentation strategy
+      applies.
+      */
+      get node() {
+        return this.context.node;
+      }
+      /**
+      @internal
+      */
+      static create(base2, pos2, context) {
+        return new TreeIndentContext(base2, pos2, context);
+      }
+      /**
+      Get the text directly after `this.pos`, either the entire line
+      or the next 100 characters, whichever is shorter.
+      */
+      get textAfter() {
+        return this.textAfterPos(this.pos);
+      }
+      /**
+      Get the indentation at the reference line for `this.node`, which
+      is the line on which it starts, unless there is a node that is
+      _not_ a parent of this node covering the start of that line. If
+      so, the line at the start of that node is tried, again skipping
+      on if it is covered by another such node.
+      */
+      get baseIndent() {
+        return this.baseIndentFor(this.node);
+      }
+      /**
+      Get the indentation for the reference line of the given node
+      (see [`baseIndent`](https://codemirror.net/6/docs/ref/#language.TreeIndentContext.baseIndent)).
+      */
+      baseIndentFor(node2) {
+        let line2 = this.state.doc.lineAt(node2.from);
+        for (; ; ) {
+          let atBreak = node2.resolve(line2.from);
+          while (atBreak.parent && atBreak.parent.from == atBreak.from)
+            atBreak = atBreak.parent;
+          if (isParent(atBreak, node2))
+            break;
+          line2 = this.state.doc.lineAt(atBreak.from);
+        }
+        return this.lineIndent(line2.from);
+      }
+      /**
+      Continue looking for indentations in the node's parent nodes,
+      and return the result of that.
+      */
+      continue() {
+        return indentFor(this.context.next, this.base, this.pos);
+      }
+    }
+    function isParent(parent, of) {
+      for (let cur2 = of; cur2; cur2 = cur2.parent)
+        if (parent == cur2)
+          return true;
+      return false;
+    }
+    function bracketedAligned(context) {
+      let tree = context.node;
+      let openToken = tree.childAfter(tree.from), last = tree.lastChild;
+      if (!openToken)
+        return null;
+      let sim2 = context.options.simulateBreak;
+      let openLine = context.state.doc.lineAt(openToken.from);
+      let lineEnd = sim2 == null || sim2 <= openLine.from ? openLine.to : Math.min(openLine.to, sim2);
+      for (let pos2 = openToken.to; ; ) {
+        let next = tree.childAfter(pos2);
+        if (!next || next == last)
+          return null;
+        if (!next.type.isSkipped) {
+          if (next.from >= lineEnd)
+            return null;
+          let space = /^ */.exec(openLine.text.slice(openToken.to - openLine.from))[0].length;
+          return { from: openToken.from, to: openToken.to + space };
+        }
+        pos2 = next.to;
+      }
+    }
+    function delimitedStrategy(context, align, units, closing, closedAt) {
+      let after = context.textAfter, space = after.match(/^\s*/)[0].length;
+      let closed = closing && after.slice(space, space + closing.length) == closing || closedAt == context.pos + space;
+      let aligned = bracketedAligned(context);
+      if (aligned)
+        return closed ? context.column(aligned.from) : context.column(aligned.to);
+      return context.baseIndent + (closed ? 0 : context.unit * units);
+    }
+    class HighlightStyle {
+      constructor(specs, options2) {
+        this.specs = specs;
+        let modSpec;
+        function def(spec) {
+          let cls = StyleModule.newName();
+          (modSpec || (modSpec = /* @__PURE__ */ Object.create(null)))["." + cls] = spec;
+          return cls;
+        }
+        const all2 = typeof options2.all == "string" ? options2.all : options2.all ? def(options2.all) : void 0;
+        const scopeOpt = options2.scope;
+        this.scope = scopeOpt instanceof Language ? (type) => type.prop(languageDataProp) == scopeOpt.data : scopeOpt ? (type) => type == scopeOpt : void 0;
+        this.style = tagHighlighter(specs.map((style2) => ({
+          tag: style2.tag,
+          class: style2.class || def(Object.assign({}, style2, { tag: null }))
+        })), {
+          all: all2
+        }).style;
+        this.module = modSpec ? new StyleModule(modSpec) : null;
+        this.themeType = options2.themeType;
+      }
+      /**
+      Create a highlighter style that associates the given styles to
+      the given tags. The specs must be objects that hold a style tag
+      or array of tags in their `tag` property, and either a single
+      `class` property providing a static CSS class (for highlighter
+      that rely on external styling), or a
+      [`style-mod`](https://github.com/marijnh/style-mod#documentation)-style
+      set of CSS properties (which define the styling for those tags).
+      
+      The CSS rules created for a highlighter will be emitted in the
+      order of the spec's properties. That means that for elements that
+      have multiple tags associated with them, styles defined further
+      down in the list will have a higher CSS precedence than styles
+      defined earlier.
+      */
+      static define(specs, options2) {
+        return new HighlightStyle(specs, options2 || {});
+      }
+    }
+    const highlighterFacet = /* @__PURE__ */ Facet.define();
+    const fallbackHighlighter = /* @__PURE__ */ Facet.define({
+      combine(values) {
+        return values.length ? [values[0]] : null;
+      }
+    });
+    function getHighlighters(state) {
+      let main2 = state.facet(highlighterFacet);
+      return main2.length ? main2 : state.facet(fallbackHighlighter);
+    }
+    function syntaxHighlighting(highlighter, options2) {
+      let ext = [treeHighlighter], themeType;
+      if (highlighter instanceof HighlightStyle) {
+        if (highlighter.module)
+          ext.push(EditorView.styleModule.of(highlighter.module));
+        themeType = highlighter.themeType;
+      }
+      if (options2 === null || options2 === void 0 ? void 0 : options2.fallback)
+        ext.push(fallbackHighlighter.of(highlighter));
+      else if (themeType)
+        ext.push(highlighterFacet.computeN([EditorView.darkTheme], (state) => {
+          return state.facet(EditorView.darkTheme) == (themeType == "dark") ? [highlighter] : [];
+        }));
+      else
+        ext.push(highlighterFacet.of(highlighter));
+      return ext;
+    }
+    class TreeHighlighter {
+      constructor(view) {
+        this.markCache = /* @__PURE__ */ Object.create(null);
+        this.tree = syntaxTree(view.state);
+        this.decorations = this.buildDeco(view, getHighlighters(view.state));
+        this.decoratedTo = view.viewport.to;
+      }
+      update(update) {
+        let tree = syntaxTree(update.state), highlighters = getHighlighters(update.state);
+        let styleChange = highlighters != getHighlighters(update.startState);
+        let { viewport: viewport2 } = update.view, decoratedToMapped = update.changes.mapPos(this.decoratedTo, 1);
+        if (tree.length < viewport2.to && !styleChange && tree.type == this.tree.type && decoratedToMapped >= viewport2.to) {
+          this.decorations = this.decorations.map(update.changes);
+          this.decoratedTo = decoratedToMapped;
+        } else if (tree != this.tree || update.viewportChanged || styleChange) {
+          this.tree = tree;
+          this.decorations = this.buildDeco(update.view, highlighters);
+          this.decoratedTo = viewport2.to;
+        }
+      }
+      buildDeco(view, highlighters) {
+        if (!highlighters || !this.tree.length)
+          return Decoration.none;
+        let builder = new RangeSetBuilder();
+        for (let { from, to: to2 } of view.visibleRanges) {
+          highlightTree(this.tree, highlighters, (from2, to3, style2) => {
+            builder.add(from2, to3, this.markCache[style2] || (this.markCache[style2] = Decoration.mark({ class: style2 })));
+          }, from, to2);
+        }
+        return builder.finish();
+      }
+    }
+    const treeHighlighter = /* @__PURE__ */ Prec.high(/* @__PURE__ */ ViewPlugin.fromClass(TreeHighlighter, {
+      decorations: (v) => v.decorations
+    }));
+    const defaultHighlightStyle = /* @__PURE__ */ HighlightStyle.define([
+      {
+        tag: tags.meta,
+        color: "#404740"
+      },
+      {
+        tag: tags.link,
+        textDecoration: "underline"
+      },
+      {
+        tag: tags.heading,
+        textDecoration: "underline",
+        fontWeight: "bold"
+      },
+      {
+        tag: tags.emphasis,
+        fontStyle: "italic"
+      },
+      {
+        tag: tags.strong,
+        fontWeight: "bold"
+      },
+      {
+        tag: tags.strikethrough,
+        textDecoration: "line-through"
+      },
+      {
+        tag: tags.keyword,
+        color: "#708"
+      },
+      {
+        tag: [tags.atom, tags.bool, tags.url, tags.contentSeparator, tags.labelName],
+        color: "#219"
+      },
+      {
+        tag: [tags.literal, tags.inserted],
+        color: "#164"
+      },
+      {
+        tag: [tags.string, tags.deleted],
+        color: "#a11"
+      },
+      {
+        tag: [tags.regexp, tags.escape, /* @__PURE__ */ tags.special(tags.string)],
+        color: "#e40"
+      },
+      {
+        tag: /* @__PURE__ */ tags.definition(tags.variableName),
+        color: "#00f"
+      },
+      {
+        tag: /* @__PURE__ */ tags.local(tags.variableName),
+        color: "#30a"
+      },
+      {
+        tag: [tags.typeName, tags.namespace],
+        color: "#085"
+      },
+      {
+        tag: tags.className,
+        color: "#167"
+      },
+      {
+        tag: [/* @__PURE__ */ tags.special(tags.variableName), tags.macroName],
+        color: "#256"
+      },
+      {
+        tag: /* @__PURE__ */ tags.definition(tags.propertyName),
+        color: "#00c"
+      },
+      {
+        tag: tags.comment,
+        color: "#940"
+      },
+      {
+        tag: tags.invalid,
+        color: "#f00"
+      }
+    ]);
+    const baseTheme$2 = /* @__PURE__ */ EditorView.baseTheme({
+      "&.cm-focused .cm-matchingBracket": { backgroundColor: "#328c8252" },
+      "&.cm-focused .cm-nonmatchingBracket": { backgroundColor: "#bb555544" }
+    });
+    const DefaultScanDist = 1e4, DefaultBrackets = "()[]{}";
+    const bracketMatchingConfig = /* @__PURE__ */ Facet.define({
+      combine(configs) {
+        return combineConfig(configs, {
+          afterCursor: true,
+          brackets: DefaultBrackets,
+          maxScanDistance: DefaultScanDist,
+          renderMatch: defaultRenderMatch
+        });
+      }
+    });
+    const matchingMark = /* @__PURE__ */ Decoration.mark({ class: "cm-matchingBracket" }), nonmatchingMark = /* @__PURE__ */ Decoration.mark({ class: "cm-nonmatchingBracket" });
+    function defaultRenderMatch(match) {
+      let decorations2 = [];
+      let mark = match.matched ? matchingMark : nonmatchingMark;
+      decorations2.push(mark.range(match.start.from, match.start.to));
+      if (match.end)
+        decorations2.push(mark.range(match.end.from, match.end.to));
+      return decorations2;
+    }
+    const bracketMatchingState = /* @__PURE__ */ StateField.define({
+      create() {
+        return Decoration.none;
+      },
+      update(deco, tr2) {
+        if (!tr2.docChanged && !tr2.selection)
+          return deco;
+        let decorations2 = [];
+        let config2 = tr2.state.facet(bracketMatchingConfig);
+        for (let range2 of tr2.state.selection.ranges) {
+          if (!range2.empty)
+            continue;
+          let match = matchBrackets(tr2.state, range2.head, -1, config2) || range2.head > 0 && matchBrackets(tr2.state, range2.head - 1, 1, config2) || config2.afterCursor && (matchBrackets(tr2.state, range2.head, 1, config2) || range2.head < tr2.state.doc.length && matchBrackets(tr2.state, range2.head + 1, -1, config2));
+          if (match)
+            decorations2 = decorations2.concat(config2.renderMatch(match, tr2.state));
+        }
+        return Decoration.set(decorations2, true);
+      },
+      provide: (f) => EditorView.decorations.from(f)
+    });
+    const bracketMatchingUnique = [
+      bracketMatchingState,
+      baseTheme$2
+    ];
+    function bracketMatching(config2 = {}) {
+      return [bracketMatchingConfig.of(config2), bracketMatchingUnique];
+    }
+    const bracketMatchingHandle = /* @__PURE__ */ new NodeProp();
+    function matchingNodes(node2, dir, brackets) {
+      let byProp = node2.prop(dir < 0 ? NodeProp.openedBy : NodeProp.closedBy);
+      if (byProp)
+        return byProp;
+      if (node2.name.length == 1) {
+        let index = brackets.indexOf(node2.name);
+        if (index > -1 && index % 2 == (dir < 0 ? 1 : 0))
+          return [brackets[index + dir]];
+      }
+      return null;
+    }
+    function findHandle(node2) {
+      let hasHandle = node2.type.prop(bracketMatchingHandle);
+      return hasHandle ? hasHandle(node2.node) : node2;
+    }
+    function matchBrackets(state, pos2, dir, config2 = {}) {
+      let maxScanDistance = config2.maxScanDistance || DefaultScanDist, brackets = config2.brackets || DefaultBrackets;
+      let tree = syntaxTree(state), node2 = tree.resolveInner(pos2, dir);
+      for (let cur2 = node2; cur2; cur2 = cur2.parent) {
+        let matches = matchingNodes(cur2.type, dir, brackets);
+        if (matches && cur2.from < cur2.to) {
+          let handle = findHandle(cur2);
+          if (handle && (dir > 0 ? pos2 >= handle.from && pos2 < handle.to : pos2 > handle.from && pos2 <= handle.to))
+            return matchMarkedBrackets(state, pos2, dir, cur2, handle, matches, brackets);
+        }
+      }
+      return matchPlainBrackets(state, pos2, dir, tree, node2.type, maxScanDistance, brackets);
+    }
+    function matchMarkedBrackets(_state, _pos, dir, token2, handle, matching, brackets) {
+      let parent = token2.parent, firstToken = { from: handle.from, to: handle.to };
+      let depth = 0, cursor = parent === null || parent === void 0 ? void 0 : parent.cursor();
+      if (cursor && (dir < 0 ? cursor.childBefore(token2.from) : cursor.childAfter(token2.to)))
+        do {
+          if (dir < 0 ? cursor.to <= token2.from : cursor.from >= token2.to) {
+            if (depth == 0 && matching.indexOf(cursor.type.name) > -1 && cursor.from < cursor.to) {
+              let endHandle = findHandle(cursor);
+              return { start: firstToken, end: endHandle ? { from: endHandle.from, to: endHandle.to } : void 0, matched: true };
+            } else if (matchingNodes(cursor.type, dir, brackets)) {
+              depth++;
+            } else if (matchingNodes(cursor.type, -dir, brackets)) {
+              if (depth == 0) {
+                let endHandle = findHandle(cursor);
+                return {
+                  start: firstToken,
+                  end: endHandle && endHandle.from < endHandle.to ? { from: endHandle.from, to: endHandle.to } : void 0,
+                  matched: false
+                };
+              }
+              depth--;
+            }
+          }
+        } while (dir < 0 ? cursor.prevSibling() : cursor.nextSibling());
+      return { start: firstToken, matched: false };
+    }
+    function matchPlainBrackets(state, pos2, dir, tree, tokenType, maxScanDistance, brackets) {
+      let startCh = dir < 0 ? state.sliceDoc(pos2 - 1, pos2) : state.sliceDoc(pos2, pos2 + 1);
+      let bracket2 = brackets.indexOf(startCh);
+      if (bracket2 < 0 || bracket2 % 2 == 0 != dir > 0)
+        return null;
+      let startToken = { from: dir < 0 ? pos2 - 1 : pos2, to: dir > 0 ? pos2 + 1 : pos2 };
+      let iter = state.doc.iterRange(pos2, dir > 0 ? state.doc.length : 0), depth = 0;
+      for (let distance = 0; !iter.next().done && distance <= maxScanDistance; ) {
+        let text2 = iter.value;
+        if (dir < 0)
+          distance += text2.length;
+        let basePos = pos2 + distance * dir;
+        for (let pos3 = dir > 0 ? 0 : text2.length - 1, end2 = dir > 0 ? text2.length : -1; pos3 != end2; pos3 += dir) {
+          let found = brackets.indexOf(text2[pos3]);
+          if (found < 0 || tree.resolveInner(basePos + pos3, 1).type != tokenType)
+            continue;
+          if (found % 2 == 0 == dir > 0) {
+            depth++;
+          } else if (depth == 1) {
+            return { start: startToken, end: { from: basePos + pos3, to: basePos + pos3 + 1 }, matched: found >> 1 == bracket2 >> 1 };
+          } else {
+            depth--;
+          }
+        }
+        if (dir > 0)
+          distance += text2.length;
+      }
+      return iter.done ? { start: startToken, matched: false } : null;
+    }
+    function countCol(string2, end2, tabSize, startIndex = 0, startValue = 0) {
+      if (end2 == null) {
+        end2 = string2.search(/[^\s\u00a0]/);
+        if (end2 == -1)
+          end2 = string2.length;
+      }
+      let n = startValue;
+      for (let i2 = startIndex; i2 < end2; i2++) {
+        if (string2.charCodeAt(i2) == 9)
+          n += tabSize - n % tabSize;
+        else
+          n++;
+      }
+      return n;
+    }
+    class StringStream {
+      /**
+      Create a stream.
+      */
+      constructor(string2, tabSize, indentUnit2, overrideIndent) {
+        this.string = string2;
+        this.tabSize = tabSize;
+        this.indentUnit = indentUnit2;
+        this.overrideIndent = overrideIndent;
+        this.pos = 0;
+        this.start = 0;
+        this.lastColumnPos = 0;
+        this.lastColumnValue = 0;
+      }
+      /**
+      True if we are at the end of the line.
+      */
+      eol() {
+        return this.pos >= this.string.length;
+      }
+      /**
+      True if we are at the start of the line.
+      */
+      sol() {
+        return this.pos == 0;
+      }
+      /**
+      Get the next code unit after the current position, or undefined
+      if we're at the end of the line.
+      */
+      peek() {
+        return this.string.charAt(this.pos) || void 0;
+      }
+      /**
+      Read the next code unit and advance `this.pos`.
+      */
+      next() {
+        if (this.pos < this.string.length)
+          return this.string.charAt(this.pos++);
+      }
+      /**
+      Match the next character against the given string, regular
+      expression, or predicate. Consume and return it if it matches.
+      */
+      eat(match) {
+        let ch3 = this.string.charAt(this.pos);
+        let ok;
+        if (typeof match == "string")
+          ok = ch3 == match;
+        else
+          ok = ch3 && (match instanceof RegExp ? match.test(ch3) : match(ch3));
+        if (ok) {
+          ++this.pos;
+          return ch3;
+        }
+      }
+      /**
+      Continue matching characters that match the given string,
+      regular expression, or predicate function. Return true if any
+      characters were consumed.
+      */
+      eatWhile(match) {
+        let start2 = this.pos;
+        while (this.eat(match)) {
+        }
+        return this.pos > start2;
+      }
+      /**
+      Consume whitespace ahead of `this.pos`. Return true if any was
+      found.
+      */
+      eatSpace() {
+        let start2 = this.pos;
+        while (/[\s\u00a0]/.test(this.string.charAt(this.pos)))
+          ++this.pos;
+        return this.pos > start2;
+      }
+      /**
+      Move to the end of the line.
+      */
+      skipToEnd() {
+        this.pos = this.string.length;
+      }
+      /**
+      Move to directly before the given character, if found on the
+      current line.
+      */
+      skipTo(ch3) {
+        let found = this.string.indexOf(ch3, this.pos);
+        if (found > -1) {
+          this.pos = found;
+          return true;
+        }
+      }
+      /**
+      Move back `n` characters.
+      */
+      backUp(n) {
+        this.pos -= n;
+      }
+      /**
+      Get the column position at `this.pos`.
+      */
+      column() {
+        if (this.lastColumnPos < this.start) {
+          this.lastColumnValue = countCol(this.string, this.start, this.tabSize, this.lastColumnPos, this.lastColumnValue);
+          this.lastColumnPos = this.start;
+        }
+        return this.lastColumnValue;
+      }
+      /**
+      Get the indentation column of the current line.
+      */
+      indentation() {
+        var _a2;
+        return (_a2 = this.overrideIndent) !== null && _a2 !== void 0 ? _a2 : countCol(this.string, null, this.tabSize);
+      }
+      /**
+      Match the input against the given string or regular expression
+      (which should start with a `^`). Return true or the regexp match
+      if it matches.
+      
+      Unless `consume` is set to `false`, this will move `this.pos`
+      past the matched text.
+      
+      When matching a string `caseInsensitive` can be set to true to
+      make the match case-insensitive.
+      */
+      match(pattern, consume, caseInsensitive) {
+        if (typeof pattern == "string") {
+          let cased = (str2) => caseInsensitive ? str2.toLowerCase() : str2;
+          let substr = this.string.substr(this.pos, pattern.length);
+          if (cased(substr) == cased(pattern)) {
+            if (consume !== false)
+              this.pos += pattern.length;
+            return true;
+          } else
+            return null;
+        } else {
+          let match = this.string.slice(this.pos).match(pattern);
+          if (match && match.index > 0)
+            return null;
+          if (match && consume !== false)
+            this.pos += match[0].length;
+          return match;
+        }
+      }
+      /**
+      Get the current token.
+      */
+      current() {
+        return this.string.slice(this.start, this.pos);
+      }
+    }
+    function fullParser(spec) {
+      return {
+        name: spec.name || "",
+        token: spec.token,
+        blankLine: spec.blankLine || (() => {
+        }),
+        startState: spec.startState || (() => true),
+        copyState: spec.copyState || defaultCopyState,
+        indent: spec.indent || (() => null),
+        languageData: spec.languageData || {},
+        tokenTable: spec.tokenTable || noTokens,
+        mergeTokens: spec.mergeTokens !== false
+      };
+    }
+    function defaultCopyState(state) {
+      if (typeof state != "object")
+        return state;
+      let newState = {};
+      for (let prop2 in state) {
+        let val = state[prop2];
+        newState[prop2] = val instanceof Array ? val.slice() : val;
+      }
+      return newState;
+    }
+    const IndentedFrom = /* @__PURE__ */ new WeakMap();
+    class StreamLanguage extends Language {
+      constructor(parser2) {
+        let data = defineLanguageFacet(parser2.languageData);
+        let p = fullParser(parser2), self2;
+        let impl = new class extends Parser {
+          createParse(input2, fragments, ranges) {
+            return new Parse(self2, input2, fragments, ranges);
+          }
+        }();
+        super(data, impl, [], parser2.name);
+        this.topNode = docID(data, this);
+        self2 = this;
+        this.streamParser = p;
+        this.stateAfter = new NodeProp({ perNode: true });
+        this.tokenTable = parser2.tokenTable ? new TokenTable(p.tokenTable) : defaultTokenTable;
+      }
+      /**
+      Define a stream language.
+      */
+      static define(spec) {
+        return new StreamLanguage(spec);
+      }
+      /**
+      @internal
+      */
+      getIndent(cx) {
+        let from = void 0;
+        let { overrideIndentation } = cx.options;
+        if (overrideIndentation) {
+          from = IndentedFrom.get(cx.state);
+          if (from != null && from < cx.pos - 1e4)
+            from = void 0;
+        }
+        let start2 = findState(this, cx.node.tree, cx.node.from, cx.node.from, from !== null && from !== void 0 ? from : cx.pos), statePos, state;
+        if (start2) {
+          state = start2.state;
+          statePos = start2.pos + 1;
+        } else {
+          state = this.streamParser.startState(cx.unit);
+          statePos = cx.node.from;
+        }
+        if (cx.pos - statePos > 1e4)
+          return null;
+        while (statePos < cx.pos) {
+          let line3 = cx.state.doc.lineAt(statePos), end2 = Math.min(cx.pos, line3.to);
+          if (line3.length) {
+            let indentation = overrideIndentation ? overrideIndentation(line3.from) : -1;
+            let stream = new StringStream(line3.text, cx.state.tabSize, cx.unit, indentation < 0 ? void 0 : indentation);
+            while (stream.pos < end2 - line3.from)
+              readToken(this.streamParser.token, stream, state);
+          } else {
+            this.streamParser.blankLine(state, cx.unit);
+          }
+          if (end2 == cx.pos)
+            break;
+          statePos = line3.to + 1;
+        }
+        let line2 = cx.lineAt(cx.pos);
+        if (overrideIndentation && from == null)
+          IndentedFrom.set(cx.state, line2.from);
+        return this.streamParser.indent(state, /^\s*(.*)/.exec(line2.text)[1], cx);
+      }
+      get allowsNesting() {
+        return false;
+      }
+    }
+    function findState(lang2, tree, off, startPos, before) {
+      let state = off >= startPos && off + tree.length <= before && tree.prop(lang2.stateAfter);
+      if (state)
+        return { state: lang2.streamParser.copyState(state), pos: off + tree.length };
+      for (let i2 = tree.children.length - 1; i2 >= 0; i2--) {
+        let child = tree.children[i2], pos2 = off + tree.positions[i2];
+        let found = child instanceof Tree && pos2 < before && findState(lang2, child, pos2, startPos, before);
+        if (found)
+          return found;
+      }
+      return null;
+    }
+    function cutTree(lang2, tree, from, to2, inside2) {
+      if (inside2 && from <= 0 && to2 >= tree.length)
+        return tree;
+      if (!inside2 && from == 0 && tree.type == lang2.topNode)
+        inside2 = true;
+      for (let i2 = tree.children.length - 1; i2 >= 0; i2--) {
+        let pos2 = tree.positions[i2], child = tree.children[i2], inner2;
+        if (pos2 < to2 && child instanceof Tree) {
+          if (!(inner2 = cutTree(lang2, child, from - pos2, to2 - pos2, inside2)))
+            break;
+          return !inside2 ? inner2 : new Tree(tree.type, tree.children.slice(0, i2).concat(inner2), tree.positions.slice(0, i2 + 1), pos2 + inner2.length);
+        }
+      }
+      return null;
+    }
+    function findStartInFragments(lang2, fragments, startPos, endPos, editorState) {
+      for (let f of fragments) {
+        let from = f.from + (f.openStart ? 25 : 0), to2 = f.to - (f.openEnd ? 25 : 0);
+        let found = from <= startPos && to2 > startPos && findState(lang2, f.tree, 0 - f.offset, startPos, to2), tree;
+        if (found && found.pos <= endPos && (tree = cutTree(lang2, f.tree, startPos + f.offset, found.pos + f.offset, false)))
+          return { state: found.state, tree };
+      }
+      return { state: lang2.streamParser.startState(editorState ? getIndentUnit(editorState) : 4), tree: Tree.empty };
+    }
+    class Parse {
+      constructor(lang2, input2, fragments, ranges) {
+        this.lang = lang2;
+        this.input = input2;
+        this.fragments = fragments;
+        this.ranges = ranges;
+        this.stoppedAt = null;
+        this.chunks = [];
+        this.chunkPos = [];
+        this.chunk = [];
+        this.chunkReused = void 0;
+        this.rangeIndex = 0;
+        this.to = ranges[ranges.length - 1].to;
+        let context = ParseContext.get(), from = ranges[0].from;
+        let { state, tree } = findStartInFragments(lang2, fragments, from, this.to, context === null || context === void 0 ? void 0 : context.state);
+        this.state = state;
+        this.parsedPos = this.chunkStart = from + tree.length;
+        for (let i2 = 0; i2 < tree.children.length; i2++) {
+          this.chunks.push(tree.children[i2]);
+          this.chunkPos.push(tree.positions[i2]);
+        }
+        if (context && this.parsedPos < context.viewport.from - 1e5 && ranges.some((r2) => r2.from <= context.viewport.from && r2.to >= context.viewport.from)) {
+          this.state = this.lang.streamParser.startState(getIndentUnit(context.state));
+          context.skipUntilInView(this.parsedPos, context.viewport.from);
+          this.parsedPos = context.viewport.from;
+        }
+        this.moveRangeIndex();
+      }
+      advance() {
+        let context = ParseContext.get();
+        let parseEnd = this.stoppedAt == null ? this.to : Math.min(this.to, this.stoppedAt);
+        let end2 = Math.min(
+          parseEnd,
+          this.chunkStart + 512
+          /* C.ChunkSize */
+        );
+        if (context)
+          end2 = Math.min(end2, context.viewport.to);
+        while (this.parsedPos < end2)
+          this.parseLine(context);
+        if (this.chunkStart < this.parsedPos)
+          this.finishChunk();
+        if (this.parsedPos >= parseEnd)
+          return this.finish();
+        if (context && this.parsedPos >= context.viewport.to) {
+          context.skipUntilInView(this.parsedPos, parseEnd);
+          return this.finish();
+        }
+        return null;
+      }
+      stopAt(pos2) {
+        this.stoppedAt = pos2;
+      }
+      lineAfter(pos2) {
+        let chunk = this.input.chunk(pos2);
+        if (!this.input.lineChunks) {
+          let eol = chunk.indexOf("\n");
+          if (eol > -1)
+            chunk = chunk.slice(0, eol);
+        } else if (chunk == "\n") {
+          chunk = "";
+        }
+        return pos2 + chunk.length <= this.to ? chunk : chunk.slice(0, this.to - pos2);
+      }
+      nextLine() {
+        let from = this.parsedPos, line2 = this.lineAfter(from), end2 = from + line2.length;
+        for (let index = this.rangeIndex; ; ) {
+          let rangeEnd2 = this.ranges[index].to;
+          if (rangeEnd2 >= end2)
+            break;
+          line2 = line2.slice(0, rangeEnd2 - (end2 - line2.length));
+          index++;
+          if (index == this.ranges.length)
+            break;
+          let rangeStart = this.ranges[index].from;
+          let after = this.lineAfter(rangeStart);
+          line2 += after;
+          end2 = rangeStart + after.length;
+        }
+        return { line: line2, end: end2 };
+      }
+      skipGapsTo(pos2, offset2, side) {
+        for (; ; ) {
+          let end2 = this.ranges[this.rangeIndex].to, offPos = pos2 + offset2;
+          if (side > 0 ? end2 > offPos : end2 >= offPos)
+            break;
+          let start2 = this.ranges[++this.rangeIndex].from;
+          offset2 += start2 - end2;
+        }
+        return offset2;
+      }
+      moveRangeIndex() {
+        while (this.ranges[this.rangeIndex].to < this.parsedPos)
+          this.rangeIndex++;
+      }
+      emitToken(id, from, to2, offset2) {
+        let size = 4;
+        if (this.ranges.length > 1) {
+          offset2 = this.skipGapsTo(from, offset2, 1);
+          from += offset2;
+          let len0 = this.chunk.length;
+          offset2 = this.skipGapsTo(to2, offset2, -1);
+          to2 += offset2;
+          size += this.chunk.length - len0;
+        }
+        let last = this.chunk.length - 4;
+        if (this.lang.streamParser.mergeTokens && size == 4 && last >= 0 && this.chunk[last] == id && this.chunk[last + 2] == from)
+          this.chunk[last + 2] = to2;
+        else
+          this.chunk.push(id, from, to2, size);
+        return offset2;
+      }
+      parseLine(context) {
+        let { line: line2, end: end2 } = this.nextLine(), offset2 = 0, { streamParser } = this.lang;
+        let stream = new StringStream(line2, context ? context.state.tabSize : 4, context ? getIndentUnit(context.state) : 2);
+        if (stream.eol()) {
+          streamParser.blankLine(this.state, stream.indentUnit);
+        } else {
+          while (!stream.eol()) {
+            let token2 = readToken(streamParser.token, stream, this.state);
+            if (token2)
+              offset2 = this.emitToken(this.lang.tokenTable.resolve(token2), this.parsedPos + stream.start, this.parsedPos + stream.pos, offset2);
+            if (stream.start > 1e4)
+              break;
+          }
+        }
+        this.parsedPos = end2;
+        this.moveRangeIndex();
+        if (this.parsedPos < this.to)
+          this.parsedPos++;
+      }
+      finishChunk() {
+        let tree = Tree.build({
+          buffer: this.chunk,
+          start: this.chunkStart,
+          length: this.parsedPos - this.chunkStart,
+          nodeSet,
+          topID: 0,
+          maxBufferLength: 512,
+          reused: this.chunkReused
+        });
+        tree = new Tree(tree.type, tree.children, tree.positions, tree.length, [[this.lang.stateAfter, this.lang.streamParser.copyState(this.state)]]);
+        this.chunks.push(tree);
+        this.chunkPos.push(this.chunkStart - this.ranges[0].from);
+        this.chunk = [];
+        this.chunkReused = void 0;
+        this.chunkStart = this.parsedPos;
+      }
+      finish() {
+        return new Tree(this.lang.topNode, this.chunks, this.chunkPos, this.parsedPos - this.ranges[0].from).balance();
+      }
+    }
+    function readToken(token2, stream, state) {
+      stream.start = stream.pos;
+      for (let i2 = 0; i2 < 10; i2++) {
+        let result2 = token2(stream, state);
+        if (stream.pos > stream.start)
+          return result2;
+      }
+      throw new Error("Stream parser failed to advance stream.");
+    }
+    const noTokens = /* @__PURE__ */ Object.create(null);
+    const typeArray = [NodeType.none];
+    const nodeSet = /* @__PURE__ */ new NodeSet(typeArray);
+    const warned = [];
+    const byTag = /* @__PURE__ */ Object.create(null);
+    const defaultTable = /* @__PURE__ */ Object.create(null);
     for (let [legacyName, name2] of [
       ["variable", "variableName"],
       ["variable-2", "variableName.special"],
@@ -150839,29 +151871,39 @@ ${events}
       ["header", "heading"],
       ["property", "propertyName"]
     ])
-      defaultTable$3[legacyName] = /* @__PURE__ */ createTokenType$3(noTokens$3, name2);
-    function warnForPart$3(part2, msg) {
-      if (warned$3.indexOf(part2) > -1)
+      defaultTable[legacyName] = /* @__PURE__ */ createTokenType(noTokens, name2);
+    class TokenTable {
+      constructor(extra) {
+        this.extra = extra;
+        this.table = Object.assign(/* @__PURE__ */ Object.create(null), defaultTable);
+      }
+      resolve(tag) {
+        return !tag ? 0 : this.table[tag] || (this.table[tag] = createTokenType(this.extra, tag));
+      }
+    }
+    const defaultTokenTable = /* @__PURE__ */ new TokenTable(noTokens);
+    function warnForPart(part2, msg) {
+      if (warned.indexOf(part2) > -1)
         return;
-      warned$3.push(part2);
+      warned.push(part2);
       console.warn(msg);
     }
-    function createTokenType$3(extra, tagStr) {
+    function createTokenType(extra, tagStr) {
       let tags$1 = [];
       for (let name3 of tagStr.split(" ")) {
         let found = [];
         for (let part2 of name3.split(".")) {
           let value2 = extra[part2] || tags[part2];
           if (!value2) {
-            warnForPart$3(part2, `Unknown highlighting tag ${part2}`);
+            warnForPart(part2, `Unknown highlighting tag ${part2}`);
           } else if (typeof value2 == "function") {
             if (!found.length)
-              warnForPart$3(part2, `Modifier ${part2} used at start of tag`);
+              warnForPart(part2, `Modifier ${part2} used at start of tag`);
             else
               found = found.map(value2);
           } else {
             if (found.length)
-              warnForPart$3(part2, `Tag ${part2} used as modifier`);
+              warnForPart(part2, `Tag ${part2} used as modifier`);
             else
               found = Array.isArray(value2) ? value2 : [value2];
           }
@@ -150872,16 +151914,24 @@ ${events}
       if (!tags$1.length)
         return 0;
       let name2 = tagStr.replace(/ /g, "_"), key2 = name2 + " " + tags$1.map((t2) => t2.id);
-      let known = byTag$3[key2];
+      let known = byTag[key2];
       if (known)
         return known.id;
-      let type = byTag$3[key2] = NodeType.define({
-        id: typeArray$3.length,
+      let type = byTag[key2] = NodeType.define({
+        id: typeArray.length,
         name: name2,
         props: [styleTags({ [name2]: tags$1 })]
       });
-      typeArray$3.push(type);
+      typeArray.push(type);
       return type.id;
+    }
+    function docID(data, lang2) {
+      let type = NodeType.define({ id: typeArray.length, name: "Document", props: [
+        languageDataProp.add(() => data),
+        indentNodeProp.add(() => (cx) => lang2.getIndent(cx))
+      ], top: true });
+      typeArray.push(type);
+      return type;
     }
     ({
       rtl: /* @__PURE__ */ Decoration.mark({ class: "cm-iso", inclusive: true, attributes: { dir: "rtl" }, bidiIsolate: Direction.RTL }),
@@ -150906,7 +151956,7 @@ ${events}
       token before `this.pos`.
       */
       tokenBefore(types2) {
-        let token2 = syntaxTree$3(this.state).resolveInner(this.pos, -1);
+        let token2 = syntaxTree(this.state).resolveInner(this.pos, -1);
         while (token2 && types2.indexOf(token2.name) < 0)
           token2 = token2.parent;
         return token2 ? {
@@ -152083,7 +153133,7 @@ ${events}
         return false;
       }
     }));
-    const baseTheme$2 = /* @__PURE__ */ EditorView.baseTheme({
+    const baseTheme$1 = /* @__PURE__ */ EditorView.baseTheme({
       ".cm-tooltip.cm-tooltip-autocomplete": {
         "& > ul": {
           fontFamily: "monospace",
@@ -152218,7 +153268,7 @@ ${events}
         completionConfig.of(config2),
         completionPlugin,
         completionKeymapExt,
-        baseTheme$2
+        baseTheme$1
       ];
     }
     const completionKeymap = [
@@ -152233,1296 +153283,6 @@ ${events}
       { key: "Enter", run: acceptCompletion }
     ];
     const completionKeymapExt = /* @__PURE__ */ Prec.highest(/* @__PURE__ */ keymap.computeN([completionConfig], (state) => state.facet(completionConfig).defaultKeymap ? [completionKeymap] : []));
-    var _a$2;
-    const languageDataProp$2 = /* @__PURE__ */ new NodeProp();
-    function defineLanguageFacet(baseData) {
-      return Facet.define({
-        combine: baseData ? (values) => values.concat(baseData) : void 0
-      });
-    }
-    const sublanguageProp$2 = /* @__PURE__ */ new NodeProp();
-    let Language$2 = class Language {
-      /**
-      Construct a language object. If you need to invoke this
-      directly, first define a data facet with
-      [`defineLanguageFacet`](https://codemirror.net/6/docs/ref/#language.defineLanguageFacet), and then
-      configure your parser to [attach](https://codemirror.net/6/docs/ref/#language.languageDataProp) it
-      to the language's outer syntax node.
-      */
-      constructor(data, parser2, extraExtensions = [], name2 = "") {
-        this.data = data;
-        this.name = name2;
-        if (!EditorState.prototype.hasOwnProperty("tree"))
-          Object.defineProperty(EditorState.prototype, "tree", { get() {
-            return syntaxTree$2(this);
-          } });
-        this.parser = parser2;
-        this.extension = [
-          language$3.of(this),
-          EditorState.languageData.of((state, pos2, side) => {
-            let top2 = topNodeAt$2(state, pos2, side), data2 = top2.type.prop(languageDataProp$2);
-            if (!data2)
-              return [];
-            let base2 = state.facet(data2), sub2 = top2.type.prop(sublanguageProp$2);
-            if (sub2) {
-              let innerNode = top2.resolve(pos2 - top2.from, side);
-              for (let sublang of sub2)
-                if (sublang.test(innerNode, state)) {
-                  let data3 = state.facet(sublang.facet);
-                  return sublang.type == "replace" ? data3 : data3.concat(base2);
-                }
-            }
-            return base2;
-          })
-        ].concat(extraExtensions);
-      }
-      /**
-      Query whether this language is active at the given position.
-      */
-      isActiveAt(state, pos2, side = -1) {
-        return topNodeAt$2(state, pos2, side).type.prop(languageDataProp$2) == this.data;
-      }
-      /**
-      Find the document regions that were parsed using this language.
-      The returned regions will _include_ any nested languages rooted
-      in this language, when those exist.
-      */
-      findRegions(state) {
-        let lang2 = state.facet(language$3);
-        if ((lang2 === null || lang2 === void 0 ? void 0 : lang2.data) == this.data)
-          return [{ from: 0, to: state.doc.length }];
-        if (!lang2 || !lang2.allowsNesting)
-          return [];
-        let result2 = [];
-        let explore = (tree, from) => {
-          if (tree.prop(languageDataProp$2) == this.data) {
-            result2.push({ from, to: from + tree.length });
-            return;
-          }
-          let mount2 = tree.prop(NodeProp.mounted);
-          if (mount2) {
-            if (mount2.tree.prop(languageDataProp$2) == this.data) {
-              if (mount2.overlay)
-                for (let r2 of mount2.overlay)
-                  result2.push({ from: r2.from + from, to: r2.to + from });
-              else
-                result2.push({ from, to: from + tree.length });
-              return;
-            } else if (mount2.overlay) {
-              let size = result2.length;
-              explore(mount2.tree, mount2.overlay[0].from + from);
-              if (result2.length > size)
-                return;
-            }
-          }
-          for (let i2 = 0; i2 < tree.children.length; i2++) {
-            let ch3 = tree.children[i2];
-            if (ch3 instanceof Tree)
-              explore(ch3, tree.positions[i2] + from);
-          }
-        };
-        explore(syntaxTree$2(state), 0);
-        return result2;
-      }
-      /**
-      Indicates whether this language allows nested languages. The
-      default implementation returns true.
-      */
-      get allowsNesting() {
-        return true;
-      }
-    };
-    Language$2.setState = /* @__PURE__ */ StateEffect.define();
-    function topNodeAt$2(state, pos2, side) {
-      let topLang = state.facet(language$3), tree = syntaxTree$2(state).topNode;
-      if (!topLang || topLang.allowsNesting) {
-        for (let node2 = tree; node2; node2 = node2.enter(pos2, side, IterMode.ExcludeBuffers))
-          if (node2.type.isTop)
-            tree = node2;
-      }
-      return tree;
-    }
-    function syntaxTree$2(state) {
-      let field = state.field(Language$2.state, false);
-      return field ? field.tree : Tree.empty;
-    }
-    let DocInput$2 = class DocInput {
-      /**
-      Create an input object for the given document.
-      */
-      constructor(doc2) {
-        this.doc = doc2;
-        this.cursorPos = 0;
-        this.string = "";
-        this.cursor = doc2.iter();
-      }
-      get length() {
-        return this.doc.length;
-      }
-      syncTo(pos2) {
-        this.string = this.cursor.next(pos2 - this.cursorPos).value;
-        this.cursorPos = pos2 + this.string.length;
-        return this.cursorPos - this.string.length;
-      }
-      chunk(pos2) {
-        this.syncTo(pos2);
-        return this.string;
-      }
-      get lineChunks() {
-        return true;
-      }
-      read(from, to2) {
-        let stringStart = this.cursorPos - this.string.length;
-        if (from < stringStart || to2 >= this.cursorPos)
-          return this.doc.sliceString(from, to2);
-        else
-          return this.string.slice(from - stringStart, to2 - stringStart);
-      }
-    };
-    let currentContext$2 = null;
-    let ParseContext$2 = class ParseContext2 {
-      constructor(parser2, state, fragments = [], tree, treeLen, viewport2, skipped, scheduleOn) {
-        this.parser = parser2;
-        this.state = state;
-        this.fragments = fragments;
-        this.tree = tree;
-        this.treeLen = treeLen;
-        this.viewport = viewport2;
-        this.skipped = skipped;
-        this.scheduleOn = scheduleOn;
-        this.parse = null;
-        this.tempSkipped = [];
-      }
-      /**
-      @internal
-      */
-      static create(parser2, state, viewport2) {
-        return new ParseContext2(parser2, state, [], Tree.empty, 0, viewport2, [], null);
-      }
-      startParse() {
-        return this.parser.startParse(new DocInput$2(this.state.doc), this.fragments);
-      }
-      /**
-      @internal
-      */
-      work(until, upto) {
-        if (upto != null && upto >= this.state.doc.length)
-          upto = void 0;
-        if (this.tree != Tree.empty && this.isDone(upto !== null && upto !== void 0 ? upto : this.state.doc.length)) {
-          this.takeTree();
-          return true;
-        }
-        return this.withContext(() => {
-          var _a2;
-          if (typeof until == "number") {
-            let endTime = Date.now() + until;
-            until = () => Date.now() > endTime;
-          }
-          if (!this.parse)
-            this.parse = this.startParse();
-          if (upto != null && (this.parse.stoppedAt == null || this.parse.stoppedAt > upto) && upto < this.state.doc.length)
-            this.parse.stopAt(upto);
-          for (; ; ) {
-            let done = this.parse.advance();
-            if (done) {
-              this.fragments = this.withoutTempSkipped(TreeFragment.addTree(done, this.fragments, this.parse.stoppedAt != null));
-              this.treeLen = (_a2 = this.parse.stoppedAt) !== null && _a2 !== void 0 ? _a2 : this.state.doc.length;
-              this.tree = done;
-              this.parse = null;
-              if (this.treeLen < (upto !== null && upto !== void 0 ? upto : this.state.doc.length))
-                this.parse = this.startParse();
-              else
-                return true;
-            }
-            if (until())
-              return false;
-          }
-        });
-      }
-      /**
-      @internal
-      */
-      takeTree() {
-        let pos2, tree;
-        if (this.parse && (pos2 = this.parse.parsedPos) >= this.treeLen) {
-          if (this.parse.stoppedAt == null || this.parse.stoppedAt > pos2)
-            this.parse.stopAt(pos2);
-          this.withContext(() => {
-            while (!(tree = this.parse.advance())) {
-            }
-          });
-          this.treeLen = pos2;
-          this.tree = tree;
-          this.fragments = this.withoutTempSkipped(TreeFragment.addTree(this.tree, this.fragments, true));
-          this.parse = null;
-        }
-      }
-      withContext(f) {
-        let prev = currentContext$2;
-        currentContext$2 = this;
-        try {
-          return f();
-        } finally {
-          currentContext$2 = prev;
-        }
-      }
-      withoutTempSkipped(fragments) {
-        for (let r2; r2 = this.tempSkipped.pop(); )
-          fragments = cutFragments$2(fragments, r2.from, r2.to);
-        return fragments;
-      }
-      /**
-      @internal
-      */
-      changes(changes, newState) {
-        let { fragments, tree, treeLen, viewport: viewport2, skipped } = this;
-        this.takeTree();
-        if (!changes.empty) {
-          let ranges = [];
-          changes.iterChangedRanges((fromA, toA, fromB, toB) => ranges.push({ fromA, toA, fromB, toB }));
-          fragments = TreeFragment.applyChanges(fragments, ranges);
-          tree = Tree.empty;
-          treeLen = 0;
-          viewport2 = { from: changes.mapPos(viewport2.from, -1), to: changes.mapPos(viewport2.to, 1) };
-          if (this.skipped.length) {
-            skipped = [];
-            for (let r2 of this.skipped) {
-              let from = changes.mapPos(r2.from, 1), to2 = changes.mapPos(r2.to, -1);
-              if (from < to2)
-                skipped.push({ from, to: to2 });
-            }
-          }
-        }
-        return new ParseContext2(this.parser, newState, fragments, tree, treeLen, viewport2, skipped, this.scheduleOn);
-      }
-      /**
-      @internal
-      */
-      updateViewport(viewport2) {
-        if (this.viewport.from == viewport2.from && this.viewport.to == viewport2.to)
-          return false;
-        this.viewport = viewport2;
-        let startLen = this.skipped.length;
-        for (let i2 = 0; i2 < this.skipped.length; i2++) {
-          let { from, to: to2 } = this.skipped[i2];
-          if (from < viewport2.to && to2 > viewport2.from) {
-            this.fragments = cutFragments$2(this.fragments, from, to2);
-            this.skipped.splice(i2--, 1);
-          }
-        }
-        if (this.skipped.length >= startLen)
-          return false;
-        this.reset();
-        return true;
-      }
-      /**
-      @internal
-      */
-      reset() {
-        if (this.parse) {
-          this.takeTree();
-          this.parse = null;
-        }
-      }
-      /**
-      Notify the parse scheduler that the given region was skipped
-      because it wasn't in view, and the parse should be restarted
-      when it comes into view.
-      */
-      skipUntilInView(from, to2) {
-        this.skipped.push({ from, to: to2 });
-      }
-      /**
-      Returns a parser intended to be used as placeholder when
-      asynchronously loading a nested parser. It'll skip its input and
-      mark it as not-really-parsed, so that the next update will parse
-      it again.
-      
-      When `until` is given, a reparse will be scheduled when that
-      promise resolves.
-      */
-      static getSkippingParser(until) {
-        return new class extends Parser {
-          createParse(input2, fragments, ranges) {
-            let from = ranges[0].from, to2 = ranges[ranges.length - 1].to;
-            let parser2 = {
-              parsedPos: from,
-              advance() {
-                let cx = currentContext$2;
-                if (cx) {
-                  for (let r2 of ranges)
-                    cx.tempSkipped.push(r2);
-                  if (until)
-                    cx.scheduleOn = cx.scheduleOn ? Promise.all([cx.scheduleOn, until]) : until;
-                }
-                this.parsedPos = to2;
-                return new Tree(NodeType.none, [], [], to2 - from);
-              },
-              stoppedAt: null,
-              stopAt() {
-              }
-            };
-            return parser2;
-          }
-        }();
-      }
-      /**
-      @internal
-      */
-      isDone(upto) {
-        upto = Math.min(upto, this.state.doc.length);
-        let frags = this.fragments;
-        return this.treeLen >= upto && frags.length && frags[0].from == 0 && frags[0].to >= upto;
-      }
-      /**
-      Get the context for the current parse, or `null` if no editor
-      parse is in progress.
-      */
-      static get() {
-        return currentContext$2;
-      }
-    };
-    function cutFragments$2(fragments, from, to2) {
-      return TreeFragment.applyChanges(fragments, [{ fromA: from, toA: to2, fromB: from, toB: to2 }]);
-    }
-    let LanguageState$2 = class LanguageState2 {
-      constructor(context) {
-        this.context = context;
-        this.tree = context.tree;
-      }
-      apply(tr2) {
-        if (!tr2.docChanged && this.tree == this.context.tree)
-          return this;
-        let newCx = this.context.changes(tr2.changes, tr2.state);
-        let upto = this.context.treeLen == tr2.startState.doc.length ? void 0 : Math.max(tr2.changes.mapPos(this.context.treeLen), newCx.viewport.to);
-        if (!newCx.work(20, upto))
-          newCx.takeTree();
-        return new LanguageState2(newCx);
-      }
-      static init(state) {
-        let vpTo = Math.min(3e3, state.doc.length);
-        let parseState2 = ParseContext$2.create(state.facet(language$3).parser, state, { from: 0, to: vpTo });
-        if (!parseState2.work(20, vpTo))
-          parseState2.takeTree();
-        return new LanguageState2(parseState2);
-      }
-    };
-    Language$2.state = /* @__PURE__ */ StateField.define({
-      create: LanguageState$2.init,
-      update(value2, tr2) {
-        for (let e of tr2.effects)
-          if (e.is(Language$2.setState))
-            return e.value;
-        if (tr2.startState.facet(language$3) != tr2.state.facet(language$3))
-          return LanguageState$2.init(tr2.state);
-        return value2.apply(tr2);
-      }
-    });
-    let requestIdle$2 = (callback) => {
-      let timeout = setTimeout(
-        () => callback(),
-        500
-        /* Work.MaxPause */
-      );
-      return () => clearTimeout(timeout);
-    };
-    if (typeof requestIdleCallback != "undefined")
-      requestIdle$2 = (callback) => {
-        let idle = -1, timeout = setTimeout(
-          () => {
-            idle = requestIdleCallback(callback, {
-              timeout: 500 - 100
-              /* Work.MinPause */
-            });
-          },
-          100
-          /* Work.MinPause */
-        );
-        return () => idle < 0 ? clearTimeout(timeout) : cancelIdleCallback(idle);
-      };
-    const isInputPending$2 = typeof navigator != "undefined" && ((_a$2 = navigator.scheduling) === null || _a$2 === void 0 ? void 0 : _a$2.isInputPending) ? () => navigator.scheduling.isInputPending() : null;
-    const parseWorker$2 = /* @__PURE__ */ ViewPlugin.fromClass(class ParseWorker {
-      constructor(view) {
-        this.view = view;
-        this.working = null;
-        this.workScheduled = 0;
-        this.chunkEnd = -1;
-        this.chunkBudget = -1;
-        this.work = this.work.bind(this);
-        this.scheduleWork();
-      }
-      update(update) {
-        let cx = this.view.state.field(Language$2.state).context;
-        if (cx.updateViewport(update.view.viewport) || this.view.viewport.to > cx.treeLen)
-          this.scheduleWork();
-        if (update.docChanged || update.selectionSet) {
-          if (this.view.hasFocus)
-            this.chunkBudget += 50;
-          this.scheduleWork();
-        }
-        this.checkAsyncSchedule(cx);
-      }
-      scheduleWork() {
-        if (this.working)
-          return;
-        let { state } = this.view, field = state.field(Language$2.state);
-        if (field.tree != field.context.tree || !field.context.isDone(state.doc.length))
-          this.working = requestIdle$2(this.work);
-      }
-      work(deadline) {
-        this.working = null;
-        let now = Date.now();
-        if (this.chunkEnd < now && (this.chunkEnd < 0 || this.view.hasFocus)) {
-          this.chunkEnd = now + 3e4;
-          this.chunkBudget = 3e3;
-        }
-        if (this.chunkBudget <= 0)
-          return;
-        let { state, viewport: { to: vpTo } } = this.view, field = state.field(Language$2.state);
-        if (field.tree == field.context.tree && field.context.isDone(
-          vpTo + 1e5
-          /* Work.MaxParseAhead */
-        ))
-          return;
-        let endTime = Date.now() + Math.min(this.chunkBudget, 100, deadline && !isInputPending$2 ? Math.max(25, deadline.timeRemaining() - 5) : 1e9);
-        let viewportFirst = field.context.treeLen < vpTo && state.doc.length > vpTo + 1e3;
-        let done = field.context.work(() => {
-          return isInputPending$2 && isInputPending$2() || Date.now() > endTime;
-        }, vpTo + (viewportFirst ? 0 : 1e5));
-        this.chunkBudget -= Date.now() - now;
-        if (done || this.chunkBudget <= 0) {
-          field.context.takeTree();
-          this.view.dispatch({ effects: Language$2.setState.of(new LanguageState$2(field.context)) });
-        }
-        if (this.chunkBudget > 0 && !(done && !viewportFirst))
-          this.scheduleWork();
-        this.checkAsyncSchedule(field.context);
-      }
-      checkAsyncSchedule(cx) {
-        if (cx.scheduleOn) {
-          this.workScheduled++;
-          cx.scheduleOn.then(() => this.scheduleWork()).catch((err2) => logException(this.view.state, err2)).then(() => this.workScheduled--);
-          cx.scheduleOn = null;
-        }
-      }
-      destroy() {
-        if (this.working)
-          this.working();
-      }
-      isWorking() {
-        return !!(this.working || this.workScheduled > 0);
-      }
-    }, {
-      eventHandlers: { focus() {
-        this.scheduleWork();
-      } }
-    });
-    const language$3 = /* @__PURE__ */ Facet.define({
-      combine(languages) {
-        return languages.length ? languages[0] : null;
-      },
-      enables: (language2) => [
-        Language$2.state,
-        parseWorker$2,
-        EditorView.contentAttributes.compute([language2], (state) => {
-          let lang2 = state.facet(language2);
-          return lang2 && lang2.name ? { "data-language": lang2.name } : {};
-        })
-      ]
-    });
-    const indentUnit$1 = /* @__PURE__ */ Facet.define({
-      combine: (values) => {
-        if (!values.length)
-          return "  ";
-        let unit = values[0];
-        if (!unit || /\S/.test(unit) || Array.from(unit).some((e) => e != unit[0]))
-          throw new Error("Invalid indent unit: " + JSON.stringify(values[0]));
-        return unit;
-      }
-    });
-    function getIndentUnit$1(state) {
-      let unit = state.facet(indentUnit$1);
-      return unit.charCodeAt(0) == 9 ? state.tabSize * unit.length : unit.length;
-    }
-    const indentNodeProp$1 = /* @__PURE__ */ new NodeProp();
-    let HighlightStyle$1 = class HighlightStyle2 {
-      constructor(specs, options2) {
-        this.specs = specs;
-        let modSpec;
-        function def(spec) {
-          let cls = StyleModule.newName();
-          (modSpec || (modSpec = /* @__PURE__ */ Object.create(null)))["." + cls] = spec;
-          return cls;
-        }
-        const all2 = typeof options2.all == "string" ? options2.all : options2.all ? def(options2.all) : void 0;
-        const scopeOpt = options2.scope;
-        this.scope = scopeOpt instanceof Language$2 ? (type) => type.prop(languageDataProp$2) == scopeOpt.data : scopeOpt ? (type) => type == scopeOpt : void 0;
-        this.style = tagHighlighter(specs.map((style2) => ({
-          tag: style2.tag,
-          class: style2.class || def(Object.assign({}, style2, { tag: null }))
-        })), {
-          all: all2
-        }).style;
-        this.module = modSpec ? new StyleModule(modSpec) : null;
-        this.themeType = options2.themeType;
-      }
-      /**
-      Create a highlighter style that associates the given styles to
-      the given tags. The specs must be objects that hold a style tag
-      or array of tags in their `tag` property, and either a single
-      `class` property providing a static CSS class (for highlighter
-      that rely on external styling), or a
-      [`style-mod`](https://github.com/marijnh/style-mod#documentation)-style
-      set of CSS properties (which define the styling for those tags).
-      
-      The CSS rules created for a highlighter will be emitted in the
-      order of the spec's properties. That means that for elements that
-      have multiple tags associated with them, styles defined further
-      down in the list will have a higher CSS precedence than styles
-      defined earlier.
-      */
-      static define(specs, options2) {
-        return new HighlightStyle2(specs, options2 || {});
-      }
-    };
-    const highlighterFacet$1 = /* @__PURE__ */ Facet.define();
-    const fallbackHighlighter$1 = /* @__PURE__ */ Facet.define({
-      combine(values) {
-        return values.length ? [values[0]] : null;
-      }
-    });
-    function getHighlighters$1(state) {
-      let main2 = state.facet(highlighterFacet$1);
-      return main2.length ? main2 : state.facet(fallbackHighlighter$1);
-    }
-    function syntaxHighlighting$1(highlighter, options2) {
-      let ext = [treeHighlighter$1], themeType;
-      if (highlighter instanceof HighlightStyle$1) {
-        if (highlighter.module)
-          ext.push(EditorView.styleModule.of(highlighter.module));
-        themeType = highlighter.themeType;
-      }
-      if (themeType)
-        ext.push(highlighterFacet$1.computeN([EditorView.darkTheme], (state) => {
-          return state.facet(EditorView.darkTheme) == (themeType == "dark") ? [highlighter] : [];
-        }));
-      else
-        ext.push(highlighterFacet$1.of(highlighter));
-      return ext;
-    }
-    let TreeHighlighter$1 = class TreeHighlighter {
-      constructor(view) {
-        this.markCache = /* @__PURE__ */ Object.create(null);
-        this.tree = syntaxTree$2(view.state);
-        this.decorations = this.buildDeco(view, getHighlighters$1(view.state));
-        this.decoratedTo = view.viewport.to;
-      }
-      update(update) {
-        let tree = syntaxTree$2(update.state), highlighters = getHighlighters$1(update.state);
-        let styleChange = highlighters != getHighlighters$1(update.startState);
-        let { viewport: viewport2 } = update.view, decoratedToMapped = update.changes.mapPos(this.decoratedTo, 1);
-        if (tree.length < viewport2.to && !styleChange && tree.type == this.tree.type && decoratedToMapped >= viewport2.to) {
-          this.decorations = this.decorations.map(update.changes);
-          this.decoratedTo = decoratedToMapped;
-        } else if (tree != this.tree || update.viewportChanged || styleChange) {
-          this.tree = tree;
-          this.decorations = this.buildDeco(update.view, highlighters);
-          this.decoratedTo = viewport2.to;
-        }
-      }
-      buildDeco(view, highlighters) {
-        if (!highlighters || !this.tree.length)
-          return Decoration.none;
-        let builder = new RangeSetBuilder();
-        for (let { from, to: to2 } of view.visibleRanges) {
-          highlightTree(this.tree, highlighters, (from2, to3, style2) => {
-            builder.add(from2, to3, this.markCache[style2] || (this.markCache[style2] = Decoration.mark({ class: style2 })));
-          }, from, to2);
-        }
-        return builder.finish();
-      }
-    };
-    const treeHighlighter$1 = /* @__PURE__ */ Prec.high(/* @__PURE__ */ ViewPlugin.fromClass(TreeHighlighter$1, {
-      decorations: (v) => v.decorations
-    }));
-    const baseTheme$1 = /* @__PURE__ */ EditorView.baseTheme({
-      "&.cm-focused .cm-matchingBracket": { backgroundColor: "#328c8252" },
-      "&.cm-focused .cm-nonmatchingBracket": { backgroundColor: "#bb555544" }
-    });
-    const DefaultScanDist$1 = 1e4, DefaultBrackets$1 = "()[]{}";
-    const bracketMatchingConfig = /* @__PURE__ */ Facet.define({
-      combine(configs) {
-        return combineConfig(configs, {
-          afterCursor: true,
-          brackets: DefaultBrackets$1,
-          maxScanDistance: DefaultScanDist$1,
-          renderMatch: defaultRenderMatch
-        });
-      }
-    });
-    const matchingMark = /* @__PURE__ */ Decoration.mark({ class: "cm-matchingBracket" }), nonmatchingMark = /* @__PURE__ */ Decoration.mark({ class: "cm-nonmatchingBracket" });
-    function defaultRenderMatch(match) {
-      let decorations2 = [];
-      let mark = match.matched ? matchingMark : nonmatchingMark;
-      decorations2.push(mark.range(match.start.from, match.start.to));
-      if (match.end)
-        decorations2.push(mark.range(match.end.from, match.end.to));
-      return decorations2;
-    }
-    const bracketMatchingState = /* @__PURE__ */ StateField.define({
-      create() {
-        return Decoration.none;
-      },
-      update(deco, tr2) {
-        if (!tr2.docChanged && !tr2.selection)
-          return deco;
-        let decorations2 = [];
-        let config2 = tr2.state.facet(bracketMatchingConfig);
-        for (let range2 of tr2.state.selection.ranges) {
-          if (!range2.empty)
-            continue;
-          let match = matchBrackets$1(tr2.state, range2.head, -1, config2) || range2.head > 0 && matchBrackets$1(tr2.state, range2.head - 1, 1, config2) || config2.afterCursor && (matchBrackets$1(tr2.state, range2.head, 1, config2) || range2.head < tr2.state.doc.length && matchBrackets$1(tr2.state, range2.head + 1, -1, config2));
-          if (match)
-            decorations2 = decorations2.concat(config2.renderMatch(match, tr2.state));
-        }
-        return Decoration.set(decorations2, true);
-      },
-      provide: (f) => EditorView.decorations.from(f)
-    });
-    const bracketMatchingUnique = [
-      bracketMatchingState,
-      baseTheme$1
-    ];
-    function bracketMatching(config2 = {}) {
-      return [bracketMatchingConfig.of(config2), bracketMatchingUnique];
-    }
-    const bracketMatchingHandle$1 = /* @__PURE__ */ new NodeProp();
-    function matchingNodes$1(node2, dir, brackets) {
-      let byProp = node2.prop(dir < 0 ? NodeProp.openedBy : NodeProp.closedBy);
-      if (byProp)
-        return byProp;
-      if (node2.name.length == 1) {
-        let index = brackets.indexOf(node2.name);
-        if (index > -1 && index % 2 == (dir < 0 ? 1 : 0))
-          return [brackets[index + dir]];
-      }
-      return null;
-    }
-    function findHandle$1(node2) {
-      let hasHandle = node2.type.prop(bracketMatchingHandle$1);
-      return hasHandle ? hasHandle(node2.node) : node2;
-    }
-    function matchBrackets$1(state, pos2, dir, config2 = {}) {
-      let maxScanDistance = config2.maxScanDistance || DefaultScanDist$1, brackets = config2.brackets || DefaultBrackets$1;
-      let tree = syntaxTree$2(state), node2 = tree.resolveInner(pos2, dir);
-      for (let cur2 = node2; cur2; cur2 = cur2.parent) {
-        let matches = matchingNodes$1(cur2.type, dir, brackets);
-        if (matches && cur2.from < cur2.to) {
-          let handle = findHandle$1(cur2);
-          if (handle && (dir > 0 ? pos2 >= handle.from && pos2 < handle.to : pos2 > handle.from && pos2 <= handle.to))
-            return matchMarkedBrackets$1(state, pos2, dir, cur2, handle, matches, brackets);
-        }
-      }
-      return matchPlainBrackets$1(state, pos2, dir, tree, node2.type, maxScanDistance, brackets);
-    }
-    function matchMarkedBrackets$1(_state, _pos, dir, token2, handle, matching, brackets) {
-      let parent = token2.parent, firstToken = { from: handle.from, to: handle.to };
-      let depth = 0, cursor = parent === null || parent === void 0 ? void 0 : parent.cursor();
-      if (cursor && (dir < 0 ? cursor.childBefore(token2.from) : cursor.childAfter(token2.to)))
-        do {
-          if (dir < 0 ? cursor.to <= token2.from : cursor.from >= token2.to) {
-            if (depth == 0 && matching.indexOf(cursor.type.name) > -1 && cursor.from < cursor.to) {
-              let endHandle = findHandle$1(cursor);
-              return { start: firstToken, end: endHandle ? { from: endHandle.from, to: endHandle.to } : void 0, matched: true };
-            } else if (matchingNodes$1(cursor.type, dir, brackets)) {
-              depth++;
-            } else if (matchingNodes$1(cursor.type, -dir, brackets)) {
-              if (depth == 0) {
-                let endHandle = findHandle$1(cursor);
-                return {
-                  start: firstToken,
-                  end: endHandle && endHandle.from < endHandle.to ? { from: endHandle.from, to: endHandle.to } : void 0,
-                  matched: false
-                };
-              }
-              depth--;
-            }
-          }
-        } while (dir < 0 ? cursor.prevSibling() : cursor.nextSibling());
-      return { start: firstToken, matched: false };
-    }
-    function matchPlainBrackets$1(state, pos2, dir, tree, tokenType, maxScanDistance, brackets) {
-      let startCh = dir < 0 ? state.sliceDoc(pos2 - 1, pos2) : state.sliceDoc(pos2, pos2 + 1);
-      let bracket2 = brackets.indexOf(startCh);
-      if (bracket2 < 0 || bracket2 % 2 == 0 != dir > 0)
-        return null;
-      let startToken = { from: dir < 0 ? pos2 - 1 : pos2, to: dir > 0 ? pos2 + 1 : pos2 };
-      let iter = state.doc.iterRange(pos2, dir > 0 ? state.doc.length : 0), depth = 0;
-      for (let distance = 0; !iter.next().done && distance <= maxScanDistance; ) {
-        let text2 = iter.value;
-        if (dir < 0)
-          distance += text2.length;
-        let basePos = pos2 + distance * dir;
-        for (let pos3 = dir > 0 ? 0 : text2.length - 1, end2 = dir > 0 ? text2.length : -1; pos3 != end2; pos3 += dir) {
-          let found = brackets.indexOf(text2[pos3]);
-          if (found < 0 || tree.resolveInner(basePos + pos3, 1).type != tokenType)
-            continue;
-          if (found % 2 == 0 == dir > 0) {
-            depth++;
-          } else if (depth == 1) {
-            return { start: startToken, end: { from: basePos + pos3, to: basePos + pos3 + 1 }, matched: found >> 1 == bracket2 >> 1 };
-          } else {
-            depth--;
-          }
-        }
-        if (dir > 0)
-          distance += text2.length;
-      }
-      return iter.done ? { start: startToken, matched: false } : null;
-    }
-    function countCol(string2, end2, tabSize, startIndex = 0, startValue = 0) {
-      if (end2 == null) {
-        end2 = string2.search(/[^\s\u00a0]/);
-        if (end2 == -1)
-          end2 = string2.length;
-      }
-      let n = startValue;
-      for (let i2 = startIndex; i2 < end2; i2++) {
-        if (string2.charCodeAt(i2) == 9)
-          n += tabSize - n % tabSize;
-        else
-          n++;
-      }
-      return n;
-    }
-    class StringStream {
-      /**
-      Create a stream.
-      */
-      constructor(string2, tabSize, indentUnit2, overrideIndent) {
-        this.string = string2;
-        this.tabSize = tabSize;
-        this.indentUnit = indentUnit2;
-        this.overrideIndent = overrideIndent;
-        this.pos = 0;
-        this.start = 0;
-        this.lastColumnPos = 0;
-        this.lastColumnValue = 0;
-      }
-      /**
-      True if we are at the end of the line.
-      */
-      eol() {
-        return this.pos >= this.string.length;
-      }
-      /**
-      True if we are at the start of the line.
-      */
-      sol() {
-        return this.pos == 0;
-      }
-      /**
-      Get the next code unit after the current position, or undefined
-      if we're at the end of the line.
-      */
-      peek() {
-        return this.string.charAt(this.pos) || void 0;
-      }
-      /**
-      Read the next code unit and advance `this.pos`.
-      */
-      next() {
-        if (this.pos < this.string.length)
-          return this.string.charAt(this.pos++);
-      }
-      /**
-      Match the next character against the given string, regular
-      expression, or predicate. Consume and return it if it matches.
-      */
-      eat(match) {
-        let ch3 = this.string.charAt(this.pos);
-        let ok;
-        if (typeof match == "string")
-          ok = ch3 == match;
-        else
-          ok = ch3 && (match instanceof RegExp ? match.test(ch3) : match(ch3));
-        if (ok) {
-          ++this.pos;
-          return ch3;
-        }
-      }
-      /**
-      Continue matching characters that match the given string,
-      regular expression, or predicate function. Return true if any
-      characters were consumed.
-      */
-      eatWhile(match) {
-        let start2 = this.pos;
-        while (this.eat(match)) {
-        }
-        return this.pos > start2;
-      }
-      /**
-      Consume whitespace ahead of `this.pos`. Return true if any was
-      found.
-      */
-      eatSpace() {
-        let start2 = this.pos;
-        while (/[\s\u00a0]/.test(this.string.charAt(this.pos)))
-          ++this.pos;
-        return this.pos > start2;
-      }
-      /**
-      Move to the end of the line.
-      */
-      skipToEnd() {
-        this.pos = this.string.length;
-      }
-      /**
-      Move to directly before the given character, if found on the
-      current line.
-      */
-      skipTo(ch3) {
-        let found = this.string.indexOf(ch3, this.pos);
-        if (found > -1) {
-          this.pos = found;
-          return true;
-        }
-      }
-      /**
-      Move back `n` characters.
-      */
-      backUp(n) {
-        this.pos -= n;
-      }
-      /**
-      Get the column position at `this.pos`.
-      */
-      column() {
-        if (this.lastColumnPos < this.start) {
-          this.lastColumnValue = countCol(this.string, this.start, this.tabSize, this.lastColumnPos, this.lastColumnValue);
-          this.lastColumnPos = this.start;
-        }
-        return this.lastColumnValue;
-      }
-      /**
-      Get the indentation column of the current line.
-      */
-      indentation() {
-        var _a2;
-        return (_a2 = this.overrideIndent) !== null && _a2 !== void 0 ? _a2 : countCol(this.string, null, this.tabSize);
-      }
-      /**
-      Match the input against the given string or regular expression
-      (which should start with a `^`). Return true or the regexp match
-      if it matches.
-      
-      Unless `consume` is set to `false`, this will move `this.pos`
-      past the matched text.
-      
-      When matching a string `caseInsensitive` can be set to true to
-      make the match case-insensitive.
-      */
-      match(pattern, consume, caseInsensitive) {
-        if (typeof pattern == "string") {
-          let cased = (str2) => caseInsensitive ? str2.toLowerCase() : str2;
-          let substr = this.string.substr(this.pos, pattern.length);
-          if (cased(substr) == cased(pattern)) {
-            if (consume !== false)
-              this.pos += pattern.length;
-            return true;
-          } else
-            return null;
-        } else {
-          let match = this.string.slice(this.pos).match(pattern);
-          if (match && match.index > 0)
-            return null;
-          if (match && consume !== false)
-            this.pos += match[0].length;
-          return match;
-        }
-      }
-      /**
-      Get the current token.
-      */
-      current() {
-        return this.string.slice(this.start, this.pos);
-      }
-    }
-    function fullParser(spec) {
-      return {
-        name: spec.name || "",
-        token: spec.token,
-        blankLine: spec.blankLine || (() => {
-        }),
-        startState: spec.startState || (() => true),
-        copyState: spec.copyState || defaultCopyState,
-        indent: spec.indent || (() => null),
-        languageData: spec.languageData || {},
-        tokenTable: spec.tokenTable || noTokens$2,
-        mergeTokens: spec.mergeTokens !== false
-      };
-    }
-    function defaultCopyState(state) {
-      if (typeof state != "object")
-        return state;
-      let newState = {};
-      for (let prop2 in state) {
-        let val = state[prop2];
-        newState[prop2] = val instanceof Array ? val.slice() : val;
-      }
-      return newState;
-    }
-    const IndentedFrom = /* @__PURE__ */ new WeakMap();
-    class StreamLanguage extends Language$2 {
-      constructor(parser2) {
-        let data = defineLanguageFacet(parser2.languageData);
-        let p = fullParser(parser2), self2;
-        let impl = new class extends Parser {
-          createParse(input2, fragments, ranges) {
-            return new Parse(self2, input2, fragments, ranges);
-          }
-        }();
-        super(data, impl, [], parser2.name);
-        this.topNode = docID(data, this);
-        self2 = this;
-        this.streamParser = p;
-        this.stateAfter = new NodeProp({ perNode: true });
-        this.tokenTable = parser2.tokenTable ? new TokenTable(p.tokenTable) : defaultTokenTable;
-      }
-      /**
-      Define a stream language.
-      */
-      static define(spec) {
-        return new StreamLanguage(spec);
-      }
-      /**
-      @internal
-      */
-      getIndent(cx) {
-        let from = void 0;
-        let { overrideIndentation } = cx.options;
-        if (overrideIndentation) {
-          from = IndentedFrom.get(cx.state);
-          if (from != null && from < cx.pos - 1e4)
-            from = void 0;
-        }
-        let start2 = findState(this, cx.node.tree, cx.node.from, cx.node.from, from !== null && from !== void 0 ? from : cx.pos), statePos, state;
-        if (start2) {
-          state = start2.state;
-          statePos = start2.pos + 1;
-        } else {
-          state = this.streamParser.startState(cx.unit);
-          statePos = cx.node.from;
-        }
-        if (cx.pos - statePos > 1e4)
-          return null;
-        while (statePos < cx.pos) {
-          let line3 = cx.state.doc.lineAt(statePos), end2 = Math.min(cx.pos, line3.to);
-          if (line3.length) {
-            let indentation = overrideIndentation ? overrideIndentation(line3.from) : -1;
-            let stream = new StringStream(line3.text, cx.state.tabSize, cx.unit, indentation < 0 ? void 0 : indentation);
-            while (stream.pos < end2 - line3.from)
-              readToken(this.streamParser.token, stream, state);
-          } else {
-            this.streamParser.blankLine(state, cx.unit);
-          }
-          if (end2 == cx.pos)
-            break;
-          statePos = line3.to + 1;
-        }
-        let line2 = cx.lineAt(cx.pos);
-        if (overrideIndentation && from == null)
-          IndentedFrom.set(cx.state, line2.from);
-        return this.streamParser.indent(state, /^\s*(.*)/.exec(line2.text)[1], cx);
-      }
-      get allowsNesting() {
-        return false;
-      }
-    }
-    function findState(lang2, tree, off, startPos, before) {
-      let state = off >= startPos && off + tree.length <= before && tree.prop(lang2.stateAfter);
-      if (state)
-        return { state: lang2.streamParser.copyState(state), pos: off + tree.length };
-      for (let i2 = tree.children.length - 1; i2 >= 0; i2--) {
-        let child = tree.children[i2], pos2 = off + tree.positions[i2];
-        let found = child instanceof Tree && pos2 < before && findState(lang2, child, pos2, startPos, before);
-        if (found)
-          return found;
-      }
-      return null;
-    }
-    function cutTree(lang2, tree, from, to2, inside2) {
-      if (inside2 && from <= 0 && to2 >= tree.length)
-        return tree;
-      if (!inside2 && from == 0 && tree.type == lang2.topNode)
-        inside2 = true;
-      for (let i2 = tree.children.length - 1; i2 >= 0; i2--) {
-        let pos2 = tree.positions[i2], child = tree.children[i2], inner2;
-        if (pos2 < to2 && child instanceof Tree) {
-          if (!(inner2 = cutTree(lang2, child, from - pos2, to2 - pos2, inside2)))
-            break;
-          return !inside2 ? inner2 : new Tree(tree.type, tree.children.slice(0, i2).concat(inner2), tree.positions.slice(0, i2 + 1), pos2 + inner2.length);
-        }
-      }
-      return null;
-    }
-    function findStartInFragments(lang2, fragments, startPos, endPos, editorState) {
-      for (let f of fragments) {
-        let from = f.from + (f.openStart ? 25 : 0), to2 = f.to - (f.openEnd ? 25 : 0);
-        let found = from <= startPos && to2 > startPos && findState(lang2, f.tree, 0 - f.offset, startPos, to2), tree;
-        if (found && found.pos <= endPos && (tree = cutTree(lang2, f.tree, startPos + f.offset, found.pos + f.offset, false)))
-          return { state: found.state, tree };
-      }
-      return { state: lang2.streamParser.startState(editorState ? getIndentUnit$1(editorState) : 4), tree: Tree.empty };
-    }
-    class Parse {
-      constructor(lang2, input2, fragments, ranges) {
-        this.lang = lang2;
-        this.input = input2;
-        this.fragments = fragments;
-        this.ranges = ranges;
-        this.stoppedAt = null;
-        this.chunks = [];
-        this.chunkPos = [];
-        this.chunk = [];
-        this.chunkReused = void 0;
-        this.rangeIndex = 0;
-        this.to = ranges[ranges.length - 1].to;
-        let context = ParseContext$2.get(), from = ranges[0].from;
-        let { state, tree } = findStartInFragments(lang2, fragments, from, this.to, context === null || context === void 0 ? void 0 : context.state);
-        this.state = state;
-        this.parsedPos = this.chunkStart = from + tree.length;
-        for (let i2 = 0; i2 < tree.children.length; i2++) {
-          this.chunks.push(tree.children[i2]);
-          this.chunkPos.push(tree.positions[i2]);
-        }
-        if (context && this.parsedPos < context.viewport.from - 1e5 && ranges.some((r2) => r2.from <= context.viewport.from && r2.to >= context.viewport.from)) {
-          this.state = this.lang.streamParser.startState(getIndentUnit$1(context.state));
-          context.skipUntilInView(this.parsedPos, context.viewport.from);
-          this.parsedPos = context.viewport.from;
-        }
-        this.moveRangeIndex();
-      }
-      advance() {
-        let context = ParseContext$2.get();
-        let parseEnd = this.stoppedAt == null ? this.to : Math.min(this.to, this.stoppedAt);
-        let end2 = Math.min(
-          parseEnd,
-          this.chunkStart + 512
-          /* C.ChunkSize */
-        );
-        if (context)
-          end2 = Math.min(end2, context.viewport.to);
-        while (this.parsedPos < end2)
-          this.parseLine(context);
-        if (this.chunkStart < this.parsedPos)
-          this.finishChunk();
-        if (this.parsedPos >= parseEnd)
-          return this.finish();
-        if (context && this.parsedPos >= context.viewport.to) {
-          context.skipUntilInView(this.parsedPos, parseEnd);
-          return this.finish();
-        }
-        return null;
-      }
-      stopAt(pos2) {
-        this.stoppedAt = pos2;
-      }
-      lineAfter(pos2) {
-        let chunk = this.input.chunk(pos2);
-        if (!this.input.lineChunks) {
-          let eol = chunk.indexOf("\n");
-          if (eol > -1)
-            chunk = chunk.slice(0, eol);
-        } else if (chunk == "\n") {
-          chunk = "";
-        }
-        return pos2 + chunk.length <= this.to ? chunk : chunk.slice(0, this.to - pos2);
-      }
-      nextLine() {
-        let from = this.parsedPos, line2 = this.lineAfter(from), end2 = from + line2.length;
-        for (let index = this.rangeIndex; ; ) {
-          let rangeEnd2 = this.ranges[index].to;
-          if (rangeEnd2 >= end2)
-            break;
-          line2 = line2.slice(0, rangeEnd2 - (end2 - line2.length));
-          index++;
-          if (index == this.ranges.length)
-            break;
-          let rangeStart = this.ranges[index].from;
-          let after = this.lineAfter(rangeStart);
-          line2 += after;
-          end2 = rangeStart + after.length;
-        }
-        return { line: line2, end: end2 };
-      }
-      skipGapsTo(pos2, offset2, side) {
-        for (; ; ) {
-          let end2 = this.ranges[this.rangeIndex].to, offPos = pos2 + offset2;
-          if (side > 0 ? end2 > offPos : end2 >= offPos)
-            break;
-          let start2 = this.ranges[++this.rangeIndex].from;
-          offset2 += start2 - end2;
-        }
-        return offset2;
-      }
-      moveRangeIndex() {
-        while (this.ranges[this.rangeIndex].to < this.parsedPos)
-          this.rangeIndex++;
-      }
-      emitToken(id, from, to2, offset2) {
-        let size = 4;
-        if (this.ranges.length > 1) {
-          offset2 = this.skipGapsTo(from, offset2, 1);
-          from += offset2;
-          let len0 = this.chunk.length;
-          offset2 = this.skipGapsTo(to2, offset2, -1);
-          to2 += offset2;
-          size += this.chunk.length - len0;
-        }
-        let last = this.chunk.length - 4;
-        if (this.lang.streamParser.mergeTokens && size == 4 && last >= 0 && this.chunk[last] == id && this.chunk[last + 2] == from)
-          this.chunk[last + 2] = to2;
-        else
-          this.chunk.push(id, from, to2, size);
-        return offset2;
-      }
-      parseLine(context) {
-        let { line: line2, end: end2 } = this.nextLine(), offset2 = 0, { streamParser } = this.lang;
-        let stream = new StringStream(line2, context ? context.state.tabSize : 4, context ? getIndentUnit$1(context.state) : 2);
-        if (stream.eol()) {
-          streamParser.blankLine(this.state, stream.indentUnit);
-        } else {
-          while (!stream.eol()) {
-            let token2 = readToken(streamParser.token, stream, this.state);
-            if (token2)
-              offset2 = this.emitToken(this.lang.tokenTable.resolve(token2), this.parsedPos + stream.start, this.parsedPos + stream.pos, offset2);
-            if (stream.start > 1e4)
-              break;
-          }
-        }
-        this.parsedPos = end2;
-        this.moveRangeIndex();
-        if (this.parsedPos < this.to)
-          this.parsedPos++;
-      }
-      finishChunk() {
-        let tree = Tree.build({
-          buffer: this.chunk,
-          start: this.chunkStart,
-          length: this.parsedPos - this.chunkStart,
-          nodeSet,
-          topID: 0,
-          maxBufferLength: 512,
-          reused: this.chunkReused
-        });
-        tree = new Tree(tree.type, tree.children, tree.positions, tree.length, [[this.lang.stateAfter, this.lang.streamParser.copyState(this.state)]]);
-        this.chunks.push(tree);
-        this.chunkPos.push(this.chunkStart - this.ranges[0].from);
-        this.chunk = [];
-        this.chunkReused = void 0;
-        this.chunkStart = this.parsedPos;
-      }
-      finish() {
-        return new Tree(this.lang.topNode, this.chunks, this.chunkPos, this.parsedPos - this.ranges[0].from).balance();
-      }
-    }
-    function readToken(token2, stream, state) {
-      stream.start = stream.pos;
-      for (let i2 = 0; i2 < 10; i2++) {
-        let result2 = token2(stream, state);
-        if (stream.pos > stream.start)
-          return result2;
-      }
-      throw new Error("Stream parser failed to advance stream.");
-    }
-    const noTokens$2 = /* @__PURE__ */ Object.create(null);
-    const typeArray$2 = [NodeType.none];
-    const nodeSet = /* @__PURE__ */ new NodeSet(typeArray$2);
-    const warned$2 = [];
-    const byTag$2 = /* @__PURE__ */ Object.create(null);
-    const defaultTable$2 = /* @__PURE__ */ Object.create(null);
-    for (let [legacyName, name2] of [
-      ["variable", "variableName"],
-      ["variable-2", "variableName.special"],
-      ["string-2", "string.special"],
-      ["def", "variableName.definition"],
-      ["tag", "tagName"],
-      ["attribute", "attributeName"],
-      ["type", "typeName"],
-      ["builtin", "variableName.standard"],
-      ["qualifier", "modifier"],
-      ["error", "invalid"],
-      ["header", "heading"],
-      ["property", "propertyName"]
-    ])
-      defaultTable$2[legacyName] = /* @__PURE__ */ createTokenType$2(noTokens$2, name2);
-    class TokenTable {
-      constructor(extra) {
-        this.extra = extra;
-        this.table = Object.assign(/* @__PURE__ */ Object.create(null), defaultTable$2);
-      }
-      resolve(tag) {
-        return !tag ? 0 : this.table[tag] || (this.table[tag] = createTokenType$2(this.extra, tag));
-      }
-    }
-    const defaultTokenTable = /* @__PURE__ */ new TokenTable(noTokens$2);
-    function warnForPart$2(part2, msg) {
-      if (warned$2.indexOf(part2) > -1)
-        return;
-      warned$2.push(part2);
-      console.warn(msg);
-    }
-    function createTokenType$2(extra, tagStr) {
-      let tags$1 = [];
-      for (let name3 of tagStr.split(" ")) {
-        let found = [];
-        for (let part2 of name3.split(".")) {
-          let value2 = extra[part2] || tags[part2];
-          if (!value2) {
-            warnForPart$2(part2, `Unknown highlighting tag ${part2}`);
-          } else if (typeof value2 == "function") {
-            if (!found.length)
-              warnForPart$2(part2, `Modifier ${part2} used at start of tag`);
-            else
-              found = found.map(value2);
-          } else {
-            if (found.length)
-              warnForPart$2(part2, `Tag ${part2} used as modifier`);
-            else
-              found = Array.isArray(value2) ? value2 : [value2];
-          }
-        }
-        for (let tag of found)
-          tags$1.push(tag);
-      }
-      if (!tags$1.length)
-        return 0;
-      let name2 = tagStr.replace(/ /g, "_"), key2 = name2 + " " + tags$1.map((t2) => t2.id);
-      let known = byTag$2[key2];
-      if (known)
-        return known.id;
-      let type = byTag$2[key2] = NodeType.define({
-        id: typeArray$2.length,
-        name: name2,
-        props: [styleTags({ [name2]: tags$1 })]
-      });
-      typeArray$2.push(type);
-      return type.id;
-    }
-    function docID(data, lang2) {
-      let type = NodeType.define({ id: typeArray$2.length, name: "Document", props: [
-        languageDataProp$2.add(() => data),
-        indentNodeProp$1.add(() => (cx) => lang2.getIndent(cx))
-      ], top: true });
-      typeArray$2.push(type);
-      return type;
-    }
-    ({
-      rtl: /* @__PURE__ */ Decoration.mark({ class: "cm-iso", inclusive: true, attributes: { dir: "rtl" }, bidiIsolate: Direction.RTL }),
-      ltr: /* @__PURE__ */ Decoration.mark({ class: "cm-iso", inclusive: true, attributes: { dir: "ltr" }, bidiIsolate: Direction.LTR })
-    });
     function crelt() {
       var elt = arguments[0];
       if (typeof elt == "string") elt = document.createElement(elt);
@@ -154184,1643 +153944,6 @@ ${events}
       /* @__PURE__ */ hoverTooltip(lintTooltip, { hideOn: hideTooltip }),
       baseTheme
     ];
-    var _a$1;
-    const languageDataProp$1 = /* @__PURE__ */ new NodeProp();
-    const sublanguageProp$1 = /* @__PURE__ */ new NodeProp();
-    let Language$1 = class Language {
-      /**
-      Construct a language object. If you need to invoke this
-      directly, first define a data facet with
-      [`defineLanguageFacet`](https://codemirror.net/6/docs/ref/#language.defineLanguageFacet), and then
-      configure your parser to [attach](https://codemirror.net/6/docs/ref/#language.languageDataProp) it
-      to the language's outer syntax node.
-      */
-      constructor(data, parser2, extraExtensions = [], name2 = "") {
-        this.data = data;
-        this.name = name2;
-        if (!EditorState.prototype.hasOwnProperty("tree"))
-          Object.defineProperty(EditorState.prototype, "tree", { get() {
-            return syntaxTree$1(this);
-          } });
-        this.parser = parser2;
-        this.extension = [
-          language$2.of(this),
-          EditorState.languageData.of((state, pos2, side) => {
-            let top2 = topNodeAt$1(state, pos2, side), data2 = top2.type.prop(languageDataProp$1);
-            if (!data2)
-              return [];
-            let base2 = state.facet(data2), sub2 = top2.type.prop(sublanguageProp$1);
-            if (sub2) {
-              let innerNode = top2.resolve(pos2 - top2.from, side);
-              for (let sublang of sub2)
-                if (sublang.test(innerNode, state)) {
-                  let data3 = state.facet(sublang.facet);
-                  return sublang.type == "replace" ? data3 : data3.concat(base2);
-                }
-            }
-            return base2;
-          })
-        ].concat(extraExtensions);
-      }
-      /**
-      Query whether this language is active at the given position.
-      */
-      isActiveAt(state, pos2, side = -1) {
-        return topNodeAt$1(state, pos2, side).type.prop(languageDataProp$1) == this.data;
-      }
-      /**
-      Find the document regions that were parsed using this language.
-      The returned regions will _include_ any nested languages rooted
-      in this language, when those exist.
-      */
-      findRegions(state) {
-        let lang2 = state.facet(language$2);
-        if ((lang2 === null || lang2 === void 0 ? void 0 : lang2.data) == this.data)
-          return [{ from: 0, to: state.doc.length }];
-        if (!lang2 || !lang2.allowsNesting)
-          return [];
-        let result2 = [];
-        let explore = (tree, from) => {
-          if (tree.prop(languageDataProp$1) == this.data) {
-            result2.push({ from, to: from + tree.length });
-            return;
-          }
-          let mount2 = tree.prop(NodeProp.mounted);
-          if (mount2) {
-            if (mount2.tree.prop(languageDataProp$1) == this.data) {
-              if (mount2.overlay)
-                for (let r2 of mount2.overlay)
-                  result2.push({ from: r2.from + from, to: r2.to + from });
-              else
-                result2.push({ from, to: from + tree.length });
-              return;
-            } else if (mount2.overlay) {
-              let size = result2.length;
-              explore(mount2.tree, mount2.overlay[0].from + from);
-              if (result2.length > size)
-                return;
-            }
-          }
-          for (let i2 = 0; i2 < tree.children.length; i2++) {
-            let ch3 = tree.children[i2];
-            if (ch3 instanceof Tree)
-              explore(ch3, tree.positions[i2] + from);
-          }
-        };
-        explore(syntaxTree$1(state), 0);
-        return result2;
-      }
-      /**
-      Indicates whether this language allows nested languages. The
-      default implementation returns true.
-      */
-      get allowsNesting() {
-        return true;
-      }
-    };
-    Language$1.setState = /* @__PURE__ */ StateEffect.define();
-    function topNodeAt$1(state, pos2, side) {
-      let topLang = state.facet(language$2), tree = syntaxTree$1(state).topNode;
-      if (!topLang || topLang.allowsNesting) {
-        for (let node2 = tree; node2; node2 = node2.enter(pos2, side, IterMode.ExcludeBuffers))
-          if (node2.type.isTop)
-            tree = node2;
-      }
-      return tree;
-    }
-    function syntaxTree$1(state) {
-      let field = state.field(Language$1.state, false);
-      return field ? field.tree : Tree.empty;
-    }
-    let DocInput$1 = class DocInput {
-      /**
-      Create an input object for the given document.
-      */
-      constructor(doc2) {
-        this.doc = doc2;
-        this.cursorPos = 0;
-        this.string = "";
-        this.cursor = doc2.iter();
-      }
-      get length() {
-        return this.doc.length;
-      }
-      syncTo(pos2) {
-        this.string = this.cursor.next(pos2 - this.cursorPos).value;
-        this.cursorPos = pos2 + this.string.length;
-        return this.cursorPos - this.string.length;
-      }
-      chunk(pos2) {
-        this.syncTo(pos2);
-        return this.string;
-      }
-      get lineChunks() {
-        return true;
-      }
-      read(from, to2) {
-        let stringStart = this.cursorPos - this.string.length;
-        if (from < stringStart || to2 >= this.cursorPos)
-          return this.doc.sliceString(from, to2);
-        else
-          return this.string.slice(from - stringStart, to2 - stringStart);
-      }
-    };
-    let currentContext$1 = null;
-    let ParseContext$1 = class ParseContext2 {
-      constructor(parser2, state, fragments = [], tree, treeLen, viewport2, skipped, scheduleOn) {
-        this.parser = parser2;
-        this.state = state;
-        this.fragments = fragments;
-        this.tree = tree;
-        this.treeLen = treeLen;
-        this.viewport = viewport2;
-        this.skipped = skipped;
-        this.scheduleOn = scheduleOn;
-        this.parse = null;
-        this.tempSkipped = [];
-      }
-      /**
-      @internal
-      */
-      static create(parser2, state, viewport2) {
-        return new ParseContext2(parser2, state, [], Tree.empty, 0, viewport2, [], null);
-      }
-      startParse() {
-        return this.parser.startParse(new DocInput$1(this.state.doc), this.fragments);
-      }
-      /**
-      @internal
-      */
-      work(until, upto) {
-        if (upto != null && upto >= this.state.doc.length)
-          upto = void 0;
-        if (this.tree != Tree.empty && this.isDone(upto !== null && upto !== void 0 ? upto : this.state.doc.length)) {
-          this.takeTree();
-          return true;
-        }
-        return this.withContext(() => {
-          var _a2;
-          if (typeof until == "number") {
-            let endTime = Date.now() + until;
-            until = () => Date.now() > endTime;
-          }
-          if (!this.parse)
-            this.parse = this.startParse();
-          if (upto != null && (this.parse.stoppedAt == null || this.parse.stoppedAt > upto) && upto < this.state.doc.length)
-            this.parse.stopAt(upto);
-          for (; ; ) {
-            let done = this.parse.advance();
-            if (done) {
-              this.fragments = this.withoutTempSkipped(TreeFragment.addTree(done, this.fragments, this.parse.stoppedAt != null));
-              this.treeLen = (_a2 = this.parse.stoppedAt) !== null && _a2 !== void 0 ? _a2 : this.state.doc.length;
-              this.tree = done;
-              this.parse = null;
-              if (this.treeLen < (upto !== null && upto !== void 0 ? upto : this.state.doc.length))
-                this.parse = this.startParse();
-              else
-                return true;
-            }
-            if (until())
-              return false;
-          }
-        });
-      }
-      /**
-      @internal
-      */
-      takeTree() {
-        let pos2, tree;
-        if (this.parse && (pos2 = this.parse.parsedPos) >= this.treeLen) {
-          if (this.parse.stoppedAt == null || this.parse.stoppedAt > pos2)
-            this.parse.stopAt(pos2);
-          this.withContext(() => {
-            while (!(tree = this.parse.advance())) {
-            }
-          });
-          this.treeLen = pos2;
-          this.tree = tree;
-          this.fragments = this.withoutTempSkipped(TreeFragment.addTree(this.tree, this.fragments, true));
-          this.parse = null;
-        }
-      }
-      withContext(f) {
-        let prev = currentContext$1;
-        currentContext$1 = this;
-        try {
-          return f();
-        } finally {
-          currentContext$1 = prev;
-        }
-      }
-      withoutTempSkipped(fragments) {
-        for (let r2; r2 = this.tempSkipped.pop(); )
-          fragments = cutFragments$1(fragments, r2.from, r2.to);
-        return fragments;
-      }
-      /**
-      @internal
-      */
-      changes(changes, newState) {
-        let { fragments, tree, treeLen, viewport: viewport2, skipped } = this;
-        this.takeTree();
-        if (!changes.empty) {
-          let ranges = [];
-          changes.iterChangedRanges((fromA, toA, fromB, toB) => ranges.push({ fromA, toA, fromB, toB }));
-          fragments = TreeFragment.applyChanges(fragments, ranges);
-          tree = Tree.empty;
-          treeLen = 0;
-          viewport2 = { from: changes.mapPos(viewport2.from, -1), to: changes.mapPos(viewport2.to, 1) };
-          if (this.skipped.length) {
-            skipped = [];
-            for (let r2 of this.skipped) {
-              let from = changes.mapPos(r2.from, 1), to2 = changes.mapPos(r2.to, -1);
-              if (from < to2)
-                skipped.push({ from, to: to2 });
-            }
-          }
-        }
-        return new ParseContext2(this.parser, newState, fragments, tree, treeLen, viewport2, skipped, this.scheduleOn);
-      }
-      /**
-      @internal
-      */
-      updateViewport(viewport2) {
-        if (this.viewport.from == viewport2.from && this.viewport.to == viewport2.to)
-          return false;
-        this.viewport = viewport2;
-        let startLen = this.skipped.length;
-        for (let i2 = 0; i2 < this.skipped.length; i2++) {
-          let { from, to: to2 } = this.skipped[i2];
-          if (from < viewport2.to && to2 > viewport2.from) {
-            this.fragments = cutFragments$1(this.fragments, from, to2);
-            this.skipped.splice(i2--, 1);
-          }
-        }
-        if (this.skipped.length >= startLen)
-          return false;
-        this.reset();
-        return true;
-      }
-      /**
-      @internal
-      */
-      reset() {
-        if (this.parse) {
-          this.takeTree();
-          this.parse = null;
-        }
-      }
-      /**
-      Notify the parse scheduler that the given region was skipped
-      because it wasn't in view, and the parse should be restarted
-      when it comes into view.
-      */
-      skipUntilInView(from, to2) {
-        this.skipped.push({ from, to: to2 });
-      }
-      /**
-      Returns a parser intended to be used as placeholder when
-      asynchronously loading a nested parser. It'll skip its input and
-      mark it as not-really-parsed, so that the next update will parse
-      it again.
-      
-      When `until` is given, a reparse will be scheduled when that
-      promise resolves.
-      */
-      static getSkippingParser(until) {
-        return new class extends Parser {
-          createParse(input2, fragments, ranges) {
-            let from = ranges[0].from, to2 = ranges[ranges.length - 1].to;
-            let parser2 = {
-              parsedPos: from,
-              advance() {
-                let cx = currentContext$1;
-                if (cx) {
-                  for (let r2 of ranges)
-                    cx.tempSkipped.push(r2);
-                  if (until)
-                    cx.scheduleOn = cx.scheduleOn ? Promise.all([cx.scheduleOn, until]) : until;
-                }
-                this.parsedPos = to2;
-                return new Tree(NodeType.none, [], [], to2 - from);
-              },
-              stoppedAt: null,
-              stopAt() {
-              }
-            };
-            return parser2;
-          }
-        }();
-      }
-      /**
-      @internal
-      */
-      isDone(upto) {
-        upto = Math.min(upto, this.state.doc.length);
-        let frags = this.fragments;
-        return this.treeLen >= upto && frags.length && frags[0].from == 0 && frags[0].to >= upto;
-      }
-      /**
-      Get the context for the current parse, or `null` if no editor
-      parse is in progress.
-      */
-      static get() {
-        return currentContext$1;
-      }
-    };
-    function cutFragments$1(fragments, from, to2) {
-      return TreeFragment.applyChanges(fragments, [{ fromA: from, toA: to2, fromB: from, toB: to2 }]);
-    }
-    let LanguageState$1 = class LanguageState2 {
-      constructor(context) {
-        this.context = context;
-        this.tree = context.tree;
-      }
-      apply(tr2) {
-        if (!tr2.docChanged && this.tree == this.context.tree)
-          return this;
-        let newCx = this.context.changes(tr2.changes, tr2.state);
-        let upto = this.context.treeLen == tr2.startState.doc.length ? void 0 : Math.max(tr2.changes.mapPos(this.context.treeLen), newCx.viewport.to);
-        if (!newCx.work(20, upto))
-          newCx.takeTree();
-        return new LanguageState2(newCx);
-      }
-      static init(state) {
-        let vpTo = Math.min(3e3, state.doc.length);
-        let parseState2 = ParseContext$1.create(state.facet(language$2).parser, state, { from: 0, to: vpTo });
-        if (!parseState2.work(20, vpTo))
-          parseState2.takeTree();
-        return new LanguageState2(parseState2);
-      }
-    };
-    Language$1.state = /* @__PURE__ */ StateField.define({
-      create: LanguageState$1.init,
-      update(value2, tr2) {
-        for (let e of tr2.effects)
-          if (e.is(Language$1.setState))
-            return e.value;
-        if (tr2.startState.facet(language$2) != tr2.state.facet(language$2))
-          return LanguageState$1.init(tr2.state);
-        return value2.apply(tr2);
-      }
-    });
-    let requestIdle$1 = (callback) => {
-      let timeout = setTimeout(
-        () => callback(),
-        500
-        /* Work.MaxPause */
-      );
-      return () => clearTimeout(timeout);
-    };
-    if (typeof requestIdleCallback != "undefined")
-      requestIdle$1 = (callback) => {
-        let idle = -1, timeout = setTimeout(
-          () => {
-            idle = requestIdleCallback(callback, {
-              timeout: 500 - 100
-              /* Work.MinPause */
-            });
-          },
-          100
-          /* Work.MinPause */
-        );
-        return () => idle < 0 ? clearTimeout(timeout) : cancelIdleCallback(idle);
-      };
-    const isInputPending$1 = typeof navigator != "undefined" && ((_a$1 = navigator.scheduling) === null || _a$1 === void 0 ? void 0 : _a$1.isInputPending) ? () => navigator.scheduling.isInputPending() : null;
-    const parseWorker$1 = /* @__PURE__ */ ViewPlugin.fromClass(class ParseWorker {
-      constructor(view) {
-        this.view = view;
-        this.working = null;
-        this.workScheduled = 0;
-        this.chunkEnd = -1;
-        this.chunkBudget = -1;
-        this.work = this.work.bind(this);
-        this.scheduleWork();
-      }
-      update(update) {
-        let cx = this.view.state.field(Language$1.state).context;
-        if (cx.updateViewport(update.view.viewport) || this.view.viewport.to > cx.treeLen)
-          this.scheduleWork();
-        if (update.docChanged || update.selectionSet) {
-          if (this.view.hasFocus)
-            this.chunkBudget += 50;
-          this.scheduleWork();
-        }
-        this.checkAsyncSchedule(cx);
-      }
-      scheduleWork() {
-        if (this.working)
-          return;
-        let { state } = this.view, field = state.field(Language$1.state);
-        if (field.tree != field.context.tree || !field.context.isDone(state.doc.length))
-          this.working = requestIdle$1(this.work);
-      }
-      work(deadline) {
-        this.working = null;
-        let now = Date.now();
-        if (this.chunkEnd < now && (this.chunkEnd < 0 || this.view.hasFocus)) {
-          this.chunkEnd = now + 3e4;
-          this.chunkBudget = 3e3;
-        }
-        if (this.chunkBudget <= 0)
-          return;
-        let { state, viewport: { to: vpTo } } = this.view, field = state.field(Language$1.state);
-        if (field.tree == field.context.tree && field.context.isDone(
-          vpTo + 1e5
-          /* Work.MaxParseAhead */
-        ))
-          return;
-        let endTime = Date.now() + Math.min(this.chunkBudget, 100, deadline && !isInputPending$1 ? Math.max(25, deadline.timeRemaining() - 5) : 1e9);
-        let viewportFirst = field.context.treeLen < vpTo && state.doc.length > vpTo + 1e3;
-        let done = field.context.work(() => {
-          return isInputPending$1 && isInputPending$1() || Date.now() > endTime;
-        }, vpTo + (viewportFirst ? 0 : 1e5));
-        this.chunkBudget -= Date.now() - now;
-        if (done || this.chunkBudget <= 0) {
-          field.context.takeTree();
-          this.view.dispatch({ effects: Language$1.setState.of(new LanguageState$1(field.context)) });
-        }
-        if (this.chunkBudget > 0 && !(done && !viewportFirst))
-          this.scheduleWork();
-        this.checkAsyncSchedule(field.context);
-      }
-      checkAsyncSchedule(cx) {
-        if (cx.scheduleOn) {
-          this.workScheduled++;
-          cx.scheduleOn.then(() => this.scheduleWork()).catch((err2) => logException(this.view.state, err2)).then(() => this.workScheduled--);
-          cx.scheduleOn = null;
-        }
-      }
-      destroy() {
-        if (this.working)
-          this.working();
-      }
-      isWorking() {
-        return !!(this.working || this.workScheduled > 0);
-      }
-    }, {
-      eventHandlers: { focus() {
-        this.scheduleWork();
-      } }
-    });
-    const language$2 = /* @__PURE__ */ Facet.define({
-      combine(languages) {
-        return languages.length ? languages[0] : null;
-      },
-      enables: (language2) => [
-        Language$1.state,
-        parseWorker$1,
-        EditorView.contentAttributes.compute([language2], (state) => {
-          let lang2 = state.facet(language2);
-          return lang2 && lang2.name ? { "data-language": lang2.name } : {};
-        })
-      ]
-    });
-    class HighlightStyle {
-      constructor(specs, options2) {
-        this.specs = specs;
-        let modSpec;
-        function def(spec) {
-          let cls = StyleModule.newName();
-          (modSpec || (modSpec = /* @__PURE__ */ Object.create(null)))["." + cls] = spec;
-          return cls;
-        }
-        const all2 = typeof options2.all == "string" ? options2.all : options2.all ? def(options2.all) : void 0;
-        const scopeOpt = options2.scope;
-        this.scope = scopeOpt instanceof Language$1 ? (type) => type.prop(languageDataProp$1) == scopeOpt.data : scopeOpt ? (type) => type == scopeOpt : void 0;
-        this.style = tagHighlighter(specs.map((style2) => ({
-          tag: style2.tag,
-          class: style2.class || def(Object.assign({}, style2, { tag: null }))
-        })), {
-          all: all2
-        }).style;
-        this.module = modSpec ? new StyleModule(modSpec) : null;
-        this.themeType = options2.themeType;
-      }
-      /**
-      Create a highlighter style that associates the given styles to
-      the given tags. The specs must be objects that hold a style tag
-      or array of tags in their `tag` property, and either a single
-      `class` property providing a static CSS class (for highlighter
-      that rely on external styling), or a
-      [`style-mod`](https://github.com/marijnh/style-mod#documentation)-style
-      set of CSS properties (which define the styling for those tags).
-      
-      The CSS rules created for a highlighter will be emitted in the
-      order of the spec's properties. That means that for elements that
-      have multiple tags associated with them, styles defined further
-      down in the list will have a higher CSS precedence than styles
-      defined earlier.
-      */
-      static define(specs, options2) {
-        return new HighlightStyle(specs, options2 || {});
-      }
-    }
-    const highlighterFacet = /* @__PURE__ */ Facet.define();
-    const fallbackHighlighter = /* @__PURE__ */ Facet.define({
-      combine(values) {
-        return values.length ? [values[0]] : null;
-      }
-    });
-    function getHighlighters(state) {
-      let main2 = state.facet(highlighterFacet);
-      return main2.length ? main2 : state.facet(fallbackHighlighter);
-    }
-    function syntaxHighlighting(highlighter, options2) {
-      let ext = [treeHighlighter], themeType;
-      if (highlighter instanceof HighlightStyle) {
-        if (highlighter.module)
-          ext.push(EditorView.styleModule.of(highlighter.module));
-        themeType = highlighter.themeType;
-      }
-      if (options2 === null || options2 === void 0 ? void 0 : options2.fallback)
-        ext.push(fallbackHighlighter.of(highlighter));
-      else if (themeType)
-        ext.push(highlighterFacet.computeN([EditorView.darkTheme], (state) => {
-          return state.facet(EditorView.darkTheme) == (themeType == "dark") ? [highlighter] : [];
-        }));
-      else
-        ext.push(highlighterFacet.of(highlighter));
-      return ext;
-    }
-    class TreeHighlighter {
-      constructor(view) {
-        this.markCache = /* @__PURE__ */ Object.create(null);
-        this.tree = syntaxTree$1(view.state);
-        this.decorations = this.buildDeco(view, getHighlighters(view.state));
-        this.decoratedTo = view.viewport.to;
-      }
-      update(update) {
-        let tree = syntaxTree$1(update.state), highlighters = getHighlighters(update.state);
-        let styleChange = highlighters != getHighlighters(update.startState);
-        let { viewport: viewport2 } = update.view, decoratedToMapped = update.changes.mapPos(this.decoratedTo, 1);
-        if (tree.length < viewport2.to && !styleChange && tree.type == this.tree.type && decoratedToMapped >= viewport2.to) {
-          this.decorations = this.decorations.map(update.changes);
-          this.decoratedTo = decoratedToMapped;
-        } else if (tree != this.tree || update.viewportChanged || styleChange) {
-          this.tree = tree;
-          this.decorations = this.buildDeco(update.view, highlighters);
-          this.decoratedTo = viewport2.to;
-        }
-      }
-      buildDeco(view, highlighters) {
-        if (!highlighters || !this.tree.length)
-          return Decoration.none;
-        let builder = new RangeSetBuilder();
-        for (let { from, to: to2 } of view.visibleRanges) {
-          highlightTree(this.tree, highlighters, (from2, to3, style2) => {
-            builder.add(from2, to3, this.markCache[style2] || (this.markCache[style2] = Decoration.mark({ class: style2 })));
-          }, from, to2);
-        }
-        return builder.finish();
-      }
-    }
-    const treeHighlighter = /* @__PURE__ */ Prec.high(/* @__PURE__ */ ViewPlugin.fromClass(TreeHighlighter, {
-      decorations: (v) => v.decorations
-    }));
-    const defaultHighlightStyle = /* @__PURE__ */ HighlightStyle.define([
-      {
-        tag: tags.meta,
-        color: "#404740"
-      },
-      {
-        tag: tags.link,
-        textDecoration: "underline"
-      },
-      {
-        tag: tags.heading,
-        textDecoration: "underline",
-        fontWeight: "bold"
-      },
-      {
-        tag: tags.emphasis,
-        fontStyle: "italic"
-      },
-      {
-        tag: tags.strong,
-        fontWeight: "bold"
-      },
-      {
-        tag: tags.strikethrough,
-        textDecoration: "line-through"
-      },
-      {
-        tag: tags.keyword,
-        color: "#708"
-      },
-      {
-        tag: [tags.atom, tags.bool, tags.url, tags.contentSeparator, tags.labelName],
-        color: "#219"
-      },
-      {
-        tag: [tags.literal, tags.inserted],
-        color: "#164"
-      },
-      {
-        tag: [tags.string, tags.deleted],
-        color: "#a11"
-      },
-      {
-        tag: [tags.regexp, tags.escape, /* @__PURE__ */ tags.special(tags.string)],
-        color: "#e40"
-      },
-      {
-        tag: /* @__PURE__ */ tags.definition(tags.variableName),
-        color: "#00f"
-      },
-      {
-        tag: /* @__PURE__ */ tags.local(tags.variableName),
-        color: "#30a"
-      },
-      {
-        tag: [tags.typeName, tags.namespace],
-        color: "#085"
-      },
-      {
-        tag: tags.className,
-        color: "#167"
-      },
-      {
-        tag: [/* @__PURE__ */ tags.special(tags.variableName), tags.macroName],
-        color: "#256"
-      },
-      {
-        tag: /* @__PURE__ */ tags.definition(tags.propertyName),
-        color: "#00c"
-      },
-      {
-        tag: tags.comment,
-        color: "#940"
-      },
-      {
-        tag: tags.invalid,
-        color: "#f00"
-      }
-    ]);
-    const noTokens$1 = /* @__PURE__ */ Object.create(null);
-    const typeArray$1 = [NodeType.none];
-    const warned$1 = [];
-    const byTag$1 = /* @__PURE__ */ Object.create(null);
-    const defaultTable$1 = /* @__PURE__ */ Object.create(null);
-    for (let [legacyName, name2] of [
-      ["variable", "variableName"],
-      ["variable-2", "variableName.special"],
-      ["string-2", "string.special"],
-      ["def", "variableName.definition"],
-      ["tag", "tagName"],
-      ["attribute", "attributeName"],
-      ["type", "typeName"],
-      ["builtin", "variableName.standard"],
-      ["qualifier", "modifier"],
-      ["error", "invalid"],
-      ["header", "heading"],
-      ["property", "propertyName"]
-    ])
-      defaultTable$1[legacyName] = /* @__PURE__ */ createTokenType$1(noTokens$1, name2);
-    function warnForPart$1(part2, msg) {
-      if (warned$1.indexOf(part2) > -1)
-        return;
-      warned$1.push(part2);
-      console.warn(msg);
-    }
-    function createTokenType$1(extra, tagStr) {
-      let tags$1 = [];
-      for (let name3 of tagStr.split(" ")) {
-        let found = [];
-        for (let part2 of name3.split(".")) {
-          let value2 = extra[part2] || tags[part2];
-          if (!value2) {
-            warnForPart$1(part2, `Unknown highlighting tag ${part2}`);
-          } else if (typeof value2 == "function") {
-            if (!found.length)
-              warnForPart$1(part2, `Modifier ${part2} used at start of tag`);
-            else
-              found = found.map(value2);
-          } else {
-            if (found.length)
-              warnForPart$1(part2, `Tag ${part2} used as modifier`);
-            else
-              found = Array.isArray(value2) ? value2 : [value2];
-          }
-        }
-        for (let tag of found)
-          tags$1.push(tag);
-      }
-      if (!tags$1.length)
-        return 0;
-      let name2 = tagStr.replace(/ /g, "_"), key2 = name2 + " " + tags$1.map((t2) => t2.id);
-      let known = byTag$1[key2];
-      if (known)
-        return known.id;
-      let type = byTag$1[key2] = NodeType.define({
-        id: typeArray$1.length,
-        name: name2,
-        props: [styleTags({ [name2]: tags$1 })]
-      });
-      typeArray$1.push(type);
-      return type.id;
-    }
-    ({
-      rtl: /* @__PURE__ */ Decoration.mark({ class: "cm-iso", inclusive: true, attributes: { dir: "rtl" }, bidiIsolate: Direction.RTL }),
-      ltr: /* @__PURE__ */ Decoration.mark({ class: "cm-iso", inclusive: true, attributes: { dir: "ltr" }, bidiIsolate: Direction.LTR })
-    });
-    var _a;
-    const languageDataProp = /* @__PURE__ */ new NodeProp();
-    const sublanguageProp = /* @__PURE__ */ new NodeProp();
-    class Language {
-      /**
-      Construct a language object. If you need to invoke this
-      directly, first define a data facet with
-      [`defineLanguageFacet`](https://codemirror.net/6/docs/ref/#language.defineLanguageFacet), and then
-      configure your parser to [attach](https://codemirror.net/6/docs/ref/#language.languageDataProp) it
-      to the language's outer syntax node.
-      */
-      constructor(data, parser2, extraExtensions = [], name2 = "") {
-        this.data = data;
-        this.name = name2;
-        if (!EditorState.prototype.hasOwnProperty("tree"))
-          Object.defineProperty(EditorState.prototype, "tree", { get() {
-            return syntaxTree(this);
-          } });
-        this.parser = parser2;
-        this.extension = [
-          language$1.of(this),
-          EditorState.languageData.of((state, pos2, side) => {
-            let top2 = topNodeAt(state, pos2, side), data2 = top2.type.prop(languageDataProp);
-            if (!data2)
-              return [];
-            let base2 = state.facet(data2), sub2 = top2.type.prop(sublanguageProp);
-            if (sub2) {
-              let innerNode = top2.resolve(pos2 - top2.from, side);
-              for (let sublang of sub2)
-                if (sublang.test(innerNode, state)) {
-                  let data3 = state.facet(sublang.facet);
-                  return sublang.type == "replace" ? data3 : data3.concat(base2);
-                }
-            }
-            return base2;
-          })
-        ].concat(extraExtensions);
-      }
-      /**
-      Query whether this language is active at the given position.
-      */
-      isActiveAt(state, pos2, side = -1) {
-        return topNodeAt(state, pos2, side).type.prop(languageDataProp) == this.data;
-      }
-      /**
-      Find the document regions that were parsed using this language.
-      The returned regions will _include_ any nested languages rooted
-      in this language, when those exist.
-      */
-      findRegions(state) {
-        let lang2 = state.facet(language$1);
-        if ((lang2 === null || lang2 === void 0 ? void 0 : lang2.data) == this.data)
-          return [{ from: 0, to: state.doc.length }];
-        if (!lang2 || !lang2.allowsNesting)
-          return [];
-        let result2 = [];
-        let explore = (tree, from) => {
-          if (tree.prop(languageDataProp) == this.data) {
-            result2.push({ from, to: from + tree.length });
-            return;
-          }
-          let mount2 = tree.prop(NodeProp.mounted);
-          if (mount2) {
-            if (mount2.tree.prop(languageDataProp) == this.data) {
-              if (mount2.overlay)
-                for (let r2 of mount2.overlay)
-                  result2.push({ from: r2.from + from, to: r2.to + from });
-              else
-                result2.push({ from, to: from + tree.length });
-              return;
-            } else if (mount2.overlay) {
-              let size = result2.length;
-              explore(mount2.tree, mount2.overlay[0].from + from);
-              if (result2.length > size)
-                return;
-            }
-          }
-          for (let i2 = 0; i2 < tree.children.length; i2++) {
-            let ch3 = tree.children[i2];
-            if (ch3 instanceof Tree)
-              explore(ch3, tree.positions[i2] + from);
-          }
-        };
-        explore(syntaxTree(state), 0);
-        return result2;
-      }
-      /**
-      Indicates whether this language allows nested languages. The
-      default implementation returns true.
-      */
-      get allowsNesting() {
-        return true;
-      }
-    }
-    Language.setState = /* @__PURE__ */ StateEffect.define();
-    function topNodeAt(state, pos2, side) {
-      let topLang = state.facet(language$1), tree = syntaxTree(state).topNode;
-      if (!topLang || topLang.allowsNesting) {
-        for (let node2 = tree; node2; node2 = node2.enter(pos2, side, IterMode.ExcludeBuffers))
-          if (node2.type.isTop)
-            tree = node2;
-      }
-      return tree;
-    }
-    function syntaxTree(state) {
-      let field = state.field(Language.state, false);
-      return field ? field.tree : Tree.empty;
-    }
-    class DocInput {
-      /**
-      Create an input object for the given document.
-      */
-      constructor(doc2) {
-        this.doc = doc2;
-        this.cursorPos = 0;
-        this.string = "";
-        this.cursor = doc2.iter();
-      }
-      get length() {
-        return this.doc.length;
-      }
-      syncTo(pos2) {
-        this.string = this.cursor.next(pos2 - this.cursorPos).value;
-        this.cursorPos = pos2 + this.string.length;
-        return this.cursorPos - this.string.length;
-      }
-      chunk(pos2) {
-        this.syncTo(pos2);
-        return this.string;
-      }
-      get lineChunks() {
-        return true;
-      }
-      read(from, to2) {
-        let stringStart = this.cursorPos - this.string.length;
-        if (from < stringStart || to2 >= this.cursorPos)
-          return this.doc.sliceString(from, to2);
-        else
-          return this.string.slice(from - stringStart, to2 - stringStart);
-      }
-    }
-    let currentContext = null;
-    class ParseContext {
-      constructor(parser2, state, fragments = [], tree, treeLen, viewport2, skipped, scheduleOn) {
-        this.parser = parser2;
-        this.state = state;
-        this.fragments = fragments;
-        this.tree = tree;
-        this.treeLen = treeLen;
-        this.viewport = viewport2;
-        this.skipped = skipped;
-        this.scheduleOn = scheduleOn;
-        this.parse = null;
-        this.tempSkipped = [];
-      }
-      /**
-      @internal
-      */
-      static create(parser2, state, viewport2) {
-        return new ParseContext(parser2, state, [], Tree.empty, 0, viewport2, [], null);
-      }
-      startParse() {
-        return this.parser.startParse(new DocInput(this.state.doc), this.fragments);
-      }
-      /**
-      @internal
-      */
-      work(until, upto) {
-        if (upto != null && upto >= this.state.doc.length)
-          upto = void 0;
-        if (this.tree != Tree.empty && this.isDone(upto !== null && upto !== void 0 ? upto : this.state.doc.length)) {
-          this.takeTree();
-          return true;
-        }
-        return this.withContext(() => {
-          var _a2;
-          if (typeof until == "number") {
-            let endTime = Date.now() + until;
-            until = () => Date.now() > endTime;
-          }
-          if (!this.parse)
-            this.parse = this.startParse();
-          if (upto != null && (this.parse.stoppedAt == null || this.parse.stoppedAt > upto) && upto < this.state.doc.length)
-            this.parse.stopAt(upto);
-          for (; ; ) {
-            let done = this.parse.advance();
-            if (done) {
-              this.fragments = this.withoutTempSkipped(TreeFragment.addTree(done, this.fragments, this.parse.stoppedAt != null));
-              this.treeLen = (_a2 = this.parse.stoppedAt) !== null && _a2 !== void 0 ? _a2 : this.state.doc.length;
-              this.tree = done;
-              this.parse = null;
-              if (this.treeLen < (upto !== null && upto !== void 0 ? upto : this.state.doc.length))
-                this.parse = this.startParse();
-              else
-                return true;
-            }
-            if (until())
-              return false;
-          }
-        });
-      }
-      /**
-      @internal
-      */
-      takeTree() {
-        let pos2, tree;
-        if (this.parse && (pos2 = this.parse.parsedPos) >= this.treeLen) {
-          if (this.parse.stoppedAt == null || this.parse.stoppedAt > pos2)
-            this.parse.stopAt(pos2);
-          this.withContext(() => {
-            while (!(tree = this.parse.advance())) {
-            }
-          });
-          this.treeLen = pos2;
-          this.tree = tree;
-          this.fragments = this.withoutTempSkipped(TreeFragment.addTree(this.tree, this.fragments, true));
-          this.parse = null;
-        }
-      }
-      withContext(f) {
-        let prev = currentContext;
-        currentContext = this;
-        try {
-          return f();
-        } finally {
-          currentContext = prev;
-        }
-      }
-      withoutTempSkipped(fragments) {
-        for (let r2; r2 = this.tempSkipped.pop(); )
-          fragments = cutFragments(fragments, r2.from, r2.to);
-        return fragments;
-      }
-      /**
-      @internal
-      */
-      changes(changes, newState) {
-        let { fragments, tree, treeLen, viewport: viewport2, skipped } = this;
-        this.takeTree();
-        if (!changes.empty) {
-          let ranges = [];
-          changes.iterChangedRanges((fromA, toA, fromB, toB) => ranges.push({ fromA, toA, fromB, toB }));
-          fragments = TreeFragment.applyChanges(fragments, ranges);
-          tree = Tree.empty;
-          treeLen = 0;
-          viewport2 = { from: changes.mapPos(viewport2.from, -1), to: changes.mapPos(viewport2.to, 1) };
-          if (this.skipped.length) {
-            skipped = [];
-            for (let r2 of this.skipped) {
-              let from = changes.mapPos(r2.from, 1), to2 = changes.mapPos(r2.to, -1);
-              if (from < to2)
-                skipped.push({ from, to: to2 });
-            }
-          }
-        }
-        return new ParseContext(this.parser, newState, fragments, tree, treeLen, viewport2, skipped, this.scheduleOn);
-      }
-      /**
-      @internal
-      */
-      updateViewport(viewport2) {
-        if (this.viewport.from == viewport2.from && this.viewport.to == viewport2.to)
-          return false;
-        this.viewport = viewport2;
-        let startLen = this.skipped.length;
-        for (let i2 = 0; i2 < this.skipped.length; i2++) {
-          let { from, to: to2 } = this.skipped[i2];
-          if (from < viewport2.to && to2 > viewport2.from) {
-            this.fragments = cutFragments(this.fragments, from, to2);
-            this.skipped.splice(i2--, 1);
-          }
-        }
-        if (this.skipped.length >= startLen)
-          return false;
-        this.reset();
-        return true;
-      }
-      /**
-      @internal
-      */
-      reset() {
-        if (this.parse) {
-          this.takeTree();
-          this.parse = null;
-        }
-      }
-      /**
-      Notify the parse scheduler that the given region was skipped
-      because it wasn't in view, and the parse should be restarted
-      when it comes into view.
-      */
-      skipUntilInView(from, to2) {
-        this.skipped.push({ from, to: to2 });
-      }
-      /**
-      Returns a parser intended to be used as placeholder when
-      asynchronously loading a nested parser. It'll skip its input and
-      mark it as not-really-parsed, so that the next update will parse
-      it again.
-      
-      When `until` is given, a reparse will be scheduled when that
-      promise resolves.
-      */
-      static getSkippingParser(until) {
-        return new class extends Parser {
-          createParse(input2, fragments, ranges) {
-            let from = ranges[0].from, to2 = ranges[ranges.length - 1].to;
-            let parser2 = {
-              parsedPos: from,
-              advance() {
-                let cx = currentContext;
-                if (cx) {
-                  for (let r2 of ranges)
-                    cx.tempSkipped.push(r2);
-                  if (until)
-                    cx.scheduleOn = cx.scheduleOn ? Promise.all([cx.scheduleOn, until]) : until;
-                }
-                this.parsedPos = to2;
-                return new Tree(NodeType.none, [], [], to2 - from);
-              },
-              stoppedAt: null,
-              stopAt() {
-              }
-            };
-            return parser2;
-          }
-        }();
-      }
-      /**
-      @internal
-      */
-      isDone(upto) {
-        upto = Math.min(upto, this.state.doc.length);
-        let frags = this.fragments;
-        return this.treeLen >= upto && frags.length && frags[0].from == 0 && frags[0].to >= upto;
-      }
-      /**
-      Get the context for the current parse, or `null` if no editor
-      parse is in progress.
-      */
-      static get() {
-        return currentContext;
-      }
-    }
-    function cutFragments(fragments, from, to2) {
-      return TreeFragment.applyChanges(fragments, [{ fromA: from, toA: to2, fromB: from, toB: to2 }]);
-    }
-    class LanguageState {
-      constructor(context) {
-        this.context = context;
-        this.tree = context.tree;
-      }
-      apply(tr2) {
-        if (!tr2.docChanged && this.tree == this.context.tree)
-          return this;
-        let newCx = this.context.changes(tr2.changes, tr2.state);
-        let upto = this.context.treeLen == tr2.startState.doc.length ? void 0 : Math.max(tr2.changes.mapPos(this.context.treeLen), newCx.viewport.to);
-        if (!newCx.work(20, upto))
-          newCx.takeTree();
-        return new LanguageState(newCx);
-      }
-      static init(state) {
-        let vpTo = Math.min(3e3, state.doc.length);
-        let parseState2 = ParseContext.create(state.facet(language$1).parser, state, { from: 0, to: vpTo });
-        if (!parseState2.work(20, vpTo))
-          parseState2.takeTree();
-        return new LanguageState(parseState2);
-      }
-    }
-    Language.state = /* @__PURE__ */ StateField.define({
-      create: LanguageState.init,
-      update(value2, tr2) {
-        for (let e of tr2.effects)
-          if (e.is(Language.setState))
-            return e.value;
-        if (tr2.startState.facet(language$1) != tr2.state.facet(language$1))
-          return LanguageState.init(tr2.state);
-        return value2.apply(tr2);
-      }
-    });
-    let requestIdle = (callback) => {
-      let timeout = setTimeout(
-        () => callback(),
-        500
-        /* Work.MaxPause */
-      );
-      return () => clearTimeout(timeout);
-    };
-    if (typeof requestIdleCallback != "undefined")
-      requestIdle = (callback) => {
-        let idle = -1, timeout = setTimeout(
-          () => {
-            idle = requestIdleCallback(callback, {
-              timeout: 500 - 100
-              /* Work.MinPause */
-            });
-          },
-          100
-          /* Work.MinPause */
-        );
-        return () => idle < 0 ? clearTimeout(timeout) : cancelIdleCallback(idle);
-      };
-    const isInputPending = typeof navigator != "undefined" && ((_a = navigator.scheduling) === null || _a === void 0 ? void 0 : _a.isInputPending) ? () => navigator.scheduling.isInputPending() : null;
-    const parseWorker = /* @__PURE__ */ ViewPlugin.fromClass(class ParseWorker {
-      constructor(view) {
-        this.view = view;
-        this.working = null;
-        this.workScheduled = 0;
-        this.chunkEnd = -1;
-        this.chunkBudget = -1;
-        this.work = this.work.bind(this);
-        this.scheduleWork();
-      }
-      update(update) {
-        let cx = this.view.state.field(Language.state).context;
-        if (cx.updateViewport(update.view.viewport) || this.view.viewport.to > cx.treeLen)
-          this.scheduleWork();
-        if (update.docChanged || update.selectionSet) {
-          if (this.view.hasFocus)
-            this.chunkBudget += 50;
-          this.scheduleWork();
-        }
-        this.checkAsyncSchedule(cx);
-      }
-      scheduleWork() {
-        if (this.working)
-          return;
-        let { state } = this.view, field = state.field(Language.state);
-        if (field.tree != field.context.tree || !field.context.isDone(state.doc.length))
-          this.working = requestIdle(this.work);
-      }
-      work(deadline) {
-        this.working = null;
-        let now = Date.now();
-        if (this.chunkEnd < now && (this.chunkEnd < 0 || this.view.hasFocus)) {
-          this.chunkEnd = now + 3e4;
-          this.chunkBudget = 3e3;
-        }
-        if (this.chunkBudget <= 0)
-          return;
-        let { state, viewport: { to: vpTo } } = this.view, field = state.field(Language.state);
-        if (field.tree == field.context.tree && field.context.isDone(
-          vpTo + 1e5
-          /* Work.MaxParseAhead */
-        ))
-          return;
-        let endTime = Date.now() + Math.min(this.chunkBudget, 100, deadline && !isInputPending ? Math.max(25, deadline.timeRemaining() - 5) : 1e9);
-        let viewportFirst = field.context.treeLen < vpTo && state.doc.length > vpTo + 1e3;
-        let done = field.context.work(() => {
-          return isInputPending && isInputPending() || Date.now() > endTime;
-        }, vpTo + (viewportFirst ? 0 : 1e5));
-        this.chunkBudget -= Date.now() - now;
-        if (done || this.chunkBudget <= 0) {
-          field.context.takeTree();
-          this.view.dispatch({ effects: Language.setState.of(new LanguageState(field.context)) });
-        }
-        if (this.chunkBudget > 0 && !(done && !viewportFirst))
-          this.scheduleWork();
-        this.checkAsyncSchedule(field.context);
-      }
-      checkAsyncSchedule(cx) {
-        if (cx.scheduleOn) {
-          this.workScheduled++;
-          cx.scheduleOn.then(() => this.scheduleWork()).catch((err2) => logException(this.view.state, err2)).then(() => this.workScheduled--);
-          cx.scheduleOn = null;
-        }
-      }
-      destroy() {
-        if (this.working)
-          this.working();
-      }
-      isWorking() {
-        return !!(this.working || this.workScheduled > 0);
-      }
-    }, {
-      eventHandlers: { focus() {
-        this.scheduleWork();
-      } }
-    });
-    const language$1 = /* @__PURE__ */ Facet.define({
-      combine(languages) {
-        return languages.length ? languages[0] : null;
-      },
-      enables: (language2) => [
-        Language.state,
-        parseWorker,
-        EditorView.contentAttributes.compute([language2], (state) => {
-          let lang2 = state.facet(language2);
-          return lang2 && lang2.name ? { "data-language": lang2.name } : {};
-        })
-      ]
-    });
-    const indentService = /* @__PURE__ */ Facet.define();
-    const indentUnit = /* @__PURE__ */ Facet.define({
-      combine: (values) => {
-        if (!values.length)
-          return "  ";
-        let unit = values[0];
-        if (!unit || /\S/.test(unit) || Array.from(unit).some((e) => e != unit[0]))
-          throw new Error("Invalid indent unit: " + JSON.stringify(values[0]));
-        return unit;
-      }
-    });
-    function getIndentUnit(state) {
-      let unit = state.facet(indentUnit);
-      return unit.charCodeAt(0) == 9 ? state.tabSize * unit.length : unit.length;
-    }
-    function indentString(state, cols) {
-      let result2 = "", ts = state.tabSize, ch3 = state.facet(indentUnit)[0];
-      if (ch3 == "	") {
-        while (cols >= ts) {
-          result2 += "	";
-          cols -= ts;
-        }
-        ch3 = " ";
-      }
-      for (let i2 = 0; i2 < cols; i2++)
-        result2 += ch3;
-      return result2;
-    }
-    function getIndentation(context, pos2) {
-      if (context instanceof EditorState)
-        context = new IndentContext(context);
-      for (let service of context.state.facet(indentService)) {
-        let result2 = service(context, pos2);
-        if (result2 !== void 0)
-          return result2;
-      }
-      let tree = syntaxTree(context.state);
-      return tree.length >= pos2 ? syntaxIndentation(context, tree, pos2) : null;
-    }
-    class IndentContext {
-      /**
-      Create an indent context.
-      */
-      constructor(state, options2 = {}) {
-        this.state = state;
-        this.options = options2;
-        this.unit = getIndentUnit(state);
-      }
-      /**
-      Get a description of the line at the given position, taking
-      [simulated line
-      breaks](https://codemirror.net/6/docs/ref/#language.IndentContext.constructor^options.simulateBreak)
-      into account. If there is such a break at `pos`, the `bias`
-      argument determines whether the part of the line line before or
-      after the break is used.
-      */
-      lineAt(pos2, bias = 1) {
-        let line2 = this.state.doc.lineAt(pos2);
-        let { simulateBreak, simulateDoubleBreak } = this.options;
-        if (simulateBreak != null && simulateBreak >= line2.from && simulateBreak <= line2.to) {
-          if (simulateDoubleBreak && simulateBreak == pos2)
-            return { text: "", from: pos2 };
-          else if (bias < 0 ? simulateBreak < pos2 : simulateBreak <= pos2)
-            return { text: line2.text.slice(simulateBreak - line2.from), from: simulateBreak };
-          else
-            return { text: line2.text.slice(0, simulateBreak - line2.from), from: line2.from };
-        }
-        return line2;
-      }
-      /**
-      Get the text directly after `pos`, either the entire line
-      or the next 100 characters, whichever is shorter.
-      */
-      textAfterPos(pos2, bias = 1) {
-        if (this.options.simulateDoubleBreak && pos2 == this.options.simulateBreak)
-          return "";
-        let { text: text2, from } = this.lineAt(pos2, bias);
-        return text2.slice(pos2 - from, Math.min(text2.length, pos2 + 100 - from));
-      }
-      /**
-      Find the column for the given position.
-      */
-      column(pos2, bias = 1) {
-        let { text: text2, from } = this.lineAt(pos2, bias);
-        let result2 = this.countColumn(text2, pos2 - from);
-        let override = this.options.overrideIndentation ? this.options.overrideIndentation(from) : -1;
-        if (override > -1)
-          result2 += override - this.countColumn(text2, text2.search(/\S|$/));
-        return result2;
-      }
-      /**
-      Find the column position (taking tabs into account) of the given
-      position in the given string.
-      */
-      countColumn(line2, pos2 = line2.length) {
-        return countColumn(line2, this.state.tabSize, pos2);
-      }
-      /**
-      Find the indentation column of the line at the given point.
-      */
-      lineIndent(pos2, bias = 1) {
-        let { text: text2, from } = this.lineAt(pos2, bias);
-        let override = this.options.overrideIndentation;
-        if (override) {
-          let overriden = override(from);
-          if (overriden > -1)
-            return overriden;
-        }
-        return this.countColumn(text2, text2.search(/\S|$/));
-      }
-      /**
-      Returns the [simulated line
-      break](https://codemirror.net/6/docs/ref/#language.IndentContext.constructor^options.simulateBreak)
-      for this context, if any.
-      */
-      get simulatedBreak() {
-        return this.options.simulateBreak || null;
-      }
-    }
-    const indentNodeProp = /* @__PURE__ */ new NodeProp();
-    function syntaxIndentation(cx, ast2, pos2) {
-      let stack2 = ast2.resolveStack(pos2);
-      let inner2 = ast2.resolveInner(pos2, -1).resolve(pos2, 0).enterUnfinishedNodesBefore(pos2);
-      if (inner2 != stack2.node) {
-        let add2 = [];
-        for (let cur2 = inner2; cur2 && !(cur2.from == stack2.node.from && cur2.type == stack2.node.type); cur2 = cur2.parent)
-          add2.push(cur2);
-        for (let i2 = add2.length - 1; i2 >= 0; i2--)
-          stack2 = { node: add2[i2], next: stack2 };
-      }
-      return indentFor(stack2, cx, pos2);
-    }
-    function indentFor(stack2, cx, pos2) {
-      for (let cur2 = stack2; cur2; cur2 = cur2.next) {
-        let strategy = indentStrategy(cur2.node);
-        if (strategy)
-          return strategy(TreeIndentContext.create(cx, pos2, cur2));
-      }
-      return 0;
-    }
-    function ignoreClosed(cx) {
-      return cx.pos == cx.options.simulateBreak && cx.options.simulateDoubleBreak;
-    }
-    function indentStrategy(tree) {
-      let strategy = tree.type.prop(indentNodeProp);
-      if (strategy)
-        return strategy;
-      let first = tree.firstChild, close2;
-      if (first && (close2 = first.type.prop(NodeProp.closedBy))) {
-        let last = tree.lastChild, closed = last && close2.indexOf(last.name) > -1;
-        return (cx) => delimitedStrategy(cx, true, 1, void 0, closed && !ignoreClosed(cx) ? last.from : void 0);
-      }
-      return tree.parent == null ? topIndent : null;
-    }
-    function topIndent() {
-      return 0;
-    }
-    class TreeIndentContext extends IndentContext {
-      constructor(base2, pos2, context) {
-        super(base2.state, base2.options);
-        this.base = base2;
-        this.pos = pos2;
-        this.context = context;
-      }
-      /**
-      The syntax tree node to which the indentation strategy
-      applies.
-      */
-      get node() {
-        return this.context.node;
-      }
-      /**
-      @internal
-      */
-      static create(base2, pos2, context) {
-        return new TreeIndentContext(base2, pos2, context);
-      }
-      /**
-      Get the text directly after `this.pos`, either the entire line
-      or the next 100 characters, whichever is shorter.
-      */
-      get textAfter() {
-        return this.textAfterPos(this.pos);
-      }
-      /**
-      Get the indentation at the reference line for `this.node`, which
-      is the line on which it starts, unless there is a node that is
-      _not_ a parent of this node covering the start of that line. If
-      so, the line at the start of that node is tried, again skipping
-      on if it is covered by another such node.
-      */
-      get baseIndent() {
-        return this.baseIndentFor(this.node);
-      }
-      /**
-      Get the indentation for the reference line of the given node
-      (see [`baseIndent`](https://codemirror.net/6/docs/ref/#language.TreeIndentContext.baseIndent)).
-      */
-      baseIndentFor(node2) {
-        let line2 = this.state.doc.lineAt(node2.from);
-        for (; ; ) {
-          let atBreak = node2.resolve(line2.from);
-          while (atBreak.parent && atBreak.parent.from == atBreak.from)
-            atBreak = atBreak.parent;
-          if (isParent(atBreak, node2))
-            break;
-          line2 = this.state.doc.lineAt(atBreak.from);
-        }
-        return this.lineIndent(line2.from);
-      }
-      /**
-      Continue looking for indentations in the node's parent nodes,
-      and return the result of that.
-      */
-      continue() {
-        return indentFor(this.context.next, this.base, this.pos);
-      }
-    }
-    function isParent(parent, of) {
-      for (let cur2 = of; cur2; cur2 = cur2.parent)
-        if (parent == cur2)
-          return true;
-      return false;
-    }
-    function bracketedAligned(context) {
-      let tree = context.node;
-      let openToken = tree.childAfter(tree.from), last = tree.lastChild;
-      if (!openToken)
-        return null;
-      let sim2 = context.options.simulateBreak;
-      let openLine = context.state.doc.lineAt(openToken.from);
-      let lineEnd = sim2 == null || sim2 <= openLine.from ? openLine.to : Math.min(openLine.to, sim2);
-      for (let pos2 = openToken.to; ; ) {
-        let next = tree.childAfter(pos2);
-        if (!next || next == last)
-          return null;
-        if (!next.type.isSkipped) {
-          if (next.from >= lineEnd)
-            return null;
-          let space = /^ */.exec(openLine.text.slice(openToken.to - openLine.from))[0].length;
-          return { from: openToken.from, to: openToken.to + space };
-        }
-        pos2 = next.to;
-      }
-    }
-    function delimitedStrategy(context, align, units, closing, closedAt) {
-      let after = context.textAfter, space = after.match(/^\s*/)[0].length;
-      let closed = closing && after.slice(space, space + closing.length) == closing || closedAt == context.pos + space;
-      let aligned = bracketedAligned(context);
-      if (aligned)
-        return closed ? context.column(aligned.from) : context.column(aligned.to);
-      return context.baseIndent + (closed ? 0 : context.unit * units);
-    }
-    const DefaultScanDist = 1e4, DefaultBrackets = "()[]{}";
-    const bracketMatchingHandle = /* @__PURE__ */ new NodeProp();
-    function matchingNodes(node2, dir, brackets) {
-      let byProp = node2.prop(dir < 0 ? NodeProp.openedBy : NodeProp.closedBy);
-      if (byProp)
-        return byProp;
-      if (node2.name.length == 1) {
-        let index = brackets.indexOf(node2.name);
-        if (index > -1 && index % 2 == (dir < 0 ? 1 : 0))
-          return [brackets[index + dir]];
-      }
-      return null;
-    }
-    function findHandle(node2) {
-      let hasHandle = node2.type.prop(bracketMatchingHandle);
-      return hasHandle ? hasHandle(node2.node) : node2;
-    }
-    function matchBrackets(state, pos2, dir, config2 = {}) {
-      let maxScanDistance = config2.maxScanDistance || DefaultScanDist, brackets = config2.brackets || DefaultBrackets;
-      let tree = syntaxTree(state), node2 = tree.resolveInner(pos2, dir);
-      for (let cur2 = node2; cur2; cur2 = cur2.parent) {
-        let matches = matchingNodes(cur2.type, dir, brackets);
-        if (matches && cur2.from < cur2.to) {
-          let handle = findHandle(cur2);
-          if (handle && (dir > 0 ? pos2 >= handle.from && pos2 < handle.to : pos2 > handle.from && pos2 <= handle.to))
-            return matchMarkedBrackets(state, pos2, dir, cur2, handle, matches, brackets);
-        }
-      }
-      return matchPlainBrackets(state, pos2, dir, tree, node2.type, maxScanDistance, brackets);
-    }
-    function matchMarkedBrackets(_state, _pos, dir, token2, handle, matching, brackets) {
-      let parent = token2.parent, firstToken = { from: handle.from, to: handle.to };
-      let depth = 0, cursor = parent === null || parent === void 0 ? void 0 : parent.cursor();
-      if (cursor && (dir < 0 ? cursor.childBefore(token2.from) : cursor.childAfter(token2.to)))
-        do {
-          if (dir < 0 ? cursor.to <= token2.from : cursor.from >= token2.to) {
-            if (depth == 0 && matching.indexOf(cursor.type.name) > -1 && cursor.from < cursor.to) {
-              let endHandle = findHandle(cursor);
-              return { start: firstToken, end: endHandle ? { from: endHandle.from, to: endHandle.to } : void 0, matched: true };
-            } else if (matchingNodes(cursor.type, dir, brackets)) {
-              depth++;
-            } else if (matchingNodes(cursor.type, -dir, brackets)) {
-              if (depth == 0) {
-                let endHandle = findHandle(cursor);
-                return {
-                  start: firstToken,
-                  end: endHandle && endHandle.from < endHandle.to ? { from: endHandle.from, to: endHandle.to } : void 0,
-                  matched: false
-                };
-              }
-              depth--;
-            }
-          }
-        } while (dir < 0 ? cursor.prevSibling() : cursor.nextSibling());
-      return { start: firstToken, matched: false };
-    }
-    function matchPlainBrackets(state, pos2, dir, tree, tokenType, maxScanDistance, brackets) {
-      let startCh = dir < 0 ? state.sliceDoc(pos2 - 1, pos2) : state.sliceDoc(pos2, pos2 + 1);
-      let bracket2 = brackets.indexOf(startCh);
-      if (bracket2 < 0 || bracket2 % 2 == 0 != dir > 0)
-        return null;
-      let startToken = { from: dir < 0 ? pos2 - 1 : pos2, to: dir > 0 ? pos2 + 1 : pos2 };
-      let iter = state.doc.iterRange(pos2, dir > 0 ? state.doc.length : 0), depth = 0;
-      for (let distance = 0; !iter.next().done && distance <= maxScanDistance; ) {
-        let text2 = iter.value;
-        if (dir < 0)
-          distance += text2.length;
-        let basePos = pos2 + distance * dir;
-        for (let pos3 = dir > 0 ? 0 : text2.length - 1, end2 = dir > 0 ? text2.length : -1; pos3 != end2; pos3 += dir) {
-          let found = brackets.indexOf(text2[pos3]);
-          if (found < 0 || tree.resolveInner(basePos + pos3, 1).type != tokenType)
-            continue;
-          if (found % 2 == 0 == dir > 0) {
-            depth++;
-          } else if (depth == 1) {
-            return { start: startToken, end: { from: basePos + pos3, to: basePos + pos3 + 1 }, matched: found >> 1 == bracket2 >> 1 };
-          } else {
-            depth--;
-          }
-        }
-        if (dir > 0)
-          distance += text2.length;
-      }
-      return iter.done ? { start: startToken, matched: false } : null;
-    }
-    const noTokens = /* @__PURE__ */ Object.create(null);
-    const typeArray = [NodeType.none];
-    const warned = [];
-    const byTag = /* @__PURE__ */ Object.create(null);
-    const defaultTable = /* @__PURE__ */ Object.create(null);
-    for (let [legacyName, name2] of [
-      ["variable", "variableName"],
-      ["variable-2", "variableName.special"],
-      ["string-2", "string.special"],
-      ["def", "variableName.definition"],
-      ["tag", "tagName"],
-      ["attribute", "attributeName"],
-      ["type", "typeName"],
-      ["builtin", "variableName.standard"],
-      ["qualifier", "modifier"],
-      ["error", "invalid"],
-      ["header", "heading"],
-      ["property", "propertyName"]
-    ])
-      defaultTable[legacyName] = /* @__PURE__ */ createTokenType(noTokens, name2);
-    function warnForPart(part2, msg) {
-      if (warned.indexOf(part2) > -1)
-        return;
-      warned.push(part2);
-      console.warn(msg);
-    }
-    function createTokenType(extra, tagStr) {
-      let tags$1 = [];
-      for (let name3 of tagStr.split(" ")) {
-        let found = [];
-        for (let part2 of name3.split(".")) {
-          let value2 = extra[part2] || tags[part2];
-          if (!value2) {
-            warnForPart(part2, `Unknown highlighting tag ${part2}`);
-          } else if (typeof value2 == "function") {
-            if (!found.length)
-              warnForPart(part2, `Modifier ${part2} used at start of tag`);
-            else
-              found = found.map(value2);
-          } else {
-            if (found.length)
-              warnForPart(part2, `Tag ${part2} used as modifier`);
-            else
-              found = Array.isArray(value2) ? value2 : [value2];
-          }
-        }
-        for (let tag of found)
-          tags$1.push(tag);
-      }
-      if (!tags$1.length)
-        return 0;
-      let name2 = tagStr.replace(/ /g, "_"), key2 = name2 + " " + tags$1.map((t2) => t2.id);
-      let known = byTag[key2];
-      if (known)
-        return known.id;
-      let type = byTag[key2] = NodeType.define({
-        id: typeArray.length,
-        name: name2,
-        props: [styleTags({ [name2]: tags$1 })]
-      });
-      typeArray.push(type);
-      return type.id;
-    }
-    ({
-      rtl: /* @__PURE__ */ Decoration.mark({ class: "cm-iso", inclusive: true, attributes: { dir: "rtl" }, bidiIsolate: Direction.RTL }),
-      ltr: /* @__PURE__ */ Decoration.mark({ class: "cm-iso", inclusive: true, attributes: { dir: "ltr" }, bidiIsolate: Direction.LTR })
-    });
     const toggleComment = (target2) => {
       let { state } = target2, line2 = state.doc.lineAt(state.selection.main.from), config2 = getConfig(target2.state, line2.from);
       return config2.line ? toggleLineComment(target2) : config2.block ? toggleBlockCommentByLine(target2) : false;
@@ -157383,7 +155506,7 @@ Supported expressions:
   • Set operations: in, not in; e.g. "x in (2, 3, 5)"
   • Functions: min, max, abs, round, floor, ceil, sqrt, log, log2, log10
 `.trim();
-    const highlightStyle = HighlightStyle$1.define([
+    const highlightStyle = HighlightStyle.define([
       { tag: tags.string, class: "token string" },
       { tag: tags.number, class: "token number" },
       { tag: tags.keyword, class: "token keyword" }
@@ -157526,7 +155649,7 @@ Supported expressions:
               updateListenerCompartment.current.of(makeUpdateListener()),
               EditorView.domEventHandlers({ focus: handleFocus }),
               language,
-              syntaxHighlighting$1(highlightStyle),
+              syntaxHighlighting(highlightStyle),
               autocompletionCompartment.current.of(makeAutocompletion()),
               linterCompartment.current.of(makeLinter())
             ]
@@ -158881,6 +157004,76 @@ Supported expressions:
         };
       });
     };
+    const isGroupedMetric = (metric) => {
+      if (!metric.params) {
+        return false;
+      }
+      const params = metric.params;
+      return params["group_key"] !== void 0 && params["metric"] !== void 0;
+    };
+    const getBaseMetricName = (metric) => {
+      if (!metric.params) {
+        return void 0;
+      }
+      const params = metric.params;
+      const metricObj = params["metric"];
+      if (!metricObj || typeof metricObj !== "object") {
+        return void 0;
+      }
+      return metricObj["name"];
+    };
+    const normalizeMetricName = (name2) => {
+      return name2.replace(/\d+$/, "");
+    };
+    const expandGroupedMetrics = (scorers) => {
+      const result2 = [];
+      for (const scorer2 of scorers) {
+        if (scorer2.metrics.length === 0) {
+          result2.push(scorer2);
+          continue;
+        }
+        const hasGroupedMetrics = scorer2.metrics.some(isGroupedMetric);
+        if (!hasGroupedMetrics) {
+          result2.push(scorer2);
+          continue;
+        }
+        const metricsByBase = /* @__PURE__ */ new Map();
+        const nonGroupedMetrics = [];
+        for (const metric of scorer2.metrics) {
+          const baseMetricName = getBaseMetricName(metric);
+          if (!baseMetricName) {
+            nonGroupedMetrics.push(metric);
+            continue;
+          }
+          if (!metricsByBase.has(baseMetricName)) {
+            metricsByBase.set(baseMetricName, []);
+          }
+          metricsByBase.get(baseMetricName).push({
+            ...metric,
+            name: normalizeMetricName(metric.name)
+          });
+        }
+        if (nonGroupedMetrics.length > 0) {
+          result2.push({
+            scorer: scorer2.scorer,
+            reducer: scorer2.reducer,
+            metrics: nonGroupedMetrics,
+            unscoredSamples: scorer2.unscoredSamples,
+            scoredSamples: scorer2.scoredSamples
+          });
+        }
+        for (const [baseMetricName, metrics] of metricsByBase.entries()) {
+          result2.push({
+            scorer: scorer2.scorer,
+            reducer: baseMetricName,
+            metrics,
+            unscoredSamples: scorer2.unscoredSamples,
+            scoredSamples: scorer2.scoredSamples
+          });
+        }
+      }
+      return result2;
+    };
     const container$3 = "_container_q17yq_1";
     const grid = "_grid_q17yq_10";
     const styles$a = {
@@ -159222,7 +157415,8 @@ Supported expressions:
           if (scorers[key2]) {
             scorers[key2].metrics.push({
               name: metric.name,
-              value: metric.value
+              value: metric.value,
+              params: metric.params
             });
           } else {
             scorers[key2] = {
@@ -159231,14 +157425,15 @@ Supported expressions:
               metrics: [
                 {
                   name: metric.name,
-                  value: metric.value
+                  value: metric.value,
+                  params: metric.params
                 }
               ]
             };
           }
         }
       });
-      return Object.values(scorers);
+      return expandGroupedMetrics(Object.values(scorers));
     };
     const ResultsPanel = ({ scorers }) => {
       const [showing, setShowing] = useProperty(
@@ -159251,16 +157446,17 @@ Supported expressions:
       if (!scorers || scorers.length === 0) {
         return void 0;
       }
-      if (scorers.length === 1) {
-        const showReducer = !!scorers[0].reducer;
-        const metrics = scorers[0].metrics;
-        const unscoredSamples2 = scorers[0].unscoredSamples || 0;
-        const scoredSamples = scorers[0].scoredSamples || 0;
+      const expandedScorers = expandGroupedMetrics(scorers);
+      if (expandedScorers.length === 1) {
+        const showReducer = !!expandedScorers[0].reducer;
+        const metrics = expandedScorers[0].metrics;
+        const unscoredSamples2 = expandedScorers[0].unscoredSamples || 0;
+        const scoredSamples = expandedScorers[0].scoredSamples || 0;
         return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$6.simpleMetricsRows, children: metrics.map((metric, i2) => {
           return /* @__PURE__ */ jsxRuntimeExports.jsx(
             VerticalMetric,
             {
-              reducer: scorers[0].reducer,
+              reducer: expandedScorers[0].reducer,
               metric,
               isFirst: i2 === 0,
               showReducer,
@@ -159271,8 +157467,8 @@ Supported expressions:
           );
         }) });
       } else {
-        const showReducer = scorers.findIndex((score2) => !!score2.reducer) !== -1;
-        const grouped = groupScorers(scorers);
+        const showReducer = expandedScorers.findIndex((score2) => !!score2.reducer) !== -1;
+        const grouped = groupScorers(expandedScorers);
         if (grouped.length < 1) {
           return void 0;
         }
