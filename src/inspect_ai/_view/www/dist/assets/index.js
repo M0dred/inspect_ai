@@ -120484,7 +120484,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.fullWidth, styles$16.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$16.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.143-7-g07e954419" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.143-8-gbfbd6cdbb" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.spacer) }),
@@ -134385,6 +134385,21 @@ ${events}
       }, [collapsedMode, setCollapsedMode]);
       const { isDebugFilter, isDefaultFilter } = useTranscriptFilter();
       const tools2 = [];
+      tools2.push(
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          ToolButton,
+          {
+            label: "Copy UUID",
+            icon: ApplicationIcons.copy,
+            onClick: () => {
+              if (sample2?.uuid) {
+                navigator.clipboard.writeText(sample2.uuid);
+              }
+            }
+          },
+          "sample-copy-uuid"
+        )
+      );
       if (selectedTab === kSampleTranscriptTabId) {
         const label2 = isDebugFilter ? "Debug" : isDefaultFilter ? "Default" : "Custom";
         tools2.push(
