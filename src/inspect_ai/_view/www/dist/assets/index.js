@@ -116503,7 +116503,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.fullWidth, styles$1q.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1q.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.143-59-gf6a801a57" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.143-15-g2de6c1bdb" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
@@ -217363,7 +217363,7 @@ If you are trying to annotate ${containerName} with application data, use the '$
             minWidth: 80,
             sortable: true,
             resizable: true,
-            filter: "true"
+            filter: true
           },
           {
             field: "logFile",
@@ -217516,6 +217516,9 @@ If you are trying to annotate ${containerName} with application data, use the '$
           {}
         );
       }, [logDetails, samplesPath]);
+      reactExports.useEffect(() => {
+        gridContainerRef.current?.focus();
+      }, []);
       const data = reactExports.useMemo(() => {
         const rows = [];
         Object.entries(filteredLogDetails).forEach(([logFile, details]) => {
@@ -217707,7 +217710,7 @@ If you are trying to annotate ${containerName} with application data, use the '$
               },
               autoSizeStrategy: { type: "fitGridWidth" },
               headerHeight: 25,
-              rowSelection: "single",
+              rowSelection: { mode: "singleRow", checkboxes: false },
               getRowId: (params) => `${params.data.logFile}-${params.data.sampleId}-${params.data.epoch}`,
               onGridColumnsChanged: (e) => {
                 const cols = e.api.getColumnDefs();
