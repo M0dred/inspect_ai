@@ -29579,6 +29579,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       min: min2,
       max: max2,
       value: value2,
+      label: label2,
       width = "100px"
     }) => {
       return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1U.container), children: [
@@ -29592,7 +29593,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1U.label, "text-size-smallest"), children: [
           value2,
           " / ",
-          max2
+          max2,
+          " ",
+          label2 || ""
         ] })
       ] });
     };
@@ -116509,7 +116512,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.fullWidth, styles$1q.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1q.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.143-18-g6bc01136e" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.143-18-gaf69984c5" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
@@ -120686,6 +120689,7 @@ categories: ${categories.join(" ")}`;
       progressBar
     }) => {
       const { page, itemsPerPage } = usePagination(id, pagesize || itemCount);
+      console.log({ progressBar });
       const effectiveItemCount = filteredCount ?? itemCount;
       const currentPage = page || 0;
       const pageItemCount = Math.min(
@@ -120713,7 +120717,7 @@ categories: ${categories.join(" ")}`;
           ] })
         ] }) : void 0 }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1e.center), children: paginated && /* @__PURE__ */ jsxRuntimeExports.jsx(LogPager, { itemCount: effectiveItemCount }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1e.right), children: progressBar || paginated ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: effectiveItemCount === 0 ? "" : filteredCount !== void 0 && filteredCount !== itemCount ? `${startItem} - ${endItem} / ${effectiveItemCount} (${itemCount} total)` : `${startItem} - ${endItem} / ${effectiveItemCount}` }) : `${effectiveItemCount} items` })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1e.right), children: progressBar ? progressBar : paginated ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: effectiveItemCount === 0 ? "" : filteredCount !== void 0 && filteredCount !== itemCount ? `${startItem} - ${endItem} / ${effectiveItemCount} (${itemCount} total)` : `${startItem} - ${endItem} / ${effectiveItemCount}` }) : `${effectiveItemCount} items` })
       ] });
     };
     const container$j = "_container_e1pcq_1";
@@ -217496,6 +217500,13 @@ If you are trying to annotate ${containerName} with application data, use the '$
       const internalGridRef = reactExports.useRef(null);
       const gridRef = externalGridRef || internalGridRef;
       const gridContainerRef = reactExports.useRef(null);
+      const { startPolling, stopPolling } = useClientEvents();
+      reactExports.useEffect(() => {
+        startPolling([]);
+        return () => {
+          stopPolling();
+        };
+      }, [startPolling, stopPolling]);
       const prevSamplesPath = usePrevious(samplesPath);
       const initialGridState = reactExports.useMemo(() => {
         if (prevSamplesPath !== samplesPath) {
@@ -217797,6 +217808,7 @@ If you are trying to annotate ${containerName} with application data, use the '$
     const SamplesPanel = () => {
       const { samplesPath } = useSamplesRouteParams();
       const { loadLogs } = useLogs();
+      const logDir2 = useStore((state) => state.logs.logDir);
       const loading = useStore((state) => state.app.status.loading);
       const syncing = useStore((state) => state.app.status.syncing);
       const filteredSamplesCount = useStore(
@@ -217808,6 +217820,39 @@ If you are trying to annotate ${containerName} with application data, use the '$
           gridRef.current.api.setFilterModel(null);
         }
       };
+      const currentDir = join(samplesPath || "", logDir2);
+      const evalSet = useStore((state) => state.logs.evalSet);
+      const logFiles = useStore((state) => state.logs.logs);
+      const logPreviews = useStore((state) => state.logs.logPreviews);
+      const currentDirLogFiles = reactExports.useMemo(() => {
+        const files = [];
+        for (const logFile of logFiles) {
+          if (logFile.name.startsWith(currentDir)) {
+            files.push(logFile);
+          }
+        }
+        return files;
+      }, [logDir2, logFiles]);
+      const totalTaskCount = reactExports.useMemo(() => {
+        const currentDirTaskIds = new Set(currentDirLogFiles.map((f) => f.task_id));
+        let count2 = currentDirLogFiles.length;
+        for (const task of evalSet?.tasks || []) {
+          if (!currentDirTaskIds.has(task.task_id)) {
+            count2++;
+          }
+        }
+        return count2;
+      }, [currentDirLogFiles, evalSet]);
+      const completedTaskCount = reactExports.useMemo(() => {
+        let count2 = 0;
+        for (const logFile of currentDirLogFiles) {
+          const preview = logPreviews[logFile.name];
+          if (preview && preview.status !== "started") {
+            count2++;
+          }
+        }
+        return count2;
+      }, [logPreviews, currentDirLogFiles]);
       reactExports.useEffect(() => {
         const exec2 = async () => {
           await loadLogs(samplesPath);
@@ -217816,6 +217861,11 @@ If you are trying to annotate ${containerName} with application data, use the '$
       }, [loadLogs, samplesPath]);
       const filterModel = gridRef.current?.api?.getFilterModel();
       const hasFilter = filterModel && Object.keys(filterModel).length > 0;
+      console.log({
+        totalTaskCount,
+        completedTaskCount,
+        showBar: totalTaskCount !== completedTaskCount
+      });
       return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1.panel), children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs(ApplicationNavbar, { currentPath: samplesPath, fnNavigationUrl: samplesUrl, children: [
           hasFilter && /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -217837,7 +217887,17 @@ If you are trying to annotate ${containerName} with application data, use the '$
             id: "samples-list-footer",
             itemCount: filteredSamplesCount ?? 0,
             paginated: false,
-            progressText: syncing ? "Syncing..." : void 0
+            progressText: syncing ? "Syncing..." : void 0,
+            progressBar: totalTaskCount !== completedTaskCount ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+              ProgressBar,
+              {
+                min: 0,
+                max: totalTaskCount,
+                value: completedTaskCount,
+                width: "100px",
+                label: "tasks"
+              }
+            ) : void 0
           }
         )
       ] });
