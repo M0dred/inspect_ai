@@ -116503,7 +116503,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.fullWidth, styles$1q.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1q.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.143-15-g2de6c1bdb" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.143-17-g005f5063f" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
@@ -217674,11 +217674,18 @@ If you are trying to annotate ${containerName} with application data, use the '$
           gridElement.removeEventListener("keydown", handleKeyDown);
         };
       }, [handleKeyDown]);
+      const sampleRowId = (logFile, sampleId, epoch) => {
+        return `${logFile}-${sampleId}-${epoch}`.replace(/\s+/g, "_");
+      };
       const selectCurrentSample = reactExports.useCallback(() => {
         if (!gridRef.current?.api || !selectedSampleHandle || !selectedLogFile) {
           return;
         }
-        const rowId = `${selectedLogFile}-${selectedSampleHandle.id}-${selectedSampleHandle.epoch}`;
+        const rowId = sampleRowId(
+          selectedLogFile,
+          selectedSampleHandle.id,
+          selectedSampleHandle.epoch
+        );
         const node2 = gridRef.current.api.getRowNode(rowId);
         if (node2) {
           gridRef.current.api.deselectAll();
@@ -217711,7 +217718,11 @@ If you are trying to annotate ${containerName} with application data, use the '$
               autoSizeStrategy: { type: "fitGridWidth" },
               headerHeight: 25,
               rowSelection: { mode: "singleRow", checkboxes: false },
-              getRowId: (params) => `${params.data.logFile}-${params.data.sampleId}-${params.data.epoch}`,
+              getRowId: (params) => sampleRowId(
+                params.data.logFile,
+                params.data.sampleId,
+                params.data.epoch
+              ),
               onGridColumnsChanged: (e) => {
                 const cols = e.api.getColumnDefs();
                 if (cols && cols?.length > maxColCount.current) {
