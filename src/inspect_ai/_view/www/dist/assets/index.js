@@ -108456,10 +108456,16 @@ self.onmessage = function (e) {
         return `W/"${mtime}-${fileCount}"`;
       };
       const get_eval_set2 = async (dir) => {
+        const basePath = "/eval-set";
+        const params = new URLSearchParams();
         if (logDir2) {
-          dir ??= logDir2;
+          params.append("log_dir", logDir2);
         }
-        const path = dir ? `/eval-set?dir=${encodeURIComponent(dir)}` : "/eval-set";
+        if (dir) {
+          params.append("dir", dir);
+        }
+        const query2 = params.toString();
+        const path = query2 ? `${basePath}?${query2}` : basePath;
         try {
           const result2 = await requestApi.fetchString("GET", path);
           return result2.parsed;
@@ -116503,7 +116509,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.fullWidth, styles$1q.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1q.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.143-17-g005f5063f" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.143-18-g6bc01136e" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
@@ -120802,8 +120808,8 @@ categories: ${categories.join(" ")}`;
         );
       }
     );
-    const panel$5 = "_panel_18nhs_1";
-    const list$1 = "_list_18nhs_8";
+    const panel$5 = "_panel_16dj8_1";
+    const list$1 = "_list_16dj8_8";
     const styles$1a = {
       panel: panel$5,
       list: list$1
