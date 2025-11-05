@@ -29170,27 +29170,38 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
         const staticList = logFiles.length > 0 && mtime === 0;
         if (staticList) {
-          this._applicationContext?.setLogHandles(logFiles);
-          const previewTasks2 = [];
-          const previews2 = await this._database.findMissingPreviews(logFiles);
-          for (const p of previews2) {
-            if (!previewTasks2.find((t2) => t2.name === p.name)) {
-              previewTasks2.push(p);
+          const serverLogs = await this._api.get_logs(0, 0);
+          if (serverLogs.files.length !== logFiles.length) {
+            for (const file of logFiles) {
+              this._database?.clearCacheForFile(file.name);
             }
-          }
-          this.queueLogPreviews(previewTasks2);
-          const detailTasks2 = [];
-          const details2 = await this._database.findMissingDetails(logFiles);
-          for (const d of details2) {
-            if (!detailTasks2.find((t2) => t2.name === d.name)) {
-              detailTasks2.push(d);
+            this._applicationContext?.setLogHandles(serverLogs.files);
+            this.queueLogDetails(serverLogs.files);
+            this.queueLogPreviews(serverLogs.files);
+            return serverLogs.files;
+          } else {
+            this._applicationContext?.setLogHandles(logFiles);
+            const previewTasks2 = [];
+            const previews2 = await this._database.findMissingPreviews(logFiles);
+            for (const p of previews2) {
+              if (!previewTasks2.find((t2) => t2.name === p.name)) {
+                previewTasks2.push(p);
+              }
             }
+            this.queueLogPreviews(previewTasks2);
+            const detailTasks2 = [];
+            const details2 = await this._database.findMissingDetails(logFiles);
+            for (const d of details2) {
+              if (!detailTasks2.find((t2) => t2.name === d.name)) {
+                detailTasks2.push(d);
+              }
+            }
+            this.queueLogDetails(detailTasks2);
+            if (progress2) {
+              this._applicationContext.setLoading(false);
+            }
+            return logFiles;
           }
-          this.queueLogDetails(detailTasks2);
-          if (progress2) {
-            this._applicationContext.setLoading(false);
-          }
-          return logFiles;
         }
         const response = await this._api.get_logs(mtime, clientFileCount);
         const updatedLogs = response.files;
@@ -108158,10 +108169,14 @@ self.onmessage = function (e) {
       );
       return logs;
     };
-    const fetchJsonFile = async (file) => {
-      return fetchFile(file, async (text2) => {
-        return await asyncJsonParse(text2);
-      });
+    const fetchJsonFile = async (file, handleError2) => {
+      return fetchFile(
+        file,
+        async (text2) => {
+          return await asyncJsonParse(text2);
+        },
+        handleError2
+      );
     };
     function joinURI(...segments2) {
       return segments2.map((segment2) => segment2.replace(/(^\/+|\/+$)/g, "")).join("/");
@@ -108223,7 +108238,14 @@ self.onmessage = function (e) {
             dirSegments.push(dir);
           }
           return await fetchJsonFile(
-            joinURI(...dirSegments, "eval-set.json")
+            joinURI(...dirSegments, "eval-set.json"),
+            (response) => {
+              if (response.status === 404) {
+                return true;
+              } else {
+                return false;
+              }
+            }
           );
         },
         log_message: async (log_file, message2) => {
@@ -116515,7 +116537,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.fullWidth, styles$1q.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1q.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.143-17-gea7a4579b" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.143-26-gc43fac683" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
@@ -120692,7 +120714,6 @@ categories: ${categories.join(" ")}`;
       progressBar
     }) => {
       const { page, itemsPerPage } = usePagination(id, pagesize || itemCount);
-      console.log({ progressBar });
       const effectiveItemCount = filteredCount ?? itemCount;
       const currentPage = page || 0;
       const pageItemCount = Math.min(
