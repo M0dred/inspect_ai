@@ -116558,7 +116558,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.fullWidth, styles$1q.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1q.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.144-2-g0cd86dfd3" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.145-13-g7f8abbc5c" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
@@ -152331,7 +152331,8 @@ ${events}
           this.range = rangeAroundSelected(open.options.length, open.selected, this.view.state.facet(completionConfig).maxRenderedOptions);
           this.showOptions(open.options, cState.id);
         }
-        if (this.updateSelectedOption(open.selected)) {
+        let newSel = this.updateSelectedOption(open.selected);
+        if (newSel) {
           this.destroyInfo();
           let { completion } = open.options[open.selected];
           let { info } = completion;
@@ -152347,6 +152348,7 @@ ${events}
             }).catch((e) => logException(this.view.state, e, "completion info"));
           } else {
             this.addInfoPane(infoResult, completion);
+            newSel.setAttribute("aria-describedby", this.info.id);
           }
         }
       }
@@ -152354,6 +152356,7 @@ ${events}
         this.destroyInfo();
         let wrap2 = this.info = document.createElement("div");
         wrap2.className = "cm-tooltip cm-completionInfo";
+        wrap2.id = "cm-completionInfo-" + Math.floor(Math.random() * 65535).toString(16);
         if (content2.nodeType != null) {
           wrap2.appendChild(content2);
           this.infoDestroy = null;
@@ -152376,8 +152379,10 @@ ${events}
               set2 = opt;
             }
           } else {
-            if (opt.hasAttribute("aria-selected"))
+            if (opt.hasAttribute("aria-selected")) {
               opt.removeAttribute("aria-selected");
+              opt.removeAttribute("aria-describedby");
+            }
           }
         }
         if (set2)
