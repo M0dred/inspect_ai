@@ -108254,7 +108254,7 @@ self.onmessage = function (e) {
           return await fetchJsonFile(
             joinURI(...dirSegments, "eval-set.json"),
             (response) => {
-              if (response.status === 404) {
+              if (400 <= response.status && response.status < 500) {
                 return true;
               } else {
                 return false;
@@ -116558,7 +116558,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.fullWidth, styles$1q.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1q.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.146-3-g3de6d9998" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.146-17-g106697608" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
@@ -121066,12 +121066,14 @@ categories: ${categories.join(" ")}`;
         let bestItem = items[0];
         for (const item2 of items) {
           const currentStatus = item2.logPreview?.status;
+          const currentMtime = item2.log.mtime ?? 0;
           const bestStatus = bestItem.logPreview?.status;
+          const bestMtime = bestItem.log.mtime ?? 0;
           if (currentStatus === "started" && bestStatus !== "started") {
             bestItem = item2;
           } else if (currentStatus === "success" && bestStatus === "error") {
             bestItem = item2;
-          } else if (currentStatus === bestStatus) {
+          } else if (currentStatus === bestStatus && currentMtime > bestMtime) {
             bestItem = item2;
           }
         }
