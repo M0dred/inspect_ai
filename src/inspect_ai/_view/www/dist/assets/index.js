@@ -22494,21 +22494,29 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return isPlainObject(value2) || Array.isArray(value2) || !!value2[DRAFTABLE] || !!value2.constructor?.[DRAFTABLE] || isMap(value2) || isSet(value2);
     }
     var objectCtorString = Object.prototype.constructor.toString();
+    var cachedCtorStrings = /* @__PURE__ */ new WeakMap();
     function isPlainObject(value2) {
       if (!value2 || typeof value2 !== "object")
         return false;
-      const proto = getPrototypeOf(value2);
-      if (proto === null) {
+      const proto = Object.getPrototypeOf(value2);
+      if (proto === null || proto === Object.prototype)
         return true;
-      }
       const Ctor = Object.hasOwnProperty.call(proto, "constructor") && proto.constructor;
       if (Ctor === Object)
         return true;
-      return typeof Ctor == "function" && Function.toString.call(Ctor) === objectCtorString;
+      if (typeof Ctor !== "function")
+        return false;
+      let ctorString = cachedCtorStrings.get(Ctor);
+      if (ctorString === void 0) {
+        ctorString = Function.toString.call(Ctor);
+        cachedCtorStrings.set(Ctor, ctorString);
+      }
+      return ctorString === objectCtorString;
     }
-    function each(obj, iter) {
+    function each(obj, iter, strict = true) {
       if (getArchtype(obj) === 0) {
-        Reflect.ownKeys(obj).forEach((key2) => {
+        const keys = strict ? Reflect.ownKeys(obj) : Object.keys(obj);
+        keys.forEach((key2) => {
           iter(key2, obj[key2], obj);
         });
       } else {
@@ -22592,10 +22600,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         return obj;
       if (getArchtype(obj) > 1) {
         Object.defineProperties(obj, {
-          set: { value: dontMutateFrozenCollections },
-          add: { value: dontMutateFrozenCollections },
-          clear: { value: dontMutateFrozenCollections },
-          delete: { value: dontMutateFrozenCollections }
+          set: dontMutateMethodOverride,
+          add: dontMutateMethodOverride,
+          clear: dontMutateMethodOverride,
+          delete: dontMutateMethodOverride
         });
       }
       Object.freeze(obj);
@@ -22606,7 +22614,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     function dontMutateFrozenCollections() {
       die$1(2);
     }
+    var dontMutateMethodOverride = {
+      value: dontMutateFrozenCollections
+    };
     function isFrozen(obj) {
+      if (obj === null || typeof obj !== "object")
+        return true;
       return Object.isFrozen(obj);
     }
     var plugins = {};
@@ -22698,11 +22711,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     function finalize(rootScope, value2, path) {
       if (isFrozen(value2))
         return value2;
+      const useStrictIteration = rootScope.immer_.shouldUseStrictIteration();
       const state = value2[DRAFT_STATE];
       if (!state) {
         each(
           value2,
-          (key2, childValue) => finalizeProperty(rootScope, state, value2, key2, childValue, path)
+          (key2, childValue) => finalizeProperty(rootScope, state, value2, key2, childValue, path),
+          useStrictIteration
         );
         return value2;
       }
@@ -22725,7 +22740,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
         each(
           resultEach,
-          (key2, childValue) => finalizeProperty(rootScope, state, result2, key2, childValue, path, isSet2)
+          (key2, childValue) => finalizeProperty(
+            rootScope,
+            state,
+            result2,
+            key2,
+            childValue,
+            path,
+            isSet2
+          ),
+          useStrictIteration
         );
         maybeFreeze(rootScope, result2, false);
         if (path && rootScope.patches_) {
@@ -22740,6 +22764,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return state.copy_;
     }
     function finalizeProperty(rootScope, parentState, targetObject, prop2, childValue, rootPath, targetIsSet) {
+      if (childValue == null) {
+        return;
+      }
+      if (typeof childValue !== "object" && !targetIsSet) {
+        return;
+      }
+      const childIsFrozen = isFrozen(childValue);
+      if (childIsFrozen && !targetIsSet) {
+        return;
+      }
       if (isDraft(childValue)) {
         const path = rootPath && parentState && parentState.type_ !== 3 && // Set objects are atomic since they have no keys.
         !has$1(parentState.assigned_, prop2) ? rootPath.concat(prop2) : void 0;
@@ -22752,8 +22786,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       } else if (targetIsSet) {
         targetObject.add(childValue);
       }
-      if (isDraftable(childValue) && !isFrozen(childValue)) {
+      if (isDraftable(childValue) && !childIsFrozen) {
         if (!rootScope.immer_.autoFreeze_ && rootScope.unfinalizedDrafts_ < 1) {
+          return;
+        }
+        if (parentState && parentState.base_ && parentState.base_[prop2] === childValue && childIsFrozen) {
           return;
         }
         finalize(rootScope, childValue);
@@ -22948,6 +22985,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       constructor(config2) {
         this.autoFreeze_ = true;
         this.useStrictShallowCopy_ = false;
+        this.useStrictIteration_ = true;
         this.produce = (base2, recipe, patchListener) => {
           if (typeof base2 === "function" && typeof recipe !== "function") {
             const defaultBase = recipe;
@@ -23010,6 +23048,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           this.setAutoFreeze(config2.autoFreeze);
         if (typeof config2?.useStrictShallowCopy === "boolean")
           this.setUseStrictShallowCopy(config2.useStrictShallowCopy);
+        if (typeof config2?.useStrictIteration === "boolean")
+          this.setUseStrictIteration(config2.useStrictIteration);
       }
       createDraft(base2) {
         if (!isDraftable(base2))
@@ -23045,6 +23085,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
        */
       setUseStrictShallowCopy(value2) {
         this.useStrictShallowCopy_ = value2;
+      }
+      /**
+       * Pass false to use faster iteration that skips non-enumerable properties
+       * but still handles symbols for compatibility.
+       *
+       * By default, strict iteration is enabled (includes all own properties).
+       */
+      setUseStrictIteration(value2) {
+        this.useStrictIteration_ = value2;
+      }
+      shouldUseStrictIteration() {
+        return this.useStrictIteration_;
       }
       applyPatches(base2, patches) {
         let i2;
@@ -23084,17 +23136,23 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         return value2;
       const state = value2[DRAFT_STATE];
       let copy2;
+      let strict = true;
       if (state) {
         if (!state.modified_)
           return state.base_;
         state.finalized_ = true;
         copy2 = shallowCopy(value2, state.scope_.immer_.useStrictShallowCopy_);
+        strict = state.scope_.immer_.shouldUseStrictIteration();
       } else {
         copy2 = shallowCopy(value2, true);
       }
-      each(copy2, (key2, childValue) => {
-        set(copy2, key2, currentImpl(childValue));
-      });
+      each(
+        copy2,
+        (key2, childValue) => {
+          set(copy2, key2, currentImpl(childValue));
+        },
+        strict
+      );
       if (state) {
         state.finalized_ = false;
       }
@@ -116906,7 +116964,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.fullWidth, styles$1q.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1q.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.147-2-ga268f450d" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.147-3-g7d938679b" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
