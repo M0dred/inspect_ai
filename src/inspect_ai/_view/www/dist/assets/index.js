@@ -68,15 +68,6 @@ var require_assets = __commonJS({
     }
     var jsxRuntime = { exports: {} };
     var reactJsxRuntime_production = {};
-    /**
-     * @license React
-     * react-jsx-runtime.production.js
-     *
-     * Copyright (c) Meta Platforms, Inc. and affiliates.
-     *
-     * This source code is licensed under the MIT license found in the
-     * LICENSE file in the root directory of this source tree.
-     */
     var hasRequiredReactJsxRuntime_production;
     function requireReactJsxRuntime_production() {
       if (hasRequiredReactJsxRuntime_production) return reactJsxRuntime_production;
@@ -119,15 +110,6 @@ var require_assets = __commonJS({
     var reactDomClient_production = {};
     var scheduler = { exports: {} };
     var scheduler_production = {};
-    /**
-     * @license React
-     * scheduler.production.js
-     *
-     * Copyright (c) Meta Platforms, Inc. and affiliates.
-     *
-     * This source code is licensed under the MIT license found in the
-     * LICENSE file in the root directory of this source tree.
-     */
     var hasRequiredScheduler_production;
     function requireScheduler_production() {
       if (hasRequiredScheduler_production) return scheduler_production;
@@ -394,15 +376,6 @@ var require_assets = __commonJS({
     }
     var react = { exports: {} };
     var react_production = {};
-    /**
-     * @license React
-     * react.production.js
-     *
-     * Copyright (c) Meta Platforms, Inc. and affiliates.
-     *
-     * This source code is licensed under the MIT license found in the
-     * LICENSE file in the root directory of this source tree.
-     */
     var hasRequiredReact_production;
     function requireReact_production() {
       if (hasRequiredReact_production) return react_production;
@@ -838,15 +811,6 @@ var require_assets = __commonJS({
     }
     var reactDom = { exports: {} };
     var reactDom_production = {};
-    /**
-     * @license React
-     * react-dom.production.js
-     *
-     * Copyright (c) Meta Platforms, Inc. and affiliates.
-     *
-     * This source code is licensed under the MIT license found in the
-     * LICENSE file in the root directory of this source tree.
-     */
     var hasRequiredReactDom_production;
     function requireReactDom_production() {
       if (hasRequiredReactDom_production) return reactDom_production;
@@ -1014,15 +978,6 @@ var require_assets = __commonJS({
       }
       return reactDom.exports;
     }
-    /**
-     * @license React
-     * react-dom-client.production.js
-     *
-     * Copyright (c) Meta Platforms, Inc. and affiliates.
-     *
-     * This source code is licensed under the MIT license found in the
-     * LICENSE file in the root directory of this source tree.
-     */
     var hasRequiredReactDomClient_production;
     function requireReactDomClient_production() {
       if (hasRequiredReactDomClient_production) return reactDomClient_production;
@@ -13650,14 +13605,6 @@ var require_assets = __commonJS({
       hasRequiredPrism = 1;
       (function(module2) {
         var _self = typeof window !== "undefined" ? window : typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope ? self : {};
-        /**
-         * Prism: Lightweight, robust, elegant syntax highlighting
-         *
-         * @license MIT <https://opensource.org/licenses/MIT>
-         * @author Lea Verou <https://lea.verou.me>
-         * @namespace
-         * @public
-         */
         var Prism2 = (function(_self2) {
           var lang2 = /(?:^|\s)lang(?:uage)?-([\w-]+)(?=\s|$)/i;
           var uniqueId = 0;
@@ -15598,12 +15545,6 @@ var require_assets = __commonJS({
     }
     requirePrismPython();
     var clipboard$1 = { exports: {} };
-    /*!
-     * clipboard.js v2.0.11
-     * https://clipboardjs.com/
-     *
-     * Licensed MIT © Zeno Rocha
-     */
     var clipboard = clipboard$1.exports;
     var hasRequiredClipboard;
     function requireClipboard() {
@@ -16249,16 +16190,6 @@ var require_assets = __commonJS({
     const ClipboardJS = /* @__PURE__ */ getDefaultExportFromCjs(clipboardExports);
     var reactExports = requireReact();
     const React20 = /* @__PURE__ */ getDefaultExportFromCjs(reactExports);
-    /**
-     * react-router v7.9.6
-     *
-     * Copyright (c) Remix Software Inc.
-     *
-     * This source code is licensed under the MIT license found in the
-     * LICENSE.md file in the root directory of this source tree.
-     *
-     * @license MIT
-     */
     var __typeError = (msg) => {
       throw TypeError(msg);
     };
@@ -81123,38 +81054,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     function requireMhchemParser() {
       if (hasRequiredMhchemParser) return mhchemParser;
       hasRequiredMhchemParser = 1;
-      /*!
-       *************************************************************************
-       *
-       *  mhchemParser.ts
-       *  4.2.1
-       *
-       *  Parser for the \ce command and \pu command for MathJax and Co.
-       *
-       *  mhchem's \ce is a tool for writing beautiful chemical equations easily.
-       *  mhchem's \pu is a tool for writing physical units easily.
-       *
-       *  ----------------------------------------------------------------------
-       *
-       *  Copyright (c) 2015-2023 Martin Hensel
-       *
-       *  Licensed under the Apache License, Version 2.0 (the "License");
-       *  you may not use this file except in compliance with the License.
-       *  You may obtain a copy of the License at
-       *
-       *      http://www.apache.org/licenses/LICENSE-2.0
-       *
-       *  Unless required by applicable law or agreed to in writing, software
-       *  distributed under the License is distributed on an "AS IS" BASIS,
-       *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-       *  See the License for the specific language governing permissions and
-       *  limitations under the License.
-       *
-       *  ----------------------------------------------------------------------
-       *
-       *  https://github.com/mhchem/mhchemParser
-       *
-       */
       Object.defineProperty(mhchemParser, "__esModule", { value: true });
       mhchemParser.mhchemParser = void 0;
       var mhchemParser$1 = (function() {
@@ -105856,13 +105755,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         var Property = requireProperty();
         exports2.Selector = Selector;
         exports2.Property = Property;
-        /**
-         * Returns an array of the selectors.
-         *
-         * @license Sizzle CSS Selector Engine - MIT
-         * @param {String} selectorText from mensch
-         * @api public
-         */
         exports2.extract = function extract(selectorText) {
           var attr = 0;
           var sels = [];
@@ -116964,7 +116856,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.fullWidth, styles$1q.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1q.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.147-5-gd244d171a" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.148-0-gac9f67489" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
@@ -117323,16 +117215,6 @@ categories: ${categories.join(" ")}`;
         }
       );
     };
-    /**
-       * table-core
-       *
-       * Copyright (c) TanStack
-       *
-       * This source code is licensed under the MIT license found in the
-       * LICENSE.md file in the root directory of this source tree.
-       *
-       * @license MIT
-       */
     function createColumnHelper() {
       return {
         accessor: (accessor, column2) => {
@@ -120253,16 +120135,6 @@ categories: ${categories.join(" ")}`;
         };
       }, getMemoOptions(table2.options, "debugTable", "getSortedRowModel", () => table2._autoResetPageIndex()));
     }
-    /**
-       * react-table
-       *
-       * Copyright (c) TanStack
-       *
-       * This source code is licensed under the MIT license found in the
-       * LICENSE.md file in the root directory of this source tree.
-       *
-       * @license MIT
-       */
     function flexRender(Comp, props) {
       return !Comp ? null : isReactComponent(Comp) ? /* @__PURE__ */ reactExports.createElement(Comp, props) : Comp;
     }
