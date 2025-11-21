@@ -16250,7 +16250,7 @@ var require_assets = __commonJS({
     var reactExports = requireReact();
     const React20 = /* @__PURE__ */ getDefaultExportFromCjs(reactExports);
     /**
-     * react-router v7.9.4
+     * react-router v7.9.6
      *
      * Copyright (c) Remix Software Inc.
      *
@@ -16575,19 +16575,23 @@ var require_assets = __commonJS({
         if (isIndexRoute(route)) {
           let indexRoute = {
             ...route,
-            ...mapRouteProperties2(route),
             id
           };
-          manifest[id] = indexRoute;
+          manifest[id] = mergeRouteUpdates(
+            indexRoute,
+            mapRouteProperties2(indexRoute)
+          );
           return indexRoute;
         } else {
           let pathOrLayoutRoute = {
             ...route,
-            ...mapRouteProperties2(route),
             id,
             children: void 0
           };
-          manifest[id] = pathOrLayoutRoute;
+          manifest[id] = mergeRouteUpdates(
+            pathOrLayoutRoute,
+            mapRouteProperties2(pathOrLayoutRoute)
+          );
           if (route.children) {
             pathOrLayoutRoute.children = convertRoutesToDataRoutes(
               route.children,
@@ -16599,6 +16603,17 @@ var require_assets = __commonJS({
           }
           return pathOrLayoutRoute;
         }
+      });
+    }
+    function mergeRouteUpdates(route, updates) {
+      return Object.assign(route, {
+        ...updates,
+        ...typeof updates.lazy === "object" && updates.lazy != null ? {
+          lazy: {
+            ...route.lazy,
+            ...updates.lazy
+          }
+        } : {}
       });
     }
     function matchRoutes(routes, locationArg, basename2 = "/") {
@@ -16888,13 +16903,36 @@ var require_assets = __commonJS({
     }) {
       return pathname === "/" ? basename2 : joinPaths([basename2, pathname]);
     }
+    var ABSOLUTE_URL_REGEX = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
+    var isAbsoluteUrl = (url) => ABSOLUTE_URL_REGEX.test(url);
     function resolvePath(to2, fromPathname = "/") {
       let {
         pathname: toPathname,
         search = "",
         hash: hash2 = ""
       } = typeof to2 === "string" ? parsePath$1(to2) : to2;
-      let pathname = toPathname ? toPathname.startsWith("/") ? toPathname : resolvePathname(toPathname, fromPathname) : fromPathname;
+      let pathname;
+      if (toPathname) {
+        if (isAbsoluteUrl(toPathname)) {
+          pathname = toPathname;
+        } else {
+          if (toPathname.includes("//")) {
+            let oldPathname = toPathname;
+            toPathname = toPathname.replace(/\/\/+/g, "/");
+            warning(
+              false,
+              `Pathnames cannot have embedded double slashes - normalizing ${oldPathname} -> ${toPathname}`
+            );
+          }
+          if (toPathname.startsWith("/")) {
+            pathname = resolvePathname(toPathname.substring(1), "/");
+          } else {
+            pathname = resolvePathname(toPathname, fromPathname);
+          }
+        }
+      } else {
+        pathname = fromPathname;
+      }
       return {
         pathname,
         search: normalizeSearch(search),
@@ -16993,6 +17031,247 @@ var require_assets = __commonJS({
     function isRouteErrorResponse(error2) {
       return error2 != null && typeof error2.status === "number" && typeof error2.statusText === "string" && typeof error2.internal === "boolean" && "data" in error2;
     }
+    function getRoutePattern(paths) {
+      return paths.filter(Boolean).join("/").replace(/\/\/*/g, "/") || "/";
+    }
+    var UninstrumentedSymbol = Symbol("Uninstrumented");
+    function getRouteInstrumentationUpdates(fns, route) {
+      let aggregated = {
+        lazy: [],
+        "lazy.loader": [],
+        "lazy.action": [],
+        "lazy.middleware": [],
+        middleware: [],
+        loader: [],
+        action: []
+      };
+      fns.forEach(
+        (fn2) => fn2({
+          id: route.id,
+          index: route.index,
+          path: route.path,
+          instrument(i2) {
+            let keys = Object.keys(aggregated);
+            for (let key2 of keys) {
+              if (i2[key2]) {
+                aggregated[key2].push(i2[key2]);
+              }
+            }
+          }
+        })
+      );
+      let updates = {};
+      if (typeof route.lazy === "function" && aggregated.lazy.length > 0) {
+        let instrumented = wrapImpl(aggregated.lazy, route.lazy, () => void 0);
+        if (instrumented) {
+          updates.lazy = instrumented;
+        }
+      }
+      if (typeof route.lazy === "object") {
+        let lazyObject = route.lazy;
+        ["middleware", "loader", "action"].forEach((key2) => {
+          let lazyFn = lazyObject[key2];
+          let instrumentations = aggregated[`lazy.${key2}`];
+          if (typeof lazyFn === "function" && instrumentations.length > 0) {
+            let instrumented = wrapImpl(instrumentations, lazyFn, () => void 0);
+            if (instrumented) {
+              updates.lazy = Object.assign(updates.lazy || {}, {
+                [key2]: instrumented
+              });
+            }
+          }
+        });
+      }
+      ["loader", "action"].forEach((key2) => {
+        let handler = route[key2];
+        if (typeof handler === "function" && aggregated[key2].length > 0) {
+          let original = handler[UninstrumentedSymbol] ?? handler;
+          let instrumented = wrapImpl(
+            aggregated[key2],
+            original,
+            (...args2) => getHandlerInfo(args2[0])
+          );
+          if (instrumented) {
+            instrumented[UninstrumentedSymbol] = original;
+            updates[key2] = instrumented;
+          }
+        }
+      });
+      if (route.middleware && route.middleware.length > 0 && aggregated.middleware.length > 0) {
+        updates.middleware = route.middleware.map((middleware) => {
+          let original = middleware[UninstrumentedSymbol] ?? middleware;
+          let instrumented = wrapImpl(
+            aggregated.middleware,
+            original,
+            (...args2) => getHandlerInfo(args2[0])
+          );
+          if (instrumented) {
+            instrumented[UninstrumentedSymbol] = original;
+            return instrumented;
+          }
+          return middleware;
+        });
+      }
+      return updates;
+    }
+    function instrumentClientSideRouter(router, fns) {
+      let aggregated = {
+        navigate: [],
+        fetch: []
+      };
+      fns.forEach(
+        (fn2) => fn2({
+          instrument(i2) {
+            let keys = Object.keys(i2);
+            for (let key2 of keys) {
+              if (i2[key2]) {
+                aggregated[key2].push(i2[key2]);
+              }
+            }
+          }
+        })
+      );
+      if (aggregated.navigate.length > 0) {
+        let navigate = router.navigate[UninstrumentedSymbol] ?? router.navigate;
+        let instrumentedNavigate = wrapImpl(
+          aggregated.navigate,
+          navigate,
+          (...args2) => {
+            let [to2, opts] = args2;
+            return {
+              to: typeof to2 === "number" || typeof to2 === "string" ? to2 : to2 ? createPath(to2) : ".",
+              ...getRouterInfo(router, opts ?? {})
+            };
+          }
+        );
+        if (instrumentedNavigate) {
+          instrumentedNavigate[UninstrumentedSymbol] = navigate;
+          router.navigate = instrumentedNavigate;
+        }
+      }
+      if (aggregated.fetch.length > 0) {
+        let fetch2 = router.fetch[UninstrumentedSymbol] ?? router.fetch;
+        let instrumentedFetch = wrapImpl(aggregated.fetch, fetch2, (...args2) => {
+          let [key2, , href, opts] = args2;
+          return {
+            href: href ?? ".",
+            fetcherKey: key2,
+            ...getRouterInfo(router, opts ?? {})
+          };
+        });
+        if (instrumentedFetch) {
+          instrumentedFetch[UninstrumentedSymbol] = fetch2;
+          router.fetch = instrumentedFetch;
+        }
+      }
+      return router;
+    }
+    function wrapImpl(impls, handler, getInfo) {
+      if (impls.length === 0) {
+        return null;
+      }
+      return async (...args2) => {
+        let result2 = await recurseRight(
+          impls,
+          getInfo(...args2),
+          () => handler(...args2),
+          impls.length - 1
+        );
+        if (result2.type === "error") {
+          throw result2.value;
+        }
+        return result2.value;
+      };
+    }
+    async function recurseRight(impls, info, handler, index) {
+      let impl = impls[index];
+      let result2;
+      if (!impl) {
+        try {
+          let value2 = await handler();
+          result2 = { type: "success", value: value2 };
+        } catch (e) {
+          result2 = { type: "error", value: e };
+        }
+      } else {
+        let handlerPromise = void 0;
+        let callHandler = async () => {
+          if (handlerPromise) {
+            console.error("You cannot call instrumented handlers more than once");
+          } else {
+            handlerPromise = recurseRight(impls, info, handler, index - 1);
+          }
+          result2 = await handlerPromise;
+          invariant(result2, "Expected a result");
+          if (result2.type === "error" && result2.value instanceof Error) {
+            return { status: "error", error: result2.value };
+          }
+          return { status: "success", error: void 0 };
+        };
+        try {
+          await impl(callHandler, info);
+        } catch (e) {
+          console.error("An instrumentation function threw an error:", e);
+        }
+        if (!handlerPromise) {
+          await callHandler();
+        }
+        await handlerPromise;
+      }
+      if (result2) {
+        return result2;
+      }
+      return {
+        type: "error",
+        value: new Error("No result assigned in instrumentation chain.")
+      };
+    }
+    function getHandlerInfo(args2) {
+      let { request, context, params, unstable_pattern } = args2;
+      return {
+        request: getReadonlyRequest(request),
+        params: { ...params },
+        unstable_pattern,
+        context: getReadonlyContext(context)
+      };
+    }
+    function getRouterInfo(router, opts) {
+      return {
+        currentUrl: createPath(router.state.location),
+        ..."formMethod" in opts ? { formMethod: opts.formMethod } : {},
+        ..."formEncType" in opts ? { formEncType: opts.formEncType } : {},
+        ..."formData" in opts ? { formData: opts.formData } : {},
+        ..."body" in opts ? { body: opts.body } : {}
+      };
+    }
+    function getReadonlyRequest(request) {
+      return {
+        method: request.method,
+        url: request.url,
+        headers: {
+          get: (...args2) => request.headers.get(...args2)
+        }
+      };
+    }
+    function getReadonlyContext(context) {
+      if (isPlainObject$1(context)) {
+        let frozen = { ...context };
+        Object.freeze(frozen);
+        return frozen;
+      } else {
+        return {
+          get: (ctx) => context.get(ctx)
+        };
+      }
+    }
+    var objectProtoNames = Object.getOwnPropertyNames(Object.prototype).sort().join("\0");
+    function isPlainObject$1(thing) {
+      if (thing === null || typeof thing !== "object") {
+        return false;
+      }
+      const proto = Object.getPrototypeOf(thing);
+      return proto === Object.prototype || proto === null || Object.getOwnPropertyNames(proto).sort().join("\0") === objectProtoNames;
+    }
     var validMutationMethodsArr = [
       "POST",
       "PUT",
@@ -17035,8 +17314,6 @@ var require_assets = __commonJS({
       reset: void 0,
       location: void 0
     };
-    var ABSOLUTE_URL_REGEX = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
-    var isAbsoluteUrl = (url) => ABSOLUTE_URL_REGEX.test(url);
     var defaultMapRouteProperties = (route) => ({
       hasErrorBoundary: Boolean(route.hasErrorBoundary)
     });
@@ -17050,7 +17327,20 @@ var require_assets = __commonJS({
         "You must provide a non-empty routes array to createRouter"
       );
       let hydrationRouteProperties2 = init.hydrationRouteProperties || [];
-      let mapRouteProperties2 = init.mapRouteProperties || defaultMapRouteProperties;
+      let _mapRouteProperties = init.mapRouteProperties || defaultMapRouteProperties;
+      let mapRouteProperties2 = _mapRouteProperties;
+      if (init.unstable_instrumentations) {
+        let instrumentations = init.unstable_instrumentations;
+        mapRouteProperties2 = (route) => {
+          return {
+            ..._mapRouteProperties(route),
+            ...getRouteInstrumentationUpdates(
+              instrumentations.map((i2) => i2.route).filter(Boolean),
+              route
+            )
+          };
+        };
+      }
       let manifest = {};
       let dataRoutes = convertRoutesToDataRoutes(
         init.routes,
@@ -18063,6 +18353,14 @@ var require_assets = __commonJS({
           key2
         );
         let actionResult = actionResults[match.route.id];
+        if (!actionResult) {
+          for (let match2 of fetchMatches) {
+            if (actionResults[match2.route.id]) {
+              actionResult = actionResults[match2.route.id];
+              break;
+            }
+          }
+        }
         if (fetchRequest.signal.aborted) {
           if (fetchControllers.get(key2) === abortController) {
             fetchControllers.delete(key2);
@@ -18719,22 +19017,42 @@ var require_assets = __commonJS({
             return { type: "aborted" };
           }
           let newMatches = matchRoutes(routesToUse, pathname, basename2);
+          let newPartialMatches = null;
           if (newMatches) {
-            return { type: "success", matches: newMatches };
+            if (Object.keys(newMatches[0].params).length === 0) {
+              return { type: "success", matches: newMatches };
+            } else {
+              newPartialMatches = matchRoutesImpl(
+                routesToUse,
+                pathname,
+                basename2,
+                true
+              );
+              let matchedDeeper = newPartialMatches && partialMatches.length < newPartialMatches.length && compareMatches(
+                partialMatches,
+                newPartialMatches.slice(0, partialMatches.length)
+              );
+              if (!matchedDeeper) {
+                return { type: "success", matches: newMatches };
+              }
+            }
           }
-          let newPartialMatches = matchRoutesImpl(
-            routesToUse,
-            pathname,
-            basename2,
-            true
-          );
-          if (!newPartialMatches || partialMatches.length === newPartialMatches.length && partialMatches.every(
-            (m, i2) => m.route.id === newPartialMatches[i2].route.id
-          )) {
+          if (!newPartialMatches) {
+            newPartialMatches = matchRoutesImpl(
+              routesToUse,
+              pathname,
+              basename2,
+              true
+            );
+          }
+          if (!newPartialMatches || compareMatches(partialMatches, newPartialMatches)) {
             return { type: "success", matches: null };
           }
           partialMatches = newPartialMatches;
         }
+      }
+      function compareMatches(a, b) {
+        return a.length === b.length && a.every((m, i2) => m.route.id === b[i2].route.id);
       }
       function _internalSetRoutes(newRoutes) {
         manifest = {};
@@ -18802,6 +19120,12 @@ var require_assets = __commonJS({
           updateState(newState);
         }
       };
+      if (init.unstable_instrumentations) {
+        router = instrumentClientSideRouter(
+          router,
+          init.unstable_instrumentations.map((i2) => i2.router).filter(Boolean)
+        );
+      }
       return router;
     }
     function isSubmissionNavigation(opts) {
@@ -18981,6 +19305,7 @@ var require_assets = __commonJS({
         actionResult,
         actionStatus
       };
+      let pattern = getRoutePattern(matches.map((m) => m.route.path));
       let dsMatches = matches.map((match, index) => {
         let { route } = match;
         let forceShouldLoad = null;
@@ -19004,6 +19329,7 @@ var require_assets = __commonJS({
             mapRouteProperties2,
             manifest,
             request,
+            pattern,
             match,
             lazyRoutePropertiesToSkip,
             scopedContext,
@@ -19024,6 +19350,7 @@ var require_assets = __commonJS({
           mapRouteProperties2,
           manifest,
           request,
+          pattern,
           match,
           lazyRoutePropertiesToSkip,
           scopedContext,
@@ -19448,12 +19775,17 @@ var require_assets = __commonJS({
       }
     }
     async function runMiddlewarePipeline(args2, handler, processResult2, isResult, errorHandler) {
-      let { matches, request, params, context } = args2;
+      let { matches, request, params, context, unstable_pattern } = args2;
       let tuples = matches.flatMap(
         (m) => m.route.middleware ? m.route.middleware.map((fn2) => [m.route.id, fn2]) : []
       );
       let result2 = await callRouteMiddleware(
-        { request, params, context },
+        {
+          request,
+          params,
+          context,
+          unstable_pattern
+        },
         tuples,
         handler,
         processResult2,
@@ -19531,7 +19863,7 @@ var require_assets = __commonJS({
         handler: lazyRoutePromises.lazyHandlerPromise
       };
     }
-    function getDataStrategyMatch(mapRouteProperties2, manifest, request, match, lazyRoutePropertiesToSkip, scopedContext, shouldLoad, unstable_shouldRevalidateArgs = null) {
+    function getDataStrategyMatch(mapRouteProperties2, manifest, request, unstable_pattern, match, lazyRoutePropertiesToSkip, scopedContext, shouldLoad, unstable_shouldRevalidateArgs = null) {
       let isUsingNewApi = false;
       let _lazyPromises = getDataStrategyMatchLazyPromises(
         mapRouteProperties2,
@@ -19562,9 +19894,10 @@ var require_assets = __commonJS({
           let { lazy, loader, middleware } = match.route;
           let callHandler = isUsingNewApi || shouldLoad || handlerOverride && !isMutationMethod(request.method) && (lazy || loader);
           let isMiddlewareOnlyRoute = middleware && middleware.length > 0 && !loader && !lazy;
-          if (callHandler && !isMiddlewareOnlyRoute) {
+          if (callHandler && (isMutationMethod(request.method) || !isMiddlewareOnlyRoute)) {
             return callLoaderOrAction({
               request,
+              unstable_pattern,
               match,
               lazyHandlerPromise: _lazyPromises?.handler,
               lazyRoutePromise: _lazyPromises?.route,
@@ -19598,6 +19931,7 @@ var require_assets = __commonJS({
           mapRouteProperties2,
           manifest,
           request,
+          getRoutePattern(matches.map((m) => m.route.path)),
           match,
           lazyRoutePropertiesToSkip,
           scopedContext,
@@ -19612,6 +19946,7 @@ var require_assets = __commonJS({
       }
       let dataStrategyArgs = {
         request,
+        unstable_pattern: getRoutePattern(matches.map((m) => m.route.path)),
         params: matches[0].params,
         context: scopedContext,
         matches
@@ -19648,6 +19983,7 @@ var require_assets = __commonJS({
     }
     async function callLoaderOrAction({
       request,
+      unstable_pattern,
       match,
       lazyHandlerPromise,
       lazyRoutePromise,
@@ -19674,6 +20010,7 @@ var require_assets = __commonJS({
           return handler(
             {
               request,
+              unstable_pattern,
               params: match.params,
               context: scopedContext
             },
@@ -20585,8 +20922,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         };
       }
       componentDidCatch(error2, errorInfo) {
-        if (this.props.unstable_onError) {
-          this.props.unstable_onError(error2, errorInfo);
+        if (this.props.onError) {
+          this.props.onError(error2, errorInfo);
         } else {
           console.error(
             "React Router caught the following error during render",
@@ -20664,6 +21001,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
         }
       }
+      let onError = dataRouterState && unstable_onError ? (error2, errorInfo) => {
+        unstable_onError(error2, {
+          location: dataRouterState.location,
+          params: dataRouterState.matches?.[0]?.params ?? {},
+          errorInfo
+        });
+      } : void 0;
       return renderedMatches.reduceRight(
         (outlet, match, index) => {
           let error2;
@@ -20724,7 +21068,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               error: error2,
               children: getChildren2(),
               routeContext: { outlet: null, matches: matches2, isDataRoute: true },
-              unstable_onError
+              onError
             }
           ) : getChildren2();
         },
@@ -20913,7 +21257,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             if (newState.errors && unstable_onError) {
               Object.entries(newState.errors).forEach(([routeId, error2]) => {
                 if (prevState.errors?.[routeId] !== error2) {
-                  unstable_onError(error2);
+                  unstable_onError(error2, {
+                    location: newState.location,
+                    params: newState.matches[0]?.params ?? {}
+                  });
                 }
               });
             }
@@ -21695,7 +22042,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     try {
       if (isBrowser) {
         window.__reactRouterVersion = // @ts-expect-error
-        "7.9.4";
+        "7.9.6";
       }
     } catch (e) {
     }
@@ -21711,7 +22058,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         hydrationRouteProperties,
         dataStrategy: opts?.dataStrategy,
         patchRoutesOnNavigation: opts?.patchRoutesOnNavigation,
-        window: opts?.window
+        window: opts?.window,
+        unstable_instrumentations: opts?.unstable_instrumentations
       }).initialize();
     }
     function parseHydrationData() {
@@ -116558,7 +116906,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.fullWidth, styles$1q.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1q.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.146-17-g106697608" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.147-2-ga268f450d" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
