@@ -116964,7 +116964,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.fullWidth, styles$1q.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1q.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.147-3-g7d938679b" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.147-5-gd244d171a" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
@@ -163003,7 +163003,7 @@ Supported expressions:
         }
       }
     };
-    var VERSION = "34.3.0";
+    var VERSION = "34.3.1";
     var MAX_URL_LENGTH = 2e3;
     var MIN_PARAM_LENGTH = 100;
     var VERSION_PARAM_NAME = "_version_";
@@ -191569,7 +191569,8 @@ ${suggestions}`;
       const agColumn = beans.colModel.getCol(position.column.getId());
       const { rowNode, column: column2 } = position;
       const editor = cellCtrl.comp?.getCellEditor();
-      const initialNewValue = editSvc?.getCellDataValue(position, false) ?? (editor ? _valueFromEditor(beans, editor)?.editorValue : void 0);
+      const cellDataValue = editSvc?.getCellDataValue(position, false);
+      const initialNewValue = cellDataValue === void 0 ? editor ? _valueFromEditor(beans, editor)?.editorValue : void 0 : cellDataValue;
       const value2 = initialNewValue === UNEDITED ? valueSvc.getValueForDisplay(agColumn, rowNode)?.value : initialNewValue;
       return _addGridCommonParams(gos, {
         value: enableGroupEditing ? initialNewValue : value2,
@@ -207435,14 +207436,20 @@ If you are trying to annotate ${containerName} with application data, use the '$
         if (this.rowNode !== rowNode) {
           super.cleanupEditors(position);
         }
-        this.dispatchRowEvent({ rowNode }, "rowEditingStarted", silent);
-        this.startedRows.push(rowNode);
         const columns = this.beans.visibleCols.allCols;
         const cells = [];
+        const editableColumns = [];
         for (const column2 of columns) {
-          if (!column2.isCellEditable(rowNode)) {
-            continue;
+          if (column2.isCellEditable(rowNode)) {
+            editableColumns.push(column2);
           }
+        }
+        if (editableColumns.length == 0) {
+          return;
+        }
+        this.dispatchRowEvent({ rowNode }, "rowEditingStarted", silent);
+        this.startedRows.push(rowNode);
+        for (const column2 of editableColumns) {
           const position2 = {
             rowNode,
             column: column2
