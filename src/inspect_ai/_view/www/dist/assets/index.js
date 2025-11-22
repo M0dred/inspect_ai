@@ -116856,7 +116856,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.fullWidth, styles$1q.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1q.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.148-0-gac9f67489" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.148-4-gc587a1f84" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
@@ -123439,6 +123439,7 @@ categories: ${categories.join(" ")}`;
       titled,
       value: value$1
     };
+    const kMaxRowTextSize$1 = 1024 * 5;
     function isEvalSample(sample2) {
       return "store" in sample2;
     }
@@ -123495,7 +123496,12 @@ categories: ${categories.join(" ")}`;
       });
       columns.push({
         label: "Input",
-        value: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: fields.input.join(" ") }),
+        value: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          RenderedText,
+          {
+            markdown: fields.input.join(" ").slice(0, kMaxRowTextSize$1)
+          }
+        ),
         size: `minmax(auto, 5fr)`,
         clamp: true
       });
@@ -123505,7 +123511,10 @@ categories: ${categories.join(" ")}`;
           value: /* @__PURE__ */ jsxRuntimeExports.jsx(
             RenderedText,
             {
-              markdown: arrayToString(fields?.target || "none"),
+              markdown: arrayToString(fields?.target || "none").slice(
+                0,
+                kMaxRowTextSize$1
+              ),
               className: clsx("no-last-para-padding", styles$S.target)
             }
           ),
@@ -123519,7 +123528,7 @@ categories: ${categories.join(" ")}`;
           value: sample2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
             RenderedText,
             {
-              markdown: fields.answer || "",
+              markdown: (fields.answer || "").slice(0, kMaxRowTextSize$1),
               className: clsx("no-last-para-padding", styles$S.answer)
             }
           ) : "",
@@ -159124,6 +159133,7 @@ Supported expressions:
       score,
       centered
     };
+    const kMaxRowTextSize = 1024 * 5;
     const SampleRow = ({
       id,
       sample: sample2,
@@ -159184,7 +159194,7 @@ Supported expressions:
                 children: !showingSampleDialog ? /* @__PURE__ */ jsxRuntimeExports.jsx(
                   RenderedText,
                   {
-                    markdown: inputString(sample2.input).join(" "),
+                    markdown: inputString(sample2.input).join(" ").slice(0, kMaxRowTextSize),
                     forceRender: true,
                     omitMedia: true
                   }
@@ -159194,7 +159204,7 @@ Supported expressions:
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("sample-target", "three-line-clamp", styles$l.cell), children: sample2?.target && !showingSampleDialog ? /* @__PURE__ */ jsxRuntimeExports.jsx(
               RenderedText,
               {
-                markdown: arrayToString(sample2.target),
+                markdown: arrayToString(sample2.target).slice(0, kMaxRowTextSize),
                 className: clsx("no-last-para-padding", styles$l.noLeft),
                 forceRender: true,
                 omitMedia: true
@@ -159203,7 +159213,7 @@ Supported expressions:
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("sample-answer", "three-line-clamp", styles$l.cell), children: sample2 && !showingSampleDialog ? /* @__PURE__ */ jsxRuntimeExports.jsx(
               RenderedText,
               {
-                markdown: answer2 || "",
+                markdown: (answer2 || "").slice(0, kMaxRowTextSize),
                 className: clsx("no-last-para-padding", styles$l.noLeft),
                 forceRender: true,
                 omitMedia: true
