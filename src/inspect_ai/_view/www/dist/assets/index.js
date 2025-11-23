@@ -29764,6 +29764,50 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       storeImplementation = store;
       store.getState().initialize(api2, capabilities2);
     };
+    const filename = (path) => {
+      if (!path) {
+        return "";
+      }
+      path = path.endsWith("/") ? path.slice(0, -1) : path;
+      const pathparts = path.split("/");
+      const basename2 = pathparts.slice(-1)[0];
+      if (basename2.startsWith(".") && !basename2.substring(1).includes(".")) {
+        return basename2;
+      }
+      const match = basename2.match(/(.*)\.\S+$/);
+      if (match) {
+        return match[1];
+      } else {
+        return path;
+      }
+    };
+    const basename = (path) => {
+      if (!path) {
+        return "";
+      }
+      path = path.endsWith("/") ? path.slice(0, -1) : path;
+      const pathparts = path.split("/");
+      return pathparts.slice(-1)[0];
+    };
+    const dirname = (path) => {
+      path = path.endsWith("/") ? path.slice(0, -1) : path;
+      const pathparts = path.split("/");
+      if (pathparts.length > 1) {
+        pathparts.pop();
+        return pathparts.join("/");
+      }
+      return "";
+    };
+    const isInDirectory = (path, directory) => {
+      directory = directory.endsWith("/") ? directory.slice(0, -1) : directory;
+      return dirname(path) === directory;
+    };
+    const ensureTrailingSlash = (path) => {
+      if (!path) {
+        return "";
+      }
+      return path.endsWith("/") ? path : path + "/";
+    };
     const loggingIcons = {
       notset: "bi bi-card-text",
       debug: "bi bi-bug",
@@ -106898,50 +106942,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const isImage = (mimeType) => {
       return mimeType.startsWith("image/");
     };
-    const filename = (path) => {
-      if (!path) {
-        return "";
-      }
-      path = path.endsWith("/") ? path.slice(0, -1) : path;
-      const pathparts = path.split("/");
-      const basename2 = pathparts.slice(-1)[0];
-      if (basename2.startsWith(".") && !basename2.substring(1).includes(".")) {
-        return basename2;
-      }
-      const match = basename2.match(/(.*)\.\S+$/);
-      if (match) {
-        return match[1];
-      } else {
-        return path;
-      }
-    };
-    const basename = (path) => {
-      if (!path) {
-        return "";
-      }
-      path = path.endsWith("/") ? path.slice(0, -1) : path;
-      const pathparts = path.split("/");
-      return pathparts.slice(-1)[0];
-    };
-    const dirname = (path) => {
-      path = path.endsWith("/") ? path.slice(0, -1) : path;
-      const pathparts = path.split("/");
-      if (pathparts.length > 1) {
-        pathparts.pop();
-        return pathparts.join("/");
-      }
-      return "";
-    };
-    const isInDirectory = (path, directory) => {
-      directory = directory.endsWith("/") ? directory.slice(0, -1) : directory;
-      return dirname(path) === directory;
-    };
-    const ensureTrailingSlash = (path) => {
-      if (!path) {
-        return "";
-      }
-      return path.endsWith("/") ? path : path + "/";
-    };
     let vscodeApi;
     const getVscodeApi = () => {
       if (window.acquireVsCodeApi) {
@@ -116856,7 +116856,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.fullWidth, styles$1q.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1q.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.148-4-gc587a1f84" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.148-5-gbe598d72d" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.spacer) }),
@@ -219078,7 +219078,7 @@ If you are trying to annotate ${containerName} with application data, use the '$
       const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
       const loadedLogFile = useStore((state) => state.log.loadedLog);
       const selectedLogDetails = useStore((state) => state.log.selectedLogDetails);
-      const setIntialState = useStore((state) => state.appActions.setInitialState);
+      const setInitialState = useStore((state) => state.appActions.setInitialState);
       const setLoading = useStore((state) => state.appActions.setLoading);
       const syncLogs = useStore((state) => state.logsActions.syncLogs);
       const setLogDir = useStore((state) => state.logsActions.setLogDir);
@@ -219124,7 +219124,13 @@ If you are trying to annotate ${containerName} with application data, use the '$
             case "updateState": {
               if (e.data.url) {
                 const decodedUrl = decodeURIComponent(e.data.url);
-                setIntialState(decodedUrl, e.data.sample_id, e.data.sample_epoch);
+                let targetFile = decodedUrl;
+                if (isUri(targetFile)) {
+                  const dir = dirname(targetFile);
+                  targetFile = basename(targetFile);
+                  setLogDir(dir);
+                }
+                setInitialState(targetFile, e.data.sample_id, e.data.sample_epoch);
               }
               break;
             }
