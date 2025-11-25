@@ -27293,6 +27293,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               state.app.showFind = false;
             });
           },
+          setNativeFind: (nativeFind) => set2((state) => {
+            state.app.nativeFind = nativeFind;
+          }),
           setShowingSampleDialog: (showing) => {
             const state = get2();
             const isShowing = state.app.dialogs.sample;
@@ -106404,43 +106407,147 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     var markdownItMathjax3Exports = requireMarkdownItMathjax3();
     const markdownitMathjax3 = /* @__PURE__ */ getDefaultExportFromCjs(markdownItMathjax3Exports);
-    const MarkdownDiv = reactExports.forwardRef(
+    const MarkdownDivComponent = reactExports.forwardRef(
       ({ markdown, omitMedia, style: style2, className: className2 }, ref) => {
-        const protectedContent = protectBackslashesInLatex(markdown);
-        const escaped = escapeHtmlCharacters(protectedContent);
-        const preRendered = preRenderText(escaped);
-        const protectedText = protectMarkdown(preRendered);
-        const preparedForMarkdown = restoreBackslashesForLatex(protectedText);
-        let renderedHtml = preparedForMarkdown;
-        try {
-          const md = MarkdownIt({
-            breaks: true,
-            html: true
-          });
-          if (omitMedia) {
-            md.disable(["image"]);
+        const cacheKey = `${markdown}:${omitMedia ? "1" : "0"}`;
+        const cachedHtml = renderCache.get(cacheKey);
+        const [renderedHtml, setRenderedHtml] = reactExports.useState(() => {
+          if (cachedHtml) {
+            return cachedHtml;
           }
-          md.use(markdownitMathjax3);
-          renderedHtml = md.render(preparedForMarkdown);
-        } catch (ex) {
-          console.log("Unable to markdown render content");
-          console.error(ex);
-        }
-        const unescaped = unprotectMarkdown(renderedHtml);
-        const withCode = unescapeCodeHtmlEntities(unescaped);
-        const withSup = unescapeSupHtmlEntities(withCode);
-        const markup = { __html: withSup };
+          return markdown.replace(/\n/g, "<br/>");
+        });
+        reactExports.useEffect(() => {
+          if (cachedHtml) {
+            if (renderedHtml !== cachedHtml) {
+              reactExports.startTransition(() => {
+                setRenderedHtml(cachedHtml);
+              });
+            }
+            return;
+          }
+          setRenderedHtml(markdown.replace(/\n/g, "<br/>"));
+          const { promise, cancel } = renderQueue.enqueue(async () => {
+            const protectedContent = protectBackslashesInLatex(markdown);
+            const escaped = escapeHtmlCharacters(protectedContent);
+            const preRendered = preRenderText(escaped);
+            const protectedText = protectMarkdown(preRendered);
+            const preparedForMarkdown = restoreBackslashesForLatex(protectedText);
+            let html2 = preparedForMarkdown;
+            try {
+              const md = omitMedia ? mdInstanceNoMedia : mdInstance;
+              html2 = md.render(preparedForMarkdown);
+            } catch (ex) {
+              console.log("Unable to markdown render content");
+              console.error(ex);
+            }
+            const unescaped = unprotectMarkdown(html2);
+            const withCode = unescapeCodeHtmlEntities(unescaped);
+            const withSup = unescapeSupHtmlEntities(withCode);
+            return withSup;
+          });
+          promise.then((result2) => {
+            if (renderCache.size >= MAX_CACHE_SIZE) {
+              const firstKey = renderCache.keys().next().value;
+              if (firstKey) {
+                renderCache.delete(firstKey);
+              }
+            }
+            renderCache.set(cacheKey, result2);
+            reactExports.startTransition(() => {
+              setRenderedHtml(result2);
+            });
+          }).catch((error2) => {
+            console.error("Markdown rendering error:", error2);
+          });
+          return () => {
+            cancel();
+          };
+        }, [markdown, omitMedia, cachedHtml, renderedHtml]);
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
             ref,
-            dangerouslySetInnerHTML: markup,
+            dangerouslySetInnerHTML: { __html: renderedHtml },
             style: style2,
             className: clsx(className2, "markdown-content")
           }
         );
       }
     );
+    const MarkdownDiv = reactExports.memo(MarkdownDivComponent);
+    const renderCache = /* @__PURE__ */ new Map();
+    const MAX_CACHE_SIZE = 500;
+    const mdInstance = MarkdownIt({ breaks: true, html: true }).use(
+      markdownitMathjax3
+    );
+    const mdInstanceNoMedia = MarkdownIt({ breaks: true, html: true }).use(markdownitMathjax3).disable(["image"]);
+    class MarkdownRenderQueue {
+      queue = [];
+      activeCount = 0;
+      maxConcurrent;
+      constructor(maxConcurrent = 10) {
+        this.maxConcurrent = maxConcurrent;
+      }
+      enqueue(task) {
+        let cancelled2 = false;
+        const promise = new Promise((resolve, reject) => {
+          const wrappedTask = async () => {
+            if (cancelled2) {
+              return;
+            }
+            try {
+              const result2 = await task();
+              if (!cancelled2) {
+                resolve(result2);
+              }
+            } catch (error2) {
+              if (!cancelled2) {
+                reject(error2);
+              }
+            }
+          };
+          const queueTask = {
+            task: wrappedTask,
+            cancelled: false
+          };
+          this.queue.push(queueTask);
+          this.processQueue();
+        });
+        const cancel = () => {
+          cancelled2 = true;
+          const index = this.queue.findIndex((t2) => !t2.cancelled);
+          if (index !== -1) {
+            this.queue[index].cancelled = true;
+          }
+        };
+        return { promise, cancel };
+      }
+      async processQueue() {
+        if (this.activeCount >= this.maxConcurrent || this.queue.length === 0) {
+          return;
+        }
+        let queueTask;
+        while (this.queue.length > 0) {
+          const task = this.queue.shift();
+          if (task && !task.cancelled) {
+            queueTask = task;
+            break;
+          }
+        }
+        if (!queueTask) {
+          return;
+        }
+        this.activeCount++;
+        try {
+          await queueTask.task();
+        } finally {
+          this.activeCount--;
+          this.processQueue();
+        }
+      }
+    }
+    const renderQueue = new MarkdownRenderQueue(10);
     const kLetterListPattern = /^([a-zA-Z][).]\s.*?)$/gm;
     const kCommonmarkReferenceLinkPattern = /\[([^\]]*)\]: (?!http)(.*)/g;
     const protectBackslashesInLatex = (content2) => {
@@ -110245,10 +110352,10 @@ ${citation.url}` : citation.url,
         );
       }
     );
-    const grid$a = "_grid_rmdrx_1";
-    const number$5 = "_number_rmdrx_7";
-    const user = "_user_rmdrx_11";
-    const container$n = "_container_rmdrx_16";
+    const grid$a = "_grid_3x3ql_1";
+    const number$5 = "_number_3x3ql_10";
+    const user = "_user_3x3ql_14";
+    const container$n = "_container_3x3ql_19";
     const styles$1z = {
       grid: grid$a,
       number: number$5,
@@ -110265,43 +110372,40 @@ ${citation.url}` : citation.url,
       allowLinking = true
     }) => {
       if (number2) {
-        return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            "div",
-            {
-              className: clsx(
-                styles$1z.grid,
-                styles$1z.container,
-                highlightUserMessage && resolvedMessage.message.role === "user" ? styles$1z.user : void 0
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: clsx(
+              styles$1z.grid,
+              styles$1z.container,
+              highlightUserMessage && resolvedMessage.message.role === "user" ? styles$1z.user : void 0
+            ),
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  className: clsx(
+                    "text-size-smaller",
+                    "text-style-secondary",
+                    styles$1z.number
+                  ),
+                  children: number2
+                }
               ),
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  "div",
-                  {
-                    className: clsx(
-                      "text-size-smaller",
-                      "text-style-secondary",
-                      styles$1z.number
-                    ),
-                    children: number2
-                  }
-                ),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  ChatMessage,
-                  {
-                    id: `${parentName}-chat-messages`,
-                    message: resolvedMessage.message,
-                    toolMessages: resolvedMessage.toolMessages,
-                    indented: indented2,
-                    toolCallStyle,
-                    allowLinking
-                  }
-                )
-              ]
-            }
-          ),
-          resolvedMessage.message.role === "user" ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { height: "10px" } }) : void 0
-        ] });
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                ChatMessage,
+                {
+                  id: `${parentName}-chat-messages`,
+                  message: resolvedMessage.message,
+                  toolMessages: resolvedMessage.toolMessages,
+                  indented: indented2,
+                  toolCallStyle,
+                  allowLinking
+                }
+              )
+            ]
+          }
+        ) });
       } else {
         return /* @__PURE__ */ jsxRuntimeExports.jsxs(
           "div",
@@ -110432,7 +110536,8 @@ ${citation.url}` : citation.url,
             resolvedMessage: msg,
             indented: indented2,
             toolCallStyle,
-            allowLinking
+            allowLinking,
+            highlightUserMessage: true
           },
           `${id}-msg-${index}`
         );
@@ -116752,7 +116857,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1r.fullWidth, styles$1r.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1r.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1r.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.144-16-gb365d50e0" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.150-13-g4aa3b2e81" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1r.spacer) }),
@@ -120817,10 +120922,10 @@ categories: ${categories.join(" ")}`;
       center: center$1
     };
     const pager = "_pager_jzegk_1";
-    const item$3 = "_item_jzegk_11";
+    const item$2 = "_item_jzegk_11";
     const styles$1e = {
       pager,
-      item: item$3
+      item: item$2
     };
     const LogPager = ({ itemCount }) => {
       const { page, itemsPerPage, setPage } = usePagination(
@@ -121940,9 +122045,9 @@ categories: ${categories.join(" ")}`;
         )
       ] });
     };
-    const item$2 = "_item_1uzhd_1";
+    const item$1 = "_item_1uzhd_1";
     const styles$18 = {
-      item: item$2
+      item: item$1
     };
     const DatasetDetailView = ({
       dataset,
@@ -121992,9 +122097,9 @@ categories: ${categories.join(" ")}`;
         ) }) : ""
       ] });
     };
-    const item$1 = "_item_leq25_1";
+    const item = "_item_leq25_1";
     const styles$16 = {
-      item: item$1
+      item
     };
     const ScorerDetailView = ({
       name: name2,
@@ -123141,10 +123246,7 @@ categories: ${categories.join(" ")}`;
         }
       );
     };
-    const item = "_item_5fj0m_6";
-    const styles$W = {
-      item
-    };
+    const styles$W = {};
     const ChatViewVirtualList = reactExports.memo(
       ({
         id,
@@ -123159,24 +123261,40 @@ categories: ${categories.join(" ")}`;
         running,
         allowLinking = true
       }) => {
+        const useVirtuoso = running || messages2.length > 200;
         const listHandle = reactExports.useRef(null);
+        const setNativeFind = useStore((state) => state.appActions.setNativeFind);
+        reactExports.useEffect(() => {
+          setNativeFind(!useVirtuoso);
+        }, [useVirtuoso]);
         reactExports.useEffect(() => {
           const handleKeyDown = (event) => {
             if (event.metaKey || event.ctrlKey) {
               if (event.key === "ArrowUp") {
-                listHandle.current?.scrollToIndex({ index: 0, align: "center" });
+                if (useVirtuoso) {
+                  listHandle.current?.scrollToIndex({ index: 0, align: "center" });
+                } else {
+                  scrollRef?.current?.scrollTo({ top: 0, behavior: "instant" });
+                }
                 event.preventDefault();
               } else if (event.key === "ArrowDown") {
-                listHandle.current?.scrollToIndex({
-                  index: Math.min(messages2.length - 5, 0),
-                  align: "center"
-                });
-                setTimeout(() => {
+                if (useVirtuoso) {
                   listHandle.current?.scrollToIndex({
-                    index: messages2.length - 1,
-                    align: "end"
+                    index: Math.min(messages2.length - 5, 0),
+                    align: "center"
                   });
-                }, 250);
+                  setTimeout(() => {
+                    listHandle.current?.scrollToIndex({
+                      index: messages2.length - 1,
+                      align: "end"
+                    });
+                  }, 250);
+                } else {
+                  scrollRef?.current?.scrollTo({
+                    top: scrollRef.current.scrollHeight,
+                    behavior: "instant"
+                  });
+                }
                 event.preventDefault();
               }
             }
@@ -123192,23 +123310,38 @@ categories: ${categories.join(" ")}`;
             };
           }
         }, [scrollRef, messages2]);
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(
-          ChatViewVirtualListComponent,
-          {
-            id,
-            listHandle,
-            className: className2,
-            scrollRef,
-            messages: messages2,
-            initialMessageId,
-            topOffset,
-            toolCallStyle,
-            indented: indented2,
-            numbered,
-            running,
-            allowLinking
-          }
-        );
+        if (!useVirtuoso) {
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(
+            ChatView,
+            {
+              id,
+              messages: messages2,
+              allowLinking,
+              indented: indented2,
+              numbered,
+              toolCallStyle,
+              className: className2
+            }
+          );
+        } else {
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(
+            ChatViewVirtualListComponent,
+            {
+              id,
+              listHandle,
+              className: className2,
+              scrollRef,
+              messages: messages2,
+              initialMessageId,
+              topOffset,
+              toolCallStyle,
+              indented: indented2,
+              numbered,
+              running,
+              allowLinking
+            }
+          );
+        }
       }
     );
     const ChatViewVirtualListComponent = reactExports.memo(
@@ -125149,6 +125282,9 @@ categories: ${categories.join(" ")}`;
                 children: filteredArrChildren?.map((child, index) => {
                   const id = pillId(index);
                   const isSelected = id === selectedNav;
+                  if (!isSelected) {
+                    return null;
+                  }
                   return /* @__PURE__ */ jsxRuntimeExports.jsx(
                     "div",
                     {
@@ -134645,6 +134781,11 @@ ${events}
       offsetTop,
       className: className2
     }) => {
+      const useVirtualization = running || eventNodes.length > 100;
+      const setNativeFind = useStore((state) => state.appActions.setNativeFind);
+      reactExports.useEffect(() => {
+        setNativeFind(!useVirtualization);
+      }, [useVirtualization]);
       const initialEventIndex = reactExports.useMemo(() => {
         if (initialEventId === null || initialEventId === void 0) {
           return void 0;
@@ -134717,20 +134858,27 @@ ${events}
           contextWithoutToolEvents
         ]
       );
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(
-        LiveVirtualList,
-        {
-          listHandle,
-          className: className2,
-          id,
-          scrollRef,
-          data: eventNodes,
-          initialTopMostItemIndex: initialEventIndex,
-          offsetTop,
-          renderRow,
-          live: running
-        }
-      );
+      if (useVirtualization) {
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          LiveVirtualList,
+          {
+            listHandle,
+            className: className2,
+            id,
+            scrollRef,
+            data: eventNodes,
+            initialTopMostItemIndex: initialEventIndex,
+            offsetTop,
+            renderRow,
+            live: running
+          }
+        );
+      } else {
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: eventNodes.map((node2, index) => {
+          const row2 = renderRow(index, node2);
+          return row2;
+        }) });
+      }
     };
     const TranscriptVirtualList = reactExports.memo(
       (props) => {
@@ -135000,9 +135148,6 @@ ${events}
         (child) => child.event.event === childEventType
       );
       if (targetIndex === -1) {
-        console.log(
-          `No ${childEventType} event found in a span, this is very unexpected.`
-        );
         return null;
       }
       const targetNode = { ...node2.children[targetIndex] };
@@ -163683,6 +163828,7 @@ Supported expressions:
       const appStatus = useStore((state) => state.app.status);
       const showFind = useStore((state) => state.app.showFind);
       const setShowFind = useStore((state) => state.appActions.setShowFind);
+      const nativeFind = useStore((state) => state.app.nativeFind);
       const hideFind = useStore((state) => state.appActions.hideFind);
       const singleFileMode = useStore((state) => state.app.singleFileMode);
       const logDir2 = useStore((state) => state.logs.logDir);
@@ -163691,6 +163837,9 @@ Supported expressions:
       const mainAppRef = reactExports.useRef(null);
       const fullScreen = logFiles.length === 1 && !logDir2;
       reactExports.useEffect(() => {
+        if (nativeFind) {
+          return;
+        }
         const handleGlobalKeyDown = (e) => {
           if ((e.ctrlKey || e.metaKey) && e.key === "f") {
             e.preventDefault();
@@ -163706,7 +163855,7 @@ Supported expressions:
         return () => {
           document.removeEventListener("keydown", handleGlobalKeyDown, true);
         };
-      }, [setShowFind, hideFind]);
+      }, [setShowFind, hideFind, nativeFind]);
       return /* @__PURE__ */ jsxRuntimeExports.jsx(ExtendedFindProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
         {
@@ -221461,18 +221610,23 @@ If you are trying to annotate ${containerName} with application data, use the '$
       ]);
       const setShowFind = useStore((state) => state.appActions.setShowFind);
       const hideFind = useStore((state) => state.appActions.hideFind);
+      const nativeFind = useStore((state) => state.app.nativeFind);
       reactExports.useEffect(() => {
         const handleGlobalKeyDown = (e) => {
           const activeElement = document.activeElement;
           const isInputFocused = activeElement && (activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA" || activeElement.tagName === "SELECT");
           if ((e.ctrlKey || e.metaKey) && e.key === "f") {
-            e.preventDefault();
-            e.stopPropagation();
-            if (setShowFind) {
-              setShowFind(true);
+            if (!nativeFind) {
+              e.preventDefault();
+              e.stopPropagation();
+              if (setShowFind) {
+                setShowFind(true);
+              }
             }
           } else if (e.key === "Escape") {
-            hideFind();
+            if (!nativeFind) {
+              hideFind();
+            }
           } else if (!isInputFocused) {
             if (e.key === "ArrowLeft") {
               if (hasPrevious) {
@@ -221491,7 +221645,15 @@ If you are trying to annotate ${containerName} with application data, use the '$
         return () => {
           document.removeEventListener("keydown", handleGlobalKeyDown, true);
         };
-      }, [setShowFind, hideFind, hasPrevious, hasNext, handlePrevious, handleNext]);
+      }, [
+        setShowFind,
+        hideFind,
+        hasPrevious,
+        hasNext,
+        nativeFind,
+        handlePrevious,
+        handleNext
+      ]);
       reactExports.useEffect(() => {
         const exec2 = async () => {
           if (selectedLogFile && selectedSampleSummary) {
