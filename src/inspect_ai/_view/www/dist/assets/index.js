@@ -110065,17 +110065,16 @@ ${citation.url}` : citation.url,
             const obj = JSON.parse(c2.text);
             return /* @__PURE__ */ jsxRuntimeExports.jsx(JsonMessageContent, { id: `${key2}-json`, json: obj });
           } else {
-            return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+            return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 RenderedText,
                 {
                   markdown: purgeInternalContainers(c2.text) || "",
                   className: isLast ? "no-last-para-padding" : ""
-                },
-                key2
+                }
               ),
               c2.citations ? /* @__PURE__ */ jsxRuntimeExports.jsx(MessageCitations, { citations: c2.citations }) : void 0
-            ] });
+            ] }, key2);
           }
         }
       },
@@ -117290,7 +117289,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.fullWidth, styles$1s.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1s.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.150-13-g8dc7d3cf4" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.150-13-g45b76b705" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.spacer) }),
@@ -163053,7 +163052,7 @@ Supported expressions:
           componentProps: {
             running: evalStatus === "started"
           },
-          tools: () => !samplesDescriptor ? void 0 : totalSampleCount === 1 ? [/* @__PURE__ */ jsxRuntimeExports.jsx(ScoreFilterTools, {})] : [
+          tools: () => !samplesDescriptor ? void 0 : totalSampleCount === 1 ? [/* @__PURE__ */ jsxRuntimeExports.jsx(ScoreFilterTools, {}, "sample-score-tool")] : [
             /* @__PURE__ */ jsxRuntimeExports.jsx(SampleTools, {}, "sample-tools"),
             evalStatus === "started" && !streamSamples && /* @__PURE__ */ jsxRuntimeExports.jsx(
               ToolButton,
@@ -163091,6 +163090,7 @@ Supported expressions:
       const groupByOrder = useGroupByOrder();
       const selectedScores = useSelectedScores();
       const selectSample = useStore((state) => state.logActions.selectSample);
+      const sampleStatus = useStore((state) => state.sample.sampleStatus);
       const sampleListHandle = reactExports.useRef(null);
       const sampleProcessor = reactExports.useMemo(() => {
         if (!samplesDescriptor) return void 0;
@@ -163170,7 +163170,7 @@ Supported expressions:
         }
       } else {
         return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-          samplesDescriptor && totalSampleCount === 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(InlineSampleDisplay, {}) : void 0,
+          samplesDescriptor && totalSampleCount === 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(InlineSampleDisplay, { showActivity: sampleStatus === "loading" }) : void 0,
           samplesDescriptor && totalSampleCount > 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
             SampleList,
             {
@@ -222124,6 +222124,7 @@ If you are trying to annotate ${containerName} with application data, use the '$
       const displayedSamples = useStore(
         (state) => state.logs.samplesListState.displayedSamples
       );
+      const sampleStatus = useStore((state) => state.sample.sampleStatus);
       const loadSample = useStore((state) => state.sampleActions.loadSample);
       const clearSelectedLogDetails = useStore(
         (state) => state.logActions.clearSelectedLogDetails
@@ -222292,7 +222293,13 @@ If you are trying to annotate ${containerName} with application data, use the '$
               ] })
             }
           ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(InlineSampleDisplay, { showActivity: false, className: styles.panel })
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            InlineSampleDisplay,
+            {
+              showActivity: sampleStatus === "loading",
+              className: styles.panel
+            }
+          )
         ] })
       ] });
     };
