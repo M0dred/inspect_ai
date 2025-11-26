@@ -68,15 +68,6 @@ var require_assets = __commonJS({
     }
     var jsxRuntime = { exports: {} };
     var reactJsxRuntime_production = {};
-    /**
-     * @license React
-     * react-jsx-runtime.production.js
-     *
-     * Copyright (c) Meta Platforms, Inc. and affiliates.
-     *
-     * This source code is licensed under the MIT license found in the
-     * LICENSE file in the root directory of this source tree.
-     */
     var hasRequiredReactJsxRuntime_production;
     function requireReactJsxRuntime_production() {
       if (hasRequiredReactJsxRuntime_production) return reactJsxRuntime_production;
@@ -119,15 +110,6 @@ var require_assets = __commonJS({
     var reactDomClient_production = {};
     var scheduler = { exports: {} };
     var scheduler_production = {};
-    /**
-     * @license React
-     * scheduler.production.js
-     *
-     * Copyright (c) Meta Platforms, Inc. and affiliates.
-     *
-     * This source code is licensed under the MIT license found in the
-     * LICENSE file in the root directory of this source tree.
-     */
     var hasRequiredScheduler_production;
     function requireScheduler_production() {
       if (hasRequiredScheduler_production) return scheduler_production;
@@ -394,15 +376,6 @@ var require_assets = __commonJS({
     }
     var react = { exports: {} };
     var react_production = {};
-    /**
-     * @license React
-     * react.production.js
-     *
-     * Copyright (c) Meta Platforms, Inc. and affiliates.
-     *
-     * This source code is licensed under the MIT license found in the
-     * LICENSE file in the root directory of this source tree.
-     */
     var hasRequiredReact_production;
     function requireReact_production() {
       if (hasRequiredReact_production) return react_production;
@@ -838,15 +811,6 @@ var require_assets = __commonJS({
     }
     var reactDom = { exports: {} };
     var reactDom_production = {};
-    /**
-     * @license React
-     * react-dom.production.js
-     *
-     * Copyright (c) Meta Platforms, Inc. and affiliates.
-     *
-     * This source code is licensed under the MIT license found in the
-     * LICENSE file in the root directory of this source tree.
-     */
     var hasRequiredReactDom_production;
     function requireReactDom_production() {
       if (hasRequiredReactDom_production) return reactDom_production;
@@ -1014,15 +978,6 @@ var require_assets = __commonJS({
       }
       return reactDom.exports;
     }
-    /**
-     * @license React
-     * react-dom-client.production.js
-     *
-     * Copyright (c) Meta Platforms, Inc. and affiliates.
-     *
-     * This source code is licensed under the MIT license found in the
-     * LICENSE file in the root directory of this source tree.
-     */
     var hasRequiredReactDomClient_production;
     function requireReactDomClient_production() {
       if (hasRequiredReactDomClient_production) return reactDomClient_production;
@@ -13650,14 +13605,6 @@ var require_assets = __commonJS({
       hasRequiredPrism = 1;
       (function(module2) {
         var _self = typeof window !== "undefined" ? window : typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope ? self : {};
-        /**
-         * Prism: Lightweight, robust, elegant syntax highlighting
-         *
-         * @license MIT <https://opensource.org/licenses/MIT>
-         * @author Lea Verou <https://lea.verou.me>
-         * @namespace
-         * @public
-         */
         var Prism2 = (function(_self2) {
           var lang2 = /(?:^|\s)lang(?:uage)?-([\w-]+)(?=\s|$)/i;
           var uniqueId = 0;
@@ -15669,12 +15616,6 @@ var require_assets = __commonJS({
       Prism2.languages.yml = Prism2.languages.yaml;
     })(Prism);
     var clipboard$1 = { exports: {} };
-    /*!
-     * clipboard.js v2.0.11
-     * https://clipboardjs.com/
-     *
-     * Licensed MIT © Zeno Rocha
-     */
     var clipboard = clipboard$1.exports;
     var hasRequiredClipboard;
     function requireClipboard() {
@@ -16320,16 +16261,6 @@ var require_assets = __commonJS({
     const ClipboardJS = /* @__PURE__ */ getDefaultExportFromCjs(clipboardExports);
     var reactExports = requireReact();
     const React20 = /* @__PURE__ */ getDefaultExportFromCjs(reactExports);
-    /**
-     * react-router v7.9.4
-     *
-     * Copyright (c) Remix Software Inc.
-     *
-     * This source code is licensed under the MIT license found in the
-     * LICENSE.md file in the root directory of this source tree.
-     *
-     * @license MIT
-     */
     var __typeError = (msg) => {
       throw TypeError(msg);
     };
@@ -16646,19 +16577,23 @@ var require_assets = __commonJS({
         if (isIndexRoute(route)) {
           let indexRoute = {
             ...route,
-            ...mapRouteProperties2(route),
             id
           };
-          manifest[id] = indexRoute;
+          manifest[id] = mergeRouteUpdates(
+            indexRoute,
+            mapRouteProperties2(indexRoute)
+          );
           return indexRoute;
         } else {
           let pathOrLayoutRoute = {
             ...route,
-            ...mapRouteProperties2(route),
             id,
             children: void 0
           };
-          manifest[id] = pathOrLayoutRoute;
+          manifest[id] = mergeRouteUpdates(
+            pathOrLayoutRoute,
+            mapRouteProperties2(pathOrLayoutRoute)
+          );
           if (route.children) {
             pathOrLayoutRoute.children = convertRoutesToDataRoutes(
               route.children,
@@ -16670,6 +16605,17 @@ var require_assets = __commonJS({
           }
           return pathOrLayoutRoute;
         }
+      });
+    }
+    function mergeRouteUpdates(route, updates) {
+      return Object.assign(route, {
+        ...updates,
+        ...typeof updates.lazy === "object" && updates.lazy != null ? {
+          lazy: {
+            ...route.lazy,
+            ...updates.lazy
+          }
+        } : {}
       });
     }
     function matchRoutes(routes, locationArg, basename2 = "/") {
@@ -16959,13 +16905,36 @@ var require_assets = __commonJS({
     }) {
       return pathname === "/" ? basename2 : joinPaths([basename2, pathname]);
     }
+    var ABSOLUTE_URL_REGEX = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
+    var isAbsoluteUrl = (url) => ABSOLUTE_URL_REGEX.test(url);
     function resolvePath(to2, fromPathname = "/") {
       let {
         pathname: toPathname,
         search = "",
         hash: hash2 = ""
       } = typeof to2 === "string" ? parsePath$1(to2) : to2;
-      let pathname = toPathname ? toPathname.startsWith("/") ? toPathname : resolvePathname(toPathname, fromPathname) : fromPathname;
+      let pathname;
+      if (toPathname) {
+        if (isAbsoluteUrl(toPathname)) {
+          pathname = toPathname;
+        } else {
+          if (toPathname.includes("//")) {
+            let oldPathname = toPathname;
+            toPathname = toPathname.replace(/\/\/+/g, "/");
+            warning(
+              false,
+              `Pathnames cannot have embedded double slashes - normalizing ${oldPathname} -> ${toPathname}`
+            );
+          }
+          if (toPathname.startsWith("/")) {
+            pathname = resolvePathname(toPathname.substring(1), "/");
+          } else {
+            pathname = resolvePathname(toPathname, fromPathname);
+          }
+        }
+      } else {
+        pathname = fromPathname;
+      }
       return {
         pathname,
         search: normalizeSearch(search),
@@ -17064,6 +17033,247 @@ var require_assets = __commonJS({
     function isRouteErrorResponse(error2) {
       return error2 != null && typeof error2.status === "number" && typeof error2.statusText === "string" && typeof error2.internal === "boolean" && "data" in error2;
     }
+    function getRoutePattern(paths) {
+      return paths.filter(Boolean).join("/").replace(/\/\/*/g, "/") || "/";
+    }
+    var UninstrumentedSymbol = Symbol("Uninstrumented");
+    function getRouteInstrumentationUpdates(fns, route) {
+      let aggregated = {
+        lazy: [],
+        "lazy.loader": [],
+        "lazy.action": [],
+        "lazy.middleware": [],
+        middleware: [],
+        loader: [],
+        action: []
+      };
+      fns.forEach(
+        (fn2) => fn2({
+          id: route.id,
+          index: route.index,
+          path: route.path,
+          instrument(i2) {
+            let keys = Object.keys(aggregated);
+            for (let key2 of keys) {
+              if (i2[key2]) {
+                aggregated[key2].push(i2[key2]);
+              }
+            }
+          }
+        })
+      );
+      let updates = {};
+      if (typeof route.lazy === "function" && aggregated.lazy.length > 0) {
+        let instrumented = wrapImpl(aggregated.lazy, route.lazy, () => void 0);
+        if (instrumented) {
+          updates.lazy = instrumented;
+        }
+      }
+      if (typeof route.lazy === "object") {
+        let lazyObject = route.lazy;
+        ["middleware", "loader", "action"].forEach((key2) => {
+          let lazyFn = lazyObject[key2];
+          let instrumentations = aggregated[`lazy.${key2}`];
+          if (typeof lazyFn === "function" && instrumentations.length > 0) {
+            let instrumented = wrapImpl(instrumentations, lazyFn, () => void 0);
+            if (instrumented) {
+              updates.lazy = Object.assign(updates.lazy || {}, {
+                [key2]: instrumented
+              });
+            }
+          }
+        });
+      }
+      ["loader", "action"].forEach((key2) => {
+        let handler = route[key2];
+        if (typeof handler === "function" && aggregated[key2].length > 0) {
+          let original = handler[UninstrumentedSymbol] ?? handler;
+          let instrumented = wrapImpl(
+            aggregated[key2],
+            original,
+            (...args2) => getHandlerInfo(args2[0])
+          );
+          if (instrumented) {
+            instrumented[UninstrumentedSymbol] = original;
+            updates[key2] = instrumented;
+          }
+        }
+      });
+      if (route.middleware && route.middleware.length > 0 && aggregated.middleware.length > 0) {
+        updates.middleware = route.middleware.map((middleware) => {
+          let original = middleware[UninstrumentedSymbol] ?? middleware;
+          let instrumented = wrapImpl(
+            aggregated.middleware,
+            original,
+            (...args2) => getHandlerInfo(args2[0])
+          );
+          if (instrumented) {
+            instrumented[UninstrumentedSymbol] = original;
+            return instrumented;
+          }
+          return middleware;
+        });
+      }
+      return updates;
+    }
+    function instrumentClientSideRouter(router, fns) {
+      let aggregated = {
+        navigate: [],
+        fetch: []
+      };
+      fns.forEach(
+        (fn2) => fn2({
+          instrument(i2) {
+            let keys = Object.keys(i2);
+            for (let key2 of keys) {
+              if (i2[key2]) {
+                aggregated[key2].push(i2[key2]);
+              }
+            }
+          }
+        })
+      );
+      if (aggregated.navigate.length > 0) {
+        let navigate = router.navigate[UninstrumentedSymbol] ?? router.navigate;
+        let instrumentedNavigate = wrapImpl(
+          aggregated.navigate,
+          navigate,
+          (...args2) => {
+            let [to2, opts] = args2;
+            return {
+              to: typeof to2 === "number" || typeof to2 === "string" ? to2 : to2 ? createPath(to2) : ".",
+              ...getRouterInfo(router, opts ?? {})
+            };
+          }
+        );
+        if (instrumentedNavigate) {
+          instrumentedNavigate[UninstrumentedSymbol] = navigate;
+          router.navigate = instrumentedNavigate;
+        }
+      }
+      if (aggregated.fetch.length > 0) {
+        let fetch2 = router.fetch[UninstrumentedSymbol] ?? router.fetch;
+        let instrumentedFetch = wrapImpl(aggregated.fetch, fetch2, (...args2) => {
+          let [key2, , href, opts] = args2;
+          return {
+            href: href ?? ".",
+            fetcherKey: key2,
+            ...getRouterInfo(router, opts ?? {})
+          };
+        });
+        if (instrumentedFetch) {
+          instrumentedFetch[UninstrumentedSymbol] = fetch2;
+          router.fetch = instrumentedFetch;
+        }
+      }
+      return router;
+    }
+    function wrapImpl(impls, handler, getInfo) {
+      if (impls.length === 0) {
+        return null;
+      }
+      return async (...args2) => {
+        let result2 = await recurseRight(
+          impls,
+          getInfo(...args2),
+          () => handler(...args2),
+          impls.length - 1
+        );
+        if (result2.type === "error") {
+          throw result2.value;
+        }
+        return result2.value;
+      };
+    }
+    async function recurseRight(impls, info, handler, index) {
+      let impl = impls[index];
+      let result2;
+      if (!impl) {
+        try {
+          let value2 = await handler();
+          result2 = { type: "success", value: value2 };
+        } catch (e) {
+          result2 = { type: "error", value: e };
+        }
+      } else {
+        let handlerPromise = void 0;
+        let callHandler = async () => {
+          if (handlerPromise) {
+            console.error("You cannot call instrumented handlers more than once");
+          } else {
+            handlerPromise = recurseRight(impls, info, handler, index - 1);
+          }
+          result2 = await handlerPromise;
+          invariant(result2, "Expected a result");
+          if (result2.type === "error" && result2.value instanceof Error) {
+            return { status: "error", error: result2.value };
+          }
+          return { status: "success", error: void 0 };
+        };
+        try {
+          await impl(callHandler, info);
+        } catch (e) {
+          console.error("An instrumentation function threw an error:", e);
+        }
+        if (!handlerPromise) {
+          await callHandler();
+        }
+        await handlerPromise;
+      }
+      if (result2) {
+        return result2;
+      }
+      return {
+        type: "error",
+        value: new Error("No result assigned in instrumentation chain.")
+      };
+    }
+    function getHandlerInfo(args2) {
+      let { request, context, params, unstable_pattern } = args2;
+      return {
+        request: getReadonlyRequest(request),
+        params: { ...params },
+        unstable_pattern,
+        context: getReadonlyContext(context)
+      };
+    }
+    function getRouterInfo(router, opts) {
+      return {
+        currentUrl: createPath(router.state.location),
+        ..."formMethod" in opts ? { formMethod: opts.formMethod } : {},
+        ..."formEncType" in opts ? { formEncType: opts.formEncType } : {},
+        ..."formData" in opts ? { formData: opts.formData } : {},
+        ..."body" in opts ? { body: opts.body } : {}
+      };
+    }
+    function getReadonlyRequest(request) {
+      return {
+        method: request.method,
+        url: request.url,
+        headers: {
+          get: (...args2) => request.headers.get(...args2)
+        }
+      };
+    }
+    function getReadonlyContext(context) {
+      if (isPlainObject$1(context)) {
+        let frozen = { ...context };
+        Object.freeze(frozen);
+        return frozen;
+      } else {
+        return {
+          get: (ctx) => context.get(ctx)
+        };
+      }
+    }
+    var objectProtoNames = Object.getOwnPropertyNames(Object.prototype).sort().join("\0");
+    function isPlainObject$1(thing) {
+      if (thing === null || typeof thing !== "object") {
+        return false;
+      }
+      const proto = Object.getPrototypeOf(thing);
+      return proto === Object.prototype || proto === null || Object.getOwnPropertyNames(proto).sort().join("\0") === objectProtoNames;
+    }
     var validMutationMethodsArr = [
       "POST",
       "PUT",
@@ -17106,8 +17316,6 @@ var require_assets = __commonJS({
       reset: void 0,
       location: void 0
     };
-    var ABSOLUTE_URL_REGEX = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
-    var isAbsoluteUrl = (url) => ABSOLUTE_URL_REGEX.test(url);
     var defaultMapRouteProperties = (route) => ({
       hasErrorBoundary: Boolean(route.hasErrorBoundary)
     });
@@ -17121,7 +17329,20 @@ var require_assets = __commonJS({
         "You must provide a non-empty routes array to createRouter"
       );
       let hydrationRouteProperties2 = init.hydrationRouteProperties || [];
-      let mapRouteProperties2 = init.mapRouteProperties || defaultMapRouteProperties;
+      let _mapRouteProperties = init.mapRouteProperties || defaultMapRouteProperties;
+      let mapRouteProperties2 = _mapRouteProperties;
+      if (init.unstable_instrumentations) {
+        let instrumentations = init.unstable_instrumentations;
+        mapRouteProperties2 = (route) => {
+          return {
+            ..._mapRouteProperties(route),
+            ...getRouteInstrumentationUpdates(
+              instrumentations.map((i2) => i2.route).filter(Boolean),
+              route
+            )
+          };
+        };
+      }
       let manifest = {};
       let dataRoutes = convertRoutesToDataRoutes(
         init.routes,
@@ -18134,6 +18355,14 @@ var require_assets = __commonJS({
           key2
         );
         let actionResult = actionResults[match.route.id];
+        if (!actionResult) {
+          for (let match2 of fetchMatches) {
+            if (actionResults[match2.route.id]) {
+              actionResult = actionResults[match2.route.id];
+              break;
+            }
+          }
+        }
         if (fetchRequest.signal.aborted) {
           if (fetchControllers.get(key2) === abortController) {
             fetchControllers.delete(key2);
@@ -18790,22 +19019,42 @@ var require_assets = __commonJS({
             return { type: "aborted" };
           }
           let newMatches = matchRoutes(routesToUse, pathname, basename2);
+          let newPartialMatches = null;
           if (newMatches) {
-            return { type: "success", matches: newMatches };
+            if (Object.keys(newMatches[0].params).length === 0) {
+              return { type: "success", matches: newMatches };
+            } else {
+              newPartialMatches = matchRoutesImpl(
+                routesToUse,
+                pathname,
+                basename2,
+                true
+              );
+              let matchedDeeper = newPartialMatches && partialMatches.length < newPartialMatches.length && compareMatches(
+                partialMatches,
+                newPartialMatches.slice(0, partialMatches.length)
+              );
+              if (!matchedDeeper) {
+                return { type: "success", matches: newMatches };
+              }
+            }
           }
-          let newPartialMatches = matchRoutesImpl(
-            routesToUse,
-            pathname,
-            basename2,
-            true
-          );
-          if (!newPartialMatches || partialMatches.length === newPartialMatches.length && partialMatches.every(
-            (m, i2) => m.route.id === newPartialMatches[i2].route.id
-          )) {
+          if (!newPartialMatches) {
+            newPartialMatches = matchRoutesImpl(
+              routesToUse,
+              pathname,
+              basename2,
+              true
+            );
+          }
+          if (!newPartialMatches || compareMatches(partialMatches, newPartialMatches)) {
             return { type: "success", matches: null };
           }
           partialMatches = newPartialMatches;
         }
+      }
+      function compareMatches(a, b) {
+        return a.length === b.length && a.every((m, i2) => m.route.id === b[i2].route.id);
       }
       function _internalSetRoutes(newRoutes) {
         manifest = {};
@@ -18873,6 +19122,12 @@ var require_assets = __commonJS({
           updateState(newState);
         }
       };
+      if (init.unstable_instrumentations) {
+        router = instrumentClientSideRouter(
+          router,
+          init.unstable_instrumentations.map((i2) => i2.router).filter(Boolean)
+        );
+      }
       return router;
     }
     function isSubmissionNavigation(opts) {
@@ -19052,6 +19307,7 @@ var require_assets = __commonJS({
         actionResult,
         actionStatus
       };
+      let pattern = getRoutePattern(matches.map((m) => m.route.path));
       let dsMatches = matches.map((match, index) => {
         let { route } = match;
         let forceShouldLoad = null;
@@ -19075,6 +19331,7 @@ var require_assets = __commonJS({
             mapRouteProperties2,
             manifest,
             request,
+            pattern,
             match,
             lazyRoutePropertiesToSkip,
             scopedContext,
@@ -19095,6 +19352,7 @@ var require_assets = __commonJS({
           mapRouteProperties2,
           manifest,
           request,
+          pattern,
           match,
           lazyRoutePropertiesToSkip,
           scopedContext,
@@ -19519,12 +19777,17 @@ var require_assets = __commonJS({
       }
     }
     async function runMiddlewarePipeline(args2, handler, processResult2, isResult, errorHandler) {
-      let { matches, request, params, context } = args2;
+      let { matches, request, params, context, unstable_pattern } = args2;
       let tuples = matches.flatMap(
         (m) => m.route.middleware ? m.route.middleware.map((fn2) => [m.route.id, fn2]) : []
       );
       let result2 = await callRouteMiddleware(
-        { request, params, context },
+        {
+          request,
+          params,
+          context,
+          unstable_pattern
+        },
         tuples,
         handler,
         processResult2,
@@ -19602,7 +19865,7 @@ var require_assets = __commonJS({
         handler: lazyRoutePromises.lazyHandlerPromise
       };
     }
-    function getDataStrategyMatch(mapRouteProperties2, manifest, request, match, lazyRoutePropertiesToSkip, scopedContext, shouldLoad, unstable_shouldRevalidateArgs = null) {
+    function getDataStrategyMatch(mapRouteProperties2, manifest, request, unstable_pattern, match, lazyRoutePropertiesToSkip, scopedContext, shouldLoad, unstable_shouldRevalidateArgs = null) {
       let isUsingNewApi = false;
       let _lazyPromises = getDataStrategyMatchLazyPromises(
         mapRouteProperties2,
@@ -19633,9 +19896,10 @@ var require_assets = __commonJS({
           let { lazy, loader, middleware } = match.route;
           let callHandler = isUsingNewApi || shouldLoad || handlerOverride && !isMutationMethod(request.method) && (lazy || loader);
           let isMiddlewareOnlyRoute = middleware && middleware.length > 0 && !loader && !lazy;
-          if (callHandler && !isMiddlewareOnlyRoute) {
+          if (callHandler && (isMutationMethod(request.method) || !isMiddlewareOnlyRoute)) {
             return callLoaderOrAction({
               request,
+              unstable_pattern,
               match,
               lazyHandlerPromise: _lazyPromises?.handler,
               lazyRoutePromise: _lazyPromises?.route,
@@ -19669,6 +19933,7 @@ var require_assets = __commonJS({
           mapRouteProperties2,
           manifest,
           request,
+          getRoutePattern(matches.map((m) => m.route.path)),
           match,
           lazyRoutePropertiesToSkip,
           scopedContext,
@@ -19683,6 +19948,7 @@ var require_assets = __commonJS({
       }
       let dataStrategyArgs = {
         request,
+        unstable_pattern: getRoutePattern(matches.map((m) => m.route.path)),
         params: matches[0].params,
         context: scopedContext,
         matches
@@ -19719,6 +19985,7 @@ var require_assets = __commonJS({
     }
     async function callLoaderOrAction({
       request,
+      unstable_pattern,
       match,
       lazyHandlerPromise,
       lazyRoutePromise,
@@ -19745,6 +20012,7 @@ var require_assets = __commonJS({
           return handler(
             {
               request,
+              unstable_pattern,
               params: match.params,
               context: scopedContext
             },
@@ -20656,8 +20924,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         };
       }
       componentDidCatch(error2, errorInfo) {
-        if (this.props.unstable_onError) {
-          this.props.unstable_onError(error2, errorInfo);
+        if (this.props.onError) {
+          this.props.onError(error2, errorInfo);
         } else {
           console.error(
             "React Router caught the following error during render",
@@ -20735,6 +21003,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
         }
       }
+      let onError = dataRouterState && unstable_onError ? (error2, errorInfo) => {
+        unstable_onError(error2, {
+          location: dataRouterState.location,
+          params: dataRouterState.matches?.[0]?.params ?? {},
+          errorInfo
+        });
+      } : void 0;
       return renderedMatches.reduceRight(
         (outlet, match, index) => {
           let error2;
@@ -20795,7 +21070,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               error: error2,
               children: getChildren2(),
               routeContext: { outlet: null, matches: matches2, isDataRoute: true },
-              unstable_onError
+              onError
             }
           ) : getChildren2();
         },
@@ -20984,7 +21259,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             if (newState.errors && unstable_onError) {
               Object.entries(newState.errors).forEach(([routeId, error2]) => {
                 if (prevState.errors?.[routeId] !== error2) {
-                  unstable_onError(error2);
+                  unstable_onError(error2, {
+                    location: newState.location,
+                    params: newState.matches[0]?.params ?? {}
+                  });
                 }
               });
             }
@@ -21766,7 +22044,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     try {
       if (isBrowser) {
         window.__reactRouterVersion = // @ts-expect-error
-        "7.9.4";
+        "7.9.6";
       }
     } catch (e) {
     }
@@ -21782,7 +22060,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         hydrationRouteProperties,
         dataStrategy: opts?.dataStrategy,
         patchRoutesOnNavigation: opts?.patchRoutesOnNavigation,
-        window: opts?.window
+        window: opts?.window,
+        unstable_instrumentations: opts?.unstable_instrumentations
       }).initialize();
     }
     function parseHydrationData() {
@@ -22217,21 +22496,29 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return isPlainObject(value2) || Array.isArray(value2) || !!value2[DRAFTABLE] || !!value2.constructor?.[DRAFTABLE] || isMap(value2) || isSet(value2);
     }
     var objectCtorString = Object.prototype.constructor.toString();
+    var cachedCtorStrings = /* @__PURE__ */ new WeakMap();
     function isPlainObject(value2) {
       if (!value2 || typeof value2 !== "object")
         return false;
-      const proto = getPrototypeOf(value2);
-      if (proto === null) {
+      const proto = Object.getPrototypeOf(value2);
+      if (proto === null || proto === Object.prototype)
         return true;
-      }
       const Ctor = Object.hasOwnProperty.call(proto, "constructor") && proto.constructor;
       if (Ctor === Object)
         return true;
-      return typeof Ctor == "function" && Function.toString.call(Ctor) === objectCtorString;
+      if (typeof Ctor !== "function")
+        return false;
+      let ctorString = cachedCtorStrings.get(Ctor);
+      if (ctorString === void 0) {
+        ctorString = Function.toString.call(Ctor);
+        cachedCtorStrings.set(Ctor, ctorString);
+      }
+      return ctorString === objectCtorString;
     }
-    function each(obj, iter) {
+    function each(obj, iter, strict = true) {
       if (getArchtype(obj) === 0) {
-        Reflect.ownKeys(obj).forEach((key2) => {
+        const keys = strict ? Reflect.ownKeys(obj) : Object.keys(obj);
+        keys.forEach((key2) => {
           iter(key2, obj[key2], obj);
         });
       } else {
@@ -22315,10 +22602,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         return obj;
       if (getArchtype(obj) > 1) {
         Object.defineProperties(obj, {
-          set: { value: dontMutateFrozenCollections },
-          add: { value: dontMutateFrozenCollections },
-          clear: { value: dontMutateFrozenCollections },
-          delete: { value: dontMutateFrozenCollections }
+          set: dontMutateMethodOverride,
+          add: dontMutateMethodOverride,
+          clear: dontMutateMethodOverride,
+          delete: dontMutateMethodOverride
         });
       }
       Object.freeze(obj);
@@ -22329,7 +22616,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     function dontMutateFrozenCollections() {
       die$1(2);
     }
+    var dontMutateMethodOverride = {
+      value: dontMutateFrozenCollections
+    };
     function isFrozen(obj) {
+      if (obj === null || typeof obj !== "object")
+        return true;
       return Object.isFrozen(obj);
     }
     var plugins = {};
@@ -22421,11 +22713,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     function finalize(rootScope, value2, path) {
       if (isFrozen(value2))
         return value2;
+      const useStrictIteration = rootScope.immer_.shouldUseStrictIteration();
       const state = value2[DRAFT_STATE];
       if (!state) {
         each(
           value2,
-          (key2, childValue) => finalizeProperty(rootScope, state, value2, key2, childValue, path)
+          (key2, childValue) => finalizeProperty(rootScope, state, value2, key2, childValue, path),
+          useStrictIteration
         );
         return value2;
       }
@@ -22448,7 +22742,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
         each(
           resultEach,
-          (key2, childValue) => finalizeProperty(rootScope, state, result2, key2, childValue, path, isSet2)
+          (key2, childValue) => finalizeProperty(
+            rootScope,
+            state,
+            result2,
+            key2,
+            childValue,
+            path,
+            isSet2
+          ),
+          useStrictIteration
         );
         maybeFreeze(rootScope, result2, false);
         if (path && rootScope.patches_) {
@@ -22463,6 +22766,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return state.copy_;
     }
     function finalizeProperty(rootScope, parentState, targetObject, prop2, childValue, rootPath, targetIsSet) {
+      if (childValue == null) {
+        return;
+      }
+      if (typeof childValue !== "object" && !targetIsSet) {
+        return;
+      }
+      const childIsFrozen = isFrozen(childValue);
+      if (childIsFrozen && !targetIsSet) {
+        return;
+      }
       if (isDraft(childValue)) {
         const path = rootPath && parentState && parentState.type_ !== 3 && // Set objects are atomic since they have no keys.
         !has$1(parentState.assigned_, prop2) ? rootPath.concat(prop2) : void 0;
@@ -22475,8 +22788,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       } else if (targetIsSet) {
         targetObject.add(childValue);
       }
-      if (isDraftable(childValue) && !isFrozen(childValue)) {
+      if (isDraftable(childValue) && !childIsFrozen) {
         if (!rootScope.immer_.autoFreeze_ && rootScope.unfinalizedDrafts_ < 1) {
+          return;
+        }
+        if (parentState && parentState.base_ && parentState.base_[prop2] === childValue && childIsFrozen) {
           return;
         }
         finalize(rootScope, childValue);
@@ -22671,6 +22987,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       constructor(config2) {
         this.autoFreeze_ = true;
         this.useStrictShallowCopy_ = false;
+        this.useStrictIteration_ = true;
         this.produce = (base2, recipe, patchListener) => {
           if (typeof base2 === "function" && typeof recipe !== "function") {
             const defaultBase = recipe;
@@ -22733,6 +23050,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           this.setAutoFreeze(config2.autoFreeze);
         if (typeof config2?.useStrictShallowCopy === "boolean")
           this.setUseStrictShallowCopy(config2.useStrictShallowCopy);
+        if (typeof config2?.useStrictIteration === "boolean")
+          this.setUseStrictIteration(config2.useStrictIteration);
       }
       createDraft(base2) {
         if (!isDraftable(base2))
@@ -22768,6 +23087,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
        */
       setUseStrictShallowCopy(value2) {
         this.useStrictShallowCopy_ = value2;
+      }
+      /**
+       * Pass false to use faster iteration that skips non-enumerable properties
+       * but still handles symbols for compatibility.
+       *
+       * By default, strict iteration is enabled (includes all own properties).
+       */
+      setUseStrictIteration(value2) {
+        this.useStrictIteration_ = value2;
+      }
+      shouldUseStrictIteration() {
+        return this.useStrictIteration_;
       }
       applyPatches(base2, patches) {
         let i2;
@@ -22807,17 +23138,23 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         return value2;
       const state = value2[DRAFT_STATE];
       let copy2;
+      let strict = true;
       if (state) {
         if (!state.modified_)
           return state.base_;
         state.finalized_ = true;
         copy2 = shallowCopy(value2, state.scope_.immer_.useStrictShallowCopy_);
+        strict = state.scope_.immer_.shouldUseStrictIteration();
       } else {
         copy2 = shallowCopy(value2, true);
       }
-      each(copy2, (key2, childValue) => {
-        set(copy2, key2, currentImpl(childValue));
-      });
+      each(
+        copy2,
+        (key2, childValue) => {
+          set(copy2, key2, currentImpl(childValue));
+        },
+        strict
+      );
       if (state) {
         state.finalized_ = false;
       }
@@ -26976,7 +27313,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
       }
       // === LOG DETAILS ===
-      async writeLogDetails(filePath, info) {
+      async writeLogDetail(filePath, info) {
         const db = this.getDb();
         const now = (/* @__PURE__ */ new Date()).toISOString();
         const record = {
@@ -26986,6 +27323,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         };
         log$a.debug(`Caching log info for: ${filePath}`);
         await db.log_details.put(record);
+      }
+      async writeLogDetails(details) {
+        const db = this.getDb();
+        const now = (/* @__PURE__ */ new Date()).toISOString();
+        const records = Object.entries(details).map(([filePath, info]) => ({
+          file_path: filePath,
+          cached_at: now,
+          details: info
+        }));
+        log$a.debug(`Caching ${records.length} log details`);
+        await db.log_details.bulkPut(records);
       }
       async readLogDetailsForFile(filePath) {
         try {
@@ -27146,6 +27494,46 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     function createDatabaseService() {
       const manager = new DatabaseManager();
       return new DatabaseService(manager);
+    }
+    function throttle$1(func, wait, options2 = {}) {
+      let context;
+      let args2;
+      let result2;
+      let timeout = null;
+      let previous = 0;
+      const later = function() {
+        previous = options2.leading === false ? 0 : Date.now();
+        timeout = null;
+        result2 = func.apply(context, args2 === null ? [] : args2);
+        if (!timeout) {
+          context = null;
+          args2 = null;
+        }
+      };
+      return function(...callArgs) {
+        const now = Date.now();
+        if (!previous && options2.leading === false) {
+          previous = now;
+        }
+        const remaining = wait - (now - previous);
+        context = this;
+        args2 = callArgs;
+        if (remaining <= 0 || remaining > wait) {
+          if (timeout) {
+            clearTimeout(timeout);
+            timeout = null;
+          }
+          previous = now;
+          result2 = func.apply(context, args2);
+          if (!timeout) {
+            context = null;
+            args2 = null;
+          }
+        } else if (!timeout && options2.trailing !== false) {
+          timeout = setTimeout(later, remaining);
+        }
+        return result2;
+      };
     }
     function debounce$2(func, wait, options2 = {}) {
       let timeout = null;
@@ -27903,7 +28291,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                   state.logActions.setSelectedLogDetails(cachedInfo);
                   api2.get_log_details(logAbsPath).then((logDetails) => {
                     state.logActions.setSelectedLogDetails(logDetails);
-                    dbService.writeLogDetails(logAbsPath, logDetails).catch(() => {
+                    dbService.writeLogDetail(logAbsPath, logDetails).catch(() => {
                     });
                   });
                   const header2 = {
@@ -27923,7 +28311,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               state.logActions.setSelectedLogDetails(logDetails);
               if (dbService) {
                 setTimeout(() => {
-                  dbService.writeLogDetails(logFileName, logDetails).catch(() => {
+                  dbService.writeLogDetail(logFileName, logDetails).catch(() => {
                   });
                 }, 0);
               }
@@ -28980,11 +29368,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     })(WorkPriority || {});
     class WorkQueue {
       itemsById = /* @__PURE__ */ new Map();
-      processing = false;
-      consecutiveErrors = 0;
+      activeWorkers = 0;
       options;
       constructor(options2) {
         this.options = {
+          batchSize: 1,
           processingDelay: 100,
           maxRetries: 3,
           onProcessingChanged: (_processing) => {
@@ -29018,66 +29406,65 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         this.options.onComplete(results, items);
       }
       async startProcessing() {
-        if (this.processing) {
-          return;
+        while (this.activeWorkers < this.options.concurrency && this.itemsById.size > 0) {
+          this.activeWorkers++;
+          if (this.activeWorkers === 1) {
+            try {
+              this.options.onProcessingChanged(true);
+            } catch (error2) {
+              console.error("onProcessingChanged callback error:", error2);
+            }
+          }
+          void this.runWorker();
         }
-        this.processing = true;
-        try {
-          this.options.onProcessingChanged(true);
-        } catch (error2) {
-          console.error("onProcessingChanged callback error:", error2);
-        }
+      }
+      async runWorker() {
         try {
           while (this.itemsById.size > 0) {
-            const batch2 = this.getNextBatch();
+            const batch2 = this.claimNextBatch();
+            if (batch2.length === 0) {
+              break;
+            }
             const inputs = batch2.map((item2) => item2.data);
             try {
               const results = await this.options.worker(inputs);
-              await this.options.onComplete(results, inputs);
-              batch2.forEach((item2) => this.itemsById.delete(item2.id));
-              this.consecutiveErrors = 0;
+              this.options.onComplete(results, inputs);
             } catch (error2) {
               console.error("Work queue processing error:", error2);
               for (const item2 of batch2) {
                 if (item2.retries < this.options.maxRetries) {
                   item2.retries++;
-                } else {
-                  this.itemsById.delete(item2.id);
+                  this.itemsById.set(item2.id, item2);
                 }
               }
-              this.consecutiveErrors++;
             }
-            if (this.itemsById.size > 0) {
-              const delay = this.getBackoffDelay();
-              if (delay > 0) {
-                await new Promise((resolve) => setTimeout(resolve, delay));
-              }
+            if (this.itemsById.size > 0 && this.options.processingDelay > 0) {
+              await new Promise(
+                (resolve) => setTimeout(resolve, this.options.processingDelay)
+              );
             }
           }
         } finally {
-          this.processing = false;
-          try {
-            this.options.onProcessingChanged(false);
-          } catch (error2) {
-            console.error("onProcessingChanged callback error:", error2);
+          this.activeWorkers--;
+          if (this.activeWorkers === 0) {
+            try {
+              this.options.onProcessingChanged(false);
+            } catch (error2) {
+              console.error("onProcessingChanged callback error:", error2);
+            }
           }
         }
       }
-      getNextBatch() {
+      claimNextBatch() {
         const items = Array.from(this.itemsById.values()).sort((a, b) => {
           if (a.priority !== b.priority) {
             return b.priority - a.priority;
           }
           return a.addedAt - b.addedAt;
         });
-        return items.slice(0, this.options.batchSize);
-      }
-      getBackoffDelay() {
-        if (this.consecutiveErrors === 0) {
-          return this.options.processingDelay;
-        }
-        const multiplier = Math.min(Math.pow(2, this.consecutiveErrors - 1), 16);
-        return multiplier * this.options.processingDelay;
+        const batch2 = items.slice(0, this.options.batchSize);
+        batch2.forEach((item2) => this.itemsById.delete(item2.id));
+        return batch2;
       }
       clear() {
         this.itemsById.clear();
@@ -29086,55 +29473,72 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         return this.itemsById.size;
       }
       get isProcessing() {
-        return this.processing;
+        return this.activeWorkers > 0;
       }
     }
     class ReplicationService {
-      _database = void 0;
+      // For remote data retrieval
       _api = void 0;
+      // For storage
+      _database = void 0;
+      // To update application state
       _applicationContext = void 0;
+      // The work queues
       _previewQueue;
       _detailQueue;
       _processingCount;
+      // Track sync requests (so we wait on already running requests before syncing again)
       _pendingSync = null;
       _syncQueued = false;
+      // Batched DB updates
+      _pendingPreviewUpdates = {};
+      _pendingDetailUpdates = {};
+      _flushingPreview = false;
+      _flushingDetail = false;
+      _throttledFlushPreviewBatch;
+      _throttledFlushDetailBatch;
+      _throttledUpdateDbStats;
       constructor() {
         this._processingCount = 0;
+        this._throttledUpdateDbStats = throttle$1(() => this.updateDbStats(), 1e3);
+        this._throttledFlushPreviewBatch = throttle$1(
+          () => this.flushPreviewBatch(),
+          100
+        );
+        this._throttledFlushDetailBatch = throttle$1(
+          () => this.flushDetailBatch(),
+          100
+        );
         this._previewQueue = new WorkQueue({
           name: "Log-Preview-Queue",
-          batchSize: 10,
-          processingDelay: 100,
+          concurrency: 2,
+          batchSize: 6,
+          processingDelay: 20,
           onProcessingChanged: this.processingChanged,
           getId: (log2) => log2.name,
           worker: async (logHandles) => {
-            if (!this._api) throw new Error("API not available");
+            if (!this._api) {
+              throw new Error("API not available");
+            }
             const previews = await this._api.get_log_summaries(
               logHandles.map((log2) => log2.name)
             );
             return previews;
           },
           onComplete: async (previews, inputs) => {
-            const previewMap = {};
             inputs.forEach((log2, i2) => {
               if (previews[i2]) {
-                previewMap[log2.name] = previews[i2];
+                this._pendingPreviewUpdates[log2.name] = previews[i2];
               }
             });
-            this._applicationContext?.updateLogPreviews(previewMap);
-            if (this._database && Object.keys(previewMap).length > 0) {
-              await this._database.writeLogPreviews(
-                Object.values(previewMap),
-                Object.keys(previewMap)
-              ).catch(() => {
-              });
-              await this.updateDbStats();
-            }
+            this._throttledFlushPreviewBatch();
           }
         });
         this._detailQueue = new WorkQueue({
           name: "Log-Detail-Queue",
-          batchSize: 3,
-          processingDelay: 50,
+          concurrency: 10,
+          batchSize: 1,
+          processingDelay: 0,
           onProcessingChanged: this.processingChanged,
           getId: (log2) => log2.name,
           worker: async (logHandles) => {
@@ -29153,23 +29557,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             return allResults;
           },
           onComplete: async (details, inputs) => {
-            if (this._database && details.length > 0) {
-              const detailMap = {};
-              inputs.forEach((log2, i2) => {
-                if (details[i2]) {
-                  detailMap[log2.name] = details[i2];
-                }
-              });
-              this._applicationContext?.updateLogDetails(detailMap);
-              for (const [i2, detail2] of details.entries()) {
-                const input2 = inputs[i2];
-                if (detail2 && input2) {
-                  await this._database.writeLogDetails(input2.name, detail2).catch(() => {
-                  });
-                  this.updateDbStats();
-                }
+            inputs.forEach((log2, i2) => {
+              if (details[i2]) {
+                this._pendingDetailUpdates[log2.name] = details[i2];
               }
-            }
+            });
+            this._throttledFlushDetailBatch();
           }
         });
       }
@@ -29181,6 +29574,47 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           this._applicationContext?.setBackgroundSyncing(false);
         }
       };
+      async flushPreviewBatch() {
+        if (this._flushingPreview) return;
+        this._flushingPreview = true;
+        try {
+          const updates = { ...this._pendingPreviewUpdates };
+          this._pendingPreviewUpdates = {};
+          if (Object.keys(updates).length === 0) {
+            return;
+          }
+          if (this._database) {
+            await this._database.writeLogPreviews(Object.values(updates), Object.keys(updates)).catch(() => {
+            });
+            this._throttledUpdateDbStats();
+          }
+          setTimeout(() => {
+            this._applicationContext?.updateLogPreviews(updates);
+          }, 0);
+        } finally {
+          this._flushingPreview = false;
+        }
+      }
+      async flushDetailBatch() {
+        if (this._flushingDetail) return;
+        this._flushingDetail = true;
+        try {
+          const updates = { ...this._pendingDetailUpdates };
+          this._pendingDetailUpdates = {};
+          if (Object.keys(updates).length === 0) {
+            return;
+          }
+          if (this._database) {
+            await this._database.writeLogDetails(updates);
+            this._throttledUpdateDbStats();
+          }
+          setTimeout(() => {
+            this._applicationContext?.updateLogDetails(updates);
+          }, 0);
+        } finally {
+          this._flushingDetail = false;
+        }
+      }
       async updateDbStats() {
         if (!this._database || !this._applicationContext) return;
         await Promise.all([
@@ -29328,7 +29762,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             previewTasks.push(p);
           }
         }
-        this.queueLogPreviews(previewTasks);
+        this.queueLogPreviews(previewTasks.slice(0, 25), WorkPriority.High);
+        this.queueLogPreviews(previewTasks.slice(25), WorkPriority.Medium);
         const detailTasks = [...toInvalidate];
         const details = await this._database.findMissingDetails(allLogHandles);
         for (const d of details) {
@@ -29336,7 +29771,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             detailTasks.push(d);
           }
         }
-        this.queueLogDetails(detailTasks);
+        this.queueLogDetails(detailTasks, WorkPriority.High);
         if (progress2) {
           this._applicationContext.setLoading(false);
         }
@@ -80842,38 +81277,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     function requireMhchemParser() {
       if (hasRequiredMhchemParser) return mhchemParser;
       hasRequiredMhchemParser = 1;
-      /*!
-       *************************************************************************
-       *
-       *  mhchemParser.ts
-       *  4.2.1
-       *
-       *  Parser for the \ce command and \pu command for MathJax and Co.
-       *
-       *  mhchem's \ce is a tool for writing beautiful chemical equations easily.
-       *  mhchem's \pu is a tool for writing physical units easily.
-       *
-       *  ----------------------------------------------------------------------
-       *
-       *  Copyright (c) 2015-2023 Martin Hensel
-       *
-       *  Licensed under the Apache License, Version 2.0 (the "License");
-       *  you may not use this file except in compliance with the License.
-       *  You may obtain a copy of the License at
-       *
-       *      http://www.apache.org/licenses/LICENSE-2.0
-       *
-       *  Unless required by applicable law or agreed to in writing, software
-       *  distributed under the License is distributed on an "AS IS" BASIS,
-       *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-       *  See the License for the specific language governing permissions and
-       *  limitations under the License.
-       *
-       *  ----------------------------------------------------------------------
-       *
-       *  https://github.com/mhchem/mhchemParser
-       *
-       */
       Object.defineProperty(mhchemParser, "__esModule", { value: true });
       mhchemParser.mhchemParser = void 0;
       var mhchemParser$1 = (function() {
@@ -105575,13 +105978,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         var Property = requireProperty();
         exports2.Selector = Selector;
         exports2.Property = Property;
-        /**
-         * Returns an array of the selectors.
-         *
-         * @license Sizzle CSS Selector Engine - MIT
-         * @param {String} selectorText from mensch
-         * @api public
-         */
         exports2.extract = function extract(selectorText) {
           var attr = 0;
           var sels = [];
@@ -116857,7 +117253,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.fullWidth, styles$1s.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1s.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.150-8-ge67c4052d" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.150-16-g0d7f58f9c" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.spacer) }),
@@ -117216,16 +117612,6 @@ categories: ${categories.join(" ")}`;
         }
       );
     };
-    /**
-       * table-core
-       *
-       * Copyright (c) TanStack
-       *
-       * This source code is licensed under the MIT license found in the
-       * LICENSE.md file in the root directory of this source tree.
-       *
-       * @license MIT
-       */
     function createColumnHelper() {
       return {
         accessor: (accessor, column2) => {
@@ -120146,16 +120532,6 @@ categories: ${categories.join(" ")}`;
         };
       }, getMemoOptions(table2.options, "debugTable", "getSortedRowModel", () => table2._autoResetPageIndex()));
     }
-    /**
-       * react-table
-       *
-       * Copyright (c) TanStack
-       *
-       * This source code is licensed under the MIT license found in the
-       * LICENSE.md file in the root directory of this source tree.
-       *
-       * @license MIT
-       */
     function flexRender(Comp, props) {
       return !Comp ? null : isReactComponent(Comp) ? /* @__PURE__ */ reactExports.createElement(Comp, props) : Comp;
     }
@@ -121027,6 +121403,7 @@ categories: ${categories.join(" ")}`;
     const LogListFooter = ({
       id,
       itemCount,
+      itemCountLabel,
       paginated,
       pagesize,
       filteredCount,
@@ -121059,7 +121436,7 @@ categories: ${categories.join(" ")}`;
             progressText,
             "..."
           ] })
-        ] }) : void 0 }),
+        ] }) : itemCountLabel ? `${itemCount.toLocaleString()} ${itemCountLabel}` : null }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1g.center), children: paginated && /* @__PURE__ */ jsxRuntimeExports.jsx(LogPager, { itemCount: effectiveItemCount }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1g.right), children: progressBar ? progressBar : paginated ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: effectiveItemCount === 0 ? "" : filteredCount !== void 0 && filteredCount !== itemCount ? `${startItem} - ${endItem} / ${effectiveItemCount} (${itemCount} total)` : `${startItem} - ${endItem} / ${effectiveItemCount}` }) : `${effectiveItemCount} items` })
       ] });
@@ -152747,7 +153124,8 @@ ${events}
           this.range = rangeAroundSelected(open.options.length, open.selected, this.view.state.facet(completionConfig).maxRenderedOptions);
           this.showOptions(open.options, cState.id);
         }
-        if (this.updateSelectedOption(open.selected)) {
+        let newSel = this.updateSelectedOption(open.selected);
+        if (newSel) {
           this.destroyInfo();
           let { completion } = open.options[open.selected];
           let { info } = completion;
@@ -152763,6 +153141,7 @@ ${events}
             }).catch((e) => logException(this.view.state, e, "completion info"));
           } else {
             this.addInfoPane(infoResult, completion);
+            newSel.setAttribute("aria-describedby", this.info.id);
           }
         }
       }
@@ -152770,6 +153149,7 @@ ${events}
         this.destroyInfo();
         let wrap2 = this.info = document.createElement("div");
         wrap2.className = "cm-tooltip cm-completionInfo";
+        wrap2.id = "cm-completionInfo-" + Math.floor(Math.random() * 65535).toString(16);
         if (content2.nodeType != null) {
           wrap2.appendChild(content2);
           this.infoDestroy = null;
@@ -152792,8 +153172,10 @@ ${events}
               set2 = opt;
             }
           } else {
-            if (opt.hasAttribute("aria-selected"))
+            if (opt.hasAttribute("aria-selected")) {
               opt.removeAttribute("aria-selected");
+              opt.removeAttribute("aria-describedby");
+            }
           }
         }
         if (set2)
@@ -165738,7 +166120,7 @@ Supported expressions:
         }
       }
     };
-    var VERSION = "34.3.0";
+    var VERSION = "34.3.1";
     var MAX_URL_LENGTH = 2e3;
     var MIN_PARAM_LENGTH = 100;
     var VERSION_PARAM_NAME = "_version_";
@@ -194304,7 +194686,8 @@ ${suggestions}`;
       const agColumn = beans.colModel.getCol(position.column.getId());
       const { rowNode, column: column2 } = position;
       const editor = cellCtrl.comp?.getCellEditor();
-      const initialNewValue = editSvc?.getCellDataValue(position, false) ?? (editor ? _valueFromEditor(beans, editor)?.editorValue : void 0);
+      const cellDataValue = editSvc?.getCellDataValue(position, false);
+      const initialNewValue = cellDataValue === void 0 ? editor ? _valueFromEditor(beans, editor)?.editorValue : void 0 : cellDataValue;
       const value2 = initialNewValue === UNEDITED ? valueSvc.getValueForDisplay(agColumn, rowNode)?.value : initialNewValue;
       return _addGridCommonParams(gos, {
         value: enableGroupEditing ? initialNewValue : value2,
@@ -210170,14 +210553,20 @@ If you are trying to annotate ${containerName} with application data, use the '$
         if (this.rowNode !== rowNode) {
           super.cleanupEditors(position);
         }
-        this.dispatchRowEvent({ rowNode }, "rowEditingStarted", silent);
-        this.startedRows.push(rowNode);
         const columns = this.beans.visibleCols.allCols;
         const cells = [];
+        const editableColumns = [];
         for (const column2 of columns) {
-          if (!column2.isCellEditable(rowNode)) {
-            continue;
+          if (column2.isCellEditable(rowNode)) {
+            editableColumns.push(column2);
           }
+        }
+        if (editableColumns.length == 0) {
+          return;
+        }
+        this.dispatchRowEvent({ rowNode }, "rowEditingStarted", silent);
+        this.startedRows.push(rowNode);
+        for (const column2 of editableColumns) {
           const position2 = {
             rowNode,
             column: column2
@@ -221631,11 +222020,6 @@ If you are trying to annotate ${containerName} with application data, use the '$
       }, [loadLogs, samplesPath]);
       const filterModel = gridRef.current?.api?.getFilterModel();
       const hasFilter = filterModel && Object.keys(filterModel).length > 0;
-      console.log({
-        totalTaskCount,
-        completedTaskCount,
-        showBar: totalTaskCount !== completedTaskCount
-      });
       return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1.panel), children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs(ApplicationNavbar, { currentPath: samplesPath, fnNavigationUrl: samplesUrl, children: [
           hasFilter && /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -221657,8 +222041,9 @@ If you are trying to annotate ${containerName} with application data, use the '$
           {
             id: "samples-list-footer",
             itemCount: filteredSamplesCount ?? 0,
+            itemCountLabel: filteredSamplesCount === 1 ? "sample" : "samples",
             paginated: false,
-            progressText: syncing ? "Syncing..." : void 0,
+            progressText: syncing ? `Syncing${filteredSamplesCount ? ` (${filteredSamplesCount.toLocaleString()} samples)` : ""}` : void 0,
             progressBar: totalTaskCount !== completedTaskCount ? /* @__PURE__ */ jsxRuntimeExports.jsx(
               ProgressBar,
               {
