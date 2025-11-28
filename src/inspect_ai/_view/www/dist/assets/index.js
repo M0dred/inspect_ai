@@ -117289,7 +117289,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.fullWidth, styles$1s.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1s.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.150-13-g45b76b705" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.150-19-g4038beaca" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.spacer) }),
@@ -156039,7 +156039,7 @@ ${events}
           diagnostics = diagnosticFilter(diagnostics, state);
         let sorted = diagnostics.slice().sort((a, b) => a.from - b.from || a.to - b.to);
         let deco = new RangeSetBuilder(), active = [], pos2 = 0;
-        let scan = state.doc.iter(), scanPos = 0;
+        let scan = state.doc.iter(), scanPos = 0, docLen = state.doc.length;
         for (let i2 = 0; ; ) {
           let next = i2 == sorted.length ? null : sorted[i2];
           if (!next && !active.length)
@@ -156050,6 +156050,8 @@ ${events}
             to2 = active.reduce((p, d) => Math.min(p, d.to), next && next.from > from ? next.from : 1e8);
           } else {
             from = next.from;
+            if (from > docLen)
+              break;
             to2 = next.to;
             active.push(next);
             i2++;
@@ -156065,8 +156067,9 @@ ${events}
               break;
             }
           }
+          to2 = Math.min(to2, docLen);
           let widget = false;
-          if (active.some((d) => d.from == from && d.to == to2)) {
+          if (active.some((d) => d.from == from && (d.to == to2 || to2 == docLen))) {
             widget = from == to2;
             if (!widget && to2 - from < 10) {
               let behind = from - (scanPos + scan.value.length);
@@ -156102,6 +156105,8 @@ ${events}
             }));
           }
           pos2 = to2;
+          if (pos2 == docLen)
+            break;
           for (let i3 = 0; i3 < active.length; i3++)
             if (active[i3].to <= pos2)
               active.splice(i3--, 1);
