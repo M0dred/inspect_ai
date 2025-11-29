@@ -117289,7 +117289,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.fullWidth, styles$1s.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1s.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.150-19-g4038beaca" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.150-21-gd89d322c9" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.spacer) }),
@@ -120613,19 +120613,19 @@ categories: ${categories.join(" ")}`;
       }));
       return tableRef.current;
     }
-    const gridContainer = "_gridContainer_kwokc_1";
-    const grid$8 = "_grid_kwokc_1";
-    const headerRow = "_headerRow_kwokc_16";
-    const headerCell = "_headerCell_kwokc_27";
-    const sortable = "_sortable_kwokc_47";
-    const sortIndicator = "_sortIndicator_kwokc_56";
-    const resizer = "_resizer_kwokc_63";
-    const isResizing = "_isResizing_kwokc_79";
-    const bodyContainer$1 = "_bodyContainer_kwokc_88";
-    const bodyRow = "_bodyRow_kwokc_96";
-    const selectedRow = "_selectedRow_kwokc_111";
-    const bodyCell = "_bodyCell_kwokc_121";
-    const emptyMessage = "_emptyMessage_kwokc_133";
+    const gridContainer = "_gridContainer_55y8l_1";
+    const grid$8 = "_grid_55y8l_1";
+    const headerRow = "_headerRow_55y8l_16";
+    const headerCell = "_headerCell_55y8l_27";
+    const sortable = "_sortable_55y8l_47";
+    const sortIndicator = "_sortIndicator_55y8l_56";
+    const resizer = "_resizer_55y8l_63";
+    const isResizing = "_isResizing_55y8l_79";
+    const bodyContainer$1 = "_bodyContainer_55y8l_88";
+    const bodyRow = "_bodyRow_55y8l_96";
+    const selectedRow = "_selectedRow_55y8l_111";
+    const bodyCell = "_bodyCell_55y8l_121";
+    const emptyMessage = "_emptyMessage_55y8l_133";
     const styles$1p = {
       gridContainer,
       grid: grid$8,
@@ -121764,6 +121764,12 @@ categories: ${categories.join(" ")}`;
     };
     const collapseLogItems = (evalSet, logItems) => {
       if (!evalSet) {
+        return logItems;
+      }
+      const running = logItems.some(
+        (l) => l.type === "file" && l.logPreview?.status === "started"
+      );
+      if (!running) {
         return logItems;
       }
       const taskIdToItems = /* @__PURE__ */ new Map();
