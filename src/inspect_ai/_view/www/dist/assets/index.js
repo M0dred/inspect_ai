@@ -30396,6 +30396,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       const durationSec = durationMs / 1e3;
       return formatTime$1(durationSec);
     }
+    const errorType = (message2) => {
+      if (!message2) {
+        return "Error";
+      }
+      if (message2.includes("(")) {
+        return message2.split("(")[0];
+      }
+      return "Error";
+    };
     const circle$1 = "_circle_qymy9_1";
     const green$1 = "_green_qymy9_12";
     const red$1 = "_red_qymy9_18";
@@ -111711,7 +111720,7 @@ ${citation.url}` : citation.url,
             selectedScores.forEach((scoreLabel, index) => {
               const score2 = evalDescriptor.score(current2, scoreLabel);
               const scoreValue = score2?.value;
-              const scoreText = scoreValue ? String(scoreValue) : current2.error ? String(current2.error) : "";
+              const scoreText = scoreValue ? String(scoreValue) : current2.error ? errorType(current2.error) : "";
               const currentSize = Math.max(
                 scoreText.length,
                 scoreLabel.name.length
@@ -117296,7 +117305,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.fullWidth, styles$1s.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1s.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.150-41-g03740fdf7" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.151-4-g21437386f" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.spacer) }),
@@ -124035,15 +124044,6 @@ Tool Use: ${toolUse.name}(${toolUse.arguments}) -> ${toolUse.result}${errorStr}`
       flatBody,
       iconSmall: iconSmall$1,
       lineBase
-    };
-    const errorType = (message2) => {
-      if (!message2) {
-        return "Error";
-      }
-      if (message2.includes("(")) {
-        return message2.split("(")[0];
-      }
-      return "Error";
     };
     const FlatSampleError = ({ message: message2 }) => {
       return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$U.flatBody), children: [
