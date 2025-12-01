@@ -27934,7 +27934,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     };
     const directoryRelativeUrl = (file, dir) => {
       if (!dir) {
-        return encodeURIComponent(file);
+        return uriEncodePathSegments(file);
       }
       const normalizedFile = file.replace(/\\/g, "/");
       const normalizedLogDir = dir.replace(/\\/g, "/");
@@ -27947,7 +27947,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         );
         return encodedSegments.join("/");
       }
-      return encodeURIComponent(file);
+      return uriEncodePathSegments(normalizedFile);
+    };
+    const uriEncodePathSegments = (path) => {
+      const segments2 = path.split("/");
+      return segments2.map((segment2) => encodeURIComponent(segment2)).join("/");
     };
     const join = (file, dir) => {
       if (!dir) {
@@ -27956,6 +27960,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       const normalizedFile = file.replace(/\\/g, "/");
       const normalizedLogDir = dir.replace(/\\/g, "/");
       const dirWithSlash = normalizedLogDir.endsWith("/") ? normalizedLogDir : normalizedLogDir + "/";
+      if (normalizedFile.startsWith(dirWithSlash)) {
+        return normalizedFile;
+      }
       return dirWithSlash + normalizedFile;
     };
     function encodePathParts(url) {
@@ -117289,7 +117296,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.fullWidth, styles$1s.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1s.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.150-21-gd89d322c9" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.150-41-g03740fdf7" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.spacer) }),
