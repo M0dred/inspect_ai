@@ -35503,8 +35503,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       const setScrollPosition = useStore(
         (state) => state.appActions.setScrollPosition
       );
-      const handleScroll = reactExports.useCallback(
-        debounce$2((e) => {
+      const handleScroll = reactExports.useMemo(
+        () => debounce$2((e) => {
           const target2 = e.target;
           const position = target2.scrollTop;
           log$2.debug(`Storing scroll position`, elementKey, position);
@@ -35575,7 +35575,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             log$2.warn("Element has no way to remove event listener", element);
           }
         };
-      }, [elementKey, elementRef, handleScroll]);
+      }, [elementKey, elementRef, getScrollPosition, handleScroll, scrollable2]);
       return { restoreScrollPosition };
     }
     const useVirtuosoState = (virtuosoRef, elementKey, delay = 1e3) => {
@@ -35882,7 +35882,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           {}
         );
         setCollapsedIds(id, defaultCollapsedIds);
-      }, [collapsedIds, items]);
+      }, [collapsedIds, defaultExpandLevel, id, items, setCollapsedIds]);
       const keyUpHandler = reactExports.useCallback(
         (itemId, index) => {
           return (event) => {
@@ -35935,7 +35935,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             }
           };
         },
-        [collapsedIds, items]
+        [collapsedIds, id, items.length, setCollapsed]
       );
       const renderRow = (index) => {
         const item2 = items[index];
@@ -36374,7 +36374,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           urlSampleId,
           urlEpoch
         ) : void 0;
-      }, [targetLogPath, messageId, sampleId, urlSampleId, sampleEpoch, urlEpoch]);
+      }, [
+        messageId,
+        targetLogPath,
+        builder,
+        sampleId,
+        urlSampleId,
+        sampleEpoch,
+        urlEpoch
+      ]);
       return messageUrl;
     };
     const useSampleEventUrl = (eventId, sampleId, sampleEpoch) => {
@@ -36398,7 +36406,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           urlSampleId,
           urlEpoch
         ) : void 0;
-      }, [targetLogPath, eventId, sampleId, urlSampleId, sampleEpoch, urlEpoch]);
+      }, [
+        targetLogPath,
+        builder,
+        eventId,
+        sampleId,
+        urlSampleId,
+        sampleEpoch,
+        urlEpoch
+      ]);
       return eventUrl;
     };
     const sampleMessageUrl = (builder, messageId, logPath, sampleId, sampleEpoch) => {
@@ -106879,7 +106895,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           return () => {
             cancel();
           };
-        }, [markdown, omitMedia, cachedHtml, renderedHtml]);
+        }, [markdown, omitMedia, cachedHtml, renderedHtml, cacheKey]);
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
@@ -114885,7 +114901,7 @@ categories: ${categories.join(" ")}`;
           loadedLog,
           sample: selectedSampleSummary
         };
-      }, [selectedLogFile, selectedSampleSummary]);
+      }, [loadedLog, selectedLogFile, selectedSampleSummary]);
     };
     const useCollapseSampleEvent = (scope, id) => {
       const collapsed2 = useStore((state) => state.sample.collapsedEvents);
@@ -114897,7 +114913,7 @@ categories: ${categories.join(" ")}`;
           collapseEvent(scope, id, value2);
         };
         return [isCollapsed, set2];
-      }, [collapsed2, collapseEvent, id]);
+      }, [collapsed2, scope, id, collapseEvent]);
     };
     const useCollapsibleIds = (key2) => {
       const collapsedIds = useStore(
@@ -114908,7 +114924,7 @@ categories: ${categories.join(" ")}`;
         (id, value2) => {
           setCollapsed(key2, id, value2);
         },
-        [setCollapsed]
+        [setCollapsed, key2]
       );
       const clearCollapsedIds = useStore(
         (state) => state.sampleActions.clearCollapsedIds
@@ -114932,7 +114948,7 @@ categories: ${categories.join(" ")}`;
           setCollapsed(stateId, value2);
         };
         return [collapsed2, set2];
-      }, [collapsed2, setCollapsed]);
+      }, [collapsed2, id, scope, setCollapsed, stateId]);
     };
     const useMessageVisibility = (id, scope) => {
       const visible2 = useStore(
@@ -115006,7 +115022,7 @@ categories: ${categories.join(" ")}`;
             removePropertyValue(id, propertyName2);
           }
         };
-      }, [id, propertyName2, removePropertyValue]);
+      }, [id, options2.cleanup, propertyName2, removePropertyValue]);
       return [propertyValue, setValue, removeValue];
     }
     const usePrevious = (value2) => {
@@ -115307,7 +115323,7 @@ categories: ${categories.join(" ")}`;
         if (dir !== flowDir) {
           fetchFlow();
         }
-      }, [dir, flowDir, api2]);
+      }, [dir, flowDir, api2, updateFlowData]);
     };
     const wrapper$4 = "_wrapper_1tajk_1";
     const container$m = "_container_1tajk_12";
@@ -116965,7 +116981,7 @@ categories: ${categories.join(" ")}`;
             window.clearTimeout(hoverTimerRef.current);
           }
         };
-      }, [isOpen, positionEl, hoverDelay]);
+      }, [isOpen, positionEl, hoverDelay, setIsOpen]);
       reactExports.useEffect(() => {
         if (usePortal && isOpen && shouldShowPopover) {
           let container2 = document.getElementById(id);
@@ -117035,7 +117051,7 @@ categories: ${categories.join(" ")}`;
           }, 10);
           return () => clearTimeout(timer);
         }
-      }, [update, isOpen, shouldShowPopover, showArrow, arrowRef.current]);
+      }, [update, isOpen, shouldShowPopover, showArrow]);
       const getArrowDataPlacement = () => {
         if (!state || !state.placement) return placement;
         return state.placement;
@@ -117305,7 +117321,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.fullWidth, styles$1s.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1s.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.151-4-g21437386f" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.151-11-g6dfd7508f" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.spacer) }),
@@ -117447,7 +117463,7 @@ categories: ${categories.join(" ")}`;
         return () => {
           resizeObserver.disconnect();
         };
-      }, [measureAndTruncate]);
+      }, [containerRef, measureAndTruncate]);
       return truncatedData;
     };
     const Navbar = ({
@@ -117482,7 +117498,7 @@ categories: ${categories.join(" ")}`;
           { text: baseLogName, url: fnNavigationUrl("", logDir2) },
           ...dirSegments
         ];
-      }, [baseLogDir, baseLogName, currentPath, logDir2]);
+      }, [baseLogDir, baseLogName, currentPath, fnNavigationUrl, logDir2]);
       const { visibleSegments, showEllipsis } = useBreadcrumbTruncation(
         segments2,
         pathContainerRef
@@ -121046,7 +121062,7 @@ categories: ${categories.join(" ")}`;
         }, [sorting]);
         reactExports.useEffect(() => {
           setSorting([{ id: "icon", desc: false }]);
-        }, []);
+        }, [setSorting]);
         reactExports.useEffect(() => {
           const currentSort = sortingRef.current?.find(
             (sort2) => sort2.id === "task" || sort2.id === "model" || sort2.id === "score"
@@ -121054,7 +121070,7 @@ categories: ${categories.join(" ")}`;
           if (currentSort) {
             setSorting([...sortingRef.current || []]);
           }
-        }, [logPreviews]);
+        }, [logPreviews, setSorting]);
         const columns = reactExports.useMemo(() => {
           return getColumns$1();
         }, []);
@@ -121110,7 +121126,7 @@ categories: ${categories.join(" ")}`;
         reactExports.useEffect(() => {
           const filteredRowCount = table2.getFilteredRowModel().rows.length;
           setFilteredCount(filteredRowCount);
-        }, [table2.getFilteredRowModel().rows.length, setFilteredCount]);
+        }, [setFilteredCount, table2]);
         const filterText = reactExports.useRef(globalFilter);
         reactExports.useEffect(() => {
           const timeoutId = setTimeout(() => {
@@ -121684,7 +121700,7 @@ categories: ${categories.join(" ")}`;
         }
         const collapsedLogItems = collapseLogItems(evalSet, logItems2);
         return appendPendingItems(evalSet, existingLogTaskIds, collapsedLogItems);
-      }, [currentDir, logFiles, logPreviews, evalSet]);
+      }, [evalSet, logFiles, currentDir, logDir2, logPreviews]);
       const progress2 = reactExports.useMemo(() => {
         let pending = 0;
         let total = 0;
@@ -121720,7 +121736,7 @@ categories: ${categories.join(" ")}`;
             navigate(onlyItem.url);
           }
         }
-      }, [logItems, maybeShowSingleLog]);
+      }, [logItems, maybeShowSingleLog, navigate]);
       function handleKeyDown(e) {
         if (e.key === "f" && (e.metaKey || e.ctrlKey)) {
           e.preventDefault();
@@ -121936,29 +121952,6 @@ categories: ${categories.join(" ")}`;
       const { extendedFindTerm } = useExtendedFind();
       const lastFoundItem = reactExports.useRef(null);
       const currentSearchTerm = reactExports.useRef("");
-      reactExports.useEffect(() => {
-        setTimeout(() => {
-          searchBoxRef.current?.focus();
-          searchBoxRef.current?.select();
-        }, 10);
-        const handleGlobalKeydown = (e) => {
-          if ((e.ctrlKey || e.metaKey) && e.key === "f") {
-            e.preventDefault();
-            e.stopPropagation();
-            searchBoxRef.current?.focus();
-            searchBoxRef.current?.select();
-          } else if ((e.ctrlKey || e.metaKey) && e.key === "g") {
-            e.preventDefault();
-            e.stopPropagation();
-            const back = e.shiftKey;
-            handleSearch(back);
-          }
-        };
-        document.addEventListener("keydown", handleGlobalKeydown, true);
-        return () => {
-          document.removeEventListener("keydown", handleGlobalKeydown, true);
-        };
-      }, []);
       const getParentExpandablePanel = reactExports.useCallback(
         (selection) => {
           let node2 = selection.anchorNode;
@@ -122025,6 +122018,29 @@ categories: ${categories.join(" ")}`;
         },
         [getParentExpandablePanel, extendedFindTerm]
       );
+      reactExports.useEffect(() => {
+        setTimeout(() => {
+          searchBoxRef.current?.focus();
+          searchBoxRef.current?.select();
+        }, 10);
+        const handleGlobalKeydown = (e) => {
+          if ((e.ctrlKey || e.metaKey) && e.key === "f") {
+            e.preventDefault();
+            e.stopPropagation();
+            searchBoxRef.current?.focus();
+            searchBoxRef.current?.select();
+          } else if ((e.ctrlKey || e.metaKey) && e.key === "g") {
+            e.preventDefault();
+            e.stopPropagation();
+            const back = e.shiftKey;
+            handleSearch(back);
+          }
+        };
+        document.addEventListener("keydown", handleGlobalKeydown, true);
+        return () => {
+          document.removeEventListener("keydown", handleGlobalKeydown, true);
+        };
+      }, [handleSearch]);
       const handleKeyDown = reactExports.useCallback(
         (e) => {
           if (e.key === "Escape") {
@@ -122736,7 +122752,14 @@ categories: ${categories.join(" ")}`;
           },
           scrollRef
         };
-      }, [evalSpec, evalPlan, evalError, evalResults, totalSampleCount]);
+      }, [
+        evalSpec,
+        evalPlan,
+        evalError,
+        evalResults,
+        evalStatus,
+        totalSampleCount
+      ]);
     };
     const InfoTab = ({
       evalSpec,
@@ -123215,7 +123238,7 @@ categories: ${categories.join(" ")}`;
             evalStatus
           }
         };
-      }, [evalSpec, evalStats]);
+      }, [evalSpec, evalStats, evalStatus]);
     };
     const ModelTab = ({
       evalSpec,
@@ -123376,12 +123399,10 @@ categories: ${categories.join(" ")}`;
           }
         },
         [
-          sampleSummaries,
           resolveLogPath,
           selectSample,
           setShowingSampleDialog,
           navigate,
-          tabId,
           sampleTabId
         ]
       );
@@ -123407,13 +123428,12 @@ categories: ${categories.join(" ")}`;
           }
         },
         [
-          selectedSampleHandle,
-          showSample,
-          sampleTabId,
           sampleSummaries,
           showingSampleDialog,
           resolveLogPath,
-          navigate
+          sampleTabId,
+          navigate,
+          selectSample
         ]
       );
       const nextSample = reactExports.useCallback(() => {
@@ -123446,7 +123466,7 @@ categories: ${categories.join(" ")}`;
           }
           return void 0;
         },
-        [resolveLogPath, tabId, sampleTabId]
+        [resolveLogPath, sampleTabId]
       );
       const clearSampleUrl = reactExports.useCallback(() => {
         const resolvedPath = resolveLogPath();
@@ -123682,7 +123702,7 @@ Tool Use: ${toolUse.name}(${toolUse.arguments}) -> ${toolUse.result}${errorStr}`
         if (followOutput === null) {
           setFollowOutput(!!live);
         }
-      }, []);
+      }, [followOutput, live, setFollowOutput]);
       const prevLive = usePrevious(live);
       reactExports.useEffect(() => {
         if (!live && prevLive && followOutput && scrollRef?.current) {
@@ -123693,7 +123713,7 @@ Tool Use: ${toolUse.name}(${toolUse.arguments}) -> ${toolUse.result}${errorStr}`
             }
           }, 100);
         }
-      }, [live, followOutput]);
+      }, [live, followOutput, prevLive, scrollRef, setFollowOutput]);
       const handleScroll = useRafThrottle(() => {
         if (isAutoScrollingRef.current) return;
         if (!live) return;
@@ -123719,16 +123739,16 @@ Tool Use: ${toolUse.name}(${toolUse.arguments}) -> ${toolUse.result}${errorStr}`
             }
           });
         },
-        [scrollRef, followOutput, live]
+        [followOutput, live, scrollRef, listHandle]
       );
+      const forceUpdate = reactExports.useCallback(() => forceRender({}), []);
       reactExports.useEffect(() => {
         const timer = setTimeout(() => {
           forceUpdate();
         }, 0);
         return () => clearTimeout(timer);
-      }, []);
+      }, [forceUpdate]);
       const [, forceRender] = reactExports.useState({});
-      const forceUpdate = reactExports.useCallback(() => forceRender({}), []);
       const defaultSearchInItem = reactExports.useCallback(
         (item2, searchTerm) => {
           const searchLower = searchTerm.toLowerCase();
@@ -123761,7 +123781,14 @@ Tool Use: ${toolUse.name}(${toolUse.arguments}) -> ${toolUse.result}${errorStr}`
           }
           return false;
         },
-        [data, searchInItem, defaultSearchInItem, visibleRange]
+        [
+          data,
+          searchInItem,
+          defaultSearchInItem,
+          visibleRange.endIndex,
+          visibleRange.startIndex,
+          listHandle
+        ]
       );
       reactExports.useEffect(() => {
         const unregister = registerVirtualList(id, searchInData);
@@ -123791,7 +123818,7 @@ Tool Use: ${toolUse.name}(${toolUse.arguments}) -> ${toolUse.result}${errorStr}`
           }, 50);
           return () => clearTimeout(timer);
         }
-      }, [initialTopMostItemIndex]);
+      }, [initialTopMostItemIndex, listHandle, offsetTop]);
       reactExports.useEffect(() => {
         if (!isCurrentlyScrolling && pendingSearchCallback.current) {
           setTimeout(() => {
@@ -123853,7 +123880,7 @@ Tool Use: ${toolUse.name}(${toolUse.arguments}) -> ${toolUse.result}${errorStr}`
         const setNativeFind = useStore((state) => state.appActions.setNativeFind);
         reactExports.useEffect(() => {
           setNativeFind(!useVirtuoso);
-        }, [useVirtuoso]);
+        }, [setNativeFind, useVirtuoso]);
         reactExports.useEffect(() => {
           const handleKeyDown = (event) => {
             if (event.metaKey || event.ctrlKey) {
@@ -123896,7 +123923,7 @@ Tool Use: ${toolUse.name}(${toolUse.arguments}) -> ${toolUse.result}${errorStr}`
               scrollElement.removeEventListener("keydown", handleKeyDown);
             };
           }
-        }, [scrollRef, messages2]);
+        }, [scrollRef, messages2, useVirtuoso]);
         if (!useVirtuoso) {
           return /* @__PURE__ */ jsxRuntimeExports.jsx(
             ChatView,
@@ -123980,7 +124007,14 @@ Tool Use: ${toolUse.name}(${toolUse.arguments}) -> ${toolUse.result}${errorStr}`
               }
             );
           },
-          [id, numbered, indented2, toolCallStyle, collapsedMessages]
+          [
+            collapsedMessages.length,
+            numbered,
+            id,
+            indented2,
+            toolCallStyle,
+            allowLinking
+          ]
         );
         const Item = ({
           children: children2,
@@ -124522,7 +124556,7 @@ Tool Use: ${toolUse.name}(${toolUse.arguments}) -> ${toolUse.result}${errorStr}`
           }
           setFilteredEventTypes(Array.from(newFiltered));
         },
-        [filtered]
+        [filtered, setFilteredEventTypes]
       );
       const setDebugFilter = reactExports.useCallback(() => {
         setFilteredEventTypes([]);
@@ -125761,7 +125795,7 @@ Tool Use: ${toolUse.name}(${toolUse.arguments}) -> ${toolUse.result}${errorStr}`
       gridColumns2.push("minmax(0, max-content)");
       const toggleCollapse = reactExports.useCallback(() => {
         setCollapsed(!collapsed2);
-      }, [setCollapsed, collapsed2, childIds]);
+      }, [setCollapsed, collapsed2]);
       const [mouseOver, setMouseOver] = reactExports.useState(false);
       const titleEl = title2 || icon2 || filteredArrChildren.length > 1 ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
@@ -134100,6 +134134,25 @@ ${events}
         }
       );
     };
+    function useRevokableUrls() {
+      const urlsRef = reactExports.useRef([]);
+      const createRevokableUrl = reactExports.useCallback(
+        (data, type = "text/plain") => {
+          const blob = new Blob([data], { type });
+          const url = URL.createObjectURL(blob);
+          urlsRef.current.push(url);
+          return url;
+        },
+        []
+      );
+      reactExports.useEffect(() => {
+        return () => {
+          urlsRef.current.forEach((url) => URL.revokeObjectURL(url));
+          urlsRef.current = [];
+        };
+      }, []);
+      return createRevokableUrl;
+    }
     const carouselThumbs = "_carouselThumbs_1mvg8_1";
     const carouselThumb = "_carouselThumb_1mvg8_1";
     const carouselPlayIcon = "_carouselPlayIcon_1mvg8_16";
@@ -134134,7 +134187,7 @@ ${events}
           setShowOverlay(true);
           setTimeout(() => setIsOpen(true), 10);
         },
-        [setIsOpen]
+        [setCurrentIndex, setIsOpen, setShowOverlay]
       );
       const closeLightbox = reactExports.useCallback(() => {
         setIsOpen(false);
@@ -134149,10 +134202,10 @@ ${events}
       }, [isOpen, showOverlay, setShowOverlay]);
       const showNext = reactExports.useCallback(() => {
         setCurrentIndex(currentIndex + 1);
-      }, [slides, setCurrentIndex]);
+      }, [setCurrentIndex, currentIndex]);
       const showPrev = reactExports.useCallback(() => {
         setCurrentIndex((currentIndex - 1 + slides.length) % slides.length);
-      }, [slides, setCurrentIndex]);
+      }, [setCurrentIndex, currentIndex, slides.length]);
       reactExports.useEffect(() => {
         if (!isOpen) return;
         const handleKeyUp = (e) => {
@@ -134168,7 +134221,7 @@ ${events}
         };
         window.addEventListener("keyup", handleKeyUp, true);
         return () => window.removeEventListener("keyup", handleKeyUp);
-      }, [isOpen, showNext, showPrev]);
+      }, [closeLightbox, isOpen, showNext, showPrev]);
       const handleThumbClick = reactExports.useCallback(
         (e) => {
           const index = Number(e.currentTarget.dataset.index);
@@ -134250,19 +134303,8 @@ ${events}
       running,
       sessionLogs
     }) => {
+      const createRevokableUrl = useRevokableUrls();
       const player_fns = [];
-      const revokableUrls = [];
-      const revokableUrl = (data) => {
-        const blob = new Blob([data], { type: "text/plain" });
-        const url = URL.createObjectURL(blob);
-        revokableUrls.push(url);
-        return url;
-      };
-      reactExports.useEffect(() => {
-        return () => {
-          revokableUrls.forEach((url) => URL.revokeObjectURL(url));
-        };
-      }, []);
       let count2 = 1;
       for (const sessionLog of sessionLogs) {
         const rows = extractSize(sessionLog.output, "LINES", 24);
@@ -134275,9 +134317,9 @@ ${events}
             AsciinemaPlayer,
             {
               id: `player-${currentCount}`,
-              inputUrl: revokableUrl(sessionLog.input),
-              outputUrl: revokableUrl(sessionLog.output),
-              timingUrl: revokableUrl(sessionLog.timing),
+              inputUrl: createRevokableUrl(sessionLog.input),
+              outputUrl: createRevokableUrl(sessionLog.output),
+              timingUrl: createRevokableUrl(sessionLog.timing),
               rows,
               cols,
               className: "asciinema-player",
@@ -134612,14 +134654,14 @@ ${events}
       const changePreview = reactExports.useMemo(() => {
         const isStore = eventNode.event.event === "store";
         return generatePreview(event.changes, structuredClone(after), isStore);
-      }, [event.changes, after]);
+      }, [eventNode.event.event, event.changes, after]);
       const title2 = event.event === "state" ? "State Updated" : "Store Updated";
       const collapseEvent = useStore((state) => state.sampleActions.collapseEvent);
       reactExports.useEffect(() => {
         if (changePreview === void 0) {
           collapseEvent(kTranscriptCollapseScope, eventNode.id, true);
         }
-      }, [changePreview, collapseEvent]);
+      }, [changePreview, collapseEvent, eventNode.id]);
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(
         EventPanel,
         {
@@ -135072,7 +135114,7 @@ ${events}
           approvalNode: approvalNode2,
           lastModelNode: lastModelNode2
         };
-      }, [event.events]);
+      }, [children2]);
       const title2 = `Tool: ${event.view?.title || event.function}`;
       return /* @__PURE__ */ jsxRuntimeExports.jsx(
         EventPanel,
@@ -135363,7 +135405,7 @@ ${events}
       const setNativeFind = useStore((state) => state.appActions.setNativeFind);
       reactExports.useEffect(() => {
         setNativeFind(!useVirtualization);
-      }, [useVirtualization]);
+      }, [setNativeFind, useVirtualization]);
       const initialEventIndex = reactExports.useMemo(() => {
         if (initialEventId === null || initialEventId === void 0) {
           return void 0;
@@ -136019,7 +136061,13 @@ ${events}
         if (!collapsedEvents && Object.keys(defaultCollapsedIds).length > 0) {
           setCollapsedEvents(kTranscriptCollapseScope, defaultCollapsedIds);
         }
-      }, [defaultCollapsedIds, collapsedEvents, setCollapsedEvents]);
+      }, [
+        defaultCollapsedIds,
+        collapsedEvents,
+        setCollapsedEvents,
+        events.length,
+        collapsedMode
+      ]);
       const allNodesList = reactExports.useMemo(() => {
         return flatTree(eventNodes, null);
       }, [eventNodes]);
@@ -136035,7 +136083,7 @@ ${events}
           }
         });
         setCollapsedEvents(kTranscriptCollapseScope, collapseIds);
-      }, [collapsedMode, events, allNodesList]);
+      }, [collapsedMode, events, allNodesList, setCollapsedEvents]);
       const { logPath } = useLogRouteParams();
       const [collapsed2, setCollapsed] = useCollapsedState(
         `transcript-panel-${logPath || "na"}`,
@@ -136146,7 +136194,7 @@ ${events}
       const sampleData = useSampleData();
       const sample2 = reactExports.useMemo(() => {
         return sampleData.getSelectedSample();
-      }, [sampleData.selectedSampleIdentifier, sampleData.getSelectedSample]);
+      }, [sampleData]);
       const runningSampleData = sampleData.running;
       const evalSpec = useStore((state) => state.log.selectedLogDetails?.eval);
       const { setDocumentTitle } = useDocumentTitle();
@@ -136165,7 +136213,7 @@ ${events}
           return height;
         }
         return -1;
-      }, [tabsRef.current]);
+      }, []);
       const selectedSampleSummary = useSelectedSampleSummary();
       const sampleEvents = sample2?.events || runningSampleData;
       const sampleMessages = reactExports.useMemo(() => {
@@ -136188,7 +136236,7 @@ ${events}
             scrollRef.current?.focus();
           }
         }, 10);
-      }, []);
+      }, [focusOnLoad, scrollRef]);
       const sampleUrlBuilder = useSampleUrlBuilder();
       const onSelectedTab = reactExports.useCallback(
         (e) => {
@@ -136200,7 +136248,15 @@ ${events}
             navigate(url);
           }
         },
-        [sampleTabId, urlLogPath, urlSampleId, urlEpoch, navigate, setSelectedTab]
+        [
+          setSelectedTab,
+          sampleTabId,
+          urlLogPath,
+          sampleUrlBuilder,
+          urlSampleId,
+          urlEpoch,
+          navigate
+        ]
       );
       const sampleMetadatas = metadataViewsForSample(
         `${baseId}-${id}`,
@@ -136219,7 +136275,7 @@ ${events}
       const optionsRef = reactExports.useRef(null);
       const handlePrintClick = reactExports.useCallback(() => {
         printSample(id, targetId);
-      }, [printSample, id, targetId]);
+      }, [id, targetId]);
       const toggleFilter = reactExports.useCallback(() => {
         setShowing(!isShowing);
       }, [setShowing, isShowing]);
@@ -136650,7 +136706,12 @@ ${events}
         if (sampleData.running && logSelection.logFile && logSelection.sample) {
           pollSample(logSelection.logFile, logSelection.sample);
         }
-      }, []);
+      }, [
+        logSelection.logFile,
+        logSelection.sample,
+        pollSample,
+        sampleData.running
+      ]);
       const prevCompleted = usePrevious(
         logSelection.sample?.completed !== void 0 ? logSelection.sample.completed : true
       );
@@ -136672,7 +136733,12 @@ ${events}
         logSelection.sample?.completed,
         sampleData.selectedSampleIdentifier?.id,
         sampleData.selectedSampleIdentifier?.epoch,
-        sampleData.sampleNeedsReload
+        sampleData.sampleNeedsReload,
+        logSelection.sample,
+        prevLogFile,
+        prevCompleted,
+        prevSampleNeedsReload,
+        loadSample
       ]);
       const scrollRef = reactExports.useRef(null);
       return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2, styles$t.container), children: [
@@ -136839,7 +136905,12 @@ ${events}
         if (sampleData.running && logSelection.logFile && logSelection.sample) {
           pollSample(logSelection.logFile, logSelection.sample);
         }
-      }, []);
+      }, [
+        logSelection.logFile,
+        logSelection.sample,
+        pollSample,
+        sampleData.running
+      ]);
       const prevCompleted = usePrevious(
         logSelection.sample?.completed !== void 0 ? logSelection.sample.completed : true
       );
@@ -136861,7 +136932,12 @@ ${events}
         logSelection.sample?.completed,
         sampleData.selectedSampleIdentifier?.id,
         sampleData.selectedSampleIdentifier?.epoch,
-        sampleData.sampleNeedsReload
+        sampleData.sampleNeedsReload,
+        logSelection.sample,
+        prevLogFile,
+        prevCompleted,
+        prevSampleNeedsReload,
+        loadSample
       ]);
       const sampleNavigation = useSampleNavigation();
       const tools2 = reactExports.useMemo(() => {
@@ -136901,11 +136977,7 @@ ${events}
               break;
           }
         },
-        [
-          sampleNavigation.nextSample,
-          sampleNavigation.previousSample,
-          sampleNavigation.clearSampleUrl
-        ]
+        [sampleNavigation]
       );
       const onHide = reactExports.useCallback(() => {
         sampleNavigation.clearSampleUrl();
@@ -161985,8 +162057,8 @@ Supported expressions:
         () => linter((view) => getLints(view, filterError)),
         [filterError]
       );
-      const debounceSetFilter = reactExports.useCallback(
-        debounce$2((value2) => {
+      const debounceSetFilter = reactExports.useMemo(
+        () => debounce$2((value2) => {
           setFilter(value2);
         }, 200),
         [setFilter]
@@ -161998,7 +162070,7 @@ Supported expressions:
             debounceSetFilter(newValue);
           }
         }),
-        [setFilter]
+        [debounceSetFilter, evalDescriptor]
       );
       reactExports.useEffect(() => {
         editorViewRef.current?.destroy();
@@ -162021,7 +162093,7 @@ Supported expressions:
           })
         });
         return () => editorViewRef.current?.destroy();
-      }, []);
+      }, [filter, handleFocus, makeAutocompletion, makeLinter, makeUpdateListener]);
       reactExports.useEffect(() => {
         if (!editorViewRef.current) return;
         const currentValue = editorViewRef.current.state.doc.toString();
@@ -162038,17 +162110,17 @@ Supported expressions:
         editorViewRef.current?.dispatch({
           effects: updateListenerCompartment.current.reconfigure(makeUpdateListener())
         });
-      }, [evalDescriptor]);
+      }, [evalDescriptor, makeUpdateListener]);
       reactExports.useEffect(() => {
         editorViewRef.current?.dispatch({
           effects: autocompletionCompartment.current.reconfigure(makeAutocompletion())
         });
-      }, [filterItems, samples]);
+      }, [filterItems, makeAutocompletion, samples]);
       reactExports.useEffect(() => {
         editorViewRef.current?.dispatch({
           effects: linterCompartment.current.reconfigure(makeLinter())
         });
-      }, [filterError]);
+      }, [filterError, makeLinter]);
       return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex" }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "span",
@@ -162617,7 +162689,7 @@ Supported expressions:
       );
       reactExports.useEffect(() => {
         listHandle.current?.scrollTo({ top: 0, behavior: "instant" });
-      }, [selectedLogFile]);
+      }, [listHandle, selectedLogFile]);
       const sampleNavigation = useSampleNavigation();
       const selectedSampleHandle = useStore(
         (state) => state.log.selectedSampleHandle
@@ -162646,7 +162718,7 @@ Supported expressions:
           }, 100);
         }
         prevRunningRef.current = running;
-      }, [running, followOutput, listHandle]);
+      }, [running, followOutput, listHandle, setFollowOutput]);
       const loaded = reactExports.useRef(false);
       const handleAtBottomStateChange = reactExports.useCallback(
         (atBottom) => {
@@ -162655,7 +162727,7 @@ Supported expressions:
           }
           loaded.current = true;
         },
-        [running, setFollowOutput, followOutput]
+        [running, setFollowOutput]
       );
       const onkeydown = reactExports.useCallback(
         (e) => {
@@ -162704,11 +162776,11 @@ Supported expressions:
           }
         },
         [
-          selectedSampleHandle,
-          sampleNavigation.nextSample,
-          sampleNavigation.previousSample,
-          sampleNavigation.showSample,
-          listHandle
+          sampleNavigation,
+          listHandle,
+          items,
+          selectedSampleHandle?.id,
+          selectedSampleHandle?.epoch
         ]
       );
       const selectedScores = useSelectedScores();
@@ -162752,7 +162824,12 @@ Supported expressions:
             return null;
           }
         },
-        [gridColumnsTemplate]
+        [
+          gridColumnsTemplate,
+          sampleNavigation,
+          selectedSampleHandle?.epoch,
+          selectedSampleHandle?.id
+        ]
       );
       const { input: input2, limit, answer: answer2, target: target2, retries } = gridColumns(samplesDescriptor);
       const sampleCount = items?.reduce((prev, current2) => {
@@ -163059,7 +163136,6 @@ Supported expressions:
     const useSamplesTabConfig = (evalStatus, refreshLog) => {
       const totalSampleCount = useTotalSampleCount();
       const samplesDescriptor = useSampleDescriptor();
-      const sampleSummaries = useFilteredSamples();
       const streamSamples = useStore((state) => state.capabilities.streamSamples);
       return reactExports.useMemo(() => {
         return {
@@ -163086,8 +163162,8 @@ Supported expressions:
       }, [
         evalStatus,
         refreshLog,
-        sampleSummaries,
         samplesDescriptor,
+        streamSamples,
         totalSampleCount
       ]);
     };
@@ -163101,7 +163177,11 @@ Supported expressions:
         const limit = selectedLogDetails?.eval.config.limit;
         const limitCount = limit === null || limit === void 0 ? void 0 : typeof limit === "number" ? limit : limit[1] - limit[0];
         return (limitCount || selectedLogDetails?.eval.dataset.samples || 0) * (selectedLogDetails?.eval.config.epochs || 0);
-      }, [selectedLogDetails?.eval.config.limit]);
+      }, [
+        selectedLogDetails?.eval.config.epochs,
+        selectedLogDetails?.eval.config.limit,
+        selectedLogDetails?.eval.dataset.samples
+      ]);
       const totalSampleCount = useTotalSampleCount();
       const samplesDescriptor = useSampleDescriptor();
       const groupBy = useGroupBy();
@@ -164362,7 +164442,7 @@ Supported expressions:
             navigation2.selectTab(id);
           }
         },
-        [setSelectedTab, navigation2.selectTab]
+        [setSelectedTab, navigation2]
       );
       if (evalSpec === void 0) {
         return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyPanel, {});
@@ -164520,7 +164600,7 @@ Supported expressions:
         return () => {
           unloadLog();
         };
-      }, []);
+      }, [unloadLog]);
       reactExports.useEffect(() => {
         if (logPath && sampleUuid && sampleSummaries) {
           const sample2 = sampleSummaries.find((s) => s.uuid === sampleUuid);
@@ -164536,7 +164616,14 @@ Supported expressions:
             return;
           }
         }
-      }, [sampleSummaries, logPath, sampleUuid, searchParams]);
+      }, [
+        sampleSummaries,
+        logPath,
+        sampleUuid,
+        searchParams,
+        sampleTabId,
+        navigate
+      ]);
       reactExports.useEffect(() => {
         if (initialState2 && !evalSpec) {
           const url = baseUrl(
@@ -164547,7 +164634,7 @@ Supported expressions:
           clearInitialState();
           navigate(url);
         }
-      }, [initialState2, evalSpec]);
+      }, [initialState2, evalSpec, clearInitialState, navigate]);
       const prevLogPath = usePrevious(logPath);
       const syncLogs = useStore((state) => state.logsActions.syncLogs);
       const initLogDir = useStore((state) => state.logsActions.initLogDir);
@@ -164569,7 +164656,17 @@ Supported expressions:
           }
         };
         loadLogFromPath();
-      }, [logPath, tabId, setSelectedLogFile, setWorkspaceTab]);
+      }, [
+        logPath,
+        tabId,
+        setSelectedLogFile,
+        setWorkspaceTab,
+        initLogDir,
+        syncLogs,
+        prevLogPath,
+        clearSelectedSample,
+        clearSelectedLogSummary
+      ]);
       reactExports.useEffect(() => {
         if (sampleId && filteredSamples) {
           const targetEpoch = epoch ? parseInt(epoch, 10) : 1;
@@ -221729,7 +221826,7 @@ If you are trying to annotate ${containerName} with application data, use the '$
         } else {
           return gridState;
         }
-      }, [gridState, prevSamplesPath, clearDisplayedSamples]);
+      }, [prevSamplesPath, samplesPath, clearDisplayedSamples, gridState]);
       const filteredLogDetails = reactExports.useMemo(() => {
         if (!samplesPath) {
           return logDetails;
@@ -221744,7 +221841,7 @@ If you are trying to annotate ${containerName} with application data, use the '$
           },
           {}
         );
-      }, [logDetails, samplesPath]);
+      }, [logDetails, logDir2, samplesPath]);
       reactExports.useEffect(() => {
         gridContainerRef.current?.focus();
       }, []);
@@ -221777,11 +221874,11 @@ If you are trying to annotate ${containerName} with application data, use the '$
         return rows;
       }, [filteredLogDetails]);
       const columns = useSampleColumns(data, filteredLogDetails);
-      const resizeGridColumns = reactExports.useCallback(
-        debounce$2(() => {
+      const resizeGridColumns = reactExports.useMemo(
+        () => debounce$2(() => {
           gridRef.current?.api?.sizeColumnsToFit();
         }, 10),
-        []
+        [gridRef]
       );
       const handleRowClick = reactExports.useCallback(
         (e) => {
@@ -221893,7 +221990,7 @@ If you are trying to annotate ${containerName} with application data, use the '$
             }
           }
         },
-        [navigateToSampleDetail]
+        [gridRef, navigateToSampleDetail]
       );
       reactExports.useEffect(() => {
         const gridElement = gridContainerRef.current;
@@ -222046,7 +222143,7 @@ If you are trying to annotate ${containerName} with application data, use the '$
           }
         }
         return files;
-      }, [logDir2, logFiles]);
+      }, [currentDir, logFiles]);
       const totalTaskCount = reactExports.useMemo(() => {
         const currentDirTaskIds = new Set(currentDirLogFiles.map((f) => f.task_id));
         let count2 = currentDirLogFiles.length;
@@ -222265,14 +222362,14 @@ If you are trying to annotate ${containerName} with application data, use the '$
           }
         };
         void exec2();
-      }, [selectedLogFile, selectedSampleSummary]);
+      }, [loadSample, selectedLogFile, selectedSampleSummary]);
       reactExports.useEffect(() => {
         return () => {
           clearSelectedLogDetails();
           clearLog();
           clearSampleTab();
         };
-      }, [clearLog, clearSelectedLogDetails]);
+      }, [clearLog, clearSampleTab, clearSelectedLogDetails]);
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(ExtendedFindProvider, { children: [
         showFind ? /* @__PURE__ */ jsxRuntimeExports.jsx(FindBand, {}) : "",
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles.detail, children: [
@@ -222466,7 +222563,7 @@ If you are trying to annotate ${containerName} with application data, use the '$
             }
           }
         },
-        [logDir2, setSelectedLogFile, syncLogs, api2]
+        [setInitialState, setLogDir, logDir2, setSelectedLogFile, api2, syncLogs]
       );
       reactExports.useEffect(() => {
         window.addEventListener("message", onMessage);
@@ -222500,7 +222597,15 @@ If you are trying to annotate ${containerName} with application data, use the '$
           new ClipboardJS(".clipboard-button,.copy-button");
         };
         loadLogsAndState();
-      }, [setLogDir, setLogFiles, setSelectedLogFile, syncLogs, onMessage]);
+      }, [
+        setLogDir,
+        setLogFiles,
+        setSelectedLogFile,
+        syncLogs,
+        onMessage,
+        rehydrated,
+        setSingleFileMode
+      ]);
       return /* @__PURE__ */ jsxRuntimeExports.jsx(RouterProvider2, { router: AppRouter });
     };
     const resolveStorage = () => {
