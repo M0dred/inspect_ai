@@ -117342,7 +117342,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.fullWidth, styles$1s.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1s.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.151-22-g013cd1f45" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.151-25-g37c018454" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.spacer) }),
@@ -135456,8 +135456,17 @@ ${events}
         () => ({ hasToolEvents: false }),
         []
       );
+      const nonVirtualGridRef = reactExports.useRef(null);
+      reactExports.useEffect(() => {
+        if (!useVirtualization && initialEventId) {
+          const row2 = nonVirtualGridRef.current?.querySelector(
+            `[id="${initialEventId}"]`
+          );
+          row2?.scrollIntoView({ block: "start" });
+        }
+      }, [initialEventId, useVirtualization]);
       const renderRow = reactExports.useCallback(
-        (index, item2) => {
+        (index, item2, style2) => {
           const paddingClass = index === 0 ? styles$u.first : void 0;
           const previousIndex = index - 1;
           const nextIndex = index + 1;
@@ -135476,6 +135485,7 @@ ${events}
               id: item2.id,
               className: clsx(styles$u.node, paddingClass, attachedClass),
               style: {
+                ...style2,
                 paddingLeft: `${item2.depth <= 1 ? item2.depth * 0.7 : (0.7 + item2.depth - 1) * 1}em`,
                 paddingRight: `${item2.depth === 0 ? void 0 : ".7em"} `
               },
@@ -135515,8 +135525,10 @@ ${events}
           }
         );
       } else {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: eventNodes.map((node2, index) => {
-          const row2 = renderRow(index, node2);
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: nonVirtualGridRef, children: eventNodes.map((node2, index) => {
+          const row2 = renderRow(index, node2, {
+            scrollMarginTop: offsetTop
+          });
           return row2;
         }) });
       }
@@ -136228,12 +136240,17 @@ ${events}
       const effectiveSelectedTab = sampleTabId || selectedTab;
       const navigate = useNavigate();
       const tabsRef = reactExports.useRef(null);
-      const tabsHeight = reactExports.useMemo(() => {
-        if (tabsRef.current) {
-          const height = tabsRef.current.getBoundingClientRect().height;
-          return height;
-        }
-        return -1;
+      const [tabsHeight, setTabsHeight] = reactExports.useState(-1);
+      reactExports.useEffect(() => {
+        const updateHeight = () => {
+          if (tabsRef.current) {
+            const height = tabsRef.current.getBoundingClientRect().height;
+            setTabsHeight(height);
+          }
+        };
+        updateHeight();
+        window.addEventListener("resize", updateHeight);
+        return () => window.removeEventListener("resize", updateHeight);
       }, []);
       const selectedSampleSummary = useSelectedSampleSummary();
       const sampleEvents = sample2?.events || runningSampleData;
