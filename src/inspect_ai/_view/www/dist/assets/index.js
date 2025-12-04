@@ -114668,13 +114668,33 @@ categories: ${categories.join(" ")}`;
       }, []);
     };
     const getScorersFromSamples = (samples) => {
-      const scoredSample = samples.find((sample2) => {
-        return !sample2.error && sample2.completed && !!sample2.scores;
-      });
-      return Object.keys(scoredSample?.scores || {}).map((key2) => ({
-        name: key2,
-        scorer: key2
-      }));
+      const scoreLabelsMap = /* @__PURE__ */ new Map();
+      for (const sample2 of samples) {
+        if (!sample2.error && sample2.scores) {
+          for (const [scorerKey, scoreValue] of Object.entries(sample2.scores)) {
+            if (scoreValue.value && typeof scoreValue.value === "object" && !Array.isArray(scoreValue.value)) {
+              const valueDict = scoreValue.value;
+              for (const innerKey of Object.keys(valueDict)) {
+                const label2 = `${scorerKey}:${innerKey}`;
+                if (!scoreLabelsMap.has(label2)) {
+                  scoreLabelsMap.set(label2, {
+                    name: innerKey,
+                    scorer: scorerKey
+                  });
+                }
+              }
+            } else {
+              if (!scoreLabelsMap.has(scorerKey)) {
+                scoreLabelsMap.set(scorerKey, {
+                  name: scorerKey,
+                  scorer: scorerKey
+                });
+              }
+            }
+          }
+        }
+      }
+      return Array.from(scoreLabelsMap.values());
     };
     const getAvailableScorers = (log2, sampleSummaries) => {
       const resultScorers = log2.results ? getScorersFromResults(log2.results) : [];
@@ -114682,6 +114702,7 @@ categories: ${categories.join(" ")}`;
         return resultScorers;
       }
       const sampleScorers = getScorersFromSamples(sampleSummaries);
+      console.log({ sampleScorers });
       if (sampleScorers.length > 0) {
         return sampleScorers;
       }
@@ -117321,7 +117342,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.fullWidth, styles$1s.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1s.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.151-11-g6dfd7508f" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.151-22-g013cd1f45" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.spacer) }),
