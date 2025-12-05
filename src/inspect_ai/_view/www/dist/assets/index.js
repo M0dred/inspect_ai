@@ -114650,23 +114650,6 @@ categories: ${categories.join(" ")}`;
       });
       return sortedSamples;
     };
-    const getScorersFromResults = (results) => {
-      if (!results?.scores) {
-        return [];
-      }
-      return results.scores.reduce((uniqueScorers, score2) => {
-        const isDuplicate = uniqueScorers.some(
-          (existing) => existing.scorer === score2.scorer && existing.name === score2.name
-        );
-        if (!isDuplicate) {
-          uniqueScorers.push({
-            name: score2.name,
-            scorer: score2.scorer
-          });
-        }
-        return uniqueScorers;
-      }, []);
-    };
     const getScorersFromSamples = (samples) => {
       const scoreLabelsMap = /* @__PURE__ */ new Map();
       for (const sample2 of samples) {
@@ -114696,13 +114679,8 @@ categories: ${categories.join(" ")}`;
       }
       return Array.from(scoreLabelsMap.values());
     };
-    const getAvailableScorers = (log2, sampleSummaries) => {
-      const resultScorers = log2.results ? getScorersFromResults(log2.results) : [];
-      if (resultScorers.length > 0) {
-        return resultScorers;
-      }
+    const getAvailableScorers = (_log, sampleSummaries) => {
       const sampleScorers = getScorersFromSamples(sampleSummaries);
-      console.log({ sampleScorers });
       if (sampleScorers.length > 0) {
         return sampleScorers;
       }
@@ -117342,7 +117320,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.fullWidth, styles$1s.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1s.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.152-3-gff673645a" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.152-3-g359087a7c" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.spacer) }),
