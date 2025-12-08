@@ -30091,7 +30091,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       },
       next: "bi bi-chevron-right",
       noSamples: "bi bi-ban",
-      options: "bi bi-gear",
       pendingTask: "bi bi-clock",
       play: "bi bi-play-fill",
       previous: "bi bi-chevron-left",
@@ -117335,7 +117334,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1t.fullWidth, styles$1t.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1t.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1t.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.153-20-gf443d521b" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.153-5-g4dbfd7135" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1t.spacer) }),
@@ -125064,7 +125063,7 @@ Tool Use: ${toolUse.name}(${toolUse.arguments}) -> ${toolUse.result}${errorStr}`
     const label$8 = "_label_1j0jk_28";
     const icon$1 = "_icon_1j0jk_34";
     const progress$2 = "_progress_1j0jk_38";
-    const popover$1 = "_popover_1j0jk_42";
+    const popover = "_popover_1j0jk_42";
     const styles$Q = {
       eventRow,
       selected: selected$2,
@@ -125073,7 +125072,7 @@ Tool Use: ${toolUse.name}(${toolUse.arguments}) -> ${toolUse.result}${errorStr}`
       label: label$8,
       icon: icon$1,
       progress: progress$2,
-      popover: popover$1
+      popover
     };
     const OutlineRow = ({
       node: node2,
@@ -126382,13 +126381,13 @@ Tool Use: ${toolUse.name}(${toolUse.arguments}) -> ${toolUse.result}${errorStr}`
     const noMargin = "_noMargin_1a3fk_1";
     const code$2 = "_code_1a3fk_5";
     const sample = "_sample_1a3fk_10";
-    const section$1 = "_section_1a3fk_14";
+    const section$2 = "_section_1a3fk_14";
     const metadata = "_metadata_1a3fk_21";
     const styles$E = {
       noMargin,
       code: code$2,
       sample,
-      section: section$1,
+      section: section$2,
       metadata
     };
     const SampleInitEventView = ({
@@ -135181,14 +135180,14 @@ ${events}
     const wrappingContent = "_wrappingContent_io1r0_8";
     const separator = "_separator_io1r0_13";
     const unchanged = "_unchanged_io1r0_22";
-    const section = "_section_io1r0_27";
+    const section$1 = "_section_io1r0_27";
     const spacer = "_spacer_io1r0_31";
     const styles$w = {
       container: container$9,
       wrappingContent,
       separator,
       unchanged,
-      section,
+      section: section$1,
       spacer
     };
     const kUnchangedSentinel = "UNCHANGED";
@@ -164799,6 +164798,401 @@ Supported expressions:
       }
     );
     NavbarButton.displayName = "NavbarButton";
+    const checkboxWrapper = "_checkboxWrapper_vtlwq_1";
+    const label = "_label_vtlwq_5";
+    const checkbox = "_checkbox_vtlwq_1";
+    const filterIcon = "_filterIcon_vtlwq_16";
+    const scrollableContainer = "_scrollableContainer_vtlwq_21";
+    const section = "_section_vtlwq_26";
+    const headerRow = "_headerRow_vtlwq_30";
+    const buttonContainer = "_buttonContainer_vtlwq_39";
+    const button = "_button_vtlwq_39";
+    const columnsLayout = "_columnsLayout_vtlwq_54";
+    const styles$3 = {
+      checkboxWrapper,
+      label,
+      checkbox,
+      filterIcon,
+      scrollableContainer,
+      section,
+      headerRow,
+      buttonContainer,
+      button,
+      columnsLayout
+    };
+    const getFieldKey = (col) => {
+      return col.field || col.headerName || "?";
+    };
+    const useSampleColumns = (logDetails) => {
+      const optionalColumnsHaveAnyData = reactExports.useMemo(() => {
+        let error2 = false;
+        let limit = false;
+        let retries = false;
+        outerLoop: for (const details of Object.values(logDetails)) {
+          for (const sample2 of details.sampleSummaries) {
+            if (sample2.error) error2 = true;
+            if (sample2.limit) limit = true;
+            if (sample2.retries) retries = true;
+            if (error2 && limit && retries) break outerLoop;
+          }
+        }
+        return { error: error2, limit, retries };
+      }, [logDetails]);
+      const columnVisibility = useStore(
+        (state) => state.logs.samplesListState.columnVisibility
+      );
+      const setColumnVisibility = useStore(
+        (state) => state.logsActions.setColumnVisibility
+      );
+      reactExports.useEffect(() => {
+        const { error: error2, limit, retries } = optionalColumnsHaveAnyData;
+        if ("error" in columnVisibility || "limit" in columnVisibility || "retries" in columnVisibility || !error2 && !limit && !retries) {
+          return;
+        }
+        const newVisibility = { ...columnVisibility };
+        if (error2 && !("error" in columnVisibility)) newVisibility.error = true;
+        if (limit && !("limit" in columnVisibility)) newVisibility.limit = true;
+        if (retries && !("retries" in columnVisibility))
+          newVisibility.retries = true;
+        setColumnVisibility(newVisibility);
+      }, [optionalColumnsHaveAnyData, columnVisibility, setColumnVisibility]);
+      const scoreMap = reactExports.useMemo(() => {
+        const scoreTypes = {};
+        for (const details of Object.values(logDetails)) {
+          for (const sample2 of details.sampleSummaries) {
+            if (sample2.scores) {
+              for (const [name2, score2] of Object.entries(sample2.scores)) {
+                scoreTypes[name2] = typeof score2.value;
+              }
+            }
+          }
+        }
+        return scoreTypes;
+      }, [logDetails]);
+      const allColumns = reactExports.useMemo(() => {
+        const baseColumns = [
+          {
+            headerName: "#",
+            valueGetter: (params) => {
+              if (params.node?.rowIndex !== null && params.node?.rowIndex !== void 0) {
+                return params.node.rowIndex + 1;
+              }
+              return "";
+            },
+            initialWidth: 80,
+            minWidth: 50,
+            maxWidth: 80,
+            sortable: false,
+            filter: false,
+            resizable: false,
+            pinned: "left"
+          },
+          {
+            field: "task",
+            headerName: "Task",
+            initialWidth: 150,
+            minWidth: 100,
+            sortable: true,
+            filter: true,
+            resizable: true
+          },
+          {
+            field: "model",
+            headerName: "Model",
+            initialWidth: 150,
+            minWidth: 100,
+            sortable: true,
+            filter: true,
+            resizable: true
+          },
+          {
+            field: "sampleId",
+            headerName: "Sample ID",
+            initialWidth: 120,
+            minWidth: 100,
+            sortable: true,
+            filter: true,
+            resizable: true,
+            valueGetter: (params) => String(params.data?.sampleId ?? "")
+          },
+          {
+            field: "epoch",
+            headerName: "Epoch",
+            initialWidth: 70,
+            minWidth: 70,
+            sortable: true,
+            filter: true,
+            resizable: true,
+            cellStyle: { textAlign: "center" }
+          },
+          {
+            field: "input",
+            headerName: "Input",
+            initialWidth: 250,
+            minWidth: 150,
+            sortable: true,
+            filter: true,
+            resizable: true,
+            cellStyle: { overflow: "hidden", textOverflow: "ellipsis" }
+          },
+          {
+            field: "status",
+            headerName: "Status",
+            initialWidth: 100,
+            minWidth: 80,
+            sortable: true,
+            resizable: true,
+            filter: true
+          },
+          {
+            field: "logFile",
+            headerName: "Log File",
+            initialWidth: 200,
+            minWidth: 150,
+            sortable: true,
+            filter: true,
+            resizable: true,
+            cellDataType: "date",
+            valueParser: (params) => new Date(params.newValue),
+            valueFormatter: (params) => filename(params.value)
+          },
+          {
+            field: "target",
+            headerName: "Target",
+            initialWidth: 150,
+            minWidth: 100,
+            sortable: true,
+            filter: true,
+            resizable: true,
+            cellStyle: { overflow: "hidden", textOverflow: "ellipsis" }
+          }
+        ];
+        const scoreColumns = Object.keys(scoreMap).map(
+          (scoreName) => {
+            const scoreType = scoreMap[scoreName];
+            return {
+              field: `score_${scoreName}`,
+              headerName: scoreName,
+              initialWidth: 100,
+              minWidth: 100,
+              sortable: true,
+              filter: scoreType === "number" ? "agNumberColumnFilter" : "agTextColumnFilter",
+              resizable: true,
+              valueFormatter: (params) => {
+                const value2 = params.value;
+                if (value2 === "" || value2 === null || value2 === void 0) {
+                  return "";
+                }
+                if (Array.isArray(value2)) {
+                  return value2.join(", ");
+                } else if (typeof value2 === "object") {
+                  return JSON.stringify(value2);
+                } else if (typeof value2 === "number") {
+                  return value2.toFixed(3);
+                }
+                return String(value2);
+              }
+            };
+          }
+        );
+        const optionalColumns = [
+          {
+            field: "error",
+            headerName: "Error",
+            initialWidth: 150,
+            minWidth: 100,
+            sortable: true,
+            filter: true,
+            resizable: true,
+            cellStyle: { overflow: "hidden", textOverflow: "ellipsis" }
+          },
+          {
+            field: "limit",
+            headerName: "Limit",
+            initialWidth: 100,
+            minWidth: 80,
+            sortable: true,
+            filter: true,
+            resizable: true
+          },
+          {
+            field: "retries",
+            headerName: "Retries",
+            initialWidth: 80,
+            minWidth: 60,
+            sortable: true,
+            filter: true,
+            resizable: true
+          }
+        ];
+        return [...baseColumns, ...scoreColumns, ...optionalColumns];
+      }, [scoreMap]);
+      const columns = reactExports.useMemo(() => {
+        const columnsWithVisibility = allColumns.map((col) => {
+          const field = getFieldKey(col);
+          const isVisible = (columnVisibility[field] ?? optionalColumnsHaveAnyData[field]) !== false;
+          return {
+            ...col,
+            hide: !isVisible
+          };
+        });
+        return columnsWithVisibility;
+      }, [allColumns, columnVisibility, optionalColumnsHaveAnyData]);
+      return {
+        columns,
+        setColumnVisibility
+      };
+    };
+    const ColumnSelectorPopover = ({
+      showing,
+      setShowing,
+      columns,
+      onVisibilityChange,
+      positionEl,
+      filteredFields = []
+    }) => {
+      const currentVisibility = reactExports.useMemo(
+        () => columns.reduce(
+          (acc, col) => ({ ...acc, [getFieldKey(col)]: !col.hide }),
+          {}
+        ),
+        [columns]
+      );
+      const handleToggle = (field) => {
+        onVisibilityChange({
+          ...currentVisibility,
+          [field]: !currentVisibility[field]
+        });
+      };
+      const columnGroups = reactExports.useMemo(() => {
+        return {
+          base: columns.filter((col) => !getFieldKey(col).startsWith("score_")),
+          scores: columns.filter((col) => getFieldKey(col).startsWith("score_"))
+        };
+      }, [columns]);
+      const handleSelectAllBase = () => {
+        onVisibilityChange({
+          ...currentVisibility,
+          ...Object.fromEntries(
+            columnGroups.base.map((col) => [getFieldKey(col), true])
+          )
+        });
+      };
+      const handleDeselectAllBase = () => {
+        onVisibilityChange({
+          ...currentVisibility,
+          ...Object.fromEntries(
+            columnGroups.base.map((col) => [getFieldKey(col), false])
+          )
+        });
+      };
+      const handleSelectAllScores = () => {
+        onVisibilityChange({
+          ...currentVisibility,
+          ...Object.fromEntries(
+            columnGroups.scores.map((col) => [getFieldKey(col), true])
+          )
+        });
+      };
+      const handleDeselectAllScores = () => {
+        onVisibilityChange({
+          ...currentVisibility,
+          ...Object.fromEntries(
+            columnGroups.scores.map((col) => [getFieldKey(col), false])
+          )
+        });
+      };
+      const renderColumnCheckbox = (col) => {
+        const field = getFieldKey(col);
+        const hasFilter = filteredFields.includes(field);
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: styles$3.checkboxWrapper,
+            title: hasFilter ? "Unselecting will remove an active filter on this column" : void 0,
+            children: /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: styles$3.label, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "input",
+                {
+                  type: "checkbox",
+                  checked: currentVisibility[field],
+                  onChange: () => handleToggle(field),
+                  className: styles$3.checkbox
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: col.headerName || field }),
+              hasFilter && /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: `${ApplicationIcons.filter} ${styles$3.filterIcon}` })
+            ] })
+          },
+          field
+        );
+      };
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        PopOver,
+        {
+          id: "column-selector-popover",
+          isOpen: showing,
+          setIsOpen: setShowing,
+          positionEl,
+          placement: "bottom-start",
+          showArrow: false,
+          hoverDelay: -1,
+          className: styles$3.popover,
+          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$3.scrollableContainer, "text-size-small"), children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$3.section), children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$3.headerRow, children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: "Base" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$3.buttonContainer, "text-size-small"), children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "a",
+                    {
+                      className: clsx(styles$3.button, "text-size-small"),
+                      onClick: handleSelectAllBase,
+                      children: "All"
+                    }
+                  ),
+                  "|",
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "a",
+                    {
+                      className: clsx(styles$3.button),
+                      onClick: handleDeselectAllBase,
+                      children: "None"
+                    }
+                  )
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$3.columnsLayout, children: columnGroups.base.map((col) => renderColumnCheckbox(col)) })
+            ] }),
+            columnGroups.scores.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$3.headerRow, children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: "Scorers" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$3.buttonContainer, children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "a",
+                    {
+                      className: clsx(styles$3.button),
+                      onClick: handleSelectAllScores,
+                      children: "All"
+                    }
+                  ),
+                  "|",
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "a",
+                    {
+                      className: clsx(styles$3.button),
+                      onClick: handleDeselectAllScores,
+                      children: "None"
+                    }
+                  )
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$3.columnsLayout, children: columnGroups.scores.map((col) => renderColumnCheckbox(col)) })
+            ] })
+          ] })
+        }
+      );
+    };
     var LocalEventService = class {
       constructor() {
         this.allSyncListeners = /* @__PURE__ */ new Map();
@@ -221622,7 +222016,7 @@ If you are trying to annotate ${containerName} with application data, use the '$
       }
     };
     const gridWrapper = "_gridWrapper_1ca3y_1";
-    const styles$3 = {
+    const styles$2 = {
       gridWrapper
     };
     ModuleRegistry.registerModules([AllCommunityModule]);
@@ -221883,7 +222277,7 @@ If you are trying to annotate ${containerName} with application data, use the '$
       reactExports.useEffect(() => {
         resizeGridColumns();
       }, [columns, resizeGridColumns]);
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$3.gridWrapper, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$2.gridWrapper, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
         {
           ref: gridContainerRef,
@@ -221967,405 +222361,6 @@ If you are trying to annotate ${containerName} with application data, use the '$
         }
       }
       return displayedSamples;
-    };
-    const getFieldKey = (col) => {
-      return col.field || col.headerName || "?";
-    };
-    const useSampleColumns = (logDetails) => {
-      const optionalColumnsHaveAnyData = reactExports.useMemo(() => {
-        let error2 = false;
-        let limit = false;
-        let retries = false;
-        outerLoop: for (const details of Object.values(logDetails)) {
-          for (const sample2 of details.sampleSummaries) {
-            if (sample2.error) error2 = true;
-            if (sample2.limit) limit = true;
-            if (sample2.retries) retries = true;
-            if (error2 && limit && retries) break outerLoop;
-          }
-        }
-        return { error: error2, limit, retries };
-      }, [logDetails]);
-      const columnVisibility = useStore(
-        (state) => state.logs.samplesListState.columnVisibility
-      );
-      const setColumnVisibility = useStore(
-        (state) => state.logsActions.setColumnVisibility
-      );
-      reactExports.useEffect(() => {
-        const { error: error2, limit, retries } = optionalColumnsHaveAnyData;
-        if ("error" in columnVisibility || "limit" in columnVisibility || "retries" in columnVisibility || !error2 && !limit && !retries) {
-          return;
-        }
-        const newVisibility = { ...columnVisibility };
-        if (error2 && !("error" in columnVisibility)) newVisibility.error = true;
-        if (limit && !("limit" in columnVisibility)) newVisibility.limit = true;
-        if (retries && !("retries" in columnVisibility))
-          newVisibility.retries = true;
-        setColumnVisibility(newVisibility);
-      }, [optionalColumnsHaveAnyData, columnVisibility, setColumnVisibility]);
-      const scoreMap = reactExports.useMemo(() => {
-        const scoreTypes = {};
-        for (const details of Object.values(logDetails)) {
-          for (const sample2 of details.sampleSummaries) {
-            if (sample2.scores) {
-              for (const [name2, score2] of Object.entries(sample2.scores)) {
-                scoreTypes[name2] = typeof score2.value;
-              }
-            }
-          }
-        }
-        return scoreTypes;
-      }, [logDetails]);
-      const allColumns = reactExports.useMemo(() => {
-        const baseColumns = [
-          {
-            headerName: "#",
-            valueGetter: (params) => {
-              if (params.node?.rowIndex !== null && params.node?.rowIndex !== void 0) {
-                return params.node.rowIndex + 1;
-              }
-              return "";
-            },
-            initialWidth: 80,
-            minWidth: 50,
-            maxWidth: 80,
-            sortable: false,
-            filter: false,
-            resizable: false,
-            pinned: "left"
-          },
-          {
-            field: "task",
-            headerName: "Task",
-            initialWidth: 150,
-            minWidth: 100,
-            sortable: true,
-            filter: true,
-            resizable: true
-          },
-          {
-            field: "model",
-            headerName: "Model",
-            initialWidth: 150,
-            minWidth: 100,
-            sortable: true,
-            filter: true,
-            resizable: true
-          },
-          {
-            field: "sampleId",
-            headerName: "Sample ID",
-            initialWidth: 120,
-            minWidth: 100,
-            sortable: true,
-            filter: true,
-            resizable: true,
-            valueGetter: (params) => String(params.data?.sampleId ?? "")
-          },
-          {
-            field: "epoch",
-            headerName: "Epoch",
-            initialWidth: 70,
-            minWidth: 70,
-            sortable: true,
-            filter: true,
-            resizable: true,
-            cellStyle: { textAlign: "center" }
-          },
-          {
-            field: "input",
-            headerName: "Input",
-            initialWidth: 250,
-            minWidth: 150,
-            sortable: true,
-            filter: true,
-            resizable: true,
-            cellStyle: { overflow: "hidden", textOverflow: "ellipsis" }
-          },
-          {
-            field: "status",
-            headerName: "Status",
-            initialWidth: 100,
-            minWidth: 80,
-            sortable: true,
-            resizable: true,
-            filter: true
-          },
-          {
-            field: "logFile",
-            headerName: "Log File",
-            initialWidth: 200,
-            minWidth: 150,
-            sortable: true,
-            filter: true,
-            resizable: true,
-            cellDataType: "date",
-            valueParser: (params) => new Date(params.newValue),
-            valueFormatter: (params) => filename(params.value)
-          },
-          {
-            field: "target",
-            headerName: "Target",
-            initialWidth: 150,
-            minWidth: 100,
-            sortable: true,
-            filter: true,
-            resizable: true,
-            cellStyle: { overflow: "hidden", textOverflow: "ellipsis" }
-          }
-        ];
-        const scoreColumns = Object.keys(scoreMap).map(
-          (scoreName) => {
-            const scoreType = scoreMap[scoreName];
-            return {
-              field: `score_${scoreName}`,
-              headerName: scoreName,
-              initialWidth: 100,
-              minWidth: 100,
-              sortable: true,
-              filter: scoreType === "number" ? "agNumberColumnFilter" : "agTextColumnFilter",
-              resizable: true,
-              valueFormatter: (params) => {
-                const value2 = params.value;
-                if (value2 === "" || value2 === null || value2 === void 0) {
-                  return "";
-                }
-                if (Array.isArray(value2)) {
-                  return value2.join(", ");
-                } else if (typeof value2 === "object") {
-                  return JSON.stringify(value2);
-                } else if (typeof value2 === "number") {
-                  return value2.toFixed(3);
-                }
-                return String(value2);
-              }
-            };
-          }
-        );
-        const optionalColumns = [
-          {
-            field: "error",
-            headerName: "Error",
-            initialWidth: 150,
-            minWidth: 100,
-            sortable: true,
-            filter: true,
-            resizable: true,
-            cellStyle: { overflow: "hidden", textOverflow: "ellipsis" }
-          },
-          {
-            field: "limit",
-            headerName: "Limit",
-            initialWidth: 100,
-            minWidth: 80,
-            sortable: true,
-            filter: true,
-            resizable: true
-          },
-          {
-            field: "retries",
-            headerName: "Retries",
-            initialWidth: 80,
-            minWidth: 60,
-            sortable: true,
-            filter: true,
-            resizable: true
-          }
-        ];
-        return [...baseColumns, ...scoreColumns, ...optionalColumns];
-      }, [scoreMap]);
-      const columns = reactExports.useMemo(() => {
-        const columnsWithVisibility = allColumns.map((col) => {
-          const field = getFieldKey(col);
-          const isVisible = (columnVisibility[field] ?? optionalColumnsHaveAnyData[field]) !== false;
-          return {
-            ...col,
-            hide: !isVisible
-          };
-        });
-        return columnsWithVisibility;
-      }, [allColumns, columnVisibility, optionalColumnsHaveAnyData]);
-      return {
-        columns,
-        setColumnVisibility
-      };
-    };
-    const checkboxWrapper = "_checkboxWrapper_14sdx_1";
-    const label = "_label_14sdx_5";
-    const checkbox = "_checkbox_14sdx_1";
-    const filterIcon = "_filterIcon_14sdx_16";
-    const scrollableContainer = "_scrollableContainer_14sdx_21";
-    const headerRow = "_headerRow_14sdx_26";
-    const buttonContainer = "_buttonContainer_14sdx_31";
-    const button = "_button_14sdx_31";
-    const columnsLayout = "_columnsLayout_14sdx_41";
-    const popover = "_popover_14sdx_45";
-    const styles$2 = {
-      checkboxWrapper,
-      label,
-      checkbox,
-      filterIcon,
-      scrollableContainer,
-      headerRow,
-      buttonContainer,
-      button,
-      columnsLayout,
-      popover
-    };
-    const ColumnSelectorPopover = ({
-      showing,
-      setShowing,
-      columns,
-      onVisibilityChange,
-      positionEl,
-      filteredFields = []
-    }) => {
-      const currentVisibility = reactExports.useMemo(
-        () => columns.reduce(
-          (acc, col) => ({ ...acc, [getFieldKey(col)]: !col.hide }),
-          {}
-        ),
-        [columns]
-      );
-      const handleToggle = (field) => {
-        onVisibilityChange({
-          ...currentVisibility,
-          [field]: !currentVisibility[field]
-        });
-      };
-      const columnGroups = reactExports.useMemo(() => {
-        return {
-          base: columns.filter((col) => !getFieldKey(col).startsWith("score_")),
-          scores: columns.filter((col) => getFieldKey(col).startsWith("score_"))
-        };
-      }, [columns]);
-      const handleSelectAllBase = () => {
-        onVisibilityChange({
-          ...currentVisibility,
-          ...Object.fromEntries(
-            columnGroups.base.map((col) => [getFieldKey(col), true])
-          )
-        });
-      };
-      const handleDeselectAllBase = () => {
-        onVisibilityChange({
-          ...currentVisibility,
-          ...Object.fromEntries(
-            columnGroups.base.map((col) => [getFieldKey(col), false])
-          )
-        });
-      };
-      const handleSelectAllScores = () => {
-        onVisibilityChange({
-          ...currentVisibility,
-          ...Object.fromEntries(
-            columnGroups.scores.map((col) => [getFieldKey(col), true])
-          )
-        });
-      };
-      const handleDeselectAllScores = () => {
-        onVisibilityChange({
-          ...currentVisibility,
-          ...Object.fromEntries(
-            columnGroups.scores.map((col) => [getFieldKey(col), false])
-          )
-        });
-      };
-      const renderColumnCheckbox = (col) => {
-        const field = getFieldKey(col);
-        const hasFilter = filteredFields.includes(field);
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "div",
-          {
-            className: styles$2.checkboxWrapper,
-            title: hasFilter ? "Unselecting will remove an active filter on this column" : void 0,
-            children: /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: styles$2.label, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "input",
-                {
-                  type: "checkbox",
-                  checked: currentVisibility[field],
-                  onChange: () => handleToggle(field),
-                  className: styles$2.checkbox
-                }
-              ),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: col.headerName || field }),
-              hasFilter && /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: `${ApplicationIcons.filter} ${styles$2.filterIcon}` })
-            ] })
-          },
-          field
-        );
-      };
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(
-        PopOver,
-        {
-          id: "column-selector-popover",
-          isOpen: showing,
-          setIsOpen: setShowing,
-          positionEl,
-          placement: "bottom-start",
-          showArrow: false,
-          hoverDelay: -1,
-          className: styles$2.popover,
-          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$2.scrollableContainer, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$2.headerRow, children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: "Base" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$2.buttonContainer, children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    "button",
-                    {
-                      type: "button",
-                      className: `btn btn-link btn-sm ${styles$2.button}`,
-                      onClick: handleSelectAllBase,
-                      children: "All"
-                    }
-                  ),
-                  "|",
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    "button",
-                    {
-                      type: "button",
-                      className: `btn btn-link btn-sm ${styles$2.button}`,
-                      onClick: handleDeselectAllBase,
-                      children: "None"
-                    }
-                  )
-                ] })
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$2.columnsLayout, children: columnGroups.base.map((col) => renderColumnCheckbox(col)) })
-            ] }),
-            columnGroups.scores.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$2.headerRow, children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: "Scorers" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$2.buttonContainer, children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    "button",
-                    {
-                      type: "button",
-                      className: `btn btn-link btn-sm ${styles$2.button}`,
-                      onClick: handleSelectAllScores,
-                      children: "All"
-                    }
-                  ),
-                  "|",
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    "button",
-                    {
-                      type: "button",
-                      className: `btn btn-link btn-sm ${styles$2.button}`,
-                      onClick: handleDeselectAllScores,
-                      children: "None"
-                    }
-                  )
-                ] })
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$2.columnsLayout, children: columnGroups.scores.map((col) => renderColumnCheckbox(col)) })
-            ] })
-          ] })
-        }
-      );
     };
     const panel$1 = "_panel_18nhs_1";
     const list = "_list_18nhs_8";
@@ -222473,7 +222468,7 @@ If you are trying to annotate ${containerName} with application data, use the '$
             {
               ref: columnButtonRef,
               label: "Choose Columns",
-              icon: ApplicationIcons.options,
+              icon: ApplicationIcons.checkbox.checked,
               onClick: (e) => {
                 e.stopPropagation();
                 setShowColumnSelector((prev) => !prev);
