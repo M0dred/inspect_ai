@@ -68,6 +68,15 @@ var require_assets = __commonJS({
     }
     var jsxRuntime = { exports: {} };
     var reactJsxRuntime_production = {};
+    /**
+     * @license React
+     * react-jsx-runtime.production.js
+     *
+     * Copyright (c) Meta Platforms, Inc. and affiliates.
+     *
+     * This source code is licensed under the MIT license found in the
+     * LICENSE file in the root directory of this source tree.
+     */
     var hasRequiredReactJsxRuntime_production;
     function requireReactJsxRuntime_production() {
       if (hasRequiredReactJsxRuntime_production) return reactJsxRuntime_production;
@@ -110,6 +119,15 @@ var require_assets = __commonJS({
     var reactDomClient_production = {};
     var scheduler = { exports: {} };
     var scheduler_production = {};
+    /**
+     * @license React
+     * scheduler.production.js
+     *
+     * Copyright (c) Meta Platforms, Inc. and affiliates.
+     *
+     * This source code is licensed under the MIT license found in the
+     * LICENSE file in the root directory of this source tree.
+     */
     var hasRequiredScheduler_production;
     function requireScheduler_production() {
       if (hasRequiredScheduler_production) return scheduler_production;
@@ -376,6 +394,15 @@ var require_assets = __commonJS({
     }
     var react = { exports: {} };
     var react_production = {};
+    /**
+     * @license React
+     * react.production.js
+     *
+     * Copyright (c) Meta Platforms, Inc. and affiliates.
+     *
+     * This source code is licensed under the MIT license found in the
+     * LICENSE file in the root directory of this source tree.
+     */
     var hasRequiredReact_production;
     function requireReact_production() {
       if (hasRequiredReact_production) return react_production;
@@ -811,6 +838,15 @@ var require_assets = __commonJS({
     }
     var reactDom = { exports: {} };
     var reactDom_production = {};
+    /**
+     * @license React
+     * react-dom.production.js
+     *
+     * Copyright (c) Meta Platforms, Inc. and affiliates.
+     *
+     * This source code is licensed under the MIT license found in the
+     * LICENSE file in the root directory of this source tree.
+     */
     var hasRequiredReactDom_production;
     function requireReactDom_production() {
       if (hasRequiredReactDom_production) return reactDom_production;
@@ -978,6 +1014,15 @@ var require_assets = __commonJS({
       }
       return reactDom.exports;
     }
+    /**
+     * @license React
+     * react-dom-client.production.js
+     *
+     * Copyright (c) Meta Platforms, Inc. and affiliates.
+     *
+     * This source code is licensed under the MIT license found in the
+     * LICENSE file in the root directory of this source tree.
+     */
     var hasRequiredReactDomClient_production;
     function requireReactDomClient_production() {
       if (hasRequiredReactDomClient_production) return reactDomClient_production;
@@ -12733,15 +12778,15 @@ var require_assets = __commonJS({
             return newToken("punctuator", read$1());
           case "n":
             read$1();
-            literal$5("ull");
+            literal$1("ull");
             return newToken("null", null);
           case "t":
             read$1();
-            literal$5("rue");
+            literal$1("rue");
             return newToken("boolean", true);
           case "f":
             read$1();
-            literal$5("alse");
+            literal$1("alse");
             return newToken("boolean", false);
           case "-":
           case "+":
@@ -12772,11 +12817,11 @@ var require_assets = __commonJS({
             return;
           case "I":
             read$1();
-            literal$5("nfinity");
+            literal$1("nfinity");
             return newToken("numeric", Infinity);
           case "N":
             read$1();
-            literal$5("aN");
+            literal$1("aN");
             return newToken("numeric", NaN);
           case '"':
           case "'":
@@ -12870,11 +12915,11 @@ var require_assets = __commonJS({
             return;
           case "I":
             read$1();
-            literal$5("nfinity");
+            literal$1("nfinity");
             return newToken("numeric", sign * Infinity);
           case "N":
             read$1();
-            literal$5("aN");
+            literal$1("aN");
             return newToken("numeric", NaN);
         }
         throw invalidChar(read$1());
@@ -13107,7 +13152,7 @@ var require_assets = __commonJS({
         column
       };
     }
-    function literal$5(s) {
+    function literal$1(s) {
       for (const c2 of s) {
         const p = peek$1();
         if (p !== c2) {
@@ -13605,6 +13650,14 @@ var require_assets = __commonJS({
       hasRequiredPrism = 1;
       (function(module2) {
         var _self = typeof window !== "undefined" ? window : typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope ? self : {};
+        /**
+         * Prism: Lightweight, robust, elegant syntax highlighting
+         *
+         * @license MIT <https://opensource.org/licenses/MIT>
+         * @author Lea Verou <https://lea.verou.me>
+         * @namespace
+         * @public
+         */
         var Prism2 = (function(_self2) {
           var lang2 = /(?:^|\s)lang(?:uage)?-([\w-]+)(?=\s|$)/i;
           var uniqueId = 0;
@@ -15616,6 +15669,12 @@ var require_assets = __commonJS({
       Prism2.languages.yml = Prism2.languages.yaml;
     })(Prism);
     var clipboard$1 = { exports: {} };
+    /*!
+     * clipboard.js v2.0.11
+     * https://clipboardjs.com/
+     *
+     * Licensed MIT © Zeno Rocha
+     */
     var clipboard = clipboard$1.exports;
     var hasRequiredClipboard;
     function requireClipboard() {
@@ -16261,6 +16320,16 @@ var require_assets = __commonJS({
     const ClipboardJS = /* @__PURE__ */ getDefaultExportFromCjs(clipboardExports);
     var reactExports = requireReact();
     const React20 = /* @__PURE__ */ getDefaultExportFromCjs(reactExports);
+    /**
+     * react-router v7.9.4
+     *
+     * Copyright (c) Remix Software Inc.
+     *
+     * This source code is licensed under the MIT license found in the
+     * LICENSE.md file in the root directory of this source tree.
+     *
+     * @license MIT
+     */
     var __typeError = (msg) => {
       throw TypeError(msg);
     };
@@ -16577,23 +16646,19 @@ var require_assets = __commonJS({
         if (isIndexRoute(route)) {
           let indexRoute = {
             ...route,
+            ...mapRouteProperties2(route),
             id
           };
-          manifest[id] = mergeRouteUpdates(
-            indexRoute,
-            mapRouteProperties2(indexRoute)
-          );
+          manifest[id] = indexRoute;
           return indexRoute;
         } else {
           let pathOrLayoutRoute = {
             ...route,
+            ...mapRouteProperties2(route),
             id,
             children: void 0
           };
-          manifest[id] = mergeRouteUpdates(
-            pathOrLayoutRoute,
-            mapRouteProperties2(pathOrLayoutRoute)
-          );
+          manifest[id] = pathOrLayoutRoute;
           if (route.children) {
             pathOrLayoutRoute.children = convertRoutesToDataRoutes(
               route.children,
@@ -16605,17 +16670,6 @@ var require_assets = __commonJS({
           }
           return pathOrLayoutRoute;
         }
-      });
-    }
-    function mergeRouteUpdates(route, updates) {
-      return Object.assign(route, {
-        ...updates,
-        ...typeof updates.lazy === "object" && updates.lazy != null ? {
-          lazy: {
-            ...route.lazy,
-            ...updates.lazy
-          }
-        } : {}
       });
     }
     function matchRoutes(routes, locationArg, basename2 = "/") {
@@ -16905,36 +16959,13 @@ var require_assets = __commonJS({
     }) {
       return pathname === "/" ? basename2 : joinPaths([basename2, pathname]);
     }
-    var ABSOLUTE_URL_REGEX = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
-    var isAbsoluteUrl = (url) => ABSOLUTE_URL_REGEX.test(url);
     function resolvePath(to2, fromPathname = "/") {
       let {
         pathname: toPathname,
         search = "",
         hash: hash2 = ""
       } = typeof to2 === "string" ? parsePath$1(to2) : to2;
-      let pathname;
-      if (toPathname) {
-        if (isAbsoluteUrl(toPathname)) {
-          pathname = toPathname;
-        } else {
-          if (toPathname.includes("//")) {
-            let oldPathname = toPathname;
-            toPathname = toPathname.replace(/\/\/+/g, "/");
-            warning(
-              false,
-              `Pathnames cannot have embedded double slashes - normalizing ${oldPathname} -> ${toPathname}`
-            );
-          }
-          if (toPathname.startsWith("/")) {
-            pathname = resolvePathname(toPathname.substring(1), "/");
-          } else {
-            pathname = resolvePathname(toPathname, fromPathname);
-          }
-        }
-      } else {
-        pathname = fromPathname;
-      }
+      let pathname = toPathname ? toPathname.startsWith("/") ? toPathname : resolvePathname(toPathname, fromPathname) : fromPathname;
       return {
         pathname,
         search: normalizeSearch(search),
@@ -17033,247 +17064,6 @@ var require_assets = __commonJS({
     function isRouteErrorResponse(error2) {
       return error2 != null && typeof error2.status === "number" && typeof error2.statusText === "string" && typeof error2.internal === "boolean" && "data" in error2;
     }
-    function getRoutePattern(paths) {
-      return paths.filter(Boolean).join("/").replace(/\/\/*/g, "/") || "/";
-    }
-    var UninstrumentedSymbol = Symbol("Uninstrumented");
-    function getRouteInstrumentationUpdates(fns, route) {
-      let aggregated = {
-        lazy: [],
-        "lazy.loader": [],
-        "lazy.action": [],
-        "lazy.middleware": [],
-        middleware: [],
-        loader: [],
-        action: []
-      };
-      fns.forEach(
-        (fn2) => fn2({
-          id: route.id,
-          index: route.index,
-          path: route.path,
-          instrument(i2) {
-            let keys = Object.keys(aggregated);
-            for (let key2 of keys) {
-              if (i2[key2]) {
-                aggregated[key2].push(i2[key2]);
-              }
-            }
-          }
-        })
-      );
-      let updates = {};
-      if (typeof route.lazy === "function" && aggregated.lazy.length > 0) {
-        let instrumented = wrapImpl(aggregated.lazy, route.lazy, () => void 0);
-        if (instrumented) {
-          updates.lazy = instrumented;
-        }
-      }
-      if (typeof route.lazy === "object") {
-        let lazyObject = route.lazy;
-        ["middleware", "loader", "action"].forEach((key2) => {
-          let lazyFn = lazyObject[key2];
-          let instrumentations = aggregated[`lazy.${key2}`];
-          if (typeof lazyFn === "function" && instrumentations.length > 0) {
-            let instrumented = wrapImpl(instrumentations, lazyFn, () => void 0);
-            if (instrumented) {
-              updates.lazy = Object.assign(updates.lazy || {}, {
-                [key2]: instrumented
-              });
-            }
-          }
-        });
-      }
-      ["loader", "action"].forEach((key2) => {
-        let handler = route[key2];
-        if (typeof handler === "function" && aggregated[key2].length > 0) {
-          let original = handler[UninstrumentedSymbol] ?? handler;
-          let instrumented = wrapImpl(
-            aggregated[key2],
-            original,
-            (...args2) => getHandlerInfo(args2[0])
-          );
-          if (instrumented) {
-            instrumented[UninstrumentedSymbol] = original;
-            updates[key2] = instrumented;
-          }
-        }
-      });
-      if (route.middleware && route.middleware.length > 0 && aggregated.middleware.length > 0) {
-        updates.middleware = route.middleware.map((middleware) => {
-          let original = middleware[UninstrumentedSymbol] ?? middleware;
-          let instrumented = wrapImpl(
-            aggregated.middleware,
-            original,
-            (...args2) => getHandlerInfo(args2[0])
-          );
-          if (instrumented) {
-            instrumented[UninstrumentedSymbol] = original;
-            return instrumented;
-          }
-          return middleware;
-        });
-      }
-      return updates;
-    }
-    function instrumentClientSideRouter(router, fns) {
-      let aggregated = {
-        navigate: [],
-        fetch: []
-      };
-      fns.forEach(
-        (fn2) => fn2({
-          instrument(i2) {
-            let keys = Object.keys(i2);
-            for (let key2 of keys) {
-              if (i2[key2]) {
-                aggregated[key2].push(i2[key2]);
-              }
-            }
-          }
-        })
-      );
-      if (aggregated.navigate.length > 0) {
-        let navigate = router.navigate[UninstrumentedSymbol] ?? router.navigate;
-        let instrumentedNavigate = wrapImpl(
-          aggregated.navigate,
-          navigate,
-          (...args2) => {
-            let [to2, opts] = args2;
-            return {
-              to: typeof to2 === "number" || typeof to2 === "string" ? to2 : to2 ? createPath(to2) : ".",
-              ...getRouterInfo(router, opts ?? {})
-            };
-          }
-        );
-        if (instrumentedNavigate) {
-          instrumentedNavigate[UninstrumentedSymbol] = navigate;
-          router.navigate = instrumentedNavigate;
-        }
-      }
-      if (aggregated.fetch.length > 0) {
-        let fetch2 = router.fetch[UninstrumentedSymbol] ?? router.fetch;
-        let instrumentedFetch = wrapImpl(aggregated.fetch, fetch2, (...args2) => {
-          let [key2, , href, opts] = args2;
-          return {
-            href: href ?? ".",
-            fetcherKey: key2,
-            ...getRouterInfo(router, opts ?? {})
-          };
-        });
-        if (instrumentedFetch) {
-          instrumentedFetch[UninstrumentedSymbol] = fetch2;
-          router.fetch = instrumentedFetch;
-        }
-      }
-      return router;
-    }
-    function wrapImpl(impls, handler, getInfo) {
-      if (impls.length === 0) {
-        return null;
-      }
-      return async (...args2) => {
-        let result2 = await recurseRight(
-          impls,
-          getInfo(...args2),
-          () => handler(...args2),
-          impls.length - 1
-        );
-        if (result2.type === "error") {
-          throw result2.value;
-        }
-        return result2.value;
-      };
-    }
-    async function recurseRight(impls, info, handler, index) {
-      let impl = impls[index];
-      let result2;
-      if (!impl) {
-        try {
-          let value2 = await handler();
-          result2 = { type: "success", value: value2 };
-        } catch (e) {
-          result2 = { type: "error", value: e };
-        }
-      } else {
-        let handlerPromise = void 0;
-        let callHandler = async () => {
-          if (handlerPromise) {
-            console.error("You cannot call instrumented handlers more than once");
-          } else {
-            handlerPromise = recurseRight(impls, info, handler, index - 1);
-          }
-          result2 = await handlerPromise;
-          invariant(result2, "Expected a result");
-          if (result2.type === "error" && result2.value instanceof Error) {
-            return { status: "error", error: result2.value };
-          }
-          return { status: "success", error: void 0 };
-        };
-        try {
-          await impl(callHandler, info);
-        } catch (e) {
-          console.error("An instrumentation function threw an error:", e);
-        }
-        if (!handlerPromise) {
-          await callHandler();
-        }
-        await handlerPromise;
-      }
-      if (result2) {
-        return result2;
-      }
-      return {
-        type: "error",
-        value: new Error("No result assigned in instrumentation chain.")
-      };
-    }
-    function getHandlerInfo(args2) {
-      let { request, context, params, unstable_pattern } = args2;
-      return {
-        request: getReadonlyRequest(request),
-        params: { ...params },
-        unstable_pattern,
-        context: getReadonlyContext(context)
-      };
-    }
-    function getRouterInfo(router, opts) {
-      return {
-        currentUrl: createPath(router.state.location),
-        ..."formMethod" in opts ? { formMethod: opts.formMethod } : {},
-        ..."formEncType" in opts ? { formEncType: opts.formEncType } : {},
-        ..."formData" in opts ? { formData: opts.formData } : {},
-        ..."body" in opts ? { body: opts.body } : {}
-      };
-    }
-    function getReadonlyRequest(request) {
-      return {
-        method: request.method,
-        url: request.url,
-        headers: {
-          get: (...args2) => request.headers.get(...args2)
-        }
-      };
-    }
-    function getReadonlyContext(context) {
-      if (isPlainObject$1(context)) {
-        let frozen = { ...context };
-        Object.freeze(frozen);
-        return frozen;
-      } else {
-        return {
-          get: (ctx) => context.get(ctx)
-        };
-      }
-    }
-    var objectProtoNames = Object.getOwnPropertyNames(Object.prototype).sort().join("\0");
-    function isPlainObject$1(thing) {
-      if (thing === null || typeof thing !== "object") {
-        return false;
-      }
-      const proto = Object.getPrototypeOf(thing);
-      return proto === Object.prototype || proto === null || Object.getOwnPropertyNames(proto).sort().join("\0") === objectProtoNames;
-    }
     var validMutationMethodsArr = [
       "POST",
       "PUT",
@@ -17316,6 +17106,8 @@ var require_assets = __commonJS({
       reset: void 0,
       location: void 0
     };
+    var ABSOLUTE_URL_REGEX = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
+    var isAbsoluteUrl = (url) => ABSOLUTE_URL_REGEX.test(url);
     var defaultMapRouteProperties = (route) => ({
       hasErrorBoundary: Boolean(route.hasErrorBoundary)
     });
@@ -17329,20 +17121,7 @@ var require_assets = __commonJS({
         "You must provide a non-empty routes array to createRouter"
       );
       let hydrationRouteProperties2 = init.hydrationRouteProperties || [];
-      let _mapRouteProperties = init.mapRouteProperties || defaultMapRouteProperties;
-      let mapRouteProperties2 = _mapRouteProperties;
-      if (init.unstable_instrumentations) {
-        let instrumentations = init.unstable_instrumentations;
-        mapRouteProperties2 = (route) => {
-          return {
-            ..._mapRouteProperties(route),
-            ...getRouteInstrumentationUpdates(
-              instrumentations.map((i2) => i2.route).filter(Boolean),
-              route
-            )
-          };
-        };
-      }
+      let mapRouteProperties2 = init.mapRouteProperties || defaultMapRouteProperties;
       let manifest = {};
       let dataRoutes = convertRoutesToDataRoutes(
         init.routes,
@@ -18355,14 +18134,6 @@ var require_assets = __commonJS({
           key2
         );
         let actionResult = actionResults[match.route.id];
-        if (!actionResult) {
-          for (let match2 of fetchMatches) {
-            if (actionResults[match2.route.id]) {
-              actionResult = actionResults[match2.route.id];
-              break;
-            }
-          }
-        }
         if (fetchRequest.signal.aborted) {
           if (fetchControllers.get(key2) === abortController) {
             fetchControllers.delete(key2);
@@ -19019,42 +18790,22 @@ var require_assets = __commonJS({
             return { type: "aborted" };
           }
           let newMatches = matchRoutes(routesToUse, pathname, basename2);
-          let newPartialMatches = null;
           if (newMatches) {
-            if (Object.keys(newMatches[0].params).length === 0) {
-              return { type: "success", matches: newMatches };
-            } else {
-              newPartialMatches = matchRoutesImpl(
-                routesToUse,
-                pathname,
-                basename2,
-                true
-              );
-              let matchedDeeper = newPartialMatches && partialMatches.length < newPartialMatches.length && compareMatches(
-                partialMatches,
-                newPartialMatches.slice(0, partialMatches.length)
-              );
-              if (!matchedDeeper) {
-                return { type: "success", matches: newMatches };
-              }
-            }
+            return { type: "success", matches: newMatches };
           }
-          if (!newPartialMatches) {
-            newPartialMatches = matchRoutesImpl(
-              routesToUse,
-              pathname,
-              basename2,
-              true
-            );
-          }
-          if (!newPartialMatches || compareMatches(partialMatches, newPartialMatches)) {
+          let newPartialMatches = matchRoutesImpl(
+            routesToUse,
+            pathname,
+            basename2,
+            true
+          );
+          if (!newPartialMatches || partialMatches.length === newPartialMatches.length && partialMatches.every(
+            (m, i2) => m.route.id === newPartialMatches[i2].route.id
+          )) {
             return { type: "success", matches: null };
           }
           partialMatches = newPartialMatches;
         }
-      }
-      function compareMatches(a, b) {
-        return a.length === b.length && a.every((m, i2) => m.route.id === b[i2].route.id);
       }
       function _internalSetRoutes(newRoutes) {
         manifest = {};
@@ -19122,12 +18873,6 @@ var require_assets = __commonJS({
           updateState(newState);
         }
       };
-      if (init.unstable_instrumentations) {
-        router = instrumentClientSideRouter(
-          router,
-          init.unstable_instrumentations.map((i2) => i2.router).filter(Boolean)
-        );
-      }
       return router;
     }
     function isSubmissionNavigation(opts) {
@@ -19307,7 +19052,6 @@ var require_assets = __commonJS({
         actionResult,
         actionStatus
       };
-      let pattern = getRoutePattern(matches.map((m) => m.route.path));
       let dsMatches = matches.map((match, index) => {
         let { route } = match;
         let forceShouldLoad = null;
@@ -19331,7 +19075,6 @@ var require_assets = __commonJS({
             mapRouteProperties2,
             manifest,
             request,
-            pattern,
             match,
             lazyRoutePropertiesToSkip,
             scopedContext,
@@ -19352,7 +19095,6 @@ var require_assets = __commonJS({
           mapRouteProperties2,
           manifest,
           request,
-          pattern,
           match,
           lazyRoutePropertiesToSkip,
           scopedContext,
@@ -19777,17 +19519,12 @@ var require_assets = __commonJS({
       }
     }
     async function runMiddlewarePipeline(args2, handler, processResult2, isResult, errorHandler) {
-      let { matches, request, params, context, unstable_pattern } = args2;
+      let { matches, request, params, context } = args2;
       let tuples = matches.flatMap(
         (m) => m.route.middleware ? m.route.middleware.map((fn2) => [m.route.id, fn2]) : []
       );
       let result2 = await callRouteMiddleware(
-        {
-          request,
-          params,
-          context,
-          unstable_pattern
-        },
+        { request, params, context },
         tuples,
         handler,
         processResult2,
@@ -19865,7 +19602,7 @@ var require_assets = __commonJS({
         handler: lazyRoutePromises.lazyHandlerPromise
       };
     }
-    function getDataStrategyMatch(mapRouteProperties2, manifest, request, unstable_pattern, match, lazyRoutePropertiesToSkip, scopedContext, shouldLoad, unstable_shouldRevalidateArgs = null) {
+    function getDataStrategyMatch(mapRouteProperties2, manifest, request, match, lazyRoutePropertiesToSkip, scopedContext, shouldLoad, unstable_shouldRevalidateArgs = null) {
       let isUsingNewApi = false;
       let _lazyPromises = getDataStrategyMatchLazyPromises(
         mapRouteProperties2,
@@ -19896,10 +19633,9 @@ var require_assets = __commonJS({
           let { lazy, loader, middleware } = match.route;
           let callHandler = isUsingNewApi || shouldLoad || handlerOverride && !isMutationMethod(request.method) && (lazy || loader);
           let isMiddlewareOnlyRoute = middleware && middleware.length > 0 && !loader && !lazy;
-          if (callHandler && (isMutationMethod(request.method) || !isMiddlewareOnlyRoute)) {
+          if (callHandler && !isMiddlewareOnlyRoute) {
             return callLoaderOrAction({
               request,
-              unstable_pattern,
               match,
               lazyHandlerPromise: _lazyPromises?.handler,
               lazyRoutePromise: _lazyPromises?.route,
@@ -19933,7 +19669,6 @@ var require_assets = __commonJS({
           mapRouteProperties2,
           manifest,
           request,
-          getRoutePattern(matches.map((m) => m.route.path)),
           match,
           lazyRoutePropertiesToSkip,
           scopedContext,
@@ -19948,7 +19683,6 @@ var require_assets = __commonJS({
       }
       let dataStrategyArgs = {
         request,
-        unstable_pattern: getRoutePattern(matches.map((m) => m.route.path)),
         params: matches[0].params,
         context: scopedContext,
         matches
@@ -19985,7 +19719,6 @@ var require_assets = __commonJS({
     }
     async function callLoaderOrAction({
       request,
-      unstable_pattern,
       match,
       lazyHandlerPromise,
       lazyRoutePromise,
@@ -20012,7 +19745,6 @@ var require_assets = __commonJS({
           return handler(
             {
               request,
-              unstable_pattern,
               params: match.params,
               context: scopedContext
             },
@@ -20924,8 +20656,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         };
       }
       componentDidCatch(error2, errorInfo) {
-        if (this.props.onError) {
-          this.props.onError(error2, errorInfo);
+        if (this.props.unstable_onError) {
+          this.props.unstable_onError(error2, errorInfo);
         } else {
           console.error(
             "React Router caught the following error during render",
@@ -21003,13 +20735,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
         }
       }
-      let onError = dataRouterState && unstable_onError ? (error2, errorInfo) => {
-        unstable_onError(error2, {
-          location: dataRouterState.location,
-          params: dataRouterState.matches?.[0]?.params ?? {},
-          errorInfo
-        });
-      } : void 0;
       return renderedMatches.reduceRight(
         (outlet, match, index) => {
           let error2;
@@ -21070,7 +20795,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               error: error2,
               children: getChildren2(),
               routeContext: { outlet: null, matches: matches2, isDataRoute: true },
-              onError
+              unstable_onError
             }
           ) : getChildren2();
         },
@@ -21259,10 +20984,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             if (newState.errors && unstable_onError) {
               Object.entries(newState.errors).forEach(([routeId, error2]) => {
                 if (prevState.errors?.[routeId] !== error2) {
-                  unstable_onError(error2, {
-                    location: newState.location,
-                    params: newState.matches[0]?.params ?? {}
-                  });
+                  unstable_onError(error2);
                 }
               });
             }
@@ -22044,7 +21766,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     try {
       if (isBrowser) {
         window.__reactRouterVersion = // @ts-expect-error
-        "7.9.6";
+        "7.9.4";
       }
     } catch (e) {
     }
@@ -22060,8 +21782,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         hydrationRouteProperties,
         dataStrategy: opts?.dataStrategy,
         patchRoutesOnNavigation: opts?.patchRoutesOnNavigation,
-        window: opts?.window,
-        unstable_instrumentations: opts?.unstable_instrumentations
+        window: opts?.window
       }).initialize();
     }
     function parseHydrationData() {
@@ -22496,29 +22217,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return isPlainObject(value2) || Array.isArray(value2) || !!value2[DRAFTABLE] || !!value2.constructor?.[DRAFTABLE] || isMap(value2) || isSet(value2);
     }
     var objectCtorString = Object.prototype.constructor.toString();
-    var cachedCtorStrings = /* @__PURE__ */ new WeakMap();
     function isPlainObject(value2) {
       if (!value2 || typeof value2 !== "object")
         return false;
-      const proto = Object.getPrototypeOf(value2);
-      if (proto === null || proto === Object.prototype)
+      const proto = getPrototypeOf(value2);
+      if (proto === null) {
         return true;
+      }
       const Ctor = Object.hasOwnProperty.call(proto, "constructor") && proto.constructor;
       if (Ctor === Object)
         return true;
-      if (typeof Ctor !== "function")
-        return false;
-      let ctorString = cachedCtorStrings.get(Ctor);
-      if (ctorString === void 0) {
-        ctorString = Function.toString.call(Ctor);
-        cachedCtorStrings.set(Ctor, ctorString);
-      }
-      return ctorString === objectCtorString;
+      return typeof Ctor == "function" && Function.toString.call(Ctor) === objectCtorString;
     }
-    function each(obj, iter, strict = true) {
+    function each(obj, iter) {
       if (getArchtype(obj) === 0) {
-        const keys = strict ? Reflect.ownKeys(obj) : Object.keys(obj);
-        keys.forEach((key2) => {
+        Reflect.ownKeys(obj).forEach((key2) => {
           iter(key2, obj[key2], obj);
         });
       } else {
@@ -22602,10 +22315,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         return obj;
       if (getArchtype(obj) > 1) {
         Object.defineProperties(obj, {
-          set: dontMutateMethodOverride,
-          add: dontMutateMethodOverride,
-          clear: dontMutateMethodOverride,
-          delete: dontMutateMethodOverride
+          set: { value: dontMutateFrozenCollections },
+          add: { value: dontMutateFrozenCollections },
+          clear: { value: dontMutateFrozenCollections },
+          delete: { value: dontMutateFrozenCollections }
         });
       }
       Object.freeze(obj);
@@ -22616,12 +22329,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     function dontMutateFrozenCollections() {
       die$1(2);
     }
-    var dontMutateMethodOverride = {
-      value: dontMutateFrozenCollections
-    };
     function isFrozen(obj) {
-      if (obj === null || typeof obj !== "object")
-        return true;
       return Object.isFrozen(obj);
     }
     var plugins = {};
@@ -22713,13 +22421,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     function finalize(rootScope, value2, path) {
       if (isFrozen(value2))
         return value2;
-      const useStrictIteration = rootScope.immer_.shouldUseStrictIteration();
       const state = value2[DRAFT_STATE];
       if (!state) {
         each(
           value2,
-          (key2, childValue) => finalizeProperty(rootScope, state, value2, key2, childValue, path),
-          useStrictIteration
+          (key2, childValue) => finalizeProperty(rootScope, state, value2, key2, childValue, path)
         );
         return value2;
       }
@@ -22742,16 +22448,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
         each(
           resultEach,
-          (key2, childValue) => finalizeProperty(
-            rootScope,
-            state,
-            result2,
-            key2,
-            childValue,
-            path,
-            isSet2
-          ),
-          useStrictIteration
+          (key2, childValue) => finalizeProperty(rootScope, state, result2, key2, childValue, path, isSet2)
         );
         maybeFreeze(rootScope, result2, false);
         if (path && rootScope.patches_) {
@@ -22766,16 +22463,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return state.copy_;
     }
     function finalizeProperty(rootScope, parentState, targetObject, prop2, childValue, rootPath, targetIsSet) {
-      if (childValue == null) {
-        return;
-      }
-      if (typeof childValue !== "object" && !targetIsSet) {
-        return;
-      }
-      const childIsFrozen = isFrozen(childValue);
-      if (childIsFrozen && !targetIsSet) {
-        return;
-      }
       if (isDraft(childValue)) {
         const path = rootPath && parentState && parentState.type_ !== 3 && // Set objects are atomic since they have no keys.
         !has$1(parentState.assigned_, prop2) ? rootPath.concat(prop2) : void 0;
@@ -22788,11 +22475,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       } else if (targetIsSet) {
         targetObject.add(childValue);
       }
-      if (isDraftable(childValue) && !childIsFrozen) {
+      if (isDraftable(childValue) && !isFrozen(childValue)) {
         if (!rootScope.immer_.autoFreeze_ && rootScope.unfinalizedDrafts_ < 1) {
-          return;
-        }
-        if (parentState && parentState.base_ && parentState.base_[prop2] === childValue && childIsFrozen) {
           return;
         }
         finalize(rootScope, childValue);
@@ -22987,7 +22671,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       constructor(config2) {
         this.autoFreeze_ = true;
         this.useStrictShallowCopy_ = false;
-        this.useStrictIteration_ = true;
         this.produce = (base2, recipe, patchListener) => {
           if (typeof base2 === "function" && typeof recipe !== "function") {
             const defaultBase = recipe;
@@ -23050,8 +22733,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           this.setAutoFreeze(config2.autoFreeze);
         if (typeof config2?.useStrictShallowCopy === "boolean")
           this.setUseStrictShallowCopy(config2.useStrictShallowCopy);
-        if (typeof config2?.useStrictIteration === "boolean")
-          this.setUseStrictIteration(config2.useStrictIteration);
       }
       createDraft(base2) {
         if (!isDraftable(base2))
@@ -23087,18 +22768,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
        */
       setUseStrictShallowCopy(value2) {
         this.useStrictShallowCopy_ = value2;
-      }
-      /**
-       * Pass false to use faster iteration that skips non-enumerable properties
-       * but still handles symbols for compatibility.
-       *
-       * By default, strict iteration is enabled (includes all own properties).
-       */
-      setUseStrictIteration(value2) {
-        this.useStrictIteration_ = value2;
-      }
-      shouldUseStrictIteration() {
-        return this.useStrictIteration_;
       }
       applyPatches(base2, patches) {
         let i2;
@@ -23138,23 +22807,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         return value2;
       const state = value2[DRAFT_STATE];
       let copy2;
-      let strict = true;
       if (state) {
         if (!state.modified_)
           return state.base_;
         state.finalized_ = true;
         copy2 = shallowCopy(value2, state.scope_.immer_.useStrictShallowCopy_);
-        strict = state.scope_.immer_.shouldUseStrictIteration();
       } else {
         copy2 = shallowCopy(value2, true);
       }
-      each(
-        copy2,
-        (key2, childValue) => {
-          set(copy2, key2, currentImpl(childValue));
-        },
-        strict
-      );
+      each(copy2, (key2, childValue) => {
+        set(copy2, key2, currentImpl(childValue));
+      });
       if (state) {
         state.finalized_ = false;
       }
@@ -39454,11 +39117,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const attribute = "(?:\\s+" + attr_name + "(?:\\s*=\\s*" + attr_value + ")?)";
     const open_tag = "<[A-Za-z][A-Za-z0-9\\-]*" + attribute + "*\\s*\\/?>";
     const close_tag = "<\\/[A-Za-z][A-Za-z0-9\\-]*\\s*>";
-    const comment$5 = "<!---?>|<!--(?:[^-]|-[^-]|--[^>])*-->";
+    const comment$1 = "<!---?>|<!--(?:[^-]|-[^-]|--[^>])*-->";
     const processing = "<[?][\\s\\S]*?[?]>";
     const declaration = "<![A-Za-z][^>]*>";
     const cdata = "<!\\[CDATA\\[[\\s\\S]*?\\]\\]>";
-    const HTML_TAG_RE = new RegExp("^(?:" + open_tag + "|" + close_tag + "|" + comment$5 + "|" + processing + "|" + declaration + "|" + cdata + ")");
+    const HTML_TAG_RE = new RegExp("^(?:" + open_tag + "|" + close_tag + "|" + comment$1 + "|" + processing + "|" + declaration + "|" + cdata + ")");
     const HTML_OPEN_CLOSE_TAG_RE = new RegExp("^(?:" + open_tag + "|" + close_tag + ")");
     const HTML_SEQUENCES = [
       [/^<(script|pre|style|textarea)(?=(\s|>|$))/i, /<\/(script|pre|style|textarea)>/i, true],
@@ -39517,7 +39180,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       token2.content = state.getLines(startLine, nextLine, state.blkIndent, true);
       return true;
     }
-    function heading$5(state, startLine, endLine, silent) {
+    function heading$1(state, startLine, endLine, silent) {
       let pos2 = state.bMarks[startLine] + state.tShift[startLine];
       let max2 = state.eMarks[startLine];
       if (state.sCount[startLine] - state.blkIndent >= 4) {
@@ -39662,7 +39325,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       ["list", list$2, ["paragraph", "reference", "blockquote"]],
       ["reference", reference$1],
       ["html_block", html_block, ["paragraph", "reference", "blockquote"]],
-      ["heading", heading$5, ["paragraph", "reference", "blockquote"]],
+      ["heading", heading$1, ["paragraph", "reference", "blockquote"]],
       ["lheading", lheading],
       ["paragraph", paragraph]
     ];
@@ -42323,12 +41986,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       FindMath.AbstractFindMath = AbstractFindMath;
       return FindMath;
     }
-    var string$5 = {};
+    var string$1 = {};
     var hasRequiredString;
     function requireString() {
-      if (hasRequiredString) return string$5;
+      if (hasRequiredString) return string$1;
       hasRequiredString = 1;
-      var __read2 = string$5 && string$5.__read || function(o, n) {
+      var __read2 = string$1 && string$1.__read || function(o, n) {
         var m = typeof Symbol === "function" && o[Symbol.iterator];
         if (!m) return o;
         var i2 = m.call(o), r2, ar2 = [], e;
@@ -42345,7 +42008,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
         return ar2;
       };
-      var __spreadArray2 = string$5 && string$5.__spreadArray || function(to2, from, pack) {
+      var __spreadArray2 = string$1 && string$1.__spreadArray || function(to2, from, pack) {
         if (pack || arguments.length === 2) for (var i2 = 0, l = from.length, ar2; i2 < l; i2++) {
           if (ar2 || !(i2 in from)) {
             if (!ar2) ar2 = Array.prototype.slice.call(from, 0, i2);
@@ -42354,35 +42017,35 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
         return to2.concat(ar2 || Array.prototype.slice.call(from));
       };
-      Object.defineProperty(string$5, "__esModule", { value: true });
-      string$5.split = string$5.isPercent = string$5.unicodeString = string$5.unicodeChars = string$5.quotePattern = string$5.sortLength = void 0;
+      Object.defineProperty(string$1, "__esModule", { value: true });
+      string$1.split = string$1.isPercent = string$1.unicodeString = string$1.unicodeChars = string$1.quotePattern = string$1.sortLength = void 0;
       function sortLength(a, b) {
         return a.length !== b.length ? b.length - a.length : a === b ? 0 : a < b ? -1 : 1;
       }
-      string$5.sortLength = sortLength;
+      string$1.sortLength = sortLength;
       function quotePattern(text2) {
         return text2.replace(/([\^$(){}+*?\-|\[\]\:\\])/g, "\\$1");
       }
-      string$5.quotePattern = quotePattern;
+      string$1.quotePattern = quotePattern;
       function unicodeChars(text2) {
         return Array.from(text2).map(function(c2) {
           return c2.codePointAt(0);
         });
       }
-      string$5.unicodeChars = unicodeChars;
+      string$1.unicodeChars = unicodeChars;
       function unicodeString(data) {
         return String.fromCodePoint.apply(String, __spreadArray2([], __read2(data), false));
       }
-      string$5.unicodeString = unicodeString;
+      string$1.unicodeString = unicodeString;
       function isPercent(x2) {
         return !!x2.match(/%\s*$/);
       }
-      string$5.isPercent = isPercent;
+      string$1.isPercent = isPercent;
       function split(x2) {
         return x2.trim().split(/\s+/);
       }
-      string$5.split = split;
-      return string$5;
+      string$1.split = split;
+      return string$1;
     }
     var MathItem = {};
     var hasRequiredMathItem;
@@ -81325,6 +80988,38 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     function requireMhchemParser() {
       if (hasRequiredMhchemParser) return mhchemParser;
       hasRequiredMhchemParser = 1;
+      /*!
+       *************************************************************************
+       *
+       *  mhchemParser.ts
+       *  4.2.1
+       *
+       *  Parser for the \ce command and \pu command for MathJax and Co.
+       *
+       *  mhchem's \ce is a tool for writing beautiful chemical equations easily.
+       *  mhchem's \pu is a tool for writing physical units easily.
+       *
+       *  ----------------------------------------------------------------------
+       *
+       *  Copyright (c) 2015-2023 Martin Hensel
+       *
+       *  Licensed under the Apache License, Version 2.0 (the "License");
+       *  you may not use this file except in compliance with the License.
+       *  You may obtain a copy of the License at
+       *
+       *      http://www.apache.org/licenses/LICENSE-2.0
+       *
+       *  Unless required by applicable law or agreed to in writing, software
+       *  distributed under the License is distributed on an "AS IS" BASIS,
+       *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       *  See the License for the specific language governing permissions and
+       *  limitations under the License.
+       *
+       *  ----------------------------------------------------------------------
+       *
+       *  https://github.com/mhchem/mhchemParser
+       *
+       */
       Object.defineProperty(mhchemParser, "__esModule", { value: true });
       mhchemParser.mhchemParser = void 0;
       var mhchemParser$1 = (function() {
@@ -106026,6 +105721,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         var Property = requireProperty();
         exports2.Selector = Selector;
         exports2.Property = Property;
+        /**
+         * Returns an array of the selectors.
+         *
+         * @license Sizzle CSS Selector Engine - MIT
+         * @param {String} selectorText from mensch
+         * @api public
+         */
         exports2.extract = function extract(selectorText) {
           var attr = 0;
           var sels = [];
@@ -107102,9 +106804,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
       );
     }
-    const content$7 = "_content_13ihw_1";
+    const content$3 = "_content_13ihw_1";
     const styles$1Q = {
-      content: content$7
+      content: content$3
     };
     const Preformatted = reactExports.forwardRef(
       ({ text: text2, style: style2, className: className2 }, ref) => {
@@ -110619,10 +110321,10 @@ ${citation.url}` : citation.url,
         ];
       }
     };
-    const content$6 = "_content_1b2jp_1";
+    const content$2 = "_content_1b2jp_1";
     const codeCompact = "_codeCompact_1b2jp_5";
     const styles$1C = {
-      content: content$6,
+      content: content$2,
       codeCompact
     };
     const defaultContext = () => {
@@ -110829,12 +110531,12 @@ ${citation.url}` : citation.url,
       }
     );
     const grid$a = "_grid_3x3ql_1";
-    const number$5 = "_number_3x3ql_10";
+    const number$1 = "_number_3x3ql_10";
     const user = "_user_3x3ql_14";
     const container$n = "_container_3x3ql_19";
     const styles$1B = {
       grid: grid$a,
-      number: number$5,
+      number: number$1,
       user,
       container: container$n
     };
@@ -117334,7 +117036,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1t.fullWidth, styles$1t.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1t.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1t.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.153-5-g4dbfd7135" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.153-18-gab6e03e26" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1t.spacer) }),
@@ -117693,6 +117395,16 @@ categories: ${categories.join(" ")}`;
         }
       );
     };
+    /**
+       * table-core
+       *
+       * Copyright (c) TanStack
+       *
+       * This source code is licensed under the MIT license found in the
+       * LICENSE.md file in the root directory of this source tree.
+       *
+       * @license MIT
+       */
     function createColumnHelper() {
       return {
         accessor: (accessor, column2) => {
@@ -120613,6 +120325,16 @@ categories: ${categories.join(" ")}`;
         };
       }, getMemoOptions(table2.options, "debugTable", "getSortedRowModel", () => table2._autoResetPageIndex()));
     }
+    /**
+       * react-table
+       *
+       * Copyright (c) TanStack
+       *
+       * This source code is licensed under the MIT license found in the
+       * LICENSE.md file in the root directory of this source tree.
+       *
+       * @license MIT
+       */
     function flexRender(Comp, props) {
       return !Comp ? null : isReactComponent(Comp) ? /* @__PURE__ */ reactExports.createElement(Comp, props) : Comp;
     }
@@ -136794,7 +136516,7 @@ ${events}
     const modal$1 = "_modal_1hch3_26";
     const hidden = "_hidden_1hch3_31";
     const modalBody$1 = "_modalBody_1hch3_35";
-    const content$5 = "_content_1hch3_41";
+    const content$1 = "_content_1hch3_41";
     const header$2 = "_header_1hch3_45";
     const titleTool = "_titleTool_1hch3_51";
     const styles$t = {
@@ -136805,7 +136527,7 @@ ${events}
       modal: modal$1,
       hidden,
       modalBody: modalBody$1,
-      content: content$5,
+      content: content$1,
       header: header$2,
       titleTool
     };
@@ -138575,7 +138297,7 @@ ${events}
       Define a new facet.
       */
       static define(config2 = {}) {
-        return new Facet(config2.combine || ((a) => a), config2.compareInput || ((a, b) => a === b), config2.compare || (!config2.combine ? sameArray$5 : (a, b) => a === b), !!config2.static, config2.enables);
+        return new Facet(config2.combine || ((a) => a), config2.compareInput || ((a, b) => a === b), config2.compare || (!config2.combine ? sameArray$1 : (a, b) => a === b), !!config2.static, config2.enables);
       }
       /**
       Returns an extension that adds the given value to this facet.
@@ -138612,7 +138334,7 @@ ${events}
         return this.compute([field], (state) => get2(state.field(field)));
       }
     }
-    function sameArray$5(a, b) {
+    function sameArray$1(a, b) {
       return a == b || a.length == b.length && a.every((e, i2) => e === b[i2]);
     }
     class FacetProvider {
@@ -138722,7 +138444,7 @@ ${events}
         reconfigure(state, oldState) {
           let depChanged = ensureAll(state, providerAddrs);
           let oldProviders = oldState.config.facets[facet.id], oldValue = oldState.facet(facet);
-          if (oldProviders && !depChanged && sameArray$5(providers, oldProviders)) {
+          if (oldProviders && !depChanged && sameArray$1(providers, oldProviders)) {
             state.values[idx] = oldValue;
             return 0;
           }
@@ -138919,7 +138641,7 @@ ${events}
             /* Provider.Static */
           )) {
             address[facet.id] = staticValues.length << 1 | 1;
-            if (sameArray$5(oldProviders, providers)) {
+            if (sameArray$1(oldProviders, providers)) {
               staticValues.push(oldState.facet(facet));
             } else {
               let value2 = facet.combine(providers.map((p) => p.value));
@@ -150026,19 +149748,19 @@ ${events}
     GutterMarker.prototype.startSide = GutterMarker.prototype.endSide = -1;
     GutterMarker.prototype.point = true;
     const DefaultBufferLength = 1024;
-    let nextPropID$1 = 0;
+    let nextPropID = 0;
     class Range {
       constructor(from, to2) {
         this.from = from;
         this.to = to2;
       }
     }
-    let NodeProp$1 = class NodeProp {
+    class NodeProp {
       /**
       Create a new node prop type.
       */
       constructor(config2 = {}) {
-        this.id = nextPropID$1++;
+        this.id = nextPropID++;
         this.perNode = !!config2.perNode;
         this.deserialize = config2.deserialize || (() => {
           throw new Error("This node type doesn't define a deserialize function");
@@ -150057,24 +149779,24 @@ ${events}
         if (this.perNode)
           throw new RangeError("Can't add per-node props to node types");
         if (typeof match != "function")
-          match = NodeType$1.match(match);
+          match = NodeType.match(match);
         return (type) => {
           let result2 = match(type);
           return result2 === void 0 ? null : [this, result2];
         };
       }
-    };
-    NodeProp$1.closedBy = new NodeProp$1({ deserialize: (str2) => str2.split(" ") });
-    NodeProp$1.openedBy = new NodeProp$1({ deserialize: (str2) => str2.split(" ") });
-    NodeProp$1.group = new NodeProp$1({ deserialize: (str2) => str2.split(" ") });
-    NodeProp$1.isolate = new NodeProp$1({ deserialize: (value2) => {
+    }
+    NodeProp.closedBy = new NodeProp({ deserialize: (str2) => str2.split(" ") });
+    NodeProp.openedBy = new NodeProp({ deserialize: (str2) => str2.split(" ") });
+    NodeProp.group = new NodeProp({ deserialize: (str2) => str2.split(" ") });
+    NodeProp.isolate = new NodeProp({ deserialize: (value2) => {
       if (value2 && value2 != "rtl" && value2 != "ltr" && value2 != "auto")
         throw new RangeError("Invalid value for isolate: " + value2);
       return value2 || "auto";
     } });
-    NodeProp$1.contextHash = new NodeProp$1({ perNode: true });
-    NodeProp$1.lookAhead = new NodeProp$1({ perNode: true });
-    NodeProp$1.mounted = new NodeProp$1({ perNode: true });
+    NodeProp.contextHash = new NodeProp({ perNode: true });
+    NodeProp.lookAhead = new NodeProp({ perNode: true });
+    NodeProp.mounted = new NodeProp({ perNode: true });
     class MountedTree {
       constructor(tree, overlay, parser2) {
         this.tree = tree;
@@ -150085,11 +149807,11 @@ ${events}
       @internal
       */
       static get(tree) {
-        return tree && tree.props && tree.props[NodeProp$1.mounted.id];
+        return tree && tree.props && tree.props[NodeProp.mounted.id];
       }
     }
-    const noProps$1 = /* @__PURE__ */ Object.create(null);
-    let NodeType$1 = class NodeType2 {
+    const noProps = /* @__PURE__ */ Object.create(null);
+    class NodeType {
       /**
       @internal
       */
@@ -150103,9 +149825,9 @@ ${events}
       Define a node type.
       */
       static define(spec) {
-        let props = spec.props && spec.props.length ? /* @__PURE__ */ Object.create(null) : noProps$1;
+        let props = spec.props && spec.props.length ? /* @__PURE__ */ Object.create(null) : noProps;
         let flags = (spec.top ? 1 : 0) | (spec.skipped ? 2 : 0) | (spec.error ? 4 : 0) | (spec.name == null ? 8 : 0);
-        let type = new NodeType2(spec.name || "", props, spec.id, flags);
+        let type = new NodeType(spec.name || "", props, spec.id, flags);
         if (spec.props)
           for (let src of spec.props) {
             if (!Array.isArray(src))
@@ -150158,7 +149880,7 @@ ${events}
         if (typeof name2 == "string") {
           if (this.name == name2)
             return true;
-          let group = this.prop(NodeProp$1.group);
+          let group = this.prop(NodeProp.group);
           return group ? group.indexOf(name2) > -1 : false;
         }
         return this.id == name2;
@@ -150177,15 +149899,15 @@ ${events}
           for (let name2 of prop2.split(" "))
             direct[name2] = map2[prop2];
         return (node2) => {
-          for (let groups = node2.prop(NodeProp$1.group), i2 = -1; i2 < (groups ? groups.length : 0); i2++) {
+          for (let groups = node2.prop(NodeProp.group), i2 = -1; i2 < (groups ? groups.length : 0); i2++) {
             let found = direct[i2 < 0 ? node2.name : groups[i2]];
             if (found)
               return found;
           }
         };
       }
-    };
-    NodeType$1.none = new NodeType$1(
+    }
+    NodeType.none = new NodeType(
       "",
       /* @__PURE__ */ Object.create(null),
       0,
@@ -150220,19 +149942,19 @@ ${events}
               newProps[add2[0].id] = add2[1];
             }
           }
-          newTypes.push(newProps ? new NodeType$1(type.name, newProps, type.id, type.flags) : type);
+          newTypes.push(newProps ? new NodeType(type.name, newProps, type.id, type.flags) : type);
         }
         return new NodeSet(newTypes);
       }
     }
     const CachedNode = /* @__PURE__ */ new WeakMap(), CachedInnerNode = /* @__PURE__ */ new WeakMap();
-    var IterMode$1;
+    var IterMode;
     (function(IterMode2) {
       IterMode2[IterMode2["ExcludeBuffers"] = 1] = "ExcludeBuffers";
       IterMode2[IterMode2["IncludeAnonymous"] = 2] = "IncludeAnonymous";
       IterMode2[IterMode2["IgnoreMounts"] = 4] = "IgnoreMounts";
       IterMode2[IterMode2["IgnoreOverlays"] = 8] = "IgnoreOverlays";
-    })(IterMode$1 || (IterMode$1 = {}));
+    })(IterMode || (IterMode = {}));
     class Tree {
       /**
       Construct a new tree. See also [`Tree.build`](#common.Tree^build).
@@ -150341,8 +150063,8 @@ ${events}
       */
       iterate(spec) {
         let { enter, leave, from = 0, to: to2 = this.length } = spec;
-        let mode = spec.mode || 0, anon = (mode & IterMode$1.IncludeAnonymous) > 0;
-        for (let c2 = this.cursor(mode | IterMode$1.IncludeAnonymous); ; ) {
+        let mode = spec.mode || 0, anon = (mode & IterMode.IncludeAnonymous) > 0;
+        for (let c2 = this.cursor(mode | IterMode.IncludeAnonymous); ; ) {
           let entered = false;
           if (c2.from <= to2 && c2.to >= from && (!anon && c2.type.isAnonymous || enter(c2) !== false)) {
             if (c2.firstChild())
@@ -150385,7 +150107,7 @@ ${events}
       [`NodeType.none`](#common.NodeType^none).
       */
       balance(config2 = {}) {
-        return this.children.length <= 8 ? this : balanceRange(NodeType$1.none, this.children, this.positions, 0, this.children.length, 0, this.length, (children2, positions, length) => new Tree(this.type, children2, positions, length, this.propValues), config2.makeTree || ((children2, positions, length) => new Tree(NodeType$1.none, children2, positions, length)));
+        return this.children.length <= 8 ? this : balanceRange(NodeType.none, this.children, this.positions, 0, this.children.length, 0, this.length, (children2, positions, length) => new Tree(this.type, children2, positions, length, this.propValues), config2.makeTree || ((children2, positions, length) => new Tree(NodeType.none, children2, positions, length)));
       }
       /**
       Build a tree from a postfix-ordered buffer of node information,
@@ -150395,7 +150117,7 @@ ${events}
         return buildTree(data);
       }
     }
-    Tree.empty = new Tree(NodeType$1.none, [], [], 0);
+    Tree.empty = new Tree(NodeType.none, [], [], 0);
     class FlatBufferCursor {
       constructor(buffer2, index) {
         this.buffer = buffer2;
@@ -150436,7 +150158,7 @@ ${events}
       @internal
       */
       get type() {
-        return NodeType$1.none;
+        return NodeType.none;
       }
       /**
       @internal
@@ -150521,7 +150243,7 @@ ${events}
           return node2;
         node2 = parent;
       }
-      let mode = overlays ? 0 : IterMode$1.IgnoreOverlays;
+      let mode = overlays ? 0 : IterMode.IgnoreOverlays;
       if (overlays)
         for (let scan = node2, parent = scan.parent; parent; scan = parent, parent = scan.parent) {
           if (scan instanceof TreeNode && scan.index < 0 && ((_a2 = parent.enter(pos2, side, mode)) === null || _a2 === void 0 ? void 0 : _a2.from) != scan.from)
@@ -150600,20 +150322,20 @@ ${events}
             if (!checkSide(side, pos2, start2, start2 + next.length))
               continue;
             if (next instanceof TreeBuffer) {
-              if (mode & IterMode$1.ExcludeBuffers)
+              if (mode & IterMode.ExcludeBuffers)
                 continue;
               let index = next.findChild(0, next.buffer.length, dir, pos2 - start2, side);
               if (index > -1)
                 return new BufferNode(new BufferContext(parent, next, i2, start2), null, index);
-            } else if (mode & IterMode$1.IncludeAnonymous || (!next.type.isAnonymous || hasChild(next))) {
+            } else if (mode & IterMode.IncludeAnonymous || (!next.type.isAnonymous || hasChild(next))) {
               let mounted;
-              if (!(mode & IterMode$1.IgnoreMounts) && (mounted = MountedTree.get(next)) && !mounted.overlay)
+              if (!(mode & IterMode.IgnoreMounts) && (mounted = MountedTree.get(next)) && !mounted.overlay)
                 return new TreeNode(mounted.tree, start2, i2, parent);
               let inner2 = new TreeNode(next, start2, i2, parent);
-              return mode & IterMode$1.IncludeAnonymous || !inner2.type.isAnonymous ? inner2 : inner2.nextChild(dir < 0 ? next.children.length - 1 : 0, dir, pos2, side);
+              return mode & IterMode.IncludeAnonymous || !inner2.type.isAnonymous ? inner2 : inner2.nextChild(dir < 0 ? next.children.length - 1 : 0, dir, pos2, side);
             }
           }
-          if (mode & IterMode$1.IncludeAnonymous || !parent.type.isAnonymous)
+          if (mode & IterMode.IncludeAnonymous || !parent.type.isAnonymous)
             return null;
           if (parent.index >= 0)
             i2 = parent.index + dir;
@@ -150662,7 +150384,7 @@ ${events}
       }
       enter(pos2, side, mode = 0) {
         let mounted;
-        if (!(mode & IterMode$1.IgnoreOverlays) && (mounted = MountedTree.get(this._tree)) && mounted.overlay) {
+        if (!(mode & IterMode.IgnoreOverlays) && (mounted = MountedTree.get(this._tree)) && mounted.overlay) {
           let rPos = pos2 - this.from;
           for (let { from, to: to2 } of mounted.overlay) {
             if ((side > 0 ? from <= rPos : from < rPos) && (side < 0 ? to2 >= rPos : to2 > rPos))
@@ -150805,7 +150527,7 @@ ${events}
         );
       }
       enter(pos2, side, mode = 0) {
-        if (mode & IterMode$1.ExcludeBuffers)
+        if (mode & IterMode.ExcludeBuffers)
           return null;
         let { buffer: buffer2 } = this.context;
         let index = buffer2.findChild(this.index + 4, buffer2.buffer[this.index + 3], side > 0 ? 1 : -1, pos2 - this.context.start, side);
@@ -151041,17 +150763,17 @@ ${events}
       enter(pos2, side, mode = this.mode) {
         if (!this.buffer)
           return this.yield(this._tree.enter(pos2, side, mode));
-        return mode & IterMode$1.ExcludeBuffers ? false : this.enterChild(1, pos2, side);
+        return mode & IterMode.ExcludeBuffers ? false : this.enterChild(1, pos2, side);
       }
       /**
       Move to the node's parent node, if this isn't the top node.
       */
       parent() {
         if (!this.buffer)
-          return this.yieldNode(this.mode & IterMode$1.IncludeAnonymous ? this._tree._parent : this._tree.parent);
+          return this.yieldNode(this.mode & IterMode.IncludeAnonymous ? this._tree._parent : this._tree.parent);
         if (this.stack.length)
           return this.yieldBuf(this.stack.pop());
-        let parent = this.mode & IterMode$1.IncludeAnonymous ? this.buffer.parent : this.buffer.parent.nextSignificantParent();
+        let parent = this.mode & IterMode.IncludeAnonymous ? this.buffer.parent : this.buffer.parent.nextSignificantParent();
         this.buffer = null;
         return this.yieldNode(parent);
       }
@@ -151111,7 +150833,7 @@ ${events}
           if (index > -1)
             for (let i2 = index + dir, e = dir < 0 ? -1 : parent._tree.children.length; i2 != e; i2 += dir) {
               let child = parent._tree.children[i2];
-              if (this.mode & IterMode$1.IncludeAnonymous || child instanceof TreeBuffer || !child.type.isAnonymous || hasChild(child))
+              if (this.mode & IterMode.IncludeAnonymous || child instanceof TreeBuffer || !child.type.isAnonymous || hasChild(child))
                 return false;
             }
         }
@@ -151358,7 +151080,7 @@ ${events}
           if (lastI >= 0 && (last = children3[lastI]) instanceof Tree) {
             if (!lastI && last.type == type && last.length == length2)
               return last;
-            if (lookAheadProp = last.prop(NodeProp$1.lookAhead))
+            if (lookAheadProp = last.prop(NodeProp.lookAhead))
               lookAhead2 = positions2[lastI] + last.length + lookAheadProp;
           }
           return makeTree(type, children3, positions2, length2, lookAhead2, contextHash2);
@@ -151375,11 +151097,11 @@ ${events}
       }
       function makeTree(type, children3, positions2, length2, lookAhead2, contextHash2, props) {
         if (contextHash2) {
-          let pair = [NodeProp$1.contextHash, contextHash2];
+          let pair = [NodeProp.contextHash, contextHash2];
           props = props ? [pair].concat(props) : [pair];
         }
         if (lookAhead2 > 25) {
-          let pair = [NodeProp$1.lookAhead, lookAhead2];
+          let pair = [NodeProp.lookAhead, lookAhead2];
           props = props ? [pair].concat(props) : [pair];
         }
         return new Tree(type, children3, positions2, length2, props);
@@ -151633,9 +151355,9 @@ ${events}
         return this.string.slice(from, to2);
       }
     }
-    new NodeProp$1({ perNode: true });
-    let nextTagID$4 = 0;
-    let Tag$4 = class Tag2 {
+    new NodeProp({ perNode: true });
+    let nextTagID = 0;
+    class Tag {
       /**
       @internal
       */
@@ -151644,7 +151366,7 @@ ${events}
         this.set = set2;
         this.base = base2;
         this.modified = modified;
-        this.id = nextTagID$4++;
+        this.id = nextTagID++;
       }
       toString() {
         let { name: name2 } = this;
@@ -151655,11 +151377,11 @@ ${events}
       }
       static define(nameOrParent, parent) {
         let name2 = typeof nameOrParent == "string" ? nameOrParent : "?";
-        if (nameOrParent instanceof Tag2)
+        if (nameOrParent instanceof Tag)
           parent = nameOrParent;
         if (parent === null || parent === void 0 ? void 0 : parent.base)
           throw new Error("Can not derive from a modified tag");
-        let tag = new Tag2(name2, [], null, []);
+        let tag = new Tag(name2, [], null, []);
         tag.set.push(tag);
         if (parent)
           for (let t2 of parent.set)
@@ -151679,42 +151401,42 @@ ${events}
       `m1(m3(t1)`, and so on.
       */
       static defineModifier(name2) {
-        let mod2 = new Modifier$4(name2);
+        let mod2 = new Modifier(name2);
         return (tag) => {
           if (tag.modified.indexOf(mod2) > -1)
             return tag;
-          return Modifier$4.get(tag.base || tag, tag.modified.concat(mod2).sort((a, b) => a.id - b.id));
+          return Modifier.get(tag.base || tag, tag.modified.concat(mod2).sort((a, b) => a.id - b.id));
         };
       }
-    };
-    let nextModifierID$4 = 0;
-    let Modifier$4 = class Modifier2 {
+    }
+    let nextModifierID = 0;
+    class Modifier {
       constructor(name2) {
         this.name = name2;
         this.instances = [];
-        this.id = nextModifierID$4++;
+        this.id = nextModifierID++;
       }
       static get(base2, mods) {
         if (!mods.length)
           return base2;
-        let exists = mods[0].instances.find((t2) => t2.base == base2 && sameArray$4(mods, t2.modified));
+        let exists = mods[0].instances.find((t2) => t2.base == base2 && sameArray(mods, t2.modified));
         if (exists)
           return exists;
-        let set2 = [], tag = new Tag$4(base2.name, set2, base2, mods);
+        let set2 = [], tag = new Tag(base2.name, set2, base2, mods);
         for (let m of mods)
           m.instances.push(tag);
-        let configs = powerSet$4(mods);
+        let configs = powerSet(mods);
         for (let parent of base2.set)
           if (!parent.modified.length)
             for (let config2 of configs)
-              set2.push(Modifier2.get(parent, config2));
+              set2.push(Modifier.get(parent, config2));
         return tag;
       }
-    };
-    function sameArray$4(a, b) {
+    }
+    function sameArray(a, b) {
       return a.length == b.length && a.every((x2, i2) => x2 == b[i2]);
     }
-    function powerSet$4(array) {
+    function powerSet(array) {
       let sets = [[]];
       for (let i2 = 0; i2 < array.length; i2++) {
         for (let j2 = 0, e = sets.length; j2 < e; j2++) {
@@ -151723,7 +151445,7 @@ ${events}
       }
       return sets.sort((a, b) => b.length - a.length);
     }
-    function styleTags$3(spec) {
+    function styleTags(spec) {
       let byName = /* @__PURE__ */ Object.create(null);
       for (let prop2 in spec) {
         let tags2 = spec[prop2];
@@ -151756,14 +151478,14 @@ ${events}
             let last = pieces.length - 1, inner2 = pieces[last];
             if (!inner2)
               throw new RangeError("Invalid path: " + part2);
-            let rule = new Rule$4(tags2, mode, last > 0 ? pieces.slice(0, last) : null);
+            let rule = new Rule(tags2, mode, last > 0 ? pieces.slice(0, last) : null);
             byName[inner2] = rule.sort(byName[inner2]);
           }
       }
-      return ruleNodeProp$3.add(byName);
+      return ruleNodeProp.add(byName);
     }
-    const ruleNodeProp$3 = new NodeProp$1();
-    let Rule$4 = class Rule {
+    const ruleNodeProp = new NodeProp();
+    class Rule {
       constructor(tags2, mode, context, next) {
         this.tags = tags2;
         this.mode = mode;
@@ -151787,9 +151509,9 @@ ${events}
       get depth() {
         return this.context ? this.context.length : 0;
       }
-    };
-    Rule$4.empty = new Rule$4([], 2, null);
-    function tagHighlighter$4(tags2, options2) {
+    }
+    Rule.empty = new Rule([], 2, null);
+    function tagHighlighter(tags2, options2) {
       let map2 = /* @__PURE__ */ Object.create(null);
       for (let style2 of tags2) {
         if (!Array.isArray(style2.tag))
@@ -151798,7 +151520,7 @@ ${events}
           for (let tag of style2.tag)
             map2[tag.id] = style2.class;
       }
-      let { scope, all: all2 = null } = {};
+      let { scope, all: all2 = null } = options2 || {};
       return {
         style: (tags3) => {
           let cls = all2;
@@ -151816,364 +151538,464 @@ ${events}
         scope
       };
     }
-    const t$4 = Tag$4.define;
-    const comment$4 = t$4(), name$4 = t$4(), typeName$4 = t$4(name$4), propertyName$4 = t$4(name$4), literal$4 = t$4(), string$4 = t$4(literal$4), number$4 = t$4(literal$4), content$4 = t$4(), heading$4 = t$4(content$4), keyword$4 = t$4(), operator$4 = t$4(), punctuation$4 = t$4(), bracket$4 = t$4(punctuation$4), meta$4 = t$4();
-    const tags$4 = {
+    function highlightTags(highlighters, tags2) {
+      let result2 = null;
+      for (let highlighter of highlighters) {
+        let value2 = highlighter.style(tags2);
+        if (value2)
+          result2 = result2 ? result2 + " " + value2 : value2;
+      }
+      return result2;
+    }
+    function highlightTree(tree, highlighter, putStyle, from = 0, to2 = tree.length) {
+      let builder = new HighlightBuilder(from, Array.isArray(highlighter) ? highlighter : [highlighter], putStyle);
+      builder.highlightRange(tree.cursor(), from, to2, "", builder.highlighters);
+      builder.flush(to2);
+    }
+    class HighlightBuilder {
+      constructor(at2, highlighters, span) {
+        this.at = at2;
+        this.highlighters = highlighters;
+        this.span = span;
+        this.class = "";
+      }
+      startSpan(at2, cls) {
+        if (cls != this.class) {
+          this.flush(at2);
+          if (at2 > this.at)
+            this.at = at2;
+          this.class = cls;
+        }
+      }
+      flush(to2) {
+        if (to2 > this.at && this.class)
+          this.span(this.at, to2, this.class);
+      }
+      highlightRange(cursor, from, to2, inheritedClass, highlighters) {
+        let { type, from: start2, to: end2 } = cursor;
+        if (start2 >= to2 || end2 <= from)
+          return;
+        if (type.isTop)
+          highlighters = this.highlighters.filter((h) => !h.scope || h.scope(type));
+        let cls = inheritedClass;
+        let rule = getStyleTags(cursor) || Rule.empty;
+        let tagCls = highlightTags(highlighters, rule.tags);
+        if (tagCls) {
+          if (cls)
+            cls += " ";
+          cls += tagCls;
+          if (rule.mode == 1)
+            inheritedClass += (inheritedClass ? " " : "") + tagCls;
+        }
+        this.startSpan(Math.max(from, start2), cls);
+        if (rule.opaque)
+          return;
+        let mounted = cursor.tree && cursor.tree.prop(NodeProp.mounted);
+        if (mounted && mounted.overlay) {
+          let inner2 = cursor.node.enter(mounted.overlay[0].from + start2, 1);
+          let innerHighlighters = this.highlighters.filter((h) => !h.scope || h.scope(mounted.tree.type));
+          let hasChild2 = cursor.firstChild();
+          for (let i2 = 0, pos2 = start2; ; i2++) {
+            let next = i2 < mounted.overlay.length ? mounted.overlay[i2] : null;
+            let nextPos = next ? next.from + start2 : end2;
+            let rangeFrom2 = Math.max(from, pos2), rangeTo2 = Math.min(to2, nextPos);
+            if (rangeFrom2 < rangeTo2 && hasChild2) {
+              while (cursor.from < rangeTo2) {
+                this.highlightRange(cursor, rangeFrom2, rangeTo2, inheritedClass, highlighters);
+                this.startSpan(Math.min(rangeTo2, cursor.to), cls);
+                if (cursor.to >= nextPos || !cursor.nextSibling())
+                  break;
+              }
+            }
+            if (!next || nextPos > to2)
+              break;
+            pos2 = next.to + start2;
+            if (pos2 > from) {
+              this.highlightRange(inner2.cursor(), Math.max(from, next.from + start2), Math.min(to2, pos2), "", innerHighlighters);
+              this.startSpan(Math.min(to2, pos2), cls);
+            }
+          }
+          if (hasChild2)
+            cursor.parent();
+        } else if (cursor.firstChild()) {
+          if (mounted)
+            inheritedClass = "";
+          do {
+            if (cursor.to <= from)
+              continue;
+            if (cursor.from >= to2)
+              break;
+            this.highlightRange(cursor, from, to2, inheritedClass, highlighters);
+            this.startSpan(Math.min(to2, cursor.to), cls);
+          } while (cursor.nextSibling());
+          cursor.parent();
+        }
+      }
+    }
+    function getStyleTags(node2) {
+      let rule = node2.type.prop(ruleNodeProp);
+      while (rule && rule.context && !node2.matchContext(rule.context))
+        rule = rule.next;
+      return rule || null;
+    }
+    const t = Tag.define;
+    const comment = t(), name = t(), typeName = t(name), propertyName = t(name), literal = t(), string = t(literal), number = t(literal), content = t(), heading = t(content), keyword = t(), operator = t(), punctuation = t(), bracket = t(punctuation), meta = t();
+    const tags = {
       /**
       A comment.
       */
-      comment: comment$4,
+      comment,
       /**
       A line [comment](#highlight.tags.comment).
       */
-      lineComment: t$4(comment$4),
+      lineComment: t(comment),
       /**
       A block [comment](#highlight.tags.comment).
       */
-      blockComment: t$4(comment$4),
+      blockComment: t(comment),
       /**
       A documentation [comment](#highlight.tags.comment).
       */
-      docComment: t$4(comment$4),
+      docComment: t(comment),
       /**
       Any kind of identifier.
       */
-      name: name$4,
+      name,
       /**
       The [name](#highlight.tags.name) of a variable.
       */
-      variableName: t$4(name$4),
+      variableName: t(name),
       /**
       A type [name](#highlight.tags.name).
       */
-      typeName: typeName$4,
+      typeName,
       /**
       A tag name (subtag of [`typeName`](#highlight.tags.typeName)).
       */
-      tagName: t$4(typeName$4),
+      tagName: t(typeName),
       /**
       A property or field [name](#highlight.tags.name).
       */
-      propertyName: propertyName$4,
+      propertyName,
       /**
       An attribute name (subtag of [`propertyName`](#highlight.tags.propertyName)).
       */
-      attributeName: t$4(propertyName$4),
+      attributeName: t(propertyName),
       /**
       The [name](#highlight.tags.name) of a class.
       */
-      className: t$4(name$4),
+      className: t(name),
       /**
       A label [name](#highlight.tags.name).
       */
-      labelName: t$4(name$4),
+      labelName: t(name),
       /**
       A namespace [name](#highlight.tags.name).
       */
-      namespace: t$4(name$4),
+      namespace: t(name),
       /**
       The [name](#highlight.tags.name) of a macro.
       */
-      macroName: t$4(name$4),
+      macroName: t(name),
       /**
       A literal value.
       */
-      literal: literal$4,
+      literal,
       /**
       A string [literal](#highlight.tags.literal).
       */
-      string: string$4,
+      string,
       /**
       A documentation [string](#highlight.tags.string).
       */
-      docString: t$4(string$4),
+      docString: t(string),
       /**
       A character literal (subtag of [string](#highlight.tags.string)).
       */
-      character: t$4(string$4),
+      character: t(string),
       /**
       An attribute value (subtag of [string](#highlight.tags.string)).
       */
-      attributeValue: t$4(string$4),
+      attributeValue: t(string),
       /**
       A number [literal](#highlight.tags.literal).
       */
-      number: number$4,
+      number,
       /**
       An integer [number](#highlight.tags.number) literal.
       */
-      integer: t$4(number$4),
+      integer: t(number),
       /**
       A floating-point [number](#highlight.tags.number) literal.
       */
-      float: t$4(number$4),
+      float: t(number),
       /**
       A boolean [literal](#highlight.tags.literal).
       */
-      bool: t$4(literal$4),
+      bool: t(literal),
       /**
       Regular expression [literal](#highlight.tags.literal).
       */
-      regexp: t$4(literal$4),
+      regexp: t(literal),
       /**
       An escape [literal](#highlight.tags.literal), for example a
       backslash escape in a string.
       */
-      escape: t$4(literal$4),
+      escape: t(literal),
       /**
       A color [literal](#highlight.tags.literal).
       */
-      color: t$4(literal$4),
+      color: t(literal),
       /**
       A URL [literal](#highlight.tags.literal).
       */
-      url: t$4(literal$4),
+      url: t(literal),
       /**
       A language keyword.
       */
-      keyword: keyword$4,
+      keyword,
       /**
       The [keyword](#highlight.tags.keyword) for the self or this
       object.
       */
-      self: t$4(keyword$4),
+      self: t(keyword),
       /**
       The [keyword](#highlight.tags.keyword) for null.
       */
-      null: t$4(keyword$4),
+      null: t(keyword),
       /**
       A [keyword](#highlight.tags.keyword) denoting some atomic value.
       */
-      atom: t$4(keyword$4),
+      atom: t(keyword),
       /**
       A [keyword](#highlight.tags.keyword) that represents a unit.
       */
-      unit: t$4(keyword$4),
+      unit: t(keyword),
       /**
       A modifier [keyword](#highlight.tags.keyword).
       */
-      modifier: t$4(keyword$4),
+      modifier: t(keyword),
       /**
       A [keyword](#highlight.tags.keyword) that acts as an operator.
       */
-      operatorKeyword: t$4(keyword$4),
+      operatorKeyword: t(keyword),
       /**
       A control-flow related [keyword](#highlight.tags.keyword).
       */
-      controlKeyword: t$4(keyword$4),
+      controlKeyword: t(keyword),
       /**
       A [keyword](#highlight.tags.keyword) that defines something.
       */
-      definitionKeyword: t$4(keyword$4),
+      definitionKeyword: t(keyword),
       /**
       A [keyword](#highlight.tags.keyword) related to defining or
       interfacing with modules.
       */
-      moduleKeyword: t$4(keyword$4),
+      moduleKeyword: t(keyword),
       /**
       An operator.
       */
-      operator: operator$4,
+      operator,
       /**
       An [operator](#highlight.tags.operator) that dereferences something.
       */
-      derefOperator: t$4(operator$4),
+      derefOperator: t(operator),
       /**
       Arithmetic-related [operator](#highlight.tags.operator).
       */
-      arithmeticOperator: t$4(operator$4),
+      arithmeticOperator: t(operator),
       /**
       Logical [operator](#highlight.tags.operator).
       */
-      logicOperator: t$4(operator$4),
+      logicOperator: t(operator),
       /**
       Bit [operator](#highlight.tags.operator).
       */
-      bitwiseOperator: t$4(operator$4),
+      bitwiseOperator: t(operator),
       /**
       Comparison [operator](#highlight.tags.operator).
       */
-      compareOperator: t$4(operator$4),
+      compareOperator: t(operator),
       /**
       [Operator](#highlight.tags.operator) that updates its operand.
       */
-      updateOperator: t$4(operator$4),
+      updateOperator: t(operator),
       /**
       [Operator](#highlight.tags.operator) that defines something.
       */
-      definitionOperator: t$4(operator$4),
+      definitionOperator: t(operator),
       /**
       Type-related [operator](#highlight.tags.operator).
       */
-      typeOperator: t$4(operator$4),
+      typeOperator: t(operator),
       /**
       Control-flow [operator](#highlight.tags.operator).
       */
-      controlOperator: t$4(operator$4),
+      controlOperator: t(operator),
       /**
       Program or markup punctuation.
       */
-      punctuation: punctuation$4,
+      punctuation,
       /**
       [Punctuation](#highlight.tags.punctuation) that separates
       things.
       */
-      separator: t$4(punctuation$4),
+      separator: t(punctuation),
       /**
       Bracket-style [punctuation](#highlight.tags.punctuation).
       */
-      bracket: bracket$4,
+      bracket,
       /**
       Angle [brackets](#highlight.tags.bracket) (usually `<` and `>`
       tokens).
       */
-      angleBracket: t$4(bracket$4),
+      angleBracket: t(bracket),
       /**
       Square [brackets](#highlight.tags.bracket) (usually `[` and `]`
       tokens).
       */
-      squareBracket: t$4(bracket$4),
+      squareBracket: t(bracket),
       /**
       Parentheses (usually `(` and `)` tokens). Subtag of
       [bracket](#highlight.tags.bracket).
       */
-      paren: t$4(bracket$4),
+      paren: t(bracket),
       /**
       Braces (usually `{` and `}` tokens). Subtag of
       [bracket](#highlight.tags.bracket).
       */
-      brace: t$4(bracket$4),
+      brace: t(bracket),
       /**
       Content, for example plain text in XML or markup documents.
       */
-      content: content$4,
+      content,
       /**
       [Content](#highlight.tags.content) that represents a heading.
       */
-      heading: heading$4,
+      heading,
       /**
       A level 1 [heading](#highlight.tags.heading).
       */
-      heading1: t$4(heading$4),
+      heading1: t(heading),
       /**
       A level 2 [heading](#highlight.tags.heading).
       */
-      heading2: t$4(heading$4),
+      heading2: t(heading),
       /**
       A level 3 [heading](#highlight.tags.heading).
       */
-      heading3: t$4(heading$4),
+      heading3: t(heading),
       /**
       A level 4 [heading](#highlight.tags.heading).
       */
-      heading4: t$4(heading$4),
+      heading4: t(heading),
       /**
       A level 5 [heading](#highlight.tags.heading).
       */
-      heading5: t$4(heading$4),
+      heading5: t(heading),
       /**
       A level 6 [heading](#highlight.tags.heading).
       */
-      heading6: t$4(heading$4),
+      heading6: t(heading),
       /**
       A prose [content](#highlight.tags.content) separator (such as a horizontal rule).
       */
-      contentSeparator: t$4(content$4),
+      contentSeparator: t(content),
       /**
       [Content](#highlight.tags.content) that represents a list.
       */
-      list: t$4(content$4),
+      list: t(content),
       /**
       [Content](#highlight.tags.content) that represents a quote.
       */
-      quote: t$4(content$4),
+      quote: t(content),
       /**
       [Content](#highlight.tags.content) that is emphasized.
       */
-      emphasis: t$4(content$4),
+      emphasis: t(content),
       /**
       [Content](#highlight.tags.content) that is styled strong.
       */
-      strong: t$4(content$4),
+      strong: t(content),
       /**
       [Content](#highlight.tags.content) that is part of a link.
       */
-      link: t$4(content$4),
+      link: t(content),
       /**
       [Content](#highlight.tags.content) that is styled as code or
       monospace.
       */
-      monospace: t$4(content$4),
+      monospace: t(content),
       /**
       [Content](#highlight.tags.content) that has a strike-through
       style.
       */
-      strikethrough: t$4(content$4),
+      strikethrough: t(content),
       /**
       Inserted text in a change-tracking format.
       */
-      inserted: t$4(),
+      inserted: t(),
       /**
       Deleted text.
       */
-      deleted: t$4(),
+      deleted: t(),
       /**
       Changed text.
       */
-      changed: t$4(),
+      changed: t(),
       /**
       An invalid or unsyntactic element.
       */
-      invalid: t$4(),
+      invalid: t(),
       /**
       Metadata or meta-instruction.
       */
-      meta: meta$4,
+      meta,
       /**
       [Metadata](#highlight.tags.meta) that applies to the entire
       document.
       */
-      documentMeta: t$4(meta$4),
+      documentMeta: t(meta),
       /**
       [Metadata](#highlight.tags.meta) that annotates or adds
       attributes to a given syntactic element.
       */
-      annotation: t$4(meta$4),
+      annotation: t(meta),
       /**
       Processing instruction or preprocessor directive. Subtag of
       [meta](#highlight.tags.meta).
       */
-      processingInstruction: t$4(meta$4),
+      processingInstruction: t(meta),
       /**
       [Modifier](#highlight.Tag^defineModifier) that indicates that a
       given element is being defined. Expected to be used with the
       various [name](#highlight.tags.name) tags.
       */
-      definition: Tag$4.defineModifier("definition"),
+      definition: Tag.defineModifier("definition"),
       /**
       [Modifier](#highlight.Tag^defineModifier) that indicates that
       something is constant. Mostly expected to be used with
       [variable names](#highlight.tags.variableName).
       */
-      constant: Tag$4.defineModifier("constant"),
+      constant: Tag.defineModifier("constant"),
       /**
       [Modifier](#highlight.Tag^defineModifier) used to indicate that
       a [variable](#highlight.tags.variableName) or [property
       name](#highlight.tags.propertyName) is being called or defined
       as a function.
       */
-      function: Tag$4.defineModifier("function"),
+      function: Tag.defineModifier("function"),
       /**
       [Modifier](#highlight.Tag^defineModifier) that can be applied to
       [names](#highlight.tags.name) to indicate that they belong to
       the language's standard environment.
       */
-      standard: Tag$4.defineModifier("standard"),
+      standard: Tag.defineModifier("standard"),
       /**
       [Modifier](#highlight.Tag^defineModifier) that indicates a given
       [names](#highlight.tags.name) is local to some scope.
       */
-      local: Tag$4.defineModifier("local"),
+      local: Tag.defineModifier("local"),
       /**
       A generic variant [modifier](#highlight.Tag^defineModifier) that
       can be used to tag language-specific alternative variants of
@@ -152182,48 +152004,48 @@ ${events}
       [variable name](#highlight.tags.variableName) tags, since those
       come up a lot.
       */
-      special: Tag$4.defineModifier("special")
+      special: Tag.defineModifier("special")
     };
-    for (let name2 in tags$4) {
-      let val = tags$4[name2];
-      if (val instanceof Tag$4)
+    for (let name2 in tags) {
+      let val = tags[name2];
+      if (val instanceof Tag)
         val.name = name2;
     }
-    tagHighlighter$4([
-      { tag: tags$4.link, class: "tok-link" },
-      { tag: tags$4.heading, class: "tok-heading" },
-      { tag: tags$4.emphasis, class: "tok-emphasis" },
-      { tag: tags$4.strong, class: "tok-strong" },
-      { tag: tags$4.keyword, class: "tok-keyword" },
-      { tag: tags$4.atom, class: "tok-atom" },
-      { tag: tags$4.bool, class: "tok-bool" },
-      { tag: tags$4.url, class: "tok-url" },
-      { tag: tags$4.labelName, class: "tok-labelName" },
-      { tag: tags$4.inserted, class: "tok-inserted" },
-      { tag: tags$4.deleted, class: "tok-deleted" },
-      { tag: tags$4.literal, class: "tok-literal" },
-      { tag: tags$4.string, class: "tok-string" },
-      { tag: tags$4.number, class: "tok-number" },
-      { tag: [tags$4.regexp, tags$4.escape, tags$4.special(tags$4.string)], class: "tok-string2" },
-      { tag: tags$4.variableName, class: "tok-variableName" },
-      { tag: tags$4.local(tags$4.variableName), class: "tok-variableName tok-local" },
-      { tag: tags$4.definition(tags$4.variableName), class: "tok-variableName tok-definition" },
-      { tag: tags$4.special(tags$4.variableName), class: "tok-variableName2" },
-      { tag: tags$4.definition(tags$4.propertyName), class: "tok-propertyName tok-definition" },
-      { tag: tags$4.typeName, class: "tok-typeName" },
-      { tag: tags$4.namespace, class: "tok-namespace" },
-      { tag: tags$4.className, class: "tok-className" },
-      { tag: tags$4.macroName, class: "tok-macroName" },
-      { tag: tags$4.propertyName, class: "tok-propertyName" },
-      { tag: tags$4.operator, class: "tok-operator" },
-      { tag: tags$4.comment, class: "tok-comment" },
-      { tag: tags$4.meta, class: "tok-meta" },
-      { tag: tags$4.invalid, class: "tok-invalid" },
-      { tag: tags$4.punctuation, class: "tok-punctuation" }
+    tagHighlighter([
+      { tag: tags.link, class: "tok-link" },
+      { tag: tags.heading, class: "tok-heading" },
+      { tag: tags.emphasis, class: "tok-emphasis" },
+      { tag: tags.strong, class: "tok-strong" },
+      { tag: tags.keyword, class: "tok-keyword" },
+      { tag: tags.atom, class: "tok-atom" },
+      { tag: tags.bool, class: "tok-bool" },
+      { tag: tags.url, class: "tok-url" },
+      { tag: tags.labelName, class: "tok-labelName" },
+      { tag: tags.inserted, class: "tok-inserted" },
+      { tag: tags.deleted, class: "tok-deleted" },
+      { tag: tags.literal, class: "tok-literal" },
+      { tag: tags.string, class: "tok-string" },
+      { tag: tags.number, class: "tok-number" },
+      { tag: [tags.regexp, tags.escape, tags.special(tags.string)], class: "tok-string2" },
+      { tag: tags.variableName, class: "tok-variableName" },
+      { tag: tags.local(tags.variableName), class: "tok-variableName tok-local" },
+      { tag: tags.definition(tags.variableName), class: "tok-variableName tok-definition" },
+      { tag: tags.special(tags.variableName), class: "tok-variableName2" },
+      { tag: tags.definition(tags.propertyName), class: "tok-propertyName tok-definition" },
+      { tag: tags.typeName, class: "tok-typeName" },
+      { tag: tags.namespace, class: "tok-namespace" },
+      { tag: tags.className, class: "tok-className" },
+      { tag: tags.macroName, class: "tok-macroName" },
+      { tag: tags.propertyName, class: "tok-propertyName" },
+      { tag: tags.operator, class: "tok-operator" },
+      { tag: tags.comment, class: "tok-comment" },
+      { tag: tags.meta, class: "tok-meta" },
+      { tag: tags.invalid, class: "tok-invalid" },
+      { tag: tags.punctuation, class: "tok-punctuation" }
     ]);
     var _a$4;
-    const languageDataProp$3 = /* @__PURE__ */ new NodeProp$1();
-    const sublanguageProp$3 = /* @__PURE__ */ new NodeProp$1();
+    const languageDataProp$3 = /* @__PURE__ */ new NodeProp();
+    const sublanguageProp$3 = /* @__PURE__ */ new NodeProp();
     let Language$3 = class Language {
       /**
       Construct a language object. If you need to invoke this
@@ -152282,7 +152104,7 @@ ${events}
             result2.push({ from, to: from + tree.length });
             return;
           }
-          let mount2 = tree.prop(NodeProp$1.mounted);
+          let mount2 = tree.prop(NodeProp.mounted);
           if (mount2) {
             if (mount2.tree.prop(languageDataProp$3) == this.data) {
               if (mount2.overlay)
@@ -152319,7 +152141,7 @@ ${events}
     function topNodeAt$3(state, pos2, side) {
       let topLang = state.facet(language$4), tree = syntaxTree$3(state).topNode;
       if (!topLang || topLang.allowsNesting) {
-        for (let node2 = tree; node2; node2 = node2.enter(pos2, side, IterMode$1.ExcludeBuffers))
+        for (let node2 = tree; node2; node2 = node2.enter(pos2, side, IterMode.ExcludeBuffers))
           if (node2.type.isTop)
             tree = node2;
       }
@@ -152539,7 +152361,7 @@ ${events}
                     cx.scheduleOn = cx.scheduleOn ? Promise.all([cx.scheduleOn, until]) : until;
                 }
                 this.parsedPos = to2;
-                return new Tree(NodeType$1.none, [], [], to2 - from);
+                return new Tree(NodeType.none, [], [], to2 - from);
               },
               stoppedAt: null,
               stopAt() {
@@ -152714,7 +152536,7 @@ ${events}
       ]
     });
     const noTokens$3 = /* @__PURE__ */ Object.create(null);
-    const typeArray$3 = [NodeType$1.none];
+    const typeArray$3 = [NodeType.none];
     const warned$3 = [];
     const byTag$3 = /* @__PURE__ */ Object.create(null);
     const defaultTable$3 = /* @__PURE__ */ Object.create(null);
@@ -152740,11 +152562,11 @@ ${events}
       console.warn(msg);
     }
     function createTokenType$3(extra, tagStr) {
-      let tags$12 = [];
+      let tags$1 = [];
       for (let name3 of tagStr.split(" ")) {
         let found = [];
         for (let part2 of name3.split(".")) {
-          let value2 = extra[part2] || tags$4[part2];
+          let value2 = extra[part2] || tags[part2];
           if (!value2) {
             warnForPart$3(part2, `Unknown highlighting tag ${part2}`);
           } else if (typeof value2 == "function") {
@@ -152760,18 +152582,18 @@ ${events}
           }
         }
         for (let tag of found)
-          tags$12.push(tag);
+          tags$1.push(tag);
       }
-      if (!tags$12.length)
+      if (!tags$1.length)
         return 0;
-      let name2 = tagStr.replace(/ /g, "_"), key2 = name2 + " " + tags$12.map((t2) => t2.id);
+      let name2 = tagStr.replace(/ /g, "_"), key2 = name2 + " " + tags$1.map((t2) => t2.id);
       let known = byTag$3[key2];
       if (known)
         return known.id;
-      let type = byTag$3[key2] = NodeType$1.define({
+      let type = byTag$3[key2] = NodeType.define({
         id: typeArray$3.length,
         name: name2,
-        props: [styleTags$3({ [name2]: tags$12 })]
+        props: [styleTags({ [name2]: tags$1 })]
       });
       typeArray$3.push(type);
       return type.id;
@@ -153275,8 +153097,7 @@ ${events}
           this.range = rangeAroundSelected(open.options.length, open.selected, this.view.state.facet(completionConfig).maxRenderedOptions);
           this.showOptions(open.options, cState.id);
         }
-        let newSel = this.updateSelectedOption(open.selected);
-        if (newSel) {
+        if (this.updateSelectedOption(open.selected)) {
           this.destroyInfo();
           let { completion } = open.options[open.selected];
           let { info } = completion;
@@ -153292,7 +153113,6 @@ ${events}
             }).catch((e) => logException(this.view.state, e, "completion info"));
           } else {
             this.addInfoPane(infoResult, completion);
-            newSel.setAttribute("aria-describedby", this.info.id);
           }
         }
       }
@@ -153300,7 +153120,6 @@ ${events}
         this.destroyInfo();
         let wrap2 = this.info = document.createElement("div");
         wrap2.className = "cm-tooltip cm-completionInfo";
-        wrap2.id = "cm-completionInfo-" + Math.floor(Math.random() * 65535).toString(16);
         if (content2.nodeType != null) {
           wrap2.appendChild(content2);
           this.infoDestroy = null;
@@ -153323,10 +153142,8 @@ ${events}
               set2 = opt;
             }
           } else {
-            if (opt.hasAttribute("aria-selected")) {
+            if (opt.hasAttribute("aria-selected"))
               opt.removeAttribute("aria-selected");
-              opt.removeAttribute("aria-describedby");
-            }
           }
         }
         if (set2)
@@ -154131,701 +153948,14 @@ ${events}
       { key: "Enter", run: acceptCompletion }
     ];
     const completionKeymapExt = /* @__PURE__ */ Prec.highest(/* @__PURE__ */ keymap.computeN([completionConfig], (state) => state.facet(completionConfig).defaultKeymap ? [completionKeymap] : []));
-    let nextTagID$3 = 0;
-    let Tag$3 = class Tag2 {
-      /**
-      @internal
-      */
-      constructor(name2, set2, base2, modified) {
-        this.name = name2;
-        this.set = set2;
-        this.base = base2;
-        this.modified = modified;
-        this.id = nextTagID$3++;
-      }
-      toString() {
-        let { name: name2 } = this;
-        for (let mod2 of this.modified)
-          if (mod2.name)
-            name2 = `${mod2.name}(${name2})`;
-        return name2;
-      }
-      static define(nameOrParent, parent) {
-        let name2 = typeof nameOrParent == "string" ? nameOrParent : "?";
-        if (nameOrParent instanceof Tag2)
-          parent = nameOrParent;
-        if (parent === null || parent === void 0 ? void 0 : parent.base)
-          throw new Error("Can not derive from a modified tag");
-        let tag = new Tag2(name2, [], null, []);
-        tag.set.push(tag);
-        if (parent)
-          for (let t2 of parent.set)
-            tag.set.push(t2);
-        return tag;
-      }
-      /**
-      Define a tag _modifier_, which is a function that, given a tag,
-      will return a tag that is a subtag of the original. Applying the
-      same modifier to a twice tag will return the same value (`m1(t1)
-      == m1(t1)`) and applying multiple modifiers will, regardless or
-      order, produce the same tag (`m1(m2(t1)) == m2(m1(t1))`).
-      
-      When multiple modifiers are applied to a given base tag, each
-      smaller set of modifiers is registered as a parent, so that for
-      example `m1(m2(m3(t1)))` is a subtype of `m1(m2(t1))`,
-      `m1(m3(t1)`, and so on.
-      */
-      static defineModifier(name2) {
-        let mod2 = new Modifier$3(name2);
-        return (tag) => {
-          if (tag.modified.indexOf(mod2) > -1)
-            return tag;
-          return Modifier$3.get(tag.base || tag, tag.modified.concat(mod2).sort((a, b) => a.id - b.id));
-        };
-      }
-    };
-    let nextModifierID$3 = 0;
-    let Modifier$3 = class Modifier2 {
-      constructor(name2) {
-        this.name = name2;
-        this.instances = [];
-        this.id = nextModifierID$3++;
-      }
-      static get(base2, mods) {
-        if (!mods.length)
-          return base2;
-        let exists = mods[0].instances.find((t2) => t2.base == base2 && sameArray$3(mods, t2.modified));
-        if (exists)
-          return exists;
-        let set2 = [], tag = new Tag$3(base2.name, set2, base2, mods);
-        for (let m of mods)
-          m.instances.push(tag);
-        let configs = powerSet$3(mods);
-        for (let parent of base2.set)
-          if (!parent.modified.length)
-            for (let config2 of configs)
-              set2.push(Modifier2.get(parent, config2));
-        return tag;
-      }
-    };
-    function sameArray$3(a, b) {
-      return a.length == b.length && a.every((x2, i2) => x2 == b[i2]);
-    }
-    function powerSet$3(array) {
-      let sets = [[]];
-      for (let i2 = 0; i2 < array.length; i2++) {
-        for (let j2 = 0, e = sets.length; j2 < e; j2++) {
-          sets.push(sets[j2].concat(array[i2]));
-        }
-      }
-      return sets.sort((a, b) => b.length - a.length);
-    }
-    function styleTags$2(spec) {
-      let byName = /* @__PURE__ */ Object.create(null);
-      for (let prop2 in spec) {
-        let tags2 = spec[prop2];
-        if (!Array.isArray(tags2))
-          tags2 = [tags2];
-        for (let part2 of prop2.split(" "))
-          if (part2) {
-            let pieces = [], mode = 2, rest = part2;
-            for (let pos2 = 0; ; ) {
-              if (rest == "..." && pos2 > 0 && pos2 + 3 == part2.length) {
-                mode = 1;
-                break;
-              }
-              let m = /^"(?:[^"\\]|\\.)*?"|[^\/!]+/.exec(rest);
-              if (!m)
-                throw new RangeError("Invalid path: " + part2);
-              pieces.push(m[0] == "*" ? "" : m[0][0] == '"' ? JSON.parse(m[0]) : m[0]);
-              pos2 += m[0].length;
-              if (pos2 == part2.length)
-                break;
-              let next = part2[pos2++];
-              if (pos2 == part2.length && next == "!") {
-                mode = 0;
-                break;
-              }
-              if (next != "/")
-                throw new RangeError("Invalid path: " + part2);
-              rest = part2.slice(pos2);
-            }
-            let last = pieces.length - 1, inner2 = pieces[last];
-            if (!inner2)
-              throw new RangeError("Invalid path: " + part2);
-            let rule = new Rule$3(tags2, mode, last > 0 ? pieces.slice(0, last) : null);
-            byName[inner2] = rule.sort(byName[inner2]);
-          }
-      }
-      return ruleNodeProp$2.add(byName);
-    }
-    const ruleNodeProp$2 = new NodeProp$1();
-    let Rule$3 = class Rule {
-      constructor(tags2, mode, context, next) {
-        this.tags = tags2;
-        this.mode = mode;
-        this.context = context;
-        this.next = next;
-      }
-      get opaque() {
-        return this.mode == 0;
-      }
-      get inherit() {
-        return this.mode == 1;
-      }
-      sort(other) {
-        if (!other || other.depth < this.depth) {
-          this.next = other;
-          return this;
-        }
-        other.next = this.sort(other.next);
-        return other;
-      }
-      get depth() {
-        return this.context ? this.context.length : 0;
-      }
-    };
-    Rule$3.empty = new Rule$3([], 2, null);
-    function tagHighlighter$3(tags2, options2) {
-      let map2 = /* @__PURE__ */ Object.create(null);
-      for (let style2 of tags2) {
-        if (!Array.isArray(style2.tag))
-          map2[style2.tag.id] = style2.class;
-        else
-          for (let tag of style2.tag)
-            map2[tag.id] = style2.class;
-      }
-      let { scope, all: all2 = null } = options2 || {};
-      return {
-        style: (tags3) => {
-          let cls = all2;
-          for (let tag of tags3) {
-            for (let sub2 of tag.set) {
-              let tagClass = map2[sub2.id];
-              if (tagClass) {
-                cls = cls ? cls + " " + tagClass : tagClass;
-                break;
-              }
-            }
-          }
-          return cls;
-        },
-        scope
-      };
-    }
-    function highlightTags$1(highlighters, tags2) {
-      let result2 = null;
-      for (let highlighter of highlighters) {
-        let value2 = highlighter.style(tags2);
-        if (value2)
-          result2 = result2 ? result2 + " " + value2 : value2;
-      }
-      return result2;
-    }
-    function highlightTree$1(tree, highlighter, putStyle, from = 0, to2 = tree.length) {
-      let builder = new HighlightBuilder$1(from, Array.isArray(highlighter) ? highlighter : [highlighter], putStyle);
-      builder.highlightRange(tree.cursor(), from, to2, "", builder.highlighters);
-      builder.flush(to2);
-    }
-    let HighlightBuilder$1 = class HighlightBuilder {
-      constructor(at2, highlighters, span) {
-        this.at = at2;
-        this.highlighters = highlighters;
-        this.span = span;
-        this.class = "";
-      }
-      startSpan(at2, cls) {
-        if (cls != this.class) {
-          this.flush(at2);
-          if (at2 > this.at)
-            this.at = at2;
-          this.class = cls;
-        }
-      }
-      flush(to2) {
-        if (to2 > this.at && this.class)
-          this.span(this.at, to2, this.class);
-      }
-      highlightRange(cursor, from, to2, inheritedClass, highlighters) {
-        let { type, from: start2, to: end2 } = cursor;
-        if (start2 >= to2 || end2 <= from)
-          return;
-        if (type.isTop)
-          highlighters = this.highlighters.filter((h) => !h.scope || h.scope(type));
-        let cls = inheritedClass;
-        let rule = getStyleTags$1(cursor) || Rule$3.empty;
-        let tagCls = highlightTags$1(highlighters, rule.tags);
-        if (tagCls) {
-          if (cls)
-            cls += " ";
-          cls += tagCls;
-          if (rule.mode == 1)
-            inheritedClass += (inheritedClass ? " " : "") + tagCls;
-        }
-        this.startSpan(Math.max(from, start2), cls);
-        if (rule.opaque)
-          return;
-        let mounted = cursor.tree && cursor.tree.prop(NodeProp$1.mounted);
-        if (mounted && mounted.overlay) {
-          let inner2 = cursor.node.enter(mounted.overlay[0].from + start2, 1);
-          let innerHighlighters = this.highlighters.filter((h) => !h.scope || h.scope(mounted.tree.type));
-          let hasChild2 = cursor.firstChild();
-          for (let i2 = 0, pos2 = start2; ; i2++) {
-            let next = i2 < mounted.overlay.length ? mounted.overlay[i2] : null;
-            let nextPos = next ? next.from + start2 : end2;
-            let rangeFrom2 = Math.max(from, pos2), rangeTo2 = Math.min(to2, nextPos);
-            if (rangeFrom2 < rangeTo2 && hasChild2) {
-              while (cursor.from < rangeTo2) {
-                this.highlightRange(cursor, rangeFrom2, rangeTo2, inheritedClass, highlighters);
-                this.startSpan(Math.min(rangeTo2, cursor.to), cls);
-                if (cursor.to >= nextPos || !cursor.nextSibling())
-                  break;
-              }
-            }
-            if (!next || nextPos > to2)
-              break;
-            pos2 = next.to + start2;
-            if (pos2 > from) {
-              this.highlightRange(inner2.cursor(), Math.max(from, next.from + start2), Math.min(to2, pos2), "", innerHighlighters);
-              this.startSpan(Math.min(to2, pos2), cls);
-            }
-          }
-          if (hasChild2)
-            cursor.parent();
-        } else if (cursor.firstChild()) {
-          if (mounted)
-            inheritedClass = "";
-          do {
-            if (cursor.to <= from)
-              continue;
-            if (cursor.from >= to2)
-              break;
-            this.highlightRange(cursor, from, to2, inheritedClass, highlighters);
-            this.startSpan(Math.min(to2, cursor.to), cls);
-          } while (cursor.nextSibling());
-          cursor.parent();
-        }
-      }
-    };
-    function getStyleTags$1(node2) {
-      let rule = node2.type.prop(ruleNodeProp$2);
-      while (rule && rule.context && !node2.matchContext(rule.context))
-        rule = rule.next;
-      return rule || null;
-    }
-    const t$3 = Tag$3.define;
-    const comment$3 = t$3(), name$3 = t$3(), typeName$3 = t$3(name$3), propertyName$3 = t$3(name$3), literal$3 = t$3(), string$3 = t$3(literal$3), number$3 = t$3(literal$3), content$3 = t$3(), heading$3 = t$3(content$3), keyword$3 = t$3(), operator$3 = t$3(), punctuation$3 = t$3(), bracket$3 = t$3(punctuation$3), meta$3 = t$3();
-    const tags$3 = {
-      /**
-      A comment.
-      */
-      comment: comment$3,
-      /**
-      A line [comment](#highlight.tags.comment).
-      */
-      lineComment: t$3(comment$3),
-      /**
-      A block [comment](#highlight.tags.comment).
-      */
-      blockComment: t$3(comment$3),
-      /**
-      A documentation [comment](#highlight.tags.comment).
-      */
-      docComment: t$3(comment$3),
-      /**
-      Any kind of identifier.
-      */
-      name: name$3,
-      /**
-      The [name](#highlight.tags.name) of a variable.
-      */
-      variableName: t$3(name$3),
-      /**
-      A type [name](#highlight.tags.name).
-      */
-      typeName: typeName$3,
-      /**
-      A tag name (subtag of [`typeName`](#highlight.tags.typeName)).
-      */
-      tagName: t$3(typeName$3),
-      /**
-      A property or field [name](#highlight.tags.name).
-      */
-      propertyName: propertyName$3,
-      /**
-      An attribute name (subtag of [`propertyName`](#highlight.tags.propertyName)).
-      */
-      attributeName: t$3(propertyName$3),
-      /**
-      The [name](#highlight.tags.name) of a class.
-      */
-      className: t$3(name$3),
-      /**
-      A label [name](#highlight.tags.name).
-      */
-      labelName: t$3(name$3),
-      /**
-      A namespace [name](#highlight.tags.name).
-      */
-      namespace: t$3(name$3),
-      /**
-      The [name](#highlight.tags.name) of a macro.
-      */
-      macroName: t$3(name$3),
-      /**
-      A literal value.
-      */
-      literal: literal$3,
-      /**
-      A string [literal](#highlight.tags.literal).
-      */
-      string: string$3,
-      /**
-      A documentation [string](#highlight.tags.string).
-      */
-      docString: t$3(string$3),
-      /**
-      A character literal (subtag of [string](#highlight.tags.string)).
-      */
-      character: t$3(string$3),
-      /**
-      An attribute value (subtag of [string](#highlight.tags.string)).
-      */
-      attributeValue: t$3(string$3),
-      /**
-      A number [literal](#highlight.tags.literal).
-      */
-      number: number$3,
-      /**
-      An integer [number](#highlight.tags.number) literal.
-      */
-      integer: t$3(number$3),
-      /**
-      A floating-point [number](#highlight.tags.number) literal.
-      */
-      float: t$3(number$3),
-      /**
-      A boolean [literal](#highlight.tags.literal).
-      */
-      bool: t$3(literal$3),
-      /**
-      Regular expression [literal](#highlight.tags.literal).
-      */
-      regexp: t$3(literal$3),
-      /**
-      An escape [literal](#highlight.tags.literal), for example a
-      backslash escape in a string.
-      */
-      escape: t$3(literal$3),
-      /**
-      A color [literal](#highlight.tags.literal).
-      */
-      color: t$3(literal$3),
-      /**
-      A URL [literal](#highlight.tags.literal).
-      */
-      url: t$3(literal$3),
-      /**
-      A language keyword.
-      */
-      keyword: keyword$3,
-      /**
-      The [keyword](#highlight.tags.keyword) for the self or this
-      object.
-      */
-      self: t$3(keyword$3),
-      /**
-      The [keyword](#highlight.tags.keyword) for null.
-      */
-      null: t$3(keyword$3),
-      /**
-      A [keyword](#highlight.tags.keyword) denoting some atomic value.
-      */
-      atom: t$3(keyword$3),
-      /**
-      A [keyword](#highlight.tags.keyword) that represents a unit.
-      */
-      unit: t$3(keyword$3),
-      /**
-      A modifier [keyword](#highlight.tags.keyword).
-      */
-      modifier: t$3(keyword$3),
-      /**
-      A [keyword](#highlight.tags.keyword) that acts as an operator.
-      */
-      operatorKeyword: t$3(keyword$3),
-      /**
-      A control-flow related [keyword](#highlight.tags.keyword).
-      */
-      controlKeyword: t$3(keyword$3),
-      /**
-      A [keyword](#highlight.tags.keyword) that defines something.
-      */
-      definitionKeyword: t$3(keyword$3),
-      /**
-      A [keyword](#highlight.tags.keyword) related to defining or
-      interfacing with modules.
-      */
-      moduleKeyword: t$3(keyword$3),
-      /**
-      An operator.
-      */
-      operator: operator$3,
-      /**
-      An [operator](#highlight.tags.operator) that dereferences something.
-      */
-      derefOperator: t$3(operator$3),
-      /**
-      Arithmetic-related [operator](#highlight.tags.operator).
-      */
-      arithmeticOperator: t$3(operator$3),
-      /**
-      Logical [operator](#highlight.tags.operator).
-      */
-      logicOperator: t$3(operator$3),
-      /**
-      Bit [operator](#highlight.tags.operator).
-      */
-      bitwiseOperator: t$3(operator$3),
-      /**
-      Comparison [operator](#highlight.tags.operator).
-      */
-      compareOperator: t$3(operator$3),
-      /**
-      [Operator](#highlight.tags.operator) that updates its operand.
-      */
-      updateOperator: t$3(operator$3),
-      /**
-      [Operator](#highlight.tags.operator) that defines something.
-      */
-      definitionOperator: t$3(operator$3),
-      /**
-      Type-related [operator](#highlight.tags.operator).
-      */
-      typeOperator: t$3(operator$3),
-      /**
-      Control-flow [operator](#highlight.tags.operator).
-      */
-      controlOperator: t$3(operator$3),
-      /**
-      Program or markup punctuation.
-      */
-      punctuation: punctuation$3,
-      /**
-      [Punctuation](#highlight.tags.punctuation) that separates
-      things.
-      */
-      separator: t$3(punctuation$3),
-      /**
-      Bracket-style [punctuation](#highlight.tags.punctuation).
-      */
-      bracket: bracket$3,
-      /**
-      Angle [brackets](#highlight.tags.bracket) (usually `<` and `>`
-      tokens).
-      */
-      angleBracket: t$3(bracket$3),
-      /**
-      Square [brackets](#highlight.tags.bracket) (usually `[` and `]`
-      tokens).
-      */
-      squareBracket: t$3(bracket$3),
-      /**
-      Parentheses (usually `(` and `)` tokens). Subtag of
-      [bracket](#highlight.tags.bracket).
-      */
-      paren: t$3(bracket$3),
-      /**
-      Braces (usually `{` and `}` tokens). Subtag of
-      [bracket](#highlight.tags.bracket).
-      */
-      brace: t$3(bracket$3),
-      /**
-      Content, for example plain text in XML or markup documents.
-      */
-      content: content$3,
-      /**
-      [Content](#highlight.tags.content) that represents a heading.
-      */
-      heading: heading$3,
-      /**
-      A level 1 [heading](#highlight.tags.heading).
-      */
-      heading1: t$3(heading$3),
-      /**
-      A level 2 [heading](#highlight.tags.heading).
-      */
-      heading2: t$3(heading$3),
-      /**
-      A level 3 [heading](#highlight.tags.heading).
-      */
-      heading3: t$3(heading$3),
-      /**
-      A level 4 [heading](#highlight.tags.heading).
-      */
-      heading4: t$3(heading$3),
-      /**
-      A level 5 [heading](#highlight.tags.heading).
-      */
-      heading5: t$3(heading$3),
-      /**
-      A level 6 [heading](#highlight.tags.heading).
-      */
-      heading6: t$3(heading$3),
-      /**
-      A prose [content](#highlight.tags.content) separator (such as a horizontal rule).
-      */
-      contentSeparator: t$3(content$3),
-      /**
-      [Content](#highlight.tags.content) that represents a list.
-      */
-      list: t$3(content$3),
-      /**
-      [Content](#highlight.tags.content) that represents a quote.
-      */
-      quote: t$3(content$3),
-      /**
-      [Content](#highlight.tags.content) that is emphasized.
-      */
-      emphasis: t$3(content$3),
-      /**
-      [Content](#highlight.tags.content) that is styled strong.
-      */
-      strong: t$3(content$3),
-      /**
-      [Content](#highlight.tags.content) that is part of a link.
-      */
-      link: t$3(content$3),
-      /**
-      [Content](#highlight.tags.content) that is styled as code or
-      monospace.
-      */
-      monospace: t$3(content$3),
-      /**
-      [Content](#highlight.tags.content) that has a strike-through
-      style.
-      */
-      strikethrough: t$3(content$3),
-      /**
-      Inserted text in a change-tracking format.
-      */
-      inserted: t$3(),
-      /**
-      Deleted text.
-      */
-      deleted: t$3(),
-      /**
-      Changed text.
-      */
-      changed: t$3(),
-      /**
-      An invalid or unsyntactic element.
-      */
-      invalid: t$3(),
-      /**
-      Metadata or meta-instruction.
-      */
-      meta: meta$3,
-      /**
-      [Metadata](#highlight.tags.meta) that applies to the entire
-      document.
-      */
-      documentMeta: t$3(meta$3),
-      /**
-      [Metadata](#highlight.tags.meta) that annotates or adds
-      attributes to a given syntactic element.
-      */
-      annotation: t$3(meta$3),
-      /**
-      Processing instruction or preprocessor directive. Subtag of
-      [meta](#highlight.tags.meta).
-      */
-      processingInstruction: t$3(meta$3),
-      /**
-      [Modifier](#highlight.Tag^defineModifier) that indicates that a
-      given element is being defined. Expected to be used with the
-      various [name](#highlight.tags.name) tags.
-      */
-      definition: Tag$3.defineModifier("definition"),
-      /**
-      [Modifier](#highlight.Tag^defineModifier) that indicates that
-      something is constant. Mostly expected to be used with
-      [variable names](#highlight.tags.variableName).
-      */
-      constant: Tag$3.defineModifier("constant"),
-      /**
-      [Modifier](#highlight.Tag^defineModifier) used to indicate that
-      a [variable](#highlight.tags.variableName) or [property
-      name](#highlight.tags.propertyName) is being called or defined
-      as a function.
-      */
-      function: Tag$3.defineModifier("function"),
-      /**
-      [Modifier](#highlight.Tag^defineModifier) that can be applied to
-      [names](#highlight.tags.name) to indicate that they belong to
-      the language's standard environment.
-      */
-      standard: Tag$3.defineModifier("standard"),
-      /**
-      [Modifier](#highlight.Tag^defineModifier) that indicates a given
-      [names](#highlight.tags.name) is local to some scope.
-      */
-      local: Tag$3.defineModifier("local"),
-      /**
-      A generic variant [modifier](#highlight.Tag^defineModifier) that
-      can be used to tag language-specific alternative variants of
-      some common tag. It is recommended for themes to define special
-      forms of at least the [string](#highlight.tags.string) and
-      [variable name](#highlight.tags.variableName) tags, since those
-      come up a lot.
-      */
-      special: Tag$3.defineModifier("special")
-    };
-    for (let name2 in tags$3) {
-      let val = tags$3[name2];
-      if (val instanceof Tag$3)
-        val.name = name2;
-    }
-    tagHighlighter$3([
-      { tag: tags$3.link, class: "tok-link" },
-      { tag: tags$3.heading, class: "tok-heading" },
-      { tag: tags$3.emphasis, class: "tok-emphasis" },
-      { tag: tags$3.strong, class: "tok-strong" },
-      { tag: tags$3.keyword, class: "tok-keyword" },
-      { tag: tags$3.atom, class: "tok-atom" },
-      { tag: tags$3.bool, class: "tok-bool" },
-      { tag: tags$3.url, class: "tok-url" },
-      { tag: tags$3.labelName, class: "tok-labelName" },
-      { tag: tags$3.inserted, class: "tok-inserted" },
-      { tag: tags$3.deleted, class: "tok-deleted" },
-      { tag: tags$3.literal, class: "tok-literal" },
-      { tag: tags$3.string, class: "tok-string" },
-      { tag: tags$3.number, class: "tok-number" },
-      { tag: [tags$3.regexp, tags$3.escape, tags$3.special(tags$3.string)], class: "tok-string2" },
-      { tag: tags$3.variableName, class: "tok-variableName" },
-      { tag: tags$3.local(tags$3.variableName), class: "tok-variableName tok-local" },
-      { tag: tags$3.definition(tags$3.variableName), class: "tok-variableName tok-definition" },
-      { tag: tags$3.special(tags$3.variableName), class: "tok-variableName2" },
-      { tag: tags$3.definition(tags$3.propertyName), class: "tok-propertyName tok-definition" },
-      { tag: tags$3.typeName, class: "tok-typeName" },
-      { tag: tags$3.namespace, class: "tok-namespace" },
-      { tag: tags$3.className, class: "tok-className" },
-      { tag: tags$3.macroName, class: "tok-macroName" },
-      { tag: tags$3.propertyName, class: "tok-propertyName" },
-      { tag: tags$3.operator, class: "tok-operator" },
-      { tag: tags$3.comment, class: "tok-comment" },
-      { tag: tags$3.meta, class: "tok-meta" },
-      { tag: tags$3.invalid, class: "tok-invalid" },
-      { tag: tags$3.punctuation, class: "tok-punctuation" }
-    ]);
     var _a$3;
-    const languageDataProp$2 = /* @__PURE__ */ new NodeProp$1();
+    const languageDataProp$2 = /* @__PURE__ */ new NodeProp();
     function defineLanguageFacet(baseData) {
       return Facet.define({
         combine: baseData ? (values) => values.concat(baseData) : void 0
       });
     }
-    const sublanguageProp$2 = /* @__PURE__ */ new NodeProp$1();
+    const sublanguageProp$2 = /* @__PURE__ */ new NodeProp();
     let Language$2 = class Language {
       /**
       Construct a language object. If you need to invoke this
@@ -154884,7 +154014,7 @@ ${events}
             result2.push({ from, to: from + tree.length });
             return;
           }
-          let mount2 = tree.prop(NodeProp$1.mounted);
+          let mount2 = tree.prop(NodeProp.mounted);
           if (mount2) {
             if (mount2.tree.prop(languageDataProp$2) == this.data) {
               if (mount2.overlay)
@@ -154921,7 +154051,7 @@ ${events}
     function topNodeAt$2(state, pos2, side) {
       let topLang = state.facet(language$3), tree = syntaxTree$2(state).topNode;
       if (!topLang || topLang.allowsNesting) {
-        for (let node2 = tree; node2; node2 = node2.enter(pos2, side, IterMode$1.ExcludeBuffers))
+        for (let node2 = tree; node2; node2 = node2.enter(pos2, side, IterMode.ExcludeBuffers))
           if (node2.type.isTop)
             tree = node2;
       }
@@ -155141,7 +154271,7 @@ ${events}
                     cx.scheduleOn = cx.scheduleOn ? Promise.all([cx.scheduleOn, until]) : until;
                 }
                 this.parsedPos = to2;
-                return new Tree(NodeType$1.none, [], [], to2 - from);
+                return new Tree(NodeType.none, [], [], to2 - from);
               },
               stoppedAt: null,
               stopAt() {
@@ -155329,7 +154459,7 @@ ${events}
       let unit = state.facet(indentUnit$1);
       return unit.charCodeAt(0) == 9 ? state.tabSize * unit.length : unit.length;
     }
-    const indentNodeProp$1 = /* @__PURE__ */ new NodeProp$1();
+    const indentNodeProp$1 = /* @__PURE__ */ new NodeProp();
     let HighlightStyle$1 = class HighlightStyle2 {
       constructor(specs, options2) {
         this.specs = specs;
@@ -155342,7 +154472,7 @@ ${events}
         const all2 = typeof options2.all == "string" ? options2.all : options2.all ? def(options2.all) : void 0;
         const scopeOpt = options2.scope;
         this.scope = scopeOpt instanceof Language$2 ? (type) => type.prop(languageDataProp$2) == scopeOpt.data : scopeOpt ? (type) => type == scopeOpt : void 0;
-        this.style = tagHighlighter$3(specs.map((style2) => ({
+        this.style = tagHighlighter(specs.map((style2) => ({
           tag: style2.tag,
           class: style2.class || def(Object.assign({}, style2, { tag: null }))
         })), {
@@ -155420,7 +154550,7 @@ ${events}
           return Decoration.none;
         let builder = new RangeSetBuilder();
         for (let { from, to: to2 } of view.visibleRanges) {
-          highlightTree$1(this.tree, highlighters, (from2, to3, style2) => {
+          highlightTree(this.tree, highlighters, (from2, to3, style2) => {
             builder.add(from2, to3, this.markCache[style2] || (this.markCache[style2] = Decoration.mark({ class: style2 })));
           }, from, to2);
         }
@@ -155481,9 +154611,9 @@ ${events}
     function bracketMatching(config2 = {}) {
       return [bracketMatchingConfig.of(config2), bracketMatchingUnique];
     }
-    const bracketMatchingHandle$1 = /* @__PURE__ */ new NodeProp$1();
+    const bracketMatchingHandle$1 = /* @__PURE__ */ new NodeProp();
     function matchingNodes$1(node2, dir, brackets) {
-      let byProp = node2.prop(dir < 0 ? NodeProp$1.openedBy : NodeProp$1.closedBy);
+      let byProp = node2.prop(dir < 0 ? NodeProp.openedBy : NodeProp.closedBy);
       if (byProp)
         return byProp;
       if (node2.name.length == 1) {
@@ -155772,7 +154902,7 @@ ${events}
         this.topNode = docID(data, this);
         self2 = this;
         this.streamParser = p;
-        this.stateAfter = new NodeProp$1({ perNode: true });
+        this.stateAfter = new NodeProp({ perNode: true });
         this.tokenTable = parser2.tokenTable ? new TokenTable(p.tokenTable) : defaultTokenTable;
       }
       /**
@@ -156023,7 +155153,7 @@ ${events}
       throw new Error("Stream parser failed to advance stream.");
     }
     const noTokens$2 = /* @__PURE__ */ Object.create(null);
-    const typeArray$2 = [NodeType$1.none];
+    const typeArray$2 = [NodeType.none];
     const nodeSet = /* @__PURE__ */ new NodeSet(typeArray$2);
     const warned$2 = [];
     const byTag$2 = /* @__PURE__ */ Object.create(null);
@@ -156060,11 +155190,11 @@ ${events}
       console.warn(msg);
     }
     function createTokenType$2(extra, tagStr) {
-      let tags$12 = [];
+      let tags$1 = [];
       for (let name3 of tagStr.split(" ")) {
         let found = [];
         for (let part2 of name3.split(".")) {
-          let value2 = extra[part2] || tags$3[part2];
+          let value2 = extra[part2] || tags[part2];
           if (!value2) {
             warnForPart$2(part2, `Unknown highlighting tag ${part2}`);
           } else if (typeof value2 == "function") {
@@ -156080,24 +155210,24 @@ ${events}
           }
         }
         for (let tag of found)
-          tags$12.push(tag);
+          tags$1.push(tag);
       }
-      if (!tags$12.length)
+      if (!tags$1.length)
         return 0;
-      let name2 = tagStr.replace(/ /g, "_"), key2 = name2 + " " + tags$12.map((t2) => t2.id);
+      let name2 = tagStr.replace(/ /g, "_"), key2 = name2 + " " + tags$1.map((t2) => t2.id);
       let known = byTag$2[key2];
       if (known)
         return known.id;
-      let type = byTag$2[key2] = NodeType$1.define({
+      let type = byTag$2[key2] = NodeType.define({
         id: typeArray$2.length,
         name: name2,
-        props: [styleTags$2({ [name2]: tags$12 })]
+        props: [styleTags({ [name2]: tags$1 })]
       });
       typeArray$2.push(type);
       return type.id;
     }
     function docID(data, lang2) {
-      let type = NodeType$1.define({ id: typeArray$2.length, name: "Document", props: [
+      let type = NodeType.define({ id: typeArray$2.length, name: "Document", props: [
         languageDataProp$2.add(() => data),
         indentNodeProp$1.add(() => (cx) => lang2.getIndent(cx))
       ], top: true });
@@ -156154,7 +155284,7 @@ ${events}
           diagnostics = diagnosticFilter(diagnostics, state);
         let sorted = diagnostics.slice().sort((a, b) => a.from - b.from || a.to - b.to);
         let deco = new RangeSetBuilder(), active = [], pos2 = 0;
-        let scan = state.doc.iter(), scanPos = 0, docLen = state.doc.length;
+        let scan = state.doc.iter(), scanPos = 0;
         for (let i2 = 0; ; ) {
           let next = i2 == sorted.length ? null : sorted[i2];
           if (!next && !active.length)
@@ -156165,8 +155295,6 @@ ${events}
             to2 = active.reduce((p, d) => Math.min(p, d.to), next && next.from > from ? next.from : 1e8);
           } else {
             from = next.from;
-            if (from > docLen)
-              break;
             to2 = next.to;
             active.push(next);
             i2++;
@@ -156182,9 +155310,8 @@ ${events}
               break;
             }
           }
-          to2 = Math.min(to2, docLen);
           let widget = false;
-          if (active.some((d) => d.from == from && (d.to == to2 || to2 == docLen))) {
+          if (active.some((d) => d.from == from && d.to == to2)) {
             widget = from == to2;
             if (!widget && to2 - from < 10) {
               let behind = from - (scanPos + scan.value.length);
@@ -156220,8 +155347,6 @@ ${events}
             }));
           }
           pos2 = to2;
-          if (pos2 == docLen)
-            break;
           for (let i3 = 0; i3 < active.length; i3++)
             if (active[i3].to <= pos2)
               active.splice(i3--, 1);
@@ -156774,1422 +155899,9 @@ ${events}
       /* @__PURE__ */ hoverTooltip(lintTooltip, { hideOn: hideTooltip }),
       baseTheme
     ];
-    let nextPropID = 0;
-    class NodeProp {
-      /**
-      Create a new node prop type.
-      */
-      constructor(config2 = {}) {
-        this.id = nextPropID++;
-        this.perNode = !!config2.perNode;
-        this.deserialize = config2.deserialize || (() => {
-          throw new Error("This node type doesn't define a deserialize function");
-        });
-        this.combine = config2.combine || null;
-      }
-      /**
-      This is meant to be used with
-      [`NodeSet.extend`](#common.NodeSet.extend) or
-      [`LRParser.configure`](#lr.ParserConfig.props) to compute
-      prop values for each node type in the set. Takes a [match
-      object](#common.NodeType^match) or function that returns undefined
-      if the node type doesn't get this prop, and the prop's value if
-      it does.
-      */
-      add(match) {
-        if (this.perNode)
-          throw new RangeError("Can't add per-node props to node types");
-        if (typeof match != "function")
-          match = NodeType.match(match);
-        return (type) => {
-          let result2 = match(type);
-          return result2 === void 0 ? null : [this, result2];
-        };
-      }
-    }
-    NodeProp.closedBy = new NodeProp({ deserialize: (str2) => str2.split(" ") });
-    NodeProp.openedBy = new NodeProp({ deserialize: (str2) => str2.split(" ") });
-    NodeProp.group = new NodeProp({ deserialize: (str2) => str2.split(" ") });
-    NodeProp.isolate = new NodeProp({ deserialize: (value2) => {
-      if (value2 && value2 != "rtl" && value2 != "ltr" && value2 != "auto")
-        throw new RangeError("Invalid value for isolate: " + value2);
-      return value2 || "auto";
-    } });
-    NodeProp.contextHash = new NodeProp({ perNode: true });
-    NodeProp.lookAhead = new NodeProp({ perNode: true });
-    NodeProp.mounted = new NodeProp({ perNode: true });
-    const noProps = /* @__PURE__ */ Object.create(null);
-    class NodeType {
-      /**
-      @internal
-      */
-      constructor(name2, props, id, flags = 0) {
-        this.name = name2;
-        this.props = props;
-        this.id = id;
-        this.flags = flags;
-      }
-      /**
-      Define a node type.
-      */
-      static define(spec) {
-        let props = spec.props && spec.props.length ? /* @__PURE__ */ Object.create(null) : noProps;
-        let flags = (spec.top ? 1 : 0) | (spec.skipped ? 2 : 0) | (spec.error ? 4 : 0) | (spec.name == null ? 8 : 0);
-        let type = new NodeType(spec.name || "", props, spec.id, flags);
-        if (spec.props)
-          for (let src of spec.props) {
-            if (!Array.isArray(src))
-              src = src(type);
-            if (src) {
-              if (src[0].perNode)
-                throw new RangeError("Can't store a per-node prop on a node type");
-              props[src[0].id] = src[1];
-            }
-          }
-        return type;
-      }
-      /**
-      Retrieves a node prop for this type. Will return `undefined` if
-      the prop isn't present on this node.
-      */
-      prop(prop2) {
-        return this.props[prop2.id];
-      }
-      /**
-      True when this is the top node of a grammar.
-      */
-      get isTop() {
-        return (this.flags & 1) > 0;
-      }
-      /**
-      True when this node is produced by a skip rule.
-      */
-      get isSkipped() {
-        return (this.flags & 2) > 0;
-      }
-      /**
-      Indicates whether this is an error node.
-      */
-      get isError() {
-        return (this.flags & 4) > 0;
-      }
-      /**
-      When true, this node type doesn't correspond to a user-declared
-      named node, for example because it is used to cache repetition.
-      */
-      get isAnonymous() {
-        return (this.flags & 8) > 0;
-      }
-      /**
-      Returns true when this node's name or one of its
-      [groups](#common.NodeProp^group) matches the given string.
-      */
-      is(name2) {
-        if (typeof name2 == "string") {
-          if (this.name == name2)
-            return true;
-          let group = this.prop(NodeProp.group);
-          return group ? group.indexOf(name2) > -1 : false;
-        }
-        return this.id == name2;
-      }
-      /**
-      Create a function from node types to arbitrary values by
-      specifying an object whose property names are node or
-      [group](#common.NodeProp^group) names. Often useful with
-      [`NodeProp.add`](#common.NodeProp.add). You can put multiple
-      names, separated by spaces, in a single property name to map
-      multiple node names to a single value.
-      */
-      static match(map2) {
-        let direct = /* @__PURE__ */ Object.create(null);
-        for (let prop2 in map2)
-          for (let name2 of prop2.split(" "))
-            direct[name2] = map2[prop2];
-        return (node2) => {
-          for (let groups = node2.prop(NodeProp.group), i2 = -1; i2 < (groups ? groups.length : 0); i2++) {
-            let found = direct[i2 < 0 ? node2.name : groups[i2]];
-            if (found)
-              return found;
-          }
-        };
-      }
-    }
-    NodeType.none = new NodeType(
-      "",
-      /* @__PURE__ */ Object.create(null),
-      0,
-      8
-      /* NodeFlag.Anonymous */
-    );
-    var IterMode;
-    (function(IterMode2) {
-      IterMode2[IterMode2["ExcludeBuffers"] = 1] = "ExcludeBuffers";
-      IterMode2[IterMode2["IncludeAnonymous"] = 2] = "IncludeAnonymous";
-      IterMode2[IterMode2["IgnoreMounts"] = 4] = "IgnoreMounts";
-      IterMode2[IterMode2["IgnoreOverlays"] = 8] = "IgnoreOverlays";
-    })(IterMode || (IterMode = {}));
-    new NodeProp({ perNode: true });
-    let nextTagID$2 = 0;
-    let Tag$2 = class Tag2 {
-      /**
-      @internal
-      */
-      constructor(name2, set2, base2, modified) {
-        this.name = name2;
-        this.set = set2;
-        this.base = base2;
-        this.modified = modified;
-        this.id = nextTagID$2++;
-      }
-      toString() {
-        let { name: name2 } = this;
-        for (let mod2 of this.modified)
-          if (mod2.name)
-            name2 = `${mod2.name}(${name2})`;
-        return name2;
-      }
-      static define(nameOrParent, parent) {
-        let name2 = typeof nameOrParent == "string" ? nameOrParent : "?";
-        if (nameOrParent instanceof Tag2)
-          parent = nameOrParent;
-        if (parent === null || parent === void 0 ? void 0 : parent.base)
-          throw new Error("Can not derive from a modified tag");
-        let tag = new Tag2(name2, [], null, []);
-        tag.set.push(tag);
-        if (parent)
-          for (let t2 of parent.set)
-            tag.set.push(t2);
-        return tag;
-      }
-      /**
-      Define a tag _modifier_, which is a function that, given a tag,
-      will return a tag that is a subtag of the original. Applying the
-      same modifier to a twice tag will return the same value (`m1(t1)
-      == m1(t1)`) and applying multiple modifiers will, regardless or
-      order, produce the same tag (`m1(m2(t1)) == m2(m1(t1))`).
-      
-      When multiple modifiers are applied to a given base tag, each
-      smaller set of modifiers is registered as a parent, so that for
-      example `m1(m2(m3(t1)))` is a subtype of `m1(m2(t1))`,
-      `m1(m3(t1)`, and so on.
-      */
-      static defineModifier(name2) {
-        let mod2 = new Modifier$2(name2);
-        return (tag) => {
-          if (tag.modified.indexOf(mod2) > -1)
-            return tag;
-          return Modifier$2.get(tag.base || tag, tag.modified.concat(mod2).sort((a, b) => a.id - b.id));
-        };
-      }
-    };
-    let nextModifierID$2 = 0;
-    let Modifier$2 = class Modifier2 {
-      constructor(name2) {
-        this.name = name2;
-        this.instances = [];
-        this.id = nextModifierID$2++;
-      }
-      static get(base2, mods) {
-        if (!mods.length)
-          return base2;
-        let exists = mods[0].instances.find((t2) => t2.base == base2 && sameArray$2(mods, t2.modified));
-        if (exists)
-          return exists;
-        let set2 = [], tag = new Tag$2(base2.name, set2, base2, mods);
-        for (let m of mods)
-          m.instances.push(tag);
-        let configs = powerSet$2(mods);
-        for (let parent of base2.set)
-          if (!parent.modified.length)
-            for (let config2 of configs)
-              set2.push(Modifier2.get(parent, config2));
-        return tag;
-      }
-    };
-    function sameArray$2(a, b) {
-      return a.length == b.length && a.every((x2, i2) => x2 == b[i2]);
-    }
-    function powerSet$2(array) {
-      let sets = [[]];
-      for (let i2 = 0; i2 < array.length; i2++) {
-        for (let j2 = 0, e = sets.length; j2 < e; j2++) {
-          sets.push(sets[j2].concat(array[i2]));
-        }
-      }
-      return sets.sort((a, b) => b.length - a.length);
-    }
-    new NodeProp({
-      combine(a, b) {
-        let cur2, root2, take;
-        while (a || b) {
-          if (!a || b && a.depth >= b.depth) {
-            take = b;
-            b = b.next;
-          } else {
-            take = a;
-            a = a.next;
-          }
-          if (cur2 && cur2.mode == take.mode && !take.context && !cur2.context)
-            continue;
-          let copy2 = new Rule$2(take.tags, take.mode, take.context);
-          if (cur2)
-            cur2.next = copy2;
-          else
-            root2 = copy2;
-          cur2 = copy2;
-        }
-        return root2;
-      }
-    });
-    let Rule$2 = class Rule {
-      constructor(tags2, mode, context, next) {
-        this.tags = tags2;
-        this.mode = mode;
-        this.context = context;
-        this.next = next;
-      }
-      get opaque() {
-        return this.mode == 0;
-      }
-      get inherit() {
-        return this.mode == 1;
-      }
-      sort(other) {
-        if (!other || other.depth < this.depth) {
-          this.next = other;
-          return this;
-        }
-        other.next = this.sort(other.next);
-        return other;
-      }
-      get depth() {
-        return this.context ? this.context.length : 0;
-      }
-    };
-    Rule$2.empty = new Rule$2([], 2, null);
-    function tagHighlighter$2(tags2, options2) {
-      let map2 = /* @__PURE__ */ Object.create(null);
-      for (let style2 of tags2) {
-        if (!Array.isArray(style2.tag))
-          map2[style2.tag.id] = style2.class;
-        else
-          for (let tag of style2.tag)
-            map2[tag.id] = style2.class;
-      }
-      let { scope, all: all2 = null } = {};
-      return {
-        style: (tags3) => {
-          let cls = all2;
-          for (let tag of tags3) {
-            for (let sub2 of tag.set) {
-              let tagClass = map2[sub2.id];
-              if (tagClass) {
-                cls = cls ? cls + " " + tagClass : tagClass;
-                break;
-              }
-            }
-          }
-          return cls;
-        },
-        scope
-      };
-    }
-    const t$2 = Tag$2.define;
-    const comment$2 = t$2(), name$2 = t$2(), typeName$2 = t$2(name$2), propertyName$2 = t$2(name$2), literal$2 = t$2(), string$2 = t$2(literal$2), number$2 = t$2(literal$2), content$2 = t$2(), heading$2 = t$2(content$2), keyword$2 = t$2(), operator$2 = t$2(), punctuation$2 = t$2(), bracket$2 = t$2(punctuation$2), meta$2 = t$2();
-    const tags$2 = {
-      /**
-      A comment.
-      */
-      comment: comment$2,
-      /**
-      A line [comment](#highlight.tags.comment).
-      */
-      lineComment: t$2(comment$2),
-      /**
-      A block [comment](#highlight.tags.comment).
-      */
-      blockComment: t$2(comment$2),
-      /**
-      A documentation [comment](#highlight.tags.comment).
-      */
-      docComment: t$2(comment$2),
-      /**
-      Any kind of identifier.
-      */
-      name: name$2,
-      /**
-      The [name](#highlight.tags.name) of a variable.
-      */
-      variableName: t$2(name$2),
-      /**
-      A type [name](#highlight.tags.name).
-      */
-      typeName: typeName$2,
-      /**
-      A tag name (subtag of [`typeName`](#highlight.tags.typeName)).
-      */
-      tagName: t$2(typeName$2),
-      /**
-      A property or field [name](#highlight.tags.name).
-      */
-      propertyName: propertyName$2,
-      /**
-      An attribute name (subtag of [`propertyName`](#highlight.tags.propertyName)).
-      */
-      attributeName: t$2(propertyName$2),
-      /**
-      The [name](#highlight.tags.name) of a class.
-      */
-      className: t$2(name$2),
-      /**
-      A label [name](#highlight.tags.name).
-      */
-      labelName: t$2(name$2),
-      /**
-      A namespace [name](#highlight.tags.name).
-      */
-      namespace: t$2(name$2),
-      /**
-      The [name](#highlight.tags.name) of a macro.
-      */
-      macroName: t$2(name$2),
-      /**
-      A literal value.
-      */
-      literal: literal$2,
-      /**
-      A string [literal](#highlight.tags.literal).
-      */
-      string: string$2,
-      /**
-      A documentation [string](#highlight.tags.string).
-      */
-      docString: t$2(string$2),
-      /**
-      A character literal (subtag of [string](#highlight.tags.string)).
-      */
-      character: t$2(string$2),
-      /**
-      An attribute value (subtag of [string](#highlight.tags.string)).
-      */
-      attributeValue: t$2(string$2),
-      /**
-      A number [literal](#highlight.tags.literal).
-      */
-      number: number$2,
-      /**
-      An integer [number](#highlight.tags.number) literal.
-      */
-      integer: t$2(number$2),
-      /**
-      A floating-point [number](#highlight.tags.number) literal.
-      */
-      float: t$2(number$2),
-      /**
-      A boolean [literal](#highlight.tags.literal).
-      */
-      bool: t$2(literal$2),
-      /**
-      Regular expression [literal](#highlight.tags.literal).
-      */
-      regexp: t$2(literal$2),
-      /**
-      An escape [literal](#highlight.tags.literal), for example a
-      backslash escape in a string.
-      */
-      escape: t$2(literal$2),
-      /**
-      A color [literal](#highlight.tags.literal).
-      */
-      color: t$2(literal$2),
-      /**
-      A URL [literal](#highlight.tags.literal).
-      */
-      url: t$2(literal$2),
-      /**
-      A language keyword.
-      */
-      keyword: keyword$2,
-      /**
-      The [keyword](#highlight.tags.keyword) for the self or this
-      object.
-      */
-      self: t$2(keyword$2),
-      /**
-      The [keyword](#highlight.tags.keyword) for null.
-      */
-      null: t$2(keyword$2),
-      /**
-      A [keyword](#highlight.tags.keyword) denoting some atomic value.
-      */
-      atom: t$2(keyword$2),
-      /**
-      A [keyword](#highlight.tags.keyword) that represents a unit.
-      */
-      unit: t$2(keyword$2),
-      /**
-      A modifier [keyword](#highlight.tags.keyword).
-      */
-      modifier: t$2(keyword$2),
-      /**
-      A [keyword](#highlight.tags.keyword) that acts as an operator.
-      */
-      operatorKeyword: t$2(keyword$2),
-      /**
-      A control-flow related [keyword](#highlight.tags.keyword).
-      */
-      controlKeyword: t$2(keyword$2),
-      /**
-      A [keyword](#highlight.tags.keyword) that defines something.
-      */
-      definitionKeyword: t$2(keyword$2),
-      /**
-      A [keyword](#highlight.tags.keyword) related to defining or
-      interfacing with modules.
-      */
-      moduleKeyword: t$2(keyword$2),
-      /**
-      An operator.
-      */
-      operator: operator$2,
-      /**
-      An [operator](#highlight.tags.operator) that dereferences something.
-      */
-      derefOperator: t$2(operator$2),
-      /**
-      Arithmetic-related [operator](#highlight.tags.operator).
-      */
-      arithmeticOperator: t$2(operator$2),
-      /**
-      Logical [operator](#highlight.tags.operator).
-      */
-      logicOperator: t$2(operator$2),
-      /**
-      Bit [operator](#highlight.tags.operator).
-      */
-      bitwiseOperator: t$2(operator$2),
-      /**
-      Comparison [operator](#highlight.tags.operator).
-      */
-      compareOperator: t$2(operator$2),
-      /**
-      [Operator](#highlight.tags.operator) that updates its operand.
-      */
-      updateOperator: t$2(operator$2),
-      /**
-      [Operator](#highlight.tags.operator) that defines something.
-      */
-      definitionOperator: t$2(operator$2),
-      /**
-      Type-related [operator](#highlight.tags.operator).
-      */
-      typeOperator: t$2(operator$2),
-      /**
-      Control-flow [operator](#highlight.tags.operator).
-      */
-      controlOperator: t$2(operator$2),
-      /**
-      Program or markup punctuation.
-      */
-      punctuation: punctuation$2,
-      /**
-      [Punctuation](#highlight.tags.punctuation) that separates
-      things.
-      */
-      separator: t$2(punctuation$2),
-      /**
-      Bracket-style [punctuation](#highlight.tags.punctuation).
-      */
-      bracket: bracket$2,
-      /**
-      Angle [brackets](#highlight.tags.bracket) (usually `<` and `>`
-      tokens).
-      */
-      angleBracket: t$2(bracket$2),
-      /**
-      Square [brackets](#highlight.tags.bracket) (usually `[` and `]`
-      tokens).
-      */
-      squareBracket: t$2(bracket$2),
-      /**
-      Parentheses (usually `(` and `)` tokens). Subtag of
-      [bracket](#highlight.tags.bracket).
-      */
-      paren: t$2(bracket$2),
-      /**
-      Braces (usually `{` and `}` tokens). Subtag of
-      [bracket](#highlight.tags.bracket).
-      */
-      brace: t$2(bracket$2),
-      /**
-      Content, for example plain text in XML or markup documents.
-      */
-      content: content$2,
-      /**
-      [Content](#highlight.tags.content) that represents a heading.
-      */
-      heading: heading$2,
-      /**
-      A level 1 [heading](#highlight.tags.heading).
-      */
-      heading1: t$2(heading$2),
-      /**
-      A level 2 [heading](#highlight.tags.heading).
-      */
-      heading2: t$2(heading$2),
-      /**
-      A level 3 [heading](#highlight.tags.heading).
-      */
-      heading3: t$2(heading$2),
-      /**
-      A level 4 [heading](#highlight.tags.heading).
-      */
-      heading4: t$2(heading$2),
-      /**
-      A level 5 [heading](#highlight.tags.heading).
-      */
-      heading5: t$2(heading$2),
-      /**
-      A level 6 [heading](#highlight.tags.heading).
-      */
-      heading6: t$2(heading$2),
-      /**
-      A prose [content](#highlight.tags.content) separator (such as a horizontal rule).
-      */
-      contentSeparator: t$2(content$2),
-      /**
-      [Content](#highlight.tags.content) that represents a list.
-      */
-      list: t$2(content$2),
-      /**
-      [Content](#highlight.tags.content) that represents a quote.
-      */
-      quote: t$2(content$2),
-      /**
-      [Content](#highlight.tags.content) that is emphasized.
-      */
-      emphasis: t$2(content$2),
-      /**
-      [Content](#highlight.tags.content) that is styled strong.
-      */
-      strong: t$2(content$2),
-      /**
-      [Content](#highlight.tags.content) that is part of a link.
-      */
-      link: t$2(content$2),
-      /**
-      [Content](#highlight.tags.content) that is styled as code or
-      monospace.
-      */
-      monospace: t$2(content$2),
-      /**
-      [Content](#highlight.tags.content) that has a strike-through
-      style.
-      */
-      strikethrough: t$2(content$2),
-      /**
-      Inserted text in a change-tracking format.
-      */
-      inserted: t$2(),
-      /**
-      Deleted text.
-      */
-      deleted: t$2(),
-      /**
-      Changed text.
-      */
-      changed: t$2(),
-      /**
-      An invalid or unsyntactic element.
-      */
-      invalid: t$2(),
-      /**
-      Metadata or meta-instruction.
-      */
-      meta: meta$2,
-      /**
-      [Metadata](#highlight.tags.meta) that applies to the entire
-      document.
-      */
-      documentMeta: t$2(meta$2),
-      /**
-      [Metadata](#highlight.tags.meta) that annotates or adds
-      attributes to a given syntactic element.
-      */
-      annotation: t$2(meta$2),
-      /**
-      Processing instruction or preprocessor directive. Subtag of
-      [meta](#highlight.tags.meta).
-      */
-      processingInstruction: t$2(meta$2),
-      /**
-      [Modifier](#highlight.Tag^defineModifier) that indicates that a
-      given element is being defined. Expected to be used with the
-      various [name](#highlight.tags.name) tags.
-      */
-      definition: Tag$2.defineModifier("definition"),
-      /**
-      [Modifier](#highlight.Tag^defineModifier) that indicates that
-      something is constant. Mostly expected to be used with
-      [variable names](#highlight.tags.variableName).
-      */
-      constant: Tag$2.defineModifier("constant"),
-      /**
-      [Modifier](#highlight.Tag^defineModifier) used to indicate that
-      a [variable](#highlight.tags.variableName) or [property
-      name](#highlight.tags.propertyName) is being called or defined
-      as a function.
-      */
-      function: Tag$2.defineModifier("function"),
-      /**
-      [Modifier](#highlight.Tag^defineModifier) that can be applied to
-      [names](#highlight.tags.name) to indicate that they belong to
-      the language's standard environment.
-      */
-      standard: Tag$2.defineModifier("standard"),
-      /**
-      [Modifier](#highlight.Tag^defineModifier) that indicates a given
-      [names](#highlight.tags.name) is local to some scope.
-      */
-      local: Tag$2.defineModifier("local"),
-      /**
-      A generic variant [modifier](#highlight.Tag^defineModifier) that
-      can be used to tag language-specific alternative variants of
-      some common tag. It is recommended for themes to define special
-      forms of at least the [string](#highlight.tags.string) and
-      [variable name](#highlight.tags.variableName) tags, since those
-      come up a lot.
-      */
-      special: Tag$2.defineModifier("special")
-    };
-    for (let name2 in tags$2) {
-      let val = tags$2[name2];
-      if (val instanceof Tag$2)
-        val.name = name2;
-    }
-    tagHighlighter$2([
-      { tag: tags$2.link, class: "tok-link" },
-      { tag: tags$2.heading, class: "tok-heading" },
-      { tag: tags$2.emphasis, class: "tok-emphasis" },
-      { tag: tags$2.strong, class: "tok-strong" },
-      { tag: tags$2.keyword, class: "tok-keyword" },
-      { tag: tags$2.atom, class: "tok-atom" },
-      { tag: tags$2.bool, class: "tok-bool" },
-      { tag: tags$2.url, class: "tok-url" },
-      { tag: tags$2.labelName, class: "tok-labelName" },
-      { tag: tags$2.inserted, class: "tok-inserted" },
-      { tag: tags$2.deleted, class: "tok-deleted" },
-      { tag: tags$2.literal, class: "tok-literal" },
-      { tag: tags$2.string, class: "tok-string" },
-      { tag: tags$2.number, class: "tok-number" },
-      { tag: [tags$2.regexp, tags$2.escape, tags$2.special(tags$2.string)], class: "tok-string2" },
-      { tag: tags$2.variableName, class: "tok-variableName" },
-      { tag: tags$2.local(tags$2.variableName), class: "tok-variableName tok-local" },
-      { tag: tags$2.definition(tags$2.variableName), class: "tok-variableName tok-definition" },
-      { tag: tags$2.special(tags$2.variableName), class: "tok-variableName2" },
-      { tag: tags$2.definition(tags$2.propertyName), class: "tok-propertyName tok-definition" },
-      { tag: tags$2.typeName, class: "tok-typeName" },
-      { tag: tags$2.namespace, class: "tok-namespace" },
-      { tag: tags$2.className, class: "tok-className" },
-      { tag: tags$2.macroName, class: "tok-macroName" },
-      { tag: tags$2.propertyName, class: "tok-propertyName" },
-      { tag: tags$2.operator, class: "tok-operator" },
-      { tag: tags$2.comment, class: "tok-comment" },
-      { tag: tags$2.meta, class: "tok-meta" },
-      { tag: tags$2.invalid, class: "tok-invalid" },
-      { tag: tags$2.punctuation, class: "tok-punctuation" }
-    ]);
-    let nextTagID$1 = 0;
-    let Tag$1 = class Tag2 {
-      /**
-      @internal
-      */
-      constructor(name2, set2, base2, modified) {
-        this.name = name2;
-        this.set = set2;
-        this.base = base2;
-        this.modified = modified;
-        this.id = nextTagID$1++;
-      }
-      toString() {
-        let { name: name2 } = this;
-        for (let mod2 of this.modified)
-          if (mod2.name)
-            name2 = `${mod2.name}(${name2})`;
-        return name2;
-      }
-      static define(nameOrParent, parent) {
-        let name2 = typeof nameOrParent == "string" ? nameOrParent : "?";
-        if (nameOrParent instanceof Tag2)
-          parent = nameOrParent;
-        if (parent === null || parent === void 0 ? void 0 : parent.base)
-          throw new Error("Can not derive from a modified tag");
-        let tag = new Tag2(name2, [], null, []);
-        tag.set.push(tag);
-        if (parent)
-          for (let t2 of parent.set)
-            tag.set.push(t2);
-        return tag;
-      }
-      /**
-      Define a tag _modifier_, which is a function that, given a tag,
-      will return a tag that is a subtag of the original. Applying the
-      same modifier to a twice tag will return the same value (`m1(t1)
-      == m1(t1)`) and applying multiple modifiers will, regardless or
-      order, produce the same tag (`m1(m2(t1)) == m2(m1(t1))`).
-      
-      When multiple modifiers are applied to a given base tag, each
-      smaller set of modifiers is registered as a parent, so that for
-      example `m1(m2(m3(t1)))` is a subtype of `m1(m2(t1))`,
-      `m1(m3(t1)`, and so on.
-      */
-      static defineModifier(name2) {
-        let mod2 = new Modifier$1(name2);
-        return (tag) => {
-          if (tag.modified.indexOf(mod2) > -1)
-            return tag;
-          return Modifier$1.get(tag.base || tag, tag.modified.concat(mod2).sort((a, b) => a.id - b.id));
-        };
-      }
-    };
-    let nextModifierID$1 = 0;
-    let Modifier$1 = class Modifier2 {
-      constructor(name2) {
-        this.name = name2;
-        this.instances = [];
-        this.id = nextModifierID$1++;
-      }
-      static get(base2, mods) {
-        if (!mods.length)
-          return base2;
-        let exists = mods[0].instances.find((t2) => t2.base == base2 && sameArray$1(mods, t2.modified));
-        if (exists)
-          return exists;
-        let set2 = [], tag = new Tag$1(base2.name, set2, base2, mods);
-        for (let m of mods)
-          m.instances.push(tag);
-        let configs = powerSet$1(mods);
-        for (let parent of base2.set)
-          if (!parent.modified.length)
-            for (let config2 of configs)
-              set2.push(Modifier2.get(parent, config2));
-        return tag;
-      }
-    };
-    function sameArray$1(a, b) {
-      return a.length == b.length && a.every((x2, i2) => x2 == b[i2]);
-    }
-    function powerSet$1(array) {
-      let sets = [[]];
-      for (let i2 = 0; i2 < array.length; i2++) {
-        for (let j2 = 0, e = sets.length; j2 < e; j2++) {
-          sets.push(sets[j2].concat(array[i2]));
-        }
-      }
-      return sets.sort((a, b) => b.length - a.length);
-    }
-    function styleTags$1(spec) {
-      let byName = /* @__PURE__ */ Object.create(null);
-      for (let prop2 in spec) {
-        let tags2 = spec[prop2];
-        if (!Array.isArray(tags2))
-          tags2 = [tags2];
-        for (let part2 of prop2.split(" "))
-          if (part2) {
-            let pieces = [], mode = 2, rest = part2;
-            for (let pos2 = 0; ; ) {
-              if (rest == "..." && pos2 > 0 && pos2 + 3 == part2.length) {
-                mode = 1;
-                break;
-              }
-              let m = /^"(?:[^"\\]|\\.)*?"|[^\/!]+/.exec(rest);
-              if (!m)
-                throw new RangeError("Invalid path: " + part2);
-              pieces.push(m[0] == "*" ? "" : m[0][0] == '"' ? JSON.parse(m[0]) : m[0]);
-              pos2 += m[0].length;
-              if (pos2 == part2.length)
-                break;
-              let next = part2[pos2++];
-              if (pos2 == part2.length && next == "!") {
-                mode = 0;
-                break;
-              }
-              if (next != "/")
-                throw new RangeError("Invalid path: " + part2);
-              rest = part2.slice(pos2);
-            }
-            let last = pieces.length - 1, inner2 = pieces[last];
-            if (!inner2)
-              throw new RangeError("Invalid path: " + part2);
-            let rule = new Rule$1(tags2, mode, last > 0 ? pieces.slice(0, last) : null);
-            byName[inner2] = rule.sort(byName[inner2]);
-          }
-      }
-      return ruleNodeProp$1.add(byName);
-    }
-    const ruleNodeProp$1 = new NodeProp$1();
-    let Rule$1 = class Rule {
-      constructor(tags2, mode, context, next) {
-        this.tags = tags2;
-        this.mode = mode;
-        this.context = context;
-        this.next = next;
-      }
-      get opaque() {
-        return this.mode == 0;
-      }
-      get inherit() {
-        return this.mode == 1;
-      }
-      sort(other) {
-        if (!other || other.depth < this.depth) {
-          this.next = other;
-          return this;
-        }
-        other.next = this.sort(other.next);
-        return other;
-      }
-      get depth() {
-        return this.context ? this.context.length : 0;
-      }
-    };
-    Rule$1.empty = new Rule$1([], 2, null);
-    function tagHighlighter$1(tags2, options2) {
-      let map2 = /* @__PURE__ */ Object.create(null);
-      for (let style2 of tags2) {
-        if (!Array.isArray(style2.tag))
-          map2[style2.tag.id] = style2.class;
-        else
-          for (let tag of style2.tag)
-            map2[tag.id] = style2.class;
-      }
-      let { scope, all: all2 = null } = options2 || {};
-      return {
-        style: (tags3) => {
-          let cls = all2;
-          for (let tag of tags3) {
-            for (let sub2 of tag.set) {
-              let tagClass = map2[sub2.id];
-              if (tagClass) {
-                cls = cls ? cls + " " + tagClass : tagClass;
-                break;
-              }
-            }
-          }
-          return cls;
-        },
-        scope
-      };
-    }
-    function highlightTags(highlighters, tags2) {
-      let result2 = null;
-      for (let highlighter of highlighters) {
-        let value2 = highlighter.style(tags2);
-        if (value2)
-          result2 = result2 ? result2 + " " + value2 : value2;
-      }
-      return result2;
-    }
-    function highlightTree(tree, highlighter, putStyle, from = 0, to2 = tree.length) {
-      let builder = new HighlightBuilder(from, Array.isArray(highlighter) ? highlighter : [highlighter], putStyle);
-      builder.highlightRange(tree.cursor(), from, to2, "", builder.highlighters);
-      builder.flush(to2);
-    }
-    class HighlightBuilder {
-      constructor(at2, highlighters, span) {
-        this.at = at2;
-        this.highlighters = highlighters;
-        this.span = span;
-        this.class = "";
-      }
-      startSpan(at2, cls) {
-        if (cls != this.class) {
-          this.flush(at2);
-          if (at2 > this.at)
-            this.at = at2;
-          this.class = cls;
-        }
-      }
-      flush(to2) {
-        if (to2 > this.at && this.class)
-          this.span(this.at, to2, this.class);
-      }
-      highlightRange(cursor, from, to2, inheritedClass, highlighters) {
-        let { type, from: start2, to: end2 } = cursor;
-        if (start2 >= to2 || end2 <= from)
-          return;
-        if (type.isTop)
-          highlighters = this.highlighters.filter((h) => !h.scope || h.scope(type));
-        let cls = inheritedClass;
-        let rule = getStyleTags(cursor) || Rule$1.empty;
-        let tagCls = highlightTags(highlighters, rule.tags);
-        if (tagCls) {
-          if (cls)
-            cls += " ";
-          cls += tagCls;
-          if (rule.mode == 1)
-            inheritedClass += (inheritedClass ? " " : "") + tagCls;
-        }
-        this.startSpan(Math.max(from, start2), cls);
-        if (rule.opaque)
-          return;
-        let mounted = cursor.tree && cursor.tree.prop(NodeProp$1.mounted);
-        if (mounted && mounted.overlay) {
-          let inner2 = cursor.node.enter(mounted.overlay[0].from + start2, 1);
-          let innerHighlighters = this.highlighters.filter((h) => !h.scope || h.scope(mounted.tree.type));
-          let hasChild2 = cursor.firstChild();
-          for (let i2 = 0, pos2 = start2; ; i2++) {
-            let next = i2 < mounted.overlay.length ? mounted.overlay[i2] : null;
-            let nextPos = next ? next.from + start2 : end2;
-            let rangeFrom2 = Math.max(from, pos2), rangeTo2 = Math.min(to2, nextPos);
-            if (rangeFrom2 < rangeTo2 && hasChild2) {
-              while (cursor.from < rangeTo2) {
-                this.highlightRange(cursor, rangeFrom2, rangeTo2, inheritedClass, highlighters);
-                this.startSpan(Math.min(rangeTo2, cursor.to), cls);
-                if (cursor.to >= nextPos || !cursor.nextSibling())
-                  break;
-              }
-            }
-            if (!next || nextPos > to2)
-              break;
-            pos2 = next.to + start2;
-            if (pos2 > from) {
-              this.highlightRange(inner2.cursor(), Math.max(from, next.from + start2), Math.min(to2, pos2), "", innerHighlighters);
-              this.startSpan(Math.min(to2, pos2), cls);
-            }
-          }
-          if (hasChild2)
-            cursor.parent();
-        } else if (cursor.firstChild()) {
-          if (mounted)
-            inheritedClass = "";
-          do {
-            if (cursor.to <= from)
-              continue;
-            if (cursor.from >= to2)
-              break;
-            this.highlightRange(cursor, from, to2, inheritedClass, highlighters);
-            this.startSpan(Math.min(to2, cursor.to), cls);
-          } while (cursor.nextSibling());
-          cursor.parent();
-        }
-      }
-    }
-    function getStyleTags(node2) {
-      let rule = node2.type.prop(ruleNodeProp$1);
-      while (rule && rule.context && !node2.matchContext(rule.context))
-        rule = rule.next;
-      return rule || null;
-    }
-    const t$1 = Tag$1.define;
-    const comment$1 = t$1(), name$1 = t$1(), typeName$1 = t$1(name$1), propertyName$1 = t$1(name$1), literal$1 = t$1(), string$1 = t$1(literal$1), number$1 = t$1(literal$1), content$1 = t$1(), heading$1 = t$1(content$1), keyword$1 = t$1(), operator$1 = t$1(), punctuation$1 = t$1(), bracket$1 = t$1(punctuation$1), meta$1 = t$1();
-    const tags$1 = {
-      /**
-      A comment.
-      */
-      comment: comment$1,
-      /**
-      A line [comment](#highlight.tags.comment).
-      */
-      lineComment: t$1(comment$1),
-      /**
-      A block [comment](#highlight.tags.comment).
-      */
-      blockComment: t$1(comment$1),
-      /**
-      A documentation [comment](#highlight.tags.comment).
-      */
-      docComment: t$1(comment$1),
-      /**
-      Any kind of identifier.
-      */
-      name: name$1,
-      /**
-      The [name](#highlight.tags.name) of a variable.
-      */
-      variableName: t$1(name$1),
-      /**
-      A type [name](#highlight.tags.name).
-      */
-      typeName: typeName$1,
-      /**
-      A tag name (subtag of [`typeName`](#highlight.tags.typeName)).
-      */
-      tagName: t$1(typeName$1),
-      /**
-      A property or field [name](#highlight.tags.name).
-      */
-      propertyName: propertyName$1,
-      /**
-      An attribute name (subtag of [`propertyName`](#highlight.tags.propertyName)).
-      */
-      attributeName: t$1(propertyName$1),
-      /**
-      The [name](#highlight.tags.name) of a class.
-      */
-      className: t$1(name$1),
-      /**
-      A label [name](#highlight.tags.name).
-      */
-      labelName: t$1(name$1),
-      /**
-      A namespace [name](#highlight.tags.name).
-      */
-      namespace: t$1(name$1),
-      /**
-      The [name](#highlight.tags.name) of a macro.
-      */
-      macroName: t$1(name$1),
-      /**
-      A literal value.
-      */
-      literal: literal$1,
-      /**
-      A string [literal](#highlight.tags.literal).
-      */
-      string: string$1,
-      /**
-      A documentation [string](#highlight.tags.string).
-      */
-      docString: t$1(string$1),
-      /**
-      A character literal (subtag of [string](#highlight.tags.string)).
-      */
-      character: t$1(string$1),
-      /**
-      An attribute value (subtag of [string](#highlight.tags.string)).
-      */
-      attributeValue: t$1(string$1),
-      /**
-      A number [literal](#highlight.tags.literal).
-      */
-      number: number$1,
-      /**
-      An integer [number](#highlight.tags.number) literal.
-      */
-      integer: t$1(number$1),
-      /**
-      A floating-point [number](#highlight.tags.number) literal.
-      */
-      float: t$1(number$1),
-      /**
-      A boolean [literal](#highlight.tags.literal).
-      */
-      bool: t$1(literal$1),
-      /**
-      Regular expression [literal](#highlight.tags.literal).
-      */
-      regexp: t$1(literal$1),
-      /**
-      An escape [literal](#highlight.tags.literal), for example a
-      backslash escape in a string.
-      */
-      escape: t$1(literal$1),
-      /**
-      A color [literal](#highlight.tags.literal).
-      */
-      color: t$1(literal$1),
-      /**
-      A URL [literal](#highlight.tags.literal).
-      */
-      url: t$1(literal$1),
-      /**
-      A language keyword.
-      */
-      keyword: keyword$1,
-      /**
-      The [keyword](#highlight.tags.keyword) for the self or this
-      object.
-      */
-      self: t$1(keyword$1),
-      /**
-      The [keyword](#highlight.tags.keyword) for null.
-      */
-      null: t$1(keyword$1),
-      /**
-      A [keyword](#highlight.tags.keyword) denoting some atomic value.
-      */
-      atom: t$1(keyword$1),
-      /**
-      A [keyword](#highlight.tags.keyword) that represents a unit.
-      */
-      unit: t$1(keyword$1),
-      /**
-      A modifier [keyword](#highlight.tags.keyword).
-      */
-      modifier: t$1(keyword$1),
-      /**
-      A [keyword](#highlight.tags.keyword) that acts as an operator.
-      */
-      operatorKeyword: t$1(keyword$1),
-      /**
-      A control-flow related [keyword](#highlight.tags.keyword).
-      */
-      controlKeyword: t$1(keyword$1),
-      /**
-      A [keyword](#highlight.tags.keyword) that defines something.
-      */
-      definitionKeyword: t$1(keyword$1),
-      /**
-      A [keyword](#highlight.tags.keyword) related to defining or
-      interfacing with modules.
-      */
-      moduleKeyword: t$1(keyword$1),
-      /**
-      An operator.
-      */
-      operator: operator$1,
-      /**
-      An [operator](#highlight.tags.operator) that dereferences something.
-      */
-      derefOperator: t$1(operator$1),
-      /**
-      Arithmetic-related [operator](#highlight.tags.operator).
-      */
-      arithmeticOperator: t$1(operator$1),
-      /**
-      Logical [operator](#highlight.tags.operator).
-      */
-      logicOperator: t$1(operator$1),
-      /**
-      Bit [operator](#highlight.tags.operator).
-      */
-      bitwiseOperator: t$1(operator$1),
-      /**
-      Comparison [operator](#highlight.tags.operator).
-      */
-      compareOperator: t$1(operator$1),
-      /**
-      [Operator](#highlight.tags.operator) that updates its operand.
-      */
-      updateOperator: t$1(operator$1),
-      /**
-      [Operator](#highlight.tags.operator) that defines something.
-      */
-      definitionOperator: t$1(operator$1),
-      /**
-      Type-related [operator](#highlight.tags.operator).
-      */
-      typeOperator: t$1(operator$1),
-      /**
-      Control-flow [operator](#highlight.tags.operator).
-      */
-      controlOperator: t$1(operator$1),
-      /**
-      Program or markup punctuation.
-      */
-      punctuation: punctuation$1,
-      /**
-      [Punctuation](#highlight.tags.punctuation) that separates
-      things.
-      */
-      separator: t$1(punctuation$1),
-      /**
-      Bracket-style [punctuation](#highlight.tags.punctuation).
-      */
-      bracket: bracket$1,
-      /**
-      Angle [brackets](#highlight.tags.bracket) (usually `<` and `>`
-      tokens).
-      */
-      angleBracket: t$1(bracket$1),
-      /**
-      Square [brackets](#highlight.tags.bracket) (usually `[` and `]`
-      tokens).
-      */
-      squareBracket: t$1(bracket$1),
-      /**
-      Parentheses (usually `(` and `)` tokens). Subtag of
-      [bracket](#highlight.tags.bracket).
-      */
-      paren: t$1(bracket$1),
-      /**
-      Braces (usually `{` and `}` tokens). Subtag of
-      [bracket](#highlight.tags.bracket).
-      */
-      brace: t$1(bracket$1),
-      /**
-      Content, for example plain text in XML or markup documents.
-      */
-      content: content$1,
-      /**
-      [Content](#highlight.tags.content) that represents a heading.
-      */
-      heading: heading$1,
-      /**
-      A level 1 [heading](#highlight.tags.heading).
-      */
-      heading1: t$1(heading$1),
-      /**
-      A level 2 [heading](#highlight.tags.heading).
-      */
-      heading2: t$1(heading$1),
-      /**
-      A level 3 [heading](#highlight.tags.heading).
-      */
-      heading3: t$1(heading$1),
-      /**
-      A level 4 [heading](#highlight.tags.heading).
-      */
-      heading4: t$1(heading$1),
-      /**
-      A level 5 [heading](#highlight.tags.heading).
-      */
-      heading5: t$1(heading$1),
-      /**
-      A level 6 [heading](#highlight.tags.heading).
-      */
-      heading6: t$1(heading$1),
-      /**
-      A prose [content](#highlight.tags.content) separator (such as a horizontal rule).
-      */
-      contentSeparator: t$1(content$1),
-      /**
-      [Content](#highlight.tags.content) that represents a list.
-      */
-      list: t$1(content$1),
-      /**
-      [Content](#highlight.tags.content) that represents a quote.
-      */
-      quote: t$1(content$1),
-      /**
-      [Content](#highlight.tags.content) that is emphasized.
-      */
-      emphasis: t$1(content$1),
-      /**
-      [Content](#highlight.tags.content) that is styled strong.
-      */
-      strong: t$1(content$1),
-      /**
-      [Content](#highlight.tags.content) that is part of a link.
-      */
-      link: t$1(content$1),
-      /**
-      [Content](#highlight.tags.content) that is styled as code or
-      monospace.
-      */
-      monospace: t$1(content$1),
-      /**
-      [Content](#highlight.tags.content) that has a strike-through
-      style.
-      */
-      strikethrough: t$1(content$1),
-      /**
-      Inserted text in a change-tracking format.
-      */
-      inserted: t$1(),
-      /**
-      Deleted text.
-      */
-      deleted: t$1(),
-      /**
-      Changed text.
-      */
-      changed: t$1(),
-      /**
-      An invalid or unsyntactic element.
-      */
-      invalid: t$1(),
-      /**
-      Metadata or meta-instruction.
-      */
-      meta: meta$1,
-      /**
-      [Metadata](#highlight.tags.meta) that applies to the entire
-      document.
-      */
-      documentMeta: t$1(meta$1),
-      /**
-      [Metadata](#highlight.tags.meta) that annotates or adds
-      attributes to a given syntactic element.
-      */
-      annotation: t$1(meta$1),
-      /**
-      Processing instruction or preprocessor directive. Subtag of
-      [meta](#highlight.tags.meta).
-      */
-      processingInstruction: t$1(meta$1),
-      /**
-      [Modifier](#highlight.Tag^defineModifier) that indicates that a
-      given element is being defined. Expected to be used with the
-      various [name](#highlight.tags.name) tags.
-      */
-      definition: Tag$1.defineModifier("definition"),
-      /**
-      [Modifier](#highlight.Tag^defineModifier) that indicates that
-      something is constant. Mostly expected to be used with
-      [variable names](#highlight.tags.variableName).
-      */
-      constant: Tag$1.defineModifier("constant"),
-      /**
-      [Modifier](#highlight.Tag^defineModifier) used to indicate that
-      a [variable](#highlight.tags.variableName) or [property
-      name](#highlight.tags.propertyName) is being called or defined
-      as a function.
-      */
-      function: Tag$1.defineModifier("function"),
-      /**
-      [Modifier](#highlight.Tag^defineModifier) that can be applied to
-      [names](#highlight.tags.name) to indicate that they belong to
-      the language's standard environment.
-      */
-      standard: Tag$1.defineModifier("standard"),
-      /**
-      [Modifier](#highlight.Tag^defineModifier) that indicates a given
-      [names](#highlight.tags.name) is local to some scope.
-      */
-      local: Tag$1.defineModifier("local"),
-      /**
-      A generic variant [modifier](#highlight.Tag^defineModifier) that
-      can be used to tag language-specific alternative variants of
-      some common tag. It is recommended for themes to define special
-      forms of at least the [string](#highlight.tags.string) and
-      [variable name](#highlight.tags.variableName) tags, since those
-      come up a lot.
-      */
-      special: Tag$1.defineModifier("special")
-    };
-    for (let name2 in tags$1) {
-      let val = tags$1[name2];
-      if (val instanceof Tag$1)
-        val.name = name2;
-    }
-    tagHighlighter$1([
-      { tag: tags$1.link, class: "tok-link" },
-      { tag: tags$1.heading, class: "tok-heading" },
-      { tag: tags$1.emphasis, class: "tok-emphasis" },
-      { tag: tags$1.strong, class: "tok-strong" },
-      { tag: tags$1.keyword, class: "tok-keyword" },
-      { tag: tags$1.atom, class: "tok-atom" },
-      { tag: tags$1.bool, class: "tok-bool" },
-      { tag: tags$1.url, class: "tok-url" },
-      { tag: tags$1.labelName, class: "tok-labelName" },
-      { tag: tags$1.inserted, class: "tok-inserted" },
-      { tag: tags$1.deleted, class: "tok-deleted" },
-      { tag: tags$1.literal, class: "tok-literal" },
-      { tag: tags$1.string, class: "tok-string" },
-      { tag: tags$1.number, class: "tok-number" },
-      { tag: [tags$1.regexp, tags$1.escape, tags$1.special(tags$1.string)], class: "tok-string2" },
-      { tag: tags$1.variableName, class: "tok-variableName" },
-      { tag: tags$1.local(tags$1.variableName), class: "tok-variableName tok-local" },
-      { tag: tags$1.definition(tags$1.variableName), class: "tok-variableName tok-definition" },
-      { tag: tags$1.special(tags$1.variableName), class: "tok-variableName2" },
-      { tag: tags$1.definition(tags$1.propertyName), class: "tok-propertyName tok-definition" },
-      { tag: tags$1.typeName, class: "tok-typeName" },
-      { tag: tags$1.namespace, class: "tok-namespace" },
-      { tag: tags$1.className, class: "tok-className" },
-      { tag: tags$1.macroName, class: "tok-macroName" },
-      { tag: tags$1.propertyName, class: "tok-propertyName" },
-      { tag: tags$1.operator, class: "tok-operator" },
-      { tag: tags$1.comment, class: "tok-comment" },
-      { tag: tags$1.meta, class: "tok-meta" },
-      { tag: tags$1.invalid, class: "tok-invalid" },
-      { tag: tags$1.punctuation, class: "tok-punctuation" }
-    ]);
     var _a$2;
-    const languageDataProp$1 = /* @__PURE__ */ new NodeProp$1();
-    const sublanguageProp$1 = /* @__PURE__ */ new NodeProp$1();
+    const languageDataProp$1 = /* @__PURE__ */ new NodeProp();
+    const sublanguageProp$1 = /* @__PURE__ */ new NodeProp();
     let Language$1 = class Language {
       /**
       Construct a language object. If you need to invoke this
@@ -158248,7 +155960,7 @@ ${events}
             result2.push({ from, to: from + tree.length });
             return;
           }
-          let mount2 = tree.prop(NodeProp$1.mounted);
+          let mount2 = tree.prop(NodeProp.mounted);
           if (mount2) {
             if (mount2.tree.prop(languageDataProp$1) == this.data) {
               if (mount2.overlay)
@@ -158285,7 +155997,7 @@ ${events}
     function topNodeAt$1(state, pos2, side) {
       let topLang = state.facet(language$2), tree = syntaxTree$1(state).topNode;
       if (!topLang || topLang.allowsNesting) {
-        for (let node2 = tree; node2; node2 = node2.enter(pos2, side, IterMode$1.ExcludeBuffers))
+        for (let node2 = tree; node2; node2 = node2.enter(pos2, side, IterMode.ExcludeBuffers))
           if (node2.type.isTop)
             tree = node2;
       }
@@ -158505,7 +156217,7 @@ ${events}
                     cx.scheduleOn = cx.scheduleOn ? Promise.all([cx.scheduleOn, until]) : until;
                 }
                 this.parsedPos = to2;
-                return new Tree(NodeType$1.none, [], [], to2 - from);
+                return new Tree(NodeType.none, [], [], to2 - from);
               },
               stoppedAt: null,
               stopAt() {
@@ -158691,7 +156403,7 @@ ${events}
         const all2 = typeof options2.all == "string" ? options2.all : options2.all ? def(options2.all) : void 0;
         const scopeOpt = options2.scope;
         this.scope = scopeOpt instanceof Language$1 ? (type) => type.prop(languageDataProp$1) == scopeOpt.data : scopeOpt ? (type) => type == scopeOpt : void 0;
-        this.style = tagHighlighter$1(specs.map((style2) => ({
+        this.style = tagHighlighter(specs.map((style2) => ({
           tag: style2.tag,
           class: style2.class || def(Object.assign({}, style2, { tag: null }))
         })), {
@@ -158783,85 +156495,85 @@ ${events}
     }));
     const defaultHighlightStyle = /* @__PURE__ */ HighlightStyle.define([
       {
-        tag: tags$1.meta,
+        tag: tags.meta,
         color: "#404740"
       },
       {
-        tag: tags$1.link,
+        tag: tags.link,
         textDecoration: "underline"
       },
       {
-        tag: tags$1.heading,
+        tag: tags.heading,
         textDecoration: "underline",
         fontWeight: "bold"
       },
       {
-        tag: tags$1.emphasis,
+        tag: tags.emphasis,
         fontStyle: "italic"
       },
       {
-        tag: tags$1.strong,
+        tag: tags.strong,
         fontWeight: "bold"
       },
       {
-        tag: tags$1.strikethrough,
+        tag: tags.strikethrough,
         textDecoration: "line-through"
       },
       {
-        tag: tags$1.keyword,
+        tag: tags.keyword,
         color: "#708"
       },
       {
-        tag: [tags$1.atom, tags$1.bool, tags$1.url, tags$1.contentSeparator, tags$1.labelName],
+        tag: [tags.atom, tags.bool, tags.url, tags.contentSeparator, tags.labelName],
         color: "#219"
       },
       {
-        tag: [tags$1.literal, tags$1.inserted],
+        tag: [tags.literal, tags.inserted],
         color: "#164"
       },
       {
-        tag: [tags$1.string, tags$1.deleted],
+        tag: [tags.string, tags.deleted],
         color: "#a11"
       },
       {
-        tag: [tags$1.regexp, tags$1.escape, /* @__PURE__ */ tags$1.special(tags$1.string)],
+        tag: [tags.regexp, tags.escape, /* @__PURE__ */ tags.special(tags.string)],
         color: "#e40"
       },
       {
-        tag: /* @__PURE__ */ tags$1.definition(tags$1.variableName),
+        tag: /* @__PURE__ */ tags.definition(tags.variableName),
         color: "#00f"
       },
       {
-        tag: /* @__PURE__ */ tags$1.local(tags$1.variableName),
+        tag: /* @__PURE__ */ tags.local(tags.variableName),
         color: "#30a"
       },
       {
-        tag: [tags$1.typeName, tags$1.namespace],
+        tag: [tags.typeName, tags.namespace],
         color: "#085"
       },
       {
-        tag: tags$1.className,
+        tag: tags.className,
         color: "#167"
       },
       {
-        tag: [/* @__PURE__ */ tags$1.special(tags$1.variableName), tags$1.macroName],
+        tag: [/* @__PURE__ */ tags.special(tags.variableName), tags.macroName],
         color: "#256"
       },
       {
-        tag: /* @__PURE__ */ tags$1.definition(tags$1.propertyName),
+        tag: /* @__PURE__ */ tags.definition(tags.propertyName),
         color: "#00c"
       },
       {
-        tag: tags$1.comment,
+        tag: tags.comment,
         color: "#940"
       },
       {
-        tag: tags$1.invalid,
+        tag: tags.invalid,
         color: "#f00"
       }
     ]);
     const noTokens$1 = /* @__PURE__ */ Object.create(null);
-    const typeArray$1 = [NodeType$1.none];
+    const typeArray$1 = [NodeType.none];
     const warned$1 = [];
     const byTag$1 = /* @__PURE__ */ Object.create(null);
     const defaultTable$1 = /* @__PURE__ */ Object.create(null);
@@ -158887,11 +156599,11 @@ ${events}
       console.warn(msg);
     }
     function createTokenType$1(extra, tagStr) {
-      let tags$1$1 = [];
+      let tags$1 = [];
       for (let name3 of tagStr.split(" ")) {
         let found = [];
         for (let part2 of name3.split(".")) {
-          let value2 = extra[part2] || tags$1[part2];
+          let value2 = extra[part2] || tags[part2];
           if (!value2) {
             warnForPart$1(part2, `Unknown highlighting tag ${part2}`);
           } else if (typeof value2 == "function") {
@@ -158907,18 +156619,18 @@ ${events}
           }
         }
         for (let tag of found)
-          tags$1$1.push(tag);
+          tags$1.push(tag);
       }
-      if (!tags$1$1.length)
+      if (!tags$1.length)
         return 0;
-      let name2 = tagStr.replace(/ /g, "_"), key2 = name2 + " " + tags$1$1.map((t2) => t2.id);
+      let name2 = tagStr.replace(/ /g, "_"), key2 = name2 + " " + tags$1.map((t2) => t2.id);
       let known = byTag$1[key2];
       if (known)
         return known.id;
-      let type = byTag$1[key2] = NodeType$1.define({
+      let type = byTag$1[key2] = NodeType.define({
         id: typeArray$1.length,
         name: name2,
-        props: [styleTags$1({ [name2]: tags$1$1 })]
+        props: [styleTags({ [name2]: tags$1 })]
       });
       typeArray$1.push(type);
       return type.id;
@@ -158927,596 +156639,9 @@ ${events}
       rtl: /* @__PURE__ */ Decoration.mark({ class: "cm-iso", inclusive: true, attributes: { dir: "rtl" }, bidiIsolate: Direction.RTL }),
       ltr: /* @__PURE__ */ Decoration.mark({ class: "cm-iso", inclusive: true, attributes: { dir: "ltr" }, bidiIsolate: Direction.LTR })
     });
-    let nextTagID = 0;
-    class Tag {
-      /**
-      @internal
-      */
-      constructor(name2, set2, base2, modified) {
-        this.name = name2;
-        this.set = set2;
-        this.base = base2;
-        this.modified = modified;
-        this.id = nextTagID++;
-      }
-      toString() {
-        let { name: name2 } = this;
-        for (let mod2 of this.modified)
-          if (mod2.name)
-            name2 = `${mod2.name}(${name2})`;
-        return name2;
-      }
-      static define(nameOrParent, parent) {
-        let name2 = typeof nameOrParent == "string" ? nameOrParent : "?";
-        if (nameOrParent instanceof Tag)
-          parent = nameOrParent;
-        if (parent === null || parent === void 0 ? void 0 : parent.base)
-          throw new Error("Can not derive from a modified tag");
-        let tag = new Tag(name2, [], null, []);
-        tag.set.push(tag);
-        if (parent)
-          for (let t2 of parent.set)
-            tag.set.push(t2);
-        return tag;
-      }
-      /**
-      Define a tag _modifier_, which is a function that, given a tag,
-      will return a tag that is a subtag of the original. Applying the
-      same modifier to a twice tag will return the same value (`m1(t1)
-      == m1(t1)`) and applying multiple modifiers will, regardless or
-      order, produce the same tag (`m1(m2(t1)) == m2(m1(t1))`).
-      
-      When multiple modifiers are applied to a given base tag, each
-      smaller set of modifiers is registered as a parent, so that for
-      example `m1(m2(m3(t1)))` is a subtype of `m1(m2(t1))`,
-      `m1(m3(t1)`, and so on.
-      */
-      static defineModifier(name2) {
-        let mod2 = new Modifier(name2);
-        return (tag) => {
-          if (tag.modified.indexOf(mod2) > -1)
-            return tag;
-          return Modifier.get(tag.base || tag, tag.modified.concat(mod2).sort((a, b) => a.id - b.id));
-        };
-      }
-    }
-    let nextModifierID = 0;
-    class Modifier {
-      constructor(name2) {
-        this.name = name2;
-        this.instances = [];
-        this.id = nextModifierID++;
-      }
-      static get(base2, mods) {
-        if (!mods.length)
-          return base2;
-        let exists = mods[0].instances.find((t2) => t2.base == base2 && sameArray(mods, t2.modified));
-        if (exists)
-          return exists;
-        let set2 = [], tag = new Tag(base2.name, set2, base2, mods);
-        for (let m of mods)
-          m.instances.push(tag);
-        let configs = powerSet(mods);
-        for (let parent of base2.set)
-          if (!parent.modified.length)
-            for (let config2 of configs)
-              set2.push(Modifier.get(parent, config2));
-        return tag;
-      }
-    }
-    function sameArray(a, b) {
-      return a.length == b.length && a.every((x2, i2) => x2 == b[i2]);
-    }
-    function powerSet(array) {
-      let sets = [[]];
-      for (let i2 = 0; i2 < array.length; i2++) {
-        for (let j2 = 0, e = sets.length; j2 < e; j2++) {
-          sets.push(sets[j2].concat(array[i2]));
-        }
-      }
-      return sets.sort((a, b) => b.length - a.length);
-    }
-    function styleTags(spec) {
-      let byName = /* @__PURE__ */ Object.create(null);
-      for (let prop2 in spec) {
-        let tags2 = spec[prop2];
-        if (!Array.isArray(tags2))
-          tags2 = [tags2];
-        for (let part2 of prop2.split(" "))
-          if (part2) {
-            let pieces = [], mode = 2, rest = part2;
-            for (let pos2 = 0; ; ) {
-              if (rest == "..." && pos2 > 0 && pos2 + 3 == part2.length) {
-                mode = 1;
-                break;
-              }
-              let m = /^"(?:[^"\\]|\\.)*?"|[^\/!]+/.exec(rest);
-              if (!m)
-                throw new RangeError("Invalid path: " + part2);
-              pieces.push(m[0] == "*" ? "" : m[0][0] == '"' ? JSON.parse(m[0]) : m[0]);
-              pos2 += m[0].length;
-              if (pos2 == part2.length)
-                break;
-              let next = part2[pos2++];
-              if (pos2 == part2.length && next == "!") {
-                mode = 0;
-                break;
-              }
-              if (next != "/")
-                throw new RangeError("Invalid path: " + part2);
-              rest = part2.slice(pos2);
-            }
-            let last = pieces.length - 1, inner2 = pieces[last];
-            if (!inner2)
-              throw new RangeError("Invalid path: " + part2);
-            let rule = new Rule(tags2, mode, last > 0 ? pieces.slice(0, last) : null);
-            byName[inner2] = rule.sort(byName[inner2]);
-          }
-      }
-      return ruleNodeProp.add(byName);
-    }
-    const ruleNodeProp = new NodeProp$1();
-    class Rule {
-      constructor(tags2, mode, context, next) {
-        this.tags = tags2;
-        this.mode = mode;
-        this.context = context;
-        this.next = next;
-      }
-      get opaque() {
-        return this.mode == 0;
-      }
-      get inherit() {
-        return this.mode == 1;
-      }
-      sort(other) {
-        if (!other || other.depth < this.depth) {
-          this.next = other;
-          return this;
-        }
-        other.next = this.sort(other.next);
-        return other;
-      }
-      get depth() {
-        return this.context ? this.context.length : 0;
-      }
-    }
-    Rule.empty = new Rule([], 2, null);
-    function tagHighlighter(tags2, options2) {
-      let map2 = /* @__PURE__ */ Object.create(null);
-      for (let style2 of tags2) {
-        if (!Array.isArray(style2.tag))
-          map2[style2.tag.id] = style2.class;
-        else
-          for (let tag of style2.tag)
-            map2[tag.id] = style2.class;
-      }
-      let { scope, all: all2 = null } = {};
-      return {
-        style: (tags3) => {
-          let cls = all2;
-          for (let tag of tags3) {
-            for (let sub2 of tag.set) {
-              let tagClass = map2[sub2.id];
-              if (tagClass) {
-                cls = cls ? cls + " " + tagClass : tagClass;
-                break;
-              }
-            }
-          }
-          return cls;
-        },
-        scope
-      };
-    }
-    const t = Tag.define;
-    const comment = t(), name = t(), typeName = t(name), propertyName = t(name), literal = t(), string = t(literal), number = t(literal), content = t(), heading = t(content), keyword = t(), operator = t(), punctuation = t(), bracket = t(punctuation), meta = t();
-    const tags = {
-      /**
-      A comment.
-      */
-      comment,
-      /**
-      A line [comment](#highlight.tags.comment).
-      */
-      lineComment: t(comment),
-      /**
-      A block [comment](#highlight.tags.comment).
-      */
-      blockComment: t(comment),
-      /**
-      A documentation [comment](#highlight.tags.comment).
-      */
-      docComment: t(comment),
-      /**
-      Any kind of identifier.
-      */
-      name,
-      /**
-      The [name](#highlight.tags.name) of a variable.
-      */
-      variableName: t(name),
-      /**
-      A type [name](#highlight.tags.name).
-      */
-      typeName,
-      /**
-      A tag name (subtag of [`typeName`](#highlight.tags.typeName)).
-      */
-      tagName: t(typeName),
-      /**
-      A property or field [name](#highlight.tags.name).
-      */
-      propertyName,
-      /**
-      An attribute name (subtag of [`propertyName`](#highlight.tags.propertyName)).
-      */
-      attributeName: t(propertyName),
-      /**
-      The [name](#highlight.tags.name) of a class.
-      */
-      className: t(name),
-      /**
-      A label [name](#highlight.tags.name).
-      */
-      labelName: t(name),
-      /**
-      A namespace [name](#highlight.tags.name).
-      */
-      namespace: t(name),
-      /**
-      The [name](#highlight.tags.name) of a macro.
-      */
-      macroName: t(name),
-      /**
-      A literal value.
-      */
-      literal,
-      /**
-      A string [literal](#highlight.tags.literal).
-      */
-      string,
-      /**
-      A documentation [string](#highlight.tags.string).
-      */
-      docString: t(string),
-      /**
-      A character literal (subtag of [string](#highlight.tags.string)).
-      */
-      character: t(string),
-      /**
-      An attribute value (subtag of [string](#highlight.tags.string)).
-      */
-      attributeValue: t(string),
-      /**
-      A number [literal](#highlight.tags.literal).
-      */
-      number,
-      /**
-      An integer [number](#highlight.tags.number) literal.
-      */
-      integer: t(number),
-      /**
-      A floating-point [number](#highlight.tags.number) literal.
-      */
-      float: t(number),
-      /**
-      A boolean [literal](#highlight.tags.literal).
-      */
-      bool: t(literal),
-      /**
-      Regular expression [literal](#highlight.tags.literal).
-      */
-      regexp: t(literal),
-      /**
-      An escape [literal](#highlight.tags.literal), for example a
-      backslash escape in a string.
-      */
-      escape: t(literal),
-      /**
-      A color [literal](#highlight.tags.literal).
-      */
-      color: t(literal),
-      /**
-      A URL [literal](#highlight.tags.literal).
-      */
-      url: t(literal),
-      /**
-      A language keyword.
-      */
-      keyword,
-      /**
-      The [keyword](#highlight.tags.keyword) for the self or this
-      object.
-      */
-      self: t(keyword),
-      /**
-      The [keyword](#highlight.tags.keyword) for null.
-      */
-      null: t(keyword),
-      /**
-      A [keyword](#highlight.tags.keyword) denoting some atomic value.
-      */
-      atom: t(keyword),
-      /**
-      A [keyword](#highlight.tags.keyword) that represents a unit.
-      */
-      unit: t(keyword),
-      /**
-      A modifier [keyword](#highlight.tags.keyword).
-      */
-      modifier: t(keyword),
-      /**
-      A [keyword](#highlight.tags.keyword) that acts as an operator.
-      */
-      operatorKeyword: t(keyword),
-      /**
-      A control-flow related [keyword](#highlight.tags.keyword).
-      */
-      controlKeyword: t(keyword),
-      /**
-      A [keyword](#highlight.tags.keyword) that defines something.
-      */
-      definitionKeyword: t(keyword),
-      /**
-      A [keyword](#highlight.tags.keyword) related to defining or
-      interfacing with modules.
-      */
-      moduleKeyword: t(keyword),
-      /**
-      An operator.
-      */
-      operator,
-      /**
-      An [operator](#highlight.tags.operator) that dereferences something.
-      */
-      derefOperator: t(operator),
-      /**
-      Arithmetic-related [operator](#highlight.tags.operator).
-      */
-      arithmeticOperator: t(operator),
-      /**
-      Logical [operator](#highlight.tags.operator).
-      */
-      logicOperator: t(operator),
-      /**
-      Bit [operator](#highlight.tags.operator).
-      */
-      bitwiseOperator: t(operator),
-      /**
-      Comparison [operator](#highlight.tags.operator).
-      */
-      compareOperator: t(operator),
-      /**
-      [Operator](#highlight.tags.operator) that updates its operand.
-      */
-      updateOperator: t(operator),
-      /**
-      [Operator](#highlight.tags.operator) that defines something.
-      */
-      definitionOperator: t(operator),
-      /**
-      Type-related [operator](#highlight.tags.operator).
-      */
-      typeOperator: t(operator),
-      /**
-      Control-flow [operator](#highlight.tags.operator).
-      */
-      controlOperator: t(operator),
-      /**
-      Program or markup punctuation.
-      */
-      punctuation,
-      /**
-      [Punctuation](#highlight.tags.punctuation) that separates
-      things.
-      */
-      separator: t(punctuation),
-      /**
-      Bracket-style [punctuation](#highlight.tags.punctuation).
-      */
-      bracket,
-      /**
-      Angle [brackets](#highlight.tags.bracket) (usually `<` and `>`
-      tokens).
-      */
-      angleBracket: t(bracket),
-      /**
-      Square [brackets](#highlight.tags.bracket) (usually `[` and `]`
-      tokens).
-      */
-      squareBracket: t(bracket),
-      /**
-      Parentheses (usually `(` and `)` tokens). Subtag of
-      [bracket](#highlight.tags.bracket).
-      */
-      paren: t(bracket),
-      /**
-      Braces (usually `{` and `}` tokens). Subtag of
-      [bracket](#highlight.tags.bracket).
-      */
-      brace: t(bracket),
-      /**
-      Content, for example plain text in XML or markup documents.
-      */
-      content,
-      /**
-      [Content](#highlight.tags.content) that represents a heading.
-      */
-      heading,
-      /**
-      A level 1 [heading](#highlight.tags.heading).
-      */
-      heading1: t(heading),
-      /**
-      A level 2 [heading](#highlight.tags.heading).
-      */
-      heading2: t(heading),
-      /**
-      A level 3 [heading](#highlight.tags.heading).
-      */
-      heading3: t(heading),
-      /**
-      A level 4 [heading](#highlight.tags.heading).
-      */
-      heading4: t(heading),
-      /**
-      A level 5 [heading](#highlight.tags.heading).
-      */
-      heading5: t(heading),
-      /**
-      A level 6 [heading](#highlight.tags.heading).
-      */
-      heading6: t(heading),
-      /**
-      A prose [content](#highlight.tags.content) separator (such as a horizontal rule).
-      */
-      contentSeparator: t(content),
-      /**
-      [Content](#highlight.tags.content) that represents a list.
-      */
-      list: t(content),
-      /**
-      [Content](#highlight.tags.content) that represents a quote.
-      */
-      quote: t(content),
-      /**
-      [Content](#highlight.tags.content) that is emphasized.
-      */
-      emphasis: t(content),
-      /**
-      [Content](#highlight.tags.content) that is styled strong.
-      */
-      strong: t(content),
-      /**
-      [Content](#highlight.tags.content) that is part of a link.
-      */
-      link: t(content),
-      /**
-      [Content](#highlight.tags.content) that is styled as code or
-      monospace.
-      */
-      monospace: t(content),
-      /**
-      [Content](#highlight.tags.content) that has a strike-through
-      style.
-      */
-      strikethrough: t(content),
-      /**
-      Inserted text in a change-tracking format.
-      */
-      inserted: t(),
-      /**
-      Deleted text.
-      */
-      deleted: t(),
-      /**
-      Changed text.
-      */
-      changed: t(),
-      /**
-      An invalid or unsyntactic element.
-      */
-      invalid: t(),
-      /**
-      Metadata or meta-instruction.
-      */
-      meta,
-      /**
-      [Metadata](#highlight.tags.meta) that applies to the entire
-      document.
-      */
-      documentMeta: t(meta),
-      /**
-      [Metadata](#highlight.tags.meta) that annotates or adds
-      attributes to a given syntactic element.
-      */
-      annotation: t(meta),
-      /**
-      Processing instruction or preprocessor directive. Subtag of
-      [meta](#highlight.tags.meta).
-      */
-      processingInstruction: t(meta),
-      /**
-      [Modifier](#highlight.Tag^defineModifier) that indicates that a
-      given element is being defined. Expected to be used with the
-      various [name](#highlight.tags.name) tags.
-      */
-      definition: Tag.defineModifier("definition"),
-      /**
-      [Modifier](#highlight.Tag^defineModifier) that indicates that
-      something is constant. Mostly expected to be used with
-      [variable names](#highlight.tags.variableName).
-      */
-      constant: Tag.defineModifier("constant"),
-      /**
-      [Modifier](#highlight.Tag^defineModifier) used to indicate that
-      a [variable](#highlight.tags.variableName) or [property
-      name](#highlight.tags.propertyName) is being called or defined
-      as a function.
-      */
-      function: Tag.defineModifier("function"),
-      /**
-      [Modifier](#highlight.Tag^defineModifier) that can be applied to
-      [names](#highlight.tags.name) to indicate that they belong to
-      the language's standard environment.
-      */
-      standard: Tag.defineModifier("standard"),
-      /**
-      [Modifier](#highlight.Tag^defineModifier) that indicates a given
-      [names](#highlight.tags.name) is local to some scope.
-      */
-      local: Tag.defineModifier("local"),
-      /**
-      A generic variant [modifier](#highlight.Tag^defineModifier) that
-      can be used to tag language-specific alternative variants of
-      some common tag. It is recommended for themes to define special
-      forms of at least the [string](#highlight.tags.string) and
-      [variable name](#highlight.tags.variableName) tags, since those
-      come up a lot.
-      */
-      special: Tag.defineModifier("special")
-    };
-    for (let name2 in tags) {
-      let val = tags[name2];
-      if (val instanceof Tag)
-        val.name = name2;
-    }
-    tagHighlighter([
-      { tag: tags.link, class: "tok-link" },
-      { tag: tags.heading, class: "tok-heading" },
-      { tag: tags.emphasis, class: "tok-emphasis" },
-      { tag: tags.strong, class: "tok-strong" },
-      { tag: tags.keyword, class: "tok-keyword" },
-      { tag: tags.atom, class: "tok-atom" },
-      { tag: tags.bool, class: "tok-bool" },
-      { tag: tags.url, class: "tok-url" },
-      { tag: tags.labelName, class: "tok-labelName" },
-      { tag: tags.inserted, class: "tok-inserted" },
-      { tag: tags.deleted, class: "tok-deleted" },
-      { tag: tags.literal, class: "tok-literal" },
-      { tag: tags.string, class: "tok-string" },
-      { tag: tags.number, class: "tok-number" },
-      { tag: [tags.regexp, tags.escape, tags.special(tags.string)], class: "tok-string2" },
-      { tag: tags.variableName, class: "tok-variableName" },
-      { tag: tags.local(tags.variableName), class: "tok-variableName tok-local" },
-      { tag: tags.definition(tags.variableName), class: "tok-variableName tok-definition" },
-      { tag: tags.special(tags.variableName), class: "tok-variableName2" },
-      { tag: tags.definition(tags.propertyName), class: "tok-propertyName tok-definition" },
-      { tag: tags.typeName, class: "tok-typeName" },
-      { tag: tags.namespace, class: "tok-namespace" },
-      { tag: tags.className, class: "tok-className" },
-      { tag: tags.macroName, class: "tok-macroName" },
-      { tag: tags.propertyName, class: "tok-propertyName" },
-      { tag: tags.operator, class: "tok-operator" },
-      { tag: tags.comment, class: "tok-comment" },
-      { tag: tags.meta, class: "tok-meta" },
-      { tag: tags.invalid, class: "tok-invalid" },
-      { tag: tags.punctuation, class: "tok-punctuation" }
-    ]);
     var _a$1;
-    const languageDataProp = /* @__PURE__ */ new NodeProp$1();
-    const sublanguageProp = /* @__PURE__ */ new NodeProp$1();
+    const languageDataProp = /* @__PURE__ */ new NodeProp();
+    const sublanguageProp = /* @__PURE__ */ new NodeProp();
     class Language {
       /**
       Construct a language object. If you need to invoke this
@@ -159575,7 +156700,7 @@ ${events}
             result2.push({ from, to: from + tree.length });
             return;
           }
-          let mount2 = tree.prop(NodeProp$1.mounted);
+          let mount2 = tree.prop(NodeProp.mounted);
           if (mount2) {
             if (mount2.tree.prop(languageDataProp) == this.data) {
               if (mount2.overlay)
@@ -159612,7 +156737,7 @@ ${events}
     function topNodeAt(state, pos2, side) {
       let topLang = state.facet(language$1), tree = syntaxTree(state).topNode;
       if (!topLang || topLang.allowsNesting) {
-        for (let node2 = tree; node2; node2 = node2.enter(pos2, side, IterMode$1.ExcludeBuffers))
+        for (let node2 = tree; node2; node2 = node2.enter(pos2, side, IterMode.ExcludeBuffers))
           if (node2.type.isTop)
             tree = node2;
       }
@@ -159832,7 +156957,7 @@ ${events}
                     cx.scheduleOn = cx.scheduleOn ? Promise.all([cx.scheduleOn, until]) : until;
                 }
                 this.parsedPos = to2;
-                return new Tree(NodeType$1.none, [], [], to2 - from);
+                return new Tree(NodeType.none, [], [], to2 - from);
               },
               stoppedAt: null,
               stopAt() {
@@ -160125,7 +157250,7 @@ ${events}
         return this.options.simulateBreak || null;
       }
     }
-    const indentNodeProp = /* @__PURE__ */ new NodeProp$1();
+    const indentNodeProp = /* @__PURE__ */ new NodeProp();
     function syntaxIndentation(cx, ast2, pos2) {
       let stack2 = ast2.resolveStack(pos2);
       let inner2 = ast2.resolveInner(pos2, -1).resolve(pos2, 0).enterUnfinishedNodesBefore(pos2);
@@ -160154,7 +157279,7 @@ ${events}
       if (strategy)
         return strategy;
       let first = tree.firstChild, close2;
-      if (first && (close2 = first.type.prop(NodeProp$1.closedBy))) {
+      if (first && (close2 = first.type.prop(NodeProp.closedBy))) {
         let last = tree.lastChild, closed = last && close2.indexOf(last.name) > -1;
         return (cx) => delimitedStrategy(cx, true, 1, void 0, closed && !ignoreClosed(cx) ? last.from : void 0);
       }
@@ -160260,9 +157385,9 @@ ${events}
       return context.baseIndent + (closed ? 0 : context.unit * units);
     }
     const DefaultScanDist = 1e4, DefaultBrackets = "()[]{}";
-    const bracketMatchingHandle = /* @__PURE__ */ new NodeProp$1();
+    const bracketMatchingHandle = /* @__PURE__ */ new NodeProp();
     function matchingNodes(node2, dir, brackets) {
-      let byProp = node2.prop(dir < 0 ? NodeProp$1.openedBy : NodeProp$1.closedBy);
+      let byProp = node2.prop(dir < 0 ? NodeProp.openedBy : NodeProp.closedBy);
       if (byProp)
         return byProp;
       if (node2.name.length == 1) {
@@ -160345,7 +157470,7 @@ ${events}
       return iter.done ? { start: startToken, matched: false } : null;
     }
     const noTokens = /* @__PURE__ */ Object.create(null);
-    const typeArray = [NodeType$1.none];
+    const typeArray = [NodeType.none];
     const warned = [];
     const byTag = /* @__PURE__ */ Object.create(null);
     const defaultTable = /* @__PURE__ */ Object.create(null);
@@ -160371,7 +157496,7 @@ ${events}
       console.warn(msg);
     }
     function createTokenType(extra, tagStr) {
-      let tags$12 = [];
+      let tags$1 = [];
       for (let name3 of tagStr.split(" ")) {
         let found = [];
         for (let part2 of name3.split(".")) {
@@ -160391,18 +157516,18 @@ ${events}
           }
         }
         for (let tag of found)
-          tags$12.push(tag);
+          tags$1.push(tag);
       }
-      if (!tags$12.length)
+      if (!tags$1.length)
         return 0;
-      let name2 = tagStr.replace(/ /g, "_"), key2 = name2 + " " + tags$12.map((t2) => t2.id);
+      let name2 = tagStr.replace(/ /g, "_"), key2 = name2 + " " + tags$1.map((t2) => t2.id);
       let known = byTag[key2];
       if (known)
         return known.id;
-      let type = byTag[key2] = NodeType$1.define({
+      let type = byTag[key2] = NodeType.define({
         id: typeArray.length,
         name: name2,
-        props: [styleTags({ [name2]: tags$12 })]
+        props: [styleTags({ [name2]: tags$1 })]
       });
       typeArray.push(type);
       return type.id;
@@ -160869,7 +157994,7 @@ ${events}
     }
     function moveBySyntax(state, start2, forward) {
       let pos2 = syntaxTree(state).resolveInner(start2.head);
-      let bracketProp = forward ? NodeProp$1.closedBy : NodeProp$1.openedBy;
+      let bracketProp = forward ? NodeProp.closedBy : NodeProp.openedBy;
       for (let at2 = start2.head; ; ) {
         let next = forward ? pos2.childAfter(at2) : pos2.childBefore(at2);
         if (!next)
@@ -161282,7 +158407,7 @@ ${events}
         return { from: pos2, to: pos2 };
       let context = syntaxTree(state).resolveInner(pos2);
       let before = context.childBefore(pos2), after = context.childAfter(pos2), closedBy;
-      if (before && after && before.to <= pos2 && after.from >= pos2 && (closedBy = before.type.prop(NodeProp$1.closedBy)) && closedBy.indexOf(after.name) > -1 && state.doc.lineAt(before.to).from == state.doc.lineAt(after.from).from && !/\S/.test(state.sliceDoc(before.to, after.from)))
+      if (before && after && before.to <= pos2 && after.from >= pos2 && (closedBy = before.type.prop(NodeProp.closedBy)) && closedBy.indexOf(after.name) > -1 && state.doc.lineAt(before.to).from == state.doc.lineAt(after.from).from && !/\S/.test(state.sliceDoc(before.to, after.from)))
         return { from: before.to, to: after.from };
       return null;
     }
@@ -161519,15 +158644,15 @@ ${events}
     const language = StreamLanguage.define({
       token: nextToken,
       tokenTable: {
-        string: tags$2.string,
-        unterminatedString: tags$2.string,
-        number: tags$2.number,
-        keyword: tags$2.keyword,
-        mathFunction: tags$2.function(tags$2.variableName),
-        sampleFunction: tags$2.function(tags$2.variableName),
-        variable: tags$2.variableName,
-        relation: tags$2.operator,
-        miscOperator: tags$2.operator
+        string: tags.string,
+        unterminatedString: tags.string,
+        number: tags.number,
+        keyword: tags.keyword,
+        mathFunction: tags.function(tags.variableName),
+        sampleFunction: tags.function(tags.variableName),
+        variable: tags.variableName,
+        relation: tags.operator,
+        miscOperator: tags.operator
       }
     });
     const isLiteral = (token2) => ["string", "unterminatedString", "number"].includes(token2?.type);
@@ -161974,9 +159099,9 @@ Supported expressions:
   • Functions: min, max, abs, round, floor, ceil, sqrt, log, log2, log10
 `.trim();
     const highlightStyle = HighlightStyle$1.define([
-      { tag: tags$2.string, class: "token string" },
-      { tag: tags$2.number, class: "token number" },
-      { tag: tags$2.keyword, class: "token keyword" }
+      { tag: tags.string, class: "token string" },
+      { tag: tags.number, class: "token number" },
+      { tag: tags.keyword, class: "token keyword" }
     ]);
     const editorTheme = EditorView.theme({
       "&": {
@@ -162711,7 +159836,14 @@ Supported expressions:
     const kSeparatorHeight = 24;
     const kSampleFollowProp = "sample-list";
     const SampleList = reactExports.memo((props) => {
-      const { items, totalItemCount, running, className: className2, listHandle } = props;
+      const {
+        items,
+        earlyStopping,
+        totalItemCount,
+        running,
+        className: className2,
+        listHandle
+      } = props;
       const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
       const { getRestoreState, isScrolling } = useVirtuosoState(
         listHandle,
@@ -162884,16 +160016,35 @@ Supported expressions:
       }, 0);
       const percentError = errorCount / sampleCount * 100;
       const percentLimit = limitCount / sampleCount * 100;
-      const warningMessage = errorCount > 0 ? `INFO: ${errorCount} of ${sampleCount} samples (${formatNoDecimal(percentError)}%) had errors and were not scored.` : limitCount ? `INFO: ${limitCount} of ${sampleCount} samples (${formatNoDecimal(percentLimit)}%) completed due to exceeding a limit.` : void 0;
+      const warnings = [];
+      if (errorCount > 0) {
+        warnings.push({
+          type: "info",
+          msg: `INFO: ${errorCount} of ${sampleCount} samples (${formatNoDecimal(percentError)}%) had errors and were not scored.`
+        });
+      }
+      if (limitCount > 0) {
+        warnings.push({
+          type: "info",
+          msg: `INFO: ${limitCount} of ${sampleCount} samples (${formatNoDecimal(percentLimit)}%) completed due to exceeding a limit.`
+        });
+      }
+      if (earlyStopping?.early_stops && earlyStopping?.early_stops?.length > 0) {
+        warnings.push({
+          type: "info",
+          msg: `Skipped ${earlyStopping.early_stops.length} samples due to early stopping (${earlyStopping.manager}). `
+        });
+      }
       return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$j.mainLayout, children: [
-        warningMessage ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+        warnings.map((warning2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
           MessageBand,
           {
-            id: "sample-warning-message",
-            message: warningMessage,
-            type: "info"
-          }
-        ) : void 0,
+            id: `sample-warning-message-${index}`,
+            message: warning2.msg,
+            type: warning2.type
+          },
+          `sample-warning-message-${index}`
+        )),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           SampleHeader,
           {
@@ -163304,6 +160455,7 @@ Supported expressions:
             {
               listHandle: sampleListHandle,
               items,
+              earlyStopping: selectedLogDetails?.results?.early_stopping,
               totalItemCount: evalSampleCount,
               running
             }
@@ -163327,7 +160479,7 @@ Supported expressions:
     const styles$h = {
       grid: grid$1
     };
-    const useTaskTabConfig = (evalSpec, evalStats) => {
+    const useTaskTabConfig = (evalSpec, evalStats, earlyStopping) => {
       return reactExports.useMemo(() => {
         return {
           id: kLogViewTaskTabId,
@@ -163336,12 +160488,17 @@ Supported expressions:
           component: TaskTab,
           componentProps: {
             evalSpec,
-            evalStats
+            evalStats,
+            earlyStopping
           }
         };
-      }, [evalSpec, evalStats]);
+      }, [evalSpec, evalStats, earlyStopping]);
     };
-    const TaskTab = ({ evalSpec, evalStats }) => {
+    const TaskTab = ({
+      evalSpec,
+      evalStats,
+      earlyStopping
+    }) => {
       Object.entries(evalSpec?.config || {}).forEach((entry) => {
         entry[0];
         entry[1];
@@ -163413,6 +160570,21 @@ Supported expressions:
               }
             )
           ] }) })
+        ] }),
+        earlyStopping && /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            CardHeader,
+            {
+              label: `Early Stopping (${earlyStopping.manager} — ${formatNumber(earlyStopping.early_stops.length)} skipped)`
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            RecordTree,
+            {
+              id: `early-stopping-metadata`,
+              record: earlyStopping.metadata
+            }
+          ) })
         ] }),
         Object.keys(task_args).length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Task Args" }),
@@ -164439,7 +161611,11 @@ Supported expressions:
         selectedLogDetails?.status
       );
       const errorTabConfig = useErrorTabConfig(selectedLogDetails?.error);
-      const taskTabConfig = useTaskTabConfig(evalSpec, selectedLogDetails?.stats);
+      const taskTabConfig = useTaskTabConfig(
+        evalSpec,
+        selectedLogDetails?.stats,
+        selectedLogDetails?.results?.early_stopping
+      );
       const modelsTabConfig = useModelsTab(
         evalSpec,
         selectedLogDetails?.stats,
@@ -166695,7 +163871,7 @@ Supported expressions:
         }
       }
     };
-    var VERSION = "34.3.1";
+    var VERSION = "34.3.0";
     var MAX_URL_LENGTH = 2e3;
     var MIN_PARAM_LENGTH = 100;
     var VERSION_PARAM_NAME = "_version_";
@@ -195261,8 +192437,7 @@ ${suggestions}`;
       const agColumn = beans.colModel.getCol(position.column.getId());
       const { rowNode, column: column2 } = position;
       const editor = cellCtrl.comp?.getCellEditor();
-      const cellDataValue = editSvc?.getCellDataValue(position, false);
-      const initialNewValue = cellDataValue === void 0 ? editor ? _valueFromEditor(beans, editor)?.editorValue : void 0 : cellDataValue;
+      const initialNewValue = editSvc?.getCellDataValue(position, false) ?? (editor ? _valueFromEditor(beans, editor)?.editorValue : void 0);
       const value2 = initialNewValue === UNEDITED ? valueSvc.getValueForDisplay(agColumn, rowNode)?.value : initialNewValue;
       return _addGridCommonParams(gos, {
         value: enableGroupEditing ? initialNewValue : value2,
@@ -211128,20 +208303,14 @@ If you are trying to annotate ${containerName} with application data, use the '$
         if (this.rowNode !== rowNode) {
           super.cleanupEditors(position);
         }
-        const columns = this.beans.visibleCols.allCols;
-        const cells = [];
-        const editableColumns = [];
-        for (const column2 of columns) {
-          if (column2.isCellEditable(rowNode)) {
-            editableColumns.push(column2);
-          }
-        }
-        if (editableColumns.length == 0) {
-          return;
-        }
         this.dispatchRowEvent({ rowNode }, "rowEditingStarted", silent);
         this.startedRows.push(rowNode);
-        for (const column2 of editableColumns) {
+        const columns = this.beans.visibleCols.allCols;
+        const cells = [];
+        for (const column2 of columns) {
+          if (!column2.isCellEditable(rowNode)) {
+            continue;
+          }
           const position2 = {
             rowNode,
             column: column2
