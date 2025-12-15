@@ -117350,7 +117350,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1u.fullWidth, styles$1u.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1u.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1u.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.153-40-g9d504a596" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.154-0-g92f0b8008" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1u.spacer) }),
@@ -126513,6 +126513,7 @@ Tool Use: ${toolUse.name}(${toolUse.arguments}) -> ${toolUse.result}${errorStr}`
           eventNodeId: eventNode.id,
           depth: eventNode.depth,
           title: title2,
+          subTitle: formatDateTime(new Date(eventNode.event.timestamp)),
           icon: icon2,
           className: className2,
           children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-smaller"), children: eventNode.event.message })
