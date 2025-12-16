@@ -117377,7 +117377,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1u.fullWidth, styles$1u.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1u.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1u.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.154-12-g6790dd806" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.154-12-g147585fdc" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1u.spacer) }),
@@ -223018,7 +223018,13 @@ If you are trying to annotate ${containerName} with application data, use the '$
                   targetFile = basename(targetFile);
                   setLogDir(dir);
                 }
-                setInitialState(targetFile, e.data.sample_id, e.data.sample_epoch);
+                if (!rehydrated) {
+                  setInitialState(
+                    targetFile,
+                    e.data.sample_id,
+                    e.data.sample_epoch
+                  );
+                }
               }
               break;
             }
@@ -223039,7 +223045,15 @@ If you are trying to annotate ${containerName} with application data, use the '$
             }
           }
         },
-        [setInitialState, setLogDir, logDir2, setSelectedLogFile, api2, syncLogs]
+        [
+          setInitialState,
+          setLogDir,
+          logDir2,
+          setSelectedLogFile,
+          api2,
+          syncLogs,
+          rehydrated
+        ]
       );
       reactExports.useEffect(() => {
         window.addEventListener("message", onMessage);
@@ -223050,7 +223064,7 @@ If you are trying to annotate ${containerName} with application data, use the '$
       reactExports.useEffect(() => {
         const loadLogsAndState = async () => {
           const embeddedState = document.getElementById("logview-state");
-          if (embeddedState && !rehydrated) {
+          if (embeddedState) {
             const state = lib$d.parse(embeddedState.textContent || "");
             onMessage({ data: state });
             setSingleFileMode(true);
@@ -223079,7 +223093,6 @@ If you are trying to annotate ${containerName} with application data, use the '$
         setSelectedLogFile,
         syncLogs,
         onMessage,
-        rehydrated,
         setSingleFileMode
       ]);
       return /* @__PURE__ */ jsxRuntimeExports.jsx(RouterProvider2, { router: AppRouter });
