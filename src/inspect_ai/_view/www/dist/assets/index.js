@@ -27016,8 +27016,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       DexieYProvider
     } = Dexie;
     const DB_VERSION = 9;
-    function resolveDBName(logDir2) {
-      const sanitizedDir = logDir2.replace(/[^a-zA-Z0-9_-]/g, "_");
+    function resolveDBName(databaseHandle) {
+      const sanitizedDir = databaseHandle.replace(/[^a-zA-Z0-9_-]/g, "_");
       const dbName = `InspectAI_${sanitizedDir}`;
       return dbName;
     }
@@ -27029,8 +27029,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
        * Check if an existing database needs to be recreated due to version mismatch.
        * Returns true if the database should be deleted and recreated.
        */
-      static async checkVersionMismatch(logDir2) {
-        const dbName = resolveDBName(logDir2);
+      static async checkVersionMismatch(databaseHandle) {
+        const dbName = resolveDBName(databaseHandle);
         try {
           const existingDb = await Dexie.exists(dbName);
           if (!existingDb) {
@@ -27051,8 +27051,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           return false;
         }
       }
-      constructor(logDir2) {
-        super(resolveDBName(logDir2));
+      constructor(databaseHandle) {
+        super(resolveDBName(databaseHandle));
         this.version(DB_VERSION).stores({
           // Basic file listing - indexes for querying and sorting
           logs: "++id, &file_path, mtime, task, task_id, cached_at",
@@ -27088,38 +27088,40 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const log$b = createLogger("DatabaseManager");
     class DatabaseManager {
       database = null;
-      logDir = null;
+      databaseHandle = null;
       /**
        * Opens a database for the specified log directory.
        * If already connected to this directory, returns the existing connection.
        * If connected to a different directory, closes the current connection first.
        */
-      async openDatabase(logDir2) {
-        if (this.logDir === logDir2 && this.database) {
+      async openDatabase(databaseHandle) {
+        if (this.databaseHandle === databaseHandle && this.database) {
           return this.database;
         }
-        log$b.debug(`Opening database for log directory: ${logDir2}`);
-        if (this.database && this.logDir !== logDir2) {
+        log$b.debug(`Opening database for log directory: ${databaseHandle}`);
+        if (this.database && this.databaseHandle !== databaseHandle) {
           await this.close();
         }
-        const needsRecreation = await AppDatabase.checkVersionMismatch(logDir2);
+        const needsRecreation = await AppDatabase.checkVersionMismatch(databaseHandle);
         if (needsRecreation) {
-          log$b.info(`Recreating database due to version mismatch for: ${logDir2}`);
-          const sanitizedDir = logDir2.replace(/[^a-zA-Z0-9_-]/g, "_");
+          log$b.info(
+            `Recreating database due to version mismatch for: ${databaseHandle}`
+          );
+          const sanitizedDir = databaseHandle.replace(/[^a-zA-Z0-9_-]/g, "_");
           const dbName = `InspectAI_${sanitizedDir}`;
           await Dexie.delete(dbName);
           log$b.debug(`Deleted old database: ${dbName}`);
         }
-        this.database = new AppDatabase(logDir2);
-        this.logDir = logDir2;
+        this.database = new AppDatabase(databaseHandle);
+        this.databaseHandle = databaseHandle;
         try {
           await this.database.open();
-          log$b.debug(`Successfully opened database for: ${logDir2}`);
+          log$b.debug(`Successfully opened database for: ${databaseHandle}`);
           return this.database;
         } catch (error2) {
-          log$b.error(`Failed to open database for ${logDir2}:`, error2);
+          log$b.error(`Failed to open database for ${databaseHandle}:`, error2);
           this.database = null;
-          this.logDir = null;
+          this.databaseHandle = null;
           throw error2;
         }
       }
@@ -27134,32 +27136,32 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
        * Get the current log directory.
        * Returns null if no database is open.
        */
-      getLogDir() {
-        return this.logDir;
+      getDatabaseHandle() {
+        return this.databaseHandle;
       }
       /**
        * Close the current database connection.
        */
       async close() {
         if (this.database) {
-          log$b.debug(`Closing database for: ${this.logDir}`);
+          log$b.debug(`Closing database for: ${this.databaseHandle}`);
           this.database.close();
           this.database = null;
-          this.logDir = null;
+          this.databaseHandle = null;
         }
       }
       /**
        * Check if a database is currently open.
        */
       isOpen() {
-        return this.database !== null && this.logDir !== null;
+        return this.database !== null && this.databaseHandle !== null;
       }
       /**
        * Get database info for debugging.
        */
       getInfo() {
         return {
-          logDir: this.logDir,
+          databaseHandle: this.databaseHandle,
           isOpen: this.isOpen()
         };
       }
@@ -27187,8 +27189,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       /**
        * Open a database for the specified log directory.
        */
-      async openDatabase(logDir2) {
-        await this.manager.openDatabase(logDir2);
+      async openDatabase(databaseHandle) {
+        await this.manager.openDatabase(databaseHandle);
       }
       /**
        * Close the current database connection.
@@ -27199,8 +27201,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       /**
        * Get the current log directory.
        */
-      getLogDir() {
-        return this.manager.getLogDir();
+      getDatabaseHandle() {
+        return this.manager.getDatabaseHandle();
       }
       async countRows(entity2) {
         const db = this.getDb();
@@ -27487,7 +27489,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           logHeaders: logInfo,
           // For backward compatibility
           sampleSummaries,
-          logDir: this.manager.getLogDir()
+          logHandle: this.manager.getDatabaseHandle()
         };
       }
     }
@@ -28517,12 +28519,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               return [];
             }
             const databaseService = get2().databaseService;
-            const useProgress = !!databaseService?.getLogDir();
+            const useProgress = !!databaseService?.getDatabaseHandle();
             if (useProgress) {
               get2().appActions.setLoading(true);
             }
             const logDir2 = await get2().logsActions.initLogDir();
-            const initDatabase = !databaseService || databaseService.getLogDir() !== logDir2;
+            const databaseHandle = api2.get_log_dir_handle(logDir2);
+            const initDatabase = !databaseService || databaseService.getDatabaseHandle() !== databaseHandle;
             if (initDatabase) {
               const initializeDatabase = async (logDir22) => {
                 if (!logDir22) {
@@ -28533,7 +28536,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                   if (!databaseService3) {
                     return void 0;
                   }
-                  await databaseService3.openDatabase(logDir22);
+                  await databaseService3.openDatabase(databaseHandle);
                   return databaseService3;
                 } catch (e) {
                   console.log(e);
@@ -29719,7 +29722,19 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         const staticList = logFiles.length > 0 && mtime === 0;
         if (staticList) {
           const serverLogs = await this._api.get_logs(0, 0);
+          let invalidate = false;
           if (serverLogs.files.length !== logFiles.length) {
+            invalidate = true;
+          } else {
+            const localLogNames = new Set(logFiles.map((f) => f.name));
+            for (const serverLog of serverLogs.files) {
+              if (!localLogNames.has(serverLog.name)) {
+                invalidate = true;
+                break;
+              }
+            }
+          }
+          if (invalidate) {
             for (const file of logFiles) {
               this._database?.clearCacheForFile(file.name);
             }
@@ -108707,6 +108722,12 @@ self.onmessage = function (e) {
           return api2.client_events();
         }),
         get_log_dir: middleware("get_log_dir", get_log_dir2),
+        get_log_dir_handle: middleware(
+          "get_log_dir_handle",
+          (log_dir) => {
+            return api2.get_log_dir_handle ? api2.get_log_dir_handle(log_dir) : log_dir || "default_log_dir";
+          }
+        ),
         get_logs: middleware("get_log_files", get_logs2),
         get_log_root: middleware("get_log_root", get_log_root2),
         get_eval_set: middleware("get_eval_set", (dir) => {
@@ -108928,6 +108949,10 @@ self.onmessage = function (e) {
           }
           return void 0;
         },
+        get_log_dir_handle: (log_dir2) => {
+          const currentDirUrl = `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf("/"))}`;
+          return joinURI(currentDirUrl, log_dir2 || "default_log_dir");
+        },
         get_eval_set: async (dir) => {
           const dirSegments = [];
           if (log_dir) {
@@ -108936,7 +108961,7 @@ self.onmessage = function (e) {
           if (dir) {
             dirSegments.push(dir);
           }
-          return await fetchJsonFile(
+          const result2 = await fetchJsonFile(
             joinURI(...dirSegments, "eval-set.json"),
             (response) => {
               if (400 <= response.status && response.status < 500) {
@@ -108946,6 +108971,8 @@ self.onmessage = function (e) {
               }
             }
           );
+          console.log({ f: joinURI(...dirSegments, "eval-set.json"), result: result2 });
+          return result2;
         },
         get_flow: async (dir) => {
           const dirSegments = [];
@@ -117350,7 +117377,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1u.fullWidth, styles$1u.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1u.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1u.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.154-0-g92f0b8008" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.154-12-g6790dd806" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1u.spacer) }),
@@ -222264,12 +222291,11 @@ If you are trying to annotate ${containerName} with application data, use the '$
         });
         return rows;
       }, [filteredLogDetails]);
-      const resizeGridColumns = reactExports.useCallback(
+      const resizeGridColumns = reactExports.useRef(
         debounce$2(() => {
           gridRef.current?.api?.sizeColumnsToFit();
-        }, 10),
-        []
-      );
+        }, 10)
+      ).current;
       const handleRowClick = reactExports.useCallback(
         (e) => {
           if (e.data && e.node && gridRef.current?.api) {
