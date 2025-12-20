@@ -1,29 +1,28 @@
 import { ColDef } from "ag-grid-community";
 import { clsx } from "clsx";
 import { FC, useMemo } from "react";
-import { PopOver } from "../../../components/PopOver";
-import { ApplicationIcons } from "../../appearance/icons";
+import { PopOver } from "../../components/PopOver";
+import { ApplicationIcons } from "../appearance/icons";
 import styles from "./ColumnSelectorPopover.module.css";
-import { getFieldKey } from "./hooks";
-import { SampleRow } from "./types";
+import { getFieldKey } from "../shared/gridUtils";
 
-interface ColumnSelectorPopoverProps {
+interface ColumnSelectorPopoverProps<T> {
   showing: boolean;
   setShowing: (showing: boolean) => void;
-  columns: ColDef<SampleRow>[];
+  columns: ColDef<T>[];
   onVisibilityChange: (visibility: Record<string, boolean>) => void;
   positionEl: HTMLElement | null;
   filteredFields?: string[];
 }
 
-export const ColumnSelectorPopover: FC<ColumnSelectorPopoverProps> = ({
+export const ColumnSelectorPopover = <T,>({
   showing,
   setShowing,
   columns,
   onVisibilityChange,
   positionEl,
   filteredFields = [],
-}) => {
+}: ColumnSelectorPopoverProps<T>): ReturnType<FC> => {
   // Get current visibility directly from columns
   const currentVisibility = useMemo(
     () =>
@@ -82,7 +81,7 @@ export const ColumnSelectorPopover: FC<ColumnSelectorPopoverProps> = ({
     });
   };
 
-  const renderColumnCheckbox = (col: ColDef<SampleRow>) => {
+  const renderColumnCheckbox = (col: ColDef<T>) => {
     const field = getFieldKey(col);
     const hasFilter = filteredFields.includes(field);
     return (

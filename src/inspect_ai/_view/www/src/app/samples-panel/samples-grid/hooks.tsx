@@ -1,17 +1,18 @@
 import {
   ColDef,
+  ICellRendererParams,
   ValueFormatterParams,
+  ValueGetterParams,
   ValueParserParams,
 } from "ag-grid-community";
 import { useEffect, useMemo } from "react";
 import { LogDetails } from "../../../client/api/types";
 import { useStore } from "../../../state/store";
 import { filename } from "../../../utils/path";
+import { comparators } from "../../shared/gridComparators";
+import { getFieldKey } from "../../shared/gridUtils";
+import styles from "../../shared/gridCells.module.css";
 import { SampleRow } from "./types";
-
-export const getFieldKey = (col: ColDef<SampleRow>): string => {
-  return col.field || col.headerName || "?";
-};
 
 export const useSampleColumns = (logDetails: Record<string, LogDetails>) => {
   const optionalColumnsHaveAnyData: Record<string, boolean> = useMemo(() => {
@@ -32,8 +33,26 @@ export const useSampleColumns = (logDetails: Record<string, LogDetails>) => {
     (state) => state.logs.samplesListState.columnVisibility,
   );
   const setColumnVisibility = useStore(
-    (state) => state.logsActions.setColumnVisibility,
+    (state) => state.logsActions.setSamplesColumnVisibility,
   );
+
+  // Detect all unique score names across all samples
+  const scoreMap = useMemo(() => {
+    const scoreTypes: Record<string, string> = {};
+
+    for (const details of Object.values(logDetails)) {
+      for (const sample of details.sampleSummaries) {
+        if (sample.scores) {
+          for (const [name, score] of Object.entries(sample.scores)) {
+            scoreTypes[name] = typeof score.value;
+          }
+        }
+      }
+    }
+
+    return scoreTypes;
+  }, [logDetails]);
+
   useEffect(() => {
     // if optional columns are not set manually, set their visibility based on the data
     const { error, limit, retries } = optionalColumnsHaveAnyData;
@@ -53,36 +72,11 @@ export const useSampleColumns = (logDetails: Record<string, LogDetails>) => {
     setColumnVisibility(newVisibility);
   }, [optionalColumnsHaveAnyData, columnVisibility, setColumnVisibility]);
 
-  // Detect all unique score names across all samples
-  const scoreMap = useMemo(() => {
-    const scoreTypes: Record<string, string> = {};
-
-    for (const details of Object.values(logDetails)) {
-      for (const sample of details.sampleSummaries) {
-        if (sample.scores) {
-          for (const [name, score] of Object.entries(sample.scores)) {
-            scoreTypes[name] = typeof score.value;
-          }
-        }
-      }
-    }
-    return scoreTypes;
-  }, [logDetails]);
-
   // Create column definitions for selector and grid
   const allColumns = useMemo((): ColDef<SampleRow>[] => {
     const baseColumns: ColDef<SampleRow>[] = [
       {
         headerName: "#",
-        valueGetter: (params) => {
-          if (
-            params.node?.rowIndex !== null &&
-            params.node?.rowIndex !== undefined
-          ) {
-            return params.node.rowIndex + 1;
-          }
-          return "";
-        },
         initialWidth: 80,
         minWidth: 50,
         maxWidth: 80,
@@ -90,6 +84,16 @@ export const useSampleColumns = (logDetails: Record<string, LogDetails>) => {
         filter: false,
         resizable: false,
         pinned: "left",
+        cellRenderer: (params: ICellRendererParams<SampleRow>) => {
+          if (params.data?.displayIndex !== undefined) {
+            return (
+              <div className={styles.numberCell}>
+                {params.data.displayIndex}
+              </div>
+            );
+          }
+          return "";
+        },
       },
       {
         field: "task",
@@ -117,7 +121,8 @@ export const useSampleColumns = (logDetails: Record<string, LogDetails>) => {
         sortable: true,
         filter: true,
         resizable: true,
-        valueGetter: (params) => String(params.data?.sampleId ?? ""),
+        valueGetter: (params: ValueGetterParams<SampleRow>) =>
+          String(params.data?.sampleId ?? ""),
       },
       {
         field: "epoch",
@@ -128,6 +133,7 @@ export const useSampleColumns = (logDetails: Record<string, LogDetails>) => {
         filter: true,
         resizable: true,
         cellStyle: { textAlign: "center" },
+        comparator: comparators.number,
       },
       {
         field: "input",
@@ -185,15 +191,12 @@ export const useSampleColumns = (logDetails: Record<string, LogDetails>) => {
             scoreType === "number"
               ? "agNumberColumnFilter"
               : "agTextColumnFilter",
-
           resizable: true,
-          valueFormatter: (params) => {
-            // Format the score based upon its type
+          valueFormatter: (params: ValueFormatterParams<SampleRow>) => {
             const value = params.value;
             if (value === "" || value === null || value === undefined) {
               return "";
             }
-
             if (Array.isArray(value)) {
               return value.join(", ");
             } else if (typeof value === "object") {
@@ -202,6 +205,12 @@ export const useSampleColumns = (logDetails: Record<string, LogDetails>) => {
               return value.toFixed(3);
             }
             return String(value);
+          },
+          comparator: (valA, valB) => {
+            if (typeof valA === "number" && typeof valB === "number") {
+              return valA - valB;
+            }
+            return String(valA || "").localeCompare(String(valB || ""));
           },
         };
       },
@@ -250,6 +259,7 @@ export const useSampleColumns = (logDetails: Record<string, LogDetails>) => {
         sortable: true,
         filter: true,
         resizable: true,
+        comparator: comparators.number,
       },
     ];
 
@@ -257,7 +267,7 @@ export const useSampleColumns = (logDetails: Record<string, LogDetails>) => {
   }, [scoreMap]);
 
   const columns = useMemo((): ColDef<SampleRow>[] => {
-    const columnsWithVisibility = allColumns.map((col) => {
+    const columnsWithVisibility = allColumns.map((col: ColDef<SampleRow>) => {
       const field = getFieldKey(col);
       // Default to visible if not explicitly unselected and not optional
       const isVisible =
