@@ -111628,7 +111628,7 @@ ${citation.url}` : citation.url,
       };
       const scoreAnswer = (sample2, scorer2) => {
         if (sample2 && sample2.scores) {
-          const sampleScore = sample2.scores[scorer2.name];
+          const sampleScore = sample2.scores[scorer2.scorer];
           if (sampleScore && sampleScore.answer) {
             return sampleScore.answer;
           }
@@ -117340,7 +117340,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.fullWidth, styles$1j.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1j.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.156-5-gf44a52cd2" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.158-2-g432bec413" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
@@ -206882,7 +206882,7 @@ ${events}
           addToOptions: [],
           positionInfo: defaultPositionInfo,
           filterStrict: false,
-          compareCompletions: (a, b) => (a.sortText || a.label).localeCompare(b.sortText || b.label),
+          compareCompletions: (a, b) => a.label.localeCompare(b.label),
           interactionDelay: 75,
           updateSyncTime: 100
         }, {
