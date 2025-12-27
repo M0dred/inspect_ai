@@ -974,7 +974,7 @@ var require_assets = __commonJS({
       reactDom_production.useFormStatus = function() {
         return ReactSharedInternals.H.useHostTransitionStatus();
       };
-      reactDom_production.version = "19.2.0";
+      reactDom_production.version = "19.2.3";
       return reactDom_production;
     }
     var hasRequiredReactDom;
@@ -12418,12 +12418,12 @@ var require_assets = __commonJS({
         }
       };
       var isomorphicReactPackageVersion$jscomp$inline_1840 = React.version;
-      if ("19.2.0" !== isomorphicReactPackageVersion$jscomp$inline_1840)
+      if ("19.2.3" !== isomorphicReactPackageVersion$jscomp$inline_1840)
         throw Error(
           formatProdErrorMessage(
             527,
             isomorphicReactPackageVersion$jscomp$inline_1840,
-            "19.2.0"
+            "19.2.3"
           )
         );
       ReactDOMSharedInternals.findDOMNode = function(componentOrElement) {
@@ -12441,10 +12441,10 @@ var require_assets = __commonJS({
       };
       var internals$jscomp$inline_2347 = {
         bundleType: 0,
-        version: "19.2.0",
+        version: "19.2.3",
         rendererPackageName: "react-dom",
         currentDispatcherRef: ReactSharedInternals,
-        reconcilerVersion: "19.2.0"
+        reconcilerVersion: "19.2.3"
       };
       if ("undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__) {
         var hook$jscomp$inline_2348 = __REACT_DEVTOOLS_GLOBAL_HOOK__;
@@ -12511,7 +12511,7 @@ var require_assets = __commonJS({
         listenToAllSupportedEvents(container2);
         return new ReactDOMHydrationRoot(initialChildren);
       };
-      reactDomClient_production.version = "19.2.0";
+      reactDomClient_production.version = "19.2.3";
       return reactDomClient_production;
     }
     var hasRequiredClient$1;
@@ -117707,7 +117707,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.fullWidth, styles$1j.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1j.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.158-18-gd2082ee7d" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.158-2-g6904e8cab" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
