@@ -117713,7 +117713,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.fullWidth, styles$1j.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1j.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.158-21-g246f3dccd" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.158-35-g1c0b473a8" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
@@ -217928,17 +217928,25 @@ Supported expressions:
         }
       );
     };
-    const modal = "_modal_1tvha_1";
-    const header = "_header_1tvha_14";
-    const modalTitle = "_modalTitle_1tvha_18";
-    const btnClose = "_btnClose_1tvha_22";
-    const backdrop = "_backdrop_1tvha_28";
+    const modal = "_modal_o64lp_1";
+    const header = "_header_o64lp_14";
+    const modalTitle = "_modalTitle_o64lp_18";
+    const btnClose = "_btnClose_o64lp_22";
+    const backdrop = "_backdrop_o64lp_28";
+    const overflowVisible = "_overflowVisible_o64lp_40";
+    const overflowHidden = "_overflowHidden_o64lp_44";
+    const overflowScroll = "_overflowScroll_o64lp_48";
+    const overflowAuto = "_overflowAuto_o64lp_52";
     const styles$a = {
       modal,
       header,
       modalTitle,
       btnClose,
-      backdrop
+      backdrop,
+      overflowVisible,
+      overflowHidden,
+      overflowScroll,
+      overflowAuto
     };
     const Modal = ({
       id,
@@ -217946,7 +217954,8 @@ Supported expressions:
       showing,
       setShowing,
       children: children2,
-      className: className2
+      className: className2,
+      overflow = "visible"
     }) => {
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
         showing && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$a.backdrop, onClick: () => setShowing(false) }),
@@ -217987,7 +217996,16 @@ Supported expressions:
                   }
                 )
               ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "modal-body", children: children2 }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  className: clsx(
+                    "modal-body",
+                    overflow === "auto" ? styles$a.overflowAuto : overflow === "hidden" ? styles$a.overflowHidden : overflow === "scroll" ? styles$a.overflowScroll : styles$a.overflowVisible
+                  ),
+                  children: children2
+                }
+              ),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "modal-footer", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "button",
                 {
@@ -218275,6 +218293,7 @@ Supported expressions:
                 showing,
                 setShowing,
                 title: "Scoring Detail",
+                overflow: "scroll",
                 children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                   ScoreGrid,
                   {
