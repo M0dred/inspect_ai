@@ -1,6 +1,12 @@
-.ansi-display {
+.ansiDisplayContainer {
+  position: relative;
+  width: 100%;
+}
+
+.ansiDisplay {
   font-family: monospace;
   white-space: pre-wrap;
+  line-height: normal;
   --ansiBlack: #000000;
   --ansiRed: #cd3131;
   --ansiGreen: #00bc00;
@@ -19,7 +25,25 @@
   --ansiBrightWhite: #a5a5a5;
 }
 
-.dark-mode .ansi-display {
+.ansiDisplayRaw {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.ansiDisplayToggle {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  z-index: 10;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.ansiDisplayContainer:hover .ansiDisplayToggle {
+  opacity: 1;
+}
+
+:global(.dark-mode) .ansiDisplay {
   --ansiBlack: #000000;
   --ansiRed: #cd3131;
   --ansiGreen: #0dbc79;
@@ -38,8 +62,14 @@
   --ansiBrightWhite: #e5e5e5;
 }
 
-@keyframes ansi-displaly-run-blink {
+@keyframes ansi-display-run-blink {
   50% {
     opacity: 0;
   }
+}
+
+.ansiDisplayToggle {
+  padding: 0.1rem;
+  padding-left: 0.5rem;
+  background-color: var(--bs-body-bg);
 }
