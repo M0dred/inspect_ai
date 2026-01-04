@@ -29561,31 +29561,24 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               state.sample.selectedOutlineId = void 0;
             });
           },
-          pollSample: async (logFile, sampleSummary) => {
+          pollSample: async (logFile, id, epoch) => {
             const state = get2();
             const sampleExists = state.sample.sampleInState ? !!state.sample.selectedSampleObject : !!selectedSampleRef.current;
             if (state.log.loadedLog && sampleExists) {
+              const sampleSummary = { id, epoch };
               samplePolling.startPolling(logFile, sampleSummary);
             }
           },
-          loadSample: async (logFile, sampleSummary) => {
+          loadSample: async (logFile, id, epoch, completed) => {
             const sampleActions = get2().sampleActions;
             sampleActions.setSampleError(void 0);
             sampleActions.setSampleStatus("loading");
             const state = get2();
             try {
-              if (sampleSummary.completed !== false) {
-                log$5.debug(
-                  `LOADING COMPLETED SAMPLE: ${sampleSummary.id}-${sampleSummary.epoch}`
-                );
-                const sample2 = await get2().api?.get_log_sample(
-                  logFile,
-                  sampleSummary.id,
-                  sampleSummary.epoch
-                );
-                log$5.debug(
-                  `LOADED COMPLETED SAMPLE: ${sampleSummary.id}-${sampleSummary.epoch}`
-                );
+              if (completed !== false) {
+                log$5.debug(`LOADING COMPLETED SAMPLE: ${id}-${epoch}`);
+                const sample2 = await get2().api?.get_log_sample(logFile, id, epoch);
+                log$5.debug(`LOADED COMPLETED SAMPLE: ${id}-${epoch}`);
                 if (sample2) {
                   if (state.sample.sample_identifier?.id !== sample2.id && state.sample.sample_identifier?.epoch !== sample2.epoch) {
                     sampleActions.clearCollapsedEvents();
@@ -29600,9 +29593,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                   );
                 }
               } else {
-                log$5.debug(
-                  `POLLING RUNNING SAMPLE: ${sampleSummary.id}-${sampleSummary.epoch}`
-                );
+                log$5.debug(`POLLING RUNNING SAMPLE: ${id}-${epoch}`);
+                const sampleSummary = { id, epoch };
                 samplePolling.startPolling(logFile, sampleSummary);
               }
             } catch (e) {
@@ -107842,6 +107834,92 @@ self.onmessage = function (e) {
         return attr.includes("data-vscode-");
       });
     };
+    const MAX_EVENTS_SIZE_BYTES = 350 * 1024 * 1024;
+    function findEventsArrayStart(data) {
+      const pattern = new TextEncoder().encode('"events"');
+      for (let i2 = 0; i2 < data.length - pattern.length - 10; i2++) {
+        let matches = true;
+        for (let j = 0; j < pattern.length; j++) {
+          if (data[i2 + j] !== pattern[j]) {
+            matches = false;
+            break;
+          }
+        }
+        if (matches) {
+          let pos2 = i2 + pattern.length;
+          while (pos2 < data.length && (data[pos2] === 32 || data[pos2] === 9 || data[pos2] === 10 || data[pos2] === 13)) {
+            pos2++;
+          }
+          if (pos2 < data.length && data[pos2] === 58) {
+            pos2++;
+            while (pos2 < data.length && (data[pos2] === 32 || data[pos2] === 9 || data[pos2] === 10 || data[pos2] === 13)) {
+              pos2++;
+            }
+            if (pos2 < data.length && data[pos2] === 91) {
+              return pos2;
+            }
+          }
+        }
+      }
+      return -1;
+    }
+    function findArrayEnd(data, arrayStart) {
+      let depth = 0;
+      let inString = false;
+      let escaped = false;
+      for (let i2 = arrayStart; i2 < data.length; i2++) {
+        const byte = data[i2];
+        if (escaped) {
+          escaped = false;
+          continue;
+        }
+        if (byte === 92) {
+          escaped = true;
+          continue;
+        }
+        if (byte === 34) {
+          inString = !inString;
+          continue;
+        }
+        if (inString) {
+          continue;
+        }
+        if (byte === 91 || byte === 123) {
+          depth++;
+        } else if (byte === 93 || byte === 125) {
+          depth--;
+          if (depth === 0 && byte === 93) {
+            return i2;
+          }
+        }
+      }
+      return -1;
+    }
+    function clearLargeEventsArray(data) {
+      if (data.length <= MAX_EVENTS_SIZE_BYTES) {
+        return data;
+      }
+      const arrayStart = findEventsArrayStart(data);
+      if (arrayStart === -1) {
+        return data;
+      }
+      const arrayEnd = findArrayEnd(data, arrayStart);
+      if (arrayEnd === -1) {
+        return data;
+      }
+      const eventsSize = arrayEnd - arrayStart - 1;
+      if (eventsSize <= MAX_EVENTS_SIZE_BYTES) {
+        return data;
+      }
+      const before = data.slice(0, arrayStart + 1);
+      const after = data.slice(arrayEnd);
+      const result2 = new Uint8Array(before.length + after.length);
+      let offset2 = 0;
+      result2.set(before, offset2);
+      offset2 += before.length;
+      result2.set(after, offset2);
+      return result2;
+    }
     class AsyncQueue {
       constructor(concurrentLimit = 6) {
         this.concurrentLimit = concurrentLimit;
@@ -108672,7 +108750,6 @@ self.onmessage = function (e) {
       }
       return entries;
     };
-    const MAX_BYTES = 100 * 1024 * 1024;
     const OPEN_RETRY_LIMIT = 5;
     class SampleNotFoundError extends Error {
       constructor(message2) {
@@ -108707,11 +108784,19 @@ self.onmessage = function (e) {
           `Failed to open remote log file at ${url} after ${OPEN_RETRY_LIMIT} attempts.`
         );
       }
-      const readJSONFile = async (file, maxBytes) => {
+      const readJSONFile = async (file, maxBytes, preprocessor2) => {
         try {
-          const data = await remoteZipFile.readFile(file, maxBytes);
+          let data = await remoteZipFile.readFile(file, maxBytes);
+          if (preprocessor2) {
+            data = preprocessor2.preprocess(data);
+          }
           const textDecoder = new TextDecoder("utf-8");
           const jsonString = textDecoder.decode(data);
+          if (data.length > 0 && jsonString.length === 0) {
+            throw new Error(
+              `Failed to decode ${file} (${(data.length / 1024 / 1024).toFixed(0)}MB). The file may be corrupted or contain invalid UTF-8 sequences.`
+            );
+          }
           return asyncJsonParse(jsonString);
         } catch (error2) {
           if (error2 instanceof FileSizeLimitError) {
@@ -108740,13 +108825,19 @@ self.onmessage = function (e) {
       };
       const readSample = async (sampleId, epoch) => {
         const sampleFile = `samples/${sampleId}_epoch_${epoch}.json`;
-        if (remoteZipFile.centralDirectory.has(sampleFile)) {
-          return await readJSONFile(sampleFile, MAX_BYTES);
-        } else {
+        if (!remoteZipFile.centralDirectory.has(sampleFile)) {
           throw new SampleNotFoundError(
             `Unable to read sample file ${sampleFile} - it is not present in the manifest.`
           );
         }
+        const eventsPreprocessor = {
+          preprocess: clearLargeEventsArray
+        };
+        return await readJSONFile(
+          sampleFile,
+          void 0,
+          eventsPreprocessor
+        );
       };
       const readHeader = async () => {
         if (remoteZipFile.centralDirectory.has("header.json")) {
@@ -117713,7 +117804,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.fullWidth, styles$1j.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1j.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.158-35-g1c0b473a8" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.158-37-ga2ccd9e29" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
@@ -190899,6 +190990,69 @@ ${events}
       }
       return false;
     };
+    function useSampleLoader() {
+      const sampleData = useSampleData();
+      const loadSample = useStore((state) => state.sampleActions.loadSample);
+      const logSelection = useLogSelection();
+      const sampleId = logSelection.sample?.id;
+      const sampleEpoch = logSelection.sample?.epoch;
+      const sampleCompleted = logSelection.sample?.completed;
+      const currentSampleCompleted = sampleCompleted !== void 0 ? sampleCompleted : true;
+      const prevCompleted = usePrevious(currentSampleCompleted);
+      const prevLogFile = usePrevious(logSelection.logFile);
+      const prevSampleNeedsReload = usePrevious(
+        sampleData.sampleNeedsReload
+      );
+      reactExports.useEffect(() => {
+        if (logSelection.logFile && sampleId !== void 0 && sampleEpoch !== void 0) {
+          const isCurrentSampleLoaded = sampleData.selectedSampleIdentifier?.id === sampleId && sampleData.selectedSampleIdentifier?.epoch === sampleEpoch;
+          const isLoading = sampleData.status === "loading" || sampleData.status === "streaming";
+          const logFileChanged = prevLogFile !== void 0 && prevLogFile !== logSelection.logFile;
+          const completedChanged = prevCompleted !== void 0 && currentSampleCompleted !== prevCompleted;
+          const needsReloadChanged = prevSampleNeedsReload !== void 0 && prevSampleNeedsReload !== sampleData.sampleNeedsReload;
+          const shouldLoad = !isCurrentSampleLoaded && !isLoading || logFileChanged || completedChanged || needsReloadChanged;
+          if (shouldLoad) {
+            loadSample(
+              logSelection.logFile,
+              sampleId,
+              sampleEpoch,
+              sampleCompleted
+            );
+          }
+        }
+      }, [
+        logSelection.logFile,
+        sampleId,
+        sampleEpoch,
+        sampleCompleted,
+        currentSampleCompleted,
+        sampleData.selectedSampleIdentifier,
+        sampleData.status,
+        sampleData.sampleNeedsReload,
+        prevLogFile,
+        prevCompleted,
+        prevSampleNeedsReload,
+        loadSample
+      ]);
+    }
+    function useSamplePolling() {
+      const sampleData = useSampleData();
+      const pollSample = useStore((state) => state.sampleActions.pollSample);
+      const logSelection = useLogSelection();
+      const sampleId = logSelection.sample?.id;
+      const sampleEpoch = logSelection.sample?.epoch;
+      reactExports.useEffect(() => {
+        if (sampleData.running && logSelection.logFile && sampleId !== void 0 && sampleEpoch !== void 0) {
+          pollSample(logSelection.logFile, sampleId, sampleEpoch);
+        }
+      }, [
+        logSelection.logFile,
+        sampleId,
+        sampleEpoch,
+        pollSample,
+        sampleData.running
+      ]);
+    }
     const container$8 = "_container_ly812_1";
     const scroller = "_scroller_ly812_7";
     const styles$s = {
@@ -190910,47 +191064,8 @@ ${events}
       className: className2
     }) => {
       const sampleData = useSampleData();
-      const loadSample = useStore((state) => state.sampleActions.loadSample);
-      const pollSample = useStore((state) => state.sampleActions.pollSample);
-      const logSelection = useLogSelection();
-      reactExports.useEffect(() => {
-        if (sampleData.running && logSelection.logFile && logSelection.sample) {
-          pollSample(logSelection.logFile, logSelection.sample);
-        }
-      }, [
-        logSelection.logFile,
-        logSelection.sample,
-        pollSample,
-        sampleData.running
-      ]);
-      const prevCompleted = usePrevious(
-        logSelection.sample?.completed !== void 0 ? logSelection.sample.completed : true
-      );
-      const prevLogFile = usePrevious(logSelection.loadedLog);
-      const prevSampleNeedsReload = usePrevious(
-        sampleData.sampleNeedsReload
-      );
-      reactExports.useEffect(() => {
-        if (logSelection.logFile && logSelection.sample) {
-          const currentSampleCompleted = logSelection.sample.completed !== void 0 ? logSelection.sample.completed : true;
-          if (prevLogFile !== void 0 && prevLogFile !== logSelection.logFile || sampleData.selectedSampleIdentifier?.id !== logSelection.sample.id || sampleData.selectedSampleIdentifier?.epoch !== logSelection.sample.epoch || prevCompleted !== void 0 && currentSampleCompleted !== prevCompleted || prevSampleNeedsReload !== sampleData.sampleNeedsReload) {
-            loadSample(logSelection.logFile, logSelection.sample);
-          }
-        }
-      }, [
-        logSelection.logFile,
-        logSelection.sample?.id,
-        logSelection.sample?.epoch,
-        logSelection.sample?.completed,
-        sampleData.selectedSampleIdentifier?.id,
-        sampleData.selectedSampleIdentifier?.epoch,
-        sampleData.sampleNeedsReload,
-        logSelection.sample,
-        prevLogFile,
-        prevCompleted,
-        prevSampleNeedsReload,
-        loadSample
-      ]);
+      useSampleLoader();
+      useSamplePolling();
       const scrollRef = reactExports.useRef(null);
       return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2, styles$s.container), children: [
         showActivity && /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -191109,47 +191224,8 @@ ${events}
       const scrollRef = reactExports.useRef(null);
       useStatefulScrollPosition(scrollRef, "sample-dialog");
       const sampleData = useSampleData();
-      const loadSample = useStore((state) => state.sampleActions.loadSample);
-      const pollSample = useStore((state) => state.sampleActions.pollSample);
-      const logSelection = useLogSelection();
-      reactExports.useEffect(() => {
-        if (sampleData.running && logSelection.logFile && logSelection.sample) {
-          pollSample(logSelection.logFile, logSelection.sample);
-        }
-      }, [
-        logSelection.logFile,
-        logSelection.sample,
-        pollSample,
-        sampleData.running
-      ]);
-      const prevCompleted = usePrevious(
-        logSelection.sample?.completed !== void 0 ? logSelection.sample.completed : true
-      );
-      const prevLogFile = usePrevious(logSelection.logFile);
-      const prevSampleNeedsReload = usePrevious(
-        sampleData.sampleNeedsReload
-      );
-      reactExports.useEffect(() => {
-        if (logSelection.logFile && logSelection.sample) {
-          const currentSampleCompleted = logSelection.sample.completed !== void 0 ? logSelection.sample.completed : true;
-          if (prevLogFile !== void 0 && prevLogFile !== logSelection.logFile || sampleData.selectedSampleIdentifier?.id !== logSelection.sample.id || sampleData.selectedSampleIdentifier?.epoch !== logSelection.sample.epoch || prevCompleted !== void 0 && currentSampleCompleted !== prevCompleted || prevSampleNeedsReload !== sampleData.sampleNeedsReload) {
-            loadSample(logSelection.logFile, logSelection.sample);
-          }
-        }
-      }, [
-        logSelection.logFile,
-        logSelection.sample?.id,
-        logSelection.sample?.epoch,
-        logSelection.sample?.completed,
-        sampleData.selectedSampleIdentifier?.id,
-        sampleData.selectedSampleIdentifier?.epoch,
-        sampleData.sampleNeedsReload,
-        logSelection.sample,
-        prevLogFile,
-        prevCompleted,
-        prevSampleNeedsReload,
-        loadSample
-      ]);
+      useSampleLoader();
+      useSamplePolling();
       const sampleNavigation = useSampleNavigation();
       const tools2 = reactExports.useMemo(() => {
         const nextTool = {
@@ -219789,6 +219865,9 @@ Supported expressions:
       const clearSampleTab = useStore((state) => state.appActions.clearSampleTab);
       const showFind = useStore((state) => state.app.showFind);
       const setSampleTab = useStore((state) => state.appActions.setSampleTab);
+      const summaryId = selectedSampleSummary?.id;
+      const summaryEpoch = selectedSampleSummary?.epoch;
+      const summaryCompleted = selectedSampleSummary?.completed;
       const currentIndex = reactExports.useMemo(() => {
         if (!displayedSamples || !selectedLogFile || !sampleId || !epoch) {
           return -1;
@@ -219898,12 +219977,17 @@ Supported expressions:
       ]);
       reactExports.useEffect(() => {
         const exec2 = async () => {
-          if (selectedLogFile && selectedSampleSummary) {
-            await loadSample(selectedLogFile, selectedSampleSummary);
+          if (selectedLogFile && summaryId !== void 0 && summaryEpoch !== void 0) {
+            await loadSample(
+              selectedLogFile,
+              summaryId,
+              summaryEpoch,
+              summaryCompleted
+            );
           }
         };
         void exec2();
-      }, [loadSample, selectedLogFile, selectedSampleSummary]);
+      }, [loadSample, selectedLogFile, summaryId, summaryEpoch, summaryCompleted]);
       reactExports.useEffect(() => {
         return () => {
           clearSelectedLogDetails();
