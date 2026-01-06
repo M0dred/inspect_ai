@@ -110642,7 +110642,14 @@ ${citation.url}` : citation.url,
         return /* @__PURE__ */ jsxRuntimeExports.jsx(JsonMessageContent, { id: `1-json`, json: obj });
       }
       if (isAnsiOutput(text2)) {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(ANSIDisplay, { className: styles$1w.ansiOutput, output: text2 });
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          ANSIDisplay,
+          {
+            className: styles$1w.ansiOutput,
+            output: text2,
+            style: { fontSize: "clamp(0.4rem, 1.15vw, 0.9rem)" }
+          }
+        );
       }
       return /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1w.textOutput, "tool-output"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("sourceCode", styles$1w.textCode), children: text2.trim() }) });
     };
@@ -117915,7 +117922,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.fullWidth, styles$1i.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1i.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.159-11-g80a4ecf55" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.159-21-g0b8c7eb65" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
