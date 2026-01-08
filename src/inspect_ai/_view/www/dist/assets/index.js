@@ -28658,7 +28658,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       },
       samplesListState: {
         columnVisibility: {}
-      }
+      },
+      showRetriedLogs: false
     };
     const createLogsSlice = (set2, get2, _store) => {
       const slice = {
@@ -28979,6 +28980,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               log$7.debug("Sample query failed, returning empty results");
               return [];
             }
+          },
+          setShowRetriedLogs: (showRetriedLogs) => {
+            set2((state) => {
+              state.logs.showRetriedLogs = showRetriedLogs;
+            });
           }
         }
       };
@@ -30363,6 +30369,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         use_tools: "bi bi-tools"
       },
       success: "bi bi-check-circle-fill",
+      toggle: {
+        // combination of toggle-on and toggle2-off looked best for our default button font size
+        on: "bi bi-toggle-on",
+        off: "bi bi-toggle2-off"
+      },
       tree: {
         open: "bi bi-caret-down-fill",
         closed: "bi bi-caret-right-fill"
@@ -115746,11 +115757,7 @@ categories: ${categories.join(" ")}`;
       const setLoading = useStore((state) => state.appActions.setLoading);
       const loadLogs = reactExports.useCallback(
         async (logPath) => {
-          const exec2 = async () => {
-            await syncLogs();
-            await syncEvalSetInfo(logPath);
-          };
-          exec2().catch((e) => {
+          await Promise.all([syncEvalSetInfo(logPath), syncLogs()]).catch((e) => {
             log$1.error("Error loading logs", e);
             setLoading(false, e);
           });
@@ -115823,6 +115830,54 @@ categories: ${categories.join(" ")}`;
         document.title = title2.join(" - ");
       };
       return { setDocumentTitle };
+    };
+    const simplifiedStatusForDeduplication = (status2) => status2 === "started" || status2 === "success" ? status2 : "_other_";
+    const useLogsWithretried = () => {
+      const logs = useStore((state) => state.logs.logs);
+      const logPreviews = useStore((state) => state.logs.logPreviews);
+      const logsWithEvalSetRetry = reactExports.useMemo(() => {
+        const logsByTaskId = logs.reduce(
+          (acc, log2) => {
+            const taskId = log2.task_id;
+            if (taskId) {
+              if (!(taskId in acc)) acc[taskId] = [];
+              acc[taskId].push(log2);
+            }
+            return acc;
+          },
+          {}
+        );
+        const bestByName = {};
+        for (const items of Object.values(logsByTaskId)) {
+          items.sort((a, b) => {
+            const as = simplifiedStatusForDeduplication(
+              logPreviews[a.name]?.status
+            );
+            const bs = simplifiedStatusForDeduplication(
+              logPreviews[b.name]?.status
+            );
+            const am = a.mtime ?? 0;
+            const bm = b.mtime ?? 0;
+            if (as === bs) return bm - am;
+            if (as === "started") return -1;
+            if (bs === "started") return 1;
+            if (as === "success") return -1;
+            if (bs === "success") return 1;
+            console.warn(`Unexpected status combination: ${as}, ${bs}`, a, b);
+            return 0;
+          });
+          const { name: name2 } = items[0];
+          bestByName[name2] = { ...items[0], retried: false };
+        }
+        return logs.map(
+          (log2) => bestByName[log2.name] ?? {
+            ...log2,
+            // task_id is optional for backward compatibility, only new logs files can be skippable
+            retried: log2.task_id ? true : void 0
+          }
+        );
+      }, [logs, logPreviews]);
+      return logsWithEvalSetRetry;
     };
     const log = createLogger("Client-Events");
     function useClientEvents() {
@@ -117922,7 +117977,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.fullWidth, styles$1i.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1i.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.159-21-g0b8c7eb65" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.159-42-g335a16841" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
@@ -175801,7 +175856,7 @@ If you are trying to annotate ${containerName} with application data, use the '$
             if (url) {
               setTimeout(() => {
                 if (openInNewWindow) {
-                  window.open(url, "_blank");
+                  window.open(`#${url}`, "_blank");
                 } else {
                   navigate(url);
                 }
@@ -175818,7 +175873,7 @@ If you are trying to annotate ${containerName} with application data, use the '$
           }
           const openInNewWindow = e.metaKey || e.ctrlKey || e.shiftKey;
           if (openInNewWindow) {
-            window.open(rowNode.data.url, "_blank");
+            window.open(`#${rowNode.data.url}`, "_blank");
           } else {
             navigate(rowNode.data.url);
           }
@@ -175979,8 +176034,12 @@ If you are trying to annotate ${containerName} with application data, use the '$
       const gridRef = reactExports.useRef(null);
       const [showColumnSelector, setShowColumnSelector] = reactExports.useState(false);
       const columnButtonRef = reactExports.useRef(null);
+      const showRetriedLogs = useStore((state) => state.logs.showRetriedLogs);
+      const setShowRetriedLogs = useStore(
+        (state) => state.logsActions.setShowRetriedLogs
+      );
       const logDir2 = useStore((state) => state.logs.logDir);
-      const logFiles = useStore((state) => state.logs.logs);
+      const logFiles = useLogsWithretried();
       const evalSet = useStore((state) => state.logs.evalSet);
       const logPreviews = useStore((state) => state.logs.logPreviews);
       const { filteredCount } = useLogsListing();
@@ -176010,11 +176069,12 @@ If you are trying to annotate ${containerName} with application data, use the '$
           previousWatchedLogs.current = watchedLogs;
         }
       }, [watchedLogs, startPolling, stopPolling]);
-      const logItems = reactExports.useMemo(() => {
+      const [logItems, hasRetriedLogs] = reactExports.useMemo(() => {
         const folderItems = [];
         const fileItems = [];
         const processedFolders = /* @__PURE__ */ new Set();
         const existingLogTaskIds = /* @__PURE__ */ new Set();
+        let _hasRetriedLogs = false;
         for (const logFile of logFiles) {
           if (logFile.task_id) {
             existingLogTaskIds.add(logFile.task_id);
@@ -176030,14 +176090,19 @@ If you are trying to annotate ${containerName} with application data, use the '$
               decodeURIComponent(relativePath),
               decodeURIComponent(dirName)
             );
-            fileItems.push({
-              id: fileOrFolderName,
-              name: fileOrFolderName,
-              type: "file",
-              url: logsUrl(path, logDir2),
-              log: logFile,
-              logPreview: logPreviews[logFile.name]
-            });
+            if (logFile.retried) {
+              _hasRetriedLogs = true;
+            }
+            if (showRetriedLogs || !logFile.retried) {
+              fileItems.push({
+                id: fileOrFolderName,
+                name: fileOrFolderName,
+                type: "file",
+                url: logsUrl(path, logDir2),
+                log: logFile,
+                logPreview: logPreviews[logFile.name]
+              });
+            }
           } else if (name2.startsWith(dirWithSlash)) {
             const relativePath = directoryRelativeUrl(name2, currentDir);
             const dirName = decodeURIComponent(rootName(relativePath));
@@ -176058,9 +176123,13 @@ If you are trying to annotate ${containerName} with application data, use the '$
           }
         }
         const orderedItems = [...folderItems, ...fileItems];
-        const collapsedLogItems = collapseLogItems(evalSet, orderedItems);
-        return appendPendingItems(evalSet, existingLogTaskIds, collapsedLogItems);
-      }, [evalSet, logFiles, currentDir, logDir2, logPreviews]);
+        const _logFiles = appendPendingItems(
+          evalSet,
+          existingLogTaskIds,
+          orderedItems
+        );
+        return [_logFiles, _hasRetriedLogs];
+      }, [evalSet, logFiles, currentDir, logDir2, logPreviews, showRetriedLogs]);
       const { columns, setColumnVisibility } = useLogListColumns();
       const handleColumnVisibilityChange = reactExports.useCallback(
         (newVisibility) => {
@@ -176100,10 +176169,7 @@ If you are trying to annotate ${containerName} with application data, use the '$
         };
       }, [logItems]);
       reactExports.useEffect(() => {
-        const exec2 = async () => {
-          await loadLogs(logPath);
-        };
-        exec2();
+        loadLogs(logPath);
       }, [loadLogs, logPath]);
       const handleResetFilters = () => {
         if (gridRef.current?.api) {
@@ -176137,6 +176203,16 @@ If you are trying to annotate ${containerName} with application data, use the '$
                   onClick: handleResetFilters
                 },
                 "reset-filters"
+              ),
+              hasRetriedLogs && /* @__PURE__ */ jsxRuntimeExports.jsx(
+                NavbarButton,
+                {
+                  label: "Show Retried Logs",
+                  icon: showRetriedLogs ? ApplicationIcons.toggle.on : ApplicationIcons.toggle.off,
+                  latched: showRetriedLogs,
+                  onClick: () => setShowRetriedLogs(!showRetriedLogs)
+                },
+                "show-retried"
               ),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 NavbarButton,
@@ -176195,62 +176271,6 @@ If you are trying to annotate ${containerName} with application data, use the '$
           )
         ] })
       ] });
-    };
-    const collapseLogItems = (evalSet, logItems) => {
-      if (!evalSet) {
-        return logItems;
-      }
-      const running = logItems.some(
-        (l) => l.type === "file" && l.logPreview?.status === "started"
-      );
-      if (!running) {
-        return logItems;
-      }
-      const taskIdToItems = /* @__PURE__ */ new Map();
-      for (const item2 of logItems) {
-        if (item2.type === "file" && item2.log.task_id) {
-          const taskId = item2.log.task_id;
-          if (!taskIdToItems.has(taskId)) {
-            taskIdToItems.set(taskId, []);
-          }
-          taskIdToItems.get(taskId).push(item2);
-        } else if (item2.type === "folder" || item2.type === "file") ;
-      }
-      const selectedItems = /* @__PURE__ */ new Map();
-      for (const [taskId, items] of taskIdToItems) {
-        let bestItem = items[0];
-        for (const item2 of items) {
-          const currentStatus = item2.logPreview?.status;
-          const currentMtime = item2.log.mtime ?? 0;
-          const bestStatus = bestItem.logPreview?.status;
-          const bestMtime = bestItem.log.mtime ?? 0;
-          if (currentStatus === "started" && bestStatus !== "started") {
-            bestItem = item2;
-          } else if (currentStatus === "success" && bestStatus === "error") {
-            bestItem = item2;
-          } else if (currentStatus === bestStatus && currentMtime > bestMtime) {
-            bestItem = item2;
-          }
-        }
-        selectedItems.set(taskId, bestItem);
-      }
-      const collapsedLogItems = [];
-      const processedTaskIds = /* @__PURE__ */ new Set();
-      for (const item2 of logItems) {
-        if (item2.type === "file" && item2.log.task_id) {
-          const taskId = item2.log.task_id;
-          if (!processedTaskIds.has(taskId)) {
-            const selectedItem = selectedItems.get(taskId);
-            if (selectedItem) {
-              collapsedLogItems.push(selectedItem);
-            }
-            processedTaskIds.add(taskId);
-          }
-        } else {
-          collapsedLogItems.push(item2);
-        }
-      }
-      return collapsedLogItems;
     };
     const appendPendingItems = (evalSet, tasksWithLogFiles, collapsedLogItems) => {
       const pendingTasks = new Array();
@@ -219226,10 +219246,7 @@ Supported expressions:
       const flowDir = dirname(currentPath || "");
       const { loadLogs } = useLogs();
       reactExports.useEffect(() => {
-        const exec2 = async () => {
-          await loadLogs(flowDir);
-        };
-        exec2();
+        loadLogs(flowDir);
       }, [loadLogs, flowDir]);
       useFlowServerData(flowDir || "");
       const flow = useStore((state) => state.logs.flow);
@@ -219502,15 +219519,14 @@ Supported expressions:
       };
     };
     const SamplesGrid = ({
+      items,
       samplesPath,
       gridRef: externalGridRef,
       columns
     }) => {
-      const logDetails = useStore((state) => state.logs.logDetails);
       const gridState = useStore((state) => state.logs.samplesListState.gridState);
       const setGridState = useStore((state) => state.logsActions.setGridState);
       const { navigateToSampleDetail } = useSamplesGridNavigation();
-      const logDir2 = useStore((state) => state.logs.logDir);
       const setFilteredSampleCount = useStore(
         (state) => state.logActions.setFilteredSampleCount
       );
@@ -219560,55 +219576,9 @@ Supported expressions:
           setPreviousSamplesPath(samplesPath);
         }
       }, [samplesPath, previousSamplesPath, setPreviousSamplesPath]);
-      const filteredLogDetails = reactExports.useMemo(() => {
-        if (!samplesPath) {
-          return logDetails;
-        }
-        const samplesPathAbs = join(samplesPath, logDir2);
-        return Object.entries(logDetails).reduce(
-          (acc, [logFile, details]) => {
-            if (logFile.startsWith(samplesPathAbs)) {
-              acc[logFile] = details;
-            }
-            return acc;
-          },
-          {}
-        );
-      }, [logDetails, logDir2, samplesPath]);
       reactExports.useEffect(() => {
         gridContainerRef.current?.focus();
       }, []);
-      const data = reactExports.useMemo(() => {
-        const rows = [];
-        let displayIndex = 1;
-        Object.entries(filteredLogDetails).forEach(([logFile, details]) => {
-          details.sampleSummaries.forEach((sample2) => {
-            const row2 = {
-              logFile,
-              created: details.eval.created,
-              task: details.eval.task || "",
-              model: details.eval.model || "",
-              status: details.status,
-              sampleId: sample2.id,
-              epoch: sample2.epoch,
-              input: inputString(sample2.input).join("\n"),
-              target: Array.isArray(sample2.target) ? sample2.target.join(", ") : sample2.target,
-              error: sample2.error,
-              limit: sample2.limit,
-              retries: sample2.retries,
-              completed: sample2.completed || false,
-              displayIndex: displayIndex++
-            };
-            if (sample2.scores) {
-              Object.entries(sample2.scores).forEach(([scoreName, score2]) => {
-                row2[`score_${scoreName}`] = score2.value;
-              });
-            }
-            rows.push(row2);
-          });
-        });
-        return rows;
-      }, [filteredLogDetails]);
       const handleRowClick = reactExports.useCallback(
         (e) => {
           if (e.data && e.node && gridRef.current?.api) {
@@ -219686,7 +219656,7 @@ Supported expressions:
         AgGridReact,
         {
           ref: gridRef,
-          rowData: data,
+          rowData: items,
           animateRows: false,
           columnDefs: columns,
           defaultColDef: {
@@ -219738,7 +219708,7 @@ Supported expressions:
             selectCurrentSample();
             clearSelectedSample();
           },
-          loading: data.length === 0 && (loading > 0 || syncing)
+          loading: items.length === 0 && (loading > 0 || syncing)
         }
       ) }) });
     };
@@ -219769,8 +219739,15 @@ Supported expressions:
       const logDir2 = useStore((state) => state.logs.logDir);
       const loading = useStore((state) => state.app.status.loading);
       const syncing = useStore((state) => state.app.status.syncing);
+      const showRetriedLogs = useStore((state) => state.logs.showRetriedLogs);
+      const setShowRetriedLogs = useStore(
+        (state) => state.logsActions.setShowRetriedLogs
+      );
       const filteredSamplesCount = useStore(
         (state) => state.log.filteredSampleCount
+      );
+      const setFilteredSampleCount = useStore(
+        (state) => state.logActions.setFilteredSampleCount
       );
       const gridRef = reactExports.useRef(null);
       const [showColumnSelector, setShowColumnSelector] = reactExports.useState(false);
@@ -219807,17 +219784,19 @@ Supported expressions:
       const flowData = useStore((state) => state.logs.flow);
       const currentDir = join(samplesPath || "", logDir2);
       const evalSet = useStore((state) => state.logs.evalSet);
-      const logFiles = useStore((state) => state.logs.logs);
+      const logFiles = useLogsWithretried();
       const logPreviews = useStore((state) => state.logs.logPreviews);
       const currentDirLogFiles = reactExports.useMemo(() => {
         const files = [];
         for (const logFile of logFiles) {
-          if (logFile.name.startsWith(currentDir)) {
+          const inCurrentDir = logFile.name.startsWith(currentDir);
+          const skipped = !showRetriedLogs && logFile.retried;
+          if (inCurrentDir && !skipped) {
             files.push(logFile);
           }
         }
         return files;
-      }, [currentDir, logFiles]);
+      }, [currentDir, logFiles, showRetriedLogs]);
       const totalTaskCount = reactExports.useMemo(() => {
         const currentDirTaskIds = new Set(currentDirLogFiles.map((f) => f.task_id));
         let count = currentDirLogFiles.length;
@@ -219839,11 +219818,69 @@ Supported expressions:
         return count;
       }, [logPreviews, currentDirLogFiles]);
       reactExports.useEffect(() => {
-        const exec2 = async () => {
-          await loadLogs(samplesPath);
-        };
-        exec2();
+        loadLogs(samplesPath);
       }, [loadLogs, samplesPath]);
+      const logDetailsInPath = reactExports.useMemo(() => {
+        if (!samplesPath) {
+          return logDetails;
+        }
+        const samplesPathAbs = join(samplesPath, logDir2);
+        return Object.entries(logDetails).reduce(
+          (acc, [logFile, details]) => {
+            if (logFile.startsWith(samplesPathAbs)) {
+              acc[logFile] = details;
+            }
+            return acc;
+          },
+          {}
+        );
+      }, [logDetails, logDir2, samplesPath]);
+      const [sampleRows, hasRetriedLogs] = reactExports.useMemo(() => {
+        const allRows = [];
+        let displayIndex = 1;
+        let anyLogInCurrentDirCouldBeSkipped = false;
+        const logInCurrentDirByName = currentDirLogFiles.reduce(
+          (acc, log2) => {
+            if (log2.retried) {
+              anyLogInCurrentDirCouldBeSkipped = true;
+            }
+            acc[log2.name] = log2;
+            return acc;
+          },
+          {}
+        );
+        Object.entries(logDetailsInPath).forEach(([logFile, logDetail]) => {
+          logDetail.sampleSummaries.forEach((sampleSummary) => {
+            const row2 = {
+              logFile,
+              created: logDetail.eval.created,
+              task: logDetail.eval.task || "",
+              model: logDetail.eval.model || "",
+              status: logDetail.status,
+              sampleId: sampleSummary.id,
+              epoch: sampleSummary.epoch,
+              input: inputString(sampleSummary.input).join("\n"),
+              target: Array.isArray(sampleSummary.target) ? sampleSummary.target.join(", ") : sampleSummary.target,
+              error: sampleSummary.error,
+              limit: sampleSummary.limit,
+              retries: sampleSummary.retries,
+              completed: sampleSummary.completed || false,
+              displayIndex: displayIndex++
+            };
+            if (sampleSummary.scores) {
+              Object.entries(sampleSummary.scores).forEach(([scoreName, score2]) => {
+                row2[`score_${scoreName}`] = score2.value;
+              });
+            }
+            allRows.push(row2);
+          });
+        });
+        const _sampleRows = allRows.filter(
+          (row2) => row2.logFile in logInCurrentDirByName
+        );
+        const _hasRetriedLogs = _sampleRows.length < allRows.length || anyLogInCurrentDirCouldBeSkipped;
+        return [_sampleRows, _hasRetriedLogs];
+      }, [logDetailsInPath, currentDirLogFiles]);
       const filterModel = gridRef.current?.api?.getFilterModel() || {};
       const filteredFields = Object.keys(filterModel);
       const hasFilter = filteredFields.length > 0;
@@ -219857,6 +219894,25 @@ Supported expressions:
               onClick: handleResetFilters
             },
             "reset-filters"
+          ),
+          hasRetriedLogs && /* @__PURE__ */ jsxRuntimeExports.jsx(
+            NavbarButton,
+            {
+              label: "Show Retried Logs",
+              icon: showRetriedLogs ? ApplicationIcons.toggle.on : ApplicationIcons.toggle.off,
+              latched: showRetriedLogs,
+              onClick: () => {
+                setShowRetriedLogs(!showRetriedLogs);
+                setTimeout(() => {
+                  if (gridRef.current) {
+                    setFilteredSampleCount(
+                      gridRef.current.api.getDisplayedRowCount()
+                    );
+                  }
+                }, 10);
+              }
+            },
+            "show-retried"
           ),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             NavbarButton,
@@ -219889,6 +219945,7 @@ Supported expressions:
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1.list, "text-size-smaller"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           SamplesGrid,
           {
+            items: sampleRows,
             samplesPath,
             gridRef,
             columns
