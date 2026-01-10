@@ -4,6 +4,25 @@ var __commonJS = (cb, mod) => function __require() {
 };
 var require_assets = __commonJS({
   "assets/index.js"(exports) {
+    function _mergeNamespaces(n, m) {
+      for (var i2 = 0; i2 < m.length; i2++) {
+        const e = m[i2];
+        if (typeof e !== "string" && !Array.isArray(e)) {
+          for (const k2 in e) {
+            if (k2 !== "default" && !(k2 in n)) {
+              const d = Object.getOwnPropertyDescriptor(e, k2);
+              if (d) {
+                Object.defineProperty(n, k2, d.get ? d : {
+                  enumerable: true,
+                  get: () => e[k2]
+                });
+              }
+            }
+          }
+        }
+      }
+      return Object.freeze(Object.defineProperty(n, Symbol.toStringTag, { value: "Module" }));
+    }
     (function polyfill() {
       const relList = document.createElement("link").relList;
       if (relList && relList.supports && relList.supports("modulepreload")) return;
@@ -55,12 +74,12 @@ var require_assets = __commonJS({
         a.prototype = f.prototype;
       } else a = {};
       Object.defineProperty(a, "__esModule", { value: true });
-      Object.keys(n).forEach(function(k) {
-        var d = Object.getOwnPropertyDescriptor(n, k);
-        Object.defineProperty(a, k, d.get ? d : {
+      Object.keys(n).forEach(function(k2) {
+        var d = Object.getOwnPropertyDescriptor(n, k2);
+        Object.defineProperty(a, k2, d.get ? d : {
           enumerable: true,
           get: function() {
-            return n[k];
+            return n[k2];
           }
         });
       });
@@ -778,8 +797,8 @@ var require_assets = __commonJS({
       react_production.useOptimistic = function(passthrough, reducer) {
         return ReactSharedInternals.H.useOptimistic(passthrough, reducer);
       };
-      react_production.useReducer = function(reducer, initialArg, init) {
-        return ReactSharedInternals.H.useReducer(reducer, initialArg, init);
+      react_production.useReducer = function(reducer, initialArg, init2) {
+        return ReactSharedInternals.H.useReducer(reducer, initialArg, init2);
       };
       react_production.useRef = function(initialValue) {
         return ReactSharedInternals.H.useRef(initialValue);
@@ -797,7 +816,7 @@ var require_assets = __commonJS({
       react_production.useTransition = function() {
         return ReactSharedInternals.H.useTransition();
       };
-      react_production.version = "19.2.0";
+      react_production.version = "19.2.3";
       return react_production;
     }
     var hasRequiredReact;
@@ -955,7 +974,7 @@ var require_assets = __commonJS({
       reactDom_production.useFormStatus = function() {
         return ReactSharedInternals.H.useHostTransitionStatus();
       };
-      reactDom_production.version = "19.2.0";
+      reactDom_production.version = "19.2.3";
       return reactDom_production;
     }
     var hasRequiredReactDom;
@@ -1259,8 +1278,8 @@ var require_assets = __commonJS({
                   } else {
                     try {
                       Fake.call();
-                    } catch (x$1) {
-                      control = x$1;
+                    } catch (x$12) {
+                      control = x$12;
                     }
                     fn2.call(Fake.prototype);
                   }
@@ -3300,8 +3319,8 @@ var require_assets = __commonJS({
       }
       function resolveLazy(lazyType) {
         try {
-          var init = lazyType._init;
-          return init(lazyType._payload);
+          var init2 = lazyType._init;
+          return init2(lazyType._payload);
         } catch (x2) {
           if (null !== x2 && "object" === typeof x2 && "function" === typeof x2.then)
             throw suspendedThenable = x2, SuspenseException;
@@ -5001,14 +5020,14 @@ var require_assets = __commonJS({
           hook.memoizedState = [nextValue, deps];
           return nextValue;
         },
-        useReducer: function(reducer, initialArg, init) {
+        useReducer: function(reducer, initialArg, init2) {
           var hook = mountWorkInProgressHook();
-          if (void 0 !== init) {
-            var initialState2 = init(initialArg);
+          if (void 0 !== init2) {
+            var initialState2 = init2(initialArg);
             if (shouldDoubleInvokeUserFnsInHooksDEV) {
               setIsStrictModeForDevtools(true);
               try {
-                init(initialArg);
+                init2(initialArg);
               } finally {
                 setIsStrictModeForDevtools(false);
               }
@@ -12399,12 +12418,12 @@ var require_assets = __commonJS({
         }
       };
       var isomorphicReactPackageVersion$jscomp$inline_1840 = React.version;
-      if ("19.2.0" !== isomorphicReactPackageVersion$jscomp$inline_1840)
+      if ("19.2.3" !== isomorphicReactPackageVersion$jscomp$inline_1840)
         throw Error(
           formatProdErrorMessage(
             527,
             isomorphicReactPackageVersion$jscomp$inline_1840,
-            "19.2.0"
+            "19.2.3"
           )
         );
       ReactDOMSharedInternals.findDOMNode = function(componentOrElement) {
@@ -12422,10 +12441,10 @@ var require_assets = __commonJS({
       };
       var internals$jscomp$inline_2347 = {
         bundleType: 0,
-        version: "19.2.0",
+        version: "19.2.3",
         rendererPackageName: "react-dom",
         currentDispatcherRef: ReactSharedInternals,
-        reconcilerVersion: "19.2.0"
+        reconcilerVersion: "19.2.3"
       };
       if ("undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__) {
         var hook$jscomp$inline_2348 = __REACT_DEVTOOLS_GLOBAL_HOOK__;
@@ -12492,7 +12511,7 @@ var require_assets = __commonJS({
         listenToAllSupportedEvents(container2);
         return new ReactDOMHydrationRoot(initialChildren);
       };
-      reactDomClient_production.version = "19.2.0";
+      reactDomClient_production.version = "19.2.3";
       return reactDomClient_production;
     }
     var hasRequiredClient$1;
@@ -14322,11 +14341,11 @@ var require_assets = __commonJS({
               }
               var patterns = grammar[token2];
               patterns = Array.isArray(patterns) ? patterns : [patterns];
-              for (var j2 = 0; j2 < patterns.length; ++j2) {
-                if (rematch && rematch.cause == token2 + "," + j2) {
+              for (var j = 0; j < patterns.length; ++j) {
+                if (rematch && rematch.cause == token2 + "," + j) {
                   return;
                 }
-                var patternObj = patterns[j2];
+                var patternObj = patterns[j];
                 var inside2 = patternObj.inside;
                 var lookbehind = !!patternObj.lookbehind;
                 var greedy = !!patternObj.greedy;
@@ -14367,9 +14386,9 @@ var require_assets = __commonJS({
                     if (currentNode.value instanceof Token2) {
                       continue;
                     }
-                    for (var k = currentNode; k !== tokenList.tail && (p < to2 || typeof k.value === "string"); k = k.next) {
+                    for (var k2 = currentNode; k2 !== tokenList.tail && (p < to2 || typeof k2.value === "string"); k2 = k2.next) {
                       removeCount++;
-                      p += k.value.length;
+                      p += k2.value.length;
                     }
                     removeCount--;
                     str2 = text2.slice(pos2, p);
@@ -14401,7 +14420,7 @@ var require_assets = __commonJS({
                   }
                   if (removeCount > 1) {
                     var nestedRematch = {
-                      cause: token2 + "," + j2,
+                      cause: token2 + "," + j,
                       reach
                     };
                     matchGrammar(text2, tokenList, grammar, currentNode.prev, pos2, nestedRematch);
@@ -16152,9 +16171,9 @@ var require_assets = __commonJS({
                 279: (
                   /***/
                   (function(module3) {
-                    function E2() {
+                    function E() {
                     }
-                    E2.prototype = {
+                    E.prototype = {
                       on: function(name2, callback, ctx) {
                         var e = this.e || (this.e = {});
                         (e[name2] || (e[name2] = [])).push({
@@ -16196,8 +16215,8 @@ var require_assets = __commonJS({
                         return this;
                       }
                     };
-                    module3.exports = E2;
-                    module3.exports.TinyEmitter = E2;
+                    module3.exports = E;
+                    module3.exports.TinyEmitter = E;
                   })
                 )
                 /******/
@@ -16261,6 +16280,10 @@ var require_assets = __commonJS({
     const ClipboardJS = /* @__PURE__ */ getDefaultExportFromCjs(clipboardExports);
     var reactExports = requireReact();
     const React20 = /* @__PURE__ */ getDefaultExportFromCjs(reactExports);
+    const React4 = /* @__PURE__ */ _mergeNamespaces({
+      __proto__: null,
+      default: React20
+    }, [reactExports]);
     var __typeError = (msg) => {
       throw TypeError(msg);
     };
@@ -16494,10 +16517,10 @@ var require_assets = __commonJS({
        * Create a new `RouterContextProvider` instance
        * @param init An optional initial context map to populate the provider with
        */
-      constructor(init) {
+      constructor(init2) {
         __privateAdd(this, _map, /* @__PURE__ */ new Map());
-        if (init) {
-          for (let [context, value2] of init) {
+        if (init2) {
+          for (let [context, value2] of init2) {
             this.set(context, value2);
           }
         }
@@ -17033,8 +17056,43 @@ var require_assets = __commonJS({
     function isRouteErrorResponse(error2) {
       return error2 != null && typeof error2.status === "number" && typeof error2.statusText === "string" && typeof error2.internal === "boolean" && "data" in error2;
     }
-    function getRoutePattern(paths) {
-      return paths.filter(Boolean).join("/").replace(/\/\/*/g, "/") || "/";
+    function getRoutePattern(matches) {
+      return matches.map((m) => m.route.path).filter(Boolean).join("/").replace(/\/\/*/g, "/") || "/";
+    }
+    var isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined";
+    function parseToInfo(_to, basename2) {
+      let to2 = _to;
+      if (typeof to2 !== "string" || !ABSOLUTE_URL_REGEX.test(to2)) {
+        return {
+          absoluteURL: void 0,
+          isExternal: false,
+          to: to2
+        };
+      }
+      let absoluteURL = to2;
+      let isExternal = false;
+      if (isBrowser) {
+        try {
+          let currentUrl = new URL(window.location.href);
+          let targetUrl = to2.startsWith("//") ? new URL(currentUrl.protocol + to2) : new URL(to2);
+          let path = stripBasename(targetUrl.pathname, basename2);
+          if (targetUrl.origin === currentUrl.origin && path != null) {
+            to2 = path + targetUrl.search + targetUrl.hash;
+          } else {
+            isExternal = true;
+          }
+        } catch (e) {
+          warning(
+            false,
+            `<Link to="${to2}"> contains an invalid URL which will probably break when clicked - please update to a valid URL path.`
+          );
+        }
+      }
+      return {
+        absoluteURL,
+        isExternal,
+        to: to2
+      };
     }
     var UninstrumentedSymbol = Symbol("Uninstrumented");
     function getRouteInstrumentationUpdates(fns, route) {
@@ -17321,18 +17379,18 @@ var require_assets = __commonJS({
     });
     var TRANSITIONS_STORAGE_KEY = "remix-router-transitions";
     var ResetLoaderDataSymbol = Symbol("ResetLoaderData");
-    function createRouter(init) {
-      const routerWindow = init.window ? init.window : typeof window !== "undefined" ? window : void 0;
-      const isBrowser2 = typeof routerWindow !== "undefined" && typeof routerWindow.document !== "undefined" && typeof routerWindow.document.createElement !== "undefined";
+    function createRouter(init2) {
+      const routerWindow = init2.window ? init2.window : typeof window !== "undefined" ? window : void 0;
+      const isBrowser3 = typeof routerWindow !== "undefined" && typeof routerWindow.document !== "undefined" && typeof routerWindow.document.createElement !== "undefined";
       invariant(
-        init.routes.length > 0,
+        init2.routes.length > 0,
         "You must provide a non-empty routes array to createRouter"
       );
-      let hydrationRouteProperties2 = init.hydrationRouteProperties || [];
-      let _mapRouteProperties = init.mapRouteProperties || defaultMapRouteProperties;
+      let hydrationRouteProperties2 = init2.hydrationRouteProperties || [];
+      let _mapRouteProperties = init2.mapRouteProperties || defaultMapRouteProperties;
       let mapRouteProperties2 = _mapRouteProperties;
-      if (init.unstable_instrumentations) {
-        let instrumentations = init.unstable_instrumentations;
+      if (init2.unstable_instrumentations) {
+        let instrumentations = init2.unstable_instrumentations;
         mapRouteProperties2 = (route) => {
           return {
             ..._mapRouteProperties(route),
@@ -17345,44 +17403,44 @@ var require_assets = __commonJS({
       }
       let manifest = {};
       let dataRoutes = convertRoutesToDataRoutes(
-        init.routes,
+        init2.routes,
         mapRouteProperties2,
         void 0,
         manifest
       );
       let inFlightDataRoutes;
-      let basename2 = init.basename || "/";
+      let basename2 = init2.basename || "/";
       if (!basename2.startsWith("/")) {
         basename2 = `/${basename2}`;
       }
-      let dataStrategyImpl = init.dataStrategy || defaultDataStrategyWithMiddleware;
+      let dataStrategyImpl = init2.dataStrategy || defaultDataStrategyWithMiddleware;
       let future = {
-        ...init.future
+        ...init2.future
       };
       let unlistenHistory = null;
       let subscribers = /* @__PURE__ */ new Set();
       let savedScrollPositions2 = null;
       let getScrollRestorationKey2 = null;
       let getScrollPosition = null;
-      let initialScrollRestored = init.hydrationData != null;
-      let initialMatches = matchRoutes(dataRoutes, init.history.location, basename2);
+      let initialScrollRestored = init2.hydrationData != null;
+      let initialMatches = matchRoutes(dataRoutes, init2.history.location, basename2);
       let initialMatchesIsFOW = false;
       let initialErrors = null;
       let initialized;
-      if (initialMatches == null && !init.patchRoutesOnNavigation) {
+      if (initialMatches == null && !init2.patchRoutesOnNavigation) {
         let error2 = getInternalRouterError(404, {
-          pathname: init.history.location.pathname
+          pathname: init2.history.location.pathname
         });
         let { matches, route } = getShortCircuitMatches(dataRoutes);
         initialized = true;
         initialMatches = matches;
         initialErrors = { [route.id]: error2 };
       } else {
-        if (initialMatches && !init.hydrationData) {
+        if (initialMatches && !init2.hydrationData) {
           let fogOfWar = checkFogOfWar(
             initialMatches,
             dataRoutes,
-            init.history.location.pathname
+            init2.history.location.pathname
           );
           if (fogOfWar.active) {
             initialMatches = null;
@@ -17394,7 +17452,7 @@ var require_assets = __commonJS({
           let fogOfWar = checkFogOfWar(
             null,
             dataRoutes,
-            init.history.location.pathname
+            init2.history.location.pathname
           );
           if (fogOfWar.active && fogOfWar.matches) {
             initialMatchesIsFOW = true;
@@ -17405,8 +17463,8 @@ var require_assets = __commonJS({
         } else if (!initialMatches.some((m) => routeHasLoaderOrMiddleware(m.route))) {
           initialized = true;
         } else {
-          let loaderData = init.hydrationData ? init.hydrationData.loaderData : null;
-          let errors2 = init.hydrationData ? init.hydrationData.errors : null;
+          let loaderData = init2.hydrationData ? init2.hydrationData.loaderData : null;
+          let errors2 = init2.hydrationData ? init2.hydrationData.errors : null;
           if (errors2) {
             let idx = initialMatches.findIndex(
               (m) => errors2[m.route.id] !== void 0
@@ -17423,22 +17481,23 @@ var require_assets = __commonJS({
       }
       let router;
       let state = {
-        historyAction: init.history.action,
-        location: init.history.location,
+        historyAction: init2.history.action,
+        location: init2.history.location,
         matches: initialMatches,
         initialized,
         navigation: IDLE_NAVIGATION,
         // Don't restore on initial updateState() if we were SSR'd
-        restoreScrollPosition: init.hydrationData != null ? false : null,
+        restoreScrollPosition: init2.hydrationData != null ? false : null,
         preventScrollReset: false,
         revalidation: "idle",
-        loaderData: init.hydrationData && init.hydrationData.loaderData || {},
-        actionData: init.hydrationData && init.hydrationData.actionData || null,
-        errors: init.hydrationData && init.hydrationData.errors || initialErrors,
+        loaderData: init2.hydrationData && init2.hydrationData.loaderData || {},
+        actionData: init2.hydrationData && init2.hydrationData.actionData || null,
+        errors: init2.hydrationData && init2.hydrationData.errors || initialErrors,
         fetchers: /* @__PURE__ */ new Map(),
         blockers: /* @__PURE__ */ new Map()
       };
       let pendingAction = "POP";
+      let pendingPopstateNavigationDfd = null;
       let pendingPreventScrollReset = false;
       let pendingNavigationController;
       let pendingViewTransitionEnabled = false;
@@ -17459,7 +17518,7 @@ var require_assets = __commonJS({
       let unblockBlockerHistoryUpdate = void 0;
       let pendingRevalidationDfd = null;
       function initialize() {
-        unlistenHistory = init.history.listen(
+        unlistenHistory = init2.history.listen(
           ({ action: historyAction, location: location2, delta: delta2 }) => {
             if (unblockBlockerHistoryUpdate) {
               unblockBlockerHistoryUpdate();
@@ -17479,7 +17538,7 @@ var require_assets = __commonJS({
               let nextHistoryUpdatePromise = new Promise((resolve) => {
                 unblockBlockerHistoryUpdate = resolve;
               });
-              init.history.go(delta2 * -1);
+              init2.history.go(delta2 * -1);
               updateBlocker(blockerKey, {
                 state: "blocked",
                 location: location2,
@@ -17490,7 +17549,7 @@ var require_assets = __commonJS({
                     reset: void 0,
                     location: location2
                   });
-                  nextHistoryUpdatePromise.then(() => init.history.go(delta2));
+                  nextHistoryUpdatePromise.then(() => init2.history.go(delta2));
                 },
                 reset() {
                   let blockers = new Map(state.blockers);
@@ -17498,12 +17557,14 @@ var require_assets = __commonJS({
                   updateState({ blockers });
                 }
               });
+              pendingPopstateNavigationDfd?.resolve();
+              pendingPopstateNavigationDfd = null;
               return;
             }
             return startNavigation(historyAction, location2);
           }
         );
-        if (isBrowser2) {
+        if (isBrowser3) {
           restoreAppliedTransitions(routerWindow, appliedViewTransitions);
           let _saveAppliedTransitions = () => persistAppliedTransitions(routerWindow, appliedViewTransitions);
           routerWindow.addEventListener("pagehide", _saveAppliedTransitions);
@@ -17569,6 +17630,7 @@ var require_assets = __commonJS({
         [...subscribers].forEach(
           (subscriber) => subscriber(state, {
             deletedFetchers: unmountedFetchers,
+            newErrors: newState.errors ?? null,
             viewTransitionOpts: opts.viewTransitionOpts,
             flushSync: opts.flushSync === true
           })
@@ -17599,7 +17661,7 @@ var require_assets = __commonJS({
         let blockers = state.blockers;
         if (blockers.size > 0) {
           blockers = new Map(blockers);
-          blockers.forEach((_, k) => blockers.set(k, IDLE_BLOCKER));
+          blockers.forEach((_, k2) => blockers.set(k2, IDLE_BLOCKER));
         }
         let restoreScrollPosition = isUninterruptedRevalidation ? false : getSavedScrollPosition(location2, newState.matches || state.matches);
         let preventScrollReset = pendingPreventScrollReset === true || state.navigation.formMethod != null && isMutationMethod(state.navigation.formMethod) && location2.state?._isRedirect !== true;
@@ -17610,9 +17672,9 @@ var require_assets = __commonJS({
         if (isUninterruptedRevalidation) ;
         else if (pendingAction === "POP") ;
         else if (pendingAction === "PUSH") {
-          init.history.push(location2, location2.state);
+          init2.history.push(location2, location2.state);
         } else if (pendingAction === "REPLACE") {
-          init.history.replace(location2, location2.state);
+          init2.history.replace(location2, location2.state);
         }
         let viewTransitionOpts;
         if (pendingAction === "POP") {
@@ -17666,13 +17728,21 @@ var require_assets = __commonJS({
         pendingViewTransitionEnabled = false;
         isUninterruptedRevalidation = false;
         isRevalidationRequired = false;
+        pendingPopstateNavigationDfd?.resolve();
+        pendingPopstateNavigationDfd = null;
         pendingRevalidationDfd?.resolve();
         pendingRevalidationDfd = null;
       }
       async function navigate(to2, opts) {
+        pendingPopstateNavigationDfd?.resolve();
+        pendingPopstateNavigationDfd = null;
         if (typeof to2 === "number") {
-          init.history.go(to2);
-          return;
+          if (!pendingPopstateNavigationDfd) {
+            pendingPopstateNavigationDfd = createDeferred();
+          }
+          let promise = pendingPopstateNavigationDfd.promise;
+          init2.history.go(to2);
+          return promise;
         }
         let normalizedPath = normalizeTo(
           state.location,
@@ -17691,7 +17761,7 @@ var require_assets = __commonJS({
         let nextLocation = createLocation(state.location, path, opts && opts.state);
         nextLocation = {
           ...nextLocation,
-          ...init.history.encodeLocation(nextLocation)
+          ...init2.history.encodeLocation(nextLocation)
         };
         let userReplace = opts && opts.replace != null ? opts.replace : void 0;
         let historyAction = "PUSH";
@@ -17737,7 +17807,8 @@ var require_assets = __commonJS({
           preventScrollReset,
           replace: opts && opts.replace,
           enableViewTransition: opts && opts.viewTransition,
-          flushSync
+          flushSync,
+          callSiteDefaultShouldRevalidate: opts && opts.unstable_defaultShouldRevalidate
         });
       }
       function revalidate() {
@@ -17809,12 +17880,12 @@ var require_assets = __commonJS({
         }
         pendingNavigationController = new AbortController();
         let request = createClientSideRequest(
-          init.history,
+          init2.history,
           location2,
           pendingNavigationController.signal,
           opts && opts.submission
         );
-        let scopedContext = init.getContext ? await init.getContext() : new RouterContextProvider();
+        let scopedContext = init2.getContext ? await init2.getContext() : new RouterContextProvider();
         let pendingActionResult;
         if (opts && opts.pendingError) {
           pendingActionResult = [
@@ -17855,7 +17926,7 @@ var require_assets = __commonJS({
           flushSync = false;
           fogOfWar.active = false;
           request = createClientSideRequest(
-            init.history,
+            init2.history,
             request.url,
             request.signal
           );
@@ -17877,7 +17948,8 @@ var require_assets = __commonJS({
           opts && opts.replace,
           opts && opts.initialHydration === true,
           flushSync,
-          pendingActionResult
+          pendingActionResult,
+          opts && opts.callSiteDefaultShouldRevalidate
         );
         if (shortCircuited) {
           return;
@@ -18022,7 +18094,7 @@ var require_assets = __commonJS({
           pendingActionResult: [actionMatch.route.id, result2]
         };
       }
-      async function handleLoaders(request, location2, matches, scopedContext, isFogOfWar, overrideNavigation, submission, fetcherSubmission, replace2, initialHydration, flushSync, pendingActionResult) {
+      async function handleLoaders(request, location2, matches, scopedContext, isFogOfWar, overrideNavigation, submission, fetcherSubmission, replace2, initialHydration, flushSync, pendingActionResult, callSiteDefaultShouldRevalidate) {
         let loadingNavigation = overrideNavigation || getLoadingNavigation(location2, submission);
         let activeSubmission = submission || fetcherSubmission || getSubmissionFromNavigation(loadingNavigation);
         let shouldUpdateNavigationState = !isUninterruptedRevalidation && !initialHydration;
@@ -18086,7 +18158,7 @@ var require_assets = __commonJS({
           scopedContext,
           mapRouteProperties2,
           manifest,
-          init.history,
+          init2.history,
           state,
           matches,
           activeSubmission,
@@ -18100,11 +18172,12 @@ var require_assets = __commonJS({
           fetchRedirectIds,
           routesToUse,
           basename2,
-          init.patchRoutesOnNavigation != null,
-          pendingActionResult
+          init2.patchRoutesOnNavigation != null,
+          pendingActionResult,
+          callSiteDefaultShouldRevalidate
         );
         pendingNavigationLoadId = ++incrementingLoadId;
-        if (!init.dataStrategy && !dsMatches.some((m) => m.shouldLoad) && !dsMatches.some(
+        if (!init2.dataStrategy && !dsMatches.some((m) => m.shouldLoad) && !dsMatches.some(
           (m) => m.route.middleware && m.route.middleware.length > 0
         ) && revalidatingFetchers.length === 0) {
           let updatedFetchers2 = markFetchRedirectsDone();
@@ -18260,7 +18333,7 @@ var require_assets = __commonJS({
           setFetcherError(key2, routeId, error2, { flushSync });
           return;
         }
-        let scopedContext = init.getContext ? await init.getContext() : new RouterContextProvider();
+        let scopedContext = init2.getContext ? await init2.getContext() : new RouterContextProvider();
         let preventScrollReset = (opts && opts.preventScrollReset) === true;
         if (submission && isMutationMethod(submission.formMethod)) {
           await handleFetcherAction(
@@ -18272,7 +18345,8 @@ var require_assets = __commonJS({
             fogOfWar.active,
             flushSync,
             preventScrollReset,
-            submission
+            submission,
+            opts && opts.unstable_defaultShouldRevalidate
           );
           return;
         }
@@ -18289,7 +18363,7 @@ var require_assets = __commonJS({
           submission
         );
       }
-      async function handleFetcherAction(key2, routeId, path, requestMatches, scopedContext, isFogOfWar, flushSync, preventScrollReset, submission) {
+      async function handleFetcherAction(key2, routeId, path, requestMatches, scopedContext, isFogOfWar, flushSync, preventScrollReset, submission, callSiteDefaultShouldRevalidate) {
         interruptActiveLoads();
         fetchLoadMatches.delete(key2);
         let existingFetcher = state.fetchers.get(key2);
@@ -18298,7 +18372,7 @@ var require_assets = __commonJS({
         });
         let abortController = new AbortController();
         let fetchRequest = createClientSideRequest(
-          init.history,
+          init2.history,
           path,
           abortController.signal,
           submission
@@ -18396,7 +18470,7 @@ var require_assets = __commonJS({
         }
         let nextLocation = state.navigation.location || state.location;
         let revalidationRequest = createClientSideRequest(
-          init.history,
+          init2.history,
           nextLocation,
           abortController.signal
         );
@@ -18412,7 +18486,7 @@ var require_assets = __commonJS({
           scopedContext,
           mapRouteProperties2,
           manifest,
-          init.history,
+          init2.history,
           state,
           matches,
           submission,
@@ -18426,8 +18500,9 @@ var require_assets = __commonJS({
           fetchRedirectIds,
           routesToUse,
           basename2,
-          init.patchRoutesOnNavigation != null,
-          [match.route.id, actionResult]
+          init2.patchRoutesOnNavigation != null,
+          [match.route.id, actionResult],
+          callSiteDefaultShouldRevalidate
         );
         revalidatingFetchers.filter((rf) => rf.key !== key2).forEach((rf) => {
           let staleKey = rf.key;
@@ -18531,7 +18606,7 @@ var require_assets = __commonJS({
         );
         let abortController = new AbortController();
         let fetchRequest = createClientSideRequest(
-          init.history,
+          init2.history,
           path,
           abortController.signal
         );
@@ -18612,6 +18687,10 @@ var require_assets = __commonJS({
         preventScrollReset,
         replace: replace2
       } = {}) {
+        if (!isNavigation) {
+          pendingPopstateNavigationDfd?.resolve();
+          pendingPopstateNavigationDfd = null;
+        }
         if (redirect2.response.headers.has("X-Remix-Revalidate")) {
           isRevalidationRequired = true;
         }
@@ -18625,7 +18704,7 @@ var require_assets = __commonJS({
         let redirectLocation = createLocation(state.location, location2, {
           _isRedirect: true
         });
-        if (isBrowser2) {
+        if (isBrowser3) {
           let isDocumentReload = false;
           if (redirect2.response.headers.has("X-Remix-Reload-Document")) {
             isDocumentReload = true;
@@ -18699,6 +18778,21 @@ var require_assets = __commonJS({
         }
         if (request.signal.aborted) {
           return dataResults;
+        }
+        if (!isMutationMethod(request.method)) {
+          for (let match of matches) {
+            if (results[match.route.id]?.type === "error") {
+              break;
+            }
+            if (!results.hasOwnProperty(match.route.id) && !state.loaderData.hasOwnProperty(match.route.id) && (!state.errors || !state.errors.hasOwnProperty(match.route.id)) && match.shouldCallHandler()) {
+              results[match.route.id] = {
+                type: "error",
+                result: new Error(
+                  `No result returned from dataStrategy for route ${match.route.id}`
+                )
+              };
+            }
+          }
         }
         for (let [routeId, result2] of Object.entries(results)) {
           if (isRedirectDataStrategyResult(result2)) {
@@ -18958,7 +19052,7 @@ var require_assets = __commonJS({
         return null;
       }
       function checkFogOfWar(matches, routesToUse, pathname) {
-        if (init.patchRoutesOnNavigation) {
+        if (init2.patchRoutesOnNavigation) {
           if (!matches) {
             let fogMatches = matchRoutesImpl(
               routesToUse,
@@ -18982,7 +19076,7 @@ var require_assets = __commonJS({
         return { active: false, matches: null };
       }
       async function discoverRoutes(matches, pathname, signal, fetcherKey) {
-        if (!init.patchRoutesOnNavigation) {
+        if (!init2.patchRoutesOnNavigation) {
           return { type: "success", matches };
         }
         let partialMatches = matches;
@@ -18991,7 +19085,7 @@ var require_assets = __commonJS({
           let routesToUse = inFlightDataRoutes || dataRoutes;
           let localManifest = manifest;
           try {
-            await init.patchRoutesOnNavigation({
+            await init2.patchRoutesOnNavigation({
               signal,
               path: pathname,
               matches: partialMatches,
@@ -19105,8 +19199,8 @@ var require_assets = __commonJS({
         revalidate,
         // Passthrough to history-aware createHref used by useHref so we get proper
         // hash-aware URLs in DOM paths
-        createHref: (to2) => init.history.createHref(to2),
-        encodeLocation: (to2) => init.history.encodeLocation(to2),
+        createHref: (to2) => init2.history.createHref(to2),
+        encodeLocation: (to2) => init2.history.encodeLocation(to2),
         getFetcher,
         resetFetcher,
         deleteFetcher: queueFetcherForDeletion,
@@ -19122,10 +19216,10 @@ var require_assets = __commonJS({
           updateState(newState);
         }
       };
-      if (init.unstable_instrumentations) {
+      if (init2.unstable_instrumentations) {
         router = instrumentClientSideRouter(
           router,
-          init.unstable_instrumentations.map((i2) => i2.router).filter(Boolean)
+          init2.unstable_instrumentations.map((i2) => i2.router).filter(Boolean)
         );
       }
       return router;
@@ -19284,7 +19378,7 @@ var require_assets = __commonJS({
       parsedPath.search = `?${searchParams}`;
       return { path: createPath(parsedPath), submission };
     }
-    function getMatchesToLoad(request, scopedContext, mapRouteProperties2, manifest, history2, state, matches, submission, location2, lazyRoutePropertiesToSkip, initialHydration, isRevalidationRequired, cancelledFetcherLoads, fetchersQueuedForDeletion, fetchLoadMatches, fetchRedirectIds, routesToUse, basename2, hasPatchRoutesOnNavigation, pendingActionResult) {
+    function getMatchesToLoad(request, scopedContext, mapRouteProperties2, manifest, history2, state, matches, submission, location2, lazyRoutePropertiesToSkip, initialHydration, isRevalidationRequired, cancelledFetcherLoads, fetchersQueuedForDeletion, fetchLoadMatches, fetchRedirectIds, routesToUse, basename2, hasPatchRoutesOnNavigation, pendingActionResult, callSiteDefaultShouldRevalidate) {
       let actionResult = pendingActionResult ? isErrorResult(pendingActionResult[1]) ? pendingActionResult[1].error : pendingActionResult[1].data : void 0;
       let currentUrl = history2.createURL(state.location);
       let nextUrl = history2.createURL(location2);
@@ -19307,7 +19401,7 @@ var require_assets = __commonJS({
         actionResult,
         actionStatus
       };
-      let pattern = getRoutePattern(matches.map((m) => m.route.path));
+      let pattern = getRoutePattern(matches);
       let dsMatches = matches.map((match, index) => {
         let { route } = match;
         let forceShouldLoad = null;
@@ -19338,11 +19432,20 @@ var require_assets = __commonJS({
             forceShouldLoad
           );
         }
-        let defaultShouldRevalidate = shouldSkipRevalidation ? false : (
-          // Forced revalidation due to submission, useRevalidator, or X-Remix-Revalidate
-          isRevalidationRequired || currentUrl.pathname + currentUrl.search === nextUrl.pathname + nextUrl.search || // Search params affect all loaders
-          currentUrl.search !== nextUrl.search || isNewRouteInstance(state.matches[index], match)
-        );
+        let defaultShouldRevalidate = false;
+        if (typeof callSiteDefaultShouldRevalidate === "boolean") {
+          defaultShouldRevalidate = callSiteDefaultShouldRevalidate;
+        } else if (shouldSkipRevalidation) {
+          defaultShouldRevalidate = false;
+        } else if (isRevalidationRequired) {
+          defaultShouldRevalidate = true;
+        } else if (currentUrl.pathname + currentUrl.search === nextUrl.pathname + nextUrl.search) {
+          defaultShouldRevalidate = true;
+        } else if (currentUrl.search !== nextUrl.search) {
+          defaultShouldRevalidate = true;
+        } else if (isNewRouteInstance(state.matches[index], match)) {
+          defaultShouldRevalidate = true;
+        }
         let shouldRevalidateArgs = {
           ...baseShouldRevalidateArgs,
           defaultShouldRevalidate
@@ -19357,7 +19460,8 @@ var require_assets = __commonJS({
           lazyRoutePropertiesToSkip,
           scopedContext,
           shouldLoad,
-          shouldRevalidateArgs
+          shouldRevalidateArgs,
+          callSiteDefaultShouldRevalidate
         );
       });
       let revalidatingFetchers = [];
@@ -19418,9 +19522,17 @@ var require_assets = __commonJS({
             );
           }
         } else {
+          let defaultShouldRevalidate;
+          if (typeof callSiteDefaultShouldRevalidate === "boolean") {
+            defaultShouldRevalidate = callSiteDefaultShouldRevalidate;
+          } else if (shouldSkipRevalidation) {
+            defaultShouldRevalidate = false;
+          } else {
+            defaultShouldRevalidate = isRevalidationRequired;
+          }
           let shouldRevalidateArgs = {
             ...baseShouldRevalidateArgs,
-            defaultShouldRevalidate: shouldSkipRevalidation ? false : isRevalidationRequired
+            defaultShouldRevalidate
           };
           if (shouldRevalidateLoader(fetcherMatch, shouldRevalidateArgs)) {
             fetcherDsMatches = getTargetedDataStrategyMatches(
@@ -19740,8 +19852,12 @@ var require_assets = __commonJS({
       return runMiddlewarePipeline(
         args2,
         handler,
-        (r2) => r2,
-        // No post-processing needed on the client
+        (r2) => {
+          if (isRedirectResponse(r2)) {
+            throw r2;
+          }
+          return r2;
+        },
         isDataStrategyResults,
         errorHandler
       );
@@ -19762,7 +19878,7 @@ var require_assets = __commonJS({
             ),
             // or the shallowest route that needs to load data
             Math.max(
-              matches.findIndex((m) => m.unstable_shouldCallHandler()),
+              matches.findIndex((m) => m.shouldCallHandler()),
               0
             )
           );
@@ -19865,7 +19981,7 @@ var require_assets = __commonJS({
         handler: lazyRoutePromises.lazyHandlerPromise
       };
     }
-    function getDataStrategyMatch(mapRouteProperties2, manifest, request, unstable_pattern, match, lazyRoutePropertiesToSkip, scopedContext, shouldLoad, unstable_shouldRevalidateArgs = null) {
+    function getDataStrategyMatch(mapRouteProperties2, manifest, request, unstable_pattern, match, lazyRoutePropertiesToSkip, scopedContext, shouldLoad, shouldRevalidateArgs = null, callSiteDefaultShouldRevalidate) {
       let isUsingNewApi = false;
       let _lazyPromises = getDataStrategyMatchLazyPromises(
         mapRouteProperties2,
@@ -19878,19 +19994,25 @@ var require_assets = __commonJS({
         ...match,
         _lazyPromises,
         shouldLoad,
-        unstable_shouldRevalidateArgs,
-        unstable_shouldCallHandler(defaultShouldRevalidate) {
+        shouldRevalidateArgs,
+        shouldCallHandler(defaultShouldRevalidate) {
           isUsingNewApi = true;
-          if (!unstable_shouldRevalidateArgs) {
+          if (!shouldRevalidateArgs) {
             return shouldLoad;
+          }
+          if (typeof callSiteDefaultShouldRevalidate === "boolean") {
+            return shouldRevalidateLoader(match, {
+              ...shouldRevalidateArgs,
+              defaultShouldRevalidate: callSiteDefaultShouldRevalidate
+            });
           }
           if (typeof defaultShouldRevalidate === "boolean") {
             return shouldRevalidateLoader(match, {
-              ...unstable_shouldRevalidateArgs,
+              ...shouldRevalidateArgs,
               defaultShouldRevalidate
             });
           }
-          return shouldRevalidateLoader(match, unstable_shouldRevalidateArgs);
+          return shouldRevalidateLoader(match, shouldRevalidateArgs);
         },
         resolve(handlerOverride) {
           let { lazy, loader, middleware } = match.route;
@@ -19917,8 +20039,8 @@ var require_assets = __commonJS({
           return {
             ...match,
             shouldLoad: false,
-            unstable_shouldRevalidateArgs: shouldRevalidateArgs,
-            unstable_shouldCallHandler: () => false,
+            shouldRevalidateArgs,
+            shouldCallHandler: () => false,
             _lazyPromises: getDataStrategyMatchLazyPromises(
               mapRouteProperties2,
               manifest,
@@ -19933,7 +20055,7 @@ var require_assets = __commonJS({
           mapRouteProperties2,
           manifest,
           request,
-          getRoutePattern(matches.map((m) => m.route.path)),
+          getRoutePattern(matches),
           match,
           lazyRoutePropertiesToSkip,
           scopedContext,
@@ -19948,7 +20070,7 @@ var require_assets = __commonJS({
       }
       let dataStrategyArgs = {
         request,
-        unstable_pattern: getRoutePattern(matches.map((m) => m.route.path)),
+        unstable_pattern: getRoutePattern(matches),
         params: matches[0].params,
         context: scopedContext,
         matches
@@ -20127,11 +20249,7 @@ var require_assets = __commonJS({
           }
           return {
             type: "error",
-            error: new ErrorResponseImpl(
-              result2.init?.status || 500,
-              void 0,
-              result2.data
-            ),
+            error: dataWithResponseInitToErrorResponse(result2),
             statusCode: isRouteErrorResponse(result2) ? result2.status : void 0,
             headers: result2.init?.headers ? new Headers(result2.init.headers) : void 0
           };
@@ -20186,22 +20304,22 @@ var require_assets = __commonJS({
     }
     function createClientSideRequest(history2, location2, signal, submission) {
       let url = history2.createURL(stripHashFromPath(location2)).toString();
-      let init = { signal };
+      let init2 = { signal };
       if (submission && isMutationMethod(submission.formMethod)) {
         let { formMethod, formEncType } = submission;
-        init.method = formMethod.toUpperCase();
+        init2.method = formMethod.toUpperCase();
         if (formEncType === "application/json") {
-          init.headers = new Headers({ "Content-Type": formEncType });
-          init.body = JSON.stringify(submission.json);
+          init2.headers = new Headers({ "Content-Type": formEncType });
+          init2.body = JSON.stringify(submission.json);
         } else if (formEncType === "text/plain") {
-          init.body = submission.text;
+          init2.body = submission.text;
         } else if (formEncType === "application/x-www-form-urlencoded" && submission.formData) {
-          init.body = convertFormDataToSearchParams(submission.formData);
+          init2.body = convertFormDataToSearchParams(submission.formData);
         } else {
-          init.body = submission.formData;
+          init2.body = submission.formData;
         }
       }
-      return new Request(url, init);
+      return new Request(url, init2);
     }
     function convertFormDataToSearchParams(formData) {
       let searchParams = new URLSearchParams();
@@ -20314,8 +20432,8 @@ var require_assets = __commonJS({
       return { loaderData, errors: errors2 };
     }
     function mergeLoaderData(loaderData, newLoaderData, matches, errors2) {
-      let mergedLoaderData = Object.entries(newLoaderData).filter(([, v]) => v !== ResetLoaderDataSymbol).reduce((merged, [k, v]) => {
-        merged[k] = v;
+      let mergedLoaderData = Object.entries(newLoaderData).filter(([, v]) => v !== ResetLoaderDataSymbol).reduce((merged, [k2, v]) => {
+        merged[k2] = v;
         return merged;
       }, {});
       for (let match of matches) {
@@ -20425,6 +20543,13 @@ var require_assets = __commonJS({
       }
       return false;
     }
+    function dataWithResponseInitToErrorResponse(data2) {
+      return new ErrorResponseImpl(
+        data2.init?.status ?? 500,
+        data2.init?.statusText ?? "Internal Server Error",
+        data2.data
+      );
+    }
     function isDataStrategyResults(result2) {
       return result2 != null && typeof result2 === "object" && Object.entries(result2).every(
         ([key2, value2]) => typeof key2 === "string" && isDataStrategyResult(value2)
@@ -20447,6 +20572,12 @@ var require_assets = __commonJS({
     }
     function isResponse(value2) {
       return value2 != null && typeof value2.status === "number" && typeof value2.statusText === "string" && typeof value2.headers === "object" && typeof value2.body !== "undefined";
+    }
+    function isRedirectStatusCode(statusCode) {
+      return redirectStatusCodes.has(statusCode);
+    }
+    function isRedirectResponse(result2) {
+      return isResponse(result2) && isRedirectStatusCode(result2.status) && result2.headers.has("Location");
     }
     function isValidMethod(method) {
       return validRequestMethods.has(method.toUpperCase());
@@ -20599,9 +20730,9 @@ var require_assets = __commonJS({
         );
         if (sessionPositions) {
           let json = JSON.parse(sessionPositions);
-          for (let [k, v] of Object.entries(json || {})) {
+          for (let [k2, v] of Object.entries(json || {})) {
             if (v && Array.isArray(v)) {
-              transitions.set(k, new Set(v || []));
+              transitions.set(k2, new Set(v || []));
             }
           }
         }
@@ -20611,8 +20742,8 @@ var require_assets = __commonJS({
     function persistAppliedTransitions(_window, transitions) {
       if (transitions.size > 0) {
         let json = {};
-        for (let [k, v] of transitions) {
-          json[k] = [...v];
+        for (let [k2, v] of transitions) {
+          json[k2] = [...v];
         }
         try {
           _window.sessionStorage.setItem(
@@ -20658,7 +20789,10 @@ var require_assets = __commonJS({
     DataRouterContext.displayName = "DataRouter";
     var DataRouterStateContext = reactExports.createContext(null);
     DataRouterStateContext.displayName = "DataRouterState";
-    reactExports.createContext(false);
+    var RSCRouterContext = reactExports.createContext(false);
+    function useIsRSCRouterContext() {
+      return reactExports.useContext(RSCRouterContext);
+    }
     var ViewTransitionContext = reactExports.createContext({
       isTransitioning: false
     });
@@ -20685,6 +20819,37 @@ var require_assets = __commonJS({
     RouteContext.displayName = "Route";
     var RouteErrorContext = reactExports.createContext(null);
     RouteErrorContext.displayName = "RouteError";
+    var ERROR_DIGEST_BASE = "REACT_ROUTER_ERROR";
+    var ERROR_DIGEST_REDIRECT = "REDIRECT";
+    var ERROR_DIGEST_ROUTE_ERROR_RESPONSE = "ROUTE_ERROR_RESPONSE";
+    function decodeRedirectErrorDigest(digest) {
+      if (digest.startsWith(`${ERROR_DIGEST_BASE}:${ERROR_DIGEST_REDIRECT}:{`)) {
+        try {
+          let parsed = JSON.parse(digest.slice(28));
+          if (typeof parsed === "object" && parsed && typeof parsed.status === "number" && typeof parsed.statusText === "string" && typeof parsed.location === "string" && typeof parsed.reloadDocument === "boolean" && typeof parsed.replace === "boolean") {
+            return parsed;
+          }
+        } catch {
+        }
+      }
+    }
+    function decodeRouteErrorResponseDigest(digest) {
+      if (digest.startsWith(
+        `${ERROR_DIGEST_BASE}:${ERROR_DIGEST_ROUTE_ERROR_RESPONSE}:{`
+      )) {
+        try {
+          let parsed = JSON.parse(digest.slice(40));
+          if (typeof parsed === "object" && parsed && typeof parsed.status === "number" && typeof parsed.statusText === "string") {
+            return new ErrorResponseImpl(
+              parsed.status,
+              parsed.statusText,
+              parsed.data
+            );
+          }
+        } catch {
+        }
+      }
+    }
     function useHref(to2, { relative } = {}) {
       invariant(
         useInRouterContext(),
@@ -20799,7 +20964,7 @@ var require_assets = __commonJS({
         [to2, routePathnamesJson, locationPathname, relative]
       );
     }
-    function useRoutesImpl(routes, locationArg, dataRouterState, unstable_onError, future) {
+    function useRoutesImpl(routes, locationArg, dataRouterState, onError, future) {
       invariant(
         useInRouterContext(),
         // TODO: This error is probably because they somehow have 2 versions of the
@@ -20874,7 +21039,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         ),
         parentMatches,
         dataRouterState,
-        unstable_onError,
+        onError,
         future
       );
       return renderedMatches;
@@ -20934,15 +21099,61 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
       }
       render() {
-        return this.state.error !== void 0 ? /* @__PURE__ */ reactExports.createElement(RouteContext.Provider, { value: this.props.routeContext }, /* @__PURE__ */ reactExports.createElement(
+        let error2 = this.state.error;
+        if (this.context && typeof error2 === "object" && error2 && "digest" in error2 && typeof error2.digest === "string") {
+          const decoded = decodeRouteErrorResponseDigest(error2.digest);
+          if (decoded) error2 = decoded;
+        }
+        let result2 = error2 !== void 0 ? /* @__PURE__ */ reactExports.createElement(RouteContext.Provider, { value: this.props.routeContext }, /* @__PURE__ */ reactExports.createElement(
           RouteErrorContext.Provider,
           {
-            value: this.state.error,
+            value: error2,
             children: this.props.component
           }
         )) : this.props.children;
+        if (this.context) {
+          return /* @__PURE__ */ reactExports.createElement(RSCErrorHandler, { error: error2 }, result2);
+        }
+        return result2;
       }
     };
+    RenderErrorBoundary.contextType = RSCRouterContext;
+    var errorRedirectHandledMap = /* @__PURE__ */ new WeakMap();
+    function RSCErrorHandler({
+      children: children2,
+      error: error2
+    }) {
+      let { basename: basename2 } = reactExports.useContext(NavigationContext);
+      if (typeof error2 === "object" && error2 && "digest" in error2 && typeof error2.digest === "string") {
+        let redirect2 = decodeRedirectErrorDigest(error2.digest);
+        if (redirect2) {
+          let existingRedirect = errorRedirectHandledMap.get(error2);
+          if (existingRedirect) throw existingRedirect;
+          let parsed = parseToInfo(redirect2.location, basename2);
+          if (isBrowser && !errorRedirectHandledMap.get(error2)) {
+            if (parsed.isExternal || redirect2.reloadDocument) {
+              window.location.href = parsed.absoluteURL || parsed.to;
+            } else {
+              const redirectPromise = Promise.resolve().then(
+                () => window.__reactRouterDataRouter.navigate(parsed.to, {
+                  replace: redirect2.replace
+                })
+              );
+              errorRedirectHandledMap.set(error2, redirectPromise);
+              throw redirectPromise;
+            }
+          }
+          return /* @__PURE__ */ reactExports.createElement(
+            "meta",
+            {
+              httpEquiv: "refresh",
+              content: `0;url=${parsed.absoluteURL || parsed.to}`
+            }
+          );
+        }
+      }
+      return children2;
+    }
     function RenderedRoute({ routeContext, match, children: children2 }) {
       let dataRouterContext = reactExports.useContext(DataRouterContext);
       if (dataRouterContext && dataRouterContext.static && dataRouterContext.staticContext && (match.route.errorElement || match.route.ErrorBoundary)) {
@@ -20950,7 +21161,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
       return /* @__PURE__ */ reactExports.createElement(RouteContext.Provider, { value: routeContext }, children2);
     }
-    function _renderMatches(matches, parentMatches = [], dataRouterState = null, unstable_onError = null, future = null) {
+    function _renderMatches(matches, parentMatches = [], dataRouterState = null, onErrorHandler = null, future = null) {
       if (matches == null) {
         if (!dataRouterState) {
           return null;
@@ -21003,10 +21214,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
         }
       }
-      let onError = dataRouterState && unstable_onError ? (error2, errorInfo) => {
-        unstable_onError(error2, {
+      let onError = dataRouterState && onErrorHandler ? (error2, errorInfo) => {
+        onErrorHandler(error2, {
           location: dataRouterState.location,
           params: dataRouterState.matches?.[0]?.params ?? {},
+          unstable_pattern: getRoutePattern(dataRouterState.matches),
           errorInfo
         });
       } : void 0;
@@ -21143,7 +21355,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           warning(activeRef.current, navigateEffectWarning);
           if (!activeRef.current) return;
           if (typeof to2 === "number") {
-            router.navigate(to2);
+            await router.navigate(to2);
           } else {
             await router.navigate(to2, { fromRouteId: id, ...options2 });
           }
@@ -21164,6 +21376,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       if (!condition && !alreadyWarned2[message2]) {
         alreadyWarned2[message2] = true;
         console.warn(message2);
+      }
+    }
+    var USE_OPTIMISTIC = "useOptimistic";
+    var useOptimisticImpl = React4[USE_OPTIMISTIC];
+    var stableUseOptimisticSetter = () => void 0;
+    function useOptimisticSafe(val) {
+      if (useOptimisticImpl) {
+        return useOptimisticImpl(val);
+      } else {
+        return [val, stableUseOptimisticSetter];
       }
     }
     function mapRouteProperties(route) {
@@ -21242,9 +21464,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     function RouterProvider({
       router,
       flushSync: reactDomFlushSyncImpl,
-      unstable_onError
+      onError,
+      unstable_useTransitions
     }) {
-      let [state, setStateImpl] = reactExports.useState(router.state);
+      let unstable_rsc = useIsRSCRouterContext();
+      unstable_useTransitions = unstable_rsc || unstable_useTransitions;
+      let [_state, setStateImpl] = reactExports.useState(router.state);
+      let [state, setOptimisticState] = useOptimisticSafe(_state);
       let [pendingState, setPendingState] = reactExports.useState();
       let [vtContext, setVtContext] = reactExports.useState({
         isTransitioning: false
@@ -21253,26 +21479,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       let [transition, setTransition] = reactExports.useState();
       let [interruption, setInterruption] = reactExports.useState();
       let fetcherData = reactExports.useRef(/* @__PURE__ */ new Map());
-      let logErrorsAndSetState = reactExports.useCallback(
-        (newState) => {
-          setStateImpl((prevState) => {
-            if (newState.errors && unstable_onError) {
-              Object.entries(newState.errors).forEach(([routeId, error2]) => {
-                if (prevState.errors?.[routeId] !== error2) {
-                  unstable_onError(error2, {
-                    location: newState.location,
-                    params: newState.matches[0]?.params ?? {}
-                  });
-                }
-              });
-            }
-            return newState;
-          });
-        },
-        [unstable_onError]
-      );
       let setState2 = reactExports.useCallback(
-        (newState, { deletedFetchers, flushSync, viewTransitionOpts }) => {
+        (newState, { deletedFetchers, newErrors, flushSync, viewTransitionOpts }) => {
+          if (newErrors && onError) {
+            Object.values(newErrors).forEach(
+              (error2) => onError(error2, {
+                location: newState.location,
+                params: newState.matches[0]?.params ?? {},
+                unstable_pattern: getRoutePattern(newState.matches)
+              })
+            );
+          }
           newState.fetchers.forEach((fetcher, key2) => {
             if (fetcher.data !== void 0) {
               fetcherData.current.set(key2, fetcher.data);
@@ -21290,16 +21507,23 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           );
           if (!viewTransitionOpts || !isViewTransitionAvailable) {
             if (reactDomFlushSyncImpl && flushSync) {
-              reactDomFlushSyncImpl(() => logErrorsAndSetState(newState));
+              reactDomFlushSyncImpl(() => setStateImpl(newState));
+            } else if (unstable_useTransitions === false) {
+              setStateImpl(newState);
             } else {
-              reactExports.startTransition(() => logErrorsAndSetState(newState));
+              reactExports.startTransition(() => {
+                if (unstable_useTransitions === true) {
+                  setOptimisticState((s) => getOptimisticRouterState(s, newState));
+                }
+                setStateImpl(newState);
+              });
             }
             return;
           }
           if (reactDomFlushSyncImpl && flushSync) {
             reactDomFlushSyncImpl(() => {
               if (transition) {
-                renderDfd && renderDfd.resolve();
+                renderDfd?.resolve();
                 transition.skipTransition();
               }
               setVtContext({
@@ -21310,7 +21534,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               });
             });
             let t2 = router.window.document.startViewTransition(() => {
-              reactDomFlushSyncImpl(() => logErrorsAndSetState(newState));
+              reactDomFlushSyncImpl(() => setStateImpl(newState));
             });
             t2.finished.finally(() => {
               reactDomFlushSyncImpl(() => {
@@ -21324,7 +21548,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             return;
           }
           if (transition) {
-            renderDfd && renderDfd.resolve();
+            renderDfd?.resolve();
             transition.skipTransition();
             setInterruption({
               state: newState,
@@ -21346,7 +21570,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           reactDomFlushSyncImpl,
           transition,
           renderDfd,
-          logErrorsAndSetState
+          unstable_useTransitions,
+          setOptimisticState,
+          onError
         ]
       );
       reactExports.useLayoutEffect(() => router.subscribe(setState2), [router, setState2]);
@@ -21360,7 +21586,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           let newState = pendingState;
           let renderPromise = renderDfd.promise;
           let transition2 = router.window.document.startViewTransition(async () => {
-            reactExports.startTransition(() => logErrorsAndSetState(newState));
+            if (unstable_useTransitions === false) {
+              setStateImpl(newState);
+            } else {
+              reactExports.startTransition(() => {
+                if (unstable_useTransitions === true) {
+                  setOptimisticState((s) => getOptimisticRouterState(s, newState));
+                }
+                setStateImpl(newState);
+              });
+            }
             await renderPromise;
           });
           transition2.finished.finally(() => {
@@ -21371,7 +21606,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           });
           setTransition(transition2);
         }
-      }, [pendingState, renderDfd, router.window, logErrorsAndSetState]);
+      }, [
+        pendingState,
+        renderDfd,
+        router.window,
+        unstable_useTransitions,
+        setOptimisticState
+      ]);
       reactExports.useEffect(() => {
         if (renderDfd && pendingState && state.location.key === pendingState.location.key) {
           renderDfd.resolve();
@@ -21412,9 +21653,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           navigator: navigator2,
           static: false,
           basename: basename2,
-          unstable_onError
+          onError
         }),
-        [router, navigator2, basename2, unstable_onError]
+        [router, navigator2, basename2, onError]
       );
       return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement(DataRouterContext.Provider, { value: dataRouterContext }, /* @__PURE__ */ reactExports.createElement(DataRouterStateContext.Provider, { value: state }, /* @__PURE__ */ reactExports.createElement(FetchersContext.Provider, { value: fetcherData.current }, /* @__PURE__ */ reactExports.createElement(ViewTransitionContext.Provider, { value: vtContext }, /* @__PURE__ */ reactExports.createElement(
         Router,
@@ -21422,7 +21663,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           basename: basename2,
           location: state.location,
           navigationType: state.historyAction,
-          navigator: navigator2
+          navigator: navigator2,
+          unstable_useTransitions
         },
         /* @__PURE__ */ reactExports.createElement(
           MemoizedDataRoutes,
@@ -21430,19 +21672,33 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             routes: router.routes,
             future: router.future,
             state,
-            unstable_onError
+            onError
           }
         )
       ))))), null);
+    }
+    function getOptimisticRouterState(currentState, newState) {
+      return {
+        // Don't surface "current location specific" stuff mid-navigation
+        // (historyAction, location, matches, loaderData, errors, initialized,
+        // restoreScroll, preventScrollReset, blockers, etc.)
+        ...currentState,
+        // Only surface "pending/in-flight stuff"
+        // (navigation, revalidation, actionData, fetchers, )
+        navigation: newState.navigation.state !== "idle" ? newState.navigation : currentState.navigation,
+        revalidation: newState.revalidation !== "idle" ? newState.revalidation : currentState.revalidation,
+        actionData: newState.navigation.state !== "submitting" ? newState.actionData : currentState.actionData,
+        fetchers: newState.fetchers
+      };
     }
     var MemoizedDataRoutes = reactExports.memo(DataRoutes);
     function DataRoutes({
       routes,
       future,
       state,
-      unstable_onError
+      onError
     }) {
-      return useRoutesImpl(routes, void 0, state, unstable_onError, future);
+      return useRoutesImpl(routes, void 0, state, onError, future);
     }
     function Navigate({
       to: to2,
@@ -21485,7 +21741,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       location: locationProp,
       navigationType = "POP",
       navigator: navigator2,
-      static: staticProp = false
+      static: staticProp = false,
+      unstable_useTransitions
     }) {
       invariant(
         !useInRouterContext(),
@@ -21497,9 +21754,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           basename: basename2,
           navigator: navigator2,
           static: staticProp,
+          unstable_useTransitions,
           future: {}
         }),
-        [basename2, navigator2, staticProp]
+        [basename2, navigator2, staticProp, unstable_useTransitions]
       );
       if (typeof locationProp === "string") {
         locationProp = parsePath$1(locationProp);
@@ -21539,7 +21797,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     var defaultMethod = "get";
     var defaultEncType = "application/x-www-form-urlencoded";
     function isHtmlElement(object) {
-      return object != null && typeof object.tagName === "string";
+      return typeof HTMLElement !== "undefined" && object instanceof HTMLElement;
     }
     function isButtonElement(object) {
       return isHtmlElement(object) && object.tagName.toLowerCase() === "button";
@@ -21558,10 +21816,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       (!target2 || target2 === "_self") && // Let browser handle "target=_blank" etc.
       !isModifiedEvent(event);
     }
-    function createSearchParams(init = "") {
+    function createSearchParams(init2 = "") {
       return new URLSearchParams(
-        typeof init === "string" || Array.isArray(init) || init instanceof URLSearchParams ? init : Object.keys(init).reduce((memo2, key2) => {
-          let value2 = init[key2];
+        typeof init2 === "string" || Array.isArray(init2) || init2 instanceof URLSearchParams ? init2 : Object.keys(init2).reduce((memo2, key2) => {
+          let value2 = init2[key2];
           return memo2.concat(
             Array.isArray(value2) ? value2.map((v) => [key2, v]) : [[key2, value2]]
           );
@@ -22040,11 +22298,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         });
       };
     }
-    var isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined";
+    var isBrowser2 = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined";
     try {
-      if (isBrowser) {
+      if (isBrowser2) {
         window.__reactRouterVersion = // @ts-expect-error
-        "7.9.6";
+        "7.11.0";
       }
     } catch (e) {
     }
@@ -22123,32 +22381,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         to: to2,
         preventScrollReset,
         viewTransition,
+        unstable_defaultShouldRevalidate,
         ...rest
       }, forwardedRef) {
-        let { basename: basename2 } = reactExports.useContext(NavigationContext);
+        let { basename: basename2, unstable_useTransitions } = reactExports.useContext(NavigationContext);
         let isAbsolute = typeof to2 === "string" && ABSOLUTE_URL_REGEX2.test(to2);
-        let absoluteHref;
-        let isExternal = false;
-        if (typeof to2 === "string" && isAbsolute) {
-          absoluteHref = to2;
-          if (isBrowser) {
-            try {
-              let currentUrl = new URL(window.location.href);
-              let targetUrl = to2.startsWith("//") ? new URL(currentUrl.protocol + to2) : new URL(to2);
-              let path = stripBasename(targetUrl.pathname, basename2);
-              if (targetUrl.origin === currentUrl.origin && path != null) {
-                to2 = path + targetUrl.search + targetUrl.hash;
-              } else {
-                isExternal = true;
-              }
-            } catch (e) {
-              warning(
-                false,
-                `<Link to="${to2}"> contains an invalid URL which will probably break when clicked - please update to a valid URL path.`
-              );
-            }
-          }
-        }
+        let parsed = parseToInfo(to2, basename2);
+        to2 = parsed.to;
         let href = useHref(to2, { relative });
         let [shouldPrefetch, prefetchRef, prefetchHandlers] = usePrefetchBehavior(
           prefetch,
@@ -22160,7 +22399,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           target: target2,
           preventScrollReset,
           relative,
-          viewTransition
+          viewTransition,
+          unstable_defaultShouldRevalidate,
+          unstable_useTransitions
         });
         function handleClick(event) {
           if (onClick) onClick(event);
@@ -22175,8 +22416,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             {
               ...rest,
               ...prefetchHandlers,
-              href: absoluteHref || href,
-              onClick: isExternal || reloadDocument ? onClick : handleClick,
+              href: parsed.absoluteURL || href,
+              onClick: parsed.isExternal || reloadDocument ? onClick : handleClick,
               ref: mergeRefs(forwardedRef, prefetchRef),
               target: target2,
               "data-discover": !isAbsolute && discover === "render" ? "true" : void 0
@@ -22268,8 +22509,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         relative,
         preventScrollReset,
         viewTransition,
+        unstable_defaultShouldRevalidate,
         ...props
       }, forwardedRef) => {
+        let { unstable_useTransitions } = reactExports.useContext(NavigationContext);
         let submit = useSubmit();
         let formAction = useFormAction(action, { relative });
         let formMethod = method.toLowerCase() === "get" ? "get" : "post";
@@ -22280,7 +22523,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           event.preventDefault();
           let submitter = event.nativeEvent.submitter;
           let submitMethod = submitter?.getAttribute("formmethod") || method;
-          submit(submitter || event.currentTarget, {
+          let doSubmit = () => submit(submitter || event.currentTarget, {
             fetcherKey,
             method: submitMethod,
             navigate,
@@ -22288,8 +22531,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             state,
             relative,
             preventScrollReset,
-            viewTransition
+            viewTransition,
+            unstable_defaultShouldRevalidate
           });
+          if (unstable_useTransitions && navigate !== false) {
+            reactExports.startTransition(() => doSubmit());
+          } else {
+            doSubmit();
+          }
         };
         return /* @__PURE__ */ reactExports.createElement(
           "form",
@@ -22319,7 +22568,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       state,
       preventScrollReset,
       relative,
-      viewTransition
+      viewTransition,
+      unstable_defaultShouldRevalidate,
+      unstable_useTransitions
     } = {}) {
       let navigate = useNavigate();
       let location2 = useLocation();
@@ -22329,13 +22580,19 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           if (shouldProcessLinkClick(event, target2)) {
             event.preventDefault();
             let replace2 = replaceProp !== void 0 ? replaceProp : createPath(location2) === createPath(path);
-            navigate(to2, {
+            let doNavigate = () => navigate(to2, {
               replace: replace2,
               state,
               preventScrollReset,
               relative,
-              viewTransition
+              viewTransition,
+              unstable_defaultShouldRevalidate
             });
+            if (unstable_useTransitions) {
+              reactExports.startTransition(() => doNavigate());
+            } else {
+              doNavigate();
+            }
           }
         },
         [
@@ -22348,7 +22605,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           to2,
           preventScrollReset,
           relative,
-          viewTransition
+          viewTransition,
+          unstable_defaultShouldRevalidate,
+          unstable_useTransitions
         ]
       );
     }
@@ -22394,6 +22653,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       );
       let { basename: basename2 } = reactExports.useContext(NavigationContext);
       let currentRouteId = useRouteId();
+      let routerFetch = router.fetch;
+      let routerNavigate = router.navigate;
       return reactExports.useCallback(
         async (target2, options2 = {}) => {
           let { action, method, encType, formData, body: body2 } = getFormSubmissionInfo(
@@ -22402,7 +22663,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           );
           if (options2.navigate === false) {
             let key2 = options2.fetcherKey || getUniqueFetcherId();
-            await router.fetch(key2, currentRouteId, options2.action || action, {
+            await routerFetch(key2, currentRouteId, options2.action || action, {
+              unstable_defaultShouldRevalidate: options2.unstable_defaultShouldRevalidate,
               preventScrollReset: options2.preventScrollReset,
               formData,
               body: body2,
@@ -22411,7 +22673,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               flushSync: options2.flushSync
             });
           } else {
-            await router.navigate(options2.action || action, {
+            await routerNavigate(options2.action || action, {
+              unstable_defaultShouldRevalidate: options2.unstable_defaultShouldRevalidate,
               preventScrollReset: options2.preventScrollReset,
               formData,
               body: body2,
@@ -22425,7 +22688,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             });
           }
         },
-        [router, basename2, currentRouteId]
+        [routerFetch, routerNavigate, basename2, currentRouteId]
       );
     }
     function useFormAction(action, { relative } = {}) {
@@ -23905,9 +24168,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             for (var r3, i3 = 0, o2 = t3.length; i3 < o2; i3++) !r3 && i3 in t3 || ((r3 = r3 || Array.prototype.slice.call(t3, 0, i3))[i3] = t3[i3]);
             return e2.concat(r3 || Array.prototype.slice.call(t3));
           }
-          var f = "undefined" != typeof globalThis ? globalThis : "undefined" != typeof self ? self : "undefined" != typeof window ? window : commonjsGlobal, O2 = Object.keys, x2 = Array.isArray;
+          var f = "undefined" != typeof globalThis ? globalThis : "undefined" != typeof self ? self : "undefined" != typeof window ? window : commonjsGlobal, O = Object.keys, x2 = Array.isArray;
           function a(t3, n2) {
-            return "object" != typeof n2 || O2(n2).forEach(function(e2) {
+            return "object" != typeof n2 || O(n2).forEach(function(e2) {
               t3[e2] = n2[e2];
             }), t3;
           }
@@ -23917,7 +24180,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             return n.call(e2, t3);
           }
           function r2(t3, n2) {
-            "function" == typeof n2 && (n2 = n2(c2(t3))), ("undefined" == typeof Reflect ? O2 : Reflect.ownKeys)(n2).forEach(function(e2) {
+            "function" == typeof n2 && (n2 = n2(c2(t3))), ("undefined" == typeof Reflect ? O : Reflect.ownKeys)(n2).forEach(function(e2) {
               l(t3, e2, n2[e2]);
             });
           }
@@ -23960,16 +24223,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               return null == u2 ? void 0 : g(u2, t3.substr(a2 + 1));
             }
           }
-          function w2(e2, t3, n2) {
+          function w(e2, t3, n2) {
             if (e2 && void 0 !== t3 && !("isFrozen" in Object && Object.isFrozen(e2))) if ("string" != typeof t3 && "length" in t3) {
               y("string" != typeof n2 && "length" in n2);
-              for (var r3 = 0, i3 = t3.length; r3 < i3; ++r3) w2(e2, t3[r3], n2[r3]);
+              for (var r3 = 0, i3 = t3.length; r3 < i3; ++r3) w(e2, t3[r3], n2[r3]);
             } else {
               var o2, a2, u2 = t3.indexOf(".");
-              -1 !== u2 ? (o2 = t3.substr(0, u2), "" === (a2 = t3.substr(u2 + 1)) ? void 0 === n2 ? x2(e2) && !isNaN(parseInt(o2)) ? e2.splice(o2, 1) : delete e2[o2] : e2[o2] = n2 : w2(u2 = !(u2 = e2[o2]) || !m(e2, o2) ? e2[o2] = {} : u2, a2, n2)) : void 0 === n2 ? x2(e2) && !isNaN(parseInt(t3)) ? e2.splice(t3, 1) : delete e2[t3] : e2[t3] = n2;
+              -1 !== u2 ? (o2 = t3.substr(0, u2), "" === (a2 = t3.substr(u2 + 1)) ? void 0 === n2 ? x2(e2) && !isNaN(parseInt(o2)) ? e2.splice(o2, 1) : delete e2[o2] : e2[o2] = n2 : w(u2 = !(u2 = e2[o2]) || !m(e2, o2) ? e2[o2] = {} : u2, a2, n2)) : void 0 === n2 ? x2(e2) && !isNaN(parseInt(t3)) ? e2.splice(t3, 1) : delete e2[t3] : e2[t3] = n2;
             }
           }
-          function k(e2) {
+          function k2(e2) {
             var t3, n2 = {};
             for (t3 in e2) m(e2, t3) && (n2[t3] = e2[t3]);
             return n2;
@@ -23987,28 +24250,28 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }), K2 = new Set(e.map(function(e2) {
             return f[e2];
           }));
-          var E2 = null;
-          function S2(e2) {
-            E2 = /* @__PURE__ */ new WeakMap();
+          var E = null;
+          function S(e2) {
+            E = /* @__PURE__ */ new WeakMap();
             e2 = (function e3(t3) {
               if (!t3 || "object" != typeof t3) return t3;
-              var n2 = E2.get(t3);
+              var n2 = E.get(t3);
               if (n2) return n2;
               if (x2(t3)) {
-                n2 = [], E2.set(t3, n2);
+                n2 = [], E.set(t3, n2);
                 for (var r3 = 0, i3 = t3.length; r3 < i3; ++r3) n2.push(e3(t3[r3]));
               } else if (K2.has(t3.constructor)) n2 = t3;
               else {
                 var o2, a2 = c2(t3);
-                for (o2 in n2 = a2 === Object.prototype ? {} : Object.create(a2), E2.set(t3, n2), t3) m(t3, o2) && (n2[o2] = e3(t3[o2]));
+                for (o2 in n2 = a2 === Object.prototype ? {} : Object.create(a2), E.set(t3, n2), t3) m(t3, o2) && (n2[o2] = e3(t3[o2]));
               }
               return n2;
             })(e2);
-            return E2 = null, e2;
+            return E = null, e2;
           }
-          var j2 = {}.toString;
+          var j = {}.toString;
           function A2(e2) {
-            return j2.call(e2).slice(8, -1);
+            return j.call(e2).slice(8, -1);
           }
           var C2 = "undefined" != typeof Symbol ? Symbol.iterator : "@@iterator", T = "symbol" == typeof C2 ? function(e2) {
             var t3;
@@ -24021,7 +24284,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             return 0 <= t3 && e2.splice(t3, 1), 0 <= t3;
           }
           var q = {};
-          function D(e2) {
+          function D2(e2) {
             var t3, n2, r3, i3;
             if (1 === arguments.length) {
               if (x2(e2)) return e2.slice();
@@ -24042,8 +24305,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             return "AsyncFunction" === e2[Symbol.toStringTag];
           } : function() {
             return false;
-          }, R = ["Unknown", "Constraint", "Data", "TransactionInactive", "ReadOnly", "Version", "NotFound", "InvalidState", "InvalidAccess", "Abort", "Timeout", "QuotaExceeded", "Syntax", "DataClone"], F = ["Modify", "Bulk", "OpenFailed", "VersionChange", "Schema", "Upgrade", "InvalidTable", "MissingAPI", "NoSuchDatabase", "InvalidArgument", "SubTransaction", "Unsupported", "Internal", "DatabaseClosed", "PrematureCommit", "ForeignAwait"].concat(R), M2 = { VersionChanged: "Database version changed by other database connection", DatabaseClosed: "Database has been closed", Abort: "Transaction aborted", TransactionInactive: "Transaction has already completed or failed", MissingAPI: "IndexedDB API missing. Please visit https://tinyurl.com/y2uuvskb" };
-          function N2(e2, t3) {
+          }, R = ["Unknown", "Constraint", "Data", "TransactionInactive", "ReadOnly", "Version", "NotFound", "InvalidState", "InvalidAccess", "Abort", "Timeout", "QuotaExceeded", "Syntax", "DataClone"], F2 = ["Modify", "Bulk", "OpenFailed", "VersionChange", "Schema", "Upgrade", "InvalidTable", "MissingAPI", "NoSuchDatabase", "InvalidArgument", "SubTransaction", "Unsupported", "Internal", "DatabaseClosed", "PrematureCommit", "ForeignAwait"].concat(R), M = { VersionChanged: "Database version changed by other database connection", DatabaseClosed: "Database has been closed", Abort: "Transaction aborted", TransactionInactive: "Transaction has already completed or failed", MissingAPI: "IndexedDB API missing. Please visit https://tinyurl.com/y2uuvskb" };
+          function N(e2, t3) {
             this.name = e2, this.message = t3;
           }
           function L(e2, t3) {
@@ -24061,15 +24324,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               return t3[e3];
             }), this.failuresByPos = t3, this.message = L(e2, this.failures);
           }
-          o(N2).from(Error).extend({ toString: function() {
+          o(N).from(Error).extend({ toString: function() {
             return this.name + ": " + this.message;
-          } }), o(U2).from(N2), o(V2).from(N2);
-          var z = F.reduce(function(e2, t3) {
+          } }), o(U2).from(N), o(V2).from(N);
+          var z = F2.reduce(function(e2, t3) {
             return e2[t3] = t3 + "Error", e2;
-          }, {}), W = N2, Y2 = F.reduce(function(e2, n2) {
+          }, {}), W = N, Y2 = F2.reduce(function(e2, n2) {
             var r3 = n2 + "Error";
             function t3(e3, t4) {
-              this.name = r3, e3 ? "string" == typeof e3 ? (this.message = "".concat(e3).concat(t4 ? "\n " + t4 : ""), this.inner = t4 || null) : "object" == typeof e3 && (this.message = "".concat(e3.name, " ").concat(e3.message), this.inner = e3) : (this.message = M2[n2] || r3, this.inner = null);
+              this.name = r3, e3 ? "string" == typeof e3 ? (this.message = "".concat(e3).concat(t4 ? "\n " + t4 : ""), this.inner = t4 || null) : "object" == typeof e3 && (this.message = "".concat(e3.name, " ").concat(e3.message), this.inner = e3) : (this.message = M[n2] || r3, this.inner = null);
             }
             return o(t3).from(W), e2[n2] = t3, e2;
           }, {});
@@ -24077,10 +24340,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           var $2 = R.reduce(function(e2, t3) {
             return e2[t3 + "Error"] = Y2[t3], e2;
           }, {});
-          var Q = F.reduce(function(e2, t3) {
+          var Q2 = F2.reduce(function(e2, t3) {
             return -1 === ["Syntax", "Type", "Range"].indexOf(t3) && (e2[t3 + "Error"] = Y2[t3]), e2;
           }, {});
-          function G2() {
+          function G() {
           }
           function X2(e2) {
             return e2;
@@ -24090,45 +24353,45 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               return n2(t3(e2));
             };
           }
-          function J(e2, t3) {
+          function J2(e2, t3) {
             return function() {
               e2.apply(this, arguments), t3.apply(this, arguments);
             };
           }
           function Z2(i3, o2) {
-            return i3 === G2 ? o2 : function() {
+            return i3 === G ? o2 : function() {
               var e2 = i3.apply(this, arguments);
               void 0 !== e2 && (arguments[0] = e2);
               var t3 = this.onsuccess, n2 = this.onerror;
               this.onsuccess = null, this.onerror = null;
               var r3 = o2.apply(this, arguments);
-              return t3 && (this.onsuccess = this.onsuccess ? J(t3, this.onsuccess) : t3), n2 && (this.onerror = this.onerror ? J(n2, this.onerror) : n2), void 0 !== r3 ? r3 : e2;
+              return t3 && (this.onsuccess = this.onsuccess ? J2(t3, this.onsuccess) : t3), n2 && (this.onerror = this.onerror ? J2(n2, this.onerror) : n2), void 0 !== r3 ? r3 : e2;
             };
           }
           function ee2(n2, r3) {
-            return n2 === G2 ? r3 : function() {
+            return n2 === G ? r3 : function() {
               n2.apply(this, arguments);
               var e2 = this.onsuccess, t3 = this.onerror;
-              this.onsuccess = this.onerror = null, r3.apply(this, arguments), e2 && (this.onsuccess = this.onsuccess ? J(e2, this.onsuccess) : e2), t3 && (this.onerror = this.onerror ? J(t3, this.onerror) : t3);
+              this.onsuccess = this.onerror = null, r3.apply(this, arguments), e2 && (this.onsuccess = this.onsuccess ? J2(e2, this.onsuccess) : e2), t3 && (this.onerror = this.onerror ? J2(t3, this.onerror) : t3);
             };
           }
           function te2(i3, o2) {
-            return i3 === G2 ? o2 : function(e2) {
+            return i3 === G ? o2 : function(e2) {
               var t3 = i3.apply(this, arguments);
               a(e2, t3);
               var n2 = this.onsuccess, r3 = this.onerror;
               this.onsuccess = null, this.onerror = null;
               e2 = o2.apply(this, arguments);
-              return n2 && (this.onsuccess = this.onsuccess ? J(n2, this.onsuccess) : n2), r3 && (this.onerror = this.onerror ? J(r3, this.onerror) : r3), void 0 === t3 ? void 0 === e2 ? void 0 : e2 : a(t3, e2);
+              return n2 && (this.onsuccess = this.onsuccess ? J2(n2, this.onsuccess) : n2), r3 && (this.onerror = this.onerror ? J2(r3, this.onerror) : r3), void 0 === t3 ? void 0 === e2 ? void 0 : e2 : a(t3, e2);
             };
           }
           function ne2(e2, t3) {
-            return e2 === G2 ? t3 : function() {
+            return e2 === G ? t3 : function() {
               return false !== t3.apply(this, arguments) && e2.apply(this, arguments);
             };
           }
           function re2(i3, o2) {
-            return i3 === G2 ? o2 : function() {
+            return i3 === G ? o2 : function() {
               var e2 = i3.apply(this, arguments);
               if (e2 && "function" == typeof e2.then) {
                 for (var t3 = this, n2 = arguments.length, r3 = new Array(n2); n2--; ) r3[n2] = arguments[n2];
@@ -24139,7 +24402,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               return o2.apply(this, arguments);
             };
           }
-          Q.ModifyError = U2, Q.DexieError = N2, Q.BulkError = V2;
+          Q2.ModifyError = U2, Q2.DexieError = N, Q2.BulkError = V2;
           var ie2 = "undefined" != typeof location && /^(http|https):\/\/(localhost|127\.0\.0\.1)/.test(location.href);
           function oe2(e2) {
             ie2 = e2;
@@ -24149,14 +24412,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             if ("undefined" == typeof crypto || !crypto.subtle) return [e2, c2(e2), e2];
             var t3 = crypto.subtle.digest("SHA-512", new Uint8Array([0]));
             return [t3, c2(t3), e2];
-          })(), R = e[0], F = e[1], e = e[2], F = F && F.then, se2 = R && R.constructor, ce2 = !!e;
+          })(), R = e[0], F2 = e[1], e = e[2], F2 = F2 && F2.then, se2 = R && R.constructor, ce2 = !!e;
           var le2 = function(e2, t3) {
             be2.push([e2, t3]), he2 && (queueMicrotask(Se2), he2 = false);
-          }, fe = true, he2 = true, de = [], pe2 = [], ye2 = X2, ve2 = { id: "global", global: true, ref: 0, unhandleds: [], onunhandled: G2, pgp: false, env: {}, finalize: G2 }, me = ve2, be2 = [], ge2 = 0, we2 = [];
+          }, fe2 = true, he2 = true, de2 = [], pe2 = [], ye2 = X2, ve2 = { id: "global", global: true, ref: 0, unhandleds: [], onunhandled: G, pgp: false, env: {}, finalize: G }, me2 = ve2, be2 = [], ge2 = 0, we2 = [];
           function _e2(e2) {
             if ("object" != typeof this) throw new TypeError("Promises must be constructed via new");
             this._listeners = [], this._lib = false;
-            var t3 = this._PSD = me;
+            var t3 = this._PSD = me2;
             if ("function" != typeof e2) {
               if (e2 !== ae2) throw new TypeError("Not a function");
               return this._state = arguments[1], this._value = arguments[2], void (false === this._state && Oe2(this, this._value));
@@ -24178,9 +24441,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             })(this, e2);
           }
           var xe2 = { get: function() {
-            var u2 = me, t3 = Fe2;
+            var u2 = me2, t3 = Fe2;
             function e2(n2, r3) {
-              var i3 = this, o2 = !u2.global && (u2 !== me || t3 !== Fe2), a2 = o2 && !Ue2(), e3 = new _e2(function(e4, t4) {
+              var i3 = this, o2 = !u2.global && (u2 !== me2 || t3 !== Fe2), a2 = o2 && !Ue2(), e3 = new _e2(function(e4, t4) {
                 Ke2(i3, new ke2(Qe2(n2, u2, o2, a2), Qe2(r3, u2, o2, a2), e4, t4, u2));
               });
               return this._consoleTask && (e3._consoleTask = this._consoleTask), e3;
@@ -24196,9 +24459,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
           function Oe2(e2, t3) {
             var n2, r3;
-            pe2.push(t3), null === e2._state && (n2 = e2._lib && je2(), t3 = ye2(t3), e2._state = false, e2._value = t3, r3 = e2, de.some(function(e3) {
+            pe2.push(t3), null === e2._state && (n2 = e2._lib && je2(), t3 = ye2(t3), e2._state = false, e2._value = t3, r3 = e2, de2.some(function(e3) {
               return e3._value === r3._value;
-            }) || de.push(r3), Pe2(e2), n2 && Ae2());
+            }) || de2.push(r3), Pe2(e2), n2 && Ae2());
           }
           function Pe2(e2) {
             var t3 = e2._listeners;
@@ -24222,8 +24485,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               !t3._state && pe2.length && (pe2 = []), r3 = ie2 && t3._consoleTask ? t3._consoleTask.run(function() {
                 return e2(i3);
               }) : e2(i3), t3._state || -1 !== pe2.indexOf(i3) || (function(e3) {
-                var t4 = de.length;
-                for (; t4; ) if (de[--t4]._value === e3._value) return de.splice(t4, 1);
+                var t4 = de2.length;
+                for (; t4; ) if (de2[--t4]._value === e3._value) return de2.splice(t4, 1);
               })(t3), n2.resolve(r3);
             } catch (e3) {
               n2.reject(e3);
@@ -24237,8 +24500,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             });
           }
           function je2() {
-            var e2 = fe;
-            return he2 = fe = false, e2;
+            var e2 = fe2;
+            return he2 = fe2 = false, e2;
           }
           function Ae2() {
             var e2, t3, n2;
@@ -24248,11 +24511,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 r3[0].apply(null, r3[1]);
               }
             } while (0 < be2.length);
-            he2 = fe = true;
+            he2 = fe2 = true;
           }
           function Ce2() {
-            var e2 = de;
-            de = [], e2.forEach(function(e3) {
+            var e2 = de2;
+            de2 = [], e2.forEach(function(e3) {
               e3._PSD.onunhandled.call(null, e3._value, e3);
             });
             for (var t3 = we2.slice(0), n2 = t3.length; n2; ) t3[--n2]();
@@ -24261,9 +24524,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             return new _e2(ae2, false, e2);
           }
           function Ie2(n2, r3) {
-            var i3 = me;
+            var i3 = me2;
             return function() {
-              var e2 = je2(), t3 = me;
+              var e2 = je2(), t3 = me2;
               try {
                 return We2(i3, true), n2.apply(this, arguments);
               } catch (e3) {
@@ -24274,7 +24537,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             };
           }
           r2(_e2.prototype, { then: xe2, _then: function(e2, t3) {
-            Ke2(this, new ke2(null, null, e2, t3, me));
+            Ke2(this, new ke2(null, null, e2, t3, me2));
           }, catch: function(e2) {
             if (1 === arguments.length) return this.then(null, e2);
             var t3 = e2, n2 = arguments[1];
@@ -24302,7 +24565,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               o2.then(e2, t3).finally(clearTimeout.bind(null, n2));
             }) : this;
           } }), "undefined" != typeof Symbol && Symbol.toStringTag && l(_e2.prototype, Symbol.toStringTag, "Dexie.Promise"), ve2.env = Ye2(), r2(_e2, { all: function() {
-            var o2 = D.apply(null, arguments).map(Ve2);
+            var o2 = D2.apply(null, arguments).map(Ve2);
             return new _e2(function(n2, r3) {
               0 === o2.length && n2([]);
               var i3 = o2.length;
@@ -24317,16 +24580,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               n2.then(e2, t3);
             }) : new _e2(ae2, true, n2);
           }, reject: Te2, race: function() {
-            var e2 = D.apply(null, arguments).map(Ve2);
+            var e2 = D2.apply(null, arguments).map(Ve2);
             return new _e2(function(t3, n2) {
               e2.map(function(e3) {
                 return _e2.resolve(e3).then(t3, n2);
               });
             });
           }, PSD: { get: function() {
-            return me;
+            return me2;
           }, set: function(e2) {
-            return me = e2;
+            return me2 = e2;
           } }, totalEchoes: { get: function() {
             return Fe2;
           } }, newPSD: Ne2, usePSD: $e2, scheduler: { get: function() {
@@ -24340,8 +24603,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           } }, follow: function(i3, n2) {
             return new _e2(function(e2, t3) {
               return Ne2(function(n3, r3) {
-                var e3 = me;
-                e3.unhandleds = [], e3.onunhandled = r3, e3.finalize = J(function() {
+                var e3 = me2;
+                e3.unhandleds = [], e3.onunhandled = r3, e3.finalize = J2(function() {
                   var t4, e4 = this;
                   t4 = function() {
                     0 === e4.unhandleds.length ? n3() : r3(e4.unhandleds[0]);
@@ -24354,7 +24617,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               }, n2, e2, t3);
             });
           } }), se2 && (se2.allSettled && l(_e2, "allSettled", function() {
-            var e2 = D.apply(null, arguments).map(Ve2);
+            var e2 = D2.apply(null, arguments).map(Ve2);
             return new _e2(function(n2) {
               0 === e2.length && n2([]);
               var r3 = e2.length, i3 = new Array(r3);
@@ -24369,7 +24632,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               });
             });
           }), se2.any && "undefined" != typeof AggregateError && l(_e2, "any", function() {
-            var e2 = D.apply(null, arguments).map(Ve2);
+            var e2 = D2.apply(null, arguments).map(Ve2);
             return new _e2(function(n2, r3) {
               0 === e2.length && r3(new AggregateError([]));
               var i3 = e2.length, o2 = new Array(i3);
@@ -24384,7 +24647,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }), se2.withResolvers && (_e2.withResolvers = se2.withResolvers));
           var qe2 = { awaits: 0, echoes: 0, id: 0 }, De2 = 0, Be2 = [], Re2 = 0, Fe2 = 0, Me2 = 0;
           function Ne2(e2, t3, n2, r3) {
-            var i3 = me, o2 = Object.create(i3);
+            var i3 = me2, o2 = Object.create(i3);
             o2.parent = i3, o2.ref = 0, o2.global = false, o2.id = ++Me2, ve2.env, o2.env = ce2 ? { Promise: _e2, PromiseProp: { value: _e2, configurable: true, writable: true }, all: _e2.all, race: _e2.race, allSettled: _e2.allSettled, any: _e2.any, resolve: _e2.resolve, reject: _e2.reject } : {}, t3 && a(o2, t3), ++i3.ref, o2.finalize = function() {
               --this.parent.ref || this.parent.finalize();
             };
@@ -24409,17 +24672,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             Be2.pop(), We2(e2, false);
           }
           function We2(e2, t3) {
-            var n2, r3 = me;
-            (t3 ? !qe2.echoes || Re2++ && e2 === me : !Re2 || --Re2 && e2 === me) || queueMicrotask(t3 ? (function(e3) {
-              ++Fe2, qe2.echoes && 0 != --qe2.echoes || (qe2.echoes = qe2.awaits = qe2.id = 0), Be2.push(me), We2(e3, true);
-            }).bind(null, e2) : ze2), e2 !== me && (me = e2, r3 === ve2 && (ve2.env = Ye2()), ce2 && (n2 = ve2.env.Promise, t3 = e2.env, (r3.global || e2.global) && (Object.defineProperty(f, "Promise", t3.PromiseProp), n2.all = t3.all, n2.race = t3.race, n2.resolve = t3.resolve, n2.reject = t3.reject, t3.allSettled && (n2.allSettled = t3.allSettled), t3.any && (n2.any = t3.any))));
+            var n2, r3 = me2;
+            (t3 ? !qe2.echoes || Re2++ && e2 === me2 : !Re2 || --Re2 && e2 === me2) || queueMicrotask(t3 ? (function(e3) {
+              ++Fe2, qe2.echoes && 0 != --qe2.echoes || (qe2.echoes = qe2.awaits = qe2.id = 0), Be2.push(me2), We2(e3, true);
+            }).bind(null, e2) : ze2), e2 !== me2 && (me2 = e2, r3 === ve2 && (ve2.env = Ye2()), ce2 && (n2 = ve2.env.Promise, t3 = e2.env, (r3.global || e2.global) && (Object.defineProperty(f, "Promise", t3.PromiseProp), n2.all = t3.all, n2.race = t3.race, n2.resolve = t3.resolve, n2.reject = t3.reject, t3.allSettled && (n2.allSettled = t3.allSettled), t3.any && (n2.any = t3.any))));
           }
           function Ye2() {
             var e2 = f.Promise;
             return ce2 ? { Promise: e2, PromiseProp: Object.getOwnPropertyDescriptor(f, "Promise"), all: e2.all, race: e2.race, allSettled: e2.allSettled, any: e2.any, resolve: e2.resolve, reject: e2.reject } : {};
           }
           function $e2(e2, t3, n2, r3, i3) {
-            var o2 = me;
+            var o2 = me2;
             try {
               return We2(e2, true), t3(n2, r3, i3);
             } finally {
@@ -24428,7 +24691,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
           function Qe2(t3, n2, r3, i3) {
             return "function" != typeof t3 ? t3 : function() {
-              var e2 = me;
+              var e2 = me2;
               r3 && Le2(), We2(n2, true);
               try {
                 return t3.apply(this, arguments);
@@ -24440,28 +24703,28 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           function Ge2(e2) {
             Promise === se2 && 0 === qe2.echoes ? 0 === Re2 ? e2() : enqueueNativeMicroTask(e2) : setTimeout(e2, 0);
           }
-          -1 === ("" + F).indexOf("[native code]") && (Le2 = Ue2 = G2);
+          -1 === ("" + F2).indexOf("[native code]") && (Le2 = Ue2 = G);
           var Xe2 = _e2.reject;
-          var He = String.fromCharCode(65535), Je2 = "Invalid key provided. Keys must be of type string, number, Date or Array<string | number | Date>.", Ze2 = "String expected.", et2 = [], tt = "__dbnames", nt = "readonly", rt2 = "readwrite";
+          var He = String.fromCharCode(65535), Je2 = "Invalid key provided. Keys must be of type string, number, Date or Array<string | number | Date>.", Ze2 = "String expected.", et2 = [], tt2 = "__dbnames", nt = "readonly", rt2 = "readwrite";
           function it2(e2, t3) {
             return e2 ? t3 ? function() {
               return e2.apply(this, arguments) && t3.apply(this, arguments);
             } : e2 : t3;
           }
           var ot2 = { type: 3, lower: -1 / 0, lowerOpen: false, upper: [[]], upperOpen: false };
-          function at2(t3) {
+          function at(t3) {
             return "string" != typeof t3 || /\./.test(t3) ? function(e2) {
               return e2;
             } : function(e2) {
-              return void 0 === e2[t3] && t3 in e2 && delete (e2 = S2(e2))[t3], e2;
+              return void 0 === e2[t3] && t3 in e2 && delete (e2 = S(e2))[t3], e2;
             };
           }
-          function ut() {
+          function ut2() {
             throw Y2.Type("Entity instances must never be new:ed. Instances are generated by the framework bypassing the constructor.");
           }
-          function st2(e2, t3) {
+          function st(e2, t3) {
             try {
-              var n2 = ct2(e2), r3 = ct2(t3);
+              var n2 = ct(e2), r3 = ct(t3);
               if (n2 !== r3) return "Array" === n2 ? 1 : "Array" === r3 ? -1 : "binary" === n2 ? 1 : "binary" === r3 ? -1 : "string" === n2 ? 1 : "string" === r3 ? -1 : "Date" === n2 ? 1 : "Date" !== r3 ? NaN : -1;
               switch (n2) {
                 case "number":
@@ -24476,7 +24739,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 case "Array":
                   return (function(e3, t4) {
                     for (var n3 = e3.length, r4 = t4.length, i3 = n3 < r4 ? n3 : r4, o2 = 0; o2 < i3; ++o2) {
-                      var a2 = st2(e3[o2], t4[o2]);
+                      var a2 = st(e3[o2], t4[o2]);
                       if (0 !== a2) return a2;
                     }
                     return n3 === r4 ? 0 : n3 < r4 ? -1 : 1;
@@ -24486,7 +24749,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             }
             return NaN;
           }
-          function ct2(e2) {
+          function ct(e2) {
             var t3 = typeof e2;
             if ("object" != t3) return t3;
             if (ArrayBuffer.isView(e2)) return "binary";
@@ -24507,7 +24770,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               return r3;
             })) : r3;
           }
-          var ht2 = (dt.prototype.execute = function(e2) {
+          var ht2 = (dt2.prototype.execute = function(e2) {
             var t3 = this["@@propmod"];
             if (void 0 !== t3.add) {
               var n2 = t3.add;
@@ -24535,29 +24798,29 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             }
             n2 = null === (n2 = t3.replacePrefix) || void 0 === n2 ? void 0 : n2[0];
             return n2 && "string" == typeof e2 && e2.startsWith(n2) ? t3.replacePrefix[1] + e2.substring(n2.length) : e2;
-          }, dt);
-          function dt(e2) {
+          }, dt2);
+          function dt2(e2) {
             this["@@propmod"] = e2;
           }
-          function pt2(e2, t3) {
-            for (var n2 = O2(t3), r3 = n2.length, i3 = false, o2 = 0; o2 < r3; ++o2) {
+          function pt(e2, t3) {
+            for (var n2 = O(t3), r3 = n2.length, i3 = false, o2 = 0; o2 < r3; ++o2) {
               var a2 = n2[o2], u2 = t3[a2], s2 = g(e2, a2);
-              u2 instanceof ht2 ? (w2(e2, a2, u2.execute(s2)), i3 = true) : s2 !== u2 && (w2(e2, a2, u2), i3 = true);
+              u2 instanceof ht2 ? (w(e2, a2, u2.execute(s2)), i3 = true) : s2 !== u2 && (w(e2, a2, u2), i3 = true);
             }
             return i3;
           }
-          var yt = (vt2.prototype._trans = function(e2, r3, t3) {
-            var n2 = this._tx || me.trans, i3 = this.name, o2 = ie2 && "undefined" != typeof console && console.createTask && console.createTask("Dexie: ".concat("readonly" === e2 ? "read" : "write", " ").concat(this.name));
+          var yt2 = (vt2.prototype._trans = function(e2, r3, t3) {
+            var n2 = this._tx || me2.trans, i3 = this.name, o2 = ie2 && "undefined" != typeof console && console.createTask && console.createTask("Dexie: ".concat("readonly" === e2 ? "read" : "write", " ").concat(this.name));
             function a2(e3, t4, n3) {
               if (!n3.schema[i3]) throw new Y2.NotFound("Table " + i3 + " not part of transaction");
               return r3(n3.idbtrans, n3);
             }
             var u2 = je2();
             try {
-              var s2 = n2 && n2.db._novip === this.db._novip ? n2 === me.trans ? n2._promise(e2, a2, t3) : Ne2(function() {
+              var s2 = n2 && n2.db._novip === this.db._novip ? n2 === me2.trans ? n2._promise(e2, a2, t3) : Ne2(function() {
                 return n2._promise(e2, a2, t3);
-              }, { trans: n2, transless: me.transless || me }) : (function t4(n3, r4, i4, o3) {
-                if (n3.idbdb && (n3._state.openComplete || me.letThrough || n3._vip)) {
+              }, { trans: n2, transless: me2.transless || me2 }) : (function t4(n3, r4, i4, o3) {
+                if (n3.idbdb && (n3._state.openComplete || me2.letThrough || n3._vip)) {
                   var a3 = n3._createTransaction(r4, i4, n3._dbSchema);
                   try {
                     a3.create(), n3._state.PR1398_maxLoop = 3;
@@ -24568,7 +24831,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                   }
                   return a3._promise(r4, function(e3, t5) {
                     return Ne2(function() {
-                      return me.trans = a3, o3(e3, t5, a3);
+                      return me2.trans = a3, o3(e3, t5, a3);
                     });
                   }).then(function(e3) {
                     if ("readwrite" === r4) try {
@@ -24583,7 +24846,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 if (n3._state.openComplete) return Xe2(new Y2.DatabaseClosed(n3._state.dbOpenError));
                 if (!n3._state.isBeingOpened) {
                   if (!n3._state.autoOpen) return Xe2(new Y2.DatabaseClosed());
-                  n3.open().catch(G2);
+                  n3.open().catch(G);
                 }
                 return n3._state.dbReadyPromise.then(function() {
                   return t4(n3, r4, i4, o3);
@@ -24605,7 +24868,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }, vt2.prototype.where = function(o2) {
             if ("string" == typeof o2) return new this.db.WhereClause(this, o2);
             if (x2(o2)) return new this.db.WhereClause(this, "[".concat(o2.join("+"), "]"));
-            var n2 = O2(o2);
+            var n2 = O(o2);
             if (1 === n2.length) return this.where(n2[0]).equals(o2[n2[0]]);
             var e2 = this.schema.indexes.concat(this.schema.primKey).filter(function(t4) {
               if (t4.compound && n2.every(function(e4) {
@@ -24627,7 +24890,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             !e2 && ie2 && console.warn("The query ".concat(JSON.stringify(o2), " on ").concat(this.name, " would benefit from a ") + "compound index [".concat(n2.join("+"), "]"));
             var a2 = this.schema.idxByName;
             function u2(e3, t4) {
-              return 0 === st2(e3, t4);
+              return 0 === st(e3, t4);
             }
             var r3 = n2.reduce(function(e3, t4) {
               var n3 = e3[0], r4 = e3[1], e3 = a2[t4], i3 = o2[t4];
@@ -24664,7 +24927,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             function i3() {
               return null !== e2 && e2.apply(this, arguments) || this;
             }
-            (this.schema.mappedClass = r3).prototype instanceof ut && ((function(e3, t4) {
+            (this.schema.mappedClass = r3).prototype instanceof ut2 && ((function(e3, t4) {
               if ("function" != typeof t4 && null !== t4) throw new TypeError("Class extends value " + String(t4) + " is not a constructor or null");
               function n3() {
                 this.constructor = e3;
@@ -24694,13 +24957,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             });
           }, vt2.prototype.add = function(t3, n2) {
             var r3 = this, e2 = this.schema.primKey, i3 = e2.auto, o2 = e2.keyPath, a2 = t3;
-            return o2 && i3 && (a2 = at2(o2)(t3)), this._trans("readwrite", function(e3) {
+            return o2 && i3 && (a2 = at(o2)(t3)), this._trans("readwrite", function(e3) {
               return r3.core.mutate({ trans: e3, type: "add", keys: null != n2 ? [n2] : null, values: [a2] });
             }).then(function(e3) {
               return e3.numFailures ? _e2.reject(e3.failures[0]) : e3.lastResult;
             }).then(function(e3) {
               if (o2) try {
-                w2(t3, o2, e3);
+                w(t3, o2, e3);
               } catch (e4) {
               }
               return e3;
@@ -24710,7 +24973,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             return this._trans("readwrite", function(n2) {
               return o2.core.get({ trans: n2, key: r3 }).then(function(t3) {
                 var e2 = null != t3 ? t3 : {};
-                return pt2(e2, i3), a2 && w2(e2, a2, r3), o2.core.mutate({ trans: n2, type: "put", values: [e2], keys: [r3], upsert: true, updates: { keys: [r3], changeSpecs: [i3] } }).then(function(e3) {
+                return pt(e2, i3), a2 && w(e2, a2, r3), o2.core.mutate({ trans: n2, type: "put", values: [e2], keys: [r3], upsert: true, updates: { keys: [r3], changeSpecs: [i3] } }).then(function(e3) {
                   return e3.numFailures ? _e2.reject(e3.failures[0]) : !!t3;
                 });
               });
@@ -24721,13 +24984,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             return void 0 === e2 ? Xe2(new Y2.InvalidArgument("Given object does not contain its primary key")) : this.where(":id").equals(e2).modify(t3);
           }, vt2.prototype.put = function(t3, n2) {
             var r3 = this, e2 = this.schema.primKey, i3 = e2.auto, o2 = e2.keyPath, a2 = t3;
-            return o2 && i3 && (a2 = at2(o2)(t3)), this._trans("readwrite", function(e3) {
+            return o2 && i3 && (a2 = at(o2)(t3)), this._trans("readwrite", function(e3) {
               return r3.core.mutate({ trans: e3, type: "put", values: [a2], keys: null != n2 ? [n2] : null });
             }).then(function(e3) {
               return e3.numFailures ? _e2.reject(e3.failures[0]) : e3.lastResult;
             }).then(function(e3) {
               if (o2) try {
-                w2(t3, o2, e3);
+                w(t3, o2, e3);
               } catch (e4) {
               }
               return e3;
@@ -24765,7 +25028,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               var t4 = o2.schema.primKey, n2 = t4.auto, t4 = t4.keyPath;
               if (t4 && a2) throw new Y2.InvalidArgument("bulkAdd(): keys argument invalid on tables with inbound keys");
               if (a2 && a2.length !== r3.length) throw new Y2.InvalidArgument("Arguments objects and keys must have the same length");
-              var i3 = r3.length, t4 = t4 && n2 ? r3.map(at2(t4)) : r3;
+              var i3 = r3.length, t4 = t4 && n2 ? r3.map(at(t4)) : r3;
               return o2.core.mutate({ trans: e3, type: "add", keys: a2, values: t4, wantResults: u2 }).then(function(e4) {
                 var t5 = e4.numFailures, n3 = e4.results, r4 = e4.lastResult, e4 = e4.failures;
                 if (0 === t5) return u2 ? n3 : r4;
@@ -24778,7 +25041,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               var t4 = o2.schema.primKey, n2 = t4.auto, t4 = t4.keyPath;
               if (t4 && a2) throw new Y2.InvalidArgument("bulkPut(): keys argument invalid on tables with inbound keys");
               if (a2 && a2.length !== r3.length) throw new Y2.InvalidArgument("Arguments objects and keys must have the same length");
-              var i3 = r3.length, t4 = t4 && n2 ? r3.map(at2(t4)) : r3;
+              var i3 = r3.length, t4 = t4 && n2 ? r3.map(at(t4)) : r3;
               return o2.core.mutate({ trans: e3, type: "put", keys: a2, values: t4, wantResults: u2 }).then(function(e4) {
                 var t5 = e4.numFailures, n3 = e4.results, r4 = e4.lastResult, e4 = e4.failures;
                 if (0 === t5) return u2 ? n3 : r4;
@@ -24800,8 +25063,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                     for (var o2 = 0, a2 = Object.keys(r4); o2 < a2.length; o2++) {
                       var u2 = a2[o2], s3 = r4[u2];
                       if (u2 === h2.schema.primKey.keyPath) {
-                        if (0 !== st2(s3, n3)) throw new Y2.Constraint("Cannot update primary key in bulkUpdate()");
-                      } else w2(i4, u2, s3);
+                        if (0 !== st(s3, n3)) throw new Y2.Constraint("Cannot update primary key in bulkUpdate()");
+                      } else w(i4, u2, s3);
                     }
                     d2.push(t4), l2.push(n3), f2.push(i4);
                   }
@@ -24832,7 +25095,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }, vt2);
           function vt2() {
           }
-          function mt2(i3) {
+          function mt(i3) {
             function t3(e3, t4) {
               if (t4) {
                 for (var n3 = arguments.length, r3 = new Array(n3 - 1); --n3; ) r3[n3 - 1] = arguments[n3];
@@ -24848,7 +25111,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               if ("object" != typeof e3) {
                 var i4;
                 n3 = n3 || ne2;
-                var o2 = { subscribers: [], fire: r3 = r3 || G2, subscribe: function(e4) {
+                var o2 = { subscribers: [], fire: r3 = r3 || G, subscribe: function(e4) {
                   -1 === o2.subscribers.indexOf(e4) && (o2.subscribers.push(e4), o2.fire = n3(o2.fire, e4));
                 }, unsubscribe: function(t4) {
                   o2.subscribers = o2.subscribers.filter(function(e4) {
@@ -24857,7 +25120,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 } };
                 return a2[e3] = t3[e3] = o2;
               }
-              O2(i4 = e3).forEach(function(e4) {
+              O(i4 = e3).forEach(function(e4) {
                 var t4 = i4[e4];
                 if (x2(t4)) u2(e4, i4[e4][0], i4[e4][1]);
                 else {
@@ -24880,10 +25143,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           function gt2(e2, t3) {
             return !(e2.filter || e2.algorithm || e2.or) && (t3 ? e2.justLimit : !e2.replayFilter);
           }
-          function wt2(e2, t3) {
+          function wt(e2, t3) {
             e2.filter = it2(e2.filter, t3);
           }
-          function _t(e2, t3, n2) {
+          function _t2(e2, t3, n2) {
             var r3 = e2.replayFilter;
             e2.replayFilter = r3 ? function() {
               return it2(r3(), t3());
@@ -24926,16 +25189,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 r3 && !r3(n2, function(e3) {
                   return t3 = e3;
                 }, function(e3) {
-                  n2.stop(e3), t3 = G2;
+                  n2.stop(e3), t3 = G;
                 }, function(e3) {
-                  n2.fail(e3), t3 = G2;
+                  n2.fail(e3), t3 = G;
                 }) || a2(n2.value, n2, function(e3) {
                   return t3 = e3;
                 }), t3();
               });
             });
           }
-          var Kt = (Et2.prototype._read = function(e2, t3) {
+          var Kt2 = (Et2.prototype._read = function(e2, t3) {
             var n2 = this._ctx;
             return n2.error ? n2.table._trans(null, Xe2.bind(null, n2.error)) : n2.table._trans("readonly", e2).then(t3);
           }, Et2.prototype._write = function(e2) {
@@ -24977,7 +25240,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             }
             var a2 = "next" === this._ctx.dir ? 1 : -1;
             function u2(e3, t4) {
-              return st2(o2(e3, i3), o2(t4, i3)) * a2;
+              return st(o2(e3, i3), o2(t4, i3)) * a2;
             }
             return this.toArray(function(e3) {
               return e3.sort(u2);
@@ -25002,28 +25265,28 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             }, e2);
           }, Et2.prototype.offset = function(t3) {
             var e2 = this._ctx;
-            return t3 <= 0 || (e2.offset += t3, gt2(e2) ? _t(e2, function() {
+            return t3 <= 0 || (e2.offset += t3, gt2(e2) ? _t2(e2, function() {
               var n2 = t3;
               return function(e3, t4) {
                 return 0 === n2 || (1 === n2 ? --n2 : t4(function() {
                   e3.advance(n2), n2 = 0;
                 }), false);
               };
-            }) : _t(e2, function() {
+            }) : _t2(e2, function() {
               var e3 = t3;
               return function() {
                 return --e3 < 0;
               };
             })), this;
           }, Et2.prototype.limit = function(e2) {
-            return this._ctx.limit = Math.min(this._ctx.limit, e2), _t(this._ctx, function() {
+            return this._ctx.limit = Math.min(this._ctx.limit, e2), _t2(this._ctx, function() {
               var r3 = e2;
               return function(e3, t3, n2) {
                 return --r3 <= 0 && t3(n2), 0 <= r3;
               };
             }, true), this;
           }, Et2.prototype.until = function(r3, i3) {
-            return wt2(this._ctx, function(e2, t3, n2) {
+            return wt(this._ctx, function(e2, t3, n2) {
               return !r3(e2.value) || (t3(n2), i3);
             }), this;
           }, Et2.prototype.first = function(e2) {
@@ -25034,7 +25297,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             return this.reverse().first(e2);
           }, Et2.prototype.filter = function(t3) {
             var e2;
-            return wt2(this._ctx, function(e3) {
+            return wt(this._ctx, function(e3) {
               return t3(e3.value);
             }), (e2 = this._ctx).isMatch = it2(e2.isMatch, t3), this;
           }, Et2.prototype.and = function(e2) {
@@ -25093,21 +25356,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             var e2 = this._ctx, e2 = e2.index && e2.table.schema.idxByName[e2.index];
             if (!e2 || !e2.multi) return this;
             var n2 = {};
-            return wt2(this._ctx, function(e3) {
+            return wt(this._ctx, function(e3) {
               var t3 = e3.primaryKey.toString(), e3 = m(n2, t3);
               return n2[t3] = true, !e3;
             }), this;
           }, Et2.prototype.modify = function(x3) {
-            var n2 = this, k2 = this._ctx;
+            var n2 = this, k3 = this._ctx;
             return this._write(function(p2) {
               var y2 = "function" == typeof x3 ? x3 : function(e3) {
-                return pt2(e3, x3);
-              }, v2 = k2.table.core, e2 = v2.schema.primaryKey, m2 = e2.outbound, b2 = e2.extractKey, g2 = 200, e2 = n2.db._options.modifyChunkSize;
+                return pt(e3, x3);
+              }, v2 = k3.table.core, e2 = v2.schema.primaryKey, m2 = e2.outbound, b2 = e2.extractKey, g2 = 200, e2 = n2.db._options.modifyChunkSize;
               e2 && (g2 = "object" == typeof e2 ? e2[v2.name] || e2["*"] || 200 : e2);
-              function w3(e3, t4) {
+              function w2(e3, t4) {
                 var n3 = t4.failures, t4 = t4.numFailures;
                 u2 += e3 - t4;
-                for (var r3 = 0, i3 = O2(n3); r3 < i3.length; r3++) {
+                for (var r3 = 0, i3 = O(n3); r3 < i3.length; r3++) {
                   var o2 = i3[r3];
                   a2.push(n3[o2]);
                 }
@@ -25119,28 +25382,28 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                   return (_2 ? Promise.resolve([]) : v2.getMany({ trans: p2, keys: l2, cache: "immutable" })).then(function(e3) {
                     var n3 = [], t4 = [], r3 = m2 ? [] : null, i3 = _2 ? l2 : [];
                     if (!_2) for (var o2 = 0; o2 < c3; ++o2) {
-                      var a3 = e3[o2], u3 = { value: S2(a3), primKey: f2[s2 + o2] };
-                      false !== y2.call(u3, u3.value, u3) && (null == u3.value ? i3.push(f2[s2 + o2]) : m2 || 0 === st2(b2(a3), b2(u3.value)) ? (t4.push(u3.value), m2 && r3.push(f2[s2 + o2])) : (i3.push(f2[s2 + o2]), n3.push(u3.value)));
+                      var a3 = e3[o2], u3 = { value: S(a3), primKey: f2[s2 + o2] };
+                      false !== y2.call(u3, u3.value, u3) && (null == u3.value ? i3.push(f2[s2 + o2]) : m2 || 0 === st(b2(a3), b2(u3.value)) ? (t4.push(u3.value), m2 && r3.push(f2[s2 + o2])) : (i3.push(f2[s2 + o2]), n3.push(u3.value)));
                     }
                     return Promise.resolve(0 < n3.length && v2.mutate({ trans: p2, type: "add", values: n3 }).then(function(e4) {
                       for (var t5 in e4.failures) i3.splice(parseInt(t5), 1);
-                      w3(n3.length, e4);
+                      w2(n3.length, e4);
                     })).then(function() {
                       return (0 < t4.length || d2 && "object" == typeof x3) && v2.mutate({ trans: p2, type: "put", keys: r3, values: t4, criteria: d2, changeSpec: "function" != typeof x3 && x3, isAdditionalChunk: 0 < s2 }).then(function(e4) {
-                        return w3(t4.length, e4);
+                        return w2(t4.length, e4);
                       });
                     }).then(function() {
                       return (0 < i3.length || d2 && _2) && v2.mutate({ trans: p2, type: "delete", keys: i3, criteria: d2, isAdditionalChunk: 0 < s2 }).then(function(e4) {
-                        return ft(k2.table, i3, e4);
+                        return ft(k3.table, i3, e4);
                       }).then(function(e4) {
-                        return w3(i3.length, e4);
+                        return w2(i3.length, e4);
                       });
                     }).then(function() {
                       return f2.length > s2 + c3 && h2(s2 + g2);
                     });
                   });
                 }
-                var d2 = gt2(k2) && k2.limit === 1 / 0 && ("function" != typeof x3 || _2) && { index: k2.index, range: k2.range };
+                var d2 = gt2(k3) && k3.limit === 1 / 0 && ("function" != typeof x3 || _2) && { index: k3.index, range: k3.range };
                 return h2(0).then(function() {
                   if (0 < a2.length) throw new U2("Error modifying one or more objects", a2, u2, t3);
                   return f2.length;
@@ -25170,14 +25433,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           function jt2(e2, t3) {
             return e2 < t3 ? -1 : e2 === t3 ? 0 : 1;
           }
-          function At(e2, t3) {
+          function At2(e2, t3) {
             return t3 < e2 ? -1 : e2 === t3 ? 0 : 1;
           }
-          function Ct(e2, t3, n2) {
+          function Ct2(e2, t3, n2) {
             e2 = e2 instanceof Bt ? new e2.Collection(e2) : e2;
             return e2._ctx.error = new (n2 || TypeError)(t3), e2;
           }
-          function Tt2(e2) {
+          function Tt(e2) {
             return new e2.Collection(e2, function() {
               return Dt2("");
             }).limit(0);
@@ -25186,7 +25449,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             var i3, c3, l2, f2, h2, d2, p2, y2 = n2.length;
             if (!n2.every(function(e3) {
               return "string" == typeof e3;
-            })) return Ct(e2, Ze2);
+            })) return Ct2(e2, Ze2);
             function t3(e3) {
               i3 = "next" === e3 ? function(e4) {
                 return e4.toUpperCase();
@@ -25196,7 +25459,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 return e4.toLowerCase();
               } : function(e4) {
                 return e4.toUpperCase();
-              }, l2 = "next" === e3 ? jt2 : At;
+              }, l2 = "next" === e3 ? jt2 : At2;
               var t4 = n2.map(function(e4) {
                 return { lower: c3(e4), upper: i3(e4) };
               }).sort(function(e4, t5) {
@@ -25210,7 +25473,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             }
             t3("next");
             e2 = new e2.Collection(e2, function() {
-              return qt2(f2[0], h2[y2 - 1] + r3);
+              return qt(f2[0], h2[y2 - 1] + r3);
             });
             e2._ondirectionchange = function(e3) {
               t3(e3);
@@ -25237,7 +25500,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               } : n3), false;
             }), e2;
           }
-          function qt2(e2, t3, n2, r3) {
+          function qt(e2, t3, n2, r3) {
             return { type: 2, lower: e2, upper: t3, lowerOpen: n2, upperOpen: r3 };
           }
           function Dt2(e2) {
@@ -25248,34 +25511,34 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }, enumerable: false, configurable: true }), Rt2.prototype.between = function(e2, t3, n2, r3) {
             n2 = false !== n2, r3 = true === r3;
             try {
-              return 0 < this._cmp(e2, t3) || 0 === this._cmp(e2, t3) && (n2 || r3) && (!n2 || !r3) ? Tt2(this) : new this.Collection(this, function() {
-                return qt2(e2, t3, !n2, !r3);
+              return 0 < this._cmp(e2, t3) || 0 === this._cmp(e2, t3) && (n2 || r3) && (!n2 || !r3) ? Tt(this) : new this.Collection(this, function() {
+                return qt(e2, t3, !n2, !r3);
               });
             } catch (e3) {
-              return Ct(this, Je2);
+              return Ct2(this, Je2);
             }
           }, Rt2.prototype.equals = function(e2) {
-            return null == e2 ? Ct(this, Je2) : new this.Collection(this, function() {
+            return null == e2 ? Ct2(this, Je2) : new this.Collection(this, function() {
               return Dt2(e2);
             });
           }, Rt2.prototype.above = function(e2) {
-            return null == e2 ? Ct(this, Je2) : new this.Collection(this, function() {
-              return qt2(e2, void 0, true);
+            return null == e2 ? Ct2(this, Je2) : new this.Collection(this, function() {
+              return qt(e2, void 0, true);
             });
           }, Rt2.prototype.aboveOrEqual = function(e2) {
-            return null == e2 ? Ct(this, Je2) : new this.Collection(this, function() {
-              return qt2(e2, void 0, false);
+            return null == e2 ? Ct2(this, Je2) : new this.Collection(this, function() {
+              return qt(e2, void 0, false);
             });
           }, Rt2.prototype.below = function(e2) {
-            return null == e2 ? Ct(this, Je2) : new this.Collection(this, function() {
-              return qt2(void 0, e2, false, true);
+            return null == e2 ? Ct2(this, Je2) : new this.Collection(this, function() {
+              return qt(void 0, e2, false, true);
             });
           }, Rt2.prototype.belowOrEqual = function(e2) {
-            return null == e2 ? Ct(this, Je2) : new this.Collection(this, function() {
-              return qt2(void 0, e2);
+            return null == e2 ? Ct2(this, Je2) : new this.Collection(this, function() {
+              return qt(void 0, e2);
             });
           }, Rt2.prototype.startsWith = function(e2) {
-            return "string" != typeof e2 ? Ct(this, Ze2) : this.between(e2, e2 + He, true, true);
+            return "string" != typeof e2 ? Ct2(this, Ze2) : this.between(e2, e2 + He, true, true);
           }, Rt2.prototype.startsWithIgnoreCase = function(e2) {
             return "" === e2 ? this.startsWith(e2) : It2(this, function(e3, t3) {
               return 0 === e3.indexOf(t3[0]);
@@ -25285,27 +25548,27 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               return e3 === t3[0];
             }, [e2], "");
           }, Rt2.prototype.anyOfIgnoreCase = function() {
-            var e2 = D.apply(q, arguments);
-            return 0 === e2.length ? Tt2(this) : It2(this, function(e3, t3) {
+            var e2 = D2.apply(q, arguments);
+            return 0 === e2.length ? Tt(this) : It2(this, function(e3, t3) {
               return -1 !== t3.indexOf(e3);
             }, e2, "");
           }, Rt2.prototype.startsWithAnyOfIgnoreCase = function() {
-            var e2 = D.apply(q, arguments);
-            return 0 === e2.length ? Tt2(this) : It2(this, function(t3, e3) {
+            var e2 = D2.apply(q, arguments);
+            return 0 === e2.length ? Tt(this) : It2(this, function(t3, e3) {
               return e3.some(function(e4) {
                 return 0 === t3.indexOf(e4);
               });
             }, e2, He);
           }, Rt2.prototype.anyOf = function() {
-            var t3 = this, i3 = D.apply(q, arguments), o2 = this._cmp;
+            var t3 = this, i3 = D2.apply(q, arguments), o2 = this._cmp;
             try {
               i3.sort(o2);
             } catch (e3) {
-              return Ct(this, Je2);
+              return Ct2(this, Je2);
             }
-            if (0 === i3.length) return Tt2(this);
+            if (0 === i3.length) return Tt(this);
             var e2 = new this.Collection(this, function() {
-              return qt2(i3[0], i3[i3.length - 1]);
+              return qt(i3[0], i3[i3.length - 1]);
             });
             e2._ondirectionchange = function(e3) {
               o2 = "next" === e3 ? t3._ascending : t3._descending, i3.sort(o2);
@@ -25320,12 +25583,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }, Rt2.prototype.notEqual = function(e2) {
             return this.inAnyRange([[-1 / 0, e2], [e2, this.db._maxKey]], { includeLowers: false, includeUppers: false });
           }, Rt2.prototype.noneOf = function() {
-            var e2 = D.apply(q, arguments);
+            var e2 = D2.apply(q, arguments);
             if (0 === e2.length) return new this.Collection(this);
             try {
               e2.sort(this._ascending);
             } catch (e3) {
-              return Ct(this, Je2);
+              return Ct2(this, Je2);
             }
             var t3 = e2.reduce(function(e3, t4) {
               return e3 ? e3.concat([[e3[e3.length - 1][1], t4]]) : [[-1 / 0, t4]];
@@ -25333,10 +25596,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             return t3.push([e2[e2.length - 1], this.db._maxKey]), this.inAnyRange(t3, { includeLowers: false, includeUppers: false });
           }, Rt2.prototype.inAnyRange = function(e2, t3) {
             var o2 = this, a2 = this._cmp, u2 = this._ascending, n2 = this._descending, s2 = this._min, c3 = this._max;
-            if (0 === e2.length) return Tt2(this);
+            if (0 === e2.length) return Tt(this);
             if (!e2.every(function(e3) {
               return void 0 !== e3[0] && void 0 !== e3[1] && u2(e3[0], e3[1]) <= 0;
-            })) return Ct(this, "First argument to inAnyRange() must be an Array of two-value Arrays [lower,upper] where upper must not be lower than lower", Y2.InvalidArgument);
+            })) return Ct2(this, "First argument to inAnyRange() must be an Array of two-value Arrays [lower,upper] where upper must not be lower than lower", Y2.InvalidArgument);
             var r3 = !t3 || false !== t3.includeLowers, i3 = t3 && true === t3.includeUppers;
             var l2, f2 = u2;
             function h2(e3, t4) {
@@ -25354,7 +25617,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 return n3 === r4 && e3.push(t4), e3;
               }, [])).sort(h2);
             } catch (e3) {
-              return Ct(this, Je2);
+              return Ct2(this, Je2);
             }
             var d2 = 0, p2 = i3 ? function(e3) {
               return 0 < u2(e3, l2[d2][1]);
@@ -25366,7 +25629,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               return 0 <= n2(e3, l2[d2][0]);
             };
             var v2 = p2, e2 = new this.Collection(this, function() {
-              return qt2(l2[0][0], l2[l2.length - 1][1], !r3, !i3);
+              return qt(l2[0][0], l2[l2.length - 1][1], !r3, !i3);
             });
             return e2._ondirectionchange = function(e3) {
               f2 = "next" === e3 ? (v2 = p2, u2) : (v2 = y2, n2), l2.sort(h2);
@@ -25377,16 +25640,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               }), false);
             }), e2;
           }, Rt2.prototype.startsWithAnyOf = function() {
-            var e2 = D.apply(q, arguments);
+            var e2 = D2.apply(q, arguments);
             return e2.every(function(e3) {
               return "string" == typeof e3;
-            }) ? 0 === e2.length ? Tt2(this) : this.inAnyRange(e2.map(function(e3) {
+            }) ? 0 === e2.length ? Tt(this) : this.inAnyRange(e2.map(function(e3) {
               return [e3, e3 + He];
-            })) : Ct(this, "startsWithAnyOf() only works with strings");
+            })) : Ct2(this, "startsWithAnyOf() only works with strings");
           }, Rt2);
           function Rt2() {
           }
-          function Ft(t3) {
+          function Ft2(t3) {
             return Ie2(function(e2) {
               return Mt(e2), t3(e2.target.error), false;
             });
@@ -25394,10 +25657,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           function Mt(e2) {
             e2.stopPropagation && e2.stopPropagation(), e2.preventDefault && e2.preventDefault();
           }
-          var Nt = "storagemutated", Lt2 = "x-storagemutated-1", Ut = mt2(null, Nt), Vt2 = (zt2.prototype._lock = function() {
-            return y(!me.global), ++this._reculock, 1 !== this._reculock || me.global || (me.lockOwnerFor = this), this;
+          var Nt = "storagemutated", Lt2 = "x-storagemutated-1", Ut = mt(null, Nt), Vt2 = (zt2.prototype._lock = function() {
+            return y(!me2.global), ++this._reculock, 1 !== this._reculock || me2.global || (me2.lockOwnerFor = this), this;
           }, zt2.prototype._unlock = function() {
-            if (y(!me.global), 0 == --this._reculock) for (me.global || (me.lockOwnerFor = null); 0 < this._blockedFuncs.length && !this._locked(); ) {
+            if (y(!me2.global), 0 == --this._reculock) for (me2.global || (me2.lockOwnerFor = null); 0 < this._blockedFuncs.length && !this._locked(); ) {
               var e2 = this._blockedFuncs.shift();
               try {
                 $e2(e2[1], e2[0]);
@@ -25406,7 +25669,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             }
             return this;
           }, zt2.prototype._locked = function() {
-            return this._reculock && me.lockOwnerFor !== this;
+            return this._reculock && me2.lockOwnerFor !== this;
           }, zt2.prototype.create = function(t3) {
             var n2 = this;
             if (!this.mode) return this;
@@ -25434,7 +25697,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             if (this._locked()) return new _e2(function(e3, t3) {
               o2._blockedFuncs.push([function() {
                 o2._promise(n2, r3, i3).then(e3, t3);
-              }, me]);
+              }, me2]);
             });
             if (i3) return Ne2(function() {
               var e3 = new _e2(function(e4, t3) {
@@ -25483,13 +25746,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }, zt2);
           function zt2() {
           }
-          function Wt(e2, t3, n2, r3, i3, o2, a2, u2) {
-            return { name: e2, keyPath: t3, unique: n2, multi: r3, auto: i3, compound: o2, src: (n2 && !a2 ? "&" : "") + (r3 ? "*" : "") + (i3 ? "++" : "") + Yt2(t3), type: u2 };
+          function Wt2(e2, t3, n2, r3, i3, o2, a2, u2) {
+            return { name: e2, keyPath: t3, unique: n2, multi: r3, auto: i3, compound: o2, src: (n2 && !a2 ? "&" : "") + (r3 ? "*" : "") + (i3 ? "++" : "") + Yt(t3), type: u2 };
           }
-          function Yt2(e2) {
+          function Yt(e2) {
             return "string" == typeof e2 ? e2 : e2 ? "[" + [].join.call(e2, "+") + "]" : "";
           }
-          function $t2(e2, t3, n2) {
+          function $t(e2, t3, n2) {
             return { name: e2, primKey: t3, indexes: n2, mappedClass: null, idxByName: (r3 = function(e3) {
               return [e3.name, e3];
             }, n2.reduce(function(e3, t4, n3) {
@@ -25498,13 +25761,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             }, {})) };
             var r3;
           }
-          var Qt = function(e2) {
+          var Qt2 = function(e2) {
             try {
-              return e2.only([[]]), Qt = function() {
+              return e2.only([[]]), Qt2 = function() {
                 return [[]];
               }, [[]];
             } catch (e3) {
-              return Qt = function() {
+              return Qt2 = function() {
                 return He;
               }, He;
             }
@@ -25520,11 +25783,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             };
             var n2;
           }
-          function Xt(e2) {
+          function Xt2(e2) {
             return [].slice.call(e2);
           }
           var Ht2 = 0;
-          function Jt(e2) {
+          function Jt2(e2) {
             return null == e2 ? ":id" : "string" == typeof e2 ? e2 : "[".concat(e2.join("+"), "]");
           }
           function Zt2(e2, i3, t3) {
@@ -25535,12 +25798,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               return void 0 === t4 ? void 0 === n3 ? null : i3.upperBound(n3, !!e3) : void 0 === n3 ? i3.lowerBound(t4, !!r4) : i3.bound(t4, n3, !!r4, !!e3);
             }
             function n2(e3) {
-              var h2, w3 = e3.name;
-              return { name: w3, schema: e3, mutate: function(e4) {
+              var h2, w2 = e3.name;
+              return { name: w2, schema: e3, mutate: function(e4) {
                 var y2 = e4.trans, v2 = e4.type, m2 = e4.keys, b2 = e4.values, g2 = e4.range;
                 return new Promise(function(t4, e5) {
                   t4 = Ie2(t4);
-                  var n3 = y2.objectStore(w3), r4 = null == n3.keyPath, i4 = "put" === v2 || "add" === v2;
+                  var n3 = y2.objectStore(w2), r4 = null == n3.keyPath, i4 = "put" === v2 || "add" === v2;
                   if (!i4 && "delete" !== v2 && "deleteRange" !== v2) throw new Error("Invalid operation type: " + v2);
                   var o3, a3 = (m2 || b2 || { length: 1 }).length;
                   if (m2 && b2 && m2.length !== b2.length) throw new Error("Given keys array must have same length as given values array.");
@@ -25572,39 +25835,39 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 var f2 = e4.trans, h3 = e4.keys;
                 return new Promise(function(t4, e5) {
                   t4 = Ie2(t4);
-                  for (var n3, r4 = f2.objectStore(w3), i4 = h3.length, o3 = new Array(i4), a3 = 0, u3 = 0, s3 = function(e6) {
+                  for (var n3, r4 = f2.objectStore(w2), i4 = h3.length, o3 = new Array(i4), a3 = 0, u3 = 0, s3 = function(e6) {
                     e6 = e6.target;
                     o3[e6._pos] = e6.result, ++u3 === a3 && t4(o3);
-                  }, c4 = Ft(e5), l2 = 0; l2 < i4; ++l2) null != h3[l2] && ((n3 = r4.get(h3[l2]))._pos = l2, n3.onsuccess = s3, n3.onerror = c4, ++a3);
+                  }, c4 = Ft2(e5), l2 = 0; l2 < i4; ++l2) null != h3[l2] && ((n3 = r4.get(h3[l2]))._pos = l2, n3.onsuccess = s3, n3.onerror = c4, ++a3);
                   0 === a3 && t4(o3);
                 });
               }, get: function(e4) {
                 var r4 = e4.trans, i4 = e4.key;
                 return new Promise(function(t4, e5) {
                   t4 = Ie2(t4);
-                  var n3 = r4.objectStore(w3).get(i4);
+                  var n3 = r4.objectStore(w2).get(i4);
                   n3.onsuccess = function(e6) {
                     return t4(e6.target.result);
-                  }, n3.onerror = Ft(e5);
+                  }, n3.onerror = Ft2(e5);
                 });
               }, query: (h2 = s2, function(f2) {
                 return new Promise(function(n3, e4) {
                   n3 = Ie2(n3);
-                  var r4, i4, o3, t4 = f2.trans, a3 = f2.values, u3 = f2.limit, s3 = f2.query, c4 = u3 === 1 / 0 ? void 0 : u3, l2 = s3.index, s3 = s3.range, t4 = t4.objectStore(w3), l2 = l2.isPrimaryKey ? t4 : t4.index(l2.name), s3 = _2(s3);
+                  var r4, i4, o3, t4 = f2.trans, a3 = f2.values, u3 = f2.limit, s3 = f2.query, c4 = u3 === 1 / 0 ? void 0 : u3, l2 = s3.index, s3 = s3.range, t4 = t4.objectStore(w2), l2 = l2.isPrimaryKey ? t4 : t4.index(l2.name), s3 = _2(s3);
                   if (0 === u3) return n3({ result: [] });
                   h2 ? ((c4 = a3 ? l2.getAll(s3, c4) : l2.getAllKeys(s3, c4)).onsuccess = function(e5) {
                     return n3({ result: e5.target.result });
-                  }, c4.onerror = Ft(e4)) : (r4 = 0, i4 = !a3 && "openKeyCursor" in l2 ? l2.openKeyCursor(s3) : l2.openCursor(s3), o3 = [], i4.onsuccess = function(e5) {
+                  }, c4.onerror = Ft2(e4)) : (r4 = 0, i4 = !a3 && "openKeyCursor" in l2 ? l2.openKeyCursor(s3) : l2.openCursor(s3), o3 = [], i4.onsuccess = function(e5) {
                     var t5 = i4.result;
                     return t5 ? (o3.push(a3 ? t5.value : t5.primaryKey), ++r4 === u3 ? n3({ result: o3 }) : void t5.continue()) : n3({ result: o3 });
-                  }, i4.onerror = Ft(e4));
+                  }, i4.onerror = Ft2(e4));
                 });
               }), openCursor: function(e4) {
                 var c4 = e4.trans, o3 = e4.values, a3 = e4.query, u3 = e4.reverse, l2 = e4.unique;
                 return new Promise(function(t4, n3) {
                   t4 = Ie2(t4);
-                  var e5 = a3.index, r4 = a3.range, i4 = c4.objectStore(w3), i4 = e5.isPrimaryKey ? i4 : i4.index(e5.name), e5 = u3 ? l2 ? "prevunique" : "prev" : l2 ? "nextunique" : "next", s3 = !o3 && "openKeyCursor" in i4 ? i4.openKeyCursor(_2(r4), e5) : i4.openCursor(_2(r4), e5);
-                  s3.onerror = Ft(n3), s3.onsuccess = Ie2(function(e6) {
+                  var e5 = a3.index, r4 = a3.range, i4 = c4.objectStore(w2), i4 = e5.isPrimaryKey ? i4 : i4.index(e5.name), e5 = u3 ? l2 ? "prevunique" : "prev" : l2 ? "nextunique" : "next", s3 = !o3 && "openKeyCursor" in i4 ? i4.openKeyCursor(_2(r4), e5) : i4.openCursor(_2(r4), e5);
+                  s3.onerror = Ft2(n3), s3.onsuccess = Ie2(function(e6) {
                     var r5, i5, o4, a4, u4 = s3.result;
                     u4 ? (u4.___id = ++Ht2, u4.done = false, r5 = u4.continue.bind(u4), i5 = (i5 = u4.continuePrimaryKey) && i5.bind(u4), o4 = u4.advance.bind(u4), a4 = function() {
                       throw new Error("Cursor not stopped");
@@ -25629,7 +25892,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                         }, u4.stop();
                       }
                       var n4 = new Promise(function(t6, e8) {
-                        t6 = Ie2(t6), s3.onerror = Ft(e8), u4.fail = e8, u4.stop = function(e9) {
+                        t6 = Ie2(t6), s3.onerror = Ft2(e8), u4.fail = e8, u4.stop = function(e9) {
                           u4.stop = u4.continue = u4.continuePrimaryKey = u4.advance = a4, t6(e9);
                         };
                       });
@@ -25642,32 +25905,32 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               }, count: function(e4) {
                 var t4 = e4.query, i4 = e4.trans, o3 = t4.index, a3 = t4.range;
                 return new Promise(function(t5, e5) {
-                  var n3 = i4.objectStore(w3), r4 = o3.isPrimaryKey ? n3 : n3.index(o3.name), n3 = _2(a3), r4 = n3 ? r4.count(n3) : r4.count();
+                  var n3 = i4.objectStore(w2), r4 = o3.isPrimaryKey ? n3 : n3.index(o3.name), n3 = _2(a3), r4 = n3 ? r4.count(n3) : r4.count();
                   r4.onsuccess = Ie2(function(e6) {
                     return t5(e6.target.result);
-                  }), r4.onerror = Ft(e5);
+                  }), r4.onerror = Ft2(e5);
                 });
               } };
             }
-            var r3, o2, a2, u2 = (o2 = t3, a2 = Xt((r3 = e2).objectStoreNames), { schema: { name: r3.name, tables: a2.map(function(e3) {
+            var r3, o2, a2, u2 = (o2 = t3, a2 = Xt2((r3 = e2).objectStoreNames), { schema: { name: r3.name, tables: a2.map(function(e3) {
               return o2.objectStore(e3);
             }).map(function(t4) {
-              var e3 = t4.keyPath, n3 = t4.autoIncrement, r4 = x2(e3), i4 = {}, n3 = { name: t4.name, primaryKey: { name: null, isPrimaryKey: true, outbound: null == e3, compound: r4, keyPath: e3, autoIncrement: n3, unique: true, extractKey: Gt2(e3) }, indexes: Xt(t4.indexNames).map(function(e4) {
+              var e3 = t4.keyPath, n3 = t4.autoIncrement, r4 = x2(e3), i4 = {}, n3 = { name: t4.name, primaryKey: { name: null, isPrimaryKey: true, outbound: null == e3, compound: r4, keyPath: e3, autoIncrement: n3, unique: true, extractKey: Gt2(e3) }, indexes: Xt2(t4.indexNames).map(function(e4) {
                 return t4.index(e4);
               }).map(function(e4) {
                 var t5 = e4.name, n4 = e4.unique, r5 = e4.multiEntry, e4 = e4.keyPath, r5 = { name: t5, compound: x2(e4), keyPath: e4, unique: n4, multiEntry: r5, extractKey: Gt2(e4) };
-                return i4[Jt(e4)] = r5;
+                return i4[Jt2(e4)] = r5;
               }), getIndexByKeyPath: function(e4) {
-                return i4[Jt(e4)];
+                return i4[Jt2(e4)];
               } };
-              return i4[":id"] = n3.primaryKey, null != e3 && (i4[Jt(e3)] = n3.primaryKey), n3;
+              return i4[":id"] = n3.primaryKey, null != e3 && (i4[Jt2(e3)] = n3.primaryKey), n3;
             }) }, hasGetAll: 0 < a2.length && "getAll" in o2.objectStore(a2[0]) && !("undefined" != typeof navigator && /Safari/.test(navigator.userAgent) && !/(Chrome\/|Edge\/)/.test(navigator.userAgent) && [].concat(navigator.userAgent.match(/Safari\/(\d*)/))[1] < 604) }), t3 = u2.schema, s2 = u2.hasGetAll, u2 = t3.tables.map(n2), c3 = {};
             return u2.forEach(function(e3) {
               return c3[e3.name] = e3;
             }), { stack: "dbcore", transaction: e2.transaction.bind(e2), table: function(e3) {
               if (!c3[e3]) throw new Error("Table '".concat(e3, "' not found"));
               return c3[e3];
-            }, MIN_KEY: -1 / 0, MAX_KEY: Qt(i3), schema: t3 };
+            }, MIN_KEY: -1 / 0, MAX_KEY: Qt2(i3), schema: t3 };
           }
           function en(e2, t3, n2, r3) {
             var i3 = n2.IDBKeyRange;
@@ -25710,12 +25973,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
           function an2(n2, r3, i3, e2) {
             var o2 = n2._dbSchema;
-            i3.objectStoreNames.contains("$meta") && !o2.$meta && (o2.$meta = $t2("$meta", pn2("")[0], []), n2._storeNames.push("$meta"));
+            i3.objectStoreNames.contains("$meta") && !o2.$meta && (o2.$meta = $t("$meta", pn2("")[0], []), n2._storeNames.push("$meta"));
             var a2 = n2._createTransaction("readwrite", n2._storeNames, o2);
             a2.create(i3), a2._completion.catch(e2);
-            var u2 = a2._reject.bind(a2), s2 = me.transless || me;
+            var u2 = a2._reject.bind(a2), s2 = me2.transless || me2;
             Ne2(function() {
-              return me.trans = a2, me.transless = s2, 0 !== r3 ? (tn2(n2, i3), t3 = r3, ((e3 = a2).storeNames.includes("$meta") ? e3.table("$meta").get("version").then(function(e4) {
+              return me2.trans = a2, me2.transless = s2, 0 !== r3 ? (tn2(n2, i3), t3 = r3, ((e3 = a2).storeNames.includes("$meta") ? e3.table("$meta").get("version").then(function(e4) {
                 return null != e4 ? e4 : t3;
               }) : _e2.resolve(t3)).then(function(e4) {
                 return c3 = e4, l2 = a2, f2 = i3, t4 = [], e4 = (s3 = n2)._versions, h2 = s3._dbSchema = hn2(0, s3.idbdb, f2), 0 !== (e4 = e4.filter(function(e5) {
@@ -25741,10 +26004,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                     var r4 = u3._cfg.contentUpgrade;
                     if (r4 && u3._cfg.version > c3) {
                       tn2(s3, f2), l2._memoizedTables = {};
-                      var i4 = k(e5);
+                      var i4 = k2(e5);
                       n3.del.forEach(function(e6) {
                         i4[e6] = t5[e6];
-                      }), rn(s3, [s3.Transaction.prototype]), nn(s3, [s3.Transaction.prototype], O2(i4), i4), l2.schema = i4;
+                      }), rn(s3, [s3.Transaction.prototype]), nn(s3, [s3.Transaction.prototype], O(i4), i4), l2.schema = i4;
                       var o3, a3 = B(r4);
                       a3 && Le2();
                       n3 = _e2.follow(function() {
@@ -25771,7 +26034,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                   ln(h2, f2);
                 })) : _e2.resolve();
                 var s3, c3, l2, f2, t4, h2;
-              }).catch(u2)) : (O2(o2).forEach(function(e4) {
+              }).catch(u2)) : (O(o2).forEach(function(e4) {
                 cn(i3, e4, o2[e4].primKey, o2[e4].indexes);
               }), tn2(n2, i3), void _e2.follow(function() {
                 return n2.on.populate.fire(a2);
@@ -25822,7 +26085,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             }), i3;
           }
           function ln(t3, n2) {
-            O2(t3).forEach(function(e2) {
+            O(t3).forEach(function(e2) {
               n2.db.objectStoreNames.contains(e2) || (ie2 && console.debug("Dexie: Creating missing table", e2), cn(n2, e2, t3[e2].primKey, t3[e2].indexes));
             });
           }
@@ -25832,11 +26095,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           function hn2(e2, t3, u2) {
             var s2 = {};
             return b(t3.objectStoreNames, 0).forEach(function(e3) {
-              for (var t4 = u2.objectStore(e3), n2 = Wt(Yt2(a2 = t4.keyPath), a2 || "", true, false, !!t4.autoIncrement, a2 && "string" != typeof a2, true), r3 = [], i3 = 0; i3 < t4.indexNames.length; ++i3) {
-                var o2 = t4.index(t4.indexNames[i3]), a2 = o2.keyPath, o2 = Wt(o2.name, a2, !!o2.unique, !!o2.multiEntry, false, a2 && "string" != typeof a2, false);
+              for (var t4 = u2.objectStore(e3), n2 = Wt2(Yt(a2 = t4.keyPath), a2 || "", true, false, !!t4.autoIncrement, a2 && "string" != typeof a2, true), r3 = [], i3 = 0; i3 < t4.indexNames.length; ++i3) {
+                var o2 = t4.index(t4.indexNames[i3]), a2 = o2.keyPath, o2 = Wt2(o2.name, a2, !!o2.unique, !!o2.multiEntry, false, a2 && "string" != typeof a2, false);
                 r3.push(o2);
               }
-              s2[e3] = $t2(e3, n2, r3);
+              s2[e3] = $t(e3, n2, r3);
             }), s2;
           }
           function dn2(e2, t3, n2) {
@@ -25853,12 +26116,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           function pn2(e2) {
             return e2.split(",").map(function(e3, t3) {
               var n2 = e3.split(":"), r3 = null === (i3 = n2[1]) || void 0 === i3 ? void 0 : i3.trim(), i3 = (e3 = n2[0].trim()).replace(/([&*]|\+\+)/g, ""), n2 = /^\[/.test(i3) ? i3.match(/^\[(.*)\]$/)[1].split("+") : i3;
-              return Wt(i3, n2 || null, /\&/.test(e3), /\*/.test(e3), /\+\+/.test(e3), x2(n2), 0 === t3, r3);
+              return Wt2(i3, n2 || null, /\&/.test(e3), /\*/.test(e3), /\+\+/.test(e3), x2(n2), 0 === t3, r3);
             });
           }
-          var yn2 = (vn.prototype._createTableSchema = $t2, vn.prototype._parseIndexSyntax = pn2, vn.prototype._parseStoresSpec = function(r3, i3) {
+          var yn = (vn.prototype._createTableSchema = $t, vn.prototype._parseIndexSyntax = pn2, vn.prototype._parseStoresSpec = function(r3, i3) {
             var o2 = this;
-            O2(r3).forEach(function(e2) {
+            O(r3).forEach(function(e2) {
               if (null !== r3[e2]) {
                 var t3 = o2._parseIndexSyntax(r3[e2]), n2 = t3.shift();
                 if (!n2) throw new Y2.Schema("Invalid schema for table " + e2 + ": " + r3[e2]);
@@ -25877,25 +26140,25 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             var e2 = t3._versions, n2 = {}, r3 = {};
             return e2.forEach(function(e3) {
               a(n2, e3._cfg.storesSource), r3 = e3._cfg.dbschema = {}, e3._parseStoresSpec(n2, r3);
-            }), t3._dbSchema = r3, rn(t3, [t3._allTables, t3, t3.Transaction.prototype]), nn(t3, [t3._allTables, t3, t3.Transaction.prototype, this._cfg.tables], O2(r3), r3), t3._storeNames = O2(r3), this;
+            }), t3._dbSchema = r3, rn(t3, [t3._allTables, t3, t3.Transaction.prototype]), nn(t3, [t3._allTables, t3, t3.Transaction.prototype, this._cfg.tables], O(r3), r3), t3._storeNames = O(r3), this;
           }, vn.prototype.upgrade = function(e2) {
-            return this._cfg.contentUpgrade = re2(this._cfg.contentUpgrade || G2, e2), this;
+            return this._cfg.contentUpgrade = re2(this._cfg.contentUpgrade || G, e2), this;
           }, vn);
           function vn() {
           }
           function mn2(e2, t3) {
             var n2 = e2._dbNamesDB;
-            return n2 || (n2 = e2._dbNamesDB = new nr2(tt, { addons: [], indexedDB: e2, IDBKeyRange: t3 })).version(1).stores({ dbnames: "name" }), n2.table("dbnames");
+            return n2 || (n2 = e2._dbNamesDB = new nr2(tt2, { addons: [], indexedDB: e2, IDBKeyRange: t3 })).version(1).stores({ dbnames: "name" }), n2.table("dbnames");
           }
           function bn2(e2) {
             return e2 && "function" == typeof e2.databases;
           }
           function gn2(e2) {
             return Ne2(function() {
-              return me.letThrough = true, e2();
+              return me2.letThrough = true, e2();
             });
           }
-          function wn(e2) {
+          function wn2(e2) {
             return !("from" in e2);
           }
           var _n2 = function(e2, t3) {
@@ -25906,20 +26169,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             a(this, arguments.length ? { d: 1, from: e2, to: 1 < arguments.length ? t3 : e2 } : { d: 0 });
           };
           function xn2(e2, t3, n2) {
-            var r3 = st2(t3, n2);
+            var r3 = st(t3, n2);
             if (!isNaN(r3)) {
               if (0 < r3) throw RangeError();
-              if (wn(e2)) return a(e2, { from: t3, to: n2, d: 1 });
+              if (wn2(e2)) return a(e2, { from: t3, to: n2, d: 1 });
               var i3 = e2.l, r3 = e2.r;
-              if (st2(n2, e2.from) < 0) return i3 ? xn2(i3, t3, n2) : e2.l = { from: t3, to: n2, d: 1, l: null, r: null }, Kn2(e2);
-              if (0 < st2(t3, e2.to)) return r3 ? xn2(r3, t3, n2) : e2.r = { from: t3, to: n2, d: 1, l: null, r: null }, Kn2(e2);
-              st2(t3, e2.from) < 0 && (e2.from = t3, e2.l = null, e2.d = r3 ? r3.d + 1 : 1), 0 < st2(n2, e2.to) && (e2.to = n2, e2.r = null, e2.d = e2.l ? e2.l.d + 1 : 1);
+              if (st(n2, e2.from) < 0) return i3 ? xn2(i3, t3, n2) : e2.l = { from: t3, to: n2, d: 1, l: null, r: null }, Kn2(e2);
+              if (0 < st(t3, e2.to)) return r3 ? xn2(r3, t3, n2) : e2.r = { from: t3, to: n2, d: 1, l: null, r: null }, Kn2(e2);
+              st(t3, e2.from) < 0 && (e2.from = t3, e2.l = null, e2.d = r3 ? r3.d + 1 : 1), 0 < st(n2, e2.to) && (e2.to = n2, e2.r = null, e2.d = e2.l ? e2.l.d + 1 : 1);
               n2 = !e2.r;
               i3 && !e2.l && kn2(e2, i3), r3 && n2 && kn2(e2, r3);
             }
           }
           function kn2(e2, t3) {
-            wn(t3) || (function e3(t4, n2) {
+            wn2(t3) || (function e3(t4, n2) {
               var r3 = n2.from, i3 = n2.to, o2 = n2.l, n2 = n2.r;
               xn2(t4, r3, i3), o2 && e3(t4, o2), n2 && e3(t4, n2);
             })(e2, t3);
@@ -25928,20 +26191,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             var n2 = Pn2(t3), r3 = n2.next();
             if (r3.done) return false;
             for (var i3 = r3.value, o2 = Pn2(e2), a2 = o2.next(i3.from), u2 = a2.value; !r3.done && !a2.done; ) {
-              if (st2(u2.from, i3.to) <= 0 && 0 <= st2(u2.to, i3.from)) return true;
-              st2(i3.from, u2.from) < 0 ? i3 = (r3 = n2.next(u2.from)).value : u2 = (a2 = o2.next(i3.from)).value;
+              if (st(u2.from, i3.to) <= 0 && 0 <= st(u2.to, i3.from)) return true;
+              st(i3.from, u2.from) < 0 ? i3 = (r3 = n2.next(u2.from)).value : u2 = (a2 = o2.next(i3.from)).value;
             }
             return false;
           }
           function Pn2(e2) {
-            var n2 = wn(e2) ? null : { s: 0, n: e2 };
+            var n2 = wn2(e2) ? null : { s: 0, n: e2 };
             return { next: function(e3) {
               for (var t3 = 0 < arguments.length; n2; ) switch (n2.s) {
                 case 0:
-                  if (n2.s = 1, t3) for (; n2.n.l && st2(e3, n2.n.from) < 0; ) n2 = { up: n2, n: n2.n.l, s: 1 };
+                  if (n2.s = 1, t3) for (; n2.n.l && st(e3, n2.n.from) < 0; ) n2 = { up: n2, n: n2.n.l, s: 1 };
                   else for (; n2.n.l; ) n2 = { up: n2, n: n2.n.l, s: 1 };
                 case 1:
-                  if (n2.s = 2, !t3 || st2(e3, n2.n.to) <= 0) return { value: n2.n, done: false };
+                  if (n2.s = 2, !t3 || st(e3, n2.n.to) <= 0) return { value: n2.n, done: false };
                 case 2:
                   if (n2.n.r) {
                     n2.s = 3, n2 = { up: n2, n: n2.n.r, s: 0 };
@@ -25962,7 +26225,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             return (t3 ? e2 ? Math.max(t3.d, e2.d) : t3.d : e2 ? e2.d : 0) + 1;
           }
           function Sn2(t3, n2) {
-            return O2(n2).forEach(function(e2) {
+            return O(n2).forEach(function(e2) {
               t3[e2] ? kn2(t3[e2], n2[e2]) : t3[e2] = (function e3(t4) {
                 var n3, r3, i3 = {};
                 for (n3 in t4) m(t4, n3) && (r3 = t4[n3], i3[n3] = !r3 || "object" != typeof r3 || K2.has(r3.constructor) ? r3 : e3(r3));
@@ -25975,7 +26238,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               return n2[e2] && On2(n2[e2], t3[e2]);
             });
           }
-          r2(_n2.prototype, ((F = { add: function(e2) {
+          r2(_n2.prototype, ((F2 = { add: function(e2) {
             return kn2(this, e2), this;
           }, addKey: function(e2) {
             return xn2(this, e2, e2), this;
@@ -25986,10 +26249,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             }), this;
           }, hasKey: function(e2) {
             var t3 = Pn2(this).next(e2).value;
-            return t3 && st2(t3.from, e2) <= 0 && 0 <= st2(t3.to, e2);
+            return t3 && st(t3.from, e2) <= 0 && 0 <= st(t3.to, e2);
           } })[C2] = function() {
             return Pn2(this);
-          }, F));
+          }, F2));
           var An2 = {}, Cn2 = {}, Tn2 = false;
           function In2(e2) {
             Sn2(Cn2, e2), Tn2 || (Tn2 = true, setTimeout(function() {
@@ -26038,17 +26301,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 if (e2(), !r3) throw new Y2.MissingAPI();
                 var c3 = f2.name, l2 = h2.autoSchema || !d2 ? r3.open(c3) : r3.open(c3, d2);
                 if (!l2) throw new Y2.MissingAPI();
-                l2.onerror = Ft(n3), l2.onblocked = Ie2(f2._fireOnBlocked), l2.onupgradeneeded = Ie2(function(e3) {
+                l2.onerror = Ft2(n3), l2.onblocked = Ie2(f2._fireOnBlocked), l2.onupgradeneeded = Ie2(function(e3) {
                   var t4;
                   v2 = l2.transaction, h2.autoSchema && !f2._options.allowEmptyDB ? (l2.onerror = Mt, v2.abort(), l2.result.close(), (t4 = r3.deleteDatabase(c3)).onsuccess = t4.onerror = Ie2(function() {
                     n3(new Y2.NoSuchDatabase("Database ".concat(c3, " doesnt exist")));
-                  })) : (v2.onerror = Ft(n3), e3 = e3.oldVersion > Math.pow(2, 62) ? 0 : e3.oldVersion, m2 = e3 < 1, f2.idbdb = l2.result, p2 && un2(f2, v2), an2(f2, e3 / 10, v2, n3));
+                  })) : (v2.onerror = Ft2(n3), e3 = e3.oldVersion > Math.pow(2, 62) ? 0 : e3.oldVersion, m2 = e3 < 1, f2.idbdb = l2.result, p2 && un2(f2, v2), an2(f2, e3 / 10, v2, n3));
                 }, n3), l2.onsuccess = Ie2(function() {
                   v2 = null;
                   var e3, t4, n4, r4, i4, o2 = f2.idbdb = l2.result, a2 = b(o2.objectStoreNames);
                   if (0 < a2.length) try {
                     var u2 = o2.transaction(1 === (r4 = a2).length ? r4[0] : r4, "readonly");
-                    if (h2.autoSchema) t4 = o2, n4 = u2, (e3 = f2).verno = t4.version / 10, n4 = e3._dbSchema = hn2(0, t4, n4), e3._storeNames = b(t4.objectStoreNames, 0), nn(e3, [e3._allTables], O2(n4), n4);
+                    if (h2.autoSchema) t4 = o2, n4 = u2, (e3 = f2).verno = t4.version / 10, n4 = e3._dbSchema = hn2(0, t4, n4), e3._storeNames = b(t4.objectStoreNames, 0), nn(e3, [e3._allTables], O(n4), n4);
                     else if (dn2(f2, f2._dbSchema, u2), ((i4 = sn(hn2(0, (i4 = f2).idbdb, u2), i4._dbSchema)).add.length || i4.change.some(function(e4) {
                       return e4.add.length || e4.change.length;
                     })) && !p2) return console.warn("Dexie SchemaDiff: Schema was extended without increasing the number passed to db.version(). Dexie will add missing parts and increment native version number to workaround this."), o2.close(), d2 = o2.version + 1, p2 = true, s2(y2());
@@ -26059,7 +26322,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                     h2.vcFired = true, f2.on("versionchange").fire(e4);
                   }), o2.onclose = Ie2(function() {
                     f2.close({ disableAutoOpen: false });
-                  }), m2 && (i4 = f2._deps, u2 = c3, o2 = i4.indexedDB, i4 = i4.IDBKeyRange, bn2(o2) || u2 === tt || mn2(o2, i4).put({ name: u2 }).catch(G2)), s2();
+                  }), m2 && (i4 = f2._deps, u2 = c3, o2 = i4.indexedDB, i4 = i4.IDBKeyRange, bn2(o2) || u2 === tt2 || mn2(o2, i4).put({ name: u2 }).catch(G)), s2();
                 }, n3);
               }).catch(function(e3) {
                 switch (null == e3 ? void 0 : e3.name) {
@@ -26085,7 +26348,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 return f2.on.ready.fire(f2.vip);
               })).then(function e3() {
                 if (0 < h2.onReadyBeingFired.length) {
-                  var t4 = h2.onReadyBeingFired.reduce(re2, G2);
+                  var t4 = h2.onReadyBeingFired.reduce(re2, G);
                   return h2.onReadyBeingFired = [], _e2.resolve(gn2(function() {
                     return t4(f2.vip);
                   })).then(e3);
@@ -26134,7 +26397,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             return _(_({}, f2), { table: function(e2) {
               var a2 = f2.table(e2), t3 = a2.schema, u2 = {}, s2 = [];
               function c3(e3, t4, n3) {
-                var r4 = Jt(e3), i4 = u2[r4] = u2[r4] || [], o2 = null == e3 ? 0 : "string" == typeof e3 ? 1 : e3.length, a3 = 0 < t4, a3 = _(_({}, n3), { name: a3 ? "".concat(r4, "(virtual-from:").concat(n3.name, ")") : n3.name, lowLevelIndex: n3, isVirtual: a3, keyTail: t4, keyLength: o2, extractKey: Gt2(e3), unique: !a3 && n3.unique });
+                var r4 = Jt2(e3), i4 = u2[r4] = u2[r4] || [], o2 = null == e3 ? 0 : "string" == typeof e3 ? 1 : e3.length, a3 = 0 < t4, a3 = _(_({}, n3), { name: a3 ? "".concat(r4, "(virtual-from:").concat(n3.name, ")") : n3.name, lowLevelIndex: n3, isVirtual: a3, keyTail: t4, keyLength: o2, extractKey: Gt2(e3), unique: !a3 && n3.unique });
                 return i4.push(a3), a3.isPrimaryKey || s2.push(a3), 1 < o2 && c3(2 === o2 ? e3[0] : e3.slice(0, o2 - 1), t4 + 1, n3), i4.sort(function(e4, t5) {
                   return e4.keyTail - t5.keyTail;
                 }), a3;
@@ -26150,7 +26413,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 return n3.isVirtual ? _(_({}, e3), { query: { index: n3.lowLevelIndex, range: (t4 = e3.query.range, n3 = n3.keyTail, { type: 1 === t4.type ? 2 : t4.type, lower: Fn2(t4.lower, t4.lowerOpen ? f2.MAX_KEY : f2.MIN_KEY, n3), lowerOpen: true, upper: Fn2(t4.upper, t4.upperOpen ? f2.MIN_KEY : f2.MAX_KEY, n3), upperOpen: true }) } }) : e3;
               }
               return _(_({}, a2), { schema: _(_({}, t3), { primaryKey: e2, indexes: s2, getIndexByKeyPath: function(e3) {
-                return (e3 = u2[Jt(e3)]) && e3[0];
+                return (e3 = u2[Jt2(e3)]) && e3[0];
               } }), count: function(e3) {
                 return a2.count(l2(e3));
               }, query: function(e3) {
@@ -26178,10 +26441,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             } });
           } };
           function Nn2(i3, o2, a2, u2) {
-            return a2 = a2 || {}, u2 = u2 || "", O2(i3).forEach(function(e2) {
+            return a2 = a2 || {}, u2 = u2 || "", O(i3).forEach(function(e2) {
               var t3, n2, r3;
               m(o2, e2) ? (t3 = i3[e2], n2 = o2[e2], "object" == typeof t3 && "object" == typeof n2 && t3 && n2 ? (r3 = A2(t3)) !== A2(n2) ? a2[u2 + e2] = o2[e2] : "Object" === r3 ? Nn2(t3, n2, a2, u2 + e2 + ".") : t3 !== n2 && (a2[u2 + e2] = o2[e2]) : t3 !== n2 && (a2[u2 + e2] = o2[e2])) : a2[u2 + e2] = void 0;
-            }), O2(o2).forEach(function(e2) {
+            }), O(o2).forEach(function(e2) {
               m(i3, e2) || (a2[u2 + e2] = o2[e2]);
             }), a2;
           }
@@ -26192,25 +26455,25 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             return _(_({}, e2), { table: function(r3) {
               var y2 = e2.table(r3), v2 = y2.schema.primaryKey;
               return _(_({}, y2), { mutate: function(e3) {
-                var t3 = me.trans, n2 = t3.table(r3).hook, h2 = n2.deleting, d2 = n2.creating, p2 = n2.updating;
+                var t3 = me2.trans, n2 = t3.table(r3).hook, h2 = n2.deleting, d2 = n2.creating, p2 = n2.updating;
                 switch (e3.type) {
                   case "add":
-                    if (d2.fire === G2) break;
+                    if (d2.fire === G) break;
                     return t3._promise("readwrite", function() {
                       return a2(e3);
                     }, true);
                   case "put":
-                    if (d2.fire === G2 && p2.fire === G2) break;
+                    if (d2.fire === G && p2.fire === G) break;
                     return t3._promise("readwrite", function() {
                       return a2(e3);
                     }, true);
                   case "delete":
-                    if (h2.fire === G2) break;
+                    if (h2.fire === G) break;
                     return t3._promise("readwrite", function() {
                       return a2(e3);
                     }, true);
                   case "deleteRange":
-                    if (h2.fire === G2) break;
+                    if (h2.fire === G) break;
                     return t3._promise("readwrite", function() {
                       return (function n3(r4, i3, o2) {
                         return y2.query({ trans: r4, values: false, query: { index: v2, range: i3 }, limit: o2 }).then(function(e4) {
@@ -26224,13 +26487,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 }
                 return y2.mutate(e3);
                 function a2(c3) {
-                  var e4, t4, n3, l2 = me.trans, f2 = c3.keys || Ln2(v2, c3);
+                  var e4, t4, n3, l2 = me2.trans, f2 = c3.keys || Ln2(v2, c3);
                   if (!f2) throw new Error("Keys missing");
                   return "delete" !== (c3 = "add" === c3.type || "put" === c3.type ? _(_({}, c3), { keys: f2 }) : _({}, c3)).type && (c3.values = i2([], c3.values)), c3.keys && (c3.keys = i2([], c3.keys)), e4 = y2, n3 = f2, ("add" === (t4 = c3).type ? Promise.resolve([]) : e4.getMany({ trans: t4.trans, keys: n3, cache: "immutable" })).then(function(u2) {
                     var s2 = f2.map(function(e5, t5) {
                       var n4, r4, i3, o2 = u2[t5], a3 = { onerror: null, onsuccess: null };
-                      return "delete" === c3.type ? h2.fire.call(a3, e5, o2, l2) : "add" === c3.type || void 0 === o2 ? (n4 = d2.fire.call(a3, e5, c3.values[t5], l2), null == e5 && null != n4 && (c3.keys[t5] = e5 = n4, v2.outbound || w2(c3.values[t5], v2.keyPath, e5))) : (n4 = Nn2(o2, c3.values[t5]), (r4 = p2.fire.call(a3, n4, e5, o2, l2)) && (i3 = c3.values[t5], Object.keys(r4).forEach(function(e6) {
-                        m(i3, e6) ? i3[e6] = r4[e6] : w2(i3, e6, r4[e6]);
+                      return "delete" === c3.type ? h2.fire.call(a3, e5, o2, l2) : "add" === c3.type || void 0 === o2 ? (n4 = d2.fire.call(a3, e5, c3.values[t5], l2), null == e5 && null != n4 && (c3.keys[t5] = e5 = n4, v2.outbound || w(c3.values[t5], v2.keyPath, e5))) : (n4 = Nn2(o2, c3.values[t5]), (r4 = p2.fire.call(a3, n4, e5, o2, l2)) && (i3 = c3.values[t5], Object.keys(r4).forEach(function(e6) {
+                        m(i3, e6) ? i3[e6] = r4[e6] : w(i3, e6, r4[e6]);
                       }))), a3;
                     });
                     return y2.mutate(c3).then(function(e5) {
@@ -26253,7 +26516,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             try {
               if (!t3) return null;
               if (t3.keys.length < e2.length) return null;
-              for (var r3 = [], i3 = 0, o2 = 0; i3 < t3.keys.length && o2 < e2.length; ++i3) 0 === st2(t3.keys[i3], e2[o2]) && (r3.push(n2 ? S2(t3.values[i3]) : t3.values[i3]), ++o2);
+              for (var r3 = [], i3 = 0, o2 = 0; i3 < t3.keys.length && o2 < e2.length; ++i3) 0 === st(t3.keys[i3], e2[o2]) && (r3.push(n2 ? S(t3.values[i3]) : t3.values[i3]), ++o2);
               return r3.length === e2.length ? r3 : null;
             } catch (e3) {
               return null;
@@ -26266,7 +26529,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 if (!t4.cache) return n2.getMany(t4);
                 var e3 = Vn2(t4.keys, t4.trans._cache, "clone" === t4.cache);
                 return e3 ? _e2.resolve(e3) : n2.getMany(t4).then(function(e4) {
-                  return t4.trans._cache = { keys: t4.keys, values: "clone" === t4.cache ? S2(e4) : e4 }, e4;
+                  return t4.trans._cache = { keys: t4.keys, values: "clone" === t4.cache ? S(e4) : e4 }, e4;
                 });
               }, mutate: function(e3) {
                 return "add" !== e3.type && (e3.trans._cache = null), n2.mutate(e3);
@@ -26288,9 +26551,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             }
           }
           var $n2 = { stack: "dbcore", level: 0, name: "Observability", create: function(b2) {
-            var g2 = b2.schema.name, w3 = new _n2(b2.MIN_KEY, b2.MAX_KEY);
+            var g2 = b2.schema.name, w2 = new _n2(b2.MIN_KEY, b2.MAX_KEY);
             return _(_({}, b2), { transaction: function(e2, t3, n2) {
-              if (me.subscr && "readonly" !== t3) throw new Y2.ReadOnly("Readwrite transaction in liveQuery context. Querier source: ".concat(me.querier));
+              if (me2.subscr && "readonly" !== t3) throw new Y2.ReadOnly("Readwrite transaction in liveQuery context. Querier source: ".concat(me2.querier));
               return b2.transaction(e2, t3, n2);
             }, table: function(d2) {
               var p2 = b2.table(d2), y2 = p2.schema, v2 = y2.primaryKey, e2 = y2.indexes, c3 = v2.extractKey, l2 = v2.outbound, m2 = v2.autoIncrement && e2.filter(function(e3) {
@@ -26314,10 +26577,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                   }
                   (o2 || s2).forEach(function(e4, t6) {
                     var n4 = o2 && r4(o2[t6]), t6 = s2 && r4(s2[t6]);
-                    0 !== st2(n4, t6) && (null != n4 && i4(n4), null != t6 && i4(t6));
+                    0 !== st(n4, t6) && (null != n4 && i4(n4), null != t6 && i4(t6));
                   });
-                }))) : f3 ? (h2 = { from: null !== (h2 = f3.lower) && void 0 !== h2 ? h2 : b2.MIN_KEY, to: null !== (h2 = f3.upper) && void 0 !== h2 ? h2 : b2.MAX_KEY }, i3.add(h2), r3.add(h2)) : (r3.add(w3), i3.add(w3), y2.indexes.forEach(function(e4) {
-                  return u2(e4.name).add(w3);
+                }))) : f3 ? (h2 = { from: null !== (h2 = f3.lower) && void 0 !== h2 ? h2 : b2.MIN_KEY, to: null !== (h2 = f3.upper) && void 0 !== h2 ? h2 : b2.MAX_KEY }, i3.add(h2), r3.add(h2)) : (r3.add(w2), i3.add(w2), y2.indexes.forEach(function(e4) {
+                  return u2(e4.name).add(w2);
                 })), p2.mutate(a2).then(function(o3) {
                   return !f3 || "add" !== a2.type && "put" !== a2.type || (r3.addKeys(o3.results), m2 && m2.forEach(function(t5) {
                     for (var e4 = a2.values.map(function(e5) {
@@ -26336,9 +26599,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               }, getMany: function(e3) {
                 return [v2, new _n2().addKeys(e3.keys)];
               }, count: e2, query: e2, openCursor: e2 };
-              return O2(f2).forEach(function(s2) {
+              return O(f2).forEach(function(s2) {
                 t3[s2] = function(i3) {
-                  var e3 = me.subscr, t4 = !!e3, n2 = Wn2(me, p2) && Yn2(s2, i3) ? i3.obsSet = {} : e3;
+                  var e3 = me2.subscr, t4 = !!e3, n2 = Wn2(me2, p2) && Yn2(s2, i3) ? i3.obsSet = {} : e3;
                   if (t4) {
                     var r3 = function(e4) {
                       e4 = "idb://".concat(g2, "/").concat(d2, "/").concat(e4);
@@ -26369,7 +26632,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                           return t5;
                         });
                       }
-                      a2.add(w3);
+                      a2.add(w2);
                     }
                   }
                   return p2[s2].apply(this, arguments);
@@ -26390,7 +26653,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             })), t3;
           }
           function Gn2(e2, t3) {
-            return n2 = e2, (void 0 === (r3 = t3).lower || (r3.lowerOpen ? 0 < st2(n2, r3.lower) : 0 <= st2(n2, r3.lower))) && (e2 = e2, void 0 === (t3 = t3).upper || (t3.upperOpen ? st2(e2, t3.upper) < 0 : st2(e2, t3.upper) <= 0));
+            return n2 = e2, (void 0 === (r3 = t3).lower || (r3.lowerOpen ? 0 < st(n2, r3.lower) : 0 <= st(n2, r3.lower))) && (e2 = e2, void 0 === (t3 = t3).upper || (t3.upperOpen ? st(e2, t3.upper) < 0 : st(e2, t3.upper) <= 0));
             var n2, r3;
           }
           function Xn2(e2, d2, t3, n2, r3, i3) {
@@ -26441,17 +26704,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               return n3;
             }, e2);
             return t3 === e2 ? e2 : (t3.sort(function(e3, t4) {
-              return st2(a2(e3), a2(t4)) || st2(v2(e3), v2(t4));
+              return st(a2(e3), a2(t4)) || st(v2(e3), v2(t4));
             }), d2.limit && d2.limit < 1 / 0 && (t3.length > d2.limit ? t3.length = d2.limit : e2.length === d2.limit && t3.length < d2.limit && (r3.dirty = true)), i3 ? Object.freeze(t3) : t3);
           }
           function Hn2(e2, t3) {
-            return 0 === st2(e2.lower, t3.lower) && 0 === st2(e2.upper, t3.upper) && !!e2.lowerOpen == !!t3.lowerOpen && !!e2.upperOpen == !!t3.upperOpen;
+            return 0 === st(e2.lower, t3.lower) && 0 === st(e2.upper, t3.upper) && !!e2.lowerOpen == !!t3.lowerOpen && !!e2.upperOpen == !!t3.upperOpen;
           }
           function Jn2(e2, t3) {
             return (function(e3, t4, n2, r3) {
               if (void 0 === e3) return void 0 !== t4 ? -1 : 0;
               if (void 0 === t4) return 1;
-              if (0 === (t4 = st2(e3, t4))) {
+              if (0 === (t4 = st(e3, t4))) {
                 if (n2 && r3) return 0;
                 if (n2) return 1;
                 if (r3) return -1;
@@ -26460,7 +26723,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             })(e2.lower, t3.lower, e2.lowerOpen, t3.lowerOpen) <= 0 && 0 <= (function(e3, t4, n2, r3) {
               if (void 0 === e3) return void 0 !== t4 ? 1 : 0;
               if (void 0 === t4) return -1;
-              if (0 === (t4 = st2(e3, t4))) {
+              if (0 === (t4 = st(e3, t4))) {
                 if (n2 && r3) return 0;
                 if (n2) return -1;
                 if (r3) return 1;
@@ -26476,17 +26739,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               }, 3e3));
             });
           }
-          var er2 = { stack: "dbcore", level: 0, name: "Cache", create: function(k2) {
-            var O3 = k2.schema.name;
-            return _(_({}, k2), { transaction: function(g2, w3, e2) {
-              var _2, t3, x3 = k2.transaction(g2, w3, e2);
-              return "readwrite" === w3 && (t3 = (_2 = new AbortController()).signal, e2 = function(b2) {
+          var er2 = { stack: "dbcore", level: 0, name: "Cache", create: function(k3) {
+            var O2 = k3.schema.name;
+            return _(_({}, k3), { transaction: function(g2, w2, e2) {
+              var _2, t3, x3 = k3.transaction(g2, w2, e2);
+              return "readwrite" === w2 && (t3 = (_2 = new AbortController()).signal, e2 = function(b2) {
                 return function() {
-                  if (_2.abort(), "readwrite" === w3) {
+                  if (_2.abort(), "readwrite" === w2) {
                     for (var t4 = /* @__PURE__ */ new Set(), e3 = 0, n2 = g2; e3 < n2.length; e3++) {
-                      var r3 = n2[e3], i3 = An2["idb://".concat(O3, "/").concat(r3)];
+                      var r3 = n2[e3], i3 = An2["idb://".concat(O2, "/").concat(r3)];
                       if (i3) {
-                        var o2 = k2.table(r3), a2 = i3.optimisticOps.filter(function(e4) {
+                        var o2 = k3.table(r3), a2 = i3.optimisticOps.filter(function(e4) {
                           return e4.trans === x3;
                         });
                         if (x3._explicit && b2 && x3.mutatedParts) for (var u2 = 0, s2 = Object.values(i3.queries.query); u2 < s2.length; u2++) for (var c3 = 0, l2 = (d2 = s2[u2]).slice(); c3 < l2.length; c3++) jn2((p2 = l2[c3]).obsSet, x3.mutatedParts) && (I(d2, p2), p2.subscribers.forEach(function(e4) {
@@ -26511,11 +26774,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 };
               }, x3.addEventListener("abort", e2(false), { signal: t3 }), x3.addEventListener("error", e2(false), { signal: t3 }), x3.addEventListener("complete", e2(true), { signal: t3 })), x3;
             }, table: function(c3) {
-              var l2 = k2.table(c3), i3 = l2.schema.primaryKey;
+              var l2 = k3.table(c3), i3 = l2.schema.primaryKey;
               return _(_({}, l2), { mutate: function(t3) {
-                var e2 = me.trans;
+                var e2 = me2.trans;
                 if (i3.outbound || "disabled" === e2.db._options.cache || e2.explicit || "readwrite" !== e2.idbtrans.mode) return l2.mutate(t3);
-                var n2 = An2["idb://".concat(O3, "/").concat(c3)];
+                var n2 = An2["idb://".concat(O2, "/").concat(c3)];
                 if (!n2) return l2.mutate(t3);
                 e2 = l2.mutate(t3);
                 return "add" !== t3.type && "put" !== t3.type || !(50 <= t3.values.length || Ln2(i3, t3).some(function(e3) {
@@ -26528,16 +26791,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                   var e3 = Qn2(0, _(_({}, t3), { values: t3.values.map(function(e4, t4) {
                     var n3;
                     if (r3.failures[t4]) return e4;
-                    e4 = null !== (n3 = i3.keyPath) && void 0 !== n3 && n3.includes(".") ? S2(e4) : _({}, e4);
-                    return w2(e4, i3.keyPath, r3.results[t4]), e4;
+                    e4 = null !== (n3 = i3.keyPath) && void 0 !== n3 && n3.includes(".") ? S(e4) : _({}, e4);
+                    return w(e4, i3.keyPath, r3.results[t4]), e4;
                   }) }), r3);
                   n2.optimisticOps.push(e3), queueMicrotask(function() {
                     return t3.mutatedParts && In2(t3.mutatedParts);
                   });
                 }), e2;
               }, query: function(t3) {
-                if (!Wn2(me, l2) || !Yn2("query", t3)) return l2.query(t3);
-                var i4 = "immutable" === (null === (o2 = me.trans) || void 0 === o2 ? void 0 : o2.db._options.cache), e2 = me, n2 = e2.requery, r3 = e2.signal, o2 = (function(e3, t4, n3, r4) {
+                if (!Wn2(me2, l2) || !Yn2("query", t3)) return l2.query(t3);
+                var i4 = "immutable" === (null === (o2 = me2.trans) || void 0 === o2 ? void 0 : o2.db._options.cache), e2 = me2, n2 = e2.requery, r3 = e2.signal, o2 = (function(e3, t4, n3, r4) {
                   var i5 = An2["idb://".concat(e3, "/").concat(t4)];
                   if (!i5) return [];
                   if (!(t4 = i5.queries[n3])) return [null, false, i5, null];
@@ -26557,17 +26820,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                       });
                       return [a3, !!a3, i5, o3];
                   }
-                })(O3, c3, "query", t3), a2 = o2[0], e2 = o2[1], u2 = o2[2], s2 = o2[3];
+                })(O2, c3, "query", t3), a2 = o2[0], e2 = o2[1], u2 = o2[2], s2 = o2[3];
                 return a2 && e2 ? a2.obsSet = t3.obsSet : (e2 = l2.query(t3).then(function(e3) {
                   var t4 = e3.result;
                   if (a2 && (a2.res = t4), i4) {
                     for (var n3 = 0, r4 = t4.length; n3 < r4; ++n3) Object.freeze(t4[n3]);
                     Object.freeze(t4);
-                  } else e3.result = S2(t4);
+                  } else e3.result = S(t4);
                   return e3;
                 }).catch(function(e3) {
                   return s2 && a2 && I(s2, a2), Promise.reject(e3);
-                }), a2 = { obsSet: t3.obsSet, promise: e2, subscribers: /* @__PURE__ */ new Set(), type: "query", req: t3, dirty: false }, s2 ? s2.push(a2) : (s2 = [a2], (u2 = u2 || (An2["idb://".concat(O3, "/").concat(c3)] = { queries: { query: {}, count: {} }, objs: /* @__PURE__ */ new Map(), optimisticOps: [], unsignaledParts: {} })).queries.query[t3.query.index.name || ""] = s2)), Zn2(a2, s2, n2, r3), a2.promise.then(function(e3) {
+                }), a2 = { obsSet: t3.obsSet, promise: e2, subscribers: /* @__PURE__ */ new Set(), type: "query", req: t3, dirty: false }, s2 ? s2.push(a2) : (s2 = [a2], (u2 = u2 || (An2["idb://".concat(O2, "/").concat(c3)] = { queries: { query: {}, count: {} }, objs: /* @__PURE__ */ new Map(), optimisticOps: [], unsignaledParts: {} })).queries.query[t3.query.index.name || ""] = s2)), Zn2(a2, s2, n2, r3), a2.promise.then(function(e3) {
                   return { result: Xn2(e3.result, t3, null == u2 ? void 0 : u2.optimisticOps, l2, a2, i4) };
                 });
               } });
@@ -26588,11 +26851,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             return n2 || (n2 = new this.Version(t3), e2.push(n2), e2.sort(on), n2.stores({}), this._state.autoSchema = false, n2);
           }, rr2.prototype._whenReady = function(e2) {
             var n2 = this;
-            return this.idbdb && (this._state.openComplete || me.letThrough || this._vip) ? e2() : new _e2(function(e3, t3) {
+            return this.idbdb && (this._state.openComplete || me2.letThrough || this._vip) ? e2() : new _e2(function(e3, t3) {
               if (n2._state.openComplete) return t3(new Y2.DatabaseClosed(n2._state.dbOpenError));
               if (!n2._state.isBeingOpened) {
                 if (!n2._state.autoOpen) return void t3(new Y2.DatabaseClosed());
-                n2.open().catch(G2);
+                n2.open().catch(G);
               }
               n2._state.dbReadyPromise.then(e3, t3);
             }).then(e2);
@@ -26641,8 +26904,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 var e3 = i3._deps.indexedDB.deleteDatabase(i3.name);
                 e3.onsuccess = Ie2(function() {
                   var e4, t4, n3;
-                  e4 = i3._deps, t4 = i3.name, n3 = e4.indexedDB, e4 = e4.IDBKeyRange, bn2(n3) || t4 === tt || mn2(n3, e4).delete(t4).catch(G2), r3();
-                }), e3.onerror = Ft(t3), e3.onblocked = i3._fireOnBlocked;
+                  e4 = i3._deps, t4 = i3.name, n3 = e4.indexedDB, e4 = e4.IDBKeyRange, bn2(n3) || t4 === tt2 || mn2(n3, e4).delete(t4).catch(G), r3();
+                }), e3.onerror = Ft2(t3), e3.onblocked = i3._fireOnBlocked;
               }
               if (o2) throw new Y2.InvalidArgument("Invalid closeOptions argument to db.delete()");
               a2.isBeingOpened ? a2.dbReadyPromise.then(e2) : e2();
@@ -26660,7 +26923,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             return this._state.autoSchema;
           }, Object.defineProperty(rr2.prototype, "tables", { get: function() {
             var t3 = this;
-            return O2(this._allTables).map(function(e2) {
+            return O(this._allTables).map(function(e2) {
               return t3._allTables[e2];
             });
           }, enumerable: false, configurable: true }), rr2.prototype.transaction = function() {
@@ -26672,7 +26935,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             }).apply(this, arguments);
             return this._transaction.apply(this, e2);
           }, rr2.prototype._transaction = function(e2, t3, n2) {
-            var r3 = this, i3 = me.trans;
+            var r3 = this, i3 = me2.trans;
             i3 && i3.db === this && -1 === e2.indexOf("!") || (i3 = null);
             var o2, a2, u2 = -1 !== e2.indexOf("?");
             e2 = e2.replace("!", "").replace("?", "");
@@ -26705,7 +26968,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             }
             var s2 = (function i4(o3, a3, u3, s3, c3) {
               return _e2.resolve().then(function() {
-                var e3 = me.transless || me, t4 = o3._createTransaction(a3, u3, o3._dbSchema, s3);
+                var e3 = me2.transless || me2, t4 = o3._createTransaction(a3, u3, o3._dbSchema, s3);
                 if (t4.explicit = true, e3 = { trans: t4, transless: e3 }, s3) t4.idbtrans = s3.idbtrans;
                 else try {
                   t4.create(), t4.idbtrans._explicit = true, o3._state.PR1398_maxLoop = 3;
@@ -26731,7 +26994,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 });
               });
             }).bind(null, this, o2, a2, i3, n2);
-            return i3 ? i3._promise(o2, s2, "lock") : me.trans ? $e2(me.transless, function() {
+            return i3 ? i3._promise(o2, s2, "lock") : me2.trans ? $e2(me2.transless, function() {
               return r3._whenReady(s2);
             }) : this._whenReady(s2);
           }, rr2.prototype.table = function(e2) {
@@ -26745,12 +27008,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             this._options = t3 = _({ addons: rr2.addons, autoOpen: true, indexedDB: n2.indexedDB, IDBKeyRange: n2.IDBKeyRange, cache: "cloned" }, t3), this._deps = { indexedDB: t3.indexedDB, IDBKeyRange: t3.IDBKeyRange };
             n2 = t3.addons;
             this._dbSchema = {}, this._versions = [], this._storeNames = [], this._allTables = {}, this.idbdb = null, this._novip = this;
-            var a2, r3, u2, i3, s2, c3 = { dbOpenError: null, isBeingOpened: false, onReadyBeingFired: null, openComplete: false, dbReadyResolve: G2, dbReadyPromise: null, cancelOpen: G2, openCanceller: null, autoSchema: true, PR1398_maxLoop: 3, autoOpen: t3.autoOpen };
+            var a2, r3, u2, i3, s2, c3 = { dbOpenError: null, isBeingOpened: false, onReadyBeingFired: null, openComplete: false, dbReadyResolve: G, dbReadyPromise: null, cancelOpen: G, openCanceller: null, autoSchema: true, PR1398_maxLoop: 3, autoOpen: t3.autoOpen };
             c3.dbReadyPromise = new _e2(function(e3) {
               c3.dbReadyResolve = e3;
             }), c3.openCanceller = new _e2(function(e3, t4) {
               c3.cancelOpen = t4;
-            }), this._state = c3, this.name = e2, this.on = mt2(this, "populate", "blocked", "versionchange", "close", { ready: [re2, G2] }), this.once = function(n3, r4) {
+            }), this._state = c3, this.name = e2, this.on = mt(this, "populate", "blocked", "versionchange", "close", { ready: [re2, G] }), this.once = function(n3, r4) {
               var i4 = function() {
                 for (var e3 = [], t4 = 0; t4 < arguments.length; t4++) e3[t4] = arguments[t4];
                 o2.on(n3).unsubscribe(i4), r4.apply(o2, e3);
@@ -26765,7 +27028,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                   }));
                 });
               };
-            }), this.Collection = (a2 = this, bt2(Kt.prototype, function(e3, t4) {
+            }), this.Collection = (a2 = this, bt2(Kt2.prototype, function(e3, t4) {
               this.db = a2;
               var n3 = ot2, r4 = null;
               if (t4) try {
@@ -26775,8 +27038,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               }
               var i4 = e3._ctx, t4 = i4.table, e3 = t4.hook.reading.fire;
               this._ctx = { table: t4, index: i4.index, isPrimKey: !i4.index || t4.schema.primKey.keyPath && i4.index === t4.schema.primKey.name, range: n3, keysOnly: false, dir: "next", unique: "", algorithm: null, filter: null, replayFilter: null, justLimit: true, isMatch: null, offset: 0, limit: 1 / 0, error: r4, or: i4.or, valueMapper: e3 !== X2 ? e3 : null };
-            })), this.Table = (r3 = this, bt2(yt.prototype, function(e3, t4, n3) {
-              this.db = r3, this._tx = n3, this.name = e3, this.schema = t4, this.hook = r3._allTables[e3] ? r3._allTables[e3].hook : mt2(null, { creating: [Z2, G2], reading: [H, X2], updating: [te2, G2], deleting: [ee2, G2] });
+            })), this.Table = (r3 = this, bt2(yt2.prototype, function(e3, t4, n3) {
+              this.db = r3, this._tx = n3, this.name = e3, this.schema = t4, this.hook = r3._allTables[e3] ? r3._allTables[e3].hook : mt(null, { creating: [Z2, G], reading: [H, X2], updating: [te2, G], deleting: [ee2, G] });
             })), this.Transaction = (u2 = this, bt2(Vt2.prototype, function(e3, t4, n3, r4, i4) {
               var o3 = this;
               "readonly" !== e3 && t4.forEach(function(e4) {
@@ -26784,7 +27047,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 e4 && (t4 = t4.concat(e4.map(function(e5) {
                   return e5.updatesTable;
                 })));
-              }), this.db = u2, this.mode = e3, this.storeNames = t4, this.schema = n3, this.chromeTransactionDurability = r4, this.idbtrans = null, this.on = mt2(this, "complete", "error", "abort"), this.parent = i4 || null, this.active = true, this._reculock = 0, this._blockedFuncs = [], this._resolve = null, this._reject = null, this._waitingFor = null, this._waitingQueue = null, this._spinCount = 0, this._completion = new _e2(function(e4, t5) {
+              }), this.db = u2, this.mode = e3, this.storeNames = t4, this.schema = n3, this.chromeTransactionDurability = r4, this.idbtrans = null, this.on = mt(this, "complete", "error", "abort"), this.parent = i4 || null, this.active = true, this._reculock = 0, this._blockedFuncs = [], this._resolve = null, this._reject = null, this._waitingFor = null, this._waitingQueue = null, this._spinCount = 0, this._completion = new _e2(function(e4, t5) {
                 o3._resolve = e4, o3._reject = t5;
               }), this._completion.then(function() {
                 o3.active = false, o3.on.complete.fire();
@@ -26792,21 +27055,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 var t5 = o3.active;
                 return o3.active = false, o3.on.error.fire(e4), o3.parent ? o3.parent._reject(e4) : t5 && o3.idbtrans && o3.idbtrans.abort(), Xe2(e4);
               });
-            })), this.Version = (i3 = this, bt2(yn2.prototype, function(e3) {
+            })), this.Version = (i3 = this, bt2(yn.prototype, function(e3) {
               this.db = i3, this._cfg = { version: e3, storesSource: null, dbschema: {}, tables: {}, contentUpgrade: null };
             })), this.WhereClause = (s2 = this, bt2(Bt.prototype, function(e3, t4, n3) {
-              if (this.db = s2, this._ctx = { table: e3, index: ":id" === t4 ? null : t4, or: n3 }, this._cmp = this._ascending = st2, this._descending = function(e4, t5) {
-                return st2(t5, e4);
+              if (this.db = s2, this._ctx = { table: e3, index: ":id" === t4 ? null : t4, or: n3 }, this._cmp = this._ascending = st, this._descending = function(e4, t5) {
+                return st(t5, e4);
               }, this._max = function(e4, t5) {
-                return 0 < st2(e4, t5) ? e4 : t5;
+                return 0 < st(e4, t5) ? e4 : t5;
               }, this._min = function(e4, t5) {
-                return st2(e4, t5) < 0 ? e4 : t5;
+                return st(e4, t5) < 0 ? e4 : t5;
               }, this._IDBKeyRange = s2._deps.IDBKeyRange, !this._IDBKeyRange) throw new Y2.MissingAPI();
             })), this.on("versionchange", function(e3) {
               0 < e3.newVersion ? console.warn("Another connection wants to upgrade database '".concat(o2.name, "'. Closing db now to resume the upgrade.")) : console.warn("Another connection wants to delete database '".concat(o2.name, "'. Closing db now to resume the delete request.")), o2.close({ disableAutoOpen: false });
             }), this.on("blocked", function(e3) {
               !e3.newVersion || e3.newVersion < e3.oldVersion ? console.warn("Dexie.delete('".concat(o2.name, "') was blocked")) : console.warn("Upgrade '".concat(o2.name, "' blocked by other connection holding version ").concat(e3.oldVersion / 10));
-            }), this._maxKey = Qt(t3.IDBKeyRange), this._createTransaction = function(e3, t4, n3, r4) {
+            }), this._maxKey = Qt2(t3.IDBKeyRange), this._createTransaction = function(e3, t4, n3, r4) {
               return new o2.Transaction(e3, t4, n3, o2._options.chromeTransactionDurability, r4);
             }, this._fireOnBlocked = function(t4) {
               o2.on("blocked").fire(t4), et2.filter(function(e3) {
@@ -26821,7 +27084,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 return tr2(o2.table(e4), l2);
               };
               var r4 = Reflect.get(e3, t4, n3);
-              return r4 instanceof yt ? tr2(r4, l2) : "tables" === t4 ? r4.map(function(e4) {
+              return r4 instanceof yt2 ? tr2(r4, l2) : "tables" === t4 ? r4.map(function(e4) {
                 return tr2(e4, l2);
               }) : "_createTransaction" === t4 ? function() {
                 return tr2(r4.apply(this, arguments), l2);
@@ -26831,9 +27094,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               return e3(o2);
             });
           }
-          var ir2, F = "undefined" != typeof Symbol && "observable" in Symbol ? Symbol.observable : "@@observable", or2 = (ar2.prototype.subscribe = function(e2, t3, n2) {
+          var ir2, F2 = "undefined" != typeof Symbol && "observable" in Symbol ? Symbol.observable : "@@observable", or2 = (ar2.prototype.subscribe = function(e2, t3, n2) {
             return this._subscribe(e2 && "function" != typeof e2 ? e2 : { next: e2, error: t3, complete: n2 });
-          }, ar2.prototype[F] = function() {
+          }, ar2.prototype[F2] = function() {
             return this;
           }, ar2);
           function ar2(e2) {
@@ -26899,7 +27162,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               fr2 = t3;
             }
           }
-          r2(sr2, _(_({}, Q), { delete: function(e2) {
+          r2(sr2, _(_({}, Q2), { delete: function(e2) {
             return new sr2(e2, { addons: [] }).delete();
           }, exists: function(e2) {
             return new sr2(e2, { addons: [] }).open().then(function(e3) {
@@ -26913,7 +27176,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 return e3.map(function(e4) {
                   return e4.name;
                 }).filter(function(e4) {
-                  return e4 !== tt;
+                  return e4 !== tt2;
                 });
               }) : mn2(n2, t3).toCollection().primaryKeys()).then(e2);
             } catch (e3) {
@@ -26925,7 +27188,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               a(this, e2);
             };
           }, ignoreTransaction: function(e2) {
-            return me.trans ? $e2(me.transless, e2) : e2();
+            return me2.trans ? $e2(me2.transless, e2) : e2();
           }, vip: gn2, async: function(t3) {
             return function() {
               try {
@@ -26943,23 +27206,23 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               return Xe2(e3);
             }
           }, currentTransaction: { get: function() {
-            return me.trans || null;
+            return me2.trans || null;
           } }, waitFor: function(e2, t3) {
             t3 = _e2.resolve("function" == typeof e2 ? sr2.ignoreTransaction(e2) : e2).timeout(t3 || 6e4);
-            return me.trans ? me.trans.waitFor(t3) : t3;
+            return me2.trans ? me2.trans.waitFor(t3) : t3;
           }, Promise: _e2, debug: { get: function() {
             return ie2;
           }, set: function(e2) {
             oe2(e2);
-          } }, derive: o, extend: a, props: r2, override: p, Events: mt2, on: Ut, liveQuery: ur2, extendObservabilitySet: Sn2, getByKeyPath: g, setByKeyPath: w2, delByKeyPath: function(t3, e2) {
-            "string" == typeof e2 ? w2(t3, e2, void 0) : "length" in e2 && [].map.call(e2, function(e3) {
-              w2(t3, e3, void 0);
+          } }, derive: o, extend: a, props: r2, override: p, Events: mt, on: Ut, liveQuery: ur2, extendObservabilitySet: Sn2, getByKeyPath: g, setByKeyPath: w, delByKeyPath: function(t3, e2) {
+            "string" == typeof e2 ? w(t3, e2, void 0) : "length" in e2 && [].map.call(e2, function(e3) {
+              w(t3, e3, void 0);
             });
-          }, shallowClone: k, deepClone: S2, getObjectDiff: Nn2, cmp: st2, asap: v, minKey: -1 / 0, addons: [], connections: et2, errnames: z, dependencies: ir2, cache: An2, semVer: "4.2.1", version: "4.2.1".split(".").map(function(e2) {
+          }, shallowClone: k2, deepClone: S, getObjectDiff: Nn2, cmp: st, asap: v, minKey: -1 / 0, addons: [], connections: et2, errnames: z, dependencies: ir2, cache: An2, semVer: "4.2.1", version: "4.2.1".split(".").map(function(e2) {
             return parseInt(e2);
           }).reduce(function(e2, t3, n2) {
             return e2 + t3 / Math.pow(10, 2 * n2);
-          }) })), sr2.maxKey = Qt(sr2.dependencies.IDBKeyRange), "undefined" != typeof dispatchEvent && "undefined" != typeof addEventListener && (Ut(Nt, function(e2) {
+          }) })), sr2.maxKey = Qt2(sr2.dependencies.IDBKeyRange), "undefined" != typeof dispatchEvent && "undefined" != typeof addEventListener && (Ut(Nt, function(e2) {
             fr2 || (e2 = new CustomEvent(Lt2, { detail: e2 }), fr2 = true, dispatchEvent(e2), fr2 = false);
           }), addEventListener(Lt2, function(e2) {
             e2 = e2.detail;
@@ -26981,10 +27244,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }), addEventListener("pageshow", function(e2) {
             !nr2.disableBfCache && e2.persisted && (ie2 && console.debug("Dexie: handling persisted pageshow"), hr2(), cr2({ all: new _n2(-1 / 0, [[]]) }));
           })), _e2.rejectionMapper = function(e2, t3) {
-            return !e2 || e2 instanceof N2 || e2 instanceof TypeError || e2 instanceof SyntaxError || !e2.name || !$2[e2.name] ? e2 : (t3 = new $2[e2.name](t3 || e2.message, e2), "stack" in e2 && l(t3, "stack", { get: function() {
+            return !e2 || e2 instanceof N || e2 instanceof TypeError || e2 instanceof SyntaxError || !e2.name || !$2[e2.name] ? e2 : (t3 = new $2[e2.name](t3 || e2.message, e2), "stack" in e2 && l(t3, "stack", { get: function() {
               return this.inner.stack;
             } }), t3);
-          }, oe2(ie2), _(nr2, Object.freeze({ __proto__: null, Dexie: nr2, liveQuery: ur2, Entity: ut, cmp: st2, PropModification: ht2, replacePrefix: function(e2, t3) {
+          }, oe2(ie2), _(nr2, Object.freeze({ __proto__: null, Dexie: nr2, liveQuery: ur2, Entity: ut2, cmp: st, PropModification: ht2, replacePrefix: function(e2, t3) {
             return new ht2({ replacePrefix: [e2, t3] });
           }, add: function(e2) {
             return new ht2({ add: e2 });
@@ -30378,7 +30641,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         return str2;
       }
       return str2.split(" ").map(
-        (w2) => w2.length > 0 ? w2[0].toUpperCase() + w2.substr(1).toLowerCase() : w2
+        (w) => w.length > 0 ? w[0].toUpperCase() + w.substr(1).toLowerCase() : w
       ).join(" ");
     }
     function formatNoDecimal(num2) {
@@ -32486,58 +32749,58 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
       );
     };
-    const we = 0, zt = 1, qt = 2, kn = 4;
+    const ve = 0, At = 1, Jt = 2, zn = 4;
     function un(t2) {
       return () => t2;
     }
-    function fo(t2) {
+    function mo$3(t2) {
       t2();
     }
-    function ne$1(t2, e) {
+    function se(t2, e) {
       return (n) => t2(e(n));
     }
     function an(t2, e) {
       return () => t2(e);
     }
-    function mo$3(t2, e) {
+    function po(t2, e) {
       return (n) => t2(e, n);
     }
-    function We(t2) {
+    function Ae(t2) {
       return t2 !== void 0;
     }
-    function po(...t2) {
+    function ho(...t2) {
       return () => {
-        t2.map(fo);
+        t2.map(mo$3);
       };
     }
-    function Yt() {
+    function Qt() {
     }
-    function ve(t2, e) {
+    function ye(t2, e) {
       return e(t2), t2;
     }
-    function ho(t2, e) {
+    function go(t2, e) {
       return e(t2);
     }
-    function X(...t2) {
+    function tt(...t2) {
       return t2;
     }
-    function K(t2, e) {
-      return t2(zt, e);
+    function Y(t2, e) {
+      return t2(At, e);
     }
-    function G(t2, e) {
-      t2(we, e);
+    function D(t2, e) {
+      t2(ve, e);
     }
-    function Ge(t2) {
-      t2(qt);
+    function We(t2) {
+      t2(Jt);
     }
-    function ot(t2) {
-      return t2(kn);
+    function rt(t2) {
+      return t2(zn);
     }
-    function O(t2, e) {
-      return K(t2, mo$3(e, we));
+    function F(t2, e) {
+      return Y(t2, po(e, ve));
     }
-    function Tt(t2, e) {
-      const n = t2(zt, (o) => {
+    function Et(t2, e) {
+      const n = t2(At, (o) => {
         n(), e(o);
       });
       return n;
@@ -32550,51 +32813,51 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }, t2);
       };
     }
-    function Fn(t2, e) {
+    function On(t2, e) {
       return t2 === e;
     }
-    function Y(t2 = Fn) {
+    function J(t2 = On) {
       let e;
       return (n) => (o) => {
         t2(e, o) || (e = o, n(o));
       };
     }
-    function A(t2) {
+    function P$1(t2) {
       return (e) => (n) => {
         t2(n) && e(n);
       };
     }
-    function E(t2) {
-      return (e) => ne$1(e, t2);
+    function k(t2) {
+      return (e) => se(e, t2);
     }
-    function Rt(t2) {
+    function Ft(t2) {
       return (e) => () => {
         e(t2);
       };
     }
-    function S(t2, ...e) {
-      const n = go(...e);
+    function x$1(t2, ...e) {
+      const n = Io(...e);
       return (o, r2) => {
         switch (o) {
-          case qt:
-            Ge(t2);
+          case Jt:
+            We(t2);
             return;
-          case zt:
-            return K(t2, n(r2));
+          case At:
+            return Y(t2, n(r2));
         }
       };
     }
-    function bt(t2, e) {
+    function Lt$1(t2, e) {
       return (n) => (o) => {
         n(e = t2(e, o));
       };
     }
-    function Dt(t2) {
+    function Kt(t2) {
       return (e) => (n) => {
         t2 > 0 ? t2-- : e(n);
       };
     }
-    function kt(t2) {
+    function Gt$1(t2) {
       let e = null, n;
       return (o) => (r2) => {
         e = r2, !n && (n = setTimeout(() => {
@@ -32602,15 +32865,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }, t2));
       };
     }
-    function N(...t2) {
+    function $(...t2) {
       const e = new Array(t2.length);
       let n = 0, o = null;
       const r2 = Math.pow(2, t2.length) - 1;
       return t2.forEach((s, i2) => {
         const l = Math.pow(2, i2);
-        K(s, (c2) => {
-          const a = n;
-          n = n | l, e[i2] = c2, a !== r2 && n === r2 && o && (o(), o = null);
+        Y(s, (c2) => {
+          const d = n;
+          n = n | l, e[i2] = c2, d !== r2 && n === r2 && o && (o(), o = null);
         });
       }), (s) => (i2) => {
         const l = () => {
@@ -32619,56 +32882,56 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         n === r2 ? l() : o = l;
       };
     }
-    function go(...t2) {
-      return (e) => t2.reduceRight(ho, e);
+    function Io(...t2) {
+      return (e) => t2.reduceRight(go, e);
     }
-    function Io(t2) {
+    function xo(t2) {
       let e, n;
       const o = () => e == null ? void 0 : e();
       return function(r2, s) {
         switch (r2) {
-          case zt:
-            return s ? n === s ? void 0 : (o(), n = s, e = K(t2, s), e) : (o(), Yt);
-          case qt:
+          case At:
+            return s ? n === s ? void 0 : (o(), n = s, e = Y(t2, s), e) : (o(), Qt);
+          case Jt:
             o(), n = null;
             return;
         }
       };
     }
-    function w(t2) {
+    function C$1(t2) {
       let e = t2;
-      const n = $();
+      const n = U();
       return (o, r2) => {
         switch (o) {
-          case we:
+          case ve:
             e = r2;
             break;
-          case zt: {
+          case At: {
             r2(e);
             break;
           }
-          case kn:
+          case zn:
             return e;
         }
         return n(o, r2);
       };
     }
-    function ct(t2, e) {
-      return ve(w(e), (n) => O(t2, n));
+    function ht(t2, e) {
+      return ye(C$1(e), (n) => F(t2, n));
     }
-    function $() {
+    function U() {
       const t2 = [];
       return (e, n) => {
         switch (e) {
-          case we:
+          case ve:
             t2.slice().forEach((o) => {
               o(n);
             });
             return;
-          case qt:
+          case Jt:
             t2.splice(0, t2.length);
             return;
-          case zt:
+          case At:
             return t2.push(n), () => {
               const o = t2.indexOf(n);
               o > -1 && t2.splice(o, 1);
@@ -32676,10 +32939,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
       };
     }
-    function ht(t2) {
-      return ve($(), (e) => O(t2, e));
+    function bt(t2) {
+      return ye(U(), (e) => F(t2, e));
     }
-    function U(t2, e = [], { singleton: n } = { singleton: true }) {
+    function K(t2, e = [], { singleton: n } = { singleton: true }) {
       return {
         constructor: t2,
         dependencies: e,
@@ -32688,7 +32951,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       };
     }
     const So = () => Symbol();
-    function xo(t2) {
+    function To(t2) {
       const e = /* @__PURE__ */ new Map(), n = ({ constructor: o, dependencies: r2, id: s, singleton: i2 }) => {
         if (i2 && e.has(s))
           return e.get(s);
@@ -32697,56 +32960,56 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       };
       return n(t2);
     }
-    function rt(...t2) {
-      const e = $(), n = new Array(t2.length);
+    function ut(...t2) {
+      const e = U(), n = new Array(t2.length);
       let o = 0;
       const r2 = Math.pow(2, t2.length) - 1;
       return t2.forEach((s, i2) => {
         const l = Math.pow(2, i2);
-        K(s, (c2) => {
-          n[i2] = c2, o = o | l, o === r2 && G(e, n);
+        Y(s, (c2) => {
+          n[i2] = c2, o = o | l, o === r2 && D(e, n);
         });
       }), function(s, i2) {
         switch (s) {
-          case qt: {
-            Ge(e);
+          case Jt: {
+            We(e);
             return;
           }
-          case zt:
-            return o === r2 && i2(n), K(e, i2);
+          case At:
+            return o === r2 && i2(n), Y(e, i2);
         }
       };
     }
-    function V(t2, e = Fn) {
-      return S(t2, Y(e));
+    function V(t2, e = On) {
+      return x$1(t2, J(e));
     }
-    function Le(...t2) {
+    function Fe(...t2) {
       return function(e, n) {
         switch (e) {
-          case qt:
+          case Jt:
             return;
-          case zt:
-            return po(...t2.map((o) => K(o, n)));
+          case At:
+            return ho(...t2.map((o) => Y(o, n)));
         }
       };
     }
-    var mt = /* @__PURE__ */ ((t2) => (t2[t2.DEBUG = 0] = "DEBUG", t2[t2.INFO = 1] = "INFO", t2[t2.WARN = 2] = "WARN", t2[t2.ERROR = 3] = "ERROR", t2))(mt || {});
-    const To = {
+    var Ct = /* @__PURE__ */ ((t2) => (t2[t2.DEBUG = 0] = "DEBUG", t2[t2.INFO = 1] = "INFO", t2[t2.WARN = 2] = "WARN", t2[t2.ERROR = 3] = "ERROR", t2))(Ct || {});
+    const Co = {
       0: "debug",
       3: "error",
       1: "log",
       2: "warn"
-    }, Co = () => typeof globalThis > "u" ? window : globalThis, Vt$1 = U(
+    }, wo = () => typeof globalThis > "u" ? window : globalThis, Wt = K(
       () => {
-        const t2 = w(
+        const t2 = C$1(
           3
           /* ERROR */
         );
         return {
-          log: w((n, o, r2 = 1) => {
+          log: C$1((n, o, r2 = 1) => {
             var i2;
-            const s = (i2 = Co().VIRTUOSO_LOG_LEVEL) != null ? i2 : ot(t2);
-            r2 >= s && console[To[r2]](
+            const s = (i2 = wo().VIRTUOSO_LOG_LEVEL) != null ? i2 : rt(t2);
+            r2 >= s && console[Co[r2]](
               "%creact-virtuoso: %c%s %o",
               "color: #0253b3; font-weight: bold",
               "color: initial",
@@ -32760,7 +33023,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       [],
       { singleton: true }
     );
-    function Ht(t2, e, n) {
+    function Vt$1(t2, e, n) {
       return _e(t2, e, n).callbackRef;
     }
     function _e(t2, e, n) {
@@ -32778,30 +33041,30 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         i2 && e ? (s == null || s.observe(i2), o.current = i2) : (o.current && (s == null || s.unobserve(o.current)), o.current = null);
       }, { callbackRef: r2, ref: o };
     }
-    function On(t2, e, n, o, r2, s, i2, l, c2) {
-      const a = React20.useCallback(
+    function Fn(t2, e, n, o, r2, s, i2, l, c2) {
+      const d = React20.useCallback(
         (m) => {
-          const x2 = wo(m.children, e, l ? "offsetWidth" : "offsetHeight", r2);
+          const S = vo(m.children, e, l ? "offsetWidth" : "offsetHeight", r2);
           let h = m.parentElement;
           for (; !h.dataset.virtuosoScroller; )
             h = h.parentElement;
-          const I = h.lastElementChild.dataset.viewportType === "window";
-          let C2;
-          I && (C2 = h.ownerDocument.defaultView);
-          const v = i2 ? l ? i2.scrollLeft : i2.scrollTop : I ? l ? C2.scrollX || C2.document.documentElement.scrollLeft : C2.scrollY || C2.document.documentElement.scrollTop : l ? h.scrollLeft : h.scrollTop, g = i2 ? l ? i2.scrollWidth : i2.scrollHeight : I ? l ? C2.document.documentElement.scrollWidth : C2.document.documentElement.scrollHeight : l ? h.scrollWidth : h.scrollHeight, p = i2 ? l ? i2.offsetWidth : i2.offsetHeight : I ? l ? C2.innerWidth : C2.innerHeight : l ? h.offsetWidth : h.offsetHeight;
+          const T = h.lastElementChild.dataset.viewportType === "window";
+          let w;
+          T && (w = h.ownerDocument.defaultView);
+          const R = i2 ? l ? i2.scrollLeft : i2.scrollTop : T ? l ? w.scrollX || w.document.documentElement.scrollLeft : w.scrollY || w.document.documentElement.scrollTop : l ? h.scrollLeft : h.scrollTop, g = i2 ? l ? i2.scrollWidth : i2.scrollHeight : T ? l ? w.document.documentElement.scrollWidth : w.document.documentElement.scrollHeight : l ? h.scrollWidth : h.scrollHeight, f = i2 ? l ? i2.offsetWidth : i2.offsetHeight : T ? l ? w.innerWidth : w.innerHeight : l ? h.offsetWidth : h.offsetHeight;
           o({
             scrollHeight: g,
-            scrollTop: Math.max(v, 0),
-            viewportHeight: p
+            scrollTop: Math.max(R, 0),
+            viewportHeight: f
           }), s == null || s(
             l ? fn("column-gap", getComputedStyle(m).columnGap, r2) : fn("row-gap", getComputedStyle(m).rowGap, r2)
-          ), x2 !== null && t2(x2);
+          ), S !== null && t2(S);
         },
         [t2, e, r2, s, i2, o, l]
       );
-      return _e(a, n, c2);
+      return _e(d, n, c2);
     }
-    function wo(t2, e, n, o) {
+    function vo(t2, e, n, o) {
       const r2 = t2.length;
       if (r2 === 0)
         return null;
@@ -32810,33 +33073,33 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         const l = t2.item(i2);
         if (l.dataset.index === void 0)
           continue;
-        const c2 = parseInt(l.dataset.index), a = parseFloat(l.dataset.knownSize), m = e(l, n);
-        if (m === 0 && o("Zero-sized element, this should not happen", { child: l }, mt.ERROR), m === a)
+        const c2 = parseInt(l.dataset.index), d = parseFloat(l.dataset.knownSize), m = e(l, n);
+        if (m === 0 && o("Zero-sized element, this should not happen", { child: l }, Ct.ERROR), m === d)
           continue;
-        const x2 = s[s.length - 1];
-        s.length === 0 || x2.size !== m || x2.endIndex !== c2 - 1 ? s.push({ endIndex: c2, size: m, startIndex: c2 }) : s[s.length - 1].endIndex++;
+        const S = s[s.length - 1];
+        s.length === 0 || S.size !== m || S.endIndex !== c2 - 1 ? s.push({ endIndex: c2, size: m, startIndex: c2 }) : s[s.length - 1].endIndex++;
       }
       return s;
     }
     function fn(t2, e, n) {
-      return e !== "normal" && !(e != null && e.endsWith("px")) && n(`${t2} was not resolved to pixel value correctly`, e, mt.WARN), e === "normal" ? 0 : parseInt(e != null ? e : "0", 10);
+      return e !== "normal" && !(e != null && e.endsWith("px")) && n(`${t2} was not resolved to pixel value correctly`, e, Ct.WARN), e === "normal" ? 0 : parseInt(e != null ? e : "0", 10);
     }
     function Ne(t2, e, n) {
       const o = React20.useRef(null), r2 = React20.useCallback(
         (c2) => {
           if (!(c2 != null && c2.offsetParent))
             return;
-          const a = c2.getBoundingClientRect(), m = a.width;
-          let x2, h;
+          const d = c2.getBoundingClientRect(), m = d.width;
+          let S, h;
           if (e) {
-            const I = e.getBoundingClientRect(), C2 = a.top - I.top;
-            h = I.height - Math.max(0, C2), x2 = C2 + e.scrollTop;
+            const T = e.getBoundingClientRect(), w = d.top - T.top;
+            h = T.height - Math.max(0, w), S = w + e.scrollTop;
           } else {
-            const I = i2.current.ownerDocument.defaultView;
-            h = I.innerHeight - Math.max(0, a.top), x2 = a.top + I.scrollY;
+            const T = i2.current.ownerDocument.defaultView;
+            h = T.innerHeight - Math.max(0, d.top), S = d.top + T.scrollY;
           }
           o.current = {
-            offsetTop: x2,
+            offsetTop: S,
             visibleHeight: h,
             visibleWidth: m
           }, t2(o.current);
@@ -32850,51 +33113,51 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         var c2;
         if (e) {
           e.addEventListener("scroll", l);
-          const a = new ResizeObserver(() => {
+          const d = new ResizeObserver(() => {
             requestAnimationFrame(l);
           });
-          return a.observe(e), () => {
-            e.removeEventListener("scroll", l), a.unobserve(e);
+          return d.observe(e), () => {
+            e.removeEventListener("scroll", l), d.unobserve(e);
           };
         } else {
-          const a = (c2 = i2.current) == null ? void 0 : c2.ownerDocument.defaultView;
-          return a == null || a.addEventListener("scroll", l), a == null || a.addEventListener("resize", l), () => {
-            a == null || a.removeEventListener("scroll", l), a == null || a.removeEventListener("resize", l);
+          const d = (c2 = i2.current) == null ? void 0 : c2.ownerDocument.defaultView;
+          return d == null || d.addEventListener("scroll", l), d == null || d.addEventListener("resize", l), () => {
+            d == null || d.removeEventListener("scroll", l), d == null || d.removeEventListener("resize", l);
           };
         }
       }, [l, e, i2]), s;
     }
-    const at = U(
+    const It = K(
       () => {
-        const t2 = $(), e = $(), n = w(0), o = $(), r2 = w(0), s = $(), i2 = $(), l = w(0), c2 = w(0), a = w(0), m = w(0), x2 = $(), h = $(), I = w(false), C2 = w(false), v = w(false);
-        return O(
-          S(
+        const t2 = U(), e = U(), n = C$1(0), o = U(), r2 = C$1(0), s = U(), i2 = U(), l = C$1(0), c2 = C$1(0), d = C$1(0), m = C$1(0), S = U(), h = U(), T = C$1(false), w = C$1(false), R = C$1(false);
+        return F(
+          x$1(
             t2,
-            E(({ scrollTop: g }) => g)
+            k(({ scrollTop: g }) => g)
           ),
           e
-        ), O(
-          S(
+        ), F(
+          x$1(
             t2,
-            E(({ scrollHeight: g }) => g)
+            k(({ scrollHeight: g }) => g)
           ),
           i2
-        ), O(e, r2), {
+        ), F(e, r2), {
           deviation: n,
-          fixedFooterHeight: a,
+          fixedFooterHeight: d,
           fixedHeaderHeight: c2,
           footerHeight: m,
           headerHeight: l,
-          horizontalDirection: C2,
+          horizontalDirection: w,
           scrollBy: h,
           // input
           scrollContainerState: t2,
           scrollHeight: i2,
-          scrollingInProgress: I,
+          scrollingInProgress: T,
           // signals
-          scrollTo: x2,
+          scrollTo: S,
           scrollTop: e,
-          skipAnimationFrameInResizeObserver: v,
+          skipAnimationFrameInResizeObserver: R,
           smoothScrollTargetReached: o,
           // state
           statefulScrollTop: r2,
@@ -32903,7 +33166,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       },
       [],
       { singleton: true }
-    ), oe = { lvl: 0 };
+    ), ie$2 = { lvl: 0 };
     function Ln(t2, e) {
       const n = t2.length;
       if (n === 0)
@@ -32916,72 +33179,72 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
       return s.push({ end: 1 / 0, start: o, value: r2 }), s;
     }
-    function j(t2) {
-      return t2 === oe;
+    function X(t2) {
+      return t2 === ie$2;
     }
-    function re(t2, e) {
-      if (!j(t2))
-        return e === t2.k ? t2.v : e < t2.k ? re(t2.l, e) : re(t2.r, e);
+    function le$1(t2, e) {
+      if (!X(t2))
+        return e === t2.k ? t2.v : e < t2.k ? le$1(t2.l, e) : le$1(t2.r, e);
     }
-    function wt(t2, e, n = "k") {
-      if (j(t2))
+    function kt(t2, e, n = "k") {
+      if (X(t2))
         return [-1 / 0, void 0];
       if (Number(t2[n]) === e)
         return [t2.k, t2.v];
       if (Number(t2[n]) < e) {
-        const o = wt(t2.r, e, n);
+        const o = kt(t2.r, e, n);
         return o[0] === -1 / 0 ? [t2.k, t2.v] : o;
       }
-      return wt(t2.l, e, n);
+      return kt(t2.l, e, n);
     }
-    function pt(t2, e, n) {
-      return j(t2) ? Pn(e, n, 1) : e === t2.k ? st(t2, { k: e, v: n }) : e < t2.k ? mn$3(st(t2, { l: pt(t2.l, e, n) })) : mn$3(st(t2, { r: pt(t2.r, e, n) }));
+    function yt(t2, e, n) {
+      return X(t2) ? Gn(e, n, 1) : e === t2.k ? dt(t2, { k: e, v: n }) : e < t2.k ? mn$3(dt(t2, { l: yt(t2.l, e, n) })) : mn$3(dt(t2, { r: yt(t2.r, e, n) }));
     }
-    function jt() {
-      return oe;
+    function Zt() {
+      return ie$2;
     }
-    function ye(t2, e, n) {
-      if (j(t2))
+    function Xt(t2, e, n) {
+      if (X(t2))
         return [];
-      const o = wt(t2, e)[0];
-      return vo(Ve(t2, o, n));
+      const o = kt(t2, e)[0];
+      return yo(Ve(t2, o, n));
     }
-    function ze(t2, e) {
-      if (j(t2)) return oe;
+    function Le(t2, e) {
+      if (X(t2)) return ie$2;
       const { k: n, l: o, r: r2 } = t2;
       if (e === n) {
-        if (j(o))
+        if (X(o))
           return r2;
-        if (j(r2))
+        if (X(r2))
           return o;
         {
-          const [s, i2] = Vn(o);
-          return ge$1(st(t2, { k: s, l: zn(o), v: i2 }));
+          const [s, i2] = Pn(o);
+          return Se(dt(t2, { k: s, l: Vn(o), v: i2 }));
         }
-      } else return e < n ? ge$1(st(t2, { l: ze(o, e) })) : ge$1(st(t2, { r: ze(r2, e) }));
+      } else return e < n ? Se(dt(t2, { l: Le(o, e) })) : Se(dt(t2, { r: Le(r2, e) }));
     }
-    function Gt$1(t2) {
-      return j(t2) ? [] : [...Gt$1(t2.l), { k: t2.k, v: t2.v }, ...Gt$1(t2.r)];
+    function Dt(t2) {
+      return X(t2) ? [] : [...Dt(t2.l), { k: t2.k, v: t2.v }, ...Dt(t2.r)];
     }
     function Ve(t2, e, n) {
-      if (j(t2))
+      if (X(t2))
         return [];
       const { k: o, l: r2, r: s, v: i2 } = t2;
       let l = [];
       return o > e && (l = l.concat(Ve(r2, e, n))), o >= e && o <= n && l.push({ k: o, v: i2 }), o <= n && (l = l.concat(Ve(s, e, n))), l;
     }
-    function ge$1(t2) {
+    function Se(t2) {
       const { l: e, lvl: n, r: o } = t2;
       if (o.lvl >= n - 1 && e.lvl >= n - 1)
         return t2;
       if (n > o.lvl + 1) {
         if (Ee(e))
-          return An(st(t2, { lvl: n - 1 }));
-        if (!j(e) && !j(e.r))
-          return st(e.r, {
-            l: st(e, { r: e.r.l }),
+          return Mn(dt(t2, { lvl: n - 1 }));
+        if (!X(e) && !X(e.r))
+          return dt(e.r, {
+            l: dt(e, { r: e.r.l }),
             lvl: n,
-            r: st(t2, {
+            r: dt(t2, {
               l: e.r.r,
               lvl: n - 1
             })
@@ -32989,23 +33252,23 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         throw new Error("Unexpected empty nodes");
       } else {
         if (Ee(t2))
-          return Pe(st(t2, { lvl: n - 1 }));
-        if (!j(o) && !j(o.l)) {
+          return Pe(dt(t2, { lvl: n - 1 }));
+        if (!X(o) && !X(o.l)) {
           const r2 = o.l, s = Ee(r2) ? o.lvl - 1 : o.lvl;
-          return st(r2, {
-            l: st(t2, {
+          return dt(r2, {
+            l: dt(t2, {
               lvl: n - 1,
               r: r2.l
             }),
             lvl: r2.lvl + 1,
-            r: Pe(st(o, { l: r2.r, lvl: s }))
+            r: Pe(dt(o, { l: r2.r, lvl: s }))
           });
         } else
           throw new Error("Unexpected empty nodes");
       }
     }
-    function st(t2, e) {
-      return Pn(
+    function dt(t2, e) {
+      return Gn(
         e.k !== void 0 ? e.k : t2.k,
         e.v !== void 0 ? e.v : t2.v,
         e.lvl !== void 0 ? e.lvl : t2.lvl,
@@ -33013,47 +33276,47 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         e.r !== void 0 ? e.r : t2.r
       );
     }
-    function zn(t2) {
-      return j(t2.r) ? t2.l : ge$1(st(t2, { r: zn(t2.r) }));
+    function Vn(t2) {
+      return X(t2.r) ? t2.l : Se(dt(t2, { r: Vn(t2.r) }));
     }
     function Ee(t2) {
-      return j(t2) || t2.lvl > t2.r.lvl;
+      return X(t2) || t2.lvl > t2.r.lvl;
     }
-    function Vn(t2) {
-      return j(t2.r) ? [t2.k, t2.v] : Vn(t2.r);
+    function Pn(t2) {
+      return X(t2.r) ? [t2.k, t2.v] : Pn(t2.r);
     }
-    function Pn(t2, e, n, o = oe, r2 = oe) {
+    function Gn(t2, e, n, o = ie$2, r2 = ie$2) {
       return { k: t2, l: o, lvl: n, r: r2, v: e };
     }
     function mn$3(t2) {
-      return Pe(An(t2));
+      return Pe(Mn(t2));
     }
-    function An(t2) {
+    function Mn(t2) {
       const { l: e } = t2;
-      return !j(e) && e.lvl === t2.lvl ? st(e, { r: st(t2, { l: e.r }) }) : t2;
+      return !X(e) && e.lvl === t2.lvl ? dt(e, { r: dt(t2, { l: e.r }) }) : t2;
     }
     function Pe(t2) {
       const { lvl: e, r: n } = t2;
-      return !j(n) && !j(n.r) && n.lvl === e && n.r.lvl === e ? st(n, { l: st(t2, { r: n.l }), lvl: e + 1 }) : t2;
+      return !X(n) && !X(n.r) && n.lvl === e && n.r.lvl === e ? dt(n, { l: dt(t2, { r: n.l }), lvl: e + 1 }) : t2;
     }
-    function vo(t2) {
+    function yo(t2) {
       return Ln(t2, ({ k: e, v: n }) => ({ index: e, value: n }));
     }
-    function Mn(t2, e) {
+    function An(t2, e) {
       return !!(t2 && t2.startIndex === e.startIndex && t2.endIndex === e.endIndex);
     }
-    function se(t2, e) {
+    function ce(t2, e) {
       return !!(t2 && t2[0] === e[0] && t2[1] === e[1]);
     }
-    const De = U(
-      () => ({ recalcInProgress: w(false) }),
+    const De = K(
+      () => ({ recalcInProgress: C$1(false) }),
       [],
       { singleton: true }
     );
     function Wn(t2, e, n) {
-      return t2[Se(t2, e, n)];
+      return t2[Ce(t2, e, n)];
     }
-    function Se(t2, e, n, o = 0) {
+    function Ce(t2, e, n, o = 0) {
       let r2 = t2.length - 1;
       for (; o <= r2; ) {
         const s = Math.floor((o + r2) / 2), i2 = t2[s], l = n(i2, e);
@@ -33071,15 +33334,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
       throw new Error(`Failed binary finding record in array - ${t2.join(",")}, searched for ${e}`);
     }
-    function yo(t2, e, n, o) {
-      const r2 = Se(t2, e, o), s = Se(t2, n, o, r2);
+    function bo(t2, e, n, o) {
+      const r2 = Ce(t2, e, o), s = Ce(t2, n, o, r2);
       return t2.slice(r2, s + 1);
     }
-    function vt$1(t2, e) {
+    function zt(t2, e) {
       return Math.round(t2.getBoundingClientRect()[e]);
     }
-    function Re$1(t2) {
-      return !j(t2.groupOffsetTree);
+    function be(t2) {
+      return !X(t2.groupOffsetTree);
     }
     function $e({ index: t2 }, e) {
       return e === t2 ? 0 : e < t2 ? -1 : 1;
@@ -33087,88 +33350,88 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     function Ro() {
       return {
         groupIndices: [],
-        groupOffsetTree: jt(),
+        groupOffsetTree: Zt(),
         lastIndex: 0,
         lastOffset: 0,
         lastSize: 0,
         offsetTree: [],
-        sizeTree: jt()
+        sizeTree: Zt()
       };
     }
-    function bo(t2, e) {
-      let n = j(t2) ? 0 : 1 / 0;
+    function Ho(t2, e) {
+      let n = X(t2) ? 0 : 1 / 0;
       for (const o of e) {
         const { endIndex: r2, size: s, startIndex: i2 } = o;
-        if (n = Math.min(n, i2), j(t2)) {
-          t2 = pt(t2, 0, s);
+        if (n = Math.min(n, i2), X(t2)) {
+          t2 = yt(t2, 0, s);
           continue;
         }
-        const l = ye(t2, i2 - 1, r2 + 1);
+        const l = Xt(t2, i2 - 1, r2 + 1);
         if (l.some(Lo(o)))
           continue;
-        let c2 = false, a = false;
-        for (const { end: m, start: x2, value: h } of l)
-          c2 ? (r2 >= x2 || s === h) && (t2 = ze(t2, x2)) : (a = h !== s, c2 = true), m > r2 && r2 >= x2 && h !== s && (t2 = pt(t2, r2 + 1, h));
-        a && (t2 = pt(t2, i2, s));
+        let c2 = false, d = false;
+        for (const { end: m, start: S, value: h } of l)
+          c2 ? (r2 >= S || s === h) && (t2 = Le(t2, S)) : (d = h !== s, c2 = true), m > r2 && r2 >= S && h !== s && (t2 = yt(t2, r2 + 1, h));
+        d && (t2 = yt(t2, i2, s));
       }
       return [t2, n];
     }
-    function Ho(t2) {
+    function Eo(t2) {
       return typeof t2.groupIndex < "u";
     }
-    function Eo({ offset: t2 }, e) {
+    function Bo({ offset: t2 }, e) {
       return e === t2 ? 0 : e < t2 ? -1 : 1;
     }
-    function ie$2(t2, e, n) {
+    function ue(t2, e, n) {
       if (e.length === 0)
         return 0;
       const { index: o, offset: r2, size: s } = Wn(e, t2, $e), i2 = t2 - o, l = s * i2 + (i2 - 1) * n + r2;
       return l > 0 ? l + n : l;
     }
-    function Gn(t2, e) {
-      if (!Re$1(e))
+    function _n(t2, e) {
+      if (!be(e))
         return t2;
       let n = 0;
       for (; e.groupIndices[n] <= t2 + n; )
         n++;
       return t2 + n;
     }
-    function _n(t2, e, n) {
-      if (Ho(t2))
+    function Nn(t2, e, n) {
+      if (Eo(t2))
         return e.groupIndices[t2.groupIndex] + 1;
       {
         const o = t2.index === "LAST" ? n : t2.index;
-        let r2 = Gn(o, e);
+        let r2 = _n(o, e);
         return r2 = Math.max(0, r2, Math.min(n, r2)), r2;
       }
     }
-    function Bo(t2, e, n, o = 0) {
-      return o > 0 && (e = Math.max(e, Wn(t2, o, $e).offset)), Ln(yo(t2, e, n, Eo), Oo);
+    function ko(t2, e, n, o = 0) {
+      return o > 0 && (e = Math.max(e, Wn(t2, o, $e).offset)), Ln(bo(t2, e, n, Bo), Fo);
     }
-    function ko(t2, [e, n, o, r2]) {
-      e.length > 0 && o("received item sizes", e, mt.DEBUG);
+    function zo(t2, [e, n, o, r2]) {
+      e.length > 0 && o("received item sizes", e, Ct.DEBUG);
       const s = t2.sizeTree;
       let i2 = s, l = 0;
-      if (n.length > 0 && j(s) && e.length === 2) {
-        const h = e[0].size, I = e[1].size;
-        i2 = n.reduce((C2, v) => pt(pt(C2, v, h), v + 1, I), i2);
+      if (n.length > 0 && X(s) && e.length === 2) {
+        const h = e[0].size, T = e[1].size;
+        i2 = n.reduce((w, R) => yt(yt(w, R, h), R + 1, T), i2);
       } else
-        [i2, l] = bo(i2, e);
+        [i2, l] = Ho(i2, e);
       if (i2 === s)
         return t2;
-      const { lastIndex: c2, lastOffset: a, lastSize: m, offsetTree: x2 } = Ae(t2.offsetTree, l, i2, r2);
+      const { lastIndex: c2, lastOffset: d, lastSize: m, offsetTree: S } = Ge(t2.offsetTree, l, i2, r2);
       return {
         groupIndices: n,
-        groupOffsetTree: n.reduce((h, I) => pt(h, I, ie$2(I, x2, r2)), jt()),
+        groupOffsetTree: n.reduce((h, T) => yt(h, T, ue(T, S, r2)), Zt()),
         lastIndex: c2,
-        lastOffset: a,
+        lastOffset: d,
         lastSize: m,
-        offsetTree: x2,
+        offsetTree: S,
         sizeTree: i2
       };
     }
-    function Fo(t2) {
-      return Gt$1(t2).map(({ k: e, v: n }, o, r2) => {
+    function Oo(t2) {
+      return Dt(t2).map(({ k: e, v: n }, o, r2) => {
         const s = r2[o + 1];
         return { endIndex: s ? s.k - 1 : 1 / 0, size: n, startIndex: e };
       });
@@ -33179,21 +33442,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         n += e[o + 1] - e[o] - 1, o++;
       return o - (n === t2 ? 0 : 1);
     }
-    function Ae(t2, e, n, o) {
+    function Ge(t2, e, n, o) {
       let r2 = t2, s = 0, i2 = 0, l = 0, c2 = 0;
       if (e !== 0) {
-        c2 = Se(r2, e - 1, $e), l = r2[c2].offset;
-        const m = wt(n, e - 1);
-        s = m[0], i2 = m[1], r2.length && r2[c2].size === wt(n, e)[1] && (c2 -= 1), r2 = r2.slice(0, c2 + 1);
+        c2 = Ce(r2, e - 1, $e), l = r2[c2].offset;
+        const m = kt(n, e - 1);
+        s = m[0], i2 = m[1], r2.length && r2[c2].size === kt(n, e)[1] && (c2 -= 1), r2 = r2.slice(0, c2 + 1);
       } else
         r2 = [];
-      for (const { start: a, value: m } of ye(n, e, 1 / 0)) {
-        const x2 = a - s, h = x2 * i2 + l + x2 * o;
+      for (const { start: d, value: m } of Xt(n, e, 1 / 0)) {
+        const S = d - s, h = S * i2 + l + S * o;
         r2.push({
-          index: a,
+          index: d,
           offset: h,
           size: m
-        }), s = a, l = h, i2 = m;
+        }), s = d, l = h, i2 = m;
       }
       return {
         lastIndex: s,
@@ -33202,172 +33465,224 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         offsetTree: r2
       };
     }
-    function Oo(t2) {
+    function Fo(t2) {
       return { index: t2.index, value: t2 };
     }
     function Lo(t2) {
       const { endIndex: e, size: n, startIndex: o } = t2;
       return (r2) => r2.start === o && (r2.end === e || r2.end === 1 / 0) && r2.value === n;
     }
-    const zo = {
+    const Vo = {
       offsetHeight: "height",
       offsetWidth: "width"
-    }, Et = U(
+    }, Pt = K(
       ([{ log: t2 }, { recalcInProgress: e }]) => {
-        const n = $(), o = $(), r2 = ct(o, 0), s = $(), i2 = $(), l = w(0), c2 = w([]), a = w(void 0), m = w(void 0), x2 = w((f, d) => vt$1(f, zo[d])), h = w(void 0), I = w(0), C2 = Ro(), v = ct(
-          S(n, N(c2, t2, I), bt(ko, C2), Y()),
-          C2
-        ), g = ct(
-          S(
+        const n = U(), o = U(), r2 = ht(o, 0), s = U(), i2 = U(), l = C$1(0), c2 = C$1([]), d = C$1(void 0), m = C$1(void 0), S = C$1(void 0), h = C$1(void 0), T = C$1((u, p) => zt(u, Vo[p])), w = C$1(void 0), R = C$1(0), g = Ro(), f = ht(
+          x$1(n, $(c2, t2, R), Lt$1(zo, g), J()),
+          g
+        ), a = ht(
+          x$1(
             c2,
-            Y(),
-            bt((f, d) => ({ current: d, prev: f.current }), {
+            J(),
+            Lt$1((u, p) => ({ current: p, prev: u.current }), {
               current: [],
               prev: []
             }),
-            E(({ prev: f }) => f)
+            k(({ prev: u }) => u)
           ),
           []
         );
-        O(
-          S(
+        F(
+          x$1(
             c2,
-            A((f) => f.length > 0),
-            N(v, I),
-            E(([f, d, y]) => {
-              const B = f.reduce((k, L, z) => pt(k, L, ie$2(L, d.offsetTree, y) || z), jt());
+            P$1((u) => u.length > 0),
+            $(f, R),
+            k(([u, p, v]) => {
+              const O = u.reduce((B, W, _) => yt(B, W, ue(W, p.offsetTree, v) || _), Zt());
               return {
-                ...d,
-                groupIndices: f,
-                groupOffsetTree: B
+                ...p,
+                groupIndices: u,
+                groupOffsetTree: O
               };
             })
           ),
-          v
-        ), O(
-          S(
+          f
+        ), F(
+          x$1(
             o,
-            N(v),
-            A(([f, { lastIndex: d }]) => f < d),
-            E(([f, { lastIndex: d, lastSize: y }]) => [
+            $(f),
+            P$1(([u, { lastIndex: p }]) => u < p),
+            k(([u, { lastIndex: p, lastSize: v }]) => [
               {
-                endIndex: d,
-                size: y,
-                startIndex: f
+                endIndex: p,
+                size: v,
+                startIndex: u
               }
             ])
           ),
           n
-        ), O(a, m);
-        const p = ct(
-          S(
-            a,
-            E((f) => f === void 0)
+        ), F(d, m);
+        const I = ht(
+          x$1(
+            d,
+            k((u) => u === void 0)
           ),
           true
         );
-        O(
-          S(
+        F(
+          x$1(
             m,
-            A((f) => f !== void 0 && j(ot(v).sizeTree)),
-            E((f) => [{ endIndex: 0, size: f, startIndex: 0 }])
+            P$1((u) => u !== void 0 && X(rt(f).sizeTree)),
+            k((u) => {
+              const p = rt(S), v = rt(c2).length > 0;
+              return p ? v ? [
+                { endIndex: 0, size: p, startIndex: 0 },
+                { endIndex: 1, size: u, startIndex: 1 }
+              ] : [] : [{ endIndex: 0, size: u, startIndex: 0 }];
+            })
+          ),
+          n
+        ), F(
+          x$1(
+            h,
+            P$1((u) => u !== void 0 && u.length > 0 && X(rt(f).sizeTree)),
+            k((u) => {
+              const p = [];
+              let v = u[0], O = 0;
+              for (let B = 1; B < u.length; B++) {
+                const W = u[B];
+                W !== v && (p.push({
+                  endIndex: B - 1,
+                  size: v,
+                  startIndex: O
+                }), v = W, O = B);
+              }
+              return p.push({
+                endIndex: u.length - 1,
+                size: v,
+                startIndex: O
+              }), p;
+            })
+          ),
+          n
+        ), F(
+          x$1(
+            c2,
+            $(S, m),
+            P$1(([, u, p]) => u !== void 0 && p !== void 0),
+            k(([u, p, v]) => {
+              const O = [];
+              for (let B = 0; B < u.length; B++) {
+                const W = u[B], _ = u[B + 1];
+                O.push({
+                  startIndex: W,
+                  endIndex: W,
+                  size: p
+                }), _ !== void 0 && O.push({
+                  startIndex: W + 1,
+                  endIndex: _ - 1,
+                  size: v
+                });
+              }
+              return O;
+            })
           ),
           n
         );
-        const u = ht(
-          S(
+        const b = bt(
+          x$1(
             n,
-            N(v),
-            bt(
-              ({ sizes: f }, [d, y]) => ({
-                changed: y !== f,
-                sizes: y
+            $(f),
+            Lt$1(
+              ({ sizes: u }, [p, v]) => ({
+                changed: v !== u,
+                sizes: v
               }),
-              { changed: false, sizes: C2 }
+              { changed: false, sizes: g }
             ),
-            E((f) => f.changed)
+            k((u) => u.changed)
           )
         );
-        K(
-          S(
+        Y(
+          x$1(
             l,
-            bt(
-              (f, d) => ({ diff: f.prev - d, prev: d }),
+            Lt$1(
+              (u, p) => ({ diff: u.prev - p, prev: p }),
               { diff: 0, prev: 0 }
             ),
-            E((f) => f.diff)
+            k((u) => u.diff)
           ),
-          (f) => {
-            const { groupIndices: d } = ot(v);
-            if (f > 0)
-              G(e, true), G(s, f + pn(f, d));
-            else if (f < 0) {
-              const y = ot(g);
-              y.length > 0 && (f -= pn(-f, y)), G(i2, f);
+          (u) => {
+            const { groupIndices: p } = rt(f);
+            if (u > 0)
+              D(e, true), D(s, u + pn(u, p));
+            else if (u < 0) {
+              const v = rt(a);
+              v.length > 0 && (u -= pn(-u, v)), D(i2, u);
             }
           }
-        ), K(S(l, N(t2)), ([f, d]) => {
-          f < 0 && d(
+        ), Y(x$1(l, $(t2)), ([u, p]) => {
+          u < 0 && p(
             "`firstItemIndex` prop should not be set to less than zero. If you don't know the total count, just use a very high value",
             { firstItemIndex: l },
-            mt.ERROR
+            Ct.ERROR
           );
         });
-        const T = ht(s);
-        O(
-          S(
+        const y = bt(s);
+        F(
+          x$1(
             s,
-            N(v),
-            E(([f, d]) => {
-              const y = d.groupIndices.length > 0, B = [], k = d.lastSize;
-              if (y) {
-                const L = re(d.sizeTree, 0);
-                let z = 0, _ = 0;
-                for (; z < f; ) {
-                  const F = d.groupIndices[_], q = d.groupIndices.length === _ + 1 ? 1 / 0 : d.groupIndices[_ + 1] - F - 1;
-                  B.push({
-                    endIndex: F,
-                    size: L,
-                    startIndex: F
-                  }), B.push({
-                    endIndex: F + 1 + q - 1,
-                    size: k,
-                    startIndex: F + 1
-                  }), _++, z += q + 1;
+            $(f),
+            k(([u, p]) => {
+              const v = p.groupIndices.length > 0, O = [], B = p.lastSize;
+              if (v) {
+                const W = le$1(p.sizeTree, 0);
+                let _ = 0, j = 0;
+                for (; _ < u; ) {
+                  const M = p.groupIndices[j], et2 = p.groupIndices.length === j + 1 ? 1 / 0 : p.groupIndices[j + 1] - M - 1;
+                  O.push({
+                    endIndex: M,
+                    size: W,
+                    startIndex: M
+                  }), O.push({
+                    endIndex: M + 1 + et2 - 1,
+                    size: B,
+                    startIndex: M + 1
+                  }), j++, _ += et2 + 1;
                 }
-                const J = Gt$1(d.sizeTree);
-                return z !== f && J.shift(), J.reduce(
-                  (F, { k: q, v: it2 }) => {
-                    let dt = F.ranges;
-                    return F.prevSize !== 0 && (dt = [
-                      ...F.ranges,
+                const L = Dt(p.sizeTree);
+                return _ !== u && L.shift(), L.reduce(
+                  (M, { k: et2, v: wt }) => {
+                    let ft = M.ranges;
+                    return M.prevSize !== 0 && (ft = [
+                      ...M.ranges,
                       {
-                        endIndex: q + f - 1,
-                        size: F.prevSize,
-                        startIndex: F.prevIndex
+                        endIndex: et2 + u - 1,
+                        size: M.prevSize,
+                        startIndex: M.prevIndex
                       }
                     ]), {
-                      prevIndex: q + f,
-                      prevSize: it2,
-                      ranges: dt
+                      prevIndex: et2 + u,
+                      prevSize: wt,
+                      ranges: ft
                     };
                   },
                   {
-                    prevIndex: f,
+                    prevIndex: u,
                     prevSize: 0,
-                    ranges: B
+                    ranges: O
                   }
                 ).ranges;
               }
-              return Gt$1(d.sizeTree).reduce(
-                (L, { k: z, v: _ }) => ({
-                  prevIndex: z + f,
-                  prevSize: _,
-                  ranges: [...L.ranges, { endIndex: z + f - 1, size: L.prevSize, startIndex: L.prevIndex }]
+              return Dt(p.sizeTree).reduce(
+                (W, { k: _, v: j }) => ({
+                  prevIndex: _ + u,
+                  prevSize: j,
+                  ranges: [...W.ranges, { endIndex: _ + u - 1, size: W.prevSize, startIndex: W.prevIndex }]
                 }),
                 {
                   prevIndex: 0,
-                  prevSize: k,
+                  prevSize: B,
                   ranges: []
                 }
               ).ranges;
@@ -33375,80 +33690,82 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           ),
           n
         );
-        const b = ht(
-          S(
+        const z = bt(
+          x$1(
             i2,
-            N(v, I),
-            E(([f, { offsetTree: d }, y]) => {
-              const B = -f;
-              return ie$2(B, d, y);
+            $(f, R),
+            k(([u, { offsetTree: p }, v]) => {
+              const O = -u;
+              return ue(O, p, v);
             })
           )
         );
-        return O(
-          S(
+        return F(
+          x$1(
             i2,
-            N(v, I),
-            E(([f, d, y]) => {
-              if (d.groupIndices.length > 0) {
-                if (j(d.sizeTree))
-                  return d;
-                let k = jt();
-                const L = ot(g);
-                let z = 0, _ = 0, J = 0;
-                for (; z < -f; ) {
-                  J = L[_];
-                  const F = L[_ + 1] - J - 1;
-                  _++, z += F + 1;
+            $(f, R),
+            k(([u, p, v]) => {
+              if (p.groupIndices.length > 0) {
+                if (X(p.sizeTree))
+                  return p;
+                let B = Zt();
+                const W = rt(a);
+                let _ = 0, j = 0, L = 0;
+                for (; _ < -u; ) {
+                  L = W[j];
+                  const M = W[j + 1] - L - 1;
+                  j++, _ += M + 1;
                 }
-                if (k = Gt$1(d.sizeTree).reduce((F, { k: q, v: it2 }) => pt(F, Math.max(0, q + f), it2), k), z !== -f) {
-                  const F = re(d.sizeTree, J);
-                  k = pt(k, 0, F);
-                  const q = wt(d.sizeTree, -f + 1)[1];
-                  k = pt(k, 1, q);
+                if (B = Dt(p.sizeTree).reduce((M, { k: et2, v: wt }) => yt(M, Math.max(0, et2 + u), wt), B), _ !== -u) {
+                  const M = le$1(p.sizeTree, L);
+                  B = yt(B, 0, M);
+                  const et2 = kt(p.sizeTree, -u + 1)[1];
+                  B = yt(B, 1, et2);
                 }
                 return {
-                  ...d,
-                  sizeTree: k,
-                  ...Ae(d.offsetTree, 0, k, y)
+                  ...p,
+                  sizeTree: B,
+                  ...Ge(p.offsetTree, 0, B, v)
                 };
               } else {
-                const k = Gt$1(d.sizeTree).reduce((L, { k: z, v: _ }) => pt(L, Math.max(0, z + f), _), jt());
+                const B = Dt(p.sizeTree).reduce((W, { k: _, v: j }) => yt(W, Math.max(0, _ + u), j), Zt());
                 return {
-                  ...d,
-                  sizeTree: k,
-                  ...Ae(d.offsetTree, 0, k, y)
+                  ...p,
+                  sizeTree: B,
+                  ...Ge(p.offsetTree, 0, B, v)
                 };
               }
             })
           ),
-          v
+          f
         ), {
-          beforeUnshiftWith: T,
+          beforeUnshiftWith: y,
           // input
-          data: h,
+          data: w,
           defaultItemSize: m,
           firstItemIndex: l,
-          fixedItemSize: a,
-          gap: I,
+          fixedItemSize: d,
+          fixedGroupSize: S,
+          gap: R,
           groupIndices: c2,
-          itemSize: x2,
-          listRefresh: u,
+          heightEstimates: h,
+          itemSize: T,
+          listRefresh: b,
           shiftWith: i2,
-          shiftWithOffset: b,
+          shiftWithOffset: z,
           sizeRanges: n,
           // output
-          sizes: v,
+          sizes: f,
           statefulTotalCount: r2,
           totalCount: o,
-          trackItemSizes: p,
+          trackItemSizes: I,
           unshiftWith: s
         };
       },
-      X(Vt$1, De),
+      tt(Wt, De),
       { singleton: true }
     );
-    function Vo(t2) {
+    function Po(t2) {
       return t2.reduce(
         (e, n) => (e.groupIndices.push(e.totalCount), e.totalCount += n + 1, e),
         {
@@ -33457,54 +33774,54 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
       );
     }
-    const Nn = U(
+    const Dn = K(
       ([{ groupIndices: t2, sizes: e, totalCount: n }, { headerHeight: o, scrollTop: r2 }]) => {
-        const s = $(), i2 = $(), l = ht(S(s, E(Vo)));
-        return O(
-          S(
+        const s = U(), i2 = U(), l = bt(x$1(s, k(Po)));
+        return F(
+          x$1(
             l,
-            E((c2) => c2.totalCount)
+            k((c2) => c2.totalCount)
           ),
           n
-        ), O(
-          S(
+        ), F(
+          x$1(
             l,
-            E((c2) => c2.groupIndices)
+            k((c2) => c2.groupIndices)
           ),
           t2
-        ), O(
-          S(
-            rt(r2, e, o),
-            A(([c2, a]) => Re$1(a)),
-            E(([c2, a, m]) => wt(a.groupOffsetTree, Math.max(c2 - m, 0), "v")[0]),
-            Y(),
-            E((c2) => [c2])
+        ), F(
+          x$1(
+            ut(r2, e, o),
+            P$1(([c2, d]) => be(d)),
+            k(([c2, d, m]) => kt(d.groupOffsetTree, Math.max(c2 - m, 0), "v")[0]),
+            J(),
+            k((c2) => [c2])
           ),
           i2
         ), { groupCounts: s, topItemsIndexes: i2 };
       },
-      X(Et, at)
-    ), Pt = U(
+      tt(Pt, It)
+    ), _t = K(
       ([{ log: t2 }]) => {
-        const e = w(false), n = ht(
-          S(
+        const e = C$1(false), n = bt(
+          x$1(
             e,
-            A((o) => o),
-            Y()
+            P$1((o) => o),
+            J()
           )
         );
-        return K(e, (o) => {
-          o && ot(t2)("props updated", {}, mt.DEBUG);
+        return Y(e, (o) => {
+          o && rt(t2)("props updated", {}, Ct.DEBUG);
         }), { didMount: n, propsReady: e };
       },
-      X(Vt$1),
+      tt(Wt),
       { singleton: true }
-    ), Po = typeof document < "u" && "scrollBehavior" in document.documentElement.style;
-    function Dn(t2) {
+    ), Go = typeof document < "u" && "scrollBehavior" in document.documentElement.style;
+    function $n(t2) {
       const e = typeof t2 == "number" ? { index: t2 } : t2;
-      return e.align || (e.align = "start"), (!e.behavior || !Po) && (e.behavior = "auto"), e.offset || (e.offset = 0), e;
+      return e.align || (e.align = "start"), (!e.behavior || !Go) && (e.behavior = "auto"), e.offset || (e.offset = 0), e;
     }
-    const ce = U(
+    const me = K(
       ([
         { gap: t2, listRefresh: e, sizes: n, totalCount: o },
         {
@@ -33513,61 +33830,61 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           footerHeight: i2,
           headerHeight: l,
           scrollingInProgress: c2,
-          scrollTo: a,
+          scrollTo: d,
           smoothScrollTargetReached: m,
-          viewportHeight: x2
+          viewportHeight: S
         },
         { log: h }
       ]) => {
-        const I = $(), C2 = $(), v = w(0);
-        let g = null, p = null, u = null;
-        function T() {
-          g && (g(), g = null), u && (u(), u = null), p && (clearTimeout(p), p = null), G(c2, false);
+        const T = U(), w = U(), R = C$1(0);
+        let g = null, f = null, a = null;
+        function I() {
+          g && (g(), g = null), a && (a(), a = null), f && (clearTimeout(f), f = null), D(c2, false);
         }
-        return O(
-          S(
-            I,
-            N(n, x2, o, v, l, i2, h),
-            N(t2, s, r2),
-            E(
+        return F(
+          x$1(
+            T,
+            $(n, S, o, R, l, i2, h),
+            $(t2, s, r2),
+            k(
               ([
-                [b, f, d, y, B, k, L, z],
+                [b, y, z, u, p, v, O, B],
+                W,
                 _,
-                J,
-                nt
+                j
               ]) => {
-                const F = Dn(b), { align: q, behavior: it2, offset: dt } = F, St = y - 1, ft = _n(F, f, St);
-                let ut = ie$2(ft, f.offsetTree, _) + k;
-                q === "end" ? (ut += J + wt(f.sizeTree, ft)[1] - d + nt, ft === St && (ut += L)) : q === "center" ? ut += (J + wt(f.sizeTree, ft)[1] - d + nt) / 2 : ut -= B, dt && (ut += dt);
-                const At = (xt) => {
-                  T(), xt ? (z("retrying to scroll to", { location: b }, mt.DEBUG), G(I, b)) : (G(C2, true), z("list did not change, scroll successful", {}, mt.DEBUG));
+                const L = $n(b), { align: xt, behavior: M, offset: et2 } = L, wt = u - 1, ft = Nn(L, y, wt);
+                let St = ue(ft, y.offsetTree, W) + v;
+                xt === "end" ? (St += _ + kt(y.sizeTree, ft)[1] - z + j, ft === wt && (St += O)) : xt === "center" ? St += (_ + kt(y.sizeTree, ft)[1] - z + j) / 2 : St -= p, et2 && (St += et2);
+                const Mt = (pt) => {
+                  I(), pt ? (B("retrying to scroll to", { location: b }, Ct.DEBUG), D(T, b)) : (D(w, true), B("list did not change, scroll successful", {}, Ct.DEBUG));
                 };
-                if (T(), it2 === "smooth") {
-                  let xt = false;
-                  u = K(e, (Xt) => {
-                    xt = xt || Xt;
-                  }), g = Tt(m, () => {
-                    At(xt);
+                if (I(), M === "smooth") {
+                  let pt = false;
+                  a = Y(e, (qt) => {
+                    pt = pt || qt;
+                  }), g = Et(m, () => {
+                    Mt(pt);
                   });
                 } else
-                  g = Tt(S(e, Ao(150)), At);
-                return p = setTimeout(() => {
-                  T();
-                }, 1200), G(c2, true), z("scrolling from index to", { behavior: it2, index: ft, top: ut }, mt.DEBUG), { behavior: it2, top: ut };
+                  g = Et(x$1(e, Mo(150)), Mt);
+                return f = setTimeout(() => {
+                  I();
+                }, 1200), D(c2, true), B("scrolling from index to", { behavior: M, index: ft, top: St }, Ct.DEBUG), { behavior: M, top: St };
               }
             )
           ),
-          a
+          d
         ), {
-          scrollTargetReached: C2,
-          scrollToIndex: I,
-          topListHeight: v
+          scrollTargetReached: w,
+          scrollToIndex: T,
+          topListHeight: R
         };
       },
-      X(Et, at, Vt$1),
+      tt(Pt, It, Wt),
       { singleton: true }
     );
-    function Ao(t2) {
+    function Mo(t2) {
       return (e) => {
         const n = setTimeout(() => {
           e(false);
@@ -33586,54 +33903,54 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       const n = e - 1;
       return typeof t2 == "number" ? t2 : t2.index === "LAST" ? n : t2.index;
     }
-    const ue = U(
+    const pe = K(
       ([{ defaultItemSize: t2, listRefresh: e, sizes: n }, { scrollTop: o }, { scrollTargetReached: r2, scrollToIndex: s }, { didMount: i2 }]) => {
-        const l = w(true), c2 = w(0), a = w(true);
-        return O(
-          S(
+        const l = C$1(true), c2 = C$1(0), d = C$1(true);
+        return F(
+          x$1(
             i2,
-            N(c2),
-            A(([m, x2]) => !!x2),
-            Rt(false)
+            $(c2),
+            P$1(([m, S]) => !!S),
+            Ft(false)
           ),
           l
-        ), O(
-          S(
+        ), F(
+          x$1(
             i2,
-            N(c2),
-            A(([m, x2]) => !!x2),
-            Rt(false)
+            $(c2),
+            P$1(([m, S]) => !!S),
+            Ft(false)
           ),
-          a
-        ), K(
-          S(
-            rt(e, i2),
-            N(l, n, t2, a),
-            A(([[, m], x2, { sizeTree: h }, I, C2]) => m && (!j(h) || We(I)) && !x2 && !C2),
-            N(c2)
+          d
+        ), Y(
+          x$1(
+            ut(e, i2),
+            $(l, n, t2, d),
+            P$1(([[, m], S, { sizeTree: h }, T, w]) => m && (!X(h) || Ae(T)) && !S && !w),
+            $(c2)
           ),
           ([, m]) => {
-            Tt(r2, () => {
-              G(a, true);
+            Et(r2, () => {
+              D(d, true);
             }), Ue(4, () => {
-              Tt(o, () => {
-                G(l, true);
-              }), G(s, m);
+              Et(o, () => {
+                D(l, true);
+              }), D(s, m);
             });
           }
         ), {
-          initialItemFinalLocationReached: a,
+          initialItemFinalLocationReached: d,
           initialTopMostItemIndex: c2,
           scrolledToInitialItem: l
         };
       },
-      X(Et, at, ce, Pt),
+      tt(Pt, It, me, _t),
       { singleton: true }
     );
-    function $n(t2, e) {
+    function Un(t2, e) {
       return Math.abs(t2 - e) < 1.01;
     }
-    const le$1 = "up", te = "down", Mo = "none", Wo = {
+    const ae = "up", oe = "down", Ao = "none", Wo = {
       atBottom: false,
       notAtBottomBecause: "NOT_SHOWING_LAST_ITEM",
       state: {
@@ -33642,184 +33959,184 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         scrollTop: 0,
         viewportHeight: 0
       }
-    }, Go = 0, ae = U(([{ footerHeight: t2, headerHeight: e, scrollBy: n, scrollContainerState: o, scrollTop: r2, viewportHeight: s }]) => {
-      const i2 = w(false), l = w(true), c2 = $(), a = $(), m = w(4), x2 = w(Go), h = ct(
-        S(
-          Le(S(V(r2), Dt(1), Rt(true)), S(V(r2), Dt(1), Rt(false), dn(100))),
-          Y()
+    }, _o = 0, he = K(([{ footerHeight: t2, headerHeight: e, scrollBy: n, scrollContainerState: o, scrollTop: r2, viewportHeight: s }]) => {
+      const i2 = C$1(false), l = C$1(true), c2 = U(), d = U(), m = C$1(4), S = C$1(_o), h = ht(
+        x$1(
+          Fe(x$1(V(r2), Kt(1), Ft(true)), x$1(V(r2), Kt(1), Ft(false), dn(100))),
+          J()
         ),
         false
-      ), I = ct(
-        S(Le(S(n, Rt(true)), S(n, Rt(false), dn(200))), Y()),
+      ), T = ht(
+        x$1(Fe(x$1(n, Ft(true)), x$1(n, Ft(false), dn(200))), J()),
         false
       );
-      O(
-        S(
-          rt(V(r2), V(x2)),
-          E(([u, T]) => u <= T),
-          Y()
+      F(
+        x$1(
+          ut(V(r2), V(S)),
+          k(([a, I]) => a <= I),
+          J()
         ),
         l
-      ), O(S(l, kt(50)), a);
-      const C2 = ht(
-        S(
-          rt(o, V(s), V(e), V(t2), V(m)),
-          bt((u, [{ scrollHeight: T, scrollTop: b }, f, d, y, B]) => {
-            const k = b + f - T > -B, L = {
-              scrollHeight: T,
+      ), F(x$1(l, Gt$1(50)), d);
+      const w = bt(
+        x$1(
+          ut(o, V(s), V(e), V(t2), V(m)),
+          Lt$1((a, [{ scrollHeight: I, scrollTop: b }, y, z, u, p]) => {
+            const v = b + y - I > -p, O = {
+              scrollHeight: I,
               scrollTop: b,
-              viewportHeight: f
+              viewportHeight: y
             };
-            if (k) {
-              let _, J;
-              return b > u.state.scrollTop ? (_ = "SCROLLED_DOWN", J = u.state.scrollTop - b) : (_ = "SIZE_DECREASED", J = u.state.scrollTop - b || u.scrollTopDelta), {
+            if (v) {
+              let W, _;
+              return b > a.state.scrollTop ? (W = "SCROLLED_DOWN", _ = a.state.scrollTop - b) : (W = "SIZE_DECREASED", _ = a.state.scrollTop - b || a.scrollTopDelta), {
                 atBottom: true,
-                atBottomBecause: _,
-                scrollTopDelta: J,
-                state: L
+                atBottomBecause: W,
+                scrollTopDelta: _,
+                state: O
               };
             }
-            let z;
-            return L.scrollHeight > u.state.scrollHeight ? z = "SIZE_INCREASED" : f < u.state.viewportHeight ? z = "VIEWPORT_HEIGHT_DECREASING" : b < u.state.scrollTop ? z = "SCROLLING_UPWARDS" : z = "NOT_FULLY_SCROLLED_TO_LAST_ITEM_BOTTOM", {
+            let B;
+            return O.scrollHeight > a.state.scrollHeight ? B = "SIZE_INCREASED" : y < a.state.viewportHeight ? B = "VIEWPORT_HEIGHT_DECREASING" : b < a.state.scrollTop ? B = "SCROLLING_UPWARDS" : B = "NOT_FULLY_SCROLLED_TO_LAST_ITEM_BOTTOM", {
               atBottom: false,
-              notAtBottomBecause: z,
-              state: L
+              notAtBottomBecause: B,
+              state: O
             };
           }, Wo),
-          Y((u, T) => u && u.atBottom === T.atBottom)
+          J((a, I) => a && a.atBottom === I.atBottom)
         )
-      ), v = ct(
-        S(
+      ), R = ht(
+        x$1(
           o,
-          bt(
-            (u, { scrollHeight: T, scrollTop: b, viewportHeight: f }) => {
-              if ($n(u.scrollHeight, T))
+          Lt$1(
+            (a, { scrollHeight: I, scrollTop: b, viewportHeight: y }) => {
+              if (Un(a.scrollHeight, I))
                 return {
                   changed: false,
                   jump: 0,
-                  scrollHeight: T,
+                  scrollHeight: I,
                   scrollTop: b
                 };
               {
-                const d = T - (b + f) < 1;
-                return u.scrollTop !== b && d ? {
+                const z = I - (b + y) < 1;
+                return a.scrollTop !== b && z ? {
                   changed: true,
-                  jump: u.scrollTop - b,
-                  scrollHeight: T,
+                  jump: a.scrollTop - b,
+                  scrollHeight: I,
                   scrollTop: b
                 } : {
                   changed: true,
                   jump: 0,
-                  scrollHeight: T,
+                  scrollHeight: I,
                   scrollTop: b
                 };
               }
             },
             { changed: false, jump: 0, scrollHeight: 0, scrollTop: 0 }
           ),
-          A((u) => u.changed),
-          E((u) => u.jump)
+          P$1((a) => a.changed),
+          k((a) => a.jump)
         ),
         0
       );
-      O(
-        S(
-          C2,
-          E((u) => u.atBottom)
+      F(
+        x$1(
+          w,
+          k((a) => a.atBottom)
         ),
         i2
-      ), O(S(i2, kt(50)), c2);
-      const g = w(te);
-      O(
-        S(
+      ), F(x$1(i2, Gt$1(50)), c2);
+      const g = C$1(oe);
+      F(
+        x$1(
           o,
-          E(({ scrollTop: u }) => u),
-          Y(),
-          bt(
-            (u, T) => ot(I) ? { direction: u.direction, prevScrollTop: T } : { direction: T < u.prevScrollTop ? le$1 : te, prevScrollTop: T },
-            { direction: te, prevScrollTop: 0 }
+          k(({ scrollTop: a }) => a),
+          J(),
+          Lt$1(
+            (a, I) => rt(T) ? { direction: a.direction, prevScrollTop: I } : { direction: I < a.prevScrollTop ? ae : oe, prevScrollTop: I },
+            { direction: oe, prevScrollTop: 0 }
           ),
-          E((u) => u.direction)
+          k((a) => a.direction)
         ),
         g
-      ), O(S(o, kt(50), Rt(Mo)), g);
-      const p = w(0);
-      return O(
-        S(
+      ), F(x$1(o, Gt$1(50), Ft(Ao)), g);
+      const f = C$1(0);
+      return F(
+        x$1(
           h,
-          A((u) => !u),
-          Rt(0)
+          P$1((a) => !a),
+          Ft(0)
         ),
-        p
-      ), O(
-        S(
+        f
+      ), F(
+        x$1(
           r2,
-          kt(100),
-          N(h),
-          A(([u, T]) => !!T),
-          bt(([u, T], [b]) => [T, b], [0, 0]),
-          E(([u, T]) => T - u)
+          Gt$1(100),
+          $(h),
+          P$1(([a, I]) => !!I),
+          Lt$1(([a, I], [b]) => [I, b], [0, 0]),
+          k(([a, I]) => I - a)
         ),
-        p
+        f
       ), {
-        atBottomState: C2,
+        atBottomState: w,
         atBottomStateChange: c2,
         atBottomThreshold: m,
-        atTopStateChange: a,
-        atTopThreshold: x2,
+        atTopStateChange: d,
+        atTopThreshold: S,
         isAtBottom: i2,
         isAtTop: l,
         isScrolling: h,
-        lastJumpDueToItemResize: v,
+        lastJumpDueToItemResize: R,
         scrollDirection: g,
-        scrollVelocity: p
+        scrollVelocity: f
       };
-    }, X(at)), xe = "top", Te = "bottom", hn = "none";
+    }, tt(It)), de = "top", fe = "bottom", hn = "none";
     function gn(t2, e, n) {
-      return typeof t2 == "number" ? n === le$1 && e === xe || n === te && e === Te ? t2 : 0 : n === le$1 ? e === xe ? t2.main : t2.reverse : e === Te ? t2.main : t2.reverse;
+      return typeof t2 == "number" ? n === ae && e === de || n === oe && e === fe ? t2 : 0 : n === ae ? e === de ? t2.main : t2.reverse : e === fe ? t2.main : t2.reverse;
     }
     function In(t2, e) {
       var n;
       return typeof t2 == "number" ? t2 : (n = t2[e]) != null ? n : 0;
     }
-    const je = U(
+    const je = K(
       ([{ deviation: t2, fixedHeaderHeight: e, headerHeight: n, scrollTop: o, viewportHeight: r2 }]) => {
-        const s = $(), i2 = w(0), l = w(0), c2 = w(0), a = ct(
-          S(
-            rt(
+        const s = U(), i2 = C$1(0), l = C$1(0), c2 = C$1(0), d = ht(
+          x$1(
+            ut(
               V(o),
               V(r2),
               V(n),
-              V(s, se),
+              V(s, ce),
               V(c2),
               V(i2),
               V(e),
               V(t2),
               V(l)
             ),
-            E(
+            k(
               ([
                 m,
-                x2,
+                S,
                 h,
-                [I, C2],
-                v,
+                [T, w],
+                R,
                 g,
-                p,
-                u,
-                T
+                f,
+                a,
+                I
               ]) => {
-                const b = m - u, f = g + p, d = Math.max(h - b, 0);
-                let y = hn;
-                const B = In(T, xe), k = In(T, Te);
-                return I -= u, I += h + p, C2 += h + p, C2 -= u, I > m + f - B && (y = le$1), C2 < m - d + x2 + k && (y = te), y !== hn ? [
-                  Math.max(b - h - gn(v, xe, y) - B, 0),
-                  b - d - p + x2 + gn(v, Te, y) + k
+                const b = m - a, y = g + f, z = Math.max(h - b, 0);
+                let u = hn;
+                const p = In(I, de), v = In(I, fe);
+                return T -= a, T += h + f, w += h + f, w -= a, T > m + y - p && (u = ae), w < m - z + S + v && (u = oe), u !== hn ? [
+                  Math.max(b - h - gn(R, de, u) - p, 0),
+                  b - z - f + S + gn(R, fe, u) + v
                 ] : null;
               }
             ),
-            A((m) => m != null),
-            Y(se)
+            P$1((m) => m != null),
+            J(ce)
           ),
           [0, 0]
         );
@@ -33830,17 +34147,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           overscan: c2,
           topListHeight: i2,
           // output
-          visibleRange: a
+          visibleRange: d
         };
       },
-      X(at),
+      tt(It),
       { singleton: true }
     );
-    function _o(t2, e, n) {
-      if (Re$1(e)) {
-        const o = Gn(t2, e);
+    function No(t2, e, n) {
+      if (be(e)) {
+        const o = _n(t2, e);
         return [
-          { index: wt(e.groupOffsetTree, o)[0], offset: 0, size: 0 },
+          { index: kt(e.groupOffsetTree, o)[0], offset: 0, size: 0 },
           { data: n == null ? void 0 : n[0], index: o, offset: 0, size: 0 }
         ];
       }
@@ -33857,28 +34174,28 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       topListHeight: 0,
       totalCount: 0
     };
-    function Ie(t2, e, n, o, r2, s) {
+    function Te(t2, e, n, o, r2, s) {
       const { lastIndex: i2, lastOffset: l, lastSize: c2 } = r2;
-      let a = 0, m = 0;
+      let d = 0, m = 0;
       if (t2.length > 0) {
-        a = t2[0].offset;
-        const v = t2[t2.length - 1];
-        m = v.offset + v.size;
+        d = t2[0].offset;
+        const R = t2[t2.length - 1];
+        m = R.offset + R.size;
       }
-      const x2 = n - i2, h = l + x2 * c2 + (x2 - 1) * o, I = a, C2 = h - m;
+      const S = n - i2, h = l + S * c2 + (S - 1) * o, T = d, w = h - m;
       return {
         bottom: m,
         firstItemIndex: s,
-        items: Sn(t2, r2, s),
-        offsetBottom: C2,
-        offsetTop: a,
-        top: I,
-        topItems: Sn(e, r2, s),
-        topListHeight: e.reduce((v, g) => g.size + v, 0),
+        items: xn(t2, r2, s),
+        offsetBottom: w,
+        offsetTop: d,
+        top: T,
+        topItems: xn(e, r2, s),
+        topListHeight: e.reduce((R, g) => g.size + R, 0),
         totalCount: n
       };
     }
-    function Un(t2, e, n, o, r2, s) {
+    function Kn(t2, e, n, o, r2, s) {
       let i2 = 0;
       if (n.groupIndices.length > 0)
         for (const m of n.groupIndices) {
@@ -33886,434 +34203,471 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             break;
           i2++;
         }
-      const l = t2 + i2, c2 = Ke(e, l), a = Array.from({ length: l }).map((m, x2) => ({
-        data: s[x2 + c2],
-        index: x2 + c2,
+      const l = t2 + i2, c2 = Ke(e, l), d = Array.from({ length: l }).map((m, S) => ({
+        data: s[S + c2],
+        index: S + c2,
         offset: 0,
         size: 0
       }));
-      return Ie(a, [], l, r2, n, o);
+      return Te(d, [], l, r2, n, o);
     }
-    function Sn(t2, e, n) {
+    function xn(t2, e, n) {
       if (t2.length === 0)
         return [];
-      if (!Re$1(e))
-        return t2.map((a) => ({ ...a, index: a.index + n, originalIndex: a.index }));
-      const o = t2[0].index, r2 = t2[t2.length - 1].index, s = [], i2 = ye(e.groupOffsetTree, o, r2);
+      if (!be(e))
+        return t2.map((d) => ({ ...d, index: d.index + n, originalIndex: d.index }));
+      const o = t2[0].index, r2 = t2[t2.length - 1].index, s = [], i2 = Xt(e.groupOffsetTree, o, r2);
       let l, c2 = 0;
-      for (const a of t2) {
-        (!l || l.end < a.index) && (l = i2.shift(), c2 = e.groupIndices.indexOf(l.start));
+      for (const d of t2) {
+        (!l || l.end < d.index) && (l = i2.shift(), c2 = e.groupIndices.indexOf(l.start));
         let m;
-        a.index === l.start ? m = {
+        d.index === l.start ? m = {
           index: c2,
           type: "group"
         } : m = {
           groupIndex: c2,
-          index: a.index - (c2 + 1) + n
+          index: d.index - (c2 + 1) + n
         }, s.push({
           ...m,
-          data: a.data,
-          offset: a.offset,
-          originalIndex: a.index,
-          size: a.size
+          data: d.data,
+          offset: d.offset,
+          originalIndex: d.index,
+          size: d.size
         });
       }
       return s;
     }
-    const $t = U(
+    function Sn(t2, e) {
+      var n;
+      return t2 === void 0 ? 0 : typeof t2 == "number" ? t2 : (n = t2[e]) != null ? n : 0;
+    }
+    const jt = K(
       ([
         { data: t2, firstItemIndex: e, gap: n, sizes: o, totalCount: r2 },
         s,
         { listBoundary: i2, topListHeight: l, visibleRange: c2 },
-        { initialTopMostItemIndex: a, scrolledToInitialItem: m },
-        { topListHeight: x2 },
+        { initialTopMostItemIndex: d, scrolledToInitialItem: m },
+        { topListHeight: S },
         h,
-        { didMount: I },
-        { recalcInProgress: C2 }
+        { didMount: T },
+        { recalcInProgress: w }
       ]) => {
-        const v = w([]), g = w(0), p = $();
-        O(s.topItemsIndexes, v);
-        const u = ct(
-          S(
-            rt(
-              I,
-              C2,
-              V(c2, se),
+        const R = C$1([]), g = C$1(0), f = U(), a = C$1(0);
+        F(s.topItemsIndexes, R);
+        const I = ht(
+          x$1(
+            ut(
+              T,
+              w,
+              V(c2, ce),
               V(r2),
               V(o),
-              V(a),
+              V(d),
               m,
-              V(v),
+              V(R),
               V(e),
               V(n),
+              V(a),
               t2
             ),
-            A(([d, y, , B, , , , , , , k]) => {
-              const L = k && k.length !== B;
-              return d && !y && !L;
+            P$1(([u, p, , v, , , , , , , , O]) => {
+              const B = O && O.length !== v;
+              return u && !p && !B;
             }),
-            E(
+            k(
               ([
                 ,
                 ,
-                [d, y],
+                [u, p],
+                v,
+                O,
                 B,
-                k,
-                L,
-                z,
+                W,
                 _,
-                J,
-                nt,
-                F
+                j,
+                L,
+                xt,
+                M
               ]) => {
-                const q = k, { offsetTree: it2, sizeTree: dt } = q, St = ot(g);
-                if (B === 0)
-                  return { ...Be, totalCount: B };
-                if (d === 0 && y === 0)
-                  return St === 0 ? { ...Be, totalCount: B } : Un(St, L, k, J, nt, F || []);
-                if (j(dt))
-                  return St > 0 ? null : Ie(
-                    _o(Ke(L, B), q, F),
+                var q, at, gt2, Tt;
+                const et2 = O, { offsetTree: wt, sizeTree: ft } = et2, St = rt(g);
+                if (v === 0)
+                  return { ...Be, totalCount: v };
+                if (u === 0 && p === 0)
+                  return St === 0 ? { ...Be, totalCount: v } : Kn(St, B, O, j, L, M || []);
+                if (X(ft))
+                  return St > 0 ? null : Te(
+                    No(Ke(B, v), et2, M),
                     [],
-                    B,
-                    nt,
-                    q,
-                    J
+                    v,
+                    L,
+                    et2,
+                    j
                   );
-                const ft = [];
+                const Mt = [];
                 if (_.length > 0) {
-                  const Mt = _[0], yt = _[_.length - 1];
-                  let Bt = 0;
-                  for (const R of ye(dt, Mt, yt)) {
-                    const D = R.value, Q = Math.max(R.start, Mt), lt2 = Math.min(R.end, yt);
-                    for (let tt = Q; tt <= lt2; tt++)
-                      ft.push({ data: F == null ? void 0 : F[tt], index: tt, offset: Bt, size: D }), Bt += D;
+                  const st = _[0], it2 = _[_.length - 1];
+                  let mt = 0;
+                  for (const lt2 of Xt(ft, st, it2)) {
+                    const Z2 = lt2.value, nt = Math.max(lt2.start, st), vt2 = Math.min(lt2.end, it2);
+                    for (let ct = nt; ct <= vt2; ct++)
+                      Mt.push({ data: M == null ? void 0 : M[ct], index: ct, offset: mt, size: Z2 }), mt += Z2;
                   }
                 }
-                if (!z)
-                  return Ie([], ft, B, nt, q, J);
-                const ut = _.length > 0 ? _[_.length - 1] + 1 : 0, At = Bo(it2, d, y, ut);
-                if (At.length === 0)
+                if (!W)
+                  return Te([], Mt, v, L, et2, j);
+                const pt = _.length > 0 ? _[_.length - 1] + 1 : 0, qt = ko(wt, u, p, pt);
+                if (qt.length === 0)
                   return null;
-                const xt = B - 1, Xt = ve([], (Mt) => {
-                  for (const yt of At) {
-                    const Bt = yt.value;
-                    let R = Bt.offset, D = yt.start;
-                    const Q = Bt.size;
-                    if (Bt.offset < d) {
-                      D += Math.floor((d - Bt.offset + nt) / (Q + nt));
-                      const tt = D - yt.start;
-                      R += tt * Q + tt * nt;
+                const ee2 = v - 1, Ot = ye([], (st) => {
+                  for (const it2 of qt) {
+                    const mt = it2.value;
+                    let lt2 = mt.offset, Z2 = it2.start;
+                    const nt = mt.size;
+                    if (mt.offset < u) {
+                      Z2 += Math.floor((u - mt.offset + L) / (nt + L));
+                      const ct = Z2 - it2.start;
+                      lt2 += ct * nt + ct * L;
                     }
-                    D < ut && (R += (ut - D) * Q, D = ut);
-                    const lt2 = Math.min(yt.end, xt);
-                    for (let tt = D; tt <= lt2 && !(R >= y); tt++)
-                      Mt.push({ data: F == null ? void 0 : F[tt], index: tt, offset: R, size: Q }), R += Q + nt;
+                    Z2 < pt && (lt2 += (pt - Z2) * nt, Z2 = pt);
+                    const vt2 = Math.min(it2.end, ee2);
+                    for (let ct = Z2; ct <= vt2 && !(lt2 >= p); ct++)
+                      st.push({ data: M == null ? void 0 : M[ct], index: ct, offset: lt2, size: nt }), lt2 += nt + L;
                   }
-                });
-                return Ie(Xt, ft, B, nt, q, J);
+                }), ne2 = Sn(xt, de), H = Sn(xt, fe);
+                if (Ot.length > 0 && (ne2 > 0 || H > 0)) {
+                  const st = Ot[0], it2 = Ot[Ot.length - 1];
+                  if (ne2 > 0 && st.index > pt) {
+                    const mt = Math.min(ne2, st.index - pt), lt2 = [];
+                    let Z2 = st.offset;
+                    for (let nt = st.index - 1; nt >= st.index - mt; nt--) {
+                      const ct = (at = (q = Xt(ft, nt, nt)[0]) == null ? void 0 : q.value) != null ? at : st.size;
+                      Z2 -= ct + L, lt2.unshift({ data: M == null ? void 0 : M[nt], index: nt, offset: Z2, size: ct });
+                    }
+                    Ot.unshift(...lt2);
+                  }
+                  if (H > 0 && it2.index < ee2) {
+                    const mt = Math.min(H, ee2 - it2.index);
+                    let lt2 = it2.offset + it2.size + L;
+                    for (let Z2 = it2.index + 1; Z2 <= it2.index + mt; Z2++) {
+                      const vt2 = (Tt = (gt2 = Xt(ft, Z2, Z2)[0]) == null ? void 0 : gt2.value) != null ? Tt : it2.size;
+                      Ot.push({ data: M == null ? void 0 : M[Z2], index: Z2, offset: lt2, size: vt2 }), lt2 += vt2 + L;
+                    }
+                  }
+                }
+                return Te(Ot, Mt, v, L, et2, j);
               }
             ),
             //@ts-expect-error filter needs to be fixed
-            A((d) => d !== null),
-            Y()
+            P$1((u) => u !== null),
+            J()
           ),
           Be
         );
-        O(
-          S(
+        F(
+          x$1(
             t2,
-            A(We),
-            E((d) => d == null ? void 0 : d.length)
+            P$1(Ae),
+            k((u) => u == null ? void 0 : u.length)
           ),
           r2
-        ), O(
-          S(
-            u,
-            E((d) => d.topListHeight)
+        ), F(
+          x$1(
+            I,
+            k((u) => u.topListHeight)
           ),
-          x2
-        ), O(x2, l), O(
-          S(
-            u,
-            E((d) => [d.top, d.bottom])
+          S
+        ), F(S, l), F(
+          x$1(
+            I,
+            k((u) => [u.top, u.bottom])
           ),
           i2
-        ), O(
-          S(
-            u,
-            E((d) => d.items)
+        ), F(
+          x$1(
+            I,
+            k((u) => u.items)
           ),
-          p
+          f
         );
-        const T = ht(
-          S(
-            u,
-            A(({ items: d }) => d.length > 0),
-            N(r2, t2),
-            A(([{ items: d }, y]) => d[d.length - 1].originalIndex === y - 1),
-            E(([, d, y]) => [d - 1, y]),
-            Y(se),
-            E(([d]) => d)
+        const b = bt(
+          x$1(
+            I,
+            P$1(({ items: u }) => u.length > 0),
+            $(r2, t2),
+            P$1(([{ items: u }, p]) => u[u.length - 1].originalIndex === p - 1),
+            k(([, u, p]) => [u - 1, p]),
+            J(ce),
+            k(([u]) => u)
           )
-        ), b = ht(
-          S(
-            u,
-            kt(200),
-            A(({ items: d, topItems: y }) => d.length > 0 && d[0].originalIndex === y.length),
-            E(({ items: d }) => d[0].index),
-            Y()
+        ), y = bt(
+          x$1(
+            I,
+            Gt$1(200),
+            P$1(({ items: u, topItems: p }) => u.length > 0 && u[0].originalIndex === p.length),
+            k(({ items: u }) => u[0].index),
+            J()
           )
-        ), f = ht(
-          S(
-            u,
-            A(({ items: d }) => d.length > 0),
-            E(({ items: d }) => {
-              let y = 0, B = d.length - 1;
-              for (; d[y].type === "group" && y < B; )
-                y++;
-              for (; d[B].type === "group" && B > y; )
-                B--;
+        ), z = bt(
+          x$1(
+            I,
+            P$1(({ items: u }) => u.length > 0),
+            k(({ items: u }) => {
+              let p = 0, v = u.length - 1;
+              for (; u[p].type === "group" && p < v; )
+                p++;
+              for (; u[v].type === "group" && v > p; )
+                v--;
               return {
-                endIndex: d[B].index,
-                startIndex: d[y].index
+                endIndex: u[v].index,
+                startIndex: u[p].index
               };
             }),
-            Y(Mn)
+            J(An)
           )
         );
-        return { endReached: T, initialItemCount: g, itemsRendered: p, listState: u, rangeChanged: f, startReached: b, topItemsIndexes: v, ...h };
+        return {
+          endReached: b,
+          initialItemCount: g,
+          itemsRendered: f,
+          listState: I,
+          minOverscanItemCount: a,
+          rangeChanged: z,
+          startReached: y,
+          topItemsIndexes: R,
+          ...h
+        };
       },
-      X(
-        Et,
-        Nn,
-        je,
-        ue,
-        ce,
-        ae,
+      tt(
         Pt,
+        Dn,
+        je,
+        pe,
+        me,
+        he,
+        _t,
         De
       ),
       { singleton: true }
-    ), Kn = U(
+    ), jn = K(
       ([{ fixedFooterHeight: t2, fixedHeaderHeight: e, footerHeight: n, headerHeight: o }, { listState: r2 }]) => {
-        const s = $(), i2 = ct(
-          S(
-            rt(n, t2, o, e, r2),
-            E(([l, c2, a, m, x2]) => l + c2 + a + m + x2.offsetBottom + x2.bottom)
+        const s = U(), i2 = ht(
+          x$1(
+            ut(n, t2, o, e, r2),
+            k(([l, c2, d, m, S]) => l + c2 + d + m + S.offsetBottom + S.bottom)
           ),
           0
         );
-        return O(V(i2), s), { totalListHeight: i2, totalListHeightChanged: s };
+        return F(V(i2), s), { totalListHeight: i2, totalListHeightChanged: s };
       },
-      X(at, $t),
+      tt(It, jt),
       { singleton: true }
-    ), No = U(
+    ), Do = K(
       ([{ viewportHeight: t2 }, { totalListHeight: e }]) => {
-        const n = w(false), o = ct(
-          S(
-            rt(n, t2, e),
-            A(([r2]) => r2),
-            E(([, r2, s]) => Math.max(0, r2 - s)),
-            kt(0),
-            Y()
+        const n = C$1(false), o = ht(
+          x$1(
+            ut(n, t2, e),
+            P$1(([r2]) => r2),
+            k(([, r2, s]) => Math.max(0, r2 - s)),
+            Gt$1(0),
+            J()
           ),
           0
         );
         return { alignToBottom: n, paddingTopAddition: o };
       },
-      X(at, Kn),
+      tt(It, jn),
       { singleton: true }
-    ), jn = U(() => ({
-      context: w(null)
-    })), Do = ({
+    ), qn = K(() => ({
+      context: C$1(null)
+    })), $o = ({
       itemBottom: t2,
       itemTop: e,
       locationParams: { align: n, behavior: o, ...r2 },
       viewportBottom: s,
       viewportTop: i2
-    }) => e < i2 ? { ...r2, align: n != null ? n : "start", behavior: o } : t2 > s ? { ...r2, align: n != null ? n : "end", behavior: o } : null, qn = U(
+    }) => e < i2 ? { ...r2, align: n != null ? n : "start", behavior: o } : t2 > s ? { ...r2, align: n != null ? n : "end", behavior: o } : null, Yn = K(
       ([
         { gap: t2, sizes: e, totalCount: n },
         { fixedFooterHeight: o, fixedHeaderHeight: r2, headerHeight: s, scrollingInProgress: i2, scrollTop: l, viewportHeight: c2 },
-        { scrollToIndex: a }
+        { scrollToIndex: d }
       ]) => {
-        const m = $();
-        return O(
-          S(
+        const m = U();
+        return F(
+          x$1(
             m,
-            N(e, c2, n, s, r2, o, l),
-            N(t2),
-            E(([[x2, h, I, C2, v, g, p, u], T]) => {
-              const { align: b, behavior: f, calculateViewLocation: d = Do, done: y, ...B } = x2, k = _n(x2, h, C2 - 1), L = ie$2(k, h.offsetTree, T) + v + g, z = L + wt(h.sizeTree, k)[1], _ = u + g, J = u + I - p, nt = d({
-                itemBottom: z,
-                itemTop: L,
-                locationParams: { align: b, behavior: f, ...B },
-                viewportBottom: J,
-                viewportTop: _
+            $(e, c2, n, s, r2, o, l),
+            $(t2),
+            k(([[S, h, T, w, R, g, f, a], I]) => {
+              const { align: b, behavior: y, calculateViewLocation: z = $o, done: u, ...p } = S, v = Nn(S, h, w - 1), O = ue(v, h.offsetTree, I) + R + g, B = O + kt(h.sizeTree, v)[1], W = a + g, _ = a + T - f, j = z({
+                itemBottom: B,
+                itemTop: O,
+                locationParams: { align: b, behavior: y, ...p },
+                viewportBottom: _,
+                viewportTop: W
               });
-              return nt ? y && Tt(
-                S(
+              return j ? u && Et(
+                x$1(
                   i2,
-                  A((F) => !F),
+                  P$1((L) => !L),
                   // skips the initial publish of false, and the cleanup call.
                   // but if scrollingInProgress is true, we skip the initial publish.
-                  Dt(ot(i2) ? 1 : 2)
+                  Kt(rt(i2) ? 1 : 2)
                 ),
-                y
-              ) : y && y(), nt;
+                u
+              ) : u && u(), j;
             }),
-            A((x2) => x2 !== null)
+            P$1((S) => S !== null)
           ),
-          a
+          d
         ), {
           scrollIntoView: m
         };
       },
-      X(Et, at, ce, $t, Vt$1),
+      tt(Pt, It, me, jt, Wt),
       { singleton: true }
     );
-    function xn(t2) {
+    function Tn(t2) {
       return t2 ? t2 === "smooth" ? "smooth" : "auto" : false;
     }
-    const $o = (t2, e) => typeof t2 == "function" ? xn(t2(e)) : e && xn(t2), Uo = U(
+    const Uo = (t2, e) => typeof t2 == "function" ? Tn(t2(e)) : e && Tn(t2), Ko = K(
       ([
         { listRefresh: t2, totalCount: e, fixedItemSize: n, data: o },
         { atBottomState: r2, isAtBottom: s },
         { scrollToIndex: i2 },
         { scrolledToInitialItem: l },
-        { didMount: c2, propsReady: a },
+        { didMount: c2, propsReady: d },
         { log: m },
-        { scrollingInProgress: x2 },
+        { scrollingInProgress: S },
         { context: h },
-        { scrollIntoView: I }
+        { scrollIntoView: T }
       ]) => {
-        const C2 = w(false), v = $();
+        const w = C$1(false), R = U();
         let g = null;
-        function p(f) {
-          G(i2, {
+        function f(y) {
+          D(i2, {
             align: "end",
-            behavior: f,
+            behavior: y,
             index: "LAST"
           });
         }
-        K(
-          S(
-            rt(S(V(e), Dt(1)), c2),
-            N(V(C2), s, l, x2),
-            E(([[f, d], y, B, k, L]) => {
-              let z = d && k, _ = "auto";
-              return z && (_ = $o(y, B || L), z = z && !!_), { followOutputBehavior: _, shouldFollow: z, totalCount: f };
+        Y(
+          x$1(
+            ut(x$1(V(e), Kt(1)), c2),
+            $(V(w), s, l, S),
+            k(([[y, z], u, p, v, O]) => {
+              let B = z && v, W = "auto";
+              return B && (W = Uo(u, p || O), B = B && !!W), { followOutputBehavior: W, shouldFollow: B, totalCount: y };
             }),
-            A(({ shouldFollow: f }) => f)
+            P$1(({ shouldFollow: y }) => y)
           ),
-          ({ followOutputBehavior: f, totalCount: d }) => {
-            g && (g(), g = null), ot(n) ? requestAnimationFrame(() => {
-              ot(m)("following output to ", { totalCount: d }, mt.DEBUG), p(f);
-            }) : g = Tt(t2, () => {
-              ot(m)("following output to ", { totalCount: d }, mt.DEBUG), p(f), g = null;
+          ({ followOutputBehavior: y, totalCount: z }) => {
+            g && (g(), g = null), rt(n) ? requestAnimationFrame(() => {
+              rt(m)("following output to ", { totalCount: z }, Ct.DEBUG), f(y);
+            }) : g = Et(t2, () => {
+              rt(m)("following output to ", { totalCount: z }, Ct.DEBUG), f(y), g = null;
             });
           }
         );
-        function u(f) {
-          const d = Tt(r2, (y) => {
-            f && !y.atBottom && y.notAtBottomBecause === "SIZE_INCREASED" && !g && (ot(m)("scrolling to bottom due to increased size", {}, mt.DEBUG), p("auto"));
+        function a(y) {
+          const z = Et(r2, (u) => {
+            y && !u.atBottom && u.notAtBottomBecause === "SIZE_INCREASED" && !g && (rt(m)("scrolling to bottom due to increased size", {}, Ct.DEBUG), f("auto"));
           });
-          setTimeout(d, 100);
+          setTimeout(z, 100);
         }
-        K(
-          S(
-            rt(V(C2), e, a),
-            A(([f, , d]) => f && d),
-            bt(
-              ({ value: f }, [, d]) => ({ refreshed: f === d, value: d }),
+        Y(
+          x$1(
+            ut(V(w), e, d),
+            P$1(([y, , z]) => y && z),
+            Lt$1(
+              ({ value: y }, [, z]) => ({ refreshed: y === z, value: z }),
               { refreshed: false, value: 0 }
             ),
-            A(({ refreshed: f }) => f),
-            N(C2, e)
+            P$1(({ refreshed: y }) => y),
+            $(w, e)
           ),
-          ([, f]) => {
-            ot(l) && u(f !== false);
+          ([, y]) => {
+            rt(l) && a(y !== false);
           }
-        ), K(v, () => {
-          u(ot(C2) !== false);
-        }), K(rt(V(C2), r2), ([f, d]) => {
-          f && !d.atBottom && d.notAtBottomBecause === "VIEWPORT_HEIGHT_DECREASING" && p("auto");
+        ), Y(R, () => {
+          a(rt(w) !== false);
+        }), Y(ut(V(w), r2), ([y, z]) => {
+          y && !z.atBottom && z.notAtBottomBecause === "VIEWPORT_HEIGHT_DECREASING" && f("auto");
         });
-        const T = w(null), b = $();
-        return O(
-          Le(
-            S(
+        const I = C$1(null), b = U();
+        return F(
+          Fe(
+            x$1(
               V(o),
-              E((f) => {
-                var d;
-                return (d = f == null ? void 0 : f.length) != null ? d : 0;
+              k((y) => {
+                var z;
+                return (z = y == null ? void 0 : y.length) != null ? z : 0;
               })
             ),
-            S(V(e))
+            x$1(V(e))
           ),
           b
-        ), K(
-          S(
-            rt(S(b, Dt(1)), c2),
-            N(V(T), l, x2, h),
-            E(([[f, d], y, B, k, L]) => d && B && (y == null ? void 0 : y({ context: L, totalCount: f, scrollingInProgress: k }))),
-            A((f) => !!f),
-            kt(0)
+        ), Y(
+          x$1(
+            ut(x$1(b, Kt(1)), c2),
+            $(V(I), l, S, h),
+            k(([[y, z], u, p, v, O]) => z && p && (u == null ? void 0 : u({ context: O, totalCount: y, scrollingInProgress: v }))),
+            P$1((y) => !!y),
+            Gt$1(0)
           ),
-          (f) => {
-            g && (g(), g = null), ot(n) ? requestAnimationFrame(() => {
-              ot(m)("scrolling into view", {}), G(I, f);
-            }) : g = Tt(t2, () => {
-              ot(m)("scrolling into view", {}), G(I, f), g = null;
+          (y) => {
+            g && (g(), g = null), rt(n) ? requestAnimationFrame(() => {
+              rt(m)("scrolling into view", {}), D(T, y);
+            }) : g = Et(t2, () => {
+              rt(m)("scrolling into view", {}), D(T, y), g = null;
             });
           }
-        ), { autoscrollToBottom: v, followOutput: C2, scrollIntoViewOnChange: T };
+        ), { autoscrollToBottom: R, followOutput: w, scrollIntoViewOnChange: I };
       },
-      X(
-        Et,
-        ae,
-        ce,
-        ue,
+      tt(
         Pt,
-        Vt$1,
-        at,
-        jn,
-        qn
+        he,
+        me,
+        pe,
+        _t,
+        Wt,
+        It,
+        qn,
+        Yn
       )
-    ), Ko = U(
-      ([{ data: t2, firstItemIndex: e, gap: n, sizes: o }, { initialTopMostItemIndex: r2 }, { initialItemCount: s, listState: i2 }, { didMount: l }]) => (O(
-        S(
+    ), jo = K(
+      ([{ data: t2, firstItemIndex: e, gap: n, sizes: o }, { initialTopMostItemIndex: r2 }, { initialItemCount: s, listState: i2 }, { didMount: l }]) => (F(
+        x$1(
           l,
-          N(s),
-          A(([, c2]) => c2 !== 0),
-          N(r2, o, e, n, t2),
-          E(([[, c2], a, m, x2, h, I = []]) => Un(c2, a, m, x2, h, I))
+          $(s),
+          P$1(([, c2]) => c2 !== 0),
+          $(r2, o, e, n, t2),
+          k(([[, c2], d, m, S, h, T = []]) => Kn(c2, d, m, S, h, T))
         ),
         i2
       ), {}),
-      X(Et, ue, $t, Pt),
+      tt(Pt, pe, jt, _t),
       { singleton: true }
-    ), jo = U(
+    ), qo = K(
       ([{ didMount: t2 }, { scrollTo: e }, { listState: n }]) => {
-        const o = w(0);
-        return K(
-          S(
+        const o = C$1(0);
+        return Y(
+          x$1(
             t2,
-            N(o),
-            A(([, r2]) => r2 !== 0),
-            E(([, r2]) => ({ top: r2 }))
+            $(o),
+            P$1(([, r2]) => r2 !== 0),
+            k(([, r2]) => ({ top: r2 }))
           ),
           (r2) => {
-            Tt(
-              S(
+            Et(
+              x$1(
                 n,
-                Dt(1),
-                A((s) => s.items.length > 1)
+                Kt(1),
+                P$1((s) => s.items.length > 1)
               ),
               () => {
                 requestAnimationFrame(() => {
-                  G(e, r2);
+                  D(e, r2);
                 });
               }
             );
@@ -34322,54 +34676,54 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           initialScrollTop: o
         };
       },
-      X(Pt, at, $t),
+      tt(_t, It, jt),
       { singleton: true }
-    ), Yn = U(
+    ), Zn = K(
       ([{ scrollVelocity: t2 }]) => {
-        const e = w(false), n = $(), o = w(false);
-        return O(
-          S(
+        const e = C$1(false), n = U(), o = C$1(false);
+        return F(
+          x$1(
             t2,
-            N(o, e, n),
-            A(([r2, s]) => !!s),
-            E(([r2, s, i2, l]) => {
-              const { enter: c2, exit: a } = s;
+            $(o, e, n),
+            P$1(([r2, s]) => !!s),
+            k(([r2, s, i2, l]) => {
+              const { enter: c2, exit: d } = s;
               if (i2) {
-                if (a(r2, l))
+                if (d(r2, l))
                   return false;
               } else if (c2(r2, l))
                 return true;
               return i2;
             }),
-            Y()
+            J()
           ),
           e
-        ), K(
-          S(rt(e, t2, n), N(o)),
+        ), Y(
+          x$1(ut(e, t2, n), $(o)),
           ([[r2, s, i2], l]) => {
             r2 && l && l.change && l.change(s, i2);
           }
         ), { isSeeking: e, scrollSeekConfiguration: o, scrollSeekRangeChanged: n, scrollVelocity: t2 };
       },
-      X(ae),
+      tt(he),
       { singleton: true }
-    ), qe = U(([{ scrollContainerState: t2, scrollTo: e }]) => {
-      const n = $(), o = $(), r2 = $(), s = w(false), i2 = w(void 0);
-      return O(
-        S(
-          rt(n, o),
-          E(([{ scrollHeight: l, scrollTop: c2, viewportHeight: a }, { offsetTop: m }]) => ({
+    ), qe = K(([{ scrollContainerState: t2, scrollTo: e }]) => {
+      const n = U(), o = U(), r2 = U(), s = C$1(false), i2 = C$1(void 0);
+      return F(
+        x$1(
+          ut(n, o),
+          k(([{ scrollHeight: l, scrollTop: c2, viewportHeight: d }, { offsetTop: m }]) => ({
             scrollHeight: l,
             scrollTop: Math.max(0, c2 - m),
-            viewportHeight: a
+            viewportHeight: d
           }))
         ),
         t2
-      ), O(
-        S(
+      ), F(
+        x$1(
           e,
-          N(o),
-          E(([l, { offsetTop: c2 }]) => ({
+          $(o),
+          k(([l, { offsetTop: c2 }]) => ({
             ...l,
             top: l.top + c2
           }))
@@ -34385,7 +34739,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         windowScrollTo: r2,
         windowViewportRect: o
       };
-    }, X(at)), qo = U(
+    }, tt(It)), Yo = K(
       ([
         { sizeRanges: t2, sizes: e },
         { headerHeight: n, scrollTop: o },
@@ -34393,130 +34747,130 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         { didMount: s },
         { useWindowScroll: i2, windowScrollContainerState: l, windowViewportRect: c2 }
       ]) => {
-        const a = $(), m = w(void 0), x2 = w(null), h = w(null);
-        return O(l, x2), O(c2, h), K(
-          S(
-            a,
-            N(e, o, i2, x2, h, n)
+        const d = U(), m = C$1(void 0), S = C$1(null), h = C$1(null);
+        return F(l, S), F(c2, h), Y(
+          x$1(
+            d,
+            $(e, o, i2, S, h, n)
           ),
-          ([I, C2, v, g, p, u, T]) => {
-            const b = Fo(C2.sizeTree);
-            g && p !== null && u !== null && (v = p.scrollTop - u.offsetTop), v -= T, I({ ranges: b, scrollTop: v });
+          ([T, w, R, g, f, a, I]) => {
+            const b = Oo(w.sizeTree);
+            g && f !== null && a !== null && (R = f.scrollTop - a.offsetTop), R -= I, T({ ranges: b, scrollTop: R });
           }
-        ), O(S(m, A(We), E(Yo)), r2), O(
-          S(
+        ), F(x$1(m, P$1(Ae), k(Zo)), r2), F(
+          x$1(
             s,
-            N(m),
-            A(([, I]) => I !== void 0),
-            Y(),
-            E(([, I]) => I.ranges)
+            $(m),
+            P$1(([, T]) => T !== void 0),
+            J(),
+            k(([, T]) => T.ranges)
           ),
           t2
         ), {
-          getState: a,
+          getState: d,
           restoreStateFrom: m
         };
       },
-      X(Et, at, ue, Pt, qe)
+      tt(Pt, It, pe, _t, qe)
     );
-    function Yo(t2) {
+    function Zo(t2) {
       return { align: "start", index: 0, offset: t2.scrollTop };
     }
-    const Zo = U(([{ topItemsIndexes: t2 }]) => {
-      const e = w(0);
-      return O(
-        S(
+    const Xo = K(([{ topItemsIndexes: t2 }]) => {
+      const e = C$1(0);
+      return F(
+        x$1(
           e,
-          A((n) => n >= 0),
-          E((n) => Array.from({ length: n }).map((o, r2) => r2))
+          P$1((n) => n >= 0),
+          k((n) => Array.from({ length: n }).map((o, r2) => r2))
         ),
         t2
       ), { topItemCount: e };
-    }, X($t));
-    function Zn(t2) {
+    }, tt(jt));
+    function Xn(t2) {
       let e = false, n;
       return () => (e || (e = true, n = t2()), n);
     }
-    const Xo = Zn(() => /iP(ad|od|hone)/i.test(navigator.userAgent) && /WebKit/i.test(navigator.userAgent)), Jo = U(
+    const Jo = Xn(() => /iP(ad|od|hone)/i.test(navigator.userAgent) && /WebKit/i.test(navigator.userAgent)), Qo = K(
       ([
         { deviation: t2, scrollBy: e, scrollingInProgress: n, scrollTop: o },
         { isAtBottom: r2, isScrolling: s, lastJumpDueToItemResize: i2, scrollDirection: l },
         { listState: c2 },
-        { beforeUnshiftWith: a, gap: m, shiftWithOffset: x2, sizes: h },
-        { log: I },
-        { recalcInProgress: C2 }
+        { beforeUnshiftWith: d, gap: m, shiftWithOffset: S, sizes: h },
+        { log: T },
+        { recalcInProgress: w }
       ]) => {
-        const v = ht(
-          S(
+        const R = bt(
+          x$1(
             c2,
-            N(i2),
-            bt(
-              ([, p, u, T], [{ bottom: b, items: f, offsetBottom: d, totalCount: y }, B]) => {
-                const k = b + d;
-                let L = 0;
-                return u === y && p.length > 0 && f.length > 0 && (f[0].originalIndex === 0 && p[0].originalIndex === 0 || (L = k - T, L !== 0 && (L += B))), [L, f, y, k];
+            $(i2),
+            Lt$1(
+              ([, f, a, I], [{ bottom: b, items: y, offsetBottom: z, totalCount: u }, p]) => {
+                const v = b + z;
+                let O = 0;
+                return a === u && f.length > 0 && y.length > 0 && (y[0].originalIndex === 0 && f[0].originalIndex === 0 || (O = v - I, O !== 0 && (O += p))), [O, y, u, v];
               },
               [0, [], 0, 0]
             ),
-            A(([p]) => p !== 0),
-            N(o, l, n, r2, I, C2),
-            A(([, p, u, T, , , b]) => !b && !T && p !== 0 && u === le$1),
-            E(([[p], , , , , u]) => (u("Upward scrolling compensation", { amount: p }, mt.DEBUG), p))
+            P$1(([f]) => f !== 0),
+            $(o, l, n, r2, T, w),
+            P$1(([, f, a, I, , , b]) => !b && !I && f !== 0 && a === ae),
+            k(([[f], , , , , a]) => (a("Upward scrolling compensation", { amount: f }, Ct.DEBUG), f))
           )
         );
-        function g(p) {
-          p > 0 ? (G(e, { behavior: "auto", top: -p }), G(t2, 0)) : (G(t2, 0), G(e, { behavior: "auto", top: -p }));
+        function g(f) {
+          f > 0 ? (D(e, { behavior: "auto", top: -f }), D(t2, 0)) : (D(t2, 0), D(e, { behavior: "auto", top: -f }));
         }
-        return K(S(v, N(t2, s)), ([p, u, T]) => {
-          T && Xo() ? G(t2, u - p) : g(-p);
-        }), K(
-          S(
-            rt(ct(s, false), t2, C2),
-            A(([p, u, T]) => !p && !T && u !== 0),
-            E(([p, u]) => u),
-            kt(1)
+        return Y(x$1(R, $(t2, s)), ([f, a, I]) => {
+          I && Jo() ? D(t2, a - f) : g(-f);
+        }), Y(
+          x$1(
+            ut(ht(s, false), t2, w),
+            P$1(([f, a, I]) => !f && !I && a !== 0),
+            k(([f, a]) => a),
+            Gt$1(1)
           ),
           g
-        ), O(
-          S(
-            x2,
-            E((p) => ({ top: -p }))
+        ), F(
+          x$1(
+            S,
+            k((f) => ({ top: -f }))
           ),
           e
-        ), K(
-          S(
-            a,
-            N(h, m),
-            E(([p, { groupIndices: u, lastSize: T, sizeTree: b }, f]) => {
-              function d(y) {
-                return y * (T + f);
+        ), Y(
+          x$1(
+            d,
+            $(h, m),
+            k(([f, { groupIndices: a, lastSize: I, sizeTree: b }, y]) => {
+              function z(u) {
+                return u * (I + y);
               }
-              if (u.length === 0)
-                return d(p);
+              if (a.length === 0)
+                return z(f);
               {
-                let y = 0;
-                const B = re(b, 0);
-                let k = 0, L = 0;
-                for (; k < p; ) {
-                  k++, y += B;
-                  let z = u.length === L + 1 ? 1 / 0 : u[L + 1] - u[L] - 1;
-                  k + z > p && (y -= B, z = p - k + 1), k += z, y += d(z), L++;
+                let u = 0;
+                const p = le$1(b, 0);
+                let v = 0, O = 0;
+                for (; v < f; ) {
+                  v++, u += p;
+                  let B = a.length === O + 1 ? 1 / 0 : a[O + 1] - a[O] - 1;
+                  v + B > f && (u -= p, B = f - v + 1), v += B, u += z(B), O++;
                 }
-                return y;
+                return u;
               }
             })
           ),
-          (p) => {
-            G(t2, p), requestAnimationFrame(() => {
-              G(e, { top: p }), requestAnimationFrame(() => {
-                G(t2, 0), G(C2, false);
+          (f) => {
+            D(t2, f), requestAnimationFrame(() => {
+              D(e, { top: f }), requestAnimationFrame(() => {
+                D(t2, 0), D(w, false);
               });
             });
           }
         ), { deviation: t2 };
       },
-      X(at, ae, $t, Et, Vt$1, De)
-    ), Qo = U(
+      tt(It, he, jt, Pt, Wt, De)
+    ), tr = K(
       ([
         t2,
         e,
@@ -34527,7 +34881,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         i2,
         l,
         c2,
-        a,
+        d,
         m
       ]) => ({
         ...t2,
@@ -34539,100 +34893,109 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         ...i2,
         ...l,
         ...c2,
-        ...a,
+        ...d,
         ...m
       }),
-      X(
+      tt(
         je,
-        Ko,
-        Pt,
-        Yn,
-        Kn,
         jo,
-        No,
+        _t,
+        Zn,
+        jn,
+        qo,
+        Do,
         qe,
-        qn,
-        Vt$1,
-        jn
+        Yn,
+        Wt,
+        qn
       )
-    ), Xn = U(
+    ), Jn = K(
       ([
         {
           data: t2,
           defaultItemSize: e,
           firstItemIndex: n,
           fixedItemSize: o,
-          gap: r2,
-          groupIndices: s,
-          itemSize: i2,
-          sizeRanges: l,
-          sizes: c2,
-          statefulTotalCount: a,
-          totalCount: m,
-          trackItemSizes: x2
+          fixedGroupSize: r2,
+          gap: s,
+          groupIndices: i2,
+          heightEstimates: l,
+          itemSize: c2,
+          sizeRanges: d,
+          sizes: m,
+          statefulTotalCount: S,
+          totalCount: h,
+          trackItemSizes: T
         },
-        { initialItemFinalLocationReached: h, initialTopMostItemIndex: I, scrolledToInitialItem: C2 },
-        v,
-        g,
-        p,
-        { listState: u, topItemsIndexes: T, ...b },
-        { scrollToIndex: f },
-        d,
-        { topItemCount: y },
-        { groupCounts: B },
-        k
-      ]) => (O(b.rangeChanged, k.scrollSeekRangeChanged), O(
-        S(
-          k.windowViewportRect,
-          E((L) => L.visibleHeight)
-        ),
-        v.viewportHeight
-      ), {
-        data: t2,
-        defaultItemHeight: e,
-        firstItemIndex: n,
-        fixedItemHeight: o,
-        gap: r2,
-        groupCounts: B,
-        initialItemFinalLocationReached: h,
-        initialTopMostItemIndex: I,
-        scrolledToInitialItem: C2,
-        sizeRanges: l,
-        topItemCount: y,
-        topItemsIndexes: T,
-        // input
-        totalCount: m,
-        ...p,
-        groupIndices: s,
-        itemSize: i2,
-        listState: u,
-        scrollToIndex: f,
-        // output
-        statefulTotalCount: a,
-        trackItemSizes: x2,
-        // exported from stateFlagsSystem
-        ...b,
-        // the bag of IO from featureGroup1System
-        ...k,
-        ...v,
-        sizes: c2,
-        ...g
-      }),
-      X(
-        Et,
-        ue,
-        at,
-        qo,
-        Uo,
-        $t,
-        ce,
-        Jo,
-        Zo,
-        Nn,
-        Qo
+        { initialItemFinalLocationReached: w, initialTopMostItemIndex: R, scrolledToInitialItem: g },
+        f,
+        a,
+        I,
+        b,
+        { scrollToIndex: y },
+        z,
+        { topItemCount: u },
+        { groupCounts: p },
+        v
+      ]) => {
+        const { listState: O, minOverscanItemCount: B, topItemsIndexes: W, rangeChanged: _, ...j } = b;
+        return F(_, v.scrollSeekRangeChanged), F(
+          x$1(
+            v.windowViewportRect,
+            k((L) => L.visibleHeight)
+          ),
+          f.viewportHeight
+        ), {
+          data: t2,
+          defaultItemHeight: e,
+          firstItemIndex: n,
+          fixedItemHeight: o,
+          fixedGroupHeight: r2,
+          gap: s,
+          groupCounts: p,
+          heightEstimates: l,
+          initialItemFinalLocationReached: w,
+          initialTopMostItemIndex: R,
+          scrolledToInitialItem: g,
+          sizeRanges: d,
+          topItemCount: u,
+          topItemsIndexes: W,
+          // input
+          totalCount: h,
+          ...I,
+          groupIndices: i2,
+          itemSize: c2,
+          listState: O,
+          minOverscanItemCount: B,
+          scrollToIndex: y,
+          // output
+          statefulTotalCount: S,
+          trackItemSizes: T,
+          // exported from stateFlagsSystem
+          rangeChanged: _,
+          ...j,
+          // the bag of IO from featureGroup1System
+          ...v,
+          ...f,
+          sizes: m,
+          ...a
+        };
+      },
+      tt(
+        Pt,
+        pe,
+        It,
+        Yo,
+        Ko,
+        jt,
+        me,
+        Qo,
+        Xo,
+        Dn,
+        tr
       )
     );
-    function tr(t2, e) {
+    function er(t2, e) {
       const n = {}, o = {};
       let r2 = 0;
       const s = t2.length;
@@ -34642,156 +35005,156 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         Object.hasOwn(o, i2) || (n[i2] = e[i2]);
       return n;
     }
-    const pe = typeof document < "u" ? React20.useLayoutEffect : React20.useEffect;
+    const Ie = typeof document < "u" ? React20.useLayoutEffect : React20.useEffect;
     function Ye(t2, e, n) {
       const o = Object.keys(e.required || {}), r2 = Object.keys(e.optional || {}), s = Object.keys(e.methods || {}), i2 = Object.keys(e.events || {}), l = React20.createContext({});
-      function c2(p, u) {
-        p.propsReady && G(p.propsReady, false);
-        for (const T of o) {
-          const b = p[e.required[T]];
-          G(b, u[T]);
+      function c2(f, a) {
+        f.propsReady && D(f.propsReady, false);
+        for (const I of o) {
+          const b = f[e.required[I]];
+          D(b, a[I]);
         }
-        for (const T of r2)
-          if (T in u) {
-            const b = p[e.optional[T]];
-            G(b, u[T]);
+        for (const I of r2)
+          if (I in a) {
+            const b = f[e.optional[I]];
+            D(b, a[I]);
           }
-        p.propsReady && G(p.propsReady, true);
+        f.propsReady && D(f.propsReady, true);
       }
-      function a(p) {
-        return s.reduce((u, T) => (u[T] = (b) => {
-          const f = p[e.methods[T]];
-          G(f, b);
-        }, u), {});
+      function d(f) {
+        return s.reduce((a, I) => (a[I] = (b) => {
+          const y = f[e.methods[I]];
+          D(y, b);
+        }, a), {});
       }
-      function m(p) {
-        return i2.reduce((u, T) => (u[T] = Io(p[e.events[T]]), u), {});
+      function m(f) {
+        return i2.reduce((a, I) => (a[I] = xo(f[e.events[I]]), a), {});
       }
-      const x2 = React20.forwardRef((p, u) => {
-        const { children: T, ...b } = p, [f] = React20.useState(() => ve(xo(t2), (B) => {
-          c2(B, b);
-        })), [d] = React20.useState(an(m, f));
-        pe(() => {
-          for (const B of i2)
-            B in b && K(d[B], b[B]);
+      const S = React20.forwardRef((f, a) => {
+        const { children: I, ...b } = f, [y] = React20.useState(() => ye(To(t2), (p) => {
+          c2(p, b);
+        })), [z] = React20.useState(an(m, y));
+        Ie(() => {
+          for (const p of i2)
+            p in b && Y(z[p], b[p]);
           return () => {
-            Object.values(d).map(Ge);
+            Object.values(z).map(We);
           };
-        }, [b, d, f]), pe(() => {
-          c2(f, b);
-        }), React20.useImperativeHandle(u, un(a(f)));
-        const y = n;
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(l.Provider, { value: f, children: n ? /* @__PURE__ */ jsxRuntimeExports.jsx(y, { ...tr([...o, ...r2, ...i2], b), children: T }) : T });
-      }), h = (p) => {
-        const u = React20.useContext(l);
+        }, [b, z, y]), Ie(() => {
+          c2(y, b);
+        }), React20.useImperativeHandle(a, un(d(y)));
+        const u = n;
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(l.Provider, { value: y, children: n ? /* @__PURE__ */ jsxRuntimeExports.jsx(u, { ...er([...o, ...r2, ...i2], b), children: I }) : I });
+      }), h = (f) => {
+        const a = React20.useContext(l);
         return React20.useCallback(
-          (T) => {
-            G(u[p], T);
+          (I) => {
+            D(a[f], I);
           },
-          [u, p]
+          [a, f]
         );
-      }, I = (p) => {
-        const T = React20.useContext(l)[p], b = React20.useCallback(
-          (f) => K(T, f),
-          [T]
+      }, T = (f) => {
+        const I = React20.useContext(l)[f], b = React20.useCallback(
+          (y) => Y(I, y),
+          [I]
         );
         return React20.useSyncExternalStore(
           b,
-          () => ot(T),
-          () => ot(T)
+          () => rt(I),
+          () => rt(I)
         );
-      }, C2 = (p) => {
-        const T = React20.useContext(l)[p], [b, f] = React20.useState(an(ot, T));
-        return pe(
-          () => K(T, (d) => {
-            d !== b && f(un(d));
+      }, w = (f) => {
+        const I = React20.useContext(l)[f], [b, y] = React20.useState(an(rt, I));
+        return Ie(
+          () => Y(I, (z) => {
+            z !== b && y(un(z));
           }),
-          [T, b]
+          [I, b]
         ), b;
-      }, v = React20.version.startsWith("18") ? I : C2;
+      }, R = React20.version.startsWith("18") ? T : w;
       return {
-        Component: x2,
-        useEmitter: (p, u) => {
-          const b = React20.useContext(l)[p];
-          pe(() => K(b, u), [u, b]);
+        Component: S,
+        useEmitter: (f, a) => {
+          const b = React20.useContext(l)[f];
+          Ie(() => Y(b, a), [a, b]);
         },
-        useEmitterValue: v,
+        useEmitterValue: R,
         usePublisher: h
       };
     }
-    const be = React20.createContext(void 0), Jn = React20.createContext(void 0), Qn = typeof document < "u" ? React20.useLayoutEffect : React20.useEffect;
+    const Re$1 = React20.createContext(void 0), Qn = React20.createContext(void 0), to = typeof document < "u" ? React20.useLayoutEffect : React20.useEffect;
     function ke(t2) {
       return "self" in t2;
     }
-    function er(t2) {
+    function nr(t2) {
       return "body" in t2;
     }
-    function to(t2, e, n, o = Yt, r2, s) {
-      const i2 = React20.useRef(null), l = React20.useRef(null), c2 = React20.useRef(null), a = React20.useCallback(
+    function eo(t2, e, n, o = Qt, r2, s) {
+      const i2 = React20.useRef(null), l = React20.useRef(null), c2 = React20.useRef(null), d = React20.useCallback(
         (h) => {
-          let I, C2, v;
+          let T, w, R;
           const g = h.target;
-          if (er(g) || ke(g)) {
-            const u = ke(g) ? g : g.defaultView;
-            v = s ? u.scrollX : u.scrollY, I = s ? u.document.documentElement.scrollWidth : u.document.documentElement.scrollHeight, C2 = s ? u.innerWidth : u.innerHeight;
+          if (nr(g) || ke(g)) {
+            const a = ke(g) ? g : g.defaultView;
+            R = s ? a.scrollX : a.scrollY, T = s ? a.document.documentElement.scrollWidth : a.document.documentElement.scrollHeight, w = s ? a.innerWidth : a.innerHeight;
           } else
-            v = s ? g.scrollLeft : g.scrollTop, I = s ? g.scrollWidth : g.scrollHeight, C2 = s ? g.offsetWidth : g.offsetHeight;
-          const p = () => {
+            R = s ? g.scrollLeft : g.scrollTop, T = s ? g.scrollWidth : g.scrollHeight, w = s ? g.offsetWidth : g.offsetHeight;
+          const f = () => {
             t2({
-              scrollHeight: I,
-              scrollTop: Math.max(v, 0),
-              viewportHeight: C2
+              scrollHeight: T,
+              scrollTop: Math.max(R, 0),
+              viewportHeight: w
             });
           };
-          h.suppressFlushSync ? p() : ReactDOM.flushSync(p), l.current !== null && (v === l.current || v <= 0 || v === I - C2) && (l.current = null, e(true), c2.current && (clearTimeout(c2.current), c2.current = null));
+          h.suppressFlushSync ? f() : ReactDOM.flushSync(f), l.current !== null && (R === l.current || R <= 0 || R === T - w) && (l.current = null, e(true), c2.current && (clearTimeout(c2.current), c2.current = null));
         },
         [t2, e, s]
       );
       React20.useEffect(() => {
         const h = r2 || i2.current;
-        return o(r2 || i2.current), a({ suppressFlushSync: true, target: h }), h.addEventListener("scroll", a, { passive: true }), () => {
-          o(null), h.removeEventListener("scroll", a);
+        return o(r2 || i2.current), d({ suppressFlushSync: true, target: h }), h.addEventListener("scroll", d, { passive: true }), () => {
+          o(null), h.removeEventListener("scroll", d);
         };
-      }, [i2, a, n, o, r2]);
+      }, [i2, d, n, o, r2]);
       function m(h) {
-        const I = i2.current;
-        if (!I || (s ? "offsetWidth" in I && I.offsetWidth === 0 : "offsetHeight" in I && I.offsetHeight === 0))
+        const T = i2.current;
+        if (!T || (s ? "offsetWidth" in T && T.offsetWidth === 0 : "offsetHeight" in T && T.offsetHeight === 0))
           return;
-        const C2 = h.behavior === "smooth";
-        let v, g, p;
-        ke(I) ? (g = Math.max(
-          vt$1(I.document.documentElement, s ? "width" : "height"),
-          s ? I.document.documentElement.scrollWidth : I.document.documentElement.scrollHeight
-        ), v = s ? I.innerWidth : I.innerHeight, p = s ? window.scrollX : window.scrollY) : (g = I[s ? "scrollWidth" : "scrollHeight"], v = vt$1(I, s ? "width" : "height"), p = I[s ? "scrollLeft" : "scrollTop"]);
-        const u = g - v;
-        if (h.top = Math.ceil(Math.max(Math.min(u, h.top), 0)), $n(v, g) || h.top === p) {
-          t2({ scrollHeight: g, scrollTop: p, viewportHeight: v }), C2 && e(true);
+        const w = h.behavior === "smooth";
+        let R, g, f;
+        ke(T) ? (g = Math.max(
+          zt(T.document.documentElement, s ? "width" : "height"),
+          s ? T.document.documentElement.scrollWidth : T.document.documentElement.scrollHeight
+        ), R = s ? T.innerWidth : T.innerHeight, f = s ? window.scrollX : window.scrollY) : (g = T[s ? "scrollWidth" : "scrollHeight"], R = zt(T, s ? "width" : "height"), f = T[s ? "scrollLeft" : "scrollTop"]);
+        const a = g - R;
+        if (h.top = Math.ceil(Math.max(Math.min(a, h.top), 0)), Un(R, g) || h.top === f) {
+          t2({ scrollHeight: g, scrollTop: f, viewportHeight: R }), w && e(true);
           return;
         }
-        C2 ? (l.current = h.top, c2.current && clearTimeout(c2.current), c2.current = setTimeout(() => {
+        w ? (l.current = h.top, c2.current && clearTimeout(c2.current), c2.current = setTimeout(() => {
           c2.current = null, l.current = null, e(true);
-        }, 1e3)) : l.current = null, s && (h = { behavior: h.behavior, left: h.top }), I.scrollTo(h);
+        }, 1e3)) : l.current = null, s && (h = { behavior: h.behavior, left: h.top }), T.scrollTo(h);
       }
-      function x2(h) {
+      function S(h) {
         s && (h = { behavior: h.behavior, left: h.top }), i2.current.scrollBy(h);
       }
-      return { scrollByCallback: x2, scrollerRef: i2, scrollToCallback: m };
+      return { scrollByCallback: S, scrollerRef: i2, scrollToCallback: m };
     }
-    const Fe = "-webkit-sticky", Tn = "sticky", Ze = Zn(() => {
+    const ze = "-webkit-sticky", Cn = "sticky", Ze = Xn(() => {
       if (typeof document > "u")
-        return Tn;
+        return Cn;
       const t2 = document.createElement("div");
-      return t2.style.position = Fe, t2.style.position === Fe ? Fe : Tn;
+      return t2.style.position = ze, t2.style.position === ze ? ze : Cn;
     });
     function Xe(t2) {
       return t2;
     }
-    const nr = /* @__PURE__ */ U(() => {
-      const t2 = w((l) => `Item ${l}`), e = w((l) => `Group ${l}`), n = w({}), o = w(Xe), r2 = w("div"), s = w(Yt), i2 = (l, c2 = null) => ct(
-        S(
+    const or$1 = /* @__PURE__ */ K(() => {
+      const t2 = C$1((l) => `Item ${l}`), e = C$1((l) => `Group ${l}`), n = C$1({}), o = C$1(Xe), r2 = C$1("div"), s = C$1(Qt), i2 = (l, c2 = null) => ht(
+        x$1(
           n,
-          E((a) => a[l]),
-          Y()
+          k((d) => d[l]),
+          J()
         ),
         c2
       );
@@ -34812,161 +35175,161 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         ScrollSeekPlaceholder: i2("ScrollSeekPlaceholder"),
         TopItemListComponent: i2("TopItemList")
       };
-    }), or$1 = /* @__PURE__ */ U(
+    }), rr = /* @__PURE__ */ K(
       ([t2, e]) => ({ ...t2, ...e }),
-      X(Xn, nr)
-    ), rr = ({ height: t2 }) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { height: t2 } }), sr = { overflowAnchor: "none", position: Ze(), zIndex: 1 }, eo = { overflowAnchor: "none" }, ir = { ...eo, display: "inline-block", height: "100%" }, Cn = /* @__PURE__ */ React20.memo(function({ showTopList: e = false }) {
-      const n = M("listState"), o = gt$3("sizeRanges"), r2 = M("useWindowScroll"), s = M("customScrollParent"), i2 = gt$3("windowScrollContainerState"), l = gt$3("scrollContainerState"), c2 = s || r2 ? i2 : l, a = M("itemContent"), m = M("context"), x2 = M("groupContent"), h = M("trackItemSizes"), I = M("itemSize"), C2 = M("log"), v = gt$3("gap"), g = M("horizontalDirection"), { callbackRef: p } = On(
+      tt(Jn, or$1)
+    ), sr = ({ height: t2 }) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { height: t2 } }), ir = { overflowAnchor: "none", position: Ze(), zIndex: 1 }, no = { overflowAnchor: "none" }, lr = { ...no, display: "inline-block", height: "100%" }, wn = /* @__PURE__ */ React20.memo(function({ showTopList: e = false }) {
+      const n = A("listState"), o = Rt("sizeRanges"), r2 = A("useWindowScroll"), s = A("customScrollParent"), i2 = Rt("windowScrollContainerState"), l = Rt("scrollContainerState"), c2 = s || r2 ? i2 : l, d = A("itemContent"), m = A("context"), S = A("groupContent"), h = A("trackItemSizes"), T = A("itemSize"), w = A("log"), R = Rt("gap"), g = A("horizontalDirection"), { callbackRef: f } = Fn(
         o,
-        I,
+        T,
         h,
-        e ? Yt : c2,
-        C2,
-        v,
+        e ? Qt : c2,
+        w,
+        R,
         s,
         g,
-        M("skipAnimationFrameInResizeObserver")
-      ), [u, T] = React20.useState(0);
-      tn("deviation", (F) => {
-        u !== F && T(F);
+        A("skipAnimationFrameInResizeObserver")
+      ), [a, I] = React20.useState(0);
+      tn("deviation", (L) => {
+        a !== L && I(L);
       });
-      const b = M("EmptyPlaceholder"), f = M("ScrollSeekPlaceholder") || rr, d = M("ListComponent"), y = M("ItemComponent"), B = M("GroupComponent"), k = M("computeItemKey"), L = M("isSeeking"), z = M("groupIndices").length > 0, _ = M("alignToBottom"), J = M("initialItemFinalLocationReached"), nt = e ? {} : {
+      const b = A("EmptyPlaceholder"), y = A("ScrollSeekPlaceholder") || sr, z = A("ListComponent"), u = A("ItemComponent"), p = A("GroupComponent"), v = A("computeItemKey"), O = A("isSeeking"), B = A("groupIndices").length > 0, W = A("alignToBottom"), _ = A("initialItemFinalLocationReached"), j = e ? {} : {
         boxSizing: "border-box",
         ...g ? {
           display: "inline-block",
           height: "100%",
-          marginLeft: u !== 0 ? u : _ ? "auto" : 0,
+          marginLeft: a !== 0 ? a : W ? "auto" : 0,
           paddingLeft: n.offsetTop,
           paddingRight: n.offsetBottom,
           whiteSpace: "nowrap"
         } : {
-          marginTop: u !== 0 ? u : _ ? "auto" : 0,
+          marginTop: a !== 0 ? a : W ? "auto" : 0,
           paddingBottom: n.offsetBottom,
           paddingTop: n.offsetTop
         },
-        ...J ? {} : { visibility: "hidden" }
+        ..._ ? {} : { visibility: "hidden" }
       };
-      return !e && n.totalCount === 0 && b ? /* @__PURE__ */ jsxRuntimeExports.jsx(b, { ...Z$1(b, m) }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
-        d,
+      return !e && n.totalCount === 0 && b ? /* @__PURE__ */ jsxRuntimeExports.jsx(b, { ...Q(b, m) }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+        z,
         {
-          ...Z$1(d, m),
+          ...Q(z, m),
           "data-testid": e ? "virtuoso-top-item-list" : "virtuoso-item-list",
-          ref: p,
-          style: nt,
-          children: (e ? n.topItems : n.items).map((F) => {
-            const q = F.originalIndex, it2 = k(q + n.firstItemIndex, F.data, m);
-            return L ? /* @__PURE__ */ reactExports.createElement(
-              f,
-              {
-                ...Z$1(f, m),
-                height: F.size,
-                index: F.index,
-                key: it2,
-                type: F.type || "item",
-                ...F.type === "group" ? {} : { groupIndex: F.groupIndex }
-              }
-            ) : F.type === "group" ? /* @__PURE__ */ reactExports.createElement(
-              B,
-              {
-                ...Z$1(B, m),
-                "data-index": q,
-                "data-item-index": F.index,
-                "data-known-size": F.size,
-                key: it2,
-                style: sr
-              },
-              x2(F.index, m)
-            ) : /* @__PURE__ */ reactExports.createElement(
+          ref: f,
+          style: j,
+          children: (e ? n.topItems : n.items).map((L) => {
+            const xt = L.originalIndex, M = v(xt + n.firstItemIndex, L.data, m);
+            return O ? /* @__PURE__ */ reactExports.createElement(
               y,
               {
-                ...Z$1(y, m),
-                ...no(y, F.data),
-                "data-index": q,
-                "data-item-group-index": F.groupIndex,
-                "data-item-index": F.index,
-                "data-known-size": F.size,
-                key: it2,
-                style: g ? ir : eo
+                ...Q(y, m),
+                height: L.size,
+                index: L.index,
+                key: M,
+                type: L.type || "item",
+                ...L.type === "group" ? {} : { groupIndex: L.groupIndex }
+              }
+            ) : L.type === "group" ? /* @__PURE__ */ reactExports.createElement(
+              p,
+              {
+                ...Q(p, m),
+                "data-index": xt,
+                "data-item-index": L.index,
+                "data-known-size": L.size,
+                key: M,
+                style: ir
               },
-              z ? a(F.index, F.groupIndex, F.data, m) : a(F.index, F.data, m)
+              S(L.index, m)
+            ) : /* @__PURE__ */ reactExports.createElement(
+              u,
+              {
+                ...Q(u, m),
+                ...oo(u, L.data),
+                "data-index": xt,
+                "data-item-group-index": L.groupIndex,
+                "data-item-index": L.index,
+                "data-known-size": L.size,
+                key: M,
+                style: g ? lr : no
+              },
+              B ? d(L.index, L.groupIndex, L.data, m) : d(L.index, L.data, m)
             );
           })
         }
       );
-    }), lr = {
+    }), cr = {
       height: "100%",
       outline: "none",
       overflowY: "auto",
       position: "relative",
       WebkitOverflowScrolling: "touch"
-    }, cr = {
+    }, ur = {
       outline: "none",
       overflowX: "auto",
       position: "relative"
-    }, Zt = (t2) => ({
+    }, te = (t2) => ({
       height: "100%",
       position: "absolute",
       top: 0,
       width: "100%",
       ...t2 ? { display: "flex", flexDirection: "column" } : {}
-    }), ur = {
+    }), ar = {
       position: Ze(),
       top: 0,
       width: "100%",
       zIndex: 1
     };
-    function Z$1(t2, e) {
+    function Q(t2, e) {
       if (typeof t2 != "string")
         return { context: e };
     }
-    function no(t2, e) {
+    function oo(t2, e) {
       return { item: typeof t2 == "string" ? void 0 : e };
     }
-    const ar = /* @__PURE__ */ React20.memo(function() {
-      const e = M("HeaderComponent"), n = gt$3("headerHeight"), o = M("HeaderFooterTag"), r2 = Ht(
+    const dr = /* @__PURE__ */ React20.memo(function() {
+      const e = A("HeaderComponent"), n = Rt("headerHeight"), o = A("HeaderFooterTag"), r2 = Vt$1(
         React20.useMemo(
           () => (i2) => {
-            n(vt$1(i2, "height"));
+            n(zt(i2, "height"));
           },
           [n]
         ),
         true,
-        M("skipAnimationFrameInResizeObserver")
-      ), s = M("context");
-      return e ? /* @__PURE__ */ jsxRuntimeExports.jsx(o, { ref: r2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(e, { ...Z$1(e, s) }) }) : null;
-    }), dr = /* @__PURE__ */ React20.memo(function() {
-      const e = M("FooterComponent"), n = gt$3("footerHeight"), o = M("HeaderFooterTag"), r2 = Ht(
+        A("skipAnimationFrameInResizeObserver")
+      ), s = A("context");
+      return e ? /* @__PURE__ */ jsxRuntimeExports.jsx(o, { ref: r2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(e, { ...Q(e, s) }) }) : null;
+    }), fr = /* @__PURE__ */ React20.memo(function() {
+      const e = A("FooterComponent"), n = Rt("footerHeight"), o = A("HeaderFooterTag"), r2 = Vt$1(
         React20.useMemo(
           () => (i2) => {
-            n(vt$1(i2, "height"));
+            n(zt(i2, "height"));
           },
           [n]
         ),
         true,
-        M("skipAnimationFrameInResizeObserver")
-      ), s = M("context");
-      return e ? /* @__PURE__ */ jsxRuntimeExports.jsx(o, { ref: r2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(e, { ...Z$1(e, s) }) }) : null;
+        A("skipAnimationFrameInResizeObserver")
+      ), s = A("context");
+      return e ? /* @__PURE__ */ jsxRuntimeExports.jsx(o, { ref: r2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(e, { ...Q(e, s) }) }) : null;
     });
     function Je({ useEmitter: t2, useEmitterValue: e, usePublisher: n }) {
       return React20.memo(function({ children: s, style: i2, context: l, ...c2 }) {
-        const a = n("scrollContainerState"), m = e("ScrollerComponent"), x2 = n("smoothScrollTargetReached"), h = e("scrollerRef"), I = e("horizontalDirection") || false, { scrollByCallback: C2, scrollerRef: v, scrollToCallback: g } = to(
-          a,
-          x2,
+        const d = n("scrollContainerState"), m = e("ScrollerComponent"), S = n("smoothScrollTargetReached"), h = e("scrollerRef"), T = e("horizontalDirection") || false, { scrollByCallback: w, scrollerRef: R, scrollToCallback: g } = eo(
+          d,
+          S,
           m,
           h,
           void 0,
-          I
+          T
         );
-        return t2("scrollTo", g), t2("scrollBy", C2), /* @__PURE__ */ jsxRuntimeExports.jsx(
+        return t2("scrollTo", g), t2("scrollBy", w), /* @__PURE__ */ jsxRuntimeExports.jsx(
           m,
           {
             "data-testid": "virtuoso-scroller",
             "data-virtuoso-scroller": true,
-            ref: v,
-            style: { ...I ? cr : lr, ...i2 },
+            ref: R,
+            style: { ...T ? ur : cr, ...i2 },
             tabIndex: 0,
             ...c2,
-            ...Z$1(m, l),
+            ...Q(m, l),
             children: s
           }
         );
@@ -34974,68 +35337,68 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     function Qe({ useEmitter: t2, useEmitterValue: e, usePublisher: n }) {
       return React20.memo(function({ children: s, style: i2, context: l, ...c2 }) {
-        const a = n("windowScrollContainerState"), m = e("ScrollerComponent"), x2 = n("smoothScrollTargetReached"), h = e("totalListHeight"), I = e("deviation"), C2 = e("customScrollParent"), v = React20.useRef(null), g = e("scrollerRef"), { scrollByCallback: p, scrollerRef: u, scrollToCallback: T } = to(
-          a,
-          x2,
+        const d = n("windowScrollContainerState"), m = e("ScrollerComponent"), S = n("smoothScrollTargetReached"), h = e("totalListHeight"), T = e("deviation"), w = e("customScrollParent"), R = React20.useRef(null), g = e("scrollerRef"), { scrollByCallback: f, scrollerRef: a, scrollToCallback: I } = eo(
+          d,
+          S,
           m,
           g,
-          C2
+          w
         );
-        return Qn(() => {
+        return to(() => {
           var b;
-          return u.current = C2 || ((b = v.current) == null ? void 0 : b.ownerDocument.defaultView), () => {
-            u.current = null;
+          return a.current = w || ((b = R.current) == null ? void 0 : b.ownerDocument.defaultView), () => {
+            a.current = null;
           };
-        }, [u, C2]), t2("windowScrollTo", T), t2("scrollBy", p), /* @__PURE__ */ jsxRuntimeExports.jsx(
+        }, [a, w]), t2("windowScrollTo", I), t2("scrollBy", f), /* @__PURE__ */ jsxRuntimeExports.jsx(
           m,
           {
-            ref: v,
+            ref: R,
             "data-virtuoso-scroller": true,
-            style: { position: "relative", ...i2, ...h !== 0 ? { height: h + I } : {} },
+            style: { position: "relative", ...i2, ...h !== 0 ? { height: h + T } : {} },
             ...c2,
-            ...Z$1(m, l),
+            ...Q(m, l),
             children: s
           }
         );
       });
     }
-    const fr = ({ children: t2 }) => {
-      const e = React20.useContext(be), n = gt$3("viewportHeight"), o = gt$3("fixedItemHeight"), r2 = M("alignToBottom"), s = M("horizontalDirection"), i2 = React20.useMemo(
-        () => ne$1(n, (c2) => vt$1(c2, s ? "width" : "height")),
+    const mr = ({ children: t2 }) => {
+      const e = React20.useContext(Re$1), n = Rt("viewportHeight"), o = Rt("fixedItemHeight"), r2 = A("alignToBottom"), s = A("horizontalDirection"), i2 = React20.useMemo(
+        () => se(n, (c2) => zt(c2, s ? "width" : "height")),
         [n, s]
-      ), l = Ht(i2, true, M("skipAnimationFrameInResizeObserver"));
+      ), l = Vt$1(i2, true, A("skipAnimationFrameInResizeObserver"));
       return React20.useEffect(() => {
         e && (n(e.viewportHeight), o(e.itemHeight));
-      }, [e, n, o]), /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-viewport-type": "element", ref: l, style: Zt(r2), children: t2 });
-    }, mr = ({ children: t2 }) => {
-      const e = React20.useContext(be), n = gt$3("windowViewportRect"), o = gt$3("fixedItemHeight"), r2 = M("customScrollParent"), s = Ne(
+      }, [e, n, o]), /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-viewport-type": "element", ref: l, style: te(r2), children: t2 });
+    }, pr$1 = ({ children: t2 }) => {
+      const e = React20.useContext(Re$1), n = Rt("windowViewportRect"), o = Rt("fixedItemHeight"), r2 = A("customScrollParent"), s = Ne(
         n,
         r2,
-        M("skipAnimationFrameInResizeObserver")
-      ), i2 = M("alignToBottom");
+        A("skipAnimationFrameInResizeObserver")
+      ), i2 = A("alignToBottom");
       return React20.useEffect(() => {
         e && (o(e.itemHeight), n({ offsetTop: 0, visibleHeight: e.viewportHeight, visibleWidth: 100 }));
-      }, [e, n, o]), /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-viewport-type": "window", ref: s, style: Zt(i2), children: t2 });
-    }, pr$1 = ({ children: t2 }) => {
-      const e = M("TopItemListComponent") || "div", n = M("headerHeight"), o = { ...ur, marginTop: `${n}px` }, r2 = M("context");
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(e, { style: o, ...Z$1(e, r2), children: t2 });
-    }, hr$1 = /* @__PURE__ */ React20.memo(function(e) {
-      const n = M("useWindowScroll"), o = M("topItemsIndexes").length > 0, r2 = M("customScrollParent"), s = M("context");
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs(r2 || n ? Ir : gr, { ...e, context: s, children: [
-        o && /* @__PURE__ */ jsxRuntimeExports.jsx(pr$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Cn, { showTopList: true }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(r2 || n ? mr : fr, { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(ar, {}),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Cn, {}),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(dr, {})
+      }, [e, n, o]), /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-viewport-type": "window", ref: s, style: te(i2), children: t2 });
+    }, hr$1 = ({ children: t2 }) => {
+      const e = A("TopItemListComponent") || "div", n = A("headerHeight"), o = { ...ar, marginTop: `${n}px` }, r2 = A("context");
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(e, { style: o, ...Q(e, r2), children: t2 });
+    }, gr = /* @__PURE__ */ React20.memo(function(e) {
+      const n = A("useWindowScroll"), o = A("topItemsIndexes").length > 0, r2 = A("customScrollParent"), s = A("context");
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(r2 || n ? xr : Ir, { ...e, context: s, children: [
+        o && /* @__PURE__ */ jsxRuntimeExports.jsx(hr$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(wn, { showTopList: true }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(r2 || n ? pr$1 : mr, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(dr, {}),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(wn, {}),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(fr, {})
         ] })
       ] });
     }), {
-      Component: oo,
+      Component: ro,
       useEmitter: tn,
-      useEmitterValue: M,
-      usePublisher: gt$3
+      useEmitterValue: A,
+      usePublisher: Rt
     } = /* @__PURE__ */ Ye(
-      or$1,
+      rr,
       {
         required: {},
         optional: {
@@ -35047,6 +35410,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           groupContent: "groupContent",
           overscan: "overscan",
           increaseViewportBy: "increaseViewportBy",
+          minOverscanItemCount: "minOverscanItemCount",
           totalCount: "totalCount",
           groupCounts: "groupCounts",
           topItemCount: "topItemCount",
@@ -35057,7 +35421,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           atTopThreshold: "atTopThreshold",
           computeItemKey: "computeItemKey",
           defaultItemHeight: "defaultItemHeight",
+          fixedGroupHeight: "fixedGroupHeight",
+          // Must be set above 'fixedItemHeight'
           fixedItemHeight: "fixedItemHeight",
+          heightEstimates: "heightEstimates",
           itemSize: "itemSize",
           scrollSeekConfiguration: "scrollSeekConfiguration",
           headerFooterTag: "HeaderFooterTag",
@@ -35092,19 +35459,19 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           groupIndices: "groupIndices"
         }
       },
-      hr$1
-    ), gr = /* @__PURE__ */ Je({ useEmitter: tn, useEmitterValue: M, usePublisher: gt$3 }), Ir = /* @__PURE__ */ Qe({ useEmitter: tn, useEmitterValue: M, usePublisher: gt$3 }), qr = oo, Sr = /* @__PURE__ */ U(() => {
-      const t2 = w((a) => /* @__PURE__ */ jsxRuntimeExports.jsxs("td", { children: [
+      gr
+    ), Ir = /* @__PURE__ */ Je({ useEmitter: tn, useEmitterValue: A, usePublisher: Rt }), xr = /* @__PURE__ */ Qe({ useEmitter: tn, useEmitterValue: A, usePublisher: Rt }), Yr = ro, Sr = /* @__PURE__ */ K(() => {
+      const t2 = C$1((d) => /* @__PURE__ */ jsxRuntimeExports.jsxs("td", { children: [
         "Item $",
-        a
-      ] })), e = w(null), n = w((a) => /* @__PURE__ */ jsxRuntimeExports.jsxs("td", { colSpan: 1e3, children: [
+        d
+      ] })), e = C$1(null), n = C$1((d) => /* @__PURE__ */ jsxRuntimeExports.jsxs("td", { colSpan: 1e3, children: [
         "Group ",
-        a
-      ] })), o = w(null), r2 = w(null), s = w({}), i2 = w(Xe), l = w(Yt), c2 = (a, m = null) => ct(
-        S(
+        d
+      ] })), o = C$1(null), r2 = C$1(null), s = C$1({}), i2 = C$1(Xe), l = C$1(Qt), c2 = (d, m = null) => ht(
+        x$1(
           s,
-          E((x2) => x2[a]),
-          Y()
+          k((S) => S[d]),
+          J()
         ),
         m
       );
@@ -35129,12 +35496,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         GroupComponent: c2("Group", "tr")
       };
     });
-    /* @__PURE__ */ U(
+    /* @__PURE__ */ K(
       ([t2, e]) => ({ ...t2, ...e }),
-      X(Xn, Sr)
+      tt(Jn, Sr)
     );
     ({ position: Ze() });
-    const yn = {
+    const bn = {
       bottom: 0,
       itemHeight: 0,
       items: [],
@@ -35142,7 +35509,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       offsetBottom: 0,
       offsetTop: 0,
       top: 0
-    }, Br = {
+    }, kr = {
       bottom: 0,
       itemHeight: 0,
       items: [{ index: 0 }],
@@ -35150,273 +35517,273 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       offsetBottom: 0,
       offsetTop: 0,
       top: 0
-    }, { ceil: Rn, floor: Ce, max: ee$1, min: Oe, round: bn } = Math;
-    function Hn(t2, e, n) {
+    }, { ceil: Rn, floor: we, max: re, min: Oe, round: Hn } = Math;
+    function En(t2, e, n) {
       return Array.from({ length: e - t2 + 1 }).map((o, r2) => ({ data: n === null ? null : n[r2 + t2], index: r2 + t2 }));
     }
-    function kr(t2) {
+    function zr(t2) {
       return {
-        ...Br,
+        ...kr,
         items: t2
       };
     }
-    function he(t2, e) {
+    function xe(t2, e) {
       return t2 && t2.width === e.width && t2.height === e.height;
     }
-    function Fr(t2, e) {
+    function Or$1(t2, e) {
       return t2 && t2.column === e.column && t2.row === e.row;
     }
-    const Or$1 = /* @__PURE__ */ U(
+    const Fr = /* @__PURE__ */ K(
       ([
         { increaseViewportBy: t2, listBoundary: e, overscan: n, visibleRange: o },
-        { footerHeight: r2, headerHeight: s, scrollBy: i2, scrollContainerState: l, scrollTo: c2, scrollTop: a, smoothScrollTargetReached: m, viewportHeight: x2 },
+        { footerHeight: r2, headerHeight: s, scrollBy: i2, scrollContainerState: l, scrollTo: c2, scrollTop: d, smoothScrollTargetReached: m, viewportHeight: S },
         h,
-        I,
-        { didMount: C2, propsReady: v },
-        { customScrollParent: g, useWindowScroll: p, windowScrollContainerState: u, windowScrollTo: T, windowViewportRect: b },
-        f
+        T,
+        { didMount: w, propsReady: R },
+        { customScrollParent: g, useWindowScroll: f, windowScrollContainerState: a, windowScrollTo: I, windowViewportRect: b },
+        y
       ]) => {
-        const d = w(0), y = w(0), B = w(yn), k = w({ height: 0, width: 0 }), L = w({ height: 0, width: 0 }), z = $(), _ = $(), J = w(0), nt = w(null), F = w({ column: 0, row: 0 }), q = $(), it2 = $(), dt = w(false), St = w(0), ft = w(true), ut = w(false), At = w(false);
-        K(
-          S(
-            C2,
-            N(St),
-            A(([R, D]) => !!D)
+        const z = C$1(0), u = C$1(0), p = C$1(bn), v = C$1({ height: 0, width: 0 }), O = C$1({ height: 0, width: 0 }), B = U(), W = U(), _ = C$1(0), j = C$1(null), L = C$1({ column: 0, row: 0 }), xt = U(), M = U(), et2 = C$1(false), wt = C$1(0), ft = C$1(true), St = C$1(false), Mt = C$1(false);
+        Y(
+          x$1(
+            w,
+            $(wt),
+            P$1(([H, q]) => !!q)
           ),
           () => {
-            G(ft, false);
+            D(ft, false);
           }
-        ), K(
-          S(
-            rt(C2, ft, L, k, St, ut),
-            A(([R, D, Q, lt2, , tt]) => R && !D && Q.height !== 0 && lt2.height !== 0 && !tt)
+        ), Y(
+          x$1(
+            ut(w, ft, O, v, wt, St),
+            P$1(([H, q, at, gt2, , Tt]) => H && !q && at.height !== 0 && gt2.height !== 0 && !Tt)
           ),
-          ([, , , , R]) => {
-            G(ut, true), Ue(1, () => {
-              G(z, R);
-            }), Tt(S(a), () => {
-              G(e, [0, 0]), G(ft, true);
+          ([, , , , H]) => {
+            D(St, true), Ue(1, () => {
+              D(B, H);
+            }), Et(x$1(d), () => {
+              D(e, [0, 0]), D(ft, true);
             });
           }
-        ), O(
-          S(
-            it2,
-            A((R) => R != null && R.scrollTop > 0),
-            Rt(0)
+        ), F(
+          x$1(
+            M,
+            P$1((H) => H != null && H.scrollTop > 0),
+            Ft(0)
           ),
-          y
-        ), K(
-          S(
-            C2,
-            N(it2),
-            A(([, R]) => R != null)
+          u
+        ), Y(
+          x$1(
+            w,
+            $(M),
+            P$1(([, H]) => H != null)
           ),
-          ([, R]) => {
-            R && (G(k, R.viewport), G(L, R.item), G(F, R.gap), R.scrollTop > 0 && (G(dt, true), Tt(S(a, Dt(1)), (D) => {
-              G(dt, false);
-            }), G(c2, { top: R.scrollTop })));
+          ([, H]) => {
+            H && (D(v, H.viewport), D(O, H.item), D(L, H.gap), H.scrollTop > 0 && (D(et2, true), Et(x$1(d, Kt(1)), (q) => {
+              D(et2, false);
+            }), D(c2, { top: H.scrollTop })));
           }
-        ), O(
-          S(
-            k,
-            E(({ height: R }) => R)
+        ), F(
+          x$1(
+            v,
+            k(({ height: H }) => H)
           ),
-          x2
-        ), O(
-          S(
-            rt(
-              V(k, he),
-              V(L, he),
-              V(F, (R, D) => R && R.column === D.column && R.row === D.row),
-              V(a)
+          S
+        ), F(
+          x$1(
+            ut(
+              V(v, xe),
+              V(O, xe),
+              V(L, (H, q) => H && H.column === q.column && H.row === q.row),
+              V(d)
             ),
-            E(([R, D, Q, lt2]) => ({
-              gap: Q,
-              item: D,
-              scrollTop: lt2,
-              viewport: R
+            k(([H, q, at, gt2]) => ({
+              gap: at,
+              item: q,
+              scrollTop: gt2,
+              viewport: H
             }))
           ),
-          q
-        ), O(
-          S(
-            rt(
-              V(d),
+          xt
+        ), F(
+          x$1(
+            ut(
+              V(z),
               o,
-              V(F, Fr),
-              V(L, he),
-              V(k, he),
-              V(nt),
-              V(y),
-              V(dt),
+              V(L, Or$1),
+              V(O, xe),
+              V(v, xe),
+              V(j),
+              V(u),
+              V(et2),
               V(ft),
-              V(St)
+              V(wt)
             ),
-            A(([, , , , , , , R]) => !R),
-            E(
+            P$1(([, , , , , , , H]) => !H),
+            k(
               ([
-                R,
-                [D, Q],
-                lt2,
-                tt,
-                Ft,
-                Jt,
-                Ut,
+                H,
+                [q, at],
+                gt2,
+                Tt,
+                st,
+                it2,
+                mt,
                 ,
-                de,
-                Ot
+                lt2,
+                Z2
               ]) => {
-                const { column: Lt2, row: Qt } = lt2, { height: fe, width: He } = tt, { width: nn } = Ft;
-                if (Ut === 0 && (R === 0 || nn === 0))
-                  return yn;
+                const { column: nt, row: vt2 } = gt2, { height: ct, width: He } = Tt, { width: nn } = st;
+                if (mt === 0 && (H === 0 || nn === 0))
+                  return bn;
                 if (He === 0) {
-                  const cn = Ke(Ot, R), co = cn + Math.max(Ut - 1, 0);
-                  return kr(Hn(cn, co, Jt));
+                  const cn = Ke(Z2, H), uo = cn + Math.max(mt - 1, 0);
+                  return zr(En(cn, uo, it2));
                 }
-                const me = so(nn, He, Lt2);
-                let Kt, Wt;
-                de ? D === 0 && Q === 0 && Ut > 0 ? (Kt = 0, Wt = Ut - 1) : (Kt = me * Ce((D + Qt) / (fe + Qt)), Wt = me * Rn((Q + Qt) / (fe + Qt)) - 1, Wt = Oe(R - 1, ee$1(Wt, me - 1)), Kt = Oe(Wt, ee$1(0, Kt))) : (Kt = 0, Wt = -1);
-                const on = Hn(Kt, Wt, Jt), { bottom: rn, top: sn } = En(Ft, lt2, tt, on), ln = Rn(R / me), lo = ln * fe + (ln - 1) * Qt - rn;
-                return { bottom: rn, itemHeight: fe, items: on, itemWidth: He, offsetBottom: lo, offsetTop: sn, top: sn };
+                const ge2 = io(nn, He, nt);
+                let Yt, Nt;
+                lt2 ? q === 0 && at === 0 && mt > 0 ? (Yt = 0, Nt = mt - 1) : (Yt = ge2 * we((q + vt2) / (ct + vt2)), Nt = ge2 * Rn((at + vt2) / (ct + vt2)) - 1, Nt = Oe(H - 1, re(Nt, ge2 - 1)), Yt = Oe(Nt, re(0, Yt))) : (Yt = 0, Nt = -1);
+                const on = En(Yt, Nt, it2), { bottom: rn, top: sn } = Bn(st, gt2, Tt, on), ln = Rn(H / ge2), co = ln * ct + (ln - 1) * vt2 - rn;
+                return { bottom: rn, itemHeight: ct, items: on, itemWidth: He, offsetBottom: co, offsetTop: sn, top: sn };
               }
             )
           ),
-          B
-        ), O(
-          S(
-            nt,
-            A((R) => R !== null),
-            E((R) => R.length)
+          p
+        ), F(
+          x$1(
+            j,
+            P$1((H) => H !== null),
+            k((H) => H.length)
           ),
-          d
-        ), O(
-          S(
-            rt(k, L, B, F),
-            A(([R, D, { items: Q }]) => Q.length > 0 && D.height !== 0 && R.height !== 0),
-            E(([R, D, { items: Q }, lt2]) => {
-              const { bottom: tt, top: Ft } = En(R, lt2, D, Q);
-              return [Ft, tt];
+          z
+        ), F(
+          x$1(
+            ut(v, O, p, L),
+            P$1(([H, q, { items: at }]) => at.length > 0 && q.height !== 0 && H.height !== 0),
+            k(([H, q, { items: at }, gt2]) => {
+              const { bottom: Tt, top: st } = Bn(H, gt2, q, at);
+              return [st, Tt];
             }),
-            Y(se)
+            J(ce)
           ),
           e
         );
-        const xt = w(false);
-        O(
-          S(
-            a,
-            N(xt),
-            E(([R, D]) => D || R !== 0)
+        const pt = C$1(false);
+        F(
+          x$1(
+            d,
+            $(pt),
+            k(([H, q]) => q || H !== 0)
           ),
-          xt
+          pt
         );
-        const Xt = ht(
-          S(
-            rt(B, d),
-            A(([{ items: R }]) => R.length > 0),
-            N(xt),
-            A(([[R, D], Q]) => {
-              const tt = R.items[R.items.length - 1].index === D - 1;
-              return (Q || R.bottom > 0 && R.itemHeight > 0 && R.offsetBottom === 0 && R.items.length === D) && tt;
+        const qt = bt(
+          x$1(
+            ut(p, z),
+            P$1(([{ items: H }]) => H.length > 0),
+            $(pt),
+            P$1(([[H, q], at]) => {
+              const Tt = H.items[H.items.length - 1].index === q - 1;
+              return (at || H.bottom > 0 && H.itemHeight > 0 && H.offsetBottom === 0 && H.items.length === q) && Tt;
             }),
-            E(([[, R]]) => R - 1),
-            Y()
+            k(([[, H]]) => H - 1),
+            J()
           )
-        ), Mt = ht(
-          S(
-            V(B),
-            A(({ items: R }) => R.length > 0 && R[0].index === 0),
-            Rt(0),
-            Y()
+        ), ee2 = bt(
+          x$1(
+            V(p),
+            P$1(({ items: H }) => H.length > 0 && H[0].index === 0),
+            Ft(0),
+            J()
           )
-        ), yt = ht(
-          S(
-            V(B),
-            N(dt),
-            A(([{ items: R }, D]) => R.length > 0 && !D),
-            E(([{ items: R }]) => ({
-              endIndex: R[R.length - 1].index,
-              startIndex: R[0].index
+        ), Ot = bt(
+          x$1(
+            V(p),
+            $(et2),
+            P$1(([{ items: H }, q]) => H.length > 0 && !q),
+            k(([{ items: H }]) => ({
+              endIndex: H[H.length - 1].index,
+              startIndex: H[0].index
             })),
-            Y(Mn),
-            kt(0)
+            J(An),
+            Gt$1(0)
           )
         );
-        O(yt, I.scrollSeekRangeChanged), O(
-          S(
-            z,
-            N(k, L, d, F),
-            E(([R, D, Q, lt2, tt]) => {
-              const Ft = Dn(R), { align: Jt, behavior: Ut, offset: de } = Ft;
-              let Ot = Ft.index;
-              Ot === "LAST" && (Ot = lt2 - 1), Ot = ee$1(0, Ot, Oe(lt2 - 1, Ot));
-              let Lt2 = Me(D, tt, Q, Ot);
-              return Jt === "end" ? Lt2 = bn(Lt2 - D.height + Q.height) : Jt === "center" && (Lt2 = bn(Lt2 - D.height / 2 + Q.height / 2)), de && (Lt2 += de), { behavior: Ut, top: Lt2 };
+        F(Ot, T.scrollSeekRangeChanged), F(
+          x$1(
+            B,
+            $(v, O, z, L),
+            k(([H, q, at, gt2, Tt]) => {
+              const st = $n(H), { align: it2, behavior: mt, offset: lt2 } = st;
+              let Z2 = st.index;
+              Z2 === "LAST" && (Z2 = gt2 - 1), Z2 = re(0, Z2, Oe(gt2 - 1, Z2));
+              let nt = Me(q, Tt, at, Z2);
+              return it2 === "end" ? nt = Hn(nt - q.height + at.height) : it2 === "center" && (nt = Hn(nt - q.height / 2 + at.height / 2)), lt2 && (nt += lt2), { behavior: mt, top: nt };
             })
           ),
           c2
         );
-        const Bt = ct(
-          S(
-            B,
-            E((R) => R.offsetBottom + R.bottom)
+        const ne2 = ht(
+          x$1(
+            p,
+            k((H) => H.offsetBottom + H.bottom)
           ),
           0
         );
-        return O(
-          S(
+        return F(
+          x$1(
             b,
-            E((R) => ({ height: R.visibleHeight, width: R.visibleWidth }))
+            k((H) => ({ height: H.visibleHeight, width: H.visibleWidth }))
           ),
-          k
+          v
         ), {
           customScrollParent: g,
           // input
-          data: nt,
-          deviation: J,
+          data: j,
+          deviation: _,
           footerHeight: r2,
-          gap: F,
+          gap: L,
           headerHeight: s,
           increaseViewportBy: t2,
-          initialItemCount: y,
-          itemDimensions: L,
+          initialItemCount: u,
+          itemDimensions: O,
           overscan: n,
-          restoreStateFrom: it2,
+          restoreStateFrom: M,
           scrollBy: i2,
           scrollContainerState: l,
-          scrollHeight: _,
+          scrollHeight: W,
           scrollTo: c2,
-          scrollToIndex: z,
-          scrollTop: a,
+          scrollToIndex: B,
+          scrollTop: d,
           smoothScrollTargetReached: m,
-          totalCount: d,
-          useWindowScroll: p,
-          viewportDimensions: k,
-          windowScrollContainerState: u,
-          windowScrollTo: T,
+          totalCount: z,
+          useWindowScroll: f,
+          viewportDimensions: v,
+          windowScrollContainerState: a,
+          windowScrollTo: I,
           windowViewportRect: b,
-          ...I,
+          ...T,
           // output
-          gridState: B,
-          horizontalDirection: At,
-          initialTopMostItemIndex: St,
-          totalListHeight: Bt,
+          gridState: p,
+          horizontalDirection: Mt,
+          initialTopMostItemIndex: wt,
+          totalListHeight: ne2,
           ...h,
-          endReached: Xt,
-          propsReady: v,
-          rangeChanged: yt,
-          startReached: Mt,
-          stateChanged: q,
-          stateRestoreInProgress: dt,
-          ...f
+          endReached: qt,
+          propsReady: R,
+          rangeChanged: Ot,
+          startReached: ee2,
+          stateChanged: xt,
+          stateRestoreInProgress: et2,
+          ...y
         };
       },
-      X(je, at, ae, Yn, Pt, qe, Vt$1)
+      tt(je, It, he, Zn, _t, qe, Wt)
     );
-    function so(t2, e, n) {
-      return ee$1(1, Ce((t2 + n) / (Ce(e) + n)));
+    function io(t2, e, n) {
+      return re(1, we((t2 + n) / (we(e) + n)));
     }
-    function En(t2, e, n, o) {
+    function Bn(t2, e, n, o) {
       const { height: r2 } = n;
       if (r2 === void 0 || o.length === 0)
         return { bottom: 0, top: 0 };
@@ -35424,19 +35791,19 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return { bottom: Me(t2, e, n, o[o.length - 1].index) + r2, top: s };
     }
     function Me(t2, e, n, o) {
-      const r2 = so(t2.width, n.width, e.column), s = Ce(o / r2), i2 = s * n.height + ee$1(0, s - 1) * e.row;
+      const r2 = io(t2.width, n.width, e.column), s = we(o / r2), i2 = s * n.height + re(0, s - 1) * e.row;
       return i2 > 0 ? i2 + e.row : i2;
     }
-    const Lr = /* @__PURE__ */ U(() => {
-      const t2 = w((x2) => `Item ${x2}`), e = w({}), n = w(null), o = w("virtuoso-grid-item"), r2 = w("virtuoso-grid-list"), s = w(Xe), i2 = w("div"), l = w(Yt), c2 = (x2, h = null) => ct(
-        S(
+    const Lr = /* @__PURE__ */ K(() => {
+      const t2 = C$1((S) => `Item ${S}`), e = C$1({}), n = C$1(null), o = C$1("virtuoso-grid-item"), r2 = C$1("virtuoso-grid-list"), s = C$1(Xe), i2 = C$1("div"), l = C$1(Qt), c2 = (S, h = null) => ht(
+        x$1(
           e,
-          E((I) => I[x2]),
-          Y()
+          k((T) => T[S]),
+          J()
         ),
         h
-      ), a = w(false), m = w(false);
-      return O(V(m), a), {
+      ), d = C$1(false), m = C$1(false);
+      return F(V(m), d), {
         components: e,
         computeItemKey: s,
         context: n,
@@ -35448,96 +35815,96 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         itemContent: t2,
         listClassName: r2,
         ListComponent: c2("List", "div"),
-        readyStateChanged: a,
+        readyStateChanged: d,
         reportReadyState: m,
         ScrollerComponent: c2("Scroller", "div"),
         scrollerRef: l,
         ScrollSeekPlaceholder: c2("ScrollSeekPlaceholder", "div")
       };
-    }), zr = /* @__PURE__ */ U(
+    }), Vr = /* @__PURE__ */ K(
       ([t2, e]) => ({ ...t2, ...e }),
-      X(Or$1, Lr)
-    ), Vr = /* @__PURE__ */ React20.memo(function() {
-      const e = et$1("gridState"), n = et$1("listClassName"), o = et$1("itemClassName"), r2 = et$1("itemContent"), s = et$1("computeItemKey"), i2 = et$1("isSeeking"), l = It("scrollHeight"), c2 = et$1("ItemComponent"), a = et$1("ListComponent"), m = et$1("ScrollSeekPlaceholder"), x2 = et$1("context"), h = It("itemDimensions"), I = It("gap"), C2 = et$1("log"), v = et$1("stateRestoreInProgress"), g = It("reportReadyState"), p = Ht(
+      tt(Fr, Lr)
+    ), Pr$1 = /* @__PURE__ */ React20.memo(function() {
+      const e = ot("gridState"), n = ot("listClassName"), o = ot("itemClassName"), r2 = ot("itemContent"), s = ot("computeItemKey"), i2 = ot("isSeeking"), l = Ht("scrollHeight"), c2 = ot("ItemComponent"), d = ot("ListComponent"), m = ot("ScrollSeekPlaceholder"), S = ot("context"), h = Ht("itemDimensions"), T = Ht("gap"), w = ot("log"), R = ot("stateRestoreInProgress"), g = Ht("reportReadyState"), f = Vt$1(
         React20.useMemo(
-          () => (u) => {
-            const T = u.parentElement.parentElement.scrollHeight;
-            l(T);
-            const b = u.firstChild;
+          () => (a) => {
+            const I = a.parentElement.parentElement.scrollHeight;
+            l(I);
+            const b = a.firstChild;
             if (b) {
-              const { height: f, width: d } = b.getBoundingClientRect();
-              h({ height: f, width: d });
+              const { height: y, width: z } = b.getBoundingClientRect();
+              h({ height: y, width: z });
             }
-            I({
-              column: Bn("column-gap", getComputedStyle(u).columnGap, C2),
-              row: Bn("row-gap", getComputedStyle(u).rowGap, C2)
+            T({
+              column: kn("column-gap", getComputedStyle(a).columnGap, w),
+              row: kn("row-gap", getComputedStyle(a).rowGap, w)
             });
           },
-          [l, h, I, C2]
+          [l, h, T, w]
         ),
         true,
         false
       );
-      return Qn(() => {
+      return to(() => {
         e.itemHeight > 0 && e.itemWidth > 0 && g(true);
-      }, [e]), v ? null : /* @__PURE__ */ jsxRuntimeExports.jsx(
-        a,
+      }, [e]), R ? null : /* @__PURE__ */ jsxRuntimeExports.jsx(
+        d,
         {
           className: n,
-          ref: p,
-          ...Z$1(a, x2),
+          ref: f,
+          ...Q(d, S),
           "data-testid": "virtuoso-item-list",
           style: { paddingBottom: e.offsetBottom, paddingTop: e.offsetTop },
-          children: e.items.map((u) => {
-            const T = s(u.index, u.data, x2);
+          children: e.items.map((a) => {
+            const I = s(a.index, a.data, S);
             return i2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
               m,
               {
-                ...Z$1(m, x2),
+                ...Q(m, S),
                 height: e.itemHeight,
-                index: u.index,
+                index: a.index,
                 width: e.itemWidth
               },
-              T
+              I
             ) : /* @__PURE__ */ reactExports.createElement(
               c2,
               {
-                ...Z$1(c2, x2),
+                ...Q(c2, S),
                 className: o,
-                "data-index": u.index,
-                key: T
+                "data-index": a.index,
+                key: I
               },
-              r2(u.index, u.data, x2)
+              r2(a.index, a.data, S)
             );
           })
         }
       );
-    }), Pr$1 = React20.memo(function() {
-      const e = et$1("HeaderComponent"), n = It("headerHeight"), o = et$1("headerFooterTag"), r2 = Ht(
+    }), Gr = React20.memo(function() {
+      const e = ot("HeaderComponent"), n = Ht("headerHeight"), o = ot("headerFooterTag"), r2 = Vt$1(
         React20.useMemo(
           () => (i2) => {
-            n(vt$1(i2, "height"));
+            n(zt(i2, "height"));
           },
           [n]
         ),
         true,
         false
-      ), s = et$1("context");
-      return e ? /* @__PURE__ */ jsxRuntimeExports.jsx(o, { ref: r2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(e, { ...Z$1(e, s) }) }) : null;
-    }), Ar = React20.memo(function() {
-      const e = et$1("FooterComponent"), n = It("footerHeight"), o = et$1("headerFooterTag"), r2 = Ht(
+      ), s = ot("context");
+      return e ? /* @__PURE__ */ jsxRuntimeExports.jsx(o, { ref: r2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(e, { ...Q(e, s) }) }) : null;
+    }), Mr = React20.memo(function() {
+      const e = ot("FooterComponent"), n = Ht("footerHeight"), o = ot("headerFooterTag"), r2 = Vt$1(
         React20.useMemo(
           () => (i2) => {
-            n(vt$1(i2, "height"));
+            n(zt(i2, "height"));
           },
           [n]
         ),
         true,
         false
-      ), s = et$1("context");
-      return e ? /* @__PURE__ */ jsxRuntimeExports.jsx(o, { ref: r2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(e, { ...Z$1(e, s) }) }) : null;
-    }), Mr = ({ children: t2 }) => {
-      const e = React20.useContext(Jn), n = It("itemDimensions"), o = It("viewportDimensions"), r2 = Ht(
+      ), s = ot("context");
+      return e ? /* @__PURE__ */ jsxRuntimeExports.jsx(o, { ref: r2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(e, { ...Q(e, s) }) }) : null;
+    }), Ar = ({ children: t2 }) => {
+      const e = React20.useContext(Qn), n = Ht("itemDimensions"), o = Ht("viewportDimensions"), r2 = Vt$1(
         React20.useMemo(
           () => (s) => {
             o(s.getBoundingClientRect());
@@ -35549,25 +35916,25 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       );
       return React20.useEffect(() => {
         e && (o({ height: e.viewportHeight, width: e.viewportWidth }), n({ height: e.itemHeight, width: e.itemWidth }));
-      }, [e, o, n]), /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: r2, style: Zt(false), children: t2 });
+      }, [e, o, n]), /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: r2, style: te(false), children: t2 });
     }, Wr = ({ children: t2 }) => {
-      const e = React20.useContext(Jn), n = It("windowViewportRect"), o = It("itemDimensions"), r2 = et$1("customScrollParent"), s = Ne(n, r2, false);
+      const e = React20.useContext(Qn), n = Ht("windowViewportRect"), o = Ht("itemDimensions"), r2 = ot("customScrollParent"), s = Ne(n, r2, false);
       return React20.useEffect(() => {
         e && (o({ height: e.itemHeight, width: e.itemWidth }), n({ offsetTop: 0, visibleHeight: e.viewportHeight, visibleWidth: e.viewportWidth }));
-      }, [e, n, o]), /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: s, style: Zt(false), children: t2 });
-    }, Gr = /* @__PURE__ */ React20.memo(function({ ...e }) {
-      const n = et$1("useWindowScroll"), o = et$1("customScrollParent"), r2 = o || n ? Dr : Nr, s = o || n ? Wr : Mr, i2 = et$1("context");
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(r2, { ...e, ...Z$1(r2, i2), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(s, { children: [
+      }, [e, n, o]), /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: s, style: te(false), children: t2 });
+    }, _r = /* @__PURE__ */ React20.memo(function({ ...e }) {
+      const n = ot("useWindowScroll"), o = ot("customScrollParent"), r2 = o || n ? $r : Dr, s = o || n ? Wr : Ar, i2 = ot("context");
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(r2, { ...e, ...Q(r2, i2), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(s, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Gr, {}),
         /* @__PURE__ */ jsxRuntimeExports.jsx(Pr$1, {}),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Vr, {}),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Ar, {})
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Mr, {})
       ] }) });
     }), {
-      useEmitter: io,
-      useEmitterValue: et$1,
-      usePublisher: It
+      useEmitter: lo,
+      useEmitterValue: ot,
+      usePublisher: Ht
     } = /* @__PURE__ */ Ye(
-      zr,
+      Vr,
       {
         optional: {
           context: "context",
@@ -35606,10 +35973,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           readyStateChanged: "readyStateChanged"
         }
       },
-      Gr
-    ), Nr = /* @__PURE__ */ Je({ useEmitter: io, useEmitterValue: et$1, usePublisher: It }), Dr = /* @__PURE__ */ Qe({ useEmitter: io, useEmitterValue: et$1, usePublisher: It });
-    function Bn(t2, e, n) {
-      return e !== "normal" && !(e != null && e.endsWith("px")) && n(`${t2} was not resolved to pixel value correctly`, e, mt.WARN), e === "normal" ? 0 : parseInt(e != null ? e : "0", 10);
+      _r
+    ), Dr = /* @__PURE__ */ Je({ useEmitter: lo, useEmitterValue: ot, usePublisher: Ht }), $r = /* @__PURE__ */ Qe({ useEmitter: lo, useEmitterValue: ot, usePublisher: Ht });
+    function kn(t2, e, n) {
+      return e !== "normal" && !(e != null && e.endsWith("px")) && n(`${t2} was not resolved to pixel value correctly`, e, Ct.WARN), e === "normal" ? 0 : parseInt(e != null ? e : "0", 10);
     }
     const log$2 = createLogger("scrolling");
     function useStatefulScrollPosition(elementRef, elementKey, delay = 1e3, scrollable2 = true) {
@@ -36140,7 +36507,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         );
       }
       return /* @__PURE__ */ jsxRuntimeExports.jsx(
-        qr,
+        Yr,
         {
           ref: listHandle,
           customScrollParent: scrollRef?.current ? scrollRef.current : void 0,
@@ -36661,7 +37028,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         });
       }
       terminate() {
-        this.workers.forEach((w2) => w2.terminate());
+        this.workers.forEach((w) => w.terminate());
         this.workers = [];
         if (this.blobURL) {
           URL.revokeObjectURL(this.blobURL);
@@ -37042,11 +37409,11 @@ self.onmessage = function (e) {
             }
             if (!part2.match(hostnamePartPattern)) {
               let newpart = "";
-              for (let j2 = 0, k = part2.length; j2 < k; j2++) {
-                if (part2.charCodeAt(j2) > 127) {
+              for (let j = 0, k2 = part2.length; j < k2; j++) {
+                if (part2.charCodeAt(j) > 127) {
                   newpart += "x";
                 } else {
-                  newpart += part2[j2];
+                  newpart += part2[j];
                 }
               }
               if (!newpart.match(hostnamePartPattern)) {
@@ -37531,13 +37898,13 @@ self.onmessage = function (e) {
         const value2 = char - jumpOffset;
         return value2 < 0 || value2 >= branchCount ? -1 : decodeTree[nodeIdx + value2] - 1;
       }
-      let lo = nodeIdx;
-      let hi = lo + branchCount - 1;
-      while (lo <= hi) {
-        const mid2 = lo + hi >>> 1;
+      let lo2 = nodeIdx;
+      let hi = lo2 + branchCount - 1;
+      while (lo2 <= hi) {
+        const mid2 = lo2 + hi >>> 1;
         const midVal = decodeTree[mid2];
         if (midVal < char) {
-          lo = mid2 + 1;
+          lo2 = mid2 + 1;
         } else if (midVal > char) {
           hi = mid2 - 1;
         } else {
@@ -38344,11 +38711,11 @@ self.onmessage = function (e) {
       if (!state.md.options.linkify) {
         return;
       }
-      for (let j2 = 0, l = blockTokens.length; j2 < l; j2++) {
-        if (blockTokens[j2].type !== "inline" || !state.md.linkify.pretest(blockTokens[j2].content)) {
+      for (let j = 0, l = blockTokens.length; j < l; j++) {
+        if (blockTokens[j].type !== "inline" || !state.md.linkify.pretest(blockTokens[j].content)) {
           continue;
         }
-        let tokens = blockTokens[j2].children;
+        let tokens = blockTokens[j].children;
         let htmlLinkLevel = 0;
         for (let i2 = tokens.length - 1; i2 >= 0; i2--) {
           const currentToken = tokens[i2];
@@ -38423,7 +38790,7 @@ self.onmessage = function (e) {
               token2.level = level;
               nodes.push(token2);
             }
-            blockTokens[j2].children = tokens = arrayReplaceAt(tokens, i2, nodes);
+            blockTokens[j].children = tokens = arrayReplaceAt(tokens, i2, nodes);
           }
         }
       }
@@ -38495,17 +38862,17 @@ self.onmessage = function (e) {
       return str2.slice(0, index) + ch3 + str2.slice(index + 1);
     }
     function process_inlines(tokens, state) {
-      let j2;
+      let j;
       const stack2 = [];
       for (let i2 = 0; i2 < tokens.length; i2++) {
         const token2 = tokens[i2];
         const thisLevel = tokens[i2].level;
-        for (j2 = stack2.length - 1; j2 >= 0; j2--) {
-          if (stack2[j2].level <= thisLevel) {
+        for (j = stack2.length - 1; j >= 0; j--) {
+          if (stack2[j].level <= thisLevel) {
             break;
           }
         }
-        stack2.length = j2 + 1;
+        stack2.length = j + 1;
         if (token2.type !== "text") {
           continue;
         }
@@ -38527,10 +38894,10 @@ self.onmessage = function (e) {
             if (t2.index - 1 >= 0) {
               lastChar = text2.charCodeAt(t2.index - 1);
             } else {
-              for (j2 = i2 - 1; j2 >= 0; j2--) {
-                if (tokens[j2].type === "softbreak" || tokens[j2].type === "hardbreak") break;
-                if (!tokens[j2].content) continue;
-                lastChar = tokens[j2].content.charCodeAt(tokens[j2].content.length - 1);
+              for (j = i2 - 1; j >= 0; j--) {
+                if (tokens[j].type === "softbreak" || tokens[j].type === "hardbreak") break;
+                if (!tokens[j].content) continue;
+                lastChar = tokens[j].content.charCodeAt(tokens[j].content.length - 1);
                 break;
               }
             }
@@ -38538,10 +38905,10 @@ self.onmessage = function (e) {
             if (pos2 < max2) {
               nextChar = text2.charCodeAt(pos2);
             } else {
-              for (j2 = i2 + 1; j2 < tokens.length; j2++) {
-                if (tokens[j2].type === "softbreak" || tokens[j2].type === "hardbreak") break;
-                if (!tokens[j2].content) continue;
-                nextChar = tokens[j2].content.charCodeAt(0);
+              for (j = i2 + 1; j < tokens.length; j++) {
+                if (tokens[j].type === "softbreak" || tokens[j].type === "hardbreak") break;
+                if (!tokens[j].content) continue;
+                nextChar = tokens[j].content.charCodeAt(0);
                 break;
               }
             }
@@ -38579,13 +38946,13 @@ self.onmessage = function (e) {
               continue;
             }
             if (canClose) {
-              for (j2 = stack2.length - 1; j2 >= 0; j2--) {
-                let item2 = stack2[j2];
-                if (stack2[j2].level < thisLevel) {
+              for (j = stack2.length - 1; j >= 0; j--) {
+                let item2 = stack2[j];
+                if (stack2[j].level < thisLevel) {
                   break;
                 }
-                if (item2.single === isSingle && stack2[j2].level === thisLevel) {
-                  item2 = stack2[j2];
+                if (item2.single === isSingle && stack2[j].level === thisLevel) {
+                  item2 = stack2[j];
                   let openQuote;
                   let closeQuote;
                   if (isSingle) {
@@ -38607,7 +38974,7 @@ self.onmessage = function (e) {
                   }
                   text2 = token2.content;
                   max2 = text2.length;
-                  stack2.length = j2;
+                  stack2.length = j;
                   continue OUTER;
                 }
               }
@@ -38640,9 +39007,9 @@ self.onmessage = function (e) {
       let curr, last;
       const blockTokens = state.tokens;
       const l = blockTokens.length;
-      for (let j2 = 0; j2 < l; j2++) {
-        if (blockTokens[j2].type !== "inline") continue;
-        const tokens = blockTokens[j2].children;
+      for (let j = 0; j < l; j++) {
+        if (blockTokens[j].type !== "inline") continue;
+        const tokens = blockTokens[j].children;
         const max2 = tokens.length;
         for (curr = 0; curr < max2; curr++) {
           if (tokens[curr].type === "text_special") {
@@ -40348,14 +40715,14 @@ self.onmessage = function (e) {
       }
       while (loneMarkers.length) {
         const i2 = loneMarkers.pop();
-        let j2 = i2 + 1;
-        while (j2 < state.tokens.length && state.tokens[j2].type === "s_close") {
-          j2++;
+        let j = i2 + 1;
+        while (j < state.tokens.length && state.tokens[j].type === "s_close") {
+          j++;
         }
-        j2--;
-        if (i2 !== j2) {
-          token2 = state.tokens[j2];
-          state.tokens[j2] = state.tokens[i2];
+        j--;
+        if (i2 !== j) {
+          token2 = state.tokens[j];
+          state.tokens[j] = state.tokens[i2];
           state.tokens[i2] = token2;
         }
       }
@@ -41071,8 +41438,8 @@ self.onmessage = function (e) {
       fuzzyIP: false
     };
     function isOptionsObj(obj) {
-      return Object.keys(obj || {}).reduce(function(acc, k) {
-        return acc || defaultOptions.hasOwnProperty(k);
+      return Object.keys(obj || {}).reduce(function(acc, k2) {
+        return acc || defaultOptions.hasOwnProperty(k2);
       }, false);
     }
     const defaultSchemas = {
@@ -41276,7 +41643,7 @@ self.onmessage = function (e) {
       if (!text2.length) {
         return false;
       }
-      let m, ml, me, len, shift2, next, re2, tld_pos, at_pos;
+      let m, ml, me2, len, shift2, next, re2, tld_pos, at_pos;
       if (this.re.schema_test.test(text2)) {
         re2 = this.re.schema_search;
         re2.lastIndex = 0;
@@ -41308,9 +41675,9 @@ self.onmessage = function (e) {
       if (this.__opts__.fuzzyEmail && this.__compiled__["mailto:"]) {
         at_pos = text2.indexOf("@");
         if (at_pos >= 0) {
-          if ((me = text2.match(this.re.email_fuzzy)) !== null) {
-            shift2 = me.index + me[1].length;
-            next = me.index + me[0].length;
+          if ((me2 = text2.match(this.re.email_fuzzy)) !== null) {
+            shift2 = me2.index + me2[1].length;
+            next = me2.index + me2[0].length;
             if (this.__index__ < 0 || shift2 < this.__index__ || shift2 === this.__index__ && next > this.__last_index__) {
               this.__schema__ = "mailto:";
               this.__index__ = shift2;
@@ -41465,13 +41832,13 @@ self.onmessage = function (e) {
       return digit + 22 + 75 * (digit < 26) - ((flag != 0) << 5);
     };
     const adapt = function(delta2, numPoints, firstTime) {
-      let k = 0;
+      let k2 = 0;
       delta2 = firstTime ? floor(delta2 / damp) : delta2 >> 1;
       delta2 += floor(delta2 / numPoints);
-      for (; delta2 > baseMinusTMin * tMax >> 1; k += base$1) {
+      for (; delta2 > baseMinusTMin * tMax >> 1; k2 += base$1) {
         delta2 = floor(delta2 / baseMinusTMin);
       }
-      return floor(k + (baseMinusTMin + 1) * delta2 / (delta2 + skew));
+      return floor(k2 + (baseMinusTMin + 1) * delta2 / (delta2 + skew));
     };
     const decode$1 = function(input2) {
       const output2 = [];
@@ -41483,15 +41850,15 @@ self.onmessage = function (e) {
       if (basic < 0) {
         basic = 0;
       }
-      for (let j2 = 0; j2 < basic; ++j2) {
-        if (input2.charCodeAt(j2) >= 128) {
+      for (let j = 0; j < basic; ++j) {
+        if (input2.charCodeAt(j) >= 128) {
           error$3("not-basic");
         }
-        output2.push(input2.charCodeAt(j2));
+        output2.push(input2.charCodeAt(j));
       }
       for (let index = basic > 0 ? basic + 1 : 0; index < inputLength; ) {
         const oldi = i2;
-        for (let w2 = 1, k = base$1; ; k += base$1) {
+        for (let w = 1, k2 = base$1; ; k2 += base$1) {
           if (index >= inputLength) {
             error$3("invalid-input");
           }
@@ -41499,19 +41866,19 @@ self.onmessage = function (e) {
           if (digit >= base$1) {
             error$3("invalid-input");
           }
-          if (digit > floor((maxInt - i2) / w2)) {
+          if (digit > floor((maxInt - i2) / w)) {
             error$3("overflow");
           }
-          i2 += digit * w2;
-          const t2 = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias;
+          i2 += digit * w;
+          const t2 = k2 <= bias ? tMin : k2 >= bias + tMax ? tMax : k2 - bias;
           if (digit < t2) {
             break;
           }
           const baseMinusT = base$1 - t2;
-          if (w2 > floor(maxInt / baseMinusT)) {
+          if (w > floor(maxInt / baseMinusT)) {
             error$3("overflow");
           }
-          w2 *= baseMinusT;
+          w *= baseMinusT;
         }
         const out = output2.length + 1;
         bias = adapt(i2 - oldi, out, oldi == 0);
@@ -41560,8 +41927,8 @@ self.onmessage = function (e) {
           }
           if (currentValue === n) {
             let q = delta2;
-            for (let k = base$1; ; k += base$1) {
-              const t2 = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias;
+            for (let k2 = base$1; ; k2 += base$1) {
+              const t2 = k2 <= bias ? tMin : k2 >= bias + tMax ? tMax : k2 - bias;
               if (q < t2) {
                 break;
               }
@@ -47211,9 +47578,9 @@ self.onmessage = function (e) {
           if (fence2 === "{" || fence2 === "}") {
             fence2 = "\\" + fence2;
           }
-          var D = "{\\bigg" + side + " " + fence2 + "}";
+          var D2 = "{\\bigg" + side + " " + fence2 + "}";
           var T = "{\\big" + side + " " + fence2 + "}";
-          return new TexParser_js_1.default("\\mathchoice" + D + T + T + T, {}, configuration).mml();
+          return new TexParser_js_1.default("\\mathchoice" + D2 + T + T + T, {}, configuration).mml();
         }
         ParseUtil2.mathPalette = mathPalette;
         function fixInitialMO(configuration, nodes) {
@@ -47235,32 +47602,32 @@ self.onmessage = function (e) {
           }
           var mathvariant = font || parser2.stack.env.font;
           var def = mathvariant ? { mathvariant } : {};
-          var mml = [], i2 = 0, k = 0, c2, node2, match = "", braces = 0;
+          var mml = [], i2 = 0, k2 = 0, c2, node2, match = "", braces = 0;
           if (text2.match(/\\?[${}\\]|\\\(|\\(eq)?ref\s*\{/)) {
             while (i2 < text2.length) {
               c2 = text2.charAt(i2++);
               if (c2 === "$") {
                 if (match === "$" && braces === 0) {
-                  node2 = parser2.create("node", "TeXAtom", [new TexParser_js_1.default(text2.slice(k, i2 - 1), {}, parser2.configuration).mml()]);
+                  node2 = parser2.create("node", "TeXAtom", [new TexParser_js_1.default(text2.slice(k2, i2 - 1), {}, parser2.configuration).mml()]);
                   mml.push(node2);
                   match = "";
-                  k = i2;
+                  k2 = i2;
                 } else if (match === "") {
-                  if (k < i2 - 1) {
-                    mml.push(internalText(parser2, text2.slice(k, i2 - 1), def));
+                  if (k2 < i2 - 1) {
+                    mml.push(internalText(parser2, text2.slice(k2, i2 - 1), def));
                   }
                   match = "$";
-                  k = i2;
+                  k2 = i2;
                 }
               } else if (c2 === "{" && match !== "") {
                 braces++;
               } else if (c2 === "}") {
                 if (match === "}" && braces === 0) {
-                  var atom = new TexParser_js_1.default(text2.slice(k, i2), {}, parser2.configuration).mml();
+                  var atom = new TexParser_js_1.default(text2.slice(k2, i2), {}, parser2.configuration).mml();
                   node2 = parser2.create("node", "TeXAtom", [atom], def);
                   mml.push(node2);
                   match = "";
-                  k = i2;
+                  k2 = i2;
                 } else if (match !== "") {
                   if (braces) {
                     braces--;
@@ -47269,25 +47636,25 @@ self.onmessage = function (e) {
               } else if (c2 === "\\") {
                 if (match === "" && text2.substr(i2).match(/^(eq)?ref\s*\{/)) {
                   var len = RegExp["$&"].length;
-                  if (k < i2 - 1) {
-                    mml.push(internalText(parser2, text2.slice(k, i2 - 1), def));
+                  if (k2 < i2 - 1) {
+                    mml.push(internalText(parser2, text2.slice(k2, i2 - 1), def));
                   }
                   match = "}";
-                  k = i2 - 1;
+                  k2 = i2 - 1;
                   i2 += len;
                 } else {
                   c2 = text2.charAt(i2++);
                   if (c2 === "(" && match === "") {
-                    if (k < i2 - 2) {
-                      mml.push(internalText(parser2, text2.slice(k, i2 - 2), def));
+                    if (k2 < i2 - 2) {
+                      mml.push(internalText(parser2, text2.slice(k2, i2 - 2), def));
                     }
                     match = ")";
-                    k = i2;
+                    k2 = i2;
                   } else if (c2 === ")" && match === ")" && braces === 0) {
-                    node2 = parser2.create("node", "TeXAtom", [new TexParser_js_1.default(text2.slice(k, i2 - 2), {}, parser2.configuration).mml()]);
+                    node2 = parser2.create("node", "TeXAtom", [new TexParser_js_1.default(text2.slice(k2, i2 - 2), {}, parser2.configuration).mml()]);
                     mml.push(node2);
                     match = "";
-                    k = i2;
+                    k2 = i2;
                   } else if (c2.match(/[${}\\]/) && match === "") {
                     i2--;
                     text2 = text2.substr(0, i2 - 1) + text2.substr(i2);
@@ -47299,8 +47666,8 @@ self.onmessage = function (e) {
               throw new TexError_js_1.default("MathNotTerminated", "Math not terminated in text box");
             }
           }
-          if (k < text2.length) {
-            mml.push(internalText(parser2, text2.slice(k), def));
+          if (k2 < text2.length) {
+            mml.push(internalText(parser2, text2.slice(k2), def));
           }
           if (level != null) {
             mml = [parser2.create("node", "mstyle", mml, { displaystyle: false, scriptlevel: level })];
@@ -47929,7 +48296,7 @@ self.onmessage = function (e) {
               this.i++;
               return "\\" + this.GetCS();
             case "{":
-              var j2 = ++this.i, parens = 1;
+              var j = ++this.i, parens = 1;
               while (this.i < this.string.length) {
                 switch (this.string.charAt(this.i++)) {
                   case "\\":
@@ -47940,7 +48307,7 @@ self.onmessage = function (e) {
                     break;
                   case "}":
                     if (--parens === 0) {
-                      return this.string.slice(j2, this.i - 1);
+                      return this.string.slice(j, this.i - 1);
                     }
                     break;
                 }
@@ -47955,7 +48322,7 @@ self.onmessage = function (e) {
           if (this.GetNext() !== "[") {
             return def;
           }
-          var j2 = ++this.i, parens = 0;
+          var j = ++this.i, parens = 0;
           while (this.i < this.string.length) {
             switch (this.string.charAt(this.i++)) {
               case "{":
@@ -47971,7 +48338,7 @@ self.onmessage = function (e) {
                 break;
               case "]":
                 if (parens === 0) {
-                  return this.string.slice(j2, this.i - 1);
+                  return this.string.slice(j, this.i - 1);
                 }
                 break;
             }
@@ -48015,10 +48382,10 @@ self.onmessage = function (e) {
           while (this.nextIsSpace()) {
             this.i++;
           }
-          var j2 = this.i;
+          var j = this.i;
           var parens = 0;
           while (this.i < this.string.length) {
-            var k = this.i;
+            var k2 = this.i;
             var c2 = this.GetNext();
             this.i += c2.length;
             switch (c2) {
@@ -48036,7 +48403,7 @@ self.onmessage = function (e) {
                 break;
             }
             if (parens === 0 && c2 === token2) {
-              return this.string.slice(j2, k);
+              return this.string.slice(j, k2);
             }
           }
           throw new TexError_js_1.default("TokenNotFoundForCommand", "Could not find %1 for %2", token2, this.currentCS);
@@ -48978,12 +49345,12 @@ self.onmessage = function (e) {
               this.autoTag();
               return this.makeTag();
             }
-            var ct2 = this.currentTag;
-            if (ct2.taggable && !ct2.noTag) {
-              if (ct2.defaultTags) {
+            var ct = this.currentTag;
+            if (ct.taggable && !ct.noTag) {
+              if (ct.defaultTags) {
                 this.autoTag();
               }
-              if (ct2.tag) {
+              if (ct.tag) {
                 return this.makeTag();
               }
             }
@@ -49472,7 +49839,7 @@ self.onmessage = function (e) {
               config2 = {};
             }
             var priority = config2.priority || PrioritizedList_js_1.PrioritizedList.DEFAULTPRIORITY;
-            var init = config2.init ? this.makeProcessor(config2.init, priority) : null;
+            var init2 = config2.init ? this.makeProcessor(config2.init, priority) : null;
             var conf = config2.config ? this.makeProcessor(config2.config, priority) : null;
             var preprocessors = (config2.preprocessors || []).map(function(pre2) {
               return _this.makeProcessor(pre2, priority);
@@ -49481,7 +49848,7 @@ self.onmessage = function (e) {
               return _this.makeProcessor(post, priority);
             });
             var parser2 = config2.parser || "tex";
-            return new Configuration3(name2, config2.handler || {}, config2.fallback || {}, config2.items || {}, config2.tags || {}, config2.options || {}, config2.nodes || {}, preprocessors, postprocessors, init, conf, priority, parser2);
+            return new Configuration3(name2, config2.handler || {}, config2.fallback || {}, config2.items || {}, config2.tags || {}, config2.options || {}, config2.nodes || {}, preprocessors, postprocessors, init2, conf, priority, parser2);
           };
           Configuration3.create = function(name2, config2) {
             if (config2 === void 0) {
@@ -51232,16 +51599,16 @@ self.onmessage = function (e) {
           return m.toFixed(3).replace(/\.?0+$/, "") + "em";
         }
         exports2.emRounded = emRounded;
-        function px(m, M2, em2) {
-          if (M2 === void 0) {
-            M2 = -exports2.BIGDIMEN;
+        function px(m, M, em2) {
+          if (M === void 0) {
+            M = -exports2.BIGDIMEN;
           }
           if (em2 === void 0) {
             em2 = 16;
           }
           m *= em2;
-          if (M2 && m < M2)
-            m = M2;
+          if (M && m < M)
+            m = M;
           if (Math.abs(m) < 0.1)
             return "0";
           return m.toFixed(1).replace(/\.0$/, "") + "px";
@@ -51265,18 +51632,18 @@ self.onmessage = function (e) {
         };
         return __assign2.apply(this, arguments);
       };
-      var __createBinding2 = BaseMethods && BaseMethods.__createBinding || (Object.create ? (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        var desc = Object.getOwnPropertyDescriptor(m, k);
+      var __createBinding2 = BaseMethods && BaseMethods.__createBinding || (Object.create ? (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        var desc = Object.getOwnPropertyDescriptor(m, k2);
         if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
           desc = { enumerable: true, get: function() {
-            return m[k];
+            return m[k2];
           } };
         }
-        Object.defineProperty(o, k2, desc);
-      }) : (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        o[k2] = m[k];
+        Object.defineProperty(o, k22, desc);
+      }) : (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        o[k22] = m[k2];
       }));
       var __setModuleDefault2 = BaseMethods && BaseMethods.__setModuleDefault || (Object.create ? (function(o, v) {
         Object.defineProperty(o, "default", { enumerable: true, value: v });
@@ -51287,7 +51654,7 @@ self.onmessage = function (e) {
         if (mod2 && mod2.__esModule) return mod2;
         var result2 = {};
         if (mod2 != null) {
-          for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
+          for (var k2 in mod2) if (k2 !== "default" && Object.prototype.hasOwnProperty.call(mod2, k2)) __createBinding2(result2, mod2, k2);
         }
         __setModuleDefault2(result2, mod2);
         return result2;
@@ -51809,8 +52176,8 @@ self.onmessage = function (e) {
         parser2.Push(parser2.itemFactory.create("nonscript"));
       };
       BaseMethods$1.Rule = function(parser2, name2, style2) {
-        var w2 = parser2.GetDimen(name2), h = parser2.GetDimen(name2), d = parser2.GetDimen(name2);
-        var def = { width: w2, height: h, depth: d };
+        var w = parser2.GetDimen(name2), h = parser2.GetDimen(name2), d = parser2.GetDimen(name2);
+        var def = { width: w, height: h, depth: d };
         if (style2 !== "blank") {
           def["mathbackground"] = parser2.stack.env["color"] || "black";
         }
@@ -51818,9 +52185,9 @@ self.onmessage = function (e) {
         parser2.Push(node2);
       };
       BaseMethods$1.rule = function(parser2, name2) {
-        var v = parser2.GetBrackets(name2), w2 = parser2.GetDimen(name2), h = parser2.GetDimen(name2);
+        var v = parser2.GetBrackets(name2), w = parser2.GetDimen(name2), h = parser2.GetDimen(name2);
         var mml = parser2.create("node", "mspace", [], {
-          width: w2,
+          width: w,
           height: h,
           mathbackground: parser2.stack.env["color"] || "black"
         });
@@ -52185,11 +52552,11 @@ self.onmessage = function (e) {
         ParseUtil_js_1.default.checkMaxMacros(parser2);
       };
       BaseMethods$1.MathChoice = function(parser2, name2) {
-        var D = parser2.ParseArg(name2);
+        var D2 = parser2.ParseArg(name2);
         var T = parser2.ParseArg(name2);
-        var S2 = parser2.ParseArg(name2);
+        var S = parser2.ParseArg(name2);
         var SS = parser2.ParseArg(name2);
-        parser2.Push(parser2.create("node", "MathChoice", [D, T, S2, SS]));
+        parser2.Push(parser2.create("node", "MathChoice", [D2, T, S, SS]));
       };
       BaseMethods.default = BaseMethods$1;
       return BaseMethods;
@@ -52313,18 +52680,18 @@ self.onmessage = function (e) {
     function requireBaseMappings() {
       if (hasRequiredBaseMappings) return BaseMappings;
       hasRequiredBaseMappings = 1;
-      var __createBinding2 = BaseMappings && BaseMappings.__createBinding || (Object.create ? (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        var desc = Object.getOwnPropertyDescriptor(m, k);
+      var __createBinding2 = BaseMappings && BaseMappings.__createBinding || (Object.create ? (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        var desc = Object.getOwnPropertyDescriptor(m, k2);
         if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
           desc = { enumerable: true, get: function() {
-            return m[k];
+            return m[k2];
           } };
         }
-        Object.defineProperty(o, k2, desc);
-      }) : (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        o[k2] = m[k];
+        Object.defineProperty(o, k22, desc);
+      }) : (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        o[k22] = m[k2];
       }));
       var __setModuleDefault2 = BaseMappings && BaseMappings.__setModuleDefault || (Object.create ? (function(o, v) {
         Object.defineProperty(o, "default", { enumerable: true, value: v });
@@ -52335,7 +52702,7 @@ self.onmessage = function (e) {
         if (mod2 && mod2.__esModule) return mod2;
         var result2 = {};
         if (mod2 != null) {
-          for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
+          for (var k2 in mod2) if (k2 !== "default" && Object.prototype.hasOwnProperty.call(mod2, k2)) __createBinding2(result2, mod2, k2);
         }
         __setModuleDefault2(result2, mod2);
         return result2;
@@ -53056,18 +53423,18 @@ self.onmessage = function (e) {
           d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
         };
       })();
-      var __createBinding2 = BaseConfiguration && BaseConfiguration.__createBinding || (Object.create ? (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        var desc = Object.getOwnPropertyDescriptor(m, k);
+      var __createBinding2 = BaseConfiguration && BaseConfiguration.__createBinding || (Object.create ? (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        var desc = Object.getOwnPropertyDescriptor(m, k2);
         if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
           desc = { enumerable: true, get: function() {
-            return m[k];
+            return m[k2];
           } };
         }
-        Object.defineProperty(o, k2, desc);
-      }) : (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        o[k2] = m[k];
+        Object.defineProperty(o, k22, desc);
+      }) : (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        o[k22] = m[k2];
       }));
       var __setModuleDefault2 = BaseConfiguration && BaseConfiguration.__setModuleDefault || (Object.create ? (function(o, v) {
         Object.defineProperty(o, "default", { enumerable: true, value: v });
@@ -53078,7 +53445,7 @@ self.onmessage = function (e) {
         if (mod2 && mod2.__esModule) return mod2;
         var result2 = {};
         if (mod2 != null) {
-          for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
+          for (var k2 in mod2) if (k2 !== "default" && Object.prototype.hasOwnProperty.call(mod2, k2)) __createBinding2(result2, mod2, k2);
         }
         __setModuleDefault2(result2, mod2);
         return result2;
@@ -54366,9 +54733,9 @@ self.onmessage = function (e) {
           var adaptor = this.adaptor;
           var family = getFamily ? adaptor.fontFamily(node2) : "";
           var em = adaptor.fontSize(node2);
-          var _a2 = __read2(adaptor.nodeSize(adaptor.childNode(node2, 1)), 2), w2 = _a2[0], h = _a2[1];
-          var ex = w2 ? h / 60 : em * this.options.exFactor;
-          var containerWidth = !w2 ? 1e6 : adaptor.getStyle(node2, "display") === "table" ? adaptor.nodeSize(adaptor.lastChild(node2))[0] - 1 : adaptor.nodeBBox(adaptor.lastChild(node2)).left - adaptor.nodeBBox(adaptor.firstChild(node2)).left - 2;
+          var _a2 = __read2(adaptor.nodeSize(adaptor.childNode(node2, 1)), 2), w = _a2[0], h = _a2[1];
+          var ex = w ? h / 60 : em * this.options.exFactor;
+          var containerWidth = !w ? 1e6 : adaptor.getStyle(node2, "display") === "table" ? adaptor.nodeSize(adaptor.lastChild(node2))[0] - 1 : adaptor.nodeBBox(adaptor.lastChild(node2)).left - adaptor.nodeBBox(adaptor.firstChild(node2)).left - 2;
           var scale = Math.max(this.options.minScale, this.options.matchFontHeight ? ex / this.font.params.x_height / em : 1);
           var lineWidth = 1e6;
           return { em, ex, containerWidth, lineWidth, scale, family };
@@ -54493,12 +54860,12 @@ self.onmessage = function (e) {
           adaptor.append(this.container, node2);
           var em = this.math.metrics.em * this.math.metrics.scale;
           var _a2 = adaptor.nodeBBox(content2), left2 = _a2.left, right2 = _a2.right, bottom2 = _a2.bottom, top2 = _a2.top;
-          var w2 = (right2 - left2) / em;
+          var w = (right2 - left2) / em;
           var h = (adaptor.nodeBBox(base2).top - top2) / em;
           var d = (bottom2 - top2) / em - h;
           adaptor.remove(this.container);
           adaptor.remove(node2);
-          return { w: w2, h, d };
+          return { w, h, d };
         };
         CommonOutputJax2.prototype.cssFontStyles = function(font, styles2) {
           if (styles2 === void 0) {
@@ -54702,11 +55069,11 @@ self.onmessage = function (e) {
             y = 0;
           }
           var rscale = cbox.rscale;
-          var w2 = x2 + rscale * (cbox.w + cbox.L + cbox.R);
+          var w = x2 + rscale * (cbox.w + cbox.L + cbox.R);
           var h = y + rscale * cbox.h;
           var d = rscale * cbox.d - y;
-          if (w2 > this.w)
-            this.w = w2;
+          if (w > this.w)
+            this.w = w;
           if (h > this.h)
             this.h = h;
           if (d > this.d)
@@ -54931,14 +55298,14 @@ self.onmessage = function (e) {
             var SmpGreek = [null, null, CLASS.SmpRemapGreekU, CLASS.SmpRemapGreekL];
             try {
               for (var _c = __values2(CLASS.SmpRanges), _d = _c.next(); !_d.done; _d = _c.next()) {
-                var _e2 = __read2(_d.value, 3), i2 = _e2[0], lo = _e2[1], hi = _e2[2];
+                var _e2 = __read2(_d.value, 3), i2 = _e2[0], lo2 = _e2[1], hi = _e2[2];
                 var base2 = CLASS.VariantSmp[name2][i2];
                 if (!base2)
                   continue;
-                for (var n = lo; n <= hi; n++) {
+                for (var n = lo2; n <= hi; n++) {
                   if (n === 930)
                     continue;
-                  var smp = base2 + n - lo;
+                  var smp = base2 + n - lo2;
                   chars[n] = this.smpChar(SmpRemap[smp] || smp);
                 }
                 if (SmpGreek[i2]) {
@@ -55252,18 +55619,18 @@ self.onmessage = function (e) {
           d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
         };
       })();
-      var __createBinding2 = Wrapper$1 && Wrapper$1.__createBinding || (Object.create ? (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        var desc = Object.getOwnPropertyDescriptor(m, k);
+      var __createBinding2 = Wrapper$1 && Wrapper$1.__createBinding || (Object.create ? (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        var desc = Object.getOwnPropertyDescriptor(m, k2);
         if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
           desc = { enumerable: true, get: function() {
-            return m[k];
+            return m[k2];
           } };
         }
-        Object.defineProperty(o, k2, desc);
-      }) : (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        o[k2] = m[k];
+        Object.defineProperty(o, k22, desc);
+      }) : (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        o[k22] = m[k2];
       }));
       var __setModuleDefault2 = Wrapper$1 && Wrapper$1.__setModuleDefault || (Object.create ? (function(o, v) {
         Object.defineProperty(o, "default", { enumerable: true, value: v });
@@ -55274,7 +55641,7 @@ self.onmessage = function (e) {
         if (mod2 && mod2.__esModule) return mod2;
         var result2 = {};
         if (mod2 != null) {
-          for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
+          for (var k2 in mod2) if (k2 !== "default" && Object.prototype.hasOwnProperty.call(mod2, k2)) __createBinding2(result2, mod2, k2);
         }
         __setModuleDefault2(result2, mod2);
         return result2;
@@ -55464,10 +55831,10 @@ self.onmessage = function (e) {
             this.computeBBox(bbox, true);
           }
         };
-        CommonWrapper2.prototype.setChildPWidths = function(recompute, w2, clear) {
+        CommonWrapper2.prototype.setChildPWidths = function(recompute, w, clear) {
           var e_3, _a2;
-          if (w2 === void 0) {
-            w2 = null;
+          if (w === void 0) {
+            w = null;
           }
           if (clear === void 0) {
             clear = true;
@@ -55483,7 +55850,7 @@ self.onmessage = function (e) {
             for (var _b2 = __values2(this.childNodes), _c = _b2.next(); !_c.done; _c = _b2.next()) {
               var child = _c.value;
               var cbox = child.getOuterBBox();
-              if (cbox.pwidth && child.setChildPWidths(recompute, w2 === null ? cbox.w : w2, clear)) {
+              if (cbox.pwidth && child.setChildPWidths(recompute, w === null ? cbox.w : w, clear)) {
                 changed = true;
               }
             }
@@ -55722,8 +56089,8 @@ self.onmessage = function (e) {
         CommonWrapper2.prototype.getAlignX = function(W, bbox, align) {
           return align === "right" ? W - (bbox.w + bbox.R) * bbox.rscale : align === "left" ? bbox.L * bbox.rscale : (W - bbox.w * bbox.rscale) / 2;
         };
-        CommonWrapper2.prototype.getAlignY = function(H, D, h, d, align) {
-          return align === "top" ? H - h : align === "bottom" ? d - D : align === "center" ? (H - h - (D - d)) / 2 : 0;
+        CommonWrapper2.prototype.getAlignY = function(H, D2, h, d, align) {
+          return align === "top" ? H - h : align === "bottom" ? d - D2 : align === "center" ? (H - h - (D2 - d)) / 2 : 0;
         };
         CommonWrapper2.prototype.getWrapWidth = function(i2) {
           return this.childNodes[i2].getBBox().w;
@@ -55737,11 +56104,11 @@ self.onmessage = function (e) {
         CommonWrapper2.prototype.em = function(m) {
           return LENGTHS.em(m);
         };
-        CommonWrapper2.prototype.px = function(m, M2) {
-          if (M2 === void 0) {
-            M2 = -LENGTHS.BIGDIMEN;
+        CommonWrapper2.prototype.px = function(m, M) {
+          if (M === void 0) {
+            M = -LENGTHS.BIGDIMEN;
           }
-          return LENGTHS.px(m, M2, this.metrics.em);
+          return LENGTHS.px(m, M, this.metrics.em);
         };
         CommonWrapper2.prototype.length2em = function(length, size, scale) {
           if (size === void 0) {
@@ -55963,13 +56330,13 @@ self.onmessage = function (e) {
           var href = this.node.attributes.get("href");
           if (href) {
             parent = this.adaptor.append(parent, this.svg("a", { href }));
-            var _a2 = this.getOuterBBox(), h = _a2.h, d = _a2.d, w2 = _a2.w;
+            var _a2 = this.getOuterBBox(), h = _a2.h, d = _a2.d, w = _a2.w;
             this.adaptor.append(this.element, this.svg("rect", {
               "data-hitbox": true,
               fill: "none",
               stroke: "none",
               "pointer-events": "all",
-              width: this.fixed(w2),
+              width: this.fixed(w),
               height: this.fixed(h + d),
               y: this.fixed(-d)
             }));
@@ -56015,12 +56382,12 @@ self.onmessage = function (e) {
             adaptor.setAttribute(this.element, "stroke", mathcolor || color);
           }
           if (mathbackground || background || bgcolor) {
-            var _b2 = this.getOuterBBox(), h = _b2.h, d = _b2.d, w2 = _b2.w;
+            var _b2 = this.getOuterBBox(), h = _b2.h, d = _b2.d, w = _b2.w;
             var rect2 = this.svg("rect", {
               fill: mathbackground || background || bgcolor,
               x: this.fixed(-this.dx),
               y: this.fixed(-d),
-              width: this.fixed(w2),
+              width: this.fixed(w),
               height: this.fixed(h + d),
               "data-bgcolor": true
             });
@@ -56061,14 +56428,14 @@ self.onmessage = function (e) {
           }
           var f = SVGWrapper2.borderFuzz;
           var bbox = this.getOuterBBox();
-          var _f = __read2([bbox.h + f, bbox.d + f, bbox.w + f], 3), h = _f[0], d = _f[1], w2 = _f[2];
-          var outerRT = [w2, h];
+          var _f = __read2([bbox.h + f, bbox.d + f, bbox.w + f], 3), h = _f[0], d = _f[1], w = _f[2];
+          var outerRT = [w, h];
           var outerLT = [-f, h];
-          var outerRB = [w2, -d];
+          var outerRB = [w, -d];
           var outerLB = [-f, -d];
-          var innerRT = [w2 - width[1], h - width[0]];
+          var innerRT = [w - width[1], h - width[0]];
           var innerLT = [-f + width[3], h - width[0]];
-          var innerRB = [w2 - width[1], -d + width[2]];
+          var innerRB = [w - width[1], -d + width[2]];
           var innerLB = [-f + width[3], -d + width[2]];
           var paths = [
             [outerLT, outerRT, innerRT, innerLT],
@@ -56233,7 +56600,7 @@ self.onmessage = function (e) {
             variant = this.variant;
           }
           var C2 = n.toString(16).toUpperCase();
-          var _b2 = __read2(this.getVariantChar(variant, n), 4), w2 = _b2[2], data = _b2[3];
+          var _b2 = __read2(this.getVariantChar(variant, n), 4), w = _b2[2], data = _b2[3];
           if ("p" in data) {
             var path = data.p ? "M" + data.p + "Z" : "";
             this.place(x2, y, this.adaptor.append(parent, this.charNode(variant, C2, path)));
@@ -56261,7 +56628,7 @@ self.onmessage = function (e) {
             this.place(x2, y, text2);
             return this.jax.measureTextNodeWithCache(text2, char, variant).w;
           }
-          return w2;
+          return w;
         };
         SVGWrapper2.prototype.charNode = function(variant, C2, path) {
           var cache = this.jax.options.fontCache;
@@ -56277,19 +56644,19 @@ self.onmessage = function (e) {
           return use2;
         };
         SVGWrapper2.prototype.drawBBox = function() {
-          var _a2 = this.getBBox(), w2 = _a2.w, h = _a2.h, d = _a2.d;
+          var _a2 = this.getBBox(), w = _a2.w, h = _a2.h, d = _a2.d;
           var box = this.svg("g", { style: {
             opacity: 0.25
           } }, [
             this.svg("rect", {
               fill: "red",
               height: this.fixed(h),
-              width: this.fixed(w2)
+              width: this.fixed(w)
             }),
             this.svg("rect", {
               fill: "green",
               height: this.fixed(d),
-              width: this.fixed(w2),
+              width: this.fixed(w),
               y: this.fixed(-d)
             })
           ]);
@@ -56527,15 +56894,15 @@ self.onmessage = function (e) {
           if (this.bbox.pwidth === BBox_js_1.BBox.fullWidth) {
             this.adaptor.setAttribute(this.jax.container, "width", "full");
             if (this.jax.table) {
-              var _b2 = this.jax.table.getOuterBBox(), L = _b2.L, w2 = _b2.w, R = _b2.R;
+              var _b2 = this.jax.table.getOuterBBox(), L = _b2.L, w = _b2.w, R = _b2.R;
               if (align === "right") {
                 R = Math.max(R || -shift2, -shift2);
               } else if (align === "left") {
                 L = Math.max(L || shift2, shift2);
               } else if (align === "center") {
-                w2 += 2 * Math.abs(shift2);
+                w += 2 * Math.abs(shift2);
               }
-              this.jax.minwidth = Math.max(0, L + w2 + R);
+              this.jax.minwidth = Math.max(0, L + w + R);
             }
           } else {
             this.jax.shift = shift2;
@@ -56571,11 +56938,11 @@ self.onmessage = function (e) {
         SVGmath2.prototype.getTitleID = function() {
           return "mjx-svg-title-" + String(this.jax.options.titleID++);
         };
-        SVGmath2.prototype.setChildPWidths = function(recompute, w2, _clear) {
-          if (w2 === void 0) {
-            w2 = null;
+        SVGmath2.prototype.setChildPWidths = function(recompute, w, _clear) {
+          if (w === void 0) {
+            w = null;
           }
-          return _super.prototype.setChildPWidths.call(this, recompute, this.parent ? w2 : this.metrics.containerWidth / this.jax.pxPerEm, false);
+          return _super.prototype.setChildPWidths.call(this, recompute, this.parent ? w : this.metrics.containerWidth / this.jax.pxPerEm, false);
         };
         SVGmath2.kind = math_js_2.MmlMath.prototype.kind;
         SVGmath2.styles = {
@@ -56723,7 +57090,7 @@ self.onmessage = function (e) {
             var count = stretchy.length;
             var nodeCount = this.childNodes.length;
             if (count && nodeCount > 1) {
-              var H = 0, D = 0;
+              var H = 0, D2 = 0;
               var all2 = count > 1 && count === nodeCount;
               try {
                 for (var _f = __values2(this.childNodes), _g = _f.next(); !_g.done; _g = _f.next()) {
@@ -56735,8 +57102,8 @@ self.onmessage = function (e) {
                     d *= rscale;
                     if (h > H)
                       H = h;
-                    if (d > D)
-                      D = d;
+                    if (d > D2)
+                      D2 = d;
                   }
                 }
               } catch (e_3_1) {
@@ -56751,7 +57118,7 @@ self.onmessage = function (e) {
               try {
                 for (var stretchy_1 = __values2(stretchy), stretchy_1_1 = stretchy_1.next(); !stretchy_1_1.done; stretchy_1_1 = stretchy_1.next()) {
                   var child = stretchy_1_1.value;
-                  child.coreMO().getStretchedVariant([H, D]);
+                  child.coreMO().getStretchedVariant([H, D2]);
                 }
               } catch (e_4_1) {
                 e_4 = { error: e_4_1 };
@@ -57434,14 +57801,14 @@ self.onmessage = function (e) {
               exact = false;
             }
             if (this.stretch.dir !== 0) {
-              var D = this.getWH(WH);
+              var D2 = this.getWH(WH);
               var min2 = this.getSize("minsize", 0);
               var max2 = this.getSize("maxsize", Infinity);
               var mathaccent = this.node.getProperty("mathaccent");
-              D = Math.max(min2, Math.min(max2, D));
+              D2 = Math.max(min2, Math.min(max2, D2));
               var df = this.font.params.delimiterfactor / 1e3;
               var ds = this.font.params.delimitershortfall;
-              var m = min2 || exact ? D : mathaccent ? Math.min(D / df, D + ds) : Math.max(D * df, D - ds);
+              var m = min2 || exact ? D2 : mathaccent ? Math.min(D2 / df, D2 + ds) : Math.max(D2 * df, D2 - ds);
               var delim = this.stretch;
               var c2 = delim.c || this.getText().codePointAt(0);
               var i2 = 0;
@@ -57475,7 +57842,7 @@ self.onmessage = function (e) {
               if (delim.stretch) {
                 this.size = -1;
                 this.invalidateBBox();
-                this.getStretchBBox(WH, this.checkExtendedHeight(D, delim), delim);
+                this.getStretchBBox(WH, this.checkExtendedHeight(D2, delim), delim);
               } else {
                 this.variant = this.font.getSizeVariant(c2, i2 - 1);
                 this.size = i2 - 1;
@@ -57494,51 +57861,51 @@ self.onmessage = function (e) {
               return 0;
             if (WH.length === 1)
               return WH[0];
-            var _a3 = __read2(WH, 2), H = _a3[0], D = _a3[1];
+            var _a3 = __read2(WH, 2), H = _a3[0], D2 = _a3[1];
             var a = this.font.params.axis_height;
-            return this.node.attributes.get("symmetric") ? 2 * Math.max(H - a, D + a) : H + D;
+            return this.node.attributes.get("symmetric") ? 2 * Math.max(H - a, D2 + a) : H + D2;
           };
-          class_1.prototype.getStretchBBox = function(WHD, D, C2) {
+          class_1.prototype.getStretchBBox = function(WHD, D2, C2) {
             var _a3;
-            if (C2.hasOwnProperty("min") && C2.min > D) {
-              D = C2.min;
+            if (C2.hasOwnProperty("min") && C2.min > D2) {
+              D2 = C2.min;
             }
-            var _b2 = __read2(C2.HDW, 3), h = _b2[0], d = _b2[1], w2 = _b2[2];
+            var _b2 = __read2(C2.HDW, 3), h = _b2[0], d = _b2[1], w = _b2[2];
             if (this.stretch.dir === 1) {
-              _a3 = __read2(this.getBaseline(WHD, D, C2), 2), h = _a3[0], d = _a3[1];
+              _a3 = __read2(this.getBaseline(WHD, D2, C2), 2), h = _a3[0], d = _a3[1];
             } else {
-              w2 = D;
+              w = D2;
             }
             this.bbox.h = h;
             this.bbox.d = d;
-            this.bbox.w = w2;
+            this.bbox.w = w;
           };
           class_1.prototype.getBaseline = function(WHD, HD, C2) {
             var hasWHD = WHD.length === 2 && WHD[0] + WHD[1] === HD;
             var symmetric = this.node.attributes.get("symmetric");
-            var _a3 = __read2(hasWHD ? WHD : [HD, 0], 2), H = _a3[0], D = _a3[1];
-            var _b2 = __read2([H + D, 0], 2), h = _b2[0], d = _b2[1];
+            var _a3 = __read2(hasWHD ? WHD : [HD, 0], 2), H = _a3[0], D2 = _a3[1];
+            var _b2 = __read2([H + D2, 0], 2), h = _b2[0], d = _b2[1];
             if (symmetric) {
               var a = this.font.params.axis_height;
               if (hasWHD) {
-                h = 2 * Math.max(H - a, D + a);
+                h = 2 * Math.max(H - a, D2 + a);
               }
               d = h / 2 - a;
             } else if (hasWHD) {
-              d = D;
+              d = D2;
             } else {
               var _c = __read2(C2.HDW || [0.75, 0.25], 2), ch3 = _c[0], cd = _c[1];
               d = cd * (h / (ch3 + cd));
             }
             return [h - d, d];
           };
-          class_1.prototype.checkExtendedHeight = function(D, C2) {
+          class_1.prototype.checkExtendedHeight = function(D2, C2) {
             if (C2.fullExt) {
               var _a3 = __read2(C2.fullExt, 2), extSize = _a3[0], endSize = _a3[1];
-              var n = Math.ceil(Math.max(0, D - endSize) / extSize);
-              D = endSize + n * extSize;
+              var n = Math.ceil(Math.max(0, D2 - endSize) / extSize);
+              D2 = endSize + n * extSize;
             }
-            return D;
+            return D2;
           };
           class_1.prototype.remapChars = function(chars) {
             var primes2 = this.node.getProperty("primes");
@@ -57675,28 +58042,28 @@ self.onmessage = function (e) {
           return variants;
         };
         SVGmo2.prototype.stretchVertical = function(stretch, variant, bbox) {
-          var h = bbox.h, d = bbox.d, w2 = bbox.w;
-          var T = this.addTop(stretch[0], variant[0], h, w2);
-          var B = this.addBot(stretch[2], variant[2], d, w2);
+          var h = bbox.h, d = bbox.d, w = bbox.w;
+          var T = this.addTop(stretch[0], variant[0], h, w);
+          var B = this.addBot(stretch[2], variant[2], d, w);
           if (stretch.length === 4) {
-            var _a2 = __read2(this.addMidV(stretch[3], variant[3], w2), 2), H = _a2[0], D = _a2[1];
-            this.addExtV(stretch[1], variant[1], h, 0, T, H, w2);
-            this.addExtV(stretch[1], variant[1], 0, d, D, B, w2);
+            var _a2 = __read2(this.addMidV(stretch[3], variant[3], w), 2), H = _a2[0], D2 = _a2[1];
+            this.addExtV(stretch[1], variant[1], h, 0, T, H, w);
+            this.addExtV(stretch[1], variant[1], 0, d, D2, B, w);
           } else {
-            this.addExtV(stretch[1], variant[1], h, d, T, B, w2);
+            this.addExtV(stretch[1], variant[1], h, d, T, B, w);
           }
         };
         SVGmo2.prototype.stretchHorizontal = function(stretch, variant, bbox) {
-          var w2 = bbox.w;
+          var w = bbox.w;
           var L = this.addLeft(stretch[0], variant[0]);
-          var R = this.addRight(stretch[2], variant[2], w2);
+          var R = this.addRight(stretch[2], variant[2], w);
           if (stretch.length === 4) {
-            var _a2 = __read2(this.addMidH(stretch[3], variant[3], w2), 2), x1 = _a2[0], x2 = _a2[1];
-            var w22 = w2 / 2;
-            this.addExtH(stretch[1], variant[1], w22, L, w22 - x1);
-            this.addExtH(stretch[1], variant[1], w22, x2 - w22, R, w22);
+            var _a2 = __read2(this.addMidH(stretch[3], variant[3], w), 2), x1 = _a2[0], x2 = _a2[1];
+            var w2 = w / 2;
+            this.addExtH(stretch[1], variant[1], w2, L, w2 - x1);
+            this.addExtH(stretch[1], variant[1], w2, x2 - w2, R, w2);
           } else {
-            this.addExtH(stretch[1], variant[1], w2, L, R);
+            this.addExtH(stretch[1], variant[1], w, L, R);
           }
         };
         SVGmo2.prototype.getChar = function(n, variant) {
@@ -57712,29 +58079,29 @@ self.onmessage = function (e) {
         SVGmo2.prototype.addTop = function(n, v, H, W) {
           if (!n)
             return 0;
-          var _a2 = __read2(this.getChar(n, v), 3), h = _a2[0], d = _a2[1], w2 = _a2[2];
-          this.addGlyph(n, v, (W - w2) / 2, H - h);
+          var _a2 = __read2(this.getChar(n, v), 3), h = _a2[0], d = _a2[1], w = _a2[2];
+          this.addGlyph(n, v, (W - w) / 2, H - h);
           return h + d;
         };
-        SVGmo2.prototype.addExtV = function(n, v, H, D, T, B, W) {
+        SVGmo2.prototype.addExtV = function(n, v, H, D2, T, B, W) {
           var _this = this;
           if (!n)
             return;
           T = Math.max(0, T - VFUZZ);
           B = Math.max(0, B - VFUZZ);
           var adaptor = this.adaptor;
-          var _a2 = __read2(this.getChar(n, v), 3), h = _a2[0], d = _a2[1], w2 = _a2[2];
-          var Y2 = H + D - T - B;
+          var _a2 = __read2(this.getChar(n, v), 3), h = _a2[0], d = _a2[1], w = _a2[2];
+          var Y2 = H + D2 - T - B;
           var s = 1.5 * Y2 / (h + d);
           var y = (s * (h - d) - Y2) / 2;
           if (Y2 <= 0)
             return;
           var svg2 = this.svg("svg", {
-            width: this.fixed(w2),
+            width: this.fixed(w),
             height: this.fixed(Y2),
-            y: this.fixed(B - D),
-            x: this.fixed((W - w2) / 2),
-            viewBox: [0, y, w2, Y2].map(function(x2) {
+            y: this.fixed(B - D2),
+            x: this.fixed((W - w) / 2),
+            viewBox: [0, y, w, Y2].map(function(x2) {
               return _this.fixed(x2);
             }).join(" ")
           });
@@ -57743,19 +58110,19 @@ self.onmessage = function (e) {
           adaptor.setAttribute(glyph, "transform", "scale(1,".concat(this.jax.fixed(s), ")"));
           adaptor.append(this.element, svg2);
         };
-        SVGmo2.prototype.addBot = function(n, v, D, W) {
+        SVGmo2.prototype.addBot = function(n, v, D2, W) {
           if (!n)
             return 0;
-          var _a2 = __read2(this.getChar(n, v), 3), h = _a2[0], d = _a2[1], w2 = _a2[2];
-          this.addGlyph(n, v, (W - w2) / 2, d - D);
+          var _a2 = __read2(this.getChar(n, v), 3), h = _a2[0], d = _a2[1], w = _a2[2];
+          this.addGlyph(n, v, (W - w) / 2, d - D2);
           return h + d;
         };
         SVGmo2.prototype.addMidV = function(n, v, W) {
           if (!n)
             return [0, 0];
-          var _a2 = __read2(this.getChar(n, v), 3), h = _a2[0], d = _a2[1], w2 = _a2[2];
+          var _a2 = __read2(this.getChar(n, v), 3), h = _a2[0], d = _a2[1], w = _a2[2];
           var y = (d - h) / 2 + this.font.params.axis_height;
-          this.addGlyph(n, v, (W - w2) / 2, y);
+          this.addGlyph(n, v, (W - w) / 2, y);
           return [h + y, d - y];
         };
         SVGmo2.prototype.addLeft = function(n, v) {
@@ -57771,19 +58138,19 @@ self.onmessage = function (e) {
           R = Math.max(0, R - HFUZZ);
           L = Math.max(0, L - HFUZZ);
           var adaptor = this.adaptor;
-          var _a2 = __read2(this.getChar(n, v), 3), h = _a2[0], d = _a2[1], w2 = _a2[2];
+          var _a2 = __read2(this.getChar(n, v), 3), h = _a2[0], d = _a2[1], w = _a2[2];
           var X2 = W - L - R;
           var Y2 = h + d + 2 * VFUZZ;
-          var s = 1.5 * (X2 / w2);
-          var D = -(d + VFUZZ);
+          var s = 1.5 * (X2 / w);
+          var D2 = -(d + VFUZZ);
           if (X2 <= 0)
             return;
           var svg2 = this.svg("svg", {
             width: this.fixed(X2),
             height: this.fixed(Y2),
             x: this.fixed(x2 + L),
-            y: this.fixed(D),
-            viewBox: [(s * w2 - X2) / 2, D, X2, Y2].map(function(x3) {
+            y: this.fixed(D2),
+            viewBox: [(s * w - X2) / 2, D2, X2, Y2].map(function(x3) {
               return _this.fixed(x3);
             }).join(" ")
           });
@@ -57795,15 +58162,15 @@ self.onmessage = function (e) {
         SVGmo2.prototype.addRight = function(n, v, W) {
           if (!n)
             return 0;
-          var w2 = this.getChar(n, v)[2];
-          return this.addGlyph(n, v, W - w2, 0);
+          var w = this.getChar(n, v)[2];
+          return this.addGlyph(n, v, W - w, 0);
         };
         SVGmo2.prototype.addMidH = function(n, v, W) {
           if (!n)
             return [0, 0];
-          var w2 = this.getChar(n, v)[2];
-          this.addGlyph(n, v, (W - w2) / 2, 0);
-          return [(W - w2) / 2, (W + w2) / 2];
+          var w = this.getChar(n, v)[2];
+          this.addGlyph(n, v, (W - w) / 2, 0);
+          return [(W - w) / 2, (W + w) / 2];
         };
         SVGmo2.kind = mo_js_2.MmlMo.prototype.kind;
         return SVGmo2;
@@ -58412,10 +58779,10 @@ self.onmessage = function (e) {
         }
         SVGmerror2.prototype.toSVG = function(parent) {
           var svg2 = this.standardSVGnode(parent);
-          var _a2 = this.getBBox(), h = _a2.h, d = _a2.d, w2 = _a2.w;
+          var _a2 = this.getBBox(), h = _a2.h, d = _a2.d, w = _a2.w;
           this.adaptor.append(this.element, this.svg("rect", {
             "data-background": true,
-            width: this.fixed(w2),
+            width: this.fixed(w),
             height: this.fixed(h + d),
             y: this.fixed(-d)
           }));
@@ -58663,10 +59030,10 @@ self.onmessage = function (e) {
           class_1.prototype.getDimens = function() {
             var values = this.node.attributes.getList("width", "height", "depth", "lspace", "voffset");
             var bbox = this.childNodes[0].getBBox();
-            var w2 = bbox.w, h = bbox.h, d = bbox.d;
-            var W = w2, H = h, D = d, x2 = 0, y = 0, dx = 0;
+            var w = bbox.w, h = bbox.h, d = bbox.d;
+            var W = w, H = h, D2 = d, x2 = 0, y = 0, dx = 0;
             if (values.width !== "")
-              w2 = this.dimen(values.width, bbox, "w", 0);
+              w = this.dimen(values.width, bbox, "w", 0);
             if (values.height !== "")
               h = this.dimen(values.height, bbox, "h", 0);
             if (values.depth !== "")
@@ -58677,9 +59044,9 @@ self.onmessage = function (e) {
               x2 = this.dimen(values.lspace, bbox);
             var align = this.node.attributes.get("data-align");
             if (align) {
-              dx = this.getAlignX(w2, bbox, align);
+              dx = this.getAlignX(w, bbox, align);
             }
-            return [H, D, W, h - H, d - D, w2 - W, x2, y, dx];
+            return [H, D2, W, h - H, d - D2, w - W, x2, y, dx];
           };
           class_1.prototype.dimen = function(length, bbox, d, m) {
             if (d === void 0) {
@@ -58704,10 +59071,10 @@ self.onmessage = function (e) {
             if (recompute === void 0) {
               recompute = false;
             }
-            var _a2 = __read2(this.getDimens(), 6), H = _a2[0], D = _a2[1], W = _a2[2], dh = _a2[3], dd2 = _a2[4], dw = _a2[5];
+            var _a2 = __read2(this.getDimens(), 6), H = _a2[0], D2 = _a2[1], W = _a2[2], dh = _a2[3], dd2 = _a2[4], dw = _a2[5];
             bbox.w = W + dw;
             bbox.h = H + dh;
-            bbox.d = D + dd2;
+            bbox.d = D2 + dd2;
             this.setChildPWidths(recompute, bbox.w);
           };
           class_1.prototype.getWrapWidth = function(_i) {
@@ -59025,22 +59392,22 @@ self.onmessage = function (e) {
             bbox.empty();
             var _a2 = this.node.attributes.getList("linethickness", "bevelled"), linethickness = _a2.linethickness, bevelled = _a2.bevelled;
             var display = this.isDisplay();
-            var w2 = null;
+            var w = null;
             if (bevelled) {
               this.getBevelledBBox(bbox, display);
             } else {
               var thickness = this.length2em(String(linethickness), 0.06);
-              w2 = -2 * this.pad;
+              w = -2 * this.pad;
               if (thickness === 0) {
                 this.getAtopBBox(bbox, display);
               } else {
                 this.getFractionBBox(bbox, display, thickness);
-                w2 -= 0.2;
+                w -= 0.2;
               }
-              w2 += bbox.w;
+              w += bbox.w;
             }
             bbox.clean();
-            this.setChildPWidths(recompute, w2);
+            this.setChildPWidths(recompute, w);
           };
           class_1.prototype.getFractionBBox = function(bbox, display, t2) {
             var nbox = this.childNodes[0].getOuterBBox();
@@ -59111,9 +59478,9 @@ self.onmessage = function (e) {
             if (attributes2.get("bevelled")) {
               return this.childNodes[i2].getOuterBBox().w;
             }
-            var w2 = this.getBBox().w;
+            var w = this.getBBox().w;
             var thickness = this.length2em(attributes2.get("linethickness"));
-            return w2 - (thickness ? 0.2 : 0) - 2 * this.pad;
+            return w - (thickness ? 0.2 : 0) - 2 * this.pad;
           };
           class_1.prototype.getChildAlign = function(i2) {
             var attributes2 = this.node.attributes;
@@ -59343,13 +59710,13 @@ self.onmessage = function (e) {
           var svg2 = this.element;
           var _a2 = __read2(this.childNodes, 2), num2 = _a2[0], den = _a2[1];
           var _b2 = this.getBevelData(display), u = _b2.u, v = _b2.v, delta2 = _b2.delta, nbox = _b2.nbox, dbox = _b2.dbox;
-          var w2 = (nbox.L + nbox.w + nbox.R) * nbox.rscale;
+          var w = (nbox.L + nbox.w + nbox.R) * nbox.rscale;
           num2.toSVG(svg2);
           this.bevel.toSVG(svg2);
           den.toSVG(svg2);
           num2.place(nbox.L * nbox.rscale, u);
-          this.bevel.place(w2 - delta2 / 2, 0);
-          den.place(w2 + this.bevel.getOuterBBox().w + dbox.L * dbox.rscale - delta2, v);
+          this.bevel.place(w - delta2 / 2, 0);
+          den.place(w + this.bevel.getOuterBBox().w + dbox.L * dbox.rscale - delta2, v);
         };
         SVGmfrac2.kind = mfrac_js_2.MmlMfrac.prototype.kind;
         return SVGmfrac2;
@@ -59691,9 +60058,9 @@ self.onmessage = function (e) {
             var surd = this.childNodes[this.surd];
             var bbox = this.childNodes[this.root].getOuterBBox();
             var offset2 = (surd.size < 0 ? 0.5 : 0.6) * sbox.w;
-            var w2 = bbox.w, rscale = bbox.rscale;
-            var W = Math.max(w2, offset2 / rscale);
-            var dx = Math.max(0, W - w2);
+            var w = bbox.w, rscale = bbox.rscale;
+            var W = Math.max(w, offset2 / rscale);
+            var dx = Math.max(0, W - w);
             var h = this.rootHeight(bbox, sbox, surd.size, H);
             var x2 = W * rscale - offset2;
             return [x2, h, dx];
@@ -60424,10 +60791,10 @@ self.onmessage = function (e) {
             if (recompute === void 0) {
               recompute = false;
             }
-            var w2 = this.getBaseWidth();
+            var w = this.getBaseWidth();
             var _a3 = __read2(this.getOffset(), 2), x2 = _a3[0], y = _a3[1];
             bbox.append(this.baseChild.getOuterBBox());
-            bbox.combine(this.scriptChild.getOuterBBox(), w2 + x2, y);
+            bbox.combine(this.scriptChild.getOuterBBox(), w + x2, y);
             bbox.w += this.font.params.scriptspace;
             bbox.clean();
             this.setChildPWidths(recompute);
@@ -60469,8 +60836,8 @@ self.onmessage = function (e) {
             var t2 = tex2.rule_thickness * tex2.separation_factor;
             var delta2 = this.baseHasAccentOver ? t2 : 0;
             var T = this.isLineAbove ? 3 * tex2.rule_thickness : t2;
-            var k = (accent ? T : Math.max(tex2.big_op_spacing1, tex2.big_op_spacing3 - Math.max(0, d))) - delta2;
-            return [k, basebox.h * basebox.rscale + k + d];
+            var k2 = (accent ? T : Math.max(tex2.big_op_spacing1, tex2.big_op_spacing3 - Math.max(0, d))) - delta2;
+            return [k2, basebox.h * basebox.rscale + k2 + d];
           };
           class_1.prototype.getUnderKV = function(basebox, underbox) {
             var accent = this.node.attributes.get("accentunder");
@@ -60479,8 +60846,8 @@ self.onmessage = function (e) {
             var t2 = tex2.rule_thickness * tex2.separation_factor;
             var delta2 = this.baseHasAccentUnder ? t2 : 0;
             var T = this.isLineBelow ? 3 * tex2.rule_thickness : t2;
-            var k = (accent ? T : Math.max(tex2.big_op_spacing2, tex2.big_op_spacing4 - h)) - delta2;
-            return [k, -(basebox.d * basebox.rscale + k + h)];
+            var k2 = (accent ? T : Math.max(tex2.big_op_spacing2, tex2.big_op_spacing4 - h)) - delta2;
+            return [k2, -(basebox.d * basebox.rscale + k2 + h)];
           };
           class_1.prototype.getDeltaW = function(boxes, delta2) {
             var e_2, _a3, e_3, _b2;
@@ -60492,13 +60859,13 @@ self.onmessage = function (e) {
               return box.w * box.rscale;
             });
             widths[0] -= this.baseRemoveIc && !this.baseCore.node.attributes.get("largeop") ? this.baseIc : 0;
-            var w2 = Math.max.apply(Math, __spreadArray2([], __read2(widths), false));
+            var w = Math.max.apply(Math, __spreadArray2([], __read2(widths), false));
             var dw = [];
             var m = 0;
             try {
               for (var _c = __values2(widths.keys()), _d = _c.next(); !_d.done; _d = _c.next()) {
                 var i2 = _d.value;
-                dw[i2] = (align === "center" ? (w2 - widths[i2]) / 2 : align === "right" ? w2 - widths[i2] : 0) + delta2[i2];
+                dw[i2] = (align === "center" ? (w - widths[i2]) / 2 : align === "right" ? w - widths[i2] : 0) + delta2[i2];
                 if (dw[i2] < m) {
                   m = -dw[i2];
                 }
@@ -60570,9 +60937,9 @@ self.onmessage = function (e) {
                   var child = _g.value;
                   var noStretch = child.stretch.dir === 0;
                   if (all2 || noStretch) {
-                    var _h = child.getOuterBBox(noStretch), w2 = _h.w, rscale = _h.rscale;
-                    if (w2 * rscale > W)
-                      W = w2 * rscale;
+                    var _h = child.getOuterBBox(noStretch), w = _h.w, rscale = _h.rscale;
+                    if (w * rscale > W)
+                      W = w * rscale;
                   }
                 }
               } catch (e_5_1) {
@@ -60657,11 +61024,11 @@ self.onmessage = function (e) {
         }
         SVGscriptbase2.prototype.toSVG = function(parent) {
           var svg2 = this.standardSVGnode(parent);
-          var w2 = this.getBaseWidth();
+          var w = this.getBaseWidth();
           var _a2 = __read2(this.getOffset(), 2), x2 = _a2[0], v = _a2[1];
           this.baseChild.toSVG(svg2);
           this.scriptChild.toSVG(svg2);
-          this.scriptChild.place(w2 + x2, v);
+          this.scriptChild.place(w + x2, v);
         };
         SVGscriptbase2.kind = "scriptbase";
         return SVGscriptbase2;
@@ -60785,11 +61152,11 @@ self.onmessage = function (e) {
             var _a3 = __read2([this.subChild.getOuterBBox(), this.supChild.getOuterBBox()], 2), subbox = _a3[0], supbox = _a3[1];
             bbox.empty();
             bbox.append(basebox);
-            var w2 = this.getBaseWidth();
+            var w = this.getBaseWidth();
             var x2 = this.getAdjustedIc();
             var _b2 = __read2(this.getUVQ(), 2), u = _b2[0], v = _b2[1];
-            bbox.combine(subbox, w2, v);
-            bbox.combine(supbox, w2 + x2, u);
+            bbox.combine(subbox, w, v);
+            bbox.combine(supbox, w + x2, u);
             bbox.w += this.font.params.scriptspace;
             bbox.clean();
             this.setChildPWidths(recompute);
@@ -61056,14 +61423,14 @@ self.onmessage = function (e) {
         SVGmsubsup2.prototype.toSVG = function(parent) {
           var svg2 = this.standardSVGnode(parent);
           var _a2 = __read2([this.baseChild, this.supChild, this.subChild], 3), base2 = _a2[0], sup4 = _a2[1], sub2 = _a2[2];
-          var w2 = this.getBaseWidth();
+          var w = this.getBaseWidth();
           var x2 = this.getAdjustedIc();
           var _b2 = __read2(this.getUVQ(), 2), u = _b2[0], v = _b2[1];
           base2.toSVG(svg2);
           sup4.toSVG(svg2);
           sub2.toSVG(svg2);
-          sub2.place(w2, v);
-          sup4.place(w2 + x2, u);
+          sub2.place(w, v);
+          sup4.place(w + x2, u);
         };
         SVGmsubsup2.kind = msubsup_js_4.MmlMsubsup.prototype.kind;
         return SVGmsubsup2;
@@ -61697,9 +62064,9 @@ self.onmessage = function (e) {
               }
               bbox.append(data.base);
               if (data.numScripts) {
-                var w2 = bbox.w;
-                bbox.combine(data.sup, w2, u);
-                bbox.combine(data.sub, w2, v);
+                var w = bbox.w;
+                bbox.combine(data.sup, w, u);
+                bbox.combine(data.sub, w, v);
                 bbox.w += scriptspace;
               }
               bbox.clean();
@@ -61765,9 +62132,9 @@ self.onmessage = function (e) {
               for (var i2 = 0; i2 < list1.length; i2++) {
                 var _a2 = __read2(this.getScaledWHD(list1[i2]), 3), w1 = _a2[0], h1 = _a2[1], d1 = _a2[2];
                 var _b2 = __read2(this.getScaledWHD(list2[i2]), 3), w2 = _b2[0], h2 = _b2[1], d2 = _b2[2];
-                var w3 = Math.max(w1, w2);
-                bbox1.w += w3;
-                bbox2.w += w3;
+                var w = Math.max(w1, w2);
+                bbox1.w += w;
+                bbox2.w += w;
                 if (h1 > bbox1.h)
                   bbox1.h = h1;
                 if (d1 > bbox1.d)
@@ -61779,8 +62146,8 @@ self.onmessage = function (e) {
               }
             };
             class_1.prototype.getScaledWHD = function(bbox) {
-              var w2 = bbox.w, h = bbox.h, d = bbox.d, rscale = bbox.rscale;
-              return [w2 * rscale, h * rscale, d * rscale];
+              var w = bbox.w, h = bbox.h, d = bbox.d, rscale = bbox.rscale;
+              return [w * rscale, h * rscale, d * rscale];
             };
             class_1.prototype.getUVQ = function(subbox, supbox) {
               var _a2;
@@ -62024,11 +62391,11 @@ self.onmessage = function (e) {
           left: function(_w, _W) {
             return 0;
           },
-          center: function(w2, W) {
-            return (W - w2) / 2;
+          center: function(w, W) {
+            return (W - w) / 2;
           },
-          right: function(w2, W) {
-            return W - w2;
+          right: function(w, W) {
+            return W - w;
           }
         }[align] || (function(_w, _W) {
           return 0;
@@ -62073,12 +62440,12 @@ self.onmessage = function (e) {
             var _a2 = __read2([this.childNodes[i2++], this.childNodes[i2++]], 2), sub2 = _a2[0], sup4 = _a2[1];
             var _b2 = __read2([sub2.getOuterBBox(), sup4.getOuterBBox()], 2), subbox = _b2[0], supbox = _b2[1];
             var _c = __read2([subbox.rscale, supbox.rscale], 2), subr = _c[0], supr = _c[1];
-            var w2 = Math.max(subbox.w * subr, supbox.w * supr);
+            var w = Math.max(subbox.w * subr, supbox.w * supr);
             sub2.toSVG(subRow);
             sup4.toSVG(supRow);
-            sub2.place(dx + alignX(subbox.w * subr, w2), 0);
-            sup4.place(dx + alignX(supbox.w * supr, w2), 0);
-            dx += w2;
+            sub2.place(dx + alignX(subbox.w * subr, w), 0);
+            sup4.place(dx + alignX(supbox.w * supr, w), 0);
+            dx += w;
           }
           return x2 + dx;
         };
@@ -62250,10 +62617,10 @@ self.onmessage = function (e) {
           class_1.prototype.stretchRows = function() {
             var equal = this.node.attributes.get("equalrows");
             var HD = equal ? this.getEqualRowHeight() : 0;
-            var _a2 = equal ? this.getTableData() : { H: [0], D: [0] }, H = _a2.H, D = _a2.D;
+            var _a2 = equal ? this.getTableData() : { H: [0], D: [0] }, H = _a2.H, D2 = _a2.D;
             var rows = this.tableRows;
             for (var i2 = 0; i2 < this.numRows; i2++) {
-              var hd = equal ? [(HD + H[i2] - D[i2]) / 2, (HD - H[i2] + D[i2]) / 2] : null;
+              var hd = equal ? [(HD + H[i2] - D2[i2]) / 2, (HD - H[i2] + D2[i2]) / 2] : null;
               rows[i2].stretchChildren(hd);
             }
           };
@@ -62300,9 +62667,9 @@ self.onmessage = function (e) {
                       var child = cell2.childNodes[0];
                       var noStretch = child.stretch.dir === 0;
                       if (all2 || noStretch) {
-                        var w2 = child.getBBox(noStretch).w;
-                        if (w2 > W) {
-                          W = w2;
+                        var w = child.getBBox(noStretch).w;
+                        if (w > W) {
+                          W = w;
                         }
                       }
                     }
@@ -62338,40 +62705,40 @@ self.onmessage = function (e) {
               return this.data;
             }
             var H = new Array(this.numRows).fill(0);
-            var D = new Array(this.numRows).fill(0);
+            var D2 = new Array(this.numRows).fill(0);
             var W = new Array(this.numCols).fill(0);
             var NH = new Array(this.numRows);
             var ND = new Array(this.numRows);
             var LW = [0];
             var rows = this.tableRows;
-            for (var j2 = 0; j2 < rows.length; j2++) {
-              var M2 = 0;
-              var row2 = rows[j2];
+            for (var j = 0; j < rows.length; j++) {
+              var M = 0;
+              var row2 = rows[j];
               var align = row2.node.attributes.get("rowalign");
               for (var i2 = 0; i2 < row2.numCells; i2++) {
                 var cell2 = row2.getChild(i2);
-                M2 = this.updateHDW(cell2, i2, j2, align, H, D, W, M2);
+                M = this.updateHDW(cell2, i2, j, align, H, D2, W, M);
                 this.recordPWidthCell(cell2, i2);
               }
-              NH[j2] = H[j2];
-              ND[j2] = D[j2];
+              NH[j] = H[j];
+              ND[j] = D2[j];
               if (row2.labeled) {
-                M2 = this.updateHDW(row2.childNodes[0], 0, j2, align, H, D, LW, M2);
+                M = this.updateHDW(row2.childNodes[0], 0, j, align, H, D2, LW, M);
               }
-              this.extendHD(j2, H, D, M2);
-              this.extendHD(j2, NH, ND, M2);
+              this.extendHD(j, H, D2, M);
+              this.extendHD(j, NH, ND, M);
             }
             var L = LW[0];
-            this.data = { H, D, W, NH, ND, L };
+            this.data = { H, D: D2, W, NH, ND, L };
             return this.data;
           };
-          class_1.prototype.updateHDW = function(cell2, i2, j2, align, H, D, W, M2) {
-            var _a2 = cell2.getBBox(), h = _a2.h, d = _a2.d, w2 = _a2.w;
+          class_1.prototype.updateHDW = function(cell2, i2, j, align, H, D2, W, M) {
+            var _a2 = cell2.getBBox(), h = _a2.h, d = _a2.d, w = _a2.w;
             var scale = cell2.parent.bbox.rscale;
             if (cell2.parent.bbox.rscale !== 1) {
               h *= scale;
               d *= scale;
-              w2 *= scale;
+              w *= scale;
             }
             if (this.node.getProperty("useHeight")) {
               if (h < 0.75)
@@ -62385,22 +62752,22 @@ self.onmessage = function (e) {
               m = h + d;
               h = d = 0;
             }
-            if (h > H[j2])
-              H[j2] = h;
-            if (d > D[j2])
-              D[j2] = d;
-            if (m > M2)
-              M2 = m;
-            if (W && w2 > W[i2])
-              W[i2] = w2;
-            return M2;
+            if (h > H[j])
+              H[j] = h;
+            if (d > D2[j])
+              D2[j] = d;
+            if (m > M)
+              M = m;
+            if (W && w > W[i2])
+              W[i2] = w;
+            return M;
           };
-          class_1.prototype.extendHD = function(i2, H, D, M2) {
-            var d = (M2 - (H[i2] + D[i2])) / 2;
+          class_1.prototype.extendHD = function(i2, H, D2, M) {
+            var d = (M - (H[i2] + D2[i2])) / 2;
             if (d < 1e-5)
               return;
             H[i2] += d;
-            D[i2] += d;
+            D2[i2] += d;
           };
           class_1.prototype.recordPWidthCell = function(cell2, i2) {
             if (cell2.childNodes[0] && cell2.childNodes[0].getBBox().pwidth) {
@@ -62408,20 +62775,20 @@ self.onmessage = function (e) {
             }
           };
           class_1.prototype.computeBBox = function(bbox, _recompute) {
-            var _a2 = this.getTableData(), H = _a2.H, D = _a2.D;
+            var _a2 = this.getTableData(), H = _a2.H, D2 = _a2.D;
             var height, width;
             if (this.node.attributes.get("equalrows")) {
               var HD = this.getEqualRowHeight();
               height = (0, numeric_js_1.sum)([].concat(this.rLines, this.rSpace)) + HD * this.numRows;
             } else {
-              height = (0, numeric_js_1.sum)(H.concat(D, this.rLines, this.rSpace));
+              height = (0, numeric_js_1.sum)(H.concat(D2, this.rLines, this.rSpace));
             }
             height += 2 * (this.fLine + this.fSpace[1]);
             var CW = this.getComputedWidths();
             width = (0, numeric_js_1.sum)(CW.concat(this.cLines, this.cSpace)) + 2 * (this.fLine + this.fSpace[0]);
-            var w2 = this.node.attributes.get("width");
-            if (w2 !== "auto") {
-              width = Math.max(this.length2em(w2, 0) + 2 * this.fLine, width);
+            var w = this.node.attributes.get("width");
+            if (w !== "auto") {
+              width = Math.max(this.length2em(w, 0) + 2 * this.fLine, width);
             }
             var _b2 = __read2(this.getBBoxHD(height), 2), h = _b2[0], d = _b2[1];
             bbox.h = h;
@@ -62430,7 +62797,7 @@ self.onmessage = function (e) {
             var _c = __read2(this.getBBoxLR(), 2), L = _c[0], R = _c[1];
             bbox.L = L;
             bbox.R = R;
-            if (!(0, string_js_1.isPercent)(w2)) {
+            if (!(0, string_js_1.isPercent)(w)) {
               this.setColumnPWidths();
             }
           };
@@ -62442,9 +62809,9 @@ self.onmessage = function (e) {
               this.bbox.pwidth = "";
               this.container.bbox.pwidth = "";
             }
-            var _a2 = this.bbox, w2 = _a2.w, L = _a2.L, R = _a2.R;
+            var _a2 = this.bbox, w = _a2.w, L = _a2.L, R = _a2.R;
             var labelInWidth = this.node.attributes.get("data-width-includes-label");
-            var W = Math.max(w2, this.length2em(width, Math.max(cwidth, L + w2 + R))) - (labelInWidth ? L + R : 0);
+            var W = Math.max(w, this.length2em(width, Math.max(cwidth, L + w + R))) - (labelInWidth ? L + R : 0);
             var cols = this.node.attributes.get("equalcolumns") ? Array(this.numCols).fill(this.percent(1 / Math.max(1, this.numCols))) : this.getColumnAttributes("columnwidth", 0);
             this.cWidths = this.getColumnWidthsFixed(cols, W);
             var CW = this.getComputedWidths();
@@ -62453,10 +62820,10 @@ self.onmessage = function (e) {
               this.bbox.w = this.pWidth;
             }
             this.setColumnPWidths();
-            if (this.pWidth !== w2) {
+            if (this.pWidth !== w) {
               this.parent.invalidateBBox();
             }
-            return this.pWidth !== w2;
+            return this.pWidth !== w;
           };
           class_1.prototype.setColumnPWidths = function() {
             var e_4, _a2;
@@ -62531,9 +62898,9 @@ self.onmessage = function (e) {
             return this.pWidth || this.getBBox().w;
           };
           class_1.prototype.getEqualRowHeight = function() {
-            var _a2 = this.getTableData(), H = _a2.H, D = _a2.D;
+            var _a2 = this.getTableData(), H = _a2.H, D2 = _a2.D;
             var HD = Array.from(H.keys()).map(function(i2) {
-              return H[i2] + D[i2];
+              return H[i2] + D2[i2];
             });
             return Math.max.apply(Math, HD);
           };
@@ -62571,8 +62938,8 @@ self.onmessage = function (e) {
             } else if ((0, string_js_1.isPercent)(width)) {
               cwidth = this.percent(1 / n);
             } else {
-              var w2 = (0, numeric_js_1.sum)([].concat(this.cLines, this.cSpace)) + 2 * this.fSpace[0];
-              cwidth = Math.max(0, this.length2em(width) - w2) / n;
+              var w = (0, numeric_js_1.sum)([].concat(this.cLines, this.cSpace)) + 2 * this.fSpace[0];
+              cwidth = Math.max(0, this.length2em(width) - w) / n;
             }
             return Array(this.numCols).fill(cwidth);
           };
@@ -62630,14 +62997,14 @@ self.onmessage = function (e) {
           };
           class_1.prototype.getVerticalPosition = function(i2, align) {
             var equal = this.node.attributes.get("equalrows");
-            var _a2 = this.getTableData(), H = _a2.H, D = _a2.D;
+            var _a2 = this.getTableData(), H = _a2.H, D2 = _a2.D;
             var HD = equal ? this.getEqualRowHeight() : 0;
             var space = this.getRowHalfSpacing();
             var y = this.fLine;
-            for (var j2 = 0; j2 < i2; j2++) {
-              y += space[j2] + (equal ? HD : H[j2] + D[j2]) + space[j2 + 1] + this.rLines[j2];
+            for (var j = 0; j < i2; j++) {
+              y += space[j] + (equal ? HD : H[j] + D2[j]) + space[j + 1] + this.rLines[j];
             }
-            var _b2 = __read2(equal ? [(HD + H[i2] - D[i2]) / 2, (HD - H[i2] + D[i2]) / 2] : [H[i2], D[i2]], 2), h = _b2[0], d = _b2[1];
+            var _b2 = __read2(equal ? [(HD + H[i2] - D2[i2]) / 2, (HD - H[i2] + D2[i2]) / 2] : [H[i2], D2[i2]], 2), h = _b2[0], d = _b2[1];
             var offset2 = {
               top: 0,
               center: space[i2] + (h + d) / 2,
@@ -63018,14 +63385,14 @@ self.onmessage = function (e) {
         SVGmtable2.prototype.placeRows = function(svg2) {
           var _a2, _b2, _c;
           var equal = this.node.attributes.get("equalrows");
-          var _d = this.getTableData(), H = _d.H, D = _d.D;
+          var _d = this.getTableData(), H = _d.H, D2 = _d.D;
           var HD = this.getEqualRowHeight();
           var rSpace = this.getRowHalfSpacing();
           var rLines = __spreadArray2(__spreadArray2([this.fLine], __read2(this.rLines), false), [this.fLine], false);
           var y = this.getBBox().h - rLines[0];
           for (var i2 = 0; i2 < this.numRows; i2++) {
             var row2 = this.childNodes[i2];
-            _a2 = __read2(this.getRowHD(equal, HD, H[i2], D[i2]), 2), row2.H = _a2[0], row2.D = _a2[1];
+            _a2 = __read2(this.getRowHD(equal, HD, H[i2], D2[i2]), 2), row2.H = _a2[0], row2.D = _a2[1];
             _b2 = __read2([rSpace[i2], rSpace[i2 + 1]], 2), row2.tSpace = _b2[0], row2.bSpace = _b2[1];
             _c = __read2([rLines[i2], rLines[i2 + 1]], 2), row2.tLine = _c[0], row2.bLine = _c[1];
             row2.toSVG(svg2);
@@ -63033,8 +63400,8 @@ self.onmessage = function (e) {
             y -= rSpace[i2] + row2.H + row2.D + rSpace[i2 + 1] + rLines[i2 + 1];
           }
         };
-        SVGmtable2.prototype.getRowHD = function(equal, HD, H, D) {
-          return equal ? [(HD + H - D) / 2, (HD - H + D) / 2] : [H, D];
+        SVGmtable2.prototype.getRowHD = function(equal, HD, H, D2) {
+          return equal ? [(HD + H - D2) / 2, (HD - H + D2) / 2] : [H, D2];
         };
         SVGmtable2.prototype.handleColor = function() {
           _super.prototype.handleColor.call(this);
@@ -63068,13 +63435,13 @@ self.onmessage = function (e) {
           if (!lines)
             return;
           var equal = this.node.attributes.get("equalrows");
-          var _a2 = this.getTableData(), H = _a2.H, D = _a2.D;
+          var _a2 = this.getTableData(), H = _a2.H, D2 = _a2.D;
           var HD = this.getEqualRowHeight();
           var rSpace = this.getRowHalfSpacing();
           var rLines = this.rLines;
           var y = this.getBBox().h - this.fLine;
           for (var i2 = 0; i2 < lines.length; i2++) {
-            var _b2 = __read2(this.getRowHD(equal, HD, H[i2], D[i2]), 2), rH = _b2[0], rD = _b2[1];
+            var _b2 = __read2(this.getRowHD(equal, HD, H[i2], D2[i2]), 2), rH = _b2[0], rD = _b2[1];
             y -= rSpace[i2] + rH + rD + rSpace[i2 + 1];
             if (lines[i2] !== "none") {
               this.adaptor.append(svg2, this.makeHLine(y, lines[i2], rLines[i2]));
@@ -63084,20 +63451,20 @@ self.onmessage = function (e) {
         };
         SVGmtable2.prototype.handleFrame = function(svg2) {
           if (this.frame && this.fLine) {
-            var _a2 = this.getBBox(), h = _a2.h, d = _a2.d, w2 = _a2.w;
+            var _a2 = this.getBBox(), h = _a2.h, d = _a2.d, w = _a2.w;
             var style2 = this.node.attributes.get("frame");
-            this.adaptor.append(svg2, this.makeFrame(w2, h, d, style2));
+            this.adaptor.append(svg2, this.makeFrame(w, h, d, style2));
           }
         };
         SVGmtable2.prototype.handlePWidth = function(svg2) {
           if (!this.pWidth) {
             return 0;
           }
-          var _a2 = this.getBBox(), w2 = _a2.w, L = _a2.L, R = _a2.R;
+          var _a2 = this.getBBox(), w = _a2.w, L = _a2.L, R = _a2.R;
           var W = L + this.pWidth + R;
           var align = this.getAlignShift()[0];
           var CW = Math.max(this.isTop ? W : 0, this.container.getWrapWidth(this.containerI)) - L - R;
-          var dw = w2 - (this.pWidth > CW ? CW : this.pWidth);
+          var dw = w - (this.pWidth > CW ? CW : this.pWidth);
           var dx = align === "left" ? 0 : align === "right" ? dw : dw / 2;
           if (dx) {
             var table2 = this.svg("g", {}, this.adaptor.childNodes(svg2));
@@ -63109,12 +63476,12 @@ self.onmessage = function (e) {
         SVGmtable2.prototype.lineClass = function(style2) {
           return CLASSPREFIX + style2;
         };
-        SVGmtable2.prototype.makeFrame = function(w2, h, d, style2) {
+        SVGmtable2.prototype.makeFrame = function(w, h, d, style2) {
           var t2 = this.fLine;
           return this.svg("rect", this.setLineThickness(t2, style2, {
             "data-frame": true,
             "class": this.lineClass(style2),
-            width: this.fixed(w2 - t2),
+            width: this.fixed(w - t2),
             height: this.fixed(h + d - t2),
             x: this.fixed(t2 / 2),
             y: this.fixed(t2 / 2 - d)
@@ -63122,27 +63489,27 @@ self.onmessage = function (e) {
         };
         SVGmtable2.prototype.makeVLine = function(x2, style2, t2) {
           var _a2 = this.getBBox(), h = _a2.h, d = _a2.d;
-          var dt = style2 === "dotted" ? t2 / 2 : 0;
+          var dt2 = style2 === "dotted" ? t2 / 2 : 0;
           var X2 = this.fixed(x2 + t2 / 2);
           return this.svg("line", this.setLineThickness(t2, style2, {
             "data-line": "v",
             "class": this.lineClass(style2),
             x1: X2,
-            y1: this.fixed(dt - d),
+            y1: this.fixed(dt2 - d),
             x2: X2,
-            y2: this.fixed(h - dt)
+            y2: this.fixed(h - dt2)
           }));
         };
         SVGmtable2.prototype.makeHLine = function(y, style2, t2) {
-          var w2 = this.getBBox().w;
-          var dt = style2 === "dotted" ? t2 / 2 : 0;
+          var w = this.getBBox().w;
+          var dt2 = style2 === "dotted" ? t2 / 2 : 0;
           var Y2 = this.fixed(y - t2 / 2);
           return this.svg("line", this.setLineThickness(t2, style2, {
             "data-line": "h",
             "class": this.lineClass(style2),
-            x1: this.fixed(dt),
+            x1: this.fixed(dt2),
             y1: Y2,
-            x2: this.fixed(w2 - dt),
+            x2: this.fixed(w - dt2),
             y2: Y2
           }));
         };
@@ -63186,8 +63553,8 @@ self.onmessage = function (e) {
         };
         SVGmtable2.prototype.topTable = function(svg2, labels, side) {
           var adaptor = this.adaptor;
-          var _a2 = this.getBBox(), h = _a2.h, d = _a2.d, w2 = _a2.w, L = _a2.L, R = _a2.R;
-          var W = L + (this.pWidth || w2) + R;
+          var _a2 = this.getBBox(), h = _a2.h, d = _a2.d, w = _a2.w, L = _a2.L, R = _a2.R;
+          var W = L + (this.pWidth || w) + R;
           var LW = this.getTableData().L;
           var _b2 = __read2(this.getPadAlignShift(side), 3), align = _b2[1], shift2 = _b2[2];
           var dx = shift2 + (align === "right" ? -W : align === "center" ? -W / 2 : 0) + L;
@@ -63211,8 +63578,8 @@ self.onmessage = function (e) {
         };
         SVGmtable2.prototype.subTable = function(svg2, labels, side, dx) {
           var adaptor = this.adaptor;
-          var _a2 = this.getBBox(), w2 = _a2.w, L = _a2.L, R = _a2.R;
-          var W = L + (this.pWidth || w2) + R;
+          var _a2 = this.getBBox(), w = _a2.w, L = _a2.L, R = _a2.R;
+          var W = L + (this.pWidth || w) + R;
           var labelW = this.getTableData().L;
           var align = this.getAlignShift()[0];
           var CW = Math.max(W, this.container.getWrapWidth(this.containerI));
@@ -63353,7 +63720,7 @@ self.onmessage = function (e) {
             var nodeCount = this.childNodes.length;
             if (count && nodeCount > 1) {
               if (HD === null) {
-                var H = 0, D = 0;
+                var H = 0, D2 = 0;
                 var all2 = count > 1 && count === nodeCount;
                 try {
                   for (var children_2 = __values2(children2), children_2_1 = children_2.next(); !children_2_1.done; children_2_1 = children_2.next()) {
@@ -63365,8 +63732,8 @@ self.onmessage = function (e) {
                       if (h > H) {
                         H = h;
                       }
-                      if (d > D) {
-                        D = d;
+                      if (d > D2) {
+                        D2 = d;
                       }
                     }
                   }
@@ -63379,7 +63746,7 @@ self.onmessage = function (e) {
                     if (e_2) throw e_2.error;
                   }
                 }
-                HD = [H, D];
+                HD = [H, D2];
               }
               try {
                 for (var stretchy_1 = __values2(stretchy), stretchy_1_1 = stretchy_1.next(); !stretchy_1_1.done; stretchy_1_1 = stretchy_1.next()) {
@@ -63715,12 +64082,12 @@ self.onmessage = function (e) {
           }
         };
         SVGmtr2.prototype.placeCell = function(cell2, sizes) {
-          var x2 = sizes.x, y = sizes.y, lSpace = sizes.lSpace, w2 = sizes.w, rSpace = sizes.rSpace, lLine = sizes.lLine, rLine = sizes.rLine;
+          var x2 = sizes.x, y = sizes.y, lSpace = sizes.lSpace, w = sizes.w, rSpace = sizes.rSpace, lLine = sizes.lLine, rLine = sizes.rLine;
           var scale = 1 / this.getBBox().rscale;
           var _a2 = __read2([this.H * scale, this.D * scale], 2), h = _a2[0], d = _a2[1];
           var _b2 = __read2([this.tSpace * scale, this.bSpace * scale], 2), t2 = _b2[0], b = _b2[1];
-          var _c = __read2(cell2.placeCell(x2 + lSpace, y, w2, h, d), 2), dx = _c[0], dy = _c[1];
-          var W = lSpace + w2 + rSpace;
+          var _c = __read2(cell2.placeCell(x2 + lSpace, y, w, h, d), 2), dx = _c[0], dy = _c[1];
+          var W = lSpace + w + rSpace;
           cell2.placeColor(-(dx + lSpace + lLine / 2), -(d + b + dy), W + (lLine + rLine) / 2, h + d + t2 + b);
           return W + rLine;
         };
@@ -63731,10 +64098,10 @@ self.onmessage = function (e) {
           if (child && adaptor.kind(child) === "rect" && adaptor.getAttribute(child, "data-bgcolor")) {
             var _a2 = __read2([this.tLine / 2 * scale, this.bLine / 2 * scale], 2), TL = _a2[0], BL = _a2[1];
             var _b2 = __read2([this.tSpace * scale, this.bSpace * scale], 2), TS = _b2[0], BS = _b2[1];
-            var _c = __read2([this.H * scale, this.D * scale], 2), H = _c[0], D = _c[1];
-            adaptor.setAttribute(child, "y", this.fixed(-(D + BS + BL)));
+            var _c = __read2([this.H * scale, this.D * scale], 2), H = _c[0], D2 = _c[1];
+            adaptor.setAttribute(child, "y", this.fixed(-(D2 + BS + BL)));
             adaptor.setAttribute(child, "width", this.fixed(this.parent.getWidth() * scale));
-            adaptor.setAttribute(child, "height", this.fixed(TL + TS + H + D + BS + BL));
+            adaptor.setAttribute(child, "height", this.fixed(TL + TS + H + D2 + BS + BL));
           }
         };
         SVGmtr2.kind = mtr_js_3.MmlMtr.prototype.kind;
@@ -63933,14 +64300,14 @@ self.onmessage = function (e) {
         function SVGmtd2() {
           return _super !== null && _super.apply(this, arguments) || this;
         }
-        SVGmtd2.prototype.placeCell = function(x2, y, W, H, D) {
+        SVGmtd2.prototype.placeCell = function(x2, y, W, H, D2) {
           var bbox = this.getBBox();
           var h = Math.max(bbox.h, 0.75);
           var d = Math.max(bbox.d, 0.25);
           var calign = this.node.attributes.get("columnalign");
           var ralign = this.node.attributes.get("rowalign");
           var alignX = this.getAlignX(W, bbox, calign);
-          var alignY = this.getAlignY(H, D, h, d, ralign);
+          var alignY = this.getAlignY(H, D2, h, d, ralign);
           this.place(x2 + alignX, y + alignY);
           return [alignX, alignY];
         };
@@ -64232,9 +64599,9 @@ self.onmessage = function (e) {
         SVGmaction2.prototype.toSVG = function(parent) {
           var svg2 = this.standardSVGnode(parent);
           var child = this.selected;
-          var _a2 = child.getOuterBBox(), h = _a2.h, d = _a2.d, w2 = _a2.w;
+          var _a2 = child.getOuterBBox(), h = _a2.h, d = _a2.d, w = _a2.w;
           this.adaptor.append(this.element, this.svg("rect", {
-            width: this.fixed(w2),
+            width: this.fixed(w),
             height: this.fixed(h + d),
             y: this.fixed(-d),
             fill: "none",
@@ -64433,8 +64800,8 @@ self.onmessage = function (e) {
         exports2.arrowBBoxHD = arrowBBoxHD;
         var arrowBBoxW = function(node2, TRBL) {
           if (node2.childNodes[0]) {
-            var w2 = node2.childNodes[0].getBBox().w;
-            TRBL[1] = TRBL[3] = Math.max(0, node2.thickness * node2.arrowhead.y - w2 / 2);
+            var w = node2.childNodes[0].getBBox().w;
+            TRBL[1] = TRBL[3] = Math.max(0, node2.thickness * node2.arrowhead.y - w / 2);
           }
           return TRBL;
         };
@@ -64554,8 +64921,8 @@ self.onmessage = function (e) {
             var _a2 = __read2(exports2.arrowDef[name2], 4), angle2 = _a2[0], double = _a2[1], isVertical = _a2[2], remove2 = _a2[3];
             return [name2 + "arrow", {
               renderer: function(node2, _child) {
-                var _a3 = node2.getBBox(), w2 = _a3.w, h = _a3.h, d = _a3.d;
-                var _b2 = __read2(isVertical ? [h + d, "X"] : [w2, "Y"], 2), W = _b2[0], offset2 = _b2[1];
+                var _a3 = node2.getBBox(), w = _a3.w, h = _a3.h, d = _a3.d;
+                var _b2 = __read2(isVertical ? [h + d, "X"] : [w, "Y"], 2), W = _b2[0], offset2 = _b2[1];
                 var dd2 = node2.getOffset(offset2);
                 var arrow2 = node2.arrow(W, angle2, double, offset2, dd2);
                 render2(node2, arrow2);
@@ -64592,18 +64959,18 @@ self.onmessage = function (e) {
           d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
         };
       })();
-      var __createBinding2 = menclose$1 && menclose$1.__createBinding || (Object.create ? (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        var desc = Object.getOwnPropertyDescriptor(m, k);
+      var __createBinding2 = menclose$1 && menclose$1.__createBinding || (Object.create ? (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        var desc = Object.getOwnPropertyDescriptor(m, k2);
         if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
           desc = { enumerable: true, get: function() {
-            return m[k];
+            return m[k2];
           } };
         }
-        Object.defineProperty(o, k2, desc);
-      }) : (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        o[k2] = m[k];
+        Object.defineProperty(o, k22, desc);
+      }) : (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        o[k22] = m[k2];
       }));
       var __setModuleDefault2 = menclose$1 && menclose$1.__setModuleDefault || (Object.create ? (function(o, v) {
         Object.defineProperty(o, "default", { enumerable: true, value: v });
@@ -64614,7 +64981,7 @@ self.onmessage = function (e) {
         if (mod2 && mod2.__esModule) return mod2;
         var result2 = {};
         if (mod2 != null) {
-          for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
+          for (var k2 in mod2) if (k2 !== "default" && Object.prototype.hasOwnProperty.call(mod2, k2)) __createBinding2(result2, mod2, k2);
         }
         __setModuleDefault2(result2, mod2);
         return result2;
@@ -64765,8 +65132,8 @@ self.onmessage = function (e) {
             try {
               for (var _c = __values2(Object.keys(this.notations)), _d = _c.next(); !_d.done; _d = _c.next()) {
                 var name_3 = _d.value;
-                var init = this.notations[name_3].init;
-                init && init(this);
+                var init2 = this.notations[name_3].init;
+                init2 && init2(this);
               }
             } catch (e_4_1) {
               e_4 = { error: e_4_1 };
@@ -64846,8 +65213,8 @@ self.onmessage = function (e) {
             var d = (direction === "X" ? R - L : B - T) / 2;
             return Math.abs(d) > 1e-3 ? d : 0;
           };
-          class_1.prototype.getArgMod = function(w2, h) {
-            return [Math.atan2(h, w2), Math.sqrt(w2 * w2 + h * h)];
+          class_1.prototype.getArgMod = function(w, h) {
+            return [Math.atan2(h, w), Math.sqrt(w * w + h * h)];
           };
           class_1.prototype.arrow = function(_w, _a2, _double, _offset, _dist) {
             return null;
@@ -64855,18 +65222,18 @@ self.onmessage = function (e) {
           class_1.prototype.arrowData = function() {
             var _b2 = __read2([this.padding, this.thickness], 2), p = _b2[0], t2 = _b2[1];
             var r2 = t2 * (this.arrowhead.x + Math.max(1, this.arrowhead.dx));
-            var _c = this.childNodes[0].getBBox(), h = _c.h, d = _c.d, w2 = _c.w;
+            var _c = this.childNodes[0].getBBox(), h = _c.h, d = _c.d, w = _c.w;
             var H = h + d;
-            var R = Math.sqrt(H * H + w2 * w2);
-            var x2 = Math.max(p, r2 * w2 / R);
+            var R = Math.sqrt(H * H + w * w);
+            var x2 = Math.max(p, r2 * w / R);
             var y = Math.max(p, r2 * H / R);
-            var _d = __read2(this.getArgMod(w2 + 2 * x2, H + 2 * y), 2), a = _d[0], W = _d[1];
+            var _d = __read2(this.getArgMod(w + 2 * x2, H + 2 * y), 2), a = _d[0], W = _d[1];
             return { a, W, x: x2, y };
           };
           class_1.prototype.arrowAW = function() {
-            var _b2 = this.childNodes[0].getBBox(), h = _b2.h, d = _b2.d, w2 = _b2.w;
+            var _b2 = this.childNodes[0].getBBox(), h = _b2.h, d = _b2.d, w = _b2.w;
             var _c = __read2(this.TRBL, 4), T = _c[0], R = _c[1], B = _c[2], L = _c[3];
-            return this.getArgMod(L + w2 + R, T + h + d + B);
+            return this.getArgMod(L + w + R, T + h + d + B);
           };
           class_1.prototype.createMsqrt = function(child) {
             var mmlFactory = this.node.factory;
@@ -64894,18 +65261,18 @@ self.onmessage = function (e) {
       if (hasRequiredNotation) return Notation;
       hasRequiredNotation = 1;
       (function(exports2) {
-        var __createBinding2 = Notation && Notation.__createBinding || (Object.create ? (function(o, m, k, k2) {
-          if (k2 === void 0) k2 = k;
-          var desc = Object.getOwnPropertyDescriptor(m, k);
+        var __createBinding2 = Notation && Notation.__createBinding || (Object.create ? (function(o, m, k2, k22) {
+          if (k22 === void 0) k22 = k2;
+          var desc = Object.getOwnPropertyDescriptor(m, k2);
           if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
             desc = { enumerable: true, get: function() {
-              return m[k];
+              return m[k2];
             } };
           }
-          Object.defineProperty(o, k2, desc);
-        }) : (function(o, m, k, k2) {
-          if (k2 === void 0) k2 = k;
-          o[k2] = m[k];
+          Object.defineProperty(o, k22, desc);
+        }) : (function(o, m, k2, k22) {
+          if (k22 === void 0) k22 = k2;
+          o[k22] = m[k2];
         }));
         var __setModuleDefault2 = Notation && Notation.__setModuleDefault || (Object.create ? (function(o, v) {
           Object.defineProperty(o, "default", { enumerable: true, value: v });
@@ -64916,7 +65283,7 @@ self.onmessage = function (e) {
           if (mod2 && mod2.__esModule) return mod2;
           var result2 = {};
           if (mod2 != null) {
-            for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
+            for (var k2 in mod2) if (k2 !== "default" && Object.prototype.hasOwnProperty.call(mod2, k2)) __createBinding2(result2, mod2, k2);
           }
           __setModuleDefault2(result2, mod2);
           return result2;
@@ -64929,38 +65296,38 @@ self.onmessage = function (e) {
         var Notation$12 = __importStar2(requireNotation$1());
         __exportStar2(requireNotation$1(), exports2);
         exports2.computeLineData = {
-          top: function(h, _d, w2, t2) {
-            return [0, h - t2, w2, h - t2];
+          top: function(h, _d, w, t2) {
+            return [0, h - t2, w, h - t2];
           },
-          right: function(h, d, w2, t2) {
-            return [w2 - t2, -d, w2 - t2, h];
+          right: function(h, d, w, t2) {
+            return [w - t2, -d, w - t2, h];
           },
-          bottom: function(_h, d, w2, t2) {
-            return [0, t2 - d, w2, t2 - d];
+          bottom: function(_h, d, w, t2) {
+            return [0, t2 - d, w, t2 - d];
           },
           left: function(h, d, _w, t2) {
             return [t2, -d, t2, h];
           },
-          vertical: function(h, d, w2, _t) {
-            return [w2 / 2, h, w2 / 2, -d];
+          vertical: function(h, d, w, _t2) {
+            return [w / 2, h, w / 2, -d];
           },
-          horizontal: function(h, d, w2, _t) {
-            return [0, (h - d) / 2, w2, (h - d) / 2];
+          horizontal: function(h, d, w, _t2) {
+            return [0, (h - d) / 2, w, (h - d) / 2];
           },
-          up: function(h, d, w2, t2) {
-            return [t2, t2 - d, w2 - t2, h - t2];
+          up: function(h, d, w, t2) {
+            return [t2, t2 - d, w - t2, h - t2];
           },
-          down: function(h, d, w2, t2) {
-            return [t2, h - t2, w2 - t2, t2 - d];
+          down: function(h, d, w, t2) {
+            return [t2, h - t2, w - t2, t2 - d];
           }
         };
         var lineData = function(node2, kind, offset2) {
           if (offset2 === void 0) {
             offset2 = "";
           }
-          var _a2 = node2.getBBox(), h = _a2.h, d = _a2.d, w2 = _a2.w;
+          var _a2 = node2.getBBox(), h = _a2.h, d = _a2.d, w = _a2.w;
           var t2 = node2.thickness / 2;
-          return (0, exports2.lineOffset)(exports2.computeLineData[kind](h, d, w2, t2), node2, offset2);
+          return (0, exports2.lineOffset)(exports2.computeLineData[kind](h, d, w, t2), node2, offset2);
         };
         exports2.lineData = lineData;
         var lineOffset = function(data, node2, offset2) {
@@ -65125,18 +65492,18 @@ self.onmessage = function (e) {
           d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
         };
       })();
-      var __createBinding2 = menclose$2 && menclose$2.__createBinding || (Object.create ? (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        var desc = Object.getOwnPropertyDescriptor(m, k);
+      var __createBinding2 = menclose$2 && menclose$2.__createBinding || (Object.create ? (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        var desc = Object.getOwnPropertyDescriptor(m, k2);
         if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
           desc = { enumerable: true, get: function() {
-            return m[k];
+            return m[k2];
           } };
         }
-        Object.defineProperty(o, k2, desc);
-      }) : (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        o[k2] = m[k];
+        Object.defineProperty(o, k22, desc);
+      }) : (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        o[k22] = m[k2];
       }));
       var __setModuleDefault2 = menclose$2 && menclose$2.__setModuleDefault || (Object.create ? (function(o, v) {
         Object.defineProperty(o, "default", { enumerable: true, value: v });
@@ -65147,7 +65514,7 @@ self.onmessage = function (e) {
         if (mod2 && mod2.__esModule) return mod2;
         var result2 = {};
         if (mod2 != null) {
-          for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
+          for (var k2 in mod2) if (k2 !== "default" && Object.prototype.hasOwnProperty.call(mod2, k2)) __createBinding2(result2, mod2, k2);
         }
         __setModuleDefault2(result2, mod2);
         return result2;
@@ -65228,20 +65595,20 @@ self.onmessage = function (e) {
           if (dist2 === void 0) {
             dist2 = 0;
           }
-          var _a2 = this.getBBox(), w2 = _a2.w, h = _a2.h, d = _a2.d;
-          var dw = (W - w2) / 2;
+          var _a2 = this.getBBox(), w = _a2.w, h = _a2.h, d = _a2.d;
+          var dw = (W - w) / 2;
           var m = (h - d) / 2;
           var t2 = this.thickness;
           var t22 = t2 / 2;
           var _b2 = __read2([t2 * this.arrowhead.x, t2 * this.arrowhead.y, t2 * this.arrowhead.dx], 3), x2 = _b2[0], y = _b2[1], dx = _b2[2];
-          var arrow2 = double ? this.fill("M", w2 + dw, m, "l", -(x2 + dx), y, "l", dx, t22 - y, "L", x2 - dw, m + t22, "l", dx, y - t22, "l", -(x2 + dx), -y, "l", x2 + dx, -y, "l", -dx, y - t22, "L", w2 + dw - x2, m - t22, "l", -dx, t22 - y, "Z") : this.fill("M", w2 + dw, m, "l", -(x2 + dx), y, "l", dx, t22 - y, "L", -dw, m + t22, "l", 0, -t2, "L", w2 + dw - x2, m - t22, "l", -dx, t22 - y, "Z");
+          var arrow2 = double ? this.fill("M", w + dw, m, "l", -(x2 + dx), y, "l", dx, t22 - y, "L", x2 - dw, m + t22, "l", dx, y - t22, "l", -(x2 + dx), -y, "l", x2 + dx, -y, "l", -dx, y - t22, "L", w + dw - x2, m - t22, "l", -dx, t22 - y, "Z") : this.fill("M", w + dw, m, "l", -(x2 + dx), y, "l", dx, t22 - y, "L", -dw, m + t22, "l", 0, -t2, "L", w + dw - x2, m - t22, "l", -dx, t22 - y, "Z");
           var transform = [];
           if (dist2) {
             transform.push(offset2 === "X" ? "translate(".concat(this.fixed(-dist2), " 0)") : "translate(0 ".concat(this.fixed(dist2), ")"));
           }
           if (a) {
             var A2 = this.jax.fixed(-a * 180 / Math.PI);
-            transform.push("rotate(".concat(A2, " ").concat(this.fixed(w2 / 2), " ").concat(this.fixed(m), ")"));
+            transform.push("rotate(".concat(A2, " ").concat(this.fixed(w / 2), " ").concat(this.fixed(m), ")"));
           }
           if (transform.length) {
             this.adaptor.setAttribute(arrow2, "transform", transform.join(" "));
@@ -65258,7 +65625,7 @@ self.onmessage = function (e) {
             "stroke-width": this.fixed(this.thickness)
           });
         };
-        SVGmenclose2.prototype.box = function(w2, h, d, r2) {
+        SVGmenclose2.prototype.box = function(w, h, d, r2) {
           if (r2 === void 0) {
             r2 = 0;
           }
@@ -65266,7 +65633,7 @@ self.onmessage = function (e) {
           var def = {
             x: this.fixed(t2 / 2),
             y: this.fixed(t2 / 2 - d),
-            width: this.fixed(w2 - t2),
+            width: this.fixed(w - t2),
             height: this.fixed(h + d - t2),
             fill: "none",
             "stroke-width": this.fixed(t2)
@@ -65276,12 +65643,12 @@ self.onmessage = function (e) {
           }
           return this.svg("rect", def);
         };
-        SVGmenclose2.prototype.ellipse = function(w2, h, d) {
+        SVGmenclose2.prototype.ellipse = function(w, h, d) {
           var t2 = this.thickness;
           return this.svg("ellipse", {
-            rx: this.fixed((w2 - t2) / 2),
+            rx: this.fixed((w - t2) / 2),
             ry: this.fixed((h + d - t2) / 2),
-            cx: this.fixed(w2 / 2),
+            cx: this.fixed(w / 2),
             cy: this.fixed((h - d) / 2),
             "fill": "none",
             "stroke-width": this.fixed(t2)
@@ -65339,8 +65706,8 @@ self.onmessage = function (e) {
           }],
           ["box", {
             renderer: function(node2, _child) {
-              var _a2 = node2.getBBox(), w2 = _a2.w, h = _a2.h, d = _a2.d;
-              node2.adaptor.append(node2.element, node2.box(w2, h, d));
+              var _a2 = node2.getBBox(), w = _a2.w, h = _a2.h, d = _a2.d;
+              node2.adaptor.append(node2.element, node2.box(w, h, d));
             },
             bbox: Notation2.fullBBox,
             border: Notation2.fullBorder,
@@ -65348,27 +65715,27 @@ self.onmessage = function (e) {
           }],
           ["roundedbox", {
             renderer: function(node2, _child) {
-              var _a2 = node2.getBBox(), w2 = _a2.w, h = _a2.h, d = _a2.d;
+              var _a2 = node2.getBBox(), w = _a2.w, h = _a2.h, d = _a2.d;
               var r2 = node2.thickness + node2.padding;
-              node2.adaptor.append(node2.element, node2.box(w2, h, d, r2));
+              node2.adaptor.append(node2.element, node2.box(w, h, d, r2));
             },
             bbox: Notation2.fullBBox
           }],
           ["circle", {
             renderer: function(node2, _child) {
-              var _a2 = node2.getBBox(), w2 = _a2.w, h = _a2.h, d = _a2.d;
-              node2.adaptor.append(node2.element, node2.ellipse(w2, h, d));
+              var _a2 = node2.getBBox(), w = _a2.w, h = _a2.h, d = _a2.d;
+              node2.adaptor.append(node2.element, node2.ellipse(w, h, d));
             },
             bbox: Notation2.fullBBox
           }],
           ["phasorangle", {
             renderer: function(node2, _child) {
-              var _a2 = node2.getBBox(), w2 = _a2.w, h = _a2.h, d = _a2.d;
+              var _a2 = node2.getBBox(), w = _a2.w, h = _a2.h, d = _a2.d;
               var a = node2.getArgMod(1.75 * node2.padding, h + d)[0];
               var t2 = node2.thickness / 2;
               var HD = h + d;
               var cos = Math.cos(a);
-              node2.adaptor.append(node2.element, node2.path("mitre", "M", w2, t2 - d, "L", t2 + cos * t2, t2 - d, "L", cos * HD + t2, HD - d - t2));
+              node2.adaptor.append(node2.element, node2.path("mitre", "M", w, t2 - d, "L", t2 + cos * t2, t2 - d, "L", cos * HD + t2, HD - d - t2));
             },
             bbox: function(node2) {
               var p = node2.padding / 2;
@@ -65395,10 +65762,10 @@ self.onmessage = function (e) {
           Notation2.DiagonalArrow("northwestsoutheast"),
           ["longdiv", {
             renderer: function(node2, _child) {
-              var _a2 = node2.getBBox(), w2 = _a2.w, h = _a2.h, d = _a2.d;
+              var _a2 = node2.getBBox(), w = _a2.w, h = _a2.h, d = _a2.d;
               var t2 = node2.thickness / 2;
               var p = node2.padding;
-              node2.adaptor.append(node2.element, node2.path("round", "M", t2, t2 - d, "a", p - t2 / 2, (h + d) / 2 - 4 * t2, 0, "0,1", 0, h + d - 2 * t2, "L", w2 - t2, h - t2));
+              node2.adaptor.append(node2.element, node2.path("round", "M", t2, t2 - d, "a", p - t2 / 2, (h + d) / 2 - 4 * t2, 0, "0,1", 0, h + d - 2 * t2, "L", w - t2, h - t2));
             },
             bbox: function(node2) {
               var p = node2.padding;
@@ -65461,8 +65828,8 @@ self.onmessage = function (e) {
           }
           class_1.prototype.computeBBox = function(bbox, _recompute) {
             if (this.childNodes.length) {
-              var _a2 = this.childNodes[0].getBBox(), w2 = _a2.w, h = _a2.h, d = _a2.d;
-              bbox.w = w2;
+              var _a2 = this.childNodes[0].getBBox(), w = _a2.w, h = _a2.h, d = _a2.d;
+              bbox.w = w;
               bbox.h = h;
               bbox.d = d;
             }
@@ -65665,18 +66032,18 @@ self.onmessage = function (e) {
           var xml = this.adaptor.clone(this.node.getXML());
           var em = this.jax.math.metrics.em * this.jax.math.metrics.scale;
           var scale = this.fixed(1 / em);
-          var _a2 = this.getBBox(), w2 = _a2.w, h = _a2.h, d = _a2.d;
+          var _a2 = this.getBBox(), w = _a2.w, h = _a2.h, d = _a2.d;
           this.element = this.adaptor.append(parent, this.svg("foreignObject", {
             "data-mjx-xml": true,
             y: this.jax.fixed(-h * em) + "px",
-            width: this.jax.fixed(w2 * em) + "px",
+            width: this.jax.fixed(w * em) + "px",
             height: this.jax.fixed((h + d) * em) + "px",
             transform: "scale(".concat(scale, ") matrix(1 0 0 -1 0 0)")
           }, [xml]));
         };
         SVGxml2.prototype.computeBBox = function(bbox, _recompute) {
-          var _a2 = this.jax.measureXMLnode(this.node.getXML()), w2 = _a2.w, h = _a2.h, d = _a2.d;
-          bbox.w = w2;
+          var _a2 = this.jax.measureXMLnode(this.node.getXML()), w = _a2.w, h = _a2.h, d = _a2.d;
+          bbox.w = w;
           bbox.h = h;
           bbox.d = d;
         };
@@ -65893,10 +66260,10 @@ self.onmessage = function (e) {
           }
           var _a2 = this.node.attributes.getList("src", "alt"), src = _a2.src, alt = _a2.alt;
           var h = this.fixed(this.height);
-          var w2 = this.fixed(this.width);
+          var w = this.fixed(this.width);
           var y = this.fixed(this.height + (this.valign || 0));
           var properties = {
-            width: w2,
+            width: w,
             height: h,
             transform: "translate(0 " + y + ") matrix(1 0 0 -1 0 0)",
             preserveAspectRatio: "none",
@@ -66169,24 +66536,24 @@ self.onmessage = function (e) {
             var text2 = this.node.getText();
             if (variant === "-explicitFont") {
               var font = this.jax.getFontData(this.parent.styles);
-              var _b2 = this.jax.measureText(text2, variant, font), w2 = _b2.w, h = _b2.h, d = _b2.d;
+              var _b2 = this.jax.measureText(text2, variant, font), w = _b2.w, h = _b2.h, d = _b2.d;
               bbox.h = h;
               bbox.d = d;
-              bbox.w = w2;
+              bbox.w = w;
             } else {
               var chars = this.remappedText(text2, variant);
               bbox.empty();
               try {
                 for (var chars_1 = __values2(chars), chars_1_1 = chars_1.next(); !chars_1_1.done; chars_1_1 = chars_1.next()) {
                   var char = chars_1_1.value;
-                  var _c = __read2(this.getVariantChar(variant, char), 4), h = _c[0], d = _c[1], w2 = _c[2], data = _c[3];
+                  var _c = __read2(this.getVariantChar(variant, char), 4), h = _c[0], d = _c[1], w = _c[2], data = _c[3];
                   if (data.unknown) {
                     var cbox = this.jax.measureText(String.fromCodePoint(char), variant);
-                    w2 = cbox.w;
+                    w = cbox.w;
                     h = cbox.h;
                     d = cbox.d;
                   }
-                  bbox.w += w2;
+                  bbox.w += w;
                   if (h > bbox.h)
                     bbox.h = h;
                   if (d > bbox.d)
@@ -66428,18 +66795,18 @@ self.onmessage = function (e) {
           };
           return __assign2.apply(this, arguments);
         };
-        var __createBinding2 = FontData && FontData.__createBinding || (Object.create ? (function(o, m, k, k2) {
-          if (k2 === void 0) k2 = k;
-          var desc = Object.getOwnPropertyDescriptor(m, k);
+        var __createBinding2 = FontData && FontData.__createBinding || (Object.create ? (function(o, m, k2, k22) {
+          if (k22 === void 0) k22 = k2;
+          var desc = Object.getOwnPropertyDescriptor(m, k2);
           if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
             desc = { enumerable: true, get: function() {
-              return m[k];
+              return m[k2];
             } };
           }
-          Object.defineProperty(o, k2, desc);
-        }) : (function(o, m, k, k2) {
-          if (k2 === void 0) k2 = k;
-          o[k2] = m[k];
+          Object.defineProperty(o, k22, desc);
+        }) : (function(o, m, k2, k22) {
+          if (k22 === void 0) k22 = k2;
+          o[k22] = m[k2];
         }));
         var __exportStar2 = FontData && FontData.__exportStar || function(m, exports3) {
           for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p)) __createBinding2(exports3, m, p);
@@ -72426,9 +72793,9 @@ self.onmessage = function (e) {
             this.container = container2;
           };
           SVG2.prototype.createRoot = function(wrapper2) {
-            var _a2 = wrapper2.getOuterBBox(), w2 = _a2.w, h = _a2.h, d = _a2.d, pwidth = _a2.pwidth;
+            var _a2 = wrapper2.getOuterBBox(), w = _a2.w, h = _a2.h, d = _a2.d, pwidth = _a2.pwidth;
             var px = wrapper2.metrics.em / 1e3;
-            var W = Math.max(w2, px);
+            var W = Math.max(w, px);
             var H = Math.max(h + d, px);
             var g = this.svg("g", {
               stroke: "currentColor",
@@ -72448,8 +72815,8 @@ self.onmessage = function (e) {
             }, [g]));
             if (W === 1e-3) {
               adaptor.setAttribute(svg2, "preserveAspectRatio", "xMidYMid slice");
-              if (w2 < 0) {
-                adaptor.setStyle(this.container, "margin-right", this.ex(w2));
+              if (w < 0) {
+                adaptor.setStyle(this.container, "margin-right", this.ex(w));
               }
             }
             if (pwidth) {
@@ -72540,9 +72907,9 @@ self.onmessage = function (e) {
               viewBox: [0, 0, ex, ex].join(" ")
             }, [text2]);
             adaptor.append(adaptor.body(adaptor.document), svg2);
-            var w2 = adaptor.nodeSize(text2, 1e3, true)[0];
+            var w = adaptor.nodeSize(text2, 1e3, true)[0];
             adaptor.remove(svg2);
-            return { w: w2, h: 0.75, d: 0.2 };
+            return { w, h: 0.75, d: 0.2 };
           };
           SVG2.NAME = "SVG";
           SVG2.OPTIONS = __assign2(__assign2({}, OutputJax_js_1.CommonOutputJax.OPTIONS), { internalSpeechTitles: true, titleID: 0, fontCache: "local", localID: null });
@@ -73047,18 +73414,18 @@ self.onmessage = function (e) {
       if (hasRequiredParser$4) return Parser$2;
       hasRequiredParser$4 = 1;
       (function(exports2) {
-        var __createBinding2 = Parser$2 && Parser$2.__createBinding || (Object.create ? (function(o, m, k, k2) {
-          if (k2 === void 0) k2 = k;
-          var desc = Object.getOwnPropertyDescriptor(m, k);
+        var __createBinding2 = Parser$2 && Parser$2.__createBinding || (Object.create ? (function(o, m, k2, k22) {
+          if (k22 === void 0) k22 = k2;
+          var desc = Object.getOwnPropertyDescriptor(m, k2);
           if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
             desc = { enumerable: true, get: function() {
-              return m[k];
+              return m[k2];
             } };
           }
-          Object.defineProperty(o, k2, desc);
-        }) : (function(o, m, k, k2) {
-          if (k2 === void 0) k2 = k;
-          o[k2] = m[k];
+          Object.defineProperty(o, k22, desc);
+        }) : (function(o, m, k2, k22) {
+          if (k22 === void 0) k22 = k2;
+          o[k22] = m[k2];
         }));
         var __setModuleDefault2 = Parser$2 && Parser$2.__setModuleDefault || (Object.create ? (function(o, v) {
           Object.defineProperty(o, "default", { enumerable: true, value: v });
@@ -73069,7 +73436,7 @@ self.onmessage = function (e) {
           if (mod2 && mod2.__esModule) return mod2;
           var result2 = {};
           if (mod2 != null) {
-            for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
+            for (var k2 in mod2) if (k2 !== "default" && Object.prototype.hasOwnProperty.call(mod2, k2)) __createBinding2(result2, mod2, k2);
           }
           __setModuleDefault2(result2, mod2);
           return result2;
@@ -75949,11 +76316,11 @@ self.onmessage = function (e) {
           _this.styles = [];
           return _this;
         }
-        HTMLDocument2.prototype.findPosition = function(N2, index, delim, nodes) {
+        HTMLDocument2.prototype.findPosition = function(N, index, delim, nodes) {
           var e_1, _a2;
           var adaptor = this.adaptor;
           try {
-            for (var _b2 = __values2(nodes[N2]), _c = _b2.next(); !_c.done; _c = _b2.next()) {
+            for (var _b2 = __values2(nodes[N]), _c = _b2.next(); !_c.done; _c = _b2.next()) {
               var list2 = _c.value;
               var _d = __read2(list2, 2), node2 = _d[0], n = _d[1];
               if (index <= n && adaptor.kind(node2) === "#text") {
@@ -76798,18 +77165,18 @@ self.onmessage = function (e) {
     function requireAmsMappings() {
       if (hasRequiredAmsMappings) return AmsMappings;
       hasRequiredAmsMappings = 1;
-      var __createBinding2 = AmsMappings && AmsMappings.__createBinding || (Object.create ? (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        var desc = Object.getOwnPropertyDescriptor(m, k);
+      var __createBinding2 = AmsMappings && AmsMappings.__createBinding || (Object.create ? (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        var desc = Object.getOwnPropertyDescriptor(m, k2);
         if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
           desc = { enumerable: true, get: function() {
-            return m[k];
+            return m[k2];
           } };
         }
-        Object.defineProperty(o, k2, desc);
-      }) : (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        o[k2] = m[k];
+        Object.defineProperty(o, k22, desc);
+      }) : (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        o[k22] = m[k2];
       }));
       var __setModuleDefault2 = AmsMappings && AmsMappings.__setModuleDefault || (Object.create ? (function(o, v) {
         Object.defineProperty(o, "default", { enumerable: true, value: v });
@@ -76820,7 +77187,7 @@ self.onmessage = function (e) {
         if (mod2 && mod2.__esModule) return mod2;
         var result2 = {};
         if (mod2 != null) {
-          for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
+          for (var k2 in mod2) if (k2 !== "default" && Object.prototype.hasOwnProperty.call(mod2, k2)) __createBinding2(result2, mod2, k2);
         }
         __setModuleDefault2(result2, mod2);
         return result2;
@@ -77227,7 +77594,7 @@ self.onmessage = function (e) {
         return AmsTags2;
       })(Tags_js_1.AbstractTags);
       AmsConfiguration.AmsTags = AmsTags;
-      var init = function(config2) {
+      var init2 = function(config2) {
         new SymbolMap_js_1.CommandMap(AmsMethods_js_1.NEW_OPS, {}, {});
         config2.append(Configuration_js_1.Configuration.local({
           handler: { macro: [AmsMethods_js_1.NEW_OPS] },
@@ -77251,7 +77618,7 @@ self.onmessage = function (e) {
         },
         items: (_a2 = {}, _a2[AmsItems_js_1.MultlineItem.prototype.kind] = AmsItems_js_1.MultlineItem, _a2[AmsItems_js_1.FlalignItem.prototype.kind] = AmsItems_js_1.FlalignItem, _a2),
         tags: { "ams": AmsTags },
-        init,
+        init: init2,
         config: function(_config, jax) {
           if (jax.parseOptions.options.multlineWidth) {
             jax.parseOptions.options.ams.multlineWidth = jax.parseOptions.options.multlineWidth;
@@ -77404,18 +77771,18 @@ self.onmessage = function (e) {
     function requireAmsCdMappings() {
       if (hasRequiredAmsCdMappings) return AmsCdMappings;
       hasRequiredAmsCdMappings = 1;
-      var __createBinding2 = AmsCdMappings && AmsCdMappings.__createBinding || (Object.create ? (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        var desc = Object.getOwnPropertyDescriptor(m, k);
+      var __createBinding2 = AmsCdMappings && AmsCdMappings.__createBinding || (Object.create ? (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        var desc = Object.getOwnPropertyDescriptor(m, k2);
         if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
           desc = { enumerable: true, get: function() {
-            return m[k];
+            return m[k2];
           } };
         }
-        Object.defineProperty(o, k2, desc);
-      }) : (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        o[k2] = m[k];
+        Object.defineProperty(o, k22, desc);
+      }) : (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        o[k22] = m[k2];
       }));
       var __setModuleDefault2 = AmsCdMappings && AmsCdMappings.__setModuleDefault || (Object.create ? (function(o, v) {
         Object.defineProperty(o, "default", { enumerable: true, value: v });
@@ -77426,7 +77793,7 @@ self.onmessage = function (e) {
         if (mod2 && mod2.__esModule) return mod2;
         var result2 = {};
         if (mod2 != null) {
-          for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
+          for (var k2 in mod2) if (k2 !== "default" && Object.prototype.hasOwnProperty.call(mod2, k2)) __createBinding2(result2, mod2, k2);
         }
         __setModuleDefault2(result2, mod2);
         return result2;
@@ -77959,10 +78326,10 @@ self.onmessage = function (e) {
           }
           var rule = getRule(inf);
           var conc2 = getConclusion(rule, (0, exports2.getProperty)(rule, "inferenceRule"));
-          var w2 = getSpaces(inf, rule, right2);
+          var w = getSpaces(inf, rule, right2);
           var x2 = getBBox(rule);
           var y = getBBox(conc2);
-          return w2 + (x2 - y) / 2;
+          return w + (x2 - y) / 2;
         };
         var addSpace = function(config2, inf, space, right2) {
           if (right2 === void 0) {
@@ -78088,19 +78455,19 @@ self.onmessage = function (e) {
               }
               var adjust = adjustValue(premiseL, true);
               addSpace(config2, premiseL, -adjust, true);
-              var w2 = getSpaces(inf, rule, true);
+              var w = getSpaces(inf, rule, true);
               var maxAdjust = (0, exports2.getProperty)(inf, "maxAdjust");
               if (maxAdjust != null) {
                 adjust = Math.max(adjust, maxAdjust);
               }
               var column2 = void 0;
               if (isProof || !(column2 = getColumn2(inf))) {
-                addSpace(config2, (0, exports2.getProperty)(inf, "proof") ? inf : inf.parent, adjust - w2, true);
+                addSpace(config2, (0, exports2.getProperty)(inf, "proof") ? inf : inf.parent, adjust - w, true);
                 continue;
               }
               var sibling = nextSibling(column2);
               if (sibling) {
-                var pos2 = config2.nodeFactory.create("node", "mspace", [], { width: adjust - w2 + "em" });
+                var pos2 = config2.nodeFactory.create("node", "mspace", [], { width: adjust - w + "em" });
                 sibling.appendChild(pos2);
                 inf.removeProperty("maxAdjust");
                 continue;
@@ -78188,18 +78555,18 @@ self.onmessage = function (e) {
           d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
         };
       })();
-      var __createBinding2 = BussproofsItems && BussproofsItems.__createBinding || (Object.create ? (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        var desc = Object.getOwnPropertyDescriptor(m, k);
+      var __createBinding2 = BussproofsItems && BussproofsItems.__createBinding || (Object.create ? (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        var desc = Object.getOwnPropertyDescriptor(m, k2);
         if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
           desc = { enumerable: true, get: function() {
-            return m[k];
+            return m[k2];
           } };
         }
-        Object.defineProperty(o, k2, desc);
-      }) : (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        o[k2] = m[k];
+        Object.defineProperty(o, k22, desc);
+      }) : (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        o[k22] = m[k2];
       }));
       var __setModuleDefault2 = BussproofsItems && BussproofsItems.__setModuleDefault || (Object.create ? (function(o, v) {
         Object.defineProperty(o, "default", { enumerable: true, value: v });
@@ -78210,7 +78577,7 @@ self.onmessage = function (e) {
         if (mod2 && mod2.__esModule) return mod2;
         var result2 = {};
         if (mod2 != null) {
-          for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
+          for (var k2 in mod2) if (k2 !== "default" && Object.prototype.hasOwnProperty.call(mod2, k2)) __createBinding2(result2, mod2, k2);
         }
         __setModuleDefault2(result2, mod2);
         return result2;
@@ -78273,18 +78640,18 @@ self.onmessage = function (e) {
     function requireBussproofsMethods() {
       if (hasRequiredBussproofsMethods) return BussproofsMethods;
       hasRequiredBussproofsMethods = 1;
-      var __createBinding2 = BussproofsMethods && BussproofsMethods.__createBinding || (Object.create ? (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        var desc = Object.getOwnPropertyDescriptor(m, k);
+      var __createBinding2 = BussproofsMethods && BussproofsMethods.__createBinding || (Object.create ? (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        var desc = Object.getOwnPropertyDescriptor(m, k2);
         if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
           desc = { enumerable: true, get: function() {
-            return m[k];
+            return m[k2];
           } };
         }
-        Object.defineProperty(o, k2, desc);
-      }) : (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        o[k2] = m[k];
+        Object.defineProperty(o, k22, desc);
+      }) : (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        o[k22] = m[k2];
       }));
       var __setModuleDefault2 = BussproofsMethods && BussproofsMethods.__setModuleDefault || (Object.create ? (function(o, v) {
         Object.defineProperty(o, "default", { enumerable: true, value: v });
@@ -78295,7 +78662,7 @@ self.onmessage = function (e) {
         if (mod2 && mod2.__esModule) return mod2;
         var result2 = {};
         if (mod2 != null) {
-          for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
+          for (var k2 in mod2) if (k2 !== "default" && Object.prototype.hasOwnProperty.call(mod2, k2)) __createBinding2(result2, mod2, k2);
         }
         __setModuleDefault2(result2, mod2);
         return result2;
@@ -79722,7 +80089,7 @@ self.onmessage = function (e) {
             return parser2.GetArgument(name2);
           }
           var i2 = parser2.i;
-          var j2 = 0;
+          var j = 0;
           var hasBraces = 0;
           while (parser2.i < parser2.string.length) {
             var c2 = parser2.string.charAt(parser2.i);
@@ -79731,25 +80098,25 @@ self.onmessage = function (e) {
                 hasBraces = 1;
               }
               parser2.GetArgument(name2);
-              j2 = parser2.i - i2;
+              j = parser2.i - i2;
             } else if (MatchParam(parser2, param)) {
               if (hasBraces) {
                 i2++;
-                j2 -= 2;
+                j -= 2;
               }
-              return parser2.string.substr(i2, j2);
+              return parser2.string.substr(i2, j);
             } else if (c2 === "\\") {
               parser2.i++;
-              j2++;
+              j++;
               hasBraces = 0;
               var match = parser2.string.substr(parser2.i).match(/[a-z]+|./i);
               if (match) {
                 parser2.i += match[0].length;
-                j2 = parser2.i - i2;
+                j = parser2.i - i2;
               }
             } else {
               parser2.i++;
-              j2++;
+              j++;
               hasBraces = 0;
             }
           }
@@ -79799,18 +80166,18 @@ self.onmessage = function (e) {
     function requireNewcommandMethods() {
       if (hasRequiredNewcommandMethods) return NewcommandMethods;
       hasRequiredNewcommandMethods = 1;
-      var __createBinding2 = NewcommandMethods && NewcommandMethods.__createBinding || (Object.create ? (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        var desc = Object.getOwnPropertyDescriptor(m, k);
+      var __createBinding2 = NewcommandMethods && NewcommandMethods.__createBinding || (Object.create ? (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        var desc = Object.getOwnPropertyDescriptor(m, k2);
         if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
           desc = { enumerable: true, get: function() {
-            return m[k];
+            return m[k2];
           } };
         }
-        Object.defineProperty(o, k2, desc);
-      }) : (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        o[k2] = m[k];
+        Object.defineProperty(o, k22, desc);
+      }) : (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        o[k22] = m[k2];
       }));
       var __setModuleDefault2 = NewcommandMethods && NewcommandMethods.__setModuleDefault || (Object.create ? (function(o, v) {
         Object.defineProperty(o, "default", { enumerable: true, value: v });
@@ -79821,7 +80188,7 @@ self.onmessage = function (e) {
         if (mod2 && mod2.__esModule) return mod2;
         var result2 = {};
         if (mod2 != null) {
-          for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
+          for (var k2 in mod2) if (k2 !== "default" && Object.prototype.hasOwnProperty.call(mod2, k2)) __createBinding2(result2, mod2, k2);
         }
         __setModuleDefault2(result2, mod2);
         return result2;
@@ -80304,18 +80671,18 @@ self.onmessage = function (e) {
     function requireNewcommandConfiguration() {
       if (hasRequiredNewcommandConfiguration) return NewcommandConfiguration;
       hasRequiredNewcommandConfiguration = 1;
-      var __createBinding2 = NewcommandConfiguration && NewcommandConfiguration.__createBinding || (Object.create ? (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        var desc = Object.getOwnPropertyDescriptor(m, k);
+      var __createBinding2 = NewcommandConfiguration && NewcommandConfiguration.__createBinding || (Object.create ? (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        var desc = Object.getOwnPropertyDescriptor(m, k2);
         if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
           desc = { enumerable: true, get: function() {
-            return m[k];
+            return m[k2];
           } };
         }
-        Object.defineProperty(o, k2, desc);
-      }) : (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        o[k2] = m[k];
+        Object.defineProperty(o, k22, desc);
+      }) : (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        o[k22] = m[k2];
       }));
       var __setModuleDefault2 = NewcommandConfiguration && NewcommandConfiguration.__setModuleDefault || (Object.create ? (function(o, v) {
         Object.defineProperty(o, "default", { enumerable: true, value: v });
@@ -80326,7 +80693,7 @@ self.onmessage = function (e) {
         if (mod2 && mod2.__esModule) return mod2;
         var result2 = {};
         if (mod2 != null) {
-          for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
+          for (var k2 in mod2) if (k2 !== "default" && Object.prototype.hasOwnProperty.call(mod2, k2)) __createBinding2(result2, mod2, k2);
         }
         __setModuleDefault2(result2, mod2);
         return result2;
@@ -80343,7 +80710,7 @@ self.onmessage = function (e) {
       requireNewcommandMappings();
       var ParseMethods_js_1 = __importDefault2(requireParseMethods());
       var sm = __importStar2(requireSymbolMap());
-      var init = function(config2) {
+      var init2 = function(config2) {
         new sm.DelimiterMap(NewcommandUtil_js_1.default.NEW_DELIMITER, ParseMethods_js_1.default.delimiter, {});
         new sm.CommandMap(NewcommandUtil_js_1.default.NEW_COMMAND, {}, {});
         new sm.EnvironmentMap(NewcommandUtil_js_1.default.NEW_ENVIRONMENT, ParseMethods_js_1.default.environment, {}, {});
@@ -80366,7 +80733,7 @@ self.onmessage = function (e) {
         },
         items: (_a2 = {}, _a2[NewcommandItems_js_1.BeginEnvItem.prototype.kind] = NewcommandItems_js_1.BeginEnvItem, _a2),
         options: { maxMacros: 1e3 },
-        init
+        init: init2
       });
       return NewcommandConfiguration;
     }
@@ -80413,12 +80780,12 @@ self.onmessage = function (e) {
           xtofrom: ["xArrow", 8644, 12, 12],
           Newextarrow: "NewExtArrow"
         }, exports2.ExtpfeilMethods);
-        var init = function(config2) {
+        var init2 = function(config2) {
           NewcommandConfiguration_js_1.NewcommandConfiguration.init(config2);
         };
         exports2.ExtpfeilConfiguration = Configuration_js_1.Configuration.create("extpfeil", {
           handler: { macro: ["extpfeil"] },
-          init
+          init: init2
         });
       })(ExtpfeilConfiguration);
       return ExtpfeilConfiguration;
@@ -81643,20 +82010,20 @@ self.onmessage = function (e) {
             for (var i2 = 0; i2 < stateArray.length; i2++) {
               var p = o[pattern][state];
               p.action_ = [].concat(p.action_);
-              for (var k = 0; k < p.action_.length; k++) {
-                if (typeof p.action_[k] === "string") {
-                  p.action_[k] = { type_: p.action_[k] };
+              for (var k2 = 0; k2 < p.action_.length; k2++) {
+                if (typeof p.action_[k2] === "string") {
+                  p.action_[k2] = { type_: p.action_[k2] };
                 }
               }
               var patternArray = pattern.split("|");
-              for (var j2 = 0; j2 < patternArray.length; j2++) {
+              for (var j = 0; j < patternArray.length; j++) {
                 if (stateArray[i2] === "*") {
                   var t2 = void 0;
                   for (t2 in transitions) {
-                    transitions[t2].push({ pattern: patternArray[j2], task: p });
+                    transitions[t2].push({ pattern: patternArray[j], task: p });
                   }
                 } else {
-                  transitions[stateArray[i2]].push({ pattern: patternArray[j2], task: p });
+                  transitions[stateArray[i2]].push({ pattern: patternArray[j], task: p });
                 }
               }
             }
@@ -82069,8 +82436,8 @@ self.onmessage = function (e) {
           "tex-math tight": function(_buffer, m) {
             return _mhchemParser.go(m, "tex-math tight");
           },
-          "bond": function(_buffer, m, k) {
-            return { type_: "bond", kind_: k || m };
+          "bond": function(_buffer, m, k2) {
+            return { type_: "bond", kind_: k2 || m };
           },
           "color0-output": function(_buffer, m) {
             return { type_: "color0", color: m };
@@ -84233,8 +84600,8 @@ self.onmessage = function (e) {
           var rows = [];
           for (var i2 = 1; i2 <= n; i2++) {
             var row2 = [];
-            for (var j2 = 1; j2 <= m; j2++) {
-              row2.push("".concat(arg1, "_{{").concat(i2, "}{").concat(j2, "}}"));
+            for (var j = 1; j <= m; j++) {
+              row2.push("".concat(arg1, "_{{").concat(i2, "}{").concat(j, "}}"));
             }
             rows.push(row2.join(" & "));
           }
@@ -84835,10 +85202,10 @@ self.onmessage = function (e) {
         Math: function(parser2, open) {
           parser2.saveText();
           var i2 = parser2.i;
-          var j2, c2;
+          var j, c2;
           var braces = 0;
           while (c2 = parser2.GetNext()) {
-            j2 = parser2.i++;
+            j = parser2.i++;
             switch (c2) {
               case "\\":
                 var cs = parser2.GetCS();
@@ -84847,7 +85214,7 @@ self.onmessage = function (e) {
               case "$":
                 if (braces === 0 && open === c2) {
                   var config2 = parser2.texParser.configuration;
-                  var mml = new TexParser_js_1.default(parser2.string.substr(i2, j2 - i2), parser2.stack.env, config2).mml();
+                  var mml = new TexParser_js_1.default(parser2.string.substr(i2, j - i2), parser2.stack.env, config2).mml();
                   parser2.PushMath(mml);
                   return;
                 }
@@ -85597,20 +85964,20 @@ self.onmessage = function (e) {
           if (!n.match(/^(x[0-9A-Fa-f]+|[0-9]+)$/)) {
             throw new TexError_js_1.default("BadUnicode", "Argument to \\unicode must be a number");
           }
-          var N2 = parseInt(n.match(/^x/) ? "0" + n : n);
-          if (!UnicodeCache[N2]) {
-            UnicodeCache[N2] = [800, 200, font, N2];
+          var N = parseInt(n.match(/^x/) ? "0" + n : n);
+          if (!UnicodeCache[N]) {
+            UnicodeCache[N] = [800, 200, font, N];
           } else if (!font) {
-            font = UnicodeCache[N2][2];
+            font = UnicodeCache[N][2];
           }
           if (HDsplit) {
-            UnicodeCache[N2][0] = Math.floor(parseFloat(HDsplit[0]) * 1e3);
-            UnicodeCache[N2][1] = Math.floor(parseFloat(HDsplit[1]) * 1e3);
+            UnicodeCache[N][0] = Math.floor(parseFloat(HDsplit[0]) * 1e3);
+            UnicodeCache[N][1] = Math.floor(parseFloat(HDsplit[1]) * 1e3);
           }
           var variant = parser2.stack.env.font;
           var def = {};
           if (font) {
-            UnicodeCache[N2][2] = def.fontfamily = font.replace(/'/g, "'");
+            UnicodeCache[N][2] = def.fontfamily = font.replace(/'/g, "'");
             if (variant) {
               if (variant.match(/bold/)) {
                 def.fontweight = "bold";
@@ -86517,18 +86884,18 @@ self.onmessage = function (e) {
         return { value: op[0] ? op[1] : void 0, done: true };
       }
     }
-    var __createBinding = Object.create ? (function(o, m, k, k2) {
-      if (k2 === void 0) k2 = k;
-      var desc = Object.getOwnPropertyDescriptor(m, k);
+    var __createBinding = Object.create ? (function(o, m, k2, k22) {
+      if (k22 === void 0) k22 = k2;
+      var desc = Object.getOwnPropertyDescriptor(m, k2);
       if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
         desc = { enumerable: true, get: function() {
-          return m[k];
+          return m[k2];
         } };
       }
-      Object.defineProperty(o, k2, desc);
-    }) : (function(o, m, k, k2) {
-      if (k2 === void 0) k2 = k;
-      o[k2] = m[k];
+      Object.defineProperty(o, k22, desc);
+    }) : (function(o, m, k2, k22) {
+      if (k22 === void 0) k22 = k2;
+      o[k22] = m[k2];
     });
     function __exportStar(m, o) {
       for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
@@ -86568,9 +86935,9 @@ self.onmessage = function (e) {
     }
     function __spreadArrays() {
       for (var s = 0, i2 = 0, il = arguments.length; i2 < il; i2++) s += arguments[i2].length;
-      for (var r2 = Array(s), k = 0, i2 = 0; i2 < il; i2++)
-        for (var a = arguments[i2], j2 = 0, jl = a.length; j2 < jl; j2++, k++)
-          r2[k] = a[j2];
+      for (var r2 = Array(s), k2 = 0, i2 = 0; i2 < il; i2++)
+        for (var a = arguments[i2], j = 0, jl = a.length; j < jl; j++, k2++)
+          r2[k2] = a[j];
       return r2;
     }
     function __spreadArray(to2, from, pack) {
@@ -86674,7 +87041,7 @@ self.onmessage = function (e) {
     var ownKeys$1 = function(o) {
       ownKeys$1 = Object.getOwnPropertyNames || function(o2) {
         var ar2 = [];
-        for (var k in o2) if (Object.prototype.hasOwnProperty.call(o2, k)) ar2[ar2.length] = k;
+        for (var k2 in o2) if (Object.prototype.hasOwnProperty.call(o2, k2)) ar2[ar2.length] = k2;
         return ar2;
       };
       return ownKeys$1(o);
@@ -86683,7 +87050,7 @@ self.onmessage = function (e) {
       if (mod2 && mod2.__esModule) return mod2;
       var result2 = {};
       if (mod2 != null) {
-        for (var k = ownKeys$1(mod2), i2 = 0; i2 < k.length; i2++) if (k[i2] !== "default") __createBinding(result2, mod2, k[i2]);
+        for (var k2 = ownKeys$1(mod2), i2 = 0; i2 < k2.length; i2++) if (k2[i2] !== "default") __createBinding(result2, mod2, k2[i2]);
       }
       __setModuleDefault(result2, mod2);
       return result2;
@@ -87803,18 +88170,18 @@ self.onmessage = function (e) {
       if (hasRequiredLib$a) return lib$7;
       hasRequiredLib$a = 1;
       (function(exports2) {
-        var __createBinding2 = lib$7 && lib$7.__createBinding || (Object.create ? (function(o, m, k, k2) {
-          if (k2 === void 0) k2 = k;
-          var desc = Object.getOwnPropertyDescriptor(m, k);
+        var __createBinding2 = lib$7 && lib$7.__createBinding || (Object.create ? (function(o, m, k2, k22) {
+          if (k22 === void 0) k22 = k2;
+          var desc = Object.getOwnPropertyDescriptor(m, k2);
           if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
             desc = { enumerable: true, get: function() {
-              return m[k];
+              return m[k2];
             } };
           }
-          Object.defineProperty(o, k2, desc);
-        }) : (function(o, m, k, k2) {
-          if (k2 === void 0) k2 = k;
-          o[k2] = m[k];
+          Object.defineProperty(o, k22, desc);
+        }) : (function(o, m, k2, k22) {
+          if (k22 === void 0) k22 = k2;
+          o[k22] = m[k2];
         }));
         var __exportStar2 = lib$7 && lib$7.__exportStar || function(m, exports3) {
           for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p)) __createBinding2(exports3, m, p);
@@ -92540,10 +92907,10 @@ self.onmessage = function (e) {
       decode.decodeHTML = (function() {
         var legacy2 = Object.keys(legacy_json_1.default).sort(sorter);
         var keys = Object.keys(entities_json_1.default).sort(sorter);
-        for (var i2 = 0, j2 = 0; i2 < keys.length; i2++) {
-          if (legacy2[j2] === keys[i2]) {
+        for (var i2 = 0, j = 0; i2 < keys.length; i2++) {
+          if (legacy2[j] === keys[i2]) {
             keys[i2] += ";?";
-            j2++;
+            j++;
           } else {
             keys[i2] += ";";
           }
@@ -92602,11 +92969,11 @@ self.onmessage = function (e) {
         var single = [];
         var multiple = [];
         for (var _i = 0, _a2 = Object.keys(inverse); _i < _a2.length; _i++) {
-          var k = _a2[_i];
-          if (k.length === 1) {
-            single.push("\\" + k);
+          var k2 = _a2[_i];
+          if (k2.length === 1) {
+            single.push("\\" + k2);
           } else {
-            multiple.push(k);
+            multiple.push(k2);
           }
         }
         single.sort();
@@ -92861,14 +93228,14 @@ self.onmessage = function (e) {
         };
         return __assign2.apply(this, arguments);
       };
-      var __createBinding2 = lib$5 && lib$5.__createBinding || (Object.create ? (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        Object.defineProperty(o, k2, { enumerable: true, get: function() {
-          return m[k];
+      var __createBinding2 = lib$5 && lib$5.__createBinding || (Object.create ? (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        Object.defineProperty(o, k22, { enumerable: true, get: function() {
+          return m[k2];
         } });
-      }) : (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        o[k2] = m[k];
+      }) : (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        o[k22] = m[k2];
       }));
       var __setModuleDefault2 = lib$5 && lib$5.__setModuleDefault || (Object.create ? (function(o, v) {
         Object.defineProperty(o, "default", { enumerable: true, value: v });
@@ -92879,7 +93246,7 @@ self.onmessage = function (e) {
         if (mod2 && mod2.__esModule) return mod2;
         var result2 = {};
         if (mod2 != null) {
-          for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
+          for (var k2 in mod2) if (k2 !== "default" && Object.prototype.hasOwnProperty.call(mod2, k2)) __createBinding2(result2, mod2, k2);
         }
         __setModuleDefault2(result2, mod2);
         return result2;
@@ -93679,14 +94046,14 @@ self.onmessage = function (e) {
       if (hasRequiredLib$7) return lib$8;
       hasRequiredLib$7 = 1;
       (function(exports2) {
-        var __createBinding2 = lib$8 && lib$8.__createBinding || (Object.create ? (function(o, m, k, k2) {
-          if (k2 === void 0) k2 = k;
-          Object.defineProperty(o, k2, { enumerable: true, get: function() {
-            return m[k];
+        var __createBinding2 = lib$8 && lib$8.__createBinding || (Object.create ? (function(o, m, k2, k22) {
+          if (k22 === void 0) k22 = k2;
+          Object.defineProperty(o, k22, { enumerable: true, get: function() {
+            return m[k2];
           } });
-        }) : (function(o, m, k, k2) {
-          if (k2 === void 0) k2 = k;
-          o[k2] = m[k];
+        }) : (function(o, m, k2, k22) {
+          if (k22 === void 0) k22 = k2;
+          o[k22] = m[k2];
         }));
         var __exportStar2 = lib$8 && lib$8.__exportStar || function(m, exports3) {
           for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p)) __createBinding2(exports3, m, p);
@@ -93791,12 +94158,12 @@ self.onmessage = function (e) {
           var procNew = procs[i2];
           if (procNew < 0)
             continue;
-          for (var j2 = i2 - 1; j2 >= 0 && procNew < procs[j2]; j2--) {
-            var token2 = arr2[j2 + 1];
-            arr2[j2 + 1] = arr2[j2];
-            arr2[j2] = token2;
-            procs[j2 + 1] = procs[j2];
-            procs[j2] = procNew;
+          for (var j = i2 - 1; j >= 0 && procNew < procs[j]; j--) {
+            var token2 = arr2[j + 1];
+            arr2[j + 1] = arr2[j];
+            arr2[j] = token2;
+            procs[j + 1] = procs[j];
+            procs[j] = procNew;
           }
         }
       }
@@ -94886,18 +95253,18 @@ self.onmessage = function (e) {
       if (hasRequiredLib$5) return lib$9;
       hasRequiredLib$5 = 1;
       (function(exports2) {
-        var __createBinding2 = lib$9 && lib$9.__createBinding || (Object.create ? (function(o, m, k, k2) {
-          if (k2 === void 0) k2 = k;
-          var desc = Object.getOwnPropertyDescriptor(m, k);
+        var __createBinding2 = lib$9 && lib$9.__createBinding || (Object.create ? (function(o, m, k2, k22) {
+          if (k22 === void 0) k22 = k2;
+          var desc = Object.getOwnPropertyDescriptor(m, k2);
           if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
             desc = { enumerable: true, get: function() {
-              return m[k];
+              return m[k2];
             } };
           }
-          Object.defineProperty(o, k2, desc);
-        }) : (function(o, m, k, k2) {
-          if (k2 === void 0) k2 = k;
-          o[k2] = m[k];
+          Object.defineProperty(o, k22, desc);
+        }) : (function(o, m, k2, k22) {
+          if (k22 === void 0) k22 = k2;
+          o[k22] = m[k2];
         }));
         var __setModuleDefault2 = lib$9 && lib$9.__setModuleDefault || (Object.create ? (function(o, v) {
           Object.defineProperty(o, "default", { enumerable: true, value: v });
@@ -94908,7 +95275,7 @@ self.onmessage = function (e) {
           if (mod2 && mod2.__esModule) return mod2;
           var result2 = {};
           if (mod2 != null) {
-            for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
+            for (var k2 in mod2) if (k2 !== "default" && Object.prototype.hasOwnProperty.call(mod2, k2)) __createBinding2(result2, mod2, k2);
           }
           __setModuleDefault2(result2, mod2);
           return result2;
@@ -95093,18 +95460,18 @@ self.onmessage = function (e) {
           };
           return __assign2.apply(this, arguments);
         };
-        var __createBinding2 = lib$a && lib$a.__createBinding || (Object.create ? (function(o, m, k, k2) {
-          if (k2 === void 0) k2 = k;
-          var desc = Object.getOwnPropertyDescriptor(m, k);
+        var __createBinding2 = lib$a && lib$a.__createBinding || (Object.create ? (function(o, m, k2, k22) {
+          if (k22 === void 0) k22 = k2;
+          var desc = Object.getOwnPropertyDescriptor(m, k2);
           if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
             desc = { enumerable: true, get: function() {
-              return m[k];
+              return m[k2];
             } };
           }
-          Object.defineProperty(o, k2, desc);
-        }) : (function(o, m, k, k2) {
-          if (k2 === void 0) k2 = k;
-          o[k2] = m[k];
+          Object.defineProperty(o, k22, desc);
+        }) : (function(o, m, k2, k22) {
+          if (k22 === void 0) k22 = k2;
+          o[k22] = m[k2];
         }));
         var __setModuleDefault2 = lib$a && lib$a.__setModuleDefault || (Object.create ? (function(o, v) {
           Object.defineProperty(o, "default", { enumerable: true, value: v });
@@ -95115,7 +95482,7 @@ self.onmessage = function (e) {
           if (mod2 && mod2.__esModule) return mod2;
           var result2 = {};
           if (mod2 != null) {
-            for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
+            for (var k2 in mod2) if (k2 !== "default" && Object.prototype.hasOwnProperty.call(mod2, k2)) __createBinding2(result2, mod2, k2);
           }
           __setModuleDefault2(result2, mod2);
           return result2;
@@ -96577,14 +96944,14 @@ self.onmessage = function (e) {
           d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
         };
       })();
-      var __createBinding2 = FeedHandler && FeedHandler.__createBinding || (Object.create ? (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        Object.defineProperty(o, k2, { enumerable: true, get: function() {
-          return m[k];
+      var __createBinding2 = FeedHandler && FeedHandler.__createBinding || (Object.create ? (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        Object.defineProperty(o, k22, { enumerable: true, get: function() {
+          return m[k2];
         } });
-      }) : (function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        o[k2] = m[k];
+      }) : (function(o, m, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        o[k22] = m[k2];
       }));
       var __setModuleDefault2 = FeedHandler && FeedHandler.__setModuleDefault || (Object.create ? (function(o, v) {
         Object.defineProperty(o, "default", { enumerable: true, value: v });
@@ -96595,7 +96962,7 @@ self.onmessage = function (e) {
         if (mod2 && mod2.__esModule) return mod2;
         var result2 = {};
         if (mod2 != null) {
-          for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
+          for (var k2 in mod2) if (k2 !== "default" && Object.prototype.hasOwnProperty.call(mod2, k2)) __createBinding2(result2, mod2, k2);
         }
         __setModuleDefault2(result2, mod2);
         return result2;
@@ -96802,14 +97169,14 @@ self.onmessage = function (e) {
       if (hasRequiredLib$3) return lib$2;
       hasRequiredLib$3 = 1;
       (function(exports2) {
-        var __createBinding2 = lib$2 && lib$2.__createBinding || (Object.create ? (function(o, m, k, k2) {
-          if (k2 === void 0) k2 = k;
-          Object.defineProperty(o, k2, { enumerable: true, get: function() {
-            return m[k];
+        var __createBinding2 = lib$2 && lib$2.__createBinding || (Object.create ? (function(o, m, k2, k22) {
+          if (k22 === void 0) k22 = k2;
+          Object.defineProperty(o, k22, { enumerable: true, get: function() {
+            return m[k2];
           } });
-        }) : (function(o, m, k, k2) {
-          if (k2 === void 0) k2 = k;
-          o[k2] = m[k];
+        }) : (function(o, m, k2, k22) {
+          if (k22 === void 0) k22 = k2;
+          o[k22] = m[k2];
         }));
         var __setModuleDefault2 = lib$2 && lib$2.__setModuleDefault || (Object.create ? (function(o, v) {
           Object.defineProperty(o, "default", { enumerable: true, value: v });
@@ -96820,7 +97187,7 @@ self.onmessage = function (e) {
           if (mod2 && mod2.__esModule) return mod2;
           var result2 = {};
           if (mod2 != null) {
-            for (var k in mod2) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod2, k)) __createBinding2(result2, mod2, k);
+            for (var k2 in mod2) if (k2 !== "default" && Object.prototype.hasOwnProperty.call(mod2, k2)) __createBinding2(result2, mod2, k2);
           }
           __setModuleDefault2(result2, mod2);
           return result2;
@@ -97336,13 +97703,13 @@ self.onmessage = function (e) {
       }
       function findNamedEntityTreeBranch(nodeIx, cp) {
         const branchCount = neTree[++nodeIx];
-        let lo = ++nodeIx;
-        let hi = lo + branchCount - 1;
-        while (lo <= hi) {
-          const mid2 = lo + hi >>> 1;
+        let lo2 = ++nodeIx;
+        let hi = lo2 + branchCount - 1;
+        while (lo2 <= hi) {
+          const mid2 = lo2 + hi >>> 1;
           const midCp = neTree[mid2];
           if (midCp < cp) {
-            lo = mid2 + 1;
+            lo2 = mid2 + 1;
           } else if (midCp > cp) {
             hi = mid2 - 1;
           } else {
@@ -97523,19 +97890,19 @@ self.onmessage = function (e) {
         //Token emission
         _emitCurrentToken() {
           this._emitCurrentCharacterToken();
-          const ct2 = this.currentToken;
+          const ct = this.currentToken;
           this.currentToken = null;
-          if (ct2.type === Tokenizer2.START_TAG_TOKEN) {
-            this.lastStartTagName = ct2.tagName;
-          } else if (ct2.type === Tokenizer2.END_TAG_TOKEN) {
-            if (ct2.attrs.length > 0) {
+          if (ct.type === Tokenizer2.START_TAG_TOKEN) {
+            this.lastStartTagName = ct.tagName;
+          } else if (ct.type === Tokenizer2.END_TAG_TOKEN) {
+            if (ct.attrs.length > 0) {
               this._err(ERR.endTagWithAttributes);
             }
-            if (ct2.selfClosing) {
+            if (ct.selfClosing) {
               this._err(ERR.endTagWithTrailingSolidus);
             }
           }
-          this.tokenQueue.push(ct2);
+          this.tokenQueue.push(ct);
         }
         _emitCurrentCharacterToken() {
           if (this.currentCharacterToken) {
@@ -99754,10 +100121,10 @@ self.onmessage = function (e) {
               neAttrsMap[neAttr.name] = neAttr.value;
             }
             for (let i2 = 0; i2 < neAttrsLength; i2++) {
-              for (let j2 = 0; j2 < cLength; j2++) {
-                const cAttr = candidates[j2].attrs[i2];
+              for (let j = 0; j < cLength; j++) {
+                const cAttr = candidates[j].attrs[i2];
                 if (neAttrsMap[cAttr.name] !== cAttr.value) {
-                  candidates.splice(j2, 1);
+                  candidates.splice(j, 1);
                   cLength--;
                 }
                 if (candidates.length < NOAH_ARK_CAPACITY) {
@@ -100489,9 +100856,9 @@ self.onmessage = function (e) {
         for (let i2 = 0; i2 < recipient.attrs.length; i2++) {
           recipientAttrsMap.push(recipient.attrs[i2].name);
         }
-        for (let j2 = 0; j2 < attrs.length; j2++) {
-          if (recipientAttrsMap.indexOf(attrs[j2].name) === -1) {
-            recipient.attrs.push(attrs[j2]);
+        for (let j = 0; j < attrs.length; j++) {
+          if (recipientAttrsMap.indexOf(attrs[j].name) === -1) {
+            recipient.attrs.push(attrs[j]);
           }
         }
       };
@@ -104191,8 +104558,8 @@ self.onmessage = function (e) {
             setAttr(el2, "class", classNames.join(" ").trim());
           } else {
             var setClass = " " + className2 + " ";
-            for (var j2 = 0; j2 < classNames.length; j2++) {
-              var appendClass = classNames[j2] + " ";
+            for (var j = 0; j < classNames.length; j++) {
+              var appendClass = classNames[j] + " ";
               if (!setClass.includes(" " + appendClass))
                 setClass += appendClass;
             }
@@ -104220,12 +104587,12 @@ self.onmessage = function (e) {
           } else {
             var elClasses = splitNames(el2.attribs.class);
             var changed = false;
-            for (var j2 = 0; j2 < numClasses; j2++) {
-              var index = elClasses.indexOf(classes[j2]);
+            for (var j = 0; j < numClasses; j++) {
+              var index = elClasses.indexOf(classes[j]);
               if (index >= 0) {
                 elClasses.splice(index, 1);
                 changed = true;
-                j2--;
+                j--;
               }
             }
             if (changed) {
@@ -104254,10 +104621,10 @@ self.onmessage = function (e) {
           if (!utils_1.isTag(el2))
             continue;
           var elementClasses = splitNames(el2.attribs.class);
-          for (var j2 = 0; j2 < numClasses; j2++) {
-            var index = elementClasses.indexOf(classNames[j2]);
+          for (var j = 0; j < numClasses; j++) {
+            var index = elementClasses.indexOf(classNames[j]);
             if (state >= 0 && index < 0) {
-              elementClasses.push(classNames[j2]);
+              elementClasses.push(classNames[j]);
             } else if (state <= 0 && index >= 0) {
               elementClasses.splice(index, 1);
             }
@@ -104721,14 +105088,14 @@ self.onmessage = function (e) {
             if (!wrapperDom || !htmlparser2_1.DomUtils.hasChildren(wrapperDom))
               continue;
             var elInsertLocation = wrapperDom;
-            var j2 = 0;
-            while (j2 < elInsertLocation.children.length) {
-              var child = elInsertLocation.children[j2];
+            var j = 0;
+            while (j < elInsertLocation.children.length) {
+              var child = elInsertLocation.children[j];
               if (utils_1.isTag(child)) {
                 elInsertLocation = child;
-                j2 = 0;
+                j = 0;
               } else {
-                j2++;
+                j++;
               }
             }
             insert2(el2, elInsertLocation, [wrapperDom]);
@@ -104768,14 +105135,14 @@ self.onmessage = function (e) {
             if (wrap_2[i2].type === "tag")
               elInsertLocation = wrap_2[i2];
           }
-          var j2 = 0;
-          while (elInsertLocation && j2 < elInsertLocation.children.length) {
-            var child = elInsertLocation.children[j2];
+          var j = 0;
+          while (elInsertLocation && j < elInsertLocation.children.length) {
+            var child = elInsertLocation.children[j];
             if (child.type === "tag") {
               elInsertLocation = child;
-              j2 = 0;
+              j = 0;
             } else {
-              j2++;
+              j++;
             }
           }
           if (elInsertLocation)
@@ -104993,8 +105360,8 @@ self.onmessage = function (e) {
           }
           el2.attribs.style = stringify2(styles2);
         } else if (typeof prop2 === "object") {
-          Object.keys(prop2).forEach(function(k, i2) {
-            setCss(el2, k, prop2[k], i2);
+          Object.keys(prop2).forEach(function(k2, i2) {
+            setCss(el2, k2, prop2[k2], i2);
           });
         }
       }
@@ -105660,8 +106027,8 @@ self.onmessage = function (e) {
                     var tokenized = false;
                     var name2;
                     var rule;
-                    for (var j2 = 0, len = atRules.length; !tokenized && j2 < len; ++j2) {
-                      rule = atRules[j2];
+                    for (var j = 0, len = atRules.length; !tokenized && j < len; ++j) {
+                      rule = atRules[j];
                       name2 = rule.name || rule;
                       if (!isNextString(name2)) {
                         continue;
@@ -106090,14 +106457,14 @@ self.onmessage = function (e) {
       };
       Part.prototype.toString = function() {
         if (!this.raw) {
-          var xpr = "", k, part2;
+          var xpr = "", k2, part2;
           xpr += this.tag || "*";
           if (this.id) xpr += "#" + this.id;
           if (this.classes) xpr += "." + this.classList.join(".");
-          if (this.attributes) for (k = 0; part2 = this.attributes[k++]; ) {
+          if (this.attributes) for (k2 = 0; part2 = this.attributes[k2++]; ) {
             xpr += "[" + part2.name + (part2.operator ? part2.operator + '"' + part2.value + '"' : "") + "]";
           }
-          if (this.pseudos) for (k = 0; part2 = this.pseudos[k++]; ) {
+          if (this.pseudos) for (k2 = 0; part2 = this.pseudos[k2++]; ) {
             xpr += ":" + part2.name;
             if (part2.value) xpr += "(" + part2.value + ")";
           }
@@ -106111,8 +106478,8 @@ self.onmessage = function (e) {
       Expression.prototype.toString = function() {
         if (!this.raw) {
           var xpr = "";
-          for (var j2 = 0, bit; bit = this[j2++]; ) {
-            if (j2 !== 1) xpr += " ";
+          for (var j = 0, bit; bit = this[j++]; ) {
+            if (j !== 1) xpr += " ";
             if (bit.combinator !== " ") xpr += bit.combinator + " ";
             xpr += bit;
           }
@@ -106620,8 +106987,8 @@ self.onmessage = function (e) {
             for (var i2 = 0; i2 < parsedSelector.length; ++i2) {
               var subSel = parsedSelector[i2];
               if (subSel.pseudos) {
-                for (var j2 = 0; j2 < subSel.pseudos.length; ++j2) {
-                  var subSelPseudo = subSel.pseudos[j2];
+                for (var j = 0; j < subSel.pseudos.length; ++j) {
+                  var subSelPseudo = subSel.pseudos[j];
                   if (juiceClient.ignoredPseudos.indexOf(subSelPseudo.name) >= 0) {
                     return;
                   }
@@ -106671,21 +107038,21 @@ self.onmessage = function (e) {
               }
               function resetCounter(el3, value2) {
                 var tokens = value2.split(/\s+/);
-                for (var j3 = 0; j3 < tokens.length; j3++) {
-                  var counter2 = tokens[j3];
-                  var resetval = parseInt(tokens[j3 + 1], 10);
-                  isNaN(resetval) ? el3.counterProps[counter2] = counters[counter2] = 0 : el3.counterProps[counter2] = counters[tokens[j3++]] = resetval;
+                for (var j2 = 0; j2 < tokens.length; j2++) {
+                  var counter2 = tokens[j2];
+                  var resetval = parseInt(tokens[j2 + 1], 10);
+                  isNaN(resetval) ? el3.counterProps[counter2] = counters[counter2] = 0 : el3.counterProps[counter2] = counters[tokens[j2++]] = resetval;
                 }
               }
               function incrementCounter(el3, value2) {
                 var tokens = value2.split(/\s+/);
-                for (var j3 = 0; j3 < tokens.length; j3++) {
-                  var counter2 = tokens[j3];
+                for (var j2 = 0; j2 < tokens.length; j2++) {
+                  var counter2 = tokens[j2];
                   if (el3.counterProps[counter2] === void 0) {
                     continue;
                   }
-                  var incrval = parseInt(tokens[j3 + 1], 10);
-                  isNaN(incrval) ? el3.counterProps[counter2] = counters[counter2] += 1 : el3.counterProps[counter2] = counters[tokens[j3++]] += incrval;
+                  var incrval = parseInt(tokens[j2 + 1], 10);
+                  isNaN(incrval) ? el3.counterProps[counter2] = counters[counter2] += 1 : el3.counterProps[counter2] = counters[tokens[j2++]] += incrval;
                 }
               }
               function addProps(style3, selector3) {
@@ -107584,8 +107951,8 @@ self.onmessage = function (e) {
       const pattern = new TextEncoder().encode('"events"');
       for (let i2 = 0; i2 < data.length - pattern.length - 10; i2++) {
         let matches = true;
-        for (let j2 = 0; j2 < pattern.length; j2++) {
-          if (data[i2 + j2] !== pattern[j2]) {
+        for (let j = 0; j < pattern.length; j++) {
+          if (data[i2 + j] !== pattern[j]) {
             matches = false;
             break;
           }
@@ -107709,10 +108076,10 @@ self.onmessage = function (e) {
     }
     var ch2 = {};
     var wk = (function(c2, id, msg, transfer, cb) {
-      var w2 = new Worker(ch2[id] || (ch2[id] = URL.createObjectURL(new Blob([
+      var w = new Worker(ch2[id] || (ch2[id] = URL.createObjectURL(new Blob([
         c2 + ';addEventListener("error",function(e){e=e.error;postMessage({$e$:[e.message,e.code,e.stack]})})'
       ], { type: "text/javascript" }))));
-      w2.onmessage = function(e) {
+      w.onmessage = function(e) {
         var d = e.data, ed = d.$e$;
         if (ed) {
           var err2 = new Error(ed[0]);
@@ -107722,8 +108089,8 @@ self.onmessage = function (e) {
         } else
           cb(null, d);
       };
-      w2.postMessage(msg, transfer);
-      return w2;
+      w.postMessage(msg, transfer);
+      return w;
     });
     var u8 = Uint8Array, u16 = Uint16Array, i32 = Int32Array;
     var fleb = new u8([
@@ -107805,8 +108172,8 @@ self.onmessage = function (e) {
       }
       var r2 = new i32(b[30]);
       for (var i2 = 1; i2 < 30; ++i2) {
-        for (var j2 = b[i2]; j2 < b[i2 + 1]; ++j2) {
-          r2[j2] = j2 - b[i2] << 5 | i2;
+        for (var j = b[i2]; j < b[i2 + 1]; ++j) {
+          r2[j] = j - b[i2] << 5 | i2;
         }
       }
       return { b, r: r2 };
@@ -107923,13 +108290,13 @@ self.onmessage = function (e) {
         throw e;
       return e;
     };
-    var inflt = function(dat, st2, buf, dict) {
+    var inflt = function(dat, st, buf, dict) {
       var sl = dat.length, dl = dict ? dict.length : 0;
-      if (!sl || st2.f && !st2.l)
+      if (!sl || st.f && !st.l)
         return buf || new u8(0);
       var noBuf = !buf;
-      var resize = noBuf || st2.i != 2;
-      var noSt = st2.i;
+      var resize = noBuf || st.i != 2;
+      var noSt = st.i;
       if (noBuf)
         buf = new u8(sl * 3);
       var cbuf = function(l2) {
@@ -107940,7 +108307,7 @@ self.onmessage = function (e) {
           buf = nbuf;
         }
       };
-      var final = st2.f || 0, pos2 = st2.p || 0, bt2 = st2.b || 0, lm = st2.l, dm = st2.d, lbt = st2.m, dbt = st2.n;
+      var final = st.f || 0, pos2 = st.p || 0, bt2 = st.b || 0, lm = st.l, dm = st.d, lbt = st.m, dbt = st.n;
       var tbts = sl * 8;
       do {
         if (!lm) {
@@ -107957,7 +108324,7 @@ self.onmessage = function (e) {
             if (resize)
               cbuf(bt2 + l);
             buf.set(dat.subarray(s, t2), bt2);
-            st2.b = bt2 += l, st2.p = pos2 = t2 * 8, st2.f = final;
+            st.b = bt2 += l, st.p = pos2 = t2 * 8, st.f = final;
             continue;
           } else if (type == 1)
             lm = flrm, dm = fdrm, lbt = 9, dbt = 5;
@@ -107991,11 +108358,11 @@ self.onmessage = function (e) {
                   ldt[i2++] = c2;
               }
             }
-            var lt2 = ldt.subarray(0, hLit), dt = ldt.subarray(hLit);
+            var lt2 = ldt.subarray(0, hLit), dt2 = ldt.subarray(hLit);
             lbt = max$1(lt2);
-            dbt = max$1(dt);
+            dbt = max$1(dt2);
             lm = hMap(lt2, lbt, 1);
-            dm = hMap(dt, dbt, 1);
+            dm = hMap(dt2, dbt, 1);
           } else
             err(1);
           if (pos2 > tbts) {
@@ -108034,10 +108401,10 @@ self.onmessage = function (e) {
             if (!d)
               err(3);
             pos2 += d & 15;
-            var dt = fd[dsym];
+            var dt2 = fd[dsym];
             if (dsym > 3) {
               var b = fdeb[dsym];
-              dt += bits16(dat, pos2) & (1 << b) - 1, pos2 += b;
+              dt2 += bits16(dat, pos2) & (1 << b) - 1, pos2 += b;
             }
             if (pos2 > tbts) {
               if (noSt)
@@ -108047,40 +108414,40 @@ self.onmessage = function (e) {
             if (resize)
               cbuf(bt2 + 131072);
             var end2 = bt2 + add2;
-            if (bt2 < dt) {
-              var shift2 = dl - dt, dend = Math.min(dt, end2);
+            if (bt2 < dt2) {
+              var shift2 = dl - dt2, dend = Math.min(dt2, end2);
               if (shift2 + bt2 < 0)
                 err(3);
               for (; bt2 < dend; ++bt2)
                 buf[bt2] = dict[shift2 + bt2];
             }
             for (; bt2 < end2; ++bt2)
-              buf[bt2] = buf[bt2 - dt];
+              buf[bt2] = buf[bt2 - dt2];
           }
         }
-        st2.l = lm, st2.p = lpos, st2.b = bt2, st2.f = final;
+        st.l = lm, st.p = lpos, st.b = bt2, st.f = final;
         if (lm)
-          final = 1, st2.m = lbt, st2.d = dm, st2.n = dbt;
+          final = 1, st.m = lbt, st.d = dm, st.n = dbt;
       } while (!final);
       return bt2 != buf.length && noBuf ? slc(buf, 0, bt2) : buf.subarray(0, bt2);
     };
     var et = /* @__PURE__ */ new u8(0);
     var mrg = function(a, b) {
       var o = {};
-      for (var k in a)
-        o[k] = a[k];
-      for (var k in b)
-        o[k] = b[k];
+      for (var k2 in a)
+        o[k2] = a[k2];
+      for (var k2 in b)
+        o[k2] = b[k2];
       return o;
     };
     var wcln = function(fn2, fnStr, td2) {
-      var dt = fn2();
-      var st2 = fn2.toString();
-      var ks = st2.slice(st2.indexOf("[") + 1, st2.lastIndexOf("]")).replace(/\s+/g, "").split(",");
-      for (var i2 = 0; i2 < dt.length; ++i2) {
-        var v = dt[i2], k = ks[i2];
+      var dt2 = fn2();
+      var st = fn2.toString();
+      var ks = st.slice(st.indexOf("[") + 1, st.lastIndexOf("]")).replace(/\s+/g, "").split(",");
+      for (var i2 = 0; i2 < dt2.length; ++i2) {
+        var v = dt2[i2], k2 = ks[i2];
         if (typeof v == "function") {
-          fnStr += ";" + k + "=";
+          fnStr += ";" + k2 + "=";
           var st_1 = v.toString();
           if (v.prototype) {
             if (st_1.indexOf("[native code]") != -1) {
@@ -108089,26 +108456,26 @@ self.onmessage = function (e) {
             } else {
               fnStr += st_1;
               for (var t2 in v.prototype)
-                fnStr += ";" + k + ".prototype." + t2 + "=" + v.prototype[t2].toString();
+                fnStr += ";" + k2 + ".prototype." + t2 + "=" + v.prototype[t2].toString();
             }
           } else
             fnStr += st_1;
         } else
-          td2[k] = v;
+          td2[k2] = v;
       }
       return fnStr;
     };
     var ch = [];
     var cbfs = function(v) {
       var tl = [];
-      for (var k in v) {
-        if (v[k].buffer) {
-          tl.push((v[k] = new v[k].constructor(v[k])).buffer);
+      for (var k2 in v) {
+        if (v[k2].buffer) {
+          tl.push((v[k2] = new v[k2].constructor(v[k2])).buffer);
         }
       }
       return tl;
     };
-    var wrkr = function(fns, init, id, cb) {
+    var wrkr = function(fns, init2, id, cb) {
       if (!ch[id]) {
         var fnStr = "", td_1 = {}, m = fns.length - 1;
         for (var i2 = 0; i2 < m; ++i2)
@@ -108116,7 +108483,7 @@ self.onmessage = function (e) {
         ch[id] = { c: wcln(fns[m], fnStr, td_1), e: td_1 };
       }
       var td2 = mrg({}, ch[id].e);
-      return wk(ch[id].c + ";onmessage=function(e){for(var k in e.data)self[k]=e.data[k];onmessage=" + init.toString() + "}", id, td2, cbfs(td2), cb);
+      return wk(ch[id].c + ";onmessage=function(e){for(var k in e.data)self[k]=e.data[k];onmessage=" + init2.toString() + "}", id, td2, cbfs(td2), cb);
     };
     var bInflt = function() {
       return [u8, u16, i32, fleb, fdeb, clim, fl, fd, flrm, fdrm, rev, ec, hMap, max$1, bits, bits16, shft, slc, err, inflt, inflateSync, pbf, gopt];
@@ -108136,26 +108503,26 @@ self.onmessage = function (e) {
         dictionary: o.dictionary
       };
     };
-    var cbify = function(dat, opts, fns, init, id, cb) {
-      var w2 = wrkr(fns, init, id, function(err2, dat2) {
-        w2.terminate();
+    var cbify = function(dat, opts, fns, init2, id, cb) {
+      var w = wrkr(fns, init2, id, function(err2, dat2) {
+        w.terminate();
         cb(err2, dat2);
       });
-      w2.postMessage([dat, opts], opts.consume ? [dat.buffer] : []);
+      w.postMessage([dat, opts], opts.consume ? [dat.buffer] : []);
       return function() {
-        w2.terminate();
+        w.terminate();
       };
     };
     var gzs = function(d) {
       if (d[0] != 31 || d[1] != 139 || d[2] != 8)
         err(6, "invalid gzip data");
       var flg = d[3];
-      var st2 = 10;
+      var st = 10;
       if (flg & 4)
-        st2 += (d[10] | d[11] << 8) + 2;
-      for (var zs = (flg >> 3 & 1) + (flg >> 4 & 1); zs > 0; zs -= !d[st2++])
+        st += (d[10] | d[11] << 8) + 2;
+      for (var zs = (flg >> 3 & 1) + (flg >> 4 & 1); zs > 0; zs -= !d[st++])
         ;
-      return st2 + (flg & 2);
+      return st + (flg & 2);
     };
     var gzl = function(d) {
       var l = d.length;
@@ -108198,10 +108565,10 @@ self.onmessage = function (e) {
       }, 3, cb);
     }
     function gunzipSync(data, opts) {
-      var st2 = gzs(data);
-      if (st2 + 8 > data.length)
+      var st = gzs(data);
+      if (st + 8 > data.length)
         err(6, "invalid gzip data");
-      return inflt(data.subarray(st2, -8), { i: 2 }, opts && opts.out || new u8(gzl(data)), opts && opts.dictionary);
+      return inflt(data.subarray(st, -8), { i: 2 }, opts && opts.out || new u8(gzl(data)), opts && opts.dictionary);
     }
     function unzlib(data, opts, cb) {
       if (!cb)
@@ -114412,10 +114779,10 @@ ${citation.url}` : citation.url,
         const declarations = [];
         const comparisons = [];
         let previousExpression = flatten$1([arr2[0]]).join("");
-        let j2 = 0;
+        let j = 0;
         for (let i2 = 1; i2 < arr2.length - 1; i2 += 2) {
           const expr = flatten$1([arr2[i2 + 1]]).join("");
-          const tempVar = `tmp${j2++}`;
+          const tempVar = `tmp${j++}`;
           comparisons.push(
             `ops["${arr2[i2]}"](${previousExpression}, ${tempVar} = ${expr})`
           );
@@ -117611,7 +117978,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.fullWidth, styles$1i.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1i.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.159-37-g4e8f25647" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.160-7-ga0412a414" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
@@ -119381,10 +119748,10 @@ categories: ${categories.join(" ")}`;
       }
       _setupListeners(object, handlers2) {
         const destroyFuncs = [];
-        for (const k of Object.keys(handlers2)) {
-          const handler = handlers2[k];
+        for (const k2 of Object.keys(handlers2)) {
+          const handler = handlers2[k2];
           if (handler) {
-            destroyFuncs.push(this._setupListener(object, k, handler));
+            destroyFuncs.push(this._setupListener(object, k2, handler));
           }
         }
         return destroyFuncs;
@@ -121088,7 +121455,7 @@ categories: ${categories.join(" ")}`;
         let atLeastOneShowingWhenClosed = false;
         let atLeastOneChangeable = false;
         const children2 = this.findChildrenRemovingPadding();
-        for (let i2 = 0, j2 = children2.length; i2 < j2; i2++) {
+        for (let i2 = 0, j = children2.length; i2 < j; i2++) {
           const abstractColumn = children2[i2];
           if (!abstractColumn.isVisible()) {
             continue;
@@ -123548,24 +123915,24 @@ categories: ${categories.join(" ")}`;
       let currentRow = [];
       const sourceLength = inputText.length;
       const targetLength = suggestion.length;
-      for (let j2 = 0; j2 <= targetLength; j2++) {
-        previousRow[j2] = j2;
+      for (let j = 0; j <= targetLength; j++) {
+        previousRow[j] = j;
       }
       let secondaryScore = 0;
       for (let i2 = 1; i2 <= sourceLength; i2++) {
         currentRow[0] = i2;
-        for (let j2 = 1; j2 <= targetLength; j2++) {
+        for (let j = 1; j <= targetLength; j++) {
           const sourceChar = inputText[i2 - 1];
-          const targetChar = suggestion[j2 - 1];
+          const targetChar = suggestion[j - 1];
           if (sourceChar.toLocaleLowerCase() === targetChar.toLocaleLowerCase()) {
             ++secondaryScore;
             if (sourceChar === targetChar) {
               ++secondaryScore;
             }
-            if (i2 > 1 && j2 > 1) {
-              if (inputText[i2 - 2].toLocaleLowerCase() === suggestion[j2 - 2].toLocaleLowerCase()) {
+            if (i2 > 1 && j > 1) {
+              if (inputText[i2 - 2].toLocaleLowerCase() === suggestion[j - 2].toLocaleLowerCase()) {
                 ++secondaryScore;
-                if (inputText[i2 - 2] === suggestion[j2 - 2]) {
+                if (inputText[i2 - 2] === suggestion[j - 2]) {
                   ++secondaryScore;
                 }
               }
@@ -123573,12 +123940,12 @@ categories: ${categories.join(" ")}`;
             if (i2 < sourceLength / 2 - 10) {
               ++secondaryScore;
             }
-            currentRow[j2] = previousRow[j2 - 1];
+            currentRow[j] = previousRow[j - 1];
           } else {
-            const insertCost = currentRow[j2 - 1];
-            const deleteCost = previousRow[j2];
-            const replaceCost = previousRow[j2 - 1];
-            currentRow[j2] = 1 + Math.min(insertCost, deleteCost, replaceCost);
+            const insertCost = currentRow[j - 1];
+            const deleteCost = previousRow[j];
+            const replaceCost = previousRow[j - 1];
+            currentRow[j] = 1 + Math.min(insertCost, deleteCost, replaceCost);
           }
         }
         [previousRow, currentRow] = [currentRow, previousRow];
@@ -128964,7 +129331,7 @@ ${inheritanceCss}}
           wrapper2?.comp?.afterGuiDetached?.();
         });
       }
-      createFilter(init) {
+      createFilter(init2) {
         const {
           column: column2,
           source: source2,
@@ -128999,7 +129366,7 @@ ${inheritanceCss}}
             }
           }
           this.appendChild(filterGui);
-          if (init) {
+          if (init2) {
             this.eventSvc.dispatchEvent({
               type: "filterOpened",
               column: column2,
@@ -135190,8 +135557,8 @@ ${inheritanceCss}}
         }
         const disabled2 = selectable && !checkboxes || !selectable && checkboxes;
         const visible2 = selectable || checkboxes;
-        const so2 = gos.get("rowSelection");
-        const showDisabledCheckboxes = so2 && typeof so2 !== "string" ? !_getHideDisabledCheckboxes(so2) : !!column2?.getColDef().showDisabledCheckboxes;
+        const so = gos.get("rowSelection");
+        const showDisabledCheckboxes = so && typeof so !== "string" ? !_getHideDisabledCheckboxes(so) : !!column2?.getColDef().showDisabledCheckboxes;
         this.setVisible(visible2 && (disabled2 ? showDisabledCheckboxes : true));
         this.setDisplayed(visible2 && (disabled2 ? showDisabledCheckboxes : true));
         if (visible2) {
@@ -135206,9 +135573,9 @@ ${inheritanceCss}}
         if (overrides) {
           return overrides.isVisible;
         }
-        const so2 = this.gos.get("rowSelection");
-        if (so2 && typeof so2 !== "string") {
-          return _getCheckboxes(so2);
+        const so = this.gos.get("rowSelection");
+        if (so && typeof so !== "string") {
+          return _getCheckboxes(so);
         }
         return this.column?.getColDef()?.checkboxSelection;
       }
@@ -135720,9 +136087,9 @@ ${inheritanceCss}}
         return true;
       }
       isCellCheckboxSelection(column2, rowNode) {
-        const so2 = this.gos.get("rowSelection");
-        if (so2 && typeof so2 !== "string") {
-          const checkbox2 = isColumnSelectionCol(column2) && _getCheckboxes(so2);
+        const so = this.gos.get("rowSelection");
+        if (so && typeof so !== "string") {
+          const checkbox2 = isColumnSelectionCol(column2) && _getCheckboxes(so);
           return column2.isColumnFunc(rowNode, checkbox2);
         } else {
           return column2.isColumnFunc(rowNode, column2.colDef.checkboxSelection);
@@ -141019,8 +141386,8 @@ ${inheritanceCss}}
           const columnsToCheckFilter = [col];
           if (colSpan > 1) {
             const colsToRemove = colSpan - 1;
-            for (let j2 = 1; j2 <= colsToRemove; j2++) {
-              columnsToCheckFilter.push(displayedColumns[i2 + j2]);
+            for (let j = 1; j <= colsToRemove; j++) {
+              columnsToCheckFilter.push(displayedColumns[i2 + j]);
             }
             i2 += colsToRemove;
           }
@@ -141411,10 +141778,10 @@ ${inheritanceCss}}
           } else {
             let firstPaddedGroup;
             let currentPaddedGroup;
-            for (let j2 = currentDepth; j2 < columnDepth; j2++) {
+            for (let j = currentDepth; j < columnDepth; j++) {
               const newColId = columnKeyCreator.getUniqueKey(null, null);
               const colGroupDefMerged = createMergedColGroupDef(this.beans, null, newColId);
-              const paddedGroup = new AgProvidedColumnGroup(colGroupDefMerged, newColId, true, j2);
+              const paddedGroup = new AgProvidedColumnGroup(colGroupDefMerged, newColId, true, j);
               this.createBean(paddedGroup);
               if (currentPaddedGroup) {
                 currentPaddedGroup.setChildren([paddedGroup]);
@@ -143009,8 +143376,8 @@ ${inheritanceCss}}
       getIcon(name2) {
         return this.icons[name2];
       }
-      getDynamicError(name2, init) {
-        if (init) {
+      getDynamicError(name2, init2) {
+        if (init2) {
           return _errMsg(279, { name: name2 });
         }
         return this.beans.validation?.missingDynamicBean(name2) ?? _errMsg(256);
@@ -146579,8 +146946,8 @@ ${suggestions}`;
         },
         groupHierarchyConfig: {
           validate({ groupHierarchyConfig = {} }, gridOptions, beans) {
-            for (const k of Object.keys(groupHierarchyConfig)) {
-              beans.validation?.validateColDef(groupHierarchyConfig[k]);
+            for (const k2 of Object.keys(groupHierarchyConfig)) {
+              beans.validation?.validateColDef(groupHierarchyConfig[k2]);
             }
             return null;
           }
@@ -153765,8 +154132,8 @@ ${suggestions}`;
         for (let i2 = 0; i2 < rowCtrlsLength; i2++) {
           const cellCtrls = rowCtrls[i2].getAllCellCtrls();
           const cellCtrlsLength = cellCtrls.length;
-          for (let j2 = 0; j2 < cellCtrlsLength; j2++) {
-            res.push(cellCtrls[j2]);
+          for (let j = 0; j < cellCtrlsLength; j++) {
+            res.push(cellCtrls[j]);
           }
         }
         return res;
@@ -155548,9 +155915,9 @@ ${clipboardApiError(method)}`,
         const validComponents = [
           // Don't include the old names / internals in potential suggestions
           ...Object.keys(agGridDefaults ?? []).filter(
-            (k) => !["agCellEditor", "agGroupRowRenderer", "agSortIndicator"].includes(k)
+            (k2) => !["agCellEditor", "agGroupRowRenderer", "agSortIndicator"].includes(k2)
           ),
-          ...Object.keys(jsComps ?? []).filter((k) => !!jsComps[k])
+          ...Object.keys(jsComps ?? []).filter((k2) => !!jsComps[k2])
         ];
         const suggestions = _fuzzySuggestions({
           inputValue: componentName,
@@ -166577,27 +166944,27 @@ If you are trying to annotate ${containerName} with application data, use the '$
     };
     var mergeSortedArrays = (rowNodeSorter, sortOptions2, arr1, arr2) => {
       let i2 = 0;
-      let j2 = 0;
+      let j = 0;
       const arr1Length = arr1.length;
       const arr2Length = arr2.length;
       const res = new Array(arr1Length + arr2Length);
-      let k = 0;
-      while (i2 < arr1Length && j2 < arr2Length) {
+      let k2 = 0;
+      while (i2 < arr1Length && j < arr2Length) {
         const a = arr1[i2];
-        const b = arr2[j2];
+        const b = arr2[j];
         if (rowNodeSorter.compareRowNodes(sortOptions2, a, b) < 0) {
-          res[k++] = a.rowNode;
+          res[k2++] = a.rowNode;
           ++i2;
         } else {
-          res[k++] = b.rowNode;
-          ++j2;
+          res[k2++] = b.rowNode;
+          ++j;
         }
       }
       while (i2 < arr1Length) {
-        res[k++] = arr1[i2++].rowNode;
+        res[k2++] = arr1[i2++].rowNode;
       }
-      while (j2 < arr2Length) {
-        res[k++] = arr2[j2++].rowNode;
+      while (j < arr2Length) {
+        res[k2++] = arr2[j++].rowNode;
       }
       return res;
     };
@@ -174015,7 +174382,7 @@ If you are trying to annotate ${containerName} with application data, use the '$
         },
         [cellCtrl, context, includeDndSource, includeRowDrag, includeSelection]
       );
-      const init = reactExports.useCallback(() => {
+      const init2 = reactExports.useCallback(() => {
         const spanReady = !cellCtrl.isCellSpanning() || eWrapper.current;
         const eRef = eGui.current;
         if (!eRef || !spanReady || !cellCtrl || !cellCtrl.isAlive() || context.isDestroyed()) {
@@ -174116,11 +174483,11 @@ If you are trying to annotate ${containerName} with application data, use the '$
       }, []);
       const setGuiRef = reactExports.useCallback((ref) => {
         eGui.current = ref;
-        init();
+        init2();
       }, []);
       const setWrapperRef = reactExports.useCallback((ref) => {
         eWrapper.current = ref;
-        init();
+        init2();
       }, []);
       const reactCellRendererStateless = reactExports.useMemo(() => {
         const res = renderDetails?.compDetails?.componentFromFramework && isComponentStateless(renderDetails.compDetails.componentClass);
@@ -177627,7 +177994,7 @@ ${content2}
             const funcName = tool2.function;
             const args2 = tool2.arguments;
             if (typeof args2 === "object" && args2 !== null) {
-              const argsText = Object.entries(args2).map(([k, v]) => `${k}: ${v}`).join("\n");
+              const argsText = Object.entries(args2).map(([k2, v]) => `${k2}: ${v}`).join("\n");
               entry += `
 Tool Call: ${funcName}
 Arguments:
@@ -177931,7 +178298,7 @@ Tool Use: ${toolUse.name}(${toolUse.arguments}) -> ${toolUse.result}${errorStr}`
         [isScrolling]
       );
       return /* @__PURE__ */ jsxRuntimeExports.jsx(
-        qr,
+        Yr,
         {
           ref: listHandle,
           customScrollParent: scrollRef?.current ? scrollRef.current : void 0,
@@ -179650,7 +180017,7 @@ Tool Use: ${toolUse.name}(${toolUse.arguments}) -> ${toolUse.result}${errorStr}`
         [outlineNodeList, running, selectedOutlineId]
       );
       return /* @__PURE__ */ jsxRuntimeExports.jsx(
-        qr,
+        Yr,
         {
           ref: listHandle,
           customScrollParent: scrollRef?.current ? scrollRef.current : void 0,
@@ -182459,10 +182826,12 @@ Tool Use: ${toolUse.name}(${toolUse.arguments}) -> ${toolUse.result}${errorStr}`
       }
     }
     let wasm;
-    const heap = new Array(128).fill(void 0);
-    heap.push(void 0, null, true, false);
-    function getObject(idx) {
-      return heap[idx];
+    function addHeapObject(obj) {
+      if (heap_next === heap.length) heap.push(heap.length + 1);
+      const idx = heap_next;
+      heap_next = heap[idx];
+      heap[idx] = obj;
+      return idx;
     }
     function debugString(val) {
       const type = typeof val;
@@ -182502,7 +182871,7 @@ Tool Use: ${toolUse.name}(${toolUse.arguments}) -> ${toolUse.result}${errorStr}`
       }
       const builtInMatches = /\[object ([^\]]+)\]/.exec(toString.call(val));
       let className2;
-      if (builtInMatches.length > 1) {
+      if (builtInMatches && builtInMatches.length > 1) {
         className2 = builtInMatches[1];
       } else {
         return toString.call(val);
@@ -182520,40 +182889,57 @@ ${val.stack}`;
       }
       return className2;
     }
-    let WASM_VECTOR_LEN = 0;
-    let cachedUint8Memory0 = null;
-    function getUint8Memory0() {
-      if (cachedUint8Memory0 === null || cachedUint8Memory0.byteLength === 0) {
-        cachedUint8Memory0 = new Uint8Array(wasm.memory.buffer);
-      }
-      return cachedUint8Memory0;
+    function dropObject(idx) {
+      if (idx < 132) return;
+      heap[idx] = heap_next;
+      heap_next = idx;
     }
-    const cachedTextEncoder = typeof TextEncoder !== "undefined" ? new TextEncoder("utf-8") : {
-      encode: () => {
-        throw Error("TextEncoder not available");
+    function getArrayU32FromWasm0(ptr, len) {
+      ptr = ptr >>> 0;
+      return getUint32ArrayMemory0().subarray(ptr / 4, ptr / 4 + len);
+    }
+    let cachedDataViewMemory0 = null;
+    function getDataViewMemory0() {
+      if (cachedDataViewMemory0 === null || cachedDataViewMemory0.buffer.detached === true || cachedDataViewMemory0.buffer.detached === void 0 && cachedDataViewMemory0.buffer !== wasm.memory.buffer) {
+        cachedDataViewMemory0 = new DataView(wasm.memory.buffer);
       }
-    };
-    const encodeString = typeof cachedTextEncoder.encodeInto === "function" ? function(arg, view) {
-      return cachedTextEncoder.encodeInto(arg, view);
-    } : function(arg, view) {
-      const buf = cachedTextEncoder.encode(arg);
-      view.set(buf);
-      return {
-        read: arg.length,
-        written: buf.length
-      };
-    };
+      return cachedDataViewMemory0;
+    }
+    function getStringFromWasm0(ptr, len) {
+      ptr = ptr >>> 0;
+      return decodeText(ptr, len);
+    }
+    let cachedUint32ArrayMemory0 = null;
+    function getUint32ArrayMemory0() {
+      if (cachedUint32ArrayMemory0 === null || cachedUint32ArrayMemory0.byteLength === 0) {
+        cachedUint32ArrayMemory0 = new Uint32Array(wasm.memory.buffer);
+      }
+      return cachedUint32ArrayMemory0;
+    }
+    let cachedUint8ArrayMemory0 = null;
+    function getUint8ArrayMemory0() {
+      if (cachedUint8ArrayMemory0 === null || cachedUint8ArrayMemory0.byteLength === 0) {
+        cachedUint8ArrayMemory0 = new Uint8Array(wasm.memory.buffer);
+      }
+      return cachedUint8ArrayMemory0;
+    }
+    function getObject(idx) {
+      return heap[idx];
+    }
+    let heap = new Array(128).fill(void 0);
+    heap.push(void 0, null, true, false);
+    let heap_next = heap.length;
     function passStringToWasm0(arg, malloc, realloc) {
       if (realloc === void 0) {
         const buf = cachedTextEncoder.encode(arg);
         const ptr2 = malloc(buf.length, 1) >>> 0;
-        getUint8Memory0().subarray(ptr2, ptr2 + buf.length).set(buf);
+        getUint8ArrayMemory0().subarray(ptr2, ptr2 + buf.length).set(buf);
         WASM_VECTOR_LEN = buf.length;
         return ptr2;
       }
       let len = arg.length;
       let ptr = malloc(len, 1) >>> 0;
-      const mem = getUint8Memory0();
+      const mem = getUint8ArrayMemory0();
       let offset2 = 0;
       for (; offset2 < len; offset2++) {
         const code2 = arg.charCodeAt(offset2);
@@ -182565,75 +182951,56 @@ ${val.stack}`;
           arg = arg.slice(offset2);
         }
         ptr = realloc(ptr, len, len = offset2 + arg.length * 3, 1) >>> 0;
-        const view = getUint8Memory0().subarray(ptr + offset2, ptr + len);
-        const ret = encodeString(arg, view);
+        const view = getUint8ArrayMemory0().subarray(ptr + offset2, ptr + len);
+        const ret = cachedTextEncoder.encodeInto(arg, view);
         offset2 += ret.written;
         ptr = realloc(ptr, len, offset2, 1) >>> 0;
       }
       WASM_VECTOR_LEN = offset2;
       return ptr;
     }
-    let cachedInt32Memory0 = null;
-    function getInt32Memory0() {
-      if (cachedInt32Memory0 === null || cachedInt32Memory0.byteLength === 0) {
-        cachedInt32Memory0 = new Int32Array(wasm.memory.buffer);
-      }
-      return cachedInt32Memory0;
-    }
-    let heap_next = heap.length;
-    function dropObject(idx) {
-      if (idx < 132) return;
-      heap[idx] = heap_next;
-      heap_next = idx;
-    }
     function takeObject(idx) {
       const ret = getObject(idx);
       dropObject(idx);
       return ret;
     }
-    function addHeapObject(obj) {
-      if (heap_next === heap.length) heap.push(heap.length + 1);
-      const idx = heap_next;
-      heap_next = heap[idx];
-      heap[idx] = obj;
-      return idx;
-    }
-    const cachedTextDecoder = typeof TextDecoder !== "undefined" ? new TextDecoder("utf-8", {
+    let cachedTextDecoder = new TextDecoder("utf-8", {
       ignoreBOM: true,
       fatal: true
-    }) : {
-      decode: () => {
-        throw Error("TextDecoder not available");
+    });
+    cachedTextDecoder.decode();
+    const MAX_SAFARI_DECODE_BYTES = 2146435072;
+    let numBytesDecoded = 0;
+    function decodeText(ptr, len) {
+      numBytesDecoded += len;
+      if (numBytesDecoded >= MAX_SAFARI_DECODE_BYTES) {
+        cachedTextDecoder = new TextDecoder("utf-8", {
+          ignoreBOM: true,
+          fatal: true
+        });
+        cachedTextDecoder.decode();
+        numBytesDecoded = len;
       }
-    };
-    if (typeof TextDecoder !== "undefined") {
-      cachedTextDecoder.decode();
+      return cachedTextDecoder.decode(getUint8ArrayMemory0().subarray(ptr, ptr + len));
     }
-    function getStringFromWasm0(ptr, len) {
-      ptr = ptr >>> 0;
-      return cachedTextDecoder.decode(getUint8Memory0().subarray(ptr, ptr + len));
+    const cachedTextEncoder = new TextEncoder();
+    if (!("encodeInto" in cachedTextEncoder)) {
+      cachedTextEncoder.encodeInto = function(arg, view) {
+        const buf = cachedTextEncoder.encode(arg);
+        view.set(buf);
+        return {
+          read: arg.length,
+          written: buf.length
+        };
+      };
     }
-    function create$1(cols, rows, scrollback_limit) {
-      const ret = wasm.create(cols, rows, scrollback_limit);
-      return Vt.__wrap(ret);
-    }
-    let cachedUint32Memory0 = null;
-    function getUint32Memory0() {
-      if (cachedUint32Memory0 === null || cachedUint32Memory0.byteLength === 0) {
-        cachedUint32Memory0 = new Uint32Array(wasm.memory.buffer);
-      }
-      return cachedUint32Memory0;
-    }
-    function getArrayU32FromWasm0(ptr, len) {
-      ptr = ptr >>> 0;
-      return getUint32Memory0().subarray(ptr / 4, ptr / 4 + len);
-    }
+    let WASM_VECTOR_LEN = 0;
     const VtFinalization = typeof FinalizationRegistry === "undefined" ? {
       register: () => {
       },
       unregister: () => {
       }
-    } : new FinalizationRegistry((ptr) => wasm.__wbg_vt_free(ptr >>> 0));
+    } : new FinalizationRegistry((ptr) => wasm.__wbg_vt_free(ptr >>> 0, 1));
     class Vt {
       static __wrap(ptr) {
         ptr = ptr >>> 0;
@@ -182650,67 +183017,75 @@ ${val.stack}`;
       }
       free() {
         const ptr = this.__destroy_into_raw();
-        wasm.__wbg_vt_free(ptr);
+        wasm.__wbg_vt_free(ptr, 0);
       }
       /**
-      * @param {string} s
-      * @returns {any}
-      */
+       * @param {string} s
+       * @returns {any}
+       */
       feed(s) {
-        const ptr0 = passStringToWasm0(s, wasm.__wbindgen_export_0, wasm.__wbindgen_export_1);
+        const ptr0 = passStringToWasm0(s, wasm.__wbindgen_export, wasm.__wbindgen_export2);
         const len0 = WASM_VECTOR_LEN;
         const ret = wasm.vt_feed(this.__wbg_ptr, ptr0, len0);
         return takeObject(ret);
       }
       /**
-      * @param {number} cols
-      * @param {number} rows
-      * @returns {any}
-      */
+       * @param {number} cols
+       * @param {number} rows
+       * @returns {any}
+       */
       resize(cols, rows) {
         const ret = wasm.vt_resize(this.__wbg_ptr, cols, rows);
         return takeObject(ret);
       }
       /**
-      * @returns {Uint32Array}
-      */
+       * @returns {Uint32Array}
+       */
       getSize() {
         try {
           const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
           wasm.vt_getSize(retptr, this.__wbg_ptr);
-          var r0 = getInt32Memory0()[retptr / 4 + 0];
-          var r1 = getInt32Memory0()[retptr / 4 + 1];
+          var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
+          var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
           var v1 = getArrayU32FromWasm0(r0, r1).slice();
-          wasm.__wbindgen_export_2(r0, r1 * 4, 4);
+          wasm.__wbindgen_export3(r0, r1 * 4, 4);
           return v1;
         } finally {
           wasm.__wbindgen_add_to_stack_pointer(16);
         }
       }
       /**
-      * @param {number} n
-      * @returns {any}
-      */
-      getLine(n) {
-        const ret = wasm.vt_getLine(this.__wbg_ptr, n);
+       * @param {number} row
+       * @param {boolean} cursor_on
+       * @returns {any}
+       */
+      getLine(row2, cursor_on) {
+        const ret = wasm.vt_getLine(this.__wbg_ptr, row2, cursor_on);
         return takeObject(ret);
       }
       /**
-      * @returns {any}
-      */
+       * @returns {any}
+       */
       getCursor() {
         const ret = wasm.vt_getCursor(this.__wbg_ptr);
         return takeObject(ret);
       }
     }
+    if (Symbol.dispose) Vt.prototype[Symbol.dispose] = Vt.prototype.free;
+    function create$1(cols, rows, scrollback_limit, bold_is_bright) {
+      const ret = wasm.create(cols, rows, scrollback_limit, bold_is_bright);
+      return Vt.__wrap(ret);
+    }
+    const EXPECTED_RESPONSE_TYPES = /* @__PURE__ */ new Set(["basic", "cors", "default"]);
     async function __wbg_load(module2, imports) {
       if (typeof Response === "function" && module2 instanceof Response) {
         if (typeof WebAssembly.instantiateStreaming === "function") {
           try {
             return await WebAssembly.instantiateStreaming(module2, imports);
           } catch (e) {
-            if (module2.headers.get("Content-Type") != "application/wasm") {
-              console.warn("`WebAssembly.instantiateStreaming` failed because your server does not serve wasm with `application/wasm` MIME type. Falling back to `WebAssembly.instantiate` which is slower. Original error:\n", e);
+            const validResponse = module2.ok && EXPECTED_RESPONSE_TYPES.has(module2.type);
+            if (validResponse && module2.headers.get("Content-Type") !== "application/wasm") {
+              console.warn("`WebAssembly.instantiateStreaming` failed because your server does not serve Wasm with `application/wasm` MIME type. Falling back to `WebAssembly.instantiate` which is slower. Original error:\n", e);
             } else {
               throw e;
             }
@@ -182733,77 +183108,70 @@ ${val.stack}`;
     function __wbg_get_imports() {
       const imports = {};
       imports.wbg = {};
-      imports.wbg.__wbindgen_is_string = function(arg0) {
-        const ret = typeof getObject(arg0) === "string";
-        return ret;
+      imports.wbg.__wbg___wbindgen_debug_string_adfb662ae34724b6 = function(arg0, arg1) {
+        const ret = debugString(getObject(arg1));
+        const ptr1 = passStringToWasm0(ret, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+        const len1 = WASM_VECTOR_LEN;
+        getDataViewMemory0().setInt32(arg0 + 4 * 1, len1, true);
+        getDataViewMemory0().setInt32(arg0 + 4 * 0, ptr1, true);
       };
-      imports.wbg.__wbg_new_b525de17f44a8943 = function() {
+      imports.wbg.__wbg___wbindgen_throw_dd24417ed36fc46e = function(arg0, arg1) {
+        throw new Error(getStringFromWasm0(arg0, arg1));
+      };
+      imports.wbg.__wbg_new_13317ed16189158e = function() {
         const ret = new Array();
         return addHeapObject(ret);
       };
-      imports.wbg.__wbg_set_17224bc548dd1d7b = function(arg0, arg1, arg2) {
-        getObject(arg0)[arg1 >>> 0] = takeObject(arg2);
-      };
-      imports.wbg.__wbindgen_debug_string = function(arg0, arg1) {
-        const ret = debugString(getObject(arg1));
-        const ptr1 = passStringToWasm0(ret, wasm.__wbindgen_export_0, wasm.__wbindgen_export_1);
-        const len1 = WASM_VECTOR_LEN;
-        getInt32Memory0()[arg0 / 4 + 1] = len1;
-        getInt32Memory0()[arg0 / 4 + 0] = ptr1;
-      };
-      imports.wbg.__wbindgen_object_drop_ref = function(arg0) {
-        takeObject(arg0);
-      };
-      imports.wbg.__wbindgen_number_new = function(arg0) {
-        const ret = arg0;
-        return addHeapObject(ret);
-      };
-      imports.wbg.__wbindgen_bigint_from_u64 = function(arg0) {
-        const ret = BigInt.asUintN(64, arg0);
-        return addHeapObject(ret);
-      };
-      imports.wbg.__wbindgen_error_new = function(arg0, arg1) {
-        const ret = new Error(getStringFromWasm0(arg0, arg1));
-        return addHeapObject(ret);
-      };
-      imports.wbg.__wbg_new_f9876326328f45ed = function() {
+      imports.wbg.__wbg_new_4ceb6a766bf78b04 = function() {
         const ret = new Object();
         return addHeapObject(ret);
       };
-      imports.wbg.__wbg_set_f975102236d3c502 = function(arg0, arg1, arg2) {
+      imports.wbg.__wbg_set_3f1d0b984ed272ed = function(arg0, arg1, arg2) {
         getObject(arg0)[takeObject(arg1)] = takeObject(arg2);
       };
-      imports.wbg.__wbg_new_f841cc6f2098f4b5 = function() {
-        const ret = /* @__PURE__ */ new Map();
-        return addHeapObject(ret);
+      imports.wbg.__wbg_set_8b6a9a61e98a8881 = function(arg0, arg1, arg2) {
+        getObject(arg0)[arg1 >>> 0] = takeObject(arg2);
       };
-      imports.wbg.__wbg_set_388c4c6422704173 = function(arg0, arg1, arg2) {
-        const ret = getObject(arg0).set(getObject(arg1), getObject(arg2));
-        return addHeapObject(ret);
-      };
-      imports.wbg.__wbindgen_string_new = function(arg0, arg1) {
+      imports.wbg.__wbindgen_cast_2241b6af4c4b2941 = function(arg0, arg1) {
         const ret = getStringFromWasm0(arg0, arg1);
+        return addHeapObject(ret);
+      };
+      imports.wbg.__wbindgen_cast_4625c577ab2ec9ee = function(arg0) {
+        const ret = BigInt.asUintN(64, arg0);
+        return addHeapObject(ret);
+      };
+      imports.wbg.__wbindgen_cast_d6cd19b81560fd6e = function(arg0) {
+        const ret = arg0;
         return addHeapObject(ret);
       };
       imports.wbg.__wbindgen_object_clone_ref = function(arg0) {
         const ret = getObject(arg0);
         return addHeapObject(ret);
       };
-      imports.wbg.__wbindgen_throw = function(arg0, arg1) {
-        throw new Error(getStringFromWasm0(arg0, arg1));
+      imports.wbg.__wbindgen_object_drop_ref = function(arg0) {
+        takeObject(arg0);
       };
       return imports;
     }
     function __wbg_finalize_init(instance, module2) {
       wasm = instance.exports;
       __wbg_init.__wbindgen_wasm_module = module2;
-      cachedInt32Memory0 = null;
-      cachedUint32Memory0 = null;
-      cachedUint8Memory0 = null;
+      cachedDataViewMemory0 = null;
+      cachedUint32ArrayMemory0 = null;
+      cachedUint8ArrayMemory0 = null;
       return wasm;
     }
     function initSync(module2) {
       if (wasm !== void 0) return wasm;
+      if (typeof module2 !== "undefined") {
+        if (Object.getPrototypeOf(module2) === Object.prototype) {
+          ({
+            module: module2
+          } = module2);
+        } else {
+          console.warn("using deprecated parameters for `initSync()`; pass a single object instead");
+        }
+      }
       const imports = __wbg_get_imports();
       if (!(module2 instanceof WebAssembly.Module)) {
         module2 = new WebAssembly.Module(module2);
@@ -182811,16 +183179,25 @@ ${val.stack}`;
       const instance = new WebAssembly.Instance(module2, imports);
       return __wbg_finalize_init(instance, module2);
     }
-    async function __wbg_init(input2) {
+    async function __wbg_init(module_or_path) {
       if (wasm !== void 0) return wasm;
+      if (typeof module_or_path !== "undefined") {
+        if (Object.getPrototypeOf(module_or_path) === Object.prototype) {
+          ({
+            module_or_path
+          } = module_or_path);
+        } else {
+          console.warn("using deprecated parameters for the initialization function; pass a single object instead");
+        }
+      }
       const imports = __wbg_get_imports();
-      if (typeof input2 === "string" || typeof Request === "function" && input2 instanceof Request || typeof URL === "function" && input2 instanceof URL) {
-        input2 = fetch(input2);
+      if (typeof module_or_path === "string" || typeof Request === "function" && module_or_path instanceof Request || typeof URL === "function" && module_or_path instanceof URL) {
+        module_or_path = fetch(module_or_path);
       }
       const {
         instance,
         module: module2
-      } = await __wbg_load(await input2, imports);
+      } = await __wbg_load(await module_or_path, imports);
       return __wbg_finalize_init(instance, module2);
     }
     var exports = /* @__PURE__ */ Object.freeze({
@@ -182834,29 +183211,27 @@ ${val.stack}`;
     function getBase64Code(charCode) {
       return base64codes[charCode - 43];
     }
-    function base64_decode(str2) {
+    function base64Decode(str2) {
       let missingOctets = str2.endsWith("==") ? 2 : str2.endsWith("=") ? 1 : 0;
       let n = str2.length;
       let result2 = new Uint8Array(3 * (n / 4));
       let buffer2;
-      for (let i2 = 0, j2 = 0; i2 < n; i2 += 4, j2 += 3) {
+      for (let i2 = 0, j = 0; i2 < n; i2 += 4, j += 3) {
         buffer2 = getBase64Code(str2.charCodeAt(i2)) << 18 | getBase64Code(str2.charCodeAt(i2 + 1)) << 12 | getBase64Code(str2.charCodeAt(i2 + 2)) << 6 | getBase64Code(str2.charCodeAt(i2 + 3));
-        result2[j2] = buffer2 >> 16;
-        result2[j2 + 1] = buffer2 >> 8 & 255;
-        result2[j2 + 2] = buffer2 & 255;
+        result2[j] = buffer2 >> 16;
+        result2[j + 1] = buffer2 >> 8 & 255;
+        result2[j + 2] = buffer2 & 255;
       }
       return result2.subarray(0, result2.length - missingOctets);
     }
-    const wasm_code = base64_decode("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QAJAAkACQAJAAkACQAJAAkAgAy8BACIDDh4AAQIDBAUOBg4HDg4ODg4ODg4ODg4ICAkKCw4MDg0OCyACQagBakEBIAEoAgAgASgCBEHQnMAAEI4BIAEgAikDqAE3AgAgAEEAOgAADBgLIAJBsAFqQQEgASgCACABKAIEQeCcwAAQjgEgASACKQOwATcCACAAQQE6AAAMFwsgAkG4AWpBASABKAIAIAEoAgRB8JzAABCOASABIAIpA7gBNwIAIABBAjoAAAwWCyACQcABakEBIAEoAgAgASgCBEGAncAAEI4BIAEgAikDwAE3AgAgAEEDOgAADBULIAJByAFqQQEgASgCACABKAIEQZCdwAAQjgEgASACKQPIATcCACAAQQQ6AAAMFAsgAkHQAWpBASABKAIAIAEoAgRBoJ3AABCOASABIAIpA9ABNwIAIABBBToAAAwTCyACQdgBakEBIAEoAgAgASgCBEGwncAAEI4BIAEgAikD2AE3AgAgAEEGOgAADBILIAJB4AFqQQEgASgCACABKAIEQcCdwAAQjgEgASACKQPgATcCACAAQQc6AAAMEQsgAkHoAWpBASABKAIAIAEoAgRB0J3AABCOASABIAIpA+gBNwIAIABBCDoAAAwQCyACQfABakEBIAEoAgAgASgCBEHgncAAEI4BIAEgAikD8AE3AgAgAEEJOgAADA8LIAJB+AFqQQEgASgCACABKAIEQfCdwAAQjgEgASACKQP4ATcCACAAQQo6AAAMDgsgAkGAAmpBASABKAIAIAEoAgRBgJ7AABCOASABIAIpA4ACNwIAIABBCzoAAAwNCyACQYgCakEBIAEoAgAgASgCBEGQnsAAEI4BIAEgAikDiAI3AgAgAEEMOgAADAwLIAJBkAJqQQEgASgCACABKAIEQaCewAAQjgEgASACKQOQAjcCACAAQQ06AAAMCwsCQAJAIANBHmtB//8DcUEITwRAIANBJmsOAgEIAgsgAkEIakEBIAEoAgAgASgCBEHAoMAAEI4BIAEgAikDCDcCACAAIANBHms6AAIgAEEOOwAADAwLAkAgASgCBCIDQQJPBEAgAkGYAWogASgCAEEQahByIAIoApgBIgMNASABKAIEIQMLIAJB6ABqQQEgASgCACADQbCewAAQjgEgAigCbCEDIAIoAmghBAwNCwJAAkACQCACKAKc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IAEvARg7AQQgACABLwEIOwECDC4LIABBAzoAACAAIAEvAQg7AQIMLQsgAS8BCA4EFxgZGhYLIAEvAQgOAxscHRoLIABBHjoAACAAIAEvAQg7AQIMKgsgAEEVOgAAIAAgAS8BCDsBAgwpCyAAQQ06AAAgACABLwEIOwECDCgLIABBLToAACAAIAEvAQg7AQIMJwsgAEEoOgAAIAAgAS8BCDsBAgwmCyABLwEIDgYZGBoYGBsYCyAAQRY6AAAgACABLwEIOwECDCQLIABBAToAACAAIAEvAQg7AQIMIwsgAEECOgAAIAAgAS8BCDsBAgwiCyAAQQo6AAAgACABLwEIOwECDCELIABBIjoAACAAIAEvAQg7AQIMIAsgAEEvOgAAIAAgAS8BCDsBAgwfCyAAQTA6AAAgACABLwEIOwECDB4LIABBCzoAACAAIAEvARg7AQQgACABLwEIOwECDB0LIAEvAQgOBBQTExUTCyADIAQgASgChARBgJzAABCBASADQUBrIgEgAygCACICIAIgAygCBEEEdGoQLyADQTtqIAFBCGooAgA2AAAgAyADKQJANwAzIABBKzoAACAAIAMpADA3AAEgAEEIaiADQTdqKQAANwAADBsLIANBCGogBCABKAKEBEGQnMAAEIEBIANBQGsiASADKAIIIgIgAiADKAIMQQR0ahAvIANBO2ogAUEIaigCADYAACADIAMpAkA3ADMgAEElOgAAIAAgAykAMDcAASAAQQhqIANBN2opAAA3AAAMGgsgA0EYaiAEIAEoAoQEQaCcwAAQgQEgAyADKQMYNwJMIANB1gBqIANBzABqEBACfyADLQBWQRJGBEBBACEBQQAhBEEBDAELIANBEGpBBEEBQQVBlInAABBrIANB2gBqLQAAIQEgAygCECECIAMoAhQiBCADKABWNgAAIARBBGogAToAACADQQE2AjggAyAENgI0IAMgAjYCMCADIAMpAkw3AkBBBSECQQEhAQNAIANB2wBqIANBQGsQECADLQBbQRJGRQRAIAMoAjAgAUYEQCADQTBqIAFBAUEBQQUQdyADKAI0IQQLIAIgBGoiBSADKABbNgAAIAVBBGogA0HfAGotAAA6AAAgAyABQQFqIgE2AjggAkEFaiECDAELCyADKAIwIQQgAygCNAshAiAAIAE2AgwgACACNgIIIAAgBDYC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IAdBAWsiBw0ACwtBB0kNAANAIAMgBC0AADoAACADQQFqIARBAWotAAA6AAAgA0ECaiAEQQJqLQAAOgAAIANBA2ogBEEDai0AADoAACADQQRqIARBBGotAAA6AAAgA0EFaiAEQQVqLQAAOgAAIANBBmogBEEGai0AADoAACADQQdqIARBB2otAAA6AAAgBEEIaiEEIAUgA0EIaiIDRw0ACwsgAiAGayIHQXxxIgggBWohAwJAIAEgBmoiBEEDcUUEQCADIAVNDQEgBCEBA0AgBSABKAIANgIAIAFBBGohASAFQQRqIgUgA0kNAAsMAQsgAyAFTQ0AIARBA3QiAkEYcSEGIARBfHEiCUEEaiEBQQAgAmtBGHEhCiAJKAIAIQIDQCACIAZ2IQkgBSAJIAEoAgAiAiAKdHI2AgAgAUEEaiEBIAVBBGoiBSADSQ0ACwsgB0EDcSECIAQgCGohAQsCQCACIANqIgYgA00NACACQQFrIAJBB3EiBARAA0AgAyABLQAAOgAAIAFBAWohASADQQFqIQMgBEEBayIEDQALC0EHSQ0AA0AgAyABLQAAOgAAIANBAWogAUEBai0AADoAACADQQJqIAFBAmotAAA6AAAgA0EDaiABQQNqLQAAOgAAIANBBGogAUEEai0AADoAACADQQVqIAFBBWotAAA6AAAgA0EGaiABQQZqLQAAOgAAIANBB2ogAUEHai0AADoAACABQQhqIQEgBiADQQhqIgNHDQALCyAAC+oEAQp/IwBBMGsiAyQAIAMgATYCLCADIAA2AiggA0EDOgAkIANCIDcCHCADQQA2AhQgA0EANgIMAn8CQAJAAkAgAigCECIKRQRAIAIoAgwiAEUNASACKAIIIgEgAEEDdGohBCAAQQFrQf////8BcUEBaiEHIAIoAgAhAANAIABBBGooAgAiBQRAIAMoAiggACgCACAFIAMoAiwoAgwRAwANBAsgASgCACADQQxqIAFBBGooAgARAgANAyAAQQhqIQAgBCABQQhqIgFHDQALDAELIAIoAhQiAEUNACAAQQV0IQsgAEEBa0H///8/cUEBaiEHIAIoAgghBSACKAIAIQADQCAAQQRqKAIAIgEEQCADKAIoIAAoAgAgASADKAIsKAIMEQMADQMLIAMgCCAKaiIBQRBqKAIANgIcIAMgAUEcai0AADoAJCADIAFB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QRBqIARBCGovAAA7AAALIAIgA0sNASABIANJDQIgA0EUbCIGIAJBFGwiAmshBSAAIAJqIQIgBEEIaiEHA0AgBQRAIAJCoICAgBA3AgAgAiAEKQAANwAIIAJBEGogBy8AADsAACAFQRRrIQUgAkEUaiECDAELCyABIANNDQAgACAGaiIAKAIEDQAgAEKggICAEDcCACAAIAQpAAA3AAggAEEQaiAEQQhqLwAAOwAACw8LIAIgA0G8lcAAEMoBAAsgAyABQbyVwAAQyAEAC4sCAQN/IwBBMGsiAyQAIAMgAjYCGCADIAE2AhQCQCADQRRqEGYiAUH//wNxQQNGBEAgAEEANgIIIABCgICAgCA3AgAMAQsgA0EIakEEQQJBAkGUicAAEGsgAygCCCECIAMoAgwiBCABOwEAIANBATYCJCADIAQ2AiAgAyACNgIcIAMgAykCFDcCKEECIQFBASECA0AgA0EoahBmIgVB//8DcUEDRkUEQCADKAIcIAJGBEAgA0EcaiACQQFBAkECEHcgAygCICEECyABIARqIAU7AQAgAyACQQFqIgI2AiQgAUECaiEBDAELCyAAIAMpAhw3AgAgAEEIaiADQSRqKAIANgIACyADQTBqJAALhQIBA38jAEEwayIDJAAgAyACNgIYIAMgATYCFAJAIANBFGoQW0H//wNxIgFFBEAgAEEANgIIIABCgICAgCA3AgAMAQsgA0EIakEEQQJBAkGUicAAEGsgAygCCCECIAMoAgwiBCABOwEAIANBATYCJCADIAQ2AiAgAyACNgIcIAMgAykCFDcCKEECIQFBASECA0AgA0EoahBbQf//A3EiBQRAIAMoAhwgAkYEQCADQRxqIAJBAUECQQIQdyADKAIgIQQLIAEgBGogBTsBACADIAJBAWoiAjYCJCABQQJqIQEMAQsLIAAgAykCHDcCACAAQQhqIANBJGooAgA2AgALIANBMGokAAuDAgECfyMAQTBrIgQkACAEQRBqIAAoAhggAxAyIARBCGogABB9IAQgASACIAQoAgggBCgCDEHcj8AAEHUCQCAEKAIEIgBFBEAgBCgCECAEKAIUQQRBFBCvAQwBCyAAQQR0IgFBEGshAyABIAQoAgAiAGoiAkEQayEBA0AgAwRAIARBIGoiBSAEQRBqEGEgACgCACAAQQRqKAIAQQRBFBCvASAA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ACIBBEAgAiABEQQACyAAKAIEIgEEQCACIAAoAgggARBDCwtCAQF/IwBBEGsiAyQAIANBCGogASACELUBIAMoAgwhASAAKAIIIAAoAgwQwgEgACABNgIMIABBATYCCCADQRBqJAALQgAgAC0AvAFBAUYEQCAAQQA6ALwBIABB9ABqIABBiAFqEH8gACAAQSRqEIABIAAoAmAgACgCZEEAIAAoAqABEGALC0EBA38gASgCFCICIAEoAhwiA2shBCACIANJBEAgBCACQbyPwAAQyQEACyAAIAM2AgQgACABKAIQIARBBHRqNgIAC0IBAX8jAEEgayIDJAAgA0EANgIQIANBATYCBCADQgQ3AgggAyABNgIcIAMgADYCGCADIANBGGo2AgAgAyACEJcBAAtBAQN/IAEoAhQiAiABKAIcIgNrIQQgAiADSQRAIAQgAkHMj8AAEMkBAAsgACADNgIEIAAgASgCECAEQQR0ajYCAAtEAQF/IAEoAgAiAiABKAIERgRAIABBgICAgHg2AgAPCyABIAJBEGo2AgAgACACKQIANwIAIABBCGogAkEIaikCADcCAAs7AQN/A0AgAkEURkUEQCAAIAJqIgMoAgAhBCADIAEgAmoiAygCADYCACADIAQ2AgAgAkEEaiECDAELCws7AQN/A0AgAkEkRkUEQCAAIAJqIgMoAgAhBCADIAEgAmoiAygCADYCACADIAQ2AgAgAkEEaiECDAELCws7AQF/AkAgAkF/RwRAIAJBAWohBCACQSBJDQEgBEEgIAMQyAEACyADEIoBAAsgACAENgIEIAAgATYCAAs4AAJAIAFpQQFHDQBBgICAgHggAWsgAEkNACAABEBBqfLAAC0AABogASAAED8iAUUNAQsgAQ8LAAs7AQF/IwBBEGsiAiQAIAEQvAEgAkEIaiABEJkBIAIoAgwhASAAIAIoAgg2AgAgACABNgIEIAJBEGokAAs4AAJAIAJBgIDEAEYNACAAIAIgASgCEBECAEUNAEEBDwsgA0UEQEEADwsgACADIAQgASgCDBEDAAstAQF/IAEgACgCAE8EfyAAKAIEIQIgAC0ACEUEQCABIAJNDwsgASACSQVBAAsLRAEBf0EBIQICQCABQQFLDQBByIHAACAAEIUBDQBB1IHAACAAEIUBDQBB4IHAACAAEIUBDQBB7IHAACAAEIUBIQILIAILNQEBfyABELwBIAEoAgAiAkF/RgRAEM0BAAsgASACQQFqNgIAIAAgATYCBCAAIAFBBGo2AgALNAEBfyAAKAIIIgMgACgCAEYEQCAAIAIQdAsgACADQQFqNgIIIAAoAgQgA0ECdGogATYCAAsuAQF/IwBBEGsiAiQAIAJBCGogASAAEJoBIAIoAggiAARAIAJBEGokACAADwsACzcBAX8jAEEgayIBJAAgAUEANgIYIAFBATYCDCABQYipwAA2AgggAUIENwIQIAFBCGogABCXAQALKgEBfyACIAMQPyIEBEAgBCAAIAEgAyABIANJGxAZGiAAIAIgARBDCyAECysAIAIgA0kEQCADIAIgBBDJAQALIAAgAiADazYCBCAAIAEgA0EUbGo2AgALLwEBfyAAIAIQnQEgACgCBCAAKAIIIgNBFGxqIAEgAkEUbBAZGiAAIAIgA2o2AggLKwAgASADSwRAIAEgAyAEEMkBAAsgACADIAFrNgIEIAAgAiABQQR0ajYCAAswAAJAAkAgA2lBAUcNAEGAgICAeCADayABSQ0AIAAgASADIAIQiwEiAA0BCwALIAALLgADQCABBEAgACgCACAAQQRqKAIAQQRBFBCvASABQQFrIQEgAEEQaiEADAELCwsyAQF/IAAoAgghAiABIAAoAgBBAmotAAAQqwEhASAAKAIEIAIgARACIAAgAkEBajYCCAsqACAAIAAoAmggAWoiASAAKAKcASIAQQFrIAAgAUsbQQAgAUEAThs2AmgLMwECfyAAIAAoAqgBIgIgACgCrAFBAWoiAyABIABBsgFqEEEgACgCYCAAKAJkIAIgAxBgCzMBAn8gACAAKAKoASICIAAoAqwBQQFqIgMgASAAQbIBahAgIAAoAmAgACgCZCACIAMQYAsqACABIAJJBEBBpInAAEEjQZSKwAAQfAALIAIgACACQRRsaiABIAJrEB0LNQAgACAAKQJ0NwJoIAAgACkBfDcBsgEgACAALwGGATsBvgEgAEG6AWogAEGEAWovAQA7AQAL7AECAn8BfiMAQRBrIgIkACACQQE7AQwgAiABNgIIIAIgADYCBCMAQRBrIgEkACACQQRqIgApAgAhBCABIAA2AgwgASAENwIEIwBBEGsiACQAIAFBBGoiASgCACICKAIMIQMCQAJAAkACQCACKAIEDgIAAQILIAMNAUEBIQJBACEDDAILIAMNACACKAIAIgIoAgQhAyACKAIAIQIMAQsgAEGAgICAeDYCACAAIAE2AgwgASgCCCIBLQAJGiAAQRkgAS0ACBBXAAsgACADNgIEIAAgAjYCACABKAIIIgEtAAkaIABBGiABLQAIEFcACysBAn8CQCAAKAIEIAAoAggiARA+IgJFDQAgASACSQ0AIAAgASACazYCCAsLKAAgASgCAEUEQCABQX82AgAgACABNgIEIAAgAUEEajYCAA8LEM0BAAsmACACBEBBqfLAAC0AABogASACED8hAQsgACACNgIEIAAgATYCAAsjAQF/IAEgACgCACAAKAIIIgJrSwRAIAAgAiABQQFBARB3CwsjAQF/IAEgACgCACAAKAIIIgJrSwRAIAAgAiABQQRBEBB3CwsjAQF/IAEgACgCACAAKAIIIgJrSwRAIAAgAiABQQRBFBB3CwslACAAQQE2AgQgACABKAIEIAEoAgBrQQR2IgE2AgggACABNgIACxsAIAEgAk0EQCACIAEgAxBYAAsgACACQRRsagsgACABIAJNBEAgAiABQeCjwAAQWAALIAAgAmpBAToAAAsbACABIAJNBEAgAiABIAMQWAALIAAgAkEEdGoLAwAACwMAAAsDAAALAwAACwMAAAsDAAALGgBBqfLAAC0AABpBBCAAED8iAARAIAAPCwALHQAgBCAAQQJqLQAAEKsBIQAgASACIAMQIyAAEAkLIQAgAEUEQEGYq8AAQTIQzAEACyAAIAIgAyABKAIQEQEACxYAIAFBAXFFBEAgALgQBQ8LIACtEAYLHwAgAEUEQEGYq8AAQTIQzAEACyAAIAIgASgCEBECAAsbAQF/IAEQACECIAAgATYCBCAAIAJBAUc2AgALGQEBfyAAKAIAIgEEQCAAKAIEQQEgARBDCwsSACAABEAgASACIAAgA2wQQwsLIQEBfyAAKAIQIgEgACgCFBCQASAAKAIMIAFBBEEQEK8BCyEBAX8gACgCBCIBIAAoAggQkAEgACgCACABQQRBEBCvAQsWACAAQQFxRQRAQYCAwABBFRDMAQALCxMAIAFFBEBBAEEAIAIQWAALIAALFgAgAEEQahBlIAAoAgAgACgCBBC3AQsUACAAIAEgAhAMNgIEIABBADYCAAsZACABKAIcQd+DwABBBSABKAIgKAIMEQMACxkAIABBgICAgHhHBEAgACABQQRBFBCvAQsLFAAgAQRAQYCAgIB4IAEQtwELIAELGQAgASgCHEHEpcAAQQ4gASgCICgCDBEDAAsPACACBEAgACABIAIQQwsLDwAgAQRAIAAgAiABEEMLCxMAIAAEQA8LQajowABBGxDMAQALDwAgAEGEAU8EQCAAEAQLCxMAIAAoAgggACgCAEECQQIQrwELFQAgAiACELgBGiAAQYCAgIB4NgIACxQAIAAoAgAgASAAKAIEKAIMEQIACxAAIAEgACgCBCAAKAIIEBMLDAAgAARAIAEQvQELCzwAIABFBEAjAEEgayIAJAAgAEEANgIYIABBATYCDCAAQZCEwAA2AgggAEIENwIQIABBCGogARCXAQALAAsUACAAQQA2AgggAEKAgICAEDcCAAsSACAAIAFBjI3AABBtQQE6AAwLEAAgASAAKAIAIAAoAgQQEwsOAEHspcAAQSsgABB8AAtrAQF/IwBBMGsiAyQAIAMgATYCBCADIAA2AgAgA0ECNgIMIANB5KnAADYCCCADQgI3AhQgAyADQQRqrUKAgICAsAGENwMoIAMgA61CgICAgLABhDcDICADIANBIGo2AhAgA0EIaiACEJcBAAtrAQF/IwBBMGsiAyQAIAMgATYCBCADIAA2AgAgA0ECNgIMIANBxKnAADYCCCADQgI3AhQgAyADQQRqrUKAgICAsAGENwMoIAMgA61CgICAgLABhDcDICADIANBIGo2AhAgA0EIaiACEJcBAAtrAQF/IwBBMGsiAyQAIAMgATYCBCADIAA2AgAgA0ECNgIMIANBmKrAADYCCCADQgI3AhQgAyADQQRqrUKAgICAsAGENwMoIAMgA61CgICAgLABhDcDICADIANBIGo2AhAgA0EIaiACEJcBAAsLACAAIwBqJAAjAAsJACAAIAEQDgALDgBBw+jAAEHPABDMAQALDQAgAEHkg8AAIAEQGgsNACAAQfCmwAAgARAaCwwAIAAgASkCADcDAAsKACAAKAIAEL0BCw0AIABBgICAgHg2AgALCQAgAEEANgIACwYAIAAQZQsFAEGABAsEAEEBCwQAIAELBABBAAsLi2gRAEGAgMAAC98EYHVud3JhcF90aHJvd2AgZmFpbGVkAAAAGwAAAAQAAAAEAAAAHAAAAGNhbGxlZCBgUmVzdWx0Ojp1bndyYXAoKWAgb24gYW4gYEVycmAgdmFsdWVNYXAga2V5IGlzIG5vdCBhIHN0cmluZyBhbmQgY2Fubm90IGJlIGFuIG9iamVjdCBrZXkAADQKEABYAAAAfQEAADMAAAA0ChAAWAAAAIIBAAAcAAAANAoQAFgAAAB/AQAAHAAAADQKEABYAAAAeQEAABwAAAAAJQAAfyUAAAAAAAAAKAAA/ygAAAAAAACAJQAAnyUAAAAAAACw4AAAs+AAAAAAAABmZ3NyYy9saWIucnNiZ2ZhaW50Ym9sZGl0YWxpY3VuZGVybGluZXN0cmlrZXRocm91Z2hibGlua2ludmVyc2UjNwEQAAEAAAABAAAAAAAAAAEAAAAAAAAA+gAQAAoAAAAlAAAANgAAAPoAEAAKAAAAKgAAADYAAAD6ABAACgAAAEwAAAAxAAAA+gAQAAoAAABDAAAAIAAAAPoAEAAKAAAARgAAACIAAAD6ABAACgAAAEEAAAAWAAAA+gAQAAoAAABTAAAALwAAAHRleHRwZW5vZmZzZXRjZWxsQ291bnRjaGFyV2lkdGhFcnJvch0AAAAMAAAABAAAAB4AAAAfAAAAIAAAAGNhcGFjaXR5IG92ZXJmbG93AAAA/AEQABEAAABsaWJyYXJ5L2FsbG9jL3NyYy9yYXdfdmVjLnJzGAIQABwAAAAoAgAAEQAAAGxpYnJhcnkvYWxsb2Mvc3JjL3N0cmluZy5ycwBB6ITAAAuVHwEAAAAhAAAAYSBmb3JtYXR0aW5nIHRyYWl0IGltcGxlbWVudGF0aW9uIHJldHVybmVkIGFuIGVycm9yIHdoZW4gdGhlIHVuZGVybHlpbmcgc3RyZWFtIGRpZCBub3RsaWJyYXJ5L2FsbG9jL3NyYy9mbXQucnMAAMYCEAAYAAAAigIAAA4AAABEAhAAGwAAAI0FAAAbAAAAKSBzaG91bGQgYmUgPCBsZW4gKGlzIGluc2VydGlvbiBpbmRleCAoaXMgKSBzaG91bGQgYmUgPD0gbGVuIChpcyAAAAAWAxAAFAAAACoDEAAXAAAAFDQQAAEAAAByZW1vdmFsIGluZGV4IChpcyAAAFwDEAASAAAAAAMQABYAAAAUNBAAAQAAAGBhdGAgc3BsaXQgaW5kZXggKGlzIAAAAIgDEAAVAAAAKgMQABcAAAAUNBAAAQAAAC9ob21lL3J1bm5lci8uY2FyZ28vcmVnaXN0cnkvc3JjL2luZGV4LmNyYXRlcy5pby0xOTQ5Y2Y4YzZiNWI1NTdmL3VuaWNvZGUtd2lkdGgtMC4xLjE0L3NyYy90YWJsZXMucnO4AxAAZAAAAJEAAAAVAAAAuAMQAGQAAACXAAAAGQAAAC9ydXN0Yy80ZDkxZGU0ZTQ4MTk4ZGEyZTMzNDEzZWZkY2Q5Y2QyY2MwYzQ2Njg4L2xpYnJhcnkvY29yZS9zcmMvaXRlci90cmFpdHMvaXRlcmF0b3IucnM8BBAAWAAAALMHAAAJAAAAYXNzZXJ0aW9uIGZhaWxlZDogbWlkIDw9IHNlbGYubGVuKCkvcnVzdGMvNGQ5MWRlNGU0ODE5OGRhMmUzMzQxM2VmZGNkOWNkMmNjMGM0NjY4OC9saWJyYXJ5L2NvcmUvc3JjL3NsaWNlL21vZC5yc8cEEABNAAAAoA0AAAkAAABhc3NlcnRpb24gZmFpbGVkOiBrIDw9IHNlbGYubGVuKCkAAADHBBAATQAAAM0NAAAJAAAAL3J1c3RjLzRkOTFkZTRlNDgxOThkYTJlMzM0MTNlZmRjZDljZDJjYzBjNDY2ODgvbGlicmFyeS9hbGxvYy9zcmMvc2xpY2UucnMAAFgFEABKAAAAoQAAABkAAAAvcnVzdGMvNGQ5MWRlNGU0ODE5OGRhMmUzMzQxM2VmZGNkOWNkMmNjMGM0NjY4OC9saWJyYXJ5L2FsbG9jL3NyYy92ZWMvbW9kLnJztAUQAEwAAAA/CgAAJAAAAC9ob21lL3J1bm5lci8uY2FyZ28vcmVnaXN0cnkvc3JjL2luZGV4LmNyYXRlcy5pby0xOTQ5Y2Y4YzZiNWI1NTdmL2F2dC0wLjE2LjAvc3JjL2J1ZmZlci5ycwAAEAYQAFoAAAAtAAAAGQAAABAGEABaAAAAWgAAAA0AAAAQBhAAWgAAAF4AAAANAAAAEAYQAFoAAABjAAAADQAAABAGEABaAAAAaAAAAB0AAAAQBhAAWgAAAHUAAAAlAAAAEAYQAFoAAAB/AAAAJQAAABAGEABaAAAAhwAAABUAAAAQBhAAWgAAAJEAAAAlAAAAEAYQAFoAAACYAAAAFQAAABAGEABaAAAAnQAAACUAAAAQBhAAWgAAAKgAAAARAAAAEAYQAFoAAACzAAAA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cnR5X2xpbmVzLnJzaBEQAGgAAAAIAAAAFAAAAGgREABoAAAADAAAAA8AAABoERAAaAAAABAAAAAPAEGIpMAAC9MHAQAAACIAAAAjAAAAJAAAACUAAAAmAAAAFAAAAAQAAAAnAAAAKAAAACkAAAAqAAAAL2hvbWUvcnVubmVyLy5jYXJnby9yZWdpc3RyeS9zcmMvaW5kZXguY3JhdGVzLmlvLTE5NDljZjhjNmI1YjU1N2YvYXZ0LTAuMTYuMC9zcmMvdGVybWluYWwucnM4EhAAXAAAAHUCAAAVAAAAOBIQAFwAAACxAgAADgAAADgSEABcAAAABQQAACMAAABCb3Jyb3dNdXRFcnJvcmFscmVhZHkgYm9ycm93ZWQ6INISEAASAAAAY2FsbGVkIGBPcHRpb246OnVud3JhcCgpYCBvbiBhIGBOb25lYCB2YWx1ZWluZGV4IG91dCBvZiBib3VuZHM6IHRoZSBsZW4gaXMgIGJ1dCB0aGUgaW5kZXggaXMgAAAAFxMQACAAAAA3ExAAEgAAADogAAABAAAAAAAAAFwTEAACAAAAAAAAAAwAAAAEAAAAKwAAACwAAAAtAAAAICAgICwKKCgKMHgwMDAxMDIwMzA0MDUwNjA3MDgwOTEwMTExMjEzMTQxNTE2MTcxODE5MjAyMTIyMjMyNDI1MjYyNzI4MjkzMDMxMzIzMzM0MzUzNjM3MzgzOTQwNDE0MjQzNDQ0NTQ2NDc0ODQ5NTA1MTUyNTM1NDU1NTY1NzU4NTk2MDYxNjI2MzY0NjU2NjY3Njg2OTcwNzE3MjczNzQ3NTc2Nzc3ODc5ODA4MTgyODM4NDg1ODY4Nzg4ODk5MDkxOTI5Mzk0OTU5Njk3OTg5OWF0dGVtcHRlZCB0byBpbmRleCBzbGljZSB1cCB0byBtYXhpbXVtIHVzaXplAFsUEAAsAAAAcmFuZ2Ugc3RhcnQgaW5kZXggIG91dCBvZiByYW5nZSBmb3Igc2xpY2Ugb2YgbGVuZ3RoIJAUEAASAAAAohQQACIAAAByYW5nZSBlbmQgaW5kZXgg1BQQABAAAACiFBAAIgAAAHNsaWNlIGluZGV4IHN0YXJ0cyBhdCAgYnV0IGVuZHMgYXQgAPQUEAAWAAAAChUQAA0AAABIYXNoIHRhYmxlIGNhcGFjaXR5IG92ZXJmbG93KBUQABwAAAAvcnVzdC9kZXBzL2hhc2hicm93bi0wLjE1LjIvc3JjL3Jhdy9tb2QucnMAAEwVEAAqAAAAIwAAACgAAACSNBAAawAAABkBAAASAAAAY2xvc3VyZSBpbnZva2VkIHJlY3Vyc2l2ZWx5IG9yIGFmdGVyIGJlaW5nIGRyb3BwZWQAAAAAAAD//////////9AVEABB6KvAAAvhAS9ob21lL3J1bm5lci8uY2FyZ28vcmVnaXN0cnkvc3JjL2luZGV4LmNyYXRlcy5pby0xOTQ5Y2Y4YzZiNWI1NTdmL3NlcmRlLXdhc20tYmluZGdlbi0wLjYuNS9zcmMvbGliLnJzAAAA6BUQAGUAAAA1AAAADgAAAC9ydXN0Yy80ZDkxZGU0ZTQ4MTk4ZGEyZTMzNDEzZWZkY2Q5Y2QyY2MwYzQ2Njg4L2xpYnJhcnkvYWxsb2Mvc3JjL3N0cmluZy5ycwBgFhAASwAAAI0FAAAbAAAAwDMQAEwAAAAoAgAAEQBBga7AAAuHAQECAwMEBQYHCAkKCwwNDgMDAwMDAwMPAwMDAwMDAw8JCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCRAJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQBBgbDAAAufCwECAgICAwICBAIFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdAgIeAgICAgICAh8gISIjAiQlJicoKQIqAgICAissAgICAi0uAgICLzAxMjMCAgICAgI0AgI1NjcCODk6Ozw9Pj85OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTlAOTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OUECAkJDAgJERUZHSEkCSjk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OUsCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgI5OTk5TAICAgICTU5PUAICAlECUlMCAgICAgICAgICAgICVFUCAlYCVwICWFlaW1xdXl9gYQJiYwJkZWZnAmgCaWprbAICbW5vcAJxcgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICcwICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAnR1AgICAgICAnZ3OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTl4OTk5OTk5OTk5eXoCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAns5OXw5OX0CAgICAgICAgICAgICAgICAgICfgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAn8CAgKAgYICAgICAgICAgICAgICAgKDhAICAgICAgICAgKFhnUCAocCAgKIAgICAgICAomKAgICAgICAgICAgICAouMAo2OAo+QkZKTlJWWApcCApiZmpsCAgICAgICAgICOTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5nB0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAnQICAgKenwIEAgUGBwgJCgsMDQ4PEBESExQVFhcYGRobHB0CAh4CAgICAgICHyAhIiMCJCUmJygpAioCAgICoKGio6Slpi6nqKmqq6ytMwICAgICAq4CAjU2NwI4OTo7PD0+rzk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OUwCAgICArBOT7GFhnUCAocCAgKIAgICAgICAomKAgICAgICAgICAgICAouMsrOOAo+QkZKTlJWWApcCApiZmpsCAgICAgICAgICVVV1VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAEG8u8AACylVVVVVFQBQVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAQBB77vAAAvEARBBEFVVVVVVV1VVVVVVVVVVVVFVVQAAQFT13VVVVVVVVVVVFQAAAAAAVVVVVfxdVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUFABQAFARQVVVVVVVVVRVRVVVVVVVVVQAAAAAAAEBVVVVVVVVVVVXVV1VVVVVVVVVVVVVVBQAAVFVVVVVVVVVVVVVVVVUVAABVVVFVVVVVVQUQAAABAVBVVVVVVVVVVVVVAVVVVVVV/////39VVVVQVQAAVVVVVVVVVVVVVQUAQcC9wAALmARAVVVVVVVVVVVVVVVVVUVUAQBUUQEAVVUFVVVVVVVVVVFVVVVVVVVVVVVVVVVVVUQBVFVRVRVVVQVVVVVVVVVFQVVVVVVVVVVVVVVVVVVVVEEVFFBRVVVVVVVVVVBRVVVBVVVVVVVVVVVVVVVVVVVUARBUUVVVVVUFVVVVVVUFAFFVVVVVVVVVVVVVVVVVVQQBVFVRVQFVVQVVVVVVVVVVRVVVVVVVVVVVVVVVVVVVRVRVVVFVFVVVVVVVVVVVVVVUVFVVVVVVVVVVVVVVVVUEVAUEUFVBVVUFVVVVVVVVVVFVVVVVVVVVVVVVVVVVVRREBQRQVUFVVQVVVVVVVVVVUFVVVVVVVVVVVVVVVVUVRAFUVUFVFVVVBVVVVVVVVVVRVVVVVVVVVVVVVVVVVVVVVVVFFQVEVRVVVVVVVVVVVVVVVVVVVVVVVVVVVVEAQFVVFQBAVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUQAAVFVVAEBVVVVVVVVVVVVVVVVVVVVVVVVQVVVVVVVVEVFVVVVVVVVVVVVVVVVVAQAAQAAEVQEAAAEAAAAAAAAAAFRVRVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUBBABBQVVVVVVVVVAFVFVVVQFUVVVFQVVRVVVVUVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVaqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqgBBgMLAAAuQA1VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAVVVVVVVVVVVVVVVVQVUVVVVVVVVBVVVVVVVVVUFVVVVVVVVVQVVVVV///33//3XX3fW1ddVEABQVUUBAABVV1FVVVVVVVVVVVVVFQBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUFVVVVVVVVVVVFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAVVFVFVQFVVVVVVVVVVVVVVVVVVVVVVVVVVVVXFRRVVVVVVVVVVVVVVVVVVUUAQEQBAFQVAAAUVVVVVVVVVVVVVVVVAAAAAAAAAEBVVVVVVVVVVVVVVVUAVVVVVVVVVVVVVVVVAABQBVVVVVVVVVVVVRUAAFVVVVBVVVVVVVVVBVAQUFVVVVVVVVVVVVVVVVVFUBFQVVVVVVVVVVVVVVVVVVUAAAVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAAAAEAFRRVVRQVVVVVVVVVVVVVVVVVVVVVVUAQaDFwAALkwhVVRUAVVVVVVVVBUBVVVVVVVVVVVVVVVUAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAAAAAAAABUVVVVVVVVVVVV9VVVVWlVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf1X11VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV9VVVVVVVfVVVVVVVVVVVVVVVV////VVVVVVVVVVVVVdVVVVVV1VVVVV1V9VVVVVV9VV9VdVVXVVVVVXVV9V11XVVd9VVVVVVVVVVXVVVVVVVVVVV31d9VVVVVVVVVVVVVVVVVVVX9VVVVVVVVV1VV1VVVVVVVVVVVVVVVVVVVVVVVVVVVVVXVV1VVVVVVVVVVVVVVVVddVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVRVQVVVVVVVVVVVVVVVVVVVV/f///////////////19V1VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAAAAAAAAAKqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqVVVVqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpaVVVVVVVVqqqqqqqqqqqqqqqqqqoKAKqqqmqpqqqqqqqqqqqqqqqqqqqqqqqqqqpqgaqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpVqaqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqKqqqqqqqqqqqmqqqqqqqqqqqqqqqqqqqqqqqqqqqqpVVZWqqqqqqqqqqqqqqmqqqqqqqqqqqqqqVVWqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqVVVVVVVVVVVVVVVVVVVVVaqqqlaqqqqqqqqqqqqqqqqqalVVVVVVVVVVVVVVVVVfVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVFUAAAFBVVVVVVVVVBVVVVVVVVVVVVVVVVVVVVVVVVVVVUFVVVUVFFVVVVVVVVUFVVFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQVVVVVVVVAAAAAFBVRRVVVVVVVVVVVVUFAFBVVVVVVRUAAFBVVVWqqqqqqqqqVkBVVVVVVVVVVVVVVRUFUFBVVVVVVVVVVVVRVVVVVVVVVVVVVVVVVVVVVQFAQUFVVRVVVVRVVVVVVVVVVVVVVVRVVVVVVVVVVVVVVVUEFFQFUVVVVVVVVVVVVVVQVUVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVRVFFVVVVVqqqqqqqqqqqqVVVVAAAAAABAFQBBv83AAAvhDFVVVVVVVVVVRVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAAAPCqqlpVAAAAAKqqqqqqqqqqaqqqqqpqqlVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVRWpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpWVVVVVVVVVVVVVVVVVVUFVFVVVVVVVVVVVVVVVVVVVapqVVUAAFRVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVBUBVAUFVAFVVVVVVVVVVVVVAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQVVVVVVVVdVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVFVRVVVVVVVVVVVVVVVVVVVVVVVVVAVVVVVVVVVVVVVVVVVVVVVVVBQAAVFVVVVVVVVVVVVVVBVBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVRVVVVVVVVVVVVVVVVVQAAAEBVVVVVVVVVVVVVFFRVFVBVVVVVVVVVVVVVVRVAQVVFVVVVVVVVVVVVVVVVVVVVQFVVVVVVVVVVFQABAFRVVVVVVVVVVVVVVVVVVRVVVVVQVVVVVVVVVVVVVVVVBQBABVUBFFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVFVAEVUVRVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUVFQBAVVVVVVVQVVVVVVVVVVVVVVVVVRVEVFVVVVUVVVVVBQBUAFRVVVVVVVVVVVVVVVVVVVVVAAAFRFVVVVVVRVVVVVVVVVVVVVVVVVVVVVVVVVVVFABEEQRVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVRUFUFUQVFVVVVVVVVBVVVVVVVVVVVVVVVVVVVVVVVVVVRUAQBFUVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVRVRABBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAQUQAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVFQAAQVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVFUVBBFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUABVVUVVVVVVVVVQEAQFVVVVVVVVVVVRUABEBVFVVVAUABVVVVVVVVVVVVVQAAAABAUFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAQAAQVVVVVVVVVVVVVVVVVVVVVVVVVVUFAAAAAAAFAARBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAUBFEAAAVVVVVVVVVVVVVVVVVVVVVVVVUBFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUVVFVVQFVVVVVVVVVVVVVVVQVAVURVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVBUAAABQVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAVFVVVVVVVVVVVVVVVVVVAEBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVFVVVVVVVVVVVVVVVVVVVVRVAVVVVVVVVVVVVVVVVVVVVVVVVVapUVVVaVVVVqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqVVWqqqqqqqqqqqqqqqqqqqqqqqqqqqpaVVVVVVVVVVVVVaqqVlVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVaqpqmmqqqqqqqqqqmpVVVVlVVVVVVVVVWpZVVVVqlVVqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpVVVVVVVVVVUEAVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAQavawAALdVAAAAAAAEBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVURUAUAAAAAQAEAVVVVVVVVVQVQVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVBVRVVVVVVVVVVVVVVVVVVQBBrdvAAAsCQBUAQbvbwAALxQZUVVFVVVVUVVVVVRUAAQAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVAEAAAAAAFAAQBEBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVRVVVVVVVVVVVVVVVVVVVVQBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQBAVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAEBVVVVVVVVVVVVVVVVVVVdVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV1VVVVVVVVVVVVVVVVVVVVXX9/39VVVVVVVVVVVVVVVVVVVVVVVX1////////blVVVaqquqqqqqrq+r+/VaqqVlVfVVVVqlpVVVVVVVX//////////1dVVf3/3///////////////////////9///////VVVV/////////////3/V/1VVVf////9XV///////////////////////f/f/////////////////////////////////////////////////////////////1////////////////////19VVdV/////////VVVVVXVVVVVVVVV9VVVVV1VVVVVVVVVVVVVVVVVVVVVVVVVV1f///////////////////////////1VVVVVVVVVVVVVVVf//////////////////////X1VXf/1V/1VV1VdV//9XVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV////VVdVVVVVVVX//////////////3///9//////////////////////////////////////////////////////////////VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf///1f//1dV///////////////f/19V9f///1X//1dV//9XVaqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpaVVVVVVVVVVVZllVhqqVZqlVVVVVVlVVVVVVVVVWVVVUAQY7iwAALAQMAQZziwAAL4QdVVVVVVZVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVRUAlmpaWmqqBUCmWZVlVVVVVVVVVVUAAAAAVVZVValWVVVVVVVVVVVVVlVVVVVVVVVVAAAAAAAAAABUVVVVlVlZVVVlVVVpVVVVVVVVVVVVVVWVVpVqqqqqVaqqWlVVVVlVqqqqVVVVVWVVVVpVVVVVpWVWVVVVlVVVVVVVVaaWmpZZWWWplqqqZlWqVVpZVVpWZVVVVWqqpaVaVVVVpapaVVVZWVVVWVVVVVVVlVVVVVVVVVVVVVVVVVVVVVVVVVVVZVX1VVVVaVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVaqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqaqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqVaqqqqqqqqqqqlVVVaqqqqqlWlVVmqpaVaWlVVpapZalWlVVVaVaVZVVVVV9VWlZpVVfVWZVVVVVVVVVVWZV////VVVVmppqmlVVVdVVVVVV1VVVpV1V9VVVVVW9Va+quqqrqqqaVbqq+q66rlVd9VVVVVVVVVVXVVVVVVlVVVV31d9VVVVVVVVVpaqqVVVVVVVV1VdVVVVVVVVVVVVVVVVXrVpVVVVVVVVVVVWqqqqqqqqqaqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqgAAAMCqqlpVAAAAAKqqqqqqqqqqaqqqqqpqqlVVVVVVVVVVVVVVVQVUVVVVVVVVVVVVVVVVVVVVqmpVVQAAVFmqqmpVqqqqqqqqqlqqqqqqqqqqqqqqqqqqqlpVqqqqqqqqqrr+/7+qqqqqVlVVVVVVVVVVVVVVVVX1////////L3J1c3RjLzRkOTFkZTRlNDgxOThkYTJlMzM0MTNlZmRjZDljZDJjYzBjNDY2ODgvbGlicmFyeS9hbGxvYy9zcmMvcmF3X3ZlYy5yc0pzVmFsdWUoKQAAAAw0EAAIAAAAFDQQAAEAAABudWxsIHBvaW50ZXIgcGFzc2VkIHRvIHJ1c3RyZWN1cnNpdmUgdXNlIG9mIGFuIG9iamVjdCBkZXRlY3RlZCB3aGljaCB3b3VsZCBsZWFkIHRvIHVuc2FmZSBhbGlhc2luZyBpbiBydXN0L2hvbWUvcnVubmVyLy5jYXJnby9yZWdpc3RyeS9zcmMvaW5kZXguY3JhdGVzLmlvLTE5NDljZjhjNmI1YjU1N2Yvd2FzbS1iaW5kZ2VuLTAuMi45Mi9zcmMvY29udmVydC9zbGljZXMucnMARwlwcm9kdWNlcnMBDHByb2Nlc3NlZC1ieQIGd2FscnVzBjAuMjAuMwx3YXNtLWJpbmRnZW4SMC4yLjkyICgyYTRhNDkzNjIp");
-    var loadVt = async (opt = {}) => {
-      let { initializeHook } = opt;
-      if (initializeHook != null) {
-        await initializeHook(__wbg_init, wasm_code);
-      } else {
-        await __wbg_init(wasm_code);
-      }
+    var vtWasmModule = base64Decode("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CAgJCgsODA4NDgsgAkGoAWpBASABKAIAIAEoAgRB1JzEABCBASABIAIpA6gBNwIAIABBADoAAAwYCyACQbABakEBIAEoAgAgASgCBEHknMQAEIEBIAEgAikDsAE3AgAgAEEBOgAADBcLIAJBuAFqQQEgASgCACABKAIEQfScxAAQgQEgASACKQO4ATcCACAAQQI6AAAMFgsgAkHAAWpBASABKAIAIAEoAgRBhJ3EABCBASABIAIpA8ABNwIAIABBAzoAAAwVCyACQcgBakEBIAEoAgAgASgCBEGUncQAEIEBIAEgAikDyAE3AgAgAEEEOgAADBQLIAJB0AFqQQEgASgCACABKAIEQaSdxAAQgQEgASACKQPQATcCACAAQQU6AAAMEwsgAkHYAWpBASABKAIAIAEoAgRBtJ3EABCBASABIAIpA9gBNwIAIABBBjoAAAwSCyACQeABakEBIAEoAgAgASgCBEHEncQAEIEBIAEgAikD4AE3AgAgAEEHOgAADBELIAJB6AFqQQEgASgCACABKAIEQdSdxAAQgQEgASACKQPoATcCACAAQQg6AAAMEAsgAkHwAWpBASABKAIAIAEoAgRB5J3EABCBASABIAIpA/ABNwIAIABBCToAAAwPCyACQfgBakEBIAEoAgAgASgCBEH0ncQAEIEBIAEgAikD+AE3AgAgAEEKOgAADA4LIAJBgAJqQQEgASgCACABKAIEQYSexAAQgQEgASACKQOAAjcCACAAQQs6AAAMDQsgAkGIAmpBASABKAIAIAEoAgRBlJ7EABCBASABIAIpA4gCNwIAIABBDDoAAAwMCyACQZACakEBIAEoAgAgASgCBEGknsQAEIEBIAEgAikDkAI3AgAgAEENOgAADAsLAkACQCADQR5rQf//A3FBCE8EQCADQSZrDgIBCAILIAJBCGpBASABKAIAIAEoAgRBxKDEABCBASABIAIpAwg3AgAgACADQR5rOgACIABBDjsAAAwMCwJAIAEoAgQiA0ECTwRAIAJBmAFqIAEoAgBBEGoQaSACKAKYASIDDQEgASgCBCEDCyACQegAakEBIAEoAgAgA0G0nsQAEIEBIAIoAmwhAyACKAJoIQQMDQsCQAJAAkAgAigCnAFBAUcNACADLwEAQQJrDgQBAAACAAsgAkHwAGpBASABKAIAIAEoAgRBhJ/EABCB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ayENIAJBJWohDiACQRxqIQ8gASgCJCEFIAEoAhQhECABKAIQIQMCQAJAAn8CQANAIAEoAgAhBiABQYCAgIB4NgIAIAEoAgQhCwJAAkACQAJAAkAgBkGAgICAeEcEQCABKQIIIREgCyEHDAELAkAgAyAQRgRAQYCAgIB4IQYMAQsgASADQRBqIgg2AhAgAykCCCERIAMoAgQhByADKAIAIQYgCCEDC0GAgICAeCALEKMBIAZBgICAgHhGDQELIAIgBzYCDCACIAY2AgggAiARNwIQIBFCIIghEkF/IAUgEaciBEcgBCAFSxtB/wFxDgICAwELQYCAgIB4IAcQowEgAEGAgICAeDYCACABQYCAgIB4NgIADAcLAkAgEqdBAXENACAFIAQgByAEEDRrIgMgAyAFSRsiAyAESw0AIAIgAzYCECADIQQLAn9BgICAgHggBCAFTQ0AGgJAAkAgByAEIAVBuJrEABCQASgCBEUEQCACQThqIgMgAkEIaiIIIAVBAWsQPyACQTBqIANBCGooAgA2AgAgAiACKQI4NwMoIAItABQhBCADQRBqIAIoAgwgAigCECIHIAdBAWtB2JrEABCQASIHQRBqLwEAOwEAIAJCoICAgBA3AjggAiAHKQIINwJAIAggA0HomsQAEFcgAiAEOgA0IAItABRBAXFFDQEMAgsgAkE4aiIDIAJBCGogBRA/IAJBMGogA0EIaigCADYCACACIAIpAjg3AyggAiACLQAUIgM6ADQgAw0BCyACQShqEIsBCyACKAIwBEAgAkFAayACQTRqKAIANgIAIAJBAToAFCACIAIpAiw3AzggAigCKAwBCyACKAIoIAIoAixBBEEUEJ8BQYCAgIB4CyEDQYCAgIB4IAsQowEgASADNgIAIAwgAikDODcCACAMQQhqIAJBQGsoAgA2AgAgAEEIaiACQRBqKQIANwIAIAAgAikCCDcCAAwGCyAAIBE3AgggACAHNgIEIAAgBjYCAAwFCwJAIAMgEEcEQCABIANBEGoiCDYCECADKAIAIgZBgICAgHhHDQELIAJBADsAQCACQQI6ADwgAkECOgA4IAJBCGoiASAFIAJBOGoQQSAAIAIpAgg3AgAgAkEAOgAUIABBCGogAUEIaikCADcCAAwFCyADQQxqKAIAIQkgDyADKQIENwIAIA9BCGogCTYCACACIAY2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IQMDQCADIAVqIgEgAyACEGogASEDIAIgACACayIATQ0ACwwBCwtBACAAQQR0IgNrIQUDQCABIAVqIAEgABBqIAEgA2ohASACIABrIgIgAE8NAAsMAQsLIAEgAEEEdCIFayIDIAJBBHQiBmohByAAIAJLDQEgBEEQaiIAIAMgBRAWGiADIAEgBhASIAcgACAFEBYaDAILIARBCGoiByABIABBBHRrIgZBCGopAgA3AwAgBCAGKQIANwMAIAJBBHQhCCACIgUhAQNAIAYgAUEEdGohAwNAIARBGGoiCSADQQhqIgopAgA3AwAgBCADKQIANwMQIAcpAwAhDSADIAQpAwA3AgAgCiANNwIAIAcgCSkDADcDACAEIAQpAxA3AwAgACABSwRAIAMgCGohAyABIAJqIQEMAQsLIAEgAGsiAQRAIAEgBSABIAVJGyEFDAEFIAQpAwAhDSAGQQhqIARBCGoiBykDADcCACAGIA03AgBBASAFIAVBAU0bIQlBASEBA0AgASAJRg0EIAYgAUEEdGoiBSkCACENIAcgBUEIaiIKKQIANwMAIAQgDTcDACABIAJqIQMDQCAEQRhqIgsgBiADQQR0aiIIQQhqIgwpAgA3AwAgBCAIKQIANwMQIAcpAwAhDSAIIAQpAwA3AgAgDCANNwIAIAcgCykDADcDACAEIAQpAxA3AwAgACADSwRAIAIgA2ohAwwBCyADIABrIgMgAUcNAAsgBCkDACENIAogBykDADcCACAFIA03AgAgAUEBaiEBDAALAAsACwALIARBEGoiACABIAYQFhogByADIAUQEiADIAAgBhAWGgsgBEGQAWokAAuQBQEIfwJAIAJBEEkEQCAAIQMMAQsCQEEAIABrQQNxIgYgAGoiBSAATQ0AIAZBAWsgACEDIAEhBCAGBEAgBiEHA0AgAyAELQAAOgAAIARBAWohBCADQQFqIQMgB0EBayIHDQALC0EHSQ0AA0AgAyAELQAAOgAAIANBAWogBEEBai0AADoAACADQQJqIARBAmotAAA6AAAgA0EDaiAEQQNqLQAAOgAAIANBBGogBEEEai0AADoAACADQQVqIARBBWotAAA6AAAgA0EGaiAEQQZqLQAAOgAAIANBB2ogBEEHai0AADoAACAEQQhqIQQgBSADQQhqIgNHDQALCyACIAZrIgdBfHEiCCAFaiEDAkAgASAGaiIEQQNxRQRAIAMgBU0NASAEIQEDQCAFIAEoAgA2AgAgAUEEaiEBIAVBBGoiBSADSQ0ACwwBCyADIAVNDQAgBEEDdCICQRhxIQYgBEF8cSIJQQRqIQFBACACa0EYcSEKIAkoAgAhAgNAIAIgBnYhCSAFIAkgASgCACICIAp0cjYCACABQQRqIQEgBUEEaiIFIANJDQALCyAHQQNxIQIgBCAIaiEBCwJAIAIgA2oiBiADTQ0AIAJBAWsgAkEHcSIEBEADQCADIAEtAAA6AAAgAUEBaiEBIANBAWohAyAEQQFrIgQNAAsLQQdJDQADQCADIAEtAAA6AAAgA0EBaiABQQFqLQAAOgAAIANBAmogAUECai0AADoAACADQQNqIAFBA2otAAA6AAAgA0EEaiABQQRqLQAAOgAAIANBBWogAUEFai0AADoAACADQQZqIAFBBmotAAA6AAAgA0EHaiABQQdqLQAAOgAAIAFBCGohASAGIANBCGoiA0cNAAsLIAAL6gQBCn8jAEEwayIDJAAgAyABNgIsIAMgADYCKCADQQM6ACQgA0IgNwIcIANBADYCFCADQQA2AgwCfwJAAkACQCACKAIQIgpFBEAgAigCDCIARQ0BIAIoAggiASAAQQN0aiEEIABBAWtB/////wFxQQFqIQcgAigCACEAA0AgAEEEaigCACIFBEAgAygCKCAAKAIAIAUgAygCLCgCDBEDAA0ECyABKAIAIANBDGogAUEEaigCABECAA0DIABBCGohACAEIAFBCGoiAUcNAAsMAQsgAigCFCIARQ0AIABBBXQhCyAAQQFrQf///z9xQQFqIQcgAigCCCEFIAIoAgAhAANAIABBBGooAgAiAQRAIAMoAiggACgCACABIAMoAiwoAgwRAwANAwsgAyAIIApqIgFBEGooAgA2AhwgAyABQRxqLQAAOgAkIAMgAUEYaigCADYCICABQQxqKAIAIQRBACEJQQAhBgJAAkACQCABQQhqKAIAQQFrDgIAAgELIAUgBEEDdGoiDCgCAA0BIAwoAgQhBAtBASEGCyADIAQ2AhAgAyAGNgIMIAFBBGooAgAhBAJAAkACQCABKAIAQQFrDgIAAgELIAUgBEEDdGoiBigCAA0BIAYoAgQhBAtBASEJCyADIAQ2AhggAyAJNgIUIAUgAUEUaigCAEEDdGoiASgCACADQQxqIAFBBGooAgARAgANAiAAQQhqIQAgCyAIQSBqIghHDQALCyAHIAIoAgRPDQEgAygCKCACKAIAIAdBA3RqIgAoAgAgACgCBCADKAIsKAIMEQMARQ0BC0EBDAELQQALIANBMGokAAurBAEMfyABQQFrIQ4gACgCBCEKIAAoAgAhCyAAKAIIIQwCQANAIAUNAQJ/AkAgAiADSQ0AA0AgASADaiEFAkACQAJAIAIgA2siB0EHTQRAIAIgA0cNASACIQMMBQsCQCAFQQNqQXxxIgYgBWsiBARAQQAhAANAIAAgBWotAABBCkYNBSAEIABBAWoiAEcNAAsgB0EIayIAIARPDQEMAwsgB0EIayEACwNAIAYoAgAiCUGAgoQIIAlBipSo0ABza3IgBkEEaigCACIJQYCChAggCUGKlKjQAHNrcnFBgIGChHhxQYCBgoR4Rw0CIAZBCGohBiAAIARBCGoiBE8NAAsMAQtBACEAA0AgACAFai0AAEEKRg0CIAcgAEEBaiIARw0ACyACIQMMAwsgBCAHRgRAIAIhAwwDCyAEIAVqIQYgAiAEayADayEHQQAhAAJAA0AgACAGai0AAEEKRg0BIAcgAEEBaiIARw0ACyACIQMMAwsgACAEaiEACyAAIANqIgRBAWohAwJAIAIgBE0NACAAIAVqLQAAQQpHDQBBACEFIAMiBAwDCyACIANPDQALCyACIAhGDQJBASEFIAghBCACCyEAAkAgDC0AAARAIAtBjKfEAEEEIAooAgwRAwANAQsgACAIayEHQQAhBiAAIAhHBEAgACAOai0AAEEKRiEGCyABIAhqIQAgDCAGOgAAIAQhCCALIAAgByAKKAIMEQMARQ0BCwtBASENCyANC6EEAgt/An4jAEHQAGshBAJAIABFDQAgAkUNACAEQQhqIgNBEGoiBiABIABBbGxqIgsiB0EQaigCADYCACADQQhqIgggB0EIaikCADcDACAEIAcpAgA3AwggAkEUbCEJIAIiAyEFA0AgCyADQRRsaiEBA0AgASkCACEOIAEgBCkDCDcCACAIKQMAIQ8gCCABQQhqIgopAgA3AwAgCiAPNwIAIAYoAgAhCiAGIAFBEGoiDCgCADYCACAMIAo2AgAgBCAONwMIIAAgA01FBEAgASAJaiEBIAIgA2ohAwwBCwsgAyAAayIDBEAgAyAFIAMgBUkbIQUMAQUgByAEKQMINwIAIAdBEGogBEEIaiIBQRBqIgYoAgA2AgAgB0EIaiABQQhqIggpAwA3AgBBASAFIAVBAU0bIQtBASEDA0AgAyALRg0DIAYgByADQRRsaiIFQRBqIgooAgA2AgAgCCAFQQhqIgwpAgA3AwAgBCAFKQIANwMIIAIgA2ohAQNAIAcgAUEUbGoiCSkCACEOIAkgBCkDCDcCACAIKQMAIQ8gCCAJQQhqIg0pAgA3AwAgDSAPNwIAIAYoAgAhDSAGIAlBEGoiCSgCADYCACAJIA02AgAgBCAONwMIIAAgAUsEQCABIAJqIQEMAQsgAyABIABrIgFHDQALIAUgBCkDCDcCACAKIAYoAgA2AgAgDCAIKQMANwIAIANBAWohAwwACwALAAsACwvRBAIDfwR+IwBB0AZrIgQkACAEQfwBakEAQYUEEB4aIARBgIDEADYC+AEgBEE0aiIFIAAgAUEBIAJBABAfIARB2ABqIAAgAUEBQQBBABAfIARBxAZqIgYgARBVIARBhAFqIAAQOSAEQQA6APABIAQgATYC1AEgBCAANgLQASAEQQA7Ae4BIARBAjoA6gEgBEECOgDmASAEQQE6AKQBIARCADcCnAEgBCACNgKAASAEQQE2AnwgBEEAOwHkASAEQQA6APUBIARBgIAENgDxASAEQgA3AtgBIAQgAUEBazYC4AEgBEECOgCwASAEQQI6ALQBIARBADYCwAEgBEECOgDEASAEQQI6AMgBIARBgICACDYCzAEgBEIANwKoASAEQoCAgAg3ArgBIARBmAFqIAZBCGooAgA2AgAgBEEAOgD2ASAEIAQpAsQGNwKQASAEQShqIABBAkEIQYyCxAAQYCAEKQMoIQcgBEEgaiAAQQJBDEGcgsQAEGAgBCkDICEIIARBGGogAEEEQQxBrILEABBgIAQpAxghCSAEQRBqIABBBEEQQbyCxAAQYCAEKQMQIQogBEEIaiAAQQRBBEHMgsQAEGAgBCADQQBHOgDABiAEQQA2ArwGIARBADYCsAYgBCAKNwKoBiAEQQA2AqQGIAQgCTcCnAYgBEEANgKYBiAEIAg3ApAGIARBADYCjAYgBCAHNwKEBiAEIAQpAwg3ArQGQZwGEJkBIgBBADYCCCAAQoGAgIAQNwIAIABBDGogBUGQBhAWGiAEQdAGaiQAIABBCGoLxhACEX8EfiMAQSBrIgwkABAAIQogDEEANgIcIAwgCjYCGCAMIAE2AhQgDEEUaiAFEIQBIAwoAhwhASAGQf//A3G4EAohBSAMKAIYIhUgASAFEAEjAEEgayIGJAACQEGw8sQAKAIAIgUNAEG08sQAQQA2AgBBsPLEAEEBNgIAQbjyxAAoAgAhAUG88sQAKAIAIQhBuPLEAEHYq8QAKQIAIhg3AgAgBkEIakHgq8QAKQIAIhk3AwBBxPLEACgCACEKQcDyxAAgGTcCACAGIBg3AwAgBUUNACAIRQ0AAkAgCkUNACABQQhqIQkgASkDAEJ/hUKAgYKEiJCgwIB/gyEZQQEhCyABIQUDQCALRQ0BIBkhGANAIBhQBEAgBUHgAGshBSAJKQMAQn+FQoCBgoSIkKDAgH+DIRggCUEIaiEJDAELCyAYQgF9IBiDIRkgCkEBayIKIQsgBSAYeqdBA3ZBdGxqQQRrKAIAIgdBhAFJDQAgBxADDAALAAsgBkEUaiAIQQFqEEMgASAGKAIcayAGKAIUIAYoAhgQpgELIAZBIGokAEG08sQAKAIARQRAQbTyxABBfzYCAEG88sQAKAIAIgEgA3EhBiADrSIaQhmIQoGChIiQoMCAAX4hG0G48sQAKAIAIQoDQCAGIApqKQAAIhkgG4UiGEKBgoSIkKDAgAF9IBhCf4WDQoCBgoSIkKDAgH+DIRgCQAJAA0AgGEIAUgRAIAMgCiAYeqdBA3YgBmogAXFBdGxqIgVBDGsoAgBGBEAgBUEIaygCACAERg0DCyAYQgF9IBiDIRgMAQsLIBkgGUIBhoNCgIGChIiQoMCAf4NQDQFBwPLEACgCAEUEQCMAQTBrIggkAAJAAkACQEHE8sQAKAIAIgpBf0YNAEG88sQAKAIAIglBAWoiC0EDdiEBIAkgAUEHbCAJQQhJGyIOQQF2IApNBEAgCEEIagJ/IAogDiAKIA5LGyIBQQdPBEAgAUH+////AUsNA0F/IAFBA3RBCGpBB25BAWtndkEBagwBC0EEQQggAUEDSRsLIgEQQyAIKAIIIgVFDQEgCCgCECEGIAgoAgwiCQRAQezyxAAtAAAaIAUgCRA1IQULIAVFDQIgBSAGakH/ASABQQhqEB4hCyAIQQA2AiAgCCABQQFrIgc2AhggCCALNgIUIAhBCDYCECAIIAcgAUEDdkEHbCABQQlJGyIONgIcIAtBDGshEUG48sQAKAIAIgYpAwBCf4VCgIGChIiQoMCAf4MhGCAGIQEgCiEJQQAhBQNAIAkEQANAIBhQBEAgBUEIaiEFIAEpAwhCf4VCgIGChIiQoMCAf4MhGCABQQhqIQEMAQsLIAggCyAHIAYgGHqnQQN2IAVqIg1BdGxqIgZBDGsoAgAiECAGQQhrKAIAIBAbrRBkIBEgCCgCAEF0bGoiEEG48sQAKAIAIgYgDUF0bGpBDGsiDSkAADcAACAQQQhqIA1BCGooAAA2AAAgCUEBayEJIBhCAX0gGIMhGAwBCwsgCCAKNgIgIAggDiAKazYCHEEAIQEDQCABQRBHBEAgAUG48sQAaiIFKAIAIQYgBSABIAhqQRRqIgUoAgA2AgAgBSAGNgIAIAFBBGohAQwBCwsgCCgCGCIBRQ0DIAhBJGogAUEBahBDIAgoAhQgCCgCLGsgCCgCJCAIKAIoEKYBDAMLIAEgC0EHcUEAR2ohBUG48sQAKAIAIgYhAQNAIAUEQCABIAEpAwAiGEJ/hUIHiEKBgoSIkKDAgAGDIBhC//79+/fv37//AIR8NwMAIAFBCGohASAFQQFrIQUMAQUCQCALQQhPBEAgBiALaiAGKQAANwAADAELIAZBCGogBiALEBILIAZBCGohESAGQQxrIRAgBiEFQQAhAQNAAkACQCABIAtHBEAgASAGaiITLQAAQYABRw0CIAFBdGwiByAQaiEUIAYgB2oiB0EIayEWIAdBDGshFwNAIAEgFygCACIHIBYoAgAgBxsiByAJcSIPayAGIAkgB60QRCINIA9rcyAJcUEISQ0CIAYgDWoiDy0AACAPIAdBGXYiBzoAACARIA1BCGsgCXFqIAc6AAAgDUF0bCEHQf8BRwRAIAYgB2ohDUF0IQcDQCAHRQ0CIAUgB2oiDy0AACESIA8gByANaiIPLQAAOgAAIA8gEjoAACAHQQFqIQcMAAsACwsgE0H/AToAACARIAFBCGsgCXFqQf8BOgAAIAcgEGoiB0EIaiAUQQhqKAAANgAAIAcgFCkAADcAAAwCC0HA8sQAIA4gCms2AgAMBwsgEyAHQRl2Igc6AAAgESABQQhrIAlxaiAHOgAACyABQQFqIQEgBUEMayEFDAALAAsACwALIwBBIGsiACQAIABBADYCGCAAQQE2AgwgAEHIqsQANgIIIABCBDcCECAAQQhqQfyqxAAQigEACwALIAhBMGokAAsgAyAEEAghASAMQQhqQbjyxAAoAgBBvPLEACgCACAaEGQgDCgCCCEFIAwtAAwhBkHE8sQAQcTyxAAoAgBBAWo2AgBBwPLEAEHA8sQAKAIAIAZBAXFrNgIAQbjyxAAoAgAgBUF0bGoiBUEEayABNgIAIAVBCGsgBDYCACAFQQxrIAM2AgALIAVBBGsoAgAQBCEBQbTyxABBtPLEACgCAEEBajYCACACIAEgFRAFIABBADYCACAMQSBqJAAPCyAOQQhqIg4gBmogAXEhBgwACwALIwBBMGsiACQAIABBATYCDCAAQeilxAA2AgggAEIBNwIUIAAgAEEvaq1CgICAgLABhDcDICAAIABBIGo2AhAgAEEIakHQrMQAEIoBAAu9AwEHfyABQQFrIQlBACABayEKIABBAnQhCCACKAIAIQUDQAJAIAVFDQAgBSEBA0ACQAJAAkACfwJAIAEoAggiBUEBcUUEQCABKAIAQXxxIgsgAUEIaiIGayAISQ0DIAsgCGsgCnEiBSAGIAMgACAEEQIAQQJ0akEIakkEQCAGKAIAIQUgBiAJcQ0EIAIgBUF8cTYCACABIgUoAgAMAwtBACECIAVBADYCACAFQQhrIgVCADcCACAFIAEoAgBBfHE2AgACQCABKAIAIgBBAnENACAAQXxxIgBFDQAgACAAKAIEQQNxIAVyNgIEIAUoAgRBA3EhAgsgBSABIAJyNgIEIAEgASgCCEF+cTYCCCABIAEoAgAiAEEDcSAFciICNgIAIABBAnENASAFKAIADAILIAEgBUF+cTYCCCABKAIEQXxxIgUEf0EAIAUgBS0AAEEBcRsFQQALIQUgARBAIAEtAABBAnENAwwECyABIAJBfXE2AgAgBSgCAEECcgshAiAFIAJBAXI2AgAgBUEIaiEHDAQLIAIgBTYCAAwECyAFIAUoAgBBAnI2AgALIAIgBTYCACAFIQEMAAsACwsgBwv0AwEFfyMAQTBrIgYkACACIAFrIgcgA0shCSACQQFrIgggACgCHCIFQQFrSQRAIAAgCEGgjsQAEGJBADoADAsgAyAHIAkbIQMCQAJAIAFFBEACQCACIAVHBEAgBkEQaiAAKAIYIAQQKyAFQQR0IAJBBHRrIQcgAEEMaiEJIAAoAhQiASACIAVraiEEIAEhAgNAIANFBEAgBigCECAGKAIUQQRBFBCfAQwFCyAGQSBqIAZBEGoQVCABIARJDQIgCSgCACIIIAJGBEAjAEEQayIFJAAgBUEIaiAJIAhBAUEEQRAQJiAFKAIIIghBgYCAgHhHBEAgBSgCDBogCEGwjsQAEK4BAAsgBUEQaiQACyAAKAIQIARBBHRqIQUgAiAESwRAIAVBEGogBSAHEBILIAUgBikCIDcCACAAIAJBAWoiAjYCFCAFQQhqIAZBKGopAgA3AgAgA0EBayEDIAdBEGohBwwACwALIAAgAyAAKAIYIAQQLgwCCyAEIAJBsI7EABBMAAsgACABQQFrQcCOxAAQYkEAOgAMIAZBCGogACABIAJB0I7EABBnIAYoAgwiASADSQ0BIAMgBigCCCADQQR0aiABIANrEBUgACACIANrIAIgBBAqCyAAQQE6ACAgBkEwaiQADwtBpIjEAEEjQbyJxAAQcQALlAMBBX8CQCACQRBJBEAgACEDDAELAkBBACAAa0EDcSIFIABqIgQgAE0NACAFQQFrIAAhAyAFBEAgBSEGA0AgAyABOgAAIANBAWohAyAGQQFrIgYNAAsLQQdJDQADQCADIAE6AAAgA0EHaiABOgAAIANBBmogAToAACADQQVqIAE6AAAgA0EEaiABOgAAIANBA2ogAToAACADQQJqIAE6AAAgA0EBaiABOgAAIAQgA0EIaiIDRw0ACwsgBCACIAVrIgJBfHFqIgMgBEsEQCABQf8BcUGBgoQIbCEFA0AgBCAFNgIAIARBBGoiBCADSQ0ACwsgAkEDcSECCwJAIAIgA2oiBSADTQ0AIAJBAWsgAkEHcSIEBEADQCADIAE6AAAgA0EBaiEDIARBAWsiBA0ACwtBB0kNAANAIAMgAToAACADQQdqIAE6AAAgA0EGaiABOgAAIANBBWogAToAACADQQRqIAE6AAAgA0EDaiABOgAAIANBAmogAToAACADQQFqIAE6AAAgBSADQQhqIgNHDQALCyAAC7EDAQV/IwBBQGoiBiQAIAZBADsAEiAGQQI6AA4gBkECOgAKIAZBMGoiB0EIaiIIIAUgBkEKaiAFGyIFQQhqLwAAOwEAIAYgBSkAADcDMCAGQRRqIAEgBxArIAYgAkEEQRBB8IzEABBgIAZBADYCLCAGIAYpAwA3AiQgBkEkaiACEI0BQQEgAiACQQFNGyIJQQFrIQcgBigCKCAGKAIsIgpBBHRqIQUCfwNAIAcEQCAGQTBqIAZBFGoQVCAFIAYpAjA3AgAgBUEIaiAIKQIANwIAIAdBAWshByAFQRBqIQUMAQUCQCAJIApqIQcCQCACRQRAIAYoAhQgBigCGEEEQRQQnwEgB0EBayEHDAELIAUgBikCFDcCACAFQQhqIAZBHGopAgA3AgALIAYgBzYCLCADQQFxRQ0AIAQEQCAGQSRqIAQQjQELIARBCm4gBGohBUEBDAMLCwsgBkEkakHoBxCNAUEACyEDIAAgBikCJDcCDCAAIAI2AhwgACABNgIYIABBADoAICAAIAU2AgggACAENgIEIAAgAzYCACAAQRRqIAZBLGooAgA2AgAgBkFAayQAC6YDAQN/IwBBEGsiBiQAIAMgACgCGCABayIFIAMgBUkbIQMgASAAIAJBoI3EABBiIgAoAggiAkEBayIFIAEgBUkbIQEgACgCBCACIAFB2JjEABCQASIFKAIERQRAIAVCoICAgBA3AgAgBSAEKQAANwAIIAVBEGogBEEIaiIHLwAAOwAAIAAoAgQgACgCCCABQQFrQeiYxAAQkAEiBUKggICAEDcCACAFIAQpAAA3AAggBUEQaiAHLwAAOwAACyAGQQhqIAAoAgQgACgCCCABQfiYxAAQfwJAIAMgBigCDCIFTQRAIAUgA2siBSAGKAIIIAVBFGxqIAMQGSAAKAIEIAAoAgggAUGImcQAEJABIgEoAgRFBEAgAUKggICAEDcCACABIAQpAAA3AAggAUEQaiAEQQhqLwAAOwAAIAJFDQIgACgCBCACQRRsaiIAQRRrIgFFDQIgAUEgNgIAIABBEGtBATYCACAAQQxrIgAgBCkAADcAACAAQQhqIARBCGovAAA7AAALIAZBEGokAA8LQcyJxABBIUHwicQAEHEAC0GYmcQAELYBAAv2AgEEfwJAIAACfwJAAkACQAJAAkAgACgCpAEiAkEBTQRAAkAgAUH/AEsNACAAIAJqQbABai0AAEEBcUUNACABQQJ0QbiQxABqKAIAIQELIAAoAmgiAyAAKAKcASIETw0DIAAoAmwhAiAALQC9AQ0BDAILIAJBAkGopcQAEEsACyAAIAMgAkEBIABBsgFqECALIAAgAyACIAEgAEGyAWoQEyIFDQELIAAtAL8BDQEgACADQQFrIAAoAmwiAiABIABBsgFqIgUQE0UEQCAAIANBAmsgAiABIAUQExoLIARBAWsMAgsgACADIAVqIgE2AmggASAERw0CIAAtAL8BDQIgBEEBawwBCwJAIAAoAmwiAiAAKAKsAUcEQCACIAAoAqABQQFrTw0BIAAgAhCwASAAIAJBAWoiAjYCbAwBCyAAIAIQsAEgAEEBEIcBIAAoAmwhAgsgAEEAIAIgASAAQbIBahATCzYCaAsgACgCYCAAKAJkIAIQkQEL+gIAAkACQAJAAkACQAJAAkAgA0EBaw4GAAECAwQFBgsgACgCGCEEIAAgAkHQjcQAEGIiA0EAOgAMIAMoAgQgAygCCCABIAQgBRAnIAAgAkEBaiAAKAIcIAUQKg8LIAAoAhghAyAAIAJB4I3EABBiIgQoAgQgBCgCCEEAIAFBAWoiASADIAEgA0kbIAUQJyAAQQAgAiAFECoPCyAAQQAgACgCHCAFECoPCyAAKAIYIQMgACACQfCNxAAQYiIAKAIEIAAoAgggASADIAUQJyAAQQA6AAwPCyAAKAIYIQMgACACQYCOxAAQYiIAKAIEIAAoAghBACABQQFqIgAgAyAAIANJGyAFECcPCyAAKAIYIQEgACACQZCOxAAQYiIAKAIEIAAoAghBACABIAUQJyAAQQA6AAwPCyAAKAIYIQMgACACQcCNxAAQYiIAKAIEIAAoAgggASABIAQgAyABayIBIAEgBEsbaiIBIAUQJyABIANGBEAgAEEAOgAMCwvUAgEFfyMAQUBqIgMkACADQQA2AiAgAyABNgIYIAMgASACajYCHCADQRBqIANBGGoQTQJAIAMoAhBFBEAgAEEANgIIIABCgICAgMAANwIADAELIAMoAhQhBCADQQhqQQRBBEEEQZSIxAAQYCADKAIIIQUgAygCDCIGIAQ2AgAgA0EBNgIsIAMgBjYCKCADIAU2AiQgA0E4aiADQSBqKAIANgIAIAMgAykCGDcDMEEEIQVBASEEA0AgAyADQTBqEE0gAygCAEEBR0UEQCADKAIEIQcgAygCJCAERgRAIANBJGogBEEBQQRBBBBtIAMoAighBgsgBSAGaiAHNgIAIAMgBEEBaiIENgIsIAVBBGohBQwBCwsgACADKQIkNwIAIABBCGogA0EsaigCADYCAAsDQCACBEAgAUEAOgAAIAJBAWshAiABQQFqIQEMAQsLIANBQGskAAvKAgIFfwJ+IwBBIGsiAiQAIAACfwJAAkAgAS0AIEUEQAwBCyABQQA6ACACQCABKAIAQQFGBEAgASgCFCIFIAEoAhxrIgMgASgCCEsNAQsMAQsgBSADIAEoAgRrIgRPBEBBACEDIAFBADYCFCACIAFBDGo2AhQgAiABKAIQIgY2AgwgAiAENgIYIAIgBSAEazYCHCACIAYgBEEEdGo2AhAgAS0AvAENAkEUQQQQfCEBIAJBDGoiA0EIaikCACEHIAIpAgwhCCABQRBqIANBEGooAgA2AgAgAUEIaiAHNwIAIAEgCDcCAEGgpMQADAMLIAQgBUH0i8QAELMBAAsgAkEANgIMQQEhAyABLQC8AQ0AQQBBARB8IQFBhKTEAAwBC0EAQQEQfCEBIANFBEAgAkEMahBYC0GEpMQACzYCBCAAIAE2AgAgAkEgaiQAC5ICAQV/AkACQAJAQX8gACgCnAEiAyABRyABIANJG0H/AXEOAgIBAAsgACAAKAJYIgMEfyAAKAJUIQUDQCADQQJJRQRAIANBAXYiBiAEaiIHIAQgBSAHQQJ0aigCACABSRshBCADIAZrIQMMAQsLIAQgBSAEQQJ0aigCACABSWoFQQALNgJYDAELQQAgASADQXhxQQhqIgRrIgNBACABIANPGyIDQQN2IANBB3FBAEdqayEDIABB0ABqIQUDQCADRQ0BIAUgBEHcosQAEHsgA0EBaiEDIARBCGohBAwACwALIAIgACgCoAFHBEAgAEEANgKoASAAIAJBAWs2AqwBCyAAIAI2AqABIAAgATYCnAEgABARC/IBAgR/AX4jAEEQayIGJAACQCACIAIgA2oiA0sEQEEAIQIMAQtBACECIAQgBWpBAWtBACAEa3GtQQhBBCAFQQFGGyIHIAEoAgAiCEEBdCIJIAMgAyAJSRsiAyADIAdJGyIHrX4iCkIgiKcNACAKpyIDQYCAgIB4IARrSw0AIAQhAgJ/IAgEQCAFRQRAIAZBCGogBCADEIwBIAYoAggMAgsgASgCBCAFIAhsIAQgAxB+DAELIAYgBCADEIwBIAYoAgALIgVFDQAgASAHNgIAIAEgBTYCBEGBgICAeCECCyAAIAM2AgQgACACNgIAIAZBEGokAAuZAgEDfwJAAkACQCABIAJGDQAgACABIAJBoJXEABCQASgCBEUEQCAAIAEgAkEBa0GwlcQAEJABIgVCoICAgBA3AgAgBSAEKQAANwAIIAVBEGogBEEIai8AADsAAAsgAiADSw0BIAEgA0kNAiADQRRsIgYgAkEUbCICayEFIAAgAmohAiAEQQhqIQcDQCAFBEAgAkKggICAEDcCACACIAQpAAA3AAggAkEQaiAHLwAAOwAAIAVBFGshBSACQRRqIQIMAQsLIAEgA00NACAAIAZqIgAoAgQNACAAQqCAgIAQNwIAIAAgBCkAADcACCAAQRBqIARBCGovAAA7AAALDwsgAiADQcCVxAAQtQEACyADIAFBwJXEABCzAQALiwIBA38jAEEwayIDJAAgAyACNgIYIAMgATYCFAJAIANBFGoQWiIBQf//A3FBA0YEQCAAQQA2AgggAEKAgICAIDcCAAwBCyADQQhqQQRBAkECQZSIxAAQYCADKAIIIQIgAygCDCIEIAE7AQAgA0EBNgIkIAMgBDYCICADIAI2AhwgAyADKQIUNwIoQQIhAUEBIQIDQCADQShqEFoiBUH//wNxQQNGRQRAIAMoAhwgAkYEQCADQRxqIAJBAUECQQIQbSADKAIgIQQLIAEgBGogBTsBACADIAJBAWoiAjYCJCABQQJqIQEMAQsLIAAgAykCHDcCACAAQQhqIANBJGooAgA2AgALIANBMGokAAuFAgEDfyMAQTBrIgMkACADIAI2AhggAyABNgIUAkAgA0EUahBOQf//A3EiAUUEQCAAQQA2AgggAEKAgICAIDcCAAwBCyADQQhqQQRBAkECQZSIxAAQYCADKAIIIQIgAygCDCIEIAE7AQAgA0EBNgIkIAMgBDYCICADIAI2AhwgAyADKQIUNwIoQQIhAUEBIQIDQCADQShqEE5B//8DcSIFBEAgAygCHCACRgRAIANBHGogAkEBQQJBAhBtIAMoAiAhBAsgASAEaiAFOwEAIAMgAkEBaiICNgIkIAFBAmohAQwBCwsgACADKQIcNwIAIABBCGogA0EkaigCADYCAAsgA0EwaiQAC4MCAQJ/IwBBMGsiBCQAIARBEGogACgCGCADECsgBEEIaiAAEHIgBCABIAIgBCgCCCAEKAIMQeCPxAAQbAJAIAQoAgQiAEUEQCAEKAIQIAQoAhRBBEEUEJ8BDAELIABBBHQiAUEQayEDIAEgBCgCACIAaiICQRBrIQEDQCADBEAgBEEgaiIFIARBEGoQVCAAKAIAIABBBGooAgBBBEEUEJ8BIABBCGogBUEIaikCADcCACAAIAQpAiA3AgAgA0EQayEDIABBEGohAAwBBSABKAIAIAJBDGsoAgBBBEEUEJ8BIAFBCGogBEEYaikCADcCACABIAQpAhA3AgALCwsgBEEwaiQAC4ACAQZ/IwBBIGsiAyQAIANBCGogAUEEQRRBkJXEABBgIANBADYCHCADIAMpAwg3AhQgA0EUaiABEI4BQQEgASABQQFNGyIGQQFrIQUgAygCGCADKAIcIgdBFGxqIQQgAkEIaiEIAkADQCAFBEAgBEKggICAEDcCACAEIAIpAAA3AAggBEEQaiAILwAAOwAAIAVBAWshBSAEQRRqIQQMAQUCQCAGIAdqIQUgAQ0AIAVBAWshBQwDCwsLIARCoICAgBA3AgAgBCACKQAANwAIIARBEGogAkEIai8AADsAAAsgACADKQIUNwIAIABBCGogBTYCACAAQQA6AAwgA0EgaiQAC9QBAQV/AkAgACgChAQiAUF/RwRAIAFBAWohAyABQSBJDQEgA0EgQdSbxAAQswEAC0HUm8QAEH0ACyAAQQRqIgEgA0EEdGohBQNAIAEgBUZFBEACQCABKAIAIgJBf0cEQCACQQZJDQEgAkEBakEGQaShxAAQswEAC0GkocQAEH0ACyABQQRqIQQgAUEQaiACQQF0QQJqIQIDQCACBEAgBEEAOwEAIAJBAmshAiAEQQJqIQQMAQsLIAFBADYCACEBDAELCyAAQYCAxAA2AgAgAEEANgKEBAvzAQEBfwJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkAgASgCACIDQYCAxABGBEAgAkHg//8AcUHAAEYNASACQTdrDgIDBAILIAJBMEYNBiACQThGDQUgA0Eoaw4CCQoNCyAAIAJBQGsQSA8LIAJB4wBGDQIMCwsgAEEROgAADwsgAEEPOgAADwsgAEEkOgAAIAFBADoAiAQPCyADQSNrDgcBBwcHBwMGBwsgA0Eoaw4CAQQGCyAAQQ46AAAPCyAAQZoCOwEADwsgAEEaOwEADwsgAkEwRw0BCyAAQZkCOwEADwsgAEEZOwEADwsgAEEyOgAAC8UBAQJ/IwBBMGsiBCQAIARBDGogAiADECsgBCABNgIcIABBDGogARCNASABBEAgACgCECAAKAIUIgJBBHRqIQMCQANAAkAgBEEgaiIFIARBDGoQVCAEKAIgQYCAgIB4Rg0AIAMgBCkCIDcCACADQQhqIAVBCGopAgA3AgAgA0EQaiEDIAJBAWohAiABQQFrIgENAQwCCwtBgICAgHggBCgCJBCjAQsgACACNgIUCyAEKAIMIAQoAhBBBEEUEJ8BIARBMGokAAuHAQEDfyMAQSBrIgEkACABQQRqIAAQViABKAIEIgAtAHBBAXEEfyAAKAJsIQMgACgCaCEAIAFBADYCEBAAIQIgAUEANgIcIAEgAjYCGCABIAFBEGo2AhQgAUEUaiICIAAQhAEgAiADEIQBIAEoAhgFQYABCyABKAIIIAEoAgwQogEgAUEgaiQAC8EBAQV/IwBBEGsiAiQAQQEhBAJAIAEoAhwiA0G7gMAAQQUgASgCICIGKAIMIgURAwANAAJAIAEtABRBBHFFBEAgA0GSp8QAQQEgBREDAA0CIAAgAyAGEDdFDQEMAgsgA0GTp8QAQQIgBREDAA0BIAIgBjYCBCACIAM2AgAgAkEBOgAPIAIgAkEPajYCCCAAIAJB9KbEABA3DQEgAkGQp8QAQQIQGA0BCyADQZbqxABBASAFEQMAIQQLIAJBEGokACAEC7ABAQF/IABBADYCACAAQQhrIgQgBCgCAEF+cTYCAAJAIAIgAxEFAEUNAAJAAkAgAEEEaygCAEF8cSICRQ0AIAItAABBAXENACAEEEAgBC0AAEECcUUNASACIAIoAgBBAnI2AgAPCyAEKAIAIgJBAnENASACQXxxIgJFDQEgAi0AAEEBcQ0BIAAgAigCCEF8cTYCACACIARBAXI2AggLDwsgACABKAIANgIAIAEgBDYCAAunAQECfyMAQSBrIgIkACACIAAoAmg2AgwgAkEAOgAcIAIgACgCVCIDNgIQIAIgAyAAKAJYQQJ0ajYCFCACIAJBDGo2AhggAAJ/AkACQANAIAFBAWsiAQRAIAJBEGoQSQ0BDAILCyACQRBqEEkiAQ0BCyAAKAKcASIDQQFrIgAMAQsgACgCnAEiA0EBayEAIAEoAgALIgEgACABIANJGzYCaCACQSBqJAALowEBAX8jAEFAaiIDJAAgA0EcaiAAEF4gAygCHCIAIAEgAhAlIANBKGogAEHgAGooAgAgAEHkAGooAgAQIyADQRBqIAAQJCADIAMpAxA3AjQgA0EIaiADKAIsIAMoAjAQWyADKAIMIQAgAygCCEEBcQRAIAMgADYCPCADQTxqQeyCxAAQQgALIANBKGoQbiADKAIgIAMoAiQQsgEgA0FAayQAIAALmQEBA38gAUFsbCECIAFB/////wNxIQMgACABQRRsaiEBQQAhAAJAA0AgAkUNAQJAIAFBFGsiBCgCAEEgRw0AIAFBEGsoAgBBAUcNACABQQxrLQAAQQJHDQAgAUEIay0AAEECRw0AIAFBBGstAAANACABQQNrLQAAQR9xDQAgAkEUaiECIABBAWohACAEIQEMAQsLIAAhAwsgAwuxAQECfyMAQRBrIgIkAAJAIAFFDQAgAUEDakECdiEBAkAgAEEETQRAIAFBAWsiA0GAAkkNAQsgAkGs8sQAKAIANgIIIAEgACACQQhqQajqxABBBEEFEE8hAEGs8sQAIAIoAgg2AgAMAQsgAkGs8sQANgIEIAIgA0ECdEGs6sQAaiIDKAIANgIMIAEgACACQQxqIAJBBGpBBkEHEE8hACADIAIoAgw2AgALIAJBEGokACAAC6ABAQN/IwBBEGsiBSQAIAVBCGogACABIAJB4I7EABBnIAUoAgwiBiADIAIgAWsiByADIAdJGyIDTwRAIAYgA2siBiAFKAIIIAZBBHRqIAMQFSAAIAEgASADaiAEECogAQRAIAAgAUEBa0HwjsQAEGJBADoADAsgACACQQFrQYCPxAAQYkEAOgAMIAVBEGokAA8LQcyJxABBIUHwicQAEHEAC6gBAQF/IwBBQGoiAyQAIANBCGogACgCABACIAMoAgghACADIAMoAgw2AgQgAyAANgIAIANBATYCMCADQQI2AhggA0GY6sQANgIUIANCATcCICADIAMoAgQiADYCPCADIAMoAgA2AjggAyAANgI0IAMgA0E0ajYCLCADIANBLGo2AhwgASACIANBFGoQFyADKAI0IgEEQCADKAI4QQEgARA4CyADQUBrJAALpAEBAX8jAEEQayIDJAACQCAARQ0AIAJFDQACQCABQQRNBEAgAkEDakECdkEBayIBQYACSQ0BCyADQazyxAAoAgA2AgggACADQQhqQajqxABBAhAxQazyxAAgAygCCDYCAAwBCyADQazy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OAACQCABaUEBRw0AQYCAgIB4IAFrIABJDQAgAARAQezyxAAtAAAaIAEgABA1IgFFDQELIAEPCwALOAACQCACQYCAxABGDQAgACACIAEoAhARAgBFDQBBAQ8LIANFBEBBAA8LIAAgA0EAIAEoAgwRAwALLQEBfyABIAAoAgBPBH8gACgCBCECIAAtAAhFBEAgASACTQ8LIAEgAkkFQQALC3ABA38gACgCACIEIAAoAggiBUYEQCMAQRBrIgMkACADQQhqIAAgBEEBQQJBCBAmIAMoAggiBEGBgICAeEcEQCADKAIMGiAEIAIQrgEACyADQRBqJAALIAAgBUEBajYCCCAAKAIEIAVBA3RqIAE3AQALNAEBfyAAKAIIIgMgACgCAEYEQCAAIAIQawsgACADQQFqNgIIIAAoAgQgA0ECdGogATYCAAsuAQF/IwBBEGsiAiQAIAJBCGogASAAEIwBIAIoAggiAARAIAJBEGokACAADwsACzcBAX8jAEEgayIBJAAgAUEANgIYIAFBATYCDCABQYypxAA2AgggAUIENwIQIAFBCGogABCKAQALKgEBfyACIAMQNSIEBEAgBCAAIAEgAyABIANJGxAWGiAAIAIgARA4CyAECysAIAIgA0kEQCADIAIgBBC0AQALIAAgAiADazYCBCAAIAEgA0EUbGo2AgALLwEBfyAAIAIQjgEgACgCBCAAKAIIIgNBFGxqIAEgAkEUbBAWGiAAIAIgA2o2AggLKwAgASADSwRAIAEgAyAEELQBAAsgACADIAFrNgIEIAAgAiABQQR0ajYCAAsvAAJAAkAgA2lBAUcNAEGAgICAeCADayABSQ0AIAAgASADIAIQfiIADQELAAsgAAsuAANAIAEEQCAAKAIAIABBBGooAgBBBEEUEJ8BIAFBAWshASAAQRBqIQAMAQsLCzIBAX8gACgCCCECIAEgACgCAEECai0AABCbASEBIAAoAgQgAiABEAEgACACQQFqNgIICyoAIAAgACgCaCABaiIBIAAoApwBIgBBAWsgACABSxtBACABQQBOGzYCaAszAQJ/IAAgACgCqAEiAiAAKAKsAUEBaiIDIAEgAEGyAWoQNiAAKAJgIAAoAmQgAiADEFMLMwECfyAAIAAoAqgBIgIgACgCrAFBAWoiAyABIABBsgFqEB0gACgCYCAAKAJkIAIgAxBTCyoAIAEgAkkEQEGkiMQAQSNBvInEABBxAAsgAiAAIAJBFGxqIAEgAmsQGQs1ACAAIAApAnQ3AmggACAAKQF8NwGyASAAIAAvAYYBOwG+ASAAQboBaiAAQYQBai8BADsBAAvsAQICfwF+IwBBEGsiAiQAIAJBATsBDCACIAE2AgggAiAANgIEIwBBEGsiASQAIAJBBGoiACkCACEEIAEgADYCDCABIAQ3AgQjAEEQayIAJAAgAUEEaiIBKAIAIgIoAgwhAwJAAkACQAJAIAIoAgQOAgABAgsgAw0BQQEhAkEAIQMMAgsgAw0AIAIoAgAiAigCBCEDIAIoAgAhAgwBCyAAQYCAgIB4NgIAIAAgATYCDCABKAIIIgEtAAkaIABBGyABLQAIEEoACyAAIAM2AgQgACACNgIAIAEoAggiAS0ACRogAEEcIAEtAAgQSgALKwECfwJAIAAoAgQgACgCCCIBEDQiAkUNACABIAJJDQAgACABIAJrNgIICwsmACACBEBB7PLEAC0AABogASACEDUhAQsgACACNgIEIAAgATYCAAsjAQF/IAEgACgCACAAKAIIIgJrSwRAIAAgAiABQQRBEBBtCwsjAQF/IAEgACgCACAAKAIIIgJrSwRAIAAgAiABQQRBFBBtCwslACAAQQE2AgQgACABKAIEIAEoAgBrQQR2IgE2AgggACABNgIACxsAIAEgAk0EQCACIAEgAxBLAAsgACACQRRsagsgACABIAJNBEAgAiABQeSjxAAQSwALIAAgAmpBAToAAAsbACABIAJNBEAgAiABIAMQSwALIAAgAkEEdGoLAwAACwMAAAsDAAALAwAACwMAAAsDAAALGgBB7PLEAC0AABpBBCAAEDUiAARAIAAPCwALIQAgAEUEQEGcq8QAQTIQuQEACyAAIAIgAyABKAIQEQEACxYAIAFBAXFFBEAgALgQCg8LIACtEAkLRgEBfyAAIAAoAgBBAWsiATYCACABRQRAIABBDGoQRwJAIABBf0YNACAAIAAoAgRBAWsiATYCBCABDQAgAEEEQZwGEDgLCwsfACAARQRAQZyrxABBMhC5AQALIAAgAiABKAIQEQIACyEBAX8gACgCECIBIAAoAhQQgwEgACgCDCABQQRBEBCfAQsSACAABEAgASACIAAgA2wQOAsLIQEBfyAAKAIEIgEgACgCCBCDASAAKAIAIAFBBEEQEJ8BCxYAIABBEGoQWCAAKAIAIAAoAgQQowELFAAgACAAKAIAQQFrNgIAIAEQnAELGQAgAEGAgICAeEcEQCAAIAFBBEEUEJ8BCwsUACABBEBBgICAgHggARCjAQsgAQsZACABKAIcQcilxABBDiABKAIgKAIMEQMACw8AIAIEQCAAIAEgAhA4CwsPACABBEAgACACIAEQOAsLEwAgAARADwtBpOnEAEEbELkBAAsPACAAQYQBTwRAIAAQAwsLEwAgACgCCCAAKAIAQQJBAhCfAQsVACACIAIQpAEaIABBgICAgHg2AgALFAAgACgCACABIAAoAgQoAgwRAgALEAAgASAAKAIEIAAoAggQDws8ACAARQRAIwBBIGsiACQAIABBADYCGCAAQQE2AgwgAEHQhMQANgIIIABCBDcCECAAQQhqIAEQigEACwALFAAgAEEANgIIIABCgICAgBA3AgALEgAgACABQZCNxAAQYkEBOgAMCxAAIAEgACgCACAAKAIEEA8LDgAgAEEANgIAIAEQnAELawEBfyMAQTBrIgMkACADIAE2AgQgAyAANgIAIANBAjYCDCADQeipxAA2AgggA0ICNwIUIAMgA0EEaq1CgICAgOABhDcDKCADIAOtQoCAgIDgAYQ3AyAgAyADQSBqNgIQIANBCGogAhCKAQALawEBfyMAQTBrIgMkACADIAE2AgQgAyAANgIAIANBAjYCDCADQcipxAA2AgggA0ICNwIUIAMgA0EEaq1CgICAgOABhDcDKCADIAOtQoCAgIDgAYQ3AyAgAyADQSBqNgIQIANBCGogAhCKAQALawEBfyMAQTBrIgMkACADIAE2AgQgAyAANgIAIANBAjYCDCADQZyqxAA2AgggA0ICNwIUIAMgA0EEaq1CgICAgOABhDcDKCADIAOtQoCAgIDgAYQ3AyAgAyADQSBqNgIQIANBCGogAhCKAQALDgBB8KXEAEErIAAQcQALCwAgACMAaiQAIwALDgBBv+nEAEHPABC5AQALCQAgACABEAcACw0AIABB9KbEACABEBcLDAAgACABKQIANwMACwoAIAAoAgAQqQELDQAgAEGAgICAeDYCAAsJACAAQQA2AgALBgAgABBYCwUAQYAECwQAQQELBAAgAQsEAEEACwvYiAEjAEGAgMAAC0AdAAAABAAAAAQAAAAeAAAAY2FsbGVkIGBSZXN1bHQ6OnVud3JhcCgpYCBvbiBhbiBgRXJyYCB2YWx1ZUVycm9yAEG7yMAACwQBAQEBAEHAysAAC4ABAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEAQfDMwAALAQEAQaXNwAALAQEAQeHNwAALAQEAQcDQwAALgAIBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAEGY18AACwEBAEHAwMMACwsBAQEBAQEBAQEBAQBB4MHDAAsEAQEBAQBB8MHDAAsoAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQABAAEBAQEBAQEBAQEBAQBBwMTDAAuqAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAEHAxsMAC+QBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAEG6zMMAC74BAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQBBwM7DAAvwAwEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEAQaDVwwALvwMBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEAQcDawwALgg0BAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAEHA6MMAC7QCAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEAQcCAxAALwSNzcmMvbGliLnJzAAABAA8A8BoPAAAAAADiJQAA5SUAAAAAAACw4AAAs+AAAAAAAAA8+wEAafsBAAAAAABq+wEAbPsBAAAAAACAJQAAnyUAAAAAAAAA+wEAO/sBAAAAAABhdHRlbXB0ZWQgdG8gdGFrZSBvd25lcnNoaXAgb2YgUnVzdCB2YWx1ZSB3aGlsZSBpdCB3YXMgYm9ycm93ZWRiZ3RleHRjb2RlcG9pbnRzcmFzdGVyX3N5bWJvbHN2ZWN0b3Jfc3ltYm9scwBAABEACgAAAGQAAAATAAAAQAARAAoAAABlAAAAFQAAAEAAEQAKAAAAZgAAABkAAABAABEACgAAAGcAAAAZAAAAQAARAAoAAABoAAAAFQAAAEAAEQAKAAAAcAAAADYAAABAABEACgAAAHUAAAA2AAAAQAARAAoAAAD8AAAAGwAAAEAAEQAKAAAAAAEAAB0AAABAABEACgAAABcBAAAtAAAAQAARAAoAAACtAAAAIwAAAEAAEQAKAAAAtwAAACMAAABAABEACgAAAMwAAAAlAAAAQAARAAoAAADEAAAAJQAAAEAAEQAKAAAA8QAAACkAAABAABEACgAAANgAAAAlAAAAQAARAAoAAADcAAAAFgAAAEAAEQAKAAAA9wAAAB0AAABAABEACgAAAB4BAAAvAAAAY2FwYWNpdHkgb3ZlcmZsb3cAAAA8AhEAEQAAACkgc2hvdWxkIGJlIDwgbGVuIChpcyBpbnNlcnRpb24gaW5kZXggKGlzICkgc2hvdWxkIGJlIDw9IGxlbiAoaXMgAAAAbgIRABQAAACCAhEAFwAAABY1EQABAAAAcmVtb3ZhbCBpbmRleCAoaXMgAAC0AhEAEgAAAFgCEQAWAAAAFjURAAEAAABgYXRgIHNwbGl0IGluZGV4IChpcyAAAADgAhEAFQAAAIICEQAXAAAAFjURAAEAAAAvaG9tZS9ydW5uZXIvLmNhcmdvL3JlZ2lzdHJ5L3NyYy9pbmRleC5jcmF0ZXMuaW8tMTk0OWNmOGM2YjViNTU3Zi91bmljb2RlLXdpZHRoLTAuMS4xNC9zcmMvdGFibGVzLnJzEAMRAGQAAACRAAAAFQAAABADEQBkAAAAlwAAABkAAAAvbml4L3N0b3JlLzI4aHl6ZmwzMzhrczRhbWhhN3ZwcG5sYnExczFucWF2LXJ1c3QtZGVmYXVsdC0xLjg1LjAvbGliL3J1c3RsaWIvc3JjL3J1c3QvbGlicmFyeS9jb3JlL3NyYy9pdGVyL3RyYWl0cy9pdGVyYXRvci5ycwAAAJQDEQB9AAAAswcAAAkAAABhc3NlcnRpb24gZmFpbGVkOiBtaWQgPD0gc2VsZi5sZW4oKS9uaXgvc3RvcmUvMjhoeXpmbDMzOGtzNGFtaGE3dnBwbmxicTFzMW5xYXYtcnVzdC1kZWZhdWx0LTEuODUuMC9saWIvcnVzdGxpYi9zcmMvcnVzdC9saWJyYXJ5L2NvcmUvc3JjL3NsaWNlL21vZC5ycwAAAEcEEQByAAAAoA0AAAkAAABhc3NlcnRpb24gZmFpbGVkOiBrIDw9IHNlbGYubGVuKCkAAABHBBEAcgAAAM0NAAAJAAAAL25peC9zdG9yZS8yOGh5emZsMzM4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CQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCRAJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQBBga/EAAufCwECAgICAwICBAIFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdAgIeAgICAgICAh8gISIjAiQlJicoKQIqAgICAissAgICAi0uAgICLzAxMjMCAgICAgI0AgI1NjcCODk6Ozw9Pj85OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTlAOTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OUECAkJDAgJERUZHSEkCSjk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OUsCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgI5OTk5TAICAgICTU5PUAICAlECUlMCAgICAgICAgICAgICVFUCAlYCVwICWFlaW1xdXl9gYQJiYwJkZWZnAmgCaWprbAICbW5vcAJxcgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICcwICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAnR1AgICAgICAnZ3OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTl4OTk5OTk5OTk5eXoCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAns5OXw5OX0CAgICAgICAgICAgICAgICAgICfgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAn8CAgKAgYICAgICAgICAgICAgICAgKDhAICAgICAgICAgKFhnUCAocCAgKIAgICAgICAomKAgICAgICAgICAgICAouMAo2OAo+QkZKTlJWWApcCApiZmpsCAgICAgICAgICOTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5nB0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAnQICAgKenwIEAgUGBwgJCgsMDQ4PEBESExQVFhcYGRobHB0CAh4CAgICAgICHyAhIiMCJCUmJygpAioCAgICoKGio6Slpi6nqKmqq6ytMwICAgICAq4CAjU2NwI4OTo7PD0+rzk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OUwCAgICArBOT7GFhnUCAocCAgKIAgICAgICAomKAgICAgICAgICAgICAouMsrOOAo+QkZKTlJWWApcCApiZmpsCAgICAgICAgICVVV1VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAEG8usQACylVVVVVFQBQVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAQBB77rEAAvEARBBEFVVVVVVV1VVVVVVVVVVVVFVVQAAQFT13VVVVVVVVVVVFQAAAAAAVVVVVfxdVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUFABQAFARQVVVVVVVVVRVRVVVVVVVVVQAAAAAAAEBVVVVVVVVVVVXVV1VVVVVVVVVVVVVVBQAAVFVVVVVVVVVVVVVVVVUVAABVVVFVVVVVVQUQAAABAVBVVVVVVVVVVVVVAVVVVVVV/////39VVVVQVQAAVVVVVVVVVVVVVQUAQcC8xAALmARAVVVVVVVVVVVVVVVVVUVUAQBUUQEAVVUFVVVVVVVVVVFVVVVVVVVVVVVVVVVVVUQBVFVRVRVVVQVVVVVVVVVFQVVVVVVVVVVVVVVVVVVVVEEVFFBRVVVVVVVVVVBRVVVBVVVVVVVVVVVVVVVVVVVUARBUUVVVVVUFVVVVVVUFAFFVVVVVVVVVVVVVVVVVVQQBVFVRVQFVVQVVVVVVVVVVRVVVVVVVVVVVVVVVVVVVRVRVVVFVFVVVVVVVVVVVVVVUVFVVVVVVVVVVVVVVVVUEVAUEUFVBVVUFVVVVVVVVVVFVVVVVVVVVVVVVVVVVVRREBQRQVUFVVQVVVVVVVVVVUFVVVVVVVVVVVVVVVVUVRAFUVUFVFVVVBVVVVVVVVVVRVVVVVVVVVVVVVVVVVVVVVVVFFQVEVRVVVVVVVVVVVVVVVVVVVVVVVVVVVVEAQFVVFQBAVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUQAAVFVVAEBVVVVVVVVVVVVVVVVVVVVVVVVQVVVVVVVVEVFVVVVVVVVVVVVVVVVVAQAAQAAEVQEAAAEAAAAAAAAAAFRVRVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUBBABBQVVVVVVVVVAFVFVVVQFUVVVFQVVRVVVVUVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVaqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqgBBgMHEAAuQA1VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAVVVVVVVVVVVVVVVVQVUVVVVVVVVBVVVVVVVVVUFVVVVVVVVVQVVVVV///33//3XX3fW1ddVEABQVUUBAABVV1FVVVVVVVVVVVVVFQBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUFVVVVVVVVVVVFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAVVFVFVQFVVVVVVVVVVVVVVVVVVVVVVVVVVVVXFRRVVVVVVVVVVVVVVVVVVUUAQEQBAFQVAAAUVVVVVVVVVVVVVVVVAAAAAAAAAEBVVVVVVVVVVVVVVVUAVVVVVVVVVVVVVVVVAABQBVVVVVVVVVVVVRUAAFVVVVBVVVVVVVVVBVAQUFVVVVVVVVVVVVVVVVVFUBFQVVVVVVVVVVVVVVVVVVUAAAVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAAAAEAFRRVVRQVVVVVVVVVVVVVVVVVVVVVVUAQaDExAALkwhVVRUAVVVVVVVVBUBVVVVVVVVVVVVVVVUAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAAAAAAAABUVVVVVVVVVVVV9VVVVWlVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf1X11VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV9VVVVVVVfVVVVVVVVVVVVVVVV////VVVVVVVVVVVVVdVVVVVV1VVVVV1V9VVVVVV9VV9VdVVXVVVVVXVV9V11XVVd9VVVVVVVVVVXVVVVVVVVVVV31d9VVVVVVVVVVVVVVVVVVVX9VVVVVVVVV1VV1VVVVVVVVVVVVVVVVVVVVVVVVVVVVVXVV1VVVVVVVVVVVVVVVVddVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVRVQVVVVVVVVVVVVVVVVVVVV/f///////////////19V1VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAAAAAAAAAKqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqVVVVqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpaVVVVVVVVqqqqqqqqqqqqqqqqqqoKAKqqqmqpqqqqqqqqqqqqqqqqqqqqqqqqqqpqgaqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpVqaqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqKqqqqqqqqqqqmqqqqqqqqqqqqqqqqqqqqqqqqqqqqpVVZWqqqqqqqqqqqqqqmqqqqqqqqqqqqqqVVWqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqVVVVVVVVVVVVVVVVVVVVVaqqqlaqqqqqqqqqqqqqqqqqalVVVVVVVVVVVVVVVVVfVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVFUAAAFBVVVVVVVVVBVVVVVVVVVVVVVVVVVVVVVVVVVVVUFVVVUVFFVVVVVVVVUFVVFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQVVVVVVVVAAAAAFBVRRVVVVVVVVVVVVUFAFBVVVVVVRUAAFBVVVWqqqqqqqqqVkBVVVVVVVVVVVVVVRUFUFBVVVVVVVVVVVVRVVVVVVVVVVVVVVVVVVVVVQFAQUFVVRVVVVRVVVVVVVVVVVVVVVRVVVVVVVVVVVVVVVUEFFQFUVVVVVVVVVVVVVVQVUVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVRVFFVVVVVqqqqqqqqqqqqVVVVAAAAAABAFQBBv8zEAAvhDFVVVVVVVVVVRVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAAAPCqqlpVAAAAAKqqqqqqqqqqaqqqqqpqqlVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVRWpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpWVVVVVVVVVVVVVVVVVVUFVFVVVVVVVVVVVVVVVVVVVapqVVUAAFRVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVBUBVAUFVAFVVVVVVVVVVVVVAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQVVVVVVVVdVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVFVRVVVVVVVVVVVVVVVVVVVVVVVVVAVVVVVVVVVVVVVVVVVVVVVVVBQAAVFVVVVVVVVVVVVVVBVBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVRVVVVVVVVVVVVVVVVVQAAAEBVVVVVVVVVVVVVFFRVFVBVVVVVVVVVVVVVVRVAQVVFVVVVVVVVVVVVVVVVVVVVQFVVVVVVVVVVFQABAFRVVVVVVVVVVVVVVVVVVRVVVVVQVVVVVVVVVVVVVVVVBQBABVUBFFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVFVAEVUVRVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUVFQBAVVVVVVVQVVVVVVVVVVVVVVVVVRVEVFVVVVUVVVVVBQBUAFRVVVVVVVVVVVVVVVVVVVVVAAAFRFVVVVVVRVVVVVVVVVVVVVVVVVVVVVVVVVVVFABEEQRVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVRUFUFUQVFVVVVVVVVBVVVVVVVVVVVVVVVVVVVVVVVVVVRUAQBFUVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVRVRABBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAQUQAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVFQAAQVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVFUVBBFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUABVVUVVVVVVVVVQEAQFVVVVVVVVVVVRUABEBVFVVVAUABVVVVVVVVVVVVVQAAAABAUFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAQAAQVVVVVVVVVVVVVVVVVVVVVVVVVVUFAAAAAAAFAARBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAUBFEAAAVVVVVVVVVVVVVVVVVVVVVVVVUBFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUVVFVVQFVVVVVVVVVVVVVVVQVAVURVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVBUAAABQVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAVFVVVVVVVVVVVVVVVVVVAEBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVFVVVVVVVVVVVVVVVVVVVVRVAVVVVVVVVVVVVVVVVVVVVVVVVVapUVVVaVVVVqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqVVWqqqqqqqqqqqqqqqqqqqqqqqqqqqpaVVVVVVVVVVVVVaqqVlVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVaqpqmmqqqqqqqqqqmpVVVVlVVVVVVVVVWpZVVVVqlVVqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpVVVVVVVVVVUEAVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAQavZxAALdVAAAAAAAEBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVURUAUAAAAAQAEAVVVVVVVVVQVQVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVBVRVVVVVVVVVVVVVVVVVVQBBrdrEAAsCQBUAQbvaxAALxQZUVVFVVVVUVVVVVRUAAQAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVAEAAAAAAFAAQBEBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVRVVVVVVVVVVVVVVVVVVVVQBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQBAVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAEBVVVVVVVVVVVVVVVVVVVdVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV1VVVVVVVVVVVVVVVVVVVVXX9/39VVVVVVVVVVVVVVVVVVVVVVVX1////////blVVVaqquqqqqqrq+r+/VaqqVlVfVVVVqlpVVVVVVVX//////////1dVVf3/3///////////////////////9///////VVVV/////////////3/V/1VVVf////9XV///////////////////////f/f/////////////////////////////////////////////////////////////1////////////////////19VVdV/////////VVVVVXVVVVVVVVV9VVVVV1VVVVVVVVVVVVVVVVVVVVVVVVVV1f///////////////////////////1VVVVVVVVVVVVVVVf//////////////////////X1VXf/1V/1VV1VdV//9XVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV////VVdVVVVVVVX//////////////3///9//////////////////////////////////////////////////////////////VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf///1f//1dV///////////////f/19V9f///1X//1dV//9XVaqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpaVVVVVVVVVVVZllVhqqVZqlVVVVVVlVVVVVVVVVWVVVUAQY7hxAALAQMAQZzhxAALiQlVVVVVVZVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVRUAlmpaWmqqBUCmWZVlVVVVVVVVVVUAAAAAVVZVValWVVVVVVVVVVVVVlVVVVVVVVVVAAAAAAAAAABUVVVVlVlZVVVlVVVpVVVVVVVVVVVVVVWVVpVqqqqqVaqqWlVVVVlVqqqqVVVVVWVVVVpVVVVVpWVWVVVVlVVVVVVVVaaWmpZZWWWplqqqZlWqVVpZVVpWZVVVVWqqpaVaVVVVpapaVVVZWVVVWVVVVVVVlVVVVVVVVVVVVVVVVVVVVVVVVVVVZVX1VVVVaVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVaqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqaqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqVaqqqqqqqqqqqlVVVaqqqqqlWlVVmqpaVaWlVVpapZalWlVVVaVaVZVVVVV9VWlZpVVfVWZVVVVVVVVVVWZV////VVVVmppqmlVVVdVVVVVV1VVVpV1V9VVVVVW9Va+quqqrqqqaVbqq+q66rlVd9VVVVVVVVVVXVVVVVVlVVVV31d9VVVVVVVVVpaqqVVVVVVVV1VdVVVVVVVVVVVVVVVVXrVpVVVVVVVVVVVWqqqqqqqqqaqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqgAAAMCqqlpVAAAAAKqqqqqqqqqqaqqqqqpqqlVVVVVVVVVVVVVVVQVUVVVVVVVVVVVVVVVVVVVVqmpVVQAAVFmqqmpVqqqqqqqqqlqqqqqqqqqqqqqqqqqqqlpVqqqqqqqqqrr+/7+qqqqqVlVVVVVVVVVVVVVVVVX1////////L25peC9zdG9yZS8yOGh5emZsMzM4a3M0YW1oYTd2cHBubGJxMXMxbnFhdi1ydXN0LWRlZmF1bHQtMS44NS4wL2xpYi9ydXN0bGliL3NyYy9ydXN0L2xpYnJhcnkvYWxsb2Mvc3JjL3Jhd192ZWMucnMvaG9tZS9ydW5uZXIvLmNhcmdvL3JlZ2lzdHJ5L3NyYy9pbmRleC5jcmF0ZXMuaW8tMTk0OWNmOGM2YjViNTU3Zi93YXNtLWJpbmRnZW4tMC4yLjEwNi9zcmMvY29udmVydC9zbGljZXMucnMvaG9tZS9ydW5uZXIvLmNhcmdvL3JlZ2lzdHJ5L3NyYy9pbmRleC5jcmF0ZXMuaW8tMTk0OWNmOGM2YjViNTU3Zi93YXNtLWJpbmRnZW4tMC4yLjEwNi9zcmMvZXh0ZXJucmVmLnJzHTQRAGcAAAB/AAAAEQAAAB00EQBnAAAAjAAAABEAAABudWxsIHBvaW50ZXIgcGFzc2VkIHRvIHJ1c3RyZWN1cnNpdmUgdXNlIG9mIGFuIG9iamVjdCBkZXRlY3RlZCB3aGljaCB3b3VsZCBsZWFkIHRvIHVuc2FmZSBhbGlhc2luZyBpbiBydXN0SnNWYWx1ZSgpAA41EQAIAAAAFjURAAEAQajqxAALAQQASAlwcm9kdWNlcnMBDHByb2Nlc3NlZC1ieQIGd2FscnVzBjAuMjQuNAx3YXNtLWJpbmRnZW4TMC4yLjEwNiAoMTE4MzFmYjg5KQ==");
+    async function init(options2) {
+      await __wbg_init({
+        module_or_path: await options2.module,
+        memory: options2.memory
+      });
       return exports;
-    };
+    }
     class Clock {
       constructor() {
         let speed = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : 1;
@@ -183090,7 +183465,7 @@ ${val.stack}`;
           } else if (header2.version === 3) {
             return parseAsciicastV3(header2, events);
           } else {
-            throw `asciicast v${header2.version} format not supported`;
+            throw new Error(`asciicast v${header2.version} format not supported`);
           }
         } else {
           const header2 = JSON.parse(text2);
@@ -183109,10 +183484,10 @@ ${val.stack}`;
           const events = data.slice(1, data.length);
           return parseAsciicastV3(header2, events);
         } else {
-          throw `asciicast v${header2.version} format not supported`;
+          throw new Error(`asciicast v${header2.version} format not supported`);
         }
       }
-      throw "invalid data";
+      throw new Error("invalid data");
     }
     function parseJsonl(jsonl) {
       const lines = jsonl.split("\n");
@@ -183232,7 +183607,7 @@ ${events}
       let audioCtx;
       let audioElement;
       let audioSeekable = false;
-      async function init() {
+      async function init2() {
         const timeout = setTimeout(() => {
           setState2("loading");
         }, 3e3);
@@ -183278,7 +183653,7 @@ ${events}
         initialCols = initialCols ?? cols;
         initialRows = initialRows ?? rows;
         if (events.length === 0) {
-          throw "recording is missing events";
+          throw new Error("recording is missing events");
         }
         if (dumpFilename !== void 0) {
           dump(recording2, dumpFilename);
@@ -183297,7 +183672,7 @@ ${events}
       async function loadAudio(audioUrl2) {
         if (!audioUrl2) return false;
         audioElement = await createAudioElement(audioUrl2);
-        audioSeekable = audioElement.duration !== NaN && audioElement.duration !== Infinity && audioElement.seekable.length > 0 && audioElement.seekable.end(audioElement.seekable.length - 1) === audioElement.duration;
+        audioSeekable = !Number.isNaN(audioElement.duration) && audioElement.duration !== Infinity && audioElement.seekable.length > 0 && audioElement.seekable.end(audioElement.seekable.length - 1) === audioElement.duration;
         if (audioSeekable) {
           audioElement.addEventListener("playing", onAudioPlaying);
           audioElement.addEventListener("waiting", onAudioWaiting);
@@ -183330,13 +183705,13 @@ ${events}
             return value2;
           }
         } else {
-          throw "failed fetching recording file: url/data missing in src";
+          throw new Error("failed fetching recording file: url/data missing in src");
         }
       }
       async function doFetchOne(url, fetchOpts) {
         const response = await fetch(url, fetchOpts);
         if (!response.ok) {
-          throw `failed fetching recording from ${url}: ${response.status} ${response.statusText}`;
+          throw new Error(`failed fetching recording from ${url}: ${response.status} ${response.statusText}`);
         }
         return response;
       }
@@ -183417,8 +183792,8 @@ ${events}
         }
       }
       async function play() {
-        if (eventTimeoutId) throw "already playing";
-        if (events[nextEventIndex] === void 0) throw "already ended";
+        if (eventTimeoutId) throw new Error("already playing");
+        if (events[nextEventIndex] === void 0) throw new Error("already ended");
         if (effectiveStartAt !== null) {
           seek(effectiveStartAt);
         }
@@ -183477,7 +183852,7 @@ ${events}
           } else if (typeof where.marker === "number") {
             const marker2 = markers[where.marker];
             if (marker2 === void 0) {
-              throw `invalid marker index: ${where.marker}`;
+              throw new Error(`invalid marker index: ${where.marker}`);
             } else {
               where = marker2[0];
             }
@@ -183585,8 +183960,8 @@ ${events}
         }
       }
       async function restart() {
-        if (eventTimeoutId) throw "still playing";
-        if (events[nextEventIndex] !== void 0) throw "not ended";
+        if (eventTimeoutId) throw new Error("still playing");
+        if (events[nextEventIndex] !== void 0) throw new Error("not ended");
         seek(0);
         await resume();
         return true;
@@ -183613,7 +183988,7 @@ ${events}
         now = audioNow;
       }
       function audioNow() {
-        if (!audioCtx) throw "audio context not started - can't tell time!";
+        if (!audioCtx) throw new Error("audio context not started - can't tell time!");
         const {
           contextTime,
           performanceTime
@@ -183656,7 +184031,7 @@ ${events}
         }
       }
       return {
-        init,
+        init: init2,
         play,
         pause,
         seek,
@@ -184121,25 +184496,25 @@ ${events}
       let transitionRate = null;
       return function(latency) {
         const now = performance.now();
-        const dt = Math.max(0, now - lastUpdateTime);
+        const dt2 = Math.max(0, now - lastUpdateTime);
         lastUpdateTime = now;
         if (smoothedPeakLatency === null) {
           smoothedPeakLatency = latency;
         } else if (latency > smoothedPeakLatency) {
-          const alphaUp = 1 - Math.pow(2, -dt / peakHalfLifeUp);
+          const alphaUp = 1 - Math.pow(2, -dt2 / peakHalfLifeUp);
           smoothedPeakLatency += alphaUp * (latency - smoothedPeakLatency);
         } else {
-          const alphaDown = 1 - Math.pow(2, -dt / peakHalfLifeDown);
+          const alphaDown = 1 - Math.pow(2, -dt2 / peakHalfLifeDown);
           smoothedPeakLatency += alphaDown * (latency - smoothedPeakLatency);
         }
         smoothedPeakLatency = Math.max(smoothedPeakLatency, 0);
         if (smoothedFloorLatency === null) {
           smoothedFloorLatency = latency;
         } else if (latency > smoothedFloorLatency) {
-          const alphaUp = 1 - Math.pow(2, -dt / floorHalfLifeUp);
+          const alphaUp = 1 - Math.pow(2, -dt2 / floorHalfLifeUp);
           smoothedFloorLatency += alphaUp * (latency - smoothedFloorLatency);
         } else {
-          const alphaDown = 1 - Math.pow(2, -dt / floorHalfLifeDown);
+          const alphaDown = 1 - Math.pow(2, -dt2 / floorHalfLifeDown);
           smoothedFloorLatency += alphaDown * (latency - smoothedFloorLatency);
         }
         smoothedFloorLatency = Math.max(smoothedFloorLatency, 0);
@@ -184148,10 +184523,10 @@ ${events}
         if (smoothedIdealBufferTime === null) {
           smoothedIdealBufferTime = idealBufferTime;
         } else if (idealBufferTime > smoothedIdealBufferTime) {
-          const alphaUp = 1 - Math.pow(2, -dt / idealHalfLifeUp);
+          const alphaUp = 1 - Math.pow(2, -dt2 / idealHalfLifeUp);
           smoothedIdealBufferTime += +alphaUp * (idealBufferTime - smoothedIdealBufferTime);
         } else {
-          const alphaDown = 1 - Math.pow(2, -dt / idealHalfLifeDown);
+          const alphaDown = 1 - Math.pow(2, -dt2 / idealHalfLifeDown);
           smoothedIdealBufferTime += +alphaDown * (idealBufferTime - smoothedIdealBufferTime);
         }
         let newBufferLevel;
@@ -184197,7 +184572,7 @@ ${events}
           stableSince = null;
         }
         if (targetBufferTime !== null) {
-          bufferTime += transitionRate * dt;
+          bufferTime += transitionRate * dt2;
           if (transitionRate >= 0 && bufferTime > targetBufferTime || transitionRate < 0 && bufferTime < targetBufferTime) {
             bufferTime = targetBufferTime;
             targetBufferTime = null;
@@ -184206,8 +184581,8 @@ ${events}
         return bufferTime;
       };
     }
-    function clamp(x2, lo, hi) {
-      return Math.min(hi, Math.max(lo, x2));
+    function clamp(x2, lo2, hi) {
+      return Math.min(hi, Math.max(lo2, x2));
     }
     const ONE_SEC_IN_USEC = 1e6;
     function alisHandler(logger) {
@@ -184221,13 +184596,13 @@ ${events}
         if (text2 === "ALiS") {
           handler = parseFirstFrame;
         } else {
-          throw "not an ALiS v1 live stream";
+          throw new Error("not an ALiS v1 live stream");
         }
       }
       function parseFirstFrame(buffer2) {
         const view = new BinaryReader(new DataView(buffer2));
         const type = view.getUint8();
-        if (type !== 1) throw `expected reset (0x01) frame, got ${type}`;
+        if (type !== 1) throw new Error(`expected reset (0x01) frame, got ${type}`);
         return parseResetFrame(view, buffer2);
       }
       function parseResetFrame(view, buffer2) {
@@ -184249,12 +184624,12 @@ ${events}
           theme2 = parseTheme(new Uint8Array(buffer2, view.offset, len));
           view.forward(len);
         } else if (themeFormat !== 0) {
-          throw `alis: invalid theme format (${themeFormat})`;
+          throw new Error(`alis: invalid theme format (${themeFormat})`);
         }
         const initLen = view.decodeVarUint();
-        let init;
+        let init2;
         if (initLen > 0) {
-          init = outputDecoder.decode(new Uint8Array(buffer2, view.offset, initLen));
+          init2 = outputDecoder.decode(new Uint8Array(buffer2, view.offset, initLen));
         }
         handler = parseFrame2;
         return {
@@ -184265,7 +184640,7 @@ ${events}
               rows
             },
             theme: theme2,
-            init
+            init: init2
           }
         };
       }
@@ -184388,7 +184763,7 @@ ${events}
       function parseHeader(buffer2) {
         const header2 = JSON.parse(buffer2);
         if (header2.version !== 2) {
-          throw "not an asciicast v2 stream";
+          throw new Error("not an asciicast v2 stream");
         }
         parse2 = parseEvent;
         return {
@@ -184423,7 +184798,7 @@ ${events}
       function parseHeader(buffer2) {
         const header2 = JSON.parse(buffer2);
         if (header2.version !== 3) {
-          throw "not an asciicast v3 stream";
+          throw new Error("not an asciicast v3 stream");
         }
         parse2 = parseEvent;
         const term = {
@@ -184596,7 +184971,7 @@ ${events}
               } else if (result2 === false) {
                 onStreamEnd();
               } else if (result2 !== void 0) {
-                throw `unexpected value from protocol handler: ${result2}`;
+                throw new Error(`unexpected value from protocol handler: ${result2}`);
               }
             } else {
               if (typeof result2 === "object" && !Array.isArray(result2)) {
@@ -184607,7 +184982,7 @@ ${events}
                 initTimeout = setTimeout(onStreamEnd, 1e3);
               } else {
                 clearTimeout(initTimeout);
-                throw `unexpected value from protocol handler: ${result2}`;
+                throw new Error(`unexpected value from protocol handler: ${result2}`);
               }
             }
           } catch (e) {
@@ -184623,7 +184998,7 @@ ${events}
         } = _ref4;
         const {
           size,
-          init,
+          init: init2,
           theme: theme2
         } = term;
         const {
@@ -184634,7 +185009,7 @@ ${events}
         setState2("playing");
         stopBuffer();
         buf = getBuffer(bufferTime, feed, resize, onInput, onMarker, (t2) => clock2.setTime(t2), time, minFrameTime, logger);
-        reset(cols, rows, init, theme2);
+        reset(cols, rows, init2, theme2);
         clock2 = new Clock();
         wasOnline = true;
         if (typeof time === "number") {
@@ -184899,7 +185274,11 @@ ${events}
       const usec = parseNumber(array.subarray(4, 8));
       return sec + usec / 1e6;
     }
-    const vt = loadVt();
+    const DEFAULT_COLS = 80;
+    const DEFAULT_ROWS = 24;
+    const vt = init({
+      module: vtWasmModule
+    });
     class State {
       constructor(core) {
         this.core = core;
@@ -185070,7 +185449,6 @@ ${events}
         this.stateName = "uninitialized";
         this.driver = getDriver(src);
         this.changedLines = /* @__PURE__ */ new Set();
-        this.cursor = void 0;
         this.duration = void 0;
         this.cols = opts.cols;
         this.rows = opts.rows;
@@ -185084,11 +185462,18 @@ ${events}
         this.markers = this._normalizeMarkers(opts.markers);
         this.pauseOnMarkers = opts.pauseOnMarkers;
         this.audioUrl = opts.audioUrl;
+        this.boldIsBright = opts.boldIsBright ?? false;
         this.commandQueue = Promise.resolve();
-        this.eventHandlers = /* @__PURE__ */ new Map([["ended", []], ["errored", []], ["idle", []], ["input", []], ["loading", []], ["marker", []], ["metadata", []], ["muted", []], ["offline", []], ["pause", []], ["play", []], ["playing", []], ["ready", []], ["reset", []], ["resize", []], ["seeked", []], ["terminalUpdate", []]]);
+        this.needsClear = false;
+        this.eventHandlers = /* @__PURE__ */ new Map([["ended", []], ["errored", []], ["idle", []], ["input", []], ["loading", []], ["marker", []], ["metadata", []], ["muted", []], ["offline", []], ["pause", []], ["play", []], ["playing", []], ["ready", []], ["seeked", []], ["vtUpdate", []]]);
       }
       async init() {
         this.wasm = await vt;
+        const {
+          memory
+        } = await this.wasm.default();
+        this.memory = memory;
+        this._initializeVt(this.cols ?? DEFAULT_COLS, this.rows ?? DEFAULT_ROWS);
         const feed = this._feed.bind(this);
         const onInput = (data) => {
           this._dispatchEvent("input", {
@@ -185110,7 +185495,7 @@ ${events}
         const reset = this._resetVt.bind(this);
         const resize = this._resizeVt.bind(this);
         const setState2 = this._setState.bind(this);
-        const posterTime = this.poster.type === "npt" ? this.poster.value : void 0;
+        const posterTime = this.poster.type === "npt" && !this.autoPlay ? this.poster.value : void 0;
         this.driver = this.driver({
           feed,
           onInput,
@@ -185139,11 +185524,9 @@ ${events}
         if (this.preload || posterTime !== void 0) {
           this._withState((state) => state.init());
         }
-        const poster = this.poster.type === "text" ? this._renderPoster(this.poster.value) : null;
         const config2 = {
           isPausable: !!this.driver.pause,
-          isSeekable: !!this.driver.seek,
-          poster
+          isSeekable: !!this.driver.seek
         };
         if (this.driver.init === void 0) {
           this.driver.init = () => {
@@ -185189,18 +185572,24 @@ ${events}
         this._dispatchEvent("ready", config2);
         if (this.autoPlay) {
           this.play();
+        } else if (this.poster.type === "text") {
+          this._feed(this.poster.value);
+          this.needsClear = true;
         }
       }
       play() {
+        this._clearIfNeeded();
         return this._withState((state) => state.play());
       }
       pause() {
         return this._withState((state) => state.pause());
       }
       togglePlay() {
+        this._clearIfNeeded();
         return this._withState((state) => state.togglePlay());
       }
       seek(where) {
+        this._clearIfNeeded();
         return this._withState(async (state) => {
           if (await state.seek(where)) {
             this._dispatchEvent("seeked");
@@ -185208,6 +185597,7 @@ ${events}
         });
       }
       step(n) {
+        this._clearIfNeeded();
         return this._withState((state) => state.step(n));
       }
       stop() {
@@ -185219,27 +185609,31 @@ ${events}
       unmute() {
         return this._withState((state) => state.unmute());
       }
-      getChanges() {
-        const changes = {};
-        if (this.changedLines.size > 0) {
-          const lines = /* @__PURE__ */ new Map();
-          const rows = this.vt.rows;
-          for (const i2 of this.changedLines) {
-            if (i2 < rows) {
-              lines.set(i2, {
-                id: i2,
-                segments: this.vt.getLine(i2)
-              });
-            }
-          }
-          this.changedLines.clear();
-          changes.lines = lines;
+      getLine(n, cursorOn) {
+        return this.vt.getLine(n, cursorOn);
+      }
+      getDataView(_ref5, size) {
+        let [ptr, len] = _ref5;
+        return new DataView(this.memory.buffer, ptr, len * size);
+      }
+      getUint32Array(_ref6) {
+        let [ptr, len] = _ref6;
+        return new Uint32Array(this.memory.buffer, ptr, len);
+      }
+      getCursor() {
+        const cursor = this.vt.getCursor();
+        if (cursor) {
+          return {
+            col: cursor[0],
+            row: cursor[1],
+            visible: true
+          };
         }
-        if (this.cursor === void 0 && this.vt) {
-          this.cursor = this.vt.getCursor() ?? false;
-          changes.cursor = this.cursor;
-        }
-        return changes;
+        return {
+          col: 0,
+          row: 0,
+          visible: false
+        };
       }
       getCurrentTime() {
         return this.driver.getCurrentTime();
@@ -185259,6 +185653,12 @@ ${events}
       }
       addEventListener(eventName, handler) {
         this.eventHandlers.get(eventName).push(handler);
+      }
+      removeEventListener(eventName, handler) {
+        const handlers2 = this.eventHandlers.get(eventName);
+        if (!handlers2) return;
+        const idx = handlers2.indexOf(handler);
+        if (idx !== -1) handlers2.splice(idx, 1);
       }
       _dispatchEvent(eventName) {
         let data = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
@@ -185290,89 +185690,127 @@ ${events}
         } else if (newState === "errored") {
           this.state = new ErroredState(this);
         } else {
-          throw `invalid state: ${newState}`;
+          throw new Error(`invalid state: ${newState}`);
         }
         this.state.onEnter(data);
         return this.state;
       }
       _feed(data) {
-        this._doFeed(data);
-        this._dispatchEvent("terminalUpdate");
-      }
-      _doFeed(data) {
-        const affectedLines = this.vt.feed(data);
-        affectedLines.forEach((i2) => this.changedLines.add(i2));
-        this.cursor = void 0;
+        const changedRows = this.vt.feed(data);
+        this._dispatchEvent("vtUpdate", {
+          changedRows
+        });
       }
       async _initializeDriver() {
         const meta2 = await this.driver.init();
-        this.cols = this.cols ?? meta2.cols ?? 80;
-        this.rows = this.rows ?? meta2.rows ?? 24;
+        this.cols = this.cols ?? meta2.cols ?? DEFAULT_COLS;
+        this.rows = this.rows ?? meta2.rows ?? DEFAULT_ROWS;
         this.duration = this.duration ?? meta2.duration;
         this.markers = this._normalizeMarkers(meta2.markers) ?? this.markers ?? [];
         if (this.cols === 0) {
-          this.cols = 80;
+          this.cols = DEFAULT_COLS;
         }
         if (this.rows === 0) {
-          this.rows = 24;
+          this.rows = DEFAULT_ROWS;
         }
         this._initializeVt(this.cols, this.rows);
-        const poster = meta2.poster !== void 0 ? this._renderPoster(meta2.poster) : null;
+        if (meta2.poster !== void 0) {
+          meta2.poster.forEach((text2) => this.vt.feed(text2));
+          this.needsClear = true;
+        } else if (this.poster.type === "text") {
+          this.vt.feed(this.poster.value);
+          this.needsClear = true;
+        }
         this._dispatchEvent("metadata", {
-          cols: this.cols,
-          rows: this.rows,
+          size: {
+            cols: this.cols,
+            rows: this.rows
+          },
+          theme: meta2.theme ?? null,
           duration: this.duration,
           markers: this.markers,
-          theme: meta2.theme,
-          hasAudio: meta2.hasAudio,
-          poster
+          hasAudio: meta2.hasAudio
+        });
+        this._dispatchEvent("vtUpdate", {
+          size: {
+            cols: this.cols,
+            rows: this.rows
+          },
+          theme: meta2.theme ?? null,
+          changedRows: Array.from({
+            length: this.rows
+          }, (_, i2) => i2)
         });
       }
+      _clearIfNeeded() {
+        if (this.needsClear) {
+          this._feed("\x1Bc");
+          this.needsClear = false;
+        }
+      }
       _resetVt(cols, rows) {
-        let init = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : void 0;
+        let init2 = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : void 0;
         let theme2 = arguments.length > 3 && arguments[3] !== void 0 ? arguments[3] : void 0;
         this.logger.debug(`core: vt reset (${cols}x${rows})`);
         this.cols = cols;
         this.rows = rows;
-        this.cursor = void 0;
         this._initializeVt(cols, rows);
-        if (init !== void 0 && init !== "") {
-          this._doFeed(init);
+        if (init2 !== void 0 && init2 !== "") {
+          this.vt.feed(init2);
         }
-        this._dispatchEvent("reset", {
-          cols,
-          rows,
-          theme: theme2
+        this._dispatchEvent("metadata", {
+          size: {
+            cols,
+            rows
+          },
+          theme: theme2 ?? null
+        });
+        this._dispatchEvent("vtUpdate", {
+          size: {
+            cols,
+            rows
+          },
+          theme: theme2 ?? null,
+          changedRows: Array.from({
+            length: rows
+          }, (_, i2) => i2)
         });
       }
       _resizeVt(cols, rows) {
         if (cols === this.vt.cols && rows === this.vt.rows) return;
-        const affectedLines = this.vt.resize(cols, rows);
-        affectedLines.forEach((i2) => this.changedLines.add(i2));
-        this.cursor = void 0;
+        const changedRows = this.vt.resize(cols, rows);
         this.vt.cols = cols;
         this.vt.rows = rows;
         this.logger.debug(`core: vt resize (${cols}x${rows})`);
-        this._dispatchEvent("resize", {
-          cols,
-          rows
+        this._dispatchEvent("metadata", {
+          size: {
+            cols,
+            rows
+          }
+        });
+        this._dispatchEvent("vtUpdate", {
+          size: {
+            cols,
+            rows
+          },
+          changedRows
         });
       }
       _initializeVt(cols, rows) {
-        this.vt = this.wasm.create(cols, rows, true, 100);
+        this.logger.debug("vt init", {
+          cols,
+          rows
+        });
+        this.vt = this.wasm.create(cols, rows, 100, this.boldIsBright);
         this.vt.cols = cols;
         this.vt.rows = rows;
-        this.changedLines.clear();
-        for (let i2 = 0; i2 < rows; i2++) {
-          this.changedLines.add(i2);
-        }
       }
       _parsePoster(poster) {
         if (typeof poster !== "string") return {};
         if (poster.substring(0, 16) == "data:text/plain,") {
           return {
             type: "text",
-            value: [poster.substring(16)]
+            value: poster.substring(16)
           };
         } else if (poster.substring(0, 4) == "npt:") {
           return {
@@ -185381,25 +185819,6 @@ ${events}
           };
         }
         return {};
-      }
-      _renderPoster(poster) {
-        const cols = this.cols ?? 80;
-        const rows = this.rows ?? 24;
-        this.logger.debug(`core: poster init (${cols}x${rows})`);
-        const vt2 = this.wasm.create(cols, rows, false, 0);
-        poster.forEach((text2) => vt2.feed(text2));
-        const cursor = vt2.getCursor() ?? false;
-        const lines = [];
-        for (let i2 = 0; i2 < rows; i2++) {
-          lines.push({
-            id: i2,
-            segments: vt2.getLine(i2)
-          });
-        }
-        return {
-          cursor,
-          lines
-        };
       }
       _normalizeMarkers(markers) {
         if (Array.isArray(markers)) {
@@ -185448,7 +185867,7 @@ ${events}
           if (PARSERS.has(src.parser)) {
             src.parser = PARSERS.get(src.parser);
           } else {
-            throw `unknown parser: ${src.parser}`;
+            throw new Error(`unknown parser: ${src.parser}`);
           }
         }
       }
@@ -185456,13 +185875,12 @@ ${events}
         const driver = DRIVERS.get(src.driver);
         return (callbacks, opts) => driver(src, callbacks, opts);
       } else {
-        throw `unsupported driver: ${JSON.stringify(src)}`;
+        throw new Error(`unsupported driver: ${JSON.stringify(src)}`);
       }
     }
     const IS_DEV = false;
     const equalFn = (a, b) => a === b;
     const $PROXY = Symbol("solid-proxy");
-    const SUPPORTS_PROXY = typeof Proxy === "function";
     const $TRACK = Symbol("solid-track");
     const signalOptions = {
       equals: equalFn
@@ -185582,12 +186000,12 @@ ${events}
     }
     function children(fn2) {
       const children2 = createMemo(fn2);
-      const memo2 = createMemo(() => resolveChildren(children2()));
-      memo2.toArray = () => {
-        const c2 = memo2();
+      const memo = createMemo(() => resolveChildren(children2()));
+      memo.toArray = () => {
+        const c2 = memo();
         return Array.isArray(c2) ? c2 : c2 != null ? [c2] : [];
       };
-      return memo2;
+      return memo;
     }
     function readSignal() {
       if (this.sources && this.state) {
@@ -185682,7 +186100,7 @@ ${events}
         node2.updatedAt = time;
       }
     }
-    function createComputation(fn2, init, pure, state = STALE, options2) {
+    function createComputation(fn2, init2, pure, state = STALE, options2) {
       const c2 = {
         fn: fn2,
         state,
@@ -185691,7 +186109,7 @@ ${events}
         sources: null,
         sourceSlots: null,
         cleanups: null,
-        value: init,
+        value: init2,
         owner: Owner,
         context: Owner ? Owner.context : null,
         pure
@@ -185725,10 +186143,10 @@ ${events}
         }
       }
     }
-    function runUpdates(fn2, init) {
+    function runUpdates(fn2, init2) {
       if (Updates) return fn2();
       let wait = false;
-      if (!init) Updates = [];
+      if (!init2) Updates = [];
       if (Effects) wait = true;
       else Effects = [];
       ExecCount++;
@@ -185847,7 +186265,7 @@ ${events}
       let items = [], mapped = [], disposers = [], len = 0, indexes = mapFn.length > 1 ? [] : null;
       onCleanup(() => dispose(disposers));
       return () => {
-        let newItems = list2() || [], newLen = newItems.length, i2, j2;
+        let newItems = list2() || [], newLen = newItems.length, i2, j;
         newItems[$TRACK];
         return untrack(() => {
           let newIndices, newIndicesNext, temp, tempdisposers, tempIndexes, start2, end2, newEnd, item2;
@@ -185870,9 +186288,9 @@ ${events}
             }
           } else if (len === 0) {
             mapped = new Array(newLen);
-            for (j2 = 0; j2 < newLen; j2++) {
-              items[j2] = newItems[j2];
-              mapped[j2] = createRoot(mapper);
+            for (j = 0; j < newLen; j++) {
+              items[j] = newItems[j];
+              mapped[j] = createRoot(mapper);
             }
             len = newLen;
           } else {
@@ -185887,32 +186305,32 @@ ${events}
             }
             newIndices = /* @__PURE__ */ new Map();
             newIndicesNext = new Array(newEnd + 1);
-            for (j2 = newEnd; j2 >= start2; j2--) {
-              item2 = newItems[j2];
+            for (j = newEnd; j >= start2; j--) {
+              item2 = newItems[j];
               i2 = newIndices.get(item2);
-              newIndicesNext[j2] = i2 === void 0 ? -1 : i2;
-              newIndices.set(item2, j2);
+              newIndicesNext[j] = i2 === void 0 ? -1 : i2;
+              newIndices.set(item2, j);
             }
             for (i2 = start2; i2 <= end2; i2++) {
               item2 = items[i2];
-              j2 = newIndices.get(item2);
-              if (j2 !== void 0 && j2 !== -1) {
-                temp[j2] = mapped[i2];
-                tempdisposers[j2] = disposers[i2];
-                indexes && (tempIndexes[j2] = indexes[i2]);
-                j2 = newIndicesNext[j2];
-                newIndices.set(item2, j2);
+              j = newIndices.get(item2);
+              if (j !== void 0 && j !== -1) {
+                temp[j] = mapped[i2];
+                tempdisposers[j] = disposers[i2];
+                indexes && (tempIndexes[j] = indexes[i2]);
+                j = newIndicesNext[j];
+                newIndices.set(item2, j);
               } else disposers[i2]();
             }
-            for (j2 = start2; j2 < newLen; j2++) {
-              if (j2 in temp) {
-                mapped[j2] = temp[j2];
-                disposers[j2] = tempdisposers[j2];
+            for (j = start2; j < newLen; j++) {
+              if (j in temp) {
+                mapped[j] = temp[j];
+                disposers[j] = tempdisposers[j];
                 if (indexes) {
-                  indexes[j2] = tempIndexes[j2];
-                  indexes[j2](j2);
+                  indexes[j] = tempIndexes[j];
+                  indexes[j](j);
                 }
-              } else mapped[j2] = createRoot(mapper);
+              } else mapped[j] = createRoot(mapper);
             }
             mapped = mapped.slice(0, len = newLen);
             items = newItems.slice(0);
@@ -185920,177 +186338,18 @@ ${events}
           return mapped;
         });
         function mapper(disposer) {
-          disposers[j2] = disposer;
+          disposers[j] = disposer;
           if (indexes) {
-            const [s, set2] = createSignal(j2);
-            indexes[j2] = set2;
-            return mapFn(newItems[j2], s);
+            const [s, set2] = createSignal(j);
+            indexes[j] = set2;
+            return mapFn(newItems[j], s);
           }
-          return mapFn(newItems[j2]);
-        }
-      };
-    }
-    function indexArray(list2, mapFn, options2 = {}) {
-      let items = [], mapped = [], disposers = [], signals = [], len = 0, i2;
-      onCleanup(() => dispose(disposers));
-      return () => {
-        const newItems = list2() || [], newLen = newItems.length;
-        newItems[$TRACK];
-        return untrack(() => {
-          if (newLen === 0) {
-            if (len !== 0) {
-              dispose(disposers);
-              disposers = [];
-              items = [];
-              mapped = [];
-              len = 0;
-              signals = [];
-            }
-            if (options2.fallback) {
-              items = [FALLBACK];
-              mapped[0] = createRoot((disposer) => {
-                disposers[0] = disposer;
-                return options2.fallback();
-              });
-              len = 1;
-            }
-            return mapped;
-          }
-          if (items[0] === FALLBACK) {
-            disposers[0]();
-            disposers = [];
-            items = [];
-            mapped = [];
-            len = 0;
-          }
-          for (i2 = 0; i2 < newLen; i2++) {
-            if (i2 < items.length && items[i2] !== newItems[i2]) {
-              signals[i2](() => newItems[i2]);
-            } else if (i2 >= items.length) {
-              mapped[i2] = createRoot(mapper);
-            }
-          }
-          for (; i2 < items.length; i2++) {
-            disposers[i2]();
-          }
-          len = signals.length = disposers.length = newLen;
-          items = newItems.slice(0);
-          return mapped = mapped.slice(0, len);
-        });
-        function mapper(disposer) {
-          disposers[i2] = disposer;
-          const [s, set2] = createSignal(newItems[i2]);
-          signals[i2] = set2;
-          return mapFn(s, i2);
+          return mapFn(newItems[j]);
         }
       };
     }
     function createComponent(Comp, props) {
       return untrack(() => Comp(props || {}));
-    }
-    function trueFn() {
-      return true;
-    }
-    const propTraps = {
-      get(_, property2, receiver) {
-        if (property2 === $PROXY) return receiver;
-        return _.get(property2);
-      },
-      has(_, property2) {
-        if (property2 === $PROXY) return true;
-        return _.has(property2);
-      },
-      set: trueFn,
-      deleteProperty: trueFn,
-      getOwnPropertyDescriptor(_, property2) {
-        return {
-          configurable: true,
-          enumerable: true,
-          get() {
-            return _.get(property2);
-          },
-          set: trueFn,
-          deleteProperty: trueFn
-        };
-      },
-      ownKeys(_) {
-        return _.keys();
-      }
-    };
-    function resolveSource(s) {
-      return !(s = typeof s === "function" ? s() : s) ? {} : s;
-    }
-    function resolveSources() {
-      for (let i2 = 0, length = this.length; i2 < length; ++i2) {
-        const v = this[i2]();
-        if (v !== void 0) return v;
-      }
-    }
-    function mergeProps(...sources) {
-      let proxy = false;
-      for (let i2 = 0; i2 < sources.length; i2++) {
-        const s = sources[i2];
-        proxy = proxy || !!s && $PROXY in s;
-        sources[i2] = typeof s === "function" ? (proxy = true, createMemo(s)) : s;
-      }
-      if (SUPPORTS_PROXY && proxy) {
-        return new Proxy(
-          {
-            get(property2) {
-              for (let i2 = sources.length - 1; i2 >= 0; i2--) {
-                const v = resolveSource(sources[i2])[property2];
-                if (v !== void 0) return v;
-              }
-            },
-            has(property2) {
-              for (let i2 = sources.length - 1; i2 >= 0; i2--) {
-                if (property2 in resolveSource(sources[i2])) return true;
-              }
-              return false;
-            },
-            keys() {
-              const keys = [];
-              for (let i2 = 0; i2 < sources.length; i2++)
-                keys.push(...Object.keys(resolveSource(sources[i2])));
-              return [...new Set(keys)];
-            }
-          },
-          propTraps
-        );
-      }
-      const sourcesMap = {};
-      const defined = /* @__PURE__ */ Object.create(null);
-      for (let i2 = sources.length - 1; i2 >= 0; i2--) {
-        const source2 = sources[i2];
-        if (!source2) continue;
-        const sourceKeys = Object.getOwnPropertyNames(source2);
-        for (let i3 = sourceKeys.length - 1; i3 >= 0; i3--) {
-          const key2 = sourceKeys[i3];
-          if (key2 === "__proto__" || key2 === "constructor") continue;
-          const desc = Object.getOwnPropertyDescriptor(source2, key2);
-          if (!defined[key2]) {
-            defined[key2] = desc.get ? {
-              enumerable: true,
-              configurable: true,
-              get: resolveSources.bind(sourcesMap[key2] = [desc.get.bind(source2)])
-            } : desc.value !== void 0 ? desc : void 0;
-          } else {
-            const sources2 = sourcesMap[key2];
-            if (sources2) {
-              if (desc.get) sources2.push(desc.get.bind(source2));
-              else if (desc.value !== void 0) sources2.push(() => desc.value);
-            }
-          }
-        }
-      }
-      const target2 = {};
-      const definedKeys = Object.keys(defined);
-      for (let i2 = definedKeys.length - 1; i2 >= 0; i2--) {
-        const key2 = definedKeys[i2], desc = defined[key2];
-        if (desc && desc.get) Object.defineProperty(target2, key2, desc);
-        else target2[key2] = desc ? desc.value : void 0;
-      }
-      return target2;
     }
     const narrowedError = (name2) => `Stale read from <${name2}>.`;
     function For(props) {
@@ -186098,12 +186357,6 @@ ${events}
         fallback: () => props.fallback
       };
       return createMemo(mapArray(() => props.each, props.children, fallback || void 0));
-    }
-    function Index(props) {
-      const fallback = "fallback" in props && {
-        fallback: () => props.fallback
-      };
-      return createMemo(indexArray(() => props.each, props.children, fallback || void 0));
     }
     function Show(props) {
       const keyed = props.keyed;
@@ -186177,7 +186430,6 @@ ${events}
     function Match(props) {
       return props;
     }
-    const memo = (fn2) => createMemo(() => fn2());
     function reconcileArrays(parentNode, a, b) {
       let bLength = b.length, aEnd = a.length, bEnd = bLength, aStart = 0, bStart = 0, after = a[aEnd - 1].nextSibling, map2 = null;
       while (aStart < aEnd || bStart < bEnd) {
@@ -186227,11 +186479,11 @@ ${events}
       }
     }
     const $$EVENTS = "_$DX_DELEGATE";
-    function render(code2, element, init, options2 = {}) {
+    function render(code2, element, init2, options2 = {}) {
       let disposer;
       createRoot((dispose2) => {
         disposer = dispose2;
-        element === document ? code2() : insert$1(element, code2(), element.firstChild ? null : void 0, init);
+        element === document ? code2() : insert$1(element, code2(), element.firstChild ? null : void 0, init2);
       }, options2.owner);
       return () => {
         disposer();
@@ -186260,7 +186512,8 @@ ${events}
       }
     }
     function setAttribute(node2, name2, value2) {
-      node2.removeAttribute(name2);
+      if (value2 == null) node2.removeAttribute(name2);
+      else node2.setAttribute(name2, value2);
     }
     function className(node2, value2) {
       if (value2 == null) node2.removeAttribute("class");
@@ -186663,91 +186916,6 @@ ${events}
       }
       return [wrappedStore, setStore];
     }
-    const $ROOT = Symbol("store-root");
-    function applyState(target2, parent, property2, merge, key2) {
-      const previous = parent[property2];
-      if (target2 === previous) return;
-      const isArray = Array.isArray(target2);
-      if (property2 !== $ROOT && (!isWrappable(target2) || !isWrappable(previous) || isArray !== Array.isArray(previous) || key2 && target2[key2] !== previous[key2])) {
-        setProperty(parent, property2, target2);
-        return;
-      }
-      if (isArray) {
-        if (target2.length && previous.length && (!merge || key2 && target2[0] && target2[0][key2] != null)) {
-          let i2, j2, start2, end2, newEnd, item2, newIndicesNext, keyVal;
-          for (start2 = 0, end2 = Math.min(previous.length, target2.length); start2 < end2 && (previous[start2] === target2[start2] || key2 && previous[start2] && target2[start2] && previous[start2][key2] === target2[start2][key2]); start2++) {
-            applyState(target2[start2], previous, start2, merge, key2);
-          }
-          const temp = new Array(target2.length), newIndices = /* @__PURE__ */ new Map();
-          for (end2 = previous.length - 1, newEnd = target2.length - 1; end2 >= start2 && newEnd >= start2 && (previous[end2] === target2[newEnd] || key2 && previous[end2] && target2[newEnd] && previous[end2][key2] === target2[newEnd][key2]); end2--, newEnd--) {
-            temp[newEnd] = previous[end2];
-          }
-          if (start2 > newEnd || start2 > end2) {
-            for (j2 = start2; j2 <= newEnd; j2++) setProperty(previous, j2, target2[j2]);
-            for (; j2 < target2.length; j2++) {
-              setProperty(previous, j2, temp[j2]);
-              applyState(target2[j2], previous, j2, merge, key2);
-            }
-            if (previous.length > target2.length) setProperty(previous, "length", target2.length);
-            return;
-          }
-          newIndicesNext = new Array(newEnd + 1);
-          for (j2 = newEnd; j2 >= start2; j2--) {
-            item2 = target2[j2];
-            keyVal = key2 && item2 ? item2[key2] : item2;
-            i2 = newIndices.get(keyVal);
-            newIndicesNext[j2] = i2 === void 0 ? -1 : i2;
-            newIndices.set(keyVal, j2);
-          }
-          for (i2 = start2; i2 <= end2; i2++) {
-            item2 = previous[i2];
-            keyVal = key2 && item2 ? item2[key2] : item2;
-            j2 = newIndices.get(keyVal);
-            if (j2 !== void 0 && j2 !== -1) {
-              temp[j2] = previous[i2];
-              j2 = newIndicesNext[j2];
-              newIndices.set(keyVal, j2);
-            }
-          }
-          for (j2 = start2; j2 < target2.length; j2++) {
-            if (j2 in temp) {
-              setProperty(previous, j2, temp[j2]);
-              applyState(target2[j2], previous, j2, merge, key2);
-            } else setProperty(previous, j2, target2[j2]);
-          }
-        } else {
-          for (let i2 = 0, len = target2.length; i2 < len; i2++) {
-            applyState(target2[i2], previous, i2, merge, key2);
-          }
-        }
-        if (previous.length > target2.length) setProperty(previous, "length", target2.length);
-        return;
-      }
-      const targetKeys = Object.keys(target2);
-      for (let i2 = 0, len = targetKeys.length; i2 < len; i2++) {
-        applyState(target2[targetKeys[i2]], previous, targetKeys[i2], merge, key2);
-      }
-      const previousKeys = Object.keys(previous);
-      for (let i2 = 0, len = previousKeys.length; i2 < len; i2++) {
-        if (target2[previousKeys[i2]] === void 0) setProperty(previous, previousKeys[i2], void 0);
-      }
-    }
-    function reconcile(value2, options2 = {}) {
-      const { merge, key: key2 = "id" } = options2, v = unwrap(value2);
-      return (state) => {
-        if (!isWrappable(state) || !isWrappable(v)) return v;
-        const res = applyState(
-          v,
-          {
-            [$ROOT]: state
-          },
-          $ROOT,
-          merge,
-          key2
-        );
-        return res === void 0 ? state : res;
-      };
-    }
     const noop = () => {
     };
     const noopTransition = (el2, done) => done();
@@ -186921,200 +187089,1081 @@ ${events}
         }
       );
     };
-    const _tmpl$$g = /* @__PURE__ */ template(`<span></span>`, 2);
-    var Segment = ((props) => {
-      const codePoint = createMemo(() => {
-        if (props.text.length == 1) {
-          const cp = props.text.codePointAt(0);
-          if (cp >= 9600 && cp <= 9631 || cp == 57520 || cp == 57522) {
-            return cp;
-          }
-        }
-      });
-      const text2 = createMemo(() => codePoint() ? " " : props.text);
-      const style$1 = createMemo(() => buildStyle(props.pen, props.offset, props.cellCount));
-      const className$1 = createMemo(() => buildClassName(props.pen, codePoint(), props.extraClass));
-      return (() => {
-        const _el$ = _tmpl$$g.cloneNode(true);
-        insert$1(_el$, text2);
-        createRenderEffect((_p$) => {
-          const _v$ = className$1(), _v$2 = style$1();
-          _v$ !== _p$._v$ && className(_el$, _p$._v$ = _v$);
-          _p$._v$2 = style(_el$, _v$2, _p$._v$2);
-          return _p$;
-        }, {
-          _v$: void 0,
-          _v$2: void 0
-        });
-        return _el$;
-      })();
-    });
-    function buildClassName(attrs, codePoint, extraClass) {
-      const fgClass = colorClass(attrs.get("fg"), attrs.get("bold"), "fg-");
-      const bgClass = colorClass(attrs.get("bg"), false, "bg-");
-      let cls = extraClass ?? "";
-      if (codePoint !== void 0) {
-        cls += ` cp-${codePoint.toString(16)}`;
-      }
-      if (fgClass) {
-        cls += " " + fgClass;
-      }
-      if (bgClass) {
-        cls += " " + bgClass;
-      }
-      if (attrs.has("bold")) {
-        cls += " ap-bright";
-      }
-      if (attrs.has("faint")) {
-        cls += " ap-faint";
-      }
-      if (attrs.has("italic")) {
-        cls += " ap-italic";
-      }
-      if (attrs.has("underline")) {
-        cls += " ap-underline";
-      }
-      if (attrs.has("blink")) {
-        cls += " ap-blink";
-      }
-      if (attrs.get("inverse")) {
-        cls += " ap-inverse";
-      }
-      return cls;
-    }
-    function colorClass(color, intense, prefix) {
-      if (typeof color === "number") {
-        if (intense && color < 8) {
-          color += 8;
-        }
-        return `${prefix}${color}`;
-      }
-    }
-    function buildStyle(attrs, offset2, width) {
-      const fg = attrs.get("fg");
-      const bg = attrs.get("bg");
-      let style2 = {
-        "--offset": offset2,
-        width: `${width + 0.01}ch`
-      };
-      if (typeof fg === "string") {
-        style2["--fg"] = fg;
-      }
-      if (typeof bg === "string") {
-        style2["--bg"] = bg;
-      }
-      return style2;
-    }
-    const _tmpl$$f = /* @__PURE__ */ template(`<span class="ap-line" role="paragraph"></span>`, 2);
-    var Line$1 = ((props) => {
-      const segments2 = () => {
-        if (typeof props.cursor === "number") {
-          const segs = [];
-          let cellOffset = 0;
-          let segIndex = 0;
-          while (segIndex < props.segments.length && cellOffset + props.segments[segIndex].cellCount - 1 < props.cursor) {
-            const seg = props.segments[segIndex];
-            segs.push(seg);
-            cellOffset += seg.cellCount;
-            segIndex++;
-          }
-          if (segIndex < props.segments.length) {
-            const seg = props.segments[segIndex];
-            const charWidth = seg.charWidth;
-            let cellIndex = props.cursor - cellOffset;
-            const charIndex = Math.floor(cellIndex / charWidth);
-            cellIndex = charIndex * charWidth;
-            const chars = Array.from(seg.text);
-            if (charIndex > 0) {
-              segs.push({
-                ...seg,
-                text: chars.slice(0, charIndex).join("")
-              });
-            }
-            segs.push({
-              ...seg,
-              text: chars[charIndex],
-              offset: cellOffset + cellIndex,
-              cellCount: charWidth,
-              extraClass: "ap-cursor"
-            });
-            if (charIndex < chars.length - 1) {
-              segs.push({
-                ...seg,
-                text: chars.slice(charIndex + 1).join(""),
-                offset: cellOffset + cellIndex + 1,
-                cellCount: seg.cellCount - charWidth
-              });
-            }
-            segIndex++;
-            while (segIndex < props.segments.length) {
-              const seg2 = props.segments[segIndex];
-              segs.push(seg2);
-              segIndex++;
-            }
-          }
-          return segs;
-        } else {
-          return props.segments;
-        }
-      };
-      return (() => {
-        const _el$ = _tmpl$$f.cloneNode(true);
-        insert$1(_el$, createComponent(Index, {
-          get each() {
-            return segments2();
-          },
-          children: (s) => createComponent(Segment, mergeProps(s))
-        }));
-        return _el$;
-      })();
-    });
-    const _tmpl$$e = /* @__PURE__ */ template(`<pre class="ap-terminal" aria-live="off" tabindex="0"></pre>`, 2);
+    const _tmpl$$e = /* @__PURE__ */ template(`<div class="ap-term"><canvas></canvas><svg class="ap-term-symbols" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" width="100%" height="100%" aria-hidden="true"><defs></defs><g></g></svg><pre class="ap-term-text" aria-live="off" tabindex="0"></pre></div>`, 12);
+    const SVG_NS = "http://www.w3.org/2000/svg";
+    const BLOCK_H_RES = 8;
+    const BLOCK_V_RES = 24;
+    const BOLD_MASK = 1;
+    const FAINT_MASK = 1 << 1;
+    const ITALIC_MASK = 1 << 2;
+    const UNDERLINE_MASK = 1 << 3;
+    const STRIKETHROUGH_MASK = 1 << 4;
+    const BLINK_MASK = 1 << 5;
     var Terminal = ((props) => {
+      const core = props.core;
+      const textRowPool = [];
+      const vectorSymbolRowPool = [];
+      const vectorSymbolUsePool = [];
+      const vectorSymbolDefCache = /* @__PURE__ */ new Set();
+      const colorsCache = /* @__PURE__ */ new Map();
+      const attrClassCache = /* @__PURE__ */ new Map();
+      const [size, setSize] = createSignal({
+        cols: props.cols,
+        rows: props.rows
+      }, {
+        equals: (newVal, oldVal) => newVal.cols === oldVal.cols && newVal.rows === oldVal.rows
+      });
+      const [theme2, setTheme] = createSignal(buildTheme$1(FALLBACK_THEME));
       const lineHeight = () => props.lineHeight ?? 1.3333333333;
+      const [blinkOn, setBlinkOn] = createSignal(true);
+      const cursorOn = createMemo(() => blinkOn() || cursorHold);
       const style$1 = createMemo(() => {
         return {
-          width: `${props.cols}ch`,
-          height: `${lineHeight() * props.rows}em`,
+          width: `${size().cols}ch`,
+          height: `${lineHeight() * size().rows}em`,
           "font-size": `${(props.scale || 1) * 100}%`,
-          "font-family": props.fontFamily,
           "--term-line-height": `${lineHeight()}em`,
-          "--term-cols": props.cols
+          "--term-cols": size().cols,
+          "--term-rows": size().rows
         };
       });
-      const cursorCol = createMemo(() => props.cursor?.[0]);
-      const cursorRow = createMemo(() => props.cursor?.[1]);
-      return (() => {
-        const _el$ = _tmpl$$e.cloneNode(true);
-        const _ref$ = props.ref;
-        typeof _ref$ === "function" ? use(_ref$, _el$) : props.ref = _el$;
-        insert$1(_el$, createComponent(For, {
-          get each() {
-            return props.lines;
-          },
-          children: (line2, i2) => createComponent(Line$1, {
-            get segments() {
-              return line2.segments;
-            },
-            get cursor() {
-              return memo(() => i2() === cursorRow())() ? cursorCol() : null;
+      let cursor = {
+        col: 0,
+        row: 0,
+        visible: false
+      };
+      let pendingChanges = {
+        size: void 0,
+        theme: void 0,
+        rows: /* @__PURE__ */ new Set()
+      };
+      let el2;
+      let canvasEl;
+      let canvasCtx;
+      let textEl;
+      let vectorSymbolsEl;
+      let vectorSymbolDefsEl;
+      let vectorSymbolRowsEl;
+      let frameRequestId;
+      let blinkIntervalId;
+      let cssTheme;
+      let cursorHold = false;
+      onMount(() => {
+        setupCanvas();
+        setInitialTheme();
+        adjustTextRowNodeCount(size().rows);
+        adjustSymbolRowNodeCount(size().rows);
+        core.addEventListener("vtUpdate", onVtUpdate);
+      });
+      onCleanup(() => {
+        core.removeEventListener("vtUpdate", onVtUpdate);
+        clearInterval(blinkIntervalId);
+        cancelAnimationFrame(frameRequestId);
+      });
+      createEffect(() => {
+        if (props.blinking && blinkIntervalId === void 0) {
+          blinkIntervalId = setInterval(toggleBlink, 600);
+        } else {
+          clearInterval(blinkIntervalId);
+          blinkIntervalId = void 0;
+          setBlinkOn(true);
+        }
+      });
+      createEffect(() => {
+        cursorOn();
+        if (cursor.visible) {
+          pendingChanges.rows.add(cursor.row);
+          scheduleRender();
+        }
+      });
+      function setupCanvas() {
+        canvasCtx = canvasEl.getContext("2d");
+        if (!canvasCtx) throw new Error("2D ctx not available");
+        const {
+          cols,
+          rows
+        } = size();
+        canvasEl.width = cols * BLOCK_H_RES;
+        canvasEl.height = rows * BLOCK_V_RES;
+        canvasEl.style.imageRendering = "pixelated";
+        canvasCtx.imageSmoothingEnabled = false;
+      }
+      function resizeCanvas(_ref) {
+        let {
+          cols,
+          rows
+        } = _ref;
+        canvasEl.width = cols * BLOCK_H_RES;
+        canvasEl.height = rows * BLOCK_V_RES;
+        canvasCtx.imageSmoothingEnabled = false;
+      }
+      function setInitialTheme() {
+        cssTheme = getCssTheme(el2);
+        pendingChanges.theme = cssTheme;
+      }
+      function onVtUpdate(_ref2) {
+        let {
+          size: newSize,
+          theme: theme3,
+          changedRows
+        } = _ref2;
+        let activity = false;
+        if (changedRows !== void 0) {
+          for (const row2 of changedRows) {
+            pendingChanges.rows.add(row2);
+            cursorHold = true;
+            activity = true;
+          }
+        }
+        if (theme3 !== void 0 && props.preferEmbeddedTheme) {
+          pendingChanges.theme = theme3;
+          for (let row2 = 0; row2 < size().rows; row2++) {
+            pendingChanges.rows.add(row2);
+          }
+        }
+        const newCursor = core.getCursor();
+        if (newCursor.visible != cursor.visible || newCursor.col != cursor.col || newCursor.row != cursor.row) {
+          if (cursor.visible) {
+            pendingChanges.rows.add(cursor.row);
+          }
+          if (newCursor.visible) {
+            pendingChanges.rows.add(newCursor.row);
+          }
+          cursor = newCursor;
+          cursorHold = true;
+          activity = true;
+        }
+        if (newSize !== void 0) {
+          pendingChanges.size = newSize;
+          for (const row2 of pendingChanges.rows) {
+            if (row2 >= newSize.rows) {
+              pendingChanges.rows.delete(row2);
             }
-          })
-        }));
+          }
+        }
+        if (activity && cursor.visible) {
+          pendingChanges.rows.add(cursor.row);
+        }
+        scheduleRender();
+      }
+      function toggleBlink() {
+        setBlinkOn((blink) => {
+          if (!blink) cursorHold = false;
+          return !blink;
+        });
+      }
+      function scheduleRender() {
+        if (frameRequestId === void 0) {
+          frameRequestId = requestAnimationFrame(render2);
+        }
+      }
+      function render2() {
+        frameRequestId = void 0;
+        const {
+          size: newSize,
+          theme: newTheme,
+          rows
+        } = pendingChanges;
+        batch(function() {
+          if (newSize !== void 0) {
+            resizeCanvas(newSize);
+            adjustTextRowNodeCount(newSize.rows);
+            adjustSymbolRowNodeCount(newSize.rows);
+            setSize(newSize);
+          }
+          if (newTheme !== void 0) {
+            if (newTheme === null) {
+              setTheme(buildTheme$1(cssTheme));
+            } else {
+              setTheme(buildTheme$1(newTheme));
+            }
+            colorsCache.clear();
+          }
+          const theme_ = theme2();
+          const cursorOn_ = blinkOn() || cursorHold;
+          for (const r2 of rows) {
+            renderRow(r2, theme_, cursorOn_);
+          }
+        });
+        pendingChanges.size = void 0;
+        pendingChanges.theme = void 0;
+        pendingChanges.rows.clear();
+        props.stats.renders += 1;
+      }
+      function renderRow(rowIndex, theme3, cursorOn2) {
+        const line2 = core.getLine(rowIndex, cursorOn2);
+        clearCanvasRow(rowIndex);
+        renderRowBg(rowIndex, line2.bg, theme3);
+        renderRowRasterSymbols(rowIndex, line2.raster_symbols, theme3);
+        renderRowVectorSymbols(rowIndex, line2.vector_symbols, theme3);
+        renderRowText(rowIndex, line2.text, line2.codepoints, theme3);
+      }
+      function clearCanvasRow(rowIndex) {
+        canvasCtx.clearRect(0, rowIndex * BLOCK_V_RES, size().cols * BLOCK_H_RES, BLOCK_V_RES);
+      }
+      function renderRowBg(rowIndex, spans, theme3) {
+        const view = core.getDataView(spans, 8);
+        const y = rowIndex * BLOCK_V_RES;
+        let i2 = 0;
+        while (i2 < view.byteLength) {
+          const column2 = view.getUint16(i2 + 0, true);
+          const width = view.getUint16(i2 + 2, true);
+          const color = getColor(view, i2 + 4, theme3);
+          i2 += 8;
+          canvasCtx.fillStyle = color;
+          canvasCtx.fillRect(column2 * BLOCK_H_RES, y, width * BLOCK_H_RES, BLOCK_V_RES);
+        }
+      }
+      function renderRowRasterSymbols(rowIndex, symbols, theme3) {
+        const view = core.getDataView(symbols, 12);
+        const y = rowIndex * BLOCK_V_RES;
+        let i2 = 0;
+        while (i2 < view.byteLength) {
+          const column2 = view.getUint16(i2 + 0, true);
+          const codepoint = view.getUint32(i2 + 4, true);
+          const color = getColor(view, i2 + 8, theme3) || theme3.fg;
+          i2 += 12;
+          canvasCtx.fillStyle = color;
+          drawBlockGlyph(canvasCtx, codepoint, column2 * BLOCK_H_RES, y);
+        }
+      }
+      function renderRowVectorSymbols(rowIndex, symbols, theme3) {
+        const view = core.getDataView(symbols, 16);
+        const frag = document.createDocumentFragment();
+        const symbolRow = vectorSymbolRowsEl.children[rowIndex];
+        let i2 = 0;
+        while (i2 < view.byteLength) {
+          const column2 = view.getUint16(i2 + 0, true);
+          const codepoint = view.getUint32(i2 + 4, true);
+          const color = getColor(view, i2 + 8, theme3);
+          const attrs = view.getUint8(i2 + 12);
+          i2 += 16;
+          const blink = (attrs & BLINK_MASK) !== 0;
+          const el3 = createVectorSymbolNode(codepoint, column2, color, blink);
+          if (el3) {
+            frag.appendChild(el3);
+          }
+        }
+        recycleVectorSymbolUses(symbolRow);
+        symbolRow.replaceChildren(frag);
+      }
+      function renderRowText(rowIndex, spans, codepoints, theme3) {
+        const spansView = core.getDataView(spans, 12);
+        const codepointsView = core.getUint32Array(codepoints);
+        const frag = document.createDocumentFragment();
+        let i2 = 0;
+        while (i2 < spansView.byteLength) {
+          const column2 = spansView.getUint16(i2 + 0, true);
+          const codepointsStart = spansView.getUint16(i2 + 2, true);
+          const len = spansView.getUint16(i2 + 4, true);
+          const color = getColor(spansView, i2 + 6, theme3);
+          const attrs = spansView.getUint8(i2 + 10);
+          const text2 = String.fromCodePoint(...codepointsView.subarray(codepointsStart, codepointsStart + len));
+          i2 += 12;
+          const el3 = document.createElement("span");
+          const style2 = el3.style;
+          style2.setProperty("--offset", column2);
+          el3.textContent = text2;
+          if (color) {
+            style2.color = color;
+          }
+          const cls = getAttrClass(attrs);
+          if (cls !== null) {
+            el3.className = cls;
+          }
+          frag.appendChild(el3);
+        }
+        textEl.children[rowIndex].replaceChildren(frag);
+      }
+      function getAttrClass(attrs) {
+        let c2 = attrClassCache.get(attrs);
+        if (c2 === void 0) {
+          c2 = buildAttrClass(attrs);
+          attrClassCache.set(attrs, c2);
+        }
+        return c2;
+      }
+      function buildAttrClass(attrs) {
+        let cls = "";
+        if ((attrs & BOLD_MASK) !== 0) {
+          cls += "ap-bold ";
+        } else if ((attrs & FAINT_MASK) !== 0) {
+          cls += "ap-faint ";
+        }
+        if ((attrs & ITALIC_MASK) !== 0) {
+          cls += "ap-italic ";
+        }
+        if ((attrs & UNDERLINE_MASK) !== 0) {
+          cls += "ap-underline ";
+        }
+        if ((attrs & STRIKETHROUGH_MASK) !== 0) {
+          cls += "ap-strike ";
+        }
+        if ((attrs & BLINK_MASK) !== 0) {
+          cls += "ap-blink ";
+        }
+        return cls === "" ? null : cls;
+      }
+      function getColor(view, offset2, theme3) {
+        const tag = view.getUint8(offset2);
+        if (tag === 0) {
+          return null;
+        } else if (tag === 1) {
+          return theme3.fg;
+        } else if (tag === 2) {
+          return theme3.bg;
+        } else if (tag === 3) {
+          return theme3.palette[view.getUint8(offset2 + 1)];
+        } else if (tag === 4) {
+          const key2 = view.getUint32(offset2, true);
+          let c2 = colorsCache.get(key2);
+          if (c2 === void 0) {
+            const r2 = view.getUint8(offset2 + 1);
+            const g = view.getUint8(offset2 + 2);
+            const b = view.getUint8(offset2 + 3);
+            c2 = "rgb(" + r2 + "," + g + "," + b + ")";
+            colorsCache.set(key2, c2);
+          }
+          return c2;
+        } else {
+          throw new Error(`invalid color tag: ${tag}`);
+        }
+      }
+      function adjustTextRowNodeCount(rows) {
+        let r2 = textEl.children.length;
+        if (r2 < rows) {
+          const frag = document.createDocumentFragment();
+          while (r2 < rows) {
+            const row2 = getNewRow();
+            row2.style.setProperty("--row", r2);
+            frag.appendChild(row2);
+            r2 += 1;
+          }
+          textEl.appendChild(frag);
+        }
+        while (textEl.children.length > rows) {
+          const row2 = textEl.lastElementChild;
+          textEl.removeChild(row2);
+          textRowPool.push(row2);
+        }
+      }
+      function adjustSymbolRowNodeCount(rows) {
+        let r2 = vectorSymbolRowsEl.children.length;
+        if (r2 < rows) {
+          const frag = document.createDocumentFragment();
+          while (r2 < rows) {
+            const row2 = getNewSymbolRow();
+            row2.setAttribute("transform", `translate(0 ${r2})`);
+            frag.appendChild(row2);
+            r2 += 1;
+          }
+          vectorSymbolRowsEl.appendChild(frag);
+        }
+        while (vectorSymbolRowsEl.children.length > rows) {
+          const row2 = vectorSymbolRowsEl.lastElementChild;
+          vectorSymbolRowsEl.removeChild(row2);
+          vectorSymbolRowPool.push(row2);
+        }
+      }
+      function getNewRow() {
+        let row2 = textRowPool.pop();
+        if (row2 === void 0) {
+          row2 = document.createElement("span");
+          row2.className = "ap-line";
+        }
+        return row2;
+      }
+      function getNewSymbolRow() {
+        let row2 = vectorSymbolRowPool.pop();
+        if (row2 === void 0) {
+          row2 = document.createElementNS(SVG_NS, "g");
+          row2.setAttribute("class", "ap-symbol-line");
+        }
+        return row2;
+      }
+      function createVectorSymbolNode(codepoint, column2, fg, blink) {
+        if (!ensureVectorSymbolDef(codepoint)) {
+          return null;
+        }
+        const isPowerline = POWERLINE_SYMBOLS.has(codepoint);
+        const symbolX = isPowerline ? column2 - POWERLINE_SYMBOL_NUDGE : column2;
+        const symbolWidth = isPowerline ? 1 + POWERLINE_SYMBOL_NUDGE * 2 : 1;
+        const node2 = getVectorSymbolUse();
+        node2.setAttribute("href", `#sym-${codepoint}`);
+        node2.setAttribute("x", symbolX);
+        node2.setAttribute("y", 0);
+        node2.setAttribute("width", symbolWidth);
+        node2.setAttribute("height", "1");
+        if (fg) {
+          node2.style.setProperty("color", fg);
+        } else {
+          node2.style.removeProperty("color");
+        }
+        if (blink) {
+          node2.classList.add("ap-blink");
+        } else {
+          node2.classList.remove("ap-blink");
+        }
+        return node2;
+      }
+      function recycleVectorSymbolUses(row2) {
+        while (row2.firstChild) {
+          const child = row2.firstChild;
+          row2.removeChild(child);
+          vectorSymbolUsePool.push(child);
+        }
+      }
+      function getVectorSymbolUse() {
+        let node2 = vectorSymbolUsePool.pop();
+        if (node2 === void 0) {
+          node2 = document.createElementNS(SVG_NS, "use");
+        }
+        return node2;
+      }
+      function ensureVectorSymbolDef(codepoint) {
+        const content2 = getVectorSymbolDef(codepoint);
+        if (!content2) {
+          return false;
+        }
+        if (vectorSymbolDefCache.has(codepoint)) {
+          return true;
+        }
+        const id = `sym-${codepoint}`;
+        const symbol = document.createElementNS(SVG_NS, "symbol");
+        symbol.setAttribute("id", id);
+        symbol.setAttribute("viewBox", "0 0 1 1");
+        symbol.setAttribute("preserveAspectRatio", "none");
+        symbol.setAttribute("overflow", "visible");
+        symbol.innerHTML = content2;
+        vectorSymbolDefsEl.appendChild(symbol);
+        vectorSymbolDefCache.add(codepoint);
+        return true;
+      }
+      return (() => {
+        const _el$ = _tmpl$$e.cloneNode(true), _el$2 = _el$.firstChild, _el$3 = _el$2.nextSibling, _el$4 = _el$3.firstChild, _el$5 = _el$4.nextSibling, _el$6 = _el$3.nextSibling;
+        const _ref$ = el2;
+        typeof _ref$ === "function" ? use(_ref$, _el$) : el2 = _el$;
+        const _ref$2 = canvasEl;
+        typeof _ref$2 === "function" ? use(_ref$2, _el$2) : canvasEl = _el$2;
+        const _ref$3 = vectorSymbolsEl;
+        typeof _ref$3 === "function" ? use(_ref$3, _el$3) : vectorSymbolsEl = _el$3;
+        const _ref$4 = vectorSymbolDefsEl;
+        typeof _ref$4 === "function" ? use(_ref$4, _el$4) : vectorSymbolDefsEl = _el$4;
+        const _ref$5 = vectorSymbolRowsEl;
+        typeof _ref$5 === "function" ? use(_ref$5, _el$5) : vectorSymbolRowsEl = _el$5;
+        const _ref$6 = textEl;
+        typeof _ref$6 === "function" ? use(_ref$6, _el$6) : textEl = _el$6;
         createRenderEffect((_p$) => {
-          const _v$ = !!(props.blink || props.cursorHold), _v$2 = !!props.blink, _v$3 = style$1();
-          _v$ !== _p$._v$ && _el$.classList.toggle("ap-cursor-on", _p$._v$ = _v$);
-          _v$2 !== _p$._v$2 && _el$.classList.toggle("ap-blink", _p$._v$2 = _v$2);
-          _p$._v$3 = style(_el$, _v$3, _p$._v$3);
+          const _v$ = style$1(), _v$2 = `0 0 ${size().cols} ${size().rows}`, _v$3 = !!blinkOn(), _v$4 = !!blinkOn();
+          _p$._v$ = style(_el$, _v$, _p$._v$);
+          _v$2 !== _p$._v$2 && setAttribute(_el$3, "viewBox", _p$._v$2 = _v$2);
+          _v$3 !== _p$._v$3 && _el$3.classList.toggle("ap-blink", _p$._v$3 = _v$3);
+          _v$4 !== _p$._v$4 && _el$6.classList.toggle("ap-blink", _p$._v$4 = _v$4);
           return _p$;
         }, {
           _v$: void 0,
           _v$2: void 0,
-          _v$3: void 0
+          _v$3: void 0,
+          _v$4: void 0
         });
         return _el$;
       })();
     });
+    function buildTheme$1(theme2) {
+      return {
+        fg: theme2.foreground,
+        bg: theme2.background,
+        palette: [...theme2.palette, ...FULL_PALETTE]
+      };
+    }
+    function getCssTheme(el2) {
+      const style2 = getComputedStyle(el2);
+      const foreground = style2.getPropertyValue("--term-color-foreground");
+      const background = style2.getPropertyValue("--term-color-background");
+      const palette = [];
+      for (let i2 = 0; i2 < 16; i2++) {
+        const c2 = style2.getPropertyValue(`--term-color-${i2}`);
+        if (c2 === void 0) throw new Error(`--term-color-${i2} has not been defined`);
+        palette[i2] = c2;
+      }
+      return {
+        foreground,
+        background,
+        palette
+      };
+    }
+    function drawBlockGlyph(ctx, codepoint, x2, y) {
+      const unitX = BLOCK_H_RES / 8;
+      const unitY = BLOCK_V_RES / 8;
+      const halfX = BLOCK_H_RES / 2;
+      const halfY = BLOCK_V_RES / 2;
+      const sextantX = BLOCK_H_RES / 2;
+      const sextantY = BLOCK_V_RES / 3;
+      switch (codepoint) {
+        case 9600:
+          ctx.fillRect(x2, y, BLOCK_H_RES, halfY);
+          break;
+        case 9601:
+          ctx.fillRect(x2, y + unitY * 7, BLOCK_H_RES, unitY);
+          break;
+        case 9602:
+          ctx.fillRect(x2, y + unitY * 6, BLOCK_H_RES, unitY * 2);
+          break;
+        case 9603:
+          ctx.fillRect(x2, y + unitY * 5, BLOCK_H_RES, unitY * 3);
+          break;
+        case 9604:
+          ctx.fillRect(x2, y + halfY, BLOCK_H_RES, halfY);
+          break;
+        case 9605:
+          ctx.fillRect(x2, y + unitY * 3, BLOCK_H_RES, unitY * 5);
+          break;
+        case 9606:
+          ctx.fillRect(x2, y + unitY * 2, BLOCK_H_RES, unitY * 6);
+          break;
+        case 9607:
+          ctx.fillRect(x2, y + unitY, BLOCK_H_RES, unitY * 7);
+          break;
+        case 9608:
+          ctx.fillRect(x2, y, BLOCK_H_RES, BLOCK_V_RES);
+          break;
+        case 9632:
+          ctx.fillRect(x2, y + unitY * 2, BLOCK_H_RES, unitY * 4);
+          break;
+        case 9609:
+          ctx.fillRect(x2, y, unitX * 7, BLOCK_V_RES);
+          break;
+        case 9610:
+          ctx.fillRect(x2, y, unitX * 6, BLOCK_V_RES);
+          break;
+        case 9611:
+          ctx.fillRect(x2, y, unitX * 5, BLOCK_V_RES);
+          break;
+        case 9612:
+          ctx.fillRect(x2, y, halfX, BLOCK_V_RES);
+          break;
+        case 9613:
+          ctx.fillRect(x2, y, unitX * 3, BLOCK_V_RES);
+          break;
+        case 9614:
+          ctx.fillRect(x2, y, unitX * 2, BLOCK_V_RES);
+          break;
+        case 9615:
+          ctx.fillRect(x2, y, unitX, BLOCK_V_RES);
+          break;
+        case 9616:
+          ctx.fillRect(x2 + halfX, y, halfX, BLOCK_V_RES);
+          break;
+        case 9617:
+          ctx.save();
+          ctx.globalAlpha = 0.25;
+          ctx.fillRect(x2, y, BLOCK_H_RES, BLOCK_V_RES);
+          ctx.restore();
+          break;
+        case 9618:
+          ctx.save();
+          ctx.globalAlpha = 0.5;
+          ctx.fillRect(x2, y, BLOCK_H_RES, BLOCK_V_RES);
+          ctx.restore();
+          break;
+        case 9619:
+          ctx.save();
+          ctx.globalAlpha = 0.75;
+          ctx.fillRect(x2, y, BLOCK_H_RES, BLOCK_V_RES);
+          ctx.restore();
+          break;
+        case 9620:
+          ctx.fillRect(x2, y, BLOCK_H_RES, unitY);
+          break;
+        case 9621:
+          ctx.fillRect(x2 + unitX * 7, y, unitX, BLOCK_V_RES);
+          break;
+        case 9622:
+          ctx.fillRect(x2, y + halfY, halfX, halfY);
+          break;
+        case 9623:
+          ctx.fillRect(x2 + halfX, y + halfY, halfX, halfY);
+          break;
+        case 9624:
+          ctx.fillRect(x2, y, halfX, halfY);
+          break;
+        case 9625:
+          ctx.fillRect(x2, y, halfX, BLOCK_V_RES);
+          ctx.fillRect(x2 + halfX, y + halfY, halfX, halfY);
+          break;
+        case 9626:
+          ctx.fillRect(x2, y, halfX, halfY);
+          ctx.fillRect(x2 + halfX, y + halfY, halfX, halfY);
+          break;
+        case 9627:
+          ctx.fillRect(x2, y, BLOCK_H_RES, halfY);
+          ctx.fillRect(x2, y + halfY, halfX, halfY);
+          break;
+        case 9628:
+          ctx.fillRect(x2, y, BLOCK_H_RES, halfY);
+          ctx.fillRect(x2 + halfX, y + halfY, halfX, halfY);
+          break;
+        case 9629:
+          ctx.fillRect(x2 + halfX, y, halfX, halfY);
+          break;
+        case 9630:
+          ctx.fillRect(x2 + halfX, y, halfX, halfY);
+          ctx.fillRect(x2, y + halfY, halfX, halfY);
+          break;
+        case 9631:
+          ctx.fillRect(x2 + halfX, y, halfX, BLOCK_V_RES);
+          ctx.fillRect(x2, y + halfY, halfX, halfY);
+          break;
+        case 129792:
+          ctx.fillRect(x2, y, sextantX, sextantY);
+          break;
+        case 129793:
+          ctx.fillRect(x2 + sextantX, y, sextantX, sextantY);
+          break;
+        case 129794:
+          ctx.fillRect(x2, y, sextantX * 2, sextantY);
+          break;
+        case 129795:
+          ctx.fillRect(x2, y + sextantY, sextantX, sextantY);
+          break;
+        case 129796:
+          ctx.fillRect(x2, y, sextantX, sextantY);
+          ctx.fillRect(x2, y + sextantY, sextantX, sextantY);
+          break;
+        case 129797:
+          ctx.fillRect(x2 + sextantX, y, sextantX, sextantY);
+          ctx.fillRect(x2, y + sextantY, sextantX, sextantY);
+          break;
+        case 129798:
+          ctx.fillRect(x2, y, sextantX * 2, sextantY);
+          ctx.fillRect(x2, y + sextantY, sextantX, sextantY);
+          break;
+        case 129799:
+          ctx.fillRect(x2 + sextantX, y + sextantY, sextantX, sextantY);
+          break;
+        case 129800:
+          ctx.fillRect(x2, y, sextantX, sextantY);
+          ctx.fillRect(x2 + sextantX, y + sextantY, sextantX, sextantY);
+          break;
+        case 129801:
+          ctx.fillRect(x2 + sextantX, y, sextantX, sextantY);
+          ctx.fillRect(x2 + sextantX, y + sextantY, sextantX, sextantY);
+          break;
+        case 129802:
+          ctx.fillRect(x2, y, sextantX * 2, sextantY);
+          ctx.fillRect(x2 + sextantX, y + sextantY, sextantX, sextantY);
+          break;
+        case 129803:
+          ctx.fillRect(x2, y + sextantY, sextantX * 2, sextantY);
+          break;
+        case 129804:
+          ctx.fillRect(x2, y, sextantX, sextantY);
+          ctx.fillRect(x2, y + sextantY, sextantX * 2, sextantY);
+          break;
+        case 129805:
+          ctx.fillRect(x2 + sextantX, y, sextantX, sextantY);
+          ctx.fillRect(x2, y + sextantY, sextantX * 2, sextantY);
+          break;
+        case 129806:
+          ctx.fillRect(x2, y, sextantX * 2, sextantY);
+          ctx.fillRect(x2, y + sextantY, sextantX * 2, sextantY);
+          break;
+        case 129807:
+          ctx.fillRect(x2, y + sextantY * 2, sextantX, sextantY);
+          break;
+        case 129808:
+          ctx.fillRect(x2, y, sextantX, sextantY);
+          ctx.fillRect(x2, y + sextantY * 2, sextantX, sextantY);
+          break;
+        case 129809:
+          ctx.fillRect(x2 + sextantX, y, sextantX, sextantY);
+          ctx.fillRect(x2, y + sextantY * 2, sextantX, sextantY);
+          break;
+        case 129810:
+          ctx.fillRect(x2, y, sextantX * 2, sextantY);
+          ctx.fillRect(x2, y + sextantY * 2, sextantX, sextantY);
+          break;
+        case 129811:
+          ctx.fillRect(x2, y + sextantY, sextantX, sextantY * 2);
+          break;
+        case 129812:
+          ctx.fillRect(x2 + sextantX, y, sextantX, sextantY);
+          ctx.fillRect(x2, y + sextantY, sextantX, sextantY * 2);
+          break;
+        case 129813:
+          ctx.fillRect(x2, y, sextantX * 2, sextantY);
+          ctx.fillRect(x2, y + sextantY, sextantX, sextantY * 2);
+          break;
+        case 129814:
+          ctx.fillRect(x2 + sextantX, y + sextantY, sextantX, sextantY);
+          ctx.fillRect(x2, y + sextantY * 2, sextantX, sextantY);
+          break;
+        case 129815:
+          ctx.fillRect(x2, y, sextantX, sextantY);
+          ctx.fillRect(x2 + sextantX, y + sextantY, sextantX, sextantY);
+          ctx.fillRect(x2, y + sextantY * 2, sextantX, sextantY);
+          break;
+        case 129816:
+          ctx.fillRect(x2 + sextantX, y, sextantX, sextantY * 2);
+          ctx.fillRect(x2, y + sextantY * 2, sextantX, sextantY);
+          break;
+        case 129817:
+          ctx.fillRect(x2, y, sextantX * 2, sextantY);
+          ctx.fillRect(x2 + sextantX, y + sextantY, sextantX, sextantY);
+          ctx.fillRect(x2, y + sextantY * 2, sextantX, sextantY);
+          break;
+        case 129818:
+          ctx.fillRect(x2, y + sextantY, sextantX * 2, sextantY);
+          ctx.fillRect(x2, y + sextantY * 2, sextantX, sextantY);
+          break;
+        case 129819:
+          ctx.fillRect(x2, y, sextantX, sextantY * 3);
+          ctx.fillRect(x2 + sextantX, y + sextantY, sextantX, sextantY);
+          break;
+        case 129820:
+          ctx.fillRect(x2 + sextantX, y, sextantX, sextantY);
+          ctx.fillRect(x2, y + sextantY, sextantX * 2, sextantY);
+          ctx.fillRect(x2, y + sextantY * 2, sextantX, sextantY);
+          break;
+        case 129821:
+          ctx.fillRect(x2, y, sextantX * 2, sextantY * 2);
+          ctx.fillRect(x2, y + sextantY * 2, sextantX, sextantY);
+          break;
+        case 129822:
+          ctx.fillRect(x2 + sextantX, y + sextantY * 2, sextantX, sextantY);
+          break;
+        case 129823:
+          ctx.fillRect(x2, y, sextantX, sextantY);
+          ctx.fillRect(x2 + sextantX, y + sextantY * 2, sextantX, sextantY);
+          break;
+        case 129824:
+          ctx.fillRect(x2 + sextantX, y, sextantX, sextantY);
+          ctx.fillRect(x2 + sextantX, y + sextantY * 2, sextantX, sextantY);
+          break;
+        case 129825:
+          ctx.fillRect(x2, y, sextantX * 2, sextantY);
+          ctx.fillRect(x2 + sextantX, y + sextantY * 2, sextantX, sextantY);
+          break;
+        case 129826:
+          ctx.fillRect(x2, y + sextantY, sextantX, sextantY);
+          ctx.fillRect(x2 + sextantX, y + sextantY * 2, sextantX, sextantY);
+          break;
+        case 129827:
+          ctx.fillRect(x2, y, sextantX, sextantY * 2);
+          ctx.fillRect(x2 + sextantX, y + sextantY * 2, sextantX, sextantY);
+          break;
+        case 129828:
+          ctx.fillRect(x2 + sextantX, y, sextantX, sextantY);
+          ctx.fillRect(x2, y + sextantY, sextantX, sextantY);
+          ctx.fillRect(x2 + sextantX, y + sextantY * 2, sextantX, sextantY);
+          break;
+        case 129829:
+          ctx.fillRect(x2, y, sextantX * 2, sextantY);
+          ctx.fillRect(x2, y + sextantY, sextantX, sextantY);
+          ctx.fillRect(x2 + sextantX, y + sextantY * 2, sextantX, sextantY);
+          break;
+        case 129830:
+          ctx.fillRect(x2 + sextantX, y + sextantY, sextantX, sextantY * 2);
+          break;
+        case 129831:
+          ctx.fillRect(x2, y, sextantX, sextantY);
+          ctx.fillRect(x2 + sextantX, y + sextantY, sextantX, sextantY * 2);
+          break;
+        case 129832:
+          ctx.fillRect(x2, y, sextantX * 2, sextantY);
+          ctx.fillRect(x2 + sextantX, y + sextantY, sextantX, sextantY * 2);
+          break;
+        case 129833:
+          ctx.fillRect(x2, y + sextantY, sextantX * 2, sextantY);
+          ctx.fillRect(x2 + sextantX, y + sextantY * 2, sextantX, sextantY);
+          break;
+        case 129834:
+          ctx.fillRect(x2, y, sextantX, sextantY * 2);
+          ctx.fillRect(x2 + sextantX, y + sextantY, sextantX, sextantY * 2);
+          break;
+        case 129835:
+          ctx.fillRect(x2 + sextantX, y, sextantX, sextantY);
+          ctx.fillRect(x2, y + sextantY, sextantX * 2, sextantY);
+          ctx.fillRect(x2 + sextantX, y + sextantY * 2, sextantX, sextantY);
+          break;
+        case 129836:
+          ctx.fillRect(x2, y, sextantX * 2, sextantY * 2);
+          ctx.fillRect(x2 + sextantX, y + sextantY * 2, sextantX, sextantY);
+          break;
+        case 129837:
+          ctx.fillRect(x2, y + sextantY * 2, sextantX * 2, sextantY);
+          break;
+        case 129838:
+          ctx.fillRect(x2, y, sextantX, sextantY);
+          ctx.fillRect(x2, y + sextantY * 2, sextantX * 2, sextantY);
+          break;
+        case 129839:
+          ctx.fillRect(x2 + sextantX, y, sextantX, sextantY);
+          ctx.fillRect(x2, y + sextantY * 2, sextantX * 2, sextantY);
+          break;
+        case 129840:
+          ctx.fillRect(x2, y, sextantX * 2, sextantY);
+          ctx.fillRect(x2, y + sextantY * 2, sextantX * 2, sextantY);
+          break;
+        case 129841:
+          ctx.fillRect(x2, y + sextantY, sextantX, sextantY);
+          ctx.fillRect(x2, y + sextantY * 2, sextantX * 2, sextantY);
+          break;
+        case 129842:
+          ctx.fillRect(x2, y, sextantX, sextantY * 2);
+          ctx.fillRect(x2, y + sextantY * 2, sextantX * 2, sextantY);
+          break;
+        case 129843:
+          ctx.fillRect(x2 + sextantX, y, sextantX, sextantY);
+          ctx.fillRect(x2, y + sextantY, sextantX, sextantY);
+          ctx.fillRect(x2, y + sextantY * 2, sextantX * 2, sextantY);
+          break;
+        case 129844:
+          ctx.fillRect(x2, y, sextantX * 2, sextantY);
+          ctx.fillRect(x2, y + sextantY, sextantX, sextantY);
+          ctx.fillRect(x2, y + sextantY * 2, sextantX * 2, sextantY);
+          break;
+        case 129845:
+          ctx.fillRect(x2 + sextantX, y + sextantY, sextantX, sextantY);
+          ctx.fillRect(x2, y + sextantY * 2, sextantX * 2, sextantY);
+          break;
+        case 129846:
+          ctx.fillRect(x2, y, sextantX, sextantY);
+          ctx.fillRect(x2 + sextantX, y + sextantY, sextantX, sextantY);
+          ctx.fillRect(x2, y + sextantY * 2, sextantX * 2, sextantY);
+          break;
+        case 129847:
+          ctx.fillRect(x2 + sextantX, y, sextantX, sextantY * 2);
+          ctx.fillRect(x2, y + sextantY * 2, sextantX * 2, sextantY);
+          break;
+        case 129848:
+          ctx.fillRect(x2, y, sextantX * 2, sextantY);
+          ctx.fillRect(x2 + sextantX, y + sextantY, sextantX, sextantY);
+          ctx.fillRect(x2, y + sextantY * 2, sextantX * 2, sextantY);
+          break;
+        case 129849:
+          ctx.fillRect(x2, y + sextantY, sextantX * 2, sextantY * 2);
+          break;
+        case 129850:
+          ctx.fillRect(x2, y, sextantX, sextantY * 3);
+          ctx.fillRect(x2 + sextantX, y + sextantY, sextantX, sextantY);
+          ctx.fillRect(x2 + sextantX, y + sextantY * 2, sextantX, sextantY);
+          break;
+        case 129851:
+          ctx.fillRect(x2 + sextantX, y, sextantX, sextantY);
+          ctx.fillRect(x2, y + sextantY, sextantX * 2, sextantY * 2);
+          break;
+      }
+    }
+    const SYMBOL_STROKE = 0.05;
+    const CELL_RATIO = 9.0375 / 20;
+    function getVectorSymbolDef(codepoint) {
+      const stroke = `stroke="currentColor" stroke-width="${SYMBOL_STROKE}" stroke-linejoin="miter" stroke-linecap="square"`;
+      const strokeButt = `stroke="currentColor" stroke-width="${SYMBOL_STROKE}" stroke-linejoin="miter" stroke-linecap="butt"`;
+      const stroked = (d) => `<path d="${d}" fill="none" ${stroke}/>`;
+      const third = 1 / 3;
+      const twoThirds = 2 / 3;
+      switch (codepoint) {
+        // ◢ - black lower right triangle (https://symbl.cc/en/25E2/)
+        case 9698:
+          return '<path d="M1,1 L1,0 L0,1 Z" fill="currentColor"/>' + stroked("M1,1 L1,0 L0,1 Z");
+        // ◣ - black lower left triangle (https://symbl.cc/en/25E3/)
+        case 9699:
+          return '<path d="M0,1 L0,0 L1,1 Z" fill="currentColor"/>' + stroked("M0,1 L0,0 L1,1 Z");
+        // ◤ - black upper left triangle (https://symbl.cc/en/25E4/)
+        case 9700:
+          return '<path d="M0,0 L1,0 L0,1 Z" fill="currentColor"/>' + stroked("M0,0 L1,0 L0,1 Z");
+        // ◥ - black upper right triangle (https://symbl.cc/en/25E5/)
+        case 9701:
+          return '<path d="M1,0 L1,1 L0,0 Z" fill="currentColor"/>' + stroked("M1,0 L1,1 L0,0 Z");
+        case 9871: {
+          const horizontalGap = 0.15;
+          const verticalGap = 0.2;
+          const lineHeight = 0.17;
+          const halfHorizontalGap = horizontalGap / 2;
+          const halfVerticalGap = verticalGap / 2;
+          const toViewBoxY = (offset2) => 0.5 + offset2 * CELL_RATIO;
+          const leftX1 = 0.5 - halfHorizontalGap;
+          const rightX0 = 0.5 + halfHorizontalGap;
+          const rightX1 = 1 + 0.02;
+          const topY0 = toViewBoxY(-halfVerticalGap - lineHeight);
+          const topY1 = toViewBoxY(-halfVerticalGap);
+          const bottomY0 = toViewBoxY(halfVerticalGap);
+          const bottomY1 = toViewBoxY(halfVerticalGap + lineHeight);
+          const rect2 = (x0, x1, y0, y1) => `M${x0},${y0} L${x1},${y0} L${x1},${y1} L${x0},${y1} Z`;
+          return `<path d="${rect2(0, leftX1, topY0, topY1)} ${rect2(rightX0, rightX1, topY0, topY1)} ${rect2(0, leftX1, bottomY0, bottomY1)} ${rect2(rightX0, rightX1, bottomY0, bottomY1)}" fill="currentColor"/>`;
+        }
+        // 🬼 - lower left block diagonal lower middle left to lower centre (https://symbl.cc/en/1FB3C/)
+        case 129852:
+          return `<path d="M0,${twoThirds} L0,1 L0.5,1 Z" fill="currentColor"/>` + stroked(`M0,${twoThirds} L0,1 L0.5,1 Z`);
+        // 🬽 - lower left block diagonal lower middle left to lower right (https://symbl.cc/en/1FB3D/)
+        case 129853:
+          return `<path d="M0,${twoThirds} L0,1 L1,1 Z" fill="currentColor"/>` + stroked(`M0,${twoThirds} L0,1 L1,1 Z`);
+        // 🬾 - lower left block diagonal upper middle left to lower centre (https://symbl.cc/en/1FB3E/)
+        case 129854:
+          return `<path d="M0,${third} L0.5,1 L0,1 Z" fill="currentColor"/>` + stroked(`M0,${third} L0.5,1 L0,1 Z`);
+        // 🬿 - lower left block diagonal upper middle left to lower right (https://symbl.cc/en/1FB3F/)
+        case 129855:
+          return `<path d="M0,${third} L1,1 L0,1 Z" fill="currentColor"/>` + stroked(`M0,${third} L1,1 L0,1 Z`);
+        // 🭀 - lower left block diagonal upper left to lower centre (https://symbl.cc/en/1FB40/)
+        case 129856:
+          return '<path d="M0,0 L0.5,1 L0,1 Z" fill="currentColor"/>' + stroked("M0,0 L0.5,1 L0,1 Z");
+        // 🭁 - lower right block diagonal upper middle left to upper centre (https://symbl.cc/en/1FB41/)
+        case 129857:
+          return `<path d="M0,${third} L0,1 L1,1 L1,0 L0.5,0 Z" fill="currentColor"/>` + stroked(`M0,${third} L0,1 L1,1 L1,0 L0.5,0 Z`);
+        // 🭂 - lower right block diagonal upper middle left to upper right (https://symbl.cc/en/1FB42/)
+        case 129858:
+          return `<path d="M0,${third} L0,1 L1,1 L1,0 Z" fill="currentColor"/>` + stroked(`M0,${third} L0,1 L1,1 L1,0 Z`);
+        // 🭃 - lower right block diagonal lower middle left to upper centre (https://symbl.cc/en/1FB43/)
+        case 129859:
+          return `<path d="M0,${twoThirds} L0,1 L1,1 L1,0 L0.5,0 Z" fill="currentColor"/>` + stroked(`M0,${twoThirds} L0,1 L1,1 L1,0 L0.5,0 Z`);
+        // 🭄 - lower right block diagonal lower middle left to upper right (https://symbl.cc/en/1FB44/)
+        case 129860:
+          return `<path d="M0,${twoThirds} L0,1 L1,1 L1,0 Z" fill="currentColor"/>` + stroked(`M0,${twoThirds} L0,1 L1,1 L1,0 Z`);
+        // 🭅 - lower right block diagonal lower left to upper centre (https://symbl.cc/en/1FB45/)
+        case 129861:
+          return '<path d="M0.5,0 L1,0 L1,1 L0,1 Z" fill="currentColor"/>' + stroked("M0.5,0 L1,0 L1,1 L0,1 Z");
+        // 🭆 - lower right block diagonal lower middle left to upper middle right (https://symbl.cc/en/1FB46/)
+        case 129862:
+          return `<path d="M0,${twoThirds} L0,1 L1,1 L1,${third} Z" fill="currentColor"/>` + stroked(`M0,${twoThirds} L0,1 L1,1 L1,${third} Z`);
+        // 🭇 - lower right block diagonal lower centre to lower middle right (https://symbl.cc/en/1FB47/)
+        case 129863:
+          return `<path d="M0.5,1 L1,1 L1,${twoThirds} Z" fill="currentColor"/>` + stroked(`M0.5,1 L1,1 L1,${twoThirds} Z`);
+        // 🭈 - lower right block diagonal lower left to lower middle right (https://symbl.cc/en/1FB48/)
+        case 129864:
+          return `<path d="M0,1 L1,1 L1,${twoThirds} Z" fill="currentColor"/>` + stroked(`M0,1 L1,1 L1,${twoThirds} Z`);
+        // 🭉 - lower right block diagonal lower centre to upper middle right (https://symbl.cc/en/1FB49/)
+        case 129865:
+          return `<path d="M0.5,1 L1,1 L1,${third} Z" fill="currentColor"/>` + stroked(`M0.5,1 L1,1 L1,${third} Z`);
+        // 🭊 - lower right block diagonal lower left to upper middle right (https://symbl.cc/en/1FB4A/)
+        case 129866:
+          return `<path d="M0,1 L1,1 L1,${third} Z" fill="currentColor"/>` + stroked(`M0,1 L1,1 L1,${third} Z`);
+        // 🭋 - lower right block diagonal lower centre to upper right (https://symbl.cc/en/1FB4B/)
+        case 129867:
+          return '<path d="M0.5,1 L1,0 L1,1 Z" fill="currentColor"/>' + stroked("M0.5,1 L1,0 L1,1 Z");
+        // 🭌 - lower left block diagonal upper centre to upper middle right (https://symbl.cc/en/1FB4C/)
+        case 129868:
+          return `<path d="M0,0 L0.5,0 L1,${third} L1,1 L0,1 Z" fill="currentColor"/>` + stroked(`M0,0 L0.5,0 L1,${third} L1,1 L0,1 Z`);
+        // 🭍 - lower left block diagonal upper left to upper middle right (https://symbl.cc/en/1FB4D/)
+        case 129869:
+          return `<path d="M0,0 L0,1 L1,1 L1,${third} Z" fill="currentColor"/>` + stroked(`M0,0 L0,1 L1,1 L1,${third} Z`);
+        // 🭎 - lower left block diagonal upper centre to lower middle right (https://symbl.cc/en/1FB4E/)
+        case 129870:
+          return `<path d="M0,0 L0.5,0 L1,${twoThirds} L1,1 L0,1 Z" fill="currentColor"/>` + stroked(`M0,0 L0.5,0 L1,${twoThirds} L1,1 L0,1 Z`);
+        // 🭏 - lower left block diagonal upper left to lower middle right (https://symbl.cc/en/1FB4F/)
+        case 129871:
+          return `<path d="M0,0 L1,${twoThirds} L1,1 L0,1 Z" fill="currentColor"/>` + stroked(`M0,0 L1,${twoThirds} L1,1 L0,1 Z`);
+        // 🭐 - lower left block diagonal upper centre to lower right (https://symbl.cc/en/1FB50/)
+        case 129872:
+          return '<path d="M0,0 L0.5,0 L1,1 L0,1 Z" fill="currentColor"/>' + stroked("M0,0 L0.5,0 L1,1 L0,1 Z");
+        // 🭑 - lower left block diagonal upper middle left to lower middle right (https://symbl.cc/en/1FB51/)
+        case 129873:
+          return `<path d="M0,${third} L1,${twoThirds} L1,1 L0,1 Z" fill="currentColor"/>` + stroked(`M0,${third} L1,${twoThirds} L1,1 L0,1 Z`);
+        // 🭒 - upper right block diagonal lower middle left to lower centre (https://symbl.cc/en/1FB52/)
+        case 129874:
+          return `<path d="M0,${twoThirds} L0,0 L1,0 L1,1 L0.5,1 Z" fill="currentColor"/>` + stroked(`M0,${twoThirds} L0,0 L1,0 L1,1 L0.5,1 Z`);
+        // 🭓 - upper right block diagonal lower middle left to lower right (https://symbl.cc/en/1FB53/)
+        case 129875:
+          return `<path d="M0,${twoThirds} L0,0 L1,0 L1,1 Z" fill="currentColor"/>` + stroked(`M0,${twoThirds} L0,0 L1,0 L1,1 Z`);
+        // 🭔 - upper right block diagonal upper middle left to lower centre (https://symbl.cc/en/1FB54/)
+        case 129876:
+          return `<path d="M0,${third} L0,0 L1,0 L1,1 L0.5,1 Z" fill="currentColor"/>` + stroked(`M0,${third} L0,0 L1,0 L1,1 L0.5,1 Z`);
+        // 🭕 - upper right block diagonal upper middle left to lower right (https://symbl.cc/en/1FB55/)
+        case 129877:
+          return `<path d="M0,${third} L0,0 L1,0 L1,1 Z" fill="currentColor"/>` + stroked(`M0,${third} L0,0 L1,0 L1,1 Z`);
+        // 🭖 - upper right block diagonal upper left to lower centre (https://symbl.cc/en/1FB56/)
+        case 129878:
+          return '<path d="M0,0 L1,0 L1,1 L0.5,1 Z" fill="currentColor"/>' + stroked("M0,0 L1,0 L1,1 L0.5,1 Z");
+        // 🭗 - upper left block diagonal upper middle left to upper centre (https://symbl.cc/en/1FB57/)
+        case 129879:
+          return `<path d="M0,${third} L0.5,0 L0,0 Z" fill="currentColor"/>` + stroked(`M0,${third} L0.5,0 L0,0 Z`);
+        // 🭘 - upper left block diagonal upper middle left to upper right (https://symbl.cc/en/1FB58/)
+        case 129880:
+          return `<path d="M0,0 L1,0 L0,${third} Z" fill="currentColor"/>` + stroked(`M0,0 L1,0 L0,${third} Z`);
+        // 🭙 - upper left block diagonal lower middle left to upper centre (https://symbl.cc/en/1FB59/)
+        case 129881:
+          return `<path d="M0,0 L0.5,0 L0,${twoThirds} Z" fill="currentColor"/>` + stroked(`M0,0 L0.5,0 L0,${twoThirds} Z`);
+        // 🭚 - upper left block diagonal lower middle left to upper right (https://symbl.cc/en/1FB5A/)
+        case 129882:
+          return `<path d="M0,0 L1,0 L0,${twoThirds} Z" fill="currentColor"/>` + stroked(`M0,0 L1,0 L0,${twoThirds} Z`);
+        // 🭛 - upper left block diagonal lower left to upper centre (https://symbl.cc/en/1FB5B/)
+        case 129883:
+          return '<path d="M0,0 L0.5,0 L0,1 Z" fill="currentColor"/>' + stroked("M0,0 L0.5,0 L0,1 Z");
+        // 🭜 - upper left block diagonal lower middle left to upper middle right (https://symbl.cc/en/1FB5C/)
+        case 129884:
+          return `<path d="M0,0 L1,0 L1,${third} L0,${twoThirds} Z" fill="currentColor"/>` + stroked(`M0,0 L1,0 L1,${third} L0,${twoThirds} Z`);
+        // 🭝 - upper left block diagonal lower centre to lower middle right (https://symbl.cc/en/1FB5D/)
+        case 129885:
+          return `<path d="M0,0 L1,0 L1,${twoThirds} L0.5,1 L0,1 Z" fill="currentColor"/>` + stroked(`M0,0 L1,0 L1,${twoThirds} L0.5,1 L0,1 Z`);
+        // 🭞 - upper left block diagonal lower left to lower middle right (https://symbl.cc/en/1FB5E/)
+        case 129886:
+          return `<path d="M0,0 L1,0 L1,${twoThirds} L0,1 Z" fill="currentColor"/>` + stroked(`M0,0 L1,0 L1,${twoThirds} L0,1 Z`);
+        // 🭟 - upper left block diagonal lower centre to upper middle right (https://symbl.cc/en/1FB5F/)
+        case 129887:
+          return `<path d="M0,0 L1,0 L1,${third} L0.5,1 L0,1 Z" fill="currentColor"/>` + stroked(`M0,0 L1,0 L1,${third} L0.5,1 L0,1 Z`);
+        // 🭠 - upper left block diagonal lower left to upper middle right (https://symbl.cc/en/1FB60/)
+        case 129888:
+          return `<path d="M0,0 L1,0 L1,${third} L0,1 Z" fill="currentColor"/>` + stroked(`M0,0 L1,0 L1,${third} L0,1 Z`);
+        // 🭡 - upper left block diagonal lower centre to upper right (https://symbl.cc/en/1FB61/)
+        case 129889:
+          return '<path d="M0,0 L1,0 L0.5,1 L0,1 Z" fill="currentColor"/>' + stroked("M0,0 L1,0 L0.5,1 L0,1 Z");
+        // 🭢 - upper right block diagonal upper centre to upper middle right (https://symbl.cc/en/1FB62/)
+        case 129890:
+          return `<path d="M0.5,0 L1,0 L1,${third} Z" fill="currentColor"/>` + stroked(`M0.5,0 L1,0 L1,${third} Z`);
+        // 🭣 - upper right block diagonal upper left to upper middle right (https://symbl.cc/en/1FB63/)
+        case 129891:
+          return `<path d="M0,0 L1,0 L1,${third} Z" fill="currentColor"/>` + stroked(`M0,0 L1,0 L1,${third} Z`);
+        // 🭤 - upper right block diagonal upper centre to lower middle right (https://symbl.cc/en/1FB64/)
+        case 129892:
+          return `<path d="M0.5,0 L1,0 L1,${twoThirds} Z" fill="currentColor"/>` + stroked(`M0.5,0 L1,0 L1,${twoThirds} Z`);
+        // 🭥 - upper right block diagonal upper left to lower middle right (https://symbl.cc/en/1FB65/)
+        case 129893:
+          return `<path d="M0,0 L1,0 L1,${twoThirds} Z" fill="currentColor"/>` + stroked(`M0,0 L1,0 L1,${twoThirds} Z`);
+        // 🭦 - upper right block diagonal upper centre to lower right (https://symbl.cc/en/1FB66/)
+        case 129894:
+          return '<path d="M0.5,0 L1,0 L1,1 Z" fill="currentColor"/>' + stroked("M0.5,0 L1,0 L1,1 Z");
+        // 🭧 - upper right block diagonal upper middle left to lower middle right (https://symbl.cc/en/1FB67/)
+        case 129895:
+          return `<path d="M0,${third} L0,0 L1,0 L1,${twoThirds} Z" fill="currentColor"/>` + stroked(`M0,${third} L0,0 L1,0 L1,${twoThirds} Z`);
+        // 🭨 - upper and right and lower triangular three quarters block (https://symbl.cc/en/1FB68/)
+        case 129896:
+          return `<path fill-rule="evenodd" d="M0,0 L1,0 L1,1 L0,1 Z M0,0 L0,1 L0.5,0.5 Z" fill="currentColor"/><path d="M0,0 L1,0 M0,1 L1,1 M1,0 L1,1" fill="none" ${stroke}/><path d="M0,0 L0.5,0.5 M0,1 L0.5,0.5" fill="none" ${strokeButt}/>`;
+        // 🭩 - left and lower and right triangular three quarters block (https://symbl.cc/en/1FB69/)
+        case 129897:
+          return `<path fill-rule="evenodd" d="M0,0 L1,0 L1,1 L0,1 Z M0,0 L1,0 L0.5,0.5 Z" fill="currentColor"/><path d="M0,0 L0,1 M1,0 L1,1 M0,1 L1,1" fill="none" ${stroke}/><path d="M0,0 L0.5,0.5 M1,0 L0.5,0.5" fill="none" ${strokeButt}/>`;
+        // 🭪 - upper and left and lower triangular three quarters block (https://symbl.cc/en/1FB6A/)
+        case 129898:
+          return `<path fill-rule="evenodd" d="M0,0 L1,0 L1,1 L0,1 Z M1,0 L1,1 L0.5,0.5 Z" fill="currentColor"/><path d="M0,0 L1,0 M0,1 L1,1 M0,0 L0,1" fill="none" ${stroke}/><path d="M1,0 L0.5,0.5 M1,1 L0.5,0.5" fill="none" ${strokeButt}/>`;
+        // 🭫 - left and upper and right triangular three quarters block (https://symbl.cc/en/1FB6B/)
+        case 129899:
+          return `<path fill-rule="evenodd" d="M0,0 L1,0 L1,1 L0,1 Z M0,1 L1,1 L0.5,0.5 Z" fill="currentColor"/><path d="M0,0 L1,0 M0,0 L0,1 M1,0 L1,1" fill="none" ${stroke}/><path d="M0,1 L0.5,0.5 M1,1 L0.5,0.5" fill="none" ${strokeButt}/>`;
+        // 🭬 - left triangular one quarter block (https://symbl.cc/en/1FB6C/)
+        case 129900:
+          return '<path d="M0,0 L0,1 L0.5,0.5 Z" fill="currentColor"/>' + stroked("M0,0 L0,1 L0.5,0.5 Z");
+        // powerline right full triangle (https://www.nerdfonts.com/cheat-sheet)
+        case 57520:
+          return '<path d="M0,0 L1,0.5 L0,1 Z" fill="currentColor"/>';
+        // powerline right bracket (https://www.nerdfonts.com/cheat-sheet)
+        case 57521:
+          return '<path d="M0,0 L1,0.5 L0,1" fill="none" stroke="currentColor" stroke-width="0.07" stroke-linejoin="miter"/>';
+        // powerline left full triangle (https://www.nerdfonts.com/cheat-sheet)
+        case 57522:
+          return '<path d="M1,0 L0,0.5 L1,1 Z" fill="currentColor"/>';
+        // powerline left bracket (https://www.nerdfonts.com/cheat-sheet)
+        case 57523:
+          return '<path d="M1,0 L0,0.5 L1,1" fill="none" stroke="currentColor" stroke-width="0.07" stroke-linejoin="miter"/>';
+        default:
+          return null;
+      }
+    }
+    const POWERLINE_SYMBOLS = /* @__PURE__ */ new Set([57520, 57521, 57522, 57523]);
+    const POWERLINE_SYMBOL_NUDGE = 0.02;
+    const FALLBACK_THEME = {
+      foreground: "black",
+      background: "black",
+      palette: ["black", "black", "black", "black", "black", "black", "black", "black", "black", "black", "black", "black", "black", "black", "black", "black"]
+    };
+    const FULL_PALETTE = ["#000000", "#00005f", "#000087", "#0000af", "#0000d7", "#0000ff", "#005f00", "#005f5f", "#005f87", "#005faf", "#005fd7", "#005fff", "#008700", "#00875f", "#008787", "#0087af", "#0087d7", "#0087ff", "#00af00", "#00af5f", "#00af87", "#00afaf", "#00afd7", "#00afff", "#00d700", "#00d75f", "#00d787", "#00d7af", "#00d7d7", "#00d7ff", "#00ff00", "#00ff5f", "#00ff87", "#00ffaf", "#00ffd7", "#00ffff", "#5f0000", "#5f005f", "#5f0087", "#5f00af", "#5f00d7", "#5f00ff", "#5f5f00", "#5f5f5f", "#5f5f87", "#5f5faf", "#5f5fd7", "#5f5fff", "#5f8700", "#5f875f", "#5f8787", "#5f87af", "#5f87d7", "#5f87ff", "#5faf00", "#5faf5f", "#5faf87", "#5fafaf", "#5fafd7", "#5fafff", "#5fd700", "#5fd75f", "#5fd787", "#5fd7af", "#5fd7d7", "#5fd7ff", "#5fff00", "#5fff5f", "#5fff87", "#5fffaf", "#5fffd7", "#5fffff", "#870000", "#87005f", "#870087", "#8700af", "#8700d7", "#8700ff", "#875f00", "#875f5f", "#875f87", "#875faf", "#875fd7", "#875fff", "#878700", "#87875f", "#878787", "#8787af", "#8787d7", "#8787ff", "#87af00", "#87af5f", "#87af87", "#87afaf", "#87afd7", "#87afff", "#87d700", "#87d75f", "#87d787", "#87d7af", "#87d7d7", "#87d7ff", "#87ff00", "#87ff5f", "#87ff87", "#87ffaf", "#87ffd7", "#87ffff", "#af0000", "#af005f", "#af0087", "#af00af", "#af00d7", "#af00ff", "#af5f00", "#af5f5f", "#af5f87", "#af5faf", "#af5fd7", "#af5fff", "#af8700", "#af875f", "#af8787", "#af87af", "#af87d7", "#af87ff", "#afaf00", "#afaf5f", "#afaf87", "#afafaf", "#afafd7", "#afafff", "#afd700", "#afd75f", "#afd787", "#afd7af", "#afd7d7", "#afd7ff", "#afff00", "#afff5f", "#afff87", "#afffaf", "#afffd7", "#afffff", "#d70000", "#d7005f", "#d70087", "#d700af", "#d700d7", "#d700ff", "#d75f00", "#d75f5f", "#d75f87", "#d75faf", "#d75fd7", "#d75fff", "#d78700", "#d7875f", "#d78787", "#d787af", "#d787d7", "#d787ff", "#d7af00", "#d7af5f", "#d7af87", "#d7afaf", "#d7afd7", "#d7afff", "#d7d700", "#d7d75f", "#d7d787", "#d7d7af", "#d7d7d7", "#d7d7ff", "#d7ff00", "#d7ff5f", "#d7ff87", "#d7ffaf", "#d7ffd7", "#d7ffff", "#ff0000", "#ff005f", "#ff0087", "#ff00af", "#ff00d7", "#ff00ff", "#ff5f00", "#ff5f5f", "#ff5f87", "#ff5faf", "#ff5fd7", "#ff5fff", "#ff8700", "#ff875f", "#ff8787", "#ff87af", "#ff87d7", "#ff87ff", "#ffaf00", "#ffaf5f", "#ffaf87", "#ffafaf", "#ffafd7", "#ffafff", "#ffd700", "#ffd75f", "#ffd787", "#ffd7af", "#ffd7d7", "#ffd7ff", "#ffff00", "#ffff5f", "#ffff87", "#ffffaf", "#ffffd7", "#ffffff", "#080808", "#121212", "#1c1c1c", "#262626", "#303030", "#3a3a3a", "#444444", "#4e4e4e", "#585858", "#626262", "#6c6c6c", "#767676", "#808080", "#8a8a8a", "#949494", "#9e9e9e", "#a8a8a8", "#b2b2b2", "#bcbcbc", "#c6c6c6", "#d0d0d0", "#dadada", "#e4e4e4", "#eeeeee"];
     const _tmpl$$d = /* @__PURE__ */ template(`<svg version="1.1" viewBox="0 0 12 12" class="ap-icon ap-icon-fullscreen-off"><path d="M7,5 L7,0 L9,2 L11,0 L12,1 L10,3 L12,5 Z"></path><path d="M5,7 L0,7 L2,9 L0,11 L1,12 L3,10 L5,12 Z"></path></svg>`, 6);
     var ExpandIcon = ((props) => {
       return _tmpl$$d.cloneNode(true);
@@ -187339,23 +188388,10 @@ ${events}
     });
     const _tmpl$$3 = /* @__PURE__ */ template(`<div class="ap-overlay ap-overlay-info"><span></span></div>`, 4);
     var InfoOverlay = ((props) => {
-      const style$1 = () => {
-        return {
-          "font-family": props.fontFamily
-        };
-      };
       return (() => {
         const _el$ = _tmpl$$3.cloneNode(true), _el$2 = _el$.firstChild;
         insert$1(_el$2, () => props.message);
-        createRenderEffect((_p$) => {
-          const _v$ = !!props.wasPlaying, _v$2 = style$1();
-          _v$ !== _p$._v$ && _el$.classList.toggle("ap-was-playing", _p$._v$ = _v$);
-          _p$._v$2 = style(_el$2, _v$2, _p$._v$2);
-          return _p$;
-        }, {
-          _v$: void 0,
-          _v$2: void 0
-        });
+        createRenderEffect(() => _el$.classList.toggle("ap-was-playing", !!props.wasPlaying));
         return _el$;
       })();
     });
@@ -187376,11 +188412,6 @@ ${events}
     delegateEvents(["click"]);
     const _tmpl$$1 = /* @__PURE__ */ template(`<li><kbd>space</kbd> - pause / resume</li>`, 4), _tmpl$2 = /* @__PURE__ */ template(`<li><kbd>←</kbd> / <kbd>→</kbd> - rewind / fast-forward by 5 seconds</li>`, 6), _tmpl$3 = /* @__PURE__ */ template(`<li><kbd>Shift</kbd> + <kbd>←</kbd> / <kbd>→</kbd> - rewind / fast-forward by 10%</li>`, 8), _tmpl$4 = /* @__PURE__ */ template(`<li><kbd>[</kbd> / <kbd>]</kbd> - jump to the previous / next marker</li>`, 6), _tmpl$5 = /* @__PURE__ */ template(`<li><kbd>0</kbd>, <kbd>1</kbd>, <kbd>2</kbd> ... <kbd>9</kbd> - jump to 0%, 10%, 20% ... 90%</li>`, 10), _tmpl$6 = /* @__PURE__ */ template(`<li><kbd>,</kbd> / <kbd>.</kbd> - step back / forward, a frame at a time (when paused)</li>`, 6), _tmpl$7 = /* @__PURE__ */ template(`<li><kbd>m</kbd> - mute / unmute audio</li>`, 4), _tmpl$8 = /* @__PURE__ */ template(`<div class="ap-overlay ap-overlay-help"><div><div><p>Keyboard shortcuts</p><ul><li><kbd>f</kbd> - toggle fullscreen mode</li><li><kbd>?</kbd> - show this help popup</li></ul></div></div></div>`, 18);
     var HelpOverlay = ((props) => {
-      const style$1 = () => {
-        return {
-          "font-family": props.fontFamily
-        };
-      };
       const e = (f) => {
         return (e2) => {
           e2.preventDefault();
@@ -187417,7 +188448,6 @@ ${events}
             return _tmpl$7.cloneNode(true);
           }
         }), _el$14);
-        createRenderEffect((_$p) => style(_el$, style$1(), _$p));
         return _el$;
       })();
     });
@@ -187428,13 +188458,14 @@ ${events}
       const logger = props.logger;
       const core = props.core;
       const autoPlay = props.autoPlay;
+      const charW = props.charW;
+      const charH = props.charH;
+      const bordersW = props.bordersW;
+      const bordersH = props.bordersH;
+      const themeOption = props.theme ?? "auto/asciinema";
+      const preferEmbeddedTheme = themeOption.slice(0, 5) === "auto/";
+      const themeName = preferEmbeddedTheme ? themeOption.slice(5) : themeOption;
       const [state, setState2] = createStore({
-        lines: [],
-        cursor: void 0,
-        charW: props.charW,
-        charH: props.charH,
-        bordersW: props.bordersW,
-        bordersH: props.bordersH,
         containerW: 0,
         containerH: 0,
         isPausable: true,
@@ -187442,129 +188473,124 @@ ${events}
         isFullscreen: false,
         currentTime: null,
         remainingTime: null,
-        progress: null,
-        blink: true,
-        cursorHold: false
+        progress: null
       });
       const [isPlaying, setIsPlaying] = createSignal(false);
       const [isMuted, setIsMuted] = createSignal(void 0);
       const [wasPlaying, setWasPlaying] = createSignal(false);
       const [overlay, setOverlay] = createSignal(!autoPlay ? "start" : null);
       const [infoMessage, setInfoMessage] = createSignal(null);
+      const [blinking, setBlinking] = createSignal(false);
       const [terminalSize, setTerminalSize] = createSignal({
         cols: props.cols,
         rows: props.rows
       }, {
         equals: (newVal, oldVal) => newVal.cols === oldVal.cols && newVal.rows === oldVal.rows
       });
-      const [duration, setDuration] = createSignal(void 0);
+      const [duration, setDuration] = createSignal(null);
       const [markers, setMarkers] = createStore([]);
       const [userActive, setUserActive] = createSignal(false);
       const [isHelpVisible, setIsHelpVisible] = createSignal(false);
-      const [originalTheme, setOriginalTheme] = createSignal(void 0);
+      const [originalTheme, setOriginalTheme] = createSignal(null);
       const terminalCols = createMemo(() => terminalSize().cols || 80);
       const terminalRows = createMemo(() => terminalSize().rows || 24);
       const controlBarHeight = () => props.controls === false ? 0 : CONTROL_BAR_HEIGHT;
       const controlsVisible = () => props.controls === true || props.controls === "auto" && userActive();
-      let frameRequestId;
       let userActivityTimeoutId;
       let timeUpdateIntervalId;
-      let blinkIntervalId;
       let wrapperRef;
       let playerRef;
-      let terminalRef;
       let controlBarRef;
       let resizeObserver;
       function onPlaying() {
-        updateTerminal();
-        startBlinking();
+        setBlinking(true);
         startTimeUpdates();
       }
       function onStopped() {
-        stopBlinking();
+        setBlinking(false);
         stopTimeUpdates();
         updateTime();
-      }
-      function resize(size_) {
-        batch(() => {
-          if (size_.rows < terminalSize().rows) {
-            setState2("lines", state.lines.slice(0, size_.rows));
-          }
-          setTerminalSize(size_);
-        });
-      }
-      function setPoster(poster) {
-        if (poster !== null && !autoPlay) {
-          setState2({
-            lines: poster.lines,
-            cursor: poster.cursor
-          });
-        }
       }
       let resolveCoreReady;
       const coreReady = new Promise((resolve) => {
         resolveCoreReady = resolve;
       });
-      core.addEventListener("ready", (_ref) => {
+      const onCoreReady = (_ref) => {
         let {
           isPausable,
-          isSeekable,
-          poster
+          isSeekable
         } = _ref;
         setState2({
           isPausable,
           isSeekable
         });
-        setPoster(poster);
         resolveCoreReady();
-      });
-      core.addEventListener("metadata", (_ref2) => {
-        let {
-          cols,
-          rows,
-          duration: duration2,
-          theme: theme3,
-          poster,
-          markers: markers2,
-          hasAudio
-        } = _ref2;
+      };
+      const onCoreMetadata = (meta2) => {
         batch(() => {
-          resize({
-            cols,
-            rows
-          });
-          setDuration(duration2);
-          setOriginalTheme(theme3);
-          setMarkers(markers2);
-          setPoster(poster);
-          setIsMuted(hasAudio ? false : void 0);
+          if (meta2.duration !== void 0) {
+            setDuration(meta2.duration);
+          }
+          if (meta2.markers !== void 0) {
+            setMarkers(meta2.markers);
+          }
+          if (meta2.hasAudio !== void 0) {
+            setIsMuted(meta2.hasAudio ? false : void 0);
+          }
+          if (meta2.size !== void 0) {
+            setTerminalSize(meta2.size);
+          }
+          if (meta2.theme !== void 0) {
+            setOriginalTheme(meta2.theme);
+          }
         });
-      });
-      core.addEventListener("play", () => {
+      };
+      const onCorePlay = () => {
         setOverlay(null);
-      });
-      core.addEventListener("playing", () => {
+      };
+      const onCorePlaying = () => {
         batch(() => {
           setIsPlaying(true);
           setWasPlaying(true);
           setOverlay(null);
           onPlaying();
         });
-      });
-      core.addEventListener("idle", () => {
+      };
+      const onCoreIdle = () => {
         batch(() => {
           setIsPlaying(false);
           onStopped();
         });
-      });
-      core.addEventListener("loading", () => {
+      };
+      const onCoreLoading = () => {
         batch(() => {
           setIsPlaying(false);
           onStopped();
           setOverlay("loader");
         });
-      });
-      core.addEventListener("offline", (_ref3) => {
+      };
+      const onCoreOffline = (_ref2) => {
+        let {
+          message: message2
+        } = _ref2;
+        batch(() => {
+          setIsPlaying(false);
+          onStopped();
+          if (message2 !== void 0) {
+            setInfoMessage(message2);
+            setOverlay("info");
+          }
+        });
+      };
+      const onCoreMuted = (muted) => {
+        setIsMuted(muted);
+      };
+      const stats = {
+        terminal: {
+          renders: 0
+        }
+      };
+      const onCoreEnded = (_ref3) => {
         let {
           message: message2
         } = _ref3;
@@ -187576,52 +188602,25 @@ ${events}
             setOverlay("info");
           }
         });
-      });
-      core.addEventListener("muted", (muted) => {
-        setIsMuted(muted);
-      });
-      let renderCount = 0;
-      core.addEventListener("ended", (_ref4) => {
-        let {
-          message: message2
-        } = _ref4;
-        batch(() => {
-          setIsPlaying(false);
-          onStopped();
-          if (message2 !== void 0) {
-            setInfoMessage(message2);
-            setOverlay("info");
-          }
-        });
-        logger.debug(`view: render count: ${renderCount}`);
-      });
-      core.addEventListener("errored", () => {
+        logger.debug("stats", stats.terminal);
+      };
+      const onCoreErrored = () => {
         setOverlay("error");
-      });
-      core.addEventListener("resize", resize);
-      core.addEventListener("reset", (_ref5) => {
-        let {
-          cols,
-          rows,
-          theme: theme3
-        } = _ref5;
-        batch(() => {
-          resize({
-            cols,
-            rows
-          });
-          setOriginalTheme(theme3);
-          updateTerminal();
-        });
-      });
-      core.addEventListener("seeked", () => {
+      };
+      const onCoreSeeked = () => {
         updateTime();
-      });
-      core.addEventListener("terminalUpdate", () => {
-        if (frameRequestId === void 0) {
-          frameRequestId = requestAnimationFrame(updateTerminal);
-        }
-      });
+      };
+      core.addEventListener("ready", onCoreReady);
+      core.addEventListener("metadata", onCoreMetadata);
+      core.addEventListener("play", onCorePlay);
+      core.addEventListener("playing", onCorePlaying);
+      core.addEventListener("idle", onCoreIdle);
+      core.addEventListener("loading", onCoreLoading);
+      core.addEventListener("offline", onCoreOffline);
+      core.addEventListener("muted", onCoreMuted);
+      core.addEventListener("ended", onCoreEnded);
+      core.addEventListener("errored", onCoreErrored);
+      core.addEventListener("seeked", onCoreSeeked);
       const setupResizeObserver = () => {
         resizeObserver = new ResizeObserver(debounce((_entries) => {
           setState2({
@@ -187639,8 +188638,8 @@ ${events}
       onMount(async () => {
         logger.info("view: mounted");
         logger.debug("view: font measurements", {
-          charW: state.charW,
-          charH: state.charH
+          charW,
+          charH
         });
         setupResizeObserver();
         setState2({
@@ -187649,30 +188648,24 @@ ${events}
         });
       });
       onCleanup(() => {
+        core.removeEventListener("ready", onCoreReady);
+        core.removeEventListener("metadata", onCoreMetadata);
+        core.removeEventListener("play", onCorePlay);
+        core.removeEventListener("playing", onCorePlaying);
+        core.removeEventListener("idle", onCoreIdle);
+        core.removeEventListener("loading", onCoreLoading);
+        core.removeEventListener("offline", onCoreOffline);
+        core.removeEventListener("muted", onCoreMuted);
+        core.removeEventListener("ended", onCoreEnded);
+        core.removeEventListener("errored", onCoreErrored);
+        core.removeEventListener("seeked", onCoreSeeked);
         core.stop();
-        stopBlinking();
         stopTimeUpdates();
         resizeObserver.disconnect();
       });
-      const updateTerminal = async () => {
-        const changes = await core.getChanges();
-        batch(() => {
-          if (changes.lines !== void 0) {
-            changes.lines.forEach((line2, i2) => {
-              setState2("lines", i2, reconcile(line2));
-            });
-          }
-          if (changes.cursor !== void 0) {
-            setState2("cursor", reconcile(changes.cursor));
-          }
-          setState2("cursorHold", true);
-        });
-        frameRequestId = void 0;
-        renderCount += 1;
-      };
       const terminalElementSize = createMemo(() => {
-        const terminalW = state.charW * terminalCols() + state.bordersW;
-        const terminalH = state.charH * terminalRows() + state.bordersH;
+        const terminalW = charW * terminalCols() + bordersW;
+        const terminalH = charH * terminalRows() + bordersH;
         let fit = props.fit ?? "width";
         if (fit === "both" || state.isFullscreen) {
           const containerRatio = state.containerW / (state.containerH - controlBarHeight());
@@ -187700,7 +188693,7 @@ ${events}
             height: state.containerH
           };
         } else {
-          throw `unsupported fit mode: ${fit}`;
+          throw new Error(`unsupported fit mode: ${fit}`);
         }
       });
       const onFullscreenChange = () => {
@@ -187796,23 +188789,6 @@ ${events}
           progress: progress2
         });
       };
-      const startBlinking = () => {
-        blinkIntervalId = setInterval(() => {
-          setState2((state2) => {
-            const changes = {
-              blink: !state2.blink
-            };
-            if (changes.blink) {
-              changes.cursorHold = false;
-            }
-            return changes;
-          });
-        }, 600);
-      };
-      const stopBlinking = () => {
-        clearInterval(blinkIntervalId);
-        setState2("blink", true);
-      };
       const onUserActive = (show) => {
         clearTimeout(userActivityTimeoutId);
         if (show) {
@@ -187820,19 +188796,7 @@ ${events}
         }
         setUserActive(show);
       };
-      const theme2 = createMemo(() => {
-        const name2 = props.theme || "auto/asciinema";
-        if (name2.slice(0, 5) === "auto/") {
-          return {
-            name: name2.slice(5),
-            colors: originalTheme()
-          };
-        } else {
-          return {
-            name: name2
-          };
-        }
-      });
+      const embeddedTheme = createMemo(() => preferEmbeddedTheme ? originalTheme() : null);
       const playerStyle = () => {
         const style2 = {};
         if ((props.fit === false || props.fit === "none") && props.terminalFontSize !== void 0) {
@@ -187851,13 +188815,13 @@ ${events}
           style2["width"] = `${size.width}px`;
           style2["height"] = `${size.height}px`;
         }
-        const themeColors = theme2().colors;
+        if (props.terminalFontFamily !== void 0) {
+          style2["--term-font-family"] = props.terminalFontFamily;
+        }
+        const themeColors = embeddedTheme();
         if (themeColors) {
           style2["--term-color-foreground"] = themeColors.foreground;
           style2["--term-color-background"] = themeColors.background;
-          themeColors.palette.forEach((color, i2) => {
-            style2[`--term-color-${i2}`] = color;
-          });
         }
         return style2;
       };
@@ -187879,7 +188843,7 @@ ${events}
       const seek = (pos2) => {
         coreReady.then(() => core.seek(pos2));
       };
-      const playerClass = () => `ap-player asciinema-player-theme-${theme2().name}`;
+      const playerClass = () => `ap-player ap-default-term-ff asciinema-player-theme-${themeName}`;
       const terminalScale = () => terminalElementSize()?.scale;
       const el2 = (() => {
         const _el$ = _tmpl$.cloneNode(true), _el$2 = _el$.firstChild;
@@ -187903,27 +188867,16 @@ ${events}
           get scale() {
             return terminalScale();
           },
-          get blink() {
-            return state.blink;
-          },
-          get lines() {
-            return state.lines;
-          },
-          get cursor() {
-            return state.cursor;
-          },
-          get cursorHold() {
-            return state.cursorHold;
-          },
-          get fontFamily() {
-            return props.terminalFontFamily;
+          get blinking() {
+            return blinking();
           },
           get lineHeight() {
             return props.terminalLineHeight;
           },
-          ref(r$) {
-            const _ref$3 = terminalRef;
-            typeof _ref$3 === "function" ? _ref$3(r$) : terminalRef = r$;
+          preferEmbeddedTheme,
+          core,
+          get stats() {
+            return stats.terminal;
           }
         }), null);
         insert$1(_el$2, createComponent(Show, {
@@ -187963,8 +188916,8 @@ ${events}
               onSeekClick: seek,
               onMuteClick: toggleMuted,
               ref(r$) {
-                const _ref$4 = controlBarRef;
-                typeof _ref$4 === "function" ? _ref$4(r$) : controlBarRef = r$;
+                const _ref$3 = controlBarRef;
+                typeof _ref$3 === "function" ? _ref$3(r$) : controlBarRef = r$;
               }
             });
           }
@@ -188009,9 +188962,6 @@ ${events}
                   get message() {
                     return infoMessage();
                   },
-                  get fontFamily() {
-                    return props.terminalFontFamily;
-                  },
                   get wasPlaying() {
                     return wasPlaying();
                   }
@@ -188026,9 +188976,6 @@ ${events}
           },
           get children() {
             return createComponent(HelpOverlay, {
-              get fontFamily() {
-                return props.terminalFontFamily;
-              },
               onClose: () => setIsHelpVisible(false),
               get isPausable() {
                 return state.isPausable;
@@ -188088,33 +189035,31 @@ ${events}
     function measureTerminal(fontFamily, lineHeight) {
       const cols = 80;
       const rows = 24;
-      const div2 = document.createElement("div");
-      div2.style.height = "0px";
-      div2.style.overflow = "hidden";
-      div2.style.fontSize = "15px";
-      document.body.appendChild(div2);
-      let el2;
-      const dispose2 = render(() => {
-        el2 = createComponent(Terminal, {
-          cols,
-          rows,
-          lineHeight,
-          fontFamily,
-          lines: []
-        });
-        return el2;
-      }, div2);
+      const playerDiv = document.createElement("div");
+      playerDiv.className = "ap-default-term-ff";
+      playerDiv.style.height = "0px";
+      playerDiv.style.overflow = "hidden";
+      playerDiv.style.fontSize = "15px";
+      if (fontFamily !== void 0) {
+        playerDiv.style.setProperty("--term-font-family", fontFamily);
+      }
+      const termDiv = document.createElement("div");
+      termDiv.className = "ap-term";
+      termDiv.style.width = `${cols}ch`;
+      termDiv.style.height = `${rows * (lineHeight ?? 1.3333333333)}em`;
+      termDiv.style.fontSize = "100%";
+      playerDiv.appendChild(termDiv);
+      document.body.appendChild(playerDiv);
       const metrics = {
-        charW: el2.clientWidth / cols,
-        charH: el2.clientHeight / rows,
-        bordersW: el2.offsetWidth - el2.clientWidth,
-        bordersH: el2.offsetHeight - el2.clientHeight
+        charW: termDiv.clientWidth / cols,
+        charH: termDiv.clientHeight / rows,
+        bordersW: termDiv.offsetWidth - termDiv.clientWidth,
+        bordersH: termDiv.offsetHeight - termDiv.clientHeight
       };
-      dispose2();
-      document.body.removeChild(div2);
+      document.body.removeChild(playerDiv);
       return metrics;
     }
-    const CORE_OPTS = ["autoPlay", "autoplay", "cols", "idleTimeLimit", "loop", "markers", "pauseOnMarkers", "poster", "preload", "rows", "speed", "startAt", "audioUrl"];
+    const CORE_OPTS = ["audioUrl", "autoPlay", "autoplay", "boldIsBright", "cols", "idleTimeLimit", "loop", "markers", "pauseOnMarkers", "poster", "preload", "rows", "speed", "startAt"];
     const UI_OPTS = ["autoPlay", "autoplay", "cols", "controls", "fit", "rows", "terminalFontFamily", "terminalFontSize", "terminalLineHeight", "theme"];
     function coreOpts(inputOpts) {
       let overrides = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
@@ -192824,8 +193769,8 @@ ${events}
         return field;
       }
       create(state) {
-        let init = state.facet(initField).find((i2) => i2.field == this);
-        return ((init === null || init === void 0 ? void 0 : init.create) || this.createF)(state);
+        let init2 = state.facet(initField).find((i2) => i2.field == this);
+        return ((init2 === null || init2 === void 0 ? void 0 : init2.create) || this.createF)(state);
       }
       /**
       @internal
@@ -192846,8 +193791,8 @@ ${events}
             return 1;
           },
           reconfigure: (state, oldState) => {
-            let init = state.facet(initField), oldInit = oldState.facet(initField), reInit;
-            if ((reInit = init.find((i2) => i2.field == this)) && reInit != oldInit.find((i2) => i2.field == this)) {
+            let init2 = state.facet(initField), oldInit = oldState.facet(initField), reInit;
+            if ((reInit = init2.find((i2) => i2.field == this)) && reInit != oldInit.find((i2) => i2.field == this)) {
               state.values[idx] = reInit.create(state);
               return 1;
             }
@@ -193517,8 +194462,8 @@ ${events}
         for (let i2 = 1; i2 < sel.ranges.length; i2++) {
           let result2 = f(sel.ranges[i2]);
           let newChanges = this.changes(result2.changes), newMapped = newChanges.map(changes);
-          for (let j2 = 0; j2 < i2; j2++)
-            ranges[j2] = ranges[j2].map(newMapped);
+          for (let j = 0; j < i2; j++)
+            ranges[j] = ranges[j].map(newMapped);
           let mapBy = changes.mapDesc(newChanges, true);
           ranges.push(result2.range.map(mapBy));
           changes = changes.compose(newMapped);
@@ -193703,8 +194648,8 @@ ${events}
        - Space (contains only whitespace)
        - Other (anything else)
       */
-      charCategorizer(at2) {
-        return makeCategorizer(this.languageDataAt("wordChars", at2).join(""));
+      charCategorizer(at) {
+        return makeCategorizer(this.languageDataAt("wordChars", at).join(""));
       }
       /**
       Find the word at the given position, meaning the range
@@ -193740,7 +194685,7 @@ ${events}
     EditorState.phrases = /* @__PURE__ */ Facet.define({
       compare(a, b) {
         let kA = Object.keys(a), kB = Object.keys(b);
-        return kA.length == kB.length && kA.every((k) => a[k] == b[k]);
+        return kA.length == kB.length && kA.every((k2) => a[k2] == b[k2]);
       }
     });
     EditorState.languageData = languageData;
@@ -193817,17 +194762,17 @@ ${events}
       // `from` pos when `end == false`, `to` when `end == true`.
       findIndex(pos2, side, end2, startAt = 0) {
         let arr2 = end2 ? this.to : this.from;
-        for (let lo = startAt, hi = arr2.length; ; ) {
-          if (lo == hi)
-            return lo;
-          let mid2 = lo + hi >> 1;
+        for (let lo2 = startAt, hi = arr2.length; ; ) {
+          if (lo2 == hi)
+            return lo2;
+          let mid2 = lo2 + hi >> 1;
           let diff2 = arr2[mid2] - pos2 || (end2 ? this.value[mid2].endSide : this.value[mid2].startSide) - side;
-          if (mid2 == lo)
-            return diff2 >= 0 ? lo : hi;
+          if (mid2 == lo2)
+            return diff2 >= 0 ? lo2 : hi;
           if (diff2 >= 0)
             hi = mid2;
           else
-            lo = mid2 + 1;
+            lo2 = mid2 + 1;
         }
       }
       between(offset2, from, to2, f) {
@@ -194649,22 +195594,22 @@ ${events}
       }
       mount(modules, root2) {
         let sheet = this.sheet;
-        let pos2 = 0, j2 = 0;
+        let pos2 = 0, j = 0;
         for (let i2 = 0; i2 < modules.length; i2++) {
           let mod2 = modules[i2], index = this.modules.indexOf(mod2);
-          if (index < j2 && index > -1) {
+          if (index < j && index > -1) {
             this.modules.splice(index, 1);
-            j2--;
+            j--;
             index = -1;
           }
           if (index == -1) {
-            this.modules.splice(j2++, 0, mod2);
-            if (sheet) for (let k = 0; k < mod2.rules.length; k++)
-              sheet.insertRule(mod2.rules[k], pos2++);
+            this.modules.splice(j++, 0, mod2);
+            if (sheet) for (let k2 = 0; k2 < mod2.rules.length; k2++)
+              sheet.insertRule(mod2.rules[k2], pos2++);
           } else {
-            while (j2 < index) pos2 += this.modules[j2++].rules.length;
+            while (j < index) pos2 += this.modules[j++].rules.length;
             pos2 += mod2.rules.length;
-            j2++;
+            j++;
           }
         }
         if (sheet) {
@@ -195808,13 +196753,13 @@ ${events}
           break;
         off = end2;
       }
-      for (let j2 = i2; j2 > 0; j2--) {
-        let prev = children2[j2 - 1];
+      for (let j = i2; j > 0; j--) {
+        let prev = children2[j - 1];
         if (prev.dom.parentNode == dom)
           return prev.domAtPos(prev.length);
       }
-      for (let j2 = i2; j2 < children2.length; j2++) {
-        let next = children2[j2];
+      for (let j = i2; j < children2.length; j++) {
+        let next = children2[j];
         if (next.dom.parentNode == dom)
           return next.domAtPos(0);
       }
@@ -196191,24 +197136,24 @@ ${events}
         mergeChildrenInto(this, from, to2, source2 ? source2.children.slice() : [], openStart, openEnd);
         return true;
       }
-      split(at2) {
+      split(at) {
         let end2 = new LineView();
         end2.breakAfter = this.breakAfter;
         if (this.length == 0)
           return end2;
-        let { i: i2, off } = this.childPos(at2);
+        let { i: i2, off } = this.childPos(at);
         if (off) {
           end2.append(this.children[i2].split(off), 0);
           this.children[i2].merge(off, this.children[i2].length, null, false, 0, 0);
           i2++;
         }
-        for (let j2 = i2; j2 < this.children.length; j2++)
-          end2.append(this.children[j2], 0);
+        for (let j = i2; j < this.children.length; j++)
+          end2.append(this.children[j], 0);
         while (i2 > 0 && this.children[i2 - 1].length == 0)
           this.children[--i2].destroy();
         this.children.length = i2;
         this.markDirty();
-        this.length = at2;
+        this.length = at;
         return end2;
       }
       transferDOM(other) {
@@ -196343,9 +197288,9 @@ ${events}
       domAtPos(pos2) {
         return pos2 == 0 ? DOMPos.before(this.dom) : DOMPos.after(this.dom, pos2 == this.length);
       }
-      split(at2) {
-        let len = this.length - at2;
-        this.length = at2;
+      split(at) {
+        let len = this.length - at;
+        this.length = at;
         let end2 = new BlockWidgetView(this.widget, len, this.deco);
         end2.breakAfter = this.breakAfter;
         return end2;
@@ -196725,8 +197670,8 @@ ${events}
             while (end2 < to2 && types[end2] == 64)
               end2++;
             let replace2 = i2 && prev == 8 || end2 < rTo && types[end2] == 8 ? prevStrong == 1 ? 1 : 8 : 256;
-            for (let j2 = i2; j2 < end2; j2++)
-              types[j2] = replace2;
+            for (let j = i2; j < end2; j++)
+              types[j] = replace2;
             i2 = end2 - 1;
           } else if (type == 8 && prevStrong == 1) {
             types[i2] = 1;
@@ -196802,12 +197747,12 @@ ${events}
             let beforeL = prev == 1;
             let afterL = (end2 < rTo ? types[end2] : outerType) == 1;
             let replace2 = beforeL == afterL ? beforeL ? 1 : 2 : outerType;
-            for (let j2 = end2, jI = iI, fromJ = jI ? isolates[jI - 1].to : rFrom; j2 > i2; ) {
-              if (j2 == fromJ) {
-                j2 = isolates[--jI].from;
+            for (let j = end2, jI = iI, fromJ = jI ? isolates[jI - 1].to : rFrom; j > i2; ) {
+              if (j == fromJ) {
+                j = isolates[--jI].from;
                 fromJ = jI ? isolates[jI - 1].to : rFrom;
               }
-              types[--j2] = replace2;
+              types[--j] = replace2;
             }
             i2 = end2;
           } else {
@@ -197175,17 +198120,17 @@ ${events}
         return new ChangedRange(Math.min(this.fromA, other.fromA), Math.max(this.toA, other.toA), Math.min(this.fromB, other.fromB), Math.max(this.toB, other.toB));
       }
       addToSet(set2) {
-        let i2 = set2.length, me = this;
+        let i2 = set2.length, me2 = this;
         for (; i2 > 0; i2--) {
           let range2 = set2[i2 - 1];
-          if (range2.fromA > me.toA)
+          if (range2.fromA > me2.toA)
             continue;
-          if (range2.toA < me.fromA)
+          if (range2.toA < me2.fromA)
             break;
-          me = me.join(range2);
+          me2 = me2.join(range2);
           set2.splice(i2 - 1, 1);
         }
-        set2.splice(i2, 0, me);
+        set2.splice(i2, 0, me2);
         return set2;
       }
       static extendWithRanges(diff2, ranges) {
@@ -197989,8 +198934,8 @@ ${events}
       let closestOffset = -1, closestDY = 1e9, generalSide = 0;
       for (let i2 = 0; i2 < len; i2++) {
         let rects = textRange(node2, i2, i2 + 1).getClientRects();
-        for (let j2 = 0; j2 < rects.length; j2++) {
-          let rect2 = rects[j2];
+        for (let j = 0; j < rects.length; j++) {
+          let rect2 = rects[j];
           if (rect2.top == rect2.bottom)
             continue;
           if (!generalSide)
@@ -199487,11 +200432,11 @@ ${events}
         result2.push(this);
       }
       applyChanges(decorations2, oldDoc, oracle, changes) {
-        let me = this, doc2 = oracle.doc;
+        let me2 = this, doc2 = oracle.doc;
         for (let i2 = changes.length - 1; i2 >= 0; i2--) {
           let { fromA, toA, fromB, toB } = changes[i2];
-          let start2 = me.lineAt(fromA, QueryType.ByPosNoHeight, oracle.setDoc(oldDoc), 0, 0);
-          let end2 = start2.to >= toA ? start2 : me.lineAt(toA, QueryType.ByPosNoHeight, oracle, 0, 0);
+          let start2 = me2.lineAt(fromA, QueryType.ByPosNoHeight, oracle.setDoc(oldDoc), 0, 0);
+          let end2 = start2.to >= toA ? start2 : me2.lineAt(toA, QueryType.ByPosNoHeight, oracle, 0, 0);
           toB += end2.to - toA;
           toA = end2.to;
           while (i2 > 0 && start2.from <= changes[i2 - 1].toA) {
@@ -199499,14 +200444,14 @@ ${events}
             fromB = changes[i2 - 1].fromB;
             i2--;
             if (fromA < start2.from)
-              start2 = me.lineAt(fromA, QueryType.ByPosNoHeight, oracle, 0, 0);
+              start2 = me2.lineAt(fromA, QueryType.ByPosNoHeight, oracle, 0, 0);
           }
           fromB += start2.from - fromA;
           fromA = start2.from;
           let nodes = NodeBuilder.build(oracle.setDoc(doc2), decorations2, fromB, toB);
-          me = replace(me, me.replace(fromA, toA, nodes));
+          me2 = replace(me2, me2.replace(fromA, toA, nodes));
         }
-        return me.updateHeight(oracle, 0);
+        return me2.updateHeight(oracle, 0);
       }
       static empty() {
         return new HeightMapText(0, 0);
@@ -199518,24 +200463,24 @@ ${events}
       static of(nodes) {
         if (nodes.length == 1)
           return nodes[0];
-        let i2 = 0, j2 = nodes.length, before = 0, after = 0;
+        let i2 = 0, j = nodes.length, before = 0, after = 0;
         for (; ; ) {
-          if (i2 == j2) {
+          if (i2 == j) {
             if (before > after * 2) {
               let split = nodes[i2 - 1];
               if (split.break)
                 nodes.splice(--i2, 1, split.left, null, split.right);
               else
                 nodes.splice(--i2, 1, split.left, split.right);
-              j2 += 1 + split.break;
+              j += 1 + split.break;
               before -= split.size;
             } else if (after > before * 2) {
-              let split = nodes[j2];
+              let split = nodes[j];
               if (split.break)
-                nodes.splice(j2, 1, split.left, null, split.right);
+                nodes.splice(j, 1, split.left, null, split.right);
               else
-                nodes.splice(j2, 1, split.left, split.right);
-              j2 += 2 + split.break;
+                nodes.splice(j, 1, split.left, split.right);
+              j += 2 + split.break;
               after -= split.size;
             } else {
               break;
@@ -199545,7 +200490,7 @@ ${events}
             if (next)
               before += next.size;
           } else {
-            let next = nodes[--j2];
+            let next = nodes[--j];
             if (next)
               after += next.size;
           }
@@ -199556,9 +200501,9 @@ ${events}
           i2--;
         } else if (nodes[i2] == null) {
           brk = 1;
-          j2++;
+          j++;
         }
-        return new HeightMapBranch(HeightMap.of(nodes.slice(0, i2)), brk, HeightMap.of(nodes.slice(j2)));
+        return new HeightMapBranch(HeightMap.of(nodes.slice(0, i2)), brk, HeightMap.of(nodes.slice(j)));
       }
     }
     function replace(old, val) {
@@ -202582,7 +203527,7 @@ ${events}
       let add2 = (scope, key2, command2, preventDefault, stopPropagation) => {
         var _a2, _b2;
         let scopeObj = bound[scope] || (bound[scope] = /* @__PURE__ */ Object.create(null));
-        let parts = key2.split(/ (?!$)/).map((k) => normalizeKeyName(k, platform));
+        let parts = key2.split(/ (?!$)/).map((k2) => normalizeKeyName(k2, platform));
         for (let i2 = 1; i2 < parts.length; i2++) {
           let prefix = parts.slice(0, i2).join(" ");
           checkPrefix(prefix, true);
@@ -203072,7 +204017,7 @@ ${events}
       updateDeco(update, deco) {
         let changeFrom = 1e9, changeTo = -1;
         if (update.docChanged)
-          update.changes.iterChanges((_f, _t, from, to2) => {
+          update.changes.iterChanges((_f, _t2, from, to2) => {
             if (to2 >= update.view.viewport.from && from <= update.view.viewport.to) {
               changeFrom = Math.min(from, changeFrom);
               changeTo = Math.max(to2, changeTo);
@@ -204555,11 +205500,11 @@ ${events}
       slice(startI, endI, from) {
         let b = this.buffer;
         let copy2 = new Uint16Array(endI - startI), len = 0;
-        for (let i2 = startI, j2 = 0; i2 < endI; ) {
-          copy2[j2++] = b[i2++];
-          copy2[j2++] = b[i2++] - from;
-          let to2 = copy2[j2++] = b[i2++] - from;
-          copy2[j2++] = b[i2++] - startI;
+        for (let i2 = startI, j = 0; i2 < endI; ) {
+          copy2[j++] = b[i2++];
+          copy2[j++] = b[i2++] - from;
+          let to2 = copy2[j++] = b[i2++] - from;
+          copy2[j++] = b[i2++] - startI;
           len = Math.max(len, to2);
         }
         return new TreeBuffer(copy2, len, this.set);
@@ -205410,11 +206355,11 @@ ${events}
         if (nodeCount) {
           let buffer3 = new Uint16Array(nodeCount * 4);
           let start2 = nodes[nodes.length - 2];
-          for (let i2 = nodes.length - 3, j2 = 0; i2 >= 0; i2 -= 3) {
-            buffer3[j2++] = nodes[i2];
-            buffer3[j2++] = nodes[i2 + 1] - start2;
-            buffer3[j2++] = nodes[i2 + 2] - start2;
-            buffer3[j2++] = j2;
+          for (let i2 = nodes.length - 3, j = 0; i2 >= 0; i2 -= 3) {
+            buffer3[j++] = nodes[i2];
+            buffer3[j++] = nodes[i2 + 1] - start2;
+            buffer3[j++] = nodes[i2 + 2] - start2;
+            buffer3[j++] = j;
           }
           children3.push(new TreeBuffer(buffer3, nodes[2] - start2, nodeSet2));
           positions2.push(start2 - parentStart);
@@ -205785,8 +206730,8 @@ ${events}
     function powerSet$4(array) {
       let sets = [[]];
       for (let i2 = 0; i2 < array.length; i2++) {
-        for (let j2 = 0, e = sets.length; j2 < e; j2++) {
-          sets.push(sets[j2].concat(array[i2]));
+        for (let j = 0, e = sets.length; j < e; j++) {
+          sets.push(sets[j].concat(array[i2]));
         }
       }
       return sets.sort((a, b) => b.length - a.length);
@@ -207142,7 +208087,7 @@ ${events}
           addToOptions: [],
           positionInfo: defaultPositionInfo,
           filterStrict: false,
-          compareCompletions: (a, b) => a.label.localeCompare(b.label),
+          compareCompletions: (a, b) => (a.sortText || a.label).localeCompare(b.sortText || b.label),
           interactionDelay: 75,
           updateSyncTime: 100
         }, {
@@ -207212,8 +208157,8 @@ ${events}
           let labelElt = document.createElement("span");
           labelElt.className = "cm-completionLabel";
           let label2 = completion.displayLabel || completion.label, off = 0;
-          for (let j2 = 0; j2 < match.length; ) {
-            let from = match[j2++], to2 = match[j2++];
+          for (let j = 0; j < match.length; ) {
+            let from = match[j++], to2 = match[j++];
             if (from > off)
               labelElt.appendChild(document.createTextNode(label2.slice(off, from)));
             let span = labelElt.appendChild(document.createElement("span"));
@@ -208282,8 +209227,8 @@ ${events}
     function powerSet$3(array) {
       let sets = [[]];
       for (let i2 = 0; i2 < array.length; i2++) {
-        for (let j2 = 0, e = sets.length; j2 < e; j2++) {
-          sets.push(sets[j2].concat(array[i2]));
+        for (let j = 0, e = sets.length; j < e; j++) {
+          sets.push(sets[j].concat(array[i2]));
         }
       }
       return sets.sort((a, b) => b.length - a.length);
@@ -208396,17 +209341,17 @@ ${events}
       builder.flush(to2);
     }
     let HighlightBuilder$1 = class HighlightBuilder {
-      constructor(at2, highlighters, span) {
-        this.at = at2;
+      constructor(at, highlighters, span) {
+        this.at = at;
         this.highlighters = highlighters;
         this.span = span;
         this.class = "";
       }
-      startSpan(at2, cls) {
+      startSpan(at, cls) {
         if (cls != this.class) {
-          this.flush(at2);
-          if (at2 > this.at)
-            this.at = at2;
+          this.flush(at);
+          if (at > this.at)
+            this.at = at;
           this.class = cls;
         }
       }
@@ -210222,7 +211167,7 @@ ${events}
           diagnostics = diagnosticFilter(diagnostics, state);
         let sorted = diagnostics.slice().sort((a, b) => a.from - b.from || a.to - b.to);
         let deco = new RangeSetBuilder(), active = [], pos2 = 0;
-        let scan = state.doc.iter(), scanPos = 0;
+        let scan = state.doc.iter(), scanPos = 0, docLen = state.doc.length;
         for (let i2 = 0; ; ) {
           let next = i2 == sorted.length ? null : sorted[i2];
           if (!next && !active.length)
@@ -210233,6 +211178,8 @@ ${events}
             to2 = active.reduce((p, d) => Math.min(p, d.to), next && next.from > from ? next.from : 1e8);
           } else {
             from = next.from;
+            if (from > docLen)
+              break;
             to2 = next.to;
             active.push(next);
             i2++;
@@ -210248,8 +211195,9 @@ ${events}
               break;
             }
           }
+          to2 = Math.min(to2, docLen);
           let widget = false;
-          if (active.some((d) => d.from == from && d.to == to2)) {
+          if (active.some((d) => d.from == from && (d.to == to2 || to2 == docLen))) {
             widget = from == to2;
             if (!widget && to2 - from < 10) {
               let behind = from - (scanPos + scan.value.length);
@@ -210285,6 +211233,8 @@ ${events}
             }));
           }
           pos2 = to2;
+          if (pos2 == docLen)
+            break;
           for (let i3 = 0; i3 < active.length; i3++)
             if (active[i3].to <= pos2)
               active.splice(i3--, 1);
@@ -210620,9 +211570,9 @@ ${events}
               continue;
             seen.add(diagnostic);
             let found = -1, item2;
-            for (let j2 = i2; j2 < this.items.length; j2++)
-              if (this.items[j2].diagnostic == diagnostic) {
-                found = j2;
+            for (let j = i2; j < this.items.length; j++)
+              if (this.items[j].diagnostic == diagnostic) {
+                found = j;
                 break;
               }
             if (found < 0) {
@@ -210818,9 +211768,9 @@ ${events}
     function maxSeverity(diagnostics) {
       let sev = "hint", weight = 1;
       for (let d of diagnostics) {
-        let w2 = severityWeight(d.severity);
-        if (w2 > weight) {
-          weight = w2;
+        let w = severityWeight(d.severity);
+        if (w > weight) {
+          weight = w;
           sev = d.severity;
         }
       }
@@ -211076,8 +212026,8 @@ ${events}
     function powerSet$2(array) {
       let sets = [[]];
       for (let i2 = 0; i2 < array.length; i2++) {
-        for (let j2 = 0, e = sets.length; j2 < e; j2++) {
-          sets.push(sets[j2].concat(array[i2]));
+        for (let j = 0, e = sets.length; j < e; j++) {
+          sets.push(sets[j].concat(array[i2]));
         }
       }
       return sets.sort((a, b) => b.length - a.length);
@@ -211646,8 +212596,8 @@ ${events}
     function powerSet$1(array) {
       let sets = [[]];
       for (let i2 = 0; i2 < array.length; i2++) {
-        for (let j2 = 0, e = sets.length; j2 < e; j2++) {
-          sets.push(sets[j2].concat(array[i2]));
+        for (let j = 0, e = sets.length; j < e; j++) {
+          sets.push(sets[j].concat(array[i2]));
         }
       }
       return sets.sort((a, b) => b.length - a.length);
@@ -211760,17 +212710,17 @@ ${events}
       builder.flush(to2);
     }
     class HighlightBuilder {
-      constructor(at2, highlighters, span) {
-        this.at = at2;
+      constructor(at, highlighters, span) {
+        this.at = at;
         this.highlighters = highlighters;
         this.span = span;
         this.class = "";
       }
-      startSpan(at2, cls) {
+      startSpan(at, cls) {
         if (cls != this.class) {
-          this.flush(at2);
-          if (at2 > this.at)
-            this.at = at2;
+          this.flush(at);
+          if (at > this.at)
+            this.at = at;
           this.class = cls;
         }
       }
@@ -213073,8 +214023,8 @@ ${events}
     function powerSet(array) {
       let sets = [[]];
       for (let i2 = 0; i2 < array.length; i2++) {
-        for (let j2 = 0, e = sets.length; j2 < e; j2++) {
-          sets.push(sets[j2].concat(array[i2]));
+        for (let j = 0, e = sets.length; j < e; j++) {
+          sets.push(sets[j].concat(array[i2]));
         }
       }
       return sets.sort((a, b) => b.length - a.length);
@@ -214637,7 +215587,7 @@ ${events}
         return combineConfig(configs, {
           minDepth: 100,
           newGroupDelay: 500,
-          joinToEvent: (_t, isAdjacent2) => isAdjacent2
+          joinToEvent: (_t2, isAdjacent2) => isAdjacent2
         }, {
           minDepth: Math.max,
           newGroupDelay: Math.min,
@@ -214766,7 +215716,7 @@ ${events}
     function isAdjacent(a, b) {
       let ranges = [], isAdjacent2 = false;
       a.iterChangedRanges((f, t2) => ranges.push(f, t2));
-      b.iterChangedRanges((_f, _t, f, t2) => {
+      b.iterChangedRanges((_f, _t2, f, t2) => {
         for (let i2 = 0; i2 < ranges.length; ) {
           let from = ranges[i2++], to2 = ranges[i2++];
           if (t2 >= from && f <= to2)
@@ -214933,14 +215883,14 @@ ${events}
     function moveBySyntax(state, start2, forward) {
       let pos2 = syntaxTree(state).resolveInner(start2.head);
       let bracketProp = forward ? NodeProp$1.closedBy : NodeProp$1.openedBy;
-      for (let at2 = start2.head; ; ) {
-        let next = forward ? pos2.childAfter(at2) : pos2.childBefore(at2);
+      for (let at = start2.head; ; ) {
+        let next = forward ? pos2.childAfter(at) : pos2.childBefore(at);
         if (!next)
           break;
         if (interestingNode(state, next, bracketProp))
           pos2 = next;
         else
-          at2 = forward ? next.to : next.from;
+          at = forward ? next.to : next.from;
       }
       let bracket2 = pos2.type.prop(bracketProp), match, newPos;
       if (bracket2 && (match = forward ? matchBrackets(state, pos2.from, 1) : matchBrackets(state, pos2.to, -1)) && match.matched)
@@ -215616,8 +216566,8 @@ ${events}
       });
       setTimeout(() => startCompletion(view), 0);
     };
-    const makeKeywordCompletion = (k) => ({
-      label: k,
+    const makeKeywordCompletion = (k2) => ({
+      label: k2,
       type: "keyword",
       boost: -20
     });
@@ -215642,8 +216592,8 @@ ${events}
       apply: label2 === kSampleMetadataVariable ? applyWithDot : label2 === kSampleIdVariable ? applyWithSpace : void 0,
       boost: 10
     });
-    const makeLiteralCompletion = (k) => ({
-      label: k,
+    const makeLiteralCompletion = (k2) => ({
+      label: k2,
       type: "text",
       boost: 20
     });
@@ -216996,7 +217946,7 @@ Supported expressions:
           }
         ),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
-          qr,
+          Yr,
           {
             ref: listHandle,
             style: { height: "100%" },
