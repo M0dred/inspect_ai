@@ -117904,7 +117904,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.fullWidth, styles$1i.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1i.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.161-12-g5846501d7" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.161-12-g4288dfd69" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
@@ -180328,6 +180328,25 @@ const EventPanel = ({
 function hasDataDefault(node2) {
   return reactExports.isValidElement(node2) && node2.props !== null && typeof node2.props === "object" && "data-default" in node2.props;
 }
+const formatTiming = (timestamp, working_start) => {
+  if (working_start) {
+    return `${formatDateTime(new Date(timestamp))}
+@ working time: ${formatTime$1(working_start)}`;
+  } else {
+    return formatDateTime(new Date(timestamp));
+  }
+};
+const formatTitle = (title2, total_tokens, working_start) => {
+  const subItems = [];
+  if (total_tokens) {
+    subItems.push(`${formatNumber(total_tokens)} tokens`);
+  }
+  if (working_start) {
+    subItems.push(`${formatTime$1(working_start)}`);
+  }
+  const subtitle = subItems.length > 0 ? ` (${subItems.join(", ")})` : "";
+  return `${title2}${subtitle}`;
+};
 const ErrorEventView = ({
   eventNode,
   className: className2
@@ -180338,7 +180357,7 @@ const ErrorEventView = ({
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      title: "Error",
+      title: formatTitle("Error", void 0, event.working_start),
       className: className2,
       subTitle: formatDateTime(new Date(event.timestamp)),
       icon: ApplicationIcons.error,
@@ -180383,7 +180402,11 @@ const InfoEventView = ({
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      title: "Info" + (event.source ? ": " + event.source : ""),
+      title: formatTitle(
+        "Info" + (event.source ? ": " + event.source : ""),
+        void 0,
+        event.working_start
+      ),
       className: className2,
       subTitle: formatDateTime(new Date(event.timestamp)),
       icon: ApplicationIcons.info,
@@ -180401,7 +180424,7 @@ const InputEventView = ({
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      title: "Input",
+      title: formatTitle("Input", void 0, event.working_start),
       className: className2,
       subTitle: formatDateTime(new Date(event.timestamp)),
       icon: ApplicationIcons.input,
@@ -180583,25 +180606,6 @@ const EventTimingPanel = ({
       ] }, `$usage-row-${idx}`);
     }
   }) });
-};
-const formatTiming = (timestamp, working_start) => {
-  if (working_start) {
-    return `${formatDateTime(new Date(timestamp))}
-@ working time: ${formatTime$1(working_start)}`;
-  } else {
-    return formatDateTime(new Date(timestamp));
-  }
-};
-const formatTitle = (title2, total_tokens, working_start) => {
-  const subItems = [];
-  if (total_tokens) {
-    subItems.push(`${formatNumber(total_tokens)} tokens`);
-  }
-  if (working_start) {
-    subItems.push(`${formatTime$1(working_start)}`);
-  }
-  const subtitle = subItems.length > 0 ? ` (${subItems.join(", ")})` : "";
-  return `${title2}${subtitle}`;
 };
 const ModelEventView = ({
   eventNode,
@@ -180790,7 +180794,7 @@ const SampleInitEventView = ({
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
       className: className2,
-      title: "Sample",
+      title: formatTitle("Sample", void 0, event.working_start),
       icon: ApplicationIcons.sample,
       subTitle: formatDateTime(new Date(event.timestamp)),
       children: [
@@ -180871,7 +180875,7 @@ const SampleLimitEventView = ({
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      title: title2,
+      title: formatTitle(title2, void 0, eventNode.event.working_start),
       subTitle: formatDateTime(new Date(eventNode.event.timestamp)),
       icon: icon2,
       className: className2,
@@ -180902,7 +180906,11 @@ const SandboxEventView = ({
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
       className: className2,
-      title: `Sandbox: ${event.action}`,
+      title: formatTitle(
+        `Sandbox: ${event.action}`,
+        void 0,
+        event.working_start
+      ),
       icon: ApplicationIcons.sandbox,
       subTitle: formatTiming(event.timestamp, event.working_start),
       children: event.action === "exec" ? /* @__PURE__ */ jsxRuntimeExports.jsx(ExecView, { id: `${eventNode.id}-exec`, event }) : event.action === "read_file" ? /* @__PURE__ */ jsxRuntimeExports.jsx(ReadFileView, { id: `${eventNode.id}-read-file`, event }) : /* @__PURE__ */ jsxRuntimeExports.jsx(WriteFileView, { id: `${eventNode.id}-write-file`, event })
@@ -180987,7 +180995,11 @@ const ScoreEventView = ({
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      title: (event.intermediate ? "Intermediate " : "") + "Score",
+      title: formatTitle(
+        (event.intermediate ? "Intermediate " : "") + "Score",
+        void 0,
+        event.working_start
+      ),
       className: clsx(className2, "text-size-small"),
       subTitle: formatDateTime(new Date(event.timestamp)),
       icon: ApplicationIcons.scorer,
@@ -189634,7 +189646,7 @@ const StateEventView = ({
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      title: title2,
+      title: formatTitle(title2, void 0, event.working_start),
       className: className2,
       subTitle: formatDateTime(new Date(event.timestamp)),
       text: !changePreview ? summary2 : void 0,
@@ -189864,7 +189876,7 @@ const StepEventView = ({
       depth: eventNode.depth,
       childIds: children2.map((child) => child.id),
       className: clsx("transcript-step", className2),
-      title: title2,
+      title: formatTitle(title2, void 0, event.working_start),
       subTitle: formatDateTime(new Date(event.timestamp)),
       icon: descriptor.icon,
       text: text2
@@ -190156,7 +190168,7 @@ const ScoreEditEventView = ({
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      title: "Edit Score",
+      title: formatTitle("Edit Score", void 0, event.working_start),
       className: clsx(className2, "text-size-small"),
       subTitle: subtitle,
       collapsibleContent: true,
@@ -190244,7 +190256,7 @@ const SpanEventView = ({
       depth: eventNode.depth,
       childIds,
       className: clsx("transcript-span", className2),
-      title: title2,
+      title: formatTitle(title2, void 0, event.working_start),
       subTitle: formatDateTime(new Date(event.timestamp)),
       text: text2,
       icon: descriptor.icon
