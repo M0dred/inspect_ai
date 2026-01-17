@@ -117904,7 +117904,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.fullWidth, styles$1i.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1i.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.161-12-g4288dfd69" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.161-7-gfc43fbc0c" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
@@ -178473,14 +178473,20 @@ const FlatSampleError = ({ message: message2 }) => {
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$T.lineBase, "text-truncate"), children: errorType(message2) })
   ] });
 };
-const target = "_target_tv989_1";
-const answer = "_answer_tv989_5";
-const grid$6 = "_grid_tv989_9";
-const centerLabel = "_centerLabel_tv989_16";
-const centerValue = "_centerValue_tv989_21";
-const wrap = "_wrap_tv989_26";
-const titled = "_titled_tv989_30";
-const value$1 = "_value_tv989_34";
+const target = "_target_10p8e_1";
+const answer = "_answer_10p8e_5";
+const grid$6 = "_grid_10p8e_9";
+const centerLabel = "_centerLabel_10p8e_16";
+const centerValue = "_centerValue_10p8e_21";
+const wrap = "_wrap_10p8e_26";
+const titled = "_titled_10p8e_30";
+const value$1 = "_value_10p8e_34";
+const invalidationBanner = "_invalidationBanner_10p8e_40";
+const invalidationIcon = "_invalidationIcon_10p8e_50";
+const invalidationContent = "_invalidationContent_10p8e_56";
+const invalidationTitle = "_invalidationTitle_10p8e_63";
+const invalidationDetails = "_invalidationDetails_10p8e_68";
+const invalidationReason = "_invalidationReason_10p8e_76";
 const styles$S = {
   target,
   answer,
@@ -178489,7 +178495,13 @@ const styles$S = {
   centerValue,
   wrap,
   titled,
-  value: value$1
+  value: value$1,
+  invalidationBanner,
+  invalidationIcon,
+  invalidationContent,
+  invalidationTitle,
+  invalidationDetails,
+  invalidationReason
 };
 const kMaxRowTextSize$1 = 1024 * 5;
 function isEvalSample(sample2) {
@@ -178636,54 +178648,88 @@ const SampleSummaryView = ({
       center: true
     });
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-    "div",
-    {
-      id: `sample-heading-${parent_id}`,
-      className: clsx(styles$S.grid, "text-size-base"),
-      style: {
-        gridTemplateColumns: `${columns.map((col) => {
-          return col.size;
-        }).join(" ")}`
-      },
-      children: [
-        columns.map((col, idx) => {
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "div",
-            {
-              className: clsx(
-                "text-style-label",
-                "text-style-secondary",
-                "text-size-smallest",
-                col.title ? styles$S.titled : void 0,
-                col.center ? styles$S.centerLabel : void 0
-              ),
-              title: col.title,
-              "data-unsearchable": true,
-              children: col.label
-            },
-            `sample-summ-lbl-${idx}`
-          );
-        }),
-        columns.map((col, idx) => {
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "div",
-            {
-              className: clsx(
-                styles$S.value,
-                styles$S.wrap,
-                col.clamp ? "three-line-clamp" : void 0,
-                col.center ? styles$S.centerValue : void 0
-              ),
-              "data-unsearchable": true,
-              children: col.value
-            },
-            `sample-summ-val-${idx}`
-          );
-        })
-      ]
+  const invalidation = isEvalSample(sample2) ? sample2.invalidation : void 0;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: `sample-heading-${parent_id}`, children: [
+    invalidation && /* @__PURE__ */ jsxRuntimeExports.jsx(InvalidationBanner, { invalidation }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        className: clsx(styles$S.grid, "text-size-base"),
+        style: {
+          gridTemplateColumns: `${columns.map((col) => {
+            return col.size;
+          }).join(" ")}`
+        },
+        children: [
+          columns.map((col, idx) => {
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                className: clsx(
+                  "text-style-label",
+                  "text-style-secondary",
+                  "text-size-smallest",
+                  col.title ? styles$S.titled : void 0,
+                  col.center ? styles$S.centerLabel : void 0
+                ),
+                title: col.title,
+                "data-unsearchable": true,
+                children: col.label
+              },
+              `sample-summ-lbl-${idx}`
+            );
+          }),
+          columns.map((col, idx) => {
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                className: clsx(
+                  styles$S.value,
+                  styles$S.wrap,
+                  col.clamp ? "three-line-clamp" : void 0,
+                  col.center ? styles$S.centerValue : void 0
+                ),
+                "data-unsearchable": true,
+                children: col.value
+              },
+              `sample-summ-val-${idx}`
+            );
+          })
+        ]
+      }
+    )
+  ] });
+};
+const InvalidationBanner = ({
+  invalidation
+}) => {
+  const formatTimestamp = (timestamp) => {
+    try {
+      return new Date(timestamp).toLocaleString();
+    } catch {
+      return timestamp;
     }
-  );
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$S.invalidationBanner, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$S.invalidationIcon, children: "⚠" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$S.invalidationContent, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$S.invalidationTitle, children: "Sample Invalidated" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$S.invalidationDetails, children: [
+        invalidation.author && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+          "By: ",
+          invalidation.author
+        ] }),
+        invalidation.timestamp && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+          "On: ",
+          formatTimestamp(invalidation.timestamp)
+        ] }),
+        invalidation.reason && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: styles$S.invalidationReason, children: [
+          "Reason: ",
+          invalidation.reason
+        ] })
+      ] })
+    ] })
+  ] });
 };
 const SampleScores = ({ sample: sample2, scorer: scorer2 }) => {
   const scoreData = sample2.scores?.[scorer2];
@@ -191550,6 +191596,44 @@ const metadataViewsForSample = (id, scrollRef, sample2) => {
     return [];
   }
   const sampleMetadatas = [];
+  if (sample2.invalidation) {
+    const formatTimestamp = (timestamp) => {
+      try {
+        return new Date(timestamp).toLocaleString();
+      } catch {
+        return timestamp;
+      }
+    };
+    const invalidationRecord = {};
+    if (sample2.invalidation.author) {
+      invalidationRecord["Author"] = sample2.invalidation.author;
+    }
+    if (sample2.invalidation.timestamp) {
+      invalidationRecord["Timestamp"] = formatTimestamp(
+        sample2.invalidation.timestamp
+      );
+    }
+    if (sample2.invalidation.reason) {
+      invalidationRecord["Reason"] = sample2.invalidation.reason;
+    }
+    if (sample2.invalidation.metadata && Object.keys(sample2.invalidation.metadata).length > 0) {
+      invalidationRecord["Metadata"] = sample2.invalidation.metadata;
+    }
+    sampleMetadatas.push(
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Invalidation" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { padded: false, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          RecordTree,
+          {
+            id: `task-sample-invalidation-${id}`,
+            record: invalidationRecord,
+            className: clsx("tab-pane", styles$U.noTop),
+            scrollRef
+          }
+        ) })
+      ] }, `sample-invalidation-${id}`)
+    );
+  }
   if (sample2.model_usage && Object.keys(sample2.model_usage).length > 0) {
     sampleMetadatas.push(
       /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
