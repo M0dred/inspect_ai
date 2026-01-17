@@ -17152,6 +17152,9 @@ var require_assets = __commonJS({
             (...args2) => getHandlerInfo(args2[0])
           );
           if (instrumented) {
+            if (key2 === "loader" && original.hydrate === true) {
+              instrumented.hydrate = true;
+            }
             instrumented[UninstrumentedSymbol] = original;
             updates[key2] = instrumented;
           }
@@ -18065,7 +18068,8 @@ var require_assets = __commonJS({
             let location22 = normalizeRedirectLocation(
               result2.response.headers.get("Location"),
               new URL(request.url),
-              basename2
+              basename2,
+              init2.history
             );
             replace2 = location22 === state.location.pathname + state.location.search;
           }
@@ -18699,7 +18703,8 @@ var require_assets = __commonJS({
         location2 = normalizeRedirectLocation(
           location2,
           new URL(request.url),
-          basename2
+          basename2,
+          init2.history
         );
         let redirectLocation = createLocation(state.location, location2, {
           _isRedirect: true
@@ -20291,14 +20296,37 @@ var require_assets = __commonJS({
       }
       return response;
     }
-    function normalizeRedirectLocation(location2, currentUrl, basename2) {
+    function normalizeRedirectLocation(location2, currentUrl, basename2, historyInstance) {
+      let invalidProtocols = [
+        "about:",
+        "blob:",
+        "chrome:",
+        "chrome-untrusted:",
+        "content:",
+        "data:",
+        "devtools:",
+        "file:",
+        "filesystem:",
+        // eslint-disable-next-line no-script-url
+        "javascript:"
+      ];
       if (isAbsoluteUrl(location2)) {
         let normalizedLocation = location2;
         let url = normalizedLocation.startsWith("//") ? new URL(currentUrl.protocol + normalizedLocation) : new URL(normalizedLocation);
+        if (invalidProtocols.includes(url.protocol)) {
+          throw new Error("Invalid redirect location");
+        }
         let isSameBasename = stripBasename(url.pathname, basename2) != null;
         if (url.origin === currentUrl.origin && isSameBasename) {
           return url.pathname + url.search + url.hash;
         }
+      }
+      try {
+        let url = historyInstance.createURL(location2);
+        if (invalidProtocols.includes(url.protocol)) {
+          throw new Error("Invalid redirect location");
+        }
+      } catch (e) {
       }
       return location2;
     }
@@ -21926,19 +21954,27 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         throw new Error(message2);
       }
     }
-    function singleFetchUrl(reqUrl, basename2, extension) {
+    function singleFetchUrl(reqUrl, basename2, trailingSlashAware, extension) {
       let url = typeof reqUrl === "string" ? new URL(
         reqUrl,
         // This can be called during the SSR flow via PrefetchPageLinksImpl so
         // don't assume window is available
         typeof window === "undefined" ? "server://singlefetch/" : window.location.origin
       ) : reqUrl;
-      if (url.pathname === "/") {
-        url.pathname = `_root.${extension}`;
-      } else if (basename2 && stripBasename(url.pathname, basename2) === "/") {
-        url.pathname = `${basename2.replace(/\/$/, "")}/_root.${extension}`;
+      if (trailingSlashAware) {
+        if (url.pathname.endsWith("/")) {
+          url.pathname = `${url.pathname}_.${extension}`;
+        } else {
+          url.pathname = `${url.pathname}.${extension}`;
+        }
       } else {
-        url.pathname = `${url.pathname.replace(/\/$/, "")}.${extension}`;
+        if (url.pathname === "/") {
+          url.pathname = `_root.${extension}`;
+        } else if (basename2 && stripBasename(url.pathname, basename2) === "/") {
+          url.pathname = `${basename2.replace(/\/$/, "")}/_root.${extension}`;
+        } else {
+          url.pathname = `${url.pathname.replace(/\/$/, "")}.${extension}`;
+        }
       }
       return url;
     }
@@ -22211,7 +22247,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       ...linkProps
     }) {
       let location2 = useLocation();
-      let { manifest, routeModules } = useFrameworkContext();
+      let { future, manifest, routeModules } = useFrameworkContext();
       let { basename: basename2 } = useDataRouterContext2();
       let { loaderData, matches } = useDataRouterStateContext();
       let newMatchesForData = reactExports.useMemo(
@@ -22258,7 +22294,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         if (routesParams.size === 0) {
           return [];
         }
-        let url = singleFetchUrl(page, basename2, "data");
+        let url = singleFetchUrl(
+          page,
+          basename2,
+          future.unstable_trailingSlashAwareDataRequests,
+          "data"
+        );
         if (foundOptOutRoute && routesParams.size > 0) {
           url.searchParams.set(
             "_routes",
@@ -22268,6 +22309,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         return [url.pathname + url.search];
       }, [
         basename2,
+        future.unstable_trailingSlashAwareDataRequests,
         loaderData,
         location2,
         manifest,
@@ -22302,7 +22344,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     try {
       if (isBrowser2) {
         window.__reactRouterVersion = // @ts-expect-error
-        "7.11.0";
+        "7.12.0";
       }
     } catch (e) {
     }
@@ -117978,7 +118020,7 @@ categories: ${categories.join(" ")}`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.fullWidth, styles$1i.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1i.logDir, children: logDir2 }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.160-7-ga0412a414" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.161-6-g8a000b383" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
