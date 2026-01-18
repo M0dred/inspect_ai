@@ -28086,6 +28086,15 @@ const sampleIdsEqual = (id, otherId) => {
   }
   return String(id) === String(otherId);
 };
+const sampleHandlesEqual = (sample1, sample2) => {
+  if (!sample1 && !sample2) {
+    return true;
+  }
+  if (!sample1 || !sample2) {
+    return false;
+  }
+  return sampleIdsEqual(sample1.id, sample2.id) && sample1.epoch === sample2.epoch && sample1.logFile === sample2.logFile;
+};
 const toLogPreview = (header2) => {
   return {
     eval_id: header2.eval.eval_id,
@@ -28395,13 +28404,17 @@ const createLogSlice = (set3, get2, _store) => {
     log: initialState$2,
     // Actions
     logActions: {
-      selectSample: (sampleId, epoch) => {
+      selectSample: (sampleId, epoch, logFile) => {
         const currentSample = get2().log.selectedSampleHandle;
-        if (sampleIdsEqual(currentSample?.id, sampleId) && currentSample?.epoch === epoch) {
+        if (sampleHandlesEqual(currentSample, {
+          id: sampleId,
+          epoch,
+          logFile
+        })) {
           return;
         }
         set3((state) => {
-          state.log.selectedSampleHandle = { id: sampleId, epoch };
+          state.log.selectedSampleHandle = { id: sampleId, epoch, logFile };
         });
       },
       clearSelectedSample: () => {
@@ -29069,7 +29082,7 @@ function createSamplePolling(get2, set3) {
             if (sample2) {
               const migratedSample = resolveSample$1(sample2);
               set3((state2) => {
-                state2.sampleActions.setSelectedSample(migratedSample);
+                state2.sampleActions.setSelectedSample(migratedSample, logFile);
                 state2.sampleActions.setSampleStatus("ok");
                 state2.sample.runningEvents = [];
               });
@@ -29371,12 +29384,13 @@ const createSampleSlice = (set3, get2, _store) => {
     // Actions
     sample: initialState,
     sampleActions: {
-      setSelectedSample: (sample2) => {
+      setSelectedSample: (sample2, logFile) => {
         const isLarge = isLargeSample(sample2);
         set3((state) => {
           state.sample.sample_identifier = {
             id: sample2.id,
-            epoch: sample2.epoch
+            epoch: sample2.epoch,
+            logFile
           };
           state.sample.sampleInState = !isLarge;
           if (!isLarge) {
@@ -29512,11 +29526,11 @@ const createSampleSlice = (set3, get2, _store) => {
             const sample2 = await get2().api?.get_log_sample(logFile, id, epoch);
             log$5.debug(`LOADED COMPLETED SAMPLE: ${id}-${epoch}`);
             if (sample2) {
-              if (state.sample.sample_identifier?.id !== sample2.id && state.sample.sample_identifier?.epoch !== sample2.epoch) {
+              if (state.sample.sample_identifier?.id !== sample2.id || state.sample.sample_identifier?.epoch !== sample2.epoch || state.sample.sample_identifier?.logFile !== logFile) {
                 sampleActions.clearCollapsedEvents();
               }
               const migratedSample = resolveSample$1(sample2);
-              sampleActions.setSelectedSample(migratedSample);
+              sampleActions.setSelectedSample(migratedSample, logFile);
               sampleActions.setSampleStatus("ok");
             } else {
               sampleActions.setSampleStatus("error");
@@ -117904,7 +117918,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.fullWidth, styles$1i.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1i.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.161-7-gfc43fbc0c" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.161-24-g1b319d98b" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
@@ -177773,7 +177787,7 @@ const useSampleNavigation = () => {
     (id, epoch, specifiedSampleTabId) => {
       const resolvedPath = resolveLogPath();
       if (resolvedPath) {
-        selectSample(id, epoch);
+        selectSample(id, epoch, resolvedPath);
         setShowingSampleDialog(true);
         const currentSampleTabId = specifiedSampleTabId || sampleTabId;
         const url = logSamplesUrl(resolvedPath, id, epoch, currentSampleTabId);
@@ -177805,7 +177819,10 @@ const useSampleNavigation = () => {
           }
         } else {
           const summary2 = sampleSummaries[index];
-          selectSample(summary2.id, summary2.epoch);
+          const logFile = logPath || selectedLogFile;
+          if (logFile) {
+            selectSample(summary2.id, summary2.epoch, logFile);
+          }
         }
       }
     },
@@ -177815,7 +177832,9 @@ const useSampleNavigation = () => {
       resolveLogPath,
       sampleTabId,
       navigate,
-      selectSample
+      selectSample,
+      logPath,
+      selectedLogFile
     ]
   );
   const nextSample = reactExports.useCallback(() => {
@@ -191783,7 +191802,7 @@ function useSampleLoader() {
   );
   reactExports.useEffect(() => {
     if (logSelection.logFile && sampleId !== void 0 && sampleEpoch !== void 0) {
-      const isCurrentSampleLoaded = sampleData.selectedSampleIdentifier?.id === sampleId && sampleData.selectedSampleIdentifier?.epoch === sampleEpoch;
+      const isCurrentSampleLoaded = sampleData.selectedSampleIdentifier?.id === sampleId && sampleData.selectedSampleIdentifier?.epoch === sampleEpoch && sampleData.selectedSampleIdentifier?.logFile === logSelection.logFile;
       const isLoading = sampleData.status === "loading" || sampleData.status === "streaming";
       const logFileChanged = prevLogFile !== void 0 && prevLogFile !== logSelection.logFile;
       const completedChanged = prevCompleted !== void 0 && currentSampleCompleted !== prevCompleted;
@@ -214102,6 +214121,7 @@ const SamplesTab = ({ running }) => {
   );
   const sampleSummaries = useFilteredSamples();
   const selectedLogDetails = useStore((state) => state.log.selectedLogDetails);
+  const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
   const evalSampleCount = reactExports.useMemo(() => {
     const limit = selectedLogDetails?.eval.config.limit;
     const limitCount = limit === null || limit === void 0 ? void 0 : typeof limit === "number" ? limit : limit[1] - limit[0];
@@ -214178,11 +214198,11 @@ const SamplesTab = ({ running }) => {
     previousShowingDialogRef.current = showingSampleDialog;
   }, [showingSampleDialog]);
   reactExports.useEffect(() => {
-    if (sampleSummaries.length === 1) {
+    if (sampleSummaries.length === 1 && selectedLogFile) {
       const sample2 = sampleSummaries[0];
-      selectSample(sample2.id, sample2.epoch);
+      selectSample(sample2.id, sample2.epoch, selectedLogFile);
     }
-  }, [sampleSummaries, selectSample]);
+  }, [sampleSummaries, selectSample, selectedLogFile]);
   const title2 = reactExports.useMemo(() => {
     if (selectedSampleHandle) {
       return `Sample ${selectedSampleHandle.id} (Epoch ${selectedSampleHandle.epoch})`;
@@ -215712,9 +215732,9 @@ const LogViewContainer = () => {
     clearSelectedLogSummary
   ]);
   reactExports.useEffect(() => {
-    if (sampleId && filteredSamples) {
+    if (sampleId && filteredSamples && logPath) {
       const targetEpoch = epoch ? parseInt(epoch, 10) : 1;
-      selectSample(sampleId, targetEpoch);
+      selectSample(sampleId, targetEpoch, logPath);
       if (sampleTabId) {
         setSampleTab(sampleTabId);
       }
@@ -215731,6 +215751,7 @@ const LogViewContainer = () => {
     sampleId,
     epoch,
     sampleTabId,
+    logPath,
     filteredSamples,
     totalSampleCount,
     selectSample,
@@ -216495,7 +216516,12 @@ const styles = {
   disabled
 };
 const SampleDetailView = () => {
-  const { samplesPath, sampleId, epoch, tabId } = useSamplesRouteParams();
+  const {
+    samplesPath: routeLogPath,
+    sampleId,
+    epoch,
+    tabId
+  } = useSamplesRouteParams();
   const { loadLogs } = useLogs();
   const navigate = useNavigate();
   const selectSample = useStore((state) => state.logActions.selectSample);
@@ -216532,7 +216558,7 @@ const SampleDetailView = () => {
   const hasPrevious = currentIndex > 0;
   const hasNext = displayedSamples && currentIndex >= 0 && currentIndex < displayedSamples.length - 1;
   const handlePrevious = reactExports.useCallback(() => {
-    if (currentIndex > 0 && displayedSamples && samplesPath && logDir2) {
+    if (currentIndex > 0 && displayedSamples && routeLogPath && logDir2) {
       const prev = displayedSamples[currentIndex - 1];
       const relativePath = directoryRelativeUrl(prev.logFile, logDir2);
       const url = samplesSampleUrl(
@@ -216543,9 +216569,9 @@ const SampleDetailView = () => {
       );
       navigate(url);
     }
-  }, [currentIndex, displayedSamples, samplesPath, logDir2, tabId, navigate]);
+  }, [currentIndex, displayedSamples, routeLogPath, logDir2, tabId, navigate]);
   const handleNext = reactExports.useCallback(() => {
-    if (displayedSamples && currentIndex >= 0 && currentIndex < displayedSamples.length - 1 && samplesPath && logDir2) {
+    if (displayedSamples && currentIndex >= 0 && currentIndex < displayedSamples.length - 1 && routeLogPath && logDir2) {
       const next = displayedSamples[currentIndex + 1];
       const relativePath = directoryRelativeUrl(next.logFile, logDir2);
       const url = samplesSampleUrl(
@@ -216556,7 +216582,7 @@ const SampleDetailView = () => {
       );
       navigate(url);
     }
-  }, [currentIndex, displayedSamples, samplesPath, logDir2, tabId, navigate]);
+  }, [currentIndex, displayedSamples, routeLogPath, logDir2, tabId, navigate]);
   reactExports.useEffect(() => {
     if (tabId) {
       setSampleTab(tabId);
@@ -216564,17 +216590,17 @@ const SampleDetailView = () => {
   }, [tabId, setSampleTab]);
   reactExports.useEffect(() => {
     const exec2 = async () => {
-      if (samplesPath && sampleId && epoch) {
+      if (routeLogPath && sampleId && epoch) {
         await initLogDir();
-        await loadLogs(samplesPath);
-        setSelectedLogFile(samplesPath);
+        await loadLogs(routeLogPath);
+        setSelectedLogFile(routeLogPath);
         const targetEpoch = parseInt(epoch, 10);
-        selectSample(sampleId, targetEpoch);
+        selectSample(sampleId, targetEpoch, routeLogPath);
       }
     };
     exec2();
   }, [
-    samplesPath,
+    routeLogPath,
     sampleId,
     epoch,
     loadLogs,
@@ -216654,7 +216680,7 @@ const SampleDetailView = () => {
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         ApplicationNavbar,
         {
-          currentPath: samplesPath,
+          currentPath: routeLogPath,
           fnNavigationUrl: samplesUrl,
           bordered: true,
           children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles.sampleNav), children: [
