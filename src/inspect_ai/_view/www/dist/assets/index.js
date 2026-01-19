@@ -117918,7 +117918,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.fullWidth, styles$1i.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1i.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.161-24-g1b319d98b" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.162-2-g730aa64d5" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
@@ -178478,6 +178478,170 @@ const styles$U = {
   chat,
   transcriptContainer
 };
+function truncateMarkdown(markdown, maxLength = 250, ellipsis2 = "...") {
+  if (!markdown || markdown.length <= maxLength) {
+    return markdown;
+  }
+  if (markdown.trim().length === 0) {
+    return markdown.slice(0, maxLength);
+  }
+  if (ellipsis2.length >= maxLength) {
+    return markdown.slice(0, maxLength);
+  }
+  if (!hasMarkdownSyntax(markdown)) {
+    return simpleMarkdownTruncate(markdown, maxLength, ellipsis2);
+  }
+  const md = new MarkdownIt({
+    html: true,
+    breaks: true
+  });
+  const tokens = md.parse(markdown, {});
+  let accumulated = "";
+  let lastSafePoint = "";
+  let isTruncated = false;
+  for (const token2 of tokens) {
+    const tokenContent = getTokenContent(token2);
+    const potentialLength = accumulated.length + tokenContent.length;
+    if (potentialLength > maxLength - ellipsis2.length) {
+      const remainingSpace = maxLength - ellipsis2.length - accumulated.length;
+      if (remainingSpace > 0 && tokenContent.length > 0) {
+        const truncatedToken = truncateAtWordBoundary(
+          tokenContent,
+          remainingSpace
+        );
+        if (truncatedToken.length > 0) {
+          accumulated += truncatedToken;
+        }
+      }
+      isTruncated = true;
+      break;
+    }
+    accumulated += tokenContent;
+    if (isCompleteSyntax(token2)) {
+      lastSafePoint = accumulated;
+    }
+  }
+  const finalText = lastSafePoint.length > maxLength * 0.5 ? lastSafePoint : accumulated;
+  if (isTruncated && finalText.length > 0) {
+    return finalText.trimEnd() + ellipsis2;
+  }
+  return finalText;
+}
+function hasMarkdownSyntax(text2) {
+  const markdownPatterns = [
+    /\[.*?\]\(.*?\)/,
+    // Links
+    /!\[.*?\]\(.*?\)/,
+    // Images
+    /`[^`]+`/,
+    // Inline code
+    /```[\s\S]*?```/,
+    // Code blocks
+    /\*{1,2}[^*]+\*{1,2}/,
+    // Bold/italic
+    /_{1,2}[^_]+_{1,2}/,
+    // Bold/italic
+    /\$[^$]+\$/,
+    // LaTeX
+    /^#{1,6}\s/m,
+    // Headers
+    /^\s*[-*+]\s/m
+    // Lists
+  ];
+  return markdownPatterns.some((pattern) => pattern.test(text2));
+}
+function getTokenContent(token2) {
+  if (token2.type === "inline" && token2.children) {
+    return token2.children.map((child) => {
+      if (child.content) return child.content;
+      if (child.type === "softbreak") return "\n";
+      if (child.type === "hardbreak") return "\n";
+      return "";
+    }).join("");
+  }
+  if (token2.content) {
+    return token2.content;
+  }
+  if (token2.type === "code_block" || token2.type === "fence") {
+    return token2.content || "";
+  }
+  if (token2.type === "html_block") {
+    return token2.content || "";
+  }
+  if (token2.type === "softbreak" || token2.type === "hardbreak") {
+    return "\n";
+  }
+  return "";
+}
+function isCompleteSyntax(token2) {
+  const completeTypes = [
+    "paragraph_close",
+    "heading_close",
+    "blockquote_close",
+    "list_item_close",
+    "ordered_list_close",
+    "bullet_list_close",
+    "code_block",
+    "fence",
+    "hr",
+    "html_block"
+  ];
+  return completeTypes.includes(token2.type);
+}
+function truncateAtWordBoundary(text2, maxLength) {
+  if (text2.length <= maxLength) {
+    return text2;
+  }
+  let lastSpace = -1;
+  for (let i = maxLength - 1; i >= 0; i--) {
+    if (/\s/.test(text2[i])) {
+      lastSpace = i;
+      break;
+    }
+  }
+  if (lastSpace > 0) {
+    return text2.slice(0, lastSpace);
+  }
+  for (let i = maxLength - 1; i >= 0; i--) {
+    if (/[.!?,;:\-—]/.test(text2[i])) {
+      return text2.slice(0, i + 1);
+    }
+  }
+  const substr = text2.slice(0, maxLength);
+  const markdownPatterns = [
+    /\[([^\]]*)?$/,
+    // Incomplete link
+    /!\[([^\]]*)?$/,
+    // Incomplete image
+    /`[^`]*$/,
+    // Incomplete inline code
+    /\*{1,2}[^*]*$/,
+    // Incomplete bold/italic
+    /_{1,2}[^_]*$/,
+    // Incomplete bold/italic
+    /\$[^$]*$/
+    // Incomplete LaTeX
+  ];
+  for (const pattern of markdownPatterns) {
+    const match2 = substr.match(pattern);
+    if (match2 && match2.index) {
+      return substr.slice(0, match2.index);
+    }
+  }
+  return substr;
+}
+function simpleMarkdownTruncate(markdown, maxLength = 250, ellipsis2 = "...") {
+  if (!markdown || markdown.length <= maxLength) {
+    return markdown;
+  }
+  const targetLength = maxLength - ellipsis2.length;
+  const truncated = markdown.slice(0, targetLength);
+  const lastSpace = truncated.lastIndexOf(" ");
+  if (lastSpace > 0) {
+    return truncated.slice(0, lastSpace) + ellipsis2;
+  }
+  return truncated + ellipsis2;
+}
 const flatBody = "_flatBody_1uw6w_1";
 const iconSmall$1 = "_iconSmall_1uw6w_9";
 const lineBase = "_lineBase_1uw6w_15";
@@ -178522,7 +178686,7 @@ const styles$S = {
   invalidationDetails,
   invalidationReason
 };
-const kMaxRowTextSize$1 = 1024 * 5;
+const kMaxCellTextLength = 256;
 function isEvalSample(sample2) {
   return "store" in sample2;
 }
@@ -178582,11 +178746,10 @@ const SampleSummaryView = ({
     value: /* @__PURE__ */ jsxRuntimeExports.jsx(
       RenderedText,
       {
-        markdown: fields.input.join(" ").slice(0, kMaxRowTextSize$1)
+        markdown: truncateMarkdown(fields.input.join(" "), kMaxCellTextLength)
       }
     ),
-    size: `minmax(auto, 5fr)`,
-    clamp: true
+    size: `minmax(auto, 5fr)`
   });
   if (fields.target) {
     columns.push({
@@ -178594,9 +178757,9 @@ const SampleSummaryView = ({
       value: /* @__PURE__ */ jsxRuntimeExports.jsx(
         RenderedText,
         {
-          markdown: arrayToString(fields?.target || "none").slice(
-            0,
-            kMaxRowTextSize$1
+          markdown: truncateMarkdown(
+            arrayToString(fields?.target || "none"),
+            kMaxCellTextLength
           ),
           className: clsx("no-last-para-padding", styles$S.target)
         }
@@ -178611,7 +178774,7 @@ const SampleSummaryView = ({
       value: sample2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
         RenderedText,
         {
-          markdown: (fields.answer || "").slice(0, kMaxRowTextSize$1),
+          markdown: truncateMarkdown(fields.answer || "", kMaxCellTextLength),
           className: clsx("no-last-para-padding", styles$S.answer)
         }
       ) : "",
@@ -213372,7 +213535,6 @@ const styles$l = {
   score,
   centered
 };
-const kMaxRowTextSize = 1024 * 5;
 const SampleRow = ({
   id,
   sample: sample2,
@@ -213433,7 +213595,10 @@ const SampleRow = ({
             children: !showingSampleDialog ? /* @__PURE__ */ jsxRuntimeExports.jsx(
               RenderedText,
               {
-                markdown: inputString(sample2.input).join(" ").slice(0, kMaxRowTextSize),
+                markdown: truncateMarkdown(
+                  inputString(sample2.input).join(" "),
+                  250
+                ),
                 forceRender: true,
                 omitMedia: true
               }
@@ -213443,7 +213608,7 @@ const SampleRow = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("sample-target", "three-line-clamp", styles$l.cell), children: sample2?.target && !showingSampleDialog ? /* @__PURE__ */ jsxRuntimeExports.jsx(
           RenderedText,
           {
-            markdown: arrayToString(sample2.target).slice(0, kMaxRowTextSize),
+            markdown: truncateMarkdown(arrayToString(sample2.target), 250),
             className: clsx("no-last-para-padding", styles$l.noLeft),
             forceRender: true,
             omitMedia: true
@@ -213452,7 +213617,7 @@ const SampleRow = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("sample-answer", "three-line-clamp", styles$l.cell), children: sample2 && !showingSampleDialog ? /* @__PURE__ */ jsxRuntimeExports.jsx(
           RenderedText,
           {
-            markdown: (answer2 || "").slice(0, kMaxRowTextSize),
+            markdown: truncateMarkdown(answer2 || "", 250),
             className: clsx("no-last-para-padding", styles$l.noLeft),
             forceRender: true,
             omitMedia: true
