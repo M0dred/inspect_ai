@@ -176449,6 +176449,15 @@ const FindBand = () => {
       input2.setSelectionRange(len, len);
     }
   }, []);
+  const handleRestoreCursorIfNeeded = reactExports.useCallback(() => {
+    const input2 = searchBoxRef.current;
+    if (!input2) return;
+    if (input2.selectionStart === 0 && input2.selectionEnd === 0 && input2.value.length > 0) {
+      restoreCursor();
+    } else {
+      needsCursorRestoreRef.current = false;
+    }
+  }, [restoreCursor]);
   const handleInputChange = reactExports.useCallback(() => {
     if (debounceTimerRef.current !== null) {
       window.clearTimeout(debounceTimerRef.current);
@@ -176461,8 +176470,8 @@ const FindBand = () => {
     }, 300);
   }, [handleSearch]);
   const handleBeforeInput = reactExports.useCallback(() => {
-    restoreCursor();
-  }, [restoreCursor]);
+    handleRestoreCursorIfNeeded();
+  }, [handleRestoreCursorIfNeeded]);
   reactExports.useEffect(() => {
     const handleGlobalKeyDown = (e) => {
       if (e.key === "F3") {
@@ -176475,9 +176484,11 @@ const FindBand = () => {
         return;
       const input2 = searchBoxRef.current;
       if (!input2) return;
-      restoreCursor();
       if (document.activeElement !== input2) {
+        restoreCursor();
         input2.focus();
+      } else {
+        handleRestoreCursorIfNeeded();
       }
     };
     document.addEventListener("keydown", handleGlobalKeyDown);
@@ -176487,7 +176498,7 @@ const FindBand = () => {
         window.clearTimeout(debounceTimerRef.current);
       }
     };
-  }, [handleSearch, restoreCursor]);
+  }, [handleSearch, restoreCursor, handleRestoreCursorIfNeeded]);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-unsearchable": "true", className: clsx("findBand"), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "input",
@@ -178085,7 +178096,7 @@ const LiveVirtualList = ({
   initialTopMostItemIndex,
   offsetTop,
   components,
-  searchInItem
+  itemSearchText
 }) => {
   const { getRestoreState, isScrolling, visibleRange, setVisibleRange } = useVirtuosoState(listHandle, `live-virtual-list-${id}`);
   const { registerVirtualList } = useExtendedFind();
@@ -178150,27 +178161,47 @@ const LiveVirtualList = ({
     return () => clearTimeout(timer);
   }, [forceUpdate]);
   const [, forceRender] = reactExports.useState({});
-  const defaultSearchInItem = reactExports.useCallback(
-    (item2, searchTerm) => {
-      const searchLower = searchTerm.toLowerCase();
-      try {
-        const itemString = JSON.stringify(item2).toLowerCase();
-        return itemString.includes(searchLower);
-      } catch {
-        return false;
+  const defaultItemSearchText = reactExports.useCallback((item2) => {
+    try {
+      return JSON.stringify(item2);
+    } catch {
+      return "";
+    }
+  }, []);
+  const searchInText = reactExports.useCallback(
+    (text2, searchTerm) => {
+      const lowerText = text2.toLowerCase();
+      const prepared = prepareSearchTerm(searchTerm);
+      if (lowerText.includes(prepared.simple)) {
+        return true;
       }
+      if (prepared.unquoted && lowerText.includes(prepared.unquoted)) {
+        return true;
+      }
+      if (prepared.jsonEscaped && lowerText.includes(prepared.jsonEscaped)) {
+        return true;
+      }
+      return false;
     },
     []
+  );
+  const searchInItem = reactExports.useCallback(
+    (item2, searchTerm) => {
+      const getSearchText = itemSearchText ?? defaultItemSearchText;
+      const texts = getSearchText(item2);
+      const textArray = Array.isArray(texts) ? texts : [texts];
+      return textArray.some((text2) => searchInText(text2, searchTerm));
+    },
+    [itemSearchText, defaultItemSearchText, searchInText]
   );
   const searchInData = reactExports.useCallback(
     async (term, direction, onContentReady) => {
       if (!data.length || !term) return false;
-      const searchFn = searchInItem || defaultSearchInItem;
       const currentIndex = direction === "forward" ? visibleRange.endIndex : visibleRange.startIndex;
       const searchStart = direction === "forward" ? Math.max(0, currentIndex + 1) : Math.min(data.length - 1, currentIndex - 1);
       const step = direction === "forward" ? 1 : -1;
       for (let i = searchStart; i >= 0 && i < data.length; i += step) {
-        if (searchFn(data[i], term)) {
+        if (searchInItem(data[i], term)) {
           pendingSearchCallback.current = onContentReady;
           listHandle.current?.scrollToIndex({
             index: i,
@@ -178191,7 +178222,6 @@ const LiveVirtualList = ({
     [
       data,
       searchInItem,
-      defaultSearchInItem,
       visibleRange.endIndex,
       visibleRange.startIndex,
       listHandle
@@ -178267,7 +178297,77 @@ const LiveVirtualList = ({
     }
   );
 };
+const prepareSearchTerm = (term) => {
+  const lower = term.toLowerCase();
+  if (!term.includes('"') && !term.includes(":")) {
+    return { simple: lower };
+  }
+  return {
+    simple: lower,
+    // Remove quotes
+    unquoted: lower.replace(/"/g, ""),
+    // Escape quotes for JSON
+    jsonEscaped: lower.replace(/"/g, '\\"')
+  };
+};
 const styles$V = {};
+const messageSearchText = (resolved) => {
+  const texts = [];
+  texts.push(...extractContentText$1(resolved.message.content));
+  if (resolved.message.role === "assistant" && "tool_calls" in resolved.message && resolved.message.tool_calls) {
+    for (const toolCall of resolved.message.tool_calls) {
+      if (toolCall.function) {
+        texts.push(toolCall.function);
+      }
+      if (toolCall.arguments) {
+        texts.push(JSON.stringify(toolCall.arguments));
+      }
+    }
+  }
+  for (const toolMsg of resolved.toolMessages) {
+    if (toolMsg.function) {
+      texts.push(toolMsg.function);
+    }
+    texts.push(...extractContentText$1(toolMsg.content));
+    if (toolMsg.error?.message) {
+      texts.push(toolMsg.error.message);
+    }
+  }
+  return texts;
+};
+const extractContentText$1 = (content2) => {
+  if (typeof content2 === "string") {
+    return [content2];
+  }
+  const texts = [];
+  for (const item2 of content2) {
+    switch (item2.type) {
+      case "text":
+        texts.push(item2.text);
+        break;
+      case "reasoning": {
+        const reasoning2 = item2;
+        if (reasoning2.reasoning) {
+          texts.push(reasoning2.reasoning);
+        } else if (reasoning2.summary) {
+          texts.push(reasoning2.summary);
+        }
+        break;
+      }
+      case "tool_use": {
+        const toolUse = item2;
+        if (toolUse.name) {
+          texts.push(toolUse.name);
+        }
+        if (toolUse.arguments) {
+          texts.push(JSON.stringify(toolUse.arguments));
+        }
+        break;
+      }
+    }
+  }
+  return texts;
+};
 const ChatViewVirtualList = reactExports.memo(
   ({
     id,
@@ -178453,7 +178553,8 @@ const ChatViewVirtualListComponent = reactExports.memo(
         offsetTop: topOffset,
         live: running,
         showProgress: running,
-        components: { Item }
+        components: { Item },
+        itemSearchText: messageSearchText
       }
     );
   }
@@ -190598,6 +190699,158 @@ const styles$t = {
   attachedParent,
   attachedChild
 };
+const eventSearchText = (node2) => {
+  const texts = [];
+  const event = node2.event;
+  switch (event.event) {
+    case "model": {
+      const modelEvent = event;
+      if (modelEvent.model) {
+        texts.push(modelEvent.model);
+      }
+      if (modelEvent.output?.choices) {
+        for (const choice of modelEvent.output.choices) {
+          texts.push(...extractContentText(choice.message.content));
+        }
+      }
+      if (modelEvent.input) {
+        for (const msg of modelEvent.input) {
+          if (msg.role === "user" || msg.role === "system") {
+            texts.push(...extractContentText(msg.content));
+          }
+        }
+      }
+      break;
+    }
+    case "tool": {
+      const toolEvent = event;
+      if (toolEvent.view?.title) {
+        texts.push(toolEvent.view.title);
+      }
+      if (toolEvent.function) {
+        texts.push(toolEvent.function);
+      }
+      if (toolEvent.arguments) {
+        texts.push(JSON.stringify(toolEvent.arguments));
+      }
+      if (toolEvent.result) {
+        if (typeof toolEvent.result === "string") {
+          texts.push(toolEvent.result);
+        } else {
+          texts.push(JSON.stringify(toolEvent.result));
+        }
+      }
+      if (toolEvent.error?.message) {
+        texts.push(toolEvent.error.message);
+      }
+      break;
+    }
+    case "error": {
+      const errorEvent = event;
+      if (errorEvent.error?.message) {
+        texts.push(errorEvent.error.message);
+      }
+      if (errorEvent.error?.traceback) {
+        texts.push(errorEvent.error.traceback);
+      }
+      break;
+    }
+    case "logger": {
+      const loggerEvent = event;
+      if (loggerEvent.message?.message) {
+        texts.push(loggerEvent.message.message);
+      }
+      if (loggerEvent.message?.filename) {
+        texts.push(loggerEvent.message.filename);
+      }
+      break;
+    }
+    case "info": {
+      const infoEvent = event;
+      if (infoEvent.source) {
+        texts.push(infoEvent.source);
+      }
+      if (infoEvent.data) {
+        if (typeof infoEvent.data === "string") {
+          texts.push(infoEvent.data);
+        } else {
+          texts.push(JSON.stringify(infoEvent.data));
+        }
+      }
+      break;
+    }
+    case "step": {
+      const stepEvent = event;
+      if (stepEvent.name) {
+        texts.push(stepEvent.name);
+      }
+      if (stepEvent.type) {
+        texts.push(stepEvent.type);
+      }
+      break;
+    }
+    case "subtask": {
+      const subtaskEvent = event;
+      if (subtaskEvent.name) {
+        texts.push(subtaskEvent.name);
+      }
+      if (subtaskEvent.type) {
+        texts.push(subtaskEvent.type);
+      }
+      if (subtaskEvent.input) {
+        texts.push(JSON.stringify(subtaskEvent.input));
+      }
+      if (subtaskEvent.result) {
+        texts.push(JSON.stringify(subtaskEvent.result));
+      }
+      break;
+    }
+    case "span_begin": {
+      const spanEvent = event;
+      if (spanEvent.name) {
+        texts.push(spanEvent.name);
+      }
+      if (spanEvent.type) {
+        texts.push(spanEvent.type);
+      }
+      break;
+    }
+  }
+  return texts;
+};
+const extractContentText = (content2) => {
+  if (typeof content2 === "string") {
+    return [content2];
+  }
+  const texts = [];
+  for (const item2 of content2) {
+    switch (item2.type) {
+      case "text":
+        texts.push(item2.text);
+        break;
+      case "reasoning": {
+        const reasoning2 = item2;
+        if (reasoning2.reasoning) {
+          texts.push(reasoning2.reasoning);
+        } else if (reasoning2.summary) {
+          texts.push(reasoning2.summary);
+        }
+        break;
+      }
+      case "tool_use": {
+        const toolUse = item2;
+        if (toolUse.name) {
+          texts.push(toolUse.name);
+        }
+        if (toolUse.arguments) {
+          texts.push(JSON.stringify(toolUse.arguments));
+        }
+        break;
+      }
+    }
+  }
+  return texts;
+};
 const TranscriptVirtualListComponent = ({
   id,
   listHandle,
@@ -190707,7 +190960,8 @@ const TranscriptVirtualListComponent = ({
         initialTopMostItemIndex: initialEventIndex,
         offsetTop,
         renderRow,
-        live: running
+        live: running,
+        itemSearchText: eventSearchText
       }
     );
   } else {
