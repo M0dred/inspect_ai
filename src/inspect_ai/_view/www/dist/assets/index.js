@@ -110873,7 +110873,7 @@ const resolveToolInput = (fn3, toolArgs) => {
 const extractInputMetadata = (toolName) => {
   if (toolName === "bash") {
     return {
-      inputArg: "cmd",
+      inputArg: ["cmd", "command"],
       contentType: "bash"
     };
   } else if (toolName === "python") {
@@ -110936,9 +110936,12 @@ const extractInput = (args2, inputDescriptor) => {
   if (inputDescriptor) {
     const filterKeys = /* @__PURE__ */ new Set();
     const base2 = {};
-    if (inputDescriptor.inputArg && args2[inputDescriptor.inputArg]) {
-      filterKeys.add(inputDescriptor.inputArg);
-      base2.input = inputDescriptor.inputToStr ? inputDescriptor.inputToStr(args2[inputDescriptor.inputArg]) || args2[inputDescriptor.inputArg] : args2[inputDescriptor.inputArg];
+    const inputArgs = inputDescriptor.inputArg ? Array.isArray(inputDescriptor.inputArg) ? inputDescriptor.inputArg : [inputDescriptor.inputArg] : [];
+    for (const inputArg of inputArgs) {
+      if (inputDescriptor.inputArg && args2[inputArg]) {
+        filterKeys.add(inputArg);
+        base2.input = inputDescriptor.inputToStr ? inputDescriptor.inputToStr(args2[inputArg]) || args2[inputArg] : args2[inputArg];
+      }
     }
     if (inputDescriptor.descriptionArg && args2[inputDescriptor.descriptionArg]) {
       filterKeys.add(inputDescriptor.descriptionArg);
@@ -111024,10 +111027,13 @@ const TodoWriteInput = ({ contents: contents2, parentRef }) => {
 const ToolInput = (props) => {
   const { contentType, contents: contents2, toolCallView: toolCallView2, className: className2 } = props;
   const sourceCodeRef = reactExports.useRef(null);
-  const sourceCodeLength = toolCallView2 ? toolCallView2.content.length : contents2 ? typeof contents2 === "string" ? contents2.length : JSON.stringify(contents2).length : 0;
+  const useToolView = toolCallView2 && isValidView(toolCallView2);
+  const sourceCodeLength = useToolView ? toolCallView2.content.length : contents2 ? typeof contents2 === "string" ? contents2.length : JSON.stringify(contents2).length : 0;
   usePrismHighlight(sourceCodeRef, sourceCodeLength);
-  if (!contents2 && !toolCallView2?.content) return null;
-  if (toolCallView2) {
+  if (!contents2 && !useToolView) {
+    return null;
+  }
+  if (useToolView) {
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       RenderedText,
       {
@@ -111081,6 +111087,12 @@ const RenderTool = ({
       )
     }
   ) });
+};
+const isValidView = (view) => {
+  if (view.content === "```bash\nbash\n```\n") {
+    return false;
+  }
+  return true;
 };
 const image = "_image_1vcac_1";
 const toolTitle = "_toolTitle_1vcac_6";
@@ -117924,7 +117936,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.fullWidth, styles$1i.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1i.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.163-6-gc5827baa9" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.163-2-g76d302787" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
