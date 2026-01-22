@@ -32499,6 +32499,41 @@ const CopyButton = ({
     }
   );
 };
+function findScrollableParent(element, options2) {
+  const minBuffer = 100;
+  let current2 = element instanceof HTMLElement ? element : element?.parentElement;
+  while (current2 && current2 !== document.body) {
+    const style2 = getComputedStyle(current2);
+    if ((style2.overflowY === "auto" || style2.overflowY === "scroll") && current2.scrollHeight > current2.clientHeight + minBuffer) {
+      return current2;
+    }
+    current2 = current2.parentElement;
+  }
+  return null;
+}
+function scrollRangeToCenter(range2, options2) {
+  const { behavior = "auto", fallbackToScrollIntoView = true } = {};
+  const rects = range2.getClientRects();
+  if (rects.length === 0) return;
+  const selectionRect = rects[0];
+  const scrollableParent = findScrollableParent(
+    range2.startContainer.parentElement
+  );
+  if (scrollableParent) {
+    const parentRect = scrollableParent.getBoundingClientRect();
+    const selectionOffsetInParent = selectionRect.top - parentRect.top + scrollableParent.scrollTop;
+    const targetScrollTop = selectionOffsetInParent - scrollableParent.clientHeight / 2;
+    scrollableParent.scrollTo({
+      top: Math.max(0, targetScrollTop),
+      behavior
+    });
+  } else if (fallbackToScrollIntoView) {
+    range2.startContainer.parentElement?.scrollIntoView({
+      behavior,
+      block: "center"
+    });
+  }
+}
 const useResizeObserver = (callback) => {
   const elementRef = reactExports.useRef(null);
   const observerRef = reactExports.useRef(null);
@@ -176328,7 +176363,6 @@ const FindBand = () => {
   const { extendedFindTerm } = useExtendedFind();
   const lastFoundItem = reactExports.useRef(null);
   const currentSearchTerm = reactExports.useRef("");
-  const debounceTimerRef = reactExports.useRef(null);
   const needsCursorRestoreRef = reactExports.useRef(false);
   const lastNoResultTerm = reactExports.useRef("");
   const lastNoResultDirection = reactExports.useRef(null);
@@ -176378,20 +176412,8 @@ const FindBand = () => {
       if (selection && selection.rangeCount > 0) {
         savedRange = selection.getRangeAt(0).cloneRange();
       }
-      let savedScrollParent = null;
-      let savedScrollTop = 0;
-      if (savedRange) {
-        let current2 = savedRange.startContainer.parentElement;
-        while (current2 && current2 !== document.body) {
-          const style2 = getComputedStyle(current2);
-          if ((style2.overflowY === "auto" || style2.overflowY === "scroll") && current2.scrollHeight > current2.clientHeight + 100) {
-            savedScrollParent = current2;
-            savedScrollTop = current2.scrollTop;
-            break;
-          }
-          current2 = current2.parentElement;
-        }
-      }
+      const savedScrollParent = savedRange ? findScrollableParent(savedRange.startContainer.parentElement) : null;
+      const savedScrollTop = savedScrollParent?.scrollTop ?? 0;
       let result2 = await findExtendedInDOM(
         searchTerm,
         back,
@@ -176447,34 +176469,7 @@ const FindBand = () => {
             window.clearTimeout(scrollTimeoutRef.current);
           }
           scrollTimeoutRef.current = window.setTimeout(() => {
-            const selectionRects = range2.getClientRects();
-            if (selectionRects.length === 0) return;
-            const selectionRect = selectionRects[0];
-            let scrollableParent = null;
-            let current2 = range2.startContainer.parentElement;
-            while (current2 && current2 !== document.body) {
-              const style2 = getComputedStyle(current2);
-              if ((style2.overflowY === "auto" || style2.overflowY === "scroll") && current2.scrollHeight > current2.clientHeight + 100) {
-                scrollableParent = current2;
-                break;
-              }
-              current2 = current2.parentElement;
-            }
-            if (scrollableParent) {
-              const parentRect = scrollableParent.getBoundingClientRect();
-              const selectionOffsetInParent = selectionRect.top - parentRect.top + scrollableParent.scrollTop;
-              const targetScrollTop = selectionOffsetInParent - scrollableParent.clientHeight / 2;
-              scrollableParent.scrollTo({
-                top: Math.max(0, targetScrollTop),
-                behavior: "auto"
-              });
-            } else {
-              const element = range2.startContainer.parentElement;
-              element?.scrollIntoView({
-                behavior: "auto",
-                block: "center"
-              });
-            }
+            scrollRangeToCenter(range2);
           }, 100);
         }
       }
@@ -176487,25 +176482,10 @@ const FindBand = () => {
       searchBoxRef.current?.focus();
       searchBoxRef.current?.select();
     }, 10);
-    const handleGlobalKeydown = (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === "f") {
-        e.preventDefault();
-        e.stopPropagation();
-        searchBoxRef.current?.focus();
-        searchBoxRef.current?.select();
-      } else if ((e.ctrlKey || e.metaKey) && e.key === "g") {
-        e.preventDefault();
-        e.stopPropagation();
-        const back = e.shiftKey;
-        void handleSearch(back);
-      }
-    };
-    document.addEventListener("keydown", handleGlobalKeydown, true);
     const mutatedPanels = mutatedPanelsRef.current;
     const scrollTimeout = scrollTimeoutRef.current;
     const focusTimeout = focusTimeoutRef.current;
     return () => {
-      document.removeEventListener("keydown", handleGlobalKeydown, true);
       if (scrollTimeout !== null) {
         window.clearTimeout(scrollTimeout);
       }
@@ -176520,7 +176500,7 @@ const FindBand = () => {
       });
       mutatedPanels.clear();
     };
-  }, [handleSearch]);
+  }, []);
   const handleKeyDown = reactExports.useCallback(
     (e) => {
       if (e.key === "Escape") {
@@ -176552,17 +176532,17 @@ const FindBand = () => {
       input2.setSelectionRange(len, len);
     }
   }, []);
-  const handleInputChange = reactExports.useCallback(() => {
-    if (debounceTimerRef.current !== null) {
-      window.clearTimeout(debounceTimerRef.current);
-    }
-    debounceTimerRef.current = window.setTimeout(async () => {
-      debounceTimerRef.current = null;
+  const debouncedSearch = reactExports.useMemo(
+    () => debounce$2(async () => {
       if (!searchBoxRef.current) return;
       await handleSearch(false);
       needsCursorRestoreRef.current = true;
-    }, 300);
-  }, [handleSearch]);
+    }, 300),
+    [handleSearch]
+  );
+  const handleInputChange = reactExports.useCallback(() => {
+    debouncedSearch();
+  }, [debouncedSearch]);
   const handleBeforeInput = reactExports.useCallback(() => {
     const input2 = searchBoxRef.current;
     if (input2) {
@@ -176579,6 +176559,19 @@ const FindBand = () => {
         void handleSearch(e.shiftKey);
         return;
       }
+      if ((e.ctrlKey || e.metaKey) && e.key === "f") {
+        e.preventDefault();
+        e.stopPropagation();
+        searchBoxRef.current?.focus();
+        searchBoxRef.current?.select();
+        return;
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key === "g") {
+        e.preventDefault();
+        e.stopPropagation();
+        void handleSearch(e.shiftKey);
+        return;
+      }
       if (e.ctrlKey || e.metaKey || e.altKey) return;
       if (e.key.length !== 1 && e.key !== "Backspace" && e.key !== "Delete")
         return;
@@ -176592,12 +176585,9 @@ const FindBand = () => {
         input2.focus();
       }
     };
-    document.addEventListener("keydown", handleGlobalKeyDown);
+    document.addEventListener("keydown", handleGlobalKeyDown, true);
     return () => {
-      document.removeEventListener("keydown", handleGlobalKeyDown);
-      if (debounceTimerRef.current !== null) {
-        window.clearTimeout(debounceTimerRef.current);
-      }
+      document.removeEventListener("keydown", handleGlobalKeyDown, true);
     };
   }, [handleSearch, restoreCursor]);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-unsearchable": "true", className: clsx("findBand"), children: [
