@@ -115536,7 +115536,7 @@ const useSampleInvalidation = () => {
   const sampleIdentifier = useStore((state) => state.sample.sample_identifier);
   return reactExports.useMemo(() => {
     const sample2 = getSelectedSample();
-    return sample2?.invalidation || null;
+    return [sample2?.invalidation || null, sampleIdentifier];
   }, [getSelectedSample, sampleIdentifier]);
 };
 const useLogSelection = () => {
@@ -117972,7 +117972,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.fullWidth, styles$1i.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1i.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.163-14-g4a4710bb7" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.164-1-g163daea04" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
@@ -215787,7 +215787,7 @@ const SecondaryBar = ({
   sampleCount
 }) => {
   const evalDescriptor = useEvalDescriptor();
-  const sampleInvalidation = useSampleInvalidation();
+  const [sampleInvalidation] = useSampleInvalidation();
   if (!evalSpec || status2 !== "success") {
     return null;
   }
