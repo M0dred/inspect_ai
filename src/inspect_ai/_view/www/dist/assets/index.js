@@ -107915,6 +107915,7 @@ const isVscode = () => {
   });
 };
 const MAX_EVENTS_SIZE_BYTES = 350 * 1024 * 1024;
+const MAX_TOTAL_SIZE = 512 * 1024 * 1024;
 function findEventsArrayStart(data) {
   const pattern = new TextEncoder().encode('"events"');
   for (let i = 0; i < data.length - pattern.length - 10; i++) {
@@ -107988,7 +107989,7 @@ function clearLargeEventsArray(data) {
     return data;
   }
   const eventsSize = arrayEnd - arrayStart - 1;
-  if (eventsSize <= MAX_EVENTS_SIZE_BYTES) {
+  if (eventsSize <= MAX_EVENTS_SIZE_BYTES && data.length <= MAX_TOTAL_SIZE) {
     return data;
   }
   const before = data.slice(0, arrayStart + 1);
@@ -117971,7 +117972,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.fullWidth, styles$1i.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1i.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.163-2-g76d302787" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.163-14-g4a4710bb7" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
@@ -192328,10 +192329,11 @@ function useSampleLoader() {
     if (logSelection.logFile && sampleId !== void 0 && sampleEpoch !== void 0) {
       const isCurrentSampleLoaded = sampleData.selectedSampleIdentifier?.id === sampleId && sampleData.selectedSampleIdentifier?.epoch === sampleEpoch && sampleData.selectedSampleIdentifier?.logFile === logSelection.logFile;
       const isLoading = sampleData.status === "loading" || sampleData.status === "streaming";
+      const isError = sampleData.status === "error";
       const logFileChanged = prevLogFile !== void 0 && prevLogFile !== logSelection.logFile;
       const completedChanged = prevCompleted !== void 0 && currentSampleCompleted !== prevCompleted;
       const needsReloadChanged = prevSampleNeedsReload !== void 0 && prevSampleNeedsReload !== sampleData.sampleNeedsReload;
-      const shouldLoad = !isCurrentSampleLoaded && !isLoading || logFileChanged || completedChanged || needsReloadChanged;
+      const shouldLoad = !isCurrentSampleLoaded && !isLoading && !isError || logFileChanged || completedChanged || needsReloadChanged;
       if (shouldLoad) {
         loadSample(
           logSelection.logFile,
