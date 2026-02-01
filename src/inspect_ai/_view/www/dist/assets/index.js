@@ -29048,8 +29048,8 @@ function createSamplePolling(get2, set3) {
       set3((state) => {
         state.sample.runningEvents = [];
       });
-      resetPollingState(pollingState);
     }
+    resetPollingState(pollingState);
     abortController = new AbortController();
     log$6.debug(`Polling sample: ${summary2.id}-${summary2.epoch}`);
     const pollCallback = async () => {
@@ -29420,11 +29420,14 @@ const createSampleSlice = (set3, get2, _store) => {
         return state.sampleInState ? state.selectedSampleObject : selectedSampleRef.current;
       },
       clearSelectedSample: () => {
+        samplePolling.stopPolling();
         selectedSampleRef.current = void 0;
         set3((state) => {
           state.sample.sample_identifier = void 0;
           state.sample.selectedSampleObject = void 0;
           state.sample.sampleInState = false;
+          state.sample.runningEvents = [];
+          state.sample.sampleStatus = "ok";
           state.log.selectedSampleHandle = void 0;
         });
       },
@@ -29533,6 +29536,10 @@ const createSampleSlice = (set3, get2, _store) => {
         try {
           if (completed !== false) {
             log$5.debug(`LOADING COMPLETED SAMPLE: ${id}-${epoch}`);
+            samplePolling.stopPolling();
+            set3((state2) => {
+              state2.sample.runningEvents = [];
+            });
             const sample2 = await get2().api?.get_log_sample(logFile, id, epoch);
             log$5.debug(`LOADED COMPLETED SAMPLE: ${id}-${epoch}`);
             if (sample2) {
@@ -29550,6 +29557,17 @@ const createSampleSlice = (set3, get2, _store) => {
             }
           } else {
             log$5.debug(`POLLING RUNNING SAMPLE: ${id}-${epoch}`);
+            selectedSampleRef.current = void 0;
+            set3((state2) => {
+              state2.sample.selectedSampleObject = void 0;
+              state2.sample.sampleInState = false;
+              state2.sample.runningEvents = [];
+              state2.sample.sample_identifier = {
+                id,
+                epoch,
+                logFile
+              };
+            });
             const sampleSummary = { id, epoch };
             samplePolling.startPolling(logFile, sampleSummary);
           }
@@ -37173,9 +37191,9 @@ function decode$2(string2, exclude) {
       if ((b1 & 248) === 240 && i + 9 < l) {
         const b2 = parseInt(seq.slice(i + 4, i + 6), 16);
         const b3 = parseInt(seq.slice(i + 7, i + 9), 16);
-        const b4 = parseInt(seq.slice(i + 10, i + 12), 16);
-        if ((b2 & 192) === 128 && (b3 & 192) === 128 && (b4 & 192) === 128) {
-          let chr = b1 << 18 & 1835008 | b2 << 12 & 258048 | b3 << 6 & 4032 | b4 & 63;
+        const b42 = parseInt(seq.slice(i + 10, i + 12), 16);
+        if ((b2 & 192) === 128 && (b3 & 192) === 128 && (b42 & 192) === 128) {
+          let chr = b1 << 18 & 1835008 | b2 << 12 & 258048 | b3 << 6 & 4032 | b42 & 63;
           if (chr < 65536 || chr > 1114111) {
             result2 += "����";
           } else {
@@ -108071,8 +108089,8 @@ var wk = (function(c2, id, msg, transfer, cb) {
   w.postMessage(msg, transfer);
   return w;
 });
-var u8 = Uint8Array, u16 = Uint16Array, i32 = Int32Array;
-var fleb = new u8([
+var u8$1 = Uint8Array, u16$1 = Uint16Array, i32$1 = Int32Array;
+var fleb = new u8$1([
   0,
   0,
   0,
@@ -108108,7 +108126,7 @@ var fleb = new u8([
   /* impossible */
   0
 ]);
-var fdeb = new u8([
+var fdeb = new u8$1([
   0,
   0,
   0,
@@ -108143,13 +108161,13 @@ var fdeb = new u8([
   0,
   0
 ]);
-var clim = new u8([16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15]);
+var clim = new u8$1([16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15]);
 var freb = function(eb, start2) {
-  var b = new u16(31);
+  var b = new u16$1(31);
   for (var i = 0; i < 31; ++i) {
     b[i] = start2 += 1 << eb[i - 1];
   }
-  var r2 = new i32(b[30]);
+  var r2 = new i32$1(b[30]);
   for (var i = 1; i < 30; ++i) {
     for (var j = b[i]; j < b[i + 1]; ++j) {
       r2[j] = j - b[i] << 5 | i;
@@ -108160,7 +108178,7 @@ var freb = function(eb, start2) {
 var _a$2 = freb(fleb, 2), fl = _a$2.b, revfl = _a$2.r;
 fl[28] = 258, revfl[258] = 28;
 var _b = freb(fdeb, 0), fd = _b.b;
-var rev = new u16(32768);
+var rev = new u16$1(32768);
 for (var i$1 = 0; i$1 < 32768; ++i$1) {
   var x = (i$1 & 43690) >> 1 | (i$1 & 21845) << 1;
   x = (x & 52428) >> 2 | (x & 13107) << 2;
@@ -108170,18 +108188,18 @@ for (var i$1 = 0; i$1 < 32768; ++i$1) {
 var hMap = (function(cd, mb, r2) {
   var s = cd.length;
   var i = 0;
-  var l = new u16(mb);
+  var l = new u16$1(mb);
   for (; i < s; ++i) {
     if (cd[i])
       ++l[cd[i] - 1];
   }
-  var le2 = new u16(mb);
+  var le2 = new u16$1(mb);
   for (i = 1; i < mb; ++i) {
     le2[i] = le2[i - 1] + l[i - 1] << 1;
   }
   var co;
   if (r2) {
-    co = new u16(1 << mb);
+    co = new u16$1(1 << mb);
     var rvb = 15 - mb;
     for (i = 0; i < s; ++i) {
       if (cd[i]) {
@@ -108194,7 +108212,7 @@ var hMap = (function(cd, mb, r2) {
       }
     }
   } else {
-    co = new u16(s);
+    co = new u16$1(s);
     for (i = 0; i < s; ++i) {
       if (cd[i]) {
         co[i] = rev[le2[cd[i] - 1]++] >> 15 - cd[i];
@@ -108203,7 +108221,7 @@ var hMap = (function(cd, mb, r2) {
   }
   return co;
 });
-var flt = new u8(288);
+var flt = new u8$1(288);
 for (var i$1 = 0; i$1 < 144; ++i$1)
   flt[i$1] = 8;
 for (var i$1 = 144; i$1 < 256; ++i$1)
@@ -108212,7 +108230,7 @@ for (var i$1 = 256; i$1 < 280; ++i$1)
   flt[i$1] = 7;
 for (var i$1 = 280; i$1 < 288; ++i$1)
   flt[i$1] = 8;
-var fdt = new u8(32);
+var fdt = new u8$1(32);
 for (var i$1 = 0; i$1 < 32; ++i$1)
   fdt[i$1] = 5;
 var flrm = /* @__PURE__ */ hMap(flt, 9, 1);
@@ -108236,14 +108254,14 @@ var bits16 = function(d, p) {
 var shft = function(p) {
   return (p + 7) / 8 | 0;
 };
-var slc = function(v, s, e) {
+var slc$1 = function(v, s, e) {
   if (s == null || s < 0)
     s = 0;
   if (e == null || e > v.length)
     e = v.length;
-  return new u8(v.subarray(s, e));
+  return new u8$1(v.subarray(s, e));
 };
-var ec = [
+var ec$1 = [
   "unexpected EOF",
   "invalid block type",
   "invalid length/literal",
@@ -108260,11 +108278,11 @@ var ec = [
   "invalid zip data"
   // determined by unknown compression method
 ];
-var err = function(ind, msg, nt) {
-  var e = new Error(msg || ec[ind]);
+var err$1 = function(ind, msg, nt) {
+  var e = new Error(msg || ec$1[ind]);
   e.code = ind;
   if (Error.captureStackTrace)
-    Error.captureStackTrace(e, err);
+    Error.captureStackTrace(e, err$1);
   if (!nt)
     throw e;
   return e;
@@ -108272,16 +108290,16 @@ var err = function(ind, msg, nt) {
 var inflt = function(dat, st, buf, dict) {
   var sl = dat.length, dl = dict ? dict.length : 0;
   if (!sl || st.f && !st.l)
-    return buf || new u8(0);
+    return buf || new u8$1(0);
   var noBuf = !buf;
   var resize = noBuf || st.i != 2;
   var noSt = st.i;
   if (noBuf)
-    buf = new u8(sl * 3);
+    buf = new u8$1(sl * 3);
   var cbuf = function(l2) {
     var bl = buf.length;
     if (l2 > bl) {
-      var nbuf = new u8(Math.max(bl * 2, l2));
+      var nbuf = new u8$1(Math.max(bl * 2, l2));
       nbuf.set(buf);
       buf = nbuf;
     }
@@ -108297,7 +108315,7 @@ var inflt = function(dat, st, buf, dict) {
         var s = shft(pos2) + 4, l = dat[s - 4] | dat[s - 3] << 8, t2 = s + l;
         if (t2 > sl) {
           if (noSt)
-            err(0);
+            err$1(0);
           break;
         }
         if (resize)
@@ -108311,8 +108329,8 @@ var inflt = function(dat, st, buf, dict) {
         var hLit = bits(dat, pos2, 31) + 257, hcLen = bits(dat, pos2 + 10, 15) + 4;
         var tl = hLit + bits(dat, pos2 + 5, 31) + 1;
         pos2 += 14;
-        var ldt = new u8(tl);
-        var clt = new u8(19);
+        var ldt = new u8$1(tl);
+        var clt = new u8$1(19);
         for (var i = 0; i < hcLen; ++i) {
           clt[clim[i]] = bits(dat, pos2 + i * 3, 7);
         }
@@ -108343,10 +108361,10 @@ var inflt = function(dat, st, buf, dict) {
         lm = hMap(lt2, lbt, 1);
         dm = hMap(dt2, dbt, 1);
       } else
-        err(1);
+        err$1(1);
       if (pos2 > tbts) {
         if (noSt)
-          err(0);
+          err$1(0);
         break;
       }
     }
@@ -108359,11 +108377,11 @@ var inflt = function(dat, st, buf, dict) {
       pos2 += c2 & 15;
       if (pos2 > tbts) {
         if (noSt)
-          err(0);
+          err$1(0);
         break;
       }
       if (!c2)
-        err(2);
+        err$1(2);
       if (sym < 256)
         buf[bt2++] = sym;
       else if (sym == 256) {
@@ -108378,7 +108396,7 @@ var inflt = function(dat, st, buf, dict) {
         }
         var d = dm[bits16(dat, pos2) & dms], dsym = d >> 4;
         if (!d)
-          err(3);
+          err$1(3);
         pos2 += d & 15;
         var dt2 = fd[dsym];
         if (dsym > 3) {
@@ -108387,7 +108405,7 @@ var inflt = function(dat, st, buf, dict) {
         }
         if (pos2 > tbts) {
           if (noSt)
-            err(0);
+            err$1(0);
           break;
         }
         if (resize)
@@ -108396,7 +108414,7 @@ var inflt = function(dat, st, buf, dict) {
         if (bt2 < dt2) {
           var shift2 = dl - dt2, dend = Math.min(dt2, end2);
           if (shift2 + bt2 < 0)
-            err(3);
+            err$1(3);
           for (; bt2 < dend; ++bt2)
             buf[bt2] = dict[shift2 + bt2];
         }
@@ -108408,9 +108426,9 @@ var inflt = function(dat, st, buf, dict) {
     if (lm)
       final = 1, st.m = lbt, st.d = dm, st.n = dbt;
   } while (!final);
-  return bt2 != buf.length && noBuf ? slc(buf, 0, bt2) : buf.subarray(0, bt2);
+  return bt2 != buf.length && noBuf ? slc$1(buf, 0, bt2) : buf.subarray(0, bt2);
 };
-var et = /* @__PURE__ */ new u8(0);
+var et = /* @__PURE__ */ new u8$1(0);
 var mrg = function(a, b) {
   var o = {};
   for (var k2 in a)
@@ -108465,7 +108483,7 @@ var wrkr = function(fns, init2, id, cb) {
   return wk(ch[id].c + ";onmessage=function(e){for(var k in e.data)self[k]=e.data[k];onmessage=" + init2.toString() + "}", id, td2, cbfs(td2), cb);
 };
 var bInflt = function() {
-  return [u8, u16, i32, fleb, fdeb, clim, fl, fd, flrm, fdrm, rev, ec, hMap, max$1, bits, bits16, shft, slc, err, inflt, inflateSync, pbf, gopt];
+  return [u8$1, u16$1, i32$1, fleb, fdeb, clim, fl, fd, flrm, fdrm, rev, ec$1, hMap, max$1, bits, bits16, shft, slc$1, err$1, inflt, inflateSync, pbf, gopt];
 };
 var guze = function() {
   return [gzs, gzl];
@@ -108478,7 +108496,7 @@ var pbf = function(msg) {
 };
 var gopt = function(o) {
   return o && {
-    out: o.size && new u8(o.size),
+    out: o.size && new u8$1(o.size),
     dictionary: o.dictionary
   };
 };
@@ -108494,7 +108512,7 @@ var cbify = function(dat, opts, fns, init2, id, cb) {
 };
 var gzs = function(d) {
   if (d[0] != 31 || d[1] != 139 || d[2] != 8)
-    err(6, "invalid gzip data");
+    err$1(6, "invalid gzip data");
   var flg = d[3];
   var st = 10;
   if (flg & 4)
@@ -108509,16 +108527,16 @@ var gzl = function(d) {
 };
 var zls = function(d, dict) {
   if ((d[0] & 15) != 8 || d[0] >> 4 > 7 || (d[0] << 8 | d[1]) % 31)
-    err(6, "invalid zlib data");
+    err$1(6, "invalid zlib data");
   if ((d[1] >> 5 & 1) == +!dict)
-    err(6, "invalid zlib data: " + (d[1] & 32 ? "need" : "unexpected") + " dictionary");
+    err$1(6, "invalid zlib data: " + (d[1] & 32 ? "need" : "unexpected") + " dictionary");
   return (d[1] >> 3 & 4) + 2;
 };
 function inflate(data, opts, cb) {
   if (!cb)
     cb = opts, opts = {};
   if (typeof cb != "function")
-    err(7);
+    err$1(7);
   return cbify(data, opts, [
     bInflt
   ], function(ev) {
@@ -108532,7 +108550,7 @@ function gunzip(data, opts, cb) {
   if (!cb)
     cb = opts, opts = {};
   if (typeof cb != "function")
-    err(7);
+    err$1(7);
   return cbify(data, opts, [
     bInflt,
     guze,
@@ -108546,14 +108564,14 @@ function gunzip(data, opts, cb) {
 function gunzipSync(data, opts) {
   var st = gzs(data);
   if (st + 8 > data.length)
-    err(6, "invalid gzip data");
-  return inflt(data.subarray(st, -8), { i: 2 }, opts && opts.out || new u8(gzl(data)), opts && opts.dictionary);
+    err$1(6, "invalid gzip data");
+  return inflt(data.subarray(st, -8), { i: 2 }, opts && opts.out || new u8$1(gzl(data)), opts && opts.dictionary);
 }
 function unzlib(data, opts, cb) {
   if (!cb)
     cb = opts, opts = {};
   if (typeof cb != "function")
-    err(7);
+    err$1(7);
   return cbify(data, opts, [
     bInflt,
     zule,
@@ -108567,11 +108585,11 @@ function unzlib(data, opts, cb) {
 function unzlibSync(data, opts) {
   return inflt(data.subarray(zls(data, opts && opts.dictionary), -4), { i: 2 }, opts && opts.out, opts && opts.dictionary);
 }
-function decompress(data, opts, cb) {
+function decompress$1(data, opts, cb) {
   if (!cb)
     cb = opts, opts = {};
   if (typeof cb != "function")
-    err(7);
+    err$1(7);
   return data[0] == 31 && data[1] == 139 && data[2] == 8 ? gunzip(data, opts, cb) : (data[0] & 15) != 8 || data[0] >> 4 > 7 || (data[0] << 8 | data[1]) % 31 ? inflate(data, opts, cb) : unzlib(data, opts, cb);
 }
 var td = typeof TextDecoder != "undefined" && /* @__PURE__ */ new TextDecoder();
@@ -108580,6 +108598,827 @@ try {
   td.decode(et, { stream: true });
   tds = 1;
 } catch (e) {
+}
+var ab = ArrayBuffer, u8 = Uint8Array, u16 = Uint16Array, i16 = Int16Array, i32 = Int32Array;
+var slc = function(v, s, e) {
+  if (u8.prototype.slice)
+    return u8.prototype.slice.call(v, s, e);
+  if (s == null || s < 0)
+    s = 0;
+  if (e == null || e > v.length)
+    e = v.length;
+  var n = new u8(e - s);
+  n.set(v.subarray(s, e));
+  return n;
+};
+var fill = function(v, n, s, e) {
+  if (u8.prototype.fill)
+    return u8.prototype.fill.call(v, n, s, e);
+  if (s == null || s < 0)
+    s = 0;
+  if (e == null || e > v.length)
+    e = v.length;
+  for (; s < e; ++s)
+    v[s] = n;
+  return v;
+};
+var cpw = function(v, t2, s, e) {
+  if (u8.prototype.copyWithin)
+    return u8.prototype.copyWithin.call(v, t2, s, e);
+  if (s == null || s < 0)
+    s = 0;
+  if (e == null || e > v.length)
+    e = v.length;
+  while (s < e) {
+    v[t2++] = v[s++];
+  }
+};
+var ec = [
+  "invalid zstd data",
+  "window size too large (>2046MB)",
+  "invalid block type",
+  "FSE accuracy too high",
+  "match distance too far back",
+  "unexpected EOF"
+];
+var err = function(ind, msg, nt) {
+  var e = new Error(msg || ec[ind]);
+  e.code = ind;
+  if (Error.captureStackTrace)
+    Error.captureStackTrace(e, err);
+  if (!nt)
+    throw e;
+  return e;
+};
+var rb = function(d, b, n) {
+  var i = 0, o = 0;
+  for (; i < n; ++i)
+    o |= d[b++] << (i << 3);
+  return o;
+};
+var b4 = function(d, b) {
+  return (d[b] | d[b + 1] << 8 | d[b + 2] << 16 | d[b + 3] << 24) >>> 0;
+};
+var rzfh = function(dat, w) {
+  var n3 = dat[0] | dat[1] << 8 | dat[2] << 16;
+  if (n3 == 3126568 && dat[3] == 253) {
+    var flg = dat[4];
+    var ss = flg >> 5 & 1, cc = flg >> 2 & 1, df = flg & 3, fcf = flg >> 6;
+    if (flg & 8)
+      err(0);
+    var bt2 = 6 - ss;
+    var db = df == 3 ? 4 : df;
+    var di = rb(dat, bt2, db);
+    bt2 += db;
+    var fsb = fcf ? 1 << fcf : ss;
+    var fss = rb(dat, bt2, fsb) + (fcf == 1 && 256);
+    var ws = fss;
+    if (!ss) {
+      var wb = 1 << 10 + (dat[5] >> 3);
+      ws = wb + (wb >> 3) * (dat[5] & 7);
+    }
+    if (ws > 2145386496)
+      err(1);
+    var buf = new u8((w == 1 ? fss || ws : w ? 0 : ws) + 12);
+    buf[0] = 1, buf[4] = 4, buf[8] = 8;
+    return {
+      b: bt2 + fsb,
+      y: 0,
+      l: 0,
+      d: di,
+      w: w && w != 1 ? w : buf.subarray(12),
+      e: ws,
+      o: new i32(buf.buffer, 0, 3),
+      u: fss,
+      c: cc,
+      m: Math.min(131072, ws)
+    };
+  } else if ((n3 >> 4 | dat[3] << 20) == 25481893) {
+    return b4(dat, 4) + 8;
+  }
+  err(0);
+};
+var msb = function(val) {
+  var bits2 = 0;
+  for (; 1 << bits2 <= val; ++bits2)
+    ;
+  return bits2 - 1;
+};
+var rfse = function(dat, bt2, mal) {
+  var tpos = (bt2 << 3) + 4;
+  var al = (dat[bt2] & 15) + 5;
+  if (al > mal)
+    err(3);
+  var sz = 1 << al;
+  var probs = sz, sym = -1, re2 = -1, i = -1, ht2 = sz;
+  var buf = new ab(512 + (sz << 2));
+  var freq = new i16(buf, 0, 256);
+  var dstate = new u16(buf, 0, 256);
+  var nstate = new u16(buf, 512, sz);
+  var bb1 = 512 + (sz << 1);
+  var syms = new u8(buf, bb1, sz);
+  var nbits = new u8(buf, bb1 + sz);
+  while (sym < 255 && probs > 0) {
+    var bits2 = msb(probs + 1);
+    var cbt = tpos >> 3;
+    var msk = (1 << bits2 + 1) - 1;
+    var val = (dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (tpos & 7) & msk;
+    var msk1fb = (1 << bits2) - 1;
+    var msv = msk - probs - 1;
+    var sval = val & msk1fb;
+    if (sval < msv)
+      tpos += bits2, val = sval;
+    else {
+      tpos += bits2 + 1;
+      if (val > msk1fb)
+        val -= msv;
+    }
+    freq[++sym] = --val;
+    if (val == -1) {
+      probs += val;
+      syms[--ht2] = sym;
+    } else
+      probs -= val;
+    if (!val) {
+      do {
+        var rbt = tpos >> 3;
+        re2 = (dat[rbt] | dat[rbt + 1] << 8) >> (tpos & 7) & 3;
+        tpos += 2;
+        sym += re2;
+      } while (re2 == 3);
+    }
+  }
+  if (sym > 255 || probs)
+    err(0);
+  var sympos = 0;
+  var sstep = (sz >> 1) + (sz >> 3) + 3;
+  var smask = sz - 1;
+  for (var s = 0; s <= sym; ++s) {
+    var sf = freq[s];
+    if (sf < 1) {
+      dstate[s] = -sf;
+      continue;
+    }
+    for (i = 0; i < sf; ++i) {
+      syms[sympos] = s;
+      do {
+        sympos = sympos + sstep & smask;
+      } while (sympos >= ht2);
+    }
+  }
+  if (sympos)
+    err(0);
+  for (i = 0; i < sz; ++i) {
+    var ns = dstate[syms[i]]++;
+    var nb = nbits[i] = al - msb(ns);
+    nstate[i] = (ns << nb) - sz;
+  }
+  return [tpos + 7 >> 3, {
+    b: al,
+    s: syms,
+    n: nbits,
+    t: nstate
+  }];
+};
+var rhu = function(dat, bt2) {
+  var i = 0, wc = -1;
+  var buf = new u8(292), hb = dat[bt2];
+  var hw = buf.subarray(0, 256);
+  var rc = buf.subarray(256, 268);
+  var ri = new u16(buf.buffer, 268);
+  if (hb < 128) {
+    var _a2 = rfse(dat, bt2 + 1, 6), ebt = _a2[0], fdt2 = _a2[1];
+    bt2 += hb;
+    var epos = ebt << 3;
+    var lb = dat[bt2];
+    if (!lb)
+      err(0);
+    var st1 = 0, st2 = 0, btr1 = fdt2.b, btr2 = btr1;
+    var fpos = (++bt2 << 3) - 8 + msb(lb);
+    for (; ; ) {
+      fpos -= btr1;
+      if (fpos < epos)
+        break;
+      var cbt = fpos >> 3;
+      st1 += (dat[cbt] | dat[cbt + 1] << 8) >> (fpos & 7) & (1 << btr1) - 1;
+      hw[++wc] = fdt2.s[st1];
+      fpos -= btr2;
+      if (fpos < epos)
+        break;
+      cbt = fpos >> 3;
+      st2 += (dat[cbt] | dat[cbt + 1] << 8) >> (fpos & 7) & (1 << btr2) - 1;
+      hw[++wc] = fdt2.s[st2];
+      btr1 = fdt2.n[st1];
+      st1 = fdt2.t[st1];
+      btr2 = fdt2.n[st2];
+      st2 = fdt2.t[st2];
+    }
+    if (++wc > 255)
+      err(0);
+  } else {
+    wc = hb - 127;
+    for (; i < wc; i += 2) {
+      var byte = dat[++bt2];
+      hw[i] = byte >> 4;
+      hw[i + 1] = byte & 15;
+    }
+    ++bt2;
+  }
+  var wes = 0;
+  for (i = 0; i < wc; ++i) {
+    var wt = hw[i];
+    if (wt > 11)
+      err(0);
+    wes += wt && 1 << wt - 1;
+  }
+  var mb = msb(wes) + 1;
+  var ts = 1 << mb;
+  var rem = ts - wes;
+  if (rem & rem - 1)
+    err(0);
+  hw[wc++] = msb(rem) + 1;
+  for (i = 0; i < wc; ++i) {
+    var wt = hw[i];
+    ++rc[hw[i] = wt && mb + 1 - wt];
+  }
+  var hbuf = new u8(ts << 1);
+  var syms = hbuf.subarray(0, ts), nb = hbuf.subarray(ts);
+  ri[mb] = 0;
+  for (i = mb; i > 0; --i) {
+    var pv = ri[i];
+    fill(nb, i, pv, ri[i - 1] = pv + rc[i] * (1 << mb - i));
+  }
+  if (ri[0] != ts)
+    err(0);
+  for (i = 0; i < wc; ++i) {
+    var bits2 = hw[i];
+    if (bits2) {
+      var code2 = ri[bits2];
+      fill(syms, i, code2, ri[bits2] = code2 + (1 << mb - bits2));
+    }
+  }
+  return [bt2, {
+    n: nb,
+    b: mb,
+    s: syms
+  }];
+};
+var dllt = rfse(/* @__PURE__ */ new u8([
+  81,
+  16,
+  99,
+  140,
+  49,
+  198,
+  24,
+  99,
+  12,
+  33,
+  196,
+  24,
+  99,
+  102,
+  102,
+  134,
+  70,
+  146,
+  4
+]), 0, 6)[1];
+var dmlt = rfse(/* @__PURE__ */ new u8([
+  33,
+  20,
+  196,
+  24,
+  99,
+  140,
+  33,
+  132,
+  16,
+  66,
+  8,
+  33,
+  132,
+  16,
+  66,
+  8,
+  33,
+  68,
+  68,
+  68,
+  68,
+  68,
+  68,
+  68,
+  68,
+  36,
+  9
+]), 0, 6)[1];
+var doct = rfse(/* @__PURE__ */ new u8([
+  32,
+  132,
+  16,
+  66,
+  102,
+  70,
+  68,
+  68,
+  68,
+  68,
+  36,
+  73,
+  2
+]), 0, 5)[1];
+var b2bl = function(b, s) {
+  var len = b.length, bl = new i32(len);
+  for (var i = 0; i < len; ++i) {
+    bl[i] = s;
+    s += 1 << b[i];
+  }
+  return bl;
+};
+var llb = /* @__PURE__ */ new u8((/* @__PURE__ */ new i32([
+  0,
+  0,
+  0,
+  0,
+  16843009,
+  50528770,
+  134678020,
+  202050057,
+  269422093
+])).buffer, 0, 36);
+var llbl = /* @__PURE__ */ b2bl(llb, 0);
+var mlb = /* @__PURE__ */ new u8((/* @__PURE__ */ new i32([
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  16843009,
+  50528770,
+  117769220,
+  185207048,
+  252579084,
+  16
+])).buffer, 0, 53);
+var mlbl = /* @__PURE__ */ b2bl(mlb, 3);
+var dhu = function(dat, out, hu) {
+  var len = dat.length, ss = out.length, lb = dat[len - 1], msk = (1 << hu.b) - 1, eb = -hu.b;
+  if (!lb)
+    err(0);
+  var st = 0, btr = hu.b, pos2 = (len << 3) - 8 + msb(lb) - btr, i = -1;
+  for (; pos2 > eb && i < ss; ) {
+    var cbt = pos2 >> 3;
+    var val = (dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (pos2 & 7);
+    st = (st << btr | val) & msk;
+    out[++i] = hu.s[st];
+    pos2 -= btr = hu.n[st];
+  }
+  if (pos2 != eb || i + 1 != ss)
+    err(0);
+};
+var dhu4 = function(dat, out, hu) {
+  var bt2 = 6;
+  var ss = out.length, sz1 = ss + 3 >> 2, sz2 = sz1 << 1, sz3 = sz1 + sz2;
+  dhu(dat.subarray(bt2, bt2 += dat[0] | dat[1] << 8), out.subarray(0, sz1), hu);
+  dhu(dat.subarray(bt2, bt2 += dat[2] | dat[3] << 8), out.subarray(sz1, sz2), hu);
+  dhu(dat.subarray(bt2, bt2 += dat[4] | dat[5] << 8), out.subarray(sz2, sz3), hu);
+  dhu(dat.subarray(bt2), out.subarray(sz3), hu);
+};
+var rzb = function(dat, st, out) {
+  var _a2;
+  var bt2 = st.b;
+  var b0 = dat[bt2], btype = b0 >> 1 & 3;
+  st.l = b0 & 1;
+  var sz = b0 >> 3 | dat[bt2 + 1] << 5 | dat[bt2 + 2] << 13;
+  var ebt = (bt2 += 3) + sz;
+  if (btype == 1) {
+    if (bt2 >= dat.length)
+      return;
+    st.b = bt2 + 1;
+    if (out) {
+      fill(out, dat[bt2], st.y, st.y += sz);
+      return out;
+    }
+    return fill(new u8(sz), dat[bt2]);
+  }
+  if (ebt > dat.length)
+    return;
+  if (btype == 0) {
+    st.b = ebt;
+    if (out) {
+      out.set(dat.subarray(bt2, ebt), st.y);
+      st.y += sz;
+      return out;
+    }
+    return slc(dat, bt2, ebt);
+  }
+  if (btype == 2) {
+    var b3 = dat[bt2], lbt = b3 & 3, sf = b3 >> 2 & 3;
+    var lss = b3 >> 4, lcs2 = 0, s4 = 0;
+    if (lbt < 2) {
+      if (sf & 1)
+        lss |= dat[++bt2] << 4 | (sf & 2 && dat[++bt2] << 12);
+      else
+        lss = b3 >> 3;
+    } else {
+      s4 = sf;
+      if (sf < 2)
+        lss |= (dat[++bt2] & 63) << 4, lcs2 = dat[bt2] >> 6 | dat[++bt2] << 2;
+      else if (sf == 2)
+        lss |= dat[++bt2] << 4 | (dat[++bt2] & 3) << 12, lcs2 = dat[bt2] >> 2 | dat[++bt2] << 6;
+      else
+        lss |= dat[++bt2] << 4 | (dat[++bt2] & 63) << 12, lcs2 = dat[bt2] >> 6 | dat[++bt2] << 2 | dat[++bt2] << 10;
+    }
+    ++bt2;
+    var buf = out ? out.subarray(st.y, st.y + st.m) : new u8(st.m);
+    var spl = buf.length - lss;
+    if (lbt == 0)
+      buf.set(dat.subarray(bt2, bt2 += lss), spl);
+    else if (lbt == 1)
+      fill(buf, dat[bt2++], spl);
+    else {
+      var hu = st.h;
+      if (lbt == 2) {
+        var hud = rhu(dat, bt2);
+        lcs2 += bt2 - (bt2 = hud[0]);
+        st.h = hu = hud[1];
+      } else if (!hu)
+        err(0);
+      (s4 ? dhu4 : dhu)(dat.subarray(bt2, bt2 += lcs2), buf.subarray(spl), hu);
+    }
+    var ns = dat[bt2++];
+    if (ns) {
+      if (ns == 255)
+        ns = (dat[bt2++] | dat[bt2++] << 8) + 32512;
+      else if (ns > 127)
+        ns = ns - 128 << 8 | dat[bt2++];
+      var scm = dat[bt2++];
+      if (scm & 3)
+        err(0);
+      var dts = [dmlt, doct, dllt];
+      for (var i = 2; i > -1; --i) {
+        var md = scm >> (i << 1) + 2 & 3;
+        if (md == 1) {
+          var rbuf = new u8([0, 0, dat[bt2++]]);
+          dts[i] = {
+            s: rbuf.subarray(2, 3),
+            n: rbuf.subarray(0, 1),
+            t: new u16(rbuf.buffer, 0, 1),
+            b: 0
+          };
+        } else if (md == 2) {
+          _a2 = rfse(dat, bt2, 9 - (i & 1)), bt2 = _a2[0], dts[i] = _a2[1];
+        } else if (md == 3) {
+          if (!st.t)
+            err(0);
+          dts[i] = st.t[i];
+        }
+      }
+      var _b2 = st.t = dts, mlt = _b2[0], oct = _b2[1], llt = _b2[2];
+      var lb = dat[ebt - 1];
+      if (!lb)
+        err(0);
+      var spos = (ebt << 3) - 8 + msb(lb) - llt.b, cbt = spos >> 3, oubt = 0;
+      var lst = (dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << llt.b) - 1;
+      cbt = (spos -= oct.b) >> 3;
+      var ost = (dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << oct.b) - 1;
+      cbt = (spos -= mlt.b) >> 3;
+      var mst = (dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << mlt.b) - 1;
+      for (++ns; --ns; ) {
+        var llc = llt.s[lst];
+        var lbtr = llt.n[lst];
+        var mlc = mlt.s[mst];
+        var mbtr = mlt.n[mst];
+        var ofc = oct.s[ost];
+        var obtr = oct.n[ost];
+        cbt = (spos -= ofc) >> 3;
+        var ofp = 1 << ofc;
+        var off = ofp + ((dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16 | dat[cbt + 3] << 24) >>> (spos & 7) & ofp - 1);
+        cbt = (spos -= mlb[mlc]) >> 3;
+        var ml = mlbl[mlc] + ((dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (spos & 7) & (1 << mlb[mlc]) - 1);
+        cbt = (spos -= llb[llc]) >> 3;
+        var ll2 = llbl[llc] + ((dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (spos & 7) & (1 << llb[llc]) - 1);
+        cbt = (spos -= lbtr) >> 3;
+        lst = llt.t[lst] + ((dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << lbtr) - 1);
+        cbt = (spos -= mbtr) >> 3;
+        mst = mlt.t[mst] + ((dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << mbtr) - 1);
+        cbt = (spos -= obtr) >> 3;
+        ost = oct.t[ost] + ((dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << obtr) - 1);
+        if (off > 3) {
+          st.o[2] = st.o[1];
+          st.o[1] = st.o[0];
+          st.o[0] = off -= 3;
+        } else {
+          var idx = off - (ll2 != 0);
+          if (idx) {
+            off = idx == 3 ? st.o[0] - 1 : st.o[idx];
+            if (idx > 1)
+              st.o[2] = st.o[1];
+            st.o[1] = st.o[0];
+            st.o[0] = off;
+          } else
+            off = st.o[0];
+        }
+        for (var i = 0; i < ll2; ++i) {
+          buf[oubt + i] = buf[spl + i];
+        }
+        oubt += ll2, spl += ll2;
+        var stin = oubt - off;
+        if (stin < 0) {
+          var len = -stin;
+          var bs = st.e + stin;
+          if (len > ml)
+            len = ml;
+          for (var i = 0; i < len; ++i) {
+            buf[oubt + i] = st.w[bs + i];
+          }
+          oubt += len, ml -= len, stin = 0;
+        }
+        for (var i = 0; i < ml; ++i) {
+          buf[oubt + i] = buf[stin + i];
+        }
+        oubt += ml;
+      }
+      if (oubt != spl) {
+        while (spl < buf.length) {
+          buf[oubt++] = buf[spl++];
+        }
+      } else
+        oubt = buf.length;
+      if (out)
+        st.y += oubt;
+      else
+        buf = slc(buf, 0, oubt);
+    } else if (out) {
+      st.y += lss;
+      if (spl) {
+        for (var i = 0; i < lss; ++i) {
+          buf[i] = buf[spl + i];
+        }
+      }
+    } else if (spl)
+      buf = slc(buf, spl);
+    st.b = ebt;
+    return buf;
+  }
+  err(2);
+};
+var cct = function(bufs, ol) {
+  if (bufs.length == 1)
+    return bufs[0];
+  var buf = new u8(ol);
+  for (var i = 0, b = 0; i < bufs.length; ++i) {
+    var chk = bufs[i];
+    buf.set(chk, b);
+    b += chk.length;
+  }
+  return buf;
+};
+function decompress(dat, buf) {
+  var bufs = [], nb = +!buf;
+  var bt2 = 0, ol = 0;
+  for (; dat.length; ) {
+    var st = rzfh(dat, nb || buf);
+    if (typeof st == "object") {
+      if (nb) {
+        buf = null;
+        if (st.w.length == st.u) {
+          bufs.push(buf = st.w);
+          ol += st.u;
+        }
+      } else {
+        bufs.push(buf);
+        st.e = 0;
+      }
+      for (; !st.l; ) {
+        var blk = rzb(dat, st, buf);
+        if (!blk)
+          err(5);
+        if (buf)
+          st.e = st.y;
+        else {
+          bufs.push(blk);
+          ol += blk.length;
+          cpw(st.w, 0, blk.length);
+          st.w.set(blk, st.w.length - blk.length);
+        }
+      }
+      bt2 = st.b + st.c * 4;
+    } else
+      bt2 = st;
+    dat = dat.subarray(bt2);
+  }
+  return cct(bufs, ol);
+}
+const kZstdWorkerCode = `
+// fzstd decompress function, loaded dynamically
+let decompress = null;
+
+self.onmessage = function(e) {
+  const { type } = e.data || {};
+
+  if (type === 'init') {
+    const { scriptContent } = e.data;
+    try {
+      if (!decompress) {
+        // Decode and evaluate the fzstd UMD library
+        const script = atob(scriptContent);
+        // The UMD module self-executes and assigns to self.fzstd
+        new Function(script)();
+        if (!self.fzstd || typeof self.fzstd.decompress !== 'function') {
+          throw new Error('Failed to initialize fzstd decompressor');
+        }
+        decompress = self.fzstd.decompress;
+      }
+      self.postMessage({ type: 'init_complete', success: true });
+    } catch (err) {
+      console.error('fzstd init error in worker:', err);
+      self.postMessage({ type: 'init_complete', success: false, error: err.message || 'Unknown error' });
+    }
+    return;
+  }
+
+  if (type === 'decompress') {
+    const { requestId, data } = e.data;
+    try {
+      if (!decompress) {
+        throw new Error('Worker not initialized');
+      }
+      const result = decompress(data);
+      // Transfer the result buffer back to avoid copying
+      self.postMessage(
+        { requestId, success: true, data: result },
+        [result.buffer]
+      );
+    } catch (err) {
+      self.postMessage({
+        requestId,
+        success: false,
+        error: err instanceof Error ? err.message : 'Unknown error'
+      });
+    }
+  }
+};
+`;
+const kFzstdBase64 = `IWZ1bmN0aW9uKGYpe3R5cGVvZiBtb2R1bGUhPSd1bmRlZmluZWQnJiZ0eXBlb2YgZXhwb3J0cz09J29iamVjdCc/bW9kdWxlLmV4cG9ydHM9ZigpOnR5cGVvZiBkZWZpbmUhPSd1bmRlZmluZWQnJiZkZWZpbmUuYW1kP2RlZmluZShbJ2Z6c3RkJyxmXSk6KHR5cGVvZiBzZWxmIT0ndW5kZWZpbmVkJz9zZWxmOnRoaXMpLmZ6c3RkPWYoKX0oZnVuY3Rpb24oKXt2YXIgX2U9e307InVzZSBzdHJpY3QiO3ZhciByPUFycmF5QnVmZmVyLHQ9VWludDhBcnJheSxlPVVpbnQxNkFycmF5LG49SW50MTZBcnJheSxhPVVpbnQzMkFycmF5LHM9SW50MzJBcnJheSxpPWZ1bmN0aW9uKHIsZSxuKXtpZih0LnByb3RvdHlwZS5zbGljZSlyZXR1cm4gdC5wcm90b3R5cGUuc2xpY2UuY2FsbChyLGUsbik7KG51bGw9PWV8fGU8MCkmJihlPTApLChudWxsPT1ufHxuPnIubGVuZ3RoKSYmKG49ci5sZW5ndGgpO3ZhciBhPW5ldyB0KG4tZSk7cmV0dXJuIGEuc2V0KHIuc3ViYXJyYXkoZSxuKSksYX0sbz1mdW5jdGlvbihyLGUsbixhKXtpZih0LnByb3RvdHlwZS5maWxsKXJldHVybiB0LnByb3RvdHlwZS5maWxsLmNhbGwocixlLG4sYSk7Zm9yKChudWxsPT1ufHxuPDApJiYobj0wKSwobnVsbD09YXx8YT5yLmxlbmd0aCkmJihhPXIubGVuZ3RoKTtuPGE7KytuKXJbbl09ZTtyZXR1cm4gcn0sdT1mdW5jdGlvbihyLGUsbixhKXtpZih0LnByb3RvdHlwZS5jb3B5V2l0aGluKXJldHVybiB0LnByb3RvdHlwZS5jb3B5V2l0aGluLmNhbGwocixlLG4sYSk7Zm9yKChudWxsPT1ufHxuPDApJiYobj0wKSwobnVsbD09YXx8YT5yLmxlbmd0aCkmJihhPXIubGVuZ3RoKTtuPGE7KXJbZSsrXT1yW24rK119O19lLlpzdGRFcnJvckNvZGU9e0ludmFsaWREYXRhOjAsV2luZG93U2l6ZVRvb0xhcmdlOjEsSW52YWxpZEJsb2NrVHlwZToyLEZTRUFjY3VyYWN5VG9vSGlnaDozLERpc3RhbmNlVG9vRmFyQmFjazo0LFVuZXhwZWN0ZWRFT0Y6NX07dmFyIGg9WyJpbnZhbGlkIHpzdGQgZGF0YSIsIndpbmRvdyBzaXplIHRvbyBsYXJnZSAoPjIwNDZNQikiLCJpbnZhbGlkIGJsb2NrIHR5cGUiLCJGU0UgYWNjdXJhY3kgdG9vIGhpZ2giLCJtYXRjaCBkaXN0YW5jZSB0b28gZmFyIGJhY2siLCJ1bmV4cGVjdGVkIEVPRiJdLGY9ZnVuY3Rpb24ocix0LGUpe3ZhciBuPUVycm9yKHR8fGhbcl0pO2lmKG4uY29kZT1yLEVycm9yLmNhcHR1cmVTdGFja1RyYWNlJiZFcnJvci5jYXB0dXJlU3RhY2tUcmFjZShuLGYpLCFlKXRocm93IG47cmV0dXJuIG59LGw9ZnVuY3Rpb24ocix0LGUpe2Zvcih2YXIgbj0wLGE9MDtuPGU7KytuKWF8PXJbdCsrXTw8KG48PDMpO3JldHVybiBhfSx2PWZ1bmN0aW9uKHIsdCl7cmV0dXJuKHJbdF18clt0KzFdPDw4fHJbdCsyXTw8MTZ8clt0KzNdPDwyNCk+Pj4wfSxjPWZ1bmN0aW9uKHIsZSl7dmFyIG49clswXXxyWzFdPDw4fHJbMl08PDE2O2lmKDMxMjY1Njg9PW4mJjI1Mz09clszXSl7dmFyIGE9cls0XSxpPWE+PjUmMSxvPWE+PjImMSx1PTMmYSxoPWE+PjY7OCZhJiZmKDApO3ZhciBjPTYtaSxiPTM9PXU/NDp1LHk9bChyLGMsYikscD1oPzE8PGg6aSx3PWwocixjKz1iLHApKygxPT1oJiYyNTYpLGc9dztpZighaSl7dmFyIGQ9MTw8MTArKHJbNV0+PjMpO2c9ZCsoZD4+MykqKDcmcls1XSl9Zz4yMTQ1Mzg2NDk2JiZmKDEpO3ZhciBtPW5ldyB0KCgxPT1lP3d8fGc6ZT8wOmcpKzEyKTtyZXR1cm4gbVswXT0xLG1bNF09NCxtWzhdPTgse2I6YytwLHk6MCxsOjAsZDp5LHc6ZSYmMSE9ZT9lOm0uc3ViYXJyYXkoMTIpLGU6ZyxvOm5ldyBzKG0uYnVmZmVyLDAsMyksdTp3LGM6byxtOk1hdGgubWluKDEzMTA3MixnKX19aWYoMjU0ODE4OTM9PShuPj40fHJbM108PDIwKSlyZXR1cm4gdihyLDQpKzg7ZigwKX0sYj1mdW5jdGlvbihyKXtmb3IodmFyIHQ9MDsxPDx0PD1yOysrdCk7cmV0dXJuIHQtMX0seT1mdW5jdGlvbihhLHMsaSl7dmFyIG89NCsoczw8MyksdT01KygxNSZhW3NdKTt1PmkmJmYoMyk7Zm9yKHZhciBoPTE8PHUsbD1oLHY9LTEsYz0tMSx5PS0xLHA9aCx3PW5ldyByKDUxMisoaDw8MikpLGc9bmV3IG4odywwLDI1NiksZD1uZXcgZSh3LDAsMjU2KSxtPW5ldyBlKHcsNTEyLGgpLHo9NTEyKyhoPDwxKSxFPW5ldyB0KHcseixoKSxrPW5ldyB0KHcseitoKTt2PDI1NSYmbD4wOyl7dmFyIEE9YihsKzEpLFQ9bz4+Myx4PSgxPDxBKzEpLTEsRj0oYVtUXXxhW1QrMV08PDh8YVtUKzJdPDwxNik+Pig3Jm8pJngsUz0oMTw8QSktMSxCPXgtbC0xLEk9RiZTO2lmKEk8Qj8obys9QSxGPUkpOihvKz1BKzEsRj5TJiYoRi09QikpLGdbKyt2XT0tLUYsLTE9PUY/KGwrPUYsRVstLXBdPXYpOmwtPUYsIUYpZG97dmFyIFU9bz4+MztjPShhW1VdfGFbVSsxXTw8OCk+Pig3Jm8pJjMsbys9Mix2Kz1jfXdoaWxlKDM9PWMpfSh2PjI1NXx8bCkmJmYoMCk7Zm9yKHZhciBEPTAsTT0oaD4+MSkrKGg+PjMpKzMsVz1oLTEsTz0wO088PXY7KytPKXt2YXIgaj1nW09dO2lmKGo8MSlkW09dPS1qO2Vsc2UgZm9yKHk9MDt5PGo7Kyt5KXtFW0RdPU87ZG97RD1EK00mV313aGlsZShEPj1wKX19Zm9yKEQmJmYoMCkseT0wO3k8aDsrK3kpe3ZhciBDPWRbRVt5XV0rKyxIPWtbeV09dS1iKEMpO21beV09KEM8PEgpLWh9cmV0dXJuW28rNz4+Myx7Yjp1LHM6RSxuOmssdDptfV19LHA9ZnVuY3Rpb24ocixuKXt2YXIgYT0wLHM9LTEsaT1uZXcgdCgyOTIpLHU9cltuXSxoPWkuc3ViYXJyYXkoMCwyNTYpLGw9aS5zdWJhcnJheSgyNTYsMjY4KSx2PW5ldyBlKGkuYnVmZmVyLDI2OCk7aWYodTwxMjgpe3ZhciBjPXkocixuKzEsNikscD1jWzFdLHc9Y1swXTw8MyxnPXJbbis9dV07Z3x8ZigwKTtmb3IodmFyIGQ9MCxtPTAsej1wLmIsRT16LGs9KCsrbjw8MyktOCtiKGcpOyEoKGstPXopPHcpOyl7dmFyIEE9az4+MztpZihoWysrc109cC5zW2QrPShyW0FdfHJbQSsxXTw8OCk+Pig3JmspJigxPDx6KS0xXSwoay09RSk8dylicmVhaztoWysrc109cC5zW20rPShyW0E9az4+M118cltBKzFdPDw4KT4+KDcmaykmKDE8PEUpLTFdLHo9cC5uW2RdLGQ9cC50W2RdLEU9cC5uW21dLG09cC50W21dfSsrcz4yNTUmJmYoMCl9ZWxzZXtmb3Iocz11LTEyNzthPHM7YSs9Mil7dmFyIFQ9clsrK25dO2hbYV09VD4+NCxoW2ErMV09MTUmVH0rK259dmFyIHg9MDtmb3IoYT0wO2E8czsrK2EpKEk9aFthXSk+MTEmJmYoMCkseCs9SSYmMTw8SS0xO3ZhciBGPWIoeCkrMSxTPTE8PEYsQj1TLXg7Zm9yKEImQi0xJiZmKDApLGhbcysrXT1iKEIpKzEsYT0wO2E8czsrK2Epe3ZhciBJOysrbFtoW2FdPShJPWhbYV0pJiZGKzEtSV19dmFyIFU9bmV3IHQoUzw8MSksRD1VLnN1YmFycmF5KDAsUyksTT1VLnN1YmFycmF5KFMpO2Zvcih2W0ZdPTAsYT1GO2E+MDstLWEpe3ZhciBXPXZbYV07byhNLGEsVyx2W2EtMV09VytsW2FdKigxPDxGLWEpKX1mb3IodlswXSE9UyYmZigwKSxhPTA7YTxzOysrYSl7dmFyIE89aFthXTtpZihPKXt2YXIgaj12W09dO28oRCxhLGosdltPXT1qKygxPDxGLU8pKX19cmV0dXJuW24se246TSxiOkYsczpEfV19LHc9eShuZXcgdChbODEsMTYsOTksMTQwLDQ5LDE5OCwyNCw5OSwxMiwzMywxOTYsMjQsOTksMTAyLDEwMiwxMzQsNzAsMTQ2LDRdKSwwLDYpWzFdLGc9eShuZXcgdChbMzMsMjAsMTk2LDI0LDk5LDE0MCwzMywxMzIsMTYsNjYsOCwzMywxMzIsMTYsNjYsOCwzMyw2OCw2OCw2OCw2OCw2OCw2OCw2OCw2OCwzNiw5XSksMCw2KVsxXSxkPXkobmV3IHQoWzMyLDEzMiwxNiw2NiwxMDIsNzAsNjgsNjgsNjgsNjgsMzYsNzMsMl0pLDAsNSlbMV0sbT1mdW5jdGlvbihyLHQpe2Zvcih2YXIgZT1yLmxlbmd0aCxuPW5ldyBzKGUpLGE9MDthPGU7KythKW5bYV09dCx0Kz0xPDxyW2FdO3JldHVybiBufSx6PW5ldyB0KG5ldyBzKFswLDAsMCwwLDE2ODQzMDA5LDUwNTI4NzcwLDEzNDY3ODAyMCwyMDIwNTAwNTcsMjY5NDIyMDkzXSkuYnVmZmVyLDAsMzYpLEU9bSh6LDApLGs9bmV3IHQobmV3IHMoWzAsMCwwLDAsMCwwLDAsMCwxNjg0MzAwOSw1MDUyODc3MCwxMTc3NjkyMjAsMTg1MjA3MDQ4LDI1MjU3OTA4NCwxNl0pLmJ1ZmZlciwwLDUzKSxBPW0oaywzKSxUPWZ1bmN0aW9uKHIsdCxlKXt2YXIgbj1yLmxlbmd0aCxhPXQubGVuZ3RoLHM9cltuLTFdLGk9KDE8PGUuYiktMSxvPS1lLmI7c3x8ZigwKTtmb3IodmFyIHU9MCxoPWUuYixsPShuPDwzKS04K2IocyktaCx2PS0xO2w+byYmdjxhOyl7dmFyIGM9bD4+Mzt0Wysrdl09ZS5zW3U9KHU8PGh8KHJbY118cltjKzFdPDw4fHJbYysyXTw8MTYpPj4oNyZsKSkmaV0sbC09aD1lLm5bdV19bD09byYmdisxPT1hfHxmKDApfSx4PWZ1bmN0aW9uKHIsdCxlKXt2YXIgbj02LGE9dC5sZW5ndGgrMz4+MixzPWE8PDEsaT1hK3M7VChyLnN1YmFycmF5KG4sbis9clswXXxyWzFdPDw4KSx0LnN1YmFycmF5KDAsYSksZSksVChyLnN1YmFycmF5KG4sbis9clsyXXxyWzNdPDw4KSx0LnN1YmFycmF5KGEscyksZSksVChyLnN1YmFycmF5KG4sbis9cls0XXxyWzVdPDw4KSx0LnN1YmFycmF5KHMsaSksZSksVChyLnN1YmFycmF5KG4pLHQuc3ViYXJyYXkoaSksZSl9LEY9ZnVuY3Rpb24ocixuLGEpe3ZhciBzLHU9bi5iLGg9clt1XSxsPWg+PjEmMztuLmw9MSZoO3ZhciB2PWg+PjN8clt1KzFdPDw1fHJbdSsyXTw8MTMsYz0odSs9MykrdjtpZigxPT1sKXtpZih1Pj1yLmxlbmd0aClyZXR1cm47cmV0dXJuIG4uYj11KzEsYT8obyhhLHJbdV0sbi55LG4ueSs9diksYSk6byhuZXcgdCh2KSxyW3VdKX1pZighKGM+ci5sZW5ndGgpKXtpZigwPT1sKXJldHVybiBuLmI9YyxhPyhhLnNldChyLnN1YmFycmF5KHUsYyksbi55KSxuLnkrPXYsYSk6aShyLHUsYyk7aWYoMj09bCl7dmFyIG09clt1XSxGPTMmbSxTPW0+PjImMyxCPW0+PjQsST0wLFU9MDtGPDI/MSZTP0J8PXJbKyt1XTw8NHwoMiZTJiZyWysrdV08PDEyKTpCPW0+PjM6KFU9UyxTPDI/KEJ8PSg2MyZyWysrdV0pPDw0LEk9clt1XT4+NnxyWysrdV08PDIpOjI9PVM/KEJ8PXJbKyt1XTw8NHwoMyZyWysrdV0pPDwxMixJPXJbdV0+PjJ8clsrK3VdPDw2KTooQnw9clsrK3VdPDw0fCg2MyZyWysrdV0pPDwxMixJPXJbdV0+PjZ8clsrK3VdPDwyfHJbKyt1XTw8MTApKSwrK3U7dmFyIEQ9YT9hLnN1YmFycmF5KG4ueSxuLnkrbi5tKTpuZXcgdChuLm0pLE09RC5sZW5ndGgtQjtpZigwPT1GKUQuc2V0KHIuc3ViYXJyYXkodSx1Kz1CKSxNKTtlbHNlIGlmKDE9PUYpbyhELHJbdSsrXSxNKTtlbHNle3ZhciBXPW4uaDtpZigyPT1GKXt2YXIgTz1wKHIsdSk7SSs9dS0odT1PWzBdKSxuLmg9Vz1PWzFdfWVsc2UgV3x8ZigwKTsoVT94OlQpKHIuc3ViYXJyYXkodSx1Kz1JKSxELnN1YmFycmF5KE0pLFcpfXZhciBqPXJbdSsrXTtpZihqKXsyNTU9PWo/aj0zMjUxMisoclt1KytdfHJbdSsrXTw8OCk6aj4xMjcmJihqPWotMTI4PDw4fHJbdSsrXSk7dmFyIEM9clt1KytdOzMmQyYmZigwKTtmb3IodmFyIEg9W2csZCx3XSxMPTI7TD4tMTstLUwpe3ZhciBaPUM+PjIrKEw8PDEpJjM7aWYoMT09Wil7dmFyIHE9bmV3IHQoWzAsMCxyW3UrK11dKTtIW0xdPXtzOnEuc3ViYXJyYXkoMiwzKSxuOnEuc3ViYXJyYXkoMCwxKSx0Om5ldyBlKHEuYnVmZmVyLDAsMSksYjowfX1lbHNlIDI9PVo/KHU9KHM9eShyLHUsOS0oMSZMKSkpWzBdLEhbTF09c1sxXSk6Mz09WiYmKG4udHx8ZigwKSxIW0xdPW4udFtMXSl9dmFyIEc9bi50PUgsSj1HWzBdLEs9R1sxXSxOPUdbMl0sUD1yW2MtMV07UHx8ZigwKTt2YXIgUT0oYzw8MyktOCtiKFApLU4uYixSPVE+PjMsVj0wLFg9KHJbUl18cltSKzFdPDw4KT4+KDcmUSkmKDE8PE4uYiktMSxZPShyW1I9KFEtPUsuYik+PjNdfHJbUisxXTw8OCk+Pig3JlEpJigxPDxLLmIpLTEsJD0ocltSPShRLT1KLmIpPj4zXXxyW1IrMV08PDgpPj4oNyZRKSYoMTw8Si5iKS0xO2ZvcigrK2o7LS1qOyl7dmFyIF89Ti5zW1hdLHJyPU4ubltYXSx0cj1KLnNbJF0sZXI9Si5uWyRdLG5yPUsuc1tZXSxhcj1LLm5bWV0sc3I9MTw8bnIsaXI9c3IrKChyW1I9KFEtPW5yKT4+M118cltSKzFdPDw4fHJbUisyXTw8MTZ8cltSKzNdPDwyNCk+Pj4oNyZRKSZzci0xKTtSPShRLT1rW3RyXSk+PjM7dmFyIG9yPUFbdHJdKygocltSXXxyW1IrMV08PDh8cltSKzJdPDwxNik+Pig3JlEpJigxPDxrW3RyXSktMSk7Uj0oUS09eltfXSk+PjM7dmFyIHVyPUVbX10rKChyW1JdfHJbUisxXTw8OHxyW1IrMl08PDE2KT4+KDcmUSkmKDE8PHpbX10pLTEpO2lmKFI9KFEtPXJyKT4+MyxYPU4udFtYXSsoKHJbUl18cltSKzFdPDw4KT4+KDcmUSkmKDE8PHJyKS0xKSxSPShRLT1lcik+PjMsJD1KLnRbJF0rKChyW1JdfHJbUisxXTw8OCk+Pig3JlEpJigxPDxlciktMSksUj0oUS09YXIpPj4zLFk9Sy50W1ldKygocltSXXxyW1IrMV08PDgpPj4oNyZRKSYoMTw8YXIpLTEpLGlyPjMpbi5vWzJdPW4ub1sxXSxuLm9bMV09bi5vWzBdLG4ub1swXT1pci09MztlbHNle3ZhciBocj1pci0oMCE9dXIpO2hyPyhpcj0zPT1ocj9uLm9bMF0tMTpuLm9baHJdLGhyPjEmJihuLm9bMl09bi5vWzFdKSxuLm9bMV09bi5vWzBdLG4ub1swXT1pcik6aXI9bi5vWzBdfWZvcihMPTA7TDx1cjsrK0wpRFtWK0xdPURbTStMXTtNKz11cjt2YXIgZnI9KFYrPXVyKS1pcjtpZihmcjwwKXt2YXIgbHI9LWZyLHZyPW4uZStmcjtmb3IobHI+b3ImJihscj1vciksTD0wO0w8bHI7KytMKURbVitMXT1uLndbdnIrTF07Vis9bHIsb3ItPWxyLGZyPTB9Zm9yKEw9MDtMPG9yOysrTClEW1YrTF09RFtmcitMXTtWKz1vcn1pZihWIT1NKWZvcig7TTxELmxlbmd0aDspRFtWKytdPURbTSsrXTtlbHNlIFY9RC5sZW5ndGg7YT9uLnkrPVY6RD1pKEQsMCxWKX1lbHNlIGlmKGEpe2lmKG4ueSs9QixNKWZvcihMPTA7TDxCOysrTClEW0xdPURbTStMXX1lbHNlIE0mJihEPWkoRCxNKSk7cmV0dXJuIG4uYj1jLER9ZigyKX19LFM9ZnVuY3Rpb24ocixlKXtpZigxPT1yLmxlbmd0aClyZXR1cm4gclswXTtmb3IodmFyIG49bmV3IHQoZSksYT0wLHM9MDthPHIubGVuZ3RoOysrYSl7dmFyIGk9clthXTtuLnNldChpLHMpLHMrPWkubGVuZ3RofXJldHVybiBufTtmdW5jdGlvbiBCKHIsdCl7Zm9yKHZhciBlPVtdLG49KyF0LGE9MCxzPTA7ci5sZW5ndGg7KXt2YXIgaT1jKHIsbnx8dCk7aWYoIm9iamVjdCI9PXR5cGVvZiBpKXtmb3Iobj8odD1udWxsLGkudy5sZW5ndGg9PWkudSYmKGUucHVzaCh0PWkudykscys9aS51KSk6KGUucHVzaCh0KSxpLmU9MCk7IWkubDspe3ZhciBvPUYocixpLHQpO298fGYoNSksdD9pLmU9aS55OihlLnB1c2gobykscys9by5sZW5ndGgsdShpLncsMCxvLmxlbmd0aCksaS53LnNldChvLGkudy5sZW5ndGgtby5sZW5ndGgpKX1hPWkuYis0KmkuY31lbHNlIGE9aTtyPXIuc3ViYXJyYXkoYSl9cmV0dXJuIFMoZSxzKX1fZS5kZWNvbXByZXNzPUI7dmFyIEk9ZnVuY3Rpb24oKXtmdW5jdGlvbiByKHIpe3RoaXMub25kYXRhPXIsdGhpcy5jPVtdLHRoaXMubD0wLHRoaXMuej0wfXJldHVybiByLnByb3RvdHlwZS5wdXNoPWZ1bmN0aW9uKHIsZSl7aWYoIm51bWJlciI9PXR5cGVvZiB0aGlzLnMpe3ZhciBuPU1hdGgubWluKHIubGVuZ3RoLHRoaXMucyk7cj1yLnN1YmFycmF5KG4pLHRoaXMucy09bn12YXIgYT1yLmxlbmd0aCt0aGlzLmw7aWYoIXRoaXMucyl7aWYoZSl7aWYoIWEpcmV0dXJuIHZvaWQgdGhpcy5vbmRhdGEobmV3IHQoMCksITApO2E8NSYmZig1KX1lbHNlIGlmKGE8MTgpcmV0dXJuIHRoaXMuYy5wdXNoKHIpLHZvaWQodGhpcy5sPWEpO2lmKHRoaXMubCYmKHRoaXMuYy5wdXNoKHIpLHI9Uyh0aGlzLmMsYSksdGhpcy5jPVtdLHRoaXMubD0wKSwibnVtYmVyIj09dHlwZW9mKHRoaXMucz1jKHIpKSlyZXR1cm4gdGhpcy5wdXNoKHIsZSl9aWYoIm51bWJlciIhPXR5cGVvZiB0aGlzLnMpe2lmKGE8KHRoaXMuenx8MykpcmV0dXJuIGUmJmYoNSksdGhpcy5jLnB1c2gociksdm9pZCh0aGlzLmw9YSk7aWYodGhpcy5sJiYodGhpcy5jLnB1c2gocikscj1TKHRoaXMuYyxhKSx0aGlzLmM9W10sdGhpcy5sPTApLCF0aGlzLnomJmE8KHRoaXMuej0yJnJbdGhpcy5zLmJdPzQ6Mysoclt0aGlzLnMuYl0+PjN8clt0aGlzLnMuYisxXTw8NXxyW3RoaXMucy5iKzJdPDwxMykpKXJldHVybiBlJiZmKDUpLHRoaXMuYy5wdXNoKHIpLHZvaWQodGhpcy5sPWEpO2Zvcih0aGlzLno9MDs7KXt2YXIgcz1GKHIsdGhpcy5zKTtpZighcyl7ZSYmZig1KTt2YXIgaT1yLnN1YmFycmF5KHRoaXMucy5iKTtyZXR1cm4gdGhpcy5zLmI9MCx0aGlzLmMucHVzaChpKSx2b2lkKHRoaXMubCs9aS5sZW5ndGgpfWlmKHRoaXMub25kYXRhKHMsITEpLHUodGhpcy5zLncsMCxzLmxlbmd0aCksdGhpcy5zLncuc2V0KHMsdGhpcy5zLncubGVuZ3RoLXMubGVuZ3RoKSx0aGlzLnMubCl7dmFyIG89ci5zdWJhcnJheSh0aGlzLnMuYik7cmV0dXJuIHRoaXMucz00KnRoaXMucy5jLHZvaWQgdGhpcy5wdXNoKG8sZSl9fX1lbHNlIGUmJmYoNSl9LHJ9KCk7X2UuRGVjb21wcmVzcz1JO3JldHVybiBfZX0p`;
+const WORKER_THRESHOLD = 1024 * 1024;
+const MAX_WINDOW_LOG = 25;
+class ZstdWindowSizeError extends Error {
+  windowLog;
+  maxWindowLog;
+  constructor(windowLog) {
+    super(
+      `Zstd window size too large (windowLog=${windowLog}, max=${MAX_WINDOW_LOG}). This file may have been compressed with zstd "ultra" mode (level 20+). Try recompressing with --long=${MAX_WINDOW_LOG} or a lower compression level.`
+    );
+    this.name = "ZstdWindowSizeError";
+    this.windowLog = windowLog;
+    this.maxWindowLog = MAX_WINDOW_LOG;
+    Object.setPrototypeOf(this, ZstdWindowSizeError.prototype);
+  }
+}
+function validateZstdWindowSize(data) {
+  if (data.length < 5) {
+    return;
+  }
+  const magic = data[0] | data[1] << 8 | data[2] << 16 | data[3] << 24;
+  if (magic !== 4247762216) {
+    return;
+  }
+  const descriptor = data[4];
+  const singleSegmentFlag = descriptor >> 5 & 1;
+  if (singleSegmentFlag) {
+    return;
+  }
+  if (data.length < 6) {
+    return;
+  }
+  const windowDescriptor = data[5];
+  const exponent = windowDescriptor >> 3;
+  const windowLog = 10 + exponent;
+  if (windowLog > MAX_WINDOW_LOG) {
+    throw new ZstdWindowSizeError(windowLog);
+  }
+}
+let zstdWorker = null;
+let blobURL = null;
+let workerInitPromise = null;
+let nextRequestId = 0;
+const pendingRequests = /* @__PURE__ */ new Map();
+let handlersAttached = false;
+function getZstdWorker() {
+  if (workerInitPromise) {
+    return workerInitPromise;
+  }
+  workerInitPromise = new Promise((resolve, reject) => {
+    const blob = new Blob([kZstdWorkerCode], {
+      type: "application/javascript"
+    });
+    blobURL = URL.createObjectURL(blob);
+    zstdWorker = new Worker(blobURL);
+    const initHandler = (event) => {
+      if (event.data.type === "init_complete") {
+        zstdWorker.removeEventListener("message", initHandler);
+        if (event.data.success) {
+          resolve(zstdWorker);
+        } else {
+          reject(new Error(event.data.error || "Worker initialization failed"));
+        }
+      }
+    };
+    zstdWorker.addEventListener("message", initHandler);
+    zstdWorker.postMessage({
+      type: "init",
+      scriptContent: kFzstdBase64
+    });
+  });
+  return workerInitPromise;
+}
+async function decompressZstd(data) {
+  validateZstdWindowSize(data);
+  if (data.length < WORKER_THRESHOLD) {
+    return decompress(data);
+  }
+  const worker = await getZstdWorker();
+  return new Promise((resolve, reject) => {
+    const requestId = nextRequestId++;
+    pendingRequests.set(requestId, { resolve, reject });
+    if (!handlersAttached) {
+      handlersAttached = true;
+      worker.addEventListener("message", (event) => {
+        const {
+          requestId: respId,
+          success: success2,
+          data: resultData,
+          error: error2
+        } = event.data;
+        const pending = pendingRequests.get(respId);
+        if (!pending) return;
+        pendingRequests.delete(respId);
+        if (success2) {
+          pending.resolve(resultData);
+        } else {
+          pending.reject(new Error(error2 || "Decompression failed"));
+        }
+      });
+      worker.addEventListener("error", (error2) => {
+        for (const [id, pending] of pendingRequests) {
+          pending.reject(new Error(`Worker error: ${error2.message}`));
+          pendingRequests.delete(id);
+        }
+      });
+    }
+    worker.postMessage(
+      {
+        type: "decompress",
+        requestId,
+        data
+      },
+      [data.buffer]
+    );
+  });
+}
+const CompressionMethod = {
+  STORED: 0,
+  DEFLATE: 8,
+  ZSTANDARD: 93
+};
+class UnsupportedCompressionError extends Error {
+  method;
+  filename;
+  constructor(method, filename2) {
+    super(`Unsupported compression method ${method} for file "${filename2}"`);
+    this.name = "UnsupportedCompressionError";
+    this.method = method;
+    this.filename = filename2;
+    Object.setPrototypeOf(this, UnsupportedCompressionError.prototype);
+  }
+}
+async function decompressData(data, compressionMethod, uncompressedSize, filename2) {
+  switch (compressionMethod) {
+    case CompressionMethod.STORED:
+      return data;
+    case CompressionMethod.DEFLATE:
+      return decompressDeflate(data, uncompressedSize);
+    case CompressionMethod.ZSTANDARD:
+      return decompressZstd(data);
+    default:
+      throw new UnsupportedCompressionError(compressionMethod, filename2);
+  }
+}
+async function decompressDeflate(data, size) {
+  return new Promise((resolve, reject) => {
+    decompress$1(data, { size }, (err2, result2) => {
+      if (err2) {
+        reject(err2);
+      } else {
+        resolve(result2);
+      }
+    });
+  });
 }
 class FileSizeLimitError extends Error {
   file;
@@ -108668,16 +109507,12 @@ const openRemoteZipFile = async (url, fetchContentLength = fetchSize, fetchBytes
         entry.fileOffset + totalSizeToFetch - 1
       );
       const zipFileEntry = await parseZipFileEntry(file, fileData);
-      if (zipFileEntry.compressionMethod === 0) {
-        return zipFileEntry.data;
-      } else if (zipFileEntry.compressionMethod === 8) {
-        const results = await decompressAsync(zipFileEntry.data, {
-          size: zipFileEntry.uncompressedSize
-        });
-        return results;
-      } else {
-        throw new Error(`Unsupported compression method for file ${file}`);
-      }
+      return decompressData(
+        zipFileEntry.data,
+        zipFileEntry.compressionMethod,
+        zipFileEntry.uncompressedSize,
+        file
+      );
     }
   };
 };
@@ -108711,17 +109546,6 @@ const fetchRange = async (url, start2, end2) => {
   });
   const arrayBuffer = await response.arrayBuffer();
   return new Uint8Array(arrayBuffer);
-};
-const decompressAsync = async (data, opts) => {
-  return new Promise((resolve, reject) => {
-    decompress(data, opts, (err2, result2) => {
-      if (err2) {
-        reject(err2);
-      } else {
-        resolve(result2);
-      }
-    });
-  });
 };
 const parseZipFileEntry = async (file, rawData) => {
   const view = new DataView(rawData.buffer);
@@ -116098,7 +116922,7 @@ function isShadowRoot(node2) {
   var OwnElement = getWindow(node2).ShadowRoot;
   return node2 instanceof OwnElement || node2 instanceof ShadowRoot;
 }
-function applyStyles$1(_ref) {
+function applyStyles(_ref) {
   var state = _ref.state;
   Object.keys(state.elements).forEach(function(name2) {
     var style2 = state.styles[name2] || {};
@@ -116156,11 +116980,11 @@ function effect$2(_ref2) {
     });
   };
 }
-const applyStyles = {
+const applyStyles$1 = {
   name: "applyStyles",
   enabled: true,
   phase: "write",
-  fn: applyStyles$1,
+  fn: applyStyles,
   effect: effect$2,
   requires: ["computeStyles"]
 };
@@ -116346,7 +117170,7 @@ var toPaddingObject = function toPaddingObject2(padding, state) {
   })) : padding;
   return mergePaddingObject(typeof padding !== "number" ? padding : expandToHashMap(padding, basePlacements));
 };
-function arrow$1(_ref) {
+function arrow(_ref) {
   var _state$modifiersData$;
   var state = _ref.state, name2 = _ref.name, options2 = _ref.options;
   var arrowElement = state.elements.arrow;
@@ -116391,11 +117215,11 @@ function effect$1(_ref2) {
   }
   state.elements.arrow = arrowElement;
 }
-const arrow = {
+const arrow$1 = {
   name: "arrow",
   enabled: true,
   phase: "main",
-  fn: arrow$1,
+  fn: arrow,
   effect: effect$1,
   requires: ["popperOffsets"],
   requiresIfExists: ["preventOverflow"]
@@ -116484,7 +117308,7 @@ function mapToStyles(_ref2) {
   }
   return Object.assign({}, commonStyles, (_Object$assign2 = {}, _Object$assign2[sideY] = hasY ? y + "px" : "", _Object$assign2[sideX] = hasX ? x + "px" : "", _Object$assign2.transform = "", _Object$assign2));
 }
-function computeStyles$1(_ref5) {
+function computeStyles(_ref5) {
   var state = _ref5.state, options2 = _ref5.options;
   var _options$gpuAccelerat = options2.gpuAcceleration, gpuAcceleration = _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat, _options$adaptive = options2.adaptive, adaptive = _options$adaptive === void 0 ? true : _options$adaptive, _options$roundOffsets = options2.roundOffsets, roundOffsets = _options$roundOffsets === void 0 ? true : _options$roundOffsets;
   var commonStyles = {
@@ -116515,11 +117339,11 @@ function computeStyles$1(_ref5) {
     "data-popper-placement": state.placement
   });
 }
-const computeStyles = {
+const computeStyles$1 = {
   name: "computeStyles",
   enabled: true,
   phase: "beforeWrite",
-  fn: computeStyles$1,
+  fn: computeStyles,
   data: {}
 };
 var passive = {
@@ -116835,7 +117659,7 @@ function getExpandedFallbackPlacements(placement) {
   var oppositePlacement = getOppositePlacement(placement);
   return [getOppositeVariationPlacement(placement), oppositePlacement, getOppositeVariationPlacement(oppositePlacement)];
 }
-function flip$1(_ref) {
+function flip(_ref) {
   var state = _ref.state, options2 = _ref.options, name2 = _ref.name;
   if (state.modifiersData[name2]._skip) {
     return;
@@ -116921,11 +117745,11 @@ function flip$1(_ref) {
     state.reset = true;
   }
 }
-const flip = {
+const flip$1 = {
   name: "flip",
   enabled: true,
   phase: "main",
-  fn: flip$1,
+  fn: flip,
   requiresIfExists: ["offset"],
   data: {
     _skip: false
@@ -116950,7 +117774,7 @@ function isAnySideFullyClipped(overflow) {
     return overflow[side] >= 0;
   });
 }
-function hide$1(_ref) {
+function hide(_ref) {
   var state = _ref.state, name2 = _ref.name;
   var referenceRect = state.rects.reference;
   var popperRect = state.rects.popper;
@@ -116976,12 +117800,12 @@ function hide$1(_ref) {
     "data-popper-escaped": hasPopperEscaped
   });
 }
-const hide = {
+const hide$1 = {
   name: "hide",
   enabled: true,
   phase: "main",
   requiresIfExists: ["preventOverflow"],
-  fn: hide$1
+  fn: hide
 };
 function distanceAndSkiddingToXY(placement, rects, offset2) {
   var basePlacement = getBasePlacement(placement);
@@ -116999,7 +117823,7 @@ function distanceAndSkiddingToXY(placement, rects, offset2) {
     y: distance
   };
 }
-function offset$1(_ref2) {
+function offset(_ref2) {
   var state = _ref2.state, options2 = _ref2.options, name2 = _ref2.name;
   var _options$offset = options2.offset, offset2 = _options$offset === void 0 ? [0, 0] : _options$offset;
   var data = placements.reduce(function(acc, placement) {
@@ -117013,14 +117837,14 @@ function offset$1(_ref2) {
   }
   state.modifiersData[name2] = data;
 }
-const offset = {
+const offset$1 = {
   name: "offset",
   enabled: true,
   phase: "main",
   requires: ["popperOffsets"],
-  fn: offset$1
+  fn: offset
 };
-function popperOffsets$1(_ref) {
+function popperOffsets(_ref) {
   var state = _ref.state, name2 = _ref.name;
   state.modifiersData[name2] = computeOffsets({
     reference: state.rects.reference,
@@ -117028,17 +117852,17 @@ function popperOffsets$1(_ref) {
     placement: state.placement
   });
 }
-const popperOffsets = {
+const popperOffsets$1 = {
   name: "popperOffsets",
   enabled: true,
   phase: "read",
-  fn: popperOffsets$1,
+  fn: popperOffsets,
   data: {}
 };
 function getAltAxis(axis) {
   return axis === "x" ? "y" : "x";
 }
-function preventOverflow$1(_ref) {
+function preventOverflow(_ref) {
   var state = _ref.state, options2 = _ref.options, name2 = _ref.name;
   var _options$mainAxis = options2.mainAxis, checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis, _options$altAxis = options2.altAxis, checkAltAxis = _options$altAxis === void 0 ? false : _options$altAxis, boundary = options2.boundary, rootBoundary = options2.rootBoundary, altBoundary = options2.altBoundary, padding = options2.padding, _options$tether = options2.tether, tether = _options$tether === void 0 ? true : _options$tether, _options$tetherOffset = options2.tetherOffset, tetherOffset = _options$tetherOffset === void 0 ? 0 : _options$tetherOffset;
   var overflow = detectOverflow(state, {
@@ -117122,11 +117946,11 @@ function preventOverflow$1(_ref) {
   }
   state.modifiersData[name2] = data;
 }
-const preventOverflow = {
+const preventOverflow$1 = {
   name: "preventOverflow",
   enabled: true,
   phase: "main",
-  fn: preventOverflow$1,
+  fn: preventOverflow,
   requiresIfExists: ["offset"]
 };
 function getHTMLElementScroll(element) {
@@ -117384,7 +118208,7 @@ function popperGenerator(generatorOptions) {
     return instance;
   };
 }
-var defaultModifiers = [eventListeners, popperOffsets, computeStyles, applyStyles, offset, flip, preventOverflow, arrow, hide];
+var defaultModifiers = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$1, offset$1, flip$1, preventOverflow$1, arrow$1, hide$1];
 var createPopper = /* @__PURE__ */ popperGenerator({
   defaultModifiers
 });
@@ -117982,7 +118806,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.fullWidth, styles$1i.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1i.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.165-5-g6fff0c462" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.169-3-g22fb0ca3d" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
@@ -192335,6 +193159,7 @@ function useSampleLoader() {
   const currentSampleCompleted = sampleCompleted !== void 0 ? sampleCompleted : true;
   const prevCompleted = usePrevious(currentSampleCompleted);
   const prevLogFile = usePrevious(logSelection.logFile);
+  const prevSampleId = usePrevious(sampleId);
   const prevSampleNeedsReload = usePrevious(
     sampleData.sampleNeedsReload
   );
@@ -192344,9 +193169,10 @@ function useSampleLoader() {
       const isLoading = sampleData.status === "loading" || sampleData.status === "streaming";
       const isError = sampleData.status === "error";
       const logFileChanged = prevLogFile !== void 0 && prevLogFile !== logSelection.logFile;
+      const sampleIdChanged = prevSampleId !== void 0 && prevSampleId !== sampleId;
       const completedChanged = prevCompleted !== void 0 && currentSampleCompleted !== prevCompleted;
       const needsReloadChanged = prevSampleNeedsReload !== void 0 && prevSampleNeedsReload !== sampleData.sampleNeedsReload;
-      const shouldLoad = !isCurrentSampleLoaded && !isLoading && !isError || logFileChanged || completedChanged || needsReloadChanged;
+      const shouldLoad = !isCurrentSampleLoaded && !isLoading && !isError || logFileChanged || sampleIdChanged || completedChanged || needsReloadChanged;
       if (shouldLoad) {
         loadSample(
           logSelection.logFile,
@@ -192366,6 +193192,7 @@ function useSampleLoader() {
     sampleData.status,
     sampleData.sampleNeedsReload,
     prevLogFile,
+    prevSampleId,
     prevCompleted,
     prevSampleNeedsReload,
     loadSample
