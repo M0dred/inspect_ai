@@ -111588,14 +111588,15 @@ const MessageContent = ({
 };
 const messageRenderers = {
   text: {
-    render: (key2, content2, isLast, _context) => {
+    render: (key2, content2, isLast, context) => {
       const c2 = content2;
       const cites = c2.citations ?? [];
       if (!c2.text && !cites.length) {
         return void 0;
       }
       const purgeInternalContainers = (text2) => {
-        const internalTags = ["internal", "content-internal", "think"];
+        const isAssistantMessage = context.role === "assistant";
+        const internalTags = !isAssistantMessage ? ["internal", "content-internal"] : ["internal", "content-internal", "think"];
         internalTags.forEach((tag) => {
           const regex2 = new RegExp(`<${tag}[^>]*>[\\s\\S]*?<\\/${tag}>`, "gm");
           text2 = text2.replace(regex2, "");
@@ -112087,7 +112088,7 @@ const ToolCallView = ({
     }
   });
   const contents2 = mode !== "compact" ? input2 : input2 || functionCall;
-  const context = defaultContext();
+  const context = defaultContext("tool");
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1w.toolCallView), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
       mode !== "compact" && (!view || view.title) ? /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -112145,10 +112146,11 @@ const styles$1s = {
   content: content$2,
   codeCompact
 };
-const defaultContext = () => {
+const defaultContext = (role2) => {
   return {
     citeOffset: 0,
-    citations: []
+    citations: [],
+    role: role2
   };
 };
 const MessageContents = ({
@@ -112157,7 +112159,7 @@ const MessageContents = ({
   toolMessages,
   toolCallStyle
 }) => {
-  const context = defaultContext();
+  const context = defaultContext(message2.role);
   if (message2.role === "assistant" && message2.tool_calls && message2.tool_calls.length) {
     const toolCalls = message2.tool_calls.map((tool_call, idx) => {
       const { input: input2, description: description2, functionCall, contentType } = resolveToolInput(tool_call.function, tool_call.arguments);
@@ -112876,7 +112878,13 @@ const contentRenderers = (renderObject) => {
       },
       render: (_id, entry, _options) => {
         return {
-          rendered: /* @__PURE__ */ jsxRuntimeExports.jsx(MessageContent, { contents: entry.value, context: defaultContext() })
+          rendered: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            MessageContent,
+            {
+              contents: entry.value,
+              context: defaultContext("unknown")
+            }
+          )
         };
       }
     },
@@ -118853,7 +118861,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.fullWidth, styles$1j.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1j.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.169-8-g4ac70e916" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.169-13-gbb8223bc0" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
