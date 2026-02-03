@@ -107553,8 +107553,9 @@ function requireMarkdownItMathjax3() {
 var markdownItMathjax3Exports = requireMarkdownItMathjax3();
 const markdownitMathjax3 = /* @__PURE__ */ getDefaultExportFromCjs(markdownItMathjax3Exports);
 const MarkdownDivComponent = reactExports.forwardRef(
-  ({ markdown, omitMedia, style: style2, className: className2 }, ref) => {
-    const cacheKey = `${markdown}:${omitMedia ? "1" : "0"}`;
+  ({ markdown, omitMedia, omitMath, style: style2, className: className2 }, ref) => {
+    const optionsKey = getOptionsKey(omitMedia, omitMath);
+    const cacheKey = `${markdown}:${optionsKey}`;
     const cachedHtml = renderCache.get(cacheKey);
     const [renderedHtml, setRenderedHtml] = reactExports.useState(() => {
       if (cachedHtml) {
@@ -107580,7 +107581,7 @@ const MarkdownDivComponent = reactExports.forwardRef(
         const preparedForMarkdown = restoreBackslashesForLatex(protectedText);
         let html2 = preparedForMarkdown;
         try {
-          const md = omitMedia ? mdInstanceNoMedia : mdInstance;
+          const md = getMarkdownInstance(omitMedia, omitMath);
           html2 = md.render(preparedForMarkdown);
         } catch (ex) {
           console.log("Unable to markdown render content");
@@ -107608,7 +107609,7 @@ const MarkdownDivComponent = reactExports.forwardRef(
       return () => {
         cancel();
       };
-    }, [markdown, omitMedia, cachedHtml, renderedHtml, cacheKey]);
+    }, [markdown, omitMedia, omitMath, cachedHtml, renderedHtml, cacheKey]);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
@@ -107623,10 +107624,22 @@ const MarkdownDivComponent = reactExports.forwardRef(
 const MarkdownDiv = reactExports.memo(MarkdownDivComponent);
 const renderCache = /* @__PURE__ */ new Map();
 const MAX_CACHE_SIZE = 500;
-const mdInstance = MarkdownIt({ breaks: true, html: true }).use(
-  markdownitMathjax3
-);
-const mdInstanceNoMedia = MarkdownIt({ breaks: true, html: true }).use(markdownitMathjax3).disable(["image"]);
+const mdInstanceCache = {};
+const getOptionsKey = (omitMedia, omitMath) => `${omitMedia ? "1" : "0"}:${omitMath ? "1" : "0"}`;
+const getMarkdownInstance = (omitMedia, omitMath) => {
+  const key2 = getOptionsKey(omitMedia, omitMath);
+  if (!mdInstanceCache[key2]) {
+    const md = new MarkdownIt({ breaks: true, html: true });
+    if (!omitMath) {
+      md.use(markdownitMathjax3);
+    }
+    if (omitMedia) {
+      md.disable(["image"]);
+    }
+    mdInstanceCache[key2] = md;
+  }
+  return mdInstanceCache[key2];
+};
 class MarkdownRenderQueue {
   queue = [];
   activeCount = 0;
@@ -107820,7 +107833,7 @@ const Preformatted = reactExports.forwardRef(
     );
   }
 );
-const RenderedText = reactExports.forwardRef(({ markdown, style: style2, className: className2, forceRender, omitMedia }, ref) => {
+const RenderedText = reactExports.forwardRef(({ markdown, style: style2, className: className2, forceRender, omitMedia, omitMath }, ref) => {
   const displayMode = useStore((state) => state.app.displayMode);
   if (forceRender || displayMode === "rendered") {
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -107830,7 +107843,8 @@ const RenderedText = reactExports.forwardRef(({ markdown, style: style2, classNa
         markdown,
         style: style2,
         className: className2,
-        omitMedia
+        omitMedia,
+        omitMath
       }
     );
   } else {
@@ -118839,7 +118853,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.fullWidth, styles$1j.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1j.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.169-9-g7bd3e912a" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.169-8-g4ac70e916" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
@@ -181686,7 +181700,8 @@ const InfoEventView = ({
         RenderedText,
         {
           markdown: event.data,
-          className: clsx(styles$I.panel, "text-size-base")
+          className: clsx(styles$I.panel, "text-size-base"),
+          omitMath: true
         }
       )
     );
