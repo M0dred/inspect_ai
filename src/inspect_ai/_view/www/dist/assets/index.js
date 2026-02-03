@@ -118861,7 +118861,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.fullWidth, styles$1j.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1j.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.169-13-gbb8223bc0" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.170-18-g1b3cd0aa3" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
@@ -177606,14 +177606,14 @@ function selectionParentElement(range2) {
 const EmptyPanel = ({ children: children2 }) => {
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "empty-panel", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: children2 }) }) });
 };
-const tabs$1 = "_tabs_jdywf_1";
-const tabContents = "_tabContents_jdywf_5";
-const scrollable = "_scrollable_jdywf_10";
-const tab$1 = "_tab_jdywf_1";
-const tabItem = "_tabItem_jdywf_24";
-const tabIcon = "_tabIcon_jdywf_28";
-const tabTools = "_tabTools_jdywf_32";
-const tabStyle = "_tabStyle_jdywf_42";
+const tabs$1 = "_tabs_1rv6h_1";
+const tabContents = "_tabContents_1rv6h_5";
+const scrollable = "_scrollable_1rv6h_11";
+const tab$1 = "_tab_1rv6h_1";
+const tabItem = "_tabItem_1rv6h_25";
+const tabIcon = "_tabIcon_1rv6h_29";
+const tabTools = "_tabTools_1rv6h_33";
+const tabStyle = "_tabStyle_1rv6h_43";
 const moduleStyles = {
   tabs: tabs$1,
   tabContents,
@@ -180317,6 +180317,45 @@ const useTranscriptFilter = () => {
     arrangedEventTypes
   };
 };
+let sharedObserver = null;
+let observedElements = /* @__PURE__ */ new Set();
+function getSharedObserver(callback) {
+  if (!sharedObserver) {
+    sharedObserver = new IntersectionObserver(callback, {
+      // hardcoded for .stickyWrapper top:30px plus its scroll container (Modal body 35px)
+      rootMargin: "-65px 0px 0px 0px",
+      threshold: [1]
+    });
+  }
+  return sharedObserver;
+}
+function handleIntersections(entries) {
+  entries.forEach((entry) => {
+    entry.target.toggleAttribute(
+      "data-useStickyObserver-stuck",
+      entry.intersectionRatio < 1
+    );
+  });
+}
+function useStickyObserver() {
+  const ref = reactExports.useRef(null);
+  reactExports.useEffect(() => {
+    const el2 = ref.current;
+    if (!el2) return;
+    const observer = getSharedObserver(handleIntersections);
+    observer.observe(el2);
+    observedElements.add(el2);
+    return () => {
+      observer.unobserve(el2);
+      observedElements.delete(el2);
+      if (observedElements.size === 0 && sharedObserver) {
+        sharedObserver.disconnect();
+        sharedObserver = null;
+      }
+    };
+  }, []);
+  return ref;
+}
 const grid$5 = "_grid_1ml4j_1";
 const row$2 = "_row_1ml4j_8";
 const links$1 = "_links_1ml4j_22";
@@ -180556,6 +180595,58 @@ class EventNode {
     this.depth = depth;
   }
 }
+const flatTree = (eventNodes, collapsed2, visitors, parentNode) => {
+  const result2 = [];
+  for (const node2 of eventNodes) {
+    if (visitors && visitors.length > 0) {
+      let pendingNodes = [{ ...node2 }];
+      for (const visitor of visitors) {
+        const allResults = [];
+        for (const pendingNode of pendingNodes) {
+          const visitorResult = visitor.visit(pendingNode);
+          if (parentNode) {
+            parentNode.children = visitorResult;
+          }
+          allResults.push(...visitorResult);
+        }
+        pendingNodes = allResults;
+      }
+      for (const pendingNode of pendingNodes) {
+        const children2 = flatTree(
+          pendingNode.children,
+          collapsed2,
+          visitors,
+          pendingNode
+        );
+        pendingNode.children = children2;
+        result2.push(pendingNode);
+        if (collapsed2 === null || collapsed2[pendingNode.id] !== true) {
+          result2.push(...children2);
+        }
+      }
+      for (const visitor of visitors) {
+        if (visitor.flush) {
+          const finalNodes = visitor.flush();
+          result2.push(...finalNodes);
+        }
+      }
+    } else {
+      result2.push(node2);
+      const children2 = flatTree(node2.children, collapsed2, visitors, node2);
+      if (collapsed2 === null || collapsed2[node2.id] !== true) {
+        result2.push(...children2);
+      }
+    }
+  }
+  return result2;
+};
+const parsePackageName = (name2) => {
+  if (name2.includes("/")) {
+    const [packageName, moduleName] = name2.split("/", 2);
+    return { package: packageName, module: moduleName };
+  }
+  return { package: "", module: name2 };
+};
 const kSandboxSignalName = "53787D8A-D3FC-426D-B383-9F880B70E4AA";
 const fixupEventStream = (events, filterPending = true) => {
   const collapsed2 = processPendingEvents(events, filterPending);
@@ -180696,58 +180787,6 @@ const createSpanEnd = (name2, timestamp2) => {
     uuid: null,
     metadata: null
   };
-};
-const flatTree = (eventNodes, collapsed2, visitors, parentNode) => {
-  const result2 = [];
-  for (const node2 of eventNodes) {
-    if (visitors && visitors.length > 0) {
-      let pendingNodes = [{ ...node2 }];
-      for (const visitor of visitors) {
-        const allResults = [];
-        for (const pendingNode of pendingNodes) {
-          const visitorResult = visitor.visit(pendingNode);
-          if (parentNode) {
-            parentNode.children = visitorResult;
-          }
-          allResults.push(...visitorResult);
-        }
-        pendingNodes = allResults;
-      }
-      for (const pendingNode of pendingNodes) {
-        const children2 = flatTree(
-          pendingNode.children,
-          collapsed2,
-          visitors,
-          pendingNode
-        );
-        pendingNode.children = children2;
-        result2.push(pendingNode);
-        if (collapsed2 === null || collapsed2[pendingNode.id] !== true) {
-          result2.push(...children2);
-        }
-      }
-      for (const visitor of visitors) {
-        if (visitor.flush) {
-          const finalNodes = visitor.flush();
-          result2.push(...finalNodes);
-        }
-      }
-    } else {
-      result2.push(node2);
-      const children2 = flatTree(node2.children, collapsed2, visitors, node2);
-      if (collapsed2 === null || collapsed2[node2.id] !== true) {
-        result2.push(...children2);
-      }
-    }
-  }
-  return result2;
-};
-const parsePackageName = (name2) => {
-  if (name2.includes("/")) {
-    const [packageName, moduleName] = name2.split("/", 2);
-    return { package: packageName, module: moduleName };
-  }
-  return { package: "", module: name2 };
 };
 const eventRow = "_eventRow_1j0jk_1";
 const selected$2 = "_selected_1j0jk_8";
@@ -181131,6 +181170,7 @@ const EventPaddingNode = {
 };
 const TranscriptOutline = ({
   eventNodes,
+  filteredNodes,
   defaultCollapsedIds,
   running,
   className: className2,
@@ -181177,26 +181217,8 @@ const TranscriptOutline = ({
     }
   }, [sampleDetailNavigation.event, setSelectedOutlineId, scrollRef]);
   const outlineNodeList = reactExports.useMemo(() => {
-    const nodeList = flatTree(
-      eventNodes,
-      (collapsedEvents ? collapsedEvents[kTranscriptOutlineCollapseScope] : void 0) || defaultCollapsedIds,
-      [
-        // Strip specific nodes
-        removeNodeVisitor("logger"),
-        removeNodeVisitor("info"),
-        removeNodeVisitor("state"),
-        removeNodeVisitor("store"),
-        removeNodeVisitor("approval"),
-        removeNodeVisitor("input"),
-        removeNodeVisitor("sandbox"),
-        // Strip the sandbox wrapper (and children)
-        removeStepSpanNameVisitor(kSandboxSignalName),
-        // Remove child events for scorers
-        noScorerChildren()
-      ]
-    );
-    return collapseScoring(collapseTurns(makeTurns(nodeList)));
-  }, [eventNodes, collapsedEvents, defaultCollapsedIds]);
+    return collapseScoring(collapseTurns(makeTurns(filteredNodes)));
+  }, [filteredNodes]);
   const allNodesList = reactExports.useMemo(() => {
     return flatTree(eventNodes, null);
   }, [eventNodes]);
@@ -181427,19 +181449,23 @@ const EventNavs = ({
     }
   );
 };
-const label$6 = "_label_1nn7f_1";
-const navs = "_navs_1nn7f_6";
-const card = "_card_1nn7f_12";
-const cardContent = "_cardContent_1nn7f_20";
-const hidden$1 = "_hidden_1nn7f_25";
-const copyLink = "_copyLink_1nn7f_33";
-const hover = "_hover_1nn7f_41";
-const root$1 = "_root_1nn7f_45";
-const bottomDongle = "_bottomDongle_1nn7f_50";
-const dongleIcon = "_dongleIcon_1nn7f_67";
+const stickyWrapper = "_stickyWrapper_1rhkd_1";
+const label$6 = "_label_1rhkd_24";
+const navs = "_navs_1rhkd_29";
+const turnLabel = "_turnLabel_1rhkd_35";
+const card = "_card_1rhkd_41";
+const cardContent = "_cardContent_1rhkd_49";
+const hidden$1 = "_hidden_1rhkd_54";
+const copyLink = "_copyLink_1rhkd_62";
+const hover = "_hover_1rhkd_70";
+const root$1 = "_root_1rhkd_74";
+const bottomDongle = "_bottomDongle_1rhkd_79";
+const dongleIcon = "_dongleIcon_1rhkd_96";
 const styles$J = {
+  stickyWrapper,
   label: label$6,
   navs,
+  turnLabel,
   card,
   cardContent,
   hidden: hidden$1,
@@ -181460,7 +181486,8 @@ const EventPanel = ({
   children: children2,
   childIds,
   collapsibleContent,
-  collapseControl = "top"
+  collapseControl = "top",
+  turnLabel: turnLabel2
 }) => {
   const [collapsed2, setCollapsed] = useCollapseSampleEvent(
     kTranscriptCollapseScope,
@@ -181485,6 +181512,7 @@ const EventPanel = ({
       defaultValue: defaultPillId
     }
   );
+  const stickyRef = useStickyObserver();
   const gridColumns2 = [];
   if (isCollapsible && !useBottomDongle) {
     gridColumns2.push("minmax(0, max-content)");
@@ -181507,7 +181535,12 @@ const EventPanel = ({
     "div",
     {
       title: subTitle,
-      className: clsx("text-size-small", mouseOver ? styles$J.hover : ""),
+      className: clsx(
+        "text-size-small",
+        mouseOver ? styles$J.hover : "",
+        turnLabel2 ? styles$J.stickyWrapper : ""
+      ),
+      ref: turnLabel2 ? stickyRef : null,
       style: {
         display: "grid",
         gridTemplateColumns: gridColumns2.join(" "),
@@ -181559,22 +181592,25 @@ const EventPanel = ({
             children: collapsed2 ? text2 : ""
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$J.navs, children: isCollapsible && collapsibleContent && collapsed2 ? "" : filteredArrChildren && filteredArrChildren.length > 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-          EventNavs,
-          {
-            navs: filteredArrChildren.map((child, index) => {
-              const defaultTitle = `Tab ${index}`;
-              const title22 = child && reactExports.isValidElement(child) ? child.props["data-name"] || defaultTitle : defaultTitle;
-              return {
-                id: `eventpanel-${eventNodeId}-${index}`,
-                title: title22,
-                target: pillId(index)
-              };
-            }),
-            selectedNav,
-            setSelectedNav
-          }
-        ) : "" })
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$J.navs, children: [
+          isCollapsible && collapsibleContent && collapsed2 ? "" : filteredArrChildren && filteredArrChildren.length > 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+            EventNavs,
+            {
+              navs: filteredArrChildren.map((child, index) => {
+                const defaultTitle = `Tab ${index}`;
+                const title22 = child && reactExports.isValidElement(child) ? child.props["data-name"] || defaultTitle : defaultTitle;
+                return {
+                  id: `eventpanel-${eventNodeId}-${index}`,
+                  title: title22,
+                  target: pillId(index)
+                };
+              }),
+              selectedNav,
+              setSelectedNav
+            }
+          ) : "",
+          turnLabel2 && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx(styles$J.turnLabel), children: turnLabel2 })
+        ] })
       ]
     }
   ) : "";
@@ -181965,6 +182001,7 @@ const ModelEventView = ({
     }
   }
   const panelTitle = event.role ? `Model Call (${event.role}): ${event.model}` : `Model Call: ${event.model}`;
+  const turnLabel2 = context?.turnInfo ? `turn ${context.turnInfo.turnNumber}/${context.turnInfo.totalTurns}` : void 0;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     EventPanel,
     {
@@ -181974,6 +182011,7 @@ const ModelEventView = ({
       title: formatTitle(panelTitle, totalUsage, callTime),
       subTitle: formatTiming(event.timestamp, event.working_start),
       icon: ApplicationIcons.model,
+      turnLabel: turnLabel2,
       children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Summary", className: styles$F.container, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -191407,9 +191445,11 @@ const styles$w = {
 const ToolEventView = ({
   eventNode,
   children: children2,
-  className: className2
+  className: className2,
+  context
 }) => {
   const event = eventNode.event;
+  const turnLabel2 = context?.turnInfo ? `turn ${context.turnInfo.turnNumber}/${context.turnInfo.totalTurns}` : void 0;
   const { input: input2, description: description2, functionCall, contentType } = reactExports.useMemo(
     () => resolveToolInput(event.function, event.arguments),
     [event.function, event.arguments]
@@ -191438,6 +191478,7 @@ const ToolEventView = ({
       icon: ApplicationIcons.solvers.use_tools,
       childIds: children2.map((child) => child.id),
       collapseControl: "bottom",
+      turnLabel: turnLabel2,
       children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Summary", className: styles$w.summary, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           ToolCallView,
@@ -191870,7 +191911,8 @@ const TranscriptVirtualListComponent = ({
   running,
   initialEventId,
   offsetTop,
-  className: className2
+  className: className2,
+  turnMap
 }) => {
   const useVirtualization = running || eventNodes.length > 100;
   const setNativeFind = useStore((state) => state.appActions.setNativeFind);
@@ -191901,11 +191943,6 @@ const TranscriptVirtualListComponent = ({
     },
     [eventNodes]
   );
-  const contextWithToolEvents = reactExports.useMemo(() => ({ hasToolEvents: true }), []);
-  const contextWithoutToolEvents = reactExports.useMemo(
-    () => ({ hasToolEvents: false }),
-    []
-  );
   const nonVirtualGridRef = reactExports.useRef(null);
   reactExports.useEffect(() => {
     if (!useVirtualization && initialEventId) {
@@ -191915,6 +191952,16 @@ const TranscriptVirtualListComponent = ({
       row2?.scrollIntoView({ block: "start" });
     }
   }, [initialEventId, useVirtualization]);
+  const contextMap = reactExports.useMemo(() => {
+    const map2 = /* @__PURE__ */ new Map();
+    for (let i = 0; i < eventNodes.length; i++) {
+      const node2 = eventNodes[i];
+      const hasToolEvents = hasToolEventsAtCurrentDepth(i);
+      const turnInfo = turnMap?.get(node2.id);
+      map2.set(node2.id, { hasToolEvents, turnInfo });
+    }
+    return map2;
+  }, [eventNodes, hasToolEventsAtCurrentDepth, turnMap]);
   const renderRow = reactExports.useCallback(
     (index, item2, style2) => {
       const paddingClass = index === 0 ? styles$u.first : void 0;
@@ -191927,8 +191974,7 @@ const TranscriptVirtualListComponent = ({
       const attachedClass = attached2 ? styles$u.attached : void 0;
       const attachedChildClass = attached2 ? styles$u.attachedChild : void 0;
       const attachedParentClass = attachedParent2 ? styles$u.attachedParent : void 0;
-      const hasToolEvents = hasToolEventsAtCurrentDepth(index);
-      const context = hasToolEvents ? contextWithToolEvents : contextWithoutToolEvents;
+      const context = contextMap.get(item2.id);
       return /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
         {
@@ -191952,12 +191998,7 @@ const TranscriptVirtualListComponent = ({
         item2.id
       );
     },
-    [
-      eventNodes,
-      hasToolEventsAtCurrentDepth,
-      contextWithToolEvents,
-      contextWithoutToolEvents
-    ]
+    [eventNodes, contextMap]
   );
   if (useVirtualization) {
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -192028,7 +192069,8 @@ const TranscriptVirtualList = reactExports.memo(
       running,
       initialEventId,
       offsetTop,
-      className: className2
+      className: className2,
+      turnMap
     } = props;
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       TranscriptVirtualListComponent,
@@ -192040,7 +192082,8 @@ const TranscriptVirtualList = reactExports.memo(
         offsetTop,
         scrollRef,
         running,
-        className: className2
+        className: className2,
+        turnMap
       }
     );
   }
@@ -192163,7 +192206,8 @@ const RenderedEventNode = reactExports.memo(
           {
             eventNode: node2,
             className: className2,
-            children: node2.children
+            children: node2.children,
+            context
           }
         );
       case "input":
@@ -192579,6 +192623,54 @@ const TranscriptPanel = reactExports.memo((props) => {
       (collapsedEvents ? collapsedEvents[kTranscriptCollapseScope] : void 0) || defaultCollapsedIds
     );
   }, [eventNodes, collapsedEvents, defaultCollapsedIds]);
+  const outlineFilteredNodes = reactExports.useMemo(() => {
+    return flatTree(
+      eventNodes,
+      (collapsedEvents ? collapsedEvents[kTranscriptOutlineCollapseScope] : void 0) || defaultCollapsedIds,
+      [
+        // Strip specific nodes
+        removeNodeVisitor("logger"),
+        removeNodeVisitor("info"),
+        removeNodeVisitor("state"),
+        removeNodeVisitor("store"),
+        removeNodeVisitor("approval"),
+        removeNodeVisitor("input"),
+        removeNodeVisitor("sandbox"),
+        // Strip the sandbox wrapper (and children)
+        removeStepSpanNameVisitor(kSandboxSignalName),
+        // Remove child events for scorers
+        noScorerChildren()
+      ]
+    );
+  }, [eventNodes, collapsedEvents, defaultCollapsedIds]);
+  const turnMap = reactExports.useMemo(() => {
+    const turns = makeTurns(outlineFilteredNodes);
+    const map2 = /* @__PURE__ */ new Map();
+    const turnNodes = turns.filter(
+      (n) => n.event.event === "span_begin" && n.event.type === "turn"
+    );
+    const totalTurns = turnNodes.length;
+    let turnNumber = 0;
+    const modelEventTurnNumbers = /* @__PURE__ */ new Map();
+    for (const node2 of turnNodes) {
+      turnNumber++;
+      const modelChild = node2.children.find((c2) => c2.event.event === "model");
+      if (modelChild) {
+        modelEventTurnNumbers.set(modelChild.id, turnNumber);
+      }
+    }
+    let currentTurn = 0;
+    for (const node2 of flattenedNodes) {
+      const modelTurn = modelEventTurnNumbers.get(node2.id);
+      if (modelTurn !== void 0) {
+        currentTurn = modelTurn;
+        map2.set(node2.id, { turnNumber: currentTurn, totalTurns });
+      } else if (currentTurn > 0) {
+        map2.set(node2.id, { turnNumber: currentTurn, totalTurns });
+      }
+    }
+    return map2;
+  }, [outlineFilteredNodes, flattenedNodes]);
   const collapsedMode = useStore((state) => state.sample.collapsedMode);
   reactExports.useEffect(() => {
     if (events.length <= 0 || collapsedMode !== null) {
@@ -192677,6 +192769,7 @@ const TranscriptPanel = reactExports.memo((props) => {
                   {
                     className: clsx(styles$N.outline),
                     eventNodes,
+                    filteredNodes: outlineFilteredNodes,
                     running,
                     defaultCollapsedIds,
                     scrollRef
@@ -192703,7 +192796,8 @@ const TranscriptPanel = reactExports.memo((props) => {
               running,
               initialEventId: initialEventId === void 0 ? null : initialEventId,
               offsetTop: topOffset,
-              className: styles$N.listContainer
+              className: styles$N.listContainer,
+              turnMap
             }
           )
         ]
