@@ -32344,6 +32344,55 @@ const computeForegroundBackgroundColor = (colorType, color) => {
       }
   }
 };
+const kPrismRenderMaxSize = 25e4;
+const highlightCodeBlocks = (container2) => {
+  const codeBlocks = container2.querySelectorAll("pre code");
+  codeBlocks.forEach((block2) => {
+    if (block2.hasAttribute("data-highlighted")) {
+      return;
+    }
+    if (block2.className.includes("language-")) {
+      block2.classList.add("sourceCode");
+      prismExports.highlightElement(block2);
+      block2.setAttribute("data-highlighted", "true");
+    }
+  });
+};
+const usePrismHighlight = (containerRef, contentLength) => {
+  reactExports.useEffect(() => {
+    if (contentLength <= 0 || containerRef.current === null || contentLength > kPrismRenderMaxSize) {
+      return;
+    }
+    const container2 = containerRef.current;
+    requestAnimationFrame(() => {
+      highlightCodeBlocks(container2);
+    });
+    const observer = new MutationObserver((mutations) => {
+      const hasNewCodeBlocks = mutations.some((mutation) => {
+        if (mutation.type === "childList") {
+          return Array.from(mutation.addedNodes).some((node2) => {
+            if (node2.nodeType === Node.ELEMENT_NODE) {
+              const el2 = node2;
+              return el2.querySelector?.("pre code") || el2.matches?.("pre code");
+            }
+            return false;
+          });
+        }
+        return false;
+      });
+      if (hasNewCodeBlocks) {
+        highlightCodeBlocks(container2);
+      }
+    });
+    observer.observe(container2, {
+      childList: true,
+      subtree: true
+    });
+    return () => {
+      observer.disconnect();
+    };
+  }, [contentLength, containerRef]);
+};
 const JSONPanel = ({
   id,
   json,
@@ -116514,22 +116563,6 @@ const usePrevious = (value2) => {
   }, [value2]);
   return ref.current;
 };
-const kPrismRenderMaxSize = 25e4;
-const usePrismHighlight = (containerRef, contentLength) => {
-  reactExports.useEffect(() => {
-    requestAnimationFrame(() => {
-      if (contentLength > 0 && containerRef.current !== null && contentLength <= kPrismRenderMaxSize) {
-        const codeBlocks = containerRef.current?.querySelectorAll("pre code");
-        codeBlocks?.forEach((block2) => {
-          if (block2.className.includes("language-")) {
-            block2.classList.add("sourceCode");
-            prismExports.highlightElement(block2);
-          }
-        });
-      }
-    });
-  }, [contentLength, containerRef]);
-};
 const useSamplePopover = (id) => {
   const setVisiblePopover = useStore(
     (store) => store.sampleActions.setVisiblePopover
@@ -118806,7 +118839,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.fullWidth, styles$1j.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1j.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.169-7-gaac254892" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.169-9-g7bd3e912a" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
