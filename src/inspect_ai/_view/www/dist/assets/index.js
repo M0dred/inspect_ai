@@ -41817,7 +41817,7 @@ const errors = {
 const baseMinusTMin = base$1 - tMin;
 const floor = Math.floor;
 const stringFromCharCode = String.fromCharCode;
-function error$3(type) {
+function error$4(type) {
   throw new RangeError(errors[type]);
 }
 function map$1(array, callback) {
@@ -41897,7 +41897,7 @@ const decode$1 = function(input2) {
   }
   for (let j = 0; j < basic; ++j) {
     if (input2.charCodeAt(j) >= 128) {
-      error$3("not-basic");
+      error$4("not-basic");
     }
     output2.push(input2.charCodeAt(j));
   }
@@ -41905,14 +41905,14 @@ const decode$1 = function(input2) {
     const oldi = i;
     for (let w = 1, k2 = base$1; ; k2 += base$1) {
       if (index >= inputLength) {
-        error$3("invalid-input");
+        error$4("invalid-input");
       }
       const digit = basicToDigit(input2.charCodeAt(index++));
       if (digit >= base$1) {
-        error$3("invalid-input");
+        error$4("invalid-input");
       }
       if (digit > floor((maxInt - i) / w)) {
-        error$3("overflow");
+        error$4("overflow");
       }
       i += digit * w;
       const t2 = k2 <= bias ? tMin : k2 >= bias + tMax ? tMax : k2 - bias;
@@ -41921,14 +41921,14 @@ const decode$1 = function(input2) {
       }
       const baseMinusT = base$1 - t2;
       if (w > floor(maxInt / baseMinusT)) {
-        error$3("overflow");
+        error$4("overflow");
       }
       w *= baseMinusT;
     }
     const out = output2.length + 1;
     bias = adapt(i - oldi, out, oldi == 0);
     if (floor(i / out) > maxInt - n) {
-      error$3("overflow");
+      error$4("overflow");
     }
     n += floor(i / out);
     i %= out;
@@ -41962,13 +41962,13 @@ const encode$1 = function(input2) {
     }
     const handledCPCountPlusOne = handledCPCount + 1;
     if (m - n > floor((maxInt - delta2) / handledCPCountPlusOne)) {
-      error$3("overflow");
+      error$4("overflow");
     }
     delta2 += (m - n) * handledCPCountPlusOne;
     n = m;
     for (const currentValue of input2) {
       if (currentValue < n && ++delta2 > maxInt) {
-        error$3("overflow");
+        error$4("overflow");
       }
       if (currentValue === n) {
         let q = delta2;
@@ -111304,7 +111304,7 @@ const title$3 = "_title_1792k_9";
 const titleText = "_titleText_1792k_18";
 const args = "_args_1792k_22";
 const argLabel = "_argLabel_1792k_31";
-const error$2 = "_error_1792k_35";
+const error$3 = "_error_1792k_35";
 const toolPanel = "_toolPanel_1792k_40";
 const styles$1y = {
   mcpToolUse,
@@ -111312,7 +111312,7 @@ const styles$1y = {
   titleText,
   args,
   argLabel,
-  error: error$2,
+  error: error$3,
   toolPanel
 };
 const ServerToolCall = ({
@@ -118861,7 +118861,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.fullWidth, styles$1j.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1j.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.170-18-g1b3cd0aa3" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.169-20-g0f38b6787" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
@@ -119474,7 +119474,7 @@ const styles$1e = {
 const nameCell = "_nameCell_mdto2_1";
 const modelCell = "_modelCell_mdto2_8";
 const scoreCell = "_scoreCell_mdto2_15";
-const error$1 = "_error_mdto2_22";
+const error$2 = "_error_mdto2_22";
 const started = "_started_mdto2_26";
 const success = "_success_mdto2_30";
 const cancelled = "_cancelled_mdto2_34";
@@ -119484,7 +119484,7 @@ const localStyles = {
   nameCell,
   modelCell,
   scoreCell,
-  error: error$1,
+  error: error$2,
   started,
   success,
   cancelled,
@@ -179551,7 +179551,7 @@ const tabPanel = "_tabPanel_6o9gh_1";
 const tabControls = "_tabControls_6o9gh_5";
 const fullWidth$1 = "_fullWidth_6o9gh_12";
 const padded = "_padded_6o9gh_25";
-const error = "_error_6o9gh_30";
+const error$1 = "_error_6o9gh_30";
 const ansi = "_ansi_6o9gh_34";
 const noTop = "_noTop_6o9gh_38";
 const chat = "_chat_6o9gh_50";
@@ -179561,7 +179561,7 @@ const styles$V = {
   tabControls,
   fullWidth: fullWidth$1,
   padded,
-  error,
+  error: error$1,
   ansi,
   noTop,
   chat,
@@ -181848,14 +181848,15 @@ const EventSection = ({
     children2
   ] });
 };
-const container$a = "_container_e0l2n_1";
-const all = "_all_e0l2n_6";
-const tableSelection = "_tableSelection_e0l2n_12";
-const codePre = "_codePre_e0l2n_22";
-const code$3 = "_code_e0l2n_22";
-const progress$1 = "_progress_e0l2n_34";
-const toolConfig = "_toolConfig_e0l2n_38";
-const toolChoice = "_toolChoice_e0l2n_46";
+const container$a = "_container_1u6fr_1";
+const all = "_all_1u6fr_6";
+const tableSelection = "_tableSelection_1u6fr_12";
+const codePre = "_codePre_1u6fr_22";
+const code$3 = "_code_1u6fr_22";
+const progress$1 = "_progress_1u6fr_34";
+const error = "_error_1u6fr_38";
+const toolConfig = "_toolConfig_1u6fr_51";
+const toolChoice = "_toolChoice_1u6fr_59";
 const styles$F = {
   container: container$a,
   all,
@@ -181863,6 +181864,7 @@ const styles$F = {
   codePre,
   code: code$3,
   progress: progress$1,
+  error,
   toolConfig,
   toolChoice
 };
@@ -182025,7 +182027,18 @@ const ModelEventView = ({
               allowLinking: false
             }
           ),
-          event.pending ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$F.progress), children: /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false, size: "medium" }) }) : void 0
+          event.error ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$F.error, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.error, "aria-hidden": "true" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              ANSIDisplay,
+              {
+                output: event.error,
+                style: {
+                  fontSize: "clamp(0.3rem, 1.1vw, 0.8rem)"
+                }
+              }
+            )
+          ] }) : event.pending ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$F.progress), children: /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false, size: "medium" }) }) : void 0
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "All", className: styles$F.container, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$F.all, children: [
