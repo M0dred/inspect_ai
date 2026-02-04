@@ -118861,7 +118861,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.fullWidth, styles$1j.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1j.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.169-20-g0f38b6787" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.170-4-g5f37ec2e0" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
@@ -179731,9 +179731,9 @@ function simpleMarkdownTruncate(markdown, maxLength = 250, ellipsis2 = "...") {
   }
   return truncated + ellipsis2;
 }
-const flatBody = "_flatBody_1uw6w_1";
-const iconSmall$1 = "_iconSmall_1uw6w_9";
-const lineBase = "_lineBase_1uw6w_15";
+const flatBody = "_flatBody_1cs2j_1";
+const iconSmall$1 = "_iconSmall_1cs2j_9";
+const lineBase = "_lineBase_1cs2j_16";
 const styles$U = {
   flatBody,
   iconSmall: iconSmall$1,
@@ -181848,15 +181848,15 @@ const EventSection = ({
     children2
   ] });
 };
-const container$a = "_container_1u6fr_1";
-const all = "_all_1u6fr_6";
-const tableSelection = "_tableSelection_1u6fr_12";
-const codePre = "_codePre_1u6fr_22";
-const code$3 = "_code_1u6fr_22";
-const progress$1 = "_progress_1u6fr_34";
-const error = "_error_1u6fr_38";
-const toolConfig = "_toolConfig_1u6fr_51";
-const toolChoice = "_toolChoice_1u6fr_59";
+const container$a = "_container_1pdlq_1";
+const all = "_all_1pdlq_6";
+const tableSelection = "_tableSelection_1pdlq_12";
+const codePre = "_codePre_1pdlq_22";
+const code$3 = "_code_1pdlq_22";
+const progress$1 = "_progress_1pdlq_34";
+const error = "_error_1pdlq_38";
+const toolConfig = "_toolConfig_1pdlq_54";
+const toolChoice = "_toolChoice_1pdlq_62";
 const styles$F = {
   container: container$a,
   all,
@@ -193085,7 +193085,8 @@ const SampleDisplay = ({
                   indented: true,
                   scrollRef,
                   toolCallStyle: "complete",
-                  running
+                  running,
+                  className: styles$V.fullWidth
                 },
                 `${baseId}-chat-${id}`
               )
