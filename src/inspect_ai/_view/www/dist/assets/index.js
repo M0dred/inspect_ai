@@ -118861,7 +118861,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.fullWidth, styles$1j.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1j.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.170-4-g5f37ec2e0" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.170-12-g5c531adec" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
@@ -181848,15 +181848,16 @@ const EventSection = ({
     children2
   ] });
 };
-const container$a = "_container_1pdlq_1";
-const all = "_all_1pdlq_6";
-const tableSelection = "_tableSelection_1pdlq_12";
-const codePre = "_codePre_1pdlq_22";
-const code$3 = "_code_1pdlq_22";
-const progress$1 = "_progress_1pdlq_34";
-const error = "_error_1pdlq_38";
-const toolConfig = "_toolConfig_1pdlq_54";
-const toolChoice = "_toolChoice_1pdlq_62";
+const container$a = "_container_1hidt_1";
+const all = "_all_1hidt_6";
+const tableSelection = "_tableSelection_1hidt_12";
+const codePre = "_codePre_1hidt_22";
+const code$3 = "_code_1hidt_22";
+const progress$1 = "_progress_1hidt_34";
+const error = "_error_1hidt_38";
+const toolConfig = "_toolConfig_1hidt_54";
+const toolChoice = "_toolChoice_1hidt_62";
+const traceback = "_traceback_1hidt_71";
 const styles$F = {
   container: container$a,
   all,
@@ -181866,7 +181867,8 @@ const styles$F = {
   progress: progress$1,
   error,
   toolConfig,
-  toolChoice
+  toolChoice,
+  traceback
 };
 const wrapper$1 = "_wrapper_cv5sf_1";
 const col2 = "_col2_cv5sf_8";
@@ -182079,7 +182081,14 @@ const ModelEventView = ({
             call: event.call,
             className: styles$F.container
           }
-        ) : ""
+        ) : "",
+        event.traceback_ansi && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-name": "Error", className: styles$F.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          ANSIDisplay,
+          {
+            output: event.traceback_ansi,
+            className: styles$F.traceback
+          }
+        ) })
       ]
     }
   );
