@@ -1751,15 +1751,15 @@ function requireReactDomClient_production() {
       valueField
     );
     if (!node2.hasOwnProperty(valueField) && "undefined" !== typeof descriptor && "function" === typeof descriptor.get && "function" === typeof descriptor.set) {
-      var get2 = descriptor.get, set3 = descriptor.set;
+      var get = descriptor.get, set2 = descriptor.set;
       Object.defineProperty(node2, valueField, {
         configurable: true,
         get: function() {
-          return get2.call(this);
+          return get.call(this);
         },
         set: function(value2) {
           currentValue = "" + value2;
-          set3.call(this, value2);
+          set2.call(this, value2);
         }
       });
       Object.defineProperty(node2, valueField, {
@@ -2914,40 +2914,40 @@ function requireReactDomClient_production() {
     throw HydrationMismatchException;
   }
   function prepareToHydrateHostInstance(fiber) {
-    var instance = fiber.stateNode, type = fiber.type, props = fiber.memoizedProps;
-    instance[internalInstanceKey] = fiber;
-    instance[internalPropsKey] = props;
+    var instance2 = fiber.stateNode, type = fiber.type, props = fiber.memoizedProps;
+    instance2[internalInstanceKey] = fiber;
+    instance2[internalPropsKey] = props;
     switch (type) {
       case "dialog":
-        listenToNonDelegatedEvent("cancel", instance);
-        listenToNonDelegatedEvent("close", instance);
+        listenToNonDelegatedEvent("cancel", instance2);
+        listenToNonDelegatedEvent("close", instance2);
         break;
       case "iframe":
       case "object":
       case "embed":
-        listenToNonDelegatedEvent("load", instance);
+        listenToNonDelegatedEvent("load", instance2);
         break;
       case "video":
       case "audio":
         for (type = 0; type < mediaEventTypes.length; type++)
-          listenToNonDelegatedEvent(mediaEventTypes[type], instance);
+          listenToNonDelegatedEvent(mediaEventTypes[type], instance2);
         break;
       case "source":
-        listenToNonDelegatedEvent("error", instance);
+        listenToNonDelegatedEvent("error", instance2);
         break;
       case "img":
       case "image":
       case "link":
-        listenToNonDelegatedEvent("error", instance);
-        listenToNonDelegatedEvent("load", instance);
+        listenToNonDelegatedEvent("error", instance2);
+        listenToNonDelegatedEvent("load", instance2);
         break;
       case "details":
-        listenToNonDelegatedEvent("toggle", instance);
+        listenToNonDelegatedEvent("toggle", instance2);
         break;
       case "input":
-        listenToNonDelegatedEvent("invalid", instance);
+        listenToNonDelegatedEvent("invalid", instance2);
         initInput(
-          instance,
+          instance2,
           props.value,
           props.defaultValue,
           props.checked,
@@ -2958,14 +2958,14 @@ function requireReactDomClient_production() {
         );
         break;
       case "select":
-        listenToNonDelegatedEvent("invalid", instance);
+        listenToNonDelegatedEvent("invalid", instance2);
         break;
       case "textarea":
-        listenToNonDelegatedEvent("invalid", instance), initTextarea(instance, props.value, props.defaultValue, props.children);
+        listenToNonDelegatedEvent("invalid", instance2), initTextarea(instance2, props.value, props.defaultValue, props.children);
     }
     type = props.children;
-    "string" !== typeof type && "number" !== typeof type && "bigint" !== typeof type || instance.textContent === "" + type || true === props.suppressHydrationWarning || checkForUnmatchedText(instance.textContent, type) ? (null != props.popover && (listenToNonDelegatedEvent("beforetoggle", instance), listenToNonDelegatedEvent("toggle", instance)), null != props.onScroll && listenToNonDelegatedEvent("scroll", instance), null != props.onScrollEnd && listenToNonDelegatedEvent("scrollend", instance), null != props.onClick && (instance.onclick = noop$1), instance = true) : instance = false;
-    instance || throwOnHydrationMismatch(fiber, true);
+    "string" !== typeof type && "number" !== typeof type && "bigint" !== typeof type || instance2.textContent === "" + type || true === props.suppressHydrationWarning || checkForUnmatchedText(instance2.textContent, type) ? (null != props.popover && (listenToNonDelegatedEvent("beforetoggle", instance2), listenToNonDelegatedEvent("toggle", instance2)), null != props.onScroll && listenToNonDelegatedEvent("scroll", instance2), null != props.onScrollEnd && listenToNonDelegatedEvent("scrollend", instance2), null != props.onClick && (instance2.onclick = noop$1), instance2 = true) : instance2 = false;
+    instance2 || throwOnHydrationMismatch(fiber, true);
   }
   function popToNextHostParent(fiber) {
     for (hydrationParentFiber = fiber.return; hydrationParentFiber; )
@@ -3912,12 +3912,12 @@ function requireReactDomClient_production() {
           a: {
             var workInProgress2 = workInProgress$jscomp$0, update = pendingQueue;
             updateLane = props;
-            var instance = instance$jscomp$0;
+            var instance2 = instance$jscomp$0;
             switch (update.tag) {
               case 1:
                 workInProgress2 = update.payload;
                 if ("function" === typeof workInProgress2) {
-                  newState = workInProgress2.call(instance, newState, updateLane);
+                  newState = workInProgress2.call(instance2, newState, updateLane);
                   break a;
                 }
                 newState = workInProgress2;
@@ -3926,7 +3926,7 @@ function requireReactDomClient_production() {
                 workInProgress2.flags = workInProgress2.flags & -65537 | 128;
               case 0:
                 workInProgress2 = update.payload;
-                updateLane = "function" === typeof workInProgress2 ? workInProgress2.call(instance, newState, updateLane) : workInProgress2;
+                updateLane = "function" === typeof workInProgress2 ? workInProgress2.call(instance2, newState, updateLane) : workInProgress2;
                 if (null === updateLane || void 0 === updateLane) break a;
                 newState = assign2({}, newState, updateLane);
                 break a;
@@ -5288,11 +5288,11 @@ function requireReactDomClient_production() {
     workInProgress2 = workInProgress2.stateNode;
     return "function" === typeof workInProgress2.shouldComponentUpdate ? workInProgress2.shouldComponentUpdate(newProps, newState, nextContext) : ctor.prototype && ctor.prototype.isPureReactComponent ? !shallowEqual(oldProps, newProps) || !shallowEqual(oldState, newState) : true;
   }
-  function callComponentWillReceiveProps(workInProgress2, instance, newProps, nextContext) {
-    workInProgress2 = instance.state;
-    "function" === typeof instance.componentWillReceiveProps && instance.componentWillReceiveProps(newProps, nextContext);
-    "function" === typeof instance.UNSAFE_componentWillReceiveProps && instance.UNSAFE_componentWillReceiveProps(newProps, nextContext);
-    instance.state !== workInProgress2 && classComponentUpdater.enqueueReplaceState(instance, instance.state, null);
+  function callComponentWillReceiveProps(workInProgress2, instance2, newProps, nextContext) {
+    workInProgress2 = instance2.state;
+    "function" === typeof instance2.componentWillReceiveProps && instance2.componentWillReceiveProps(newProps, nextContext);
+    "function" === typeof instance2.UNSAFE_componentWillReceiveProps && instance2.UNSAFE_componentWillReceiveProps(newProps, nextContext);
+    instance2.state !== workInProgress2 && classComponentUpdater.enqueueReplaceState(instance2, instance2.state, null);
   }
   function resolveClassComponentProps(Component2, baseProps) {
     var newProps = baseProps;
@@ -7068,22 +7068,22 @@ function requireReactDomClient_production() {
   function commitClassCallbacks(finishedWork) {
     var updateQueue = finishedWork.updateQueue;
     if (null !== updateQueue) {
-      var instance = finishedWork.stateNode;
+      var instance2 = finishedWork.stateNode;
       try {
-        commitCallbacks(updateQueue, instance);
+        commitCallbacks(updateQueue, instance2);
       } catch (error2) {
         captureCommitPhaseError(finishedWork, finishedWork.return, error2);
       }
     }
   }
-  function safelyCallComponentWillUnmount(current2, nearestMountedAncestor, instance) {
-    instance.props = resolveClassComponentProps(
+  function safelyCallComponentWillUnmount(current2, nearestMountedAncestor, instance2) {
+    instance2.props = resolveClassComponentProps(
       current2.type,
       current2.memoizedProps
     );
-    instance.state = current2.memoizedState;
+    instance2.state = current2.memoizedState;
     try {
-      instance.componentWillUnmount();
+      instance2.componentWillUnmount();
     } catch (error2) {
       captureCommitPhaseError(current2, nearestMountedAncestor, error2);
     }
@@ -7130,17 +7130,17 @@ function requireReactDomClient_production() {
       else ref.current = null;
   }
   function commitHostMount(finishedWork) {
-    var type = finishedWork.type, props = finishedWork.memoizedProps, instance = finishedWork.stateNode;
+    var type = finishedWork.type, props = finishedWork.memoizedProps, instance2 = finishedWork.stateNode;
     try {
       a: switch (type) {
         case "button":
         case "input":
         case "select":
         case "textarea":
-          props.autoFocus && instance.focus();
+          props.autoFocus && instance2.focus();
           break a;
         case "img":
-          props.src ? instance.src = props.src : props.srcSet && (instance.srcset = props.srcSet);
+          props.src ? instance2.src = props.src : props.srcSet && (instance2.srcset = props.srcSet);
       }
     } catch (error2) {
       captureCommitPhaseError(finishedWork, finishedWork.return, error2);
@@ -7907,8 +7907,8 @@ function requireReactDomClient_production() {
               if (null === current2) {
                 wasHidden = root3;
                 try {
-                  var instance = wasHidden.stateNode;
-                  hoistableRoot ? hideOrUnhideDehydratedBoundary(instance, true) : hideOrUnhideDehydratedBoundary(wasHidden.stateNode, false);
+                  var instance2 = wasHidden.stateNode;
+                  hoistableRoot ? hideOrUnhideDehydratedBoundary(instance2, true) : hideOrUnhideDehydratedBoundary(wasHidden.stateNode, false);
                 } catch (error2) {
                   captureCommitPhaseError(wasHidden, wasHidden.return, error2);
                 }
@@ -8012,11 +8012,11 @@ function requireReactDomClient_production() {
           break;
         case 1:
           safelyDetachRef(finishedWork, finishedWork.return);
-          var instance = finishedWork.stateNode;
-          "function" === typeof instance.componentWillUnmount && safelyCallComponentWillUnmount(
+          var instance2 = finishedWork.stateNode;
+          "function" === typeof instance2.componentWillUnmount && safelyCallComponentWillUnmount(
             finishedWork,
             finishedWork.return,
-            instance
+            instance2
           );
           recursivelyTraverseDisappearLayoutEffects(finishedWork);
           break;
@@ -8071,12 +8071,12 @@ function requireReactDomClient_production() {
           current2 = finishedWork;
           finishedRoot = current2.updateQueue;
           if (null !== finishedRoot) {
-            var instance = current2.stateNode;
+            var instance2 = current2.stateNode;
             try {
               var hiddenCallbacks = finishedRoot.shared.hiddenCallbacks;
               if (null !== hiddenCallbacks)
                 for (finishedRoot.shared.hiddenCallbacks = null, finishedRoot = 0; finishedRoot < hiddenCallbacks.length; finishedRoot++)
-                  callCallback(hiddenCallbacks[finishedRoot], instance);
+                  callCallback(hiddenCallbacks[finishedRoot], instance2);
             } catch (error2) {
               captureCommitPhaseError(current2, current2.return, error2);
             }
@@ -8299,8 +8299,8 @@ function requireReactDomClient_production() {
         case 23:
           break;
         case 22:
-          var instance = finishedWork.stateNode;
-          null !== finishedWork.memoizedState ? instance._visibility & 2 ? recursivelyTraverseReconnectPassiveEffects(
+          var instance2 = finishedWork.stateNode;
+          null !== finishedWork.memoizedState ? instance2._visibility & 2 ? recursivelyTraverseReconnectPassiveEffects(
             finishedRoot,
             finishedWork,
             committedLanes,
@@ -8309,7 +8309,7 @@ function requireReactDomClient_production() {
           ) : recursivelyTraverseAtomicPassiveEffects(
             finishedRoot,
             finishedWork
-          ) : (instance._visibility |= 2, recursivelyTraverseReconnectPassiveEffects(
+          ) : (instance2._visibility |= 2, recursivelyTraverseReconnectPassiveEffects(
             finishedRoot,
             finishedWork,
             committedLanes,
@@ -8469,8 +8469,8 @@ function requireReactDomClient_production() {
         recursivelyTraversePassiveUnmountEffects(finishedWork);
         break;
       case 22:
-        var instance = finishedWork.stateNode;
-        null !== finishedWork.memoizedState && instance._visibility & 2 && (null === finishedWork.return || 13 !== finishedWork.return.tag) ? (instance._visibility &= -3, recursivelyTraverseDisconnectPassiveEffects(finishedWork)) : recursivelyTraversePassiveUnmountEffects(finishedWork);
+        var instance2 = finishedWork.stateNode;
+        null !== finishedWork.memoizedState && instance2._visibility & 2 && (null === finishedWork.return || 13 !== finishedWork.return.tag) ? (instance2._visibility &= -3, recursivelyTraverseDisconnectPassiveEffects(finishedWork)) : recursivelyTraversePassiveUnmountEffects(finishedWork);
         break;
       default:
         recursivelyTraversePassiveUnmountEffects(finishedWork);
@@ -9433,17 +9433,17 @@ function requireReactDomClient_production() {
           );
           break;
         } else if (1 === nearestMountedAncestor.tag) {
-          var instance = nearestMountedAncestor.stateNode;
-          if ("function" === typeof nearestMountedAncestor.type.getDerivedStateFromError || "function" === typeof instance.componentDidCatch && (null === legacyErrorBoundariesThatAlreadyFailed || !legacyErrorBoundariesThatAlreadyFailed.has(instance))) {
+          var instance2 = nearestMountedAncestor.stateNode;
+          if ("function" === typeof nearestMountedAncestor.type.getDerivedStateFromError || "function" === typeof instance2.componentDidCatch && (null === legacyErrorBoundariesThatAlreadyFailed || !legacyErrorBoundariesThatAlreadyFailed.has(instance2))) {
             sourceFiber = createCapturedValueAtFiber(error2, sourceFiber);
             error2 = createClassErrorUpdate(2);
-            instance = enqueueUpdate(nearestMountedAncestor, error2, 2);
-            null !== instance && (initializeClassErrorUpdate(
+            instance2 = enqueueUpdate(nearestMountedAncestor, error2, 2);
+            null !== instance2 && (initializeClassErrorUpdate(
               error2,
-              instance,
+              instance2,
               nearestMountedAncestor,
               sourceFiber
-            ), markRootUpdated$1(instance, 2), ensureRootIsScheduled(instance));
+            ), markRootUpdated$1(instance2, 2), ensureRootIsScheduled(instance2));
             break;
           }
         }
@@ -9768,9 +9768,9 @@ function requireReactDomClient_production() {
         var previousInstance = void 0;
         if (eventSystemFlags)
           for (var i$jscomp$0 = _dispatchQueue$i.length - 1; 0 <= i$jscomp$0; i$jscomp$0--) {
-            var _dispatchListeners$i = _dispatchQueue$i[i$jscomp$0], instance = _dispatchListeners$i.instance, currentTarget = _dispatchListeners$i.currentTarget;
+            var _dispatchListeners$i = _dispatchQueue$i[i$jscomp$0], instance2 = _dispatchListeners$i.instance, currentTarget = _dispatchListeners$i.currentTarget;
             _dispatchListeners$i = _dispatchListeners$i.listener;
-            if (instance !== previousInstance && event.isPropagationStopped())
+            if (instance2 !== previousInstance && event.isPropagationStopped())
               break a;
             previousInstance = _dispatchListeners$i;
             event.currentTarget = currentTarget;
@@ -9780,15 +9780,15 @@ function requireReactDomClient_production() {
               reportGlobalError(error2);
             }
             event.currentTarget = null;
-            previousInstance = instance;
+            previousInstance = instance2;
           }
         else
           for (i$jscomp$0 = 0; i$jscomp$0 < _dispatchQueue$i.length; i$jscomp$0++) {
             _dispatchListeners$i = _dispatchQueue$i[i$jscomp$0];
-            instance = _dispatchListeners$i.instance;
+            instance2 = _dispatchListeners$i.instance;
             currentTarget = _dispatchListeners$i.currentTarget;
             _dispatchListeners$i = _dispatchListeners$i.listener;
-            if (instance !== previousInstance && event.isPropagationStopped())
+            if (instance2 !== previousInstance && event.isPropagationStopped())
               break a;
             previousInstance = _dispatchListeners$i;
             event.currentTarget = currentTarget;
@@ -9798,7 +9798,7 @@ function requireReactDomClient_production() {
               reportGlobalError(error2);
             }
             event.currentTarget = null;
-            previousInstance = instance;
+            previousInstance = instance2;
           }
       }
     }
@@ -9974,15 +9974,15 @@ function requireReactDomClient_production() {
           }
           var inCapturePhase = 0 !== (eventSystemFlags & 4), accumulateTargetOnly = !inCapturePhase && ("scroll" === domEventName || "scrollend" === domEventName), reactEventName = inCapturePhase ? null !== reactName ? reactName + "Capture" : null : reactName;
           inCapturePhase = [];
-          for (var instance = targetInst, lastHostComponent; null !== instance; ) {
-            var _instance = instance;
+          for (var instance2 = targetInst, lastHostComponent; null !== instance2; ) {
+            var _instance = instance2;
             lastHostComponent = _instance.stateNode;
             _instance = _instance.tag;
-            5 !== _instance && 26 !== _instance && 27 !== _instance || null === lastHostComponent || null === reactEventName || (_instance = getListener2(instance, reactEventName), null != _instance && inCapturePhase.push(
-              createDispatchListener(instance, _instance, lastHostComponent)
+            5 !== _instance && 26 !== _instance && 27 !== _instance || null === lastHostComponent || null === reactEventName || (_instance = getListener2(instance2, reactEventName), null != _instance && inCapturePhase.push(
+              createDispatchListener(instance2, _instance, lastHostComponent)
             ));
             if (accumulateTargetOnly) break;
-            instance = instance.return;
+            instance2 = instance2.return;
           }
           0 < inCapturePhase.length && (reactName = new SyntheticEventCtor(
             reactName,
@@ -10009,14 +10009,14 @@ function requireReactDomClient_production() {
               inCapturePhase = SyntheticMouseEvent;
               _instance = "onMouseLeave";
               reactEventName = "onMouseEnter";
-              instance = "mouse";
+              instance2 = "mouse";
               if ("pointerout" === domEventName || "pointerover" === domEventName)
-                inCapturePhase = SyntheticPointerEvent, _instance = "onPointerLeave", reactEventName = "onPointerEnter", instance = "pointer";
+                inCapturePhase = SyntheticPointerEvent, _instance = "onPointerLeave", reactEventName = "onPointerEnter", instance2 = "pointer";
               accumulateTargetOnly = null == SyntheticEventCtor ? reactName : getNodeFromInstance(SyntheticEventCtor);
               lastHostComponent = null == reactEventType ? reactName : getNodeFromInstance(reactEventType);
               reactName = new inCapturePhase(
                 _instance,
-                instance + "leave",
+                instance2 + "leave",
                 SyntheticEventCtor,
                 nativeEvent,
                 nativeEventTarget
@@ -10026,7 +10026,7 @@ function requireReactDomClient_production() {
               _instance = null;
               getClosestInstanceFromNode(nativeEventTarget) === targetInst && (inCapturePhase = new inCapturePhase(
                 reactEventName,
-                instance + "enter",
+                instance2 + "enter",
                 reactEventType,
                 nativeEvent,
                 nativeEventTarget
@@ -10036,24 +10036,24 @@ function requireReactDomClient_production() {
                 b: {
                   inCapturePhase = getParent;
                   reactEventName = SyntheticEventCtor;
-                  instance = reactEventType;
+                  instance2 = reactEventType;
                   lastHostComponent = 0;
                   for (_instance = reactEventName; _instance; _instance = inCapturePhase(_instance))
                     lastHostComponent++;
                   _instance = 0;
-                  for (var tempB = instance; tempB; tempB = inCapturePhase(tempB))
+                  for (var tempB = instance2; tempB; tempB = inCapturePhase(tempB))
                     _instance++;
                   for (; 0 < lastHostComponent - _instance; )
                     reactEventName = inCapturePhase(reactEventName), lastHostComponent--;
                   for (; 0 < _instance - lastHostComponent; )
-                    instance = inCapturePhase(instance), _instance--;
+                    instance2 = inCapturePhase(instance2), _instance--;
                   for (; lastHostComponent--; ) {
-                    if (reactEventName === instance || null !== instance && reactEventName === instance.alternate) {
+                    if (reactEventName === instance2 || null !== instance2 && reactEventName === instance2.alternate) {
                       inCapturePhase = reactEventName;
                       break b;
                     }
                     reactEventName = inCapturePhase(reactEventName);
-                    instance = inCapturePhase(instance);
+                    instance2 = inCapturePhase(instance2);
                   }
                   inCapturePhase = null;
                 }
@@ -10172,9 +10172,9 @@ function requireReactDomClient_production() {
       processDispatchQueue(dispatchQueue, eventSystemFlags);
     });
   }
-  function createDispatchListener(instance, listener, currentTarget) {
+  function createDispatchListener(instance2, listener, currentTarget) {
     return {
-      instance,
+      instance: instance2,
       listener,
       currentTarget
     };
@@ -11140,75 +11140,75 @@ function requireReactDomClient_production() {
       container2.removeChild(node2);
     }
   }
-  function canHydrateInstance(instance, type, props, inRootOrSingleton) {
-    for (; 1 === instance.nodeType; ) {
+  function canHydrateInstance(instance2, type, props, inRootOrSingleton) {
+    for (; 1 === instance2.nodeType; ) {
       var anyProps = props;
-      if (instance.nodeName.toLowerCase() !== type.toLowerCase()) {
-        if (!inRootOrSingleton && ("INPUT" !== instance.nodeName || "hidden" !== instance.type))
+      if (instance2.nodeName.toLowerCase() !== type.toLowerCase()) {
+        if (!inRootOrSingleton && ("INPUT" !== instance2.nodeName || "hidden" !== instance2.type))
           break;
       } else if (!inRootOrSingleton)
-        if ("input" === type && "hidden" === instance.type) {
+        if ("input" === type && "hidden" === instance2.type) {
           var name2 = null == anyProps.name ? null : "" + anyProps.name;
-          if ("hidden" === anyProps.type && instance.getAttribute("name") === name2)
-            return instance;
-        } else return instance;
-      else if (!instance[internalHoistableMarker])
+          if ("hidden" === anyProps.type && instance2.getAttribute("name") === name2)
+            return instance2;
+        } else return instance2;
+      else if (!instance2[internalHoistableMarker])
         switch (type) {
           case "meta":
-            if (!instance.hasAttribute("itemprop")) break;
-            return instance;
+            if (!instance2.hasAttribute("itemprop")) break;
+            return instance2;
           case "link":
-            name2 = instance.getAttribute("rel");
-            if ("stylesheet" === name2 && instance.hasAttribute("data-precedence"))
+            name2 = instance2.getAttribute("rel");
+            if ("stylesheet" === name2 && instance2.hasAttribute("data-precedence"))
               break;
-            else if (name2 !== anyProps.rel || instance.getAttribute("href") !== (null == anyProps.href || "" === anyProps.href ? null : anyProps.href) || instance.getAttribute("crossorigin") !== (null == anyProps.crossOrigin ? null : anyProps.crossOrigin) || instance.getAttribute("title") !== (null == anyProps.title ? null : anyProps.title))
+            else if (name2 !== anyProps.rel || instance2.getAttribute("href") !== (null == anyProps.href || "" === anyProps.href ? null : anyProps.href) || instance2.getAttribute("crossorigin") !== (null == anyProps.crossOrigin ? null : anyProps.crossOrigin) || instance2.getAttribute("title") !== (null == anyProps.title ? null : anyProps.title))
               break;
-            return instance;
+            return instance2;
           case "style":
-            if (instance.hasAttribute("data-precedence")) break;
-            return instance;
+            if (instance2.hasAttribute("data-precedence")) break;
+            return instance2;
           case "script":
-            name2 = instance.getAttribute("src");
-            if ((name2 !== (null == anyProps.src ? null : anyProps.src) || instance.getAttribute("type") !== (null == anyProps.type ? null : anyProps.type) || instance.getAttribute("crossorigin") !== (null == anyProps.crossOrigin ? null : anyProps.crossOrigin)) && name2 && instance.hasAttribute("async") && !instance.hasAttribute("itemprop"))
+            name2 = instance2.getAttribute("src");
+            if ((name2 !== (null == anyProps.src ? null : anyProps.src) || instance2.getAttribute("type") !== (null == anyProps.type ? null : anyProps.type) || instance2.getAttribute("crossorigin") !== (null == anyProps.crossOrigin ? null : anyProps.crossOrigin)) && name2 && instance2.hasAttribute("async") && !instance2.hasAttribute("itemprop"))
               break;
-            return instance;
+            return instance2;
           default:
-            return instance;
+            return instance2;
         }
-      instance = getNextHydratable(instance.nextSibling);
-      if (null === instance) break;
+      instance2 = getNextHydratable(instance2.nextSibling);
+      if (null === instance2) break;
     }
     return null;
   }
-  function canHydrateTextInstance(instance, text2, inRootOrSingleton) {
+  function canHydrateTextInstance(instance2, text2, inRootOrSingleton) {
     if ("" === text2) return null;
-    for (; 3 !== instance.nodeType; ) {
-      if ((1 !== instance.nodeType || "INPUT" !== instance.nodeName || "hidden" !== instance.type) && !inRootOrSingleton)
+    for (; 3 !== instance2.nodeType; ) {
+      if ((1 !== instance2.nodeType || "INPUT" !== instance2.nodeName || "hidden" !== instance2.type) && !inRootOrSingleton)
         return null;
-      instance = getNextHydratable(instance.nextSibling);
-      if (null === instance) return null;
+      instance2 = getNextHydratable(instance2.nextSibling);
+      if (null === instance2) return null;
     }
-    return instance;
+    return instance2;
   }
-  function canHydrateHydrationBoundary(instance, inRootOrSingleton) {
-    for (; 8 !== instance.nodeType; ) {
-      if ((1 !== instance.nodeType || "INPUT" !== instance.nodeName || "hidden" !== instance.type) && !inRootOrSingleton)
+  function canHydrateHydrationBoundary(instance2, inRootOrSingleton) {
+    for (; 8 !== instance2.nodeType; ) {
+      if ((1 !== instance2.nodeType || "INPUT" !== instance2.nodeName || "hidden" !== instance2.type) && !inRootOrSingleton)
         return null;
-      instance = getNextHydratable(instance.nextSibling);
-      if (null === instance) return null;
+      instance2 = getNextHydratable(instance2.nextSibling);
+      if (null === instance2) return null;
     }
-    return instance;
+    return instance2;
   }
-  function isSuspenseInstancePending(instance) {
-    return "$?" === instance.data || "$~" === instance.data;
+  function isSuspenseInstancePending(instance2) {
+    return "$?" === instance2.data || "$~" === instance2.data;
   }
-  function isSuspenseInstanceFallback(instance) {
-    return "$!" === instance.data || "$?" === instance.data && "loading" !== instance.ownerDocument.readyState;
+  function isSuspenseInstanceFallback(instance2) {
+    return "$!" === instance2.data || "$?" === instance2.data && "loading" !== instance2.ownerDocument.readyState;
   }
-  function registerSuspenseInstanceRetry(instance, callback) {
-    var ownerDocument = instance.ownerDocument;
-    if ("$~" === instance.data) instance._reactRetry = callback;
-    else if ("$?" !== instance.data || "loading" !== ownerDocument.readyState)
+  function registerSuspenseInstanceRetry(instance2, callback) {
+    var ownerDocument = instance2.ownerDocument;
+    if ("$~" === instance2.data) instance2._reactRetry = callback;
+    else if ("$?" !== instance2.data || "loading" !== ownerDocument.readyState)
       callback();
     else {
       var listener = function() {
@@ -11216,7 +11216,7 @@ function requireReactDomClient_production() {
         ownerDocument.removeEventListener("DOMContentLoaded", listener);
       };
       ownerDocument.addEventListener("DOMContentLoaded", listener);
-      instance._reactRetry = listener;
+      instance2._reactRetry = listener;
     }
   }
   function getNextHydratable(node2) {
@@ -11282,10 +11282,10 @@ function requireReactDomClient_production() {
         throw Error(formatProdErrorMessage(451));
     }
   }
-  function releaseSingletonInstance(instance) {
-    for (var attributes2 = instance.attributes; attributes2.length; )
-      instance.removeAttributeNode(attributes2[0]);
-    detachDeletedInstance(instance);
+  function releaseSingletonInstance(instance2) {
+    for (var attributes2 = instance2.attributes; attributes2.length; )
+      instance2.removeAttributeNode(attributes2[0]);
+    detachDeletedInstance(instance2);
   }
   var preloadPropsMap = /* @__PURE__ */ new Map(), preconnectsSet = /* @__PURE__ */ new Set();
   function getHoistableRoot(container2) {
@@ -11554,24 +11554,24 @@ function requireReactDomClient_production() {
     if (null === resource.instance)
       switch (resource.type) {
         case "style":
-          var instance = hoistableRoot.querySelector(
+          var instance2 = hoistableRoot.querySelector(
             'style[data-href~="' + escapeSelectorAttributeValueInsideDoubleQuotes(props.href) + '"]'
           );
-          if (instance)
-            return resource.instance = instance, markNodeAsHoistable(instance), instance;
+          if (instance2)
+            return resource.instance = instance2, markNodeAsHoistable(instance2), instance2;
           var styleProps = assign2({}, props, {
             "data-href": props.href,
             "data-precedence": props.precedence,
             href: null,
             precedence: null
           });
-          instance = (hoistableRoot.ownerDocument || hoistableRoot).createElement(
+          instance2 = (hoistableRoot.ownerDocument || hoistableRoot).createElement(
             "style"
           );
-          markNodeAsHoistable(instance);
-          setInitialProperties(instance, "style", styleProps);
-          insertStylesheet(instance, props.precedence, hoistableRoot);
-          return resource.instance = instance;
+          markNodeAsHoistable(instance2);
+          setInitialProperties(instance2, "style", styleProps);
+          insertStylesheet(instance2, props.precedence, hoistableRoot);
+          return resource.instance = instance2;
         case "stylesheet":
           styleProps = getStyleKey(props.href);
           var instance$249 = hoistableRoot.querySelector(
@@ -11579,8 +11579,8 @@ function requireReactDomClient_production() {
           );
           if (instance$249)
             return resource.state.loading |= 4, resource.instance = instance$249, markNodeAsHoistable(instance$249), instance$249;
-          instance = stylesheetPropsFromRawProps(props);
-          (styleProps = preloadPropsMap.get(styleProps)) && adoptPreloadPropsForStylesheet(instance, styleProps);
+          instance2 = stylesheetPropsFromRawProps(props);
+          (styleProps = preloadPropsMap.get(styleProps)) && adoptPreloadPropsForStylesheet(instance2, styleProps);
           instance$249 = (hoistableRoot.ownerDocument || hoistableRoot).createElement("link");
           markNodeAsHoistable(instance$249);
           var linkInstance = instance$249;
@@ -11588,7 +11588,7 @@ function requireReactDomClient_production() {
             linkInstance.onload = resolve;
             linkInstance.onerror = reject;
           });
-          setInitialProperties(instance$249, "link", instance);
+          setInitialProperties(instance$249, "link", instance2);
           resource.state.loading |= 4;
           insertStylesheet(instance$249, props.precedence, hoistableRoot);
           return resource.instance = instance$249;
@@ -11598,13 +11598,13 @@ function requireReactDomClient_production() {
             getScriptSelectorFromKey(instance$249)
           ))
             return resource.instance = styleProps, markNodeAsHoistable(styleProps), styleProps;
-          instance = props;
+          instance2 = props;
           if (styleProps = preloadPropsMap.get(instance$249))
-            instance = assign2({}, props), adoptPreloadPropsForScript(instance, styleProps);
+            instance2 = assign2({}, props), adoptPreloadPropsForScript(instance2, styleProps);
           hoistableRoot = hoistableRoot.ownerDocument || hoistableRoot;
           styleProps = hoistableRoot.createElement("script");
           markNodeAsHoistable(styleProps);
-          setInitialProperties(styleProps, "link", instance);
+          setInitialProperties(styleProps, "link", instance2);
           hoistableRoot.head.appendChild(styleProps);
           return resource.instance = styleProps;
         case "void":
@@ -11613,10 +11613,10 @@ function requireReactDomClient_production() {
           throw Error(formatProdErrorMessage(443, resource.type));
       }
     else
-      "stylesheet" === resource.type && 0 === (resource.state.loading & 4) && (instance = resource.instance, resource.state.loading |= 4, insertStylesheet(instance, props.precedence, hoistableRoot));
+      "stylesheet" === resource.type && 0 === (resource.state.loading & 4) && (instance2 = resource.instance, resource.state.loading |= 4, insertStylesheet(instance2, props.precedence, hoistableRoot));
     return resource.instance;
   }
-  function insertStylesheet(instance, precedence, root3) {
+  function insertStylesheet(instance2, precedence, root3) {
     for (var nodes = root3.querySelectorAll(
       'link[rel="stylesheet"][data-precedence],style[data-precedence]'
     ), last = nodes.length ? nodes[nodes.length - 1] : null, prior = last, i = 0; i < nodes.length; i++) {
@@ -11624,7 +11624,7 @@ function requireReactDomClient_production() {
       if (node2.dataset.precedence === precedence) prior = node2;
       else if (prior !== last) break;
     }
-    prior ? prior.parentNode.insertBefore(instance, prior.nextSibling) : (precedence = 9 === root3.nodeType ? root3.head : root3, precedence.insertBefore(instance, precedence.firstChild));
+    prior ? prior.parentNode.insertBefore(instance2, prior.nextSibling) : (precedence = 9 === root3.nodeType ? root3.head : root3, precedence.insertBefore(instance2, precedence.firstChild));
   }
   function adoptPreloadPropsForStylesheet(stylesheetProps, preloadProps) {
     null == stylesheetProps.crossOrigin && (stylesheetProps.crossOrigin = preloadProps.crossOrigin);
@@ -11658,10 +11658,10 @@ function requireReactDomClient_production() {
     }
     return cache;
   }
-  function mountHoistable(hoistableRoot, type, instance) {
+  function mountHoistable(hoistableRoot, type, instance2) {
     hoistableRoot = hoistableRoot.ownerDocument || hoistableRoot;
     hoistableRoot.head.insertBefore(
-      instance,
+      instance2,
       "title" === type ? hoistableRoot.querySelector("head > title") : null
     );
   }
@@ -11696,29 +11696,29 @@ function requireReactDomClient_production() {
   function suspendResource(state, hoistableRoot, resource, props) {
     if ("stylesheet" === resource.type && ("string" !== typeof props.media || false !== matchMedia(props.media).matches) && 0 === (resource.state.loading & 4)) {
       if (null === resource.instance) {
-        var key2 = getStyleKey(props.href), instance = hoistableRoot.querySelector(
+        var key2 = getStyleKey(props.href), instance2 = hoistableRoot.querySelector(
           getStylesheetSelectorFromKey(key2)
         );
-        if (instance) {
-          hoistableRoot = instance._p;
+        if (instance2) {
+          hoistableRoot = instance2._p;
           null !== hoistableRoot && "object" === typeof hoistableRoot && "function" === typeof hoistableRoot.then && (state.count++, state = onUnsuspend.bind(state), hoistableRoot.then(state, state));
           resource.state.loading |= 4;
-          resource.instance = instance;
-          markNodeAsHoistable(instance);
+          resource.instance = instance2;
+          markNodeAsHoistable(instance2);
           return;
         }
-        instance = hoistableRoot.ownerDocument || hoistableRoot;
+        instance2 = hoistableRoot.ownerDocument || hoistableRoot;
         props = stylesheetPropsFromRawProps(props);
         (key2 = preloadPropsMap.get(key2)) && adoptPreloadPropsForStylesheet(props, key2);
-        instance = instance.createElement("link");
-        markNodeAsHoistable(instance);
-        var linkInstance = instance;
+        instance2 = instance2.createElement("link");
+        markNodeAsHoistable(instance2);
+        var linkInstance = instance2;
         linkInstance._p = new Promise(function(resolve, reject) {
           linkInstance.onload = resolve;
           linkInstance.onerror = reject;
         });
-        setInitialProperties(instance, "link", props);
-        resource.instance = instance;
+        setInitialProperties(instance2, "link", props);
+        resource.instance = instance2;
       }
       null === state.stylesheets && (state.stylesheets = /* @__PURE__ */ new Map());
       state.stylesheets.set(resource, hoistableRoot);
@@ -15768,8 +15768,8 @@ function requireClipboard() {
                   }
                   return clipboard_typeof(obj);
                 }
-                function _classCallCheck(instance, Constructor) {
-                  if (!(instance instanceof Constructor)) {
+                function _classCallCheck(instance2, Constructor) {
+                  if (!(instance2 instanceof Constructor)) {
                     throw new TypeError("Cannot call a class as a function");
                   }
                 }
@@ -22103,12 +22103,12 @@ function sortKeys(obj) {
   return sorted;
 }
 function dedupeLinkDescriptors(descriptors, preloads) {
-  let set3 = /* @__PURE__ */ new Set();
+  let set2 = /* @__PURE__ */ new Set();
   new Set(preloads);
   return descriptors.reduce((deduped, descriptor) => {
     let key2 = JSON.stringify(sortKeys(descriptor));
-    if (!set3.has(key2)) {
-      set3.add(key2);
+    if (!set2.has(key2)) {
+      set2.add(key2);
       deduped.push({ key: key2, link: descriptor });
     }
     return deduped;
@@ -22831,7 +22831,7 @@ function getArchtype(thing) {
 function has$1(thing, prop2) {
   return getArchtype(thing) === 2 ? thing.has(prop2) : Object.prototype.hasOwnProperty.call(thing, prop2);
 }
-function set(thing, propOrOldValue, value2) {
+function set$1(thing, propOrOldValue, value2) {
   const t2 = getArchtype(thing);
   if (t2 === 2)
     thing.set(propOrOldValue, value2);
@@ -23079,7 +23079,7 @@ function finalizeProperty(rootScope, parentState, targetObject, prop2, childValu
     const path = rootPath && parentState && parentState.type_ !== 3 && // Set objects are atomic since they have no keys.
     !has$1(parentState.assigned_, prop2) ? rootPath.concat(prop2) : void 0;
     const res = finalize(rootScope, childValue, path);
-    set(targetObject, prop2, res);
+    set$1(targetObject, prop2, res);
     if (isDraft(res)) {
       rootScope.canAutoFreeze_ = false;
     } else
@@ -23450,7 +23450,7 @@ function currentImpl(value2) {
   each(
     copy2,
     (key2, childValue) => {
-      set(copy2, key2, currentImpl(childValue));
+      set$1(copy2, key2, currentImpl(childValue));
     },
     strict
   );
@@ -23795,7 +23795,7 @@ const findCallerName = (stack2) => {
   const callerLine = ((_a2 = traceLines[apiSetStateLineIndex + 1]) == null ? void 0 : _a2.trim()) || "";
   return (_b2 = /.+ (.+) .+/.exec(callerLine)) == null ? void 0 : _b2[1];
 };
-const devtoolsImpl = (fn3, devtoolsOptions = {}) => (set3, get2, api2) => {
+const devtoolsImpl = (fn3, devtoolsOptions = {}) => (set2, get, api2) => {
   const { enabled, anonymousActionType, store, ...options2 } = devtoolsOptions;
   let extensionConnector;
   try {
@@ -23803,18 +23803,18 @@ const devtoolsImpl = (fn3, devtoolsOptions = {}) => (set3, get2, api2) => {
   } catch (e) {
   }
   if (!extensionConnector) {
-    return fn3(set3, get2, api2);
+    return fn3(set2, get, api2);
   }
   const { connection, ...connectionInformation } = extractConnectionInformation(store, extensionConnector, options2);
   let isRecording = true;
   api2.setState = ((state, replace2, nameOrAction) => {
-    const r2 = set3(state, replace2);
+    const r2 = set2(state, replace2);
     if (!isRecording) return r2;
     const action = nameOrAction === void 0 ? {
       type: anonymousActionType || findCallerName(new Error().stack) || "anonymous"
     } : typeof nameOrAction === "string" ? { type: nameOrAction } : nameOrAction;
     if (store === void 0) {
-      connection == null ? void 0 : connection.send(action, get2());
+      connection == null ? void 0 : connection.send(action, get());
       return r2;
     }
     connection == null ? void 0 : connection.send(
@@ -23840,10 +23840,10 @@ const devtoolsImpl = (fn3, devtoolsOptions = {}) => (set3, get2, api2) => {
   const setStateFromDevtools = (...a) => {
     const originalIsRecording = isRecording;
     isRecording = false;
-    set3(...a);
+    set2(...a);
     isRecording = originalIsRecording;
   };
-  const initialState2 = fn3(api2.setState, get2, api2);
+  const initialState2 = fn3(api2.setState, get, api2);
   if (connectionInformation.type === "untracked") {
     connection == null ? void 0 : connection.init(initialState2);
   } else {
@@ -24035,7 +24035,7 @@ const toThenable = (fn3) => (input2) => {
     };
   }
 };
-const persistImpl = (config2, baseOptions) => (set3, get2, api2) => {
+const persistImpl = (config2, baseOptions) => (set2, get, api2) => {
   let options2 = {
     storage: createJSONStorage(() => localStorage),
     partialize: (state) => state,
@@ -24057,14 +24057,14 @@ const persistImpl = (config2, baseOptions) => (set3, get2, api2) => {
         console.warn(
           `[zustand persist middleware] Unable to update item '${options2.name}', the given storage is currently unavailable.`
         );
-        set3(...args2);
+        set2(...args2);
       },
-      get2,
+      get,
       api2
     );
   }
   const setItem = () => {
-    const state = options2.partialize({ ...get2() });
+    const state = options2.partialize({ ...get() });
     return storage2.setItem(options2.name, {
       state,
       version: options2.version
@@ -24077,10 +24077,10 @@ const persistImpl = (config2, baseOptions) => (set3, get2, api2) => {
   };
   const configResult = config2(
     (...args2) => {
-      set3(...args2);
+      set2(...args2);
       return setItem();
     },
-    get2,
+    get,
     api2
   );
   api2.getInitialState = () => configResult;
@@ -24092,9 +24092,9 @@ const persistImpl = (config2, baseOptions) => (set3, get2, api2) => {
     hasHydrated = false;
     hydrationListeners.forEach((cb) => {
       var _a22;
-      return cb((_a22 = get2()) != null ? _a22 : configResult);
+      return cb((_a22 = get()) != null ? _a22 : configResult);
     });
-    const postRehydrationCallback = ((_b2 = options2.onRehydrateStorage) == null ? void 0 : _b2.call(options2, (_a2 = get2()) != null ? _a2 : configResult)) || void 0;
+    const postRehydrationCallback = ((_b2 = options2.onRehydrateStorage) == null ? void 0 : _b2.call(options2, (_a2 = get()) != null ? _a2 : configResult)) || void 0;
     return toThenable(storage2.getItem.bind(storage2))(options2.name).then((deserializedStorageValue) => {
       if (deserializedStorageValue) {
         if (typeof deserializedStorageValue.version === "number" && deserializedStorageValue.version !== options2.version) {
@@ -24124,9 +24124,9 @@ const persistImpl = (config2, baseOptions) => (set3, get2, api2) => {
       const [migrated, migratedState] = migrationResult;
       stateFromStorage = options2.merge(
         migratedState,
-        (_a22 = get2()) != null ? _a22 : configResult
+        (_a22 = get()) != null ? _a22 : configResult
       );
-      set3(stateFromStorage, true);
+      set2(stateFromStorage, true);
       if (migrated) {
         return setItem();
       }
@@ -24135,7 +24135,7 @@ const persistImpl = (config2, baseOptions) => (set3, get2, api2) => {
         return;
       }
       postRehydrationCallback == null ? void 0 : postRehydrationCallback(stateFromStorage, void 0);
-      stateFromStorage = get2();
+      stateFromStorage = get();
       hasHydrated = true;
       finishHydrationListeners.forEach((cb) => cb(stateFromStorage));
     }).catch((e) => {
@@ -24180,12 +24180,12 @@ const persistImpl = (config2, baseOptions) => (set3, get2, api2) => {
   return stateFromStorage || configResult;
 };
 const persist = persistImpl;
-const immerImpl = (initializer) => (set3, get2, store) => {
+const immerImpl = (initializer) => (set2, get, store) => {
   store.setState = (updater, replace2, ...args2) => {
     const nextState = typeof updater === "function" ? produce(updater) : updater;
-    return set3(nextState, replace2, ...args2);
+    return set2(nextState, replace2, ...args2);
   };
-  return initializer(store.setState, get2, store);
+  return initializer(store.setState, get, store);
 };
 const immer = immerImpl;
 var dexie_min$1 = { exports: {} };
@@ -27274,7 +27274,7 @@ const createLogger = (namespace) => {
   };
   return logger;
 };
-const log$b = createLogger("DatabaseManager");
+const log$c = createLogger("DatabaseManager");
 class DatabaseManager {
   database = null;
   databaseHandle = null;
@@ -27287,28 +27287,28 @@ class DatabaseManager {
     if (this.databaseHandle === databaseHandle && this.database) {
       return this.database;
     }
-    log$b.debug(`Opening database for log directory: ${databaseHandle}`);
+    log$c.debug(`Opening database for log directory: ${databaseHandle}`);
     if (this.database && this.databaseHandle !== databaseHandle) {
       await this.close();
     }
     const needsRecreation = await AppDatabase.checkVersionMismatch(databaseHandle);
     if (needsRecreation) {
-      log$b.info(
+      log$c.info(
         `Recreating database due to version mismatch for: ${databaseHandle}`
       );
       const sanitizedDir = databaseHandle.replace(/[^a-zA-Z0-9_-]/g, "_");
       const dbName = `InspectAI_${sanitizedDir}`;
       await Dexie.delete(dbName);
-      log$b.debug(`Deleted old database: ${dbName}`);
+      log$c.debug(`Deleted old database: ${dbName}`);
     }
     this.database = new AppDatabase(databaseHandle);
     this.databaseHandle = databaseHandle;
     try {
       await this.database.open();
-      log$b.debug(`Successfully opened database for: ${databaseHandle}`);
+      log$c.debug(`Successfully opened database for: ${databaseHandle}`);
       return this.database;
     } catch (error2) {
-      log$b.error(`Failed to open database for ${databaseHandle}:`, error2);
+      log$c.error(`Failed to open database for ${databaseHandle}:`, error2);
       this.database = null;
       this.databaseHandle = null;
       throw error2;
@@ -27333,7 +27333,7 @@ class DatabaseManager {
    */
   async close() {
     if (this.database) {
-      log$b.debug(`Closing database for: ${this.databaseHandle}`);
+      log$c.debug(`Closing database for: ${this.databaseHandle}`);
       this.database.close();
       this.database = null;
       this.databaseHandle = null;
@@ -27355,7 +27355,7 @@ class DatabaseManager {
     };
   }
 }
-const log$a = createLogger("DatabaseService");
+const log$b = createLogger("DatabaseService");
 class DatabaseService {
   manager;
   constructor(manager) {
@@ -27421,13 +27421,13 @@ class DatabaseService {
       mtime: file.mtime,
       cached_at: now
     }));
-    log$a.debug(`Caching ${records.length} log files`);
+    log$b.debug(`Caching ${records.length} log files`);
     await db.logs.bulkPut(records);
   }
   async readLogs() {
     try {
       if (!this.opened()) {
-        log$a.debug("Database not open");
+        log$b.debug("Database not open");
         return null;
       }
       const db = this.getDb();
@@ -27442,10 +27442,10 @@ class DatabaseService {
         return 0;
       });
       if (files.length === 0) {
-        log$a.debug("No cached log files found");
+        log$b.debug("No cached log files found");
         return [];
       }
-      log$a.debug(`Retrieved ${files.length} cached log files`);
+      log$b.debug(`Retrieved ${files.length} cached log files`);
       return files.map((file) => ({
         name: file.file_path,
         task: file.task,
@@ -27453,7 +27453,7 @@ class DatabaseService {
         mtime: file.mtime
       }));
     } catch (error2) {
-      log$a.error("Error retrieving cached log files:", error2);
+      log$b.error("Error retrieving cached log files:", error2);
       return null;
     }
   }
@@ -27466,7 +27466,7 @@ class DatabaseService {
       cached_at: now,
       preview: summary2
     }));
-    log$a.debug(`Caching ${records.length} log previews`);
+    log$b.debug(`Caching ${records.length} log previews`);
     await db.log_previews.bulkPut(records);
   }
   async readLogPreviews(logs) {
@@ -27474,7 +27474,7 @@ class DatabaseService {
       const filePaths = logs.map((log2) => log2.name);
       const db = this.getDb();
       const records = await db.log_previews.where("file_path").anyOf(filePaths).toArray();
-      log$a.debug(
+      log$b.debug(
         `Retrieved ${records.length} cached log previews out of ${filePaths.length} requested`
       );
       const result2 = {};
@@ -27483,7 +27483,7 @@ class DatabaseService {
       }
       return result2;
     } catch (error2) {
-      log$a.error("Error retrieving cached log summaries:", error2);
+      log$b.error("Error retrieving cached log summaries:", error2);
       return {};
     }
   }
@@ -27494,12 +27494,12 @@ class DatabaseService {
       const records = await db.log_previews.where("file_path").anyOf(filePaths).toArray();
       const cachedPaths = new Set(records.map((r2) => r2.file_path));
       const missing = logs.filter((log2) => !cachedPaths.has(log2.name));
-      log$a.debug(
+      log$b.debug(
         `Found ${missing.length} missing previews out of ${logs.length} requested`
       );
       return missing;
     } catch (error2) {
-      log$a.error("Error finding missing previews:", error2);
+      log$b.error("Error finding missing previews:", error2);
       return logs;
     }
   }
@@ -27512,7 +27512,7 @@ class DatabaseService {
       cached_at: now,
       details: info
     };
-    log$a.debug(`Caching log info for: ${filePath}`);
+    log$b.debug(`Caching log info for: ${filePath}`);
     await db.log_details.put(record);
   }
   async writeLogDetails(details) {
@@ -27523,7 +27523,7 @@ class DatabaseService {
       cached_at: now,
       details: info
     }));
-    log$a.debug(`Caching ${records.length} log details`);
+    log$b.debug(`Caching ${records.length} log details`);
     await db.log_details.bulkPut(records);
   }
   async readLogDetailsForFile(filePath) {
@@ -27531,13 +27531,13 @@ class DatabaseService {
       const db = this.getDb();
       const record = await db.log_details.get(filePath);
       if (!record) {
-        log$a.debug(`No cached log info found for: ${filePath}`);
+        log$b.debug(`No cached log info found for: ${filePath}`);
         return null;
       }
-      log$a.debug(`Retrieved cached log info for: ${filePath}`);
+      log$b.debug(`Retrieved cached log info for: ${filePath}`);
       return record.details;
     } catch (error2) {
-      log$a.error(`Error retrieving cached log info for ${filePath}:`, error2);
+      log$b.error(`Error retrieving cached log info for ${filePath}:`, error2);
       return null;
     }
   }
@@ -27546,7 +27546,7 @@ class DatabaseService {
       const filePaths = logs.map((log2) => log2.name);
       const db = this.getDb();
       const records = await db.log_details.where("file_path").anyOf(filePaths).toArray();
-      log$a.debug(
+      log$b.debug(
         `Retrieved ${records.length} cached log details out of ${filePaths.length} requested`
       );
       const result2 = {};
@@ -27555,7 +27555,7 @@ class DatabaseService {
       }
       return result2;
     } catch (error2) {
-      log$a.error("Error retrieving cached log details:", error2);
+      log$b.error("Error retrieving cached log details:", error2);
       return {};
     }
   }
@@ -27566,12 +27566,12 @@ class DatabaseService {
       const records = await db.log_details.where("file_path").anyOf(filePaths).toArray();
       const cachedPaths = new Set(records.map((r2) => r2.file_path));
       const missing = logs.filter((log2) => !cachedPaths.has(log2.name));
-      log$a.debug(
+      log$b.debug(
         `Found ${missing.length} missing details out of ${logs.length} requested`
       );
       return missing;
     } catch (error2) {
-      log$a.error("Error finding missing details:", error2);
+      log$b.error("Error finding missing details:", error2);
       return logs;
     }
   }
@@ -27585,7 +27585,7 @@ class DatabaseService {
         allSummaries.push(...record.details.sampleSummaries);
       }
     }
-    log$a.debug(
+    log$b.debug(
       `Retrieved ${allSummaries.length} sample summaries across all files`
     );
     return allSummaries;
@@ -27625,7 +27625,7 @@ class DatabaseService {
         }
       });
     }
-    log$a.debug(
+    log$b.debug(
       `Query returned ${filtered.length} sample summaries (filtered from ${allSummaries.length})`
     );
     return filtered;
@@ -27636,7 +27636,7 @@ class DatabaseService {
    */
   async clearAllCaches() {
     const db = this.getDb();
-    log$a.debug("Clearing all caches");
+    log$b.debug("Clearing all caches");
     await Promise.all([
       db.logs.clear(),
       db.log_previews.clear(),
@@ -27648,7 +27648,7 @@ class DatabaseService {
    */
   async clearCacheForFile(filePath) {
     const db = this.getDb();
-    log$a.debug(`Clearing cache for file: ${filePath}`);
+    log$b.debug(`Clearing cache for file: ${filePath}`);
     await Promise.all([
       db.logs.where("file_path").equals(filePath).delete(),
       db.log_previews.where("file_path").equals(filePath).delete(),
@@ -27841,7 +27841,7 @@ const initialState$3 = {
   displayMode: "rendered",
   logsSampleView: false
 };
-const createAppSlice = (set3, get2, _store) => {
+const createAppSlice = (set2, get, _store) => {
   const getBoolRecord = (record, name2, defaultValue) => {
     if (Object.keys(record).includes(name2)) {
       return record[name2];
@@ -27855,71 +27855,71 @@ const createAppSlice = (set3, get2, _store) => {
     capabilities: {},
     // Actions
     appActions: {
-      setLoading: (loading, error2) => set3((state) => {
+      setLoading: (loading, error2) => set2((state) => {
         state.app.status.loading = Math.max(
           state.app.status.loading + (loading ? 1 : -1),
           0
         );
         state.app.status.error = error2;
       }),
-      setShowFind: (show) => set3((state) => {
+      setShowFind: (show) => set2((state) => {
         state.app.showFind = show;
       }),
       hideFind: () => {
         clearDocumentSelection();
-        set3((state) => {
+        set2((state) => {
           state.app.showFind = false;
         });
       },
-      setNativeFind: (nativeFind) => set3((state) => {
+      setNativeFind: (nativeFind) => set2((state) => {
         state.app.nativeFind = nativeFind;
       }),
       setShowingSampleDialog: (showing) => {
-        const state = get2();
+        const state = get();
         const isShowing = state.app.dialogs.sample;
         if (showing === isShowing) {
           return;
         }
-        set3((state2) => {
+        set2((state2) => {
           state2.app.dialogs.sample = showing;
         });
         if (!showing) {
-          const state2 = get2();
+          const state2 = get();
           state2.appActions.clearSampleTab();
         }
       },
       setShowingTranscriptFilterDialog: (showing) => {
-        const state = get2();
+        const state = get();
         const isShowing = state.app.dialogs.transcriptFilter;
         if (showing === isShowing) {
           return;
         }
-        set3((state2) => {
+        set2((state2) => {
           state2.app.dialogs.transcriptFilter = showing;
         });
       },
       setShowingOptionsDialog: (showing) => {
-        const state = get2();
+        const state = get();
         const isShowing = state.app.dialogs.options;
         if (showing === isShowing) {
           return;
         }
-        set3((state2) => {
+        set2((state2) => {
           state2.app.dialogs.options = showing;
         });
       },
       setWorkspaceTab: (tab2) => {
-        set3((state) => {
+        set2((state) => {
           state.app.tabs.workspace = tab2;
         });
       },
       clearWorkspaceTab: () => {
-        set3((state) => {
+        set2((state) => {
           state.app.tabs.workspace = kDefaultWorkspaceTab;
         });
       },
       setInitialState: (log2, sample_id, sample_epoch) => {
-        set3((state) => {
+        set2((state) => {
           state.app.initialState = {
             log: log2,
             sample_id,
@@ -27928,31 +27928,31 @@ const createAppSlice = (set3, get2, _store) => {
         });
       },
       clearInitialState: () => {
-        set3((state) => {
+        set2((state) => {
           state.app.initialState = void 0;
         });
       },
       setSampleTab: (tab2) => {
-        set3((state) => {
+        set2((state) => {
           state.app.tabs.sample = tab2;
         });
       },
       clearSampleTab: () => {
-        set3((state) => {
+        set2((state) => {
           state.app.tabs.sample = kDefaultSampleTab;
         });
       },
       getScrollPosition: (name2) => {
-        const state = get2();
+        const state = get();
         return state.app.scrollPositions[name2];
       },
       setScrollPosition: (name2, position) => {
-        set3((state) => {
+        set2((state) => {
           state.app.scrollPositions[name2] = position;
         });
       },
       getListPosition: (name2) => {
-        const state = get2();
+        const state = get();
         if (Object.keys(state.app.listPositions).includes(name2)) {
           return state.app.listPositions[name2];
         } else {
@@ -27960,12 +27960,12 @@ const createAppSlice = (set3, get2, _store) => {
         }
       },
       setListPosition: (name2, position) => {
-        set3((state) => {
+        set2((state) => {
           state.app.listPositions[name2] = position;
         });
       },
       clearListPosition: (name2) => {
-        set3((state) => {
+        set2((state) => {
           const newListPositions = { ...state.app.listPositions };
           delete newListPositions[name2];
           return {
@@ -27977,7 +27977,7 @@ const createAppSlice = (set3, get2, _store) => {
         });
       },
       getVisibleRange: (name2) => {
-        const state = get2();
+        const state = get();
         if (Object.keys(state.app.visibleRanges).includes(name2)) {
           return state.app.visibleRanges[name2];
         } else {
@@ -27985,12 +27985,12 @@ const createAppSlice = (set3, get2, _store) => {
         }
       },
       setVisibleRange: (name2, value2) => {
-        set3((state) => {
+        set2((state) => {
           state.app.visibleRanges[name2] = value2;
         });
       },
       clearVisibleRange: (name2) => {
-        set3((state) => {
+        set2((state) => {
           const newVisibleRanges = { ...state.app.visibleRanges };
           delete newVisibleRanges[name2];
           return {
@@ -28002,33 +28002,33 @@ const createAppSlice = (set3, get2, _store) => {
         });
       },
       getCollapsed: (name2, defaultValue) => {
-        return getBoolRecord(get2().app.collapsed, name2, defaultValue);
+        return getBoolRecord(get().app.collapsed, name2, defaultValue);
       },
       setCollapsed: (name2, value2) => {
-        set3((state) => {
+        set2((state) => {
           state.app.collapsed[name2] = value2;
         });
       },
       getMessageVisible: (name2, defaultValue) => {
-        return getBoolRecord(get2().app.messages, name2, defaultValue);
+        return getBoolRecord(get().app.messages, name2, defaultValue);
       },
       setMessageVisible: (name2, value2) => {
-        set3((state) => {
+        set2((state) => {
           state.app.messages[name2] = value2;
         });
       },
       clearMessageVisible: (name2) => {
-        set3((state) => {
+        set2((state) => {
           delete state.app.messages[name2];
         });
       },
       getPropertyValue: (bagName, key2, defaultValue) => {
-        const state = get2();
+        const state = get();
         const bag = state.app.propertyBags[bagName] || {};
         return key2 in bag ? bag[key2] : defaultValue;
       },
       setPropertyValue: (bagName, key2, value2) => {
-        set3((state) => {
+        set2((state) => {
           if (!state.app.propertyBags[bagName]) {
             state.app.propertyBags[bagName] = {};
           }
@@ -28036,7 +28036,7 @@ const createAppSlice = (set3, get2, _store) => {
         });
       },
       removePropertyValue: (bagName, key2) => {
-        set3((state) => {
+        set2((state) => {
           if (state.app.propertyBags[bagName]) {
             const { [key2]: _, ...rest } = state.app.propertyBags[bagName];
             state.app.propertyBags[bagName] = rest;
@@ -28044,22 +28044,22 @@ const createAppSlice = (set3, get2, _store) => {
         });
       },
       setUrlHash: (urlHash) => {
-        set3((state) => {
+        set2((state) => {
           state.app.urlHash = urlHash;
         });
       },
       setSingleFileMode: (singleFile) => {
-        set3((state) => {
+        set2((state) => {
           state.app.singleFileMode = singleFile;
         });
       },
       setDisplayMode: (mode) => {
-        set3((state) => {
+        set2((state) => {
           state.app.displayMode = mode;
         });
       },
       setLogsSampleView: (logsSampleView) => {
-        set3((state) => {
+        set2((state) => {
           state.app.logsSampleView = logsSampleView;
         });
       }
@@ -28069,8 +28069,8 @@ const createAppSlice = (set3, get2, _store) => {
   };
   return [slice, cleanup];
 };
-const initializeAppSlice = (set3, capabilities2) => {
-  set3((state) => {
+const initializeAppSlice = (set2, capabilities2) => {
+  set2((state) => {
     state.capabilities = capabilities2;
     if (!state.app) {
       state.app = initialState$3;
@@ -28249,35 +28249,35 @@ const createPolling = (name2, callback, options2) => {
   };
   return { name: name2, start: start2, stop };
 };
-const log$9 = createLogger("logPolling");
+const log$a = createLogger("logPolling");
 const kRetries$1 = 10;
 const kPollingInterval$2 = 2;
-function createLogPolling(get2, set3) {
+function createLogPolling(get, set2) {
   let currentPolling = null;
   let abortController;
   const refreshLog = async (logFileName, clearPending = false) => {
     if (abortController?.signal.aborted) {
       return false;
     }
-    const state = get2();
+    const state = get();
     const api2 = state.api;
     const selectedLogFile = state.logs.selectedLogFile;
     if (!api2 || !selectedLogFile) {
       return false;
     }
-    log$9.debug(`refresh: ${selectedLogFile}`);
+    log$a.debug(`refresh: ${selectedLogFile}`);
     try {
       const logDetails = await api2.get_log_details(selectedLogFile);
-      set3((state2) => {
+      set2((state2) => {
         state2.log.selectedLogDetails = logDetails;
-        log$9.debug(
+        log$a.debug(
           `Setting refreshed summary ${logDetails.sampleSummaries.length} samples`,
           logDetails
         );
         if (clearPending) {
           const pendingSampleSummaries = state2.log.pendingSampleSummaries;
           if ((pendingSampleSummaries?.samples.length || 0) > 0) {
-            log$9.debug(
+            log$a.debug(
               `Clearing pending summaries during refresh for: ${logFileName}`
             );
             state2.log.pendingSampleSummaries = {
@@ -28289,7 +28289,7 @@ function createLogPolling(get2, set3) {
       });
       return true;
     } catch (error2) {
-      log$9.error("Error refreshing log:", error2);
+      log$a.error("Error refreshing log:", error2);
       return false;
     }
   };
@@ -28303,10 +28303,10 @@ function createLogPolling(get2, set3) {
       `PendingSamples-${logFileName}`,
       async () => {
         if (abortController.signal.aborted) {
-          log$9.debug(`Component unmounted, stopping poll for: ${logFileName}`);
+          log$a.debug(`Component unmounted, stopping poll for: ${logFileName}`);
           return false;
         }
-        const state = get2();
+        const state = get();
         const api2 = state.api;
         if (!api2?.get_log_pending_samples) {
           return false;
@@ -28314,27 +28314,27 @@ function createLogPolling(get2, set3) {
         if (abortController.signal.aborted) {
           return false;
         }
-        log$9.debug(`Polling running samples: ${logFileName}`);
-        const currentEtag = get2().log.pendingSampleSummaries?.etag;
+        log$a.debug(`Polling running samples: ${logFileName}`);
+        const currentEtag = get().log.pendingSampleSummaries?.etag;
         const pendingSamples = await api2.get_log_pending_samples(
           logFileName,
           currentEtag
         );
-        log$9.debug(`Received pending samples`, pendingSamples);
+        log$a.debug(`Received pending samples`, pendingSamples);
         if (abortController.signal.aborted) {
           return false;
         }
         if (pendingSamples.status === "OK" && pendingSamples.pendingSamples) {
           loadedPendingSamples = true;
-          set3((state2) => {
+          set2((state2) => {
             state2.log.pendingSampleSummaries = pendingSamples.pendingSamples;
           });
           await refreshLog(logFileName, false);
           return true;
         } else if (pendingSamples.status === "NotFound") {
-          log$9.debug(`Stop polling running samples: ${logFileName}`);
+          log$a.debug(`Stop polling running samples: ${logFileName}`);
           if (loadedPendingSamples || state.log.selectedLogDetails?.status === "started") {
-            log$9.debug(`Refresh log: ${logFileName}`);
+            log$a.debug(`Refresh log: ${logFileName}`);
             await refreshLog(logFileName, true);
           }
           return false;
@@ -28343,7 +28343,7 @@ function createLogPolling(get2, set3) {
       },
       {
         maxRetries: kRetries$1,
-        interval: get2().log.pendingSampleSummaries?.refresh || kPollingInterval$2
+        interval: get().log.pendingSampleSummaries?.refresh || kPollingInterval$2
       }
     );
     currentPolling.start();
@@ -28352,9 +28352,9 @@ function createLogPolling(get2, set3) {
     if (abortController.signal.aborted) {
       return false;
     }
-    const pendingSampleSummaries = get2().log.pendingSampleSummaries;
+    const pendingSampleSummaries = get().log.pendingSampleSummaries;
     if ((pendingSampleSummaries?.samples.length || 0) > 0) {
-      log$9.debug(`Clear pending: ${logFileName}`);
+      log$a.debug(`Clear pending: ${logFileName}`);
       return refreshLog(logFileName, true);
     }
     return false;
@@ -28366,7 +28366,7 @@ function createLogPolling(get2, set3) {
     }
   };
   const cleanup = () => {
-    log$9.debug(`Cleanup`);
+    log$a.debug(`Cleanup`);
     if (abortController) {
       abortController.abort();
     }
@@ -28378,10 +28378,10 @@ function createLogPolling(get2, set3) {
     clearPendingSummaries,
     cleanup,
     // Expose the refresh function so components can use it directly
-    refreshLog: (clearPending = false) => refreshLog(get2().logs.selectedLogFile || "", clearPending)
+    refreshLog: (clearPending = false) => refreshLog(get().logs.selectedLogFile || "", clearPending)
   };
 }
-const log$8 = createLogger("logSlice");
+const log$9 = createLogger("logSlice");
 const initialState$2 = {
   // Log state
   șselectedSampleId: void 0,
@@ -28397,15 +28397,15 @@ const initialState$2 = {
   selectedScores: void 0,
   scores: void 0
 };
-const createLogSlice = (set3, get2, _store) => {
-  const logPolling = createLogPolling(get2, set3);
+const createLogSlice = (set2, get, _store) => {
+  const logPolling = createLogPolling(get, set2);
   const slice = {
     // State
     log: initialState$2,
     // Actions
     logActions: {
       selectSample: (sampleId, epoch, logFile) => {
-        const currentSample = get2().log.selectedSampleHandle;
+        const currentSample = get().log.selectedSampleHandle;
         if (sampleHandlesEqual(currentSample, {
           id: sampleId,
           epoch,
@@ -28413,63 +28413,63 @@ const createLogSlice = (set3, get2, _store) => {
         })) {
           return;
         }
-        set3((state) => {
+        set2((state) => {
           state.log.selectedSampleHandle = { id: sampleId, epoch, logFile };
         });
       },
       clearSelectedSample: () => {
-        set3((state) => {
+        set2((state) => {
           state.log.selectedSampleHandle = void 0;
         });
       },
       setSelectedLogDetails: (details) => {
-        set3((state) => {
+        set2((state) => {
           state.log.selectedScores = void 0;
           state.log.selectedLogDetails = details;
         });
         if (details.status !== "started" && details.sampleSummaries.length === 0) {
-          get2().appActions.setWorkspaceTab(kLogViewInfoTabId);
+          get().appActions.setWorkspaceTab(kLogViewInfoTabId);
         }
       },
       clearSelectedLogDetails: () => {
-        set3((state) => {
+        set2((state) => {
           state.log.selectedLogDetails = void 0;
         });
       },
       setPendingSampleSummaries: (pendingSampleSummaries) => {
-        set3((state) => {
+        set2((state) => {
           state.log.pendingSampleSummaries = pendingSampleSummaries;
         });
       },
       clearPendingSampleSummaries: () => {
-        set3((state) => {
+        set2((state) => {
           state.log.pendingSampleSummaries = void 0;
         });
       },
-      setFilter: (filter) => set3((state) => {
+      setFilter: (filter) => set2((state) => {
         state.log.filter = filter;
       }),
-      setFilterError: (error2) => set3((state) => {
+      setFilterError: (error2) => set2((state) => {
         state.log.filterError = error2;
       }),
       clearFilterError: () => {
-        set3((state) => {
+        set2((state) => {
           state.log.filterError = void 0;
         });
       },
-      setEpoch: (epoch) => set3((state) => {
+      setEpoch: (epoch) => set2((state) => {
         state.log.epoch = epoch;
       }),
-      setSort: (sort2) => set3((state) => {
+      setSort: (sort2) => set2((state) => {
         state.log.sort = sort2;
       }),
-      setSelectedScores: (scores2) => set3((state) => {
+      setSelectedScores: (scores2) => set2((state) => {
         state.log.selectedScores = scores2;
       }),
-      setScores: (scores2) => set3((state) => {
+      setScores: (scores2) => set2((state) => {
         state.log.scores = scores2;
       }),
-      resetFiltering: () => set3((state) => {
+      resetFiltering: () => set2((state) => {
         state.log.filter = "";
         state.log.filterError = void 0;
         state.log.epoch = "all";
@@ -28477,7 +28477,7 @@ const createLogSlice = (set3, get2, _store) => {
         state.log.selectedScores = state.log.scores?.slice(0, 1);
       }),
       syncLog: async (logFileName) => {
-        const state = get2();
+        const state = get();
         const api2 = state.api;
         let logDir2 = state.logs.logDir;
         if (state.logs.logDir === void 0) {
@@ -28488,13 +28488,13 @@ const createLogSlice = (set3, get2, _store) => {
           console.error("API not initialized in Store");
           return;
         }
-        log$8.debug(`Load log: ${logAbsPath}`);
+        log$9.debug(`Load log: ${logAbsPath}`);
         const dbService = state.databaseService;
         if (dbService && dbService.opened()) {
           try {
             const cachedInfo = await dbService.readLogDetailsForFile(logAbsPath);
             if (cachedInfo) {
-              log$8.debug(`Using cached log info for: ${logAbsPath}`);
+              log$9.debug(`Using cached log info for: ${logAbsPath}`);
               state.logActions.setSelectedLogDetails(cachedInfo);
               api2.get_log_details(logAbsPath).then((logDetails) => {
                 state.logActions.setSelectedLogDetails(logDetails);
@@ -28505,7 +28505,7 @@ const createLogSlice = (set3, get2, _store) => {
                 [logFileName]: toLogPreview(cachedInfo)
               };
               state.logsActions.updateLogPreviews(header2);
-              set3((state2) => {
+              set2((state2) => {
                 state2.log.loadedLog = logFileName;
               });
               state.logActions.clearPendingSampleSummaries();
@@ -28528,50 +28528,50 @@ const createLogSlice = (set3, get2, _store) => {
             [logFileName]: toLogPreview(logDetails)
           };
           state.logsActions.updateLogPreviews(header2);
-          set3((state2) => {
+          set2((state2) => {
             state2.log.loadedLog = logFileName;
           });
           state.logActions.clearPendingSampleSummaries();
           logPolling.startPolling(logFileName);
         } catch (error2) {
-          log$8.error("Error loading log:", error2);
+          log$9.error("Error loading log:", error2);
           throw error2;
         }
       },
       clearLog: () => {
-        set3((state) => {
+        set2((state) => {
           state.log.loadedLog = void 0;
         });
       },
       pollLog: async () => {
-        const currentLog = get2().log.loadedLog;
+        const currentLog = get().log.loadedLog;
         if (currentLog) {
           logPolling.startPolling(currentLog);
         }
       },
       refreshLog: async () => {
-        const state = get2();
+        const state = get();
         const api2 = state.api;
         const selectedLogFile = state.logs.selectedLogFile;
         if (!api2 || !selectedLogFile) {
           return;
         }
-        log$8.debug(`refresh: ${selectedLogFile}`);
+        log$9.debug(`refresh: ${selectedLogFile}`);
         try {
           const logDetails = await api2.get_log_details(selectedLogFile);
           state.logActions.setSelectedLogDetails(logDetails);
         } catch (error2) {
-          log$8.error("Error refreshing log:", error2);
+          log$9.error("Error refreshing log:", error2);
           throw error2;
         }
       },
       setFilteredSampleCount: (count) => {
-        set3((state) => {
+        set2((state) => {
           state.log.filteredSampleCount = count;
         });
       },
       clearFilteredSampleCount: () => {
-        set3((state) => {
+        set2((state) => {
           state.log.filteredSampleCount = void 0;
         });
       }
@@ -28582,14 +28582,14 @@ const createLogSlice = (set3, get2, _store) => {
   };
   return [slice, cleanup];
 };
-const initalializeLogSlice = (set3) => {
-  set3((state) => {
+const initalializeLogSlice = (set2) => {
+  set2((state) => {
     if (!state.log) {
       state.log = initialState$2;
     }
   });
 };
-const log$7 = createLogger("Log Slice");
+const log$8 = createLogger("Log Slice");
 const initialState$1 = {
   logDir: void 0,
   logs: [],
@@ -28610,14 +28610,14 @@ const initialState$1 = {
   },
   showRetriedLogs: false
 };
-const createLogsSlice = (set3, get2, _store) => {
+const createLogsSlice = (set2, get, _store) => {
   const slice = {
     // State
     logs: initialState$1,
     // Actions
     logsActions: {
       setLogDir: (logDir2) => {
-        set3((state) => {
+        set2((state) => {
           if (logDir2 !== state.logs.logDir) {
             state.logs.logDir = logDir2;
             state.logs.samplesListState.gridState = void 0;
@@ -28626,11 +28626,11 @@ const createLogsSlice = (set3, get2, _store) => {
           }
         });
       },
-      setLogHandles: (logs) => set3((state) => {
+      setLogHandles: (logs) => set2((state) => {
         state.logs.logs = logs;
       }),
       syncLogPreviews: async (logs) => {
-        const state = get2();
+        const state = get();
         const api2 = state.api;
         if (!api2) {
           console.error("API not initialized in LogsStore");
@@ -28646,53 +28646,53 @@ const createLogsSlice = (set3, get2, _store) => {
           console.error("Failed to sync log previews", e);
         }
       },
-      updateLogPreviews: (previews) => set3((state) => {
+      updateLogPreviews: (previews) => set2((state) => {
         state.logs.logPreviews = {
-          ...get2().logs.logPreviews,
+          ...get().logs.logPreviews,
           ...previews
         };
       }),
-      updateLogDetails: (details) => set3((state) => {
+      updateLogDetails: (details) => set2((state) => {
         state.logs.logDetails = {
-          ...get2().logs.logDetails,
+          ...get().logs.logDetails,
           ...details
         };
       }),
       setGridState: (gridState) => {
-        set3((state) => {
+        set2((state) => {
           state.logs.samplesListState.gridState = gridState;
         });
       },
       clearGridState: () => {
-        set3((state) => {
+        set2((state) => {
           state.logs.samplesListState.gridState = void 0;
         });
       },
       setDisplayedSamples: (samples) => {
-        const currentDisplaySamples = get2().logs.samplesListState.displayedSamples;
-        set3((state) => {
+        const currentDisplaySamples = get().logs.samplesListState.displayedSamples;
+        set2((state) => {
           if (!displaySamplesEqual(currentDisplaySamples, samples)) {
             state.logs.samplesListState.displayedSamples = samples;
           }
         });
       },
       clearDisplayedSamples: () => {
-        set3((state) => {
+        set2((state) => {
           state.logs.samplesListState.displayedSamples = void 0;
         });
       },
       setSamplesColumnVisibility: (visibility) => {
-        set3((state) => {
+        set2((state) => {
           state.logs.samplesListState.columnVisibility = visibility;
         });
       },
       setPreviousSamplesPath: (path) => {
-        set3((state) => {
+        set2((state) => {
           state.logs.samplesListState.previousSamplesPath = path;
         });
       },
       initLogDir: async () => {
-        const api2 = get2().api;
+        const api2 = get().api;
         if (!api2) {
           console.error("API not initialized in LogsStore");
           return void 0;
@@ -28702,34 +28702,34 @@ const createLogsSlice = (set3, get2, _store) => {
             return await api2.get_log_dir();
           } catch (e) {
             console.log(e);
-            get2().appActions.setLoading(false, e);
+            get().appActions.setLoading(false, e);
             return void 0;
           }
         };
         const logDir2 = await loadLogDir();
-        if (get2().logs.logDir !== logDir2) {
-          get2().logsActions.setLogDir(logDir2);
+        if (get().logs.logDir !== logDir2) {
+          get().logsActions.setLogDir(logDir2);
         }
         return logDir2;
       },
       ensureReplication: async () => {
-        const state = get2();
+        const state = get();
         if (state.logs.logDir) {
           await state.logsActions.syncLogs();
         }
       },
       syncLogs: async () => {
-        const api2 = get2().api;
+        const api2 = get().api;
         if (!api2) {
           console.error("API not initialized in LogsStore");
           return [];
         }
-        const databaseService = get2().databaseService;
+        const databaseService = get().databaseService;
         const useProgress = !!databaseService?.getDatabaseHandle();
         if (useProgress) {
-          get2().appActions.setLoading(true);
+          get().appActions.setLoading(true);
         }
-        const logDir2 = await get2().logsActions.initLogDir();
+        const logDir2 = await get().logsActions.initLogDir();
         const databaseHandle = api2.get_log_dir_handle(logDir2);
         const initDatabase = !databaseService || databaseService.getDatabaseHandle() !== databaseHandle;
         if (initDatabase) {
@@ -28738,7 +28738,7 @@ const createLogsSlice = (set3, get2, _store) => {
               return void 0;
             }
             try {
-              const databaseService3 = get2().databaseService;
+              const databaseService3 = get().databaseService;
               if (!databaseService3) {
                 return void 0;
               }
@@ -28747,14 +28747,14 @@ const createLogsSlice = (set3, get2, _store) => {
             } catch (e) {
               console.log(e);
               if (useProgress) {
-                get2().appActions.setLoading(false, e);
+                get().appActions.setLoading(false, e);
               }
               return;
             }
           };
-          if (!logDir2 || get2().app.singleFileMode) {
+          if (!logDir2 || get().app.singleFileMode) {
             if (useProgress) {
-              get2().appActions.setLoading(false);
+              get().appActions.setLoading(false);
             }
             return [];
           }
@@ -28762,16 +28762,16 @@ const createLogsSlice = (set3, get2, _store) => {
           if (!databaseService2) {
             throw new Error("Database service not available");
           }
-          await get2().replicationService?.startReplication(
+          await get().replicationService?.startReplication(
             databaseService2,
             api2,
             {
               setLogHandles: (logs) => {
-                const state = get2();
+                const state = get();
                 state.logsActions.setLogHandles(logs);
               },
               getSelectedLog: () => {
-                const state = get2();
+                const state = get();
                 if (!state.logs.selectedLogFile) {
                   return void 0;
                 }
@@ -28780,28 +28780,28 @@ const createLogsSlice = (set3, get2, _store) => {
                 });
               },
               setSelectedLogFile: (logFile) => {
-                const state = get2();
+                const state = get();
                 state.logsActions.setSelectedLogFile(logFile);
               },
               updateLogPreviews: (previews) => {
-                const state = get2();
+                const state = get();
                 state.logsActions.updateLogPreviews(previews);
               },
               updateLogDetails: (details) => {
-                const state = get2();
+                const state = get();
                 state.logsActions.updateLogDetails(details);
               },
               setLoading(loading) {
-                const state = get2();
+                const state = get();
                 state.appActions.setLoading(loading);
               },
               setBackgroundSyncing(syncing) {
-                set3((state) => {
+                set2((state) => {
                   state.app.status.syncing = syncing;
                 });
               },
               setDbStats(stats) {
-                set3((state) => {
+                set2((state) => {
                   state.logs.dbStats = stats;
                 });
               }
@@ -28809,30 +28809,30 @@ const createLogsSlice = (set3, get2, _store) => {
           );
         }
         if (useProgress) {
-          get2().appActions.setLoading(false);
+          get().appActions.setLoading(false);
         }
-        return await get2().replicationService?.sync(initDatabase) || [];
+        return await get().replicationService?.sync(initDatabase) || [];
       },
       syncEvalSetInfo: async (logPath) => {
-        const api2 = get2().api;
+        const api2 = get().api;
         if (!api2) {
           console.error("API not initialized in LogsStore");
           return void 0;
         }
         const info = await api2.get_eval_set(logPath);
-        set3((state) => {
+        set2((state) => {
           state.logs.evalSet = info;
         });
       },
       updateFlowData: (flowPath, flowData) => {
-        set3((state) => {
+        set2((state) => {
           state.logs.flowDir = flowPath;
           state.logs.flow = flowData;
         });
       },
       // Select a specific log file
       setSelectedLogFile: async (logFile) => {
-        const state = get2();
+        const state = get();
         const isInFileList = state.logs.logs.findIndex(
           (val) => val.name.endsWith(logFile)
         ) !== -1;
@@ -28849,89 +28849,89 @@ const createLogsSlice = (set3, get2, _store) => {
             state.logsActions.setLogHandles([{ name: logFile }]);
           }
         }
-        set3((state2) => {
+        set2((state2) => {
           const absoluteLogfile = isUri(logFile) ? logFile : join(logFile, state2.logs.logDir);
           state2.logs.selectedLogFile = absoluteLogfile;
         });
       },
       setFilteredCount: (count) => {
-        set3((state) => {
+        set2((state) => {
           state.logs.listing.filteredCount = count;
         });
       },
       setWatchedLogs: (logs) => {
-        set3((state) => {
+        set2((state) => {
           state.logs.listing.watchedLogs = logs;
         });
       },
       clearWatchedLogs: () => {
-        set3((state) => {
+        set2((state) => {
           state.logs.listing.watchedLogs = void 0;
         });
       },
       setSelectedRowIndex: (index) => {
-        set3((state) => {
+        set2((state) => {
           state.logs.listing.selectedRowIndex = index;
         });
       },
       setLogsGridState: (gridState) => {
-        set3((state) => {
+        set2((state) => {
           state.logs.listing.gridState = gridState;
         });
       },
       clearLogsGridState: () => {
-        set3((state) => {
+        set2((state) => {
           state.logs.listing.gridState = void 0;
         });
       },
       setPreviousLogsPath: (path) => {
-        set3((state) => {
+        set2((state) => {
           state.logs.listing.previousLogPath = path;
         });
       },
       setLogsColumnVisibility: (visibility) => {
-        set3((state) => {
+        set2((state) => {
           state.logs.listing.columnVisibility = visibility;
         });
       },
       clearSelectedLogFile: () => {
-        set3((state) => {
+        set2((state) => {
           state.logs.selectedLogFile = void 0;
         });
       },
       // Cross-file sample operations
       getAllCachedSamples: async () => {
         try {
-          log$7.debug("LOADING ALL CACHED SAMPLES");
-          const dbService = get2().databaseService;
+          log$8.debug("LOADING ALL CACHED SAMPLES");
+          const dbService = get().databaseService;
           if (!dbService) {
             throw new Error("Database service not initialized");
           }
           const samples = await dbService.readAllSampleSummaries();
-          log$7.debug(`Retrieved ${samples.length} cached samples`);
+          log$8.debug(`Retrieved ${samples.length} cached samples`);
           return samples;
         } catch (e) {
-          log$7.debug("No cached samples available");
+          log$8.debug("No cached samples available");
           return [];
         }
       },
       queryCachedSamples: async (filter) => {
         try {
-          log$7.debug("QUERYING CACHED SAMPLES", filter);
-          const dbService = get2().databaseService;
+          log$8.debug("QUERYING CACHED SAMPLES", filter);
+          const dbService = get().databaseService;
           if (!dbService) {
             throw new Error("Database service not initialized");
           }
           const samples = await dbService.querySampleSummaries(filter);
-          log$7.debug(`Query returned ${samples.length} samples`);
+          log$8.debug(`Query returned ${samples.length} samples`);
           return samples;
         } catch (e) {
-          log$7.debug("Sample query failed, returning empty results");
+          log$8.debug("Sample query failed, returning empty results");
           return [];
         }
       },
       setShowRetriedLogs: (showRetriedLogs) => {
-        set3((state) => {
+        set2((state) => {
           state.logs.showRetriedLogs = showRetriedLogs;
         });
       }
@@ -28941,8 +28941,8 @@ const createLogsSlice = (set3, get2, _store) => {
   };
   return [slice, cleanup];
 };
-const initializeLogsSlice = (set3) => {
-  set3((state) => {
+const initializeLogsSlice = (set2) => {
+  set2((state) => {
     if (!state.logs) {
       state.logs = initialState$1;
     }
@@ -29008,7 +29008,7 @@ const resolveAttachments = (value2, attachments, onFailedResolve) => {
   }
   return value2;
 };
-const resolveSample$1 = (sample2) => {
+const resolveSample$2 = (sample2) => {
   sample2 = { ...sample2 };
   if (sample2.transcript) {
     sample2.events = sample2.transcript.events;
@@ -29021,11 +29021,11 @@ const resolveSample$1 = (sample2) => {
   sample2.attachments = {};
   return sample2;
 };
-const log$6 = createLogger("samplePolling");
+const log$7 = createLogger("samplePolling");
 const kNoId = -1;
 const kPollingInterval$1 = 2;
 const kPollingMaxRetries = 10;
-function createSamplePolling(get2, set3) {
+function createSamplePolling(store) {
   let currentPolling = null;
   let abortController;
   const pollingState = {
@@ -29037,23 +29037,22 @@ function createSamplePolling(get2, set3) {
   };
   const startPolling = (logFile, summary2) => {
     const pollingId = `${logFile}:${summary2.id}-${summary2.epoch}`;
-    log$6.debug(`Start Polling ${pollingId}`);
+    log$7.debug(`Start Polling ${pollingId}`);
     if (currentPolling && currentPolling.name === pollingId) {
-      log$6.debug(`Aleady polling, ignoring start`);
+      log$7.debug(`Aleady polling, ignoring start`);
       return;
     }
     if (currentPolling) {
-      log$6.debug(`Resetting existing polling`);
+      log$7.debug(`Resetting existing polling`);
       currentPolling.stop();
-      set3((state) => {
-        state.sample.runningEvents = [];
-      });
+      store.getState().sampleActions.setRunningEvents([]);
     }
     resetPollingState(pollingState);
     abortController = new AbortController();
-    log$6.debug(`Polling sample: ${summary2.id}-${summary2.epoch}`);
+    log$7.debug(`Polling sample: ${summary2.id}-${summary2.epoch}`);
     const pollCallback = async () => {
-      const state = get2();
+      const state = store.getState();
+      const { sampleActions } = state;
       const api2 = state.api;
       if (!api2) {
         throw new Error("Required API is missing");
@@ -29064,7 +29063,6 @@ function createSamplePolling(get2, set3) {
       if (abortController.signal.aborted) {
         return false;
       }
-      state.sampleActions.setSampleStatus("streaming");
       const eventId = pollingState.eventId;
       const attachmentId = pollingState.attachmentId;
       const sampleDataResponse = await api2.get_log_sample_data(
@@ -29081,7 +29079,7 @@ function createSamplePolling(get2, set3) {
         stopPolling();
         if (state.sample.runningEvents.length > 0) {
           try {
-            log$6.debug(
+            log$7.debug(
               `LOADING COMPLETED SAMPLE AFTER FLUSH: ${summary2.id}-${summary2.epoch}`
             );
             const sample2 = await api2.get_log_sample(
@@ -29090,31 +29088,27 @@ function createSamplePolling(get2, set3) {
               summary2.epoch
             );
             if (sample2) {
-              const migratedSample = resolveSample$1(sample2);
-              set3((state2) => {
-                state2.sampleActions.setSelectedSample(migratedSample, logFile);
-                state2.sampleActions.setSampleStatus("ok");
-                state2.sample.runningEvents = [];
-              });
+              const migratedSample = resolveSample$2(sample2);
+              sampleActions.setSelectedSample(migratedSample, logFile);
+              sampleActions.setSampleStatus("ok");
+              sampleActions.setRunningEvents([]);
             } else {
-              set3((state2) => {
-                state2.sampleActions.setSampleStatus("error");
-                state2.sample.sampleError = new Error(
-                  "Unable to load sample - an unknown error occurred"
-                );
-                state2.sample.runningEvents = [];
-              });
+              sampleActions.setSampleStatus("error");
+              sampleActions.setSampleError(
+                new Error("Unable to load sample - an unknown error occurred")
+              );
+              sampleActions.setRunningEvents([]);
             }
           } catch (e) {
-            set3((state2) => {
-              state2.sample.sampleError = e;
-              state2.sampleActions.setSampleStatus("error");
-              state2.sample.runningEvents = [];
-            });
+            sampleActions.setSampleError(e);
+            sampleActions.setSampleStatus("error");
+            sampleActions.setRunningEvents([]);
           }
         } else {
-          state.sampleActions.setSampleStatus("ok");
-          state.sample.runningEvents = [];
+          if (state.sample.sampleStatus === "streaming") {
+            sampleActions.setSampleStatus("ok");
+          }
+          sampleActions.setRunningEvents([]);
         }
         return false;
       }
@@ -29122,6 +29116,7 @@ function createSamplePolling(get2, set3) {
         if (abortController.signal.aborted) {
           return false;
         }
+        sampleActions.setSampleStatus("streaming");
         if (sampleDataResponse.sampleData) {
           processAttachments(sampleDataResponse.sampleData, pollingState);
           const processedEvents = processEvents(
@@ -29135,7 +29130,7 @@ function createSamplePolling(get2, set3) {
               sampleDataResponse.sampleData.attachments,
               pollingState.attachmentId
             );
-            log$6.debug(`New max attachment ${maxAttachment}`);
+            log$7.debug(`New max attachment ${maxAttachment}`);
             pollingState.attachmentId = maxAttachment;
           }
           if (sampleDataResponse.sampleData.events.length > 0) {
@@ -29143,13 +29138,11 @@ function createSamplePolling(get2, set3) {
               sampleDataResponse.sampleData.events,
               pollingState.eventId
             );
-            log$6.debug(`New max event ${maxEvent}`);
+            log$7.debug(`New max event ${maxEvent}`);
             pollingState.eventId = maxEvent;
           }
           if (processedEvents) {
-            set3((state2) => {
-              state2.sample.runningEvents = [...pollingState.events];
-            });
+            sampleActions.setRunningEvents([...pollingState.events]);
           }
         }
       }
@@ -29169,7 +29162,7 @@ function createSamplePolling(get2, set3) {
     }
   };
   const cleanup = () => {
-    log$6.debug(`Cleanup`);
+    log$7.debug(`Cleanup`);
     if (abortController) {
       abortController.abort();
     }
@@ -29189,13 +29182,13 @@ const resetPollingState = (state) => {
   state.events = [];
 };
 function processAttachments(sampleData, pollingState) {
-  log$6.debug(`Processing ${sampleData.attachments.length} attachments`);
+  log$7.debug(`Processing ${sampleData.attachments.length} attachments`);
   Object.values(sampleData.attachments).forEach((v) => {
     pollingState.attachments[v.hash] = v.content;
   });
 }
 function processEvents(sampleData, pollingState, api2, log_file) {
-  log$6.debug(`Processing ${sampleData.events.length} events`);
+  log$7.debug(`Processing ${sampleData.events.length} events`);
   if (sampleData.events.length === 0) {
     return false;
   }
@@ -29221,10 +29214,10 @@ function processEvents(sampleData, pollingState, api2, log_file) {
       }
     );
     if (existingIndex) {
-      log$6.debug(`Replace event ${existingIndex}`);
+      log$7.debug(`Replace event ${existingIndex}`);
       pollingState.events[existingIndex] = resolvedEvent;
     } else {
-      log$6.debug(`New event ${pollingState.events.length}`);
+      log$7.debug(`New event ${pollingState.events.length}`);
       const currentIndex = pollingState.events.length;
       pollingState.eventMapping[eventData.event_id] = currentIndex;
       pollingState.events.push(resolvedEvent);
@@ -29239,6 +29232,24 @@ const findMaxId = (items, currentMax) => {
   }
   return currentMax;
 };
+let instance = null;
+function getSamplePolling() {
+  if (!instance) {
+    if (!storeImplementation) {
+      throw new Error(
+        "Store must be initialized before accessing samplePolling"
+      );
+    }
+    instance = createSamplePolling(storeImplementation);
+  }
+  return instance;
+}
+function cleanupSamplePolling() {
+  if (instance) {
+    instance.cleanup();
+    instance = null;
+  }
+}
 const isJson = (text2) => {
   text2 = text2.trim();
   if (text2.startsWith("{") && text2.endsWith("}")) {
@@ -29356,7 +29367,6 @@ function filterLargeLogDetails(state) {
     return state;
   }
 }
-const log$5 = createLogger("sampleSlice");
 let selectedSampleRef = {
   current: void 0
 };
@@ -29388,15 +29398,14 @@ const initialState = {
   collapsedIdBuckets: {},
   selectedOutlineId: void 0
 };
-const createSampleSlice = (set3, get2, _store) => {
-  const samplePolling = createSamplePolling(get2, set3);
+const createSampleSlice = (set2, get, _store) => {
   const slice = {
     // Actions
     sample: initialState,
     sampleActions: {
       setSelectedSample: (sample2, logFile) => {
         const isLarge = isLargeSample(sample2);
-        set3((state) => {
+        set2((state) => {
           state.sample.sample_identifier = {
             id: sample2.id,
             epoch: sample2.epoch,
@@ -29412,17 +29421,17 @@ const createSampleSlice = (set3, get2, _store) => {
           }
         });
         if (sample2.events.length < 1) {
-          get2().appActions.setSampleTab(kSampleMessagesTabId);
+          get().appActions.setSampleTab(kSampleMessagesTabId);
         }
       },
       getSelectedSample: () => {
-        const state = get2().sample;
+        const state = get().sample;
         return state.sampleInState ? state.selectedSampleObject : selectedSampleRef.current;
       },
       clearSelectedSample: () => {
-        samplePolling.stopPolling();
+        getSamplePolling().stopPolling();
         selectedSampleRef.current = void 0;
-        set3((state) => {
+        set2((state) => {
           state.sample.sample_identifier = void 0;
           state.sample.selectedSampleObject = void 0;
           state.sample.sampleInState = false;
@@ -29431,14 +29440,14 @@ const createSampleSlice = (set3, get2, _store) => {
           state.log.selectedSampleHandle = void 0;
         });
       },
-      setSampleStatus: (status2) => set3((state) => {
+      setSampleStatus: (status2) => set2((state) => {
         state.sample.sampleStatus = status2;
       }),
-      setSampleError: (error2) => set3((state) => {
+      setSampleError: (error2) => set2((state) => {
         state.sample.sampleError = error2;
       }),
       setCollapsedEvents: (scope, collapsed2) => {
-        set3((state) => {
+        set2((state) => {
           if (state.sample.collapsedEvents === null) {
             state.sample.collapsedEvents = {};
           }
@@ -29446,7 +29455,7 @@ const createSampleSlice = (set3, get2, _store) => {
         });
       },
       clearCollapsedEvents: () => {
-        set3((state) => {
+        set2((state) => {
           if (state.sample.collapsedEvents !== null) {
             state.sample.collapsedEvents = null;
           }
@@ -29454,7 +29463,7 @@ const createSampleSlice = (set3, get2, _store) => {
         });
       },
       collapseEvent: (scope, id, collapsed2) => {
-        set3((state) => {
+        set2((state) => {
           if (state.sample.collapsedEvents === null) {
             state.sample.collapsedEvents = {};
           }
@@ -29469,12 +29478,12 @@ const createSampleSlice = (set3, get2, _store) => {
         });
       },
       setCollapsedIds: (key2, collapsed2) => {
-        set3((state) => {
+        set2((state) => {
           state.sample.collapsedIdBuckets[key2] = collapsed2;
         });
       },
       collapseId: (key2, id, collapsed2) => {
-        set3((state) => {
+        set2((state) => {
           if (state.sample.collapsedIdBuckets[key2] === void 0) {
             state.sample.collapsedIdBuckets[key2] = {};
           }
@@ -29486,100 +29495,67 @@ const createSampleSlice = (set3, get2, _store) => {
         });
       },
       clearCollapsedIds: (key2) => {
-        set3((state) => {
+        set2((state) => {
           delete state.sample.collapsedIdBuckets[key2];
         });
       },
       setCollapsedMode: (mode) => {
-        set3((state) => {
+        set2((state) => {
           state.sample.collapsedMode = mode;
         });
       },
       setFilteredEventTypes: (types2) => {
-        set3((state) => {
+        set2((state) => {
           state.sample.eventFilter.filteredTypes = types2;
         });
       },
       setVisiblePopover: (id) => {
-        set3((state) => {
+        set2((state) => {
           state.sample.visiblePopover = id;
         });
       },
       clearVisiblePopover: () => {
-        set3((state) => {
+        set2((state) => {
           state.sample.visiblePopover = void 0;
         });
       },
       setSelectedOutlineId: (id) => {
-        set3((state) => {
+        set2((state) => {
           state.sample.selectedOutlineId = id;
         });
       },
       clearSelectedOutlineId: () => {
-        set3((state) => {
+        set2((state) => {
           state.sample.selectedOutlineId = void 0;
         });
       },
-      pollSample: async (logFile, id, epoch) => {
-        const state = get2();
-        const sampleExists = state.sample.sampleInState ? !!state.sample.selectedSampleObject : !!selectedSampleRef.current;
-        if (state.log.loadedLog && sampleExists) {
-          const sampleSummary = { id, epoch };
-          samplePolling.startPolling(logFile, sampleSummary);
-        }
+      clearSampleForPolling: (logFile, id, epoch) => {
+        selectedSampleRef.current = void 0;
+        set2((state) => {
+          state.sample.selectedSampleObject = void 0;
+          state.sample.sampleInState = false;
+          state.sample.runningEvents = [];
+          state.sample.sample_identifier = {
+            id,
+            epoch,
+            logFile
+          };
+        });
       },
-      loadSample: async (logFile, id, epoch, completed) => {
-        const sampleActions = get2().sampleActions;
-        sampleActions.setSampleError(void 0);
-        sampleActions.setSampleStatus("loading");
-        const state = get2();
-        try {
-          if (completed !== false) {
-            log$5.debug(`LOADING COMPLETED SAMPLE: ${id}-${epoch}`);
-            samplePolling.stopPolling();
-            set3((state2) => {
-              state2.sample.runningEvents = [];
-            });
-            const sample2 = await get2().api?.get_log_sample(logFile, id, epoch);
-            log$5.debug(`LOADED COMPLETED SAMPLE: ${id}-${epoch}`);
-            if (sample2) {
-              if (state.sample.sample_identifier?.id !== sample2.id || state.sample.sample_identifier?.epoch !== sample2.epoch || state.sample.sample_identifier?.logFile !== logFile) {
-                sampleActions.clearCollapsedEvents();
-              }
-              const migratedSample = resolveSample$1(sample2);
-              sampleActions.setSelectedSample(migratedSample, logFile);
-              sampleActions.setSampleStatus("ok");
-            } else {
-              sampleActions.setSampleStatus("error");
-              throw new Error(
-                "Unable to load sample - an unknown error occurred"
-              );
-            }
-          } else {
-            log$5.debug(`POLLING RUNNING SAMPLE: ${id}-${epoch}`);
-            selectedSampleRef.current = void 0;
-            set3((state2) => {
-              state2.sample.selectedSampleObject = void 0;
-              state2.sample.sampleInState = false;
-              state2.sample.runningEvents = [];
-              state2.sample.sample_identifier = {
-                id,
-                epoch,
-                logFile
-              };
-            });
-            const sampleSummary = { id, epoch };
-            samplePolling.startPolling(logFile, sampleSummary);
-          }
-        } catch (e) {
-          sampleActions.setSampleError(e);
-          sampleActions.setSampleStatus("error");
-        }
+      setSampleIdentifier: (logFile, id, epoch) => {
+        set2((state) => {
+          state.sample.sample_identifier = { id, epoch, logFile };
+        });
+      },
+      setRunningEvents: (events) => {
+        set2((state) => {
+          state.sample.runningEvents = events;
+        });
       }
     }
   };
   const cleanup = () => {
-    samplePolling.cleanup();
+    cleanupSamplePolling();
     selectedSampleRef.current = void 0;
   };
   return [slice, cleanup];
@@ -29589,8 +29565,8 @@ const handleRehydrate = (state) => {
     state.sample.sampleNeedsReload = state.sample.sampleNeedsReload + 1;
   }
 };
-const initializeSampleSlice = (set3) => {
-  set3((state) => {
+const initializeSampleSlice = (set2) => {
+  set2((state) => {
     if (!state.sample) {
       state.sample = initialState;
     }
@@ -30073,7 +30049,7 @@ class ReplicationService {
     this._detailQueue.enqueue(logs, priority);
   }
 }
-const log$4 = createLogger("store");
+const log$6 = createLogger("store");
 let storeImplementation = null;
 const useStore = ((selector2) => {
   if (!storeImplementation) {
@@ -30103,22 +30079,22 @@ const initializeStore = (api2, capabilities2, storage2) => {
   const store = create$2()(
     devtools(
       persist(
-        immer((set3, get2, store2) => {
+        immer((set2, get, store2) => {
           const [appSlice, appCleanup] = createAppSlice(
-            set3,
-            get2
+            set2,
+            get
           );
           const [logsSlice, logsCleanup] = createLogsSlice(
-            set3,
-            get2
+            set2,
+            get
           );
           const [logSlice, logCleanup] = createLogSlice(
-            set3,
-            get2
+            set2,
+            get
           );
           const [sampleSlice, sampleCleanup] = createSampleSlice(
-            set3,
-            get2
+            set2,
+            get
           );
           const databaseService = createDatabaseService();
           const replicationService = new ReplicationService();
@@ -30129,23 +30105,23 @@ const initializeStore = (api2, capabilities2, storage2) => {
             replicationService,
             // Initialize
             initialize: (api22, capabilities22) => {
-              set3((state) => {
+              set2((state) => {
                 state.api = api22;
                 state.databaseService = databaseService;
                 state.replicationService = replicationService;
               });
               initializeAppSlice(
-                set3,
+                set2,
                 capabilities22
               );
               initializeLogsSlice(
-                set3
+                set2
               );
               initalializeLogSlice(
-                set3
+                set2
               );
               initializeSampleSlice(
-                set3
+                set2
               );
             },
             // Create the slices and merge them in
@@ -30172,18 +30148,18 @@ const initializeStore = (api2, capabilities2, storage2) => {
               logs: state.logs,
               sample: state.sample
             });
-            log$4.debug("PARTIALIZED STATE", persisted);
+            log$6.debug("PARTIALIZED STATE", persisted);
             return persisted;
           },
           version: 1,
           onRehydrateStorage: (state) => {
             return (hydrationState, error2) => {
               handleRehydrate(state);
-              log$4.debug("REHYDRATING STATE");
+              log$6.debug("REHYDRATING STATE");
               if (error2) {
-                log$4.debug("ERROR", { error: error2 });
+                log$6.debug("ERROR", { error: error2 });
               } else {
-                log$4.debug("STATE", { state, hydrationState });
+                log$6.debug("STATE", { state, hydrationState });
               }
             };
           }
@@ -30441,7 +30417,7 @@ const ProgressBar = ({
     ] })
   ] });
 };
-const log$3 = createLogger("Client-Events-Service");
+const log$5 = createLogger("Client-Events-Service");
 const kRetries = 10;
 const kPollingInterval = 5;
 const kRefreshEvent = "refresh-evals";
@@ -30481,14 +30457,14 @@ class ClientEventsService {
       `Client-Events`,
       async () => {
         if (this.abortController?.signal.aborted) {
-          log$3.debug(`Component unmounted, stopping poll for client events`);
+          log$5.debug(`Component unmounted, stopping poll for client events`);
           return false;
         }
-        log$3.debug(`Polling client events`);
+        log$5.debug(`Polling client events`);
         const events = await api2?.client_events();
-        log$3.debug(`Received events`, events);
+        log$5.debug(`Received events`, events);
         if (this.abortController?.signal.aborted) {
-          log$3.debug(`Polling aborted, stopping poll for client events`);
+          log$5.debug(`Polling aborted, stopping poll for client events`);
           return false;
         }
         if ((events || []).includes(kRefreshEvent)) {
@@ -30517,7 +30493,7 @@ class ClientEventsService {
     }
   }
   cleanup() {
-    log$3.debug(`Cleanup`);
+    log$5.debug(`Cleanup`);
     this.stopPolling();
     this.pendingLogs.clear();
     this.onRefreshCallback = null;
@@ -36021,7 +35997,7 @@ const Lr = /* @__PURE__ */ K(() => {
 function kn(t2, e, n) {
   return e !== "normal" && !(e != null && e.endsWith("px")) && n(`${t2} was not resolved to pixel value correctly`, e, Ct.WARN), e === "normal" ? 0 : parseInt(e != null ? e : "0", 10);
 }
-const log$2 = createLogger("scrolling");
+const log$4 = createLogger("scrolling");
 function useStatefulScrollPosition(elementRef, elementKey, delay = 1e3, scrollable2 = true) {
   const getScrollPosition = useStore(
     (state) => state.appActions.getScrollPosition
@@ -36033,7 +36009,7 @@ function useStatefulScrollPosition(elementRef, elementKey, delay = 1e3, scrollab
     () => debounce$2((e) => {
       const target2 = e.target;
       const position = target2.scrollTop;
-      log$2.debug(`Storing scroll position`, elementKey, position);
+      log$4.debug(`Storing scroll position`, elementKey, position);
       setScrollPosition(elementKey, position);
     }, delay),
     [elementKey, setScrollPosition, delay]
@@ -36057,15 +36033,15 @@ function useStatefulScrollPosition(elementRef, elementKey, delay = 1e3, scrollab
     if (!element || !scrollable2) {
       return;
     }
-    log$2.debug(`Restore Scroll Hook`, elementKey);
+    log$4.debug(`Restore Scroll Hook`, elementKey);
     const savedPosition = getScrollPosition(elementKey);
     if (savedPosition !== void 0) {
-      log$2.debug(`Restoring scroll position`, savedPosition);
+      log$4.debug(`Restoring scroll position`, savedPosition);
       const tryRestoreScroll = () => {
         if (element.scrollHeight > element.clientHeight) {
           if (element.scrollTop !== savedPosition) {
             element.scrollTop = savedPosition;
-            log$2.debug(`Scroll position restored to ${savedPosition}`);
+            log$4.debug(`Scroll position restored to ${savedPosition}`);
           }
           return true;
         }
@@ -36077,7 +36053,7 @@ function useStatefulScrollPosition(elementRef, elementKey, delay = 1e3, scrollab
         const pollForRender = () => {
           if (tryRestoreScroll() || attempts >= maxAttempts) {
             if (attempts >= maxAttempts) {
-              log$2.debug(
+              log$4.debug(
                 `Failed to restore scroll after ${maxAttempts} attempts`
               );
             }
@@ -36092,13 +36068,13 @@ function useStatefulScrollPosition(elementRef, elementKey, delay = 1e3, scrollab
     if (element.addEventListener) {
       element.addEventListener("scroll", handleScroll);
     } else {
-      log$2.warn("Element has no way to add event listener", element);
+      log$4.warn("Element has no way to add event listener", element);
     }
     return () => {
       if (element.removeEventListener) {
         element.removeEventListener("scroll", handleScroll);
       } else {
-        log$2.warn("Element has no way to remove event listener", element);
+        log$4.warn("Element has no way to remove event listener", element);
       }
     };
   }, [elementKey, elementRef, getScrollPosition, handleScroll, scrollable2]);
@@ -36117,14 +36093,14 @@ const useVirtuosoState = (virtuosoRef, elementKey, delay = 1e3) => {
   const debouncedFnRef = reactExports.useRef(null);
   const handleStateChange = reactExports.useCallback(
     (state) => {
-      log$2.debug(`Storing list state: [${elementKey}]`, state);
+      log$4.debug(`Storing list state: [${elementKey}]`, state);
       setListPosition(elementKey, state);
     },
     [elementKey, setListPosition]
   );
   reactExports.useEffect(() => {
     debouncedFnRef.current = debounce$2((isScrolling2) => {
-      log$2.debug("List scroll", isScrolling2);
+      log$4.debug("List scroll", isScrolling2);
       const element = virtuosoRef.current;
       if (!element) {
         return;
@@ -41678,7 +41654,7 @@ LinkifyIt.prototype.add = function add(schema, definition) {
   compile$2(this);
   return this;
 };
-LinkifyIt.prototype.set = function set2(options2) {
+LinkifyIt.prototype.set = function set(options2) {
   this.__opts__ = assign(this.__opts__, options2);
   return this;
 };
@@ -104811,23 +104787,23 @@ function requireTraversing() {
   });
   function closest(selector2) {
     var _this = this;
-    var set3 = [];
+    var set2 = [];
     if (!selector2) {
-      return this._make(set3);
+      return this._make(set2);
     }
     utils_1.domEach(this, function(elem) {
       var _a2;
       while (elem && elem.type !== "root") {
         if (!selector2 || filterArray([elem], selector2, _this.options.xmlMode, (_a2 = _this._root) === null || _a2 === void 0 ? void 0 : _a2[0]).length) {
-          if (elem && !set3.includes(elem)) {
-            set3.push(elem);
+          if (elem && !set2.includes(elem)) {
+            set2.push(elem);
           }
           break;
         }
         elem = elem.parent;
       }
     });
-    return this._make(set3);
+    return this._make(set2);
   }
   traversing.closest = closest;
   traversing.next = _singleMatcher(function(elem) {
@@ -104968,13 +104944,13 @@ function requireTraversing() {
     return this._make((_a2 = this[i]) !== null && _a2 !== void 0 ? _a2 : []);
   }
   traversing.eq = eq;
-  function get2(i) {
+  function get(i) {
     if (i == null) {
       return this.toArray();
     }
     return this[i < 0 ? this.length + i : i];
   }
-  traversing.get = get2;
+  traversing.get = get;
   function toArray2() {
     return Array.prototype.slice.call(this);
   }
@@ -110408,7 +110384,6 @@ function staticHttpApiForLog(logInfo) {
           }
         }
       );
-      console.log({ f: joinURI(...dirSegments, "eval-set.json"), result: result2 });
       return result2;
     },
     get_flow: async (dir) => {
@@ -115743,7 +115718,7 @@ function compileExpression(expression, options2) {
     throw new UnknownPropertyError(name2);
   }
   function safeGetter(obj) {
-    return function get2(name2) {
+    return function get(name2) {
       if (hasOwnProperty(obj ?? {}, name2)) return obj[name2];
       throw new UnknownPropertyError(name2);
     };
@@ -115959,9 +115934,9 @@ const filterExpression = (evalDescriptor, sample2, filterValue) => {
       ...mySampleVariables,
       ...scoreVariables(evalDescriptor, sample2.scores)
     };
-    const resolveVariable = (name2, get2) => {
+    const resolveVariable = (name2, get) => {
       if (name2 in mySampleVariables) {
-        const value2 = get2(name2);
+        const value2 = get(name2);
         return value2;
       }
       if (name2.startsWith(kSampleMetadataPrefix)) {
@@ -115969,7 +115944,7 @@ const filterExpression = (evalDescriptor, sample2, filterValue) => {
         const metadata2 = sample2.metadata || {};
         return getNestedPropertyValue(metadata2, propertyPath);
       }
-      return sample2.error ? void 0 : get2(name2);
+      return sample2.error ? void 0 : get(name2);
     };
     const expression = compileExpression(filterValue, {
       extraFunctions,
@@ -116250,7 +116225,7 @@ const mergeSampleSummaries = (logSamples, pendingSamples) => {
   });
   return [...logSamples, ...uniquePendingSamples];
 };
-const log$1 = createLogger("hooks");
+const log$3 = createLogger("hooks");
 const useEvalSpec = () => {
   const selectedLogDetails = useStore((state) => state.log.selectedLogDetails);
   return selectedLogDetails?.eval;
@@ -116461,11 +116436,11 @@ const useCollapseSampleEvent = (scope, id) => {
   const collapseEvent = useStore((state) => state.sampleActions.collapseEvent);
   return reactExports.useMemo(() => {
     const isCollapsed = collapsed2 !== null && collapsed2[scope]?.[id] === true;
-    const set3 = (value2) => {
-      log$1.debug("Set collapsed", id, value2);
+    const set2 = (value2) => {
+      log$3.debug("Set collapsed", id, value2);
       collapseEvent(scope, id, value2);
     };
-    return [isCollapsed, set3];
+    return [isCollapsed, set2];
   }, [collapsed2, scope, id, collapseEvent]);
 };
 const useCollapsibleIds = (key2) => {
@@ -116496,11 +116471,11 @@ const useCollapsedState = (id, defaultValue, scope) => {
   );
   const setCollapsed = useStore((state) => state.appActions.setCollapsed);
   return reactExports.useMemo(() => {
-    const set3 = (value2) => {
-      log$1.debug("Set collapsed", id, scope, value2);
+    const set2 = (value2) => {
+      log$3.debug("Set collapsed", id, scope, value2);
       setCollapsed(stateId, value2);
     };
-    return [collapsed2, set3];
+    return [collapsed2, set2];
   }, [collapsed2, id, scope, setCollapsed, stateId]);
 };
 const useMessageVisibility = (id, scope) => {
@@ -116518,7 +116493,7 @@ const useMessageVisibility = (id, scope) => {
       isFirstRender.current = false;
       return;
     }
-    log$1.debug("clear message (eval)", id);
+    log$3.debug("clear message (eval)", id);
     clearVisible(id);
   }, [selectedLogFile, clearVisible, id]);
   const selectedSampleHandle = useStore(
@@ -116529,17 +116504,17 @@ const useMessageVisibility = (id, scope) => {
       return;
     }
     if (scope === "sample") {
-      log$1.debug("clear message (sample)", id);
+      log$3.debug("clear message (sample)", id);
       clearVisible(id);
     }
   }, [selectedSampleHandle, clearVisible, id, scope]);
   return reactExports.useMemo(() => {
-    log$1.debug("visibility", id, visible2);
-    const set3 = (visible22) => {
-      log$1.debug("set visiblity", id);
+    log$3.debug("visibility", id, visible2);
+    const set2 = (visible22) => {
+      log$3.debug("set visiblity", id);
       setVisible(id, visible22);
     };
-    return [visible2, set3];
+    return [visible2, set2];
   }, [visible2, setVisible, id]);
 };
 function useProperty(id, propertyName2, options2) {
@@ -116642,7 +116617,7 @@ const useLogs = () => {
   const loadLogs = reactExports.useCallback(
     async (logPath) => {
       await Promise.all([syncEvalSetInfo(logPath), syncLogs()]).catch((e) => {
-        log$1.error("Error loading logs", e);
+        log$3.error("Error loading logs", e);
         setLoading(false, e);
       });
     },
@@ -116763,7 +116738,7 @@ const useLogsWithretried = () => {
   }, [logs, logPreviews]);
   return logsWithEvalSetRetry;
 };
-const log = createLogger("Client-Events");
+const log$2 = createLogger("Client-Events");
 function useClientEvents() {
   const syncLogs = useStore((state) => state.logsActions.syncLogs);
   const logPreviews = useStore((state) => state.logs.logPreviews);
@@ -116771,7 +116746,7 @@ function useClientEvents() {
   const { loadLogOverviews } = useLogs();
   const refreshCallback = reactExports.useCallback(
     async (logs) => {
-      log.debug("Refresh Log Files");
+      log$2.debug("Refresh Log Files");
       await syncLogs();
       const toRefresh = [];
       for (const log2 of logs) {
@@ -116781,7 +116756,7 @@ function useClientEvents() {
         }
       }
       if (toRefresh.length > 0) {
-        log.debug(`Refreshing ${toRefresh.length} log files`, toRefresh);
+        log$2.debug(`Refreshing ${toRefresh.length} log files`, toRefresh);
         await loadLogOverviews(toRefresh);
       }
     },
@@ -116977,7 +116952,7 @@ function isShadowRoot(node2) {
   var OwnElement = getWindow(node2).ShadowRoot;
   return node2 instanceof OwnElement || node2 instanceof ShadowRoot;
 }
-function applyStyles(_ref) {
+function applyStyles$1(_ref) {
   var state = _ref.state;
   Object.keys(state.elements).forEach(function(name2) {
     var style2 = state.styles[name2] || {};
@@ -117035,11 +117010,11 @@ function effect$2(_ref2) {
     });
   };
 }
-const applyStyles$1 = {
+const applyStyles = {
   name: "applyStyles",
   enabled: true,
   phase: "write",
-  fn: applyStyles,
+  fn: applyStyles$1,
   effect: effect$2,
   requires: ["computeStyles"]
 };
@@ -117225,7 +117200,7 @@ var toPaddingObject = function toPaddingObject2(padding, state) {
   })) : padding;
   return mergePaddingObject(typeof padding !== "number" ? padding : expandToHashMap(padding, basePlacements));
 };
-function arrow(_ref) {
+function arrow$1(_ref) {
   var _state$modifiersData$;
   var state = _ref.state, name2 = _ref.name, options2 = _ref.options;
   var arrowElement = state.elements.arrow;
@@ -117270,11 +117245,11 @@ function effect$1(_ref2) {
   }
   state.elements.arrow = arrowElement;
 }
-const arrow$1 = {
+const arrow = {
   name: "arrow",
   enabled: true,
   phase: "main",
-  fn: arrow,
+  fn: arrow$1,
   effect: effect$1,
   requires: ["popperOffsets"],
   requiresIfExists: ["preventOverflow"]
@@ -117363,7 +117338,7 @@ function mapToStyles(_ref2) {
   }
   return Object.assign({}, commonStyles, (_Object$assign2 = {}, _Object$assign2[sideY] = hasY ? y + "px" : "", _Object$assign2[sideX] = hasX ? x + "px" : "", _Object$assign2.transform = "", _Object$assign2));
 }
-function computeStyles(_ref5) {
+function computeStyles$1(_ref5) {
   var state = _ref5.state, options2 = _ref5.options;
   var _options$gpuAccelerat = options2.gpuAcceleration, gpuAcceleration = _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat, _options$adaptive = options2.adaptive, adaptive = _options$adaptive === void 0 ? true : _options$adaptive, _options$roundOffsets = options2.roundOffsets, roundOffsets = _options$roundOffsets === void 0 ? true : _options$roundOffsets;
   var commonStyles = {
@@ -117394,37 +117369,37 @@ function computeStyles(_ref5) {
     "data-popper-placement": state.placement
   });
 }
-const computeStyles$1 = {
+const computeStyles = {
   name: "computeStyles",
   enabled: true,
   phase: "beforeWrite",
-  fn: computeStyles,
+  fn: computeStyles$1,
   data: {}
 };
 var passive = {
   passive: true
 };
 function effect(_ref) {
-  var state = _ref.state, instance = _ref.instance, options2 = _ref.options;
+  var state = _ref.state, instance2 = _ref.instance, options2 = _ref.options;
   var _options$scroll = options2.scroll, scroll = _options$scroll === void 0 ? true : _options$scroll, _options$resize = options2.resize, resize = _options$resize === void 0 ? true : _options$resize;
   var window2 = getWindow(state.elements.popper);
   var scrollParents = [].concat(state.scrollParents.reference, state.scrollParents.popper);
   if (scroll) {
     scrollParents.forEach(function(scrollParent) {
-      scrollParent.addEventListener("scroll", instance.update, passive);
+      scrollParent.addEventListener("scroll", instance2.update, passive);
     });
   }
   if (resize) {
-    window2.addEventListener("resize", instance.update, passive);
+    window2.addEventListener("resize", instance2.update, passive);
   }
   return function() {
     if (scroll) {
       scrollParents.forEach(function(scrollParent) {
-        scrollParent.removeEventListener("scroll", instance.update, passive);
+        scrollParent.removeEventListener("scroll", instance2.update, passive);
       });
     }
     if (resize) {
-      window2.removeEventListener("resize", instance.update, passive);
+      window2.removeEventListener("resize", instance2.update, passive);
     }
   };
 }
@@ -117714,7 +117689,7 @@ function getExpandedFallbackPlacements(placement) {
   var oppositePlacement = getOppositePlacement(placement);
   return [getOppositeVariationPlacement(placement), oppositePlacement, getOppositeVariationPlacement(oppositePlacement)];
 }
-function flip(_ref) {
+function flip$1(_ref) {
   var state = _ref.state, options2 = _ref.options, name2 = _ref.name;
   if (state.modifiersData[name2]._skip) {
     return;
@@ -117800,11 +117775,11 @@ function flip(_ref) {
     state.reset = true;
   }
 }
-const flip$1 = {
+const flip = {
   name: "flip",
   enabled: true,
   phase: "main",
-  fn: flip,
+  fn: flip$1,
   requiresIfExists: ["offset"],
   data: {
     _skip: false
@@ -117829,7 +117804,7 @@ function isAnySideFullyClipped(overflow) {
     return overflow[side] >= 0;
   });
 }
-function hide(_ref) {
+function hide$1(_ref) {
   var state = _ref.state, name2 = _ref.name;
   var referenceRect = state.rects.reference;
   var popperRect = state.rects.popper;
@@ -117855,12 +117830,12 @@ function hide(_ref) {
     "data-popper-escaped": hasPopperEscaped
   });
 }
-const hide$1 = {
+const hide = {
   name: "hide",
   enabled: true,
   phase: "main",
   requiresIfExists: ["preventOverflow"],
-  fn: hide
+  fn: hide$1
 };
 function distanceAndSkiddingToXY(placement, rects, offset2) {
   var basePlacement = getBasePlacement(placement);
@@ -117878,7 +117853,7 @@ function distanceAndSkiddingToXY(placement, rects, offset2) {
     y: distance
   };
 }
-function offset(_ref2) {
+function offset$1(_ref2) {
   var state = _ref2.state, options2 = _ref2.options, name2 = _ref2.name;
   var _options$offset = options2.offset, offset2 = _options$offset === void 0 ? [0, 0] : _options$offset;
   var data = placements.reduce(function(acc, placement) {
@@ -117892,14 +117867,14 @@ function offset(_ref2) {
   }
   state.modifiersData[name2] = data;
 }
-const offset$1 = {
+const offset = {
   name: "offset",
   enabled: true,
   phase: "main",
   requires: ["popperOffsets"],
-  fn: offset
+  fn: offset$1
 };
-function popperOffsets(_ref) {
+function popperOffsets$1(_ref) {
   var state = _ref.state, name2 = _ref.name;
   state.modifiersData[name2] = computeOffsets({
     reference: state.rects.reference,
@@ -117907,17 +117882,17 @@ function popperOffsets(_ref) {
     placement: state.placement
   });
 }
-const popperOffsets$1 = {
+const popperOffsets = {
   name: "popperOffsets",
   enabled: true,
   phase: "read",
-  fn: popperOffsets,
+  fn: popperOffsets$1,
   data: {}
 };
 function getAltAxis(axis) {
   return axis === "x" ? "y" : "x";
 }
-function preventOverflow(_ref) {
+function preventOverflow$1(_ref) {
   var state = _ref.state, options2 = _ref.options, name2 = _ref.name;
   var _options$mainAxis = options2.mainAxis, checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis, _options$altAxis = options2.altAxis, checkAltAxis = _options$altAxis === void 0 ? false : _options$altAxis, boundary = options2.boundary, rootBoundary = options2.rootBoundary, altBoundary = options2.altBoundary, padding = options2.padding, _options$tether = options2.tether, tether = _options$tether === void 0 ? true : _options$tether, _options$tetherOffset = options2.tetherOffset, tetherOffset = _options$tetherOffset === void 0 ? 0 : _options$tetherOffset;
   var overflow = detectOverflow(state, {
@@ -118001,11 +117976,11 @@ function preventOverflow(_ref) {
   }
   state.modifiersData[name2] = data;
 }
-const preventOverflow$1 = {
+const preventOverflow = {
   name: "preventOverflow",
   enabled: true,
   phase: "main",
-  fn: preventOverflow,
+  fn: preventOverflow$1,
   requiresIfExists: ["offset"]
 };
 function getHTMLElementScroll(element) {
@@ -118161,7 +118136,7 @@ function popperGenerator(generatorOptions) {
     };
     var effectCleanupFns = [];
     var isDestroyed2 = false;
-    var instance = {
+    var instance2 = {
       state,
       setOptions: function setOptions(setOptionsAction) {
         var options3 = typeof setOptionsAction === "function" ? setOptionsAction(state.options) : setOptionsAction;
@@ -118176,7 +118151,7 @@ function popperGenerator(generatorOptions) {
           return m.enabled;
         });
         runModifierEffects();
-        return instance.update();
+        return instance2.update();
       },
       // Sync update – it will always be executed, even if not necessary. This
       // is useful for low frequency updates where sync behavior simplifies the
@@ -118212,7 +118187,7 @@ function popperGenerator(generatorOptions) {
               state,
               options: _options,
               name: name2,
-              instance
+              instance: instance2
             }) || state;
           }
         }
@@ -118221,7 +118196,7 @@ function popperGenerator(generatorOptions) {
       // not necessary (debounced to run at most once-per-tick)
       update: debounce$1(function() {
         return new Promise(function(resolve) {
-          instance.forceUpdate();
+          instance2.forceUpdate();
           resolve(state);
         });
       }),
@@ -118231,9 +118206,9 @@ function popperGenerator(generatorOptions) {
       }
     };
     if (!areValidElements(reference2, popper2)) {
-      return instance;
+      return instance2;
     }
-    instance.setOptions(options2).then(function(state2) {
+    instance2.setOptions(options2).then(function(state2) {
       if (!isDestroyed2 && options2.onFirstUpdate) {
         options2.onFirstUpdate(state2);
       }
@@ -118245,7 +118220,7 @@ function popperGenerator(generatorOptions) {
           var cleanupFn = effect2({
             state,
             name: name2,
-            instance,
+            instance: instance2,
             options: options3
           });
           var noopFn = function noopFn2() {
@@ -118260,10 +118235,10 @@ function popperGenerator(generatorOptions) {
       });
       effectCleanupFns = [];
     }
-    return instance;
+    return instance2;
   };
 }
-var defaultModifiers = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$1, offset$1, flip$1, preventOverflow$1, arrow$1, hide$1];
+var defaultModifiers = [eventListeners, popperOffsets, computeStyles, applyStyles, offset, flip, preventOverflow, arrow, hide];
 var createPopper = /* @__PURE__ */ popperGenerator({
   defaultModifiers
 });
@@ -118861,7 +118836,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.fullWidth, styles$1j.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1j.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.170-12-g5c531adec" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.170-9-gbcf09a3c5" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
@@ -124294,23 +124269,23 @@ var UserComponentFactory = class extends BeanStub {
   }
   newAgStackInstance(ComponentClass, componentFromFramework, params, type) {
     const jsComponent = !componentFromFramework;
-    let instance;
+    let instance2;
     if (jsComponent) {
-      instance = new ComponentClass();
+      instance2 = new ComponentClass();
     } else {
-      instance = this.frameworkCompWrapper.wrap(
+      instance2 = this.frameworkCompWrapper.wrap(
         ComponentClass,
         type.mandatoryMethods,
         type.optionalMethods,
         type
       );
     }
-    this.createBean(instance);
-    const deferredInit = instance.init?.(params);
+    this.createBean(instance2);
+    const deferredInit = instance2.init?.(params);
     if (deferredInit == null) {
-      return AgPromise.resolve(instance);
+      return AgPromise.resolve(instance2);
     }
-    return deferredInit.then(() => instance);
+    return deferredInit.then(() => instance2);
   }
   /**
    * merges params with application provided params
@@ -127003,13 +126978,13 @@ var AgContext = class {
       this.beans[beanName] = params.providedBeanInstances[beanName];
     }
     for (const BeanClass of params.beanClasses) {
-      const instance = new BeanClass();
-      if (instance.beanName) {
-        this.beans[instance.beanName] = instance;
+      const instance2 = new BeanClass();
+      if (instance2.beanName) {
+        this.beans[instance2.beanName] = instance2;
       } else {
         console.error(`Bean ${BeanClass.name} is missing beanName`);
       }
-      this.createdBeans.push(instance);
+      this.createdBeans.push(instance2);
     }
     for (const beanFunc of params.derivedBeans ?? []) {
       const { beanName, bean } = beanFunc(this);
@@ -127030,18 +127005,18 @@ var AgContext = class {
   }
   initBeans(beanInstances, afterPreCreateCallback) {
     const beans = this.beans;
-    for (const instance of beanInstances) {
-      instance.preWireBeans?.(beans);
-      instance.wireBeans?.(beans);
+    for (const instance2 of beanInstances) {
+      instance2.preWireBeans?.(beans);
+      instance2.wireBeans?.(beans);
     }
-    for (const instance of beanInstances) {
-      instance.preConstruct?.();
+    for (const instance2 of beanInstances) {
+      instance2.preConstruct?.();
     }
     if (afterPreCreateCallback) {
       beanInstances.forEach(afterPreCreateCallback);
     }
-    for (const instance of beanInstances) {
-      instance.postConstruct?.();
+    for (const instance2 of beanInstances) {
+      instance2.postConstruct?.();
     }
   }
   getBeans() {
@@ -136005,14 +135980,14 @@ function _destroyRowNodeSibling(rowNode) {
     mainNode.rowPinned = null;
   }
 }
-function removeGroupRows(set3) {
+function removeGroupRows(set2) {
   const rowsToRemove = /* @__PURE__ */ new Set();
-  set3.forEach((node2) => {
+  set2.forEach((node2) => {
     if (node2.group) {
       rowsToRemove.add(node2);
     }
   });
-  rowsToRemove.forEach((node2) => set3.delete(node2));
+  rowsToRemove.forEach((node2) => set2.delete(node2));
 }
 function getSpannedRows(beans, rowNode, column2) {
   const { rowSpanSvc } = beans;
@@ -141523,8 +141498,8 @@ var ColumnResizeService = class extends BeanStub {
     }
     const changedCols = [];
     const allResizedCols = [];
-    for (const set3 of resizeSets) {
-      const { width, columns, ratios } = set3;
+    for (const set2 of resizeSets) {
+      const { width, columns, ratios } = set2;
       const newWidths = {};
       const finishedCols = {};
       for (const col of columns) {
@@ -159489,8 +159464,8 @@ var ColumnFilterService = class extends BeanStub {
       if (filterComponent == null) {
         return;
       }
-      filterComponent.then((instance) => {
-        callback(_unwrapUserComp(instance));
+      filterComponent.then((instance2) => {
+        callback(_unwrapUserComp(instance2));
       });
     };
     const colDef = column2.getColDef();
@@ -173263,11 +173238,11 @@ var ApiEventService = class extends BeanStub {
     });
     map2.clear();
   }
-  destroyGlobalListeners(set3, async) {
-    for (const listener of set3) {
+  destroyGlobalListeners(set2, async) {
+    for (const listener of set2) {
       this.eventSvc.removeGlobalListener(listener, async);
     }
-    set3.clear();
+    set2.clear();
   }
   destroy() {
     super.destroy();
@@ -174177,8 +174152,8 @@ var FilterDisplayComponentWrapper = class extends CustomComponentWrapper {
   }
 };
 function updateFloatingFilterParent(params, model2) {
-  params.parentFilterInstance((instance) => {
-    (instance.setModel(model2) || AgPromise.resolve()).then(() => {
+  params.parentFilterInstance((instance2) => {
+    (instance2.setModel(model2) || AgPromise.resolve()).then(() => {
       params.filterParams.filterChangedCallback();
     });
   });
@@ -179779,7 +179754,7 @@ const kMaxCellTextLength = 256;
 function isEvalSample(sample2) {
   return "store" in sample2;
 }
-const resolveSample = (sample2, sampleDescriptor) => {
+const resolveSample$1 = (sample2, sampleDescriptor) => {
   const input2 = inputString(sample2.input);
   if (isEvalSample(sample2) && sample2.choices && sample2.choices.length > 0) {
     input2.push("");
@@ -179817,7 +179792,7 @@ const SampleSummaryView = ({
   if (!sampleDescriptor) {
     return void 0;
   }
-  const fields = resolveSample(sample2, sampleDescriptor);
+  const fields = resolveSample$1(sample2, sampleDescriptor);
   const limitSize = sampleDescriptor?.messageShape.normalized.limit > 0 ? Math.max(0.15, sampleDescriptor.messageShape.normalized.limit) : 0;
   const retrySize = sampleDescriptor?.messageShape.normalized.retries > 0 ? 6 : 0;
   const idSize = Math.max(
@@ -180331,9 +180306,10 @@ function getSharedObserver(callback) {
 }
 function handleIntersections(entries) {
   entries.forEach((entry) => {
+    const isAtTop = entry.boundingClientRect.top <= (entry.rootBounds?.top ?? 0);
     entry.target.toggleAttribute(
       "data-useStickyObserver-stuck",
-      entry.intersectionRatio < 1
+      entry.intersectionRatio < 1 && isAtTop
     );
   });
 }
@@ -181449,18 +181425,18 @@ const EventNavs = ({
     }
   );
 };
-const stickyWrapper = "_stickyWrapper_1rhkd_1";
-const label$6 = "_label_1rhkd_24";
-const navs = "_navs_1rhkd_29";
-const turnLabel = "_turnLabel_1rhkd_35";
-const card = "_card_1rhkd_41";
-const cardContent = "_cardContent_1rhkd_49";
-const hidden$1 = "_hidden_1rhkd_54";
-const copyLink = "_copyLink_1rhkd_62";
-const hover = "_hover_1rhkd_70";
-const root$1 = "_root_1rhkd_74";
-const bottomDongle = "_bottomDongle_1rhkd_79";
-const dongleIcon = "_dongleIcon_1rhkd_96";
+const stickyWrapper = "_stickyWrapper_16okh_1";
+const label$6 = "_label_16okh_22";
+const navs = "_navs_16okh_27";
+const turnLabel = "_turnLabel_16okh_33";
+const card = "_card_16okh_39";
+const cardContent = "_cardContent_16okh_47";
+const hidden$1 = "_hidden_16okh_52";
+const copyLink = "_copyLink_16okh_60";
+const hover = "_hover_16okh_68";
+const root$1 = "_root_16okh_72";
+const bottomDongle = "_bottomDongle_16okh_77";
+const dongleIcon = "_dongleIcon_16okh_94";
 const styles$J = {
   stickyWrapper,
   label: label$6,
@@ -182793,13 +182769,13 @@ const backtrack = (matrix, array1, array2, context) => {
   }
   return subsequence;
 };
-const get = (array1, array2, match2, context) => {
+const get$1 = (array1, array2, match2, context) => {
   const innerContext = context || {};
   const matrix = lengthMatrix(array1, array2, match2 || defaultMatch, innerContext);
   return backtrack(matrix, array1, array2, innerContext);
 };
 const lcs = {
-  get
+  get: get$1
 };
 const ARRAY_MOVE = 3;
 function arraysHaveMatchByRef(array1, array2, len1, len2) {
@@ -183342,9 +183318,9 @@ let cachedDiffPatch = null;
 function getDiffMatchPatch(options2, required) {
   var _a2;
   if (!cachedDiffPatch) {
-    let instance;
+    let instance2;
     if ((_a2 = options2 === null || options2 === void 0 ? void 0 : options2.textDiff) === null || _a2 === void 0 ? void 0 : _a2.diffMatchPatch) {
-      instance = new options2.textDiff.diffMatchPatch();
+      instance2 = new options2.textDiff.diffMatchPatch();
     } else {
       if (!required) {
         return null;
@@ -183354,9 +183330,9 @@ function getDiffMatchPatch(options2, required) {
       throw error2;
     }
     cachedDiffPatch = {
-      diff: (txt1, txt2) => instance.patch_toText(instance.patch_make(txt1, txt2)),
+      diff: (txt1, txt2) => instance2.patch_toText(instance2.patch_make(txt1, txt2)),
       patch: (txt1, patch) => {
-        const results = instance.patch_apply(instance.patch_fromText(patch), txt1);
+        const results = instance2.patch_apply(instance2.patch_fromText(patch), txt1);
         for (const resultOk of results[1]) {
           if (!resultOk) {
             const error2 = new Error("text patch failed");
@@ -184424,14 +184400,14 @@ async function __wbg_load(module, imports) {
     const bytes = await module.arrayBuffer();
     return await WebAssembly.instantiate(bytes, imports);
   } else {
-    const instance = await WebAssembly.instantiate(module, imports);
-    if (instance instanceof WebAssembly.Instance) {
+    const instance2 = await WebAssembly.instantiate(module, imports);
+    if (instance2 instanceof WebAssembly.Instance) {
       return {
-        instance,
+        instance: instance2,
         module
       };
     } else {
-      return instance;
+      return instance2;
     }
   }
 }
@@ -184483,8 +184459,8 @@ function __wbg_get_imports() {
   };
   return imports;
 }
-function __wbg_finalize_init(instance, module) {
-  wasm = instance.exports;
+function __wbg_finalize_init(instance2, module) {
+  wasm = instance2.exports;
   __wbg_init.__wbindgen_wasm_module = module;
   cachedDataViewMemory0 = null;
   cachedUint32ArrayMemory0 = null;
@@ -184506,8 +184482,8 @@ function initSync(module) {
   if (!(module instanceof WebAssembly.Module)) {
     module = new WebAssembly.Module(module);
   }
-  const instance = new WebAssembly.Instance(module, imports);
-  return __wbg_finalize_init(instance, module);
+  const instance2 = new WebAssembly.Instance(module, imports);
+  return __wbg_finalize_init(instance2, module);
 }
 async function __wbg_init(module_or_path) {
   if (wasm !== void 0) return wasm;
@@ -184525,10 +184501,10 @@ async function __wbg_init(module_or_path) {
     module_or_path = fetch(module_or_path);
   }
   const {
-    instance,
+    instance: instance2,
     module
   } = await __wbg_load(await module_or_path, imports);
-  return __wbg_finalize_init(instance, module);
+  return __wbg_finalize_init(instance2, module);
 }
 var exports$1 = /* @__PURE__ */ Object.freeze({
   __proto__: null,
@@ -187670,8 +187646,8 @@ function mapArray(list2, mapFn, options2 = {}) {
     function mapper(disposer) {
       disposers[j] = disposer;
       if (indexes) {
-        const [s, set3] = createSignal(j);
-        indexes[j] = set3;
+        const [s, set2] = createSignal(j);
+        indexes[j] = set2;
         return mapFn(newItems[j], s);
       }
       return mapFn(newItems[j]);
@@ -188067,26 +188043,26 @@ function isWrappable(obj) {
   let proto;
   return obj != null && typeof obj === "object" && (obj[$PROXY] || !(proto = Object.getPrototypeOf(obj)) || proto === Object.prototype || Array.isArray(obj));
 }
-function unwrap(item2, set3 = /* @__PURE__ */ new Set()) {
+function unwrap(item2, set2 = /* @__PURE__ */ new Set()) {
   let result2, unwrapped, v, prop2;
   if (result2 = item2 != null && item2[$RAW]) return result2;
-  if (!isWrappable(item2) || set3.has(item2)) return item2;
+  if (!isWrappable(item2) || set2.has(item2)) return item2;
   if (Array.isArray(item2)) {
     if (Object.isFrozen(item2)) item2 = item2.slice(0);
-    else set3.add(item2);
+    else set2.add(item2);
     for (let i = 0, l = item2.length; i < l; i++) {
       v = item2[i];
-      if ((unwrapped = unwrap(v, set3)) !== v) item2[i] = unwrapped;
+      if ((unwrapped = unwrap(v, set2)) !== v) item2[i] = unwrapped;
     }
   } else {
     if (Object.isFrozen(item2)) item2 = Object.assign({}, item2);
-    else set3.add(item2);
+    else set2.add(item2);
     const keys = Object.keys(item2), desc = Object.getOwnPropertyDescriptors(item2);
     for (let i = 0, l = keys.length; i < l; i++) {
       prop2 = keys[i];
       if (desc[prop2].get) continue;
       v = item2[prop2];
-      if ((unwrapped = unwrap(v, set3)) !== v) item2[prop2] = unwrapped;
+      if ((unwrapped = unwrap(v, set2)) !== v) item2[prop2] = unwrapped;
     }
   }
   return item2;
@@ -188101,11 +188077,11 @@ function getNodes(target2, symbol) {
 }
 function getNode(nodes, property2, value2) {
   if (nodes[property2]) return nodes[property2];
-  const [s, set3] = createSignal(value2, {
+  const [s, set2] = createSignal(value2, {
     equals: false,
     internal: true
   });
-  s.$ = set3;
+  s.$ = set2;
   return nodes[property2] = s;
 }
 function proxyDescriptor$1(target2, property2) {
@@ -193374,10 +193350,12 @@ const isRunning = (sampleSummary, runningSampleData) => {
   }
   return false;
 };
-function useSampleLoader() {
+const log$1 = createLogger("useSampleLoader");
+function useLoadSample() {
   const sampleData = useSampleData();
-  const loadSample = useStore((state) => state.sampleActions.loadSample);
   const logSelection = useLogSelection();
+  const api2 = useStore((state) => state.api);
+  const sampleActions = useStore((state) => state.sampleActions);
   const sampleId = logSelection.sample?.id;
   const sampleEpoch = logSelection.sample?.epoch;
   const sampleCompleted = logSelection.sample?.completed;
@@ -193387,6 +193365,52 @@ function useSampleLoader() {
   const prevSampleId = usePrevious(sampleId);
   const prevSampleNeedsReload = usePrevious(
     sampleData.sampleNeedsReload
+  );
+  const loadSample = reactExports.useCallback(
+    async (logFile, id, epoch, completed) => {
+      const currentId = sampleData.selectedSampleIdentifier;
+      const isSameSample = currentId?.id === id && currentId?.epoch === epoch && currentId?.logFile === logFile;
+      const isLoading = sampleData.status === "loading" || sampleData.status === "streaming";
+      if (isSameSample && isLoading) {
+        return;
+      }
+      sampleActions.setSampleIdentifier(logFile, id, epoch);
+      sampleActions.setSampleError(void 0);
+      sampleActions.setSampleStatus("loading");
+      try {
+        if (completed !== false) {
+          log$1.debug(`LOADING COMPLETED SAMPLE: ${id}-${epoch}`);
+          getSamplePolling().stopPolling();
+          const sample2 = await api2?.get_log_sample(logFile, id, epoch);
+          log$1.debug(`LOADED COMPLETED SAMPLE: ${id}-${epoch}`);
+          if (sample2) {
+            if (currentId?.id !== sample2.id || currentId?.epoch !== sample2.epoch || currentId?.logFile !== logFile) {
+              sampleActions.clearCollapsedEvents();
+            }
+            const migratedSample = resolveSample$2(sample2);
+            sampleActions.setSelectedSample(migratedSample, logFile);
+            sampleActions.setSampleStatus("ok");
+          } else {
+            sampleActions.setSampleStatus("error");
+            throw new Error(
+              "Unable to load sample - an unknown error occurred"
+            );
+          }
+        } else {
+          log$1.debug(`PREPARING FOR POLLING RUNNING SAMPLE: ${id}-${epoch}`);
+          sampleActions.clearSampleForPolling(logFile, id, epoch);
+        }
+      } catch (e) {
+        sampleActions.setSampleError(e);
+        sampleActions.setSampleStatus("error");
+      }
+    },
+    [
+      api2,
+      sampleActions,
+      sampleData.selectedSampleIdentifier,
+      sampleData.status
+    ]
   );
   reactExports.useEffect(() => {
     if (logSelection.logFile && sampleId !== void 0 && sampleEpoch !== void 0) {
@@ -193399,7 +193423,7 @@ function useSampleLoader() {
       const needsReloadChanged = prevSampleNeedsReload !== void 0 && prevSampleNeedsReload !== sampleData.sampleNeedsReload;
       const shouldLoad = !isCurrentSampleLoaded && !isLoading && !isError || logFileChanged || sampleIdChanged || completedChanged || needsReloadChanged;
       if (shouldLoad) {
-        loadSample(
+        void loadSample(
           logSelection.logFile,
           sampleId,
           sampleEpoch,
@@ -193423,23 +193447,28 @@ function useSampleLoader() {
     loadSample
   ]);
 }
-function useSamplePolling() {
-  const sampleData = useSampleData();
-  const pollSample = useStore((state) => state.sampleActions.pollSample);
+const log = createLogger("useSamplePolling");
+function usePollSample() {
   const logSelection = useLogSelection();
+  const loadedLog = useStore((state) => state.log.loadedLog);
   const sampleId = logSelection.sample?.id;
   const sampleEpoch = logSelection.sample?.epoch;
+  const sampleCompleted = logSelection.sample?.completed;
   reactExports.useEffect(() => {
-    if (sampleData.running && logSelection.logFile && sampleId !== void 0 && sampleEpoch !== void 0) {
-      pollSample(logSelection.logFile, sampleId, sampleEpoch);
+    if (logSelection.logFile && sampleId !== void 0 && sampleEpoch !== void 0 && sampleCompleted === false && loadedLog) {
+      log.debug(`Starting poll for running sample: ${sampleId}-${sampleEpoch}`);
+      const sampleSummary = {
+        id: sampleId,
+        epoch: sampleEpoch
+      };
+      getSamplePolling().startPolling(logSelection.logFile, sampleSummary);
     }
-  }, [
-    logSelection.logFile,
-    sampleId,
-    sampleEpoch,
-    pollSample,
-    sampleData.running
-  ]);
+  }, [logSelection.logFile, sampleId, sampleEpoch, sampleCompleted, loadedLog]);
+  reactExports.useEffect(() => {
+    return () => {
+      getSamplePolling().stopPolling();
+    };
+  }, []);
 }
 const container$8 = "_container_ly812_1";
 const scroller = "_scroller_ly812_7";
@@ -193451,9 +193480,15 @@ const InlineSampleDisplay = ({
   showActivity,
   className: className2
 }) => {
+  useLoadSample();
+  usePollSample();
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(InlineSampleComponent, { showActivity, className: className2 });
+};
+const InlineSampleComponent = ({
+  showActivity,
+  className: className2
+}) => {
   const sampleData = useSampleData();
-  useSampleLoader();
-  useSamplePolling();
   const scrollRef = reactExports.useRef(null);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2, styles$s.container), children: [
     showActivity && /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -193611,9 +193646,9 @@ const SampleDialog = ({
 }) => {
   const scrollRef = reactExports.useRef(null);
   useStatefulScrollPosition(scrollRef, "sample-dialog");
+  useLoadSample();
+  usePollSample();
   const sampleData = useSampleData();
-  useSampleLoader();
-  useSamplePolling();
   const sampleNavigation = useSampleNavigation();
   const tools2 = reactExports.useMemo(() => {
     const nextTool = {
@@ -194695,8 +194730,8 @@ class ChangeSet extends ChangeDesc {
         return;
       if (pos2 < length)
         addSection(sections, length - pos2, -1);
-      let set3 = new ChangeSet(sections, inserted);
-      total = total ? total.compose(set3.map(total)) : set3;
+      let set2 = new ChangeSet(sections, inserted);
+      total = total ? total.compose(set2.map(total)) : set2;
       sections = [];
       inserted = [];
       pos2 = 0;
@@ -194913,8 +194948,8 @@ function composeSets(setA, setB, mkSet = false) {
   }
 }
 class SectionIter {
-  constructor(set3) {
-    this.set = set3;
+  constructor(set2) {
+    this.set = set2;
     this.i = 0;
     this.next();
   }
@@ -195237,24 +195272,24 @@ class Facet {
   In cases where your value depends only on a single field, you'll
   want to use the [`from`](https://codemirror.net/6/docs/ref/#state.Facet.from) method instead.
   */
-  compute(deps, get2) {
+  compute(deps, get) {
     if (this.isStatic)
       throw new Error("Can't compute a static facet");
-    return new FacetProvider(deps, this, 1, get2);
+    return new FacetProvider(deps, this, 1, get);
   }
   /**
   Create an extension that computes zero or more values for this
   facet from a state.
   */
-  computeN(deps, get2) {
+  computeN(deps, get) {
     if (this.isStatic)
       throw new Error("Can't compute a static facet");
-    return new FacetProvider(deps, this, 2, get2);
+    return new FacetProvider(deps, this, 2, get);
   }
-  from(field, get2) {
-    if (!get2)
-      get2 = (x) => x;
-    return this.compute([field], (state) => get2(state.field(field)));
+  from(field, get) {
+    if (!get)
+      get = (x) => x;
+    return this.compute([field], (state) => get(state.field(field)));
   }
 }
 function sameArray$1(a, b) {
@@ -195336,7 +195371,7 @@ function dynamicFacetSlot(addresses, facet, providers) {
   let providerTypes = providers.map((p) => p.type);
   let dynamic = providerAddrs.filter((p) => !(p & 1));
   let idx = addresses[facet.id] >> 1;
-  function get2(state) {
+  function get(state) {
     let values = [];
     for (let i = 0; i < providerAddrs.length; i++) {
       let value2 = getAddr(state, providerAddrs[i]);
@@ -195352,13 +195387,13 @@ function dynamicFacetSlot(addresses, facet, providers) {
     create(state) {
       for (let addr of providerAddrs)
         ensureAddr(state, addr);
-      state.values[idx] = get2(state);
+      state.values[idx] = get(state);
       return 1;
     },
     update(state, tr2) {
       if (!ensureAll(state, dynamic))
         return 0;
-      let value2 = get2(state);
+      let value2 = get(state);
       if (facet.compare(value2, state.values[idx]))
         return 0;
       state.values[idx] = value2;
@@ -195371,7 +195406,7 @@ function dynamicFacetSlot(addresses, facet, providers) {
         state.values[idx] = oldValue;
         return 0;
       }
-      let value2 = get2(state);
+      let value2 = get(state);
       if (facet.compare(value2, oldValue)) {
         state.values[idx] = oldValue;
         return 0;
@@ -196590,8 +196625,8 @@ class RangeSet {
   to notify it of possible differences.
   */
   static compare(oldSets, newSets, textDiff, comparator, minPointSize = -1) {
-    let a = oldSets.filter((set3) => set3.maxPoint > 0 || !set3.isEmpty && set3.maxPoint >= minPointSize);
-    let b = newSets.filter((set3) => set3.maxPoint > 0 || !set3.isEmpty && set3.maxPoint >= minPointSize);
+    let a = oldSets.filter((set2) => set2.maxPoint > 0 || !set2.isEmpty && set2.maxPoint >= minPointSize);
+    let b = newSets.filter((set2) => set2.maxPoint > 0 || !set2.isEmpty && set2.maxPoint >= minPointSize);
     let sharedChunks = findSharedChunks(a, b, textDiff);
     let sideA = new SpanCursor(a, sharedChunks, minPointSize);
     let sideB = new SpanCursor(b, sharedChunks, minPointSize);
@@ -196606,8 +196641,8 @@ class RangeSet {
   static eq(oldSets, newSets, from = 0, to2) {
     if (to2 == null)
       to2 = 1e9 - 1;
-    let a = oldSets.filter((set3) => !set3.isEmpty && newSets.indexOf(set3) < 0);
-    let b = newSets.filter((set3) => !set3.isEmpty && oldSets.indexOf(set3) < 0);
+    let a = oldSets.filter((set2) => !set2.isEmpty && newSets.indexOf(set2) < 0);
+    let b = newSets.filter((set2) => !set2.isEmpty && oldSets.indexOf(set2) < 0);
     if (a.length != b.length)
       return false;
     if (!a.length)
@@ -196789,16 +196824,16 @@ class RangeSetBuilder {
 }
 function findSharedChunks(a, b, textDiff) {
   let inA = /* @__PURE__ */ new Map();
-  for (let set3 of a)
-    for (let i = 0; i < set3.chunk.length; i++)
-      if (set3.chunk[i].maxPoint <= 0)
-        inA.set(set3.chunk[i], set3.chunkPos[i]);
+  for (let set2 of a)
+    for (let i = 0; i < set2.chunk.length; i++)
+      if (set2.chunk[i].maxPoint <= 0)
+        inA.set(set2.chunk[i], set2.chunkPos[i]);
   let shared = /* @__PURE__ */ new Set();
-  for (let set3 of b)
-    for (let i = 0; i < set3.chunk.length; i++) {
-      let known = inA.get(set3.chunk[i]);
-      if (known != null && (textDiff ? textDiff.mapPos(known) : known) == set3.chunkPos[i] && !(textDiff === null || textDiff === void 0 ? void 0 : textDiff.touchesRange(known, known + set3.chunk[i].length)))
-        shared.add(set3.chunk[i]);
+  for (let set2 of b)
+    for (let i = 0; i < set2.chunk.length; i++) {
+      let known = inA.get(set2.chunk[i]);
+      if (known != null && (textDiff ? textDiff.mapPos(known) : known) == set2.chunkPos[i] && !(textDiff === null || textDiff === void 0 ? void 0 : textDiff.touchesRange(known, known + set2.chunk[i].length)))
+        shared.add(set2.chunk[i]);
     }
   return shared;
 }
@@ -197211,10 +197246,10 @@ class StyleModule {
   // If a Content Security Policy nonce is provided, it is added to
   // the `<style>` tag generated by the library.
   static mount(root2, modules, options2) {
-    let set3 = root2[SET], nonce = options2 && options2.nonce;
-    if (!set3) set3 = new StyleSet(root2, nonce);
-    else if (nonce) set3.setNonce(nonce);
-    set3.mount(Array.isArray(modules) ? modules : [modules], root2);
+    let set2 = root2[SET], nonce = options2 && options2.nonce;
+    if (!set2) set2 = new StyleSet(root2, nonce);
+    else if (nonce) set2.setNonce(nonce);
+    set2.mount(Array.isArray(modules) ? modules : [modules], root2);
   }
 }
 let adoptedSet = /* @__PURE__ */ new Map();
@@ -198707,19 +198742,19 @@ class ChangedRange {
   join(other) {
     return new ChangedRange(Math.min(this.fromA, other.fromA), Math.max(this.toA, other.toA), Math.min(this.fromB, other.fromB), Math.max(this.toB, other.toB));
   }
-  addToSet(set3) {
-    let i = set3.length, me2 = this;
+  addToSet(set2) {
+    let i = set2.length, me2 = this;
     for (; i > 0; i--) {
-      let range2 = set3[i - 1];
+      let range2 = set2[i - 1];
       if (range2.fromA > me2.toA)
         continue;
       if (range2.toA < me2.fromA)
         break;
       me2 = me2.join(range2);
-      set3.splice(i - 1, 1);
+      set2.splice(i - 1, 1);
     }
-    set3.splice(i, 0, me2);
-    return set3;
+    set2.splice(i, 0, me2);
+    return set2;
   }
   // Extend a set to cover all the content in `ranges`, which is a
   // flat array with each pair of numbers representing fromB/toB
@@ -200811,8 +200846,8 @@ function moveVertically(view, start2, forward, distance) {
 function skipAtomicRanges(atoms, pos2, bias) {
   for (; ; ) {
     let moved = 0;
-    for (let set3 of atoms) {
-      set3.between(pos2 - 1, pos2 + 1, (from, to2, value2) => {
+    for (let set2 of atoms) {
+      set2.between(pos2 - 1, pos2 + 1, (from, to2, value2) => {
         if (pos2 > from && pos2 < to2) {
           let side = moved || bias || (pos2 - from < to2 - pos2 ? -1 : 1);
           pos2 = side < 0 ? from : to2;
@@ -207339,10 +207374,10 @@ class TreeBuffer {
   /**
   Create a tree buffer.
   */
-  constructor(buffer2, length, set3) {
+  constructor(buffer2, length, set2) {
     this.buffer = buffer2;
     this.length = length;
-    this.set = set3;
+    this.set = set2;
   }
   /**
   @internal
@@ -208558,9 +208593,9 @@ class Tag {
   /**
   @internal
   */
-  constructor(name2, set3, base2, modified) {
+  constructor(name2, set2, base2, modified) {
     this.name = name2;
-    this.set = set3;
+    this.set = set2;
     this.base = base2;
     this.modified = modified;
     this.id = nextTagID++;
@@ -208619,14 +208654,14 @@ class Modifier {
     let exists = mods[0].instances.find((t2) => t2.base == base2 && sameArray(mods, t2.modified));
     if (exists)
       return exists;
-    let set3 = [], tag = new Tag(base2.name, set3, base2, mods);
+    let set2 = [], tag = new Tag(base2.name, set2, base2, mods);
     for (let m of mods)
       m.instances.push(tag);
     let configs = powerSet(mods);
     for (let parent of base2.set)
       if (!parent.modified.length)
         for (let config2 of configs)
-          set3.push(Modifier.get(parent, config2));
+          set2.push(Modifier.get(parent, config2));
     return tag;
   }
 }
@@ -211404,14 +211439,14 @@ class CompletionTooltip {
     this.view.requestMeasure(this.placeInfoReq);
   }
   updateSelectedOption(selected2) {
-    let set3 = null;
+    let set2 = null;
     for (let opt = this.list.firstChild, i = this.range.from; opt; opt = opt.nextSibling, i++) {
       if (opt.nodeName != "LI" || !opt.id) {
         i--;
       } else if (i == selected2) {
         if (!opt.hasAttribute("aria-selected")) {
           opt.setAttribute("aria-selected", "true");
-          set3 = opt;
+          set2 = opt;
         }
       } else {
         if (opt.hasAttribute("aria-selected")) {
@@ -211420,9 +211455,9 @@ class CompletionTooltip {
         }
       }
     }
-    if (set3)
-      scrollIntoView(this.list, set3);
-    return set3;
+    if (set2)
+      scrollIntoView(this.list, set2);
+    return set2;
   }
   measureInfo() {
     let sel = this.dom.querySelector("[aria-selected]");
@@ -212313,8 +212348,8 @@ class LintState {
         if (active[i2].to <= pos2)
           active.splice(i2--, 1);
     }
-    let set3 = deco.finish();
-    return new LintState(set3, panel2, findDiagnostic(set3));
+    let set2 = deco.finish();
+    return new LintState(set2, panel2, findDiagnostic(set2));
   }
 }
 function findDiagnostic(diagnostics, diagnostic = null, after = 0) {
@@ -218136,6 +218171,51 @@ const SamplesPanel = () => {
     )
   ] });
 };
+const useLoadLog = () => {
+  const {
+    samplesPath: routeLogPath,
+    sampleId,
+    epoch
+  } = useSamplesRouteParams();
+  const { loadLogs } = useLogs();
+  const initLogDir = useStore((state) => state.logsActions.initLogDir);
+  const selectSample = useStore((state) => state.logActions.selectSample);
+  const logs = useStore((state) => state.logs.logs);
+  const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
+  const logDir2 = useStore((state) => state.logs.logDir);
+  const setSelectedLogFile = useStore(
+    (state) => state.logsActions.setSelectedLogFile
+  );
+  reactExports.useEffect(() => {
+    const exec2 = async () => {
+      if (routeLogPath && sampleId && epoch) {
+        if (!logDir2) {
+          await initLogDir();
+        }
+        if (!logs.some((log2) => log2.name.endsWith(routeLogPath))) {
+          await loadLogs(routeLogPath);
+        }
+        if (selectedLogFile !== routeLogPath) {
+          setSelectedLogFile(routeLogPath);
+        }
+        const targetEpoch = parseInt(epoch, 10);
+        selectSample(sampleId, targetEpoch, routeLogPath);
+      }
+    };
+    exec2();
+  }, [
+    routeLogPath,
+    sampleId,
+    epoch,
+    loadLogs,
+    setSelectedLogFile,
+    selectSample,
+    initLogDir,
+    logDir2,
+    logs,
+    selectedLogFile
+  ]);
+};
 const detail = "_detail_14cqz_1";
 const panel = "_panel_14cqz_7";
 const sampleInfo = "_sampleInfo_14cqz_11";
@@ -218151,27 +218231,26 @@ const styles = {
   disabled
 };
 const SampleDetailView = () => {
+  useLoadLog();
+  useLoadSample();
+  usePollSample();
   const {
     samplesPath: routeLogPath,
     sampleId,
     epoch,
     tabId
   } = useSamplesRouteParams();
-  const { loadLogs } = useLogs();
   const navigate = useNavigate();
-  const selectSample = useStore((state) => state.logActions.selectSample);
-  const setSelectedLogFile = useStore(
-    (state) => state.logsActions.setSelectedLogFile
-  );
-  const selectedSampleSummary = useSelectedSampleSummary();
   const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
-  const initLogDir = useStore((state) => state.logsActions.initLogDir);
   const logDir2 = useStore((state) => state.logs.logDir);
   const displayedSamples = useStore(
     (state) => state.logs.samplesListState.displayedSamples
   );
   const sampleStatus = useStore((state) => state.sample.sampleStatus);
-  const loadSample = useStore((state) => state.sampleActions.loadSample);
+  const sampleData = useSampleData();
+  const sample2 = reactExports.useMemo(() => {
+    return sampleData.getSelectedSample();
+  }, [sampleData]);
   const clearSelectedLogDetails = useStore(
     (state) => state.logActions.clearSelectedLogDetails
   );
@@ -218179,19 +218258,21 @@ const SampleDetailView = () => {
   const clearSampleTab = useStore((state) => state.appActions.clearSampleTab);
   const showFind = useStore((state) => state.app.showFind);
   const setSampleTab = useStore((state) => state.appActions.setSampleTab);
-  const summaryId = selectedSampleSummary?.id;
-  const summaryEpoch = selectedSampleSummary?.epoch;
-  const summaryCompleted = selectedSampleSummary?.completed;
   const currentIndex = reactExports.useMemo(() => {
     if (!displayedSamples || !selectedLogFile || !sampleId || !epoch) {
       return -1;
     }
-    return displayedSamples.findIndex(
-      (s) => s.sampleId === sampleId && s.epoch === parseInt(epoch, 10) && s.logFile === selectedLogFile
-    );
+    const index = displayedSamples.findIndex((s) => {
+      const isMatch = String(s.sampleId) === sampleId && s.epoch === parseInt(epoch, 10) && s.logFile === selectedLogFile;
+      return isMatch;
+    });
+    return index;
   }, [displayedSamples, selectedLogFile, sampleId, epoch]);
   const hasPrevious = currentIndex > 0;
   const hasNext = displayedSamples && currentIndex >= 0 && currentIndex < displayedSamples.length - 1;
+  const setShowFind = useStore((state) => state.appActions.setShowFind);
+  const hideFind = useStore((state) => state.appActions.hideFind);
+  const nativeFind = useStore((state) => state.app.nativeFind);
   const handlePrevious = reactExports.useCallback(() => {
     if (currentIndex > 0 && displayedSamples && routeLogPath && logDir2) {
       const prev = displayedSamples[currentIndex - 1];
@@ -218223,29 +218304,6 @@ const SampleDetailView = () => {
       setSampleTab(tabId);
     }
   }, [tabId, setSampleTab]);
-  reactExports.useEffect(() => {
-    const exec2 = async () => {
-      if (routeLogPath && sampleId && epoch) {
-        await initLogDir();
-        await loadLogs(routeLogPath);
-        setSelectedLogFile(routeLogPath);
-        const targetEpoch = parseInt(epoch, 10);
-        selectSample(sampleId, targetEpoch, routeLogPath);
-      }
-    };
-    exec2();
-  }, [
-    routeLogPath,
-    sampleId,
-    epoch,
-    loadLogs,
-    setSelectedLogFile,
-    selectSample,
-    initLogDir
-  ]);
-  const setShowFind = useStore((state) => state.appActions.setShowFind);
-  const hideFind = useStore((state) => state.appActions.hideFind);
-  const nativeFind = useStore((state) => state.app.nativeFind);
   reactExports.useEffect(() => {
     const handleGlobalKeyDown = (e) => {
       const activeElement = document.activeElement;
@@ -218289,19 +218347,6 @@ const SampleDetailView = () => {
     handlePrevious,
     handleNext
   ]);
-  reactExports.useEffect(() => {
-    const exec2 = async () => {
-      if (selectedLogFile && summaryId !== void 0 && summaryEpoch !== void 0) {
-        await loadSample(
-          selectedLogFile,
-          summaryId,
-          summaryEpoch,
-          summaryCompleted
-        );
-      }
-    };
-    void exec2();
-  }, [loadSample, selectedLogFile, summaryId, summaryEpoch, summaryCompleted]);
   reactExports.useEffect(() => {
     return () => {
       clearSelectedLogDetails();
@@ -218347,10 +218392,10 @@ const SampleDetailView = () => {
           ] })
         }
       ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        InlineSampleDisplay,
+      sampleStatus !== "loading" && sample2 && /* @__PURE__ */ jsxRuntimeExports.jsx(
+        InlineSampleComponent,
         {
-          showActivity: sampleStatus === "loading",
+          showActivity: false,
           className: styles.panel
         }
       )
