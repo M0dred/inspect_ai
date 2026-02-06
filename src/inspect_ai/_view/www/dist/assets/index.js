@@ -1751,15 +1751,15 @@ function requireReactDomClient_production() {
       valueField
     );
     if (!node2.hasOwnProperty(valueField) && "undefined" !== typeof descriptor && "function" === typeof descriptor.get && "function" === typeof descriptor.set) {
-      var get = descriptor.get, set2 = descriptor.set;
+      var get2 = descriptor.get, set3 = descriptor.set;
       Object.defineProperty(node2, valueField, {
         configurable: true,
         get: function() {
-          return get.call(this);
+          return get2.call(this);
         },
         set: function(value2) {
           currentValue = "" + value2;
-          set2.call(this, value2);
+          set3.call(this, value2);
         }
       });
       Object.defineProperty(node2, valueField, {
@@ -22103,12 +22103,12 @@ function sortKeys(obj) {
   return sorted;
 }
 function dedupeLinkDescriptors(descriptors, preloads) {
-  let set2 = /* @__PURE__ */ new Set();
+  let set3 = /* @__PURE__ */ new Set();
   new Set(preloads);
   return descriptors.reduce((deduped, descriptor) => {
     let key2 = JSON.stringify(sortKeys(descriptor));
-    if (!set2.has(key2)) {
-      set2.add(key2);
+    if (!set3.has(key2)) {
+      set3.add(key2);
       deduped.push({ key: key2, link: descriptor });
     }
     return deduped;
@@ -22831,7 +22831,7 @@ function getArchtype(thing) {
 function has$1(thing, prop2) {
   return getArchtype(thing) === 2 ? thing.has(prop2) : Object.prototype.hasOwnProperty.call(thing, prop2);
 }
-function set$1(thing, propOrOldValue, value2) {
+function set(thing, propOrOldValue, value2) {
   const t2 = getArchtype(thing);
   if (t2 === 2)
     thing.set(propOrOldValue, value2);
@@ -23079,7 +23079,7 @@ function finalizeProperty(rootScope, parentState, targetObject, prop2, childValu
     const path = rootPath && parentState && parentState.type_ !== 3 && // Set objects are atomic since they have no keys.
     !has$1(parentState.assigned_, prop2) ? rootPath.concat(prop2) : void 0;
     const res = finalize(rootScope, childValue, path);
-    set$1(targetObject, prop2, res);
+    set(targetObject, prop2, res);
     if (isDraft(res)) {
       rootScope.canAutoFreeze_ = false;
     } else
@@ -23450,7 +23450,7 @@ function currentImpl(value2) {
   each(
     copy2,
     (key2, childValue) => {
-      set$1(copy2, key2, currentImpl(childValue));
+      set(copy2, key2, currentImpl(childValue));
     },
     strict
   );
@@ -23795,7 +23795,7 @@ const findCallerName = (stack2) => {
   const callerLine = ((_a2 = traceLines[apiSetStateLineIndex + 1]) == null ? void 0 : _a2.trim()) || "";
   return (_b2 = /.+ (.+) .+/.exec(callerLine)) == null ? void 0 : _b2[1];
 };
-const devtoolsImpl = (fn3, devtoolsOptions = {}) => (set2, get, api2) => {
+const devtoolsImpl = (fn3, devtoolsOptions = {}) => (set3, get2, api2) => {
   const { enabled, anonymousActionType, store, ...options2 } = devtoolsOptions;
   let extensionConnector;
   try {
@@ -23803,18 +23803,18 @@ const devtoolsImpl = (fn3, devtoolsOptions = {}) => (set2, get, api2) => {
   } catch (e) {
   }
   if (!extensionConnector) {
-    return fn3(set2, get, api2);
+    return fn3(set3, get2, api2);
   }
   const { connection, ...connectionInformation } = extractConnectionInformation(store, extensionConnector, options2);
   let isRecording = true;
   api2.setState = ((state, replace2, nameOrAction) => {
-    const r2 = set2(state, replace2);
+    const r2 = set3(state, replace2);
     if (!isRecording) return r2;
     const action = nameOrAction === void 0 ? {
       type: anonymousActionType || findCallerName(new Error().stack) || "anonymous"
     } : typeof nameOrAction === "string" ? { type: nameOrAction } : nameOrAction;
     if (store === void 0) {
-      connection == null ? void 0 : connection.send(action, get());
+      connection == null ? void 0 : connection.send(action, get2());
       return r2;
     }
     connection == null ? void 0 : connection.send(
@@ -23840,10 +23840,10 @@ const devtoolsImpl = (fn3, devtoolsOptions = {}) => (set2, get, api2) => {
   const setStateFromDevtools = (...a) => {
     const originalIsRecording = isRecording;
     isRecording = false;
-    set2(...a);
+    set3(...a);
     isRecording = originalIsRecording;
   };
-  const initialState2 = fn3(api2.setState, get, api2);
+  const initialState2 = fn3(api2.setState, get2, api2);
   if (connectionInformation.type === "untracked") {
     connection == null ? void 0 : connection.init(initialState2);
   } else {
@@ -24035,7 +24035,7 @@ const toThenable = (fn3) => (input2) => {
     };
   }
 };
-const persistImpl = (config2, baseOptions) => (set2, get, api2) => {
+const persistImpl = (config2, baseOptions) => (set3, get2, api2) => {
   let options2 = {
     storage: createJSONStorage(() => localStorage),
     partialize: (state) => state,
@@ -24057,14 +24057,14 @@ const persistImpl = (config2, baseOptions) => (set2, get, api2) => {
         console.warn(
           `[zustand persist middleware] Unable to update item '${options2.name}', the given storage is currently unavailable.`
         );
-        set2(...args2);
+        set3(...args2);
       },
-      get,
+      get2,
       api2
     );
   }
   const setItem = () => {
-    const state = options2.partialize({ ...get() });
+    const state = options2.partialize({ ...get2() });
     return storage2.setItem(options2.name, {
       state,
       version: options2.version
@@ -24077,10 +24077,10 @@ const persistImpl = (config2, baseOptions) => (set2, get, api2) => {
   };
   const configResult = config2(
     (...args2) => {
-      set2(...args2);
+      set3(...args2);
       return setItem();
     },
-    get,
+    get2,
     api2
   );
   api2.getInitialState = () => configResult;
@@ -24092,9 +24092,9 @@ const persistImpl = (config2, baseOptions) => (set2, get, api2) => {
     hasHydrated = false;
     hydrationListeners.forEach((cb) => {
       var _a22;
-      return cb((_a22 = get()) != null ? _a22 : configResult);
+      return cb((_a22 = get2()) != null ? _a22 : configResult);
     });
-    const postRehydrationCallback = ((_b2 = options2.onRehydrateStorage) == null ? void 0 : _b2.call(options2, (_a2 = get()) != null ? _a2 : configResult)) || void 0;
+    const postRehydrationCallback = ((_b2 = options2.onRehydrateStorage) == null ? void 0 : _b2.call(options2, (_a2 = get2()) != null ? _a2 : configResult)) || void 0;
     return toThenable(storage2.getItem.bind(storage2))(options2.name).then((deserializedStorageValue) => {
       if (deserializedStorageValue) {
         if (typeof deserializedStorageValue.version === "number" && deserializedStorageValue.version !== options2.version) {
@@ -24124,9 +24124,9 @@ const persistImpl = (config2, baseOptions) => (set2, get, api2) => {
       const [migrated, migratedState] = migrationResult;
       stateFromStorage = options2.merge(
         migratedState,
-        (_a22 = get()) != null ? _a22 : configResult
+        (_a22 = get2()) != null ? _a22 : configResult
       );
-      set2(stateFromStorage, true);
+      set3(stateFromStorage, true);
       if (migrated) {
         return setItem();
       }
@@ -24135,7 +24135,7 @@ const persistImpl = (config2, baseOptions) => (set2, get, api2) => {
         return;
       }
       postRehydrationCallback == null ? void 0 : postRehydrationCallback(stateFromStorage, void 0);
-      stateFromStorage = get();
+      stateFromStorage = get2();
       hasHydrated = true;
       finishHydrationListeners.forEach((cb) => cb(stateFromStorage));
     }).catch((e) => {
@@ -24180,12 +24180,12 @@ const persistImpl = (config2, baseOptions) => (set2, get, api2) => {
   return stateFromStorage || configResult;
 };
 const persist = persistImpl;
-const immerImpl = (initializer) => (set2, get, store) => {
+const immerImpl = (initializer) => (set3, get2, store) => {
   store.setState = (updater, replace2, ...args2) => {
     const nextState = typeof updater === "function" ? produce(updater) : updater;
-    return set2(nextState, replace2, ...args2);
+    return set3(nextState, replace2, ...args2);
   };
-  return initializer(store.setState, get, store);
+  return initializer(store.setState, get2, store);
 };
 const immer = immerImpl;
 var dexie_min$1 = { exports: {} };
@@ -27841,7 +27841,7 @@ const initialState$3 = {
   displayMode: "rendered",
   logsSampleView: false
 };
-const createAppSlice = (set2, get, _store) => {
+const createAppSlice = (set3, get2, _store) => {
   const getBoolRecord = (record, name2, defaultValue) => {
     if (Object.keys(record).includes(name2)) {
       return record[name2];
@@ -27855,71 +27855,71 @@ const createAppSlice = (set2, get, _store) => {
     capabilities: {},
     // Actions
     appActions: {
-      setLoading: (loading, error2) => set2((state) => {
+      setLoading: (loading, error2) => set3((state) => {
         state.app.status.loading = Math.max(
           state.app.status.loading + (loading ? 1 : -1),
           0
         );
         state.app.status.error = error2;
       }),
-      setShowFind: (show) => set2((state) => {
+      setShowFind: (show) => set3((state) => {
         state.app.showFind = show;
       }),
       hideFind: () => {
         clearDocumentSelection();
-        set2((state) => {
+        set3((state) => {
           state.app.showFind = false;
         });
       },
-      setNativeFind: (nativeFind) => set2((state) => {
+      setNativeFind: (nativeFind) => set3((state) => {
         state.app.nativeFind = nativeFind;
       }),
       setShowingSampleDialog: (showing) => {
-        const state = get();
+        const state = get2();
         const isShowing = state.app.dialogs.sample;
         if (showing === isShowing) {
           return;
         }
-        set2((state2) => {
+        set3((state2) => {
           state2.app.dialogs.sample = showing;
         });
         if (!showing) {
-          const state2 = get();
+          const state2 = get2();
           state2.appActions.clearSampleTab();
         }
       },
       setShowingTranscriptFilterDialog: (showing) => {
-        const state = get();
+        const state = get2();
         const isShowing = state.app.dialogs.transcriptFilter;
         if (showing === isShowing) {
           return;
         }
-        set2((state2) => {
+        set3((state2) => {
           state2.app.dialogs.transcriptFilter = showing;
         });
       },
       setShowingOptionsDialog: (showing) => {
-        const state = get();
+        const state = get2();
         const isShowing = state.app.dialogs.options;
         if (showing === isShowing) {
           return;
         }
-        set2((state2) => {
+        set3((state2) => {
           state2.app.dialogs.options = showing;
         });
       },
       setWorkspaceTab: (tab2) => {
-        set2((state) => {
+        set3((state) => {
           state.app.tabs.workspace = tab2;
         });
       },
       clearWorkspaceTab: () => {
-        set2((state) => {
+        set3((state) => {
           state.app.tabs.workspace = kDefaultWorkspaceTab;
         });
       },
       setInitialState: (log2, sample_id, sample_epoch) => {
-        set2((state) => {
+        set3((state) => {
           state.app.initialState = {
             log: log2,
             sample_id,
@@ -27928,31 +27928,31 @@ const createAppSlice = (set2, get, _store) => {
         });
       },
       clearInitialState: () => {
-        set2((state) => {
+        set3((state) => {
           state.app.initialState = void 0;
         });
       },
       setSampleTab: (tab2) => {
-        set2((state) => {
+        set3((state) => {
           state.app.tabs.sample = tab2;
         });
       },
       clearSampleTab: () => {
-        set2((state) => {
+        set3((state) => {
           state.app.tabs.sample = kDefaultSampleTab;
         });
       },
       getScrollPosition: (name2) => {
-        const state = get();
+        const state = get2();
         return state.app.scrollPositions[name2];
       },
       setScrollPosition: (name2, position) => {
-        set2((state) => {
+        set3((state) => {
           state.app.scrollPositions[name2] = position;
         });
       },
       getListPosition: (name2) => {
-        const state = get();
+        const state = get2();
         if (Object.keys(state.app.listPositions).includes(name2)) {
           return state.app.listPositions[name2];
         } else {
@@ -27960,12 +27960,12 @@ const createAppSlice = (set2, get, _store) => {
         }
       },
       setListPosition: (name2, position) => {
-        set2((state) => {
+        set3((state) => {
           state.app.listPositions[name2] = position;
         });
       },
       clearListPosition: (name2) => {
-        set2((state) => {
+        set3((state) => {
           const newListPositions = { ...state.app.listPositions };
           delete newListPositions[name2];
           return {
@@ -27977,7 +27977,7 @@ const createAppSlice = (set2, get, _store) => {
         });
       },
       getVisibleRange: (name2) => {
-        const state = get();
+        const state = get2();
         if (Object.keys(state.app.visibleRanges).includes(name2)) {
           return state.app.visibleRanges[name2];
         } else {
@@ -27985,12 +27985,12 @@ const createAppSlice = (set2, get, _store) => {
         }
       },
       setVisibleRange: (name2, value2) => {
-        set2((state) => {
+        set3((state) => {
           state.app.visibleRanges[name2] = value2;
         });
       },
       clearVisibleRange: (name2) => {
-        set2((state) => {
+        set3((state) => {
           const newVisibleRanges = { ...state.app.visibleRanges };
           delete newVisibleRanges[name2];
           return {
@@ -28002,33 +28002,33 @@ const createAppSlice = (set2, get, _store) => {
         });
       },
       getCollapsed: (name2, defaultValue) => {
-        return getBoolRecord(get().app.collapsed, name2, defaultValue);
+        return getBoolRecord(get2().app.collapsed, name2, defaultValue);
       },
       setCollapsed: (name2, value2) => {
-        set2((state) => {
+        set3((state) => {
           state.app.collapsed[name2] = value2;
         });
       },
       getMessageVisible: (name2, defaultValue) => {
-        return getBoolRecord(get().app.messages, name2, defaultValue);
+        return getBoolRecord(get2().app.messages, name2, defaultValue);
       },
       setMessageVisible: (name2, value2) => {
-        set2((state) => {
+        set3((state) => {
           state.app.messages[name2] = value2;
         });
       },
       clearMessageVisible: (name2) => {
-        set2((state) => {
+        set3((state) => {
           delete state.app.messages[name2];
         });
       },
       getPropertyValue: (bagName, key2, defaultValue) => {
-        const state = get();
+        const state = get2();
         const bag = state.app.propertyBags[bagName] || {};
         return key2 in bag ? bag[key2] : defaultValue;
       },
       setPropertyValue: (bagName, key2, value2) => {
-        set2((state) => {
+        set3((state) => {
           if (!state.app.propertyBags[bagName]) {
             state.app.propertyBags[bagName] = {};
           }
@@ -28036,7 +28036,7 @@ const createAppSlice = (set2, get, _store) => {
         });
       },
       removePropertyValue: (bagName, key2) => {
-        set2((state) => {
+        set3((state) => {
           if (state.app.propertyBags[bagName]) {
             const { [key2]: _, ...rest } = state.app.propertyBags[bagName];
             state.app.propertyBags[bagName] = rest;
@@ -28044,22 +28044,22 @@ const createAppSlice = (set2, get, _store) => {
         });
       },
       setUrlHash: (urlHash) => {
-        set2((state) => {
+        set3((state) => {
           state.app.urlHash = urlHash;
         });
       },
       setSingleFileMode: (singleFile) => {
-        set2((state) => {
+        set3((state) => {
           state.app.singleFileMode = singleFile;
         });
       },
       setDisplayMode: (mode) => {
-        set2((state) => {
+        set3((state) => {
           state.app.displayMode = mode;
         });
       },
       setLogsSampleView: (logsSampleView) => {
-        set2((state) => {
+        set3((state) => {
           state.app.logsSampleView = logsSampleView;
         });
       }
@@ -28069,8 +28069,8 @@ const createAppSlice = (set2, get, _store) => {
   };
   return [slice, cleanup];
 };
-const initializeAppSlice = (set2, capabilities2) => {
-  set2((state) => {
+const initializeAppSlice = (set3, capabilities2) => {
+  set3((state) => {
     state.capabilities = capabilities2;
     if (!state.app) {
       state.app = initialState$3;
@@ -28252,14 +28252,14 @@ const createPolling = (name2, callback, options2) => {
 const log$a = createLogger("logPolling");
 const kRetries$1 = 10;
 const kPollingInterval$2 = 2;
-function createLogPolling(get, set2) {
+function createLogPolling(get2, set3) {
   let currentPolling = null;
   let abortController;
   const refreshLog = async (logFileName, clearPending = false) => {
     if (abortController?.signal.aborted) {
       return false;
     }
-    const state = get();
+    const state = get2();
     const api2 = state.api;
     const selectedLogFile = state.logs.selectedLogFile;
     if (!api2 || !selectedLogFile) {
@@ -28268,7 +28268,7 @@ function createLogPolling(get, set2) {
     log$a.debug(`refresh: ${selectedLogFile}`);
     try {
       const logDetails = await api2.get_log_details(selectedLogFile);
-      set2((state2) => {
+      set3((state2) => {
         state2.log.selectedLogDetails = logDetails;
         log$a.debug(
           `Setting refreshed summary ${logDetails.sampleSummaries.length} samples`,
@@ -28306,7 +28306,7 @@ function createLogPolling(get, set2) {
           log$a.debug(`Component unmounted, stopping poll for: ${logFileName}`);
           return false;
         }
-        const state = get();
+        const state = get2();
         const api2 = state.api;
         if (!api2?.get_log_pending_samples) {
           return false;
@@ -28315,7 +28315,7 @@ function createLogPolling(get, set2) {
           return false;
         }
         log$a.debug(`Polling running samples: ${logFileName}`);
-        const currentEtag = get().log.pendingSampleSummaries?.etag;
+        const currentEtag = get2().log.pendingSampleSummaries?.etag;
         const pendingSamples = await api2.get_log_pending_samples(
           logFileName,
           currentEtag
@@ -28326,7 +28326,7 @@ function createLogPolling(get, set2) {
         }
         if (pendingSamples.status === "OK" && pendingSamples.pendingSamples) {
           loadedPendingSamples = true;
-          set2((state2) => {
+          set3((state2) => {
             state2.log.pendingSampleSummaries = pendingSamples.pendingSamples;
           });
           await refreshLog(logFileName, false);
@@ -28343,7 +28343,7 @@ function createLogPolling(get, set2) {
       },
       {
         maxRetries: kRetries$1,
-        interval: get().log.pendingSampleSummaries?.refresh || kPollingInterval$2
+        interval: get2().log.pendingSampleSummaries?.refresh || kPollingInterval$2
       }
     );
     currentPolling.start();
@@ -28352,7 +28352,7 @@ function createLogPolling(get, set2) {
     if (abortController.signal.aborted) {
       return false;
     }
-    const pendingSampleSummaries = get().log.pendingSampleSummaries;
+    const pendingSampleSummaries = get2().log.pendingSampleSummaries;
     if ((pendingSampleSummaries?.samples.length || 0) > 0) {
       log$a.debug(`Clear pending: ${logFileName}`);
       return refreshLog(logFileName, true);
@@ -28378,7 +28378,7 @@ function createLogPolling(get, set2) {
     clearPendingSummaries,
     cleanup,
     // Expose the refresh function so components can use it directly
-    refreshLog: (clearPending = false) => refreshLog(get().logs.selectedLogFile || "", clearPending)
+    refreshLog: (clearPending = false) => refreshLog(get2().logs.selectedLogFile || "", clearPending)
   };
 }
 const log$9 = createLogger("logSlice");
@@ -28397,15 +28397,15 @@ const initialState$2 = {
   selectedScores: void 0,
   scores: void 0
 };
-const createLogSlice = (set2, get, _store) => {
-  const logPolling = createLogPolling(get, set2);
+const createLogSlice = (set3, get2, _store) => {
+  const logPolling = createLogPolling(get2, set3);
   const slice = {
     // State
     log: initialState$2,
     // Actions
     logActions: {
       selectSample: (sampleId, epoch, logFile) => {
-        const currentSample = get().log.selectedSampleHandle;
+        const currentSample = get2().log.selectedSampleHandle;
         if (sampleHandlesEqual(currentSample, {
           id: sampleId,
           epoch,
@@ -28413,63 +28413,63 @@ const createLogSlice = (set2, get, _store) => {
         })) {
           return;
         }
-        set2((state) => {
+        set3((state) => {
           state.log.selectedSampleHandle = { id: sampleId, epoch, logFile };
         });
       },
       clearSelectedSample: () => {
-        set2((state) => {
+        set3((state) => {
           state.log.selectedSampleHandle = void 0;
         });
       },
       setSelectedLogDetails: (details) => {
-        set2((state) => {
+        set3((state) => {
           state.log.selectedScores = void 0;
           state.log.selectedLogDetails = details;
         });
         if (details.status !== "started" && details.sampleSummaries.length === 0) {
-          get().appActions.setWorkspaceTab(kLogViewInfoTabId);
+          get2().appActions.setWorkspaceTab(kLogViewInfoTabId);
         }
       },
       clearSelectedLogDetails: () => {
-        set2((state) => {
+        set3((state) => {
           state.log.selectedLogDetails = void 0;
         });
       },
       setPendingSampleSummaries: (pendingSampleSummaries) => {
-        set2((state) => {
+        set3((state) => {
           state.log.pendingSampleSummaries = pendingSampleSummaries;
         });
       },
       clearPendingSampleSummaries: () => {
-        set2((state) => {
+        set3((state) => {
           state.log.pendingSampleSummaries = void 0;
         });
       },
-      setFilter: (filter) => set2((state) => {
+      setFilter: (filter) => set3((state) => {
         state.log.filter = filter;
       }),
-      setFilterError: (error2) => set2((state) => {
+      setFilterError: (error2) => set3((state) => {
         state.log.filterError = error2;
       }),
       clearFilterError: () => {
-        set2((state) => {
+        set3((state) => {
           state.log.filterError = void 0;
         });
       },
-      setEpoch: (epoch) => set2((state) => {
+      setEpoch: (epoch) => set3((state) => {
         state.log.epoch = epoch;
       }),
-      setSort: (sort2) => set2((state) => {
+      setSort: (sort2) => set3((state) => {
         state.log.sort = sort2;
       }),
-      setSelectedScores: (scores2) => set2((state) => {
+      setSelectedScores: (scores2) => set3((state) => {
         state.log.selectedScores = scores2;
       }),
-      setScores: (scores2) => set2((state) => {
+      setScores: (scores2) => set3((state) => {
         state.log.scores = scores2;
       }),
-      resetFiltering: () => set2((state) => {
+      resetFiltering: () => set3((state) => {
         state.log.filter = "";
         state.log.filterError = void 0;
         state.log.epoch = "all";
@@ -28477,7 +28477,7 @@ const createLogSlice = (set2, get, _store) => {
         state.log.selectedScores = state.log.scores?.slice(0, 1);
       }),
       syncLog: async (logFileName) => {
-        const state = get();
+        const state = get2();
         const api2 = state.api;
         let logDir2 = state.logs.logDir;
         if (state.logs.logDir === void 0) {
@@ -28505,7 +28505,7 @@ const createLogSlice = (set2, get, _store) => {
                 [logFileName]: toLogPreview(cachedInfo)
               };
               state.logsActions.updateLogPreviews(header2);
-              set2((state2) => {
+              set3((state2) => {
                 state2.log.loadedLog = logFileName;
               });
               state.logActions.clearPendingSampleSummaries();
@@ -28528,7 +28528,7 @@ const createLogSlice = (set2, get, _store) => {
             [logFileName]: toLogPreview(logDetails)
           };
           state.logsActions.updateLogPreviews(header2);
-          set2((state2) => {
+          set3((state2) => {
             state2.log.loadedLog = logFileName;
           });
           state.logActions.clearPendingSampleSummaries();
@@ -28539,18 +28539,18 @@ const createLogSlice = (set2, get, _store) => {
         }
       },
       clearLog: () => {
-        set2((state) => {
+        set3((state) => {
           state.log.loadedLog = void 0;
         });
       },
       pollLog: async () => {
-        const currentLog = get().log.loadedLog;
+        const currentLog = get2().log.loadedLog;
         if (currentLog) {
           logPolling.startPolling(currentLog);
         }
       },
       refreshLog: async () => {
-        const state = get();
+        const state = get2();
         const api2 = state.api;
         const selectedLogFile = state.logs.selectedLogFile;
         if (!api2 || !selectedLogFile) {
@@ -28566,12 +28566,12 @@ const createLogSlice = (set2, get, _store) => {
         }
       },
       setFilteredSampleCount: (count) => {
-        set2((state) => {
+        set3((state) => {
           state.log.filteredSampleCount = count;
         });
       },
       clearFilteredSampleCount: () => {
-        set2((state) => {
+        set3((state) => {
           state.log.filteredSampleCount = void 0;
         });
       }
@@ -28582,8 +28582,8 @@ const createLogSlice = (set2, get, _store) => {
   };
   return [slice, cleanup];
 };
-const initalializeLogSlice = (set2) => {
-  set2((state) => {
+const initalializeLogSlice = (set3) => {
+  set3((state) => {
     if (!state.log) {
       state.log = initialState$2;
     }
@@ -28610,14 +28610,14 @@ const initialState$1 = {
   },
   showRetriedLogs: false
 };
-const createLogsSlice = (set2, get, _store) => {
+const createLogsSlice = (set3, get2, _store) => {
   const slice = {
     // State
     logs: initialState$1,
     // Actions
     logsActions: {
       setLogDir: (logDir2) => {
-        set2((state) => {
+        set3((state) => {
           if (logDir2 !== state.logs.logDir) {
             state.logs.logDir = logDir2;
             state.logs.samplesListState.gridState = void 0;
@@ -28626,11 +28626,11 @@ const createLogsSlice = (set2, get, _store) => {
           }
         });
       },
-      setLogHandles: (logs) => set2((state) => {
+      setLogHandles: (logs) => set3((state) => {
         state.logs.logs = logs;
       }),
       syncLogPreviews: async (logs) => {
-        const state = get();
+        const state = get2();
         const api2 = state.api;
         if (!api2) {
           console.error("API not initialized in LogsStore");
@@ -28646,53 +28646,53 @@ const createLogsSlice = (set2, get, _store) => {
           console.error("Failed to sync log previews", e);
         }
       },
-      updateLogPreviews: (previews) => set2((state) => {
+      updateLogPreviews: (previews) => set3((state) => {
         state.logs.logPreviews = {
-          ...get().logs.logPreviews,
+          ...get2().logs.logPreviews,
           ...previews
         };
       }),
-      updateLogDetails: (details) => set2((state) => {
+      updateLogDetails: (details) => set3((state) => {
         state.logs.logDetails = {
-          ...get().logs.logDetails,
+          ...get2().logs.logDetails,
           ...details
         };
       }),
       setGridState: (gridState) => {
-        set2((state) => {
+        set3((state) => {
           state.logs.samplesListState.gridState = gridState;
         });
       },
       clearGridState: () => {
-        set2((state) => {
+        set3((state) => {
           state.logs.samplesListState.gridState = void 0;
         });
       },
       setDisplayedSamples: (samples) => {
-        const currentDisplaySamples = get().logs.samplesListState.displayedSamples;
-        set2((state) => {
+        const currentDisplaySamples = get2().logs.samplesListState.displayedSamples;
+        set3((state) => {
           if (!displaySamplesEqual(currentDisplaySamples, samples)) {
             state.logs.samplesListState.displayedSamples = samples;
           }
         });
       },
       clearDisplayedSamples: () => {
-        set2((state) => {
+        set3((state) => {
           state.logs.samplesListState.displayedSamples = void 0;
         });
       },
       setSamplesColumnVisibility: (visibility) => {
-        set2((state) => {
+        set3((state) => {
           state.logs.samplesListState.columnVisibility = visibility;
         });
       },
       setPreviousSamplesPath: (path) => {
-        set2((state) => {
+        set3((state) => {
           state.logs.samplesListState.previousSamplesPath = path;
         });
       },
       initLogDir: async () => {
-        const api2 = get().api;
+        const api2 = get2().api;
         if (!api2) {
           console.error("API not initialized in LogsStore");
           return void 0;
@@ -28702,34 +28702,34 @@ const createLogsSlice = (set2, get, _store) => {
             return await api2.get_log_dir();
           } catch (e) {
             console.log(e);
-            get().appActions.setLoading(false, e);
+            get2().appActions.setLoading(false, e);
             return void 0;
           }
         };
         const logDir2 = await loadLogDir();
-        if (get().logs.logDir !== logDir2) {
-          get().logsActions.setLogDir(logDir2);
+        if (get2().logs.logDir !== logDir2) {
+          get2().logsActions.setLogDir(logDir2);
         }
         return logDir2;
       },
       ensureReplication: async () => {
-        const state = get();
+        const state = get2();
         if (state.logs.logDir) {
           await state.logsActions.syncLogs();
         }
       },
       syncLogs: async () => {
-        const api2 = get().api;
+        const api2 = get2().api;
         if (!api2) {
           console.error("API not initialized in LogsStore");
           return [];
         }
-        const databaseService = get().databaseService;
+        const databaseService = get2().databaseService;
         const useProgress = !!databaseService?.getDatabaseHandle();
         if (useProgress) {
-          get().appActions.setLoading(true);
+          get2().appActions.setLoading(true);
         }
-        const logDir2 = await get().logsActions.initLogDir();
+        const logDir2 = await get2().logsActions.initLogDir();
         const databaseHandle = api2.get_log_dir_handle(logDir2);
         const initDatabase = !databaseService || databaseService.getDatabaseHandle() !== databaseHandle;
         if (initDatabase) {
@@ -28738,7 +28738,7 @@ const createLogsSlice = (set2, get, _store) => {
               return void 0;
             }
             try {
-              const databaseService3 = get().databaseService;
+              const databaseService3 = get2().databaseService;
               if (!databaseService3) {
                 return void 0;
               }
@@ -28747,14 +28747,14 @@ const createLogsSlice = (set2, get, _store) => {
             } catch (e) {
               console.log(e);
               if (useProgress) {
-                get().appActions.setLoading(false, e);
+                get2().appActions.setLoading(false, e);
               }
               return;
             }
           };
-          if (!logDir2 || get().app.singleFileMode) {
+          if (!logDir2 || get2().app.singleFileMode) {
             if (useProgress) {
-              get().appActions.setLoading(false);
+              get2().appActions.setLoading(false);
             }
             return [];
           }
@@ -28762,16 +28762,16 @@ const createLogsSlice = (set2, get, _store) => {
           if (!databaseService2) {
             throw new Error("Database service not available");
           }
-          await get().replicationService?.startReplication(
+          await get2().replicationService?.startReplication(
             databaseService2,
             api2,
             {
               setLogHandles: (logs) => {
-                const state = get();
+                const state = get2();
                 state.logsActions.setLogHandles(logs);
               },
               getSelectedLog: () => {
-                const state = get();
+                const state = get2();
                 if (!state.logs.selectedLogFile) {
                   return void 0;
                 }
@@ -28780,28 +28780,28 @@ const createLogsSlice = (set2, get, _store) => {
                 });
               },
               setSelectedLogFile: (logFile) => {
-                const state = get();
+                const state = get2();
                 state.logsActions.setSelectedLogFile(logFile);
               },
               updateLogPreviews: (previews) => {
-                const state = get();
+                const state = get2();
                 state.logsActions.updateLogPreviews(previews);
               },
               updateLogDetails: (details) => {
-                const state = get();
+                const state = get2();
                 state.logsActions.updateLogDetails(details);
               },
               setLoading(loading) {
-                const state = get();
+                const state = get2();
                 state.appActions.setLoading(loading);
               },
               setBackgroundSyncing(syncing) {
-                set2((state) => {
+                set3((state) => {
                   state.app.status.syncing = syncing;
                 });
               },
               setDbStats(stats) {
-                set2((state) => {
+                set3((state) => {
                   state.logs.dbStats = stats;
                 });
               }
@@ -28809,30 +28809,30 @@ const createLogsSlice = (set2, get, _store) => {
           );
         }
         if (useProgress) {
-          get().appActions.setLoading(false);
+          get2().appActions.setLoading(false);
         }
-        return await get().replicationService?.sync(initDatabase) || [];
+        return await get2().replicationService?.sync(initDatabase) || [];
       },
       syncEvalSetInfo: async (logPath) => {
-        const api2 = get().api;
+        const api2 = get2().api;
         if (!api2) {
           console.error("API not initialized in LogsStore");
           return void 0;
         }
         const info = await api2.get_eval_set(logPath);
-        set2((state) => {
+        set3((state) => {
           state.logs.evalSet = info;
         });
       },
       updateFlowData: (flowPath, flowData) => {
-        set2((state) => {
+        set3((state) => {
           state.logs.flowDir = flowPath;
           state.logs.flow = flowData;
         });
       },
       // Select a specific log file
       setSelectedLogFile: async (logFile) => {
-        const state = get();
+        const state = get2();
         const isInFileList = state.logs.logs.findIndex(
           (val) => val.name.endsWith(logFile)
         ) !== -1;
@@ -28849,53 +28849,53 @@ const createLogsSlice = (set2, get, _store) => {
             state.logsActions.setLogHandles([{ name: logFile }]);
           }
         }
-        set2((state2) => {
+        set3((state2) => {
           const absoluteLogfile = isUri(logFile) ? logFile : join(logFile, state2.logs.logDir);
           state2.logs.selectedLogFile = absoluteLogfile;
         });
       },
       setFilteredCount: (count) => {
-        set2((state) => {
+        set3((state) => {
           state.logs.listing.filteredCount = count;
         });
       },
       setWatchedLogs: (logs) => {
-        set2((state) => {
+        set3((state) => {
           state.logs.listing.watchedLogs = logs;
         });
       },
       clearWatchedLogs: () => {
-        set2((state) => {
+        set3((state) => {
           state.logs.listing.watchedLogs = void 0;
         });
       },
       setSelectedRowIndex: (index) => {
-        set2((state) => {
+        set3((state) => {
           state.logs.listing.selectedRowIndex = index;
         });
       },
       setLogsGridState: (gridState) => {
-        set2((state) => {
+        set3((state) => {
           state.logs.listing.gridState = gridState;
         });
       },
       clearLogsGridState: () => {
-        set2((state) => {
+        set3((state) => {
           state.logs.listing.gridState = void 0;
         });
       },
       setPreviousLogsPath: (path) => {
-        set2((state) => {
+        set3((state) => {
           state.logs.listing.previousLogPath = path;
         });
       },
       setLogsColumnVisibility: (visibility) => {
-        set2((state) => {
+        set3((state) => {
           state.logs.listing.columnVisibility = visibility;
         });
       },
       clearSelectedLogFile: () => {
-        set2((state) => {
+        set3((state) => {
           state.logs.selectedLogFile = void 0;
         });
       },
@@ -28903,7 +28903,7 @@ const createLogsSlice = (set2, get, _store) => {
       getAllCachedSamples: async () => {
         try {
           log$8.debug("LOADING ALL CACHED SAMPLES");
-          const dbService = get().databaseService;
+          const dbService = get2().databaseService;
           if (!dbService) {
             throw new Error("Database service not initialized");
           }
@@ -28918,7 +28918,7 @@ const createLogsSlice = (set2, get, _store) => {
       queryCachedSamples: async (filter) => {
         try {
           log$8.debug("QUERYING CACHED SAMPLES", filter);
-          const dbService = get().databaseService;
+          const dbService = get2().databaseService;
           if (!dbService) {
             throw new Error("Database service not initialized");
           }
@@ -28931,7 +28931,7 @@ const createLogsSlice = (set2, get, _store) => {
         }
       },
       setShowRetriedLogs: (showRetriedLogs) => {
-        set2((state) => {
+        set3((state) => {
           state.logs.showRetriedLogs = showRetriedLogs;
         });
       }
@@ -28941,8 +28941,8 @@ const createLogsSlice = (set2, get, _store) => {
   };
   return [slice, cleanup];
 };
-const initializeLogsSlice = (set2) => {
-  set2((state) => {
+const initializeLogsSlice = (set3) => {
+  set3((state) => {
     if (!state.logs) {
       state.logs = initialState$1;
     }
@@ -29008,7 +29008,7 @@ const resolveAttachments = (value2, attachments, onFailedResolve) => {
   }
   return value2;
 };
-const resolveSample$2 = (sample2) => {
+const resolveSample$1 = (sample2) => {
   sample2 = { ...sample2 };
   if (sample2.transcript) {
     sample2.events = sample2.transcript.events;
@@ -29088,7 +29088,7 @@ function createSamplePolling(store) {
               summary2.epoch
             );
             if (sample2) {
-              const migratedSample = resolveSample$2(sample2);
+              const migratedSample = resolveSample$1(sample2);
               sampleActions.setSelectedSample(migratedSample, logFile);
               sampleActions.setSampleStatus("ok");
               sampleActions.setRunningEvents([]);
@@ -29410,14 +29410,14 @@ const initialState = {
   collapsedIdBuckets: {},
   selectedOutlineId: void 0
 };
-const createSampleSlice = (set2, get, _store) => {
+const createSampleSlice = (set3, get2, _store) => {
   const slice = {
     // Actions
     sample: initialState,
     sampleActions: {
       setSelectedSample: (sample2, logFile) => {
         const isLarge = isLargeSample(sample2);
-        set2((state) => {
+        set3((state) => {
           state.sample.sample_identifier = {
             id: sample2.id,
             epoch: sample2.epoch,
@@ -29433,17 +29433,17 @@ const createSampleSlice = (set2, get, _store) => {
           }
         });
         if (sample2.events.length < 1) {
-          get().appActions.setSampleTab(kSampleMessagesTabId);
+          get2().appActions.setSampleTab(kSampleMessagesTabId);
         }
       },
       getSelectedSample: () => {
-        const state = get().sample;
+        const state = get2().sample;
         return state.sampleInState ? state.selectedSampleObject : selectedSampleRef.current;
       },
       clearSelectedSample: () => {
         getSamplePolling().stopPolling();
         selectedSampleRef.current = void 0;
-        set2((state) => {
+        set3((state) => {
           state.sample.sample_identifier = void 0;
           state.sample.selectedSampleObject = void 0;
           state.sample.sampleInState = false;
@@ -29452,14 +29452,14 @@ const createSampleSlice = (set2, get, _store) => {
           state.log.selectedSampleHandle = void 0;
         });
       },
-      setSampleStatus: (status2) => set2((state) => {
+      setSampleStatus: (status2) => set3((state) => {
         state.sample.sampleStatus = status2;
       }),
-      setSampleError: (error2) => set2((state) => {
+      setSampleError: (error2) => set3((state) => {
         state.sample.sampleError = error2;
       }),
       setCollapsedEvents: (scope, collapsed2) => {
-        set2((state) => {
+        set3((state) => {
           if (state.sample.collapsedEvents === null) {
             state.sample.collapsedEvents = {};
           }
@@ -29467,7 +29467,7 @@ const createSampleSlice = (set2, get, _store) => {
         });
       },
       clearCollapsedEvents: () => {
-        set2((state) => {
+        set3((state) => {
           if (state.sample.collapsedEvents !== null) {
             state.sample.collapsedEvents = null;
           }
@@ -29475,7 +29475,7 @@ const createSampleSlice = (set2, get, _store) => {
         });
       },
       collapseEvent: (scope, id, collapsed2) => {
-        set2((state) => {
+        set3((state) => {
           if (state.sample.collapsedEvents === null) {
             state.sample.collapsedEvents = {};
           }
@@ -29490,12 +29490,12 @@ const createSampleSlice = (set2, get, _store) => {
         });
       },
       setCollapsedIds: (key2, collapsed2) => {
-        set2((state) => {
+        set3((state) => {
           state.sample.collapsedIdBuckets[key2] = collapsed2;
         });
       },
       collapseId: (key2, id, collapsed2) => {
-        set2((state) => {
+        set3((state) => {
           if (state.sample.collapsedIdBuckets[key2] === void 0) {
             state.sample.collapsedIdBuckets[key2] = {};
           }
@@ -29507,43 +29507,43 @@ const createSampleSlice = (set2, get, _store) => {
         });
       },
       clearCollapsedIds: (key2) => {
-        set2((state) => {
+        set3((state) => {
           delete state.sample.collapsedIdBuckets[key2];
         });
       },
       setCollapsedMode: (mode) => {
-        set2((state) => {
+        set3((state) => {
           state.sample.collapsedMode = mode;
         });
       },
       setFilteredEventTypes: (types2) => {
-        set2((state) => {
+        set3((state) => {
           state.sample.eventFilter.filteredTypes = types2;
         });
       },
       setVisiblePopover: (id) => {
-        set2((state) => {
+        set3((state) => {
           state.sample.visiblePopover = id;
         });
       },
       clearVisiblePopover: () => {
-        set2((state) => {
+        set3((state) => {
           state.sample.visiblePopover = void 0;
         });
       },
       setSelectedOutlineId: (id) => {
-        set2((state) => {
+        set3((state) => {
           state.sample.selectedOutlineId = id;
         });
       },
       clearSelectedOutlineId: () => {
-        set2((state) => {
+        set3((state) => {
           state.sample.selectedOutlineId = void 0;
         });
       },
       clearSampleForPolling: (logFile, id, epoch) => {
         selectedSampleRef.current = void 0;
-        set2((state) => {
+        set3((state) => {
           state.sample.selectedSampleObject = void 0;
           state.sample.sampleInState = false;
           state.sample.runningEvents = [];
@@ -29555,12 +29555,12 @@ const createSampleSlice = (set2, get, _store) => {
         });
       },
       setSampleIdentifier: (logFile, id, epoch) => {
-        set2((state) => {
+        set3((state) => {
           state.sample.sample_identifier = { id, epoch, logFile };
         });
       },
       setRunningEvents: (events) => {
-        set2((state) => {
+        set3((state) => {
           state.sample.runningEvents = events;
         });
       }
@@ -29577,8 +29577,8 @@ const handleRehydrate = (state) => {
     state.sample.sampleNeedsReload = state.sample.sampleNeedsReload + 1;
   }
 };
-const initializeSampleSlice = (set2) => {
-  set2((state) => {
+const initializeSampleSlice = (set3) => {
+  set3((state) => {
     if (!state.sample) {
       state.sample = initialState;
     }
@@ -30096,22 +30096,22 @@ const initializeStore = (api2, capabilities2, storage2) => {
   const store = create$2()(
     devtools(
       persist(
-        immer((set2, get, store2) => {
+        immer((set3, get2, store2) => {
           const [appSlice, appCleanup] = createAppSlice(
-            set2,
-            get
+            set3,
+            get2
           );
           const [logsSlice, logsCleanup] = createLogsSlice(
-            set2,
-            get
+            set3,
+            get2
           );
           const [logSlice, logCleanup] = createLogSlice(
-            set2,
-            get
+            set3,
+            get2
           );
           const [sampleSlice, sampleCleanup] = createSampleSlice(
-            set2,
-            get
+            set3,
+            get2
           );
           const databaseService = createDatabaseService();
           const replicationService = new ReplicationService();
@@ -30122,23 +30122,23 @@ const initializeStore = (api2, capabilities2, storage2) => {
             replicationService,
             // Initialize
             initialize: (api22, capabilities22) => {
-              set2((state) => {
+              set3((state) => {
                 state.api = api22;
                 state.databaseService = databaseService;
                 state.replicationService = replicationService;
               });
               initializeAppSlice(
-                set2,
+                set3,
                 capabilities22
               );
               initializeLogsSlice(
-                set2
+                set3
               );
               initalializeLogSlice(
-                set2
+                set3
               );
               initializeSampleSlice(
-                set2
+                set3
               );
             },
             // Create the slices and merge them in
@@ -41667,7 +41667,7 @@ LinkifyIt.prototype.add = function add(schema, definition) {
   compile$2(this);
   return this;
 };
-LinkifyIt.prototype.set = function set(options2) {
+LinkifyIt.prototype.set = function set2(options2) {
   this.__opts__ = assign(this.__opts__, options2);
   return this;
 };
@@ -104800,23 +104800,23 @@ function requireTraversing() {
   });
   function closest(selector2) {
     var _this = this;
-    var set2 = [];
+    var set3 = [];
     if (!selector2) {
-      return this._make(set2);
+      return this._make(set3);
     }
     utils_1.domEach(this, function(elem) {
       var _a2;
       while (elem && elem.type !== "root") {
         if (!selector2 || filterArray([elem], selector2, _this.options.xmlMode, (_a2 = _this._root) === null || _a2 === void 0 ? void 0 : _a2[0]).length) {
-          if (elem && !set2.includes(elem)) {
-            set2.push(elem);
+          if (elem && !set3.includes(elem)) {
+            set3.push(elem);
           }
           break;
         }
         elem = elem.parent;
       }
     });
-    return this._make(set2);
+    return this._make(set3);
   }
   traversing.closest = closest;
   traversing.next = _singleMatcher(function(elem) {
@@ -104957,13 +104957,13 @@ function requireTraversing() {
     return this._make((_a2 = this[i]) !== null && _a2 !== void 0 ? _a2 : []);
   }
   traversing.eq = eq;
-  function get(i) {
+  function get2(i) {
     if (i == null) {
       return this.toArray();
     }
     return this[i < 0 ? this.length + i : i];
   }
-  traversing.get = get;
+  traversing.get = get2;
   function toArray2() {
     return Array.prototype.slice.call(this);
   }
@@ -115731,7 +115731,7 @@ function compileExpression(expression, options2) {
     throw new UnknownPropertyError(name2);
   }
   function safeGetter(obj) {
-    return function get(name2) {
+    return function get2(name2) {
       if (hasOwnProperty(obj ?? {}, name2)) return obj[name2];
       throw new UnknownPropertyError(name2);
     };
@@ -115947,9 +115947,9 @@ const filterExpression = (evalDescriptor, sample2, filterValue) => {
       ...mySampleVariables,
       ...scoreVariables(evalDescriptor, sample2.scores)
     };
-    const resolveVariable = (name2, get) => {
+    const resolveVariable = (name2, get2) => {
       if (name2 in mySampleVariables) {
-        const value2 = get(name2);
+        const value2 = get2(name2);
         return value2;
       }
       if (name2.startsWith(kSampleMetadataPrefix)) {
@@ -115957,7 +115957,7 @@ const filterExpression = (evalDescriptor, sample2, filterValue) => {
         const metadata2 = sample2.metadata || {};
         return getNestedPropertyValue(metadata2, propertyPath);
       }
-      return sample2.error ? void 0 : get(name2);
+      return sample2.error ? void 0 : get2(name2);
     };
     const expression = compileExpression(filterValue, {
       extraFunctions,
@@ -116449,11 +116449,11 @@ const useCollapseSampleEvent = (scope, id) => {
   const collapseEvent = useStore((state) => state.sampleActions.collapseEvent);
   return reactExports.useMemo(() => {
     const isCollapsed = collapsed2 !== null && collapsed2[scope]?.[id] === true;
-    const set2 = (value2) => {
+    const set3 = (value2) => {
       log$3.debug("Set collapsed", id, value2);
       collapseEvent(scope, id, value2);
     };
-    return [isCollapsed, set2];
+    return [isCollapsed, set3];
   }, [collapsed2, scope, id, collapseEvent]);
 };
 const useCollapsibleIds = (key2) => {
@@ -116484,11 +116484,11 @@ const useCollapsedState = (id, defaultValue, scope) => {
   );
   const setCollapsed = useStore((state) => state.appActions.setCollapsed);
   return reactExports.useMemo(() => {
-    const set2 = (value2) => {
+    const set3 = (value2) => {
       log$3.debug("Set collapsed", id, scope, value2);
       setCollapsed(stateId, value2);
     };
-    return [collapsed2, set2];
+    return [collapsed2, set3];
   }, [collapsed2, id, scope, setCollapsed, stateId]);
 };
 const useMessageVisibility = (id, scope) => {
@@ -116523,11 +116523,11 @@ const useMessageVisibility = (id, scope) => {
   }, [selectedSampleHandle, clearVisible, id, scope]);
   return reactExports.useMemo(() => {
     log$3.debug("visibility", id, visible2);
-    const set2 = (visible22) => {
+    const set3 = (visible22) => {
       log$3.debug("set visiblity", id);
       setVisible(id, visible22);
     };
-    return [visible2, set2];
+    return [visible2, set3];
   }, [visible2, setVisible, id]);
 };
 function useProperty(id, propertyName2, options2) {
@@ -116965,7 +116965,7 @@ function isShadowRoot(node2) {
   var OwnElement = getWindow(node2).ShadowRoot;
   return node2 instanceof OwnElement || node2 instanceof ShadowRoot;
 }
-function applyStyles$1(_ref) {
+function applyStyles(_ref) {
   var state = _ref.state;
   Object.keys(state.elements).forEach(function(name2) {
     var style2 = state.styles[name2] || {};
@@ -117023,11 +117023,11 @@ function effect$2(_ref2) {
     });
   };
 }
-const applyStyles = {
+const applyStyles$1 = {
   name: "applyStyles",
   enabled: true,
   phase: "write",
-  fn: applyStyles$1,
+  fn: applyStyles,
   effect: effect$2,
   requires: ["computeStyles"]
 };
@@ -117213,7 +117213,7 @@ var toPaddingObject = function toPaddingObject2(padding, state) {
   })) : padding;
   return mergePaddingObject(typeof padding !== "number" ? padding : expandToHashMap(padding, basePlacements));
 };
-function arrow$1(_ref) {
+function arrow(_ref) {
   var _state$modifiersData$;
   var state = _ref.state, name2 = _ref.name, options2 = _ref.options;
   var arrowElement = state.elements.arrow;
@@ -117258,11 +117258,11 @@ function effect$1(_ref2) {
   }
   state.elements.arrow = arrowElement;
 }
-const arrow = {
+const arrow$1 = {
   name: "arrow",
   enabled: true,
   phase: "main",
-  fn: arrow$1,
+  fn: arrow,
   effect: effect$1,
   requires: ["popperOffsets"],
   requiresIfExists: ["preventOverflow"]
@@ -117351,7 +117351,7 @@ function mapToStyles(_ref2) {
   }
   return Object.assign({}, commonStyles, (_Object$assign2 = {}, _Object$assign2[sideY] = hasY ? y + "px" : "", _Object$assign2[sideX] = hasX ? x + "px" : "", _Object$assign2.transform = "", _Object$assign2));
 }
-function computeStyles$1(_ref5) {
+function computeStyles(_ref5) {
   var state = _ref5.state, options2 = _ref5.options;
   var _options$gpuAccelerat = options2.gpuAcceleration, gpuAcceleration = _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat, _options$adaptive = options2.adaptive, adaptive = _options$adaptive === void 0 ? true : _options$adaptive, _options$roundOffsets = options2.roundOffsets, roundOffsets = _options$roundOffsets === void 0 ? true : _options$roundOffsets;
   var commonStyles = {
@@ -117382,11 +117382,11 @@ function computeStyles$1(_ref5) {
     "data-popper-placement": state.placement
   });
 }
-const computeStyles = {
+const computeStyles$1 = {
   name: "computeStyles",
   enabled: true,
   phase: "beforeWrite",
-  fn: computeStyles$1,
+  fn: computeStyles,
   data: {}
 };
 var passive = {
@@ -117702,7 +117702,7 @@ function getExpandedFallbackPlacements(placement) {
   var oppositePlacement = getOppositePlacement(placement);
   return [getOppositeVariationPlacement(placement), oppositePlacement, getOppositeVariationPlacement(oppositePlacement)];
 }
-function flip$1(_ref) {
+function flip(_ref) {
   var state = _ref.state, options2 = _ref.options, name2 = _ref.name;
   if (state.modifiersData[name2]._skip) {
     return;
@@ -117788,11 +117788,11 @@ function flip$1(_ref) {
     state.reset = true;
   }
 }
-const flip = {
+const flip$1 = {
   name: "flip",
   enabled: true,
   phase: "main",
-  fn: flip$1,
+  fn: flip,
   requiresIfExists: ["offset"],
   data: {
     _skip: false
@@ -117817,7 +117817,7 @@ function isAnySideFullyClipped(overflow) {
     return overflow[side] >= 0;
   });
 }
-function hide$1(_ref) {
+function hide(_ref) {
   var state = _ref.state, name2 = _ref.name;
   var referenceRect = state.rects.reference;
   var popperRect = state.rects.popper;
@@ -117843,12 +117843,12 @@ function hide$1(_ref) {
     "data-popper-escaped": hasPopperEscaped
   });
 }
-const hide = {
+const hide$1 = {
   name: "hide",
   enabled: true,
   phase: "main",
   requiresIfExists: ["preventOverflow"],
-  fn: hide$1
+  fn: hide
 };
 function distanceAndSkiddingToXY(placement, rects, offset2) {
   var basePlacement = getBasePlacement(placement);
@@ -117866,7 +117866,7 @@ function distanceAndSkiddingToXY(placement, rects, offset2) {
     y: distance
   };
 }
-function offset$1(_ref2) {
+function offset(_ref2) {
   var state = _ref2.state, options2 = _ref2.options, name2 = _ref2.name;
   var _options$offset = options2.offset, offset2 = _options$offset === void 0 ? [0, 0] : _options$offset;
   var data = placements.reduce(function(acc, placement) {
@@ -117880,14 +117880,14 @@ function offset$1(_ref2) {
   }
   state.modifiersData[name2] = data;
 }
-const offset = {
+const offset$1 = {
   name: "offset",
   enabled: true,
   phase: "main",
   requires: ["popperOffsets"],
-  fn: offset$1
+  fn: offset
 };
-function popperOffsets$1(_ref) {
+function popperOffsets(_ref) {
   var state = _ref.state, name2 = _ref.name;
   state.modifiersData[name2] = computeOffsets({
     reference: state.rects.reference,
@@ -117895,17 +117895,17 @@ function popperOffsets$1(_ref) {
     placement: state.placement
   });
 }
-const popperOffsets = {
+const popperOffsets$1 = {
   name: "popperOffsets",
   enabled: true,
   phase: "read",
-  fn: popperOffsets$1,
+  fn: popperOffsets,
   data: {}
 };
 function getAltAxis(axis) {
   return axis === "x" ? "y" : "x";
 }
-function preventOverflow$1(_ref) {
+function preventOverflow(_ref) {
   var state = _ref.state, options2 = _ref.options, name2 = _ref.name;
   var _options$mainAxis = options2.mainAxis, checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis, _options$altAxis = options2.altAxis, checkAltAxis = _options$altAxis === void 0 ? false : _options$altAxis, boundary = options2.boundary, rootBoundary = options2.rootBoundary, altBoundary = options2.altBoundary, padding = options2.padding, _options$tether = options2.tether, tether = _options$tether === void 0 ? true : _options$tether, _options$tetherOffset = options2.tetherOffset, tetherOffset = _options$tetherOffset === void 0 ? 0 : _options$tetherOffset;
   var overflow = detectOverflow(state, {
@@ -117989,11 +117989,11 @@ function preventOverflow$1(_ref) {
   }
   state.modifiersData[name2] = data;
 }
-const preventOverflow = {
+const preventOverflow$1 = {
   name: "preventOverflow",
   enabled: true,
   phase: "main",
-  fn: preventOverflow$1,
+  fn: preventOverflow,
   requiresIfExists: ["offset"]
 };
 function getHTMLElementScroll(element) {
@@ -118251,7 +118251,7 @@ function popperGenerator(generatorOptions) {
     return instance2;
   };
 }
-var defaultModifiers = [eventListeners, popperOffsets, computeStyles, applyStyles, offset, flip, preventOverflow, arrow, hide];
+var defaultModifiers = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$1, offset$1, flip$1, preventOverflow$1, arrow$1, hide$1];
 var createPopper = /* @__PURE__ */ popperGenerator({
   defaultModifiers
 });
@@ -118849,7 +118849,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.fullWidth, styles$1j.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1j.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.170-9-gbcf09a3c5" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.170-32-gf37f64459" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.spacer) }),
@@ -135993,14 +135993,14 @@ function _destroyRowNodeSibling(rowNode) {
     mainNode.rowPinned = null;
   }
 }
-function removeGroupRows(set2) {
+function removeGroupRows(set3) {
   const rowsToRemove = /* @__PURE__ */ new Set();
-  set2.forEach((node2) => {
+  set3.forEach((node2) => {
     if (node2.group) {
       rowsToRemove.add(node2);
     }
   });
-  rowsToRemove.forEach((node2) => set2.delete(node2));
+  rowsToRemove.forEach((node2) => set3.delete(node2));
 }
 function getSpannedRows(beans, rowNode, column2) {
   const { rowSpanSvc } = beans;
@@ -141511,8 +141511,8 @@ var ColumnResizeService = class extends BeanStub {
     }
     const changedCols = [];
     const allResizedCols = [];
-    for (const set2 of resizeSets) {
-      const { width, columns, ratios } = set2;
+    for (const set3 of resizeSets) {
+      const { width, columns, ratios } = set3;
       const newWidths = {};
       const finishedCols = {};
       for (const col of columns) {
@@ -173251,11 +173251,11 @@ var ApiEventService = class extends BeanStub {
     });
     map2.clear();
   }
-  destroyGlobalListeners(set2, async) {
-    for (const listener of set2) {
+  destroyGlobalListeners(set3, async) {
+    for (const listener of set3) {
       this.eventSvc.removeGlobalListener(listener, async);
     }
-    set2.clear();
+    set3.clear();
   }
   destroy() {
     super.destroy();
@@ -179767,7 +179767,7 @@ const kMaxCellTextLength = 256;
 function isEvalSample(sample2) {
   return "store" in sample2;
 }
-const resolveSample$1 = (sample2, sampleDescriptor) => {
+const resolveSample = (sample2, sampleDescriptor) => {
   const input2 = inputString(sample2.input);
   if (isEvalSample(sample2) && sample2.choices && sample2.choices.length > 0) {
     input2.push("");
@@ -179805,7 +179805,7 @@ const SampleSummaryView = ({
   if (!sampleDescriptor) {
     return void 0;
   }
-  const fields = resolveSample$1(sample2, sampleDescriptor);
+  const fields = resolveSample(sample2, sampleDescriptor);
   const limitSize = sampleDescriptor?.messageShape.normalized.limit > 0 ? Math.max(0.15, sampleDescriptor.messageShape.normalized.limit) : 0;
   const retrySize = sampleDescriptor?.messageShape.normalized.retries > 0 ? 6 : 0;
   const idSize = Math.max(
@@ -182782,13 +182782,13 @@ const backtrack = (matrix, array1, array2, context) => {
   }
   return subsequence;
 };
-const get$1 = (array1, array2, match2, context) => {
+const get = (array1, array2, match2, context) => {
   const innerContext = context || {};
   const matrix = lengthMatrix(array1, array2, match2 || defaultMatch, innerContext);
   return backtrack(matrix, array1, array2, innerContext);
 };
 const lcs = {
-  get: get$1
+  get
 };
 const ARRAY_MOVE = 3;
 function arraysHaveMatchByRef(array1, array2, len1, len2) {
@@ -187659,8 +187659,8 @@ function mapArray(list2, mapFn, options2 = {}) {
     function mapper(disposer) {
       disposers[j] = disposer;
       if (indexes) {
-        const [s, set2] = createSignal(j);
-        indexes[j] = set2;
+        const [s, set3] = createSignal(j);
+        indexes[j] = set3;
         return mapFn(newItems[j], s);
       }
       return mapFn(newItems[j]);
@@ -188056,26 +188056,26 @@ function isWrappable(obj) {
   let proto;
   return obj != null && typeof obj === "object" && (obj[$PROXY] || !(proto = Object.getPrototypeOf(obj)) || proto === Object.prototype || Array.isArray(obj));
 }
-function unwrap(item2, set2 = /* @__PURE__ */ new Set()) {
+function unwrap(item2, set3 = /* @__PURE__ */ new Set()) {
   let result2, unwrapped, v, prop2;
   if (result2 = item2 != null && item2[$RAW]) return result2;
-  if (!isWrappable(item2) || set2.has(item2)) return item2;
+  if (!isWrappable(item2) || set3.has(item2)) return item2;
   if (Array.isArray(item2)) {
     if (Object.isFrozen(item2)) item2 = item2.slice(0);
-    else set2.add(item2);
+    else set3.add(item2);
     for (let i = 0, l = item2.length; i < l; i++) {
       v = item2[i];
-      if ((unwrapped = unwrap(v, set2)) !== v) item2[i] = unwrapped;
+      if ((unwrapped = unwrap(v, set3)) !== v) item2[i] = unwrapped;
     }
   } else {
     if (Object.isFrozen(item2)) item2 = Object.assign({}, item2);
-    else set2.add(item2);
+    else set3.add(item2);
     const keys = Object.keys(item2), desc = Object.getOwnPropertyDescriptors(item2);
     for (let i = 0, l = keys.length; i < l; i++) {
       prop2 = keys[i];
       if (desc[prop2].get) continue;
       v = item2[prop2];
-      if ((unwrapped = unwrap(v, set2)) !== v) item2[prop2] = unwrapped;
+      if ((unwrapped = unwrap(v, set3)) !== v) item2[prop2] = unwrapped;
     }
   }
   return item2;
@@ -188090,11 +188090,11 @@ function getNodes(target2, symbol) {
 }
 function getNode(nodes, property2, value2) {
   if (nodes[property2]) return nodes[property2];
-  const [s, set2] = createSignal(value2, {
+  const [s, set3] = createSignal(value2, {
     equals: false,
     internal: true
   });
-  s.$ = set2;
+  s.$ = set3;
   return nodes[property2] = s;
 }
 function proxyDescriptor$1(target2, property2) {
@@ -193400,7 +193400,7 @@ function useLoadSample() {
             if (currentId?.id !== sample2.id || currentId?.epoch !== sample2.epoch || currentId?.logFile !== logFile) {
               sampleActions.clearCollapsedEvents();
             }
-            const migratedSample = resolveSample$2(sample2);
+            const migratedSample = resolveSample$1(sample2);
             sampleActions.setSelectedSample(migratedSample, logFile);
             sampleActions.setSampleStatus("ok");
           } else {
@@ -194743,8 +194743,8 @@ class ChangeSet extends ChangeDesc {
         return;
       if (pos2 < length)
         addSection(sections, length - pos2, -1);
-      let set2 = new ChangeSet(sections, inserted);
-      total = total ? total.compose(set2.map(total)) : set2;
+      let set3 = new ChangeSet(sections, inserted);
+      total = total ? total.compose(set3.map(total)) : set3;
       sections = [];
       inserted = [];
       pos2 = 0;
@@ -194961,8 +194961,8 @@ function composeSets(setA, setB, mkSet = false) {
   }
 }
 class SectionIter {
-  constructor(set2) {
-    this.set = set2;
+  constructor(set3) {
+    this.set = set3;
     this.i = 0;
     this.next();
   }
@@ -195285,24 +195285,24 @@ class Facet {
   In cases where your value depends only on a single field, you'll
   want to use the [`from`](https://codemirror.net/6/docs/ref/#state.Facet.from) method instead.
   */
-  compute(deps, get) {
+  compute(deps, get2) {
     if (this.isStatic)
       throw new Error("Can't compute a static facet");
-    return new FacetProvider(deps, this, 1, get);
+    return new FacetProvider(deps, this, 1, get2);
   }
   /**
   Create an extension that computes zero or more values for this
   facet from a state.
   */
-  computeN(deps, get) {
+  computeN(deps, get2) {
     if (this.isStatic)
       throw new Error("Can't compute a static facet");
-    return new FacetProvider(deps, this, 2, get);
+    return new FacetProvider(deps, this, 2, get2);
   }
-  from(field, get) {
-    if (!get)
-      get = (x) => x;
-    return this.compute([field], (state) => get(state.field(field)));
+  from(field, get2) {
+    if (!get2)
+      get2 = (x) => x;
+    return this.compute([field], (state) => get2(state.field(field)));
   }
 }
 function sameArray$1(a, b) {
@@ -195384,7 +195384,7 @@ function dynamicFacetSlot(addresses, facet, providers) {
   let providerTypes = providers.map((p) => p.type);
   let dynamic = providerAddrs.filter((p) => !(p & 1));
   let idx = addresses[facet.id] >> 1;
-  function get(state) {
+  function get2(state) {
     let values = [];
     for (let i = 0; i < providerAddrs.length; i++) {
       let value2 = getAddr(state, providerAddrs[i]);
@@ -195400,13 +195400,13 @@ function dynamicFacetSlot(addresses, facet, providers) {
     create(state) {
       for (let addr of providerAddrs)
         ensureAddr(state, addr);
-      state.values[idx] = get(state);
+      state.values[idx] = get2(state);
       return 1;
     },
     update(state, tr2) {
       if (!ensureAll(state, dynamic))
         return 0;
-      let value2 = get(state);
+      let value2 = get2(state);
       if (facet.compare(value2, state.values[idx]))
         return 0;
       state.values[idx] = value2;
@@ -195419,7 +195419,7 @@ function dynamicFacetSlot(addresses, facet, providers) {
         state.values[idx] = oldValue;
         return 0;
       }
-      let value2 = get(state);
+      let value2 = get2(state);
       if (facet.compare(value2, oldValue)) {
         state.values[idx] = oldValue;
         return 0;
@@ -196638,8 +196638,8 @@ class RangeSet {
   to notify it of possible differences.
   */
   static compare(oldSets, newSets, textDiff, comparator, minPointSize = -1) {
-    let a = oldSets.filter((set2) => set2.maxPoint > 0 || !set2.isEmpty && set2.maxPoint >= minPointSize);
-    let b = newSets.filter((set2) => set2.maxPoint > 0 || !set2.isEmpty && set2.maxPoint >= minPointSize);
+    let a = oldSets.filter((set3) => set3.maxPoint > 0 || !set3.isEmpty && set3.maxPoint >= minPointSize);
+    let b = newSets.filter((set3) => set3.maxPoint > 0 || !set3.isEmpty && set3.maxPoint >= minPointSize);
     let sharedChunks = findSharedChunks(a, b, textDiff);
     let sideA = new SpanCursor(a, sharedChunks, minPointSize);
     let sideB = new SpanCursor(b, sharedChunks, minPointSize);
@@ -196654,8 +196654,8 @@ class RangeSet {
   static eq(oldSets, newSets, from = 0, to2) {
     if (to2 == null)
       to2 = 1e9 - 1;
-    let a = oldSets.filter((set2) => !set2.isEmpty && newSets.indexOf(set2) < 0);
-    let b = newSets.filter((set2) => !set2.isEmpty && oldSets.indexOf(set2) < 0);
+    let a = oldSets.filter((set3) => !set3.isEmpty && newSets.indexOf(set3) < 0);
+    let b = newSets.filter((set3) => !set3.isEmpty && oldSets.indexOf(set3) < 0);
     if (a.length != b.length)
       return false;
     if (!a.length)
@@ -196837,16 +196837,16 @@ class RangeSetBuilder {
 }
 function findSharedChunks(a, b, textDiff) {
   let inA = /* @__PURE__ */ new Map();
-  for (let set2 of a)
-    for (let i = 0; i < set2.chunk.length; i++)
-      if (set2.chunk[i].maxPoint <= 0)
-        inA.set(set2.chunk[i], set2.chunkPos[i]);
+  for (let set3 of a)
+    for (let i = 0; i < set3.chunk.length; i++)
+      if (set3.chunk[i].maxPoint <= 0)
+        inA.set(set3.chunk[i], set3.chunkPos[i]);
   let shared = /* @__PURE__ */ new Set();
-  for (let set2 of b)
-    for (let i = 0; i < set2.chunk.length; i++) {
-      let known = inA.get(set2.chunk[i]);
-      if (known != null && (textDiff ? textDiff.mapPos(known) : known) == set2.chunkPos[i] && !(textDiff === null || textDiff === void 0 ? void 0 : textDiff.touchesRange(known, known + set2.chunk[i].length)))
-        shared.add(set2.chunk[i]);
+  for (let set3 of b)
+    for (let i = 0; i < set3.chunk.length; i++) {
+      let known = inA.get(set3.chunk[i]);
+      if (known != null && (textDiff ? textDiff.mapPos(known) : known) == set3.chunkPos[i] && !(textDiff === null || textDiff === void 0 ? void 0 : textDiff.touchesRange(known, known + set3.chunk[i].length)))
+        shared.add(set3.chunk[i]);
     }
   return shared;
 }
@@ -197259,10 +197259,10 @@ class StyleModule {
   // If a Content Security Policy nonce is provided, it is added to
   // the `<style>` tag generated by the library.
   static mount(root2, modules, options2) {
-    let set2 = root2[SET], nonce = options2 && options2.nonce;
-    if (!set2) set2 = new StyleSet(root2, nonce);
-    else if (nonce) set2.setNonce(nonce);
-    set2.mount(Array.isArray(modules) ? modules : [modules], root2);
+    let set3 = root2[SET], nonce = options2 && options2.nonce;
+    if (!set3) set3 = new StyleSet(root2, nonce);
+    else if (nonce) set3.setNonce(nonce);
+    set3.mount(Array.isArray(modules) ? modules : [modules], root2);
   }
 }
 let adoptedSet = /* @__PURE__ */ new Map();
@@ -198755,19 +198755,19 @@ class ChangedRange {
   join(other) {
     return new ChangedRange(Math.min(this.fromA, other.fromA), Math.max(this.toA, other.toA), Math.min(this.fromB, other.fromB), Math.max(this.toB, other.toB));
   }
-  addToSet(set2) {
-    let i = set2.length, me2 = this;
+  addToSet(set3) {
+    let i = set3.length, me2 = this;
     for (; i > 0; i--) {
-      let range2 = set2[i - 1];
+      let range2 = set3[i - 1];
       if (range2.fromA > me2.toA)
         continue;
       if (range2.toA < me2.fromA)
         break;
       me2 = me2.join(range2);
-      set2.splice(i - 1, 1);
+      set3.splice(i - 1, 1);
     }
-    set2.splice(i, 0, me2);
-    return set2;
+    set3.splice(i, 0, me2);
+    return set3;
   }
   // Extend a set to cover all the content in `ranges`, which is a
   // flat array with each pair of numbers representing fromB/toB
@@ -200859,8 +200859,8 @@ function moveVertically(view, start2, forward, distance) {
 function skipAtomicRanges(atoms, pos2, bias) {
   for (; ; ) {
     let moved = 0;
-    for (let set2 of atoms) {
-      set2.between(pos2 - 1, pos2 + 1, (from, to2, value2) => {
+    for (let set3 of atoms) {
+      set3.between(pos2 - 1, pos2 + 1, (from, to2, value2) => {
         if (pos2 > from && pos2 < to2) {
           let side = moved || bias || (pos2 - from < to2 - pos2 ? -1 : 1);
           pos2 = side < 0 ? from : to2;
@@ -207387,10 +207387,10 @@ class TreeBuffer {
   /**
   Create a tree buffer.
   */
-  constructor(buffer2, length, set2) {
+  constructor(buffer2, length, set3) {
     this.buffer = buffer2;
     this.length = length;
-    this.set = set2;
+    this.set = set3;
   }
   /**
   @internal
@@ -208606,9 +208606,9 @@ class Tag {
   /**
   @internal
   */
-  constructor(name2, set2, base2, modified) {
+  constructor(name2, set3, base2, modified) {
     this.name = name2;
-    this.set = set2;
+    this.set = set3;
     this.base = base2;
     this.modified = modified;
     this.id = nextTagID++;
@@ -208667,14 +208667,14 @@ class Modifier {
     let exists = mods[0].instances.find((t2) => t2.base == base2 && sameArray(mods, t2.modified));
     if (exists)
       return exists;
-    let set2 = [], tag = new Tag(base2.name, set2, base2, mods);
+    let set3 = [], tag = new Tag(base2.name, set3, base2, mods);
     for (let m of mods)
       m.instances.push(tag);
     let configs = powerSet(mods);
     for (let parent of base2.set)
       if (!parent.modified.length)
         for (let config2 of configs)
-          set2.push(Modifier.get(parent, config2));
+          set3.push(Modifier.get(parent, config2));
     return tag;
   }
 }
@@ -211452,14 +211452,14 @@ class CompletionTooltip {
     this.view.requestMeasure(this.placeInfoReq);
   }
   updateSelectedOption(selected2) {
-    let set2 = null;
+    let set3 = null;
     for (let opt = this.list.firstChild, i = this.range.from; opt; opt = opt.nextSibling, i++) {
       if (opt.nodeName != "LI" || !opt.id) {
         i--;
       } else if (i == selected2) {
         if (!opt.hasAttribute("aria-selected")) {
           opt.setAttribute("aria-selected", "true");
-          set2 = opt;
+          set3 = opt;
         }
       } else {
         if (opt.hasAttribute("aria-selected")) {
@@ -211468,9 +211468,9 @@ class CompletionTooltip {
         }
       }
     }
-    if (set2)
-      scrollIntoView(this.list, set2);
-    return set2;
+    if (set3)
+      scrollIntoView(this.list, set3);
+    return set3;
   }
   measureInfo() {
     let sel = this.dom.querySelector("[aria-selected]");
@@ -212361,8 +212361,8 @@ class LintState {
         if (active[i2].to <= pos2)
           active.splice(i2--, 1);
     }
-    let set2 = deco.finish();
-    return new LintState(set2, panel2, findDiagnostic(set2));
+    let set3 = deco.finish();
+    return new LintState(set3, panel2, findDiagnostic(set3));
   }
 }
 function findDiagnostic(diagnostics, diagnostic = null, after = 0) {
