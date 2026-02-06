@@ -13552,8 +13552,8 @@ var stringify$3 = function stringify(value2, replacer, space) {
         properties = partial.join(",");
         final = "{" + properties + "}";
       } else {
-        let separator2 = ",\n" + indent;
-        properties = partial.join(separator2);
+        let separator = ",\n" + indent;
+        properties = partial.join(separator);
         final = "{\n" + indent + properties + ",\n" + stepback + "}";
       }
     }
@@ -13596,8 +13596,8 @@ var stringify$3 = function stringify(value2, replacer, space) {
         let properties = partial.join(",");
         final = "[" + properties + "]";
       } else {
-        let separator2 = ",\n" + indent;
-        let properties = partial.join(separator2);
+        let separator = ",\n" + indent;
+        let properties = partial.join(separator);
         final = "[\n" + indent + properties + ",\n" + stepback + "]";
       }
     }
@@ -29309,7 +29309,7 @@ function filterState(state) {
   if (!state) {
     return state;
   }
-  const filters2 = [filterLargeLogDetails];
+  const filters2 = [filterLargeLogDetails, filtersLogsDetails];
   return filters2.reduce(
     (filteredState, filter) => filter(filteredState),
     state
@@ -29366,6 +29366,18 @@ function filterLargeLogDetails(state) {
   } else {
     return state;
   }
+}
+function filtersLogsDetails(state) {
+  if (!state || !state.logs) {
+    return state;
+  }
+  return {
+    ...state,
+    logs: {
+      ...state.logs,
+      logDetails: {}
+    }
+  };
 }
 let selectedSampleRef = {
   current: void 0
@@ -30067,7 +30079,12 @@ const initializeStore = (api2, capabilities2, storage2) => {
     },
     setItem: debounce$2((name2, value2) => {
       if (storage2) {
-        storage2.setItem(name2, value2);
+        const wrapper2 = value2;
+        const filtered = {
+          state: filterState(wrapper2.state),
+          version: wrapper2.version
+        };
+        storage2.setItem(name2, filtered);
       }
     }, 1e3),
     removeItem: (name2) => {
@@ -30141,16 +30158,12 @@ const initializeStore = (api2, capabilities2, storage2) => {
         {
           name: "app-storage",
           storage: storageImplementation,
-          partialize: (state) => {
-            const persisted = filterState({
-              app: { ...state.app, rehydrated: true },
-              log: state.log,
-              logs: state.logs,
-              sample: state.sample
-            });
-            log$6.debug("PARTIALIZED STATE", persisted);
-            return persisted;
-          },
+          partialize: (state) => ({
+            app: { ...state.app, rehydrated: true },
+            log: state.log,
+            logs: state.logs,
+            sample: state.sample
+          }),
           version: 1,
           onRehydrateStorage: (state) => {
             return (hydrationState, error2) => {
@@ -32613,7 +32626,7 @@ const expandableCollapsed = "_expandableCollapsed_1cl3h_18";
 const moreToggle = "_moreToggle_1cl3h_22";
 const bordered$1 = "_bordered_1cl3h_32";
 const moreToggleButton = "_moreToggleButton_1cl3h_36";
-const separator$6 = "_separator_1cl3h_42";
+const separator$7 = "_separator_1cl3h_42";
 const inlineRight = "_inlineRight_1cl3h_48";
 const blockLeft = "_blockLeft_1cl3h_54";
 const styles$1K = {
@@ -32623,7 +32636,7 @@ const styles$1K = {
   moreToggle,
   bordered: bordered$1,
   moreToggleButton,
-  separator: separator$6,
+  separator: separator$7,
   inlineRight,
   blockLeft
 };
@@ -106508,11 +106521,11 @@ function requireParser() {
     }
     return this.raw;
   };
-  var replacer = function(rawMatch, separator2, combinator, combinatorChildren, tagName, id, className2, attributeKey, attributeOperator, attributeQuote, attributeValue, pseudoMarker, pseudoClass, pseudoQuote, pseudoClassQuotedValue, pseudoClassValue) {
+  var replacer = function(rawMatch, separator, combinator, combinatorChildren, tagName, id, className2, attributeKey, attributeOperator, attributeQuote, attributeValue, pseudoMarker, pseudoClass, pseudoQuote, pseudoClassQuotedValue, pseudoClassValue) {
     var expression, current2;
-    if (separator2 || !this.length) {
+    if (separator || !this.length) {
       expression = this[this.length++] = new Expression();
-      if (separator2) return "";
+      if (separator) return "";
     }
     if (!expression) expression = this[this.length - 1];
     if (combinator || combinatorChildren || !expression.length) {
@@ -124595,13 +124608,13 @@ var DATE_TIME_REGEXP = new RegExp(`^\\d{4}-\\d{2}-\\d{2}(${DATE_TIME_SEPARATOR}\
 function _padStartWidthZeros(value2, totalStringSize) {
   return value2.toString().padStart(totalStringSize, "0");
 }
-function _serialiseDate(date, includeTime = true, separator2 = DATE_TIME_SEPARATOR) {
+function _serialiseDate(date, includeTime = true, separator = DATE_TIME_SEPARATOR) {
   if (!date) {
     return null;
   }
   let serialised = [date.getFullYear(), date.getMonth() + 1, date.getDate()].map((part2) => _padStartWidthZeros(part2, 2)).join("-");
   if (includeTime) {
-    serialised += separator2 + [date.getHours(), date.getMinutes(), date.getSeconds()].map((part2) => _padStartWidthZeros(part2, 2)).join(":");
+    serialised += separator + [date.getHours(), date.getMinutes(), date.getSeconds()].map((part2) => _padStartWidthZeros(part2, 2)).join(":");
   }
   return serialised;
 }
@@ -161433,12 +161446,12 @@ var DateFilter = class extends SimpleFilter {
     const type = this.getConditionType(position);
     const model2 = {};
     const values = this.getValues(position);
-    const separator2 = this.params.useIsoSeparator ? "T" : " ";
+    const separator = this.params.useIsoSeparator ? "T" : " ";
     if (values.length > 0) {
-      model2.dateFrom = _serialiseDate(values[0], true, separator2);
+      model2.dateFrom = _serialiseDate(values[0], true, separator);
     }
     if (values.length > 1) {
-      model2.dateTo = _serialiseDate(values[1], true, separator2);
+      model2.dateTo = _serialiseDate(values[1], true, separator);
     }
     return {
       dateFrom: null,
@@ -177968,13 +177981,13 @@ const ScorerDetailView = ({
   );
 };
 const container$i = "_container_12j2k_1";
-const separator$5 = "_separator_12j2k_11";
+const separator$6 = "_separator_12j2k_11";
 const styles$15 = {
   container: container$i,
-  separator: separator$5
+  separator: separator$6
 };
 const SolversDetailView = ({ steps }) => {
-  const separator2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$15.items, "text-size-small", styles$15.separator), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.arrows.right }) });
+  const separator = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$15.items, "text-size-small", styles$15.separator), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.arrows.right }) });
   const details = steps?.map((step, index) => {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -177984,7 +177997,7 @@ const SolversDetailView = ({ steps }) => {
           className: clsx(styles$15.items, "text-size-small")
         }
       ),
-      index < steps.length - 1 ? separator2 : ""
+      index < steps.length - 1 ? separator : ""
     ] }, `solver-step-${index}`);
   });
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$15.container, children: details });
@@ -178389,14 +178402,14 @@ const wrapper$3 = "_wrapper_sq96g_1";
 const col2$2 = "_col2_sq96g_8";
 const col1_3$1 = "_col1_3_sq96g_12";
 const col3$1 = "_col3_sq96g_16";
-const separator$4 = "_separator_sq96g_20";
+const separator$5 = "_separator_sq96g_20";
 const padded$1 = "_padded_sq96g_26";
 const styles$11 = {
   wrapper: wrapper$3,
   col2: col2$2,
   col1_3: col1_3$1,
   col3: col3$1,
-  separator: separator$4,
+  separator: separator$5,
   padded: padded$1
 };
 const ModelUsagePanel = ({ usage, className: className2 }) => {
@@ -179991,14 +180004,14 @@ const SampleScores = ({ sample: sample2, scorer: scorer2 }) => {
 const container$d = "_container_kwhbh_1";
 const cell$1 = "_cell_kwhbh_9";
 const fullWidth = "_fullWidth_kwhbh_13";
-const separator$3 = "_separator_kwhbh_25";
+const separator$4 = "_separator_kwhbh_25";
 const separatorPadded = "_separatorPadded_kwhbh_30";
 const headerSep = "_headerSep_kwhbh_35";
 const styles$S = {
   container: container$d,
   cell: cell$1,
   fullWidth,
-  separator: separator$3,
+  separator: separator$4,
   separatorPadded,
   headerSep
 };
@@ -181850,14 +181863,14 @@ const wrapper$1 = "_wrapper_cv5sf_1";
 const col2 = "_col2_cv5sf_8";
 const col1_3 = "_col1_3_cv5sf_12";
 const col3 = "_col3_cv5sf_16";
-const separator$2 = "_separator_cv5sf_20";
+const separator$3 = "_separator_cv5sf_20";
 const topMargin = "_topMargin_cv5sf_26";
 const styles$E = {
   wrapper: wrapper$1,
   col2,
   col1_3,
   col3,
-  separator: separator$2,
+  separator: separator$3,
   topMargin
 };
 const EventTimingPanel = ({
@@ -182346,11 +182359,11 @@ const FileView = ({ id, file, contents: contents2 }) => {
 };
 const explanation = "_explanation_1k2k0_1";
 const wrappingContent$1 = "_wrappingContent_1k2k0_8";
-const separator$1 = "_separator_1k2k0_13";
+const separator$2 = "_separator_1k2k0_13";
 const styles$B = {
   explanation,
   wrappingContent: wrappingContent$1,
-  separator: separator$1
+  separator: separator$2
 };
 const ScoreEventView = ({
   eventNode,
@@ -191515,14 +191528,14 @@ const ToolEventView = ({
 };
 const container$9 = "_container_io1r0_1";
 const wrappingContent = "_wrappingContent_io1r0_8";
-const separator = "_separator_io1r0_13";
+const separator$1 = "_separator_io1r0_13";
 const unchanged = "_unchanged_io1r0_22";
 const section = "_section_io1r0_27";
 const spacer = "_spacer_io1r0_31";
 const styles$v = {
   container: container$9,
   wrappingContent,
-  separator,
+  separator: separator$1,
   unchanged,
   section,
   spacer
