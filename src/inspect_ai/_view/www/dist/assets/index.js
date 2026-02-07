@@ -118838,7 +118838,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1h.fullWidth, styles$1h.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1h.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1h.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.171-4-g2c62453f0" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.172-0-g35c22e3f7" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1h.spacer) }),
@@ -193500,7 +193500,9 @@ function useLoadSample() {
   );
   reactExports.useEffect(() => {
     if (logSelection.logFile && sampleId !== void 0 && sampleEpoch !== void 0) {
-      const isCurrentSampleLoaded = sampleData.selectedSampleIdentifier?.id === sampleId && sampleData.selectedSampleIdentifier?.epoch === sampleEpoch && sampleData.selectedSampleIdentifier?.logFile === logSelection.logFile;
+      const identifierMatches = sampleData.selectedSampleIdentifier?.id === sampleId && sampleData.selectedSampleIdentifier?.epoch === sampleEpoch && sampleData.selectedSampleIdentifier?.logFile === logSelection.logFile;
+      const hasSampleData = sampleData.getSelectedSample() !== void 0;
+      const isCurrentSampleLoaded = identifierMatches && hasSampleData;
       const isLoading = sampleData.status === "loading" || sampleData.status === "streaming";
       const isError = sampleData.status === "error";
       const logFileChanged = prevLogFile !== void 0 && prevLogFile !== logSelection.logFile;
@@ -193526,6 +193528,7 @@ function useLoadSample() {
     sampleData.selectedSampleIdentifier,
     sampleData.status,
     sampleData.sampleNeedsReload,
+    sampleData.getSelectedSample,
     prevLogFile,
     prevSampleId,
     prevCompleted,
