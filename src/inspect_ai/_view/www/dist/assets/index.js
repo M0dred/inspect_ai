@@ -118887,7 +118887,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1h.fullWidth, styles$1h.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1h.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1h.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.172-19-g9adff6bd6" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.173-0-gc6204f30f" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1h.spacer) }),
