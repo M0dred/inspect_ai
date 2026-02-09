@@ -30385,7 +30385,7 @@ const container$o = "_container_1n7pm_1";
 const label$b = "_label_1n7pm_7";
 const outer = "_outer_1n7pm_11";
 const inner = "_inner_1n7pm_20";
-const styles$1P = {
+const styles$1Q = {
   container: container$o,
   label: label$b,
   outer,
@@ -30398,15 +30398,15 @@ const ProgressBar = ({
   label: label2,
   width = "100px"
 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1P.container), children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1P.outer), style: { width }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1Q.container), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1Q.outer), style: { width }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
-        className: clsx(styles$1P.inner),
+        className: clsx(styles$1Q.inner),
         style: { width: `${(value2 - min2) / (max2 - min2) * 100}%` }
       }
     ) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1P.label, "text-size-smallest"), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1Q.label, "text-size-smallest"), children: [
       value2,
       " / ",
       max2,
@@ -30619,7 +30619,7 @@ const errorType = (message2) => {
 const circle$1 = "_circle_qymy9_1";
 const green$1 = "_green_qymy9_12";
 const red$1 = "_red_qymy9_18";
-const styles$1O = {
+const styles$1P = {
   circle: circle$1,
   green: green$1,
   red: red$1
@@ -30635,9 +30635,9 @@ const booleanScoreDescriptor = () => {
         "span",
         {
           className: clsx(
-            styles$1O.circle,
+            styles$1P.circle,
             "text-size-small",
-            score2 ? styles$1O.green : styles$1O.red
+            score2 ? styles$1P.green : styles$1P.red
           ),
           children: String(score2)
         }
@@ -30739,7 +30739,7 @@ const numericScoreDescriptor = (values) => {
 const container$n = "_container_1ramc_1";
 const key$1 = "_key_1ramc_12";
 const value$2 = "_value_1ramc_16";
-const styles$1N = {
+const styles$1O = {
   container: container$n,
   key: key$1,
   value: value$2
@@ -30783,12 +30783,12 @@ const objectScoreDescriptor = (values) => {
         ) : String(value2);
         scores2.push(
           /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1N.key, "text-size-smaller"), children: key2 }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1N.value, "text-size-base"), children: formattedValue })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1O.key, "text-size-smaller"), children: key2 }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1O.value, "text-size-base"), children: formattedValue })
           ] })
         );
       });
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1N.container), children: scores2 }, `score-value`);
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1O.container), children: scores2 }, `score-value`);
     }
   };
 };
@@ -32082,7 +32082,7 @@ function requireAnsiOutput() {
 var ansiOutputExports = requireAnsiOutput();
 const toolButton$1 = "_toolButton_nu8dt_1";
 const latched = "_latched_nu8dt_13";
-const styles$1M = {
+const styles$1N = {
   toolButton: toolButton$1,
   latched
 };
@@ -32096,10 +32096,10 @@ const ToolButton = reactExports.forwardRef(
         className: clsx(
           "btn",
           "btn-tools",
-          styles$1M.toolButton,
+          styles$1N.toolButton,
           classes,
           className2,
-          latched2 ? styles$1M.latched : void 0
+          latched2 ? styles$1N.latched : void 0
         ),
         ...rest,
         children: [
@@ -32115,7 +32115,7 @@ const ansiDisplayContainer = "_ansiDisplayContainer_sawhg_1";
 const ansiDisplay = "_ansiDisplay_sawhg_1";
 const ansiDisplayRaw = "_ansiDisplayRaw_sawhg_28";
 const ansiDisplayToggle = "_ansiDisplayToggle_sawhg_33";
-const styles$1L = {
+const styles$1M = {
   ansiDisplayContainer,
   ansiDisplay,
   ansiDisplayRaw,
@@ -32171,13 +32171,13 @@ const ANSIDisplay = ({
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
     {
-      className: clsx(styles$1L.ansiDisplayContainer, className2),
+      className: clsx(styles$1M.ansiDisplayContainer, className2),
       style: { ...style2 },
       children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           ToolButton,
           {
-            className: clsx(styles$1L.ansiDisplayToggle, "text-size-smallest"),
+            className: clsx(styles$1M.ansiDisplayToggle, "text-size-smallest"),
             icon: "bi bi-code-slash",
             label: "",
             latched: showRaw,
@@ -32185,9 +32185,9 @@ const ANSIDisplay = ({
             title: showRaw ? "Show rendered output" : "Show raw output"
           }
         ),
-        showRaw ? /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1L.ansiDisplay, styles$1L.ansiDisplayRaw), children: output2 }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1L.ansiDisplay), style: backgroundStyle, children: ansiOutput2.outputLines.map((line2, index) => {
+        showRaw ? /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1M.ansiDisplay, styles$1M.ansiDisplayRaw), children: output2 }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1M.ansiDisplay), style: backgroundStyle, children: ansiOutput2.outputLines.map((line2, index) => {
           firstOutput = firstOutput || !!line2.outputRuns.length;
-          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1L.ansiDisplayLine), children: !line2.outputRuns.length ? firstOutput ? /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}) : null : line2.outputRuns.map((outputRun) => /* @__PURE__ */ jsxRuntimeExports.jsx(OutputRun, { run: outputRun }, outputRun.id)) }, index);
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1M.ansiDisplayLine), children: !line2.outputRuns.length ? firstOutput ? /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}) : null : line2.outputRuns.map((outputRun) => /* @__PURE__ */ jsxRuntimeExports.jsx(OutputRun, { run: outputRun }, outputRun.id)) }, index);
         }) })
       ]
     }
@@ -32414,7 +32414,7 @@ const visible = "_visible_tm52u_1";
 const hidden$1 = "_hidden_tm52u_5";
 const pills = "_pills_tm52u_9";
 const pill = "_pill_tm52u_9";
-const styles$1K = {
+const styles$1L = {
   visible,
   hidden: hidden$1,
   pills,
@@ -32444,7 +32444,7 @@ const NavPills = ({ id, children: children2 }) => {
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
-        className: child["props"]?.title === activeItem ? styles$1K.visible : styles$1K.hidden,
+        className: child["props"]?.title === activeItem ? styles$1L.visible : styles$1L.hidden,
         children: child
       },
       `nav-pill-container-${idx}`
@@ -32454,7 +32454,7 @@ const NavPills = ({ id, children: children2 }) => {
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "ul",
       {
-        className: clsx("nav", "nav-pills", styles$1K.pills),
+        className: clsx("nav", "nav-pills", styles$1L.pills),
         role: "tablist",
         "aria-orientation": "horizontal",
         children: navPills
@@ -32490,7 +32490,7 @@ const NavPill = ({
           "nav-link",
           "text-style-label",
           active ? "active " : "",
-          styles$1K.pill
+          styles$1L.pill
         ),
         "data-target": title2,
         onClick: handleClick,
@@ -32506,7 +32506,7 @@ const Buckets = {
   final: 1e3
 };
 const copyButton = "_copyButton_1goi8_1";
-const styles$1J = {
+const styles$1K = {
   copyButton
 };
 const CopyButton = ({
@@ -32536,7 +32536,7 @@ const CopyButton = ({
     "button",
     {
       type: "button",
-      className: clsx("copy-button", styles$1J.copyButton, className2),
+      className: clsx("copy-button", styles$1K.copyButton, className2),
       onClick: handleClick,
       "aria-label": ariaLabel,
       disabled: isCopied,
@@ -32614,7 +32614,7 @@ const moreToggleButton = "_moreToggleButton_1cl3h_36";
 const separator$6 = "_separator_1cl3h_42";
 const inlineRight = "_inlineRight_1cl3h_48";
 const blockLeft = "_blockLeft_1cl3h_54";
-const styles$1I = {
+const styles$1J = {
   expandablePanel,
   expandableBordered,
   expandableCollapsed,
@@ -32667,10 +32667,10 @@ const ExpandablePanel = reactExports.memo(
           ref: contentRef,
           "data-expandable-panel": "true",
           className: clsx(
-            styles$1I.expandablePanel,
-            collapsed2 ? styles$1I.expandableCollapsed : void 0,
-            border ? styles$1I.expandableBordered : void 0,
-            showToggle ? styles$1I.padBottom : void 0,
+            styles$1J.expandablePanel,
+            collapsed2 ? styles$1J.expandableCollapsed : void 0,
+            border ? styles$1J.expandableBordered : void 0,
+            showToggle ? styles$1J.padBottom : void 0,
             className2
           ),
           children: [
@@ -32696,7 +32696,7 @@ const ExpandablePanel = reactExports.memo(
           position: "block-left"
         }
       ) }),
-      showToggle && layout == "inline-right" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1I.separator) })
+      showToggle && layout == "inline-right" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1J.separator) })
     ] });
   }
 );
@@ -32715,15 +32715,15 @@ const MoreToggle = ({
     "div",
     {
       className: clsx(
-        styles$1I.moreToggle,
-        border ? styles$1I.bordered : void 0,
-        position === "inline-right" ? styles$1I.inlineRight : styles$1I.blockLeft
+        styles$1J.moreToggle,
+        border ? styles$1J.bordered : void 0,
+        position === "inline-right" ? styles$1J.inlineRight : styles$1J.blockLeft
       ),
       style: style2,
       children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "button",
         {
-          className: clsx("btn", styles$1I.moreToggleButton, "text-size-smallest"),
+          className: clsx("btn", styles$1J.moreToggleButton, "text-size-smallest"),
           onClick: handleClick,
           children: [
             text2,
@@ -36257,7 +36257,7 @@ const keyPairBordered = "_keyPairBordered_qjlxf_9";
 const key = "_key_qjlxf_1";
 const pre$1 = "_pre_qjlxf_19";
 const treeIcon = "_treeIcon_qjlxf_23";
-const styles$1H = {
+const styles$1I = {
   keyPairContainer,
   keyPairBordered,
   key,
@@ -36443,8 +36443,8 @@ const RecordTree = ({
       "div",
       {
         className: clsx(
-          styles$1H.keyPairContainer,
-          index < items.length - 1 && useBorders ? styles$1H.keyPairBordered : void 0,
+          styles$1I.keyPairContainer,
+          index < items.length - 1 && useBorders ? styles$1I.keyPairBordered : void 0,
           "text-size-small"
         ),
         style: {
@@ -36457,7 +36457,7 @@ const RecordTree = ({
               "data-index": index,
               className: clsx(
                 kRecordTreeKey,
-                styles$1H.key,
+                styles$1I.key,
                 "font-monospace",
                 "text-style-secondary"
               ),
@@ -36467,16 +36467,16 @@ const RecordTree = ({
                 setCollapsed(item2.id, !collapsedIds?.[item2.id]);
               },
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: item2.hasChildren ? /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1H.pre), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: item2.hasChildren ? /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1I.pre), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                   "i",
                   {
                     className: clsx(
                       collapsedIds && collapsedIds[item2.id] ? ApplicationIcons.tree.closed : ApplicationIcons.tree.open,
-                      styles$1H.treeIcon
+                      styles$1I.treeIcon
                     )
                   }
                 ) }) : void 0 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("pre", { className: clsx(styles$1H.pre), children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("pre", { className: clsx(styles$1I.pre), children: [
                   item2.key,
                   ":"
                 ] })
@@ -36961,7 +36961,7 @@ const indented = "_indented_1k527_37";
 const copyLink$1 = "_copyLink_1k527_41";
 const metadataLabel = "_metadataLabel_1k527_52";
 const hover$1 = "_hover_1k527_56";
-const styles$1G = {
+const styles$1H = {
   message: message$3,
   systemRole,
   timestamp,
@@ -36975,14 +36975,14 @@ const styles$1G = {
 };
 const panel$8 = "_panel_1pa96_1";
 const code$5 = "_code_1pa96_7";
-const styles$1F = {
+const styles$1G = {
   panel: panel$8,
   code: code$5
 };
 const CodePanel = ({ code: code2, language: language2 = "json" }) => {
   const codeContainerRef = reactExports.useRef(null);
   usePrismHighlight(codeContainerRef, code2.length);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: codeContainerRef, className: clsx(styles$1F.panel), children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1F.code), children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx(`language-${language2}`), children: code2 }) }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: codeContainerRef, className: clsx(styles$1G.panel), children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1G.code), children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx(`language-${language2}`), children: code2 }) }) });
 };
 class JsonWorkerPool {
   encoder = new TextEncoder();
@@ -107794,9 +107794,9 @@ function unescapeCodeHtmlEntities(str2) {
     }
   );
 }
-const content$2 = "_content_13ihw_1";
-const styles$1E = {
-  content: content$2
+const content$3 = "_content_13ihw_1";
+const styles$1F = {
+  content: content$3
 };
 const Preformatted = reactExports.forwardRef(
   ({ text: text2, style: style2, className: className2 }, ref) => {
@@ -107804,7 +107804,7 @@ const Preformatted = reactExports.forwardRef(
       "pre",
       {
         ref,
-        className: clsx(styles$1E.content, "text-size-smaller", className2),
+        className: clsx(styles$1F.content, "text-size-smaller", className2),
         style: style2,
         children: text2
       }
@@ -107839,22 +107839,22 @@ const RenderedText = reactExports.forwardRef(({ markdown, style: style2, classNa
 });
 const webSearch = "_webSearch_1376z_1";
 const query$1 = "_query_1376z_8";
-const styles$1D = {
+const styles$1E = {
   webSearch,
   query: query$1
 };
 const WebSearch = ({ query: query2 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1D.webSearch, "text-size-smaller"), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1E.webSearch, "text-size-smaller"), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-style-label", "text-style-secondary"), children: "Web Search:" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx(styles$1D.query, "text-size-smallest"), children: query2 })
+    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx(styles$1E.query, "text-size-smallest"), children: query2 })
   ] });
 };
-const contentData = "_contentData_1sd1z_1";
-const styles$1C = {
+const contentData = "_contentData_1lrx1_1";
+const styles$1D = {
   contentData
 };
 const result$1 = "_result_1mixg_12";
-const styles$1B = {
+const styles$1C = {
   result: result$1
 };
 const WebSearchResults = ({
@@ -107865,7 +107865,7 @@ const WebSearchResults = ({
       "div",
       {
         className: clsx(
-          styles$1B.label,
+          styles$1C.label,
           "text-style-label",
           "text-style-secondary",
           "text-size-smaller"
@@ -107873,10 +107873,10 @@ const WebSearchResults = ({
         children: "Results"
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("ol", { className: clsx(styles$1B.results, "text-size-smaller"), children: results.map((result2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+    /* @__PURE__ */ jsxRuntimeExports.jsx("ol", { className: clsx(styles$1C.results, "text-size-smaller"), children: results.map((result2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
       "li",
       {
-        className: clsx(styles$1B.result, "text-style-secondary"),
+        className: clsx(styles$1C.result, "text-style-secondary"),
         children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           "a",
           {
@@ -107893,6 +107893,121 @@ const WebSearchResults = ({
     )) })
   ] });
 };
+const title$3 = "_title_1gjvf_1";
+const content$2 = "_content_1gjvf_11";
+const grid$a = "_grid_1gjvf_16";
+const styles$1B = {
+  title: title$3,
+  content: content$2,
+  grid: grid$a
+};
+const grid$9 = "_grid_14885_1";
+const cell$2 = "_cell_14885_8";
+const styles$1A = {
+  grid: grid$9,
+  cell: cell$2
+};
+const MetaDataGrid = ({
+  id,
+  entries,
+  className: className2,
+  size,
+  style: style2,
+  plain
+}) => {
+  const baseId = "metadata-grid";
+  const fontStyle = size === "mini" ? "text-size-smallest" : "text-size-smaller";
+  const entryEls = entryRecords(entries).map((entry, index) => {
+    const id2 = `${baseId}-value-${index}`;
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
+      index !== 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
+        {
+          style: {
+            gridColumn: "1 / -1",
+            borderBottom: `${!plain ? "solid 1px var(--bs-light-border-subtle" : ""}`
+          }
+        }
+      ) : void 0,
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
+        {
+          className: clsx(
+            `${baseId}-key`,
+            styles$1A.cell,
+            "text-style-label",
+            "text-style-secondary",
+            fontStyle
+          ),
+          children: entry?.name
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1A.value, `${baseId}-value`, fontStyle), children: entry && /* @__PURE__ */ jsxRuntimeExports.jsx(
+        RenderedContent,
+        {
+          id: id2,
+          entry,
+          renderObject: (obj) => {
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(
+              MetaDataGrid,
+              {
+                id: id2,
+                className: clsx(styles$1A.nested),
+                entries: obj,
+                size,
+                plain
+              }
+            );
+          }
+        }
+      ) })
+    ] }, `${baseId}-record-${index}`);
+  });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { id, className: clsx(className2, styles$1A.grid), style: style2, children: entryEls });
+};
+const entryRecords = (entries) => {
+  if (!entries) {
+    return [];
+  }
+  if (!Array.isArray(entries)) {
+    return Object.entries(entries || {}).map(([key2, value2]) => {
+      return { name: key2, value: value2 };
+    });
+  } else {
+    return entries;
+  }
+};
+const kCompactionMetadata = "compaction_metadata";
+const CompactionData = ({ id, data }) => {
+  const compactionMetadata = data[kCompactionMetadata];
+  let compactionContent = void 0;
+  if (compactionMetadata.type === "anthropic_compact") {
+    compactionContent = /* @__PURE__ */ jsxRuntimeExports.jsx(ExpandablePanel, { id: `${id}-compacted-content`, collapse: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: String(compactionMetadata.content) }) });
+  } else {
+    compactionContent = /* @__PURE__ */ jsxRuntimeExports.jsx(
+      MetaDataGrid,
+      {
+        id: `${id}-compacted-content-metadata`,
+        className: styles$1B.grid,
+        entries: compactionMetadata
+      }
+    );
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1B.content, "text-size-small"), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        className: clsx(
+          "text-style-label",
+          "text-style-secondary",
+          styles$1B.title
+        ),
+        children: "Compacted Content"
+      }
+    ),
+    compactionContent
+  ] });
+};
 const ContentDataView = ({ id, contentData: contentData2 }) => {
   const renderableData = contentData2.data;
   const renderer = contentDataRenderers.find(
@@ -107900,24 +108015,33 @@ const ContentDataView = ({ id, contentData: contentData2 }) => {
   );
   if (!renderer) {
     const { encrypted_content, ...record } = renderableData;
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1C.contentData), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1D.contentData), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       RecordTree,
       {
         id: `${id}-tree`,
         record,
-        className: clsx(styles$1C.data),
+        className: clsx(styles$1D.data),
         defaultExpandLevel: 0
       }
     ) });
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1C.contentData), children: renderer.render(renderableData) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1D.contentData), children: renderer.render(id, renderableData) });
+};
+const compactionDataRenderer = {
+  name: "Compaction",
+  canRender: (data) => {
+    return Object.hasOwn(data, kCompactionMetadata);
+  },
+  render: (id, data) => {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(CompactionData, { id, data });
+  }
 };
 const webSearchServerToolRenderer = {
   name: "WebSearch",
   canRender: (data) => {
     return data.type === "server_tool_use" && data.name === "web_search";
   },
-  render: (data) => {
+  render: (_id, data) => {
     return /* @__PURE__ */ jsxRuntimeExports.jsx(WebSearch, { query: data.input.query });
   }
 };
@@ -107926,7 +108050,7 @@ const webSearchResultsServerToolRenderer = {
   canRender: (data) => {
     return data.type === "web_search_tool_result" && Array.isArray(data.content);
   },
-  render: (data) => {
+  render: (_id, data) => {
     const results = data.content;
     return /* @__PURE__ */ jsxRuntimeExports.jsx(WebSearchResults, { results });
   }
@@ -107934,7 +108058,7 @@ const webSearchResultsServerToolRenderer = {
 const serverToolRenderer = {
   name: "ServerTool",
   canRender: (data) => data.type === "server_tool_use",
-  render: (data) => {
+  render: (id, data) => {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
@@ -107950,15 +108074,16 @@ const serverToolRenderer = {
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         RecordTree,
         {
-          id: data.name || "server-tool",
+          id: `${id}-server-tool`,
           record: data,
-          className: clsx(styles$1C.data)
+          className: clsx(styles$1D.data)
         }
       )
     ] });
   }
 };
 const contentDataRenderers = [
+  compactionDataRenderer,
   webSearchServerToolRenderer,
   webSearchResultsServerToolRenderer,
   serverToolRenderer
@@ -111141,7 +111266,7 @@ const documentFrame = "_documentFrame_1576h_1";
 const documentFrameTitle = "_documentFrameTitle_1576h_9";
 const downloadLink = "_downloadLink_1576h_16";
 const imageDocument = "_imageDocument_1576h_21";
-const styles$1A = {
+const styles$1z = {
   documentFrame,
   documentFrameTitle,
   downloadLink,
@@ -111158,7 +111283,7 @@ const ContentDocumentView = ({
     return /* @__PURE__ */ jsxRuntimeExports.jsx(ContentDocumentFrame, { document: document2, downloadable: canDownloadFiles, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       "img",
       {
-        className: clsx(styles$1A.imageDocument),
+        className: clsx(styles$1z.imageDocument),
         src: document2.document,
         alt: document2.filename,
         id
@@ -111183,17 +111308,17 @@ const ContentDocumentFrame = ({
     "div",
     {
       className: clsx(
-        styles$1A.documentFrame,
+        styles$1z.documentFrame,
         "text-size-small",
         "text-style-secondary"
       ),
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1A.documentFrameTitle), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1z.documentFrameTitle), children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(iconForMimeType(document2.mime_type)) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: downloadable ? /* @__PURE__ */ jsxRuntimeExports.jsx(
             "a",
             {
-              className: clsx(styles$1A.downloadLink),
+              className: clsx(styles$1z.downloadLink),
               onClick: () => {
                 api.download_file(document2.filename, document2.document);
               },
@@ -111207,7 +111332,7 @@ const ContentDocumentFrame = ({
   );
 };
 const jsonMessage = "_jsonMessage_oxf8d_1";
-const styles$1z = {
+const styles$1y = {
   jsonMessage
 };
 const JsonMessageContent = ({
@@ -111220,7 +111345,7 @@ const JsonMessageContent = ({
     {
       id,
       record: json,
-      className: clsx(styles$1z.jsonMessage, className2),
+      className: clsx(styles$1y.jsonMessage, className2),
       useBorders: false
     }
   );
@@ -111235,7 +111360,7 @@ const decodeHtmlEntities = (text2) => {
 };
 const citations = "_citations_1ggvf_1";
 const citationLink = "_citationLink_1ggvf_9";
-const styles$1y = {
+const styles$1x = {
   citations,
   citationLink
 };
@@ -111243,7 +111368,7 @@ const MessageCitations = ({ citations: citations2 }) => {
   if (citations2.length === 0) {
     return void 0;
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1y.citations, "text-size-smallest"), children: citations2.map((citation, index) => /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1x.citations, "text-size-smallest"), children: citations2.map((citation, index) => /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: index + 1 }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(MessageCitation, { citation })
   ] }, index)) });
@@ -111263,7 +111388,7 @@ const UrlCitation = ({
     href: citation.url,
     target: "_blank",
     rel: "noopener noreferrer",
-    className: clsx(styles$1y.citationLink),
+    className: clsx(styles$1x.citationLink),
     title: citation.cited_text ? `${citation.cited_text}
 ${citation.url}` : citation.url,
     children: children2
@@ -111272,7 +111397,7 @@ ${citation.url}` : citation.url,
 const OtherCitation = ({ children: children2 }) => /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: children2 });
 const contentImage = "_contentImage_srbm0_1";
 const reasoning = "_reasoning_srbm0_6";
-const styles$1x = {
+const styles$1w = {
   contentImage,
   reasoning
 };
@@ -111283,7 +111408,7 @@ const args = "_args_1792k_22";
 const argLabel = "_argLabel_1792k_31";
 const error$3 = "_error_1792k_35";
 const toolPanel = "_toolPanel_1792k_40";
-const styles$1w = {
+const styles$1v = {
   mcpToolUse,
   title: title$2,
   titleText,
@@ -111304,23 +111429,23 @@ const McpToolUse = ({ id, content: content2, className: className2 }) => {
   const titleStr = content2.context ? `${content2.context} — ${content2.name}()` : `${content2.name}()`;
   const listToolsResult = maybeListTools(content2);
   const webSearchResult = maybeWebSearchResult(content2);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id, className: clsx(styles$1w.mcpToolUse, className2), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id, className: clsx(styles$1v.mcpToolUse, className2), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
       {
         className: clsx(
-          styles$1w.title,
+          styles$1v.title,
           "text-size-small",
           "text-style-secondary"
         ),
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.role.tool }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$1w.titleText, children: titleStr }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1w.type, children: content2.type })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$1v.titleText, children: titleStr }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1v.type, children: content2.type })
         ]
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1w.args, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1v.args, children: [
       Object.keys(args2).map((key2, index) => {
         const value2 = args2[key2];
         let valueRecord = void 0;
@@ -111339,7 +111464,7 @@ const McpToolUse = ({ id, content: content2, className: className2 }) => {
       }),
       webSearchResult ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(LabelDiv, { label: "results" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(ValueDiv, { children: webSearchResult.result.map((result2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1w.result, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsx(ValueDiv, { children: webSearchResult.result.map((result2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1v.result, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           "a",
           {
             href: result2.url,
@@ -111354,7 +111479,7 @@ const McpToolUse = ({ id, content: content2, className: className2 }) => {
         {
           id: `${id}-output`,
           collapse: true,
-          className: clsx(styles$1w.toolPanel),
+          className: clsx(styles$1v.toolPanel),
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(LabelDiv, { label: tool2.name }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs(ValueDiv, { children: [
@@ -111372,7 +111497,7 @@ const McpToolUse = ({ id, content: content2, className: className2 }) => {
         }
       ) })) : void 0
     ] }),
-    content2.error ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1w.error, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+    content2.error ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1v.error, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
       "Error: ",
       content2.error
     ] }) }) : !listToolsResult && !webSearchResult ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-small"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExpandablePanel, { id: `${id}-output`, collapse: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -111429,7 +111554,7 @@ const LabelDiv = ({ label: label2 }) => {
     "div",
     {
       className: clsx(
-        styles$1w.argLabel,
+        styles$1v.argLabel,
         "text-style-secondary",
         "text-size-smaller"
       ),
@@ -111451,7 +111576,7 @@ const toolImage = "_toolImage_1wvgr_1";
 const output = "_output_1wvgr_6";
 const textOutput = "_textOutput_1wvgr_10";
 const textCode = "_textCode_1wvgr_18";
-const styles$1v = {
+const styles$1u = {
   toolImage,
   output,
   textOutput,
@@ -111473,7 +111598,7 @@ const ToolOutput = ({ output: output2, className: className2 }) => {
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "img",
               {
-                className: clsx(styles$1v.toolImage),
+                className: clsx(styles$1u.toolImage),
                 src: out.image
               },
               key2
@@ -111489,7 +111614,7 @@ const ToolOutput = ({ output: output2, className: className2 }) => {
       /* @__PURE__ */ jsxRuntimeExports.jsx(ToolTextOutput, { text: String(output2) }, "tool-output-single")
     );
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1v.output, className2), children: outputs });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1u.output, className2), children: outputs });
 };
 const ToolTextOutput = ({ text: text2 }) => {
   if (isJson(text2)) {
@@ -111500,13 +111625,13 @@ const ToolTextOutput = ({ text: text2 }) => {
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       ANSIDisplay,
       {
-        className: styles$1v.ansiOutput,
+        className: styles$1u.ansiOutput,
         output: text2,
         style: { fontSize: "clamp(0.4rem, 1.15vw, 0.9rem)" }
       }
     );
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1v.textOutput, "tool-output"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("sourceCode", styles$1v.textCode), children: text2.trim() }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1u.textOutput, "tool-output"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("sourceCode", styles$1u.textCode), children: text2.trim() }) });
 };
 const isMessageContent = (content2) => {
   return typeof content2 === "object" && content2 !== null && "type" in content2 && typeof content2.type === "string";
@@ -111615,7 +111740,7 @@ const messageRenderers = {
       }
       const renderReasoningCode = isOpenRouterReasoning(text2);
       const codeFormatted = renderReasoningCode ? JSON.stringify(jsonParse(text2), null, 2) : text2;
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1x.reasoning, "text-size-small"), children: [
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1w.reasoning, "text-size-small"), children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
@@ -111638,7 +111763,7 @@ const messageRenderers = {
     render: (key2, content2, _isLast, _context) => {
       const c2 = content2;
       if (c2.image.startsWith("data:")) {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: c2.image, className: styles$1x.contentImage }, key2);
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: c2.image, className: styles$1w.contentImage }, key2);
       } else {
         return /* @__PURE__ */ jsxRuntimeExports.jsx("code", { children: c2.image }, key2);
       }
@@ -111877,20 +112002,20 @@ const extractInput = (args2, inputDescriptor) => {
   }
 };
 const toolCallView = "_toolCallView_l6wae_1";
-const styles$1u = {
+const styles$1t = {
   toolCallView
 };
 const outputPre = "_outputPre_1jznn_1";
 const toolView = "_toolView_1jznn_7";
 const outputCode = "_outputCode_1jznn_15";
-const styles$1t = {
+const styles$1s = {
   outputPre,
   toolView,
   outputCode
 };
 const todoList = "_todoList_1t8rx_1";
 const inProgress = "_inProgress_1t8rx_9";
-const styles$1s = {
+const styles$1r = {
   todoList,
   inProgress
 };
@@ -111910,7 +112035,7 @@ const toToolTodos = (obj) => {
 };
 const TodoWriteInput = ({ contents: contents2, parentRef }) => {
   const todoItems = toToolTodos(contents2);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: parentRef, className: clsx(styles$1s.todoList), children: todoItems.map((todo) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: parentRef, className: clsx(styles$1r.todoList), children: todoItems.map((todo) => {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "i",
@@ -111925,9 +112050,9 @@ const TodoWriteInput = ({ contents: contents2, parentRef }) => {
         "span",
         {
           className: clsx(
-            styles$1s.todoItem,
+            styles$1r.todoItem,
             "text-size-smallest",
-            todo.status === "in_progress" ? styles$1s.inProgress : void 0
+            todo.status === "in_progress" ? styles$1r.inProgress : void 0
           ),
           children: todo.content
         }
@@ -111950,7 +112075,7 @@ const ToolInput = (props) => {
       {
         markdown: toolCallView2.content,
         ref: sourceCodeRef,
-        className: clsx("tool-output", styles$1t.toolView, className2)
+        className: clsx("tool-output", styles$1s.toolView, className2)
       }
     );
   } else {
@@ -111980,8 +112105,8 @@ const RenderTool = ({
     {
       className: clsx(
         "tool-output",
-        styles$1t.outputPre,
-        styles$1t.bottomMargin,
+        styles$1s.outputPre,
+        styles$1s.bottomMargin,
         className2
       ),
       children: /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -111991,7 +112116,7 @@ const RenderTool = ({
             "source-code",
             "sourceCode",
             contentType ? `language-${contentType}` : void 0,
-            styles$1t.outputCode
+            styles$1s.outputCode
           ),
           children: formattedContent
         }
@@ -112008,16 +112133,16 @@ const isValidView = (view) => {
 const image = "_image_1vcac_1";
 const toolTitle = "_toolTitle_1vcac_6";
 const description = "_description_1vcac_10";
-const styles$1r = {
+const styles$1q = {
   image,
   toolTitle,
   description
 };
 const ToolTitle = ({ title: title2, description: description2 }) => {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx("bi", "bi-tools", styles$1r.image) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("text-size-small", styles$1r.toolTitle), children: title2 }),
-    description2 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: clsx(styles$1r.description, "text-size-smallest"), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx("bi", "bi-tools", styles$1q.image) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("text-size-small", styles$1q.toolTitle), children: title2 }),
+    description2 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: clsx(styles$1q.description, "text-size-smallest"), children: [
       "- ",
       description2
     ] }) : void 0
@@ -112066,7 +112191,7 @@ const ToolCallView = ({
   });
   const contents2 = mode !== "compact" ? input2 : input2 || functionCall;
   const context = defaultContext("tool");
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1u.toolCallView), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1t.toolCallView), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
       mode !== "compact" && (!view || view.title) ? /* @__PURE__ */ jsxRuntimeExports.jsx(
         ToolTitle,
@@ -112119,7 +112244,7 @@ const normalizeContent$1 = (output2) => {
 };
 const content$1 = "_content_1b2jp_1";
 const codeCompact = "_codeCompact_1b2jp_5";
-const styles$1q = {
+const styles$1p = {
   content: content$1,
   codeCompact
 };
@@ -112150,7 +112275,7 @@ const MessageContents = ({
       }
       const resolvedToolOutput = resolveToolMessage(toolMessage);
       if (toolCallStyle === "compact") {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("code", { className: clsx(styles$1q.codeCompact), children: [
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("code", { className: clsx(styles$1p.codeCompact), children: [
           "tool: ",
           functionCall
         ] }) }, `tool-call-${idx}`);
@@ -112174,7 +112299,7 @@ const MessageContents = ({
       }
     });
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-      message2.content && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1q.content, children: /* @__PURE__ */ jsxRuntimeExports.jsx(MessageContent, { contents: message2.content, context }) }),
+      message2.content && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1p.content, children: /* @__PURE__ */ jsxRuntimeExports.jsx(MessageContent, { contents: message2.content, context }) }),
       toolCalls
     ] });
   } else {
@@ -112249,10 +112374,10 @@ const ChatMessage = reactExports.memo(
         className: clsx(
           message2.role,
           "text-size-base",
-          styles$1G.message,
-          message2.role === "system" ? styles$1G.systemRole : void 0,
-          message2.role === "user" ? styles$1G.userRole : void 0,
-          mouseOver ? styles$1G.hover : void 0
+          styles$1H.message,
+          message2.role === "system" ? styles$1H.systemRole : void 0,
+          message2.role === "user" ? styles$1H.userRole : void 0,
+          mouseOver ? styles$1H.hover : void 0
         ),
         onMouseEnter: () => setMouseOver(true),
         onMouseLeave: () => setMouseOver(false),
@@ -112261,8 +112386,8 @@ const ChatMessage = reactExports.memo(
             "div",
             {
               className: clsx(
-                styles$1G.messageGrid,
-                message2.role === "tool" ? styles$1G.toolMessageGrid : void 0,
+                styles$1H.messageGrid,
+                message2.role === "tool" ? styles$1H.toolMessageGrid : void 0,
                 "text-style-label"
               ),
               children: [
@@ -112274,11 +112399,11 @@ const ChatMessage = reactExports.memo(
                     {
                       icon: ApplicationIcons.link,
                       value: toFullUrl(messageUrl),
-                      className: clsx(styles$1G.copyLink)
+                      className: clsx(styles$1H.copyLink)
                     }
                   ) : ""
                 ] }),
-                message2.timestamp && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1G.timestamp, title: message2.timestamp, children: formatDateTime(new Date(message2.timestamp)) })
+                message2.timestamp && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1H.timestamp, title: message2.timestamp, children: formatDateTime(new Date(message2.timestamp)) })
               ]
             }
           ),
@@ -112286,8 +112411,8 @@ const ChatMessage = reactExports.memo(
             "div",
             {
               className: clsx(
-                styles$1G.messageContents,
-                indented2 ? styles$1G.indented : void 0
+                styles$1H.messageContents,
+                indented2 ? styles$1H.indented : void 0
               ),
               children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -112312,7 +112437,7 @@ const ChatMessage = reactExports.memo(
                   LabeledValue,
                   {
                     label: "Metadata",
-                    className: clsx(styles$1G.metadataLabel, "text-size-smaller"),
+                    className: clsx(styles$1H.metadataLabel, "text-size-smaller"),
                     children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                       RecordTree,
                       {
@@ -112331,12 +112456,12 @@ const ChatMessage = reactExports.memo(
     );
   }
 );
-const grid$9 = "_grid_3x3ql_1";
+const grid$8 = "_grid_3x3ql_1";
 const number$1 = "_number_3x3ql_10";
 const user = "_user_3x3ql_14";
 const container$m = "_container_3x3ql_19";
-const styles$1p = {
-  grid: grid$9,
+const styles$1o = {
+  grid: grid$8,
   number: number$1,
   user,
   container: container$m
@@ -112355,9 +112480,9 @@ const ChatMessageRow = ({
       "div",
       {
         className: clsx(
-          styles$1p.grid,
-          styles$1p.container,
-          highlightUserMessage && resolvedMessage.message.role === "user" ? styles$1p.user : void 0
+          styles$1o.grid,
+          styles$1o.container,
+          highlightUserMessage && resolvedMessage.message.role === "user" ? styles$1o.user : void 0
         ),
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -112366,7 +112491,7 @@ const ChatMessageRow = ({
               className: clsx(
                 "text-size-smaller",
                 "text-style-secondary",
-                styles$1p.number
+                styles$1o.number
               ),
               children: number2
             }
@@ -112390,9 +112515,9 @@ const ChatMessageRow = ({
       "div",
       {
         className: clsx(
-          styles$1p.container,
-          styles$1p.simple,
-          highlightUserMessage && resolvedMessage.message.role === "user" ? styles$1p.user : void 0
+          styles$1o.container,
+          styles$1o.simple,
+          highlightUserMessage && resolvedMessage.message.role === "user" ? styles$1o.user : void 0
         ),
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -112555,82 +112680,6 @@ const ChatSummary = ({ id, messages: messages2 }) => {
     }
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsx(ChatView, { id, messages: summaryMessages });
-};
-const grid$8 = "_grid_14885_1";
-const cell$2 = "_cell_14885_8";
-const styles$1o = {
-  grid: grid$8,
-  cell: cell$2
-};
-const MetaDataGrid = ({
-  id,
-  entries,
-  className: className2,
-  size,
-  style: style2,
-  plain
-}) => {
-  const baseId = "metadata-grid";
-  const fontStyle = size === "mini" ? "text-size-smallest" : "text-size-smaller";
-  const entryEls = entryRecords(entries).map((entry, index) => {
-    const id2 = `${baseId}-value-${index}`;
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-      index !== 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "div",
-        {
-          style: {
-            gridColumn: "1 / -1",
-            borderBottom: `${!plain ? "solid 1px var(--bs-light-border-subtle" : ""}`
-          }
-        }
-      ) : void 0,
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "div",
-        {
-          className: clsx(
-            `${baseId}-key`,
-            styles$1o.cell,
-            "text-style-label",
-            "text-style-secondary",
-            fontStyle
-          ),
-          children: entry?.name
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1o.value, `${baseId}-value`, fontStyle), children: entry && /* @__PURE__ */ jsxRuntimeExports.jsx(
-        RenderedContent,
-        {
-          id: id2,
-          entry,
-          renderObject: (obj) => {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx(
-              MetaDataGrid,
-              {
-                id: id2,
-                className: clsx(styles$1o.nested),
-                entries: obj,
-                size,
-                plain
-              }
-            );
-          }
-        }
-      ) })
-    ] }, `${baseId}-record-${index}`);
-  });
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { id, className: clsx(className2, styles$1o.grid), style: style2, children: entryEls });
-};
-const entryRecords = (entries) => {
-  if (!entries) {
-    return [];
-  }
-  if (!Array.isArray(entries)) {
-    return Object.entries(entries || {}).map(([key2, value2]) => {
-      return { name: key2, value: value2 };
-    });
-  } else {
-    return entries;
-  }
 };
 const query = "_query_seqs2_1";
 const summary$3 = "_summary_seqs2_6";
@@ -116954,7 +117003,7 @@ function isShadowRoot(node2) {
   var OwnElement = getWindow(node2).ShadowRoot;
   return node2 instanceof OwnElement || node2 instanceof ShadowRoot;
 }
-function applyStyles$1(_ref) {
+function applyStyles(_ref) {
   var state = _ref.state;
   Object.keys(state.elements).forEach(function(name2) {
     var style2 = state.styles[name2] || {};
@@ -117012,11 +117061,11 @@ function effect$2(_ref2) {
     });
   };
 }
-const applyStyles = {
+const applyStyles$1 = {
   name: "applyStyles",
   enabled: true,
   phase: "write",
-  fn: applyStyles$1,
+  fn: applyStyles,
   effect: effect$2,
   requires: ["computeStyles"]
 };
@@ -117202,7 +117251,7 @@ var toPaddingObject = function toPaddingObject2(padding, state) {
   })) : padding;
   return mergePaddingObject(typeof padding !== "number" ? padding : expandToHashMap(padding, basePlacements));
 };
-function arrow$1(_ref) {
+function arrow(_ref) {
   var _state$modifiersData$;
   var state = _ref.state, name2 = _ref.name, options2 = _ref.options;
   var arrowElement = state.elements.arrow;
@@ -117247,11 +117296,11 @@ function effect$1(_ref2) {
   }
   state.elements.arrow = arrowElement;
 }
-const arrow = {
+const arrow$1 = {
   name: "arrow",
   enabled: true,
   phase: "main",
-  fn: arrow$1,
+  fn: arrow,
   effect: effect$1,
   requires: ["popperOffsets"],
   requiresIfExists: ["preventOverflow"]
@@ -117340,7 +117389,7 @@ function mapToStyles(_ref2) {
   }
   return Object.assign({}, commonStyles, (_Object$assign2 = {}, _Object$assign2[sideY] = hasY ? y + "px" : "", _Object$assign2[sideX] = hasX ? x + "px" : "", _Object$assign2.transform = "", _Object$assign2));
 }
-function computeStyles$1(_ref5) {
+function computeStyles(_ref5) {
   var state = _ref5.state, options2 = _ref5.options;
   var _options$gpuAccelerat = options2.gpuAcceleration, gpuAcceleration = _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat, _options$adaptive = options2.adaptive, adaptive = _options$adaptive === void 0 ? true : _options$adaptive, _options$roundOffsets = options2.roundOffsets, roundOffsets = _options$roundOffsets === void 0 ? true : _options$roundOffsets;
   var commonStyles = {
@@ -117371,11 +117420,11 @@ function computeStyles$1(_ref5) {
     "data-popper-placement": state.placement
   });
 }
-const computeStyles = {
+const computeStyles$1 = {
   name: "computeStyles",
   enabled: true,
   phase: "beforeWrite",
-  fn: computeStyles$1,
+  fn: computeStyles,
   data: {}
 };
 var passive = {
@@ -117691,7 +117740,7 @@ function getExpandedFallbackPlacements(placement) {
   var oppositePlacement = getOppositePlacement(placement);
   return [getOppositeVariationPlacement(placement), oppositePlacement, getOppositeVariationPlacement(oppositePlacement)];
 }
-function flip$1(_ref) {
+function flip(_ref) {
   var state = _ref.state, options2 = _ref.options, name2 = _ref.name;
   if (state.modifiersData[name2]._skip) {
     return;
@@ -117777,11 +117826,11 @@ function flip$1(_ref) {
     state.reset = true;
   }
 }
-const flip = {
+const flip$1 = {
   name: "flip",
   enabled: true,
   phase: "main",
-  fn: flip$1,
+  fn: flip,
   requiresIfExists: ["offset"],
   data: {
     _skip: false
@@ -117806,7 +117855,7 @@ function isAnySideFullyClipped(overflow) {
     return overflow[side] >= 0;
   });
 }
-function hide$1(_ref) {
+function hide(_ref) {
   var state = _ref.state, name2 = _ref.name;
   var referenceRect = state.rects.reference;
   var popperRect = state.rects.popper;
@@ -117832,12 +117881,12 @@ function hide$1(_ref) {
     "data-popper-escaped": hasPopperEscaped
   });
 }
-const hide = {
+const hide$1 = {
   name: "hide",
   enabled: true,
   phase: "main",
   requiresIfExists: ["preventOverflow"],
-  fn: hide$1
+  fn: hide
 };
 function distanceAndSkiddingToXY(placement, rects, offset2) {
   var basePlacement = getBasePlacement(placement);
@@ -117855,7 +117904,7 @@ function distanceAndSkiddingToXY(placement, rects, offset2) {
     y: distance
   };
 }
-function offset$1(_ref2) {
+function offset(_ref2) {
   var state = _ref2.state, options2 = _ref2.options, name2 = _ref2.name;
   var _options$offset = options2.offset, offset2 = _options$offset === void 0 ? [0, 0] : _options$offset;
   var data = placements.reduce(function(acc, placement) {
@@ -117869,14 +117918,14 @@ function offset$1(_ref2) {
   }
   state.modifiersData[name2] = data;
 }
-const offset = {
+const offset$1 = {
   name: "offset",
   enabled: true,
   phase: "main",
   requires: ["popperOffsets"],
-  fn: offset$1
+  fn: offset
 };
-function popperOffsets$1(_ref) {
+function popperOffsets(_ref) {
   var state = _ref.state, name2 = _ref.name;
   state.modifiersData[name2] = computeOffsets({
     reference: state.rects.reference,
@@ -117884,17 +117933,17 @@ function popperOffsets$1(_ref) {
     placement: state.placement
   });
 }
-const popperOffsets = {
+const popperOffsets$1 = {
   name: "popperOffsets",
   enabled: true,
   phase: "read",
-  fn: popperOffsets$1,
+  fn: popperOffsets,
   data: {}
 };
 function getAltAxis(axis) {
   return axis === "x" ? "y" : "x";
 }
-function preventOverflow$1(_ref) {
+function preventOverflow(_ref) {
   var state = _ref.state, options2 = _ref.options, name2 = _ref.name;
   var _options$mainAxis = options2.mainAxis, checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis, _options$altAxis = options2.altAxis, checkAltAxis = _options$altAxis === void 0 ? false : _options$altAxis, boundary = options2.boundary, rootBoundary = options2.rootBoundary, altBoundary = options2.altBoundary, padding = options2.padding, _options$tether = options2.tether, tether = _options$tether === void 0 ? true : _options$tether, _options$tetherOffset = options2.tetherOffset, tetherOffset = _options$tetherOffset === void 0 ? 0 : _options$tetherOffset;
   var overflow = detectOverflow(state, {
@@ -117978,11 +118027,11 @@ function preventOverflow$1(_ref) {
   }
   state.modifiersData[name2] = data;
 }
-const preventOverflow = {
+const preventOverflow$1 = {
   name: "preventOverflow",
   enabled: true,
   phase: "main",
-  fn: preventOverflow$1,
+  fn: preventOverflow,
   requiresIfExists: ["offset"]
 };
 function getHTMLElementScroll(element) {
@@ -118240,7 +118289,7 @@ function popperGenerator(generatorOptions) {
     return instance2;
   };
 }
-var defaultModifiers = [eventListeners, popperOffsets, computeStyles, applyStyles, offset, flip, preventOverflow, arrow, hide];
+var defaultModifiers = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$1, offset$1, flip$1, preventOverflow$1, arrow$1, hide$1];
 var createPopper = /* @__PURE__ */ popperGenerator({
   defaultModifiers
 });
@@ -118838,7 +118887,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1h.fullWidth, styles$1h.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1h.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1h.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.172-8-g0fbbdeb21" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.173-0-gc6204f30f" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1h.spacer) }),
@@ -181504,7 +181553,13 @@ const ModelEventView = ({
   const entries = { ...event.config };
   delete entries["max_connections"];
   const userMessages = [];
-  for (const msg of inputMessages.slice().reverse()) {
+  let offset2 = void 0;
+  const lastMessage = inputMessages.at(-1);
+  if (lastMessage?.role === "assistant") {
+    userMessages.push(lastMessage);
+    offset2 = -1;
+  }
+  for (const msg of inputMessages.slice(offset2).reverse()) {
     if (msg.role === "user" && !msg.tool_call_id || msg.role === "system" || // If the client doesn't support tool events, then tools messages are allowed to be displayed
     // in this view, since no tool events will be shown. This pretty much happens for bridged agents
     // where tool events aren't captured.
@@ -191575,16 +191630,13 @@ const CompactionEventView = ({
     data["tokens_after"] = event.tokens_after;
   }
   data = { ...data, ...event.metadata || {} };
+  const source2 = event.source && event.source !== "inspect" ? event.source : "";
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     EventPanel,
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      title: formatTitle(
-        "Compaction" + (event.source ? ": " + event.source : ""),
-        void 0,
-        event.working_start
-      ),
+      title: formatTitle("Compaction" + source2, void 0, event.working_start),
       className: className2,
       subTitle: formatDateTime(new Date(event.timestamp)),
       icon: ApplicationIcons.info,
