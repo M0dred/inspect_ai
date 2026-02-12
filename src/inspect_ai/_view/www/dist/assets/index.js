@@ -118682,7 +118682,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1c.fullWidth, styles$1c.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1c.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1c.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.178-58-g9ba78cea6" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.178-36-g3e22f9399" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1c.spacer) }),
@@ -177056,6 +177056,7 @@ function useLoadSample() {
         } else {
           log$1.debug(`PREPARING FOR POLLING RUNNING SAMPLE: ${id}-${epoch}`);
           sampleActions.clearSampleForPolling(logFile, id, epoch);
+          getSamplePolling().stopPolling();
         }
       } catch (e) {
         sampleActions.setSampleError(e);
@@ -192909,9 +192910,10 @@ const SampleDetailComponent = ({
   const sample2 = reactExports.useMemo(() => {
     return sampleData.getSelectedSample();
   }, [sampleData]);
-  const sampleStatus = useStore((state) => state.sample.sampleStatus);
   const sampleMatchesRequest = reactExports.useMemo(() => {
-    if (!sample2 || !sampleId || !epoch) return false;
+    if (!sample2 || !sampleId || !epoch) {
+      return true;
+    }
     return String(sample2.id) === sampleId && sample2.epoch === parseInt(epoch, 10);
   }, [sample2, sampleId, epoch]);
   const showFind = useStore((state) => state.app.showFind);
@@ -193024,7 +193026,7 @@ const SampleDetailComponent = ({
           ] })
         }
       ),
-      sampleStatus !== "loading" && sample2 && sampleMatchesRequest && /* @__PURE__ */ jsxRuntimeExports.jsx(
+      sampleMatchesRequest && /* @__PURE__ */ jsxRuntimeExports.jsx(
         InlineSampleComponent,
         {
           showActivity: false,
@@ -193042,6 +193044,8 @@ const LogSampleDetailView = () => {
     sampleTabId,
     sampleUuid
   } = useLogRouteParams();
+  useLoadSample();
+  usePollSample();
   const navigate = useNavigate();
   const initLogDir = useStore((state) => state.logsActions.initLogDir);
   const sampleSummaries = useSampleSummaries();
@@ -193095,8 +193099,6 @@ const LogSampleDetailView = () => {
       }
     }
   }, [logPath, sampleUuid, sampleSummaries, sampleTabId, navigate]);
-  useLoadSample();
-  usePollSample();
   const { onPrevious, onNext, hasPrevious, hasNext } = useLogSampleNavigation();
   const fnNavigationUrl = reactExports.useCallback(
     (file, log_dir) => {
