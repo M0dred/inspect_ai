@@ -30279,7 +30279,8 @@ const ApplicationIcons = {
     operator: "bi bi-person-workspace",
     tokens: "bi bi-list",
     time: "bi bi-clock",
-    execution: "bi bi-stopwatch"
+    execution: "bi bi-stopwatch",
+    cost: "bi bi-currency-dollar"
   },
   link: "bi bi-link-45deg",
   loading: "bi bi-arrow-clockwise",
@@ -118886,7 +118887,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1g.fullWidth, styles$1g.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1g.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1g.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.177-12-gfbe225c93" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.178-31-g08ed1152b" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1g.spacer) }),
@@ -181908,6 +181909,8 @@ const SampleLimitEventView = ({
         return "Operator Canceled";
       case "working":
         return "Execution Time Limit Exceeded";
+      case "cost":
+        return "Cost Limit Exceeded";
     }
   };
   const resolve_icon = (type) => {
@@ -181924,6 +181927,8 @@ const SampleLimitEventView = ({
         return ApplicationIcons.limits.operator;
       case "working":
         return ApplicationIcons.limits.execution;
+      case "cost":
+        return ApplicationIcons.limits.cost;
     }
   };
   const title2 = resolve_title(eventNode.event.type);
