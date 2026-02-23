@@ -109827,6 +109827,7 @@ const parseCentralDirectory = (buffer2) => {
   return entries;
 };
 const OPEN_RETRY_LIMIT = 5;
+const MAX_SAMPLE_SIZE_BYTES = 2048 * 1024 * 1024;
 class SampleNotFoundError extends Error {
   constructor(message2) {
     super(message2 || "Sample not found");
@@ -109905,6 +109906,10 @@ const openRemoteLogFile = async (api2, url, concurrency) => {
       throw new SampleNotFoundError(
         `Unable to read sample file ${sampleFile} - it is not present in the manifest.`
       );
+    }
+    const entry = remoteZipFile.centralDirectory.get(sampleFile);
+    if (entry.uncompressedSize > MAX_SAMPLE_SIZE_BYTES) {
+      throw new FileSizeLimitError(sampleFile, MAX_SAMPLE_SIZE_BYTES);
     }
     const eventsPreprocessor = {
       preprocess: clearLargeEventsArray
@@ -118685,7 +118690,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.180-11-gff554a15d" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.180-41-g59150a781" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
