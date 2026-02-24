@@ -2914,40 +2914,40 @@ function requireReactDomClient_production() {
     throw HydrationMismatchException;
   }
   function prepareToHydrateHostInstance(fiber) {
-    var instance = fiber.stateNode, type = fiber.type, props = fiber.memoizedProps;
-    instance[internalInstanceKey] = fiber;
-    instance[internalPropsKey] = props;
+    var instance2 = fiber.stateNode, type = fiber.type, props = fiber.memoizedProps;
+    instance2[internalInstanceKey] = fiber;
+    instance2[internalPropsKey] = props;
     switch (type) {
       case "dialog":
-        listenToNonDelegatedEvent("cancel", instance);
-        listenToNonDelegatedEvent("close", instance);
+        listenToNonDelegatedEvent("cancel", instance2);
+        listenToNonDelegatedEvent("close", instance2);
         break;
       case "iframe":
       case "object":
       case "embed":
-        listenToNonDelegatedEvent("load", instance);
+        listenToNonDelegatedEvent("load", instance2);
         break;
       case "video":
       case "audio":
         for (type = 0; type < mediaEventTypes.length; type++)
-          listenToNonDelegatedEvent(mediaEventTypes[type], instance);
+          listenToNonDelegatedEvent(mediaEventTypes[type], instance2);
         break;
       case "source":
-        listenToNonDelegatedEvent("error", instance);
+        listenToNonDelegatedEvent("error", instance2);
         break;
       case "img":
       case "image":
       case "link":
-        listenToNonDelegatedEvent("error", instance);
-        listenToNonDelegatedEvent("load", instance);
+        listenToNonDelegatedEvent("error", instance2);
+        listenToNonDelegatedEvent("load", instance2);
         break;
       case "details":
-        listenToNonDelegatedEvent("toggle", instance);
+        listenToNonDelegatedEvent("toggle", instance2);
         break;
       case "input":
-        listenToNonDelegatedEvent("invalid", instance);
+        listenToNonDelegatedEvent("invalid", instance2);
         initInput(
-          instance,
+          instance2,
           props.value,
           props.defaultValue,
           props.checked,
@@ -2958,14 +2958,14 @@ function requireReactDomClient_production() {
         );
         break;
       case "select":
-        listenToNonDelegatedEvent("invalid", instance);
+        listenToNonDelegatedEvent("invalid", instance2);
         break;
       case "textarea":
-        listenToNonDelegatedEvent("invalid", instance), initTextarea(instance, props.value, props.defaultValue, props.children);
+        listenToNonDelegatedEvent("invalid", instance2), initTextarea(instance2, props.value, props.defaultValue, props.children);
     }
     type = props.children;
-    "string" !== typeof type && "number" !== typeof type && "bigint" !== typeof type || instance.textContent === "" + type || true === props.suppressHydrationWarning || checkForUnmatchedText(instance.textContent, type) ? (null != props.popover && (listenToNonDelegatedEvent("beforetoggle", instance), listenToNonDelegatedEvent("toggle", instance)), null != props.onScroll && listenToNonDelegatedEvent("scroll", instance), null != props.onScrollEnd && listenToNonDelegatedEvent("scrollend", instance), null != props.onClick && (instance.onclick = noop$1), instance = true) : instance = false;
-    instance || throwOnHydrationMismatch(fiber, true);
+    "string" !== typeof type && "number" !== typeof type && "bigint" !== typeof type || instance2.textContent === "" + type || true === props.suppressHydrationWarning || checkForUnmatchedText(instance2.textContent, type) ? (null != props.popover && (listenToNonDelegatedEvent("beforetoggle", instance2), listenToNonDelegatedEvent("toggle", instance2)), null != props.onScroll && listenToNonDelegatedEvent("scroll", instance2), null != props.onScrollEnd && listenToNonDelegatedEvent("scrollend", instance2), null != props.onClick && (instance2.onclick = noop$1), instance2 = true) : instance2 = false;
+    instance2 || throwOnHydrationMismatch(fiber, true);
   }
   function popToNextHostParent(fiber) {
     for (hydrationParentFiber = fiber.return; hydrationParentFiber; )
@@ -3912,12 +3912,12 @@ function requireReactDomClient_production() {
           a: {
             var workInProgress2 = workInProgress$jscomp$0, update = pendingQueue;
             updateLane = props;
-            var instance = instance$jscomp$0;
+            var instance2 = instance$jscomp$0;
             switch (update.tag) {
               case 1:
                 workInProgress2 = update.payload;
                 if ("function" === typeof workInProgress2) {
-                  newState = workInProgress2.call(instance, newState, updateLane);
+                  newState = workInProgress2.call(instance2, newState, updateLane);
                   break a;
                 }
                 newState = workInProgress2;
@@ -3926,7 +3926,7 @@ function requireReactDomClient_production() {
                 workInProgress2.flags = workInProgress2.flags & -65537 | 128;
               case 0:
                 workInProgress2 = update.payload;
-                updateLane = "function" === typeof workInProgress2 ? workInProgress2.call(instance, newState, updateLane) : workInProgress2;
+                updateLane = "function" === typeof workInProgress2 ? workInProgress2.call(instance2, newState, updateLane) : workInProgress2;
                 if (null === updateLane || void 0 === updateLane) break a;
                 newState = assign2({}, newState, updateLane);
                 break a;
@@ -5288,11 +5288,11 @@ function requireReactDomClient_production() {
     workInProgress2 = workInProgress2.stateNode;
     return "function" === typeof workInProgress2.shouldComponentUpdate ? workInProgress2.shouldComponentUpdate(newProps, newState, nextContext) : ctor.prototype && ctor.prototype.isPureReactComponent ? !shallowEqual(oldProps, newProps) || !shallowEqual(oldState, newState) : true;
   }
-  function callComponentWillReceiveProps(workInProgress2, instance, newProps, nextContext) {
-    workInProgress2 = instance.state;
-    "function" === typeof instance.componentWillReceiveProps && instance.componentWillReceiveProps(newProps, nextContext);
-    "function" === typeof instance.UNSAFE_componentWillReceiveProps && instance.UNSAFE_componentWillReceiveProps(newProps, nextContext);
-    instance.state !== workInProgress2 && classComponentUpdater.enqueueReplaceState(instance, instance.state, null);
+  function callComponentWillReceiveProps(workInProgress2, instance2, newProps, nextContext) {
+    workInProgress2 = instance2.state;
+    "function" === typeof instance2.componentWillReceiveProps && instance2.componentWillReceiveProps(newProps, nextContext);
+    "function" === typeof instance2.UNSAFE_componentWillReceiveProps && instance2.UNSAFE_componentWillReceiveProps(newProps, nextContext);
+    instance2.state !== workInProgress2 && classComponentUpdater.enqueueReplaceState(instance2, instance2.state, null);
   }
   function resolveClassComponentProps(Component2, baseProps) {
     var newProps = baseProps;
@@ -7068,22 +7068,22 @@ function requireReactDomClient_production() {
   function commitClassCallbacks(finishedWork) {
     var updateQueue = finishedWork.updateQueue;
     if (null !== updateQueue) {
-      var instance = finishedWork.stateNode;
+      var instance2 = finishedWork.stateNode;
       try {
-        commitCallbacks(updateQueue, instance);
+        commitCallbacks(updateQueue, instance2);
       } catch (error2) {
         captureCommitPhaseError(finishedWork, finishedWork.return, error2);
       }
     }
   }
-  function safelyCallComponentWillUnmount(current2, nearestMountedAncestor, instance) {
-    instance.props = resolveClassComponentProps(
+  function safelyCallComponentWillUnmount(current2, nearestMountedAncestor, instance2) {
+    instance2.props = resolveClassComponentProps(
       current2.type,
       current2.memoizedProps
     );
-    instance.state = current2.memoizedState;
+    instance2.state = current2.memoizedState;
     try {
-      instance.componentWillUnmount();
+      instance2.componentWillUnmount();
     } catch (error2) {
       captureCommitPhaseError(current2, nearestMountedAncestor, error2);
     }
@@ -7130,17 +7130,17 @@ function requireReactDomClient_production() {
       else ref.current = null;
   }
   function commitHostMount(finishedWork) {
-    var type = finishedWork.type, props = finishedWork.memoizedProps, instance = finishedWork.stateNode;
+    var type = finishedWork.type, props = finishedWork.memoizedProps, instance2 = finishedWork.stateNode;
     try {
       a: switch (type) {
         case "button":
         case "input":
         case "select":
         case "textarea":
-          props.autoFocus && instance.focus();
+          props.autoFocus && instance2.focus();
           break a;
         case "img":
-          props.src ? instance.src = props.src : props.srcSet && (instance.srcset = props.srcSet);
+          props.src ? instance2.src = props.src : props.srcSet && (instance2.srcset = props.srcSet);
       }
     } catch (error2) {
       captureCommitPhaseError(finishedWork, finishedWork.return, error2);
@@ -7907,8 +7907,8 @@ function requireReactDomClient_production() {
               if (null === current2) {
                 wasHidden = root3;
                 try {
-                  var instance = wasHidden.stateNode;
-                  hoistableRoot ? hideOrUnhideDehydratedBoundary(instance, true) : hideOrUnhideDehydratedBoundary(wasHidden.stateNode, false);
+                  var instance2 = wasHidden.stateNode;
+                  hoistableRoot ? hideOrUnhideDehydratedBoundary(instance2, true) : hideOrUnhideDehydratedBoundary(wasHidden.stateNode, false);
                 } catch (error2) {
                   captureCommitPhaseError(wasHidden, wasHidden.return, error2);
                 }
@@ -8012,11 +8012,11 @@ function requireReactDomClient_production() {
           break;
         case 1:
           safelyDetachRef(finishedWork, finishedWork.return);
-          var instance = finishedWork.stateNode;
-          "function" === typeof instance.componentWillUnmount && safelyCallComponentWillUnmount(
+          var instance2 = finishedWork.stateNode;
+          "function" === typeof instance2.componentWillUnmount && safelyCallComponentWillUnmount(
             finishedWork,
             finishedWork.return,
-            instance
+            instance2
           );
           recursivelyTraverseDisappearLayoutEffects(finishedWork);
           break;
@@ -8071,12 +8071,12 @@ function requireReactDomClient_production() {
           current2 = finishedWork;
           finishedRoot = current2.updateQueue;
           if (null !== finishedRoot) {
-            var instance = current2.stateNode;
+            var instance2 = current2.stateNode;
             try {
               var hiddenCallbacks = finishedRoot.shared.hiddenCallbacks;
               if (null !== hiddenCallbacks)
                 for (finishedRoot.shared.hiddenCallbacks = null, finishedRoot = 0; finishedRoot < hiddenCallbacks.length; finishedRoot++)
-                  callCallback(hiddenCallbacks[finishedRoot], instance);
+                  callCallback(hiddenCallbacks[finishedRoot], instance2);
             } catch (error2) {
               captureCommitPhaseError(current2, current2.return, error2);
             }
@@ -8299,8 +8299,8 @@ function requireReactDomClient_production() {
         case 23:
           break;
         case 22:
-          var instance = finishedWork.stateNode;
-          null !== finishedWork.memoizedState ? instance._visibility & 2 ? recursivelyTraverseReconnectPassiveEffects(
+          var instance2 = finishedWork.stateNode;
+          null !== finishedWork.memoizedState ? instance2._visibility & 2 ? recursivelyTraverseReconnectPassiveEffects(
             finishedRoot,
             finishedWork,
             committedLanes,
@@ -8309,7 +8309,7 @@ function requireReactDomClient_production() {
           ) : recursivelyTraverseAtomicPassiveEffects(
             finishedRoot,
             finishedWork
-          ) : (instance._visibility |= 2, recursivelyTraverseReconnectPassiveEffects(
+          ) : (instance2._visibility |= 2, recursivelyTraverseReconnectPassiveEffects(
             finishedRoot,
             finishedWork,
             committedLanes,
@@ -8469,8 +8469,8 @@ function requireReactDomClient_production() {
         recursivelyTraversePassiveUnmountEffects(finishedWork);
         break;
       case 22:
-        var instance = finishedWork.stateNode;
-        null !== finishedWork.memoizedState && instance._visibility & 2 && (null === finishedWork.return || 13 !== finishedWork.return.tag) ? (instance._visibility &= -3, recursivelyTraverseDisconnectPassiveEffects(finishedWork)) : recursivelyTraversePassiveUnmountEffects(finishedWork);
+        var instance2 = finishedWork.stateNode;
+        null !== finishedWork.memoizedState && instance2._visibility & 2 && (null === finishedWork.return || 13 !== finishedWork.return.tag) ? (instance2._visibility &= -3, recursivelyTraverseDisconnectPassiveEffects(finishedWork)) : recursivelyTraversePassiveUnmountEffects(finishedWork);
         break;
       default:
         recursivelyTraversePassiveUnmountEffects(finishedWork);
@@ -9433,17 +9433,17 @@ function requireReactDomClient_production() {
           );
           break;
         } else if (1 === nearestMountedAncestor.tag) {
-          var instance = nearestMountedAncestor.stateNode;
-          if ("function" === typeof nearestMountedAncestor.type.getDerivedStateFromError || "function" === typeof instance.componentDidCatch && (null === legacyErrorBoundariesThatAlreadyFailed || !legacyErrorBoundariesThatAlreadyFailed.has(instance))) {
+          var instance2 = nearestMountedAncestor.stateNode;
+          if ("function" === typeof nearestMountedAncestor.type.getDerivedStateFromError || "function" === typeof instance2.componentDidCatch && (null === legacyErrorBoundariesThatAlreadyFailed || !legacyErrorBoundariesThatAlreadyFailed.has(instance2))) {
             sourceFiber = createCapturedValueAtFiber(error2, sourceFiber);
             error2 = createClassErrorUpdate(2);
-            instance = enqueueUpdate(nearestMountedAncestor, error2, 2);
-            null !== instance && (initializeClassErrorUpdate(
+            instance2 = enqueueUpdate(nearestMountedAncestor, error2, 2);
+            null !== instance2 && (initializeClassErrorUpdate(
               error2,
-              instance,
+              instance2,
               nearestMountedAncestor,
               sourceFiber
-            ), markRootUpdated$1(instance, 2), ensureRootIsScheduled(instance));
+            ), markRootUpdated$1(instance2, 2), ensureRootIsScheduled(instance2));
             break;
           }
         }
@@ -9768,9 +9768,9 @@ function requireReactDomClient_production() {
         var previousInstance = void 0;
         if (eventSystemFlags)
           for (var i$jscomp$0 = _dispatchQueue$i.length - 1; 0 <= i$jscomp$0; i$jscomp$0--) {
-            var _dispatchListeners$i = _dispatchQueue$i[i$jscomp$0], instance = _dispatchListeners$i.instance, currentTarget = _dispatchListeners$i.currentTarget;
+            var _dispatchListeners$i = _dispatchQueue$i[i$jscomp$0], instance2 = _dispatchListeners$i.instance, currentTarget = _dispatchListeners$i.currentTarget;
             _dispatchListeners$i = _dispatchListeners$i.listener;
-            if (instance !== previousInstance && event.isPropagationStopped())
+            if (instance2 !== previousInstance && event.isPropagationStopped())
               break a;
             previousInstance = _dispatchListeners$i;
             event.currentTarget = currentTarget;
@@ -9780,15 +9780,15 @@ function requireReactDomClient_production() {
               reportGlobalError(error2);
             }
             event.currentTarget = null;
-            previousInstance = instance;
+            previousInstance = instance2;
           }
         else
           for (i$jscomp$0 = 0; i$jscomp$0 < _dispatchQueue$i.length; i$jscomp$0++) {
             _dispatchListeners$i = _dispatchQueue$i[i$jscomp$0];
-            instance = _dispatchListeners$i.instance;
+            instance2 = _dispatchListeners$i.instance;
             currentTarget = _dispatchListeners$i.currentTarget;
             _dispatchListeners$i = _dispatchListeners$i.listener;
-            if (instance !== previousInstance && event.isPropagationStopped())
+            if (instance2 !== previousInstance && event.isPropagationStopped())
               break a;
             previousInstance = _dispatchListeners$i;
             event.currentTarget = currentTarget;
@@ -9798,7 +9798,7 @@ function requireReactDomClient_production() {
               reportGlobalError(error2);
             }
             event.currentTarget = null;
-            previousInstance = instance;
+            previousInstance = instance2;
           }
       }
     }
@@ -9974,15 +9974,15 @@ function requireReactDomClient_production() {
           }
           var inCapturePhase = 0 !== (eventSystemFlags & 4), accumulateTargetOnly = !inCapturePhase && ("scroll" === domEventName || "scrollend" === domEventName), reactEventName = inCapturePhase ? null !== reactName ? reactName + "Capture" : null : reactName;
           inCapturePhase = [];
-          for (var instance = targetInst, lastHostComponent; null !== instance; ) {
-            var _instance = instance;
+          for (var instance2 = targetInst, lastHostComponent; null !== instance2; ) {
+            var _instance = instance2;
             lastHostComponent = _instance.stateNode;
             _instance = _instance.tag;
-            5 !== _instance && 26 !== _instance && 27 !== _instance || null === lastHostComponent || null === reactEventName || (_instance = getListener2(instance, reactEventName), null != _instance && inCapturePhase.push(
-              createDispatchListener(instance, _instance, lastHostComponent)
+            5 !== _instance && 26 !== _instance && 27 !== _instance || null === lastHostComponent || null === reactEventName || (_instance = getListener2(instance2, reactEventName), null != _instance && inCapturePhase.push(
+              createDispatchListener(instance2, _instance, lastHostComponent)
             ));
             if (accumulateTargetOnly) break;
-            instance = instance.return;
+            instance2 = instance2.return;
           }
           0 < inCapturePhase.length && (reactName = new SyntheticEventCtor(
             reactName,
@@ -10009,14 +10009,14 @@ function requireReactDomClient_production() {
               inCapturePhase = SyntheticMouseEvent;
               _instance = "onMouseLeave";
               reactEventName = "onMouseEnter";
-              instance = "mouse";
+              instance2 = "mouse";
               if ("pointerout" === domEventName || "pointerover" === domEventName)
-                inCapturePhase = SyntheticPointerEvent, _instance = "onPointerLeave", reactEventName = "onPointerEnter", instance = "pointer";
+                inCapturePhase = SyntheticPointerEvent, _instance = "onPointerLeave", reactEventName = "onPointerEnter", instance2 = "pointer";
               accumulateTargetOnly = null == SyntheticEventCtor ? reactName : getNodeFromInstance(SyntheticEventCtor);
               lastHostComponent = null == reactEventType ? reactName : getNodeFromInstance(reactEventType);
               reactName = new inCapturePhase(
                 _instance,
-                instance + "leave",
+                instance2 + "leave",
                 SyntheticEventCtor,
                 nativeEvent,
                 nativeEventTarget
@@ -10026,7 +10026,7 @@ function requireReactDomClient_production() {
               _instance = null;
               getClosestInstanceFromNode(nativeEventTarget) === targetInst && (inCapturePhase = new inCapturePhase(
                 reactEventName,
-                instance + "enter",
+                instance2 + "enter",
                 reactEventType,
                 nativeEvent,
                 nativeEventTarget
@@ -10036,24 +10036,24 @@ function requireReactDomClient_production() {
                 b: {
                   inCapturePhase = getParent;
                   reactEventName = SyntheticEventCtor;
-                  instance = reactEventType;
+                  instance2 = reactEventType;
                   lastHostComponent = 0;
                   for (_instance = reactEventName; _instance; _instance = inCapturePhase(_instance))
                     lastHostComponent++;
                   _instance = 0;
-                  for (var tempB = instance; tempB; tempB = inCapturePhase(tempB))
+                  for (var tempB = instance2; tempB; tempB = inCapturePhase(tempB))
                     _instance++;
                   for (; 0 < lastHostComponent - _instance; )
                     reactEventName = inCapturePhase(reactEventName), lastHostComponent--;
                   for (; 0 < _instance - lastHostComponent; )
-                    instance = inCapturePhase(instance), _instance--;
+                    instance2 = inCapturePhase(instance2), _instance--;
                   for (; lastHostComponent--; ) {
-                    if (reactEventName === instance || null !== instance && reactEventName === instance.alternate) {
+                    if (reactEventName === instance2 || null !== instance2 && reactEventName === instance2.alternate) {
                       inCapturePhase = reactEventName;
                       break b;
                     }
                     reactEventName = inCapturePhase(reactEventName);
-                    instance = inCapturePhase(instance);
+                    instance2 = inCapturePhase(instance2);
                   }
                   inCapturePhase = null;
                 }
@@ -10172,9 +10172,9 @@ function requireReactDomClient_production() {
       processDispatchQueue(dispatchQueue, eventSystemFlags);
     });
   }
-  function createDispatchListener(instance, listener, currentTarget) {
+  function createDispatchListener(instance2, listener, currentTarget) {
     return {
-      instance,
+      instance: instance2,
       listener,
       currentTarget
     };
@@ -11140,75 +11140,75 @@ function requireReactDomClient_production() {
       container2.removeChild(node2);
     }
   }
-  function canHydrateInstance(instance, type, props, inRootOrSingleton) {
-    for (; 1 === instance.nodeType; ) {
+  function canHydrateInstance(instance2, type, props, inRootOrSingleton) {
+    for (; 1 === instance2.nodeType; ) {
       var anyProps = props;
-      if (instance.nodeName.toLowerCase() !== type.toLowerCase()) {
-        if (!inRootOrSingleton && ("INPUT" !== instance.nodeName || "hidden" !== instance.type))
+      if (instance2.nodeName.toLowerCase() !== type.toLowerCase()) {
+        if (!inRootOrSingleton && ("INPUT" !== instance2.nodeName || "hidden" !== instance2.type))
           break;
       } else if (!inRootOrSingleton)
-        if ("input" === type && "hidden" === instance.type) {
+        if ("input" === type && "hidden" === instance2.type) {
           var name2 = null == anyProps.name ? null : "" + anyProps.name;
-          if ("hidden" === anyProps.type && instance.getAttribute("name") === name2)
-            return instance;
-        } else return instance;
-      else if (!instance[internalHoistableMarker])
+          if ("hidden" === anyProps.type && instance2.getAttribute("name") === name2)
+            return instance2;
+        } else return instance2;
+      else if (!instance2[internalHoistableMarker])
         switch (type) {
           case "meta":
-            if (!instance.hasAttribute("itemprop")) break;
-            return instance;
+            if (!instance2.hasAttribute("itemprop")) break;
+            return instance2;
           case "link":
-            name2 = instance.getAttribute("rel");
-            if ("stylesheet" === name2 && instance.hasAttribute("data-precedence"))
+            name2 = instance2.getAttribute("rel");
+            if ("stylesheet" === name2 && instance2.hasAttribute("data-precedence"))
               break;
-            else if (name2 !== anyProps.rel || instance.getAttribute("href") !== (null == anyProps.href || "" === anyProps.href ? null : anyProps.href) || instance.getAttribute("crossorigin") !== (null == anyProps.crossOrigin ? null : anyProps.crossOrigin) || instance.getAttribute("title") !== (null == anyProps.title ? null : anyProps.title))
+            else if (name2 !== anyProps.rel || instance2.getAttribute("href") !== (null == anyProps.href || "" === anyProps.href ? null : anyProps.href) || instance2.getAttribute("crossorigin") !== (null == anyProps.crossOrigin ? null : anyProps.crossOrigin) || instance2.getAttribute("title") !== (null == anyProps.title ? null : anyProps.title))
               break;
-            return instance;
+            return instance2;
           case "style":
-            if (instance.hasAttribute("data-precedence")) break;
-            return instance;
+            if (instance2.hasAttribute("data-precedence")) break;
+            return instance2;
           case "script":
-            name2 = instance.getAttribute("src");
-            if ((name2 !== (null == anyProps.src ? null : anyProps.src) || instance.getAttribute("type") !== (null == anyProps.type ? null : anyProps.type) || instance.getAttribute("crossorigin") !== (null == anyProps.crossOrigin ? null : anyProps.crossOrigin)) && name2 && instance.hasAttribute("async") && !instance.hasAttribute("itemprop"))
+            name2 = instance2.getAttribute("src");
+            if ((name2 !== (null == anyProps.src ? null : anyProps.src) || instance2.getAttribute("type") !== (null == anyProps.type ? null : anyProps.type) || instance2.getAttribute("crossorigin") !== (null == anyProps.crossOrigin ? null : anyProps.crossOrigin)) && name2 && instance2.hasAttribute("async") && !instance2.hasAttribute("itemprop"))
               break;
-            return instance;
+            return instance2;
           default:
-            return instance;
+            return instance2;
         }
-      instance = getNextHydratable(instance.nextSibling);
-      if (null === instance) break;
+      instance2 = getNextHydratable(instance2.nextSibling);
+      if (null === instance2) break;
     }
     return null;
   }
-  function canHydrateTextInstance(instance, text2, inRootOrSingleton) {
+  function canHydrateTextInstance(instance2, text2, inRootOrSingleton) {
     if ("" === text2) return null;
-    for (; 3 !== instance.nodeType; ) {
-      if ((1 !== instance.nodeType || "INPUT" !== instance.nodeName || "hidden" !== instance.type) && !inRootOrSingleton)
+    for (; 3 !== instance2.nodeType; ) {
+      if ((1 !== instance2.nodeType || "INPUT" !== instance2.nodeName || "hidden" !== instance2.type) && !inRootOrSingleton)
         return null;
-      instance = getNextHydratable(instance.nextSibling);
-      if (null === instance) return null;
+      instance2 = getNextHydratable(instance2.nextSibling);
+      if (null === instance2) return null;
     }
-    return instance;
+    return instance2;
   }
-  function canHydrateHydrationBoundary(instance, inRootOrSingleton) {
-    for (; 8 !== instance.nodeType; ) {
-      if ((1 !== instance.nodeType || "INPUT" !== instance.nodeName || "hidden" !== instance.type) && !inRootOrSingleton)
+  function canHydrateHydrationBoundary(instance2, inRootOrSingleton) {
+    for (; 8 !== instance2.nodeType; ) {
+      if ((1 !== instance2.nodeType || "INPUT" !== instance2.nodeName || "hidden" !== instance2.type) && !inRootOrSingleton)
         return null;
-      instance = getNextHydratable(instance.nextSibling);
-      if (null === instance) return null;
+      instance2 = getNextHydratable(instance2.nextSibling);
+      if (null === instance2) return null;
     }
-    return instance;
+    return instance2;
   }
-  function isSuspenseInstancePending(instance) {
-    return "$?" === instance.data || "$~" === instance.data;
+  function isSuspenseInstancePending(instance2) {
+    return "$?" === instance2.data || "$~" === instance2.data;
   }
-  function isSuspenseInstanceFallback(instance) {
-    return "$!" === instance.data || "$?" === instance.data && "loading" !== instance.ownerDocument.readyState;
+  function isSuspenseInstanceFallback(instance2) {
+    return "$!" === instance2.data || "$?" === instance2.data && "loading" !== instance2.ownerDocument.readyState;
   }
-  function registerSuspenseInstanceRetry(instance, callback) {
-    var ownerDocument = instance.ownerDocument;
-    if ("$~" === instance.data) instance._reactRetry = callback;
-    else if ("$?" !== instance.data || "loading" !== ownerDocument.readyState)
+  function registerSuspenseInstanceRetry(instance2, callback) {
+    var ownerDocument = instance2.ownerDocument;
+    if ("$~" === instance2.data) instance2._reactRetry = callback;
+    else if ("$?" !== instance2.data || "loading" !== ownerDocument.readyState)
       callback();
     else {
       var listener = function() {
@@ -11216,7 +11216,7 @@ function requireReactDomClient_production() {
         ownerDocument.removeEventListener("DOMContentLoaded", listener);
       };
       ownerDocument.addEventListener("DOMContentLoaded", listener);
-      instance._reactRetry = listener;
+      instance2._reactRetry = listener;
     }
   }
   function getNextHydratable(node2) {
@@ -11282,10 +11282,10 @@ function requireReactDomClient_production() {
         throw Error(formatProdErrorMessage(451));
     }
   }
-  function releaseSingletonInstance(instance) {
-    for (var attributes2 = instance.attributes; attributes2.length; )
-      instance.removeAttributeNode(attributes2[0]);
-    detachDeletedInstance(instance);
+  function releaseSingletonInstance(instance2) {
+    for (var attributes2 = instance2.attributes; attributes2.length; )
+      instance2.removeAttributeNode(attributes2[0]);
+    detachDeletedInstance(instance2);
   }
   var preloadPropsMap = /* @__PURE__ */ new Map(), preconnectsSet = /* @__PURE__ */ new Set();
   function getHoistableRoot(container2) {
@@ -11554,24 +11554,24 @@ function requireReactDomClient_production() {
     if (null === resource.instance)
       switch (resource.type) {
         case "style":
-          var instance = hoistableRoot.querySelector(
+          var instance2 = hoistableRoot.querySelector(
             'style[data-href~="' + escapeSelectorAttributeValueInsideDoubleQuotes(props.href) + '"]'
           );
-          if (instance)
-            return resource.instance = instance, markNodeAsHoistable(instance), instance;
+          if (instance2)
+            return resource.instance = instance2, markNodeAsHoistable(instance2), instance2;
           var styleProps = assign2({}, props, {
             "data-href": props.href,
             "data-precedence": props.precedence,
             href: null,
             precedence: null
           });
-          instance = (hoistableRoot.ownerDocument || hoistableRoot).createElement(
+          instance2 = (hoistableRoot.ownerDocument || hoistableRoot).createElement(
             "style"
           );
-          markNodeAsHoistable(instance);
-          setInitialProperties(instance, "style", styleProps);
-          insertStylesheet(instance, props.precedence, hoistableRoot);
-          return resource.instance = instance;
+          markNodeAsHoistable(instance2);
+          setInitialProperties(instance2, "style", styleProps);
+          insertStylesheet(instance2, props.precedence, hoistableRoot);
+          return resource.instance = instance2;
         case "stylesheet":
           styleProps = getStyleKey(props.href);
           var instance$249 = hoistableRoot.querySelector(
@@ -11579,8 +11579,8 @@ function requireReactDomClient_production() {
           );
           if (instance$249)
             return resource.state.loading |= 4, resource.instance = instance$249, markNodeAsHoistable(instance$249), instance$249;
-          instance = stylesheetPropsFromRawProps(props);
-          (styleProps = preloadPropsMap.get(styleProps)) && adoptPreloadPropsForStylesheet(instance, styleProps);
+          instance2 = stylesheetPropsFromRawProps(props);
+          (styleProps = preloadPropsMap.get(styleProps)) && adoptPreloadPropsForStylesheet(instance2, styleProps);
           instance$249 = (hoistableRoot.ownerDocument || hoistableRoot).createElement("link");
           markNodeAsHoistable(instance$249);
           var linkInstance = instance$249;
@@ -11588,7 +11588,7 @@ function requireReactDomClient_production() {
             linkInstance.onload = resolve;
             linkInstance.onerror = reject;
           });
-          setInitialProperties(instance$249, "link", instance);
+          setInitialProperties(instance$249, "link", instance2);
           resource.state.loading |= 4;
           insertStylesheet(instance$249, props.precedence, hoistableRoot);
           return resource.instance = instance$249;
@@ -11598,13 +11598,13 @@ function requireReactDomClient_production() {
             getScriptSelectorFromKey(instance$249)
           ))
             return resource.instance = styleProps, markNodeAsHoistable(styleProps), styleProps;
-          instance = props;
+          instance2 = props;
           if (styleProps = preloadPropsMap.get(instance$249))
-            instance = assign2({}, props), adoptPreloadPropsForScript(instance, styleProps);
+            instance2 = assign2({}, props), adoptPreloadPropsForScript(instance2, styleProps);
           hoistableRoot = hoistableRoot.ownerDocument || hoistableRoot;
           styleProps = hoistableRoot.createElement("script");
           markNodeAsHoistable(styleProps);
-          setInitialProperties(styleProps, "link", instance);
+          setInitialProperties(styleProps, "link", instance2);
           hoistableRoot.head.appendChild(styleProps);
           return resource.instance = styleProps;
         case "void":
@@ -11613,10 +11613,10 @@ function requireReactDomClient_production() {
           throw Error(formatProdErrorMessage(443, resource.type));
       }
     else
-      "stylesheet" === resource.type && 0 === (resource.state.loading & 4) && (instance = resource.instance, resource.state.loading |= 4, insertStylesheet(instance, props.precedence, hoistableRoot));
+      "stylesheet" === resource.type && 0 === (resource.state.loading & 4) && (instance2 = resource.instance, resource.state.loading |= 4, insertStylesheet(instance2, props.precedence, hoistableRoot));
     return resource.instance;
   }
-  function insertStylesheet(instance, precedence, root3) {
+  function insertStylesheet(instance2, precedence, root3) {
     for (var nodes = root3.querySelectorAll(
       'link[rel="stylesheet"][data-precedence],style[data-precedence]'
     ), last = nodes.length ? nodes[nodes.length - 1] : null, prior = last, i = 0; i < nodes.length; i++) {
@@ -11624,7 +11624,7 @@ function requireReactDomClient_production() {
       if (node2.dataset.precedence === precedence) prior = node2;
       else if (prior !== last) break;
     }
-    prior ? prior.parentNode.insertBefore(instance, prior.nextSibling) : (precedence = 9 === root3.nodeType ? root3.head : root3, precedence.insertBefore(instance, precedence.firstChild));
+    prior ? prior.parentNode.insertBefore(instance2, prior.nextSibling) : (precedence = 9 === root3.nodeType ? root3.head : root3, precedence.insertBefore(instance2, precedence.firstChild));
   }
   function adoptPreloadPropsForStylesheet(stylesheetProps, preloadProps) {
     null == stylesheetProps.crossOrigin && (stylesheetProps.crossOrigin = preloadProps.crossOrigin);
@@ -11658,10 +11658,10 @@ function requireReactDomClient_production() {
     }
     return cache;
   }
-  function mountHoistable(hoistableRoot, type, instance) {
+  function mountHoistable(hoistableRoot, type, instance2) {
     hoistableRoot = hoistableRoot.ownerDocument || hoistableRoot;
     hoistableRoot.head.insertBefore(
-      instance,
+      instance2,
       "title" === type ? hoistableRoot.querySelector("head > title") : null
     );
   }
@@ -11696,29 +11696,29 @@ function requireReactDomClient_production() {
   function suspendResource(state, hoistableRoot, resource, props) {
     if ("stylesheet" === resource.type && ("string" !== typeof props.media || false !== matchMedia(props.media).matches) && 0 === (resource.state.loading & 4)) {
       if (null === resource.instance) {
-        var key2 = getStyleKey(props.href), instance = hoistableRoot.querySelector(
+        var key2 = getStyleKey(props.href), instance2 = hoistableRoot.querySelector(
           getStylesheetSelectorFromKey(key2)
         );
-        if (instance) {
-          hoistableRoot = instance._p;
+        if (instance2) {
+          hoistableRoot = instance2._p;
           null !== hoistableRoot && "object" === typeof hoistableRoot && "function" === typeof hoistableRoot.then && (state.count++, state = onUnsuspend.bind(state), hoistableRoot.then(state, state));
           resource.state.loading |= 4;
-          resource.instance = instance;
-          markNodeAsHoistable(instance);
+          resource.instance = instance2;
+          markNodeAsHoistable(instance2);
           return;
         }
-        instance = hoistableRoot.ownerDocument || hoistableRoot;
+        instance2 = hoistableRoot.ownerDocument || hoistableRoot;
         props = stylesheetPropsFromRawProps(props);
         (key2 = preloadPropsMap.get(key2)) && adoptPreloadPropsForStylesheet(props, key2);
-        instance = instance.createElement("link");
-        markNodeAsHoistable(instance);
-        var linkInstance = instance;
+        instance2 = instance2.createElement("link");
+        markNodeAsHoistable(instance2);
+        var linkInstance = instance2;
         linkInstance._p = new Promise(function(resolve, reject) {
           linkInstance.onload = resolve;
           linkInstance.onerror = reject;
         });
-        setInitialProperties(instance, "link", props);
-        resource.instance = instance;
+        setInitialProperties(instance2, "link", props);
+        resource.instance = instance2;
       }
       null === state.stylesheets && (state.stylesheets = /* @__PURE__ */ new Map());
       state.stylesheets.set(resource, hoistableRoot);
@@ -15768,8 +15768,8 @@ function requireClipboard() {
                   }
                   return clipboard_typeof(obj);
                 }
-                function _classCallCheck(instance, Constructor) {
-                  if (!(instance instanceof Constructor)) {
+                function _classCallCheck(instance2, Constructor) {
+                  if (!(instance2 instanceof Constructor)) {
                     throw new TypeError("Cannot call a class as a function");
                   }
                 }
@@ -16932,22 +16932,11 @@ function resolvePath(to2, fromPathname = "/") {
   } = typeof to2 === "string" ? parsePath$1(to2) : to2;
   let pathname;
   if (toPathname) {
-    if (isAbsoluteUrl(toPathname)) {
-      pathname = toPathname;
+    toPathname = toPathname.replace(/\/\/+/g, "/");
+    if (toPathname.startsWith("/")) {
+      pathname = resolvePathname(toPathname.substring(1), "/");
     } else {
-      if (toPathname.includes("//")) {
-        let oldPathname = toPathname;
-        toPathname = toPathname.replace(/\/\/+/g, "/");
-        warning(
-          false,
-          `Pathnames cannot have embedded double slashes - normalizing ${oldPathname} -> ${toPathname}`
-        );
-      }
-      if (toPathname.startsWith("/")) {
-        pathname = resolvePathname(toPathname.substring(1), "/");
-      } else {
-        pathname = resolvePathname(toPathname, fromPathname);
-      }
+      pathname = resolvePathname(toPathname, fromPathname);
     }
   } else {
     pathname = fromPathname;
@@ -22320,7 +22309,15 @@ function PrefetchPageLinksImpl({
   return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, dataHrefs.map((href) => /* @__PURE__ */ reactExports.createElement("link", { key: href, rel: "prefetch", as: "fetch", href, ...linkProps })), moduleHrefs.map((href) => /* @__PURE__ */ reactExports.createElement("link", { key: href, rel: "modulepreload", href, ...linkProps })), keyedPrefetchLinks.map(({ key: key2, link: link2 }) => (
     // these don't spread `linkProps` because they are full link descriptors
     // already with their own props
-    /* @__PURE__ */ reactExports.createElement("link", { key: key2, nonce: linkProps.nonce, ...link2 })
+    /* @__PURE__ */ reactExports.createElement(
+      "link",
+      {
+        key: key2,
+        nonce: linkProps.nonce,
+        ...link2,
+        crossOrigin: link2.crossOrigin ?? linkProps.crossOrigin
+      }
+    )
   )));
 }
 function mergeRefs(...refs) {
@@ -22338,7 +22335,7 @@ var isBrowser2 = typeof window !== "undefined" && typeof window.document !== "un
 try {
   if (isBrowser2) {
     window.__reactRouterVersion = // @ts-expect-error
-    "7.12.0";
+    "7.13.0";
   }
 } catch (e) {
 }
@@ -27274,7 +27271,7 @@ const createLogger = (namespace) => {
   };
   return logger;
 };
-const log$b = createLogger("DatabaseManager");
+const log$c = createLogger("DatabaseManager");
 class DatabaseManager {
   database = null;
   databaseHandle = null;
@@ -27287,28 +27284,28 @@ class DatabaseManager {
     if (this.databaseHandle === databaseHandle && this.database) {
       return this.database;
     }
-    log$b.debug(`Opening database for log directory: ${databaseHandle}`);
+    log$c.debug(`Opening database for log directory: ${databaseHandle}`);
     if (this.database && this.databaseHandle !== databaseHandle) {
       await this.close();
     }
     const needsRecreation = await AppDatabase.checkVersionMismatch(databaseHandle);
     if (needsRecreation) {
-      log$b.info(
+      log$c.info(
         `Recreating database due to version mismatch for: ${databaseHandle}`
       );
       const sanitizedDir = databaseHandle.replace(/[^a-zA-Z0-9_-]/g, "_");
       const dbName = `InspectAI_${sanitizedDir}`;
       await Dexie.delete(dbName);
-      log$b.debug(`Deleted old database: ${dbName}`);
+      log$c.debug(`Deleted old database: ${dbName}`);
     }
     this.database = new AppDatabase(databaseHandle);
     this.databaseHandle = databaseHandle;
     try {
       await this.database.open();
-      log$b.debug(`Successfully opened database for: ${databaseHandle}`);
+      log$c.debug(`Successfully opened database for: ${databaseHandle}`);
       return this.database;
     } catch (error2) {
-      log$b.error(`Failed to open database for ${databaseHandle}:`, error2);
+      log$c.error(`Failed to open database for ${databaseHandle}:`, error2);
       this.database = null;
       this.databaseHandle = null;
       throw error2;
@@ -27333,7 +27330,7 @@ class DatabaseManager {
    */
   async close() {
     if (this.database) {
-      log$b.debug(`Closing database for: ${this.databaseHandle}`);
+      log$c.debug(`Closing database for: ${this.databaseHandle}`);
       this.database.close();
       this.database = null;
       this.databaseHandle = null;
@@ -27355,7 +27352,7 @@ class DatabaseManager {
     };
   }
 }
-const log$a = createLogger("DatabaseService");
+const log$b = createLogger("DatabaseService");
 class DatabaseService {
   manager;
   constructor(manager) {
@@ -27421,13 +27418,13 @@ class DatabaseService {
       mtime: file.mtime,
       cached_at: now
     }));
-    log$a.debug(`Caching ${records.length} log files`);
+    log$b.debug(`Caching ${records.length} log files`);
     await db.logs.bulkPut(records);
   }
   async readLogs() {
     try {
       if (!this.opened()) {
-        log$a.debug("Database not open");
+        log$b.debug("Database not open");
         return null;
       }
       const db = this.getDb();
@@ -27442,10 +27439,10 @@ class DatabaseService {
         return 0;
       });
       if (files.length === 0) {
-        log$a.debug("No cached log files found");
+        log$b.debug("No cached log files found");
         return [];
       }
-      log$a.debug(`Retrieved ${files.length} cached log files`);
+      log$b.debug(`Retrieved ${files.length} cached log files`);
       return files.map((file) => ({
         name: file.file_path,
         task: file.task,
@@ -27453,7 +27450,7 @@ class DatabaseService {
         mtime: file.mtime
       }));
     } catch (error2) {
-      log$a.error("Error retrieving cached log files:", error2);
+      log$b.error("Error retrieving cached log files:", error2);
       return null;
     }
   }
@@ -27466,7 +27463,7 @@ class DatabaseService {
       cached_at: now,
       preview: summary2
     }));
-    log$a.debug(`Caching ${records.length} log previews`);
+    log$b.debug(`Caching ${records.length} log previews`);
     await db.log_previews.bulkPut(records);
   }
   async readLogPreviews(logs) {
@@ -27474,7 +27471,7 @@ class DatabaseService {
       const filePaths = logs.map((log2) => log2.name);
       const db = this.getDb();
       const records = await db.log_previews.where("file_path").anyOf(filePaths).toArray();
-      log$a.debug(
+      log$b.debug(
         `Retrieved ${records.length} cached log previews out of ${filePaths.length} requested`
       );
       const result2 = {};
@@ -27483,7 +27480,7 @@ class DatabaseService {
       }
       return result2;
     } catch (error2) {
-      log$a.error("Error retrieving cached log summaries:", error2);
+      log$b.error("Error retrieving cached log summaries:", error2);
       return {};
     }
   }
@@ -27494,12 +27491,12 @@ class DatabaseService {
       const records = await db.log_previews.where("file_path").anyOf(filePaths).toArray();
       const cachedPaths = new Set(records.map((r2) => r2.file_path));
       const missing = logs.filter((log2) => !cachedPaths.has(log2.name));
-      log$a.debug(
+      log$b.debug(
         `Found ${missing.length} missing previews out of ${logs.length} requested`
       );
       return missing;
     } catch (error2) {
-      log$a.error("Error finding missing previews:", error2);
+      log$b.error("Error finding missing previews:", error2);
       return logs;
     }
   }
@@ -27512,7 +27509,7 @@ class DatabaseService {
       cached_at: now,
       details: info
     };
-    log$a.debug(`Caching log info for: ${filePath}`);
+    log$b.debug(`Caching log info for: ${filePath}`);
     await db.log_details.put(record);
   }
   async writeLogDetails(details) {
@@ -27523,7 +27520,7 @@ class DatabaseService {
       cached_at: now,
       details: info
     }));
-    log$a.debug(`Caching ${records.length} log details`);
+    log$b.debug(`Caching ${records.length} log details`);
     await db.log_details.bulkPut(records);
   }
   async readLogDetailsForFile(filePath) {
@@ -27531,13 +27528,13 @@ class DatabaseService {
       const db = this.getDb();
       const record = await db.log_details.get(filePath);
       if (!record) {
-        log$a.debug(`No cached log info found for: ${filePath}`);
+        log$b.debug(`No cached log info found for: ${filePath}`);
         return null;
       }
-      log$a.debug(`Retrieved cached log info for: ${filePath}`);
+      log$b.debug(`Retrieved cached log info for: ${filePath}`);
       return record.details;
     } catch (error2) {
-      log$a.error(`Error retrieving cached log info for ${filePath}:`, error2);
+      log$b.error(`Error retrieving cached log info for ${filePath}:`, error2);
       return null;
     }
   }
@@ -27546,7 +27543,7 @@ class DatabaseService {
       const filePaths = logs.map((log2) => log2.name);
       const db = this.getDb();
       const records = await db.log_details.where("file_path").anyOf(filePaths).toArray();
-      log$a.debug(
+      log$b.debug(
         `Retrieved ${records.length} cached log details out of ${filePaths.length} requested`
       );
       const result2 = {};
@@ -27555,7 +27552,7 @@ class DatabaseService {
       }
       return result2;
     } catch (error2) {
-      log$a.error("Error retrieving cached log details:", error2);
+      log$b.error("Error retrieving cached log details:", error2);
       return {};
     }
   }
@@ -27566,12 +27563,12 @@ class DatabaseService {
       const records = await db.log_details.where("file_path").anyOf(filePaths).toArray();
       const cachedPaths = new Set(records.map((r2) => r2.file_path));
       const missing = logs.filter((log2) => !cachedPaths.has(log2.name));
-      log$a.debug(
+      log$b.debug(
         `Found ${missing.length} missing details out of ${logs.length} requested`
       );
       return missing;
     } catch (error2) {
-      log$a.error("Error finding missing details:", error2);
+      log$b.error("Error finding missing details:", error2);
       return logs;
     }
   }
@@ -27585,7 +27582,7 @@ class DatabaseService {
         allSummaries.push(...record.details.sampleSummaries);
       }
     }
-    log$a.debug(
+    log$b.debug(
       `Retrieved ${allSummaries.length} sample summaries across all files`
     );
     return allSummaries;
@@ -27625,7 +27622,7 @@ class DatabaseService {
         }
       });
     }
-    log$a.debug(
+    log$b.debug(
       `Query returned ${filtered.length} sample summaries (filtered from ${allSummaries.length})`
     );
     return filtered;
@@ -27636,7 +27633,7 @@ class DatabaseService {
    */
   async clearAllCaches() {
     const db = this.getDb();
-    log$a.debug("Clearing all caches");
+    log$b.debug("Clearing all caches");
     await Promise.all([
       db.logs.clear(),
       db.log_previews.clear(),
@@ -27648,7 +27645,7 @@ class DatabaseService {
    */
   async clearCacheForFile(filePath) {
     const db = this.getDb();
-    log$a.debug(`Clearing cache for file: ${filePath}`);
+    log$b.debug(`Clearing cache for file: ${filePath}`);
     await Promise.all([
       db.logs.where("file_path").equals(filePath).delete(),
       db.log_previews.where("file_path").equals(filePath).delete(),
@@ -27801,13 +27798,6 @@ const kScoreTypeOther = "other";
 const kScoreTypeObject = "object";
 const kScoreTypeBoolean = "boolean";
 const kScoreTypeList = "list";
-const kSampleAscVal = "sample-asc";
-const kSampleDescVal = "sample-desc";
-const kEpochAscVal = "epoch-asc";
-const kEpochDescVal = "epoch-desc";
-const kScoreAscVal = "score-asc";
-const kScoreDescVal = "score-desc";
-const kDefaultSort = kSampleAscVal;
 const clearDocumentSelection = () => {
   const sel = window.getSelection();
   if (sel) {
@@ -27824,7 +27814,6 @@ const initialState$3 = {
   status: { loading: 0, syncing: false },
   showFind: false,
   dialogs: {
-    sample: false,
     transcriptFilter: false,
     options: false
   },
@@ -27874,20 +27863,6 @@ const createAppSlice = (set3, get2, _store) => {
       setNativeFind: (nativeFind) => set3((state) => {
         state.app.nativeFind = nativeFind;
       }),
-      setShowingSampleDialog: (showing) => {
-        const state = get2();
-        const isShowing = state.app.dialogs.sample;
-        if (showing === isShowing) {
-          return;
-        }
-        set3((state2) => {
-          state2.app.dialogs.sample = showing;
-        });
-        if (!showing) {
-          const state2 = get2();
-          state2.appActions.clearSampleTab();
-        }
-      },
       setShowingTranscriptFilterDialog: (showing) => {
         const state = get2();
         const isShowing = state.app.dialogs.transcriptFilter;
@@ -28249,7 +28224,7 @@ const createPolling = (name2, callback, options2) => {
   };
   return { name: name2, start: start2, stop };
 };
-const log$9 = createLogger("logPolling");
+const log$a = createLogger("logPolling");
 const kRetries$1 = 10;
 const kPollingInterval$2 = 2;
 function createLogPolling(get2, set3) {
@@ -28265,19 +28240,19 @@ function createLogPolling(get2, set3) {
     if (!api2 || !selectedLogFile) {
       return false;
     }
-    log$9.debug(`refresh: ${selectedLogFile}`);
+    log$a.debug(`refresh: ${selectedLogFile}`);
     try {
       const logDetails = await api2.get_log_details(selectedLogFile);
       set3((state2) => {
         state2.log.selectedLogDetails = logDetails;
-        log$9.debug(
+        log$a.debug(
           `Setting refreshed summary ${logDetails.sampleSummaries.length} samples`,
           logDetails
         );
         if (clearPending) {
           const pendingSampleSummaries = state2.log.pendingSampleSummaries;
           if ((pendingSampleSummaries?.samples.length || 0) > 0) {
-            log$9.debug(
+            log$a.debug(
               `Clearing pending summaries during refresh for: ${logFileName}`
             );
             state2.log.pendingSampleSummaries = {
@@ -28289,7 +28264,7 @@ function createLogPolling(get2, set3) {
       });
       return true;
     } catch (error2) {
-      log$9.error("Error refreshing log:", error2);
+      log$a.error("Error refreshing log:", error2);
       return false;
     }
   };
@@ -28303,7 +28278,7 @@ function createLogPolling(get2, set3) {
       `PendingSamples-${logFileName}`,
       async () => {
         if (abortController.signal.aborted) {
-          log$9.debug(`Component unmounted, stopping poll for: ${logFileName}`);
+          log$a.debug(`Component unmounted, stopping poll for: ${logFileName}`);
           return false;
         }
         const state = get2();
@@ -28314,13 +28289,13 @@ function createLogPolling(get2, set3) {
         if (abortController.signal.aborted) {
           return false;
         }
-        log$9.debug(`Polling running samples: ${logFileName}`);
+        log$a.debug(`Polling running samples: ${logFileName}`);
         const currentEtag = get2().log.pendingSampleSummaries?.etag;
         const pendingSamples = await api2.get_log_pending_samples(
           logFileName,
           currentEtag
         );
-        log$9.debug(`Received pending samples`, pendingSamples);
+        log$a.debug(`Received pending samples`, pendingSamples);
         if (abortController.signal.aborted) {
           return false;
         }
@@ -28332,9 +28307,17 @@ function createLogPolling(get2, set3) {
           await refreshLog(logFileName, false);
           return true;
         } else if (pendingSamples.status === "NotFound") {
-          log$9.debug(`Stop polling running samples: ${logFileName}`);
-          if (loadedPendingSamples || state.log.selectedLogDetails?.status === "started") {
-            log$9.debug(`Refresh log: ${logFileName}`);
+          const currentStatus = get2().log.selectedLogDetails?.status;
+          if (currentStatus === "started") {
+            log$a.debug(
+              `NotFound but eval still running, continuing to poll: ${logFileName}`
+            );
+            await refreshLog(logFileName, false);
+            return true;
+          }
+          log$a.debug(`Stop polling running samples: ${logFileName}`);
+          if (loadedPendingSamples) {
+            log$a.debug(`Refresh log: ${logFileName}`);
             await refreshLog(logFileName, true);
           }
           return false;
@@ -28354,7 +28337,7 @@ function createLogPolling(get2, set3) {
     }
     const pendingSampleSummaries = get2().log.pendingSampleSummaries;
     if ((pendingSampleSummaries?.samples.length || 0) > 0) {
-      log$9.debug(`Clear pending: ${logFileName}`);
+      log$a.debug(`Clear pending: ${logFileName}`);
       return refreshLog(logFileName, true);
     }
     return false;
@@ -28366,7 +28349,7 @@ function createLogPolling(get2, set3) {
     }
   };
   const cleanup = () => {
-    log$9.debug(`Cleanup`);
+    log$a.debug(`Cleanup`);
     if (abortController) {
       abortController.abort();
     }
@@ -28381,10 +28364,10 @@ function createLogPolling(get2, set3) {
     refreshLog: (clearPending = false) => refreshLog(get2().logs.selectedLogFile || "", clearPending)
   };
 }
-const log$8 = createLogger("logSlice");
+const log$9 = createLogger("logSlice");
 const initialState$2 = {
   // Log state
-  șselectedSampleId: void 0,
+  selectedSampleId: void 0,
   selectedSampleEpoch: void 0,
   selectedLogDetails: void 0,
   pendingSampleSummaries: void 0,
@@ -28392,8 +28375,6 @@ const initialState$2 = {
   // Filter state
   filter: "",
   filterError: void 0,
-  epoch: "all",
-  sort: kDefaultSort,
   selectedScores: void 0,
   scores: void 0
 };
@@ -28457,12 +28438,6 @@ const createLogSlice = (set3, get2, _store) => {
           state.log.filterError = void 0;
         });
       },
-      setEpoch: (epoch) => set3((state) => {
-        state.log.epoch = epoch;
-      }),
-      setSort: (sort2) => set3((state) => {
-        state.log.sort = sort2;
-      }),
       setSelectedScores: (scores2) => set3((state) => {
         state.log.selectedScores = scores2;
       }),
@@ -28472,8 +28447,6 @@ const createLogSlice = (set3, get2, _store) => {
       resetFiltering: () => set3((state) => {
         state.log.filter = "";
         state.log.filterError = void 0;
-        state.log.epoch = "all";
-        state.log.sort = kDefaultSort;
         state.log.selectedScores = state.log.scores?.slice(0, 1);
       }),
       syncLog: async (logFileName) => {
@@ -28488,13 +28461,13 @@ const createLogSlice = (set3, get2, _store) => {
           console.error("API not initialized in Store");
           return;
         }
-        log$8.debug(`Load log: ${logAbsPath}`);
+        log$9.debug(`Load log: ${logAbsPath}`);
         const dbService = state.databaseService;
         if (dbService && dbService.opened()) {
           try {
             const cachedInfo = await dbService.readLogDetailsForFile(logAbsPath);
             if (cachedInfo) {
-              log$8.debug(`Using cached log info for: ${logAbsPath}`);
+              log$9.debug(`Using cached log info for: ${logAbsPath}`);
               state.logActions.setSelectedLogDetails(cachedInfo);
               api2.get_log_details(logAbsPath).then((logDetails) => {
                 state.logActions.setSelectedLogDetails(logDetails);
@@ -28534,7 +28507,7 @@ const createLogSlice = (set3, get2, _store) => {
           state.logActions.clearPendingSampleSummaries();
           logPolling.startPolling(logFileName);
         } catch (error2) {
-          log$8.error("Error loading log:", error2);
+          log$9.error("Error loading log:", error2);
           throw error2;
         }
       },
@@ -28556,12 +28529,12 @@ const createLogSlice = (set3, get2, _store) => {
         if (!api2 || !selectedLogFile) {
           return;
         }
-        log$8.debug(`refresh: ${selectedLogFile}`);
+        log$9.debug(`refresh: ${selectedLogFile}`);
         try {
           const logDetails = await api2.get_log_details(selectedLogFile);
           state.logActions.setSelectedLogDetails(logDetails);
         } catch (error2) {
-          log$8.error("Error refreshing log:", error2);
+          log$9.error("Error refreshing log:", error2);
           throw error2;
         }
       },
@@ -28589,7 +28562,7 @@ const initalializeLogSlice = (set3) => {
     }
   });
 };
-const log$7 = createLogger("Log Slice");
+const log$8 = createLogger("Log Slice");
 const initialState$1 = {
   logDir: void 0,
   logs: [],
@@ -28902,31 +28875,31 @@ const createLogsSlice = (set3, get2, _store) => {
       // Cross-file sample operations
       getAllCachedSamples: async () => {
         try {
-          log$7.debug("LOADING ALL CACHED SAMPLES");
+          log$8.debug("LOADING ALL CACHED SAMPLES");
           const dbService = get2().databaseService;
           if (!dbService) {
             throw new Error("Database service not initialized");
           }
           const samples = await dbService.readAllSampleSummaries();
-          log$7.debug(`Retrieved ${samples.length} cached samples`);
+          log$8.debug(`Retrieved ${samples.length} cached samples`);
           return samples;
         } catch (e) {
-          log$7.debug("No cached samples available");
+          log$8.debug("No cached samples available");
           return [];
         }
       },
       queryCachedSamples: async (filter) => {
         try {
-          log$7.debug("QUERYING CACHED SAMPLES", filter);
+          log$8.debug("QUERYING CACHED SAMPLES", filter);
           const dbService = get2().databaseService;
           if (!dbService) {
             throw new Error("Database service not initialized");
           }
           const samples = await dbService.querySampleSummaries(filter);
-          log$7.debug(`Query returned ${samples.length} samples`);
+          log$8.debug(`Query returned ${samples.length} samples`);
           return samples;
         } catch (e) {
-          log$7.debug("Sample query failed, returning empty results");
+          log$8.debug("Sample query failed, returning empty results");
           return [];
         }
       },
@@ -29021,11 +28994,11 @@ const resolveSample$1 = (sample2) => {
   sample2.attachments = {};
   return sample2;
 };
-const log$6 = createLogger("samplePolling");
+const log$7 = createLogger("samplePolling");
 const kNoId = -1;
 const kPollingInterval$1 = 2;
 const kPollingMaxRetries = 10;
-function createSamplePolling(get2, set3) {
+function createSamplePolling(store) {
   let currentPolling = null;
   let abortController;
   const pollingState = {
@@ -29037,23 +29010,22 @@ function createSamplePolling(get2, set3) {
   };
   const startPolling = (logFile, summary2) => {
     const pollingId = `${logFile}:${summary2.id}-${summary2.epoch}`;
-    log$6.debug(`Start Polling ${pollingId}`);
+    log$7.debug(`Start Polling ${pollingId}`);
     if (currentPolling && currentPolling.name === pollingId) {
-      log$6.debug(`Aleady polling, ignoring start`);
+      log$7.debug(`Aleady polling, ignoring start`);
       return;
     }
     if (currentPolling) {
-      log$6.debug(`Resetting existing polling`);
+      log$7.debug(`Resetting existing polling`);
       currentPolling.stop();
-      set3((state) => {
-        state.sample.runningEvents = [];
-      });
-      resetPollingState(pollingState);
+      store.getState().sampleActions.setRunningEvents([]);
     }
+    resetPollingState(pollingState);
     abortController = new AbortController();
-    log$6.debug(`Polling sample: ${summary2.id}-${summary2.epoch}`);
+    log$7.debug(`Polling sample: ${summary2.id}-${summary2.epoch}`);
     const pollCallback = async () => {
-      const state = get2();
+      const state = store.getState();
+      const { sampleActions } = state;
       const api2 = state.api;
       if (!api2) {
         throw new Error("Required API is missing");
@@ -29064,7 +29036,6 @@ function createSamplePolling(get2, set3) {
       if (abortController.signal.aborted) {
         return false;
       }
-      state.sampleActions.setSampleStatus("streaming");
       const eventId = pollingState.eventId;
       const attachmentId = pollingState.attachmentId;
       const sampleDataResponse = await api2.get_log_sample_data(
@@ -29081,7 +29052,7 @@ function createSamplePolling(get2, set3) {
         stopPolling();
         if (state.sample.runningEvents.length > 0) {
           try {
-            log$6.debug(
+            log$7.debug(
               `LOADING COMPLETED SAMPLE AFTER FLUSH: ${summary2.id}-${summary2.epoch}`
             );
             const sample2 = await api2.get_log_sample(
@@ -29091,30 +29062,26 @@ function createSamplePolling(get2, set3) {
             );
             if (sample2) {
               const migratedSample = resolveSample$1(sample2);
-              set3((state2) => {
-                state2.sampleActions.setSelectedSample(migratedSample, logFile);
-                state2.sampleActions.setSampleStatus("ok");
-                state2.sample.runningEvents = [];
-              });
+              sampleActions.setSelectedSample(migratedSample, logFile);
+              sampleActions.setSampleStatus("ok");
+              sampleActions.setRunningEvents([]);
             } else {
-              set3((state2) => {
-                state2.sampleActions.setSampleStatus("error");
-                state2.sample.sampleError = new Error(
-                  "Unable to load sample - an unknown error occurred"
-                );
-                state2.sample.runningEvents = [];
-              });
+              sampleActions.setSampleStatus("error");
+              sampleActions.setSampleError(
+                new Error("Unable to load sample - an unknown error occurred")
+              );
+              sampleActions.setRunningEvents([]);
             }
           } catch (e) {
-            set3((state2) => {
-              state2.sample.sampleError = e;
-              state2.sampleActions.setSampleStatus("error");
-              state2.sample.runningEvents = [];
-            });
+            sampleActions.setSampleError(e);
+            sampleActions.setSampleStatus("error");
+            sampleActions.setRunningEvents([]);
           }
         } else {
-          state.sampleActions.setSampleStatus("ok");
-          state.sample.runningEvents = [];
+          if (state.sample.sampleStatus === "streaming") {
+            sampleActions.setSampleStatus("ok");
+          }
+          sampleActions.setRunningEvents([]);
         }
         return false;
       }
@@ -29122,6 +29089,7 @@ function createSamplePolling(get2, set3) {
         if (abortController.signal.aborted) {
           return false;
         }
+        sampleActions.setSampleStatus("streaming");
         if (sampleDataResponse.sampleData) {
           processAttachments(sampleDataResponse.sampleData, pollingState);
           const processedEvents = processEvents(
@@ -29135,7 +29103,7 @@ function createSamplePolling(get2, set3) {
               sampleDataResponse.sampleData.attachments,
               pollingState.attachmentId
             );
-            log$6.debug(`New max attachment ${maxAttachment}`);
+            log$7.debug(`New max attachment ${maxAttachment}`);
             pollingState.attachmentId = maxAttachment;
           }
           if (sampleDataResponse.sampleData.events.length > 0) {
@@ -29143,13 +29111,11 @@ function createSamplePolling(get2, set3) {
               sampleDataResponse.sampleData.events,
               pollingState.eventId
             );
-            log$6.debug(`New max event ${maxEvent}`);
+            log$7.debug(`New max event ${maxEvent}`);
             pollingState.eventId = maxEvent;
           }
           if (processedEvents) {
-            set3((state2) => {
-              state2.sample.runningEvents = [...pollingState.events];
-            });
+            sampleActions.setRunningEvents([...pollingState.events]);
           }
         }
       }
@@ -29169,7 +29135,7 @@ function createSamplePolling(get2, set3) {
     }
   };
   const cleanup = () => {
-    log$6.debug(`Cleanup`);
+    log$7.debug(`Cleanup`);
     if (abortController) {
       abortController.abort();
     }
@@ -29189,13 +29155,13 @@ const resetPollingState = (state) => {
   state.events = [];
 };
 function processAttachments(sampleData, pollingState) {
-  log$6.debug(`Processing ${sampleData.attachments.length} attachments`);
+  log$7.debug(`Processing ${sampleData.attachments.length} attachments`);
   Object.values(sampleData.attachments).forEach((v) => {
     pollingState.attachments[v.hash] = v.content;
   });
 }
 function processEvents(sampleData, pollingState, api2, log_file) {
-  log$6.debug(`Processing ${sampleData.events.length} events`);
+  log$7.debug(`Processing ${sampleData.events.length} events`);
   if (sampleData.events.length === 0) {
     return false;
   }
@@ -29221,10 +29187,10 @@ function processEvents(sampleData, pollingState, api2, log_file) {
       }
     );
     if (existingIndex) {
-      log$6.debug(`Replace event ${existingIndex}`);
+      log$7.debug(`Replace event ${existingIndex}`);
       pollingState.events[existingIndex] = resolvedEvent;
     } else {
-      log$6.debug(`New event ${pollingState.events.length}`);
+      log$7.debug(`New event ${pollingState.events.length}`);
       const currentIndex = pollingState.events.length;
       pollingState.eventMapping[eventData.event_id] = currentIndex;
       pollingState.events.push(resolvedEvent);
@@ -29239,6 +29205,24 @@ const findMaxId = (items, currentMax) => {
   }
   return currentMax;
 };
+let instance = null;
+function getSamplePolling() {
+  if (!instance) {
+    if (!storeImplementation) {
+      throw new Error(
+        "Store must be initialized before accessing samplePolling"
+      );
+    }
+    instance = createSamplePolling(storeImplementation);
+  }
+  return instance;
+}
+function cleanupSamplePolling() {
+  if (instance) {
+    instance.cleanup();
+    instance = null;
+  }
+}
 const isJson = (text2) => {
   text2 = text2.trim();
   if (text2.startsWith("{") && text2.endsWith("}")) {
@@ -29298,7 +29282,7 @@ function filterState(state) {
   if (!state) {
     return state;
   }
-  const filters2 = [filterLargeLogDetails];
+  const filters2 = [filterLargeLogDetails, filtersLogsDetails];
   return filters2.reduce(
     (filteredState, filter) => filter(filteredState),
     state
@@ -29356,7 +29340,18 @@ function filterLargeLogDetails(state) {
     return state;
   }
 }
-const log$5 = createLogger("sampleSlice");
+function filtersLogsDetails(state) {
+  if (!state || !state.logs) {
+    return state;
+  }
+  return {
+    ...state,
+    logs: {
+      ...state.logs,
+      logDetails: {}
+    }
+  };
+}
 let selectedSampleRef = {
   current: void 0
 };
@@ -29389,7 +29384,6 @@ const initialState = {
   selectedOutlineId: void 0
 };
 const createSampleSlice = (set3, get2, _store) => {
-  const samplePolling = createSamplePolling(get2, set3);
   const slice = {
     // Actions
     sample: initialState,
@@ -29420,11 +29414,14 @@ const createSampleSlice = (set3, get2, _store) => {
         return state.sampleInState ? state.selectedSampleObject : selectedSampleRef.current;
       },
       clearSelectedSample: () => {
+        getSamplePolling().stopPolling();
         selectedSampleRef.current = void 0;
         set3((state) => {
           state.sample.sample_identifier = void 0;
           state.sample.selectedSampleObject = void 0;
           state.sample.sampleInState = false;
+          state.sample.runningEvents = [];
+          state.sample.sampleStatus = "ok";
           state.log.selectedSampleHandle = void 0;
         });
       },
@@ -29517,51 +29514,33 @@ const createSampleSlice = (set3, get2, _store) => {
           state.sample.selectedOutlineId = void 0;
         });
       },
-      pollSample: async (logFile, id, epoch) => {
-        const state = get2();
-        const sampleExists = state.sample.sampleInState ? !!state.sample.selectedSampleObject : !!selectedSampleRef.current;
-        if (state.log.loadedLog && sampleExists) {
-          const sampleSummary = { id, epoch };
-          samplePolling.startPolling(logFile, sampleSummary);
-        }
+      clearSampleForPolling: (logFile, id, epoch) => {
+        selectedSampleRef.current = void 0;
+        set3((state) => {
+          state.sample.selectedSampleObject = void 0;
+          state.sample.sampleInState = false;
+          state.sample.runningEvents = [];
+          state.sample.sample_identifier = {
+            id,
+            epoch,
+            logFile
+          };
+        });
       },
-      loadSample: async (logFile, id, epoch, completed) => {
-        const sampleActions = get2().sampleActions;
-        sampleActions.setSampleError(void 0);
-        sampleActions.setSampleStatus("loading");
-        const state = get2();
-        try {
-          if (completed !== false) {
-            log$5.debug(`LOADING COMPLETED SAMPLE: ${id}-${epoch}`);
-            const sample2 = await get2().api?.get_log_sample(logFile, id, epoch);
-            log$5.debug(`LOADED COMPLETED SAMPLE: ${id}-${epoch}`);
-            if (sample2) {
-              if (state.sample.sample_identifier?.id !== sample2.id || state.sample.sample_identifier?.epoch !== sample2.epoch || state.sample.sample_identifier?.logFile !== logFile) {
-                sampleActions.clearCollapsedEvents();
-              }
-              const migratedSample = resolveSample$1(sample2);
-              sampleActions.setSelectedSample(migratedSample, logFile);
-              sampleActions.setSampleStatus("ok");
-            } else {
-              sampleActions.setSampleStatus("error");
-              throw new Error(
-                "Unable to load sample - an unknown error occurred"
-              );
-            }
-          } else {
-            log$5.debug(`POLLING RUNNING SAMPLE: ${id}-${epoch}`);
-            const sampleSummary = { id, epoch };
-            samplePolling.startPolling(logFile, sampleSummary);
-          }
-        } catch (e) {
-          sampleActions.setSampleError(e);
-          sampleActions.setSampleStatus("error");
-        }
+      setSampleIdentifier: (logFile, id, epoch) => {
+        set3((state) => {
+          state.sample.sample_identifier = { id, epoch, logFile };
+        });
+      },
+      setRunningEvents: (events) => {
+        set3((state) => {
+          state.sample.runningEvents = events;
+        });
       }
     }
   };
   const cleanup = () => {
-    samplePolling.cleanup();
+    cleanupSamplePolling();
     selectedSampleRef.current = void 0;
   };
   return [slice, cleanup];
@@ -30055,7 +30034,7 @@ class ReplicationService {
     this._detailQueue.enqueue(logs, priority);
   }
 }
-const log$4 = createLogger("store");
+const log$6 = createLogger("store");
 let storeImplementation = null;
 const useStore = ((selector2) => {
   if (!storeImplementation) {
@@ -30073,7 +30052,12 @@ const initializeStore = (api2, capabilities2, storage2) => {
     },
     setItem: debounce$2((name2, value2) => {
       if (storage2) {
-        storage2.setItem(name2, value2);
+        const wrapper2 = value2;
+        const filtered = {
+          state: filterState(wrapper2.state),
+          version: wrapper2.version
+        };
+        storage2.setItem(name2, filtered);
       }
     }, 1e3),
     removeItem: (name2) => {
@@ -30147,25 +30131,21 @@ const initializeStore = (api2, capabilities2, storage2) => {
         {
           name: "app-storage",
           storage: storageImplementation,
-          partialize: (state) => {
-            const persisted = filterState({
-              app: { ...state.app, rehydrated: true },
-              log: state.log,
-              logs: state.logs,
-              sample: state.sample
-            });
-            log$4.debug("PARTIALIZED STATE", persisted);
-            return persisted;
-          },
+          partialize: (state) => ({
+            app: { ...state.app, rehydrated: true },
+            log: state.log,
+            logs: state.logs,
+            sample: state.sample
+          }),
           version: 1,
           onRehydrateStorage: (state) => {
             return (hydrationState, error2) => {
               handleRehydrate(state);
-              log$4.debug("REHYDRATING STATE");
+              log$6.debug("REHYDRATING STATE");
               if (error2) {
-                log$4.debug("ERROR", { error: error2 });
+                log$6.debug("ERROR", { error: error2 });
               } else {
-                log$4.debug("STATE", { state, hydrationState });
+                log$6.debug("STATE", { state, hydrationState });
               }
             };
           }
@@ -30287,7 +30267,8 @@ const ApplicationIcons = {
     operator: "bi bi-person-workspace",
     tokens: "bi bi-list",
     time: "bi bi-clock",
-    execution: "bi bi-stopwatch"
+    execution: "bi bi-stopwatch",
+    cost: "bi bi-currency-dollar"
   },
   link: "bi bi-link-45deg",
   loading: "bi bi-arrow-clockwise",
@@ -30389,13 +30370,13 @@ function clsx() {
   for (var e, t2, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t2 = r(e)) && (n && (n += " "), n += t2);
   return n;
 }
-const container$o = "_container_1n7pm_1";
-const label$b = "_label_1n7pm_7";
+const container$n = "_container_1n7pm_1";
+const label$9 = "_label_1n7pm_7";
 const outer = "_outer_1n7pm_11";
 const inner = "_inner_1n7pm_20";
-const styles$1Q = {
-  container: container$o,
-  label: label$b,
+const styles$1L = {
+  container: container$n,
+  label: label$9,
   outer,
   inner
 };
@@ -30406,15 +30387,15 @@ const ProgressBar = ({
   label: label2,
   width = "100px"
 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1Q.container), children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1Q.outer), style: { width }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1L.container), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1L.outer), style: { width }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
-        className: clsx(styles$1Q.inner),
+        className: clsx(styles$1L.inner),
         style: { width: `${(value2 - min2) / (max2 - min2) * 100}%` }
       }
     ) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1Q.label, "text-size-smallest"), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1L.label, "text-size-smallest"), children: [
       value2,
       " / ",
       max2,
@@ -30423,7 +30404,7 @@ const ProgressBar = ({
     ] })
   ] });
 };
-const log$3 = createLogger("Client-Events-Service");
+const log$5 = createLogger("Client-Events-Service");
 const kRetries = 10;
 const kPollingInterval = 5;
 const kRefreshEvent = "refresh-evals";
@@ -30463,14 +30444,14 @@ class ClientEventsService {
       `Client-Events`,
       async () => {
         if (this.abortController?.signal.aborted) {
-          log$3.debug(`Component unmounted, stopping poll for client events`);
+          log$5.debug(`Component unmounted, stopping poll for client events`);
           return false;
         }
-        log$3.debug(`Polling client events`);
+        log$5.debug(`Polling client events`);
         const events = await api2?.client_events();
-        log$3.debug(`Received events`, events);
+        log$5.debug(`Received events`, events);
         if (this.abortController?.signal.aborted) {
-          log$3.debug(`Polling aborted, stopping poll for client events`);
+          log$5.debug(`Polling aborted, stopping poll for client events`);
           return false;
         }
         if ((events || []).includes(kRefreshEvent)) {
@@ -30499,13 +30480,22 @@ class ClientEventsService {
     }
   }
   cleanup() {
-    log$3.debug(`Cleanup`);
+    log$5.debug(`Cleanup`);
     this.stopPolling();
     this.pendingLogs.clear();
     this.onRefreshCallback = null;
   }
 }
 const clientEventsService = new ClientEventsService();
+const errorType = (message2) => {
+  if (!message2) {
+    return "Error";
+  }
+  if (message2.includes("(")) {
+    return message2.split("(")[0];
+  }
+  return "Error";
+};
 const arrayToString = (val) => {
   val = Array.isArray(val) ? val : [val];
   return val.join(", ");
@@ -30615,19 +30605,10 @@ function formatDuration(start2, end2) {
   const durationSec = durationMs / 1e3;
   return formatTime$1(durationSec);
 }
-const errorType = (message2) => {
-  if (!message2) {
-    return "Error";
-  }
-  if (message2.includes("(")) {
-    return message2.split("(")[0];
-  }
-  return "Error";
-};
 const circle$1 = "_circle_qymy9_1";
 const green$1 = "_green_qymy9_12";
 const red$1 = "_red_qymy9_18";
-const styles$1P = {
+const styles$1K = {
   circle: circle$1,
   green: green$1,
   red: red$1
@@ -30643,9 +30624,9 @@ const booleanScoreDescriptor = () => {
         "span",
         {
           className: clsx(
-            styles$1P.circle,
+            styles$1K.circle,
             "text-size-small",
-            score2 ? styles$1P.green : styles$1P.red
+            score2 ? styles$1K.green : styles$1K.red
           ),
           children: String(score2)
         }
@@ -30744,11 +30725,11 @@ const numericScoreDescriptor = (values) => {
     }
   };
 };
-const container$n = "_container_1ramc_1";
+const container$m = "_container_1ramc_1";
 const key$1 = "_key_1ramc_12";
 const value$2 = "_value_1ramc_16";
-const styles$1O = {
-  container: container$n,
+const styles$1J = {
+  container: container$m,
   key: key$1,
   value: value$2
 };
@@ -30791,12 +30772,12 @@ const objectScoreDescriptor = (values) => {
         ) : String(value2);
         scores2.push(
           /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1O.key, "text-size-smaller"), children: key2 }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1O.value, "text-size-base"), children: formattedValue })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1J.key, "text-size-smaller"), children: key2 }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1J.value, "text-size-base"), children: formattedValue })
           ] })
         );
       });
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1O.container), children: scores2 }, `score-value`);
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1J.container), children: scores2 }, `score-value`);
     }
   };
 };
@@ -32090,7 +32071,7 @@ function requireAnsiOutput() {
 var ansiOutputExports = requireAnsiOutput();
 const toolButton$1 = "_toolButton_nu8dt_1";
 const latched = "_latched_nu8dt_13";
-const styles$1N = {
+const styles$1I = {
   toolButton: toolButton$1,
   latched
 };
@@ -32104,10 +32085,10 @@ const ToolButton = reactExports.forwardRef(
         className: clsx(
           "btn",
           "btn-tools",
-          styles$1N.toolButton,
+          styles$1I.toolButton,
           classes,
           className2,
-          latched2 ? styles$1N.latched : void 0
+          latched2 ? styles$1I.latched : void 0
         ),
         ...rest,
         children: [
@@ -32123,7 +32104,7 @@ const ansiDisplayContainer = "_ansiDisplayContainer_sawhg_1";
 const ansiDisplay = "_ansiDisplay_sawhg_1";
 const ansiDisplayRaw = "_ansiDisplayRaw_sawhg_28";
 const ansiDisplayToggle = "_ansiDisplayToggle_sawhg_33";
-const styles$1M = {
+const styles$1H = {
   ansiDisplayContainer,
   ansiDisplay,
   ansiDisplayRaw,
@@ -32179,13 +32160,13 @@ const ANSIDisplay = ({
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
     {
-      className: clsx(styles$1M.ansiDisplayContainer, className2),
+      className: clsx(styles$1H.ansiDisplayContainer, className2),
       style: { ...style2 },
       children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           ToolButton,
           {
-            className: clsx(styles$1M.ansiDisplayToggle, "text-size-smallest"),
+            className: clsx(styles$1H.ansiDisplayToggle, "text-size-smallest"),
             icon: "bi bi-code-slash",
             label: "",
             latched: showRaw,
@@ -32193,9 +32174,9 @@ const ANSIDisplay = ({
             title: showRaw ? "Show rendered output" : "Show raw output"
           }
         ),
-        showRaw ? /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1M.ansiDisplay, styles$1M.ansiDisplayRaw), children: output2 }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1M.ansiDisplay), style: backgroundStyle, children: ansiOutput2.outputLines.map((line2, index) => {
+        showRaw ? /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1H.ansiDisplay, styles$1H.ansiDisplayRaw), children: output2 }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1H.ansiDisplay), style: backgroundStyle, children: ansiOutput2.outputLines.map((line2, index) => {
           firstOutput = firstOutput || !!line2.outputRuns.length;
-          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1M.ansiDisplayLine), children: !line2.outputRuns.length ? firstOutput ? /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}) : null : line2.outputRuns.map((outputRun) => /* @__PURE__ */ jsxRuntimeExports.jsx(OutputRun, { run: outputRun }, outputRun.id)) }, index);
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1H.ansiDisplayLine), children: !line2.outputRuns.length ? firstOutput ? /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}) : null : line2.outputRuns.map((outputRun) => /* @__PURE__ */ jsxRuntimeExports.jsx(OutputRun, { run: outputRun }, outputRun.id)) }, index);
         }) })
       ]
     }
@@ -32326,6 +32307,55 @@ const computeForegroundBackgroundColor = (colorType, color) => {
       }
   }
 };
+const kPrismRenderMaxSize = 25e4;
+const highlightCodeBlocks = (container2) => {
+  const codeBlocks = container2.querySelectorAll("pre code");
+  codeBlocks.forEach((block2) => {
+    if (block2.hasAttribute("data-highlighted")) {
+      return;
+    }
+    if (block2.className.includes("language-")) {
+      block2.classList.add("sourceCode");
+      prismExports.highlightElement(block2);
+      block2.setAttribute("data-highlighted", "true");
+    }
+  });
+};
+const usePrismHighlight = (containerRef, contentLength) => {
+  reactExports.useEffect(() => {
+    if (contentLength <= 0 || containerRef.current === null || contentLength > kPrismRenderMaxSize) {
+      return;
+    }
+    const container2 = containerRef.current;
+    requestAnimationFrame(() => {
+      highlightCodeBlocks(container2);
+    });
+    const observer = new MutationObserver((mutations) => {
+      const hasNewCodeBlocks = mutations.some((mutation) => {
+        if (mutation.type === "childList") {
+          return Array.from(mutation.addedNodes).some((node2) => {
+            if (node2.nodeType === Node.ELEMENT_NODE) {
+              const el2 = node2;
+              return el2.querySelector?.("pre code") || el2.matches?.("pre code");
+            }
+            return false;
+          });
+        }
+        return false;
+      });
+      if (hasNewCodeBlocks) {
+        highlightCodeBlocks(container2);
+      }
+    });
+    observer.observe(container2, {
+      childList: true,
+      subtree: true
+    });
+    return () => {
+      observer.disconnect();
+    };
+  }, [contentLength, containerRef]);
+};
 const JSONPanel = ({
   id,
   json,
@@ -32370,12 +32400,12 @@ const resolveBase64 = (value2) => {
   return value2;
 };
 const visible = "_visible_tm52u_1";
-const hidden$2 = "_hidden_tm52u_5";
+const hidden$1 = "_hidden_tm52u_5";
 const pills = "_pills_tm52u_9";
 const pill = "_pill_tm52u_9";
-const styles$1L = {
+const styles$1G = {
   visible,
-  hidden: hidden$2,
+  hidden: hidden$1,
   pills,
   pill
 };
@@ -32403,7 +32433,7 @@ const NavPills = ({ id, children: children2 }) => {
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
-        className: child["props"]?.title === activeItem ? styles$1L.visible : styles$1L.hidden,
+        className: child["props"]?.title === activeItem ? styles$1G.visible : styles$1G.hidden,
         children: child
       },
       `nav-pill-container-${idx}`
@@ -32413,7 +32443,7 @@ const NavPills = ({ id, children: children2 }) => {
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "ul",
       {
-        className: clsx("nav", "nav-pills", styles$1L.pills),
+        className: clsx("nav", "nav-pills", styles$1G.pills),
         role: "tablist",
         "aria-orientation": "horizontal",
         children: navPills
@@ -32449,7 +32479,7 @@ const NavPill = ({
           "nav-link",
           "text-style-label",
           active ? "active " : "",
-          styles$1L.pill
+          styles$1G.pill
         ),
         "data-target": title2,
         onClick: handleClick,
@@ -32465,7 +32495,7 @@ const Buckets = {
   final: 1e3
 };
 const copyButton = "_copyButton_1goi8_1";
-const styles$1K = {
+const styles$1F = {
   copyButton
 };
 const CopyButton = ({
@@ -32495,7 +32525,7 @@ const CopyButton = ({
     "button",
     {
       type: "button",
-      className: clsx("copy-button", styles$1K.copyButton, className2),
+      className: clsx("copy-button", styles$1F.copyButton, className2),
       onClick: handleClick,
       "aria-label": ariaLabel,
       disabled: isCopied,
@@ -32573,7 +32603,7 @@ const moreToggleButton = "_moreToggleButton_1cl3h_36";
 const separator$6 = "_separator_1cl3h_42";
 const inlineRight = "_inlineRight_1cl3h_48";
 const blockLeft = "_blockLeft_1cl3h_54";
-const styles$1J = {
+const styles$1E = {
   expandablePanel,
   expandableBordered,
   expandableCollapsed,
@@ -32626,10 +32656,10 @@ const ExpandablePanel = reactExports.memo(
           ref: contentRef,
           "data-expandable-panel": "true",
           className: clsx(
-            styles$1J.expandablePanel,
-            collapsed2 ? styles$1J.expandableCollapsed : void 0,
-            border ? styles$1J.expandableBordered : void 0,
-            showToggle ? styles$1J.padBottom : void 0,
+            styles$1E.expandablePanel,
+            collapsed2 ? styles$1E.expandableCollapsed : void 0,
+            border ? styles$1E.expandableBordered : void 0,
+            showToggle ? styles$1E.padBottom : void 0,
             className2
           ),
           children: [
@@ -32655,7 +32685,7 @@ const ExpandablePanel = reactExports.memo(
           position: "block-left"
         }
       ) }),
-      showToggle && layout == "inline-right" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1J.separator) })
+      showToggle && layout == "inline-right" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1E.separator) })
     ] });
   }
 );
@@ -32674,15 +32704,15 @@ const MoreToggle = ({
     "div",
     {
       className: clsx(
-        styles$1J.moreToggle,
-        border ? styles$1J.bordered : void 0,
-        position === "inline-right" ? styles$1J.inlineRight : styles$1J.blockLeft
+        styles$1E.moreToggle,
+        border ? styles$1E.bordered : void 0,
+        position === "inline-right" ? styles$1E.inlineRight : styles$1E.blockLeft
       ),
       style: style2,
       children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "button",
         {
-          className: clsx("btn", styles$1J.moreToggleButton, "text-size-smallest"),
+          className: clsx("btn", styles$1E.moreToggleButton, "text-size-smallest"),
           onClick: handleClick,
           children: [
             text2,
@@ -35954,7 +35984,7 @@ const Lr = /* @__PURE__ */ K(() => {
 function kn(t2, e, n) {
   return e !== "normal" && !(e != null && e.endsWith("px")) && n(`${t2} was not resolved to pixel value correctly`, e, Ct.WARN), e === "normal" ? 0 : parseInt(e != null ? e : "0", 10);
 }
-const log$2 = createLogger("scrolling");
+const log$4 = createLogger("scrolling");
 function useStatefulScrollPosition(elementRef, elementKey, delay = 1e3, scrollable2 = true) {
   const getScrollPosition = useStore(
     (state) => state.appActions.getScrollPosition
@@ -35966,7 +35996,7 @@ function useStatefulScrollPosition(elementRef, elementKey, delay = 1e3, scrollab
     () => debounce$2((e) => {
       const target2 = e.target;
       const position = target2.scrollTop;
-      log$2.debug(`Storing scroll position`, elementKey, position);
+      log$4.debug(`Storing scroll position`, elementKey, position);
       setScrollPosition(elementKey, position);
     }, delay),
     [elementKey, setScrollPosition, delay]
@@ -35990,15 +36020,15 @@ function useStatefulScrollPosition(elementRef, elementKey, delay = 1e3, scrollab
     if (!element || !scrollable2) {
       return;
     }
-    log$2.debug(`Restore Scroll Hook`, elementKey);
+    log$4.debug(`Restore Scroll Hook`, elementKey);
     const savedPosition = getScrollPosition(elementKey);
     if (savedPosition !== void 0) {
-      log$2.debug(`Restoring scroll position`, savedPosition);
+      log$4.debug(`Restoring scroll position`, savedPosition);
       const tryRestoreScroll = () => {
         if (element.scrollHeight > element.clientHeight) {
           if (element.scrollTop !== savedPosition) {
             element.scrollTop = savedPosition;
-            log$2.debug(`Scroll position restored to ${savedPosition}`);
+            log$4.debug(`Scroll position restored to ${savedPosition}`);
           }
           return true;
         }
@@ -36010,7 +36040,7 @@ function useStatefulScrollPosition(elementRef, elementKey, delay = 1e3, scrollab
         const pollForRender = () => {
           if (tryRestoreScroll() || attempts >= maxAttempts) {
             if (attempts >= maxAttempts) {
-              log$2.debug(
+              log$4.debug(
                 `Failed to restore scroll after ${maxAttempts} attempts`
               );
             }
@@ -36025,13 +36055,13 @@ function useStatefulScrollPosition(elementRef, elementKey, delay = 1e3, scrollab
     if (element.addEventListener) {
       element.addEventListener("scroll", handleScroll);
     } else {
-      log$2.warn("Element has no way to add event listener", element);
+      log$4.warn("Element has no way to add event listener", element);
     }
     return () => {
       if (element.removeEventListener) {
         element.removeEventListener("scroll", handleScroll);
       } else {
-        log$2.warn("Element has no way to remove event listener", element);
+        log$4.warn("Element has no way to remove event listener", element);
       }
     };
   }, [elementKey, elementRef, getScrollPosition, handleScroll, scrollable2]);
@@ -36050,14 +36080,14 @@ const useVirtuosoState = (virtuosoRef, elementKey, delay = 1e3) => {
   const debouncedFnRef = reactExports.useRef(null);
   const handleStateChange = reactExports.useCallback(
     (state) => {
-      log$2.debug(`Storing list state: [${elementKey}]`, state);
+      log$4.debug(`Storing list state: [${elementKey}]`, state);
       setListPosition(elementKey, state);
     },
     [elementKey, setListPosition]
   );
   reactExports.useEffect(() => {
     debouncedFnRef.current = debounce$2((isScrolling2) => {
-      log$2.debug("List scroll", isScrolling2);
+      log$4.debug("List scroll", isScrolling2);
       const element = virtuosoRef.current;
       if (!element) {
         return;
@@ -36216,7 +36246,7 @@ const keyPairBordered = "_keyPairBordered_qjlxf_9";
 const key = "_key_qjlxf_1";
 const pre$1 = "_pre_qjlxf_19";
 const treeIcon = "_treeIcon_qjlxf_23";
-const styles$1I = {
+const styles$1D = {
   keyPairContainer,
   keyPairBordered,
   key,
@@ -36402,8 +36432,8 @@ const RecordTree = ({
       "div",
       {
         className: clsx(
-          styles$1I.keyPairContainer,
-          index < items.length - 1 && useBorders ? styles$1I.keyPairBordered : void 0,
+          styles$1D.keyPairContainer,
+          index < items.length - 1 && useBorders ? styles$1D.keyPairBordered : void 0,
           "text-size-small"
         ),
         style: {
@@ -36416,7 +36446,7 @@ const RecordTree = ({
               "data-index": index,
               className: clsx(
                 kRecordTreeKey,
-                styles$1I.key,
+                styles$1D.key,
                 "font-monospace",
                 "text-style-secondary"
               ),
@@ -36426,16 +36456,16 @@ const RecordTree = ({
                 setCollapsed(item2.id, !collapsedIds?.[item2.id]);
               },
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: item2.hasChildren ? /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1I.pre), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: item2.hasChildren ? /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1D.pre), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                   "i",
                   {
                     className: clsx(
                       collapsedIds && collapsedIds[item2.id] ? ApplicationIcons.tree.closed : ApplicationIcons.tree.open,
-                      styles$1I.treeIcon
+                      styles$1D.treeIcon
                     )
                   }
                 ) }) : void 0 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("pre", { className: clsx(styles$1I.pre), children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("pre", { className: clsx(styles$1D.pre), children: [
                   item2.key,
                   ":"
                 ] })
@@ -36632,9 +36662,11 @@ const useLogOrSampleRouteParams = () => {
   }
 };
 const useLogRouteParams = () => {
-  const params = useParams();
+  const location2 = useLocation();
   return reactExports.useMemo(() => {
-    const splatPath = params["*"] || "";
+    const rawPath = location2.pathname;
+    const logsMatch = rawPath.match(/^\/logs\/(.*)$/);
+    const splatPath = logsMatch ? logsMatch[1] : "";
     const sampleUuidMatch = splatPath.match(
       /^(.+?)\/samples\/sample_uuid\/([^/]+)(?:\/(.+?))?\/?\s*$/
     );
@@ -36738,12 +36770,14 @@ const useLogRouteParams = () => {
         epoch: void 0
       };
     }
-  }, [params]);
+  }, [location2.pathname]);
 };
 const useSamplesRouteParams = () => {
-  const params = useParams();
+  const location2 = useLocation();
   return reactExports.useMemo(() => {
-    const splatPath = params["*"] || "";
+    const rawPath = location2.pathname;
+    const samplesMatch = rawPath.match(/^\/samples\/(.*)$/);
+    const splatPath = samplesMatch ? samplesMatch[1] : "";
     const sampleMatch = splatPath.match(
       /^(.+?)\/sample\/([^/]+)\/([^/]+)(?:\/([^/]+))?\/?$/
     );
@@ -36762,12 +36796,10 @@ const useSamplesRouteParams = () => {
       epoch: void 0,
       tabId: void 0
     };
-  }, [params]);
+  }, [location2.pathname]);
 };
 const kLogsRoutUrlPattern = "/logs";
 const kLogRouteUrlPattern = "/logs/*";
-const kSampleRouteUrlPattern = "/logs/*/samples/sample/:sampleId/:epoch?/:sampleTabId?";
-const kSampleUuidRouteUrlPattern = "/logs/*/samples/sample_uuid/:sampleUuid/:sampleTabId?";
 const baseUrl = (logPath, sampleId, sampleEpoch) => {
   if (sampleId !== void 0 && sampleEpoch !== void 0) {
     return logSamplesUrl(logPath, sampleId, sampleEpoch);
@@ -36788,8 +36820,9 @@ const useSampleUrlBuilder = () => {
 const logSamplesUrl = (logPath, sampleId, sampleEpoch, sampleTabId) => {
   const decodedLogPath = decodeUrlParam(logPath) || logPath;
   if (sampleId !== void 0 && sampleEpoch !== void 0) {
+    const encodedSampleId = encodeURIComponent(String(sampleId));
     return encodePathParts(
-      `/logs/${decodedLogPath}/samples/sample/${sampleId}/${sampleEpoch}/${sampleTabId || ""}`
+      `/logs/${decodedLogPath}/samples/sample/${encodedSampleId}/${sampleEpoch}/${sampleTabId || ""}`
     );
   } else {
     return encodePathParts(
@@ -36799,8 +36832,9 @@ const logSamplesUrl = (logPath, sampleId, sampleEpoch, sampleTabId) => {
 };
 const samplesSampleUrl = (logPath, sampleId, epoch, sampleTabId) => {
   const decodedLogPath = decodeUrlParam(logPath) || logPath;
+  const encodedSampleId = encodeURIComponent(String(sampleId));
   return encodePathParts(
-    `/samples/${decodedLogPath}/sample/${sampleId}/${epoch}/${sampleTabId || ""}`
+    `/samples/${decodedLogPath}/sample/${encodedSampleId}/${epoch}/${sampleTabId || ""}`
   );
 };
 const sampleEventUrl = (builder, eventId, logPath, sampleId, sampleEpoch) => {
@@ -36916,7 +36950,7 @@ const indented = "_indented_1k527_37";
 const copyLink$1 = "_copyLink_1k527_41";
 const metadataLabel = "_metadataLabel_1k527_52";
 const hover$1 = "_hover_1k527_56";
-const styles$1H = {
+const styles$1C = {
   message: message$3,
   systemRole,
   timestamp,
@@ -36928,16 +36962,16 @@ const styles$1H = {
   metadataLabel,
   hover: hover$1
 };
-const panel$7 = "_panel_1pa96_1";
+const panel$8 = "_panel_1pa96_1";
 const code$5 = "_code_1pa96_7";
-const styles$1G = {
-  panel: panel$7,
+const styles$1B = {
+  panel: panel$8,
   code: code$5
 };
 const CodePanel = ({ code: code2, language: language2 = "json" }) => {
   const codeContainerRef = reactExports.useRef(null);
   usePrismHighlight(codeContainerRef, code2.length);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: codeContainerRef, className: clsx(styles$1G.panel), children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1G.code), children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx(`language-${language2}`), children: code2 }) }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: codeContainerRef, className: clsx(styles$1B.panel), children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1B.code), children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx(`language-${language2}`), children: code2 }) }) });
 };
 class JsonWorkerPool {
   encoder = new TextEncoder();
@@ -37173,9 +37207,9 @@ function decode$2(string2, exclude) {
       if ((b1 & 248) === 240 && i + 9 < l) {
         const b2 = parseInt(seq.slice(i + 4, i + 6), 16);
         const b3 = parseInt(seq.slice(i + 7, i + 9), 16);
-        const b4 = parseInt(seq.slice(i + 10, i + 12), 16);
-        if ((b2 & 192) === 128 && (b3 & 192) === 128 && (b4 & 192) === 128) {
-          let chr = b1 << 18 & 1835008 | b2 << 12 & 258048 | b3 << 6 & 4032 | b4 & 63;
+        const b42 = parseInt(seq.slice(i + 10, i + 12), 16);
+        if ((b2 & 192) === 128 && (b3 & 192) === 128 && (b42 & 192) === 128) {
+          let chr = b1 << 18 & 1835008 | b2 << 12 & 258048 | b3 << 6 & 4032 | b42 & 63;
           if (chr < 65536 || chr > 1114111) {
             result2 += "����";
           } else {
@@ -40486,7 +40520,13 @@ function linkify(state, silent) {
   if (!link2) return false;
   let url = link2.url;
   if (url.length <= proto.length) return false;
-  url = url.replace(/\*+$/, "");
+  let urlEnd = url.length;
+  while (urlEnd > 0 && url.charCodeAt(urlEnd - 1) === 42) {
+    urlEnd--;
+  }
+  if (urlEnd !== url.length) {
+    url = url.slice(0, urlEnd);
+  }
   const fullUrl = state.md.normalizeLink(url);
   if (!state.md.validateLink(fullUrl)) return false;
   if (!silent) {
@@ -41750,7 +41790,7 @@ const errors = {
 const baseMinusTMin = base$1 - tMin;
 const floor = Math.floor;
 const stringFromCharCode = String.fromCharCode;
-function error$3(type) {
+function error$5(type) {
   throw new RangeError(errors[type]);
 }
 function map$1(array, callback) {
@@ -41830,7 +41870,7 @@ const decode$1 = function(input2) {
   }
   for (let j = 0; j < basic; ++j) {
     if (input2.charCodeAt(j) >= 128) {
-      error$3("not-basic");
+      error$5("not-basic");
     }
     output2.push(input2.charCodeAt(j));
   }
@@ -41838,14 +41878,14 @@ const decode$1 = function(input2) {
     const oldi = i;
     for (let w = 1, k2 = base$1; ; k2 += base$1) {
       if (index >= inputLength) {
-        error$3("invalid-input");
+        error$5("invalid-input");
       }
       const digit = basicToDigit(input2.charCodeAt(index++));
       if (digit >= base$1) {
-        error$3("invalid-input");
+        error$5("invalid-input");
       }
       if (digit > floor((maxInt - i) / w)) {
-        error$3("overflow");
+        error$5("overflow");
       }
       i += digit * w;
       const t2 = k2 <= bias ? tMin : k2 >= bias + tMax ? tMax : k2 - bias;
@@ -41854,14 +41894,14 @@ const decode$1 = function(input2) {
       }
       const baseMinusT = base$1 - t2;
       if (w > floor(maxInt / baseMinusT)) {
-        error$3("overflow");
+        error$5("overflow");
       }
       w *= baseMinusT;
     }
     const out = output2.length + 1;
     bias = adapt(i - oldi, out, oldi == 0);
     if (floor(i / out) > maxInt - n) {
-      error$3("overflow");
+      error$5("overflow");
     }
     n += floor(i / out);
     i %= out;
@@ -41895,13 +41935,13 @@ const encode$1 = function(input2) {
     }
     const handledCPCountPlusOne = handledCPCount + 1;
     if (m - n > floor((maxInt - delta2) / handledCPCountPlusOne)) {
-      error$3("overflow");
+      error$5("overflow");
     }
     delta2 += (m - n) * handledCPCountPlusOne;
     n = m;
     for (const currentValue of input2) {
       if (currentValue < n && ++delta2 > maxInt) {
-        error$3("overflow");
+        error$5("overflow");
       }
       if (currentValue === n) {
         let q = delta2;
@@ -43026,14 +43066,14 @@ function requireMathItem() {
   (function(exports$12) {
     Object.defineProperty(exports$12, "__esModule", { value: true });
     exports$12.newState = exports$12.STATE = exports$12.AbstractMathItem = exports$12.protoItem = void 0;
-    function protoItem(open, math2, close2, n, start2, end2, display) {
+    function protoItem(open, math2, close, n, start2, end2, display) {
       if (display === void 0) {
         display = null;
       }
       var item2 = {
         open,
         math: math2,
-        close: close2,
+        close,
         n,
         start: { n: start2 },
         end: { n: end2 },
@@ -43258,19 +43298,19 @@ function requireFindTeX() {
       this.hasPatterns = parts.length > 0;
     };
     FindTeX2.prototype.addPattern = function(starts, delims2, display) {
-      var _a2 = __read2(delims2, 2), open = _a2[0], close2 = _a2[1];
+      var _a2 = __read2(delims2, 2), open = _a2[0], close = _a2[1];
       starts.push((0, string_js_1.quotePattern)(open));
-      this.end[open] = [close2, display, this.endPattern(close2)];
+      this.end[open] = [close, display, this.endPattern(close)];
     };
     FindTeX2.prototype.endPattern = function(end2, endp) {
       return new RegExp((endp || (0, string_js_1.quotePattern)(end2)) + "|\\\\(?:[a-zA-Z]|.)|[{}]", "g");
     };
     FindTeX2.prototype.findEnd = function(text2, n, start2, end2) {
-      var _a2 = __read2(end2, 3), close2 = _a2[0], display = _a2[1], pattern = _a2[2];
+      var _a2 = __read2(end2, 3), close = _a2[0], display = _a2[1], pattern = _a2[2];
       var i = pattern.lastIndex = start2.index + start2[0].length;
       var match2, braces = 0;
       while (match2 = pattern.exec(text2)) {
-        if ((match2[1] || match2[0]) === close2 && braces === 0) {
+        if ((match2[1] || match2[0]) === close && braces === 0) {
           return (0, MathItem_js_1.protoItem)(start2[0], text2.substr(i, match2.index - i), match2[0], n, start2.index, match2.index + match2[0].length, display);
         } else if (match2[0] === "{") {
           braces++;
@@ -47508,7 +47548,7 @@ function requireParseUtil() {
       }).join(" ");
     }
     ParseUtil2.cols = cols;
-    function fenced(configuration, open, mml, close2, big, color) {
+    function fenced(configuration, open, mml, close, big, color) {
       if (big === void 0) {
         big = "";
       }
@@ -47516,7 +47556,7 @@ function requireParseUtil() {
         color = "";
       }
       var nf = configuration.nodeFactory;
-      var mrow2 = nf.create("node", "mrow", [], { open, close: close2, texClass: MmlNode_js_1.TEXCLASS.INNER });
+      var mrow2 = nf.create("node", "mrow", [], { open, close, texClass: MmlNode_js_1.TEXCLASS.INNER });
       var mo2;
       if (big) {
         mo2 = new TexParser_js_1.default("\\" + big + "l" + open, configuration.parser.stack.env, configuration).mml();
@@ -47526,9 +47566,9 @@ function requireParseUtil() {
       }
       NodeUtil_js_1.default.appendChildren(mrow2, [mo2, mml]);
       if (big) {
-        mo2 = new TexParser_js_1.default("\\" + big + "r" + close2, configuration.parser.stack.env, configuration).mml();
+        mo2 = new TexParser_js_1.default("\\" + big + "r" + close, configuration.parser.stack.env, configuration).mml();
       } else {
-        var closeNode = nf.create("text", close2);
+        var closeNode = nf.create("text", close);
         mo2 = nf.create("node", "mo", [], { fence: true, stretchy: true, symmetric: true, texClass: MmlNode_js_1.TEXCLASS.CLOSE }, closeNode);
       }
       color && mo2.attributes.set("mathcolor", color);
@@ -47536,8 +47576,8 @@ function requireParseUtil() {
       return mrow2;
     }
     ParseUtil2.fenced = fenced;
-    function fixedFence(configuration, open, mml, close2) {
-      var mrow2 = configuration.nodeFactory.create("node", "mrow", [], { open, close: close2, texClass: MmlNode_js_1.TEXCLASS.ORD });
+    function fixedFence(configuration, open, mml, close) {
+      var mrow2 = configuration.nodeFactory.create("node", "mrow", [], { open, close, texClass: MmlNode_js_1.TEXCLASS.ORD });
       if (open) {
         NodeUtil_js_1.default.appendChildren(mrow2, [mathPalette(configuration, open, "l")]);
       }
@@ -47546,8 +47586,8 @@ function requireParseUtil() {
       } else {
         NodeUtil_js_1.default.appendChildren(mrow2, [mml]);
       }
-      if (close2) {
-        NodeUtil_js_1.default.appendChildren(mrow2, [mathPalette(configuration, close2, "r")]);
+      if (close) {
+        NodeUtil_js_1.default.appendChildren(mrow2, [mathPalette(configuration, close, "r")]);
       }
       return mrow2;
     }
@@ -51865,18 +51905,18 @@ function requireBaseMethods() {
       NodeUtil_js_1.default.setProperties(op, { "movablelimits": false });
     }
   };
-  BaseMethods$1.Over = function(parser2, name2, open, close2) {
+  BaseMethods$1.Over = function(parser2, name2, open, close) {
     var mml = parser2.itemFactory.create("over").setProperty("name", parser2.currentCS);
-    if (open || close2) {
+    if (open || close) {
       mml.setProperty("open", open);
-      mml.setProperty("close", close2);
+      mml.setProperty("close", close);
     } else if (name2.match(/withdelims$/)) {
       mml.setProperty("open", parser2.GetDelimiter(name2));
       mml.setProperty("close", parser2.GetDelimiter(name2));
     }
     if (name2.match(/^\\above/)) {
       mml.setProperty("thickness", parser2.GetDimen(name2));
-    } else if (name2.match(/^\\atop/) || open || close2) {
+    } else if (name2.match(/^\\atop/) || open || close) {
       mml.setProperty("thickness", 0);
     }
     parser2.Push(mml);
@@ -52238,7 +52278,7 @@ function requireBaseMethods() {
       cdots
     }));
   };
-  BaseMethods$1.Matrix = function(parser2, _name, open, close2, align, spacing, vspacing, style2, cases, numbered) {
+  BaseMethods$1.Matrix = function(parser2, _name, open, close, align, spacing, vspacing, style2, cases, numbered) {
     var c2 = parser2.GetNext();
     if (c2 === "") {
       throw new TexError_js_1.default("MissingArgFor", "Missing argument for %1", parser2.currentCS);
@@ -52261,9 +52301,9 @@ function requireBaseMethods() {
       array.setProperty("isNumbered", true);
       array.arraydef.side = numbered;
     }
-    if (open || close2) {
+    if (open || close) {
       array.setProperty("open", open);
-      array.setProperty("close", close2);
+      array.setProperty("close", close);
     }
     if (style2 === "D") {
       array.arraydef.displaystyle = true;
@@ -52281,7 +52321,7 @@ function requireBaseMethods() {
     if (!cases && !env)
       return;
     var str2 = parser2.string;
-    var braces = 0, close2 = -1, i = parser2.i, m = str2.length;
+    var braces = 0, close = -1, i = parser2.i, m = str2.length;
     var end2 = env ? new RegExp("^\\\\end\\s*\\{".concat(env.replace(/\*/, "\\*"), "\\}")) : null;
     while (i < m) {
       var c2 = str2.charAt(i);
@@ -52293,8 +52333,8 @@ function requireBaseMethods() {
           m = 0;
         } else {
           braces--;
-          if (braces === 0 && close2 < 0) {
-            close2 = i - parser2.i;
+          if (braces === 0 && close < 0) {
+            close = i - parser2.i;
           }
           i++;
         }
@@ -52312,7 +52352,7 @@ function requireBaseMethods() {
       }
     }
     var text2 = str2.substr(parser2.i, i - parser2.i);
-    if (!text2.match(/^\s*\\text[^a-zA-Z]/) || close2 !== text2.replace(/\s+$/, "").length - 1) {
+    if (!text2.match(/^\s*\\text[^a-zA-Z]/) || close !== text2.replace(/\s+$/, "").length - 1) {
       var internal = ParseUtil_js_1.default.internalMath(parser2, ParseUtil_js_1.default.trimSpaces(text2), 0);
       parser2.PushAll(internal);
       parser2.i = i;
@@ -52399,7 +52439,7 @@ function requireBaseMethods() {
     ParseUtil_js_1.default.checkMaxMacros(parser2, false);
     parser2.parse("environment", [parser2, env]);
   };
-  BaseMethods$1.Array = function(parser2, begin, open, close2, align, spacing, vspacing, style2, raggedHeight) {
+  BaseMethods$1.Array = function(parser2, begin, open, close, align, spacing, vspacing, style2, raggedHeight) {
     if (!align) {
       align = parser2.GetArgument("\\begin{" + begin.getName() + "}");
     }
@@ -52426,8 +52466,8 @@ function requireBaseMethods() {
     if (open) {
       array.setProperty("open", parser2.convertDelimiter(open));
     }
-    if (close2) {
-      array.setProperty("close", parser2.convertDelimiter(close2));
+    if (close) {
+      array.setProperty("close", parser2.convertDelimiter(close));
     }
     if ((style2 || "").charAt(1) === "'") {
       array.arraydef["data-cramped"] = true;
@@ -60435,9 +60475,9 @@ function requireMfenced$1() {
     };
     MmlMfenced2.prototype.addFakeNodes = function() {
       var e_2, _a2;
-      var _b2 = this.attributes.getList("open", "close", "separators"), open = _b2.open, close2 = _b2.close, separators = _b2.separators;
+      var _b2 = this.attributes.getList("open", "close", "separators"), open = _b2.open, close = _b2.close, separators = _b2.separators;
       open = open.replace(/[ \t\n\r]/g, "");
-      close2 = close2.replace(/[ \t\n\r]/g, "");
+      close = close.replace(/[ \t\n\r]/g, "");
       separators = separators.replace(/[ \t\n\r]/g, "");
       if (open) {
         this.open = this.fakeNode(open, { fence: true, form: "prefix" }, MmlNode_js_1.TEXCLASS.OPEN);
@@ -60464,8 +60504,8 @@ function requireMfenced$1() {
           }
         }
       }
-      if (close2) {
-        this.close = this.fakeNode(close2, { fence: true, form: "postfix" }, MmlNode_js_1.TEXCLASS.CLOSE);
+      if (close) {
+        this.close = this.fakeNode(close, { fence: true, form: "postfix" }, MmlNode_js_1.TEXCLASS.CLOSE);
       }
     };
     MmlMfenced2.prototype.fakeNode = function(c2, properties, texClass) {
@@ -78049,15 +78089,15 @@ function requireBraketItems() {
     BraketItem2.prototype.toMml = function() {
       var inner2 = _super.prototype.toMml.call(this);
       var open = this.getProperty("open");
-      var close2 = this.getProperty("close");
+      var close = this.getProperty("close");
       if (this.getProperty("stretchy")) {
-        return ParseUtil_js_1.default.fenced(this.factory.configuration, open, inner2, close2);
+        return ParseUtil_js_1.default.fenced(this.factory.configuration, open, inner2, close);
       }
       var attrs = { fence: true, stretchy: false, symmetric: true, texClass: MmlNode_js_1.TEXCLASS.OPEN };
       var openNode = this.create("token", "mo", attrs, open);
       attrs.texClass = MmlNode_js_1.TEXCLASS.CLOSE;
-      var closeNode = this.create("token", "mo", attrs, close2);
-      var mrow2 = this.create("node", "mrow", [openNode, inner2, closeNode], { open, close: close2, texClass: MmlNode_js_1.TEXCLASS.INNER });
+      var closeNode = this.create("token", "mo", attrs, close);
+      var mrow2 = this.create("node", "mrow", [openNode, inner2, closeNode], { open, close, texClass: MmlNode_js_1.TEXCLASS.INNER });
       return mrow2;
     };
     return BraketItem2;
@@ -78080,7 +78120,7 @@ function requireBraketMethods() {
   var TexError_js_1 = __importDefault2(requireTexError());
   var BraketMethods$1 = {};
   BraketMethods$1.Macro = BaseMethods_js_1.default.Macro;
-  BraketMethods$1.Braket = function(parser2, _name, open, close2, stretchy, barmax) {
+  BraketMethods$1.Braket = function(parser2, _name, open, close, stretchy, barmax) {
     var next = parser2.GetNext();
     if (next === "") {
       throw new TexError_js_1.default("MissingArgFor", "Missing argument for %1", parser2.currentCS);
@@ -78094,7 +78134,7 @@ function requireBraketMethods() {
       barmax,
       barcount: 0,
       open,
-      close: close2,
+      close,
       stretchy,
       single
     }));
@@ -81041,15 +81081,15 @@ function requireMathtoolsMethods() {
     var NewcommandMethods_js_1 = __importDefault2(requireNewcommandMethods());
     var MathtoolsUtil_js_1 = requireMathtoolsUtil();
     exports$12.MathtoolsMethods = {
-      MtMatrix: function(parser2, begin, open, close2) {
+      MtMatrix: function(parser2, begin, open, close) {
         var align = parser2.GetBrackets("\\begin{".concat(begin.getName(), "}"), "c");
-        return exports$12.MathtoolsMethods.Array(parser2, begin, open, close2, align);
+        return exports$12.MathtoolsMethods.Array(parser2, begin, open, close, align);
       },
-      MtSmallMatrix: function(parser2, begin, open, close2, align) {
+      MtSmallMatrix: function(parser2, begin, open, close, align) {
         if (!align) {
           align = parser2.GetBrackets("\\begin{".concat(begin.getName(), "}"), parser2.options.mathtools["smallmatrix-align"]);
         }
-        return exports$12.MathtoolsMethods.Array(parser2, begin, open, close2, align, ParseUtil_js_1.default.Em(1 / 3), ".2em", "S", 1);
+        return exports$12.MathtoolsMethods.Array(parser2, begin, open, close, align, ParseUtil_js_1.default.Em(1 / 3), ".2em", "S", 1);
       },
       MtMultlined: function(parser2, begin) {
         var _a2;
@@ -81126,7 +81166,7 @@ function requireMathtoolsMethods() {
           parser2.Push(begin);
         }
       },
-      Cases: function(parser2, begin, open, close2, style2) {
+      Cases: function(parser2, begin, open, close, style2) {
         var array = parser2.itemFactory.create("array").setProperty("casesEnv", begin.getName());
         array.arraydef = {
           rowspacing: ".2em",
@@ -81136,7 +81176,7 @@ function requireMathtoolsMethods() {
         if (style2 === "D") {
           array.arraydef.displaystyle = true;
         }
-        array.setProperties({ open, close: close2 });
+        array.setProperties({ open, close });
         parser2.Push(begin);
         return array;
       },
@@ -81269,7 +81309,7 @@ function requireMathtoolsMethods() {
         top2.EndRow();
         top2.addRowSpacing("-" + parser2.options.mathtools["shortvdotsadjustbelow"]);
       },
-      PairedDelimiters: function(parser2, name2, open, close2, body2, n, pre2, post) {
+      PairedDelimiters: function(parser2, name2, open, close, body2, n, pre2, post) {
         if (body2 === void 0) {
           body2 = "#1";
         }
@@ -81296,7 +81336,7 @@ function requireMathtoolsMethods() {
           post = ParseUtil_js_1.default.substituteArgs(parser2, args2, post);
         }
         body2 = body2.replace(/\\delimsize/g, delim);
-        parser2.string = [pre2, left2, open, body2, right2, close2, post, parser2.string.substr(parser2.i)].reduce(function(s, part2) {
+        parser2.string = [pre2, left2, open, body2, right2, close, post, parser2.string.substr(parser2.i)].reduce(function(s, part2) {
           return ParseUtil_js_1.default.addArgs(parser2, s, part2);
         }, "");
         parser2.i = 0;
@@ -81305,26 +81345,26 @@ function requireMathtoolsMethods() {
       DeclarePairedDelimiter: function(parser2, name2) {
         var cs = NewcommandUtil_js_1.default.GetCsNameArgument(parser2, name2);
         var open = parser2.GetArgument(name2);
-        var close2 = parser2.GetArgument(name2);
-        MathtoolsUtil_js_1.MathtoolsUtil.addPairedDelims(parser2.configuration, cs, [open, close2]);
+        var close = parser2.GetArgument(name2);
+        MathtoolsUtil_js_1.MathtoolsUtil.addPairedDelims(parser2.configuration, cs, [open, close]);
       },
       DeclarePairedDelimiterX: function(parser2, name2) {
         var cs = NewcommandUtil_js_1.default.GetCsNameArgument(parser2, name2);
         var n = NewcommandUtil_js_1.default.GetArgCount(parser2, name2);
         var open = parser2.GetArgument(name2);
-        var close2 = parser2.GetArgument(name2);
+        var close = parser2.GetArgument(name2);
         var body2 = parser2.GetArgument(name2);
-        MathtoolsUtil_js_1.MathtoolsUtil.addPairedDelims(parser2.configuration, cs, [open, close2, body2, n]);
+        MathtoolsUtil_js_1.MathtoolsUtil.addPairedDelims(parser2.configuration, cs, [open, close, body2, n]);
       },
       DeclarePairedDelimiterXPP: function(parser2, name2) {
         var cs = NewcommandUtil_js_1.default.GetCsNameArgument(parser2, name2);
         var n = NewcommandUtil_js_1.default.GetArgCount(parser2, name2);
         var pre2 = parser2.GetArgument(name2);
         var open = parser2.GetArgument(name2);
-        var close2 = parser2.GetArgument(name2);
+        var close = parser2.GetArgument(name2);
         var post = parser2.GetArgument(name2);
         var body2 = parser2.GetArgument(name2);
-        MathtoolsUtil_js_1.MathtoolsUtil.addPairedDelims(parser2.configuration, cs, [open, close2, body2, n, pre2, post]);
+        MathtoolsUtil_js_1.MathtoolsUtil.addPairedDelims(parser2.configuration, cs, [open, close, body2, n, pre2, post]);
       },
       CenterColon: function(parser2, _name, center2, force, thin) {
         if (force === void 0) {
@@ -84040,8 +84080,8 @@ function requirePhysicsItems() {
           this.openCount++;
         }
       }
-      var close2 = item2.getProperty("autoclose");
-      if (close2 && close2 === this.getProperty("close") && !this.openCount--) {
+      var close = item2.getProperty("autoclose");
+      if (close && close === this.getProperty("close") && !this.openCount--) {
         if (this.getProperty("ignore")) {
           this.Clear();
           return [[], true];
@@ -84100,12 +84140,12 @@ function requirePhysicsMethods() {
     "|": "|"
   };
   var biggs = /^(b|B)i(g{1,2})$/;
-  PhysicsMethods$1.Quantity = function(parser2, name2, open, close2, arg, named, variant) {
+  PhysicsMethods$1.Quantity = function(parser2, name2, open, close, arg, named, variant) {
     if (open === void 0) {
       open = "(";
     }
-    if (close2 === void 0) {
-      close2 = ")";
+    if (close === void 0) {
+      close = ")";
     }
     if (arg === void 0) {
       arg = false;
@@ -84125,7 +84165,7 @@ function requirePhysicsMethods() {
       big = parser2.GetCS();
       if (!big.match(biggs)) {
         var empty2 = parser2.create("node", "mrow");
-        parser2.Push(ParseUtil_js_1.default.fenced(parser2.configuration, open, empty2, close2));
+        parser2.Push(ParseUtil_js_1.default.fenced(parser2.configuration, open, empty2, close));
         parser2.i = position;
         return;
       }
@@ -84137,7 +84177,7 @@ function requirePhysicsMethods() {
     }
     if (!right2) {
       var empty2 = parser2.create("node", "mrow");
-      parser2.Push(ParseUtil_js_1.default.fenced(parser2.configuration, open, empty2, close2));
+      parser2.Push(ParseUtil_js_1.default.fenced(parser2.configuration, open, empty2, close));
       parser2.i = position;
       return;
     }
@@ -84151,14 +84191,14 @@ function requirePhysicsMethods() {
     if (next === "{") {
       var argument = parser2.GetArgument(name2);
       next = arg ? open : "\\{";
-      right2 = arg ? close2 : "\\}";
+      right2 = arg ? close : "\\}";
       argument = star2 ? next + " " + argument + " " + right2 : big ? "\\" + big + "l" + next + " " + argument + " \\" + big + "r" + right2 : "\\left" + next + " " + argument + " \\right" + right2;
       parser2.Push(new TexParser_js_1.default(argument, parser2.stack.env, parser2.configuration).mml());
       return;
     }
     if (arg) {
       next = open;
-      right2 = close2;
+      right2 = close;
     }
     parser2.i++;
     parser2.Push(parser2.itemFactory.create("auto open").setProperties({ open: next, close: right2, big }));
@@ -84184,12 +84224,12 @@ function requirePhysicsMethods() {
     }
     throw new TexError_js_1.default("MissingArgFor", "Missing argument for %1", parser2.currentCS);
   };
-  PhysicsMethods$1.Commutator = function(parser2, name2, open, close2) {
+  PhysicsMethods$1.Commutator = function(parser2, name2, open, close) {
     if (open === void 0) {
       open = "[";
     }
-    if (close2 === void 0) {
-      close2 = "]";
+    if (close === void 0) {
+      close = "]";
     }
     var star2 = parser2.GetStar();
     var next = parser2.GetNext();
@@ -84208,7 +84248,7 @@ function requirePhysicsMethods() {
     var arg1 = parser2.GetArgument(name2);
     var arg2 = parser2.GetArgument(name2);
     var argument = arg1 + "," + arg2;
-    argument = star2 ? open + " " + argument + " " + close2 : big ? "\\" + big + "l" + open + " " + argument + " \\" + big + "r" + close2 : "\\left" + open + " " + argument + " \\right" + close2;
+    argument = star2 ? open + " " + argument + " " + close : big ? "\\" + big + "l" + open + " " + argument + " \\" + big + "r" + close : "\\left" + open + " " + argument + " \\right" + close;
     parser2.Push(new TexParser_js_1.default(argument, parser2.stack.env, parser2.configuration).mml());
   };
   var latinCap = [65, 90];
@@ -84488,7 +84528,7 @@ function requirePhysicsMethods() {
     var array = small2 ? "smallmatrix" : "array";
     var arg = "";
     var open = "";
-    var close2 = "";
+    var close = "";
     switch (next) {
       case "{":
         arg = parser2.GetArgument(name2);
@@ -84496,27 +84536,27 @@ function requirePhysicsMethods() {
       case "(":
         parser2.i++;
         open = star2 ? "\\lgroup" : "(";
-        close2 = star2 ? "\\rgroup" : ")";
+        close = star2 ? "\\rgroup" : ")";
         arg = parser2.GetUpTo(name2, ")");
         break;
       case "[":
         parser2.i++;
         open = "[";
-        close2 = "]";
+        close = "]";
         arg = parser2.GetUpTo(name2, "]");
         break;
       case "|":
         parser2.i++;
         open = "|";
-        close2 = "|";
+        close = "|";
         arg = parser2.GetUpTo(name2, "|");
         break;
       default:
         open = "(";
-        close2 = ")";
+        close = ")";
         break;
     }
-    var macro = (open ? "\\left" : "") + open + "\\begin{" + array + "}{} " + arg + "\\end{" + array + "}" + (open ? "\\right" : "") + close2;
+    var macro = (open ? "\\left" : "") + open + "\\begin{" + array + "}{} " + arg + "\\end{" + array + "}" + (open ? "\\right" : "") + close;
     parser2.Push(new TexParser_js_1.default(macro, parser2.stack.env, parser2.configuration).mml());
   };
   PhysicsMethods$1.IdentityMatrix = function(parser2, name2) {
@@ -107486,8 +107526,9 @@ function requireMarkdownItMathjax3() {
 var markdownItMathjax3Exports = requireMarkdownItMathjax3();
 const markdownitMathjax3 = /* @__PURE__ */ getDefaultExportFromCjs(markdownItMathjax3Exports);
 const MarkdownDivComponent = reactExports.forwardRef(
-  ({ markdown, omitMedia, style: style2, className: className2 }, ref) => {
-    const cacheKey = `${markdown}:${omitMedia ? "1" : "0"}`;
+  ({ markdown, omitMedia, omitMath, style: style2, className: className2 }, ref) => {
+    const optionsKey = getOptionsKey(omitMedia, omitMath);
+    const cacheKey = `${markdown}:${optionsKey}`;
     const cachedHtml = renderCache.get(cacheKey);
     const [renderedHtml, setRenderedHtml] = reactExports.useState(() => {
       if (cachedHtml) {
@@ -107513,7 +107554,7 @@ const MarkdownDivComponent = reactExports.forwardRef(
         const preparedForMarkdown = restoreBackslashesForLatex(protectedText);
         let html2 = preparedForMarkdown;
         try {
-          const md = omitMedia ? mdInstanceNoMedia : mdInstance;
+          const md = getMarkdownInstance(omitMedia, omitMath);
           html2 = md.render(preparedForMarkdown);
         } catch (ex) {
           console.log("Unable to markdown render content");
@@ -107541,7 +107582,7 @@ const MarkdownDivComponent = reactExports.forwardRef(
       return () => {
         cancel();
       };
-    }, [markdown, omitMedia, cachedHtml, renderedHtml, cacheKey]);
+    }, [markdown, omitMedia, omitMath, cachedHtml, renderedHtml, cacheKey]);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
@@ -107556,10 +107597,22 @@ const MarkdownDivComponent = reactExports.forwardRef(
 const MarkdownDiv = reactExports.memo(MarkdownDivComponent);
 const renderCache = /* @__PURE__ */ new Map();
 const MAX_CACHE_SIZE = 500;
-const mdInstance = MarkdownIt({ breaks: true, html: true }).use(
-  markdownitMathjax3
-);
-const mdInstanceNoMedia = MarkdownIt({ breaks: true, html: true }).use(markdownitMathjax3).disable(["image"]);
+const mdInstanceCache = {};
+const getOptionsKey = (omitMedia, omitMath) => `${omitMedia ? "1" : "0"}:${omitMath ? "1" : "0"}`;
+const getMarkdownInstance = (omitMedia, omitMath) => {
+  const key2 = getOptionsKey(omitMedia, omitMath);
+  if (!mdInstanceCache[key2]) {
+    const md = new MarkdownIt({ breaks: true, html: true });
+    if (!omitMath) {
+      md.use(markdownitMathjax3);
+    }
+    if (omitMedia) {
+      md.disable(["image"]);
+    }
+    mdInstanceCache[key2] = md;
+  }
+  return mdInstanceCache[key2];
+};
 class MarkdownRenderQueue {
   queue = [];
   activeCount = 0;
@@ -107737,7 +107790,7 @@ function unescapeCodeHtmlEntities(str2) {
   );
 }
 const content$3 = "_content_13ihw_1";
-const styles$1F = {
+const styles$1A = {
   content: content$3
 };
 const Preformatted = reactExports.forwardRef(
@@ -107746,14 +107799,14 @@ const Preformatted = reactExports.forwardRef(
       "pre",
       {
         ref,
-        className: clsx(styles$1F.content, "text-size-smaller", className2),
+        className: clsx(styles$1A.content, "text-size-smaller", className2),
         style: style2,
         children: text2
       }
     );
   }
 );
-const RenderedText = reactExports.forwardRef(({ markdown, style: style2, className: className2, forceRender, omitMedia }, ref) => {
+const RenderedText = reactExports.forwardRef(({ markdown, style: style2, className: className2, forceRender, omitMedia, omitMath }, ref) => {
   const displayMode = useStore((state) => state.app.displayMode);
   if (forceRender || displayMode === "rendered") {
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -107763,7 +107816,8 @@ const RenderedText = reactExports.forwardRef(({ markdown, style: style2, classNa
         markdown,
         style: style2,
         className: className2,
-        omitMedia
+        omitMedia,
+        omitMath
       }
     );
   } else {
@@ -107780,22 +107834,22 @@ const RenderedText = reactExports.forwardRef(({ markdown, style: style2, classNa
 });
 const webSearch = "_webSearch_1376z_1";
 const query$1 = "_query_1376z_8";
-const styles$1E = {
+const styles$1z = {
   webSearch,
   query: query$1
 };
 const WebSearch = ({ query: query2 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1E.webSearch, "text-size-smaller"), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1z.webSearch, "text-size-smaller"), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-style-label", "text-style-secondary"), children: "Web Search:" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx(styles$1E.query, "text-size-smallest"), children: query2 })
+    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx(styles$1z.query, "text-size-smallest"), children: query2 })
   ] });
 };
-const contentData = "_contentData_1sd1z_1";
-const styles$1D = {
+const contentData = "_contentData_1lrx1_1";
+const styles$1y = {
   contentData
 };
 const result$1 = "_result_1mixg_12";
-const styles$1C = {
+const styles$1x = {
   result: result$1
 };
 const WebSearchResults = ({
@@ -107806,7 +107860,7 @@ const WebSearchResults = ({
       "div",
       {
         className: clsx(
-          styles$1C.label,
+          styles$1x.label,
           "text-style-label",
           "text-style-secondary",
           "text-size-smaller"
@@ -107814,10 +107868,10 @@ const WebSearchResults = ({
         children: "Results"
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("ol", { className: clsx(styles$1C.results, "text-size-smaller"), children: results.map((result2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+    /* @__PURE__ */ jsxRuntimeExports.jsx("ol", { className: clsx(styles$1x.results, "text-size-smaller"), children: results.map((result2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
       "li",
       {
-        className: clsx(styles$1C.result, "text-style-secondary"),
+        className: clsx(styles$1x.result, "text-style-secondary"),
         children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           "a",
           {
@@ -107834,6 +107888,121 @@ const WebSearchResults = ({
     )) })
   ] });
 };
+const title$3 = "_title_1gjvf_1";
+const content$2 = "_content_1gjvf_11";
+const grid$9 = "_grid_1gjvf_16";
+const styles$1w = {
+  title: title$3,
+  content: content$2,
+  grid: grid$9
+};
+const grid$8 = "_grid_14885_1";
+const cell$2 = "_cell_14885_8";
+const styles$1v = {
+  grid: grid$8,
+  cell: cell$2
+};
+const MetaDataGrid = ({
+  id,
+  entries,
+  className: className2,
+  size,
+  style: style2,
+  plain
+}) => {
+  const baseId = "metadata-grid";
+  const fontStyle = size === "mini" ? "text-size-smallest" : "text-size-smaller";
+  const entryEls = entryRecords(entries).map((entry, index) => {
+    const id2 = `${baseId}-value-${index}`;
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
+      index !== 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
+        {
+          style: {
+            gridColumn: "1 / -1",
+            borderBottom: `${!plain ? "solid 1px var(--bs-light-border-subtle" : ""}`
+          }
+        }
+      ) : void 0,
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
+        {
+          className: clsx(
+            `${baseId}-key`,
+            styles$1v.cell,
+            "text-style-label",
+            "text-style-secondary",
+            fontStyle
+          ),
+          children: entry?.name
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1v.value, `${baseId}-value`, fontStyle), children: entry && /* @__PURE__ */ jsxRuntimeExports.jsx(
+        RenderedContent,
+        {
+          id: id2,
+          entry,
+          renderObject: (obj) => {
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(
+              MetaDataGrid,
+              {
+                id: id2,
+                className: clsx(styles$1v.nested),
+                entries: obj,
+                size,
+                plain
+              }
+            );
+          }
+        }
+      ) })
+    ] }, `${baseId}-record-${index}`);
+  });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { id, className: clsx(className2, styles$1v.grid), style: style2, children: entryEls });
+};
+const entryRecords = (entries) => {
+  if (!entries) {
+    return [];
+  }
+  if (!Array.isArray(entries)) {
+    return Object.entries(entries || {}).map(([key2, value2]) => {
+      return { name: key2, value: value2 };
+    });
+  } else {
+    return entries;
+  }
+};
+const kCompactionMetadata = "compaction_metadata";
+const CompactionData = ({ id, data }) => {
+  const compactionMetadata = data[kCompactionMetadata];
+  let compactionContent = void 0;
+  if (compactionMetadata.type === "anthropic_compact") {
+    compactionContent = /* @__PURE__ */ jsxRuntimeExports.jsx(ExpandablePanel, { id: `${id}-compacted-content`, collapse: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: String(compactionMetadata.content) }) });
+  } else {
+    compactionContent = /* @__PURE__ */ jsxRuntimeExports.jsx(
+      MetaDataGrid,
+      {
+        id: `${id}-compacted-content-metadata`,
+        className: styles$1w.grid,
+        entries: compactionMetadata
+      }
+    );
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1w.content, "text-size-small"), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        className: clsx(
+          "text-style-label",
+          "text-style-secondary",
+          styles$1w.title
+        ),
+        children: "Compacted Content"
+      }
+    ),
+    compactionContent
+  ] });
+};
 const ContentDataView = ({ id, contentData: contentData2 }) => {
   const renderableData = contentData2.data;
   const renderer = contentDataRenderers.find(
@@ -107841,24 +108010,33 @@ const ContentDataView = ({ id, contentData: contentData2 }) => {
   );
   if (!renderer) {
     const { encrypted_content, ...record } = renderableData;
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1D.contentData), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1y.contentData), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       RecordTree,
       {
         id: `${id}-tree`,
         record,
-        className: clsx(styles$1D.data),
+        className: clsx(styles$1y.data),
         defaultExpandLevel: 0
       }
     ) });
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1D.contentData), children: renderer.render(renderableData) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1y.contentData), children: renderer.render(id, renderableData) });
+};
+const compactionDataRenderer = {
+  name: "Compaction",
+  canRender: (data) => {
+    return Object.hasOwn(data, kCompactionMetadata);
+  },
+  render: (id, data) => {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(CompactionData, { id, data });
+  }
 };
 const webSearchServerToolRenderer = {
   name: "WebSearch",
   canRender: (data) => {
     return data.type === "server_tool_use" && data.name === "web_search";
   },
-  render: (data) => {
+  render: (_id, data) => {
     return /* @__PURE__ */ jsxRuntimeExports.jsx(WebSearch, { query: data.input.query });
   }
 };
@@ -107867,7 +108045,7 @@ const webSearchResultsServerToolRenderer = {
   canRender: (data) => {
     return data.type === "web_search_tool_result" && Array.isArray(data.content);
   },
-  render: (data) => {
+  render: (_id, data) => {
     const results = data.content;
     return /* @__PURE__ */ jsxRuntimeExports.jsx(WebSearchResults, { results });
   }
@@ -107875,7 +108053,7 @@ const webSearchResultsServerToolRenderer = {
 const serverToolRenderer = {
   name: "ServerTool",
   canRender: (data) => data.type === "server_tool_use",
-  render: (data) => {
+  render: (id, data) => {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
@@ -107891,15 +108069,16 @@ const serverToolRenderer = {
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         RecordTree,
         {
-          id: data.name || "server-tool",
+          id: `${id}-server-tool`,
           record: data,
-          className: clsx(styles$1D.data)
+          className: clsx(styles$1y.data)
         }
       )
     ] });
   }
 };
 const contentDataRenderers = [
+  compactionDataRenderer,
   webSearchServerToolRenderer,
   webSearchResultsServerToolRenderer,
   serverToolRenderer
@@ -108071,8 +108250,8 @@ var wk = (function(c2, id, msg, transfer, cb) {
   w.postMessage(msg, transfer);
   return w;
 });
-var u8 = Uint8Array, u16 = Uint16Array, i32 = Int32Array;
-var fleb = new u8([
+var u8$1 = Uint8Array, u16$1 = Uint16Array, i32$1 = Int32Array;
+var fleb = new u8$1([
   0,
   0,
   0,
@@ -108108,7 +108287,7 @@ var fleb = new u8([
   /* impossible */
   0
 ]);
-var fdeb = new u8([
+var fdeb = new u8$1([
   0,
   0,
   0,
@@ -108143,13 +108322,13 @@ var fdeb = new u8([
   0,
   0
 ]);
-var clim = new u8([16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15]);
+var clim = new u8$1([16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15]);
 var freb = function(eb, start2) {
-  var b = new u16(31);
+  var b = new u16$1(31);
   for (var i = 0; i < 31; ++i) {
     b[i] = start2 += 1 << eb[i - 1];
   }
-  var r2 = new i32(b[30]);
+  var r2 = new i32$1(b[30]);
   for (var i = 1; i < 30; ++i) {
     for (var j = b[i]; j < b[i + 1]; ++j) {
       r2[j] = j - b[i] << 5 | i;
@@ -108160,7 +108339,7 @@ var freb = function(eb, start2) {
 var _a$2 = freb(fleb, 2), fl = _a$2.b, revfl = _a$2.r;
 fl[28] = 258, revfl[258] = 28;
 var _b = freb(fdeb, 0), fd = _b.b;
-var rev = new u16(32768);
+var rev = new u16$1(32768);
 for (var i$1 = 0; i$1 < 32768; ++i$1) {
   var x = (i$1 & 43690) >> 1 | (i$1 & 21845) << 1;
   x = (x & 52428) >> 2 | (x & 13107) << 2;
@@ -108170,18 +108349,18 @@ for (var i$1 = 0; i$1 < 32768; ++i$1) {
 var hMap = (function(cd, mb, r2) {
   var s = cd.length;
   var i = 0;
-  var l = new u16(mb);
+  var l = new u16$1(mb);
   for (; i < s; ++i) {
     if (cd[i])
       ++l[cd[i] - 1];
   }
-  var le2 = new u16(mb);
+  var le2 = new u16$1(mb);
   for (i = 1; i < mb; ++i) {
     le2[i] = le2[i - 1] + l[i - 1] << 1;
   }
   var co;
   if (r2) {
-    co = new u16(1 << mb);
+    co = new u16$1(1 << mb);
     var rvb = 15 - mb;
     for (i = 0; i < s; ++i) {
       if (cd[i]) {
@@ -108194,7 +108373,7 @@ var hMap = (function(cd, mb, r2) {
       }
     }
   } else {
-    co = new u16(s);
+    co = new u16$1(s);
     for (i = 0; i < s; ++i) {
       if (cd[i]) {
         co[i] = rev[le2[cd[i] - 1]++] >> 15 - cd[i];
@@ -108203,7 +108382,7 @@ var hMap = (function(cd, mb, r2) {
   }
   return co;
 });
-var flt = new u8(288);
+var flt = new u8$1(288);
 for (var i$1 = 0; i$1 < 144; ++i$1)
   flt[i$1] = 8;
 for (var i$1 = 144; i$1 < 256; ++i$1)
@@ -108212,7 +108391,7 @@ for (var i$1 = 256; i$1 < 280; ++i$1)
   flt[i$1] = 7;
 for (var i$1 = 280; i$1 < 288; ++i$1)
   flt[i$1] = 8;
-var fdt = new u8(32);
+var fdt = new u8$1(32);
 for (var i$1 = 0; i$1 < 32; ++i$1)
   fdt[i$1] = 5;
 var flrm = /* @__PURE__ */ hMap(flt, 9, 1);
@@ -108236,14 +108415,14 @@ var bits16 = function(d, p) {
 var shft = function(p) {
   return (p + 7) / 8 | 0;
 };
-var slc = function(v, s, e) {
+var slc$1 = function(v, s, e) {
   if (s == null || s < 0)
     s = 0;
   if (e == null || e > v.length)
     e = v.length;
-  return new u8(v.subarray(s, e));
+  return new u8$1(v.subarray(s, e));
 };
-var ec = [
+var ec$1 = [
   "unexpected EOF",
   "invalid block type",
   "invalid length/literal",
@@ -108260,11 +108439,11 @@ var ec = [
   "invalid zip data"
   // determined by unknown compression method
 ];
-var err = function(ind, msg, nt) {
-  var e = new Error(msg || ec[ind]);
+var err$1 = function(ind, msg, nt) {
+  var e = new Error(msg || ec$1[ind]);
   e.code = ind;
   if (Error.captureStackTrace)
-    Error.captureStackTrace(e, err);
+    Error.captureStackTrace(e, err$1);
   if (!nt)
     throw e;
   return e;
@@ -108272,16 +108451,16 @@ var err = function(ind, msg, nt) {
 var inflt = function(dat, st, buf, dict) {
   var sl = dat.length, dl = dict ? dict.length : 0;
   if (!sl || st.f && !st.l)
-    return buf || new u8(0);
+    return buf || new u8$1(0);
   var noBuf = !buf;
   var resize = noBuf || st.i != 2;
   var noSt = st.i;
   if (noBuf)
-    buf = new u8(sl * 3);
+    buf = new u8$1(sl * 3);
   var cbuf = function(l2) {
     var bl = buf.length;
     if (l2 > bl) {
-      var nbuf = new u8(Math.max(bl * 2, l2));
+      var nbuf = new u8$1(Math.max(bl * 2, l2));
       nbuf.set(buf);
       buf = nbuf;
     }
@@ -108297,7 +108476,7 @@ var inflt = function(dat, st, buf, dict) {
         var s = shft(pos2) + 4, l = dat[s - 4] | dat[s - 3] << 8, t2 = s + l;
         if (t2 > sl) {
           if (noSt)
-            err(0);
+            err$1(0);
           break;
         }
         if (resize)
@@ -108311,8 +108490,8 @@ var inflt = function(dat, st, buf, dict) {
         var hLit = bits(dat, pos2, 31) + 257, hcLen = bits(dat, pos2 + 10, 15) + 4;
         var tl = hLit + bits(dat, pos2 + 5, 31) + 1;
         pos2 += 14;
-        var ldt = new u8(tl);
-        var clt = new u8(19);
+        var ldt = new u8$1(tl);
+        var clt = new u8$1(19);
         for (var i = 0; i < hcLen; ++i) {
           clt[clim[i]] = bits(dat, pos2 + i * 3, 7);
         }
@@ -108343,10 +108522,10 @@ var inflt = function(dat, st, buf, dict) {
         lm = hMap(lt2, lbt, 1);
         dm = hMap(dt2, dbt, 1);
       } else
-        err(1);
+        err$1(1);
       if (pos2 > tbts) {
         if (noSt)
-          err(0);
+          err$1(0);
         break;
       }
     }
@@ -108359,11 +108538,11 @@ var inflt = function(dat, st, buf, dict) {
       pos2 += c2 & 15;
       if (pos2 > tbts) {
         if (noSt)
-          err(0);
+          err$1(0);
         break;
       }
       if (!c2)
-        err(2);
+        err$1(2);
       if (sym < 256)
         buf[bt2++] = sym;
       else if (sym == 256) {
@@ -108378,7 +108557,7 @@ var inflt = function(dat, st, buf, dict) {
         }
         var d = dm[bits16(dat, pos2) & dms], dsym = d >> 4;
         if (!d)
-          err(3);
+          err$1(3);
         pos2 += d & 15;
         var dt2 = fd[dsym];
         if (dsym > 3) {
@@ -108387,7 +108566,7 @@ var inflt = function(dat, st, buf, dict) {
         }
         if (pos2 > tbts) {
           if (noSt)
-            err(0);
+            err$1(0);
           break;
         }
         if (resize)
@@ -108396,7 +108575,7 @@ var inflt = function(dat, st, buf, dict) {
         if (bt2 < dt2) {
           var shift2 = dl - dt2, dend = Math.min(dt2, end2);
           if (shift2 + bt2 < 0)
-            err(3);
+            err$1(3);
           for (; bt2 < dend; ++bt2)
             buf[bt2] = dict[shift2 + bt2];
         }
@@ -108408,9 +108587,9 @@ var inflt = function(dat, st, buf, dict) {
     if (lm)
       final = 1, st.m = lbt, st.d = dm, st.n = dbt;
   } while (!final);
-  return bt2 != buf.length && noBuf ? slc(buf, 0, bt2) : buf.subarray(0, bt2);
+  return bt2 != buf.length && noBuf ? slc$1(buf, 0, bt2) : buf.subarray(0, bt2);
 };
-var et = /* @__PURE__ */ new u8(0);
+var et = /* @__PURE__ */ new u8$1(0);
 var mrg = function(a, b) {
   var o = {};
   for (var k2 in a)
@@ -108465,7 +108644,7 @@ var wrkr = function(fns, init2, id, cb) {
   return wk(ch[id].c + ";onmessage=function(e){for(var k in e.data)self[k]=e.data[k];onmessage=" + init2.toString() + "}", id, td2, cbfs(td2), cb);
 };
 var bInflt = function() {
-  return [u8, u16, i32, fleb, fdeb, clim, fl, fd, flrm, fdrm, rev, ec, hMap, max$1, bits, bits16, shft, slc, err, inflt, inflateSync, pbf, gopt];
+  return [u8$1, u16$1, i32$1, fleb, fdeb, clim, fl, fd, flrm, fdrm, rev, ec$1, hMap, max$1, bits, bits16, shft, slc$1, err$1, inflt, inflateSync, pbf, gopt];
 };
 var guze = function() {
   return [gzs, gzl];
@@ -108478,7 +108657,7 @@ var pbf = function(msg) {
 };
 var gopt = function(o) {
   return o && {
-    out: o.size && new u8(o.size),
+    out: o.size && new u8$1(o.size),
     dictionary: o.dictionary
   };
 };
@@ -108494,7 +108673,7 @@ var cbify = function(dat, opts, fns, init2, id, cb) {
 };
 var gzs = function(d) {
   if (d[0] != 31 || d[1] != 139 || d[2] != 8)
-    err(6, "invalid gzip data");
+    err$1(6, "invalid gzip data");
   var flg = d[3];
   var st = 10;
   if (flg & 4)
@@ -108509,16 +108688,16 @@ var gzl = function(d) {
 };
 var zls = function(d, dict) {
   if ((d[0] & 15) != 8 || d[0] >> 4 > 7 || (d[0] << 8 | d[1]) % 31)
-    err(6, "invalid zlib data");
+    err$1(6, "invalid zlib data");
   if ((d[1] >> 5 & 1) == +!dict)
-    err(6, "invalid zlib data: " + (d[1] & 32 ? "need" : "unexpected") + " dictionary");
+    err$1(6, "invalid zlib data: " + (d[1] & 32 ? "need" : "unexpected") + " dictionary");
   return (d[1] >> 3 & 4) + 2;
 };
 function inflate(data, opts, cb) {
   if (!cb)
     cb = opts, opts = {};
   if (typeof cb != "function")
-    err(7);
+    err$1(7);
   return cbify(data, opts, [
     bInflt
   ], function(ev) {
@@ -108532,7 +108711,7 @@ function gunzip(data, opts, cb) {
   if (!cb)
     cb = opts, opts = {};
   if (typeof cb != "function")
-    err(7);
+    err$1(7);
   return cbify(data, opts, [
     bInflt,
     guze,
@@ -108546,14 +108725,14 @@ function gunzip(data, opts, cb) {
 function gunzipSync(data, opts) {
   var st = gzs(data);
   if (st + 8 > data.length)
-    err(6, "invalid gzip data");
-  return inflt(data.subarray(st, -8), { i: 2 }, opts && opts.out || new u8(gzl(data)), opts && opts.dictionary);
+    err$1(6, "invalid gzip data");
+  return inflt(data.subarray(st, -8), { i: 2 }, opts && opts.out || new u8$1(gzl(data)), opts && opts.dictionary);
 }
 function unzlib(data, opts, cb) {
   if (!cb)
     cb = opts, opts = {};
   if (typeof cb != "function")
-    err(7);
+    err$1(7);
   return cbify(data, opts, [
     bInflt,
     zule,
@@ -108567,11 +108746,11 @@ function unzlib(data, opts, cb) {
 function unzlibSync(data, opts) {
   return inflt(data.subarray(zls(data, opts && opts.dictionary), -4), { i: 2 }, opts && opts.out, opts && opts.dictionary);
 }
-function decompress(data, opts, cb) {
+function decompress$1(data, opts, cb) {
   if (!cb)
     cb = opts, opts = {};
   if (typeof cb != "function")
-    err(7);
+    err$1(7);
   return data[0] == 31 && data[1] == 139 && data[2] == 8 ? gunzip(data, opts, cb) : (data[0] & 15) != 8 || data[0] >> 4 > 7 || (data[0] << 8 | data[1]) % 31 ? inflate(data, opts, cb) : unzlib(data, opts, cb);
 }
 var td = typeof TextDecoder != "undefined" && /* @__PURE__ */ new TextDecoder();
@@ -108580,6 +108759,827 @@ try {
   td.decode(et, { stream: true });
   tds = 1;
 } catch (e) {
+}
+var ab = ArrayBuffer, u8 = Uint8Array, u16 = Uint16Array, i16 = Int16Array, i32 = Int32Array;
+var slc = function(v, s, e) {
+  if (u8.prototype.slice)
+    return u8.prototype.slice.call(v, s, e);
+  if (s == null || s < 0)
+    s = 0;
+  if (e == null || e > v.length)
+    e = v.length;
+  var n = new u8(e - s);
+  n.set(v.subarray(s, e));
+  return n;
+};
+var fill = function(v, n, s, e) {
+  if (u8.prototype.fill)
+    return u8.prototype.fill.call(v, n, s, e);
+  if (s == null || s < 0)
+    s = 0;
+  if (e == null || e > v.length)
+    e = v.length;
+  for (; s < e; ++s)
+    v[s] = n;
+  return v;
+};
+var cpw = function(v, t2, s, e) {
+  if (u8.prototype.copyWithin)
+    return u8.prototype.copyWithin.call(v, t2, s, e);
+  if (s == null || s < 0)
+    s = 0;
+  if (e == null || e > v.length)
+    e = v.length;
+  while (s < e) {
+    v[t2++] = v[s++];
+  }
+};
+var ec = [
+  "invalid zstd data",
+  "window size too large (>2046MB)",
+  "invalid block type",
+  "FSE accuracy too high",
+  "match distance too far back",
+  "unexpected EOF"
+];
+var err = function(ind, msg, nt) {
+  var e = new Error(msg || ec[ind]);
+  e.code = ind;
+  if (Error.captureStackTrace)
+    Error.captureStackTrace(e, err);
+  if (!nt)
+    throw e;
+  return e;
+};
+var rb = function(d, b, n) {
+  var i = 0, o = 0;
+  for (; i < n; ++i)
+    o |= d[b++] << (i << 3);
+  return o;
+};
+var b4 = function(d, b) {
+  return (d[b] | d[b + 1] << 8 | d[b + 2] << 16 | d[b + 3] << 24) >>> 0;
+};
+var rzfh = function(dat, w) {
+  var n3 = dat[0] | dat[1] << 8 | dat[2] << 16;
+  if (n3 == 3126568 && dat[3] == 253) {
+    var flg = dat[4];
+    var ss = flg >> 5 & 1, cc = flg >> 2 & 1, df = flg & 3, fcf = flg >> 6;
+    if (flg & 8)
+      err(0);
+    var bt2 = 6 - ss;
+    var db = df == 3 ? 4 : df;
+    var di = rb(dat, bt2, db);
+    bt2 += db;
+    var fsb = fcf ? 1 << fcf : ss;
+    var fss = rb(dat, bt2, fsb) + (fcf == 1 && 256);
+    var ws = fss;
+    if (!ss) {
+      var wb = 1 << 10 + (dat[5] >> 3);
+      ws = wb + (wb >> 3) * (dat[5] & 7);
+    }
+    if (ws > 2145386496)
+      err(1);
+    var buf = new u8((w == 1 ? fss || ws : w ? 0 : ws) + 12);
+    buf[0] = 1, buf[4] = 4, buf[8] = 8;
+    return {
+      b: bt2 + fsb,
+      y: 0,
+      l: 0,
+      d: di,
+      w: w && w != 1 ? w : buf.subarray(12),
+      e: ws,
+      o: new i32(buf.buffer, 0, 3),
+      u: fss,
+      c: cc,
+      m: Math.min(131072, ws)
+    };
+  } else if ((n3 >> 4 | dat[3] << 20) == 25481893) {
+    return b4(dat, 4) + 8;
+  }
+  err(0);
+};
+var msb = function(val) {
+  var bits2 = 0;
+  for (; 1 << bits2 <= val; ++bits2)
+    ;
+  return bits2 - 1;
+};
+var rfse = function(dat, bt2, mal) {
+  var tpos = (bt2 << 3) + 4;
+  var al = (dat[bt2] & 15) + 5;
+  if (al > mal)
+    err(3);
+  var sz = 1 << al;
+  var probs = sz, sym = -1, re2 = -1, i = -1, ht2 = sz;
+  var buf = new ab(512 + (sz << 2));
+  var freq = new i16(buf, 0, 256);
+  var dstate = new u16(buf, 0, 256);
+  var nstate = new u16(buf, 512, sz);
+  var bb1 = 512 + (sz << 1);
+  var syms = new u8(buf, bb1, sz);
+  var nbits = new u8(buf, bb1 + sz);
+  while (sym < 255 && probs > 0) {
+    var bits2 = msb(probs + 1);
+    var cbt = tpos >> 3;
+    var msk = (1 << bits2 + 1) - 1;
+    var val = (dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (tpos & 7) & msk;
+    var msk1fb = (1 << bits2) - 1;
+    var msv = msk - probs - 1;
+    var sval = val & msk1fb;
+    if (sval < msv)
+      tpos += bits2, val = sval;
+    else {
+      tpos += bits2 + 1;
+      if (val > msk1fb)
+        val -= msv;
+    }
+    freq[++sym] = --val;
+    if (val == -1) {
+      probs += val;
+      syms[--ht2] = sym;
+    } else
+      probs -= val;
+    if (!val) {
+      do {
+        var rbt = tpos >> 3;
+        re2 = (dat[rbt] | dat[rbt + 1] << 8) >> (tpos & 7) & 3;
+        tpos += 2;
+        sym += re2;
+      } while (re2 == 3);
+    }
+  }
+  if (sym > 255 || probs)
+    err(0);
+  var sympos = 0;
+  var sstep = (sz >> 1) + (sz >> 3) + 3;
+  var smask = sz - 1;
+  for (var s = 0; s <= sym; ++s) {
+    var sf = freq[s];
+    if (sf < 1) {
+      dstate[s] = -sf;
+      continue;
+    }
+    for (i = 0; i < sf; ++i) {
+      syms[sympos] = s;
+      do {
+        sympos = sympos + sstep & smask;
+      } while (sympos >= ht2);
+    }
+  }
+  if (sympos)
+    err(0);
+  for (i = 0; i < sz; ++i) {
+    var ns = dstate[syms[i]]++;
+    var nb = nbits[i] = al - msb(ns);
+    nstate[i] = (ns << nb) - sz;
+  }
+  return [tpos + 7 >> 3, {
+    b: al,
+    s: syms,
+    n: nbits,
+    t: nstate
+  }];
+};
+var rhu = function(dat, bt2) {
+  var i = 0, wc = -1;
+  var buf = new u8(292), hb = dat[bt2];
+  var hw = buf.subarray(0, 256);
+  var rc = buf.subarray(256, 268);
+  var ri = new u16(buf.buffer, 268);
+  if (hb < 128) {
+    var _a2 = rfse(dat, bt2 + 1, 6), ebt = _a2[0], fdt2 = _a2[1];
+    bt2 += hb;
+    var epos = ebt << 3;
+    var lb = dat[bt2];
+    if (!lb)
+      err(0);
+    var st1 = 0, st2 = 0, btr1 = fdt2.b, btr2 = btr1;
+    var fpos = (++bt2 << 3) - 8 + msb(lb);
+    for (; ; ) {
+      fpos -= btr1;
+      if (fpos < epos)
+        break;
+      var cbt = fpos >> 3;
+      st1 += (dat[cbt] | dat[cbt + 1] << 8) >> (fpos & 7) & (1 << btr1) - 1;
+      hw[++wc] = fdt2.s[st1];
+      fpos -= btr2;
+      if (fpos < epos)
+        break;
+      cbt = fpos >> 3;
+      st2 += (dat[cbt] | dat[cbt + 1] << 8) >> (fpos & 7) & (1 << btr2) - 1;
+      hw[++wc] = fdt2.s[st2];
+      btr1 = fdt2.n[st1];
+      st1 = fdt2.t[st1];
+      btr2 = fdt2.n[st2];
+      st2 = fdt2.t[st2];
+    }
+    if (++wc > 255)
+      err(0);
+  } else {
+    wc = hb - 127;
+    for (; i < wc; i += 2) {
+      var byte = dat[++bt2];
+      hw[i] = byte >> 4;
+      hw[i + 1] = byte & 15;
+    }
+    ++bt2;
+  }
+  var wes = 0;
+  for (i = 0; i < wc; ++i) {
+    var wt = hw[i];
+    if (wt > 11)
+      err(0);
+    wes += wt && 1 << wt - 1;
+  }
+  var mb = msb(wes) + 1;
+  var ts = 1 << mb;
+  var rem = ts - wes;
+  if (rem & rem - 1)
+    err(0);
+  hw[wc++] = msb(rem) + 1;
+  for (i = 0; i < wc; ++i) {
+    var wt = hw[i];
+    ++rc[hw[i] = wt && mb + 1 - wt];
+  }
+  var hbuf = new u8(ts << 1);
+  var syms = hbuf.subarray(0, ts), nb = hbuf.subarray(ts);
+  ri[mb] = 0;
+  for (i = mb; i > 0; --i) {
+    var pv = ri[i];
+    fill(nb, i, pv, ri[i - 1] = pv + rc[i] * (1 << mb - i));
+  }
+  if (ri[0] != ts)
+    err(0);
+  for (i = 0; i < wc; ++i) {
+    var bits2 = hw[i];
+    if (bits2) {
+      var code2 = ri[bits2];
+      fill(syms, i, code2, ri[bits2] = code2 + (1 << mb - bits2));
+    }
+  }
+  return [bt2, {
+    n: nb,
+    b: mb,
+    s: syms
+  }];
+};
+var dllt = rfse(/* @__PURE__ */ new u8([
+  81,
+  16,
+  99,
+  140,
+  49,
+  198,
+  24,
+  99,
+  12,
+  33,
+  196,
+  24,
+  99,
+  102,
+  102,
+  134,
+  70,
+  146,
+  4
+]), 0, 6)[1];
+var dmlt = rfse(/* @__PURE__ */ new u8([
+  33,
+  20,
+  196,
+  24,
+  99,
+  140,
+  33,
+  132,
+  16,
+  66,
+  8,
+  33,
+  132,
+  16,
+  66,
+  8,
+  33,
+  68,
+  68,
+  68,
+  68,
+  68,
+  68,
+  68,
+  68,
+  36,
+  9
+]), 0, 6)[1];
+var doct = rfse(/* @__PURE__ */ new u8([
+  32,
+  132,
+  16,
+  66,
+  102,
+  70,
+  68,
+  68,
+  68,
+  68,
+  36,
+  73,
+  2
+]), 0, 5)[1];
+var b2bl = function(b, s) {
+  var len = b.length, bl = new i32(len);
+  for (var i = 0; i < len; ++i) {
+    bl[i] = s;
+    s += 1 << b[i];
+  }
+  return bl;
+};
+var llb = /* @__PURE__ */ new u8((/* @__PURE__ */ new i32([
+  0,
+  0,
+  0,
+  0,
+  16843009,
+  50528770,
+  134678020,
+  202050057,
+  269422093
+])).buffer, 0, 36);
+var llbl = /* @__PURE__ */ b2bl(llb, 0);
+var mlb = /* @__PURE__ */ new u8((/* @__PURE__ */ new i32([
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  16843009,
+  50528770,
+  117769220,
+  185207048,
+  252579084,
+  16
+])).buffer, 0, 53);
+var mlbl = /* @__PURE__ */ b2bl(mlb, 3);
+var dhu = function(dat, out, hu) {
+  var len = dat.length, ss = out.length, lb = dat[len - 1], msk = (1 << hu.b) - 1, eb = -hu.b;
+  if (!lb)
+    err(0);
+  var st = 0, btr = hu.b, pos2 = (len << 3) - 8 + msb(lb) - btr, i = -1;
+  for (; pos2 > eb && i < ss; ) {
+    var cbt = pos2 >> 3;
+    var val = (dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (pos2 & 7);
+    st = (st << btr | val) & msk;
+    out[++i] = hu.s[st];
+    pos2 -= btr = hu.n[st];
+  }
+  if (pos2 != eb || i + 1 != ss)
+    err(0);
+};
+var dhu4 = function(dat, out, hu) {
+  var bt2 = 6;
+  var ss = out.length, sz1 = ss + 3 >> 2, sz2 = sz1 << 1, sz3 = sz1 + sz2;
+  dhu(dat.subarray(bt2, bt2 += dat[0] | dat[1] << 8), out.subarray(0, sz1), hu);
+  dhu(dat.subarray(bt2, bt2 += dat[2] | dat[3] << 8), out.subarray(sz1, sz2), hu);
+  dhu(dat.subarray(bt2, bt2 += dat[4] | dat[5] << 8), out.subarray(sz2, sz3), hu);
+  dhu(dat.subarray(bt2), out.subarray(sz3), hu);
+};
+var rzb = function(dat, st, out) {
+  var _a2;
+  var bt2 = st.b;
+  var b0 = dat[bt2], btype = b0 >> 1 & 3;
+  st.l = b0 & 1;
+  var sz = b0 >> 3 | dat[bt2 + 1] << 5 | dat[bt2 + 2] << 13;
+  var ebt = (bt2 += 3) + sz;
+  if (btype == 1) {
+    if (bt2 >= dat.length)
+      return;
+    st.b = bt2 + 1;
+    if (out) {
+      fill(out, dat[bt2], st.y, st.y += sz);
+      return out;
+    }
+    return fill(new u8(sz), dat[bt2]);
+  }
+  if (ebt > dat.length)
+    return;
+  if (btype == 0) {
+    st.b = ebt;
+    if (out) {
+      out.set(dat.subarray(bt2, ebt), st.y);
+      st.y += sz;
+      return out;
+    }
+    return slc(dat, bt2, ebt);
+  }
+  if (btype == 2) {
+    var b3 = dat[bt2], lbt = b3 & 3, sf = b3 >> 2 & 3;
+    var lss = b3 >> 4, lcs2 = 0, s4 = 0;
+    if (lbt < 2) {
+      if (sf & 1)
+        lss |= dat[++bt2] << 4 | (sf & 2 && dat[++bt2] << 12);
+      else
+        lss = b3 >> 3;
+    } else {
+      s4 = sf;
+      if (sf < 2)
+        lss |= (dat[++bt2] & 63) << 4, lcs2 = dat[bt2] >> 6 | dat[++bt2] << 2;
+      else if (sf == 2)
+        lss |= dat[++bt2] << 4 | (dat[++bt2] & 3) << 12, lcs2 = dat[bt2] >> 2 | dat[++bt2] << 6;
+      else
+        lss |= dat[++bt2] << 4 | (dat[++bt2] & 63) << 12, lcs2 = dat[bt2] >> 6 | dat[++bt2] << 2 | dat[++bt2] << 10;
+    }
+    ++bt2;
+    var buf = out ? out.subarray(st.y, st.y + st.m) : new u8(st.m);
+    var spl = buf.length - lss;
+    if (lbt == 0)
+      buf.set(dat.subarray(bt2, bt2 += lss), spl);
+    else if (lbt == 1)
+      fill(buf, dat[bt2++], spl);
+    else {
+      var hu = st.h;
+      if (lbt == 2) {
+        var hud = rhu(dat, bt2);
+        lcs2 += bt2 - (bt2 = hud[0]);
+        st.h = hu = hud[1];
+      } else if (!hu)
+        err(0);
+      (s4 ? dhu4 : dhu)(dat.subarray(bt2, bt2 += lcs2), buf.subarray(spl), hu);
+    }
+    var ns = dat[bt2++];
+    if (ns) {
+      if (ns == 255)
+        ns = (dat[bt2++] | dat[bt2++] << 8) + 32512;
+      else if (ns > 127)
+        ns = ns - 128 << 8 | dat[bt2++];
+      var scm = dat[bt2++];
+      if (scm & 3)
+        err(0);
+      var dts = [dmlt, doct, dllt];
+      for (var i = 2; i > -1; --i) {
+        var md = scm >> (i << 1) + 2 & 3;
+        if (md == 1) {
+          var rbuf = new u8([0, 0, dat[bt2++]]);
+          dts[i] = {
+            s: rbuf.subarray(2, 3),
+            n: rbuf.subarray(0, 1),
+            t: new u16(rbuf.buffer, 0, 1),
+            b: 0
+          };
+        } else if (md == 2) {
+          _a2 = rfse(dat, bt2, 9 - (i & 1)), bt2 = _a2[0], dts[i] = _a2[1];
+        } else if (md == 3) {
+          if (!st.t)
+            err(0);
+          dts[i] = st.t[i];
+        }
+      }
+      var _b2 = st.t = dts, mlt = _b2[0], oct = _b2[1], llt = _b2[2];
+      var lb = dat[ebt - 1];
+      if (!lb)
+        err(0);
+      var spos = (ebt << 3) - 8 + msb(lb) - llt.b, cbt = spos >> 3, oubt = 0;
+      var lst = (dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << llt.b) - 1;
+      cbt = (spos -= oct.b) >> 3;
+      var ost = (dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << oct.b) - 1;
+      cbt = (spos -= mlt.b) >> 3;
+      var mst = (dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << mlt.b) - 1;
+      for (++ns; --ns; ) {
+        var llc = llt.s[lst];
+        var lbtr = llt.n[lst];
+        var mlc = mlt.s[mst];
+        var mbtr = mlt.n[mst];
+        var ofc = oct.s[ost];
+        var obtr = oct.n[ost];
+        cbt = (spos -= ofc) >> 3;
+        var ofp = 1 << ofc;
+        var off = ofp + ((dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16 | dat[cbt + 3] << 24) >>> (spos & 7) & ofp - 1);
+        cbt = (spos -= mlb[mlc]) >> 3;
+        var ml = mlbl[mlc] + ((dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (spos & 7) & (1 << mlb[mlc]) - 1);
+        cbt = (spos -= llb[llc]) >> 3;
+        var ll2 = llbl[llc] + ((dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (spos & 7) & (1 << llb[llc]) - 1);
+        cbt = (spos -= lbtr) >> 3;
+        lst = llt.t[lst] + ((dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << lbtr) - 1);
+        cbt = (spos -= mbtr) >> 3;
+        mst = mlt.t[mst] + ((dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << mbtr) - 1);
+        cbt = (spos -= obtr) >> 3;
+        ost = oct.t[ost] + ((dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << obtr) - 1);
+        if (off > 3) {
+          st.o[2] = st.o[1];
+          st.o[1] = st.o[0];
+          st.o[0] = off -= 3;
+        } else {
+          var idx = off - (ll2 != 0);
+          if (idx) {
+            off = idx == 3 ? st.o[0] - 1 : st.o[idx];
+            if (idx > 1)
+              st.o[2] = st.o[1];
+            st.o[1] = st.o[0];
+            st.o[0] = off;
+          } else
+            off = st.o[0];
+        }
+        for (var i = 0; i < ll2; ++i) {
+          buf[oubt + i] = buf[spl + i];
+        }
+        oubt += ll2, spl += ll2;
+        var stin = oubt - off;
+        if (stin < 0) {
+          var len = -stin;
+          var bs = st.e + stin;
+          if (len > ml)
+            len = ml;
+          for (var i = 0; i < len; ++i) {
+            buf[oubt + i] = st.w[bs + i];
+          }
+          oubt += len, ml -= len, stin = 0;
+        }
+        for (var i = 0; i < ml; ++i) {
+          buf[oubt + i] = buf[stin + i];
+        }
+        oubt += ml;
+      }
+      if (oubt != spl) {
+        while (spl < buf.length) {
+          buf[oubt++] = buf[spl++];
+        }
+      } else
+        oubt = buf.length;
+      if (out)
+        st.y += oubt;
+      else
+        buf = slc(buf, 0, oubt);
+    } else if (out) {
+      st.y += lss;
+      if (spl) {
+        for (var i = 0; i < lss; ++i) {
+          buf[i] = buf[spl + i];
+        }
+      }
+    } else if (spl)
+      buf = slc(buf, spl);
+    st.b = ebt;
+    return buf;
+  }
+  err(2);
+};
+var cct = function(bufs, ol) {
+  if (bufs.length == 1)
+    return bufs[0];
+  var buf = new u8(ol);
+  for (var i = 0, b = 0; i < bufs.length; ++i) {
+    var chk = bufs[i];
+    buf.set(chk, b);
+    b += chk.length;
+  }
+  return buf;
+};
+function decompress(dat, buf) {
+  var bufs = [], nb = +!buf;
+  var bt2 = 0, ol = 0;
+  for (; dat.length; ) {
+    var st = rzfh(dat, nb || buf);
+    if (typeof st == "object") {
+      if (nb) {
+        buf = null;
+        if (st.w.length == st.u) {
+          bufs.push(buf = st.w);
+          ol += st.u;
+        }
+      } else {
+        bufs.push(buf);
+        st.e = 0;
+      }
+      for (; !st.l; ) {
+        var blk = rzb(dat, st, buf);
+        if (!blk)
+          err(5);
+        if (buf)
+          st.e = st.y;
+        else {
+          bufs.push(blk);
+          ol += blk.length;
+          cpw(st.w, 0, blk.length);
+          st.w.set(blk, st.w.length - blk.length);
+        }
+      }
+      bt2 = st.b + st.c * 4;
+    } else
+      bt2 = st;
+    dat = dat.subarray(bt2);
+  }
+  return cct(bufs, ol);
+}
+const kZstdWorkerCode = `
+// fzstd decompress function, loaded dynamically
+let decompress = null;
+
+self.onmessage = function(e) {
+  const { type } = e.data || {};
+
+  if (type === 'init') {
+    const { scriptContent } = e.data;
+    try {
+      if (!decompress) {
+        // Decode and evaluate the fzstd UMD library
+        const script = atob(scriptContent);
+        // The UMD module self-executes and assigns to self.fzstd
+        new Function(script)();
+        if (!self.fzstd || typeof self.fzstd.decompress !== 'function') {
+          throw new Error('Failed to initialize fzstd decompressor');
+        }
+        decompress = self.fzstd.decompress;
+      }
+      self.postMessage({ type: 'init_complete', success: true });
+    } catch (err) {
+      console.error('fzstd init error in worker:', err);
+      self.postMessage({ type: 'init_complete', success: false, error: err.message || 'Unknown error' });
+    }
+    return;
+  }
+
+  if (type === 'decompress') {
+    const { requestId, data } = e.data;
+    try {
+      if (!decompress) {
+        throw new Error('Worker not initialized');
+      }
+      const result = decompress(data);
+      // Transfer the result buffer back to avoid copying
+      self.postMessage(
+        { requestId, success: true, data: result },
+        [result.buffer]
+      );
+    } catch (err) {
+      self.postMessage({
+        requestId,
+        success: false,
+        error: err instanceof Error ? err.message : 'Unknown error'
+      });
+    }
+  }
+};
+`;
+const kFzstdBase64 = `IWZ1bmN0aW9uKGYpe3R5cGVvZiBtb2R1bGUhPSd1bmRlZmluZWQnJiZ0eXBlb2YgZXhwb3J0cz09J29iamVjdCc/bW9kdWxlLmV4cG9ydHM9ZigpOnR5cGVvZiBkZWZpbmUhPSd1bmRlZmluZWQnJiZkZWZpbmUuYW1kP2RlZmluZShbJ2Z6c3RkJyxmXSk6KHR5cGVvZiBzZWxmIT0ndW5kZWZpbmVkJz9zZWxmOnRoaXMpLmZ6c3RkPWYoKX0oZnVuY3Rpb24oKXt2YXIgX2U9e307InVzZSBzdHJpY3QiO3ZhciByPUFycmF5QnVmZmVyLHQ9VWludDhBcnJheSxlPVVpbnQxNkFycmF5LG49SW50MTZBcnJheSxhPVVpbnQzMkFycmF5LHM9SW50MzJBcnJheSxpPWZ1bmN0aW9uKHIsZSxuKXtpZih0LnByb3RvdHlwZS5zbGljZSlyZXR1cm4gdC5wcm90b3R5cGUuc2xpY2UuY2FsbChyLGUsbik7KG51bGw9PWV8fGU8MCkmJihlPTApLChudWxsPT1ufHxuPnIubGVuZ3RoKSYmKG49ci5sZW5ndGgpO3ZhciBhPW5ldyB0KG4tZSk7cmV0dXJuIGEuc2V0KHIuc3ViYXJyYXkoZSxuKSksYX0sbz1mdW5jdGlvbihyLGUsbixhKXtpZih0LnByb3RvdHlwZS5maWxsKXJldHVybiB0LnByb3RvdHlwZS5maWxsLmNhbGwocixlLG4sYSk7Zm9yKChudWxsPT1ufHxuPDApJiYobj0wKSwobnVsbD09YXx8YT5yLmxlbmd0aCkmJihhPXIubGVuZ3RoKTtuPGE7KytuKXJbbl09ZTtyZXR1cm4gcn0sdT1mdW5jdGlvbihyLGUsbixhKXtpZih0LnByb3RvdHlwZS5jb3B5V2l0aGluKXJldHVybiB0LnByb3RvdHlwZS5jb3B5V2l0aGluLmNhbGwocixlLG4sYSk7Zm9yKChudWxsPT1ufHxuPDApJiYobj0wKSwobnVsbD09YXx8YT5yLmxlbmd0aCkmJihhPXIubGVuZ3RoKTtuPGE7KXJbZSsrXT1yW24rK119O19lLlpzdGRFcnJvckNvZGU9e0ludmFsaWREYXRhOjAsV2luZG93U2l6ZVRvb0xhcmdlOjEsSW52YWxpZEJsb2NrVHlwZToyLEZTRUFjY3VyYWN5VG9vSGlnaDozLERpc3RhbmNlVG9vRmFyQmFjazo0LFVuZXhwZWN0ZWRFT0Y6NX07dmFyIGg9WyJpbnZhbGlkIHpzdGQgZGF0YSIsIndpbmRvdyBzaXplIHRvbyBsYXJnZSAoPjIwNDZNQikiLCJpbnZhbGlkIGJsb2NrIHR5cGUiLCJGU0UgYWNjdXJhY3kgdG9vIGhpZ2giLCJtYXRjaCBkaXN0YW5jZSB0b28gZmFyIGJhY2siLCJ1bmV4cGVjdGVkIEVPRiJdLGY9ZnVuY3Rpb24ocix0LGUpe3ZhciBuPUVycm9yKHR8fGhbcl0pO2lmKG4uY29kZT1yLEVycm9yLmNhcHR1cmVTdGFja1RyYWNlJiZFcnJvci5jYXB0dXJlU3RhY2tUcmFjZShuLGYpLCFlKXRocm93IG47cmV0dXJuIG59LGw9ZnVuY3Rpb24ocix0LGUpe2Zvcih2YXIgbj0wLGE9MDtuPGU7KytuKWF8PXJbdCsrXTw8KG48PDMpO3JldHVybiBhfSx2PWZ1bmN0aW9uKHIsdCl7cmV0dXJuKHJbdF18clt0KzFdPDw4fHJbdCsyXTw8MTZ8clt0KzNdPDwyNCk+Pj4wfSxjPWZ1bmN0aW9uKHIsZSl7dmFyIG49clswXXxyWzFdPDw4fHJbMl08PDE2O2lmKDMxMjY1Njg9PW4mJjI1Mz09clszXSl7dmFyIGE9cls0XSxpPWE+PjUmMSxvPWE+PjImMSx1PTMmYSxoPWE+PjY7OCZhJiZmKDApO3ZhciBjPTYtaSxiPTM9PXU/NDp1LHk9bChyLGMsYikscD1oPzE8PGg6aSx3PWwocixjKz1iLHApKygxPT1oJiYyNTYpLGc9dztpZighaSl7dmFyIGQ9MTw8MTArKHJbNV0+PjMpO2c9ZCsoZD4+MykqKDcmcls1XSl9Zz4yMTQ1Mzg2NDk2JiZmKDEpO3ZhciBtPW5ldyB0KCgxPT1lP3d8fGc6ZT8wOmcpKzEyKTtyZXR1cm4gbVswXT0xLG1bNF09NCxtWzhdPTgse2I6YytwLHk6MCxsOjAsZDp5LHc6ZSYmMSE9ZT9lOm0uc3ViYXJyYXkoMTIpLGU6ZyxvOm5ldyBzKG0uYnVmZmVyLDAsMyksdTp3LGM6byxtOk1hdGgubWluKDEzMTA3MixnKX19aWYoMjU0ODE4OTM9PShuPj40fHJbM108PDIwKSlyZXR1cm4gdihyLDQpKzg7ZigwKX0sYj1mdW5jdGlvbihyKXtmb3IodmFyIHQ9MDsxPDx0PD1yOysrdCk7cmV0dXJuIHQtMX0seT1mdW5jdGlvbihhLHMsaSl7dmFyIG89NCsoczw8MyksdT01KygxNSZhW3NdKTt1PmkmJmYoMyk7Zm9yKHZhciBoPTE8PHUsbD1oLHY9LTEsYz0tMSx5PS0xLHA9aCx3PW5ldyByKDUxMisoaDw8MikpLGc9bmV3IG4odywwLDI1NiksZD1uZXcgZSh3LDAsMjU2KSxtPW5ldyBlKHcsNTEyLGgpLHo9NTEyKyhoPDwxKSxFPW5ldyB0KHcseixoKSxrPW5ldyB0KHcseitoKTt2PDI1NSYmbD4wOyl7dmFyIEE9YihsKzEpLFQ9bz4+Myx4PSgxPDxBKzEpLTEsRj0oYVtUXXxhW1QrMV08PDh8YVtUKzJdPDwxNik+Pig3Jm8pJngsUz0oMTw8QSktMSxCPXgtbC0xLEk9RiZTO2lmKEk8Qj8obys9QSxGPUkpOihvKz1BKzEsRj5TJiYoRi09QikpLGdbKyt2XT0tLUYsLTE9PUY/KGwrPUYsRVstLXBdPXYpOmwtPUYsIUYpZG97dmFyIFU9bz4+MztjPShhW1VdfGFbVSsxXTw8OCk+Pig3Jm8pJjMsbys9Mix2Kz1jfXdoaWxlKDM9PWMpfSh2PjI1NXx8bCkmJmYoMCk7Zm9yKHZhciBEPTAsTT0oaD4+MSkrKGg+PjMpKzMsVz1oLTEsTz0wO088PXY7KytPKXt2YXIgaj1nW09dO2lmKGo8MSlkW09dPS1qO2Vsc2UgZm9yKHk9MDt5PGo7Kyt5KXtFW0RdPU87ZG97RD1EK00mV313aGlsZShEPj1wKX19Zm9yKEQmJmYoMCkseT0wO3k8aDsrK3kpe3ZhciBDPWRbRVt5XV0rKyxIPWtbeV09dS1iKEMpO21beV09KEM8PEgpLWh9cmV0dXJuW28rNz4+Myx7Yjp1LHM6RSxuOmssdDptfV19LHA9ZnVuY3Rpb24ocixuKXt2YXIgYT0wLHM9LTEsaT1uZXcgdCgyOTIpLHU9cltuXSxoPWkuc3ViYXJyYXkoMCwyNTYpLGw9aS5zdWJhcnJheSgyNTYsMjY4KSx2PW5ldyBlKGkuYnVmZmVyLDI2OCk7aWYodTwxMjgpe3ZhciBjPXkocixuKzEsNikscD1jWzFdLHc9Y1swXTw8MyxnPXJbbis9dV07Z3x8ZigwKTtmb3IodmFyIGQ9MCxtPTAsej1wLmIsRT16LGs9KCsrbjw8MyktOCtiKGcpOyEoKGstPXopPHcpOyl7dmFyIEE9az4+MztpZihoWysrc109cC5zW2QrPShyW0FdfHJbQSsxXTw8OCk+Pig3JmspJigxPDx6KS0xXSwoay09RSk8dylicmVhaztoWysrc109cC5zW20rPShyW0E9az4+M118cltBKzFdPDw4KT4+KDcmaykmKDE8PEUpLTFdLHo9cC5uW2RdLGQ9cC50W2RdLEU9cC5uW21dLG09cC50W21dfSsrcz4yNTUmJmYoMCl9ZWxzZXtmb3Iocz11LTEyNzthPHM7YSs9Mil7dmFyIFQ9clsrK25dO2hbYV09VD4+NCxoW2ErMV09MTUmVH0rK259dmFyIHg9MDtmb3IoYT0wO2E8czsrK2EpKEk9aFthXSk+MTEmJmYoMCkseCs9SSYmMTw8SS0xO3ZhciBGPWIoeCkrMSxTPTE8PEYsQj1TLXg7Zm9yKEImQi0xJiZmKDApLGhbcysrXT1iKEIpKzEsYT0wO2E8czsrK2Epe3ZhciBJOysrbFtoW2FdPShJPWhbYV0pJiZGKzEtSV19dmFyIFU9bmV3IHQoUzw8MSksRD1VLnN1YmFycmF5KDAsUyksTT1VLnN1YmFycmF5KFMpO2Zvcih2W0ZdPTAsYT1GO2E+MDstLWEpe3ZhciBXPXZbYV07byhNLGEsVyx2W2EtMV09VytsW2FdKigxPDxGLWEpKX1mb3IodlswXSE9UyYmZigwKSxhPTA7YTxzOysrYSl7dmFyIE89aFthXTtpZihPKXt2YXIgaj12W09dO28oRCxhLGosdltPXT1qKygxPDxGLU8pKX19cmV0dXJuW24se246TSxiOkYsczpEfV19LHc9eShuZXcgdChbODEsMTYsOTksMTQwLDQ5LDE5OCwyNCw5OSwxMiwzMywxOTYsMjQsOTksMTAyLDEwMiwxMzQsNzAsMTQ2LDRdKSwwLDYpWzFdLGc9eShuZXcgdChbMzMsMjAsMTk2LDI0LDk5LDE0MCwzMywxMzIsMTYsNjYsOCwzMywxMzIsMTYsNjYsOCwzMyw2OCw2OCw2OCw2OCw2OCw2OCw2OCw2OCwzNiw5XSksMCw2KVsxXSxkPXkobmV3IHQoWzMyLDEzMiwxNiw2NiwxMDIsNzAsNjgsNjgsNjgsNjgsMzYsNzMsMl0pLDAsNSlbMV0sbT1mdW5jdGlvbihyLHQpe2Zvcih2YXIgZT1yLmxlbmd0aCxuPW5ldyBzKGUpLGE9MDthPGU7KythKW5bYV09dCx0Kz0xPDxyW2FdO3JldHVybiBufSx6PW5ldyB0KG5ldyBzKFswLDAsMCwwLDE2ODQzMDA5LDUwNTI4NzcwLDEzNDY3ODAyMCwyMDIwNTAwNTcsMjY5NDIyMDkzXSkuYnVmZmVyLDAsMzYpLEU9bSh6LDApLGs9bmV3IHQobmV3IHMoWzAsMCwwLDAsMCwwLDAsMCwxNjg0MzAwOSw1MDUyODc3MCwxMTc3NjkyMjAsMTg1MjA3MDQ4LDI1MjU3OTA4NCwxNl0pLmJ1ZmZlciwwLDUzKSxBPW0oaywzKSxUPWZ1bmN0aW9uKHIsdCxlKXt2YXIgbj1yLmxlbmd0aCxhPXQubGVuZ3RoLHM9cltuLTFdLGk9KDE8PGUuYiktMSxvPS1lLmI7c3x8ZigwKTtmb3IodmFyIHU9MCxoPWUuYixsPShuPDwzKS04K2IocyktaCx2PS0xO2w+byYmdjxhOyl7dmFyIGM9bD4+Mzt0Wysrdl09ZS5zW3U9KHU8PGh8KHJbY118cltjKzFdPDw4fHJbYysyXTw8MTYpPj4oNyZsKSkmaV0sbC09aD1lLm5bdV19bD09byYmdisxPT1hfHxmKDApfSx4PWZ1bmN0aW9uKHIsdCxlKXt2YXIgbj02LGE9dC5sZW5ndGgrMz4+MixzPWE8PDEsaT1hK3M7VChyLnN1YmFycmF5KG4sbis9clswXXxyWzFdPDw4KSx0LnN1YmFycmF5KDAsYSksZSksVChyLnN1YmFycmF5KG4sbis9clsyXXxyWzNdPDw4KSx0LnN1YmFycmF5KGEscyksZSksVChyLnN1YmFycmF5KG4sbis9cls0XXxyWzVdPDw4KSx0LnN1YmFycmF5KHMsaSksZSksVChyLnN1YmFycmF5KG4pLHQuc3ViYXJyYXkoaSksZSl9LEY9ZnVuY3Rpb24ocixuLGEpe3ZhciBzLHU9bi5iLGg9clt1XSxsPWg+PjEmMztuLmw9MSZoO3ZhciB2PWg+PjN8clt1KzFdPDw1fHJbdSsyXTw8MTMsYz0odSs9MykrdjtpZigxPT1sKXtpZih1Pj1yLmxlbmd0aClyZXR1cm47cmV0dXJuIG4uYj11KzEsYT8obyhhLHJbdV0sbi55LG4ueSs9diksYSk6byhuZXcgdCh2KSxyW3VdKX1pZighKGM+ci5sZW5ndGgpKXtpZigwPT1sKXJldHVybiBuLmI9YyxhPyhhLnNldChyLnN1YmFycmF5KHUsYyksbi55KSxuLnkrPXYsYSk6aShyLHUsYyk7aWYoMj09bCl7dmFyIG09clt1XSxGPTMmbSxTPW0+PjImMyxCPW0+PjQsST0wLFU9MDtGPDI/MSZTP0J8PXJbKyt1XTw8NHwoMiZTJiZyWysrdV08PDEyKTpCPW0+PjM6KFU9UyxTPDI/KEJ8PSg2MyZyWysrdV0pPDw0LEk9clt1XT4+NnxyWysrdV08PDIpOjI9PVM/KEJ8PXJbKyt1XTw8NHwoMyZyWysrdV0pPDwxMixJPXJbdV0+PjJ8clsrK3VdPDw2KTooQnw9clsrK3VdPDw0fCg2MyZyWysrdV0pPDwxMixJPXJbdV0+PjZ8clsrK3VdPDwyfHJbKyt1XTw8MTApKSwrK3U7dmFyIEQ9YT9hLnN1YmFycmF5KG4ueSxuLnkrbi5tKTpuZXcgdChuLm0pLE09RC5sZW5ndGgtQjtpZigwPT1GKUQuc2V0KHIuc3ViYXJyYXkodSx1Kz1CKSxNKTtlbHNlIGlmKDE9PUYpbyhELHJbdSsrXSxNKTtlbHNle3ZhciBXPW4uaDtpZigyPT1GKXt2YXIgTz1wKHIsdSk7SSs9dS0odT1PWzBdKSxuLmg9Vz1PWzFdfWVsc2UgV3x8ZigwKTsoVT94OlQpKHIuc3ViYXJyYXkodSx1Kz1JKSxELnN1YmFycmF5KE0pLFcpfXZhciBqPXJbdSsrXTtpZihqKXsyNTU9PWo/aj0zMjUxMisoclt1KytdfHJbdSsrXTw8OCk6aj4xMjcmJihqPWotMTI4PDw4fHJbdSsrXSk7dmFyIEM9clt1KytdOzMmQyYmZigwKTtmb3IodmFyIEg9W2csZCx3XSxMPTI7TD4tMTstLUwpe3ZhciBaPUM+PjIrKEw8PDEpJjM7aWYoMT09Wil7dmFyIHE9bmV3IHQoWzAsMCxyW3UrK11dKTtIW0xdPXtzOnEuc3ViYXJyYXkoMiwzKSxuOnEuc3ViYXJyYXkoMCwxKSx0Om5ldyBlKHEuYnVmZmVyLDAsMSksYjowfX1lbHNlIDI9PVo/KHU9KHM9eShyLHUsOS0oMSZMKSkpWzBdLEhbTF09c1sxXSk6Mz09WiYmKG4udHx8ZigwKSxIW0xdPW4udFtMXSl9dmFyIEc9bi50PUgsSj1HWzBdLEs9R1sxXSxOPUdbMl0sUD1yW2MtMV07UHx8ZigwKTt2YXIgUT0oYzw8MyktOCtiKFApLU4uYixSPVE+PjMsVj0wLFg9KHJbUl18cltSKzFdPDw4KT4+KDcmUSkmKDE8PE4uYiktMSxZPShyW1I9KFEtPUsuYik+PjNdfHJbUisxXTw8OCk+Pig3JlEpJigxPDxLLmIpLTEsJD0ocltSPShRLT1KLmIpPj4zXXxyW1IrMV08PDgpPj4oNyZRKSYoMTw8Si5iKS0xO2ZvcigrK2o7LS1qOyl7dmFyIF89Ti5zW1hdLHJyPU4ubltYXSx0cj1KLnNbJF0sZXI9Si5uWyRdLG5yPUsuc1tZXSxhcj1LLm5bWV0sc3I9MTw8bnIsaXI9c3IrKChyW1I9KFEtPW5yKT4+M118cltSKzFdPDw4fHJbUisyXTw8MTZ8cltSKzNdPDwyNCk+Pj4oNyZRKSZzci0xKTtSPShRLT1rW3RyXSk+PjM7dmFyIG9yPUFbdHJdKygocltSXXxyW1IrMV08PDh8cltSKzJdPDwxNik+Pig3JlEpJigxPDxrW3RyXSktMSk7Uj0oUS09eltfXSk+PjM7dmFyIHVyPUVbX10rKChyW1JdfHJbUisxXTw8OHxyW1IrMl08PDE2KT4+KDcmUSkmKDE8PHpbX10pLTEpO2lmKFI9KFEtPXJyKT4+MyxYPU4udFtYXSsoKHJbUl18cltSKzFdPDw4KT4+KDcmUSkmKDE8PHJyKS0xKSxSPShRLT1lcik+PjMsJD1KLnRbJF0rKChyW1JdfHJbUisxXTw8OCk+Pig3JlEpJigxPDxlciktMSksUj0oUS09YXIpPj4zLFk9Sy50W1ldKygocltSXXxyW1IrMV08PDgpPj4oNyZRKSYoMTw8YXIpLTEpLGlyPjMpbi5vWzJdPW4ub1sxXSxuLm9bMV09bi5vWzBdLG4ub1swXT1pci09MztlbHNle3ZhciBocj1pci0oMCE9dXIpO2hyPyhpcj0zPT1ocj9uLm9bMF0tMTpuLm9baHJdLGhyPjEmJihuLm9bMl09bi5vWzFdKSxuLm9bMV09bi5vWzBdLG4ub1swXT1pcik6aXI9bi5vWzBdfWZvcihMPTA7TDx1cjsrK0wpRFtWK0xdPURbTStMXTtNKz11cjt2YXIgZnI9KFYrPXVyKS1pcjtpZihmcjwwKXt2YXIgbHI9LWZyLHZyPW4uZStmcjtmb3IobHI+b3ImJihscj1vciksTD0wO0w8bHI7KytMKURbVitMXT1uLndbdnIrTF07Vis9bHIsb3ItPWxyLGZyPTB9Zm9yKEw9MDtMPG9yOysrTClEW1YrTF09RFtmcitMXTtWKz1vcn1pZihWIT1NKWZvcig7TTxELmxlbmd0aDspRFtWKytdPURbTSsrXTtlbHNlIFY9RC5sZW5ndGg7YT9uLnkrPVY6RD1pKEQsMCxWKX1lbHNlIGlmKGEpe2lmKG4ueSs9QixNKWZvcihMPTA7TDxCOysrTClEW0xdPURbTStMXX1lbHNlIE0mJihEPWkoRCxNKSk7cmV0dXJuIG4uYj1jLER9ZigyKX19LFM9ZnVuY3Rpb24ocixlKXtpZigxPT1yLmxlbmd0aClyZXR1cm4gclswXTtmb3IodmFyIG49bmV3IHQoZSksYT0wLHM9MDthPHIubGVuZ3RoOysrYSl7dmFyIGk9clthXTtuLnNldChpLHMpLHMrPWkubGVuZ3RofXJldHVybiBufTtmdW5jdGlvbiBCKHIsdCl7Zm9yKHZhciBlPVtdLG49KyF0LGE9MCxzPTA7ci5sZW5ndGg7KXt2YXIgaT1jKHIsbnx8dCk7aWYoIm9iamVjdCI9PXR5cGVvZiBpKXtmb3Iobj8odD1udWxsLGkudy5sZW5ndGg9PWkudSYmKGUucHVzaCh0PWkudykscys9aS51KSk6KGUucHVzaCh0KSxpLmU9MCk7IWkubDspe3ZhciBvPUYocixpLHQpO298fGYoNSksdD9pLmU9aS55OihlLnB1c2gobykscys9by5sZW5ndGgsdShpLncsMCxvLmxlbmd0aCksaS53LnNldChvLGkudy5sZW5ndGgtby5sZW5ndGgpKX1hPWkuYis0KmkuY31lbHNlIGE9aTtyPXIuc3ViYXJyYXkoYSl9cmV0dXJuIFMoZSxzKX1fZS5kZWNvbXByZXNzPUI7dmFyIEk9ZnVuY3Rpb24oKXtmdW5jdGlvbiByKHIpe3RoaXMub25kYXRhPXIsdGhpcy5jPVtdLHRoaXMubD0wLHRoaXMuej0wfXJldHVybiByLnByb3RvdHlwZS5wdXNoPWZ1bmN0aW9uKHIsZSl7aWYoIm51bWJlciI9PXR5cGVvZiB0aGlzLnMpe3ZhciBuPU1hdGgubWluKHIubGVuZ3RoLHRoaXMucyk7cj1yLnN1YmFycmF5KG4pLHRoaXMucy09bn12YXIgYT1yLmxlbmd0aCt0aGlzLmw7aWYoIXRoaXMucyl7aWYoZSl7aWYoIWEpcmV0dXJuIHZvaWQgdGhpcy5vbmRhdGEobmV3IHQoMCksITApO2E8NSYmZig1KX1lbHNlIGlmKGE8MTgpcmV0dXJuIHRoaXMuYy5wdXNoKHIpLHZvaWQodGhpcy5sPWEpO2lmKHRoaXMubCYmKHRoaXMuYy5wdXNoKHIpLHI9Uyh0aGlzLmMsYSksdGhpcy5jPVtdLHRoaXMubD0wKSwibnVtYmVyIj09dHlwZW9mKHRoaXMucz1jKHIpKSlyZXR1cm4gdGhpcy5wdXNoKHIsZSl9aWYoIm51bWJlciIhPXR5cGVvZiB0aGlzLnMpe2lmKGE8KHRoaXMuenx8MykpcmV0dXJuIGUmJmYoNSksdGhpcy5jLnB1c2gociksdm9pZCh0aGlzLmw9YSk7aWYodGhpcy5sJiYodGhpcy5jLnB1c2gocikscj1TKHRoaXMuYyxhKSx0aGlzLmM9W10sdGhpcy5sPTApLCF0aGlzLnomJmE8KHRoaXMuej0yJnJbdGhpcy5zLmJdPzQ6Mysoclt0aGlzLnMuYl0+PjN8clt0aGlzLnMuYisxXTw8NXxyW3RoaXMucy5iKzJdPDwxMykpKXJldHVybiBlJiZmKDUpLHRoaXMuYy5wdXNoKHIpLHZvaWQodGhpcy5sPWEpO2Zvcih0aGlzLno9MDs7KXt2YXIgcz1GKHIsdGhpcy5zKTtpZighcyl7ZSYmZig1KTt2YXIgaT1yLnN1YmFycmF5KHRoaXMucy5iKTtyZXR1cm4gdGhpcy5zLmI9MCx0aGlzLmMucHVzaChpKSx2b2lkKHRoaXMubCs9aS5sZW5ndGgpfWlmKHRoaXMub25kYXRhKHMsITEpLHUodGhpcy5zLncsMCxzLmxlbmd0aCksdGhpcy5zLncuc2V0KHMsdGhpcy5zLncubGVuZ3RoLXMubGVuZ3RoKSx0aGlzLnMubCl7dmFyIG89ci5zdWJhcnJheSh0aGlzLnMuYik7cmV0dXJuIHRoaXMucz00KnRoaXMucy5jLHZvaWQgdGhpcy5wdXNoKG8sZSl9fX1lbHNlIGUmJmYoNSl9LHJ9KCk7X2UuRGVjb21wcmVzcz1JO3JldHVybiBfZX0p`;
+const WORKER_THRESHOLD = 1024 * 1024;
+const MAX_WINDOW_LOG = 25;
+class ZstdWindowSizeError extends Error {
+  windowLog;
+  maxWindowLog;
+  constructor(windowLog) {
+    super(
+      `Zstd window size too large (windowLog=${windowLog}, max=${MAX_WINDOW_LOG}). This file may have been compressed with zstd "ultra" mode (level 20+). Try recompressing with --long=${MAX_WINDOW_LOG} or a lower compression level.`
+    );
+    this.name = "ZstdWindowSizeError";
+    this.windowLog = windowLog;
+    this.maxWindowLog = MAX_WINDOW_LOG;
+    Object.setPrototypeOf(this, ZstdWindowSizeError.prototype);
+  }
+}
+function validateZstdWindowSize(data) {
+  if (data.length < 5) {
+    return;
+  }
+  const magic = data[0] | data[1] << 8 | data[2] << 16 | data[3] << 24;
+  if (magic !== 4247762216) {
+    return;
+  }
+  const descriptor = data[4];
+  const singleSegmentFlag = descriptor >> 5 & 1;
+  if (singleSegmentFlag) {
+    return;
+  }
+  if (data.length < 6) {
+    return;
+  }
+  const windowDescriptor = data[5];
+  const exponent = windowDescriptor >> 3;
+  const windowLog = 10 + exponent;
+  if (windowLog > MAX_WINDOW_LOG) {
+    throw new ZstdWindowSizeError(windowLog);
+  }
+}
+let zstdWorker = null;
+let blobURL = null;
+let workerInitPromise = null;
+let nextRequestId = 0;
+const pendingRequests = /* @__PURE__ */ new Map();
+let handlersAttached = false;
+function getZstdWorker() {
+  if (workerInitPromise) {
+    return workerInitPromise;
+  }
+  workerInitPromise = new Promise((resolve, reject) => {
+    const blob = new Blob([kZstdWorkerCode], {
+      type: "application/javascript"
+    });
+    blobURL = URL.createObjectURL(blob);
+    zstdWorker = new Worker(blobURL);
+    const initHandler = (event) => {
+      if (event.data.type === "init_complete") {
+        zstdWorker.removeEventListener("message", initHandler);
+        if (event.data.success) {
+          resolve(zstdWorker);
+        } else {
+          reject(new Error(event.data.error || "Worker initialization failed"));
+        }
+      }
+    };
+    zstdWorker.addEventListener("message", initHandler);
+    zstdWorker.postMessage({
+      type: "init",
+      scriptContent: kFzstdBase64
+    });
+  });
+  return workerInitPromise;
+}
+async function decompressZstd(data) {
+  validateZstdWindowSize(data);
+  if (data.length < WORKER_THRESHOLD) {
+    return decompress(data);
+  }
+  const worker = await getZstdWorker();
+  return new Promise((resolve, reject) => {
+    const requestId = nextRequestId++;
+    pendingRequests.set(requestId, { resolve, reject });
+    if (!handlersAttached) {
+      handlersAttached = true;
+      worker.addEventListener("message", (event) => {
+        const {
+          requestId: respId,
+          success: success2,
+          data: resultData,
+          error: error2
+        } = event.data;
+        const pending = pendingRequests.get(respId);
+        if (!pending) return;
+        pendingRequests.delete(respId);
+        if (success2) {
+          pending.resolve(resultData);
+        } else {
+          pending.reject(new Error(error2 || "Decompression failed"));
+        }
+      });
+      worker.addEventListener("error", (error2) => {
+        for (const [id, pending] of pendingRequests) {
+          pending.reject(new Error(`Worker error: ${error2.message}`));
+          pendingRequests.delete(id);
+        }
+      });
+    }
+    worker.postMessage(
+      {
+        type: "decompress",
+        requestId,
+        data
+      },
+      [data.buffer]
+    );
+  });
+}
+const CompressionMethod = {
+  STORED: 0,
+  DEFLATE: 8,
+  ZSTANDARD: 93
+};
+class UnsupportedCompressionError extends Error {
+  method;
+  filename;
+  constructor(method, filename2) {
+    super(`Unsupported compression method ${method} for file "${filename2}"`);
+    this.name = "UnsupportedCompressionError";
+    this.method = method;
+    this.filename = filename2;
+    Object.setPrototypeOf(this, UnsupportedCompressionError.prototype);
+  }
+}
+async function decompressData(data, compressionMethod, uncompressedSize, filename2) {
+  switch (compressionMethod) {
+    case CompressionMethod.STORED:
+      return data;
+    case CompressionMethod.DEFLATE:
+      return decompressDeflate(data, uncompressedSize);
+    case CompressionMethod.ZSTANDARD:
+      return decompressZstd(data);
+    default:
+      throw new UnsupportedCompressionError(compressionMethod, filename2);
+  }
+}
+async function decompressDeflate(data, size) {
+  return new Promise((resolve, reject) => {
+    decompress$1(data, { size }, (err2, result2) => {
+      if (err2) {
+        reject(err2);
+      } else {
+        resolve(result2);
+      }
+    });
+  });
 }
 class FileSizeLimitError extends Error {
   file;
@@ -108668,16 +109668,12 @@ const openRemoteZipFile = async (url, fetchContentLength = fetchSize, fetchBytes
         entry.fileOffset + totalSizeToFetch - 1
       );
       const zipFileEntry = await parseZipFileEntry(file, fileData);
-      if (zipFileEntry.compressionMethod === 0) {
-        return zipFileEntry.data;
-      } else if (zipFileEntry.compressionMethod === 8) {
-        const results = await decompressAsync(zipFileEntry.data, {
-          size: zipFileEntry.uncompressedSize
-        });
-        return results;
-      } else {
-        throw new Error(`Unsupported compression method for file ${file}`);
-      }
+      return decompressData(
+        zipFileEntry.data,
+        zipFileEntry.compressionMethod,
+        zipFileEntry.uncompressedSize,
+        file
+      );
     }
   };
 };
@@ -108711,17 +109707,6 @@ const fetchRange = async (url, start2, end2) => {
   });
   const arrayBuffer = await response.arrayBuffer();
   return new Uint8Array(arrayBuffer);
-};
-const decompressAsync = async (data, opts) => {
-  return new Promise((resolve, reject) => {
-    decompress(data, opts, (err2, result2) => {
-      if (err2) {
-        reject(err2);
-      } else {
-        resolve(result2);
-      }
-    });
-  });
 };
 const parseZipFileEntry = async (file, rawData) => {
   const view = new DataView(rawData.buffer);
@@ -108842,6 +109827,7 @@ const parseCentralDirectory = (buffer2) => {
   return entries;
 };
 const OPEN_RETRY_LIMIT = 5;
+const MAX_SAMPLE_SIZE_BYTES = 2048 * 1024 * 1024;
 class SampleNotFoundError extends Error {
   constructor(message2) {
     super(message2 || "Sample not found");
@@ -108920,6 +109906,10 @@ const openRemoteLogFile = async (api2, url, concurrency) => {
       throw new SampleNotFoundError(
         `Unable to read sample file ${sampleFile} - it is not present in the manifest.`
       );
+    }
+    const entry = remoteZipFile.centralDirectory.get(sampleFile);
+    if (entry.uncompressedSize > MAX_SAMPLE_SIZE_BYTES) {
+      throw new FileSizeLimitError(sampleFile, MAX_SAMPLE_SIZE_BYTES);
     }
     const eventsPreprocessor = {
       preprocess: clearLargeEventsArray
@@ -109521,7 +110511,6 @@ function staticHttpApiForLog(logInfo) {
           }
         }
       );
-      console.log({ f: joinURI(...dirSegments, "eval-set.json"), result: result2 });
       return result2;
     },
     get_flow: async (dir) => {
@@ -110277,7 +111266,7 @@ const documentFrame = "_documentFrame_1576h_1";
 const documentFrameTitle = "_documentFrameTitle_1576h_9";
 const downloadLink = "_downloadLink_1576h_16";
 const imageDocument = "_imageDocument_1576h_21";
-const styles$1B = {
+const styles$1u = {
   documentFrame,
   documentFrameTitle,
   downloadLink,
@@ -110294,7 +111283,7 @@ const ContentDocumentView = ({
     return /* @__PURE__ */ jsxRuntimeExports.jsx(ContentDocumentFrame, { document: document2, downloadable: canDownloadFiles, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       "img",
       {
-        className: clsx(styles$1B.imageDocument),
+        className: clsx(styles$1u.imageDocument),
         src: document2.document,
         alt: document2.filename,
         id
@@ -110319,17 +111308,17 @@ const ContentDocumentFrame = ({
     "div",
     {
       className: clsx(
-        styles$1B.documentFrame,
+        styles$1u.documentFrame,
         "text-size-small",
         "text-style-secondary"
       ),
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1B.documentFrameTitle), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1u.documentFrameTitle), children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(iconForMimeType(document2.mime_type)) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: downloadable ? /* @__PURE__ */ jsxRuntimeExports.jsx(
             "a",
             {
-              className: clsx(styles$1B.downloadLink),
+              className: clsx(styles$1u.downloadLink),
               onClick: () => {
                 api.download_file(document2.filename, document2.document);
               },
@@ -110343,7 +111332,7 @@ const ContentDocumentFrame = ({
   );
 };
 const jsonMessage = "_jsonMessage_oxf8d_1";
-const styles$1A = {
+const styles$1t = {
   jsonMessage
 };
 const JsonMessageContent = ({
@@ -110356,7 +111345,7 @@ const JsonMessageContent = ({
     {
       id,
       record: json,
-      className: clsx(styles$1A.jsonMessage, className2),
+      className: clsx(styles$1t.jsonMessage, className2),
       useBorders: false
     }
   );
@@ -110371,7 +111360,7 @@ const decodeHtmlEntities = (text2) => {
 };
 const citations = "_citations_1ggvf_1";
 const citationLink = "_citationLink_1ggvf_9";
-const styles$1z = {
+const styles$1s = {
   citations,
   citationLink
 };
@@ -110379,7 +111368,7 @@ const MessageCitations = ({ citations: citations2 }) => {
   if (citations2.length === 0) {
     return void 0;
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1z.citations, "text-size-smallest"), children: citations2.map((citation, index) => /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1s.citations, "text-size-smallest"), children: citations2.map((citation, index) => /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: index + 1 }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(MessageCitation, { citation })
   ] }, index)) });
@@ -110399,7 +111388,7 @@ const UrlCitation = ({
     href: citation.url,
     target: "_blank",
     rel: "noopener noreferrer",
-    className: clsx(styles$1z.citationLink),
+    className: clsx(styles$1s.citationLink),
     title: citation.cited_text ? `${citation.cited_text}
 ${citation.url}` : citation.url,
     children: children2
@@ -110408,24 +111397,24 @@ ${citation.url}` : citation.url,
 const OtherCitation = ({ children: children2 }) => /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: children2 });
 const contentImage = "_contentImage_srbm0_1";
 const reasoning = "_reasoning_srbm0_6";
-const styles$1y = {
+const styles$1r = {
   contentImage,
   reasoning
 };
 const mcpToolUse = "_mcpToolUse_1792k_1";
-const title$3 = "_title_1792k_9";
+const title$2 = "_title_1792k_9";
 const titleText = "_titleText_1792k_18";
 const args = "_args_1792k_22";
 const argLabel = "_argLabel_1792k_31";
-const error$2 = "_error_1792k_35";
+const error$4 = "_error_1792k_35";
 const toolPanel = "_toolPanel_1792k_40";
-const styles$1x = {
+const styles$1q = {
   mcpToolUse,
-  title: title$3,
+  title: title$2,
   titleText,
   args,
   argLabel,
-  error: error$2,
+  error: error$4,
   toolPanel
 };
 const ServerToolCall = ({
@@ -110440,23 +111429,23 @@ const McpToolUse = ({ id, content: content2, className: className2 }) => {
   const titleStr = content2.context ? `${content2.context} — ${content2.name}()` : `${content2.name}()`;
   const listToolsResult = maybeListTools(content2);
   const webSearchResult = maybeWebSearchResult(content2);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id, className: clsx(styles$1x.mcpToolUse, className2), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id, className: clsx(styles$1q.mcpToolUse, className2), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
       {
         className: clsx(
-          styles$1x.title,
+          styles$1q.title,
           "text-size-small",
           "text-style-secondary"
         ),
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.role.tool }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$1x.titleText, children: titleStr }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1x.type, children: content2.type })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$1q.titleText, children: titleStr }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1q.type, children: content2.type })
         ]
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1x.args, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1q.args, children: [
       Object.keys(args2).map((key2, index) => {
         const value2 = args2[key2];
         let valueRecord = void 0;
@@ -110475,7 +111464,7 @@ const McpToolUse = ({ id, content: content2, className: className2 }) => {
       }),
       webSearchResult ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(LabelDiv, { label: "results" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(ValueDiv, { children: webSearchResult.result.map((result2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1x.result, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsx(ValueDiv, { children: webSearchResult.result.map((result2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1q.result, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           "a",
           {
             href: result2.url,
@@ -110490,7 +111479,7 @@ const McpToolUse = ({ id, content: content2, className: className2 }) => {
         {
           id: `${id}-output`,
           collapse: true,
-          className: clsx(styles$1x.toolPanel),
+          className: clsx(styles$1q.toolPanel),
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(LabelDiv, { label: tool2.name }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs(ValueDiv, { children: [
@@ -110508,7 +111497,7 @@ const McpToolUse = ({ id, content: content2, className: className2 }) => {
         }
       ) })) : void 0
     ] }),
-    content2.error ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1x.error, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+    content2.error ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1q.error, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
       "Error: ",
       content2.error
     ] }) }) : !listToolsResult && !webSearchResult ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-small"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExpandablePanel, { id: `${id}-output`, collapse: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -110565,7 +111554,7 @@ const LabelDiv = ({ label: label2 }) => {
     "div",
     {
       className: clsx(
-        styles$1x.argLabel,
+        styles$1q.argLabel,
         "text-style-secondary",
         "text-size-smaller"
       ),
@@ -110587,7 +111576,7 @@ const toolImage = "_toolImage_1wvgr_1";
 const output = "_output_1wvgr_6";
 const textOutput = "_textOutput_1wvgr_10";
 const textCode = "_textCode_1wvgr_18";
-const styles$1w = {
+const styles$1p = {
   toolImage,
   output,
   textOutput,
@@ -110609,7 +111598,7 @@ const ToolOutput = ({ output: output2, className: className2 }) => {
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "img",
               {
-                className: clsx(styles$1w.toolImage),
+                className: clsx(styles$1p.toolImage),
                 src: out.image
               },
               key2
@@ -110625,7 +111614,7 @@ const ToolOutput = ({ output: output2, className: className2 }) => {
       /* @__PURE__ */ jsxRuntimeExports.jsx(ToolTextOutput, { text: String(output2) }, "tool-output-single")
     );
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1w.output, className2), children: outputs });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1p.output, className2), children: outputs });
 };
 const ToolTextOutput = ({ text: text2 }) => {
   if (isJson(text2)) {
@@ -110636,13 +111625,13 @@ const ToolTextOutput = ({ text: text2 }) => {
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       ANSIDisplay,
       {
-        className: styles$1w.ansiOutput,
+        className: styles$1p.ansiOutput,
         output: text2,
         style: { fontSize: "clamp(0.4rem, 1.15vw, 0.9rem)" }
       }
     );
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1w.textOutput, "tool-output"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("sourceCode", styles$1w.textCode), children: text2.trim() }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1p.textOutput, "tool-output"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("sourceCode", styles$1p.textCode), children: text2.trim() }) });
 };
 const isMessageContent = (content2) => {
   return typeof content2 === "object" && content2 !== null && "type" in content2 && typeof content2.type === "string";
@@ -110701,14 +111690,15 @@ const MessageContent = ({
 };
 const messageRenderers = {
   text: {
-    render: (key2, content2, isLast, _context) => {
+    render: (key2, content2, isLast, context) => {
       const c2 = content2;
       const cites = c2.citations ?? [];
       if (!c2.text && !cites.length) {
         return void 0;
       }
       const purgeInternalContainers = (text2) => {
-        const internalTags = ["internal", "content-internal", "think"];
+        const isAssistantMessage = context.role === "assistant";
+        const internalTags = !isAssistantMessage ? ["internal", "content-internal"] : ["internal", "content-internal", "think"];
         internalTags.forEach((tag) => {
           const regex2 = new RegExp(`<${tag}[^>]*>[\\s\\S]*?<\\/${tag}>`, "gm");
           text2 = text2.replace(regex2, "");
@@ -110750,7 +111740,7 @@ const messageRenderers = {
       }
       const renderReasoningCode = isOpenRouterReasoning(text2);
       const codeFormatted = renderReasoningCode ? JSON.stringify(jsonParse(text2), null, 2) : text2;
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1y.reasoning, "text-size-small"), children: [
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1r.reasoning, "text-size-small"), children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
@@ -110773,7 +111763,7 @@ const messageRenderers = {
     render: (key2, content2, _isLast, _context) => {
       const c2 = content2;
       if (c2.image.startsWith("data:")) {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: c2.image, className: styles$1y.contentImage }, key2);
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: c2.image, className: styles$1r.contentImage }, key2);
       } else {
         return /* @__PURE__ */ jsxRuntimeExports.jsx("code", { children: c2.image }, key2);
       }
@@ -111012,20 +112002,20 @@ const extractInput = (args2, inputDescriptor) => {
   }
 };
 const toolCallView = "_toolCallView_l6wae_1";
-const styles$1v = {
+const styles$1o = {
   toolCallView
 };
 const outputPre = "_outputPre_1jznn_1";
 const toolView = "_toolView_1jznn_7";
 const outputCode = "_outputCode_1jznn_15";
-const styles$1u = {
+const styles$1n = {
   outputPre,
   toolView,
   outputCode
 };
 const todoList = "_todoList_1t8rx_1";
 const inProgress = "_inProgress_1t8rx_9";
-const styles$1t = {
+const styles$1m = {
   todoList,
   inProgress
 };
@@ -111045,7 +112035,7 @@ const toToolTodos = (obj) => {
 };
 const TodoWriteInput = ({ contents: contents2, parentRef }) => {
   const todoItems = toToolTodos(contents2);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: parentRef, className: clsx(styles$1t.todoList), children: todoItems.map((todo) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: parentRef, className: clsx(styles$1m.todoList), children: todoItems.map((todo) => {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "i",
@@ -111060,9 +112050,9 @@ const TodoWriteInput = ({ contents: contents2, parentRef }) => {
         "span",
         {
           className: clsx(
-            styles$1t.todoItem,
+            styles$1m.todoItem,
             "text-size-smallest",
-            todo.status === "in_progress" ? styles$1t.inProgress : void 0
+            todo.status === "in_progress" ? styles$1m.inProgress : void 0
           ),
           children: todo.content
         }
@@ -111085,7 +112075,7 @@ const ToolInput = (props) => {
       {
         markdown: toolCallView2.content,
         ref: sourceCodeRef,
-        className: clsx("tool-output", styles$1u.toolView, className2)
+        className: clsx("tool-output", styles$1n.toolView, className2)
       }
     );
   } else {
@@ -111115,8 +112105,8 @@ const RenderTool = ({
     {
       className: clsx(
         "tool-output",
-        styles$1u.outputPre,
-        styles$1u.bottomMargin,
+        styles$1n.outputPre,
+        styles$1n.bottomMargin,
         className2
       ),
       children: /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -111126,7 +112116,7 @@ const RenderTool = ({
             "source-code",
             "sourceCode",
             contentType ? `language-${contentType}` : void 0,
-            styles$1u.outputCode
+            styles$1n.outputCode
           ),
           children: formattedContent
         }
@@ -111143,16 +112133,16 @@ const isValidView = (view) => {
 const image = "_image_1vcac_1";
 const toolTitle = "_toolTitle_1vcac_6";
 const description = "_description_1vcac_10";
-const styles$1s = {
+const styles$1l = {
   image,
   toolTitle,
   description
 };
 const ToolTitle = ({ title: title2, description: description2 }) => {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx("bi", "bi-tools", styles$1s.image) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("text-size-small", styles$1s.toolTitle), children: title2 }),
-    description2 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: clsx(styles$1s.description, "text-size-smallest"), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx("bi", "bi-tools", styles$1l.image) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("text-size-small", styles$1l.toolTitle), children: title2 }),
+    description2 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: clsx(styles$1l.description, "text-size-smallest"), children: [
       "- ",
       description2
     ] }) : void 0
@@ -111200,8 +112190,8 @@ const ToolCallView = ({
     }
   });
   const contents2 = mode !== "compact" ? input2 : input2 || functionCall;
-  const context = defaultContext();
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1v.toolCallView), children: [
+  const context = defaultContext("tool");
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1o.toolCallView), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
       mode !== "compact" && (!view || view.title) ? /* @__PURE__ */ jsxRuntimeExports.jsx(
         ToolTitle,
@@ -111252,16 +112242,17 @@ const normalizeContent$1 = (output2) => {
     ];
   }
 };
-const content$2 = "_content_1b2jp_1";
+const content$1 = "_content_1b2jp_1";
 const codeCompact = "_codeCompact_1b2jp_5";
-const styles$1r = {
-  content: content$2,
+const styles$1k = {
+  content: content$1,
   codeCompact
 };
-const defaultContext = () => {
+const defaultContext = (role2) => {
   return {
     citeOffset: 0,
-    citations: []
+    citations: [],
+    role: role2
   };
 };
 const MessageContents = ({
@@ -111270,7 +112261,7 @@ const MessageContents = ({
   toolMessages,
   toolCallStyle
 }) => {
-  const context = defaultContext();
+  const context = defaultContext(message2.role);
   if (message2.role === "assistant" && message2.tool_calls && message2.tool_calls.length) {
     const toolCalls = message2.tool_calls.map((tool_call, idx) => {
       const { input: input2, description: description2, functionCall, contentType } = resolveToolInput(tool_call.function, tool_call.arguments);
@@ -111284,7 +112275,7 @@ const MessageContents = ({
       }
       const resolvedToolOutput = resolveToolMessage(toolMessage);
       if (toolCallStyle === "compact") {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("code", { className: clsx(styles$1r.codeCompact), children: [
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("code", { className: clsx(styles$1k.codeCompact), children: [
           "tool: ",
           functionCall
         ] }) }, `tool-call-${idx}`);
@@ -111308,7 +112299,7 @@ const MessageContents = ({
       }
     });
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-      message2.content && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1r.content, children: /* @__PURE__ */ jsxRuntimeExports.jsx(MessageContent, { contents: message2.content, context }) }),
+      message2.content && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1k.content, children: /* @__PURE__ */ jsxRuntimeExports.jsx(MessageContent, { contents: message2.content, context }) }),
       toolCalls
     ] });
   } else {
@@ -111383,10 +112374,10 @@ const ChatMessage = reactExports.memo(
         className: clsx(
           message2.role,
           "text-size-base",
-          styles$1H.message,
-          message2.role === "system" ? styles$1H.systemRole : void 0,
-          message2.role === "user" ? styles$1H.userRole : void 0,
-          mouseOver ? styles$1H.hover : void 0
+          styles$1C.message,
+          message2.role === "system" ? styles$1C.systemRole : void 0,
+          message2.role === "user" ? styles$1C.userRole : void 0,
+          mouseOver ? styles$1C.hover : void 0
         ),
         onMouseEnter: () => setMouseOver(true),
         onMouseLeave: () => setMouseOver(false),
@@ -111395,8 +112386,8 @@ const ChatMessage = reactExports.memo(
             "div",
             {
               className: clsx(
-                styles$1H.messageGrid,
-                message2.role === "tool" ? styles$1H.toolMessageGrid : void 0,
+                styles$1C.messageGrid,
+                message2.role === "tool" ? styles$1C.toolMessageGrid : void 0,
                 "text-style-label"
               ),
               children: [
@@ -111408,11 +112399,11 @@ const ChatMessage = reactExports.memo(
                     {
                       icon: ApplicationIcons.link,
                       value: toFullUrl(messageUrl),
-                      className: clsx(styles$1H.copyLink)
+                      className: clsx(styles$1C.copyLink)
                     }
                   ) : ""
                 ] }),
-                message2.timestamp && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1H.timestamp, title: message2.timestamp, children: formatDateTime(new Date(message2.timestamp)) })
+                message2.timestamp && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1C.timestamp, title: message2.timestamp, children: formatDateTime(new Date(message2.timestamp)) })
               ]
             }
           ),
@@ -111420,8 +112411,8 @@ const ChatMessage = reactExports.memo(
             "div",
             {
               className: clsx(
-                styles$1H.messageContents,
-                indented2 ? styles$1H.indented : void 0
+                styles$1C.messageContents,
+                indented2 ? styles$1C.indented : void 0
               ),
               children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -111446,7 +112437,7 @@ const ChatMessage = reactExports.memo(
                   LabeledValue,
                   {
                     label: "Metadata",
-                    className: clsx(styles$1H.metadataLabel, "text-size-smaller"),
+                    className: clsx(styles$1C.metadataLabel, "text-size-smaller"),
                     children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                       RecordTree,
                       {
@@ -111465,15 +112456,15 @@ const ChatMessage = reactExports.memo(
     );
   }
 );
-const grid$9 = "_grid_3x3ql_1";
+const grid$7 = "_grid_3x3ql_1";
 const number$1 = "_number_3x3ql_10";
 const user = "_user_3x3ql_14";
-const container$m = "_container_3x3ql_19";
-const styles$1q = {
-  grid: grid$9,
+const container$l = "_container_3x3ql_19";
+const styles$1j = {
+  grid: grid$7,
   number: number$1,
   user,
-  container: container$m
+  container: container$l
 };
 const ChatMessageRow = ({
   parentName,
@@ -111489,9 +112480,9 @@ const ChatMessageRow = ({
       "div",
       {
         className: clsx(
-          styles$1q.grid,
-          styles$1q.container,
-          highlightUserMessage && resolvedMessage.message.role === "user" ? styles$1q.user : void 0
+          styles$1j.grid,
+          styles$1j.container,
+          highlightUserMessage && resolvedMessage.message.role === "user" ? styles$1j.user : void 0
         ),
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -111500,7 +112491,7 @@ const ChatMessageRow = ({
               className: clsx(
                 "text-size-smaller",
                 "text-style-secondary",
-                styles$1q.number
+                styles$1j.number
               ),
               children: number2
             }
@@ -111524,9 +112515,9 @@ const ChatMessageRow = ({
       "div",
       {
         className: clsx(
-          styles$1q.container,
-          styles$1q.simple,
-          highlightUserMessage && resolvedMessage.message.role === "user" ? styles$1q.user : void 0
+          styles$1j.container,
+          styles$1j.simple,
+          highlightUserMessage && resolvedMessage.message.role === "user" ? styles$1j.user : void 0
         ),
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -111690,87 +112681,11 @@ const ChatSummary = ({ id, messages: messages2 }) => {
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsx(ChatView, { id, messages: summaryMessages });
 };
-const grid$8 = "_grid_14885_1";
-const cell$2 = "_cell_14885_8";
-const styles$1p = {
-  grid: grid$8,
-  cell: cell$2
-};
-const MetaDataGrid = ({
-  id,
-  entries,
-  className: className2,
-  size,
-  style: style2,
-  plain
-}) => {
-  const baseId = "metadata-grid";
-  const fontStyle = size === "mini" ? "text-size-smallest" : "text-size-smaller";
-  const entryEls = entryRecords(entries).map((entry, index) => {
-    const id2 = `${baseId}-value-${index}`;
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-      index !== 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "div",
-        {
-          style: {
-            gridColumn: "1 / -1",
-            borderBottom: `${!plain ? "solid 1px var(--bs-light-border-subtle" : ""}`
-          }
-        }
-      ) : void 0,
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "div",
-        {
-          className: clsx(
-            `${baseId}-key`,
-            styles$1p.cell,
-            "text-style-label",
-            "text-style-secondary",
-            fontStyle
-          ),
-          children: entry?.name
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1p.value, `${baseId}-value`, fontStyle), children: entry && /* @__PURE__ */ jsxRuntimeExports.jsx(
-        RenderedContent,
-        {
-          id: id2,
-          entry,
-          renderObject: (obj) => {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx(
-              MetaDataGrid,
-              {
-                id: id2,
-                className: clsx(styles$1p.nested),
-                entries: obj,
-                size,
-                plain
-              }
-            );
-          }
-        }
-      ) })
-    ] }, `${baseId}-record-${index}`);
-  });
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { id, className: clsx(className2, styles$1p.grid), style: style2, children: entryEls });
-};
-const entryRecords = (entries) => {
-  if (!entries) {
-    return [];
-  }
-  if (!Array.isArray(entries)) {
-    return Object.entries(entries || {}).map(([key2, value2]) => {
-      return { name: key2, value: value2 };
-    });
-  } else {
-    return entries;
-  }
-};
 const query = "_query_seqs2_1";
 const summary$3 = "_summary_seqs2_6";
 const preWrap = "_preWrap_seqs2_10";
 const preCompact = "_preCompact_seqs2_15";
-const styles$1o = {
+const styles$1i = {
   query,
   summary: summary$3,
   preWrap,
@@ -111888,7 +112803,7 @@ const contentRenderers = (renderObject) => {
           };
         } else {
           return {
-            rendered: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1o.preWrap, styles$1o.preCompact), children: rendered })
+            rendered: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1i.preWrap, styles$1i.preCompact), children: rendered })
           };
         }
       }
@@ -111937,7 +112852,7 @@ const contentRenderers = (renderObject) => {
       render: (_id, entry, _options) => {
         const results = [];
         results.push(
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1o.query, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1i.query, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.search }),
             " ",
             entry.value.query
@@ -111949,7 +112864,7 @@ const contentRenderers = (renderObject) => {
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: result2.url, children: result2.url }) })
             );
             results.push(
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-smaller", styles$1o.summary), children: result2.summary })
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-smaller", styles$1i.summary), children: result2.summary })
             );
           }
         );
@@ -111965,7 +112880,7 @@ const contentRenderers = (renderObject) => {
       },
       render: (_id, entry, _options) => {
         return {
-          rendered: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$1o.preWrap, children: entry.value })
+          rendered: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$1i.preWrap, children: entry.value })
         };
       }
     },
@@ -111989,7 +112904,13 @@ const contentRenderers = (renderObject) => {
       },
       render: (_id, entry, _options) => {
         return {
-          rendered: /* @__PURE__ */ jsxRuntimeExports.jsx(MessageContent, { contents: entry.value, context: defaultContext() })
+          rendered: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            MessageContent,
+            {
+              contents: entry.value,
+              context: defaultContext("unknown")
+            }
+          )
         };
       }
     },
@@ -112051,7 +112972,7 @@ const circle = "_circle_1iagp_1";
 const green = "_green_1iagp_12";
 const red = "_red_1iagp_18";
 const orange = "_orange_1iagp_24";
-const styles$1n = {
+const styles$1h = {
   circle,
   green,
   red,
@@ -112092,22 +113013,22 @@ const passFailScoreDescriptor = (values) => {
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           "span",
           {
-            className: clsx("text-size-small", styles$1n.circle, styles$1n.green),
+            className: clsx("text-size-small", styles$1h.circle, styles$1h.green),
             children: "C"
           }
         );
       } else if (score2 === "I") {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-size-small", styles$1n.circle, styles$1n.red), children: "I" });
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-size-small", styles$1h.circle, styles$1h.red), children: "I" });
       } else if (score2 === "P") {
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           "span",
           {
-            className: clsx("text-size-small", styles$1n.circle, styles$1n.orange),
+            className: clsx("text-size-small", styles$1h.circle, styles$1h.orange),
             children: "P"
           }
         );
       } else if (score2 === "N") {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-size-small", styles$1n.circle, styles$1n.red), children: "N" });
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-size-small", styles$1h.circle, styles$1h.red), children: "N" });
       } else {
         return String(score2);
       }
@@ -112377,93 +113298,59 @@ const createEvalDescriptor = (scores2, samples) => {
   };
 };
 const createSamplesDescriptor = (samples, evalDescriptor, selectedScores) => {
-  const sizes = samples.reduce(
-    (previous, current2) => {
-      const text2 = inputString(current2.input).join(" ");
-      let answerLength = 0;
-      if (selectedScores.length > 0) {
-        selectedScores.forEach((scoreLabel, index) => {
-          const score2 = evalDescriptor.score(current2, scoreLabel);
-          const scoreValue = score2?.value;
-          const scoreText = scoreValue ? String(scoreValue) : current2.error ? errorType(current2.error) : "";
-          const currentSize = Math.max(
-            scoreText.length,
-            scoreLabel.name.length
-          );
-          previous.scores[index] = Math.max(
-            previous.scores[index] || 0,
-            currentSize
-          );
-        });
-        answerLength = evalDescriptor.scoreAnswer(current2, selectedScores[0])?.length || 0;
-      } else {
-        previous.scores = [];
-        previous.scores[0] = 3;
-      }
-      previous.input = Math.min(Math.max(previous.input, text2.length), 200);
-      previous.target = Math.min(
-        Math.max(previous.target, arrayToString(current2.target).length),
+  const messageShape = samples.reduce(
+    (shape, sample2) => {
+      shape.inputSize = Math.min(
+        Math.max(shape.inputSize, inputString(sample2.input).join(" ").length),
         300
       );
-      previous.answer = Math.min(Math.max(previous.answer, answerLength), 300);
-      previous.limit = Math.min(
-        Math.max(previous.limit, current2.limit ? current2.limit.length : 0),
-        50
+      shape.targetSize = Math.min(
+        Math.max(shape.targetSize, arrayToString(sample2.target).length),
+        300
       );
-      previous.retries = Math.min(
+      if (selectedScores.length > 0) {
+        shape.answerSize = Math.min(
+          Math.max(
+            shape.answerSize,
+            evalDescriptor.scoreAnswer(sample2, selectedScores[0])?.length ?? 0
+          ),
+          300
+        );
+      }
+      shape.idSize = Math.min(
+        10,
+        Math.max(shape.idSize, String(sample2.id).length)
+      );
+      shape.limitSize = Math.min(
+        10,
+        Math.max(shape.limitSize, sample2.limit ? sample2.limit.length : 0)
+      );
+      shape.retriesSize = Math.min(
+        10,
         Math.max(
-          previous.retries,
-          current2.retries ? String(current2.retries).length : 0
-        ),
-        50
+          shape.retriesSize,
+          sample2.retries ? String(sample2.retries).length : 0
+        )
       );
-      previous.id = Math.min(
-        Math.max(previous.id, String(current2.id).length),
-        10
+      shape.errorSize = Math.min(
+        10,
+        Math.max(
+          shape.errorSize,
+          sample2.error ? errorType(sample2.error).length : 0
+        )
       );
-      return previous;
+      return shape;
     },
     {
-      input: 0,
-      target: 0,
-      answer: 0,
-      limit: 0,
-      retries: 0,
-      id: 0,
-      scores: []
+      idSize: 2,
+      inputSize: 0,
+      targetSize: 0,
+      answerSize: 0,
+      limitSize: 0,
+      retriesSize: 0,
+      errorSize: 0
     }
   );
-  const totalScoreSizes = sizes.scores.reduce((sum2, size) => sum2 + size, 0);
-  const normalizedScoreSizes = totalScoreSizes > 0 ? sizes.scores.map((size) => Math.round(size / totalScoreSizes * 30)) : [];
-  const maxSizes = {
-    input: Math.min(sizes.input, 300),
-    target: Math.min(sizes.target, 300),
-    answer: Math.min(sizes.answer, 300),
-    limit: Math.min(sizes.limit, 50),
-    retries: Math.min(sizes.retries, 50),
-    id: Math.min(sizes.id, 10),
-    score: normalizedScoreSizes
-  };
-  const base2 = maxSizes.input + maxSizes.target + maxSizes.answer + maxSizes.limit + maxSizes.retries + maxSizes.id + maxSizes.score.reduce((sum2, size) => {
-    return sum2 + size;
-  }, 0) || 1;
-  const inputNormalized = maxSizes.input / base2;
-  const targetNormalized = maxSizes.target / base2 > 0 ? Math.max(maxSizes.target / base2, inputNormalized / 10) : 0;
-  const answerNormalized = maxSizes.answer / base2 > 0 ? Math.max(maxSizes.answer / base2, inputNormalized / 10) : 0;
-  const messageShape = {
-    raw: sizes,
-    normalized: {
-      input: inputNormalized,
-      target: targetNormalized,
-      answer: answerNormalized,
-      limit: maxSizes.limit / base2,
-      retries: maxSizes.retries / base2,
-      id: maxSizes.id / base2,
-      scores: maxSizes.score.map((val) => {
-        return val / base2;
-      })
-    }
-  };
   const firstSelectedScore = selectedScores?.[0];
   return {
     evalDescriptor,
@@ -114899,6 +115786,7 @@ const MATH_FUNCTIONS = [
   ["log10", "Base 10 logarithm"]
 ];
 const SAMPLE_VARIABLES = [
+  ["epoch", "The epoch (run) number of the sample"],
   ["has_error", "Checks if the sample has an error"],
   ["has_retries", "Checks if the sample has been retried"],
   [kSampleIdVariable, "The unique identifier of the sample"],
@@ -114974,6 +115862,7 @@ const getNestedPropertyValue = (obj, path) => {
 };
 const sampleVariables = (sample2) => {
   return {
+    epoch: sample2.epoch,
     has_error: !!sample2.error,
     has_retries: sample2.retries !== void 0 && sample2.retries > 0,
     id: sample2.id,
@@ -115156,149 +116045,6 @@ const filterSamples = (evalDescriptor, samples, filterValue) => {
   });
   return { result: result2, error: error2, allErrors: errorCount === samples.length };
 };
-const flex = "_flex_1kye9_1";
-const label$a = "_label_1kye9_5";
-const styles$1m = {
-  flex,
-  label: label$a
-};
-const SortFilter = ({ sort: sort2, setSort, epochs }) => {
-  const options2 = [
-    { label: "sample asc", val: kSampleAscVal },
-    { label: "sample desc", val: kSampleDescVal }
-  ];
-  if (epochs > 1) {
-    options2.push({
-      label: "epoch asc",
-      val: kEpochAscVal
-    });
-    options2.push({
-      label: "epoch desc",
-      val: kEpochDescVal
-    });
-  }
-  options2.push({
-    label: "score asc",
-    val: kScoreAscVal
-  });
-  options2.push({
-    label: "score desc",
-    val: kScoreDescVal
-  });
-  const handleChange = reactExports.useCallback(
-    (e) => {
-      const sel = e.target;
-      setSort(sel.value);
-    },
-    [setSort]
-  );
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1m.flex, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "span",
-      {
-        className: clsx(
-          "sort-filter-label",
-          "text-size-smaller",
-          "text-style-label",
-          "text-style-secondary",
-          styles$1m.label
-        ),
-        children: "Sort:"
-      }
-    ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "select",
-      {
-        className: clsx("form-select", "form-select-sm", "text-size-smaller"),
-        "aria-label": ".sort-filter-label",
-        value: sort2,
-        onChange: handleChange,
-        children: options2.map((option) => {
-          return /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: option.val, children: option.label }, option.val);
-        })
-      }
-    )
-  ] });
-};
-const byEpoch = (sort2) => {
-  return sort2 === kEpochAscVal || sort2 === kEpochDescVal;
-};
-const bySample = (sort2) => {
-  return sort2 === kSampleAscVal || sort2 === kSampleDescVal;
-};
-const sortId = (a, b) => {
-  if (isNumeric$1(a.id) && isNumeric$1(b.id)) {
-    return Number(a.id) - Number(b.id);
-  } else {
-    return String(a.id).localeCompare(String(b.id));
-  }
-};
-const sortSamples = (sort2, samples, samplesDescriptor, scores2) => {
-  const scoreDescriptors = scores2.map((score2) => samplesDescriptor.evalDescriptor.scoreDescriptor(score2)).filter((scoreDescriptor) => scoreDescriptor !== void 0);
-  const sortedSamples = samples.sort((a, b) => {
-    const aScores = scores2.map((score2) => samplesDescriptor.evalDescriptor.score(a, score2)).filter((score2) => score2 !== void 0);
-    const bScores = scores2.map((score2) => samplesDescriptor.evalDescriptor.score(b, score2)).filter((score2) => score2 !== void 0);
-    switch (sort2) {
-      case kSampleAscVal: {
-        const result2 = sortId(a, b);
-        if (result2 !== 0) {
-          return result2;
-        } else {
-          return a.epoch - b.epoch;
-        }
-      }
-      case kSampleDescVal: {
-        const result2 = sortId(b, a);
-        if (result2 !== 0) {
-          return result2;
-        } else {
-          return a.epoch - b.epoch;
-        }
-      }
-      case kEpochAscVal: {
-        const result2 = a.epoch - b.epoch;
-        if (result2 !== 0) {
-          return result2;
-        } else {
-          return sortId(a, b);
-        }
-      }
-      case kEpochDescVal: {
-        const result2 = b.epoch - a.epoch;
-        if (result2 !== 0) {
-          return result2;
-        } else {
-          return sortId(b, a);
-        }
-      }
-      case kScoreAscVal: {
-        if (aScores.length === 0 || bScores.length === 0 || scoreDescriptors.length === 0) {
-          return 0;
-        }
-        return aScores.reduce((cmp2, score2, index) => {
-          if (cmp2 !== 0) {
-            return cmp2;
-          }
-          return scoreDescriptors[index]?.compare(score2, bScores[index]);
-        }, 0);
-      }
-      case kScoreDescVal: {
-        if (aScores.length === 0 || bScores.length === 0 || scoreDescriptors.length === 0) {
-          return 0;
-        }
-        return bScores.reduce((cmp2, score2, index) => {
-          if (cmp2 !== 0) {
-            return cmp2;
-          }
-          return scoreDescriptors[index]?.compare(score2, aScores[index]);
-        }, 0);
-      }
-      default:
-        return 0;
-    }
-  });
-  return sortedSamples;
-};
 const getScorersFromSamples = (samples) => {
   const scoreLabelsMap = /* @__PURE__ */ new Map();
   for (const sample2 of samples) {
@@ -115355,7 +116101,7 @@ const mergeSampleSummaries = (logSamples, pendingSamples) => {
   });
   return [...logSamples, ...uniquePendingSamples];
 };
-const log$1 = createLogger("hooks");
+const log$3 = createLogger("hooks");
 const useEvalSpec = () => {
   const selectedLogDetails = useStore((state) => state.log.selectedLogDetails);
   return selectedLogDetails?.eval;
@@ -115447,10 +116193,6 @@ const useFilteredSamples = () => {
   const clearFilterError = useStore(
     (state) => state.logActions.clearFilterError
   );
-  const epoch = useStore((state) => state.log.epoch);
-  const sort2 = useStore((state) => state.log.sort);
-  const samplesDescriptor = useSampleDescriptor();
-  const selectedScores = useSelectedScores();
   return reactExports.useMemo(() => {
     const { result: result2, error: error2, allErrors } = evalDescriptor && filter ? filterSamples(evalDescriptor, sampleSummaries, filter) : { result: sampleSummaries, error: void 0, allErrors: false };
     if (error2 && allErrors) {
@@ -115458,43 +116200,25 @@ const useFilteredSamples = () => {
     } else {
       clearFilterError();
     }
-    const prefiltered = error2 === void 0 || !allErrors ? result2 : sampleSummaries;
-    const filtered = epoch && epoch !== "all" ? prefiltered.filter((sample2) => epoch === String(sample2.epoch)) : prefiltered;
-    const sorted = samplesDescriptor ? sortSamples(sort2, filtered, samplesDescriptor, selectedScores) : filtered;
-    return [...sorted];
+    const filtered = error2 === void 0 || !allErrors ? result2 : sampleSummaries;
+    const sorted = [...filtered].sort((a, b) => {
+      let idCompare;
+      if (typeof a.id === "number" && typeof b.id === "number") {
+        idCompare = a.id - b.id;
+      } else {
+        idCompare = String(a.id).localeCompare(String(b.id));
+      }
+      if (idCompare !== 0) return idCompare;
+      return a.epoch - b.epoch;
+    });
+    return sorted;
   }, [
     evalDescriptor,
     sampleSummaries,
     filter,
     setFilterError,
-    clearFilterError,
-    epoch,
-    sort2,
-    samplesDescriptor,
-    selectedScores
+    clearFilterError
   ]);
-};
-const useGroupBy = () => {
-  const selectedLogDetails = useStore((state) => state.log.selectedLogDetails);
-  const sort2 = useStore((state) => state.log.sort);
-  const epoch = useStore((state) => state.log.epoch);
-  return reactExports.useMemo(() => {
-    const epochs = selectedLogDetails?.eval?.config?.epochs || 1;
-    if (epochs > 1) {
-      if (byEpoch(sort2) || epoch !== "all") {
-        return "epoch";
-      } else if (bySample(sort2)) {
-        return "sample";
-      }
-    }
-    return "none";
-  }, [selectedLogDetails, sort2, epoch]);
-};
-const useGroupByOrder = () => {
-  const sort2 = useStore((state) => state.log.sort);
-  return reactExports.useMemo(() => {
-    return sort2 === kSampleAscVal || sort2 === kEpochAscVal || sort2 === kScoreAscVal ? "asc" : "desc";
-  }, [sort2]);
 };
 const useSelectedSampleSummary = () => {
   const sampleSummaries = useSampleSummaries();
@@ -115509,7 +116233,7 @@ const useSelectedSampleSummary = () => {
   }, [selectedSampleHandle, sampleSummaries]);
 };
 const useSampleData = () => {
-  const sampleStatus = useStore((state) => state.sample.sampleStatus);
+  const sampleStatus2 = useStore((state) => state.sample.sampleStatus);
   const sampleError = useStore((state) => state.sample.sampleError);
   const getSelectedSample = useStore(
     (state) => state.sampleActions.getSelectedSample
@@ -115524,14 +116248,14 @@ const useSampleData = () => {
   return reactExports.useMemo(() => {
     return {
       selectedSampleIdentifier,
-      status: sampleStatus,
+      status: sampleStatus2,
       sampleNeedsReload,
       error: sampleError,
       getSelectedSample,
       running: runningEvents
     };
   }, [
-    sampleStatus,
+    sampleStatus2,
     sampleError,
     getSelectedSample,
     selectedSampleIdentifier,
@@ -115567,7 +116291,7 @@ const useCollapseSampleEvent = (scope, id) => {
   return reactExports.useMemo(() => {
     const isCollapsed = collapsed2 !== null && collapsed2[scope]?.[id] === true;
     const set3 = (value2) => {
-      log$1.debug("Set collapsed", id, value2);
+      log$3.debug("Set collapsed", id, value2);
       collapseEvent(scope, id, value2);
     };
     return [isCollapsed, set3];
@@ -115602,7 +116326,7 @@ const useCollapsedState = (id, defaultValue, scope) => {
   const setCollapsed = useStore((state) => state.appActions.setCollapsed);
   return reactExports.useMemo(() => {
     const set3 = (value2) => {
-      log$1.debug("Set collapsed", id, scope, value2);
+      log$3.debug("Set collapsed", id, scope, value2);
       setCollapsed(stateId, value2);
     };
     return [collapsed2, set3];
@@ -115623,7 +116347,7 @@ const useMessageVisibility = (id, scope) => {
       isFirstRender.current = false;
       return;
     }
-    log$1.debug("clear message (eval)", id);
+    log$3.debug("clear message (eval)", id);
     clearVisible(id);
   }, [selectedLogFile, clearVisible, id]);
   const selectedSampleHandle = useStore(
@@ -115634,14 +116358,14 @@ const useMessageVisibility = (id, scope) => {
       return;
     }
     if (scope === "sample") {
-      log$1.debug("clear message (sample)", id);
+      log$3.debug("clear message (sample)", id);
       clearVisible(id);
     }
   }, [selectedSampleHandle, clearVisible, id, scope]);
   return reactExports.useMemo(() => {
-    log$1.debug("visibility", id, visible2);
+    log$3.debug("visibility", id, visible2);
     const set3 = (visible22) => {
-      log$1.debug("set visiblity", id);
+      log$3.debug("set visiblity", id);
       setVisible(id, visible22);
     };
     return [visible2, set3];
@@ -115689,22 +116413,6 @@ const usePrevious = (value2) => {
     ref.current = value2;
   }, [value2]);
   return ref.current;
-};
-const kPrismRenderMaxSize = 25e4;
-const usePrismHighlight = (containerRef, contentLength) => {
-  reactExports.useEffect(() => {
-    requestAnimationFrame(() => {
-      if (contentLength > 0 && containerRef.current !== null && contentLength <= kPrismRenderMaxSize) {
-        const codeBlocks = containerRef.current?.querySelectorAll("pre code");
-        codeBlocks?.forEach((block2) => {
-          if (block2.className.includes("language-")) {
-            block2.classList.add("sourceCode");
-            prismExports.highlightElement(block2);
-          }
-        });
-      }
-    });
-  }, [contentLength, containerRef]);
 };
 const useSamplePopover = (id) => {
   const setVisiblePopover = useStore(
@@ -115763,7 +116471,7 @@ const useLogs = () => {
   const loadLogs = reactExports.useCallback(
     async (logPath) => {
       await Promise.all([syncEvalSetInfo(logPath), syncLogs()]).catch((e) => {
-        log$1.error("Error loading logs", e);
+        log$3.error("Error loading logs", e);
         setLoading(false, e);
       });
     },
@@ -115884,7 +116592,7 @@ const useLogsWithretried = () => {
   }, [logs, logPreviews]);
   return logsWithEvalSetRetry;
 };
-const log = createLogger("Client-Events");
+const log$2 = createLogger("Client-Events");
 function useClientEvents() {
   const syncLogs = useStore((state) => state.logsActions.syncLogs);
   const logPreviews = useStore((state) => state.logs.logPreviews);
@@ -115892,7 +116600,7 @@ function useClientEvents() {
   const { loadLogOverviews } = useLogs();
   const refreshCallback = reactExports.useCallback(
     async (logs) => {
-      log.debug("Refresh Log Files");
+      log$2.debug("Refresh Log Files");
       await syncLogs();
       const toRefresh = [];
       for (const log2 of logs) {
@@ -115902,7 +116610,7 @@ function useClientEvents() {
         }
       }
       if (toRefresh.length > 0) {
-        log.debug(`Refreshing ${toRefresh.length} log files`, toRefresh);
+        log$2.debug(`Refreshing ${toRefresh.length} log files`, toRefresh);
         await loadLogOverviews(toRefresh);
       }
     },
@@ -115936,7 +116644,7 @@ function useClientEvents() {
 }
 const button$3 = "_button_1bbut_1";
 const viewerOptions$1 = "_viewerOptions_1bbut_7";
-const styles$1l = {
+const styles$1g = {
   button: button$3,
   viewerOptions: viewerOptions$1
 };
@@ -115956,14 +116664,14 @@ const FlowButton = reactExports.forwardRef(
       {
         ref,
         type: "button",
-        className: clsx(styles$1l.button),
+        className: clsx(styles$1g.button),
         onClick: navigate,
         title: "View Flow configuration for this directory",
         children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           "i",
           {
             ref,
-            className: clsx(ApplicationIcons.flow, styles$1l.viewerOptions)
+            className: clsx(ApplicationIcons.flow, styles$1g.viewerOptions)
           }
         )
       }
@@ -115985,30 +116693,30 @@ const useFlowServerData = (dir) => {
   }, [dir, flowDir, api2, updateFlowData]);
 };
 const wrapper$4 = "_wrapper_1tajk_1";
-const container$l = "_container_1tajk_12";
+const container$k = "_container_1tajk_12";
 const animate = "_animate_1tajk_21";
-const styles$1k = {
+const styles$1f = {
   wrapper: wrapper$4,
-  container: container$l,
+  container: container$k,
   animate
 };
 const ActivityBar = ({ animating }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1k.wrapper), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1f.wrapper), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
     {
-      className: clsx(styles$1k.container),
+      className: clsx(styles$1f.container),
       role: "progressbar",
       "aria-label": "Progress bar",
       "aria-valuenow": 25,
       "aria-valuemin": 0,
       "aria-valuemax": 100,
-      children: animating && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1k.animate })
+      children: animating && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1f.animate })
     }
   ) });
 };
 const button$2 = "_button_1bbut_1";
 const viewerOptions = "_viewerOptions_1bbut_7";
-const styles$1j = {
+const styles$1e = {
   button: button$2,
   viewerOptions
 };
@@ -116021,14 +116729,14 @@ const ViewerOptionsButton = reactExports.forwardRef(({ showing, setShowing }, re
     {
       ref,
       type: "button",
-      className: clsx(styles$1j.button),
+      className: clsx(styles$1e.button),
       onClick: toggleShowing,
       title: "Viewer information and options",
       children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         "i",
         {
           ref,
-          className: clsx(ApplicationIcons.info, styles$1j.viewerOptions)
+          className: clsx(ApplicationIcons.info, styles$1e.viewerOptions)
         }
       )
     }
@@ -116098,7 +116806,7 @@ function isShadowRoot(node2) {
   var OwnElement = getWindow(node2).ShadowRoot;
   return node2 instanceof OwnElement || node2 instanceof ShadowRoot;
 }
-function applyStyles$1(_ref) {
+function applyStyles(_ref) {
   var state = _ref.state;
   Object.keys(state.elements).forEach(function(name2) {
     var style2 = state.styles[name2] || {};
@@ -116156,11 +116864,11 @@ function effect$2(_ref2) {
     });
   };
 }
-const applyStyles = {
+const applyStyles$1 = {
   name: "applyStyles",
   enabled: true,
   phase: "write",
-  fn: applyStyles$1,
+  fn: applyStyles,
   effect: effect$2,
   requires: ["computeStyles"]
 };
@@ -116346,7 +117054,7 @@ var toPaddingObject = function toPaddingObject2(padding, state) {
   })) : padding;
   return mergePaddingObject(typeof padding !== "number" ? padding : expandToHashMap(padding, basePlacements));
 };
-function arrow$1(_ref) {
+function arrow(_ref) {
   var _state$modifiersData$;
   var state = _ref.state, name2 = _ref.name, options2 = _ref.options;
   var arrowElement = state.elements.arrow;
@@ -116391,11 +117099,11 @@ function effect$1(_ref2) {
   }
   state.elements.arrow = arrowElement;
 }
-const arrow = {
+const arrow$1 = {
   name: "arrow",
   enabled: true,
   phase: "main",
-  fn: arrow$1,
+  fn: arrow,
   effect: effect$1,
   requires: ["popperOffsets"],
   requiresIfExists: ["preventOverflow"]
@@ -116484,7 +117192,7 @@ function mapToStyles(_ref2) {
   }
   return Object.assign({}, commonStyles, (_Object$assign2 = {}, _Object$assign2[sideY] = hasY ? y + "px" : "", _Object$assign2[sideX] = hasX ? x + "px" : "", _Object$assign2.transform = "", _Object$assign2));
 }
-function computeStyles$1(_ref5) {
+function computeStyles(_ref5) {
   var state = _ref5.state, options2 = _ref5.options;
   var _options$gpuAccelerat = options2.gpuAcceleration, gpuAcceleration = _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat, _options$adaptive = options2.adaptive, adaptive = _options$adaptive === void 0 ? true : _options$adaptive, _options$roundOffsets = options2.roundOffsets, roundOffsets = _options$roundOffsets === void 0 ? true : _options$roundOffsets;
   var commonStyles = {
@@ -116515,37 +117223,37 @@ function computeStyles$1(_ref5) {
     "data-popper-placement": state.placement
   });
 }
-const computeStyles = {
+const computeStyles$1 = {
   name: "computeStyles",
   enabled: true,
   phase: "beforeWrite",
-  fn: computeStyles$1,
+  fn: computeStyles,
   data: {}
 };
 var passive = {
   passive: true
 };
 function effect(_ref) {
-  var state = _ref.state, instance = _ref.instance, options2 = _ref.options;
+  var state = _ref.state, instance2 = _ref.instance, options2 = _ref.options;
   var _options$scroll = options2.scroll, scroll = _options$scroll === void 0 ? true : _options$scroll, _options$resize = options2.resize, resize = _options$resize === void 0 ? true : _options$resize;
   var window2 = getWindow(state.elements.popper);
   var scrollParents = [].concat(state.scrollParents.reference, state.scrollParents.popper);
   if (scroll) {
     scrollParents.forEach(function(scrollParent) {
-      scrollParent.addEventListener("scroll", instance.update, passive);
+      scrollParent.addEventListener("scroll", instance2.update, passive);
     });
   }
   if (resize) {
-    window2.addEventListener("resize", instance.update, passive);
+    window2.addEventListener("resize", instance2.update, passive);
   }
   return function() {
     if (scroll) {
       scrollParents.forEach(function(scrollParent) {
-        scrollParent.removeEventListener("scroll", instance.update, passive);
+        scrollParent.removeEventListener("scroll", instance2.update, passive);
       });
     }
     if (resize) {
-      window2.removeEventListener("resize", instance.update, passive);
+      window2.removeEventListener("resize", instance2.update, passive);
     }
   };
 }
@@ -116835,7 +117543,7 @@ function getExpandedFallbackPlacements(placement) {
   var oppositePlacement = getOppositePlacement(placement);
   return [getOppositeVariationPlacement(placement), oppositePlacement, getOppositeVariationPlacement(oppositePlacement)];
 }
-function flip$1(_ref) {
+function flip(_ref) {
   var state = _ref.state, options2 = _ref.options, name2 = _ref.name;
   if (state.modifiersData[name2]._skip) {
     return;
@@ -116921,11 +117629,11 @@ function flip$1(_ref) {
     state.reset = true;
   }
 }
-const flip = {
+const flip$1 = {
   name: "flip",
   enabled: true,
   phase: "main",
-  fn: flip$1,
+  fn: flip,
   requiresIfExists: ["offset"],
   data: {
     _skip: false
@@ -116950,7 +117658,7 @@ function isAnySideFullyClipped(overflow) {
     return overflow[side] >= 0;
   });
 }
-function hide$1(_ref) {
+function hide(_ref) {
   var state = _ref.state, name2 = _ref.name;
   var referenceRect = state.rects.reference;
   var popperRect = state.rects.popper;
@@ -116976,12 +117684,12 @@ function hide$1(_ref) {
     "data-popper-escaped": hasPopperEscaped
   });
 }
-const hide = {
+const hide$1 = {
   name: "hide",
   enabled: true,
   phase: "main",
   requiresIfExists: ["preventOverflow"],
-  fn: hide$1
+  fn: hide
 };
 function distanceAndSkiddingToXY(placement, rects, offset2) {
   var basePlacement = getBasePlacement(placement);
@@ -116999,7 +117707,7 @@ function distanceAndSkiddingToXY(placement, rects, offset2) {
     y: distance
   };
 }
-function offset$1(_ref2) {
+function offset(_ref2) {
   var state = _ref2.state, options2 = _ref2.options, name2 = _ref2.name;
   var _options$offset = options2.offset, offset2 = _options$offset === void 0 ? [0, 0] : _options$offset;
   var data = placements.reduce(function(acc, placement) {
@@ -117013,14 +117721,14 @@ function offset$1(_ref2) {
   }
   state.modifiersData[name2] = data;
 }
-const offset = {
+const offset$1 = {
   name: "offset",
   enabled: true,
   phase: "main",
   requires: ["popperOffsets"],
-  fn: offset$1
+  fn: offset
 };
-function popperOffsets$1(_ref) {
+function popperOffsets(_ref) {
   var state = _ref.state, name2 = _ref.name;
   state.modifiersData[name2] = computeOffsets({
     reference: state.rects.reference,
@@ -117028,17 +117736,17 @@ function popperOffsets$1(_ref) {
     placement: state.placement
   });
 }
-const popperOffsets = {
+const popperOffsets$1 = {
   name: "popperOffsets",
   enabled: true,
   phase: "read",
-  fn: popperOffsets$1,
+  fn: popperOffsets,
   data: {}
 };
 function getAltAxis(axis) {
   return axis === "x" ? "y" : "x";
 }
-function preventOverflow$1(_ref) {
+function preventOverflow(_ref) {
   var state = _ref.state, options2 = _ref.options, name2 = _ref.name;
   var _options$mainAxis = options2.mainAxis, checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis, _options$altAxis = options2.altAxis, checkAltAxis = _options$altAxis === void 0 ? false : _options$altAxis, boundary = options2.boundary, rootBoundary = options2.rootBoundary, altBoundary = options2.altBoundary, padding = options2.padding, _options$tether = options2.tether, tether = _options$tether === void 0 ? true : _options$tether, _options$tetherOffset = options2.tetherOffset, tetherOffset = _options$tetherOffset === void 0 ? 0 : _options$tetherOffset;
   var overflow = detectOverflow(state, {
@@ -117122,11 +117830,11 @@ function preventOverflow$1(_ref) {
   }
   state.modifiersData[name2] = data;
 }
-const preventOverflow = {
+const preventOverflow$1 = {
   name: "preventOverflow",
   enabled: true,
   phase: "main",
-  fn: preventOverflow$1,
+  fn: preventOverflow,
   requiresIfExists: ["offset"]
 };
 function getHTMLElementScroll(element) {
@@ -117282,7 +117990,7 @@ function popperGenerator(generatorOptions) {
     };
     var effectCleanupFns = [];
     var isDestroyed2 = false;
-    var instance = {
+    var instance2 = {
       state,
       setOptions: function setOptions(setOptionsAction) {
         var options3 = typeof setOptionsAction === "function" ? setOptionsAction(state.options) : setOptionsAction;
@@ -117297,7 +118005,7 @@ function popperGenerator(generatorOptions) {
           return m.enabled;
         });
         runModifierEffects();
-        return instance.update();
+        return instance2.update();
       },
       // Sync update – it will always be executed, even if not necessary. This
       // is useful for low frequency updates where sync behavior simplifies the
@@ -117333,7 +118041,7 @@ function popperGenerator(generatorOptions) {
               state,
               options: _options,
               name: name2,
-              instance
+              instance: instance2
             }) || state;
           }
         }
@@ -117342,7 +118050,7 @@ function popperGenerator(generatorOptions) {
       // not necessary (debounced to run at most once-per-tick)
       update: debounce$1(function() {
         return new Promise(function(resolve) {
-          instance.forceUpdate();
+          instance2.forceUpdate();
           resolve(state);
         });
       }),
@@ -117352,9 +118060,9 @@ function popperGenerator(generatorOptions) {
       }
     };
     if (!areValidElements(reference2, popper2)) {
-      return instance;
+      return instance2;
     }
-    instance.setOptions(options2).then(function(state2) {
+    instance2.setOptions(options2).then(function(state2) {
       if (!isDestroyed2 && options2.onFirstUpdate) {
         options2.onFirstUpdate(state2);
       }
@@ -117366,7 +118074,7 @@ function popperGenerator(generatorOptions) {
           var cleanupFn = effect2({
             state,
             name: name2,
-            instance,
+            instance: instance2,
             options: options3
           });
           var noopFn = function noopFn2() {
@@ -117381,10 +118089,10 @@ function popperGenerator(generatorOptions) {
       });
       effectCleanupFns = [];
     }
-    return instance;
+    return instance2;
   };
 }
-var defaultModifiers = [eventListeners, popperOffsets, computeStyles, applyStyles, offset, flip, preventOverflow, arrow, hide];
+var defaultModifiers = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$1, offset$1, flip$1, preventOverflow$1, arrow$1, hide$1];
 var createPopper = /* @__PURE__ */ popperGenerator({
   defaultModifiers
 });
@@ -117906,7 +118614,7 @@ const PopOver = ({
   }
   return popperContent;
 };
-const container$k = "_container_e3s30_1";
+const container$j = "_container_e3s30_1";
 const fullWidth$2 = "_fullWidth_e3s30_9";
 const fullWidthPadded = "_fullWidthPadded_e3s30_13";
 const spacer$1 = "_spacer_e3s30_18";
@@ -117915,8 +118623,8 @@ const clearButton = "_clearButton_e3s30_52";
 const message$2 = "_message_e3s30_56";
 const messageSuccess = "_messageSuccess_e3s30_64";
 const messageError = "_messageError_e3s30_69";
-const styles$1i = {
-  container: container$k,
+const styles$1d = {
+  container: container$j,
   fullWidth: fullWidth$2,
   fullWidthPadded,
   spacer: spacer$1,
@@ -117967,32 +118675,32 @@ const ViewerOptionsPopover = ({
       hoverDelay: -1,
       offset: [-10, 5],
       showArrow: false,
-      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1i.container, "text-size-smaller"), children: [
+      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1d.container, "text-size-smaller"), children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
             className: clsx(
               "text-style-label",
               "text-style-secondary",
-              styles$1i.fullWidth
+              styles$1d.fullWidth
             ),
             children: "Log Directory"
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.fullWidth, styles$1i.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1i.logDir, children: logDir2 }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.165-5-g6fff0c462" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.181-5-gc4024cf16" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Logs" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: dbStats?.logCount || 0 }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Log Previews" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: dbStats?.previewCount || 0 }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Log Details" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: dbStats?.detailsCount || 0 }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1i.spacer) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Tools" }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(), children: [
           " ",
@@ -118005,7 +118713,7 @@ const ViewerOptionsPopover = ({
                 "btn",
                 "btn-tools",
                 "text-size-smallest",
-                styles$1i.clearButton
+                styles$1d.clearButton
               ),
               children: isClearing ? "Clearing..." : "Clear Local Database"
             }
@@ -118015,9 +118723,9 @@ const ViewerOptionsPopover = ({
           "div",
           {
             className: clsx(
-              styles$1i.fullWidth,
-              styles$1i.message,
-              clearMessage.includes("success") ? styles$1i.messageSuccess : styles$1i.messageError
+              styles$1d.fullWidth,
+              styles$1d.message,
+              clearMessage.includes("success") ? styles$1d.messageSuccess : styles$1d.messageError
             ),
             children: clearMessage
           }
@@ -118026,7 +118734,7 @@ const ViewerOptionsPopover = ({
     }
   );
 };
-const header$3 = "_header_1u3sd_1";
+const header$1 = "_header_1u3sd_1";
 const bordered = "_bordered_1u3sd_11";
 const breadcrumbs = "_breadcrumbs_1u3sd_15";
 const ellipsis = "_ellipsis_1u3sd_26";
@@ -118034,8 +118742,8 @@ const left$1 = "_left_1u3sd_31";
 const right$1 = "_right_1u3sd_41";
 const toolbarButton = "_toolbarButton_1u3sd_50";
 const pathContainer = "_pathContainer_1u3sd_58";
-const styles$1h = {
-  header: header$3,
+const styles$1c = {
+  header: header$1,
   bordered,
   breadcrumbs,
   ellipsis,
@@ -118131,7 +118839,8 @@ const Navbar = ({
   fnNavigationUrl,
   bordered: bordered2,
   children: children2,
-  currentPath
+  currentPath,
+  breadcrumbsEnabled
 }) => {
   const logDir2 = useStore((state) => state.logs.logDir);
   const baseLogDir = dirname(logDir2 || "");
@@ -118169,42 +118878,48 @@ const Navbar = ({
       className: clsx(
         "text-size-smaller",
         "header-nav",
-        styles$1h.header,
-        bordered2 === false ? null : styles$1h.bordered
+        styles$1c.header,
+        bordered2 === false ? null : styles$1c.bordered
       ),
       "aria-label": "breadcrumb",
       "data-unsearchable": true,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1h.left), children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: backUrl, className: clsx(styles$1h.toolbarButton), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.navbar.back) }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1c.left), children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: backUrl, className: clsx(styles$1c.toolbarButton), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.navbar.back) }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             Link,
             {
               to: fnNavigationUrl("", logDir2),
-              className: clsx(styles$1h.toolbarButton),
+              className: clsx(styles$1c.toolbarButton),
               children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.navbar.home) })
             }
           ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1h.pathContainer), ref: pathContainerRef, children: logDir2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("ol", { className: clsx("breadcrumb", styles$1h.breadcrumbs), children: visibleSegments?.map((segment2, index) => {
+          breadcrumbsEnabled !== false && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1c.pathContainer), ref: pathContainerRef, children: logDir2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("ol", { className: clsx("breadcrumb", styles$1c.breadcrumbs), children: visibleSegments?.map((segment2, index) => {
             const isLast = index === visibleSegments.length - 1;
             const shouldShowEllipsis = showEllipsis && index === 1 && visibleSegments.length >= 2;
             return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-              shouldShowEllipsis && /* @__PURE__ */ jsxRuntimeExports.jsx("li", { className: clsx("breadcrumb-item", styles$1h.ellipsis), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "..." }) }),
+              shouldShowEllipsis && /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "li",
+                {
+                  className: clsx("breadcrumb-item", styles$1c.ellipsis),
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "..." })
+                }
+              ),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "li",
                 {
                   className: clsx(
-                    styles$1h.pathLink,
+                    styles$1c.pathLink,
                     "breadcrumb-item",
                     isLast ? "active" : void 0
                   ),
-                  children: segment2.url && !isLast ? /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: segment2.url, children: segment2.text }) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx(styles$1h.pathSegment), children: segment2.text })
+                  children: segment2.url && !isLast ? /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: segment2.url, children: segment2.text }) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx(styles$1c.pathSegment), children: segment2.text })
                 }
               )
             ] }, index);
           }) }) : "" })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1h.right), children: children2 })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1c.right), children: children2 })
       ]
     }
   );
@@ -118214,26 +118929,27 @@ const ApplicationNavbar = ({
   fnNavigationUrl,
   bordered: bordered2,
   children: children2,
-  showActivity = "all"
+  showActivity = "all",
+  breadcrumbsEnabled
 }) => {
   const optionsRef = reactExports.useRef(null);
   const loading = useStore((state) => state.app.status.loading);
-  const sampleStatus = useStore((state) => state.sample.sampleStatus);
+  const sampleStatus2 = useStore((state) => state.sample.sampleStatus);
   const isShowing = useStore((state) => state.app.dialogs.options);
   const setShowing = useStore(
     (state) => state.appActions.setShowingOptionsDialog
   );
   const hasActivity = reactExports.useMemo(() => {
     if (showActivity === "all") {
-      return !!loading || sampleStatus === "loading";
+      return !!loading || sampleStatus2 === "loading";
     } else if (showActivity === "log") {
       return !!loading;
     } else if (showActivity === "sample") {
-      return sampleStatus === "loading";
+      return sampleStatus2 === "loading";
     } else {
       return false;
     }
-  }, [showActivity, loading, sampleStatus]);
+  }, [showActivity, loading, sampleStatus2]);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
       Navbar,
@@ -118241,6 +118957,7 @@ const ApplicationNavbar = ({
         currentPath,
         fnNavigationUrl,
         bordered: bordered2,
+        breadcrumbsEnabled,
         children: [
           children2,
           /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -118266,7 +118983,7 @@ const ApplicationNavbar = ({
   ] });
 };
 const navbarButton = "_navbarButton_1gksz_1";
-const styles$1g = {
+const styles$1b = {
   navbarButton
 };
 const NavbarButton = reactExports.forwardRef(
@@ -118276,7 +118993,7 @@ const NavbarButton = reactExports.forwardRef(
       {
         ref,
         label: label2,
-        className: clsx(className2, styles$1g.navbarButton),
+        className: clsx(className2, styles$1b.navbarButton),
         icon: icon2,
         latched: latched2,
         ...rest
@@ -118287,11 +119004,11 @@ const NavbarButton = reactExports.forwardRef(
 NavbarButton.displayName = "NavbarButton";
 const rootControl = "_rootControl_mhb7y_1";
 const segment = "_segment_mhb7y_9";
-const selected$4 = "_selected_mhb7y_9";
-const styles$1f = {
+const selected$3 = "_selected_mhb7y_9";
+const styles$1a = {
   rootControl,
   segment,
-  selected: selected$4
+  selected: selected$3
 };
 const SegmentedControl = ({
   segments: segments2,
@@ -118307,13 +119024,13 @@ const SegmentedControl = ({
   if (selectedId === void 0) {
     selectedId = segments2[0]?.id;
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1f.rootControl), children: segments2.map((segment2, index) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1a.rootControl), children: segments2.map((segment2, index) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "button",
     {
       className: clsx(
-        styles$1f.segment,
+        styles$1a.segment,
         {
-          [styles$1f.selected]: selectedId === segment2.id
+          [styles$1a.selected]: selectedId === segment2.id
         },
         "text-size-smallest",
         "text-style-secondary"
@@ -118358,7 +119075,7 @@ const ViewSegmentedControl = ({
   );
 };
 const checkboxWrapper = "_checkboxWrapper_vtlwq_1";
-const label$9 = "_label_vtlwq_5";
+const label$8 = "_label_vtlwq_5";
 const checkbox = "_checkbox_vtlwq_1";
 const filterIcon = "_filterIcon_vtlwq_16";
 const scrollableContainer = "_scrollableContainer_vtlwq_21";
@@ -118367,9 +119084,9 @@ const headerRow = "_headerRow_vtlwq_30";
 const buttonContainer = "_buttonContainer_vtlwq_39";
 const button$1 = "_button_vtlwq_39";
 const columnsLayout = "_columnsLayout_vtlwq_54";
-const styles$1e = {
+const styles$19 = {
   checkboxWrapper,
-  label: label$9,
+  label: label$8,
   checkbox,
   filterIcon,
   scrollableContainer,
@@ -118452,20 +119169,20 @@ const ColumnSelectorPopover = ({
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
-        className: styles$1e.checkboxWrapper,
+        className: styles$19.checkboxWrapper,
         title: hasFilter ? "Unselecting will remove an active filter on this column" : void 0,
-        children: /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: styles$1e.label, children: [
+        children: /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: styles$19.label, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "input",
             {
               type: "checkbox",
               checked: currentVisibility[field],
               onChange: () => handleToggle(field),
-              className: styles$1e.checkbox
+              className: styles$19.checkbox
             }
           ),
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: col.headerName || field }),
-          hasFilter && /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: `${ApplicationIcons.filter} ${styles$1e.filterIcon}` })
+          hasFilter && /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: `${ApplicationIcons.filter} ${styles$19.filterIcon}` })
         ] })
       },
       field
@@ -118481,16 +119198,16 @@ const ColumnSelectorPopover = ({
       placement: "bottom-start",
       showArrow: false,
       hoverDelay: -1,
-      className: styles$1e.popover,
-      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1e.scrollableContainer, "text-size-small"), children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1e.section), children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1e.headerRow, children: [
+      className: styles$19.popover,
+      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$19.scrollableContainer, "text-size-small"), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$19.section), children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$19.headerRow, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: "Base" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1e.buttonContainer, "text-size-small"), children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$19.buttonContainer, "text-size-small"), children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "a",
                 {
-                  className: clsx(styles$1e.button, "text-size-small"),
+                  className: clsx(styles$19.button, "text-size-small"),
                   onClick: handleSelectAllBase,
                   children: "All"
                 }
@@ -118499,23 +119216,23 @@ const ColumnSelectorPopover = ({
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "a",
                 {
-                  className: clsx(styles$1e.button),
+                  className: clsx(styles$19.button),
                   onClick: handleDeselectAllBase,
                   children: "None"
                 }
               )
             ] })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1e.columnsLayout, children: columnGroups.base.map((col) => renderColumnCheckbox(col)) })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$19.columnsLayout, children: columnGroups.base.map((col) => renderColumnCheckbox(col)) })
         ] }),
         columnGroups.scores.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1e.headerRow, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$19.headerRow, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: "Scorers" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1e.buttonContainer, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$19.buttonContainer, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "a",
                 {
-                  className: clsx(styles$1e.button),
+                  className: clsx(styles$19.button),
                   onClick: handleSelectAllScores,
                   children: "All"
                 }
@@ -118524,14 +119241,14 @@ const ColumnSelectorPopover = ({
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "a",
                 {
-                  className: clsx(styles$1e.button),
+                  className: clsx(styles$19.button),
                   onClick: handleDeselectAllScores,
                   children: "None"
                 }
               )
             ] })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1e.columnsLayout, children: columnGroups.scores.map((col) => renderColumnCheckbox(col)) })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$19.columnsLayout, children: columnGroups.scores.map((col) => renderColumnCheckbox(col)) })
         ] })
       ] })
     }
@@ -118578,41 +119295,43 @@ const comparators = {
     return timeA - timeB;
   }
 };
-const gridWrapper = "_gridWrapper_oveew_5";
-const gridContainer = "_gridContainer_oveew_11";
-const iconCell = "_iconCell_oveew_19";
-const numberCell = "_numberCell_oveew_32";
-const taskText = "_taskText_oveew_42";
-const folder = "_folder_oveew_49";
-const styles$1d = {
+const gridWrapper = "_gridWrapper_anqm2_5";
+const gridContainer = "_gridContainer_anqm2_11";
+const iconCell = "_iconCell_anqm2_19";
+const numberCell = "_numberCell_anqm2_33";
+const taskText = "_taskText_anqm2_43";
+const folder = "_folder_anqm2_50";
+const fullWidthHeight = "_fullWidthHeight_anqm2_56";
+const styles$18 = {
   gridWrapper,
   gridContainer,
   iconCell,
   numberCell,
   taskText,
-  folder
+  folder,
+  fullWidthHeight
 };
-const nameCell = "_nameCell_mdto2_1";
-const modelCell = "_modelCell_mdto2_8";
-const scoreCell = "_scoreCell_mdto2_15";
-const error$1 = "_error_mdto2_22";
-const started = "_started_mdto2_26";
-const success = "_success_mdto2_30";
-const cancelled = "_cancelled_mdto2_34";
-const statusCell = "_statusCell_mdto2_38";
-const dateCell = "_dateCell_mdto2_44";
+const nameCell = "_nameCell_1jtud_1";
+const modelCell = "_modelCell_1jtud_8";
+const scoreCell = "_scoreCell_1jtud_15";
+const error$3 = "_error_1jtud_22";
+const started = "_started_1jtud_26";
+const success$1 = "_success_1jtud_30";
+const cancelled$1 = "_cancelled_1jtud_34";
+const statusCell$1 = "_statusCell_1jtud_38";
+const dateCell = "_dateCell_1jtud_45";
 const localStyles = {
   nameCell,
   modelCell,
   scoreCell,
-  error: error$1,
+  error: error$3,
   started,
-  success,
-  cancelled,
-  statusCell,
+  success: success$1,
+  cancelled: cancelled$1,
+  statusCell: statusCell$1,
   dateCell
 };
-const styles$1c = { ...styles$1d, ...localStyles };
+const styles$17 = { ...styles$18, ...localStyles };
 const EmptyCell = () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: "-" });
 const useLogListColumns = () => {
   const columnVisibility = useStore(
@@ -118672,7 +119391,7 @@ const useLogListColumns = () => {
         cellRenderer: (params) => {
           const type = params.data?.type;
           const icon2 = type === "file" || type === "pending-task" ? ApplicationIcons.inspectFile : ApplicationIcons.folder;
-          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1c.iconCell, children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2) }) });
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$17.iconCell, children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2) }) });
         }
       },
       {
@@ -118698,7 +119417,7 @@ const useLogListColumns = () => {
           if (item2.type === "file") {
             value2 = item2.task || parseLogFileName(item2.name).name;
           }
-          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1c.nameCell, children: item2.type === "folder" && item2.url ? /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1c.folder, children: value2 }) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1c.taskText, children: value2 }) });
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$17.nameCell, children: item2.type === "folder" && item2.url ? /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$17.folder, children: value2 }) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$17.taskText, children: value2 }) });
         }
       },
       {
@@ -118714,7 +119433,7 @@ const useLogListColumns = () => {
           const item2 = params.data;
           if (!item2) return null;
           if (item2.model) {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1c.modelCell, children: item2.model });
+            return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$17.modelCell, children: item2.model });
           }
           return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
         }
@@ -118737,7 +119456,7 @@ const useLogListColumns = () => {
           if (!item2 || item2.score === void 0) {
             return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
           }
-          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1c.scoreCell, children: formatPrettyDecimal(item2.score) });
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$17.scoreCell, children: formatPrettyDecimal(item2.score) });
         }
       },
       {
@@ -118757,8 +119476,8 @@ const useLogListColumns = () => {
             return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
           }
           const icon2 = item2.type === "pending-task" ? ApplicationIcons.pendingTask : status2 === "error" ? ApplicationIcons.error : status2 === "started" ? ApplicationIcons.running : status2 === "cancelled" ? ApplicationIcons.cancelled : ApplicationIcons.success;
-          const clz = item2.type === "pending-task" ? styles$1c.started : status2 === "error" ? styles$1c.error : status2 === "started" ? styles$1c.started : status2 === "cancelled" ? styles$1c.cancelled : styles$1c.success;
-          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1c.statusCell, children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, clz) }) });
+          const clz = item2.type === "pending-task" ? styles$17.started : status2 === "error" ? styles$17.error : status2 === "started" ? styles$17.started : status2 === "cancelled" ? styles$17.cancelled : styles$17.success;
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$17.statusCell, children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, clz) }) });
         }
       },
       {
@@ -118787,7 +119506,7 @@ const useLogListColumns = () => {
             return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
           }
           const timeStr = formatDateTime(new Date(completed));
-          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1c.dateCell, children: timeStr });
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$17.dateCell, children: timeStr });
         },
         comparator: createFolderFirstComparator(comparators.date)
       },
@@ -118810,7 +119529,7 @@ const useLogListColumns = () => {
             return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
           }
           const value2 = basename(item2.name);
-          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1c.nameCell, children: value2 });
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$17.nameCell, children: value2 });
         }
       }
     ];
@@ -118840,7 +119559,7 @@ const useLogListColumns = () => {
             if (value2 === void 0 || value2 === null || value2 === "") {
               return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
             }
-            return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1c.scoreCell, children: formatPrettyDecimal(value2) });
+            return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$17.scoreCell, children: formatPrettyDecimal(value2) });
           },
           comparator: createFolderFirstComparator((valA, valB) => {
             if (typeof valA === "number" && typeof valB === "number") {
@@ -121788,7 +122507,7 @@ function createColumn(beans, primaryColumns, colDef, existingColsCopy, columnKey
   beans.dataTypeSvc?.addColumnListeners(column2);
   return column2;
 }
-function updateSomeColumnState(beans, column2, hide2, sort2, sortIndex, pinned, flex2, source2) {
+function updateSomeColumnState(beans, column2, hide2, sort2, sortIndex, pinned, flex, source2) {
   const { sortSvc, pinnedCols, colFlex } = beans;
   if (hide2 !== void 0) {
     column2.setVisible(!hide2, source2);
@@ -121802,8 +122521,8 @@ function updateSomeColumnState(beans, column2, hide2, sort2, sortIndex, pinned, 
   if (pinned !== void 0) {
     pinnedCols?.setColPinned(column2, pinned);
   }
-  if (flex2 !== void 0) {
-    colFlex?.setColFlex(column2, flex2);
+  if (flex !== void 0) {
+    colFlex?.setColFlex(column2, flex);
   }
 }
 function _updateColumnState(beans, column2, colDef, source2) {
@@ -122073,7 +122792,7 @@ function _applyColumnState(beans, params, source2) {
       return;
     }
     const getValue = getValueFactory(stateItem, params.defaultState);
-    const flex2 = getValue("flex").value1;
+    const flex = getValue("flex").value1;
     updateSomeColumnState(
       beans,
       column2,
@@ -122081,10 +122800,10 @@ function _applyColumnState(beans, params, source2) {
       getValue("sort").value1,
       getValue("sortIndex").value1,
       getValue("pinned").value1,
-      flex2,
+      flex,
       source2
     );
-    if (flex2 == null) {
+    if (flex == null) {
       const width = getValue("width").value1;
       if (width != null) {
         const minColWidth = column2.getColDef().minWidth ?? environment.getDefaultColumnMinWidth();
@@ -122345,7 +123064,7 @@ function getColumnStateFromColDef(column2) {
   const hide2 = getValueOrNull(colDef.hide, colDef.initialHide);
   const pinned = getValueOrNull(colDef.pinned, colDef.initialPinned);
   const width = getValueOrNull(colDef.width, colDef.initialWidth);
-  const flex2 = getValueOrNull(colDef.flex, colDef.initialFlex);
+  const flex = getValueOrNull(colDef.flex, colDef.initialFlex);
   let rowGroupIndex = getValueOrNull(colDef.rowGroupIndex, colDef.initialRowGroupIndex);
   let rowGroup = getValueOrNull(colDef.rowGroup, colDef.initialRowGroup);
   if (rowGroupIndex == null && !rowGroup) {
@@ -122366,7 +123085,7 @@ function getColumnStateFromColDef(column2) {
     hide: hide2,
     pinned,
     width,
-    flex: flex2,
+    flex,
     rowGroup,
     rowGroupIndex,
     pivot,
@@ -123415,23 +124134,23 @@ var UserComponentFactory = class extends BeanStub {
   }
   newAgStackInstance(ComponentClass, componentFromFramework, params, type) {
     const jsComponent = !componentFromFramework;
-    let instance;
+    let instance2;
     if (jsComponent) {
-      instance = new ComponentClass();
+      instance2 = new ComponentClass();
     } else {
-      instance = this.frameworkCompWrapper.wrap(
+      instance2 = this.frameworkCompWrapper.wrap(
         ComponentClass,
         type.mandatoryMethods,
         type.optionalMethods,
         type
       );
     }
-    this.createBean(instance);
-    const deferredInit = instance.init?.(params);
+    this.createBean(instance2);
+    const deferredInit = instance2.init?.(params);
     if (deferredInit == null) {
-      return AgPromise.resolve(instance);
+      return AgPromise.resolve(instance2);
     }
-    return deferredInit.then(() => instance);
+    return deferredInit.then(() => instance2);
   }
   /**
    * merges params with application provided params
@@ -126124,13 +126843,13 @@ var AgContext = class {
       this.beans[beanName] = params.providedBeanInstances[beanName];
     }
     for (const BeanClass of params.beanClasses) {
-      const instance = new BeanClass();
-      if (instance.beanName) {
-        this.beans[instance.beanName] = instance;
+      const instance2 = new BeanClass();
+      if (instance2.beanName) {
+        this.beans[instance2.beanName] = instance2;
       } else {
         console.error(`Bean ${BeanClass.name} is missing beanName`);
       }
-      this.createdBeans.push(instance);
+      this.createdBeans.push(instance2);
     }
     for (const beanFunc of params.derivedBeans ?? []) {
       const { beanName, bean } = beanFunc(this);
@@ -126151,18 +126870,18 @@ var AgContext = class {
   }
   initBeans(beanInstances, afterPreCreateCallback) {
     const beans = this.beans;
-    for (const instance of beanInstances) {
-      instance.preWireBeans?.(beans);
-      instance.wireBeans?.(beans);
+    for (const instance2 of beanInstances) {
+      instance2.preWireBeans?.(beans);
+      instance2.wireBeans?.(beans);
     }
-    for (const instance of beanInstances) {
-      instance.preConstruct?.();
+    for (const instance2 of beanInstances) {
+      instance2.preConstruct?.();
     }
     if (afterPreCreateCallback) {
       beanInstances.forEach(afterPreCreateCallback);
     }
-    for (const instance of beanInstances) {
-      instance.postConstruct?.();
+    for (const instance2 of beanInstances) {
+      instance2.postConstruct?.();
     }
   }
   getBeans() {
@@ -139988,20 +140707,20 @@ var ColumnMoveService = class extends BeanStub {
     this.beanName = "colMoves";
   }
   moveColumnByIndex(fromIndex, toIndex, source2) {
-    const gridColumns2 = this.beans.colModel.getCols();
-    if (!gridColumns2) {
+    const gridColumns = this.beans.colModel.getCols();
+    if (!gridColumns) {
       return;
     }
-    const column2 = gridColumns2[fromIndex];
+    const column2 = gridColumns[fromIndex];
     this.moveColumns([column2], toIndex, source2);
   }
   moveColumns(columnsToMoveKeys, toIndex, source2, finished = true) {
     const { colModel, colAnimation, visibleCols, eventSvc } = this.beans;
-    const gridColumns2 = colModel.getCols();
-    if (!gridColumns2) {
+    const gridColumns = colModel.getCols();
+    if (!gridColumns) {
       return;
     }
-    if (toIndex > gridColumns2.length - columnsToMoveKeys.length) {
+    if (toIndex > gridColumns.length - columnsToMoveKeys.length) {
       _warn(30, { toIndex });
       return;
     }
@@ -140059,8 +140778,8 @@ var ColumnMoveService = class extends BeanStub {
     return true;
   }
   getProposedColumnOrder(columnsToMove, toIndex) {
-    const gridColumns2 = this.beans.colModel.getCols();
-    const proposedColumnOrder = gridColumns2.slice();
+    const gridColumns = this.beans.colModel.getCols();
+    const proposedColumnOrder = gridColumns.slice();
     _moveInArray(proposedColumnOrder, columnsToMove, toIndex);
     return proposedColumnOrder;
   }
@@ -142187,13 +142906,13 @@ var ColumnFlexService = class extends BeanStub {
     }
     let hasFlexItems = false;
     const items = visibleCenterCols.map((col, i) => {
-      const flex2 = col.getFlex();
-      const isFlex = flex2 != null && flex2 > 0 && i > flexAfterDisplayIndex;
+      const flex = col.getFlex();
+      const isFlex = flex != null && flex > 0 && i > flexAfterDisplayIndex;
       hasFlexItems || (hasFlexItems = isFlex);
       return {
         col,
         isFlex,
-        flex: Math.max(0, flex2 ?? 0),
+        flex: Math.max(0, flex ?? 0),
         initialSize: col.getActualWidth(),
         min: col.getMinWidth(),
         max: col.getMaxWidth(),
@@ -142287,17 +143006,17 @@ var ColumnFlexService = class extends BeanStub {
     }
   }
   initCol(column2) {
-    const { flex: flex2, initialFlex } = column2.colDef;
-    if (flex2 !== void 0) {
-      column2.flex = flex2;
+    const { flex, initialFlex } = column2.colDef;
+    if (flex !== void 0) {
+      column2.flex = flex;
     } else if (initialFlex !== void 0) {
       column2.flex = initialFlex;
     }
   }
   // this method should only be used by the colModel to
   // change flex when required by the applyColumnState method.
-  setColFlex(column2, flex2) {
-    column2.flex = flex2 ?? null;
+  setColFlex(column2, flex) {
+    column2.flex = flex ?? null;
     column2.dispatchStateUpdatedEvent("flex");
   }
 };
@@ -156392,7 +157111,7 @@ function convertColumnState(columnState, enablePivotMode = false) {
       pinned,
       hide: hide2,
       width,
-      flex: flex2
+      flex
     } = columnState[i];
     columns.push(colId);
     if (sort2) {
@@ -156413,8 +157132,8 @@ function convertColumnState(columnState, enablePivotMode = false) {
     if (hide2) {
       hiddenColIds.push(colId);
     }
-    if (flex2 != null || width) {
-      columnSizes.push({ colId, flex: flex2 ?? void 0, width });
+    if (flex != null || width) {
+      columnSizes.push({ colId, flex: flex ?? void 0, width });
     }
   }
   return {
@@ -158610,8 +159329,8 @@ var ColumnFilterService = class extends BeanStub {
       if (filterComponent == null) {
         return;
       }
-      filterComponent.then((instance) => {
-        callback(_unwrapUserComp(instance));
+      filterComponent.then((instance2) => {
+        callback(_unwrapUserComp(instance2));
       });
     };
     const colDef = column2.getColDef();
@@ -158875,8 +159594,8 @@ var ColumnFilterService = class extends BeanStub {
     return !isSameComponentClass;
   }
   hasFloatingFilters() {
-    const gridColumns2 = this.beans.colModel.getCols();
-    return gridColumns2.some((col) => col.getColDef().floatingFilter);
+    const gridColumns = this.beans.colModel.getCols();
+    return gridColumns.some((col) => col.getColDef().floatingFilter);
   }
   getFilterInstance(key2) {
     const column2 = this.beans.colModel.getColDefCol(key2);
@@ -169700,9 +170419,9 @@ var StateService = class extends BeanStub {
     }
     const shouldSetColumnSizingState = shouldSetState("columnSizing", columnSizingState);
     if (shouldSetColumnSizingState) {
-      for (const { colId, flex: flex2, width } of columnSizingState?.columnSizingModel ?? []) {
+      for (const { colId, flex, width } of columnSizingState?.columnSizingModel ?? []) {
         const columnState = getColumnState2(colId);
-        columnState.flex = flex2 ?? null;
+        columnState.flex = flex ?? null;
         columnState.width = width;
       }
     }
@@ -173298,8 +174017,8 @@ var FilterDisplayComponentWrapper = class extends CustomComponentWrapper {
   }
 };
 function updateFloatingFilterParent(params, model2) {
-  params.parentFilterInstance((instance) => {
-    (instance.setModel(model2) || AgPromise.resolve()).then(() => {
+  params.parentFilterInstance((instance2) => {
+    (instance2.setModel(model2) || AgPromise.resolve()).then(() => {
       params.filterParams.filterChangedCallback();
     });
   });
@@ -175928,7 +176647,7 @@ const LogListGrid = ({
   reactExports.useEffect(() => {
     resizeGridColumns();
   }, [columns, resizeGridColumns]);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.gridWrapper), children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: gridContainerRef, className: styles$1d.gridContainer, tabIndex: 0, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$18.gridWrapper), children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: gridContainerRef, className: styles$18.gridContainer, tabIndex: 0, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     AgGridReact,
     {
       ref: gridRef,
@@ -175973,18 +176692,18 @@ const LogListGrid = ({
 const footer$1 = "_footer_14uod_1";
 const spinnerContainer$1 = "_spinnerContainer_14uod_11";
 const spinner$2 = "_spinner_14uod_11";
-const label$8 = "_label_14uod_25";
+const label$7 = "_label_14uod_25";
 const right = "_right_14uod_30";
 const left = "_left_14uod_39";
-const center$1 = "_center_14uod_48";
-const styles$1b = {
+const center = "_center_14uod_48";
+const styles$16 = {
   footer: footer$1,
   spinnerContainer: spinnerContainer$1,
   spinner: spinner$2,
-  label: label$8,
+  label: label$7,
   right,
   left,
-  center: center$1
+  center
 };
 const LogListFooter = ({
   itemCount,
@@ -175994,12 +176713,12 @@ const LogListFooter = ({
   progressBar
 }) => {
   const effectiveItemCount = filteredCount ?? itemCount;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-smaller", styles$1b.footer), children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1b.left), children: progressText ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1b.spinnerContainer), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-smaller", styles$16.footer), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.left), children: progressText ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$16.spinnerContainer), children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
         {
-          className: clsx("spinner-border", styles$1b.spinner),
+          className: clsx("spinner-border", styles$16.spinner),
           role: "status",
           children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: clsx("visually-hidden"), children: [
             progressText,
@@ -176007,19 +176726,19 @@ const LogListFooter = ({
           ] })
         }
       ),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-style-secondary", styles$1b.label), children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-style-secondary", styles$16.label), children: [
         progressText,
         "..."
       ] })
     ] }) : null }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1b.center) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1b.right), children: progressBar ? progressBar : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: effectiveItemCount === 0 ? "" : filteredCount !== void 0 && filteredCount !== itemCount ? `${effectiveItemCount} / ${itemCount} ${itemCountLabel || "items"}` : `${effectiveItemCount} ${itemCountLabel || "items"}` }) })
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.center) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$16.right), children: progressBar ? progressBar : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: effectiveItemCount === 0 ? "" : filteredCount !== void 0 && filteredCount !== itemCount ? `${effectiveItemCount} / ${itemCount} ${itemCountLabel || "items"}` : `${effectiveItemCount} ${itemCountLabel || "items"}` }) })
   ] });
 };
-const panel$6 = "_panel_16dj8_1";
+const panel$7 = "_panel_16dj8_1";
 const list$1 = "_list_16dj8_8";
-const styles$1a = {
-  panel: panel$6,
+const styles$15 = {
+  panel: panel$7,
   list: list$1
 };
 const rootName = (relativePath) => {
@@ -176187,7 +176906,7 @@ const LogsPanel = ({ maybeShowSingleLog }) => {
       }
     }
   }, [logItems, maybeShowSingleLog, navigate]);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1a.panel), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$15.panel), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
       ApplicationNavbar,
       {
@@ -176244,7 +176963,7 @@ const LogsPanel = ({ maybeShowSingleLog }) => {
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1a.list, "text-size-smaller"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$15.list, "text-size-smaller"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         LogListGrid,
         {
           items: logItems,
@@ -176288,20 +177007,339 @@ const appendPendingItems = (evalSet, tasksWithLogFiles, collapsedLogItems) => {
   collapsedLogItems.push(...pendingTasks);
   return collapsedLogItems;
 };
-const useUnloadLog = () => {
-  const clearSelectedLogDetails = useStore(
-    (state) => state.logActions.clearSelectedLogDetails
+const SAMPLE_LIST_KEYS = ["transcript-tree"];
+const log$1 = createLogger("useSampleLoader");
+function useLoadSample() {
+  const sampleData = useSampleData();
+  const logSelection = useLogSelection();
+  const api2 = useStore((state) => state.api);
+  const sampleActions = useStore((state) => state.sampleActions);
+  const clearListPosition = useStore(
+    (state) => state.appActions.clearListPosition
   );
-  const clearSelectedLogFile = useStore(
-    (state) => state.logsActions.clearSelectedLogFile
+  const getSelectedSample = useStore(
+    (state) => state.sampleActions.getSelectedSample
   );
-  const clearLog = useStore((state) => state.logActions.clearLog);
-  const unloadLog = reactExports.useCallback(() => {
-    clearSelectedLogDetails();
-    clearSelectedLogFile();
-    clearLog();
-  }, [clearLog, clearSelectedLogDetails, clearSelectedLogFile]);
-  return { unloadLog };
+  const sampleId = logSelection.sample?.id;
+  const sampleEpoch = logSelection.sample?.epoch;
+  const sampleCompleted = logSelection.sample?.completed;
+  const currentSampleCompleted = sampleCompleted !== void 0 ? sampleCompleted : true;
+  const prevCompleted = usePrevious(currentSampleCompleted);
+  const prevLogFile = usePrevious(logSelection.logFile);
+  const prevSampleId = usePrevious(sampleId);
+  const prevSampleNeedsReload = usePrevious(
+    sampleData.sampleNeedsReload
+  );
+  const loadSample = reactExports.useCallback(
+    async (logFile, id, epoch, completed) => {
+      const currentId = sampleData.selectedSampleIdentifier;
+      const isSameSample = currentId?.id === id && currentId?.epoch === epoch && currentId?.logFile === logFile;
+      const isLoading = sampleData.status === "loading" || sampleData.status === "streaming";
+      if (isSameSample && isLoading) {
+        return;
+      }
+      for (const key2 of SAMPLE_LIST_KEYS) {
+        clearListPosition(key2);
+      }
+      sampleActions.setSampleIdentifier(logFile, id, epoch);
+      sampleActions.setSampleError(void 0);
+      sampleActions.setSampleStatus("loading");
+      try {
+        if (completed !== false) {
+          log$1.debug(`LOADING COMPLETED SAMPLE: ${id}-${epoch}`);
+          getSamplePolling().stopPolling();
+          const sample2 = await api2?.get_log_sample(logFile, id, epoch);
+          log$1.debug(`LOADED COMPLETED SAMPLE: ${id}-${epoch}`);
+          if (sample2) {
+            if (currentId?.id !== sample2.id || currentId?.epoch !== sample2.epoch || currentId?.logFile !== logFile) {
+              sampleActions.clearCollapsedEvents();
+            }
+            const migratedSample = resolveSample$1(sample2);
+            sampleActions.setSelectedSample(migratedSample, logFile);
+            sampleActions.setSampleStatus("ok");
+          } else {
+            sampleActions.setSampleStatus("error");
+            throw new Error(
+              "Unable to load sample - an unknown error occurred"
+            );
+          }
+        } else {
+          log$1.debug(`PREPARING FOR POLLING RUNNING SAMPLE: ${id}-${epoch}`);
+          sampleActions.clearSampleForPolling(logFile, id, epoch);
+          getSamplePolling().stopPolling();
+        }
+      } catch (e) {
+        sampleActions.setSampleError(e);
+        sampleActions.setSampleStatus("error");
+      }
+    },
+    [
+      api2,
+      clearListPosition,
+      sampleActions,
+      sampleData.selectedSampleIdentifier,
+      sampleData.status
+    ]
+  );
+  reactExports.useEffect(() => {
+    if (logSelection.logFile && sampleId !== void 0 && sampleEpoch !== void 0) {
+      const identifierMatches = sampleData.selectedSampleIdentifier?.id === sampleId && sampleData.selectedSampleIdentifier?.epoch === sampleEpoch && sampleData.selectedSampleIdentifier?.logFile === logSelection.logFile;
+      const hasSampleData = getSelectedSample() !== void 0;
+      const isCurrentSampleLoaded = identifierMatches && hasSampleData;
+      const isLoading = sampleData.status === "loading" || sampleData.status === "streaming";
+      const isError = sampleData.status === "error";
+      const logFileChanged = prevLogFile !== void 0 && prevLogFile !== logSelection.logFile;
+      const sampleIdChanged = prevSampleId !== void 0 && prevSampleId !== sampleId;
+      const completedChanged = prevCompleted !== void 0 && currentSampleCompleted !== prevCompleted;
+      const needsReloadChanged = prevSampleNeedsReload !== void 0 && prevSampleNeedsReload !== sampleData.sampleNeedsReload;
+      const shouldLoad = !isCurrentSampleLoaded && !isLoading && !isError || logFileChanged || sampleIdChanged || completedChanged || needsReloadChanged;
+      if (shouldLoad) {
+        void loadSample(
+          logSelection.logFile,
+          sampleId,
+          sampleEpoch,
+          sampleCompleted
+        );
+      }
+    }
+  }, [
+    logSelection.logFile,
+    sampleId,
+    sampleEpoch,
+    sampleCompleted,
+    currentSampleCompleted,
+    sampleData.selectedSampleIdentifier,
+    sampleData.status,
+    sampleData.sampleNeedsReload,
+    sampleData.getSelectedSample,
+    prevLogFile,
+    prevSampleId,
+    prevCompleted,
+    prevSampleNeedsReload,
+    loadSample,
+    getSelectedSample
+  ]);
+}
+const log = createLogger("useSamplePolling");
+function usePollSample() {
+  const logSelection = useLogSelection();
+  const loadedLog = useStore((state) => state.log.loadedLog);
+  const sampleId = logSelection.sample?.id;
+  const sampleEpoch = logSelection.sample?.epoch;
+  const sampleCompleted = logSelection.sample?.completed;
+  reactExports.useEffect(() => {
+    if (logSelection.logFile && sampleId !== void 0 && sampleEpoch !== void 0 && sampleCompleted === false && loadedLog) {
+      log.debug(`Starting poll for running sample: ${sampleId}-${sampleEpoch}`);
+      const sampleSummary = {
+        id: sampleId,
+        epoch: sampleEpoch
+      };
+      getSamplePolling().startPolling(logSelection.logFile, sampleSummary);
+    }
+  }, [logSelection.logFile, sampleId, sampleEpoch, sampleCompleted, loadedLog]);
+  reactExports.useEffect(() => {
+    return () => {
+      getSamplePolling().stopPolling();
+    };
+  }, []);
+}
+const useSampleNavigation = () => {
+  const navigate = useNavigate();
+  const logDirectory = useStore((state) => state.logs.logDir);
+  const { logPath, tabId, sampleTabId } = useLogRouteParams();
+  const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
+  const resolveLogPath = reactExports.useCallback(() => {
+    if (logPath) {
+      return logPath;
+    }
+    if (selectedLogFile) {
+      return directoryRelativeUrl(selectedLogFile, logDirectory);
+    }
+    return void 0;
+  }, [logPath, selectedLogFile, logDirectory]);
+  const sampleSummaries = useFilteredSamples();
+  const selectedSampleHandle = useStore(
+    (state) => state.log.selectedSampleHandle
+  );
+  const selectedSampleIndex = reactExports.useMemo(() => {
+    return sampleSummaries.findIndex((summary2) => {
+      return sampleIdsEqual(summary2.id, selectedSampleHandle?.id) && summary2.epoch === selectedSampleHandle?.epoch;
+    });
+  }, [selectedSampleHandle, sampleSummaries]);
+  const selectSample = useStore((state) => state.logActions.selectSample);
+  const showSample = reactExports.useCallback(
+    (id, epoch, specifiedSampleTabId) => {
+      const resolvedPath = resolveLogPath();
+      if (resolvedPath) {
+        selectSample(id, epoch, resolvedPath);
+        const currentSampleTabId = specifiedSampleTabId || sampleTabId;
+        const url = logSamplesUrl(resolvedPath, id, epoch, currentSampleTabId);
+        navigate(url);
+      }
+    },
+    [resolveLogPath, selectSample, navigate, sampleTabId]
+  );
+  const navigateSampleIndex = reactExports.useCallback(
+    (index) => {
+      if (index > -1 && index < sampleSummaries.length) {
+        const summary2 = sampleSummaries[index];
+        const logFile = logPath || selectedLogFile;
+        if (logFile) {
+          selectSample(summary2.id, summary2.epoch, logFile);
+        }
+      }
+    },
+    [sampleSummaries, selectSample, logPath, selectedLogFile]
+  );
+  const nextSample = reactExports.useCallback(() => {
+    const itemsCount = sampleSummaries.length;
+    const next = Math.min(selectedSampleIndex + 1, itemsCount - 1);
+    navigateSampleIndex(next);
+  }, [selectedSampleIndex, navigateSampleIndex, sampleSummaries]);
+  const previousSample = reactExports.useCallback(() => {
+    const prev = selectedSampleIndex - 1;
+    navigateSampleIndex(prev);
+  }, [selectedSampleIndex, navigateSampleIndex]);
+  const firstSample = reactExports.useCallback(() => {
+    navigateSampleIndex(0);
+  }, [navigateSampleIndex]);
+  const lastSample = reactExports.useCallback(() => {
+    navigateSampleIndex(sampleSummaries.length - 1);
+  }, [navigateSampleIndex, sampleSummaries]);
+  const getSampleUrl = reactExports.useCallback(
+    (sampleId, epoch, specificSampleTabId) => {
+      const resolvedPath = resolveLogPath();
+      if (resolvedPath) {
+        const currentSampleTabId = specificSampleTabId || sampleTabId;
+        const url = logSamplesUrl(
+          resolvedPath,
+          sampleId,
+          epoch,
+          currentSampleTabId
+        );
+        return `#${url}`;
+      }
+      return void 0;
+    },
+    [resolveLogPath, sampleTabId]
+  );
+  const clearSampleUrl = reactExports.useCallback(() => {
+    const resolvedPath = resolveLogPath();
+    if (resolvedPath) {
+      const url = logsUrlRaw(resolvedPath, tabId);
+      navigate(url);
+    }
+  }, [resolveLogPath, navigate, tabId]);
+  return {
+    showSample,
+    nextEnabled: selectedSampleIndex < sampleSummaries.length - 1,
+    nextSample,
+    previousEnabled: selectedSampleIndex > 0,
+    previousSample,
+    firstSample,
+    lastSample,
+    getSampleUrl,
+    clearSampleUrl
+  };
+};
+const useSampleDetailNavigation = () => {
+  const [searchParams] = useSearchParams();
+  const message2 = searchParams.get("message");
+  const event = searchParams.get("event");
+  return {
+    message: message2,
+    event
+  };
+};
+const useSamplesGridNavigation = () => {
+  const navigate = useNavigate();
+  const logDirectory = useStore((state) => state.logs.logDir);
+  const navigateToSampleDetail = reactExports.useCallback(
+    (logFile, sampleId, epoch, openInNewWindow = false) => {
+      const relativePath = directoryRelativeUrl(logFile, logDirectory);
+      const url = samplesSampleUrl(relativePath, sampleId, epoch);
+      if (openInNewWindow) {
+        window.open(`#${url}`, "_blank");
+      } else {
+        navigate(url);
+      }
+    },
+    [navigate, logDirectory]
+  );
+  return {
+    navigateToSampleDetail
+  };
+};
+const useLogSampleNavigation = () => {
+  const navigate = useNavigate();
+  const { logPath: routeLogPath, sampleTabId } = useLogRouteParams();
+  const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
+  const logPath = routeLogPath || selectedLogFile;
+  const sampleSummaries = useFilteredSamples();
+  const selectedSampleHandle = useStore(
+    (state) => state.log.selectedSampleHandle
+  );
+  const selectSample = useStore((state) => state.logActions.selectSample);
+  const currentIndex = reactExports.useMemo(() => {
+    if (!selectedSampleHandle) {
+      return -1;
+    }
+    return sampleSummaries.findIndex((summary2) => {
+      return sampleIdsEqual(summary2.id, selectedSampleHandle.id) && summary2.epoch === selectedSampleHandle.epoch;
+    });
+  }, [selectedSampleHandle, sampleSummaries]);
+  const hasPrevious = currentIndex > 0;
+  const hasNext = currentIndex >= 0 && currentIndex < sampleSummaries.length - 1;
+  const onPrevious = reactExports.useCallback(() => {
+    if (hasPrevious && logPath && currentIndex > 0) {
+      const prevSample = sampleSummaries[currentIndex - 1];
+      if (!prevSample) return;
+      selectSample(prevSample.id, prevSample.epoch, logPath);
+      const url = logSamplesUrl(
+        logPath,
+        prevSample.id,
+        prevSample.epoch,
+        sampleTabId
+      );
+      navigate(url);
+    }
+  }, [
+    hasPrevious,
+    logPath,
+    sampleSummaries,
+    currentIndex,
+    sampleTabId,
+    selectSample,
+    navigate
+  ]);
+  const onNext = reactExports.useCallback(() => {
+    if (hasNext && logPath && currentIndex < sampleSummaries.length - 1) {
+      const nextSample = sampleSummaries[currentIndex + 1];
+      if (!nextSample) return;
+      selectSample(nextSample.id, nextSample.epoch, logPath);
+      const url = logSamplesUrl(
+        logPath,
+        nextSample.id,
+        nextSample.epoch,
+        sampleTabId
+      );
+      navigate(url);
+    }
+  }, [
+    hasNext,
+    logPath,
+    sampleSummaries,
+    currentIndex,
+    sampleTabId,
+    selectSample,
+    navigate
+  ]);
+  return {
+    onPrevious,
+    onNext,
+    hasPrevious,
+    hasNext
+  };
 };
 const ExtendedFindContext = reactExports.createContext(null);
 const ExtendedFindProvider = ({
@@ -176724,17 +177762,14 @@ function selectionParentElement(range2) {
   }
   return element;
 }
-const EmptyPanel = ({ children: children2 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "empty-panel", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: children2 }) }) });
-};
-const tabs$1 = "_tabs_jdywf_1";
-const tabContents = "_tabContents_jdywf_5";
-const scrollable = "_scrollable_jdywf_10";
-const tab$1 = "_tab_jdywf_1";
-const tabItem = "_tabItem_jdywf_24";
-const tabIcon = "_tabIcon_jdywf_28";
-const tabTools = "_tabTools_jdywf_32";
-const tabStyle = "_tabStyle_jdywf_42";
+const tabs$1 = "_tabs_1rv6h_1";
+const tabContents = "_tabContents_1rv6h_5";
+const scrollable = "_scrollable_1rv6h_11";
+const tab$1 = "_tab_1rv6h_1";
+const tabItem = "_tabItem_1rv6h_25";
+const tabIcon = "_tabIcon_1rv6h_29";
+const tabTools = "_tabTools_1rv6h_33";
+const tabStyle = "_tabStyle_1rv6h_43";
 const moduleStyles = {
   tabs: tabs$1,
   tabContents,
@@ -176864,39 +177899,58 @@ const flattenChildren = (children2) => {
     return [];
   });
 };
-const useLogNavigation = () => {
-  const navigate = useNavigate();
-  const { logPath } = useParams();
-  const logDir2 = useStore((state) => state.logs.logDir);
-  const loadedLog = useStore((state) => state.log.loadedLog);
-  const selectTab = reactExports.useCallback(
-    (tabId) => {
-      if (loadedLog && logPath) {
-        const url = logsUrlRaw(logPath, tabId);
-        navigate(url);
-      } else if (loadedLog) {
-        const url = logsUrl(loadedLog, logDir2, tabId);
-        navigate(url);
-      }
-    },
-    [loadedLog, logPath, logDir2, navigate]
-  );
-  return {
-    selectTab
+const dropdownContainer = "_dropdownContainer_h3ljc_1";
+const toolButton = "_toolButton_h3ljc_6";
+const chevron = "_chevron_h3ljc_10";
+const backdrop$1 = "_backdrop_h3ljc_24";
+const dropdownMenu = "_dropdownMenu_h3ljc_33";
+const dropdownItem = "_dropdownItem_h3ljc_47";
+const styles$14 = {
+  dropdownContainer,
+  toolButton,
+  chevron,
+  backdrop: backdrop$1,
+  dropdownMenu,
+  dropdownItem
+};
+const ToolDropdownButton = reactExports.forwardRef(({ label: label2, icon: icon2, className: className2, items, ...rest }, ref) => {
+  const [isOpen, setIsOpen] = reactExports.useState(false);
+  const handleItemClick = (fn3) => {
+    fn3();
+    setIsOpen(false);
   };
-};
-const workspace = "_workspace_1r3mu_1";
-const tabContainer = "_tabContainer_1r3mu_6";
-const tabSet = "_tabSet_1r3mu_14";
-const tabs = "_tabs_1r3mu_21";
-const tabPanels = "_tabPanels_1r3mu_29";
-const styles$19 = {
-  workspace,
-  tabContainer,
-  tabSet,
-  tabs,
-  tabPanels
-};
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$14.dropdownContainer, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "button",
+      {
+        ref,
+        type: "button",
+        className: clsx("btn", "btn-tools", styles$14.toolButton, className2),
+        onClick: () => setIsOpen(!isOpen),
+        ...rest,
+        children: [
+          icon2 && /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: `${icon2}` }),
+          label2,
+          /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx("bi-chevron-down", styles$14.chevron) })
+        ]
+      }
+    ),
+    isOpen && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$14.backdrop, onClick: () => setIsOpen(false) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$14.dropdownMenu, children: Object.entries(items).map(([itemLabel, fn3]) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "button",
+        {
+          type: "button",
+          className: styles$14.dropdownItem,
+          onClick: () => handleItemClick(fn3),
+          children: itemLabel
+        },
+        itemLabel
+      )) })
+    ] })
+  ] });
+});
+ToolDropdownButton.displayName = "ToolDropdownButton";
 const CardHeader = ({
   id,
   icon: icon2,
@@ -176940,891 +177994,14 @@ const CardBody = ({
 const Card = ({ id, children: children2, className: className2 }) => {
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("card", className2), id, children: children2 });
 };
-const message$1 = "_message_1gb2h_5";
-const styles$18 = {
-  "task-error-display": "_task-error-display_1gb2h_1",
-  message: message$1
-};
-const TaskErrorCard = ({ error: error2 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      CardHeader,
-      {
-        icon: ApplicationIcons.error,
-        label: `Task Failed`
-      }
-    ),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(CardBody, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        ExpandablePanel,
-        {
-          id: "task-error-collapse",
-          collapse: true,
-          className: clsx("text-size-smaller", styles$18.message),
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-            RenderedContent,
-            {
-              id: "task-error-message",
-              entry: { name: "error", value: error2.message }
-            }
-          )
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        ANSIDisplay,
-        {
-          output: error2.traceback_ansi,
-          className: styles$18["task-error-display"]
-        }
-      )
-    ] })
-  ] });
-};
-const useErrorTabConfig = (evalError) => {
-  const scrollRef = reactExports.useRef(null);
-  return reactExports.useMemo(() => {
-    return {
-      id: kLogViewErrorTabId,
-      label: "Error",
-      scrollable: true,
-      component: ErrorTab,
-      componentProps: {
-        evalError,
-        scrollRef
-      },
-      scrollRef
-    };
-  }, [evalError]);
-};
-const ErrorTab = ({ evalError }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "0.5em 1em 0 1em", width: "100%" }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      TaskErrorCard,
-      {
-        error: evalError || {
-          message: "Unknown error",
-          traceback: "",
-          traceback_ansi: ""
-        }
-      }
-    ),
-    " "
-  ] }) });
-};
-const MessageBand = ({
-  id,
-  message: message2,
-  type,
-  scope = "eval"
-}) => {
-  const className2 = [type];
-  const [visible2, setVisible] = useMessageVisibility(id, scope);
-  const handleClick = reactExports.useCallback(() => {
-    setVisible(false);
-  }, [setVisible]);
-  if (!visible2) {
-    className2.push("hidden");
-  }
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("message-band", className2), children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.logging[type] }),
-    message2,
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "button",
-      {
-        className: clsx("btn", "message-band-btn", type),
-        title: "Close",
-        onClick: handleClick,
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.close })
-      }
-    )
-  ] });
-};
-const item$1 = "_item_1uzhd_1";
-const styles$17 = {
-  item: item$1
-};
-const DatasetDetailView = ({
-  dataset,
-  style: style2
-}) => {
-  const filtered = Object.fromEntries(
-    Object.entries(dataset).filter(([key2]) => key2 !== "sample_ids")
-  );
-  if (!dataset || Object.keys(filtered).length === 0) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-size-base", styles$17.item), style: style2, children: "No dataset information available" });
-  }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    MetaDataGrid,
-    {
-      className: clsx("text-size-base", styles$17.item),
-      entries: filtered,
-      style: style2,
-      plain: true
-    }
-  );
-};
-const icon$2 = "_icon_59zaz_1";
-const container$j = "_container_59zaz_5";
-const metadata$1 = "_metadata_59zaz_11";
-const styles$16 = {
-  icon: icon$2,
-  container: container$j,
-  metadata: metadata$1
-};
-const DetailStep = ({
-  icon: icon2,
-  name: name2,
-  params,
-  className: className2
-}) => {
-  const iconHtml = icon2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, styles$16.icon) }) : "";
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2), children: [
-    iconHtml,
-    " ",
-    name2,
-    params && Object.keys(params).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$16.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      MetaDataGrid,
-      {
-        entries: params,
-        className: clsx("text-size-small", styles$16.metadata)
-      }
-    ) }) : ""
-  ] });
-};
-const item = "_item_leq25_1";
-const styles$15 = {
-  item
-};
-const ScorerDetailView = ({
-  name: name2,
-  scores: scores2,
-  params
-}) => {
-  if (scores2.length > 1) {
-    params = { ...params, ["scores"]: scores2 };
-  }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    DetailStep,
-    {
-      icon: ApplicationIcons.scorer,
-      name: name2,
-      params,
-      className: clsx(styles$15.item, "text-size-base")
-    }
-  );
-};
-const container$i = "_container_12j2k_1";
-const separator$5 = "_separator_12j2k_11";
-const styles$14 = {
-  container: container$i,
-  separator: separator$5
-};
-const SolversDetailView = ({ steps }) => {
-  const separator2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$14.items, "text-size-small", styles$14.separator), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.arrows.right }) });
-  const details = steps?.map((step, index) => {
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        DetailStep,
-        {
-          name: step.solver,
-          className: clsx(styles$14.items, "text-size-small")
-        }
-      ),
-      index < steps.length - 1 ? separator2 : ""
-    ] }, `solver-step-${index}`);
-  });
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$14.container, children: details });
-};
-const floatingCol = "_floatingCol_1n79r_1";
-const wideCol = "_wideCol_1n79r_9";
-const planCol = "_planCol_1n79r_24";
-const container$h = "_container_1n79r_29";
-const grid$7 = "_grid_1n79r_35";
+const panel$6 = "_panel_twp3v_1";
+const container$i = "_container_twp3v_7";
 const styles$13 = {
-  floatingCol,
-  wideCol,
-  planCol,
-  container: container$h,
-  grid: grid$7
-};
-const PlanDetailView = ({
-  evaluation,
-  plan,
-  scores: scores2
-}) => {
-  if (!evaluation) {
-    return null;
-  }
-  const steps = plan?.steps;
-  const taskColumns = [];
-  taskColumns.push({
-    title: "Dataset",
-    className: styles$13.floatingCol,
-    contents: /* @__PURE__ */ jsxRuntimeExports.jsx(DatasetDetailView, { dataset: evaluation.dataset })
-  });
-  if (steps) {
-    taskColumns.push({
-      title: "Solvers",
-      className: styles$13.wideCol,
-      contents: /* @__PURE__ */ jsxRuntimeExports.jsx(SolversDetailView, { steps })
-    });
-  }
-  if (scores2) {
-    const scorers = scores2.reduce(
-      (accum, score2) => {
-        if (!accum[score2.scorer]) {
-          accum[score2.scorer] = {
-            scores: [score2.name],
-            params: score2.params
-          };
-        } else {
-          accum[score2.scorer].scores.push(score2.name);
-        }
-        return accum;
-      },
-      {}
-    );
-    if (Object.keys(scorers).length > 0) {
-      const label2 = Object.keys(scorers).length === 1 ? "Scorer" : "Scorers";
-      const scorerPanels = Object.keys(scorers).map((key2) => {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(
-          ScorerDetailView,
-          {
-            name: key2,
-            scores: scorers[key2].scores,
-            params: scorers[key2].params
-          },
-          key2
-        );
-      });
-      taskColumns.push({
-        title: label2,
-        className: styles$13.floatingCol,
-        contents: scorerPanels
-      });
-    }
-  }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$13.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-    "div",
-    {
-      className: styles$13.grid,
-      style: {
-        gridTemplateColumns: `repeat(${taskColumns.length}, fit-content(50%))`
-      },
-      children: taskColumns.map((col) => {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(
-          PlanColumn,
-          {
-            title: col.title,
-            className: col.className,
-            children: col.contents
-          },
-          `plan-col-${col.title}`
-        );
-      })
-    }
-  ) });
-};
-const PlanColumn = ({ title: title2, className: className2, children: children2 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2), children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "div",
-      {
-        className: clsx(
-          "card-subheading",
-          "text-size-small",
-          "text-style-label",
-          "text-style-secondary",
-          styles$13.planCol
-        ),
-        children: title2
-      }
-    ),
-    children2
-  ] });
-};
-const PlanCard = ({
-  evalSpec,
-  evalPlan,
-  scores: scores2,
-  scrollRef
-}) => {
-  const metadata2 = evalSpec?.metadata || {};
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Summary" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: "task-plan-card-body", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-        PlanDetailView,
-        {
-          evaluation: evalSpec,
-          plan: evalPlan,
-          scores: scores2
-        }
-      ) })
-    ] }),
-    Object.keys(metadata2).length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Metadata" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: "task-metadata`", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-        RecordTree,
-        {
-          id: "plan-md-metadata",
-          record: metadata2,
-          scrollRef
-        }
-      ) })
-    ] })
-  ] });
-};
-const useInfoTabConfig = (evalSpec, evalPlan, evalError, evalResults, evalStatus) => {
-  const scrollRef = reactExports.useRef(null);
-  const totalSampleCount = useTotalSampleCount();
-  return reactExports.useMemo(() => {
-    return {
-      id: kLogViewInfoTabId,
-      label: "Info",
-      scrollable: true,
-      component: InfoTab,
-      componentProps: {
-        evalSpec,
-        evalPlan,
-        evalError,
-        evalResults,
-        evalStatus,
-        sampleCount: totalSampleCount,
-        scrollRef
-      },
-      scrollRef
-    };
-  }, [
-    evalSpec,
-    evalPlan,
-    evalError,
-    evalResults,
-    evalStatus,
-    totalSampleCount
-  ]);
-};
-const InfoTab = ({
-  evalSpec,
-  evalPlan,
-  evalResults,
-  evalStatus,
-  sampleCount,
-  scrollRef
-}) => {
-  const showWarning = sampleCount === 0 && evalStatus === "success" && evalSpec?.dataset.samples && evalSpec.dataset.samples > 0;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { width: "100%" }, children: [
-    showWarning ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-      MessageBand,
-      {
-        id: "sample-too-large",
-        message: "Unable to display samples (this evaluation log may be too large).",
-        type: "warning"
-      }
-    ) : "",
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { padding: "0.5em 1em 0 1em", width: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      PlanCard,
-      {
-        evalSpec,
-        evalPlan,
-        scores: evalResults?.scores,
-        scrollRef
-      }
-    ) })
-  ] });
-};
-const DownloadButton = ({
-  label: label2,
-  fileName,
-  fileContents
-}) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    "button",
-    {
-      className: "btn btn-outline-primary download-button",
-      onClick: async () => {
-        await api.download_file(fileName, fileContents);
-      },
-      children: label2
-    }
-  );
-};
-const DownloadPanel = ({
-  message: message2,
-  buttonLabel,
-  fileName,
-  fileContents
-}) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "download-panel", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "download-panel-message", children: message2 }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      DownloadButton,
-      {
-        label: buttonLabel,
-        fileName,
-        fileContents
-      }
-    )
-  ] }) });
-};
-const jsonTab = "_jsonTab_6pq03_1";
-const styles$12 = {
-  jsonTab
-};
-const kJsonMaxSize = 1e7;
-const useJsonTabConfig = (evalVersion, evalStatus, evalSpec, evalPlan, evalError, evalResults, evalStats) => {
-  const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
-  const selectedTab = useStore((state) => state.app.tabs.workspace);
-  return reactExports.useMemo(() => {
-    const evalHeader = {
-      version: evalVersion,
-      status: evalStatus,
-      eval: evalSpec,
-      plan: evalPlan,
-      error: evalError,
-      results: evalResults,
-      stats: evalStats
-    };
-    return {
-      id: kLogViewJsonTabId,
-      label: "JSON",
-      scrollable: true,
-      component: JsonTab,
-      componentProps: {
-        logFile: selectedLogFile,
-        json: JSON.stringify(evalHeader, null, 2),
-        selected: selectedTab === kLogViewJsonTabId
-      },
-      tools: () => [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          ToolButton,
-          {
-            label: "Copy JSON",
-            icon: ApplicationIcons.copy,
-            className: clsx("task-btn-json-copy", "clipboard-button"),
-            "data-clipboard-target": "#task-json-contents",
-            onClick: copyFeedback
-          },
-          "copy-json"
-        )
-      ]
-    };
-  }, [
-    selectedLogFile,
-    evalVersion,
-    evalStatus,
-    evalSpec,
-    evalPlan,
-    evalError,
-    evalResults,
-    evalStats,
-    selectedTab
-  ]);
-};
-const copyFeedback = (e) => {
-  const textEl = e.currentTarget.querySelector(".task-btn-copy-content");
-  const iconEl = e.currentTarget.querySelector("i.bi");
-  if (textEl) {
-    const htmlEl = textEl;
-    const htmlIconEl = iconEl;
-    const oldText = htmlEl.innerText;
-    const oldIconClz = htmlIconEl.className;
-    htmlEl.innerText = "Copied!";
-    htmlIconEl.className = `${ApplicationIcons.confirm}`;
-    setTimeout(() => {
-      window.getSelection()?.removeAllRanges();
-    }, 50);
-    setTimeout(() => {
-      htmlEl.innerText = oldText;
-      htmlIconEl.className = oldIconClz;
-    }, 1250);
-  }
-};
-const JsonTab = ({ logFile, json }) => {
-  const downloadFiles = useStore((state) => state.capabilities.downloadFiles);
-  if (logFile && json.length > kJsonMaxSize && downloadFiles) {
-    const file = `${filename(logFile)}.json`;
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$12.jsonTab, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      DownloadPanel,
-      {
-        message: "The JSON for this log file is too large to render.",
-        buttonLabel: "Download JSON File",
-        fileName: file,
-        fileContents: json
-      }
-    ) });
-  } else {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$12.jsonTab, children: /* @__PURE__ */ jsxRuntimeExports.jsx(JSONPanel, { id: "task-json-contents", json, simple: true }) });
-  }
-};
-const container$g = "_container_4wzpj_1";
-const modelInfo = "_modelInfo_4wzpj_8";
-const role = "_role_4wzpj_15";
-const sep = "_sep_4wzpj_19";
-const styles$11 = {
-  container: container$g,
-  modelInfo,
-  role,
-  sep
-};
-const ModelCard = ({ evalSpec }) => {
-  if (!evalSpec) {
-    return void 0;
-  }
-  const modelsInfo = {
-    eval: {
-      model: evalSpec.model,
-      base_url: evalSpec.model_base_url,
-      config: evalSpec.model_generate_config,
-      args: evalSpec.model_args
-    },
-    ...evalSpec.model_roles
-  };
-  const noneEl = /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-style-secondary", children: "None" });
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Models" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: "task-model-card-body", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$11.container, children: Object.keys(modelsInfo || {}).map((modelKey) => {
-      const modelInfo2 = modelsInfo[modelKey];
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        "div",
-        {
-          className: clsx(styles$11.modelInfo, "text-size-small"),
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "div",
-              {
-                className: clsx(
-                  styles$11.role,
-                  "text-style-label",
-                  "text-style-secondary"
-                ),
-                children: modelKey
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$11.sep) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Model" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: modelInfo2.model }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$11.sep) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Base Url" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-size-small", children: modelInfo2.base_url || noneEl }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$11.sep) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Configuration" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-size-small", children: modelInfo2.config && Object.keys(modelInfo2.config).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-              MetaDataGrid,
-              {
-                entries: modelInfo2.config
-              }
-            ) : noneEl }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$11.sep) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Args" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-size-small", children: Object.keys(modelInfo2.args).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-              MetaDataGrid,
-              {
-                entries: modelInfo2.args
-              }
-            ) : noneEl }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$11.sep) })
-          ]
-        },
-        modelKey
-      );
-    }) }) })
-  ] });
-};
-const wrapper$3 = "_wrapper_sq96g_1";
-const col2$2 = "_col2_sq96g_8";
-const col1_3$1 = "_col1_3_sq96g_12";
-const col3$1 = "_col3_sq96g_16";
-const separator$4 = "_separator_sq96g_20";
-const padded$1 = "_padded_sq96g_26";
-const styles$10 = {
-  wrapper: wrapper$3,
-  col2: col2$2,
-  col1_3: col1_3$1,
-  col3: col3$1,
-  separator: separator$4,
-  padded: padded$1
-};
-const ModelUsagePanel = ({ usage, className: className2 }) => {
-  if (!usage) {
-    return null;
-  }
-  const rows = [];
-  if (usage.reasoning_tokens) {
-    rows.push({
-      label: "Reasoning",
-      value: usage.reasoning_tokens,
-      secondary: false,
-      bordered: true
-    });
-    rows.push({
-      label: "---",
-      value: void 0,
-      secondary: false,
-      padded: true
-    });
-  }
-  rows.push({
-    label: "input",
-    value: usage.input_tokens,
-    secondary: false
-  });
-  if (usage.input_tokens_cache_read) {
-    rows.push({
-      label: "cache_read",
-      value: usage.input_tokens_cache_read,
-      secondary: true
-    });
-  }
-  if (usage.input_tokens_cache_write) {
-    rows.push({
-      label: "cache_write",
-      value: usage.input_tokens_cache_write,
-      secondary: true
-    });
-  }
-  rows.push({
-    label: "Output",
-    value: usage.output_tokens,
-    secondary: false,
-    bordered: true
-  });
-  rows.push({
-    label: "---",
-    value: void 0,
-    secondary: false
-  });
-  rows.push({
-    label: "Total",
-    value: usage.total_tokens,
-    secondary: false
-  });
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-small", styles$10.wrapper, className2), children: rows.map((row2, idx) => {
-    if (row2.label === "---") {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "div",
-        {
-          className: clsx(
-            styles$10.separator,
-            row2.padded ? styles$10.padded : void 0
-          )
-        },
-        `$usage-sep-${idx}`
-      );
-    } else {
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "div",
-          {
-            className: clsx(
-              "text-style-label",
-              "text-style-secondary",
-              row2.secondary ? styles$10.col2 : styles$10.col1_3
-            ),
-            children: row2.label
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$10.col3, children: row2.value ? formatNumber(row2.value) : "" })
-      ] }, `$usage-row-${idx}`);
-    }
-  }) });
-};
-const table$1 = "_table_z217i_1";
-const tableTokens = "_tableTokens_z217i_5";
-const tableH = "_tableH_z217i_9";
-const model = "_model_z217i_14";
-const cellContents = "_cellContents_z217i_18";
-const styles$$ = {
-  table: table$1,
-  tableTokens,
-  tableH,
-  model,
-  cellContents
-};
-const TokenTable$1 = ({ className: className2, children: children2 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    "table",
-    {
-      className: clsx(
-        "table",
-        "table-sm",
-        "text-size-smaller",
-        styles$$.table,
-        className2
-      ),
-      children: children2
-    }
-  );
-};
-const TokenHeader = () => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("thead", { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("td", {}),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "td",
-        {
-          colSpan: 3,
-          className: clsx(
-            "card-subheading",
-            styles$$.tableTokens,
-            "text-size-small",
-            "text-style-label",
-            "text-style-secondary"
-          ),
-          align: "center",
-          children: "Tokens"
-        }
-      )
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "th",
-        {
-          className: clsx(
-            styles$$.tableH,
-            "text-sixe-small",
-            "text-style-label",
-            "text-style-secondary"
-          ),
-          children: "Model"
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "th",
-        {
-          className: clsx(
-            styles$$.tableH,
-            "text-sixe-small",
-            "text-style-label",
-            "text-style-secondary"
-          ),
-          children: "Usage"
-        }
-      )
-    ] })
-  ] });
-};
-const TokenRow = ({ model: model2, usage }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("td", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$$.model, styles$$.cellContents), children: model2 }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("td", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(ModelUsagePanel, { usage, className: clsx(styles$$.cellContents) }) })
-  ] });
-};
-const ModelTokenTable = ({
-  model_usage,
-  className: className2
-}) => {
-  if (!model_usage) {
-    return null;
-  }
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(TokenTable$1, { className: className2, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(TokenHeader, {}),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("tbody", { children: Object.keys(model_usage).map((key2) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(TokenRow, { model: key2, usage: model_usage[key2] }, key2);
-    }) })
-  ] });
-};
-const wrapper$2 = "_wrapper_14r3b_1";
-const col2$1 = "_col2_14r3b_16";
-const styles$_ = {
-  wrapper: wrapper$2,
-  col2: col2$1
-};
-const kUsageCardBodyId = "usage-card-body";
-const UsageCard = ({ stats }) => {
-  if (!stats) {
-    return null;
-  }
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Usage" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: kUsageCardBodyId, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$_.wrapper, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$_.col2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ModelTokenTable, { model_usage: stats.model_usage }) }) }) })
-  ] });
-};
-const useModelsTab = (evalSpec, evalStats, evalStatus) => {
-  return reactExports.useMemo(() => {
-    return {
-      id: kLogViewModelsTabId,
-      label: "Models",
-      scrollable: true,
-      component: ModelTab,
-      componentProps: {
-        evalSpec,
-        evalStats,
-        evalStatus
-      }
-    };
-  }, [evalSpec, evalStats, evalStatus]);
-};
-const ModelTab = ({
-  evalSpec,
-  evalStats,
-  evalStatus
-}) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "0.5em 1em 0 1em", width: "100%" }, children: [
-    evalSpec ? /* @__PURE__ */ jsxRuntimeExports.jsx(ModelCard, { evalSpec }) : void 0,
-    evalStatus !== "started" && evalStats?.model_usage && Object.keys(evalStats.model_usage).length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(UsageCard, { stats: evalStats })
-  ] }) });
-};
-const dropdownContainer = "_dropdownContainer_h3ljc_1";
-const toolButton = "_toolButton_h3ljc_6";
-const chevron = "_chevron_h3ljc_10";
-const backdrop$1 = "_backdrop_h3ljc_24";
-const dropdownMenu = "_dropdownMenu_h3ljc_33";
-const dropdownItem = "_dropdownItem_h3ljc_47";
-const styles$Z = {
-  dropdownContainer,
-  toolButton,
-  chevron,
-  backdrop: backdrop$1,
-  dropdownMenu,
-  dropdownItem
-};
-const ToolDropdownButton = reactExports.forwardRef(({ label: label2, icon: icon2, className: className2, items, ...rest }, ref) => {
-  const [isOpen, setIsOpen] = reactExports.useState(false);
-  const handleItemClick = (fn3) => {
-    fn3();
-    setIsOpen(false);
-  };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$Z.dropdownContainer, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      "button",
-      {
-        ref,
-        type: "button",
-        className: clsx("btn", "btn-tools", styles$Z.toolButton, className2),
-        onClick: () => setIsOpen(!isOpen),
-        ...rest,
-        children: [
-          icon2 && /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: `${icon2}` }),
-          label2,
-          /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx("bi-chevron-down", styles$Z.chevron) })
-        ]
-      }
-    ),
-    isOpen && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$Z.backdrop, onClick: () => setIsOpen(false) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$Z.dropdownMenu, children: Object.entries(items).map(([itemLabel, fn3]) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "button",
-        {
-          type: "button",
-          className: styles$Z.dropdownItem,
-          onClick: () => handleItemClick(fn3),
-          children: itemLabel
-        },
-        itemLabel
-      )) })
-    ] })
-  ] });
-});
-ToolDropdownButton.displayName = "ToolDropdownButton";
-const panel$5 = "_panel_twp3v_1";
-const container$f = "_container_twp3v_7";
-const styles$Y = {
-  panel: panel$5,
-  container: container$f
+  panel: panel$6,
+  container: container$i
 };
 const NoContentsPanel = ({ text: text2 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Y.panel), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$Y.container, "text-size-smaller"), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$13.panel), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$13.container, "text-size-smaller"), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.noSamples }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: text2 })
   ] }) });
@@ -177873,167 +178050,6 @@ const printHeadingHtml = () => {
 <div style="text-align: right;">${time}</div>
 </div>`;
   return headingHtml;
-};
-const useSampleNavigation = () => {
-  const navigate = useNavigate();
-  const logDirectory = useStore((state) => state.logs.logDir);
-  const { logPath, tabId, sampleTabId } = useLogRouteParams();
-  const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
-  const resolveLogPath = reactExports.useCallback(() => {
-    if (logPath) {
-      return logPath;
-    }
-    if (selectedLogFile) {
-      return directoryRelativeUrl(selectedLogFile, logDirectory);
-    }
-    return void 0;
-  }, [logPath, selectedLogFile, logDirectory]);
-  const sampleSummaries = useFilteredSamples();
-  const selectedSampleHandle = useStore(
-    (state) => state.log.selectedSampleHandle
-  );
-  const selectedSampleIndex = reactExports.useMemo(() => {
-    return sampleSummaries.findIndex((summary2) => {
-      return sampleIdsEqual(summary2.id, selectedSampleHandle?.id) && summary2.epoch === selectedSampleHandle?.epoch;
-    });
-  }, [selectedSampleHandle, sampleSummaries]);
-  const selectSample = useStore((state) => state.logActions.selectSample);
-  const setShowingSampleDialog = useStore(
-    (state) => state.appActions.setShowingSampleDialog
-  );
-  const showingSampleDialog = useStore((state) => state.app.dialogs.sample);
-  const showSample = reactExports.useCallback(
-    (id, epoch, specifiedSampleTabId) => {
-      const resolvedPath = resolveLogPath();
-      if (resolvedPath) {
-        selectSample(id, epoch, resolvedPath);
-        setShowingSampleDialog(true);
-        const currentSampleTabId = specifiedSampleTabId || sampleTabId;
-        const url = logSamplesUrl(resolvedPath, id, epoch, currentSampleTabId);
-        navigate(url);
-      }
-    },
-    [
-      resolveLogPath,
-      selectSample,
-      setShowingSampleDialog,
-      navigate,
-      sampleTabId
-    ]
-  );
-  const navigateSampleIndex = reactExports.useCallback(
-    (index) => {
-      if (index > -1 && index < sampleSummaries.length) {
-        if (showingSampleDialog) {
-          const resolvedPath = resolveLogPath();
-          if (resolvedPath) {
-            const summary2 = sampleSummaries[index];
-            const url = logSamplesUrl(
-              resolvedPath,
-              summary2.id,
-              summary2.epoch,
-              sampleTabId
-            );
-            navigate(url);
-          }
-        } else {
-          const summary2 = sampleSummaries[index];
-          const logFile = logPath || selectedLogFile;
-          if (logFile) {
-            selectSample(summary2.id, summary2.epoch, logFile);
-          }
-        }
-      }
-    },
-    [
-      sampleSummaries,
-      showingSampleDialog,
-      resolveLogPath,
-      sampleTabId,
-      navigate,
-      selectSample,
-      logPath,
-      selectedLogFile
-    ]
-  );
-  const nextSample = reactExports.useCallback(() => {
-    const itemsCount = sampleSummaries.length;
-    const next = Math.min(selectedSampleIndex + 1, itemsCount - 1);
-    navigateSampleIndex(next);
-  }, [selectedSampleIndex, navigateSampleIndex, sampleSummaries]);
-  const previousSample = reactExports.useCallback(() => {
-    const prev = selectedSampleIndex - 1;
-    navigateSampleIndex(prev);
-  }, [selectedSampleIndex, navigateSampleIndex]);
-  const firstSample = reactExports.useCallback(() => {
-    navigateSampleIndex(0);
-  }, [navigateSampleIndex]);
-  const lastSample = reactExports.useCallback(() => {
-    navigateSampleIndex(sampleSummaries.length - 1);
-  }, [navigateSampleIndex, sampleSummaries]);
-  const getSampleUrl = reactExports.useCallback(
-    (sampleId, epoch, specificSampleTabId) => {
-      const resolvedPath = resolveLogPath();
-      if (resolvedPath) {
-        const currentSampleTabId = specificSampleTabId || sampleTabId;
-        const url = logSamplesUrl(
-          resolvedPath,
-          sampleId,
-          epoch,
-          currentSampleTabId
-        );
-        return `#${url}`;
-      }
-      return void 0;
-    },
-    [resolveLogPath, sampleTabId]
-  );
-  const clearSampleUrl = reactExports.useCallback(() => {
-    const resolvedPath = resolveLogPath();
-    if (resolvedPath) {
-      const url = logsUrlRaw(resolvedPath, tabId);
-      navigate(url);
-    }
-  }, [resolveLogPath, navigate, tabId]);
-  return {
-    showSample,
-    nextEnabled: selectedSampleIndex < sampleSummaries.length - 1,
-    nextSample,
-    previousEnabled: selectedSampleIndex > 0,
-    previousSample,
-    firstSample,
-    lastSample,
-    getSampleUrl,
-    clearSampleUrl
-  };
-};
-const useSampleDetailNavigation = () => {
-  const [searchParams] = useSearchParams();
-  const message2 = searchParams.get("message");
-  const event = searchParams.get("event");
-  return {
-    message: message2,
-    event
-  };
-};
-const useSamplesGridNavigation = () => {
-  const navigate = useNavigate();
-  const logDirectory = useStore((state) => state.logs.logDir);
-  const navigateToSampleDetail = reactExports.useCallback(
-    (logFile, sampleId, epoch, openInNewWindow = false) => {
-      const relativePath = directoryRelativeUrl(logFile, logDirectory);
-      const url = samplesSampleUrl(relativePath, sampleId, epoch);
-      if (openInNewWindow) {
-        window.open(`#${url}`, "_blank");
-      } else {
-        navigate(url);
-      }
-    },
-    [navigate, logDirectory]
-  );
-  return {
-    navigateToSampleDetail
-  };
 };
 const messagesToStr = (messages2, options2) => {
   const opts = {};
@@ -178135,7 +178151,200 @@ const betterContentText = (content2, excludeToolUsage, excludeReasoning) => {
   const allText = content2.map((c2) => textFromContent(c2, excludeToolUsage, excludeReasoning)).filter((text2) => text2 !== null);
   return allText.join("\n");
 };
-const container$e = "_container_4p85e_2";
+const wrapper$3 = "_wrapper_sq96g_1";
+const col2$2 = "_col2_sq96g_8";
+const col1_3$1 = "_col1_3_sq96g_12";
+const col3$1 = "_col3_sq96g_16";
+const separator$5 = "_separator_sq96g_20";
+const padded$1 = "_padded_sq96g_26";
+const styles$12 = {
+  wrapper: wrapper$3,
+  col2: col2$2,
+  col1_3: col1_3$1,
+  col3: col3$1,
+  separator: separator$5,
+  padded: padded$1
+};
+const ModelUsagePanel = ({ usage, className: className2 }) => {
+  if (!usage) {
+    return null;
+  }
+  const rows = [];
+  if (usage.reasoning_tokens) {
+    rows.push({
+      label: "Reasoning",
+      value: usage.reasoning_tokens,
+      secondary: false,
+      bordered: true
+    });
+    rows.push({
+      label: "---",
+      value: void 0,
+      secondary: false,
+      padded: true
+    });
+  }
+  rows.push({
+    label: "input",
+    value: usage.input_tokens,
+    secondary: false
+  });
+  if (usage.input_tokens_cache_read) {
+    rows.push({
+      label: "cache_read",
+      value: usage.input_tokens_cache_read,
+      secondary: true
+    });
+  }
+  if (usage.input_tokens_cache_write) {
+    rows.push({
+      label: "cache_write",
+      value: usage.input_tokens_cache_write,
+      secondary: true
+    });
+  }
+  rows.push({
+    label: "Output",
+    value: usage.output_tokens,
+    secondary: false,
+    bordered: true
+  });
+  rows.push({
+    label: "---",
+    value: void 0,
+    secondary: false
+  });
+  rows.push({
+    label: "Total",
+    value: usage.total_tokens,
+    secondary: false
+  });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-small", styles$12.wrapper, className2), children: rows.map((row2, idx) => {
+    if (row2.label === "---") {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
+        {
+          className: clsx(
+            styles$12.separator,
+            row2.padded ? styles$12.padded : void 0
+          )
+        },
+        `$usage-sep-${idx}`
+      );
+    } else {
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: clsx(
+              "text-style-label",
+              "text-style-secondary",
+              row2.secondary ? styles$12.col2 : styles$12.col1_3
+            ),
+            children: row2.label
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$12.col3, children: row2.value ? formatNumber(row2.value) : "" })
+      ] }, `$usage-row-${idx}`);
+    }
+  }) });
+};
+const table$1 = "_table_z217i_1";
+const tableTokens = "_tableTokens_z217i_5";
+const tableH = "_tableH_z217i_9";
+const model = "_model_z217i_14";
+const cellContents = "_cellContents_z217i_18";
+const styles$11 = {
+  table: table$1,
+  tableTokens,
+  tableH,
+  model,
+  cellContents
+};
+const TokenTable$1 = ({ className: className2, children: children2 }) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "table",
+    {
+      className: clsx(
+        "table",
+        "table-sm",
+        "text-size-smaller",
+        styles$11.table,
+        className2
+      ),
+      children: children2
+    }
+  );
+};
+const TokenHeader = () => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("thead", { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("td", {}),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "td",
+        {
+          colSpan: 3,
+          className: clsx(
+            "card-subheading",
+            styles$11.tableTokens,
+            "text-size-small",
+            "text-style-label",
+            "text-style-secondary"
+          ),
+          align: "center",
+          children: "Tokens"
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "th",
+        {
+          className: clsx(
+            styles$11.tableH,
+            "text-sixe-small",
+            "text-style-label",
+            "text-style-secondary"
+          ),
+          children: "Model"
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "th",
+        {
+          className: clsx(
+            styles$11.tableH,
+            "text-sixe-small",
+            "text-style-label",
+            "text-style-secondary"
+          ),
+          children: "Usage"
+        }
+      )
+    ] })
+  ] });
+};
+const TokenRow = ({ model: model2, usage }) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("td", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$11.model, styles$11.cellContents), children: model2 }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("td", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(ModelUsagePanel, { usage, className: clsx(styles$11.cellContents) }) })
+  ] });
+};
+const ModelTokenTable = ({
+  model_usage,
+  className: className2
+}) => {
+  if (!model_usage) {
+    return null;
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(TokenTable$1, { className: className2, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(TokenHeader, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("tbody", { children: Object.keys(model_usage).map((key2) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(TokenRow, { model: key2, usage: model_usage[key2] }, key2);
+    }) })
+  ] });
+};
+const container$h = "_container_4p85e_2";
 const dotsContainer = "_dotsContainer_4p85e_8";
 const small = "_small_4p85e_15";
 const medium = "_medium_4p85e_19";
@@ -178144,8 +178353,8 @@ const dot = "_dot_4p85e_8";
 const subtle = "_subtle_4p85e_36";
 const primary = "_primary_4p85e_40";
 const visuallyHidden = "_visuallyHidden_4p85e_59";
-const styles$X = {
-  container: container$e,
+const styles$10 = {
+  container: container$h,
   dotsContainer,
   small,
   medium,
@@ -178166,30 +178375,30 @@ const PulsingDots = ({
     "div",
     {
       className: clsx(
-        styles$X.container,
-        size === "small" ? styles$X.small : size === "medium" ? styles$X.medium : styles$X.large,
+        styles$10.container,
+        size === "small" ? styles$10.small : size === "medium" ? styles$10.medium : styles$10.large,
         className2
       ),
       role: "status",
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$X.dotsContainer, children: [...Array(dotsCount)].map((_, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$10.dotsContainer, children: [...Array(dotsCount)].map((_, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
             className: clsx(
-              styles$X.dot,
-              subtle2 ? styles$X.subtle : styles$X.primary
+              styles$10.dot,
+              subtle2 ? styles$10.subtle : styles$10.primary
             ),
             style: { animationDelay: `${index * 0.2}s` }
           },
           index
         )) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$X.visuallyHidden, children: text2 })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$10.visuallyHidden, children: text2 })
       ]
     }
   );
 };
 const progressContainer = "_progressContainer_1cjjr_1";
-const styles$W = {
+const styles$$ = {
   progressContainer
 };
 const LiveVirtualList = ({
@@ -178340,7 +178549,7 @@ const LiveVirtualList = ({
     return unregister;
   }, [id, registerVirtualList, searchInData]);
   const Footer = () => {
-    return showProgress ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$W.progressContainer), children: /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false, size: "medium" }) }) : void 0;
+    return showProgress ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$$.progressContainer), children: /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false, size: "medium" }) }) : void 0;
   };
   reactExports.useEffect(() => {
     const parent = scrollRef?.current;
@@ -178396,6 +178605,7 @@ const LiveVirtualList = ({
       rangeChanged: (range2) => {
         setVisibleRange(range2);
       },
+      skipAnimationFrameInResizeObserver: true,
       restoreStateFrom: getRestoreState(),
       totalListHeightChanged: heightChanged,
       components: {
@@ -178418,7 +178628,7 @@ const prepareSearchTerm = (term) => {
     jsonEscaped: lower.replace(/"/g, '\\"')
   };
 };
-const styles$V = {};
+const styles$_ = {};
 const messageSearchText = (resolved) => {
   const texts = [];
   texts.push(...extractContentText$1(resolved.message.content));
@@ -178638,7 +178848,7 @@ const ChatViewVirtualListComponent = reactExports.memo(
       return /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
         {
-          className: clsx(styles$V.item),
+          className: clsx(styles$_.item),
           "data-index": props["data-index"],
           "data-item-group-index": props["data-item-group-index"],
           "data-item-index": props["data-item-index"],
@@ -178671,17 +178881,17 @@ const tabPanel = "_tabPanel_6o9gh_1";
 const tabControls = "_tabControls_6o9gh_5";
 const fullWidth$1 = "_fullWidth_6o9gh_12";
 const padded = "_padded_6o9gh_25";
-const error = "_error_6o9gh_30";
+const error$2 = "_error_6o9gh_30";
 const ansi = "_ansi_6o9gh_34";
 const noTop = "_noTop_6o9gh_38";
 const chat = "_chat_6o9gh_50";
 const transcriptContainer = "_transcriptContainer_6o9gh_58";
-const styles$U = {
+const styles$Z = {
   tabPanel,
   tabControls,
   fullWidth: fullWidth$1,
   padded,
-  error,
+  error: error$2,
   ansi,
   noTop,
   chat,
@@ -178851,26 +179061,103 @@ function simpleMarkdownTruncate(markdown, maxLength = 250, ellipsis2 = "...") {
   }
   return truncated + ellipsis2;
 }
-const flatBody = "_flatBody_1uw6w_1";
-const iconSmall$1 = "_iconSmall_1uw6w_9";
-const lineBase = "_lineBase_1uw6w_15";
-const styles$T = {
-  flatBody,
-  iconSmall: iconSmall$1,
-  lineBase
+const kBaseFontSize = 0.9;
+const ScaleBaseFont = (scale) => {
+  return `${kBaseFontSize + scale}rem`;
 };
-const FlatSampleError = ({ message: message2 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$T.flatBody), children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.error, styles$T.iconSmall) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$T.lineBase, "text-truncate"), children: errorType(message2) })
-  ] });
+const FontSize = {
+  smaller: ScaleBaseFont(-0.1)
+};
+const TextStyle = {
+  secondary: {
+    color: "var(--bs-secondary)"
+  }
+};
+const ApplicationStyles = {
+  moreButton: {
+    maxHeight: "1.8em",
+    fontSize: FontSize.smaller,
+    padding: "0 0.2em 0 0.2em",
+    ...TextStyle.secondary
+  },
+  threeLineClamp: {
+    display: "-webkit-box",
+    WebkitLineClamp: "3",
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden"
+  },
+  lineClamp: (len) => {
+    return {
+      display: "-webkit-box",
+      WebkitLineClamp: `${len}`,
+      WebkitBoxOrient: "vertical",
+      overflow: "hidden"
+    };
+  },
+  wrapText: () => {
+    return {
+      whiteSpace: "nowrap",
+      textOverflow: "ellipsis",
+      overflow: "hidden"
+    };
+  },
+  scoreFills: {
+    green: {
+      backgroundColor: "var(--bs-success)",
+      borderColor: "var(--bs-success)",
+      color: "var(--bs-body-bg)"
+    },
+    red: {
+      backgroundColor: "var(--bs-danger)",
+      borderColor: "var(--bs-danger)",
+      color: "var(--bs-body-bg)"
+    },
+    orange: {
+      backgroundColor: "var(--bs-orange)",
+      borderColor: "var(--bs-orange)",
+      color: "var(--bs-body-bg)"
+    }
+  }
+};
+const body$1 = "_body_x9ww7_1";
+const safe = "_safe_x9ww7_9";
+const iconSmall = "_iconSmall_x9ww7_13";
+const message$1 = "_message_x9ww7_19";
+const styles$Y = {
+  body: body$1,
+  safe,
+  iconSmall,
+  message: message$1
+};
+const SampleErrorView = ({
+  message: message2,
+  align
+}) => {
+  align = align || "center";
+  const type = errorType(message2);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    "div",
+    {
+      className: clsx(
+        styles$Y.body,
+        isCanceledError(type) ? styles$Y.safe : void 0
+      ),
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.error, styles$Y.iconSmall) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$Y.message, style: ApplicationStyles.lineClamp(2), children: type })
+      ]
+    }
+  );
+};
+const isCanceledError = (type) => {
+  return type === "CancelledError";
 };
 const target = "_target_10p8e_1";
 const answer = "_answer_10p8e_5";
 const grid$6 = "_grid_10p8e_9";
 const centerLabel = "_centerLabel_10p8e_16";
 const centerValue = "_centerValue_10p8e_21";
-const wrap = "_wrap_10p8e_26";
+const wrap$2 = "_wrap_10p8e_26";
 const titled = "_titled_10p8e_30";
 const value$1 = "_value_10p8e_34";
 const invalidationBanner = "_invalidationBanner_10p8e_40";
@@ -178879,13 +179166,13 @@ const invalidationContent = "_invalidationContent_10p8e_56";
 const invalidationTitle = "_invalidationTitle_10p8e_63";
 const invalidationDetails = "_invalidationDetails_10p8e_68";
 const invalidationReason = "_invalidationReason_10p8e_76";
-const styles$S = {
+const styles$X = {
   target,
   answer,
   grid: grid$6,
   centerLabel,
   centerValue,
-  wrap,
+  wrap: wrap$2,
   titled,
   value: value$1,
   invalidationBanner,
@@ -178938,12 +179225,10 @@ const SampleSummaryView = ({
     return void 0;
   }
   const fields = resolveSample(sample2, sampleDescriptor);
-  const limitSize = sampleDescriptor?.messageShape.normalized.limit > 0 ? Math.max(0.15, sampleDescriptor.messageShape.normalized.limit) : 0;
-  const retrySize = sampleDescriptor?.messageShape.normalized.retries > 0 ? 6 : 0;
-  const idSize = Math.max(
-    2,
-    Math.min(10, sampleDescriptor?.messageShape.raw.id)
-  );
+  const shape = sampleDescriptor?.messageShape;
+  const limitSize = shape?.limitSize ?? 0;
+  const retrySize = shape?.retriesSize ?? 0;
+  const idSize = shape?.idSize ?? 2;
   const columns = [];
   columns.push({
     label: "Id",
@@ -178970,7 +179255,7 @@ const SampleSummaryView = ({
             arrayToString(fields?.target || "none"),
             kMaxCellTextLength
           ),
-          className: clsx("no-last-para-padding", styles$S.target)
+          className: clsx("no-last-para-padding", styles$X.target)
         }
       ),
       size: `minmax(auto, 3fr)`,
@@ -178984,7 +179269,7 @@ const SampleSummaryView = ({
         RenderedText,
         {
           markdown: truncateMarkdown(fields.answer || "", kMaxCellTextLength),
-          className: clsx("no-last-para-padding", styles$S.answer)
+          className: clsx("no-last-para-padding", styles$X.answer)
         }
       ) : "",
       size: `minmax(auto, 5fr)`,
@@ -179010,7 +179295,7 @@ const SampleSummaryView = ({
     columns.push({
       label: "Limit",
       value: fields.limit,
-      size: `fit-content(10rem)`,
+      size: `${limitSize}em`,
       center: true
     });
   }
@@ -179018,24 +179303,24 @@ const SampleSummaryView = ({
     columns.push({
       label: "Retries",
       value: fields.retries,
-      size: `fit-content(${retrySize}rem)`,
+      size: `${retrySize}em`,
       center: true
     });
   }
   if (selectedScores && selectedScores.length > 0) {
-    selectedScores.forEach((scoreLabel) => {
-      columns.push({
-        label: selectedScores.length === 1 ? "Score" : scoreLabel.name,
-        value: fields.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(FlatSampleError, { message: fields.error }) : sampleDescriptor?.evalDescriptor.score(sample2, scoreLabel)?.render() || "",
-        size: "fit-content(15em)",
-        center: true
-      });
-    });
-  } else {
-    columns.push({
-      label: "Score",
-      value: fields.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(FlatSampleError, { message: fields.error }) : "",
+    const scoreColumns = selectedScores.map((scoreLabel) => ({
+      label: selectedScores.length === 1 ? "Score" : scoreLabel.name,
+      value: sampleDescriptor?.evalDescriptor.score(sample2, scoreLabel)?.render() || "",
       size: "fit-content(15em)",
+      center: true
+    })).filter((col) => col.value !== "");
+    columns.push(...scoreColumns);
+  }
+  if (fields.error) {
+    columns.push({
+      label: "Error",
+      value: /* @__PURE__ */ jsxRuntimeExports.jsx(SampleErrorView, { message: fields.error }),
+      size: `${shape?.errorSize ?? 1}em`,
       center: true
     });
   }
@@ -179045,7 +179330,7 @@ const SampleSummaryView = ({
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
       {
-        className: clsx(styles$S.grid, "text-size-base"),
+        className: clsx(styles$X.grid, "text-size-base"),
         style: {
           gridTemplateColumns: `${columns.map((col) => {
             return col.size;
@@ -179060,8 +179345,8 @@ const SampleSummaryView = ({
                   "text-style-label",
                   "text-style-secondary",
                   "text-size-smallest",
-                  col.title ? styles$S.titled : void 0,
-                  col.center ? styles$S.centerLabel : void 0
+                  col.title ? styles$X.titled : void 0,
+                  col.center ? styles$X.centerLabel : void 0
                 ),
                 title: col.title,
                 "data-unsearchable": true,
@@ -179075,10 +179360,10 @@ const SampleSummaryView = ({
               "div",
               {
                 className: clsx(
-                  styles$S.value,
-                  styles$S.wrap,
+                  styles$X.value,
+                  styles$X.wrap,
                   col.clamp ? "three-line-clamp" : void 0,
-                  col.center ? styles$S.centerValue : void 0
+                  col.center ? styles$X.centerValue : void 0
                 ),
                 "data-unsearchable": true,
                 children: col.value
@@ -179101,11 +179386,11 @@ const InvalidationBanner = ({
       return timestamp2;
     }
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$S.invalidationBanner, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$S.invalidationIcon, children: "⚠" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$S.invalidationContent, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$S.invalidationTitle, children: "Sample Invalidated" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$S.invalidationDetails, children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$X.invalidationBanner, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$X.invalidationIcon, children: "⚠" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$X.invalidationContent, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$X.invalidationTitle, children: "Sample Invalidated" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$X.invalidationDetails, children: [
         invalidation.author && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
           "By: ",
           invalidation.author
@@ -179114,13 +179399,16 @@ const InvalidationBanner = ({
           "On: ",
           formatTimestamp(invalidation.timestamp)
         ] }),
-        invalidation.reason && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: styles$S.invalidationReason, children: [
+        invalidation.reason && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: styles$X.invalidationReason, children: [
           "Reason: ",
           invalidation.reason
         ] })
       ] })
     ] })
   ] });
+};
+const EmptyPanel = ({ children: children2 }) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "empty-panel", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: children2 }) }) });
 };
 const SampleScores = ({ sample: sample2, scorer: scorer2 }) => {
   const scoreData = sample2.scores?.[scorer2];
@@ -179133,17 +179421,17 @@ const SampleScores = ({ sample: sample2, scorer: scorer2 }) => {
   );
   return scorerDescriptor?.render(scoreData.value);
 };
-const container$d = "_container_kwhbh_1";
+const container$g = "_container_kwhbh_1";
 const cell$1 = "_cell_kwhbh_9";
 const fullWidth = "_fullWidth_kwhbh_13";
-const separator$3 = "_separator_kwhbh_25";
+const separator$4 = "_separator_kwhbh_25";
 const separatorPadded = "_separatorPadded_kwhbh_30";
 const headerSep = "_headerSep_kwhbh_35";
-const styles$R = {
-  container: container$d,
+const styles$W = {
+  container: container$g,
   cell: cell$1,
   fullWidth,
-  separator: separator$3,
+  separator: separator$4,
   separatorPadded,
   headerSep
 };
@@ -179156,7 +179444,7 @@ const SampleScoresGrid = ({
   if (!evalDescriptor) {
     return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyPanel, { children: "No Sample Selected" });
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2, styles$R.container), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2, styles$W.container), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
@@ -179204,7 +179492,7 @@ const SampleScoresGrid = ({
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
-        className: clsx(styles$R.separator, styles$R.fullWidth, styles$R.headerSep)
+        className: clsx(styles$W.separator, styles$W.fullWidth, styles$W.headerSep)
       }
     ),
     Object.keys(evalSample.scores || {}).map((scorer2) => {
@@ -179216,16 +179504,16 @@ const SampleScoresGrid = ({
       const answer2 = scoreData.answer;
       let metadata2 = scoreData.metadata || {};
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-base", styles$R.cell), children: scorer2 }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$R.cell, "text-size-base"), children: answer2 }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$R.cell, "text-size-base"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-base", styles$W.cell), children: scorer2 }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$W.cell, "text-size-base"), children: answer2 }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$W.cell, "text-size-base"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           SampleScores,
           {
             sample: evalSample,
             scorer: scorer2
           }
         ) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-base", styles$R.cell), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-base", styles$W.cell), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           RenderedContent,
           {
             id: `${scorer2}-explanation`,
@@ -179243,12 +179531,12 @@ const SampleScoresGrid = ({
                 "text-size-smaller",
                 "text-style-label",
                 "text-style-secondary",
-                styles$R.fullWidth
+                styles$W.fullWidth
               ),
               children: "Metadata"
             }
           ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$R.fullWidth), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$W.fullWidth), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             RecordTree,
             {
               id: `${scorer2}-metadataa`,
@@ -179261,9 +179549,9 @@ const SampleScoresGrid = ({
             "div",
             {
               className: clsx(
-                styles$R.separator,
-                styles$R.separatorPadded,
-                styles$R.fullWidth
+                styles$W.separator,
+                styles$W.separatorPadded,
+                styles$W.fullWidth
               )
             }
           )
@@ -179275,7 +179563,7 @@ const SampleScoresGrid = ({
 const wordBreak = "_wordBreak_las07_9";
 const scoreCard = "_scoreCard_las07_50";
 const scores = "_scores_las07_54";
-const styles$Q = {
+const styles$V = {
   wordBreak,
   scoreCard,
   scores
@@ -179308,9 +179596,9 @@ const SampleScoresView = ({
         "container-fluid",
         className2,
         "font-size-base",
-        styles$Q.container
+        styles$V.container
       ),
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(Card, { className: clsx(styles$Q.scoreCard), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardBody, { children: [
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(Card, { className: clsx(styles$V.scoreCard), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardBody, { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
@@ -179332,7 +179620,7 @@ const SampleScoresView = ({
               RenderedText,
               {
                 markdown: scoreInput.join("\n"),
-                className: clsx(styles$Q.wordBreak, "text-size-base")
+                className: clsx(styles$V.wordBreak, "text-size-base")
               }
             )
           }
@@ -179341,7 +179629,7 @@ const SampleScoresView = ({
           SampleScoresGrid,
           {
             evalSample: sample2,
-            className: clsx(styles$Q.scores),
+            className: clsx(styles$V.scores),
             scrollRef
           }
         )
@@ -179363,6 +179651,7 @@ const eventTypes = {
   score_edit: "Score Edit",
   error: "Error",
   logger: "Logger",
+  compaction: "Compaction",
   info: "Info",
   subtask: "Subtask"
 };
@@ -179437,14 +179726,14 @@ const useTranscriptFilter = () => {
   };
 };
 const grid$5 = "_grid_1ml4j_1";
-const row$2 = "_row_1ml4j_8";
+const row$1 = "_row_1ml4j_8";
 const links$1 = "_links_1ml4j_22";
-const selected$3 = "_selected_1ml4j_40";
-const styles$P = {
+const selected$2 = "_selected_1ml4j_40";
+const styles$U = {
   grid: grid$5,
-  row: row$2,
+  row: row$1,
   links: links$1,
-  selected: selected$3
+  selected: selected$2
 };
 const TranscriptFilterPopover = ({
   showing,
@@ -179471,13 +179760,13 @@ const TranscriptFilterPopover = ({
       placement: "bottom-end",
       hoverDelay: -1,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$P.links, "text-size-smaller"), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$U.links, "text-size-smaller"), children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "a",
             {
               className: clsx(
-                styles$P.link,
-                isDefaultFilter ? styles$P.selected : void 0
+                styles$U.link,
+                isDefaultFilter ? styles$U.selected : void 0
               ),
               onClick: () => setDefaultFilter(),
               children: "Default"
@@ -179488,19 +179777,19 @@ const TranscriptFilterPopover = ({
             "a",
             {
               className: clsx(
-                styles$P.link,
-                isDebugFilter ? styles$P.selected : void 0
+                styles$U.link,
+                isDebugFilter ? styles$U.selected : void 0
               ),
               onClick: () => setDebugFilter(),
               children: "Debug"
             }
           )
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$P.grid, "text-size-smaller"), children: arrangedEventTypes(2).map((eventType) => {
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$U.grid, "text-size-smaller"), children: arrangedEventTypes(2).map((eventType) => {
           return /* @__PURE__ */ jsxRuntimeExports.jsxs(
             "div",
             {
-              className: clsx(styles$P.row),
+              className: clsx(styles$U.row),
               onClick: () => {
                 filterEventType(eventType, filtered.includes(eventType));
               },
@@ -179675,6 +179964,58 @@ class EventNode {
     this.depth = depth;
   }
 }
+const flatTree = (eventNodes, collapsed2, visitors, parentNode) => {
+  const result2 = [];
+  for (const node2 of eventNodes) {
+    if (visitors && visitors.length > 0) {
+      let pendingNodes = [{ ...node2 }];
+      for (const visitor of visitors) {
+        const allResults = [];
+        for (const pendingNode of pendingNodes) {
+          const visitorResult = visitor.visit(pendingNode);
+          if (parentNode) {
+            parentNode.children = visitorResult;
+          }
+          allResults.push(...visitorResult);
+        }
+        pendingNodes = allResults;
+      }
+      for (const pendingNode of pendingNodes) {
+        const children2 = flatTree(
+          pendingNode.children,
+          collapsed2,
+          visitors,
+          pendingNode
+        );
+        pendingNode.children = children2;
+        result2.push(pendingNode);
+        if (collapsed2 === null || collapsed2[pendingNode.id] !== true) {
+          result2.push(...children2);
+        }
+      }
+      for (const visitor of visitors) {
+        if (visitor.flush) {
+          const finalNodes = visitor.flush();
+          result2.push(...finalNodes);
+        }
+      }
+    } else {
+      result2.push(node2);
+      const children2 = flatTree(node2.children, collapsed2, visitors, node2);
+      if (collapsed2 === null || collapsed2[node2.id] !== true) {
+        result2.push(...children2);
+      }
+    }
+  }
+  return result2;
+};
+const parsePackageName = (name2) => {
+  if (name2.includes("/")) {
+    const [packageName, moduleName] = name2.split("/", 2);
+    return { package: packageName, module: moduleName };
+  }
+  return { package: "", module: name2 };
+};
 const kSandboxSignalName = "53787D8A-D3FC-426D-B383-9F880B70E4AA";
 const fixupEventStream = (events, filterPending = true) => {
   const collapsed2 = processPendingEvents(events, filterPending);
@@ -179816,73 +180157,21 @@ const createSpanEnd = (name2, timestamp2) => {
     metadata: null
   };
 };
-const flatTree = (eventNodes, collapsed2, visitors, parentNode) => {
-  const result2 = [];
-  for (const node2 of eventNodes) {
-    if (visitors && visitors.length > 0) {
-      let pendingNodes = [{ ...node2 }];
-      for (const visitor of visitors) {
-        const allResults = [];
-        for (const pendingNode of pendingNodes) {
-          const visitorResult = visitor.visit(pendingNode);
-          if (parentNode) {
-            parentNode.children = visitorResult;
-          }
-          allResults.push(...visitorResult);
-        }
-        pendingNodes = allResults;
-      }
-      for (const pendingNode of pendingNodes) {
-        const children2 = flatTree(
-          pendingNode.children,
-          collapsed2,
-          visitors,
-          pendingNode
-        );
-        pendingNode.children = children2;
-        result2.push(pendingNode);
-        if (collapsed2 === null || collapsed2[pendingNode.id] !== true) {
-          result2.push(...children2);
-        }
-      }
-      for (const visitor of visitors) {
-        if (visitor.flush) {
-          const finalNodes = visitor.flush();
-          result2.push(...finalNodes);
-        }
-      }
-    } else {
-      result2.push(node2);
-      const children2 = flatTree(node2.children, collapsed2, visitors, node2);
-      if (collapsed2 === null || collapsed2[node2.id] !== true) {
-        result2.push(...children2);
-      }
-    }
-  }
-  return result2;
-};
-const parsePackageName = (name2) => {
-  if (name2.includes("/")) {
-    const [packageName, moduleName] = name2.split("/", 2);
-    return { package: packageName, module: moduleName };
-  }
-  return { package: "", module: name2 };
-};
 const eventRow = "_eventRow_1j0jk_1";
-const selected$2 = "_selected_1j0jk_8";
+const selected$1 = "_selected_1j0jk_8";
 const toggle = "_toggle_1j0jk_12";
 const eventLink = "_eventLink_1j0jk_17";
-const label$7 = "_label_1j0jk_28";
-const icon$1 = "_icon_1j0jk_34";
+const label$6 = "_label_1j0jk_28";
+const icon$2 = "_icon_1j0jk_34";
 const progress$2 = "_progress_1j0jk_38";
 const popover = "_popover_1j0jk_42";
-const styles$O = {
+const styles$T = {
   eventRow,
-  selected: selected$2,
+  selected: selected$1,
   toggle,
   eventLink,
-  label: label$7,
-  icon: icon$1,
+  label: label$6,
+  icon: icon$2,
   progress: progress$2,
   popover
 };
@@ -179907,9 +180196,9 @@ const OutlineRow = ({
       "div",
       {
         className: clsx(
-          styles$O.eventRow,
+          styles$T.eventRow,
           "text-size-smaller",
-          selected2 ? styles$O.selected : ""
+          selected2 ? styles$T.selected : ""
         ),
         style: { paddingLeft: `${node2.depth * 0.4}em` },
         "data-unsearchable": true,
@@ -179917,20 +180206,20 @@ const OutlineRow = ({
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "div",
             {
-              className: clsx(styles$O.toggle),
+              className: clsx(styles$T.toggle),
               onClick: () => {
                 setCollapsed(!collapsed2);
               },
               children: toggle2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(toggle2) }) : void 0
             }
           ),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$O.label), "data-depth": node2.depth, children: [
-            icon2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, styles$O.icon) }) : void 0,
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$T.label), "data-depth": node2.depth, children: [
+            icon2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, styles$T.icon) }) : void 0,
             sampleEventUrl2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
               Link,
               {
                 to: sampleEventUrl2,
-                className: clsx(styles$O.eventLink),
+                className: clsx(styles$T.eventLink),
                 ref,
                 children: parsePackageName(labelForNode(node2)).module
               }
@@ -179939,7 +180228,7 @@ const OutlineRow = ({
               PulsingDots,
               {
                 size: "small",
-                className: clsx(styles$O.progress),
+                className: clsx(styles$T.progress),
                 subtle: false
               }
             ) : void 0
@@ -179954,7 +180243,7 @@ const OutlineRow = ({
         positionEl: ref.current,
         isOpen: isShowing,
         setIsOpen: setShowing,
-        className: clsx(styles$O.popper),
+        className: clsx(styles$T.popper),
         placement: "auto-end",
         children: summarizeNode(node2)
       }
@@ -180069,11 +180358,11 @@ const summarizeNode = (node2) => {
     {
       entries,
       size: "mini",
-      className: clsx(styles$O.popover, "text-size-smallest")
+      className: clsx(styles$T.popover, "text-size-smallest")
     }
   );
 };
-const styles$N = {};
+const styles$S = {};
 const kTurnType = "turn";
 const kTurnsType = "turns";
 const kCollapsedScoring = "scorings";
@@ -180250,6 +180539,7 @@ const EventPaddingNode = {
 };
 const TranscriptOutline = ({
   eventNodes,
+  filteredNodes,
   defaultCollapsedIds,
   running,
   className: className2,
@@ -180296,26 +180586,8 @@ const TranscriptOutline = ({
     }
   }, [sampleDetailNavigation.event, setSelectedOutlineId, scrollRef]);
   const outlineNodeList = reactExports.useMemo(() => {
-    const nodeList = flatTree(
-      eventNodes,
-      (collapsedEvents ? collapsedEvents[kTranscriptOutlineCollapseScope] : void 0) || defaultCollapsedIds,
-      [
-        // Strip specific nodes
-        removeNodeVisitor("logger"),
-        removeNodeVisitor("info"),
-        removeNodeVisitor("state"),
-        removeNodeVisitor("store"),
-        removeNodeVisitor("approval"),
-        removeNodeVisitor("input"),
-        removeNodeVisitor("sandbox"),
-        // Strip the sandbox wrapper (and children)
-        removeStepSpanNameVisitor(kSandboxSignalName),
-        // Remove child events for scorers
-        noScorerChildren()
-      ]
-    );
-    return collapseScoring(collapseTurns(makeTurns(nodeList)));
-  }, [eventNodes, collapsedEvents, defaultCollapsedIds]);
+    return collapseScoring(collapseTurns(makeTurns(filteredNodes)));
+  }, [filteredNodes]);
   const allNodesList = reactExports.useMemo(() => {
     return flatTree(eventNodes, null);
   }, [eventNodes]);
@@ -180359,7 +180631,7 @@ const TranscriptOutline = ({
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
-            className: clsx(styles$N.eventPadding),
+            className: clsx(styles$S.eventPadding),
             style: { height: "2em" }
           },
           node2.id
@@ -180402,24 +180674,24 @@ const TranscriptOutline = ({
     }
   );
 };
-const container$c = "_container_17sux_1";
+const container$f = "_container_17sux_1";
 const collapsed = "_collapsed_17sux_9";
 const treeContainer = "_treeContainer_17sux_13";
 const listContainer = "_listContainer_17sux_25";
 const outline = "_outline_17sux_29";
 const outlineToggle = "_outlineToggle_17sux_33";
-const styles$M = {
-  container: container$c,
+const styles$R = {
+  container: container$f,
   collapsed,
   treeContainer,
   listContainer,
   outline,
   outlineToggle
 };
-const title$2 = "_title_19l1b_1";
+const title$1 = "_title_19l1b_1";
 const contents = "_contents_19l1b_8";
-const styles$L = {
-  title: title$2,
+const styles$Q = {
+  title: title$1,
   contents
 };
 const EventRow = ({
@@ -180428,12 +180700,12 @@ const EventRow = ({
   className: className2,
   children: children2
 }) => {
-  const contentEl = title2 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-small", styles$L.title, className2), children: [
+  const contentEl = title2 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-small", styles$Q.title, className2), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: icon2 || ApplicationIcons.metadata }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: title2 }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: children2 })
   ] }) : "";
-  const card2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("card", styles$L.contents), children: contentEl });
+  const card2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("card", styles$Q.contents), children: contentEl });
   return card2;
 };
 const ApprovalEventView = ({
@@ -180484,7 +180756,7 @@ const decisionIcon = (decision) => {
   }
 };
 const tab = "_tab_1je38_1";
-const styles$K = {
+const styles$P = {
   tab
 };
 const EventNav = ({
@@ -180509,7 +180781,7 @@ const EventNav = ({
         active ? "active " : "",
         "text-style-label",
         "text-size-small",
-        styles$K.tab
+        styles$P.tab
       ),
       onClick: handleClick,
       children: title2
@@ -180517,7 +180789,7 @@ const EventNav = ({
   ) });
 };
 const navs$1 = "_navs_1vm6p_1";
-const styles$J = {
+const styles$O = {
   navs: navs$1
 };
 const EventNavs = ({
@@ -180528,7 +180800,7 @@ const EventNavs = ({
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "ul",
     {
-      className: clsx("nav", "nav-pills", styles$J.navs),
+      className: clsx("nav", "nav-pills", styles$O.navs),
       role: "tablist",
       "aria-orientation": "horizontal",
       children: navs2.map((nav2) => {
@@ -180546,22 +180818,110 @@ const EventNavs = ({
     }
   );
 };
-const label$6 = "_label_1nn7f_1";
-const navs = "_navs_1nn7f_6";
-const card = "_card_1nn7f_12";
-const cardContent = "_cardContent_1nn7f_20";
-const hidden$1 = "_hidden_1nn7f_25";
-const copyLink = "_copyLink_1nn7f_33";
-const hover = "_hover_1nn7f_41";
-const root$1 = "_root_1nn7f_45";
-const bottomDongle = "_bottomDongle_1nn7f_50";
-const dongleIcon = "_dongleIcon_1nn7f_67";
-const styles$I = {
-  label: label$6,
+const StickyScrollContext = reactExports.createContext(
+  null
+);
+const StickyScrollProvider = StickyScrollContext.Provider;
+const useStickyScrollContainer = () => reactExports.useContext(StickyScrollContext);
+const scrollListenerMap = /* @__PURE__ */ new Map();
+function updateStickyState(container2, elements) {
+  const containerRect = container2?.getBoundingClientRect();
+  const containerTop = containerRect?.top ?? 0;
+  const stickyTop = parseFloat(
+    getComputedStyle(document.body).getPropertyValue(
+      "--inspect-event-panel-sticky-top"
+    )
+  ) || 0;
+  elements.forEach((el2) => {
+    const rect2 = el2.getBoundingClientRect();
+    const relativeTop = rect2.top - containerTop;
+    const isStuck = relativeTop <= stickyTop + 1 && relativeTop >= stickyTop - 1;
+    el2.toggleAttribute("data-useStickyObserver-stuck", isStuck);
+  });
+}
+function getScrollListener(container2) {
+  let entry = scrollListenerMap.get(container2);
+  if (!entry) {
+    const elements = /* @__PURE__ */ new Set();
+    let rafId = null;
+    const handleScroll = () => {
+      if (rafId === null) {
+        rafId = requestAnimationFrame(() => {
+          updateStickyState(container2, elements);
+          rafId = null;
+        });
+      }
+    };
+    const scrollTarget = container2 || window;
+    scrollTarget.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
+    const cleanup = () => {
+      scrollTarget.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
+    };
+    entry = { elements, cleanup };
+    scrollListenerMap.set(container2, entry);
+  }
+  return entry;
+}
+function useStickyObserver() {
+  const ref = reactExports.useRef(null);
+  const scrollContainerRef = useStickyScrollContainer();
+  const [container2, setContainer] = reactExports.useState(null);
+  reactExports.useEffect(() => {
+    const checkContainer = () => {
+      const newContainer = scrollContainerRef?.current ?? null;
+      if (newContainer !== container2) {
+        setContainer(newContainer);
+      }
+    };
+    checkContainer();
+    const timeoutId = setTimeout(checkContainer, 0);
+    return () => clearTimeout(timeoutId);
+  }, [scrollContainerRef, container2]);
+  reactExports.useEffect(() => {
+    const el2 = ref.current;
+    if (!el2) return;
+    if (scrollContainerRef && !container2) {
+      return;
+    }
+    const { elements, cleanup } = getScrollListener(container2);
+    elements.add(el2);
+    updateStickyState(container2, elements);
+    return () => {
+      elements.delete(el2);
+      el2.removeAttribute("data-useStickyObserver-stuck");
+      if (elements.size === 0) {
+        cleanup();
+        scrollListenerMap.delete(container2);
+      }
+    };
+  }, [container2, scrollContainerRef]);
+  return ref;
+}
+const stickyWrapper = "_stickyWrapper_1yfru_1";
+const label$5 = "_label_1yfru_22";
+const navs = "_navs_1yfru_27";
+const turnLabel = "_turnLabel_1yfru_33";
+const card = "_card_1yfru_39";
+const cardContent = "_cardContent_1yfru_47";
+const hidden = "_hidden_1yfru_52";
+const copyLink = "_copyLink_1yfru_60";
+const hover = "_hover_1yfru_68";
+const root$1 = "_root_1yfru_72";
+const bottomDongle = "_bottomDongle_1yfru_77";
+const dongleIcon = "_dongleIcon_1yfru_94";
+const styles$N = {
+  stickyWrapper,
+  label: label$5,
   navs,
+  turnLabel,
   card,
   cardContent,
-  hidden: hidden$1,
+  hidden,
   copyLink,
   hover,
   root: root$1,
@@ -180579,7 +180939,8 @@ const EventPanel = ({
   children: children2,
   childIds,
   collapsibleContent,
-  collapseControl = "top"
+  collapseControl = "top",
+  turnLabel: turnLabel2
 }) => {
   const [collapsed2, setCollapsed] = useCollapseSampleEvent(
     kTranscriptCollapseScope,
@@ -180604,20 +180965,21 @@ const EventPanel = ({
       defaultValue: defaultPillId
     }
   );
-  const gridColumns2 = [];
+  const stickyRef = useStickyObserver();
+  const gridColumns = [];
   if (isCollapsible && !useBottomDongle) {
-    gridColumns2.push("minmax(0, max-content)");
+    gridColumns.push("minmax(0, max-content)");
   }
   if (icon2) {
-    gridColumns2.push("max-content");
+    gridColumns.push("max-content");
   }
-  gridColumns2.push("minmax(0, max-content)");
+  gridColumns.push("minmax(0, max-content)");
   if (url) {
-    gridColumns2.push("minmax(0, max-content)");
+    gridColumns.push("minmax(0, max-content)");
   }
-  gridColumns2.push("auto");
-  gridColumns2.push("minmax(0, max-content)");
-  gridColumns2.push("minmax(0, max-content)");
+  gridColumns.push("auto");
+  gridColumns.push("minmax(0, max-content)");
+  gridColumns.push("minmax(0, max-content)");
   const toggleCollapse = reactExports.useCallback(() => {
     setCollapsed(!collapsed2);
   }, [setCollapsed, collapsed2]);
@@ -180626,10 +180988,15 @@ const EventPanel = ({
     "div",
     {
       title: subTitle,
-      className: clsx("text-size-small", mouseOver ? styles$I.hover : ""),
+      className: clsx(
+        "text-size-small",
+        mouseOver ? styles$N.hover : "",
+        turnLabel2 ? styles$N.stickyWrapper : ""
+      ),
+      ref: turnLabel2 ? stickyRef : null,
       style: {
         display: "grid",
-        gridTemplateColumns: gridColumns2.join(" "),
+        gridTemplateColumns: gridColumns.join(" "),
         columnGap: "0.3em",
         cursor: isCollapsible && !useBottomDongle ? "pointer" : void 0
       },
@@ -180666,34 +181033,37 @@ const EventPanel = ({
           {
             value: url,
             icon: ApplicationIcons.link,
-            className: clsx(styles$I.copyLink)
+            className: clsx(styles$N.copyLink)
           }
         ) : "",
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { onClick: toggleCollapse }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
-            className: clsx("text-style-secondary", styles$I.label),
+            className: clsx("text-style-secondary", styles$N.label),
             onClick: toggleCollapse,
             children: collapsed2 ? text2 : ""
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$I.navs, children: isCollapsible && collapsibleContent && collapsed2 ? "" : filteredArrChildren && filteredArrChildren.length > 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-          EventNavs,
-          {
-            navs: filteredArrChildren.map((child, index) => {
-              const defaultTitle = `Tab ${index}`;
-              const title22 = child && reactExports.isValidElement(child) ? child.props["data-name"] || defaultTitle : defaultTitle;
-              return {
-                id: `eventpanel-${eventNodeId}-${index}`,
-                title: title22,
-                target: pillId(index)
-              };
-            }),
-            selectedNav,
-            setSelectedNav
-          }
-        ) : "" })
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$N.navs, children: [
+          isCollapsible && collapsibleContent && collapsed2 ? "" : filteredArrChildren && filteredArrChildren.length > 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+            EventNavs,
+            {
+              navs: filteredArrChildren.map((child, index) => {
+                const defaultTitle = `Tab ${index}`;
+                const title22 = child && reactExports.isValidElement(child) ? child.props["data-name"] || defaultTitle : defaultTitle;
+                return {
+                  id: `eventpanel-${eventNodeId}-${index}`,
+                  title: title22,
+                  target: pillId(index)
+                };
+              }),
+              selectedNav,
+              setSelectedNav
+            }
+          ) : "",
+          turnLabel2 && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx(styles$N.turnLabel), children: turnLabel2 })
+        ] })
       ]
     }
   ) : "";
@@ -180703,8 +181073,8 @@ const EventPanel = ({
       id: `event-panel-${eventNodeId}`,
       className: clsx(
         className2,
-        styles$I.card,
-        depth === 0 ? styles$I.root : void 0
+        styles$N.card,
+        depth === 0 ? styles$N.root : void 0
       ),
       children: [
         titleEl,
@@ -180713,8 +181083,8 @@ const EventPanel = ({
           {
             className: clsx(
               "tab-content",
-              styles$I.cardContent,
-              isCollapsible && collapsed2 && collapsibleContent ? styles$I.hidden : void 0
+              styles$N.cardContent,
+              isCollapsible && collapsed2 && collapsibleContent ? styles$N.hidden : void 0
             ),
             children: filteredArrChildren?.map((child, index) => {
               const id = pillId(index);
@@ -180737,7 +181107,7 @@ const EventPanel = ({
         isCollapsible && useBottomDongle ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
           "div",
           {
-            className: clsx(styles$I.bottomDongle, "text-size-smallest"),
+            className: clsx(styles$N.bottomDongle, "text-size-smallest"),
             onClick: toggleCollapse,
             children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -180745,7 +181115,7 @@ const EventPanel = ({
                 {
                   className: clsx(
                     collapsed2 ? ApplicationIcons.chevron.right : ApplicationIcons.chevron.down,
-                    styles$I.dongleIcon
+                    styles$N.dongleIcon
                   )
                 }
               ),
@@ -180811,9 +181181,9 @@ const ErrorEventView = ({
     }
   );
 };
-const panel$4 = "_panel_vz394_1";
-const styles$H = {
-  panel: panel$4
+const panel$5 = "_panel_vz394_1";
+const styles$M = {
+  panel: panel$5
 };
 const InfoEventView = ({
   eventNode,
@@ -180827,12 +181197,13 @@ const InfoEventView = ({
         RenderedText,
         {
           markdown: event.data,
-          className: clsx(styles$H.panel, "text-size-base")
+          className: clsx(styles$M.panel, "text-size-base"),
+          omitMath: true
         }
       )
     );
   } else {
-    panels.push(/* @__PURE__ */ jsxRuntimeExports.jsx(JSONPanel, { data: event.data, className: styles$H.panel }));
+    panels.push(/* @__PURE__ */ jsxRuntimeExports.jsx(JSONPanel, { data: event.data, className: styles$M.panel }));
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     EventPanel,
@@ -180875,9 +181246,11 @@ const InputEventView = ({
     }
   );
 };
-const grid$4 = "_grid_1eq5o_1";
-const styles$G = {
-  grid: grid$4
+const grid$4 = "_grid_159mg_1";
+const wrap = "_wrap_159mg_12";
+const styles$L = {
+  grid: grid$4,
+  wrap
 };
 const LoggerEventView = ({
   eventNode,
@@ -180891,8 +181264,16 @@ const LoggerEventView = ({
       className: className2,
       title: event.message.level,
       icon: ApplicationIcons.logging[event.message.level.toLowerCase()],
-      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-base", styles$G.grid), children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-smaller"), children: obj !== void 0 && obj !== null ? /* @__PURE__ */ jsxRuntimeExports.jsx(MetaDataGrid, { entries: obj }) : event.message.message }),
+      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-base", styles$L.grid), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-smaller"), children: obj !== void 0 && obj !== null ? /* @__PURE__ */ jsxRuntimeExports.jsx(MetaDataGrid, { entries: obj }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+          ExpandablePanel,
+          {
+            id: `event-message-${event.uuid}`,
+            collapse: true,
+            className: clsx(styles$L.wrap),
+            children: event.message.message
+          }
+        ) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-smaller", "text-style-secondary"), children: [
           event.message.filename,
           ":",
@@ -180902,13 +181283,13 @@ const LoggerEventView = ({
     }
   );
 };
-const container$b = "_container_1ww70_1";
+const container$e = "_container_1ww70_1";
 const titleRow = "_titleRow_1ww70_5";
-const title$1 = "_title_1ww70_5";
-const styles$F = {
-  container: container$b,
+const title = "_title_1ww70_5";
+const styles$K = {
+  container: container$e,
   titleRow,
-  title: title$1
+  title
 };
 const EventSection = ({
   title: title2,
@@ -180916,11 +181297,11 @@ const EventSection = ({
   copyContent,
   className: className2
 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$F.container, className2), children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$F.titleRow), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$K.container, className2), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$K.titleRow), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
       {
-        className: clsx("text-size-small", "text-style-label", styles$F.title),
+        className: clsx("text-size-small", "text-style-label", styles$K.title),
         children: [
           title2,
           copyContent ? /* @__PURE__ */ jsxRuntimeExports.jsx(CopyButton, { value: copyContent, ariaLabel: "Copy to clipboard" }) : null
@@ -180930,36 +181311,40 @@ const EventSection = ({
     children2
   ] });
 };
-const container$a = "_container_e0l2n_1";
-const all = "_all_e0l2n_6";
-const tableSelection = "_tableSelection_e0l2n_12";
-const codePre = "_codePre_e0l2n_22";
-const code$3 = "_code_e0l2n_22";
-const progress$1 = "_progress_e0l2n_34";
-const toolConfig = "_toolConfig_e0l2n_38";
-const toolChoice = "_toolChoice_e0l2n_46";
-const styles$E = {
-  container: container$a,
+const container$d = "_container_1hidt_1";
+const all = "_all_1hidt_6";
+const tableSelection = "_tableSelection_1hidt_12";
+const codePre = "_codePre_1hidt_22";
+const code$3 = "_code_1hidt_22";
+const progress$1 = "_progress_1hidt_34";
+const error$1 = "_error_1hidt_38";
+const toolConfig = "_toolConfig_1hidt_54";
+const toolChoice = "_toolChoice_1hidt_62";
+const traceback = "_traceback_1hidt_71";
+const styles$J = {
+  container: container$d,
   all,
   tableSelection,
   codePre,
   code: code$3,
   progress: progress$1,
+  error: error$1,
   toolConfig,
-  toolChoice
+  toolChoice,
+  traceback
 };
-const wrapper$1 = "_wrapper_cv5sf_1";
-const col2 = "_col2_cv5sf_8";
+const wrapper$2 = "_wrapper_cv5sf_1";
+const col2$1 = "_col2_cv5sf_8";
 const col1_3 = "_col1_3_cv5sf_12";
 const col3 = "_col3_cv5sf_16";
-const separator$2 = "_separator_cv5sf_20";
+const separator$3 = "_separator_cv5sf_20";
 const topMargin = "_topMargin_cv5sf_26";
-const styles$D = {
-  wrapper: wrapper$1,
-  col2,
+const styles$I = {
+  wrapper: wrapper$2,
+  col2: col2$1,
   col1_3,
   col3,
-  separator: separator$2,
+  separator: separator$3,
   topMargin
 };
 const EventTimingPanel = ({
@@ -181028,9 +181413,9 @@ const EventTimingPanel = ({
       });
     }
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-small", styles$D.wrapper), children: rows.map((row2, idx) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-small", styles$I.wrapper), children: rows.map((row2, idx) => {
     if (row2.label === "---") {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$D.separator }, `$usage-sep-${idx}`);
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$I.separator }, `$usage-sep-${idx}`);
     } else {
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -181039,13 +181424,13 @@ const EventTimingPanel = ({
             className: clsx(
               "text-style-label",
               "text-style-secondary",
-              row2.secondary ? styles$D.col2 : styles$D.col1_3,
-              row2.topMargin ? styles$D.topMargin : void 0
+              row2.secondary ? styles$I.col2 : styles$I.col1_3,
+              row2.topMargin ? styles$I.topMargin : void 0
             ),
             children: row2.label
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$D.col3, children: row2.value ? row2.value : "" })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$I.col3, children: row2.value ? row2.value : "" })
       ] }, `$usage-row-${idx}`);
     }
   }) });
@@ -181072,7 +181457,13 @@ const ModelEventView = ({
   const entries = { ...event.config };
   delete entries["max_connections"];
   const userMessages = [];
-  for (const msg of inputMessages.slice().reverse()) {
+  let offset2 = void 0;
+  const lastMessage = inputMessages.at(-1);
+  if (lastMessage?.role === "assistant") {
+    userMessages.push(lastMessage);
+    offset2 = -1;
+  }
+  for (const msg of inputMessages.slice(offset2).reverse()) {
     if (msg.role === "user" && !msg.tool_call_id || msg.role === "system" || // If the client doesn't support tool events, then tools messages are allowed to be displayed
     // in this view, since no tool events will be shown. This pretty much happens for bridged agents
     // where tool events aren't captured.
@@ -181083,6 +181474,7 @@ const ModelEventView = ({
     }
   }
   const panelTitle = event.role ? `Model Call (${event.role}): ${event.model}` : `Model Call: ${event.model}`;
+  const turnLabel2 = context?.turnInfo ? `turn ${context.turnInfo.turnNumber}/${context.turnInfo.totalTurns}` : void 0;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     EventPanel,
     {
@@ -181092,8 +181484,9 @@ const ModelEventView = ({
       title: formatTitle(panelTitle, totalUsage, callTime),
       subTitle: formatTiming(event.timestamp, event.working_start),
       icon: ApplicationIcons.model,
+      turnLabel: turnLabel2,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Summary", className: styles$E.container, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Summary", className: styles$J.container, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             ChatView,
             {
@@ -181105,20 +181498,31 @@ const ModelEventView = ({
               allowLinking: false
             }
           ),
-          event.pending ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$E.progress), children: /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false, size: "medium" }) }) : void 0
+          event.error ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$J.error, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.error, "aria-hidden": "true" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              ANSIDisplay,
+              {
+                output: event.error,
+                style: {
+                  fontSize: "clamp(0.3rem, 1.1vw, 0.8rem)"
+                }
+              }
+            )
+          ] }) : event.pending ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$J.progress), children: /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false, size: "medium" }) }) : void 0
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "All", className: styles$E.container, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$E.all, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "All", className: styles$J.container, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$J.all, children: [
             Object.keys(entries).length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(
               EventSection,
               {
                 title: "Configuration",
-                className: styles$E.tableSelection,
+                className: styles$J.tableSelection,
                 children: /* @__PURE__ */ jsxRuntimeExports.jsx(MetaDataGrid, { entries, plain: true })
               }
             ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Usage", className: styles$E.tableSelection, children: event.output.usage !== null ? /* @__PURE__ */ jsxRuntimeExports.jsx(ModelUsagePanel, { usage: event.output.usage }) : void 0 }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Timing", className: styles$E.tableSelection, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Usage", className: styles$J.tableSelection, children: event.output.usage !== null ? /* @__PURE__ */ jsxRuntimeExports.jsx(ModelUsagePanel, { usage: event.output.usage }) : void 0 }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Timing", className: styles$J.tableSelection, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
               EventTimingPanel,
               {
                 timestamp: event.timestamp,
@@ -181138,45 +181542,53 @@ const ModelEventView = ({
             }
           ) })
         ] }),
-        event.tools.length > 1 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-name": "Tools", className: styles$E.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ToolsConfig, { tools: event.tools, toolChoice: event.tool_choice }) }),
+        event.tools.length > 1 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-name": "Tools", className: styles$J.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ToolsConfig, { tools: event.tools, toolChoice: event.tool_choice }) }),
         event.call ? /* @__PURE__ */ jsxRuntimeExports.jsx(
           APIView,
           {
             "data-name": "API",
             call: event.call,
-            className: styles$E.container
+            error: event.error,
+            className: styles$J.container
           }
-        ) : ""
+        ) : "",
+        event.traceback_ansi && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-name": "Error", className: styles$J.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          ANSIDisplay,
+          {
+            output: event.traceback_ansi,
+            className: styles$J.traceback
+          }
+        ) })
       ]
     }
   );
 };
-const APIView = ({ call, className: className2 }) => {
+const APIView = ({ call, error: error2, className: className2 }) => {
   const requestCode = reactExports.useMemo(() => {
-    return JSON.stringify(call.request, void 0, 2);
-  }, [call.request]);
+    return call?.request ? JSON.stringify(call.request, void 0, 2) : "";
+  }, [call?.request]);
   const responseCode = reactExports.useMemo(() => {
-    return JSON.stringify(call.response, void 0, 2);
-  }, [call.response]);
+    return call?.response ? JSON.stringify(call.response, void 0, 2) : null;
+  }, [call?.response]);
   if (!call) {
     return null;
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2), children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Request", copyContent: requestCode, children: /* @__PURE__ */ jsxRuntimeExports.jsx(APICodeCell, { sourceCode: requestCode }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Response", copyContent: responseCode, children: /* @__PURE__ */ jsxRuntimeExports.jsx(APICodeCell, { sourceCode: responseCode }) })
+    /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Request", copyContent: requestCode, children: requestCode ? /* @__PURE__ */ jsxRuntimeExports.jsx(APICodeCell, { sourceCode: requestCode }) : "None" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Response", copyContent: responseCode ?? "", children: responseCode ? /* @__PURE__ */ jsxRuntimeExports.jsx(APICodeCell, { sourceCode: responseCode }) : error2 ? "None" : /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false, size: "medium" }) })
   ] });
 };
 const APICodeCell = ({ id, sourceCode }) => {
   const sourceCodeRef = reactExports.useRef(null);
-  usePrismHighlight(sourceCodeRef, sourceCode.length);
+  usePrismHighlight(sourceCodeRef, sourceCode?.length ?? 0);
   if (!sourceCode) {
     return null;
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: sourceCodeRef, className: clsx("model-call"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$E.codePre), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: sourceCodeRef, className: clsx("model-call"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$J.codePre), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     "code",
     {
       id,
-      className: clsx("language-json", styles$E.code, "text-size-small"),
+      className: clsx("language-json", styles$J.code, "text-size-small"),
       children: sourceCode
     }
   ) }) });
@@ -181189,8 +181601,8 @@ const ToolsConfig = ({ tools: tools2, toolChoice: toolChoice2 }) => {
     ] }, `${tool2.name}-${idx}`);
   });
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$E.toolConfig, "text-size-small"), children: toolEls }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$E.toolChoice, "text-size-small"), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$J.toolConfig, "text-size-small"), children: toolEls }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$J.toolChoice, "text-size-small"), children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Tool Choice" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(ToolChoiceView, { toolChoice: toolChoice2 }) })
     ] })
@@ -181211,13 +181623,13 @@ const noMargin = "_noMargin_1a3fk_1";
 const code$2 = "_code_1a3fk_5";
 const sample = "_sample_1a3fk_10";
 const section$1 = "_section_1a3fk_14";
-const metadata = "_metadata_1a3fk_21";
-const styles$C = {
+const metadata$1 = "_metadata_1a3fk_21";
+const styles$H = {
   noMargin,
   code: code$2,
   sample,
   section: section$1,
-  metadata
+  metadata: metadata$1
 };
 const SampleInitEventView = ({
   eventNode,
@@ -181229,13 +181641,13 @@ const SampleInitEventView = ({
   if (event.sample.files && Object.keys(event.sample.files).length > 0) {
     sections.push(
       /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Files", children: Object.keys(event.sample.files).map((file) => {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$C.noMargin, children: file }, `sample-init-file-${file}`);
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$H.noMargin, children: file }, `sample-init-file-${file}`);
       }) }, `event-${eventNode.id}`)
     );
   }
   if (event.sample.setup) {
     sections.push(
-      /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Setup", children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$C.code, children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: "sourceCode", children: event.sample.setup }) }) }, `${eventNode.id}-section-setup`)
+      /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Setup", children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$H.code, children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: "sourceCode", children: event.sample.setup }) }) }, `${eventNode.id}-section-setup`)
     );
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -181248,7 +181660,7 @@ const SampleInitEventView = ({
       icon: ApplicationIcons.sample,
       subTitle: formatDateTime(new Date(event.timestamp)),
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Sample", className: styles$C.sample, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Sample", className: styles$H.sample, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             ChatView,
             {
@@ -181264,7 +181676,7 @@ const SampleInitEventView = ({
                 choice
               ] }, `$choice-{choice}`);
             }) : "",
-            sections.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$C.section, children: sections }) : "",
+            sections.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$H.section, children: sections }) : "",
             event.sample.target ? /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Target", children: toArray(event.sample.target).map((target2) => {
               return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-base"), children: target2 }, target2);
             }) }) : void 0
@@ -181274,7 +181686,7 @@ const SampleInitEventView = ({
           MetaDataGrid,
           {
             "data-name": "Metadata",
-            className: styles$C.metadata,
+            className: styles$H.metadata,
             entries: event.sample.metadata
           }
         ) : ""
@@ -181300,6 +181712,8 @@ const SampleLimitEventView = ({
         return "Operator Canceled";
       case "working":
         return "Execution Time Limit Exceeded";
+      case "cost":
+        return "Cost Limit Exceeded";
     }
   };
   const resolve_icon = (type) => {
@@ -181316,6 +181730,8 @@ const SampleLimitEventView = ({
         return ApplicationIcons.limits.operator;
       case "working":
         return ApplicationIcons.limits.execution;
+      case "cost":
+        return ApplicationIcons.limits.cost;
     }
   };
   const title2 = resolve_title(eventNode.event.type);
@@ -181338,7 +181754,7 @@ const exec = "_exec_1irga_15";
 const result = "_result_1irga_19";
 const fileLabel = "_fileLabel_1irga_23";
 const wrapPre = "_wrapPre_1irga_28";
-const styles$B = {
+const styles$G = {
   twoColumn,
   exec,
   result,
@@ -181376,10 +181792,10 @@ const ExecView = ({ id, event }) => {
   const input2 = event.input;
   const result2 = event.result;
   const output2 = event.output ? event.output.trim() : void 0;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$B.exec), children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: `Command`, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$B.twoColumn), children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$B.wrapPre), children: cmd2 }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$B.wrapPre), children: input2 !== null ? input2?.trim() : void 0 }),
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$G.exec), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: `Command`, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$G.twoColumn), children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$G.wrapPre), children: cmd2 }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$G.wrapPre), children: input2 !== null ? input2?.trim() : void 0 }),
       options2 !== null && Object.keys(options2).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: `Options`, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         MetaDataGrid,
         {
@@ -181396,7 +181812,7 @@ const ExecView = ({ id, event }) => {
           entry: { name: "sandbox_output", value: output2 }
         }
       ) }) : void 0,
-      result2 !== 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$B.result, "text-size-base"), children: [
+      result2 !== 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$G.result, "text-size-base"), children: [
         "(exited with code ",
         result2,
         ")"
@@ -181422,17 +181838,17 @@ const WriteFileView = ({ id, event }) => {
 };
 const FileView = ({ id, file, contents: contents2 }) => {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "File", children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$B.fileLabel), children: file }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "File", children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$G.fileLabel), children: file }) }),
     contents2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Contents", children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExpandablePanel, { id: `${id}-file`, collapse: false, children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { children: contents2 }) }) }) : void 0
   ] });
 };
 const explanation = "_explanation_1k2k0_1";
 const wrappingContent$1 = "_wrappingContent_1k2k0_8";
-const separator$1 = "_separator_1k2k0_13";
-const styles$A = {
+const separator$2 = "_separator_1k2k0_13";
+const styles$F = {
   explanation,
   wrappingContent: wrappingContent$1,
-  separator: separator$1
+  separator: separator$2
 };
 const ScoreEventView = ({
   eventNode,
@@ -181455,29 +181871,29 @@ const ScoreEventView = ({
       icon: ApplicationIcons.scorer,
       collapsibleContent: true,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Explanation", className: clsx(styles$A.explanation), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Explanation", className: clsx(styles$F.explanation), children: [
           event.target ? /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.separator) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$F.separator) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Target" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: resolvedTarget || "" }) })
           ] }) : "",
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.separator) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$F.separator) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Answer" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.score.answer || "" }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.separator) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$F.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.score.answer || "" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$F.separator) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Explanation" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.score.explanation || "" }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.separator) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$F.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.score.explanation || "" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$F.separator) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Score" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: renderScore(event.score.value) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.separator) })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$F.separator) })
         ] }),
         event.score.metadata ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-name": "Metadata", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           RecordTree,
           {
             id: `${eventNode.id}-score-metadata`,
             record: event.score.metadata,
-            className: styles$A.metadataTree,
+            className: styles$F.metadataTree,
             defaultExpandLevel: 0
           }
         ) }) : void 0
@@ -182400,9 +182816,9 @@ let cachedDiffPatch = null;
 function getDiffMatchPatch(options2, required) {
   var _a2;
   if (!cachedDiffPatch) {
-    let instance;
+    let instance2;
     if ((_a2 = options2 === null || options2 === void 0 ? void 0 : options2.textDiff) === null || _a2 === void 0 ? void 0 : _a2.diffMatchPatch) {
-      instance = new options2.textDiff.diffMatchPatch();
+      instance2 = new options2.textDiff.diffMatchPatch();
     } else {
       if (!required) {
         return null;
@@ -182412,9 +182828,9 @@ function getDiffMatchPatch(options2, required) {
       throw error2;
     }
     cachedDiffPatch = {
-      diff: (txt1, txt2) => instance.patch_toText(instance.patch_make(txt1, txt2)),
+      diff: (txt1, txt2) => instance2.patch_toText(instance2.patch_make(txt1, txt2)),
       patch: (txt1, patch) => {
-        const results = instance.patch_apply(instance.patch_fromText(patch), txt1);
+        const results = instance2.patch_apply(instance2.patch_fromText(patch), txt1);
         for (const resultOk of results[1]) {
           if (!resultOk) {
             const error2 = new Error("text patch failed");
@@ -183482,14 +183898,14 @@ async function __wbg_load(module, imports) {
     const bytes = await module.arrayBuffer();
     return await WebAssembly.instantiate(bytes, imports);
   } else {
-    const instance = await WebAssembly.instantiate(module, imports);
-    if (instance instanceof WebAssembly.Instance) {
+    const instance2 = await WebAssembly.instantiate(module, imports);
+    if (instance2 instanceof WebAssembly.Instance) {
       return {
-        instance,
+        instance: instance2,
         module
       };
     } else {
-      return instance;
+      return instance2;
     }
   }
 }
@@ -183541,8 +183957,8 @@ function __wbg_get_imports() {
   };
   return imports;
 }
-function __wbg_finalize_init(instance, module) {
-  wasm = instance.exports;
+function __wbg_finalize_init(instance2, module) {
+  wasm = instance2.exports;
   __wbg_init.__wbindgen_wasm_module = module;
   cachedDataViewMemory0 = null;
   cachedUint32ArrayMemory0 = null;
@@ -183564,8 +183980,8 @@ function initSync(module) {
   if (!(module instanceof WebAssembly.Module)) {
     module = new WebAssembly.Module(module);
   }
-  const instance = new WebAssembly.Instance(module, imports);
-  return __wbg_finalize_init(instance, module);
+  const instance2 = new WebAssembly.Instance(module, imports);
+  return __wbg_finalize_init(instance2, module);
 }
 async function __wbg_init(module_or_path) {
   if (wasm !== void 0) return wasm;
@@ -183583,10 +183999,10 @@ async function __wbg_init(module_or_path) {
     module_or_path = fetch(module_or_path);
   }
   const {
-    instance,
+    instance: instance2,
     module
   } = await __wbg_load(await module_or_path, imports);
-  return __wbg_finalize_init(instance, module);
+  return __wbg_finalize_init(instance2, module);
 }
 var exports$1 = /* @__PURE__ */ Object.freeze({
   __proto__: null,
@@ -189590,7 +190006,7 @@ const lightboxContent = "_lightboxContent_1mvg8_33";
 const lightboxButtonCloseWrapper = "_lightboxButtonCloseWrapper_1mvg8_45";
 const lightboxButtonClose = "_lightboxButtonClose_1mvg8_45";
 const lightboxPreviewButton = "_lightboxPreviewButton_1mvg8_63";
-const styles$z = {
+const styles$E = {
   carouselThumbs,
   carouselThumb,
   carouselPlayIcon,
@@ -189659,12 +190075,12 @@ const LightboxCarousel = ({ id, slides }) => {
     [openLightbox]
   );
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("lightbox-carousel-container"), children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$z.carouselThumbs), children: slides.map((slide, index) => {
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$E.carouselThumbs), children: slides.map((slide, index) => {
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
         {
           "data-index": index,
-          className: clsx(styles$z.carouselThumb),
+          className: clsx(styles$E.carouselThumb),
           onClick: handleThumbClick,
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: slide.label }),
@@ -189673,7 +190089,7 @@ const LightboxCarousel = ({ id, slides }) => {
               {
                 className: clsx(
                   ApplicationIcons.play,
-                  styles$z.carouselPlayIcon
+                  styles$E.carouselPlayIcon
                 )
               }
             ) })
@@ -189685,12 +190101,12 @@ const LightboxCarousel = ({ id, slides }) => {
     showOverlay && /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
       {
-        className: clsx(styles$z.lightboxOverlay, isOpen ? "open" : "closed"),
+        className: clsx(styles$E.lightboxOverlay, isOpen ? "open" : "closed"),
         children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$z.lightboxButtonCloseWrapper), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$E.lightboxButtonCloseWrapper), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             "button",
             {
-              className: styles$z.lightboxButtonClose,
+              className: styles$E.lightboxButtonClose,
               onClick: closeLightbox,
               children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.close })
             }
@@ -189698,7 +190114,7 @@ const LightboxCarousel = ({ id, slides }) => {
           slides.length > 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
             "button",
             {
-              className: clsx(styles$z.lightboxPreviewButton, "prev"),
+              className: clsx(styles$E.lightboxPreviewButton, "prev"),
               onClick: showPrev,
               children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.previous })
             }
@@ -189706,7 +190122,7 @@ const LightboxCarousel = ({ id, slides }) => {
           slides.length > 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
             "button",
             {
-              className: clsx(styles$z.lightboxPreviewButton, "next"),
+              className: clsx(styles$E.lightboxPreviewButton, "next"),
               onClick: showNext,
               children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.next })
             }
@@ -189714,7 +190130,7 @@ const LightboxCarousel = ({ id, slides }) => {
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "div",
             {
-              className: clsx(styles$z.lightboxContent, isOpen ? "open" : "closed"),
+              className: clsx(styles$E.lightboxContent, isOpen ? "open" : "closed"),
               children: slides[currentIndex].render()
             },
             `carousel-slide-${currentIndex}`
@@ -189814,7 +190230,7 @@ const extractSize = (value2, label2, defaultValue) => {
 const toolsGrid = "_toolsGrid_1qqm2_1";
 const tools = "_tools_1qqm2_1";
 const tool = "_tool_1qqm2_1";
-const styles$y = {
+const styles$D = {
   toolsGrid,
   tools,
   tool
@@ -189983,7 +190399,7 @@ const renderTools = (changes, resolvedState) => {
       toolsInfo["Tools"] = /* @__PURE__ */ jsxRuntimeExports.jsx(Tools, { toolDefinitions: filtered });
     }
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$y.tools), children: Object.keys(toolsInfo).map((key2) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$D.tools), children: Object.keys(toolsInfo).map((key2) => {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
@@ -190038,7 +190454,7 @@ const StoreSpecificRenderableTypes = [
   human_baseline_session
 ];
 const Tools = ({ toolDefinitions }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$y.toolsGrid, children: toolDefinitions.map((toolDefinition, idx) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$D.toolsGrid, children: toolDefinitions.map((toolDefinition, idx) => {
     const toolName = toolDefinition.name;
     const toolArgs = toolDefinition.parameters?.properties ? Object.keys(toolDefinition.parameters.properties) : [];
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -190053,11 +190469,11 @@ const Tools = ({ toolDefinitions }) => {
 };
 const Tool = ({ toolName, toolArgs }) => {
   const functionCall = toolArgs && toolArgs.length > 0 ? `${toolName}(${toolArgs.join(", ")})` : toolName;
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("text-size-smallest", styles$y.tool), children: functionCall });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("text-size-smallest", styles$D.tool), children: functionCall });
 };
 const diff = "_diff_eobja_1";
 const summary$2 = "_summary_eobja_6";
-const styles$x = {
+const styles$C = {
   diff,
   summary: summary$2
 };
@@ -190102,14 +190518,14 @@ const StateEventView = ({
       text: !changePreview ? summary2 : void 0,
       collapsibleContent: true,
       children: [
-        changePreview ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-name": "Summary", className: clsx(styles$x.summary), children: changePreview }) : void 0,
+        changePreview ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-name": "Summary", className: clsx(styles$C.summary), children: changePreview }) : void 0,
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           StateDiffView,
           {
             before,
             after,
             "data-name": "Diff",
-            className: clsx(styles$x.diff)
+            className: clsx(styles$C.diff)
           }
         )
       ]
@@ -190434,7 +190850,7 @@ const summary$1 = "_summary_ac4z2_1";
 const summaryRendered = "_summaryRendered_ac4z2_6";
 const subtaskSummary = "_subtaskSummary_ac4z2_10";
 const subtaskLabel = "_subtaskLabel_ac4z2_17";
-const styles$w = {
+const styles$B = {
   summary: summary$1,
   summaryRendered,
   subtaskSummary,
@@ -190449,9 +190865,9 @@ const SubtaskEventView = ({
   const body2 = [];
   if (event.type === "fork") {
     body2.push(
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { title: "Summary", className: clsx(styles$w.summary), children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { title: "Summary", className: clsx(styles$B.summary), children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Inputs" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$w.summaryRendered), children: /* @__PURE__ */ jsxRuntimeExports.jsx(Rendered, { values: event.input }) })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$B.summaryRendered), children: /* @__PURE__ */ jsxRuntimeExports.jsx(Rendered, { values: event.input }) })
       ] })
     );
   } else {
@@ -190487,12 +190903,12 @@ const SubtaskEventView = ({
 };
 const SubtaskSummary = ({ input: input2, result: result2 }) => {
   const output2 = typeof result2 === "object" ? result2 : { result: result2 };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$w.subtaskSummary), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$B.subtaskSummary), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-size-small"), children: "Input" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-large", styles$w.subtaskLabel) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-large", styles$B.subtaskLabel) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-size-small"), children: "Output" }),
     input2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(Rendered, { values: input2 }) : void 0,
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-title-secondary", styles$w.subtaskLabel), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.arrows.right }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-title-secondary", styles$B.subtaskLabel), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.arrows.right }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Rendered, { values: output2 }) })
   ] });
 };
@@ -190517,7 +190933,7 @@ const None = () => {
 const summary = "_summary_1qsnv_1";
 const approval = "_approval_1qsnv_6";
 const progress = "_progress_1qsnv_12";
-const styles$v = {
+const styles$A = {
   summary,
   approval,
   progress
@@ -190525,9 +190941,11 @@ const styles$v = {
 const ToolEventView = ({
   eventNode,
   children: children2,
-  className: className2
+  className: className2,
+  context
 }) => {
   const event = eventNode.event;
+  const turnLabel2 = context?.turnInfo ? `turn ${context.turnInfo.turnNumber}/${context.turnInfo.totalTurns}` : void 0;
   const { input: input2, description: description2, functionCall, contentType } = reactExports.useMemo(
     () => resolveToolInput(event.function, event.arguments),
     [event.function, event.arguments]
@@ -190556,7 +190974,8 @@ const ToolEventView = ({
       icon: ApplicationIcons.solvers.use_tools,
       childIds: children2.map((child) => child.id),
       collapseControl: "bottom",
-      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Summary", className: styles$v.summary, children: [
+      turnLabel: turnLabel2,
+      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Summary", className: styles$A.summary, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           ToolCallView,
           {
@@ -190584,24 +191003,24 @@ const ToolEventView = ({
           ApprovalEventView,
           {
             eventNode: approvalNode,
-            className: styles$v.approval
+            className: styles$A.approval
           }
         ) : "",
-        event.pending ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$v.progress), children: /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false, size: "medium" }) }) : void 0
+        event.pending ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.progress), children: /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false, size: "medium" }) }) : void 0
       ] })
     }
   );
 };
-const container$9 = "_container_io1r0_1";
+const container$c = "_container_io1r0_1";
 const wrappingContent = "_wrappingContent_io1r0_8";
-const separator = "_separator_io1r0_13";
+const separator$1 = "_separator_io1r0_13";
 const unchanged = "_unchanged_io1r0_22";
 const section = "_section_io1r0_27";
 const spacer = "_spacer_io1r0_31";
-const styles$u = {
-  container: container$9,
+const styles$z = {
+  container: container$c,
   wrappingContent,
-  separator,
+  separator: separator$1,
   unchanged,
   section,
   spacer
@@ -190630,46 +191049,46 @@ const ScoreEditEventView = ({
             className: clsx(
               "text-style-label",
               "text-style-secondary",
-              styles$u.section
+              styles$z.section
             ),
             children: "Updated Values"
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$u.container), children: [
-          event.edit.value ? /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$u.separator) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$z.container), children: [
+          event.edit.value !== void 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$z.separator) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Value" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: renderScore(event.edit.value) })
           ] }) : "",
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$u.separator) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$z.separator) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Answer" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$u.wrappingContent), children: event.edit.answer === kUnchangedSentinel ? /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$u.unchanged), children: "[unchanged]" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.edit.answer || "" }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$u.separator) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$z.wrappingContent), children: event.edit.answer === kUnchangedSentinel ? /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$z.unchanged), children: "[unchanged]" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.edit.answer || "" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$z.separator) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Explanation" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$u.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.edit.explanation || "" }) })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$z.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.edit.explanation || "" }) })
         ] }),
-        event.edit.provenance ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$u.container), children: [
+        event.edit.provenance ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$z.container), children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "div",
             {
               className: clsx(
                 "text-style-label",
                 "text-style-secondary",
-                styles$u.section
+                styles$z.section
               ),
               children: "Provenance"
             }
           ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$u.spacer) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$u.separator) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$z.spacer) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$z.separator) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Author" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$u.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.edit.provenance.author }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$u.separator) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$z.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.edit.provenance.author }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$z.separator) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Reason" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$u.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.edit.provenance.reason || "" }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$u.separator) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$z.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.edit.provenance.reason || "" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$z.separator) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Time" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$u.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$z.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             RenderedText,
             {
               markdown: formatDateTime(new Date(event.edit.provenance.timestamp)) || ""
@@ -190681,7 +191100,7 @@ const ScoreEditEventView = ({
           {
             id: `${eventNode.id}-score-metadata`,
             record: event.edit.metadata || {},
-            className: styles$u.metadataTree,
+            className: styles$z.metadataTree,
             defaultExpandLevel: 0
           }
         ) }) : void 0
@@ -190814,7 +191233,7 @@ const node = "_node_1r858_1";
 const attached = "_attached_1r858_5";
 const attachedParent = "_attachedParent_1r858_9";
 const attachedChild = "_attachedChild_1r858_16";
-const styles$t = {
+const styles$y = {
   node,
   attached,
   attachedParent,
@@ -190900,6 +191319,14 @@ const eventSearchText = (node2) => {
       }
       break;
     }
+    case "compaction": {
+      const compactionEvent = event;
+      if (compactionEvent.source) {
+        texts.push(compactionEvent.source);
+      }
+      texts.push(JSON.stringify(compactionEvent));
+      break;
+    }
     case "step": {
       const stepEvent = event;
       if (stepEvent.name) {
@@ -190980,7 +191407,8 @@ const TranscriptVirtualListComponent = ({
   running,
   initialEventId,
   offsetTop,
-  className: className2
+  className: className2,
+  turnMap
 }) => {
   const useVirtualization = running || eventNodes.length > 100;
   const setNativeFind = useStore((state) => state.appActions.setNativeFind);
@@ -191011,11 +191439,6 @@ const TranscriptVirtualListComponent = ({
     },
     [eventNodes]
   );
-  const contextWithToolEvents = reactExports.useMemo(() => ({ hasToolEvents: true }), []);
-  const contextWithoutToolEvents = reactExports.useMemo(
-    () => ({ hasToolEvents: false }),
-    []
-  );
   const nonVirtualGridRef = reactExports.useRef(null);
   reactExports.useEffect(() => {
     if (!useVirtualization && initialEventId) {
@@ -191025,25 +191448,34 @@ const TranscriptVirtualListComponent = ({
       row2?.scrollIntoView({ block: "start" });
     }
   }, [initialEventId, useVirtualization]);
+  const contextMap = reactExports.useMemo(() => {
+    const map2 = /* @__PURE__ */ new Map();
+    for (let i = 0; i < eventNodes.length; i++) {
+      const node2 = eventNodes[i];
+      const hasToolEvents = hasToolEventsAtCurrentDepth(i);
+      const turnInfo = turnMap?.get(node2.id);
+      map2.set(node2.id, { hasToolEvents, turnInfo });
+    }
+    return map2;
+  }, [eventNodes, hasToolEventsAtCurrentDepth, turnMap]);
   const renderRow = reactExports.useCallback(
     (index, item2, style2) => {
-      const paddingClass = index === 0 ? styles$t.first : void 0;
+      const paddingClass = index === 0 ? styles$y.first : void 0;
       const previousIndex = index - 1;
       const nextIndex = index + 1;
       const previous = previousIndex > 0 && previousIndex <= eventNodes.length ? eventNodes[previousIndex] : void 0;
       const next = nextIndex < eventNodes.length ? eventNodes[nextIndex] : void 0;
       const attached2 = item2.event.event === "tool" && (previous?.event.event === "tool" || previous?.event.event === "model");
       const attachedParent2 = item2.event.event === "model" && next?.event.event === "tool";
-      const attachedClass = attached2 ? styles$t.attached : void 0;
-      const attachedChildClass = attached2 ? styles$t.attachedChild : void 0;
-      const attachedParentClass = attachedParent2 ? styles$t.attachedParent : void 0;
-      const hasToolEvents = hasToolEventsAtCurrentDepth(index);
-      const context = hasToolEvents ? contextWithToolEvents : contextWithoutToolEvents;
+      const attachedClass = attached2 ? styles$y.attached : void 0;
+      const attachedChildClass = attached2 ? styles$y.attachedChild : void 0;
+      const attachedParentClass = attachedParent2 ? styles$y.attachedParent : void 0;
+      const context = contextMap.get(item2.id);
       return /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
         {
           id: item2.id,
-          className: clsx(styles$t.node, paddingClass, attachedClass),
+          className: clsx(styles$y.node, paddingClass, attachedClass),
           style: {
             ...style2,
             paddingLeft: `${item2.depth <= 1 ? item2.depth * 0.7 : (0.7 + item2.depth - 1) * 1}em`,
@@ -191062,12 +191494,7 @@ const TranscriptVirtualListComponent = ({
         item2.id
       );
     },
-    [
-      eventNodes,
-      hasToolEventsAtCurrentDepth,
-      contextWithToolEvents,
-      contextWithoutToolEvents
-    ]
+    [eventNodes, contextMap]
   );
   if (useVirtualization) {
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -191094,6 +191521,37 @@ const TranscriptVirtualListComponent = ({
     }) });
   }
 };
+const panel$4 = "_panel_8zdtn_1";
+const styles$x = {
+  panel: panel$4
+};
+const CompactionEventView = ({
+  eventNode,
+  className: className2
+}) => {
+  const event = eventNode.event;
+  let data = {};
+  if (event.tokens_before) {
+    data["tokens_before"] = event.tokens_before;
+  }
+  if (event.tokens_after) {
+    data["tokens_after"] = event.tokens_after;
+  }
+  data = { ...data, ...event.metadata || {} };
+  const source2 = event.source && event.source !== "inspect" ? event.source : "";
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    EventPanel,
+    {
+      eventNodeId: eventNode.id,
+      depth: eventNode.depth,
+      title: formatTitle("Compaction" + source2, void 0, event.working_start),
+      className: className2,
+      subTitle: formatDateTime(new Date(event.timestamp)),
+      icon: ApplicationIcons.info,
+      children: [/* @__PURE__ */ jsxRuntimeExports.jsx(MetaDataGrid, { entries: data, className: styles$x.panel })]
+    }
+  );
+};
 const TranscriptVirtualList = reactExports.memo(
   (props) => {
     let {
@@ -191104,7 +191562,8 @@ const TranscriptVirtualList = reactExports.memo(
       running,
       initialEventId,
       offsetTop,
-      className: className2
+      className: className2,
+      turnMap
     } = props;
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       TranscriptVirtualListComponent,
@@ -191116,7 +191575,8 @@ const TranscriptVirtualList = reactExports.memo(
         offsetTop,
         scrollRef,
         running,
-        className: className2
+        className: className2,
+        turnMap
       }
     );
   }
@@ -191143,6 +191603,14 @@ const RenderedEventNode = reactExports.memo(
       case "info":
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           InfoEventView,
+          {
+            eventNode: node2,
+            className: className2
+          }
+        );
+      case "compaction":
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          CompactionEventView,
           {
             eventNode: node2,
             className: className2
@@ -191231,7 +191699,8 @@ const RenderedEventNode = reactExports.memo(
           {
             eventNode: node2,
             className: className2,
-            children: node2.children
+            children: node2.children,
+            context
           }
         );
       case "input":
@@ -191624,7 +192093,7 @@ const TranscriptPanel = reactExports.memo((props) => {
   const filteredEventTypes = useStore(
     (state) => state.sample.eventFilter.filteredTypes
   );
-  const sampleStatus = useStore((state) => state.sample.sampleStatus);
+  const sampleStatus2 = useStore((state) => state.sample.sampleStatus);
   const filteredEvents = reactExports.useMemo(() => {
     if (filteredEventTypes.length === 0) {
       return events;
@@ -191647,6 +192116,54 @@ const TranscriptPanel = reactExports.memo((props) => {
       (collapsedEvents ? collapsedEvents[kTranscriptCollapseScope] : void 0) || defaultCollapsedIds
     );
   }, [eventNodes, collapsedEvents, defaultCollapsedIds]);
+  const outlineFilteredNodes = reactExports.useMemo(() => {
+    return flatTree(
+      eventNodes,
+      (collapsedEvents ? collapsedEvents[kTranscriptOutlineCollapseScope] : void 0) || defaultCollapsedIds,
+      [
+        // Strip specific nodes
+        removeNodeVisitor("logger"),
+        removeNodeVisitor("info"),
+        removeNodeVisitor("state"),
+        removeNodeVisitor("store"),
+        removeNodeVisitor("approval"),
+        removeNodeVisitor("input"),
+        removeNodeVisitor("sandbox"),
+        // Strip the sandbox wrapper (and children)
+        removeStepSpanNameVisitor(kSandboxSignalName),
+        // Remove child events for scorers
+        noScorerChildren()
+      ]
+    );
+  }, [eventNodes, collapsedEvents, defaultCollapsedIds]);
+  const turnMap = reactExports.useMemo(() => {
+    const turns = makeTurns(outlineFilteredNodes);
+    const map2 = /* @__PURE__ */ new Map();
+    const turnNodes = turns.filter(
+      (n) => n.event.event === "span_begin" && n.event.type === "turn"
+    );
+    const totalTurns = turnNodes.length;
+    let turnNumber = 0;
+    const modelEventTurnNumbers = /* @__PURE__ */ new Map();
+    for (const node2 of turnNodes) {
+      turnNumber++;
+      const modelChild = node2.children.find((c2) => c2.event.event === "model");
+      if (modelChild) {
+        modelEventTurnNumbers.set(modelChild.id, turnNumber);
+      }
+    }
+    let currentTurn = 0;
+    for (const node2 of flattenedNodes) {
+      const modelTurn = modelEventTurnNumbers.get(node2.id);
+      if (modelTurn !== void 0) {
+        currentTurn = modelTurn;
+        map2.set(node2.id, { turnNumber: currentTurn, totalTurns });
+      } else if (currentTurn > 0) {
+        map2.set(node2.id, { turnNumber: currentTurn, totalTurns });
+      }
+    }
+    return map2;
+  }, [outlineFilteredNodes, flattenedNodes]);
   const collapsedMode = useStore((state) => state.sample.collapsedMode);
   reactExports.useEffect(() => {
     if (events.length <= 0 || collapsedMode !== null) {
@@ -191717,7 +192234,7 @@ const TranscriptPanel = reactExports.memo((props) => {
       };
     }
   }, [scrollRef, flattenedNodes]);
-  if (sampleStatus === "loading" && flattenedNodes.length === 0) {
+  if (sampleStatus2 === "loading" && flattenedNodes.length === 0) {
     return void 0;
   }
   if (flattenedNodes.length === 0) {
@@ -191729,22 +192246,23 @@ const TranscriptPanel = reactExports.memo((props) => {
       "div",
       {
         className: clsx(
-          styles$M.container,
-          collapsed2 ? styles$M.collapsed : void 0
+          styles$R.container,
+          collapsed2 ? styles$R.collapsed : void 0
         ),
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs(
             StickyScroll,
             {
               scrollRef,
-              className: styles$M.treeContainer,
+              className: styles$R.treeContainer,
               offsetTop: topOffset,
               children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
                   TranscriptOutline,
                   {
-                    className: clsx(styles$M.outline),
+                    className: clsx(styles$R.outline),
                     eventNodes,
+                    filteredNodes: outlineFilteredNodes,
                     running,
                     defaultCollapsedIds,
                     scrollRef
@@ -191753,7 +192271,7 @@ const TranscriptPanel = reactExports.memo((props) => {
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
                   "div",
                   {
-                    className: styles$M.outlineToggle,
+                    className: styles$R.outlineToggle,
                     onClick: () => setCollapsed(!collapsed2),
                     children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.sidebar })
                   }
@@ -191771,7 +192289,8 @@ const TranscriptPanel = reactExports.memo((props) => {
               running,
               initialEventId: initialEventId === void 0 ? null : initialEventId,
               offsetTop: topOffset,
-              className: styles$M.listContainer
+              className: styles$R.listContainer,
+              turnMap
             }
           )
         ]
@@ -191784,7 +192303,7 @@ const SampleDisplay = ({
   scrollRef,
   focusOnLoad
 }) => {
-  const baseId = `sample-dialog`;
+  const baseId = `sample-display`;
   const sampleData = useSampleData();
   const sample2 = reactExports.useMemo(() => {
     return sampleData.getSelectedSample();
@@ -191892,6 +192411,8 @@ const SampleDisplay = ({
     setCollapsedMode(isCollapsed(collapsedMode) ? "expanded" : "collapsed");
   }, [collapsedMode, setCollapsedMode]);
   const { isDebugFilter, isDefaultFilter } = useTranscriptFilter();
+  const api2 = useStore((state) => state.api);
+  const downloadFiles = useStore((state) => state.capabilities.downloadFiles);
   const tools2 = [];
   const [icon2, setIcon] = reactExports.useState(ApplicationIcons.copy);
   tools2.push(
@@ -191924,6 +192445,33 @@ const SampleDisplay = ({
       "sample-copy"
     )
   );
+  if (downloadFiles && sample2 && api2?.download_file) {
+    const sampleId = sample2.id ?? "sample";
+    tools2.push(
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        ToolDropdownButton,
+        {
+          label: "Download",
+          icon: ApplicationIcons.downloadLog,
+          items: {
+            "Sample JSON": () => {
+              api2.download_file(
+                `${sampleId}.json`,
+                JSON.stringify(sample2, null, 2)
+              );
+            },
+            Transcript: () => {
+              api2.download_file(
+                `${sampleId}-transcript.txt`,
+                messagesToStr(sample2.messages ?? [])
+              );
+            }
+          }
+        },
+        "sample-download"
+      )
+    );
+  }
   if (selectedTab === kSampleTranscriptTabId) {
     const label2 = isDebugFilter ? "Debug" : isDefaultFilter ? "Default" : "Custom";
     tools2.push(
@@ -191988,16 +192536,16 @@ const SampleDisplay = ({
       {
         id: tabsetId,
         tabsRef,
-        className: clsx(styles$U.tabControls),
+        className: clsx(styles$Z.tabControls),
         tabControlsClassName: clsx("text-size-base"),
-        tabPanelsClassName: clsx(styles$U.tabPanel),
+        tabPanelsClassName: clsx(styles$Z.tabPanel),
         tools: tools2,
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs(
             TabPanel,
             {
               id: kSampleTranscriptTabId,
-              className: clsx("sample-tab", styles$U.transcriptContainer),
+              className: clsx("sample-tab", styles$Z.transcriptContainer),
               title: "Transcript",
               onSelected: onSelectedTab,
               selected: effectiveSelectedTab === kSampleTranscriptTabId || effectiveSelectedTab === void 0,
@@ -192031,7 +192579,7 @@ const SampleDisplay = ({
             TabPanel,
             {
               id: kSampleMessagesTabId,
-              className: clsx("sample-tab", styles$U.fullWidth, styles$U.chat),
+              className: clsx("sample-tab", styles$Z.fullWidth, styles$Z.chat),
               title: "Messages",
               onSelected: onSelectedTab,
               selected: effectiveSelectedTab === kSampleMessagesTabId,
@@ -192046,7 +192594,8 @@ const SampleDisplay = ({
                   indented: true,
                   scrollRef,
                   toolCallStyle: "complete",
-                  running
+                  running,
+                  className: styles$Z.fullWidth
                 },
                 `${baseId}-chat-${id}`
               )
@@ -192065,7 +192614,7 @@ const SampleDisplay = ({
                 SampleScoresView,
                 {
                   sample: sample2,
-                  className: styles$U.padded,
+                  className: styles$Z.padded,
                   scrollRef
                 }
               )
@@ -192080,7 +192629,7 @@ const SampleDisplay = ({
               title: "Metadata",
               onSelected: onSelectedTab,
               selected: effectiveSelectedTab === kSampleMetdataTabId,
-              children: !sample2 || sampleMetadatas.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$U.padded, styles$U.fullWidth), children: sampleMetadatas }) : /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: "No metadata" })
+              children: !sample2 || sampleMetadatas.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Z.padded, styles$Z.fullWidth), children: sampleMetadatas }) : /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: "No metadata" })
             }
           ),
           sample2?.error || sample2?.error_retries && sample2?.error_retries.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -192091,14 +192640,14 @@ const SampleDisplay = ({
               title: "Errors",
               onSelected: onSelectedTab,
               selected: effectiveSelectedTab === kSampleErrorTabId,
-              children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$U.error), children: [
+              children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$Z.error), children: [
                 sample2?.error ? /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: `Sample Error` }),
                   /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                     ANSIDisplay,
                     {
                       output: sample2.error.traceback_ansi,
-                      className: clsx("text-size-small", styles$U.ansi),
+                      className: clsx("text-size-small", styles$Z.ansi),
                       style: {
                         fontSize: "clamp(0.3rem, 1.1vw, 0.8rem)",
                         margin: "0.5em 0"
@@ -192113,7 +192662,7 @@ const SampleDisplay = ({
                       ANSIDisplay,
                       {
                         output: retry.traceback_ansi,
-                        className: clsx("text-size-small", styles$U.ansi),
+                        className: clsx("text-size-small", styles$Z.ansi),
                         style: {
                           fontSize: "clamp(0.3rem, 1.1vw, 0.8rem)",
                           margin: "0.5em 0"
@@ -192133,7 +192682,7 @@ const SampleDisplay = ({
               title: "JSON",
               onSelected: onSelectedTab,
               selected: effectiveSelectedTab === kSampleJsonTabId,
-              children: !sample2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: "JSON not available" }) : estimateSize(sample2.events) > 25 * 1024 * 1024 ? /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: "JSON too large to display" }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$U.padded, styles$U.fullWidth), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              children: !sample2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: "JSON not available" }) : estimateSize(sample2.events) > 25 * 1024 * 1024 ? /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: "JSON too large to display" }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Z.padded, styles$Z.fullWidth), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                 JSONPanel,
                 {
                   data: sample2,
@@ -192184,7 +192733,7 @@ const metadataViewsForSample = (id, scrollRef, sample2) => {
           {
             id: `task-sample-invalidation-${id}`,
             record: invalidationRecord,
-            className: clsx("tab-pane", styles$U.noTop),
+            className: clsx("tab-pane", styles$Z.noTop),
             scrollRef
           }
         ) })
@@ -192199,7 +192748,7 @@ const metadataViewsForSample = (id, scrollRef, sample2) => {
           ModelTokenTable,
           {
             model_usage: sample2.model_usage,
-            className: clsx(styles$U.noTop)
+            className: clsx(styles$Z.noTop)
           }
         ) })
       ] }, `sample-usage-${id}`)
@@ -192217,7 +192766,7 @@ const metadataViewsForSample = (id, scrollRef, sample2) => {
               Working: formatTime$1(sample2.working_time),
               Total: formatTime$1(sample2.total_time)
             },
-            className: clsx("tab-pane", styles$U.noTop),
+            className: clsx("tab-pane", styles$Z.noTop),
             scrollRef
           }
         ) })
@@ -192233,7 +192782,7 @@ const metadataViewsForSample = (id, scrollRef, sample2) => {
           {
             id: `task-sample-metadata-${id}`,
             record: sample2?.metadata,
-            className: clsx("tab-pane", styles$U.noTop),
+            className: clsx("tab-pane", styles$Z.noTop),
             scrollRef
           }
         ) })
@@ -192249,7 +192798,7 @@ const metadataViewsForSample = (id, scrollRef, sample2) => {
           {
             id: `task-sample-store-${id}`,
             record: sample2?.store,
-            className: clsx("tab-pane", styles$U.noTop),
+            className: clsx("tab-pane", styles$Z.noTop),
             scrollRef,
             processStore: true
           }
@@ -192325,350 +192874,985 @@ const isRunning = (sampleSummary, runningSampleData) => {
   }
   return false;
 };
-function useSampleLoader() {
-  const sampleData = useSampleData();
-  const loadSample = useStore((state) => state.sampleActions.loadSample);
-  const logSelection = useLogSelection();
-  const sampleId = logSelection.sample?.id;
-  const sampleEpoch = logSelection.sample?.epoch;
-  const sampleCompleted = logSelection.sample?.completed;
-  const currentSampleCompleted = sampleCompleted !== void 0 ? sampleCompleted : true;
-  const prevCompleted = usePrevious(currentSampleCompleted);
-  const prevLogFile = usePrevious(logSelection.logFile);
-  const prevSampleNeedsReload = usePrevious(
-    sampleData.sampleNeedsReload
-  );
-  reactExports.useEffect(() => {
-    if (logSelection.logFile && sampleId !== void 0 && sampleEpoch !== void 0) {
-      const isCurrentSampleLoaded = sampleData.selectedSampleIdentifier?.id === sampleId && sampleData.selectedSampleIdentifier?.epoch === sampleEpoch && sampleData.selectedSampleIdentifier?.logFile === logSelection.logFile;
-      const isLoading = sampleData.status === "loading" || sampleData.status === "streaming";
-      const isError = sampleData.status === "error";
-      const logFileChanged = prevLogFile !== void 0 && prevLogFile !== logSelection.logFile;
-      const completedChanged = prevCompleted !== void 0 && currentSampleCompleted !== prevCompleted;
-      const needsReloadChanged = prevSampleNeedsReload !== void 0 && prevSampleNeedsReload !== sampleData.sampleNeedsReload;
-      const shouldLoad = !isCurrentSampleLoaded && !isLoading && !isError || logFileChanged || completedChanged || needsReloadChanged;
-      if (shouldLoad) {
-        loadSample(
-          logSelection.logFile,
-          sampleId,
-          sampleEpoch,
-          sampleCompleted
-        );
-      }
-    }
-  }, [
-    logSelection.logFile,
-    sampleId,
-    sampleEpoch,
-    sampleCompleted,
-    currentSampleCompleted,
-    sampleData.selectedSampleIdentifier,
-    sampleData.status,
-    sampleData.sampleNeedsReload,
-    prevLogFile,
-    prevCompleted,
-    prevSampleNeedsReload,
-    loadSample
-  ]);
-}
-function useSamplePolling() {
-  const sampleData = useSampleData();
-  const pollSample = useStore((state) => state.sampleActions.pollSample);
-  const logSelection = useLogSelection();
-  const sampleId = logSelection.sample?.id;
-  const sampleEpoch = logSelection.sample?.epoch;
-  reactExports.useEffect(() => {
-    if (sampleData.running && logSelection.logFile && sampleId !== void 0 && sampleEpoch !== void 0) {
-      pollSample(logSelection.logFile, sampleId, sampleEpoch);
-    }
-  }, [
-    logSelection.logFile,
-    sampleId,
-    sampleEpoch,
-    pollSample,
-    sampleData.running
-  ]);
-}
-const container$8 = "_container_ly812_1";
+const container$b = "_container_ly812_1";
 const scroller = "_scroller_ly812_7";
-const styles$s = {
-  container: container$8,
+const styles$w = {
+  container: container$b,
   scroller
 };
 const InlineSampleDisplay = ({
   showActivity,
   className: className2
 }) => {
+  useLoadSample();
+  usePollSample();
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(InlineSampleComponent, { showActivity, className: className2 });
+};
+const InlineSampleComponent = ({
+  showActivity,
+  className: className2
+}) => {
   const sampleData = useSampleData();
-  useSampleLoader();
-  useSamplePolling();
   const scrollRef = reactExports.useRef(null);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2, styles$s.container), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2, styles$w.container), children: [
     showActivity && /* @__PURE__ */ jsxRuntimeExports.jsx(
       ActivityBar,
       {
         animating: sampleData.status === "loading" || sampleData.status === "streaming"
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$s.scroller), ref: scrollRef, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$s.body, children: sampleData.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$w.scroller), ref: scrollRef, children: /* @__PURE__ */ jsxRuntimeExports.jsx(StickyScrollProvider, { value: scrollRef, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$w.body, children: sampleData.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(
       ErrorPanel,
       {
         title: "Unable to load sample",
         error: sampleData.error
       }
-    ) : /* @__PURE__ */ jsxRuntimeExports.jsx(SampleDisplay, { id: "inline-sample-display", scrollRef }) }) })
+    ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+      SampleDisplay,
+      {
+        id: "inline-sample-display",
+        scrollRef
+      }
+    ) }) }) })
   ] });
 };
-const title = "_title_1hch3_1";
-const detail$1 = "_detail_1hch3_5";
-const detailText = "_detailText_1hch3_13";
-const close = "_close_1hch3_18";
-const modal$1 = "_modal_1hch3_26";
-const hidden = "_hidden_1hch3_31";
-const modalBody$1 = "_modalBody_1hch3_35";
-const content$1 = "_content_1hch3_41";
-const header$2 = "_header_1hch3_45";
-const titleTool = "_titleTool_1hch3_51";
-const styles$r = {
-  title,
-  detail: detail$1,
-  detailText,
-  close,
-  modal: modal$1,
-  hidden,
-  modalBody: modalBody$1,
-  content: content$1,
-  header: header$2,
-  titleTool
+const detail = "_detail_14cqz_1";
+const panel$3 = "_panel_14cqz_7";
+const sampleInfo = "_sampleInfo_14cqz_11";
+const sampleNav = "_sampleNav_14cqz_17";
+const nav$1 = "_nav_14cqz_25";
+const disabled = "_disabled_14cqz_25";
+const styles$v = {
+  detail,
+  panel: panel$3,
+  sampleInfo,
+  sampleNav,
+  nav: nav$1,
+  disabled
 };
-const LargeModal = ({
-  id,
-  title: title2,
-  detail: detail2,
-  detailTools,
-  children: children2,
-  footer: footer2,
-  onkeyup,
-  visible: visible2,
-  onHide,
-  showProgress,
-  scrollRef,
-  classNames
+const SampleDetailComponent = ({
+  sampleId,
+  epoch,
+  tabId,
+  navigation: navigation2,
+  navbarConfig
 }) => {
-  const modalFooter = footer2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "modal-footer", children: footer2 }) : "";
-  const modalRef = reactExports.useRef(null);
-  scrollRef = scrollRef || modalRef;
-  const dialogRef = reactExports.useRef(null);
-  reactExports.useEffect(() => {
-    if (visible2 && dialogRef.current) {
-      dialogRef.current.focus();
-    }
-  }, [visible2]);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    "div",
-    {
-      id,
-      className: clsx(
-        "modal",
-        styles$r.modal,
-        !visible2 ? styles$r.hidden : void 0
-      ),
-      role: "dialog",
-      onKeyUp: onkeyup,
-      tabIndex: visible2 ? 0 : void 0,
-      ref: dialogRef,
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "div",
-        {
-          className: clsx(
-            "modal-dialog",
-            "modal-dialog-scrollable",
-            styles$r.modalBody
-          ),
-          role: "document",
-          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("modal-content", styles$r.content), children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("modal-header", styles$r.header), children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "div",
-                {
-                  className: clsx("modal-title", "text-size-smaller", styles$r.title),
-                  children: title2 || ""
-                }
-              ),
-              detail2 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$r.detail, children: [
-                detailTools?.left ? detailTools.left.map((tool2, idx) => {
-                  return /* @__PURE__ */ jsxRuntimeExports.jsx(TitleTool, { ...tool2 }, `tool-left-${idx}`);
-                }) : "",
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-smaller", styles$r.detailText), children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: detail2 }) }),
-                detailTools?.right ? detailTools.right.map((tool2, idx) => {
-                  return /* @__PURE__ */ jsxRuntimeExports.jsx(TitleTool, { ...tool2 }, `tool-right-${idx}`);
-                }) : ""
-              ] }) : void 0,
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "button",
-                {
-                  type: "button",
-                  className: clsx(
-                    "btn",
-                    "btn-close-large-dialog",
-                    "text-size-larger",
-                    styles$r.close
-                  ),
-                  onClick: onHide,
-                  "aria-label": "Close",
-                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(HtmlEntity, { html: "&times;" })
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(ActivityBar, { animating: showProgress }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("modal-body", classNames?.body), ref: scrollRef, children: children2 }),
-            modalFooter
-          ] })
-        }
-      )
-    }
-  );
-};
-const HtmlEntity = ({ html: html2 }) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { dangerouslySetInnerHTML: { __html: html2 } });
-const TitleTool = ({ label: label2, icon: icon2, enabled, onClick }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    "button",
-    {
-      type: "button",
-      className: clsx(
-        "btn",
-        "btn-outline",
-        "text-size-small",
-        styles$r.titleTool
-      ),
-      "aria-label": label2,
-      onClick,
-      disabled: !enabled,
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: icon2 })
-    }
-  );
-};
-const modalBody = "_modalBody_ozq2k_1";
-const styles$q = {
-  modalBody
-};
-const SampleDialog = ({
-  id,
-  title: title2,
-  showingSampleDialog
-}) => {
-  const scrollRef = reactExports.useRef(null);
-  useStatefulScrollPosition(scrollRef, "sample-dialog");
+  const { onPrevious, onNext, hasPrevious, hasNext } = navigation2;
+  const {
+    currentPath,
+    fnNavigationUrl,
+    bordered: bordered2 = true,
+    breadcrumbsEnabled
+  } = navbarConfig;
   const sampleData = useSampleData();
-  useSampleLoader();
-  useSamplePolling();
-  const sampleNavigation = useSampleNavigation();
-  const tools2 = reactExports.useMemo(() => {
-    const nextTool = {
-      label: "Next Sample",
-      icon: ApplicationIcons.next,
-      onClick: sampleNavigation.nextSample,
-      enabled: sampleNavigation.nextEnabled
-    };
-    const prevTool = {
-      label: "Previous Sample",
-      icon: ApplicationIcons.previous,
-      onClick: sampleNavigation.previousSample,
-      enabled: sampleNavigation.previousEnabled
-    };
-    return {
-      left: [prevTool],
-      right: [nextTool]
-    };
-  }, [
-    sampleNavigation.nextSample,
-    sampleNavigation.previousSample,
-    sampleNavigation.nextEnabled,
-    sampleNavigation.previousEnabled
-  ]);
-  const handleKeyUp = reactExports.useCallback(
+  const sample2 = reactExports.useMemo(() => {
+    return sampleData.getSelectedSample();
+  }, [sampleData]);
+  const sampleMatchesRequest = reactExports.useMemo(() => {
+    if (!sample2 || !sampleId || !epoch) {
+      return true;
+    }
+    return String(sample2.id) === sampleId && sample2.epoch === parseInt(epoch, 10);
+  }, [sample2, sampleId, epoch]);
+  const showFind = useStore((state) => state.app.showFind);
+  const setShowFind = useStore((state) => state.appActions.setShowFind);
+  const hideFind = useStore((state) => state.appActions.hideFind);
+  const nativeFind = useStore((state) => state.app.nativeFind);
+  const setSampleTab = useStore((state) => state.appActions.setSampleTab);
+  reactExports.useEffect(() => {
+    if (tabId) {
+      setSampleTab(tabId);
+    }
+  }, [tabId, setSampleTab]);
+  const handleKeyDown = reactExports.useCallback(
     (e) => {
-      switch (e.key) {
-        case "ArrowRight":
-          sampleNavigation.nextSample();
-          break;
-        case "ArrowLeft":
-          sampleNavigation.previousSample();
-          break;
-        case "Escape":
-          sampleNavigation.clearSampleUrl();
-          break;
+      const activeElement = document.activeElement;
+      const isInputFocused = activeElement && (activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA" || activeElement.tagName === "SELECT");
+      if ((e.ctrlKey || e.metaKey) && e.key === "f") {
+        if (!nativeFind) {
+          e.preventDefault();
+          e.stopPropagation();
+          setShowFind(true);
+        }
+      } else if (e.key === "Escape") {
+        if (!nativeFind) {
+          hideFind();
+        }
+      } else if (!isInputFocused) {
+        if (e.key === "ArrowLeft") {
+          if (hasPrevious) {
+            e.preventDefault();
+            onPrevious();
+          }
+        } else if (e.key === "ArrowRight") {
+          if (hasNext) {
+            e.preventDefault();
+            onNext();
+          }
+        }
       }
     },
-    [sampleNavigation]
+    [
+      setShowFind,
+      hideFind,
+      hasPrevious,
+      hasNext,
+      nativeFind,
+      onPrevious,
+      onNext
+    ]
   );
-  const onHide = reactExports.useCallback(() => {
-    sampleNavigation.clearSampleUrl();
-  }, [sampleNavigation]);
+  reactExports.useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown, true);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown, true);
+    };
+  }, [handleKeyDown]);
+  const handleNavButtonKeyDown = reactExports.useCallback(
+    (e, action, enabled) => {
+      if ((e.key === "Enter" || e.key === " ") && enabled) {
+        e.preventDefault();
+        action();
+      }
+    },
+    []
+  );
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(ExtendedFindProvider, { children: [
+    showFind ? /* @__PURE__ */ jsxRuntimeExports.jsx(FindBand, {}) : "",
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$v.detail, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        ApplicationNavbar,
+        {
+          currentPath,
+          fnNavigationUrl,
+          bordered: bordered2,
+          breadcrumbsEnabled,
+          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$v.sampleNav), children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                onClick: hasPrevious ? onPrevious : void 0,
+                onKeyDown: (e) => handleNavButtonKeyDown(e, onPrevious, hasPrevious),
+                tabIndex: hasPrevious ? 0 : -1,
+                role: "button",
+                "aria-label": "Previous sample",
+                "aria-disabled": !hasPrevious,
+                className: clsx(!hasPrevious && styles$v.disabled, styles$v.nav),
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.previous) })
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$v.sampleInfo, "text-size-smallest"), children: [
+              "Sample ",
+              sampleId,
+              " (Epoch ",
+              epoch,
+              ")"
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                onClick: hasNext ? onNext : void 0,
+                onKeyDown: (e) => handleNavButtonKeyDown(e, onNext, hasNext),
+                tabIndex: hasNext ? 0 : -1,
+                role: "button",
+                "aria-label": "Next sample",
+                "aria-disabled": !hasNext,
+                className: clsx(!hasNext && styles$v.disabled, styles$v.nav),
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.next) })
+              }
+            )
+          ] })
+        }
+      ),
+      sampleMatchesRequest && /* @__PURE__ */ jsxRuntimeExports.jsx(
+        InlineSampleComponent,
+        {
+          showActivity: false,
+          className: styles$v.panel
+        }
+      )
+    ] })
+  ] });
+};
+const LogSampleDetailView = () => {
+  const {
+    logPath: routeLogPath,
+    sampleId: routeSampleId,
+    epoch: routeEpoch,
+    sampleTabId,
+    sampleUuid
+  } = useLogRouteParams();
+  useLoadSample();
+  usePollSample();
+  const navigate = useNavigate();
+  const initLogDir = useStore((state) => state.logsActions.initLogDir);
+  const sampleSummaries = useSampleSummaries();
+  const setSelectedLogFile = useStore(
+    (state) => state.logsActions.setSelectedLogFile
+  );
+  const syncLogs = useStore((state) => state.logsActions.syncLogs);
+  const selectSample = useStore((state) => state.logActions.selectSample);
+  const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
+  const selectedSampleHandle = useStore(
+    (state) => state.log.selectedSampleHandle
+  );
+  const singleFileMode = useStore((state) => state.app.singleFileMode);
+  const logPath = routeLogPath || selectedLogFile;
+  const sampleId = routeSampleId || selectedSampleHandle?.id?.toString();
+  const epoch = routeEpoch || selectedSampleHandle?.epoch?.toString();
+  reactExports.useEffect(() => {
+    const loadLogAndSample = async () => {
+      if (routeLogPath && routeSampleId && routeEpoch) {
+        await initLogDir();
+        setSelectedLogFile(routeLogPath);
+        void syncLogs();
+        const targetEpoch = parseInt(routeEpoch, 10);
+        if (isNaN(targetEpoch)) {
+          return;
+        }
+        selectSample(routeSampleId, targetEpoch, routeLogPath);
+      }
+    };
+    void loadLogAndSample();
+  }, [
+    routeLogPath,
+    routeSampleId,
+    routeEpoch,
+    initLogDir,
+    setSelectedLogFile,
+    syncLogs,
+    selectSample
+  ]);
+  reactExports.useEffect(() => {
+    if (logPath && sampleUuid && sampleSummaries && sampleSummaries.length > 0) {
+      const sample2 = sampleSummaries.find((s) => s.uuid === sampleUuid);
+      if (sample2) {
+        const url = logSamplesUrl(
+          logPath,
+          sample2.id,
+          sample2.epoch,
+          sampleTabId
+        );
+        navigate(url, { replace: true });
+      }
+    }
+  }, [logPath, sampleUuid, sampleSummaries, sampleTabId, navigate]);
+  const { onPrevious, onNext, hasPrevious, hasNext } = useLogSampleNavigation();
+  const fnNavigationUrl = reactExports.useCallback(
+    (file, log_dir) => {
+      if (!logPath || !file) {
+        return logsUrl(file, log_dir);
+      }
+      const normalizedFile = file.endsWith("/") ? file.slice(0, -1) : file;
+      if (normalizedFile === logPath || normalizedFile === `${logPath}/sample`) {
+        return logsUrl(logPath, log_dir, kLogViewSamplesTabId);
+      }
+      return logsUrl(file, log_dir);
+    },
+    [logPath]
+  );
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    LargeModal,
+    SampleDetailComponent,
     {
-      id,
-      detail: title2,
-      detailTools: tools2,
-      onkeyup: handleKeyUp,
-      visible: showingSampleDialog,
-      onHide,
-      classNames: {
-        body: styles$q.modalBody
+      sampleId,
+      epoch,
+      tabId: sampleTabId,
+      navigation: {
+        onPrevious,
+        onNext,
+        hasPrevious,
+        hasNext
       },
-      showProgress: sampleData.status === "loading" || sampleData.status === "streaming",
-      scrollRef,
-      children: sampleData.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(ErrorPanel, { title: "Sample Error", error: sampleData.error }) : /* @__PURE__ */ jsxRuntimeExports.jsx(SampleDisplay, { id, scrollRef, focusOnLoad: true })
+      navbarConfig: {
+        // Add sample identifier to path so log file becomes clickable
+        // (breadcrumbs don't make the last segment a link)
+        currentPath: logPath ? `${logPath}/sample` : void 0,
+        fnNavigationUrl,
+        bordered: true,
+        breadcrumbsEnabled: !singleFileMode
+      }
     }
   );
 };
-const container$7 = "_container_15b4r_1";
-const label$5 = "_label_15b4r_5";
-const styles$p = {
-  container: container$7,
-  label: label$5
+const useUnloadLog = () => {
+  const clearSelectedLogDetails = useStore(
+    (state) => state.logActions.clearSelectedLogDetails
+  );
+  const clearSelectedLogFile = useStore(
+    (state) => state.logsActions.clearSelectedLogFile
+  );
+  const clearLog = useStore((state) => state.logActions.clearLog);
+  const unloadLog = reactExports.useCallback(() => {
+    clearSelectedLogDetails();
+    clearSelectedLogFile();
+    clearLog();
+  }, [clearLog, clearSelectedLogDetails, clearSelectedLogFile]);
+  return { unloadLog };
 };
-const EpochFilter = ({
-  epochs,
-  epoch,
-  setEpoch
-}) => {
-  const options2 = ["all"];
-  for (let i = 1; i <= epochs; i++) {
-    options2.push(i + "");
-  }
-  const handleEpochChange = (e) => {
-    const sel = e.target;
-    setEpoch(sel.value);
+const useLogNavigation = () => {
+  const navigate = useNavigate();
+  const { logPath } = useParams();
+  const logDir2 = useStore((state) => state.logs.logDir);
+  const loadedLog = useStore((state) => state.log.loadedLog);
+  const selectTab = reactExports.useCallback(
+    (tabId) => {
+      if (loadedLog && logPath) {
+        const url = logsUrlRaw(logPath, tabId);
+        navigate(url);
+      } else if (loadedLog) {
+        const url = logsUrl(loadedLog, logDir2, tabId);
+        navigate(url);
+      }
+    },
+    [loadedLog, logPath, logDir2, navigate]
+  );
+  return {
+    selectTab
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$p.container, children: [
+};
+const workspace = "_workspace_1r3mu_1";
+const tabContainer = "_tabContainer_1r3mu_6";
+const tabSet = "_tabSet_1r3mu_14";
+const tabs = "_tabs_1r3mu_21";
+const tabPanels = "_tabPanels_1r3mu_29";
+const styles$u = {
+  workspace,
+  tabContainer,
+  tabSet,
+  tabs,
+  tabPanels
+};
+const message = "_message_1gb2h_5";
+const styles$t = {
+  "task-error-display": "_task-error-display_1gb2h_1",
+  message
+};
+const TaskErrorCard = ({ error: error2 }) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "span",
+      CardHeader,
       {
-        className: clsx(
-          "epoch-filter-label",
-          "text-size-smaller",
-          "text-style-label",
-          "text-style-secondary",
-          styles$p.label
-        ),
-        children: "Epochs:"
+        icon: ApplicationIcons.error,
+        label: `Task Failed`
       }
     ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(CardBody, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        ExpandablePanel,
+        {
+          id: "task-error-collapse",
+          collapse: true,
+          className: clsx("text-size-smaller", styles$t.message),
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            RenderedContent,
+            {
+              id: "task-error-message",
+              entry: { name: "error", value: error2.message }
+            }
+          )
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        ANSIDisplay,
+        {
+          output: error2.traceback_ansi,
+          className: styles$t["task-error-display"]
+        }
+      )
+    ] })
+  ] });
+};
+const useErrorTabConfig = (evalError) => {
+  const scrollRef = reactExports.useRef(null);
+  return reactExports.useMemo(() => {
+    return {
+      id: kLogViewErrorTabId,
+      label: "Error",
+      scrollable: true,
+      component: ErrorTab,
+      componentProps: {
+        evalError,
+        scrollRef
+      },
+      scrollRef
+    };
+  }, [evalError]);
+};
+const ErrorTab = ({ evalError }) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "0.5em 1em 0 1em", width: "100%" }, children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "select",
+      TaskErrorCard,
       {
-        className: clsx("form-select", "form-select-sm", "text-size-smaller"),
-        "aria-label": ".epoch-filter-label",
-        value: epoch,
-        onChange: handleEpochChange,
-        children: options2.map((option) => {
-          return /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: option, children: option });
-        })
+        error: evalError || {
+          message: "Unknown error",
+          traceback: "",
+          traceback_ansi: ""
+        }
+      }
+    ),
+    " "
+  ] }) });
+};
+const MessageBand = ({
+  id,
+  message: message2,
+  type,
+  scope = "eval"
+}) => {
+  const className2 = [type];
+  const [visible2, setVisible] = useMessageVisibility(id, scope);
+  const handleClick = reactExports.useCallback(() => {
+    setVisible(false);
+  }, [setVisible]);
+  if (!visible2) {
+    className2.push("hidden");
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("message-band", className2), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.logging[type] }),
+    message2,
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "button",
+      {
+        className: clsx("btn", "message-band-btn", type),
+        title: "Close",
+        onClick: handleClick,
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.close })
       }
     )
   ] });
+};
+const item$1 = "_item_1uzhd_1";
+const styles$s = {
+  item: item$1
+};
+const DatasetDetailView = ({
+  dataset,
+  style: style2
+}) => {
+  const filtered = Object.fromEntries(
+    Object.entries(dataset).filter(([key2]) => key2 !== "sample_ids")
+  );
+  if (!dataset || Object.keys(filtered).length === 0) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-size-base", styles$s.item), style: style2, children: "No dataset information available" });
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    MetaDataGrid,
+    {
+      className: clsx("text-size-base", styles$s.item),
+      entries: filtered,
+      style: style2,
+      plain: true
+    }
+  );
+};
+const icon$1 = "_icon_59zaz_1";
+const container$a = "_container_59zaz_5";
+const metadata = "_metadata_59zaz_11";
+const styles$r = {
+  icon: icon$1,
+  container: container$a,
+  metadata
+};
+const DetailStep = ({
+  icon: icon2,
+  name: name2,
+  params,
+  className: className2
+}) => {
+  const iconHtml = icon2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, styles$r.icon) }) : "";
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2), children: [
+    iconHtml,
+    " ",
+    name2,
+    params && Object.keys(params).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$r.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      MetaDataGrid,
+      {
+        entries: params,
+        className: clsx("text-size-small", styles$r.metadata)
+      }
+    ) }) : ""
+  ] });
+};
+const item = "_item_leq25_1";
+const styles$q = {
+  item
+};
+const ScorerDetailView = ({
+  name: name2,
+  scores: scores2,
+  params
+}) => {
+  if (scores2.length > 1) {
+    params = { ...params, ["scores"]: scores2 };
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    DetailStep,
+    {
+      icon: ApplicationIcons.scorer,
+      name: name2,
+      params,
+      className: clsx(styles$q.item, "text-size-base")
+    }
+  );
+};
+const container$9 = "_container_12j2k_1";
+const separator = "_separator_12j2k_11";
+const styles$p = {
+  container: container$9,
+  separator
+};
+const SolversDetailView = ({ steps }) => {
+  const separator2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$p.items, "text-size-small", styles$p.separator), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.arrows.right }) });
+  const details = steps?.map((step, index) => {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        DetailStep,
+        {
+          name: step.solver,
+          className: clsx(styles$p.items, "text-size-small")
+        }
+      ),
+      index < steps.length - 1 ? separator2 : ""
+    ] }, `solver-step-${index}`);
+  });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$p.container, children: details });
+};
+const floatingCol = "_floatingCol_1n79r_1";
+const wideCol = "_wideCol_1n79r_9";
+const planCol = "_planCol_1n79r_24";
+const container$8 = "_container_1n79r_29";
+const grid$3 = "_grid_1n79r_35";
+const styles$o = {
+  floatingCol,
+  wideCol,
+  planCol,
+  container: container$8,
+  grid: grid$3
+};
+const PlanDetailView = ({
+  evaluation,
+  plan,
+  scores: scores2
+}) => {
+  if (!evaluation) {
+    return null;
+  }
+  const steps = plan?.steps;
+  const taskColumns = [];
+  taskColumns.push({
+    title: "Dataset",
+    className: styles$o.floatingCol,
+    contents: /* @__PURE__ */ jsxRuntimeExports.jsx(DatasetDetailView, { dataset: evaluation.dataset })
+  });
+  if (steps) {
+    taskColumns.push({
+      title: "Solvers",
+      className: styles$o.wideCol,
+      contents: /* @__PURE__ */ jsxRuntimeExports.jsx(SolversDetailView, { steps })
+    });
+  }
+  if (scores2) {
+    const scorers = scores2.reduce(
+      (accum, score2) => {
+        if (!accum[score2.scorer]) {
+          accum[score2.scorer] = {
+            scores: [score2.name],
+            params: score2.params
+          };
+        } else {
+          accum[score2.scorer].scores.push(score2.name);
+        }
+        return accum;
+      },
+      {}
+    );
+    if (Object.keys(scorers).length > 0) {
+      const label2 = Object.keys(scorers).length === 1 ? "Scorer" : "Scorers";
+      const scorerPanels = Object.keys(scorers).map((key2) => {
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          ScorerDetailView,
+          {
+            name: key2,
+            scores: scorers[key2].scores,
+            params: scorers[key2].params
+          },
+          key2
+        );
+      });
+      taskColumns.push({
+        title: label2,
+        className: styles$o.floatingCol,
+        contents: scorerPanels
+      });
+    }
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$o.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "div",
+    {
+      className: styles$o.grid,
+      style: {
+        gridTemplateColumns: `repeat(${taskColumns.length}, fit-content(50%))`
+      },
+      children: taskColumns.map((col) => {
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          PlanColumn,
+          {
+            title: col.title,
+            className: col.className,
+            children: col.contents
+          },
+          `plan-col-${col.title}`
+        );
+      })
+    }
+  ) });
+};
+const PlanColumn = ({ title: title2, className: className2, children: children2 }) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        className: clsx(
+          "card-subheading",
+          "text-size-small",
+          "text-style-label",
+          "text-style-secondary",
+          styles$o.planCol
+        ),
+        children: title2
+      }
+    ),
+    children2
+  ] });
+};
+const PlanCard = ({
+  evalSpec,
+  evalPlan,
+  scores: scores2,
+  scrollRef
+}) => {
+  const metadata2 = evalSpec?.metadata || {};
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Summary" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: "task-plan-card-body", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        PlanDetailView,
+        {
+          evaluation: evalSpec,
+          plan: evalPlan,
+          scores: scores2
+        }
+      ) })
+    ] }),
+    Object.keys(metadata2).length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Metadata" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: "task-metadata`", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        RecordTree,
+        {
+          id: "plan-md-metadata",
+          record: metadata2,
+          scrollRef
+        }
+      ) })
+    ] })
+  ] });
+};
+const useInfoTabConfig = (evalSpec, evalPlan, evalError, evalResults, evalStatus) => {
+  const scrollRef = reactExports.useRef(null);
+  const totalSampleCount = useTotalSampleCount();
+  return reactExports.useMemo(() => {
+    return {
+      id: kLogViewInfoTabId,
+      label: "Info",
+      scrollable: true,
+      component: InfoTab,
+      componentProps: {
+        evalSpec,
+        evalPlan,
+        evalError,
+        evalResults,
+        evalStatus,
+        sampleCount: totalSampleCount,
+        scrollRef
+      },
+      scrollRef
+    };
+  }, [
+    evalSpec,
+    evalPlan,
+    evalError,
+    evalResults,
+    evalStatus,
+    totalSampleCount
+  ]);
+};
+const InfoTab = ({
+  evalSpec,
+  evalPlan,
+  evalResults,
+  evalStatus,
+  sampleCount,
+  scrollRef
+}) => {
+  const showWarning = sampleCount === 0 && evalStatus === "success" && evalSpec?.dataset.samples && evalSpec.dataset.samples > 0;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { width: "100%" }, children: [
+    showWarning ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+      MessageBand,
+      {
+        id: "sample-too-large",
+        message: "Unable to display samples (this evaluation log may be too large).",
+        type: "warning"
+      }
+    ) : "",
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { padding: "0.5em 1em 0 1em", width: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      PlanCard,
+      {
+        evalSpec,
+        evalPlan,
+        scores: evalResults?.scores,
+        scrollRef
+      }
+    ) })
+  ] });
+};
+const DownloadButton = ({
+  label: label2,
+  fileName,
+  fileContents
+}) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "button",
+    {
+      className: "btn btn-outline-primary download-button",
+      onClick: async () => {
+        await api.download_file(fileName, fileContents);
+      },
+      children: label2
+    }
+  );
+};
+const DownloadPanel = ({
+  message: message2,
+  buttonLabel,
+  fileName,
+  fileContents
+}) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "download-panel", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "download-panel-message", children: message2 }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      DownloadButton,
+      {
+        label: buttonLabel,
+        fileName,
+        fileContents
+      }
+    )
+  ] }) });
+};
+const jsonTab = "_jsonTab_6pq03_1";
+const styles$n = {
+  jsonTab
+};
+const kJsonMaxSize = 1e7;
+const useJsonTabConfig = (evalVersion, evalStatus, evalSpec, evalPlan, evalError, evalResults, evalStats) => {
+  const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
+  const selectedTab = useStore((state) => state.app.tabs.workspace);
+  return reactExports.useMemo(() => {
+    const evalHeader = {
+      version: evalVersion,
+      status: evalStatus,
+      eval: evalSpec,
+      plan: evalPlan,
+      error: evalError,
+      results: evalResults,
+      stats: evalStats
+    };
+    return {
+      id: kLogViewJsonTabId,
+      label: "JSON",
+      scrollable: true,
+      component: JsonTab,
+      componentProps: {
+        logFile: selectedLogFile,
+        json: JSON.stringify(evalHeader, null, 2),
+        selected: selectedTab === kLogViewJsonTabId
+      },
+      tools: () => [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          ToolButton,
+          {
+            label: "Copy JSON",
+            icon: ApplicationIcons.copy,
+            className: clsx("task-btn-json-copy", "clipboard-button"),
+            "data-clipboard-target": "#task-json-contents",
+            onClick: copyFeedback
+          },
+          "copy-json"
+        )
+      ]
+    };
+  }, [
+    selectedLogFile,
+    evalVersion,
+    evalStatus,
+    evalSpec,
+    evalPlan,
+    evalError,
+    evalResults,
+    evalStats,
+    selectedTab
+  ]);
+};
+const copyFeedback = (e) => {
+  const textEl = e.currentTarget.querySelector(".task-btn-copy-content");
+  const iconEl = e.currentTarget.querySelector("i.bi");
+  if (textEl) {
+    const htmlEl = textEl;
+    const htmlIconEl = iconEl;
+    const oldText = htmlEl.innerText;
+    const oldIconClz = htmlIconEl.className;
+    htmlEl.innerText = "Copied!";
+    htmlIconEl.className = `${ApplicationIcons.confirm}`;
+    setTimeout(() => {
+      window.getSelection()?.removeAllRanges();
+    }, 50);
+    setTimeout(() => {
+      htmlEl.innerText = oldText;
+      htmlIconEl.className = oldIconClz;
+    }, 1250);
+  }
+};
+const JsonTab = ({ logFile, json }) => {
+  const downloadFiles = useStore((state) => state.capabilities.downloadFiles);
+  if (logFile && json.length > kJsonMaxSize && downloadFiles) {
+    const file = `${filename(logFile)}.json`;
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$n.jsonTab, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      DownloadPanel,
+      {
+        message: "The JSON for this log file is too large to render.",
+        buttonLabel: "Download JSON File",
+        fileName: file,
+        fileContents: json
+      }
+    ) });
+  } else {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$n.jsonTab, children: /* @__PURE__ */ jsxRuntimeExports.jsx(JSONPanel, { id: "task-json-contents", json, simple: true }) });
+  }
+};
+const container$7 = "_container_4wzpj_1";
+const modelInfo = "_modelInfo_4wzpj_8";
+const role = "_role_4wzpj_15";
+const sep = "_sep_4wzpj_19";
+const styles$m = {
+  container: container$7,
+  modelInfo,
+  role,
+  sep
+};
+const ModelCard = ({ evalSpec }) => {
+  if (!evalSpec) {
+    return void 0;
+  }
+  const modelsInfo = {
+    eval: {
+      model: evalSpec.model,
+      base_url: evalSpec.model_base_url,
+      config: evalSpec.model_generate_config,
+      args: evalSpec.model_args
+    },
+    ...evalSpec.model_roles
+  };
+  const noneEl = /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-style-secondary", children: "None" });
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Models" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: "task-model-card-body", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$m.container, children: Object.keys(modelsInfo || {}).map((modelKey) => {
+      const modelInfo2 = modelsInfo[modelKey];
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "div",
+        {
+          className: clsx(styles$m.modelInfo, "text-size-small"),
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                className: clsx(
+                  styles$m.role,
+                  "text-style-label",
+                  "text-style-secondary"
+                ),
+                children: modelKey
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$m.sep) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Model" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: modelInfo2.model }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$m.sep) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Base Url" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-size-small", children: modelInfo2.base_url || noneEl }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$m.sep) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Configuration" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-size-small", children: modelInfo2.config && Object.keys(modelInfo2.config).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+              MetaDataGrid,
+              {
+                entries: modelInfo2.config
+              }
+            ) : noneEl }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$m.sep) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Args" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-size-small", children: Object.keys(modelInfo2.args).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+              MetaDataGrid,
+              {
+                entries: modelInfo2.args
+              }
+            ) : noneEl }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$m.sep) })
+          ]
+        },
+        modelKey
+      );
+    }) }) })
+  ] });
+};
+const wrapper$1 = "_wrapper_14r3b_1";
+const col2 = "_col2_14r3b_16";
+const styles$l = {
+  wrapper: wrapper$1,
+  col2
+};
+const kUsageCardBodyId = "usage-card-body";
+const UsageCard = ({ stats }) => {
+  if (!stats) {
+    return null;
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Usage" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: kUsageCardBodyId, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$l.wrapper, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$l.col2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ModelTokenTable, { model_usage: stats.model_usage }) }) }) })
+  ] });
+};
+const useModelsTab = (evalSpec, evalStats, evalStatus) => {
+  return reactExports.useMemo(() => {
+    return {
+      id: kLogViewModelsTabId,
+      label: "Models",
+      scrollable: true,
+      component: ModelTab,
+      componentProps: {
+        evalSpec,
+        evalStats,
+        evalStatus
+      }
+    };
+  }, [evalSpec, evalStats, evalStatus]);
+};
+const ModelTab = ({
+  evalSpec,
+  evalStats,
+  evalStatus
+}) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "0.5em 1em 0 1em", width: "100%" }, children: [
+    evalSpec ? /* @__PURE__ */ jsxRuntimeExports.jsx(ModelCard, { evalSpec }) : void 0,
+    evalStatus !== "started" && evalStats?.model_usage && Object.keys(evalStats.model_usage).length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(UsageCard, { stats: evalStats })
+  ] }) });
 };
 let rangeFrom = [], rangeTo = [];
 (() => {
@@ -196346,32 +197530,32 @@ function add2(elt, child) {
     throw new RangeError("Unsupported child node: " + child);
   }
 }
-let nav$1 = typeof navigator != "undefined" ? navigator : { userAgent: "", vendor: "", platform: "" };
+let nav = typeof navigator != "undefined" ? navigator : { userAgent: "", vendor: "", platform: "" };
 let doc = typeof document != "undefined" ? document : { documentElement: { style: {} } };
-const ie_edge = /* @__PURE__ */ /Edge\/(\d+)/.exec(nav$1.userAgent);
-const ie_upto10 = /* @__PURE__ */ /MSIE \d/.test(nav$1.userAgent);
-const ie_11up = /* @__PURE__ */ /Trident\/(?:[7-9]|\d{2,})\..*rv:(\d+)/.exec(nav$1.userAgent);
+const ie_edge = /* @__PURE__ */ /Edge\/(\d+)/.exec(nav.userAgent);
+const ie_upto10 = /* @__PURE__ */ /MSIE \d/.test(nav.userAgent);
+const ie_11up = /* @__PURE__ */ /Trident\/(?:[7-9]|\d{2,})\..*rv:(\d+)/.exec(nav.userAgent);
 const ie = !!(ie_upto10 || ie_11up || ie_edge);
-const gecko = !ie && /* @__PURE__ */ /gecko\/(\d+)/i.test(nav$1.userAgent);
-const chrome = !ie && /* @__PURE__ */ /Chrome\/(\d+)/.exec(nav$1.userAgent);
+const gecko = !ie && /* @__PURE__ */ /gecko\/(\d+)/i.test(nav.userAgent);
+const chrome = !ie && /* @__PURE__ */ /Chrome\/(\d+)/.exec(nav.userAgent);
 const webkit = "webkitFontSmoothing" in doc.documentElement.style;
-const safari = !ie && /* @__PURE__ */ /Apple Computer/.test(nav$1.vendor);
-const ios = safari && (/* @__PURE__ */ /Mobile\/\w+/.test(nav$1.userAgent) || nav$1.maxTouchPoints > 2);
+const safari = !ie && /* @__PURE__ */ /Apple Computer/.test(nav.vendor);
+const ios = safari && (/* @__PURE__ */ /Mobile\/\w+/.test(nav.userAgent) || nav.maxTouchPoints > 2);
 var browser = {
-  mac: ios || /* @__PURE__ */ /Mac/.test(nav$1.platform),
-  windows: /* @__PURE__ */ /Win/.test(nav$1.platform),
-  linux: /* @__PURE__ */ /Linux|X11/.test(nav$1.platform),
+  mac: ios || /* @__PURE__ */ /Mac/.test(nav.platform),
+  windows: /* @__PURE__ */ /Win/.test(nav.platform),
+  linux: /* @__PURE__ */ /Linux|X11/.test(nav.platform),
   ie,
   ie_version: ie_upto10 ? doc.documentMode || 6 : ie_11up ? +ie_11up[1] : ie_edge ? +ie_edge[1] : 0,
   gecko,
-  gecko_version: gecko ? +(/* @__PURE__ */ /Firefox\/(\d+)/.exec(nav$1.userAgent) || [0, 0])[1] : 0,
+  gecko_version: gecko ? +(/* @__PURE__ */ /Firefox\/(\d+)/.exec(nav.userAgent) || [0, 0])[1] : 0,
   chrome: !!chrome,
   chrome_version: chrome ? +chrome[1] : 0,
   ios,
-  android: /* @__PURE__ */ /Android\b/.test(nav$1.userAgent),
-  webkit_version: webkit ? +(/* @__PURE__ */ /\bAppleWebKit\/(\d+)/.exec(nav$1.userAgent) || [0, 0])[1] : 0,
+  android: /* @__PURE__ */ /Android\b/.test(nav.userAgent),
+  webkit_version: webkit ? +(/* @__PURE__ */ /\bAppleWebKit\/(\d+)/.exec(nav.userAgent) || [0, 0])[1] : 0,
   safari,
-  safari_version: safari ? +(/* @__PURE__ */ /\bVersion\/(\d+(\.\d+)?)/.exec(nav$1.userAgent) || [0, 0])[1] : 0,
+  safari_version: safari ? +(/* @__PURE__ */ /\bVersion\/(\d+(\.\d+)?)/.exec(nav.userAgent) || [0, 0])[1] : 0,
   tabSize: doc.documentElement.style.tabSize != null ? "tab-size" : "-moz-tab-size"
 };
 function combineAttrs(source2, target2) {
@@ -208854,9 +210038,9 @@ function indentStrategy(tree) {
   let strategy = tree.type.prop(indentNodeProp);
   if (strategy)
     return strategy;
-  let first = tree.firstChild, close2;
-  if (first && (close2 = first.type.prop(NodeProp.closedBy))) {
-    let last = tree.lastChild, closed = last && close2.indexOf(last.name) > -1;
+  let first = tree.firstChild, close;
+  if (first && (close = first.type.prop(NodeProp.closedBy))) {
+    let last = tree.lastChild, closed = last && close.indexOf(last.name) > -1;
     return (cx) => delimitedStrategy(cx, true, 1, void 0, closed && !ignoreClosed(cx) ? last.from : void 0);
   }
   return tree.parent == null ? topIndent : null;
@@ -211844,12 +213028,12 @@ function getConfig(state, pos2) {
   return data.length ? data[0] : {};
 }
 const SearchMargin = 50;
-function findBlockComment(state, { open, close: close2 }, from, to2) {
+function findBlockComment(state, { open, close }, from, to2) {
   let textBefore = state.sliceDoc(from - SearchMargin, from);
   let textAfter = state.sliceDoc(to2, to2 + SearchMargin);
   let spaceBefore = /\s*$/.exec(textBefore)[0].length, spaceAfter = /^\s*/.exec(textAfter)[0].length;
   let beforeOff = textBefore.length - spaceBefore;
-  if (textBefore.slice(beforeOff - open.length, beforeOff) == open && textAfter.slice(spaceAfter, spaceAfter + close2.length) == close2) {
+  if (textBefore.slice(beforeOff - open.length, beforeOff) == open && textAfter.slice(spaceAfter, spaceAfter + close.length) == close) {
     return {
       open: { pos: from - spaceBefore, margin: spaceBefore && 1 },
       close: { pos: to2 + spaceAfter, margin: spaceAfter && 1 }
@@ -211863,15 +213047,15 @@ function findBlockComment(state, { open, close: close2 }, from, to2) {
     endText = state.sliceDoc(to2 - SearchMargin, to2);
   }
   let startSpace = /^\s*/.exec(startText)[0].length, endSpace = /\s*$/.exec(endText)[0].length;
-  let endOff = endText.length - endSpace - close2.length;
-  if (startText.slice(startSpace, startSpace + open.length) == open && endText.slice(endOff, endOff + close2.length) == close2) {
+  let endOff = endText.length - endSpace - close.length;
+  if (startText.slice(startSpace, startSpace + open.length) == open && endText.slice(endOff, endOff + close.length) == close) {
     return {
       open: {
         pos: from + startSpace + open.length,
         margin: /\s/.test(startText.charAt(startSpace + open.length)) ? 1 : 0
       },
       close: {
-        pos: to2 - endSpace - close2.length,
+        pos: to2 - endSpace - close.length,
         margin: /\s/.test(endText.charAt(endOff - 1)) ? 1 : 0
       }
     };
@@ -211908,8 +213092,8 @@ function changeBlockComment(option, state, ranges = state.selection.ranges) {
     let changes = [];
     for (let i = 0, comment2; i < comments.length; i++)
       if (comment2 = comments[i]) {
-        let token2 = tokens[i], { open, close: close2 } = comment2;
-        changes.push({ from: open.pos - token2.open.length, to: open.pos + open.margin }, { from: close2.pos - close2.margin, to: close2.pos + token2.close.length });
+        let token2 = tokens[i], { open, close } = comment2;
+        changes.push({ from: open.pos - token2.open.length, to: open.pos + open.margin }, { from: close.pos - close.margin, to: close.pos + token2.close.length });
       }
     return { changes };
   }
@@ -213309,6 +214493,9 @@ function getCompletions(context, filterItems, samples) {
     if (isMetadataProperty(tokens, currentTokenIndex)) {
       return customRelationCompletions();
     }
+    if (varName === "epoch") {
+      return continuousRelationCompletions();
+    }
     if (varName === kSampleIdVariable) {
       return discreteRelationCompletions();
     }
@@ -213367,6 +214554,17 @@ function getCompletions(context, filterItems, samples) {
         includeDefault: false
       });
     }
+    if (varName === "epoch" && samples) {
+      const epochValues = Array.from(
+        new Set(samples.map((s) => s.epoch).filter((e) => e !== void 0))
+      ).sort((a, b) => a - b);
+      const epochCompletions = epochValues.map(
+        (e) => makeLiteralCompletion(String(e))
+      );
+      return makeCompletions(epochCompletions, {
+        includeDefault: epochCompletions.length === 0
+      });
+    }
     const item2 = findFilterItem(2);
     if (item2?.categories?.length) {
       return rhsCompletions(item2.categories);
@@ -213382,7 +214580,7 @@ function getCompletions(context, filterItems, samples) {
 const label$4 = "_label_jbrqc_1";
 const input = "_input_jbrqc_7";
 const help = "_help_jbrqc_11";
-const styles$o = {
+const styles$k = {
   label: label$4,
   input,
   help
@@ -213390,6 +214588,7 @@ const styles$o = {
 const FILTER_TOOLTIP = `
 Filter samples by:
   • Scores
+  • Epoch: e.g. "epoch == 1" or "epoch <= 2"
   • Samples with errors: has_error
   • Input, target and error regex search: input_contains, target_contains, error_contains
   • Samples that have been retried: has_retries
@@ -213591,7 +214790,7 @@ const SampleFilter = () => {
           "text-size-smaller",
           "text-style-label",
           "text-style-secondary",
-          styles$o.label
+          styles$k.label
         ),
         children: "Filter:"
       }
@@ -213600,13 +214799,13 @@ const SampleFilter = () => {
       "div",
       {
         ref: editorRef,
-        className: clsx(filterError && "filter-pending", styles$o.input)
+        className: clsx(filterError && "filter-pending", styles$k.input)
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "span",
       {
-        className: clsx("bi", "bi-question-circle", styles$o.help),
+        className: clsx("bi", "bi-question-circle", styles$k.help),
         "data-tooltip": FILTER_TOOLTIP,
         "data-tooltip-position": "bottom-left"
       }
@@ -213614,19 +214813,19 @@ const SampleFilter = () => {
   ] });
 };
 const container$6 = "_container_uvlpz_1";
-const grid$3 = "_grid_uvlpz_5";
-const row$1 = "_row_uvlpz_12";
+const grid$2 = "_grid_uvlpz_5";
+const row = "_row_uvlpz_12";
 const label$3 = "_label_uvlpz_26";
 const links = "_links_uvlpz_32";
-const selected$1 = "_selected_uvlpz_50";
+const selected = "_selected_uvlpz_50";
 const bodyColorButton = "_bodyColorButton_uvlpz_54";
-const styles$n = {
+const styles$j = {
   container: container$6,
-  grid: grid$3,
-  row: row$1,
+  grid: grid$2,
+  row,
   label: label$3,
   links,
-  selected: selected$1,
+  selected,
   bodyColorButton
 };
 const SelectScorer = ({
@@ -213651,7 +214850,7 @@ const SelectScorer = ({
           "text-size-smaller",
           "text-style-label",
           "text-style-secondary",
-          styles$n.label
+          styles$j.label
         ),
         children: "Scorers:"
       }
@@ -213663,7 +214862,7 @@ const SelectScorer = ({
         icon: ApplicationIcons.metrics,
         onClick: () => setShowing(!showing),
         ref: buttonRef,
-        className: clsx(styles$n.bodyColorButton)
+        className: clsx(styles$j.bodyColorButton)
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -213679,13 +214878,13 @@ const SelectScorer = ({
           padding: "3px 5px"
         },
         children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$n.links, "text-size-smaller"), children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$j.links, "text-size-smaller"), children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "a",
               {
                 className: clsx(
-                  styles$n.link,
-                  !allScoresSelected ? styles$n.selected : void 0
+                  styles$j.link,
+                  !allScoresSelected ? styles$j.selected : void 0
                 ),
                 onClick: () => {
                   if (scores2.length > 0) {
@@ -213700,8 +214899,8 @@ const SelectScorer = ({
               "a",
               {
                 className: clsx(
-                  styles$n.link,
-                  allScoresSelected ? styles$n.selected : void 0
+                  styles$j.link,
+                  allScoresSelected ? styles$j.selected : void 0
                 ),
                 onClick: () => {
                   setSelectedScores(scores2);
@@ -213710,7 +214909,7 @@ const SelectScorer = ({
               }
             )
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$n.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$j.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             ScoreCheckboxes,
             {
               scores: scores2,
@@ -213742,13 +214941,13 @@ const ScoreCheckboxes = ({
     },
     [setSelectedScores, scores2, selectedKeys]
   );
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$n.grid, "text-size-smaller"), children: scores2.map((sc2) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$j.grid, "text-size-smaller"), children: scores2.map((sc2) => {
     const key2 = `${sc2.scorer}.${sc2.name}`;
     const isChecked = selectedKeys ? selectedKeys.has(key2) : false;
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
       {
-        className: clsx(styles$n.row),
+        className: clsx(styles$j.row),
         onClick: () => handleToggle(sc2, isChecked),
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -213770,17 +214969,11 @@ const ScoreCheckboxes = ({
   }) });
 };
 const SampleTools = () => {
-  const selectedLogDetails = useStore((state) => state.log.selectedLogDetails);
   const scores2 = useScores();
   const selectedScores = useSelectedScores();
   const setSelectedScores = useStore(
     (state) => state.logActions.setSelectedScores
   );
-  const epoch = useStore((state) => state.log.epoch);
-  const setEpoch = useStore((state) => state.logActions.setEpoch);
-  const sort2 = useStore((state) => state.log.sort);
-  const setSort = useStore((state) => state.logActions.setSort);
-  const epochs = selectedLogDetails?.eval.config.epochs || 1;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(SampleFilter, {}),
     scores2?.length > 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -213790,9 +214983,7 @@ const SampleTools = () => {
         selectedScores,
         setSelectedScores
       }
-    ) : void 0,
-    epochs > 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(EpochFilter, { epoch, setEpoch, epochs }) : void 0,
-    /* @__PURE__ */ jsxRuntimeExports.jsx(SortFilter, { sort: sort2, setSort, epochs })
+    ) : void 0
   ] });
 };
 const ScoreFilterTools = () => {
@@ -213813,260 +215004,299 @@ const ScoreFilterTools = () => {
     }
   );
 };
-const kBaseFontSize = 0.9;
-const ScaleBaseFont = (scale) => {
-  return `${kBaseFontSize + scale}rem`;
+const statusCell = "_statusCell_hunte_1";
+const error = "_error_hunte_7";
+const success = "_success_hunte_11";
+const cancelled = "_cancelled_hunte_15";
+const styles$i = {
+  statusCell,
+  error,
+  success,
+  cancelled
 };
-const FontSize = {
-  smaller: ScaleBaseFont(-0.1)
+const sampleStatus = (completed, error2) => {
+  if (error2) {
+    return errorType(error2) === "CancelledError" ? "cancelled" : "error";
+  }
+  return completed ? "ok" : "running";
 };
-const TextStyle = {
-  secondary: {
-    color: "var(--bs-secondary)"
+const kDefaultSampleSortValue = "3:ok";
+const sampleStatusSortValue = (status2, error2) => {
+  switch (status2) {
+    case "running":
+      return "0:running";
+    case "error":
+      return `1:error:${errorType(error2)}`;
+    case "cancelled":
+      return "2:cancelled";
+    default:
+      return kDefaultSampleSortValue;
   }
 };
-const ApplicationStyles = {
-  moreButton: {
-    maxHeight: "1.8em",
-    fontSize: FontSize.smaller,
-    padding: "0 0.2em 0 0.2em",
-    ...TextStyle.secondary
-  },
-  threeLineClamp: {
-    display: "-webkit-box",
-    WebkitLineClamp: "3",
-    WebkitBoxOrient: "vertical",
-    overflow: "hidden"
-  },
-  lineClamp: (len) => {
-    return {
-      display: "-webkit-box",
-      WebkitLineClamp: `${len}`,
-      WebkitBoxOrient: "vertical",
-      overflow: "hidden"
-    };
-  },
-  wrapText: () => {
-    return {
-      whiteSpace: "nowrap",
-      textOverflow: "ellipsis",
-      overflow: "hidden"
-    };
-  },
-  scoreFills: {
-    green: {
-      backgroundColor: "var(--bs-success)",
-      borderColor: "var(--bs-success)",
-      color: "var(--bs-body-bg)"
-    },
-    red: {
-      backgroundColor: "var(--bs-danger)",
-      borderColor: "var(--bs-danger)",
-      color: "var(--bs-body-bg)"
-    },
-    orange: {
-      backgroundColor: "var(--bs-orange)",
-      borderColor: "var(--bs-orange)",
-      color: "var(--bs-body-bg)"
-    }
+const SampleStatusIcon = ({ status: status2 }) => {
+  if (status2 === "running") {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$i.statusCell, children: /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false }) });
   }
+  const icon2 = status2 === "error" ? ApplicationIcons.error : status2 === "cancelled" ? ApplicationIcons.cancelled : ApplicationIcons.success;
+  const colorClass = status2 === "error" ? styles$i.error : status2 === "cancelled" ? styles$i.cancelled : styles$i.success;
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$i.statusCell, children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, colorClass) }) });
 };
-const body$1 = "_body_12gn4_1";
-const iconSmall = "_iconSmall_12gn4_9";
-const message = "_message_12gn4_15";
-const styles$m = {
-  body: body$1,
-  iconSmall,
-  message
-};
-const SampleErrorView = ({
-  message: message2,
-  align
-}) => {
-  align = align || "center";
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$m.body, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.error, styles$m.iconSmall) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$m.message, style: ApplicationStyles.lineClamp(2), children: errorType(message2) })
-  ] });
-};
-const grid$2 = "_grid_1213u_1";
-const selected = "_selected_1213u_11";
-const sampleLink = "_sampleLink_1213u_15";
-const disabledRow = "_disabledRow_1213u_34";
-const disabled$1 = "_disabled_1213u_34";
-const cell = "_cell_1213u_44";
-const wrapAnywhere = "_wrapAnywhere_1213u_49";
-const noLeft = "_noLeft_1213u_53";
-const score = "_score_1213u_57";
-const centered = "_centered_1213u_62";
-const styles$l = {
-  grid: grid$2,
-  selected,
-  sampleLink,
-  disabledRow,
-  disabled: disabled$1,
+const mainLayout = "_mainLayout_1s8x3_1";
+const samplesListGrid = "_samplesListGrid_1s8x3_7";
+const cell = "_cell_1s8x3_44";
+const wrapAnywhere = "_wrapAnywhere_1s8x3_48";
+const noLeft = "_noLeft_1s8x3_52";
+const score = "_score_1s8x3_56";
+const centered = "_centered_1s8x3_63";
+const styles$h = {
+  mainLayout,
+  samplesListGrid,
   cell,
   wrapAnywhere,
   noLeft,
   score,
   centered
 };
-const SampleRow = ({
-  id,
-  sample: sample2,
-  answer: answer2,
-  completed,
-  scoresRendered,
-  gridColumnsTemplate,
-  height,
-  selected: selected2,
-  showSample,
-  sampleUrl
-}) => {
-  const streamSampleData = useStore(
-    (state) => state.capabilities.streamSampleData
-  );
-  const isViewable = completed || streamSampleData;
-  const showingSampleDialog = useStore((state) => state.app.dialogs.sample);
-  if (!completed && scoresRendered.length === 0 && Object.keys(sample2.scores || {}).length === 0) {
-    scoresRendered = [null];
-  }
-  const scoreColumnContent = scoresRendered.map((scoreRendered, i) => {
-    if (!showingSampleDialog && sample2.error) {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(SampleErrorView, { message: sample2.error });
-    } else if (completed) {
-      return scoreRendered;
-    } else if (i === scoresRendered.length - 1) {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false });
-    } else {
-      return void 0;
-    }
-  });
-  const rowContent = /* @__PURE__ */ jsxRuntimeExports.jsxs(
+const ScoreCellDiv = ({ children: children2 }) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-small", styles$h.cell, styles$h.score), children: children2 });
+const MarkdownCellDiv = ({ semanticClass, text: text2, trimRenderedText }) => {
+  const markdown = truncateMarkdown(text2, 250);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
     {
-      id: `sample-${id}`,
       className: clsx(
-        styles$l.grid,
+        semanticClass,
         "text-size-base",
-        selected2 ? styles$l.selected : void 0,
-        !isViewable && !sampleUrl ? styles$l.disabled : void 0
+        "three-line-clamp",
+        styles$h.cell,
+        styles$h.wrapAnywhere
       ),
-      style: {
-        height: `${height}px`,
-        gridTemplateRows: `${height - 28}px`,
-        gridTemplateColumns: gridColumnsTemplate
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        RenderedText,
+        {
+          markdown,
+          className: trimRenderedText ? clsx("no-last-para-padding", styles$h.noLeft) : void 0,
+          forceRender: true,
+          omitMedia: true
+        }
+      )
+    }
+  );
+};
+function buildColumnDefs(samplesDescriptor, selectedScores, scores2, epochs) {
+  const shape = samplesDescriptor?.messageShape;
+  const inputFlex = shape?.inputSize || 3;
+  const targetFlex = shape?.targetSize || 1;
+  const answerFlex = shape?.answerSize || 1;
+  const scoreLabels = !selectedScores || selectedScores.length === 0 ? [] : scores2 && scores2.length === 1 ? ["Score"] : selectedScores?.map((s) => s.name) ?? [];
+  const columns = [
+    {
+      colId: "sampleStatus",
+      headerName: "",
+      headerTooltipValueGetter: () => "Sample Status",
+      width: 24,
+      valueGetter: (params) => {
+        if (!params.data) return kDefaultSampleSortValue;
+        const s = sampleStatus(params.data.completed, params.data.data.error);
+        return sampleStatusSortValue(s, params.data.data.error);
       },
-      children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("sample-id", "three-line-clamp", styles$l.cell), children: !showingSampleDialog ? sample2.id : void 0 }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
+      cellRenderer: (params) => {
+        if (!params.data) return null;
+        const s = sampleStatus(params.data.completed, params.data.data.error);
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(SampleStatusIcon, { status: s });
+      },
+      tooltipValueGetter: (params) => {
+        if (!params.data) return null;
+        return params.data.data.error ? params.data.data.error : sampleStatus(params.data.completed, params.data.data.error);
+      }
+    },
+    {
+      colId: "id",
+      headerName: "Id",
+      width: (shape?.idSize ?? 2) * 16,
+      // 16 for 1em in pixels
+      minWidth: 35,
+      valueGetter: (params) => params.data?.data?.id,
+      cellRenderer: (params) => {
+        if (!params.data) return null;
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
             className: clsx(
-              "sample-input",
+              "sample-id",
+              "text-size-base",
               "three-line-clamp",
-              styles$l.cell,
-              styles$l.wrapAnywhere
+              styles$h.cell,
+              styles$h.wrapAnywhere
             ),
-            children: !showingSampleDialog ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-              RenderedText,
-              {
-                markdown: truncateMarkdown(
-                  inputString(sample2.input).join(" "),
-                  250
-                ),
-                forceRender: true,
-                omitMedia: true
-              }
-            ) : void 0
+            children: params.data.data.id
           }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("sample-target", "three-line-clamp", styles$l.cell), children: sample2?.target && !showingSampleDialog ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-          RenderedText,
+        );
+      }
+    },
+    {
+      colId: "epoch",
+      headerName: "Epoch",
+      width: 50,
+      minWidth: 28,
+      hide: epochs <= 1,
+      valueGetter: (params) => params.data?.data?.epoch,
+      cellRenderer: (params) => {
+        if (!params.data) return null;
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
           {
-            markdown: truncateMarkdown(arrayToString(sample2.target), 250),
-            className: clsx("no-last-para-padding", styles$l.noLeft),
-            forceRender: true,
-            omitMedia: true
+            className: clsx(
+              "sample-epoch",
+              "text-size-base",
+              styles$h.cell,
+              styles$h.centered
+            ),
+            children: params.data.data.epoch
           }
-        ) : void 0 }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("sample-answer", "three-line-clamp", styles$l.cell), children: sample2 && !showingSampleDialog ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-          RenderedText,
+        );
+      }
+    },
+    {
+      colId: "input",
+      headerName: "Input",
+      flex: inputFlex,
+      minWidth: 80,
+      hide: !shape?.inputSize,
+      valueGetter: (params) => {
+        return params.data ? inputString(params.data.data.input).join(" ") : "";
+      },
+      cellRenderer: (params) => {
+        if (!params.data) return null;
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          MarkdownCellDiv,
           {
-            markdown: truncateMarkdown(answer2 || "", 250),
-            className: clsx("no-last-para-padding", styles$l.noLeft),
-            forceRender: true,
-            omitMedia: true
+            semanticClass: "sample-input",
+            text: inputString(params.data.data.input).join(" ")
           }
-        ) : "" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
+        );
+      }
+    },
+    {
+      colId: "target",
+      headerName: "Target",
+      flex: targetFlex,
+      minWidth: 80,
+      hide: !shape?.targetSize,
+      valueGetter: (params) => {
+        return params.data?.data?.target != null ? arrayToString(params.data.data.target) : "";
+      },
+      cellRenderer: (params) => {
+        if (!params.data?.data?.target) return null;
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          MarkdownCellDiv,
+          {
+            semanticClass: "sample-target",
+            text: arrayToString(params.data.data.target),
+            trimRenderedText: true
+          }
+        );
+      }
+    },
+    {
+      colId: "answer",
+      headerName: "Answer",
+      flex: answerFlex,
+      minWidth: 80,
+      hide: !shape?.answerSize,
+      valueGetter: (params) => params.data?.answer ?? "",
+      cellRenderer: (params) => {
+        if (!params.data) return null;
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          MarkdownCellDiv,
+          {
+            semanticClass: "sample-answer",
+            text: params.data.answer || "",
+            trimRenderedText: true
+          }
+        );
+      }
+    },
+    {
+      colId: "limit",
+      headerName: "Limit",
+      width: (shape?.limitSize ?? 1) * 16,
+      minWidth: 28,
+      hide: !shape?.limitSize,
+      valueGetter: (params) => params.data?.data?.limit,
+      cellRenderer: (params) => {
+        if (!params.data) return null;
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
             className: clsx(
               "sample-limit",
               "text-size-small",
               "three-line-clamp",
-              styles$l.cell
+              styles$h.cell,
+              styles$h.wrapAnywhere
             ),
-            children: !showingSampleDialog ? sample2.limit : void 0
+            children: params.data.data.limit
           }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
+        );
+      }
+    },
+    {
+      colId: "retries",
+      headerName: "Retries",
+      width: (shape?.retriesSize ?? 1) * 16,
+      minWidth: 28,
+      hide: !shape?.retriesSize,
+      valueGetter: (params) => params.data?.data?.retries,
+      cellRenderer: (params) => {
+        if (!params.data) return null;
+        const { data } = params.data;
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
             className: clsx(
               "sample-retries",
               "text-size-small",
               "three-line-clamp",
-              styles$l.cell,
-              styles$l.centered
+              styles$h.cell,
+              styles$h.centered
             ),
-            children: !showingSampleDialog && sample2.retries && sample2.retries > 0 ? sample2.retries : void 0
+            children: data.retries && data.retries > 0 ? data.retries : void 0
           }
-        ),
-        scoreColumnContent.map((scoreColumnContent2, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "div",
-          {
-            className: clsx("text-size-small", styles$l.cell, styles$l.score),
-            children: scoreColumnContent2
-          },
-          `score-${i}`
-        ))
-      ]
+        );
+      }
     }
-  );
-  if (!sampleUrl || !isViewable) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$l.disabledRow, children: rowContent });
-  }
-  if (isVscode()) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { onClick: showSample, className: styles$l.sampleLink, children: rowContent });
-  }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: sampleUrl, className: styles$l.sampleLink, children: rowContent });
-};
-const row = "_row_utdq5_1";
-const styles$k = {
-  row
-};
-const SampleSeparator = ({
-  id,
-  title: title2,
-  height
-}) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    "div",
-    {
-      id,
-      className: clsx("text-style-secondary", "text-size-smaller", styles$k.row),
-      style: { height: `${height}px` },
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: title2 })
-    }
-  );
-};
+  ];
+  scoreLabels.forEach((label2, i) => {
+    columns.push({
+      headerName: label2,
+      colId: `score-${i}`,
+      width: 80,
+      minWidth: 28,
+      valueGetter: (params) => {
+        if (!params.data?.data || !samplesDescriptor) return void 0;
+        return samplesDescriptor.evalDescriptor.score(
+          params.data.data,
+          selectedScores[i]
+        )?.value;
+      },
+      cellRenderer: (params) => {
+        if (!params.data) return null;
+        const { data, completed } = params.data;
+        const rendered = samplesDescriptor?.evalDescriptor.score(data, selectedScores[i])?.render();
+        if (completed && rendered !== void 0) {
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(ScoreCellDiv, { children: rendered });
+        }
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(ScoreCellDiv, {});
+      }
+    });
+  });
+  return columns;
+}
 const footer = "_footer_vkofn_1";
 const spinnerContainer = "_spinnerContainer_vkofn_11";
 const spinner$1 = "_spinner_vkofn_11";
 const label$2 = "_label_vkofn_25";
-const styles$j = {
+const styles$g = {
   footer,
   spinnerContainer,
   spinner: spinner$1,
@@ -214077,72 +215307,23 @@ const SampleFooter = ({
   totalSampleCount,
   running
 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-smaller", styles$j.footer), children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: running ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$j.spinnerContainer), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-smaller", styles$g.footer), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: running ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$g.spinnerContainer), children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
         {
-          className: clsx("spinner-border", styles$j.spinner),
+          className: clsx("spinner-border", styles$g.spinner),
           role: "status",
           children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("visually-hidden"), children: "Running..." })
         }
       ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-secondary", styles$j.label), children: "running..." })
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-secondary", styles$g.label), children: "running..." })
     ] }) : void 0 }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: sampleCount < totalSampleCount ? `${sampleCount} / ${totalSampleCount} Samples` : `${sampleCount} Samples` })
   ] });
 };
-const header$1 = "_header_1qnb6_1";
-const center = "_center_1qnb6_9";
-const shrinkable = "_shrinkable_1qnb6_13";
-const styles$i = {
-  header: header$1,
-  center,
-  shrinkable
-};
-const SampleHeader = ({
-  input: input2 = true,
-  target: target2 = true,
-  answer: answer2 = true,
-  limit = true,
-  retries = false,
-  scoreLabels = ["Score"],
-  gridColumnsTemplate
-}) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
-  "div",
-  {
-    className: clsx(
-      styles$i.header,
-      "text-size-smallestest",
-      "text-style-label",
-      "text-style-secondary"
-    ),
-    style: { gridTemplateColumns: gridColumnsTemplate },
-    children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: "Id" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: input2 ? "Input" : "" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: target2 ? "Target" : "" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: answer2 ? "Answer" : "" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: limit ? "Limit" : "" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: retries ? "Retries" : "" }),
-      scoreLabels.map((label2, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "div",
-        {
-          className: clsx(styles$i.center, styles$i.shrinkable),
-          children: label2
-        },
-        `score-header-${i}`
-      ))
-    ]
-  }
-);
-const mainLayout = "_mainLayout_q79zq_7";
-const styles$h = {
-  mainLayout
-};
 const kSampleHeight = 88;
-const kSeparatorHeight = 24;
-const kSampleFollowProp = "sample-list";
+const makeSampleRowId = (id, epoch) => `${id}-${epoch}`.replace(/\s+/g, "_");
 const SampleList = reactExports.memo((props) => {
   const {
     items,
@@ -214153,196 +215334,174 @@ const SampleList = reactExports.memo((props) => {
     listHandle
   } = props;
   const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
-  const { getRestoreState, isScrolling } = useVirtuosoState(
-    listHandle,
-    `sample-list-${selectedLogFile}`
-  );
   reactExports.useEffect(() => {
-    listHandle.current?.scrollTo({ top: 0, behavior: "instant" });
+    listHandle.current?.api?.ensureIndexVisible(0, "top");
   }, [listHandle, selectedLogFile]);
   const sampleNavigation = useSampleNavigation();
   const selectedSampleHandle = useStore(
     (state) => state.log.selectedSampleHandle
   );
-  const samplesDescriptor = useSampleDescriptor();
-  const [followOutput, setFollowOutput] = useProperty(
-    kSampleFollowProp,
-    "follow",
-    {
-      defaultValue: !!running
-    }
-  );
-  const evalSpec = useStore((state) => state.log.selectedLogDetails?.eval);
+  const selectedLogDetails = useStore((state) => state.log.selectedLogDetails);
+  const evalSpec = selectedLogDetails?.eval;
+  const epochs = evalSpec?.config?.epochs || 1;
   const { setDocumentTitle } = useDocumentTitle();
   reactExports.useEffect(() => {
     setDocumentTitle({ evalSpec });
   }, [setDocumentTitle, evalSpec]);
+  const followOutputRef = reactExports.useRef(running);
+  const prevItemCountRef = reactExports.useRef(items.length);
+  reactExports.useEffect(() => {
+    if (running) {
+      followOutputRef.current = true;
+    }
+  }, [running]);
+  reactExports.useEffect(() => {
+    if (running && followOutputRef.current && items.length > prevItemCountRef.current && listHandle.current?.api) {
+      listHandle.current.api.ensureIndexVisible(items.length - 1, "bottom");
+    }
+    prevItemCountRef.current = items.length;
+  }, [items.length, running, listHandle]);
+  const handleBodyScroll = reactExports.useCallback(() => {
+    if (!running || !listHandle.current?.api) return;
+    const api2 = listHandle.current.api;
+    const vPixel = api2.getVerticalPixelRange();
+    const totalHeight = api2.getDisplayedRowCount() * kSampleHeight;
+    const viewportHeight = vPixel.bottom - vPixel.top;
+    const atBottom = vPixel.bottom >= totalHeight - viewportHeight * 0.1;
+    followOutputRef.current = atBottom;
+  }, [running, listHandle]);
   const prevRunningRef = reactExports.useRef(running);
   reactExports.useEffect(() => {
-    if (!running && prevRunningRef.current && followOutput && listHandle.current) {
-      setFollowOutput(false);
+    if (!running && prevRunningRef.current && listHandle.current?.api) {
+      followOutputRef.current = false;
       setTimeout(() => {
-        if (listHandle.current) {
-          listHandle.current.scrollTo({ top: 0, behavior: "instant" });
-        }
+        listHandle.current?.api?.ensureIndexVisible(0, "top");
       }, 100);
     }
     prevRunningRef.current = running;
-  }, [running, followOutput, listHandle, setFollowOutput]);
-  const loaded = reactExports.useRef(false);
-  const handleAtBottomStateChange = reactExports.useCallback(
-    (atBottom) => {
-      if (loaded.current && running) {
-        setFollowOutput(atBottom);
-      }
-      loaded.current = true;
-    },
-    [running, setFollowOutput]
-  );
-  const onkeydown = reactExports.useCallback(
+  }, [running, listHandle]);
+  const handleRowClick = reactExports.useCallback(
     (e) => {
-      switch (e.key) {
-        case "ArrowUp":
-          if (e.metaKey || e.ctrlKey) {
-            sampleNavigation.firstSample();
-            listHandle.current?.scrollToIndex({
-              index: 0,
-              align: "start",
-              behavior: "auto"
-            });
-          } else {
-            sampleNavigation.previousSample();
-          }
-          e.preventDefault();
-          e.stopPropagation();
-          break;
-        case "ArrowDown":
-          if (e.metaKey || e.ctrlKey) {
-            sampleNavigation.lastSample();
-            listHandle.current?.scrollToIndex({
-              index: items.length - 1,
-              align: "end",
-              behavior: "auto"
-            });
-          } else {
-            sampleNavigation.nextSample();
-          }
-          e.preventDefault();
-          e.stopPropagation();
-          break;
-        case "Enter": {
-          const item2 = items.find((item22) => {
-            if (item22.type === "sample") {
-              return sampleIdsEqual(item22.sampleId, selectedSampleHandle?.id) && item22.sampleEpoch === selectedSampleHandle?.epoch;
-            }
-          });
-          if (item2 && item2.type === "sample") {
-            sampleNavigation.showSample(item2.data.id, item2.data.epoch);
-            e.preventDefault();
-            e.stopPropagation();
-          }
-          break;
+      if (e.data && e.node && listHandle.current?.api) {
+        listHandle.current.api.deselectAll();
+        e.node.setSelected(true);
+        const mouseEvent = e.event;
+        const openInNewWindow = mouseEvent?.metaKey || mouseEvent?.ctrlKey || mouseEvent?.shiftKey || mouseEvent?.button === 1;
+        if (openInNewWindow) {
+          const url = sampleNavigation.getSampleUrl(
+            e.data.data.id,
+            e.data.data.epoch
+          );
+          if (url) window.open(url, "_blank");
+        } else {
+          sampleNavigation.showSample(e.data.data.id, e.data.data.epoch);
         }
       }
     },
-    [
-      sampleNavigation,
-      listHandle,
-      items,
-      selectedSampleHandle?.id,
-      selectedSampleHandle?.epoch
-    ]
+    [sampleNavigation, listHandle]
   );
-  const selectedScores = useSelectedScores();
-  const scores2 = useScores();
-  const gridColumnsTemplate = reactExports.useMemo(() => {
-    return gridColumnsValue(samplesDescriptor);
-  }, [samplesDescriptor]);
-  const renderRow = reactExports.useCallback(
-    (_index, item2) => {
-      if (item2.type === "sample") {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(
-          SampleRow,
-          {
-            id: `${item2.number}`,
-            sample: item2.data,
-            height: kSampleHeight,
-            answer: item2.answer,
-            completed: item2.completed,
-            scoresRendered: item2.scoresRendered,
-            gridColumnsTemplate,
-            sampleUrl: sampleNavigation.getSampleUrl(
-              item2.data.id,
-              item2.data.epoch
-            ),
-            selected: sampleIdsEqual(selectedSampleHandle?.id, item2.sampleId) && selectedSampleHandle?.epoch === item2.sampleEpoch,
-            showSample: () => {
-              sampleNavigation.showSample(item2.data.id, item2.data.epoch);
-            }
-          }
+  const handleOpenRow = reactExports.useCallback(
+    (rowNode, _e2) => {
+      if (rowNode.data) {
+        sampleNavigation.showSample(
+          rowNode.data.data.id,
+          rowNode.data.data.epoch
         );
-      } else if (item2.type === "separator") {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(
-          SampleSeparator,
-          {
-            id: `sample-group${item2.number}`,
-            title: item2.data,
-            height: kSeparatorHeight
-          }
-        );
-      } else {
-        return null;
       }
     },
-    [
-      gridColumnsTemplate,
-      sampleNavigation,
-      selectedSampleHandle?.epoch,
-      selectedSampleHandle?.id
-    ]
+    [sampleNavigation]
   );
-  const { input: input2, limit, answer: answer2, target: target2, retries } = gridColumns(samplesDescriptor);
-  const sampleCount = items?.reduce((prev, current2) => {
-    if (current2.type === "sample") {
-      return prev + 1;
-    } else {
-      return prev;
+  const gridContainerRef = reactExports.useRef(null);
+  const handleKeyDown = reactExports.useMemo(
+    () => createGridKeyboardHandler({
+      gridRef: listHandle,
+      onOpenRow: handleOpenRow
+    }),
+    [listHandle, handleOpenRow]
+  );
+  reactExports.useEffect(() => {
+    const el2 = gridContainerRef.current;
+    if (!el2) return;
+    const handler = handleKeyDown;
+    el2.addEventListener("keydown", handler);
+    return () => el2.removeEventListener("keydown", handler);
+  }, [handleKeyDown]);
+  const selectCurrentSample = reactExports.useCallback(() => {
+    if (!listHandle.current?.api || !selectedSampleHandle) {
+      return;
     }
-  }, 0);
-  const errorCount = items?.reduce((previous, item2) => {
-    if (typeof item2.data === "object" && item2.data.error) {
-      return previous + 1;
+    const rowId = makeSampleRowId(
+      selectedSampleHandle.id,
+      selectedSampleHandle.epoch
+    );
+    const node2 = listHandle.current.api.getRowNode(rowId);
+    if (node2) {
+      listHandle.current.api.deselectAll();
+      node2.setSelected(true);
+      listHandle.current.api.ensureNodeVisible(node2, "middle");
     }
-    return previous;
-  }, 0);
-  const limitCount = items?.reduce((previous, item2) => {
-    if (typeof item2.data === "object" && item2.data.limit) {
-      return previous + 1;
-    } else {
-      return previous;
+  }, [listHandle, selectedSampleHandle]);
+  reactExports.useEffect(() => {
+    selectCurrentSample();
+  }, [selectedSampleHandle, selectCurrentSample]);
+  const selectedScores = useSelectedScores();
+  const scores2 = useScores();
+  const samplesDescriptor = useSampleDescriptor();
+  const columnDefs = reactExports.useMemo(
+    () => buildColumnDefs(samplesDescriptor, selectedScores, scores2, epochs),
+    [samplesDescriptor, selectedScores, scores2, epochs]
+  );
+  const getRowId = reactExports.useCallback((params) => {
+    return makeSampleRowId(params.data.data.id, params.data.data.epoch);
+  }, []);
+  const manuallyResized = reactExports.useRef(/* @__PURE__ */ new Set());
+  const handleColumnResized = reactExports.useCallback(
+    (event) => {
+      if (event.finished && event.source === "uiColumnResized" && event.column) {
+        manuallyResized.current.add(event.column.getColId());
+        const state = columnDefs.filter(
+          (c2) => c2.colId && c2.flex && !manuallyResized.current.has(c2.colId)
+        ).map((c2) => ({ colId: c2.colId, flex: c2.flex }));
+        if (state.length > 0) {
+          listHandle.current?.api?.applyColumnState({ state });
+        }
+      }
+    },
+    [listHandle, columnDefs]
+  );
+  const sampleCount = items.length;
+  const warnings = reactExports.useMemo(() => {
+    const errorCount = items.reduce(
+      (prev, item2) => item2.data.error ? prev + 1 : prev,
+      0
+    );
+    const limitCount = items.reduce(
+      (prev, item2) => item2.data.limit ? prev + 1 : prev,
+      0
+    );
+    const percentError = sampleCount > 0 ? errorCount / sampleCount * 100 : 0;
+    const percentLimit = sampleCount > 0 ? limitCount / sampleCount * 100 : 0;
+    const result2 = [];
+    if (errorCount > 0) {
+      result2.push({
+        type: "info",
+        msg: `INFO: ${errorCount} of ${sampleCount} samples (${formatNoDecimal(percentError)}%) had errors and were not scored.`
+      });
     }
-  }, 0);
-  const percentError = errorCount / sampleCount * 100;
-  const percentLimit = limitCount / sampleCount * 100;
-  const warnings = [];
-  if (errorCount > 0) {
-    warnings.push({
-      type: "info",
-      msg: `INFO: ${errorCount} of ${sampleCount} samples (${formatNoDecimal(percentError)}%) had errors and were not scored.`
-    });
-  }
-  if (limitCount > 0) {
-    warnings.push({
-      type: "info",
-      msg: `INFO: ${limitCount} of ${sampleCount} samples (${formatNoDecimal(percentLimit)}%) completed due to exceeding a limit.`
-    });
-  }
-  if (earlyStopping?.early_stops && earlyStopping?.early_stops?.length > 0) {
-    warnings.push({
-      type: "info",
-      msg: `Skipped ${earlyStopping.early_stops.length} samples due to early stopping (${earlyStopping.manager}). `
-    });
-  }
+    if (limitCount > 0) {
+      result2.push({
+        type: "info",
+        msg: `INFO: ${limitCount} of ${sampleCount} samples (${formatNoDecimal(percentLimit)}%) completed due to exceeding a limit.`
+      });
+    }
+    if (earlyStopping?.early_stops && earlyStopping?.early_stops?.length > 0) {
+      result2.push({
+        type: "info",
+        msg: `Skipped ${earlyStopping.early_stops.length} samples due to early stopping (${earlyStopping.manager}). `
+      });
+    }
+    return result2;
+  }, [items, sampleCount, earlyStopping]);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$h.mainLayout, children: [
     warnings.map((warning2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
       MessageBand,
@@ -214354,41 +215513,51 @@ const SampleList = reactExports.memo((props) => {
       `sample-warning-message-${index}`
     )),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
-      SampleHeader,
+      "div",
       {
-        input: input2 !== "0",
-        target: target2 !== "0",
-        answer: answer2 !== "0",
-        limit: limit !== "0",
-        retries: retries !== "0em",
-        scoreLabels: scoreHeaders(selectedScores, scores2),
-        gridColumnsTemplate
-      }
-    ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Yr,
-      {
-        ref: listHandle,
-        style: { height: "100%" },
-        data: items,
-        defaultItemHeight: 50,
-        itemContent: renderRow,
-        followOutput: running ? (_atBottom) => {
-          return followOutput;
-        } : void 0,
-        atBottomStateChange: handleAtBottomStateChange,
-        atBottomThreshold: 30,
-        increaseViewportBy: { top: 300, bottom: 300 },
-        overscan: {
-          main: 10,
-          reverse: 10
+        ref: gridContainerRef,
+        className: clsx(className2, styles$h.samplesListGrid, "samples-list"),
+        style: {
+          flex: 1,
+          minHeight: 0,
+          display: "flex",
+          flexDirection: "column"
         },
-        className: clsx(className2, "samples-list"),
-        onKeyDown: onkeydown,
-        skipAnimationFrameInResizeObserver: true,
-        isScrolling,
-        restoreStateFrom: getRestoreState(),
-        tabIndex: 0
+        tabIndex: 0,
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          AgGridReact,
+          {
+            ref: listHandle,
+            rowData: items,
+            columnDefs,
+            defaultColDef: {
+              filter: false,
+              headerTooltipValueGetter: (params) => params.colDef?.headerName
+            },
+            tooltipShowDelay: 300,
+            animateRows: false,
+            rowHeight: kSampleHeight,
+            headerHeight: 25,
+            getRowId,
+            rowSelection: { mode: "singleRow", checkboxes: false },
+            onRowClicked: handleRowClick,
+            onColumnResized: handleColumnResized,
+            theme: themeBalham,
+            enableCellTextSelection: true,
+            suppressCellFocus: true,
+            domLayout: "normal",
+            onBodyScroll: handleBodyScroll,
+            onFirstDataRendered: () => {
+              if (running && followOutputRef.current) {
+                listHandle.current?.api?.ensureIndexVisible(
+                  items.length - 1,
+                  "bottom"
+                );
+              }
+              selectCurrentSample();
+            }
+          }
+        )
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -214401,226 +215570,21 @@ const SampleList = reactExports.memo((props) => {
     )
   ] });
 });
-const gridColumnsValue = (sampleDescriptor) => {
-  const { input: input2, target: target2, answer: answer2, limit, retries, id, scores: scores2 } = gridColumns(sampleDescriptor);
-  const result2 = `${id} ${input2} ${target2} ${answer2} ${limit} ${retries} ${scores2.join(" ")}`;
-  return result2;
-};
-const gridColumns = (sampleDescriptor) => {
-  const input2 = sampleDescriptor && sampleDescriptor.messageShape.normalized.input > 0 ? Math.max(0.15, sampleDescriptor.messageShape.normalized.input) : 0;
-  const target2 = sampleDescriptor && sampleDescriptor.messageShape.normalized.target > 0 ? Math.max(0.15, sampleDescriptor.messageShape.normalized.target) : 0;
-  const answer2 = sampleDescriptor && sampleDescriptor.messageShape.normalized.answer > 0 ? Math.max(0.15, sampleDescriptor.messageShape.normalized.answer) : 0;
-  const limit = sampleDescriptor && sampleDescriptor.messageShape.normalized.limit > 0 ? Math.max(0.15, sampleDescriptor.messageShape.normalized.limit) : 0;
-  const retries = sampleDescriptor && sampleDescriptor.messageShape.normalized.retries > 0 ? 4 : 0;
-  const id = Math.max(
-    2,
-    Math.min(10, sampleDescriptor?.messageShape.raw.id || 0)
-  );
-  const scoresRaw = sampleDescriptor?.messageShape.raw.scores || [];
-  const scoreSizes = scoresRaw.map((size) => Math.max(3, size));
-  const scores2 = scoreSizes.length > 0 ? scoreSizes.map((size) => `${size / 2}rem`) : [];
-  const frSize = (val) => {
-    if (val === 0) {
-      return "0";
-    } else {
-      return `${val}fr`;
-    }
-  };
-  return {
-    input: frSize(input2),
-    target: frSize(target2),
-    answer: frSize(answer2),
-    limit: frSize(limit),
-    retries: `${retries}em`,
-    id: `${id}rem`,
-    scores: scores2
-  };
-};
-const scoreHeaders = (selectedScores, availableScores) => {
-  if (!selectedScores || selectedScores.length === 0) {
-    return [];
-  }
-  if (availableScores && availableScores.length === 1) {
-    return ["Score"];
-  }
-  return selectedScores.map((s) => s.name);
-};
-const panel$3 = "_panel_1yknn_1";
+const panel$2 = "_panel_1yknn_1";
 const container$5 = "_container_1yknn_7";
 const spinner = "_spinner_1yknn_14";
 const text = "_text_1yknn_20";
-const styles$g = {
-  panel: panel$3,
+const styles$f = {
+  panel: panel$2,
   container: container$5,
   spinner,
   text
 };
 const RunningNoSamples = () => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$g.panel), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$g.container, "text-size-smaller"), children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$g.spinner, "spinner-border"), role: "status", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("visually-hidden"), children: "starting..." }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$g.text), children: "starting...." })
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$f.panel), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$f.container, "text-size-smaller"), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$f.spinner, "spinner-border"), role: "status", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("visually-hidden"), children: "starting..." }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$f.text), children: "starting...." })
   ] }) });
-};
-const getSampleProcessor = (samples, epochs, groupBy, groupByOrder, sampleDescriptor, selectedScores) => {
-  selectedScores = selectedScores || [];
-  if (groupBy == "epoch") {
-    return groupByEpoch(
-      samples,
-      epochs,
-      sampleDescriptor,
-      groupByOrder,
-      selectedScores
-    );
-  } else if (groupBy === "sample") {
-    return groupBySample(
-      samples,
-      epochs,
-      sampleDescriptor,
-      groupByOrder,
-      selectedScores
-    );
-  } else {
-    return noGrouping(samples, groupByOrder, sampleDescriptor, selectedScores);
-  }
-};
-const noGrouping = (samples, order2, sampleDescriptor, selectedScores) => {
-  const counter2 = getCounter(samples.length, 1, order2);
-  return (sample2, index) => {
-    counter2.incrementItem();
-    const itemCount = counter2.item();
-    return [
-      {
-        sampleId: sample2.id,
-        sampleEpoch: sample2.epoch,
-        label: `Sample ${sample2.id}`,
-        number: itemCount,
-        index,
-        data: sample2,
-        type: "sample",
-        answer: sampleDescriptor.selectedScorerDescriptor(sample2)?.answer() || "",
-        scoresRendered: selectedScores.map(
-          (sc2) => sampleDescriptor.evalDescriptor.score(sample2, sc2)?.render()
-        ),
-        completed: sample2.completed !== void 0 ? sample2.completed : true
-      }
-    ];
-  };
-};
-const groupBySample = (samples, epochs, sampleDescriptor, order2, selectedScores) => {
-  samples = samples.sort((a, b) => {
-    if (typeof a.id === "string") {
-      if (order2 === "asc") {
-        return String(a.id).localeCompare(String(b.id));
-      } else {
-        return String(b.id).localeCompare(String(a.id));
-      }
-    } else {
-      if (order2 === "asc") {
-        return Number(a.id) - Number(b.id);
-      } else {
-        return Number(b.id) - Number(b.id);
-      }
-    }
-  });
-  const groupCount = samples.length / epochs;
-  const itemCount = samples.length / groupCount;
-  const counter2 = getCounter(itemCount, groupCount, order2);
-  return (sample2, index, previousSample) => {
-    const results = [];
-    const lastId = previousSample ? previousSample.id : void 0;
-    if (sample2.id !== lastId) {
-      counter2.incrementGroup();
-      results.push({
-        label: `Sample ${sample2.id}`,
-        number: counter2.group(),
-        index,
-        data: `Sample ${sample2.id}`,
-        type: "separator"
-      });
-      counter2.resetItem();
-    }
-    counter2.incrementItem();
-    results.push({
-      sampleId: sample2.id,
-      sampleEpoch: sample2.epoch,
-      label: `Sample ${counter2.group()} (Epoch ${counter2.item()})`,
-      number: counter2.item(),
-      index,
-      data: sample2,
-      type: "sample",
-      answer: sampleDescriptor.selectedScorerDescriptor(sample2)?.answer() || "",
-      scoresRendered: selectedScores.map(
-        (sc2) => sampleDescriptor.evalDescriptor.score(sample2, sc2)?.render()
-      ),
-      completed: sample2.completed !== void 0 ? sample2.completed : true
-    });
-    return results;
-  };
-};
-const groupByEpoch = (samples, epochs, sampleDescriptor, order2, selectedScores) => {
-  const groupCount = epochs;
-  const itemCount = samples.length / groupCount;
-  const counter2 = getCounter(itemCount, groupCount, order2);
-  return (sample2, index, previousSample) => {
-    const results = [];
-    const lastEpoch = previousSample ? previousSample.epoch : -1;
-    if (lastEpoch !== sample2.epoch) {
-      counter2.incrementGroup();
-      results.push({
-        label: `Epoch ${counter2.group()}`,
-        number: counter2.group(),
-        index,
-        data: `Epoch ${counter2.group()}`,
-        type: "separator"
-      });
-      counter2.resetItem();
-    }
-    counter2.incrementItem();
-    results.push({
-      sampleId: sample2.id,
-      sampleEpoch: sample2.epoch,
-      label: `Sample ${sample2.id} (Epoch ${sample2.epoch})`,
-      number: counter2.item(),
-      index,
-      data: sample2,
-      type: "sample",
-      answer: sampleDescriptor.selectedScorerDescriptor(sample2)?.answer() || "",
-      scoresRendered: selectedScores.map(
-        (sc2) => sampleDescriptor.evalDescriptor.score(sample2, sc2)?.render()
-      ),
-      completed: sample2.completed !== void 0 ? sample2.completed : true
-    });
-    return results;
-  };
-};
-const getCounter = (itemCount, groupCount, order2) => {
-  let itemIndex = order2 !== "desc" ? 0 : itemCount + 1;
-  let groupIndex = order2 !== "desc" ? 0 : groupCount + 1;
-  return {
-    resetItem: () => {
-      itemIndex = order2 !== "desc" ? 0 : itemCount + 1;
-    },
-    incrementItem: () => {
-      if (order2 !== "desc") {
-        itemIndex++;
-      } else {
-        itemIndex--;
-      }
-    },
-    incrementGroup: () => {
-      if (order2 !== "desc") {
-        groupIndex++;
-      } else {
-        groupIndex--;
-      }
-    },
-    item: () => {
-      return itemIndex;
-    },
-    group: () => {
-      return groupIndex;
-    }
-  };
 };
 const useSamplesTabConfig = (evalStatus, refreshLog) => {
   const totalSampleCount = useTotalSampleCount();
@@ -214657,9 +215621,6 @@ const useSamplesTabConfig = (evalStatus, refreshLog) => {
   ]);
 };
 const SamplesTab = ({ running }) => {
-  const selectedSampleHandle = useStore(
-    (state) => state.log.selectedSampleHandle
-  );
   const sampleSummaries = useFilteredSamples();
   const selectedLogDetails = useStore((state) => state.log.selectedLogDetails);
   const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
@@ -214674,82 +215635,25 @@ const SamplesTab = ({ running }) => {
   ]);
   const totalSampleCount = useTotalSampleCount();
   const samplesDescriptor = useSampleDescriptor();
-  const groupBy = useGroupBy();
-  const groupByOrder = useGroupByOrder();
-  const selectedScores = useSelectedScores();
   const selectSample = useStore((state) => state.logActions.selectSample);
-  const sampleStatus = useStore((state) => state.sample.sampleStatus);
+  const sampleStatus2 = useStore((state) => state.sample.sampleStatus);
   const sampleListHandle = reactExports.useRef(null);
-  const sampleProcessor = reactExports.useMemo(() => {
-    if (!samplesDescriptor) return void 0;
-    return getSampleProcessor(
-      sampleSummaries || [],
-      selectedLogDetails?.eval?.config?.epochs || 1,
-      groupBy,
-      groupByOrder,
-      samplesDescriptor,
-      selectedScores
-    );
-  }, [
-    samplesDescriptor,
-    sampleSummaries,
-    selectedLogDetails?.eval?.config?.epochs,
-    groupBy,
-    groupByOrder,
-    selectedScores
-  ]);
   const items = reactExports.useMemo(() => {
-    const resolvedSamples = sampleSummaries?.flatMap((sample2, index) => {
-      const results = [];
-      const previousSample = index !== 0 ? sampleSummaries[index - 1] : void 0;
-      const items2 = sampleProcessor ? sampleProcessor(sample2, index, previousSample) : [];
-      results.push(...items2);
-      return results;
-    });
-    return resolvedSamples || [];
-  }, [sampleSummaries, sampleProcessor]);
-  const selectedItemIndex = reactExports.useMemo(() => {
-    return items.findIndex((item2) => {
-      if (item2.type !== "sample") {
-        return false;
-      }
-      return sampleIdsEqual(item2.sampleId, selectedSampleHandle?.id) && item2.sampleEpoch === selectedSampleHandle?.epoch;
-    });
-  }, [selectedSampleHandle, items]);
-  reactExports.useEffect(() => {
-    setTimeout(() => {
-      if (sampleListHandle.current && selectedItemIndex >= 0) {
-        sampleListHandle.current.scrollIntoView({
-          index: selectedItemIndex
-        });
-      }
-    }, 0);
-  }, [selectedItemIndex]);
-  const showingSampleDialog = useStore((state) => state.app.dialogs.sample);
-  const previousShowingDialogRef = reactExports.useRef(showingSampleDialog);
-  reactExports.useEffect(() => {
-    if (previousShowingDialogRef.current && !showingSampleDialog && sampleListHandle.current) {
-      setTimeout(() => {
-        const element = document.querySelector(".samples-list");
-        if (element instanceof HTMLElement) {
-          element.focus();
-        }
-      }, 10);
-    }
-    previousShowingDialogRef.current = showingSampleDialog;
-  }, [showingSampleDialog]);
+    if (!samplesDescriptor) return [];
+    return sampleSummaries.map(
+      (sample2) => ({
+        data: sample2,
+        answer: samplesDescriptor.selectedScorerDescriptor(sample2)?.answer() || "",
+        completed: sample2.completed !== void 0 ? sample2.completed : true
+      })
+    );
+  }, [sampleSummaries, samplesDescriptor]);
   reactExports.useEffect(() => {
     if (sampleSummaries.length === 1 && selectedLogFile) {
       const sample2 = sampleSummaries[0];
       selectSample(sample2.id, sample2.epoch, selectedLogFile);
     }
   }, [sampleSummaries, selectSample, selectedLogFile]);
-  const title2 = reactExports.useMemo(() => {
-    if (selectedSampleHandle) {
-      return `Sample ${selectedSampleHandle.id} (Epoch ${selectedSampleHandle.epoch})`;
-    }
-    return "";
-  }, [selectedSampleHandle]);
   if (totalSampleCount === 0) {
     if (running) {
       return /* @__PURE__ */ jsxRuntimeExports.jsx(RunningNoSamples, {});
@@ -214758,7 +215662,7 @@ const SamplesTab = ({ running }) => {
     }
   } else {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-      samplesDescriptor && totalSampleCount === 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(InlineSampleDisplay, { showActivity: sampleStatus === "loading" }) : void 0,
+      samplesDescriptor && totalSampleCount === 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(InlineSampleDisplay, { showActivity: sampleStatus2 === "loading" }) : void 0,
       samplesDescriptor && totalSampleCount > 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
         SampleList,
         {
@@ -214768,15 +215672,7 @@ const SamplesTab = ({ running }) => {
           totalItemCount: evalSampleCount,
           running
         }
-      ) : void 0,
-      showingSampleDialog && /* @__PURE__ */ jsxRuntimeExports.jsx(
-        SampleDialog,
-        {
-          id: selectedSampleHandle ? `${selectedSampleHandle.id}_${selectedSampleHandle.epoch}` : "",
-          title: title2,
-          showingSampleDialog
-        }
-      )
+      ) : void 0
     ] });
   }
 };
@@ -214785,7 +215681,7 @@ const ghCommitUrl = (origin, commit) => {
   return `${baseUrl2}/commit/${commit}`;
 };
 const grid$1 = "_grid_er9fb_1";
-const styles$f = {
+const styles$e = {
   grid: grid$1
 };
 const useTaskTabConfig = (evalSpec, evalStats, earlyStopping) => {
@@ -214855,7 +215751,7 @@ const TaskTab = ({
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "0.5em 1em 0 1em", width: "100%" }, children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Task Info" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: "task-card-config", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$f.grid), children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: "task-card-config", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$e.grid), children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           MetaDataGrid,
           {
@@ -214909,7 +215805,7 @@ const TaskTab = ({
   ] }) });
 };
 const downloadLogButton = "_downloadLogButton_fi3zx_1";
-const styles$e = {
+const styles$d = {
   downloadLogButton
 };
 const DownloadLogButton = ({
@@ -214962,7 +215858,7 @@ const DownloadLogButton = ({
       type: "button",
       className: clsx(
         "download-log-button",
-        styles$e.downloadLogButton,
+        styles$d.downloadLogButton,
         className2
       ),
       onClick: handleClick,
@@ -215103,7 +215999,7 @@ const expandGroupedMetrics = (scorers) => {
 };
 const container$4 = "_container_q17yq_1";
 const grid = "_grid_q17yq_10";
-const styles$d = {
+const styles$c = {
   container: container$4,
   grid
 };
@@ -215118,7 +216014,7 @@ const ModelRolesView = ({ roles }) => {
       "div",
       {
         className: clsx(
-          singleLine ? styles$d.grid : void 0,
+          singleLine ? styles$c.grid : void 0,
           "text-style-secondary",
           "text-size-smallest"
         ),
@@ -215133,7 +216029,7 @@ const ModelRolesView = ({ roles }) => {
       key2
     );
   });
-  return modelEls.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$d.container, children: modelEls }) : void 0;
+  return modelEls.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$c.container, children: modelEls }) : void 0;
 };
 const container$3 = "_container_17txe_1";
 const wrapper = "_wrapper_17txe_8";
@@ -215144,7 +216040,7 @@ const taskModel = "_taskModel_17txe_38";
 const taskStatus = "_taskStatus_17txe_42";
 const secondaryContainer = "_secondaryContainer_17txe_49";
 const buttonGroup = "_buttonGroup_17txe_58";
-const styles$c = {
+const styles$b = {
   container: container$3,
   wrapper,
   body,
@@ -215157,7 +216053,7 @@ const styles$c = {
 };
 const button = "_button_12472_1";
 const label$1 = "_label_12472_14";
-const styles$b = {
+const styles$a = {
   button,
   label: label$1
 };
@@ -215173,10 +216069,10 @@ const LinkButton = ({
     {
       id,
       onClick,
-      className: clsx(className2, styles$b.button, "text-size-smaller"),
+      className: clsx(className2, styles$a.button, "text-size-smaller"),
       children: [
         icon2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2) }) : void 0,
-        text2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$b.label), children: text2 }) : void 0
+        text2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$a.label), children: text2 }) : void 0
       ]
     }
   );
@@ -215190,7 +216086,7 @@ const overflowVisible = "_overflowVisible_o64lp_40";
 const overflowHidden = "_overflowHidden_o64lp_44";
 const overflowScroll = "_overflowScroll_o64lp_48";
 const overflowAuto = "_overflowAuto_o64lp_52";
-const styles$a = {
+const styles$9 = {
   modal,
   header,
   modalTitle,
@@ -215211,7 +216107,7 @@ const Modal = ({
   overflow = "visible"
 }) => {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    showing && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$a.backdrop, onClick: () => setShowing(false) }),
+    showing && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$9.backdrop, onClick: () => setShowing(false) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
@@ -215219,15 +216115,15 @@ const Modal = ({
         className: clsx("modal", "fade", showing ? "show" : "", className2),
         tabIndex: -1,
         style: { display: showing ? "block" : "none" },
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("modal-dialog", styles$a.modal), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "modal-content", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("modal-header", styles$a.header), children: [
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("modal-dialog", styles$9.modal), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "modal-content", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("modal-header", styles$9.header), children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "div",
               {
                 className: clsx(
                   "modal-title",
                   "text-size-base",
-                  styles$a.modalTitle
+                  styles$9.modalTitle
                 ),
                 children: title2
               }
@@ -215239,7 +216135,7 @@ const Modal = ({
                 className: clsx(
                   "btn-close",
                   "text-size-smaller",
-                  styles$a.btnClose
+                  styles$9.btnClose
                 ),
                 "data-bs-dismiss": "modal",
                 "aria-label": "Close",
@@ -215254,7 +216150,7 @@ const Modal = ({
             {
               className: clsx(
                 "modal-body",
-                overflow === "auto" ? styles$a.overflowAuto : overflow === "hidden" ? styles$a.overflowHidden : overflow === "scroll" ? styles$a.overflowScroll : styles$a.overflowVisible
+                overflow === "auto" ? styles$9.overflowAuto : overflow === "hidden" ? styles$9.overflowHidden : overflow === "scroll" ? styles$9.overflowScroll : styles$9.overflowVisible
               ),
               children: children2
             }
@@ -215298,7 +216194,7 @@ const verticalMetricValue = "_verticalMetricValue_1itqo_41";
 const moreButton = "_moreButton_1itqo_91";
 const metricsSummary = "_metricsSummary_1itqo_97";
 const modalScores = "_modalScores_1itqo_104";
-const styles$9 = {
+const styles$8 = {
   simpleMetricsRows,
   verticalMetricReducer,
   verticalMetricName,
@@ -215314,7 +216210,7 @@ const label = "_label_12koy_11";
 const groupSeparator = "_groupSeparator_12koy_28";
 const tableBody = "_tableBody_12koy_33";
 const tableSeparator = "_tableSeparator_12koy_45";
-const styles$8 = {
+const styles$7 = {
   table,
   scorer,
   value,
@@ -215324,7 +216220,7 @@ const styles$8 = {
   tableSeparator
 };
 const unscoredSamples = "_unscoredSamples_1h85z_1";
-const styles$7 = {
+const styles$6 = {
   unscoredSamples
 };
 const UnscoredSamples = ({
@@ -215338,7 +216234,7 @@ const UnscoredSamples = ({
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "span",
     {
-      className: clsx("text-style-secondary", styles$7.unscoredSamples),
+      className: clsx("text-style-secondary", styles$6.unscoredSamples),
       title: msg,
       children: [
         "(",
@@ -215374,7 +216270,7 @@ const ScoreGrid = ({
                 "text-style-label",
                 "text-style-secondary",
                 "text-size-small",
-                styles$8.label
+                styles$7.label
               ),
               children: metrics[i].name
             }
@@ -215384,7 +216280,7 @@ const ScoreGrid = ({
         cells.push(/* @__PURE__ */ jsxRuntimeExports.jsx("td", {}));
       }
     }
-    const headerRow2 = /* @__PURE__ */ jsxRuntimeExports.jsx("thead", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { className: clsx(styles$8.headerRow), children: [
+    const headerRow2 = /* @__PURE__ */ jsxRuntimeExports.jsx("thead", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { className: clsx(styles$7.headerRow), children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("td", {}),
       cells
     ] }) });
@@ -215394,15 +216290,15 @@ const ScoreGrid = ({
       for (let i = 0; i < columnCount; i++) {
         if (metrics.length > i) {
           cells2.push(
-            /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: clsx(styles$8.value, "text-size-small"), children: formatPrettyDecimal(g.metrics[i].value) })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: clsx(styles$7.value, "text-size-small"), children: formatPrettyDecimal(g.metrics[i].value) })
           );
         } else {
-          cells2.push(/* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: clsx(styles$8.value) }));
+          cells2.push(/* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: clsx(styles$7.value) }));
         }
       }
       rows.push(
         /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("th", { className: clsx(styles$8.scorer, "text-size-small"), children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("th", { className: clsx(styles$7.scorer, "text-size-small"), children: [
             g.scorer,
             " ",
             showReducer && g.reducer ? `(${g.reducer})` : void 0,
@@ -215420,15 +216316,15 @@ const ScoreGrid = ({
     });
     subTables.push(
       /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-        index > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("tbody", { className: clsx(styles$8.tableSeparator), children: /* @__PURE__ */ jsxRuntimeExports.jsx("tr", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        index > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("tbody", { className: clsx(styles$7.tableSeparator), children: /* @__PURE__ */ jsxRuntimeExports.jsx("tr", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           "td",
           {
             colSpan: columnCount + 1,
-            className: clsx(styles$8.groupSeparator)
+            className: clsx(styles$7.groupSeparator)
           }
         ) }) }) : void 0,
         headerRow2,
-        /* @__PURE__ */ jsxRuntimeExports.jsx("tbody", { className: clsx("table-group-divider", styles$8.tableBody), children: rows })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("tbody", { className: clsx("table-group-divider", styles$7.tableBody), children: rows })
       ] })
     );
     index++;
@@ -215440,7 +216336,7 @@ const ScoreGrid = ({
         className2,
         "table",
         striped ? "table-striped" : void 0,
-        styles$8.table,
+        styles$7.table,
         "table-bordered"
       ),
       children: subTables
@@ -215499,7 +216395,7 @@ const ResultsPanel = ({ scorers }) => {
     const metrics = expandedScorers[0].metrics;
     const unscoredSamples2 = expandedScorers[0].unscoredSamples || 0;
     const scoredSamples = expandedScorers[0].scoredSamples || 0;
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$9.simpleMetricsRows, children: metrics.map((metric, i) => {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$8.simpleMetricsRows, children: metrics.map((metric, i) => {
       return /* @__PURE__ */ jsxRuntimeExports.jsx(
         VerticalMetric,
         {
@@ -215536,7 +216432,7 @@ const ResultsPanel = ({ scorers }) => {
         showMore = true;
       }
     }
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$9.metricsSummary), children: [
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$8.metricsSummary), children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(ScoreGrid, { scoreGroups: [primaryResults], showReducer }),
       showMore ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -215552,7 +216448,7 @@ const ResultsPanel = ({ scorers }) => {
               {
                 scoreGroups: grouped,
                 showReducer,
-                className: styles$9.modalScores,
+                className: styles$8.modalScores,
                 striped: false
               }
             )
@@ -215561,7 +216457,7 @@ const ResultsPanel = ({ scorers }) => {
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           LinkButton,
           {
-            className: styles$9.moreButton,
+            className: styles$8.moreButton,
             text: "All scoring...",
             onClick: () => {
               setShowing(true);
@@ -215588,7 +216484,7 @@ const VerticalMetric = ({
           "vertical-metric-label",
           "text-style-label",
           "text-style-secondary",
-          styles$9.verticalMetricName
+          styles$8.verticalMetricName
         ),
         children: [
           metricDisplayName(metric),
@@ -215608,7 +216504,7 @@ const VerticalMetric = ({
         className: clsx(
           "text-style-label",
           "text-style-secondary",
-          styles$9.verticalMetricReducer
+          styles$8.verticalMetricReducer
         ),
         children: reducer || "default"
       }
@@ -215619,7 +216515,7 @@ const VerticalMetric = ({
         className: clsx(
           "vertical-metric-value",
           "text-size-largest",
-          styles$9.verticalMetricValue
+          styles$8.verticalMetricValue
         ),
         children: metric.value !== void 0 && metric.value !== null ? formatPrettyDecimal(metric.value) : "n/a"
       }
@@ -215630,20 +216526,20 @@ const statusContainer = "_statusContainer_1sckj_1";
 const status = "_status_1sckj_1";
 const statusText = "_statusText_1sckj_11";
 const icon = "_icon_1sckj_24";
-const styles$6 = {
+const styles$5 = {
   statusContainer,
   status,
   statusText,
   icon
 };
 const RunningStatusPanel = ({ sampleCount }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$6.statusContainer), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$6.status), children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.running, styles$6.icon) }),
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$5.statusContainer), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$5.status), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.running, styles$5.icon) }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
       {
         className: clsx(
-          styles$6.statusText,
+          styles$5.statusText,
           "text-style-label",
           "text-size-smaller"
         ),
@@ -215658,7 +216554,7 @@ const RunningStatusPanel = ({ sampleCount }) => {
 };
 const statusPanel = "_statusPanel_1o5l7_1";
 const statusIcon = "_statusIcon_1o5l7_11";
-const styles$5 = {
+const styles$4 = {
   statusPanel,
   statusIcon
 };
@@ -215687,8 +216583,8 @@ const StatusPanel = ({
   status: status2,
   sampleCount
 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$5.statusPanel, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, styles$5.statusIcon), style: {} }),
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$4.statusPanel, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, styles$4.statusIcon), style: {} }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: status2 }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
@@ -215714,7 +216610,7 @@ const PrimaryBar = ({
   const logFileName = selectedLogFile ? filename(selectedLogFile) : "";
   const isEvalFile2 = selectedLogFile?.endsWith(".eval");
   const hasRunningMetrics = runningMetrics && runningMetrics.length > 0;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$c.wrapper), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$b.wrapper), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
@@ -215722,15 +216618,15 @@ const PrimaryBar = ({
           "navbar-brand",
           "navbar-text",
           "mb-0",
-          styles$c.container
+          styles$b.container
         ),
-        children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$c.body, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$c.bodyContainer, children: [
+        children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$b.body, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$b.bodyContainer, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "div",
               {
                 id: "task-title",
-                className: clsx("task-title", "text-truncate", styles$c.taskTitle),
+                className: clsx("task-title", "text-truncate", styles$b.taskTitle),
                 title: evalSpec?.task,
                 children: evalSpec?.task
               }
@@ -215742,7 +216638,7 @@ const PrimaryBar = ({
                 className: clsx(
                   "task-model",
                   "text-truncate",
-                  styles$c.taskModel,
+                  styles$b.taskModel,
                   "text-size-base"
                 ),
                 title: evalSpec?.model,
@@ -215751,9 +216647,9 @@ const PrimaryBar = ({
             ) : ""
           ] }),
           evalSpec?.model_roles ? /* @__PURE__ */ jsxRuntimeExports.jsx(ModelRolesView, { roles: evalSpec.model_roles }) : void 0,
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-small", styles$c.secondaryContainer), children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-small", styles$b.secondaryContainer), children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("navbar-secondary-text", "text-truncate"), children: logFileName }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$c.buttonGroup, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$b.buttonGroup, children: [
               selectedLogFile ? /* @__PURE__ */ jsxRuntimeExports.jsx(CopyButton, { value: selectedLogFile }) : "",
               downloadLogs && selectedLogFile && isEvalFile2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(DownloadLogButton, { log_file: selectedLogFile }) : null
             ] })
@@ -215761,7 +216657,7 @@ const PrimaryBar = ({
         ] })
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$c.taskStatus, "navbar-text"), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$b.taskStatus, "navbar-text"), children: [
       status2 === "success" || status2 === "started" && streamSamples && hasRunningMetrics || status2 === "error" && evalSpec?.config["continue_on_fail"] ? /* @__PURE__ */ jsxRuntimeExports.jsx(
         ResultsPanel,
         {
@@ -215782,7 +216678,7 @@ const justifyRight = "_justifyRight_qgv1z_13";
 const valueGrid = "_valueGrid_qgv1z_17";
 const container$2 = "_container_qgv1z_25";
 const invalidationStatus = "_invalidationStatus_qgv1z_30";
-const styles$4 = {
+const styles$3 = {
   staticCol,
   justifyLeft,
   justifyCenter,
@@ -215817,7 +216713,7 @@ const SecondaryBar = ({
       LabeledValue,
       {
         label: "Dataset",
-        className: clsx(styles$4.staticCol, "text-size-small"),
+        className: clsx(styles$3.staticCol, "text-size-small"),
         children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           DatasetSummary,
           {
@@ -215838,8 +216734,8 @@ const SecondaryBar = ({
       {
         label: label2,
         className: clsx(
-          styles$4.staticCol,
-          hasConfig ? styles$4.justifyLeft : styles$4.justifyCenter,
+          styles$3.staticCol,
+          hasConfig ? styles$3.justifyLeft : styles$3.justifyCenter,
           "text-size-small"
         ),
         children: /* @__PURE__ */ jsxRuntimeExports.jsx(ScorerSummary, { evalDescriptor })
@@ -215854,7 +216750,7 @@ const SecondaryBar = ({
         LabeledValue,
         {
           label: "Config",
-          className: clsx(styles$4.justifyRight, "text-size-small"),
+          className: clsx(styles$3.justifyRight, "text-size-small"),
           children: /* @__PURE__ */ jsxRuntimeExports.jsx(ParamSummary, { params: hyperparameters })
         },
         "sb-params"
@@ -215872,7 +216768,7 @@ const SecondaryBar = ({
         LabeledValue,
         {
           label: "Duration",
-          className: clsx(styles$4.justifyRight, "text-size-small"),
+          className: clsx(styles$3.justifyRight, "text-size-small"),
           children: totalDuration
         },
         "sb-duration"
@@ -215895,13 +216791,13 @@ const SecondaryBar = ({
     ExpandablePanel,
     {
       id: "secondary-nav-bar",
-      className: clsx(styles$4.container, "text-size-small"),
+      className: clsx(styles$3.container, "text-size-small"),
       collapse: true,
       lines: 5,
       children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
         {
-          className: styles$4.valueGrid,
+          className: styles$3.valueGrid,
           style: {
             gridTemplateColumns: `${values.map((val) => {
               return val.size;
@@ -215980,13 +216876,13 @@ const InvalidationStatus = ({ invalidation }) => {
     LabeledValue,
     {
       label: "Status",
-      className: clsx(styles$4.justifyRight, "text-size-small"),
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$4.invalidationStatus, title: details, children: "⚠ Invalidated" })
+      className: clsx(styles$3.justifyRight, "text-size-small"),
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$3.invalidationStatus, title: details, children: "⚠ Invalidated" })
     }
   );
 };
 const navbarWrapper = "_navbarWrapper_838qu_48";
-const styles$3 = {
+const styles$2 = {
   navbarWrapper
 };
 const TitleView = ({
@@ -215998,11 +216894,7 @@ const TitleView = ({
   runningMetrics
 }) => {
   const totalSampleCount = useTotalSampleCount();
-  const showingSampleDialog = useStore((state) => state.app.dialogs.sample);
-  if (showingSampleDialog) {
-    return null;
-  }
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("nav", { className: clsx("navbar", "sticky-top", styles$3.navbarWrapper), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("nav", { className: clsx("navbar", "sticky-top", styles$2.navbarWrapper), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       PrimaryBar,
       {
@@ -216114,15 +217006,15 @@ const LogView = () => {
           status: selectedLogDetails?.status
         }
       ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: divRef, className: clsx("workspace", styles$19.workspace), children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("log-detail", styles$19.tabContainer), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: divRef, className: clsx("workspace", styles$u.workspace), children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("log-detail", styles$u.tabContainer), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         TabSet,
         {
           id: "log-details",
           tools: tabTools2,
           type: "pills",
-          className: clsx(styles$19.tabSet, "text-size-smaller"),
-          tabControlsClassName: clsx(styles$19.tabs, "text-size-smaller"),
-          tabPanelsClassName: clsx(styles$19.tabPanels),
+          className: clsx(styles$u.tabSet, "text-size-smaller"),
+          tabControlsClassName: clsx(styles$u.tabs, "text-size-smaller"),
+          tabPanelsClassName: clsx(styles$u.tabPanels),
           children: Object.keys(tabs2).map((key2) => {
             const tab2 = tabs2[key2];
             return /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -216211,18 +217103,13 @@ const LogViewLayout = () => {
   ) });
 };
 const LogViewContainer = () => {
-  const { logPath, tabId, sampleUuid, sampleId, epoch, sampleTabId } = useLogRouteParams();
+  const { logPath, tabId, sampleUuid, sampleTabId } = useLogRouteParams();
   const initialState2 = useStore((state) => state.app.initialState);
   const clearInitialState = useStore(
     (state) => state.appActions.clearInitialState
   );
   const evalSpec = useEvalSpec();
-  const setSampleTab = useStore((state) => state.appActions.setSampleTab);
-  const setShowingSampleDialog = useStore(
-    (state) => state.appActions.setShowingSampleDialog
-  );
   const setWorkspaceTab = useStore((state) => state.appActions.setWorkspaceTab);
-  const selectSample = useStore((state) => state.logActions.selectSample);
   const setSelectedLogFile = useStore(
     (state) => state.logsActions.setSelectedLogFile
   );
@@ -216232,8 +217119,6 @@ const LogViewContainer = () => {
   const clearSelectedSample = useStore(
     (state) => state.sampleActions.clearSelectedSample
   );
-  const filteredSamples = useFilteredSamples();
-  const totalSampleCount = useTotalSampleCount();
   const navigate = useNavigate();
   const sampleSummaries = useSampleSummaries();
   const [searchParams] = useSearchParams();
@@ -216309,42 +217194,14 @@ const LogViewContainer = () => {
     clearSelectedSample,
     clearSelectedLogSummary
   ]);
-  reactExports.useEffect(() => {
-    if (sampleId && filteredSamples && logPath) {
-      const targetEpoch = epoch ? parseInt(epoch, 10) : 1;
-      selectSample(sampleId, targetEpoch, logPath);
-      if (sampleTabId) {
-        setSampleTab(sampleTabId);
-      }
-      if (filteredSamples.length > 1) {
-        setShowingSampleDialog(true);
-      }
-    } else {
-      setShowingSampleDialog(false);
-      if (totalSampleCount > 1) {
-        clearSelectedSample();
-      }
-    }
-  }, [
-    sampleId,
-    epoch,
-    sampleTabId,
-    logPath,
-    filteredSamples,
-    totalSampleCount,
-    selectSample,
-    setSampleTab,
-    setShowingSampleDialog,
-    clearSelectedSample
-  ]);
   return /* @__PURE__ */ jsxRuntimeExports.jsx(LogViewLayout, {});
 };
 const container$1 = "_container_ovp9s_1";
-const panel$2 = "_panel_ovp9s_7";
+const panel$1 = "_panel_ovp9s_7";
 const code = "_code_ovp9s_12";
-const styles$2 = {
+const styles$1 = {
   container: container$1,
-  panel: panel$2,
+  panel: panel$1,
   code
 };
 const FlowPanel = () => {
@@ -216361,7 +217218,7 @@ const FlowPanel = () => {
   const codeContainerRef = reactExports.useRef(null);
   usePrismHighlight(codeContainerRef, flow?.length || 0);
   const fnNavigationUrl = isSamplesRoute ? samplesUrl : logsUrl;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$2.container), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1.container), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       ApplicationNavbar,
       {
@@ -216369,13 +217226,16 @@ const FlowPanel = () => {
         fnNavigationUrl
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: codeContainerRef, className: clsx(styles$2.panel), children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$2.code), children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("language-yml"), children: flow }) }) })
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: codeContainerRef, className: clsx(styles$1.panel), children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1.code), children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("language-yml"), children: flow }) }) })
   ] });
 };
 const RouteDispatcher = () => {
-  const { logPath } = useLogRouteParams();
+  const { logPath, sampleId, epoch, sampleUuid } = useLogRouteParams();
   if (!logPath) {
     return /* @__PURE__ */ jsxRuntimeExports.jsx(LogsPanel, {});
+  }
+  if (sampleId && epoch || sampleUuid) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(LogSampleDetailView, {});
   }
   const isFlowFile = logPath.endsWith(".yaml") || logPath.endsWith(".yml");
   if (isFlowFile) {
@@ -216447,7 +217307,7 @@ const useSampleColumns = (logDetails) => {
         pinned: "left",
         cellRenderer: (params) => {
           if (params.data?.displayIndex !== void 0) {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1d.numberCell, children: params.data.displayIndex });
+            return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$18.numberCell, children: params.data.displayIndex });
           }
           return "";
         }
@@ -216765,7 +217625,7 @@ const SamplesGrid = ({
   reactExports.useEffect(() => {
     resizeGridColumns();
   }, [columns, resizeGridColumns]);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1d.gridWrapper, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: gridContainerRef, className: styles$1d.gridContainer, tabIndex: 0, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$18.gridWrapper, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: gridContainerRef, className: styles$18.gridContainer, tabIndex: 0, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     AgGridReact,
     {
       ref: gridRef,
@@ -216777,6 +217637,7 @@ const SamplesGrid = ({
         filter: true,
         resizable: true
       },
+      tooltipShowDelay: 300,
       autoSizeStrategy: { type: "fitGridWidth" },
       headerHeight: 25,
       rowSelection: { mode: "singleRow", checkboxes: false },
@@ -216840,10 +217701,10 @@ const gridDisplayedSamples = (gridApi) => {
   }
   return displayedSamples;
 };
-const panel$1 = "_panel_18nhs_1";
+const panel = "_panel_18nhs_1";
 const list = "_list_18nhs_8";
-const styles$1 = {
-  panel: panel$1,
+const styles = {
+  panel,
   list
 };
 const SamplesPanel = () => {
@@ -216997,7 +217858,7 @@ const SamplesPanel = () => {
   const filterModel = gridRef.current?.api?.getFilterModel() || {};
   const filteredFields = Object.keys(filterModel);
   const hasFilter = filteredFields.length > 0;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1.panel), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles.panel), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs(ApplicationNavbar, { currentPath: samplesPath, fnNavigationUrl: samplesUrl, children: [
       hasFilter && /* @__PURE__ */ jsxRuntimeExports.jsx(
         NavbarButton,
@@ -217055,7 +217916,7 @@ const SamplesPanel = () => {
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(ActivityBar, { animating: !!loading }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1.list, "text-size-smaller"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles.list, "text-size-smaller"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       SamplesGrid,
       {
         items: sampleRows,
@@ -217084,59 +217945,82 @@ const SamplesPanel = () => {
     )
   ] });
 };
-const detail = "_detail_14cqz_1";
-const panel = "_panel_14cqz_7";
-const sampleInfo = "_sampleInfo_14cqz_11";
-const sampleNav = "_sampleNav_14cqz_17";
-const nav = "_nav_14cqz_25";
-const disabled = "_disabled_14cqz_25";
-const styles = {
-  detail,
-  panel,
-  sampleInfo,
-  sampleNav,
-  nav,
-  disabled
+const useLoadLog = () => {
+  const {
+    samplesPath: routeLogPath,
+    sampleId,
+    epoch
+  } = useSamplesRouteParams();
+  const { loadLogs } = useLogs();
+  const initLogDir = useStore((state) => state.logsActions.initLogDir);
+  const selectSample = useStore((state) => state.logActions.selectSample);
+  const logs = useStore((state) => state.logs.logs);
+  const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
+  const logDir2 = useStore((state) => state.logs.logDir);
+  const setSelectedLogFile = useStore(
+    (state) => state.logsActions.setSelectedLogFile
+  );
+  reactExports.useEffect(() => {
+    const exec2 = async () => {
+      if (routeLogPath && sampleId && epoch) {
+        if (!logDir2) {
+          await initLogDir();
+        }
+        if (!logs.some((log2) => log2.name.endsWith(routeLogPath))) {
+          await loadLogs(routeLogPath);
+        }
+        if (selectedLogFile !== routeLogPath) {
+          setSelectedLogFile(routeLogPath);
+        }
+        const targetEpoch = parseInt(epoch, 10);
+        selectSample(sampleId, targetEpoch, routeLogPath);
+      }
+    };
+    exec2();
+  }, [
+    routeLogPath,
+    sampleId,
+    epoch,
+    loadLogs,
+    setSelectedLogFile,
+    selectSample,
+    initLogDir,
+    logDir2,
+    logs,
+    selectedLogFile
+  ]);
 };
 const SampleDetailView = () => {
+  useLoadLog();
+  useLoadSample();
+  usePollSample();
   const {
     samplesPath: routeLogPath,
     sampleId,
     epoch,
     tabId
   } = useSamplesRouteParams();
-  const { loadLogs } = useLogs();
   const navigate = useNavigate();
-  const selectSample = useStore((state) => state.logActions.selectSample);
-  const setSelectedLogFile = useStore(
-    (state) => state.logsActions.setSelectedLogFile
-  );
-  const selectedSampleSummary = useSelectedSampleSummary();
   const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
-  const initLogDir = useStore((state) => state.logsActions.initLogDir);
   const logDir2 = useStore((state) => state.logs.logDir);
   const displayedSamples = useStore(
     (state) => state.logs.samplesListState.displayedSamples
   );
-  const sampleStatus = useStore((state) => state.sample.sampleStatus);
-  const loadSample = useStore((state) => state.sampleActions.loadSample);
   const clearSelectedLogDetails = useStore(
     (state) => state.logActions.clearSelectedLogDetails
   );
   const clearLog = useStore((state) => state.logActions.clearLog);
   const clearSampleTab = useStore((state) => state.appActions.clearSampleTab);
-  const showFind = useStore((state) => state.app.showFind);
-  const setSampleTab = useStore((state) => state.appActions.setSampleTab);
-  const summaryId = selectedSampleSummary?.id;
-  const summaryEpoch = selectedSampleSummary?.epoch;
-  const summaryCompleted = selectedSampleSummary?.completed;
+  const singleFileMode = useStore((state) => state.app.singleFileMode);
   const currentIndex = reactExports.useMemo(() => {
     if (!displayedSamples || !selectedLogFile || !sampleId || !epoch) {
       return -1;
     }
-    return displayedSamples.findIndex(
-      (s) => s.sampleId === sampleId && s.epoch === parseInt(epoch, 10) && s.logFile === selectedLogFile
-    );
+    const index = displayedSamples.findIndex((s) => {
+      const isMatch = String(s.sampleId) === sampleId && s.epoch === parseInt(epoch, 10) && s.logFile === selectedLogFile;
+      return isMatch;
+    });
+    return index;
   }, [displayedSamples, selectedLogFile, sampleId, epoch]);
   const hasPrevious = currentIndex > 0;
   const hasNext = displayedSamples && currentIndex >= 0 && currentIndex < displayedSamples.length - 1;
@@ -217167,143 +218051,32 @@ const SampleDetailView = () => {
     }
   }, [currentIndex, displayedSamples, routeLogPath, logDir2, tabId, navigate]);
   reactExports.useEffect(() => {
-    if (tabId) {
-      setSampleTab(tabId);
-    }
-  }, [tabId, setSampleTab]);
-  reactExports.useEffect(() => {
-    const exec2 = async () => {
-      if (routeLogPath && sampleId && epoch) {
-        await initLogDir();
-        await loadLogs(routeLogPath);
-        setSelectedLogFile(routeLogPath);
-        const targetEpoch = parseInt(epoch, 10);
-        selectSample(sampleId, targetEpoch, routeLogPath);
-      }
-    };
-    exec2();
-  }, [
-    routeLogPath,
-    sampleId,
-    epoch,
-    loadLogs,
-    setSelectedLogFile,
-    selectSample,
-    initLogDir
-  ]);
-  const setShowFind = useStore((state) => state.appActions.setShowFind);
-  const hideFind = useStore((state) => state.appActions.hideFind);
-  const nativeFind = useStore((state) => state.app.nativeFind);
-  reactExports.useEffect(() => {
-    const handleGlobalKeyDown = (e) => {
-      const activeElement = document.activeElement;
-      const isInputFocused = activeElement && (activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA" || activeElement.tagName === "SELECT");
-      if ((e.ctrlKey || e.metaKey) && e.key === "f") {
-        if (!nativeFind) {
-          e.preventDefault();
-          e.stopPropagation();
-          if (setShowFind) {
-            setShowFind(true);
-          }
-        }
-      } else if (e.key === "Escape") {
-        if (!nativeFind) {
-          hideFind();
-        }
-      } else if (!isInputFocused) {
-        if (e.key === "ArrowLeft") {
-          if (hasPrevious) {
-            e.preventDefault();
-            handlePrevious();
-          }
-        } else if (e.key === "ArrowRight") {
-          if (hasNext) {
-            e.preventDefault();
-            handleNext();
-          }
-        }
-      }
-    };
-    document.addEventListener("keydown", handleGlobalKeyDown, true);
-    return () => {
-      document.removeEventListener("keydown", handleGlobalKeyDown, true);
-    };
-  }, [
-    setShowFind,
-    hideFind,
-    hasPrevious,
-    hasNext,
-    nativeFind,
-    handlePrevious,
-    handleNext
-  ]);
-  reactExports.useEffect(() => {
-    const exec2 = async () => {
-      if (selectedLogFile && summaryId !== void 0 && summaryEpoch !== void 0) {
-        await loadSample(
-          selectedLogFile,
-          summaryId,
-          summaryEpoch,
-          summaryCompleted
-        );
-      }
-    };
-    void exec2();
-  }, [loadSample, selectedLogFile, summaryId, summaryEpoch, summaryCompleted]);
-  reactExports.useEffect(() => {
     return () => {
       clearSelectedLogDetails();
       clearLog();
       clearSampleTab();
     };
   }, [clearLog, clearSampleTab, clearSelectedLogDetails]);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(ExtendedFindProvider, { children: [
-    showFind ? /* @__PURE__ */ jsxRuntimeExports.jsx(FindBand, {}) : "",
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles.detail, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        ApplicationNavbar,
-        {
-          currentPath: routeLogPath,
-          fnNavigationUrl: samplesUrl,
-          bordered: true,
-          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles.sampleNav), children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "div",
-              {
-                onClick: handlePrevious,
-                tabIndex: 0,
-                className: clsx(!hasPrevious && styles.disabled, styles.nav),
-                children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.previous) })
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles.sampleInfo, "text-size-smallest"), children: [
-              "Sample ",
-              sampleId,
-              " (Epoch ",
-              epoch,
-              ")"
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "div",
-              {
-                onClick: handleNext,
-                tabIndex: 0,
-                className: clsx(!hasNext && styles.disabled, styles.nav),
-                children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.next) })
-              }
-            )
-          ] })
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        InlineSampleDisplay,
-        {
-          showActivity: sampleStatus === "loading",
-          className: styles.panel
-        }
-      )
-    ] })
-  ] });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    SampleDetailComponent,
+    {
+      sampleId,
+      epoch,
+      tabId,
+      navigation: {
+        onPrevious: handlePrevious,
+        onNext: handleNext,
+        hasPrevious: !!hasPrevious,
+        hasNext: !!hasNext
+      },
+      navbarConfig: {
+        currentPath: routeLogPath,
+        fnNavigationUrl: samplesUrl,
+        bordered: true,
+        breadcrumbsEnabled: !singleFileMode
+      }
+    }
+  );
 };
 const SamplesRouter = () => {
   const { samplesPath, sampleId, epoch } = useSamplesRouteParams();
@@ -217326,8 +218099,10 @@ const AppLayout = () => {
     }
   }, [location2]);
   const singleFileMode = useStore((state) => state.app.singleFileMode);
+  const { sampleId, epoch, sampleUuid } = useLogRouteParams();
   if (singleFileMode) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(AppErrorBoundary, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(LogViewContainer, {}) });
+    const isSampleDetail = sampleId && epoch || sampleUuid;
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(AppErrorBoundary, { children: isSampleDetail ? /* @__PURE__ */ jsxRuntimeExports.jsx(LogSampleDetailView, {}) : /* @__PURE__ */ jsxRuntimeExports.jsx(LogViewContainer, {}) });
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsx(AppErrorBoundary, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Outlet, {}) });
 };
@@ -217347,16 +218122,10 @@ const AppRouter = createHashRouter(
           element: /* @__PURE__ */ jsxRuntimeExports.jsx(LogsPanel, {})
         },
         {
+          // This matches all /logs/* paths including sample detail URLs
+          // The RouteDispatcher parses the path and routes to the appropriate component
           path: kLogRouteUrlPattern,
           element: /* @__PURE__ */ jsxRuntimeExports.jsx(RouteDispatcher, {})
-        },
-        {
-          path: kSampleRouteUrlPattern,
-          element: /* @__PURE__ */ jsxRuntimeExports.jsx(LogViewContainer, {})
-        },
-        {
-          path: kSampleUuidRouteUrlPattern,
-          element: /* @__PURE__ */ jsxRuntimeExports.jsx(LogViewContainer, {})
         },
         {
           path: "/samples/*",
@@ -217545,8 +218314,8 @@ if (vscode) {
     'meta[name="inspect-extension:version"]'
   );
   const extensionVersion = extensionVersionEl ? extensionVersionEl.getAttribute("content") : void 0;
+  capabilities.downloadFiles = false;
   if (!extensionVersion) {
-    capabilities.downloadFiles = false;
     capabilities.webWorkers = false;
   }
 }
