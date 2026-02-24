@@ -118690,7 +118690,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.180-41-g59150a781" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.181-5-gc4024cf16" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -192411,6 +192411,8 @@ const SampleDisplay = ({
     setCollapsedMode(isCollapsed(collapsedMode) ? "expanded" : "collapsed");
   }, [collapsedMode, setCollapsedMode]);
   const { isDebugFilter, isDefaultFilter } = useTranscriptFilter();
+  const api2 = useStore((state) => state.api);
+  const downloadFiles = useStore((state) => state.capabilities.downloadFiles);
   const tools2 = [];
   const [icon2, setIcon] = reactExports.useState(ApplicationIcons.copy);
   tools2.push(
@@ -192443,6 +192445,33 @@ const SampleDisplay = ({
       "sample-copy"
     )
   );
+  if (downloadFiles && sample2 && api2?.download_file) {
+    const sampleId = sample2.id ?? "sample";
+    tools2.push(
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        ToolDropdownButton,
+        {
+          label: "Download",
+          icon: ApplicationIcons.downloadLog,
+          items: {
+            "Sample JSON": () => {
+              api2.download_file(
+                `${sampleId}.json`,
+                JSON.stringify(sample2, null, 2)
+              );
+            },
+            Transcript: () => {
+              api2.download_file(
+                `${sampleId}-transcript.txt`,
+                messagesToStr(sample2.messages ?? [])
+              );
+            }
+          }
+        },
+        "sample-download"
+      )
+    );
+  }
   if (selectedTab === kSampleTranscriptTabId) {
     const label2 = isDebugFilter ? "Debug" : isDefaultFilter ? "Default" : "Custom";
     tools2.push(
@@ -218285,8 +218314,8 @@ if (vscode) {
     'meta[name="inspect-extension:version"]'
   );
   const extensionVersion = extensionVersionEl ? extensionVersionEl.getAttribute("content") : void 0;
+  capabilities.downloadFiles = false;
   if (!extensionVersion) {
-    capabilities.downloadFiles = false;
     capabilities.webWorkers = false;
   }
 }
