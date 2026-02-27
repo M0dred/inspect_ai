@@ -16932,11 +16932,22 @@ function resolvePath(to2, fromPathname = "/") {
   } = typeof to2 === "string" ? parsePath$1(to2) : to2;
   let pathname;
   if (toPathname) {
-    toPathname = toPathname.replace(/\/\/+/g, "/");
-    if (toPathname.startsWith("/")) {
-      pathname = resolvePathname(toPathname.substring(1), "/");
+    if (isAbsoluteUrl(toPathname)) {
+      pathname = toPathname;
     } else {
-      pathname = resolvePathname(toPathname, fromPathname);
+      if (toPathname.includes("//")) {
+        let oldPathname = toPathname;
+        toPathname = toPathname.replace(/\/\/+/g, "/");
+        warning(
+          false,
+          `Pathnames cannot have embedded double slashes - normalizing ${oldPathname} -> ${toPathname}`
+        );
+      }
+      if (toPathname.startsWith("/")) {
+        pathname = resolvePathname(toPathname.substring(1), "/");
+      } else {
+        pathname = resolvePathname(toPathname, fromPathname);
+      }
     }
   } else {
     pathname = fromPathname;
@@ -22309,15 +22320,7 @@ function PrefetchPageLinksImpl({
   return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, dataHrefs.map((href) => /* @__PURE__ */ reactExports.createElement("link", { key: href, rel: "prefetch", as: "fetch", href, ...linkProps })), moduleHrefs.map((href) => /* @__PURE__ */ reactExports.createElement("link", { key: href, rel: "modulepreload", href, ...linkProps })), keyedPrefetchLinks.map(({ key: key2, link: link2 }) => (
     // these don't spread `linkProps` because they are full link descriptors
     // already with their own props
-    /* @__PURE__ */ reactExports.createElement(
-      "link",
-      {
-        key: key2,
-        nonce: linkProps.nonce,
-        ...link2,
-        crossOrigin: link2.crossOrigin ?? linkProps.crossOrigin
-      }
-    )
+    /* @__PURE__ */ reactExports.createElement("link", { key: key2, nonce: linkProps.nonce, ...link2 })
   )));
 }
 function mergeRefs(...refs) {
@@ -22335,7 +22338,7 @@ var isBrowser2 = typeof window !== "undefined" && typeof window.document !== "un
 try {
   if (isBrowser2) {
     window.__reactRouterVersion = // @ts-expect-error
-    "7.13.0";
+    "7.12.0";
   }
 } catch (e) {
 }
@@ -29422,6 +29425,19 @@ const createSampleSlice = (set3, get2, _store) => {
           state.sample.sampleInState = false;
           state.sample.runningEvents = [];
           state.sample.sampleStatus = "ok";
+          state.log.selectedSampleHandle = void 0;
+        });
+      },
+      prepareForSampleLoad: (logFile, id, epoch) => {
+        getSamplePolling().stopPolling();
+        selectedSampleRef.current = void 0;
+        set3((state) => {
+          state.sample.selectedSampleObject = void 0;
+          state.sample.sampleInState = false;
+          state.sample.runningEvents = [];
+          state.sample.sampleStatus = "loading";
+          state.sample.sampleError = void 0;
+          state.sample.sample_identifier = { logFile, id, epoch };
           state.log.selectedSampleHandle = void 0;
         });
       },
@@ -40520,13 +40536,7 @@ function linkify(state, silent) {
   if (!link2) return false;
   let url = link2.url;
   if (url.length <= proto.length) return false;
-  let urlEnd = url.length;
-  while (urlEnd > 0 && url.charCodeAt(urlEnd - 1) === 42) {
-    urlEnd--;
-  }
-  if (urlEnd !== url.length) {
-    url = url.slice(0, urlEnd);
-  }
+  url = url.replace(/\*+$/, "");
   const fullUrl = state.md.normalizeLink(url);
   if (!state.md.validateLink(fullUrl)) return false;
   if (!silent) {
@@ -116692,11 +116702,11 @@ const useFlowServerData = (dir) => {
     }
   }, [dir, flowDir, api2, updateFlowData]);
 };
-const wrapper$4 = "_wrapper_1tajk_1";
+const wrapper$3 = "_wrapper_1tajk_1";
 const container$k = "_container_1tajk_12";
 const animate = "_animate_1tajk_21";
 const styles$1f = {
-  wrapper: wrapper$4,
+  wrapper: wrapper$3,
   container: container$k,
   animate
 };
@@ -118690,7 +118700,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.181-5-gc4024cf16" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.183-51-gc5feaeac7" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -177009,6 +177019,7 @@ const appendPendingItems = (evalSet, tasksWithLogFiles, collapsedLogItems) => {
 };
 const SAMPLE_LIST_KEYS = ["transcript-tree"];
 const log$1 = createLogger("useSampleLoader");
+let loadGeneration = 0;
 function useLoadSample() {
   const sampleData = useSampleData();
   const logSelection = useLogSelection();
@@ -177038,20 +177049,24 @@ function useLoadSample() {
       if (isSameSample && isLoading) {
         return;
       }
+      const thisGeneration = ++loadGeneration;
       for (const key2 of SAMPLE_LIST_KEYS) {
         clearListPosition(key2);
       }
-      sampleActions.setSampleIdentifier(logFile, id, epoch);
-      sampleActions.setSampleError(void 0);
-      sampleActions.setSampleStatus("loading");
+      sampleActions.prepareForSampleLoad(logFile, id, epoch);
       try {
         if (completed !== false) {
           log$1.debug(`LOADING COMPLETED SAMPLE: ${id}-${epoch}`);
           getSamplePolling().stopPolling();
           const sample2 = await api2?.get_log_sample(logFile, id, epoch);
           log$1.debug(`LOADED COMPLETED SAMPLE: ${id}-${epoch}`);
+          if (thisGeneration !== loadGeneration) {
+            log$1.debug(`Discarding stale sample response: ${id}-${epoch}`);
+            return;
+          }
           if (sample2) {
-            if (currentId?.id !== sample2.id || currentId?.epoch !== sample2.epoch || currentId?.logFile !== logFile) {
+            const isNewSample = currentId?.id !== id || currentId?.epoch !== epoch || currentId?.logFile !== logFile;
+            if (isNewSample) {
               sampleActions.clearCollapsedEvents();
             }
             const migratedSample = resolveSample$1(sample2);
@@ -177346,6 +177361,7 @@ const ExtendedFindProvider = ({
   children: children2
 }) => {
   const virtualLists = reactExports.useRef(/* @__PURE__ */ new Map());
+  const matchCounters = reactExports.useRef(/* @__PURE__ */ new Map());
   const extendedFindTerm = reactExports.useCallback(
     async (term, direction) => {
       for (const [, searchFn] of virtualLists.current) {
@@ -177386,9 +177402,27 @@ const ExtendedFindProvider = ({
     },
     []
   );
+  const countAllMatches = reactExports.useCallback((term) => {
+    let total = 0;
+    for (const [, countFn] of matchCounters.current) {
+      total += countFn(term);
+    }
+    return total;
+  }, []);
+  const registerMatchCounter = reactExports.useCallback(
+    (id, countFn) => {
+      matchCounters.current.set(id, countFn);
+      return () => {
+        matchCounters.current.delete(id);
+      };
+    },
+    []
+  );
   const contextValue = {
     extendedFindTerm,
-    registerVirtualList
+    registerVirtualList,
+    countAllMatches,
+    registerMatchCounter
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsx(ExtendedFindContext.Provider, { value: contextValue, children: children2 });
 };
@@ -177409,16 +177443,20 @@ const findConfig = {
 const FindBand = () => {
   const searchBoxRef = reactExports.useRef(null);
   const storeHideFind = useStore((state) => state.appActions.hideFind);
-  const { extendedFindTerm } = useExtendedFind();
+  const { extendedFindTerm, countAllMatches } = useExtendedFind();
   const lastFoundItem = reactExports.useRef(null);
   const currentSearchTerm = reactExports.useRef("");
   const needsCursorRestoreRef = reactExports.useRef(false);
-  const lastNoResultTerm = reactExports.useRef("");
-  const lastNoResultDirection = reactExports.useRef(null);
   const scrollTimeoutRef = reactExports.useRef(null);
   const focusTimeoutRef = reactExports.useRef(null);
   const searchIdRef = reactExports.useRef(0);
+  const cachedCount = reactExports.useRef({
+    term: "",
+    count: 0
+  });
   const mutatedPanelsRef = reactExports.useRef(/* @__PURE__ */ new Map());
+  const [matchCount, setMatchCount] = reactExports.useState(null);
+  const [currentMatchIndex, setCurrentMatchIndex] = reactExports.useState(0);
   const getParentExpandablePanel = reactExports.useCallback(
     (selection) => {
       let node2 = selection.anchorNode;
@@ -177437,23 +177475,26 @@ const FindBand = () => {
       const thisSearchId = ++searchIdRef.current;
       const searchTerm = searchBoxRef.current?.value ?? "";
       if (!searchTerm) {
+        setMatchCount(null);
+        setCurrentMatchIndex(0);
         return;
       }
       if (currentSearchTerm.current !== searchTerm) {
         lastFoundItem.current = null;
         currentSearchTerm.current = searchTerm;
+        setCurrentMatchIndex(0);
       }
-      const noResultEl = document.getElementById("inspect-find-no-results");
-      if (lastNoResultTerm.current && searchTerm.startsWith(lastNoResultTerm.current) && lastNoResultDirection.current === back) {
-        if (noResultEl) {
-          noResultEl.style.opacity = "1";
-          noResultEl.setAttribute("aria-hidden", "false");
-        }
+      let total;
+      if (cachedCount.current.term === searchTerm) {
+        total = cachedCount.current.count;
+      } else {
+        total = countAllMatches(searchTerm);
+        cachedCount.current = { term: searchTerm, count: total };
+      }
+      setMatchCount(total);
+      if (total === 0) {
+        setCurrentMatchIndex(0);
         return;
-      }
-      if (lastNoResultTerm.current && (!searchTerm.startsWith(lastNoResultTerm.current) || lastNoResultDirection.current !== back)) {
-        lastNoResultTerm.current = "";
-        lastNoResultDirection.current = null;
       }
       const focusedElement = document.activeElement;
       const selection = window.getSelection();
@@ -177463,22 +177504,15 @@ const FindBand = () => {
       }
       const savedScrollParent = savedRange ? findScrollableParent(savedRange.startContainer.parentElement) : null;
       const savedScrollTop = savedScrollParent?.scrollTop ?? 0;
-      let result2 = await findExtendedInDOM(
+      const result2 = await findExtendedInDOM(
         searchTerm,
         back,
         lastFoundItem.current,
         extendedFindTerm
       );
-      if (!noResultEl) {
-        return;
-      }
       if (searchIdRef.current !== thisSearchId) {
         return;
       }
-      noResultEl.style.opacity = result2 ? "0" : "1";
-      noResultEl.setAttribute("aria-hidden", result2 ? "true" : "false");
-      lastNoResultTerm.current = result2 ? "" : searchTerm;
-      lastNoResultDirection.current = result2 ? null : back;
       if (!result2 && savedRange) {
         const sel = window.getSelection();
         if (sel) {
@@ -177494,11 +177528,21 @@ const FindBand = () => {
         if (selection2 && selection2.rangeCount > 0) {
           const range2 = selection2.getRangeAt(0);
           const parentElement = range2.startContainer.parentElement || range2.commonAncestorContainer;
+          const isNewMatch = !isLastFoundItem(range2, lastFoundItem.current);
           lastFoundItem.current = {
             text: range2.toString(),
             offset: range2.startOffset,
             parentElement
           };
+          if (isNewMatch) {
+            setCurrentMatchIndex((prev) => {
+              if (back) {
+                return prev <= 1 ? total : prev - 1;
+              } else {
+                return prev >= total ? 1 : prev + 1;
+              }
+            });
+          }
           const parentPanel = getParentExpandablePanel(selection2);
           if (parentPanel) {
             if (!mutatedPanelsRef.current.has(parentPanel)) {
@@ -177524,7 +177568,7 @@ const FindBand = () => {
       }
       focusedElement?.focus();
     },
-    [getParentExpandablePanel, extendedFindTerm]
+    [getParentExpandablePanel, extendedFindTerm, countAllMatches]
   );
   reactExports.useEffect(() => {
     focusTimeoutRef.current = window.setTimeout(() => {
@@ -177639,6 +177683,11 @@ const FindBand = () => {
       document.removeEventListener("keydown", handleGlobalKeyDown, true);
     };
   }, [handleSearch, restoreCursor]);
+  const matchCountLabel = reactExports.useMemo(() => {
+    if (matchCount === null) return null;
+    if (matchCount === 0) return "No results";
+    return `${currentMatchIndex} of ${matchCount}`;
+  }, [matchCount, currentMatchIndex]);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-unsearchable": "true", className: clsx("findBand"), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "input",
@@ -177651,7 +177700,16 @@ const FindBand = () => {
         onChange: handleInputChange
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { id: "inspect-find-no-results", "aria-hidden": "true", children: "No results" }),
+    matchCountLabel !== null && /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "span",
+      {
+        className: clsx(
+          "findBand-match-count",
+          matchCount === 0 && "findBand-no-results"
+        ),
+        children: matchCountLabel
+      }
+    ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "button",
       {
@@ -177684,21 +177742,35 @@ const FindBand = () => {
     )
   ] });
 };
+function windowFind(searchTerm, back) {
+  return window.find(
+    searchTerm,
+    findConfig.caseSensitive,
+    back,
+    findConfig.wrapAround,
+    findConfig.wholeWord,
+    findConfig.searchInFrames,
+    findConfig.showDialog
+  );
+}
+function positionSelectionForWrap(back) {
+  if (!back) return;
+  const sel = window.getSelection();
+  if (sel) {
+    const range2 = document.createRange();
+    range2.selectNodeContents(document.body);
+    range2.collapse(false);
+    sel.removeAllRanges();
+    sel.addRange(range2);
+  }
+}
 async function findExtendedInDOM(searchTerm, back, lastFoundItem, extendedFindTerm) {
   let result2 = false;
-  let attempts = 0;
   let hasTriedExtendedSearch = false;
+  let extendedSearchSucceeded = false;
   const maxAttempts = 25;
-  do {
-    result2 = window.find(
-      searchTerm,
-      findConfig.caseSensitive,
-      back,
-      findConfig.wrapAround,
-      findConfig.wholeWord,
-      findConfig.searchInFrames,
-      findConfig.showDialog
-    );
+  for (let attempts = 0; attempts < maxAttempts; attempts++) {
+    result2 = windowFind(searchTerm, back);
     if (result2) {
       const selection = window.getSelection();
       if (selection && selection.rangeCount > 0) {
@@ -177709,24 +177781,74 @@ async function findExtendedInDOM(searchTerm, back, lastFoundItem, extendedFindTe
           break;
         }
         if (isSameAsLast) {
-          return false;
+          if (!hasTriedExtendedSearch) {
+            hasTriedExtendedSearch = true;
+            window.getSelection()?.removeAllRanges();
+            const foundInVirtual = await extendedFindTerm(
+              searchTerm,
+              back ? "backward" : "forward"
+            );
+            if (foundInVirtual) {
+              extendedSearchSucceeded = true;
+              continue;
+            }
+          }
+          if (extendedSearchSucceeded) {
+            const sel = window.getSelection();
+            if (sel?.rangeCount) {
+              sel.getRangeAt(0).collapse(!back);
+            }
+          } else {
+            window.getSelection()?.removeAllRanges();
+            positionSelectionForWrap(back);
+          }
+          result2 = windowFind(searchTerm, back);
+          if (result2) {
+            const sel = window.getSelection();
+            if (sel && sel.rangeCount > 0) {
+              const r2 = sel.getRangeAt(0);
+              if (inUnsearchableElement(r2)) {
+                continue;
+              }
+            }
+          }
+          break;
         }
       }
     } else if (!hasTriedExtendedSearch) {
       hasTriedExtendedSearch = true;
+      window.getSelection()?.removeAllRanges();
       const foundInVirtual = await extendedFindTerm(
         searchTerm,
         back ? "backward" : "forward"
       );
-      if (foundInVirtual) ;
-      else {
-        break;
+      if (foundInVirtual) {
+        extendedSearchSucceeded = true;
+        continue;
       }
+      positionSelectionForWrap(back);
+      result2 = windowFind(searchTerm, back);
+      if (result2) {
+        const sel = window.getSelection();
+        if (sel && sel.rangeCount > 0) {
+          const r2 = sel.getRangeAt(0);
+          if (inUnsearchableElement(r2)) {
+            continue;
+          }
+        }
+      }
+      break;
     } else {
       break;
     }
-    attempts++;
-  } while (attempts < maxAttempts);
+  }
+  if (result2) {
+    const sel = window.getSelection();
+    if (sel?.rangeCount && inUnsearchableElement(sel.getRangeAt(0))) {
+      sel.removeAllRanges();
+      result2 = false;
+    }
+  }
   return result2;
 }
 function isLastFoundItem(range2, lastFoundItem) {
@@ -178151,15 +178273,15 @@ const betterContentText = (content2, excludeToolUsage, excludeReasoning) => {
   const allText = content2.map((c2) => textFromContent(c2, excludeToolUsage, excludeReasoning)).filter((text2) => text2 !== null);
   return allText.join("\n");
 };
-const wrapper$3 = "_wrapper_sq96g_1";
-const col2$2 = "_col2_sq96g_8";
+const wrapper$2 = "_wrapper_sq96g_1";
+const col2$1 = "_col2_sq96g_8";
 const col1_3$1 = "_col1_3_sq96g_12";
 const col3$1 = "_col3_sq96g_16";
 const separator$5 = "_separator_sq96g_20";
 const padded$1 = "_padded_sq96g_26";
 const styles$12 = {
-  wrapper: wrapper$3,
-  col2: col2$2,
+  wrapper: wrapper$2,
+  col2: col2$1,
   col1_3: col1_3$1,
   col3: col3$1,
   separator: separator$5,
@@ -178416,7 +178538,7 @@ const LiveVirtualList = ({
   itemSearchText
 }) => {
   const { getRestoreState, isScrolling, visibleRange, setVisibleRange } = useVirtuosoState(listHandle, `live-virtual-list-${id}`);
-  const { registerVirtualList } = useExtendedFind();
+  const { registerVirtualList, registerMatchCounter } = useExtendedFind();
   const pendingSearchCallback = reactExports.useRef(null);
   const [isCurrentlyScrolling, setIsCurrentlyScrolling] = reactExports.useState(false);
   const [followOutput, setFollowOutput] = useProperty(
@@ -178511,26 +178633,35 @@ const LiveVirtualList = ({
     },
     [itemSearchText, defaultItemSearchText, searchInText]
   );
+  const scrollToMatch = reactExports.useCallback(
+    (index, onContentReady) => {
+      pendingSearchCallback.current = onContentReady;
+      listHandle.current?.scrollToIndex({
+        index,
+        behavior: "auto",
+        align: "center"
+      });
+      setTimeout(() => {
+        if (pendingSearchCallback.current === onContentReady) {
+          pendingSearchCallback.current = null;
+          onContentReady();
+        }
+      }, 200);
+    },
+    [listHandle]
+  );
   const searchInData = reactExports.useCallback(
     async (term, direction, onContentReady) => {
       if (!data.length || !term) return false;
-      const currentIndex = direction === "forward" ? visibleRange.endIndex : visibleRange.startIndex;
-      const searchStart = direction === "forward" ? Math.max(0, currentIndex + 1) : Math.min(data.length - 1, currentIndex - 1);
-      const step = direction === "forward" ? 1 : -1;
-      for (let i = searchStart; i >= 0 && i < data.length; i += step) {
+      const isForward = direction === "forward";
+      const currentIndex = isForward ? visibleRange.endIndex : visibleRange.startIndex;
+      const len = data.length;
+      for (let offset2 = 1; offset2 < len; offset2++) {
+        const i = isForward ? (currentIndex + offset2) % len : (currentIndex - offset2 + len) % len;
+        if (i >= visibleRange.startIndex && i <= visibleRange.endIndex)
+          continue;
         if (searchInItem(data[i], term)) {
-          pendingSearchCallback.current = onContentReady;
-          listHandle.current?.scrollToIndex({
-            index: i,
-            behavior: "auto",
-            align: "center"
-          });
-          setTimeout(() => {
-            if (pendingSearchCallback.current === onContentReady) {
-              pendingSearchCallback.current = null;
-              onContentReady();
-            }
-          }, 200);
+          scrollToMatch(i, onContentReady);
           return true;
         }
       }
@@ -178541,13 +178672,45 @@ const LiveVirtualList = ({
       searchInItem,
       visibleRange.endIndex,
       visibleRange.startIndex,
-      listHandle
+      scrollToMatch
     ]
   );
+  const countMatchesInData = reactExports.useCallback(
+    (term) => {
+      if (!term || !data.length) return 0;
+      const lower = term.toLowerCase();
+      let total = 0;
+      const getSearchText = itemSearchText ?? defaultItemSearchText;
+      for (const item2 of data) {
+        const texts = getSearchText(item2);
+        const textArray = Array.isArray(texts) ? texts : [texts];
+        for (const text2 of textArray) {
+          const lowerText = text2.toLowerCase();
+          let pos2 = 0;
+          while ((pos2 = lowerText.indexOf(lower, pos2)) !== -1) {
+            total++;
+            pos2 += lower.length;
+          }
+        }
+      }
+      return total;
+    },
+    [data, itemSearchText, defaultItemSearchText]
+  );
   reactExports.useEffect(() => {
-    const unregister = registerVirtualList(id, searchInData);
-    return unregister;
-  }, [id, registerVirtualList, searchInData]);
+    const unregisterSearch = registerVirtualList(id, searchInData);
+    const unregisterCount = registerMatchCounter(id, countMatchesInData);
+    return () => {
+      unregisterSearch();
+      unregisterCount();
+    };
+  }, [
+    id,
+    registerVirtualList,
+    registerMatchCounter,
+    searchInData,
+    countMatchesInData
+  ]);
   const Footer = () => {
     return showProgress ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$$.progressContainer), children: /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false, size: "medium" }) }) : void 0;
   };
@@ -180708,6 +180871,87 @@ const EventRow = ({
   const card2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("card", styles$Q.contents), children: contentEl });
   return card2;
 };
+const sampleLimitTitles = {
+  custom: "Custom Limit Exceeded",
+  time: "Time Limit Exceeded",
+  message: "Message Limit Exceeded",
+  token: "Token Limit Exceeded",
+  operator: "Operator Canceled",
+  working: "Execution Time Limit Exceeded",
+  cost: "Cost Limit Exceeded"
+};
+const approvalDecisionLabels = {
+  approve: "Approved",
+  reject: "Rejected",
+  terminate: "Terminated",
+  escalate: "Escalated",
+  modify: "Modified"
+};
+const eventTitle = (event) => {
+  switch (event.event) {
+    case "model":
+      return event.role ? `Model Call (${event.role}): ${event.model}` : `Model Call: ${event.model}`;
+    case "tool":
+      return `Tool: ${event.view?.title || event.function}`;
+    case "error":
+      return "Error";
+    case "logger":
+      return event.message.level;
+    case "info":
+      return "Info" + (event.source ? ": " + event.source : "");
+    case "compaction": {
+      const source2 = event.source && event.source !== "inspect" ? event.source : "";
+      return "Compaction" + source2;
+    }
+    case "step":
+      if (event.name === kSandboxSignalName) return "Sandbox Events";
+      if (event.name === "init") return "Init";
+      if (event.name === "sample_init") return "Sample Init";
+      return event.type ? `${event.type}: ${event.name}` : `Step: ${event.name}`;
+    case "subtask":
+      return event.type === "fork" ? `Fork: ${event.name}` : `Subtask: ${event.name}`;
+    case "span_begin":
+      if (event.span_id === kSandboxSignalName) return "Sandbox Events";
+      if (event.name === "init") return "Init";
+      if (event.name === "sample_init") return "Sample Init";
+      return event.type ? `${event.type}: ${event.name}` : `Step: ${event.name}`;
+    case "score":
+      return (event.intermediate ? "Intermediate " : "") + "Score";
+    case "score_edit":
+      return "Edit Score";
+    case "sample_init":
+      return "Sample";
+    case "sample_limit":
+      return sampleLimitTitles[event.type] ?? event.type;
+    case "input":
+      return "Input";
+    case "approval":
+      return approvalDecisionLabels[event.decision] ?? event.decision;
+    case "sandbox":
+      return `Sandbox: ${event.action}`;
+    default:
+      return "";
+  }
+};
+const formatTiming = (timestamp2, working_start) => {
+  if (working_start) {
+    return `${formatDateTime(new Date(timestamp2))}
+@ working time: ${formatTime$1(working_start)}`;
+  } else {
+    return formatDateTime(new Date(timestamp2));
+  }
+};
+const formatTitle = (title2, total_tokens, working_start) => {
+  const subItems = [];
+  if (total_tokens) {
+    subItems.push(`${formatNumber(total_tokens)} tokens`);
+  }
+  if (working_start) {
+    subItems.push(`${formatTime$1(working_start)}`);
+  }
+  const subtitle = subItems.length > 0 ? ` (${subItems.join(", ")})` : "";
+  return `${title2}${subtitle}`;
+};
 const ApprovalEventView = ({
   eventNode,
   className: className2
@@ -180716,28 +180960,12 @@ const ApprovalEventView = ({
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     EventRow,
     {
-      title: decisionLabel(event.decision),
+      title: eventTitle(event),
       icon: decisionIcon(event.decision),
       className: className2,
       children: event.explanation || ""
     }
   );
-};
-const decisionLabel = (decision) => {
-  switch (decision) {
-    case "approve":
-      return "Approved";
-    case "reject":
-      return "Rejected";
-    case "terminate":
-      return "Terminated";
-    case "escalate":
-      return "Escalated";
-    case "modify":
-      return "Modified";
-    default:
-      return decision;
-  }
 };
 const decisionIcon = (decision) => {
   switch (decision) {
@@ -181135,25 +181363,6 @@ const EventPanel = ({
 function hasDataDefault(node2) {
   return reactExports.isValidElement(node2) && node2.props !== null && typeof node2.props === "object" && "data-default" in node2.props;
 }
-const formatTiming = (timestamp2, working_start) => {
-  if (working_start) {
-    return `${formatDateTime(new Date(timestamp2))}
-@ working time: ${formatTime$1(working_start)}`;
-  } else {
-    return formatDateTime(new Date(timestamp2));
-  }
-};
-const formatTitle = (title2, total_tokens, working_start) => {
-  const subItems = [];
-  if (total_tokens) {
-    subItems.push(`${formatNumber(total_tokens)} tokens`);
-  }
-  if (working_start) {
-    subItems.push(`${formatTime$1(working_start)}`);
-  }
-  const subtitle = subItems.length > 0 ? ` (${subItems.join(", ")})` : "";
-  return `${title2}${subtitle}`;
-};
 const ErrorEventView = ({
   eventNode,
   className: className2
@@ -181164,7 +181373,7 @@ const ErrorEventView = ({
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      title: formatTitle("Error", void 0, event.working_start),
+      title: formatTitle(eventTitle(event), void 0, event.working_start),
       className: className2,
       subTitle: formatDateTime(new Date(event.timestamp)),
       icon: ApplicationIcons.error,
@@ -181210,11 +181419,7 @@ const InfoEventView = ({
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      title: formatTitle(
-        "Info" + (event.source ? ": " + event.source : ""),
-        void 0,
-        event.working_start
-      ),
+      title: formatTitle(eventTitle(event), void 0, event.working_start),
       className: className2,
       subTitle: formatDateTime(new Date(event.timestamp)),
       icon: ApplicationIcons.info,
@@ -181232,7 +181437,7 @@ const InputEventView = ({
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      title: formatTitle("Input", void 0, event.working_start),
+      title: formatTitle(eventTitle(event), void 0, event.working_start),
       className: className2,
       subTitle: formatDateTime(new Date(event.timestamp)),
       icon: ApplicationIcons.input,
@@ -181262,7 +181467,7 @@ const LoggerEventView = ({
     EventRow,
     {
       className: className2,
-      title: event.message.level,
+      title: eventTitle(event),
       icon: ApplicationIcons.logging[event.message.level.toLowerCase()],
       children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-base", styles$L.grid), children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-smaller"), children: obj !== void 0 && obj !== null ? /* @__PURE__ */ jsxRuntimeExports.jsx(MetaDataGrid, { entries: obj }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -181333,15 +181538,15 @@ const styles$J = {
   toolChoice,
   traceback
 };
-const wrapper$2 = "_wrapper_cv5sf_1";
-const col2$1 = "_col2_cv5sf_8";
+const wrapper$1 = "_wrapper_cv5sf_1";
+const col2 = "_col2_cv5sf_8";
 const col1_3 = "_col1_3_cv5sf_12";
 const col3 = "_col3_cv5sf_16";
 const separator$3 = "_separator_cv5sf_20";
 const topMargin = "_topMargin_cv5sf_26";
 const styles$I = {
-  wrapper: wrapper$2,
-  col2: col2$1,
+  wrapper: wrapper$1,
+  col2,
   col1_3,
   col3,
   separator: separator$3,
@@ -181473,7 +181678,7 @@ const ModelEventView = ({
       break;
     }
   }
-  const panelTitle = event.role ? `Model Call (${event.role}): ${event.model}` : `Model Call: ${event.model}`;
+  const panelTitle = eventTitle(event);
   const turnLabel2 = context?.turnInfo ? `turn ${context.turnInfo.turnNumber}/${context.turnInfo.totalTurns}` : void 0;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     EventPanel,
@@ -181656,7 +181861,7 @@ const SampleInitEventView = ({
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
       className: className2,
-      title: formatTitle("Sample", void 0, event.working_start),
+      title: formatTitle(eventTitle(event), void 0, event.working_start),
       icon: ApplicationIcons.sample,
       subTitle: formatDateTime(new Date(event.timestamp)),
       children: [
@@ -181698,24 +181903,6 @@ const SampleLimitEventView = ({
   eventNode,
   className: className2
 }) => {
-  const resolve_title = (type) => {
-    switch (type) {
-      case "custom":
-        return "Custom Limit Exceeded";
-      case "time":
-        return "Time Limit Exceeded";
-      case "message":
-        return "Message Limit Exceeded";
-      case "token":
-        return "Token Limit Exceeded";
-      case "operator":
-        return "Operator Canceled";
-      case "working":
-        return "Execution Time Limit Exceeded";
-      case "cost":
-        return "Cost Limit Exceeded";
-    }
-  };
   const resolve_icon = (type) => {
     switch (type) {
       case "custom":
@@ -181734,14 +181921,17 @@ const SampleLimitEventView = ({
         return ApplicationIcons.limits.cost;
     }
   };
-  const title2 = resolve_title(eventNode.event.type);
   const icon2 = resolve_icon(eventNode.event.type);
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     EventPanel,
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      title: formatTitle(title2, void 0, eventNode.event.working_start),
+      title: formatTitle(
+        eventTitle(eventNode.event),
+        void 0,
+        eventNode.event.working_start
+      ),
       subTitle: formatDateTime(new Date(eventNode.event.timestamp)),
       icon: icon2,
       className: className2,
@@ -181772,11 +181962,7 @@ const SandboxEventView = ({
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
       className: className2,
-      title: formatTitle(
-        `Sandbox: ${event.action}`,
-        void 0,
-        event.working_start
-      ),
+      title: formatTitle(eventTitle(event), void 0, event.working_start),
       icon: ApplicationIcons.sandbox,
       subTitle: formatTiming(event.timestamp, event.working_start),
       children: event.action === "exec" ? /* @__PURE__ */ jsxRuntimeExports.jsx(ExecView, { id: `${eventNode.id}-exec`, event }) : event.action === "read_file" ? /* @__PURE__ */ jsxRuntimeExports.jsx(ReadFileView, { id: `${eventNode.id}-read-file`, event }) : /* @__PURE__ */ jsxRuntimeExports.jsx(WriteFileView, { id: `${eventNode.id}-write-file`, event })
@@ -181861,11 +182047,7 @@ const ScoreEventView = ({
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      title: formatTitle(
-        (event.intermediate ? "Intermediate " : "") + "Score",
-        void 0,
-        event.working_start
-      ),
+      title: formatTitle(eventTitle(event), void 0, event.working_start),
       className: clsx(className2, "text-size-small"),
       subTitle: formatDateTime(new Date(event.timestamp)),
       icon: ApplicationIcons.scorer,
@@ -190733,7 +190915,7 @@ const StepEventView = ({
 }) => {
   const event = eventNode.event;
   const descriptor = stepDescriptor(event);
-  const title2 = descriptor.name || `${event.type ? event.type + ": " : "Step: "}${event.name}`;
+  const title2 = eventTitle(event);
   const text2 = summarize$1(children2);
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     EventPanel,
@@ -190781,68 +190963,16 @@ const stepDescriptor = (event) => {
   const rootStepDescriptor = {
     endSpace: true
   };
-  if (event.type === "solver") {
-    switch (event.name) {
-      case "chain_of_thought":
-        return {
-          ...rootStepDescriptor
-        };
-      case "generate":
-        return {
-          ...rootStepDescriptor
-        };
-      case "self_critique":
-        return {
-          ...rootStepDescriptor
-        };
-      case "system_message":
-        return {
-          ...rootStepDescriptor
-        };
-      case "use_tools":
-        return {
-          ...rootStepDescriptor
-        };
-      case "multiple_choice":
-        return {
-          ...rootStepDescriptor
-        };
-      default:
-        return {
-          ...rootStepDescriptor
-        };
-    }
-  } else if (event.type === "scorer") {
-    return {
-      ...rootStepDescriptor
-    };
+  if (event.type === "solver" || event.type === "scorer") {
+    return { ...rootStepDescriptor };
   } else if (event.event === "step") {
-    if (event.name === kSandboxSignalName) {
-      return {
-        ...rootStepDescriptor,
-        name: "Sandbox Events"
-      };
-    } else if (event.name === "init") {
-      return {
-        ...rootStepDescriptor,
-        name: "Init"
-      };
-    } else {
-      return {
-        ...rootStepDescriptor
-      };
-    }
+    return { ...rootStepDescriptor };
   } else {
     switch (event.name) {
       case "sample_init":
-        return {
-          ...rootStepDescriptor,
-          name: "Sample Init"
-        };
+        return { ...rootStepDescriptor };
       default:
-        return {
-          endSpace: false
-        };
+        return { endSpace: false };
     }
   }
 };
@@ -190882,18 +191012,13 @@ const SubtaskEventView = ({
       )
     );
   }
-  const type = event.type === "fork" ? "Fork" : "Subtask";
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     EventPanel,
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
       className: className2,
-      title: formatTitle(
-        `${type}: ${event.name}`,
-        void 0,
-        event.working_time
-      ),
+      title: formatTitle(eventTitle(event), void 0, event.working_time),
       subTitle: formatTiming(event.timestamp, event.working_start),
       childIds: children2.map((child) => child.id),
       collapseControl: "bottom",
@@ -190962,13 +191087,12 @@ const ToolEventView = ({
       lastModelNode: lastModelNode2
     };
   }, [children2]);
-  const title2 = `Tool: ${event.view?.title || event.function}`;
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     EventPanel,
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      title: formatTitle(title2, void 0, event.working_time),
+      title: formatTitle(eventTitle(event), void 0, event.working_time),
       className: className2,
       subTitle: formatTiming(event.timestamp, event.working_start),
       icon: ApplicationIcons.solvers.use_tools,
@@ -191037,7 +191161,7 @@ const ScoreEditEventView = ({
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      title: formatTitle("Edit Score", void 0, event.working_start),
+      title: formatTitle(eventTitle(event), void 0, event.working_start),
       className: clsx(className2, "text-size-small"),
       subTitle: subtitle,
       collapsibleContent: true,
@@ -191115,7 +191239,7 @@ const SpanEventView = ({
 }) => {
   const event = eventNode.event;
   const descriptor = spanDescriptor(event);
-  const title2 = descriptor.name || `${event.type ? event.type + ": " : "Step: "}${event.name}`;
+  const title2 = eventTitle(event);
   const text2 = reactExports.useMemo(() => summarize(children2), [children2]);
   const childIds = reactExports.useMemo(() => children2.map((child) => child.id), [children2]);
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -191164,68 +191288,16 @@ const spanDescriptor = (event) => {
   const rootStepDescriptor = {
     endSpace: true
   };
-  if (event.type === "solver") {
-    switch (event.name) {
-      case "chain_of_thought":
-        return {
-          ...rootStepDescriptor
-        };
-      case "generate":
-        return {
-          ...rootStepDescriptor
-        };
-      case "self_critique":
-        return {
-          ...rootStepDescriptor
-        };
-      case "system_message":
-        return {
-          ...rootStepDescriptor
-        };
-      case "use_tools":
-        return {
-          ...rootStepDescriptor
-        };
-      case "multiple_choice":
-        return {
-          ...rootStepDescriptor
-        };
-      default:
-        return {
-          ...rootStepDescriptor
-        };
-    }
-  } else if (event.type === "scorer") {
-    return {
-      ...rootStepDescriptor
-    };
+  if (event.type === "solver" || event.type === "scorer") {
+    return { ...rootStepDescriptor };
   } else if (event.event === "span_begin") {
-    if (event.span_id === kSandboxSignalName) {
-      return {
-        ...rootStepDescriptor,
-        name: "Sandbox Events"
-      };
-    } else if (event.name === "init") {
-      return {
-        ...rootStepDescriptor,
-        name: "Init"
-      };
-    } else {
-      return {
-        ...rootStepDescriptor
-      };
-    }
+    return { ...rootStepDescriptor };
   } else {
     switch (event.name) {
       case "sample_init":
-        return {
-          ...rootStepDescriptor,
-          name: "Sample Init"
-        };
+        return { ...rootStepDescriptor };
       default:
-        return {
-          endSpace: false
-        };
+        return { endSpace: false };
     }
   }
 };
@@ -191242,19 +191314,19 @@ const styles$y = {
 const eventSearchText = (node2) => {
   const texts = [];
   const event = node2.event;
+  const title2 = eventTitle(event);
+  if (title2) {
+    texts.push(title2);
+  }
   switch (event.event) {
     case "model": {
-      const modelEvent = event;
-      if (modelEvent.model) {
-        texts.push(modelEvent.model);
-      }
-      if (modelEvent.output?.choices) {
-        for (const choice of modelEvent.output.choices) {
+      if (event.output?.choices) {
+        for (const choice of event.output.choices) {
           texts.push(...extractContentText(choice.message.content));
         }
       }
-      if (modelEvent.input) {
-        for (const msg of modelEvent.input) {
+      if (event.input) {
+        for (const msg of event.input) {
           if (msg.role === "user" || msg.role === "system") {
             texts.push(...extractContentText(msg.content));
           }
@@ -191263,103 +191335,140 @@ const eventSearchText = (node2) => {
       break;
     }
     case "tool": {
-      const toolEvent = event;
-      if (toolEvent.view?.title) {
-        texts.push(toolEvent.view.title);
+      if (event.function) {
+        texts.push(event.function);
       }
-      if (toolEvent.function) {
-        texts.push(toolEvent.function);
+      if (event.arguments) {
+        texts.push(JSON.stringify(event.arguments));
       }
-      if (toolEvent.arguments) {
-        texts.push(JSON.stringify(toolEvent.arguments));
-      }
-      if (toolEvent.result) {
-        if (typeof toolEvent.result === "string") {
-          texts.push(toolEvent.result);
+      if (event.result) {
+        if (typeof event.result === "string") {
+          texts.push(event.result);
         } else {
-          texts.push(JSON.stringify(toolEvent.result));
+          texts.push(JSON.stringify(event.result));
         }
       }
-      if (toolEvent.error?.message) {
-        texts.push(toolEvent.error.message);
+      if (event.error?.message) {
+        texts.push(event.error.message);
       }
       break;
     }
     case "error": {
-      const errorEvent = event;
-      if (errorEvent.error?.message) {
-        texts.push(errorEvent.error.message);
+      if (event.error?.message) {
+        texts.push(event.error.message);
       }
-      if (errorEvent.error?.traceback) {
-        texts.push(errorEvent.error.traceback);
+      if (event.error?.traceback) {
+        texts.push(event.error.traceback);
       }
       break;
     }
     case "logger": {
-      const loggerEvent = event;
-      if (loggerEvent.message?.message) {
-        texts.push(loggerEvent.message.message);
+      if (event.message?.message) {
+        texts.push(event.message.message);
       }
-      if (loggerEvent.message?.filename) {
-        texts.push(loggerEvent.message.filename);
+      if (event.message?.filename) {
+        texts.push(event.message.filename);
       }
       break;
     }
     case "info": {
-      const infoEvent = event;
-      if (infoEvent.source) {
-        texts.push(infoEvent.source);
-      }
-      if (infoEvent.data) {
-        if (typeof infoEvent.data === "string") {
-          texts.push(infoEvent.data);
+      if (event.data) {
+        if (typeof event.data === "string") {
+          texts.push(event.data);
         } else {
-          texts.push(JSON.stringify(infoEvent.data));
+          texts.push(JSON.stringify(event.data));
         }
       }
       break;
     }
     case "compaction": {
-      const compactionEvent = event;
-      if (compactionEvent.source) {
-        texts.push(compactionEvent.source);
+      if (event.source) {
+        texts.push(event.source);
       }
-      texts.push(JSON.stringify(compactionEvent));
-      break;
-    }
-    case "step": {
-      const stepEvent = event;
-      if (stepEvent.name) {
-        texts.push(stepEvent.name);
-      }
-      if (stepEvent.type) {
-        texts.push(stepEvent.type);
-      }
+      texts.push(JSON.stringify(event));
       break;
     }
     case "subtask": {
-      const subtaskEvent = event;
-      if (subtaskEvent.name) {
-        texts.push(subtaskEvent.name);
+      if (event.input) {
+        texts.push(JSON.stringify(event.input));
       }
-      if (subtaskEvent.type) {
-        texts.push(subtaskEvent.type);
-      }
-      if (subtaskEvent.input) {
-        texts.push(JSON.stringify(subtaskEvent.input));
-      }
-      if (subtaskEvent.result) {
-        texts.push(JSON.stringify(subtaskEvent.result));
+      if (event.result) {
+        texts.push(JSON.stringify(event.result));
       }
       break;
     }
-    case "span_begin": {
-      const spanEvent = event;
-      if (spanEvent.name) {
-        texts.push(spanEvent.name);
+    case "score": {
+      if (event.score.answer) {
+        texts.push(event.score.answer);
       }
-      if (spanEvent.type) {
-        texts.push(spanEvent.type);
+      if (event.score.explanation) {
+        texts.push(event.score.explanation);
+      }
+      if (event.target) {
+        const target2 = Array.isArray(event.target) ? event.target.join("\n") : event.target;
+        texts.push(target2);
+      }
+      if (event.score.value != null) {
+        texts.push(
+          typeof event.score.value === "object" ? JSON.stringify(event.score.value) : String(event.score.value)
+        );
+      }
+      break;
+    }
+    case "score_edit": {
+      if (event.edit.answer) {
+        texts.push(event.edit.answer);
+      }
+      if (event.edit.explanation) {
+        texts.push(event.edit.explanation);
+      }
+      if (event.edit.provenance) {
+        if (event.edit.provenance.author) {
+          texts.push(event.edit.provenance.author);
+        }
+        if (event.edit.provenance.reason) {
+          texts.push(event.edit.provenance.reason);
+        }
+      }
+      break;
+    }
+    case "sample_init": {
+      if (event.sample.target) {
+        const target2 = Array.isArray(event.sample.target) ? event.sample.target.join("\n") : event.sample.target;
+        texts.push(target2);
+      }
+      break;
+    }
+    case "sample_limit": {
+      if (event.message) {
+        texts.push(event.message);
+      }
+      break;
+    }
+    case "input": {
+      if (event.input_ansi) {
+        texts.push(event.input_ansi);
+      }
+      break;
+    }
+    case "approval": {
+      if (event.explanation) {
+        texts.push(event.explanation);
+      }
+      break;
+    }
+    case "sandbox": {
+      if (event.cmd) {
+        texts.push(event.cmd);
+      }
+      if (event.file) {
+        texts.push(event.file);
+      }
+      if (event.input) {
+        texts.push(event.input);
+      }
+      if (event.output) {
+        texts.push(event.output);
       }
       break;
     }
@@ -191377,21 +191486,19 @@ const extractContentText = (content2) => {
         texts.push(item2.text);
         break;
       case "reasoning": {
-        const reasoning2 = item2;
-        if (reasoning2.reasoning) {
-          texts.push(reasoning2.reasoning);
-        } else if (reasoning2.summary) {
-          texts.push(reasoning2.summary);
+        if (item2.reasoning) {
+          texts.push(item2.reasoning);
+        } else if (item2.summary) {
+          texts.push(item2.summary);
         }
         break;
       }
       case "tool_use": {
-        const toolUse = item2;
-        if (toolUse.name) {
-          texts.push(toolUse.name);
+        if (item2.name) {
+          texts.push(item2.name);
         }
-        if (toolUse.arguments) {
-          texts.push(JSON.stringify(toolUse.arguments));
+        if (item2.arguments) {
+          texts.push(JSON.stringify(item2.arguments));
         }
         break;
       }
@@ -191538,13 +191645,12 @@ const CompactionEventView = ({
     data["tokens_after"] = event.tokens_after;
   }
   data = { ...data, ...event.metadata || {} };
-  const source2 = event.source && event.source !== "inspect" ? event.source : "";
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     EventPanel,
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      title: formatTitle("Compaction" + source2, void 0, event.working_start),
+      title: formatTitle(eventTitle(event), void 0, event.working_start),
       className: className2,
       subTitle: formatDateTime(new Date(event.timestamp)),
       icon: ApplicationIcons.info,
@@ -192948,10 +193054,9 @@ const SampleDetailComponent = ({
   const sample2 = reactExports.useMemo(() => {
     return sampleData.getSelectedSample();
   }, [sampleData]);
+  const sampleStatus2 = useStore((state) => state.sample.sampleStatus);
   const sampleMatchesRequest = reactExports.useMemo(() => {
-    if (!sample2 || !sampleId || !epoch) {
-      return true;
-    }
+    if (!sample2 || !sampleId || !epoch) return false;
     return String(sample2.id) === sampleId && sample2.epoch === parseInt(epoch, 10);
   }, [sample2, sampleId, epoch]);
   const showFind = useStore((state) => state.app.showFind);
@@ -193064,7 +193169,7 @@ const SampleDetailComponent = ({
           ] })
         }
       ),
-      sampleMatchesRequest && /* @__PURE__ */ jsxRuntimeExports.jsx(
+      sampleStatus2 !== "loading" && sample2 && sampleMatchesRequest && /* @__PURE__ */ jsxRuntimeExports.jsx(
         InlineSampleComponent,
         {
           showActivity: false,
@@ -193813,20 +193918,26 @@ const ModelCard = ({ evalSpec }) => {
     }) }) })
   ] });
 };
-const wrapper$1 = "_wrapper_14r3b_1";
-const col2 = "_col2_14r3b_16";
+const cardsContainer = "_cardsContainer_d0qjo_1";
 const styles$l = {
-  wrapper: wrapper$1,
-  col2
+  cardsContainer
 };
-const kUsageCardBodyId = "usage-card-body";
+const kModelUsageCardBodyId = "model-usage-card-body";
+const kRoleUsageCardBodyId = "role-usage-card-body";
 const UsageCard = ({ stats }) => {
   if (!stats) {
     return null;
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Usage" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: kUsageCardBodyId, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$l.wrapper, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$l.col2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ModelTokenTable, { model_usage: stats.model_usage }) }) }) })
+  const hasRoleUsage = stats.role_usage && Object.keys(stats.role_usage).length > 0;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$l.cardsContainer, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Model Usage" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: kModelUsageCardBodyId, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ModelTokenTable, { model_usage: stats.model_usage }) })
+    ] }),
+    hasRoleUsage && /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Role Usage" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: kRoleUsageCardBodyId, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ModelTokenTable, { model_usage: stats.role_usage }) })
+    ] })
   ] });
 };
 const useModelsTab = (evalSpec, evalStats, evalStatus) => {
