@@ -16932,22 +16932,11 @@ function resolvePath(to2, fromPathname = "/") {
   } = typeof to2 === "string" ? parsePath$1(to2) : to2;
   let pathname;
   if (toPathname) {
-    if (isAbsoluteUrl(toPathname)) {
-      pathname = toPathname;
+    toPathname = toPathname.replace(/\/\/+/g, "/");
+    if (toPathname.startsWith("/")) {
+      pathname = resolvePathname(toPathname.substring(1), "/");
     } else {
-      if (toPathname.includes("//")) {
-        let oldPathname = toPathname;
-        toPathname = toPathname.replace(/\/\/+/g, "/");
-        warning(
-          false,
-          `Pathnames cannot have embedded double slashes - normalizing ${oldPathname} -> ${toPathname}`
-        );
-      }
-      if (toPathname.startsWith("/")) {
-        pathname = resolvePathname(toPathname.substring(1), "/");
-      } else {
-        pathname = resolvePathname(toPathname, fromPathname);
-      }
+      pathname = resolvePathname(toPathname, fromPathname);
     }
   } else {
     pathname = fromPathname;
@@ -22320,7 +22309,15 @@ function PrefetchPageLinksImpl({
   return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, dataHrefs.map((href) => /* @__PURE__ */ reactExports.createElement("link", { key: href, rel: "prefetch", as: "fetch", href, ...linkProps })), moduleHrefs.map((href) => /* @__PURE__ */ reactExports.createElement("link", { key: href, rel: "modulepreload", href, ...linkProps })), keyedPrefetchLinks.map(({ key: key2, link: link2 }) => (
     // these don't spread `linkProps` because they are full link descriptors
     // already with their own props
-    /* @__PURE__ */ reactExports.createElement("link", { key: key2, nonce: linkProps.nonce, ...link2 })
+    /* @__PURE__ */ reactExports.createElement(
+      "link",
+      {
+        key: key2,
+        nonce: linkProps.nonce,
+        ...link2,
+        crossOrigin: link2.crossOrigin ?? linkProps.crossOrigin
+      }
+    )
   )));
 }
 function mergeRefs(...refs) {
@@ -22338,7 +22335,7 @@ var isBrowser2 = typeof window !== "undefined" && typeof window.document !== "un
 try {
   if (isBrowser2) {
     window.__reactRouterVersion = // @ts-expect-error
-    "7.12.0";
+    "7.13.0";
   }
 } catch (e) {
 }
@@ -40536,7 +40533,13 @@ function linkify(state, silent) {
   if (!link2) return false;
   let url = link2.url;
   if (url.length <= proto.length) return false;
-  url = url.replace(/\*+$/, "");
+  let urlEnd = url.length;
+  while (urlEnd > 0 && url.charCodeAt(urlEnd - 1) === 42) {
+    urlEnd--;
+  }
+  if (urlEnd !== url.length) {
+    url = url.slice(0, urlEnd);
+  }
   const fullUrl = state.md.normalizeLink(url);
   if (!state.md.validateLink(fullUrl)) return false;
   if (!silent) {
@@ -111900,6 +111903,17 @@ const isCitationWithRange = (citation) => Array.isArray(citation.cited_text);
 const isOpenRouterReasoning = (text2) => {
   return text2.startsWith("[{'format'");
 };
+const substituteToolCallContent = (content2, args2) => {
+  const replace2 = (text2) => text2.replace(
+    /\{\{(\w+)\}\}/g,
+    (match2, key2) => Object.hasOwn(args2, key2) ? String(args2[key2]) : match2
+  );
+  return {
+    ...content2,
+    title: content2.title ? replace2(content2.title) : content2.title,
+    content: replace2(content2.content)
+  };
+};
 const kToolTodoContentType = "agent/todo-list";
 const resolveToolInput = (fn3, toolArgs) => {
   const toolName = fn3;
@@ -112302,7 +112316,10 @@ const MessageContents = ({
             contentType,
             output: resolvedToolOutput,
             collapsible: false,
-            view: tool_call.view ? tool_call.view : void 0
+            view: tool_call.view ? substituteToolCallContent(
+              tool_call.view,
+              tool_call.arguments
+            ) : void 0
           },
           `tool-call-${idx}`
         );
@@ -118700,7 +118717,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.183-51-gc5feaeac7" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.183-88-g9c08a61c1" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -180891,8 +180908,16 @@ const eventTitle = (event) => {
   switch (event.event) {
     case "model":
       return event.role ? `Model Call (${event.role}): ${event.model}` : `Model Call: ${event.model}`;
-    case "tool":
-      return `Tool: ${event.view?.title || event.function}`;
+    case "tool": {
+      let title2 = event.view?.title || event.function;
+      if (event.view?.title) {
+        title2 = title2.replace(
+          /\{\{(\w+)\}\}/g,
+          (match2, key2) => Object.hasOwn(event.arguments, key2) ? String(event.arguments[key2]) : match2
+        );
+      }
+      return `Tool: ${title2}`;
+    }
     case "error":
       return "Error";
     case "logger":
@@ -191110,7 +191135,10 @@ const ToolEventView = ({
             contentType,
             output: event.error?.message || event.result,
             mode: "compact",
-            view: event.view ? event.view : void 0
+            view: event.view ? substituteToolCallContent(
+              event.view,
+              event.arguments
+            ) : void 0
           }
         ),
         lastModelNode ? /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -191350,6 +191378,13 @@ const eventSearchText = (node2) => {
       }
       if (event.error?.message) {
         texts.push(event.error.message);
+      }
+      if (event.view?.content) {
+        const substituted = substituteToolCallContent(
+          event.view,
+          event.arguments
+        );
+        texts.push(substituted.content);
       }
       break;
     }
