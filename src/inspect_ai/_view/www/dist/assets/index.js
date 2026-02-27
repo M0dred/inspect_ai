@@ -118690,7 +118690,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.183-44-gaeaf1ce70" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.183-45-ga0c9924d7" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -180897,6 +180897,9 @@ const eventTitle = (event) => {
     }
     case "step": {
       const e = event;
+      if (e.name === kSandboxSignalName) return "Sandbox Events";
+      if (e.name === "init") return "Init";
+      if (e.name === "sample_init") return "Sample Init";
       return e.type ? `${e.type}: ${e.name}` : `Step: ${e.name}`;
     }
     case "subtask": {
@@ -180905,6 +180908,9 @@ const eventTitle = (event) => {
     }
     case "span_begin": {
       const e = event;
+      if (e.span_id === kSandboxSignalName) return "Sandbox Events";
+      if (e.name === "init") return "Init";
+      if (e.name === "sample_init") return "Sample Init";
       return e.type ? `${e.type}: ${e.name}` : `Step: ${e.name}`;
     }
     case "score":
@@ -190907,7 +190913,7 @@ const StepEventView = ({
 }) => {
   const event = eventNode.event;
   const descriptor = stepDescriptor(event);
-  const title2 = descriptor.name || eventTitle(event);
+  const title2 = eventTitle(event);
   const text2 = summarize$1(children2);
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     EventPanel,
@@ -190955,68 +190961,16 @@ const stepDescriptor = (event) => {
   const rootStepDescriptor = {
     endSpace: true
   };
-  if (event.type === "solver") {
-    switch (event.name) {
-      case "chain_of_thought":
-        return {
-          ...rootStepDescriptor
-        };
-      case "generate":
-        return {
-          ...rootStepDescriptor
-        };
-      case "self_critique":
-        return {
-          ...rootStepDescriptor
-        };
-      case "system_message":
-        return {
-          ...rootStepDescriptor
-        };
-      case "use_tools":
-        return {
-          ...rootStepDescriptor
-        };
-      case "multiple_choice":
-        return {
-          ...rootStepDescriptor
-        };
-      default:
-        return {
-          ...rootStepDescriptor
-        };
-    }
-  } else if (event.type === "scorer") {
-    return {
-      ...rootStepDescriptor
-    };
+  if (event.type === "solver" || event.type === "scorer") {
+    return { ...rootStepDescriptor };
   } else if (event.event === "step") {
-    if (event.name === kSandboxSignalName) {
-      return {
-        ...rootStepDescriptor,
-        name: "Sandbox Events"
-      };
-    } else if (event.name === "init") {
-      return {
-        ...rootStepDescriptor,
-        name: "Init"
-      };
-    } else {
-      return {
-        ...rootStepDescriptor
-      };
-    }
+    return { ...rootStepDescriptor };
   } else {
     switch (event.name) {
       case "sample_init":
-        return {
-          ...rootStepDescriptor,
-          name: "Sample Init"
-        };
+        return { ...rootStepDescriptor };
       default:
-        return {
-          endSpace: false
-        };
+        return { endSpace: false };
     }
   }
 };
@@ -191283,7 +191237,7 @@ const SpanEventView = ({
 }) => {
   const event = eventNode.event;
   const descriptor = spanDescriptor(event);
-  const title2 = descriptor.name || eventTitle(event);
+  const title2 = eventTitle(event);
   const text2 = reactExports.useMemo(() => summarize(children2), [children2]);
   const childIds = reactExports.useMemo(() => children2.map((child) => child.id), [children2]);
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -191332,68 +191286,16 @@ const spanDescriptor = (event) => {
   const rootStepDescriptor = {
     endSpace: true
   };
-  if (event.type === "solver") {
-    switch (event.name) {
-      case "chain_of_thought":
-        return {
-          ...rootStepDescriptor
-        };
-      case "generate":
-        return {
-          ...rootStepDescriptor
-        };
-      case "self_critique":
-        return {
-          ...rootStepDescriptor
-        };
-      case "system_message":
-        return {
-          ...rootStepDescriptor
-        };
-      case "use_tools":
-        return {
-          ...rootStepDescriptor
-        };
-      case "multiple_choice":
-        return {
-          ...rootStepDescriptor
-        };
-      default:
-        return {
-          ...rootStepDescriptor
-        };
-    }
-  } else if (event.type === "scorer") {
-    return {
-      ...rootStepDescriptor
-    };
+  if (event.type === "solver" || event.type === "scorer") {
+    return { ...rootStepDescriptor };
   } else if (event.event === "span_begin") {
-    if (event.span_id === kSandboxSignalName) {
-      return {
-        ...rootStepDescriptor,
-        name: "Sandbox Events"
-      };
-    } else if (event.name === "init") {
-      return {
-        ...rootStepDescriptor,
-        name: "Init"
-      };
-    } else {
-      return {
-        ...rootStepDescriptor
-      };
-    }
+    return { ...rootStepDescriptor };
   } else {
     switch (event.name) {
       case "sample_init":
-        return {
-          ...rootStepDescriptor,
-          name: "Sample Init"
-        };
+        return { ...rootStepDescriptor };
       default:
-        return {
-          endSpace: false
-        };
+        return { endSpace: false };
     }
   }
 };
