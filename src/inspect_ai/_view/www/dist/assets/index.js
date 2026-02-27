@@ -28815,7 +28815,7 @@ const createLogsSlice = (set3, get2, _store) => {
         if (!isInFileList) {
           if (state.replicationService?.isReplicating() && !state.app.singleFileMode) {
             await state.logsActions.syncLogs();
-            const logHandle = state.logs.logs.find(
+            const logHandle = get2().logs.logs.find(
               (val) => val.name.endsWith(logFile)
             );
             if (!logHandle) {
