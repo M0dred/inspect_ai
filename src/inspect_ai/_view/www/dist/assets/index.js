@@ -118690,7 +118690,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.183-40-ga5eb54b15" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.183-44-gaeaf1ce70" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -180856,6 +180856,94 @@ const EventRow = ({
   const card2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("card", styles$Q.contents), children: contentEl });
   return card2;
 };
+const sampleLimitTitles = {
+  custom: "Custom Limit Exceeded",
+  time: "Time Limit Exceeded",
+  message: "Message Limit Exceeded",
+  token: "Token Limit Exceeded",
+  operator: "Operator Canceled",
+  working: "Execution Time Limit Exceeded",
+  cost: "Cost Limit Exceeded"
+};
+const approvalDecisionLabels = {
+  approve: "Approved",
+  reject: "Rejected",
+  terminate: "Terminated",
+  escalate: "Escalated",
+  modify: "Modified"
+};
+const eventTitle = (event) => {
+  switch (event.event) {
+    case "model": {
+      const e = event;
+      return e.role ? `Model Call (${e.role}): ${e.model}` : `Model Call: ${e.model}`;
+    }
+    case "tool": {
+      const e = event;
+      return `Tool: ${e.view?.title || e.function}`;
+    }
+    case "error":
+      return "Error";
+    case "logger":
+      return event.message.level;
+    case "info": {
+      const e = event;
+      return "Info" + (e.source ? ": " + e.source : "");
+    }
+    case "compaction": {
+      const e = event;
+      const source2 = e.source && e.source !== "inspect" ? e.source : "";
+      return "Compaction" + source2;
+    }
+    case "step": {
+      const e = event;
+      return e.type ? `${e.type}: ${e.name}` : `Step: ${e.name}`;
+    }
+    case "subtask": {
+      const e = event;
+      return e.type === "fork" ? `Fork: ${e.name}` : `Subtask: ${e.name}`;
+    }
+    case "span_begin": {
+      const e = event;
+      return e.type ? `${e.type}: ${e.name}` : `Step: ${e.name}`;
+    }
+    case "score":
+      return (event.intermediate ? "Intermediate " : "") + "Score";
+    case "score_edit":
+      return "Edit Score";
+    case "sample_init":
+      return "Sample";
+    case "sample_limit":
+      return sampleLimitTitles[event.type] ?? event.type;
+    case "input":
+      return "Input";
+    case "approval":
+      return approvalDecisionLabels[event.decision] ?? event.decision;
+    case "sandbox":
+      return `Sandbox: ${event.action}`;
+    default:
+      return "";
+  }
+};
+const formatTiming = (timestamp2, working_start) => {
+  if (working_start) {
+    return `${formatDateTime(new Date(timestamp2))}
+@ working time: ${formatTime$1(working_start)}`;
+  } else {
+    return formatDateTime(new Date(timestamp2));
+  }
+};
+const formatTitle = (title2, total_tokens, working_start) => {
+  const subItems = [];
+  if (total_tokens) {
+    subItems.push(`${formatNumber(total_tokens)} tokens`);
+  }
+  if (working_start) {
+    subItems.push(`${formatTime$1(working_start)}`);
+  }
+  const subtitle = subItems.length > 0 ? ` (${subItems.join(", ")})` : "";
+  return `${title2}${subtitle}`;
+};
 const ApprovalEventView = ({
   eventNode,
   className: className2
@@ -180864,28 +180952,12 @@ const ApprovalEventView = ({
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     EventRow,
     {
-      title: decisionLabel(event.decision),
+      title: eventTitle(event),
       icon: decisionIcon(event.decision),
       className: className2,
       children: event.explanation || ""
     }
   );
-};
-const decisionLabel = (decision) => {
-  switch (decision) {
-    case "approve":
-      return "Approved";
-    case "reject":
-      return "Rejected";
-    case "terminate":
-      return "Terminated";
-    case "escalate":
-      return "Escalated";
-    case "modify":
-      return "Modified";
-    default:
-      return decision;
-  }
 };
 const decisionIcon = (decision) => {
   switch (decision) {
@@ -181283,25 +181355,6 @@ const EventPanel = ({
 function hasDataDefault(node2) {
   return reactExports.isValidElement(node2) && node2.props !== null && typeof node2.props === "object" && "data-default" in node2.props;
 }
-const formatTiming = (timestamp2, working_start) => {
-  if (working_start) {
-    return `${formatDateTime(new Date(timestamp2))}
-@ working time: ${formatTime$1(working_start)}`;
-  } else {
-    return formatDateTime(new Date(timestamp2));
-  }
-};
-const formatTitle = (title2, total_tokens, working_start) => {
-  const subItems = [];
-  if (total_tokens) {
-    subItems.push(`${formatNumber(total_tokens)} tokens`);
-  }
-  if (working_start) {
-    subItems.push(`${formatTime$1(working_start)}`);
-  }
-  const subtitle = subItems.length > 0 ? ` (${subItems.join(", ")})` : "";
-  return `${title2}${subtitle}`;
-};
 const ErrorEventView = ({
   eventNode,
   className: className2
@@ -181312,7 +181365,7 @@ const ErrorEventView = ({
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      title: formatTitle("Error", void 0, event.working_start),
+      title: formatTitle(eventTitle(event), void 0, event.working_start),
       className: className2,
       subTitle: formatDateTime(new Date(event.timestamp)),
       icon: ApplicationIcons.error,
@@ -181358,11 +181411,7 @@ const InfoEventView = ({
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      title: formatTitle(
-        "Info" + (event.source ? ": " + event.source : ""),
-        void 0,
-        event.working_start
-      ),
+      title: formatTitle(eventTitle(event), void 0, event.working_start),
       className: className2,
       subTitle: formatDateTime(new Date(event.timestamp)),
       icon: ApplicationIcons.info,
@@ -181380,7 +181429,7 @@ const InputEventView = ({
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      title: formatTitle("Input", void 0, event.working_start),
+      title: formatTitle(eventTitle(event), void 0, event.working_start),
       className: className2,
       subTitle: formatDateTime(new Date(event.timestamp)),
       icon: ApplicationIcons.input,
@@ -181410,7 +181459,7 @@ const LoggerEventView = ({
     EventRow,
     {
       className: className2,
-      title: event.message.level,
+      title: eventTitle(event),
       icon: ApplicationIcons.logging[event.message.level.toLowerCase()],
       children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-base", styles$L.grid), children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-smaller"), children: obj !== void 0 && obj !== null ? /* @__PURE__ */ jsxRuntimeExports.jsx(MetaDataGrid, { entries: obj }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -181621,7 +181670,7 @@ const ModelEventView = ({
       break;
     }
   }
-  const panelTitle = event.role ? `Model Call (${event.role}): ${event.model}` : `Model Call: ${event.model}`;
+  const panelTitle = eventTitle(event);
   const turnLabel2 = context?.turnInfo ? `turn ${context.turnInfo.turnNumber}/${context.turnInfo.totalTurns}` : void 0;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     EventPanel,
@@ -181804,7 +181853,7 @@ const SampleInitEventView = ({
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
       className: className2,
-      title: formatTitle("Sample", void 0, event.working_start),
+      title: formatTitle(eventTitle(event), void 0, event.working_start),
       icon: ApplicationIcons.sample,
       subTitle: formatDateTime(new Date(event.timestamp)),
       children: [
@@ -181846,24 +181895,6 @@ const SampleLimitEventView = ({
   eventNode,
   className: className2
 }) => {
-  const resolve_title = (type) => {
-    switch (type) {
-      case "custom":
-        return "Custom Limit Exceeded";
-      case "time":
-        return "Time Limit Exceeded";
-      case "message":
-        return "Message Limit Exceeded";
-      case "token":
-        return "Token Limit Exceeded";
-      case "operator":
-        return "Operator Canceled";
-      case "working":
-        return "Execution Time Limit Exceeded";
-      case "cost":
-        return "Cost Limit Exceeded";
-    }
-  };
   const resolve_icon = (type) => {
     switch (type) {
       case "custom":
@@ -181882,14 +181913,17 @@ const SampleLimitEventView = ({
         return ApplicationIcons.limits.cost;
     }
   };
-  const title2 = resolve_title(eventNode.event.type);
   const icon2 = resolve_icon(eventNode.event.type);
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     EventPanel,
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      title: formatTitle(title2, void 0, eventNode.event.working_start),
+      title: formatTitle(
+        eventTitle(eventNode.event),
+        void 0,
+        eventNode.event.working_start
+      ),
       subTitle: formatDateTime(new Date(eventNode.event.timestamp)),
       icon: icon2,
       className: className2,
@@ -181920,11 +181954,7 @@ const SandboxEventView = ({
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
       className: className2,
-      title: formatTitle(
-        `Sandbox: ${event.action}`,
-        void 0,
-        event.working_start
-      ),
+      title: formatTitle(eventTitle(event), void 0, event.working_start),
       icon: ApplicationIcons.sandbox,
       subTitle: formatTiming(event.timestamp, event.working_start),
       children: event.action === "exec" ? /* @__PURE__ */ jsxRuntimeExports.jsx(ExecView, { id: `${eventNode.id}-exec`, event }) : event.action === "read_file" ? /* @__PURE__ */ jsxRuntimeExports.jsx(ReadFileView, { id: `${eventNode.id}-read-file`, event }) : /* @__PURE__ */ jsxRuntimeExports.jsx(WriteFileView, { id: `${eventNode.id}-write-file`, event })
@@ -182009,11 +182039,7 @@ const ScoreEventView = ({
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      title: formatTitle(
-        (event.intermediate ? "Intermediate " : "") + "Score",
-        void 0,
-        event.working_start
-      ),
+      title: formatTitle(eventTitle(event), void 0, event.working_start),
       className: clsx(className2, "text-size-small"),
       subTitle: formatDateTime(new Date(event.timestamp)),
       icon: ApplicationIcons.scorer,
@@ -190881,7 +190907,7 @@ const StepEventView = ({
 }) => {
   const event = eventNode.event;
   const descriptor = stepDescriptor(event);
-  const title2 = descriptor.name || `${event.type ? event.type + ": " : "Step: "}${event.name}`;
+  const title2 = descriptor.name || eventTitle(event);
   const text2 = summarize$1(children2);
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     EventPanel,
@@ -191030,18 +191056,13 @@ const SubtaskEventView = ({
       )
     );
   }
-  const type = event.type === "fork" ? "Fork" : "Subtask";
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     EventPanel,
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
       className: className2,
-      title: formatTitle(
-        `${type}: ${event.name}`,
-        void 0,
-        event.working_time
-      ),
+      title: formatTitle(eventTitle(event), void 0, event.working_time),
       subTitle: formatTiming(event.timestamp, event.working_start),
       childIds: children2.map((child) => child.id),
       collapseControl: "bottom",
@@ -191110,13 +191131,12 @@ const ToolEventView = ({
       lastModelNode: lastModelNode2
     };
   }, [children2]);
-  const title2 = `Tool: ${event.view?.title || event.function}`;
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     EventPanel,
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      title: formatTitle(title2, void 0, event.working_time),
+      title: formatTitle(eventTitle(event), void 0, event.working_time),
       className: className2,
       subTitle: formatTiming(event.timestamp, event.working_start),
       icon: ApplicationIcons.solvers.use_tools,
@@ -191185,7 +191205,7 @@ const ScoreEditEventView = ({
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      title: formatTitle("Edit Score", void 0, event.working_start),
+      title: formatTitle(eventTitle(event), void 0, event.working_start),
       className: clsx(className2, "text-size-small"),
       subTitle: subtitle,
       collapsibleContent: true,
@@ -191263,7 +191283,7 @@ const SpanEventView = ({
 }) => {
   const event = eventNode.event;
   const descriptor = spanDescriptor(event);
-  const title2 = descriptor.name || `${event.type ? event.type + ": " : "Step: "}${event.name}`;
+  const title2 = descriptor.name || eventTitle(event);
   const text2 = reactExports.useMemo(() => summarize(children2), [children2]);
   const childIds = reactExports.useMemo(() => children2.map((child) => child.id), [children2]);
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -191390,12 +191410,13 @@ const styles$y = {
 const eventSearchText = (node2) => {
   const texts = [];
   const event = node2.event;
+  const title2 = eventTitle(event);
+  if (title2) {
+    texts.push(title2);
+  }
   switch (event.event) {
     case "model": {
       const modelEvent = event;
-      if (modelEvent.model) {
-        texts.push(modelEvent.model);
-      }
       if (modelEvent.output?.choices) {
         for (const choice of modelEvent.output.choices) {
           texts.push(...extractContentText(choice.message.content));
@@ -191412,9 +191433,6 @@ const eventSearchText = (node2) => {
     }
     case "tool": {
       const toolEvent = event;
-      if (toolEvent.view?.title) {
-        texts.push(toolEvent.view.title);
-      }
       if (toolEvent.function) {
         texts.push(toolEvent.function);
       }
@@ -191455,9 +191473,6 @@ const eventSearchText = (node2) => {
     }
     case "info": {
       const infoEvent = event;
-      if (infoEvent.source) {
-        texts.push(infoEvent.source);
-      }
       if (infoEvent.data) {
         if (typeof infoEvent.data === "string") {
           texts.push(infoEvent.data);
@@ -191475,24 +191490,8 @@ const eventSearchText = (node2) => {
       texts.push(JSON.stringify(compactionEvent));
       break;
     }
-    case "step": {
-      const stepEvent = event;
-      if (stepEvent.name) {
-        texts.push(stepEvent.name);
-      }
-      if (stepEvent.type) {
-        texts.push(stepEvent.type);
-      }
-      break;
-    }
     case "subtask": {
       const subtaskEvent = event;
-      if (subtaskEvent.name) {
-        texts.push(subtaskEvent.name);
-      }
-      if (subtaskEvent.type) {
-        texts.push(subtaskEvent.type);
-      }
       if (subtaskEvent.input) {
         texts.push(JSON.stringify(subtaskEvent.input));
       }
@@ -191501,13 +191500,85 @@ const eventSearchText = (node2) => {
       }
       break;
     }
-    case "span_begin": {
-      const spanEvent = event;
-      if (spanEvent.name) {
-        texts.push(spanEvent.name);
+    case "score": {
+      const scoreEvent = event;
+      if (scoreEvent.score.answer) {
+        texts.push(scoreEvent.score.answer);
       }
-      if (spanEvent.type) {
-        texts.push(spanEvent.type);
+      if (scoreEvent.score.explanation) {
+        texts.push(scoreEvent.score.explanation);
+      }
+      if (scoreEvent.target) {
+        const target2 = Array.isArray(scoreEvent.target) ? scoreEvent.target.join("\n") : scoreEvent.target;
+        texts.push(target2);
+      }
+      if (scoreEvent.score.value != null) {
+        texts.push(
+          typeof scoreEvent.score.value === "object" ? JSON.stringify(scoreEvent.score.value) : String(scoreEvent.score.value)
+        );
+      }
+      break;
+    }
+    case "score_edit": {
+      const scoreEditEvent = event;
+      if (scoreEditEvent.edit.answer) {
+        texts.push(scoreEditEvent.edit.answer);
+      }
+      if (scoreEditEvent.edit.explanation) {
+        texts.push(scoreEditEvent.edit.explanation);
+      }
+      if (scoreEditEvent.edit.provenance) {
+        if (scoreEditEvent.edit.provenance.author) {
+          texts.push(scoreEditEvent.edit.provenance.author);
+        }
+        if (scoreEditEvent.edit.provenance.reason) {
+          texts.push(scoreEditEvent.edit.provenance.reason);
+        }
+      }
+      break;
+    }
+    case "sample_init": {
+      const sampleInitEvent = event;
+      if (sampleInitEvent.sample.target) {
+        const target2 = Array.isArray(sampleInitEvent.sample.target) ? sampleInitEvent.sample.target.join("\n") : sampleInitEvent.sample.target;
+        texts.push(target2);
+      }
+      break;
+    }
+    case "sample_limit": {
+      const sampleLimitEvent = event;
+      if (sampleLimitEvent.message) {
+        texts.push(sampleLimitEvent.message);
+      }
+      break;
+    }
+    case "input": {
+      const inputEvent = event;
+      if (inputEvent.input_ansi) {
+        texts.push(inputEvent.input_ansi);
+      }
+      break;
+    }
+    case "approval": {
+      const approvalEvent = event;
+      if (approvalEvent.explanation) {
+        texts.push(approvalEvent.explanation);
+      }
+      break;
+    }
+    case "sandbox": {
+      const sandboxEvent = event;
+      if (sandboxEvent.cmd) {
+        texts.push(sandboxEvent.cmd);
+      }
+      if (sandboxEvent.file) {
+        texts.push(sandboxEvent.file);
+      }
+      if (sandboxEvent.input) {
+        texts.push(sandboxEvent.input);
+      }
+      if (sandboxEvent.output) {
+        texts.push(sandboxEvent.output);
       }
       break;
     }
@@ -191686,13 +191757,12 @@ const CompactionEventView = ({
     data["tokens_after"] = event.tokens_after;
   }
   data = { ...data, ...event.metadata || {} };
-  const source2 = event.source && event.source !== "inspect" ? event.source : "";
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     EventPanel,
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      title: formatTitle("Compaction" + source2, void 0, event.working_start),
+      title: formatTitle(eventTitle(event), void 0, event.working_start),
       className: className2,
       subTitle: formatDateTime(new Date(event.timestamp)),
       icon: ApplicationIcons.info,
