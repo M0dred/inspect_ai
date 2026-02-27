@@ -118690,7 +118690,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.183-45-ga0c9924d7" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.183-46-g3b67d6c44" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -180874,45 +180874,32 @@ const approvalDecisionLabels = {
 };
 const eventTitle = (event) => {
   switch (event.event) {
-    case "model": {
-      const e = event;
-      return e.role ? `Model Call (${e.role}): ${e.model}` : `Model Call: ${e.model}`;
-    }
-    case "tool": {
-      const e = event;
-      return `Tool: ${e.view?.title || e.function}`;
-    }
+    case "model":
+      return event.role ? `Model Call (${event.role}): ${event.model}` : `Model Call: ${event.model}`;
+    case "tool":
+      return `Tool: ${event.view?.title || event.function}`;
     case "error":
       return "Error";
     case "logger":
       return event.message.level;
-    case "info": {
-      const e = event;
-      return "Info" + (e.source ? ": " + e.source : "");
-    }
+    case "info":
+      return "Info" + (event.source ? ": " + event.source : "");
     case "compaction": {
-      const e = event;
-      const source2 = e.source && e.source !== "inspect" ? e.source : "";
+      const source2 = event.source && event.source !== "inspect" ? event.source : "";
       return "Compaction" + source2;
     }
-    case "step": {
-      const e = event;
-      if (e.name === kSandboxSignalName) return "Sandbox Events";
-      if (e.name === "init") return "Init";
-      if (e.name === "sample_init") return "Sample Init";
-      return e.type ? `${e.type}: ${e.name}` : `Step: ${e.name}`;
-    }
-    case "subtask": {
-      const e = event;
-      return e.type === "fork" ? `Fork: ${e.name}` : `Subtask: ${e.name}`;
-    }
-    case "span_begin": {
-      const e = event;
-      if (e.span_id === kSandboxSignalName) return "Sandbox Events";
-      if (e.name === "init") return "Init";
-      if (e.name === "sample_init") return "Sample Init";
-      return e.type ? `${e.type}: ${e.name}` : `Step: ${e.name}`;
-    }
+    case "step":
+      if (event.name === kSandboxSignalName) return "Sandbox Events";
+      if (event.name === "init") return "Init";
+      if (event.name === "sample_init") return "Sample Init";
+      return event.type ? `${event.type}: ${event.name}` : `Step: ${event.name}`;
+    case "subtask":
+      return event.type === "fork" ? `Fork: ${event.name}` : `Subtask: ${event.name}`;
+    case "span_begin":
+      if (event.span_id === kSandboxSignalName) return "Sandbox Events";
+      if (event.name === "init") return "Init";
+      if (event.name === "sample_init") return "Sample Init";
+      return event.type ? `${event.type}: ${event.name}` : `Step: ${event.name}`;
     case "score":
       return (event.intermediate ? "Intermediate " : "") + "Score";
     case "score_edit":
@@ -191318,14 +191305,13 @@ const eventSearchText = (node2) => {
   }
   switch (event.event) {
     case "model": {
-      const modelEvent = event;
-      if (modelEvent.output?.choices) {
-        for (const choice of modelEvent.output.choices) {
+      if (event.output?.choices) {
+        for (const choice of event.output.choices) {
           texts.push(...extractContentText(choice.message.content));
         }
       }
-      if (modelEvent.input) {
-        for (const msg of modelEvent.input) {
+      if (event.input) {
+        for (const msg of event.input) {
           if (msg.role === "user" || msg.role === "system") {
             texts.push(...extractContentText(msg.content));
           }
@@ -191334,153 +191320,140 @@ const eventSearchText = (node2) => {
       break;
     }
     case "tool": {
-      const toolEvent = event;
-      if (toolEvent.function) {
-        texts.push(toolEvent.function);
+      if (event.function) {
+        texts.push(event.function);
       }
-      if (toolEvent.arguments) {
-        texts.push(JSON.stringify(toolEvent.arguments));
+      if (event.arguments) {
+        texts.push(JSON.stringify(event.arguments));
       }
-      if (toolEvent.result) {
-        if (typeof toolEvent.result === "string") {
-          texts.push(toolEvent.result);
+      if (event.result) {
+        if (typeof event.result === "string") {
+          texts.push(event.result);
         } else {
-          texts.push(JSON.stringify(toolEvent.result));
+          texts.push(JSON.stringify(event.result));
         }
       }
-      if (toolEvent.error?.message) {
-        texts.push(toolEvent.error.message);
+      if (event.error?.message) {
+        texts.push(event.error.message);
       }
       break;
     }
     case "error": {
-      const errorEvent = event;
-      if (errorEvent.error?.message) {
-        texts.push(errorEvent.error.message);
+      if (event.error?.message) {
+        texts.push(event.error.message);
       }
-      if (errorEvent.error?.traceback) {
-        texts.push(errorEvent.error.traceback);
+      if (event.error?.traceback) {
+        texts.push(event.error.traceback);
       }
       break;
     }
     case "logger": {
-      const loggerEvent = event;
-      if (loggerEvent.message?.message) {
-        texts.push(loggerEvent.message.message);
+      if (event.message?.message) {
+        texts.push(event.message.message);
       }
-      if (loggerEvent.message?.filename) {
-        texts.push(loggerEvent.message.filename);
+      if (event.message?.filename) {
+        texts.push(event.message.filename);
       }
       break;
     }
     case "info": {
-      const infoEvent = event;
-      if (infoEvent.data) {
-        if (typeof infoEvent.data === "string") {
-          texts.push(infoEvent.data);
+      if (event.data) {
+        if (typeof event.data === "string") {
+          texts.push(event.data);
         } else {
-          texts.push(JSON.stringify(infoEvent.data));
+          texts.push(JSON.stringify(event.data));
         }
       }
       break;
     }
     case "compaction": {
-      const compactionEvent = event;
-      if (compactionEvent.source) {
-        texts.push(compactionEvent.source);
+      if (event.source) {
+        texts.push(event.source);
       }
-      texts.push(JSON.stringify(compactionEvent));
+      texts.push(JSON.stringify(event));
       break;
     }
     case "subtask": {
-      const subtaskEvent = event;
-      if (subtaskEvent.input) {
-        texts.push(JSON.stringify(subtaskEvent.input));
+      if (event.input) {
+        texts.push(JSON.stringify(event.input));
       }
-      if (subtaskEvent.result) {
-        texts.push(JSON.stringify(subtaskEvent.result));
+      if (event.result) {
+        texts.push(JSON.stringify(event.result));
       }
       break;
     }
     case "score": {
-      const scoreEvent = event;
-      if (scoreEvent.score.answer) {
-        texts.push(scoreEvent.score.answer);
+      if (event.score.answer) {
+        texts.push(event.score.answer);
       }
-      if (scoreEvent.score.explanation) {
-        texts.push(scoreEvent.score.explanation);
+      if (event.score.explanation) {
+        texts.push(event.score.explanation);
       }
-      if (scoreEvent.target) {
-        const target2 = Array.isArray(scoreEvent.target) ? scoreEvent.target.join("\n") : scoreEvent.target;
+      if (event.target) {
+        const target2 = Array.isArray(event.target) ? event.target.join("\n") : event.target;
         texts.push(target2);
       }
-      if (scoreEvent.score.value != null) {
+      if (event.score.value != null) {
         texts.push(
-          typeof scoreEvent.score.value === "object" ? JSON.stringify(scoreEvent.score.value) : String(scoreEvent.score.value)
+          typeof event.score.value === "object" ? JSON.stringify(event.score.value) : String(event.score.value)
         );
       }
       break;
     }
     case "score_edit": {
-      const scoreEditEvent = event;
-      if (scoreEditEvent.edit.answer) {
-        texts.push(scoreEditEvent.edit.answer);
+      if (event.edit.answer) {
+        texts.push(event.edit.answer);
       }
-      if (scoreEditEvent.edit.explanation) {
-        texts.push(scoreEditEvent.edit.explanation);
+      if (event.edit.explanation) {
+        texts.push(event.edit.explanation);
       }
-      if (scoreEditEvent.edit.provenance) {
-        if (scoreEditEvent.edit.provenance.author) {
-          texts.push(scoreEditEvent.edit.provenance.author);
+      if (event.edit.provenance) {
+        if (event.edit.provenance.author) {
+          texts.push(event.edit.provenance.author);
         }
-        if (scoreEditEvent.edit.provenance.reason) {
-          texts.push(scoreEditEvent.edit.provenance.reason);
+        if (event.edit.provenance.reason) {
+          texts.push(event.edit.provenance.reason);
         }
       }
       break;
     }
     case "sample_init": {
-      const sampleInitEvent = event;
-      if (sampleInitEvent.sample.target) {
-        const target2 = Array.isArray(sampleInitEvent.sample.target) ? sampleInitEvent.sample.target.join("\n") : sampleInitEvent.sample.target;
+      if (event.sample.target) {
+        const target2 = Array.isArray(event.sample.target) ? event.sample.target.join("\n") : event.sample.target;
         texts.push(target2);
       }
       break;
     }
     case "sample_limit": {
-      const sampleLimitEvent = event;
-      if (sampleLimitEvent.message) {
-        texts.push(sampleLimitEvent.message);
+      if (event.message) {
+        texts.push(event.message);
       }
       break;
     }
     case "input": {
-      const inputEvent = event;
-      if (inputEvent.input_ansi) {
-        texts.push(inputEvent.input_ansi);
+      if (event.input_ansi) {
+        texts.push(event.input_ansi);
       }
       break;
     }
     case "approval": {
-      const approvalEvent = event;
-      if (approvalEvent.explanation) {
-        texts.push(approvalEvent.explanation);
+      if (event.explanation) {
+        texts.push(event.explanation);
       }
       break;
     }
     case "sandbox": {
-      const sandboxEvent = event;
-      if (sandboxEvent.cmd) {
-        texts.push(sandboxEvent.cmd);
+      if (event.cmd) {
+        texts.push(event.cmd);
       }
-      if (sandboxEvent.file) {
-        texts.push(sandboxEvent.file);
+      if (event.file) {
+        texts.push(event.file);
       }
-      if (sandboxEvent.input) {
-        texts.push(sandboxEvent.input);
+      if (event.input) {
+        texts.push(event.input);
       }
-      if (sandboxEvent.output) {
-        texts.push(sandboxEvent.output);
+      if (event.output) {
+        texts.push(event.output);
       }
       break;
     }
@@ -191498,21 +191471,19 @@ const extractContentText = (content2) => {
         texts.push(item2.text);
         break;
       case "reasoning": {
-        const reasoning2 = item2;
-        if (reasoning2.reasoning) {
-          texts.push(reasoning2.reasoning);
-        } else if (reasoning2.summary) {
-          texts.push(reasoning2.summary);
+        if (item2.reasoning) {
+          texts.push(item2.reasoning);
+        } else if (item2.summary) {
+          texts.push(item2.summary);
         }
         break;
       }
       case "tool_use": {
-        const toolUse = item2;
-        if (toolUse.name) {
-          texts.push(toolUse.name);
+        if (item2.name) {
+          texts.push(item2.name);
         }
-        if (toolUse.arguments) {
-          texts.push(JSON.stringify(toolUse.arguments));
+        if (item2.arguments) {
+          texts.push(JSON.stringify(item2.arguments));
         }
         break;
       }
