@@ -16932,11 +16932,22 @@ function resolvePath(to2, fromPathname = "/") {
   } = typeof to2 === "string" ? parsePath$1(to2) : to2;
   let pathname;
   if (toPathname) {
-    toPathname = toPathname.replace(/\/\/+/g, "/");
-    if (toPathname.startsWith("/")) {
-      pathname = resolvePathname(toPathname.substring(1), "/");
+    if (isAbsoluteUrl(toPathname)) {
+      pathname = toPathname;
     } else {
-      pathname = resolvePathname(toPathname, fromPathname);
+      if (toPathname.includes("//")) {
+        let oldPathname = toPathname;
+        toPathname = toPathname.replace(/\/\/+/g, "/");
+        warning(
+          false,
+          `Pathnames cannot have embedded double slashes - normalizing ${oldPathname} -> ${toPathname}`
+        );
+      }
+      if (toPathname.startsWith("/")) {
+        pathname = resolvePathname(toPathname.substring(1), "/");
+      } else {
+        pathname = resolvePathname(toPathname, fromPathname);
+      }
     }
   } else {
     pathname = fromPathname;
@@ -22309,15 +22320,7 @@ function PrefetchPageLinksImpl({
   return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, dataHrefs.map((href) => /* @__PURE__ */ reactExports.createElement("link", { key: href, rel: "prefetch", as: "fetch", href, ...linkProps })), moduleHrefs.map((href) => /* @__PURE__ */ reactExports.createElement("link", { key: href, rel: "modulepreload", href, ...linkProps })), keyedPrefetchLinks.map(({ key: key2, link: link2 }) => (
     // these don't spread `linkProps` because they are full link descriptors
     // already with their own props
-    /* @__PURE__ */ reactExports.createElement(
-      "link",
-      {
-        key: key2,
-        nonce: linkProps.nonce,
-        ...link2,
-        crossOrigin: link2.crossOrigin ?? linkProps.crossOrigin
-      }
-    )
+    /* @__PURE__ */ reactExports.createElement("link", { key: key2, nonce: linkProps.nonce, ...link2 })
   )));
 }
 function mergeRefs(...refs) {
@@ -22335,7 +22338,7 @@ var isBrowser2 = typeof window !== "undefined" && typeof window.document !== "un
 try {
   if (isBrowser2) {
     window.__reactRouterVersion = // @ts-expect-error
-    "7.13.0";
+    "7.12.0";
   }
 } catch (e) {
 }
@@ -29422,6 +29425,19 @@ const createSampleSlice = (set3, get2, _store) => {
           state.sample.sampleInState = false;
           state.sample.runningEvents = [];
           state.sample.sampleStatus = "ok";
+          state.log.selectedSampleHandle = void 0;
+        });
+      },
+      prepareForSampleLoad: (logFile, id, epoch) => {
+        getSamplePolling().stopPolling();
+        selectedSampleRef.current = void 0;
+        set3((state) => {
+          state.sample.selectedSampleObject = void 0;
+          state.sample.sampleInState = false;
+          state.sample.runningEvents = [];
+          state.sample.sampleStatus = "loading";
+          state.sample.sampleError = void 0;
+          state.sample.sample_identifier = { logFile, id, epoch };
           state.log.selectedSampleHandle = void 0;
         });
       },
@@ -40520,13 +40536,7 @@ function linkify(state, silent) {
   if (!link2) return false;
   let url = link2.url;
   if (url.length <= proto.length) return false;
-  let urlEnd = url.length;
-  while (urlEnd > 0 && url.charCodeAt(urlEnd - 1) === 42) {
-    urlEnd--;
-  }
-  if (urlEnd !== url.length) {
-    url = url.slice(0, urlEnd);
-  }
+  url = url.replace(/\*+$/, "");
   const fullUrl = state.md.normalizeLink(url);
   if (!state.md.validateLink(fullUrl)) return false;
   if (!silent) {
@@ -118690,7 +118700,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.183-46-g3b67d6c44" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.183-51-gc5feaeac7" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -177009,6 +177019,7 @@ const appendPendingItems = (evalSet, tasksWithLogFiles, collapsedLogItems) => {
 };
 const SAMPLE_LIST_KEYS = ["transcript-tree"];
 const log$1 = createLogger("useSampleLoader");
+let loadGeneration = 0;
 function useLoadSample() {
   const sampleData = useSampleData();
   const logSelection = useLogSelection();
@@ -177038,20 +177049,24 @@ function useLoadSample() {
       if (isSameSample && isLoading) {
         return;
       }
+      const thisGeneration = ++loadGeneration;
       for (const key2 of SAMPLE_LIST_KEYS) {
         clearListPosition(key2);
       }
-      sampleActions.setSampleIdentifier(logFile, id, epoch);
-      sampleActions.setSampleError(void 0);
-      sampleActions.setSampleStatus("loading");
+      sampleActions.prepareForSampleLoad(logFile, id, epoch);
       try {
         if (completed !== false) {
           log$1.debug(`LOADING COMPLETED SAMPLE: ${id}-${epoch}`);
           getSamplePolling().stopPolling();
           const sample2 = await api2?.get_log_sample(logFile, id, epoch);
           log$1.debug(`LOADED COMPLETED SAMPLE: ${id}-${epoch}`);
+          if (thisGeneration !== loadGeneration) {
+            log$1.debug(`Discarding stale sample response: ${id}-${epoch}`);
+            return;
+          }
           if (sample2) {
-            if (currentId?.id !== sample2.id || currentId?.epoch !== sample2.epoch || currentId?.logFile !== logFile) {
+            const isNewSample = currentId?.id !== id || currentId?.epoch !== epoch || currentId?.logFile !== logFile;
+            if (isNewSample) {
               sampleActions.clearCollapsedEvents();
             }
             const migratedSample = resolveSample$1(sample2);
@@ -193039,10 +193054,9 @@ const SampleDetailComponent = ({
   const sample2 = reactExports.useMemo(() => {
     return sampleData.getSelectedSample();
   }, [sampleData]);
+  const sampleStatus2 = useStore((state) => state.sample.sampleStatus);
   const sampleMatchesRequest = reactExports.useMemo(() => {
-    if (!sample2 || !sampleId || !epoch) {
-      return true;
-    }
+    if (!sample2 || !sampleId || !epoch) return false;
     return String(sample2.id) === sampleId && sample2.epoch === parseInt(epoch, 10);
   }, [sample2, sampleId, epoch]);
   const showFind = useStore((state) => state.app.showFind);
@@ -193155,7 +193169,7 @@ const SampleDetailComponent = ({
           ] })
         }
       ),
-      sampleMatchesRequest && /* @__PURE__ */ jsxRuntimeExports.jsx(
+      sampleStatus2 !== "loading" && sample2 && sampleMatchesRequest && /* @__PURE__ */ jsxRuntimeExports.jsx(
         InlineSampleComponent,
         {
           showActivity: false,
