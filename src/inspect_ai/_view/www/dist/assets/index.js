@@ -111584,10 +111584,10 @@ const isAnsiOutput = (text2) => {
   );
   return ansiRegex.test(text2);
 };
-const toolImage = "_toolImage_1wvgr_1";
-const output = "_output_1wvgr_6";
-const textOutput = "_textOutput_1wvgr_10";
-const textCode = "_textCode_1wvgr_18";
+const toolImage = "_toolImage_h7uyp_1";
+const output = "_output_h7uyp_6";
+const textOutput = "_textOutput_h7uyp_10";
+const textCode = "_textCode_h7uyp_19";
 const styles$1p = {
   toolImage,
   output,
@@ -112389,11 +112389,20 @@ const ChatMessage = reactExports.memo(
     toolMessages,
     indented: indented2,
     toolCallStyle,
-    allowLinking = true
+    allowLinking = true,
+    unlabeledRoles
   }) => {
     const messageUrl = useSampleMessageUrl(message2.id);
-    const collapse = message2.role === "system" || message2.role === "user";
     const [mouseOver, setMouseOver] = reactExports.useState(false);
+    const collapse = message2.role === "system" || message2.role === "user";
+    const hideRole = unlabeledRoles?.includes(message2.role) ?? false;
+    if (hideRole) {
+      const content2 = message2.content;
+      const hasVisibleContent = typeof content2 === "string" ? content2.trim().length > 0 : Array.isArray(content2) && content2.some((c2) => c2.type !== "tool_use");
+      if (!hasVisibleContent) {
+        return null;
+      }
+    }
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
       {
@@ -112408,7 +112417,7 @@ const ChatMessage = reactExports.memo(
         onMouseEnter: () => setMouseOver(true),
         onMouseLeave: () => setMouseOver(false),
         children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          !hideRole && /* @__PURE__ */ jsxRuntimeExports.jsxs(
             "div",
             {
               className: clsx(
@@ -112499,7 +112508,8 @@ const ChatMessageRow = ({
   toolCallStyle,
   indented: indented2,
   highlightUserMessage,
-  allowLinking = true
+  allowLinking = true,
+  unlabeledRoles
 }) => {
   if (number2) {
     return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -112530,7 +112540,8 @@ const ChatMessageRow = ({
               toolMessages: resolvedMessage.toolMessages,
               indented: indented2,
               toolCallStyle,
-              allowLinking
+              allowLinking,
+              unlabeledRoles
             }
           )
         ]
@@ -112554,7 +112565,8 @@ const ChatMessageRow = ({
               toolMessages: resolvedMessage.toolMessages,
               indented: indented2,
               toolCallStyle,
-              allowLinking
+              allowLinking,
+              unlabeledRoles
             }
           ),
           resolvedMessage.message.role === "user" ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { height: "10px" } }) : void 0
@@ -112648,7 +112660,8 @@ const ChatView = ({
   indented: indented2,
   numbered = true,
   className: className2,
-  allowLinking = true
+  allowLinking = true,
+  unlabeledRoles
 }) => {
   const collapsedMessages = resolveToolCallsIntoPreviousMessage ? resolveMessages(messages2) : messages2.map((msg) => {
     return {
@@ -112667,7 +112680,8 @@ const ChatView = ({
         indented: indented2,
         toolCallStyle,
         allowLinking,
-        highlightUserMessage: true
+        highlightUserMessage: true,
+        unlabeledRoles
       },
       `${id}-msg-${index}`
     );
@@ -118716,7 +118730,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.185-45-g277bd1e78" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.186-14-ga2e157993" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -181110,7 +181124,8 @@ const formatTiming = (timestamp2, working_start) => {
     return formatDateTime(new Date(timestamp2));
   }
 };
-const formatTitle = (title2, total_tokens, working_start) => {
+const formatTitle = (title2, total_tokens, working_start, role2) => {
+  const titleWithRole = role2 ? `${title2} – ${role2} –` : title2;
   const subItems = [];
   if (total_tokens) {
     subItems.push(`${formatNumber(total_tokens)} tokens`);
@@ -181119,7 +181134,7 @@ const formatTitle = (title2, total_tokens, working_start) => {
     subItems.push(`${formatTime$1(working_start)}`);
   }
   const subtitle = subItems.length > 0 ? ` (${subItems.join(", ")})` : "";
-  return `${title2}${subtitle}`;
+  return `${titleWithRole}${subtitle}`;
 };
 const ApprovalEventView = ({
   eventNode,
@@ -181685,16 +181700,16 @@ const EventSection = ({
     children2
   ] });
 };
-const container$d = "_container_1hidt_1";
-const all = "_all_1hidt_6";
-const tableSelection = "_tableSelection_1hidt_12";
-const codePre = "_codePre_1hidt_22";
-const code$3 = "_code_1hidt_22";
-const progress$1 = "_progress_1hidt_34";
-const error$1 = "_error_1hidt_38";
-const toolConfig = "_toolConfig_1hidt_54";
-const toolChoice = "_toolChoice_1hidt_62";
-const traceback = "_traceback_1hidt_71";
+const container$d = "_container_1gr6b_1";
+const all = "_all_1gr6b_6";
+const tableSelection = "_tableSelection_1gr6b_12";
+const codePre = "_codePre_1gr6b_22";
+const code$3 = "_code_1gr6b_22";
+const progress$1 = "_progress_1gr6b_34";
+const error$1 = "_error_1gr6b_38";
+const toolConfig = "_toolConfig_1gr6b_54";
+const toolChoice = "_toolChoice_1gr6b_62";
+const traceback = "_traceback_1gr6b_71";
 const styles$J = {
   container: container$d,
   all,
@@ -181848,14 +181863,17 @@ const ModelEventView = ({
     }
   }
   const panelTitle = eventTitle(event);
-  const turnLabel2 = context?.turnInfo ? `turn ${context.turnInfo.turnNumber}/${context.turnInfo.totalTurns}` : void 0;
+  const outputRole = outputMessages.length > 0 ? outputMessages[0].role : void 0;
+  const outputTimestamp = event.completed ? formatDateTime(new Date(event.completed)) : void 0;
+  const baseTurnLabel = context?.turnInfo ? `turn ${context.turnInfo.turnNumber}/${context.turnInfo.totalTurns}` : void 0;
+  const turnLabel2 = [outputTimestamp, baseTurnLabel].filter(Boolean).join(" | ") || void 0;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     EventPanel,
     {
       eventNodeId: eventNode.id,
       depth: eventNode.depth,
-      className: className2,
-      title: formatTitle(panelTitle, totalUsage, callTime),
+      className: clsx(className2),
+      title: formatTitle(panelTitle, totalUsage, callTime, outputRole),
       subTitle: formatTiming(event.timestamp, event.working_start),
       icon: ApplicationIcons.model,
       turnLabel: turnLabel2,
@@ -181869,7 +181887,8 @@ const ModelEventView = ({
               numbered: false,
               toolCallStyle: showToolCalls ? "complete" : "omit",
               resolveToolCallsIntoPreviousMessage: context?.hasToolEvents !== false,
-              allowLinking: false
+              allowLinking: false,
+              unlabeledRoles: ["assistant"]
             }
           ),
           event.error ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$J.error, children: [
