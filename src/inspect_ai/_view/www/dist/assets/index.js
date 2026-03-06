@@ -29370,6 +29370,7 @@ const initialState = {
   sampleInState: false,
   sampleStatus: "ok",
   sampleError: void 0,
+  eventsCleared: false,
   visiblePopover: void 0,
   // signals that the sample needs to be reloaded
   sampleNeedsReload: 0,
@@ -29390,6 +29391,7 @@ const createSampleSlice = (set3, get2, _store) => {
     sampleActions: {
       setSelectedSample: (sample2, logFile) => {
         const isLarge = isLargeSample(sample2);
+        const eventsCleared = sample2.events.length === 0 && (sample2.messages?.length ?? 0) > 0;
         set3((state) => {
           state.sample.sample_identifier = {
             id: sample2.id,
@@ -29397,6 +29399,7 @@ const createSampleSlice = (set3, get2, _store) => {
             logFile
           };
           state.sample.sampleInState = !isLarge;
+          state.sample.eventsCleared = eventsCleared;
           if (!isLarge) {
             state.sample.selectedSampleObject = sample2;
             selectedSampleRef.current = void 0;
@@ -116282,6 +116285,7 @@ const useSampleData = () => {
     (state) => state.sample.sample_identifier
   );
   const sampleNeedsReload = useStore((state) => state.sample.sampleNeedsReload);
+  const eventsCleared = useStore((state) => state.sample.eventsCleared);
   const runningEvents = useStore(
     (state) => state.sample.runningEvents
   );
@@ -116292,6 +116296,7 @@ const useSampleData = () => {
       sampleNeedsReload,
       error: sampleError,
       getSelectedSample,
+      eventsCleared,
       running: runningEvents
     };
   }, [
@@ -116300,6 +116305,7 @@ const useSampleData = () => {
     getSelectedSample,
     selectedSampleIdentifier,
     sampleNeedsReload,
+    eventsCleared,
     runningEvents
   ]);
 };
@@ -116846,7 +116852,7 @@ function isShadowRoot(node2) {
   var OwnElement = getWindow(node2).ShadowRoot;
   return node2 instanceof OwnElement || node2 instanceof ShadowRoot;
 }
-function applyStyles(_ref) {
+function applyStyles$1(_ref) {
   var state = _ref.state;
   Object.keys(state.elements).forEach(function(name2) {
     var style2 = state.styles[name2] || {};
@@ -116904,11 +116910,11 @@ function effect$2(_ref2) {
     });
   };
 }
-const applyStyles$1 = {
+const applyStyles = {
   name: "applyStyles",
   enabled: true,
   phase: "write",
-  fn: applyStyles,
+  fn: applyStyles$1,
   effect: effect$2,
   requires: ["computeStyles"]
 };
@@ -117094,7 +117100,7 @@ var toPaddingObject = function toPaddingObject2(padding, state) {
   })) : padding;
   return mergePaddingObject(typeof padding !== "number" ? padding : expandToHashMap(padding, basePlacements));
 };
-function arrow(_ref) {
+function arrow$1(_ref) {
   var _state$modifiersData$;
   var state = _ref.state, name2 = _ref.name, options2 = _ref.options;
   var arrowElement = state.elements.arrow;
@@ -117139,11 +117145,11 @@ function effect$1(_ref2) {
   }
   state.elements.arrow = arrowElement;
 }
-const arrow$1 = {
+const arrow = {
   name: "arrow",
   enabled: true,
   phase: "main",
-  fn: arrow,
+  fn: arrow$1,
   effect: effect$1,
   requires: ["popperOffsets"],
   requiresIfExists: ["preventOverflow"]
@@ -117232,7 +117238,7 @@ function mapToStyles(_ref2) {
   }
   return Object.assign({}, commonStyles, (_Object$assign2 = {}, _Object$assign2[sideY] = hasY ? y + "px" : "", _Object$assign2[sideX] = hasX ? x + "px" : "", _Object$assign2.transform = "", _Object$assign2));
 }
-function computeStyles(_ref5) {
+function computeStyles$1(_ref5) {
   var state = _ref5.state, options2 = _ref5.options;
   var _options$gpuAccelerat = options2.gpuAcceleration, gpuAcceleration = _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat, _options$adaptive = options2.adaptive, adaptive = _options$adaptive === void 0 ? true : _options$adaptive, _options$roundOffsets = options2.roundOffsets, roundOffsets = _options$roundOffsets === void 0 ? true : _options$roundOffsets;
   var commonStyles = {
@@ -117263,11 +117269,11 @@ function computeStyles(_ref5) {
     "data-popper-placement": state.placement
   });
 }
-const computeStyles$1 = {
+const computeStyles = {
   name: "computeStyles",
   enabled: true,
   phase: "beforeWrite",
-  fn: computeStyles,
+  fn: computeStyles$1,
   data: {}
 };
 var passive = {
@@ -117583,7 +117589,7 @@ function getExpandedFallbackPlacements(placement) {
   var oppositePlacement = getOppositePlacement(placement);
   return [getOppositeVariationPlacement(placement), oppositePlacement, getOppositeVariationPlacement(oppositePlacement)];
 }
-function flip(_ref) {
+function flip$1(_ref) {
   var state = _ref.state, options2 = _ref.options, name2 = _ref.name;
   if (state.modifiersData[name2]._skip) {
     return;
@@ -117669,11 +117675,11 @@ function flip(_ref) {
     state.reset = true;
   }
 }
-const flip$1 = {
+const flip = {
   name: "flip",
   enabled: true,
   phase: "main",
-  fn: flip,
+  fn: flip$1,
   requiresIfExists: ["offset"],
   data: {
     _skip: false
@@ -117698,7 +117704,7 @@ function isAnySideFullyClipped(overflow) {
     return overflow[side] >= 0;
   });
 }
-function hide(_ref) {
+function hide$1(_ref) {
   var state = _ref.state, name2 = _ref.name;
   var referenceRect = state.rects.reference;
   var popperRect = state.rects.popper;
@@ -117724,12 +117730,12 @@ function hide(_ref) {
     "data-popper-escaped": hasPopperEscaped
   });
 }
-const hide$1 = {
+const hide = {
   name: "hide",
   enabled: true,
   phase: "main",
   requiresIfExists: ["preventOverflow"],
-  fn: hide
+  fn: hide$1
 };
 function distanceAndSkiddingToXY(placement, rects, offset2) {
   var basePlacement = getBasePlacement(placement);
@@ -117747,7 +117753,7 @@ function distanceAndSkiddingToXY(placement, rects, offset2) {
     y: distance
   };
 }
-function offset(_ref2) {
+function offset$1(_ref2) {
   var state = _ref2.state, options2 = _ref2.options, name2 = _ref2.name;
   var _options$offset = options2.offset, offset2 = _options$offset === void 0 ? [0, 0] : _options$offset;
   var data = placements.reduce(function(acc, placement) {
@@ -117761,14 +117767,14 @@ function offset(_ref2) {
   }
   state.modifiersData[name2] = data;
 }
-const offset$1 = {
+const offset = {
   name: "offset",
   enabled: true,
   phase: "main",
   requires: ["popperOffsets"],
-  fn: offset
+  fn: offset$1
 };
-function popperOffsets(_ref) {
+function popperOffsets$1(_ref) {
   var state = _ref.state, name2 = _ref.name;
   state.modifiersData[name2] = computeOffsets({
     reference: state.rects.reference,
@@ -117776,17 +117782,17 @@ function popperOffsets(_ref) {
     placement: state.placement
   });
 }
-const popperOffsets$1 = {
+const popperOffsets = {
   name: "popperOffsets",
   enabled: true,
   phase: "read",
-  fn: popperOffsets,
+  fn: popperOffsets$1,
   data: {}
 };
 function getAltAxis(axis) {
   return axis === "x" ? "y" : "x";
 }
-function preventOverflow(_ref) {
+function preventOverflow$1(_ref) {
   var state = _ref.state, options2 = _ref.options, name2 = _ref.name;
   var _options$mainAxis = options2.mainAxis, checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis, _options$altAxis = options2.altAxis, checkAltAxis = _options$altAxis === void 0 ? false : _options$altAxis, boundary = options2.boundary, rootBoundary = options2.rootBoundary, altBoundary = options2.altBoundary, padding = options2.padding, _options$tether = options2.tether, tether = _options$tether === void 0 ? true : _options$tether, _options$tetherOffset = options2.tetherOffset, tetherOffset = _options$tetherOffset === void 0 ? 0 : _options$tetherOffset;
   var overflow = detectOverflow(state, {
@@ -117870,11 +117876,11 @@ function preventOverflow(_ref) {
   }
   state.modifiersData[name2] = data;
 }
-const preventOverflow$1 = {
+const preventOverflow = {
   name: "preventOverflow",
   enabled: true,
   phase: "main",
-  fn: preventOverflow,
+  fn: preventOverflow$1,
   requiresIfExists: ["offset"]
 };
 function getHTMLElementScroll(element) {
@@ -118132,7 +118138,7 @@ function popperGenerator(generatorOptions) {
     return instance2;
   };
 }
-var defaultModifiers = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$1, offset$1, flip$1, preventOverflow$1, arrow$1, hide$1];
+var defaultModifiers = [eventListeners, popperOffsets, computeStyles, applyStyles, offset, flip, preventOverflow, arrow, hide];
 var createPopper = /* @__PURE__ */ popperGenerator({
   defaultModifiers
 });
@@ -118730,7 +118736,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.186-14-ga2e157993" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.188-2-g71f54a16e" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -192196,10 +192202,7 @@ const treeifyWithSpans = (events, depth) => {
     const parentNode = resolvedParent ?? null;
     const node2 = createNode(event, parentNode);
     if (event.event === SPAN_BEGIN) {
-      const spanId = getEventSpanId(event);
-      if (spanId !== null) {
-        spanNodes.set(spanId, node2);
-      }
+      spanNodes.set(event.id, node2);
     }
   };
   events.forEach((event) => processEvent(event));
@@ -192393,7 +192396,15 @@ const collapseFilters = [
   (event) => event.event === "subtask"
 ];
 const TranscriptPanel = reactExports.memo((props) => {
-  let { id, scrollRef, events, running, initialEventId, topOffset } = props;
+  let {
+    id,
+    scrollRef,
+    events,
+    running,
+    initialEventId,
+    topOffset,
+    eventsCleared
+  } = props;
   const filteredEventTypes = useStore(
     (state) => state.sample.eventFilter.filteredTypes
   );
@@ -192543,7 +192554,7 @@ const TranscriptPanel = reactExports.memo((props) => {
   }
   if (flattenedNodes.length === 0) {
     const isCompletedFiltered = flattenedNodes.length === 0 && events.length > 0;
-    const message2 = isCompletedFiltered ? "The currently applied filter hides all events." : "No events to display.";
+    const message2 = isCompletedFiltered ? "The currently applied filter hides all events." : eventsCleared ? "Transcript events were removed because this sample exceeds the browser's size limit. Use the Messages tab to view the conversation." : "No events to display.";
     return /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: message2 });
   } else {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -192612,6 +192623,7 @@ const SampleDisplay = ({
   const sample2 = reactExports.useMemo(() => {
     return sampleData.getSelectedSample();
   }, [sampleData]);
+  const eventsCleared = sampleData.eventsCleared;
   const runningSampleData = sampleData.running;
   const evalSpec = useStore((state) => state.log.selectedLogDetails?.eval);
   const { setDocumentTitle } = useDocumentTitle();
@@ -192872,6 +192884,7 @@ const SampleDisplay = ({
                   {
                     id: `${baseId}-transcript-display-${id}`,
                     events: sampleEvents || [],
+                    eventsCleared,
                     initialEventId: sampleDetailNavigation.event,
                     topOffset: tabsHeight,
                     running,
