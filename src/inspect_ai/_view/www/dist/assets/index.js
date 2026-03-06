@@ -29370,6 +29370,7 @@ const initialState = {
   sampleInState: false,
   sampleStatus: "ok",
   sampleError: void 0,
+  eventsCleared: false,
   visiblePopover: void 0,
   // signals that the sample needs to be reloaded
   sampleNeedsReload: 0,
@@ -29390,6 +29391,7 @@ const createSampleSlice = (set3, get2, _store) => {
     sampleActions: {
       setSelectedSample: (sample2, logFile) => {
         const isLarge = isLargeSample(sample2);
+        const eventsCleared = sample2.events.length === 0 && (sample2.messages?.length ?? 0) > 0;
         set3((state) => {
           state.sample.sample_identifier = {
             id: sample2.id,
@@ -29397,6 +29399,7 @@ const createSampleSlice = (set3, get2, _store) => {
             logFile
           };
           state.sample.sampleInState = !isLarge;
+          state.sample.eventsCleared = eventsCleared;
           if (!isLarge) {
             state.sample.selectedSampleObject = sample2;
             selectedSampleRef.current = void 0;
@@ -116282,6 +116285,7 @@ const useSampleData = () => {
     (state) => state.sample.sample_identifier
   );
   const sampleNeedsReload = useStore((state) => state.sample.sampleNeedsReload);
+  const eventsCleared = useStore((state) => state.sample.eventsCleared);
   const runningEvents = useStore(
     (state) => state.sample.runningEvents
   );
@@ -116292,6 +116296,7 @@ const useSampleData = () => {
       sampleNeedsReload,
       error: sampleError,
       getSelectedSample,
+      eventsCleared,
       running: runningEvents
     };
   }, [
@@ -116300,6 +116305,7 @@ const useSampleData = () => {
     getSelectedSample,
     selectedSampleIdentifier,
     sampleNeedsReload,
+    eventsCleared,
     runningEvents
   ]);
 };
@@ -118730,7 +118736,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.186-14-ga2e157993" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.188-5-g73ebe2de6" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -192393,7 +192399,15 @@ const collapseFilters = [
   (event) => event.event === "subtask"
 ];
 const TranscriptPanel = reactExports.memo((props) => {
-  let { id, scrollRef, events, running, initialEventId, topOffset } = props;
+  let {
+    id,
+    scrollRef,
+    events,
+    running,
+    initialEventId,
+    topOffset,
+    eventsCleared
+  } = props;
   const filteredEventTypes = useStore(
     (state) => state.sample.eventFilter.filteredTypes
   );
@@ -192543,7 +192557,7 @@ const TranscriptPanel = reactExports.memo((props) => {
   }
   if (flattenedNodes.length === 0) {
     const isCompletedFiltered = flattenedNodes.length === 0 && events.length > 0;
-    const message2 = isCompletedFiltered ? "The currently applied filter hides all events." : "No events to display.";
+    const message2 = isCompletedFiltered ? "The currently applied filter hides all events." : eventsCleared ? "Transcript events were removed because this sample exceeds the browser's size limit. Use the Messages tab to view the conversation." : "No events to display.";
     return /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: message2 });
   } else {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -192612,6 +192626,7 @@ const SampleDisplay = ({
   const sample2 = reactExports.useMemo(() => {
     return sampleData.getSelectedSample();
   }, [sampleData]);
+  const eventsCleared = sampleData.eventsCleared;
   const runningSampleData = sampleData.running;
   const evalSpec = useStore((state) => state.log.selectedLogDetails?.eval);
   const { setDocumentTitle } = useDocumentTitle();
@@ -192872,6 +192887,7 @@ const SampleDisplay = ({
                   {
                     id: `${baseId}-transcript-display-${id}`,
                     events: sampleEvents || [],
+                    eventsCleared,
                     initialEventId: sampleDetailNavigation.event,
                     topOffset: tabsHeight,
                     running,
