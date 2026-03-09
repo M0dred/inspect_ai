@@ -118744,7 +118744,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.189-52-gd4f496ac9" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.189-55-g16c3e59a7" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -193993,28 +193993,11 @@ const styles$n = {
   jsonTab
 };
 const kJsonMaxSize = 1e7;
-const useJsonTabConfig = (evalVersion, evalStatus, evalSpec, evalPlan, evalError, evalResults, evalStats, tags2, metadata2, logUpdates) => {
+const useJsonTabConfig = (logDetails) => {
   const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
   const selectedTab = useStore((state) => state.app.tabs.workspace);
   return reactExports.useMemo(() => {
-    const evalHeader = {
-      version: evalVersion,
-      status: evalStatus,
-      eval: evalSpec,
-      plan: evalPlan,
-      error: evalError,
-      results: evalResults,
-      stats: evalStats
-    };
-    if (tags2 && tags2.length > 0) {
-      evalHeader.tags = tags2;
-    }
-    if (metadata2 && Object.keys(metadata2).length > 0) {
-      evalHeader.metadata = metadata2;
-    }
-    if (logUpdates && logUpdates.length > 0) {
-      evalHeader.log_updates = logUpdates;
-    }
+    const { sampleSummaries: _, ...header2 } = logDetails ?? {};
     return {
       id: kLogViewJsonTabId,
       label: "JSON",
@@ -194022,7 +194005,7 @@ const useJsonTabConfig = (evalVersion, evalStatus, evalSpec, evalPlan, evalError
       component: JsonTab,
       componentProps: {
         logFile: selectedLogFile,
-        json: JSON.stringify(evalHeader, null, 2),
+        json: JSON.stringify(header2, null, 2),
         selected: selectedTab === kLogViewJsonTabId
       },
       tools: () => [
@@ -194039,20 +194022,7 @@ const useJsonTabConfig = (evalVersion, evalStatus, evalSpec, evalPlan, evalError
         )
       ]
     };
-  }, [
-    selectedLogFile,
-    evalVersion,
-    evalStatus,
-    evalSpec,
-    evalPlan,
-    evalError,
-    evalResults,
-    evalStats,
-    tags2,
-    metadata2,
-    logUpdates,
-    selectedTab
-  ]);
+  }, [selectedLogFile, logDetails, selectedTab]);
 };
 const copyFeedback = (e) => {
   const textEl = e.currentTarget.querySelector(".task-btn-copy-content");
@@ -217310,18 +217280,7 @@ const LogView = () => {
     selectedLogDetails?.stats,
     selectedLogDetails?.status
   );
-  const jsonTabConfig = useJsonTabConfig(
-    selectedLogDetails?.version,
-    selectedLogDetails?.status,
-    evalSpec,
-    selectedLogDetails?.plan,
-    selectedLogDetails?.error,
-    selectedLogDetails?.results,
-    selectedLogDetails?.stats,
-    selectedLogDetails?.tags,
-    selectedLogDetails?.metadata,
-    selectedLogDetails?.log_updates
-  );
+  const jsonTabConfig = useJsonTabConfig(selectedLogDetails);
   const tabs2 = {
     ...samplesTabConfig ? { samples: samplesTabConfig } : {},
     task: taskTabConfig,
