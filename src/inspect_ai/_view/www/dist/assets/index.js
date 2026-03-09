@@ -118744,7 +118744,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.189-55-g16c3e59a7" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.189-66-gcb8de068d" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -118983,7 +118983,7 @@ const ApplicationNavbar = ({
   fnNavigationUrl,
   bordered: bordered2,
   children: children2,
-  showActivity = "all",
+  showActivity = "log",
   breadcrumbsEnabled
 }) => {
   const optionsRef = reactExports.useRef(null);
@@ -192624,6 +192624,7 @@ const TranscriptPanel = reactExports.memo((props) => {
 const SampleDisplay = ({
   id,
   scrollRef,
+  showActivity,
   focusOnLoad
 }) => {
   const baseId = `sample-display`;
@@ -192852,10 +192853,10 @@ const SampleDisplay = ({
     return isRunning(selectedSampleSummary, runningSampleData);
   }, [selectedSampleSummary, runningSampleData]);
   const sampleDetailNavigation = useSampleDetailNavigation();
-  const displaySample = sample2 || selectedSampleSummary;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-    displaySample ? /* @__PURE__ */ jsxRuntimeExports.jsx(SampleSummaryView, { parent_id: id, sample: displaySample }) : void 0,
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    selectedSampleSummary ? /* @__PURE__ */ jsxRuntimeExports.jsx(SampleSummaryView, { parent_id: id, sample: selectedSampleSummary }) : void 0,
+    /* @__PURE__ */ jsxRuntimeExports.jsx(ActivityBar, { animating: showActivity }),
+    sample2 && /* @__PURE__ */ jsxRuntimeExports.jsxs(
       TabSet,
       {
         id: tabsetId,
@@ -193228,27 +193229,20 @@ const InlineSampleComponent = ({
 }) => {
   const sampleData = useSampleData();
   const scrollRef = reactExports.useRef(null);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2, styles$w.container), children: [
-    showActivity && /* @__PURE__ */ jsxRuntimeExports.jsx(
-      ActivityBar,
-      {
-        animating: sampleData.status === "loading" || sampleData.status === "streaming"
-      }
-    ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$w.scroller), ref: scrollRef, children: /* @__PURE__ */ jsxRuntimeExports.jsx(StickyScrollProvider, { value: scrollRef, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$w.body, children: sampleData.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-      ErrorPanel,
-      {
-        title: "Unable to load sample",
-        error: sampleData.error
-      }
-    ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
-      SampleDisplay,
-      {
-        id: "inline-sample-display",
-        scrollRef
-      }
-    ) }) }) })
-  ] });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(className2, styles$w.container), children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$w.scroller), ref: scrollRef, children: /* @__PURE__ */ jsxRuntimeExports.jsx(StickyScrollProvider, { value: scrollRef, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$w.body, children: sampleData.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+    ErrorPanel,
+    {
+      title: "Unable to load sample",
+      error: sampleData.error
+    }
+  ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+    SampleDisplay,
+    {
+      id: "inline-sample-display",
+      showActivity: !!showActivity,
+      scrollRef
+    }
+  ) }) }) }) });
 };
 const detail = "_detail_14cqz_1";
 const panel$3 = "_panel_14cqz_7";
@@ -193398,10 +193392,10 @@ const SampleDetailComponent = ({
           ] })
         }
       ),
-      sampleStatus2 !== "loading" && sampleMatchesRequest && /* @__PURE__ */ jsxRuntimeExports.jsx(
+      sampleMatchesRequest && /* @__PURE__ */ jsxRuntimeExports.jsx(
         InlineSampleComponent,
         {
-          showActivity: false,
+          showActivity: sampleStatus2 === "loading" || sampleStatus2 === "streaming",
           className: styles$v.panel
         }
       )
@@ -215989,7 +215983,12 @@ const SamplesTab = ({ running }) => {
     }
   } else {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-      samplesDescriptor && totalSampleCount === 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(InlineSampleDisplay, { showActivity: sampleStatus2 === "loading" }) : void 0,
+      samplesDescriptor && totalSampleCount === 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+        InlineSampleDisplay,
+        {
+          showActivity: sampleStatus2 === "loading" || sampleStatus2 === "streaming"
+        }
+      ) : void 0,
       samplesDescriptor && totalSampleCount > 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
         SampleList,
         {
