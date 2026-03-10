@@ -16932,22 +16932,11 @@ function resolvePath(to2, fromPathname = "/") {
   } = typeof to2 === "string" ? parsePath$1(to2) : to2;
   let pathname;
   if (toPathname) {
-    if (isAbsoluteUrl(toPathname)) {
-      pathname = toPathname;
+    toPathname = toPathname.replace(/\/\/+/g, "/");
+    if (toPathname.startsWith("/")) {
+      pathname = resolvePathname(toPathname.substring(1), "/");
     } else {
-      if (toPathname.includes("//")) {
-        let oldPathname = toPathname;
-        toPathname = toPathname.replace(/\/\/+/g, "/");
-        warning(
-          false,
-          `Pathnames cannot have embedded double slashes - normalizing ${oldPathname} -> ${toPathname}`
-        );
-      }
-      if (toPathname.startsWith("/")) {
-        pathname = resolvePathname(toPathname.substring(1), "/");
-      } else {
-        pathname = resolvePathname(toPathname, fromPathname);
-      }
+      pathname = resolvePathname(toPathname, fromPathname);
     }
   } else {
     pathname = fromPathname;
@@ -22320,7 +22309,15 @@ function PrefetchPageLinksImpl({
   return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, dataHrefs.map((href) => /* @__PURE__ */ reactExports.createElement("link", { key: href, rel: "prefetch", as: "fetch", href, ...linkProps })), moduleHrefs.map((href) => /* @__PURE__ */ reactExports.createElement("link", { key: href, rel: "modulepreload", href, ...linkProps })), keyedPrefetchLinks.map(({ key: key2, link: link2 }) => (
     // these don't spread `linkProps` because they are full link descriptors
     // already with their own props
-    /* @__PURE__ */ reactExports.createElement("link", { key: key2, nonce: linkProps.nonce, ...link2 })
+    /* @__PURE__ */ reactExports.createElement(
+      "link",
+      {
+        key: key2,
+        nonce: linkProps.nonce,
+        ...link2,
+        crossOrigin: link2.crossOrigin ?? linkProps.crossOrigin
+      }
+    )
   )));
 }
 function mergeRefs(...refs) {
@@ -22338,7 +22335,7 @@ var isBrowser2 = typeof window !== "undefined" && typeof window.document !== "un
 try {
   if (isBrowser2) {
     window.__reactRouterVersion = // @ts-expect-error
-    "7.12.0";
+    "7.13.0";
   }
 } catch (e) {
 }
@@ -29415,6 +29412,7 @@ const initialState = {
   sampleInState: false,
   sampleStatus: "ok",
   sampleError: void 0,
+  eventsCleared: false,
   visiblePopover: void 0,
   // signals that the sample needs to be reloaded
   sampleNeedsReload: 0,
@@ -29435,6 +29433,7 @@ const createSampleSlice = (set3, get2, _store) => {
     sampleActions: {
       setSelectedSample: (sample2, logFile) => {
         const isLarge = isLargeSample(sample2);
+        const eventsCleared = sample2.events.length === 0 && (sample2.messages?.length ?? 0) > 0;
         set3((state) => {
           state.sample.sample_identifier = {
             id: sample2.id,
@@ -29442,6 +29441,7 @@ const createSampleSlice = (set3, get2, _store) => {
             logFile
           };
           state.sample.sampleInState = !isLarge;
+          state.sample.eventsCleared = eventsCleared;
           if (!isLarge) {
             state.sample.selectedSampleObject = sample2;
             selectedSampleRef.current = void 0;
@@ -40577,7 +40577,13 @@ function linkify(state, silent) {
   if (!link2) return false;
   let url = link2.url;
   if (url.length <= proto.length) return false;
-  url = url.replace(/\*+$/, "");
+  let urlEnd = url.length;
+  while (urlEnd > 0 && url.charCodeAt(urlEnd - 1) === 42) {
+    urlEnd--;
+  }
+  if (urlEnd !== url.length) {
+    url = url.slice(0, urlEnd);
+  }
   const fullUrl = state.md.normalizeLink(url);
   if (!state.md.validateLink(fullUrl)) return false;
   if (!silent) {
@@ -110038,6 +110044,9 @@ const openRemoteLogFile = async (api2, url, concurrency) => {
         results: header2.results,
         stats: header2.stats,
         error: header2.error,
+        tags: header2.tags,
+        metadata: header2.metadata,
+        log_updates: header2.log_updates,
         sampleSummaries
       };
       return result2;
@@ -110162,6 +110171,9 @@ const clientApi = (api2, log_file, debug2 = false) => {
         results: parsed.results,
         stats: parsed.stats,
         error: parsed.error,
+        tags: parsed.tags,
+        metadata: parsed.metadata,
+        log_updates: parsed.log_updates,
         sampleSummaries
       };
     }
@@ -110461,24 +110473,26 @@ const fetchLogFile = async (file) => {
   });
 };
 const fetchManifest = async (log_dir) => {
+  const parseListing = async (text2) => {
+    const parsed = await asyncJsonParse(text2);
+    return { raw: text2, parsed };
+  };
+  const handle404 = (response) => {
+    return response.status === 404;
+  };
   const logs = await fetchFile(
     log_dir + "/listing.json",
-    async (text2) => {
-      const parsed = await asyncJsonParse(text2);
-      return {
-        raw: text2,
-        parsed
-      };
-    },
-    (response) => {
-      if (response.status === 404) {
-        return true;
-      } else {
-        return false;
-      }
-    }
+    parseListing,
+    handle404
   );
-  return logs;
+  if (logs) {
+    return logs;
+  }
+  return await fetchFile(
+    "./listing.json",
+    parseListing,
+    handle404
+  );
 };
 const fetchJsonFile = async (file, handleError2) => {
   return fetchFile(
@@ -116321,6 +116335,7 @@ const useSampleData = () => {
     (state) => state.sample.sample_identifier
   );
   const sampleNeedsReload = useStore((state) => state.sample.sampleNeedsReload);
+  const eventsCleared = useStore((state) => state.sample.eventsCleared);
   const runningEvents = useStore(
     (state) => state.sample.runningEvents
   );
@@ -116331,6 +116346,7 @@ const useSampleData = () => {
       sampleNeedsReload,
       error: sampleError,
       getSelectedSample,
+      eventsCleared,
       running: runningEvents
     };
   }, [
@@ -116339,6 +116355,7 @@ const useSampleData = () => {
     getSelectedSample,
     selectedSampleIdentifier,
     sampleNeedsReload,
+    eventsCleared,
     runningEvents
   ]);
 };
@@ -118769,7 +118786,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.186-31-g616fd7086" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.189-99-g931f43f9a" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -119008,7 +119025,7 @@ const ApplicationNavbar = ({
   fnNavigationUrl,
   bordered: bordered2,
   children: children2,
-  showActivity = "all",
+  showActivity = "log",
   breadcrumbsEnabled
 }) => {
   const optionsRef = reactExports.useRef(null);
@@ -179955,7 +179972,7 @@ const SampleScoresView = ({
     return void 0;
   }
   if (!sample2) {
-    return void 0;
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: "Scoring data not available" });
   }
   const scoreInput = inputString(sample2.input);
   if (sample2.choices && sample2.choices.length > 0) {
@@ -192235,10 +192252,7 @@ const treeifyWithSpans = (events, depth) => {
     const parentNode = resolvedParent ?? null;
     const node2 = createNode(event, parentNode);
     if (event.event === SPAN_BEGIN) {
-      const spanId = getEventSpanId(event);
-      if (spanId !== null) {
-        spanNodes.set(spanId, node2);
-      }
+      spanNodes.set(event.id, node2);
     }
   };
   events.forEach((event) => processEvent(event));
@@ -192432,7 +192446,15 @@ const collapseFilters = [
   (event) => event.event === "subtask"
 ];
 const TranscriptPanel = reactExports.memo((props) => {
-  let { id, scrollRef, events, running, initialEventId, topOffset } = props;
+  let {
+    id,
+    scrollRef,
+    events,
+    running,
+    initialEventId,
+    topOffset,
+    eventsCleared
+  } = props;
   const filteredEventTypes = useStore(
     (state) => state.sample.eventFilter.filteredTypes
   );
@@ -192582,7 +192604,7 @@ const TranscriptPanel = reactExports.memo((props) => {
   }
   if (flattenedNodes.length === 0) {
     const isCompletedFiltered = flattenedNodes.length === 0 && events.length > 0;
-    const message2 = isCompletedFiltered ? "The currently applied filter hides all events." : "No events to display.";
+    const message2 = isCompletedFiltered ? "The currently applied filter hides all events." : eventsCleared ? "Transcript events were removed because this sample exceeds the browser's size limit. Use the Messages tab to view the conversation." : "No events to display.";
     return /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: message2 });
   } else {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -192644,6 +192666,7 @@ const TranscriptPanel = reactExports.memo((props) => {
 const SampleDisplay = ({
   id,
   scrollRef,
+  showActivity,
   focusOnLoad
 }) => {
   const baseId = `sample-display`;
@@ -192651,6 +192674,7 @@ const SampleDisplay = ({
   const sample2 = reactExports.useMemo(() => {
     return sampleData.getSelectedSample();
   }, [sampleData]);
+  const eventsCleared = sampleData.eventsCleared;
   const runningSampleData = sampleData.running;
   const evalSpec = useStore((state) => state.log.selectedLogDetails?.eval);
   const { setDocumentTitle } = useDocumentTitle();
@@ -192686,6 +192710,7 @@ const SampleDisplay = ({
       return [];
     }
   }, [sample2?.messages, runningSampleData]);
+  const hasSampleData = sample2 !== void 0 || sampleEvents !== void 0 || sampleMessages !== void 0;
   const {
     logPath: urlLogPath,
     id: urlSampleId,
@@ -192871,10 +192896,11 @@ const SampleDisplay = ({
     return isRunning(selectedSampleSummary, runningSampleData);
   }, [selectedSampleSummary, runningSampleData]);
   const sampleDetailNavigation = useSampleDetailNavigation();
-  const displaySample = sample2 || selectedSampleSummary;
+  console.log({ sample: sample2, sampleMetadatas });
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-    displaySample ? /* @__PURE__ */ jsxRuntimeExports.jsx(SampleSummaryView, { parent_id: id, sample: displaySample }) : void 0,
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    selectedSampleSummary ? /* @__PURE__ */ jsxRuntimeExports.jsx(SampleSummaryView, { parent_id: id, sample: selectedSampleSummary }) : void 0,
+    /* @__PURE__ */ jsxRuntimeExports.jsx(ActivityBar, { animating: showActivity }),
+    hasSampleData && /* @__PURE__ */ jsxRuntimeExports.jsxs(
       TabSet,
       {
         id: tabsetId,
@@ -192911,6 +192937,7 @@ const SampleDisplay = ({
                   {
                     id: `${baseId}-transcript-display-${id}`,
                     events: sampleEvents || [],
+                    eventsCleared,
                     initialEventId: sampleDetailNavigation.event,
                     topOffset: tabsHeight,
                     running,
@@ -192981,7 +193008,7 @@ const SampleDisplay = ({
               title: "Metadata",
               onSelected: onSelectedTab,
               selected: effectiveSelectedTab === kSampleMetdataTabId,
-              children: !sample2 || sampleMetadatas.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Z.padded, styles$Z.fullWidth), children: sampleMetadatas }) : /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: "No metadata" })
+              children: sampleMetadatas.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Z.padded, styles$Z.fullWidth), children: sampleMetadatas }) : /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: "No sample metadata available" })
             }
           ),
           sample2?.error || sample2?.error_retries && sample2?.error_retries.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -193246,27 +193273,20 @@ const InlineSampleComponent = ({
 }) => {
   const sampleData = useSampleData();
   const scrollRef = reactExports.useRef(null);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2, styles$w.container), children: [
-    showActivity && /* @__PURE__ */ jsxRuntimeExports.jsx(
-      ActivityBar,
-      {
-        animating: sampleData.status === "loading" || sampleData.status === "streaming"
-      }
-    ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$w.scroller), ref: scrollRef, children: /* @__PURE__ */ jsxRuntimeExports.jsx(StickyScrollProvider, { value: scrollRef, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$w.body, children: sampleData.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-      ErrorPanel,
-      {
-        title: "Unable to load sample",
-        error: sampleData.error
-      }
-    ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
-      SampleDisplay,
-      {
-        id: "inline-sample-display",
-        scrollRef
-      }
-    ) }) }) })
-  ] });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(className2, styles$w.container), children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$w.scroller), ref: scrollRef, children: /* @__PURE__ */ jsxRuntimeExports.jsx(StickyScrollProvider, { value: scrollRef, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$w.body, children: sampleData.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+    ErrorPanel,
+    {
+      title: "Unable to load sample",
+      error: sampleData.error
+    }
+  ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+    SampleDisplay,
+    {
+      id: "inline-sample-display",
+      showActivity: !!showActivity,
+      scrollRef
+    }
+  ) }) }) }) });
 };
 const detail = "_detail_14cqz_1";
 const panel$3 = "_panel_14cqz_7";
@@ -193416,10 +193436,10 @@ const SampleDetailComponent = ({
           ] })
         }
       ),
-      sampleStatus2 !== "loading" && sampleMatchesRequest && /* @__PURE__ */ jsxRuntimeExports.jsx(
+      sampleMatchesRequest && /* @__PURE__ */ jsxRuntimeExports.jsx(
         InlineSampleComponent,
         {
-          showActivity: false,
+          showActivity: sampleStatus2 === "loading" || sampleStatus2 === "streaming",
           className: styles$v.panel
         }
       )
@@ -193881,9 +193901,10 @@ const PlanCard = ({
   evalSpec,
   evalPlan,
   scores: scores2,
+  metadata: metadataProp,
   scrollRef
 }) => {
-  const metadata2 = evalSpec?.metadata || {};
+  const metadata2 = metadataProp || {};
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Summary" }),
@@ -193909,7 +193930,7 @@ const PlanCard = ({
     ] })
   ] });
 };
-const useInfoTabConfig = (evalSpec, evalPlan, evalError, evalResults, evalStatus) => {
+const useInfoTabConfig = (evalSpec, evalPlan, evalError, evalResults, evalStatus, metadata2) => {
   const scrollRef = reactExports.useRef(null);
   const totalSampleCount = useTotalSampleCount();
   return reactExports.useMemo(() => {
@@ -193924,6 +193945,7 @@ const useInfoTabConfig = (evalSpec, evalPlan, evalError, evalResults, evalStatus
         evalError,
         evalResults,
         evalStatus,
+        metadata: metadata2,
         sampleCount: totalSampleCount,
         scrollRef
       },
@@ -193935,6 +193957,7 @@ const useInfoTabConfig = (evalSpec, evalPlan, evalError, evalResults, evalStatus
     evalError,
     evalResults,
     evalStatus,
+    metadata2,
     totalSampleCount
   ]);
 };
@@ -193943,6 +193966,7 @@ const InfoTab = ({
   evalPlan,
   evalResults,
   evalStatus,
+  metadata: metadata2,
   sampleCount,
   scrollRef
 }) => {
@@ -193962,6 +193986,7 @@ const InfoTab = ({
         evalSpec,
         evalPlan,
         scores: evalResults?.scores,
+        metadata: metadata2,
         scrollRef
       }
     ) })
@@ -194006,19 +194031,11 @@ const styles$n = {
   jsonTab
 };
 const kJsonMaxSize = 1e7;
-const useJsonTabConfig = (evalVersion, evalStatus, evalSpec, evalPlan, evalError, evalResults, evalStats) => {
+const useJsonTabConfig = (logDetails) => {
   const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
   const selectedTab = useStore((state) => state.app.tabs.workspace);
   return reactExports.useMemo(() => {
-    const evalHeader = {
-      version: evalVersion,
-      status: evalStatus,
-      eval: evalSpec,
-      plan: evalPlan,
-      error: evalError,
-      results: evalResults,
-      stats: evalStats
-    };
+    const { sampleSummaries: _, ...header2 } = logDetails ?? {};
     return {
       id: kLogViewJsonTabId,
       label: "JSON",
@@ -194026,7 +194043,7 @@ const useJsonTabConfig = (evalVersion, evalStatus, evalSpec, evalPlan, evalError
       component: JsonTab,
       componentProps: {
         logFile: selectedLogFile,
-        json: JSON.stringify(evalHeader, null, 2),
+        json: JSON.stringify(header2, null, 2),
         selected: selectedTab === kLogViewJsonTabId
       },
       tools: () => [
@@ -194043,17 +194060,7 @@ const useJsonTabConfig = (evalVersion, evalStatus, evalSpec, evalPlan, evalError
         )
       ]
     };
-  }, [
-    selectedLogFile,
-    evalVersion,
-    evalStatus,
-    evalSpec,
-    evalPlan,
-    evalError,
-    evalResults,
-    evalStats,
-    selectedTab
-  ]);
+  }, [selectedLogFile, logDetails, selectedTab]);
 };
 const copyFeedback = (e) => {
   const textEl = e.currentTarget.querySelector(".task-btn-copy-content");
@@ -216020,7 +216027,12 @@ const SamplesTab = ({ running }) => {
     }
   } else {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-      samplesDescriptor && totalSampleCount === 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(InlineSampleDisplay, { showActivity: sampleStatus2 === "loading" }) : void 0,
+      samplesDescriptor && totalSampleCount === 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+        InlineSampleDisplay,
+        {
+          showActivity: sampleStatus2 === "loading" || sampleStatus2 === "streaming"
+        }
+      ) : void 0,
       samplesDescriptor && totalSampleCount > 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
         SampleList,
         {
@@ -216042,7 +216054,7 @@ const grid$1 = "_grid_er9fb_1";
 const styles$e = {
   grid: grid$1
 };
-const useTaskTabConfig = (evalSpec, evalStats, earlyStopping) => {
+const useTaskTabConfig = (evalSpec, evalStats, earlyStopping, tags2) => {
   return reactExports.useMemo(() => {
     return {
       id: kLogViewTaskTabId,
@@ -216052,15 +216064,17 @@ const useTaskTabConfig = (evalSpec, evalStats, earlyStopping) => {
       componentProps: {
         evalSpec,
         evalStats,
-        earlyStopping
+        earlyStopping,
+        tags: tags2
       }
     };
-  }, [evalSpec, evalStats, earlyStopping]);
+  }, [evalSpec, evalStats, earlyStopping, tags2]);
 };
 const TaskTab = ({
   evalSpec,
   evalStats,
-  earlyStopping
+  earlyStopping,
+  tags: tags2
 }) => {
   Object.entries(evalSpec?.config || {}).forEach((entry) => {
     entry[0];
@@ -216087,8 +216101,8 @@ const TaskTab = ({
       taskInformation["Inspect"] = names;
     }
   }
-  if (evalSpec?.tags) {
-    taskInformation["tags"] = evalSpec?.tags.join(", ");
+  if (tags2 && tags2.length > 0) {
+    taskInformation["tags"] = tags2.join(", ");
   }
   if (evalSpec?.sandbox) {
     if (Array.isArray(evalSpec?.sandbox)) {
@@ -217294,28 +217308,22 @@ const LogView = () => {
     selectedLogDetails?.plan,
     selectedLogDetails?.error,
     selectedLogDetails?.results,
-    selectedLogDetails?.status
+    selectedLogDetails?.status,
+    selectedLogDetails?.metadata
   );
   const errorTabConfig = useErrorTabConfig(selectedLogDetails?.error);
   const taskTabConfig = useTaskTabConfig(
     evalSpec,
     selectedLogDetails?.stats,
-    selectedLogDetails?.results?.early_stopping
+    selectedLogDetails?.results?.early_stopping,
+    selectedLogDetails?.tags
   );
   const modelsTabConfig = useModelsTab(
     evalSpec,
     selectedLogDetails?.stats,
     selectedLogDetails?.status
   );
-  const jsonTabConfig = useJsonTabConfig(
-    selectedLogDetails?.version,
-    selectedLogDetails?.status,
-    evalSpec,
-    selectedLogDetails?.plan,
-    selectedLogDetails?.error,
-    selectedLogDetails?.results,
-    selectedLogDetails?.stats
-  );
+  const jsonTabConfig = useJsonTabConfig(selectedLogDetails);
   const tabs2 = {
     ...samplesTabConfig ? { samples: samplesTabConfig } : {},
     task: taskTabConfig,
