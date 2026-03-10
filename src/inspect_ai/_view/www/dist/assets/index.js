@@ -118738,7 +118738,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.189-40-gf18734c79" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.190-1-g8e10151dc" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -179924,7 +179924,7 @@ const SampleScoresView = ({
     return void 0;
   }
   if (!sample2) {
-    return void 0;
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: "Scoring data not available" });
   }
   const scoreInput = inputString(sample2.input);
   if (sample2.choices && sample2.choices.length > 0) {
@@ -192662,6 +192662,7 @@ const SampleDisplay = ({
       return [];
     }
   }, [sample2?.messages, runningSampleData]);
+  const hasSampleData = sample2 !== void 0 || sampleEvents !== void 0 || sampleMessages !== void 0;
   const {
     logPath: urlLogPath,
     id: urlSampleId,
@@ -192847,10 +192848,11 @@ const SampleDisplay = ({
     return isRunning(selectedSampleSummary, runningSampleData);
   }, [selectedSampleSummary, runningSampleData]);
   const sampleDetailNavigation = useSampleDetailNavigation();
+  console.log({ sample: sample2, sampleMetadatas });
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
     selectedSampleSummary ? /* @__PURE__ */ jsxRuntimeExports.jsx(SampleSummaryView, { parent_id: id, sample: selectedSampleSummary }) : void 0,
     /* @__PURE__ */ jsxRuntimeExports.jsx(ActivityBar, { animating: showActivity }),
-    sample2 && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    hasSampleData && /* @__PURE__ */ jsxRuntimeExports.jsxs(
       TabSet,
       {
         id: tabsetId,
@@ -192958,7 +192960,7 @@ const SampleDisplay = ({
               title: "Metadata",
               onSelected: onSelectedTab,
               selected: effectiveSelectedTab === kSampleMetdataTabId,
-              children: !sample2 || sampleMetadatas.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Z.padded, styles$Z.fullWidth), children: sampleMetadatas }) : /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: "No metadata" })
+              children: sampleMetadatas.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Z.padded, styles$Z.fullWidth), children: sampleMetadatas }) : /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: "No sample metadata available" })
             }
           ),
           sample2?.error || sample2?.error_retries && sample2?.error_retries.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
