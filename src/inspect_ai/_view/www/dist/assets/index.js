@@ -215399,13 +215399,13 @@ const SampleStatusIcon = ({ status: status2 }) => {
   const colorClass = status2 === "error" ? styles$i.error : status2 === "cancelled" ? styles$i.cancelled : styles$i.success;
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$i.statusCell, children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, colorClass) }) });
 };
-const mainLayout = "_mainLayout_1s8x3_1";
-const samplesListGrid = "_samplesListGrid_1s8x3_7";
-const cell = "_cell_1s8x3_44";
-const wrapAnywhere = "_wrapAnywhere_1s8x3_48";
-const noLeft = "_noLeft_1s8x3_52";
-const score = "_score_1s8x3_56";
-const centered = "_centered_1s8x3_63";
+const mainLayout = "_mainLayout_1pg7l_1";
+const samplesListGrid = "_samplesListGrid_1pg7l_7";
+const cell = "_cell_1pg7l_43";
+const wrapAnywhere = "_wrapAnywhere_1pg7l_47";
+const noLeft = "_noLeft_1pg7l_51";
+const score = "_score_1pg7l_55";
+const centered = "_centered_1pg7l_62";
 const styles$h = {
   mainLayout,
   samplesListGrid,
