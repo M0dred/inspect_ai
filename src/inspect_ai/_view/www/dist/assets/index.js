@@ -112543,7 +112543,7 @@ const styles$1j = {
   container: container$l
 };
 const ChatMessageRow = ({
-  parentName,
+  id,
   number: number2,
   resolvedMessage,
   toolCallStyle,
@@ -112576,7 +112576,7 @@ const ChatMessageRow = ({
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             ChatMessage,
             {
-              id: `${parentName}-chat-messages`,
+              id: `${id}-chat-messages`,
               message: resolvedMessage.message,
               toolMessages: resolvedMessage.toolMessages,
               indented: indented2,
@@ -112601,7 +112601,7 @@ const ChatMessageRow = ({
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             ChatMessage,
             {
-              id: `${parentName}-chat-messages`,
+              id: `${id}-chat-messages`,
               message: resolvedMessage.message,
               toolMessages: resolvedMessage.toolMessages,
               indented: indented2,
@@ -112712,10 +112712,11 @@ const ChatView = ({
   });
   const result2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(className2), children: collapsedMessages.map((msg, index) => {
     const number2 = collapsedMessages.length > 1 && numbered ? index + 1 : void 0;
+    const rowId = (id || "chat-view") + `-msg-${index}`;
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       ChatMessageRow,
       {
-        parentName: id || "chat-view",
+        id: rowId,
         number: number2,
         resolvedMessage: msg,
         indented: indented2,
@@ -118774,7 +118775,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.191-125-g87c676451" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.192-144-g8f9f751e5" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -179205,10 +179206,11 @@ const ChatViewVirtualListComponent = reactExports.memo(
     const renderRow = reactExports.useCallback(
       (index, item2) => {
         const number2 = collapsedMessages.length > 1 && numbered ? index + 1 : void 0;
+        const rowId = `${id}-msg-${index}`;
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           ChatMessageRow,
           {
-            parentName: id || "chat-virtual-list",
+            id: rowId,
             number: number2,
             resolvedMessage: item2,
             indented: indented2,
