@@ -28981,12 +28981,54 @@ const resolveAttachments = (value2, attachments, onFailedResolve) => {
   }
   return value2;
 };
+const expandRefs = (refs, pool) => refs.flatMap(([start2, end_exclusive]) => pool.slice(start2, end_exclusive));
+const resolveEventRefs = (events, msgPool, callPool) => {
+  return events.map((event) => {
+    if (event.event !== "model") return event;
+    const resolved = Array.isArray(event.input_refs) ? {
+      ...event,
+      input: expandRefs(
+        event.input_refs,
+        msgPool
+      ),
+      input_refs: null
+    } : event;
+    if (!resolved.call || !Array.isArray(resolved.call.call_refs))
+      return resolved;
+    return {
+      ...resolved,
+      call: {
+        ...resolved.call,
+        request: {
+          ...resolved.call.request,
+          [resolved.call.call_key || "messages"]: expandRefs(
+            resolved.call.call_refs,
+            callPool
+          )
+        },
+        call_refs: null,
+        call_key: null
+      }
+    };
+  });
+};
+const resolvePools = (sample2) => {
+  const { message_pool, call_pool } = sample2;
+  if (!message_pool?.length && !call_pool?.length) return sample2;
+  return {
+    ...sample2,
+    events: resolveEventRefs(sample2.events, message_pool, call_pool),
+    message_pool: [],
+    call_pool: []
+  };
+};
 const resolveSample$1 = (sample2) => {
   sample2 = { ...sample2 };
   if (sample2.transcript) {
     sample2.events = sample2.transcript.events;
     sample2.attachments = sample2.transcript.content;
   }
+  sample2 = resolvePools(sample2);
   sample2.attachments = sample2.attachments || {};
   sample2.input = resolveAttachments(sample2.input, sample2.attachments);
   sample2.messages = resolveAttachments(sample2.messages, sample2.attachments);
@@ -110002,6 +110044,9 @@ const openRemoteLogFile = async (api2, url, concurrency) => {
         results: header2.results,
         stats: header2.stats,
         error: header2.error,
+        tags: header2.tags,
+        metadata: header2.metadata,
+        log_updates: header2.log_updates,
         sampleSummaries
       };
       return result2;
@@ -110126,6 +110171,9 @@ const clientApi = (api2, log_file, debug2 = false) => {
         results: parsed.results,
         stats: parsed.stats,
         error: parsed.error,
+        tags: parsed.tags,
+        metadata: parsed.metadata,
+        log_updates: parsed.log_updates,
         sampleSummaries
       };
     }
@@ -118738,7 +118786,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.190-1-g8e10151dc" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.191-0-g980fc96cd" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -192848,7 +192896,6 @@ const SampleDisplay = ({
     return isRunning(selectedSampleSummary, runningSampleData);
   }, [selectedSampleSummary, runningSampleData]);
   const sampleDetailNavigation = useSampleDetailNavigation();
-  console.log({ sample: sample2, sampleMetadatas });
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
     selectedSampleSummary ? /* @__PURE__ */ jsxRuntimeExports.jsx(SampleSummaryView, { parent_id: id, sample: selectedSampleSummary }) : void 0,
     /* @__PURE__ */ jsxRuntimeExports.jsx(ActivityBar, { animating: showActivity }),
@@ -193853,9 +193900,10 @@ const PlanCard = ({
   evalSpec,
   evalPlan,
   scores: scores2,
+  metadata: metadataProp,
   scrollRef
 }) => {
-  const metadata2 = evalSpec?.metadata || {};
+  const metadata2 = metadataProp || {};
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Summary" }),
@@ -193881,7 +193929,7 @@ const PlanCard = ({
     ] })
   ] });
 };
-const useInfoTabConfig = (evalSpec, evalPlan, evalError, evalResults, evalStatus) => {
+const useInfoTabConfig = (evalSpec, evalPlan, evalError, evalResults, evalStatus, metadata2) => {
   const scrollRef = reactExports.useRef(null);
   const totalSampleCount = useTotalSampleCount();
   return reactExports.useMemo(() => {
@@ -193896,6 +193944,7 @@ const useInfoTabConfig = (evalSpec, evalPlan, evalError, evalResults, evalStatus
         evalError,
         evalResults,
         evalStatus,
+        metadata: metadata2,
         sampleCount: totalSampleCount,
         scrollRef
       },
@@ -193907,6 +193956,7 @@ const useInfoTabConfig = (evalSpec, evalPlan, evalError, evalResults, evalStatus
     evalError,
     evalResults,
     evalStatus,
+    metadata2,
     totalSampleCount
   ]);
 };
@@ -193915,6 +193965,7 @@ const InfoTab = ({
   evalPlan,
   evalResults,
   evalStatus,
+  metadata: metadata2,
   sampleCount,
   scrollRef
 }) => {
@@ -193934,6 +193985,7 @@ const InfoTab = ({
         evalSpec,
         evalPlan,
         scores: evalResults?.scores,
+        metadata: metadata2,
         scrollRef
       }
     ) })
@@ -193978,19 +194030,11 @@ const styles$n = {
   jsonTab
 };
 const kJsonMaxSize = 1e7;
-const useJsonTabConfig = (evalVersion, evalStatus, evalSpec, evalPlan, evalError, evalResults, evalStats) => {
+const useJsonTabConfig = (logDetails) => {
   const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
   const selectedTab = useStore((state) => state.app.tabs.workspace);
   return reactExports.useMemo(() => {
-    const evalHeader = {
-      version: evalVersion,
-      status: evalStatus,
-      eval: evalSpec,
-      plan: evalPlan,
-      error: evalError,
-      results: evalResults,
-      stats: evalStats
-    };
+    const { sampleSummaries: _, ...header2 } = logDetails ?? {};
     return {
       id: kLogViewJsonTabId,
       label: "JSON",
@@ -193998,7 +194042,7 @@ const useJsonTabConfig = (evalVersion, evalStatus, evalSpec, evalPlan, evalError
       component: JsonTab,
       componentProps: {
         logFile: selectedLogFile,
-        json: JSON.stringify(evalHeader, null, 2),
+        json: JSON.stringify(header2, null, 2),
         selected: selectedTab === kLogViewJsonTabId
       },
       tools: () => [
@@ -194015,17 +194059,7 @@ const useJsonTabConfig = (evalVersion, evalStatus, evalSpec, evalPlan, evalError
         )
       ]
     };
-  }, [
-    selectedLogFile,
-    evalVersion,
-    evalStatus,
-    evalSpec,
-    evalPlan,
-    evalError,
-    evalResults,
-    evalStats,
-    selectedTab
-  ]);
+  }, [selectedLogFile, logDetails, selectedTab]);
 };
 const copyFeedback = (e) => {
   const textEl = e.currentTarget.querySelector(".task-btn-copy-content");
@@ -216019,7 +216053,7 @@ const grid$1 = "_grid_er9fb_1";
 const styles$e = {
   grid: grid$1
 };
-const useTaskTabConfig = (evalSpec, evalStats, earlyStopping) => {
+const useTaskTabConfig = (evalSpec, evalStats, earlyStopping, tags2) => {
   return reactExports.useMemo(() => {
     return {
       id: kLogViewTaskTabId,
@@ -216029,15 +216063,17 @@ const useTaskTabConfig = (evalSpec, evalStats, earlyStopping) => {
       componentProps: {
         evalSpec,
         evalStats,
-        earlyStopping
+        earlyStopping,
+        tags: tags2
       }
     };
-  }, [evalSpec, evalStats, earlyStopping]);
+  }, [evalSpec, evalStats, earlyStopping, tags2]);
 };
 const TaskTab = ({
   evalSpec,
   evalStats,
-  earlyStopping
+  earlyStopping,
+  tags: tags2
 }) => {
   Object.entries(evalSpec?.config || {}).forEach((entry) => {
     entry[0];
@@ -216064,8 +216100,8 @@ const TaskTab = ({
       taskInformation["Inspect"] = names;
     }
   }
-  if (evalSpec?.tags) {
-    taskInformation["tags"] = evalSpec?.tags.join(", ");
+  if (tags2 && tags2.length > 0) {
+    taskInformation["tags"] = tags2.join(", ");
   }
   if (evalSpec?.sandbox) {
     if (Array.isArray(evalSpec?.sandbox)) {
@@ -217271,28 +217307,22 @@ const LogView = () => {
     selectedLogDetails?.plan,
     selectedLogDetails?.error,
     selectedLogDetails?.results,
-    selectedLogDetails?.status
+    selectedLogDetails?.status,
+    selectedLogDetails?.metadata
   );
   const errorTabConfig = useErrorTabConfig(selectedLogDetails?.error);
   const taskTabConfig = useTaskTabConfig(
     evalSpec,
     selectedLogDetails?.stats,
-    selectedLogDetails?.results?.early_stopping
+    selectedLogDetails?.results?.early_stopping,
+    selectedLogDetails?.tags
   );
   const modelsTabConfig = useModelsTab(
     evalSpec,
     selectedLogDetails?.stats,
     selectedLogDetails?.status
   );
-  const jsonTabConfig = useJsonTabConfig(
-    selectedLogDetails?.version,
-    selectedLogDetails?.status,
-    evalSpec,
-    selectedLogDetails?.plan,
-    selectedLogDetails?.error,
-    selectedLogDetails?.results,
-    selectedLogDetails?.stats
-  );
+  const jsonTabConfig = useJsonTabConfig(selectedLogDetails);
   const tabs2 = {
     ...samplesTabConfig ? { samples: samplesTabConfig } : {},
     task: taskTabConfig,
