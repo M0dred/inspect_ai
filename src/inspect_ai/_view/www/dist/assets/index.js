@@ -110477,21 +110477,9 @@ const fetchManifest = async (log_dir) => {
     const parsed = await asyncJsonParse(text2);
     return { raw: text2, parsed };
   };
-  const handle404 = (response) => {
-    return response.status === 404;
-  };
-  const logs = await fetchFile(
-    log_dir + "/listing.json",
-    parseListing,
-    handle404
-  );
-  if (logs) {
-    return logs;
-  }
   return await fetchFile(
-    "./listing.json",
-    parseListing,
-    handle404
+    log_dir + "/listing.json",
+    parseListing
   );
 };
 const fetchJsonFile = async (file, handleError2) => {
@@ -118786,7 +118774,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.191-0-g980fc96cd" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.191-125-g87c676451" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -118939,8 +118927,14 @@ const Navbar = ({
   breadcrumbsEnabled
 }) => {
   const logDir2 = useStore((state) => state.logs.logDir);
-  const baseLogDir = dirname(logDir2 || "");
-  const baseLogName = basename(logDir2 || "");
+  const displayDir = logDir2 === "." ? basename(
+    window.location.pathname.substring(
+      0,
+      window.location.pathname.lastIndexOf("/")
+    )
+  ) : logDir2 || "";
+  const baseLogDir = dirname(displayDir);
+  const baseLogName = basename(displayDir);
   const pathContainerRef = reactExports.useRef(null);
   const backUrl = fnNavigationUrl(
     ensureTrailingSlash(dirname(currentPath || "")),
