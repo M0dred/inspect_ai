@@ -110477,21 +110477,9 @@ const fetchManifest = async (log_dir) => {
     const parsed = await asyncJsonParse(text2);
     return { raw: text2, parsed };
   };
-  const handle404 = (response) => {
-    return response.status === 404;
-  };
-  const logs = await fetchFile(
-    log_dir + "/listing.json",
-    parseListing,
-    handle404
-  );
-  if (logs) {
-    return logs;
-  }
   return await fetchFile(
-    "./listing.json",
-    parseListing,
-    handle404
+    log_dir + "/listing.json",
+    parseListing
   );
 };
 const fetchJsonFile = async (file, handleError2) => {
@@ -112555,7 +112543,7 @@ const styles$1j = {
   container: container$l
 };
 const ChatMessageRow = ({
-  parentName,
+  id,
   number: number2,
   resolvedMessage,
   toolCallStyle,
@@ -112588,7 +112576,7 @@ const ChatMessageRow = ({
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             ChatMessage,
             {
-              id: `${parentName}-chat-messages`,
+              id: `${id}-chat-messages`,
               message: resolvedMessage.message,
               toolMessages: resolvedMessage.toolMessages,
               indented: indented2,
@@ -112613,7 +112601,7 @@ const ChatMessageRow = ({
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             ChatMessage,
             {
-              id: `${parentName}-chat-messages`,
+              id: `${id}-chat-messages`,
               message: resolvedMessage.message,
               toolMessages: resolvedMessage.toolMessages,
               indented: indented2,
@@ -112724,10 +112712,11 @@ const ChatView = ({
   });
   const result2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(className2), children: collapsedMessages.map((msg, index) => {
     const number2 = collapsedMessages.length > 1 && numbered ? index + 1 : void 0;
+    const rowId = (id || "chat-view") + `-msg-${index}`;
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       ChatMessageRow,
       {
-        parentName: id || "chat-view",
+        id: rowId,
         number: number2,
         resolvedMessage: msg,
         indented: indented2,
@@ -118786,7 +118775,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.189-108-g02d8bda83" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.192-144-g8f9f751e5" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -118939,8 +118928,14 @@ const Navbar = ({
   breadcrumbsEnabled
 }) => {
   const logDir2 = useStore((state) => state.logs.logDir);
-  const baseLogDir = dirname(logDir2 || "");
-  const baseLogName = basename(logDir2 || "");
+  const displayDir = logDir2 === "." ? basename(
+    window.location.pathname.substring(
+      0,
+      window.location.pathname.lastIndexOf("/")
+    )
+  ) : logDir2 || "";
+  const baseLogDir = dirname(displayDir);
+  const baseLogName = basename(displayDir);
   const pathContainerRef = reactExports.useRef(null);
   const backUrl = fnNavigationUrl(
     ensureTrailingSlash(dirname(currentPath || "")),
@@ -179211,10 +179206,11 @@ const ChatViewVirtualListComponent = reactExports.memo(
     const renderRow = reactExports.useCallback(
       (index, item2) => {
         const number2 = collapsedMessages.length > 1 && numbered ? index + 1 : void 0;
+        const rowId = `${id}-msg-${index}`;
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           ChatMessageRow,
           {
-            parentName: id || "chat-virtual-list",
+            id: rowId,
             number: number2,
             resolvedMessage: item2,
             indented: indented2,
@@ -192896,7 +192892,6 @@ const SampleDisplay = ({
     return isRunning(selectedSampleSummary, runningSampleData);
   }, [selectedSampleSummary, runningSampleData]);
   const sampleDetailNavigation = useSampleDetailNavigation();
-  console.log({ sample: sample2, sampleMetadatas });
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
     selectedSampleSummary ? /* @__PURE__ */ jsxRuntimeExports.jsx(SampleSummaryView, { parent_id: id, sample: selectedSampleSummary }) : void 0,
     /* @__PURE__ */ jsxRuntimeExports.jsx(ActivityBar, { animating: showActivity }),
@@ -215406,13 +215401,13 @@ const SampleStatusIcon = ({ status: status2 }) => {
   const colorClass = status2 === "error" ? styles$i.error : status2 === "cancelled" ? styles$i.cancelled : styles$i.success;
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$i.statusCell, children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, colorClass) }) });
 };
-const mainLayout = "_mainLayout_1s8x3_1";
-const samplesListGrid = "_samplesListGrid_1s8x3_7";
-const cell = "_cell_1s8x3_44";
-const wrapAnywhere = "_wrapAnywhere_1s8x3_48";
-const noLeft = "_noLeft_1s8x3_52";
-const score = "_score_1s8x3_56";
-const centered = "_centered_1s8x3_63";
+const mainLayout = "_mainLayout_1pg7l_1";
+const samplesListGrid = "_samplesListGrid_1pg7l_7";
+const cell = "_cell_1pg7l_43";
+const wrapAnywhere = "_wrapAnywhere_1pg7l_47";
+const noLeft = "_noLeft_1pg7l_51";
+const score = "_score_1pg7l_55";
+const centered = "_centered_1pg7l_62";
 const styles$h = {
   mainLayout,
   samplesListGrid,
