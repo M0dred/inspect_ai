@@ -110477,21 +110477,9 @@ const fetchManifest = async (log_dir) => {
     const parsed = await asyncJsonParse(text2);
     return { raw: text2, parsed };
   };
-  const handle404 = (response) => {
-    return response.status === 404;
-  };
-  const logs = await fetchFile(
-    log_dir + "/listing.json",
-    parseListing,
-    handle404
-  );
-  if (logs) {
-    return logs;
-  }
   return await fetchFile(
-    "./listing.json",
-    parseListing,
-    handle404
+    log_dir + "/listing.json",
+    parseListing
   );
 };
 const fetchJsonFile = async (file, handleError2) => {
@@ -118940,8 +118928,14 @@ const Navbar = ({
   breadcrumbsEnabled
 }) => {
   const logDir2 = useStore((state) => state.logs.logDir);
-  const baseLogDir = dirname(logDir2 || "");
-  const baseLogName = basename(logDir2 || "");
+  const displayDir = logDir2 === "." ? basename(
+    window.location.pathname.substring(
+      0,
+      window.location.pathname.lastIndexOf("/")
+    )
+  ) : logDir2 || "";
+  const baseLogDir = dirname(displayDir);
+  const baseLogName = basename(displayDir);
   const pathContainerRef = reactExports.useRef(null);
   const backUrl = fnNavigationUrl(
     ensureTrailingSlash(dirname(currentPath || "")),
