@@ -111645,6 +111645,8 @@ const ToolOutput = ({ output: output2, className: className2 }) => {
       const key2 = `tool-output-${idx}`;
       if (out.type === "text") {
         outputs.push(/* @__PURE__ */ jsxRuntimeExports.jsx(ToolTextOutput, { text: out.text }, key2));
+      } else if (out.type === "document") {
+        outputs.push(/* @__PURE__ */ jsxRuntimeExports.jsx(ContentDocumentView, { id: key2, document: out }, key2));
       } else {
         if (out.image.startsWith("data:")) {
           outputs.push(
@@ -112408,12 +112410,7 @@ const resolveToolMessage = (toolMessage) => {
             }
           ]
         };
-      } else if (con.type === "text") {
-        return {
-          content: [con],
-          type: "tool"
-        };
-      } else if (con.type === "image") {
+      } else if (["text", "image", "document"].includes(con.type)) {
         return {
           content: [con],
           type: "tool"
@@ -118775,7 +118772,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.192-144-g8f9f751e5" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.195-17-g8e4436fac" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
