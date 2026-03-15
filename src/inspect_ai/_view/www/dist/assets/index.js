@@ -118772,7 +118772,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.195-17-g8e4436fac" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.195-20-g21e83c571" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -180065,11 +180065,18 @@ const useTranscriptFilter = () => {
   const setDefaultFilter = reactExports.useCallback(() => {
     setFilteredEventTypes([...kDefaultExcludeEvents]);
   }, [setFilteredEventTypes]);
+  const setNoneFilter = reactExports.useCallback(() => {
+    setFilteredEventTypes(Object.keys(eventTypes));
+  }, [setFilteredEventTypes]);
   const isDefaultFilter = reactExports.useMemo(() => {
     return filtered.length === kDefaultExcludeEvents.length && [...filtered].every((type) => kDefaultExcludeEvents.includes(type));
   }, [filtered]);
   const isDebugFilter = reactExports.useMemo(() => {
     return filtered.length === 0;
+  }, [filtered]);
+  const isNoneFilter = reactExports.useMemo(() => {
+    const allTypes = Object.keys(eventTypes);
+    return filtered.length === allTypes.length && allTypes.every((type) => filtered.includes(type));
   }, [filtered]);
   const arrangedEventTypes = reactExports.useCallback((columns = 1) => {
     const keys = Object.keys(eventTypes);
@@ -180105,8 +180112,10 @@ const useTranscriptFilter = () => {
     filtered,
     isDefaultFilter,
     isDebugFilter,
+    isNoneFilter,
     setDefaultFilter,
     setDebugFilter,
+    setNoneFilter,
     filterEventType,
     eventTypes,
     arrangedEventTypes
@@ -180130,8 +180139,10 @@ const TranscriptFilterPopover = ({
   const {
     isDefaultFilter,
     isDebugFilter,
+    isNoneFilter,
     setDefaultFilter,
     setDebugFilter,
+    setNoneFilter,
     filterEventType,
     eventTypes: eventTypes2,
     filtered,
@@ -180169,6 +180180,18 @@ const TranscriptFilterPopover = ({
               ),
               onClick: () => setDebugFilter(),
               children: "Debug"
+            }
+          ),
+          "|",
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "a",
+            {
+              className: clsx(
+                styles$U.link,
+                isNoneFilter ? styles$U.selected : void 0
+              ),
+              onClick: () => setNoneFilter(),
+              children: "None"
             }
           )
         ] }),
@@ -192771,7 +192794,7 @@ const SampleDisplay = ({
   const toggleCollapsedMode = reactExports.useCallback(() => {
     setCollapsedMode(isCollapsed(collapsedMode) ? "expanded" : "collapsed");
   }, [collapsedMode, setCollapsedMode]);
-  const { isDebugFilter, isDefaultFilter } = useTranscriptFilter();
+  const { isDebugFilter, isDefaultFilter, isNoneFilter } = useTranscriptFilter();
   const api2 = useStore((state) => state.api);
   const downloadFiles = useStore((state) => state.capabilities.downloadFiles);
   const tools2 = [];
@@ -192834,7 +192857,7 @@ const SampleDisplay = ({
     );
   }
   if (selectedTab === kSampleTranscriptTabId) {
-    const label2 = isDebugFilter ? "Debug" : isDefaultFilter ? "Default" : "Custom";
+    const label2 = isNoneFilter ? "None" : isDebugFilter ? "Debug" : isDefaultFilter ? "Default" : "Custom";
     tools2.push(
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         ToolButton,
