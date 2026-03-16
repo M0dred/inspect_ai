@@ -29014,7 +29014,7 @@ const resolveEventRefs = (events, msgPool, callPool) => {
 };
 const resolvePools = (sample2) => {
   const { message_pool, call_pool } = sample2;
-  if (!message_pool.length && !call_pool.length) return sample2;
+  if (!message_pool?.length && !call_pool?.length) return sample2;
   return {
     ...sample2,
     events: resolveEventRefs(sample2.events, message_pool, call_pool),
@@ -110477,21 +110477,9 @@ const fetchManifest = async (log_dir) => {
     const parsed = await asyncJsonParse(text2);
     return { raw: text2, parsed };
   };
-  const handle404 = (response) => {
-    return response.status === 404;
-  };
-  const logs = await fetchFile(
-    log_dir + "/listing.json",
-    parseListing,
-    handle404
-  );
-  if (logs) {
-    return logs;
-  }
   return await fetchFile(
-    "./listing.json",
-    parseListing,
-    handle404
+    log_dir + "/listing.json",
+    parseListing
   );
 };
 const fetchJsonFile = async (file, handleError2) => {
@@ -111657,6 +111645,8 @@ const ToolOutput = ({ output: output2, className: className2 }) => {
       const key2 = `tool-output-${idx}`;
       if (out.type === "text") {
         outputs.push(/* @__PURE__ */ jsxRuntimeExports.jsx(ToolTextOutput, { text: out.text }, key2));
+      } else if (out.type === "document") {
+        outputs.push(/* @__PURE__ */ jsxRuntimeExports.jsx(ContentDocumentView, { id: key2, document: out }, key2));
       } else {
         if (out.image.startsWith("data:")) {
           outputs.push(
@@ -112420,12 +112410,7 @@ const resolveToolMessage = (toolMessage) => {
             }
           ]
         };
-      } else if (con.type === "text") {
-        return {
-          content: [con],
-          type: "tool"
-        };
-      } else if (con.type === "image") {
+      } else if (["text", "image", "document"].includes(con.type)) {
         return {
           content: [con],
           type: "tool"
@@ -112555,7 +112540,7 @@ const styles$1j = {
   container: container$l
 };
 const ChatMessageRow = ({
-  parentName,
+  id,
   number: number2,
   resolvedMessage,
   toolCallStyle,
@@ -112588,7 +112573,7 @@ const ChatMessageRow = ({
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             ChatMessage,
             {
-              id: `${parentName}-chat-messages`,
+              id: `${id}-chat-messages`,
               message: resolvedMessage.message,
               toolMessages: resolvedMessage.toolMessages,
               indented: indented2,
@@ -112613,7 +112598,7 @@ const ChatMessageRow = ({
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             ChatMessage,
             {
-              id: `${parentName}-chat-messages`,
+              id: `${id}-chat-messages`,
               message: resolvedMessage.message,
               toolMessages: resolvedMessage.toolMessages,
               indented: indented2,
@@ -112724,10 +112709,11 @@ const ChatView = ({
   });
   const result2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(className2), children: collapsedMessages.map((msg, index) => {
     const number2 = collapsedMessages.length > 1 && numbered ? index + 1 : void 0;
+    const rowId = (id || "chat-view") + `-msg-${index}`;
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       ChatMessageRow,
       {
-        parentName: id || "chat-view",
+        id: rowId,
         number: number2,
         resolvedMessage: msg,
         indented: indented2,
@@ -118786,7 +118772,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.189-99-g931f43f9a" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.195-20-g21e83c571" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -118939,8 +118925,14 @@ const Navbar = ({
   breadcrumbsEnabled
 }) => {
   const logDir2 = useStore((state) => state.logs.logDir);
-  const baseLogDir = dirname(logDir2 || "");
-  const baseLogName = basename(logDir2 || "");
+  const displayDir = logDir2 === "." ? basename(
+    window.location.pathname.substring(
+      0,
+      window.location.pathname.lastIndexOf("/")
+    )
+  ) : logDir2 || "";
+  const baseLogDir = dirname(displayDir);
+  const baseLogName = basename(displayDir);
   const pathContainerRef = reactExports.useRef(null);
   const backUrl = fnNavigationUrl(
     ensureTrailingSlash(dirname(currentPath || "")),
@@ -179211,10 +179203,11 @@ const ChatViewVirtualListComponent = reactExports.memo(
     const renderRow = reactExports.useCallback(
       (index, item2) => {
         const number2 = collapsedMessages.length > 1 && numbered ? index + 1 : void 0;
+        const rowId = `${id}-msg-${index}`;
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           ChatMessageRow,
           {
-            parentName: id || "chat-virtual-list",
+            id: rowId,
             number: number2,
             resolvedMessage: item2,
             indented: indented2,
@@ -180072,11 +180065,18 @@ const useTranscriptFilter = () => {
   const setDefaultFilter = reactExports.useCallback(() => {
     setFilteredEventTypes([...kDefaultExcludeEvents]);
   }, [setFilteredEventTypes]);
+  const setNoneFilter = reactExports.useCallback(() => {
+    setFilteredEventTypes(Object.keys(eventTypes));
+  }, [setFilteredEventTypes]);
   const isDefaultFilter = reactExports.useMemo(() => {
     return filtered.length === kDefaultExcludeEvents.length && [...filtered].every((type) => kDefaultExcludeEvents.includes(type));
   }, [filtered]);
   const isDebugFilter = reactExports.useMemo(() => {
     return filtered.length === 0;
+  }, [filtered]);
+  const isNoneFilter = reactExports.useMemo(() => {
+    const allTypes = Object.keys(eventTypes);
+    return filtered.length === allTypes.length && allTypes.every((type) => filtered.includes(type));
   }, [filtered]);
   const arrangedEventTypes = reactExports.useCallback((columns = 1) => {
     const keys = Object.keys(eventTypes);
@@ -180112,8 +180112,10 @@ const useTranscriptFilter = () => {
     filtered,
     isDefaultFilter,
     isDebugFilter,
+    isNoneFilter,
     setDefaultFilter,
     setDebugFilter,
+    setNoneFilter,
     filterEventType,
     eventTypes,
     arrangedEventTypes
@@ -180137,8 +180139,10 @@ const TranscriptFilterPopover = ({
   const {
     isDefaultFilter,
     isDebugFilter,
+    isNoneFilter,
     setDefaultFilter,
     setDebugFilter,
+    setNoneFilter,
     filterEventType,
     eventTypes: eventTypes2,
     filtered,
@@ -180176,6 +180180,18 @@ const TranscriptFilterPopover = ({
               ),
               onClick: () => setDebugFilter(),
               children: "Debug"
+            }
+          ),
+          "|",
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "a",
+            {
+              className: clsx(
+                styles$U.link,
+                isNoneFilter ? styles$U.selected : void 0
+              ),
+              onClick: () => setNoneFilter(),
+              children: "None"
             }
           )
         ] }),
@@ -192778,7 +192794,7 @@ const SampleDisplay = ({
   const toggleCollapsedMode = reactExports.useCallback(() => {
     setCollapsedMode(isCollapsed(collapsedMode) ? "expanded" : "collapsed");
   }, [collapsedMode, setCollapsedMode]);
-  const { isDebugFilter, isDefaultFilter } = useTranscriptFilter();
+  const { isDebugFilter, isDefaultFilter, isNoneFilter } = useTranscriptFilter();
   const api2 = useStore((state) => state.api);
   const downloadFiles = useStore((state) => state.capabilities.downloadFiles);
   const tools2 = [];
@@ -192841,7 +192857,7 @@ const SampleDisplay = ({
     );
   }
   if (selectedTab === kSampleTranscriptTabId) {
-    const label2 = isDebugFilter ? "Debug" : isDefaultFilter ? "Default" : "Custom";
+    const label2 = isNoneFilter ? "None" : isDebugFilter ? "Debug" : isDefaultFilter ? "Default" : "Custom";
     tools2.push(
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         ToolButton,
@@ -192896,7 +192912,6 @@ const SampleDisplay = ({
     return isRunning(selectedSampleSummary, runningSampleData);
   }, [selectedSampleSummary, runningSampleData]);
   const sampleDetailNavigation = useSampleDetailNavigation();
-  console.log({ sample: sample2, sampleMetadatas });
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
     selectedSampleSummary ? /* @__PURE__ */ jsxRuntimeExports.jsx(SampleSummaryView, { parent_id: id, sample: selectedSampleSummary }) : void 0,
     /* @__PURE__ */ jsxRuntimeExports.jsx(ActivityBar, { animating: showActivity }),
@@ -215406,13 +215421,13 @@ const SampleStatusIcon = ({ status: status2 }) => {
   const colorClass = status2 === "error" ? styles$i.error : status2 === "cancelled" ? styles$i.cancelled : styles$i.success;
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$i.statusCell, children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, colorClass) }) });
 };
-const mainLayout = "_mainLayout_1s8x3_1";
-const samplesListGrid = "_samplesListGrid_1s8x3_7";
-const cell = "_cell_1s8x3_44";
-const wrapAnywhere = "_wrapAnywhere_1s8x3_48";
-const noLeft = "_noLeft_1s8x3_52";
-const score = "_score_1s8x3_56";
-const centered = "_centered_1s8x3_63";
+const mainLayout = "_mainLayout_1pg7l_1";
+const samplesListGrid = "_samplesListGrid_1pg7l_7";
+const cell = "_cell_1pg7l_43";
+const wrapAnywhere = "_wrapAnywhere_1pg7l_47";
+const noLeft = "_noLeft_1pg7l_51";
+const score = "_score_1pg7l_55";
+const centered = "_centered_1pg7l_62";
 const styles$h = {
   mainLayout,
   samplesListGrid,
