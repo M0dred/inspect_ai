@@ -118771,7 +118771,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.197-26-gc8bed7809" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.197-28-gcfbce4c75" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -192134,6 +192134,11 @@ const transformers = () => {
     {
       name: "unwrap_agent_solver",
       matches: (node2) => node2.event.event === SPAN_BEGIN && node2.event["type"] === TYPE_SOLVER && node2.children.length === 2 && node2.children[0].event.event === SPAN_BEGIN && node2.children[0].event.type === TYPE_AGENT && node2.children[1].event.event === STATE,
+      process: (node2) => skipFirstChildNode(node2)
+    },
+    {
+      name: "unwrap_filtered-agent_solver",
+      matches: (node2) => node2.event.event === SPAN_BEGIN && node2.event["type"] === TYPE_SOLVER && node2.children.length === 1 && node2.children[0].event.event === SPAN_BEGIN && node2.children[0].event.type === TYPE_AGENT,
       process: (node2) => skipFirstChildNode(node2)
     },
     {
