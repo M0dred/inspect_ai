@@ -29413,6 +29413,7 @@ const initialState = {
   sampleStatus: "ok",
   sampleError: void 0,
   eventsCleared: false,
+  downloadProgress: void 0,
   visiblePopover: void 0,
   // signals that the sample needs to be reloaded
   sampleNeedsReload: 0,
@@ -29467,6 +29468,7 @@ const createSampleSlice = (set3, get2, _store) => {
           state.sample.sampleInState = false;
           state.sample.runningEvents = [];
           state.sample.sampleStatus = "ok";
+          state.sample.downloadProgress = void 0;
           state.log.selectedSampleHandle = void 0;
         });
       },
@@ -29487,6 +29489,9 @@ const createSampleSlice = (set3, get2, _store) => {
       }),
       setSampleError: (error2) => set3((state) => {
         state.sample.sampleError = error2;
+      }),
+      setDownloadProgress: (progress2) => set3((state) => {
+        state.sample.downloadProgress = progress2;
       }),
       setCollapsedEvents: (scope, collapsed2) => {
         set3((state) => {
@@ -37096,6 +37101,23 @@ class JsonWorkerPool {
       );
     });
   }
+  async parseBytes(data) {
+    this.ensureWorkers();
+    const requestId = this.nextRequestId++;
+    const ownedData = data.byteOffset === 0 && data.byteLength === data.buffer.byteLength ? data : data.slice();
+    return new Promise((resolve, reject) => {
+      this.pendingRequests.set(requestId, { resolve, reject });
+      const worker = this.workers[requestId % this.workers.length];
+      worker?.postMessage(
+        {
+          type: "parse",
+          requestId,
+          encodedText: ownedData
+        },
+        [ownedData.buffer]
+      );
+    });
+  }
   terminate() {
     this.workers.forEach((w) => w.terminate());
     this.workers = [];
@@ -37118,6 +37140,14 @@ const asyncJsonParse = async (text2) => {
     return Promise.resolve(result2);
   } else {
     return workerPool.parse(text2);
+  }
+};
+const asyncJsonParseBytes = async (data) => {
+  if (data.length < 5e4) {
+    const text2 = new TextDecoder("utf-8").decode(data);
+    return jsonParse(text2);
+  } else {
+    return workerPool.parseBytes(data);
   }
 };
 const jsonParse = (text2) => {
@@ -108247,6 +108277,13 @@ function clearLargeEventsArray(data) {
   result2.set(after, offset2);
   return result2;
 }
+const fetchRange = async (url, start2, end2) => {
+  const response = await fetch(url, {
+    headers: { Range: `bytes=${start2}-${end2}` }
+  });
+  const arrayBuffer = await response.arrayBuffer();
+  return new Uint8Array(arrayBuffer);
+};
 class AsyncQueue {
   constructor(concurrentLimit = 6) {
     this.concurrentLimit = concurrentLimit;
@@ -109651,8 +109688,50 @@ class FileSizeLimitError extends Error {
     Object.setPrototypeOf(this, FileSizeLimitError.prototype);
   }
 }
-const openRemoteZipFile = async (url, fetchContentLength = fetchSize, fetchBytes = fetchRange) => {
-  const contentLength = await fetchContentLength(url);
+const PARALLEL_CHUNK_THRESHOLD = 8 * 1024 * 1024;
+const PARALLEL_CHUNK_SIZE = 8 * 1024 * 1024;
+const MAX_PARALLEL_CHUNKS = 10;
+const fetchBytesParallel = async (fetchFn, url, start2, end2, onProgress) => {
+  const totalSize = end2 - start2 + 1;
+  if (totalSize <= PARALLEL_CHUNK_THRESHOLD) {
+    return fetchFn(url, start2, end2);
+  }
+  const chunks = [];
+  let offset2 = start2;
+  while (offset2 <= end2) {
+    const chunkEnd = Math.min(offset2 + PARALLEL_CHUNK_SIZE - 1, end2);
+    chunks.push({ start: offset2, end: chunkEnd, index: chunks.length });
+    offset2 = chunkEnd + 1;
+  }
+  const concurrency = Math.min(chunks.length, MAX_PARALLEL_CHUNKS);
+  const results = new Array(chunks.length);
+  let nextChunk = 0;
+  let bytesLoaded = 0;
+  if (onProgress) {
+    onProgress(0, totalSize);
+  }
+  const worker = async () => {
+    while (nextChunk < chunks.length) {
+      const idx = nextChunk++;
+      const chunk = chunks[idx];
+      results[idx] = await fetchFn(url, chunk.start, chunk.end);
+      if (onProgress) {
+        bytesLoaded += results[idx].length;
+        onProgress(bytesLoaded, totalSize);
+      }
+    }
+  };
+  await Promise.all(Array.from({ length: concurrency }, () => worker()));
+  const combined = new Uint8Array(totalSize);
+  let pos2 = 0;
+  for (const chunk of results) {
+    combined.set(chunk, pos2);
+    pos2 += chunk.length;
+  }
+  return combined;
+};
+const openRemoteZipFile = async (url, contentLength, fetchBytes = fetchRange) => {
+  contentLength = contentLength ?? await fetchSize(url);
   const eocdrBuffer = await fetchBytes(
     url,
     contentLength - 22,
@@ -109694,7 +109773,8 @@ const openRemoteZipFile = async (url, fetchContentLength = fetchSize, fetchBytes
     centralDirSize = Number(zip64EOCDView.getBigUint64(40, true));
     centralDirOffset = Number(zip64EOCDView.getBigUint64(48, true));
   }
-  const centralDirBuffer = await fetchBytes(
+  const centralDirBuffer = await fetchBytesParallel(
+    fetchBytes,
     url,
     centralDirOffset,
     centralDirOffset + centralDirSize - 1
@@ -109702,28 +109782,40 @@ const openRemoteZipFile = async (url, fetchContentLength = fetchSize, fetchBytes
   const centralDirectory = parseCentralDirectory(centralDirBuffer);
   return {
     centralDirectory,
-    readFile: async (file, maxBytes) => {
+    readFile: async (file, maxBytes, onProgress) => {
       const entry = centralDirectory.get(file);
       if (!entry) {
         throw new Error(`File not found: ${file}`);
       }
       const headerSize = 30;
-      const headerData = await fetchBytes(
-        url,
-        entry.fileOffset,
-        entry.fileOffset + headerSize - 1
-      );
-      const filenameLength = headerData[26] + (headerData[27] << 8);
-      const extraFieldLength = headerData[28] + (headerData[29] << 8);
-      const totalSizeToFetch = headerSize + filenameLength + extraFieldLength + entry.compressedSize;
-      if (maxBytes && totalSizeToFetch > maxBytes) {
+      const extraFieldPadding = 256;
+      const estimatedSize = headerSize + entry.filenameLength + extraFieldPadding + entry.compressedSize;
+      if (maxBytes && headerSize + entry.filenameLength + entry.compressedSize > maxBytes) {
         throw new FileSizeLimitError(file, maxBytes);
       }
-      const fileData = await fetchBytes(
+      let fileData = await fetchBytesParallel(
+        fetchBytes,
         url,
         entry.fileOffset,
-        entry.fileOffset + totalSizeToFetch - 1
+        entry.fileOffset + estimatedSize - 1,
+        onProgress
       );
+      if (fileData.length < headerSize) {
+        throw new Error(`File entry header is truncated for ${file}`);
+      }
+      const actualExtraFieldLength = fileData[28] + (fileData[29] << 8);
+      const actualTotal = headerSize + entry.filenameLength + actualExtraFieldLength + entry.compressedSize;
+      if (maxBytes && actualTotal > maxBytes) {
+        throw new FileSizeLimitError(file, maxBytes);
+      }
+      if (actualTotal > estimatedSize) {
+        fileData = await fetchBytesParallel(
+          fetchBytes,
+          url,
+          entry.fileOffset,
+          entry.fileOffset + actualTotal - 1
+        );
+      }
       const zipFileEntry = await parseZipFileEntry(file, fileData);
       return decompressData(
         zipFileEntry.data,
@@ -109757,13 +109849,6 @@ const fetchSize = async (url) => {
     return Number(contentLength);
   }
   throw new Error(`Could not determine content length for ${url}`);
-};
-const fetchRange = async (url, start2, end2) => {
-  const response = await fetch(`${url}`, {
-    headers: { Range: `bytes=${start2}-${end2}` }
-  });
-  const arrayBuffer = await response.arrayBuffer();
-  return new Uint8Array(arrayBuffer);
 };
 const parseZipFileEntry = async (file, rawData) => {
   const view = new DataView(rawData.buffer);
@@ -109876,7 +109961,8 @@ const parseCentralDirectory = (buffer2) => {
       compressionMethod: view.getUint16(offset2 + 10, true),
       compressedSize,
       uncompressedSize,
-      fileOffset
+      fileOffset,
+      filenameLength
     };
     entries.set(filename2, entry);
     offset2 += kFileHeaderSize + filenameLength + extraFieldLength + fileCommentLength;
@@ -109894,15 +109980,23 @@ class SampleNotFoundError extends Error {
 }
 const openRemoteLogFile = async (api2, url, concurrency) => {
   const queue = new AsyncQueue(concurrency);
+  const logInfo = await api2.get_log_info(url);
+  const directUrl = logInfo.direct_url;
+  const fetchBytes = async (_url, start2, end2) => {
+    if (directUrl) {
+      try {
+        return await fetchRange(directUrl, start2, end2);
+      } catch (e) {
+        console.warn("Direct URL fetch failed, falling back to proxy", e);
+      }
+    }
+    return api2.get_log_bytes(url, start2, end2);
+  };
   let remoteZipFile = void 0;
   let retryCount = 0;
   while (!remoteZipFile && retryCount < OPEN_RETRY_LIMIT) {
     try {
-      remoteZipFile = await openRemoteZipFile(
-        url,
-        api2.get_log_size,
-        api2.get_log_bytes
-      );
+      remoteZipFile = await openRemoteZipFile(url, logInfo.size, fetchBytes);
     } catch {
       retryCount++;
       console.warn(
@@ -109918,20 +110012,13 @@ const openRemoteLogFile = async (api2, url, concurrency) => {
       `Failed to open remote log file at ${url} after ${OPEN_RETRY_LIMIT} attempts.`
     );
   }
-  const readJSONFile = async (file, maxBytes, preprocessor2) => {
+  const readJSONFile = async (file, maxBytes, preprocessor2, onProgress) => {
     try {
-      let data = await remoteZipFile.readFile(file, maxBytes);
+      let data = await remoteZipFile.readFile(file, maxBytes, onProgress);
       if (preprocessor2) {
         data = preprocessor2.preprocess(data);
       }
-      const textDecoder = new TextDecoder("utf-8");
-      const jsonString = textDecoder.decode(data);
-      if (data.length > 0 && jsonString.length === 0) {
-        throw new Error(
-          `Failed to decode ${file} (${(data.length / 1024 / 1024).toFixed(0)}MB). The file may be corrupted or contain invalid UTF-8 sequences.`
-        );
-      }
-      return asyncJsonParse(jsonString);
+      return asyncJsonParseBytes(data);
     } catch (error2) {
       if (error2 instanceof FileSizeLimitError) {
         throw error2;
@@ -109957,7 +110044,7 @@ const openRemoteLogFile = async (api2, url, concurrency) => {
       };
     });
   };
-  const readSample = async (sampleId, epoch) => {
+  const readSample = async (sampleId, epoch, onProgress) => {
     const sampleFile = `samples/${sampleId}_epoch_${epoch}.json`;
     if (!remoteZipFile.centralDirectory.has(sampleFile)) {
       throw new SampleNotFoundError(
@@ -109974,7 +110061,8 @@ const openRemoteLogFile = async (api2, url, concurrency) => {
     return await readJSONFile(
       sampleFile,
       void 0,
-      eventsPreprocessor
+      eventsPreprocessor,
+      onProgress
     );
   };
   const readHeader = async () => {
@@ -110143,7 +110231,7 @@ const clientApi = (api2, log_file, debug2 = false) => {
   let pending_log_promise = null;
   const get_log_details = async (log_file2) => {
     if (isEvalFile(log_file2)) {
-      const remoteLogFile = await remoteEvalFile(log_file2);
+      const remoteLogFile = await remoteEvalFile(log_file2, true);
       if (remoteLogFile) {
         return await remoteLogFile.readLogSummary();
       } else {
@@ -110178,7 +110266,7 @@ const clientApi = (api2, log_file, debug2 = false) => {
       };
     }
   };
-  const get_log_sample = async (log_file2, id, epoch) => {
+  const get_log_sample = async (log_file2, id, epoch, onProgress) => {
     if (isEvalFile(log_file2)) {
       let handleError2 = function(error2) {
         if (error2 instanceof FileSizeLimitError) {
@@ -110191,7 +110279,7 @@ const clientApi = (api2, log_file, debug2 = false) => {
         if (!remoteLogFile) {
           throw new Error(`Unable to read remote eval file ${log_file2}`);
         }
-        return await remoteLogFile.readSample(String(id), epoch);
+        return await remoteLogFile.readSample(String(id), epoch, onProgress);
       }
       try {
         return await fetchSample(true);
@@ -110596,8 +110684,9 @@ function staticHttpApiForLog(logInfo) {
         throw new Error(`"Unable to load eval log ${log_file}`);
       }
     },
-    get_log_size: async (log_file) => {
-      return await fetchSize(log_file);
+    get_log_info: async (log_file) => {
+      const size = await fetchSize(log_file);
+      return { size };
     },
     get_log_bytes: async (log_file, start2, end2) => {
       return await fetchRange(log_file, start2, end2);
@@ -110869,10 +110958,10 @@ function viewServerApi(options2 = {}) {
     );
     return result2;
   };
-  const get_log_size2 = async (file) => {
+  const get_log_info2 = async (file) => {
     const result2 = await requestApi.fetchString(
       "GET",
-      `/log-size/${encodeURIComponent(file)}`
+      `/log-info/${encodeURIComponent(file)}`
     );
     return result2.parsed;
   };
@@ -111027,7 +111116,7 @@ function viewServerApi(options2 = {}) {
     get_eval_set: get_eval_set2,
     get_flow: get_flow2,
     get_log_contents: get_log_contents2,
-    get_log_size: get_log_size2,
+    get_log_info: get_log_info2,
     get_log_bytes: get_log_bytes2,
     get_log_summaries: get_log_summaries2,
     log_message: log_message2,
@@ -111043,12 +111132,13 @@ const kMethodEvalLogDir = "eval_log_dir";
 const kMethodEvalLogs = "eval_logs";
 const kMethodEvalLogFiles = "eval_log_files";
 const kMethodEvalLog = "eval_log";
-const kMethodEvalLogSize = "eval_log_size";
+const kMethodEvalLogInfo = "eval_log_info";
 const kMethodEvalLogBytes = "eval_log_bytes";
 const kMethodEvalLogHeaders = "eval_log_headers";
 const kMethodPendingSamples = "eval_log_pending_samples";
 const kMethodSampleData = "eval_log_sample_data";
 const kMethodLogMessage = "log_message";
+const kJsonRpcMethodNotFound = -32601;
 const kJsonRpcVersion = "2.0";
 function webViewJsonRpcClient(vscode2) {
   const target2 = {
@@ -111181,8 +111271,16 @@ async function get_log_contents(log_file, headerOnly, capabilities2) {
     throw new Error(`Unable to load eval log ${log_file}.`);
   }
 }
-async function get_log_size(log_file) {
-  return await vscodeClient(kMethodEvalLogSize, [log_file]);
+async function get_log_info(log_file) {
+  try {
+    return await vscodeClient(kMethodEvalLogInfo, [log_file]);
+  } catch (e) {
+    if (e?.code === kJsonRpcMethodNotFound) {
+      const size = await vscodeClient("eval_log_size", [log_file]);
+      return { size };
+    }
+    throw e;
+  }
 }
 async function get_log_bytes(log_file, start2, end2) {
   return await vscodeClient(kMethodEvalLogBytes, [log_file, start2, end2]);
@@ -111265,7 +111363,7 @@ const api$1 = {
   get_eval_set,
   get_flow,
   get_log_contents,
-  get_log_size,
+  get_log_info,
   get_log_bytes,
   get_log_summaries,
   log_message,
@@ -116324,6 +116422,7 @@ const useSampleData = () => {
   const runningEvents = useStore(
     (state) => state.sample.runningEvents
   );
+  const downloadProgress = useStore((state) => state.sample.downloadProgress);
   return reactExports.useMemo(() => {
     return {
       selectedSampleIdentifier,
@@ -116332,7 +116431,8 @@ const useSampleData = () => {
       error: sampleError,
       getSelectedSample,
       eventsCleared,
-      running: runningEvents
+      running: runningEvents,
+      downloadProgress
     };
   }, [
     sampleStatus2,
@@ -116341,7 +116441,8 @@ const useSampleData = () => {
     selectedSampleIdentifier,
     sampleNeedsReload,
     eventsCleared,
-    runningEvents
+    runningEvents,
+    downloadProgress
   ]);
 };
 const useSampleInvalidation = () => {
@@ -116773,25 +116874,33 @@ const useFlowServerData = (dir) => {
     }
   }, [dir, flowDir, api2, updateFlowData]);
 };
-const wrapper$3 = "_wrapper_1tajk_1";
-const container$k = "_container_1tajk_12";
-const animate = "_animate_1tajk_21";
+const wrapper$3 = "_wrapper_44dmw_1";
+const container$k = "_container_44dmw_12";
+const animate = "_animate_44dmw_21";
+const determinate = "_determinate_44dmw_31";
 const styles$1f = {
   wrapper: wrapper$3,
   container: container$k,
-  animate
+  animate,
+  determinate
 };
-const ActivityBar = ({ animating }) => {
+const ActivityBar = ({ animating, progress: progress2 }) => {
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1f.wrapper), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
     {
       className: clsx(styles$1f.container),
       role: "progressbar",
       "aria-label": "Progress bar",
-      "aria-valuenow": 25,
+      "aria-valuenow": progress2 !== void 0 ? Math.round(progress2 * 100) : void 0,
       "aria-valuemin": 0,
       "aria-valuemax": 100,
-      children: animating && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1f.animate })
+      children: animating && (progress2 !== void 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
+        {
+          className: styles$1f.determinate,
+          style: { width: `${progress2 * 100}%` }
+        }
+      ) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1f.animate }))
     }
   ) });
 };
@@ -118771,7 +118880,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.199-0-gffdb82c59" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.199-19-g2765f21a4" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -177332,7 +177441,20 @@ function useLoadSample() {
         if (completed !== false) {
           log$1.debug(`LOADING COMPLETED SAMPLE: ${id}-${epoch}`);
           getSamplePolling().stopPolling();
-          const sample2 = await api2?.get_log_sample(logFile, id, epoch);
+          sampleActions.setDownloadProgress(void 0);
+          const onProgress = (bytesLoaded, bytesTotal) => {
+            sampleActions.setDownloadProgress({
+              complete: bytesLoaded,
+              total: bytesTotal
+            });
+          };
+          const sample2 = await api2?.get_log_sample(
+            logFile,
+            id,
+            epoch,
+            onProgress
+          );
+          sampleActions.setDownloadProgress(void 0);
           log$1.debug(`LOADED COMPLETED SAMPLE: ${id}-${epoch}`);
           if (thisGeneration !== loadGeneration) {
             log$1.debug(`Discarding stale sample response: ${id}-${epoch}`);
@@ -177358,6 +177480,7 @@ function useLoadSample() {
           getSamplePolling().stopPolling();
         }
       } catch (e) {
+        sampleActions.setDownloadProgress(void 0);
         sampleActions.setSampleError(e);
         sampleActions.setSampleStatus("error");
       }
@@ -192698,6 +192821,7 @@ const SampleDisplay = ({
   id,
   scrollRef,
   showActivity,
+  progress: progress2,
   focusOnLoad
 }) => {
   const baseId = `sample-display`;
@@ -192929,7 +193053,7 @@ const SampleDisplay = ({
   const sampleDetailNavigation = useSampleDetailNavigation();
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
     selectedSampleSummary ? /* @__PURE__ */ jsxRuntimeExports.jsx(SampleSummaryView, { parent_id: id, sample: selectedSampleSummary }) : void 0,
-    /* @__PURE__ */ jsxRuntimeExports.jsx(ActivityBar, { animating: showActivity }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(ActivityBar, { animating: showActivity, progress: progress2 }),
     hasSampleData && /* @__PURE__ */ jsxRuntimeExports.jsxs(
       TabSet,
       {
@@ -193295,6 +193419,7 @@ const InlineSampleComponent = ({
   className: className2
 }) => {
   const sampleData = useSampleData();
+  const sampleProgress = sampleData.status === "loading" && sampleData.downloadProgress && sampleData.downloadProgress.total > 0 ? sampleData.downloadProgress.complete / sampleData.downloadProgress.total : void 0;
   const scrollRef = reactExports.useRef(null);
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(className2, styles$w.container), children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$w.scroller), ref: scrollRef, children: /* @__PURE__ */ jsxRuntimeExports.jsx(StickyScrollProvider, { value: scrollRef, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$w.body, children: sampleData.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(
     ErrorPanel,
@@ -193307,6 +193432,7 @@ const InlineSampleComponent = ({
     {
       id: "inline-sample-display",
       showActivity: !!showActivity,
+      progress: sampleProgress,
       scrollRef
     }
   ) }) }) }) });
