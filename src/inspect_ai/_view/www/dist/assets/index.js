@@ -118771,7 +118771,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.197-28-gcfbce4c75" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.199-0-gffdb82c59" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -178751,6 +178751,7 @@ const LiveVirtualList = ({
       }, 100);
     }
   }, [live, followOutput, prevLive, scrollRef, setFollowOutput]);
+  const isNearBottomRef = reactExports.useRef(false);
   const handleScroll = useRafThrottle(() => {
     if (isAutoScrollingRef.current) return;
     if (!live) return;
@@ -178764,10 +178765,25 @@ const LiveVirtualList = ({
       }
     }
   }, [setFollowOutput, followOutput, live]);
+  const handleScrollSync = reactExports.useCallback(() => {
+    if (isAutoScrollingRef.current) return;
+    if (!scrollRef?.current) return;
+    const parent = scrollRef.current;
+    isNearBottomRef.current = parent.scrollHeight - parent.scrollTop <= parent.clientHeight + 50;
+  }, [scrollRef]);
   const heightChanged = reactExports.useCallback(
     (height) => {
       requestAnimationFrame(() => {
-        if (followOutput && live && scrollRef?.current) {
+        if (!scrollRef?.current) return;
+        if (followOutput && live) {
+          isAutoScrollingRef.current = true;
+          listHandle.current?.scrollTo({ top: height });
+          requestAnimationFrame(() => {
+            isAutoScrollingRef.current = false;
+          });
+          return;
+        }
+        if (isNearBottomRef.current) {
           isAutoScrollingRef.current = true;
           listHandle.current?.scrollTo({ top: height });
           requestAnimationFrame(() => {
@@ -178904,9 +178920,13 @@ const LiveVirtualList = ({
     const parent = scrollRef?.current;
     if (parent) {
       parent.addEventListener("scroll", handleScroll);
-      return () => parent.removeEventListener("scroll", handleScroll);
+      parent.addEventListener("scroll", handleScrollSync);
+      return () => {
+        parent.removeEventListener("scroll", handleScroll);
+        parent.removeEventListener("scroll", handleScrollSync);
+      };
     }
-  }, [scrollRef, handleScroll]);
+  }, [scrollRef, handleScroll, handleScrollSync]);
   const hasScrolled = reactExports.useRef(false);
   reactExports.useEffect(() => {
     if (initialTopMostItemIndex !== void 0 && listHandle.current) {
@@ -179068,7 +179088,7 @@ const ChatViewVirtualList = reactExports.memo(
           } else if (event.key === "ArrowDown") {
             if (useVirtuoso) {
               listHandle.current?.scrollToIndex({
-                index: Math.min(messages2.length - 5, 0),
+                index: Math.max(messages2.length - 5, 0),
                 align: "center"
               });
               setTimeout(() => {
@@ -179087,16 +179107,10 @@ const ChatViewVirtualList = reactExports.memo(
           }
         }
       };
-      const scrollElement = scrollRef?.current;
-      if (scrollElement) {
-        scrollElement.addEventListener("keydown", handleKeyDown);
-        if (!scrollElement.hasAttribute("tabIndex")) {
-          scrollElement.setAttribute("tabIndex", "0");
-        }
-        return () => {
-          scrollElement.removeEventListener("keydown", handleKeyDown);
-        };
-      }
+      document.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+      };
     }, [scrollRef, messages2, useVirtuoso]);
     if (!useVirtuoso) {
       return /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -192574,17 +192588,11 @@ const TranscriptPanel = reactExports.memo((props) => {
         }
       }
     };
-    const scrollElement = scrollRef.current;
-    if (scrollElement) {
-      scrollElement.addEventListener("keydown", handleKeyDown);
-      if (!scrollElement.hasAttribute("tabIndex")) {
-        scrollElement.setAttribute("tabIndex", "0");
-      }
-      return () => {
-        scrollElement.removeEventListener("keydown", handleKeyDown);
-      };
-    }
-  }, [scrollRef, flattenedNodes]);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [flattenedNodes]);
   if (sampleStatus2 === "loading" && flattenedNodes.length === 0) {
     return void 0;
   }
