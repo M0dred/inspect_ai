@@ -16932,22 +16932,11 @@ function resolvePath(to2, fromPathname = "/") {
   } = typeof to2 === "string" ? parsePath$1(to2) : to2;
   let pathname;
   if (toPathname) {
-    if (isAbsoluteUrl(toPathname)) {
-      pathname = toPathname;
+    toPathname = toPathname.replace(/\/\/+/g, "/");
+    if (toPathname.startsWith("/")) {
+      pathname = resolvePathname(toPathname.substring(1), "/");
     } else {
-      if (toPathname.includes("//")) {
-        let oldPathname = toPathname;
-        toPathname = toPathname.replace(/\/\/+/g, "/");
-        warning(
-          false,
-          `Pathnames cannot have embedded double slashes - normalizing ${oldPathname} -> ${toPathname}`
-        );
-      }
-      if (toPathname.startsWith("/")) {
-        pathname = resolvePathname(toPathname.substring(1), "/");
-      } else {
-        pathname = resolvePathname(toPathname, fromPathname);
-      }
+      pathname = resolvePathname(toPathname, fromPathname);
     }
   } else {
     pathname = fromPathname;
@@ -22320,7 +22309,15 @@ function PrefetchPageLinksImpl({
   return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, dataHrefs.map((href) => /* @__PURE__ */ reactExports.createElement("link", { key: href, rel: "prefetch", as: "fetch", href, ...linkProps })), moduleHrefs.map((href) => /* @__PURE__ */ reactExports.createElement("link", { key: href, rel: "modulepreload", href, ...linkProps })), keyedPrefetchLinks.map(({ key: key2, link: link2 }) => (
     // these don't spread `linkProps` because they are full link descriptors
     // already with their own props
-    /* @__PURE__ */ reactExports.createElement("link", { key: key2, nonce: linkProps.nonce, ...link2 })
+    /* @__PURE__ */ reactExports.createElement(
+      "link",
+      {
+        key: key2,
+        nonce: linkProps.nonce,
+        ...link2,
+        crossOrigin: link2.crossOrigin ?? linkProps.crossOrigin
+      }
+    )
   )));
 }
 function mergeRefs(...refs) {
@@ -22338,7 +22335,7 @@ var isBrowser2 = typeof window !== "undefined" && typeof window.document !== "un
 try {
   if (isBrowser2) {
     window.__reactRouterVersion = // @ts-expect-error
-    "7.12.0";
+    "7.13.0";
   }
 } catch (e) {
 }
@@ -40580,7 +40577,13 @@ function linkify(state, silent) {
   if (!link2) return false;
   let url = link2.url;
   if (url.length <= proto.length) return false;
-  url = url.replace(/\*+$/, "");
+  let urlEnd = url.length;
+  while (urlEnd > 0 && url.charCodeAt(urlEnd - 1) === 42) {
+    urlEnd--;
+  }
+  if (urlEnd !== url.length) {
+    url = url.slice(0, urlEnd);
+  }
   const fullUrl = state.md.normalizeLink(url);
   if (!state.md.validateLink(fullUrl)) return false;
   if (!silent) {
@@ -116885,7 +116888,7 @@ function isShadowRoot(node2) {
   var OwnElement = getWindow(node2).ShadowRoot;
   return node2 instanceof OwnElement || node2 instanceof ShadowRoot;
 }
-function applyStyles(_ref) {
+function applyStyles$1(_ref) {
   var state = _ref.state;
   Object.keys(state.elements).forEach(function(name2) {
     var style2 = state.styles[name2] || {};
@@ -116943,11 +116946,11 @@ function effect$2(_ref2) {
     });
   };
 }
-const applyStyles$1 = {
+const applyStyles = {
   name: "applyStyles",
   enabled: true,
   phase: "write",
-  fn: applyStyles,
+  fn: applyStyles$1,
   effect: effect$2,
   requires: ["computeStyles"]
 };
@@ -117133,7 +117136,7 @@ var toPaddingObject = function toPaddingObject2(padding, state) {
   })) : padding;
   return mergePaddingObject(typeof padding !== "number" ? padding : expandToHashMap(padding, basePlacements));
 };
-function arrow(_ref) {
+function arrow$1(_ref) {
   var _state$modifiersData$;
   var state = _ref.state, name2 = _ref.name, options2 = _ref.options;
   var arrowElement = state.elements.arrow;
@@ -117178,11 +117181,11 @@ function effect$1(_ref2) {
   }
   state.elements.arrow = arrowElement;
 }
-const arrow$1 = {
+const arrow = {
   name: "arrow",
   enabled: true,
   phase: "main",
-  fn: arrow,
+  fn: arrow$1,
   effect: effect$1,
   requires: ["popperOffsets"],
   requiresIfExists: ["preventOverflow"]
@@ -117271,7 +117274,7 @@ function mapToStyles(_ref2) {
   }
   return Object.assign({}, commonStyles, (_Object$assign2 = {}, _Object$assign2[sideY] = hasY ? y + "px" : "", _Object$assign2[sideX] = hasX ? x + "px" : "", _Object$assign2.transform = "", _Object$assign2));
 }
-function computeStyles(_ref5) {
+function computeStyles$1(_ref5) {
   var state = _ref5.state, options2 = _ref5.options;
   var _options$gpuAccelerat = options2.gpuAcceleration, gpuAcceleration = _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat, _options$adaptive = options2.adaptive, adaptive = _options$adaptive === void 0 ? true : _options$adaptive, _options$roundOffsets = options2.roundOffsets, roundOffsets = _options$roundOffsets === void 0 ? true : _options$roundOffsets;
   var commonStyles = {
@@ -117302,11 +117305,11 @@ function computeStyles(_ref5) {
     "data-popper-placement": state.placement
   });
 }
-const computeStyles$1 = {
+const computeStyles = {
   name: "computeStyles",
   enabled: true,
   phase: "beforeWrite",
-  fn: computeStyles,
+  fn: computeStyles$1,
   data: {}
 };
 var passive = {
@@ -117622,7 +117625,7 @@ function getExpandedFallbackPlacements(placement) {
   var oppositePlacement = getOppositePlacement(placement);
   return [getOppositeVariationPlacement(placement), oppositePlacement, getOppositeVariationPlacement(oppositePlacement)];
 }
-function flip(_ref) {
+function flip$1(_ref) {
   var state = _ref.state, options2 = _ref.options, name2 = _ref.name;
   if (state.modifiersData[name2]._skip) {
     return;
@@ -117708,11 +117711,11 @@ function flip(_ref) {
     state.reset = true;
   }
 }
-const flip$1 = {
+const flip = {
   name: "flip",
   enabled: true,
   phase: "main",
-  fn: flip,
+  fn: flip$1,
   requiresIfExists: ["offset"],
   data: {
     _skip: false
@@ -117737,7 +117740,7 @@ function isAnySideFullyClipped(overflow) {
     return overflow[side] >= 0;
   });
 }
-function hide(_ref) {
+function hide$1(_ref) {
   var state = _ref.state, name2 = _ref.name;
   var referenceRect = state.rects.reference;
   var popperRect = state.rects.popper;
@@ -117763,12 +117766,12 @@ function hide(_ref) {
     "data-popper-escaped": hasPopperEscaped
   });
 }
-const hide$1 = {
+const hide = {
   name: "hide",
   enabled: true,
   phase: "main",
   requiresIfExists: ["preventOverflow"],
-  fn: hide
+  fn: hide$1
 };
 function distanceAndSkiddingToXY(placement, rects, offset2) {
   var basePlacement = getBasePlacement(placement);
@@ -117786,7 +117789,7 @@ function distanceAndSkiddingToXY(placement, rects, offset2) {
     y: distance
   };
 }
-function offset(_ref2) {
+function offset$1(_ref2) {
   var state = _ref2.state, options2 = _ref2.options, name2 = _ref2.name;
   var _options$offset = options2.offset, offset2 = _options$offset === void 0 ? [0, 0] : _options$offset;
   var data = placements.reduce(function(acc, placement) {
@@ -117800,14 +117803,14 @@ function offset(_ref2) {
   }
   state.modifiersData[name2] = data;
 }
-const offset$1 = {
+const offset = {
   name: "offset",
   enabled: true,
   phase: "main",
   requires: ["popperOffsets"],
-  fn: offset
+  fn: offset$1
 };
-function popperOffsets(_ref) {
+function popperOffsets$1(_ref) {
   var state = _ref.state, name2 = _ref.name;
   state.modifiersData[name2] = computeOffsets({
     reference: state.rects.reference,
@@ -117815,17 +117818,17 @@ function popperOffsets(_ref) {
     placement: state.placement
   });
 }
-const popperOffsets$1 = {
+const popperOffsets = {
   name: "popperOffsets",
   enabled: true,
   phase: "read",
-  fn: popperOffsets,
+  fn: popperOffsets$1,
   data: {}
 };
 function getAltAxis(axis) {
   return axis === "x" ? "y" : "x";
 }
-function preventOverflow(_ref) {
+function preventOverflow$1(_ref) {
   var state = _ref.state, options2 = _ref.options, name2 = _ref.name;
   var _options$mainAxis = options2.mainAxis, checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis, _options$altAxis = options2.altAxis, checkAltAxis = _options$altAxis === void 0 ? false : _options$altAxis, boundary = options2.boundary, rootBoundary = options2.rootBoundary, altBoundary = options2.altBoundary, padding = options2.padding, _options$tether = options2.tether, tether = _options$tether === void 0 ? true : _options$tether, _options$tetherOffset = options2.tetherOffset, tetherOffset = _options$tetherOffset === void 0 ? 0 : _options$tetherOffset;
   var overflow = detectOverflow(state, {
@@ -117909,11 +117912,11 @@ function preventOverflow(_ref) {
   }
   state.modifiersData[name2] = data;
 }
-const preventOverflow$1 = {
+const preventOverflow = {
   name: "preventOverflow",
   enabled: true,
   phase: "main",
-  fn: preventOverflow,
+  fn: preventOverflow$1,
   requiresIfExists: ["offset"]
 };
 function getHTMLElementScroll(element) {
@@ -118171,7 +118174,7 @@ function popperGenerator(generatorOptions) {
     return instance2;
   };
 }
-var defaultModifiers = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$1, offset$1, flip$1, preventOverflow$1, arrow$1, hide$1];
+var defaultModifiers = [eventListeners, popperOffsets, computeStyles, applyStyles, offset, flip, preventOverflow, arrow, hide];
 var createPopper = /* @__PURE__ */ popperGenerator({
   defaultModifiers
 });
@@ -118769,7 +118772,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.195-27-g3918b4353" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.197-24-g12c4c8a8c" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -178357,51 +178360,6 @@ const NoContentsPanel = ({ text: text2 }) => {
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: text2 })
   ] }) });
 };
-const printHtml = (html2, css2) => {
-  const printWindow = window.open("", "", "height=600,width=800");
-  if (printWindow !== null) {
-    printWindow.document.write("<html><head><title>Print</title>");
-    printWindow.document.write(`
-          <link rel="stylesheet" crossorigin="" href="./assets/index.css">
-          <style>
-            @media print {
-              ${css2}
-            }
-          </style>
-        `);
-    printWindow.document.write("</head><body>");
-    printWindow.document.write(html2);
-    printWindow.document.write("</body></html>");
-    printWindow.document.close();
-    printWindow.onload = function() {
-      printWindow.focus();
-      printWindow.print();
-      printWindow.close();
-    };
-  } else {
-    console.error("Print window failed to open.");
-  }
-};
-const printHeadingHtml = () => {
-  const taskEl = document.getElementById("task-title");
-  const modelEl = document.getElementById("task-model");
-  const timeEl = document.getElementById("task-created");
-  if (!taskEl || !modelEl || !timeEl) {
-    throw new Error(
-      "Failed to compute heading HTML. The task, model, or time element can't be found."
-    );
-  }
-  const task = taskEl.innerText;
-  const model2 = modelEl.innerText;
-  const time = timeEl.innerText;
-  const headingHtml = `
-<div style="display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 0.5em; margin-bottom: 2em; justify-content: space-between; border-bottom: solid 1px silver;">
-<div style="font-weight: 600">${task}</div>
-<div style="text-align: center;">${model2}</div>
-<div style="text-align: right;">${time}</div>
-</div>`;
-  return headingHtml;
-};
 const messagesToStr = (messages2, options2) => {
   const opts = {};
   return messages2.map((msg) => messageToStr(msg, opts)).filter((str2) => str2 !== null).join("\n");
@@ -192687,6 +192645,43 @@ const TranscriptPanel = reactExports.memo((props) => {
     );
   }
 });
+const printHtml = (html2, css2) => {
+  const printWindow = window.open("", "", "height=600,width=800");
+  if (printWindow !== null) {
+    printWindow.document.write("<html><head><title>Print</title>");
+    printWindow.document.write(`
+          <link rel="stylesheet" crossorigin="" href="./assets/index.css">
+          <style>
+            @media print {
+              ${css2}
+            }
+          </style>
+        `);
+    printWindow.document.write("</head><body>");
+    printWindow.document.write(html2);
+    printWindow.document.write("</body></html>");
+    printWindow.document.close();
+    printWindow.onload = function() {
+      printWindow.focus();
+      printWindow.print();
+      printWindow.close();
+    };
+  } else {
+    console.error("Print window failed to open.");
+  }
+};
+const printHeadingHtml = (evalSpec) => {
+  const task = evalSpec?.task || "Unknown Task";
+  const model2 = evalSpec?.model || "Unknown Model";
+  const time = evalSpec?.created ? new Date(evalSpec.created).toLocaleString() : "Unknown Time";
+  const headingHtml = `
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 0.5em; margin-bottom: 2em; justify-content: space-between; border-bottom: solid 1px silver;">
+<div style="font-weight: 600">${task}</div>
+<div style="text-align: center;">${model2}</div>
+<div style="text-align: right;">${time}</div>
+</div>`;
+  return headingHtml;
+};
 const SampleDisplay = ({
   id,
   scrollRef,
@@ -192784,8 +192779,8 @@ const SampleDisplay = ({
   const filterRef = reactExports.useRef(null);
   const optionsRef = reactExports.useRef(null);
   const handlePrintClick = reactExports.useCallback(() => {
-    printSample(id, targetId);
-  }, [id, targetId]);
+    printSample(id, targetId, evalSpec);
+  }, [id, targetId, evalSpec]);
   const toggleFilter = reactExports.useCallback(() => {
     setShowing(!isShowing);
   }, [setShowing, isShowing]);
@@ -193210,7 +193205,7 @@ const metadataViewsForSample = (id, scrollRef, sample2) => {
   }
   return sampleMetadatas;
 };
-const printSample = (id, targetId) => {
+const printSample = (id, targetId, evalSpec) => {
   const targetTabEl = document.querySelector(
     `#${escapeSelector(targetId)} .sample-tab.tab-pane.show.active`
   );
@@ -193219,7 +193214,7 @@ const printSample = (id, targetId) => {
     if (targetEl) {
       const headingId = `sample-heading-${id}`;
       const headingEl = document.getElementById(headingId);
-      const headingHtml = printHeadingHtml();
+      const headingHtml = printHeadingHtml(evalSpec);
       const css2 = `
       html { font-size: 9pt }
       /* Allow content to break anywhere without any forced page breaks */
@@ -193232,13 +193227,6 @@ const printSample = (id, targetId) => {
         page-break-after: auto;
       }
       /* Specifically disable all page breaks for divs */
-      div {
-        break-inside: auto;
-        page-break-inside: auto;
-      }
-      body > .transcript-step {
-        break-inside: avoid;
-      }
       body{
         -webkit-print-color-adjust:exact !important;
         print-color-adjust:exact !important;
