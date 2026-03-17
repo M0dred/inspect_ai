@@ -16932,11 +16932,22 @@ function resolvePath(to2, fromPathname = "/") {
   } = typeof to2 === "string" ? parsePath$1(to2) : to2;
   let pathname;
   if (toPathname) {
-    toPathname = toPathname.replace(/\/\/+/g, "/");
-    if (toPathname.startsWith("/")) {
-      pathname = resolvePathname(toPathname.substring(1), "/");
+    if (isAbsoluteUrl(toPathname)) {
+      pathname = toPathname;
     } else {
-      pathname = resolvePathname(toPathname, fromPathname);
+      if (toPathname.includes("//")) {
+        let oldPathname = toPathname;
+        toPathname = toPathname.replace(/\/\/+/g, "/");
+        warning(
+          false,
+          `Pathnames cannot have embedded double slashes - normalizing ${oldPathname} -> ${toPathname}`
+        );
+      }
+      if (toPathname.startsWith("/")) {
+        pathname = resolvePathname(toPathname.substring(1), "/");
+      } else {
+        pathname = resolvePathname(toPathname, fromPathname);
+      }
     }
   } else {
     pathname = fromPathname;
@@ -22309,15 +22320,7 @@ function PrefetchPageLinksImpl({
   return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, dataHrefs.map((href) => /* @__PURE__ */ reactExports.createElement("link", { key: href, rel: "prefetch", as: "fetch", href, ...linkProps })), moduleHrefs.map((href) => /* @__PURE__ */ reactExports.createElement("link", { key: href, rel: "modulepreload", href, ...linkProps })), keyedPrefetchLinks.map(({ key: key2, link: link2 }) => (
     // these don't spread `linkProps` because they are full link descriptors
     // already with their own props
-    /* @__PURE__ */ reactExports.createElement(
-      "link",
-      {
-        key: key2,
-        nonce: linkProps.nonce,
-        ...link2,
-        crossOrigin: link2.crossOrigin ?? linkProps.crossOrigin
-      }
-    )
+    /* @__PURE__ */ reactExports.createElement("link", { key: key2, nonce: linkProps.nonce, ...link2 })
   )));
 }
 function mergeRefs(...refs) {
@@ -22335,7 +22338,7 @@ var isBrowser2 = typeof window !== "undefined" && typeof window.document !== "un
 try {
   if (isBrowser2) {
     window.__reactRouterVersion = // @ts-expect-error
-    "7.13.0";
+    "7.12.0";
   }
 } catch (e) {
 }
@@ -40577,13 +40580,7 @@ function linkify(state, silent) {
   if (!link2) return false;
   let url = link2.url;
   if (url.length <= proto.length) return false;
-  let urlEnd = url.length;
-  while (urlEnd > 0 && url.charCodeAt(urlEnd - 1) === 42) {
-    urlEnd--;
-  }
-  if (urlEnd !== url.length) {
-    url = url.slice(0, urlEnd);
-  }
+  url = url.replace(/\*+$/, "");
   const fullUrl = state.md.normalizeLink(url);
   if (!state.md.validateLink(fullUrl)) return false;
   if (!silent) {
@@ -118772,7 +118769,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.195-20-g21e83c571" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.195-27-g3918b4353" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -176790,6 +176787,16 @@ const LogListGrid = ({
       gridElement.removeEventListener("keydown", handleKeyDown);
     };
   }, [handleKeyDown]);
+  const handleCellMouseDown = reactExports.useCallback(
+    (e) => {
+      const mouseEvent = e.event;
+      if (mouseEvent?.button === 1 && e.data?.url) {
+        mouseEvent.preventDefault();
+        window.open(`#${e.data.url}`, "_blank");
+      }
+    },
+    []
+  );
   reactExports.useEffect(() => {
     const loadHeaders = async () => {
       const filesToLoad = logFiles.filter((file) => !logPreviews[file.name]);
@@ -176956,6 +176963,7 @@ const LogListGrid = ({
           }
         },
         onRowClicked: handleRowClick,
+        onCellMouseDown: handleCellMouseDown,
         onSortChanged: handleSortChanged,
         onFilterChanged: handleFilterChanged,
         loading: data.length === 0 && (loading > 0 || syncing)
@@ -215802,10 +215810,25 @@ const SampleList = reactExports.memo((props) => {
   reactExports.useEffect(() => {
     const el2 = gridContainerRef.current;
     if (!el2) return;
-    const handler = handleKeyDown;
-    el2.addEventListener("keydown", handler);
-    return () => el2.removeEventListener("keydown", handler);
+    el2.addEventListener("keydown", handleKeyDown);
+    return () => {
+      el2.removeEventListener("keydown", handleKeyDown);
+    };
   }, [handleKeyDown]);
+  const handleCellMouseDown = reactExports.useCallback(
+    (e) => {
+      const mouseEvent = e.event;
+      if (mouseEvent?.button === 1 && e.data) {
+        mouseEvent.preventDefault();
+        const url = sampleNavigation.getSampleUrl(
+          e.data.data.id,
+          e.data.data.epoch
+        );
+        if (url) window.open(url, "_blank");
+      }
+    },
+    [sampleNavigation]
+  );
   const selectCurrentSample = reactExports.useCallback(() => {
     if (!listHandle.current?.api || !selectedSampleHandle) {
       return;
@@ -215921,6 +215944,7 @@ const SampleList = reactExports.memo((props) => {
             getRowId,
             rowSelection: { mode: "singleRow", checkboxes: false },
             onRowClicked: handleRowClick,
+            onCellMouseDown: handleCellMouseDown,
             onColumnResized: handleColumnResized,
             theme: themeBalham,
             enableCellTextSelection: true,
@@ -217906,7 +217930,7 @@ const SamplesGrid = ({
     (state) => state.log.selectedSampleHandle
   );
   const internalGridRef = reactExports.useRef(null);
-  const gridRef = externalGridRef || internalGridRef;
+  const gridRef = externalGridRef ?? internalGridRef;
   const gridContainerRef = reactExports.useRef(null);
   const { startPolling, stopPolling } = useClientEvents();
   reactExports.useEffect(() => {
@@ -217979,6 +218003,21 @@ const SamplesGrid = ({
       gridElement.removeEventListener("keydown", handleKeyDown);
     };
   }, [handleKeyDown]);
+  const handleCellMouseDown = reactExports.useCallback(
+    (e) => {
+      const mouseEvent = e.event;
+      if (mouseEvent?.button === 1 && e.data) {
+        mouseEvent.preventDefault();
+        navigateToSampleDetail(
+          e.data.logFile,
+          e.data.sampleId,
+          e.data.epoch,
+          true
+        );
+      }
+    },
+    [navigateToSampleDetail]
+  );
   const sampleRowId = (logFile, sampleId, epoch) => {
     return `${logFile}-${sampleId}-${epoch}`.replace(/\s+/g, "_");
   };
@@ -218050,6 +218089,7 @@ const SamplesGrid = ({
         }
       },
       onRowClicked: handleRowClick,
+      onCellMouseDown: handleCellMouseDown,
       onFilterChanged: () => {
         if (gridRef.current?.api) {
           const newDisplayedSamples = gridDisplayedSamples(
