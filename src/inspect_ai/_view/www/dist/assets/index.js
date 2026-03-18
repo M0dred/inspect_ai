@@ -36996,16 +36996,16 @@ const supportsLinking = () => {
 const toFullUrl = (path) => {
   return `${window.location.origin}${window.location.pathname}${window.location.search}#${path}`;
 };
-const message$3 = "_message_1k527_1";
-const systemRole = "_systemRole_1k527_8";
-const timestamp = "_timestamp_1k527_12";
-const messageGrid = "_messageGrid_1k527_18";
-const toolMessageGrid = "_toolMessageGrid_1k527_28";
-const messageContents = "_messageContents_1k527_32";
-const indented = "_indented_1k527_37";
-const copyLink$1 = "_copyLink_1k527_41";
-const metadataLabel = "_metadataLabel_1k527_52";
-const hover$1 = "_hover_1k527_56";
+const message$3 = "_message_1kuwu_1";
+const systemRole = "_systemRole_1kuwu_9";
+const timestamp = "_timestamp_1kuwu_13";
+const messageGrid = "_messageGrid_1kuwu_19";
+const toolMessageGrid = "_toolMessageGrid_1kuwu_29";
+const messageContents = "_messageContents_1kuwu_33";
+const indented = "_indented_1kuwu_38";
+const copyLink$1 = "_copyLink_1kuwu_42";
+const metadataLabel = "_metadataLabel_1kuwu_53";
+const hover$1 = "_hover_1kuwu_57";
 const styles$1C = {
   message: message$3,
   systemRole,
@@ -111540,11 +111540,13 @@ ${citation.url}` : citation.url,
   }
 );
 const OtherCitation = ({ children: children2 }) => /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: children2 });
-const contentImage = "_contentImage_srbm0_1";
-const reasoning = "_reasoning_srbm0_6";
+const contentImage = "_contentImage_16eyd_1";
+const reasoning = "_reasoning_16eyd_6";
+const breakable = "_breakable_16eyd_21";
 const styles$1r = {
   contentImage,
-  reasoning
+  reasoning,
+  breakable
 };
 const mcpToolUse = "_mcpToolUse_1792k_1";
 const title$2 = "_title_1792k_9";
@@ -111860,7 +111862,10 @@ const messageRenderers = {
             RenderedText,
             {
               markdown: purgeInternalContainers(c2.text) || "",
-              className: isLast ? "no-last-para-padding" : ""
+              className: clsx(
+                isLast ? "no-last-para-padding" : "",
+                styles$1r.breakable
+              )
             }
           ),
           c2.citations ? /* @__PURE__ */ jsxRuntimeExports.jsx(MessageCitations, { citations: c2.citations }) : void 0
@@ -112158,7 +112163,7 @@ const extractInput = (args2, inputDescriptor) => {
     };
   }
 };
-const toolCallView = "_toolCallView_l6wae_1";
+const toolCallView = "_toolCallView_10z2l_1";
 const styles$1o = {
   toolCallView
 };
@@ -181226,12 +181231,12 @@ const TranscriptOutline = ({
     }
   );
 };
-const container$f = "_container_17sux_1";
-const collapsed = "_collapsed_17sux_9";
-const treeContainer = "_treeContainer_17sux_13";
-const listContainer = "_listContainer_17sux_25";
-const outline = "_outline_17sux_29";
-const outlineToggle = "_outlineToggle_17sux_33";
+const container$f = "_container_n37ko_1";
+const collapsed = "_collapsed_n37ko_13";
+const treeContainer = "_treeContainer_n37ko_17";
+const listContainer = "_listContainer_n37ko_29";
+const outline = "_outline_n37ko_33";
+const outlineToggle = "_outlineToggle_n37ko_37";
 const styles$R = {
   container: container$f,
   collapsed,
