@@ -28981,54 +28981,48 @@ const resolveAttachments = (value2, attachments, onFailedResolve) => {
   }
   return value2;
 };
-const expandRefs = (refs, pool) => refs.flatMap(([start2, end_exclusive]) => pool.slice(start2, end_exclusive));
-const resolveEventRefs = (events, msgPool, callPool) => {
+const expandRefs = (refs, pool) => refs.flatMap(([start2, end2]) => pool.slice(start2, end2));
+const isModelEvent = (event) => event.event === "model";
+function expandEvents(events, eventsData) {
+  if (!eventsData) return events;
+  const { messages: messages2, calls } = eventsData;
+  const hasMessages = messages2.length > 0;
+  const hasCalls = calls.length > 0;
+  if (!hasMessages && !hasCalls) return events;
   return events.map((event) => {
-    if (event.event !== "model") return event;
-    const resolved = Array.isArray(event.input_refs) ? {
-      ...event,
-      input: expandRefs(
-        event.input_refs,
-        msgPool
-      ),
-      input_refs: null
-    } : event;
-    if (!resolved.call || !Array.isArray(resolved.call.call_refs))
-      return resolved;
-    return {
-      ...resolved,
-      call: {
-        ...resolved.call,
-        request: {
-          ...resolved.call.request,
-          [resolved.call.call_key || "messages"]: expandRefs(
-            resolved.call.call_refs,
-            callPool
-          )
-        },
+    if (!isModelEvent(event)) return event;
+    let changed = false;
+    let input2 = event.input;
+    let call = event.call;
+    if (event.input_refs != null && hasMessages) {
+      input2 = expandRefs(event.input_refs, messages2);
+      changed = true;
+    }
+    if (call?.call_refs != null && hasCalls) {
+      const key2 = call.call_key ?? "messages";
+      const expandedMsgs = expandRefs(
+        call.call_refs,
+        calls
+      );
+      call = {
+        ...call,
+        request: { ...call.request, [key2]: expandedMsgs },
         call_refs: null,
         call_key: null
-      }
-    };
+      };
+      changed = true;
+    }
+    return changed ? { ...event, input: input2, input_refs: null, call } : event;
   });
-};
-const resolvePools = (sample2) => {
-  const { message_pool, call_pool } = sample2;
-  if (!message_pool?.length && !call_pool?.length) return sample2;
-  return {
-    ...sample2,
-    events: resolveEventRefs(sample2.events, message_pool, call_pool),
-    message_pool: [],
-    call_pool: []
-  };
-};
+}
 const resolveSample$1 = (sample2) => {
   sample2 = { ...sample2 };
   if (sample2.transcript) {
     sample2.events = sample2.transcript.events;
     sample2.attachments = sample2.transcript.content;
   }
-  sample2 = resolvePools(sample2);
+  sample2.events = expandEvents(sample2.events, sample2.events_data ?? null);
+  sample2.events_data = null;
   sample2.attachments = sample2.attachments || {};
   sample2.input = resolveAttachments(sample2.input, sample2.attachments);
   sample2.messages = resolveAttachments(sample2.messages, sample2.attachments);
@@ -74337,7 +74331,7 @@ function requireLiteAdaptor() {
   liteAdaptor.liteAdaptor = liteAdaptor$1;
   return liteAdaptor;
 }
-var html$1 = {};
+var html$2 = {};
 var HTMLHandler = {};
 var Handler = {};
 var MathDocument = {};
@@ -76682,12 +76676,12 @@ function requireHTMLHandler() {
   HTMLHandler.HTMLHandler = HTMLHandler$1;
   return HTMLHandler;
 }
-var hasRequiredHtml$1;
-function requireHtml$1() {
-  if (hasRequiredHtml$1) return html$1;
-  hasRequiredHtml$1 = 1;
-  Object.defineProperty(html$1, "__esModule", { value: true });
-  html$1.RegisterHTMLHandler = void 0;
+var hasRequiredHtml$2;
+function requireHtml$2() {
+  if (hasRequiredHtml$2) return html$2;
+  hasRequiredHtml$2 = 1;
+  Object.defineProperty(html$2, "__esModule", { value: true });
+  html$2.RegisterHTMLHandler = void 0;
   var mathjax_js_1 = requireMathjax();
   var HTMLHandler_js_1 = requireHTMLHandler();
   function RegisterHTMLHandler(adaptor) {
@@ -76695,8 +76689,8 @@ function requireHtml$1() {
     mathjax_js_1.mathjax.handlers.register(handler);
     return handler;
   }
-  html$1.RegisterHTMLHandler = RegisterHTMLHandler;
-  return html$1;
+  html$2.RegisterHTMLHandler = RegisterHTMLHandler;
+  return html$2;
 }
 var AllPackages = {};
 var ActionConfiguration = {};
@@ -99582,12 +99576,12 @@ function requireTokenizer() {
   tokenizer = Tokenizer2;
   return tokenizer;
 }
-var html = {};
-var hasRequiredHtml;
-function requireHtml() {
-  if (hasRequiredHtml) return html;
-  hasRequiredHtml = 1;
-  const NS = html.NAMESPACES = {
+var html$1 = {};
+var hasRequiredHtml$1;
+function requireHtml$1() {
+  if (hasRequiredHtml$1) return html$1;
+  hasRequiredHtml$1 = 1;
+  const NS = html$1.NAMESPACES = {
     HTML: "http://www.w3.org/1999/xhtml",
     MATHML: "http://www.w3.org/1998/Math/MathML",
     SVG: "http://www.w3.org/2000/svg",
@@ -99595,7 +99589,7 @@ function requireHtml() {
     XML: "http://www.w3.org/XML/1998/namespace",
     XMLNS: "http://www.w3.org/2000/xmlns/"
   };
-  html.ATTRS = {
+  html$1.ATTRS = {
     TYPE: "type",
     ACTION: "action",
     ENCODING: "encoding",
@@ -99605,12 +99599,12 @@ function requireHtml() {
     FACE: "face",
     SIZE: "size"
   };
-  html.DOCUMENT_MODE = {
+  html$1.DOCUMENT_MODE = {
     NO_QUIRKS: "no-quirks",
     QUIRKS: "quirks",
     LIMITED_QUIRKS: "limited-quirks"
   };
-  const $2 = html.TAG_NAMES = {
+  const $2 = html$1.TAG_NAMES = {
     A: "a",
     ADDRESS: "address",
     ANNOTATION_XML: "annotation-xml",
@@ -99734,7 +99728,7 @@ function requireHtml() {
     WBR: "wbr",
     XMP: "xmp"
   };
-  html.SPECIAL_ELEMENTS = {
+  html$1.SPECIAL_ELEMENTS = {
     [NS.HTML]: {
       [$2.ADDRESS]: true,
       [$2.APPLET]: true,
@@ -99832,14 +99826,14 @@ function requireHtml() {
       [$2.DESC]: true
     }
   };
-  return html;
+  return html$1;
 }
 var openElementStack;
 var hasRequiredOpenElementStack;
 function requireOpenElementStack() {
   if (hasRequiredOpenElementStack) return openElementStack;
   hasRequiredOpenElementStack = 1;
-  const HTML = requireHtml();
+  const HTML = requireHtml$1();
   const $2 = HTML.TAG_NAMES;
   const NS = HTML.NAMESPACES;
   function isImpliedEndTagRequired(tn2) {
@@ -100564,7 +100558,7 @@ function requireParserMixin$1() {
   const Tokenizer2 = requireTokenizer();
   const LocationInfoTokenizerMixin = requireTokenizerMixin$1();
   const LocationInfoOpenElementStackMixin = requireOpenElementStackMixin();
-  const HTML = requireHtml();
+  const HTML = requireHtml$1();
   const $2 = HTML.TAG_NAMES;
   class LocationInfoParserMixin extends Mixin {
     constructor(parser2) {
@@ -100851,7 +100845,7 @@ var hasRequired_default;
 function require_default() {
   if (hasRequired_default) return _default;
   hasRequired_default = 1;
-  const { DOCUMENT_MODE } = requireHtml();
+  const { DOCUMENT_MODE } = requireHtml$1();
   _default.createDocument = function() {
     return {
       nodeName: "#document",
@@ -101039,12 +101033,12 @@ function requireMergeOptions() {
   };
   return mergeOptions;
 }
-var doctype = {};
-var hasRequiredDoctype;
-function requireDoctype() {
-  if (hasRequiredDoctype) return doctype;
-  hasRequiredDoctype = 1;
-  const { DOCUMENT_MODE } = requireHtml();
+var doctype$1 = {};
+var hasRequiredDoctype$1;
+function requireDoctype$1() {
+  if (hasRequiredDoctype$1) return doctype$1;
+  hasRequiredDoctype$1 = 1;
+  const { DOCUMENT_MODE } = requireHtml$1();
   const VALID_DOCTYPE_NAME = "html";
   const VALID_SYSTEM_ID = "about:legacy-compat";
   const QUIRKS_MODE_SYSTEM_ID = "http://www.ibm.com/data/dtd/v11/ibmxhtml1-transitional.dtd";
@@ -101127,10 +101121,10 @@ function requireDoctype() {
     }
     return false;
   }
-  doctype.isConforming = function(token2) {
+  doctype$1.isConforming = function(token2) {
     return token2.name === VALID_DOCTYPE_NAME && token2.publicId === null && (token2.systemId === null || token2.systemId === VALID_SYSTEM_ID);
   };
-  doctype.getDocumentMode = function(token2) {
+  doctype$1.getDocumentMode = function(token2) {
     if (token2.name !== VALID_DOCTYPE_NAME) {
       return DOCUMENT_MODE.QUIRKS;
     }
@@ -101155,7 +101149,7 @@ function requireDoctype() {
     }
     return DOCUMENT_MODE.NO_QUIRKS;
   };
-  doctype.serializeContent = function(name2, publicId, systemId) {
+  doctype$1.serializeContent = function(name2, publicId, systemId) {
     let str2 = "!DOCTYPE ";
     if (name2) {
       str2 += name2;
@@ -101170,7 +101164,7 @@ function requireDoctype() {
     }
     return str2;
   };
-  return doctype;
+  return doctype$1;
 }
 var foreignContent = {};
 var hasRequiredForeignContent;
@@ -101178,7 +101172,7 @@ function requireForeignContent() {
   if (hasRequiredForeignContent) return foreignContent;
   hasRequiredForeignContent = 1;
   const Tokenizer2 = requireTokenizer();
-  const HTML = requireHtml();
+  const HTML = requireHtml$1();
   const $2 = HTML.TAG_NAMES;
   const NS = HTML.NAMESPACES;
   const ATTRS = HTML.ATTRS;
@@ -101421,11 +101415,11 @@ function requireParser$2() {
   const Mixin = requireMixin();
   const defaultTreeAdapter = require_default();
   const mergeOptions2 = requireMergeOptions();
-  const doctype2 = requireDoctype();
+  const doctype2 = requireDoctype$1();
   const foreignContent2 = requireForeignContent();
   const ERR = requireErrorCodes();
   const unicode2 = requireUnicode();
-  const HTML = requireHtml();
+  const HTML = requireHtml$1();
   const $2 = HTML.TAG_NAMES;
   const NS = HTML.NAMESPACES;
   const ATTRS = HTML.ATTRS;
@@ -103666,8 +103660,8 @@ function requireSerializer() {
   hasRequiredSerializer = 1;
   const defaultTreeAdapter = require_default();
   const mergeOptions2 = requireMergeOptions();
-  const doctype2 = requireDoctype();
-  const HTML = requireHtml();
+  const doctype2 = requireDoctype$1();
+  const HTML = requireHtml$1();
   const $2 = HTML.TAG_NAMES;
   const NS = HTML.NAMESPACES;
   const DEFAULT_OPTIONS2 = {
@@ -103802,6 +103796,391 @@ function requireLib$2() {
   return lib$1;
 }
 var lib = {};
+var doctype = {};
+var html = {};
+var hasRequiredHtml;
+function requireHtml() {
+  if (hasRequiredHtml) return html;
+  hasRequiredHtml = 1;
+  const NS = html.NAMESPACES = {
+    HTML: "http://www.w3.org/1999/xhtml",
+    MATHML: "http://www.w3.org/1998/Math/MathML",
+    SVG: "http://www.w3.org/2000/svg",
+    XLINK: "http://www.w3.org/1999/xlink",
+    XML: "http://www.w3.org/XML/1998/namespace",
+    XMLNS: "http://www.w3.org/2000/xmlns/"
+  };
+  html.ATTRS = {
+    TYPE: "type",
+    ACTION: "action",
+    ENCODING: "encoding",
+    PROMPT: "prompt",
+    NAME: "name",
+    COLOR: "color",
+    FACE: "face",
+    SIZE: "size"
+  };
+  html.DOCUMENT_MODE = {
+    NO_QUIRKS: "no-quirks",
+    QUIRKS: "quirks",
+    LIMITED_QUIRKS: "limited-quirks"
+  };
+  const $2 = html.TAG_NAMES = {
+    A: "a",
+    ADDRESS: "address",
+    ANNOTATION_XML: "annotation-xml",
+    APPLET: "applet",
+    AREA: "area",
+    ARTICLE: "article",
+    ASIDE: "aside",
+    B: "b",
+    BASE: "base",
+    BASEFONT: "basefont",
+    BGSOUND: "bgsound",
+    BIG: "big",
+    BLOCKQUOTE: "blockquote",
+    BODY: "body",
+    BR: "br",
+    BUTTON: "button",
+    CAPTION: "caption",
+    CENTER: "center",
+    CODE: "code",
+    COL: "col",
+    COLGROUP: "colgroup",
+    DD: "dd",
+    DESC: "desc",
+    DETAILS: "details",
+    DIALOG: "dialog",
+    DIR: "dir",
+    DIV: "div",
+    DL: "dl",
+    DT: "dt",
+    EM: "em",
+    EMBED: "embed",
+    FIELDSET: "fieldset",
+    FIGCAPTION: "figcaption",
+    FIGURE: "figure",
+    FONT: "font",
+    FOOTER: "footer",
+    FOREIGN_OBJECT: "foreignObject",
+    FORM: "form",
+    FRAME: "frame",
+    FRAMESET: "frameset",
+    H1: "h1",
+    H2: "h2",
+    H3: "h3",
+    H4: "h4",
+    H5: "h5",
+    H6: "h6",
+    HEAD: "head",
+    HEADER: "header",
+    HGROUP: "hgroup",
+    HR: "hr",
+    HTML: "html",
+    I: "i",
+    IMG: "img",
+    IMAGE: "image",
+    INPUT: "input",
+    IFRAME: "iframe",
+    KEYGEN: "keygen",
+    LABEL: "label",
+    LI: "li",
+    LINK: "link",
+    LISTING: "listing",
+    MAIN: "main",
+    MALIGNMARK: "malignmark",
+    MARQUEE: "marquee",
+    MATH: "math",
+    MENU: "menu",
+    META: "meta",
+    MGLYPH: "mglyph",
+    MI: "mi",
+    MO: "mo",
+    MN: "mn",
+    MS: "ms",
+    MTEXT: "mtext",
+    NAV: "nav",
+    NOBR: "nobr",
+    NOFRAMES: "noframes",
+    NOEMBED: "noembed",
+    NOSCRIPT: "noscript",
+    OBJECT: "object",
+    OL: "ol",
+    OPTGROUP: "optgroup",
+    OPTION: "option",
+    P: "p",
+    PARAM: "param",
+    PLAINTEXT: "plaintext",
+    PRE: "pre",
+    RB: "rb",
+    RP: "rp",
+    RT: "rt",
+    RTC: "rtc",
+    RUBY: "ruby",
+    S: "s",
+    SCRIPT: "script",
+    SECTION: "section",
+    SELECT: "select",
+    SOURCE: "source",
+    SMALL: "small",
+    SPAN: "span",
+    STRIKE: "strike",
+    STRONG: "strong",
+    STYLE: "style",
+    SUB: "sub",
+    SUMMARY: "summary",
+    SUP: "sup",
+    TABLE: "table",
+    TBODY: "tbody",
+    TEMPLATE: "template",
+    TEXTAREA: "textarea",
+    TFOOT: "tfoot",
+    TD: "td",
+    TH: "th",
+    THEAD: "thead",
+    TITLE: "title",
+    TR: "tr",
+    TRACK: "track",
+    TT: "tt",
+    U: "u",
+    UL: "ul",
+    SVG: "svg",
+    VAR: "var",
+    WBR: "wbr",
+    XMP: "xmp"
+  };
+  html.SPECIAL_ELEMENTS = {
+    [NS.HTML]: {
+      [$2.ADDRESS]: true,
+      [$2.APPLET]: true,
+      [$2.AREA]: true,
+      [$2.ARTICLE]: true,
+      [$2.ASIDE]: true,
+      [$2.BASE]: true,
+      [$2.BASEFONT]: true,
+      [$2.BGSOUND]: true,
+      [$2.BLOCKQUOTE]: true,
+      [$2.BODY]: true,
+      [$2.BR]: true,
+      [$2.BUTTON]: true,
+      [$2.CAPTION]: true,
+      [$2.CENTER]: true,
+      [$2.COL]: true,
+      [$2.COLGROUP]: true,
+      [$2.DD]: true,
+      [$2.DETAILS]: true,
+      [$2.DIR]: true,
+      [$2.DIV]: true,
+      [$2.DL]: true,
+      [$2.DT]: true,
+      [$2.EMBED]: true,
+      [$2.FIELDSET]: true,
+      [$2.FIGCAPTION]: true,
+      [$2.FIGURE]: true,
+      [$2.FOOTER]: true,
+      [$2.FORM]: true,
+      [$2.FRAME]: true,
+      [$2.FRAMESET]: true,
+      [$2.H1]: true,
+      [$2.H2]: true,
+      [$2.H3]: true,
+      [$2.H4]: true,
+      [$2.H5]: true,
+      [$2.H6]: true,
+      [$2.HEAD]: true,
+      [$2.HEADER]: true,
+      [$2.HGROUP]: true,
+      [$2.HR]: true,
+      [$2.HTML]: true,
+      [$2.IFRAME]: true,
+      [$2.IMG]: true,
+      [$2.INPUT]: true,
+      [$2.LI]: true,
+      [$2.LINK]: true,
+      [$2.LISTING]: true,
+      [$2.MAIN]: true,
+      [$2.MARQUEE]: true,
+      [$2.MENU]: true,
+      [$2.META]: true,
+      [$2.NAV]: true,
+      [$2.NOEMBED]: true,
+      [$2.NOFRAMES]: true,
+      [$2.NOSCRIPT]: true,
+      [$2.OBJECT]: true,
+      [$2.OL]: true,
+      [$2.P]: true,
+      [$2.PARAM]: true,
+      [$2.PLAINTEXT]: true,
+      [$2.PRE]: true,
+      [$2.SCRIPT]: true,
+      [$2.SECTION]: true,
+      [$2.SELECT]: true,
+      [$2.SOURCE]: true,
+      [$2.STYLE]: true,
+      [$2.SUMMARY]: true,
+      [$2.TABLE]: true,
+      [$2.TBODY]: true,
+      [$2.TD]: true,
+      [$2.TEMPLATE]: true,
+      [$2.TEXTAREA]: true,
+      [$2.TFOOT]: true,
+      [$2.TH]: true,
+      [$2.THEAD]: true,
+      [$2.TITLE]: true,
+      [$2.TR]: true,
+      [$2.TRACK]: true,
+      [$2.UL]: true,
+      [$2.WBR]: true,
+      [$2.XMP]: true
+    },
+    [NS.MATHML]: {
+      [$2.MI]: true,
+      [$2.MO]: true,
+      [$2.MN]: true,
+      [$2.MS]: true,
+      [$2.MTEXT]: true,
+      [$2.ANNOTATION_XML]: true
+    },
+    [NS.SVG]: {
+      [$2.TITLE]: true,
+      [$2.FOREIGN_OBJECT]: true,
+      [$2.DESC]: true
+    }
+  };
+  return html;
+}
+var hasRequiredDoctype;
+function requireDoctype() {
+  if (hasRequiredDoctype) return doctype;
+  hasRequiredDoctype = 1;
+  const { DOCUMENT_MODE } = requireHtml();
+  const VALID_DOCTYPE_NAME = "html";
+  const VALID_SYSTEM_ID = "about:legacy-compat";
+  const QUIRKS_MODE_SYSTEM_ID = "http://www.ibm.com/data/dtd/v11/ibmxhtml1-transitional.dtd";
+  const QUIRKS_MODE_PUBLIC_ID_PREFIXES = [
+    "+//silmaril//dtd html pro v0r11 19970101//",
+    "-//as//dtd html 3.0 aswedit + extensions//",
+    "-//advasoft ltd//dtd html 3.0 aswedit + extensions//",
+    "-//ietf//dtd html 2.0 level 1//",
+    "-//ietf//dtd html 2.0 level 2//",
+    "-//ietf//dtd html 2.0 strict level 1//",
+    "-//ietf//dtd html 2.0 strict level 2//",
+    "-//ietf//dtd html 2.0 strict//",
+    "-//ietf//dtd html 2.0//",
+    "-//ietf//dtd html 2.1e//",
+    "-//ietf//dtd html 3.0//",
+    "-//ietf//dtd html 3.2 final//",
+    "-//ietf//dtd html 3.2//",
+    "-//ietf//dtd html 3//",
+    "-//ietf//dtd html level 0//",
+    "-//ietf//dtd html level 1//",
+    "-//ietf//dtd html level 2//",
+    "-//ietf//dtd html level 3//",
+    "-//ietf//dtd html strict level 0//",
+    "-//ietf//dtd html strict level 1//",
+    "-//ietf//dtd html strict level 2//",
+    "-//ietf//dtd html strict level 3//",
+    "-//ietf//dtd html strict//",
+    "-//ietf//dtd html//",
+    "-//metrius//dtd metrius presentational//",
+    "-//microsoft//dtd internet explorer 2.0 html strict//",
+    "-//microsoft//dtd internet explorer 2.0 html//",
+    "-//microsoft//dtd internet explorer 2.0 tables//",
+    "-//microsoft//dtd internet explorer 3.0 html strict//",
+    "-//microsoft//dtd internet explorer 3.0 html//",
+    "-//microsoft//dtd internet explorer 3.0 tables//",
+    "-//netscape comm. corp.//dtd html//",
+    "-//netscape comm. corp.//dtd strict html//",
+    "-//o'reilly and associates//dtd html 2.0//",
+    "-//o'reilly and associates//dtd html extended 1.0//",
+    "-//o'reilly and associates//dtd html extended relaxed 1.0//",
+    "-//sq//dtd html 2.0 hotmetal + extensions//",
+    "-//softquad software//dtd hotmetal pro 6.0::19990601::extensions to html 4.0//",
+    "-//softquad//dtd hotmetal pro 4.0::19971010::extensions to html 4.0//",
+    "-//spyglass//dtd html 2.0 extended//",
+    "-//sun microsystems corp.//dtd hotjava html//",
+    "-//sun microsystems corp.//dtd hotjava strict html//",
+    "-//w3c//dtd html 3 1995-03-24//",
+    "-//w3c//dtd html 3.2 draft//",
+    "-//w3c//dtd html 3.2 final//",
+    "-//w3c//dtd html 3.2//",
+    "-//w3c//dtd html 3.2s draft//",
+    "-//w3c//dtd html 4.0 frameset//",
+    "-//w3c//dtd html 4.0 transitional//",
+    "-//w3c//dtd html experimental 19960712//",
+    "-//w3c//dtd html experimental 970421//",
+    "-//w3c//dtd w3 html//",
+    "-//w3o//dtd w3 html 3.0//",
+    "-//webtechs//dtd mozilla html 2.0//",
+    "-//webtechs//dtd mozilla html//"
+  ];
+  const QUIRKS_MODE_NO_SYSTEM_ID_PUBLIC_ID_PREFIXES = QUIRKS_MODE_PUBLIC_ID_PREFIXES.concat([
+    "-//w3c//dtd html 4.01 frameset//",
+    "-//w3c//dtd html 4.01 transitional//"
+  ]);
+  const QUIRKS_MODE_PUBLIC_IDS = ["-//w3o//dtd w3 html strict 3.0//en//", "-/w3c/dtd html 4.0 transitional/en", "html"];
+  const LIMITED_QUIRKS_PUBLIC_ID_PREFIXES = ["-//w3c//dtd xhtml 1.0 frameset//", "-//w3c//dtd xhtml 1.0 transitional//"];
+  const LIMITED_QUIRKS_WITH_SYSTEM_ID_PUBLIC_ID_PREFIXES = LIMITED_QUIRKS_PUBLIC_ID_PREFIXES.concat([
+    "-//w3c//dtd html 4.01 frameset//",
+    "-//w3c//dtd html 4.01 transitional//"
+  ]);
+  function enquoteDoctypeId(id) {
+    const quote2 = id.indexOf('"') !== -1 ? "'" : '"';
+    return quote2 + id + quote2;
+  }
+  function hasPrefix(publicId, prefixes) {
+    for (let i = 0; i < prefixes.length; i++) {
+      if (publicId.indexOf(prefixes[i]) === 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+  doctype.isConforming = function(token2) {
+    return token2.name === VALID_DOCTYPE_NAME && token2.publicId === null && (token2.systemId === null || token2.systemId === VALID_SYSTEM_ID);
+  };
+  doctype.getDocumentMode = function(token2) {
+    if (token2.name !== VALID_DOCTYPE_NAME) {
+      return DOCUMENT_MODE.QUIRKS;
+    }
+    const systemId = token2.systemId;
+    if (systemId && systemId.toLowerCase() === QUIRKS_MODE_SYSTEM_ID) {
+      return DOCUMENT_MODE.QUIRKS;
+    }
+    let publicId = token2.publicId;
+    if (publicId !== null) {
+      publicId = publicId.toLowerCase();
+      if (QUIRKS_MODE_PUBLIC_IDS.indexOf(publicId) > -1) {
+        return DOCUMENT_MODE.QUIRKS;
+      }
+      let prefixes = systemId === null ? QUIRKS_MODE_NO_SYSTEM_ID_PUBLIC_ID_PREFIXES : QUIRKS_MODE_PUBLIC_ID_PREFIXES;
+      if (hasPrefix(publicId, prefixes)) {
+        return DOCUMENT_MODE.QUIRKS;
+      }
+      prefixes = systemId === null ? LIMITED_QUIRKS_PUBLIC_ID_PREFIXES : LIMITED_QUIRKS_WITH_SYSTEM_ID_PUBLIC_ID_PREFIXES;
+      if (hasPrefix(publicId, prefixes)) {
+        return DOCUMENT_MODE.LIMITED_QUIRKS;
+      }
+    }
+    return DOCUMENT_MODE.NO_QUIRKS;
+  };
+  doctype.serializeContent = function(name2, publicId, systemId) {
+    let str2 = "!DOCTYPE ";
+    if (name2) {
+      str2 += name2;
+    }
+    if (publicId) {
+      str2 += " PUBLIC " + enquoteDoctypeId(publicId);
+    } else if (systemId) {
+      str2 += " SYSTEM";
+    }
+    if (systemId !== null) {
+      str2 += " " + enquoteDoctypeId(systemId);
+    }
+    return str2;
+  };
+  return doctype;
+}
 var hasRequiredLib$1;
 function requireLib$1() {
   if (hasRequiredLib$1) return lib;
@@ -107462,7 +107841,7 @@ function requireMarkdownItMathjax3() {
   const tex_js_1 = requireTex$2();
   const svg_js_1 = requireSvg();
   const liteAdaptor_js_1 = requireLiteAdaptor();
-  const html_js_1 = requireHtml$1();
+  const html_js_1 = requireHtml$2();
   const AllPackages_js_1 = requireAllPackages();
   const assistive_mml_js_1 = requireAssistiveMml();
   const client_1 = __importDefault2(requireClient());
@@ -118880,7 +119259,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.199-19-g2765f21a4" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.199-5-g67da5fe22" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
