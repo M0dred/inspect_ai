@@ -107606,16 +107606,163 @@ function requireMarkdownItMathjax3() {
 }
 var markdownItMathjax3Exports = requireMarkdownItMathjax3();
 const markdownitMathjax3 = /* @__PURE__ */ getDefaultExportFromCjs(markdownItMathjax3Exports);
+const mdInstanceCache = {};
+const getOptionsKey = (omitMedia, omitMath) => `${omitMedia ? "1" : "0"}:${omitMath ? "1" : "0"}`;
+const unescapeHtmlForMath = (content2) => {
+  return content2.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/&apos;/g, "'").replace(/&quot;/g, '"');
+};
+const getMarkdownInstance = (omitMedia, omitMath) => {
+  const key2 = getOptionsKey(omitMedia, omitMath);
+  if (!mdInstanceCache[key2]) {
+    const md = new MarkdownIt({ breaks: true, html: true });
+    if (!omitMath) {
+      md.use(markdownitMathjax3);
+      const origInline = md.renderer.rules.math_inline;
+      const origBlock = md.renderer.rules.math_block;
+      if (origInline) {
+        md.renderer.rules.math_inline = (tokens, idx, options2, env, self2) => {
+          tokens[idx].content = unescapeHtmlForMath(tokens[idx].content);
+          return origInline(tokens, idx, options2, env, self2);
+        };
+      }
+      if (origBlock) {
+        md.renderer.rules.math_block = (tokens, idx, options2, env, self2) => {
+          tokens[idx].content = unescapeHtmlForMath(tokens[idx].content);
+          return origBlock(tokens, idx, options2, env, self2);
+        };
+      }
+    }
+    if (omitMedia) {
+      md.disable(["image"]);
+    }
+    mdInstanceCache[key2] = md;
+  }
+  return mdInstanceCache[key2];
+};
+const escapeHtmlCharacters = (content2) => {
+  if (!content2) return content2;
+  return content2.replace(/[<>&'"]/g, (c2) => {
+    switch (c2) {
+      case "<":
+        return "&lt;";
+      case ">":
+        return "&gt;";
+      case "&":
+        return "&amp;";
+      case "'":
+        return "&apos;";
+      case '"':
+        return "&quot;";
+      default:
+        throw new Error("Matched a value that isn't replaceable");
+    }
+  });
+};
+const protectBackslashesInLatex = (content2) => {
+  if (!content2) return content2;
+  try {
+    const inlineRegex = /\$(.*?)\$/g;
+    const blockRegex = /\$\$([\s\S]*?)\$\$/g;
+    let result2 = content2.replace(inlineRegex, (_match, latex) => {
+      const protectedTex = latex.replace(/\\/g, "___LATEX_BACKSLASH___");
+      return `$${protectedTex}$`;
+    });
+    result2 = result2.replace(blockRegex, (_match, latex) => {
+      const protectedTex = latex.replace(/\\/g, "___LATEX_BACKSLASH___");
+      return `$$${protectedTex}$$`;
+    });
+    return result2;
+  } catch (error2) {
+    console.error("Error protecting LaTeX content:", error2);
+    return content2;
+  }
+};
+const restoreBackslashesForLatex = (content2) => {
+  if (!content2) {
+    return content2;
+  }
+  try {
+    let result2 = content2.replace(/___LATEX_BACKSLASH___/g, "\\");
+    result2 = fixDotsNotation(result2);
+    return result2;
+  } catch (error2) {
+    console.error("Error restoring LaTeX content:", error2);
+    return content2;
+  }
+};
+const fixDotsNotation = (content2) => {
+  if (!content2) return content2;
+  try {
+    let result2 = content2.replace(/(\$[^$]*?)\\dots([^$]*?\$)/g, "$1\\ldots$2");
+    result2 = result2.replace(/(\$\$[^$]*?)\\dots([^$]*?\$\$)/g, "$1\\ldots$2");
+    return result2;
+  } catch (error2) {
+    console.error("Error fixing dots notation:", error2);
+    return content2;
+  }
+};
+const kLetterListPattern = /^([a-zA-Z][).]\s.*?)$/gm;
+const kCommonmarkReferenceLinkPattern = /\[([^\]]*)\]: (?!http)(.*)/g;
+const preRenderText = (txt) => {
+  if (!txt) return txt;
+  txt = txt.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/, "");
+  return txt.replaceAll(
+    kLetterListPattern,
+    "<p class='markdown-ordered-list-item'>$1</p>"
+  );
+};
+const protectMarkdown = (txt) => {
+  if (!txt) return txt;
+  return txt.replaceAll(
+    kCommonmarkReferenceLinkPattern,
+    "(open:767A125E)$1(close:767A125E) $2 "
+  );
+};
+const unprotectMarkdown = (txt) => {
+  if (!txt) return txt;
+  txt = txt.replaceAll("(open:767A125E)", "[");
+  txt = txt.replaceAll("(close:767A125E)", "]");
+  return txt;
+};
+function unescapeSupHtmlEntities(str2) {
+  if (!str2) {
+    return str2;
+  }
+  return str2.replace(/&lt;sup&gt;/g, "<sup>").replace(/&lt;\/sup&gt;/g, "</sup>");
+}
+function unescapeCodeHtmlEntities(str2) {
+  if (!str2) return str2;
+  const htmlEntities = {
+    "&lt;": "<",
+    "&gt;": ">",
+    "&amp;": "&",
+    "&#x5C;": "\\",
+    "&quot;": '"'
+  };
+  return str2.replace(
+    /(<code[^>]*>)([\s\S]*?)(<\/code>)/gi,
+    (_match, starttag, content2, endtag) => {
+      return starttag + content2.replace(
+        /&(?:amp|lt|gt|quot|#39|#x2F|#x5C|#96);/g,
+        (entity2) => htmlEntities[entity2] || entity2
+      ) + endtag;
+    }
+  );
+}
 const MarkdownDivComponent = reactExports.forwardRef(
   ({ markdown, omitMedia, omitMath, style: style2, className: className2 }, ref) => {
-    const optionsKey = getOptionsKey(omitMedia, omitMath);
+    const optionsKey = `${omitMedia ? "1" : "0"}:${omitMath ? "1" : "0"}`;
     const cacheKey = `${markdown}:${optionsKey}`;
     const cachedHtml = renderCache.get(cacheKey);
+    const sanitizeMarkdown = (md) => {
+      const escapedBr = md.replace(/\n/g, "<br/>");
+      return escapeHtmlCharacters(escapedBr);
+    };
     const [renderedHtml, setRenderedHtml] = reactExports.useState(() => {
       if (cachedHtml) {
         return cachedHtml;
       }
-      return markdown.replace(/\n/g, "<br/>");
+      return sanitizeMarkdown(markdown);
     });
     reactExports.useEffect(() => {
       if (cachedHtml) {
@@ -107626,7 +107773,7 @@ const MarkdownDivComponent = reactExports.forwardRef(
         }
         return;
       }
-      setRenderedHtml(markdown.replace(/\n/g, "<br/>"));
+      setRenderedHtml(sanitizeMarkdown(markdown));
       const { promise, cancel } = renderQueue.enqueue(async () => {
         const protectedContent = protectBackslashesInLatex(markdown);
         const escaped = escapeHtmlCharacters(protectedContent);
@@ -107678,22 +107825,6 @@ const MarkdownDivComponent = reactExports.forwardRef(
 const MarkdownDiv = reactExports.memo(MarkdownDivComponent);
 const renderCache = /* @__PURE__ */ new Map();
 const MAX_CACHE_SIZE = 500;
-const mdInstanceCache = {};
-const getOptionsKey = (omitMedia, omitMath) => `${omitMedia ? "1" : "0"}:${omitMath ? "1" : "0"}`;
-const getMarkdownInstance = (omitMedia, omitMath) => {
-  const key2 = getOptionsKey(omitMedia, omitMath);
-  if (!mdInstanceCache[key2]) {
-    const md = new MarkdownIt({ breaks: true, html: true });
-    if (!omitMath) {
-      md.use(markdownitMathjax3);
-    }
-    if (omitMedia) {
-      md.disable(["image"]);
-    }
-    mdInstanceCache[key2] = md;
-  }
-  return mdInstanceCache[key2];
-};
 class MarkdownRenderQueue {
   queue = [];
   activeCount = 0;
@@ -107760,116 +107891,6 @@ class MarkdownRenderQueue {
   }
 }
 const renderQueue = new MarkdownRenderQueue(10);
-const kLetterListPattern = /^([a-zA-Z][).]\s.*?)$/gm;
-const kCommonmarkReferenceLinkPattern = /\[([^\]]*)\]: (?!http)(.*)/g;
-const protectBackslashesInLatex = (content2) => {
-  if (!content2) return content2;
-  try {
-    const inlineRegex = /\$(.*?)\$/g;
-    const blockRegex = /\$\$([\s\S]*?)\$\$/g;
-    let result2 = content2.replace(inlineRegex, (_match, latex) => {
-      const protectedTex = latex.replace(/\\/g, "___LATEX_BACKSLASH___").replace(/</g, "___LATEX_LT___").replace(/>/g, "___LATEX_GT___").replace(/&/g, "___LATEX_AMP___").replace(/'/g, "___LATEX_APOS___").replace(/"/g, "___LATEX_QUOT___");
-      return `$${protectedTex}$`;
-    });
-    result2 = result2.replace(blockRegex, (_match, latex) => {
-      const protectedTex = latex.replace(/\\/g, "___LATEX_BACKSLASH___").replace(/</g, "___LATEX_LT___").replace(/>/g, "___LATEX_GT___").replace(/&/g, "___LATEX_AMP___").replace(/'/g, "___LATEX_APOS___").replace(/"/g, "___LATEX_QUOT___");
-      return `$$${protectedTex}$$`;
-    });
-    return result2;
-  } catch (error2) {
-    console.error("Error protecting LaTeX content:", error2);
-    return content2;
-  }
-};
-const restoreBackslashesForLatex = (content2) => {
-  if (!content2) {
-    return content2;
-  }
-  try {
-    let result2 = content2.replace(/___LATEX_BACKSLASH___/g, "\\").replace(/___LATEX_LT___/g, "<").replace(/___LATEX_GT___/g, ">").replace(/___LATEX_AMP___/g, "&").replace(/___LATEX_APOS___/g, "'").replace(/___LATEX_QUOT___/g, '"');
-    result2 = fixDotsNotation(result2);
-    return result2;
-  } catch (error2) {
-    console.error("Error restoring LaTeX content:", error2);
-    return content2;
-  }
-};
-const fixDotsNotation = (content2) => {
-  if (!content2) return content2;
-  try {
-    let result2 = content2.replace(/(\$[^$]*?)\\dots([^$]*?\$)/g, "$1\\ldots$2");
-    result2 = result2.replace(/(\$\$[^$]*?)\\dots([^$]*?\$\$)/g, "$1\\ldots$2");
-    return result2;
-  } catch (error2) {
-    console.error("Error fixing dots notation:", error2);
-    return content2;
-  }
-};
-const escapeHtmlCharacters = (content2) => {
-  if (!content2) return content2;
-  return content2.replace(/[<>&'"]/g, (c2) => {
-    switch (c2) {
-      case "<":
-        return "&lt;";
-      case ">":
-        return "&gt;";
-      case "&":
-        return "&amp;";
-      case "'":
-        return "&apos;";
-      case '"':
-        return "&quot;";
-      default:
-        throw new Error("Matched a value that isn't replaceable");
-    }
-  });
-};
-const preRenderText = (txt) => {
-  if (!txt) return txt;
-  txt = txt.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/, "");
-  return txt.replaceAll(
-    kLetterListPattern,
-    "<p class='markdown-ordered-list-item'>$1</p>"
-  );
-};
-const protectMarkdown = (txt) => {
-  if (!txt) return txt;
-  return txt.replaceAll(
-    kCommonmarkReferenceLinkPattern,
-    "(open:767A125E)$1(close:767A125E) $2 "
-  );
-};
-const unprotectMarkdown = (txt) => {
-  if (!txt) return txt;
-  txt = txt.replaceAll("(open:767A125E)", "[");
-  txt = txt.replaceAll("(close:767A125E)", "]");
-  return txt;
-};
-function unescapeSupHtmlEntities(str2) {
-  if (!str2) {
-    return str2;
-  }
-  return str2.replace(/&lt;sup&gt;/g, "<sup>").replace(/&lt;\/sup&gt;/g, "</sup>");
-}
-function unescapeCodeHtmlEntities(str2) {
-  if (!str2) return str2;
-  const htmlEntities = {
-    "&lt;": "<",
-    "&gt;": ">",
-    "&amp;": "&",
-    "&#x5C;": "\\",
-    "&quot;": '"'
-  };
-  return str2.replace(
-    /(<code[^>]*>)([\s\S]*?)(<\/code>)/gi,
-    (_match, starttag, content2, endtag) => {
-      return starttag + content2.replace(
-        /&(?:amp|lt|gt|quot|#39|#x2F|#x5C|#96);/g,
-        (entity2) => htmlEntities[entity2] || entity2
-      ) + endtag;
-    }
-  );
-}
 const content$3 = "_content_13ihw_1";
 const styles$1A = {
   content: content$3
@@ -118879,7 +118900,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.199-6-g15d0294d5" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.199-28-gc856926c2" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
