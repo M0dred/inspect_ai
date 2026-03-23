@@ -110203,7 +110203,7 @@ class SampleSizeLimitedExceededError extends Error {
     Object.setPrototypeOf(this, SampleSizeLimitedExceededError.prototype);
   }
 }
-const clientApi = (api2, log_file, debug2 = false) => {
+const clientApi = (api2, log_file, debug2 = false, abs_log_dir) => {
   let current_log = void 0;
   let current_path = void 0;
   const loadedEvalFile = {
@@ -110464,7 +110464,8 @@ const clientApi = (api2, log_file, debug2 = false) => {
       }
     ),
     get_log_pending_samples: api2.eval_pending_samples ? middleware("get_log_pending_samples", get_log_pending_samples) : void 0,
-    get_log_sample_data: api2.eval_log_sample_data ? middleware("get_log_sample_data", get_log_sample_data) : void 0
+    get_log_sample_data: api2.eval_log_sample_data ? middleware("get_log_sample_data", get_log_sample_data) : void 0,
+    abs_log_dir
   };
 };
 const debugMiddleware = (name2, _fn, args2, result2) => {
@@ -111400,7 +111401,7 @@ const resolveApi = () => {
         if (data.log_dir || data.log_file) {
           const log_dir2 = data.log_dir || dirname(data.log_file);
           const api2 = staticHttpApi(log_dir2, data.log_file);
-          return clientApi(api2, data.log_file, debug2);
+          return clientApi(api2, data.log_file, debug2, data.abs_log_dir);
         }
       }
     }
@@ -118900,7 +118901,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.199-28-gc856926c2" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.200-24-gbe8b87eed" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -217209,9 +217210,17 @@ const PrimaryBar = ({
 }) => {
   const streamSamples = useStore((state) => state.capabilities.streamSamples);
   const downloadLogs = useStore((state) => state.capabilities.downloadLogs);
+  const absLogDir = useStore((state) => state.capabilities.absLogDir);
   const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
+  const logDir2 = useStore((state) => state.logs.logDir);
   const logFileName = selectedLogFile ? filename(selectedLogFile) : "";
   const isEvalFile2 = selectedLogFile?.endsWith(".eval");
+  const copyValue = (() => {
+    if (!absLogDir || !selectedLogFile || !logDir2) return selectedLogFile;
+    const prefix = logDir2 + "/";
+    const relFile = selectedLogFile.startsWith(prefix) ? selectedLogFile.slice(prefix.length) : selectedLogFile;
+    return absLogDir.replace(/\/?$/, "/") + relFile;
+  })();
   const hasRunningMetrics = runningMetrics && runningMetrics.length > 0;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$b.wrapper), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -217253,7 +217262,7 @@ const PrimaryBar = ({
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-small", styles$b.secondaryContainer), children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("navbar-secondary-text", "text-truncate"), children: logFileName }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$b.buttonGroup, children: [
-              selectedLogFile ? /* @__PURE__ */ jsxRuntimeExports.jsx(CopyButton, { value: selectedLogFile }) : "",
+              copyValue ? /* @__PURE__ */ jsxRuntimeExports.jsx(CopyButton, { value: copyValue }) : "",
               downloadLogs && selectedLogFile && isEvalFile2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(DownloadLogButton, { log_file: selectedLogFile }) : null
             ] })
           ] })
@@ -218920,7 +218929,8 @@ let capabilities = {
   downloadLogs: !!applicationApi.download_log,
   webWorkers: true,
   streamSamples: !!applicationApi.get_log_pending_samples,
-  streamSampleData: !!applicationApi.get_log_sample_data
+  streamSampleData: !!applicationApi.get_log_sample_data,
+  absLogDir: applicationApi.abs_log_dir
 };
 if (vscode) {
   const extensionVersionEl = document.querySelector(
