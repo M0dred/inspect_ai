@@ -28670,18 +28670,26 @@ const createLogsSlice = (set3, get2, _store) => {
           console.error("API not initialized in LogsStore");
           return void 0;
         }
-        const loadLogDir = async () => {
+        const loadLogInfo = async () => {
           try {
-            return await api2.get_log_dir();
+            const root2 = await api2.get_log_root();
+            return { logDir: root2.log_dir, absLogDir: root2.abs_log_dir };
           } catch (e) {
             console.log(e);
             get2().appActions.setLoading(false, e);
             return void 0;
           }
         };
-        const logDir2 = await loadLogDir();
+        const info = await loadLogInfo();
+        const logDir2 = info?.logDir;
         if (get2().logs.logDir !== logDir2) {
           get2().logsActions.setLogDir(logDir2);
+        }
+        const absLogDir = info?.absLogDir;
+        if (get2().logs.absLogDir !== absLogDir) {
+          set3((state) => {
+            state.logs.absLogDir = absLogDir;
+          });
         }
         return logDir2;
       },
@@ -110203,7 +110211,7 @@ class SampleSizeLimitedExceededError extends Error {
     Object.setPrototypeOf(this, SampleSizeLimitedExceededError.prototype);
   }
 }
-const clientApi = (api2, log_file, debug2 = false, abs_log_dir) => {
+const clientApi = (api2, log_file, debug2 = false) => {
   let current_log = void 0;
   let current_path = void 0;
   const loadedEvalFile = {
@@ -110464,8 +110472,7 @@ const clientApi = (api2, log_file, debug2 = false, abs_log_dir) => {
       }
     ),
     get_log_pending_samples: api2.eval_pending_samples ? middleware("get_log_pending_samples", get_log_pending_samples) : void 0,
-    get_log_sample_data: api2.eval_log_sample_data ? middleware("get_log_sample_data", get_log_sample_data) : void 0,
-    abs_log_dir
+    get_log_sample_data: api2.eval_log_sample_data ? middleware("get_log_sample_data", get_log_sample_data) : void 0
   };
 };
 const debugMiddleware = (name2, _fn, args2, result2) => {
@@ -110598,15 +110605,17 @@ const fetchJsonFile = async (file, handleError2) => {
 function joinURI(...segments2) {
   return segments2.map((segment2) => segment2.replace(/(^\/+|\/+$)/g, "")).join("/");
 }
-function staticHttpApi(log_dir, log_file) {
+function staticHttpApi(log_dir, log_file, abs_log_dir) {
   const resolved_log_dir = log_dir?.replace(" ", "+");
   log_file ? log_file.replace(" ", "+") : void 0;
   return staticHttpApiForLog({
-    log_dir: resolved_log_dir
+    log_dir: resolved_log_dir,
+    abs_log_dir
   });
 }
 function staticHttpApiForLog(logInfo) {
   const log_dir = logInfo.log_dir;
+  const abs_log_dir = logInfo.abs_log_dir;
   let manifest = void 0;
   let manifestPromise = void 0;
   const getManifest = async () => {
@@ -110640,7 +110649,8 @@ function staticHttpApiForLog(logInfo) {
           });
           return Promise.resolve({
             logs,
-            log_dir
+            log_dir,
+            abs_log_dir
           });
         }
       }
@@ -111400,8 +111410,8 @@ const resolveApi = () => {
         const data = lib$d.parse(context);
         if (data.log_dir || data.log_file) {
           const log_dir2 = data.log_dir || dirname(data.log_file);
-          const api2 = staticHttpApi(log_dir2, data.log_file);
-          return clientApi(api2, data.log_file, debug2, data.abs_log_dir);
+          const api2 = staticHttpApi(log_dir2, data.log_file, data.abs_log_dir);
+          return clientApi(api2, data.log_file, debug2);
         }
       }
     }
@@ -118901,7 +118911,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.200-25-gb5332ebd3" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.200-28-g6f7ea0284" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -217210,7 +217220,7 @@ const PrimaryBar = ({
 }) => {
   const streamSamples = useStore((state) => state.capabilities.streamSamples);
   const downloadLogs = useStore((state) => state.capabilities.downloadLogs);
-  const absLogDir = useStore((state) => state.capabilities.absLogDir);
+  const absLogDir = useStore((state) => state.logs.absLogDir);
   const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
   const logDir2 = useStore((state) => state.logs.logDir);
   const logFileName = selectedLogFile ? filename(selectedLogFile) : "";
@@ -218929,8 +218939,7 @@ let capabilities = {
   downloadLogs: !!applicationApi.download_log,
   webWorkers: true,
   streamSamples: !!applicationApi.get_log_pending_samples,
-  streamSampleData: !!applicationApi.get_log_sample_data,
-  absLogDir: applicationApi.abs_log_dir
+  streamSampleData: !!applicationApi.get_log_sample_data
 };
 if (vscode) {
   const extensionVersionEl = document.querySelector(
