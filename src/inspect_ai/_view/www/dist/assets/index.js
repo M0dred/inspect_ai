@@ -28670,18 +28670,26 @@ const createLogsSlice = (set3, get2, _store) => {
           console.error("API not initialized in LogsStore");
           return void 0;
         }
-        const loadLogDir = async () => {
+        const loadLogInfo = async () => {
           try {
-            return await api2.get_log_dir();
+            const root2 = await api2.get_log_root();
+            return { logDir: root2.log_dir, absLogDir: root2.abs_log_dir };
           } catch (e) {
             console.log(e);
             get2().appActions.setLoading(false, e);
             return void 0;
           }
         };
-        const logDir2 = await loadLogDir();
+        const info = await loadLogInfo();
+        const logDir2 = info?.logDir;
         if (get2().logs.logDir !== logDir2) {
           get2().logsActions.setLogDir(logDir2);
+        }
+        const absLogDir = info?.absLogDir;
+        if (get2().logs.absLogDir !== absLogDir) {
+          set3((state) => {
+            state.logs.absLogDir = absLogDir;
+          });
         }
         return logDir2;
       },
@@ -28981,54 +28989,48 @@ const resolveAttachments = (value2, attachments, onFailedResolve) => {
   }
   return value2;
 };
-const expandRefs = (refs, pool) => refs.flatMap(([start2, end_exclusive]) => pool.slice(start2, end_exclusive));
-const resolveEventRefs = (events, msgPool, callPool) => {
+const expandRefs = (refs, pool) => refs.flatMap(([start2, end2]) => pool.slice(start2, end2));
+const isModelEvent = (event) => event.event === "model";
+function expandEvents(events, eventsData) {
+  if (!eventsData) return events;
+  const { messages: messages2, calls } = eventsData;
+  const hasMessages = messages2.length > 0;
+  const hasCalls = calls.length > 0;
+  if (!hasMessages && !hasCalls) return events;
   return events.map((event) => {
-    if (event.event !== "model") return event;
-    const resolved = Array.isArray(event.input_refs) ? {
-      ...event,
-      input: expandRefs(
-        event.input_refs,
-        msgPool
-      ),
-      input_refs: null
-    } : event;
-    if (!resolved.call || !Array.isArray(resolved.call.call_refs))
-      return resolved;
-    return {
-      ...resolved,
-      call: {
-        ...resolved.call,
-        request: {
-          ...resolved.call.request,
-          [resolved.call.call_key || "messages"]: expandRefs(
-            resolved.call.call_refs,
-            callPool
-          )
-        },
+    if (!isModelEvent(event)) return event;
+    let changed = false;
+    let input2 = event.input;
+    let call = event.call;
+    if (event.input_refs != null && hasMessages) {
+      input2 = expandRefs(event.input_refs, messages2);
+      changed = true;
+    }
+    if (call?.call_refs != null && hasCalls) {
+      const key2 = call.call_key ?? "messages";
+      const expandedMsgs = expandRefs(
+        call.call_refs,
+        calls
+      );
+      call = {
+        ...call,
+        request: { ...call.request, [key2]: expandedMsgs },
         call_refs: null,
         call_key: null
-      }
-    };
+      };
+      changed = true;
+    }
+    return changed ? { ...event, input: input2, input_refs: null, call } : event;
   });
-};
-const resolvePools = (sample2) => {
-  const { message_pool, call_pool } = sample2;
-  if (!message_pool?.length && !call_pool?.length) return sample2;
-  return {
-    ...sample2,
-    events: resolveEventRefs(sample2.events, message_pool, call_pool),
-    message_pool: [],
-    call_pool: []
-  };
-};
+}
 const resolveSample$1 = (sample2) => {
   sample2 = { ...sample2 };
   if (sample2.transcript) {
     sample2.events = sample2.transcript.events;
     sample2.attachments = sample2.transcript.content;
   }
-  sample2 = resolvePools(sample2);
+  sample2.events = expandEvents(sample2.events, sample2.events_data ?? null);
+  sample2.events_data = null;
   sample2.attachments = sample2.attachments || {};
   sample2.input = resolveAttachments(sample2.input, sample2.attachments);
   sample2.messages = resolveAttachments(sample2.messages, sample2.attachments);
@@ -29413,6 +29415,7 @@ const initialState = {
   sampleStatus: "ok",
   sampleError: void 0,
   eventsCleared: false,
+  downloadProgress: void 0,
   visiblePopover: void 0,
   // signals that the sample needs to be reloaded
   sampleNeedsReload: 0,
@@ -29467,6 +29470,7 @@ const createSampleSlice = (set3, get2, _store) => {
           state.sample.sampleInState = false;
           state.sample.runningEvents = [];
           state.sample.sampleStatus = "ok";
+          state.sample.downloadProgress = void 0;
           state.log.selectedSampleHandle = void 0;
         });
       },
@@ -29487,6 +29491,9 @@ const createSampleSlice = (set3, get2, _store) => {
       }),
       setSampleError: (error2) => set3((state) => {
         state.sample.sampleError = error2;
+      }),
+      setDownloadProgress: (progress2) => set3((state) => {
+        state.sample.downloadProgress = progress2;
       }),
       setCollapsedEvents: (scope, collapsed2) => {
         set3((state) => {
@@ -36997,16 +37004,16 @@ const supportsLinking = () => {
 const toFullUrl = (path) => {
   return `${window.location.origin}${window.location.pathname}${window.location.search}#${path}`;
 };
-const message$3 = "_message_1k527_1";
-const systemRole = "_systemRole_1k527_8";
-const timestamp = "_timestamp_1k527_12";
-const messageGrid = "_messageGrid_1k527_18";
-const toolMessageGrid = "_toolMessageGrid_1k527_28";
-const messageContents = "_messageContents_1k527_32";
-const indented = "_indented_1k527_37";
-const copyLink$1 = "_copyLink_1k527_41";
-const metadataLabel = "_metadataLabel_1k527_52";
-const hover$1 = "_hover_1k527_56";
+const message$3 = "_message_1kuwu_1";
+const systemRole = "_systemRole_1kuwu_9";
+const timestamp = "_timestamp_1kuwu_13";
+const messageGrid = "_messageGrid_1kuwu_19";
+const toolMessageGrid = "_toolMessageGrid_1kuwu_29";
+const messageContents = "_messageContents_1kuwu_33";
+const indented = "_indented_1kuwu_38";
+const copyLink$1 = "_copyLink_1kuwu_42";
+const metadataLabel = "_metadataLabel_1kuwu_53";
+const hover$1 = "_hover_1kuwu_57";
 const styles$1C = {
   message: message$3,
   systemRole,
@@ -37096,6 +37103,23 @@ class JsonWorkerPool {
       );
     });
   }
+  async parseBytes(data) {
+    this.ensureWorkers();
+    const requestId = this.nextRequestId++;
+    const ownedData = data.byteOffset === 0 && data.byteLength === data.buffer.byteLength ? data : data.slice();
+    return new Promise((resolve, reject) => {
+      this.pendingRequests.set(requestId, { resolve, reject });
+      const worker = this.workers[requestId % this.workers.length];
+      worker?.postMessage(
+        {
+          type: "parse",
+          requestId,
+          encodedText: ownedData
+        },
+        [ownedData.buffer]
+      );
+    });
+  }
   terminate() {
     this.workers.forEach((w) => w.terminate());
     this.workers = [];
@@ -37118,6 +37142,14 @@ const asyncJsonParse = async (text2) => {
     return Promise.resolve(result2);
   } else {
     return workerPool.parse(text2);
+  }
+};
+const asyncJsonParseBytes = async (data) => {
+  if (data.length < 5e4) {
+    const text2 = new TextDecoder("utf-8").decode(data);
+    return jsonParse(text2);
+  } else {
+    return workerPool.parseBytes(data);
   }
 };
 const jsonParse = (text2) => {
@@ -107582,16 +107614,163 @@ function requireMarkdownItMathjax3() {
 }
 var markdownItMathjax3Exports = requireMarkdownItMathjax3();
 const markdownitMathjax3 = /* @__PURE__ */ getDefaultExportFromCjs(markdownItMathjax3Exports);
+const mdInstanceCache = {};
+const getOptionsKey = (omitMedia, omitMath) => `${omitMedia ? "1" : "0"}:${omitMath ? "1" : "0"}`;
+const unescapeHtmlForMath = (content2) => {
+  return content2.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/&apos;/g, "'").replace(/&quot;/g, '"');
+};
+const getMarkdownInstance = (omitMedia, omitMath) => {
+  const key2 = getOptionsKey(omitMedia, omitMath);
+  if (!mdInstanceCache[key2]) {
+    const md = new MarkdownIt({ breaks: true, html: true });
+    if (!omitMath) {
+      md.use(markdownitMathjax3);
+      const origInline = md.renderer.rules.math_inline;
+      const origBlock = md.renderer.rules.math_block;
+      if (origInline) {
+        md.renderer.rules.math_inline = (tokens, idx, options2, env, self2) => {
+          tokens[idx].content = unescapeHtmlForMath(tokens[idx].content);
+          return origInline(tokens, idx, options2, env, self2);
+        };
+      }
+      if (origBlock) {
+        md.renderer.rules.math_block = (tokens, idx, options2, env, self2) => {
+          tokens[idx].content = unescapeHtmlForMath(tokens[idx].content);
+          return origBlock(tokens, idx, options2, env, self2);
+        };
+      }
+    }
+    if (omitMedia) {
+      md.disable(["image"]);
+    }
+    mdInstanceCache[key2] = md;
+  }
+  return mdInstanceCache[key2];
+};
+const escapeHtmlCharacters = (content2) => {
+  if (!content2) return content2;
+  return content2.replace(/[<>&'"]/g, (c2) => {
+    switch (c2) {
+      case "<":
+        return "&lt;";
+      case ">":
+        return "&gt;";
+      case "&":
+        return "&amp;";
+      case "'":
+        return "&apos;";
+      case '"':
+        return "&quot;";
+      default:
+        throw new Error("Matched a value that isn't replaceable");
+    }
+  });
+};
+const protectBackslashesInLatex = (content2) => {
+  if (!content2) return content2;
+  try {
+    const inlineRegex = /\$(.*?)\$/g;
+    const blockRegex = /\$\$([\s\S]*?)\$\$/g;
+    let result2 = content2.replace(inlineRegex, (_match, latex) => {
+      const protectedTex = latex.replace(/\\/g, "___LATEX_BACKSLASH___");
+      return `$${protectedTex}$`;
+    });
+    result2 = result2.replace(blockRegex, (_match, latex) => {
+      const protectedTex = latex.replace(/\\/g, "___LATEX_BACKSLASH___");
+      return `$$${protectedTex}$$`;
+    });
+    return result2;
+  } catch (error2) {
+    console.error("Error protecting LaTeX content:", error2);
+    return content2;
+  }
+};
+const restoreBackslashesForLatex = (content2) => {
+  if (!content2) {
+    return content2;
+  }
+  try {
+    let result2 = content2.replace(/___LATEX_BACKSLASH___/g, "\\");
+    result2 = fixDotsNotation(result2);
+    return result2;
+  } catch (error2) {
+    console.error("Error restoring LaTeX content:", error2);
+    return content2;
+  }
+};
+const fixDotsNotation = (content2) => {
+  if (!content2) return content2;
+  try {
+    let result2 = content2.replace(/(\$[^$]*?)\\dots([^$]*?\$)/g, "$1\\ldots$2");
+    result2 = result2.replace(/(\$\$[^$]*?)\\dots([^$]*?\$\$)/g, "$1\\ldots$2");
+    return result2;
+  } catch (error2) {
+    console.error("Error fixing dots notation:", error2);
+    return content2;
+  }
+};
+const kLetterListPattern = /^([a-zA-Z][).]\s.*?)$/gm;
+const kCommonmarkReferenceLinkPattern = /\[([^\]]*)\]: (?!http)(.*)/g;
+const preRenderText = (txt) => {
+  if (!txt) return txt;
+  txt = txt.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/, "");
+  return txt.replaceAll(
+    kLetterListPattern,
+    "<p class='markdown-ordered-list-item'>$1</p>"
+  );
+};
+const protectMarkdown = (txt) => {
+  if (!txt) return txt;
+  return txt.replaceAll(
+    kCommonmarkReferenceLinkPattern,
+    "(open:767A125E)$1(close:767A125E) $2 "
+  );
+};
+const unprotectMarkdown = (txt) => {
+  if (!txt) return txt;
+  txt = txt.replaceAll("(open:767A125E)", "[");
+  txt = txt.replaceAll("(close:767A125E)", "]");
+  return txt;
+};
+function unescapeSupHtmlEntities(str2) {
+  if (!str2) {
+    return str2;
+  }
+  return str2.replace(/&lt;sup&gt;/g, "<sup>").replace(/&lt;\/sup&gt;/g, "</sup>");
+}
+function unescapeCodeHtmlEntities(str2) {
+  if (!str2) return str2;
+  const htmlEntities = {
+    "&lt;": "<",
+    "&gt;": ">",
+    "&amp;": "&",
+    "&#x5C;": "\\",
+    "&quot;": '"'
+  };
+  return str2.replace(
+    /(<code[^>]*>)([\s\S]*?)(<\/code>)/gi,
+    (_match, starttag, content2, endtag) => {
+      return starttag + content2.replace(
+        /&(?:amp|lt|gt|quot|#39|#x2F|#x5C|#96);/g,
+        (entity2) => htmlEntities[entity2] || entity2
+      ) + endtag;
+    }
+  );
+}
 const MarkdownDivComponent = reactExports.forwardRef(
   ({ markdown, omitMedia, omitMath, style: style2, className: className2 }, ref) => {
-    const optionsKey = getOptionsKey(omitMedia, omitMath);
+    const optionsKey = `${omitMedia ? "1" : "0"}:${omitMath ? "1" : "0"}`;
     const cacheKey = `${markdown}:${optionsKey}`;
     const cachedHtml = renderCache.get(cacheKey);
+    const sanitizeMarkdown = (md) => {
+      const escapedBr = md.replace(/\n/g, "<br/>");
+      return escapeHtmlCharacters(escapedBr);
+    };
     const [renderedHtml, setRenderedHtml] = reactExports.useState(() => {
       if (cachedHtml) {
         return cachedHtml;
       }
-      return markdown.replace(/\n/g, "<br/>");
+      return sanitizeMarkdown(markdown);
     });
     reactExports.useEffect(() => {
       if (cachedHtml) {
@@ -107602,7 +107781,7 @@ const MarkdownDivComponent = reactExports.forwardRef(
         }
         return;
       }
-      setRenderedHtml(markdown.replace(/\n/g, "<br/>"));
+      setRenderedHtml(sanitizeMarkdown(markdown));
       const { promise, cancel } = renderQueue.enqueue(async () => {
         const protectedContent = protectBackslashesInLatex(markdown);
         const escaped = escapeHtmlCharacters(protectedContent);
@@ -107654,22 +107833,6 @@ const MarkdownDivComponent = reactExports.forwardRef(
 const MarkdownDiv = reactExports.memo(MarkdownDivComponent);
 const renderCache = /* @__PURE__ */ new Map();
 const MAX_CACHE_SIZE = 500;
-const mdInstanceCache = {};
-const getOptionsKey = (omitMedia, omitMath) => `${omitMedia ? "1" : "0"}:${omitMath ? "1" : "0"}`;
-const getMarkdownInstance = (omitMedia, omitMath) => {
-  const key2 = getOptionsKey(omitMedia, omitMath);
-  if (!mdInstanceCache[key2]) {
-    const md = new MarkdownIt({ breaks: true, html: true });
-    if (!omitMath) {
-      md.use(markdownitMathjax3);
-    }
-    if (omitMedia) {
-      md.disable(["image"]);
-    }
-    mdInstanceCache[key2] = md;
-  }
-  return mdInstanceCache[key2];
-};
 class MarkdownRenderQueue {
   queue = [];
   activeCount = 0;
@@ -107736,116 +107899,6 @@ class MarkdownRenderQueue {
   }
 }
 const renderQueue = new MarkdownRenderQueue(10);
-const kLetterListPattern = /^([a-zA-Z][).]\s.*?)$/gm;
-const kCommonmarkReferenceLinkPattern = /\[([^\]]*)\]: (?!http)(.*)/g;
-const protectBackslashesInLatex = (content2) => {
-  if (!content2) return content2;
-  try {
-    const inlineRegex = /\$(.*?)\$/g;
-    const blockRegex = /\$\$([\s\S]*?)\$\$/g;
-    let result2 = content2.replace(inlineRegex, (_match, latex) => {
-      const protectedTex = latex.replace(/\\/g, "___LATEX_BACKSLASH___").replace(/</g, "___LATEX_LT___").replace(/>/g, "___LATEX_GT___").replace(/&/g, "___LATEX_AMP___").replace(/'/g, "___LATEX_APOS___").replace(/"/g, "___LATEX_QUOT___");
-      return `$${protectedTex}$`;
-    });
-    result2 = result2.replace(blockRegex, (_match, latex) => {
-      const protectedTex = latex.replace(/\\/g, "___LATEX_BACKSLASH___").replace(/</g, "___LATEX_LT___").replace(/>/g, "___LATEX_GT___").replace(/&/g, "___LATEX_AMP___").replace(/'/g, "___LATEX_APOS___").replace(/"/g, "___LATEX_QUOT___");
-      return `$$${protectedTex}$$`;
-    });
-    return result2;
-  } catch (error2) {
-    console.error("Error protecting LaTeX content:", error2);
-    return content2;
-  }
-};
-const restoreBackslashesForLatex = (content2) => {
-  if (!content2) {
-    return content2;
-  }
-  try {
-    let result2 = content2.replace(/___LATEX_BACKSLASH___/g, "\\").replace(/___LATEX_LT___/g, "<").replace(/___LATEX_GT___/g, ">").replace(/___LATEX_AMP___/g, "&").replace(/___LATEX_APOS___/g, "'").replace(/___LATEX_QUOT___/g, '"');
-    result2 = fixDotsNotation(result2);
-    return result2;
-  } catch (error2) {
-    console.error("Error restoring LaTeX content:", error2);
-    return content2;
-  }
-};
-const fixDotsNotation = (content2) => {
-  if (!content2) return content2;
-  try {
-    let result2 = content2.replace(/(\$[^$]*?)\\dots([^$]*?\$)/g, "$1\\ldots$2");
-    result2 = result2.replace(/(\$\$[^$]*?)\\dots([^$]*?\$\$)/g, "$1\\ldots$2");
-    return result2;
-  } catch (error2) {
-    console.error("Error fixing dots notation:", error2);
-    return content2;
-  }
-};
-const escapeHtmlCharacters = (content2) => {
-  if (!content2) return content2;
-  return content2.replace(/[<>&'"]/g, (c2) => {
-    switch (c2) {
-      case "<":
-        return "&lt;";
-      case ">":
-        return "&gt;";
-      case "&":
-        return "&amp;";
-      case "'":
-        return "&apos;";
-      case '"':
-        return "&quot;";
-      default:
-        throw new Error("Matched a value that isn't replaceable");
-    }
-  });
-};
-const preRenderText = (txt) => {
-  if (!txt) return txt;
-  txt = txt.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/, "");
-  return txt.replaceAll(
-    kLetterListPattern,
-    "<p class='markdown-ordered-list-item'>$1</p>"
-  );
-};
-const protectMarkdown = (txt) => {
-  if (!txt) return txt;
-  return txt.replaceAll(
-    kCommonmarkReferenceLinkPattern,
-    "(open:767A125E)$1(close:767A125E) $2 "
-  );
-};
-const unprotectMarkdown = (txt) => {
-  if (!txt) return txt;
-  txt = txt.replaceAll("(open:767A125E)", "[");
-  txt = txt.replaceAll("(close:767A125E)", "]");
-  return txt;
-};
-function unescapeSupHtmlEntities(str2) {
-  if (!str2) {
-    return str2;
-  }
-  return str2.replace(/&lt;sup&gt;/g, "<sup>").replace(/&lt;\/sup&gt;/g, "</sup>");
-}
-function unescapeCodeHtmlEntities(str2) {
-  if (!str2) return str2;
-  const htmlEntities = {
-    "&lt;": "<",
-    "&gt;": ">",
-    "&amp;": "&",
-    "&#x5C;": "\\",
-    "&quot;": '"'
-  };
-  return str2.replace(
-    /(<code[^>]*>)([\s\S]*?)(<\/code>)/gi,
-    (_match, starttag, content2, endtag) => {
-      return starttag + content2.replace(
-        /&(?:amp|lt|gt|quot|#39|#x2F|#x5C|#96);/g,
-        (entity2) => htmlEntities[entity2] || entity2
-      ) + endtag;
-    }
-  );
-}
 const content$3 = "_content_13ihw_1";
 const styles$1A = {
   content: content$3
@@ -108247,6 +108300,13 @@ function clearLargeEventsArray(data) {
   result2.set(after, offset2);
   return result2;
 }
+const fetchRange = async (url, start2, end2) => {
+  const response = await fetch(url, {
+    headers: { Range: `bytes=${start2}-${end2}` }
+  });
+  const arrayBuffer = await response.arrayBuffer();
+  return new Uint8Array(arrayBuffer);
+};
 class AsyncQueue {
   constructor(concurrentLimit = 6) {
     this.concurrentLimit = concurrentLimit;
@@ -109651,8 +109711,50 @@ class FileSizeLimitError extends Error {
     Object.setPrototypeOf(this, FileSizeLimitError.prototype);
   }
 }
-const openRemoteZipFile = async (url, fetchContentLength = fetchSize, fetchBytes = fetchRange) => {
-  const contentLength = await fetchContentLength(url);
+const PARALLEL_CHUNK_THRESHOLD = 8 * 1024 * 1024;
+const PARALLEL_CHUNK_SIZE = 8 * 1024 * 1024;
+const MAX_PARALLEL_CHUNKS = 10;
+const fetchBytesParallel = async (fetchFn, url, start2, end2, onProgress) => {
+  const totalSize = end2 - start2 + 1;
+  if (totalSize <= PARALLEL_CHUNK_THRESHOLD) {
+    return fetchFn(url, start2, end2);
+  }
+  const chunks = [];
+  let offset2 = start2;
+  while (offset2 <= end2) {
+    const chunkEnd = Math.min(offset2 + PARALLEL_CHUNK_SIZE - 1, end2);
+    chunks.push({ start: offset2, end: chunkEnd, index: chunks.length });
+    offset2 = chunkEnd + 1;
+  }
+  const concurrency = Math.min(chunks.length, MAX_PARALLEL_CHUNKS);
+  const results = new Array(chunks.length);
+  let nextChunk = 0;
+  let bytesLoaded = 0;
+  if (onProgress) {
+    onProgress(0, totalSize);
+  }
+  const worker = async () => {
+    while (nextChunk < chunks.length) {
+      const idx = nextChunk++;
+      const chunk = chunks[idx];
+      results[idx] = await fetchFn(url, chunk.start, chunk.end);
+      if (onProgress) {
+        bytesLoaded += results[idx].length;
+        onProgress(bytesLoaded, totalSize);
+      }
+    }
+  };
+  await Promise.all(Array.from({ length: concurrency }, () => worker()));
+  const combined = new Uint8Array(totalSize);
+  let pos2 = 0;
+  for (const chunk of results) {
+    combined.set(chunk, pos2);
+    pos2 += chunk.length;
+  }
+  return combined;
+};
+const openRemoteZipFile = async (url, contentLength, fetchBytes = fetchRange) => {
+  contentLength = contentLength ?? await fetchSize(url);
   const eocdrBuffer = await fetchBytes(
     url,
     contentLength - 22,
@@ -109694,7 +109796,8 @@ const openRemoteZipFile = async (url, fetchContentLength = fetchSize, fetchBytes
     centralDirSize = Number(zip64EOCDView.getBigUint64(40, true));
     centralDirOffset = Number(zip64EOCDView.getBigUint64(48, true));
   }
-  const centralDirBuffer = await fetchBytes(
+  const centralDirBuffer = await fetchBytesParallel(
+    fetchBytes,
     url,
     centralDirOffset,
     centralDirOffset + centralDirSize - 1
@@ -109702,28 +109805,40 @@ const openRemoteZipFile = async (url, fetchContentLength = fetchSize, fetchBytes
   const centralDirectory = parseCentralDirectory(centralDirBuffer);
   return {
     centralDirectory,
-    readFile: async (file, maxBytes) => {
+    readFile: async (file, maxBytes, onProgress) => {
       const entry = centralDirectory.get(file);
       if (!entry) {
         throw new Error(`File not found: ${file}`);
       }
       const headerSize = 30;
-      const headerData = await fetchBytes(
-        url,
-        entry.fileOffset,
-        entry.fileOffset + headerSize - 1
-      );
-      const filenameLength = headerData[26] + (headerData[27] << 8);
-      const extraFieldLength = headerData[28] + (headerData[29] << 8);
-      const totalSizeToFetch = headerSize + filenameLength + extraFieldLength + entry.compressedSize;
-      if (maxBytes && totalSizeToFetch > maxBytes) {
+      const extraFieldPadding = 256;
+      const estimatedSize = headerSize + entry.filenameLength + extraFieldPadding + entry.compressedSize;
+      if (maxBytes && headerSize + entry.filenameLength + entry.compressedSize > maxBytes) {
         throw new FileSizeLimitError(file, maxBytes);
       }
-      const fileData = await fetchBytes(
+      let fileData = await fetchBytesParallel(
+        fetchBytes,
         url,
         entry.fileOffset,
-        entry.fileOffset + totalSizeToFetch - 1
+        entry.fileOffset + estimatedSize - 1,
+        onProgress
       );
+      if (fileData.length < headerSize) {
+        throw new Error(`File entry header is truncated for ${file}`);
+      }
+      const actualExtraFieldLength = fileData[28] + (fileData[29] << 8);
+      const actualTotal = headerSize + entry.filenameLength + actualExtraFieldLength + entry.compressedSize;
+      if (maxBytes && actualTotal > maxBytes) {
+        throw new FileSizeLimitError(file, maxBytes);
+      }
+      if (actualTotal > estimatedSize) {
+        fileData = await fetchBytesParallel(
+          fetchBytes,
+          url,
+          entry.fileOffset,
+          entry.fileOffset + actualTotal - 1
+        );
+      }
       const zipFileEntry = await parseZipFileEntry(file, fileData);
       return decompressData(
         zipFileEntry.data,
@@ -109757,13 +109872,6 @@ const fetchSize = async (url) => {
     return Number(contentLength);
   }
   throw new Error(`Could not determine content length for ${url}`);
-};
-const fetchRange = async (url, start2, end2) => {
-  const response = await fetch(`${url}`, {
-    headers: { Range: `bytes=${start2}-${end2}` }
-  });
-  const arrayBuffer = await response.arrayBuffer();
-  return new Uint8Array(arrayBuffer);
 };
 const parseZipFileEntry = async (file, rawData) => {
   const view = new DataView(rawData.buffer);
@@ -109876,7 +109984,8 @@ const parseCentralDirectory = (buffer2) => {
       compressionMethod: view.getUint16(offset2 + 10, true),
       compressedSize,
       uncompressedSize,
-      fileOffset
+      fileOffset,
+      filenameLength
     };
     entries.set(filename2, entry);
     offset2 += kFileHeaderSize + filenameLength + extraFieldLength + fileCommentLength;
@@ -109894,15 +110003,23 @@ class SampleNotFoundError extends Error {
 }
 const openRemoteLogFile = async (api2, url, concurrency) => {
   const queue = new AsyncQueue(concurrency);
+  const logInfo = await api2.get_log_info(url);
+  const directUrl = logInfo.direct_url;
+  const fetchBytes = async (_url, start2, end2) => {
+    if (directUrl) {
+      try {
+        return await fetchRange(directUrl, start2, end2);
+      } catch (e) {
+        console.warn("Direct URL fetch failed, falling back to proxy", e);
+      }
+    }
+    return api2.get_log_bytes(url, start2, end2);
+  };
   let remoteZipFile = void 0;
   let retryCount = 0;
   while (!remoteZipFile && retryCount < OPEN_RETRY_LIMIT) {
     try {
-      remoteZipFile = await openRemoteZipFile(
-        url,
-        api2.get_log_size,
-        api2.get_log_bytes
-      );
+      remoteZipFile = await openRemoteZipFile(url, logInfo.size, fetchBytes);
     } catch {
       retryCount++;
       console.warn(
@@ -109918,20 +110035,13 @@ const openRemoteLogFile = async (api2, url, concurrency) => {
       `Failed to open remote log file at ${url} after ${OPEN_RETRY_LIMIT} attempts.`
     );
   }
-  const readJSONFile = async (file, maxBytes, preprocessor2) => {
+  const readJSONFile = async (file, maxBytes, preprocessor2, onProgress) => {
     try {
-      let data = await remoteZipFile.readFile(file, maxBytes);
+      let data = await remoteZipFile.readFile(file, maxBytes, onProgress);
       if (preprocessor2) {
         data = preprocessor2.preprocess(data);
       }
-      const textDecoder = new TextDecoder("utf-8");
-      const jsonString = textDecoder.decode(data);
-      if (data.length > 0 && jsonString.length === 0) {
-        throw new Error(
-          `Failed to decode ${file} (${(data.length / 1024 / 1024).toFixed(0)}MB). The file may be corrupted or contain invalid UTF-8 sequences.`
-        );
-      }
-      return asyncJsonParse(jsonString);
+      return asyncJsonParseBytes(data);
     } catch (error2) {
       if (error2 instanceof FileSizeLimitError) {
         throw error2;
@@ -109957,7 +110067,7 @@ const openRemoteLogFile = async (api2, url, concurrency) => {
       };
     });
   };
-  const readSample = async (sampleId, epoch) => {
+  const readSample = async (sampleId, epoch, onProgress) => {
     const sampleFile = `samples/${sampleId}_epoch_${epoch}.json`;
     if (!remoteZipFile.centralDirectory.has(sampleFile)) {
       throw new SampleNotFoundError(
@@ -109974,7 +110084,8 @@ const openRemoteLogFile = async (api2, url, concurrency) => {
     return await readJSONFile(
       sampleFile,
       void 0,
-      eventsPreprocessor
+      eventsPreprocessor,
+      onProgress
     );
   };
   const readHeader = async () => {
@@ -110143,7 +110254,7 @@ const clientApi = (api2, log_file, debug2 = false) => {
   let pending_log_promise = null;
   const get_log_details = async (log_file2) => {
     if (isEvalFile(log_file2)) {
-      const remoteLogFile = await remoteEvalFile(log_file2);
+      const remoteLogFile = await remoteEvalFile(log_file2, true);
       if (remoteLogFile) {
         return await remoteLogFile.readLogSummary();
       } else {
@@ -110178,7 +110289,7 @@ const clientApi = (api2, log_file, debug2 = false) => {
       };
     }
   };
-  const get_log_sample = async (log_file2, id, epoch) => {
+  const get_log_sample = async (log_file2, id, epoch, onProgress) => {
     if (isEvalFile(log_file2)) {
       let handleError2 = function(error2) {
         if (error2 instanceof FileSizeLimitError) {
@@ -110191,7 +110302,7 @@ const clientApi = (api2, log_file, debug2 = false) => {
         if (!remoteLogFile) {
           throw new Error(`Unable to read remote eval file ${log_file2}`);
         }
-        return await remoteLogFile.readSample(String(id), epoch);
+        return await remoteLogFile.readSample(String(id), epoch, onProgress);
       }
       try {
         return await fetchSample(true);
@@ -110477,21 +110588,9 @@ const fetchManifest = async (log_dir) => {
     const parsed = await asyncJsonParse(text2);
     return { raw: text2, parsed };
   };
-  const handle404 = (response) => {
-    return response.status === 404;
-  };
-  const logs = await fetchFile(
-    log_dir + "/listing.json",
-    parseListing,
-    handle404
-  );
-  if (logs) {
-    return logs;
-  }
   return await fetchFile(
-    "./listing.json",
-    parseListing,
-    handle404
+    log_dir + "/listing.json",
+    parseListing
   );
 };
 const fetchJsonFile = async (file, handleError2) => {
@@ -110506,15 +110605,17 @@ const fetchJsonFile = async (file, handleError2) => {
 function joinURI(...segments2) {
   return segments2.map((segment2) => segment2.replace(/(^\/+|\/+$)/g, "")).join("/");
 }
-function staticHttpApi(log_dir, log_file) {
+function staticHttpApi(log_dir, log_file, abs_log_dir) {
   const resolved_log_dir = log_dir?.replace(" ", "+");
   log_file ? log_file.replace(" ", "+") : void 0;
   return staticHttpApiForLog({
-    log_dir: resolved_log_dir
+    log_dir: resolved_log_dir,
+    abs_log_dir
   });
 }
 function staticHttpApiForLog(logInfo) {
   const log_dir = logInfo.log_dir;
+  const abs_log_dir = logInfo.abs_log_dir;
   let manifest = void 0;
   let manifestPromise = void 0;
   const getManifest = async () => {
@@ -110548,7 +110649,8 @@ function staticHttpApiForLog(logInfo) {
           });
           return Promise.resolve({
             logs,
-            log_dir
+            log_dir,
+            abs_log_dir
           });
         }
       }
@@ -110608,8 +110710,9 @@ function staticHttpApiForLog(logInfo) {
         throw new Error(`"Unable to load eval log ${log_file}`);
       }
     },
-    get_log_size: async (log_file) => {
-      return await fetchSize(log_file);
+    get_log_info: async (log_file) => {
+      const size = await fetchSize(log_file);
+      return { size };
     },
     get_log_bytes: async (log_file, start2, end2) => {
       return await fetchRange(log_file, start2, end2);
@@ -110881,10 +110984,10 @@ function viewServerApi(options2 = {}) {
     );
     return result2;
   };
-  const get_log_size2 = async (file) => {
+  const get_log_info2 = async (file) => {
     const result2 = await requestApi.fetchString(
       "GET",
-      `/log-size/${encodeURIComponent(file)}`
+      `/log-info/${encodeURIComponent(file)}`
     );
     return result2.parsed;
   };
@@ -111039,7 +111142,7 @@ function viewServerApi(options2 = {}) {
     get_eval_set: get_eval_set2,
     get_flow: get_flow2,
     get_log_contents: get_log_contents2,
-    get_log_size: get_log_size2,
+    get_log_info: get_log_info2,
     get_log_bytes: get_log_bytes2,
     get_log_summaries: get_log_summaries2,
     log_message: log_message2,
@@ -111055,12 +111158,13 @@ const kMethodEvalLogDir = "eval_log_dir";
 const kMethodEvalLogs = "eval_logs";
 const kMethodEvalLogFiles = "eval_log_files";
 const kMethodEvalLog = "eval_log";
-const kMethodEvalLogSize = "eval_log_size";
+const kMethodEvalLogInfo = "eval_log_info";
 const kMethodEvalLogBytes = "eval_log_bytes";
 const kMethodEvalLogHeaders = "eval_log_headers";
 const kMethodPendingSamples = "eval_log_pending_samples";
 const kMethodSampleData = "eval_log_sample_data";
 const kMethodLogMessage = "log_message";
+const kJsonRpcMethodNotFound = -32601;
 const kJsonRpcVersion = "2.0";
 function webViewJsonRpcClient(vscode2) {
   const target2 = {
@@ -111193,8 +111297,16 @@ async function get_log_contents(log_file, headerOnly, capabilities2) {
     throw new Error(`Unable to load eval log ${log_file}.`);
   }
 }
-async function get_log_size(log_file) {
-  return await vscodeClient(kMethodEvalLogSize, [log_file]);
+async function get_log_info(log_file) {
+  try {
+    return await vscodeClient(kMethodEvalLogInfo, [log_file]);
+  } catch (e) {
+    if (e?.code === kJsonRpcMethodNotFound) {
+      const size = await vscodeClient("eval_log_size", [log_file]);
+      return { size };
+    }
+    throw e;
+  }
 }
 async function get_log_bytes(log_file, start2, end2) {
   return await vscodeClient(kMethodEvalLogBytes, [log_file, start2, end2]);
@@ -111277,7 +111389,7 @@ const api$1 = {
   get_eval_set,
   get_flow,
   get_log_contents,
-  get_log_size,
+  get_log_info,
   get_log_bytes,
   get_log_summaries,
   log_message,
@@ -111298,7 +111410,7 @@ const resolveApi = () => {
         const data = lib$d.parse(context);
         if (data.log_dir || data.log_file) {
           const log_dir2 = data.log_dir || dirname(data.log_file);
-          const api2 = staticHttpApi(log_dir2, data.log_file);
+          const api2 = staticHttpApi(log_dir2, data.log_file, data.abs_log_dir);
           return clientApi(api2, data.log_file, debug2);
         }
       }
@@ -111460,11 +111572,13 @@ ${citation.url}` : citation.url,
   }
 );
 const OtherCitation = ({ children: children2 }) => /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: children2 });
-const contentImage = "_contentImage_srbm0_1";
-const reasoning = "_reasoning_srbm0_6";
+const contentImage = "_contentImage_16eyd_1";
+const reasoning = "_reasoning_16eyd_6";
+const breakable = "_breakable_16eyd_21";
 const styles$1r = {
   contentImage,
-  reasoning
+  reasoning,
+  breakable
 };
 const mcpToolUse = "_mcpToolUse_1792k_1";
 const title$2 = "_title_1792k_9";
@@ -111657,6 +111771,8 @@ const ToolOutput = ({ output: output2, className: className2 }) => {
       const key2 = `tool-output-${idx}`;
       if (out.type === "text") {
         outputs.push(/* @__PURE__ */ jsxRuntimeExports.jsx(ToolTextOutput, { text: out.text }, key2));
+      } else if (out.type === "document") {
+        outputs.push(/* @__PURE__ */ jsxRuntimeExports.jsx(ContentDocumentView, { id: key2, document: out }, key2));
       } else {
         if (out.image.startsWith("data:")) {
           outputs.push(
@@ -111755,15 +111871,14 @@ const MessageContent = ({
 };
 const messageRenderers = {
   text: {
-    render: (key2, content2, isLast, context) => {
+    render: (key2, content2, isLast, _context) => {
       const c2 = content2;
       const cites = c2.citations ?? [];
       if (!c2.text && !cites.length) {
         return void 0;
       }
       const purgeInternalContainers = (text2) => {
-        const isAssistantMessage = context.role === "assistant";
-        const internalTags = !isAssistantMessage ? ["internal", "content-internal"] : ["internal", "content-internal", "think"];
+        const internalTags = ["internal", "content-internal"];
         internalTags.forEach((tag) => {
           const regex2 = new RegExp(`<${tag}[^>]*>[\\s\\S]*?<\\/${tag}>`, "gm");
           text2 = text2.replace(regex2, "");
@@ -111779,7 +111894,10 @@ const messageRenderers = {
             RenderedText,
             {
               markdown: purgeInternalContainers(c2.text) || "",
-              className: isLast ? "no-last-para-padding" : ""
+              className: clsx(
+                isLast ? "no-last-para-padding" : "",
+                styles$1r.breakable
+              )
             }
           ),
           c2.citations ? /* @__PURE__ */ jsxRuntimeExports.jsx(MessageCitations, { citations: c2.citations }) : void 0
@@ -112077,7 +112195,7 @@ const extractInput = (args2, inputDescriptor) => {
     };
   }
 };
-const toolCallView = "_toolCallView_l6wae_1";
+const toolCallView = "_toolCallView_10z2l_1";
 const styles$1o = {
   toolCallView
 };
@@ -112420,12 +112538,7 @@ const resolveToolMessage = (toolMessage) => {
             }
           ]
         };
-      } else if (con.type === "text") {
-        return {
-          content: [con],
-          type: "tool"
-        };
-      } else if (con.type === "image") {
+      } else if (["text", "image", "document"].includes(con.type)) {
         return {
           content: [con],
           type: "tool"
@@ -112555,7 +112668,7 @@ const styles$1j = {
   container: container$l
 };
 const ChatMessageRow = ({
-  parentName,
+  id,
   number: number2,
   resolvedMessage,
   toolCallStyle,
@@ -112588,7 +112701,7 @@ const ChatMessageRow = ({
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             ChatMessage,
             {
-              id: `${parentName}-chat-messages`,
+              id: `${id}-chat-messages`,
               message: resolvedMessage.message,
               toolMessages: resolvedMessage.toolMessages,
               indented: indented2,
@@ -112613,7 +112726,7 @@ const ChatMessageRow = ({
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             ChatMessage,
             {
-              id: `${parentName}-chat-messages`,
+              id: `${id}-chat-messages`,
               message: resolvedMessage.message,
               toolMessages: resolvedMessage.toolMessages,
               indented: indented2,
@@ -112724,10 +112837,11 @@ const ChatView = ({
   });
   const result2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(className2), children: collapsedMessages.map((msg, index) => {
     const number2 = collapsedMessages.length > 1 && numbered ? index + 1 : void 0;
+    const rowId = (id || "chat-view") + `-msg-${index}`;
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       ChatMessageRow,
       {
-        parentName: id || "chat-view",
+        id: rowId,
         number: number2,
         resolvedMessage: msg,
         indented: indented2,
@@ -116339,6 +116453,7 @@ const useSampleData = () => {
   const runningEvents = useStore(
     (state) => state.sample.runningEvents
   );
+  const downloadProgress = useStore((state) => state.sample.downloadProgress);
   return reactExports.useMemo(() => {
     return {
       selectedSampleIdentifier,
@@ -116347,7 +116462,8 @@ const useSampleData = () => {
       error: sampleError,
       getSelectedSample,
       eventsCleared,
-      running: runningEvents
+      running: runningEvents,
+      downloadProgress
     };
   }, [
     sampleStatus2,
@@ -116356,7 +116472,8 @@ const useSampleData = () => {
     selectedSampleIdentifier,
     sampleNeedsReload,
     eventsCleared,
-    runningEvents
+    runningEvents,
+    downloadProgress
   ]);
 };
 const useSampleInvalidation = () => {
@@ -116788,25 +116905,33 @@ const useFlowServerData = (dir) => {
     }
   }, [dir, flowDir, api2, updateFlowData]);
 };
-const wrapper$3 = "_wrapper_1tajk_1";
-const container$k = "_container_1tajk_12";
-const animate = "_animate_1tajk_21";
+const wrapper$3 = "_wrapper_44dmw_1";
+const container$k = "_container_44dmw_12";
+const animate = "_animate_44dmw_21";
+const determinate = "_determinate_44dmw_31";
 const styles$1f = {
   wrapper: wrapper$3,
   container: container$k,
-  animate
+  animate,
+  determinate
 };
-const ActivityBar = ({ animating }) => {
+const ActivityBar = ({ animating, progress: progress2 }) => {
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1f.wrapper), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
     {
       className: clsx(styles$1f.container),
       role: "progressbar",
       "aria-label": "Progress bar",
-      "aria-valuenow": 25,
+      "aria-valuenow": progress2 !== void 0 ? Math.round(progress2 * 100) : void 0,
       "aria-valuemin": 0,
       "aria-valuemax": 100,
-      children: animating && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1f.animate })
+      children: animating && (progress2 !== void 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
+        {
+          className: styles$1f.determinate,
+          style: { width: `${progress2 * 100}%` }
+        }
+      ) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1f.animate }))
     }
   ) });
 };
@@ -118786,7 +118911,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.191-0-g980fc96cd" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.200-28-g6f7ea0284" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -118939,8 +119064,14 @@ const Navbar = ({
   breadcrumbsEnabled
 }) => {
   const logDir2 = useStore((state) => state.logs.logDir);
-  const baseLogDir = dirname(logDir2 || "");
-  const baseLogName = basename(logDir2 || "");
+  const displayDir = logDir2 === "." ? basename(
+    window.location.pathname.substring(
+      0,
+      window.location.pathname.lastIndexOf("/")
+    )
+  ) : logDir2 || "";
+  const baseLogDir = dirname(displayDir);
+  const baseLogName = basename(displayDir);
   const pathContainerRef = reactExports.useRef(null);
   const backUrl = fnNavigationUrl(
     ensureTrailingSlash(dirname(currentPath || "")),
@@ -176798,6 +176929,16 @@ const LogListGrid = ({
       gridElement.removeEventListener("keydown", handleKeyDown);
     };
   }, [handleKeyDown]);
+  const handleCellMouseDown = reactExports.useCallback(
+    (e) => {
+      const mouseEvent = e.event;
+      if (mouseEvent?.button === 1 && e.data?.url) {
+        mouseEvent.preventDefault();
+        window.open(`#${e.data.url}`, "_blank");
+      }
+    },
+    []
+  );
   reactExports.useEffect(() => {
     const loadHeaders = async () => {
       const filesToLoad = logFiles.filter((file) => !logPreviews[file.name]);
@@ -176964,6 +177105,7 @@ const LogListGrid = ({
           }
         },
         onRowClicked: handleRowClick,
+        onCellMouseDown: handleCellMouseDown,
         onSortChanged: handleSortChanged,
         onFilterChanged: handleFilterChanged,
         loading: data.length === 0 && (loading > 0 || syncing)
@@ -177330,7 +177472,20 @@ function useLoadSample() {
         if (completed !== false) {
           log$1.debug(`LOADING COMPLETED SAMPLE: ${id}-${epoch}`);
           getSamplePolling().stopPolling();
-          const sample2 = await api2?.get_log_sample(logFile, id, epoch);
+          sampleActions.setDownloadProgress(void 0);
+          const onProgress = (bytesLoaded, bytesTotal) => {
+            sampleActions.setDownloadProgress({
+              complete: bytesLoaded,
+              total: bytesTotal
+            });
+          };
+          const sample2 = await api2?.get_log_sample(
+            logFile,
+            id,
+            epoch,
+            onProgress
+          );
+          sampleActions.setDownloadProgress(void 0);
           log$1.debug(`LOADED COMPLETED SAMPLE: ${id}-${epoch}`);
           if (thisGeneration !== loadGeneration) {
             log$1.debug(`Discarding stale sample response: ${id}-${epoch}`);
@@ -177356,6 +177511,7 @@ function useLoadSample() {
           getSamplePolling().stopPolling();
         }
       } catch (e) {
+        sampleActions.setDownloadProgress(void 0);
         sampleActions.setSampleError(e);
         sampleActions.setSampleStatus("error");
       }
@@ -178019,6 +178175,7 @@ async function findExtendedInDOM(searchTerm, back, lastFoundItem, extendedFindTe
             );
             if (foundInVirtual) {
               extendedSearchSucceeded = true;
+              await waitForTextInDOM(searchTerm);
               continue;
             }
           }
@@ -178053,6 +178210,7 @@ async function findExtendedInDOM(searchTerm, back, lastFoundItem, extendedFindTe
       );
       if (foundInVirtual) {
         extendedSearchSucceeded = true;
+        await waitForTextInDOM(searchTerm);
         continue;
       }
       positionSelectionForWrap(back);
@@ -178112,6 +178270,50 @@ function selectionParentElement(range2) {
     element = range2.commonAncestorContainer.parentElement;
   }
   return element;
+}
+function waitForTextInDOM(searchTerm, timeoutMs = 2e3) {
+  const lowerTerm = searchTerm.toLowerCase();
+  const isTextInSearchableDOM = () => {
+    const walker = document.createTreeWalker(
+      document.body,
+      NodeFilter.SHOW_TEXT,
+      {
+        acceptNode: (node2) => {
+          let el2 = node2.parentElement;
+          while (el2) {
+            if (el2.hasAttribute("data-unsearchable")) {
+              return NodeFilter.FILTER_REJECT;
+            }
+            el2 = el2.parentElement;
+          }
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      }
+    );
+    while (walker.nextNode()) {
+      if (walker.currentNode.textContent?.toLowerCase().includes(lowerTerm)) {
+        return true;
+      }
+    }
+    return false;
+  };
+  return new Promise((resolve) => {
+    const interval = 50;
+    let elapsed = 0;
+    const check2 = () => {
+      if (isTextInSearchableDOM()) {
+        resolve(true);
+        return;
+      }
+      elapsed += interval;
+      if (elapsed >= timeoutMs) {
+        resolve(false);
+        return;
+      }
+      setTimeout(check2, interval);
+    };
+    check2();
+  });
 }
 const tabs$1 = "_tabs_1rv6h_1";
 const tabContents = "_tabContents_1rv6h_5";
@@ -178356,51 +178558,6 @@ const NoContentsPanel = ({ text: text2 }) => {
     /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.noSamples }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: text2 })
   ] }) });
-};
-const printHtml = (html2, css2) => {
-  const printWindow = window.open("", "", "height=600,width=800");
-  if (printWindow !== null) {
-    printWindow.document.write("<html><head><title>Print</title>");
-    printWindow.document.write(`
-          <link rel="stylesheet" crossorigin="" href="./assets/index.css">
-          <style>
-            @media print {
-              ${css2}
-            }
-          </style>
-        `);
-    printWindow.document.write("</head><body>");
-    printWindow.document.write(html2);
-    printWindow.document.write("</body></html>");
-    printWindow.document.close();
-    printWindow.onload = function() {
-      printWindow.focus();
-      printWindow.print();
-      printWindow.close();
-    };
-  } else {
-    console.error("Print window failed to open.");
-  }
-};
-const printHeadingHtml = () => {
-  const taskEl = document.getElementById("task-title");
-  const modelEl = document.getElementById("task-model");
-  const timeEl = document.getElementById("task-created");
-  if (!taskEl || !modelEl || !timeEl) {
-    throw new Error(
-      "Failed to compute heading HTML. The task, model, or time element can't be found."
-    );
-  }
-  const task = taskEl.innerText;
-  const model2 = modelEl.innerText;
-  const time = timeEl.innerText;
-  const headingHtml = `
-<div style="display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 0.5em; margin-bottom: 2em; justify-content: space-between; border-bottom: solid 1px silver;">
-<div style="font-weight: 600">${task}</div>
-<div style="text-align: center;">${model2}</div>
-<div style="text-align: right;">${time}</div>
-</div>`;
-  return headingHtml;
 };
 const messagesToStr = (messages2, options2) => {
   const opts = {};
@@ -178794,6 +178951,7 @@ const LiveVirtualList = ({
       }, 100);
     }
   }, [live, followOutput, prevLive, scrollRef, setFollowOutput]);
+  const isNearBottomRef = reactExports.useRef(false);
   const handleScroll = useRafThrottle(() => {
     if (isAutoScrollingRef.current) return;
     if (!live) return;
@@ -178807,10 +178965,25 @@ const LiveVirtualList = ({
       }
     }
   }, [setFollowOutput, followOutput, live]);
+  const handleScrollSync = reactExports.useCallback(() => {
+    if (isAutoScrollingRef.current) return;
+    if (!scrollRef?.current) return;
+    const parent = scrollRef.current;
+    isNearBottomRef.current = parent.scrollHeight - parent.scrollTop <= parent.clientHeight + 50;
+  }, [scrollRef]);
   const heightChanged = reactExports.useCallback(
     (height) => {
       requestAnimationFrame(() => {
-        if (followOutput && live && scrollRef?.current) {
+        if (!scrollRef?.current) return;
+        if (followOutput && live) {
+          isAutoScrollingRef.current = true;
+          listHandle.current?.scrollTo({ top: height });
+          requestAnimationFrame(() => {
+            isAutoScrollingRef.current = false;
+          });
+          return;
+        }
+        if (isNearBottomRef.current) {
           isAutoScrollingRef.current = true;
           listHandle.current?.scrollTo({ top: height });
           requestAnimationFrame(() => {
@@ -178947,9 +179120,13 @@ const LiveVirtualList = ({
     const parent = scrollRef?.current;
     if (parent) {
       parent.addEventListener("scroll", handleScroll);
-      return () => parent.removeEventListener("scroll", handleScroll);
+      parent.addEventListener("scroll", handleScrollSync);
+      return () => {
+        parent.removeEventListener("scroll", handleScroll);
+        parent.removeEventListener("scroll", handleScrollSync);
+      };
     }
-  }, [scrollRef, handleScroll]);
+  }, [scrollRef, handleScroll, handleScrollSync]);
   const hasScrolled = reactExports.useRef(false);
   reactExports.useEffect(() => {
     if (initialTopMostItemIndex !== void 0 && listHandle.current) {
@@ -179111,7 +179288,7 @@ const ChatViewVirtualList = reactExports.memo(
           } else if (event.key === "ArrowDown") {
             if (useVirtuoso) {
               listHandle.current?.scrollToIndex({
-                index: Math.min(messages2.length - 5, 0),
+                index: Math.max(messages2.length - 5, 0),
                 align: "center"
               });
               setTimeout(() => {
@@ -179130,16 +179307,10 @@ const ChatViewVirtualList = reactExports.memo(
           }
         }
       };
-      const scrollElement = scrollRef?.current;
-      if (scrollElement) {
-        scrollElement.addEventListener("keydown", handleKeyDown);
-        if (!scrollElement.hasAttribute("tabIndex")) {
-          scrollElement.setAttribute("tabIndex", "0");
-        }
-        return () => {
-          scrollElement.removeEventListener("keydown", handleKeyDown);
-        };
-      }
+      document.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+      };
     }, [scrollRef, messages2, useVirtuoso]);
     if (!useVirtuoso) {
       return /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -179211,10 +179382,11 @@ const ChatViewVirtualListComponent = reactExports.memo(
     const renderRow = reactExports.useCallback(
       (index, item2) => {
         const number2 = collapsedMessages.length > 1 && numbered ? index + 1 : void 0;
+        const rowId = `${id}-msg-${index}`;
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           ChatMessageRow,
           {
-            parentName: id || "chat-virtual-list",
+            id: rowId,
             number: number2,
             resolvedMessage: item2,
             indented: indented2,
@@ -180072,11 +180244,18 @@ const useTranscriptFilter = () => {
   const setDefaultFilter = reactExports.useCallback(() => {
     setFilteredEventTypes([...kDefaultExcludeEvents]);
   }, [setFilteredEventTypes]);
+  const setNoneFilter = reactExports.useCallback(() => {
+    setFilteredEventTypes(Object.keys(eventTypes));
+  }, [setFilteredEventTypes]);
   const isDefaultFilter = reactExports.useMemo(() => {
     return filtered.length === kDefaultExcludeEvents.length && [...filtered].every((type) => kDefaultExcludeEvents.includes(type));
   }, [filtered]);
   const isDebugFilter = reactExports.useMemo(() => {
     return filtered.length === 0;
+  }, [filtered]);
+  const isNoneFilter = reactExports.useMemo(() => {
+    const allTypes = Object.keys(eventTypes);
+    return filtered.length === allTypes.length && allTypes.every((type) => filtered.includes(type));
   }, [filtered]);
   const arrangedEventTypes = reactExports.useCallback((columns = 1) => {
     const keys = Object.keys(eventTypes);
@@ -180112,8 +180291,10 @@ const useTranscriptFilter = () => {
     filtered,
     isDefaultFilter,
     isDebugFilter,
+    isNoneFilter,
     setDefaultFilter,
     setDebugFilter,
+    setNoneFilter,
     filterEventType,
     eventTypes,
     arrangedEventTypes
@@ -180137,8 +180318,10 @@ const TranscriptFilterPopover = ({
   const {
     isDefaultFilter,
     isDebugFilter,
+    isNoneFilter,
     setDefaultFilter,
     setDebugFilter,
+    setNoneFilter,
     filterEventType,
     eventTypes: eventTypes2,
     filtered,
@@ -180176,6 +180359,18 @@ const TranscriptFilterPopover = ({
               ),
               onClick: () => setDebugFilter(),
               children: "Debug"
+            }
+          ),
+          "|",
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "a",
+            {
+              className: clsx(
+                styles$U.link,
+                isNoneFilter ? styles$U.selected : void 0
+              ),
+              onClick: () => setNoneFilter(),
+              children: "None"
             }
           )
         ] }),
@@ -181068,12 +181263,12 @@ const TranscriptOutline = ({
     }
   );
 };
-const container$f = "_container_17sux_1";
-const collapsed = "_collapsed_17sux_9";
-const treeContainer = "_treeContainer_17sux_13";
-const listContainer = "_listContainer_17sux_25";
-const outline = "_outline_17sux_29";
-const outlineToggle = "_outlineToggle_17sux_33";
+const container$f = "_container_n37ko_1";
+const collapsed = "_collapsed_n37ko_13";
+const treeContainer = "_treeContainer_n37ko_17";
+const listContainer = "_listContainer_n37ko_29";
+const outline = "_outline_n37ko_33";
+const outlineToggle = "_outlineToggle_n37ko_37";
 const styles$R = {
   container: container$f,
   collapsed,
@@ -192156,6 +192351,11 @@ const transformers = () => {
       process: (node2) => skipFirstChildNode(node2)
     },
     {
+      name: "unwrap_filtered-agent_solver",
+      matches: (node2) => node2.event.event === SPAN_BEGIN && node2.event["type"] === TYPE_SOLVER && node2.children.length === 1 && node2.children[0].event.event === SPAN_BEGIN && node2.children[0].event.type === TYPE_AGENT,
+      process: (node2) => skipFirstChildNode(node2)
+    },
+    {
       name: "unwrap_agent_solver w/store",
       matches: (node2) => node2.event.event === SPAN_BEGIN && node2.event["type"] === TYPE_SOLVER && node2.children.length === 3 && node2.children[0].event.event === SPAN_BEGIN && node2.children[0].event.type === TYPE_AGENT && node2.children[1].event.event === STATE && node2.children[2].event.event === STORE,
       process: (node2) => skipFirstChildNode(node2)
@@ -192588,17 +192788,11 @@ const TranscriptPanel = reactExports.memo((props) => {
         }
       }
     };
-    const scrollElement = scrollRef.current;
-    if (scrollElement) {
-      scrollElement.addEventListener("keydown", handleKeyDown);
-      if (!scrollElement.hasAttribute("tabIndex")) {
-        scrollElement.setAttribute("tabIndex", "0");
-      }
-      return () => {
-        scrollElement.removeEventListener("keydown", handleKeyDown);
-      };
-    }
-  }, [scrollRef, flattenedNodes]);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [flattenedNodes]);
   if (sampleStatus2 === "loading" && flattenedNodes.length === 0) {
     return void 0;
   }
@@ -192663,10 +192857,48 @@ const TranscriptPanel = reactExports.memo((props) => {
     );
   }
 });
+const printHtml = (html2, css2) => {
+  const printWindow = window.open("", "", "height=600,width=800");
+  if (printWindow !== null) {
+    printWindow.document.write("<html><head><title>Print</title>");
+    printWindow.document.write(`
+          <link rel="stylesheet" crossorigin="" href="./assets/index.css">
+          <style>
+            @media print {
+              ${css2}
+            }
+          </style>
+        `);
+    printWindow.document.write("</head><body>");
+    printWindow.document.write(html2);
+    printWindow.document.write("</body></html>");
+    printWindow.document.close();
+    printWindow.onload = function() {
+      printWindow.focus();
+      printWindow.print();
+      printWindow.close();
+    };
+  } else {
+    console.error("Print window failed to open.");
+  }
+};
+const printHeadingHtml = (evalSpec) => {
+  const task = evalSpec?.task || "Unknown Task";
+  const model2 = evalSpec?.model || "Unknown Model";
+  const time = evalSpec?.created ? new Date(evalSpec.created).toLocaleString() : "Unknown Time";
+  const headingHtml = `
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 0.5em; margin-bottom: 2em; justify-content: space-between; border-bottom: solid 1px silver;">
+<div style="font-weight: 600">${task}</div>
+<div style="text-align: center;">${model2}</div>
+<div style="text-align: right;">${time}</div>
+</div>`;
+  return headingHtml;
+};
 const SampleDisplay = ({
   id,
   scrollRef,
   showActivity,
+  progress: progress2,
   focusOnLoad
 }) => {
   const baseId = `sample-display`;
@@ -192760,8 +192992,8 @@ const SampleDisplay = ({
   const filterRef = reactExports.useRef(null);
   const optionsRef = reactExports.useRef(null);
   const handlePrintClick = reactExports.useCallback(() => {
-    printSample(id, targetId);
-  }, [id, targetId]);
+    printSample(id, targetId, evalSpec);
+  }, [id, targetId, evalSpec]);
   const toggleFilter = reactExports.useCallback(() => {
     setShowing(!isShowing);
   }, [setShowing, isShowing]);
@@ -192778,7 +193010,7 @@ const SampleDisplay = ({
   const toggleCollapsedMode = reactExports.useCallback(() => {
     setCollapsedMode(isCollapsed(collapsedMode) ? "expanded" : "collapsed");
   }, [collapsedMode, setCollapsedMode]);
-  const { isDebugFilter, isDefaultFilter } = useTranscriptFilter();
+  const { isDebugFilter, isDefaultFilter, isNoneFilter } = useTranscriptFilter();
   const api2 = useStore((state) => state.api);
   const downloadFiles = useStore((state) => state.capabilities.downloadFiles);
   const tools2 = [];
@@ -192841,7 +193073,7 @@ const SampleDisplay = ({
     );
   }
   if (selectedTab === kSampleTranscriptTabId) {
-    const label2 = isDebugFilter ? "Debug" : isDefaultFilter ? "Default" : "Custom";
+    const label2 = isNoneFilter ? "None" : isDebugFilter ? "Debug" : isDefaultFilter ? "Default" : "Custom";
     tools2.push(
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         ToolButton,
@@ -192898,7 +193130,7 @@ const SampleDisplay = ({
   const sampleDetailNavigation = useSampleDetailNavigation();
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
     selectedSampleSummary ? /* @__PURE__ */ jsxRuntimeExports.jsx(SampleSummaryView, { parent_id: id, sample: selectedSampleSummary }) : void 0,
-    /* @__PURE__ */ jsxRuntimeExports.jsx(ActivityBar, { animating: showActivity }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(ActivityBar, { animating: showActivity, progress: progress2 }),
     hasSampleData && /* @__PURE__ */ jsxRuntimeExports.jsxs(
       TabSet,
       {
@@ -193186,7 +193418,7 @@ const metadataViewsForSample = (id, scrollRef, sample2) => {
   }
   return sampleMetadatas;
 };
-const printSample = (id, targetId) => {
+const printSample = (id, targetId, evalSpec) => {
   const targetTabEl = document.querySelector(
     `#${escapeSelector(targetId)} .sample-tab.tab-pane.show.active`
   );
@@ -193195,7 +193427,7 @@ const printSample = (id, targetId) => {
     if (targetEl) {
       const headingId = `sample-heading-${id}`;
       const headingEl = document.getElementById(headingId);
-      const headingHtml = printHeadingHtml();
+      const headingHtml = printHeadingHtml(evalSpec);
       const css2 = `
       html { font-size: 9pt }
       /* Allow content to break anywhere without any forced page breaks */
@@ -193208,13 +193440,6 @@ const printSample = (id, targetId) => {
         page-break-after: auto;
       }
       /* Specifically disable all page breaks for divs */
-      div {
-        break-inside: auto;
-        page-break-inside: auto;
-      }
-      body > .transcript-step {
-        break-inside: avoid;
-      }
       body{
         -webkit-print-color-adjust:exact !important;
         print-color-adjust:exact !important;
@@ -193271,6 +193496,7 @@ const InlineSampleComponent = ({
   className: className2
 }) => {
   const sampleData = useSampleData();
+  const sampleProgress = sampleData.status === "loading" && sampleData.downloadProgress && sampleData.downloadProgress.total > 0 ? sampleData.downloadProgress.complete / sampleData.downloadProgress.total : void 0;
   const scrollRef = reactExports.useRef(null);
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(className2, styles$w.container), children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$w.scroller), ref: scrollRef, children: /* @__PURE__ */ jsxRuntimeExports.jsx(StickyScrollProvider, { value: scrollRef, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$w.body, children: sampleData.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(
     ErrorPanel,
@@ -193283,6 +193509,7 @@ const InlineSampleComponent = ({
     {
       id: "inline-sample-display",
       showActivity: !!showActivity,
+      progress: sampleProgress,
       scrollRef
     }
   ) }) }) }) });
@@ -215405,13 +215632,13 @@ const SampleStatusIcon = ({ status: status2 }) => {
   const colorClass = status2 === "error" ? styles$i.error : status2 === "cancelled" ? styles$i.cancelled : styles$i.success;
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$i.statusCell, children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, colorClass) }) });
 };
-const mainLayout = "_mainLayout_1s8x3_1";
-const samplesListGrid = "_samplesListGrid_1s8x3_7";
-const cell = "_cell_1s8x3_44";
-const wrapAnywhere = "_wrapAnywhere_1s8x3_48";
-const noLeft = "_noLeft_1s8x3_52";
-const score = "_score_1s8x3_56";
-const centered = "_centered_1s8x3_63";
+const mainLayout = "_mainLayout_1pg7l_1";
+const samplesListGrid = "_samplesListGrid_1pg7l_7";
+const cell = "_cell_1pg7l_43";
+const wrapAnywhere = "_wrapAnywhere_1pg7l_47";
+const noLeft = "_noLeft_1pg7l_51";
+const score = "_score_1pg7l_55";
+const centered = "_centered_1pg7l_62";
 const styles$h = {
   mainLayout,
   samplesListGrid,
@@ -215786,10 +216013,25 @@ const SampleList = reactExports.memo((props) => {
   reactExports.useEffect(() => {
     const el2 = gridContainerRef.current;
     if (!el2) return;
-    const handler = handleKeyDown;
-    el2.addEventListener("keydown", handler);
-    return () => el2.removeEventListener("keydown", handler);
+    el2.addEventListener("keydown", handleKeyDown);
+    return () => {
+      el2.removeEventListener("keydown", handleKeyDown);
+    };
   }, [handleKeyDown]);
+  const handleCellMouseDown = reactExports.useCallback(
+    (e) => {
+      const mouseEvent = e.event;
+      if (mouseEvent?.button === 1 && e.data) {
+        mouseEvent.preventDefault();
+        const url = sampleNavigation.getSampleUrl(
+          e.data.data.id,
+          e.data.data.epoch
+        );
+        if (url) window.open(url, "_blank");
+      }
+    },
+    [sampleNavigation]
+  );
   const selectCurrentSample = reactExports.useCallback(() => {
     if (!listHandle.current?.api || !selectedSampleHandle) {
       return;
@@ -215905,6 +216147,7 @@ const SampleList = reactExports.memo((props) => {
             getRowId,
             rowSelection: { mode: "singleRow", checkboxes: false },
             onRowClicked: handleRowClick,
+            onCellMouseDown: handleCellMouseDown,
             onColumnResized: handleColumnResized,
             theme: themeBalham,
             enableCellTextSelection: true,
@@ -216977,9 +217220,17 @@ const PrimaryBar = ({
 }) => {
   const streamSamples = useStore((state) => state.capabilities.streamSamples);
   const downloadLogs = useStore((state) => state.capabilities.downloadLogs);
+  const absLogDir = useStore((state) => state.logs.absLogDir);
   const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
+  const logDir2 = useStore((state) => state.logs.logDir);
   const logFileName = selectedLogFile ? filename(selectedLogFile) : "";
   const isEvalFile2 = selectedLogFile?.endsWith(".eval");
+  const copyValue = (() => {
+    if (!absLogDir || !selectedLogFile || !logDir2) return selectedLogFile;
+    const prefix = logDir2 + "/";
+    const relFile = selectedLogFile.startsWith(prefix) ? selectedLogFile.slice(prefix.length) : selectedLogFile;
+    return absLogDir.replace(/\/?$/, "/") + relFile;
+  })();
   const hasRunningMetrics = runningMetrics && runningMetrics.length > 0;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$b.wrapper), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -217021,7 +217272,7 @@ const PrimaryBar = ({
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-small", styles$b.secondaryContainer), children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("navbar-secondary-text", "text-truncate"), children: logFileName }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$b.buttonGroup, children: [
-              selectedLogFile ? /* @__PURE__ */ jsxRuntimeExports.jsx(CopyButton, { value: selectedLogFile }) : "",
+              copyValue ? /* @__PURE__ */ jsxRuntimeExports.jsx(CopyButton, { value: copyValue }) : "",
               downloadLogs && selectedLogFile && isEvalFile2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(DownloadLogButton, { log_file: selectedLogFile }) : null
             ] })
           ] })
@@ -217890,7 +218141,7 @@ const SamplesGrid = ({
     (state) => state.log.selectedSampleHandle
   );
   const internalGridRef = reactExports.useRef(null);
-  const gridRef = externalGridRef || internalGridRef;
+  const gridRef = externalGridRef ?? internalGridRef;
   const gridContainerRef = reactExports.useRef(null);
   const { startPolling, stopPolling } = useClientEvents();
   reactExports.useEffect(() => {
@@ -217963,6 +218214,21 @@ const SamplesGrid = ({
       gridElement.removeEventListener("keydown", handleKeyDown);
     };
   }, [handleKeyDown]);
+  const handleCellMouseDown = reactExports.useCallback(
+    (e) => {
+      const mouseEvent = e.event;
+      if (mouseEvent?.button === 1 && e.data) {
+        mouseEvent.preventDefault();
+        navigateToSampleDetail(
+          e.data.logFile,
+          e.data.sampleId,
+          e.data.epoch,
+          true
+        );
+      }
+    },
+    [navigateToSampleDetail]
+  );
   const sampleRowId = (logFile, sampleId, epoch) => {
     return `${logFile}-${sampleId}-${epoch}`.replace(/\s+/g, "_");
   };
@@ -218034,6 +218300,7 @@ const SamplesGrid = ({
         }
       },
       onRowClicked: handleRowClick,
+      onCellMouseDown: handleCellMouseDown,
       onFilterChanged: () => {
         if (gridRef.current?.api) {
           const newDisplayedSamples = gridDisplayedSamples(
