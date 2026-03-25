@@ -28670,18 +28670,26 @@ const createLogsSlice = (set3, get2, _store) => {
           console.error("API not initialized in LogsStore");
           return void 0;
         }
-        const loadLogDir = async () => {
+        const loadLogInfo = async () => {
           try {
-            return await api2.get_log_dir();
+            const root2 = await api2.get_log_root();
+            return { logDir: root2.log_dir, absLogDir: root2.abs_log_dir };
           } catch (e) {
             console.log(e);
             get2().appActions.setLoading(false, e);
             return void 0;
           }
         };
-        const logDir2 = await loadLogDir();
+        const info = await loadLogInfo();
+        const logDir2 = info?.logDir;
         if (get2().logs.logDir !== logDir2) {
           get2().logsActions.setLogDir(logDir2);
+        }
+        const absLogDir = info?.absLogDir;
+        if (get2().logs.absLogDir !== absLogDir) {
+          set3((state) => {
+            state.logs.absLogDir = absLogDir;
+          });
         }
         return logDir2;
       },
@@ -110597,15 +110605,17 @@ const fetchJsonFile = async (file, handleError2) => {
 function joinURI(...segments2) {
   return segments2.map((segment2) => segment2.replace(/(^\/+|\/+$)/g, "")).join("/");
 }
-function staticHttpApi(log_dir, log_file) {
+function staticHttpApi(log_dir, log_file, abs_log_dir) {
   const resolved_log_dir = log_dir?.replace(" ", "+");
   log_file ? log_file.replace(" ", "+") : void 0;
   return staticHttpApiForLog({
-    log_dir: resolved_log_dir
+    log_dir: resolved_log_dir,
+    abs_log_dir
   });
 }
 function staticHttpApiForLog(logInfo) {
   const log_dir = logInfo.log_dir;
+  const abs_log_dir = logInfo.abs_log_dir;
   let manifest = void 0;
   let manifestPromise = void 0;
   const getManifest = async () => {
@@ -110639,7 +110649,8 @@ function staticHttpApiForLog(logInfo) {
           });
           return Promise.resolve({
             logs,
-            log_dir
+            log_dir,
+            abs_log_dir
           });
         }
       }
@@ -111399,7 +111410,7 @@ const resolveApi = () => {
         const data = lib$d.parse(context);
         if (data.log_dir || data.log_file) {
           const log_dir2 = data.log_dir || dirname(data.log_file);
-          const api2 = staticHttpApi(log_dir2, data.log_file);
+          const api2 = staticHttpApi(log_dir2, data.log_file, data.abs_log_dir);
           return clientApi(api2, data.log_file, debug2);
         }
       }
@@ -118900,7 +118911,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.fullWidth, styles$1d.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1d.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.199-28-gc856926c2" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.200-28-g6f7ea0284" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1d.spacer) }),
@@ -217209,9 +217220,17 @@ const PrimaryBar = ({
 }) => {
   const streamSamples = useStore((state) => state.capabilities.streamSamples);
   const downloadLogs = useStore((state) => state.capabilities.downloadLogs);
+  const absLogDir = useStore((state) => state.logs.absLogDir);
   const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
+  const logDir2 = useStore((state) => state.logs.logDir);
   const logFileName = selectedLogFile ? filename(selectedLogFile) : "";
   const isEvalFile2 = selectedLogFile?.endsWith(".eval");
+  const copyValue = (() => {
+    if (!absLogDir || !selectedLogFile || !logDir2) return selectedLogFile;
+    const prefix = logDir2 + "/";
+    const relFile = selectedLogFile.startsWith(prefix) ? selectedLogFile.slice(prefix.length) : selectedLogFile;
+    return absLogDir.replace(/\/?$/, "/") + relFile;
+  })();
   const hasRunningMetrics = runningMetrics && runningMetrics.length > 0;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$b.wrapper), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -217253,7 +217272,7 @@ const PrimaryBar = ({
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-small", styles$b.secondaryContainer), children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("navbar-secondary-text", "text-truncate"), children: logFileName }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$b.buttonGroup, children: [
-              selectedLogFile ? /* @__PURE__ */ jsxRuntimeExports.jsx(CopyButton, { value: selectedLogFile }) : "",
+              copyValue ? /* @__PURE__ */ jsxRuntimeExports.jsx(CopyButton, { value: copyValue }) : "",
               downloadLogs && selectedLogFile && isEvalFile2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(DownloadLogButton, { log_file: selectedLogFile }) : null
             ] })
           ] })
