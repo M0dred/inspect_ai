@@ -112569,7 +112569,8 @@ const ChatMessage = reactExports.memo(
     if (hideRole) {
       const content2 = message2.content;
       const hasVisibleContent = typeof content2 === "string" ? content2.trim().length > 0 : Array.isArray(content2) && content2.some((c2) => c2.type !== "tool_use");
-      if (!hasVisibleContent) {
+      const hasToolCalls = "tool_calls" in message2 && Array.isArray(message2.tool_calls) && message2.tool_calls.length > 0;
+      if (!hasVisibleContent && !hasToolCalls) {
         return null;
       }
     }
@@ -118915,7 +118916,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1e.fullWidth, styles$1e.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1e.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1e.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.201-8-g95dd1e629" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.201-10-g4398a09a3" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1e.spacer) }),
