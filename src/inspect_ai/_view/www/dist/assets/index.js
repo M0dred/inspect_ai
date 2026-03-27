@@ -28242,7 +28242,7 @@ function createLogPolling(get2, set3) {
     }
     log$a.debug(`refresh: ${selectedLogFile}`);
     try {
-      const logDetails = await api2.get_log_details(selectedLogFile);
+      const logDetails = await api2.get_log_details(selectedLogFile, false);
       set3((state2) => {
         state2.log.selectedLogDetails = logDetails;
         log$a.debug(
@@ -110259,9 +110259,9 @@ const clientApi = (api2, log_file, debug2 = false) => {
     return current_log;
   };
   let pending_log_promise = null;
-  const get_log_details = async (log_file2) => {
+  const get_log_details = async (log_file2, cached = true) => {
     if (isEvalFile(log_file2)) {
-      const remoteLogFile = await remoteEvalFile(log_file2, true);
+      const remoteLogFile = await remoteEvalFile(log_file2, cached);
       if (remoteLogFile) {
         return await remoteLogFile.readLogSummary();
       } else {
@@ -116308,7 +116308,7 @@ const mergeSampleSummaries = (logSamples, pendingSamples) => {
     logSamples.map((sample2) => `${sample2.id}-${sample2.epoch}`)
   );
   const uniquePendingSamples = pendingSamples.filter((sample2) => !existingSampleIds.has(`${sample2.id}-${sample2.epoch}`)).map((sample2) => {
-    return { ...sample2, completed: false };
+    return { ...sample2, completed: sample2.completed ?? false };
   });
   return [...logSamples, ...uniquePendingSamples];
 };
@@ -118915,7 +118915,7 @@ const ViewerOptionsPopover = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1e.fullWidth, styles$1e.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1e.logDir, children: logDir2 }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1e.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.201-4-g6d8fa20dc" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "0.3.201-8-g95dd1e629" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1e.spacer) }),
@@ -193128,8 +193128,12 @@ const SampleDisplay = ({
     );
   }
   const running = reactExports.useMemo(() => {
-    return isRunning(selectedSampleSummary, runningSampleData);
-  }, [selectedSampleSummary, runningSampleData]);
+    return isRunning(
+      selectedSampleSummary,
+      runningSampleData,
+      sampleData.status
+    );
+  }, [selectedSampleSummary, runningSampleData, sampleData.status]);
   const sampleDetailNavigation = useSampleDetailNavigation();
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
     selectedSampleSummary ? /* @__PURE__ */ jsxRuntimeExports.jsx(SampleSummaryView, { parent_id: id, sample: selectedSampleSummary }) : void 0,
@@ -193420,7 +193424,10 @@ const metadataViewsForSample = (id, scrollRef, sample2) => {
   }
   return sampleMetadatas;
 };
-const isRunning = (sampleSummary, runningSampleData) => {
+const isRunning = (sampleSummary, runningSampleData, sampleStatus2) => {
+  if (sampleStatus2 === "ok") {
+    return false;
+  }
   if (sampleSummary && sampleSummary.completed === false) {
     return true;
   }
