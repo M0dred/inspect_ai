@@ -30550,7 +30550,7 @@ const ansiDisplayContainer = "_ansiDisplayContainer_sawhg_1";
 const ansiDisplay = "_ansiDisplay_sawhg_1";
 const ansiDisplayRaw = "_ansiDisplayRaw_sawhg_28";
 const ansiDisplayToggle = "_ansiDisplayToggle_sawhg_33";
-const styles$2q = {
+const styles$2p = {
   ansiDisplayContainer,
   ansiDisplay,
   ansiDisplayRaw,
@@ -30560,7 +30560,7 @@ const toolButton$1 = "_toolButton_wcmr6_1";
 const marginRight = "_marginRight_wcmr6_6";
 const latched = "_latched_wcmr6_18";
 const subtle$1 = "_subtle_wcmr6_25";
-const styles$2p = {
+const styles$2o = {
   toolButton: toolButton$1,
   marginRight,
   latched,
@@ -30576,15 +30576,15 @@ const ToolButton = reactExports.forwardRef(
         className: clsx(
           "btn",
           "btn-tools",
-          styles$2p.toolButton,
+          styles$2o.toolButton,
           classes,
           className2,
-          latched2 ? styles$2p.latched : void 0,
-          subtle2 ? styles$2p.subtle : void 0
+          latched2 ? styles$2o.latched : void 0,
+          subtle2 ? styles$2o.subtle : void 0
         ),
         ...rest,
         children: [
-          icon2 && /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, label2 ? styles$2p.marginRight : void 0) }),
+          icon2 && /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, label2 ? styles$2o.marginRight : void 0) }),
           label2
         ]
       }
@@ -30643,13 +30643,13 @@ const ANSIDisplay = ({
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
     {
-      className: clsx(styles$2q.ansiDisplayContainer, className2),
+      className: clsx(styles$2p.ansiDisplayContainer, className2),
       style: { ...style2 },
       children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           ToolButton,
           {
-            className: clsx(styles$2q.ansiDisplayToggle, "text-size-smallest"),
+            className: clsx(styles$2p.ansiDisplayToggle, "text-size-smallest"),
             icon: icons.code,
             label: "",
             latched: showRaw,
@@ -30657,9 +30657,9 @@ const ANSIDisplay = ({
             title: showRaw ? "Show rendered output" : "Show raw output"
           }
         ),
-        showRaw ? /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$2q.ansiDisplay, styles$2q.ansiDisplayRaw), children: output2 }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$2q.ansiDisplay), style: backgroundStyle, children: ansiOutput2.outputLines.map((line2, index) => {
+        showRaw ? /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$2p.ansiDisplay, styles$2p.ansiDisplayRaw), children: output2 }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$2p.ansiDisplay), style: backgroundStyle, children: ansiOutput2.outputLines.map((line2, index) => {
           firstOutput = firstOutput || !!line2.outputRuns.length;
-          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$2q.ansiDisplayLine), children: !line2.outputRuns.length ? firstOutput ? /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}) : null : line2.outputRuns.map((outputRun) => /* @__PURE__ */ jsxRuntimeExports.jsx(OutputRun, { run: outputRun }, outputRun.id)) }, index);
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$2p.ansiDisplayLine), children: !line2.outputRuns.length ? firstOutput ? /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}) : null : line2.outputRuns.map((outputRun) => /* @__PURE__ */ jsxRuntimeExports.jsx(OutputRun, { run: outputRun }, outputRun.id)) }, index);
         }) })
       ]
     }
@@ -30797,7 +30797,7 @@ const headerIconEmpty = "_headerIconEmpty_idrkc_16";
 const body$3 = "_body_idrkc_20";
 const card$1 = "_card_idrkc_25";
 const noPadding = "_noPadding_idrkc_32";
-const styles$2o = {
+const styles$2n = {
   headerContainer,
   headerModern,
   headerIcon,
@@ -30818,17 +30818,17 @@ const CardHeader = ({
     "div",
     {
       className: clsx(
-        styles$2o.headerContainer,
+        styles$2n.headerContainer,
         "text-style-label",
         className2,
-        type === "modern" ? styles$2o.headerModern : ""
+        type === "modern" ? styles$2n.headerModern : ""
       ),
       id: id || "",
       children: [
-        icon2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(styles$2o.headerIcon, icon2) }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+        icon2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(styles$2n.headerIcon, icon2) }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
           "span",
           {
-            className: clsx(styles$2o.headerIcon, styles$2o.headerIconEmpty)
+            className: clsx(styles$2n.headerIcon, styles$2n.headerIconEmpty)
           }
         ),
         label2 ? label2 : "",
@@ -30848,9 +30848,9 @@ const CardBody = ({
     "div",
     {
       className: clsx(
-        styles$2o.body,
+        styles$2n.body,
         className2,
-        !padded2 ? styles$2o.noPadding : void 0
+        !padded2 ? styles$2n.noPadding : void 0
       ),
       id: id || "",
       children: children2
@@ -30858,10 +30858,10 @@ const CardBody = ({
   );
 };
 const Card = ({ id, children: children2, className: className2 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$2o.card, className2), id, children: children2 });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$2n.card, className2), id, children: children2 });
 };
 const copyButton = "_copyButton_1goi8_1";
-const styles$2n = {
+const styles$2m = {
   copyButton
 };
 const CopyButton = ({
@@ -30893,7 +30893,7 @@ const CopyButton = ({
     "button",
     {
       type: "button",
-      className: clsx("copy-button", styles$2n.copyButton, className2),
+      className: clsx("copy-button", styles$2m.copyButton, className2),
       onClick: () => {
         void handleClick();
       },
@@ -38015,7 +38015,7 @@ function getDefaultFontStack() {
   }
 }
 const defaultFontStack$2 = r$6(getDefaultFontStack());
-const styles$2m = [
+const styles$2l = [
   defaultStyles,
   i$9`
     :host {
@@ -38083,7 +38083,7 @@ let VscodeBadge = class VscodeBadge2 extends VscElement {
     return b`<div class="root"><slot></slot></div>`;
   }
 };
-VscodeBadge.styles = styles$2m;
+VscodeBadge.styles = styles$2l;
 __decorate$E([
   n$4({ reflect: true })
 ], VscodeBadge.prototype, "variant", void 0);
@@ -38162,7 +38162,7 @@ class StylePropertyMap extends i$5 {
   }
 }
 const stylePropertyMap = e$3(StylePropertyMap);
-const styles$2l = [
+const styles$2k = [
   defaultStyles,
   i$9`
     :host {
@@ -38303,7 +38303,7 @@ let VscodeIcon = VscodeIcon_1 = class VscodeIcon2 extends VscElement {
     `;
   }
 };
-VscodeIcon.styles = styles$2l;
+VscodeIcon.styles = styles$2k;
 VscodeIcon.stylesheetHref = "";
 VscodeIcon.nonce = "";
 __decorate$D([
@@ -38328,7 +38328,7 @@ VscodeIcon = VscodeIcon_1 = __decorate$D([
   customElement("vscode-icon")
 ], VscodeIcon);
 const defaultFontStack$1 = r$6(getDefaultFontStack());
-const styles$2k = [
+const styles$2j = [
   defaultStyles,
   i$9`
     :host {
@@ -38661,7 +38661,7 @@ let VscodeButton = class VscodeButton2 extends VscElement {
     `;
   }
 };
-VscodeButton.styles = styles$2k;
+VscodeButton.styles = styles$2j;
 VscodeButton.formAssociated = true;
 __decorate$C([
   n$4({ type: Boolean, reflect: true })
@@ -38733,7 +38733,7 @@ o$7({
   react: React20,
   displayName: "VscodeButton"
 });
-const styles$2j = [
+const styles$2i = [
   defaultStyles,
   i$9`
     :host {
@@ -38781,7 +38781,7 @@ let VscodeButtonGroup = class VscodeButtonGroup2 extends VscElement {
     return b`<div class="root"><slot></slot></div>`;
   }
 };
-VscodeButtonGroup.styles = styles$2j;
+VscodeButtonGroup.styles = styles$2i;
 VscodeButtonGroup = __decorate$B([
   customElement("vscode-button-group")
 ], VscodeButtonGroup);
@@ -38960,7 +38960,7 @@ const baseStyles = [
     }
   `
 ];
-const styles$2i = [
+const styles$2h = [
   defaultStyles,
   baseStyles,
   i$9`
@@ -39245,7 +39245,7 @@ let VscodeCheckbox = class VscodeCheckbox2 extends LabelledCheckboxOrRadioMixin(
     `;
   }
 };
-VscodeCheckbox.styles = styles$2i;
+VscodeCheckbox.styles = styles$2h;
 VscodeCheckbox.formAssociated = true;
 VscodeCheckbox.shadowRootOptions = {
   ...i$6.shadowRootOptions,
@@ -39299,7 +39299,7 @@ o$7({
     onChange: "change"
   }
 });
-const styles$2h = [
+const styles$2g = [
   defaultStyles,
   i$9`
     :host {
@@ -39353,7 +39353,7 @@ let VscodeCheckboxGroup = class VscodeCheckboxGroup2 extends VscElement {
     `;
   }
 };
-VscodeCheckboxGroup.styles = styles$2h;
+VscodeCheckboxGroup.styles = styles$2g;
 __decorate$x([
   n$4({ reflect: true })
 ], VscodeCheckboxGroup.prototype, "role", void 0);
@@ -39369,7 +39369,7 @@ o$7({
   react: React20,
   displayName: "VscodeCheckboxGroup"
 });
-const styles$2g = [
+const styles$2f = [
   defaultStyles,
   i$9`
     :host {
@@ -39548,7 +39548,7 @@ let VscodeCollapsible = class VscodeCollapsible2 extends VscElement {
     `;
   }
 };
-VscodeCollapsible.styles = styles$2g;
+VscodeCollapsible.styles = styles$2f;
 __decorate$w([
   n$4({
     type: Boolean,
@@ -39577,7 +39577,7 @@ o$7({
   react: React20,
   displayName: "VscodeCollapsible"
 });
-const styles$2f = [
+const styles$2e = [
   defaultStyles,
   i$9`
     :host {
@@ -39695,7 +39695,7 @@ let VscodeContextMenuItem = class VscodeContextMenuItem2 extends VscElement {
     `;
   }
 };
-VscodeContextMenuItem.styles = styles$2f;
+VscodeContextMenuItem.styles = styles$2e;
 __decorate$v([
   n$4({ type: String })
 ], VscodeContextMenuItem.prototype, "label", void 0);
@@ -39714,7 +39714,7 @@ __decorate$v([
 VscodeContextMenuItem = __decorate$v([
   customElement("vscode-context-menu-item")
 ], VscodeContextMenuItem);
-const styles$2e = [
+const styles$2d = [
   defaultStyles,
   i$9`
     :host {
@@ -39904,7 +39904,7 @@ let VscodeContextMenu = class VscodeContextMenu2 extends VscElement {
     `;
   }
 };
-VscodeContextMenu.styles = styles$2e;
+VscodeContextMenu.styles = styles$2d;
 __decorate$u([
   n$4({ type: Array, attribute: false })
 ], VscodeContextMenu.prototype, "data", null);
@@ -39944,7 +39944,7 @@ o$7({
   react: React20,
   displayName: "VscodeContextMenuItem"
 });
-const styles$2d = [
+const styles$2c = [
   defaultStyles,
   i$9`
     :host {
@@ -39975,7 +39975,7 @@ let VscodeDivider = class VscodeDivider2 extends VscElement {
     return b`<div></div>`;
   }
 };
-VscodeDivider.styles = styles$2d;
+VscodeDivider.styles = styles$2c;
 __decorate$t([
   n$4({ reflect: true })
 ], VscodeDivider.prototype, "role", void 0);
@@ -39988,7 +39988,7 @@ o$7({
   react: React20,
   displayName: "VscodeDivider"
 });
-const styles$2c = [
+const styles$2b = [
   defaultStyles,
   i$9`
     :host {
@@ -40087,7 +40087,7 @@ let VscodeFormContainer = class VscodeFormContainer2 extends VscElement {
     `;
   }
 };
-VscodeFormContainer.styles = styles$2c;
+VscodeFormContainer.styles = styles$2b;
 __decorate$s([
   n$4({ type: Boolean, reflect: true })
 ], VscodeFormContainer.prototype, "responsive", null);
@@ -40109,7 +40109,7 @@ o$7({
   react: React20,
   displayName: "VscodeFormContainer"
 });
-const styles$2b = [
+const styles$2a = [
   defaultStyles,
   i$9`
     :host {
@@ -40217,7 +40217,7 @@ let VscodeFormGroup = class VscodeFormGroup2 extends VscElement {
     `;
   }
 };
-VscodeFormGroup.styles = styles$2b;
+VscodeFormGroup.styles = styles$2a;
 __decorate$r([
   n$4({ reflect: true })
 ], VscodeFormGroup.prototype, "variant", void 0);
@@ -40230,7 +40230,7 @@ o$7({
   react: React20,
   displayName: "VscodeFormGroup"
 });
-const styles$2a = [
+const styles$29 = [
   defaultStyles,
   i$9`
     :host {
@@ -40278,7 +40278,7 @@ let VscodeFormHelper = class VscodeFormHelper2 extends VscElement {
     return b`<slot></slot>`;
   }
 };
-VscodeFormHelper.styles = styles$2a;
+VscodeFormHelper.styles = styles$29;
 VscodeFormHelper = __decorate$q([
   customElement("vscode-form-helper")
 ], VscodeFormHelper);
@@ -40299,7 +40299,7 @@ const uniqueId = (prefix = "") => {
   counter$1++;
   return `${prefix}${counter$1}`;
 };
-const styles$29 = [
+const styles$28 = [
   defaultStyles,
   i$9`
     :host {
@@ -40418,7 +40418,7 @@ let VscodeLabel = class VscodeLabel2 extends VscElement {
     `;
   }
 };
-VscodeLabel.styles = styles$29;
+VscodeLabel.styles = styles$28;
 __decorate$p([
   n$4({ reflect: true, attribute: "for" })
 ], VscodeLabel.prototype, "htmlFor", null);
@@ -40873,11 +40873,11 @@ class OptionListController {
   add(option) {
     const nextIndex2 = this._options.length;
     const { description: description2, disabled: disabled2, label: label2, selected: selected2, value: value2 } = option;
-    let visible2 = true;
+    let visible = true;
     let ranges = [];
     if (this._combobox && this._filterPattern !== "") {
       const res = this._searchByPattern(label2 ?? "");
-      visible2 = res.match;
+      visible = res.match;
       ranges = res.ranges;
     }
     this._indexByValue.set(value2 ?? "", nextIndex2);
@@ -40895,10 +40895,10 @@ class OptionListController {
       label: label2 ?? "",
       selected: selected2 ?? false,
       value: value2 ?? "",
-      visible: visible2,
+      visible,
       ranges
     });
-    if (visible2) {
+    if (visible) {
       this._numOfVisibleOptions += 1;
     }
   }
@@ -41079,7 +41079,7 @@ class OptionListController {
     this._host.requestUpdate();
   }
 }
-const styles$28 = [
+const styles$27 = [
   defaultStyles,
   i$9`
     :host {
@@ -41453,7 +41453,7 @@ let VscodeScrollable = class VscodeScrollable2 extends VscElement {
     `;
   }
 };
-VscodeScrollable.styles = styles$28;
+VscodeScrollable.styles = styles$27;
 __decorate$n([
   n$4({ type: Boolean, reflect: true, attribute: "always-visible" })
 ], VscodeScrollable.prototype, "alwaysVisible", void 0);
@@ -42135,7 +42135,7 @@ __decorate$m([
 __decorate$m([
   r$2()
 ], VscodeSelectBase.prototype, "_optionListScrollPos", void 0);
-const styles$27 = [
+const styles$26 = [
   defaultStyles,
   i$9`
     :host {
@@ -42854,7 +42854,7 @@ let VscodeMultiSelect = class VscodeMultiSelect2 extends VscodeSelectBase {
     `;
   }
 };
-VscodeMultiSelect.styles = styles$27;
+VscodeMultiSelect.styles = styles$26;
 VscodeMultiSelect.shadowRootOptions = {
   ...i$6.shadowRootOptions,
   delegatesFocus: true
@@ -42898,7 +42898,7 @@ o$7({
   react: React20,
   displayName: "VscodeOption"
 });
-const styles$26 = [
+const styles$25 = [
   defaultStyles,
   i$9`
     :host {
@@ -43059,7 +43059,7 @@ let VscodeProgressBar = class VscodeProgressBar2 extends VscElement {
     }
   }
 };
-VscodeProgressBar.styles = styles$26;
+VscodeProgressBar.styles = styles$25;
 __decorate$k([
   n$4({ reflect: true, attribute: "aria-label" })
 ], VscodeProgressBar.prototype, "ariaLabel", void 0);
@@ -43087,7 +43087,7 @@ o$7({
   react: React20,
   displayName: "VscodeProgressBar"
 });
-const styles$25 = [
+const styles$24 = [
   defaultStyles,
   i$9`
     :host {
@@ -43168,7 +43168,7 @@ let VscodeProgressRing = class VscodeProgressRing2 extends VscElement {
     </svg>`;
   }
 };
-VscodeProgressRing.styles = styles$25;
+VscodeProgressRing.styles = styles$24;
 __decorate$j([
   n$4({ reflect: true, attribute: "aria-label" })
 ], VscodeProgressRing.prototype, "ariaLabel", void 0);
@@ -43187,7 +43187,7 @@ o$7({
   react: React20,
   displayName: "VscodeProgressRing"
 });
-const styles$24 = [
+const styles$23 = [
   defaultStyles,
   baseStyles,
   i$9`
@@ -43420,7 +43420,7 @@ let VscodeRadio = class VscodeRadio2 extends LabelledCheckboxOrRadioMixin(FormBu
     `;
   }
 };
-VscodeRadio.styles = styles$24;
+VscodeRadio.styles = styles$23;
 VscodeRadio.formAssociated = true;
 VscodeRadio.shadowRootOptions = {
   ...i$6.shadowRootOptions,
@@ -43475,7 +43475,7 @@ o$7({
     onInvalid: "invalid"
   }
 });
-const styles$23 = [
+const styles$22 = [
   defaultStyles,
   i$9`
     :host {
@@ -43636,7 +43636,7 @@ let VscodeRadioGroup = class VscodeRadioGroup2 extends VscElement {
     `;
   }
 };
-VscodeRadioGroup.styles = styles$23;
+VscodeRadioGroup.styles = styles$22;
 __decorate$h([
   n$4({ reflect: true })
 ], VscodeRadioGroup.prototype, "variant", void 0);
@@ -43941,7 +43941,7 @@ let VscodeSingleSelect = class VscodeSingleSelect2 extends VscodeSelectBase {
     `;
   }
 };
-VscodeSingleSelect.styles = styles$27;
+VscodeSingleSelect.styles = styles$26;
 VscodeSingleSelect.shadowRootOptions = {
   ...i$6.shadowRootOptions,
   delegatesFocus: true
@@ -43979,7 +43979,7 @@ o$7({
     onVscSingleSelectCreateOption: "vsc-single-select-create-option"
   }
 });
-const styles$22 = [
+const styles$21 = [
   defaultStyles,
   i$9`
     :host {
@@ -44463,7 +44463,7 @@ let VscodeSplitLayout = VscodeSplitLayout_1 = class VscodeSplitLayout2 extends V
     `;
   }
 };
-VscodeSplitLayout.styles = styles$22;
+VscodeSplitLayout.styles = styles$21;
 __decorate$f([
   n$4({ reflect: true })
 ], VscodeSplitLayout.prototype, "split", null);
@@ -44524,7 +44524,7 @@ o$7({
     onVscSplitLayoutChange: "vsc-split-layout-change"
   }
 });
-const styles$21 = [
+const styles$20 = [
   defaultStyles,
   i$9`
     :host {
@@ -44673,7 +44673,7 @@ let VscodeTabHeader = class VscodeTabHeader2 extends VscElement {
     `;
   }
 };
-VscodeTabHeader.styles = styles$21;
+VscodeTabHeader.styles = styles$20;
 __decorate$e([
   n$4({ type: Boolean, reflect: true })
 ], VscodeTabHeader.prototype, "active", void 0);
@@ -44729,7 +44729,7 @@ const parseSizeAttributeToPercent = (raw, base2) => {
 };
 const SPLITTER_HIT_WIDTH = 5;
 const SPLITTER_VISIBLE_WIDTH = 1;
-const styles$20 = [
+const styles$1$ = [
   defaultStyles,
   i$9`
     :host {
@@ -45463,7 +45463,7 @@ let VscodeTable = class VscodeTable2 extends VscElement {
     `;
   }
 };
-VscodeTable.styles = styles$20;
+VscodeTable.styles = styles$1$;
 __decorate$d([
   n$4({ reflect: true })
 ], VscodeTable.prototype, "role", void 0);
@@ -45547,7 +45547,7 @@ o$7({
   react: React20,
   displayName: "VscodeTable"
 });
-const styles$1$ = [
+const styles$1_ = [
   defaultStyles,
   i$9`
     :host {
@@ -45580,7 +45580,7 @@ let VscodeTableBody = class VscodeTableBody2 extends VscElement {
     return b` <slot></slot> `;
   }
 };
-VscodeTableBody.styles = styles$1$;
+VscodeTableBody.styles = styles$1_;
 __decorate$c([
   n$4({ reflect: true })
 ], VscodeTableBody.prototype, "role", void 0);
@@ -45593,7 +45593,7 @@ o$7({
   react: React20,
   displayName: "VscodeTableBody"
 });
-const styles$1_ = [
+const styles$1Z = [
   defaultStyles,
   i$9`
     :host {
@@ -45668,7 +45668,7 @@ let VscodeTableCell = class VscodeTableCell2 extends VscElement {
     `;
   }
 };
-VscodeTableCell.styles = styles$1_;
+VscodeTableCell.styles = styles$1Z;
 __decorate$b([
   n$4({ reflect: true })
 ], VscodeTableCell.prototype, "role", void 0);
@@ -45687,7 +45687,7 @@ o$7({
   react: React20,
   displayName: "VscodeTableCell"
 });
-const styles$1Z = [
+const styles$1Y = [
   defaultStyles,
   i$9`
     :host {
@@ -45716,7 +45716,7 @@ let VscodeTableHeader = class VscodeTableHeader2 extends VscElement {
     return b` <slot></slot> `;
   }
 };
-VscodeTableHeader.styles = styles$1Z;
+VscodeTableHeader.styles = styles$1Y;
 __decorate$a([
   n$4({ reflect: true })
 ], VscodeTableHeader.prototype, "role", void 0);
@@ -45729,7 +45729,7 @@ o$7({
   react: React20,
   displayName: "VscodeTableHeader"
 });
-const styles$1Y = [
+const styles$1X = [
   defaultStyles,
   i$9`
     :host {
@@ -45787,7 +45787,7 @@ let VscodeTableHeaderCell = class VscodeTableHeaderCell2 extends VscElement {
     `;
   }
 };
-VscodeTableHeaderCell.styles = styles$1Y;
+VscodeTableHeaderCell.styles = styles$1X;
 __decorate$9([
   n$4({ attribute: "min-width" })
 ], VscodeTableHeaderCell.prototype, "minWidth", void 0);
@@ -45806,7 +45806,7 @@ o$7({
   react: React20,
   displayName: "VscodeTableHeaderCell"
 });
-const styles$1X = [
+const styles$1W = [
   defaultStyles,
   i$9`
     :host {
@@ -45836,7 +45836,7 @@ let VscodeTableRow = class VscodeTableRow2 extends VscElement {
     return b` <slot></slot> `;
   }
 };
-VscodeTableRow.styles = styles$1X;
+VscodeTableRow.styles = styles$1W;
 __decorate$8([
   n$4({ reflect: true })
 ], VscodeTableRow.prototype, "role", void 0);
@@ -45849,7 +45849,7 @@ o$7({
   react: React20,
   displayName: "VscodeTableRow"
 });
-const styles$1W = [
+const styles$1V = [
   defaultStyles,
   i$9`
     :host {
@@ -45888,7 +45888,7 @@ let VscodeTabPanel = class VscodeTabPanel2 extends VscElement {
     return b` <slot></slot> `;
   }
 };
-VscodeTabPanel.styles = styles$1W;
+VscodeTabPanel.styles = styles$1V;
 __decorate$7([
   n$4({ type: Boolean, reflect: true })
 ], VscodeTabPanel.prototype, "hidden", void 0);
@@ -45913,7 +45913,7 @@ o$7({
   react: React20,
   displayName: "VscodeTabPanel"
 });
-const styles$1V = [
+const styles$1U = [
   defaultStyles,
   i$9`
     :host {
@@ -46085,7 +46085,7 @@ let VscodeTabs = class VscodeTabs2 extends VscElement {
     `;
   }
 };
-VscodeTabs.styles = styles$1V;
+VscodeTabs.styles = styles$1U;
 __decorate$6([
   n$4({ type: Boolean, reflect: true })
 ], VscodeTabs.prototype, "panel", void 0);
@@ -46110,7 +46110,7 @@ o$7({
   },
   displayName: "VscodeTabs"
 });
-const styles$1U = [
+const styles$1T = [
   defaultStyles,
   i$9`
     :host {
@@ -46428,7 +46428,7 @@ let VscodeTextarea = class VscodeTextarea2 extends VscElement {
     `;
   }
 };
-VscodeTextarea.styles = styles$1U;
+VscodeTextarea.styles = styles$1T;
 VscodeTextarea.formAssociated = true;
 VscodeTextarea.shadowRootOptions = {
   ...i$6.shadowRootOptions,
@@ -46515,7 +46515,7 @@ o$7({
   }
 });
 const defaultFontStack = r$6(getDefaultFontStack());
-const styles$1T = [
+const styles$1S = [
   defaultStyles,
   i$9`
     :host {
@@ -46843,7 +46843,7 @@ let VscodeTextfield = class VscodeTextfield2 extends VscElement {
     `;
   }
 };
-VscodeTextfield.styles = styles$1T;
+VscodeTextfield.styles = styles$1S;
 VscodeTextfield.formAssociated = true;
 VscodeTextfield.shadowRootOptions = {
   ...i$6.shadowRootOptions,
@@ -46932,7 +46932,7 @@ o$7({
     onInvalid: "invalid"
   }
 });
-const styles$1S = [
+const styles$1R = [
   defaultStyles,
   i$9`
     :host {
@@ -47050,7 +47050,7 @@ let VscodeToolbarButton = class VscodeToolbarButton2 extends VscElement {
     `;
   }
 };
-VscodeToolbarButton.styles = styles$1S;
+VscodeToolbarButton.styles = styles$1R;
 __decorate$3([
   n$4({ reflect: true })
 ], VscodeToolbarButton.prototype, "icon", void 0);
@@ -47081,7 +47081,7 @@ o$7({
     onChange: "change"
   }
 });
-const styles$1R = [
+const styles$1Q = [
   defaultStyles,
   i$9`
     :host {
@@ -47106,7 +47106,7 @@ let VscodeToolbarContainer = class VscodeToolbarContainer2 extends VscElement {
     return b`<div><slot></slot></div>`;
   }
 };
-VscodeToolbarContainer.styles = styles$1R;
+VscodeToolbarContainer.styles = styles$1Q;
 VscodeToolbarContainer = __decorate$2([
   customElement("vscode-toolbar-container")
 ], VscodeToolbarContainer);
@@ -47244,7 +47244,7 @@ function c({ context: c2, subscribe: e3 }) {
     }));
   };
 }
-const styles$1Q = [
+const styles$1P = [
   defaultStyles,
   i$9`
     :host {
@@ -47718,7 +47718,7 @@ let VscodeTree = class VscodeTree2 extends VscElement {
     </div>`;
   }
 };
-VscodeTree.styles = styles$1Q;
+VscodeTree.styles = styles$1P;
 __decorate$1([
   n$4({ type: String, attribute: "expand-mode" })
 ], VscodeTree.prototype, "expandMode", void 0);
@@ -47760,7 +47760,7 @@ o$7({
     onVscTreeSelect: "vsc-tree-select"
   }
 });
-const styles$1P = [
+const styles$1O = [
   defaultStyles,
   i$9`
     :host {
@@ -48591,7 +48591,7 @@ let VscodeTreeItem = VscodeTreeItem_1 = class VscodeTreeItem2 extends VscElement
     </div>`;
   }
 };
-VscodeTreeItem.styles = styles$1P;
+VscodeTreeItem.styles = styles$1O;
 __decorate([
   n$4({ type: Boolean })
 ], VscodeTreeItem.prototype, "active", void 0);
@@ -48673,7 +48673,7 @@ const body$2 = "_body_13pj6_13";
 const stack = "_stack_13pj6_23";
 const centeredFlex = "_centeredFlex_13pj6_28";
 const errorIcon = "_errorIcon_13pj6_35";
-const styles$1O = {
+const styles$1N = {
   errorPanel,
   heading: heading$2,
   body: body$2,
@@ -48685,14 +48685,14 @@ const ErrorPanel = ({ title: title2, error: error2 }) => {
   const icons = useComponentIcons();
   const message2 = error2.message;
   const stack2 = error2.stack;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1O.errorPanel, styles$1O.centeredFlex), children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1O.heading, styles$1O.centeredFlex), children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icons.error, styles$1O.errorIcon) }) }),
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1N.errorPanel, styles$1N.centeredFlex), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1N.heading, styles$1N.centeredFlex), children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icons.error, styles$1N.errorIcon) }) }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: title2 || "" })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1O.body, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1N.body, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
       message2 || "",
-      stack2 && error2.displayStack !== false && /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$1O.stack, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("code", { children: [
+      stack2 && error2.displayStack !== false && /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$1N.stack, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("code", { children: [
         "at ",
         stack2
       ] }) })
@@ -48880,7 +48880,7 @@ const labeledValue = "_labeledValue_6obbb_1";
 const row$2 = "_row_6obbb_6";
 const column = "_column_6obbb_10";
 const labeledValueLabel = "_labeledValueLabel_6obbb_14";
-const styles$1N = {
+const styles$1M = {
   labeledValue,
   row: row$2,
   column,
@@ -48898,8 +48898,8 @@ const LabeledValue = ({
     "div",
     {
       className: clsx(
-        styles$1N.labeledValue,
-        layout === "column" ? styles$1N.column : styles$1N.row,
+        styles$1M.labeledValue,
+        layout === "column" ? styles$1M.column : styles$1M.row,
         className2
       ),
       style: {
@@ -48910,14 +48910,14 @@ const LabeledValue = ({
           "div",
           {
             className: clsx(
-              styles$1N.labeledValueLabel,
+              styles$1M.labeledValueLabel,
               "text-style-label",
               "text-style-secondary"
             ),
             children: label2
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1N.labeledValueValue), style: { ...valueStyle }, children: children2 })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1M.labeledValueValue), style: { ...valueStyle }, children: children2 })
       ]
     }
   );
@@ -54626,13 +54626,13 @@ class MarkdownRenderQueue {
 const renderQueue = new MarkdownRenderQueue(10);
 const panel$9 = "_panel_twp3v_1";
 const container$p = "_container_twp3v_7";
-const styles$1M = {
+const styles$1L = {
   panel: panel$9,
   container: container$p
 };
 const NoContentsPanel = ({ text: text2, icon: icon2 }) => {
   const icons = useComponentIcons();
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1M.panel), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1M.container, "text-size-smaller"), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1L.panel), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1L.container, "text-size-smaller"), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: icon2 ?? icons.noSamples }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: text2 })
   ] }) });
@@ -56569,7 +56569,7 @@ const PopOver = ({
   return popperContent;
 };
 const content$3 = "_content_13ihw_1";
-const styles$1L = {
+const styles$1K = {
   content: content$3
 };
 const Preformatted = reactExports.forwardRef(
@@ -56578,7 +56578,7 @@ const Preformatted = reactExports.forwardRef(
       "pre",
       {
         ref: ref2,
-        className: clsx(styles$1L.content, "text-size-smaller", className2),
+        className: clsx(styles$1K.content, "text-size-smaller", className2),
         style: style2,
         children: text2
       }
@@ -56590,7 +56590,7 @@ const container$o = "_container_1n7pm_1";
 const label$9 = "_label_1n7pm_7";
 const outer = "_outer_1n7pm_11";
 const inner = "_inner_1n7pm_20";
-const styles$1K = {
+const styles$1J = {
   container: container$o,
   label: label$9,
   outer,
@@ -56603,15 +56603,15 @@ const ProgressBar = ({
   label: label2,
   width = "100px"
 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1K.container), children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1K.outer), style: { width }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1J.container), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1J.outer), style: { width }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
-        className: clsx(styles$1K.inner),
+        className: clsx(styles$1J.inner),
         style: { width: `${(value2 - min2) / (max2 - min2) * 100}%` }
       }
     ) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1K.label, "text-size-smallest"), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1J.label, "text-size-smallest"), children: [
       value2,
       " / ",
       max2,
@@ -56629,7 +56629,7 @@ const dot = "_dot_4p85e_8";
 const subtle = "_subtle_4p85e_36";
 const primary = "_primary_4p85e_40";
 const visuallyHidden = "_visuallyHidden_4p85e_59";
-const styles$1J = {
+const styles$1I = {
   container: container$n,
   dotsContainer,
   small,
@@ -56651,24 +56651,24 @@ const PulsingDots = ({
     "div",
     {
       className: clsx(
-        styles$1J.container,
-        size === "small" ? styles$1J.small : size === "medium" ? styles$1J.medium : styles$1J.large,
+        styles$1I.container,
+        size === "small" ? styles$1I.small : size === "medium" ? styles$1I.medium : styles$1I.large,
         className2
       ),
       role: "status",
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1J.dotsContainer, children: Array.from({ length: dotsCount }, (_2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1I.dotsContainer, children: Array.from({ length: dotsCount }, (_2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
             className: clsx(
-              styles$1J.dot,
-              subtle2 ? styles$1J.subtle : styles$1J.primary
+              styles$1I.dot,
+              subtle2 ? styles$1I.subtle : styles$1I.primary
             ),
             style: { animationDelay: `${index * 0.2}s` }
           },
           `dot-${index}`
         )) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1J.visuallyHidden, children: text2 })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1I.visuallyHidden, children: text2 })
       ]
     }
   );
@@ -56676,7 +56676,7 @@ const PulsingDots = ({
 const rootControl = "_rootControl_19z32_1";
 const segment = "_segment_19z32_10";
 const selected$3 = "_selected_19z32_10";
-const styles$1I = {
+const styles$1H = {
   rootControl,
   segment,
   selected: selected$3
@@ -56694,12 +56694,12 @@ const SegmentedControl = ({
     [onSegmentChange]
   );
   const selectedId = selectedIdProp ?? segments2[0]?.id ?? "";
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { id, className: clsx(styles$1I.rootControl), children: segments2.map((segment2, index) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { id, className: clsx(styles$1H.rootControl), children: segments2.map((segment2, index) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "button",
     {
       className: clsx(
-        styles$1I.segment,
-        selectedId === segment2.id && styles$1I.selected,
+        styles$1H.segment,
+        selectedId === segment2.id && styles$1H.selected,
         "text-size-smallest",
         selectedId === segment2.id ? void 0 : "text-style-secondary"
       ),
@@ -57139,14 +57139,14 @@ const input$1 = "_input_1linb_17";
 const withIcon = "_withIcon_1linb_25";
 const icon$3 = "_icon_1linb_29";
 const clearText = "_clearText_1linb_33";
-const hidden$2 = "_hidden_1linb_42";
-const styles$1H = {
+const hidden$1 = "_hidden_1linb_42";
+const styles$1G = {
   container: container$m,
   input: input$1,
   withIcon,
   icon: icon$3,
   clearText,
-  hidden: hidden$2
+  hidden: hidden$1
 };
 const TextInput = reactExports.forwardRef(
   ({ value: value2, onChange, onFocus, icon: icon2, placeholder, className: className2 }, ref2) => {
@@ -57155,12 +57155,12 @@ const TextInput = reactExports.forwardRef(
       "div",
       {
         className: clsx(
-          styles$1H.container,
+          styles$1G.container,
           className2,
-          icon2 ? styles$1H.withIcon : ""
+          icon2 ? styles$1G.withIcon : ""
         ),
         children: [
-          icon2 && /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, styles$1H.icon) }),
+          icon2 && /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, styles$1G.icon) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "input",
             {
@@ -57169,7 +57169,7 @@ const TextInput = reactExports.forwardRef(
               onChange,
               ref: ref2,
               placeholder,
-              className: clsx(styles$1H.input),
+              className: clsx(styles$1G.input),
               onFocus
             }
           ),
@@ -57177,8 +57177,8 @@ const TextInput = reactExports.forwardRef(
             "i",
             {
               className: clsx(
-                styles$1H.clearText,
-                value2 === "" ? styles$1H.hidden : "",
+                styles$1G.clearText,
+                value2 === "" ? styles$1G.hidden : "",
                 icons.clearText
               ),
               onClick: () => {
@@ -57205,7 +57205,7 @@ const backdrop$1 = "_backdrop_1fize_41";
 const dropdownMenu = "_dropdownMenu_1fize_50";
 const alignRight = "_alignRight_1fize_64";
 const dropdownItem = "_dropdownItem_1fize_69";
-const styles$1G = {
+const styles$1F = {
   dropdownContainer,
   toolButton,
   bodyColor,
@@ -57232,7 +57232,7 @@ const ToolDropdownButton = reactExports.forwardRef(
       fn3();
       setIsOpen(false);
     };
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1G.dropdownContainer), children: [
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1F.dropdownContainer), children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "button",
         {
@@ -57241,8 +57241,8 @@ const ToolDropdownButton = reactExports.forwardRef(
           className: clsx(
             "btn",
             "btn-tools",
-            styles$1G.toolButton,
-            subtle2 ? styles$1G.bodyColor : void 0,
+            styles$1F.toolButton,
+            subtle2 ? styles$1F.bodyColor : void 0,
             className2
           ),
           onClick: () => setIsOpen(!isOpen),
@@ -57250,25 +57250,25 @@ const ToolDropdownButton = reactExports.forwardRef(
           children: [
             icon2 && /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: `${icon2}` }),
             label2,
-            /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icons.chevronDown, styles$1G.chevron) })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icons.chevronDown, styles$1F.chevron) })
           ]
         }
       ),
       isOpen && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1G.backdrop, onClick: () => setIsOpen(false) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1F.backdrop, onClick: () => setIsOpen(false) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
             className: clsx(
-              styles$1G.dropdownMenu,
-              dropdownAlign === "right" ? styles$1G.alignRight : void 0,
+              styles$1F.dropdownMenu,
+              dropdownAlign === "right" ? styles$1F.alignRight : void 0,
               dropdownClassName
             ),
             children: Object.entries(items).map(([itemLabel, fn3]) => /* @__PURE__ */ jsxRuntimeExports.jsx(
               "button",
               {
                 type: "button",
-                className: styles$1G.dropdownItem,
+                className: styles$1F.dropdownItem,
                 onClick: () => handleItemClick(fn3),
                 children: itemLabel
               },
@@ -57281,96 +57281,6 @@ const ToolDropdownButton = reactExports.forwardRef(
   }
 );
 ToolDropdownButton.displayName = "ToolDropdownButton";
-const visible = "_visible_tm52u_1";
-const hidden$1 = "_hidden_tm52u_5";
-const pills = "_pills_tm52u_9";
-const pill = "_pill_tm52u_9";
-const styles$1F = {
-  visible,
-  hidden: hidden$1,
-  pills,
-  pill
-};
-const NavPills = ({ id, children: children2 }) => {
-  const defaultNav = children2 ? children2?.[0]?.props["title"] : "";
-  const [activeItem, setActiveItem] = useProperty(id, "active", {
-    defaultValue: defaultNav
-  });
-  if (!activeItem || !children2) {
-    return void 0;
-  }
-  const navPills = children2.map((nav2, idx) => {
-    const title2 = typeof nav2 === "object" ? nav2["props"]?.title || `Tab ${idx}` : `Tab ${idx}`;
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      NavPill,
-      {
-        title: title2,
-        activeItem,
-        setActiveItem
-      },
-      `nav-pill-contents-${idx}`
-    );
-  });
-  const navBodies = children2.map((child, idx) => {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "div",
-      {
-        className: child["props"]?.title === activeItem ? styles$1F.visible : styles$1F.hidden,
-        children: child
-      },
-      `nav-pill-container-${idx}`
-    );
-  });
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "ul",
-      {
-        className: clsx("nav", "nav-pills", styles$1F.pills),
-        role: "tablist",
-        "aria-orientation": "horizontal",
-        children: navPills
-      }
-    ),
-    navBodies
-  ] });
-};
-const NavPill = ({
-  title: title2,
-  activeItem,
-  setActiveItem,
-  children: children2
-}) => {
-  const active = activeItem === title2;
-  const handleClick = reactExports.useCallback(
-    (e3) => {
-      const target2 = e3.currentTarget.dataset.target;
-      if (target2) {
-        setActiveItem(target2);
-      }
-    },
-    [setActiveItem]
-  );
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { className: "nav-item", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "button",
-      {
-        type: "button",
-        role: "tab",
-        "aria-selected": active,
-        className: clsx(
-          "nav-link",
-          "text-style-label",
-          active ? "active " : "",
-          styles$1F.pill
-        ),
-        "data-target": title2,
-        onClick: handleClick,
-        children: title2
-      }
-    ),
-    children2
-  ] });
-};
 const tabs$1 = "_tabs_1orks_1";
 const tabContents = "_tabContents_1orks_5";
 const scrollable = "_scrollable_1orks_11";
@@ -61417,127 +61327,132 @@ const cite = "_cite_1t1bm_1";
 const styles$1B = {
   cite
 };
-const MarkdownDivWithReferences = reactExports.forwardRef(({ markdown, references, options, className: className2, style: style2, omitMedia }, ref2) => {
-  const containerRef = reactExports.useRef(null);
-  const [positionEl, setPositionEl] = reactExports.useState(null);
-  const [currentRef, setCurrentRef] = reactExports.useState(null);
-  const [visibleKey, setVisibleKey, clearVisibleKey] = useProperty(
-    "popover",
-    "visibleKey"
-  );
-  const refMap = reactExports.useMemo(
-    () => new Map(references?.map((r2) => [r2.id, r2])),
-    [references]
-  );
-  const { navigate } = useComponentNavigation();
-  const handleLinkClick = reactExports.useCallback(
-    (e3) => {
-      const anchor = e3.target.closest("a");
-      if (anchor) {
-        const href = anchor.getAttribute("href");
-        if (href?.startsWith("#/")) {
-          e3.preventDefault();
-          void navigate(href.slice(1));
-        }
-      }
-    },
-    [navigate]
-  );
-  const postProcess2 = reactExports.useCallback(
-    (html) => injectReferenceLinks(html, references, styles$1B.cite),
-    [references]
-  );
-  const memoizedMarkdown = reactExports.useMemo(
-    () => /* @__PURE__ */ jsxRuntimeExports.jsx(
-      MarkdownDiv,
-      {
-        ref: ref2,
-        markdown,
-        postProcess: postProcess2,
-        style: style2,
-        omitMedia,
-        onClick: handleLinkClick
-      }
-    ),
-    [ref2, markdown, postProcess2, style2, omitMedia, handleLinkClick]
-  );
-  reactExports.useEffect(() => {
-    const container2 = containerRef.current;
-    if (!container2) {
-      return;
-    }
-    if (options?.previewRefsOnHover === false) {
-      return;
-    }
-    const citeLinks = container2.querySelectorAll(
-      `.${styles$1B.cite}`
+const MarkdownDivWithReferences = reactExports.forwardRef(
+  ({ markdown, references, options, className: className2, style: style2, omitMedia, omitMath }, ref2) => {
+    const containerRef = reactExports.useRef(null);
+    const [positionEl, setPositionEl] = reactExports.useState(null);
+    const [currentRef, setCurrentRef] = reactExports.useState(
+      null
     );
-    const handleMouseEnter = (e3) => {
-      const el = e3.currentTarget;
-      const id = el.getAttribute("data-ref-id");
-      if (!id) {
-        return;
-      }
-      const r2 = refMap.get(id);
-      if (!r2) {
-        return;
-      }
-      if (!r2.citePreview) {
-        return;
-      }
-      setPositionEl(el);
-      setCurrentRef(r2);
-      setVisibleKey(popoverKey(r2));
-    };
-    const handleClick = (e3) => {
-      clearVisibleKey();
-      setCurrentRef(null);
-      setPositionEl(null);
-      e3.stopPropagation();
-    };
-    const cleanup = [];
-    citeLinks.forEach((link2) => {
-      link2.addEventListener("mouseenter", handleMouseEnter);
-      link2.addEventListener("click", handleClick);
-      cleanup.push(() => {
-        link2.removeEventListener("mouseenter", handleMouseEnter);
-        link2.removeEventListener("click", handleClick);
-      });
-    });
-    return () => {
-      cleanup.forEach((fn3) => fn3());
-    };
-  }, [
-    markdown,
-    refMap,
-    options?.previewRefsOnHover,
-    setVisibleKey,
-    clearVisibleKey
-  ]);
-  const key2 = currentRef ? popoverKey(currentRef) : "unknown-markdown-ref-popover";
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2), ref: containerRef, children: [
-    memoizedMarkdown,
-    positionEl && currentRef && /* @__PURE__ */ jsxRuntimeExports.jsx(
-      PopOver,
-      {
-        id: key2,
-        positionEl,
-        isOpen: visibleKey === key2,
-        setIsOpen: (isOpen) => {
-          if (!isOpen) {
-            clearVisibleKey();
-            setCurrentRef(null);
-            setPositionEl(null);
+    const [visibleKey, setVisibleKey, clearVisibleKey] = useProperty(
+      "popover",
+      "visibleKey"
+    );
+    const refMap = reactExports.useMemo(
+      () => new Map(references?.map((r2) => [r2.id, r2])),
+      [references]
+    );
+    const { navigate } = useComponentNavigation();
+    const handleLinkClick = reactExports.useCallback(
+      (e3) => {
+        const anchor = e3.target.closest("a");
+        if (anchor) {
+          const href = anchor.getAttribute("href");
+          if (href?.startsWith("#/")) {
+            e3.preventDefault();
+            void navigate(href.slice(1));
           }
-        },
-        placement: "auto",
-        hoverDelay: 400,
-        showArrow: true,
-        children: currentRef.citePreview && currentRef.citePreview() || /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: "No preview available." })
+        }
+      },
+      [navigate]
+    );
+    const postProcess2 = reactExports.useCallback(
+      (html) => injectReferenceLinks(html, references, styles$1B.cite),
+      [references]
+    );
+    const memoizedMarkdown = reactExports.useMemo(
+      () => /* @__PURE__ */ jsxRuntimeExports.jsx(
+        MarkdownDiv,
+        {
+          ref: ref2,
+          markdown,
+          postProcess: postProcess2,
+          style: style2,
+          omitMedia,
+          omitMath,
+          onClick: handleLinkClick
+        }
+      ),
+      [ref2, markdown, postProcess2, style2, omitMedia, omitMath, handleLinkClick]
+    );
+    reactExports.useEffect(() => {
+      const container2 = containerRef.current;
+      if (!container2) {
+        return;
       }
-    )
-  ] });
-});
+      if (options?.previewRefsOnHover === false) {
+        return;
+      }
+      const citeLinks = container2.querySelectorAll(
+        `.${styles$1B.cite}`
+      );
+      const handleMouseEnter = (e3) => {
+        const el = e3.currentTarget;
+        const id = el.getAttribute("data-ref-id");
+        if (!id) {
+          return;
+        }
+        const r2 = refMap.get(id);
+        if (!r2) {
+          return;
+        }
+        if (!r2.citePreview) {
+          return;
+        }
+        setPositionEl(el);
+        setCurrentRef(r2);
+        setVisibleKey(popoverKey(r2));
+      };
+      const handleClick = (e3) => {
+        clearVisibleKey();
+        setCurrentRef(null);
+        setPositionEl(null);
+        e3.stopPropagation();
+      };
+      const cleanup = [];
+      citeLinks.forEach((link2) => {
+        link2.addEventListener("mouseenter", handleMouseEnter);
+        link2.addEventListener("click", handleClick);
+        cleanup.push(() => {
+          link2.removeEventListener("mouseenter", handleMouseEnter);
+          link2.removeEventListener("click", handleClick);
+        });
+      });
+      return () => {
+        cleanup.forEach((fn3) => fn3());
+      };
+    }, [
+      markdown,
+      refMap,
+      options?.previewRefsOnHover,
+      setVisibleKey,
+      clearVisibleKey
+    ]);
+    const key2 = currentRef ? popoverKey(currentRef) : "unknown-markdown-ref-popover";
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2), ref: containerRef, children: [
+      memoizedMarkdown,
+      positionEl && currentRef && /* @__PURE__ */ jsxRuntimeExports.jsx(
+        PopOver,
+        {
+          id: key2,
+          positionEl,
+          isOpen: visibleKey === key2,
+          setIsOpen: (isOpen) => {
+            if (!isOpen) {
+              clearVisibleKey();
+              setCurrentRef(null);
+              setPositionEl(null);
+            }
+          },
+          placement: "auto",
+          hoverDelay: 400,
+          showArrow: true,
+          children: currentRef.citePreview && currentRef.citePreview() || /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: "No preview available." })
+        }
+      )
+    ] });
+  }
+);
 MarkdownDivWithReferences.displayName = "MarkdownDivWithReferences";
 const popoverKey = (ref2) => `markdown-ref-popover-${ref2.id}`;
 function injectReferenceLinks(html, references, citeClass) {
@@ -66193,12 +66108,8 @@ class DatabaseService {
       const db = this.getDb();
       let files = await db.logs.toArray();
       files.sort((a2, b2) => {
-        if (a2.mtime !== void 0 && b2.mtime !== void 0) {
-          return b2.mtime - a2.mtime;
-        }
-        if (a2.id !== void 0 && b2.id !== void 0) {
-          return a2.id - b2.id;
-        }
+        if (a2.mtime != null && b2.mtime != null) return b2.mtime - a2.mtime;
+        if (a2.id != null && b2.id != null) return a2.id - b2.id;
         return 0;
       });
       if (files.length === 0) {
@@ -68983,7 +68894,6 @@ const ApplicationIcons = {
   sample: "bi bi-database",
   sandbox: "bi bi-box-seam",
   scorer: "bi bi-calculator",
-  search: "bi bi-search",
   sidebar: "bi bi-list",
   solvers: {
     use_tools: "bi bi-tools"
@@ -68994,11 +68904,7 @@ const ApplicationIcons = {
     on: "bi bi-toggle-on",
     off: "bi bi-toggle2-off"
   },
-  threeDots: "bi bi-three-dots",
-  tree: {
-    open: "bi bi-caret-down-fill",
-    closed: "bi bi-caret-right-fill"
-  }
+  threeDots: "bi bi-three-dots"
 };
 class AppErrorBoundary extends reactExports.Component {
   constructor(props) {
@@ -69219,11 +69125,11 @@ const numericScoreDescriptor = (values) => {
 };
 const container$l = "_container_1ramc_1";
 const key$1 = "_key_1ramc_12";
-const value$2 = "_value_1ramc_16";
+const value$3 = "_value_1ramc_16";
 const styles$1z = {
   container: container$l,
   key: key$1,
-  value: value$2
+  value: value$3
 };
 const objectScoreDescriptor = (values) => {
   const buckets2 = values.map((val) => {
@@ -69273,37 +69179,452 @@ const objectScoreDescriptor = (values) => {
     }
   };
 };
+const ContentRenderersContext = reactExports.createContext(null);
+const useContentRenderers = () => {
+  return reactExports.useContext(ContentRenderersContext);
+};
+const DisplayModeContext = reactExports.createContext(
+  null
+);
+const useDisplayMode = () => {
+  const context = reactExports.useContext(DisplayModeContext);
+  return context?.displayMode ?? "rendered";
+};
+const defaultIcons = {
+  model: "bi bi-grid-3x3-gap",
+  search: "bi bi-search",
+  tree: {
+    open: "bi bi-caret-down-fill",
+    closed: "bi bi-caret-right-fill"
+  }
+};
+const IconsContext = reactExports.createContext(defaultIcons);
+const useContentIcons = () => {
+  return reactExports.useContext(IconsContext);
+};
+const grid$9 = "_grid_1bdxe_1";
+const cell$2 = "_cell_1bdxe_8";
+const value$2 = "_value_1bdxe_12";
+const toggleContainer = "_toggleContainer_1bdxe_16";
+const toggleButton = "_toggleButton_1bdxe_27";
+const styles$1y = {
+  grid: grid$9,
+  cell: cell$2,
+  value: value$2,
+  toggleContainer,
+  toggleButton
+};
+const query$1 = "_query_seqs2_1";
+const summary$3 = "_summary_seqs2_6";
+const preWrap = "_preWrap_seqs2_10";
+const preCompact = "_preCompact_seqs2_15";
+const styles$1x = {
+  query: query$1,
+  summary: summary$3,
+  preWrap,
+  preCompact
+};
+const RenderedText = reactExports.forwardRef(
+  ({
+    markdown,
+    references,
+    style: style2,
+    className: className2,
+    forceRender,
+    omitMedia,
+    omitMath,
+    options
+  }, ref2) => {
+    const displayMode = useDisplayMode();
+    if (forceRender || displayMode === "rendered") {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        MarkdownDivWithReferences,
+        {
+          ref: ref2,
+          markdown,
+          references,
+          options,
+          style: style2,
+          className: className2,
+          omitMedia,
+          omitMath
+        }
+      );
+    } else {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Preformatted,
+        {
+          ref: ref2,
+          text: markdown,
+          style: style2,
+          className: className2
+        }
+      );
+    }
+  }
+);
+RenderedText.displayName = "RenderedText";
 const Buckets = {
   first: 0,
   intermediate: 10,
   final: 1e3
 };
-const formatTime = (seconds) => {
-  if (seconds < 60) {
-    return `${formatPrettyDecimal(seconds, 1)} sec`;
-  } else if (seconds < 60 * 60) {
-    return `${Math.floor(seconds / 60)} min ${Math.floor(seconds % 60)} sec`;
-  } else if (seconds < 60 * 60 * 24) {
-    const hours = Math.floor(seconds / (60 * 60));
-    const minutes = Math.floor(seconds % (60 * 60) / 60);
-    const remainingSeconds = seconds % 60;
-    return `${hours} hr ${minutes} min ${Math.floor(remainingSeconds)} sec`;
+const RenderedContent = ({
+  id,
+  entry,
+  references,
+  renderOptions = { renderString: "markdown" },
+  renderObject
+}) => {
+  const icons = useContentIcons();
+  const externalRenderers = useContentRenderers();
+  if (entry.value === null) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { children: "[null]" }) }) });
+  }
+  const renderers = contentRenderers(
+    icons,
+    renderObject,
+    externalRenderers?.renderers
+  );
+  const renderer = Object.keys(renderers).map((key2) => {
+    return renderers[key2];
+  }).sort((a2, b2) => {
+    if (!a2 || !b2) {
+      return 0;
+    }
+    return a2.bucket - b2.bucket;
+  }).find((renderer2) => {
+    return renderer2?.canRender(entry);
+  });
+  if (renderer) {
+    const { rendered } = renderer.render(id, entry, renderOptions, references);
+    if (rendered !== void 0 && reactExports.isValidElement(rendered)) {
+      return rendered;
+    }
+  }
+  const displayValue = (() => {
+    try {
+      if (typeof entry.value === "object") {
+        return JSON.stringify(entry.value);
+      }
+      return String(entry.value).trim();
+    } catch (e3) {
+      return "[Unable to display value]";
+    }
+  })();
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: displayValue });
+};
+const contentRenderers = (icons, renderObject, externalRenderers) => {
+  const contentRenderers2 = {
+    AnsiString: {
+      bucket: Buckets.first,
+      canRender: (entry) => {
+        return typeof entry.value === "string" && entry.value.indexOf("\x1B") > -1;
+      },
+      render: (_id, entry, _options) => {
+        return {
+          rendered: /* @__PURE__ */ jsxRuntimeExports.jsx(ANSIDisplay, { output: entry.value })
+        };
+      }
+    },
+    JsonString: {
+      bucket: Buckets.first,
+      canRender: (entry) => {
+        if (typeof entry.value === "string") {
+          const trimmed = entry.value.trim();
+          return isJson(trimmed);
+        }
+        return false;
+      },
+      render: (_id, entry, _options) => {
+        const obj = lib$1.parse(entry.value);
+        return {
+          rendered: /* @__PURE__ */ jsxRuntimeExports.jsx(JSONPanel, { data: obj })
+        };
+      }
+    },
+    Model: {
+      bucket: Buckets.intermediate,
+      canRender: (entry) => {
+        return typeof entry.value === "object" && entry.value._model;
+      },
+      render: (_id, entry, _options) => {
+        return {
+          rendered: /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: icons.model }),
+            " ",
+            entry.value._model
+          ] })
+        };
+      }
+    },
+    Boolean: {
+      bucket: Buckets.intermediate,
+      canRender: (entry) => {
+        return typeof entry.value === "boolean";
+      },
+      render: (id, entry, options) => {
+        entry.value = entry.value.toString();
+        return contentRenderers2.String?.render(id, entry, options) || {
+          rendered: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: entry.value })
+        };
+      }
+    },
+    Number: {
+      bucket: Buckets.intermediate,
+      canRender: (entry) => {
+        return typeof entry.value === "number";
+      },
+      render: (id, entry, options) => {
+        entry.value = formatNumber(entry.value);
+        return contentRenderers2.String?.render(id, entry, options) || {
+          rendered: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: entry.value })
+        };
+      }
+    },
+    String: {
+      bucket: Buckets.final,
+      canRender: (entry) => {
+        return typeof entry.value === "string";
+      },
+      render: (_id, entry, options, references) => {
+        const rendered = entry.value.trim();
+        if (options.renderString === "markdown") {
+          return {
+            rendered: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              RenderedText,
+              {
+                markdown: rendered,
+                references,
+                options: { previewRefsOnHover: options.previewRefsOnHover }
+              }
+            )
+          };
+        } else {
+          return {
+            rendered: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1x.preWrap, styles$1x.preCompact), children: rendered })
+          };
+        }
+      }
+    },
+    Array: {
+      bucket: Buckets.intermediate,
+      canRender: (entry) => {
+        const isArray2 = Array.isArray(entry.value);
+        if (isArray2) {
+          if (entry.value.length === 0 || entry.value.length === 1) {
+            return true;
+          }
+          const types2 = new Set(
+            entry.value.filter((e3) => e3 !== null).map((e3) => {
+              return typeof e3;
+            })
+          );
+          return types2.size === 1;
+        } else {
+          return false;
+        }
+      },
+      render: (id, entry, _options) => {
+        const arrayMap = {};
+        entry.value.forEach((e3, index) => {
+          arrayMap[`[${index}]`] = e3;
+        });
+        const arrayRendered = renderObject ? renderObject(arrayMap) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+          MetaDataGrid,
+          {
+            id,
+            className: "font-size-small",
+            entries: arrayMap,
+            options: { plain: true }
+          }
+        );
+        return { rendered: arrayRendered };
+      }
+    },
+    // Merge in any external renderers (e.g. ChatMessage, MessageContent from apps)
+    ...externalRenderers,
+    web_search: {
+      bucket: Buckets.intermediate,
+      canRender: (entry) => {
+        return typeof entry.value === "object" && entry.name === "web_search";
+      },
+      render: (_id, entry, _options) => {
+        const results = [];
+        results.push(
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1x.query, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: icons.search }),
+            " ",
+            entry.value.query
+          ] })
+        );
+        entry.value.results.forEach(
+          (result2) => {
+            results.push(
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: result2.url, children: result2.url }) })
+            );
+            results.push(
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-smaller", styles$1x.summary), children: result2.summary })
+            );
+          }
+        );
+        return {
+          rendered: results
+        };
+      }
+    },
+    web_browser: {
+      bucket: Buckets.intermediate,
+      canRender: (entry) => {
+        return typeof entry.value === "string" && entry.name?.startsWith("web_browser");
+      },
+      render: (_id, entry, _options) => {
+        return {
+          rendered: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$1x.preWrap, children: entry.value })
+        };
+      }
+    },
+    Html: {
+      bucket: Buckets.intermediate,
+      canRender: (entry) => {
+        return typeof entry.value === "object" && entry.value._html;
+      },
+      render: (_id, entry, _options) => {
+        return {
+          rendered: entry.value._html
+        };
+      }
+    },
+    Image: {
+      bucket: Buckets.intermediate,
+      canRender: (entry) => {
+        return typeof entry.value === "string" && entry.value.startsWith("data:image/");
+      },
+      render: (_id, entry, _options) => {
+        return {
+          rendered: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: entry.value })
+        };
+      }
+    },
+    Object: {
+      bucket: Buckets.intermediate,
+      canRender: (entry) => {
+        return typeof entry.value === "object";
+      },
+      render: (id, entry, _options) => {
+        if (renderObject) {
+          return { rendered: renderObject(entry.value) };
+        } else {
+          return {
+            rendered: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              MetaDataGrid,
+              {
+                id,
+                className: "font-size-small",
+                entries: entry.value,
+                options: { plain: true }
+              }
+            )
+          };
+        }
+      }
+    }
+  };
+  return contentRenderers2;
+};
+const MetaDataGrid = ({
+  id,
+  entries,
+  className: className2,
+  references,
+  style: style2,
+  maxRows,
+  options
+}) => {
+  const baseId = "metadata-grid";
+  const fontStyle = options?.size === "mini" ? "text-size-smallest" : "text-size-smaller";
+  const [expanded, setExpanded] = reactExports.useState(false);
+  const allEntries = entryRecords(entries);
+  const isCollapsible = maxRows != null && allEntries.length > maxRows;
+  const visibleEntries = isCollapsible && !expanded ? allEntries.slice(0, maxRows) : allEntries;
+  const entryEls = visibleEntries.map((entry, index) => {
+    const id2 = `${baseId}-value-${index}`;
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
+      index !== 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
+        {
+          style: {
+            gridColumn: "1 / -1",
+            borderBottom: `${!options?.plain ? "solid 1px var(--bs-light-border-subtle" : ""}`
+          }
+        }
+      ) : void 0,
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
+        {
+          className: clsx(
+            `${baseId}-key`,
+            styles$1y.cell,
+            "text-style-label",
+            "text-style-secondary",
+            fontStyle
+          ),
+          children: entry?.name
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1y.value, `${baseId}-value`, fontStyle), children: entry && /* @__PURE__ */ jsxRuntimeExports.jsx(
+        RenderedContent,
+        {
+          id: id2,
+          entry,
+          references,
+          renderOptions: {
+            renderString: "markdown",
+            previewRefsOnHover: options?.previewRefsOnHover
+          },
+          renderObject: (obj) => {
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(
+              MetaDataGrid,
+              {
+                id: id2,
+                className: clsx(styles$1y.nested),
+                entries: obj,
+                options,
+                references
+              }
+            );
+          }
+        }
+      ) })
+    ] }, `${baseId}-record-${index}`);
+  });
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id, className: clsx(className2, styles$1y.grid), style: style2, children: [
+    entryEls,
+    isCollapsible && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1y.toggleContainer, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "button",
+      {
+        className: clsx(styles$1y.toggleButton, "text-size-smallest"),
+        onClick: () => setExpanded((prev) => !prev),
+        children: [
+          expanded ? "less" : `${allEntries.length - visibleEntries.length} more`,
+          "..."
+        ]
+      }
+    ) })
+  ] });
+};
+const entryRecords = (entries) => {
+  if (!entries) {
+    return [];
+  }
+  if (!Array.isArray(entries)) {
+    return Object.entries(entries || {}).map(([key2, value2]) => {
+      return { name: key2, value: value2 };
+    });
   } else {
-    const days = Math.floor(seconds / (60 * 60 * 24));
-    const hours = Math.floor(seconds % (60 * 60 * 24) / (60 * 60));
-    const minutes = Math.floor(seconds % (60 * 60) / 60);
-    const remainingSeconds = seconds % 60;
-    return `${days} days ${hours} hr ${minutes} min ${Math.floor(remainingSeconds)} sec`;
+    return entries;
   }
 };
-function formatDateTime(date) {
-  return date.toLocaleString("sv-SE");
-}
-function formatDuration(start2, end2) {
-  const durationMs = end2.getTime() - start2.getTime();
-  const durationSec = durationMs / 1e3;
-  return formatTime(durationSec);
-}
 const kStoreInstanceKey = /^(.+)?:([a-zA-Z0-9]{22}):instance$/;
 const kStoreKey = /^(.+)?:([a-zA-Z0-9]{22}):(.+)$/;
 const resolveStoreKeys = (record) => {
@@ -69312,10 +69633,15 @@ const resolveStoreKeys = (record) => {
   const instanceKeys = /* @__PURE__ */ new Set();
   const entries = Object.entries(record);
   for (let i4 = 0; i4 < entries.length; i4++) {
-    const [key2, value2] = entries[i4];
+    const entry = entries[i4];
+    if (!entry) continue;
+    const [key2, value2] = entry;
     const instanceInfo = parseStoreInstanceKey(key2, value2);
     if (instanceInfo) {
       const { storeName, instanceId } = instanceInfo;
+      if (!storeName) {
+        continue;
+      }
       const instanceKey = storeKey(storeName, instanceId);
       if (!storeInstances[instanceKey]) {
         storeInstances[instanceKey] = {};
@@ -69326,6 +69652,9 @@ const resolveStoreKeys = (record) => {
       const storeKeyInfo = parseStoreKey(key2);
       if (storeKeyInfo) {
         const { storeName, instanceId, keyName: keyName2 } = storeKeyInfo;
+        if (!storeName || !instanceId || !keyName2) {
+          continue;
+        }
         const instanceKey = storeKey(storeName, instanceId);
         if (storeInstances[instanceKey]) {
           storeInstances[instanceKey][keyName2] = value2;
@@ -69381,7 +69710,7 @@ const keyPairBordered = "_keyPairBordered_qjlxf_9";
 const key = "_key_qjlxf_1";
 const pre = "_pre_qjlxf_19";
 const treeIcon = "_treeIcon_qjlxf_23";
-const styles$1y = {
+const styles$1w = {
   keyPairContainer,
   keyPairBordered,
   key,
@@ -69398,14 +69727,20 @@ const RecordTree = ({
   processStore = false,
   useBorders = true
 }) => {
+  const icons = useContentIcons();
   const listHandle = reactExports.useRef(null);
   const { getRestoreState } = useVirtuosoState(
     listHandle,
     `metadata-grid-${id}`
   );
   const [collapsedIds, setCollapsed, clearIds] = useCollapsibleIds(id);
-  const setCollapsedIds = useStore(
-    (state) => state.sampleActions.setCollapsedIds
+  const setCollapsedIds = reactExports.useCallback(
+    (values) => {
+      Object.entries(values).forEach(([key2, value2]) => {
+        setCollapsed(key2, value2);
+      });
+    },
+    [setCollapsed]
   );
   reactExports.useEffect(() => {
     return () => {
@@ -69433,8 +69768,8 @@ const RecordTree = ({
       },
       {}
     );
-    setCollapsedIds(id, defaultCollapsedIds);
-  }, [collapsedIds, defaultExpandLevel, id, items, setCollapsedIds]);
+    setCollapsedIds(defaultCollapsedIds);
+  }, [collapsedIds, items]);
   const keyUpHandler = reactExports.useCallback(
     (itemId, index) => {
       return (event) => {
@@ -69487,16 +69822,19 @@ const RecordTree = ({
         }
       };
     },
-    [collapsedIds, id, items.length, setCollapsed]
+    [collapsedIds, items]
   );
   const renderRow = (index) => {
     const item2 = items[index];
+    if (!item2) {
+      return null;
+    }
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
       {
         className: clsx(
-          styles$1y.keyPairContainer,
-          index < items.length - 1 && useBorders ? styles$1y.keyPairBordered : void 0,
+          styles$1w.keyPairContainer,
+          index < items.length - 1 && useBorders ? styles$1w.keyPairBordered : void 0,
           "text-size-small"
         ),
         style: {
@@ -69509,7 +69847,7 @@ const RecordTree = ({
               "data-index": index,
               className: clsx(
                 kRecordTreeKey,
-                styles$1y.key,
+                styles$1w.key,
                 "font-monospace",
                 "text-style-secondary"
               ),
@@ -69519,16 +69857,16 @@ const RecordTree = ({
                 setCollapsed(item2.id, !collapsedIds?.[item2.id]);
               },
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: item2.hasChildren ? /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1y.pre), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: item2.hasChildren ? /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1w.pre), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                   "i",
                   {
                     className: clsx(
-                      collapsedIds && collapsedIds[item2.id] ? ApplicationIcons.tree.closed : ApplicationIcons.tree.open,
-                      styles$1y.treeIcon
+                      collapsedIds && collapsedIds[item2.id] ? icons.tree.closed : icons.tree.open,
+                      styles$1w.treeIcon
                     )
                   }
                 ) }) : void 0 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("pre", { className: clsx(styles$1y.pre), children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("pre", { className: clsx(styles$1w.pre), children: [
                   item2.key,
                   ":"
                 ] })
@@ -69692,5711 +70030,6 @@ const processNodeRecursive = (key2, value2, depth, parentPath, thisPath, collaps
 const isPrimitiveOrNull = (value2) => {
   return value2 === null || value2 === void 0 || typeof value2 === "string" || typeof value2 === "number" || typeof value2 === "boolean";
 };
-const decodeUrlParam = (param) => {
-  if (!param) return param;
-  try {
-    return decodeURIComponent(param);
-  } catch {
-    return param;
-  }
-};
-const useLogOrSampleRouteParams = () => {
-  const location2 = useLocation();
-  const logParams = useLogRouteParams();
-  const sampleParams = useSamplesRouteParams();
-  if (location2.pathname.startsWith("/samples/")) {
-    return {
-      logPath: sampleParams.samplesPath,
-      id: sampleParams.sampleId,
-      epoch: sampleParams.epoch,
-      sampleTabId: sampleParams.tabId,
-      tabId: void 0,
-      uuid: void 0
-    };
-  } else {
-    return {
-      logPath: logParams.logPath,
-      id: logParams.sampleId,
-      epoch: logParams.epoch,
-      tabId: logParams.tabId,
-      sampleTabId: logParams.sampleTabId,
-      uuid: logParams.sampleUuid
-    };
-  }
-};
-const useLogRouteParams = () => {
-  const location2 = useLocation();
-  return reactExports.useMemo(() => {
-    const rawPath = location2.pathname;
-    const logsMatch = rawPath.match(/^\/logs\/(.*)$/);
-    const splatPath = logsMatch ? logsMatch[1] : "";
-    const sampleUuidMatch = splatPath.match(
-      /^(.+?)\/samples\/sample_uuid\/([^/]+)(?:\/(.+?))?\/?\s*$/
-    );
-    if (sampleUuidMatch) {
-      const [, logPath, sampleUuid, sampleTabId] = sampleUuidMatch;
-      return {
-        logPath: decodeUrlParam(logPath),
-        tabId: void 0,
-        sampleTabId: decodeUrlParam(sampleTabId),
-        sampleId: void 0,
-        epoch: void 0,
-        sampleUuid: decodeUrlParam(sampleUuid)
-      };
-    }
-    const fullSampleUrlMatch = splatPath.match(
-      /^(.+?)\/samples\/sample\/([^/]+)(?:\/([^/]+)(?:\/(.+?))?)?\/?\s*$/
-    );
-    if (fullSampleUrlMatch) {
-      const [, logPath, sampleId, epoch, sampleTabId] = fullSampleUrlMatch;
-      return {
-        logPath: decodeUrlParam(logPath),
-        tabId: void 0,
-        sampleTabId: decodeUrlParam(sampleTabId),
-        sampleId: decodeUrlParam(sampleId),
-        epoch: epoch ? decodeUrlParam(epoch) : void 0
-      };
-    }
-    const sampleUrlMatch = splatPath.match(
-      /^(.+?)\/samples(?:\/([^/]+)(?:\/([^/]+))?)?$/
-    );
-    if (sampleUrlMatch) {
-      const [, logPath, firstSegment, secondSegment] = sampleUrlMatch;
-      if (firstSegment) {
-        const validSampleTabIds = new Set(kSampleTabIds);
-        if (validSampleTabIds.has(firstSegment) && !secondSegment) {
-          return {
-            logPath: decodeUrlParam(logPath),
-            tabId: "samples",
-            sampleTabId: decodeUrlParam(firstSegment),
-            sampleId: void 0,
-            epoch: void 0
-          };
-        } else {
-          return {
-            logPath: decodeUrlParam(logPath),
-            tabId: void 0,
-            sampleTabId: void 0,
-            sampleId: decodeUrlParam(firstSegment),
-            epoch: secondSegment ? decodeUrlParam(secondSegment) : void 0
-          };
-        }
-      } else {
-        return {
-          logPath: decodeUrlParam(logPath),
-          tabId: "samples",
-          sampleTabId: void 0,
-          sampleId: void 0,
-          epoch: void 0
-        };
-      }
-    }
-    const pathSegments = splatPath.split("/").filter(Boolean);
-    if (pathSegments.length === 0) {
-      return {
-        logPath: void 0,
-        tabId: void 0,
-        sampleTabId: void 0,
-        sampleId: void 0,
-        epoch: void 0
-      };
-    }
-    const validTabIds = new Set(kWorkspaceTabs);
-    let tabIdIndex = -1;
-    let foundTabId = void 0;
-    for (let i4 = pathSegments.length - 1; i4 >= 0; i4--) {
-      const segment2 = pathSegments[i4];
-      const decodedSegment = decodeUrlParam(segment2) || segment2;
-      if (validTabIds.has(decodedSegment)) {
-        tabIdIndex = i4;
-        foundTabId = decodedSegment;
-        break;
-      }
-    }
-    if (foundTabId && tabIdIndex > 0) {
-      const pathSlice = pathSegments.slice(0, tabIdIndex);
-      const firstSegment = pathSlice[0];
-      const logPath = firstSegment?.endsWith(":") && !firstSegment.includes("://") ? firstSegment + (firstSegment === "file:" ? "///" : "//") + pathSlice.slice(1).join("/") : pathSlice.join("/");
-      return {
-        logPath: decodeUrlParam(logPath),
-        tabId: foundTabId,
-        sampleTabId: void 0,
-        sampleId: void 0,
-        epoch: void 0
-      };
-    } else {
-      return {
-        logPath: decodeUrlParam(splatPath),
-        tabId: void 0,
-        sampleTabId: void 0,
-        sampleId: void 0,
-        epoch: void 0
-      };
-    }
-  }, [location2.pathname]);
-};
-const useSamplesRouteParams = () => {
-  const location2 = useLocation();
-  return reactExports.useMemo(() => {
-    const rawPath = location2.pathname;
-    const samplesMatch = rawPath.match(/^\/samples\/(.*)$/);
-    const splatPath = samplesMatch ? samplesMatch[1] : "";
-    const sampleMatch = splatPath.match(
-      /^(.+?)\/sample\/([^/]+)\/([^/]+)(?:\/([^/]+))?\/?$/
-    );
-    if (sampleMatch) {
-      const [, logPath, sampleId, epoch, tabId] = sampleMatch;
-      return {
-        samplesPath: decodeUrlParam(logPath),
-        sampleId: decodeUrlParam(sampleId),
-        epoch: decodeUrlParam(epoch),
-        tabId: tabId ? decodeUrlParam(tabId) : void 0
-      };
-    }
-    return {
-      samplesPath: splatPath ? decodeUrlParam(splatPath) : void 0,
-      sampleId: void 0,
-      epoch: void 0,
-      tabId: void 0
-    };
-  }, [location2.pathname]);
-};
-const kLogsRoutUrlPattern = "/logs";
-const kLogRouteUrlPattern = "/logs/*";
-const baseUrl = (logPath, sampleId, sampleEpoch) => {
-  if (sampleId !== void 0 && sampleEpoch !== void 0) {
-    return logSamplesUrl(logPath, sampleId, sampleEpoch);
-  } else {
-    return logsUrl(logPath);
-  }
-};
-const useSampleUrlBuilder = () => {
-  const location2 = useLocation();
-  return (logPath, sampleId, sampleEpoch, sampleTabId) => {
-    if (sampleId && sampleEpoch && location2.pathname.startsWith("/samples/")) {
-      return samplesSampleUrl(logPath, sampleId, sampleEpoch, sampleTabId);
-    } else {
-      return logSamplesUrl(logPath, sampleId, sampleEpoch, sampleTabId);
-    }
-  };
-};
-const logSamplesUrl = (logPath, sampleId, sampleEpoch, sampleTabId) => {
-  const decodedLogPath = decodeUrlParam(logPath) || logPath;
-  if (sampleId !== void 0 && sampleEpoch !== void 0) {
-    const encodedSampleId = encodeURIComponent(String(sampleId));
-    return encodePathParts(
-      `/logs/${decodedLogPath}/samples/sample/${encodedSampleId}/${sampleEpoch}/${sampleTabId || ""}`
-    );
-  } else {
-    return encodePathParts(
-      `/logs/${decodedLogPath}/samples/${sampleTabId || ""}`
-    );
-  }
-};
-const printSampleUrl = (logPath, sampleId, epoch, view) => {
-  const decodedLogPath = decodeUrlParam(logPath) || logPath;
-  const encodedSampleId = encodeURIComponent(String(sampleId));
-  return encodePathParts(
-    `/logs/${decodedLogPath}/samples/sample/${encodedSampleId}/${epoch}/print`
-  ) + `?view=${view}`;
-};
-const samplesSampleUrl = (logPath, sampleId, epoch, sampleTabId) => {
-  const decodedLogPath = decodeUrlParam(logPath) || logPath;
-  const encodedSampleId = encodeURIComponent(String(sampleId));
-  return encodePathParts(
-    `/samples/${decodedLogPath}/sample/${encodedSampleId}/${epoch}/${sampleTabId || ""}`
-  );
-};
-const sampleEventUrl = (builder, eventId, logPath, sampleId, sampleEpoch) => {
-  const baseUrl2 = builder(
-    logPath,
-    sampleId,
-    sampleEpoch,
-    kSampleTranscriptTabId
-  );
-  return `${baseUrl2}?event=${eventId}`;
-};
-const useSampleMessageUrl = (messageId, sampleId, sampleEpoch) => {
-  const {
-    logPath: urlLogPath,
-    id: urlSampleId,
-    epoch: urlEpoch
-  } = useLogOrSampleRouteParams();
-  const builder = useSampleUrlBuilder();
-  const log_file = useStore((state) => state.logs.selectedLogFile);
-  const log_dir = useStore((state) => state.logs.logDir);
-  let targetLogPath = urlLogPath;
-  if (!targetLogPath && log_file) {
-    targetLogPath = makeLogsPath(log_file, log_dir);
-  }
-  const messageUrl = reactExports.useMemo(() => {
-    return messageId && targetLogPath ? sampleMessageUrl(
-      builder,
-      messageId,
-      targetLogPath,
-      urlSampleId,
-      urlEpoch
-    ) : void 0;
-  }, [
-    messageId,
-    targetLogPath,
-    builder,
-    sampleId,
-    urlSampleId,
-    sampleEpoch,
-    urlEpoch
-  ]);
-  return messageUrl;
-};
-const useSampleEventUrl = (eventId, sampleId, sampleEpoch) => {
-  const {
-    logPath: urlLogPath,
-    id: urlSampleId,
-    epoch: urlEpoch
-  } = useLogOrSampleRouteParams();
-  const builder = useSampleUrlBuilder();
-  const log_file = useStore((state) => state.logs.selectedLogFile);
-  const log_dir = useStore((state) => state.logs.logDir);
-  let targetLogPath = urlLogPath;
-  if (!targetLogPath && log_file) {
-    targetLogPath = makeLogsPath(log_file, log_dir);
-  }
-  const eventUrl = reactExports.useMemo(() => {
-    return targetLogPath ? sampleEventUrl(
-      builder,
-      eventId,
-      targetLogPath,
-      urlSampleId,
-      urlEpoch
-    ) : void 0;
-  }, [
-    targetLogPath,
-    builder,
-    eventId,
-    sampleId,
-    urlSampleId,
-    sampleEpoch,
-    urlEpoch
-  ]);
-  return eventUrl;
-};
-const sampleMessageUrl = (builder, messageId, logPath, sampleId, sampleEpoch) => {
-  const baseUrl2 = builder(logPath, sampleId, sampleEpoch, kSampleMessagesTabId);
-  return `${baseUrl2}?message=${messageId}`;
-};
-const samplesUrl = (log_file, log_dir) => {
-  const path = makeLogsPath(log_file, log_dir);
-  const decodedLogSegment = decodeUrlParam(path) || path;
-  return encodePathParts(`/samples/${decodedLogSegment}`);
-};
-const logsUrl = (log_file, log_dir, tabId) => {
-  return logsUrlRaw(makeLogsPath(log_file, log_dir), tabId);
-};
-const makeLogsPath = (log_file, log_dir) => {
-  const pathSegment = directoryRelativeUrl(log_file, log_dir);
-  return pathSegment;
-};
-const logsUrlRaw = (log_segment, tabId) => {
-  const decodedLogSegment = decodeUrlParam(log_segment) || log_segment;
-  if (tabId) {
-    return encodePathParts(`/logs/${decodedLogSegment}/${tabId}`);
-  } else {
-    return encodePathParts(`/logs/${decodedLogSegment}`);
-  }
-};
-const supportsLinking = () => {
-  return location.hostname !== "localhost" && location.hostname !== "127.0.0.1" && location.protocol !== "vscode-webview:";
-};
-const toFullUrl = (path) => {
-  return `${window.location.origin}${window.location.pathname}${window.location.search}#${path}`;
-};
-const message$3 = "_message_1kuwu_1";
-const systemRole = "_systemRole_1kuwu_9";
-const timestamp = "_timestamp_1kuwu_13";
-const messageGrid = "_messageGrid_1kuwu_19";
-const toolMessageGrid = "_toolMessageGrid_1kuwu_29";
-const messageContents = "_messageContents_1kuwu_33";
-const indented = "_indented_1kuwu_38";
-const copyLink$1 = "_copyLink_1kuwu_42";
-const metadataLabel = "_metadataLabel_1kuwu_53";
-const hover$1 = "_hover_1kuwu_57";
-const styles$1x = {
-  message: message$3,
-  systemRole,
-  timestamp,
-  messageGrid,
-  toolMessageGrid,
-  messageContents,
-  indented,
-  copyLink: copyLink$1,
-  metadataLabel,
-  hover: hover$1
-};
-const panel$8 = "_panel_1pa96_1";
-const code$4 = "_code_1pa96_7";
-const styles$1w = {
-  panel: panel$8,
-  code: code$4
-};
-const CodePanel = ({ code: code2, language: language2 = "json" }) => {
-  const codeContainerRef = reactExports.useRef(null);
-  usePrismHighlight(codeContainerRef, code2.length);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: codeContainerRef, className: clsx(styles$1w.panel), children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1w.code), children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx(`language-${language2}`), children: code2 }) }) });
-};
-class JsonWorkerPool {
-  encoder = new TextEncoder();
-  decoder = new TextDecoder();
-  workers = [];
-  blobURL = null;
-  nextRequestId = 0;
-  pendingRequests = /* @__PURE__ */ new Map();
-  poolSize = 4;
-  ensureWorkers() {
-    if (this.workers.length === 0) {
-      const blob = new Blob([kWorkerCode], { type: "application/javascript" });
-      this.blobURL = URL.createObjectURL(blob);
-      for (let i4 = 0; i4 < this.poolSize; i4++) {
-        const worker = new Worker(this.blobURL);
-        worker.onmessage = (e3) => this.handleMessage(e3);
-        worker.onerror = (error2) => this.handleError(error2);
-        this.workers.push(worker);
-        worker.postMessage({
-          type: "init",
-          scriptContent: kJson5ScriptBase64
-        });
-      }
-    }
-  }
-  handleMessage(e3) {
-    const { requestId, success: success2, serialized, result: result2, error: error2, stack: stack2 } = e3.data;
-    const pending = this.pendingRequests.get(requestId);
-    if (!pending) return;
-    this.pendingRequests.delete(requestId);
-    if (success2) {
-      if (serialized) {
-        const resultString = this.decoder.decode(result2);
-        pending.resolve(JSON.parse(resultString));
-      } else {
-        pending.resolve(result2);
-      }
-    } else {
-      const err2 = new Error(error2);
-      if (stack2) err2.stack = stack2;
-      pending.reject(err2);
-    }
-  }
-  handleError(error2) {
-    const err2 = new Error(`Worker error: ${error2.message}`);
-    for (const pending of this.pendingRequests.values()) {
-      pending.reject(err2);
-    }
-    this.pendingRequests.clear();
-  }
-  async parse(text2) {
-    this.ensureWorkers();
-    const encodedText = this.encoder.encode(text2);
-    const requestId = this.nextRequestId++;
-    return new Promise((resolve, reject) => {
-      this.pendingRequests.set(requestId, { resolve, reject });
-      const worker = this.workers[requestId % this.workers.length];
-      worker?.postMessage(
-        {
-          type: "parse",
-          requestId,
-          encodedText
-        },
-        [encodedText.buffer]
-      );
-    });
-  }
-  async parseBytes(data2) {
-    this.ensureWorkers();
-    const requestId = this.nextRequestId++;
-    const ownedData = data2.byteOffset === 0 && data2.byteLength === data2.buffer.byteLength ? data2 : data2.slice();
-    return new Promise((resolve, reject) => {
-      this.pendingRequests.set(requestId, { resolve, reject });
-      const worker = this.workers[requestId % this.workers.length];
-      worker?.postMessage(
-        {
-          type: "parse",
-          requestId,
-          encodedText: ownedData
-        },
-        [ownedData.buffer]
-      );
-    });
-  }
-  terminate() {
-    this.workers.forEach((w2) => w2.terminate());
-    this.workers = [];
-    if (this.blobURL) {
-      URL.revokeObjectURL(this.blobURL);
-      this.blobURL = null;
-    }
-    this.pendingRequests.clear();
-  }
-}
-const workerPool = new JsonWorkerPool();
-const asyncJsonParse = async (text2) => {
-  if (text2.length < 5e4) {
-    let result2 = void 0;
-    try {
-      result2 = JSON.parse(text2);
-    } catch {
-      result2 = lib$1.parse(text2);
-    }
-    return Promise.resolve(result2);
-  } else {
-    return workerPool.parse(text2);
-  }
-};
-const asyncJsonParseBytes = async (data2) => {
-  if (data2.length < 5e4) {
-    const text2 = new TextDecoder("utf-8").decode(data2);
-    return jsonParse(text2);
-  } else {
-    return workerPool.parseBytes(data2);
-  }
-};
-const jsonParse = (text2) => {
-  try {
-    return JSON.parse(text2);
-  } catch {
-    return lib$1.parse(text2);
-  }
-};
-const kWorkerCode = `
-// Store the JSON5 parser once loaded
-let JSON5 = null;
-const decoder = new TextDecoder();
-const encoder = new TextEncoder();
-
-self.onmessage = function (e) {
-  const { type } = e.data || {};
-
-  if (type === 'init') {
-    const { scriptContent } = e.data;
-    try {
-      if (!JSON5) {
-        const script = atob(scriptContent);
-        new Function(script)();
-        if (typeof self.JSON5 !== 'object' || typeof self.JSON5.parse !== 'function') {
-          throw new Error('Failed to initialize JSON5 parser');
-        }
-        JSON5 = self.JSON5;
-      }
-    } catch (err) {
-      // nothing to respond to yet; worker will fail on first parse if init failed
-      console.error('JSON5 init error in worker', err);
-    }
-    return;
-  }
-
-  if (type === 'parse') {
-    const { requestId, encodedText, scriptContent } = e.data;
-
-    try {
-      
-      // Decode the text using TextDecoder
-      const text = decoder.decode(encodedText);
-
-      // Parse with JSON/JSON5
-      let result = undefined;
-      try {
-        // Optimistically, try a regular JSON parse first (this is much faster)
-        result = JSON.parse(text);
-      } catch {
-        result = JSON5.parse(text);
-      }
-
-      if (result && typeof result === 'object' &&
-          (Array.isArray(result) ? result.length > 10000 : Object.keys(result).length > 10000)) {
-
-        // Large result, use transferrable object
-        const resultString = JSON.stringify(result);
-        const serialized = encoder.encode(resultString);
-
-        postMessage({
-          requestId,
-          success: true,
-          serialized: true,
-          result: serialized
-        }, [serialized.buffer]);
-      } else {
-        // Small results, send directly
-        postMessage({
-          requestId,
-          success: true, 
-          serialized: false, 
-          result: result 
-        });
-      }
-    } catch (err) {
-      postMessage({
-        requestId,
-        success: false, 
-        error: err.message,
-        stack: err.stack || ''
-      });
-    }
-  }
-};`;
-const kJson5ScriptBase64 = `IWZ1bmN0aW9uKHUsRCl7Im9iamVjdCI9PXR5cGVvZiBleHBvcnRzJiYidW5kZWZpbmVkIiE9dHlwZW9mIG1vZHVsZT9tb2R1bGUuZXhwb3J0cz1EKCk6ImZ1bmN0aW9uIj09dHlwZW9mIGRlZmluZSYmZGVmaW5lLmFtZD9kZWZpbmUoRCk6dS5KU09ONT1EKCl9KHRoaXMsZnVuY3Rpb24oKXsidXNlIHN0cmljdCI7ZnVuY3Rpb24gdSh1LEQpe3JldHVybiB1KEQ9e2V4cG9ydHM6e319LEQuZXhwb3J0cyksRC5leHBvcnRzfXZhciBEPXUoZnVuY3Rpb24odSl7dmFyIEQ9dS5leHBvcnRzPSJ1bmRlZmluZWQiIT10eXBlb2Ygd2luZG93JiZ3aW5kb3cuTWF0aD09TWF0aD93aW5kb3c6InVuZGVmaW5lZCIhPXR5cGVvZiBzZWxmJiZzZWxmLk1hdGg9PU1hdGg/c2VsZjpGdW5jdGlvbigicmV0dXJuIHRoaXMiKSgpOyJudW1iZXIiPT10eXBlb2YgX19nJiYoX19nPUQpfSksZT11KGZ1bmN0aW9uKHUpe3ZhciBEPXUuZXhwb3J0cz17dmVyc2lvbjoiMi42LjUifTsibnVtYmVyIj09dHlwZW9mIF9fZSYmKF9fZT1EKX0pLHI9KGUudmVyc2lvbixmdW5jdGlvbih1KXtyZXR1cm4ib2JqZWN0Ij09dHlwZW9mIHU/bnVsbCE9PXU6ImZ1bmN0aW9uIj09dHlwZW9mIHV9KSx0PWZ1bmN0aW9uKHUpe2lmKCFyKHUpKXRocm93IFR5cGVFcnJvcih1KyIgaXMgbm90IGFuIG9iamVjdCEiKTtyZXR1cm4gdX0sbj1mdW5jdGlvbih1KXt0cnl7cmV0dXJuISF1KCl9Y2F0Y2godSl7cmV0dXJuITB9fSxGPSFuKGZ1bmN0aW9uKCl7cmV0dXJuIDchPU9iamVjdC5kZWZpbmVQcm9wZXJ0eSh7fSwiYSIse2dldDpmdW5jdGlvbigpe3JldHVybiA3fX0pLmF9KSxDPUQuZG9jdW1lbnQsQT1yKEMpJiZyKEMuY3JlYXRlRWxlbWVudCksaT0hRiYmIW4oZnVuY3Rpb24oKXtyZXR1cm4gNyE9T2JqZWN0LmRlZmluZVByb3BlcnR5KCh1PSJkaXYiLEE/Qy5jcmVhdGVFbGVtZW50KHUpOnt9KSwiYSIse2dldDpmdW5jdGlvbigpe3JldHVybiA3fX0pLmE7dmFyIHV9KSxFPU9iamVjdC5kZWZpbmVQcm9wZXJ0eSxvPXtmOkY/T2JqZWN0LmRlZmluZVByb3BlcnR5OmZ1bmN0aW9uKHUsRCxlKXtpZih0KHUpLEQ9ZnVuY3Rpb24odSxEKXtpZighcih1KSlyZXR1cm4gdTt2YXIgZSx0O2lmKEQmJiJmdW5jdGlvbiI9PXR5cGVvZihlPXUudG9TdHJpbmcpJiYhcih0PWUuY2FsbCh1KSkpcmV0dXJuIHQ7aWYoImZ1bmN0aW9uIj09dHlwZW9mKGU9dS52YWx1ZU9mKSYmIXIodD1lLmNhbGwodSkpKXJldHVybiB0O2lmKCFEJiYiZnVuY3Rpb24iPT10eXBlb2YoZT11LnRvU3RyaW5nKSYmIXIodD1lLmNhbGwodSkpKXJldHVybiB0O3Rocm93IFR5cGVFcnJvcigiQ2FuJ3QgY29udmVydCBvYmplY3QgdG8gcHJpbWl0aXZlIHZhbHVlIil9KEQsITApLHQoZSksaSl0cnl7cmV0dXJuIEUodSxELGUpfWNhdGNoKHUpe31pZigiZ2V0ImluIGV8fCJzZXQiaW4gZSl0aHJvdyBUeXBlRXJyb3IoIkFjY2Vzc29ycyBub3Qgc3VwcG9ydGVkISIpO3JldHVybiJ2YWx1ZSJpbiBlJiYodVtEXT1lLnZhbHVlKSx1fX0sYT1GP2Z1bmN0aW9uKHUsRCxlKXtyZXR1cm4gby5mKHUsRCxmdW5jdGlvbih1LEQpe3JldHVybntlbnVtZXJhYmxlOiEoMSZ1KSxjb25maWd1cmFibGU6ISgyJnUpLHdyaXRhYmxlOiEoNCZ1KSx2YWx1ZTpEfX0oMSxlKSl9OmZ1bmN0aW9uKHUsRCxlKXtyZXR1cm4gdVtEXT1lLHV9LGM9e30uaGFzT3duUHJvcGVydHksQj1mdW5jdGlvbih1LEQpe3JldHVybiBjLmNhbGwodSxEKX0scz0wLGY9TWF0aC5yYW5kb20oKSxsPXUoZnVuY3Rpb24odSl7dmFyIHI9RFsiX19jb3JlLWpzX3NoYXJlZF9fIl18fChEWyJfX2NvcmUtanNfc2hhcmVkX18iXT17fSk7KHUuZXhwb3J0cz1mdW5jdGlvbih1LEQpe3JldHVybiByW3VdfHwoclt1XT12b2lkIDAhPT1EP0Q6e30pfSkoInZlcnNpb25zIixbXSkucHVzaCh7dmVyc2lvbjplLnZlcnNpb24sbW9kZToiZ2xvYmFsIixjb3B5cmlnaHQ6IsKpIDIwMTkgRGVuaXMgUHVzaGthcmV2ICh6bG9pcm9jay5ydSkifSl9KSgibmF0aXZlLWZ1bmN0aW9uLXRvLXN0cmluZyIsRnVuY3Rpb24udG9TdHJpbmcpLGQ9dShmdW5jdGlvbih1KXt2YXIgcix0PSJTeW1ib2woIi5jb25jYXQodm9pZCAwPT09KHI9InNyYyIpPyIiOnIsIilfIiwoKytzK2YpLnRvU3RyaW5nKDM2KSksbj0oIiIrbCkuc3BsaXQoInRvU3RyaW5nIik7ZS5pbnNwZWN0U291cmNlPWZ1bmN0aW9uKHUpe3JldHVybiBsLmNhbGwodSl9LCh1LmV4cG9ydHM9ZnVuY3Rpb24odSxlLHIsRil7dmFyIEM9ImZ1bmN0aW9uIj09dHlwZW9mIHI7QyYmKEIociwibmFtZSIpfHxhKHIsIm5hbWUiLGUpKSx1W2VdIT09ciYmKEMmJihCKHIsdCl8fGEocix0LHVbZV0/IiIrdVtlXTpuLmpvaW4oU3RyaW5nKGUpKSkpLHU9PT1EP3VbZV09cjpGP3VbZV0/dVtlXT1yOmEodSxlLHIpOihkZWxldGUgdVtlXSxhKHUsZSxyKSkpfSkoRnVuY3Rpb24ucHJvdG90eXBlLCJ0b1N0cmluZyIsZnVuY3Rpb24oKXtyZXR1cm4iZnVuY3Rpb24iPT10eXBlb2YgdGhpcyYmdGhpc1t0XXx8bC5jYWxsKHRoaXMpfSl9KSx2PWZ1bmN0aW9uKHUsRCxlKXtpZihmdW5jdGlvbih1KXtpZigiZnVuY3Rpb24iIT10eXBlb2YgdSl0aHJvdyBUeXBlRXJyb3IodSsiIGlzIG5vdCBhIGZ1bmN0aW9uISIpfSh1KSx2b2lkIDA9PT1EKXJldHVybiB1O3N3aXRjaChlKXtjYXNlIDE6cmV0dXJuIGZ1bmN0aW9uKGUpe3JldHVybiB1LmNhbGwoRCxlKX07Y2FzZSAyOnJldHVybiBmdW5jdGlvbihlLHIpe3JldHVybiB1LmNhbGwoRCxlLHIpfTtjYXNlIDM6cmV0dXJuIGZ1bmN0aW9uKGUscix0KXtyZXR1cm4gdS5jYWxsKEQsZSxyLHQpfX1yZXR1cm4gZnVuY3Rpb24oKXtyZXR1cm4gdS5hcHBseShELGFyZ3VtZW50cyl9fSxwPWZ1bmN0aW9uKHUscix0KXt2YXIgbixGLEMsQSxpPXUmcC5GLEU9dSZwLkcsbz11JnAuUyxjPXUmcC5QLEI9dSZwLkIscz1FP0Q6bz9EW3JdfHwoRFtyXT17fSk6KERbcl18fHt9KS5wcm90b3R5cGUsZj1FP2U6ZVtyXXx8KGVbcl09e30pLGw9Zi5wcm90b3R5cGV8fChmLnByb3RvdHlwZT17fSk7Zm9yKG4gaW4gRSYmKHQ9ciksdClDPSgoRj0haSYmcyYmdm9pZCAwIT09c1tuXSk/czp0KVtuXSxBPUImJkY/dihDLEQpOmMmJiJmdW5jdGlvbiI9PXR5cGVvZiBDP3YoRnVuY3Rpb24uY2FsbCxDKTpDLHMmJmQocyxuLEMsdSZwLlUpLGZbbl0hPUMmJmEoZixuLEEpLGMmJmxbbl0hPUMmJihsW25dPUMpfTtELmNvcmU9ZSxwLkY9MSxwLkc9MixwLlM9NCxwLlA9OCxwLkI9MTYscC5XPTMyLHAuVT02NCxwLlI9MTI4O3ZhciBoLG09cCxnPU1hdGguY2VpbCx5PU1hdGguZmxvb3Isdz1mdW5jdGlvbih1KXtyZXR1cm4gaXNOYU4odT0rdSk/MDoodT4wP3k6ZykodSl9LGI9KGg9ITEsZnVuY3Rpb24odSxEKXt2YXIgZSxyLHQ9U3RyaW5nKGZ1bmN0aW9uKHUpe2lmKG51bGw9PXUpdGhyb3cgVHlwZUVycm9yKCJDYW4ndCBjYWxsIG1ldGhvZCBvbiAgIit1KTtyZXR1cm4gdX0odSkpLG49dyhEKSxGPXQubGVuZ3RoO3JldHVybiBuPDB8fG4+PUY/aD8iIjp2b2lkIDA6KGU9dC5jaGFyQ29kZUF0KG4pKTw1NTI5Nnx8ZT41NjMxOXx8bisxPT09Rnx8KHI9dC5jaGFyQ29kZUF0KG4rMSkpPDU2MzIwfHxyPjU3MzQzP2g/dC5jaGFyQXQobik6ZTpoP3Quc2xpY2UobixuKzIpOnItNTYzMjArKGUtNTUyOTY8PDEwKSs2NTUzNn0pO20obS5QLCJTdHJpbmciLHtjb2RlUG9pbnRBdDpmdW5jdGlvbih1KXtyZXR1cm4gYih0aGlzLHUpfX0pO2UuU3RyaW5nLmNvZGVQb2ludEF0O3ZhciBTPU1hdGgubWF4LHg9TWF0aC5taW4sTj1TdHJpbmcuZnJvbUNoYXJDb2RlLFA9U3RyaW5nLmZyb21Db2RlUG9pbnQ7bShtLlMrbS5GKighIVAmJjEhPVAubGVuZ3RoKSwiU3RyaW5nIix7ZnJvbUNvZGVQb2ludDpmdW5jdGlvbih1KXtmb3IodmFyIEQsZSxyLHQ9YXJndW1lbnRzLG49W10sRj1hcmd1bWVudHMubGVuZ3RoLEM9MDtGPkM7KXtpZihEPSt0W0MrK10scj0xMTE0MTExLCgoZT13KGU9RCkpPDA/UyhlK3IsMCk6eChlLHIpKSE9PUQpdGhyb3cgUmFuZ2VFcnJvcihEKyIgaXMgbm90IGEgdmFsaWQgY29kZSBwb2ludCIpO24ucHVzaChEPDY1NTM2P04oRCk6Tig1NTI5NisoKEQtPTY1NTM2KT4+MTApLEQlMTAyNCs1NjMyMCkpfXJldHVybiBuLmpvaW4oIiIpfX0pO2UuU3RyaW5nLmZyb21Db2RlUG9pbnQ7dmFyIF8sTyxqLEksVixKLE0sayxMLFQseixILCQsUixHPXtTcGFjZV9TZXBhcmF0b3I6L1tcdTE2ODBcdTIwMDAtXHUyMDBBXHUyMDJGXHUyMDVGXHUzMDAwXS8sSURfU3RhcnQ6L1tceEFBXHhCNVx4QkFceEMwLVx4RDZceEQ4LVx4RjZceEY4LVx1MDJDMVx1MDJDNi1cdTAyRDFcdTAyRTAtXHUwMkU0XHUwMkVDXHUwMkVFXHUwMzcwLVx1MDM3NFx1MDM3Nlx1MDM3N1x1MDM3QS1cdTAzN0RcdTAzN0ZcdTAzODZcdTAzODgtXHUwMzhBXHUwMzhDXHUwMzhFLVx1MDNBMVx1MDNBMy1cdTAzRjVcdTAzRjctXHUwNDgxXHUwNDhBLVx1MDUyRlx1MDUzMS1cdTA1NTZcdTA1NTlcdTA1NjEtXHUwNTg3XHUwNUQwLVx1MDVFQVx1MDVGMC1cdTA1RjJcdTA2MjAtXHUwNjRBXHUwNjZFXHUwNjZGXHUwNjcxLVx1MDZEM1x1MDZENVx1MDZFNVx1MDZFNlx1MDZFRVx1MDZFRlx1MDZGQS1cdTA2RkNcdTA2RkZcdTA3MTBcdTA3MTItXHUwNzJGXHUwNzRELVx1MDdBNVx1MDdCMVx1MDdDQS1cdTA3RUFcdTA3RjRcdTA3RjVcdTA3RkFcdTA4MDAtXHUwODE1XHUwODFBXHUwODI0XHUwODI4XHUwODQwLVx1MDg1OFx1MDg2MC1cdTA4NkFcdTA4QTAtXHUwOEI0XHUwOEI2LVx1MDhCRFx1MDkwNC1cdTA5MzlcdTA5M0RcdTA5NTBcdTA5NTgtXHUwOTYxXHUwOTcxLVx1MDk4MFx1MDk4NS1cdTA5OENcdTA5OEZcdTA5OTBcdTA5OTMtXHUwOUE4XHUwOUFBLVx1MDlCMFx1MDlCMlx1MDlCNi1cdTA5QjlcdTA5QkRcdTA5Q0VcdTA5RENcdTA5RERcdTA5REYtXHUwOUUxXHUwOUYwXHUwOUYxXHUwOUZDXHUwQTA1LVx1MEEwQVx1MEEwRlx1MEExMFx1MEExMy1cdTBBMjhcdTBBMkEtXHUwQTMwXHUwQTMyXHUwQTMzXHUwQTM1XHUwQTM2XHUwQTM4XHUwQTM5XHUwQTU5LVx1MEE1Q1x1MEE1RVx1MEE3Mi1cdTBBNzRcdTBBODUtXHUwQThEXHUwQThGLVx1MEE5MVx1MEE5My1cdTBBQThcdTBBQUEtXHUwQUIwXHUwQUIyXHUwQUIzXHUwQUI1LVx1MEFCOVx1MEFCRFx1MEFEMFx1MEFFMFx1MEFFMVx1MEFGOVx1MEIwNS1cdTBCMENcdTBCMEZcdTBCMTBcdTBCMTMtXHUwQjI4XHUwQjJBLVx1MEIzMFx1MEIzMlx1MEIzM1x1MEIzNS1cdTBCMzlcdTBCM0RcdTBCNUNcdTBCNURcdTBCNUYtXHUwQjYxXHUwQjcxXHUwQjgzXHUwQjg1LVx1MEI4QVx1MEI4RS1cdTBCOTBcdTBCOTItXHUwQjk1XHUwQjk5XHUwQjlBXHUwQjlDXHUwQjlFXHUwQjlGXHUwQkEzXHUwQkE0XHUwQkE4LVx1MEJBQVx1MEJBRS1cdTBCQjlcdTBCRDBcdTBDMDUtXHUwQzBDXHUwQzBFLVx1MEMxMFx1MEMxMi1cdTBDMjhcdTBDMkEtXHUwQzM5XHUwQzNEXHUwQzU4LVx1MEM1QVx1MEM2MFx1MEM2MVx1MEM4MFx1MEM4NS1cdTBDOENcdTBDOEUtXHUwQzkwXHUwQzkyLVx1MENBOFx1MENBQS1cdTBDQjNcdTBDQjUtXHUwQ0I5XHUwQ0JEXHUwQ0RFXHUwQ0UwXHUwQ0UxXHUwQ0YxXHUwQ0YyXHUwRDA1LVx1MEQwQ1x1MEQwRS1cdTBEMTBcdTBEMTItXHUwRDNBXHUwRDNEXHUwRDRFXHUwRDU0LVx1MEQ1Nlx1MEQ1Ri1cdTBENjFcdTBEN0EtXHUwRDdGXHUwRDg1LVx1MEQ5Nlx1MEQ5QS1cdTBEQjFcdTBEQjMtXHUwREJCXHUwREJEXHUwREMwLVx1MERDNlx1MEUwMS1cdTBFMzBcdTBFMzJcdTBFMzNcdTBFNDAtXHUwRTQ2XHUwRTgxXHUwRTgyXHUwRTg0XHUwRTg3XHUwRTg4XHUwRThBXHUwRThEXHUwRTk0LVx1MEU5N1x1MEU5OS1cdTBFOUZcdTBFQTEtXHUwRUEzXHUwRUE1XHUwRUE3XHUwRUFBXHUwRUFCXHUwRUFELVx1MEVCMFx1MEVCMlx1MEVCM1x1MEVCRFx1MEVDMC1cdTBFQzRcdTBFQzZcdTBFREMtXHUwRURGXHUwRjAwXHUwRjQwLVx1MEY0N1x1MEY0OS1cdTBGNkNcdTBGODgtXHUwRjhDXHUxMDAwLVx1MTAyQVx1MTAzRlx1MTA1MC1cdTEwNTVcdTEwNUEtXHUxMDVEXHUxMDYxXHUxMDY1XHUxMDY2XHUxMDZFLVx1MTA3MFx1MTA3NS1cdTEwODFcdTEwOEVcdTEwQTAtXHUxMEM1XHUxMEM3XHUxMENEXHUxMEQwLVx1MTBGQVx1MTBGQy1cdTEyNDhcdTEyNEEtXHUxMjREXHUxMjUwLVx1MTI1Nlx1MTI1OFx1MTI1QS1cdTEyNURcdTEyNjAtXHUxMjg4XHUxMjhBLVx1MTI4RFx1MTI5MC1cdTEyQjBcdTEyQjItXHUxMkI1XHUxMkI4LVx1MTJCRVx1MTJDMFx1MTJDMi1cdTEyQzVcdTEyQzgtXHUxMkQ2XHUxMkQ4LVx1MTMxMFx1MTMxMi1cdTEzMTVcdTEzMTgtXHUxMzVBXHUxMzgwLVx1MTM4Rlx1MTNBMC1cdTEzRjVcdTEzRjgtXHUxM0ZEXHUxNDAxLVx1MTY2Q1x1MTY2Ri1cdTE2N0ZcdTE2ODEtXHUxNjlBXHUxNkEwLVx1MTZFQVx1MTZFRS1cdTE2RjhcdTE3MDAtXHUxNzBDXHUxNzBFLVx1MTcxMVx1MTcyMC1cdTE3MzFcdTE3NDAtXHUxNzUxXHUxNzYwLVx1MTc2Q1x1MTc2RS1cdTE3NzBcdTE3ODAtXHUxN0IzXHUxN0Q3XHUxN0RDXHUxODIwLVx1MTg3N1x1MTg4MC1cdTE4ODRcdTE4ODctXHUxOEE4XHUxOEFBXHUxOEIwLVx1MThGNVx1MTkwMC1cdTE5MUVcdTE5NTAtXHUxOTZEXHUxOTcwLVx1MTk3NFx1MTk4MC1cdTE5QUJcdTE5QjAtXHUxOUM5XHUxQTAwLVx1MUExNlx1MUEyMC1cdTFBNTRcdTFBQTdcdTFCMDUtXHUxQjMzXHUxQjQ1LVx1MUI0Qlx1MUI4My1cdTFCQTBcdTFCQUVcdTFCQUZcdTFCQkEtXHUxQkU1XHUxQzAwLVx1MUMyM1x1MUM0RC1cdTFDNEZcdTFDNUEtXHUxQzdEXHUxQzgwLVx1MUM4OFx1MUNFOS1cdTFDRUNcdTFDRUUtXHUxQ0YxXHUxQ0Y1XHUxQ0Y2XHUxRDAwLVx1MURCRlx1MUUwMC1cdTFGMTVcdTFGMTgtXHUxRjFEXHUxRjIwLVx1MUY0NVx1MUY0OC1cdTFGNERcdTFGNTAtXHUxRjU3XHUxRjU5XHUxRjVCXHUxRjVEXHUxRjVGLVx1MUY3RFx1MUY4MC1cdTFGQjRcdTFGQjYtXHUxRkJDXHUxRkJFXHUxRkMyLVx1MUZDNFx1MUZDNi1cdTFGQ0NcdTFGRDAtXHUxRkQzXHUxRkQ2LVx1MUZEQlx1MUZFMC1cdTFGRUNcdTFGRjItXHUxRkY0XHUxRkY2LVx1MUZGQ1x1MjA3MVx1MjA3Rlx1MjA5MC1cdTIwOUNcdTIxMDJcdTIxMDdcdTIxMEEtXHUyMTEzXHUyMTE1XHUyMTE5LVx1MjExRFx1MjEyNFx1MjEyNlx1MjEyOFx1MjEyQS1cdTIxMkRcdTIxMkYtXHUyMTM5XHUyMTNDLVx1MjEzRlx1MjE0NS1cdTIxNDlcdTIxNEVcdTIxNjAtXHUyMTg4XHUyQzAwLVx1MkMyRVx1MkMzMC1cdTJDNUVcdTJDNjAtXHUyQ0U0XHUyQ0VCLVx1MkNFRVx1MkNGMlx1MkNGM1x1MkQwMC1cdTJEMjVcdTJEMjdcdTJEMkRcdTJEMzAtXHUyRDY3XHUyRDZGXHUyRDgwLVx1MkQ5Nlx1MkRBMC1cdTJEQTZcdTJEQTgtXHUyREFFXHUyREIwLVx1MkRCNlx1MkRCOC1cdTJEQkVcdTJEQzAtXHUyREM2XHUyREM4LVx1MkRDRVx1MkREMC1cdTJERDZcdTJERDgtXHUyRERFXHUyRTJGXHUzMDA1LVx1MzAwN1x1MzAyMS1cdTMwMjlcdTMwMzEtXHUzMDM1XHUzMDM4LVx1MzAzQ1x1MzA0MS1cdTMwOTZcdTMwOUQtXHUzMDlGXHUzMEExLVx1MzBGQVx1MzBGQy1cdTMwRkZcdTMxMDUtXHUzMTJFXHUzMTMxLVx1MzE4RVx1MzFBMC1cdTMxQkFcdTMxRjAtXHUzMUZGXHUzNDAwLVx1NERCNVx1NEUwMC1cdTlGRUFcdUEwMDAtXHVBNDhDXHVBNEQwLVx1QTRGRFx1QTUwMC1cdUE2MENcdUE2MTAtXHVBNjFGXHVBNjJBXHVBNjJCXHVBNjQwLVx1QTY2RVx1QTY3Ri1cdUE2OURcdUE2QTAtXHVBNkVGXHVBNzE3LVx1QTcxRlx1QTcyMi1cdUE3ODhcdUE3OEItXHVBN0FFXHVBN0IwLVx1QTdCN1x1QTdGNy1cdUE4MDFcdUE4MDMtXHVBODA1XHVBODA3LVx1QTgwQVx1QTgwQy1cdUE4MjJcdUE4NDAtXHVBODczXHVBODgyLVx1QThCM1x1QThGMi1cdUE4RjdcdUE4RkJcdUE4RkRcdUE5MEEtXHVBOTI1XHVBOTMwLVx1QTk0Nlx1QTk2MC1cdUE5N0NcdUE5ODQtXHVBOUIyXHVBOUNGXHVBOUUwLVx1QTlFNFx1QTlFNi1cdUE5RUZcdUE5RkEtXHVBOUZFXHVBQTAwLVx1QUEyOFx1QUE0MC1cdUFBNDJcdUFBNDQtXHVBQTRCXHVBQTYwLVx1QUE3Nlx1QUE3QVx1QUE3RS1cdUFBQUZcdUFBQjFcdUFBQjVcdUFBQjZcdUFBQjktXHVBQUJEXHVBQUMwXHVBQUMyXHVBQURCLVx1QUFERFx1QUFFMC1cdUFBRUFcdUFBRjItXHVBQUY0XHVBQjAxLVx1QUIwNlx1QUIwOS1cdUFCMEVcdUFCMTEtXHVBQjE2XHVBQjIwLVx1QUIyNlx1QUIyOC1cdUFCMkVcdUFCMzAtXHVBQjVBXHVBQjVDLVx1QUI2NVx1QUI3MC1cdUFCRTJcdUFDMDAtXHVEN0EzXHVEN0IwLVx1RDdDNlx1RDdDQi1cdUQ3RkJcdUY5MDAtXHVGQTZEXHVGQTcwLVx1RkFEOVx1RkIwMC1cdUZCMDZcdUZCMTMtXHVGQjE3XHVGQjFEXHVGQjFGLVx1RkIyOFx1RkIyQS1cdUZCMzZcdUZCMzgtXHVGQjNDXHVGQjNFXHVGQjQwXHVGQjQxXHVGQjQzXHVGQjQ0XHVGQjQ2LVx1RkJCMVx1RkJEMy1cdUZEM0RcdUZENTAtXHVGRDhGXHVGRDkyLVx1RkRDN1x1RkRGMC1cdUZERkJcdUZFNzAtXHVGRTc0XHVGRTc2LVx1RkVGQ1x1RkYyMS1cdUZGM0FcdUZGNDEtXHVGRjVBXHVGRjY2LVx1RkZCRVx1RkZDMi1cdUZGQzdcdUZGQ0EtXHVGRkNGXHVGRkQyLVx1RkZEN1x1RkZEQS1cdUZGRENdfFx1RDgwMFtcdURDMDAtXHVEQzBCXHVEQzBELVx1REMyNlx1REMyOC1cdURDM0FcdURDM0NcdURDM0RcdURDM0YtXHVEQzREXHVEQzUwLVx1REM1RFx1REM4MC1cdURDRkFcdURENDAtXHVERDc0XHVERTgwLVx1REU5Q1x1REVBMC1cdURFRDBcdURGMDAtXHVERjFGXHVERjJELVx1REY0QVx1REY1MC1cdURGNzVcdURGODAtXHVERjlEXHVERkEwLVx1REZDM1x1REZDOC1cdURGQ0ZcdURGRDEtXHVERkQ1XXxcdUQ4MDFbXHVEQzAwLVx1REM5RFx1RENCMC1cdURDRDNcdURDRDgtXHVEQ0ZCXHVERDAwLVx1REQyN1x1REQzMC1cdURENjNcdURFMDAtXHVERjM2XHVERjQwLVx1REY1NVx1REY2MC1cdURGNjddfFx1RDgwMltcdURDMDAtXHVEQzA1XHVEQzA4XHVEQzBBLVx1REMzNVx1REMzN1x1REMzOFx1REMzQ1x1REMzRi1cdURDNTVcdURDNjAtXHVEQzc2XHVEQzgwLVx1REM5RVx1RENFMC1cdURDRjJcdURDRjRcdURDRjVcdUREMDAtXHVERDE1XHVERDIwLVx1REQzOVx1REQ4MC1cdUREQjdcdUREQkVcdUREQkZcdURFMDBcdURFMTAtXHVERTEzXHVERTE1LVx1REUxN1x1REUxOS1cdURFMzNcdURFNjAtXHVERTdDXHVERTgwLVx1REU5Q1x1REVDMC1cdURFQzdcdURFQzktXHVERUU0XHVERjAwLVx1REYzNVx1REY0MC1cdURGNTVcdURGNjAtXHVERjcyXHVERjgwLVx1REY5MV18XHVEODAzW1x1REMwMC1cdURDNDhcdURDODAtXHVEQ0IyXHVEQ0MwLVx1RENGMl18XHVEODA0W1x1REMwMy1cdURDMzdcdURDODMtXHVEQ0FGXHVEQ0QwLVx1RENFOFx1REQwMy1cdUREMjZcdURENTAtXHVERDcyXHVERDc2XHVERDgzLVx1RERCMlx1RERDMS1cdUREQzRcdUREREFcdURERENcdURFMDAtXHVERTExXHVERTEzLVx1REUyQlx1REU4MC1cdURFODZcdURFODhcdURFOEEtXHVERThEXHVERThGLVx1REU5RFx1REU5Ri1cdURFQThcdURFQjAtXHVERURFXHVERjA1LVx1REYwQ1x1REYwRlx1REYxMFx1REYxMy1cdURGMjhcdURGMkEtXHVERjMwXHVERjMyXHVERjMzXHVERjM1LVx1REYzOVx1REYzRFx1REY1MFx1REY1RC1cdURGNjFdfFx1RDgwNVtcdURDMDAtXHVEQzM0XHVEQzQ3LVx1REM0QVx1REM4MC1cdURDQUZcdURDQzRcdURDQzVcdURDQzdcdUREODAtXHVEREFFXHVEREQ4LVx1REREQlx1REUwMC1cdURFMkZcdURFNDRcdURFODAtXHVERUFBXHVERjAwLVx1REYxOV18XHVEODA2W1x1RENBMC1cdURDREZcdURDRkZcdURFMDBcdURFMEItXHVERTMyXHVERTNBXHVERTUwXHVERTVDLVx1REU4M1x1REU4Ni1cdURFODlcdURFQzAtXHVERUY4XXxcdUQ4MDdbXHVEQzAwLVx1REMwOFx1REMwQS1cdURDMkVcdURDNDBcdURDNzItXHVEQzhGXHVERDAwLVx1REQwNlx1REQwOFx1REQwOVx1REQwQi1cdUREMzBcdURENDZdfFx1RDgwOFtcdURDMDAtXHVERjk5XXxcdUQ4MDlbXHVEQzAwLVx1REM2RVx1REM4MC1cdURENDNdfFtcdUQ4MENcdUQ4MUMtXHVEODIwXHVEODQwLVx1RDg2OFx1RDg2QS1cdUQ4NkNcdUQ4NkYtXHVEODcyXHVEODc0LVx1RDg3OV1bXHVEQzAwLVx1REZGRl18XHVEODBEW1x1REMwMC1cdURDMkVdfFx1RDgxMVtcdURDMDAtXHVERTQ2XXxcdUQ4MUFbXHVEQzAwLVx1REUzOFx1REU0MC1cdURFNUVcdURFRDAtXHVERUVEXHVERjAwLVx1REYyRlx1REY0MC1cdURGNDNcdURGNjMtXHVERjc3XHVERjdELVx1REY4Rl18XHVEODFCW1x1REYwMC1cdURGNDRcdURGNTBcdURGOTMtXHVERjlGXHVERkUwXHVERkUxXXxcdUQ4MjFbXHVEQzAwLVx1REZFQ118XHVEODIyW1x1REMwMC1cdURFRjJdfFx1RDgyQ1tcdURDMDAtXHVERDFFXHVERDcwLVx1REVGQl18XHVEODJGW1x1REMwMC1cdURDNkFcdURDNzAtXHVEQzdDXHVEQzgwLVx1REM4OFx1REM5MC1cdURDOTldfFx1RDgzNVtcdURDMDAtXHVEQzU0XHVEQzU2LVx1REM5Q1x1REM5RVx1REM5Rlx1RENBMlx1RENBNVx1RENBNlx1RENBOS1cdURDQUNcdURDQUUtXHVEQ0I5XHVEQ0JCXHVEQ0JELVx1RENDM1x1RENDNS1cdUREMDVcdUREMDctXHVERDBBXHVERDBELVx1REQxNFx1REQxNi1cdUREMUNcdUREMUUtXHVERDM5XHVERDNCLVx1REQzRVx1REQ0MC1cdURENDRcdURENDZcdURENEEtXHVERDUwXHVERDUyLVx1REVBNVx1REVBOC1cdURFQzBcdURFQzItXHVERURBXHVERURDLVx1REVGQVx1REVGQy1cdURGMTRcdURGMTYtXHVERjM0XHVERjM2LVx1REY0RVx1REY1MC1cdURGNkVcdURGNzAtXHVERjg4XHVERjhBLVx1REZBOFx1REZBQS1cdURGQzJcdURGQzQtXHVERkNCXXxcdUQ4M0FbXHVEQzAwLVx1RENDNFx1REQwMC1cdURENDNdfFx1RDgzQltcdURFMDAtXHVERTAzXHVERTA1LVx1REUxRlx1REUyMVx1REUyMlx1REUyNFx1REUyN1x1REUyOS1cdURFMzJcdURFMzQtXHVERTM3XHVERTM5XHVERTNCXHVERTQyXHVERTQ3XHVERTQ5XHVERTRCXHVERTRELVx1REU0Rlx1REU1MVx1REU1Mlx1REU1NFx1REU1N1x1REU1OVx1REU1Qlx1REU1RFx1REU1Rlx1REU2MVx1REU2Mlx1REU2NFx1REU2Ny1cdURFNkFcdURFNkMtXHVERTcyXHVERTc0LVx1REU3N1x1REU3OS1cdURFN0NcdURFN0VcdURFODAtXHVERTg5XHVERThCLVx1REU5Qlx1REVBMS1cdURFQTNcdURFQTUtXHVERUE5XHVERUFCLVx1REVCQl18XHVEODY5W1x1REMwMC1cdURFRDZcdURGMDAtXHVERkZGXXxcdUQ4NkRbXHVEQzAwLVx1REYzNFx1REY0MC1cdURGRkZdfFx1RDg2RVtcdURDMDAtXHVEQzFEXHVEQzIwLVx1REZGRl18XHVEODczW1x1REMwMC1cdURFQTFcdURFQjAtXHVERkZGXXxcdUQ4N0FbXHVEQzAwLVx1REZFMF18XHVEODdFW1x1REMwMC1cdURFMURdLyxJRF9Db250aW51ZTovW1x4QUFceEI1XHhCQVx4QzAtXHhENlx4RDgtXHhGNlx4RjgtXHUwMkMxXHUwMkM2LVx1MDJEMVx1MDJFMC1cdTAyRTRcdTAyRUNcdTAyRUVcdTAzMDAtXHUwMzc0XHUwMzc2XHUwMzc3XHUwMzdBLVx1MDM3RFx1MDM3Rlx1MDM4Nlx1MDM4OC1cdTAzOEFcdTAzOENcdTAzOEUtXHUwM0ExXHUwM0EzLVx1MDNGNVx1MDNGNy1cdTA0ODFcdTA0ODMtXHUwNDg3XHUwNDhBLVx1MDUyRlx1MDUzMS1cdTA1NTZcdTA1NTlcdTA1NjEtXHUwNTg3XHUwNTkxLVx1MDVCRFx1MDVCRlx1MDVDMVx1MDVDMlx1MDVDNFx1MDVDNVx1MDVDN1x1MDVEMC1cdTA1RUFcdTA1RjAtXHUwNUYyXHUwNjEwLVx1MDYxQVx1MDYyMC1cdTA2NjlcdTA2NkUtXHUwNkQzXHUwNkQ1LVx1MDZEQ1x1MDZERi1cdTA2RThcdTA2RUEtXHUwNkZDXHUwNkZGXHUwNzEwLVx1MDc0QVx1MDc0RC1cdTA3QjFcdTA3QzAtXHUwN0Y1XHUwN0ZBXHUwODAwLVx1MDgyRFx1MDg0MC1cdTA4NUJcdTA4NjAtXHUwODZBXHUwOEEwLVx1MDhCNFx1MDhCNi1cdTA4QkRcdTA4RDQtXHUwOEUxXHUwOEUzLVx1MDk2M1x1MDk2Ni1cdTA5NkZcdTA5NzEtXHUwOTgzXHUwOTg1LVx1MDk4Q1x1MDk4Rlx1MDk5MFx1MDk5My1cdTA5QThcdTA5QUEtXHUwOUIwXHUwOUIyXHUwOUI2LVx1MDlCOVx1MDlCQy1cdTA5QzRcdTA5QzdcdTA5QzhcdTA5Q0ItXHUwOUNFXHUwOUQ3XHUwOURDXHUwOUREXHUwOURGLVx1MDlFM1x1MDlFNi1cdTA5RjFcdTA5RkNcdTBBMDEtXHUwQTAzXHUwQTA1LVx1MEEwQVx1MEEwRlx1MEExMFx1MEExMy1cdTBBMjhcdTBBMkEtXHUwQTMwXHUwQTMyXHUwQTMzXHUwQTM1XHUwQTM2XHUwQTM4XHUwQTM5XHUwQTNDXHUwQTNFLVx1MEE0Mlx1MEE0N1x1MEE0OFx1MEE0Qi1cdTBBNERcdTBBNTFcdTBBNTktXHUwQTVDXHUwQTVFXHUwQTY2LVx1MEE3NVx1MEE4MS1cdTBBODNcdTBBODUtXHUwQThEXHUwQThGLVx1MEE5MVx1MEE5My1cdTBBQThcdTBBQUEtXHUwQUIwXHUwQUIyXHUwQUIzXHUwQUI1LVx1MEFCOVx1MEFCQy1cdTBBQzVcdTBBQzctXHUwQUM5XHUwQUNCLVx1MEFDRFx1MEFEMFx1MEFFMC1cdTBBRTNcdTBBRTYtXHUwQUVGXHUwQUY5LVx1MEFGRlx1MEIwMS1cdTBCMDNcdTBCMDUtXHUwQjBDXHUwQjBGXHUwQjEwXHUwQjEzLVx1MEIyOFx1MEIyQS1cdTBCMzBcdTBCMzJcdTBCMzNcdTBCMzUtXHUwQjM5XHUwQjNDLVx1MEI0NFx1MEI0N1x1MEI0OFx1MEI0Qi1cdTBCNERcdTBCNTZcdTBCNTdcdTBCNUNcdTBCNURcdTBCNUYtXHUwQjYzXHUwQjY2LVx1MEI2Rlx1MEI3MVx1MEI4Mlx1MEI4M1x1MEI4NS1cdTBCOEFcdTBCOEUtXHUwQjkwXHUwQjkyLVx1MEI5NVx1MEI5OVx1MEI5QVx1MEI5Q1x1MEI5RVx1MEI5Rlx1MEJBM1x1MEJBNFx1MEJBOC1cdTBCQUFcdTBCQUUtXHUwQkI5XHUwQkJFLVx1MEJDMlx1MEJDNi1cdTBCQzhcdTBCQ0EtXHUwQkNEXHUwQkQwXHUwQkQ3XHUwQkU2LVx1MEJFRlx1MEMwMC1cdTBDMDNcdTBDMDUtXHUwQzBDXHUwQzBFLVx1MEMxMFx1MEMxMi1cdTBDMjhcdTBDMkEtXHUwQzM5XHUwQzNELVx1MEM0NFx1MEM0Ni1cdTBDNDhcdTBDNEEtXHUwQzREXHUwQzU1XHUwQzU2XHUwQzU4LVx1MEM1QVx1MEM2MC1cdTBDNjNcdTBDNjYtXHUwQzZGXHUwQzgwLVx1MEM4M1x1MEM4NS1cdTBDOENcdTBDOEUtXHUwQzkwXHUwQzkyLVx1MENBOFx1MENBQS1cdTBDQjNcdTBDQjUtXHUwQ0I5XHUwQ0JDLVx1MENDNFx1MENDNi1cdTBDQzhcdTBDQ0EtXHUwQ0NEXHUwQ0Q1XHUwQ0Q2XHUwQ0RFXHUwQ0UwLVx1MENFM1x1MENFNi1cdTBDRUZcdTBDRjFcdTBDRjJcdTBEMDAtXHUwRDAzXHUwRDA1LVx1MEQwQ1x1MEQwRS1cdTBEMTBcdTBEMTItXHUwRDQ0XHUwRDQ2LVx1MEQ0OFx1MEQ0QS1cdTBENEVcdTBENTQtXHUwRDU3XHUwRDVGLVx1MEQ2M1x1MEQ2Ni1cdTBENkZcdTBEN0EtXHUwRDdGXHUwRDgyXHUwRDgzXHUwRDg1LVx1MEQ5Nlx1MEQ5QS1cdTBEQjFcdTBEQjMtXHUwREJCXHUwREJEXHUwREMwLVx1MERDNlx1MERDQVx1MERDRi1cdTBERDRcdTBERDZcdTBERDgtXHUwRERGXHUwREU2LVx1MERFRlx1MERGMlx1MERGM1x1MEUwMS1cdTBFM0FcdTBFNDAtXHUwRTRFXHUwRTUwLVx1MEU1OVx1MEU4MVx1MEU4Mlx1MEU4NFx1MEU4N1x1MEU4OFx1MEU4QVx1MEU4RFx1MEU5NC1cdTBFOTdcdTBFOTktXHUwRTlGXHUwRUExLVx1MEVBM1x1MEVBNVx1MEVBN1x1MEVBQVx1MEVBQlx1MEVBRC1cdTBFQjlcdTBFQkItXHUwRUJEXHUwRUMwLVx1MEVDNFx1MEVDNlx1MEVDOC1cdTBFQ0RcdTBFRDAtXHUwRUQ5XHUwRURDLVx1MEVERlx1MEYwMFx1MEYxOFx1MEYxOVx1MEYyMC1cdTBGMjlcdTBGMzVcdTBGMzdcdTBGMzlcdTBGM0UtXHUwRjQ3XHUwRjQ5LVx1MEY2Q1x1MEY3MS1cdTBGODRcdTBGODYtXHUwRjk3XHUwRjk5LVx1MEZCQ1x1MEZDNlx1MTAwMC1cdTEwNDlcdTEwNTAtXHUxMDlEXHUxMEEwLVx1MTBDNVx1MTBDN1x1MTBDRFx1MTBEMC1cdTEwRkFcdTEwRkMtXHUxMjQ4XHUxMjRBLVx1MTI0RFx1MTI1MC1cdTEyNTZcdTEyNThcdTEyNUEtXHUxMjVEXHUxMjYwLVx1MTI4OFx1MTI4QS1cdTEyOERcdTEyOTAtXHUxMkIwXHUxMkIyLVx1MTJCNVx1MTJCOC1cdTEyQkVcdTEyQzBcdTEyQzItXHUxMkM1XHUxMkM4LVx1MTJENlx1MTJEOC1cdTEzMTBcdTEzMTItXHUxMzE1XHUxMzE4LVx1MTM1QVx1MTM1RC1cdTEzNUZcdTEzODAtXHUxMzhGXHUxM0EwLVx1MTNGNVx1MTNGOC1cdTEzRkRcdTE0MDEtXHUxNjZDXHUxNjZGLVx1MTY3Rlx1MTY4MS1cdTE2OUFcdTE2QTAtXHUxNkVBXHUxNkVFLVx1MTZGOFx1MTcwMC1cdTE3MENcdTE3MEUtXHUxNzE0XHUxNzIwLVx1MTczNFx1MTc0MC1cdTE3NTNcdTE3NjAtXHUxNzZDXHUxNzZFLVx1MTc3MFx1MTc3Mlx1MTc3M1x1MTc4MC1cdTE3RDNcdTE3RDdcdTE3RENcdTE3RERcdTE3RTAtXHUxN0U5XHUxODBCLVx1MTgwRFx1MTgxMC1cdTE4MTlcdTE4MjAtXHUxODc3XHUxODgwLVx1MThBQVx1MThCMC1cdTE4RjVcdTE5MDAtXHUxOTFFXHUxOTIwLVx1MTkyQlx1MTkzMC1cdTE5M0JcdTE5NDYtXHUxOTZEXHUxOTcwLVx1MTk3NFx1MTk4MC1cdTE5QUJcdTE5QjAtXHUxOUM5XHUxOUQwLVx1MTlEOVx1MUEwMC1cdTFBMUJcdTFBMjAtXHUxQTVFXHUxQTYwLVx1MUE3Q1x1MUE3Ri1cdTFBODlcdTFBOTAtXHUxQTk5XHUxQUE3XHUxQUIwLVx1MUFCRFx1MUIwMC1cdTFCNEJcdTFCNTAtXHUxQjU5XHUxQjZCLVx1MUI3M1x1MUI4MC1cdTFCRjNcdTFDMDAtXHUxQzM3XHUxQzQwLVx1MUM0OVx1MUM0RC1cdTFDN0RcdTFDODAtXHUxQzg4XHUxQ0QwLVx1MUNEMlx1MUNENC1cdTFDRjlcdTFEMDAtXHUxREY5XHUxREZCLVx1MUYxNVx1MUYxOC1cdTFGMURcdTFGMjAtXHUxRjQ1XHUxRjQ4LVx1MUY0RFx1MUY1MC1cdTFGNTdcdTFGNTlcdTFGNUJcdTFGNURcdTFGNUYtXHUxRjdEXHUxRjgwLVx1MUZCNFx1MUZCNi1cdTFGQkNcdTFGQkVcdTFGQzItXHUxRkM0XHUxRkM2LVx1MUZDQ1x1MUZEMC1cdTFGRDNcdTFGRDYtXHUxRkRCXHUxRkUwLVx1MUZFQ1x1MUZGMi1cdTFGRjRcdTFGRjYtXHUxRkZDXHUyMDNGXHUyMDQwXHUyMDU0XHUyMDcxXHUyMDdGXHUyMDkwLVx1MjA5Q1x1MjBEMC1cdTIwRENcdTIwRTFcdTIwRTUtXHUyMEYwXHUyMTAyXHUyMTA3XHUyMTBBLVx1MjExM1x1MjExNVx1MjExOS1cdTIxMURcdTIxMjRcdTIxMjZcdTIxMjhcdTIxMkEtXHUyMTJEXHUyMTJGLVx1MjEzOVx1MjEzQy1cdTIxM0ZcdTIxNDUtXHUyMTQ5XHUyMTRFXHUyMTYwLVx1MjE4OFx1MkMwMC1cdTJDMkVcdTJDMzAtXHUyQzVFXHUyQzYwLVx1MkNFNFx1MkNFQi1cdTJDRjNcdTJEMDAtXHUyRDI1XHUyRDI3XHUyRDJEXHUyRDMwLVx1MkQ2N1x1MkQ2Rlx1MkQ3Ri1cdTJEOTZcdTJEQTAtXHUyREE2XHUyREE4LVx1MkRBRVx1MkRCMC1cdTJEQjZcdTJEQjgtXHUyREJFXHUyREMwLVx1MkRDNlx1MkRDOC1cdTJEQ0VcdTJERDAtXHUyREQ2XHUyREQ4LVx1MkRERVx1MkRFMC1cdTJERkZcdTJFMkZcdTMwMDUtXHUzMDA3XHUzMDIxLVx1MzAyRlx1MzAzMS1cdTMwMzVcdTMwMzgtXHUzMDNDXHUzMDQxLVx1MzA5Nlx1MzA5OVx1MzA5QVx1MzA5RC1cdTMwOUZcdTMwQTEtXHUzMEZBXHUzMEZDLVx1MzBGRlx1MzEwNS1cdTMxMkVcdTMxMzEtXHUzMThFXHUzMUEwLVx1MzFCQVx1MzFGMC1cdTMxRkZcdTM0MDAtXHU0REI1XHU0RTAwLVx1OUZFQVx1QTAwMC1cdUE0OENcdUE0RDAtXHVBNEZEXHVBNTAwLVx1QTYwQ1x1QTYxMC1cdUE2MkJcdUE2NDAtXHVBNjZGXHVBNjc0LVx1QTY3RFx1QTY3Ri1cdUE2RjFcdUE3MTctXHVBNzFGXHVBNzIyLVx1QTc4OFx1QTc4Qi1cdUE3QUVcdUE3QjAtXHVBN0I3XHVBN0Y3LVx1QTgyN1x1QTg0MC1cdUE4NzNcdUE4ODAtXHVBOEM1XHVBOEQwLVx1QThEOVx1QThFMC1cdUE4RjdcdUE4RkJcdUE4RkRcdUE5MDAtXHVBOTJEXHVBOTMwLVx1QTk1M1x1QTk2MC1cdUE5N0NcdUE5ODAtXHVBOUMwXHVBOUNGLVx1QTlEOVx1QTlFMC1cdUE5RkVcdUFBMDAtXHVBQTM2XHVBQTQwLVx1QUE0RFx1QUE1MC1cdUFBNTlcdUFBNjAtXHVBQTc2XHVBQTdBLVx1QUFDMlx1QUFEQi1cdUFBRERcdUFBRTAtXHVBQUVGXHVBQUYyLVx1QUFGNlx1QUIwMS1cdUFCMDZcdUFCMDktXHVBQjBFXHVBQjExLVx1QUIxNlx1QUIyMC1cdUFCMjZcdUFCMjgtXHVBQjJFXHVBQjMwLVx1QUI1QVx1QUI1Qy1cdUFCNjVcdUFCNzAtXHVBQkVBXHVBQkVDXHVBQkVEXHVBQkYwLVx1QUJGOVx1QUMwMC1cdUQ3QTNcdUQ3QjAtXHVEN0M2XHVEN0NCLVx1RDdGQlx1RjkwMC1cdUZBNkRcdUZBNzAtXHVGQUQ5XHVGQjAwLVx1RkIwNlx1RkIxMy1cdUZCMTdcdUZCMUQtXHVGQjI4XHVGQjJBLVx1RkIzNlx1RkIzOC1cdUZCM0NcdUZCM0VcdUZCNDBcdUZCNDFcdUZCNDNcdUZCNDRcdUZCNDYtXHVGQkIxXHVGQkQzLVx1RkQzRFx1RkQ1MC1cdUZEOEZcdUZEOTItXHVGREM3XHVGREYwLVx1RkRGQlx1RkUwMC1cdUZFMEZcdUZFMjAtXHVGRTJGXHVGRTMzXHVGRTM0XHVGRTRELVx1RkU0Rlx1RkU3MC1cdUZFNzRcdUZFNzYtXHVGRUZDXHVGRjEwLVx1RkYxOVx1RkYyMS1cdUZGM0FcdUZGM0ZcdUZGNDEtXHVGRjVBXHVGRjY2LVx1RkZCRVx1RkZDMi1cdUZGQzdcdUZGQ0EtXHVGRkNGXHVGRkQyLVx1RkZEN1x1RkZEQS1cdUZGRENdfFx1RDgwMFtcdURDMDAtXHVEQzBCXHVEQzBELVx1REMyNlx1REMyOC1cdURDM0FcdURDM0NcdURDM0RcdURDM0YtXHVEQzREXHVEQzUwLVx1REM1RFx1REM4MC1cdURDRkFcdURENDAtXHVERDc0XHVEREZEXHVERTgwLVx1REU5Q1x1REVBMC1cdURFRDBcdURFRTBcdURGMDAtXHVERjFGXHVERjJELVx1REY0QVx1REY1MC1cdURGN0FcdURGODAtXHVERjlEXHVERkEwLVx1REZDM1x1REZDOC1cdURGQ0ZcdURGRDEtXHVERkQ1XXxcdUQ4MDFbXHVEQzAwLVx1REM5RFx1RENBMC1cdURDQTlcdURDQjAtXHVEQ0QzXHVEQ0Q4LVx1RENGQlx1REQwMC1cdUREMjdcdUREMzAtXHVERDYzXHVERTAwLVx1REYzNlx1REY0MC1cdURGNTVcdURGNjAtXHVERjY3XXxcdUQ4MDJbXHVEQzAwLVx1REMwNVx1REMwOFx1REMwQS1cdURDMzVcdURDMzdcdURDMzhcdURDM0NcdURDM0YtXHVEQzU1XHVEQzYwLVx1REM3Nlx1REM4MC1cdURDOUVcdURDRTAtXHVEQ0YyXHVEQ0Y0XHVEQ0Y1XHVERDAwLVx1REQxNVx1REQyMC1cdUREMzlcdUREODAtXHVEREI3XHVEREJFXHVEREJGXHVERTAwLVx1REUwM1x1REUwNVx1REUwNlx1REUwQy1cdURFMTNcdURFMTUtXHVERTE3XHVERTE5LVx1REUzM1x1REUzOC1cdURFM0FcdURFM0ZcdURFNjAtXHVERTdDXHVERTgwLVx1REU5Q1x1REVDMC1cdURFQzdcdURFQzktXHVERUU2XHVERjAwLVx1REYzNVx1REY0MC1cdURGNTVcdURGNjAtXHVERjcyXHVERjgwLVx1REY5MV18XHVEODAzW1x1REMwMC1cdURDNDhcdURDODAtXHVEQ0IyXHVEQ0MwLVx1RENGMl18XHVEODA0W1x1REMwMC1cdURDNDZcdURDNjYtXHVEQzZGXHVEQzdGLVx1RENCQVx1RENEMC1cdURDRThcdURDRjAtXHVEQ0Y5XHVERDAwLVx1REQzNFx1REQzNi1cdUREM0ZcdURENTAtXHVERDczXHVERDc2XHVERDgwLVx1RERDNFx1RERDQS1cdUREQ0NcdURERDAtXHVERERBXHVERERDXHVERTAwLVx1REUxMVx1REUxMy1cdURFMzdcdURFM0VcdURFODAtXHVERTg2XHVERTg4XHVERThBLVx1REU4RFx1REU4Ri1cdURFOURcdURFOUYtXHVERUE4XHVERUIwLVx1REVFQVx1REVGMC1cdURFRjlcdURGMDAtXHVERjAzXHVERjA1LVx1REYwQ1x1REYwRlx1REYxMFx1REYxMy1cdURGMjhcdURGMkEtXHVERjMwXHVERjMyXHVERjMzXHVERjM1LVx1REYzOVx1REYzQy1cdURGNDRcdURGNDdcdURGNDhcdURGNEItXHVERjREXHVERjUwXHVERjU3XHVERjVELVx1REY2M1x1REY2Ni1cdURGNkNcdURGNzAtXHVERjc0XXxcdUQ4MDVbXHVEQzAwLVx1REM0QVx1REM1MC1cdURDNTlcdURDODAtXHVEQ0M1XHVEQ0M3XHVEQ0QwLVx1RENEOVx1REQ4MC1cdUREQjVcdUREQjgtXHVEREMwXHVEREQ4LVx1RERERFx1REUwMC1cdURFNDBcdURFNDRcdURFNTAtXHVERTU5XHVERTgwLVx1REVCN1x1REVDMC1cdURFQzlcdURGMDAtXHVERjE5XHVERjFELVx1REYyQlx1REYzMC1cdURGMzldfFx1RDgwNltcdURDQTAtXHVEQ0U5XHVEQ0ZGXHVERTAwLVx1REUzRVx1REU0N1x1REU1MC1cdURFODNcdURFODYtXHVERTk5XHVERUMwLVx1REVGOF18XHVEODA3W1x1REMwMC1cdURDMDhcdURDMEEtXHVEQzM2XHVEQzM4LVx1REM0MFx1REM1MC1cdURDNTlcdURDNzItXHVEQzhGXHVEQzkyLVx1RENBN1x1RENBOS1cdURDQjZcdUREMDAtXHVERDA2XHVERDA4XHVERDA5XHVERDBCLVx1REQzNlx1REQzQVx1REQzQ1x1REQzRFx1REQzRi1cdURENDdcdURENTAtXHVERDU5XXxcdUQ4MDhbXHVEQzAwLVx1REY5OV18XHVEODA5W1x1REMwMC1cdURDNkVcdURDODAtXHVERDQzXXxbXHVEODBDXHVEODFDLVx1RDgyMFx1RDg0MC1cdUQ4NjhcdUQ4NkEtXHVEODZDXHVEODZGLVx1RDg3Mlx1RDg3NC1cdUQ4NzldW1x1REMwMC1cdURGRkZdfFx1RDgwRFtcdURDMDAtXHVEQzJFXXxcdUQ4MTFbXHVEQzAwLVx1REU0Nl18XHVEODFBW1x1REMwMC1cdURFMzhcdURFNDAtXHVERTVFXHVERTYwLVx1REU2OVx1REVEMC1cdURFRURcdURFRjAtXHVERUY0XHVERjAwLVx1REYzNlx1REY0MC1cdURGNDNcdURGNTAtXHVERjU5XHVERjYzLVx1REY3N1x1REY3RC1cdURGOEZdfFx1RDgxQltcdURGMDAtXHVERjQ0XHVERjUwLVx1REY3RVx1REY4Ri1cdURGOUZcdURGRTBcdURGRTFdfFx1RDgyMVtcdURDMDAtXHVERkVDXXxcdUQ4MjJbXHVEQzAwLVx1REVGMl18XHVEODJDW1x1REMwMC1cdUREMUVcdURENzAtXHVERUZCXXxcdUQ4MkZbXHVEQzAwLVx1REM2QVx1REM3MC1cdURDN0NcdURDODAtXHVEQzg4XHVEQzkwLVx1REM5OVx1REM5RFx1REM5RV18XHVEODM0W1x1REQ2NS1cdURENjlcdURENkQtXHVERDcyXHVERDdCLVx1REQ4Mlx1REQ4NS1cdUREOEJcdUREQUEtXHVEREFEXHVERTQyLVx1REU0NF18XHVEODM1W1x1REMwMC1cdURDNTRcdURDNTYtXHVEQzlDXHVEQzlFXHVEQzlGXHVEQ0EyXHVEQ0E1XHVEQ0E2XHVEQ0E5LVx1RENBQ1x1RENBRS1cdURDQjlcdURDQkJcdURDQkQtXHVEQ0MzXHVEQ0M1LVx1REQwNVx1REQwNy1cdUREMEFcdUREMEQtXHVERDE0XHVERDE2LVx1REQxQ1x1REQxRS1cdUREMzlcdUREM0ItXHVERDNFXHVERDQwLVx1REQ0NFx1REQ0Nlx1REQ0QS1cdURENTBcdURENTItXHVERUE1XHVERUE4LVx1REVDMFx1REVDMi1cdURFREFcdURFREMtXHVERUZBXHVERUZDLVx1REYxNFx1REYxNi1cdURGMzRcdURGMzYtXHVERjRFXHVERjUwLVx1REY2RVx1REY3MC1cdURGODhcdURGOEEtXHVERkE4XHVERkFBLVx1REZDMlx1REZDNC1cdURGQ0JcdURGQ0UtXHVERkZGXXxcdUQ4MzZbXHVERTAwLVx1REUzNlx1REUzQi1cdURFNkNcdURFNzVcdURFODRcdURFOUItXHVERTlGXHVERUExLVx1REVBRl18XHVEODM4W1x1REMwMC1cdURDMDZcdURDMDgtXHVEQzE4XHVEQzFCLVx1REMyMVx1REMyM1x1REMyNFx1REMyNi1cdURDMkFdfFx1RDgzQVtcdURDMDAtXHVEQ0M0XHVEQ0QwLVx1RENENlx1REQwMC1cdURENEFcdURENTAtXHVERDU5XXxcdUQ4M0JbXHVERTAwLVx1REUwM1x1REUwNS1cdURFMUZcdURFMjFcdURFMjJcdURFMjRcdURFMjdcdURFMjktXHVERTMyXHVERTM0LVx1REUzN1x1REUzOVx1REUzQlx1REU0Mlx1REU0N1x1REU0OVx1REU0Qlx1REU0RC1cdURFNEZcdURFNTFcdURFNTJcdURFNTRcdURFNTdcdURFNTlcdURFNUJcdURFNURcdURFNUZcdURFNjFcdURFNjJcdURFNjRcdURFNjctXHVERTZBXHVERTZDLVx1REU3Mlx1REU3NC1cdURFNzdcdURFNzktXHVERTdDXHVERTdFXHVERTgwLVx1REU4OVx1REU4Qi1cdURFOUJcdURFQTEtXHVERUEzXHVERUE1LVx1REVBOVx1REVBQi1cdURFQkJdfFx1RDg2OVtcdURDMDAtXHVERUQ2XHVERjAwLVx1REZGRl18XHVEODZEW1x1REMwMC1cdURGMzRcdURGNDAtXHVERkZGXXxcdUQ4NkVbXHVEQzAwLVx1REMxRFx1REMyMC1cdURGRkZdfFx1RDg3M1tcdURDMDAtXHVERUExXHVERUIwLVx1REZGRl18XHVEODdBW1x1REMwMC1cdURGRTBdfFx1RDg3RVtcdURDMDAtXHVERTFEXXxcdURCNDBbXHVERDAwLVx1RERFRl0vfSxVPXtpc1NwYWNlU2VwYXJhdG9yOmZ1bmN0aW9uKHUpe3JldHVybiJzdHJpbmciPT10eXBlb2YgdSYmRy5TcGFjZV9TZXBhcmF0b3IudGVzdCh1KX0saXNJZFN0YXJ0Q2hhcjpmdW5jdGlvbih1KXtyZXR1cm4ic3RyaW5nIj09dHlwZW9mIHUmJih1Pj0iYSImJnU8PSJ6Inx8dT49IkEiJiZ1PD0iWiJ8fCIkIj09PXV8fCJfIj09PXV8fEcuSURfU3RhcnQudGVzdCh1KSl9LGlzSWRDb250aW51ZUNoYXI6ZnVuY3Rpb24odSl7cmV0dXJuInN0cmluZyI9PXR5cGVvZiB1JiYodT49ImEiJiZ1PD0ieiJ8fHU+PSJBIiYmdTw9IloifHx1Pj0iMCImJnU8PSI5Inx8IiQiPT09dXx8Il8iPT09dXx8IuKAjCI9PT11fHwi4oCNIj09PXV8fEcuSURfQ29udGludWUudGVzdCh1KSl9LGlzRGlnaXQ6ZnVuY3Rpb24odSl7cmV0dXJuInN0cmluZyI9PXR5cGVvZiB1JiYvWzAtOV0vLnRlc3QodSl9LGlzSGV4RGlnaXQ6ZnVuY3Rpb24odSl7cmV0dXJuInN0cmluZyI9PXR5cGVvZiB1JiYvWzAtOUEtRmEtZl0vLnRlc3QodSl9fTtmdW5jdGlvbiBaKCl7Zm9yKFQ9ImRlZmF1bHQiLHo9IiIsSD0hMSwkPTE7Oyl7Uj1xKCk7dmFyIHU9WFtUXSgpO2lmKHUpcmV0dXJuIHV9fWZ1bmN0aW9uIHEoKXtpZihfW0ldKXJldHVybiBTdHJpbmcuZnJvbUNvZGVQb2ludChfLmNvZGVQb2ludEF0KEkpKX1mdW5jdGlvbiBXKCl7dmFyIHU9cSgpO3JldHVybiJcbiI9PT11PyhWKyssSj0wKTp1P0orPXUubGVuZ3RoOkorKyx1JiYoSSs9dS5sZW5ndGgpLHV9dmFyIFg9e2RlZmF1bHQ6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSJcdCI6Y2FzZSJcdiI6Y2FzZSJcZiI6Y2FzZSIgIjpjYXNlIiAiOmNhc2UiXHVmZWZmIjpjYXNlIlxuIjpjYXNlIlxyIjpjYXNlIlx1MjAyOCI6Y2FzZSJcdTIwMjkiOnJldHVybiB2b2lkIFcoKTtjYXNlIi8iOnJldHVybiBXKCksdm9pZChUPSJjb21tZW50Iik7Y2FzZSB2b2lkIDA6cmV0dXJuIFcoKSxLKCJlb2YiKX1pZighVS5pc1NwYWNlU2VwYXJhdG9yKFIpKXJldHVybiBYW09dKCk7VygpfSxjb21tZW50OmZ1bmN0aW9uKCl7c3dpdGNoKFIpe2Nhc2UiKiI6cmV0dXJuIFcoKSx2b2lkKFQ9Im11bHRpTGluZUNvbW1lbnQiKTtjYXNlIi8iOnJldHVybiBXKCksdm9pZChUPSJzaW5nbGVMaW5lQ29tbWVudCIpfXRocm93IHJ1KFcoKSl9LG11bHRpTGluZUNvbW1lbnQ6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSIqIjpyZXR1cm4gVygpLHZvaWQoVD0ibXVsdGlMaW5lQ29tbWVudEFzdGVyaXNrIik7Y2FzZSB2b2lkIDA6dGhyb3cgcnUoVygpKX1XKCl9LG11bHRpTGluZUNvbW1lbnRBc3RlcmlzazpmdW5jdGlvbigpe3N3aXRjaChSKXtjYXNlIioiOnJldHVybiB2b2lkIFcoKTtjYXNlIi8iOnJldHVybiBXKCksdm9pZChUPSJkZWZhdWx0Iik7Y2FzZSB2b2lkIDA6dGhyb3cgcnUoVygpKX1XKCksVD0ibXVsdGlMaW5lQ29tbWVudCJ9LHNpbmdsZUxpbmVDb21tZW50OmZ1bmN0aW9uKCl7c3dpdGNoKFIpe2Nhc2UiXG4iOmNhc2UiXHIiOmNhc2UiXHUyMDI4IjpjYXNlIlx1MjAyOSI6cmV0dXJuIFcoKSx2b2lkKFQ9ImRlZmF1bHQiKTtjYXNlIHZvaWQgMDpyZXR1cm4gVygpLEsoImVvZiIpfVcoKX0sdmFsdWU6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSJ7IjpjYXNlIlsiOnJldHVybiBLKCJwdW5jdHVhdG9yIixXKCkpO2Nhc2UibiI6cmV0dXJuIFcoKSxRKCJ1bGwiKSxLKCJudWxsIixudWxsKTtjYXNlInQiOnJldHVybiBXKCksUSgicnVlIiksSygiYm9vbGVhbiIsITApO2Nhc2UiZiI6cmV0dXJuIFcoKSxRKCJhbHNlIiksSygiYm9vbGVhbiIsITEpO2Nhc2UiLSI6Y2FzZSIrIjpyZXR1cm4iLSI9PT1XKCkmJigkPS0xKSx2b2lkKFQ9InNpZ24iKTtjYXNlIi4iOnJldHVybiB6PVcoKSx2b2lkKFQ9ImRlY2ltYWxQb2ludExlYWRpbmciKTtjYXNlIjAiOnJldHVybiB6PVcoKSx2b2lkKFQ9Inplcm8iKTtjYXNlIjEiOmNhc2UiMiI6Y2FzZSIzIjpjYXNlIjQiOmNhc2UiNSI6Y2FzZSI2IjpjYXNlIjciOmNhc2UiOCI6Y2FzZSI5IjpyZXR1cm4gej1XKCksdm9pZChUPSJkZWNpbWFsSW50ZWdlciIpO2Nhc2UiSSI6cmV0dXJuIFcoKSxRKCJuZmluaXR5IiksSygibnVtZXJpYyIsMS8wKTtjYXNlIk4iOnJldHVybiBXKCksUSgiYU4iKSxLKCJudW1lcmljIixOYU4pO2Nhc2UnIic6Y2FzZSInIjpyZXR1cm4gSD0nIic9PT1XKCksej0iIix2b2lkKFQ9InN0cmluZyIpfXRocm93IHJ1KFcoKSl9LGlkZW50aWZpZXJOYW1lU3RhcnRFc2NhcGU6ZnVuY3Rpb24oKXtpZigidSIhPT1SKXRocm93IHJ1KFcoKSk7VygpO3ZhciB1PVkoKTtzd2l0Y2godSl7Y2FzZSIkIjpjYXNlIl8iOmJyZWFrO2RlZmF1bHQ6aWYoIVUuaXNJZFN0YXJ0Q2hhcih1KSl0aHJvdyBudSgpfXorPXUsVD0iaWRlbnRpZmllck5hbWUifSxpZGVudGlmaWVyTmFtZTpmdW5jdGlvbigpe3N3aXRjaChSKXtjYXNlIiQiOmNhc2UiXyI6Y2FzZSLigIwiOmNhc2Ui4oCNIjpyZXR1cm4gdm9pZCh6Kz1XKCkpO2Nhc2UiXFwiOnJldHVybiBXKCksdm9pZChUPSJpZGVudGlmaWVyTmFtZUVzY2FwZSIpfWlmKCFVLmlzSWRDb250aW51ZUNoYXIoUikpcmV0dXJuIEsoImlkZW50aWZpZXIiLHopO3orPVcoKX0saWRlbnRpZmllck5hbWVFc2NhcGU6ZnVuY3Rpb24oKXtpZigidSIhPT1SKXRocm93IHJ1KFcoKSk7VygpO3ZhciB1PVkoKTtzd2l0Y2godSl7Y2FzZSIkIjpjYXNlIl8iOmNhc2Ui4oCMIjpjYXNlIuKAjSI6YnJlYWs7ZGVmYXVsdDppZighVS5pc0lkQ29udGludWVDaGFyKHUpKXRocm93IG51KCl9eis9dSxUPSJpZGVudGlmaWVyTmFtZSJ9LHNpZ246ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSIuIjpyZXR1cm4gej1XKCksdm9pZChUPSJkZWNpbWFsUG9pbnRMZWFkaW5nIik7Y2FzZSIwIjpyZXR1cm4gej1XKCksdm9pZChUPSJ6ZXJvIik7Y2FzZSIxIjpjYXNlIjIiOmNhc2UiMyI6Y2FzZSI0IjpjYXNlIjUiOmNhc2UiNiI6Y2FzZSI3IjpjYXNlIjgiOmNhc2UiOSI6cmV0dXJuIHo9VygpLHZvaWQoVD0iZGVjaW1hbEludGVnZXIiKTtjYXNlIkkiOnJldHVybiBXKCksUSgibmZpbml0eSIpLEsoIm51bWVyaWMiLCQqKDEvMCkpO2Nhc2UiTiI6cmV0dXJuIFcoKSxRKCJhTiIpLEsoIm51bWVyaWMiLE5hTil9dGhyb3cgcnUoVygpKX0semVybzpmdW5jdGlvbigpe3N3aXRjaChSKXtjYXNlIi4iOnJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsUG9pbnQiKTtjYXNlImUiOmNhc2UiRSI6cmV0dXJuIHorPVcoKSx2b2lkKFQ9ImRlY2ltYWxFeHBvbmVudCIpO2Nhc2UieCI6Y2FzZSJYIjpyZXR1cm4geis9VygpLHZvaWQoVD0iaGV4YWRlY2ltYWwiKX1yZXR1cm4gSygibnVtZXJpYyIsMCokKX0sZGVjaW1hbEludGVnZXI6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSIuIjpyZXR1cm4geis9VygpLHZvaWQoVD0iZGVjaW1hbFBvaW50Iik7Y2FzZSJlIjpjYXNlIkUiOnJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsRXhwb25lbnQiKX1pZighVS5pc0RpZ2l0KFIpKXJldHVybiBLKCJudW1lcmljIiwkKk51bWJlcih6KSk7eis9VygpfSxkZWNpbWFsUG9pbnRMZWFkaW5nOmZ1bmN0aW9uKCl7aWYoVS5pc0RpZ2l0KFIpKXJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsRnJhY3Rpb24iKTt0aHJvdyBydShXKCkpfSxkZWNpbWFsUG9pbnQ6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSJlIjpjYXNlIkUiOnJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsRXhwb25lbnQiKX1yZXR1cm4gVS5pc0RpZ2l0KFIpPyh6Kz1XKCksdm9pZChUPSJkZWNpbWFsRnJhY3Rpb24iKSk6SygibnVtZXJpYyIsJCpOdW1iZXIoeikpfSxkZWNpbWFsRnJhY3Rpb246ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSJlIjpjYXNlIkUiOnJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsRXhwb25lbnQiKX1pZighVS5pc0RpZ2l0KFIpKXJldHVybiBLKCJudW1lcmljIiwkKk51bWJlcih6KSk7eis9VygpfSxkZWNpbWFsRXhwb25lbnQ6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSIrIjpjYXNlIi0iOnJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsRXhwb25lbnRTaWduIil9aWYoVS5pc0RpZ2l0KFIpKXJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsRXhwb25lbnRJbnRlZ2VyIik7dGhyb3cgcnUoVygpKX0sZGVjaW1hbEV4cG9uZW50U2lnbjpmdW5jdGlvbigpe2lmKFUuaXNEaWdpdChSKSlyZXR1cm4geis9VygpLHZvaWQoVD0iZGVjaW1hbEV4cG9uZW50SW50ZWdlciIpO3Rocm93IHJ1KFcoKSl9LGRlY2ltYWxFeHBvbmVudEludGVnZXI6ZnVuY3Rpb24oKXtpZighVS5pc0RpZ2l0KFIpKXJldHVybiBLKCJudW1lcmljIiwkKk51bWJlcih6KSk7eis9VygpfSxoZXhhZGVjaW1hbDpmdW5jdGlvbigpe2lmKFUuaXNIZXhEaWdpdChSKSlyZXR1cm4geis9VygpLHZvaWQoVD0iaGV4YWRlY2ltYWxJbnRlZ2VyIik7dGhyb3cgcnUoVygpKX0saGV4YWRlY2ltYWxJbnRlZ2VyOmZ1bmN0aW9uKCl7aWYoIVUuaXNIZXhEaWdpdChSKSlyZXR1cm4gSygibnVtZXJpYyIsJCpOdW1iZXIoeikpO3orPVcoKX0sc3RyaW5nOmZ1bmN0aW9uKCl7c3dpdGNoKFIpe2Nhc2UiXFwiOnJldHVybiBXKCksdm9pZCh6Kz1mdW5jdGlvbigpe3N3aXRjaChxKCkpe2Nhc2UiYiI6cmV0dXJuIFcoKSwiXGIiO2Nhc2UiZiI6cmV0dXJuIFcoKSwiXGYiO2Nhc2UibiI6cmV0dXJuIFcoKSwiXG4iO2Nhc2UiciI6cmV0dXJuIFcoKSwiXHIiO2Nhc2UidCI6cmV0dXJuIFcoKSwiXHQiO2Nhc2UidiI6cmV0dXJuIFcoKSwiXHYiO2Nhc2UiMCI6aWYoVygpLFUuaXNEaWdpdChxKCkpKXRocm93IHJ1KFcoKSk7cmV0dXJuIlwwIjtjYXNlIngiOnJldHVybiBXKCksZnVuY3Rpb24oKXt2YXIgdT0iIixEPXEoKTtpZighVS5pc0hleERpZ2l0KEQpKXRocm93IHJ1KFcoKSk7aWYodSs9VygpLEQ9cSgpLCFVLmlzSGV4RGlnaXQoRCkpdGhyb3cgcnUoVygpKTtyZXR1cm4gdSs9VygpLFN0cmluZy5mcm9tQ29kZVBvaW50KHBhcnNlSW50KHUsMTYpKX0oKTtjYXNlInUiOnJldHVybiBXKCksWSgpO2Nhc2UiXG4iOmNhc2UiXHUyMDI4IjpjYXNlIlx1MjAyOSI6cmV0dXJuIFcoKSwiIjtjYXNlIlxyIjpyZXR1cm4gVygpLCJcbiI9PT1xKCkmJlcoKSwiIjtjYXNlIjEiOmNhc2UiMiI6Y2FzZSIzIjpjYXNlIjQiOmNhc2UiNSI6Y2FzZSI2IjpjYXNlIjciOmNhc2UiOCI6Y2FzZSI5IjpjYXNlIHZvaWQgMDp0aHJvdyBydShXKCkpfXJldHVybiBXKCl9KCkpO2Nhc2UnIic6cmV0dXJuIEg/KFcoKSxLKCJzdHJpbmciLHopKTp2b2lkKHorPVcoKSk7Y2FzZSInIjpyZXR1cm4gSD92b2lkKHorPVcoKSk6KFcoKSxLKCJzdHJpbmciLHopKTtjYXNlIlxuIjpjYXNlIlxyIjp0aHJvdyBydShXKCkpO2Nhc2UiXHUyMDI4IjpjYXNlIlx1MjAyOSI6IWZ1bmN0aW9uKHUpe2NvbnNvbGUud2FybigiSlNPTjU6ICciK0Z1KHUpKyInIGluIHN0cmluZ3MgaXMgbm90IHZhbGlkIEVDTUFTY3JpcHQ7IGNvbnNpZGVyIGVzY2FwaW5nIil9KFIpO2JyZWFrO2Nhc2Ugdm9pZCAwOnRocm93IHJ1KFcoKSl9eis9VygpfSxzdGFydDpmdW5jdGlvbigpe3N3aXRjaChSKXtjYXNlInsiOmNhc2UiWyI6cmV0dXJuIEsoInB1bmN0dWF0b3IiLFcoKSl9VD0idmFsdWUifSxiZWZvcmVQcm9wZXJ0eU5hbWU6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSIkIjpjYXNlIl8iOnJldHVybiB6PVcoKSx2b2lkKFQ9ImlkZW50aWZpZXJOYW1lIik7Y2FzZSJcXCI6cmV0dXJuIFcoKSx2b2lkKFQ9ImlkZW50aWZpZXJOYW1lU3RhcnRFc2NhcGUiKTtjYXNlIn0iOnJldHVybiBLKCJwdW5jdHVhdG9yIixXKCkpO2Nhc2UnIic6Y2FzZSInIjpyZXR1cm4gSD0nIic9PT1XKCksdm9pZChUPSJzdHJpbmciKX1pZihVLmlzSWRTdGFydENoYXIoUikpcmV0dXJuIHorPVcoKSx2b2lkKFQ9ImlkZW50aWZpZXJOYW1lIik7dGhyb3cgcnUoVygpKX0sYWZ0ZXJQcm9wZXJ0eU5hbWU6ZnVuY3Rpb24oKXtpZigiOiI9PT1SKXJldHVybiBLKCJwdW5jdHVhdG9yIixXKCkpO3Rocm93IHJ1KFcoKSl9LGJlZm9yZVByb3BlcnR5VmFsdWU6ZnVuY3Rpb24oKXtUPSJ2YWx1ZSJ9LGFmdGVyUHJvcGVydHlWYWx1ZTpmdW5jdGlvbigpe3N3aXRjaChSKXtjYXNlIiwiOmNhc2UifSI6cmV0dXJuIEsoInB1bmN0dWF0b3IiLFcoKSl9dGhyb3cgcnUoVygpKX0sYmVmb3JlQXJyYXlWYWx1ZTpmdW5jdGlvbigpe2lmKCJdIj09PVIpcmV0dXJuIEsoInB1bmN0dWF0b3IiLFcoKSk7VD0idmFsdWUifSxhZnRlckFycmF5VmFsdWU6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSIsIjpjYXNlIl0iOnJldHVybiBLKCJwdW5jdHVhdG9yIixXKCkpfXRocm93IHJ1KFcoKSl9LGVuZDpmdW5jdGlvbigpe3Rocm93IHJ1KFcoKSl9fTtmdW5jdGlvbiBLKHUsRCl7cmV0dXJue3R5cGU6dSx2YWx1ZTpELGxpbmU6Vixjb2x1bW46Sn19ZnVuY3Rpb24gUSh1KXtmb3IodmFyIEQ9MCxlPXU7RDxlLmxlbmd0aDtEKz0xKXt2YXIgcj1lW0RdO2lmKHEoKSE9PXIpdGhyb3cgcnUoVygpKTtXKCl9fWZ1bmN0aW9uIFkoKXtmb3IodmFyIHU9IiIsRD00O0QtLSA+MDspe3ZhciBlPXEoKTtpZighVS5pc0hleERpZ2l0KGUpKXRocm93IHJ1KFcoKSk7dSs9VygpfXJldHVybiBTdHJpbmcuZnJvbUNvZGVQb2ludChwYXJzZUludCh1LDE2KSl9dmFyIHV1PXtzdGFydDpmdW5jdGlvbigpe2lmKCJlb2YiPT09TS50eXBlKXRocm93IHR1KCk7RHUoKX0sYmVmb3JlUHJvcGVydHlOYW1lOmZ1bmN0aW9uKCl7c3dpdGNoKE0udHlwZSl7Y2FzZSJpZGVudGlmaWVyIjpjYXNlInN0cmluZyI6cmV0dXJuIGs9TS52YWx1ZSx2b2lkKE89ImFmdGVyUHJvcGVydHlOYW1lIik7Y2FzZSJwdW5jdHVhdG9yIjpyZXR1cm4gdm9pZCBldSgpO2Nhc2UiZW9mIjp0aHJvdyB0dSgpfX0sYWZ0ZXJQcm9wZXJ0eU5hbWU6ZnVuY3Rpb24oKXtpZigiZW9mIj09PU0udHlwZSl0aHJvdyB0dSgpO089ImJlZm9yZVByb3BlcnR5VmFsdWUifSxiZWZvcmVQcm9wZXJ0eVZhbHVlOmZ1bmN0aW9uKCl7aWYoImVvZiI9PT1NLnR5cGUpdGhyb3cgdHUoKTtEdSgpfSxiZWZvcmVBcnJheVZhbHVlOmZ1bmN0aW9uKCl7aWYoImVvZiI9PT1NLnR5cGUpdGhyb3cgdHUoKTsicHVuY3R1YXRvciIhPT1NLnR5cGV8fCJdIiE9PU0udmFsdWU/RHUoKTpldSgpfSxhZnRlclByb3BlcnR5VmFsdWU6ZnVuY3Rpb24oKXtpZigiZW9mIj09PU0udHlwZSl0aHJvdyB0dSgpO3N3aXRjaChNLnZhbHVlKXtjYXNlIiwiOnJldHVybiB2b2lkKE89ImJlZm9yZVByb3BlcnR5TmFtZSIpO2Nhc2UifSI6ZXUoKX19LGFmdGVyQXJyYXlWYWx1ZTpmdW5jdGlvbigpe2lmKCJlb2YiPT09TS50eXBlKXRocm93IHR1KCk7c3dpdGNoKE0udmFsdWUpe2Nhc2UiLCI6cmV0dXJuIHZvaWQoTz0iYmVmb3JlQXJyYXlWYWx1ZSIpO2Nhc2UiXSI6ZXUoKX19LGVuZDpmdW5jdGlvbigpe319O2Z1bmN0aW9uIER1KCl7dmFyIHU7c3dpdGNoKE0udHlwZSl7Y2FzZSJwdW5jdHVhdG9yIjpzd2l0Y2goTS52YWx1ZSl7Y2FzZSJ7Ijp1PXt9O2JyZWFrO2Nhc2UiWyI6dT1bXX1icmVhaztjYXNlIm51bGwiOmNhc2UiYm9vbGVhbiI6Y2FzZSJudW1lcmljIjpjYXNlInN0cmluZyI6dT1NLnZhbHVlfWlmKHZvaWQgMD09PUwpTD11O2Vsc2V7dmFyIEQ9altqLmxlbmd0aC0xXTtBcnJheS5pc0FycmF5KEQpP0QucHVzaCh1KTpPYmplY3QuZGVmaW5lUHJvcGVydHkoRCxrLHt2YWx1ZTp1LHdyaXRhYmxlOiEwLGVudW1lcmFibGU6ITAsY29uZmlndXJhYmxlOiEwfSl9aWYobnVsbCE9PXUmJiJvYmplY3QiPT10eXBlb2YgdSlqLnB1c2godSksTz1BcnJheS5pc0FycmF5KHUpPyJiZWZvcmVBcnJheVZhbHVlIjoiYmVmb3JlUHJvcGVydHlOYW1lIjtlbHNle3ZhciBlPWpbai5sZW5ndGgtMV07Tz1udWxsPT1lPyJlbmQiOkFycmF5LmlzQXJyYXkoZSk/ImFmdGVyQXJyYXlWYWx1ZSI6ImFmdGVyUHJvcGVydHlWYWx1ZSJ9fWZ1bmN0aW9uIGV1KCl7ai5wb3AoKTt2YXIgdT1qW2oubGVuZ3RoLTFdO089bnVsbD09dT8iZW5kIjpBcnJheS5pc0FycmF5KHUpPyJhZnRlckFycmF5VmFsdWUiOiJhZnRlclByb3BlcnR5VmFsdWUifWZ1bmN0aW9uIHJ1KHUpe3JldHVybiBDdSh2b2lkIDA9PT11PyJKU09ONTogaW52YWxpZCBlbmQgb2YgaW5wdXQgYXQgIitWKyI6IitKOiJKU09ONTogaW52YWxpZCBjaGFyYWN0ZXIgJyIrRnUodSkrIicgYXQgIitWKyI6IitKKX1mdW5jdGlvbiB0dSgpe3JldHVybiBDdSgiSlNPTjU6IGludmFsaWQgZW5kIG9mIGlucHV0IGF0ICIrVisiOiIrSil9ZnVuY3Rpb24gbnUoKXtyZXR1cm4gQ3UoIkpTT041OiBpbnZhbGlkIGlkZW50aWZpZXIgY2hhcmFjdGVyIGF0ICIrVisiOiIrKEotPTUpKX1mdW5jdGlvbiBGdSh1KXt2YXIgRD17IiciOiJcXCciLCciJzonXFwiJywiXFwiOiJcXFxcIiwiXGIiOiJcXGIiLCJcZiI6IlxcZiIsIlxuIjoiXFxuIiwiXHIiOiJcXHIiLCJcdCI6IlxcdCIsIlx2IjoiXFx2IiwiXDAiOiJcXDAiLCJcdTIwMjgiOiJcXHUyMDI4IiwiXHUyMDI5IjoiXFx1MjAyOSJ9O2lmKERbdV0pcmV0dXJuIERbdV07aWYodTwiICIpe3ZhciBlPXUuY2hhckNvZGVBdCgwKS50b1N0cmluZygxNik7cmV0dXJuIlxceCIrKCIwMCIrZSkuc3Vic3RyaW5nKGUubGVuZ3RoKX1yZXR1cm4gdX1mdW5jdGlvbiBDdSh1KXt2YXIgRD1uZXcgU3ludGF4RXJyb3IodSk7cmV0dXJuIEQubGluZU51bWJlcj1WLEQuY29sdW1uTnVtYmVyPUosRH1yZXR1cm57cGFyc2U6ZnVuY3Rpb24odSxEKXtfPVN0cmluZyh1KSxPPSJzdGFydCIsaj1bXSxJPTAsVj0xLEo9MCxNPXZvaWQgMCxrPXZvaWQgMCxMPXZvaWQgMDtkb3tNPVooKSx1dVtPXSgpfXdoaWxlKCJlb2YiIT09TS50eXBlKTtyZXR1cm4iZnVuY3Rpb24iPT10eXBlb2YgRD9mdW5jdGlvbiB1KEQsZSxyKXt2YXIgdD1EW2VdO2lmKG51bGwhPXQmJiJvYmplY3QiPT10eXBlb2YgdClpZihBcnJheS5pc0FycmF5KHQpKWZvcih2YXIgbj0wO248dC5sZW5ndGg7bisrKXt2YXIgRj1TdHJpbmcobiksQz11KHQsRixyKTt2b2lkIDA9PT1DP2RlbGV0ZSB0W0ZdOk9iamVjdC5kZWZpbmVQcm9wZXJ0eSh0LEYse3ZhbHVlOkMsd3JpdGFibGU6ITAsZW51bWVyYWJsZTohMCxjb25maWd1cmFibGU6ITB9KX1lbHNlIGZvcih2YXIgQSBpbiB0KXt2YXIgaT11KHQsQSxyKTt2b2lkIDA9PT1pP2RlbGV0ZSB0W0FdOk9iamVjdC5kZWZpbmVQcm9wZXJ0eSh0LEEse3ZhbHVlOmksd3JpdGFibGU6ITAsZW51bWVyYWJsZTohMCxjb25maWd1cmFibGU6ITB9KX1yZXR1cm4gci5jYWxsKEQsZSx0KX0oeyIiOkx9LCIiLEQpOkx9LHN0cmluZ2lmeTpmdW5jdGlvbih1LEQsZSl7dmFyIHIsdCxuLEY9W10sQz0iIixBPSIiO2lmKG51bGw9PUR8fCJvYmplY3QiIT10eXBlb2YgRHx8QXJyYXkuaXNBcnJheShEKXx8KGU9RC5zcGFjZSxuPUQucXVvdGUsRD1ELnJlcGxhY2VyKSwiZnVuY3Rpb24iPT10eXBlb2YgRCl0PUQ7ZWxzZSBpZihBcnJheS5pc0FycmF5KEQpKXtyPVtdO2Zvcih2YXIgaT0wLEU9RDtpPEUubGVuZ3RoO2krPTEpe3ZhciBvPUVbaV0sYT12b2lkIDA7InN0cmluZyI9PXR5cGVvZiBvP2E9bzooIm51bWJlciI9PXR5cGVvZiBvfHxvIGluc3RhbmNlb2YgU3RyaW5nfHxvIGluc3RhbmNlb2YgTnVtYmVyKSYmKGE9U3RyaW5nKG8pKSx2b2lkIDAhPT1hJiZyLmluZGV4T2YoYSk8MCYmci5wdXNoKGEpfX1yZXR1cm4gZSBpbnN0YW5jZW9mIE51bWJlcj9lPU51bWJlcihlKTplIGluc3RhbmNlb2YgU3RyaW5nJiYoZT1TdHJpbmcoZSkpLCJudW1iZXIiPT10eXBlb2YgZT9lPjAmJihlPU1hdGgubWluKDEwLE1hdGguZmxvb3IoZSkpLEE9IiAgICAgICAgICAiLnN1YnN0cigwLGUpKToic3RyaW5nIj09dHlwZW9mIGUmJihBPWUuc3Vic3RyKDAsMTApKSxjKCIiLHsiIjp1fSk7ZnVuY3Rpb24gYyh1LEQpe3ZhciBlPURbdV07c3dpdGNoKG51bGwhPWUmJigiZnVuY3Rpb24iPT10eXBlb2YgZS50b0pTT041P2U9ZS50b0pTT041KHUpOiJmdW5jdGlvbiI9PXR5cGVvZiBlLnRvSlNPTiYmKGU9ZS50b0pTT04odSkpKSx0JiYoZT10LmNhbGwoRCx1LGUpKSxlIGluc3RhbmNlb2YgTnVtYmVyP2U9TnVtYmVyKGUpOmUgaW5zdGFuY2VvZiBTdHJpbmc/ZT1TdHJpbmcoZSk6ZSBpbnN0YW5jZW9mIEJvb2xlYW4mJihlPWUudmFsdWVPZigpKSxlKXtjYXNlIG51bGw6cmV0dXJuIm51bGwiO2Nhc2UhMDpyZXR1cm4idHJ1ZSI7Y2FzZSExOnJldHVybiJmYWxzZSJ9cmV0dXJuInN0cmluZyI9PXR5cGVvZiBlP0IoZSk6Im51bWJlciI9PXR5cGVvZiBlP1N0cmluZyhlKToib2JqZWN0Ij09dHlwZW9mIGU/QXJyYXkuaXNBcnJheShlKT9mdW5jdGlvbih1KXtpZihGLmluZGV4T2YodSk+PTApdGhyb3cgVHlwZUVycm9yKCJDb252ZXJ0aW5nIGNpcmN1bGFyIHN0cnVjdHVyZSB0byBKU09ONSIpO0YucHVzaCh1KTt2YXIgRD1DO0MrPUE7Zm9yKHZhciBlLHI9W10sdD0wO3Q8dS5sZW5ndGg7dCsrKXt2YXIgbj1jKFN0cmluZyh0KSx1KTtyLnB1c2godm9pZCAwIT09bj9uOiJudWxsIil9aWYoMD09PXIubGVuZ3RoKWU9IltdIjtlbHNlIGlmKCIiPT09QSl7dmFyIGk9ci5qb2luKCIsIik7ZT0iWyIraSsiXSJ9ZWxzZXt2YXIgRT0iLFxuIitDLG89ci5qb2luKEUpO2U9IltcbiIrQytvKyIsXG4iK0QrIl0ifXJldHVybiBGLnBvcCgpLEM9RCxlfShlKTpmdW5jdGlvbih1KXtpZihGLmluZGV4T2YodSk+PTApdGhyb3cgVHlwZUVycm9yKCJDb252ZXJ0aW5nIGNpcmN1bGFyIHN0cnVjdHVyZSB0byBKU09ONSIpO0YucHVzaCh1KTt2YXIgRD1DO0MrPUE7Zm9yKHZhciBlLHQsbj1yfHxPYmplY3Qua2V5cyh1KSxpPVtdLEU9MCxvPW47RTxvLmxlbmd0aDtFKz0xKXt2YXIgYT1vW0VdLEI9YyhhLHUpO2lmKHZvaWQgMCE9PUIpe3ZhciBmPXMoYSkrIjoiOyIiIT09QSYmKGYrPSIgIiksZis9QixpLnB1c2goZil9fWlmKDA9PT1pLmxlbmd0aCllPSJ7fSI7ZWxzZSBpZigiIj09PUEpdD1pLmpvaW4oIiwiKSxlPSJ7Iit0KyJ9IjtlbHNle3ZhciBsPSIsXG4iK0M7dD1pLmpvaW4obCksZT0ie1xuIitDK3QrIixcbiIrRCsifSJ9cmV0dXJuIEYucG9wKCksQz1ELGV9KGUpOnZvaWQgMH1mdW5jdGlvbiBCKHUpe2Zvcih2YXIgRD17IiciOi4xLCciJzouMn0sZT17IiciOiJcXCciLCciJzonXFwiJywiXFwiOiJcXFxcIiwiXGIiOiJcXGIiLCJcZiI6IlxcZiIsIlxuIjoiXFxuIiwiXHIiOiJcXHIiLCJcdCI6IlxcdCIsIlx2IjoiXFx2IiwiXDAiOiJcXDAiLCJcdTIwMjgiOiJcXHUyMDI4IiwiXHUyMDI5IjoiXFx1MjAyOSJ9LHI9IiIsdD0wO3Q8dS5sZW5ndGg7dCsrKXt2YXIgRj11W3RdO3N3aXRjaChGKXtjYXNlIiciOmNhc2UnIic6RFtGXSsrLHIrPUY7Y29udGludWU7Y2FzZSJcMCI6aWYoVS5pc0RpZ2l0KHVbdCsxXSkpe3IrPSJcXHgwMCI7Y29udGludWV9fWlmKGVbRl0pcis9ZVtGXTtlbHNlIGlmKEY8IiAiKXt2YXIgQz1GLmNoYXJDb2RlQXQoMCkudG9TdHJpbmcoMTYpO3IrPSJcXHgiKygiMDAiK0MpLnN1YnN0cmluZyhDLmxlbmd0aCl9ZWxzZSByKz1GfXZhciBBPW58fE9iamVjdC5rZXlzKEQpLnJlZHVjZShmdW5jdGlvbih1LGUpe3JldHVybiBEW3VdPERbZV0/dTplfSk7cmV0dXJuIEErKHI9ci5yZXBsYWNlKG5ldyBSZWdFeHAoQSwiZyIpLGVbQV0pKStBfWZ1bmN0aW9uIHModSl7aWYoMD09PXUubGVuZ3RoKXJldHVybiBCKHUpO3ZhciBEPVN0cmluZy5mcm9tQ29kZVBvaW50KHUuY29kZVBvaW50QXQoMCkpO2lmKCFVLmlzSWRTdGFydENoYXIoRCkpcmV0dXJuIEIodSk7Zm9yKHZhciBlPUQubGVuZ3RoO2U8dS5sZW5ndGg7ZSsrKWlmKCFVLmlzSWRDb250aW51ZUNoYXIoU3RyaW5nLmZyb21Db2RlUG9pbnQodS5jb2RlUG9pbnRBdChlKSkpKXJldHVybiBCKHUpO3JldHVybiB1fX19fSk7`;
-const RenderedText = reactExports.forwardRef(({ markdown, style: style2, className: className2, forceRender, omitMedia, omitMath }, ref2) => {
-  const displayMode = useStore((state) => state.app.displayMode);
-  if (forceRender || displayMode === "rendered") {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      MarkdownDiv,
-      {
-        ref: ref2,
-        markdown,
-        style: style2,
-        className: className2,
-        omitMedia,
-        omitMath
-      }
-    );
-  } else {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Preformatted,
-      {
-        ref: ref2,
-        text: markdown,
-        style: style2,
-        className: className2
-      }
-    );
-  }
-});
-const grid$9 = "_grid_14885_1";
-const cell$2 = "_cell_14885_8";
-const styles$1v = {
-  grid: grid$9,
-  cell: cell$2
-};
-const MetaDataGrid = ({
-  id,
-  entries,
-  className: className2,
-  size,
-  style: style2,
-  plain
-}) => {
-  const baseId = "metadata-grid";
-  const fontStyle = size === "mini" ? "text-size-smallest" : "text-size-smaller";
-  const entryEls = entryRecords(entries).map((entry, index) => {
-    const id2 = `${baseId}-value-${index}`;
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-      index !== 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "div",
-        {
-          style: {
-            gridColumn: "1 / -1",
-            borderBottom: `${!plain ? "solid 1px var(--bs-light-border-subtle" : ""}`
-          }
-        }
-      ) : void 0,
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "div",
-        {
-          className: clsx(
-            `${baseId}-key`,
-            styles$1v.cell,
-            "text-style-label",
-            "text-style-secondary",
-            fontStyle
-          ),
-          children: entry?.name
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1v.value, `${baseId}-value`, fontStyle), children: entry && /* @__PURE__ */ jsxRuntimeExports.jsx(
-        RenderedContent,
-        {
-          id: id2,
-          entry,
-          renderObject: (obj) => {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx(
-              MetaDataGrid,
-              {
-                id: id2,
-                className: clsx(styles$1v.nested),
-                entries: obj,
-                size,
-                plain
-              }
-            );
-          }
-        }
-      ) })
-    ] }, `${baseId}-record-${index}`);
-  });
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { id, className: clsx(className2, styles$1v.grid), style: style2, children: entryEls });
-};
-const entryRecords = (entries) => {
-  if (!entries) {
-    return [];
-  }
-  if (!Array.isArray(entries)) {
-    return Object.entries(entries || {}).map(([key2, value2]) => {
-      return { name: key2, value: value2 };
-    });
-  } else {
-    return entries;
-  }
-};
-const title$3 = "_title_1gjvf_1";
-const content$2 = "_content_1gjvf_11";
-const grid$8 = "_grid_1gjvf_16";
-const styles$1u = {
-  title: title$3,
-  content: content$2,
-  grid: grid$8
-};
-const kCompactionMetadata = "compaction_metadata";
-const CompactionData = ({ id, data: data2 }) => {
-  const compactionMetadata = data2[kCompactionMetadata];
-  let compactionContent = void 0;
-  if (compactionMetadata.type === "anthropic_compact") {
-    compactionContent = /* @__PURE__ */ jsxRuntimeExports.jsx(ExpandablePanel, { id: `${id}-compacted-content`, collapse: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: String(compactionMetadata.content) }) });
-  } else {
-    compactionContent = /* @__PURE__ */ jsxRuntimeExports.jsx(
-      MetaDataGrid,
-      {
-        id: `${id}-compacted-content-metadata`,
-        className: styles$1u.grid,
-        entries: compactionMetadata
-      }
-    );
-  }
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1u.content, "text-size-small"), children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "div",
-      {
-        className: clsx(
-          "text-style-label",
-          "text-style-secondary",
-          styles$1u.title
-        ),
-        children: "Compacted Content"
-      }
-    ),
-    compactionContent
-  ] });
-};
-const contentData = "_contentData_1lrx1_1";
-const styles$1t = {
-  contentData
-};
-const webSearch = "_webSearch_1376z_1";
-const query$1 = "_query_1376z_8";
-const styles$1s = {
-  webSearch,
-  query: query$1
-};
-const WebSearch = ({ query: query2 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1s.webSearch, "text-size-smaller"), children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-style-label", "text-style-secondary"), children: "Web Search:" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx(styles$1s.query, "text-size-smallest"), children: query2 })
-  ] });
-};
-const result$1 = "_result_1mixg_12";
-const styles$1r = {
-  result: result$1
-};
-const WebSearchResults = ({
-  results
-}) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "div",
-      {
-        className: clsx(
-          styles$1r.label,
-          "text-style-label",
-          "text-style-secondary",
-          "text-size-smaller"
-        ),
-        children: "Results"
-      }
-    ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("ol", { className: clsx(styles$1r.results, "text-size-smaller"), children: results.map((result2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "li",
-      {
-        className: clsx(styles$1r.result, "text-style-secondary"),
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "a",
-          {
-            href: result2.url,
-            target: "_blank",
-            rel: "noopener noreferrer",
-            title: result2.url + (result2.page_age ? `
-(Age: ${result2.page_age})` : ""),
-            children: result2.title
-          }
-        )
-      },
-      index
-    )) })
-  ] });
-};
-const ContentDataView = ({ id, contentData: contentData2 }) => {
-  const renderableData = contentData2.data;
-  const renderer = contentDataRenderers.find(
-    (r2) => r2.canRender(renderableData)
-  );
-  if (!renderer) {
-    const { encrypted_content, ...record } = renderableData;
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1t.contentData), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      RecordTree,
-      {
-        id: `${id}-tree`,
-        record,
-        className: clsx(styles$1t.data),
-        defaultExpandLevel: 0
-      }
-    ) });
-  }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1t.contentData), children: renderer.render(id, renderableData) });
-};
-const compactionDataRenderer = {
-  name: "Compaction",
-  canRender: (data2) => {
-    return Object.hasOwn(data2, kCompactionMetadata);
-  },
-  render: (id, data2) => {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(CompactionData, { id, data: data2 });
-  }
-};
-const webSearchServerToolRenderer = {
-  name: "WebSearch",
-  canRender: (data2) => {
-    return data2.type === "server_tool_use" && data2.name === "web_search";
-  },
-  render: (_id, data2) => {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(WebSearch, { query: data2.input.query });
-  }
-};
-const webSearchResultsServerToolRenderer = {
-  name: "WebSearchResults",
-  canRender: (data2) => {
-    return data2.type === "web_search_tool_result" && Array.isArray(data2.content);
-  },
-  render: (_id, data2) => {
-    const results = data2.content;
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(WebSearchResults, { results });
-  }
-};
-const serverToolRenderer = {
-  name: "ServerTool",
-  canRender: (data2) => data2.type === "server_tool_use",
-  render: (id, data2) => {
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "div",
-        {
-          className: clsx(
-            "text-style-label",
-            "text-style-secondary",
-            "text-size-smaller"
-          ),
-          children: "Server Tool"
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        RecordTree,
-        {
-          id: `${id}-server-tool`,
-          record: data2,
-          className: clsx(styles$1t.data)
-        }
-      )
-    ] });
-  }
-};
-const contentDataRenderers = [
-  compactionDataRenderer,
-  webSearchServerToolRenderer,
-  webSearchResultsServerToolRenderer,
-  serverToolRenderer
-];
-const MAX_EVENTS_SIZE_BYTES = 350 * 1024 * 1024;
-const MAX_TOTAL_SIZE = 512 * 1024 * 1024;
-function findEventsArrayStart(data2) {
-  const pattern = new TextEncoder().encode('"events"');
-  for (let i4 = 0; i4 < data2.length - pattern.length - 10; i4++) {
-    let matches = true;
-    for (let j2 = 0; j2 < pattern.length; j2++) {
-      if (data2[i4 + j2] !== pattern[j2]) {
-        matches = false;
-        break;
-      }
-    }
-    if (matches) {
-      let pos2 = i4 + pattern.length;
-      while (pos2 < data2.length && (data2[pos2] === 32 || data2[pos2] === 9 || data2[pos2] === 10 || data2[pos2] === 13)) {
-        pos2++;
-      }
-      if (pos2 < data2.length && data2[pos2] === 58) {
-        pos2++;
-        while (pos2 < data2.length && (data2[pos2] === 32 || data2[pos2] === 9 || data2[pos2] === 10 || data2[pos2] === 13)) {
-          pos2++;
-        }
-        if (pos2 < data2.length && data2[pos2] === 91) {
-          return pos2;
-        }
-      }
-    }
-  }
-  return -1;
-}
-function findArrayEnd(data2, arrayStart) {
-  let depth = 0;
-  let inString = false;
-  let escaped = false;
-  for (let i4 = arrayStart; i4 < data2.length; i4++) {
-    const byte = data2[i4];
-    if (escaped) {
-      escaped = false;
-      continue;
-    }
-    if (byte === 92) {
-      escaped = true;
-      continue;
-    }
-    if (byte === 34) {
-      inString = !inString;
-      continue;
-    }
-    if (inString) {
-      continue;
-    }
-    if (byte === 91 || byte === 123) {
-      depth++;
-    } else if (byte === 93 || byte === 125) {
-      depth--;
-      if (depth === 0 && byte === 93) {
-        return i4;
-      }
-    }
-  }
-  return -1;
-}
-function clearLargeEventsArray(data2) {
-  if (data2.length <= MAX_EVENTS_SIZE_BYTES) {
-    return data2;
-  }
-  const arrayStart = findEventsArrayStart(data2);
-  if (arrayStart === -1) {
-    return data2;
-  }
-  const arrayEnd = findArrayEnd(data2, arrayStart);
-  if (arrayEnd === -1) {
-    return data2;
-  }
-  const eventsSize = arrayEnd - arrayStart - 1;
-  if (eventsSize <= MAX_EVENTS_SIZE_BYTES && data2.length <= MAX_TOTAL_SIZE) {
-    return data2;
-  }
-  const before = data2.slice(0, arrayStart + 1);
-  const after = data2.slice(arrayEnd);
-  const result2 = new Uint8Array(before.length + after.length);
-  let offset3 = 0;
-  result2.set(before, offset3);
-  offset3 += before.length;
-  result2.set(after, offset3);
-  return result2;
-}
-var ch2 = {};
-var wk = (function(c2, id, msg, transfer, cb) {
-  var w2 = new Worker(ch2[id] || (ch2[id] = URL.createObjectURL(new Blob([
-    c2 + ';addEventListener("error",function(e){e=e.error;postMessage({$e$:[e.message,e.code,e.stack]})})'
-  ], { type: "text/javascript" }))));
-  w2.onmessage = function(e3) {
-    var d2 = e3.data, ed = d2.$e$;
-    if (ed) {
-      var err2 = new Error(ed[0]);
-      err2["code"] = ed[1];
-      err2.stack = ed[2];
-      cb(err2, null);
-    } else
-      cb(null, d2);
-  };
-  w2.postMessage(msg, transfer);
-  return w2;
-});
-var u8$1 = Uint8Array, u16$1 = Uint16Array, i32$1 = Int32Array;
-var fleb = new u8$1([
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  1,
-  1,
-  1,
-  1,
-  2,
-  2,
-  2,
-  2,
-  3,
-  3,
-  3,
-  3,
-  4,
-  4,
-  4,
-  4,
-  5,
-  5,
-  5,
-  5,
-  0,
-  /* unused */
-  0,
-  0,
-  /* impossible */
-  0
-]);
-var fdeb = new u8$1([
-  0,
-  0,
-  0,
-  0,
-  1,
-  1,
-  2,
-  2,
-  3,
-  3,
-  4,
-  4,
-  5,
-  5,
-  6,
-  6,
-  7,
-  7,
-  8,
-  8,
-  9,
-  9,
-  10,
-  10,
-  11,
-  11,
-  12,
-  12,
-  13,
-  13,
-  /* unused */
-  0,
-  0
-]);
-var clim = new u8$1([16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15]);
-var freb = function(eb, start2) {
-  var b2 = new u16$1(31);
-  for (var i4 = 0; i4 < 31; ++i4) {
-    b2[i4] = start2 += 1 << eb[i4 - 1];
-  }
-  var r2 = new i32$1(b2[30]);
-  for (var i4 = 1; i4 < 30; ++i4) {
-    for (var j2 = b2[i4]; j2 < b2[i4 + 1]; ++j2) {
-      r2[j2] = j2 - b2[i4] << 5 | i4;
-    }
-  }
-  return { b: b2, r: r2 };
-};
-var _a$2 = freb(fleb, 2), fl = _a$2.b, revfl = _a$2.r;
-fl[28] = 258, revfl[258] = 28;
-var _b = freb(fdeb, 0), fd = _b.b;
-var rev = new u16$1(32768);
-for (var i$1 = 0; i$1 < 32768; ++i$1) {
-  var x = (i$1 & 43690) >> 1 | (i$1 & 21845) << 1;
-  x = (x & 52428) >> 2 | (x & 13107) << 2;
-  x = (x & 61680) >> 4 | (x & 3855) << 4;
-  rev[i$1] = ((x & 65280) >> 8 | (x & 255) << 8) >> 1;
-}
-var hMap = (function(cd, mb, r2) {
-  var s4 = cd.length;
-  var i4 = 0;
-  var l2 = new u16$1(mb);
-  for (; i4 < s4; ++i4) {
-    if (cd[i4])
-      ++l2[cd[i4] - 1];
-  }
-  var le2 = new u16$1(mb);
-  for (i4 = 1; i4 < mb; ++i4) {
-    le2[i4] = le2[i4 - 1] + l2[i4 - 1] << 1;
-  }
-  var co;
-  if (r2) {
-    co = new u16$1(1 << mb);
-    var rvb = 15 - mb;
-    for (i4 = 0; i4 < s4; ++i4) {
-      if (cd[i4]) {
-        var sv = i4 << 4 | cd[i4];
-        var r_1 = mb - cd[i4];
-        var v2 = le2[cd[i4] - 1]++ << r_1;
-        for (var m2 = v2 | (1 << r_1) - 1; v2 <= m2; ++v2) {
-          co[rev[v2] >> rvb] = sv;
-        }
-      }
-    }
-  } else {
-    co = new u16$1(s4);
-    for (i4 = 0; i4 < s4; ++i4) {
-      if (cd[i4]) {
-        co[i4] = rev[le2[cd[i4] - 1]++] >> 15 - cd[i4];
-      }
-    }
-  }
-  return co;
-});
-var flt = new u8$1(288);
-for (var i$1 = 0; i$1 < 144; ++i$1)
-  flt[i$1] = 8;
-for (var i$1 = 144; i$1 < 256; ++i$1)
-  flt[i$1] = 9;
-for (var i$1 = 256; i$1 < 280; ++i$1)
-  flt[i$1] = 7;
-for (var i$1 = 280; i$1 < 288; ++i$1)
-  flt[i$1] = 8;
-var fdt = new u8$1(32);
-for (var i$1 = 0; i$1 < 32; ++i$1)
-  fdt[i$1] = 5;
-var flrm = /* @__PURE__ */ hMap(flt, 9, 1);
-var fdrm = /* @__PURE__ */ hMap(fdt, 5, 1);
-var max = function(a2) {
-  var m2 = a2[0];
-  for (var i4 = 1; i4 < a2.length; ++i4) {
-    if (a2[i4] > m2)
-      m2 = a2[i4];
-  }
-  return m2;
-};
-var bits = function(d2, p2, m2) {
-  var o2 = p2 / 8 | 0;
-  return (d2[o2] | d2[o2 + 1] << 8) >> (p2 & 7) & m2;
-};
-var bits16 = function(d2, p2) {
-  var o2 = p2 / 8 | 0;
-  return (d2[o2] | d2[o2 + 1] << 8 | d2[o2 + 2] << 16) >> (p2 & 7);
-};
-var shft = function(p2) {
-  return (p2 + 7) / 8 | 0;
-};
-var slc$1 = function(v2, s4, e3) {
-  if (s4 == null || s4 < 0)
-    s4 = 0;
-  if (e3 == null || e3 > v2.length)
-    e3 = v2.length;
-  return new u8$1(v2.subarray(s4, e3));
-};
-var ec$1 = [
-  "unexpected EOF",
-  "invalid block type",
-  "invalid length/literal",
-  "invalid distance",
-  "stream finished",
-  "no stream handler",
-  ,
-  "no callback",
-  "invalid UTF-8 data",
-  "extra field too long",
-  "date not in range 1980-2099",
-  "filename too long",
-  "stream finishing",
-  "invalid zip data"
-  // determined by unknown compression method
-];
-var err$1 = function(ind, msg, nt) {
-  var e3 = new Error(msg || ec$1[ind]);
-  e3.code = ind;
-  if (Error.captureStackTrace)
-    Error.captureStackTrace(e3, err$1);
-  if (!nt)
-    throw e3;
-  return e3;
-};
-var inflt = function(dat, st, buf2, dict) {
-  var sl = dat.length, dl = dict ? dict.length : 0;
-  if (!sl || st.f && !st.l)
-    return buf2 || new u8$1(0);
-  var noBuf = !buf2;
-  var resize = noBuf || st.i != 2;
-  var noSt = st.i;
-  if (noBuf)
-    buf2 = new u8$1(sl * 3);
-  var cbuf = function(l3) {
-    var bl = buf2.length;
-    if (l3 > bl) {
-      var nbuf = new u8$1(Math.max(bl * 2, l3));
-      nbuf.set(buf2);
-      buf2 = nbuf;
-    }
-  };
-  var final = st.f || 0, pos2 = st.p || 0, bt2 = st.b || 0, lm = st.l, dm = st.d, lbt = st.m, dbt = st.n;
-  var tbts = sl * 8;
-  do {
-    if (!lm) {
-      final = bits(dat, pos2, 1);
-      var type = bits(dat, pos2 + 1, 3);
-      pos2 += 3;
-      if (!type) {
-        var s4 = shft(pos2) + 4, l2 = dat[s4 - 4] | dat[s4 - 3] << 8, t2 = s4 + l2;
-        if (t2 > sl) {
-          if (noSt)
-            err$1(0);
-          break;
-        }
-        if (resize)
-          cbuf(bt2 + l2);
-        buf2.set(dat.subarray(s4, t2), bt2);
-        st.b = bt2 += l2, st.p = pos2 = t2 * 8, st.f = final;
-        continue;
-      } else if (type == 1)
-        lm = flrm, dm = fdrm, lbt = 9, dbt = 5;
-      else if (type == 2) {
-        var hLit = bits(dat, pos2, 31) + 257, hcLen = bits(dat, pos2 + 10, 15) + 4;
-        var tl = hLit + bits(dat, pos2 + 5, 31) + 1;
-        pos2 += 14;
-        var ldt = new u8$1(tl);
-        var clt = new u8$1(19);
-        for (var i4 = 0; i4 < hcLen; ++i4) {
-          clt[clim[i4]] = bits(dat, pos2 + i4 * 3, 7);
-        }
-        pos2 += hcLen * 3;
-        var clb = max(clt), clbmsk = (1 << clb) - 1;
-        var clm = hMap(clt, clb, 1);
-        for (var i4 = 0; i4 < tl; ) {
-          var r2 = clm[bits(dat, pos2, clbmsk)];
-          pos2 += r2 & 15;
-          var s4 = r2 >> 4;
-          if (s4 < 16) {
-            ldt[i4++] = s4;
-          } else {
-            var c2 = 0, n3 = 0;
-            if (s4 == 16)
-              n3 = 3 + bits(dat, pos2, 3), pos2 += 2, c2 = ldt[i4 - 1];
-            else if (s4 == 17)
-              n3 = 3 + bits(dat, pos2, 7), pos2 += 3;
-            else if (s4 == 18)
-              n3 = 11 + bits(dat, pos2, 127), pos2 += 7;
-            while (n3--)
-              ldt[i4++] = c2;
-          }
-        }
-        var lt = ldt.subarray(0, hLit), dt2 = ldt.subarray(hLit);
-        lbt = max(lt);
-        dbt = max(dt2);
-        lm = hMap(lt, lbt, 1);
-        dm = hMap(dt2, dbt, 1);
-      } else
-        err$1(1);
-      if (pos2 > tbts) {
-        if (noSt)
-          err$1(0);
-        break;
-      }
-    }
-    if (resize)
-      cbuf(bt2 + 131072);
-    var lms = (1 << lbt) - 1, dms = (1 << dbt) - 1;
-    var lpos = pos2;
-    for (; ; lpos = pos2) {
-      var c2 = lm[bits16(dat, pos2) & lms], sym = c2 >> 4;
-      pos2 += c2 & 15;
-      if (pos2 > tbts) {
-        if (noSt)
-          err$1(0);
-        break;
-      }
-      if (!c2)
-        err$1(2);
-      if (sym < 256)
-        buf2[bt2++] = sym;
-      else if (sym == 256) {
-        lpos = pos2, lm = null;
-        break;
-      } else {
-        var add3 = sym - 254;
-        if (sym > 264) {
-          var i4 = sym - 257, b2 = fleb[i4];
-          add3 = bits(dat, pos2, (1 << b2) - 1) + fl[i4];
-          pos2 += b2;
-        }
-        var d2 = dm[bits16(dat, pos2) & dms], dsym = d2 >> 4;
-        if (!d2)
-          err$1(3);
-        pos2 += d2 & 15;
-        var dt2 = fd[dsym];
-        if (dsym > 3) {
-          var b2 = fdeb[dsym];
-          dt2 += bits16(dat, pos2) & (1 << b2) - 1, pos2 += b2;
-        }
-        if (pos2 > tbts) {
-          if (noSt)
-            err$1(0);
-          break;
-        }
-        if (resize)
-          cbuf(bt2 + 131072);
-        var end2 = bt2 + add3;
-        if (bt2 < dt2) {
-          var shift2 = dl - dt2, dend = Math.min(dt2, end2);
-          if (shift2 + bt2 < 0)
-            err$1(3);
-          for (; bt2 < dend; ++bt2)
-            buf2[bt2] = dict[shift2 + bt2];
-        }
-        for (; bt2 < end2; ++bt2)
-          buf2[bt2] = buf2[bt2 - dt2];
-      }
-    }
-    st.l = lm, st.p = lpos, st.b = bt2, st.f = final;
-    if (lm)
-      final = 1, st.m = lbt, st.d = dm, st.n = dbt;
-  } while (!final);
-  return bt2 != buf2.length && noBuf ? slc$1(buf2, 0, bt2) : buf2.subarray(0, bt2);
-};
-var et = /* @__PURE__ */ new u8$1(0);
-var mrg = function(a2, b2) {
-  var o2 = {};
-  for (var k3 in a2)
-    o2[k3] = a2[k3];
-  for (var k3 in b2)
-    o2[k3] = b2[k3];
-  return o2;
-};
-var wcln = function(fn3, fnStr, td2) {
-  var dt2 = fn3();
-  var st = fn3.toString();
-  var ks = st.slice(st.indexOf("[") + 1, st.lastIndexOf("]")).replace(/\s+/g, "").split(",");
-  for (var i4 = 0; i4 < dt2.length; ++i4) {
-    var v2 = dt2[i4], k3 = ks[i4];
-    if (typeof v2 == "function") {
-      fnStr += ";" + k3 + "=";
-      var st_1 = v2.toString();
-      if (v2.prototype) {
-        if (st_1.indexOf("[native code]") != -1) {
-          var spInd = st_1.indexOf(" ", 8) + 1;
-          fnStr += st_1.slice(spInd, st_1.indexOf("(", spInd));
-        } else {
-          fnStr += st_1;
-          for (var t2 in v2.prototype)
-            fnStr += ";" + k3 + ".prototype." + t2 + "=" + v2.prototype[t2].toString();
-        }
-      } else
-        fnStr += st_1;
-    } else
-      td2[k3] = v2;
-  }
-  return fnStr;
-};
-var ch = [];
-var cbfs = function(v2) {
-  var tl = [];
-  for (var k3 in v2) {
-    if (v2[k3].buffer) {
-      tl.push((v2[k3] = new v2[k3].constructor(v2[k3])).buffer);
-    }
-  }
-  return tl;
-};
-var wrkr = function(fns, init2, id, cb) {
-  if (!ch[id]) {
-    var fnStr = "", td_1 = {}, m2 = fns.length - 1;
-    for (var i4 = 0; i4 < m2; ++i4)
-      fnStr = wcln(fns[i4], fnStr, td_1);
-    ch[id] = { c: wcln(fns[m2], fnStr, td_1), e: td_1 };
-  }
-  var td2 = mrg({}, ch[id].e);
-  return wk(ch[id].c + ";onmessage=function(e){for(var k in e.data)self[k]=e.data[k];onmessage=" + init2.toString() + "}", id, td2, cbfs(td2), cb);
-};
-var bInflt = function() {
-  return [u8$1, u16$1, i32$1, fleb, fdeb, clim, fl, fd, flrm, fdrm, rev, ec$1, hMap, max, bits, bits16, shft, slc$1, err$1, inflt, inflateSync, pbf, gopt];
-};
-var guze = function() {
-  return [gzs, gzl];
-};
-var zule = function() {
-  return [zls];
-};
-var pbf = function(msg) {
-  return postMessage(msg, [msg.buffer]);
-};
-var gopt = function(o2) {
-  return o2 && {
-    out: o2.size && new u8$1(o2.size),
-    dictionary: o2.dictionary
-  };
-};
-var cbify = function(dat, opts, fns, init2, id, cb) {
-  var w2 = wrkr(fns, init2, id, function(err2, dat2) {
-    w2.terminate();
-    cb(err2, dat2);
-  });
-  w2.postMessage([dat, opts], opts.consume ? [dat.buffer] : []);
-  return function() {
-    w2.terminate();
-  };
-};
-var gzs = function(d2) {
-  if (d2[0] != 31 || d2[1] != 139 || d2[2] != 8)
-    err$1(6, "invalid gzip data");
-  var flg = d2[3];
-  var st = 10;
-  if (flg & 4)
-    st += (d2[10] | d2[11] << 8) + 2;
-  for (var zs = (flg >> 3 & 1) + (flg >> 4 & 1); zs > 0; zs -= !d2[st++])
-    ;
-  return st + (flg & 2);
-};
-var gzl = function(d2) {
-  var l2 = d2.length;
-  return (d2[l2 - 4] | d2[l2 - 3] << 8 | d2[l2 - 2] << 16 | d2[l2 - 1] << 24) >>> 0;
-};
-var zls = function(d2, dict) {
-  if ((d2[0] & 15) != 8 || d2[0] >> 4 > 7 || (d2[0] << 8 | d2[1]) % 31)
-    err$1(6, "invalid zlib data");
-  if ((d2[1] >> 5 & 1) == +!dict)
-    err$1(6, "invalid zlib data: " + (d2[1] & 32 ? "need" : "unexpected") + " dictionary");
-  return (d2[1] >> 3 & 4) + 2;
-};
-function inflate(data2, opts, cb) {
-  if (!cb)
-    cb = opts, opts = {};
-  if (typeof cb != "function")
-    err$1(7);
-  return cbify(data2, opts, [
-    bInflt
-  ], function(ev) {
-    return pbf(inflateSync(ev.data[0], gopt(ev.data[1])));
-  }, 1, cb);
-}
-function inflateSync(data2, opts) {
-  return inflt(data2, { i: 2 }, opts && opts.out, opts && opts.dictionary);
-}
-function gunzip(data2, opts, cb) {
-  if (!cb)
-    cb = opts, opts = {};
-  if (typeof cb != "function")
-    err$1(7);
-  return cbify(data2, opts, [
-    bInflt,
-    guze,
-    function() {
-      return [gunzipSync];
-    }
-  ], function(ev) {
-    return pbf(gunzipSync(ev.data[0], ev.data[1]));
-  }, 3, cb);
-}
-function gunzipSync(data2, opts) {
-  var st = gzs(data2);
-  if (st + 8 > data2.length)
-    err$1(6, "invalid gzip data");
-  return inflt(data2.subarray(st, -8), { i: 2 }, opts && opts.out || new u8$1(gzl(data2)), opts && opts.dictionary);
-}
-function unzlib(data2, opts, cb) {
-  if (!cb)
-    cb = opts, opts = {};
-  if (typeof cb != "function")
-    err$1(7);
-  return cbify(data2, opts, [
-    bInflt,
-    zule,
-    function() {
-      return [unzlibSync];
-    }
-  ], function(ev) {
-    return pbf(unzlibSync(ev.data[0], gopt(ev.data[1])));
-  }, 5, cb);
-}
-function unzlibSync(data2, opts) {
-  return inflt(data2.subarray(zls(data2, opts && opts.dictionary), -4), { i: 2 }, opts && opts.out, opts && opts.dictionary);
-}
-function decompress$1(data2, opts, cb) {
-  if (!cb)
-    cb = opts, opts = {};
-  if (typeof cb != "function")
-    err$1(7);
-  return data2[0] == 31 && data2[1] == 139 && data2[2] == 8 ? gunzip(data2, opts, cb) : (data2[0] & 15) != 8 || data2[0] >> 4 > 7 || (data2[0] << 8 | data2[1]) % 31 ? inflate(data2, opts, cb) : unzlib(data2, opts, cb);
-}
-var td = typeof TextDecoder != "undefined" && /* @__PURE__ */ new TextDecoder();
-var tds = 0;
-try {
-  td.decode(et, { stream: true });
-  tds = 1;
-} catch (e3) {
-}
-var ab = ArrayBuffer, u8 = Uint8Array, u16 = Uint16Array, i16 = Int16Array, i32 = Int32Array;
-var slc = function(v2, s4, e3) {
-  if (u8.prototype.slice)
-    return u8.prototype.slice.call(v2, s4, e3);
-  if (s4 == null || s4 < 0)
-    s4 = 0;
-  if (e3 == null || e3 > v2.length)
-    e3 = v2.length;
-  var n3 = new u8(e3 - s4);
-  n3.set(v2.subarray(s4, e3));
-  return n3;
-};
-var fill = function(v2, n3, s4, e3) {
-  if (u8.prototype.fill)
-    return u8.prototype.fill.call(v2, n3, s4, e3);
-  if (s4 == null || s4 < 0)
-    s4 = 0;
-  if (e3 == null || e3 > v2.length)
-    e3 = v2.length;
-  for (; s4 < e3; ++s4)
-    v2[s4] = n3;
-  return v2;
-};
-var cpw = function(v2, t2, s4, e3) {
-  if (u8.prototype.copyWithin)
-    return u8.prototype.copyWithin.call(v2, t2, s4, e3);
-  if (s4 == null || s4 < 0)
-    s4 = 0;
-  if (e3 == null || e3 > v2.length)
-    e3 = v2.length;
-  while (s4 < e3) {
-    v2[t2++] = v2[s4++];
-  }
-};
-var ec = [
-  "invalid zstd data",
-  "window size too large (>2046MB)",
-  "invalid block type",
-  "FSE accuracy too high",
-  "match distance too far back",
-  "unexpected EOF"
-];
-var err = function(ind, msg, nt) {
-  var e3 = new Error(msg || ec[ind]);
-  e3.code = ind;
-  if (Error.captureStackTrace)
-    Error.captureStackTrace(e3, err);
-  if (!nt)
-    throw e3;
-  return e3;
-};
-var rb = function(d2, b2, n3) {
-  var i4 = 0, o2 = 0;
-  for (; i4 < n3; ++i4)
-    o2 |= d2[b2++] << (i4 << 3);
-  return o2;
-};
-var b4 = function(d2, b2) {
-  return (d2[b2] | d2[b2 + 1] << 8 | d2[b2 + 2] << 16 | d2[b2 + 3] << 24) >>> 0;
-};
-var rzfh = function(dat, w2) {
-  var n3 = dat[0] | dat[1] << 8 | dat[2] << 16;
-  if (n3 == 3126568 && dat[3] == 253) {
-    var flg = dat[4];
-    var ss = flg >> 5 & 1, cc = flg >> 2 & 1, df = flg & 3, fcf = flg >> 6;
-    if (flg & 8)
-      err(0);
-    var bt2 = 6 - ss;
-    var db = df == 3 ? 4 : df;
-    var di = rb(dat, bt2, db);
-    bt2 += db;
-    var fsb = fcf ? 1 << fcf : ss;
-    var fss = rb(dat, bt2, fsb) + (fcf == 1 && 256);
-    var ws = fss;
-    if (!ss) {
-      var wb = 1 << 10 + (dat[5] >> 3);
-      ws = wb + (wb >> 3) * (dat[5] & 7);
-    }
-    if (ws > 2145386496)
-      err(1);
-    var buf2 = new u8((w2 == 1 ? fss || ws : w2 ? 0 : ws) + 12);
-    buf2[0] = 1, buf2[4] = 4, buf2[8] = 8;
-    return {
-      b: bt2 + fsb,
-      y: 0,
-      l: 0,
-      d: di,
-      w: w2 && w2 != 1 ? w2 : buf2.subarray(12),
-      e: ws,
-      o: new i32(buf2.buffer, 0, 3),
-      u: fss,
-      c: cc,
-      m: Math.min(131072, ws)
-    };
-  } else if ((n3 >> 4 | dat[3] << 20) == 25481893) {
-    return b4(dat, 4) + 8;
-  }
-  err(0);
-};
-var msb = function(val) {
-  var bits2 = 0;
-  for (; 1 << bits2 <= val; ++bits2)
-    ;
-  return bits2 - 1;
-};
-var rfse = function(dat, bt2, mal) {
-  var tpos = (bt2 << 3) + 4;
-  var al = (dat[bt2] & 15) + 5;
-  if (al > mal)
-    err(3);
-  var sz = 1 << al;
-  var probs = sz, sym = -1, re2 = -1, i4 = -1, ht2 = sz;
-  var buf2 = new ab(512 + (sz << 2));
-  var freq = new i16(buf2, 0, 256);
-  var dstate = new u16(buf2, 0, 256);
-  var nstate = new u16(buf2, 512, sz);
-  var bb1 = 512 + (sz << 1);
-  var syms = new u8(buf2, bb1, sz);
-  var nbits = new u8(buf2, bb1 + sz);
-  while (sym < 255 && probs > 0) {
-    var bits2 = msb(probs + 1);
-    var cbt = tpos >> 3;
-    var msk = (1 << bits2 + 1) - 1;
-    var val = (dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (tpos & 7) & msk;
-    var msk1fb = (1 << bits2) - 1;
-    var msv = msk - probs - 1;
-    var sval = val & msk1fb;
-    if (sval < msv)
-      tpos += bits2, val = sval;
-    else {
-      tpos += bits2 + 1;
-      if (val > msk1fb)
-        val -= msv;
-    }
-    freq[++sym] = --val;
-    if (val == -1) {
-      probs += val;
-      syms[--ht2] = sym;
-    } else
-      probs -= val;
-    if (!val) {
-      do {
-        var rbt = tpos >> 3;
-        re2 = (dat[rbt] | dat[rbt + 1] << 8) >> (tpos & 7) & 3;
-        tpos += 2;
-        sym += re2;
-      } while (re2 == 3);
-    }
-  }
-  if (sym > 255 || probs)
-    err(0);
-  var sympos = 0;
-  var sstep = (sz >> 1) + (sz >> 3) + 3;
-  var smask = sz - 1;
-  for (var s4 = 0; s4 <= sym; ++s4) {
-    var sf = freq[s4];
-    if (sf < 1) {
-      dstate[s4] = -sf;
-      continue;
-    }
-    for (i4 = 0; i4 < sf; ++i4) {
-      syms[sympos] = s4;
-      do {
-        sympos = sympos + sstep & smask;
-      } while (sympos >= ht2);
-    }
-  }
-  if (sympos)
-    err(0);
-  for (i4 = 0; i4 < sz; ++i4) {
-    var ns = dstate[syms[i4]]++;
-    var nb = nbits[i4] = al - msb(ns);
-    nstate[i4] = (ns << nb) - sz;
-  }
-  return [tpos + 7 >> 3, {
-    b: al,
-    s: syms,
-    n: nbits,
-    t: nstate
-  }];
-};
-var rhu = function(dat, bt2) {
-  var i4 = 0, wc = -1;
-  var buf2 = new u8(292), hb = dat[bt2];
-  var hw = buf2.subarray(0, 256);
-  var rc = buf2.subarray(256, 268);
-  var ri = new u16(buf2.buffer, 268);
-  if (hb < 128) {
-    var _a2 = rfse(dat, bt2 + 1, 6), ebt = _a2[0], fdt2 = _a2[1];
-    bt2 += hb;
-    var epos = ebt << 3;
-    var lb = dat[bt2];
-    if (!lb)
-      err(0);
-    var st1 = 0, st2 = 0, btr1 = fdt2.b, btr2 = btr1;
-    var fpos = (++bt2 << 3) - 8 + msb(lb);
-    for (; ; ) {
-      fpos -= btr1;
-      if (fpos < epos)
-        break;
-      var cbt = fpos >> 3;
-      st1 += (dat[cbt] | dat[cbt + 1] << 8) >> (fpos & 7) & (1 << btr1) - 1;
-      hw[++wc] = fdt2.s[st1];
-      fpos -= btr2;
-      if (fpos < epos)
-        break;
-      cbt = fpos >> 3;
-      st2 += (dat[cbt] | dat[cbt + 1] << 8) >> (fpos & 7) & (1 << btr2) - 1;
-      hw[++wc] = fdt2.s[st2];
-      btr1 = fdt2.n[st1];
-      st1 = fdt2.t[st1];
-      btr2 = fdt2.n[st2];
-      st2 = fdt2.t[st2];
-    }
-    if (++wc > 255)
-      err(0);
-  } else {
-    wc = hb - 127;
-    for (; i4 < wc; i4 += 2) {
-      var byte = dat[++bt2];
-      hw[i4] = byte >> 4;
-      hw[i4 + 1] = byte & 15;
-    }
-    ++bt2;
-  }
-  var wes = 0;
-  for (i4 = 0; i4 < wc; ++i4) {
-    var wt = hw[i4];
-    if (wt > 11)
-      err(0);
-    wes += wt && 1 << wt - 1;
-  }
-  var mb = msb(wes) + 1;
-  var ts = 1 << mb;
-  var rem = ts - wes;
-  if (rem & rem - 1)
-    err(0);
-  hw[wc++] = msb(rem) + 1;
-  for (i4 = 0; i4 < wc; ++i4) {
-    var wt = hw[i4];
-    ++rc[hw[i4] = wt && mb + 1 - wt];
-  }
-  var hbuf = new u8(ts << 1);
-  var syms = hbuf.subarray(0, ts), nb = hbuf.subarray(ts);
-  ri[mb] = 0;
-  for (i4 = mb; i4 > 0; --i4) {
-    var pv = ri[i4];
-    fill(nb, i4, pv, ri[i4 - 1] = pv + rc[i4] * (1 << mb - i4));
-  }
-  if (ri[0] != ts)
-    err(0);
-  for (i4 = 0; i4 < wc; ++i4) {
-    var bits2 = hw[i4];
-    if (bits2) {
-      var code2 = ri[bits2];
-      fill(syms, i4, code2, ri[bits2] = code2 + (1 << mb - bits2));
-    }
-  }
-  return [bt2, {
-    n: nb,
-    b: mb,
-    s: syms
-  }];
-};
-var dllt = rfse(/* @__PURE__ */ new u8([
-  81,
-  16,
-  99,
-  140,
-  49,
-  198,
-  24,
-  99,
-  12,
-  33,
-  196,
-  24,
-  99,
-  102,
-  102,
-  134,
-  70,
-  146,
-  4
-]), 0, 6)[1];
-var dmlt = rfse(/* @__PURE__ */ new u8([
-  33,
-  20,
-  196,
-  24,
-  99,
-  140,
-  33,
-  132,
-  16,
-  66,
-  8,
-  33,
-  132,
-  16,
-  66,
-  8,
-  33,
-  68,
-  68,
-  68,
-  68,
-  68,
-  68,
-  68,
-  68,
-  36,
-  9
-]), 0, 6)[1];
-var doct = rfse(/* @__PURE__ */ new u8([
-  32,
-  132,
-  16,
-  66,
-  102,
-  70,
-  68,
-  68,
-  68,
-  68,
-  36,
-  73,
-  2
-]), 0, 5)[1];
-var b2bl = function(b2, s4) {
-  var len = b2.length, bl = new i32(len);
-  for (var i4 = 0; i4 < len; ++i4) {
-    bl[i4] = s4;
-    s4 += 1 << b2[i4];
-  }
-  return bl;
-};
-var llb = /* @__PURE__ */ new u8((/* @__PURE__ */ new i32([
-  0,
-  0,
-  0,
-  0,
-  16843009,
-  50528770,
-  134678020,
-  202050057,
-  269422093
-])).buffer, 0, 36);
-var llbl = /* @__PURE__ */ b2bl(llb, 0);
-var mlb = /* @__PURE__ */ new u8((/* @__PURE__ */ new i32([
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  16843009,
-  50528770,
-  117769220,
-  185207048,
-  252579084,
-  16
-])).buffer, 0, 53);
-var mlbl = /* @__PURE__ */ b2bl(mlb, 3);
-var dhu = function(dat, out, hu) {
-  var len = dat.length, ss = out.length, lb = dat[len - 1], msk = (1 << hu.b) - 1, eb = -hu.b;
-  if (!lb)
-    err(0);
-  var st = 0, btr = hu.b, pos2 = (len << 3) - 8 + msb(lb) - btr, i4 = -1;
-  for (; pos2 > eb && i4 < ss; ) {
-    var cbt = pos2 >> 3;
-    var val = (dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (pos2 & 7);
-    st = (st << btr | val) & msk;
-    out[++i4] = hu.s[st];
-    pos2 -= btr = hu.n[st];
-  }
-  if (pos2 != eb || i4 + 1 != ss)
-    err(0);
-};
-var dhu4 = function(dat, out, hu) {
-  var bt2 = 6;
-  var ss = out.length, sz1 = ss + 3 >> 2, sz2 = sz1 << 1, sz3 = sz1 + sz2;
-  dhu(dat.subarray(bt2, bt2 += dat[0] | dat[1] << 8), out.subarray(0, sz1), hu);
-  dhu(dat.subarray(bt2, bt2 += dat[2] | dat[3] << 8), out.subarray(sz1, sz2), hu);
-  dhu(dat.subarray(bt2, bt2 += dat[4] | dat[5] << 8), out.subarray(sz2, sz3), hu);
-  dhu(dat.subarray(bt2), out.subarray(sz3), hu);
-};
-var rzb = function(dat, st, out) {
-  var _a2;
-  var bt2 = st.b;
-  var b0 = dat[bt2], btype = b0 >> 1 & 3;
-  st.l = b0 & 1;
-  var sz = b0 >> 3 | dat[bt2 + 1] << 5 | dat[bt2 + 2] << 13;
-  var ebt = (bt2 += 3) + sz;
-  if (btype == 1) {
-    if (bt2 >= dat.length)
-      return;
-    st.b = bt2 + 1;
-    if (out) {
-      fill(out, dat[bt2], st.y, st.y += sz);
-      return out;
-    }
-    return fill(new u8(sz), dat[bt2]);
-  }
-  if (ebt > dat.length)
-    return;
-  if (btype == 0) {
-    st.b = ebt;
-    if (out) {
-      out.set(dat.subarray(bt2, ebt), st.y);
-      st.y += sz;
-      return out;
-    }
-    return slc(dat, bt2, ebt);
-  }
-  if (btype == 2) {
-    var b3 = dat[bt2], lbt = b3 & 3, sf = b3 >> 2 & 3;
-    var lss = b3 >> 4, lcs2 = 0, s4 = 0;
-    if (lbt < 2) {
-      if (sf & 1)
-        lss |= dat[++bt2] << 4 | (sf & 2 && dat[++bt2] << 12);
-      else
-        lss = b3 >> 3;
-    } else {
-      s4 = sf;
-      if (sf < 2)
-        lss |= (dat[++bt2] & 63) << 4, lcs2 = dat[bt2] >> 6 | dat[++bt2] << 2;
-      else if (sf == 2)
-        lss |= dat[++bt2] << 4 | (dat[++bt2] & 3) << 12, lcs2 = dat[bt2] >> 2 | dat[++bt2] << 6;
-      else
-        lss |= dat[++bt2] << 4 | (dat[++bt2] & 63) << 12, lcs2 = dat[bt2] >> 6 | dat[++bt2] << 2 | dat[++bt2] << 10;
-    }
-    ++bt2;
-    var buf2 = out ? out.subarray(st.y, st.y + st.m) : new u8(st.m);
-    var spl = buf2.length - lss;
-    if (lbt == 0)
-      buf2.set(dat.subarray(bt2, bt2 += lss), spl);
-    else if (lbt == 1)
-      fill(buf2, dat[bt2++], spl);
-    else {
-      var hu = st.h;
-      if (lbt == 2) {
-        var hud = rhu(dat, bt2);
-        lcs2 += bt2 - (bt2 = hud[0]);
-        st.h = hu = hud[1];
-      } else if (!hu)
-        err(0);
-      (s4 ? dhu4 : dhu)(dat.subarray(bt2, bt2 += lcs2), buf2.subarray(spl), hu);
-    }
-    var ns = dat[bt2++];
-    if (ns) {
-      if (ns == 255)
-        ns = (dat[bt2++] | dat[bt2++] << 8) + 32512;
-      else if (ns > 127)
-        ns = ns - 128 << 8 | dat[bt2++];
-      var scm = dat[bt2++];
-      if (scm & 3)
-        err(0);
-      var dts = [dmlt, doct, dllt];
-      for (var i4 = 2; i4 > -1; --i4) {
-        var md = scm >> (i4 << 1) + 2 & 3;
-        if (md == 1) {
-          var rbuf = new u8([0, 0, dat[bt2++]]);
-          dts[i4] = {
-            s: rbuf.subarray(2, 3),
-            n: rbuf.subarray(0, 1),
-            t: new u16(rbuf.buffer, 0, 1),
-            b: 0
-          };
-        } else if (md == 2) {
-          _a2 = rfse(dat, bt2, 9 - (i4 & 1)), bt2 = _a2[0], dts[i4] = _a2[1];
-        } else if (md == 3) {
-          if (!st.t)
-            err(0);
-          dts[i4] = st.t[i4];
-        }
-      }
-      var _b2 = st.t = dts, mlt = _b2[0], oct = _b2[1], llt = _b2[2];
-      var lb = dat[ebt - 1];
-      if (!lb)
-        err(0);
-      var spos = (ebt << 3) - 8 + msb(lb) - llt.b, cbt = spos >> 3, oubt = 0;
-      var lst = (dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << llt.b) - 1;
-      cbt = (spos -= oct.b) >> 3;
-      var ost = (dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << oct.b) - 1;
-      cbt = (spos -= mlt.b) >> 3;
-      var mst = (dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << mlt.b) - 1;
-      for (++ns; --ns; ) {
-        var llc = llt.s[lst];
-        var lbtr = llt.n[lst];
-        var mlc = mlt.s[mst];
-        var mbtr = mlt.n[mst];
-        var ofc = oct.s[ost];
-        var obtr = oct.n[ost];
-        cbt = (spos -= ofc) >> 3;
-        var ofp = 1 << ofc;
-        var off = ofp + ((dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16 | dat[cbt + 3] << 24) >>> (spos & 7) & ofp - 1);
-        cbt = (spos -= mlb[mlc]) >> 3;
-        var ml = mlbl[mlc] + ((dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (spos & 7) & (1 << mlb[mlc]) - 1);
-        cbt = (spos -= llb[llc]) >> 3;
-        var ll = llbl[llc] + ((dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (spos & 7) & (1 << llb[llc]) - 1);
-        cbt = (spos -= lbtr) >> 3;
-        lst = llt.t[lst] + ((dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << lbtr) - 1);
-        cbt = (spos -= mbtr) >> 3;
-        mst = mlt.t[mst] + ((dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << mbtr) - 1);
-        cbt = (spos -= obtr) >> 3;
-        ost = oct.t[ost] + ((dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << obtr) - 1);
-        if (off > 3) {
-          st.o[2] = st.o[1];
-          st.o[1] = st.o[0];
-          st.o[0] = off -= 3;
-        } else {
-          var idx = off - (ll != 0);
-          if (idx) {
-            off = idx == 3 ? st.o[0] - 1 : st.o[idx];
-            if (idx > 1)
-              st.o[2] = st.o[1];
-            st.o[1] = st.o[0];
-            st.o[0] = off;
-          } else
-            off = st.o[0];
-        }
-        for (var i4 = 0; i4 < ll; ++i4) {
-          buf2[oubt + i4] = buf2[spl + i4];
-        }
-        oubt += ll, spl += ll;
-        var stin = oubt - off;
-        if (stin < 0) {
-          var len = -stin;
-          var bs = st.e + stin;
-          if (len > ml)
-            len = ml;
-          for (var i4 = 0; i4 < len; ++i4) {
-            buf2[oubt + i4] = st.w[bs + i4];
-          }
-          oubt += len, ml -= len, stin = 0;
-        }
-        for (var i4 = 0; i4 < ml; ++i4) {
-          buf2[oubt + i4] = buf2[stin + i4];
-        }
-        oubt += ml;
-      }
-      if (oubt != spl) {
-        while (spl < buf2.length) {
-          buf2[oubt++] = buf2[spl++];
-        }
-      } else
-        oubt = buf2.length;
-      if (out)
-        st.y += oubt;
-      else
-        buf2 = slc(buf2, 0, oubt);
-    } else if (out) {
-      st.y += lss;
-      if (spl) {
-        for (var i4 = 0; i4 < lss; ++i4) {
-          buf2[i4] = buf2[spl + i4];
-        }
-      }
-    } else if (spl)
-      buf2 = slc(buf2, spl);
-    st.b = ebt;
-    return buf2;
-  }
-  err(2);
-};
-var cct = function(bufs, ol) {
-  if (bufs.length == 1)
-    return bufs[0];
-  var buf2 = new u8(ol);
-  for (var i4 = 0, b2 = 0; i4 < bufs.length; ++i4) {
-    var chk = bufs[i4];
-    buf2.set(chk, b2);
-    b2 += chk.length;
-  }
-  return buf2;
-};
-function decompress(dat, buf2) {
-  var bufs = [], nb = +!buf2;
-  var bt2 = 0, ol = 0;
-  for (; dat.length; ) {
-    var st = rzfh(dat, nb || buf2);
-    if (typeof st == "object") {
-      if (nb) {
-        buf2 = null;
-        if (st.w.length == st.u) {
-          bufs.push(buf2 = st.w);
-          ol += st.u;
-        }
-      } else {
-        bufs.push(buf2);
-        st.e = 0;
-      }
-      for (; !st.l; ) {
-        var blk = rzb(dat, st, buf2);
-        if (!blk)
-          err(5);
-        if (buf2)
-          st.e = st.y;
-        else {
-          bufs.push(blk);
-          ol += blk.length;
-          cpw(st.w, 0, blk.length);
-          st.w.set(blk, st.w.length - blk.length);
-        }
-      }
-      bt2 = st.b + st.c * 4;
-    } else
-      bt2 = st;
-    dat = dat.subarray(bt2);
-  }
-  return cct(bufs, ol);
-}
-const kZstdWorkerCode = `
-// fzstd decompress function, loaded dynamically
-let decompress = null;
-
-self.onmessage = function(e) {
-  const { type } = e.data || {};
-
-  if (type === 'init') {
-    const { scriptContent } = e.data;
-    try {
-      if (!decompress) {
-        // Decode and evaluate the fzstd UMD library
-        const script = atob(scriptContent);
-        // The UMD module self-executes and assigns to self.fzstd
-        new Function(script)();
-        if (!self.fzstd || typeof self.fzstd.decompress !== 'function') {
-          throw new Error('Failed to initialize fzstd decompressor');
-        }
-        decompress = self.fzstd.decompress;
-      }
-      self.postMessage({ type: 'init_complete', success: true });
-    } catch (err) {
-      console.error('fzstd init error in worker:', err);
-      self.postMessage({ type: 'init_complete', success: false, error: err.message || 'Unknown error' });
-    }
-    return;
-  }
-
-  if (type === 'decompress') {
-    const { requestId, data } = e.data;
-    try {
-      if (!decompress) {
-        throw new Error('Worker not initialized');
-      }
-      const result = decompress(data);
-      // Transfer the result buffer back to avoid copying
-      self.postMessage(
-        { requestId, success: true, data: result },
-        [result.buffer]
-      );
-    } catch (err) {
-      self.postMessage({
-        requestId,
-        success: false,
-        error: err instanceof Error ? err.message : 'Unknown error'
-      });
-    }
-  }
-};
-`;
-const kFzstdBase64 = `IWZ1bmN0aW9uKGYpe3R5cGVvZiBtb2R1bGUhPSd1bmRlZmluZWQnJiZ0eXBlb2YgZXhwb3J0cz09J29iamVjdCc/bW9kdWxlLmV4cG9ydHM9ZigpOnR5cGVvZiBkZWZpbmUhPSd1bmRlZmluZWQnJiZkZWZpbmUuYW1kP2RlZmluZShbJ2Z6c3RkJyxmXSk6KHR5cGVvZiBzZWxmIT0ndW5kZWZpbmVkJz9zZWxmOnRoaXMpLmZ6c3RkPWYoKX0oZnVuY3Rpb24oKXt2YXIgX2U9e307InVzZSBzdHJpY3QiO3ZhciByPUFycmF5QnVmZmVyLHQ9VWludDhBcnJheSxlPVVpbnQxNkFycmF5LG49SW50MTZBcnJheSxhPVVpbnQzMkFycmF5LHM9SW50MzJBcnJheSxpPWZ1bmN0aW9uKHIsZSxuKXtpZih0LnByb3RvdHlwZS5zbGljZSlyZXR1cm4gdC5wcm90b3R5cGUuc2xpY2UuY2FsbChyLGUsbik7KG51bGw9PWV8fGU8MCkmJihlPTApLChudWxsPT1ufHxuPnIubGVuZ3RoKSYmKG49ci5sZW5ndGgpO3ZhciBhPW5ldyB0KG4tZSk7cmV0dXJuIGEuc2V0KHIuc3ViYXJyYXkoZSxuKSksYX0sbz1mdW5jdGlvbihyLGUsbixhKXtpZih0LnByb3RvdHlwZS5maWxsKXJldHVybiB0LnByb3RvdHlwZS5maWxsLmNhbGwocixlLG4sYSk7Zm9yKChudWxsPT1ufHxuPDApJiYobj0wKSwobnVsbD09YXx8YT5yLmxlbmd0aCkmJihhPXIubGVuZ3RoKTtuPGE7KytuKXJbbl09ZTtyZXR1cm4gcn0sdT1mdW5jdGlvbihyLGUsbixhKXtpZih0LnByb3RvdHlwZS5jb3B5V2l0aGluKXJldHVybiB0LnByb3RvdHlwZS5jb3B5V2l0aGluLmNhbGwocixlLG4sYSk7Zm9yKChudWxsPT1ufHxuPDApJiYobj0wKSwobnVsbD09YXx8YT5yLmxlbmd0aCkmJihhPXIubGVuZ3RoKTtuPGE7KXJbZSsrXT1yW24rK119O19lLlpzdGRFcnJvckNvZGU9e0ludmFsaWREYXRhOjAsV2luZG93U2l6ZVRvb0xhcmdlOjEsSW52YWxpZEJsb2NrVHlwZToyLEZTRUFjY3VyYWN5VG9vSGlnaDozLERpc3RhbmNlVG9vRmFyQmFjazo0LFVuZXhwZWN0ZWRFT0Y6NX07dmFyIGg9WyJpbnZhbGlkIHpzdGQgZGF0YSIsIndpbmRvdyBzaXplIHRvbyBsYXJnZSAoPjIwNDZNQikiLCJpbnZhbGlkIGJsb2NrIHR5cGUiLCJGU0UgYWNjdXJhY3kgdG9vIGhpZ2giLCJtYXRjaCBkaXN0YW5jZSB0b28gZmFyIGJhY2siLCJ1bmV4cGVjdGVkIEVPRiJdLGY9ZnVuY3Rpb24ocix0LGUpe3ZhciBuPUVycm9yKHR8fGhbcl0pO2lmKG4uY29kZT1yLEVycm9yLmNhcHR1cmVTdGFja1RyYWNlJiZFcnJvci5jYXB0dXJlU3RhY2tUcmFjZShuLGYpLCFlKXRocm93IG47cmV0dXJuIG59LGw9ZnVuY3Rpb24ocix0LGUpe2Zvcih2YXIgbj0wLGE9MDtuPGU7KytuKWF8PXJbdCsrXTw8KG48PDMpO3JldHVybiBhfSx2PWZ1bmN0aW9uKHIsdCl7cmV0dXJuKHJbdF18clt0KzFdPDw4fHJbdCsyXTw8MTZ8clt0KzNdPDwyNCk+Pj4wfSxjPWZ1bmN0aW9uKHIsZSl7dmFyIG49clswXXxyWzFdPDw4fHJbMl08PDE2O2lmKDMxMjY1Njg9PW4mJjI1Mz09clszXSl7dmFyIGE9cls0XSxpPWE+PjUmMSxvPWE+PjImMSx1PTMmYSxoPWE+PjY7OCZhJiZmKDApO3ZhciBjPTYtaSxiPTM9PXU/NDp1LHk9bChyLGMsYikscD1oPzE8PGg6aSx3PWwocixjKz1iLHApKygxPT1oJiYyNTYpLGc9dztpZighaSl7dmFyIGQ9MTw8MTArKHJbNV0+PjMpO2c9ZCsoZD4+MykqKDcmcls1XSl9Zz4yMTQ1Mzg2NDk2JiZmKDEpO3ZhciBtPW5ldyB0KCgxPT1lP3d8fGc6ZT8wOmcpKzEyKTtyZXR1cm4gbVswXT0xLG1bNF09NCxtWzhdPTgse2I6YytwLHk6MCxsOjAsZDp5LHc6ZSYmMSE9ZT9lOm0uc3ViYXJyYXkoMTIpLGU6ZyxvOm5ldyBzKG0uYnVmZmVyLDAsMyksdTp3LGM6byxtOk1hdGgubWluKDEzMTA3MixnKX19aWYoMjU0ODE4OTM9PShuPj40fHJbM108PDIwKSlyZXR1cm4gdihyLDQpKzg7ZigwKX0sYj1mdW5jdGlvbihyKXtmb3IodmFyIHQ9MDsxPDx0PD1yOysrdCk7cmV0dXJuIHQtMX0seT1mdW5jdGlvbihhLHMsaSl7dmFyIG89NCsoczw8MyksdT01KygxNSZhW3NdKTt1PmkmJmYoMyk7Zm9yKHZhciBoPTE8PHUsbD1oLHY9LTEsYz0tMSx5PS0xLHA9aCx3PW5ldyByKDUxMisoaDw8MikpLGc9bmV3IG4odywwLDI1NiksZD1uZXcgZSh3LDAsMjU2KSxtPW5ldyBlKHcsNTEyLGgpLHo9NTEyKyhoPDwxKSxFPW5ldyB0KHcseixoKSxrPW5ldyB0KHcseitoKTt2PDI1NSYmbD4wOyl7dmFyIEE9YihsKzEpLFQ9bz4+Myx4PSgxPDxBKzEpLTEsRj0oYVtUXXxhW1QrMV08PDh8YVtUKzJdPDwxNik+Pig3Jm8pJngsUz0oMTw8QSktMSxCPXgtbC0xLEk9RiZTO2lmKEk8Qj8obys9QSxGPUkpOihvKz1BKzEsRj5TJiYoRi09QikpLGdbKyt2XT0tLUYsLTE9PUY/KGwrPUYsRVstLXBdPXYpOmwtPUYsIUYpZG97dmFyIFU9bz4+MztjPShhW1VdfGFbVSsxXTw8OCk+Pig3Jm8pJjMsbys9Mix2Kz1jfXdoaWxlKDM9PWMpfSh2PjI1NXx8bCkmJmYoMCk7Zm9yKHZhciBEPTAsTT0oaD4+MSkrKGg+PjMpKzMsVz1oLTEsTz0wO088PXY7KytPKXt2YXIgaj1nW09dO2lmKGo8MSlkW09dPS1qO2Vsc2UgZm9yKHk9MDt5PGo7Kyt5KXtFW0RdPU87ZG97RD1EK00mV313aGlsZShEPj1wKX19Zm9yKEQmJmYoMCkseT0wO3k8aDsrK3kpe3ZhciBDPWRbRVt5XV0rKyxIPWtbeV09dS1iKEMpO21beV09KEM8PEgpLWh9cmV0dXJuW28rNz4+Myx7Yjp1LHM6RSxuOmssdDptfV19LHA9ZnVuY3Rpb24ocixuKXt2YXIgYT0wLHM9LTEsaT1uZXcgdCgyOTIpLHU9cltuXSxoPWkuc3ViYXJyYXkoMCwyNTYpLGw9aS5zdWJhcnJheSgyNTYsMjY4KSx2PW5ldyBlKGkuYnVmZmVyLDI2OCk7aWYodTwxMjgpe3ZhciBjPXkocixuKzEsNikscD1jWzFdLHc9Y1swXTw8MyxnPXJbbis9dV07Z3x8ZigwKTtmb3IodmFyIGQ9MCxtPTAsej1wLmIsRT16LGs9KCsrbjw8MyktOCtiKGcpOyEoKGstPXopPHcpOyl7dmFyIEE9az4+MztpZihoWysrc109cC5zW2QrPShyW0FdfHJbQSsxXTw8OCk+Pig3JmspJigxPDx6KS0xXSwoay09RSk8dylicmVhaztoWysrc109cC5zW20rPShyW0E9az4+M118cltBKzFdPDw4KT4+KDcmaykmKDE8PEUpLTFdLHo9cC5uW2RdLGQ9cC50W2RdLEU9cC5uW21dLG09cC50W21dfSsrcz4yNTUmJmYoMCl9ZWxzZXtmb3Iocz11LTEyNzthPHM7YSs9Mil7dmFyIFQ9clsrK25dO2hbYV09VD4+NCxoW2ErMV09MTUmVH0rK259dmFyIHg9MDtmb3IoYT0wO2E8czsrK2EpKEk9aFthXSk+MTEmJmYoMCkseCs9SSYmMTw8SS0xO3ZhciBGPWIoeCkrMSxTPTE8PEYsQj1TLXg7Zm9yKEImQi0xJiZmKDApLGhbcysrXT1iKEIpKzEsYT0wO2E8czsrK2Epe3ZhciBJOysrbFtoW2FdPShJPWhbYV0pJiZGKzEtSV19dmFyIFU9bmV3IHQoUzw8MSksRD1VLnN1YmFycmF5KDAsUyksTT1VLnN1YmFycmF5KFMpO2Zvcih2W0ZdPTAsYT1GO2E+MDstLWEpe3ZhciBXPXZbYV07byhNLGEsVyx2W2EtMV09VytsW2FdKigxPDxGLWEpKX1mb3IodlswXSE9UyYmZigwKSxhPTA7YTxzOysrYSl7dmFyIE89aFthXTtpZihPKXt2YXIgaj12W09dO28oRCxhLGosdltPXT1qKygxPDxGLU8pKX19cmV0dXJuW24se246TSxiOkYsczpEfV19LHc9eShuZXcgdChbODEsMTYsOTksMTQwLDQ5LDE5OCwyNCw5OSwxMiwzMywxOTYsMjQsOTksMTAyLDEwMiwxMzQsNzAsMTQ2LDRdKSwwLDYpWzFdLGc9eShuZXcgdChbMzMsMjAsMTk2LDI0LDk5LDE0MCwzMywxMzIsMTYsNjYsOCwzMywxMzIsMTYsNjYsOCwzMyw2OCw2OCw2OCw2OCw2OCw2OCw2OCw2OCwzNiw5XSksMCw2KVsxXSxkPXkobmV3IHQoWzMyLDEzMiwxNiw2NiwxMDIsNzAsNjgsNjgsNjgsNjgsMzYsNzMsMl0pLDAsNSlbMV0sbT1mdW5jdGlvbihyLHQpe2Zvcih2YXIgZT1yLmxlbmd0aCxuPW5ldyBzKGUpLGE9MDthPGU7KythKW5bYV09dCx0Kz0xPDxyW2FdO3JldHVybiBufSx6PW5ldyB0KG5ldyBzKFswLDAsMCwwLDE2ODQzMDA5LDUwNTI4NzcwLDEzNDY3ODAyMCwyMDIwNTAwNTcsMjY5NDIyMDkzXSkuYnVmZmVyLDAsMzYpLEU9bSh6LDApLGs9bmV3IHQobmV3IHMoWzAsMCwwLDAsMCwwLDAsMCwxNjg0MzAwOSw1MDUyODc3MCwxMTc3NjkyMjAsMTg1MjA3MDQ4LDI1MjU3OTA4NCwxNl0pLmJ1ZmZlciwwLDUzKSxBPW0oaywzKSxUPWZ1bmN0aW9uKHIsdCxlKXt2YXIgbj1yLmxlbmd0aCxhPXQubGVuZ3RoLHM9cltuLTFdLGk9KDE8PGUuYiktMSxvPS1lLmI7c3x8ZigwKTtmb3IodmFyIHU9MCxoPWUuYixsPShuPDwzKS04K2IocyktaCx2PS0xO2w+byYmdjxhOyl7dmFyIGM9bD4+Mzt0Wysrdl09ZS5zW3U9KHU8PGh8KHJbY118cltjKzFdPDw4fHJbYysyXTw8MTYpPj4oNyZsKSkmaV0sbC09aD1lLm5bdV19bD09byYmdisxPT1hfHxmKDApfSx4PWZ1bmN0aW9uKHIsdCxlKXt2YXIgbj02LGE9dC5sZW5ndGgrMz4+MixzPWE8PDEsaT1hK3M7VChyLnN1YmFycmF5KG4sbis9clswXXxyWzFdPDw4KSx0LnN1YmFycmF5KDAsYSksZSksVChyLnN1YmFycmF5KG4sbis9clsyXXxyWzNdPDw4KSx0LnN1YmFycmF5KGEscyksZSksVChyLnN1YmFycmF5KG4sbis9cls0XXxyWzVdPDw4KSx0LnN1YmFycmF5KHMsaSksZSksVChyLnN1YmFycmF5KG4pLHQuc3ViYXJyYXkoaSksZSl9LEY9ZnVuY3Rpb24ocixuLGEpe3ZhciBzLHU9bi5iLGg9clt1XSxsPWg+PjEmMztuLmw9MSZoO3ZhciB2PWg+PjN8clt1KzFdPDw1fHJbdSsyXTw8MTMsYz0odSs9MykrdjtpZigxPT1sKXtpZih1Pj1yLmxlbmd0aClyZXR1cm47cmV0dXJuIG4uYj11KzEsYT8obyhhLHJbdV0sbi55LG4ueSs9diksYSk6byhuZXcgdCh2KSxyW3VdKX1pZighKGM+ci5sZW5ndGgpKXtpZigwPT1sKXJldHVybiBuLmI9YyxhPyhhLnNldChyLnN1YmFycmF5KHUsYyksbi55KSxuLnkrPXYsYSk6aShyLHUsYyk7aWYoMj09bCl7dmFyIG09clt1XSxGPTMmbSxTPW0+PjImMyxCPW0+PjQsST0wLFU9MDtGPDI/MSZTP0J8PXJbKyt1XTw8NHwoMiZTJiZyWysrdV08PDEyKTpCPW0+PjM6KFU9UyxTPDI/KEJ8PSg2MyZyWysrdV0pPDw0LEk9clt1XT4+NnxyWysrdV08PDIpOjI9PVM/KEJ8PXJbKyt1XTw8NHwoMyZyWysrdV0pPDwxMixJPXJbdV0+PjJ8clsrK3VdPDw2KTooQnw9clsrK3VdPDw0fCg2MyZyWysrdV0pPDwxMixJPXJbdV0+PjZ8clsrK3VdPDwyfHJbKyt1XTw8MTApKSwrK3U7dmFyIEQ9YT9hLnN1YmFycmF5KG4ueSxuLnkrbi5tKTpuZXcgdChuLm0pLE09RC5sZW5ndGgtQjtpZigwPT1GKUQuc2V0KHIuc3ViYXJyYXkodSx1Kz1CKSxNKTtlbHNlIGlmKDE9PUYpbyhELHJbdSsrXSxNKTtlbHNle3ZhciBXPW4uaDtpZigyPT1GKXt2YXIgTz1wKHIsdSk7SSs9dS0odT1PWzBdKSxuLmg9Vz1PWzFdfWVsc2UgV3x8ZigwKTsoVT94OlQpKHIuc3ViYXJyYXkodSx1Kz1JKSxELnN1YmFycmF5KE0pLFcpfXZhciBqPXJbdSsrXTtpZihqKXsyNTU9PWo/aj0zMjUxMisoclt1KytdfHJbdSsrXTw8OCk6aj4xMjcmJihqPWotMTI4PDw4fHJbdSsrXSk7dmFyIEM9clt1KytdOzMmQyYmZigwKTtmb3IodmFyIEg9W2csZCx3XSxMPTI7TD4tMTstLUwpe3ZhciBaPUM+PjIrKEw8PDEpJjM7aWYoMT09Wil7dmFyIHE9bmV3IHQoWzAsMCxyW3UrK11dKTtIW0xdPXtzOnEuc3ViYXJyYXkoMiwzKSxuOnEuc3ViYXJyYXkoMCwxKSx0Om5ldyBlKHEuYnVmZmVyLDAsMSksYjowfX1lbHNlIDI9PVo/KHU9KHM9eShyLHUsOS0oMSZMKSkpWzBdLEhbTF09c1sxXSk6Mz09WiYmKG4udHx8ZigwKSxIW0xdPW4udFtMXSl9dmFyIEc9bi50PUgsSj1HWzBdLEs9R1sxXSxOPUdbMl0sUD1yW2MtMV07UHx8ZigwKTt2YXIgUT0oYzw8MyktOCtiKFApLU4uYixSPVE+PjMsVj0wLFg9KHJbUl18cltSKzFdPDw4KT4+KDcmUSkmKDE8PE4uYiktMSxZPShyW1I9KFEtPUsuYik+PjNdfHJbUisxXTw8OCk+Pig3JlEpJigxPDxLLmIpLTEsJD0ocltSPShRLT1KLmIpPj4zXXxyW1IrMV08PDgpPj4oNyZRKSYoMTw8Si5iKS0xO2ZvcigrK2o7LS1qOyl7dmFyIF89Ti5zW1hdLHJyPU4ubltYXSx0cj1KLnNbJF0sZXI9Si5uWyRdLG5yPUsuc1tZXSxhcj1LLm5bWV0sc3I9MTw8bnIsaXI9c3IrKChyW1I9KFEtPW5yKT4+M118cltSKzFdPDw4fHJbUisyXTw8MTZ8cltSKzNdPDwyNCk+Pj4oNyZRKSZzci0xKTtSPShRLT1rW3RyXSk+PjM7dmFyIG9yPUFbdHJdKygocltSXXxyW1IrMV08PDh8cltSKzJdPDwxNik+Pig3JlEpJigxPDxrW3RyXSktMSk7Uj0oUS09eltfXSk+PjM7dmFyIHVyPUVbX10rKChyW1JdfHJbUisxXTw8OHxyW1IrMl08PDE2KT4+KDcmUSkmKDE8PHpbX10pLTEpO2lmKFI9KFEtPXJyKT4+MyxYPU4udFtYXSsoKHJbUl18cltSKzFdPDw4KT4+KDcmUSkmKDE8PHJyKS0xKSxSPShRLT1lcik+PjMsJD1KLnRbJF0rKChyW1JdfHJbUisxXTw8OCk+Pig3JlEpJigxPDxlciktMSksUj0oUS09YXIpPj4zLFk9Sy50W1ldKygocltSXXxyW1IrMV08PDgpPj4oNyZRKSYoMTw8YXIpLTEpLGlyPjMpbi5vWzJdPW4ub1sxXSxuLm9bMV09bi5vWzBdLG4ub1swXT1pci09MztlbHNle3ZhciBocj1pci0oMCE9dXIpO2hyPyhpcj0zPT1ocj9uLm9bMF0tMTpuLm9baHJdLGhyPjEmJihuLm9bMl09bi5vWzFdKSxuLm9bMV09bi5vWzBdLG4ub1swXT1pcik6aXI9bi5vWzBdfWZvcihMPTA7TDx1cjsrK0wpRFtWK0xdPURbTStMXTtNKz11cjt2YXIgZnI9KFYrPXVyKS1pcjtpZihmcjwwKXt2YXIgbHI9LWZyLHZyPW4uZStmcjtmb3IobHI+b3ImJihscj1vciksTD0wO0w8bHI7KytMKURbVitMXT1uLndbdnIrTF07Vis9bHIsb3ItPWxyLGZyPTB9Zm9yKEw9MDtMPG9yOysrTClEW1YrTF09RFtmcitMXTtWKz1vcn1pZihWIT1NKWZvcig7TTxELmxlbmd0aDspRFtWKytdPURbTSsrXTtlbHNlIFY9RC5sZW5ndGg7YT9uLnkrPVY6RD1pKEQsMCxWKX1lbHNlIGlmKGEpe2lmKG4ueSs9QixNKWZvcihMPTA7TDxCOysrTClEW0xdPURbTStMXX1lbHNlIE0mJihEPWkoRCxNKSk7cmV0dXJuIG4uYj1jLER9ZigyKX19LFM9ZnVuY3Rpb24ocixlKXtpZigxPT1yLmxlbmd0aClyZXR1cm4gclswXTtmb3IodmFyIG49bmV3IHQoZSksYT0wLHM9MDthPHIubGVuZ3RoOysrYSl7dmFyIGk9clthXTtuLnNldChpLHMpLHMrPWkubGVuZ3RofXJldHVybiBufTtmdW5jdGlvbiBCKHIsdCl7Zm9yKHZhciBlPVtdLG49KyF0LGE9MCxzPTA7ci5sZW5ndGg7KXt2YXIgaT1jKHIsbnx8dCk7aWYoIm9iamVjdCI9PXR5cGVvZiBpKXtmb3Iobj8odD1udWxsLGkudy5sZW5ndGg9PWkudSYmKGUucHVzaCh0PWkudykscys9aS51KSk6KGUucHVzaCh0KSxpLmU9MCk7IWkubDspe3ZhciBvPUYocixpLHQpO298fGYoNSksdD9pLmU9aS55OihlLnB1c2gobykscys9by5sZW5ndGgsdShpLncsMCxvLmxlbmd0aCksaS53LnNldChvLGkudy5sZW5ndGgtby5sZW5ndGgpKX1hPWkuYis0KmkuY31lbHNlIGE9aTtyPXIuc3ViYXJyYXkoYSl9cmV0dXJuIFMoZSxzKX1fZS5kZWNvbXByZXNzPUI7dmFyIEk9ZnVuY3Rpb24oKXtmdW5jdGlvbiByKHIpe3RoaXMub25kYXRhPXIsdGhpcy5jPVtdLHRoaXMubD0wLHRoaXMuej0wfXJldHVybiByLnByb3RvdHlwZS5wdXNoPWZ1bmN0aW9uKHIsZSl7aWYoIm51bWJlciI9PXR5cGVvZiB0aGlzLnMpe3ZhciBuPU1hdGgubWluKHIubGVuZ3RoLHRoaXMucyk7cj1yLnN1YmFycmF5KG4pLHRoaXMucy09bn12YXIgYT1yLmxlbmd0aCt0aGlzLmw7aWYoIXRoaXMucyl7aWYoZSl7aWYoIWEpcmV0dXJuIHZvaWQgdGhpcy5vbmRhdGEobmV3IHQoMCksITApO2E8NSYmZig1KX1lbHNlIGlmKGE8MTgpcmV0dXJuIHRoaXMuYy5wdXNoKHIpLHZvaWQodGhpcy5sPWEpO2lmKHRoaXMubCYmKHRoaXMuYy5wdXNoKHIpLHI9Uyh0aGlzLmMsYSksdGhpcy5jPVtdLHRoaXMubD0wKSwibnVtYmVyIj09dHlwZW9mKHRoaXMucz1jKHIpKSlyZXR1cm4gdGhpcy5wdXNoKHIsZSl9aWYoIm51bWJlciIhPXR5cGVvZiB0aGlzLnMpe2lmKGE8KHRoaXMuenx8MykpcmV0dXJuIGUmJmYoNSksdGhpcy5jLnB1c2gociksdm9pZCh0aGlzLmw9YSk7aWYodGhpcy5sJiYodGhpcy5jLnB1c2gocikscj1TKHRoaXMuYyxhKSx0aGlzLmM9W10sdGhpcy5sPTApLCF0aGlzLnomJmE8KHRoaXMuej0yJnJbdGhpcy5zLmJdPzQ6Mysoclt0aGlzLnMuYl0+PjN8clt0aGlzLnMuYisxXTw8NXxyW3RoaXMucy5iKzJdPDwxMykpKXJldHVybiBlJiZmKDUpLHRoaXMuYy5wdXNoKHIpLHZvaWQodGhpcy5sPWEpO2Zvcih0aGlzLno9MDs7KXt2YXIgcz1GKHIsdGhpcy5zKTtpZighcyl7ZSYmZig1KTt2YXIgaT1yLnN1YmFycmF5KHRoaXMucy5iKTtyZXR1cm4gdGhpcy5zLmI9MCx0aGlzLmMucHVzaChpKSx2b2lkKHRoaXMubCs9aS5sZW5ndGgpfWlmKHRoaXMub25kYXRhKHMsITEpLHUodGhpcy5zLncsMCxzLmxlbmd0aCksdGhpcy5zLncuc2V0KHMsdGhpcy5zLncubGVuZ3RoLXMubGVuZ3RoKSx0aGlzLnMubCl7dmFyIG89ci5zdWJhcnJheSh0aGlzLnMuYik7cmV0dXJuIHRoaXMucz00KnRoaXMucy5jLHZvaWQgdGhpcy5wdXNoKG8sZSl9fX1lbHNlIGUmJmYoNSl9LHJ9KCk7X2UuRGVjb21wcmVzcz1JO3JldHVybiBfZX0p`;
-const WORKER_THRESHOLD = 1024 * 1024;
-const MAX_WINDOW_LOG = 25;
-class ZstdWindowSizeError extends Error {
-  windowLog;
-  maxWindowLog;
-  constructor(windowLog) {
-    super(
-      `Zstd window size too large (windowLog=${windowLog}, max=${MAX_WINDOW_LOG}). This file may have been compressed with zstd "ultra" mode (level 20+). Try recompressing with --long=${MAX_WINDOW_LOG} or a lower compression level.`
-    );
-    this.name = "ZstdWindowSizeError";
-    this.windowLog = windowLog;
-    this.maxWindowLog = MAX_WINDOW_LOG;
-    Object.setPrototypeOf(this, ZstdWindowSizeError.prototype);
-  }
-}
-function validateZstdWindowSize(data2) {
-  if (data2.length < 5) {
-    return;
-  }
-  const magic = data2[0] | data2[1] << 8 | data2[2] << 16 | data2[3] << 24;
-  if (magic !== 4247762216) {
-    return;
-  }
-  const descriptor = data2[4];
-  const singleSegmentFlag = descriptor >> 5 & 1;
-  if (singleSegmentFlag) {
-    return;
-  }
-  if (data2.length < 6) {
-    return;
-  }
-  const windowDescriptor = data2[5];
-  const exponent = windowDescriptor >> 3;
-  const windowLog = 10 + exponent;
-  if (windowLog > MAX_WINDOW_LOG) {
-    throw new ZstdWindowSizeError(windowLog);
-  }
-}
-let zstdWorker = null;
-let blobURL = null;
-let workerInitPromise = null;
-let nextRequestId = 0;
-const pendingRequests = /* @__PURE__ */ new Map();
-let handlersAttached = false;
-function getZstdWorker() {
-  if (workerInitPromise) {
-    return workerInitPromise;
-  }
-  workerInitPromise = new Promise((resolve, reject) => {
-    const blob = new Blob([kZstdWorkerCode], {
-      type: "application/javascript"
-    });
-    blobURL = URL.createObjectURL(blob);
-    zstdWorker = new Worker(blobURL);
-    const initHandler = (event) => {
-      if (event.data.type === "init_complete") {
-        zstdWorker.removeEventListener("message", initHandler);
-        if (event.data.success) {
-          resolve(zstdWorker);
-        } else {
-          reject(new Error(event.data.error || "Worker initialization failed"));
-        }
-      }
-    };
-    zstdWorker.addEventListener("message", initHandler);
-    zstdWorker.postMessage({
-      type: "init",
-      scriptContent: kFzstdBase64
-    });
-  });
-  return workerInitPromise;
-}
-async function decompressZstd(data2) {
-  validateZstdWindowSize(data2);
-  if (data2.length < WORKER_THRESHOLD) {
-    return decompress(data2);
-  }
-  const worker = await getZstdWorker();
-  return new Promise((resolve, reject) => {
-    const requestId = nextRequestId++;
-    pendingRequests.set(requestId, { resolve, reject });
-    if (!handlersAttached) {
-      handlersAttached = true;
-      worker.addEventListener("message", (event) => {
-        const {
-          requestId: respId,
-          success: success2,
-          data: resultData,
-          error: error2
-        } = event.data;
-        const pending = pendingRequests.get(respId);
-        if (!pending) return;
-        pendingRequests.delete(respId);
-        if (success2) {
-          pending.resolve(resultData);
-        } else {
-          pending.reject(new Error(error2 || "Decompression failed"));
-        }
-      });
-      worker.addEventListener("error", (error2) => {
-        for (const [id, pending] of pendingRequests) {
-          pending.reject(new Error(`Worker error: ${error2.message}`));
-          pendingRequests.delete(id);
-        }
-      });
-    }
-    worker.postMessage(
-      {
-        type: "decompress",
-        requestId,
-        data: data2
-      },
-      [data2.buffer]
-    );
-  });
-}
-const CompressionMethod = {
-  STORED: 0,
-  DEFLATE: 8,
-  ZSTANDARD: 93
-};
-class UnsupportedCompressionError extends Error {
-  method;
-  filename;
-  constructor(method, filename2) {
-    super(`Unsupported compression method ${method} for file "${filename2}"`);
-    this.name = "UnsupportedCompressionError";
-    this.method = method;
-    this.filename = filename2;
-    Object.setPrototypeOf(this, UnsupportedCompressionError.prototype);
-  }
-}
-async function decompressData(data2, compressionMethod, uncompressedSize, filename2) {
-  switch (compressionMethod) {
-    case CompressionMethod.STORED:
-      return data2;
-    case CompressionMethod.DEFLATE:
-      return decompressDeflate(data2, uncompressedSize);
-    case CompressionMethod.ZSTANDARD:
-      return decompressZstd(data2);
-    default:
-      throw new UnsupportedCompressionError(compressionMethod, filename2);
-  }
-}
-async function decompressDeflate(data2, size) {
-  return new Promise((resolve, reject) => {
-    decompress$1(data2, { size }, (err2, result2) => {
-      if (err2) {
-        reject(err2);
-      } else {
-        resolve(result2);
-      }
-    });
-  });
-}
-class FileSizeLimitError extends Error {
-  file;
-  maxBytes;
-  constructor(file, maxBytes) {
-    super(
-      `File "${file}" exceeds the maximum size (${maxBytes} bytes) and cannot be loaded.`
-    );
-    this.name = "FileSizeLimitError";
-    this.file = file;
-    this.maxBytes = maxBytes;
-    Object.setPrototypeOf(this, FileSizeLimitError.prototype);
-  }
-}
-const PARALLEL_CHUNK_THRESHOLD = 8 * 1024 * 1024;
-const PARALLEL_CHUNK_SIZE = 8 * 1024 * 1024;
-const MAX_PARALLEL_CHUNKS = 10;
-const fetchBytesParallel = async (fetchFn, url, start2, end2, onProgress) => {
-  const totalSize = end2 - start2 + 1;
-  if (totalSize <= PARALLEL_CHUNK_THRESHOLD) {
-    return fetchFn(url, start2, end2);
-  }
-  const chunks = [];
-  let offset3 = start2;
-  while (offset3 <= end2) {
-    const chunkEnd = Math.min(offset3 + PARALLEL_CHUNK_SIZE - 1, end2);
-    chunks.push({ start: offset3, end: chunkEnd, index: chunks.length });
-    offset3 = chunkEnd + 1;
-  }
-  const concurrency = Math.min(chunks.length, MAX_PARALLEL_CHUNKS);
-  const results = new Array(chunks.length);
-  let nextChunk = 0;
-  let bytesLoaded = 0;
-  if (onProgress) {
-    onProgress(0, totalSize);
-  }
-  const worker = async () => {
-    while (nextChunk < chunks.length) {
-      const idx = nextChunk++;
-      const chunk = chunks[idx];
-      results[idx] = await fetchFn(url, chunk.start, chunk.end);
-      if (onProgress) {
-        bytesLoaded += results[idx].length;
-        onProgress(bytesLoaded, totalSize);
-      }
-    }
-  };
-  await Promise.all(Array.from({ length: concurrency }, () => worker()));
-  const combined = new Uint8Array(totalSize);
-  let pos2 = 0;
-  for (const chunk of results) {
-    combined.set(chunk, pos2);
-    pos2 += chunk.length;
-  }
-  return combined;
-};
-const openRemoteZipFile = async (url, contentLength, fetchBytes = fetchRange) => {
-  contentLength = contentLength ?? await fetchSize(url);
-  const eocdrBuffer = await fetchBytes(
-    url,
-    contentLength - 22,
-    contentLength - 1
-  );
-  const eocdrView = new DataView(eocdrBuffer.buffer);
-  if (eocdrView.getUint32(0, true) !== 101010256) {
-    if (eocdrBuffer.length !== 22) {
-      throw new Error(
-        "Unexpected central directory size - does the HTTP server serving this file support HTTP range requests?"
-      );
-    } else {
-      throw new Error("End of central directory record not found");
-    }
-  }
-  let centralDirOffset = eocdrView.getUint32(16, true);
-  let centralDirSize = eocdrView.getUint32(12, true);
-  const needsZip64 = centralDirOffset === 4294967295 || centralDirSize === 4294967295;
-  if (needsZip64) {
-    const locatorBuffer = await fetchBytes(
-      url,
-      contentLength - 22 - 20,
-      contentLength - 23
-    );
-    const locatorView = new DataView(locatorBuffer.buffer);
-    if (locatorView.getUint32(0, true) !== 117853008) {
-      throw new Error("ZIP64 End of central directory locator not found");
-    }
-    const zip64EOCDOffset = Number(locatorView.getBigUint64(8, true));
-    const zip64EOCDBuffer = await fetchBytes(
-      url,
-      zip64EOCDOffset,
-      zip64EOCDOffset + 56
-    );
-    const zip64EOCDView = new DataView(zip64EOCDBuffer.buffer);
-    if (zip64EOCDView.getUint32(0, true) !== 101075792) {
-      throw new Error("ZIP64 End of central directory record not found");
-    }
-    centralDirSize = Number(zip64EOCDView.getBigUint64(40, true));
-    centralDirOffset = Number(zip64EOCDView.getBigUint64(48, true));
-  }
-  const centralDirBuffer = await fetchBytesParallel(
-    fetchBytes,
-    url,
-    centralDirOffset,
-    centralDirOffset + centralDirSize - 1
-  );
-  const centralDirectory = parseCentralDirectory(centralDirBuffer);
-  return {
-    centralDirectory,
-    readFile: async (file, maxBytes, onProgress) => {
-      const entry = centralDirectory.get(file);
-      if (!entry) {
-        throw new Error(`File not found: ${file}`);
-      }
-      const headerSize = 30;
-      const extraFieldPadding = 256;
-      const estimatedSize = headerSize + entry.filenameLength + extraFieldPadding + entry.compressedSize;
-      if (maxBytes && headerSize + entry.filenameLength + entry.compressedSize > maxBytes) {
-        throw new FileSizeLimitError(file, maxBytes);
-      }
-      let fileData = await fetchBytesParallel(
-        fetchBytes,
-        url,
-        entry.fileOffset,
-        entry.fileOffset + estimatedSize - 1,
-        onProgress
-      );
-      if (fileData.length < headerSize) {
-        throw new Error(`File entry header is truncated for ${file}`);
-      }
-      const actualExtraFieldLength = fileData[28] + (fileData[29] << 8);
-      const actualTotal = headerSize + entry.filenameLength + actualExtraFieldLength + entry.compressedSize;
-      if (maxBytes && actualTotal > maxBytes) {
-        throw new FileSizeLimitError(file, maxBytes);
-      }
-      if (actualTotal > estimatedSize) {
-        fileData = await fetchBytesParallel(
-          fetchBytes,
-          url,
-          entry.fileOffset,
-          entry.fileOffset + actualTotal - 1
-        );
-      }
-      const zipFileEntry = await parseZipFileEntry(file, fileData);
-      return decompressData(
-        zipFileEntry.data,
-        zipFileEntry.compressionMethod,
-        zipFileEntry.uncompressedSize,
-        file
-      );
-    }
-  };
-};
-const fetchSize = async (url) => {
-  const acceptResponse = await fetch(url, { method: "HEAD" });
-  const acceptsRanges = acceptResponse.headers.get("Accept-Ranges");
-  if (acceptsRanges === "bytes") {
-    const getResponse = await fetch(`${url}`, {
-      method: "GET",
-      headers: { Range: "bytes=0-0" }
-    });
-    const contentRange = getResponse.headers.get("Content-Range");
-    if (contentRange !== null) {
-      const rangeMatch = contentRange.match(/bytes (\d+)-(\d+)\/(\d+)/);
-      if (rangeMatch !== null) {
-        await getResponse.arrayBuffer();
-        return Number(rangeMatch[3]);
-      }
-    }
-    await getResponse.arrayBuffer();
-  }
-  const contentLength = acceptResponse.headers.get("Content-Length");
-  if (contentLength !== null) {
-    return Number(contentLength);
-  }
-  throw new Error(`Could not determine content length for ${url}`);
-};
-const parseZipFileEntry = async (file, rawData) => {
-  const view = new DataView(rawData.buffer);
-  let offset3 = 0;
-  const signature = view.getUint32(offset3, true);
-  if (signature !== 67324752) {
-    throw new Error(`Invalid ZIP entry signature for ${file}`);
-  }
-  offset3 += 4;
-  const versionNeeded = view.getUint16(offset3, true);
-  offset3 += 2;
-  const bitFlag = view.getUint16(offset3, true);
-  offset3 += 2;
-  const compressionMethod = view.getUint16(offset3, true);
-  offset3 += 2;
-  offset3 += 4;
-  const crc32 = view.getUint32(offset3, true);
-  offset3 += 4;
-  let compressedSize = view.getUint32(offset3, true);
-  offset3 += 4;
-  let uncompressedSize = view.getUint32(offset3, true);
-  offset3 += 4;
-  const filenameLength = view.getUint16(offset3, true);
-  offset3 += 2;
-  const extraFieldLength = view.getUint16(offset3, true);
-  offset3 += 2;
-  const headerOffset = offset3;
-  const needsZip64 = compressedSize === 4294967295 || uncompressedSize === 4294967295;
-  if (needsZip64) {
-    offset3 += filenameLength;
-    const extraFieldEnd = offset3 + extraFieldLength;
-    while (offset3 < extraFieldEnd) {
-      const tag = view.getUint16(offset3, true);
-      const size = view.getUint16(offset3 + 2, true);
-      if (tag === 1) {
-        let zip64Offset = offset3 + 4;
-        if (uncompressedSize === 4294967295 && zip64Offset + 8 <= extraFieldEnd) {
-          uncompressedSize = Number(view.getBigUint64(zip64Offset, true));
-          zip64Offset += 8;
-        }
-        if (compressedSize === 4294967295 && zip64Offset + 8 <= extraFieldEnd) {
-          compressedSize = Number(view.getBigUint64(zip64Offset, true));
-        }
-        break;
-      }
-      offset3 += 4 + size;
-    }
-    offset3 = headerOffset;
-  }
-  offset3 += filenameLength + extraFieldLength;
-  const data2 = rawData.subarray(offset3, offset3 + compressedSize);
-  return {
-    versionNeeded,
-    bitFlag,
-    compressionMethod,
-    crc32,
-    compressedSize,
-    uncompressedSize,
-    filenameLength,
-    extraFieldLength,
-    data: data2
-  };
-};
-const kFileHeaderSize = 46;
-const parseCentralDirectory = (buffer2) => {
-  let offset3 = 0;
-  const view = new DataView(buffer2.buffer);
-  const entries = /* @__PURE__ */ new Map();
-  while (offset3 < buffer2.length) {
-    if (view.getUint32(offset3, true) !== 33639248) break;
-    const filenameLength = view.getUint16(offset3 + 28, true);
-    const extraFieldLength = view.getUint16(offset3 + 30, true);
-    const fileCommentLength = view.getUint16(offset3 + 32, true);
-    let compressedSize = view.getUint32(offset3 + 20, true);
-    let uncompressedSize = view.getUint32(offset3 + 24, true);
-    let fileOffset = view.getUint32(offset3 + 42, true);
-    const filename2 = new TextDecoder().decode(
-      buffer2.subarray(
-        offset3 + kFileHeaderSize,
-        offset3 + kFileHeaderSize + filenameLength
-      )
-    );
-    const needsZip64 = fileOffset === 4294967295 || compressedSize === 4294967295 || uncompressedSize === 4294967295;
-    if (needsZip64) {
-      let extraOffset = offset3 + kFileHeaderSize + filenameLength;
-      const extraEnd = extraOffset + extraFieldLength;
-      while (extraOffset < extraEnd) {
-        const tag = view.getUint16(extraOffset, true);
-        const size = view.getUint16(extraOffset + 2, true);
-        if (tag === 1) {
-          let zip64Offset = extraOffset + 4;
-          if (uncompressedSize === 4294967295 && zip64Offset + 8 <= extraEnd) {
-            uncompressedSize = Number(view.getBigUint64(zip64Offset, true));
-            zip64Offset += 8;
-          }
-          if (compressedSize === 4294967295 && zip64Offset + 8 <= extraEnd) {
-            compressedSize = Number(view.getBigUint64(zip64Offset, true));
-            zip64Offset += 8;
-          }
-          if (fileOffset === 4294967295 && zip64Offset + 8 <= extraEnd) {
-            fileOffset = Number(view.getBigUint64(zip64Offset, true));
-          }
-          break;
-        }
-        extraOffset += 4 + size;
-      }
-    }
-    const entry = {
-      filename: filename2,
-      compressionMethod: view.getUint16(offset3 + 10, true),
-      compressedSize,
-      uncompressedSize,
-      fileOffset,
-      filenameLength
-    };
-    entries.set(filename2, entry);
-    offset3 += kFileHeaderSize + filenameLength + extraFieldLength + fileCommentLength;
-  }
-  return entries;
-};
-const OPEN_RETRY_LIMIT = 5;
-const MAX_SAMPLE_SIZE_BYTES = 2048 * 1024 * 1024;
-class SampleNotFoundError extends Error {
-  constructor(message2) {
-    super(message2 || "Sample not found");
-    this.name = "SampleNotFoundError";
-    Object.setPrototypeOf(this, SampleNotFoundError.prototype);
-  }
-}
-const openRemoteLogFile = async (api2, url, concurrency) => {
-  const queue = new AsyncQueue(concurrency);
-  const logInfo = await api2.get_log_info(url);
-  const directUrl = logInfo.direct_url;
-  const fetchBytes = async (_url, start2, end2) => {
-    if (directUrl) {
-      try {
-        return await fetchRange(directUrl, start2, end2);
-      } catch (e3) {
-        console.warn("Direct URL fetch failed, falling back to proxy", e3);
-      }
-    }
-    return api2.get_log_bytes(url, start2, end2);
-  };
-  let remoteZipFile = void 0;
-  let retryCount = 0;
-  while (!remoteZipFile && retryCount < OPEN_RETRY_LIMIT) {
-    try {
-      remoteZipFile = await openRemoteZipFile(url, logInfo.size, fetchBytes);
-    } catch {
-      retryCount++;
-      console.warn(
-        `Failed to open remote log file at ${url}, retrying (${retryCount}/${OPEN_RETRY_LIMIT})...`
-      );
-      await new Promise(
-        (resolve) => setTimeout(resolve, 100 * (retryCount + retryCount))
-      );
-    }
-  }
-  if (!remoteZipFile) {
-    throw new Error(
-      `Failed to open remote log file at ${url} after ${OPEN_RETRY_LIMIT} attempts.`
-    );
-  }
-  const readJSONFile = async (file, maxBytes, preprocessor, onProgress) => {
-    try {
-      let data2 = await remoteZipFile.readFile(file, maxBytes, onProgress);
-      if (preprocessor) {
-        data2 = preprocessor.preprocess(data2);
-      }
-      return asyncJsonParseBytes(data2);
-    } catch (error2) {
-      if (error2 instanceof FileSizeLimitError) {
-        throw error2;
-      } else if (error2 instanceof Error) {
-        throw new Error(
-          `Failed to read or parse file ${file}: ${error2.message}`
-        );
-      } else {
-        throw new Error(
-          `Failed to read or parse file ${file} - an unknown error occurred`
-        );
-      }
-    }
-  };
-  const listSamples = async () => {
-    return Array.from(remoteZipFile.centralDirectory.keys()).filter(
-      (filename2) => filename2.startsWith("samples/") && filename2.endsWith(".json")
-    ).map((filename2) => {
-      const [sampleId, epochStr] = filename2.split("/")[1].split("_epoch_");
-      return {
-        sampleId,
-        epoch: parseInt(epochStr.split(".")[0], 10)
-      };
-    });
-  };
-  const readSample = async (sampleId, epoch, onProgress) => {
-    const sampleFile = `samples/${sampleId}_epoch_${epoch}.json`;
-    if (!remoteZipFile.centralDirectory.has(sampleFile)) {
-      throw new SampleNotFoundError(
-        `Unable to read sample file ${sampleFile} - it is not present in the manifest.`
-      );
-    }
-    const entry = remoteZipFile.centralDirectory.get(sampleFile);
-    if (entry.uncompressedSize > MAX_SAMPLE_SIZE_BYTES) {
-      throw new FileSizeLimitError(sampleFile, MAX_SAMPLE_SIZE_BYTES);
-    }
-    const eventsPreprocessor = {
-      preprocess: clearLargeEventsArray
-    };
-    return await readJSONFile(
-      sampleFile,
-      void 0,
-      eventsPreprocessor,
-      onProgress
-    );
-  };
-  const readHeader = async () => {
-    if (remoteZipFile.centralDirectory.has("header.json")) {
-      return await readJSONFile("header.json");
-    } else {
-      const evalSpec = await readJSONFile("_journal/start.json");
-      return {
-        status: "started",
-        eval: evalSpec.eval,
-        plan: evalSpec.plan
-      };
-    }
-  };
-  const readEvalBasicInfo = async () => {
-    const header2 = await readHeader();
-    return toLogPreview(header2);
-  };
-  const readFallbackSummaries = async () => {
-    const summaryFiles = Array.from(
-      remoteZipFile.centralDirectory.keys()
-    ).filter(
-      (filename2) => filename2.startsWith("_journal/summaries/") && filename2.endsWith(".json")
-    );
-    const summaries = [];
-    const errors2 = [];
-    await Promise.all(
-      summaryFiles.map(
-        (filename2) => queue.enqueue(async () => {
-          try {
-            const partialSummary = await readJSONFile(
-              filename2
-            );
-            summaries.push(...partialSummary);
-          } catch (error2) {
-            errors2.push(error2);
-          }
-        })
-      )
-    );
-    if (errors2.length > 0) {
-      console.error(
-        `Encountered ${errors2.length} errors while reading summary files:`,
-        errors2
-      );
-    }
-    return summaries;
-  };
-  const readSampleSummaries = async () => {
-    if (remoteZipFile.centralDirectory.has("summaries.json")) {
-      return await readJSONFile("summaries.json");
-    } else {
-      return readFallbackSummaries();
-    }
-  };
-  return {
-    readEvalBasicInfo,
-    readLogSummary: async () => {
-      const [header2, sampleSummaries] = await Promise.all([
-        readHeader(),
-        readSampleSummaries()
-      ]);
-      const result2 = {
-        status: header2.status,
-        eval: header2.eval,
-        plan: header2.plan,
-        results: header2.results,
-        stats: header2.stats,
-        error: header2.error,
-        tags: header2.tags,
-        metadata: header2.metadata,
-        log_updates: header2.log_updates,
-        sampleSummaries
-      };
-      return result2;
-    },
-    readSample,
-    /**
-     * Reads the complete log file.
-     */
-    readCompleteLog: async () => {
-      const [evalLogHeader, samples] = await Promise.all([
-        readHeader(),
-        listSamples().then(
-          (sampleIds) => Promise.all(
-            sampleIds.map(
-              ({ sampleId, epoch }) => readSample(sampleId, epoch).then((sample2) => sample2)
-            )
-          )
-        )
-      ]);
-      return {
-        status: evalLogHeader.status,
-        eval: evalLogHeader.eval,
-        plan: evalLogHeader.plan,
-        results: evalLogHeader.results,
-        stats: evalLogHeader.stats,
-        error: evalLogHeader.error,
-        samples
-      };
-    }
-  };
-};
-const isEvalFile = (file) => {
-  return file.endsWith(".eval");
-};
-class SampleSizeLimitedExceededError extends Error {
-  id;
-  epoch;
-  maxBytes;
-  displayStack;
-  constructor(id, epoch, maxBytes) {
-    super(
-      `Sample ${id} in epoch ${epoch} exceeds the maximum supported size (${maxBytes / 1024 / 1024}MB) and cannot be loaded.`
-    );
-    this.name = "SampleSizeLimitedExceededError";
-    this.id = id;
-    this.epoch = epoch;
-    this.maxBytes = maxBytes;
-    this.displayStack = false;
-    Object.setPrototypeOf(this, SampleSizeLimitedExceededError.prototype);
-  }
-}
-const clientApi = (api2, log_file, debug = false) => {
-  let current_log = void 0;
-  let current_path = void 0;
-  const loadedEvalFile = {
-    file: void 0,
-    remoteLog: void 0
-  };
-  const remoteEvalFile = async (log_file2, cached = false) => {
-    if (cached && loadedEvalFile.file === log_file2) {
-      return loadedEvalFile.remoteLog;
-    }
-    const remoteLog = await openRemoteLogFile(
-      api2,
-      encodePathParts(log_file2),
-      5
-    );
-    if (cached) {
-      loadedEvalFile.file = log_file2;
-      loadedEvalFile.remoteLog = remoteLog;
-    }
-    return remoteLog;
-  };
-  const get_log = async (log_file2, cached = false) => {
-    if (!cached || log_file2 !== current_path || !current_log) {
-      if (pending_log_promise) {
-        return pending_log_promise;
-      }
-      pending_log_promise = api2.get_log_contents(log_file2, 100).then((log2) => {
-        current_log = log2;
-        current_path = log_file2;
-        pending_log_promise = null;
-        return log2;
-      }).catch((err2) => {
-        pending_log_promise = null;
-        throw err2;
-      });
-      return pending_log_promise;
-    }
-    return current_log;
-  };
-  let pending_log_promise = null;
-  const get_log_details = async (log_file2, cached = true) => {
-    if (isEvalFile(log_file2)) {
-      const remoteLogFile = await remoteEvalFile(log_file2, cached);
-      if (remoteLogFile) {
-        return await remoteLogFile.readLogSummary();
-      } else {
-        throw new Error("Unable to read remote eval file");
-      }
-    } else {
-      const logContents = await get_log(log_file2);
-      const sampleSummaries = logContents.parsed.samples ? logContents.parsed.samples?.map((sample2) => {
-        return {
-          id: sample2.id,
-          epoch: sample2.epoch,
-          input: sample2.input,
-          target: sample2.target,
-          scores: sample2.scores,
-          metadata: sample2.metadata,
-          error: sample2.error?.message
-        };
-      }) : [];
-      const parsed = logContents.parsed;
-      return {
-        version: parsed.version,
-        status: parsed.status,
-        eval: parsed.eval,
-        plan: parsed.plan,
-        results: parsed.results,
-        stats: parsed.stats,
-        error: parsed.error,
-        tags: parsed.tags,
-        metadata: parsed.metadata,
-        log_updates: parsed.log_updates,
-        sampleSummaries
-      };
-    }
-  };
-  const get_log_sample = async (log_file2, id, epoch, onProgress) => {
-    if (isEvalFile(log_file2)) {
-      let handleError2 = function(error2) {
-        if (error2 instanceof FileSizeLimitError) {
-          throw new SampleSizeLimitedExceededError(id, epoch, error2.maxBytes);
-        }
-        throw error2;
-      };
-      async function fetchSample(useCache) {
-        const remoteLogFile = await remoteEvalFile(log_file2, useCache);
-        if (!remoteLogFile) {
-          throw new Error(`Unable to read remote eval file ${log_file2}`);
-        }
-        return await remoteLogFile.readSample(String(id), epoch, onProgress);
-      }
-      try {
-        return await fetchSample(true);
-      } catch (error2) {
-        if (error2 instanceof SampleNotFoundError) {
-          try {
-            return await fetchSample(false);
-          } catch (retryError) {
-            handleError2(retryError);
-          }
-        } else {
-          handleError2(error2);
-        }
-      }
-    } else {
-      const logContents = await get_log(log_file2, true);
-      if (logContents.parsed.samples && logContents.parsed.samples.length > 0) {
-        return logContents.parsed.samples.find((sample2) => {
-          return sampleIdsEqual(sample2.id, id) && sample2.epoch === epoch;
-        });
-      }
-    }
-    return void 0;
-  };
-  const read_eval_file_log_summary = async (log_file2) => {
-    if (api2.get_log_summary) {
-      return api2.get_log_summary(log_file2);
-    } else {
-      const remoteLogFile = await openRemoteLogFile(
-        api2,
-        encodePathParts(log_file2),
-        5
-      );
-      return remoteLogFile.readEvalBasicInfo();
-    }
-  };
-  const get_log_summaries2 = async (log_files) => {
-    const eval_files = {};
-    const json_files = {};
-    let index = 0;
-    for (const file of log_files) {
-      if (isEvalFile(file)) {
-        eval_files[file] = index;
-      } else {
-        json_files[file] = index;
-      }
-      index++;
-    }
-    const evalLogHeadersPromises = Object.keys(eval_files).map(
-      (file) => read_eval_file_log_summary(file).then((summary2) => ({
-        index: eval_files[file],
-        // Store original index
-        summary: summary2
-      }))
-    );
-    const jsonLogHeadersPromise = api2.get_log_summaries(Object.keys(json_files)).then(
-      (summaries2) => summaries2.map((summary2, i4) => ({
-        index: json_files[Object.keys(json_files)[i4]],
-        // Store original index
-        summary: summary2
-      }))
-    );
-    const summaries = await Promise.all([
-      ...evalLogHeadersPromises,
-      jsonLogHeadersPromise
-    ]);
-    const orderedSummaries = summaries.flat().sort((a2, b2) => a2.index - b2.index);
-    return orderedSummaries.map(({ summary: summary2 }) => summary2);
-  };
-  const get_log_dir2 = async () => {
-    if (api2.get_log_dir) {
-      return await api2.get_log_dir();
-    } else {
-      const logRoot = await api2.get_log_root();
-      return logRoot?.log_dir;
-    }
-  };
-  const get_logs2 = async (mtime, clientFileCount) => {
-    if (api2.get_logs) {
-      const result2 = await api2.get_logs(mtime, clientFileCount);
-      return result2;
-    } else {
-      const logRoot = await api2.get_log_root();
-      return {
-        files: logRoot?.logs || [],
-        response_type: "full"
-      };
-    }
-  };
-  const get_log_root2 = async () => {
-    const logFiles = await api2.get_log_root();
-    if (logFiles) {
-      return logFiles;
-    } else if (log_file) {
-      const summary2 = await get_log_details(log_file);
-      if (summary2) {
-        return {
-          logs: [
-            {
-              name: log_file,
-              task: summary2.eval.task,
-              task_id: summary2.eval.task_id
-            }
-          ]
-        };
-      }
-    }
-    throw new Error("Unable to determine log paths.");
-  };
-  const get_log_pending_samples = (log_file2, etag) => {
-    if (!api2.eval_pending_samples) {
-      throw new Error("API doesn't support streamed samples");
-    }
-    return api2.eval_pending_samples(log_file2, etag);
-  };
-  const get_log_sample_data = (log_file2, id, epoch, last_event, last_attachment) => {
-    if (!api2.eval_log_sample_data) {
-      throw new Error("API doesn't supported streamed sample data");
-    }
-    return api2.eval_log_sample_data(
-      log_file2,
-      id,
-      epoch,
-      last_event,
-      last_attachment
-    );
-  };
-  const middleware = debug ? createMiddlewareWrapper([debugMiddleware]) : (_name, fn3) => fn3;
-  return {
-    client_events: middleware("client_events", () => {
-      return api2.client_events();
-    }),
-    get_log_dir: middleware("get_log_dir", get_log_dir2),
-    get_log_dir_handle: middleware(
-      "get_log_dir_handle",
-      (log_dir) => {
-        return api2.get_log_dir_handle ? api2.get_log_dir_handle(log_dir) : log_dir || "default_log_dir";
-      }
-    ),
-    get_logs: middleware("get_log_files", get_logs2),
-    get_log_root: middleware("get_log_root", get_log_root2),
-    get_eval_set: middleware("get_eval_set", (dir) => {
-      return api2.get_eval_set(dir);
-    }),
-    get_flow: middleware("get_flow", (dir) => {
-      return api2.get_flow(dir);
-    }),
-    get_log_summaries: middleware("get_log_summaries", get_log_summaries2),
-    get_log_details: middleware("get_log_details", get_log_details),
-    get_log_sample: middleware("get_log_sample", get_log_sample),
-    open_log_file: middleware("open_log_file", (log_file2, log_dir) => {
-      return api2.open_log_file(log_file2, log_dir);
-    }),
-    download_file: middleware(
-      "download_file",
-      (download_file2, file_contents) => {
-        return api2.download_file(download_file2, file_contents);
-      }
-    ),
-    download_log: api2.download_log ? middleware("download_log", (log_file2) => {
-      return api2.download_log(log_file2);
-    }) : void 0,
-    log_message: middleware(
-      "log_message",
-      (log_file2, message2) => {
-        return api2.log_message(log_file2, message2);
-      }
-    ),
-    get_log_pending_samples: api2.eval_pending_samples ? middleware("get_log_pending_samples", get_log_pending_samples) : void 0,
-    get_log_sample_data: api2.eval_log_sample_data ? middleware("get_log_sample_data", get_log_sample_data) : void 0
-  };
-};
-const debugMiddleware = (name2, _fn, args2, result2) => {
-  if (result2 instanceof Promise) {
-    const startTime = performance.now();
-    return result2.then((returned) => {
-      const duration = performance.now() - startTime;
-      console.log(`[ClientAPI] ${name2}`, {
-        args: args2,
-        returned,
-        duration: `${duration.toFixed(2)}ms`
-      });
-      return returned;
-    });
-  } else {
-    console.log(`[ClientAPI] ${name2}`, { args: args2, returned: result2 });
-    return result2;
-  }
-};
-const applyMiddleware = (name2, fn3, middlewares) => {
-  if (middlewares.length === 0) return fn3;
-  return ((...args2) => {
-    let result2 = fn3(...args2);
-    for (const middleware of middlewares) {
-      result2 = middleware(name2, fn3, args2, result2);
-    }
-    return result2;
-  });
-};
-const createMiddlewareWrapper = (middlewares) => {
-  return (name2, fn3) => {
-    return applyMiddleware(name2, fn3, middlewares);
-  };
-};
-async function download_file$1(filename2, filecontents) {
-  let blob;
-  if (typeof filecontents === "string" && filecontents.startsWith("data:")) {
-    const response = await fetch(filecontents);
-    blob = await response.blob();
-  } else {
-    blob = new Blob([filecontents], { type: "text/plain" });
-  }
-  const link2 = document.createElement("a");
-  link2.href = URL.createObjectURL(blob);
-  link2.download = filename2;
-  document.body.appendChild(link2);
-  link2.click();
-  document.body.removeChild(link2);
-  URL.revokeObjectURL(link2.href);
-}
-async function fetchTextFile(url, handleError2) {
-  const safe_url = encodePathParts(url);
-  const response = await fetch(`${safe_url}`, { method: "GET" });
-  if (response.ok) {
-    const text2 = await response.text();
-    return text2;
-  } else if (response.status !== 200) {
-    if (handleError2 && handleError2(response)) {
-      return void 0;
-    }
-    const message2 = await response.text() || response.statusText;
-    const error2 = new Error(`${response.status}: ${message2})`);
-    throw error2;
-  } else {
-    throw new Error(`${response.status} - ${response.statusText} `);
-  }
-}
-async function fetchFile(url, parse5, handleError2) {
-  const safe_url = encodePathParts(url);
-  const response = await fetch(`${safe_url}`, { method: "GET" });
-  if (response.ok) {
-    const text2 = await response.text();
-    return await parse5(text2);
-  } else if (response.status !== 200) {
-    if (handleError2 && handleError2(response)) {
-      return void 0;
-    }
-    const message2 = await response.text() || response.statusText;
-    const error2 = new Error(`${response.status}: ${message2})`);
-    throw error2;
-  } else {
-    throw new Error(`${response.status} - ${response.statusText} `);
-  }
-}
-const fetchLogFile = async (file) => {
-  return fetchFile(file, async (text2) => {
-    const log2 = await asyncJsonParse(text2);
-    if (log2.version === 1) {
-      if (log2.results) {
-        const untypedLog = log2;
-        log2.results.scores = [];
-        untypedLog.results.scorer.scorer = untypedLog.results.scorer.name;
-        log2.results.scores.push(untypedLog.results.scorer);
-        delete untypedLog.results.scorer;
-        log2.results.scores[0].metrics = untypedLog.results.metrics;
-        delete untypedLog.results.metrics;
-        const scorerName = log2.results.scores[0].name;
-        log2.samples?.forEach((sample2) => {
-          const untypedSample = sample2;
-          sample2.scores = { [scorerName]: untypedSample.score };
-          delete untypedSample.score;
-        });
-      }
-    }
-    return {
-      raw: text2,
-      parsed: log2
-    };
-  });
-};
-const fetchManifest = async (log_dir) => {
-  const parseListing = async (text2) => {
-    const parsed = await asyncJsonParse(text2);
-    return { raw: text2, parsed };
-  };
-  return await fetchFile(
-    log_dir + "/listing.json",
-    parseListing
-  );
-};
-const fetchJsonFile = async (file, handleError2) => {
-  return fetchFile(
-    file,
-    async (text2) => {
-      return await asyncJsonParse(text2);
-    },
-    handleError2
-  );
-};
-function joinURI(...segments2) {
-  return segments2.map((segment2) => segment2.replace(/(^\/+|\/+$)/g, "")).join("/");
-}
-function staticHttpApi(log_dir, log_file, abs_log_dir) {
-  const resolved_log_dir = log_dir?.replace(" ", "+");
-  log_file ? log_file.replace(" ", "+") : void 0;
-  return staticHttpApiForLog({
-    log_dir: resolved_log_dir,
-    abs_log_dir
-  });
-}
-function staticHttpApiForLog(logInfo) {
-  const log_dir = logInfo.log_dir;
-  const abs_log_dir = logInfo.abs_log_dir;
-  let manifest = void 0;
-  let manifestPromise = void 0;
-  const getManifest = async () => {
-    if (!manifest && log_dir) {
-      if (!manifestPromise) {
-        manifestPromise = fetchManifest(log_dir).then((manifestRaw) => {
-          manifest = manifestRaw?.parsed || {};
-          return manifest;
-        });
-      }
-      await manifestPromise;
-    }
-    return manifest || {};
-  };
-  async function open_log_file2() {
-  }
-  return {
-    client_events: async () => {
-      return Promise.resolve([]);
-    },
-    get_log_root: async () => {
-      if (log_dir) {
-        const manifest2 = await getManifest();
-        if (manifest2) {
-          const logs = Object.keys(manifest2).map((key2) => {
-            return {
-              name: joinURI(log_dir, key2),
-              task: manifest2[key2].task,
-              task_id: manifest2[key2].task_id
-            };
-          });
-          return Promise.resolve({
-            logs,
-            log_dir,
-            abs_log_dir
-          });
-        }
-      }
-      return void 0;
-    },
-    get_log_dir_handle: (log_dir2) => {
-      const currentDirUrl = `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf("/"))}`;
-      return joinURI(currentDirUrl, log_dir2 || "default_log_dir");
-    },
-    get_eval_set: async (dir) => {
-      const dirSegments = [];
-      if (log_dir) {
-        dirSegments.push(log_dir);
-      }
-      if (dir) {
-        dirSegments.push(dir);
-      }
-      const result2 = await fetchJsonFile(
-        joinURI(...dirSegments, "eval-set.json"),
-        (response) => {
-          if (400 <= response.status && response.status < 500) {
-            return true;
-          } else {
-            return false;
-          }
-        }
-      );
-      return result2;
-    },
-    get_flow: async (dir) => {
-      const dirSegments = [];
-      if (log_dir) {
-        dirSegments.push(log_dir);
-      }
-      if (dir) {
-        dirSegments.push(dir);
-      }
-      return await fetchTextFile(
-        joinURI(...dirSegments, "flow.yaml"),
-        (response) => {
-          if (400 <= response.status && response.status < 500) {
-            return true;
-          } else {
-            return false;
-          }
-        }
-      );
-    },
-    log_message: async (log_file, message2) => {
-      console.log(`[CLIENT MESSAGE] (${log_file}): ${message2}`);
-    },
-    get_log_contents: async (log_file, _headerOnly, _capabilities) => {
-      const response = await fetchLogFile(log_file);
-      if (response) {
-        return response;
-      } else {
-        throw new Error(`"Unable to load eval log ${log_file}`);
-      }
-    },
-    get_log_info: async (log_file) => {
-      const size = await fetchSize(log_file);
-      return { size };
-    },
-    get_log_bytes: async (log_file, start2, end2) => {
-      return await fetchRange(log_file, start2, end2);
-    },
-    get_log_summary: async (log_file) => {
-      const manifest2 = await getManifest();
-      if (manifest2) {
-        const manifestAbs = {};
-        Object.keys(manifest2).forEach((key2) => {
-          manifestAbs[joinURI(log_dir || "", key2)] = manifest2[key2];
-        });
-        const header2 = manifestAbs[log_file];
-        if (header2) {
-          return header2;
-        }
-      }
-      throw new Error(`Unable to load eval log header for ${log_file}`);
-    },
-    get_log_summaries: async (files) => {
-      if (files.length === 0) {
-        return [];
-      }
-      if (log_dir) {
-        const manifest2 = await getManifest();
-        if (manifest2) {
-          const keys = Object.keys(manifest2);
-          const result2 = [];
-          files.forEach((file) => {
-            const fileKey = keys.find((key2) => {
-              return file.endsWith(key2);
-            });
-            if (fileKey) {
-              result2.push(manifest2[fileKey]);
-            }
-          });
-          return result2;
-        }
-      }
-      throw new Error(
-        `Failed to load a listing file using the directory: ${log_dir}. Please be sure you have deployed a manifest file (listing.json).`
-      );
-    },
-    download_file: download_file$1,
-    open_log_file: open_log_file2
-  };
-}
-class ApiError extends Error {
-  status;
-  constructor(status2, message2) {
-    super(message2);
-    this.status = status2;
-  }
-}
-function serverRequestApi(baseUrl2, getHeaders) {
-  const apiUrl = baseUrl2;
-  function buildApiUrl(path) {
-    const base2 = apiUrl.endsWith("/") ? apiUrl.slice(0, -1) : apiUrl;
-    const cleanPath = path.startsWith("/") ? path : `/${path}`;
-    return base2 + cleanPath;
-  }
-  function isApiCrossOrigin() {
-    try {
-      return Boolean(
-        apiUrl && new URL(apiUrl).origin !== window.location.origin
-      );
-    } catch (error2) {
-      return false;
-    }
-  }
-  const fetchType = async (method, path, request) => {
-    const url = buildApiUrl(path);
-    const responseHeaders = {
-      Accept: "application/json",
-      Pragma: "no-cache",
-      Expires: "0",
-      "Cache-Control": "no-cache",
-      ...request.headers
-    };
-    if (getHeaders) {
-      const globalHeaders = await getHeaders();
-      Object.assign(responseHeaders, globalHeaders);
-    }
-    if (request.body) {
-      responseHeaders["Content-Type"] = "application/json";
-    }
-    const response = await fetch(url, {
-      method,
-      headers: responseHeaders,
-      body: request.body,
-      credentials: isApiCrossOrigin() ? "include" : "same-origin"
-    });
-    if (!response.ok) {
-      const errorResponse = request.handleError?.(response.status);
-      if (errorResponse) {
-        return {
-          raw: response.statusText,
-          parsed: errorResponse
-        };
-      }
-      const message2 = await response.text() || response.statusText;
-      throw new ApiError(
-        response.status,
-        `API Error ${response.status}: ${message2}`
-      );
-    }
-    const text2 = await response.text();
-    const parse5 = request.parse || asyncJsonParse;
-    return {
-      parsed: await parse5(text2),
-      raw: text2
-    };
-  };
-  const fetchString = async (method, path, headers, body2) => {
-    const url = buildApiUrl(path);
-    const requestHeaders = {
-      Accept: "application/json",
-      Pragma: "no-cache",
-      Expires: "0",
-      "Cache-Control": "no-cache",
-      ...headers
-    };
-    if (getHeaders) {
-      const globalHeaders = await getHeaders();
-      Object.assign(requestHeaders, globalHeaders);
-    }
-    if (body2) {
-      requestHeaders["Content-Type"] = "application/json";
-    }
-    const response = await fetch(url, {
-      method,
-      headers: requestHeaders,
-      body: body2,
-      credentials: isApiCrossOrigin() ? "include" : "same-origin"
-    });
-    if (response.ok) {
-      const text2 = await response.text();
-      return {
-        parsed: await asyncJsonParse(text2),
-        raw: text2
-      };
-    }
-    const message2 = await response.text() || response.statusText;
-    throw new ApiError(response.status, `HTTP ${response.status}: ${message2}`);
-  };
-  const fetchBytes = async (method, path) => {
-    const url = buildApiUrl(path);
-    const headers = {
-      Accept: "application/octet-stream",
-      Pragma: "no-cache",
-      Expires: "0",
-      "Cache-Control": "no-cache"
-    };
-    if (getHeaders) {
-      const globalHeaders = await getHeaders();
-      Object.assign(headers, globalHeaders);
-    }
-    const response = await fetch(url, {
-      method,
-      headers,
-      credentials: isApiCrossOrigin() ? "include" : "same-origin"
-    });
-    if (!response.ok) {
-      const message2 = await response.text() || response.statusText;
-      throw new ApiError(
-        response.status,
-        `HTTP ${response.status}: ${message2}`
-      );
-    }
-    const buffer2 = await response.arrayBuffer();
-    return new Uint8Array(buffer2);
-  };
-  return {
-    fetchString,
-    fetchBytes,
-    fetchType
-  };
-}
-const LOADED_TIME = Date.now();
-let lastEvalTime = 0;
-function viewServerApi(options = {}) {
-  const { apiBaseUrl, logDir: logDir2, headerProvider } = options;
-  const requestApi = serverRequestApi(
-    apiBaseUrl || "/api",
-    headerProvider
-  );
-  const client_events2 = async () => {
-    const params = new URLSearchParams();
-    params.append("loaded_time", String(LOADED_TIME.valueOf()));
-    params.append("last_eval_time", String(lastEvalTime.valueOf()));
-    const result2 = await requestApi.fetchString(
-      "GET",
-      `/events?${params.toString()}`
-    );
-    return result2.parsed;
-  };
-  const get_log_dir2 = async () => {
-    if (logDir2) {
-      return logDir2;
-    }
-    const obj = (await requestApi.fetchString("GET", "/log-dir")).parsed;
-    return obj.log_dir;
-  };
-  const get_log_root2 = async () => {
-    const path = logDir2 ? `/logs?log_dir=${encodeURIComponent(logDir2)}` : "/logs";
-    const logs = await requestApi.fetchString("GET", path);
-    lastEvalTime = Date.now();
-    return logs.parsed;
-  };
-  const get_logs2 = async (mtime, clientFileCount) => {
-    const path = logDir2 ? `/log-files?log_dir=${encodeURIComponent(logDir2)}` : "/log-files";
-    const headers = {};
-    const token2 = log_file_token(mtime, clientFileCount);
-    if (token2) {
-      headers["If-None-Match"] = token2;
-    }
-    lastEvalTime = Date.now();
-    const envelope = await requestApi.fetchString("GET", path, headers);
-    return envelope.parsed;
-  };
-  const log_file_token = (mtime, fileCount) => {
-    return `W/"${mtime}-${fileCount}"`;
-  };
-  const get_eval_set2 = async (dir) => {
-    const basePath = "/eval-set";
-    const params = new URLSearchParams();
-    if (logDir2) {
-      params.append("log_dir", logDir2);
-    }
-    if (dir) {
-      params.append("dir", dir);
-    }
-    const query2 = params.toString();
-    const path = query2 ? `${basePath}?${query2}` : basePath;
-    try {
-      const result2 = await requestApi.fetchString("GET", path);
-      return result2.parsed;
-    } catch (error2) {
-      if (error2 instanceof ApiError && (error2.status === 404 || error2.status === 403)) {
-        return void 0;
-      }
-      throw error2;
-    }
-  };
-  const get_flow2 = async (dir) => {
-    const basePath = "/flow";
-    const params = new URLSearchParams();
-    if (logDir2) {
-      params.append("log_dir", logDir2);
-    }
-    if (dir) {
-      params.append("dir", dir);
-    }
-    const query2 = params.toString();
-    const path = query2 ? `${basePath}?${query2}` : basePath;
-    try {
-      const bytes = await requestApi.fetchBytes("GET", path);
-      return new TextDecoder().decode(bytes);
-    } catch (error2) {
-      if (error2 instanceof ApiError && (error2.status === 404 || error2.status === 403)) {
-        return void 0;
-      }
-      throw error2;
-    }
-  };
-  const get_log_contents2 = async (file, headerOnly, _capabilities) => {
-    const result2 = await requestApi.fetchString(
-      "GET",
-      `/logs/${encodeURIComponent(file)}?header-only=${headerOnly}`
-    );
-    return result2;
-  };
-  const get_log_info2 = async (file) => {
-    const result2 = await requestApi.fetchString(
-      "GET",
-      `/log-info/${encodeURIComponent(file)}`
-    );
-    return result2.parsed;
-  };
-  const toLogPreview2 = (header2) => {
-    const scores2 = Object.values(header2.results?.scores || {});
-    const metric = scores2.length > 0 ? scores2[0].metrics : void 0;
-    const evalMetrics = Object.values(metric || {});
-    const primary_metric = evalMetrics.length > 0 ? evalMetrics[0] : void 0;
-    return {
-      eval_id: header2.eval.eval_id,
-      run_id: header2.eval.run_id,
-      task: header2.eval.task,
-      task_id: header2.eval.task_id,
-      task_version: header2.eval.task_version,
-      version: header2.version,
-      status: header2.status,
-      error: header2.error,
-      model: header2.eval.model,
-      started_at: header2.stats?.started_at,
-      completed_at: header2.stats?.completed_at,
-      primary_metric
-    };
-  };
-  const get_log_bytes2 = async (file, start2, end2) => requestApi.fetchBytes(
-    "GET",
-    `/log-bytes/${encodeURIComponent(file)}?start=${start2}&end=${end2}`
-  );
-  const get_log_summaries2 = async (files) => {
-    const params = new URLSearchParams();
-    for (const file of files) {
-      params.append("file", file);
-    }
-    const result2 = await requestApi.fetchString(
-      "GET",
-      `/log-headers?${params.toString()}`
-    );
-    const logHeaders = result2.parsed;
-    return logHeaders.map(toLogPreview2);
-  };
-  const log_message2 = async (log_file, message2) => {
-    const params = new URLSearchParams();
-    params.append("log_file", log_file);
-    params.append("message", message2);
-    const request = {
-      headers: {
-        "Content-Type": "text/plain"
-      },
-      parse: async (text2) => {
-        if (text2 !== "") {
-          throw new Error(`Unexpected response from log_message: ${text2}`);
-        }
-        return;
-      }
-    };
-    await requestApi.fetchType(
-      "GET",
-      `/log-message?${params.toString()}`,
-      request
-    );
-  };
-  const eval_pending_samples2 = async (log_file, etag) => {
-    const params = new URLSearchParams();
-    params.append("log", log_file);
-    const headers = {};
-    if (etag) {
-      headers["If-None-Match"] = etag;
-    }
-    const request = {
-      headers,
-      parse: async (text2) => {
-        const pendingSamples = await asyncJsonParse(
-          text2
-        );
-        return {
-          status: "OK",
-          pendingSamples
-        };
-      },
-      handleError: (status2) => {
-        if (status2 === 404) {
-          return {
-            status: "NotFound"
-          };
-        } else if (status2 === 304) {
-          return {
-            status: "NotModified"
-          };
-        }
-      }
-    };
-    const result2 = await requestApi.fetchType(
-      "GET",
-      `/pending-samples?${params.toString()}`,
-      request
-    );
-    return result2.parsed;
-  };
-  const eval_log_sample_data2 = async (log_file, id, epoch, last_event, last_attachment) => {
-    const params = new URLSearchParams();
-    params.append("log", log_file);
-    params.append("id", String(id));
-    params.append("epoch", String(epoch));
-    if (last_event !== void 0) {
-      params.append("last-event-id", String(last_event));
-    }
-    if (last_attachment !== void 0) {
-      params.append("after-attachment-id", String(last_attachment));
-    }
-    const request = {
-      headers: {},
-      parse: async (text2) => {
-        const sampleData = await asyncJsonParse(text2);
-        return {
-          status: "OK",
-          sampleData
-        };
-      },
-      handleError: (status2) => {
-        if (status2 === 404) {
-          return {
-            status: "NotFound"
-          };
-        } else if (status2 === 304) {
-          return {
-            status: "NotModified"
-          };
-        }
-      }
-    };
-    const result2 = await requestApi.fetchType(
-      "GET",
-      `/pending-sample-data?${params.toString()}`,
-      request
-    );
-    return result2.parsed;
-  };
-  const download_log = async (log_file) => {
-    const baseUrl2 = apiBaseUrl || "/api";
-    const url = `${baseUrl2}/log-download/${encodeURIComponent(log_file)}`;
-    const link2 = document.createElement("a");
-    link2.href = url;
-    link2.download = "";
-    document.body.appendChild(link2);
-    link2.click();
-    document.body.removeChild(link2);
-  };
-  return {
-    client_events: client_events2,
-    get_log_root: get_log_root2,
-    get_logs: get_logs2,
-    get_log_dir: get_log_dir2,
-    get_eval_set: get_eval_set2,
-    get_flow: get_flow2,
-    get_log_contents: get_log_contents2,
-    get_log_info: get_log_info2,
-    get_log_bytes: get_log_bytes2,
-    get_log_summaries: get_log_summaries2,
-    log_message: log_message2,
-    download_file: download_file$1,
-    download_log,
-    open_log_file: async () => {
-    },
-    eval_pending_samples: eval_pending_samples2,
-    eval_log_sample_data: eval_log_sample_data2
-  };
-}
-const kMethodEvalLogDir = "eval_log_dir";
-const kMethodEvalLogs = "eval_logs";
-const kMethodEvalLogFiles = "eval_log_files";
-const kMethodEvalLog = "eval_log";
-const kMethodEvalLogInfo = "eval_log_info";
-const kMethodEvalLogBytes = "eval_log_bytes";
-const kMethodEvalLogHeaders = "eval_log_headers";
-const kMethodPendingSamples = "eval_log_pending_samples";
-const kMethodSampleData = "eval_log_sample_data";
-const kMethodLogMessage = "log_message";
-const kJsonRpcMethodNotFound = -32601;
-const kJsonRpcVersion = "2.0";
-function webViewJsonRpcClient(vscode2) {
-  const target2 = {
-    postMessage: (data2) => {
-      vscode2.postMessage(data2);
-    },
-    onMessage: (handler) => {
-      const onMessage = (ev) => {
-        handler(ev.data);
-      };
-      window.addEventListener("message", onMessage);
-      return () => {
-        window.removeEventListener("message", onMessage);
-      };
-    }
-  };
-  return jsonRpcPostMessageRequestTransport(target2).request;
-}
-function jsonRpcPostMessageRequestTransport(target2) {
-  const requests = /* @__PURE__ */ new Map();
-  const disconnect = target2.onMessage((ev) => {
-    const response = asJsonRpcResponse(ev);
-    if (response) {
-      const request = requests.get(response.id);
-      if (request) {
-        requests.delete(response.id);
-        if (response.error) {
-          request.reject(response.error);
-        } else {
-          request.resolve(response.result);
-        }
-      }
-    }
-  });
-  return {
-    request: (method, params) => {
-      return new Promise((resolve, reject) => {
-        const requestId = Math.floor(Math.random() * 1e6);
-        requests.set(requestId, { resolve, reject });
-        const request = {
-          jsonrpc: kJsonRpcVersion,
-          id: requestId,
-          method,
-          params
-        };
-        target2.postMessage(request);
-      });
-    },
-    disconnect
-  };
-}
-function isJsonRpcMessage(message2) {
-  return message2.jsonrpc !== void 0 && message2.id !== void 0;
-}
-function asJsonRpcMessage(data2) {
-  if (isJsonRpcMessage(data2) && data2.jsonrpc === kJsonRpcVersion) {
-    return data2;
-  }
-  return null;
-}
-function asJsonRpcResponse(data2) {
-  const message2 = asJsonRpcMessage(data2);
-  if (message2) {
-    return message2;
-  }
-  return null;
-}
-const kNotFoundSignal = "NotFound";
-const kNotModifiedSignal = "NotModified";
-const vscodeClient = webViewJsonRpcClient(getVscodeApi());
-async function client_events() {
-  return [];
-}
-async function get_log_root() {
-  const response = await vscodeClient(kMethodEvalLogs, []);
-  if (response) {
-    const parsed = lib$1.parse(response);
-    if (Array.isArray(parsed)) {
-      return {
-        log_dir: "",
-        files: parsed
-      };
-    } else {
-      return parsed;
-    }
-  } else {
-    return void 0;
-  }
-}
-const get_log_dir = async () => {
-  const response = await vscodeClient(kMethodEvalLogDir, []);
-  if (response) {
-    const parsed = lib$1.parse(response);
-    return parsed.log_dir;
-  }
-  return void 0;
-};
-const get_logs = async (mtime, clientFileCount) => {
-  const response = await vscodeClient(kMethodEvalLogFiles, [
-    mtime,
-    clientFileCount
-  ]);
-  if (response) {
-    const parsed = lib$1.parse(response);
-    return parsed;
-  } else {
-    return [];
-  }
-};
-async function get_eval_set() {
-  return void 0;
-}
-async function get_flow() {
-  return void 0;
-}
-async function get_log_contents(log_file, headerOnly, capabilities2) {
-  const response = await vscodeClient(kMethodEvalLog, [log_file, headerOnly]);
-  if (response) {
-    let json;
-    if (capabilities2?.webWorkers) {
-      json = await asyncJsonParse(response);
-    } else {
-      json = lib$1.parse(response);
-    }
-    return {
-      parsed: json,
-      raw: response
-    };
-  } else {
-    throw new Error(`Unable to load eval log ${log_file}.`);
-  }
-}
-async function get_log_info(log_file) {
-  try {
-    return await vscodeClient(kMethodEvalLogInfo, [log_file]);
-  } catch (e3) {
-    if (e3?.code === kJsonRpcMethodNotFound) {
-      const size = await vscodeClient("eval_log_size", [log_file]);
-      return { size };
-    }
-    throw e3;
-  }
-}
-async function get_log_bytes(log_file, start2, end2) {
-  return await vscodeClient(kMethodEvalLogBytes, [log_file, start2, end2]);
-}
-async function get_log_summaries(files) {
-  const response = await vscodeClient(kMethodEvalLogHeaders, [files]);
-  if (response) {
-    return lib$1.parse(response);
-  } else {
-    return void 0;
-  }
-}
-async function eval_pending_samples(log_file, etag) {
-  const response = await vscodeClient(kMethodPendingSamples, [log_file, etag]);
-  if (response) {
-    if (response === kNotModifiedSignal) {
-      return {
-        status: "NotModified"
-      };
-    } else if (response === kNotFoundSignal) {
-      return {
-        status: "NotFound"
-      };
-    }
-    const json = await asyncJsonParse(response);
-    return {
-      status: "OK",
-      pendingSamples: json
-    };
-  } else {
-    throw new Error(`Unable to load pending samples ${log_file}.`);
-  }
-}
-async function eval_log_sample_data(log_file, id, epoch, last_event, last_attachment) {
-  const response = await vscodeClient(kMethodSampleData, [
-    log_file,
-    id,
-    epoch,
-    last_event,
-    last_attachment
-  ]);
-  if (response) {
-    if (response === kNotModifiedSignal) {
-      return {
-        status: "NotModified"
-      };
-    } else if (response === kNotFoundSignal) {
-      return {
-        status: "NotFound"
-      };
-    }
-    const json = await asyncJsonParse(response);
-    return {
-      status: "OK",
-      sampleData: json
-    };
-  } else {
-    throw new Error(`Unable to load live sample data ${log_file}.`);
-  }
-}
-async function log_message(log_file, message2) {
-  await vscodeClient(kMethodLogMessage, [log_file, message2]);
-}
-async function download_file() {
-  throw Error("Downloading files is not supported in VS Code");
-}
-async function open_log_file(log_file, log_dir) {
-  const msg = {
-    type: "displayLogFile",
-    url: log_file,
-    log_dir
-  };
-  getVscodeApi()?.postMessage(msg);
-}
-const api$1 = {
-  client_events,
-  get_log_root,
-  get_log_dir,
-  get_logs,
-  get_eval_set,
-  get_flow,
-  get_log_contents,
-  get_log_info,
-  get_log_bytes,
-  get_log_summaries,
-  log_message,
-  download_file,
-  open_log_file,
-  eval_pending_samples,
-  eval_log_sample_data
-};
-const resolveApi = () => {
-  const debug = false;
-  if (getVscodeApi()) {
-    return clientApi(api$1, void 0, debug);
-  } else {
-    const scriptEl = document.getElementById("log_dir_context");
-    if (scriptEl) {
-      const context = scriptEl.textContent;
-      if (context !== null) {
-        const data2 = lib$1.parse(context);
-        if (data2.log_dir || data2.log_file) {
-          const log_dir2 = data2.log_dir || dirname(data2.log_file);
-          const api2 = staticHttpApi(log_dir2, data2.log_file, data2.abs_log_dir);
-          return clientApi(api2, data2.log_file, debug);
-        }
-      }
-    }
-    const urlParams = new URLSearchParams(window.location.search);
-    const log_file = urlParams.get("log_file");
-    const log_dir = urlParams.get("log_dir");
-    const forceViewServerApi = urlParams.get("inspect_server") === "true";
-    const resolved_log_dir = log_dir ?? void 0;
-    const resolved_log_file = log_file ?? void 0;
-    if (forceViewServerApi) {
-      return clientApi(
-        viewServerApi({ logDir: resolved_log_dir }),
-        resolved_log_file,
-        debug
-      );
-    }
-    if (resolved_log_dir !== void 0 || resolved_log_file !== void 0) {
-      return clientApi(
-        staticHttpApi(resolved_log_dir, resolved_log_file),
-        resolved_log_file,
-        debug
-      );
-    }
-    return clientApi(viewServerApi(), void 0, debug);
-  }
-};
-const api = resolveApi();
-const documentFrame = "_documentFrame_1576h_1";
-const documentFrameTitle = "_documentFrameTitle_1576h_9";
-const downloadLink = "_downloadLink_1576h_16";
-const imageDocument = "_imageDocument_1576h_21";
-const styles$1q = {
-  documentFrame,
-  documentFrameTitle,
-  downloadLink,
-  imageDocument
-};
-const ContentDocumentView = ({
-  id,
-  document: document2
-}) => {
-  const canDownloadFiles = useStore(
-    (state) => state.capabilities.downloadFiles
-  );
-  if (isImage(document2.mime_type)) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(ContentDocumentFrame, { document: document2, downloadable: canDownloadFiles, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "img",
-      {
-        className: clsx(styles$1q.imageDocument),
-        src: document2.document,
-        alt: document2.filename,
-        id
-      }
-    ) });
-  } else {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      ContentDocumentFrame,
-      {
-        document: document2,
-        downloadable: canDownloadFiles
-      }
-    );
-  }
-};
-const ContentDocumentFrame = ({
-  document: document2,
-  children: children2,
-  downloadable
-}) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-    "div",
-    {
-      className: clsx(
-        styles$1q.documentFrame,
-        "text-size-small",
-        "text-style-secondary"
-      ),
-      children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1q.documentFrameTitle), children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(iconForMimeType(document2.mime_type)) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: downloadable ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "a",
-            {
-              className: clsx(styles$1q.downloadLink),
-              onClick: () => {
-                api.download_file(document2.filename, document2.document);
-              },
-              children: document2.filename
-            }
-          ) : document2.filename })
-        ] }),
-        children2
-      ]
-    }
-  );
-};
-const jsonMessage = "_jsonMessage_oxf8d_1";
-const styles$1p = {
-  jsonMessage
-};
-const JsonMessageContent = ({
-  id,
-  json,
-  className: className2
-}) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    RecordTree,
-    {
-      id,
-      record: json,
-      className: clsx(styles$1p.jsonMessage, className2),
-      useBorders: false
-    }
-  );
-};
-const decodeHtmlEntities = (text2) => {
-  const parser2 = new DOMParser();
-  const doc2 = parser2.parseFromString(text2, "text/html");
-  return doc2.documentElement.textContent || text2;
-};
-const citations = "_citations_1ggvf_1";
-const citationLink = "_citationLink_1ggvf_9";
-const styles$1o = {
-  citations,
-  citationLink
-};
-const MessageCitations = ({ citations: citations2 }) => {
-  if (citations2.length === 0) {
-    return void 0;
-  }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1o.citations, "text-size-smallest"), children: citations2.map((citation, index) => /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: index + 1 }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(MessageCitation, { citation })
-  ] }, index)) });
-};
-const MessageCitation = ({ citation }) => {
-  const innards = decodeHtmlEntities(
-    citation.title ?? (typeof citation.cited_text === "string" ? citation.cited_text : citation.type === "url" ? citation.url : "")
-  );
-  return citation.type === "url" ? /* @__PURE__ */ jsxRuntimeExports.jsx(UrlCitation, { citation, children: innards }) : /* @__PURE__ */ jsxRuntimeExports.jsx(OtherCitation, { children: innards });
-};
-const UrlCitation = ({
-  children: children2,
-  citation
-}) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-  "a",
-  {
-    href: citation.url,
-    target: "_blank",
-    rel: "noopener noreferrer",
-    className: clsx(styles$1o.citationLink),
-    title: citation.cited_text ? `${citation.cited_text}
-${citation.url}` : citation.url,
-    children: children2
-  }
-);
-const OtherCitation = ({ children: children2 }) => /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: children2 });
-const contentImage = "_contentImage_16eyd_1";
-const reasoning = "_reasoning_16eyd_6";
-const breakable = "_breakable_16eyd_21";
-const styles$1n = {
-  contentImage,
-  reasoning,
-  breakable
-};
-const mcpToolUse = "_mcpToolUse_1792k_1";
-const title$2 = "_title_1792k_9";
-const titleText = "_titleText_1792k_18";
-const args = "_args_1792k_22";
-const argLabel = "_argLabel_1792k_31";
-const error$4 = "_error_1792k_35";
-const toolPanel = "_toolPanel_1792k_40";
-const styles$1m = {
-  mcpToolUse,
-  title: title$2,
-  titleText,
-  args,
-  argLabel,
-  error: error$4,
-  toolPanel
-};
-const ServerToolCall = ({
-  id,
-  content: content2,
-  className: className2
-}) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(McpToolUse, { id, content: content2, className: className2 });
-};
-const McpToolUse = ({ id, content: content2, className: className2 }) => {
-  const args2 = resolveArgs(content2);
-  const titleStr = content2.context ? `${content2.context} — ${content2.name}()` : `${content2.name}()`;
-  const listToolsResult = maybeListTools(content2);
-  const webSearchResult = maybeWebSearchResult(content2);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id, className: clsx(styles$1m.mcpToolUse, className2), children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      "div",
-      {
-        className: clsx(
-          styles$1m.title,
-          "text-size-small",
-          "text-style-secondary"
-        ),
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.role.tool }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$1m.titleText, children: titleStr }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1m.type, children: content2.type })
-        ]
-      }
-    ),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1m.args, children: [
-      Object.keys(args2).map((key2, index) => {
-        const value2 = args2[key2];
-        let valueRecord = void 0;
-        if (Array.isArray(value2)) {
-          valueRecord = {};
-          for (var i4 = 0; i4 < value2.length; i4++) {
-            valueRecord[`[${i4}]`] = value2[i4];
-          }
-        } else if (value2 && typeof value2 === "object") {
-          valueRecord = value2;
-        }
-        return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(LabelDiv, { label: key2 }),
-          valueRecord ? /* @__PURE__ */ jsxRuntimeExports.jsx(RecordTree, { id: `${id}-val-${index}`, record: valueRecord }) : /* @__PURE__ */ jsxRuntimeExports.jsx(ValueDiv, { children: value2 })
-        ] });
-      }),
-      webSearchResult ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(LabelDiv, { label: "results" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(ValueDiv, { children: webSearchResult.result.map((result2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1m.result, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "a",
-          {
-            href: result2.url,
-            target: "_blank",
-            rel: "noopener noreferrer",
-            children: result2.title
-          }
-        ) }, index)) })
-      ] }) : void 0,
-      listToolsResult ? listToolsResult.result.map((tool2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        ExpandablePanel,
-        {
-          id: `${id}-output`,
-          collapse: true,
-          className: clsx(styles$1m.toolPanel),
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(LabelDiv, { label: tool2.name }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs(ValueDiv, { children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: tool2.description }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                RecordTree,
-                {
-                  id: `${id}-tool-${index}`,
-                  record: { schema: tool2.input_schema },
-                  defaultExpandLevel: 0
-                }
-              )
-            ] })
-          ]
-        }
-      ) })) : void 0
-    ] }),
-    content2.error ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1m.error, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
-      "Error: ",
-      content2.error
-    ] }) }) : !listToolsResult && !webSearchResult ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-small"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExpandablePanel, { id: `${id}-output`, collapse: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      RenderedContent,
-      {
-        id: `${id}-output`,
-        entry: { name: "Output", value: content2.result },
-        renderOptions: { renderString: "markdown" }
-      }
-    ) }) }) : void 0
-  ] });
-};
-const resolveArgs = (content2) => {
-  if (typeof content2.arguments === "string") {
-    if (isJson(content2.arguments)) {
-      try {
-        return JSON.parse(content2.arguments);
-      } catch (e3) {
-        console.warn("Failed to parse arguments as JSON", e3);
-      }
-    }
-    if (content2.arguments) {
-      return { arguments: content2.arguments };
-    }
-    return {};
-  } else if (typeof content2.arguments === "object") {
-    return content2.arguments;
-  } else if (content2.arguments) {
-    return { arguments: content2.arguments };
-  } else {
-    return {};
-  }
-};
-const maybeWebSearchResult = (content2) => {
-  if (content2.name !== "web_search") {
-    return void 0;
-  }
-  const objArray = asJsonObjArray(content2.result);
-  if (objArray !== void 0) {
-    return { result: objArray };
-  }
-};
-const maybeListTools = (content2) => {
-  if (content2.name !== "mcp_list_tools") {
-    return void 0;
-  }
-  const objArray = asJsonObjArray(content2.result);
-  if (objArray !== void 0) {
-    return { result: objArray };
-  }
-};
-const LabelDiv = ({ label: label2 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    "div",
-    {
-      className: clsx(
-        styles$1m.argLabel,
-        "text-style-secondary",
-        "text-size-smaller"
-      ),
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { children: label2 })
-    }
-  );
-};
-const ValueDiv = ({ children: children2 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-smaller"), children: children2 });
-};
-const toolImage = "_toolImage_h7uyp_1";
-const output = "_output_h7uyp_6";
-const textOutput = "_textOutput_h7uyp_10";
-const textCode = "_textCode_h7uyp_19";
-const styles$1l = {
-  toolImage,
-  output,
-  textOutput,
-  textCode
-};
-const ToolOutput = ({ output: output2, className: className2 }) => {
-  if (!output2) {
-    return null;
-  }
-  const outputs = [];
-  if (Array.isArray(output2)) {
-    output2.forEach((out, idx) => {
-      const key2 = `tool-output-${idx}`;
-      if (out.type === "text") {
-        outputs.push(/* @__PURE__ */ jsxRuntimeExports.jsx(ToolTextOutput, { text: out.text }, key2));
-      } else if (out.type === "document") {
-        outputs.push(/* @__PURE__ */ jsxRuntimeExports.jsx(ContentDocumentView, { id: key2, document: out }, key2));
-      } else {
-        if (out.image.startsWith("data:")) {
-          outputs.push(
-            /* @__PURE__ */ jsxRuntimeExports.jsx("img", { className: clsx(styles$1l.toolImage), src: out.image }, key2)
-          );
-        } else {
-          outputs.push(/* @__PURE__ */ jsxRuntimeExports.jsx(ToolTextOutput, { text: String(out.image) }, key2));
-        }
-      }
-    });
-  } else {
-    outputs.push(
-      /* @__PURE__ */ jsxRuntimeExports.jsx(ToolTextOutput, { text: String(output2) }, "tool-output-single")
-    );
-  }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1l.output, className2), children: outputs });
-};
-const ToolTextOutput = ({ text: text2 }) => {
-  if (isJson(text2)) {
-    const obj = JSON.parse(text2);
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(JsonMessageContent, { id: `1-json`, json: obj });
-  }
-  if (isAnsiOutput(text2)) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      ANSIDisplay,
-      {
-        className: styles$1l.ansiOutput,
-        output: text2,
-        style: { fontSize: "clamp(0.4rem, 1.15vw, 0.9rem)" }
-      }
-    );
-  }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1l.textOutput, "tool-output"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("sourceCode", styles$1l.textCode), children: text2.trim() }) });
-};
-const isMessageContent = (content2) => {
-  return typeof content2 === "object" && content2 !== null && "type" in content2 && typeof content2.type === "string";
-};
-const MessageContent = ({
-  contents: contents2,
-  context
-}) => {
-  const normalized = normalizeContent$2(contents2);
-  if (Array.isArray(normalized)) {
-    return normalized.map((content2, index) => {
-      if (typeof content2 === "string") {
-        return messageRenderers["text"].render(
-          `text-content-${index}`,
-          {
-            type: "text",
-            text: content2,
-            refusal: null,
-            internal: null,
-            citations: null
-          },
-          index === contents2.length - 1,
-          context
-        );
-      } else {
-        if (content2) {
-          const renderer = messageRenderers[content2.type];
-          if (renderer) {
-            return renderer.render(
-              `text-${content2.type}-${index}`,
-              content2,
-              index === contents2.length - 1,
-              context
-            );
-          } else {
-            console.error(`Unknown message content type '${content2.type}'`);
-          }
-        }
-      }
-    });
-  } else {
-    const contentText = {
-      type: "text",
-      text: normalized,
-      refusal: null,
-      internal: null,
-      citations: null
-    };
-    return messageRenderers["text"].render(
-      "text-message-content",
-      contentText,
-      true,
-      context
-    );
-  }
-};
-const messageRenderers = {
-  text: {
-    render: (key2, content2, isLast, _context) => {
-      const c2 = content2;
-      const cites = c2.citations ?? [];
-      if (!c2.text && !cites.length) {
-        return void 0;
-      }
-      const purgeInternalContainers = (text2) => {
-        const internalTags = ["internal", "content-internal"];
-        internalTags.forEach((tag) => {
-          const regex2 = new RegExp(`<${tag}[^>]*>[\\s\\S]*?<\\/${tag}>`, "gm");
-          text2 = text2.replace(regex2, "");
-        });
-        return text2.trim();
-      };
-      if (isJson(c2.text)) {
-        const obj = JSON.parse(c2.text);
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(JsonMessageContent, { id: `${key2}-json`, json: obj });
-      } else {
-        return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            RenderedText,
-            {
-              markdown: purgeInternalContainers(c2.text) || "",
-              className: clsx(
-                isLast ? "no-last-para-padding" : "",
-                styles$1n.breakable
-              )
-            }
-          ),
-          c2.citations ? /* @__PURE__ */ jsxRuntimeExports.jsx(MessageCitations, { citations: c2.citations }) : void 0
-        ] }, key2);
-      }
-    }
-  },
-  reasoning: {
-    render: (key2, content2, isLast, _context) => {
-      const r2 = content2;
-      let title2 = "Reasoning";
-      let text2 = r2.reasoning;
-      if (r2.redacted) {
-        text2 = r2.summary || "Reasoning encrypted by model provider.";
-        if (r2.summary) {
-          title2 = "Reasoning (Summary)";
-        }
-      } else if (!text2) {
-        text2 = r2.summary || "Reasoning text not provided.";
-        if (r2.summary) {
-          title2 = "Reasoning (Summary)";
-        }
-      }
-      const renderReasoningCode = isOpenRouterReasoning(text2);
-      const codeFormatted = renderReasoningCode ? JSON.stringify(jsonParse(text2), null, 2) : text2;
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1n.reasoning, "text-size-small"), children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "div",
-          {
-            className: clsx(
-              "text-style-label",
-              "text-style-secondary",
-              isLast ? "no-last-para-padding" : ""
-            ),
-            children: title2
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(ExpandablePanel, { id: `${key2}-reasoning`, collapse: true, children: [
-          !renderReasoningCode && /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: codeFormatted }),
-          renderReasoningCode && /* @__PURE__ */ jsxRuntimeExports.jsx(CodePanel, { language: "json", code: codeFormatted })
-        ] })
-      ] }, key2);
-    }
-  },
-  image: {
-    render: (key2, content2, _isLast, _context) => {
-      const c2 = content2;
-      if (c2.image.startsWith("data:")) {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: c2.image, className: styles$1n.contentImage }, key2);
-      } else {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx("code", { children: c2.image }, key2);
-      }
-    }
-  },
-  audio: {
-    render: (key2, content2, _isLast, _context) => {
-      const c2 = content2;
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("audio", { controls: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx("source", { src: c2.audio, type: mimeTypeForFormat(c2.format) }) }, key2);
-    }
-  },
-  video: {
-    render: (key2, content2, _isLast, _context) => {
-      const c2 = content2;
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("video", { width: "500", height: "375", controls: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx("source", { src: c2.video, type: mimeTypeForFormat(c2.format) }) }, key2);
-    }
-  },
-  tool: {
-    render: (key2, content2, _isLast, _context) => {
-      const c2 = content2;
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(ToolOutput, { output: c2.content }, key2);
-    }
-  },
-  // server-side tool use
-  tool_use: {
-    render: (key2, content2, _isLast, _context) => {
-      const c2 = content2;
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(ServerToolCall, { id: key2, content: c2 });
-    }
-  },
-  data: {
-    render: (key2, content2, _isLast, _context) => {
-      const c2 = content2;
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(ContentDataView, { id: key2, contentData: c2 });
-    }
-  },
-  document: {
-    render: (key2, content2, _isLast, _context) => {
-      const c2 = content2;
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(ContentDocumentView, { id: key2, document: c2 });
-    }
-  }
-};
-const mimeTypeForFormat = (format2) => {
-  switch (format2) {
-    case "mov":
-      return "video/quicktime";
-    case "wav":
-      return "audio/wav";
-    case "mp3":
-      return "audio/mpeg";
-    case "mp4":
-      return "video/mp4";
-    case "mpeg":
-      return "video/mpeg";
-    default:
-      return "video/mp4";
-  }
-};
-const normalizeContent$2 = (contents2) => {
-  if (typeof contents2 === "string") {
-    return contents2;
-  }
-  if (contents2.length > 0 && typeof contents2[0] === "string") {
-    return contents2;
-  }
-  const result2 = [];
-  const collection = [];
-  const collect = () => {
-    if (collection.length > 0) {
-      const filteredCitations = collection.flatMap((c2) => c2.citations || []);
-      let citeCount = 0;
-      const textWithCites = collection.map((c2) => {
-        const positionalCites = (c2.citations ?? []).filter(isCitationWithRange).sort((a2, b2) => b2.cited_text[1] - a2.cited_text[1]);
-        const endCites = c2.citations?.filter(
-          (citation) => !isCitationWithRange(citation)
-        );
-        let textWithCites2 = c2.text;
-        for (let i4 = 0; i4 < positionalCites.length; i4++) {
-          const end_index = positionalCites[i4].cited_text[1];
-          textWithCites2 = textWithCites2.slice(0, end_index) + `<sup>${positionalCites.length - i4}</sup>` + textWithCites2.slice(end_index);
-        }
-        citeCount = citeCount + positionalCites.length;
-        const citeText = endCites?.map((_citation) => `${++citeCount}`);
-        let inlineCites = "";
-        if (citeText && citeText.length > 0) {
-          inlineCites = `<sup>${citeText.join(",")}</sup>`;
-        }
-        return (textWithCites2 || "") + inlineCites;
-      }).join("");
-      result2.push({
-        type: "text",
-        text: textWithCites,
-        refusal: null,
-        internal: null,
-        citations: filteredCitations
-      });
-      collection.length = 0;
-    }
-  };
-  for (const content2 of contents2) {
-    if (typeof content2 === "string") {
-      result2.push({
-        type: "text",
-        text: content2,
-        refusal: null,
-        internal: null,
-        citations: null
-      });
-      continue;
-    }
-    if (content2.type === "text") {
-      collection.push(content2);
-      continue;
-    } else {
-      collect();
-      result2.push(content2);
-    }
-  }
-  collect();
-  return result2;
-};
-const isCitationWithRange = (citation) => Array.isArray(citation.cited_text);
-const isOpenRouterReasoning = (text2) => {
-  return text2.startsWith("[{'format'");
-};
-const content$1 = "_content_1b2jp_1";
-const codeCompact = "_codeCompact_1b2jp_5";
-const styles$1k = {
-  content: content$1,
-  codeCompact
-};
-const substituteToolCallContent = (content2, args2) => {
-  const replace2 = (text2) => text2.replace(
-    /\{\{(\w+)\}\}/g,
-    (match2, key2) => Object.hasOwn(args2, key2) ? String(args2[key2]) : match2
-  );
-  return {
-    ...content2,
-    title: content2.title ? replace2(content2.title) : content2.title,
-    content: replace2(content2.content)
-  };
-};
-const kToolTodoContentType = "agent/todo-list";
-const resolveToolInput = (fn3, toolArgs) => {
-  const toolName = fn3;
-  const inputDescriptor = extractInputMetadata(toolName);
-  const { input: input2, description: description2, args: args2 } = extractInput(
-    toolArgs,
-    inputDescriptor
-  );
-  const functionCall = args2.length > 0 ? `${toolName}(${args2.join(", ")})` : toolName;
-  return {
-    functionCall,
-    input: input2,
-    description: description2,
-    contentType: inputDescriptor?.contentType
-  };
-};
-const extractInputMetadata = (toolName) => {
-  if (toolName === "bash") {
-    return {
-      inputArg: ["cmd", "command"],
-      contentType: "bash"
-    };
-  } else if (toolName === "python") {
-    return {
-      inputArg: "code",
-      contentType: "python"
-    };
-  } else if (toolName === "web_search") {
-    return {
-      inputArg: "query",
-      contentType: "json"
-    };
-  } else if (toolName === "Bash") {
-    return {
-      inputArg: "command",
-      descriptionArg: "description",
-      contentType: "bash"
-    };
-  } else if (toolName === "shell_command") {
-    return {
-      inputArg: "command",
-      descriptionArg: "description",
-      contentType: "bash"
-    };
-  } else if (toolName === "shell") {
-    return {
-      inputArg: "command",
-      contentType: "bash",
-      inputToStr: (input2) => {
-        if (Array.isArray(input2)) {
-          return input2.join(" ");
-        }
-        return void 0;
-      }
-    };
-  } else if (toolName == "TodoWrite") {
-    return {
-      inputArg: "todos",
-      contentType: kToolTodoContentType
-    };
-  } else if (toolName == "update_plan") {
-    return {
-      inputArg: "plan",
-      contentType: kToolTodoContentType
-    };
-  } else {
-    return void 0;
-  }
-};
-const extractInput = (args2, inputDescriptor) => {
-  const formatArg = (key2, value2) => {
-    const quotedValue = value2 === null ? "None" : typeof value2 === "string" ? `"${value2}"` : typeof value2 === "object" || Array.isArray(value2) ? JSON.stringify(value2, void 0, 2) : String(value2);
-    return `${key2}: ${quotedValue}`;
-  };
-  if (!args2) {
-    return {
-      args: []
-    };
-  }
-  if (inputDescriptor) {
-    const filterKeys = /* @__PURE__ */ new Set();
-    const base2 = {};
-    const inputArgs = inputDescriptor.inputArg ? Array.isArray(inputDescriptor.inputArg) ? inputDescriptor.inputArg : [inputDescriptor.inputArg] : [];
-    for (const inputArg of inputArgs) {
-      if (inputDescriptor.inputArg && args2[inputArg]) {
-        filterKeys.add(inputArg);
-        base2.input = inputDescriptor.inputToStr ? inputDescriptor.inputToStr(args2[inputArg]) || args2[inputArg] : args2[inputArg];
-      }
-    }
-    if (inputDescriptor.descriptionArg && args2[inputDescriptor.descriptionArg]) {
-      filterKeys.add(inputDescriptor.descriptionArg);
-      base2.description = String(args2[inputDescriptor.descriptionArg]);
-    }
-    const filteredArgs = Object.keys(args2).filter((key2) => {
-      return !filterKeys.has(key2);
-    }).map((key2) => {
-      return formatArg(key2, args2[key2]);
-    });
-    return {
-      ...base2,
-      args: filteredArgs
-    };
-  } else {
-    const formattedArgs = Object.keys(args2).map((key2) => {
-      return formatArg(key2, args2[key2]);
-    });
-    return {
-      args: formattedArgs
-    };
-  }
-};
-const toolCallView = "_toolCallView_10z2l_1";
-const styles$1j = {
-  toolCallView
-};
-const todoList = "_todoList_1t8rx_1";
-const inProgress = "_inProgress_1t8rx_9";
-const styles$1i = {
-  todoList,
-  inProgress
-};
-const toToolTodos = (obj) => {
-  if (Array.isArray(obj) && obj.every((item2) => typeof item2 === "object") && obj.every(
-    (item2) => item2 !== null && ("content" in item2 || "step" in item2) && "status" in item2
-  )) {
-    return obj.map((o2) => {
-      return {
-        content: o2.content || o2.step || "",
-        status: o2.status
-      };
-    });
-  } else {
-    return [];
-  }
-};
-const TodoWriteInput = ({ contents: contents2, parentRef }) => {
-  const todoItems = toToolTodos(contents2);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: parentRef, className: clsx(styles$1i.todoList), children: todoItems.map((todo) => {
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "i",
-        {
-          className: clsx(
-            todo.status === "completed" ? ApplicationIcons.checkbox.checked : ApplicationIcons.checkbox.unchecked,
-            "text-size-smallest"
-          )
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "span",
-        {
-          className: clsx(
-            styles$1i.todoItem,
-            "text-size-smallest",
-            todo.status === "in_progress" ? styles$1i.inProgress : void 0
-          ),
-          children: todo.content
-        }
-      )
-    ] });
-  }) });
-};
-const outputPre = "_outputPre_1jznn_1";
-const toolView = "_toolView_1jznn_7";
-const outputCode = "_outputCode_1jznn_15";
-const styles$1h = {
-  outputPre,
-  toolView,
-  outputCode
-};
-const ToolInput = (props) => {
-  const { contentType, contents: contents2, toolCallView: toolCallView2, className: className2 } = props;
-  const sourceCodeRef = reactExports.useRef(null);
-  const useToolView = toolCallView2 && isValidView(toolCallView2);
-  const sourceCodeLength = useToolView ? toolCallView2.content.length : contents2 ? typeof contents2 === "string" ? contents2.length : JSON.stringify(contents2).length : 0;
-  usePrismHighlight(sourceCodeRef, sourceCodeLength);
-  if (!contents2 && !useToolView) {
-    return null;
-  }
-  if (useToolView) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      RenderedText,
-      {
-        markdown: toolCallView2.content,
-        ref: sourceCodeRef,
-        className: clsx("tool-output", styles$1h.toolView, className2)
-      }
-    );
-  } else {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      RenderTool,
-      {
-        contents: contents2,
-        contentType: contentType || "",
-        parentRef: sourceCodeRef,
-        className: className2
-      }
-    );
-  }
-};
-const RenderTool = ({
-  contents: contents2,
-  contentType,
-  parentRef,
-  className: className2
-}) => {
-  if (contentType === kToolTodoContentType) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(TodoWriteInput, { contents: contents2, parentRef });
-  }
-  const formattedContent = typeof contents2 === "object" ? JSON.stringify(contents2) : contents2;
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: parentRef, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-    "pre",
-    {
-      className: clsx(
-        "tool-output",
-        styles$1h.outputPre,
-        styles$1h.bottomMargin,
-        className2
-      ),
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "code",
-        {
-          className: clsx(
-            "source-code",
-            "sourceCode",
-            contentType ? `language-${contentType}` : void 0,
-            styles$1h.outputCode
-          ),
-          children: formattedContent
-        }
-      )
-    }
-  ) });
-};
-const isValidView = (view) => {
-  if (view.content === "```bash\nbash\n```\n") {
-    return false;
-  }
-  return true;
-};
-const image = "_image_1vcac_1";
-const toolTitle = "_toolTitle_1vcac_6";
-const description = "_description_1vcac_10";
-const styles$1g = {
-  image,
-  toolTitle,
-  description
-};
-const ToolTitle = ({ title: title2, description: description2 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx("bi", "bi-tools", styles$1g.image) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("text-size-small", styles$1g.toolTitle), children: title2 }),
-    description2 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: clsx(styles$1g.description, "text-size-smallest"), children: [
-      "- ",
-      description2
-    ] }) : void 0
-  ] });
-};
-const ToolCallView = ({
-  id,
-  functionCall,
-  input: input2,
-  description: description2,
-  contentType,
-  view,
-  output: output2,
-  mode,
-  collapsible = true
-}) => {
-  function isContentImage(value2) {
-    if (value2 && typeof value2 === "object") {
-      if (value2.type === "image") {
-        return true;
-      } else if (value2.type === "tool") {
-        if (Array.isArray(value2.content) && value2.content.some(isContentImage)) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-  const collapse = Array.isArray(output2) ? output2.every((item2) => !isContentImage(item2)) : !isContentImage(output2);
-  const normalizedContent = reactExports.useMemo(() => normalizeContent$1(output2), [output2]);
-  const hasContent2 = normalizedContent.find((c2) => {
-    if (c2.type === "tool") {
-      for (const t2 of c2.content) {
-        if (t2.type === "text") {
-          if (t2.text) {
-            return true;
-          }
-        } else {
-          return true;
-        }
-      }
-      return false;
-    } else {
-      return true;
-    }
-  });
-  const contents2 = mode !== "compact" ? input2 : input2 || functionCall;
-  const context = defaultContext("tool");
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1j.toolCallView), children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-      mode !== "compact" && (!view || view.title) ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-        ToolTitle,
-        {
-          title: view?.title || functionCall,
-          description: description2
-        }
-      ) : "",
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        ToolInput,
-        {
-          contentType,
-          contents: contents2,
-          toolCallView: view
-        }
-      )
-    ] }),
-    hasContent2 && collapsible ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-      ExpandablePanel,
-      {
-        id: `${id}-tool-input`,
-        collapse,
-        border: true,
-        lines: 15,
-        className: clsx("text-size-small"),
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx(MessageContent, { contents: normalizedContent, context })
-      }
-    ) : /* @__PURE__ */ jsxRuntimeExports.jsx(MessageContent, { contents: normalizedContent, context })
-  ] });
-};
-const normalizeContent$1 = (output2) => {
-  if (Array.isArray(output2)) {
-    return output2;
-  } else {
-    return [
-      {
-        type: "tool",
-        content: [
-          {
-            type: "text",
-            text: String(output2),
-            refusal: null,
-            internal: null,
-            citations: null
-          }
-        ]
-      }
-    ];
-  }
-};
-const defaultContext = (role2) => {
-  return {
-    citeOffset: 0,
-    citations: [],
-    role: role2
-  };
-};
-const MessageContents = ({
-  id,
-  message: message2,
-  toolMessages,
-  toolCallStyle
-}) => {
-  const context = defaultContext(message2.role);
-  if (message2.role === "assistant" && message2.tool_calls && message2.tool_calls.length) {
-    const toolCalls = message2.tool_calls.map((tool_call, idx) => {
-      const { input: input2, description: description2, functionCall, contentType } = resolveToolInput(tool_call.function, tool_call.arguments);
-      let toolMessage;
-      if (tool_call.id) {
-        toolMessage = toolMessages.find((msg) => {
-          return msg.tool_call_id === tool_call.id;
-        });
-      } else {
-        toolMessage = toolMessages[idx];
-      }
-      const resolvedToolOutput = resolveToolMessage(toolMessage);
-      if (toolCallStyle === "compact") {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("code", { className: clsx(styles$1k.codeCompact), children: [
-          "tool: ",
-          functionCall
-        ] }) }, `tool-call-${idx}`);
-      } else if (toolCallStyle === "omit") {
-        return void 0;
-      } else {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(
-          ToolCallView,
-          {
-            id: `${id}-tool-call`,
-            functionCall,
-            input: input2,
-            description: description2,
-            contentType,
-            output: resolvedToolOutput,
-            collapsible: false,
-            view: tool_call.view ? substituteToolCallContent(
-              tool_call.view,
-              tool_call.arguments
-            ) : void 0
-          },
-          `tool-call-${idx}`
-        );
-      }
-    });
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-      message2.content && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1k.content, children: /* @__PURE__ */ jsxRuntimeExports.jsx(MessageContent, { contents: message2.content, context }) }),
-      toolCalls
-    ] });
-  } else {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: message2.content && /* @__PURE__ */ jsxRuntimeExports.jsx(MessageContent, { contents: message2.content, context }) });
-  }
-};
-const resolveToolMessage = (toolMessage) => {
-  if (!toolMessage) {
-    return [];
-  }
-  const content2 = toolMessage.error !== null && toolMessage.error ? toolMessage.error.message : toolMessage.content;
-  if (typeof content2 === "string") {
-    return [
-      {
-        type: "tool",
-        content: [
-          {
-            type: "text",
-            text: content2,
-            refusal: null,
-            internal: null,
-            citations: null
-          }
-        ]
-      }
-    ];
-  } else {
-    const result2 = content2.map((con) => {
-      if (typeof con === "string") {
-        return {
-          type: "tool",
-          content: [
-            {
-              type: "text",
-              text: con,
-              refusal: null,
-              internal: null,
-              citations: null
-            }
-          ]
-        };
-      } else if (["text", "image", "document"].includes(con.type)) {
-        return {
-          content: [con],
-          type: "tool"
-        };
-      }
-    }).filter((con) => con !== void 0);
-    return result2;
-  }
-};
-const ChatMessage = reactExports.memo(
-  ({
-    id,
-    message: message2,
-    toolMessages,
-    indented: indented2,
-    toolCallStyle,
-    allowLinking = true,
-    unlabeledRoles
-  }) => {
-    const messageUrl = useSampleMessageUrl(message2.id);
-    const [mouseOver, setMouseOver] = reactExports.useState(false);
-    const collapse = message2.role === "system" || message2.role === "user";
-    const hideRole = unlabeledRoles?.includes(message2.role) ?? false;
-    if (hideRole) {
-      const content2 = message2.content;
-      const hasVisibleContent = typeof content2 === "string" ? content2.trim().length > 0 : Array.isArray(content2) && content2.some((c2) => c2.type !== "tool_use");
-      const hasToolCalls = "tool_calls" in message2 && Array.isArray(message2.tool_calls) && message2.tool_calls.length > 0;
-      if (!hasVisibleContent && !hasToolCalls) {
-        return null;
-      }
-    }
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      "div",
-      {
-        className: clsx(
-          message2.role,
-          "text-size-base",
-          styles$1x.message,
-          message2.role === "system" ? styles$1x.systemRole : void 0,
-          message2.role === "user" ? styles$1x.userRole : void 0,
-          mouseOver ? styles$1x.hover : void 0
-        ),
-        onMouseEnter: () => setMouseOver(true),
-        onMouseLeave: () => setMouseOver(false),
-        children: [
-          !hideRole && /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            "div",
-            {
-              className: clsx(
-                styles$1x.messageGrid,
-                message2.role === "tool" ? styles$1x.toolMessageGrid : void 0,
-                "text-style-label"
-              ),
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                  message2.role,
-                  message2.role === "tool" ? `: ${message2.function}` : "",
-                  supportsLinking() && messageUrl && allowLinking ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    CopyButton,
-                    {
-                      icon: ApplicationIcons.link,
-                      value: toFullUrl(messageUrl),
-                      className: clsx(styles$1x.copyLink)
-                    }
-                  ) : ""
-                ] }),
-                message2.timestamp && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1x.timestamp, title: message2.timestamp, children: formatDateTime(new Date(message2.timestamp)) })
-              ]
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            "div",
-            {
-              className: clsx(
-                styles$1x.messageContents,
-                indented2 ? styles$1x.indented : void 0
-              ),
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  ExpandablePanel,
-                  {
-                    id: `${id}-message`,
-                    collapse,
-                    lines: collapse ? 15 : 25,
-                    children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-                      MessageContents,
-                      {
-                        id: `${id}-contents`,
-                        message: message2,
-                        toolMessages,
-                        toolCallStyle
-                      },
-                      `${id}-contents`
-                    )
-                  }
-                ),
-                message2.metadata && Object.keys(message2.metadata).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  LabeledValue,
-                  {
-                    label: "Metadata",
-                    className: clsx(styles$1x.metadataLabel, "text-size-smaller"),
-                    children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-                      RecordTree,
-                      {
-                        record: message2.metadata,
-                        id: `${id}-metadata`,
-                        defaultExpandLevel: 0
-                      }
-                    )
-                  }
-                ) : ""
-              ]
-            }
-          )
-        ]
-      }
-    );
-  }
-);
-const grid$7 = "_grid_gewjd_1";
-const number$1 = "_number_gewjd_10";
-const user = "_user_gewjd_14";
-const container$k = "_container_gewjd_19";
-const styles$1f = {
-  grid: grid$7,
-  number: number$1,
-  user,
-  container: container$k
-};
-const ChatMessageRow = ({
-  id,
-  number: number2,
-  resolvedMessage,
-  toolCallStyle,
-  indented: indented2,
-  highlightUserMessage,
-  allowLinking = true,
-  unlabeledRoles
-}) => {
-  if (number2) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      "div",
-      {
-        className: clsx(
-          styles$1f.grid,
-          styles$1f.container,
-          highlightUserMessage && resolvedMessage.message.role === "user" ? styles$1f.user : void 0
-        ),
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "div",
-            {
-              className: clsx(
-                "text-size-smaller",
-                "text-style-secondary",
-                styles$1f.number
-              ),
-              children: number2
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            ChatMessage,
-            {
-              id: `${id}-chat-messages`,
-              message: resolvedMessage.message,
-              toolMessages: resolvedMessage.toolMessages,
-              indented: indented2,
-              toolCallStyle,
-              allowLinking,
-              unlabeledRoles
-            }
-          )
-        ]
-      }
-    ) });
-  } else {
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      "div",
-      {
-        className: clsx(
-          styles$1f.container,
-          styles$1f.simple,
-          highlightUserMessage && resolvedMessage.message.role === "user" ? styles$1f.user : void 0
-        ),
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            ChatMessage,
-            {
-              id: `${id}-chat-messages`,
-              message: resolvedMessage.message,
-              toolMessages: resolvedMessage.toolMessages,
-              indented: indented2,
-              toolCallStyle,
-              allowLinking,
-              unlabeledRoles
-            }
-          ),
-          resolvedMessage.message.role === "user" ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { height: "10px" } }) : void 0
-        ]
-      }
-    );
-  }
-};
-const resolveMessages = (messages2) => {
-  const resolvedMessages = [];
-  let index = 0;
-  for (const message2 of messages2) {
-    if (message2.role === "tool") {
-      if (resolvedMessages.length > 0) {
-        const msg = resolvedMessages[resolvedMessages.length - 1];
-        msg.toolMessages = msg.toolMessages || [];
-        msg.toolMessages.push(message2);
-      }
-    } else {
-      resolvedMessages.push({ message: message2, toolMessages: [] });
-    }
-    if (message2.id === void 0) {
-      message2.id = `msg-${index}`;
-    }
-    index++;
-  }
-  const systemMessages = [];
-  const collapsedMessages = resolvedMessages.map((resolved) => {
-    if (resolved.message.role === "system") {
-      systemMessages.push(resolved.message);
-    }
-    return resolved;
-  }).filter((resolved) => {
-    return resolved.message.role !== "system";
-  });
-  const systemContent = [];
-  for (const systemMessage2 of systemMessages) {
-    const contents2 = Array.isArray(systemMessage2.content) ? systemMessage2.content : [systemMessage2.content];
-    systemContent.push(...contents2.map(normalizeContent));
-  }
-  const systemMessage = {
-    id: "sys-message-6815A84B062A",
-    role: "system",
-    content: systemContent,
-    source: "input",
-    metadata: null
-  };
-  if (systemMessage && systemMessage.content.length > 0) {
-    collapsedMessages.unshift({ message: systemMessage, toolMessages: [] });
-  }
-  return collapsedMessages;
-};
-const normalizeContent = (content2) => {
-  if (typeof content2 === "string") {
-    return {
-      type: "text",
-      text: content2,
-      refusal: null,
-      internal: null,
-      citations: null
-    };
-  } else {
-    return content2;
-  }
-};
-const messagesFromEvents = (runningEvents) => {
-  const messages2 = /* @__PURE__ */ new Map();
-  runningEvents.filter((e3) => e3.event === "model").forEach((e3) => {
-    for (const m2 of e3.input) {
-      const inputMessage = m2;
-      if (inputMessage.id && !messages2.has(inputMessage.id)) {
-        messages2.set(inputMessage.id, inputMessage);
-      }
-    }
-    const outputMessage = e3.output.choices[0].message;
-    if (outputMessage.id) {
-      messages2.set(outputMessage.id, outputMessage);
-    }
-  });
-  if (messages2.size > 0) {
-    return messages2.values().toArray();
-  } else {
-    return [];
-  }
-};
-const ChatView = ({
-  id,
-  messages: messages2,
-  toolCallStyle = "complete",
-  resolveToolCallsIntoPreviousMessage = true,
-  indented: indented2,
-  numbered = true,
-  className: className2,
-  allowLinking = true,
-  unlabeledRoles
-}) => {
-  const collapsedMessages = resolveToolCallsIntoPreviousMessage ? resolveMessages(messages2) : messages2.map((msg) => {
-    return {
-      message: msg,
-      toolMessages: []
-    };
-  });
-  const result2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(className2), children: collapsedMessages.map((msg, index) => {
-    const number2 = collapsedMessages.length > 1 && numbered ? index + 1 : void 0;
-    const rowId = (id || "chat-view") + `-msg-${index}`;
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      ChatMessageRow,
-      {
-        id: rowId,
-        number: number2,
-        resolvedMessage: msg,
-        indented: indented2,
-        toolCallStyle,
-        allowLinking,
-        highlightUserMessage: true,
-        unlabeledRoles
-      },
-      `${id}-msg-${index}`
-    );
-  }) });
-  return result2;
-};
-const ChatMessageRenderer = {
-  bucket: Buckets.first,
-  canRender: (entry) => {
-    const val = entry.value;
-    return Array.isArray(val) && val.length > 0 && val[0]?.role !== void 0 && val[0]?.content !== void 0;
-  },
-  render: (id, entry) => {
-    return {
-      rendered: /* @__PURE__ */ jsxRuntimeExports.jsxs(NavPills, { id: `${id}-navpills`, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(ChatSummary, { title: "Last Turn", id, messages: entry.value }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          ChatView,
-          {
-            title: "All",
-            id,
-            messages: entry.value,
-            allowLinking: false
-          }
-        )
-      ] })
-    };
-  }
-};
-const ChatSummary = ({ id, messages: messages2 }) => {
-  const summaryMessages = [];
-  for (const message2 of messages2.slice().reverse()) {
-    summaryMessages.unshift(message2);
-    if (message2.role === "user") {
-      break;
-    }
-  }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(ChatView, { id, messages: summaryMessages });
-};
-const query = "_query_seqs2_1";
-const summary$3 = "_summary_seqs2_6";
-const preWrap = "_preWrap_seqs2_10";
-const preCompact = "_preCompact_seqs2_15";
-const styles$1e = {
-  query,
-  summary: summary$3,
-  preWrap,
-  preCompact
-};
-const RenderedContent = ({
-  id,
-  entry,
-  renderOptions = { renderString: "markdown" },
-  renderObject
-}) => {
-  if (entry.value === null) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "[null]" });
-  }
-  const renderers = contentRenderers(renderObject);
-  const renderer = Object.keys(renderers).map((key2) => {
-    return renderers[key2];
-  }).sort((a2, b2) => {
-    return a2.bucket - b2.bucket;
-  }).find((renderer2) => {
-    return renderer2.canRender(entry);
-  });
-  if (renderer) {
-    const { rendered } = renderer.render(id, entry, renderOptions);
-    if (rendered !== void 0 && reactExports.isValidElement(rendered)) {
-      return rendered;
-    }
-  }
-  const displayValue = (() => {
-    try {
-      if (typeof entry.value === "object") {
-        return JSON.stringify(entry.value);
-      }
-      return String(entry.value).trim();
-    } catch (e3) {
-      return "[Unable to display value]";
-    }
-  })();
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: displayValue });
-};
-const contentRenderers = (renderObject) => {
-  const contentRenderers2 = {
-    AnsiString: {
-      bucket: Buckets.first,
-      canRender: (entry) => {
-        return typeof entry.value === "string" && entry.value.indexOf("\x1B") > -1;
-      },
-      render: (_id, entry, _options) => {
-        return {
-          rendered: /* @__PURE__ */ jsxRuntimeExports.jsx(ANSIDisplay, { output: entry.value })
-        };
-      }
-    },
-    JsonString: {
-      bucket: Buckets.first,
-      canRender: (entry) => {
-        if (typeof entry.value === "string") {
-          const trimmed = entry.value.trim();
-          return isJson(trimmed);
-        }
-        return false;
-      },
-      render: (_id, entry, _options) => {
-        const obj = lib$1.parse(entry.value);
-        return {
-          rendered: /* @__PURE__ */ jsxRuntimeExports.jsx(JSONPanel, { data: obj })
-        };
-      }
-    },
-    Model: {
-      bucket: Buckets.intermediate,
-      canRender: (entry) => {
-        return typeof entry.value === "object" && entry.value._model;
-      },
-      render: (_id, entry, _options) => {
-        return {
-          rendered: /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.model }),
-            " ",
-            entry.value._model
-          ] })
-        };
-      }
-    },
-    Boolean: {
-      bucket: Buckets.intermediate,
-      canRender: (entry) => {
-        return typeof entry.value === "boolean";
-      },
-      render: (id, entry, options) => {
-        entry.value = entry.value.toString();
-        return contentRenderers2.String.render(id, entry, options);
-      }
-    },
-    Number: {
-      bucket: Buckets.intermediate,
-      canRender: (entry) => {
-        return typeof entry.value === "number";
-      },
-      render: (id, entry, options) => {
-        entry.value = formatNumber(entry.value);
-        return contentRenderers2.String.render(id, entry, options);
-      }
-    },
-    String: {
-      bucket: Buckets.final,
-      canRender: (entry) => {
-        return typeof entry.value === "string";
-      },
-      render: (_id, entry, options) => {
-        const rendered = entry.value.trim();
-        if (options.renderString === "markdown") {
-          return {
-            rendered: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: rendered })
-          };
-        } else {
-          return {
-            rendered: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1e.preWrap, styles$1e.preCompact), children: rendered })
-          };
-        }
-      }
-    },
-    Array: {
-      bucket: Buckets.intermediate,
-      canRender: (entry) => {
-        const isArray2 = Array.isArray(entry.value);
-        if (isArray2) {
-          if (entry.value.length === 0 || entry.value.length === 1) {
-            return true;
-          }
-          const types2 = new Set(
-            entry.value.filter((e3) => e3 !== null).map((e3) => {
-              return typeof e3;
-            })
-          );
-          return types2.size === 1;
-        } else {
-          return false;
-        }
-      },
-      render: (id, entry, _options) => {
-        const arrayMap = {};
-        entry.value.forEach((e3, index) => {
-          arrayMap[`[${index}]`] = e3;
-        });
-        const arrayRendered = renderObject ? renderObject(arrayMap) : /* @__PURE__ */ jsxRuntimeExports.jsx(
-          MetaDataGrid,
-          {
-            id,
-            className: "font-size-small",
-            entries: arrayMap,
-            plain: true
-          }
-        );
-        return { rendered: arrayRendered };
-      }
-    },
-    ChatMessage: ChatMessageRenderer,
-    web_search: {
-      bucket: Buckets.intermediate,
-      canRender: (entry) => {
-        return typeof entry.value === "object" && entry.name === "web_search";
-      },
-      render: (_id, entry, _options) => {
-        const results = [];
-        results.push(
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1e.query, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.search }),
-            " ",
-            entry.value.query
-          ] })
-        );
-        entry.value.results.forEach(
-          (result2) => {
-            results.push(
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: result2.url, children: result2.url }) })
-            );
-            results.push(
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-smaller", styles$1e.summary), children: result2.summary })
-            );
-          }
-        );
-        return {
-          rendered: results
-        };
-      }
-    },
-    web_browser: {
-      bucket: Buckets.intermediate,
-      canRender: (entry) => {
-        return typeof entry.value === "string" && entry.name?.startsWith("web_browser");
-      },
-      render: (_id, entry, _options) => {
-        return {
-          rendered: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$1e.preWrap, children: entry.value })
-        };
-      }
-    },
-    Html: {
-      bucket: Buckets.intermediate,
-      canRender: (entry) => {
-        return typeof entry.value === "object" && entry.value._html;
-      },
-      render: (_id, entry, _options) => {
-        return {
-          rendered: entry.value._html
-        };
-      }
-    },
-    MessageContent: {
-      bucket: Buckets.first,
-      canRender: (entry) => {
-        return Array.isArray(entry.value) && entry.value.every((item2) => {
-          return isMessageContent(item2);
-        });
-      },
-      render: (_id, entry, _options) => {
-        return {
-          rendered: /* @__PURE__ */ jsxRuntimeExports.jsx(
-            MessageContent,
-            {
-              contents: entry.value,
-              context: defaultContext("unknown")
-            }
-          )
-        };
-      }
-    },
-    Image: {
-      bucket: Buckets.intermediate,
-      canRender: (entry) => {
-        return typeof entry.value === "string" && entry.value.startsWith("data:image/");
-      },
-      render: (_id, entry, _options) => {
-        return {
-          rendered: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: entry.value })
-        };
-      }
-    },
-    Object: {
-      bucket: Buckets.intermediate,
-      canRender: (entry) => {
-        return typeof entry.value === "object";
-      },
-      render: (id, entry, _options) => {
-        if (renderObject) {
-          return { rendered: renderObject(entry.value) };
-        } else {
-          return {
-            rendered: /* @__PURE__ */ jsxRuntimeExports.jsx(
-              MetaDataGrid,
-              {
-                id,
-                className: "font-size-small",
-                entries: entry.value,
-                plain: true
-              }
-            )
-          };
-        }
-      }
-    }
-  };
-  return contentRenderers2;
-};
 const otherScoreDescriptor = () => {
   return {
     scoreType: kScoreTypeOther,
@@ -75418,7 +70051,7 @@ const circle = "_circle_1iagp_1";
 const green = "_green_1iagp_12";
 const red = "_red_1iagp_18";
 const orange = "_orange_1iagp_24";
-const styles$1d = {
+const styles$1v = {
   circle,
   green,
   red,
@@ -75459,22 +70092,22 @@ const passFailScoreDescriptor = (values) => {
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           "span",
           {
-            className: clsx("text-size-small", styles$1d.circle, styles$1d.green),
+            className: clsx("text-size-small", styles$1v.circle, styles$1v.green),
             children: "C"
           }
         );
       } else if (score2 === "I") {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-size-small", styles$1d.circle, styles$1d.red), children: "I" });
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-size-small", styles$1v.circle, styles$1v.red), children: "I" });
       } else if (score2 === "P") {
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           "span",
           {
-            className: clsx("text-size-small", styles$1d.circle, styles$1d.orange),
+            className: clsx("text-size-small", styles$1v.circle, styles$1v.orange),
             children: "P"
           }
         );
       } else if (score2 === "N") {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-size-small", styles$1d.circle, styles$1d.red), children: "N" });
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-size-small", styles$1v.circle, styles$1v.red), children: "N" });
       } else {
         return String(score2);
       }
@@ -78750,7 +73383,7 @@ const useCollapseSampleEvent = (scope, id) => {
   }, [collapsed2, scope, id, collapseEvent]);
 };
 const useMessageVisibility = (id, scope) => {
-  const visible2 = useStore(
+  const visible = useStore(
     (state) => state.appActions.getMessageVisible(id, true)
   );
   const setVisible = useStore((state) => state.appActions.setMessageVisible);
@@ -78780,13 +73413,13 @@ const useMessageVisibility = (id, scope) => {
     }
   }, [selectedSampleHandle, clearVisible, id, scope]);
   return reactExports.useMemo(() => {
-    log$3.debug("visibility", id, visible2);
-    const set3 = (visible22) => {
+    log$3.debug("visibility", id, visible);
+    const set3 = (visible2) => {
       log$3.debug("set visiblity", id);
-      setVisible(id, visible22);
+      setVisible(id, visible2);
     };
-    return [visible2, set3];
-  }, [visible2, setVisible, id]);
+    return [visible, set3];
+  }, [visible, setVisible, id]);
 };
 const usePrevious = (value2) => {
   const ref2 = reactExports.useRef(void 0);
@@ -79023,9 +73656,327 @@ function useClientEvents() {
     cleanup
   };
 }
+const decodeUrlParam = (param) => {
+  if (!param) return param;
+  try {
+    return decodeURIComponent(param);
+  } catch {
+    return param;
+  }
+};
+const useLogOrSampleRouteParams = () => {
+  const location2 = useLocation();
+  const logParams = useLogRouteParams();
+  const sampleParams = useSamplesRouteParams();
+  if (location2.pathname.startsWith("/samples/")) {
+    return {
+      logPath: sampleParams.samplesPath,
+      id: sampleParams.sampleId,
+      epoch: sampleParams.epoch,
+      sampleTabId: sampleParams.tabId,
+      tabId: void 0,
+      uuid: void 0
+    };
+  } else {
+    return {
+      logPath: logParams.logPath,
+      id: logParams.sampleId,
+      epoch: logParams.epoch,
+      tabId: logParams.tabId,
+      sampleTabId: logParams.sampleTabId,
+      uuid: logParams.sampleUuid
+    };
+  }
+};
+const useLogRouteParams = () => {
+  const location2 = useLocation();
+  return reactExports.useMemo(() => {
+    const rawPath = location2.pathname;
+    const logsMatch = rawPath.match(/^\/logs\/(.*)$/);
+    const splatPath = logsMatch ? logsMatch[1] : "";
+    const sampleUuidMatch = splatPath.match(
+      /^(.+?)\/samples\/sample_uuid\/([^/]+)(?:\/(.+?))?\/?\s*$/
+    );
+    if (sampleUuidMatch) {
+      const [, logPath, sampleUuid, sampleTabId] = sampleUuidMatch;
+      return {
+        logPath: decodeUrlParam(logPath),
+        tabId: void 0,
+        sampleTabId: decodeUrlParam(sampleTabId),
+        sampleId: void 0,
+        epoch: void 0,
+        sampleUuid: decodeUrlParam(sampleUuid)
+      };
+    }
+    const fullSampleUrlMatch = splatPath.match(
+      /^(.+?)\/samples\/sample\/([^/]+)(?:\/([^/]+)(?:\/(.+?))?)?\/?\s*$/
+    );
+    if (fullSampleUrlMatch) {
+      const [, logPath, sampleId, epoch, sampleTabId] = fullSampleUrlMatch;
+      return {
+        logPath: decodeUrlParam(logPath),
+        tabId: void 0,
+        sampleTabId: decodeUrlParam(sampleTabId),
+        sampleId: decodeUrlParam(sampleId),
+        epoch: epoch ? decodeUrlParam(epoch) : void 0
+      };
+    }
+    const sampleUrlMatch = splatPath.match(
+      /^(.+?)\/samples(?:\/([^/]+)(?:\/([^/]+))?)?$/
+    );
+    if (sampleUrlMatch) {
+      const [, logPath, firstSegment, secondSegment] = sampleUrlMatch;
+      if (firstSegment) {
+        const validSampleTabIds = new Set(kSampleTabIds);
+        if (validSampleTabIds.has(firstSegment) && !secondSegment) {
+          return {
+            logPath: decodeUrlParam(logPath),
+            tabId: "samples",
+            sampleTabId: decodeUrlParam(firstSegment),
+            sampleId: void 0,
+            epoch: void 0
+          };
+        } else {
+          return {
+            logPath: decodeUrlParam(logPath),
+            tabId: void 0,
+            sampleTabId: void 0,
+            sampleId: decodeUrlParam(firstSegment),
+            epoch: secondSegment ? decodeUrlParam(secondSegment) : void 0
+          };
+        }
+      } else {
+        return {
+          logPath: decodeUrlParam(logPath),
+          tabId: "samples",
+          sampleTabId: void 0,
+          sampleId: void 0,
+          epoch: void 0
+        };
+      }
+    }
+    const pathSegments = splatPath.split("/").filter(Boolean);
+    if (pathSegments.length === 0) {
+      return {
+        logPath: void 0,
+        tabId: void 0,
+        sampleTabId: void 0,
+        sampleId: void 0,
+        epoch: void 0
+      };
+    }
+    const validTabIds = new Set(kWorkspaceTabs);
+    let tabIdIndex = -1;
+    let foundTabId = void 0;
+    for (let i4 = pathSegments.length - 1; i4 >= 0; i4--) {
+      const segment2 = pathSegments[i4];
+      const decodedSegment = decodeUrlParam(segment2) || segment2;
+      if (validTabIds.has(decodedSegment)) {
+        tabIdIndex = i4;
+        foundTabId = decodedSegment;
+        break;
+      }
+    }
+    if (foundTabId && tabIdIndex > 0) {
+      const pathSlice = pathSegments.slice(0, tabIdIndex);
+      const firstSegment = pathSlice[0];
+      const logPath = firstSegment?.endsWith(":") && !firstSegment.includes("://") ? firstSegment + (firstSegment === "file:" ? "///" : "//") + pathSlice.slice(1).join("/") : pathSlice.join("/");
+      return {
+        logPath: decodeUrlParam(logPath),
+        tabId: foundTabId,
+        sampleTabId: void 0,
+        sampleId: void 0,
+        epoch: void 0
+      };
+    } else {
+      return {
+        logPath: decodeUrlParam(splatPath),
+        tabId: void 0,
+        sampleTabId: void 0,
+        sampleId: void 0,
+        epoch: void 0
+      };
+    }
+  }, [location2.pathname]);
+};
+const useSamplesRouteParams = () => {
+  const location2 = useLocation();
+  return reactExports.useMemo(() => {
+    const rawPath = location2.pathname;
+    const samplesMatch = rawPath.match(/^\/samples\/(.*)$/);
+    const splatPath = samplesMatch ? samplesMatch[1] : "";
+    const sampleMatch = splatPath.match(
+      /^(.+?)\/sample\/([^/]+)\/([^/]+)(?:\/([^/]+))?\/?$/
+    );
+    if (sampleMatch) {
+      const [, logPath, sampleId, epoch, tabId] = sampleMatch;
+      return {
+        samplesPath: decodeUrlParam(logPath),
+        sampleId: decodeUrlParam(sampleId),
+        epoch: decodeUrlParam(epoch),
+        tabId: tabId ? decodeUrlParam(tabId) : void 0
+      };
+    }
+    return {
+      samplesPath: splatPath ? decodeUrlParam(splatPath) : void 0,
+      sampleId: void 0,
+      epoch: void 0,
+      tabId: void 0
+    };
+  }, [location2.pathname]);
+};
+const kLogsRoutUrlPattern = "/logs";
+const kLogRouteUrlPattern = "/logs/*";
+const baseUrl = (logPath, sampleId, sampleEpoch) => {
+  if (sampleId !== void 0 && sampleEpoch !== void 0) {
+    return logSamplesUrl(logPath, sampleId, sampleEpoch);
+  } else {
+    return logsUrl(logPath);
+  }
+};
+const useSampleUrlBuilder = () => {
+  const location2 = useLocation();
+  return (logPath, sampleId, sampleEpoch, sampleTabId) => {
+    if (sampleId && sampleEpoch && location2.pathname.startsWith("/samples/")) {
+      return samplesSampleUrl(logPath, sampleId, sampleEpoch, sampleTabId);
+    } else {
+      return logSamplesUrl(logPath, sampleId, sampleEpoch, sampleTabId);
+    }
+  };
+};
+const logSamplesUrl = (logPath, sampleId, sampleEpoch, sampleTabId) => {
+  const decodedLogPath = decodeUrlParam(logPath) || logPath;
+  if (sampleId !== void 0 && sampleEpoch !== void 0) {
+    const encodedSampleId = encodeURIComponent(String(sampleId));
+    return encodePathParts(
+      `/logs/${decodedLogPath}/samples/sample/${encodedSampleId}/${sampleEpoch}/${sampleTabId || ""}`
+    );
+  } else {
+    return encodePathParts(
+      `/logs/${decodedLogPath}/samples/${sampleTabId || ""}`
+    );
+  }
+};
+const printSampleUrl = (logPath, sampleId, epoch, view) => {
+  const decodedLogPath = decodeUrlParam(logPath) || logPath;
+  const encodedSampleId = encodeURIComponent(String(sampleId));
+  return encodePathParts(
+    `/logs/${decodedLogPath}/samples/sample/${encodedSampleId}/${epoch}/print`
+  ) + `?view=${view}`;
+};
+const samplesSampleUrl = (logPath, sampleId, epoch, sampleTabId) => {
+  const decodedLogPath = decodeUrlParam(logPath) || logPath;
+  const encodedSampleId = encodeURIComponent(String(sampleId));
+  return encodePathParts(
+    `/samples/${decodedLogPath}/sample/${encodedSampleId}/${epoch}/${sampleTabId || ""}`
+  );
+};
+const sampleEventUrl = (builder, eventId, logPath, sampleId, sampleEpoch) => {
+  const baseUrl2 = builder(
+    logPath,
+    sampleId,
+    sampleEpoch,
+    kSampleTranscriptTabId
+  );
+  return `${baseUrl2}?event=${eventId}`;
+};
+const useSampleMessageUrl = (messageId, sampleId, sampleEpoch) => {
+  const {
+    logPath: urlLogPath,
+    id: urlSampleId,
+    epoch: urlEpoch
+  } = useLogOrSampleRouteParams();
+  const builder = useSampleUrlBuilder();
+  const log_file = useStore((state) => state.logs.selectedLogFile);
+  const log_dir = useStore((state) => state.logs.logDir);
+  let targetLogPath = urlLogPath;
+  if (!targetLogPath && log_file) {
+    targetLogPath = makeLogsPath(log_file, log_dir);
+  }
+  const messageUrl = reactExports.useMemo(() => {
+    return messageId && targetLogPath ? sampleMessageUrl(
+      builder,
+      messageId,
+      targetLogPath,
+      urlSampleId,
+      urlEpoch
+    ) : void 0;
+  }, [
+    messageId,
+    targetLogPath,
+    builder,
+    sampleId,
+    urlSampleId,
+    sampleEpoch,
+    urlEpoch
+  ]);
+  return messageUrl;
+};
+const useSampleEventUrl = (eventId, sampleId, sampleEpoch) => {
+  const {
+    logPath: urlLogPath,
+    id: urlSampleId,
+    epoch: urlEpoch
+  } = useLogOrSampleRouteParams();
+  const builder = useSampleUrlBuilder();
+  const log_file = useStore((state) => state.logs.selectedLogFile);
+  const log_dir = useStore((state) => state.logs.logDir);
+  let targetLogPath = urlLogPath;
+  if (!targetLogPath && log_file) {
+    targetLogPath = makeLogsPath(log_file, log_dir);
+  }
+  const eventUrl = reactExports.useMemo(() => {
+    return targetLogPath ? sampleEventUrl(
+      builder,
+      eventId,
+      targetLogPath,
+      urlSampleId,
+      urlEpoch
+    ) : void 0;
+  }, [
+    targetLogPath,
+    builder,
+    eventId,
+    sampleId,
+    urlSampleId,
+    sampleEpoch,
+    urlEpoch
+  ]);
+  return eventUrl;
+};
+const sampleMessageUrl = (builder, messageId, logPath, sampleId, sampleEpoch) => {
+  const baseUrl2 = builder(logPath, sampleId, sampleEpoch, kSampleMessagesTabId);
+  return `${baseUrl2}?message=${messageId}`;
+};
+const samplesUrl = (log_file, log_dir) => {
+  const path = makeLogsPath(log_file, log_dir);
+  const decodedLogSegment = decodeUrlParam(path) || path;
+  return encodePathParts(`/samples/${decodedLogSegment}`);
+};
+const logsUrl = (log_file, log_dir, tabId) => {
+  return logsUrlRaw(makeLogsPath(log_file, log_dir), tabId);
+};
+const makeLogsPath = (log_file, log_dir) => {
+  const pathSegment = directoryRelativeUrl(log_file, log_dir);
+  return pathSegment;
+};
+const logsUrlRaw = (log_segment, tabId) => {
+  const decodedLogSegment = decodeUrlParam(log_segment) || log_segment;
+  if (tabId) {
+    return encodePathParts(`/logs/${decodedLogSegment}/${tabId}`);
+  } else {
+    return encodePathParts(`/logs/${decodedLogSegment}`);
+  }
+};
+const supportsLinking = () => {
+  return location.hostname !== "localhost" && location.hostname !== "127.0.0.1" && location.protocol !== "vscode-webview:";
+};
+const toFullUrl = (path) => {
+  return `${window.location.origin}${window.location.pathname}${window.location.search}#${path}`;
+};
 const button$3 = "_button_1bbut_1";
 const viewerOptions$1 = "_viewerOptions_1bbut_7";
-const styles$1c = {
+const styles$1u = {
   button: button$3,
   viewerOptions: viewerOptions$1
 };
@@ -79045,14 +73996,14 @@ const FlowButton = reactExports.forwardRef(
       {
         ref: ref2,
         type: "button",
-        className: clsx(styles$1c.button),
+        className: clsx(styles$1u.button),
         onClick: navigate,
         title: "View Flow configuration for this directory",
         children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           "i",
           {
             ref: ref2,
-            className: clsx(ApplicationIcons.flow, styles$1c.viewerOptions)
+            className: clsx(ApplicationIcons.flow, styles$1u.viewerOptions)
           }
         )
       }
@@ -79073,21 +74024,21 @@ const useFlowServerData = (dir) => {
     }
   }, [dir, flowDir, api2, updateFlowData]);
 };
-const wrapper$3 = "_wrapper_44dmw_1";
-const container$j = "_container_44dmw_12";
+const wrapper$4 = "_wrapper_44dmw_1";
+const container$k = "_container_44dmw_12";
 const animate = "_animate_44dmw_21";
 const determinate = "_determinate_44dmw_31";
-const styles$1b = {
-  wrapper: wrapper$3,
-  container: container$j,
+const styles$1t = {
+  wrapper: wrapper$4,
+  container: container$k,
   animate,
   determinate
 };
 const ActivityBar = ({ animating, progress: progress2 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1b.wrapper), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1t.wrapper), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
     {
-      className: clsx(styles$1b.container),
+      className: clsx(styles$1t.container),
       role: "progressbar",
       "aria-label": "Progress bar",
       "aria-valuenow": progress2 !== void 0 ? Math.round(progress2 * 100) : void 0,
@@ -79096,16 +74047,16 @@ const ActivityBar = ({ animating, progress: progress2 }) => {
       children: animating && (progress2 !== void 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
         {
-          className: styles$1b.determinate,
+          className: styles$1t.determinate,
           style: { width: `${progress2 * 100}%` }
         }
-      ) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1b.animate }))
+      ) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1t.animate }))
     }
   ) });
 };
 const button$2 = "_button_1bbut_1";
 const viewerOptions = "_viewerOptions_1bbut_7";
-const styles$1a = {
+const styles$1s = {
   button: button$2,
   viewerOptions
 };
@@ -79118,36 +74069,36 @@ const ViewerOptionsButton = reactExports.forwardRef(({ showing, setShowing }, re
     {
       ref: ref2,
       type: "button",
-      className: clsx(styles$1a.button),
+      className: clsx(styles$1s.button),
       onClick: toggleShowing,
       title: "Viewer information and options",
       children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         "i",
         {
           ref: ref2,
-          className: clsx(ApplicationIcons.info, styles$1a.viewerOptions)
+          className: clsx(ApplicationIcons.info, styles$1s.viewerOptions)
         }
       )
     }
   ) });
 });
-const container$i = "_container_e3s30_1";
+const container$j = "_container_e3s30_1";
 const fullWidth$2 = "_fullWidth_e3s30_9";
 const fullWidthPadded = "_fullWidthPadded_e3s30_13";
 const spacer$1 = "_spacer_e3s30_18";
 const logDir = "_logDir_e3s30_38";
 const clearButton = "_clearButton_e3s30_52";
-const message$2 = "_message_e3s30_56";
+const message$3 = "_message_e3s30_56";
 const messageSuccess = "_messageSuccess_e3s30_64";
 const messageError = "_messageError_e3s30_69";
-const styles$19 = {
-  container: container$i,
+const styles$1r = {
+  container: container$j,
   fullWidth: fullWidth$2,
   fullWidthPadded,
   spacer: spacer$1,
   logDir,
   clearButton,
-  message: message$2,
+  message: message$3,
   messageSuccess,
   messageError
 };
@@ -79192,32 +74143,32 @@ const ViewerOptionsPopover = ({
       hoverDelay: -1,
       offset: [-10, 5],
       showArrow: false,
-      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$19.container, "text-size-smaller"), children: [
+      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1r.container, "text-size-smaller"), children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
             className: clsx(
               "text-style-label",
               "text-style-secondary",
-              styles$19.fullWidth
+              styles$1r.fullWidth
             ),
             children: "Log Directory"
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$19.fullWidth, styles$19.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$19.logDir, children: logDir2 }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$19.spacer) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1r.fullWidth, styles$1r.fullWidthPadded), children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1r.logDir, children: logDir2 }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1r.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Version" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: "unknown" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Schema" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: DB_VERSION }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$19.spacer) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1r.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Logs" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: dbStats?.logCount || 0 }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Log Previews" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: dbStats?.previewCount || 0 }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Log Details" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(), children: dbStats?.detailsCount || 0 }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$19.spacer) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1r.spacer) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Tools" }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(), children: [
           " ",
@@ -79230,7 +74181,7 @@ const ViewerOptionsPopover = ({
                 "btn",
                 "btn-tools",
                 "text-size-smallest",
-                styles$19.clearButton
+                styles$1r.clearButton
               ),
               children: isClearing ? "Clearing..." : "Clear Local Database"
             }
@@ -79240,9 +74191,9 @@ const ViewerOptionsPopover = ({
           "div",
           {
             className: clsx(
-              styles$19.fullWidth,
-              styles$19.message,
-              clearMessage.includes("success") ? styles$19.messageSuccess : styles$19.messageError
+              styles$1r.fullWidth,
+              styles$1r.message,
+              clearMessage.includes("success") ? styles$1r.messageSuccess : styles$1r.messageError
             ),
             children: clearMessage
           }
@@ -79259,7 +74210,7 @@ const left$1 = "_left_1u3sd_31";
 const right$1 = "_right_1u3sd_41";
 const toolbarButton = "_toolbarButton_1u3sd_50";
 const pathContainer = "_pathContainer_1u3sd_58";
-const styles$18 = {
+const styles$1q = {
   header: header$2,
   bordered,
   breadcrumbs,
@@ -79401,30 +74352,30 @@ const Navbar = ({
       className: clsx(
         "text-size-smaller",
         "header-nav",
-        styles$18.header,
-        bordered2 === false ? null : styles$18.bordered
+        styles$1q.header,
+        bordered2 === false ? null : styles$1q.bordered
       ),
       "aria-label": "breadcrumb",
       "data-unsearchable": true,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$18.left), children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: backUrl, className: clsx(styles$18.toolbarButton), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.navbar.back) }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1q.left), children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: backUrl, className: clsx(styles$1q.toolbarButton), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.navbar.back) }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             Link,
             {
               to: fnNavigationUrl("", logDir2),
-              className: clsx(styles$18.toolbarButton),
+              className: clsx(styles$1q.toolbarButton),
               children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.navbar.home) })
             }
           ),
-          breadcrumbsEnabled !== false && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$18.pathContainer), ref: pathContainerRef, children: logDir2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("ol", { className: clsx("breadcrumb", styles$18.breadcrumbs), children: visibleSegments?.map((segment2, index) => {
+          breadcrumbsEnabled !== false && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.pathContainer), ref: pathContainerRef, children: logDir2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("ol", { className: clsx("breadcrumb", styles$1q.breadcrumbs), children: visibleSegments?.map((segment2, index) => {
             const isLast = index === visibleSegments.length - 1;
             const shouldShowEllipsis = showEllipsis && index === 1 && visibleSegments.length >= 2;
             return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
               shouldShowEllipsis && /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "li",
                 {
-                  className: clsx("breadcrumb-item", styles$18.ellipsis),
+                  className: clsx("breadcrumb-item", styles$1q.ellipsis),
                   children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "..." })
                 }
               ),
@@ -79432,17 +74383,17 @@ const Navbar = ({
                 "li",
                 {
                   className: clsx(
-                    styles$18.pathLink,
+                    styles$1q.pathLink,
                     "breadcrumb-item",
                     isLast ? "active" : void 0
                   ),
-                  children: segment2.url && !isLast ? /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: segment2.url, children: segment2.text }) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx(styles$18.pathSegment), children: segment2.text })
+                  children: segment2.url && !isLast ? /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: segment2.url, children: segment2.text }) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx(styles$1q.pathSegment), children: segment2.text })
                 }
               )
             ] }, index);
           }) }) : "" })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$18.right), children: children2 })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1q.right), children: children2 })
       ]
     }
   );
@@ -79506,7 +74457,7 @@ const ApplicationNavbar = ({
   ] });
 };
 const navbarButton = "_navbarButton_1gksz_1";
-const styles$17 = {
+const styles$1p = {
   navbarButton
 };
 const NavbarButton = reactExports.forwardRef(
@@ -79516,7 +74467,7 @@ const NavbarButton = reactExports.forwardRef(
       {
         ref: ref2,
         label: label2,
-        className: clsx(className2, styles$17.navbarButton),
+        className: clsx(className2, styles$1p.navbarButton),
         icon: icon2,
         latched: latched2,
         ...rest
@@ -79572,7 +74523,7 @@ const headerRow = "_headerRow_vtlwq_30";
 const buttonContainer = "_buttonContainer_vtlwq_39";
 const button$1 = "_button_vtlwq_39";
 const columnsLayout = "_columnsLayout_vtlwq_54";
-const styles$16 = {
+const styles$1o = {
   checkboxWrapper,
   label: label$8,
   checkbox,
@@ -79649,20 +74600,20 @@ const ColumnSelectorPopover = ({
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
-        className: styles$16.checkboxWrapper,
+        className: styles$1o.checkboxWrapper,
         title: hasFilter ? "Unselecting will remove an active filter on this column" : void 0,
-        children: /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: styles$16.label, children: [
+        children: /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: styles$1o.label, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "input",
             {
               type: "checkbox",
               checked: currentVisibility[field],
               onChange: () => handleToggle(field),
-              className: styles$16.checkbox
+              className: styles$1o.checkbox
             }
           ),
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: col.headerName || field }),
-          hasFilter && /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: `${ApplicationIcons.filter} ${styles$16.filterIcon}` })
+          hasFilter && /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: `${ApplicationIcons.filter} ${styles$1o.filterIcon}` })
         ] })
       },
       field
@@ -79678,16 +74629,16 @@ const ColumnSelectorPopover = ({
       placement: "bottom-start",
       showArrow: false,
       hoverDelay: -1,
-      className: styles$16.popover,
-      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$16.scrollableContainer, "text-size-small"), children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$16.section), children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$16.headerRow, children: [
+      className: styles$1o.popover,
+      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1o.scrollableContainer, "text-size-small"), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1o.section), children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1o.headerRow, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: "Base" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$16.buttonContainer, "text-size-small"), children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1o.buttonContainer, "text-size-small"), children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "a",
                 {
-                  className: clsx(styles$16.button, "text-size-small"),
+                  className: clsx(styles$1o.button, "text-size-small"),
                   onClick: handleSelectAllBase,
                   children: "All"
                 }
@@ -79696,23 +74647,23 @@ const ColumnSelectorPopover = ({
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "a",
                 {
-                  className: clsx(styles$16.button),
+                  className: clsx(styles$1o.button),
                   onClick: handleDeselectAllBase,
                   children: "None"
                 }
               )
             ] })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$16.columnsLayout, children: columnGroups.base.map((col) => renderColumnCheckbox(col)) })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1o.columnsLayout, children: columnGroups.base.map((col) => renderColumnCheckbox(col)) })
         ] }),
         columnGroups.scores.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$16.headerRow, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1o.headerRow, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: "Scorers" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$16.buttonContainer, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$1o.buttonContainer, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "a",
                 {
-                  className: clsx(styles$16.button),
+                  className: clsx(styles$1o.button),
                   onClick: handleSelectAllScores,
                   children: "All"
                 }
@@ -79721,14 +74672,14 @@ const ColumnSelectorPopover = ({
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "a",
                 {
-                  className: clsx(styles$16.button),
+                  className: clsx(styles$1o.button),
                   onClick: handleDeselectAllScores,
                   children: "None"
                 }
               )
             ] })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$16.columnsLayout, children: columnGroups.scores.map((col) => renderColumnCheckbox(col)) })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1o.columnsLayout, children: columnGroups.scores.map((col) => renderColumnCheckbox(col)) })
         ] })
       ] })
     }
@@ -79752,6 +74703,32 @@ const parseLogFileName = (logFileName) => {
     extension: match2[4]
   };
 };
+const formatTime = (seconds) => {
+  if (seconds < 60) {
+    return `${formatPrettyDecimal(seconds, 1)} sec`;
+  } else if (seconds < 60 * 60) {
+    return `${Math.floor(seconds / 60)} min ${Math.floor(seconds % 60)} sec`;
+  } else if (seconds < 60 * 60 * 24) {
+    const hours = Math.floor(seconds / (60 * 60));
+    const minutes = Math.floor(seconds % (60 * 60) / 60);
+    const remainingSeconds = seconds % 60;
+    return `${hours} hr ${minutes} min ${Math.floor(remainingSeconds)} sec`;
+  } else {
+    const days = Math.floor(seconds / (60 * 60 * 24));
+    const hours = Math.floor(seconds % (60 * 60 * 24) / (60 * 60));
+    const minutes = Math.floor(seconds % (60 * 60) / 60);
+    const remainingSeconds = seconds % 60;
+    return `${days} days ${hours} hr ${minutes} min ${Math.floor(remainingSeconds)} sec`;
+  }
+};
+function formatDateTime(date) {
+  return date.toLocaleString("sv-SE");
+}
+function formatDuration(start2, end2) {
+  const durationMs = end2.getTime() - start2.getTime();
+  const durationSec = durationMs / 1e3;
+  return formatTime(durationSec);
+}
 const gridWrapper = "_gridWrapper_anqm2_5";
 const gridContainer = "_gridContainer_anqm2_11";
 const iconCell = "_iconCell_anqm2_19";
@@ -79759,7 +74736,7 @@ const numberCell = "_numberCell_anqm2_33";
 const taskText = "_taskText_anqm2_43";
 const folder = "_folder_anqm2_50";
 const fullWidthHeight = "_fullWidthHeight_anqm2_56";
-const styles$15 = {
+const styles$1n = {
   gridWrapper,
   gridContainer,
   iconCell,
@@ -79794,7 +74771,7 @@ const comparators = {
 const nameCell = "_nameCell_1jtud_1";
 const modelCell = "_modelCell_1jtud_8";
 const scoreCell = "_scoreCell_1jtud_15";
-const error$3 = "_error_1jtud_22";
+const error$4 = "_error_1jtud_22";
 const started = "_started_1jtud_26";
 const success$1 = "_success_1jtud_30";
 const cancelled$1 = "_cancelled_1jtud_34";
@@ -79804,14 +74781,14 @@ const localStyles = {
   nameCell,
   modelCell,
   scoreCell,
-  error: error$3,
+  error: error$4,
   started,
   success: success$1,
   cancelled: cancelled$1,
   statusCell: statusCell$1,
   dateCell
 };
-const styles$14 = { ...styles$15, ...localStyles };
+const styles$1m = { ...styles$1n, ...localStyles };
 const EmptyCell = () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: "-" });
 const useLogListColumns = () => {
   const columnVisibility = useStore(
@@ -79871,7 +74848,7 @@ const useLogListColumns = () => {
         cellRenderer: (params) => {
           const type = params.data?.type;
           const icon2 = type === "file" || type === "pending-task" ? ApplicationIcons.inspectFile : ApplicationIcons.folder;
-          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$14.iconCell, children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2) }) });
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1m.iconCell, children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2) }) });
         }
       },
       {
@@ -79897,7 +74874,7 @@ const useLogListColumns = () => {
           if (item2.type === "file") {
             value2 = item2.task || parseLogFileName(item2.name).name;
           }
-          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$14.nameCell, children: item2.type === "folder" && item2.url ? /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$14.folder, children: value2 }) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$14.taskText, children: value2 }) });
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1m.nameCell, children: item2.type === "folder" && item2.url ? /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1m.folder, children: value2 }) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1m.taskText, children: value2 }) });
         }
       },
       {
@@ -79913,7 +74890,7 @@ const useLogListColumns = () => {
           const item2 = params.data;
           if (!item2) return null;
           if (item2.model) {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$14.modelCell, children: item2.model });
+            return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1m.modelCell, children: item2.model });
           }
           return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
         }
@@ -79936,7 +74913,7 @@ const useLogListColumns = () => {
           if (!item2 || item2.score === void 0) {
             return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
           }
-          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$14.scoreCell, children: formatPrettyDecimal(item2.score) });
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1m.scoreCell, children: formatPrettyDecimal(item2.score) });
         }
       },
       {
@@ -79956,8 +74933,8 @@ const useLogListColumns = () => {
             return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
           }
           const icon2 = item2.type === "pending-task" ? ApplicationIcons.pendingTask : status2 === "error" ? ApplicationIcons.error : status2 === "started" ? ApplicationIcons.running : status2 === "cancelled" ? ApplicationIcons.cancelled : ApplicationIcons.success;
-          const clz = item2.type === "pending-task" ? styles$14.started : status2 === "error" ? styles$14.error : status2 === "started" ? styles$14.started : status2 === "cancelled" ? styles$14.cancelled : styles$14.success;
-          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$14.statusCell, children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, clz) }) });
+          const clz = item2.type === "pending-task" ? styles$1m.started : status2 === "error" ? styles$1m.error : status2 === "started" ? styles$1m.started : status2 === "cancelled" ? styles$1m.cancelled : styles$1m.success;
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1m.statusCell, children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, clz) }) });
         }
       },
       {
@@ -79986,7 +74963,7 @@ const useLogListColumns = () => {
             return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
           }
           const timeStr = formatDateTime(new Date(completed));
-          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$14.dateCell, children: timeStr });
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1m.dateCell, children: timeStr });
         },
         comparator: createFolderFirstComparator(comparators.date)
       },
@@ -80009,7 +74986,7 @@ const useLogListColumns = () => {
             return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
           }
           const value2 = basename(item2.name);
-          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$14.nameCell, children: value2 });
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1m.nameCell, children: value2 });
         }
       }
     ];
@@ -80039,7 +75016,7 @@ const useLogListColumns = () => {
             if (value2 === void 0 || value2 === null || value2 === "") {
               return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
             }
-            return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$14.scoreCell, children: formatPrettyDecimal(value2) });
+            return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1m.scoreCell, children: formatPrettyDecimal(value2) });
           },
           comparator: createFolderFirstComparator((valA, valB) => {
             if (typeof valA === "number" && typeof valB === "number") {
@@ -80446,11 +75423,11 @@ function _setDisplayed(element, displayed, options = {}) {
     _setAriaHidden(element, !displayed);
   }
 }
-function _setVisible(element, visible2, options = {}) {
+function _setVisible(element, visible, options = {}) {
   const { skipAriaHidden } = options;
-  element.classList.toggle("ag-invisible", !visible2);
+  element.classList.toggle("ag-invisible", !visible);
   if (!skipAriaHidden) {
-    _setAriaHidden(element, !visible2);
+    _setAriaHidden(element, !visible);
   }
 }
 function _setDisabled(element, disabled2) {
@@ -82353,8 +77330,8 @@ var AgColumn = class extends BeanStub {
   getPinned() {
     return this.pinned;
   }
-  setVisible(visible2, source2) {
-    const newValue = visible2 === true;
+  setVisible(visible, source2) {
+    const newValue = visible === true;
     if (this.visible !== newValue) {
       this.visible = newValue;
       this.dispatchColEvent("visibleChanged", source2);
@@ -83214,10 +78191,10 @@ function dispatchColumnVisibleEvent(eventSvc, changedColumns, source2) {
     return;
   }
   const column2 = changedColumns.length === 1 ? changedColumns[0] : null;
-  const visible2 = getCommonValue(changedColumns, (col) => col.isVisible());
+  const visible = getCommonValue(changedColumns, (col) => col.isVisible());
   eventSvc.dispatchEvent({
     type: "columnVisible",
-    visible: visible2,
+    visible,
     columns: changedColumns,
     column: column2,
     source: source2
@@ -83868,13 +78845,13 @@ var ColumnModel = class extends BeanStub {
     this.refreshCols(false, source2);
     this.beans.visibleCols.refresh(source2);
   }
-  setColsVisible(keys, visible2 = false, source2) {
+  setColsVisible(keys, visible = false, source2) {
     _applyColumnState(
       this.beans,
       {
         state: keys.map((key2) => ({
           colId: typeof key2 === "string" ? key2 : key2.getColId(),
-          hide: !visible2
+          hide: !visible
         }))
       },
       source2
@@ -84391,11 +79368,11 @@ var AgComponentStub = class extends AgBeanStub {
   isDisplayed() {
     return this.displayed;
   }
-  setVisible(visible2, options = {}) {
-    if (visible2 !== this.visible) {
-      this.visible = visible2;
+  setVisible(visible, options = {}) {
+    if (visible !== this.visible) {
+      this.visible = visible;
       const { skipAriaHidden } = options;
-      _setVisible(this.eGui, visible2, { skipAriaHidden });
+      _setVisible(this.eGui, visible, { skipAriaHidden });
     }
   }
   setDisplayed(displayed, options = {}) {
@@ -86761,8 +81738,8 @@ var _unregisterInstanceUsingThemingAPI = (environment) => {
     }
   }
 };
-var _a$1;
-var injectionState = (_a$1 = typeof window === "object" ? window : {}).agStyleInjectionState ?? (_a$1.agStyleInjectionState = {
+var _a$2;
+var injectionState = (_a$2 = typeof window === "object" ? window : {}).agStyleInjectionState ?? (_a$2.agStyleInjectionState = {
   map: /* @__PURE__ */ new WeakMap(),
   grids: /* @__PURE__ */ new Set()
 });
@@ -93185,9 +88162,9 @@ var RowContainerCtrl = class extends BeanStub {
     return !pinned || !!this.pinnedWidthFeature && this.pinnedWidthFeature.getWidth() > 0;
   }
   onPinnedWidthChanged() {
-    const visible2 = this.isContainerVisible();
-    if (this.visible != visible2) {
-      this.visible = visible2;
+    const visible = this.isContainerVisible();
+    if (this.visible != visible) {
+      this.visible = visible;
       this.onDisplayedRowsChanged();
     }
   }
@@ -93291,11 +88268,11 @@ var GridBodyCtrl = class extends BeanStub {
   }
   onScrollVisibilityChanged() {
     const { scrollVisibleSvc } = this;
-    const visible2 = scrollVisibleSvc.verticalScrollShowing;
-    this.setVerticalScrollPaddingVisible(visible2);
-    this.setStickyWidth(visible2);
+    const visible = scrollVisibleSvc.verticalScrollShowing;
+    this.setVerticalScrollPaddingVisible(visible);
+    this.setStickyWidth(visible);
     this.setStickyBottomOffsetBottom();
-    const scrollbarWidth = visible2 ? scrollVisibleSvc.getScrollbarWidth() || 0 : 0;
+    const scrollbarWidth = visible ? scrollVisibleSvc.getScrollbarWidth() || 0 : 0;
     const pad = _isInvisibleScrollbar() ? 16 : 0;
     const width = `calc(100% + ${scrollbarWidth + pad}px)`;
     _requestAnimationFrame(this.beans, () => this.comp.setBodyViewportWidth(width));
@@ -93385,8 +88362,8 @@ var GridBodyCtrl = class extends BeanStub {
   registerBodyViewportResizeListener(listener) {
     this.comp.registerBodyViewportResizeListener(listener);
   }
-  setVerticalScrollPaddingVisible(visible2) {
-    const overflowY = visible2 ? "scroll" : "hidden";
+  setVerticalScrollPaddingVisible(visible) {
+    const overflowY = visible ? "scroll" : "hidden";
     this.comp.setPinnedTopBottomOverflowY(overflowY);
   }
   isVerticalScrollShowing() {
@@ -95576,9 +90553,9 @@ var MenuService = class extends BeanStub {
     }
   }
 };
-function _setColMenuVisible(column2, visible2, source2) {
-  if (column2.menuVisible !== visible2) {
-    column2.menuVisible = visible2;
+function _setColMenuVisible(column2, visible, source2) {
+  if (column2.menuVisible !== visible) {
+    column2.menuVisible = visible;
     column2.dispatchColEvent("menuVisibleChanged", source2);
   }
 }
@@ -95904,12 +90881,12 @@ var PinnedRows = class {
     return this.visible.size;
   }
   add(node2) {
-    const { all: all2, visible: visible2, order: order2 } = this;
+    const { all: all2, visible, order: order2 } = this;
     if (all2.has(node2)) {
       return;
     }
     all2.add(node2);
-    visible2.add(node2);
+    visible.add(node2);
     order2.push(node2);
     this.sort();
   }
@@ -95936,10 +90913,10 @@ var PinnedRows = class {
     }
   }
   clear() {
-    const { all: all2, visible: visible2, order: order2, queued } = this;
+    const { all: all2, visible, order: order2, queued } = this;
     all2.clear();
     queued.clear();
-    visible2.clear();
+    visible.clear();
     order2.length = 0;
   }
   sort() {
@@ -95959,9 +90936,9 @@ var PinnedRows = class {
     }
   }
   hide(shouldHide) {
-    const { all: all2, visible: visible2 } = this;
-    all2.forEach((node2) => shouldHide(node2) ? visible2.delete(node2) : visible2.add(node2));
-    this.order = Array.from(visible2);
+    const { all: all2, visible } = this;
+    all2.forEach((node2) => shouldHide(node2) ? visible.delete(node2) : visible.add(node2));
+    this.order = Array.from(visible);
     this.sort();
   }
   queue(id) {
@@ -96754,16 +91731,16 @@ var CheckboxSelectionComponent = class extends Component {
       checkboxes = isVisible ?? false;
     }
     const disabled2 = selectable && !checkboxes || !selectable && checkboxes;
-    const visible2 = selectable || checkboxes;
+    const visible = selectable || checkboxes;
     const so = gos.get("rowSelection");
     const showDisabledCheckboxes = so && typeof so !== "string" ? !_getHideDisabledCheckboxes(so) : !!column2?.getColDef().showDisabledCheckboxes;
-    this.setVisible(visible2 && (disabled2 ? showDisabledCheckboxes : true));
-    this.setDisplayed(visible2 && (disabled2 ? showDisabledCheckboxes : true));
-    if (visible2) {
+    this.setVisible(visible && (disabled2 ? showDisabledCheckboxes : true));
+    this.setDisplayed(visible && (disabled2 ? showDisabledCheckboxes : true));
+    if (visible) {
       this.eCheckbox.setDisabled(disabled2);
     }
     if (overrides?.removeHidden) {
-      this.setDisplayed(visible2);
+      this.setDisplayed(visible);
     }
   }
   getIsVisible() {
@@ -98721,8 +93698,8 @@ var DndSourceComp = class extends Component {
     }
   }
   checkVisibility() {
-    const visible2 = this.column.isDndSource(this.rowNode);
-    this.setDisplayed(visible2);
+    const visible = this.column.isDndSource(this.rowNode);
+    this.setDisplayed(visible);
   }
 };
 function addRowDropZone(beans, params) {
@@ -98879,13 +93856,13 @@ var RowDragComp = class extends Component {
     }
     const column2 = this.column;
     let shownSometimes = typeof column2?.getColDef().rowDrag === "function";
-    let visible2 = !column2 || this.isCustomGui() || column2.isRowDrag(this.rowNode);
-    if (visible2 && this.rowNode.footer && this.gos.get("rowDragManaged")) {
-      visible2 = false;
+    let visible = !column2 || this.isCustomGui() || column2.isRowDrag(this.rowNode);
+    if (visible && this.rowNode.footer && this.gos.get("rowDragManaged")) {
+      visible = false;
       shownSometimes = true;
     }
-    this.setDisplayed(shownSometimes || visible2, displayedOptions);
-    this.setVisible(visible2, displayedOptions);
+    this.setDisplayed(shownSometimes || visible, displayedOptions);
+    this.setVisible(visible, displayedOptions);
   }
   isNeverDisplayed() {
     const { gos, beans } = this;
@@ -100698,7 +95675,7 @@ var MoveColumnFeature = class extends BeanStub {
     this.ensureIntervalCleared();
     this.lastMovedInfo = null;
   }
-  setColumnsVisible(columns, visible2, source2) {
+  setColumnsVisible(columns, visible, source2) {
     if (!columns?.length) {
       return;
     }
@@ -100706,7 +95683,7 @@ var MoveColumnFeature = class extends BeanStub {
     if (!allowedCols.length) {
       return;
     }
-    this.beans.colModel.setColsVisible(allowedCols, visible2, source2);
+    this.beans.colModel.setColsVisible(allowedCols, visible, source2);
   }
   finishColumnMoving() {
     this.clearHighlighted();
@@ -103233,8 +98210,8 @@ function getDisplayedColAfter(beans, col) {
 function getDisplayedColBefore(beans, col) {
   return beans.visibleCols.getColBefore(col);
 }
-function setColumnsVisible(beans, keys, visible2) {
-  beans.colModel.setColsVisible(keys, visible2, "api");
+function setColumnsVisible(beans, keys, visible) {
+  beans.colModel.setColsVisible(keys, visible, "api");
 }
 function setColumnsPinned(beans, keys, pinned) {
   beans.pinnedCols?.setColsPinned(keys, pinned, "api");
@@ -120747,10 +115724,10 @@ var FilterMenuFactory = class extends BeanStub {
     e3.preventDefault();
     _focusInto(menu, e3.shiftKey);
   }
-  dispatchVisibleChangedEvent(visible2, containerType, column2) {
+  dispatchVisibleChangedEvent(visible, containerType, column2) {
     this.eventSvc.dispatchEvent({
       type: "columnMenuVisibleChanged",
-      visible: visible2,
+      visible,
       switchingTab: false,
       key: containerType,
       column: column2 ?? null,
@@ -134058,7 +129035,7 @@ var GroupCellRenderer = reactExports.forwardRef((props, ref2) => {
       toggleCss: (name2, on) => setCssClasses((prev) => prev.setClass(name2, on)),
       setContractedDisplayed: (displayed) => setContractedCssClasses((prev) => prev.setClass("ag-hidden", !displayed)),
       setExpandedDisplayed: (displayed) => setExpandedCssClasses((prev) => prev.setClass("ag-hidden", !displayed)),
-      setCheckboxVisible: (visible2) => setCheckboxCssClasses((prev) => prev.setClass("ag-invisible", !visible2)),
+      setCheckboxVisible: (visible) => setCheckboxCssClasses((prev) => prev.setClass("ag-invisible", !visible)),
       setCheckboxSpacing: (add3) => setCheckboxCssClasses((prev) => prev.setClass("ag-group-checkbox-spacing", add3))
     };
     const groupCellRendererCtrl = registry.createDynamicBean("groupCellRendererCtrl", true);
@@ -137305,7 +132282,7 @@ const LogListGrid = ({
       setCurrentMatchIndex(0);
     }
   }, [findTerm, performSearch]);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$15.gridWrapper), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1n.gridWrapper), children: [
     showFind && /* @__PURE__ */ jsxRuntimeExports.jsx(
       FindBandUI,
       {
@@ -137322,7 +132299,7 @@ const LogListGrid = ({
         matchIndex: findTerm ? currentMatchIndex : void 0
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: gridContainerRef, className: styles$15.gridContainer, tabIndex: 0, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: gridContainerRef, className: styles$1n.gridContainer, tabIndex: 0, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       AgGridReact,
       {
         ref: gridRef,
@@ -137373,7 +132350,7 @@ const label$7 = "_label_14uod_25";
 const right = "_right_14uod_30";
 const left = "_left_14uod_39";
 const center = "_center_14uod_48";
-const styles$13 = {
+const styles$1l = {
   footer: footer$1,
   spinnerContainer: spinnerContainer$1,
   spinner: spinner$2,
@@ -137390,12 +132367,12 @@ const LogListFooter = ({
   progressBar
 }) => {
   const effectiveItemCount = filteredCount ?? itemCount;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-smaller", styles$13.footer), children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$13.left), children: progressText ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$13.spinnerContainer), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-smaller", styles$1l.footer), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1l.left), children: progressText ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1l.spinnerContainer), children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
         {
-          className: clsx("spinner-border", styles$13.spinner),
+          className: clsx("spinner-border", styles$1l.spinner),
           role: "status",
           children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: clsx("visually-hidden"), children: [
             progressText,
@@ -137403,19 +132380,19 @@ const LogListFooter = ({
           ] })
         }
       ),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-style-secondary", styles$13.label), children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-style-secondary", styles$1l.label), children: [
         progressText,
         "..."
       ] })
     ] }) : null }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$13.center) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$13.right), children: progressBar ? progressBar : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: effectiveItemCount === 0 ? "" : filteredCount !== void 0 && filteredCount !== itemCount ? `${effectiveItemCount} / ${itemCount} ${itemCountLabel || "items"}` : `${effectiveItemCount} ${itemCountLabel || "items"}` }) })
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1l.center) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1l.right), children: progressBar ? progressBar : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: effectiveItemCount === 0 ? "" : filteredCount !== void 0 && filteredCount !== itemCount ? `${effectiveItemCount} / ${itemCount} ${itemCountLabel || "items"}` : `${effectiveItemCount} ${itemCountLabel || "items"}` }) })
   ] });
 };
-const panel$7 = "_panel_16dj8_1";
+const panel$8 = "_panel_16dj8_1";
 const list$1 = "_list_16dj8_8";
-const styles$12 = {
-  panel: panel$7,
+const styles$1k = {
+  panel: panel$8,
   list: list$1
 };
 const rootName = (relativePath) => {
@@ -137583,7 +132560,7 @@ const LogsPanel = ({ maybeShowSingleLog }) => {
       }
     }
   }, [logItems, maybeShowSingleLog, navigate]);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$12.panel), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1k.panel), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
       ApplicationNavbar,
       {
@@ -137640,7 +132617,7 @@ const LogsPanel = ({ maybeShowSingleLog }) => {
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$12.list, "text-size-smaller"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1k.list, "text-size-smaller"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         LogListGrid,
         {
           items: logItems,
@@ -138526,11 +133503,220 @@ function waitForTextInDOM(searchTerm, timeoutMs = 2e3) {
     check();
   });
 }
-const container$h = "_container_ly812_1";
+const container$i = "_container_ly812_1";
 const scroller = "_scroller_ly812_7";
-const styles$11 = {
-  container: container$h,
+const styles$1j = {
+  container: container$i,
   scroller
+};
+const wrapper$3 = "_wrapper_sq96g_1";
+const col2$2 = "_col2_sq96g_8";
+const col1_3$1 = "_col1_3_sq96g_12";
+const col3$1 = "_col3_sq96g_16";
+const separator$5 = "_separator_sq96g_20";
+const padded$1 = "_padded_sq96g_26";
+const styles$1i = {
+  wrapper: wrapper$3,
+  col2: col2$2,
+  col1_3: col1_3$1,
+  col3: col3$1,
+  separator: separator$5,
+  padded: padded$1
+};
+const ModelUsagePanel = ({ usage, className: className2 }) => {
+  if (!usage) {
+    return null;
+  }
+  const rows = [];
+  if (usage.reasoning_tokens) {
+    rows.push({
+      label: "Reasoning",
+      value: usage.reasoning_tokens,
+      secondary: false,
+      bordered: true
+    });
+    rows.push({
+      label: "---",
+      value: void 0,
+      secondary: false,
+      padded: true
+    });
+  }
+  rows.push({
+    label: "input",
+    value: usage.input_tokens,
+    secondary: false
+  });
+  if (usage.input_tokens_cache_read) {
+    rows.push({
+      label: "cache_read",
+      value: usage.input_tokens_cache_read,
+      secondary: true
+    });
+  }
+  if (usage.input_tokens_cache_write) {
+    rows.push({
+      label: "cache_write",
+      value: usage.input_tokens_cache_write,
+      secondary: true
+    });
+  }
+  rows.push({
+    label: "Output",
+    value: usage.output_tokens,
+    secondary: false,
+    bordered: true
+  });
+  rows.push({
+    label: "---",
+    value: void 0,
+    secondary: false
+  });
+  rows.push({
+    label: "Total",
+    value: usage.total_tokens,
+    secondary: false
+  });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-small", styles$1i.wrapper, className2), children: rows.map((row2, idx) => {
+    if (row2.label === "---") {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
+        {
+          className: clsx(
+            styles$1i.separator,
+            row2.padded ? styles$1i.padded : void 0
+          )
+        },
+        `$usage-sep-${idx}`
+      );
+    } else {
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: clsx(
+              "text-style-label",
+              "text-style-secondary",
+              row2.secondary ? styles$1i.col2 : styles$1i.col1_3
+            ),
+            children: row2.label
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1i.col3, children: row2.value ? formatNumber(row2.value) : "" })
+      ] }, `$usage-row-${idx}`);
+    }
+  }) });
+};
+const table$1 = "_table_z217i_1";
+const tableTokens = "_tableTokens_z217i_5";
+const tableH = "_tableH_z217i_9";
+const model = "_model_z217i_14";
+const cellContents = "_cellContents_z217i_18";
+const styles$1h = {
+  table: table$1,
+  tableTokens,
+  tableH,
+  model,
+  cellContents
+};
+const TokenTable$1 = ({ className: className2, children: children2 }) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "table",
+    {
+      className: clsx(
+        "table",
+        "table-sm",
+        "text-size-smaller",
+        styles$1h.table,
+        className2
+      ),
+      children: children2
+    }
+  );
+};
+const TokenHeader = () => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("thead", { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("td", {}),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "td",
+        {
+          colSpan: 3,
+          className: clsx(
+            "card-subheading",
+            styles$1h.tableTokens,
+            "text-size-small",
+            "text-style-label",
+            "text-style-secondary"
+          ),
+          align: "center",
+          children: "Tokens"
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "th",
+        {
+          className: clsx(
+            styles$1h.tableH,
+            "text-sixe-small",
+            "text-style-label",
+            "text-style-secondary"
+          ),
+          children: "Model"
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "th",
+        {
+          className: clsx(
+            styles$1h.tableH,
+            "text-sixe-small",
+            "text-style-label",
+            "text-style-secondary"
+          ),
+          children: "Usage"
+        }
+      )
+    ] })
+  ] });
+};
+const TokenRow = ({ model: model2, usage }) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("td", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1h.model, styles$1h.cellContents), children: model2 }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("td", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(ModelUsagePanel, { usage, className: clsx(styles$1h.cellContents) }) })
+  ] });
+};
+const ModelTokenTable = ({
+  model_usage,
+  className: className2
+}) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(TokenTable$1, { className: className2, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(TokenHeader, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("tbody", { children: Object.keys(model_usage).map((key2) => {
+      if (!model_usage[key2]) {
+        return null;
+      }
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(TokenRow, { model: key2, usage: model_usage[key2] }, key2);
+    }) })
+  ] });
+};
+const wrapper$2 = "_wrapper_14r3b_1";
+const col2$1 = "_col2_14r3b_16";
+const styles$1g = {
+  wrapper: wrapper$2,
+  col2: col2$1
+};
+const kUsageCardBodyId = "usage-card-body";
+const UsageCard = ({ usage, label: label2 = "Usage" }) => {
+  if (!usage) {
+    return null;
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: label2 }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: kUsageCardBodyId, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1g.wrapper, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1g.col2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ModelTokenTable, { model_usage: usage }) }) }) })
+  ] });
 };
 const messagesToStr = (messages2, options) => {
   const opts = {};
@@ -138632,200 +133818,4986 @@ const betterContentText = (content2, excludeToolUsage, excludeReasoning) => {
   const allText = content2.map((c2) => textFromContent(c2, excludeToolUsage, excludeReasoning)).filter((text2) => text2 !== null);
   return allText.join("\n");
 };
-const wrapper$2 = "_wrapper_sq96g_1";
-const col2$1 = "_col2_sq96g_8";
-const col1_3$1 = "_col1_3_sq96g_12";
-const col3$1 = "_col3_sq96g_16";
-const separator$5 = "_separator_sq96g_20";
-const padded$1 = "_padded_sq96g_26";
-const styles$10 = {
-  wrapper: wrapper$2,
-  col2: col2$1,
-  col1_3: col1_3$1,
-  col3: col3$1,
-  separator: separator$5,
-  padded: padded$1
+const message$2 = "_message_1kuwu_1";
+const systemRole = "_systemRole_1kuwu_9";
+const timestamp = "_timestamp_1kuwu_13";
+const messageGrid = "_messageGrid_1kuwu_19";
+const toolMessageGrid = "_toolMessageGrid_1kuwu_29";
+const messageContents = "_messageContents_1kuwu_33";
+const indented = "_indented_1kuwu_38";
+const copyLink$1 = "_copyLink_1kuwu_42";
+const metadataLabel = "_metadataLabel_1kuwu_53";
+const hover$1 = "_hover_1kuwu_57";
+const styles$1f = {
+  message: message$2,
+  systemRole,
+  timestamp,
+  messageGrid,
+  toolMessageGrid,
+  messageContents,
+  indented,
+  copyLink: copyLink$1,
+  metadataLabel,
+  hover: hover$1
 };
-const ModelUsagePanel = ({ usage, className: className2 }) => {
-  if (!usage) {
-    return null;
+const panel$7 = "_panel_1pa96_1";
+const code$4 = "_code_1pa96_7";
+const styles$1e = {
+  panel: panel$7,
+  code: code$4
+};
+const CodePanel = ({ code: code2, language: language2 = "json" }) => {
+  const codeContainerRef = reactExports.useRef(null);
+  usePrismHighlight(codeContainerRef, code2.length);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: codeContainerRef, className: clsx(styles$1e.panel), children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$1e.code), children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx(`language-${language2}`), children: code2 }) }) });
+};
+class JsonWorkerPool {
+  encoder = new TextEncoder();
+  decoder = new TextDecoder();
+  workers = [];
+  blobURL = null;
+  nextRequestId = 0;
+  pendingRequests = /* @__PURE__ */ new Map();
+  poolSize = 4;
+  ensureWorkers() {
+    if (this.workers.length === 0) {
+      const blob = new Blob([kWorkerCode], { type: "application/javascript" });
+      this.blobURL = URL.createObjectURL(blob);
+      for (let i4 = 0; i4 < this.poolSize; i4++) {
+        const worker = new Worker(this.blobURL);
+        worker.onmessage = (e3) => this.handleMessage(e3);
+        worker.onerror = (error2) => this.handleError(error2);
+        this.workers.push(worker);
+        worker.postMessage({
+          type: "init",
+          scriptContent: kJson5ScriptBase64
+        });
+      }
+    }
   }
-  const rows = [];
-  if (usage.reasoning_tokens) {
-    rows.push({
-      label: "Reasoning",
-      value: usage.reasoning_tokens,
-      secondary: false,
-      bordered: true
-    });
-    rows.push({
-      label: "---",
-      value: void 0,
-      secondary: false,
-      padded: true
+  handleMessage(e3) {
+    const { requestId, success: success2, serialized, result: result2, error: error2, stack: stack2 } = e3.data;
+    const pending = this.pendingRequests.get(requestId);
+    if (!pending) return;
+    this.pendingRequests.delete(requestId);
+    if (success2) {
+      if (serialized) {
+        const resultString = this.decoder.decode(result2);
+        pending.resolve(JSON.parse(resultString));
+      } else {
+        pending.resolve(result2);
+      }
+    } else {
+      const err2 = new Error(error2);
+      if (stack2) err2.stack = stack2;
+      pending.reject(err2);
+    }
+  }
+  handleError(error2) {
+    const err2 = new Error(`Worker error: ${error2.message}`);
+    for (const pending of this.pendingRequests.values()) {
+      pending.reject(err2);
+    }
+    this.pendingRequests.clear();
+  }
+  async parse(text2) {
+    this.ensureWorkers();
+    const encodedText = this.encoder.encode(text2);
+    const requestId = this.nextRequestId++;
+    return new Promise((resolve, reject) => {
+      this.pendingRequests.set(requestId, { resolve, reject });
+      const worker = this.workers[requestId % this.workers.length];
+      worker?.postMessage(
+        {
+          type: "parse",
+          requestId,
+          encodedText
+        },
+        [encodedText.buffer]
+      );
     });
   }
-  rows.push({
-    label: "input",
-    value: usage.input_tokens,
-    secondary: false
-  });
-  if (usage.input_tokens_cache_read) {
-    rows.push({
-      label: "cache_read",
-      value: usage.input_tokens_cache_read,
-      secondary: true
+  async parseBytes(data2) {
+    this.ensureWorkers();
+    const requestId = this.nextRequestId++;
+    const ownedData = data2.byteOffset === 0 && data2.byteLength === data2.buffer.byteLength ? data2 : data2.slice();
+    return new Promise((resolve, reject) => {
+      this.pendingRequests.set(requestId, { resolve, reject });
+      const worker = this.workers[requestId % this.workers.length];
+      worker?.postMessage(
+        {
+          type: "parse",
+          requestId,
+          encodedText: ownedData
+        },
+        [ownedData.buffer]
+      );
     });
   }
-  if (usage.input_tokens_cache_write) {
-    rows.push({
-      label: "cache_write",
-      value: usage.input_tokens_cache_write,
-      secondary: true
-    });
+  terminate() {
+    this.workers.forEach((w2) => w2.terminate());
+    this.workers = [];
+    if (this.blobURL) {
+      URL.revokeObjectURL(this.blobURL);
+      this.blobURL = null;
+    }
+    this.pendingRequests.clear();
   }
-  rows.push({
-    label: "Output",
-    value: usage.output_tokens,
-    secondary: false,
-    bordered: true
-  });
-  rows.push({
-    label: "---",
-    value: void 0,
-    secondary: false
-  });
-  rows.push({
-    label: "Total",
-    value: usage.total_tokens,
-    secondary: false
-  });
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-small", styles$10.wrapper, className2), children: rows.map((row2, idx) => {
-    if (row2.label === "---") {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+}
+const workerPool = new JsonWorkerPool();
+const asyncJsonParse = async (text2) => {
+  if (text2.length < 5e4) {
+    let result2 = void 0;
+    try {
+      result2 = JSON.parse(text2);
+    } catch {
+      result2 = lib$1.parse(text2);
+    }
+    return Promise.resolve(result2);
+  } else {
+    return workerPool.parse(text2);
+  }
+};
+const asyncJsonParseBytes = async (data2) => {
+  if (data2.length < 5e4) {
+    const text2 = new TextDecoder("utf-8").decode(data2);
+    return jsonParse(text2);
+  } else {
+    return workerPool.parseBytes(data2);
+  }
+};
+const jsonParse = (text2) => {
+  try {
+    return JSON.parse(text2);
+  } catch {
+    return lib$1.parse(text2);
+  }
+};
+const kWorkerCode = `
+// Store the JSON5 parser once loaded
+let JSON5 = null;
+const decoder = new TextDecoder();
+const encoder = new TextEncoder();
+
+self.onmessage = function (e) {
+  const { type } = e.data || {};
+
+  if (type === 'init') {
+    const { scriptContent } = e.data;
+    try {
+      if (!JSON5) {
+        const script = atob(scriptContent);
+        new Function(script)();
+        if (typeof self.JSON5 !== 'object' || typeof self.JSON5.parse !== 'function') {
+          throw new Error('Failed to initialize JSON5 parser');
+        }
+        JSON5 = self.JSON5;
+      }
+    } catch (err) {
+      // nothing to respond to yet; worker will fail on first parse if init failed
+      console.error('JSON5 init error in worker', err);
+    }
+    return;
+  }
+
+  if (type === 'parse') {
+    const { requestId, encodedText, scriptContent } = e.data;
+
+    try {
+      
+      // Decode the text using TextDecoder
+      const text = decoder.decode(encodedText);
+
+      // Parse with JSON/JSON5
+      let result = undefined;
+      try {
+        // Optimistically, try a regular JSON parse first (this is much faster)
+        result = JSON.parse(text);
+      } catch {
+        result = JSON5.parse(text);
+      }
+
+      if (result && typeof result === 'object' &&
+          (Array.isArray(result) ? result.length > 10000 : Object.keys(result).length > 10000)) {
+
+        // Large result, use transferrable object
+        const resultString = JSON.stringify(result);
+        const serialized = encoder.encode(resultString);
+
+        postMessage({
+          requestId,
+          success: true,
+          serialized: true,
+          result: serialized
+        }, [serialized.buffer]);
+      } else {
+        // Small results, send directly
+        postMessage({
+          requestId,
+          success: true, 
+          serialized: false, 
+          result: result 
+        });
+      }
+    } catch (err) {
+      postMessage({
+        requestId,
+        success: false, 
+        error: err.message,
+        stack: err.stack || ''
+      });
+    }
+  }
+};`;
+const kJson5ScriptBase64 = `IWZ1bmN0aW9uKHUsRCl7Im9iamVjdCI9PXR5cGVvZiBleHBvcnRzJiYidW5kZWZpbmVkIiE9dHlwZW9mIG1vZHVsZT9tb2R1bGUuZXhwb3J0cz1EKCk6ImZ1bmN0aW9uIj09dHlwZW9mIGRlZmluZSYmZGVmaW5lLmFtZD9kZWZpbmUoRCk6dS5KU09ONT1EKCl9KHRoaXMsZnVuY3Rpb24oKXsidXNlIHN0cmljdCI7ZnVuY3Rpb24gdSh1LEQpe3JldHVybiB1KEQ9e2V4cG9ydHM6e319LEQuZXhwb3J0cyksRC5leHBvcnRzfXZhciBEPXUoZnVuY3Rpb24odSl7dmFyIEQ9dS5leHBvcnRzPSJ1bmRlZmluZWQiIT10eXBlb2Ygd2luZG93JiZ3aW5kb3cuTWF0aD09TWF0aD93aW5kb3c6InVuZGVmaW5lZCIhPXR5cGVvZiBzZWxmJiZzZWxmLk1hdGg9PU1hdGg/c2VsZjpGdW5jdGlvbigicmV0dXJuIHRoaXMiKSgpOyJudW1iZXIiPT10eXBlb2YgX19nJiYoX19nPUQpfSksZT11KGZ1bmN0aW9uKHUpe3ZhciBEPXUuZXhwb3J0cz17dmVyc2lvbjoiMi42LjUifTsibnVtYmVyIj09dHlwZW9mIF9fZSYmKF9fZT1EKX0pLHI9KGUudmVyc2lvbixmdW5jdGlvbih1KXtyZXR1cm4ib2JqZWN0Ij09dHlwZW9mIHU/bnVsbCE9PXU6ImZ1bmN0aW9uIj09dHlwZW9mIHV9KSx0PWZ1bmN0aW9uKHUpe2lmKCFyKHUpKXRocm93IFR5cGVFcnJvcih1KyIgaXMgbm90IGFuIG9iamVjdCEiKTtyZXR1cm4gdX0sbj1mdW5jdGlvbih1KXt0cnl7cmV0dXJuISF1KCl9Y2F0Y2godSl7cmV0dXJuITB9fSxGPSFuKGZ1bmN0aW9uKCl7cmV0dXJuIDchPU9iamVjdC5kZWZpbmVQcm9wZXJ0eSh7fSwiYSIse2dldDpmdW5jdGlvbigpe3JldHVybiA3fX0pLmF9KSxDPUQuZG9jdW1lbnQsQT1yKEMpJiZyKEMuY3JlYXRlRWxlbWVudCksaT0hRiYmIW4oZnVuY3Rpb24oKXtyZXR1cm4gNyE9T2JqZWN0LmRlZmluZVByb3BlcnR5KCh1PSJkaXYiLEE/Qy5jcmVhdGVFbGVtZW50KHUpOnt9KSwiYSIse2dldDpmdW5jdGlvbigpe3JldHVybiA3fX0pLmE7dmFyIHV9KSxFPU9iamVjdC5kZWZpbmVQcm9wZXJ0eSxvPXtmOkY/T2JqZWN0LmRlZmluZVByb3BlcnR5OmZ1bmN0aW9uKHUsRCxlKXtpZih0KHUpLEQ9ZnVuY3Rpb24odSxEKXtpZighcih1KSlyZXR1cm4gdTt2YXIgZSx0O2lmKEQmJiJmdW5jdGlvbiI9PXR5cGVvZihlPXUudG9TdHJpbmcpJiYhcih0PWUuY2FsbCh1KSkpcmV0dXJuIHQ7aWYoImZ1bmN0aW9uIj09dHlwZW9mKGU9dS52YWx1ZU9mKSYmIXIodD1lLmNhbGwodSkpKXJldHVybiB0O2lmKCFEJiYiZnVuY3Rpb24iPT10eXBlb2YoZT11LnRvU3RyaW5nKSYmIXIodD1lLmNhbGwodSkpKXJldHVybiB0O3Rocm93IFR5cGVFcnJvcigiQ2FuJ3QgY29udmVydCBvYmplY3QgdG8gcHJpbWl0aXZlIHZhbHVlIil9KEQsITApLHQoZSksaSl0cnl7cmV0dXJuIEUodSxELGUpfWNhdGNoKHUpe31pZigiZ2V0ImluIGV8fCJzZXQiaW4gZSl0aHJvdyBUeXBlRXJyb3IoIkFjY2Vzc29ycyBub3Qgc3VwcG9ydGVkISIpO3JldHVybiJ2YWx1ZSJpbiBlJiYodVtEXT1lLnZhbHVlKSx1fX0sYT1GP2Z1bmN0aW9uKHUsRCxlKXtyZXR1cm4gby5mKHUsRCxmdW5jdGlvbih1LEQpe3JldHVybntlbnVtZXJhYmxlOiEoMSZ1KSxjb25maWd1cmFibGU6ISgyJnUpLHdyaXRhYmxlOiEoNCZ1KSx2YWx1ZTpEfX0oMSxlKSl9OmZ1bmN0aW9uKHUsRCxlKXtyZXR1cm4gdVtEXT1lLHV9LGM9e30uaGFzT3duUHJvcGVydHksQj1mdW5jdGlvbih1LEQpe3JldHVybiBjLmNhbGwodSxEKX0scz0wLGY9TWF0aC5yYW5kb20oKSxsPXUoZnVuY3Rpb24odSl7dmFyIHI9RFsiX19jb3JlLWpzX3NoYXJlZF9fIl18fChEWyJfX2NvcmUtanNfc2hhcmVkX18iXT17fSk7KHUuZXhwb3J0cz1mdW5jdGlvbih1LEQpe3JldHVybiByW3VdfHwoclt1XT12b2lkIDAhPT1EP0Q6e30pfSkoInZlcnNpb25zIixbXSkucHVzaCh7dmVyc2lvbjplLnZlcnNpb24sbW9kZToiZ2xvYmFsIixjb3B5cmlnaHQ6IsKpIDIwMTkgRGVuaXMgUHVzaGthcmV2ICh6bG9pcm9jay5ydSkifSl9KSgibmF0aXZlLWZ1bmN0aW9uLXRvLXN0cmluZyIsRnVuY3Rpb24udG9TdHJpbmcpLGQ9dShmdW5jdGlvbih1KXt2YXIgcix0PSJTeW1ib2woIi5jb25jYXQodm9pZCAwPT09KHI9InNyYyIpPyIiOnIsIilfIiwoKytzK2YpLnRvU3RyaW5nKDM2KSksbj0oIiIrbCkuc3BsaXQoInRvU3RyaW5nIik7ZS5pbnNwZWN0U291cmNlPWZ1bmN0aW9uKHUpe3JldHVybiBsLmNhbGwodSl9LCh1LmV4cG9ydHM9ZnVuY3Rpb24odSxlLHIsRil7dmFyIEM9ImZ1bmN0aW9uIj09dHlwZW9mIHI7QyYmKEIociwibmFtZSIpfHxhKHIsIm5hbWUiLGUpKSx1W2VdIT09ciYmKEMmJihCKHIsdCl8fGEocix0LHVbZV0/IiIrdVtlXTpuLmpvaW4oU3RyaW5nKGUpKSkpLHU9PT1EP3VbZV09cjpGP3VbZV0/dVtlXT1yOmEodSxlLHIpOihkZWxldGUgdVtlXSxhKHUsZSxyKSkpfSkoRnVuY3Rpb24ucHJvdG90eXBlLCJ0b1N0cmluZyIsZnVuY3Rpb24oKXtyZXR1cm4iZnVuY3Rpb24iPT10eXBlb2YgdGhpcyYmdGhpc1t0XXx8bC5jYWxsKHRoaXMpfSl9KSx2PWZ1bmN0aW9uKHUsRCxlKXtpZihmdW5jdGlvbih1KXtpZigiZnVuY3Rpb24iIT10eXBlb2YgdSl0aHJvdyBUeXBlRXJyb3IodSsiIGlzIG5vdCBhIGZ1bmN0aW9uISIpfSh1KSx2b2lkIDA9PT1EKXJldHVybiB1O3N3aXRjaChlKXtjYXNlIDE6cmV0dXJuIGZ1bmN0aW9uKGUpe3JldHVybiB1LmNhbGwoRCxlKX07Y2FzZSAyOnJldHVybiBmdW5jdGlvbihlLHIpe3JldHVybiB1LmNhbGwoRCxlLHIpfTtjYXNlIDM6cmV0dXJuIGZ1bmN0aW9uKGUscix0KXtyZXR1cm4gdS5jYWxsKEQsZSxyLHQpfX1yZXR1cm4gZnVuY3Rpb24oKXtyZXR1cm4gdS5hcHBseShELGFyZ3VtZW50cyl9fSxwPWZ1bmN0aW9uKHUscix0KXt2YXIgbixGLEMsQSxpPXUmcC5GLEU9dSZwLkcsbz11JnAuUyxjPXUmcC5QLEI9dSZwLkIscz1FP0Q6bz9EW3JdfHwoRFtyXT17fSk6KERbcl18fHt9KS5wcm90b3R5cGUsZj1FP2U6ZVtyXXx8KGVbcl09e30pLGw9Zi5wcm90b3R5cGV8fChmLnByb3RvdHlwZT17fSk7Zm9yKG4gaW4gRSYmKHQ9ciksdClDPSgoRj0haSYmcyYmdm9pZCAwIT09c1tuXSk/czp0KVtuXSxBPUImJkY/dihDLEQpOmMmJiJmdW5jdGlvbiI9PXR5cGVvZiBDP3YoRnVuY3Rpb24uY2FsbCxDKTpDLHMmJmQocyxuLEMsdSZwLlUpLGZbbl0hPUMmJmEoZixuLEEpLGMmJmxbbl0hPUMmJihsW25dPUMpfTtELmNvcmU9ZSxwLkY9MSxwLkc9MixwLlM9NCxwLlA9OCxwLkI9MTYscC5XPTMyLHAuVT02NCxwLlI9MTI4O3ZhciBoLG09cCxnPU1hdGguY2VpbCx5PU1hdGguZmxvb3Isdz1mdW5jdGlvbih1KXtyZXR1cm4gaXNOYU4odT0rdSk/MDoodT4wP3k6ZykodSl9LGI9KGg9ITEsZnVuY3Rpb24odSxEKXt2YXIgZSxyLHQ9U3RyaW5nKGZ1bmN0aW9uKHUpe2lmKG51bGw9PXUpdGhyb3cgVHlwZUVycm9yKCJDYW4ndCBjYWxsIG1ldGhvZCBvbiAgIit1KTtyZXR1cm4gdX0odSkpLG49dyhEKSxGPXQubGVuZ3RoO3JldHVybiBuPDB8fG4+PUY/aD8iIjp2b2lkIDA6KGU9dC5jaGFyQ29kZUF0KG4pKTw1NTI5Nnx8ZT41NjMxOXx8bisxPT09Rnx8KHI9dC5jaGFyQ29kZUF0KG4rMSkpPDU2MzIwfHxyPjU3MzQzP2g/dC5jaGFyQXQobik6ZTpoP3Quc2xpY2UobixuKzIpOnItNTYzMjArKGUtNTUyOTY8PDEwKSs2NTUzNn0pO20obS5QLCJTdHJpbmciLHtjb2RlUG9pbnRBdDpmdW5jdGlvbih1KXtyZXR1cm4gYih0aGlzLHUpfX0pO2UuU3RyaW5nLmNvZGVQb2ludEF0O3ZhciBTPU1hdGgubWF4LHg9TWF0aC5taW4sTj1TdHJpbmcuZnJvbUNoYXJDb2RlLFA9U3RyaW5nLmZyb21Db2RlUG9pbnQ7bShtLlMrbS5GKighIVAmJjEhPVAubGVuZ3RoKSwiU3RyaW5nIix7ZnJvbUNvZGVQb2ludDpmdW5jdGlvbih1KXtmb3IodmFyIEQsZSxyLHQ9YXJndW1lbnRzLG49W10sRj1hcmd1bWVudHMubGVuZ3RoLEM9MDtGPkM7KXtpZihEPSt0W0MrK10scj0xMTE0MTExLCgoZT13KGU9RCkpPDA/UyhlK3IsMCk6eChlLHIpKSE9PUQpdGhyb3cgUmFuZ2VFcnJvcihEKyIgaXMgbm90IGEgdmFsaWQgY29kZSBwb2ludCIpO24ucHVzaChEPDY1NTM2P04oRCk6Tig1NTI5NisoKEQtPTY1NTM2KT4+MTApLEQlMTAyNCs1NjMyMCkpfXJldHVybiBuLmpvaW4oIiIpfX0pO2UuU3RyaW5nLmZyb21Db2RlUG9pbnQ7dmFyIF8sTyxqLEksVixKLE0sayxMLFQseixILCQsUixHPXtTcGFjZV9TZXBhcmF0b3I6L1tcdTE2ODBcdTIwMDAtXHUyMDBBXHUyMDJGXHUyMDVGXHUzMDAwXS8sSURfU3RhcnQ6L1tceEFBXHhCNVx4QkFceEMwLVx4RDZceEQ4LVx4RjZceEY4LVx1MDJDMVx1MDJDNi1cdTAyRDFcdTAyRTAtXHUwMkU0XHUwMkVDXHUwMkVFXHUwMzcwLVx1MDM3NFx1MDM3Nlx1MDM3N1x1MDM3QS1cdTAzN0RcdTAzN0ZcdTAzODZcdTAzODgtXHUwMzhBXHUwMzhDXHUwMzhFLVx1MDNBMVx1MDNBMy1cdTAzRjVcdTAzRjctXHUwNDgxXHUwNDhBLVx1MDUyRlx1MDUzMS1cdTA1NTZcdTA1NTlcdTA1NjEtXHUwNTg3XHUwNUQwLVx1MDVFQVx1MDVGMC1cdTA1RjJcdTA2MjAtXHUwNjRBXHUwNjZFXHUwNjZGXHUwNjcxLVx1MDZEM1x1MDZENVx1MDZFNVx1MDZFNlx1MDZFRVx1MDZFRlx1MDZGQS1cdTA2RkNcdTA2RkZcdTA3MTBcdTA3MTItXHUwNzJGXHUwNzRELVx1MDdBNVx1MDdCMVx1MDdDQS1cdTA3RUFcdTA3RjRcdTA3RjVcdTA3RkFcdTA4MDAtXHUwODE1XHUwODFBXHUwODI0XHUwODI4XHUwODQwLVx1MDg1OFx1MDg2MC1cdTA4NkFcdTA4QTAtXHUwOEI0XHUwOEI2LVx1MDhCRFx1MDkwNC1cdTA5MzlcdTA5M0RcdTA5NTBcdTA5NTgtXHUwOTYxXHUwOTcxLVx1MDk4MFx1MDk4NS1cdTA5OENcdTA5OEZcdTA5OTBcdTA5OTMtXHUwOUE4XHUwOUFBLVx1MDlCMFx1MDlCMlx1MDlCNi1cdTA5QjlcdTA5QkRcdTA5Q0VcdTA5RENcdTA5RERcdTA5REYtXHUwOUUxXHUwOUYwXHUwOUYxXHUwOUZDXHUwQTA1LVx1MEEwQVx1MEEwRlx1MEExMFx1MEExMy1cdTBBMjhcdTBBMkEtXHUwQTMwXHUwQTMyXHUwQTMzXHUwQTM1XHUwQTM2XHUwQTM4XHUwQTM5XHUwQTU5LVx1MEE1Q1x1MEE1RVx1MEE3Mi1cdTBBNzRcdTBBODUtXHUwQThEXHUwQThGLVx1MEE5MVx1MEE5My1cdTBBQThcdTBBQUEtXHUwQUIwXHUwQUIyXHUwQUIzXHUwQUI1LVx1MEFCOVx1MEFCRFx1MEFEMFx1MEFFMFx1MEFFMVx1MEFGOVx1MEIwNS1cdTBCMENcdTBCMEZcdTBCMTBcdTBCMTMtXHUwQjI4XHUwQjJBLVx1MEIzMFx1MEIzMlx1MEIzM1x1MEIzNS1cdTBCMzlcdTBCM0RcdTBCNUNcdTBCNURcdTBCNUYtXHUwQjYxXHUwQjcxXHUwQjgzXHUwQjg1LVx1MEI4QVx1MEI4RS1cdTBCOTBcdTBCOTItXHUwQjk1XHUwQjk5XHUwQjlBXHUwQjlDXHUwQjlFXHUwQjlGXHUwQkEzXHUwQkE0XHUwQkE4LVx1MEJBQVx1MEJBRS1cdTBCQjlcdTBCRDBcdTBDMDUtXHUwQzBDXHUwQzBFLVx1MEMxMFx1MEMxMi1cdTBDMjhcdTBDMkEtXHUwQzM5XHUwQzNEXHUwQzU4LVx1MEM1QVx1MEM2MFx1MEM2MVx1MEM4MFx1MEM4NS1cdTBDOENcdTBDOEUtXHUwQzkwXHUwQzkyLVx1MENBOFx1MENBQS1cdTBDQjNcdTBDQjUtXHUwQ0I5XHUwQ0JEXHUwQ0RFXHUwQ0UwXHUwQ0UxXHUwQ0YxXHUwQ0YyXHUwRDA1LVx1MEQwQ1x1MEQwRS1cdTBEMTBcdTBEMTItXHUwRDNBXHUwRDNEXHUwRDRFXHUwRDU0LVx1MEQ1Nlx1MEQ1Ri1cdTBENjFcdTBEN0EtXHUwRDdGXHUwRDg1LVx1MEQ5Nlx1MEQ5QS1cdTBEQjFcdTBEQjMtXHUwREJCXHUwREJEXHUwREMwLVx1MERDNlx1MEUwMS1cdTBFMzBcdTBFMzJcdTBFMzNcdTBFNDAtXHUwRTQ2XHUwRTgxXHUwRTgyXHUwRTg0XHUwRTg3XHUwRTg4XHUwRThBXHUwRThEXHUwRTk0LVx1MEU5N1x1MEU5OS1cdTBFOUZcdTBFQTEtXHUwRUEzXHUwRUE1XHUwRUE3XHUwRUFBXHUwRUFCXHUwRUFELVx1MEVCMFx1MEVCMlx1MEVCM1x1MEVCRFx1MEVDMC1cdTBFQzRcdTBFQzZcdTBFREMtXHUwRURGXHUwRjAwXHUwRjQwLVx1MEY0N1x1MEY0OS1cdTBGNkNcdTBGODgtXHUwRjhDXHUxMDAwLVx1MTAyQVx1MTAzRlx1MTA1MC1cdTEwNTVcdTEwNUEtXHUxMDVEXHUxMDYxXHUxMDY1XHUxMDY2XHUxMDZFLVx1MTA3MFx1MTA3NS1cdTEwODFcdTEwOEVcdTEwQTAtXHUxMEM1XHUxMEM3XHUxMENEXHUxMEQwLVx1MTBGQVx1MTBGQy1cdTEyNDhcdTEyNEEtXHUxMjREXHUxMjUwLVx1MTI1Nlx1MTI1OFx1MTI1QS1cdTEyNURcdTEyNjAtXHUxMjg4XHUxMjhBLVx1MTI4RFx1MTI5MC1cdTEyQjBcdTEyQjItXHUxMkI1XHUxMkI4LVx1MTJCRVx1MTJDMFx1MTJDMi1cdTEyQzVcdTEyQzgtXHUxMkQ2XHUxMkQ4LVx1MTMxMFx1MTMxMi1cdTEzMTVcdTEzMTgtXHUxMzVBXHUxMzgwLVx1MTM4Rlx1MTNBMC1cdTEzRjVcdTEzRjgtXHUxM0ZEXHUxNDAxLVx1MTY2Q1x1MTY2Ri1cdTE2N0ZcdTE2ODEtXHUxNjlBXHUxNkEwLVx1MTZFQVx1MTZFRS1cdTE2RjhcdTE3MDAtXHUxNzBDXHUxNzBFLVx1MTcxMVx1MTcyMC1cdTE3MzFcdTE3NDAtXHUxNzUxXHUxNzYwLVx1MTc2Q1x1MTc2RS1cdTE3NzBcdTE3ODAtXHUxN0IzXHUxN0Q3XHUxN0RDXHUxODIwLVx1MTg3N1x1MTg4MC1cdTE4ODRcdTE4ODctXHUxOEE4XHUxOEFBXHUxOEIwLVx1MThGNVx1MTkwMC1cdTE5MUVcdTE5NTAtXHUxOTZEXHUxOTcwLVx1MTk3NFx1MTk4MC1cdTE5QUJcdTE5QjAtXHUxOUM5XHUxQTAwLVx1MUExNlx1MUEyMC1cdTFBNTRcdTFBQTdcdTFCMDUtXHUxQjMzXHUxQjQ1LVx1MUI0Qlx1MUI4My1cdTFCQTBcdTFCQUVcdTFCQUZcdTFCQkEtXHUxQkU1XHUxQzAwLVx1MUMyM1x1MUM0RC1cdTFDNEZcdTFDNUEtXHUxQzdEXHUxQzgwLVx1MUM4OFx1MUNFOS1cdTFDRUNcdTFDRUUtXHUxQ0YxXHUxQ0Y1XHUxQ0Y2XHUxRDAwLVx1MURCRlx1MUUwMC1cdTFGMTVcdTFGMTgtXHUxRjFEXHUxRjIwLVx1MUY0NVx1MUY0OC1cdTFGNERcdTFGNTAtXHUxRjU3XHUxRjU5XHUxRjVCXHUxRjVEXHUxRjVGLVx1MUY3RFx1MUY4MC1cdTFGQjRcdTFGQjYtXHUxRkJDXHUxRkJFXHUxRkMyLVx1MUZDNFx1MUZDNi1cdTFGQ0NcdTFGRDAtXHUxRkQzXHUxRkQ2LVx1MUZEQlx1MUZFMC1cdTFGRUNcdTFGRjItXHUxRkY0XHUxRkY2LVx1MUZGQ1x1MjA3MVx1MjA3Rlx1MjA5MC1cdTIwOUNcdTIxMDJcdTIxMDdcdTIxMEEtXHUyMTEzXHUyMTE1XHUyMTE5LVx1MjExRFx1MjEyNFx1MjEyNlx1MjEyOFx1MjEyQS1cdTIxMkRcdTIxMkYtXHUyMTM5XHUyMTNDLVx1MjEzRlx1MjE0NS1cdTIxNDlcdTIxNEVcdTIxNjAtXHUyMTg4XHUyQzAwLVx1MkMyRVx1MkMzMC1cdTJDNUVcdTJDNjAtXHUyQ0U0XHUyQ0VCLVx1MkNFRVx1MkNGMlx1MkNGM1x1MkQwMC1cdTJEMjVcdTJEMjdcdTJEMkRcdTJEMzAtXHUyRDY3XHUyRDZGXHUyRDgwLVx1MkQ5Nlx1MkRBMC1cdTJEQTZcdTJEQTgtXHUyREFFXHUyREIwLVx1MkRCNlx1MkRCOC1cdTJEQkVcdTJEQzAtXHUyREM2XHUyREM4LVx1MkRDRVx1MkREMC1cdTJERDZcdTJERDgtXHUyRERFXHUyRTJGXHUzMDA1LVx1MzAwN1x1MzAyMS1cdTMwMjlcdTMwMzEtXHUzMDM1XHUzMDM4LVx1MzAzQ1x1MzA0MS1cdTMwOTZcdTMwOUQtXHUzMDlGXHUzMEExLVx1MzBGQVx1MzBGQy1cdTMwRkZcdTMxMDUtXHUzMTJFXHUzMTMxLVx1MzE4RVx1MzFBMC1cdTMxQkFcdTMxRjAtXHUzMUZGXHUzNDAwLVx1NERCNVx1NEUwMC1cdTlGRUFcdUEwMDAtXHVBNDhDXHVBNEQwLVx1QTRGRFx1QTUwMC1cdUE2MENcdUE2MTAtXHVBNjFGXHVBNjJBXHVBNjJCXHVBNjQwLVx1QTY2RVx1QTY3Ri1cdUE2OURcdUE2QTAtXHVBNkVGXHVBNzE3LVx1QTcxRlx1QTcyMi1cdUE3ODhcdUE3OEItXHVBN0FFXHVBN0IwLVx1QTdCN1x1QTdGNy1cdUE4MDFcdUE4MDMtXHVBODA1XHVBODA3LVx1QTgwQVx1QTgwQy1cdUE4MjJcdUE4NDAtXHVBODczXHVBODgyLVx1QThCM1x1QThGMi1cdUE4RjdcdUE4RkJcdUE4RkRcdUE5MEEtXHVBOTI1XHVBOTMwLVx1QTk0Nlx1QTk2MC1cdUE5N0NcdUE5ODQtXHVBOUIyXHVBOUNGXHVBOUUwLVx1QTlFNFx1QTlFNi1cdUE5RUZcdUE5RkEtXHVBOUZFXHVBQTAwLVx1QUEyOFx1QUE0MC1cdUFBNDJcdUFBNDQtXHVBQTRCXHVBQTYwLVx1QUE3Nlx1QUE3QVx1QUE3RS1cdUFBQUZcdUFBQjFcdUFBQjVcdUFBQjZcdUFBQjktXHVBQUJEXHVBQUMwXHVBQUMyXHVBQURCLVx1QUFERFx1QUFFMC1cdUFBRUFcdUFBRjItXHVBQUY0XHVBQjAxLVx1QUIwNlx1QUIwOS1cdUFCMEVcdUFCMTEtXHVBQjE2XHVBQjIwLVx1QUIyNlx1QUIyOC1cdUFCMkVcdUFCMzAtXHVBQjVBXHVBQjVDLVx1QUI2NVx1QUI3MC1cdUFCRTJcdUFDMDAtXHVEN0EzXHVEN0IwLVx1RDdDNlx1RDdDQi1cdUQ3RkJcdUY5MDAtXHVGQTZEXHVGQTcwLVx1RkFEOVx1RkIwMC1cdUZCMDZcdUZCMTMtXHVGQjE3XHVGQjFEXHVGQjFGLVx1RkIyOFx1RkIyQS1cdUZCMzZcdUZCMzgtXHVGQjNDXHVGQjNFXHVGQjQwXHVGQjQxXHVGQjQzXHVGQjQ0XHVGQjQ2LVx1RkJCMVx1RkJEMy1cdUZEM0RcdUZENTAtXHVGRDhGXHVGRDkyLVx1RkRDN1x1RkRGMC1cdUZERkJcdUZFNzAtXHVGRTc0XHVGRTc2LVx1RkVGQ1x1RkYyMS1cdUZGM0FcdUZGNDEtXHVGRjVBXHVGRjY2LVx1RkZCRVx1RkZDMi1cdUZGQzdcdUZGQ0EtXHVGRkNGXHVGRkQyLVx1RkZEN1x1RkZEQS1cdUZGRENdfFx1RDgwMFtcdURDMDAtXHVEQzBCXHVEQzBELVx1REMyNlx1REMyOC1cdURDM0FcdURDM0NcdURDM0RcdURDM0YtXHVEQzREXHVEQzUwLVx1REM1RFx1REM4MC1cdURDRkFcdURENDAtXHVERDc0XHVERTgwLVx1REU5Q1x1REVBMC1cdURFRDBcdURGMDAtXHVERjFGXHVERjJELVx1REY0QVx1REY1MC1cdURGNzVcdURGODAtXHVERjlEXHVERkEwLVx1REZDM1x1REZDOC1cdURGQ0ZcdURGRDEtXHVERkQ1XXxcdUQ4MDFbXHVEQzAwLVx1REM5RFx1RENCMC1cdURDRDNcdURDRDgtXHVEQ0ZCXHVERDAwLVx1REQyN1x1REQzMC1cdURENjNcdURFMDAtXHVERjM2XHVERjQwLVx1REY1NVx1REY2MC1cdURGNjddfFx1RDgwMltcdURDMDAtXHVEQzA1XHVEQzA4XHVEQzBBLVx1REMzNVx1REMzN1x1REMzOFx1REMzQ1x1REMzRi1cdURDNTVcdURDNjAtXHVEQzc2XHVEQzgwLVx1REM5RVx1RENFMC1cdURDRjJcdURDRjRcdURDRjVcdUREMDAtXHVERDE1XHVERDIwLVx1REQzOVx1REQ4MC1cdUREQjdcdUREQkVcdUREQkZcdURFMDBcdURFMTAtXHVERTEzXHVERTE1LVx1REUxN1x1REUxOS1cdURFMzNcdURFNjAtXHVERTdDXHVERTgwLVx1REU5Q1x1REVDMC1cdURFQzdcdURFQzktXHVERUU0XHVERjAwLVx1REYzNVx1REY0MC1cdURGNTVcdURGNjAtXHVERjcyXHVERjgwLVx1REY5MV18XHVEODAzW1x1REMwMC1cdURDNDhcdURDODAtXHVEQ0IyXHVEQ0MwLVx1RENGMl18XHVEODA0W1x1REMwMy1cdURDMzdcdURDODMtXHVEQ0FGXHVEQ0QwLVx1RENFOFx1REQwMy1cdUREMjZcdURENTAtXHVERDcyXHVERDc2XHVERDgzLVx1RERCMlx1RERDMS1cdUREQzRcdUREREFcdURERENcdURFMDAtXHVERTExXHVERTEzLVx1REUyQlx1REU4MC1cdURFODZcdURFODhcdURFOEEtXHVERThEXHVERThGLVx1REU5RFx1REU5Ri1cdURFQThcdURFQjAtXHVERURFXHVERjA1LVx1REYwQ1x1REYwRlx1REYxMFx1REYxMy1cdURGMjhcdURGMkEtXHVERjMwXHVERjMyXHVERjMzXHVERjM1LVx1REYzOVx1REYzRFx1REY1MFx1REY1RC1cdURGNjFdfFx1RDgwNVtcdURDMDAtXHVEQzM0XHVEQzQ3LVx1REM0QVx1REM4MC1cdURDQUZcdURDQzRcdURDQzVcdURDQzdcdUREODAtXHVEREFFXHVEREQ4LVx1REREQlx1REUwMC1cdURFMkZcdURFNDRcdURFODAtXHVERUFBXHVERjAwLVx1REYxOV18XHVEODA2W1x1RENBMC1cdURDREZcdURDRkZcdURFMDBcdURFMEItXHVERTMyXHVERTNBXHVERTUwXHVERTVDLVx1REU4M1x1REU4Ni1cdURFODlcdURFQzAtXHVERUY4XXxcdUQ4MDdbXHVEQzAwLVx1REMwOFx1REMwQS1cdURDMkVcdURDNDBcdURDNzItXHVEQzhGXHVERDAwLVx1REQwNlx1REQwOFx1REQwOVx1REQwQi1cdUREMzBcdURENDZdfFx1RDgwOFtcdURDMDAtXHVERjk5XXxcdUQ4MDlbXHVEQzAwLVx1REM2RVx1REM4MC1cdURENDNdfFtcdUQ4MENcdUQ4MUMtXHVEODIwXHVEODQwLVx1RDg2OFx1RDg2QS1cdUQ4NkNcdUQ4NkYtXHVEODcyXHVEODc0LVx1RDg3OV1bXHVEQzAwLVx1REZGRl18XHVEODBEW1x1REMwMC1cdURDMkVdfFx1RDgxMVtcdURDMDAtXHVERTQ2XXxcdUQ4MUFbXHVEQzAwLVx1REUzOFx1REU0MC1cdURFNUVcdURFRDAtXHVERUVEXHVERjAwLVx1REYyRlx1REY0MC1cdURGNDNcdURGNjMtXHVERjc3XHVERjdELVx1REY4Rl18XHVEODFCW1x1REYwMC1cdURGNDRcdURGNTBcdURGOTMtXHVERjlGXHVERkUwXHVERkUxXXxcdUQ4MjFbXHVEQzAwLVx1REZFQ118XHVEODIyW1x1REMwMC1cdURFRjJdfFx1RDgyQ1tcdURDMDAtXHVERDFFXHVERDcwLVx1REVGQl18XHVEODJGW1x1REMwMC1cdURDNkFcdURDNzAtXHVEQzdDXHVEQzgwLVx1REM4OFx1REM5MC1cdURDOTldfFx1RDgzNVtcdURDMDAtXHVEQzU0XHVEQzU2LVx1REM5Q1x1REM5RVx1REM5Rlx1RENBMlx1RENBNVx1RENBNlx1RENBOS1cdURDQUNcdURDQUUtXHVEQ0I5XHVEQ0JCXHVEQ0JELVx1RENDM1x1RENDNS1cdUREMDVcdUREMDctXHVERDBBXHVERDBELVx1REQxNFx1REQxNi1cdUREMUNcdUREMUUtXHVERDM5XHVERDNCLVx1REQzRVx1REQ0MC1cdURENDRcdURENDZcdURENEEtXHVERDUwXHVERDUyLVx1REVBNVx1REVBOC1cdURFQzBcdURFQzItXHVERURBXHVERURDLVx1REVGQVx1REVGQy1cdURGMTRcdURGMTYtXHVERjM0XHVERjM2LVx1REY0RVx1REY1MC1cdURGNkVcdURGNzAtXHVERjg4XHVERjhBLVx1REZBOFx1REZBQS1cdURGQzJcdURGQzQtXHVERkNCXXxcdUQ4M0FbXHVEQzAwLVx1RENDNFx1REQwMC1cdURENDNdfFx1RDgzQltcdURFMDAtXHVERTAzXHVERTA1LVx1REUxRlx1REUyMVx1REUyMlx1REUyNFx1REUyN1x1REUyOS1cdURFMzJcdURFMzQtXHVERTM3XHVERTM5XHVERTNCXHVERTQyXHVERTQ3XHVERTQ5XHVERTRCXHVERTRELVx1REU0Rlx1REU1MVx1REU1Mlx1REU1NFx1REU1N1x1REU1OVx1REU1Qlx1REU1RFx1REU1Rlx1REU2MVx1REU2Mlx1REU2NFx1REU2Ny1cdURFNkFcdURFNkMtXHVERTcyXHVERTc0LVx1REU3N1x1REU3OS1cdURFN0NcdURFN0VcdURFODAtXHVERTg5XHVERThCLVx1REU5Qlx1REVBMS1cdURFQTNcdURFQTUtXHVERUE5XHVERUFCLVx1REVCQl18XHVEODY5W1x1REMwMC1cdURFRDZcdURGMDAtXHVERkZGXXxcdUQ4NkRbXHVEQzAwLVx1REYzNFx1REY0MC1cdURGRkZdfFx1RDg2RVtcdURDMDAtXHVEQzFEXHVEQzIwLVx1REZGRl18XHVEODczW1x1REMwMC1cdURFQTFcdURFQjAtXHVERkZGXXxcdUQ4N0FbXHVEQzAwLVx1REZFMF18XHVEODdFW1x1REMwMC1cdURFMURdLyxJRF9Db250aW51ZTovW1x4QUFceEI1XHhCQVx4QzAtXHhENlx4RDgtXHhGNlx4RjgtXHUwMkMxXHUwMkM2LVx1MDJEMVx1MDJFMC1cdTAyRTRcdTAyRUNcdTAyRUVcdTAzMDAtXHUwMzc0XHUwMzc2XHUwMzc3XHUwMzdBLVx1MDM3RFx1MDM3Rlx1MDM4Nlx1MDM4OC1cdTAzOEFcdTAzOENcdTAzOEUtXHUwM0ExXHUwM0EzLVx1MDNGNVx1MDNGNy1cdTA0ODFcdTA0ODMtXHUwNDg3XHUwNDhBLVx1MDUyRlx1MDUzMS1cdTA1NTZcdTA1NTlcdTA1NjEtXHUwNTg3XHUwNTkxLVx1MDVCRFx1MDVCRlx1MDVDMVx1MDVDMlx1MDVDNFx1MDVDNVx1MDVDN1x1MDVEMC1cdTA1RUFcdTA1RjAtXHUwNUYyXHUwNjEwLVx1MDYxQVx1MDYyMC1cdTA2NjlcdTA2NkUtXHUwNkQzXHUwNkQ1LVx1MDZEQ1x1MDZERi1cdTA2RThcdTA2RUEtXHUwNkZDXHUwNkZGXHUwNzEwLVx1MDc0QVx1MDc0RC1cdTA3QjFcdTA3QzAtXHUwN0Y1XHUwN0ZBXHUwODAwLVx1MDgyRFx1MDg0MC1cdTA4NUJcdTA4NjAtXHUwODZBXHUwOEEwLVx1MDhCNFx1MDhCNi1cdTA4QkRcdTA4RDQtXHUwOEUxXHUwOEUzLVx1MDk2M1x1MDk2Ni1cdTA5NkZcdTA5NzEtXHUwOTgzXHUwOTg1LVx1MDk4Q1x1MDk4Rlx1MDk5MFx1MDk5My1cdTA5QThcdTA5QUEtXHUwOUIwXHUwOUIyXHUwOUI2LVx1MDlCOVx1MDlCQy1cdTA5QzRcdTA5QzdcdTA5QzhcdTA5Q0ItXHUwOUNFXHUwOUQ3XHUwOURDXHUwOUREXHUwOURGLVx1MDlFM1x1MDlFNi1cdTA5RjFcdTA5RkNcdTBBMDEtXHUwQTAzXHUwQTA1LVx1MEEwQVx1MEEwRlx1MEExMFx1MEExMy1cdTBBMjhcdTBBMkEtXHUwQTMwXHUwQTMyXHUwQTMzXHUwQTM1XHUwQTM2XHUwQTM4XHUwQTM5XHUwQTNDXHUwQTNFLVx1MEE0Mlx1MEE0N1x1MEE0OFx1MEE0Qi1cdTBBNERcdTBBNTFcdTBBNTktXHUwQTVDXHUwQTVFXHUwQTY2LVx1MEE3NVx1MEE4MS1cdTBBODNcdTBBODUtXHUwQThEXHUwQThGLVx1MEE5MVx1MEE5My1cdTBBQThcdTBBQUEtXHUwQUIwXHUwQUIyXHUwQUIzXHUwQUI1LVx1MEFCOVx1MEFCQy1cdTBBQzVcdTBBQzctXHUwQUM5XHUwQUNCLVx1MEFDRFx1MEFEMFx1MEFFMC1cdTBBRTNcdTBBRTYtXHUwQUVGXHUwQUY5LVx1MEFGRlx1MEIwMS1cdTBCMDNcdTBCMDUtXHUwQjBDXHUwQjBGXHUwQjEwXHUwQjEzLVx1MEIyOFx1MEIyQS1cdTBCMzBcdTBCMzJcdTBCMzNcdTBCMzUtXHUwQjM5XHUwQjNDLVx1MEI0NFx1MEI0N1x1MEI0OFx1MEI0Qi1cdTBCNERcdTBCNTZcdTBCNTdcdTBCNUNcdTBCNURcdTBCNUYtXHUwQjYzXHUwQjY2LVx1MEI2Rlx1MEI3MVx1MEI4Mlx1MEI4M1x1MEI4NS1cdTBCOEFcdTBCOEUtXHUwQjkwXHUwQjkyLVx1MEI5NVx1MEI5OVx1MEI5QVx1MEI5Q1x1MEI5RVx1MEI5Rlx1MEJBM1x1MEJBNFx1MEJBOC1cdTBCQUFcdTBCQUUtXHUwQkI5XHUwQkJFLVx1MEJDMlx1MEJDNi1cdTBCQzhcdTBCQ0EtXHUwQkNEXHUwQkQwXHUwQkQ3XHUwQkU2LVx1MEJFRlx1MEMwMC1cdTBDMDNcdTBDMDUtXHUwQzBDXHUwQzBFLVx1MEMxMFx1MEMxMi1cdTBDMjhcdTBDMkEtXHUwQzM5XHUwQzNELVx1MEM0NFx1MEM0Ni1cdTBDNDhcdTBDNEEtXHUwQzREXHUwQzU1XHUwQzU2XHUwQzU4LVx1MEM1QVx1MEM2MC1cdTBDNjNcdTBDNjYtXHUwQzZGXHUwQzgwLVx1MEM4M1x1MEM4NS1cdTBDOENcdTBDOEUtXHUwQzkwXHUwQzkyLVx1MENBOFx1MENBQS1cdTBDQjNcdTBDQjUtXHUwQ0I5XHUwQ0JDLVx1MENDNFx1MENDNi1cdTBDQzhcdTBDQ0EtXHUwQ0NEXHUwQ0Q1XHUwQ0Q2XHUwQ0RFXHUwQ0UwLVx1MENFM1x1MENFNi1cdTBDRUZcdTBDRjFcdTBDRjJcdTBEMDAtXHUwRDAzXHUwRDA1LVx1MEQwQ1x1MEQwRS1cdTBEMTBcdTBEMTItXHUwRDQ0XHUwRDQ2LVx1MEQ0OFx1MEQ0QS1cdTBENEVcdTBENTQtXHUwRDU3XHUwRDVGLVx1MEQ2M1x1MEQ2Ni1cdTBENkZcdTBEN0EtXHUwRDdGXHUwRDgyXHUwRDgzXHUwRDg1LVx1MEQ5Nlx1MEQ5QS1cdTBEQjFcdTBEQjMtXHUwREJCXHUwREJEXHUwREMwLVx1MERDNlx1MERDQVx1MERDRi1cdTBERDRcdTBERDZcdTBERDgtXHUwRERGXHUwREU2LVx1MERFRlx1MERGMlx1MERGM1x1MEUwMS1cdTBFM0FcdTBFNDAtXHUwRTRFXHUwRTUwLVx1MEU1OVx1MEU4MVx1MEU4Mlx1MEU4NFx1MEU4N1x1MEU4OFx1MEU4QVx1MEU4RFx1MEU5NC1cdTBFOTdcdTBFOTktXHUwRTlGXHUwRUExLVx1MEVBM1x1MEVBNVx1MEVBN1x1MEVBQVx1MEVBQlx1MEVBRC1cdTBFQjlcdTBFQkItXHUwRUJEXHUwRUMwLVx1MEVDNFx1MEVDNlx1MEVDOC1cdTBFQ0RcdTBFRDAtXHUwRUQ5XHUwRURDLVx1MEVERlx1MEYwMFx1MEYxOFx1MEYxOVx1MEYyMC1cdTBGMjlcdTBGMzVcdTBGMzdcdTBGMzlcdTBGM0UtXHUwRjQ3XHUwRjQ5LVx1MEY2Q1x1MEY3MS1cdTBGODRcdTBGODYtXHUwRjk3XHUwRjk5LVx1MEZCQ1x1MEZDNlx1MTAwMC1cdTEwNDlcdTEwNTAtXHUxMDlEXHUxMEEwLVx1MTBDNVx1MTBDN1x1MTBDRFx1MTBEMC1cdTEwRkFcdTEwRkMtXHUxMjQ4XHUxMjRBLVx1MTI0RFx1MTI1MC1cdTEyNTZcdTEyNThcdTEyNUEtXHUxMjVEXHUxMjYwLVx1MTI4OFx1MTI4QS1cdTEyOERcdTEyOTAtXHUxMkIwXHUxMkIyLVx1MTJCNVx1MTJCOC1cdTEyQkVcdTEyQzBcdTEyQzItXHUxMkM1XHUxMkM4LVx1MTJENlx1MTJEOC1cdTEzMTBcdTEzMTItXHUxMzE1XHUxMzE4LVx1MTM1QVx1MTM1RC1cdTEzNUZcdTEzODAtXHUxMzhGXHUxM0EwLVx1MTNGNVx1MTNGOC1cdTEzRkRcdTE0MDEtXHUxNjZDXHUxNjZGLVx1MTY3Rlx1MTY4MS1cdTE2OUFcdTE2QTAtXHUxNkVBXHUxNkVFLVx1MTZGOFx1MTcwMC1cdTE3MENcdTE3MEUtXHUxNzE0XHUxNzIwLVx1MTczNFx1MTc0MC1cdTE3NTNcdTE3NjAtXHUxNzZDXHUxNzZFLVx1MTc3MFx1MTc3Mlx1MTc3M1x1MTc4MC1cdTE3RDNcdTE3RDdcdTE3RENcdTE3RERcdTE3RTAtXHUxN0U5XHUxODBCLVx1MTgwRFx1MTgxMC1cdTE4MTlcdTE4MjAtXHUxODc3XHUxODgwLVx1MThBQVx1MThCMC1cdTE4RjVcdTE5MDAtXHUxOTFFXHUxOTIwLVx1MTkyQlx1MTkzMC1cdTE5M0JcdTE5NDYtXHUxOTZEXHUxOTcwLVx1MTk3NFx1MTk4MC1cdTE5QUJcdTE5QjAtXHUxOUM5XHUxOUQwLVx1MTlEOVx1MUEwMC1cdTFBMUJcdTFBMjAtXHUxQTVFXHUxQTYwLVx1MUE3Q1x1MUE3Ri1cdTFBODlcdTFBOTAtXHUxQTk5XHUxQUE3XHUxQUIwLVx1MUFCRFx1MUIwMC1cdTFCNEJcdTFCNTAtXHUxQjU5XHUxQjZCLVx1MUI3M1x1MUI4MC1cdTFCRjNcdTFDMDAtXHUxQzM3XHUxQzQwLVx1MUM0OVx1MUM0RC1cdTFDN0RcdTFDODAtXHUxQzg4XHUxQ0QwLVx1MUNEMlx1MUNENC1cdTFDRjlcdTFEMDAtXHUxREY5XHUxREZCLVx1MUYxNVx1MUYxOC1cdTFGMURcdTFGMjAtXHUxRjQ1XHUxRjQ4LVx1MUY0RFx1MUY1MC1cdTFGNTdcdTFGNTlcdTFGNUJcdTFGNURcdTFGNUYtXHUxRjdEXHUxRjgwLVx1MUZCNFx1MUZCNi1cdTFGQkNcdTFGQkVcdTFGQzItXHUxRkM0XHUxRkM2LVx1MUZDQ1x1MUZEMC1cdTFGRDNcdTFGRDYtXHUxRkRCXHUxRkUwLVx1MUZFQ1x1MUZGMi1cdTFGRjRcdTFGRjYtXHUxRkZDXHUyMDNGXHUyMDQwXHUyMDU0XHUyMDcxXHUyMDdGXHUyMDkwLVx1MjA5Q1x1MjBEMC1cdTIwRENcdTIwRTFcdTIwRTUtXHUyMEYwXHUyMTAyXHUyMTA3XHUyMTBBLVx1MjExM1x1MjExNVx1MjExOS1cdTIxMURcdTIxMjRcdTIxMjZcdTIxMjhcdTIxMkEtXHUyMTJEXHUyMTJGLVx1MjEzOVx1MjEzQy1cdTIxM0ZcdTIxNDUtXHUyMTQ5XHUyMTRFXHUyMTYwLVx1MjE4OFx1MkMwMC1cdTJDMkVcdTJDMzAtXHUyQzVFXHUyQzYwLVx1MkNFNFx1MkNFQi1cdTJDRjNcdTJEMDAtXHUyRDI1XHUyRDI3XHUyRDJEXHUyRDMwLVx1MkQ2N1x1MkQ2Rlx1MkQ3Ri1cdTJEOTZcdTJEQTAtXHUyREE2XHUyREE4LVx1MkRBRVx1MkRCMC1cdTJEQjZcdTJEQjgtXHUyREJFXHUyREMwLVx1MkRDNlx1MkRDOC1cdTJEQ0VcdTJERDAtXHUyREQ2XHUyREQ4LVx1MkRERVx1MkRFMC1cdTJERkZcdTJFMkZcdTMwMDUtXHUzMDA3XHUzMDIxLVx1MzAyRlx1MzAzMS1cdTMwMzVcdTMwMzgtXHUzMDNDXHUzMDQxLVx1MzA5Nlx1MzA5OVx1MzA5QVx1MzA5RC1cdTMwOUZcdTMwQTEtXHUzMEZBXHUzMEZDLVx1MzBGRlx1MzEwNS1cdTMxMkVcdTMxMzEtXHUzMThFXHUzMUEwLVx1MzFCQVx1MzFGMC1cdTMxRkZcdTM0MDAtXHU0REI1XHU0RTAwLVx1OUZFQVx1QTAwMC1cdUE0OENcdUE0RDAtXHVBNEZEXHVBNTAwLVx1QTYwQ1x1QTYxMC1cdUE2MkJcdUE2NDAtXHVBNjZGXHVBNjc0LVx1QTY3RFx1QTY3Ri1cdUE2RjFcdUE3MTctXHVBNzFGXHVBNzIyLVx1QTc4OFx1QTc4Qi1cdUE3QUVcdUE3QjAtXHVBN0I3XHVBN0Y3LVx1QTgyN1x1QTg0MC1cdUE4NzNcdUE4ODAtXHVBOEM1XHVBOEQwLVx1QThEOVx1QThFMC1cdUE4RjdcdUE4RkJcdUE4RkRcdUE5MDAtXHVBOTJEXHVBOTMwLVx1QTk1M1x1QTk2MC1cdUE5N0NcdUE5ODAtXHVBOUMwXHVBOUNGLVx1QTlEOVx1QTlFMC1cdUE5RkVcdUFBMDAtXHVBQTM2XHVBQTQwLVx1QUE0RFx1QUE1MC1cdUFBNTlcdUFBNjAtXHVBQTc2XHVBQTdBLVx1QUFDMlx1QUFEQi1cdUFBRERcdUFBRTAtXHVBQUVGXHVBQUYyLVx1QUFGNlx1QUIwMS1cdUFCMDZcdUFCMDktXHVBQjBFXHVBQjExLVx1QUIxNlx1QUIyMC1cdUFCMjZcdUFCMjgtXHVBQjJFXHVBQjMwLVx1QUI1QVx1QUI1Qy1cdUFCNjVcdUFCNzAtXHVBQkVBXHVBQkVDXHVBQkVEXHVBQkYwLVx1QUJGOVx1QUMwMC1cdUQ3QTNcdUQ3QjAtXHVEN0M2XHVEN0NCLVx1RDdGQlx1RjkwMC1cdUZBNkRcdUZBNzAtXHVGQUQ5XHVGQjAwLVx1RkIwNlx1RkIxMy1cdUZCMTdcdUZCMUQtXHVGQjI4XHVGQjJBLVx1RkIzNlx1RkIzOC1cdUZCM0NcdUZCM0VcdUZCNDBcdUZCNDFcdUZCNDNcdUZCNDRcdUZCNDYtXHVGQkIxXHVGQkQzLVx1RkQzRFx1RkQ1MC1cdUZEOEZcdUZEOTItXHVGREM3XHVGREYwLVx1RkRGQlx1RkUwMC1cdUZFMEZcdUZFMjAtXHVGRTJGXHVGRTMzXHVGRTM0XHVGRTRELVx1RkU0Rlx1RkU3MC1cdUZFNzRcdUZFNzYtXHVGRUZDXHVGRjEwLVx1RkYxOVx1RkYyMS1cdUZGM0FcdUZGM0ZcdUZGNDEtXHVGRjVBXHVGRjY2LVx1RkZCRVx1RkZDMi1cdUZGQzdcdUZGQ0EtXHVGRkNGXHVGRkQyLVx1RkZEN1x1RkZEQS1cdUZGRENdfFx1RDgwMFtcdURDMDAtXHVEQzBCXHVEQzBELVx1REMyNlx1REMyOC1cdURDM0FcdURDM0NcdURDM0RcdURDM0YtXHVEQzREXHVEQzUwLVx1REM1RFx1REM4MC1cdURDRkFcdURENDAtXHVERDc0XHVEREZEXHVERTgwLVx1REU5Q1x1REVBMC1cdURFRDBcdURFRTBcdURGMDAtXHVERjFGXHVERjJELVx1REY0QVx1REY1MC1cdURGN0FcdURGODAtXHVERjlEXHVERkEwLVx1REZDM1x1REZDOC1cdURGQ0ZcdURGRDEtXHVERkQ1XXxcdUQ4MDFbXHVEQzAwLVx1REM5RFx1RENBMC1cdURDQTlcdURDQjAtXHVEQ0QzXHVEQ0Q4LVx1RENGQlx1REQwMC1cdUREMjdcdUREMzAtXHVERDYzXHVERTAwLVx1REYzNlx1REY0MC1cdURGNTVcdURGNjAtXHVERjY3XXxcdUQ4MDJbXHVEQzAwLVx1REMwNVx1REMwOFx1REMwQS1cdURDMzVcdURDMzdcdURDMzhcdURDM0NcdURDM0YtXHVEQzU1XHVEQzYwLVx1REM3Nlx1REM4MC1cdURDOUVcdURDRTAtXHVEQ0YyXHVEQ0Y0XHVEQ0Y1XHVERDAwLVx1REQxNVx1REQyMC1cdUREMzlcdUREODAtXHVEREI3XHVEREJFXHVEREJGXHVERTAwLVx1REUwM1x1REUwNVx1REUwNlx1REUwQy1cdURFMTNcdURFMTUtXHVERTE3XHVERTE5LVx1REUzM1x1REUzOC1cdURFM0FcdURFM0ZcdURFNjAtXHVERTdDXHVERTgwLVx1REU5Q1x1REVDMC1cdURFQzdcdURFQzktXHVERUU2XHVERjAwLVx1REYzNVx1REY0MC1cdURGNTVcdURGNjAtXHVERjcyXHVERjgwLVx1REY5MV18XHVEODAzW1x1REMwMC1cdURDNDhcdURDODAtXHVEQ0IyXHVEQ0MwLVx1RENGMl18XHVEODA0W1x1REMwMC1cdURDNDZcdURDNjYtXHVEQzZGXHVEQzdGLVx1RENCQVx1RENEMC1cdURDRThcdURDRjAtXHVEQ0Y5XHVERDAwLVx1REQzNFx1REQzNi1cdUREM0ZcdURENTAtXHVERDczXHVERDc2XHVERDgwLVx1RERDNFx1RERDQS1cdUREQ0NcdURERDAtXHVERERBXHVERERDXHVERTAwLVx1REUxMVx1REUxMy1cdURFMzdcdURFM0VcdURFODAtXHVERTg2XHVERTg4XHVERThBLVx1REU4RFx1REU4Ri1cdURFOURcdURFOUYtXHVERUE4XHVERUIwLVx1REVFQVx1REVGMC1cdURFRjlcdURGMDAtXHVERjAzXHVERjA1LVx1REYwQ1x1REYwRlx1REYxMFx1REYxMy1cdURGMjhcdURGMkEtXHVERjMwXHVERjMyXHVERjMzXHVERjM1LVx1REYzOVx1REYzQy1cdURGNDRcdURGNDdcdURGNDhcdURGNEItXHVERjREXHVERjUwXHVERjU3XHVERjVELVx1REY2M1x1REY2Ni1cdURGNkNcdURGNzAtXHVERjc0XXxcdUQ4MDVbXHVEQzAwLVx1REM0QVx1REM1MC1cdURDNTlcdURDODAtXHVEQ0M1XHVEQ0M3XHVEQ0QwLVx1RENEOVx1REQ4MC1cdUREQjVcdUREQjgtXHVEREMwXHVEREQ4LVx1RERERFx1REUwMC1cdURFNDBcdURFNDRcdURFNTAtXHVERTU5XHVERTgwLVx1REVCN1x1REVDMC1cdURFQzlcdURGMDAtXHVERjE5XHVERjFELVx1REYyQlx1REYzMC1cdURGMzldfFx1RDgwNltcdURDQTAtXHVEQ0U5XHVEQ0ZGXHVERTAwLVx1REUzRVx1REU0N1x1REU1MC1cdURFODNcdURFODYtXHVERTk5XHVERUMwLVx1REVGOF18XHVEODA3W1x1REMwMC1cdURDMDhcdURDMEEtXHVEQzM2XHVEQzM4LVx1REM0MFx1REM1MC1cdURDNTlcdURDNzItXHVEQzhGXHVEQzkyLVx1RENBN1x1RENBOS1cdURDQjZcdUREMDAtXHVERDA2XHVERDA4XHVERDA5XHVERDBCLVx1REQzNlx1REQzQVx1REQzQ1x1REQzRFx1REQzRi1cdURENDdcdURENTAtXHVERDU5XXxcdUQ4MDhbXHVEQzAwLVx1REY5OV18XHVEODA5W1x1REMwMC1cdURDNkVcdURDODAtXHVERDQzXXxbXHVEODBDXHVEODFDLVx1RDgyMFx1RDg0MC1cdUQ4NjhcdUQ4NkEtXHVEODZDXHVEODZGLVx1RDg3Mlx1RDg3NC1cdUQ4NzldW1x1REMwMC1cdURGRkZdfFx1RDgwRFtcdURDMDAtXHVEQzJFXXxcdUQ4MTFbXHVEQzAwLVx1REU0Nl18XHVEODFBW1x1REMwMC1cdURFMzhcdURFNDAtXHVERTVFXHVERTYwLVx1REU2OVx1REVEMC1cdURFRURcdURFRjAtXHVERUY0XHVERjAwLVx1REYzNlx1REY0MC1cdURGNDNcdURGNTAtXHVERjU5XHVERjYzLVx1REY3N1x1REY3RC1cdURGOEZdfFx1RDgxQltcdURGMDAtXHVERjQ0XHVERjUwLVx1REY3RVx1REY4Ri1cdURGOUZcdURGRTBcdURGRTFdfFx1RDgyMVtcdURDMDAtXHVERkVDXXxcdUQ4MjJbXHVEQzAwLVx1REVGMl18XHVEODJDW1x1REMwMC1cdUREMUVcdURENzAtXHVERUZCXXxcdUQ4MkZbXHVEQzAwLVx1REM2QVx1REM3MC1cdURDN0NcdURDODAtXHVEQzg4XHVEQzkwLVx1REM5OVx1REM5RFx1REM5RV18XHVEODM0W1x1REQ2NS1cdURENjlcdURENkQtXHVERDcyXHVERDdCLVx1REQ4Mlx1REQ4NS1cdUREOEJcdUREQUEtXHVEREFEXHVERTQyLVx1REU0NF18XHVEODM1W1x1REMwMC1cdURDNTRcdURDNTYtXHVEQzlDXHVEQzlFXHVEQzlGXHVEQ0EyXHVEQ0E1XHVEQ0E2XHVEQ0E5LVx1RENBQ1x1RENBRS1cdURDQjlcdURDQkJcdURDQkQtXHVEQ0MzXHVEQ0M1LVx1REQwNVx1REQwNy1cdUREMEFcdUREMEQtXHVERDE0XHVERDE2LVx1REQxQ1x1REQxRS1cdUREMzlcdUREM0ItXHVERDNFXHVERDQwLVx1REQ0NFx1REQ0Nlx1REQ0QS1cdURENTBcdURENTItXHVERUE1XHVERUE4LVx1REVDMFx1REVDMi1cdURFREFcdURFREMtXHVERUZBXHVERUZDLVx1REYxNFx1REYxNi1cdURGMzRcdURGMzYtXHVERjRFXHVERjUwLVx1REY2RVx1REY3MC1cdURGODhcdURGOEEtXHVERkE4XHVERkFBLVx1REZDMlx1REZDNC1cdURGQ0JcdURGQ0UtXHVERkZGXXxcdUQ4MzZbXHVERTAwLVx1REUzNlx1REUzQi1cdURFNkNcdURFNzVcdURFODRcdURFOUItXHVERTlGXHVERUExLVx1REVBRl18XHVEODM4W1x1REMwMC1cdURDMDZcdURDMDgtXHVEQzE4XHVEQzFCLVx1REMyMVx1REMyM1x1REMyNFx1REMyNi1cdURDMkFdfFx1RDgzQVtcdURDMDAtXHVEQ0M0XHVEQ0QwLVx1RENENlx1REQwMC1cdURENEFcdURENTAtXHVERDU5XXxcdUQ4M0JbXHVERTAwLVx1REUwM1x1REUwNS1cdURFMUZcdURFMjFcdURFMjJcdURFMjRcdURFMjdcdURFMjktXHVERTMyXHVERTM0LVx1REUzN1x1REUzOVx1REUzQlx1REU0Mlx1REU0N1x1REU0OVx1REU0Qlx1REU0RC1cdURFNEZcdURFNTFcdURFNTJcdURFNTRcdURFNTdcdURFNTlcdURFNUJcdURFNURcdURFNUZcdURFNjFcdURFNjJcdURFNjRcdURFNjctXHVERTZBXHVERTZDLVx1REU3Mlx1REU3NC1cdURFNzdcdURFNzktXHVERTdDXHVERTdFXHVERTgwLVx1REU4OVx1REU4Qi1cdURFOUJcdURFQTEtXHVERUEzXHVERUE1LVx1REVBOVx1REVBQi1cdURFQkJdfFx1RDg2OVtcdURDMDAtXHVERUQ2XHVERjAwLVx1REZGRl18XHVEODZEW1x1REMwMC1cdURGMzRcdURGNDAtXHVERkZGXXxcdUQ4NkVbXHVEQzAwLVx1REMxRFx1REMyMC1cdURGRkZdfFx1RDg3M1tcdURDMDAtXHVERUExXHVERUIwLVx1REZGRl18XHVEODdBW1x1REMwMC1cdURGRTBdfFx1RDg3RVtcdURDMDAtXHVERTFEXXxcdURCNDBbXHVERDAwLVx1RERFRl0vfSxVPXtpc1NwYWNlU2VwYXJhdG9yOmZ1bmN0aW9uKHUpe3JldHVybiJzdHJpbmciPT10eXBlb2YgdSYmRy5TcGFjZV9TZXBhcmF0b3IudGVzdCh1KX0saXNJZFN0YXJ0Q2hhcjpmdW5jdGlvbih1KXtyZXR1cm4ic3RyaW5nIj09dHlwZW9mIHUmJih1Pj0iYSImJnU8PSJ6Inx8dT49IkEiJiZ1PD0iWiJ8fCIkIj09PXV8fCJfIj09PXV8fEcuSURfU3RhcnQudGVzdCh1KSl9LGlzSWRDb250aW51ZUNoYXI6ZnVuY3Rpb24odSl7cmV0dXJuInN0cmluZyI9PXR5cGVvZiB1JiYodT49ImEiJiZ1PD0ieiJ8fHU+PSJBIiYmdTw9IloifHx1Pj0iMCImJnU8PSI5Inx8IiQiPT09dXx8Il8iPT09dXx8IuKAjCI9PT11fHwi4oCNIj09PXV8fEcuSURfQ29udGludWUudGVzdCh1KSl9LGlzRGlnaXQ6ZnVuY3Rpb24odSl7cmV0dXJuInN0cmluZyI9PXR5cGVvZiB1JiYvWzAtOV0vLnRlc3QodSl9LGlzSGV4RGlnaXQ6ZnVuY3Rpb24odSl7cmV0dXJuInN0cmluZyI9PXR5cGVvZiB1JiYvWzAtOUEtRmEtZl0vLnRlc3QodSl9fTtmdW5jdGlvbiBaKCl7Zm9yKFQ9ImRlZmF1bHQiLHo9IiIsSD0hMSwkPTE7Oyl7Uj1xKCk7dmFyIHU9WFtUXSgpO2lmKHUpcmV0dXJuIHV9fWZ1bmN0aW9uIHEoKXtpZihfW0ldKXJldHVybiBTdHJpbmcuZnJvbUNvZGVQb2ludChfLmNvZGVQb2ludEF0KEkpKX1mdW5jdGlvbiBXKCl7dmFyIHU9cSgpO3JldHVybiJcbiI9PT11PyhWKyssSj0wKTp1P0orPXUubGVuZ3RoOkorKyx1JiYoSSs9dS5sZW5ndGgpLHV9dmFyIFg9e2RlZmF1bHQ6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSJcdCI6Y2FzZSJcdiI6Y2FzZSJcZiI6Y2FzZSIgIjpjYXNlIiAiOmNhc2UiXHVmZWZmIjpjYXNlIlxuIjpjYXNlIlxyIjpjYXNlIlx1MjAyOCI6Y2FzZSJcdTIwMjkiOnJldHVybiB2b2lkIFcoKTtjYXNlIi8iOnJldHVybiBXKCksdm9pZChUPSJjb21tZW50Iik7Y2FzZSB2b2lkIDA6cmV0dXJuIFcoKSxLKCJlb2YiKX1pZighVS5pc1NwYWNlU2VwYXJhdG9yKFIpKXJldHVybiBYW09dKCk7VygpfSxjb21tZW50OmZ1bmN0aW9uKCl7c3dpdGNoKFIpe2Nhc2UiKiI6cmV0dXJuIFcoKSx2b2lkKFQ9Im11bHRpTGluZUNvbW1lbnQiKTtjYXNlIi8iOnJldHVybiBXKCksdm9pZChUPSJzaW5nbGVMaW5lQ29tbWVudCIpfXRocm93IHJ1KFcoKSl9LG11bHRpTGluZUNvbW1lbnQ6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSIqIjpyZXR1cm4gVygpLHZvaWQoVD0ibXVsdGlMaW5lQ29tbWVudEFzdGVyaXNrIik7Y2FzZSB2b2lkIDA6dGhyb3cgcnUoVygpKX1XKCl9LG11bHRpTGluZUNvbW1lbnRBc3RlcmlzazpmdW5jdGlvbigpe3N3aXRjaChSKXtjYXNlIioiOnJldHVybiB2b2lkIFcoKTtjYXNlIi8iOnJldHVybiBXKCksdm9pZChUPSJkZWZhdWx0Iik7Y2FzZSB2b2lkIDA6dGhyb3cgcnUoVygpKX1XKCksVD0ibXVsdGlMaW5lQ29tbWVudCJ9LHNpbmdsZUxpbmVDb21tZW50OmZ1bmN0aW9uKCl7c3dpdGNoKFIpe2Nhc2UiXG4iOmNhc2UiXHIiOmNhc2UiXHUyMDI4IjpjYXNlIlx1MjAyOSI6cmV0dXJuIFcoKSx2b2lkKFQ9ImRlZmF1bHQiKTtjYXNlIHZvaWQgMDpyZXR1cm4gVygpLEsoImVvZiIpfVcoKX0sdmFsdWU6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSJ7IjpjYXNlIlsiOnJldHVybiBLKCJwdW5jdHVhdG9yIixXKCkpO2Nhc2UibiI6cmV0dXJuIFcoKSxRKCJ1bGwiKSxLKCJudWxsIixudWxsKTtjYXNlInQiOnJldHVybiBXKCksUSgicnVlIiksSygiYm9vbGVhbiIsITApO2Nhc2UiZiI6cmV0dXJuIFcoKSxRKCJhbHNlIiksSygiYm9vbGVhbiIsITEpO2Nhc2UiLSI6Y2FzZSIrIjpyZXR1cm4iLSI9PT1XKCkmJigkPS0xKSx2b2lkKFQ9InNpZ24iKTtjYXNlIi4iOnJldHVybiB6PVcoKSx2b2lkKFQ9ImRlY2ltYWxQb2ludExlYWRpbmciKTtjYXNlIjAiOnJldHVybiB6PVcoKSx2b2lkKFQ9Inplcm8iKTtjYXNlIjEiOmNhc2UiMiI6Y2FzZSIzIjpjYXNlIjQiOmNhc2UiNSI6Y2FzZSI2IjpjYXNlIjciOmNhc2UiOCI6Y2FzZSI5IjpyZXR1cm4gej1XKCksdm9pZChUPSJkZWNpbWFsSW50ZWdlciIpO2Nhc2UiSSI6cmV0dXJuIFcoKSxRKCJuZmluaXR5IiksSygibnVtZXJpYyIsMS8wKTtjYXNlIk4iOnJldHVybiBXKCksUSgiYU4iKSxLKCJudW1lcmljIixOYU4pO2Nhc2UnIic6Y2FzZSInIjpyZXR1cm4gSD0nIic9PT1XKCksej0iIix2b2lkKFQ9InN0cmluZyIpfXRocm93IHJ1KFcoKSl9LGlkZW50aWZpZXJOYW1lU3RhcnRFc2NhcGU6ZnVuY3Rpb24oKXtpZigidSIhPT1SKXRocm93IHJ1KFcoKSk7VygpO3ZhciB1PVkoKTtzd2l0Y2godSl7Y2FzZSIkIjpjYXNlIl8iOmJyZWFrO2RlZmF1bHQ6aWYoIVUuaXNJZFN0YXJ0Q2hhcih1KSl0aHJvdyBudSgpfXorPXUsVD0iaWRlbnRpZmllck5hbWUifSxpZGVudGlmaWVyTmFtZTpmdW5jdGlvbigpe3N3aXRjaChSKXtjYXNlIiQiOmNhc2UiXyI6Y2FzZSLigIwiOmNhc2Ui4oCNIjpyZXR1cm4gdm9pZCh6Kz1XKCkpO2Nhc2UiXFwiOnJldHVybiBXKCksdm9pZChUPSJpZGVudGlmaWVyTmFtZUVzY2FwZSIpfWlmKCFVLmlzSWRDb250aW51ZUNoYXIoUikpcmV0dXJuIEsoImlkZW50aWZpZXIiLHopO3orPVcoKX0saWRlbnRpZmllck5hbWVFc2NhcGU6ZnVuY3Rpb24oKXtpZigidSIhPT1SKXRocm93IHJ1KFcoKSk7VygpO3ZhciB1PVkoKTtzd2l0Y2godSl7Y2FzZSIkIjpjYXNlIl8iOmNhc2Ui4oCMIjpjYXNlIuKAjSI6YnJlYWs7ZGVmYXVsdDppZighVS5pc0lkQ29udGludWVDaGFyKHUpKXRocm93IG51KCl9eis9dSxUPSJpZGVudGlmaWVyTmFtZSJ9LHNpZ246ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSIuIjpyZXR1cm4gej1XKCksdm9pZChUPSJkZWNpbWFsUG9pbnRMZWFkaW5nIik7Y2FzZSIwIjpyZXR1cm4gej1XKCksdm9pZChUPSJ6ZXJvIik7Y2FzZSIxIjpjYXNlIjIiOmNhc2UiMyI6Y2FzZSI0IjpjYXNlIjUiOmNhc2UiNiI6Y2FzZSI3IjpjYXNlIjgiOmNhc2UiOSI6cmV0dXJuIHo9VygpLHZvaWQoVD0iZGVjaW1hbEludGVnZXIiKTtjYXNlIkkiOnJldHVybiBXKCksUSgibmZpbml0eSIpLEsoIm51bWVyaWMiLCQqKDEvMCkpO2Nhc2UiTiI6cmV0dXJuIFcoKSxRKCJhTiIpLEsoIm51bWVyaWMiLE5hTil9dGhyb3cgcnUoVygpKX0semVybzpmdW5jdGlvbigpe3N3aXRjaChSKXtjYXNlIi4iOnJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsUG9pbnQiKTtjYXNlImUiOmNhc2UiRSI6cmV0dXJuIHorPVcoKSx2b2lkKFQ9ImRlY2ltYWxFeHBvbmVudCIpO2Nhc2UieCI6Y2FzZSJYIjpyZXR1cm4geis9VygpLHZvaWQoVD0iaGV4YWRlY2ltYWwiKX1yZXR1cm4gSygibnVtZXJpYyIsMCokKX0sZGVjaW1hbEludGVnZXI6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSIuIjpyZXR1cm4geis9VygpLHZvaWQoVD0iZGVjaW1hbFBvaW50Iik7Y2FzZSJlIjpjYXNlIkUiOnJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsRXhwb25lbnQiKX1pZighVS5pc0RpZ2l0KFIpKXJldHVybiBLKCJudW1lcmljIiwkKk51bWJlcih6KSk7eis9VygpfSxkZWNpbWFsUG9pbnRMZWFkaW5nOmZ1bmN0aW9uKCl7aWYoVS5pc0RpZ2l0KFIpKXJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsRnJhY3Rpb24iKTt0aHJvdyBydShXKCkpfSxkZWNpbWFsUG9pbnQ6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSJlIjpjYXNlIkUiOnJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsRXhwb25lbnQiKX1yZXR1cm4gVS5pc0RpZ2l0KFIpPyh6Kz1XKCksdm9pZChUPSJkZWNpbWFsRnJhY3Rpb24iKSk6SygibnVtZXJpYyIsJCpOdW1iZXIoeikpfSxkZWNpbWFsRnJhY3Rpb246ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSJlIjpjYXNlIkUiOnJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsRXhwb25lbnQiKX1pZighVS5pc0RpZ2l0KFIpKXJldHVybiBLKCJudW1lcmljIiwkKk51bWJlcih6KSk7eis9VygpfSxkZWNpbWFsRXhwb25lbnQ6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSIrIjpjYXNlIi0iOnJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsRXhwb25lbnRTaWduIil9aWYoVS5pc0RpZ2l0KFIpKXJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsRXhwb25lbnRJbnRlZ2VyIik7dGhyb3cgcnUoVygpKX0sZGVjaW1hbEV4cG9uZW50U2lnbjpmdW5jdGlvbigpe2lmKFUuaXNEaWdpdChSKSlyZXR1cm4geis9VygpLHZvaWQoVD0iZGVjaW1hbEV4cG9uZW50SW50ZWdlciIpO3Rocm93IHJ1KFcoKSl9LGRlY2ltYWxFeHBvbmVudEludGVnZXI6ZnVuY3Rpb24oKXtpZighVS5pc0RpZ2l0KFIpKXJldHVybiBLKCJudW1lcmljIiwkKk51bWJlcih6KSk7eis9VygpfSxoZXhhZGVjaW1hbDpmdW5jdGlvbigpe2lmKFUuaXNIZXhEaWdpdChSKSlyZXR1cm4geis9VygpLHZvaWQoVD0iaGV4YWRlY2ltYWxJbnRlZ2VyIik7dGhyb3cgcnUoVygpKX0saGV4YWRlY2ltYWxJbnRlZ2VyOmZ1bmN0aW9uKCl7aWYoIVUuaXNIZXhEaWdpdChSKSlyZXR1cm4gSygibnVtZXJpYyIsJCpOdW1iZXIoeikpO3orPVcoKX0sc3RyaW5nOmZ1bmN0aW9uKCl7c3dpdGNoKFIpe2Nhc2UiXFwiOnJldHVybiBXKCksdm9pZCh6Kz1mdW5jdGlvbigpe3N3aXRjaChxKCkpe2Nhc2UiYiI6cmV0dXJuIFcoKSwiXGIiO2Nhc2UiZiI6cmV0dXJuIFcoKSwiXGYiO2Nhc2UibiI6cmV0dXJuIFcoKSwiXG4iO2Nhc2UiciI6cmV0dXJuIFcoKSwiXHIiO2Nhc2UidCI6cmV0dXJuIFcoKSwiXHQiO2Nhc2UidiI6cmV0dXJuIFcoKSwiXHYiO2Nhc2UiMCI6aWYoVygpLFUuaXNEaWdpdChxKCkpKXRocm93IHJ1KFcoKSk7cmV0dXJuIlwwIjtjYXNlIngiOnJldHVybiBXKCksZnVuY3Rpb24oKXt2YXIgdT0iIixEPXEoKTtpZighVS5pc0hleERpZ2l0KEQpKXRocm93IHJ1KFcoKSk7aWYodSs9VygpLEQ9cSgpLCFVLmlzSGV4RGlnaXQoRCkpdGhyb3cgcnUoVygpKTtyZXR1cm4gdSs9VygpLFN0cmluZy5mcm9tQ29kZVBvaW50KHBhcnNlSW50KHUsMTYpKX0oKTtjYXNlInUiOnJldHVybiBXKCksWSgpO2Nhc2UiXG4iOmNhc2UiXHUyMDI4IjpjYXNlIlx1MjAyOSI6cmV0dXJuIFcoKSwiIjtjYXNlIlxyIjpyZXR1cm4gVygpLCJcbiI9PT1xKCkmJlcoKSwiIjtjYXNlIjEiOmNhc2UiMiI6Y2FzZSIzIjpjYXNlIjQiOmNhc2UiNSI6Y2FzZSI2IjpjYXNlIjciOmNhc2UiOCI6Y2FzZSI5IjpjYXNlIHZvaWQgMDp0aHJvdyBydShXKCkpfXJldHVybiBXKCl9KCkpO2Nhc2UnIic6cmV0dXJuIEg/KFcoKSxLKCJzdHJpbmciLHopKTp2b2lkKHorPVcoKSk7Y2FzZSInIjpyZXR1cm4gSD92b2lkKHorPVcoKSk6KFcoKSxLKCJzdHJpbmciLHopKTtjYXNlIlxuIjpjYXNlIlxyIjp0aHJvdyBydShXKCkpO2Nhc2UiXHUyMDI4IjpjYXNlIlx1MjAyOSI6IWZ1bmN0aW9uKHUpe2NvbnNvbGUud2FybigiSlNPTjU6ICciK0Z1KHUpKyInIGluIHN0cmluZ3MgaXMgbm90IHZhbGlkIEVDTUFTY3JpcHQ7IGNvbnNpZGVyIGVzY2FwaW5nIil9KFIpO2JyZWFrO2Nhc2Ugdm9pZCAwOnRocm93IHJ1KFcoKSl9eis9VygpfSxzdGFydDpmdW5jdGlvbigpe3N3aXRjaChSKXtjYXNlInsiOmNhc2UiWyI6cmV0dXJuIEsoInB1bmN0dWF0b3IiLFcoKSl9VD0idmFsdWUifSxiZWZvcmVQcm9wZXJ0eU5hbWU6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSIkIjpjYXNlIl8iOnJldHVybiB6PVcoKSx2b2lkKFQ9ImlkZW50aWZpZXJOYW1lIik7Y2FzZSJcXCI6cmV0dXJuIFcoKSx2b2lkKFQ9ImlkZW50aWZpZXJOYW1lU3RhcnRFc2NhcGUiKTtjYXNlIn0iOnJldHVybiBLKCJwdW5jdHVhdG9yIixXKCkpO2Nhc2UnIic6Y2FzZSInIjpyZXR1cm4gSD0nIic9PT1XKCksdm9pZChUPSJzdHJpbmciKX1pZihVLmlzSWRTdGFydENoYXIoUikpcmV0dXJuIHorPVcoKSx2b2lkKFQ9ImlkZW50aWZpZXJOYW1lIik7dGhyb3cgcnUoVygpKX0sYWZ0ZXJQcm9wZXJ0eU5hbWU6ZnVuY3Rpb24oKXtpZigiOiI9PT1SKXJldHVybiBLKCJwdW5jdHVhdG9yIixXKCkpO3Rocm93IHJ1KFcoKSl9LGJlZm9yZVByb3BlcnR5VmFsdWU6ZnVuY3Rpb24oKXtUPSJ2YWx1ZSJ9LGFmdGVyUHJvcGVydHlWYWx1ZTpmdW5jdGlvbigpe3N3aXRjaChSKXtjYXNlIiwiOmNhc2UifSI6cmV0dXJuIEsoInB1bmN0dWF0b3IiLFcoKSl9dGhyb3cgcnUoVygpKX0sYmVmb3JlQXJyYXlWYWx1ZTpmdW5jdGlvbigpe2lmKCJdIj09PVIpcmV0dXJuIEsoInB1bmN0dWF0b3IiLFcoKSk7VD0idmFsdWUifSxhZnRlckFycmF5VmFsdWU6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSIsIjpjYXNlIl0iOnJldHVybiBLKCJwdW5jdHVhdG9yIixXKCkpfXRocm93IHJ1KFcoKSl9LGVuZDpmdW5jdGlvbigpe3Rocm93IHJ1KFcoKSl9fTtmdW5jdGlvbiBLKHUsRCl7cmV0dXJue3R5cGU6dSx2YWx1ZTpELGxpbmU6Vixjb2x1bW46Sn19ZnVuY3Rpb24gUSh1KXtmb3IodmFyIEQ9MCxlPXU7RDxlLmxlbmd0aDtEKz0xKXt2YXIgcj1lW0RdO2lmKHEoKSE9PXIpdGhyb3cgcnUoVygpKTtXKCl9fWZ1bmN0aW9uIFkoKXtmb3IodmFyIHU9IiIsRD00O0QtLSA+MDspe3ZhciBlPXEoKTtpZighVS5pc0hleERpZ2l0KGUpKXRocm93IHJ1KFcoKSk7dSs9VygpfXJldHVybiBTdHJpbmcuZnJvbUNvZGVQb2ludChwYXJzZUludCh1LDE2KSl9dmFyIHV1PXtzdGFydDpmdW5jdGlvbigpe2lmKCJlb2YiPT09TS50eXBlKXRocm93IHR1KCk7RHUoKX0sYmVmb3JlUHJvcGVydHlOYW1lOmZ1bmN0aW9uKCl7c3dpdGNoKE0udHlwZSl7Y2FzZSJpZGVudGlmaWVyIjpjYXNlInN0cmluZyI6cmV0dXJuIGs9TS52YWx1ZSx2b2lkKE89ImFmdGVyUHJvcGVydHlOYW1lIik7Y2FzZSJwdW5jdHVhdG9yIjpyZXR1cm4gdm9pZCBldSgpO2Nhc2UiZW9mIjp0aHJvdyB0dSgpfX0sYWZ0ZXJQcm9wZXJ0eU5hbWU6ZnVuY3Rpb24oKXtpZigiZW9mIj09PU0udHlwZSl0aHJvdyB0dSgpO089ImJlZm9yZVByb3BlcnR5VmFsdWUifSxiZWZvcmVQcm9wZXJ0eVZhbHVlOmZ1bmN0aW9uKCl7aWYoImVvZiI9PT1NLnR5cGUpdGhyb3cgdHUoKTtEdSgpfSxiZWZvcmVBcnJheVZhbHVlOmZ1bmN0aW9uKCl7aWYoImVvZiI9PT1NLnR5cGUpdGhyb3cgdHUoKTsicHVuY3R1YXRvciIhPT1NLnR5cGV8fCJdIiE9PU0udmFsdWU/RHUoKTpldSgpfSxhZnRlclByb3BlcnR5VmFsdWU6ZnVuY3Rpb24oKXtpZigiZW9mIj09PU0udHlwZSl0aHJvdyB0dSgpO3N3aXRjaChNLnZhbHVlKXtjYXNlIiwiOnJldHVybiB2b2lkKE89ImJlZm9yZVByb3BlcnR5TmFtZSIpO2Nhc2UifSI6ZXUoKX19LGFmdGVyQXJyYXlWYWx1ZTpmdW5jdGlvbigpe2lmKCJlb2YiPT09TS50eXBlKXRocm93IHR1KCk7c3dpdGNoKE0udmFsdWUpe2Nhc2UiLCI6cmV0dXJuIHZvaWQoTz0iYmVmb3JlQXJyYXlWYWx1ZSIpO2Nhc2UiXSI6ZXUoKX19LGVuZDpmdW5jdGlvbigpe319O2Z1bmN0aW9uIER1KCl7dmFyIHU7c3dpdGNoKE0udHlwZSl7Y2FzZSJwdW5jdHVhdG9yIjpzd2l0Y2goTS52YWx1ZSl7Y2FzZSJ7Ijp1PXt9O2JyZWFrO2Nhc2UiWyI6dT1bXX1icmVhaztjYXNlIm51bGwiOmNhc2UiYm9vbGVhbiI6Y2FzZSJudW1lcmljIjpjYXNlInN0cmluZyI6dT1NLnZhbHVlfWlmKHZvaWQgMD09PUwpTD11O2Vsc2V7dmFyIEQ9altqLmxlbmd0aC0xXTtBcnJheS5pc0FycmF5KEQpP0QucHVzaCh1KTpPYmplY3QuZGVmaW5lUHJvcGVydHkoRCxrLHt2YWx1ZTp1LHdyaXRhYmxlOiEwLGVudW1lcmFibGU6ITAsY29uZmlndXJhYmxlOiEwfSl9aWYobnVsbCE9PXUmJiJvYmplY3QiPT10eXBlb2YgdSlqLnB1c2godSksTz1BcnJheS5pc0FycmF5KHUpPyJiZWZvcmVBcnJheVZhbHVlIjoiYmVmb3JlUHJvcGVydHlOYW1lIjtlbHNle3ZhciBlPWpbai5sZW5ndGgtMV07Tz1udWxsPT1lPyJlbmQiOkFycmF5LmlzQXJyYXkoZSk/ImFmdGVyQXJyYXlWYWx1ZSI6ImFmdGVyUHJvcGVydHlWYWx1ZSJ9fWZ1bmN0aW9uIGV1KCl7ai5wb3AoKTt2YXIgdT1qW2oubGVuZ3RoLTFdO089bnVsbD09dT8iZW5kIjpBcnJheS5pc0FycmF5KHUpPyJhZnRlckFycmF5VmFsdWUiOiJhZnRlclByb3BlcnR5VmFsdWUifWZ1bmN0aW9uIHJ1KHUpe3JldHVybiBDdSh2b2lkIDA9PT11PyJKU09ONTogaW52YWxpZCBlbmQgb2YgaW5wdXQgYXQgIitWKyI6IitKOiJKU09ONTogaW52YWxpZCBjaGFyYWN0ZXIgJyIrRnUodSkrIicgYXQgIitWKyI6IitKKX1mdW5jdGlvbiB0dSgpe3JldHVybiBDdSgiSlNPTjU6IGludmFsaWQgZW5kIG9mIGlucHV0IGF0ICIrVisiOiIrSil9ZnVuY3Rpb24gbnUoKXtyZXR1cm4gQ3UoIkpTT041OiBpbnZhbGlkIGlkZW50aWZpZXIgY2hhcmFjdGVyIGF0ICIrVisiOiIrKEotPTUpKX1mdW5jdGlvbiBGdSh1KXt2YXIgRD17IiciOiJcXCciLCciJzonXFwiJywiXFwiOiJcXFxcIiwiXGIiOiJcXGIiLCJcZiI6IlxcZiIsIlxuIjoiXFxuIiwiXHIiOiJcXHIiLCJcdCI6IlxcdCIsIlx2IjoiXFx2IiwiXDAiOiJcXDAiLCJcdTIwMjgiOiJcXHUyMDI4IiwiXHUyMDI5IjoiXFx1MjAyOSJ9O2lmKERbdV0pcmV0dXJuIERbdV07aWYodTwiICIpe3ZhciBlPXUuY2hhckNvZGVBdCgwKS50b1N0cmluZygxNik7cmV0dXJuIlxceCIrKCIwMCIrZSkuc3Vic3RyaW5nKGUubGVuZ3RoKX1yZXR1cm4gdX1mdW5jdGlvbiBDdSh1KXt2YXIgRD1uZXcgU3ludGF4RXJyb3IodSk7cmV0dXJuIEQubGluZU51bWJlcj1WLEQuY29sdW1uTnVtYmVyPUosRH1yZXR1cm57cGFyc2U6ZnVuY3Rpb24odSxEKXtfPVN0cmluZyh1KSxPPSJzdGFydCIsaj1bXSxJPTAsVj0xLEo9MCxNPXZvaWQgMCxrPXZvaWQgMCxMPXZvaWQgMDtkb3tNPVooKSx1dVtPXSgpfXdoaWxlKCJlb2YiIT09TS50eXBlKTtyZXR1cm4iZnVuY3Rpb24iPT10eXBlb2YgRD9mdW5jdGlvbiB1KEQsZSxyKXt2YXIgdD1EW2VdO2lmKG51bGwhPXQmJiJvYmplY3QiPT10eXBlb2YgdClpZihBcnJheS5pc0FycmF5KHQpKWZvcih2YXIgbj0wO248dC5sZW5ndGg7bisrKXt2YXIgRj1TdHJpbmcobiksQz11KHQsRixyKTt2b2lkIDA9PT1DP2RlbGV0ZSB0W0ZdOk9iamVjdC5kZWZpbmVQcm9wZXJ0eSh0LEYse3ZhbHVlOkMsd3JpdGFibGU6ITAsZW51bWVyYWJsZTohMCxjb25maWd1cmFibGU6ITB9KX1lbHNlIGZvcih2YXIgQSBpbiB0KXt2YXIgaT11KHQsQSxyKTt2b2lkIDA9PT1pP2RlbGV0ZSB0W0FdOk9iamVjdC5kZWZpbmVQcm9wZXJ0eSh0LEEse3ZhbHVlOmksd3JpdGFibGU6ITAsZW51bWVyYWJsZTohMCxjb25maWd1cmFibGU6ITB9KX1yZXR1cm4gci5jYWxsKEQsZSx0KX0oeyIiOkx9LCIiLEQpOkx9LHN0cmluZ2lmeTpmdW5jdGlvbih1LEQsZSl7dmFyIHIsdCxuLEY9W10sQz0iIixBPSIiO2lmKG51bGw9PUR8fCJvYmplY3QiIT10eXBlb2YgRHx8QXJyYXkuaXNBcnJheShEKXx8KGU9RC5zcGFjZSxuPUQucXVvdGUsRD1ELnJlcGxhY2VyKSwiZnVuY3Rpb24iPT10eXBlb2YgRCl0PUQ7ZWxzZSBpZihBcnJheS5pc0FycmF5KEQpKXtyPVtdO2Zvcih2YXIgaT0wLEU9RDtpPEUubGVuZ3RoO2krPTEpe3ZhciBvPUVbaV0sYT12b2lkIDA7InN0cmluZyI9PXR5cGVvZiBvP2E9bzooIm51bWJlciI9PXR5cGVvZiBvfHxvIGluc3RhbmNlb2YgU3RyaW5nfHxvIGluc3RhbmNlb2YgTnVtYmVyKSYmKGE9U3RyaW5nKG8pKSx2b2lkIDAhPT1hJiZyLmluZGV4T2YoYSk8MCYmci5wdXNoKGEpfX1yZXR1cm4gZSBpbnN0YW5jZW9mIE51bWJlcj9lPU51bWJlcihlKTplIGluc3RhbmNlb2YgU3RyaW5nJiYoZT1TdHJpbmcoZSkpLCJudW1iZXIiPT10eXBlb2YgZT9lPjAmJihlPU1hdGgubWluKDEwLE1hdGguZmxvb3IoZSkpLEE9IiAgICAgICAgICAiLnN1YnN0cigwLGUpKToic3RyaW5nIj09dHlwZW9mIGUmJihBPWUuc3Vic3RyKDAsMTApKSxjKCIiLHsiIjp1fSk7ZnVuY3Rpb24gYyh1LEQpe3ZhciBlPURbdV07c3dpdGNoKG51bGwhPWUmJigiZnVuY3Rpb24iPT10eXBlb2YgZS50b0pTT041P2U9ZS50b0pTT041KHUpOiJmdW5jdGlvbiI9PXR5cGVvZiBlLnRvSlNPTiYmKGU9ZS50b0pTT04odSkpKSx0JiYoZT10LmNhbGwoRCx1LGUpKSxlIGluc3RhbmNlb2YgTnVtYmVyP2U9TnVtYmVyKGUpOmUgaW5zdGFuY2VvZiBTdHJpbmc/ZT1TdHJpbmcoZSk6ZSBpbnN0YW5jZW9mIEJvb2xlYW4mJihlPWUudmFsdWVPZigpKSxlKXtjYXNlIG51bGw6cmV0dXJuIm51bGwiO2Nhc2UhMDpyZXR1cm4idHJ1ZSI7Y2FzZSExOnJldHVybiJmYWxzZSJ9cmV0dXJuInN0cmluZyI9PXR5cGVvZiBlP0IoZSk6Im51bWJlciI9PXR5cGVvZiBlP1N0cmluZyhlKToib2JqZWN0Ij09dHlwZW9mIGU/QXJyYXkuaXNBcnJheShlKT9mdW5jdGlvbih1KXtpZihGLmluZGV4T2YodSk+PTApdGhyb3cgVHlwZUVycm9yKCJDb252ZXJ0aW5nIGNpcmN1bGFyIHN0cnVjdHVyZSB0byBKU09ONSIpO0YucHVzaCh1KTt2YXIgRD1DO0MrPUE7Zm9yKHZhciBlLHI9W10sdD0wO3Q8dS5sZW5ndGg7dCsrKXt2YXIgbj1jKFN0cmluZyh0KSx1KTtyLnB1c2godm9pZCAwIT09bj9uOiJudWxsIil9aWYoMD09PXIubGVuZ3RoKWU9IltdIjtlbHNlIGlmKCIiPT09QSl7dmFyIGk9ci5qb2luKCIsIik7ZT0iWyIraSsiXSJ9ZWxzZXt2YXIgRT0iLFxuIitDLG89ci5qb2luKEUpO2U9IltcbiIrQytvKyIsXG4iK0QrIl0ifXJldHVybiBGLnBvcCgpLEM9RCxlfShlKTpmdW5jdGlvbih1KXtpZihGLmluZGV4T2YodSk+PTApdGhyb3cgVHlwZUVycm9yKCJDb252ZXJ0aW5nIGNpcmN1bGFyIHN0cnVjdHVyZSB0byBKU09ONSIpO0YucHVzaCh1KTt2YXIgRD1DO0MrPUE7Zm9yKHZhciBlLHQsbj1yfHxPYmplY3Qua2V5cyh1KSxpPVtdLEU9MCxvPW47RTxvLmxlbmd0aDtFKz0xKXt2YXIgYT1vW0VdLEI9YyhhLHUpO2lmKHZvaWQgMCE9PUIpe3ZhciBmPXMoYSkrIjoiOyIiIT09QSYmKGYrPSIgIiksZis9QixpLnB1c2goZil9fWlmKDA9PT1pLmxlbmd0aCllPSJ7fSI7ZWxzZSBpZigiIj09PUEpdD1pLmpvaW4oIiwiKSxlPSJ7Iit0KyJ9IjtlbHNle3ZhciBsPSIsXG4iK0M7dD1pLmpvaW4obCksZT0ie1xuIitDK3QrIixcbiIrRCsifSJ9cmV0dXJuIEYucG9wKCksQz1ELGV9KGUpOnZvaWQgMH1mdW5jdGlvbiBCKHUpe2Zvcih2YXIgRD17IiciOi4xLCciJzouMn0sZT17IiciOiJcXCciLCciJzonXFwiJywiXFwiOiJcXFxcIiwiXGIiOiJcXGIiLCJcZiI6IlxcZiIsIlxuIjoiXFxuIiwiXHIiOiJcXHIiLCJcdCI6IlxcdCIsIlx2IjoiXFx2IiwiXDAiOiJcXDAiLCJcdTIwMjgiOiJcXHUyMDI4IiwiXHUyMDI5IjoiXFx1MjAyOSJ9LHI9IiIsdD0wO3Q8dS5sZW5ndGg7dCsrKXt2YXIgRj11W3RdO3N3aXRjaChGKXtjYXNlIiciOmNhc2UnIic6RFtGXSsrLHIrPUY7Y29udGludWU7Y2FzZSJcMCI6aWYoVS5pc0RpZ2l0KHVbdCsxXSkpe3IrPSJcXHgwMCI7Y29udGludWV9fWlmKGVbRl0pcis9ZVtGXTtlbHNlIGlmKEY8IiAiKXt2YXIgQz1GLmNoYXJDb2RlQXQoMCkudG9TdHJpbmcoMTYpO3IrPSJcXHgiKygiMDAiK0MpLnN1YnN0cmluZyhDLmxlbmd0aCl9ZWxzZSByKz1GfXZhciBBPW58fE9iamVjdC5rZXlzKEQpLnJlZHVjZShmdW5jdGlvbih1LGUpe3JldHVybiBEW3VdPERbZV0/dTplfSk7cmV0dXJuIEErKHI9ci5yZXBsYWNlKG5ldyBSZWdFeHAoQSwiZyIpLGVbQV0pKStBfWZ1bmN0aW9uIHModSl7aWYoMD09PXUubGVuZ3RoKXJldHVybiBCKHUpO3ZhciBEPVN0cmluZy5mcm9tQ29kZVBvaW50KHUuY29kZVBvaW50QXQoMCkpO2lmKCFVLmlzSWRTdGFydENoYXIoRCkpcmV0dXJuIEIodSk7Zm9yKHZhciBlPUQubGVuZ3RoO2U8dS5sZW5ndGg7ZSsrKWlmKCFVLmlzSWRDb250aW51ZUNoYXIoU3RyaW5nLmZyb21Db2RlUG9pbnQodS5jb2RlUG9pbnRBdChlKSkpKXJldHVybiBCKHUpO3JldHVybiB1fX19fSk7`;
+const title$3 = "_title_1gjvf_1";
+const content$2 = "_content_1gjvf_11";
+const grid$8 = "_grid_1gjvf_16";
+const styles$1d = {
+  title: title$3,
+  content: content$2,
+  grid: grid$8
+};
+const kCompactionMetadata = "compaction_metadata";
+const CompactionData = ({ id, data: data2 }) => {
+  const compactionMetadata = data2[kCompactionMetadata];
+  let compactionContent = void 0;
+  if (compactionMetadata.type === "anthropic_compact") {
+    compactionContent = /* @__PURE__ */ jsxRuntimeExports.jsx(ExpandablePanel, { id: `${id}-compacted-content`, collapse: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: String(compactionMetadata.content) }) });
+  } else {
+    compactionContent = /* @__PURE__ */ jsxRuntimeExports.jsx(
+      MetaDataGrid,
+      {
+        id: `${id}-compacted-content-metadata`,
+        className: styles$1d.grid,
+        entries: compactionMetadata
+      }
+    );
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1d.content, "text-size-small"), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        className: clsx(
+          "text-style-label",
+          "text-style-secondary",
+          styles$1d.title
+        ),
+        children: "Compacted Content"
+      }
+    ),
+    compactionContent
+  ] });
+};
+const contentData = "_contentData_1lrx1_1";
+const styles$1c = {
+  contentData
+};
+const webSearch = "_webSearch_1376z_1";
+const query = "_query_1376z_8";
+const styles$1b = {
+  webSearch,
+  query
+};
+const WebSearch = ({ query: query2 }) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1b.webSearch, "text-size-smaller"), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-style-label", "text-style-secondary"), children: "Web Search:" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx(styles$1b.query, "text-size-smallest"), children: query2 })
+  ] });
+};
+const result$1 = "_result_1mixg_12";
+const styles$1a = {
+  result: result$1
+};
+const WebSearchResults = ({
+  results
+}) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        className: clsx(
+          styles$1a.label,
+          "text-style-label",
+          "text-style-secondary",
+          "text-size-smaller"
+        ),
+        children: "Results"
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("ol", { className: clsx(styles$1a.results, "text-size-smaller"), children: results.map((result2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "li",
+      {
+        className: clsx(styles$1a.result, "text-style-secondary"),
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: result2.url,
+            target: "_blank",
+            rel: "noopener noreferrer",
+            title: result2.url + (result2.page_age ? `
+(Age: ${result2.page_age})` : ""),
+            children: result2.title
+          }
+        )
+      },
+      index
+    )) })
+  ] });
+};
+const ContentDataView = ({ id, contentData: contentData2 }) => {
+  const renderableData = contentData2.data;
+  const renderer = contentDataRenderers.find(
+    (r2) => r2.canRender(renderableData)
+  );
+  if (!renderer) {
+    const { encrypted_content, ...record } = renderableData;
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1c.contentData), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      RecordTree,
+      {
+        id: `${id}-tree`,
+        record,
+        className: clsx(styles$1c.data),
+        defaultExpandLevel: 0
+      }
+    ) });
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1c.contentData), children: renderer.render(id, renderableData) });
+};
+const compactionDataRenderer = {
+  name: "Compaction",
+  canRender: (data2) => {
+    return Object.hasOwn(data2, kCompactionMetadata);
+  },
+  render: (id, data2) => {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(CompactionData, { id, data: data2 });
+  }
+};
+const webSearchServerToolRenderer = {
+  name: "WebSearch",
+  canRender: (data2) => {
+    return data2.type === "server_tool_use" && data2.name === "web_search";
+  },
+  render: (_id, data2) => {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(WebSearch, { query: data2.input.query });
+  }
+};
+const webSearchResultsServerToolRenderer = {
+  name: "WebSearchResults",
+  canRender: (data2) => {
+    return data2.type === "web_search_tool_result" && Array.isArray(data2.content);
+  },
+  render: (_id, data2) => {
+    const results = data2.content;
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(WebSearchResults, { results });
+  }
+};
+const serverToolRenderer = {
+  name: "ServerTool",
+  canRender: (data2) => data2.type === "server_tool_use",
+  render: (id, data2) => {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
         {
           className: clsx(
-            styles$10.separator,
-            row2.padded ? styles$10.padded : void 0
-          )
-        },
-        `$usage-sep-${idx}`
+            "text-style-label",
+            "text-style-secondary",
+            "text-size-smaller"
+          ),
+          children: "Server Tool"
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        RecordTree,
+        {
+          id: `${id}-server-tool`,
+          record: data2,
+          className: clsx(styles$1c.data)
+        }
+      )
+    ] });
+  }
+};
+const contentDataRenderers = [
+  compactionDataRenderer,
+  webSearchServerToolRenderer,
+  webSearchResultsServerToolRenderer,
+  serverToolRenderer
+];
+const MAX_EVENTS_SIZE_BYTES = 350 * 1024 * 1024;
+const MAX_TOTAL_SIZE = 512 * 1024 * 1024;
+function findEventsArrayStart(data2) {
+  const pattern = new TextEncoder().encode('"events"');
+  for (let i4 = 0; i4 < data2.length - pattern.length - 10; i4++) {
+    let matches = true;
+    for (let j2 = 0; j2 < pattern.length; j2++) {
+      if (data2[i4 + j2] !== pattern[j2]) {
+        matches = false;
+        break;
+      }
+    }
+    if (matches) {
+      let pos2 = i4 + pattern.length;
+      while (pos2 < data2.length && (data2[pos2] === 32 || data2[pos2] === 9 || data2[pos2] === 10 || data2[pos2] === 13)) {
+        pos2++;
+      }
+      if (pos2 < data2.length && data2[pos2] === 58) {
+        pos2++;
+        while (pos2 < data2.length && (data2[pos2] === 32 || data2[pos2] === 9 || data2[pos2] === 10 || data2[pos2] === 13)) {
+          pos2++;
+        }
+        if (pos2 < data2.length && data2[pos2] === 91) {
+          return pos2;
+        }
+      }
+    }
+  }
+  return -1;
+}
+function findArrayEnd(data2, arrayStart) {
+  let depth = 0;
+  let inString = false;
+  let escaped = false;
+  for (let i4 = arrayStart; i4 < data2.length; i4++) {
+    const byte = data2[i4];
+    if (escaped) {
+      escaped = false;
+      continue;
+    }
+    if (byte === 92) {
+      escaped = true;
+      continue;
+    }
+    if (byte === 34) {
+      inString = !inString;
+      continue;
+    }
+    if (inString) {
+      continue;
+    }
+    if (byte === 91 || byte === 123) {
+      depth++;
+    } else if (byte === 93 || byte === 125) {
+      depth--;
+      if (depth === 0 && byte === 93) {
+        return i4;
+      }
+    }
+  }
+  return -1;
+}
+function clearLargeEventsArray(data2) {
+  if (data2.length <= MAX_EVENTS_SIZE_BYTES) {
+    return data2;
+  }
+  const arrayStart = findEventsArrayStart(data2);
+  if (arrayStart === -1) {
+    return data2;
+  }
+  const arrayEnd = findArrayEnd(data2, arrayStart);
+  if (arrayEnd === -1) {
+    return data2;
+  }
+  const eventsSize = arrayEnd - arrayStart - 1;
+  if (eventsSize <= MAX_EVENTS_SIZE_BYTES && data2.length <= MAX_TOTAL_SIZE) {
+    return data2;
+  }
+  const before = data2.slice(0, arrayStart + 1);
+  const after = data2.slice(arrayEnd);
+  const result2 = new Uint8Array(before.length + after.length);
+  let offset3 = 0;
+  result2.set(before, offset3);
+  offset3 += before.length;
+  result2.set(after, offset3);
+  return result2;
+}
+var ch2 = {};
+var wk = (function(c2, id, msg, transfer, cb) {
+  var w2 = new Worker(ch2[id] || (ch2[id] = URL.createObjectURL(new Blob([
+    c2 + ';addEventListener("error",function(e){e=e.error;postMessage({$e$:[e.message,e.code,e.stack]})})'
+  ], { type: "text/javascript" }))));
+  w2.onmessage = function(e3) {
+    var d2 = e3.data, ed = d2.$e$;
+    if (ed) {
+      var err2 = new Error(ed[0]);
+      err2["code"] = ed[1];
+      err2.stack = ed[2];
+      cb(err2, null);
+    } else
+      cb(null, d2);
+  };
+  w2.postMessage(msg, transfer);
+  return w2;
+});
+var u8$1 = Uint8Array, u16$1 = Uint16Array, i32$1 = Int32Array;
+var fleb = new u8$1([
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  1,
+  1,
+  1,
+  2,
+  2,
+  2,
+  2,
+  3,
+  3,
+  3,
+  3,
+  4,
+  4,
+  4,
+  4,
+  5,
+  5,
+  5,
+  5,
+  0,
+  /* unused */
+  0,
+  0,
+  /* impossible */
+  0
+]);
+var fdeb = new u8$1([
+  0,
+  0,
+  0,
+  0,
+  1,
+  1,
+  2,
+  2,
+  3,
+  3,
+  4,
+  4,
+  5,
+  5,
+  6,
+  6,
+  7,
+  7,
+  8,
+  8,
+  9,
+  9,
+  10,
+  10,
+  11,
+  11,
+  12,
+  12,
+  13,
+  13,
+  /* unused */
+  0,
+  0
+]);
+var clim = new u8$1([16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15]);
+var freb = function(eb, start2) {
+  var b2 = new u16$1(31);
+  for (var i4 = 0; i4 < 31; ++i4) {
+    b2[i4] = start2 += 1 << eb[i4 - 1];
+  }
+  var r2 = new i32$1(b2[30]);
+  for (var i4 = 1; i4 < 30; ++i4) {
+    for (var j2 = b2[i4]; j2 < b2[i4 + 1]; ++j2) {
+      r2[j2] = j2 - b2[i4] << 5 | i4;
+    }
+  }
+  return { b: b2, r: r2 };
+};
+var _a$1 = freb(fleb, 2), fl = _a$1.b, revfl = _a$1.r;
+fl[28] = 258, revfl[258] = 28;
+var _b = freb(fdeb, 0), fd = _b.b;
+var rev = new u16$1(32768);
+for (var i$1 = 0; i$1 < 32768; ++i$1) {
+  var x = (i$1 & 43690) >> 1 | (i$1 & 21845) << 1;
+  x = (x & 52428) >> 2 | (x & 13107) << 2;
+  x = (x & 61680) >> 4 | (x & 3855) << 4;
+  rev[i$1] = ((x & 65280) >> 8 | (x & 255) << 8) >> 1;
+}
+var hMap = (function(cd, mb, r2) {
+  var s4 = cd.length;
+  var i4 = 0;
+  var l2 = new u16$1(mb);
+  for (; i4 < s4; ++i4) {
+    if (cd[i4])
+      ++l2[cd[i4] - 1];
+  }
+  var le2 = new u16$1(mb);
+  for (i4 = 1; i4 < mb; ++i4) {
+    le2[i4] = le2[i4 - 1] + l2[i4 - 1] << 1;
+  }
+  var co;
+  if (r2) {
+    co = new u16$1(1 << mb);
+    var rvb = 15 - mb;
+    for (i4 = 0; i4 < s4; ++i4) {
+      if (cd[i4]) {
+        var sv = i4 << 4 | cd[i4];
+        var r_1 = mb - cd[i4];
+        var v2 = le2[cd[i4] - 1]++ << r_1;
+        for (var m2 = v2 | (1 << r_1) - 1; v2 <= m2; ++v2) {
+          co[rev[v2] >> rvb] = sv;
+        }
+      }
+    }
+  } else {
+    co = new u16$1(s4);
+    for (i4 = 0; i4 < s4; ++i4) {
+      if (cd[i4]) {
+        co[i4] = rev[le2[cd[i4] - 1]++] >> 15 - cd[i4];
+      }
+    }
+  }
+  return co;
+});
+var flt = new u8$1(288);
+for (var i$1 = 0; i$1 < 144; ++i$1)
+  flt[i$1] = 8;
+for (var i$1 = 144; i$1 < 256; ++i$1)
+  flt[i$1] = 9;
+for (var i$1 = 256; i$1 < 280; ++i$1)
+  flt[i$1] = 7;
+for (var i$1 = 280; i$1 < 288; ++i$1)
+  flt[i$1] = 8;
+var fdt = new u8$1(32);
+for (var i$1 = 0; i$1 < 32; ++i$1)
+  fdt[i$1] = 5;
+var flrm = /* @__PURE__ */ hMap(flt, 9, 1);
+var fdrm = /* @__PURE__ */ hMap(fdt, 5, 1);
+var max = function(a2) {
+  var m2 = a2[0];
+  for (var i4 = 1; i4 < a2.length; ++i4) {
+    if (a2[i4] > m2)
+      m2 = a2[i4];
+  }
+  return m2;
+};
+var bits = function(d2, p2, m2) {
+  var o2 = p2 / 8 | 0;
+  return (d2[o2] | d2[o2 + 1] << 8) >> (p2 & 7) & m2;
+};
+var bits16 = function(d2, p2) {
+  var o2 = p2 / 8 | 0;
+  return (d2[o2] | d2[o2 + 1] << 8 | d2[o2 + 2] << 16) >> (p2 & 7);
+};
+var shft = function(p2) {
+  return (p2 + 7) / 8 | 0;
+};
+var slc$1 = function(v2, s4, e3) {
+  if (s4 == null || s4 < 0)
+    s4 = 0;
+  if (e3 == null || e3 > v2.length)
+    e3 = v2.length;
+  return new u8$1(v2.subarray(s4, e3));
+};
+var ec$1 = [
+  "unexpected EOF",
+  "invalid block type",
+  "invalid length/literal",
+  "invalid distance",
+  "stream finished",
+  "no stream handler",
+  ,
+  "no callback",
+  "invalid UTF-8 data",
+  "extra field too long",
+  "date not in range 1980-2099",
+  "filename too long",
+  "stream finishing",
+  "invalid zip data"
+  // determined by unknown compression method
+];
+var err$1 = function(ind, msg, nt) {
+  var e3 = new Error(msg || ec$1[ind]);
+  e3.code = ind;
+  if (Error.captureStackTrace)
+    Error.captureStackTrace(e3, err$1);
+  if (!nt)
+    throw e3;
+  return e3;
+};
+var inflt = function(dat, st, buf2, dict) {
+  var sl = dat.length, dl = dict ? dict.length : 0;
+  if (!sl || st.f && !st.l)
+    return buf2 || new u8$1(0);
+  var noBuf = !buf2;
+  var resize = noBuf || st.i != 2;
+  var noSt = st.i;
+  if (noBuf)
+    buf2 = new u8$1(sl * 3);
+  var cbuf = function(l3) {
+    var bl = buf2.length;
+    if (l3 > bl) {
+      var nbuf = new u8$1(Math.max(bl * 2, l3));
+      nbuf.set(buf2);
+      buf2 = nbuf;
+    }
+  };
+  var final = st.f || 0, pos2 = st.p || 0, bt2 = st.b || 0, lm = st.l, dm = st.d, lbt = st.m, dbt = st.n;
+  var tbts = sl * 8;
+  do {
+    if (!lm) {
+      final = bits(dat, pos2, 1);
+      var type = bits(dat, pos2 + 1, 3);
+      pos2 += 3;
+      if (!type) {
+        var s4 = shft(pos2) + 4, l2 = dat[s4 - 4] | dat[s4 - 3] << 8, t2 = s4 + l2;
+        if (t2 > sl) {
+          if (noSt)
+            err$1(0);
+          break;
+        }
+        if (resize)
+          cbuf(bt2 + l2);
+        buf2.set(dat.subarray(s4, t2), bt2);
+        st.b = bt2 += l2, st.p = pos2 = t2 * 8, st.f = final;
+        continue;
+      } else if (type == 1)
+        lm = flrm, dm = fdrm, lbt = 9, dbt = 5;
+      else if (type == 2) {
+        var hLit = bits(dat, pos2, 31) + 257, hcLen = bits(dat, pos2 + 10, 15) + 4;
+        var tl = hLit + bits(dat, pos2 + 5, 31) + 1;
+        pos2 += 14;
+        var ldt = new u8$1(tl);
+        var clt = new u8$1(19);
+        for (var i4 = 0; i4 < hcLen; ++i4) {
+          clt[clim[i4]] = bits(dat, pos2 + i4 * 3, 7);
+        }
+        pos2 += hcLen * 3;
+        var clb = max(clt), clbmsk = (1 << clb) - 1;
+        var clm = hMap(clt, clb, 1);
+        for (var i4 = 0; i4 < tl; ) {
+          var r2 = clm[bits(dat, pos2, clbmsk)];
+          pos2 += r2 & 15;
+          var s4 = r2 >> 4;
+          if (s4 < 16) {
+            ldt[i4++] = s4;
+          } else {
+            var c2 = 0, n3 = 0;
+            if (s4 == 16)
+              n3 = 3 + bits(dat, pos2, 3), pos2 += 2, c2 = ldt[i4 - 1];
+            else if (s4 == 17)
+              n3 = 3 + bits(dat, pos2, 7), pos2 += 3;
+            else if (s4 == 18)
+              n3 = 11 + bits(dat, pos2, 127), pos2 += 7;
+            while (n3--)
+              ldt[i4++] = c2;
+          }
+        }
+        var lt = ldt.subarray(0, hLit), dt2 = ldt.subarray(hLit);
+        lbt = max(lt);
+        dbt = max(dt2);
+        lm = hMap(lt, lbt, 1);
+        dm = hMap(dt2, dbt, 1);
+      } else
+        err$1(1);
+      if (pos2 > tbts) {
+        if (noSt)
+          err$1(0);
+        break;
+      }
+    }
+    if (resize)
+      cbuf(bt2 + 131072);
+    var lms = (1 << lbt) - 1, dms = (1 << dbt) - 1;
+    var lpos = pos2;
+    for (; ; lpos = pos2) {
+      var c2 = lm[bits16(dat, pos2) & lms], sym = c2 >> 4;
+      pos2 += c2 & 15;
+      if (pos2 > tbts) {
+        if (noSt)
+          err$1(0);
+        break;
+      }
+      if (!c2)
+        err$1(2);
+      if (sym < 256)
+        buf2[bt2++] = sym;
+      else if (sym == 256) {
+        lpos = pos2, lm = null;
+        break;
+      } else {
+        var add3 = sym - 254;
+        if (sym > 264) {
+          var i4 = sym - 257, b2 = fleb[i4];
+          add3 = bits(dat, pos2, (1 << b2) - 1) + fl[i4];
+          pos2 += b2;
+        }
+        var d2 = dm[bits16(dat, pos2) & dms], dsym = d2 >> 4;
+        if (!d2)
+          err$1(3);
+        pos2 += d2 & 15;
+        var dt2 = fd[dsym];
+        if (dsym > 3) {
+          var b2 = fdeb[dsym];
+          dt2 += bits16(dat, pos2) & (1 << b2) - 1, pos2 += b2;
+        }
+        if (pos2 > tbts) {
+          if (noSt)
+            err$1(0);
+          break;
+        }
+        if (resize)
+          cbuf(bt2 + 131072);
+        var end2 = bt2 + add3;
+        if (bt2 < dt2) {
+          var shift2 = dl - dt2, dend = Math.min(dt2, end2);
+          if (shift2 + bt2 < 0)
+            err$1(3);
+          for (; bt2 < dend; ++bt2)
+            buf2[bt2] = dict[shift2 + bt2];
+        }
+        for (; bt2 < end2; ++bt2)
+          buf2[bt2] = buf2[bt2 - dt2];
+      }
+    }
+    st.l = lm, st.p = lpos, st.b = bt2, st.f = final;
+    if (lm)
+      final = 1, st.m = lbt, st.d = dm, st.n = dbt;
+  } while (!final);
+  return bt2 != buf2.length && noBuf ? slc$1(buf2, 0, bt2) : buf2.subarray(0, bt2);
+};
+var et = /* @__PURE__ */ new u8$1(0);
+var mrg = function(a2, b2) {
+  var o2 = {};
+  for (var k3 in a2)
+    o2[k3] = a2[k3];
+  for (var k3 in b2)
+    o2[k3] = b2[k3];
+  return o2;
+};
+var wcln = function(fn3, fnStr, td2) {
+  var dt2 = fn3();
+  var st = fn3.toString();
+  var ks = st.slice(st.indexOf("[") + 1, st.lastIndexOf("]")).replace(/\s+/g, "").split(",");
+  for (var i4 = 0; i4 < dt2.length; ++i4) {
+    var v2 = dt2[i4], k3 = ks[i4];
+    if (typeof v2 == "function") {
+      fnStr += ";" + k3 + "=";
+      var st_1 = v2.toString();
+      if (v2.prototype) {
+        if (st_1.indexOf("[native code]") != -1) {
+          var spInd = st_1.indexOf(" ", 8) + 1;
+          fnStr += st_1.slice(spInd, st_1.indexOf("(", spInd));
+        } else {
+          fnStr += st_1;
+          for (var t2 in v2.prototype)
+            fnStr += ";" + k3 + ".prototype." + t2 + "=" + v2.prototype[t2].toString();
+        }
+      } else
+        fnStr += st_1;
+    } else
+      td2[k3] = v2;
+  }
+  return fnStr;
+};
+var ch = [];
+var cbfs = function(v2) {
+  var tl = [];
+  for (var k3 in v2) {
+    if (v2[k3].buffer) {
+      tl.push((v2[k3] = new v2[k3].constructor(v2[k3])).buffer);
+    }
+  }
+  return tl;
+};
+var wrkr = function(fns, init2, id, cb) {
+  if (!ch[id]) {
+    var fnStr = "", td_1 = {}, m2 = fns.length - 1;
+    for (var i4 = 0; i4 < m2; ++i4)
+      fnStr = wcln(fns[i4], fnStr, td_1);
+    ch[id] = { c: wcln(fns[m2], fnStr, td_1), e: td_1 };
+  }
+  var td2 = mrg({}, ch[id].e);
+  return wk(ch[id].c + ";onmessage=function(e){for(var k in e.data)self[k]=e.data[k];onmessage=" + init2.toString() + "}", id, td2, cbfs(td2), cb);
+};
+var bInflt = function() {
+  return [u8$1, u16$1, i32$1, fleb, fdeb, clim, fl, fd, flrm, fdrm, rev, ec$1, hMap, max, bits, bits16, shft, slc$1, err$1, inflt, inflateSync, pbf, gopt];
+};
+var guze = function() {
+  return [gzs, gzl];
+};
+var zule = function() {
+  return [zls];
+};
+var pbf = function(msg) {
+  return postMessage(msg, [msg.buffer]);
+};
+var gopt = function(o2) {
+  return o2 && {
+    out: o2.size && new u8$1(o2.size),
+    dictionary: o2.dictionary
+  };
+};
+var cbify = function(dat, opts, fns, init2, id, cb) {
+  var w2 = wrkr(fns, init2, id, function(err2, dat2) {
+    w2.terminate();
+    cb(err2, dat2);
+  });
+  w2.postMessage([dat, opts], opts.consume ? [dat.buffer] : []);
+  return function() {
+    w2.terminate();
+  };
+};
+var gzs = function(d2) {
+  if (d2[0] != 31 || d2[1] != 139 || d2[2] != 8)
+    err$1(6, "invalid gzip data");
+  var flg = d2[3];
+  var st = 10;
+  if (flg & 4)
+    st += (d2[10] | d2[11] << 8) + 2;
+  for (var zs = (flg >> 3 & 1) + (flg >> 4 & 1); zs > 0; zs -= !d2[st++])
+    ;
+  return st + (flg & 2);
+};
+var gzl = function(d2) {
+  var l2 = d2.length;
+  return (d2[l2 - 4] | d2[l2 - 3] << 8 | d2[l2 - 2] << 16 | d2[l2 - 1] << 24) >>> 0;
+};
+var zls = function(d2, dict) {
+  if ((d2[0] & 15) != 8 || d2[0] >> 4 > 7 || (d2[0] << 8 | d2[1]) % 31)
+    err$1(6, "invalid zlib data");
+  if ((d2[1] >> 5 & 1) == +!dict)
+    err$1(6, "invalid zlib data: " + (d2[1] & 32 ? "need" : "unexpected") + " dictionary");
+  return (d2[1] >> 3 & 4) + 2;
+};
+function inflate(data2, opts, cb) {
+  if (!cb)
+    cb = opts, opts = {};
+  if (typeof cb != "function")
+    err$1(7);
+  return cbify(data2, opts, [
+    bInflt
+  ], function(ev) {
+    return pbf(inflateSync(ev.data[0], gopt(ev.data[1])));
+  }, 1, cb);
+}
+function inflateSync(data2, opts) {
+  return inflt(data2, { i: 2 }, opts && opts.out, opts && opts.dictionary);
+}
+function gunzip(data2, opts, cb) {
+  if (!cb)
+    cb = opts, opts = {};
+  if (typeof cb != "function")
+    err$1(7);
+  return cbify(data2, opts, [
+    bInflt,
+    guze,
+    function() {
+      return [gunzipSync];
+    }
+  ], function(ev) {
+    return pbf(gunzipSync(ev.data[0], ev.data[1]));
+  }, 3, cb);
+}
+function gunzipSync(data2, opts) {
+  var st = gzs(data2);
+  if (st + 8 > data2.length)
+    err$1(6, "invalid gzip data");
+  return inflt(data2.subarray(st, -8), { i: 2 }, opts && opts.out || new u8$1(gzl(data2)), opts && opts.dictionary);
+}
+function unzlib(data2, opts, cb) {
+  if (!cb)
+    cb = opts, opts = {};
+  if (typeof cb != "function")
+    err$1(7);
+  return cbify(data2, opts, [
+    bInflt,
+    zule,
+    function() {
+      return [unzlibSync];
+    }
+  ], function(ev) {
+    return pbf(unzlibSync(ev.data[0], gopt(ev.data[1])));
+  }, 5, cb);
+}
+function unzlibSync(data2, opts) {
+  return inflt(data2.subarray(zls(data2, opts && opts.dictionary), -4), { i: 2 }, opts && opts.out, opts && opts.dictionary);
+}
+function decompress$1(data2, opts, cb) {
+  if (!cb)
+    cb = opts, opts = {};
+  if (typeof cb != "function")
+    err$1(7);
+  return data2[0] == 31 && data2[1] == 139 && data2[2] == 8 ? gunzip(data2, opts, cb) : (data2[0] & 15) != 8 || data2[0] >> 4 > 7 || (data2[0] << 8 | data2[1]) % 31 ? inflate(data2, opts, cb) : unzlib(data2, opts, cb);
+}
+var td = typeof TextDecoder != "undefined" && /* @__PURE__ */ new TextDecoder();
+var tds = 0;
+try {
+  td.decode(et, { stream: true });
+  tds = 1;
+} catch (e3) {
+}
+var ab = ArrayBuffer, u8 = Uint8Array, u16 = Uint16Array, i16 = Int16Array, i32 = Int32Array;
+var slc = function(v2, s4, e3) {
+  if (u8.prototype.slice)
+    return u8.prototype.slice.call(v2, s4, e3);
+  if (s4 == null || s4 < 0)
+    s4 = 0;
+  if (e3 == null || e3 > v2.length)
+    e3 = v2.length;
+  var n3 = new u8(e3 - s4);
+  n3.set(v2.subarray(s4, e3));
+  return n3;
+};
+var fill = function(v2, n3, s4, e3) {
+  if (u8.prototype.fill)
+    return u8.prototype.fill.call(v2, n3, s4, e3);
+  if (s4 == null || s4 < 0)
+    s4 = 0;
+  if (e3 == null || e3 > v2.length)
+    e3 = v2.length;
+  for (; s4 < e3; ++s4)
+    v2[s4] = n3;
+  return v2;
+};
+var cpw = function(v2, t2, s4, e3) {
+  if (u8.prototype.copyWithin)
+    return u8.prototype.copyWithin.call(v2, t2, s4, e3);
+  if (s4 == null || s4 < 0)
+    s4 = 0;
+  if (e3 == null || e3 > v2.length)
+    e3 = v2.length;
+  while (s4 < e3) {
+    v2[t2++] = v2[s4++];
+  }
+};
+var ec = [
+  "invalid zstd data",
+  "window size too large (>2046MB)",
+  "invalid block type",
+  "FSE accuracy too high",
+  "match distance too far back",
+  "unexpected EOF"
+];
+var err = function(ind, msg, nt) {
+  var e3 = new Error(msg || ec[ind]);
+  e3.code = ind;
+  if (Error.captureStackTrace)
+    Error.captureStackTrace(e3, err);
+  if (!nt)
+    throw e3;
+  return e3;
+};
+var rb = function(d2, b2, n3) {
+  var i4 = 0, o2 = 0;
+  for (; i4 < n3; ++i4)
+    o2 |= d2[b2++] << (i4 << 3);
+  return o2;
+};
+var b4 = function(d2, b2) {
+  return (d2[b2] | d2[b2 + 1] << 8 | d2[b2 + 2] << 16 | d2[b2 + 3] << 24) >>> 0;
+};
+var rzfh = function(dat, w2) {
+  var n3 = dat[0] | dat[1] << 8 | dat[2] << 16;
+  if (n3 == 3126568 && dat[3] == 253) {
+    var flg = dat[4];
+    var ss = flg >> 5 & 1, cc = flg >> 2 & 1, df = flg & 3, fcf = flg >> 6;
+    if (flg & 8)
+      err(0);
+    var bt2 = 6 - ss;
+    var db = df == 3 ? 4 : df;
+    var di = rb(dat, bt2, db);
+    bt2 += db;
+    var fsb = fcf ? 1 << fcf : ss;
+    var fss = rb(dat, bt2, fsb) + (fcf == 1 && 256);
+    var ws = fss;
+    if (!ss) {
+      var wb = 1 << 10 + (dat[5] >> 3);
+      ws = wb + (wb >> 3) * (dat[5] & 7);
+    }
+    if (ws > 2145386496)
+      err(1);
+    var buf2 = new u8((w2 == 1 ? fss || ws : w2 ? 0 : ws) + 12);
+    buf2[0] = 1, buf2[4] = 4, buf2[8] = 8;
+    return {
+      b: bt2 + fsb,
+      y: 0,
+      l: 0,
+      d: di,
+      w: w2 && w2 != 1 ? w2 : buf2.subarray(12),
+      e: ws,
+      o: new i32(buf2.buffer, 0, 3),
+      u: fss,
+      c: cc,
+      m: Math.min(131072, ws)
+    };
+  } else if ((n3 >> 4 | dat[3] << 20) == 25481893) {
+    return b4(dat, 4) + 8;
+  }
+  err(0);
+};
+var msb = function(val) {
+  var bits2 = 0;
+  for (; 1 << bits2 <= val; ++bits2)
+    ;
+  return bits2 - 1;
+};
+var rfse = function(dat, bt2, mal) {
+  var tpos = (bt2 << 3) + 4;
+  var al = (dat[bt2] & 15) + 5;
+  if (al > mal)
+    err(3);
+  var sz = 1 << al;
+  var probs = sz, sym = -1, re2 = -1, i4 = -1, ht2 = sz;
+  var buf2 = new ab(512 + (sz << 2));
+  var freq = new i16(buf2, 0, 256);
+  var dstate = new u16(buf2, 0, 256);
+  var nstate = new u16(buf2, 512, sz);
+  var bb1 = 512 + (sz << 1);
+  var syms = new u8(buf2, bb1, sz);
+  var nbits = new u8(buf2, bb1 + sz);
+  while (sym < 255 && probs > 0) {
+    var bits2 = msb(probs + 1);
+    var cbt = tpos >> 3;
+    var msk = (1 << bits2 + 1) - 1;
+    var val = (dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (tpos & 7) & msk;
+    var msk1fb = (1 << bits2) - 1;
+    var msv = msk - probs - 1;
+    var sval = val & msk1fb;
+    if (sval < msv)
+      tpos += bits2, val = sval;
+    else {
+      tpos += bits2 + 1;
+      if (val > msk1fb)
+        val -= msv;
+    }
+    freq[++sym] = --val;
+    if (val == -1) {
+      probs += val;
+      syms[--ht2] = sym;
+    } else
+      probs -= val;
+    if (!val) {
+      do {
+        var rbt = tpos >> 3;
+        re2 = (dat[rbt] | dat[rbt + 1] << 8) >> (tpos & 7) & 3;
+        tpos += 2;
+        sym += re2;
+      } while (re2 == 3);
+    }
+  }
+  if (sym > 255 || probs)
+    err(0);
+  var sympos = 0;
+  var sstep = (sz >> 1) + (sz >> 3) + 3;
+  var smask = sz - 1;
+  for (var s4 = 0; s4 <= sym; ++s4) {
+    var sf = freq[s4];
+    if (sf < 1) {
+      dstate[s4] = -sf;
+      continue;
+    }
+    for (i4 = 0; i4 < sf; ++i4) {
+      syms[sympos] = s4;
+      do {
+        sympos = sympos + sstep & smask;
+      } while (sympos >= ht2);
+    }
+  }
+  if (sympos)
+    err(0);
+  for (i4 = 0; i4 < sz; ++i4) {
+    var ns = dstate[syms[i4]]++;
+    var nb = nbits[i4] = al - msb(ns);
+    nstate[i4] = (ns << nb) - sz;
+  }
+  return [tpos + 7 >> 3, {
+    b: al,
+    s: syms,
+    n: nbits,
+    t: nstate
+  }];
+};
+var rhu = function(dat, bt2) {
+  var i4 = 0, wc = -1;
+  var buf2 = new u8(292), hb = dat[bt2];
+  var hw = buf2.subarray(0, 256);
+  var rc = buf2.subarray(256, 268);
+  var ri = new u16(buf2.buffer, 268);
+  if (hb < 128) {
+    var _a2 = rfse(dat, bt2 + 1, 6), ebt = _a2[0], fdt2 = _a2[1];
+    bt2 += hb;
+    var epos = ebt << 3;
+    var lb = dat[bt2];
+    if (!lb)
+      err(0);
+    var st1 = 0, st2 = 0, btr1 = fdt2.b, btr2 = btr1;
+    var fpos = (++bt2 << 3) - 8 + msb(lb);
+    for (; ; ) {
+      fpos -= btr1;
+      if (fpos < epos)
+        break;
+      var cbt = fpos >> 3;
+      st1 += (dat[cbt] | dat[cbt + 1] << 8) >> (fpos & 7) & (1 << btr1) - 1;
+      hw[++wc] = fdt2.s[st1];
+      fpos -= btr2;
+      if (fpos < epos)
+        break;
+      cbt = fpos >> 3;
+      st2 += (dat[cbt] | dat[cbt + 1] << 8) >> (fpos & 7) & (1 << btr2) - 1;
+      hw[++wc] = fdt2.s[st2];
+      btr1 = fdt2.n[st1];
+      st1 = fdt2.t[st1];
+      btr2 = fdt2.n[st2];
+      st2 = fdt2.t[st2];
+    }
+    if (++wc > 255)
+      err(0);
+  } else {
+    wc = hb - 127;
+    for (; i4 < wc; i4 += 2) {
+      var byte = dat[++bt2];
+      hw[i4] = byte >> 4;
+      hw[i4 + 1] = byte & 15;
+    }
+    ++bt2;
+  }
+  var wes = 0;
+  for (i4 = 0; i4 < wc; ++i4) {
+    var wt = hw[i4];
+    if (wt > 11)
+      err(0);
+    wes += wt && 1 << wt - 1;
+  }
+  var mb = msb(wes) + 1;
+  var ts = 1 << mb;
+  var rem = ts - wes;
+  if (rem & rem - 1)
+    err(0);
+  hw[wc++] = msb(rem) + 1;
+  for (i4 = 0; i4 < wc; ++i4) {
+    var wt = hw[i4];
+    ++rc[hw[i4] = wt && mb + 1 - wt];
+  }
+  var hbuf = new u8(ts << 1);
+  var syms = hbuf.subarray(0, ts), nb = hbuf.subarray(ts);
+  ri[mb] = 0;
+  for (i4 = mb; i4 > 0; --i4) {
+    var pv = ri[i4];
+    fill(nb, i4, pv, ri[i4 - 1] = pv + rc[i4] * (1 << mb - i4));
+  }
+  if (ri[0] != ts)
+    err(0);
+  for (i4 = 0; i4 < wc; ++i4) {
+    var bits2 = hw[i4];
+    if (bits2) {
+      var code2 = ri[bits2];
+      fill(syms, i4, code2, ri[bits2] = code2 + (1 << mb - bits2));
+    }
+  }
+  return [bt2, {
+    n: nb,
+    b: mb,
+    s: syms
+  }];
+};
+var dllt = rfse(/* @__PURE__ */ new u8([
+  81,
+  16,
+  99,
+  140,
+  49,
+  198,
+  24,
+  99,
+  12,
+  33,
+  196,
+  24,
+  99,
+  102,
+  102,
+  134,
+  70,
+  146,
+  4
+]), 0, 6)[1];
+var dmlt = rfse(/* @__PURE__ */ new u8([
+  33,
+  20,
+  196,
+  24,
+  99,
+  140,
+  33,
+  132,
+  16,
+  66,
+  8,
+  33,
+  132,
+  16,
+  66,
+  8,
+  33,
+  68,
+  68,
+  68,
+  68,
+  68,
+  68,
+  68,
+  68,
+  36,
+  9
+]), 0, 6)[1];
+var doct = rfse(/* @__PURE__ */ new u8([
+  32,
+  132,
+  16,
+  66,
+  102,
+  70,
+  68,
+  68,
+  68,
+  68,
+  36,
+  73,
+  2
+]), 0, 5)[1];
+var b2bl = function(b2, s4) {
+  var len = b2.length, bl = new i32(len);
+  for (var i4 = 0; i4 < len; ++i4) {
+    bl[i4] = s4;
+    s4 += 1 << b2[i4];
+  }
+  return bl;
+};
+var llb = /* @__PURE__ */ new u8((/* @__PURE__ */ new i32([
+  0,
+  0,
+  0,
+  0,
+  16843009,
+  50528770,
+  134678020,
+  202050057,
+  269422093
+])).buffer, 0, 36);
+var llbl = /* @__PURE__ */ b2bl(llb, 0);
+var mlb = /* @__PURE__ */ new u8((/* @__PURE__ */ new i32([
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  16843009,
+  50528770,
+  117769220,
+  185207048,
+  252579084,
+  16
+])).buffer, 0, 53);
+var mlbl = /* @__PURE__ */ b2bl(mlb, 3);
+var dhu = function(dat, out, hu) {
+  var len = dat.length, ss = out.length, lb = dat[len - 1], msk = (1 << hu.b) - 1, eb = -hu.b;
+  if (!lb)
+    err(0);
+  var st = 0, btr = hu.b, pos2 = (len << 3) - 8 + msb(lb) - btr, i4 = -1;
+  for (; pos2 > eb && i4 < ss; ) {
+    var cbt = pos2 >> 3;
+    var val = (dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (pos2 & 7);
+    st = (st << btr | val) & msk;
+    out[++i4] = hu.s[st];
+    pos2 -= btr = hu.n[st];
+  }
+  if (pos2 != eb || i4 + 1 != ss)
+    err(0);
+};
+var dhu4 = function(dat, out, hu) {
+  var bt2 = 6;
+  var ss = out.length, sz1 = ss + 3 >> 2, sz2 = sz1 << 1, sz3 = sz1 + sz2;
+  dhu(dat.subarray(bt2, bt2 += dat[0] | dat[1] << 8), out.subarray(0, sz1), hu);
+  dhu(dat.subarray(bt2, bt2 += dat[2] | dat[3] << 8), out.subarray(sz1, sz2), hu);
+  dhu(dat.subarray(bt2, bt2 += dat[4] | dat[5] << 8), out.subarray(sz2, sz3), hu);
+  dhu(dat.subarray(bt2), out.subarray(sz3), hu);
+};
+var rzb = function(dat, st, out) {
+  var _a2;
+  var bt2 = st.b;
+  var b0 = dat[bt2], btype = b0 >> 1 & 3;
+  st.l = b0 & 1;
+  var sz = b0 >> 3 | dat[bt2 + 1] << 5 | dat[bt2 + 2] << 13;
+  var ebt = (bt2 += 3) + sz;
+  if (btype == 1) {
+    if (bt2 >= dat.length)
+      return;
+    st.b = bt2 + 1;
+    if (out) {
+      fill(out, dat[bt2], st.y, st.y += sz);
+      return out;
+    }
+    return fill(new u8(sz), dat[bt2]);
+  }
+  if (ebt > dat.length)
+    return;
+  if (btype == 0) {
+    st.b = ebt;
+    if (out) {
+      out.set(dat.subarray(bt2, ebt), st.y);
+      st.y += sz;
+      return out;
+    }
+    return slc(dat, bt2, ebt);
+  }
+  if (btype == 2) {
+    var b3 = dat[bt2], lbt = b3 & 3, sf = b3 >> 2 & 3;
+    var lss = b3 >> 4, lcs2 = 0, s4 = 0;
+    if (lbt < 2) {
+      if (sf & 1)
+        lss |= dat[++bt2] << 4 | (sf & 2 && dat[++bt2] << 12);
+      else
+        lss = b3 >> 3;
+    } else {
+      s4 = sf;
+      if (sf < 2)
+        lss |= (dat[++bt2] & 63) << 4, lcs2 = dat[bt2] >> 6 | dat[++bt2] << 2;
+      else if (sf == 2)
+        lss |= dat[++bt2] << 4 | (dat[++bt2] & 3) << 12, lcs2 = dat[bt2] >> 2 | dat[++bt2] << 6;
+      else
+        lss |= dat[++bt2] << 4 | (dat[++bt2] & 63) << 12, lcs2 = dat[bt2] >> 6 | dat[++bt2] << 2 | dat[++bt2] << 10;
+    }
+    ++bt2;
+    var buf2 = out ? out.subarray(st.y, st.y + st.m) : new u8(st.m);
+    var spl = buf2.length - lss;
+    if (lbt == 0)
+      buf2.set(dat.subarray(bt2, bt2 += lss), spl);
+    else if (lbt == 1)
+      fill(buf2, dat[bt2++], spl);
+    else {
+      var hu = st.h;
+      if (lbt == 2) {
+        var hud = rhu(dat, bt2);
+        lcs2 += bt2 - (bt2 = hud[0]);
+        st.h = hu = hud[1];
+      } else if (!hu)
+        err(0);
+      (s4 ? dhu4 : dhu)(dat.subarray(bt2, bt2 += lcs2), buf2.subarray(spl), hu);
+    }
+    var ns = dat[bt2++];
+    if (ns) {
+      if (ns == 255)
+        ns = (dat[bt2++] | dat[bt2++] << 8) + 32512;
+      else if (ns > 127)
+        ns = ns - 128 << 8 | dat[bt2++];
+      var scm = dat[bt2++];
+      if (scm & 3)
+        err(0);
+      var dts = [dmlt, doct, dllt];
+      for (var i4 = 2; i4 > -1; --i4) {
+        var md = scm >> (i4 << 1) + 2 & 3;
+        if (md == 1) {
+          var rbuf = new u8([0, 0, dat[bt2++]]);
+          dts[i4] = {
+            s: rbuf.subarray(2, 3),
+            n: rbuf.subarray(0, 1),
+            t: new u16(rbuf.buffer, 0, 1),
+            b: 0
+          };
+        } else if (md == 2) {
+          _a2 = rfse(dat, bt2, 9 - (i4 & 1)), bt2 = _a2[0], dts[i4] = _a2[1];
+        } else if (md == 3) {
+          if (!st.t)
+            err(0);
+          dts[i4] = st.t[i4];
+        }
+      }
+      var _b2 = st.t = dts, mlt = _b2[0], oct = _b2[1], llt = _b2[2];
+      var lb = dat[ebt - 1];
+      if (!lb)
+        err(0);
+      var spos = (ebt << 3) - 8 + msb(lb) - llt.b, cbt = spos >> 3, oubt = 0;
+      var lst = (dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << llt.b) - 1;
+      cbt = (spos -= oct.b) >> 3;
+      var ost = (dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << oct.b) - 1;
+      cbt = (spos -= mlt.b) >> 3;
+      var mst = (dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << mlt.b) - 1;
+      for (++ns; --ns; ) {
+        var llc = llt.s[lst];
+        var lbtr = llt.n[lst];
+        var mlc = mlt.s[mst];
+        var mbtr = mlt.n[mst];
+        var ofc = oct.s[ost];
+        var obtr = oct.n[ost];
+        cbt = (spos -= ofc) >> 3;
+        var ofp = 1 << ofc;
+        var off = ofp + ((dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16 | dat[cbt + 3] << 24) >>> (spos & 7) & ofp - 1);
+        cbt = (spos -= mlb[mlc]) >> 3;
+        var ml = mlbl[mlc] + ((dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (spos & 7) & (1 << mlb[mlc]) - 1);
+        cbt = (spos -= llb[llc]) >> 3;
+        var ll = llbl[llc] + ((dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (spos & 7) & (1 << llb[llc]) - 1);
+        cbt = (spos -= lbtr) >> 3;
+        lst = llt.t[lst] + ((dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << lbtr) - 1);
+        cbt = (spos -= mbtr) >> 3;
+        mst = mlt.t[mst] + ((dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << mbtr) - 1);
+        cbt = (spos -= obtr) >> 3;
+        ost = oct.t[ost] + ((dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << obtr) - 1);
+        if (off > 3) {
+          st.o[2] = st.o[1];
+          st.o[1] = st.o[0];
+          st.o[0] = off -= 3;
+        } else {
+          var idx = off - (ll != 0);
+          if (idx) {
+            off = idx == 3 ? st.o[0] - 1 : st.o[idx];
+            if (idx > 1)
+              st.o[2] = st.o[1];
+            st.o[1] = st.o[0];
+            st.o[0] = off;
+          } else
+            off = st.o[0];
+        }
+        for (var i4 = 0; i4 < ll; ++i4) {
+          buf2[oubt + i4] = buf2[spl + i4];
+        }
+        oubt += ll, spl += ll;
+        var stin = oubt - off;
+        if (stin < 0) {
+          var len = -stin;
+          var bs = st.e + stin;
+          if (len > ml)
+            len = ml;
+          for (var i4 = 0; i4 < len; ++i4) {
+            buf2[oubt + i4] = st.w[bs + i4];
+          }
+          oubt += len, ml -= len, stin = 0;
+        }
+        for (var i4 = 0; i4 < ml; ++i4) {
+          buf2[oubt + i4] = buf2[stin + i4];
+        }
+        oubt += ml;
+      }
+      if (oubt != spl) {
+        while (spl < buf2.length) {
+          buf2[oubt++] = buf2[spl++];
+        }
+      } else
+        oubt = buf2.length;
+      if (out)
+        st.y += oubt;
+      else
+        buf2 = slc(buf2, 0, oubt);
+    } else if (out) {
+      st.y += lss;
+      if (spl) {
+        for (var i4 = 0; i4 < lss; ++i4) {
+          buf2[i4] = buf2[spl + i4];
+        }
+      }
+    } else if (spl)
+      buf2 = slc(buf2, spl);
+    st.b = ebt;
+    return buf2;
+  }
+  err(2);
+};
+var cct = function(bufs, ol) {
+  if (bufs.length == 1)
+    return bufs[0];
+  var buf2 = new u8(ol);
+  for (var i4 = 0, b2 = 0; i4 < bufs.length; ++i4) {
+    var chk = bufs[i4];
+    buf2.set(chk, b2);
+    b2 += chk.length;
+  }
+  return buf2;
+};
+function decompress(dat, buf2) {
+  var bufs = [], nb = +!buf2;
+  var bt2 = 0, ol = 0;
+  for (; dat.length; ) {
+    var st = rzfh(dat, nb || buf2);
+    if (typeof st == "object") {
+      if (nb) {
+        buf2 = null;
+        if (st.w.length == st.u) {
+          bufs.push(buf2 = st.w);
+          ol += st.u;
+        }
+      } else {
+        bufs.push(buf2);
+        st.e = 0;
+      }
+      for (; !st.l; ) {
+        var blk = rzb(dat, st, buf2);
+        if (!blk)
+          err(5);
+        if (buf2)
+          st.e = st.y;
+        else {
+          bufs.push(blk);
+          ol += blk.length;
+          cpw(st.w, 0, blk.length);
+          st.w.set(blk, st.w.length - blk.length);
+        }
+      }
+      bt2 = st.b + st.c * 4;
+    } else
+      bt2 = st;
+    dat = dat.subarray(bt2);
+  }
+  return cct(bufs, ol);
+}
+const kZstdWorkerCode = `
+// fzstd decompress function, loaded dynamically
+let decompress = null;
+
+self.onmessage = function(e) {
+  const { type } = e.data || {};
+
+  if (type === 'init') {
+    const { scriptContent } = e.data;
+    try {
+      if (!decompress) {
+        // Decode and evaluate the fzstd UMD library
+        const script = atob(scriptContent);
+        // The UMD module self-executes and assigns to self.fzstd
+        new Function(script)();
+        if (!self.fzstd || typeof self.fzstd.decompress !== 'function') {
+          throw new Error('Failed to initialize fzstd decompressor');
+        }
+        decompress = self.fzstd.decompress;
+      }
+      self.postMessage({ type: 'init_complete', success: true });
+    } catch (err) {
+      console.error('fzstd init error in worker:', err);
+      self.postMessage({ type: 'init_complete', success: false, error: err.message || 'Unknown error' });
+    }
+    return;
+  }
+
+  if (type === 'decompress') {
+    const { requestId, data } = e.data;
+    try {
+      if (!decompress) {
+        throw new Error('Worker not initialized');
+      }
+      const result = decompress(data);
+      // Transfer the result buffer back to avoid copying
+      self.postMessage(
+        { requestId, success: true, data: result },
+        [result.buffer]
+      );
+    } catch (err) {
+      self.postMessage({
+        requestId,
+        success: false,
+        error: err instanceof Error ? err.message : 'Unknown error'
+      });
+    }
+  }
+};
+`;
+const kFzstdBase64 = `IWZ1bmN0aW9uKGYpe3R5cGVvZiBtb2R1bGUhPSd1bmRlZmluZWQnJiZ0eXBlb2YgZXhwb3J0cz09J29iamVjdCc/bW9kdWxlLmV4cG9ydHM9ZigpOnR5cGVvZiBkZWZpbmUhPSd1bmRlZmluZWQnJiZkZWZpbmUuYW1kP2RlZmluZShbJ2Z6c3RkJyxmXSk6KHR5cGVvZiBzZWxmIT0ndW5kZWZpbmVkJz9zZWxmOnRoaXMpLmZ6c3RkPWYoKX0oZnVuY3Rpb24oKXt2YXIgX2U9e307InVzZSBzdHJpY3QiO3ZhciByPUFycmF5QnVmZmVyLHQ9VWludDhBcnJheSxlPVVpbnQxNkFycmF5LG49SW50MTZBcnJheSxhPVVpbnQzMkFycmF5LHM9SW50MzJBcnJheSxpPWZ1bmN0aW9uKHIsZSxuKXtpZih0LnByb3RvdHlwZS5zbGljZSlyZXR1cm4gdC5wcm90b3R5cGUuc2xpY2UuY2FsbChyLGUsbik7KG51bGw9PWV8fGU8MCkmJihlPTApLChudWxsPT1ufHxuPnIubGVuZ3RoKSYmKG49ci5sZW5ndGgpO3ZhciBhPW5ldyB0KG4tZSk7cmV0dXJuIGEuc2V0KHIuc3ViYXJyYXkoZSxuKSksYX0sbz1mdW5jdGlvbihyLGUsbixhKXtpZih0LnByb3RvdHlwZS5maWxsKXJldHVybiB0LnByb3RvdHlwZS5maWxsLmNhbGwocixlLG4sYSk7Zm9yKChudWxsPT1ufHxuPDApJiYobj0wKSwobnVsbD09YXx8YT5yLmxlbmd0aCkmJihhPXIubGVuZ3RoKTtuPGE7KytuKXJbbl09ZTtyZXR1cm4gcn0sdT1mdW5jdGlvbihyLGUsbixhKXtpZih0LnByb3RvdHlwZS5jb3B5V2l0aGluKXJldHVybiB0LnByb3RvdHlwZS5jb3B5V2l0aGluLmNhbGwocixlLG4sYSk7Zm9yKChudWxsPT1ufHxuPDApJiYobj0wKSwobnVsbD09YXx8YT5yLmxlbmd0aCkmJihhPXIubGVuZ3RoKTtuPGE7KXJbZSsrXT1yW24rK119O19lLlpzdGRFcnJvckNvZGU9e0ludmFsaWREYXRhOjAsV2luZG93U2l6ZVRvb0xhcmdlOjEsSW52YWxpZEJsb2NrVHlwZToyLEZTRUFjY3VyYWN5VG9vSGlnaDozLERpc3RhbmNlVG9vRmFyQmFjazo0LFVuZXhwZWN0ZWRFT0Y6NX07dmFyIGg9WyJpbnZhbGlkIHpzdGQgZGF0YSIsIndpbmRvdyBzaXplIHRvbyBsYXJnZSAoPjIwNDZNQikiLCJpbnZhbGlkIGJsb2NrIHR5cGUiLCJGU0UgYWNjdXJhY3kgdG9vIGhpZ2giLCJtYXRjaCBkaXN0YW5jZSB0b28gZmFyIGJhY2siLCJ1bmV4cGVjdGVkIEVPRiJdLGY9ZnVuY3Rpb24ocix0LGUpe3ZhciBuPUVycm9yKHR8fGhbcl0pO2lmKG4uY29kZT1yLEVycm9yLmNhcHR1cmVTdGFja1RyYWNlJiZFcnJvci5jYXB0dXJlU3RhY2tUcmFjZShuLGYpLCFlKXRocm93IG47cmV0dXJuIG59LGw9ZnVuY3Rpb24ocix0LGUpe2Zvcih2YXIgbj0wLGE9MDtuPGU7KytuKWF8PXJbdCsrXTw8KG48PDMpO3JldHVybiBhfSx2PWZ1bmN0aW9uKHIsdCl7cmV0dXJuKHJbdF18clt0KzFdPDw4fHJbdCsyXTw8MTZ8clt0KzNdPDwyNCk+Pj4wfSxjPWZ1bmN0aW9uKHIsZSl7dmFyIG49clswXXxyWzFdPDw4fHJbMl08PDE2O2lmKDMxMjY1Njg9PW4mJjI1Mz09clszXSl7dmFyIGE9cls0XSxpPWE+PjUmMSxvPWE+PjImMSx1PTMmYSxoPWE+PjY7OCZhJiZmKDApO3ZhciBjPTYtaSxiPTM9PXU/NDp1LHk9bChyLGMsYikscD1oPzE8PGg6aSx3PWwocixjKz1iLHApKygxPT1oJiYyNTYpLGc9dztpZighaSl7dmFyIGQ9MTw8MTArKHJbNV0+PjMpO2c9ZCsoZD4+MykqKDcmcls1XSl9Zz4yMTQ1Mzg2NDk2JiZmKDEpO3ZhciBtPW5ldyB0KCgxPT1lP3d8fGc6ZT8wOmcpKzEyKTtyZXR1cm4gbVswXT0xLG1bNF09NCxtWzhdPTgse2I6YytwLHk6MCxsOjAsZDp5LHc6ZSYmMSE9ZT9lOm0uc3ViYXJyYXkoMTIpLGU6ZyxvOm5ldyBzKG0uYnVmZmVyLDAsMyksdTp3LGM6byxtOk1hdGgubWluKDEzMTA3MixnKX19aWYoMjU0ODE4OTM9PShuPj40fHJbM108PDIwKSlyZXR1cm4gdihyLDQpKzg7ZigwKX0sYj1mdW5jdGlvbihyKXtmb3IodmFyIHQ9MDsxPDx0PD1yOysrdCk7cmV0dXJuIHQtMX0seT1mdW5jdGlvbihhLHMsaSl7dmFyIG89NCsoczw8MyksdT01KygxNSZhW3NdKTt1PmkmJmYoMyk7Zm9yKHZhciBoPTE8PHUsbD1oLHY9LTEsYz0tMSx5PS0xLHA9aCx3PW5ldyByKDUxMisoaDw8MikpLGc9bmV3IG4odywwLDI1NiksZD1uZXcgZSh3LDAsMjU2KSxtPW5ldyBlKHcsNTEyLGgpLHo9NTEyKyhoPDwxKSxFPW5ldyB0KHcseixoKSxrPW5ldyB0KHcseitoKTt2PDI1NSYmbD4wOyl7dmFyIEE9YihsKzEpLFQ9bz4+Myx4PSgxPDxBKzEpLTEsRj0oYVtUXXxhW1QrMV08PDh8YVtUKzJdPDwxNik+Pig3Jm8pJngsUz0oMTw8QSktMSxCPXgtbC0xLEk9RiZTO2lmKEk8Qj8obys9QSxGPUkpOihvKz1BKzEsRj5TJiYoRi09QikpLGdbKyt2XT0tLUYsLTE9PUY/KGwrPUYsRVstLXBdPXYpOmwtPUYsIUYpZG97dmFyIFU9bz4+MztjPShhW1VdfGFbVSsxXTw8OCk+Pig3Jm8pJjMsbys9Mix2Kz1jfXdoaWxlKDM9PWMpfSh2PjI1NXx8bCkmJmYoMCk7Zm9yKHZhciBEPTAsTT0oaD4+MSkrKGg+PjMpKzMsVz1oLTEsTz0wO088PXY7KytPKXt2YXIgaj1nW09dO2lmKGo8MSlkW09dPS1qO2Vsc2UgZm9yKHk9MDt5PGo7Kyt5KXtFW0RdPU87ZG97RD1EK00mV313aGlsZShEPj1wKX19Zm9yKEQmJmYoMCkseT0wO3k8aDsrK3kpe3ZhciBDPWRbRVt5XV0rKyxIPWtbeV09dS1iKEMpO21beV09KEM8PEgpLWh9cmV0dXJuW28rNz4+Myx7Yjp1LHM6RSxuOmssdDptfV19LHA9ZnVuY3Rpb24ocixuKXt2YXIgYT0wLHM9LTEsaT1uZXcgdCgyOTIpLHU9cltuXSxoPWkuc3ViYXJyYXkoMCwyNTYpLGw9aS5zdWJhcnJheSgyNTYsMjY4KSx2PW5ldyBlKGkuYnVmZmVyLDI2OCk7aWYodTwxMjgpe3ZhciBjPXkocixuKzEsNikscD1jWzFdLHc9Y1swXTw8MyxnPXJbbis9dV07Z3x8ZigwKTtmb3IodmFyIGQ9MCxtPTAsej1wLmIsRT16LGs9KCsrbjw8MyktOCtiKGcpOyEoKGstPXopPHcpOyl7dmFyIEE9az4+MztpZihoWysrc109cC5zW2QrPShyW0FdfHJbQSsxXTw8OCk+Pig3JmspJigxPDx6KS0xXSwoay09RSk8dylicmVhaztoWysrc109cC5zW20rPShyW0E9az4+M118cltBKzFdPDw4KT4+KDcmaykmKDE8PEUpLTFdLHo9cC5uW2RdLGQ9cC50W2RdLEU9cC5uW21dLG09cC50W21dfSsrcz4yNTUmJmYoMCl9ZWxzZXtmb3Iocz11LTEyNzthPHM7YSs9Mil7dmFyIFQ9clsrK25dO2hbYV09VD4+NCxoW2ErMV09MTUmVH0rK259dmFyIHg9MDtmb3IoYT0wO2E8czsrK2EpKEk9aFthXSk+MTEmJmYoMCkseCs9SSYmMTw8SS0xO3ZhciBGPWIoeCkrMSxTPTE8PEYsQj1TLXg7Zm9yKEImQi0xJiZmKDApLGhbcysrXT1iKEIpKzEsYT0wO2E8czsrK2Epe3ZhciBJOysrbFtoW2FdPShJPWhbYV0pJiZGKzEtSV19dmFyIFU9bmV3IHQoUzw8MSksRD1VLnN1YmFycmF5KDAsUyksTT1VLnN1YmFycmF5KFMpO2Zvcih2W0ZdPTAsYT1GO2E+MDstLWEpe3ZhciBXPXZbYV07byhNLGEsVyx2W2EtMV09VytsW2FdKigxPDxGLWEpKX1mb3IodlswXSE9UyYmZigwKSxhPTA7YTxzOysrYSl7dmFyIE89aFthXTtpZihPKXt2YXIgaj12W09dO28oRCxhLGosdltPXT1qKygxPDxGLU8pKX19cmV0dXJuW24se246TSxiOkYsczpEfV19LHc9eShuZXcgdChbODEsMTYsOTksMTQwLDQ5LDE5OCwyNCw5OSwxMiwzMywxOTYsMjQsOTksMTAyLDEwMiwxMzQsNzAsMTQ2LDRdKSwwLDYpWzFdLGc9eShuZXcgdChbMzMsMjAsMTk2LDI0LDk5LDE0MCwzMywxMzIsMTYsNjYsOCwzMywxMzIsMTYsNjYsOCwzMyw2OCw2OCw2OCw2OCw2OCw2OCw2OCw2OCwzNiw5XSksMCw2KVsxXSxkPXkobmV3IHQoWzMyLDEzMiwxNiw2NiwxMDIsNzAsNjgsNjgsNjgsNjgsMzYsNzMsMl0pLDAsNSlbMV0sbT1mdW5jdGlvbihyLHQpe2Zvcih2YXIgZT1yLmxlbmd0aCxuPW5ldyBzKGUpLGE9MDthPGU7KythKW5bYV09dCx0Kz0xPDxyW2FdO3JldHVybiBufSx6PW5ldyB0KG5ldyBzKFswLDAsMCwwLDE2ODQzMDA5LDUwNTI4NzcwLDEzNDY3ODAyMCwyMDIwNTAwNTcsMjY5NDIyMDkzXSkuYnVmZmVyLDAsMzYpLEU9bSh6LDApLGs9bmV3IHQobmV3IHMoWzAsMCwwLDAsMCwwLDAsMCwxNjg0MzAwOSw1MDUyODc3MCwxMTc3NjkyMjAsMTg1MjA3MDQ4LDI1MjU3OTA4NCwxNl0pLmJ1ZmZlciwwLDUzKSxBPW0oaywzKSxUPWZ1bmN0aW9uKHIsdCxlKXt2YXIgbj1yLmxlbmd0aCxhPXQubGVuZ3RoLHM9cltuLTFdLGk9KDE8PGUuYiktMSxvPS1lLmI7c3x8ZigwKTtmb3IodmFyIHU9MCxoPWUuYixsPShuPDwzKS04K2IocyktaCx2PS0xO2w+byYmdjxhOyl7dmFyIGM9bD4+Mzt0Wysrdl09ZS5zW3U9KHU8PGh8KHJbY118cltjKzFdPDw4fHJbYysyXTw8MTYpPj4oNyZsKSkmaV0sbC09aD1lLm5bdV19bD09byYmdisxPT1hfHxmKDApfSx4PWZ1bmN0aW9uKHIsdCxlKXt2YXIgbj02LGE9dC5sZW5ndGgrMz4+MixzPWE8PDEsaT1hK3M7VChyLnN1YmFycmF5KG4sbis9clswXXxyWzFdPDw4KSx0LnN1YmFycmF5KDAsYSksZSksVChyLnN1YmFycmF5KG4sbis9clsyXXxyWzNdPDw4KSx0LnN1YmFycmF5KGEscyksZSksVChyLnN1YmFycmF5KG4sbis9cls0XXxyWzVdPDw4KSx0LnN1YmFycmF5KHMsaSksZSksVChyLnN1YmFycmF5KG4pLHQuc3ViYXJyYXkoaSksZSl9LEY9ZnVuY3Rpb24ocixuLGEpe3ZhciBzLHU9bi5iLGg9clt1XSxsPWg+PjEmMztuLmw9MSZoO3ZhciB2PWg+PjN8clt1KzFdPDw1fHJbdSsyXTw8MTMsYz0odSs9MykrdjtpZigxPT1sKXtpZih1Pj1yLmxlbmd0aClyZXR1cm47cmV0dXJuIG4uYj11KzEsYT8obyhhLHJbdV0sbi55LG4ueSs9diksYSk6byhuZXcgdCh2KSxyW3VdKX1pZighKGM+ci5sZW5ndGgpKXtpZigwPT1sKXJldHVybiBuLmI9YyxhPyhhLnNldChyLnN1YmFycmF5KHUsYyksbi55KSxuLnkrPXYsYSk6aShyLHUsYyk7aWYoMj09bCl7dmFyIG09clt1XSxGPTMmbSxTPW0+PjImMyxCPW0+PjQsST0wLFU9MDtGPDI/MSZTP0J8PXJbKyt1XTw8NHwoMiZTJiZyWysrdV08PDEyKTpCPW0+PjM6KFU9UyxTPDI/KEJ8PSg2MyZyWysrdV0pPDw0LEk9clt1XT4+NnxyWysrdV08PDIpOjI9PVM/KEJ8PXJbKyt1XTw8NHwoMyZyWysrdV0pPDwxMixJPXJbdV0+PjJ8clsrK3VdPDw2KTooQnw9clsrK3VdPDw0fCg2MyZyWysrdV0pPDwxMixJPXJbdV0+PjZ8clsrK3VdPDwyfHJbKyt1XTw8MTApKSwrK3U7dmFyIEQ9YT9hLnN1YmFycmF5KG4ueSxuLnkrbi5tKTpuZXcgdChuLm0pLE09RC5sZW5ndGgtQjtpZigwPT1GKUQuc2V0KHIuc3ViYXJyYXkodSx1Kz1CKSxNKTtlbHNlIGlmKDE9PUYpbyhELHJbdSsrXSxNKTtlbHNle3ZhciBXPW4uaDtpZigyPT1GKXt2YXIgTz1wKHIsdSk7SSs9dS0odT1PWzBdKSxuLmg9Vz1PWzFdfWVsc2UgV3x8ZigwKTsoVT94OlQpKHIuc3ViYXJyYXkodSx1Kz1JKSxELnN1YmFycmF5KE0pLFcpfXZhciBqPXJbdSsrXTtpZihqKXsyNTU9PWo/aj0zMjUxMisoclt1KytdfHJbdSsrXTw8OCk6aj4xMjcmJihqPWotMTI4PDw4fHJbdSsrXSk7dmFyIEM9clt1KytdOzMmQyYmZigwKTtmb3IodmFyIEg9W2csZCx3XSxMPTI7TD4tMTstLUwpe3ZhciBaPUM+PjIrKEw8PDEpJjM7aWYoMT09Wil7dmFyIHE9bmV3IHQoWzAsMCxyW3UrK11dKTtIW0xdPXtzOnEuc3ViYXJyYXkoMiwzKSxuOnEuc3ViYXJyYXkoMCwxKSx0Om5ldyBlKHEuYnVmZmVyLDAsMSksYjowfX1lbHNlIDI9PVo/KHU9KHM9eShyLHUsOS0oMSZMKSkpWzBdLEhbTF09c1sxXSk6Mz09WiYmKG4udHx8ZigwKSxIW0xdPW4udFtMXSl9dmFyIEc9bi50PUgsSj1HWzBdLEs9R1sxXSxOPUdbMl0sUD1yW2MtMV07UHx8ZigwKTt2YXIgUT0oYzw8MyktOCtiKFApLU4uYixSPVE+PjMsVj0wLFg9KHJbUl18cltSKzFdPDw4KT4+KDcmUSkmKDE8PE4uYiktMSxZPShyW1I9KFEtPUsuYik+PjNdfHJbUisxXTw8OCk+Pig3JlEpJigxPDxLLmIpLTEsJD0ocltSPShRLT1KLmIpPj4zXXxyW1IrMV08PDgpPj4oNyZRKSYoMTw8Si5iKS0xO2ZvcigrK2o7LS1qOyl7dmFyIF89Ti5zW1hdLHJyPU4ubltYXSx0cj1KLnNbJF0sZXI9Si5uWyRdLG5yPUsuc1tZXSxhcj1LLm5bWV0sc3I9MTw8bnIsaXI9c3IrKChyW1I9KFEtPW5yKT4+M118cltSKzFdPDw4fHJbUisyXTw8MTZ8cltSKzNdPDwyNCk+Pj4oNyZRKSZzci0xKTtSPShRLT1rW3RyXSk+PjM7dmFyIG9yPUFbdHJdKygocltSXXxyW1IrMV08PDh8cltSKzJdPDwxNik+Pig3JlEpJigxPDxrW3RyXSktMSk7Uj0oUS09eltfXSk+PjM7dmFyIHVyPUVbX10rKChyW1JdfHJbUisxXTw8OHxyW1IrMl08PDE2KT4+KDcmUSkmKDE8PHpbX10pLTEpO2lmKFI9KFEtPXJyKT4+MyxYPU4udFtYXSsoKHJbUl18cltSKzFdPDw4KT4+KDcmUSkmKDE8PHJyKS0xKSxSPShRLT1lcik+PjMsJD1KLnRbJF0rKChyW1JdfHJbUisxXTw8OCk+Pig3JlEpJigxPDxlciktMSksUj0oUS09YXIpPj4zLFk9Sy50W1ldKygocltSXXxyW1IrMV08PDgpPj4oNyZRKSYoMTw8YXIpLTEpLGlyPjMpbi5vWzJdPW4ub1sxXSxuLm9bMV09bi5vWzBdLG4ub1swXT1pci09MztlbHNle3ZhciBocj1pci0oMCE9dXIpO2hyPyhpcj0zPT1ocj9uLm9bMF0tMTpuLm9baHJdLGhyPjEmJihuLm9bMl09bi5vWzFdKSxuLm9bMV09bi5vWzBdLG4ub1swXT1pcik6aXI9bi5vWzBdfWZvcihMPTA7TDx1cjsrK0wpRFtWK0xdPURbTStMXTtNKz11cjt2YXIgZnI9KFYrPXVyKS1pcjtpZihmcjwwKXt2YXIgbHI9LWZyLHZyPW4uZStmcjtmb3IobHI+b3ImJihscj1vciksTD0wO0w8bHI7KytMKURbVitMXT1uLndbdnIrTF07Vis9bHIsb3ItPWxyLGZyPTB9Zm9yKEw9MDtMPG9yOysrTClEW1YrTF09RFtmcitMXTtWKz1vcn1pZihWIT1NKWZvcig7TTxELmxlbmd0aDspRFtWKytdPURbTSsrXTtlbHNlIFY9RC5sZW5ndGg7YT9uLnkrPVY6RD1pKEQsMCxWKX1lbHNlIGlmKGEpe2lmKG4ueSs9QixNKWZvcihMPTA7TDxCOysrTClEW0xdPURbTStMXX1lbHNlIE0mJihEPWkoRCxNKSk7cmV0dXJuIG4uYj1jLER9ZigyKX19LFM9ZnVuY3Rpb24ocixlKXtpZigxPT1yLmxlbmd0aClyZXR1cm4gclswXTtmb3IodmFyIG49bmV3IHQoZSksYT0wLHM9MDthPHIubGVuZ3RoOysrYSl7dmFyIGk9clthXTtuLnNldChpLHMpLHMrPWkubGVuZ3RofXJldHVybiBufTtmdW5jdGlvbiBCKHIsdCl7Zm9yKHZhciBlPVtdLG49KyF0LGE9MCxzPTA7ci5sZW5ndGg7KXt2YXIgaT1jKHIsbnx8dCk7aWYoIm9iamVjdCI9PXR5cGVvZiBpKXtmb3Iobj8odD1udWxsLGkudy5sZW5ndGg9PWkudSYmKGUucHVzaCh0PWkudykscys9aS51KSk6KGUucHVzaCh0KSxpLmU9MCk7IWkubDspe3ZhciBvPUYocixpLHQpO298fGYoNSksdD9pLmU9aS55OihlLnB1c2gobykscys9by5sZW5ndGgsdShpLncsMCxvLmxlbmd0aCksaS53LnNldChvLGkudy5sZW5ndGgtby5sZW5ndGgpKX1hPWkuYis0KmkuY31lbHNlIGE9aTtyPXIuc3ViYXJyYXkoYSl9cmV0dXJuIFMoZSxzKX1fZS5kZWNvbXByZXNzPUI7dmFyIEk9ZnVuY3Rpb24oKXtmdW5jdGlvbiByKHIpe3RoaXMub25kYXRhPXIsdGhpcy5jPVtdLHRoaXMubD0wLHRoaXMuej0wfXJldHVybiByLnByb3RvdHlwZS5wdXNoPWZ1bmN0aW9uKHIsZSl7aWYoIm51bWJlciI9PXR5cGVvZiB0aGlzLnMpe3ZhciBuPU1hdGgubWluKHIubGVuZ3RoLHRoaXMucyk7cj1yLnN1YmFycmF5KG4pLHRoaXMucy09bn12YXIgYT1yLmxlbmd0aCt0aGlzLmw7aWYoIXRoaXMucyl7aWYoZSl7aWYoIWEpcmV0dXJuIHZvaWQgdGhpcy5vbmRhdGEobmV3IHQoMCksITApO2E8NSYmZig1KX1lbHNlIGlmKGE8MTgpcmV0dXJuIHRoaXMuYy5wdXNoKHIpLHZvaWQodGhpcy5sPWEpO2lmKHRoaXMubCYmKHRoaXMuYy5wdXNoKHIpLHI9Uyh0aGlzLmMsYSksdGhpcy5jPVtdLHRoaXMubD0wKSwibnVtYmVyIj09dHlwZW9mKHRoaXMucz1jKHIpKSlyZXR1cm4gdGhpcy5wdXNoKHIsZSl9aWYoIm51bWJlciIhPXR5cGVvZiB0aGlzLnMpe2lmKGE8KHRoaXMuenx8MykpcmV0dXJuIGUmJmYoNSksdGhpcy5jLnB1c2gociksdm9pZCh0aGlzLmw9YSk7aWYodGhpcy5sJiYodGhpcy5jLnB1c2gocikscj1TKHRoaXMuYyxhKSx0aGlzLmM9W10sdGhpcy5sPTApLCF0aGlzLnomJmE8KHRoaXMuej0yJnJbdGhpcy5zLmJdPzQ6Mysoclt0aGlzLnMuYl0+PjN8clt0aGlzLnMuYisxXTw8NXxyW3RoaXMucy5iKzJdPDwxMykpKXJldHVybiBlJiZmKDUpLHRoaXMuYy5wdXNoKHIpLHZvaWQodGhpcy5sPWEpO2Zvcih0aGlzLno9MDs7KXt2YXIgcz1GKHIsdGhpcy5zKTtpZighcyl7ZSYmZig1KTt2YXIgaT1yLnN1YmFycmF5KHRoaXMucy5iKTtyZXR1cm4gdGhpcy5zLmI9MCx0aGlzLmMucHVzaChpKSx2b2lkKHRoaXMubCs9aS5sZW5ndGgpfWlmKHRoaXMub25kYXRhKHMsITEpLHUodGhpcy5zLncsMCxzLmxlbmd0aCksdGhpcy5zLncuc2V0KHMsdGhpcy5zLncubGVuZ3RoLXMubGVuZ3RoKSx0aGlzLnMubCl7dmFyIG89ci5zdWJhcnJheSh0aGlzLnMuYik7cmV0dXJuIHRoaXMucz00KnRoaXMucy5jLHZvaWQgdGhpcy5wdXNoKG8sZSl9fX1lbHNlIGUmJmYoNSl9LHJ9KCk7X2UuRGVjb21wcmVzcz1JO3JldHVybiBfZX0p`;
+const WORKER_THRESHOLD = 1024 * 1024;
+const MAX_WINDOW_LOG = 25;
+class ZstdWindowSizeError extends Error {
+  windowLog;
+  maxWindowLog;
+  constructor(windowLog) {
+    super(
+      `Zstd window size too large (windowLog=${windowLog}, max=${MAX_WINDOW_LOG}). This file may have been compressed with zstd "ultra" mode (level 20+). Try recompressing with --long=${MAX_WINDOW_LOG} or a lower compression level.`
+    );
+    this.name = "ZstdWindowSizeError";
+    this.windowLog = windowLog;
+    this.maxWindowLog = MAX_WINDOW_LOG;
+    Object.setPrototypeOf(this, ZstdWindowSizeError.prototype);
+  }
+}
+function validateZstdWindowSize(data2) {
+  if (data2.length < 5) {
+    return;
+  }
+  const magic = data2[0] | data2[1] << 8 | data2[2] << 16 | data2[3] << 24;
+  if (magic !== 4247762216) {
+    return;
+  }
+  const descriptor = data2[4];
+  const singleSegmentFlag = descriptor >> 5 & 1;
+  if (singleSegmentFlag) {
+    return;
+  }
+  if (data2.length < 6) {
+    return;
+  }
+  const windowDescriptor = data2[5];
+  const exponent = windowDescriptor >> 3;
+  const windowLog = 10 + exponent;
+  if (windowLog > MAX_WINDOW_LOG) {
+    throw new ZstdWindowSizeError(windowLog);
+  }
+}
+let zstdWorker = null;
+let blobURL = null;
+let workerInitPromise = null;
+let nextRequestId = 0;
+const pendingRequests = /* @__PURE__ */ new Map();
+let handlersAttached = false;
+function getZstdWorker() {
+  if (workerInitPromise) {
+    return workerInitPromise;
+  }
+  workerInitPromise = new Promise((resolve, reject) => {
+    const blob = new Blob([kZstdWorkerCode], {
+      type: "application/javascript"
+    });
+    blobURL = URL.createObjectURL(blob);
+    zstdWorker = new Worker(blobURL);
+    const initHandler = (event) => {
+      if (event.data.type === "init_complete") {
+        zstdWorker.removeEventListener("message", initHandler);
+        if (event.data.success) {
+          resolve(zstdWorker);
+        } else {
+          reject(new Error(event.data.error || "Worker initialization failed"));
+        }
+      }
+    };
+    zstdWorker.addEventListener("message", initHandler);
+    zstdWorker.postMessage({
+      type: "init",
+      scriptContent: kFzstdBase64
+    });
+  });
+  return workerInitPromise;
+}
+async function decompressZstd(data2) {
+  validateZstdWindowSize(data2);
+  if (data2.length < WORKER_THRESHOLD) {
+    return decompress(data2);
+  }
+  const worker = await getZstdWorker();
+  return new Promise((resolve, reject) => {
+    const requestId = nextRequestId++;
+    pendingRequests.set(requestId, { resolve, reject });
+    if (!handlersAttached) {
+      handlersAttached = true;
+      worker.addEventListener("message", (event) => {
+        const {
+          requestId: respId,
+          success: success2,
+          data: resultData,
+          error: error2
+        } = event.data;
+        const pending = pendingRequests.get(respId);
+        if (!pending) return;
+        pendingRequests.delete(respId);
+        if (success2) {
+          pending.resolve(resultData);
+        } else {
+          pending.reject(new Error(error2 || "Decompression failed"));
+        }
+      });
+      worker.addEventListener("error", (error2) => {
+        for (const [id, pending] of pendingRequests) {
+          pending.reject(new Error(`Worker error: ${error2.message}`));
+          pendingRequests.delete(id);
+        }
+      });
+    }
+    worker.postMessage(
+      {
+        type: "decompress",
+        requestId,
+        data: data2
+      },
+      [data2.buffer]
+    );
+  });
+}
+const CompressionMethod = {
+  STORED: 0,
+  DEFLATE: 8,
+  ZSTANDARD: 93
+};
+class UnsupportedCompressionError extends Error {
+  method;
+  filename;
+  constructor(method, filename2) {
+    super(`Unsupported compression method ${method} for file "${filename2}"`);
+    this.name = "UnsupportedCompressionError";
+    this.method = method;
+    this.filename = filename2;
+    Object.setPrototypeOf(this, UnsupportedCompressionError.prototype);
+  }
+}
+async function decompressData(data2, compressionMethod, uncompressedSize, filename2) {
+  switch (compressionMethod) {
+    case CompressionMethod.STORED:
+      return data2;
+    case CompressionMethod.DEFLATE:
+      return decompressDeflate(data2, uncompressedSize);
+    case CompressionMethod.ZSTANDARD:
+      return decompressZstd(data2);
+    default:
+      throw new UnsupportedCompressionError(compressionMethod, filename2);
+  }
+}
+async function decompressDeflate(data2, size) {
+  return new Promise((resolve, reject) => {
+    decompress$1(data2, { size }, (err2, result2) => {
+      if (err2) {
+        reject(err2);
+      } else {
+        resolve(result2);
+      }
+    });
+  });
+}
+class FileSizeLimitError extends Error {
+  file;
+  maxBytes;
+  constructor(file, maxBytes) {
+    super(
+      `File "${file}" exceeds the maximum size (${maxBytes} bytes) and cannot be loaded.`
+    );
+    this.name = "FileSizeLimitError";
+    this.file = file;
+    this.maxBytes = maxBytes;
+    Object.setPrototypeOf(this, FileSizeLimitError.prototype);
+  }
+}
+const PARALLEL_CHUNK_THRESHOLD = 8 * 1024 * 1024;
+const PARALLEL_CHUNK_SIZE = 8 * 1024 * 1024;
+const MAX_PARALLEL_CHUNKS = 10;
+const fetchBytesParallel = async (fetchFn, url, start2, end2, onProgress) => {
+  const totalSize = end2 - start2 + 1;
+  if (totalSize <= PARALLEL_CHUNK_THRESHOLD) {
+    return fetchFn(url, start2, end2);
+  }
+  const chunks = [];
+  let offset3 = start2;
+  while (offset3 <= end2) {
+    const chunkEnd = Math.min(offset3 + PARALLEL_CHUNK_SIZE - 1, end2);
+    chunks.push({ start: offset3, end: chunkEnd, index: chunks.length });
+    offset3 = chunkEnd + 1;
+  }
+  const concurrency = Math.min(chunks.length, MAX_PARALLEL_CHUNKS);
+  const results = new Array(chunks.length);
+  let nextChunk = 0;
+  let bytesLoaded = 0;
+  if (onProgress) {
+    onProgress(0, totalSize);
+  }
+  const worker = async () => {
+    while (nextChunk < chunks.length) {
+      const idx = nextChunk++;
+      const chunk = chunks[idx];
+      results[idx] = await fetchFn(url, chunk.start, chunk.end);
+      if (onProgress) {
+        bytesLoaded += results[idx].length;
+        onProgress(bytesLoaded, totalSize);
+      }
+    }
+  };
+  await Promise.all(Array.from({ length: concurrency }, () => worker()));
+  const combined = new Uint8Array(totalSize);
+  let pos2 = 0;
+  for (const chunk of results) {
+    combined.set(chunk, pos2);
+    pos2 += chunk.length;
+  }
+  return combined;
+};
+const openRemoteZipFile = async (url, contentLength, fetchBytes = fetchRange) => {
+  contentLength = contentLength ?? await fetchSize(url);
+  const eocdrBuffer = await fetchBytes(
+    url,
+    contentLength - 22,
+    contentLength - 1
+  );
+  const eocdrView = new DataView(eocdrBuffer.buffer);
+  if (eocdrView.getUint32(0, true) !== 101010256) {
+    if (eocdrBuffer.length !== 22) {
+      throw new Error(
+        "Unexpected central directory size - does the HTTP server serving this file support HTTP range requests?"
       );
     } else {
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
+      throw new Error("End of central directory record not found");
+    }
+  }
+  let centralDirOffset = eocdrView.getUint32(16, true);
+  let centralDirSize = eocdrView.getUint32(12, true);
+  const needsZip64 = centralDirOffset === 4294967295 || centralDirSize === 4294967295;
+  if (needsZip64) {
+    const locatorBuffer = await fetchBytes(
+      url,
+      contentLength - 22 - 20,
+      contentLength - 23
+    );
+    const locatorView = new DataView(locatorBuffer.buffer);
+    if (locatorView.getUint32(0, true) !== 117853008) {
+      throw new Error("ZIP64 End of central directory locator not found");
+    }
+    const zip64EOCDOffset = Number(locatorView.getBigUint64(8, true));
+    const zip64EOCDBuffer = await fetchBytes(
+      url,
+      zip64EOCDOffset,
+      zip64EOCDOffset + 56
+    );
+    const zip64EOCDView = new DataView(zip64EOCDBuffer.buffer);
+    if (zip64EOCDView.getUint32(0, true) !== 101075792) {
+      throw new Error("ZIP64 End of central directory record not found");
+    }
+    centralDirSize = Number(zip64EOCDView.getBigUint64(40, true));
+    centralDirOffset = Number(zip64EOCDView.getBigUint64(48, true));
+  }
+  const centralDirBuffer = await fetchBytesParallel(
+    fetchBytes,
+    url,
+    centralDirOffset,
+    centralDirOffset + centralDirSize - 1
+  );
+  const centralDirectory = parseCentralDirectory(centralDirBuffer);
+  return {
+    centralDirectory,
+    readFile: async (file, maxBytes, onProgress) => {
+      const entry = centralDirectory.get(file);
+      if (!entry) {
+        throw new Error(`File not found: ${file}`);
+      }
+      const headerSize = 30;
+      const extraFieldPadding = 256;
+      const estimatedSize = headerSize + entry.filenameLength + extraFieldPadding + entry.compressedSize;
+      if (maxBytes && headerSize + entry.filenameLength + entry.compressedSize > maxBytes) {
+        throw new FileSizeLimitError(file, maxBytes);
+      }
+      let fileData = await fetchBytesParallel(
+        fetchBytes,
+        url,
+        entry.fileOffset,
+        entry.fileOffset + estimatedSize - 1,
+        onProgress
+      );
+      if (fileData.length < headerSize) {
+        throw new Error(`File entry header is truncated for ${file}`);
+      }
+      const actualExtraFieldLength = fileData[28] + (fileData[29] << 8);
+      const actualTotal = headerSize + entry.filenameLength + actualExtraFieldLength + entry.compressedSize;
+      if (maxBytes && actualTotal > maxBytes) {
+        throw new FileSizeLimitError(file, maxBytes);
+      }
+      if (actualTotal > estimatedSize) {
+        fileData = await fetchBytesParallel(
+          fetchBytes,
+          url,
+          entry.fileOffset,
+          entry.fileOffset + actualTotal - 1
+        );
+      }
+      const zipFileEntry = await parseZipFileEntry(file, fileData);
+      return decompressData(
+        zipFileEntry.data,
+        zipFileEntry.compressionMethod,
+        zipFileEntry.uncompressedSize,
+        file
+      );
+    }
+  };
+};
+const fetchSize = async (url) => {
+  const acceptResponse = await fetch(url, { method: "HEAD" });
+  const acceptsRanges = acceptResponse.headers.get("Accept-Ranges");
+  if (acceptsRanges === "bytes") {
+    const getResponse = await fetch(`${url}`, {
+      method: "GET",
+      headers: { Range: "bytes=0-0" }
+    });
+    const contentRange = getResponse.headers.get("Content-Range");
+    if (contentRange !== null) {
+      const rangeMatch = contentRange.match(/bytes (\d+)-(\d+)\/(\d+)/);
+      if (rangeMatch !== null) {
+        await getResponse.arrayBuffer();
+        return Number(rangeMatch[3]);
+      }
+    }
+    await getResponse.arrayBuffer();
+  }
+  const contentLength = acceptResponse.headers.get("Content-Length");
+  if (contentLength !== null) {
+    return Number(contentLength);
+  }
+  throw new Error(`Could not determine content length for ${url}`);
+};
+const parseZipFileEntry = async (file, rawData) => {
+  const view = new DataView(rawData.buffer);
+  let offset3 = 0;
+  const signature = view.getUint32(offset3, true);
+  if (signature !== 67324752) {
+    throw new Error(`Invalid ZIP entry signature for ${file}`);
+  }
+  offset3 += 4;
+  const versionNeeded = view.getUint16(offset3, true);
+  offset3 += 2;
+  const bitFlag = view.getUint16(offset3, true);
+  offset3 += 2;
+  const compressionMethod = view.getUint16(offset3, true);
+  offset3 += 2;
+  offset3 += 4;
+  const crc32 = view.getUint32(offset3, true);
+  offset3 += 4;
+  let compressedSize = view.getUint32(offset3, true);
+  offset3 += 4;
+  let uncompressedSize = view.getUint32(offset3, true);
+  offset3 += 4;
+  const filenameLength = view.getUint16(offset3, true);
+  offset3 += 2;
+  const extraFieldLength = view.getUint16(offset3, true);
+  offset3 += 2;
+  const headerOffset = offset3;
+  const needsZip64 = compressedSize === 4294967295 || uncompressedSize === 4294967295;
+  if (needsZip64) {
+    offset3 += filenameLength;
+    const extraFieldEnd = offset3 + extraFieldLength;
+    while (offset3 < extraFieldEnd) {
+      const tag = view.getUint16(offset3, true);
+      const size = view.getUint16(offset3 + 2, true);
+      if (tag === 1) {
+        let zip64Offset = offset3 + 4;
+        if (uncompressedSize === 4294967295 && zip64Offset + 8 <= extraFieldEnd) {
+          uncompressedSize = Number(view.getBigUint64(zip64Offset, true));
+          zip64Offset += 8;
+        }
+        if (compressedSize === 4294967295 && zip64Offset + 8 <= extraFieldEnd) {
+          compressedSize = Number(view.getBigUint64(zip64Offset, true));
+        }
+        break;
+      }
+      offset3 += 4 + size;
+    }
+    offset3 = headerOffset;
+  }
+  offset3 += filenameLength + extraFieldLength;
+  const data2 = rawData.subarray(offset3, offset3 + compressedSize);
+  return {
+    versionNeeded,
+    bitFlag,
+    compressionMethod,
+    crc32,
+    compressedSize,
+    uncompressedSize,
+    filenameLength,
+    extraFieldLength,
+    data: data2
+  };
+};
+const kFileHeaderSize = 46;
+const parseCentralDirectory = (buffer2) => {
+  let offset3 = 0;
+  const view = new DataView(buffer2.buffer);
+  const entries = /* @__PURE__ */ new Map();
+  while (offset3 < buffer2.length) {
+    if (view.getUint32(offset3, true) !== 33639248) break;
+    const filenameLength = view.getUint16(offset3 + 28, true);
+    const extraFieldLength = view.getUint16(offset3 + 30, true);
+    const fileCommentLength = view.getUint16(offset3 + 32, true);
+    let compressedSize = view.getUint32(offset3 + 20, true);
+    let uncompressedSize = view.getUint32(offset3 + 24, true);
+    let fileOffset = view.getUint32(offset3 + 42, true);
+    const filename2 = new TextDecoder().decode(
+      buffer2.subarray(
+        offset3 + kFileHeaderSize,
+        offset3 + kFileHeaderSize + filenameLength
+      )
+    );
+    const needsZip64 = fileOffset === 4294967295 || compressedSize === 4294967295 || uncompressedSize === 4294967295;
+    if (needsZip64) {
+      let extraOffset = offset3 + kFileHeaderSize + filenameLength;
+      const extraEnd = extraOffset + extraFieldLength;
+      while (extraOffset < extraEnd) {
+        const tag = view.getUint16(extraOffset, true);
+        const size = view.getUint16(extraOffset + 2, true);
+        if (tag === 1) {
+          let zip64Offset = extraOffset + 4;
+          if (uncompressedSize === 4294967295 && zip64Offset + 8 <= extraEnd) {
+            uncompressedSize = Number(view.getBigUint64(zip64Offset, true));
+            zip64Offset += 8;
+          }
+          if (compressedSize === 4294967295 && zip64Offset + 8 <= extraEnd) {
+            compressedSize = Number(view.getBigUint64(zip64Offset, true));
+            zip64Offset += 8;
+          }
+          if (fileOffset === 4294967295 && zip64Offset + 8 <= extraEnd) {
+            fileOffset = Number(view.getBigUint64(zip64Offset, true));
+          }
+          break;
+        }
+        extraOffset += 4 + size;
+      }
+    }
+    const entry = {
+      filename: filename2,
+      compressionMethod: view.getUint16(offset3 + 10, true),
+      compressedSize,
+      uncompressedSize,
+      fileOffset,
+      filenameLength
+    };
+    entries.set(filename2, entry);
+    offset3 += kFileHeaderSize + filenameLength + extraFieldLength + fileCommentLength;
+  }
+  return entries;
+};
+const OPEN_RETRY_LIMIT = 5;
+const MAX_SAMPLE_SIZE_BYTES = 2048 * 1024 * 1024;
+class SampleNotFoundError extends Error {
+  constructor(message2) {
+    super(message2 || "Sample not found");
+    this.name = "SampleNotFoundError";
+    Object.setPrototypeOf(this, SampleNotFoundError.prototype);
+  }
+}
+const openRemoteLogFile = async (api2, url, concurrency) => {
+  const queue = new AsyncQueue(concurrency);
+  const logInfo = await api2.get_log_info(url);
+  const directUrl = logInfo.direct_url;
+  const fetchBytes = async (_url, start2, end2) => {
+    if (directUrl) {
+      try {
+        return await fetchRange(directUrl, start2, end2);
+      } catch (e3) {
+        console.warn("Direct URL fetch failed, falling back to proxy", e3);
+      }
+    }
+    return api2.get_log_bytes(url, start2, end2);
+  };
+  let remoteZipFile = void 0;
+  let retryCount = 0;
+  while (!remoteZipFile && retryCount < OPEN_RETRY_LIMIT) {
+    try {
+      remoteZipFile = await openRemoteZipFile(url, logInfo.size, fetchBytes);
+    } catch {
+      retryCount++;
+      console.warn(
+        `Failed to open remote log file at ${url}, retrying (${retryCount}/${OPEN_RETRY_LIMIT})...`
+      );
+      await new Promise(
+        (resolve) => setTimeout(resolve, 100 * (retryCount + retryCount))
+      );
+    }
+  }
+  if (!remoteZipFile) {
+    throw new Error(
+      `Failed to open remote log file at ${url} after ${OPEN_RETRY_LIMIT} attempts.`
+    );
+  }
+  const readJSONFile = async (file, maxBytes, preprocessor, onProgress) => {
+    try {
+      let data2 = await remoteZipFile.readFile(file, maxBytes, onProgress);
+      if (preprocessor) {
+        data2 = preprocessor.preprocess(data2);
+      }
+      return asyncJsonParseBytes(data2);
+    } catch (error2) {
+      if (error2 instanceof FileSizeLimitError) {
+        throw error2;
+      } else if (error2 instanceof Error) {
+        throw new Error(
+          `Failed to read or parse file ${file}: ${error2.message}`
+        );
+      } else {
+        throw new Error(
+          `Failed to read or parse file ${file} - an unknown error occurred`
+        );
+      }
+    }
+  };
+  const listSamples = async () => {
+    return Array.from(remoteZipFile.centralDirectory.keys()).filter(
+      (filename2) => filename2.startsWith("samples/") && filename2.endsWith(".json")
+    ).map((filename2) => {
+      const [sampleId, epochStr] = filename2.split("/")[1].split("_epoch_");
+      return {
+        sampleId,
+        epoch: parseInt(epochStr.split(".")[0], 10)
+      };
+    });
+  };
+  const readSample = async (sampleId, epoch, onProgress) => {
+    const sampleFile = `samples/${sampleId}_epoch_${epoch}.json`;
+    if (!remoteZipFile.centralDirectory.has(sampleFile)) {
+      throw new SampleNotFoundError(
+        `Unable to read sample file ${sampleFile} - it is not present in the manifest.`
+      );
+    }
+    const entry = remoteZipFile.centralDirectory.get(sampleFile);
+    if (entry.uncompressedSize > MAX_SAMPLE_SIZE_BYTES) {
+      throw new FileSizeLimitError(sampleFile, MAX_SAMPLE_SIZE_BYTES);
+    }
+    const eventsPreprocessor = {
+      preprocess: clearLargeEventsArray
+    };
+    return await readJSONFile(
+      sampleFile,
+      void 0,
+      eventsPreprocessor,
+      onProgress
+    );
+  };
+  const readHeader = async () => {
+    if (remoteZipFile.centralDirectory.has("header.json")) {
+      return await readJSONFile("header.json");
+    } else {
+      const evalSpec = await readJSONFile("_journal/start.json");
+      return {
+        status: "started",
+        eval: evalSpec.eval,
+        plan: evalSpec.plan
+      };
+    }
+  };
+  const readEvalBasicInfo = async () => {
+    const header2 = await readHeader();
+    return toLogPreview(header2);
+  };
+  const readFallbackSummaries = async () => {
+    const summaryFiles = Array.from(
+      remoteZipFile.centralDirectory.keys()
+    ).filter(
+      (filename2) => filename2.startsWith("_journal/summaries/") && filename2.endsWith(".json")
+    );
+    const summaries = [];
+    const errors2 = [];
+    await Promise.all(
+      summaryFiles.map(
+        (filename2) => queue.enqueue(async () => {
+          try {
+            const partialSummary = await readJSONFile(
+              filename2
+            );
+            summaries.push(...partialSummary);
+          } catch (error2) {
+            errors2.push(error2);
+          }
+        })
+      )
+    );
+    if (errors2.length > 0) {
+      console.error(
+        `Encountered ${errors2.length} errors while reading summary files:`,
+        errors2
+      );
+    }
+    return summaries;
+  };
+  const readSampleSummaries = async () => {
+    if (remoteZipFile.centralDirectory.has("summaries.json")) {
+      return await readJSONFile("summaries.json");
+    } else {
+      return readFallbackSummaries();
+    }
+  };
+  return {
+    readEvalBasicInfo,
+    readLogSummary: async () => {
+      const [header2, sampleSummaries] = await Promise.all([
+        readHeader(),
+        readSampleSummaries()
+      ]);
+      const result2 = {
+        status: header2.status,
+        eval: header2.eval,
+        plan: header2.plan,
+        results: header2.results,
+        stats: header2.stats,
+        error: header2.error,
+        tags: header2.tags,
+        metadata: header2.metadata,
+        log_updates: header2.log_updates,
+        sampleSummaries
+      };
+      return result2;
+    },
+    readSample,
+    /**
+     * Reads the complete log file.
+     */
+    readCompleteLog: async () => {
+      const [evalLogHeader, samples] = await Promise.all([
+        readHeader(),
+        listSamples().then(
+          (sampleIds) => Promise.all(
+            sampleIds.map(
+              ({ sampleId, epoch }) => readSample(sampleId, epoch).then((sample2) => sample2)
+            )
+          )
+        )
+      ]);
+      return {
+        status: evalLogHeader.status,
+        eval: evalLogHeader.eval,
+        plan: evalLogHeader.plan,
+        results: evalLogHeader.results,
+        stats: evalLogHeader.stats,
+        error: evalLogHeader.error,
+        samples
+      };
+    }
+  };
+};
+const isEvalFile = (file) => {
+  return file.endsWith(".eval");
+};
+class SampleSizeLimitedExceededError extends Error {
+  id;
+  epoch;
+  maxBytes;
+  displayStack;
+  constructor(id, epoch, maxBytes) {
+    super(
+      `Sample ${id} in epoch ${epoch} exceeds the maximum supported size (${maxBytes / 1024 / 1024}MB) and cannot be loaded.`
+    );
+    this.name = "SampleSizeLimitedExceededError";
+    this.id = id;
+    this.epoch = epoch;
+    this.maxBytes = maxBytes;
+    this.displayStack = false;
+    Object.setPrototypeOf(this, SampleSizeLimitedExceededError.prototype);
+  }
+}
+const clientApi = (api2, log_file, debug = false) => {
+  let current_log = void 0;
+  let current_path = void 0;
+  const loadedEvalFile = {
+    file: void 0,
+    remoteLog: void 0
+  };
+  const remoteEvalFile = async (log_file2, cached = false) => {
+    if (cached && loadedEvalFile.file === log_file2) {
+      return loadedEvalFile.remoteLog;
+    }
+    const remoteLog = await openRemoteLogFile(
+      api2,
+      encodePathParts(log_file2),
+      5
+    );
+    if (cached) {
+      loadedEvalFile.file = log_file2;
+      loadedEvalFile.remoteLog = remoteLog;
+    }
+    return remoteLog;
+  };
+  const get_log = async (log_file2, cached = false) => {
+    if (!cached || log_file2 !== current_path || !current_log) {
+      if (pending_log_promise) {
+        return pending_log_promise;
+      }
+      pending_log_promise = api2.get_log_contents(log_file2, 100).then((log2) => {
+        current_log = log2;
+        current_path = log_file2;
+        pending_log_promise = null;
+        return log2;
+      }).catch((err2) => {
+        pending_log_promise = null;
+        throw err2;
+      });
+      return pending_log_promise;
+    }
+    return current_log;
+  };
+  let pending_log_promise = null;
+  const get_log_details = async (log_file2, cached = true) => {
+    if (isEvalFile(log_file2)) {
+      const remoteLogFile = await remoteEvalFile(log_file2, cached);
+      if (remoteLogFile) {
+        return await remoteLogFile.readLogSummary();
+      } else {
+        throw new Error("Unable to read remote eval file");
+      }
+    } else {
+      const logContents = await get_log(log_file2);
+      const sampleSummaries = logContents.parsed.samples ? logContents.parsed.samples?.map((sample2) => {
+        return {
+          id: sample2.id,
+          epoch: sample2.epoch,
+          input: sample2.input,
+          target: sample2.target,
+          scores: sample2.scores,
+          metadata: sample2.metadata,
+          error: sample2.error?.message
+        };
+      }) : [];
+      const parsed = logContents.parsed;
+      return {
+        version: parsed.version,
+        status: parsed.status,
+        eval: parsed.eval,
+        plan: parsed.plan,
+        results: parsed.results,
+        stats: parsed.stats,
+        error: parsed.error,
+        tags: parsed.tags,
+        metadata: parsed.metadata,
+        log_updates: parsed.log_updates,
+        sampleSummaries
+      };
+    }
+  };
+  const get_log_sample = async (log_file2, id, epoch, onProgress) => {
+    if (isEvalFile(log_file2)) {
+      let handleError2 = function(error2) {
+        if (error2 instanceof FileSizeLimitError) {
+          throw new SampleSizeLimitedExceededError(id, epoch, error2.maxBytes);
+        }
+        throw error2;
+      };
+      async function fetchSample(useCache) {
+        const remoteLogFile = await remoteEvalFile(log_file2, useCache);
+        if (!remoteLogFile) {
+          throw new Error(`Unable to read remote eval file ${log_file2}`);
+        }
+        return await remoteLogFile.readSample(String(id), epoch, onProgress);
+      }
+      try {
+        return await fetchSample(true);
+      } catch (error2) {
+        if (error2 instanceof SampleNotFoundError) {
+          try {
+            return await fetchSample(false);
+          } catch (retryError) {
+            handleError2(retryError);
+          }
+        } else {
+          handleError2(error2);
+        }
+      }
+    } else {
+      const logContents = await get_log(log_file2, true);
+      if (logContents.parsed.samples && logContents.parsed.samples.length > 0) {
+        return logContents.parsed.samples.find((sample2) => {
+          return sampleIdsEqual(sample2.id, id) && sample2.epoch === epoch;
+        });
+      }
+    }
+    return void 0;
+  };
+  const read_eval_file_log_summary = async (log_file2) => {
+    if (api2.get_log_summary) {
+      return api2.get_log_summary(log_file2);
+    } else {
+      const remoteLogFile = await openRemoteLogFile(
+        api2,
+        encodePathParts(log_file2),
+        5
+      );
+      return remoteLogFile.readEvalBasicInfo();
+    }
+  };
+  const get_log_summaries2 = async (log_files) => {
+    const eval_files = {};
+    const json_files = {};
+    let index = 0;
+    for (const file of log_files) {
+      if (isEvalFile(file)) {
+        eval_files[file] = index;
+      } else {
+        json_files[file] = index;
+      }
+      index++;
+    }
+    const evalLogHeadersPromises = Object.keys(eval_files).map(
+      (file) => read_eval_file_log_summary(file).then((summary2) => ({
+        index: eval_files[file],
+        // Store original index
+        summary: summary2
+      }))
+    );
+    const jsonLogHeadersPromise = api2.get_log_summaries(Object.keys(json_files)).then(
+      (summaries2) => summaries2.map((summary2, i4) => ({
+        index: json_files[Object.keys(json_files)[i4]],
+        // Store original index
+        summary: summary2
+      }))
+    );
+    const summaries = await Promise.all([
+      ...evalLogHeadersPromises,
+      jsonLogHeadersPromise
+    ]);
+    const orderedSummaries = summaries.flat().sort((a2, b2) => a2.index - b2.index);
+    return orderedSummaries.map(({ summary: summary2 }) => summary2);
+  };
+  const get_log_dir2 = async () => {
+    if (api2.get_log_dir) {
+      return await api2.get_log_dir();
+    } else {
+      const logRoot = await api2.get_log_root();
+      return logRoot?.log_dir;
+    }
+  };
+  const get_logs2 = async (mtime, clientFileCount) => {
+    if (api2.get_logs) {
+      const result2 = await api2.get_logs(mtime, clientFileCount);
+      return result2;
+    } else {
+      const logRoot = await api2.get_log_root();
+      return {
+        files: logRoot?.logs || [],
+        response_type: "full"
+      };
+    }
+  };
+  const get_log_root2 = async () => {
+    const logFiles = await api2.get_log_root();
+    if (logFiles) {
+      return logFiles;
+    } else if (log_file) {
+      const summary2 = await get_log_details(log_file);
+      if (summary2) {
+        return {
+          logs: [
+            {
+              name: log_file,
+              task: summary2.eval.task,
+              task_id: summary2.eval.task_id
+            }
+          ]
+        };
+      }
+    }
+    throw new Error("Unable to determine log paths.");
+  };
+  const get_log_pending_samples = (log_file2, etag) => {
+    if (!api2.eval_pending_samples) {
+      throw new Error("API doesn't support streamed samples");
+    }
+    return api2.eval_pending_samples(log_file2, etag);
+  };
+  const get_log_sample_data = (log_file2, id, epoch, last_event, last_attachment) => {
+    if (!api2.eval_log_sample_data) {
+      throw new Error("API doesn't supported streamed sample data");
+    }
+    return api2.eval_log_sample_data(
+      log_file2,
+      id,
+      epoch,
+      last_event,
+      last_attachment
+    );
+  };
+  const middleware = debug ? createMiddlewareWrapper([debugMiddleware]) : (_name, fn3) => fn3;
+  return {
+    client_events: middleware("client_events", () => {
+      return api2.client_events();
+    }),
+    get_log_dir: middleware("get_log_dir", get_log_dir2),
+    get_log_dir_handle: middleware(
+      "get_log_dir_handle",
+      (log_dir) => {
+        return api2.get_log_dir_handle ? api2.get_log_dir_handle(log_dir) : log_dir || "default_log_dir";
+      }
+    ),
+    get_logs: middleware("get_log_files", get_logs2),
+    get_log_root: middleware("get_log_root", get_log_root2),
+    get_eval_set: middleware("get_eval_set", (dir) => {
+      return api2.get_eval_set(dir);
+    }),
+    get_flow: middleware("get_flow", (dir) => {
+      return api2.get_flow(dir);
+    }),
+    get_log_summaries: middleware("get_log_summaries", get_log_summaries2),
+    get_log_details: middleware("get_log_details", get_log_details),
+    get_log_sample: middleware("get_log_sample", get_log_sample),
+    open_log_file: middleware("open_log_file", (log_file2, log_dir) => {
+      return api2.open_log_file(log_file2, log_dir);
+    }),
+    download_file: middleware(
+      "download_file",
+      (download_file2, file_contents) => {
+        return api2.download_file(download_file2, file_contents);
+      }
+    ),
+    download_log: api2.download_log ? middleware("download_log", (log_file2) => {
+      return api2.download_log(log_file2);
+    }) : void 0,
+    log_message: middleware(
+      "log_message",
+      (log_file2, message2) => {
+        return api2.log_message(log_file2, message2);
+      }
+    ),
+    get_log_pending_samples: api2.eval_pending_samples ? middleware("get_log_pending_samples", get_log_pending_samples) : void 0,
+    get_log_sample_data: api2.eval_log_sample_data ? middleware("get_log_sample_data", get_log_sample_data) : void 0
+  };
+};
+const debugMiddleware = (name2, _fn, args2, result2) => {
+  if (result2 instanceof Promise) {
+    const startTime = performance.now();
+    return result2.then((returned) => {
+      const duration = performance.now() - startTime;
+      console.log(`[ClientAPI] ${name2}`, {
+        args: args2,
+        returned,
+        duration: `${duration.toFixed(2)}ms`
+      });
+      return returned;
+    });
+  } else {
+    console.log(`[ClientAPI] ${name2}`, { args: args2, returned: result2 });
+    return result2;
+  }
+};
+const applyMiddleware = (name2, fn3, middlewares) => {
+  if (middlewares.length === 0) return fn3;
+  return ((...args2) => {
+    let result2 = fn3(...args2);
+    for (const middleware of middlewares) {
+      result2 = middleware(name2, fn3, args2, result2);
+    }
+    return result2;
+  });
+};
+const createMiddlewareWrapper = (middlewares) => {
+  return (name2, fn3) => {
+    return applyMiddleware(name2, fn3, middlewares);
+  };
+};
+async function download_file$1(filename2, filecontents) {
+  let blob;
+  if (typeof filecontents === "string" && filecontents.startsWith("data:")) {
+    const response = await fetch(filecontents);
+    blob = await response.blob();
+  } else {
+    blob = new Blob([filecontents], { type: "text/plain" });
+  }
+  const link2 = document.createElement("a");
+  link2.href = URL.createObjectURL(blob);
+  link2.download = filename2;
+  document.body.appendChild(link2);
+  link2.click();
+  document.body.removeChild(link2);
+  URL.revokeObjectURL(link2.href);
+}
+async function fetchTextFile(url, handleError2) {
+  const safe_url = encodePathParts(url);
+  const response = await fetch(`${safe_url}`, { method: "GET" });
+  if (response.ok) {
+    const text2 = await response.text();
+    return text2;
+  } else if (response.status !== 200) {
+    if (handleError2 && handleError2(response)) {
+      return void 0;
+    }
+    const message2 = await response.text() || response.statusText;
+    const error2 = new Error(`${response.status}: ${message2})`);
+    throw error2;
+  } else {
+    throw new Error(`${response.status} - ${response.statusText} `);
+  }
+}
+async function fetchFile(url, parse5, handleError2) {
+  const safe_url = encodePathParts(url);
+  const response = await fetch(`${safe_url}`, { method: "GET" });
+  if (response.ok) {
+    const text2 = await response.text();
+    return await parse5(text2);
+  } else if (response.status !== 200) {
+    if (handleError2 && handleError2(response)) {
+      return void 0;
+    }
+    const message2 = await response.text() || response.statusText;
+    const error2 = new Error(`${response.status}: ${message2})`);
+    throw error2;
+  } else {
+    throw new Error(`${response.status} - ${response.statusText} `);
+  }
+}
+const fetchLogFile = async (file) => {
+  return fetchFile(file, async (text2) => {
+    const log2 = await asyncJsonParse(text2);
+    if (log2.version === 1) {
+      if (log2.results) {
+        const untypedLog = log2;
+        log2.results.scores = [];
+        untypedLog.results.scorer.scorer = untypedLog.results.scorer.name;
+        log2.results.scores.push(untypedLog.results.scorer);
+        delete untypedLog.results.scorer;
+        log2.results.scores[0].metrics = untypedLog.results.metrics;
+        delete untypedLog.results.metrics;
+        const scorerName = log2.results.scores[0].name;
+        log2.samples?.forEach((sample2) => {
+          const untypedSample = sample2;
+          sample2.scores = { [scorerName]: untypedSample.score };
+          delete untypedSample.score;
+        });
+      }
+    }
+    return {
+      raw: text2,
+      parsed: log2
+    };
+  });
+};
+const fetchManifest = async (log_dir) => {
+  const parseListing = async (text2) => {
+    const parsed = await asyncJsonParse(text2);
+    return { raw: text2, parsed };
+  };
+  return await fetchFile(
+    log_dir + "/listing.json",
+    parseListing
+  );
+};
+const fetchJsonFile = async (file, handleError2) => {
+  return fetchFile(
+    file,
+    async (text2) => {
+      return await asyncJsonParse(text2);
+    },
+    handleError2
+  );
+};
+function joinURI(...segments2) {
+  return segments2.map((segment2) => segment2.replace(/(^\/+|\/+$)/g, "")).join("/");
+}
+function staticHttpApi(log_dir, log_file, abs_log_dir) {
+  const resolved_log_dir = log_dir?.replace(" ", "+");
+  log_file ? log_file.replace(" ", "+") : void 0;
+  return staticHttpApiForLog({
+    log_dir: resolved_log_dir,
+    abs_log_dir
+  });
+}
+function staticHttpApiForLog(logInfo) {
+  const log_dir = logInfo.log_dir;
+  const abs_log_dir = logInfo.abs_log_dir;
+  let manifest = void 0;
+  let manifestPromise = void 0;
+  const getManifest = async () => {
+    if (!manifest && log_dir) {
+      if (!manifestPromise) {
+        manifestPromise = fetchManifest(log_dir).then((manifestRaw) => {
+          manifest = manifestRaw?.parsed || {};
+          return manifest;
+        });
+      }
+      await manifestPromise;
+    }
+    return manifest || {};
+  };
+  async function open_log_file2() {
+  }
+  return {
+    client_events: async () => {
+      return Promise.resolve([]);
+    },
+    get_log_root: async () => {
+      if (log_dir) {
+        const manifest2 = await getManifest();
+        if (manifest2) {
+          const logs = Object.keys(manifest2).map((key2) => {
+            return {
+              name: joinURI(log_dir, key2),
+              task: manifest2[key2].task,
+              task_id: manifest2[key2].task_id
+            };
+          });
+          return Promise.resolve({
+            logs,
+            log_dir,
+            abs_log_dir
+          });
+        }
+      }
+      return void 0;
+    },
+    get_log_dir_handle: (log_dir2) => {
+      const currentDirUrl = `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf("/"))}`;
+      return joinURI(currentDirUrl, log_dir2 || "default_log_dir");
+    },
+    get_eval_set: async (dir) => {
+      const dirSegments = [];
+      if (log_dir) {
+        dirSegments.push(log_dir);
+      }
+      if (dir) {
+        dirSegments.push(dir);
+      }
+      const result2 = await fetchJsonFile(
+        joinURI(...dirSegments, "eval-set.json"),
+        (response) => {
+          if (400 <= response.status && response.status < 500) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      );
+      return result2;
+    },
+    get_flow: async (dir) => {
+      const dirSegments = [];
+      if (log_dir) {
+        dirSegments.push(log_dir);
+      }
+      if (dir) {
+        dirSegments.push(dir);
+      }
+      return await fetchTextFile(
+        joinURI(...dirSegments, "flow.yaml"),
+        (response) => {
+          if (400 <= response.status && response.status < 500) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      );
+    },
+    log_message: async (log_file, message2) => {
+      console.log(`[CLIENT MESSAGE] (${log_file}): ${message2}`);
+    },
+    get_log_contents: async (log_file, _headerOnly, _capabilities) => {
+      const response = await fetchLogFile(log_file);
+      if (response) {
+        return response;
+      } else {
+        throw new Error(`"Unable to load eval log ${log_file}`);
+      }
+    },
+    get_log_info: async (log_file) => {
+      const size = await fetchSize(log_file);
+      return { size };
+    },
+    get_log_bytes: async (log_file, start2, end2) => {
+      return await fetchRange(log_file, start2, end2);
+    },
+    get_log_summary: async (log_file) => {
+      const manifest2 = await getManifest();
+      if (manifest2) {
+        const manifestAbs = {};
+        Object.keys(manifest2).forEach((key2) => {
+          manifestAbs[joinURI(log_dir || "", key2)] = manifest2[key2];
+        });
+        const header2 = manifestAbs[log_file];
+        if (header2) {
+          return header2;
+        }
+      }
+      throw new Error(`Unable to load eval log header for ${log_file}`);
+    },
+    get_log_summaries: async (files) => {
+      if (files.length === 0) {
+        return [];
+      }
+      if (log_dir) {
+        const manifest2 = await getManifest();
+        if (manifest2) {
+          const keys = Object.keys(manifest2);
+          const result2 = [];
+          files.forEach((file) => {
+            const fileKey = keys.find((key2) => {
+              return file.endsWith(key2);
+            });
+            if (fileKey) {
+              result2.push(manifest2[fileKey]);
+            }
+          });
+          return result2;
+        }
+      }
+      throw new Error(
+        `Failed to load a listing file using the directory: ${log_dir}. Please be sure you have deployed a manifest file (listing.json).`
+      );
+    },
+    download_file: download_file$1,
+    open_log_file: open_log_file2
+  };
+}
+class ApiError extends Error {
+  status;
+  constructor(status2, message2) {
+    super(message2);
+    this.status = status2;
+  }
+}
+function serverRequestApi(baseUrl2, getHeaders) {
+  const apiUrl = baseUrl2;
+  function buildApiUrl(path) {
+    const base2 = apiUrl.endsWith("/") ? apiUrl.slice(0, -1) : apiUrl;
+    const cleanPath = path.startsWith("/") ? path : `/${path}`;
+    return base2 + cleanPath;
+  }
+  function isApiCrossOrigin() {
+    try {
+      return Boolean(
+        apiUrl && new URL(apiUrl).origin !== window.location.origin
+      );
+    } catch (error2) {
+      return false;
+    }
+  }
+  const fetchType = async (method, path, request) => {
+    const url = buildApiUrl(path);
+    const responseHeaders = {
+      Accept: "application/json",
+      Pragma: "no-cache",
+      Expires: "0",
+      "Cache-Control": "no-cache",
+      ...request.headers
+    };
+    if (getHeaders) {
+      const globalHeaders = await getHeaders();
+      Object.assign(responseHeaders, globalHeaders);
+    }
+    if (request.body) {
+      responseHeaders["Content-Type"] = "application/json";
+    }
+    const response = await fetch(url, {
+      method,
+      headers: responseHeaders,
+      body: request.body,
+      credentials: isApiCrossOrigin() ? "include" : "same-origin"
+    });
+    if (!response.ok) {
+      const errorResponse = request.handleError?.(response.status);
+      if (errorResponse) {
+        return {
+          raw: response.statusText,
+          parsed: errorResponse
+        };
+      }
+      const message2 = await response.text() || response.statusText;
+      throw new ApiError(
+        response.status,
+        `API Error ${response.status}: ${message2}`
+      );
+    }
+    const text2 = await response.text();
+    const parse5 = request.parse || asyncJsonParse;
+    return {
+      parsed: await parse5(text2),
+      raw: text2
+    };
+  };
+  const fetchString = async (method, path, headers, body2) => {
+    const url = buildApiUrl(path);
+    const requestHeaders = {
+      Accept: "application/json",
+      Pragma: "no-cache",
+      Expires: "0",
+      "Cache-Control": "no-cache",
+      ...headers
+    };
+    if (getHeaders) {
+      const globalHeaders = await getHeaders();
+      Object.assign(requestHeaders, globalHeaders);
+    }
+    if (body2) {
+      requestHeaders["Content-Type"] = "application/json";
+    }
+    const response = await fetch(url, {
+      method,
+      headers: requestHeaders,
+      body: body2,
+      credentials: isApiCrossOrigin() ? "include" : "same-origin"
+    });
+    if (response.ok) {
+      const text2 = await response.text();
+      return {
+        parsed: await asyncJsonParse(text2),
+        raw: text2
+      };
+    }
+    const message2 = await response.text() || response.statusText;
+    throw new ApiError(response.status, `HTTP ${response.status}: ${message2}`);
+  };
+  const fetchBytes = async (method, path) => {
+    const url = buildApiUrl(path);
+    const headers = {
+      Accept: "application/octet-stream",
+      Pragma: "no-cache",
+      Expires: "0",
+      "Cache-Control": "no-cache"
+    };
+    if (getHeaders) {
+      const globalHeaders = await getHeaders();
+      Object.assign(headers, globalHeaders);
+    }
+    const response = await fetch(url, {
+      method,
+      headers,
+      credentials: isApiCrossOrigin() ? "include" : "same-origin"
+    });
+    if (!response.ok) {
+      const message2 = await response.text() || response.statusText;
+      throw new ApiError(
+        response.status,
+        `HTTP ${response.status}: ${message2}`
+      );
+    }
+    const buffer2 = await response.arrayBuffer();
+    return new Uint8Array(buffer2);
+  };
+  return {
+    fetchString,
+    fetchBytes,
+    fetchType
+  };
+}
+const LOADED_TIME = Date.now();
+let lastEvalTime = 0;
+function viewServerApi(options = {}) {
+  const { apiBaseUrl, logDir: logDir2, headerProvider } = options;
+  const requestApi = serverRequestApi(
+    apiBaseUrl || "/api",
+    headerProvider
+  );
+  const client_events2 = async () => {
+    const params = new URLSearchParams();
+    params.append("loaded_time", String(LOADED_TIME.valueOf()));
+    params.append("last_eval_time", String(lastEvalTime.valueOf()));
+    const result2 = await requestApi.fetchString(
+      "GET",
+      `/events?${params.toString()}`
+    );
+    return result2.parsed;
+  };
+  const get_log_dir2 = async () => {
+    if (logDir2) {
+      return logDir2;
+    }
+    const obj = (await requestApi.fetchString("GET", "/log-dir")).parsed;
+    return obj.log_dir;
+  };
+  const get_log_root2 = async () => {
+    const path = logDir2 ? `/logs?log_dir=${encodeURIComponent(logDir2)}` : "/logs";
+    const logs = await requestApi.fetchString("GET", path);
+    lastEvalTime = Date.now();
+    return logs.parsed;
+  };
+  const get_logs2 = async (mtime, clientFileCount) => {
+    const path = logDir2 ? `/log-files?log_dir=${encodeURIComponent(logDir2)}` : "/log-files";
+    const headers = {};
+    const token2 = log_file_token(mtime, clientFileCount);
+    if (token2) {
+      headers["If-None-Match"] = token2;
+    }
+    lastEvalTime = Date.now();
+    const envelope = await requestApi.fetchString("GET", path, headers);
+    return envelope.parsed;
+  };
+  const log_file_token = (mtime, fileCount) => {
+    return `W/"${mtime}-${fileCount}"`;
+  };
+  const get_eval_set2 = async (dir) => {
+    const basePath = "/eval-set";
+    const params = new URLSearchParams();
+    if (logDir2) {
+      params.append("log_dir", logDir2);
+    }
+    if (dir) {
+      params.append("dir", dir);
+    }
+    const query2 = params.toString();
+    const path = query2 ? `${basePath}?${query2}` : basePath;
+    try {
+      const result2 = await requestApi.fetchString("GET", path);
+      return result2.parsed;
+    } catch (error2) {
+      if (error2 instanceof ApiError && (error2.status === 404 || error2.status === 403)) {
+        return void 0;
+      }
+      throw error2;
+    }
+  };
+  const get_flow2 = async (dir) => {
+    const basePath = "/flow";
+    const params = new URLSearchParams();
+    if (logDir2) {
+      params.append("log_dir", logDir2);
+    }
+    if (dir) {
+      params.append("dir", dir);
+    }
+    const query2 = params.toString();
+    const path = query2 ? `${basePath}?${query2}` : basePath;
+    try {
+      const bytes = await requestApi.fetchBytes("GET", path);
+      return new TextDecoder().decode(bytes);
+    } catch (error2) {
+      if (error2 instanceof ApiError && (error2.status === 404 || error2.status === 403)) {
+        return void 0;
+      }
+      throw error2;
+    }
+  };
+  const get_log_contents2 = async (file, headerOnly, _capabilities) => {
+    const result2 = await requestApi.fetchString(
+      "GET",
+      `/logs/${encodeURIComponent(file)}?header-only=${headerOnly}`
+    );
+    return result2;
+  };
+  const get_log_info2 = async (file) => {
+    const result2 = await requestApi.fetchString(
+      "GET",
+      `/log-info/${encodeURIComponent(file)}`
+    );
+    return result2.parsed;
+  };
+  const toLogPreview2 = (header2) => {
+    const scores2 = Object.values(header2.results?.scores || {});
+    const metric = scores2.length > 0 ? scores2[0].metrics : void 0;
+    const evalMetrics = Object.values(metric || {});
+    const primary_metric = evalMetrics.length > 0 ? evalMetrics[0] : void 0;
+    return {
+      eval_id: header2.eval.eval_id,
+      run_id: header2.eval.run_id,
+      task: header2.eval.task,
+      task_id: header2.eval.task_id,
+      task_version: header2.eval.task_version,
+      version: header2.version,
+      status: header2.status,
+      error: header2.error,
+      model: header2.eval.model,
+      started_at: header2.stats?.started_at,
+      completed_at: header2.stats?.completed_at,
+      primary_metric
+    };
+  };
+  const get_log_bytes2 = async (file, start2, end2) => requestApi.fetchBytes(
+    "GET",
+    `/log-bytes/${encodeURIComponent(file)}?start=${start2}&end=${end2}`
+  );
+  const get_log_summaries2 = async (files) => {
+    const params = new URLSearchParams();
+    for (const file of files) {
+      params.append("file", file);
+    }
+    const result2 = await requestApi.fetchString(
+      "GET",
+      `/log-headers?${params.toString()}`
+    );
+    const logHeaders = result2.parsed;
+    return logHeaders.map(toLogPreview2);
+  };
+  const log_message2 = async (log_file, message2) => {
+    const params = new URLSearchParams();
+    params.append("log_file", log_file);
+    params.append("message", message2);
+    const request = {
+      headers: {
+        "Content-Type": "text/plain"
+      },
+      parse: async (text2) => {
+        if (text2 !== "") {
+          throw new Error(`Unexpected response from log_message: ${text2}`);
+        }
+        return;
+      }
+    };
+    await requestApi.fetchType(
+      "GET",
+      `/log-message?${params.toString()}`,
+      request
+    );
+  };
+  const eval_pending_samples2 = async (log_file, etag) => {
+    const params = new URLSearchParams();
+    params.append("log", log_file);
+    const headers = {};
+    if (etag) {
+      headers["If-None-Match"] = etag;
+    }
+    const request = {
+      headers,
+      parse: async (text2) => {
+        const pendingSamples = await asyncJsonParse(
+          text2
+        );
+        return {
+          status: "OK",
+          pendingSamples
+        };
+      },
+      handleError: (status2) => {
+        if (status2 === 404) {
+          return {
+            status: "NotFound"
+          };
+        } else if (status2 === 304) {
+          return {
+            status: "NotModified"
+          };
+        }
+      }
+    };
+    const result2 = await requestApi.fetchType(
+      "GET",
+      `/pending-samples?${params.toString()}`,
+      request
+    );
+    return result2.parsed;
+  };
+  const eval_log_sample_data2 = async (log_file, id, epoch, last_event, last_attachment) => {
+    const params = new URLSearchParams();
+    params.append("log", log_file);
+    params.append("id", String(id));
+    params.append("epoch", String(epoch));
+    if (last_event !== void 0) {
+      params.append("last-event-id", String(last_event));
+    }
+    if (last_attachment !== void 0) {
+      params.append("after-attachment-id", String(last_attachment));
+    }
+    const request = {
+      headers: {},
+      parse: async (text2) => {
+        const sampleData = await asyncJsonParse(text2);
+        return {
+          status: "OK",
+          sampleData
+        };
+      },
+      handleError: (status2) => {
+        if (status2 === 404) {
+          return {
+            status: "NotFound"
+          };
+        } else if (status2 === 304) {
+          return {
+            status: "NotModified"
+          };
+        }
+      }
+    };
+    const result2 = await requestApi.fetchType(
+      "GET",
+      `/pending-sample-data?${params.toString()}`,
+      request
+    );
+    return result2.parsed;
+  };
+  const download_log = async (log_file) => {
+    const baseUrl2 = apiBaseUrl || "/api";
+    const url = `${baseUrl2}/log-download/${encodeURIComponent(log_file)}`;
+    const link2 = document.createElement("a");
+    link2.href = url;
+    link2.download = "";
+    document.body.appendChild(link2);
+    link2.click();
+    document.body.removeChild(link2);
+  };
+  return {
+    client_events: client_events2,
+    get_log_root: get_log_root2,
+    get_logs: get_logs2,
+    get_log_dir: get_log_dir2,
+    get_eval_set: get_eval_set2,
+    get_flow: get_flow2,
+    get_log_contents: get_log_contents2,
+    get_log_info: get_log_info2,
+    get_log_bytes: get_log_bytes2,
+    get_log_summaries: get_log_summaries2,
+    log_message: log_message2,
+    download_file: download_file$1,
+    download_log,
+    open_log_file: async () => {
+    },
+    eval_pending_samples: eval_pending_samples2,
+    eval_log_sample_data: eval_log_sample_data2
+  };
+}
+const kMethodEvalLogDir = "eval_log_dir";
+const kMethodEvalLogs = "eval_logs";
+const kMethodEvalLogFiles = "eval_log_files";
+const kMethodEvalLog = "eval_log";
+const kMethodEvalLogInfo = "eval_log_info";
+const kMethodEvalLogBytes = "eval_log_bytes";
+const kMethodEvalLogHeaders = "eval_log_headers";
+const kMethodPendingSamples = "eval_log_pending_samples";
+const kMethodSampleData = "eval_log_sample_data";
+const kMethodLogMessage = "log_message";
+const kJsonRpcMethodNotFound = -32601;
+const kJsonRpcVersion = "2.0";
+function webViewJsonRpcClient(vscode2) {
+  const target2 = {
+    postMessage: (data2) => {
+      vscode2.postMessage(data2);
+    },
+    onMessage: (handler) => {
+      const onMessage = (ev) => {
+        handler(ev.data);
+      };
+      window.addEventListener("message", onMessage);
+      return () => {
+        window.removeEventListener("message", onMessage);
+      };
+    }
+  };
+  return jsonRpcPostMessageRequestTransport(target2).request;
+}
+function jsonRpcPostMessageRequestTransport(target2) {
+  const requests = /* @__PURE__ */ new Map();
+  const disconnect = target2.onMessage((ev) => {
+    const response = asJsonRpcResponse(ev);
+    if (response) {
+      const request = requests.get(response.id);
+      if (request) {
+        requests.delete(response.id);
+        if (response.error) {
+          request.reject(response.error);
+        } else {
+          request.resolve(response.result);
+        }
+      }
+    }
+  });
+  return {
+    request: (method, params) => {
+      return new Promise((resolve, reject) => {
+        const requestId = Math.floor(Math.random() * 1e6);
+        requests.set(requestId, { resolve, reject });
+        const request = {
+          jsonrpc: kJsonRpcVersion,
+          id: requestId,
+          method,
+          params
+        };
+        target2.postMessage(request);
+      });
+    },
+    disconnect
+  };
+}
+function isJsonRpcMessage(message2) {
+  return message2.jsonrpc !== void 0 && message2.id !== void 0;
+}
+function asJsonRpcMessage(data2) {
+  if (isJsonRpcMessage(data2) && data2.jsonrpc === kJsonRpcVersion) {
+    return data2;
+  }
+  return null;
+}
+function asJsonRpcResponse(data2) {
+  const message2 = asJsonRpcMessage(data2);
+  if (message2) {
+    return message2;
+  }
+  return null;
+}
+const kNotFoundSignal = "NotFound";
+const kNotModifiedSignal = "NotModified";
+const vscodeClient = webViewJsonRpcClient(getVscodeApi());
+async function client_events() {
+  return [];
+}
+async function get_log_root() {
+  const response = await vscodeClient(kMethodEvalLogs, []);
+  if (response) {
+    const parsed = lib$1.parse(response);
+    if (Array.isArray(parsed)) {
+      return {
+        log_dir: "",
+        files: parsed
+      };
+    } else {
+      return parsed;
+    }
+  } else {
+    return void 0;
+  }
+}
+const get_log_dir = async () => {
+  const response = await vscodeClient(kMethodEvalLogDir, []);
+  if (response) {
+    const parsed = lib$1.parse(response);
+    return parsed.log_dir;
+  }
+  return void 0;
+};
+const get_logs = async (mtime, clientFileCount) => {
+  const response = await vscodeClient(kMethodEvalLogFiles, [
+    mtime,
+    clientFileCount
+  ]);
+  if (response) {
+    const parsed = lib$1.parse(response);
+    return parsed;
+  } else {
+    return [];
+  }
+};
+async function get_eval_set() {
+  return void 0;
+}
+async function get_flow() {
+  return void 0;
+}
+async function get_log_contents(log_file, headerOnly, capabilities2) {
+  const response = await vscodeClient(kMethodEvalLog, [log_file, headerOnly]);
+  if (response) {
+    let json;
+    if (capabilities2?.webWorkers) {
+      json = await asyncJsonParse(response);
+    } else {
+      json = lib$1.parse(response);
+    }
+    return {
+      parsed: json,
+      raw: response
+    };
+  } else {
+    throw new Error(`Unable to load eval log ${log_file}.`);
+  }
+}
+async function get_log_info(log_file) {
+  try {
+    return await vscodeClient(kMethodEvalLogInfo, [log_file]);
+  } catch (e3) {
+    if (e3?.code === kJsonRpcMethodNotFound) {
+      const size = await vscodeClient("eval_log_size", [log_file]);
+      return { size };
+    }
+    throw e3;
+  }
+}
+async function get_log_bytes(log_file, start2, end2) {
+  return await vscodeClient(kMethodEvalLogBytes, [log_file, start2, end2]);
+}
+async function get_log_summaries(files) {
+  const response = await vscodeClient(kMethodEvalLogHeaders, [files]);
+  if (response) {
+    return lib$1.parse(response);
+  } else {
+    return void 0;
+  }
+}
+async function eval_pending_samples(log_file, etag) {
+  const response = await vscodeClient(kMethodPendingSamples, [log_file, etag]);
+  if (response) {
+    if (response === kNotModifiedSignal) {
+      return {
+        status: "NotModified"
+      };
+    } else if (response === kNotFoundSignal) {
+      return {
+        status: "NotFound"
+      };
+    }
+    const json = await asyncJsonParse(response);
+    return {
+      status: "OK",
+      pendingSamples: json
+    };
+  } else {
+    throw new Error(`Unable to load pending samples ${log_file}.`);
+  }
+}
+async function eval_log_sample_data(log_file, id, epoch, last_event, last_attachment) {
+  const response = await vscodeClient(kMethodSampleData, [
+    log_file,
+    id,
+    epoch,
+    last_event,
+    last_attachment
+  ]);
+  if (response) {
+    if (response === kNotModifiedSignal) {
+      return {
+        status: "NotModified"
+      };
+    } else if (response === kNotFoundSignal) {
+      return {
+        status: "NotFound"
+      };
+    }
+    const json = await asyncJsonParse(response);
+    return {
+      status: "OK",
+      sampleData: json
+    };
+  } else {
+    throw new Error(`Unable to load live sample data ${log_file}.`);
+  }
+}
+async function log_message(log_file, message2) {
+  await vscodeClient(kMethodLogMessage, [log_file, message2]);
+}
+async function download_file() {
+  throw Error("Downloading files is not supported in VS Code");
+}
+async function open_log_file(log_file, log_dir) {
+  const msg = {
+    type: "displayLogFile",
+    url: log_file,
+    log_dir
+  };
+  getVscodeApi()?.postMessage(msg);
+}
+const api$1 = {
+  client_events,
+  get_log_root,
+  get_log_dir,
+  get_logs,
+  get_eval_set,
+  get_flow,
+  get_log_contents,
+  get_log_info,
+  get_log_bytes,
+  get_log_summaries,
+  log_message,
+  download_file,
+  open_log_file,
+  eval_pending_samples,
+  eval_log_sample_data
+};
+const resolveApi = () => {
+  const debug = false;
+  if (getVscodeApi()) {
+    return clientApi(api$1, void 0, debug);
+  } else {
+    const scriptEl = document.getElementById("log_dir_context");
+    if (scriptEl) {
+      const context = scriptEl.textContent;
+      if (context !== null) {
+        const data2 = lib$1.parse(context);
+        if (data2.log_dir || data2.log_file) {
+          const log_dir2 = data2.log_dir || dirname(data2.log_file);
+          const api2 = staticHttpApi(log_dir2, data2.log_file, data2.abs_log_dir);
+          return clientApi(api2, data2.log_file, debug);
+        }
+      }
+    }
+    const urlParams = new URLSearchParams(window.location.search);
+    const log_file = urlParams.get("log_file");
+    const log_dir = urlParams.get("log_dir");
+    const forceViewServerApi = urlParams.get("inspect_server") === "true";
+    const resolved_log_dir = log_dir ?? void 0;
+    const resolved_log_file = log_file ?? void 0;
+    if (forceViewServerApi) {
+      return clientApi(
+        viewServerApi({ logDir: resolved_log_dir }),
+        resolved_log_file,
+        debug
+      );
+    }
+    if (resolved_log_dir !== void 0 || resolved_log_file !== void 0) {
+      return clientApi(
+        staticHttpApi(resolved_log_dir, resolved_log_file),
+        resolved_log_file,
+        debug
+      );
+    }
+    return clientApi(viewServerApi(), void 0, debug);
+  }
+};
+const api = resolveApi();
+const documentFrame = "_documentFrame_1576h_1";
+const documentFrameTitle = "_documentFrameTitle_1576h_9";
+const downloadLink = "_downloadLink_1576h_16";
+const imageDocument = "_imageDocument_1576h_21";
+const styles$19 = {
+  documentFrame,
+  documentFrameTitle,
+  downloadLink,
+  imageDocument
+};
+const ContentDocumentView = ({
+  id,
+  document: document2
+}) => {
+  const canDownloadFiles = useStore(
+    (state) => state.capabilities.downloadFiles
+  );
+  if (isImage(document2.mime_type)) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(ContentDocumentFrame, { document: document2, downloadable: canDownloadFiles, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "img",
+      {
+        className: clsx(styles$19.imageDocument),
+        src: document2.document,
+        alt: document2.filename,
+        id
+      }
+    ) });
+  } else {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      ContentDocumentFrame,
+      {
+        document: document2,
+        downloadable: canDownloadFiles
+      }
+    );
+  }
+};
+const ContentDocumentFrame = ({
+  document: document2,
+  children: children2,
+  downloadable
+}) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    "div",
+    {
+      className: clsx(
+        styles$19.documentFrame,
+        "text-size-small",
+        "text-style-secondary"
+      ),
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$19.documentFrameTitle), children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(iconForMimeType(document2.mime_type)) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: downloadable ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "a",
+            {
+              className: clsx(styles$19.downloadLink),
+              onClick: () => {
+                api.download_file(document2.filename, document2.document);
+              },
+              children: document2.filename
+            }
+          ) : document2.filename })
+        ] }),
+        children2
+      ]
+    }
+  );
+};
+const jsonMessage = "_jsonMessage_oxf8d_1";
+const styles$18 = {
+  jsonMessage
+};
+const JsonMessageContent = ({
+  id,
+  json,
+  className: className2
+}) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    RecordTree,
+    {
+      id,
+      record: json,
+      className: clsx(styles$18.jsonMessage, className2),
+      useBorders: false
+    }
+  );
+};
+const decodeHtmlEntities = (text2) => {
+  const parser2 = new DOMParser();
+  const doc2 = parser2.parseFromString(text2, "text/html");
+  return doc2.documentElement.textContent || text2;
+};
+const citations = "_citations_1ggvf_1";
+const citationLink = "_citationLink_1ggvf_9";
+const styles$17 = {
+  citations,
+  citationLink
+};
+const MessageCitations = ({ citations: citations2 }) => {
+  if (citations2.length === 0) {
+    return void 0;
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$17.citations, "text-size-smallest"), children: citations2.map((citation, index) => /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: index + 1 }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(MessageCitation, { citation })
+  ] }, index)) });
+};
+const MessageCitation = ({ citation }) => {
+  const innards = decodeHtmlEntities(
+    citation.title ?? (typeof citation.cited_text === "string" ? citation.cited_text : citation.type === "url" ? citation.url : "")
+  );
+  return citation.type === "url" ? /* @__PURE__ */ jsxRuntimeExports.jsx(UrlCitation, { citation, children: innards }) : /* @__PURE__ */ jsxRuntimeExports.jsx(OtherCitation, { children: innards });
+};
+const UrlCitation = ({
+  children: children2,
+  citation
+}) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+  "a",
+  {
+    href: citation.url,
+    target: "_blank",
+    rel: "noopener noreferrer",
+    className: clsx(styles$17.citationLink),
+    title: citation.cited_text ? `${citation.cited_text}
+${citation.url}` : citation.url,
+    children: children2
+  }
+);
+const OtherCitation = ({ children: children2 }) => /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: children2 });
+const contentImage = "_contentImage_16eyd_1";
+const reasoning = "_reasoning_16eyd_6";
+const breakable = "_breakable_16eyd_21";
+const styles$16 = {
+  contentImage,
+  reasoning,
+  breakable
+};
+const mcpToolUse = "_mcpToolUse_1792k_1";
+const title$2 = "_title_1792k_9";
+const titleText = "_titleText_1792k_18";
+const args = "_args_1792k_22";
+const argLabel = "_argLabel_1792k_31";
+const error$3 = "_error_1792k_35";
+const toolPanel = "_toolPanel_1792k_40";
+const styles$15 = {
+  mcpToolUse,
+  title: title$2,
+  titleText,
+  args,
+  argLabel,
+  error: error$3,
+  toolPanel
+};
+const ServerToolCall = ({
+  id,
+  content: content2,
+  className: className2
+}) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(McpToolUse, { id, content: content2, className: className2 });
+};
+const McpToolUse = ({ id, content: content2, className: className2 }) => {
+  const args2 = resolveArgs(content2);
+  const titleStr = content2.context ? `${content2.context} — ${content2.name}()` : `${content2.name}()`;
+  const listToolsResult = maybeListTools(content2);
+  const webSearchResult = maybeWebSearchResult(content2);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id, className: clsx(styles$15.mcpToolUse, className2), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        className: clsx(
+          styles$15.title,
+          "text-size-small",
+          "text-style-secondary"
+        ),
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.role.tool }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$15.titleText, children: titleStr }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$15.type, children: content2.type })
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$15.args, children: [
+      Object.keys(args2).map((key2, index) => {
+        const value2 = args2[key2];
+        let valueRecord = void 0;
+        if (Array.isArray(value2)) {
+          valueRecord = {};
+          for (var i4 = 0; i4 < value2.length; i4++) {
+            valueRecord[`[${i4}]`] = value2[i4];
+          }
+        } else if (value2 && typeof value2 === "object") {
+          valueRecord = value2;
+        }
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(LabelDiv, { label: key2 }),
+          valueRecord ? /* @__PURE__ */ jsxRuntimeExports.jsx(RecordTree, { id: `${id}-val-${index}`, record: valueRecord }) : /* @__PURE__ */ jsxRuntimeExports.jsx(ValueDiv, { children: value2 })
+        ] });
+      }),
+      webSearchResult ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(LabelDiv, { label: "results" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(ValueDiv, { children: webSearchResult.result.map((result2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$15.result, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: result2.url,
+            target: "_blank",
+            rel: "noopener noreferrer",
+            children: result2.title
+          }
+        ) }, index)) })
+      ] }) : void 0,
+      listToolsResult ? listToolsResult.result.map((tool2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        ExpandablePanel,
+        {
+          id: `${id}-output`,
+          collapse: true,
+          className: clsx(styles$15.toolPanel),
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(LabelDiv, { label: tool2.name }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(ValueDiv, { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: tool2.description }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                RecordTree,
+                {
+                  id: `${id}-tool-${index}`,
+                  record: { schema: tool2.input_schema },
+                  defaultExpandLevel: 0
+                }
+              )
+            ] })
+          ]
+        }
+      ) })) : void 0
+    ] }),
+    content2.error ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$15.error, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+      "Error: ",
+      content2.error
+    ] }) }) : !listToolsResult && !webSearchResult ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-small"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExpandablePanel, { id: `${id}-output`, collapse: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      RenderedContent,
+      {
+        id: `${id}-output`,
+        entry: { name: "Output", value: content2.result },
+        renderOptions: { renderString: "markdown" }
+      }
+    ) }) }) : void 0
+  ] });
+};
+const resolveArgs = (content2) => {
+  if (typeof content2.arguments === "string") {
+    if (isJson(content2.arguments)) {
+      try {
+        return JSON.parse(content2.arguments);
+      } catch (e3) {
+        console.warn("Failed to parse arguments as JSON", e3);
+      }
+    }
+    if (content2.arguments) {
+      return { arguments: content2.arguments };
+    }
+    return {};
+  } else if (typeof content2.arguments === "object") {
+    return content2.arguments;
+  } else if (content2.arguments) {
+    return { arguments: content2.arguments };
+  } else {
+    return {};
+  }
+};
+const maybeWebSearchResult = (content2) => {
+  if (content2.name !== "web_search") {
+    return void 0;
+  }
+  const objArray = asJsonObjArray(content2.result);
+  if (objArray !== void 0) {
+    return { result: objArray };
+  }
+};
+const maybeListTools = (content2) => {
+  if (content2.name !== "mcp_list_tools") {
+    return void 0;
+  }
+  const objArray = asJsonObjArray(content2.result);
+  if (objArray !== void 0) {
+    return { result: objArray };
+  }
+};
+const LabelDiv = ({ label: label2 }) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "div",
+    {
+      className: clsx(
+        styles$15.argLabel,
+        "text-style-secondary",
+        "text-size-smaller"
+      ),
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { children: label2 })
+    }
+  );
+};
+const ValueDiv = ({ children: children2 }) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-smaller"), children: children2 });
+};
+const toolImage = "_toolImage_h7uyp_1";
+const output = "_output_h7uyp_6";
+const textOutput = "_textOutput_h7uyp_10";
+const textCode = "_textCode_h7uyp_19";
+const styles$14 = {
+  toolImage,
+  output,
+  textOutput,
+  textCode
+};
+const ToolOutput = ({ output: output2, className: className2 }) => {
+  if (!output2) {
+    return null;
+  }
+  const outputs = [];
+  if (Array.isArray(output2)) {
+    output2.forEach((out, idx) => {
+      const key2 = `tool-output-${idx}`;
+      if (out.type === "text") {
+        outputs.push(/* @__PURE__ */ jsxRuntimeExports.jsx(ToolTextOutput, { text: out.text }, key2));
+      } else if (out.type === "document") {
+        outputs.push(/* @__PURE__ */ jsxRuntimeExports.jsx(ContentDocumentView, { id: key2, document: out }, key2));
+      } else {
+        if (out.image.startsWith("data:")) {
+          outputs.push(
+            /* @__PURE__ */ jsxRuntimeExports.jsx("img", { className: clsx(styles$14.toolImage), src: out.image }, key2)
+          );
+        } else {
+          outputs.push(/* @__PURE__ */ jsxRuntimeExports.jsx(ToolTextOutput, { text: String(out.image) }, key2));
+        }
+      }
+    });
+  } else {
+    outputs.push(
+      /* @__PURE__ */ jsxRuntimeExports.jsx(ToolTextOutput, { text: String(output2) }, "tool-output-single")
+    );
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$14.output, className2), children: outputs });
+};
+const ToolTextOutput = ({ text: text2 }) => {
+  if (isJson(text2)) {
+    const obj = JSON.parse(text2);
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(JsonMessageContent, { id: `1-json`, json: obj });
+  }
+  if (isAnsiOutput(text2)) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      ANSIDisplay,
+      {
+        className: styles$14.ansiOutput,
+        output: text2,
+        style: { fontSize: "clamp(0.4rem, 1.15vw, 0.9rem)" }
+      }
+    );
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$14.textOutput, "tool-output"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("sourceCode", styles$14.textCode), children: text2.trim() }) });
+};
+const MessageContent = ({
+  contents: contents2,
+  context
+}) => {
+  const normalized = normalizeContent$2(contents2);
+  if (Array.isArray(normalized)) {
+    return normalized.map((content2, index) => {
+      if (typeof content2 === "string") {
+        return messageRenderers["text"].render(
+          `text-content-${index}`,
+          {
+            type: "text",
+            text: content2,
+            refusal: null,
+            internal: null,
+            citations: null
+          },
+          index === contents2.length - 1,
+          context
+        );
+      } else {
+        if (content2) {
+          const renderer = messageRenderers[content2.type];
+          if (renderer) {
+            return renderer.render(
+              `text-${content2.type}-${index}`,
+              content2,
+              index === contents2.length - 1,
+              context
+            );
+          } else {
+            console.error(`Unknown message content type '${content2.type}'`);
+          }
+        }
+      }
+    });
+  } else {
+    const contentText = {
+      type: "text",
+      text: normalized,
+      refusal: null,
+      internal: null,
+      citations: null
+    };
+    return messageRenderers["text"].render(
+      "text-message-content",
+      contentText,
+      true,
+      context
+    );
+  }
+};
+const messageRenderers = {
+  text: {
+    render: (key2, content2, isLast, _context) => {
+      const c2 = content2;
+      const cites = c2.citations ?? [];
+      if (!c2.text && !cites.length) {
+        return void 0;
+      }
+      const purgeInternalContainers = (text2) => {
+        const internalTags = ["internal", "content-internal"];
+        internalTags.forEach((tag) => {
+          const regex2 = new RegExp(`<${tag}[^>]*>[\\s\\S]*?<\\/${tag}>`, "gm");
+          text2 = text2.replace(regex2, "");
+        });
+        return text2.trim();
+      };
+      if (isJson(c2.text)) {
+        const obj = JSON.parse(c2.text);
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(JsonMessageContent, { id: `${key2}-json`, json: obj });
+      } else {
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            RenderedText,
+            {
+              markdown: purgeInternalContainers(c2.text) || "",
+              className: clsx(
+                isLast ? "no-last-para-padding" : "",
+                styles$16.breakable
+              )
+            }
+          ),
+          c2.citations ? /* @__PURE__ */ jsxRuntimeExports.jsx(MessageCitations, { citations: c2.citations }) : void 0
+        ] }, key2);
+      }
+    }
+  },
+  reasoning: {
+    render: (key2, content2, isLast, _context) => {
+      const r2 = content2;
+      let title2 = "Reasoning";
+      let text2 = r2.reasoning;
+      if (r2.redacted) {
+        text2 = r2.summary || "Reasoning encrypted by model provider.";
+        if (r2.summary) {
+          title2 = "Reasoning (Summary)";
+        }
+      } else if (!text2) {
+        text2 = r2.summary || "Reasoning text not provided.";
+        if (r2.summary) {
+          title2 = "Reasoning (Summary)";
+        }
+      }
+      const renderReasoningCode = isOpenRouterReasoning(text2);
+      const codeFormatted = renderReasoningCode ? JSON.stringify(jsonParse(text2), null, 2) : text2;
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$16.reasoning, "text-size-small"), children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
             className: clsx(
               "text-style-label",
               "text-style-secondary",
-              row2.secondary ? styles$10.col2 : styles$10.col1_3
+              isLast ? "no-last-para-padding" : ""
             ),
-            children: row2.label
+            children: title2
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$10.col3, children: row2.value ? formatNumber(row2.value) : "" })
-      ] }, `$usage-row-${idx}`);
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(ExpandablePanel, { id: `${key2}-reasoning`, collapse: true, children: [
+          !renderReasoningCode && /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: codeFormatted }),
+          renderReasoningCode && /* @__PURE__ */ jsxRuntimeExports.jsx(CodePanel, { language: "json", code: codeFormatted })
+        ] })
+      ] }, key2);
     }
+  },
+  image: {
+    render: (key2, content2, _isLast, _context) => {
+      const c2 = content2;
+      if (c2.image.startsWith("data:")) {
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: c2.image, className: styles$16.contentImage }, key2);
+      } else {
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("code", { children: c2.image }, key2);
+      }
+    }
+  },
+  audio: {
+    render: (key2, content2, _isLast, _context) => {
+      const c2 = content2;
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("audio", { controls: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx("source", { src: c2.audio, type: mimeTypeForFormat(c2.format) }) }, key2);
+    }
+  },
+  video: {
+    render: (key2, content2, _isLast, _context) => {
+      const c2 = content2;
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("video", { width: "500", height: "375", controls: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx("source", { src: c2.video, type: mimeTypeForFormat(c2.format) }) }, key2);
+    }
+  },
+  tool: {
+    render: (key2, content2, _isLast, _context) => {
+      const c2 = content2;
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(ToolOutput, { output: c2.content }, key2);
+    }
+  },
+  // server-side tool use
+  tool_use: {
+    render: (key2, content2, _isLast, _context) => {
+      const c2 = content2;
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(ServerToolCall, { id: key2, content: c2 });
+    }
+  },
+  data: {
+    render: (key2, content2, _isLast, _context) => {
+      const c2 = content2;
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(ContentDataView, { id: key2, contentData: c2 });
+    }
+  },
+  document: {
+    render: (key2, content2, _isLast, _context) => {
+      const c2 = content2;
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(ContentDocumentView, { id: key2, document: c2 });
+    }
+  }
+};
+const mimeTypeForFormat = (format2) => {
+  switch (format2) {
+    case "mov":
+      return "video/quicktime";
+    case "wav":
+      return "audio/wav";
+    case "mp3":
+      return "audio/mpeg";
+    case "mp4":
+      return "video/mp4";
+    case "mpeg":
+      return "video/mpeg";
+    default:
+      return "video/mp4";
+  }
+};
+const normalizeContent$2 = (contents2) => {
+  if (typeof contents2 === "string") {
+    return contents2;
+  }
+  if (contents2.length > 0 && typeof contents2[0] === "string") {
+    return contents2;
+  }
+  const result2 = [];
+  const collection = [];
+  const collect = () => {
+    if (collection.length > 0) {
+      const filteredCitations = collection.flatMap((c2) => c2.citations || []);
+      let citeCount = 0;
+      const textWithCites = collection.map((c2) => {
+        const positionalCites = (c2.citations ?? []).filter(isCitationWithRange).sort((a2, b2) => b2.cited_text[1] - a2.cited_text[1]);
+        const endCites = c2.citations?.filter(
+          (citation) => !isCitationWithRange(citation)
+        );
+        let textWithCites2 = c2.text;
+        for (let i4 = 0; i4 < positionalCites.length; i4++) {
+          const end_index = positionalCites[i4].cited_text[1];
+          textWithCites2 = textWithCites2.slice(0, end_index) + `<sup>${positionalCites.length - i4}</sup>` + textWithCites2.slice(end_index);
+        }
+        citeCount = citeCount + positionalCites.length;
+        const citeText = endCites?.map((_citation) => `${++citeCount}`);
+        let inlineCites = "";
+        if (citeText && citeText.length > 0) {
+          inlineCites = `<sup>${citeText.join(",")}</sup>`;
+        }
+        return (textWithCites2 || "") + inlineCites;
+      }).join("");
+      result2.push({
+        type: "text",
+        text: textWithCites,
+        refusal: null,
+        internal: null,
+        citations: filteredCitations
+      });
+      collection.length = 0;
+    }
+  };
+  for (const content2 of contents2) {
+    if (typeof content2 === "string") {
+      result2.push({
+        type: "text",
+        text: content2,
+        refusal: null,
+        internal: null,
+        citations: null
+      });
+      continue;
+    }
+    if (content2.type === "text") {
+      collection.push(content2);
+      continue;
+    } else {
+      collect();
+      result2.push(content2);
+    }
+  }
+  collect();
+  return result2;
+};
+const isCitationWithRange = (citation) => Array.isArray(citation.cited_text);
+const isOpenRouterReasoning = (text2) => {
+  return text2.startsWith("[{'format'");
+};
+const content$1 = "_content_1b2jp_1";
+const codeCompact = "_codeCompact_1b2jp_5";
+const styles$13 = {
+  content: content$1,
+  codeCompact
+};
+const substituteToolCallContent = (content2, args2) => {
+  const replace2 = (text2) => text2.replace(
+    /\{\{(\w+)\}\}/g,
+    (match2, key2) => Object.hasOwn(args2, key2) ? String(args2[key2]) : match2
+  );
+  return {
+    ...content2,
+    title: content2.title ? replace2(content2.title) : content2.title,
+    content: replace2(content2.content)
+  };
+};
+const kToolTodoContentType = "agent/todo-list";
+const resolveToolInput = (fn3, toolArgs) => {
+  const toolName = fn3;
+  const inputDescriptor = extractInputMetadata(toolName);
+  const { input: input2, description: description2, args: args2 } = extractInput(
+    toolArgs,
+    inputDescriptor
+  );
+  const functionCall = args2.length > 0 ? `${toolName}(${args2.join(", ")})` : toolName;
+  return {
+    functionCall,
+    input: input2,
+    description: description2,
+    contentType: inputDescriptor?.contentType
+  };
+};
+const extractInputMetadata = (toolName) => {
+  if (toolName === "bash") {
+    return {
+      inputArg: ["cmd", "command"],
+      contentType: "bash"
+    };
+  } else if (toolName === "python") {
+    return {
+      inputArg: "code",
+      contentType: "python"
+    };
+  } else if (toolName === "web_search") {
+    return {
+      inputArg: "query",
+      contentType: "json"
+    };
+  } else if (toolName === "Bash") {
+    return {
+      inputArg: "command",
+      descriptionArg: "description",
+      contentType: "bash"
+    };
+  } else if (toolName === "shell_command") {
+    return {
+      inputArg: "command",
+      descriptionArg: "description",
+      contentType: "bash"
+    };
+  } else if (toolName === "shell") {
+    return {
+      inputArg: "command",
+      contentType: "bash",
+      inputToStr: (input2) => {
+        if (Array.isArray(input2)) {
+          return input2.join(" ");
+        }
+        return void 0;
+      }
+    };
+  } else if (toolName == "TodoWrite") {
+    return {
+      inputArg: "todos",
+      contentType: kToolTodoContentType
+    };
+  } else if (toolName == "update_plan") {
+    return {
+      inputArg: "plan",
+      contentType: kToolTodoContentType
+    };
+  } else {
+    return void 0;
+  }
+};
+const extractInput = (args2, inputDescriptor) => {
+  const formatArg = (key2, value2) => {
+    const quotedValue = value2 === null ? "None" : typeof value2 === "string" ? `"${value2}"` : typeof value2 === "object" || Array.isArray(value2) ? JSON.stringify(value2, void 0, 2) : String(value2);
+    return `${key2}: ${quotedValue}`;
+  };
+  if (!args2) {
+    return {
+      args: []
+    };
+  }
+  if (inputDescriptor) {
+    const filterKeys = /* @__PURE__ */ new Set();
+    const base2 = {};
+    const inputArgs = inputDescriptor.inputArg ? Array.isArray(inputDescriptor.inputArg) ? inputDescriptor.inputArg : [inputDescriptor.inputArg] : [];
+    for (const inputArg of inputArgs) {
+      if (inputDescriptor.inputArg && args2[inputArg]) {
+        filterKeys.add(inputArg);
+        base2.input = inputDescriptor.inputToStr ? inputDescriptor.inputToStr(args2[inputArg]) || args2[inputArg] : args2[inputArg];
+      }
+    }
+    if (inputDescriptor.descriptionArg && args2[inputDescriptor.descriptionArg]) {
+      filterKeys.add(inputDescriptor.descriptionArg);
+      base2.description = String(args2[inputDescriptor.descriptionArg]);
+    }
+    const filteredArgs = Object.keys(args2).filter((key2) => {
+      return !filterKeys.has(key2);
+    }).map((key2) => {
+      return formatArg(key2, args2[key2]);
+    });
+    return {
+      ...base2,
+      args: filteredArgs
+    };
+  } else {
+    const formattedArgs = Object.keys(args2).map((key2) => {
+      return formatArg(key2, args2[key2]);
+    });
+    return {
+      args: formattedArgs
+    };
+  }
+};
+const toolCallView = "_toolCallView_10z2l_1";
+const styles$12 = {
+  toolCallView
+};
+const todoList = "_todoList_1t8rx_1";
+const inProgress = "_inProgress_1t8rx_9";
+const styles$11 = {
+  todoList,
+  inProgress
+};
+const toToolTodos = (obj) => {
+  if (Array.isArray(obj) && obj.every((item2) => typeof item2 === "object") && obj.every(
+    (item2) => item2 !== null && ("content" in item2 || "step" in item2) && "status" in item2
+  )) {
+    return obj.map((o2) => {
+      return {
+        content: o2.content || o2.step || "",
+        status: o2.status
+      };
+    });
+  } else {
+    return [];
+  }
+};
+const TodoWriteInput = ({ contents: contents2, parentRef }) => {
+  const todoItems = toToolTodos(contents2);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: parentRef, className: clsx(styles$11.todoList), children: todoItems.map((todo) => {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "i",
+        {
+          className: clsx(
+            todo.status === "completed" ? ApplicationIcons.checkbox.checked : ApplicationIcons.checkbox.unchecked,
+            "text-size-smallest"
+          )
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "span",
+        {
+          className: clsx(
+            styles$11.todoItem,
+            "text-size-smallest",
+            todo.status === "in_progress" ? styles$11.inProgress : void 0
+          ),
+          children: todo.content
+        }
+      )
+    ] });
   }) });
 };
-const table$1 = "_table_z217i_1";
-const tableTokens = "_tableTokens_z217i_5";
-const tableH = "_tableH_z217i_9";
-const model = "_model_z217i_14";
-const cellContents = "_cellContents_z217i_18";
-const styles$$ = {
-  table: table$1,
-  tableTokens,
-  tableH,
-  model,
-  cellContents
+const outputPre = "_outputPre_1jznn_1";
+const toolView = "_toolView_1jznn_7";
+const outputCode = "_outputCode_1jznn_15";
+const styles$10 = {
+  outputPre,
+  toolView,
+  outputCode
 };
-const TokenTable$1 = ({ className: className2, children: children2 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    "table",
+const ToolInput = (props) => {
+  const { contentType, contents: contents2, toolCallView: toolCallView2, className: className2 } = props;
+  const sourceCodeRef = reactExports.useRef(null);
+  const useToolView = toolCallView2 && isValidView(toolCallView2);
+  const sourceCodeLength = useToolView ? toolCallView2.content.length : contents2 ? typeof contents2 === "string" ? contents2.length : JSON.stringify(contents2).length : 0;
+  usePrismHighlight(sourceCodeRef, sourceCodeLength);
+  if (!contents2 && !useToolView) {
+    return null;
+  }
+  if (useToolView) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      RenderedText,
+      {
+        markdown: toolCallView2.content,
+        ref: sourceCodeRef,
+        className: clsx("tool-output", styles$10.toolView, className2)
+      }
+    );
+  } else {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      RenderTool,
+      {
+        contents: contents2,
+        contentType: contentType || "",
+        parentRef: sourceCodeRef,
+        className: className2
+      }
+    );
+  }
+};
+const RenderTool = ({
+  contents: contents2,
+  contentType,
+  parentRef,
+  className: className2
+}) => {
+  if (contentType === kToolTodoContentType) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(TodoWriteInput, { contents: contents2, parentRef });
+  }
+  const formattedContent = typeof contents2 === "object" ? JSON.stringify(contents2) : contents2;
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: parentRef, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "pre",
     {
       className: clsx(
-        "table",
-        "table-sm",
-        "text-size-smaller",
-        styles$$.table,
+        "tool-output",
+        styles$10.outputPre,
+        styles$10.bottomMargin,
         className2
       ),
-      children: children2
-    }
-  );
-};
-const TokenHeader = () => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("thead", { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("td", {}),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "td",
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "code",
         {
-          colSpan: 3,
           className: clsx(
-            "card-subheading",
-            styles$$.tableTokens,
-            "text-size-small",
-            "text-style-label",
-            "text-style-secondary"
+            "source-code",
+            "sourceCode",
+            contentType ? `language-${contentType}` : void 0,
+            styles$10.outputCode
           ),
-          align: "center",
-          children: "Tokens"
+          children: formattedContent
+        }
+      )
+    }
+  ) });
+};
+const isValidView = (view) => {
+  if (view.content === "```bash\nbash\n```\n") {
+    return false;
+  }
+  return true;
+};
+const image = "_image_1vcac_1";
+const toolTitle = "_toolTitle_1vcac_6";
+const description = "_description_1vcac_10";
+const styles$$ = {
+  image,
+  toolTitle,
+  description
+};
+const ToolTitle = ({ title: title2, description: description2 }) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx("bi", "bi-tools", styles$$.image) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("text-size-small", styles$$.toolTitle), children: title2 }),
+    description2 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: clsx(styles$$.description, "text-size-smallest"), children: [
+      "- ",
+      description2
+    ] }) : void 0
+  ] });
+};
+const ToolCallView = ({
+  id,
+  functionCall,
+  input: input2,
+  description: description2,
+  contentType,
+  view,
+  output: output2,
+  mode,
+  collapsible = true
+}) => {
+  function isContentImage(value2) {
+    if (value2 && typeof value2 === "object") {
+      if (value2.type === "image") {
+        return true;
+      } else if (value2.type === "tool") {
+        if (Array.isArray(value2.content) && value2.content.some(isContentImage)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  const collapse = Array.isArray(output2) ? output2.every((item2) => !isContentImage(item2)) : !isContentImage(output2);
+  const normalizedContent = reactExports.useMemo(() => normalizeContent$1(output2), [output2]);
+  const hasContent2 = normalizedContent.find((c2) => {
+    if (c2.type === "tool") {
+      for (const t2 of c2.content) {
+        if (t2.type === "text") {
+          if (t2.text) {
+            return true;
+          }
+        } else {
+          return true;
+        }
+      }
+      return false;
+    } else {
+      return true;
+    }
+  });
+  const contents2 = mode !== "compact" ? input2 : input2 || functionCall;
+  const context = defaultContext("tool");
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$12.toolCallView), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+      mode !== "compact" && (!view || view.title) ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+        ToolTitle,
+        {
+          title: view?.title || functionCall,
+          description: description2
+        }
+      ) : "",
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        ToolInput,
+        {
+          contentType,
+          contents: contents2,
+          toolCallView: view
         }
       )
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "th",
-        {
-          className: clsx(
-            styles$$.tableH,
-            "text-sixe-small",
-            "text-style-label",
-            "text-style-secondary"
-          ),
-          children: "Model"
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "th",
-        {
-          className: clsx(
-            styles$$.tableH,
-            "text-sixe-small",
-            "text-style-label",
-            "text-style-secondary"
-          ),
-          children: "Usage"
-        }
-      )
-    ] })
+    hasContent2 && collapsible ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+      ExpandablePanel,
+      {
+        id: `${id}-tool-input`,
+        collapse,
+        border: true,
+        lines: 15,
+        className: clsx("text-size-small"),
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(MessageContent, { contents: normalizedContent, context })
+      }
+    ) : /* @__PURE__ */ jsxRuntimeExports.jsx(MessageContent, { contents: normalizedContent, context })
   ] });
 };
-const TokenRow = ({ model: model2, usage }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("td", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$$.model, styles$$.cellContents), children: model2 }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("td", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(ModelUsagePanel, { usage, className: clsx(styles$$.cellContents) }) })
-  ] });
-};
-const ModelTokenTable = ({
-  model_usage,
-  className: className2
-}) => {
-  if (!model_usage) {
-    return null;
+const normalizeContent$1 = (output2) => {
+  if (Array.isArray(output2)) {
+    return output2;
+  } else {
+    return [
+      {
+        type: "tool",
+        content: [
+          {
+            type: "text",
+            text: String(output2),
+            refusal: null,
+            internal: null,
+            citations: null
+          }
+        ]
+      }
+    ];
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(TokenTable$1, { className: className2, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(TokenHeader, {}),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("tbody", { children: Object.keys(model_usage).map((key2) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(TokenRow, { model: key2, usage: model_usage[key2] }, key2);
-    }) })
-  ] });
 };
-const styles$_ = {};
+const defaultContext = (role2) => {
+  return {
+    citeOffset: 0,
+    citations: [],
+    role: role2
+  };
+};
+const MessageContents = ({
+  id,
+  message: message2,
+  toolMessages,
+  toolCallStyle
+}) => {
+  const context = defaultContext(message2.role);
+  if (message2.role === "assistant" && message2.tool_calls && message2.tool_calls.length) {
+    const toolCalls = message2.tool_calls.map((tool_call, idx) => {
+      const { input: input2, description: description2, functionCall, contentType } = resolveToolInput(tool_call.function, tool_call.arguments);
+      let toolMessage;
+      if (tool_call.id) {
+        toolMessage = toolMessages.find((msg) => {
+          return msg.tool_call_id === tool_call.id;
+        });
+      } else {
+        toolMessage = toolMessages[idx];
+      }
+      const resolvedToolOutput = resolveToolMessage(toolMessage);
+      if (toolCallStyle === "compact") {
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("code", { className: clsx(styles$13.codeCompact), children: [
+          "tool: ",
+          functionCall
+        ] }) }, `tool-call-${idx}`);
+      } else if (toolCallStyle === "omit") {
+        return void 0;
+      } else {
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          ToolCallView,
+          {
+            id: `${id}-tool-call`,
+            functionCall,
+            input: input2,
+            description: description2,
+            contentType,
+            output: resolvedToolOutput,
+            collapsible: false,
+            view: tool_call.view ? substituteToolCallContent(
+              tool_call.view,
+              tool_call.arguments
+            ) : void 0
+          },
+          `tool-call-${idx}`
+        );
+      }
+    });
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
+      message2.content && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$13.content, children: /* @__PURE__ */ jsxRuntimeExports.jsx(MessageContent, { contents: message2.content, context }) }),
+      toolCalls
+    ] });
+  } else {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: message2.content && /* @__PURE__ */ jsxRuntimeExports.jsx(MessageContent, { contents: message2.content, context }) });
+  }
+};
+const resolveToolMessage = (toolMessage) => {
+  if (!toolMessage) {
+    return [];
+  }
+  const content2 = toolMessage.error !== null && toolMessage.error ? toolMessage.error.message : toolMessage.content;
+  if (typeof content2 === "string") {
+    return [
+      {
+        type: "tool",
+        content: [
+          {
+            type: "text",
+            text: content2,
+            refusal: null,
+            internal: null,
+            citations: null
+          }
+        ]
+      }
+    ];
+  } else {
+    const result2 = content2.map((con) => {
+      if (typeof con === "string") {
+        return {
+          type: "tool",
+          content: [
+            {
+              type: "text",
+              text: con,
+              refusal: null,
+              internal: null,
+              citations: null
+            }
+          ]
+        };
+      } else if (["text", "image", "document"].includes(con.type)) {
+        return {
+          content: [con],
+          type: "tool"
+        };
+      }
+    }).filter((con) => con !== void 0);
+    return result2;
+  }
+};
+const ChatMessage = reactExports.memo(
+  ({
+    id,
+    message: message2,
+    toolMessages,
+    indented: indented2,
+    toolCallStyle,
+    allowLinking = true,
+    unlabeledRoles
+  }) => {
+    const messageUrl = useSampleMessageUrl(message2.id);
+    const [mouseOver, setMouseOver] = reactExports.useState(false);
+    const collapse = message2.role === "system" || message2.role === "user";
+    const hideRole = unlabeledRoles?.includes(message2.role) ?? false;
+    if (hideRole) {
+      const content2 = message2.content;
+      const hasVisibleContent = typeof content2 === "string" ? content2.trim().length > 0 : Array.isArray(content2) && content2.some((c2) => c2.type !== "tool_use");
+      const hasToolCalls = "tool_calls" in message2 && Array.isArray(message2.tool_calls) && message2.tool_calls.length > 0;
+      if (!hasVisibleContent && !hasToolCalls) {
+        return null;
+      }
+    }
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        className: clsx(
+          message2.role,
+          "text-size-base",
+          styles$1f.message,
+          message2.role === "system" ? styles$1f.systemRole : void 0,
+          message2.role === "user" ? styles$1f.userRole : void 0,
+          mouseOver ? styles$1f.hover : void 0
+        ),
+        onMouseEnter: () => setMouseOver(true),
+        onMouseLeave: () => setMouseOver(false),
+        children: [
+          !hideRole && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "div",
+            {
+              className: clsx(
+                styles$1f.messageGrid,
+                message2.role === "tool" ? styles$1f.toolMessageGrid : void 0,
+                "text-style-label"
+              ),
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                  message2.role,
+                  message2.role === "tool" ? `: ${message2.function}` : "",
+                  supportsLinking() && messageUrl && allowLinking ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    CopyButton,
+                    {
+                      icon: ApplicationIcons.link,
+                      value: toFullUrl(messageUrl),
+                      className: clsx(styles$1f.copyLink)
+                    }
+                  ) : ""
+                ] }),
+                message2.timestamp && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1f.timestamp, title: message2.timestamp, children: formatDateTime(new Date(message2.timestamp)) })
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "div",
+            {
+              className: clsx(
+                styles$1f.messageContents,
+                indented2 ? styles$1f.indented : void 0
+              ),
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  ExpandablePanel,
+                  {
+                    id: `${id}-message`,
+                    collapse,
+                    lines: collapse ? 15 : 25,
+                    children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      MessageContents,
+                      {
+                        id: `${id}-contents`,
+                        message: message2,
+                        toolMessages,
+                        toolCallStyle
+                      },
+                      `${id}-contents`
+                    )
+                  }
+                ),
+                message2.metadata && Object.keys(message2.metadata).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  LabeledValue,
+                  {
+                    label: "Metadata",
+                    className: clsx(styles$1f.metadataLabel, "text-size-smaller"),
+                    children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      RecordTree,
+                      {
+                        record: message2.metadata,
+                        id: `${id}-metadata`,
+                        defaultExpandLevel: 0
+                      }
+                    )
+                  }
+                ) : ""
+              ]
+            }
+          )
+        ]
+      }
+    );
+  }
+);
+const grid$7 = "_grid_gewjd_1";
+const number$1 = "_number_gewjd_10";
+const user = "_user_gewjd_14";
+const container$h = "_container_gewjd_19";
+const styles$_ = {
+  grid: grid$7,
+  number: number$1,
+  user,
+  container: container$h
+};
+const ChatMessageRow = ({
+  id,
+  number: number2,
+  resolvedMessage,
+  toolCallStyle,
+  indented: indented2,
+  highlightUserMessage,
+  allowLinking = true,
+  unlabeledRoles
+}) => {
+  if (number2) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        className: clsx(
+          styles$_.grid,
+          styles$_.container,
+          highlightUserMessage && resolvedMessage.message.role === "user" ? styles$_.user : void 0
+        ),
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "div",
+            {
+              className: clsx(
+                "text-size-smaller",
+                "text-style-secondary",
+                styles$_.number
+              ),
+              children: number2
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            ChatMessage,
+            {
+              id: `${id}-chat-messages`,
+              message: resolvedMessage.message,
+              toolMessages: resolvedMessage.toolMessages,
+              indented: indented2,
+              toolCallStyle,
+              allowLinking,
+              unlabeledRoles
+            }
+          )
+        ]
+      }
+    ) });
+  } else {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        className: clsx(
+          styles$_.container,
+          styles$_.simple,
+          highlightUserMessage && resolvedMessage.message.role === "user" ? styles$_.user : void 0
+        ),
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            ChatMessage,
+            {
+              id: `${id}-chat-messages`,
+              message: resolvedMessage.message,
+              toolMessages: resolvedMessage.toolMessages,
+              indented: indented2,
+              toolCallStyle,
+              allowLinking,
+              unlabeledRoles
+            }
+          ),
+          resolvedMessage.message.role === "user" ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { height: "10px" } }) : void 0
+        ]
+      }
+    );
+  }
+};
+const resolveMessages = (messages2) => {
+  const resolvedMessages = [];
+  let index = 0;
+  for (const message2 of messages2) {
+    if (message2.role === "tool") {
+      if (resolvedMessages.length > 0) {
+        const msg = resolvedMessages[resolvedMessages.length - 1];
+        msg.toolMessages = msg.toolMessages || [];
+        msg.toolMessages.push(message2);
+      }
+    } else {
+      resolvedMessages.push({ message: message2, toolMessages: [] });
+    }
+    if (message2.id === void 0) {
+      message2.id = `msg-${index}`;
+    }
+    index++;
+  }
+  const systemMessages = [];
+  const collapsedMessages = resolvedMessages.map((resolved) => {
+    if (resolved.message.role === "system") {
+      systemMessages.push(resolved.message);
+    }
+    return resolved;
+  }).filter((resolved) => {
+    return resolved.message.role !== "system";
+  });
+  const systemContent = [];
+  for (const systemMessage2 of systemMessages) {
+    const contents2 = Array.isArray(systemMessage2.content) ? systemMessage2.content : [systemMessage2.content];
+    systemContent.push(...contents2.map(normalizeContent));
+  }
+  const systemMessage = {
+    id: "sys-message-6815A84B062A",
+    role: "system",
+    content: systemContent,
+    source: "input",
+    metadata: null
+  };
+  if (systemMessage && systemMessage.content.length > 0) {
+    collapsedMessages.unshift({ message: systemMessage, toolMessages: [] });
+  }
+  return collapsedMessages;
+};
+const normalizeContent = (content2) => {
+  if (typeof content2 === "string") {
+    return {
+      type: "text",
+      text: content2,
+      refusal: null,
+      internal: null,
+      citations: null
+    };
+  } else {
+    return content2;
+  }
+};
+const messagesFromEvents = (runningEvents) => {
+  const messages2 = /* @__PURE__ */ new Map();
+  runningEvents.filter((e3) => e3.event === "model").forEach((e3) => {
+    for (const m2 of e3.input) {
+      const inputMessage = m2;
+      if (inputMessage.id && !messages2.has(inputMessage.id)) {
+        messages2.set(inputMessage.id, inputMessage);
+      }
+    }
+    const outputMessage = e3.output.choices[0].message;
+    if (outputMessage.id) {
+      messages2.set(outputMessage.id, outputMessage);
+    }
+  });
+  if (messages2.size > 0) {
+    return messages2.values().toArray();
+  } else {
+    return [];
+  }
+};
+const ChatView = ({
+  id,
+  messages: messages2,
+  toolCallStyle = "complete",
+  resolveToolCallsIntoPreviousMessage = true,
+  indented: indented2,
+  numbered = true,
+  className: className2,
+  allowLinking = true,
+  unlabeledRoles
+}) => {
+  const collapsedMessages = resolveToolCallsIntoPreviousMessage ? resolveMessages(messages2) : messages2.map((msg) => {
+    return {
+      message: msg,
+      toolMessages: []
+    };
+  });
+  const result2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(className2), children: collapsedMessages.map((msg, index) => {
+    const number2 = collapsedMessages.length > 1 && numbered ? index + 1 : void 0;
+    const rowId = (id || "chat-view") + `-msg-${index}`;
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      ChatMessageRow,
+      {
+        id: rowId,
+        number: number2,
+        resolvedMessage: msg,
+        indented: indented2,
+        toolCallStyle,
+        allowLinking,
+        highlightUserMessage: true,
+        unlabeledRoles
+      },
+      `${id}-msg-${index}`
+    );
+  }) });
+  return result2;
+};
+const styles$Z = {};
 const messageSearchText = (resolved) => {
   const texts = [];
   texts.push(...extractContentText$1(resolved.message.content));
@@ -139040,7 +139012,7 @@ const ChatViewVirtualListComponent = reactExports.memo(
       return /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
         {
-          className: clsx(styles$_.item),
+          className: clsx(styles$Z.item),
           "data-index": props["data-index"],
           "data-item-group-index": props["data-item-group-index"],
           "data-item-index": props["data-item-index"],
@@ -139079,7 +139051,7 @@ const noTop = "_noTop_20s9q_38";
 const chat = "_chat_20s9q_50";
 const transcriptContainer = "_transcriptContainer_20s9q_58";
 const overflowVisible$1 = "_overflowVisible_20s9q_62";
-const styles$Z = {
+const styles$Y = {
   tabPanel,
   tabControls,
   fullWidth: fullWidth$1,
@@ -139324,7 +139296,7 @@ const body$1 = "_body_x9ww7_1";
 const safe = "_safe_x9ww7_9";
 const iconSmall = "_iconSmall_x9ww7_13";
 const message$1 = "_message_x9ww7_19";
-const styles$Y = {
+const styles$X = {
   body: body$1,
   safe,
   iconSmall,
@@ -139340,12 +139312,12 @@ const SampleErrorView = ({
     "div",
     {
       className: clsx(
-        styles$Y.body,
-        isCanceledError(type) ? styles$Y.safe : void 0
+        styles$X.body,
+        isCanceledError(type) ? styles$X.safe : void 0
       ),
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.error, styles$Y.iconSmall) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$Y.message, style: ApplicationStyles.lineClamp(2), children: type })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.error, styles$X.iconSmall) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$X.message, style: ApplicationStyles.lineClamp(2), children: type })
       ]
     }
   );
@@ -139367,7 +139339,7 @@ const invalidationContent = "_invalidationContent_10p8e_56";
 const invalidationTitle = "_invalidationTitle_10p8e_63";
 const invalidationDetails = "_invalidationDetails_10p8e_68";
 const invalidationReason = "_invalidationReason_10p8e_76";
-const styles$X = {
+const styles$W = {
   target,
   answer,
   grid: grid$6,
@@ -139456,7 +139428,7 @@ const SampleSummaryView = ({
             arrayToString(fields?.target || "none"),
             kMaxCellTextLength
           ),
-          className: clsx("no-last-para-padding", styles$X.target)
+          className: clsx("no-last-para-padding", styles$W.target)
         }
       ),
       size: `minmax(auto, 3fr)`,
@@ -139470,7 +139442,7 @@ const SampleSummaryView = ({
         RenderedText,
         {
           markdown: truncateMarkdown(fields.answer || "", kMaxCellTextLength),
-          className: clsx("no-last-para-padding", styles$X.answer)
+          className: clsx("no-last-para-padding", styles$W.answer)
         }
       ) : "",
       size: `minmax(auto, 5fr)`,
@@ -139531,7 +139503,7 @@ const SampleSummaryView = ({
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
       {
-        className: clsx(styles$X.grid, "text-size-base"),
+        className: clsx(styles$W.grid, "text-size-base"),
         style: {
           gridTemplateColumns: `${columns.map((col) => {
             return col.size;
@@ -139546,8 +139518,8 @@ const SampleSummaryView = ({
                   "text-style-label",
                   "text-style-secondary",
                   "text-size-smallest",
-                  col.title ? styles$X.titled : void 0,
-                  col.center ? styles$X.centerLabel : void 0
+                  col.title ? styles$W.titled : void 0,
+                  col.center ? styles$W.centerLabel : void 0
                 ),
                 title: col.title,
                 "data-unsearchable": true,
@@ -139561,10 +139533,10 @@ const SampleSummaryView = ({
               "div",
               {
                 className: clsx(
-                  styles$X.value,
-                  styles$X.wrap,
+                  styles$W.value,
+                  styles$W.wrap,
                   col.clamp ? "three-line-clamp" : void 0,
-                  col.center ? styles$X.centerValue : void 0
+                  col.center ? styles$W.centerValue : void 0
                 ),
                 "data-unsearchable": true,
                 children: col.value
@@ -139587,11 +139559,11 @@ const InvalidationBanner = ({
       return timestamp2;
     }
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$X.invalidationBanner, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$X.invalidationIcon, children: "⚠" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$X.invalidationContent, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$X.invalidationTitle, children: "Sample Invalidated" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$X.invalidationDetails, children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$W.invalidationBanner, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$W.invalidationIcon, children: "⚠" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$W.invalidationContent, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$W.invalidationTitle, children: "Sample Invalidated" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$W.invalidationDetails, children: [
         invalidation.author && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
           "By: ",
           invalidation.author
@@ -139600,7 +139572,7 @@ const InvalidationBanner = ({
           "On: ",
           formatTimestamp(invalidation.timestamp)
         ] }),
-        invalidation.reason && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: styles$X.invalidationReason, children: [
+        invalidation.reason && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: styles$W.invalidationReason, children: [
           "Reason: ",
           invalidation.reason
         ] })
@@ -139625,7 +139597,7 @@ const fullWidth = "_fullWidth_kwhbh_13";
 const separator$4 = "_separator_kwhbh_25";
 const separatorPadded = "_separatorPadded_kwhbh_30";
 const headerSep = "_headerSep_kwhbh_35";
-const styles$W = {
+const styles$V = {
   container: container$g,
   cell: cell$1,
   fullWidth,
@@ -139642,7 +139614,7 @@ const SampleScoresGrid = ({
   if (!evalDescriptor) {
     return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyPanel, { children: "No Sample Selected" });
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2, styles$W.container), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2, styles$V.container), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
@@ -139690,7 +139662,7 @@ const SampleScoresGrid = ({
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
-        className: clsx(styles$W.separator, styles$W.fullWidth, styles$W.headerSep)
+        className: clsx(styles$V.separator, styles$V.fullWidth, styles$V.headerSep)
       }
     ),
     Object.keys(evalSample.scores || {}).map((scorer2) => {
@@ -139702,16 +139674,16 @@ const SampleScoresGrid = ({
       const answer2 = scoreData.answer;
       let metadata2 = scoreData.metadata || {};
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-base", styles$W.cell), children: scorer2 }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$W.cell, "text-size-base"), children: answer2 }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$W.cell, "text-size-base"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-base", styles$V.cell), children: scorer2 }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$V.cell, "text-size-base"), children: answer2 }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$V.cell, "text-size-base"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           SampleScores,
           {
             sample: evalSample,
             scorer: scorer2
           }
         ) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-base", styles$W.cell), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-base", styles$V.cell), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           RenderedContent,
           {
             id: `${scorer2}-explanation`,
@@ -139729,12 +139701,12 @@ const SampleScoresGrid = ({
                 "text-size-smaller",
                 "text-style-label",
                 "text-style-secondary",
-                styles$W.fullWidth
+                styles$V.fullWidth
               ),
               children: "Metadata"
             }
           ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$W.fullWidth), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$V.fullWidth), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             RecordTree,
             {
               id: `${scorer2}-metadataa`,
@@ -139747,9 +139719,9 @@ const SampleScoresGrid = ({
             "div",
             {
               className: clsx(
-                styles$W.separator,
-                styles$W.separatorPadded,
-                styles$W.fullWidth
+                styles$V.separator,
+                styles$V.separatorPadded,
+                styles$V.fullWidth
               )
             }
           )
@@ -139761,7 +139733,7 @@ const SampleScoresGrid = ({
 const wordBreak = "_wordBreak_las07_9";
 const scoreCard = "_scoreCard_las07_50";
 const scores = "_scores_las07_54";
-const styles$V = {
+const styles$U = {
   wordBreak,
   scoreCard,
   scores
@@ -139794,9 +139766,9 @@ const SampleScoresView = ({
         "container-fluid",
         className2,
         "font-size-base",
-        styles$V.container
+        styles$U.container
       ),
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(Card, { className: clsx(styles$V.scoreCard), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardBody, { children: [
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(Card, { className: clsx(styles$U.scoreCard), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardBody, { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
@@ -139818,7 +139790,7 @@ const SampleScoresView = ({
               RenderedText,
               {
                 markdown: scoreInput.join("\n"),
-                className: clsx(styles$V.wordBreak, "text-size-base")
+                className: clsx(styles$U.wordBreak, "text-size-base")
               }
             )
           }
@@ -139827,7 +139799,7 @@ const SampleScoresView = ({
           SampleScoresGrid,
           {
             evalSample: sample2,
-            className: clsx(styles$V.scores),
+            className: clsx(styles$U.scores),
             scrollRef
           }
         )
@@ -139938,7 +139910,7 @@ const grid$5 = "_grid_1ml4j_1";
 const row$1 = "_row_1ml4j_8";
 const links$1 = "_links_1ml4j_22";
 const selected$2 = "_selected_1ml4j_40";
-const styles$U = {
+const styles$T = {
   grid: grid$5,
   row: row$1,
   links: links$1,
@@ -139971,13 +139943,13 @@ const TranscriptFilterPopover = ({
       placement: "bottom-end",
       hoverDelay: -1,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$U.links, "text-size-smaller"), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$T.links, "text-size-smaller"), children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "a",
             {
               className: clsx(
-                styles$U.link,
-                isDefaultFilter ? styles$U.selected : void 0
+                styles$T.link,
+                isDefaultFilter ? styles$T.selected : void 0
               ),
               onClick: () => setDefaultFilter(),
               children: "Default"
@@ -139988,8 +139960,8 @@ const TranscriptFilterPopover = ({
             "a",
             {
               className: clsx(
-                styles$U.link,
-                isDebugFilter ? styles$U.selected : void 0
+                styles$T.link,
+                isDebugFilter ? styles$T.selected : void 0
               ),
               onClick: () => setDebugFilter(),
               children: "Debug"
@@ -140000,19 +139972,19 @@ const TranscriptFilterPopover = ({
             "a",
             {
               className: clsx(
-                styles$U.link,
-                isNoneFilter ? styles$U.selected : void 0
+                styles$T.link,
+                isNoneFilter ? styles$T.selected : void 0
               ),
               onClick: () => setNoneFilter(),
               children: "None"
             }
           )
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$U.grid, "text-size-smaller"), children: arrangedEventTypes(2).map((eventType) => {
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$T.grid, "text-size-smaller"), children: arrangedEventTypes(2).map((eventType) => {
           return /* @__PURE__ */ jsxRuntimeExports.jsxs(
             "div",
             {
-              className: clsx(styles$U.row),
+              className: clsx(styles$T.row),
               onClick: () => {
                 filterEventType(eventType, filtered.includes(eventType));
               },
@@ -140268,7 +140240,7 @@ const label$6 = "_label_1j0jk_28";
 const icon$2 = "_icon_1j0jk_34";
 const progress$2 = "_progress_1j0jk_38";
 const popover = "_popover_1j0jk_42";
-const styles$T = {
+const styles$S = {
   eventRow,
   selected: selected$1,
   toggle,
@@ -140299,9 +140271,9 @@ const OutlineRow = ({
       "div",
       {
         className: clsx(
-          styles$T.eventRow,
+          styles$S.eventRow,
           "text-size-smaller",
-          selected2 ? styles$T.selected : ""
+          selected2 ? styles$S.selected : ""
         ),
         style: { paddingLeft: `${node2.depth * 0.4}em` },
         "data-unsearchable": true,
@@ -140309,20 +140281,20 @@ const OutlineRow = ({
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "div",
             {
-              className: clsx(styles$T.toggle),
+              className: clsx(styles$S.toggle),
               onClick: () => {
                 setCollapsed(!collapsed2);
               },
               children: toggle2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(toggle2) }) : void 0
             }
           ),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$T.label), "data-depth": node2.depth, children: [
-            icon2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, styles$T.icon) }) : void 0,
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$S.label), "data-depth": node2.depth, children: [
+            icon2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, styles$S.icon) }) : void 0,
             sampleEventUrl2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
               Link,
               {
                 to: sampleEventUrl2,
-                className: clsx(styles$T.eventLink),
+                className: clsx(styles$S.eventLink),
                 ref: ref2,
                 children: parsePackageName(labelForNode(node2)).module
               }
@@ -140331,7 +140303,7 @@ const OutlineRow = ({
               PulsingDots,
               {
                 size: "small",
-                className: clsx(styles$T.progress),
+                className: clsx(styles$S.progress),
                 subtle: false
               }
             ) : void 0
@@ -140346,7 +140318,7 @@ const OutlineRow = ({
         positionEl: ref2.current,
         isOpen: isShowing,
         setIsOpen: setShowing,
-        className: clsx(styles$T.popper),
+        className: clsx(styles$S.popper),
         placement: "auto-end",
         children: summarizeNode(node2)
       }
@@ -140460,12 +140432,12 @@ const summarizeNode = (node2) => {
     MetaDataGrid,
     {
       entries,
-      size: "mini",
-      className: clsx(styles$T.popover, "text-size-smallest")
+      options: { size: "mini" },
+      className: clsx(styles$S.popover, "text-size-smallest")
     }
   );
 };
-const styles$S = {};
+const styles$R = {};
 const kTurnType = "turn";
 const kTurnsType = "turns";
 const kCollapsedScoring = "scorings";
@@ -140734,7 +140706,7 @@ const TranscriptOutline = ({
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
-            className: clsx(styles$S.eventPadding),
+            className: clsx(styles$R.eventPadding),
             style: { height: "2em" }
           },
           node2.id
@@ -140784,7 +140756,7 @@ const stickyOutline = "_stickyOutline_siils_23";
 const listContainer = "_listContainer_siils_32";
 const outline = "_outline_siils_36";
 const outlineToggle = "_outlineToggle_siils_40";
-const styles$R = {
+const styles$Q = {
   container: container$f,
   collapsed,
   treeContainer,
@@ -140795,7 +140767,7 @@ const styles$R = {
 };
 const title$1 = "_title_19l1b_1";
 const contents = "_contents_19l1b_8";
-const styles$Q = {
+const styles$P = {
   title: title$1,
   contents
 };
@@ -140805,12 +140777,12 @@ const EventRow = ({
   className: className2,
   children: children2
 }) => {
-  const contentEl = title2 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-small", styles$Q.title, className2), children: [
+  const contentEl = title2 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-small", styles$P.title, className2), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: icon2 || ApplicationIcons.metadata }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: title2 }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: children2 })
   ] }) : "";
-  const card2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("card", styles$Q.contents), children: contentEl });
+  const card2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("card", styles$P.contents), children: contentEl });
   return card2;
 };
 const sampleLimitTitles = {
@@ -140935,7 +140907,7 @@ const decisionIcon = (decision) => {
   }
 };
 const panel$6 = "_panel_8zdtn_1";
-const styles$P = {
+const styles$O = {
   panel: panel$6
 };
 const scrollListenerMap = /* @__PURE__ */ new Map();
@@ -141018,7 +140990,7 @@ function useStickyObserver() {
   return ref2;
 }
 const tab = "_tab_1je38_1";
-const styles$O = {
+const styles$N = {
   tab
 };
 const EventNav = ({
@@ -141043,7 +141015,7 @@ const EventNav = ({
         active ? "active " : "",
         "text-style-label",
         "text-size-small",
-        styles$O.tab
+        styles$N.tab
       ),
       onClick: handleClick,
       children: title2
@@ -141051,7 +141023,7 @@ const EventNav = ({
   ) });
 };
 const navs$1 = "_navs_1vm6p_1";
-const styles$N = {
+const styles$M = {
   navs: navs$1
 };
 const EventNavs = ({
@@ -141062,7 +141034,7 @@ const EventNavs = ({
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "ul",
     {
-      className: clsx("nav", "nav-pills", styles$N.navs),
+      className: clsx("nav", "nav-pills", styles$M.navs),
       role: "tablist",
       "aria-orientation": "horizontal",
       children: navs2.map((nav2) => {
@@ -141092,7 +141064,7 @@ const hover = "_hover_1gpbh_68";
 const root$1 = "_root_1gpbh_72";
 const bottomDongle = "_bottomDongle_1gpbh_77";
 const dongleIcon = "_dongleIcon_1gpbh_94";
-const styles$M = {
+const styles$L = {
   stickyWrapper,
   label: label$5,
   navs,
@@ -141168,8 +141140,8 @@ const EventPanel = ({
       title: subTitle,
       className: clsx(
         "text-size-small",
-        mouseOver ? styles$M.hover : "",
-        turnLabel2 ? styles$M.stickyWrapper : ""
+        mouseOver ? styles$L.hover : "",
+        turnLabel2 ? styles$L.stickyWrapper : ""
       ),
       ref: turnLabel2 ? stickyRef : null,
       style: {
@@ -141211,19 +141183,19 @@ const EventPanel = ({
           {
             value: url,
             icon: ApplicationIcons.link,
-            className: clsx(styles$M.copyLink)
+            className: clsx(styles$L.copyLink)
           }
         ) : "",
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { onClick: toggleCollapse }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
-            className: clsx("text-style-secondary", styles$M.label),
+            className: clsx("text-style-secondary", styles$L.label),
             onClick: toggleCollapse,
             children: collapsed2 ? text2 : ""
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$M.navs, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$L.navs, children: [
           isCollapsible && collapsibleContent && collapsed2 ? "" : filteredArrChildren && filteredArrChildren.length > 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
             EventNavs,
             {
@@ -141240,7 +141212,7 @@ const EventPanel = ({
               setSelectedNav
             }
           ) : "",
-          turnLabel2 && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx(styles$M.turnLabel), children: turnLabel2 })
+          turnLabel2 && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx(styles$L.turnLabel), children: turnLabel2 })
         ] })
       ]
     }
@@ -141251,8 +141223,8 @@ const EventPanel = ({
       id: `event-panel-${eventNodeId}`,
       className: clsx(
         className2,
-        styles$M.card,
-        depth === 0 ? styles$M.root : void 0
+        styles$L.card,
+        depth === 0 ? styles$L.root : void 0
       ),
       children: [
         titleEl,
@@ -141261,8 +141233,8 @@ const EventPanel = ({
           {
             className: clsx(
               "tab-content",
-              styles$M.cardContent,
-              isCollapsible && collapsed2 && collapsibleContent ? styles$M.hidden : void 0
+              styles$L.cardContent,
+              isCollapsible && collapsed2 && collapsibleContent ? styles$L.hidden : void 0
             ),
             children: filteredArrChildren?.map((child, index) => {
               const id = pillId(index);
@@ -141285,7 +141257,7 @@ const EventPanel = ({
         isCollapsible && useBottomDongle ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
           "div",
           {
-            className: clsx(styles$M.bottomDongle, "text-size-smallest"),
+            className: clsx(styles$L.bottomDongle, "text-size-smallest"),
             onClick: toggleCollapse,
             children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -141293,7 +141265,7 @@ const EventPanel = ({
                 {
                   className: clsx(
                     collapsed2 ? ApplicationIcons.chevron.right : ApplicationIcons.chevron.down,
-                    styles$M.dongleIcon
+                    styles$L.dongleIcon
                   )
                 }
               ),
@@ -141334,12 +141306,12 @@ const BranchEventView = ({
       className: className2,
       subTitle: formatDateTime(new Date(event.timestamp)),
       icon: ApplicationIcons.info,
-      children: [/* @__PURE__ */ jsxRuntimeExports.jsx(MetaDataGrid, { entries: data2, className: styles$P.panel })]
+      children: [/* @__PURE__ */ jsxRuntimeExports.jsx(MetaDataGrid, { entries: data2, className: styles$O.panel })]
     }
   );
 };
 const panel$5 = "_panel_8zdtn_1";
-const styles$L = {
+const styles$K = {
   panel: panel$5
 };
 const CompactionEventView = ({
@@ -141364,7 +141336,7 @@ const CompactionEventView = ({
       className: className2,
       subTitle: formatDateTime(new Date(event.timestamp)),
       icon: ApplicationIcons.info,
-      children: [/* @__PURE__ */ jsxRuntimeExports.jsx(MetaDataGrid, { entries: data2, className: styles$L.panel })]
+      children: [/* @__PURE__ */ jsxRuntimeExports.jsx(MetaDataGrid, { entries: data2, className: styles$K.panel })]
     }
   );
 };
@@ -141396,7 +141368,7 @@ const ErrorEventView = ({
   );
 };
 const panel$4 = "_panel_vz394_1";
-const styles$K = {
+const styles$J = {
   panel: panel$4
 };
 const InfoEventView = ({
@@ -141411,13 +141383,13 @@ const InfoEventView = ({
         RenderedText,
         {
           markdown: event.data,
-          className: clsx(styles$K.panel, "text-size-base"),
+          className: clsx(styles$J.panel, "text-size-base"),
           omitMath: true
         }
       )
     );
   } else {
-    panels.push(/* @__PURE__ */ jsxRuntimeExports.jsx(JSONPanel, { data: event.data, className: styles$K.panel }));
+    panels.push(/* @__PURE__ */ jsxRuntimeExports.jsx(JSONPanel, { data: event.data, className: styles$J.panel }));
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     EventPanel,
@@ -141458,7 +141430,7 @@ const InputEventView = ({
 };
 const grid$4 = "_grid_159mg_1";
 const wrap = "_wrap_159mg_12";
-const styles$J = {
+const styles$I = {
   grid: grid$4,
   wrap
 };
@@ -141474,13 +141446,13 @@ const LoggerEventView = ({
       className: className2,
       title: eventTitle(event),
       icon: ApplicationIcons.logging[event.message.level.toLowerCase()],
-      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-base", styles$J.grid), children: [
+      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-base", styles$I.grid), children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-smaller"), children: obj !== void 0 && obj !== null ? /* @__PURE__ */ jsxRuntimeExports.jsx(MetaDataGrid, { entries: obj }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
           ExpandablePanel,
           {
             id: `event-message-${event.uuid}`,
             collapse: true,
-            className: clsx(styles$J.wrap),
+            className: clsx(styles$I.wrap),
             children: event.message.message
           }
         ) }),
@@ -141496,7 +141468,7 @@ const LoggerEventView = ({
 const container$e = "_container_1ww70_1";
 const titleRow = "_titleRow_1ww70_5";
 const title = "_title_1ww70_5";
-const styles$I = {
+const styles$H = {
   container: container$e,
   titleRow,
   title
@@ -141507,11 +141479,11 @@ const EventSection = ({
   copyContent,
   className: className2
 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$I.container, className2), children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$I.titleRow), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$H.container, className2), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$H.titleRow), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
       {
-        className: clsx("text-size-small", "text-style-label", styles$I.title),
+        className: clsx("text-size-small", "text-style-label", styles$H.title),
         children: [
           title2,
           copyContent ? /* @__PURE__ */ jsxRuntimeExports.jsx(CopyButton, { value: copyContent, ariaLabel: "Copy to clipboard" }) : null
@@ -141527,7 +141499,7 @@ const col1_3 = "_col1_3_cv5sf_12";
 const col3 = "_col3_cv5sf_16";
 const separator$3 = "_separator_cv5sf_20";
 const topMargin = "_topMargin_cv5sf_26";
-const styles$H = {
+const styles$G = {
   wrapper: wrapper$1,
   col2,
   col1_3,
@@ -141601,9 +141573,9 @@ const EventTimingPanel = ({
       });
     }
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-small", styles$H.wrapper), children: rows.map((row2, idx) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-small", styles$G.wrapper), children: rows.map((row2, idx) => {
     if (row2.label === "---") {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$H.separator }, `$usage-sep-${idx}`);
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$G.separator }, `$usage-sep-${idx}`);
     } else {
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -141612,13 +141584,13 @@ const EventTimingPanel = ({
             className: clsx(
               "text-style-label",
               "text-style-secondary",
-              row2.secondary ? styles$H.col2 : styles$H.col1_3,
-              row2.topMargin ? styles$H.topMargin : void 0
+              row2.secondary ? styles$G.col2 : styles$G.col1_3,
+              row2.topMargin ? styles$G.topMargin : void 0
             ),
             children: row2.label
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$H.col3, children: row2.value ? row2.value : "" })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$G.col3, children: row2.value ? row2.value : "" })
       ] }, `$usage-row-${idx}`);
     }
   }) });
@@ -141633,7 +141605,7 @@ const error$1 = "_error_1gr6b_38";
 const toolConfig = "_toolConfig_1gr6b_54";
 const toolChoice = "_toolChoice_1gr6b_62";
 const traceback = "_traceback_1gr6b_71";
-const styles$G = {
+const styles$F = {
   container: container$d,
   all,
   tableSelection,
@@ -141699,7 +141671,7 @@ const ModelEventView = ({
       icon: ApplicationIcons.model,
       turnLabel: turnLabel2,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Summary", className: styles$G.container, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Summary", className: styles$F.container, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             ChatView,
             {
@@ -141712,7 +141684,7 @@ const ModelEventView = ({
               unlabeledRoles: ["assistant"]
             }
           ),
-          event.error ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$G.error, children: [
+          event.error ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$F.error, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.error, "aria-hidden": "true" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               ANSIDisplay,
@@ -141723,20 +141695,20 @@ const ModelEventView = ({
                 }
               }
             )
-          ] }) : event.pending ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$G.progress), children: /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false, size: "medium" }) }) : void 0
+          ] }) : event.pending ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$F.progress), children: /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false, size: "medium" }) }) : void 0
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "All", className: styles$G.container, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$G.all, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "All", className: styles$F.container, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$F.all, children: [
             Object.keys(entries).length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(
               EventSection,
               {
                 title: "Configuration",
-                className: styles$G.tableSelection,
-                children: /* @__PURE__ */ jsxRuntimeExports.jsx(MetaDataGrid, { entries, plain: true })
+                className: styles$F.tableSelection,
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(MetaDataGrid, { entries, options: { plain: true } })
               }
             ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Usage", className: styles$G.tableSelection, children: event.output.usage !== null ? /* @__PURE__ */ jsxRuntimeExports.jsx(ModelUsagePanel, { usage: event.output.usage }) : void 0 }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Timing", className: styles$G.tableSelection, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Usage", className: styles$F.tableSelection, children: event.output.usage != null ? /* @__PURE__ */ jsxRuntimeExports.jsx(ModelUsagePanel, { usage: event.output.usage }) : void 0 }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Timing", className: styles$F.tableSelection, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
               EventTimingPanel,
               {
                 timestamp: event.timestamp,
@@ -141756,21 +141728,21 @@ const ModelEventView = ({
             }
           ) })
         ] }),
-        event.tools.length > 1 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-name": "Tools", className: styles$G.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ToolsConfig, { tools: event.tools, toolChoice: event.tool_choice }) }),
+        event.tools.length > 1 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-name": "Tools", className: styles$F.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ToolsConfig, { tools: event.tools, toolChoice: event.tool_choice }) }),
         event.call ? /* @__PURE__ */ jsxRuntimeExports.jsx(
           APIView,
           {
             "data-name": "API",
             call: event.call,
             error: event.error,
-            className: styles$G.container
+            className: styles$F.container
           }
         ) : "",
-        event.traceback_ansi && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-name": "Error", className: styles$G.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        event.traceback_ansi && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-name": "Error", className: styles$F.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           ANSIDisplay,
           {
             output: event.traceback_ansi,
-            className: styles$G.traceback
+            className: styles$F.traceback
           }
         ) })
       ]
@@ -141798,11 +141770,11 @@ const APICodeCell = ({ id, sourceCode }) => {
   if (!sourceCode) {
     return null;
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: sourceCodeRef, className: clsx("model-call"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$G.codePre), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: sourceCodeRef, className: clsx("model-call"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$F.codePre), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     "code",
     {
       id,
-      className: clsx("language-json", styles$G.code, "text-size-small"),
+      className: clsx("language-json", styles$F.code, "text-size-small"),
       children: sourceCode
     }
   ) }) });
@@ -141815,8 +141787,8 @@ const ToolsConfig = ({ tools: tools2, toolChoice: toolChoice2 }) => {
     ] }, `${tool2.name}-${idx}`);
   });
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$G.toolConfig, "text-size-small"), children: toolEls }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$G.toolChoice, "text-size-small"), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$F.toolConfig, "text-size-small"), children: toolEls }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$F.toolChoice, "text-size-small"), children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Tool Choice" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(ToolChoiceView, { toolChoice: toolChoice2 }) })
     ] })
@@ -141838,7 +141810,7 @@ const code$2 = "_code_1a3fk_5";
 const sample = "_sample_1a3fk_10";
 const section$1 = "_section_1a3fk_14";
 const metadata$1 = "_metadata_1a3fk_21";
-const styles$F = {
+const styles$E = {
   noMargin,
   code: code$2,
   sample,
@@ -141855,13 +141827,13 @@ const SampleInitEventView = ({
   if (event.sample.files && Object.keys(event.sample.files).length > 0) {
     sections.push(
       /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Files", children: Object.keys(event.sample.files).map((file) => {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$F.noMargin, children: file }, `sample-init-file-${file}`);
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$E.noMargin, children: file }, `sample-init-file-${file}`);
       }) }, `event-${eventNode.id}`)
     );
   }
   if (event.sample.setup) {
     sections.push(
-      /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Setup", children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$F.code, children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: "sourceCode", children: event.sample.setup }) }) }, `${eventNode.id}-section-setup`)
+      /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Setup", children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$E.code, children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: "sourceCode", children: event.sample.setup }) }) }, `${eventNode.id}-section-setup`)
     );
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -141874,7 +141846,7 @@ const SampleInitEventView = ({
       icon: ApplicationIcons.sample,
       subTitle: formatDateTime(new Date(event.timestamp)),
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Sample", className: styles$F.sample, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Sample", className: styles$E.sample, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             ChatView,
             {
@@ -141890,7 +141862,7 @@ const SampleInitEventView = ({
                 choice
               ] }, `$choice-{choice}`);
             }) : "",
-            sections.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$F.section, children: sections }) : "",
+            sections.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$E.section, children: sections }) : "",
             event.sample.target ? /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Target", children: toArray(event.sample.target).map((target2) => {
               return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-base"), children: target2 }, target2);
             }) }) : void 0
@@ -141900,7 +141872,7 @@ const SampleInitEventView = ({
           MetaDataGrid,
           {
             "data-name": "Metadata",
-            className: styles$F.metadata,
+            className: styles$E.metadata,
             entries: event.sample.metadata
           }
         ) : ""
@@ -141953,7 +141925,7 @@ const exec = "_exec_1irga_15";
 const result = "_result_1irga_19";
 const fileLabel = "_fileLabel_1irga_23";
 const wrapPre = "_wrapPre_1irga_28";
-const styles$E = {
+const styles$D = {
   twoColumn,
   exec,
   result,
@@ -141987,15 +141959,15 @@ const ExecView = ({ id, event }) => {
   const input2 = event.input;
   const result2 = event.result;
   const output2 = event.output ? event.output.trim() : void 0;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$E.exec), children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: `Command`, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$E.twoColumn), children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$E.wrapPre), children: cmd2 }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$E.wrapPre), children: input2 !== null ? input2?.trim() : void 0 }),
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$D.exec), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: `Command`, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$D.twoColumn), children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$D.wrapPre), children: cmd2 }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$D.wrapPre), children: input2 !== null ? input2?.trim() : void 0 }),
       options !== null && Object.keys(options).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: `Options`, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         MetaDataGrid,
         {
           entries: options,
-          plain: true
+          options: { plain: true }
         }
       ) }) : void 0
     ] }) }),
@@ -142007,7 +141979,7 @@ const ExecView = ({ id, event }) => {
           entry: { name: "sandbox_output", value: output2 }
         }
       ) }) : void 0,
-      result2 !== 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$E.result, "text-size-base"), children: [
+      result2 !== 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$D.result, "text-size-base"), children: [
         "(exited with code ",
         result2,
         ")"
@@ -142033,7 +142005,7 @@ const WriteFileView = ({ id, event }) => {
 };
 const FileView = ({ id, file, contents: contents2 }) => {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "File", children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$E.fileLabel), children: file }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "File", children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$D.fileLabel), children: file }) }),
     contents2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Contents", children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExpandablePanel, { id: `${id}-file`, collapse: false, children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { children: contents2 }) }) }) : void 0
   ] });
 };
@@ -142043,7 +142015,7 @@ const separator$2 = "_separator_io1r0_13";
 const unchanged = "_unchanged_io1r0_22";
 const section = "_section_io1r0_27";
 const spacer = "_spacer_io1r0_31";
-const styles$D = {
+const styles$C = {
   container: container$c,
   wrappingContent: wrappingContent$1,
   separator: separator$2,
@@ -142054,7 +142026,7 @@ const styles$D = {
 const explanation = "_explanation_1k2k0_1";
 const wrappingContent = "_wrappingContent_1k2k0_8";
 const separator$1 = "_separator_1k2k0_13";
-const styles$C = {
+const styles$B = {
   explanation,
   wrappingContent,
   separator: separator$1
@@ -142076,29 +142048,29 @@ const ScoreEventView = ({
       icon: ApplicationIcons.scorer,
       collapsibleContent: true,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Explanation", className: clsx(styles$C.explanation), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Explanation", className: clsx(styles$B.explanation), children: [
           event.target ? /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$C.separator) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$B.separator) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Target" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: resolvedTarget || "" }) })
           ] }) : "",
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$C.separator) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$B.separator) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Answer" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$C.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.score.answer || "" }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$C.separator) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$B.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.score.answer || "" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$B.separator) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Explanation" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$C.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.score.explanation || "" }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$C.separator) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$B.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.score.explanation || "" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$B.separator) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Score" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: renderScore(event.score.value) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$C.separator) })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$B.separator) })
         ] }),
         event.score.metadata ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-name": "Metadata", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           RecordTree,
           {
             id: `${eventNode.id}-score-metadata`,
             record: event.score.metadata,
-            className: styles$C.metadataTree,
+            className: styles$B.metadataTree,
             defaultExpandLevel: 0
           }
         ) }) : void 0
@@ -142139,46 +142111,46 @@ const ScoreEditEventView = ({
             className: clsx(
               "text-style-label",
               "text-style-secondary",
-              styles$D.section
+              styles$C.section
             ),
             children: "Updated Values"
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$D.container), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$C.container), children: [
           event.edit.value !== void 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$D.separator) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$C.separator) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Value" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: renderScore(event.edit.value) })
           ] }) : "",
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$D.separator) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$C.separator) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Answer" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$D.wrappingContent), children: event.edit.answer === kUnchangedSentinel ? /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$D.unchanged), children: "[unchanged]" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.edit.answer || "" }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$D.separator) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$C.wrappingContent), children: event.edit.answer === kUnchangedSentinel ? /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$C.unchanged), children: "[unchanged]" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.edit.answer || "" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$C.separator) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Explanation" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$D.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.edit.explanation || "" }) })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$C.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.edit.explanation || "" }) })
         ] }),
-        event.edit.provenance ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$D.container), children: [
+        event.edit.provenance ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$C.container), children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "div",
             {
               className: clsx(
                 "text-style-label",
                 "text-style-secondary",
-                styles$D.section
+                styles$C.section
               ),
               children: "Provenance"
             }
           ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$D.spacer) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$D.separator) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$C.spacer) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$C.separator) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Author" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$D.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.edit.provenance.author }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$D.separator) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$C.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.edit.provenance.author }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$C.separator) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Reason" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$D.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.edit.provenance.reason || "" }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$D.separator) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$C.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.edit.provenance.reason || "" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$C.separator) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Time" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$D.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$C.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             RenderedText,
             {
               markdown: formatDateTime(new Date(event.edit.provenance.timestamp)) || ""
@@ -142190,7 +142162,7 @@ const ScoreEditEventView = ({
           {
             id: `${eventNode.id}-score-metadata`,
             record: event.edit.metadata || {},
-            className: styles$D.metadataTree,
+            className: styles$C.metadataTree,
             defaultExpandLevel: 0
           }
         ) }) : void 0
@@ -143910,7 +143882,7 @@ function sanitizeKeys(obj) {
 const toolsGrid = "_toolsGrid_1qqm2_1";
 const tools = "_tools_1qqm2_1";
 const tool = "_tool_1qqm2_1";
-const styles$B = {
+const styles$A = {
   toolsGrid,
   tools,
   tool
@@ -144080,7 +144052,7 @@ const renderTools = (changes, resolvedState) => {
       toolsInfo["Tools"] = /* @__PURE__ */ jsxRuntimeExports.jsx(Tools, { toolDefinitions: filtered });
     }
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$B.tools), children: Object.keys(toolsInfo).map((key2) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.tools), children: Object.keys(toolsInfo).map((key2) => {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
@@ -144127,7 +144099,7 @@ const StoreSpecificRenderableTypes = [
   human_baseline_session
 ];
 const Tools = ({ toolDefinitions }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$B.toolsGrid, children: toolDefinitions.map((toolDefinition, idx) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$A.toolsGrid, children: toolDefinitions.map((toolDefinition, idx) => {
     const toolName = toolDefinition.name;
     const toolArgs = toolDefinition.parameters?.properties ? Object.keys(toolDefinition.parameters.properties) : [];
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -144142,11 +144114,11 @@ const Tools = ({ toolDefinitions }) => {
 };
 const Tool = ({ toolName, toolArgs }) => {
   const functionCall = toolArgs && toolArgs.length > 0 ? `${toolName}(${toolArgs.join(", ")})` : toolName;
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("text-size-smallest", styles$B.tool), children: functionCall });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("text-size-smallest", styles$A.tool), children: functionCall });
 };
 const diff = "_diff_eobja_1";
 const summary$2 = "_summary_eobja_6";
-const styles$A = {
+const styles$z = {
   diff,
   summary: summary$2
 };
@@ -144191,14 +144163,14 @@ const StateEventView = ({
       text: !changePreview ? summary2 : void 0,
       collapsibleContent: true,
       children: [
-        changePreview ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-name": "Summary", className: clsx(styles$A.summary), children: changePreview }) : void 0,
+        changePreview ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-name": "Summary", className: clsx(styles$z.summary), children: changePreview }) : void 0,
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           StateDiffView,
           {
             before,
             after,
             "data-name": "Diff",
-            className: clsx(styles$A.diff)
+            className: clsx(styles$z.diff)
           }
         )
       ]
@@ -144471,7 +144443,7 @@ const summary$1 = "_summary_ac4z2_1";
 const summaryRendered = "_summaryRendered_ac4z2_6";
 const subtaskSummary = "_subtaskSummary_ac4z2_10";
 const subtaskLabel = "_subtaskLabel_ac4z2_17";
-const styles$z = {
+const styles$y = {
   summary: summary$1,
   summaryRendered,
   subtaskSummary,
@@ -144486,9 +144458,9 @@ const SubtaskEventView = ({
   const body2 = [];
   if (event.type === "fork") {
     body2.push(
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { title: "Summary", className: clsx(styles$z.summary), children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { title: "Summary", className: clsx(styles$y.summary), children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Inputs" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$z.summaryRendered), children: /* @__PURE__ */ jsxRuntimeExports.jsx(Rendered, { values: event.input }) })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$y.summaryRendered), children: /* @__PURE__ */ jsxRuntimeExports.jsx(Rendered, { values: event.input }) })
       ] })
     );
   } else {
@@ -144519,12 +144491,12 @@ const SubtaskEventView = ({
 };
 const SubtaskSummary = ({ input: input2, result: result2 }) => {
   const output2 = result2 !== null && typeof result2 === "object" ? result2 : { result: result2 };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$z.subtaskSummary), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$y.subtaskSummary), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-size-small"), children: "Input" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-large", styles$z.subtaskLabel) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-large", styles$y.subtaskLabel) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-size-small"), children: "Output" }),
     input2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(Rendered, { values: input2 }) : void 0,
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-title-secondary", styles$z.subtaskLabel), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.arrows.right }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-title-secondary", styles$y.subtaskLabel), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.arrows.right }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Rendered, { values: output2 }) })
   ] });
 };
@@ -144549,7 +144521,7 @@ const None = () => {
 const summary = "_summary_1qsnv_1";
 const approval = "_approval_1qsnv_6";
 const progress = "_progress_1qsnv_12";
-const styles$y = {
+const styles$x = {
   summary,
   approval,
   progress
@@ -144590,7 +144562,7 @@ const ToolEventView = ({
       childIds: children2.map((child) => child.id),
       collapseControl: "bottom",
       turnLabel: turnLabel2,
-      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Summary", className: styles$y.summary, children: [
+      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Summary", className: styles$x.summary, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           ToolCallView,
           {
@@ -144621,10 +144593,10 @@ const ToolEventView = ({
           ApprovalEventView,
           {
             eventNode: approvalNode,
-            className: styles$y.approval
+            className: styles$x.approval
           }
         ) : "",
-        event.pending ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$y.progress), children: /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false, size: "medium" }) }) : void 0
+        event.pending ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$x.progress), children: /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false, size: "medium" }) }) : void 0
       ] })
     }
   );
@@ -144844,7 +144816,7 @@ const node = "_node_59x7e_1";
 const attached = "_attached_59x7e_5";
 const attachedParent = "_attachedParent_59x7e_9";
 const attachedChild = "_attachedChild_59x7e_16";
-const styles$x = {
+const styles$w = {
   node,
   attached,
   attachedParent,
@@ -144912,22 +144884,22 @@ const TranscriptVirtualListComponent = ({
   }, [eventNodes, hasToolEventsAtCurrentDepth, turnMap]);
   const renderRow = reactExports.useCallback(
     (index, item2, style2) => {
-      const paddingClass = index === 0 ? styles$x.first : void 0;
+      const paddingClass = index === 0 ? styles$w.first : void 0;
       const previousIndex = index - 1;
       const nextIndex2 = index + 1;
       const previous = previousIndex > 0 && previousIndex <= eventNodes.length ? eventNodes[previousIndex] : void 0;
       const next = nextIndex2 < eventNodes.length ? eventNodes[nextIndex2] : void 0;
       const attached2 = item2.event.event === "tool" && (previous?.event.event === "tool" || previous?.event.event === "model");
       const attachedParent2 = item2.event.event === "model" && next?.event.event === "tool";
-      const attachedClass = attached2 ? styles$x.attached : void 0;
-      const attachedChildClass = attached2 ? styles$x.attachedChild : void 0;
-      const attachedParentClass = attachedParent2 ? styles$x.attachedParent : void 0;
+      const attachedClass = attached2 ? styles$w.attached : void 0;
+      const attachedChildClass = attached2 ? styles$w.attachedChild : void 0;
+      const attachedParentClass = attachedParent2 ? styles$w.attachedParent : void 0;
       const context = contextMap.get(item2.id);
       return /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
         {
           id: item2.id,
-          className: clsx(styles$x.node, paddingClass, attachedClass),
+          className: clsx(styles$w.node, paddingClass, attachedClass),
           style: {
             ...style2,
             paddingLeft: `${item2.depth <= 1 ? item2.depth * 0.7 : (0.7 + item2.depth - 1) * 1}em`,
@@ -145679,21 +145651,21 @@ const TranscriptPanel = reactExports.memo((props) => {
       "div",
       {
         className: clsx(
-          styles$R.container,
-          collapsed2 ? styles$R.collapsed : void 0
+          styles$Q.container,
+          collapsed2 ? styles$Q.collapsed : void 0
         ),
         children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$R.treeContainer, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$Q.treeContainer, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
             StickyScroll,
             {
               scrollRef,
               offsetTop: topOffset,
-              className: styles$R.stickyOutline,
+              className: styles$Q.stickyOutline,
               children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
                   TranscriptOutline,
                   {
-                    className: clsx(styles$R.outline),
+                    className: clsx(styles$Q.outline),
                     eventNodes,
                     filteredNodes: outlineFilteredNodes,
                     running,
@@ -145704,7 +145676,7 @@ const TranscriptPanel = reactExports.memo((props) => {
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
                   "div",
                   {
-                    className: styles$R.outlineToggle,
+                    className: styles$Q.outlineToggle,
                     onClick: () => setCollapsed(!collapsed2),
                     children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.sidebar })
                   }
@@ -145722,7 +145694,7 @@ const TranscriptPanel = reactExports.memo((props) => {
               running,
               initialEventId: initialEventId === void 0 ? null : initialEventId,
               offsetTop: topOffset,
-              className: styles$R.listContainer,
+              className: styles$Q.listContainer,
               turnMap
             }
           )
@@ -145997,7 +145969,11 @@ const SampleDisplay = ({
     );
   }, [selectedSampleSummary, runningSampleData, sampleData.status]);
   const sampleDetailNavigation = useSampleDetailNavigation();
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
+  const displayModeContext = reactExports.useMemo(
+    () => ({ displayMode: displayMode ?? "rendered" }),
+    [displayMode]
+  );
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(DisplayModeContext.Provider, { value: displayModeContext, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
     selectedSampleSummary ? /* @__PURE__ */ jsxRuntimeExports.jsx(SampleSummaryView, { parent_id: id, sample: selectedSampleSummary }) : void 0,
     /* @__PURE__ */ jsxRuntimeExports.jsx(ActivityBar, { animating: showActivity, progress: progress2 }),
     hasSampleData && /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -146005,9 +145981,9 @@ const SampleDisplay = ({
       {
         id: tabsetId,
         tabsRef,
-        className: clsx(styles$Z.tabControls),
+        className: clsx(styles$Y.tabControls),
         tabControlsClassName: clsx("text-size-base"),
-        tabPanelsClassName: clsx(styles$Z.tabPanel),
+        tabPanelsClassName: clsx(styles$Y.tabPanel),
         tools: tools2,
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -146016,8 +145992,8 @@ const SampleDisplay = ({
               id: kSampleTranscriptTabId,
               className: clsx(
                 "sample-tab",
-                styles$Z.transcriptContainer,
-                styles$Z.overflowVisible
+                styles$Y.transcriptContainer,
+                styles$Y.overflowVisible
               ),
               title: "Transcript",
               onSelected: onSelectedTab,
@@ -146055,9 +146031,9 @@ const SampleDisplay = ({
               id: kSampleMessagesTabId,
               className: clsx(
                 "sample-tab",
-                styles$Z.fullWidth,
-                styles$Z.chat,
-                styles$Z.overflowVisible
+                styles$Y.fullWidth,
+                styles$Y.chat,
+                styles$Y.overflowVisible
               ),
               title: "Messages",
               onSelected: onSelectedTab,
@@ -146074,7 +146050,7 @@ const SampleDisplay = ({
                   scrollRef,
                   toolCallStyle: "complete",
                   running,
-                  className: styles$Z.fullWidth
+                  className: styles$Y.fullWidth
                 },
                 `${baseId}-chat-${id}`
               )
@@ -146093,7 +146069,7 @@ const SampleDisplay = ({
                 SampleScoresView,
                 {
                   sample: sample2,
-                  className: styles$Z.padded,
+                  className: styles$Y.padded,
                   scrollRef
                 }
               )
@@ -146108,7 +146084,7 @@ const SampleDisplay = ({
               title: "Metadata",
               onSelected: onSelectedTab,
               selected: effectiveSelectedTab === kSampleMetdataTabId,
-              children: sampleMetadatas.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Z.padded, styles$Z.fullWidth), children: sampleMetadatas }) : /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: "No sample metadata available" })
+              children: sampleMetadatas.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Y.padded, styles$Y.fullWidth), children: sampleMetadatas }) : /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: "No sample metadata available" })
             }
           ),
           sample2?.error || sample2?.error_retries && sample2?.error_retries.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -146119,14 +146095,14 @@ const SampleDisplay = ({
               title: "Errors",
               onSelected: onSelectedTab,
               selected: effectiveSelectedTab === kSampleErrorTabId,
-              children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$Z.error), children: [
+              children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$Y.error), children: [
                 sample2?.error ? /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: `Sample Error` }),
                   /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                     ANSIDisplay,
                     {
                       output: sample2.error.traceback_ansi,
-                      className: clsx("text-size-small", styles$Z.ansi),
+                      className: clsx("text-size-small", styles$Y.ansi),
                       style: {
                         fontSize: "clamp(0.3rem, 1.1vw, 0.8rem)",
                         margin: "0.5em 0"
@@ -146141,7 +146117,7 @@ const SampleDisplay = ({
                       ANSIDisplay,
                       {
                         output: retry.traceback_ansi,
-                        className: clsx("text-size-small", styles$Z.ansi),
+                        className: clsx("text-size-small", styles$Y.ansi),
                         style: {
                           fontSize: "clamp(0.3rem, 1.1vw, 0.8rem)",
                           margin: "0.5em 0"
@@ -146161,7 +146137,7 @@ const SampleDisplay = ({
               title: "JSON",
               onSelected: onSelectedTab,
               selected: effectiveSelectedTab === kSampleJsonTabId,
-              children: !sample2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: "JSON not available" }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Z.padded, styles$Z.fullWidth), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              children: !sample2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(NoContentsPanel, { text: "JSON not available" }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Y.padded, styles$Y.fullWidth), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                 SampleJSONView,
                 {
                   sample: sample2,
@@ -146173,7 +146149,7 @@ const SampleDisplay = ({
         ]
       }
     )
-  ] });
+  ] }) });
 };
 const metadataViewsForSample = (id, scrollRef, sample2) => {
   if (!sample2) {
@@ -146211,7 +146187,7 @@ const metadataViewsForSample = (id, scrollRef, sample2) => {
           {
             id: `task-sample-invalidation-${id}`,
             record: invalidationRecord,
-            className: clsx("tab-pane", styles$Z.noTop),
+            className: clsx("tab-pane", styles$Y.noTop),
             scrollRef
           }
         ) })
@@ -146226,7 +146202,7 @@ const metadataViewsForSample = (id, scrollRef, sample2) => {
           ModelTokenTable,
           {
             model_usage: sample2.model_usage,
-            className: clsx(styles$Z.noTop)
+            className: clsx(styles$Y.noTop)
           }
         ) })
       ] }, `sample-usage-${id}`)
@@ -146244,7 +146220,7 @@ const metadataViewsForSample = (id, scrollRef, sample2) => {
               Working: formatTime(sample2.working_time),
               Total: formatTime(sample2.total_time)
             },
-            className: clsx("tab-pane", styles$Z.noTop),
+            className: clsx("tab-pane", styles$Y.noTop),
             scrollRef
           }
         ) })
@@ -146260,7 +146236,7 @@ const metadataViewsForSample = (id, scrollRef, sample2) => {
           {
             id: `task-sample-metadata-${id}`,
             record: sample2?.metadata,
-            className: clsx("tab-pane", styles$Z.noTop),
+            className: clsx("tab-pane", styles$Y.noTop),
             scrollRef
           }
         ) })
@@ -146276,7 +146252,7 @@ const metadataViewsForSample = (id, scrollRef, sample2) => {
           {
             id: `task-sample-store-${id}`,
             record: sample2?.store,
-            className: clsx("tab-pane", styles$Z.noTop),
+            className: clsx("tab-pane", styles$Y.noTop),
             scrollRef,
             processStore: true
           }
@@ -146316,7 +146292,7 @@ const InlineSampleComponent = ({
   const sampleData = useSampleData();
   const sampleProgress = sampleData.status === "loading" && sampleData.downloadProgress && sampleData.downloadProgress.total > 0 ? sampleData.downloadProgress.complete / sampleData.downloadProgress.total : void 0;
   const scrollRef = reactExports.useRef(null);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(className2, styles$11.container), children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$11.scroller), ref: scrollRef, children: /* @__PURE__ */ jsxRuntimeExports.jsx(StickyScrollProvider, { value: scrollRef, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$11.body, children: sampleData.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(className2, styles$1j.container), children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1j.scroller), ref: scrollRef, children: /* @__PURE__ */ jsxRuntimeExports.jsx(StickyScrollProvider, { value: scrollRef, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1j.body, children: sampleData.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(
     ErrorPanel,
     {
       title: "Unable to load sample",
@@ -146338,7 +146314,7 @@ const sampleInfo$1 = "_sampleInfo_14cqz_11";
 const sampleNav = "_sampleNav_14cqz_17";
 const nav$1 = "_nav_14cqz_25";
 const disabled = "_disabled_14cqz_25";
-const styles$w = {
+const styles$v = {
   detail,
   panel: panel$3,
   sampleInfo: sampleInfo$1,
@@ -146435,7 +146411,7 @@ const SampleDetailComponent = ({
   );
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(ExtendedFindProvider, { children: [
     showFind ? /* @__PURE__ */ jsxRuntimeExports.jsx(FindBand, {}) : "",
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$w.detail, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$v.detail, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         ApplicationNavbar,
         {
@@ -146443,7 +146419,7 @@ const SampleDetailComponent = ({
           fnNavigationUrl,
           bordered: bordered2,
           breadcrumbsEnabled,
-          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$w.sampleNav), children: [
+          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$v.sampleNav), children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "div",
               {
@@ -146453,11 +146429,11 @@ const SampleDetailComponent = ({
                 role: "button",
                 "aria-label": "Previous sample",
                 "aria-disabled": !hasPrevious,
-                className: clsx(!hasPrevious && styles$w.disabled, styles$w.nav),
+                className: clsx(!hasPrevious && styles$v.disabled, styles$v.nav),
                 children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.previous) })
               }
             ),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$w.sampleInfo, "text-size-smallest"), children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$v.sampleInfo, "text-size-smallest"), children: [
               "Sample ",
               sampleId,
               " (Epoch ",
@@ -146473,7 +146449,7 @@ const SampleDetailComponent = ({
                 role: "button",
                 "aria-label": "Next sample",
                 "aria-disabled": !hasNext,
-                className: clsx(!hasNext && styles$w.disabled, styles$w.nav),
+                className: clsx(!hasNext && styles$v.disabled, styles$v.nav),
                 children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.next) })
               }
             )
@@ -146484,7 +146460,7 @@ const SampleDetailComponent = ({
         InlineSampleComponent,
         {
           showActivity: sampleStatus2 === "loading" || sampleStatus2 === "streaming",
-          className: styles$w.panel
+          className: styles$v.panel
         }
       )
     ] })
@@ -146631,7 +146607,7 @@ const tabContainer = "_tabContainer_1r3mu_6";
 const tabSet = "_tabSet_1r3mu_14";
 const tabs = "_tabs_1r3mu_21";
 const tabPanels = "_tabPanels_1r3mu_29";
-const styles$v = {
+const styles$u = {
   workspace,
   tabContainer,
   tabSet,
@@ -146639,7 +146615,7 @@ const styles$v = {
   tabPanels
 };
 const message = "_message_1gb2h_5";
-const styles$u = {
+const styles$t = {
   "task-error-display": "_task-error-display_1gb2h_1",
   message
 };
@@ -146658,7 +146634,7 @@ const TaskErrorCard = ({ error: error2 }) => {
         {
           id: "task-error-collapse",
           collapse: true,
-          className: clsx("text-size-smaller", styles$u.message),
+          className: clsx("text-size-smaller", styles$t.message),
           children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             RenderedContent,
             {
@@ -146672,7 +146648,7 @@ const TaskErrorCard = ({ error: error2 }) => {
         ANSIDisplay,
         {
           output: error2.traceback_ansi,
-          className: styles$u["task-error-display"]
+          className: styles$t["task-error-display"]
         }
       )
     ] })
@@ -146716,11 +146692,11 @@ const MessageBand = ({
   scope = "eval"
 }) => {
   const className2 = [type];
-  const [visible2, setVisible] = useMessageVisibility(id, scope);
+  const [visible, setVisible] = useMessageVisibility(id, scope);
   const handleClick = reactExports.useCallback(() => {
     setVisible(false);
   }, [setVisible]);
-  if (!visible2) {
+  if (!visible) {
     className2.push("hidden");
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("message-band", className2), children: [
@@ -146738,7 +146714,7 @@ const MessageBand = ({
   ] });
 };
 const item$1 = "_item_1uzhd_1";
-const styles$t = {
+const styles$s = {
   item: item$1
 };
 const DatasetDetailView = ({
@@ -146749,15 +146725,15 @@ const DatasetDetailView = ({
     Object.entries(dataset).filter(([key2]) => key2 !== "sample_ids")
   );
   if (!dataset || Object.keys(filtered).length === 0) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-size-base", styles$t.item), style: style2, children: "No dataset information available" });
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-size-base", styles$s.item), style: style2, children: "No dataset information available" });
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     MetaDataGrid,
     {
-      className: clsx("text-size-base", styles$t.item),
+      className: clsx("text-size-base", styles$s.item),
       entries: filtered,
       style: style2,
-      plain: true
+      options: { plain: true }
     }
   );
 };
@@ -146766,7 +146742,7 @@ const wideCol = "_wideCol_1n79r_9";
 const planCol = "_planCol_1n79r_24";
 const container$b = "_container_1n79r_29";
 const grid$3 = "_grid_1n79r_35";
-const styles$s = {
+const styles$r = {
   floatingCol,
   wideCol,
   planCol,
@@ -146776,7 +146752,7 @@ const styles$s = {
 const icon$1 = "_icon_59zaz_1";
 const container$a = "_container_59zaz_5";
 const metadata = "_metadata_59zaz_11";
-const styles$r = {
+const styles$q = {
   icon: icon$1,
   container: container$a,
   metadata
@@ -146787,22 +146763,22 @@ const DetailStep = ({
   params,
   className: className2
 }) => {
-  const iconHtml = icon2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, styles$r.icon) }) : "";
+  const iconHtml = icon2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, styles$q.icon) }) : "";
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2), children: [
     iconHtml,
     " ",
     name2,
-    params && Object.keys(params).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$r.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    params && Object.keys(params).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$q.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       MetaDataGrid,
       {
         entries: params,
-        className: clsx("text-size-small", styles$r.metadata)
+        className: clsx("text-size-small", styles$q.metadata)
       }
     ) }) : ""
   ] });
 };
 const item = "_item_leq25_1";
-const styles$q = {
+const styles$p = {
   item
 };
 const ScorerDetailView = ({
@@ -146819,31 +146795,31 @@ const ScorerDetailView = ({
       icon: ApplicationIcons.scorer,
       name: name2,
       params,
-      className: clsx(styles$q.item, "text-size-base")
+      className: clsx(styles$p.item, "text-size-base")
     }
   );
 };
 const container$9 = "_container_12j2k_1";
 const separator = "_separator_12j2k_11";
-const styles$p = {
+const styles$o = {
   container: container$9,
   separator
 };
 const SolversDetailView = ({ steps }) => {
-  const separator2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$p.items, "text-size-small", styles$p.separator), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.arrows.right }) });
+  const separator2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$o.items, "text-size-small", styles$o.separator), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.arrows.right }) });
   const details = steps?.map((step, index) => {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         DetailStep,
         {
           name: step.solver,
-          className: clsx(styles$p.items, "text-size-small")
+          className: clsx(styles$o.items, "text-size-small")
         }
       ),
       index < steps.length - 1 ? separator2 : ""
     ] }, `solver-step-${index}`);
   });
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$p.container, children: details });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$o.container, children: details });
 };
 const PlanDetailView = ({
   evaluation,
@@ -146857,13 +146833,13 @@ const PlanDetailView = ({
   const taskColumns = [];
   taskColumns.push({
     title: "Dataset",
-    className: styles$s.floatingCol,
+    className: styles$r.floatingCol,
     contents: /* @__PURE__ */ jsxRuntimeExports.jsx(DatasetDetailView, { dataset: evaluation.dataset })
   });
   if (steps) {
     taskColumns.push({
       title: "Solvers",
-      className: styles$s.wideCol,
+      className: styles$r.wideCol,
       contents: /* @__PURE__ */ jsxRuntimeExports.jsx(SolversDetailView, { steps })
     });
   }
@@ -146897,15 +146873,15 @@ const PlanDetailView = ({
       });
       taskColumns.push({
         title: label2,
-        className: styles$s.floatingCol,
+        className: styles$r.floatingCol,
         contents: scorerPanels
       });
     }
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$s.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$r.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
     {
-      className: styles$s.grid,
+      className: styles$r.grid,
       style: {
         gridTemplateColumns: `repeat(${taskColumns.length}, fit-content(50%))`
       },
@@ -146933,7 +146909,7 @@ const PlanColumn = ({ title: title2, className: className2, children: children2 
           "text-size-small",
           "text-style-label",
           "text-style-secondary",
-          styles$s.planCol
+          styles$r.planCol
         ),
         children: title2
       }
@@ -147071,7 +147047,7 @@ const DownloadPanel = ({
   ] }) });
 };
 const jsonTab = "_jsonTab_6pq03_1";
-const styles$o = {
+const styles$n = {
   jsonTab
 };
 const kJsonMaxSize = 1e7;
@@ -147129,7 +147105,7 @@ const JsonTab = ({ logFile, json }) => {
   const downloadFiles = useStore((state) => state.capabilities.downloadFiles);
   if (logFile && json.length > kJsonMaxSize && downloadFiles) {
     const file = `${filename(logFile)}.json`;
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$o.jsonTab, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$n.jsonTab, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       DownloadPanel,
       {
         message: "The JSON for this log file is too large to render.",
@@ -147139,14 +147115,14 @@ const JsonTab = ({ logFile, json }) => {
       }
     ) });
   } else {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$o.jsonTab, children: /* @__PURE__ */ jsxRuntimeExports.jsx(JSONPanel, { id: "task-json-contents", json, simple: true }) });
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$n.jsonTab, children: /* @__PURE__ */ jsxRuntimeExports.jsx(JSONPanel, { id: "task-json-contents", json, simple: true }) });
   }
 };
 const container$8 = "_container_4wzpj_1";
 const modelInfo = "_modelInfo_4wzpj_8";
 const role = "_role_4wzpj_15";
 const sep = "_sep_4wzpj_19";
-const styles$n = {
+const styles$m = {
   container: container$8,
   modelInfo,
   role,
@@ -147168,31 +147144,31 @@ const ModelCard = ({ evalSpec }) => {
   const noneEl = /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-style-secondary", children: "None" });
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Models" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: "task-model-card-body", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$n.container, children: Object.keys(modelsInfo || {}).map((modelKey) => {
+    /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: "task-model-card-body", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$m.container, children: Object.keys(modelsInfo || {}).map((modelKey) => {
       const modelInfo2 = modelsInfo[modelKey];
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
         {
-          className: clsx(styles$n.modelInfo, "text-size-small"),
+          className: clsx(styles$m.modelInfo, "text-size-small"),
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "div",
               {
                 className: clsx(
-                  styles$n.role,
+                  styles$m.role,
                   "text-style-label",
                   "text-style-secondary"
                 ),
                 children: modelKey
               }
             ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$n.sep) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$m.sep) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Model" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: modelInfo2.model }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$n.sep) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$m.sep) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Base Url" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-size-small", children: modelInfo2.base_url || noneEl }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$n.sep) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$m.sep) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Configuration" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-size-small", children: modelInfo2.config && Object.keys(modelInfo2.config).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
               MetaDataGrid,
@@ -147200,7 +147176,7 @@ const ModelCard = ({ evalSpec }) => {
                 entries: modelInfo2.config
               }
             ) : noneEl }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$n.sep) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$m.sep) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Args" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-size-small", children: Object.keys(modelInfo2.args).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
               MetaDataGrid,
@@ -147208,34 +147184,12 @@ const ModelCard = ({ evalSpec }) => {
                 entries: modelInfo2.args
               }
             ) : noneEl }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$n.sep) })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$m.sep) })
           ]
         },
         modelKey
       );
     }) }) })
-  ] });
-};
-const cardsContainer = "_cardsContainer_d0qjo_1";
-const styles$m = {
-  cardsContainer
-};
-const kModelUsageCardBodyId = "model-usage-card-body";
-const kRoleUsageCardBodyId = "role-usage-card-body";
-const UsageCard = ({ stats }) => {
-  if (!stats) {
-    return null;
-  }
-  const hasRoleUsage = stats.role_usage && Object.keys(stats.role_usage).length > 0;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$m.cardsContainer, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Model Usage" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: kModelUsageCardBodyId, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ModelTokenTable, { model_usage: stats.model_usage }) })
-    ] }),
-    hasRoleUsage && /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Role Usage" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: kRoleUsageCardBodyId, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ModelTokenTable, { model_usage: stats.role_usage }) })
-    ] })
   ] });
 };
 const useModelsTab = (evalSpec, evalStats, evalStatus) => {
@@ -147260,7 +147214,10 @@ const ModelTab = ({
 }) => {
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { padding: "0.5em 1em 0 1em", width: "100%" }, children: [
     evalSpec ? /* @__PURE__ */ jsxRuntimeExports.jsx(ModelCard, { evalSpec }) : void 0,
-    evalStatus !== "started" && evalStats?.model_usage && Object.keys(evalStats.model_usage).length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(UsageCard, { stats: evalStats })
+    evalStatus !== "started" && evalStats?.model_usage && Object.keys(evalStats.model_usage).length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(UsageCard, { label: "Model Usage", usage: evalStats.model_usage }),
+      evalStats.role_usage && Object.keys(evalStats.role_usage).length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(UsageCard, { label: "Role Usage", usage: evalStats.role_usage })
+    ] })
   ] }) });
 };
 const statusCell = "_statusCell_hunte_1";
@@ -160137,11 +160094,11 @@ function iterMatches(doc2, re2, from, to2, f2) {
   }
 }
 function matchRanges(view, maxLength) {
-  let visible2 = view.visibleRanges;
-  if (visible2.length == 1 && visible2[0].from == view.viewport.from && visible2[0].to == view.viewport.to)
-    return visible2;
+  let visible = view.visibleRanges;
+  if (visible.length == 1 && visible[0].from == view.viewport.from && visible[0].to == view.viewport.to)
+    return visible;
   let result2 = [];
-  for (let { from, to: to2 } of visible2) {
+  for (let { from, to: to2 } of visible) {
     from = Math.max(view.state.doc.lineAt(from).from, from - maxLength);
     to2 = Math.min(view.state.doc.lineAt(to2).to, to2 + maxLength);
     if (result2.length && result2[result2.length - 1].to >= from)
@@ -160593,13 +160550,13 @@ const tooltipPlugin = /* @__PURE__ */ ViewPlugin.fromClass(class {
         ({ scaleX, scaleY } = this.view.viewState);
       }
     }
-    let visible2 = this.view.scrollDOM.getBoundingClientRect(), margins = getScrollMargins(this.view);
+    let visible = this.view.scrollDOM.getBoundingClientRect(), margins = getScrollMargins(this.view);
     return {
       visible: {
-        left: visible2.left + margins.left,
-        top: visible2.top + margins.top,
-        right: visible2.right - margins.right,
-        bottom: visible2.bottom - margins.bottom
+        left: visible.left + margins.left,
+        top: visible.top + margins.top,
+        right: visible.right - margins.right,
+        bottom: visible.bottom - margins.bottom
       },
       parent: this.parent ? this.container.getBoundingClientRect() : this.view.dom.getBoundingClientRect(),
       pos: this.manager.tooltips.map((t2, i4) => {
@@ -160621,12 +160578,12 @@ const tooltipPlugin = /* @__PURE__ */ ViewPlugin.fromClass(class {
       for (let t2 of this.manager.tooltipViews)
         t2.dom.style.position = "absolute";
     }
-    let { visible: visible2, space, scaleX, scaleY } = measured;
+    let { visible, space, scaleX, scaleY } = measured;
     let others = [];
     for (let i4 = 0; i4 < this.manager.tooltips.length; i4++) {
       let tooltip = this.manager.tooltips[i4], tView = this.manager.tooltipViews[i4], { dom } = tView;
       let pos2 = measured.pos[i4], size = measured.size[i4];
-      if (!pos2 || tooltip.clip !== false && (pos2.bottom <= Math.max(visible2.top, space.top) || pos2.top >= Math.min(visible2.bottom, space.bottom) || pos2.right < Math.max(visible2.left, space.left) - 0.1 || pos2.left > Math.min(visible2.right, space.right) + 0.1)) {
+      if (!pos2 || tooltip.clip !== false && (pos2.bottom <= Math.max(visible.top, space.top) || pos2.top >= Math.min(visible.bottom, space.bottom) || pos2.right < Math.max(visible.left, space.left) - 0.1 || pos2.left > Math.min(visible.right, space.right) + 0.1)) {
         dom.style.top = Outside;
         continue;
       }
@@ -170628,15 +170585,15 @@ const LogView = () => {
           status: selectedLogDetails?.status
         }
       ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: divRef, className: clsx("workspace", styles$v.workspace), children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("log-detail", styles$v.tabContainer), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: divRef, className: clsx("workspace", styles$u.workspace), children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("log-detail", styles$u.tabContainer), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         TabSet,
         {
           id: "log-details",
           tools: tabTools2,
           type: "pills",
-          className: clsx(styles$v.tabSet, "text-size-smaller"),
-          tabControlsClassName: clsx(styles$v.tabs, "text-size-smaller"),
-          tabPanelsClassName: clsx(styles$v.tabPanels),
+          className: clsx(styles$u.tabSet, "text-size-smaller"),
+          tabControlsClassName: clsx(styles$u.tabs, "text-size-smaller"),
+          tabPanelsClassName: clsx(styles$u.tabPanels),
           children: Object.keys(tabs2).map((key2) => {
             const tab2 = tabs2[key2];
             return /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -171275,7 +171232,7 @@ const useSampleColumns = (logDetails) => {
         pinned: "left",
         cellRenderer: (params) => {
           if (params.data?.displayIndex !== void 0) {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$15.numberCell, children: params.data.displayIndex });
+            return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1n.numberCell, children: params.data.displayIndex });
           }
           return "";
         }
@@ -171608,7 +171565,7 @@ const SamplesGrid = ({
   reactExports.useEffect(() => {
     resizeGridColumns();
   }, [columns, resizeGridColumns]);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$15.gridWrapper, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: gridContainerRef, className: styles$15.gridContainer, tabIndex: 0, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1n.gridWrapper, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: gridContainerRef, className: styles$1n.gridContainer, tabIndex: 0, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     AgGridReact,
     {
       ref: gridRef,
