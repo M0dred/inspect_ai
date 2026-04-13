@@ -69610,6 +69610,7 @@ const ApplicationIcons = {
   expand: {
     all: "bi bi-arrows-expand"
   },
+  file: "bi bi-file-code",
   filter: "bi bi-funnel",
   folder: "bi bi-folder",
   flow: "ii inspect-flow",
@@ -74380,8 +74381,8 @@ const useLogRouteParams = () => {
   const location2 = useLocation();
   return reactExports.useMemo(() => {
     const rawPath = location2.pathname;
-    const logsMatch = rawPath.match(/^\/logs\/(.*)$/);
-    const splatPath = logsMatch ? logsMatch[1] : "";
+    const logsMatch = rawPath.match(/^\/(logs|tasks)\/(.*)$/);
+    const splatPath = logsMatch ? logsMatch[2] : "";
     const sampleUuidMatch = splatPath.match(
       /^(.+?)\/samples\/sample_uuid\/([^/]+)(?:\/(.+?))?\/?\s*$/
     );
@@ -74515,41 +74516,48 @@ const useSamplesRouteParams = () => {
 };
 const kLogsRoutUrlPattern = "/logs";
 const kLogRouteUrlPattern = "/logs/*";
-const baseUrl = (logPath, sampleId, sampleEpoch) => {
+const kTasksRouteUrlPattern = "/tasks";
+const kTaskRouteUrlPattern = "/tasks/*";
+const useRoutePrefix = () => {
+  const location2 = useLocation();
+  return location2.pathname.startsWith("/tasks") ? "/tasks" : "/logs";
+};
+const baseUrl = (logPath, sampleId, sampleEpoch, prefix = "/logs") => {
   if (sampleId !== void 0 && sampleEpoch !== void 0) {
-    return logSamplesUrl(logPath, sampleId, sampleEpoch);
+    return logSamplesUrl(logPath, sampleId, sampleEpoch, void 0, prefix);
   } else {
-    return logsUrl(logPath);
+    return logsUrl(logPath, void 0, void 0, prefix);
   }
 };
 const useSampleUrlBuilder = () => {
   const location2 = useLocation();
+  const prefix = location2.pathname.startsWith("/tasks") ? "/tasks" : "/logs";
   return (logPath, sampleId, sampleEpoch, sampleTabId) => {
     if (sampleId && sampleEpoch && location2.pathname.startsWith("/samples/")) {
       return samplesSampleUrl(logPath, sampleId, sampleEpoch, sampleTabId);
     } else {
-      return logSamplesUrl(logPath, sampleId, sampleEpoch, sampleTabId);
+      return logSamplesUrl(logPath, sampleId, sampleEpoch, sampleTabId, prefix);
     }
   };
 };
-const logSamplesUrl = (logPath, sampleId, sampleEpoch, sampleTabId) => {
+const logSamplesUrl = (logPath, sampleId, sampleEpoch, sampleTabId, prefix = "/logs") => {
   const decodedLogPath = decodeUrlParam(logPath) || logPath;
   if (sampleId !== void 0 && sampleEpoch !== void 0) {
     const encodedSampleId = encodeURIComponent(String(sampleId));
     return encodePathParts(
-      `/logs/${decodedLogPath}/samples/sample/${encodedSampleId}/${sampleEpoch}/${sampleTabId || ""}`
+      `${prefix}/${decodedLogPath}/samples/sample/${encodedSampleId}/${sampleEpoch}/${sampleTabId || ""}`
     );
   } else {
     return encodePathParts(
-      `/logs/${decodedLogPath}/samples/${sampleTabId || ""}`
+      `${prefix}/${decodedLogPath}/samples/${sampleTabId || ""}`
     );
   }
 };
-const printSampleUrl = (logPath, sampleId, epoch, view) => {
+const printSampleUrl = (logPath, sampleId, epoch, view, prefix = "/logs") => {
   const decodedLogPath = decodeUrlParam(logPath) || logPath;
   const encodedSampleId = encodeURIComponent(String(sampleId));
   return encodePathParts(
-    `/logs/${decodedLogPath}/samples/sample/${encodedSampleId}/${epoch}/print`
+    `${prefix}/${decodedLogPath}/samples/sample/${encodedSampleId}/${epoch}/print`
   ) + `?view=${view}`;
 };
 const samplesSampleUrl = (logPath, sampleId, epoch, sampleTabId) => {
@@ -74572,24 +74580,55 @@ const sampleMessageUrl = (builder, messageId, logPath, sampleId, sampleEpoch) =>
   const baseUrl2 = builder(logPath, sampleId, sampleEpoch, kSampleMessagesTabId);
   return `${baseUrl2}?message=${messageId}`;
 };
+const tasksUrl = (log_file, log_dir) => {
+  const path = makeLogsPath(log_file, log_dir);
+  const decodedLogSegment = decodeUrlParam(path) || path;
+  return encodePathParts(`/tasks/${decodedLogSegment}`);
+};
+const useTasksRouteParams = () => {
+  const location2 = useLocation();
+  return reactExports.useMemo(() => {
+    const rawPath = location2.pathname;
+    const tasksMatch = rawPath.match(/^\/tasks\/(.*)$/);
+    const splatPath = tasksMatch ? tasksMatch[1] : "";
+    const sampleMatch = splatPath.match(
+      /^(.+?)\/sample\/([^/]+)\/([^/]+)(?:\/([^/]+))?\/?$/
+    );
+    if (sampleMatch) {
+      const [, logPath, sampleId, epoch, tabId] = sampleMatch;
+      return {
+        tasksPath: decodeUrlParam(logPath),
+        sampleId: decodeUrlParam(sampleId),
+        epoch: decodeUrlParam(epoch),
+        tabId: tabId ? decodeUrlParam(tabId) : void 0
+      };
+    }
+    return {
+      tasksPath: splatPath ? decodeUrlParam(splatPath) : void 0,
+      sampleId: void 0,
+      epoch: void 0,
+      tabId: void 0
+    };
+  }, [location2.pathname]);
+};
 const samplesUrl = (log_file, log_dir) => {
   const path = makeLogsPath(log_file, log_dir);
   const decodedLogSegment = decodeUrlParam(path) || path;
   return encodePathParts(`/samples/${decodedLogSegment}`);
 };
-const logsUrl = (log_file, log_dir, tabId) => {
-  return logsUrlRaw(makeLogsPath(log_file, log_dir), tabId);
+const logsUrl = (log_file, log_dir, tabId, prefix = "/logs") => {
+  return logsUrlRaw(makeLogsPath(log_file, log_dir), tabId, prefix);
 };
 const makeLogsPath = (log_file, log_dir) => {
   const pathSegment = directoryRelativeUrl(log_file, log_dir);
   return pathSegment;
 };
-const logsUrlRaw = (log_segment, tabId) => {
+const logsUrlRaw = (log_segment, tabId, prefix = "/logs") => {
   const decodedLogSegment = decodeUrlParam(log_segment) || log_segment;
   if (tabId) {
-    return encodePathParts(`/logs/${decodedLogSegment}/${tabId}`);
+    return encodePathParts(`${prefix}/${decodedLogSegment}/${tabId}`);
   } else {
-    return encodePathParts(`/logs/${decodedLogSegment}`);
+    return encodePathParts(`${prefix}/${decodedLogSegment}`);
   }
 };
 const button$3 = "_button_1bbut_1";
@@ -75095,7 +75134,8 @@ const NavbarButton = reactExports.forwardRef(
 );
 NavbarButton.displayName = "NavbarButton";
 const segments = [
-  { id: "logs", label: "Tasks", icon: ApplicationIcons.navbar.tasks },
+  { id: "tasks", label: "Tasks", icon: ApplicationIcons.navbar.tasks },
+  { id: "logs", label: "Folders", icon: ApplicationIcons.file },
   { id: "samples", label: "Samples", icon: ApplicationIcons.sample }
 ];
 const ViewSegmentedControl = ({
@@ -75104,20 +75144,20 @@ const ViewSegmentedControl = ({
   const navigate = useNavigate();
   const { logPath } = useLogRouteParams();
   const { samplesPath } = useSamplesRouteParams();
+  const { tasksPath } = useTasksRouteParams();
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     SegmentedControl,
     {
       segments,
       selectedId: selectedSegment,
       onSegmentChange: (segment2) => {
-        if (segment2 === "samples") {
-          const path = logPath || samplesPath || "";
-          const sampleUrl = samplesUrl(path);
-          navigate(sampleUrl);
+        const path = logPath || samplesPath || tasksPath || "";
+        if (segment2 === "logs") {
+          navigate(logsUrl(path));
+        } else if (segment2 === "tasks") {
+          navigate(tasksUrl(path));
         } else {
-          const path = samplesPath || logPath || "";
-          const logUrl = logsUrl(path);
-          navigate(logUrl);
+          navigate(samplesUrl(path));
         }
       }
     }
@@ -75386,6 +75426,27 @@ const comparators = {
     return timeA - timeB;
   }
 };
+const PreformattedTooltip = ({ value: value2 }) => {
+  if (!value2) return null;
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "div",
+    {
+      style: {
+        backgroundColor: "var(--bs-body-bg, #fff)",
+        border: "1px solid var(--bs-border-color, #dee2e6)",
+        borderRadius: "4px",
+        padding: "8px",
+        maxWidth: "500px",
+        maxHeight: "400px",
+        overflow: "auto",
+        whiteSpace: "pre",
+        fontFamily: "monospace",
+        fontSize: "10px"
+      },
+      children: value2
+    }
+  );
+};
 const nameCell = "_nameCell_1jtud_1";
 const modelCell = "_modelCell_1jtud_8";
 const scoreCell = "_scoreCell_1jtud_15";
@@ -75408,7 +75469,7 @@ const localStyles = {
 };
 const styles$1o = { ...styles$1p, ...localStyles };
 const EmptyCell = () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: "-" });
-const useLogListColumns = () => {
+const useLogListColumns = (mode = "logs") => {
   const columnVisibility = useStore(
     (state) => state.logs.listing.columnVisibility
   );
@@ -75477,6 +75538,7 @@ const useLogListColumns = () => {
         sortable: true,
         filter: true,
         resizable: true,
+        tooltipValueGetter: (params) => params.value || void 0,
         valueGetter: (params) => {
           const item2 = params.data;
           if (!item2) return "";
@@ -75504,6 +75566,7 @@ const useLogListColumns = () => {
         sortable: true,
         filter: true,
         resizable: true,
+        tooltipField: "model",
         cellRenderer: (params) => {
           const item2 = params.data;
           if (!item2) return null;
@@ -75593,19 +75656,161 @@ const useLogListColumns = () => {
         sortable: true,
         filter: true,
         resizable: true,
+        tooltipValueGetter: (params) => params.value || void 0,
         valueGetter: (params) => {
           const item2 = params.data;
-          if (!item2 || item2.type !== "file") return "";
-          return basename(item2.name);
+          if (!item2) return "";
+          if (item2.type === "folder") return item2.name;
+          if (item2.type === "file") return basename(item2.name);
+          return "";
         },
         cellRenderer: (params) => {
           const item2 = params.data;
-          if (!item2 || item2.type === "folder" || item2.type === "pending-task") {
+          if (!item2 || item2.type === "pending-task") {
             return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
+          }
+          if (item2.type === "folder") {
+            return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1o.nameCell, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$1o.folder, children: item2.name }) });
           }
           const value2 = basename(item2.name);
           return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1o.nameCell, children: value2 });
         }
+      },
+      {
+        field: "path",
+        headerName: "Path",
+        initialWidth: 300,
+        minWidth: 100,
+        sortable: true,
+        filter: true,
+        resizable: true,
+        tooltipField: "path",
+        cellRenderer: (params) => {
+          const item2 = params.data;
+          if (!item2?.path) return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1o.nameCell, children: item2.path });
+        }
+      },
+      {
+        field: "totalSamples",
+        headerName: "Samples",
+        initialWidth: 90,
+        minWidth: 60,
+        maxWidth: 120,
+        sortable: true,
+        filter: "agNumberColumnFilter",
+        resizable: true,
+        cellRenderer: (params) => {
+          if (params.value === void 0 || params.value === null) {
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
+          }
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: formatNumber(params.value) });
+        }
+      },
+      {
+        field: "completedSamples",
+        headerName: "Completed Samples",
+        initialWidth: 130,
+        minWidth: 80,
+        maxWidth: 160,
+        sortable: true,
+        filter: "agNumberColumnFilter",
+        resizable: true,
+        cellRenderer: (params) => {
+          if (params.value === void 0 || params.value === null) {
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
+          }
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: formatNumber(params.value) });
+        }
+      },
+      {
+        field: "sandbox",
+        headerName: "Sandbox",
+        initialWidth: 100,
+        minWidth: 60,
+        maxWidth: 150,
+        sortable: true,
+        filter: true,
+        resizable: true,
+        cellRenderer: (params) => {
+          if (!params.value) return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: params.value });
+        }
+      },
+      {
+        field: "totalTokens",
+        headerName: "Tokens",
+        initialWidth: 100,
+        minWidth: 60,
+        maxWidth: 140,
+        sortable: true,
+        filter: "agNumberColumnFilter",
+        resizable: true,
+        cellRenderer: (params) => {
+          if (params.value === void 0 || params.value === null) {
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
+          }
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: formatNumber(params.value) });
+        }
+      },
+      {
+        field: "duration",
+        headerName: "Duration",
+        initialWidth: 120,
+        minWidth: 70,
+        maxWidth: 160,
+        sortable: true,
+        filter: "agNumberColumnFilter",
+        resizable: true,
+        valueFormatter: (params) => {
+          if (params.value === void 0 || params.value === null) return "";
+          return formatTime(params.value);
+        },
+        cellRenderer: (params) => {
+          if (params.value === void 0 || params.value === null) {
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
+          }
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: formatTime(params.value) });
+        },
+        tooltipValueGetter: (params) => {
+          if (params.value === void 0 || params.value === null) {
+            return void 0;
+          }
+          return formatTime(params.value);
+        }
+      },
+      {
+        field: "taskFile",
+        headerName: "Task File",
+        initialWidth: 200,
+        minWidth: 100,
+        sortable: true,
+        filter: true,
+        resizable: true,
+        tooltipField: "taskFile",
+        cellRenderer: (params) => {
+          if (!params.value) return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1o.nameCell, children: params.value });
+        }
+      },
+      {
+        field: "taskArgs",
+        headerName: "Task Args",
+        initialWidth: 200,
+        minWidth: 100,
+        sortable: true,
+        filter: true,
+        resizable: true,
+        cellRenderer: (params) => {
+          if (!params.value) return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyCell, {});
+          return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$1o.nameCell, children: params.value });
+        },
+        tooltipValueGetter: (params) => {
+          const raw = params.data?.taskArgsRaw;
+          if (!raw) return void 0;
+          return JSON.stringify(raw, null, 2);
+        },
+        tooltipComponent: PreformattedTooltip
       }
     ];
     const scorerColumns = Object.keys(scorerMap).map(
@@ -75645,20 +75850,77 @@ const useLogListColumns = () => {
         };
       }
     );
-    return [...baseColumns, ...scorerColumns];
-  }, [scorerMap]);
+    const allCols = [...baseColumns, ...scorerColumns];
+    if (mode === "tasks") {
+      const typeIdx = allCols.findIndex((col) => col.field === "type");
+      if (typeIdx >= 0) {
+        allCols.splice(typeIdx, 1);
+      }
+      const tasksFieldOrder = [
+        "status",
+        "task",
+        "model",
+        "taskArgs",
+        "score",
+        "completedAt",
+        "totalSamples",
+        "completedSamples",
+        "totalTokens",
+        "duration",
+        "name",
+        "sandbox",
+        "taskFile"
+      ];
+      allCols.sort((a2, b2) => {
+        const aIdx = tasksFieldOrder.indexOf(a2.field || "");
+        const bIdx = tasksFieldOrder.indexOf(b2.field || "");
+        const aOrder = aIdx >= 0 ? aIdx : tasksFieldOrder.length;
+        const bOrder = bIdx >= 0 ? bIdx : tasksFieldOrder.length;
+        return aOrder - bOrder;
+      });
+    } else {
+      const nameIdx = allCols.findIndex((col) => col.field === "name");
+      if (nameIdx > 1) {
+        const [nameCol] = allCols.splice(nameIdx, 1);
+        allCols.splice(1, 0, nameCol);
+      }
+      const statusIdx = allCols.findIndex((col) => col.field === "status");
+      if (statusIdx > 2) {
+        const [statusCol] = allCols.splice(statusIdx, 1);
+        allCols.splice(2, 0, statusCol);
+      }
+    }
+    return allCols;
+  }, [scorerMap, mode]);
+  const defaultHiddenFields = reactExports.useMemo(() => {
+    const hidden2 = /* @__PURE__ */ new Set();
+    if (mode === "tasks") {
+      hidden2.add("sandbox");
+      hidden2.add("taskFile");
+      hidden2.add("name");
+      hidden2.add("path");
+      hidden2.add("completedSamples");
+    } else {
+      hidden2.add("path");
+      hidden2.add("completedSamples");
+      hidden2.add("sandbox");
+      hidden2.add("taskFile");
+    }
+    return hidden2;
+  }, [mode]);
   const columns = reactExports.useMemo(() => {
     const columnsWithVisibility = allColumns.map((col) => {
       const field = getFieldKey(col);
       const isScoreColumn = field.startsWith("score_");
-      const isVisible = columnVisibility[field] ?? (isScoreColumn ? false : true);
+      const defaultVisible = isScoreColumn ? false : !defaultHiddenFields.has(field);
+      const isVisible = columnVisibility[field] ?? defaultVisible;
       return {
         ...col,
         hide: !isVisible
       };
     });
     return columnsWithVisibility;
-  }, [allColumns, columnVisibility]);
+  }, [allColumns, columnVisibility, defaultHiddenFields]);
   return {
     columns,
     setColumnVisibility
@@ -132644,7 +132906,8 @@ const createGridKeyboardHandler = ({
 const LogListGrid = ({
   items,
   currentPath,
-  gridRef: externalGridRef
+  gridRef: externalGridRef,
+  mode = "logs"
 }) => {
   const {
     gridState,
@@ -132677,7 +132940,7 @@ const LogListGrid = ({
   const logFiles = reactExports.useMemo(() => {
     return items.filter((item2) => item2.type === "file").map((item2) => item2.log).filter((file) => file !== void 0);
   }, [items]);
-  const { columns } = useLogListColumns();
+  const { columns } = useLogListColumns(mode);
   const initialGridState = reactExports.useMemo(() => {
     if (previousLogPath !== void 0 && previousLogPath !== currentPath) {
       const result2 = { ...gridState };
@@ -132698,6 +132961,28 @@ const LogListGrid = ({
     return items.map((item2) => {
       const preview = item2.type === "file" ? item2.logPreview : void 0;
       const details = item2.type === "file" && item2.log ? logDetails[item2.log.name] : void 0;
+      let totalTokens;
+      if (details?.stats?.model_usage) {
+        totalTokens = 0;
+        for (const usage of Object.values(details.stats.model_usage)) {
+          totalTokens += usage.total_tokens;
+        }
+      }
+      let duration;
+      if (details?.stats?.started_at && details?.stats?.completed_at) {
+        const start2 = new Date(details.stats.started_at).getTime();
+        const end2 = new Date(details.stats.completed_at).getTime();
+        if (start2 && end2 && end2 > start2) {
+          duration = (end2 - start2) / 1e3;
+        }
+      }
+      let taskArgs;
+      if (details?.eval?.task_args) {
+        const entries = Object.entries(details.eval.task_args);
+        if (entries.length > 0) {
+          taskArgs = entries.map(([k2, v2]) => `${k2}=${JSON.stringify(v2)}`).join(", ");
+        }
+      }
       const row2 = {
         id: item2.id,
         name: item2.name,
@@ -132710,7 +132995,16 @@ const LogListGrid = ({
         status: preview?.status,
         completedAt: preview?.completed_at,
         itemCount: item2.type === "folder" ? item2.itemCount : void 0,
-        log: item2.type === "file" ? item2.log : void 0
+        log: item2.type === "file" ? item2.log : void 0,
+        path: item2.type === "file" ? item2.name : void 0,
+        totalSamples: details?.results?.total_samples,
+        completedSamples: details?.results?.completed_samples,
+        sandbox: details?.eval?.sandbox?.type,
+        totalTokens,
+        duration,
+        taskFile: details?.eval?.task_file ?? void 0,
+        taskArgs,
+        taskArgsRaw: details?.eval?.task_args ?? void 0
       };
       if (details?.results?.scores) {
         for (const evalScore of details.results.scores) {
@@ -132804,17 +133098,13 @@ const LogListGrid = ({
   const handleFilterChanged = reactExports.useCallback(async () => {
     await loadAllLogOverviews();
     setWatchedLogs(logFiles);
-    if (gridRef.current?.api) {
-      const displayedRowCount = gridRef.current.api.getDisplayedRowCount();
-      setFilteredCount(displayedRowCount);
-    }
-  }, [
-    loadAllLogOverviews,
-    setWatchedLogs,
-    logFiles,
-    setFilteredCount,
-    gridRef
-  ]);
+  }, [loadAllLogOverviews, setWatchedLogs, logFiles]);
+  const handleModelUpdated = reactExports.useCallback(
+    (e3) => {
+      setFilteredCount(e3.api.getDisplayedRowCount());
+    },
+    [setFilteredCount]
+  );
   const maxColCount = reactExports.useRef(0);
   const resizeGridColumns = reactExports.useRef(createGridColumnResizer(gridRef)).current;
   reactExports.useEffect(() => {
@@ -132929,6 +133219,9 @@ const LogListGrid = ({
           filter: true,
           resizable: true
         },
+        tooltipShowDelay: 2e3,
+        tooltipInteraction: true,
+        popupParent: document.body,
         autoSizeStrategy: { type: "fitGridWidth" },
         headerHeight: 25,
         rowSelection: { mode: "singleRow", checkboxes: false },
@@ -132947,15 +133240,12 @@ const LogListGrid = ({
         suppressCellFocus: true,
         onStateUpdated: (e3) => {
           setGridState(e3.state);
-          if (gridRef.current?.api) {
-            const displayedRowCount = gridRef.current.api.getDisplayedRowCount();
-            setFilteredCount(displayedRowCount);
-          }
         },
         onRowClicked: handleRowClick,
         onCellMouseDown: handleCellMouseDown,
         onSortChanged: handleSortChanged,
         onFilterChanged: handleFilterChanged,
+        onModelUpdated: handleModelUpdated,
         loading: data2.length === 0 && (loading2 > 0 || syncing)
       }
     ) })
@@ -132985,6 +133275,8 @@ const LogListFooter = ({
   progressBar
 }) => {
   const effectiveItemCount = filteredCount ?? itemCount;
+  const label2 = itemCountLabel || "items";
+  const countText = effectiveItemCount === 0 ? "" : filteredCount !== void 0 && filteredCount !== itemCount ? `${effectiveItemCount.toLocaleString()} / ${itemCount.toLocaleString()} ${label2}` : `${effectiveItemCount.toLocaleString()} ${label2}`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-smaller", styles$1n.footer), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1n.left), children: progressText ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$1n.spinnerContainer), children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -133002,9 +133294,9 @@ const LogListFooter = ({
         progressText,
         "..."
       ] })
-    ] }) : null }),
+    ] }) : progressBar ?? null }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1n.center) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1n.right), children: progressBar ? progressBar : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: effectiveItemCount === 0 ? "" : filteredCount !== void 0 && filteredCount !== itemCount ? `${effectiveItemCount} / ${itemCount} ${itemCountLabel || "items"}` : `${effectiveItemCount} ${itemCountLabel || "items"}` }) })
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$1n.right), children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: countText }) })
   ] });
 };
 const panel$7 = "_panel_16dj8_1";
@@ -133020,7 +133312,10 @@ const rootName = (relativePath) => {
   }
   return parts[0];
 };
-const LogsPanel = ({ maybeShowSingleLog }) => {
+const LogsPanel = ({
+  maybeShowSingleLog,
+  mode = "logs"
+}) => {
   const { loadLogs } = useLogs();
   const gridRef = reactExports.useRef(null);
   const [showColumnSelector, setShowColumnSelector] = reactExports.useState(false);
@@ -133061,6 +133356,37 @@ const LogsPanel = ({ maybeShowSingleLog }) => {
     }
   }, [watchedLogs, startPolling, stopPolling]);
   const [logItems, hasRetriedLogs] = reactExports.useMemo(() => {
+    if (mode === "tasks") {
+      const fileItems2 = [];
+      const existingLogTaskIds2 = /* @__PURE__ */ new Set();
+      let _hasRetriedLogs2 = false;
+      for (const logFile of logFiles) {
+        if (logFile.task_id) {
+          existingLogTaskIds2.add(logFile.task_id);
+        }
+        if (logFile.retried) {
+          _hasRetriedLogs2 = true;
+        }
+        if (showRetriedLogs || !logFile.retried) {
+          const relativePath = directoryRelativeUrl(logFile.name, logDir2);
+          const decodedPath = decodeURIComponent(relativePath);
+          fileItems2.push({
+            id: logFile.name,
+            name: decodedPath,
+            type: "file",
+            url: tasksUrl(decodedPath, logDir2),
+            log: logFile,
+            logPreview: logPreviews[logFile.name]
+          });
+        }
+      }
+      const allItems = appendPendingItems(
+        evalSet,
+        existingLogTaskIds2,
+        fileItems2
+      );
+      return [allItems, _hasRetriedLogs2];
+    }
     const folderItems = [];
     const fileItems = [];
     const processedFolders = /* @__PURE__ */ new Set();
@@ -133120,8 +133446,16 @@ const LogsPanel = ({ maybeShowSingleLog }) => {
       orderedItems
     );
     return [_logFiles, _hasRetriedLogs];
-  }, [evalSet, logFiles, currentDir, logDir2, logPreviews, showRetriedLogs]);
-  const { columns, setColumnVisibility } = useLogListColumns();
+  }, [
+    mode,
+    evalSet,
+    logFiles,
+    currentDir,
+    logDir2,
+    logPreviews,
+    showRetriedLogs
+  ]);
+  const { columns, setColumnVisibility } = useLogListColumns(mode);
   const handleColumnVisibilityChange = reactExports.useCallback(
     (newVisibility) => {
       if (gridRef.current?.api) {
@@ -133182,8 +133516,8 @@ const LogsPanel = ({ maybeShowSingleLog }) => {
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
       ApplicationNavbar,
       {
-        fnNavigationUrl: logsUrl,
-        currentPath: logPath,
+        fnNavigationUrl: mode === "tasks" ? tasksUrl : logsUrl,
+        currentPath: mode === "tasks" ? void 0 : logPath,
         showActivity: "log",
         children: [
           hasFilter && /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -133218,7 +133552,12 @@ const LogsPanel = ({ maybeShowSingleLog }) => {
             },
             "choose-columns"
           ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(ViewSegmentedControl, { selectedSegment: "logs" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            ViewSegmentedControl,
+            {
+              selectedSegment: mode === "tasks" ? "tasks" : "logs"
+            }
+          ),
           flowData && /* @__PURE__ */ jsxRuntimeExports.jsx(FlowButton, {})
         ]
       }
@@ -133240,7 +133579,8 @@ const LogsPanel = ({ maybeShowSingleLog }) => {
         {
           items: logItems,
           currentPath: currentDir,
-          gridRef
+          gridRef,
+          mode
         }
       ) }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -133436,6 +133776,7 @@ function usePollSample() {
 }
 const useSampleNavigation = () => {
   const navigate = useNavigate();
+  const prefix = useRoutePrefix();
   const logDirectory = useStore((state) => state.logs.logDir);
   const { logPath, tabId, sampleTabId } = useLogRouteParams();
   const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
@@ -133464,11 +133805,17 @@ const useSampleNavigation = () => {
       if (resolvedPath) {
         selectSample(id, epoch, resolvedPath);
         const currentSampleTabId = specifiedSampleTabId || sampleTabId;
-        const url = logSamplesUrl(resolvedPath, id, epoch, currentSampleTabId);
+        const url = logSamplesUrl(
+          resolvedPath,
+          id,
+          epoch,
+          currentSampleTabId,
+          prefix
+        );
         navigate(url);
       }
     },
-    [resolveLogPath, selectSample, navigate, sampleTabId]
+    [resolveLogPath, selectSample, navigate, sampleTabId, prefix]
   );
   const navigateSampleIndex = reactExports.useCallback(
     (index) => {
@@ -133506,21 +133853,22 @@ const useSampleNavigation = () => {
           resolvedPath,
           sampleId,
           epoch,
-          currentSampleTabId
+          currentSampleTabId,
+          prefix
         );
         return `#${url}`;
       }
       return void 0;
     },
-    [resolveLogPath, sampleTabId]
+    [resolveLogPath, sampleTabId, prefix]
   );
   const clearSampleUrl = reactExports.useCallback(() => {
     const resolvedPath = resolveLogPath();
     if (resolvedPath) {
-      const url = logsUrlRaw(resolvedPath, tabId);
+      const url = logsUrlRaw(resolvedPath, tabId, prefix);
       navigate(url);
     }
-  }, [resolveLogPath, navigate, tabId]);
+  }, [resolveLogPath, navigate, tabId, prefix]);
   return {
     showSample,
     nextEnabled: selectedSampleIndex < sampleSummaries.length - 1,
@@ -133563,6 +133911,7 @@ const useSamplesGridNavigation = () => {
 };
 const useLogSampleNavigation = () => {
   const navigate = useNavigate();
+  const prefix = useRoutePrefix();
   const { logPath: routeLogPath, sampleTabId } = useLogRouteParams();
   const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
   const logPath = routeLogPath || selectedLogFile;
@@ -133590,7 +133939,8 @@ const useLogSampleNavigation = () => {
         logPath,
         prevSample.id,
         prevSample.epoch,
-        sampleTabId
+        sampleTabId,
+        prefix
       );
       navigate(url);
     }
@@ -133601,7 +133951,8 @@ const useLogSampleNavigation = () => {
     currentIndex,
     sampleTabId,
     selectSample,
-    navigate
+    navigate,
+    prefix
   ]);
   const onNext = reactExports.useCallback(() => {
     if (hasNext && logPath && currentIndex < sampleSummaries.length - 1) {
@@ -133612,7 +133963,8 @@ const useLogSampleNavigation = () => {
         logPath,
         nextSample.id,
         nextSample.epoch,
-        sampleTabId
+        sampleTabId,
+        prefix
       );
       navigate(url);
     }
@@ -133623,7 +133975,8 @@ const useLogSampleNavigation = () => {
     currentIndex,
     sampleTabId,
     selectSample,
-    navigate
+    navigate,
+    prefix
   ]);
   return {
     onPrevious,
@@ -147892,6 +148245,7 @@ const SampleDisplay = ({
   focusOnLoad
 }) => {
   const baseId = `sample-display`;
+  const prefix = useRoutePrefix();
   const sampleData = useSampleData();
   const sample2 = reactExports.useMemo(() => {
     return sampleData.getSelectedSample();
@@ -148012,11 +148366,12 @@ const SampleDisplay = ({
         printLogPath,
         printSampleId,
         printEpoch,
-        effectiveSelectedTab
+        effectiveSelectedTab,
+        prefix
       );
       window.open(`#${printUrl}`, "_blank");
     }
-  }, [printLogPath, printSampleId, printEpoch, effectiveSelectedTab]);
+  }, [printLogPath, printSampleId, printEpoch, effectiveSelectedTab, prefix]);
   reactExports.useEffect(() => {
     if (isVscode() || !printLogPath || !printSampleId || !printEpoch) return;
     const handleKeyDown = (e3) => {
@@ -148700,6 +149055,7 @@ const LogSampleDetailView = () => {
   useLoadSample();
   usePollSample();
   const navigate = useNavigate();
+  const prefix = useRoutePrefix();
   const initLogDir = useStore((state) => state.logsActions.initLogDir);
   const sampleSummaries = useSampleSummaries();
   const setSelectedLogFile = useStore(
@@ -148746,25 +149102,26 @@ const LogSampleDetailView = () => {
           logPath,
           sample2.id,
           sample2.epoch,
-          sampleTabId
+          sampleTabId,
+          prefix
         );
         navigate(url, { replace: true });
       }
     }
-  }, [logPath, sampleUuid, sampleSummaries, sampleTabId, navigate]);
+  }, [logPath, sampleUuid, sampleSummaries, sampleTabId, navigate, prefix]);
   const { onPrevious, onNext, hasPrevious, hasNext } = useLogSampleNavigation();
   const fnNavigationUrl = reactExports.useCallback(
     (file, log_dir) => {
       if (!logPath || !file) {
-        return logsUrl(file, log_dir);
+        return logsUrl(file, log_dir, void 0, prefix);
       }
       const normalizedFile = file.endsWith("/") ? file.slice(0, -1) : file;
       if (normalizedFile === logPath || normalizedFile === `${logPath}/sample`) {
-        return logsUrl(logPath, log_dir, kLogViewSamplesTabId);
+        return logsUrl(logPath, log_dir, kLogViewSamplesTabId, prefix);
       }
-      return logsUrl(file, log_dir);
+      return logsUrl(file, log_dir, void 0, prefix);
     },
-    [logPath]
+    [logPath, prefix]
   );
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     SampleDetailComponent,
@@ -148809,17 +149166,18 @@ const useLogNavigation = () => {
   const { logPath } = useParams();
   const logDir2 = useStore((state) => state.logs.logDir);
   const loadedLog = useStore((state) => state.log.loadedLog);
+  const prefix = useRoutePrefix();
   const selectTab = reactExports.useCallback(
     (tabId) => {
       if (loadedLog && logPath) {
-        const url = logsUrlRaw(logPath, tabId);
+        const url = logsUrlRaw(logPath, tabId, prefix);
         navigate(url);
       } else if (loadedLog) {
-        const url = logsUrl(loadedLog, logDir2, tabId);
+        const url = logsUrl(loadedLog, logDir2, tabId, prefix);
         navigate(url);
       }
     },
-    [loadedLog, logPath, logDir2, navigate]
+    [loadedLog, logPath, logDir2, navigate, prefix]
   );
   return {
     selectTab
@@ -176273,6 +176631,8 @@ const LogViewLayout = () => {
   const logDir2 = useStore((state) => state.logs.logDir);
   const logFiles = useStore((state) => state.logs.logs);
   const { logPath } = useLogRouteParams();
+  const prefix = useRoutePrefix();
+  const navigationUrl = (file, log_dir) => logsUrl(file, log_dir, void 0, prefix);
   const mainAppRef = reactExports.useRef(null);
   const fullScreen = logFiles.length === 1 && !logDir2;
   reactExports.useEffect(() => {
@@ -176311,7 +176671,7 @@ const LogViewLayout = () => {
         !singleFileMode ? /* @__PURE__ */ jsxRuntimeExports.jsx(
           ApplicationNavbar,
           {
-            fnNavigationUrl: logsUrl,
+            fnNavigationUrl: navigationUrl,
             currentPath: logPath,
             showActivity: "log"
           }
@@ -176345,6 +176705,8 @@ const LogViewContainer = () => {
     (state) => state.sampleActions.clearSelectedSample
   );
   const navigate = useNavigate();
+  const location2 = useLocation();
+  const prefix = location2.pathname.startsWith("/tasks/") ? "/tasks" : "/logs";
   const sampleSummaries = useSampleSummaries();
   const [searchParams] = useSearchParams();
   const { unloadLog } = useUnloadLog();
@@ -176361,7 +176723,8 @@ const LogViewContainer = () => {
           logPath,
           sample2.id,
           sample2.epoch,
-          sampleTabId
+          sampleTabId,
+          prefix
         );
         const finalUrl = searchParams.toString() ? `${url}?${searchParams.toString()}` : url;
         navigate(finalUrl);
@@ -176374,19 +176737,21 @@ const LogViewContainer = () => {
     sampleUuid,
     searchParams,
     sampleTabId,
-    navigate
+    navigate,
+    prefix
   ]);
   reactExports.useEffect(() => {
     if (initialState2 && !evalSpec) {
       const url = baseUrl(
         initialState2.log,
         initialState2.sample_id,
-        initialState2.sample_epoch
+        initialState2.sample_epoch,
+        prefix
       );
       clearInitialState();
       navigate(url);
     }
-  }, [initialState2, evalSpec, clearInitialState, navigate]);
+  }, [initialState2, evalSpec, clearInitialState, navigate, prefix]);
   const prevLogPath = usePrevious(logPath);
   const syncLogs = useStore((state) => state.logsActions.syncLogs);
   const initLogDir = useStore((state) => state.logsActions.initLogDir);
@@ -177549,6 +177914,27 @@ const SamplesRouter = () => {
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsx(SamplesPanel, {});
 };
+const TasksRouter = () => {
+  const { logPath, sampleId, epoch, sampleTabId, sampleUuid } = useLogRouteParams();
+  if (!logPath) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(LogsPanel, { mode: "tasks" });
+  }
+  if (sampleId && epoch && sampleTabId === "print") {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(SamplePrintView, {});
+  }
+  if (sampleId && epoch || sampleUuid) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(LogSampleDetailView, {});
+  }
+  const isFlowFile = logPath.endsWith(".yaml") || logPath.endsWith(".yml");
+  if (isFlowFile) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(FlowPanel, {});
+  }
+  const isLogFile = logPath.endsWith(".eval") || logPath.endsWith(".json");
+  if (isLogFile) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(LogViewContainer, {});
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(LogsPanel, { mode: "tasks" });
+};
 const AppLayout = () => {
   const location2 = useLocation();
   const navigate = useNavigate();
@@ -177578,7 +177964,7 @@ const AppRouter = createHashRouter(
         {
           index: true,
           // This will match exactly the "/" path
-          element: /* @__PURE__ */ jsxRuntimeExports.jsx(LogsPanel, { maybeShowSingleLog: true })
+          element: /* @__PURE__ */ jsxRuntimeExports.jsx(LogsPanel, { mode: "tasks", maybeShowSingleLog: true })
         },
         {
           path: kLogsRoutUrlPattern,
@@ -177589,6 +177975,14 @@ const AppRouter = createHashRouter(
           // The RouteDispatcher parses the path and routes to the appropriate component
           path: kLogRouteUrlPattern,
           element: /* @__PURE__ */ jsxRuntimeExports.jsx(RouteDispatcher, {})
+        },
+        {
+          path: kTasksRouteUrlPattern,
+          element: /* @__PURE__ */ jsxRuntimeExports.jsx(LogsPanel, { mode: "tasks" })
+        },
+        {
+          path: kTaskRouteUrlPattern,
+          element: /* @__PURE__ */ jsxRuntimeExports.jsx(TasksRouter, {})
         },
         {
           path: "/samples/*",
