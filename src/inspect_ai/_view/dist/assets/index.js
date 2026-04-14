@@ -780,7 +780,7 @@ function requireReact_production() {
   react_production.useTransition = function() {
     return ReactSharedInternals.H.useTransition();
   };
-  react_production.version = "19.2.4";
+  react_production.version = "19.2.5";
   return react_production;
 }
 var hasRequiredReact;
@@ -938,7 +938,7 @@ function requireReactDom_production() {
   reactDom_production.useFormStatus = function() {
     return ReactSharedInternals.H.useHostTransitionStatus();
   };
-  reactDom_production.version = "19.2.4";
+  reactDom_production.version = "19.2.5";
   return reactDom_production;
 }
 var hasRequiredReactDom;
@@ -12323,10 +12323,10 @@ function requireReactDomClient_production() {
     }
     function handleNavigateComplete() {
       null !== pendingResolve && (pendingResolve(), pendingResolve = null);
-      isCancelled || setTimeout(startFakeNavigation, 20);
+      isCancelled2 || setTimeout(startFakeNavigation, 20);
     }
     function startFakeNavigation() {
-      if (!isCancelled && !navigation.transition) {
+      if (!isCancelled2 && !navigation.transition) {
         var currentEntry = navigation.currentEntry;
         currentEntry && null != currentEntry.url && navigation.navigate(currentEntry.url, {
           state: currentEntry.getState(),
@@ -12336,13 +12336,13 @@ function requireReactDomClient_production() {
       }
     }
     if ("object" === typeof navigation) {
-      var isCancelled = false, pendingResolve = null;
+      var isCancelled2 = false, pendingResolve = null;
       navigation.addEventListener("navigate", handleNavigate);
       navigation.addEventListener("navigatesuccess", handleNavigateComplete);
       navigation.addEventListener("navigateerror", handleNavigateComplete);
       setTimeout(startFakeNavigation, 100);
       return function() {
-        isCancelled = true;
+        isCancelled2 = true;
         navigation.removeEventListener("navigate", handleNavigate);
         navigation.removeEventListener("navigatesuccess", handleNavigateComplete);
         navigation.removeEventListener("navigateerror", handleNavigateComplete);
@@ -12382,12 +12382,12 @@ function requireReactDomClient_production() {
     }
   };
   var isomorphicReactPackageVersion$jscomp$inline_1840 = React.version;
-  if ("19.2.4" !== isomorphicReactPackageVersion$jscomp$inline_1840)
+  if ("19.2.5" !== isomorphicReactPackageVersion$jscomp$inline_1840)
     throw Error(
       formatProdErrorMessage(
         527,
         isomorphicReactPackageVersion$jscomp$inline_1840,
-        "19.2.4"
+        "19.2.5"
       )
     );
   ReactDOMSharedInternals.findDOMNode = function(componentOrElement) {
@@ -12405,10 +12405,10 @@ function requireReactDomClient_production() {
   };
   var internals$jscomp$inline_2347 = {
     bundleType: 0,
-    version: "19.2.4",
+    version: "19.2.5",
     rendererPackageName: "react-dom",
     currentDispatcherRef: ReactSharedInternals,
-    reconcilerVersion: "19.2.4"
+    reconcilerVersion: "19.2.5"
   };
   if ("undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__) {
     var hook$jscomp$inline_2348 = __REACT_DEVTOOLS_GLOBAL_HOOK__;
@@ -12475,7 +12475,7 @@ function requireReactDomClient_production() {
     listenToAllSupportedEvents(container2);
     return new ReactDOMHydrationRoot(initialChildren);
   };
-  reactDomClient_production.version = "19.2.4";
+  reactDomClient_production.version = "19.2.5";
   return reactDomClient_production;
 }
 var hasRequiredClient;
@@ -23434,7 +23434,7 @@ function resolvePath(to2, fromPathname = "/") {
   } = typeof to2 === "string" ? parsePath$1(to2) : to2;
   let pathname;
   if (toPathname) {
-    toPathname = toPathname.replace(/\/\/+/g, "/");
+    toPathname = removeDoubleSlashes(toPathname);
     if (toPathname.startsWith("/")) {
       pathname = resolvePathname(toPathname.substring(1), "/");
     } else {
@@ -23450,7 +23450,7 @@ function resolvePath(to2, fromPathname = "/") {
   };
 }
 function resolvePathname(relativePath, fromPathname) {
-  let segments2 = fromPathname.replace(/\/+$/, "").split("/");
+  let segments2 = removeTrailingSlash(fromPathname).split("/");
   let relativeSegments = relativePath.split("/");
   relativeSegments.forEach((segment2) => {
     if (segment2 === "..") {
@@ -23521,8 +23521,10 @@ function resolveTo(toArg, routePathnames, locationPathname, isPathRelative = fal
   }
   return path;
 }
-var joinPaths = (paths) => paths.join("/").replace(/\/\/+/g, "/");
-var normalizePathname = (pathname) => pathname.replace(/\/+$/, "").replace(/^\/*/, "/");
+var removeDoubleSlashes = (path) => path.replace(/\/\/+/g, "/");
+var joinPaths = (paths) => removeDoubleSlashes(paths.join("/"));
+var removeTrailingSlash = (path) => path.replace(/\/+$/, "");
+var normalizePathname = (pathname) => removeTrailingSlash(pathname).replace(/^\/*/, "/");
 var normalizeSearch = (search) => !search || search === "?" ? "" : search.startsWith("?") ? search : "?" + search;
 var normalizeHash = (hash2) => !hash2 || hash2 === "#" ? "" : hash2.startsWith("#") ? hash2 : "#" + hash2;
 var ErrorResponseImpl = class {
@@ -23542,7 +23544,8 @@ function isRouteErrorResponse(error2) {
   return error2 != null && typeof error2.status === "number" && typeof error2.statusText === "string" && typeof error2.internal === "boolean" && "data" in error2;
 }
 function getRoutePattern(matches) {
-  return matches.map((m2) => m2.route.path).filter(Boolean).join("/").replace(/\/\/*/g, "/") || "/";
+  let parts = matches.map((m2) => m2.route.path).filter(Boolean);
+  return joinPaths(parts) || "/";
 }
 var isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined";
 function parseToInfo(_to, basename2) {
@@ -26850,7 +26853,7 @@ function normalizeRedirectLocation(location2, currentUrl, basename2, historyInst
     }
     let isSameBasename = stripBasename(url.pathname, basename2) != null;
     if (url.origin === currentUrl.origin && isSameBasename) {
-      return url.pathname + url.search + url.hash;
+      return removeDoubleSlashes(url.pathname) + url.search + url.hash;
     }
   }
   try {
@@ -28157,6 +28160,16 @@ function RouterProvider({
     ]
   );
   reactExports.useLayoutEffect(() => router.subscribe(setState2), [router, setState2]);
+  let initialized = state.initialized;
+  reactExports.useLayoutEffect(() => {
+    if (!initialized && router.state.initialized) {
+      setState2(router.state, {
+        deletedFetchers: [],
+        flushSync: false,
+        newErrors: null
+      });
+    }
+  }, [initialized, setState2, router.state]);
   reactExports.useEffect(() => {
     if (vtContext.isTransitioning && !vtContext.flushSync) {
       setRenderDfd(new Deferred());
@@ -28537,9 +28550,9 @@ function singleFetchUrl(reqUrl, basename2, trailingSlashAware, extension) {
     if (url.pathname === "/") {
       url.pathname = `_root.${extension}`;
     } else if (basename2 && stripBasename(url.pathname, basename2) === "/") {
-      url.pathname = `${basename2.replace(/\/$/, "")}/_root.${extension}`;
+      url.pathname = `${removeTrailingSlash(basename2)}/_root.${extension}`;
     } else {
-      url.pathname = `${url.pathname.replace(/\/$/, "")}.${extension}`;
+      url.pathname = `${removeTrailingSlash(url.pathname)}.${extension}`;
     }
   }
   return url;
@@ -28962,7 +28975,7 @@ var isBrowser2 = typeof window !== "undefined" && typeof window.document !== "un
 try {
   if (isBrowser2) {
     window.__reactRouterVersion = // @ts-expect-error
-    "7.14.0";
+    "7.14.1";
   }
 } catch (e3) {
 }
@@ -30977,13 +30990,13 @@ const computeForegroundBackgroundColor = (colorType, color) => {
       }
   }
 };
-const headerContainer = "_headerContainer_idrkc_1";
-const headerModern = "_headerModern_idrkc_11";
-const headerIcon = "_headerIcon_idrkc_16";
-const headerIconEmpty = "_headerIconEmpty_idrkc_16";
-const body$3 = "_body_idrkc_20";
-const card$2 = "_card_idrkc_25";
-const noPadding = "_noPadding_idrkc_32";
+const headerContainer = "_headerContainer_gh2j2_1";
+const headerModern = "_headerModern_gh2j2_11";
+const headerIcon = "_headerIcon_gh2j2_18";
+const headerIconEmpty = "_headerIconEmpty_gh2j2_18";
+const body$3 = "_body_gh2j2_22";
+const card$2 = "_card_gh2j2_27";
+const noPadding = "_noPadding_gh2j2_34";
 const styles$2q = {
   headerContainer,
   headerModern,
@@ -68337,7 +68350,7 @@ const resolveAttachments = (value2, attachments, onFailedResolve) => {
   }
   return value2;
 };
-function expandRefs(refs, pool) {
+function expandRefs$1(refs, pool) {
   return refs.flatMap(([start2, end2]) => pool.slice(start2, end2));
 }
 function isModelEvent(event) {
@@ -68355,12 +68368,12 @@ function expandEvents(events, eventsData) {
     let input2 = event.input;
     let call = event.call;
     if (event.input_refs != null && hasMessages) {
-      input2 = expandRefs(event.input_refs, messages2);
+      input2 = expandRefs$1(event.input_refs, messages2);
       changed = true;
     }
     if (call?.call_refs != null && hasCalls) {
       const key2 = call.call_key ?? "messages";
-      const expandedMsgs = expandRefs(call.call_refs, calls);
+      const expandedMsgs = expandRefs$1(call.call_refs, calls);
       call = {
         ...call,
         request: { ...call.request, [key2]: expandedMsgs },
@@ -68422,8 +68435,12 @@ function createSamplePolling(store) {
   const pollingState = {
     eventId: kNoId,
     attachmentId: kNoId,
+    messagePoolId: kNoId,
+    callPoolId: kNoId,
     eventMapping: {},
     attachments: {},
+    messagePool: [],
+    callPool: [],
     events: []
   };
   const startPolling = (logFile, summary2) => {
@@ -68456,12 +68473,16 @@ function createSamplePolling(store) {
       }
       const eventId = pollingState.eventId;
       const attachmentId = pollingState.attachmentId;
+      const messagePoolId = pollingState.messagePoolId;
+      const callPoolId = pollingState.callPoolId;
       const sampleDataResponse = await api2.get_log_sample_data(
         logFile,
         summary2.id,
         summary2.epoch,
         eventId,
-        attachmentId
+        attachmentId,
+        messagePoolId !== kNoId ? messagePoolId : void 0,
+        callPoolId !== kNoId ? callPoolId : void 0
       );
       if (abortController.signal.aborted) {
         return false;
@@ -68510,6 +68531,8 @@ function createSamplePolling(store) {
         sampleActions.setSampleStatus("streaming");
         if (sampleDataResponse.sampleData) {
           processAttachments(sampleDataResponse.sampleData, pollingState);
+          processMessagePool(sampleDataResponse.sampleData, pollingState);
+          processCallPool(sampleDataResponse.sampleData, pollingState);
           const processedEvents = processEvents(
             sampleDataResponse.sampleData,
             pollingState,
@@ -68568,8 +68591,12 @@ function createSamplePolling(store) {
 const resetPollingState = (state) => {
   state.eventId = kNoId;
   state.attachmentId = kNoId;
+  state.messagePoolId = kNoId;
+  state.callPoolId = kNoId;
   state.eventMapping = {};
   state.attachments = {};
+  state.messagePool = [];
+  state.callPool = [];
   state.events = [];
 };
 function processAttachments(sampleData, pollingState) {
@@ -68578,6 +68605,20 @@ function processAttachments(sampleData, pollingState) {
     pollingState.attachments[v2.hash] = v2.content;
   });
 }
+function processMessagePool(sampleData, pollingState) {
+  if (!sampleData.message_pool.length) return;
+  for (const entry of sampleData.message_pool) {
+    pollingState.messagePool.push(JSON.parse(entry.data));
+    pollingState.messagePoolId = Math.max(pollingState.messagePoolId, entry.id);
+  }
+}
+function processCallPool(sampleData, pollingState) {
+  if (!sampleData.call_pool.length) return;
+  for (const entry of sampleData.call_pool) {
+    pollingState.callPool.push(JSON.parse(entry.data));
+    pollingState.callPoolId = Math.max(pollingState.callPoolId, entry.id);
+  }
+}
 function processEvents(sampleData, pollingState, api2, log_file) {
   log$6.debug(`Processing ${sampleData.events.length} events`);
   if (sampleData.events.length === 0) {
@@ -68585,7 +68626,7 @@ function processEvents(sampleData, pollingState, api2, log_file) {
   }
   for (const eventData of sampleData.events) {
     const existingIndex = pollingState.eventMapping[eventData.event_id];
-    const resolvedEvent = resolveAttachments(
+    const withAttachments = resolveAttachments(
       eventData.event,
       pollingState.attachments,
       (attachmentId) => {
@@ -68604,7 +68645,12 @@ function processEvents(sampleData, pollingState, api2, log_file) {
         console.warn(`Unable to resolve attachment ${attachmentId}`, snapshot);
       }
     );
-    if (existingIndex) {
+    const withPoolRefs = resolvePoolRefs(withAttachments, pollingState);
+    const resolvedEvent = resolveAttachments(
+      withPoolRefs,
+      pollingState.attachments
+    );
+    if (existingIndex !== void 0) {
       log$6.debug(`Replace event ${existingIndex}`);
       pollingState.events[existingIndex] = resolvedEvent;
     } else {
@@ -68615,6 +68661,35 @@ function processEvents(sampleData, pollingState, api2, log_file) {
     }
   }
   return true;
+}
+function expandRefs(refs, pool) {
+  return refs.flatMap(([start2, end2]) => pool.slice(start2, end2));
+}
+function resolvePoolRefs(event, pollingState) {
+  if (event.event !== "model") return event;
+  const withInput = Array.isArray(event.input_refs) && pollingState.messagePool.length > 0 ? {
+    ...event,
+    input: expandRefs(
+      event.input_refs,
+      pollingState.messagePool
+    ),
+    input_refs: null
+  } : event;
+  if (!withInput.call || !Array.isArray(withInput.call.call_refs)) {
+    return withInput;
+  }
+  const msgKey = withInput.call.call_key || "messages";
+  const request = { ...withInput.call.request };
+  request[msgKey] = expandRefs(withInput.call.call_refs, pollingState.callPool);
+  return {
+    ...withInput,
+    call: {
+      ...withInput.call,
+      request,
+      call_refs: null,
+      call_key: null
+    }
+  };
 }
 const findMaxId = (items, currentMax) => {
   if (items.length > 0) {
@@ -137067,6 +137142,52 @@ const styles$_ = {
   invalidationDetails,
   invalidationReason
 };
+const statusCell = "_statusCell_hunte_1";
+const error$1 = "_error_hunte_7";
+const success = "_success_hunte_11";
+const cancelled = "_cancelled_hunte_15";
+const styles$Z = {
+  statusCell,
+  error: error$1,
+  success,
+  cancelled
+};
+const sampleStatus = (completed, error2) => {
+  if (error2) {
+    return errorType(error2) === "CancelledError" ? "cancelled" : "error";
+  }
+  return completed ? "ok" : "running";
+};
+const isCancelled = (sample2) => {
+  if ("error" in sample2 && sample2.error) {
+    if (typeof sample2.error === "string") {
+      return errorType(sample2.error) === "CancelledError";
+    }
+    return errorType(sample2.error.message) === "CancelledError";
+  }
+  return false;
+};
+const kDefaultSampleSortValue = "3:ok";
+const sampleStatusSortValue = (status2, error2) => {
+  switch (status2) {
+    case "running":
+      return "0:running";
+    case "error":
+      return `1:error:${errorType(error2)}`;
+    case "cancelled":
+      return "2:cancelled";
+    default:
+      return kDefaultSampleSortValue;
+  }
+};
+const SampleStatusIcon = ({ status: status2 }) => {
+  if (status2 === "running") {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$Z.statusCell, children: /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false }) });
+  }
+  const icon2 = status2 === "error" ? ApplicationIcons.error : status2 === "cancelled" ? ApplicationIcons.cancelled : ApplicationIcons.success;
+  const colorClass = status2 === "error" ? styles$Z.error : status2 === "cancelled" ? styles$Z.cancelled : styles$Z.success;
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$Z.statusCell, children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, colorClass) }) });
+};
 const kMaxCellTextLength = 256;
 function isEvalSample(sample2) {
   return "store" in sample2;
@@ -137086,6 +137207,7 @@ const resolveSample = (sample2, sampleDescriptor) => {
   const limit = isEvalSample(sample2) ? sample2.limit?.type : void 0;
   const working_time = isEvalSample(sample2) ? sample2.working_time : void 0;
   const total_time = isEvalSample(sample2) ? sample2.total_time : void 0;
+  const cancelled2 = isCancelled(sample2);
   const error2 = isEvalSample(sample2) ? sample2.error?.message : void 0;
   const retries = isEvalSample(sample2) ? sample2.error_retries?.length : sample2.retries;
   return {
@@ -137097,7 +137219,8 @@ const resolveSample = (sample2, sampleDescriptor) => {
     retries,
     working_time,
     total_time,
-    error: error2
+    error: error2,
+    cancelled: cancelled2
   };
 };
 const SampleSummaryView = ({
@@ -137209,6 +137332,13 @@ const SampleSummaryView = ({
       center: true
     });
   }
+  if (fields.cancelled) {
+    columns.push({
+      label: "Status",
+      value: "Cancelled",
+      size: `10em`
+    });
+  }
   const invalidation = isEvalSample(sample2) ? sample2.invalidation : void 0;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: `sample-heading-${parent_id}`, children: [
     invalidation && /* @__PURE__ */ jsxRuntimeExports.jsx(InvalidationBanner, { invalidation }),
@@ -137309,7 +137439,7 @@ const fullWidth = "_fullWidth_kwhbh_13";
 const separator$5 = "_separator_kwhbh_25";
 const separatorPadded = "_separatorPadded_kwhbh_30";
 const headerSep = "_headerSep_kwhbh_35";
-const styles$Z = {
+const styles$Y = {
   container: container$h,
   cell: cell$1,
   fullWidth,
@@ -137326,7 +137456,7 @@ const SampleScoresGrid = ({
   if (!evalDescriptor) {
     return /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyPanel, { children: "No Sample Selected" });
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2, styles$Z.container), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2, styles$Y.container), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
@@ -137374,7 +137504,7 @@ const SampleScoresGrid = ({
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
-        className: clsx(styles$Z.separator, styles$Z.fullWidth, styles$Z.headerSep)
+        className: clsx(styles$Y.separator, styles$Y.fullWidth, styles$Y.headerSep)
       }
     ),
     Object.keys(evalSample.scores || {}).map((scorer2) => {
@@ -137386,16 +137516,16 @@ const SampleScoresGrid = ({
       const answer2 = scoreData.answer;
       let metadata2 = scoreData.metadata || {};
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-base", styles$Z.cell), children: scorer2 }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Z.cell, "text-size-base"), children: answer2 }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Z.cell, "text-size-base"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-base", styles$Y.cell), children: scorer2 }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Y.cell, "text-size-base"), children: answer2 }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Y.cell, "text-size-base"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           SampleScores,
           {
             sample: evalSample,
             scorer: scorer2
           }
         ) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-base", styles$Z.cell), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-base", styles$Y.cell), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           RenderedContent,
           {
             id: `${scorer2}-explanation`,
@@ -137413,12 +137543,12 @@ const SampleScoresGrid = ({
                 "text-size-smaller",
                 "text-style-label",
                 "text-style-secondary",
-                styles$Z.fullWidth
+                styles$Y.fullWidth
               ),
               children: "Metadata"
             }
           ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Z.fullWidth), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Y.fullWidth), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             RecordTree,
             {
               id: `${scorer2}-metadataa`,
@@ -137431,9 +137561,9 @@ const SampleScoresGrid = ({
             "div",
             {
               className: clsx(
-                styles$Z.separator,
-                styles$Z.separatorPadded,
-                styles$Z.fullWidth
+                styles$Y.separator,
+                styles$Y.separatorPadded,
+                styles$Y.fullWidth
               )
             }
           )
@@ -137445,7 +137575,7 @@ const SampleScoresGrid = ({
 const wordBreak = "_wordBreak_las07_9";
 const scoreCard = "_scoreCard_las07_50";
 const scores = "_scores_las07_54";
-const styles$Y = {
+const styles$X = {
   wordBreak,
   scoreCard,
   scores
@@ -137478,9 +137608,9 @@ const SampleScoresView = ({
         "container-fluid",
         className2,
         "font-size-base",
-        styles$Y.container
+        styles$X.container
       ),
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(Card, { className: clsx(styles$Y.scoreCard), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardBody, { children: [
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(Card, { className: clsx(styles$X.scoreCard), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardBody, { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
@@ -137502,7 +137632,7 @@ const SampleScoresView = ({
               RenderedText,
               {
                 markdown: scoreInput.join("\n"),
-                className: clsx(styles$Y.wordBreak, "text-size-base")
+                className: clsx(styles$X.wordBreak, "text-size-base")
               }
             )
           }
@@ -137511,7 +137641,7 @@ const SampleScoresView = ({
           SampleScoresGrid,
           {
             evalSample: sample2,
-            className: clsx(styles$Y.scores),
+            className: clsx(styles$X.scores),
             scrollRef
           }
         )
@@ -137622,7 +137752,7 @@ const grid$5 = "_grid_1ml4j_1";
 const row$3 = "_row_1ml4j_8";
 const links$1 = "_links_1ml4j_22";
 const selected$2 = "_selected_1ml4j_40";
-const styles$X = {
+const styles$W = {
   grid: grid$5,
   row: row$3,
   links: links$1,
@@ -137655,13 +137785,13 @@ const TranscriptFilterPopover = ({
       placement: "bottom-end",
       hoverDelay: -1,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$X.links, "text-size-smaller"), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$W.links, "text-size-smaller"), children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "a",
             {
               className: clsx(
-                styles$X.link,
-                isDefaultFilter ? styles$X.selected : void 0
+                styles$W.link,
+                isDefaultFilter ? styles$W.selected : void 0
               ),
               onClick: () => setDefaultFilter(),
               children: "Default"
@@ -137672,8 +137802,8 @@ const TranscriptFilterPopover = ({
             "a",
             {
               className: clsx(
-                styles$X.link,
-                isDebugFilter ? styles$X.selected : void 0
+                styles$W.link,
+                isDebugFilter ? styles$W.selected : void 0
               ),
               onClick: () => setDebugFilter(),
               children: "Debug"
@@ -137684,19 +137814,19 @@ const TranscriptFilterPopover = ({
             "a",
             {
               className: clsx(
-                styles$X.link,
-                isNoneFilter ? styles$X.selected : void 0
+                styles$W.link,
+                isNoneFilter ? styles$W.selected : void 0
               ),
               onClick: () => setNoneFilter(),
               children: "None"
             }
           )
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$X.grid, "text-size-smaller"), children: arrangedEventTypes(2).map((eventType) => {
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$W.grid, "text-size-smaller"), children: arrangedEventTypes(2).map((eventType) => {
           return /* @__PURE__ */ jsxRuntimeExports.jsxs(
             "div",
             {
-              className: clsx(styles$X.row),
+              className: clsx(styles$W.row),
               onClick: () => {
                 filterEventType(eventType, filtered.includes(eventType));
               },
@@ -138975,7 +139105,7 @@ function useStickyObserver() {
   return ref2;
 }
 const tab = "_tab_1je38_1";
-const styles$W = {
+const styles$V = {
   tab
 };
 const EventNav = ({
@@ -139000,7 +139130,7 @@ const EventNav = ({
         active ? "active " : "",
         "text-style-label",
         "text-size-small",
-        styles$W.tab
+        styles$V.tab
       ),
       onClick: handleClick,
       children: title2
@@ -139008,7 +139138,7 @@ const EventNav = ({
   ) });
 };
 const navs$1 = "_navs_1vm6p_1";
-const styles$V = {
+const styles$U = {
   navs: navs$1
 };
 const EventNavs = ({
@@ -139019,7 +139149,7 @@ const EventNavs = ({
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "ul",
     {
-      className: clsx("nav", "nav-pills", styles$V.navs),
+      className: clsx("nav", "nav-pills", styles$U.navs),
       role: "tablist",
       "aria-orientation": "horizontal",
       children: navs2.map((nav2) => {
@@ -139049,7 +139179,7 @@ const hover = "_hover_osq4e_64";
 const root$2 = "_root_osq4e_68";
 const bottomDongle = "_bottomDongle_osq4e_73";
 const dongleIcon = "_dongleIcon_osq4e_89";
-const styles$U = {
+const styles$T = {
   stickyWrapper,
   label: label$7,
   navs,
@@ -139135,8 +139265,8 @@ const EventPanel = ({
       title: subTitle,
       className: clsx(
         "text-size-small",
-        mouseOver ? styles$U.hover : "",
-        turnLabel2 ? styles$U.stickyWrapper : ""
+        mouseOver ? styles$T.hover : "",
+        turnLabel2 ? styles$T.stickyWrapper : ""
       ),
       ref: turnLabel2 ? stickyRef : null,
       style: {
@@ -139175,19 +139305,19 @@ const EventPanel = ({
           {
             value: url,
             icon: kLinkIcon,
-            className: clsx(styles$U.copyLink)
+            className: clsx(styles$T.copyLink)
           }
         ) : "",
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { onClick: toggleCollapse }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
-            className: clsx("text-style-secondary", styles$U.label),
+            className: clsx("text-style-secondary", styles$T.label),
             onClick: toggleCollapse,
             children: collapsed ? text2 : ""
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$U.navs, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$T.navs, children: [
           isCollapsible && collapsibleContent && collapsed ? "" : filteredArrChildren && filteredArrChildren.length > 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
             EventNavs,
             {
@@ -139204,7 +139334,7 @@ const EventPanel = ({
               setSelectedNav
             }
           ) : "",
-          turnLabel2 && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx(styles$U.turnLabel), children: turnLabel2 })
+          turnLabel2 && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx(styles$T.turnLabel), children: turnLabel2 })
         ] })
       ]
     }
@@ -139214,7 +139344,7 @@ const EventPanel = ({
     "div",
     {
       id: `event-panel-${eventNodeId}`,
-      className: clsx(className2, styles$U.card, isRoot ? styles$U.root : void 0),
+      className: clsx(className2, styles$T.card, isRoot ? styles$T.root : void 0),
       children: [
         titleEl,
         /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -139222,8 +139352,8 @@ const EventPanel = ({
           {
             className: clsx(
               "tab-content",
-              styles$U.cardContent,
-              isCollapsible && collapsed && collapsibleContent ? styles$U.hidden : void 0
+              styles$T.cardContent,
+              isCollapsible && collapsed && collapsibleContent ? styles$T.hidden : void 0
             ),
             children: filteredArrChildren?.map((child, index) => {
               const id = pillId(index);
@@ -139246,7 +139376,7 @@ const EventPanel = ({
         isCollapsible && useBottomDongle ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
           "div",
           {
-            className: clsx(styles$U.bottomDongle, "text-size-smallest"),
+            className: clsx(styles$T.bottomDongle, "text-size-smallest"),
             onClick: toggleCollapse,
             children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -139254,7 +139384,7 @@ const EventPanel = ({
                 {
                   className: clsx(
                     collapsed ? kChevronRight : kChevronDown,
-                    styles$U.dongleIcon
+                    styles$T.dongleIcon
                   )
                 }
               ),
@@ -139276,7 +139406,7 @@ function hasDataDefault(node2) {
 }
 const title$3 = "_title_19l1b_1";
 const contents = "_contents_19l1b_8";
-const styles$T = {
+const styles$S = {
   title: title$3,
   contents
 };
@@ -139287,18 +139417,18 @@ const EventRow = ({
   className: className2,
   children: children2
 }) => {
-  const contentEl = title2 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-small", styles$T.title, className2), children: [
+  const contentEl = title2 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-small", styles$S.title, className2), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: icon2 || kDefaultIcon }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: title2 }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: children2 })
   ] }) : "";
-  const card2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("card", styles$T.contents), children: contentEl });
+  const card2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("card", styles$S.contents), children: contentEl });
   return card2;
 };
 const container$g = "_container_1ww70_1";
 const titleRow = "_titleRow_1ww70_5";
 const title$2 = "_title_1ww70_5";
-const styles$S = {
+const styles$R = {
   container: container$g,
   titleRow,
   title: title$2
@@ -139309,11 +139439,11 @@ const EventSection = ({
   copyContent,
   className: className2
 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$S.container, className2), children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$S.titleRow), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$R.container, className2), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$R.titleRow), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
       {
-        className: clsx("text-size-small", "text-style-label", styles$S.title),
+        className: clsx("text-size-small", "text-style-label", styles$R.title),
         children: [
           title2,
           copyContent ? /* @__PURE__ */ jsxRuntimeExports.jsx(CopyButton, { value: copyContent, ariaLabel: "Copy to clipboard" }) : null
@@ -139329,7 +139459,7 @@ const col1_3 = "_col1_3_45f60_12";
 const col3 = "_col3_45f60_16";
 const separator$4 = "_separator_45f60_20";
 const topMargin = "_topMargin_45f60_26";
-const styles$R = {
+const styles$Q = {
   wrapper: wrapper$1,
   col2,
   col1_3,
@@ -139397,9 +139527,9 @@ const EventTimingPanel = ({
       });
     }
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-small", styles$R.wrapper), children: rows2.map((row2, idx) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-small", styles$Q.wrapper), children: rows2.map((row2, idx) => {
     if (row2.label === "---") {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$R.separator }, `$usage-sep-${idx}`);
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$Q.separator }, `$usage-sep-${idx}`);
     } else {
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -139408,13 +139538,13 @@ const EventTimingPanel = ({
             className: clsx(
               "text-style-label",
               "text-style-secondary",
-              row2.secondary ? styles$R.col2 : styles$R.col1_3,
-              row2.topMargin ? styles$R.topMargin : void 0
+              row2.secondary ? styles$Q.col2 : styles$Q.col1_3,
+              row2.topMargin ? styles$Q.topMargin : void 0
             ),
             children: row2.label
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$R.col3, children: row2.value ? row2.value : "" })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$Q.col3, children: row2.value ? row2.value : "" })
       ] }, `$usage-row-${idx}`);
     }
   }) });
@@ -141064,7 +141194,7 @@ function sanitizeKeys(obj) {
 const toolsGrid = "_toolsGrid_1qqm2_1";
 const tools = "_tools_1qqm2_1";
 const tool = "_tool_1qqm2_1";
-const styles$Q = {
+const styles$P = {
   toolsGrid,
   tools,
   tool
@@ -141224,7 +141354,7 @@ const renderTools = (changes, resolvedState) => {
       toolsInfo["Tools"] = /* @__PURE__ */ jsxRuntimeExports.jsx(Tools, { toolDefinitions: filtered });
     }
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$Q.tools), children: Object.keys(toolsInfo).map((key2) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$P.tools), children: Object.keys(toolsInfo).map((key2) => {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
@@ -141278,7 +141408,7 @@ const StoreSpecificRenderableTypes = [
   human_baseline_session
 ];
 const Tools = ({ toolDefinitions }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$Q.toolsGrid, children: toolDefinitions.map((toolDefinition, idx) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$P.toolsGrid, children: toolDefinitions.map((toolDefinition, idx) => {
     const name2 = toolDefinition.name;
     const toolArgs = toolDefinition.parameters?.properties ? Object.keys(toolDefinition.parameters.properties) : [];
     return /* @__PURE__ */ jsxRuntimeExports.jsx(Tool, { toolName: name2, toolArgs }, `${name2}-${idx}`);
@@ -141286,7 +141416,7 @@ const Tools = ({ toolDefinitions }) => {
 };
 const Tool = ({ toolName, toolArgs }) => {
   const functionCall = toolArgs && toolArgs.length > 0 ? `${toolName}(${toolArgs.join(", ")})` : toolName;
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("text-size-smallest", styles$Q.tool), children: functionCall });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: clsx("text-size-smallest", styles$P.tool), children: functionCall });
 };
 function useStickySwimLaneHeight() {
   const [stickySwimLaneHeight, setStickySwimLaneHeight] = reactExports.useState(0);
@@ -141568,7 +141698,7 @@ const labelForNode = (node2) => {
   }
 };
 const rootHeader = "_rootHeader_79lc7_7";
-const styles$P = {
+const styles$O = {
   rootHeader
 };
 const kMinWidth = 120;
@@ -141597,7 +141727,7 @@ function useOutlineWidth(outlineNodes, _font, agentName) {
     if (agentName) {
       const header2 = document.createElement("div");
       header2.className = [
-        styles$P.rootHeader,
+        styles$O.rootHeader,
         "text-size-smaller",
         "text-style-label"
       ].join(" ");
@@ -141814,7 +141944,7 @@ const TranscriptOutline = ({
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
-            className: clsx(styles$P.eventPadding),
+            className: clsx(styles$O.eventPadding),
             style: { height: "2em" }
           },
           node2.id
@@ -141854,7 +141984,7 @@ const TranscriptOutline = ({
       "div",
       {
         className: clsx(
-          styles$P.rootHeader,
+          styles$O.rootHeader,
           "text-size-smaller",
           "text-style-label"
         ),
@@ -143408,7 +143538,7 @@ const meta$1 = "_meta_fxgye_49";
 const disclosure = "_disclosure_fxgye_54";
 const description = "_description_fxgye_59";
 const resultPanel = "_resultPanel_fxgye_64";
-const styles$O = {
+const styles$N = {
   card,
   branchCard,
   utilityCard,
@@ -143456,20 +143586,20 @@ const AgentCardView = ({ span, className: className2 }) => {
     "div",
     {
       className: clsx(
-        styles$O.card,
-        isUtility && styles$O.utilityCard,
-        isBranch && styles$O.branchCard,
+        styles$N.card,
+        isUtility && styles$N.utilityCard,
+        isBranch && styles$N.branchCard,
         className2
       ),
       onClick: isBranch ? void 0 : handleClick,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$O.header, "text-size-small"), children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(iconClass, styles$O.icon, "text-style-secondary") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$N.header, "text-size-small"), children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(iconClass, styles$N.icon, "text-style-secondary") }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs(
             "div",
             {
               className: clsx(
-                styles$O.title,
+                styles$N.title,
                 "text-style-secondary",
                 "text-style-label"
               ),
@@ -143481,7 +143611,7 @@ const AgentCardView = ({ span, className: className2 }) => {
             }
           ),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", {}),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$O.meta, "text-style-secondary"), children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$N.meta, "text-style-secondary"), children: [
             tokens2,
             " · ",
             duration
@@ -143491,14 +143621,14 @@ const AgentCardView = ({ span, className: className2 }) => {
             {
               className: clsx(
                 icons.chevron.right,
-                styles$O.disclosure,
+                styles$N.disclosure,
                 "text-style-secondary"
               )
             }
           )
         ] }),
-        !isUtility && span.description && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$O.description, "text-size-small"), children: span.description }),
-        resultOutput && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$O.resultPanel, onClick: stopPropagation, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        !isUtility && span.description && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$N.description, "text-size-small"), children: span.description }),
+        resultOutput && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$N.resultPanel, onClick: stopPropagation, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           ExpandablePanel,
           {
             id: `agent-result-${span.id}`,
@@ -143779,7 +143909,7 @@ const sectionTimePill = "_sectionTimePill_1h53w_126";
 const scrubber = "_scrubber_1h53w_142";
 const scrubberLine = "_scrubberLine_1h53w_153";
 const scrubberCaretUp = "_scrubberCaretUp_1h53w_161";
-const styles$N = {
+const styles$M = {
   container: container$f,
   stableLabel,
   alignRight,
@@ -143913,25 +144043,25 @@ const TimelineMinimap = ({
     return useShortFormat ? formatDurationShort(selection.startTime, selection.endTime) : formatDuration$1(selection.startTime, selection.endTime);
   };
   const sectionLabel = computeSectionLabel();
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$N.container, children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$M.container, children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
       {
-        className: clsx(styles$N.stableLabel, styles$N.alignRight),
+        className: clsx(styles$M.stableLabel, styles$M.alignRight),
         onClick: toggle2,
         children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: isTokenMode ? styles$N.hidden : void 0, children: "time" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: isTokenMode ? void 0 : styles$N.hidden, children: "tokens" })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: isTokenMode ? styles$M.hidden : void 0, children: "time" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: isTokenMode ? void 0 : styles$M.hidden, children: "tokens" })
         ]
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$N.minimap, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$N.track }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$M.minimap, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$M.track }),
       showRegion && /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
         {
           ref: regionRef,
-          className: styles$N.selectionRegion,
+          className: styles$M.selectionRegion,
           style: bar.left + bar.width / 2 < 50 ? { left: `${bar.left}%`, minWidth: `${bar.width}%` } : {
             right: `${100 - bar.left - bar.width}%`,
             minWidth: `${bar.width}%`
@@ -143941,23 +144071,23 @@ const TimelineMinimap = ({
           onPointerUp: onScrub ? handlePointerUp : void 0,
           onLostPointerCapture: onScrub ? handleLostCapture : void 0,
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$N.regionFill }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$M.regionFill }),
             displayProgress != null && /* @__PURE__ */ jsxRuntimeExports.jsxs(
               "div",
               {
-                className: styles$N.scrubber,
+                className: styles$M.scrubber,
                 style: {
                   left: `${displayProgress * 100}%`
                 },
                 children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$N.scrubberLine }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$N.scrubberCaretUp })
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$M.scrubberLine }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$M.scrubberCaretUp })
                 ]
               }
             ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$N.marker }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$N.sectionTime, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$N.sectionTimePill, onClick: toggle2, children: sectionLabel }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$N.marker })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$M.marker }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$M.sectionTime, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$M.sectionTimePill, onClick: toggle2, children: sectionLabel }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$M.marker })
           ]
         }
       )
@@ -143965,11 +144095,11 @@ const TimelineMinimap = ({
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
       {
-        className: clsx(styles$N.stableLabel, styles$N.alignLeft),
+        className: clsx(styles$M.stableLabel, styles$M.alignLeft),
         onClick: toggle2,
         children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: isTokenMode ? styles$N.hidden : void 0, children: timeRightLabel }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: isTokenMode ? void 0 : styles$N.hidden, children: tokenRightLabel })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: isTokenMode ? styles$M.hidden : void 0, children: timeRightLabel }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: isTokenMode ? void 0 : styles$M.hidden, children: tokenRightLabel })
         ]
       }
     )
@@ -143978,7 +144108,7 @@ const TimelineMinimap = ({
 const title = "_title_3h2qq_1";
 const rows = "_rows_3h2qq_8";
 const row$2 = "_row_3h2qq_8";
-const styles$M = {
+const styles$L = {
   title,
   rows,
   row: row$2
@@ -144004,14 +144134,14 @@ const TimelineOptionsPopover = ({
       placement: "bottom-end",
       hoverDelay: -1,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `${styles$M.title} text-size-smaller`, children: "View Options" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `${styles$M.rows} text-size-smaller`, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `${styles$L.title} text-size-smaller`, children: "View Options" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `${styles$L.rows} text-size-smaller`, children: [
           kMarkerKindLabels.map(({ kind, label: label2 }) => {
             const checked = config2.markerKinds.includes(kind);
             return /* @__PURE__ */ jsxRuntimeExports.jsxs(
               "div",
               {
-                className: styles$M.row,
+                className: styles$L.row,
                 onClick: () => config2.toggleMarkerKind(kind),
                 children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -144034,7 +144164,7 @@ const TimelineOptionsPopover = ({
           /* @__PURE__ */ jsxRuntimeExports.jsxs(
             "div",
             {
-              className: styles$M.row,
+              className: styles$L.row,
               onClick: () => config2.setIncludeUtility(!config2.includeUtility),
               children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -144052,7 +144182,7 @@ const TimelineOptionsPopover = ({
               ]
             }
           ),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$M.row, onClick: onToggleBranches, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$L.row, onClick: onToggleBranches, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "input",
               {
@@ -144069,7 +144199,7 @@ const TimelineOptionsPopover = ({
           config2.showBranches && /* @__PURE__ */ jsxRuntimeExports.jsxs(
             "div",
             {
-              className: styles$M.row,
+              className: styles$L.row,
               onClick: () => config2.setForkRelative(!config2.forkRelative),
               children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -144099,7 +144229,7 @@ const backdrop$1 = "_backdrop_djjmp_33";
 const dropdownMenu = "_dropdownMenu_djjmp_42";
 const dropdownItem = "_dropdownItem_djjmp_57";
 const dropdownItemActive = "_dropdownItemActive_djjmp_74";
-const styles$L = {
+const styles$K = {
   selectorContainer,
   selectorButton,
   chevron: chevron$1,
@@ -144124,31 +144254,31 @@ const TimelineSelector = ({
   if (timelines.length <= 1) return null;
   const active = timelines[activeIndex];
   if (!active) return null;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$L.selectorContainer, children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$K.selectorContainer, children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "button",
       {
         type: "button",
-        className: styles$L.selectorButton,
+        className: styles$K.selectorButton,
         onClick: () => setIsOpen((prev) => !prev),
         title: active.description,
         "aria-haspopup": "listbox",
         "aria-expanded": isOpen,
         children: [
           active.name,
-          /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx("bi-chevron-down", styles$L.chevron) })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx("bi-chevron-down", styles$K.chevron) })
         ]
       }
     ),
     isOpen && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$L.backdrop, onClick: () => setIsOpen(false) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$L.dropdownMenu, role: "listbox", children: timelines.map((tl, i4) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$K.backdrop, onClick: () => setIsOpen(false) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$K.dropdownMenu, role: "listbox", children: timelines.map((tl, i4) => /* @__PURE__ */ jsxRuntimeExports.jsx(
         "button",
         {
           type: "button",
           className: clsx(
-            styles$L.dropdownItem,
-            i4 === activeIndex && styles$L.dropdownItemActive
+            styles$K.dropdownItem,
+            i4 === activeIndex && styles$K.dropdownItemActive
           ),
           role: "option",
           "aria-selected": i4 === activeIndex,
@@ -144700,7 +144830,7 @@ const breadcrumbDivider = "_breadcrumbDivider_1u7je_418";
 const breadcrumbLink = "_breadcrumbLink_1u7je_426";
 const breadcrumbCurrent = "_breadcrumbCurrent_1u7je_440";
 const tokens = "_tokens_1u7je_451";
-const styles$K = {
+const styles$J = {
   swimlane,
   pinnedSection,
   scrollSection,
@@ -144941,13 +145071,13 @@ const TimelineSwimLanes = ({
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
     {
-      className: clsx(styles$K.swimlane, isSticky && styles$K.swimlaneSticky),
+      className: clsx(styles$J.swimlane, isSticky && styles$J.swimlaneSticky),
       tabIndex: 0,
       onKeyDown: handleKeyDown,
       role: "grid",
       "aria-label": "Timeline swimlane",
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$K.pinnedSection, children: header2 && /* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$J.pinnedSection, children: header2 && /* @__PURE__ */ jsxRuntimeExports.jsx(
           HeaderRow,
           {
             ...header2,
@@ -144960,10 +145090,10 @@ const TimelineSwimLanes = ({
           "div",
           {
             className: clsx(
-              styles$K.collapsibleSection,
-              isCollapsed && styles$K.collapsibleCollapsed
+              styles$J.collapsibleSection,
+              isCollapsed && styles$J.collapsibleCollapsed
             ),
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$K.collapsibleInner, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$K.scrollSection, children: [
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$J.collapsibleInner, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$J.scrollSection, children: [
               parentRow && renderRow(
                 parentRow,
                 parentRow.name === "solvers" ? "main" : void 0
@@ -144975,7 +145105,7 @@ const TimelineSwimLanes = ({
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "button",
           {
-            className: styles$K.collapseToggle,
+            className: styles$J.collapseToggle,
             onClick: toggleCollapsed,
             title: isCollapsed ? "Expand swimlanes" : "Collapse swimlanes",
             children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: isCollapsed ? icons.expand.down : icons.collapse.up })
@@ -145056,14 +145186,14 @@ const SwimlaneRow = ({
     if (!onMarkerNavigate) return void 0;
     return (eventId) => onMarkerNavigate(eventId, layout.key);
   }, [onMarkerNavigate, layout.key]);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$K.row, role: "row", children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$J.row, role: "row", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
       {
         className: clsx(
-          styles$K.label,
-          isRowSelected && styles$K.labelSelected,
-          highlightClip !== void 0 && !isRowSelected && styles$K.labelHighlighted
+          styles$J.label,
+          isRowSelected && styles$J.labelSelected,
+          highlightClip !== void 0 && !isRowSelected && styles$J.labelHighlighted
         ),
         style: { paddingLeft: `${0.3 + layout.depth * 0.5}rem` },
         onClick: onSelectRow,
@@ -145071,7 +145201,7 @@ const SwimlaneRow = ({
           hasChildren ? /* @__PURE__ */ jsxRuntimeExports.jsx(
             "span",
             {
-              className: styles$K.chevron,
+              className: styles$J.chevron,
               onClick: handleChevronClick,
               role: "button",
               "aria-label": isExpanded ? "Collapse" : "Expand",
@@ -145082,7 +145212,7 @@ const SwimlaneRow = ({
                 }
               )
             }
-          ) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$K.chevronSpacer }),
+          ) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$J.chevronSpacer }),
           displayName ?? (layout.branch ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: icons.solvers.default }),
             " ",
@@ -145091,7 +145221,7 @@ const SwimlaneRow = ({
         ]
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$K.barArea, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$K.barInner, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$J.barArea, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$J.barInner, children: [
       layout.spans.map((span, spanIndex) => {
         const isBarSelected = isRowSelected && (!hasMultipleSpans || selectedSpanIndex === null || selectedSpanIndex === spanIndex);
         const isBarDimmed = isRowSelected && hasMultipleSpans && selectedSpanIndex !== null && selectedSpanIndex !== spanIndex;
@@ -145142,7 +145272,7 @@ const SwimlaneRow = ({
       )),
       connector && /* @__PURE__ */ jsxRuntimeExports.jsx(BranchConnectorLine, { connector })
     ] }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$K.tokens, children: formatTokenCount(layout.totalTokens) })
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$J.tokens, children: formatTokenCount(layout.totalTokens) })
   ] });
 };
 const HeaderRow = ({
@@ -145160,31 +145290,31 @@ const HeaderRow = ({
   const rootDisplay = rootLabel === "solvers" ? "main" : rootLabel;
   const [optionsOpen, setOptionsOpen] = reactExports.useState(false);
   const optionsButtonRef = reactExports.useRef(null);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$K.breadcrumbRow, children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$J.breadcrumbRow, children: [
     timelineSelector && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(TimelineSelector, { ...timelineSelector }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$K.breadcrumbDivider, children: "/" })
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$J.breadcrumbDivider, children: "/" })
     ] }),
-    hasBreadcrumbs ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$K.breadcrumbTrail, children: breadcrumbs2.map((segment2, i4) => {
+    hasBreadcrumbs ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$J.breadcrumbTrail, children: breadcrumbs2.map((segment2, i4) => {
       const isLast = i4 === breadcrumbs2.length - 1;
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: styles$K.breadcrumbSegment, children: [
-        i4 > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$K.breadcrumbDivider, children: "/" }),
-        isLast ? /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$K.breadcrumbCurrent, children: segment2.label }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: styles$J.breadcrumbSegment, children: [
+        i4 > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$J.breadcrumbDivider, children: "/" }),
+        isLast ? /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: styles$J.breadcrumbCurrent, children: segment2.label }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
           "button",
           {
-            className: styles$K.breadcrumbLink,
+            className: styles$J.breadcrumbLink,
             onClick: () => onBreadcrumbSelect?.(segment2.key),
             children: segment2.label
           }
         )
       ] }, segment2.key);
-    }) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: styles$K.breadcrumbCurrent, onClick: onScrollToTop, children: rootDisplay }),
+    }) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: styles$J.breadcrumbCurrent, onClick: onScrollToTop, children: rootDisplay }),
     timelineConfig && /* @__PURE__ */ jsxRuntimeExports.jsx(
       "button",
       {
         ref: optionsButtonRef,
         type: "button",
-        className: styles$K.optionsButton,
+        className: styles$J.optionsButton,
         onClick: () => setOptionsOpen((prev) => !prev),
         title: "Timeline options",
         "aria-label": "Timeline options",
@@ -145231,10 +145361,10 @@ const BarFill = ({
     "div",
     {
       className: clsx(
-        styles$K.fill,
-        isParent2 && styles$K.fillParent,
-        isSelected && styles$K.fillSelected,
-        isDimmed && styles$K.fillDimmed
+        styles$J.fill,
+        isParent2 && styles$J.fillParent,
+        isSelected && styles$J.fillSelected,
+        isDimmed && styles$J.fillDimmed
       ),
       style: {
         left: insetPx ? `calc(${span.bar.left}% + ${insetPx}px)` : `${span.bar.left}%`,
@@ -145258,7 +145388,7 @@ const HighlightOverlay = ({ spans, clipRight }) => {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
     {
-      className: styles$K.fillHighlight,
+      className: styles$J.fillHighlight,
       style: {
         left: `${barLeft}%`,
         width: `${width}%`
@@ -145295,9 +145425,9 @@ const RegionBarFill = ({
       "div",
       {
         className: clsx(
-          styles$K.fill,
-          isParent2 && styles$K.fillParent,
-          styles$K.fillDimmed
+          styles$J.fill,
+          isParent2 && styles$J.fillParent,
+          styles$J.fillDimmed
         ),
         style: {
           left: `${barLeft}%`,
@@ -145324,34 +145454,34 @@ const RegionBarFill = ({
     let opacityClass;
     if (hasRegionSelection) {
       if (isSegmentSelected) {
-        opacityClass = styles$K.fillSelected;
+        opacityClass = styles$J.fillSelected;
       } else if (hoveredIndex === i4) {
-        opacityClass = styles$K.regionHover;
+        opacityClass = styles$J.regionHover;
       } else {
-        opacityClass = styles$K.fillDimmed;
+        opacityClass = styles$J.fillDimmed;
       }
     } else if (isBarSelected) {
       if (hoveredIndex !== null && hoveredIndex !== i4) {
-        opacityClass = isParent2 ? styles$K.fillParent : styles$K.regionDefault;
+        opacityClass = isParent2 ? styles$J.fillParent : styles$J.regionDefault;
       } else {
-        opacityClass = styles$K.fillSelected;
+        opacityClass = styles$J.fillSelected;
       }
     } else {
       if (hoveredIndex !== null) {
-        opacityClass = styles$K.regionHover;
+        opacityClass = styles$J.regionHover;
       } else {
-        opacityClass = isParent2 ? styles$K.fillParent : styles$K.regionDefault;
+        opacityClass = isParent2 ? styles$J.fillParent : styles$J.regionDefault;
       }
     }
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
         className: clsx(
-          styles$K.regionSegment,
+          styles$J.regionSegment,
           opacityClass,
-          isFirst && styles$K.regionFirst,
-          isLast && styles$K.regionLast,
-          !isFirst && !isLast && styles$K.regionMiddle
+          isFirst && styles$J.regionFirst,
+          isLast && styles$J.regionLast,
+          !isFirst && !isLast && styles$J.regionMiddle
         ),
         style: {
           left: `${segmentLeft}%`,
@@ -145394,7 +145524,7 @@ const BranchConnectorLine = ({
   const midY = kRowHeight / 2;
   const endLeft = Math.max(barLeft, markerLeft + 0.5);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { className: styles$K.branchConnector, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { className: styles$J.branchConnector, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "line",
         {
@@ -145421,7 +145551,7 @@ const BranchConnectorLine = ({
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
-        className: styles$K.connectorArrow,
+        className: styles$J.connectorArrow,
         style: { left: `calc(${endLeft}% + 4px)` }
       }
     )
@@ -145439,7 +145569,7 @@ const MarkerGlyph = ({
     branch: icons.fork
   };
   const icon2 = markerIcons[marker2.kind] ?? "bi bi-question-circle";
-  const kindClass = marker2.kind === "error" ? styles$K.markerError : marker2.kind === "compaction" ? styles$K.markerCompaction : styles$K.markerBranch;
+  const kindClass = marker2.kind === "error" ? styles$J.markerError : marker2.kind === "compaction" ? styles$J.markerCompaction : styles$J.markerBranch;
   const handleClick = reactExports.useCallback(
     (e3) => {
       e3.stopPropagation();
@@ -145455,7 +145585,7 @@ const MarkerGlyph = ({
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "span",
     {
-      className: clsx(styles$K.marker, kindClass),
+      className: clsx(styles$J.marker, kindClass),
       style: { left: `${marker2.left}%` },
       title: marker2.tooltip,
       onClick: handleClick,
@@ -145861,7 +145991,7 @@ const outline = "_outline_4pe3a_20";
 const outlineToggle = "_outlineToggle_4pe3a_44";
 const separator$3 = "_separator_4pe3a_58";
 const eventsList = "_eventsList_4pe3a_62";
-const styles$J = {
+const styles$I = {
   root: root$1,
   container: container$e,
   outlineCollapsed,
@@ -145919,7 +146049,7 @@ const decisionIcon = (decision) => {
   }
 };
 const panel$6 = "_panel_8zdtn_1";
-const styles$I = {
+const styles$H = {
   panel: panel$6
 };
 const BranchEventView = ({
@@ -145942,12 +146072,12 @@ const BranchEventView = ({
       className: className2,
       subTitle: formatDateTime$1(new Date(event.timestamp)),
       icon: TranscriptIcons.info,
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(MetaDataGrid, { entries: data2, className: styles$I.panel })
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(MetaDataGrid, { entries: data2, className: styles$H.panel })
     }
   );
 };
 const panel$5 = "_panel_8zdtn_1";
-const styles$H = {
+const styles$G = {
   panel: panel$5
 };
 const CompactionEventView = ({
@@ -145972,7 +146102,7 @@ const CompactionEventView = ({
       className: className2,
       subTitle: formatDateTime$1(new Date(event.timestamp)),
       icon: TranscriptIcons.compaction,
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(MetaDataGrid, { entries: data2, className: styles$H.panel })
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(MetaDataGrid, { entries: data2, className: styles$G.panel })
     }
   );
 };
@@ -146003,7 +146133,7 @@ const ErrorEventView = ({
   );
 };
 const panel$4 = "_panel_vz394_1";
-const styles$G = {
+const styles$F = {
   panel: panel$4
 };
 const InfoEventView = ({
@@ -146018,12 +146148,12 @@ const InfoEventView = ({
         RenderedText,
         {
           markdown: event.data,
-          className: clsx(styles$G.panel, "text-size-base")
+          className: clsx(styles$F.panel, "text-size-base")
         }
       )
     );
   } else {
-    panels.push(/* @__PURE__ */ jsxRuntimeExports.jsx(JSONPanel, { data: event.data, className: styles$G.panel }));
+    panels.push(/* @__PURE__ */ jsxRuntimeExports.jsx(JSONPanel, { data: event.data, className: styles$F.panel }));
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     EventPanel,
@@ -146061,7 +146191,7 @@ const InputEventView = ({
   );
 };
 const grid$4 = "_grid_1eq5o_1";
-const styles$F = {
+const styles$E = {
   grid: grid$4
 };
 const LoggerEventView = ({
@@ -146076,7 +146206,7 @@ const LoggerEventView = ({
       className: className2,
       title: event.message.level,
       icon: TranscriptIcons.logging[event.message.level.toLowerCase()] || TranscriptIcons.info,
-      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-base", styles$F.grid), children: [
+      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-base", styles$E.grid), children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-smaller"), children: obj !== void 0 && obj !== null ? /* @__PURE__ */ jsxRuntimeExports.jsx(MetaDataGrid, { entries: obj }) : event.message.message }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx("text-size-smaller", "text-style-secondary"), children: [
           event.message.filename,
@@ -146093,17 +146223,17 @@ const tableSelection = "_tableSelection_qpy9f_12";
 const codePre = "_codePre_qpy9f_22";
 const code$3 = "_code_qpy9f_22";
 const progress$1 = "_progress_qpy9f_34";
-const error$1 = "_error_qpy9f_38";
+const error = "_error_qpy9f_38";
 const toolConfig = "_toolConfig_qpy9f_49";
 const toolChoice = "_toolChoice_qpy9f_57";
-const styles$E = {
+const styles$D = {
   container: container$d,
   all,
   tableSelection,
   codePre,
   code: code$3,
   progress: progress$1,
-  error: error$1,
+  error,
   toolConfig,
   toolChoice
 };
@@ -146154,7 +146284,7 @@ const ModelEventView = ({
       turnLabel: turnLabel2,
       eventCallbacks,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Summary", className: styles$E.container, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Summary", className: styles$D.container, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             ChatView,
             {
@@ -146167,20 +146297,20 @@ const ModelEventView = ({
               labels: { show: false }
             }
           ),
-          event.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Error", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$E.error, children: event.error }) }) : event.pending ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$E.progress), children: /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false, size: "medium" }) }) : void 0
+          event.error ? /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Error", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$D.error, children: event.error }) }) : event.pending ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$D.progress), children: /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false, size: "medium" }) }) : void 0
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "All", className: styles$E.container, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$E.all, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "All", className: styles$D.container, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$D.all, children: [
             Object.keys(entries).length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(
               EventSection,
               {
                 title: "Configuration",
-                className: styles$E.tableSelection,
+                className: styles$D.tableSelection,
                 children: /* @__PURE__ */ jsxRuntimeExports.jsx(MetaDataGrid, { entries, options: { plain: true } })
               }
             ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Usage", className: styles$E.tableSelection, children: event.output.usage ? /* @__PURE__ */ jsxRuntimeExports.jsx(ModelUsagePanel, { usage: event.output.usage }) : void 0 }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Timing", className: styles$E.tableSelection, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Usage", className: styles$D.tableSelection, children: event.output.usage ? /* @__PURE__ */ jsxRuntimeExports.jsx(ModelUsagePanel, { usage: event.output.usage }) : void 0 }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Timing", className: styles$D.tableSelection, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
               EventTimingPanel,
               {
                 timestamp: event.timestamp,
@@ -146201,13 +146331,13 @@ const ModelEventView = ({
             }
           ) })
         ] }),
-        event.tools.length > 1 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-name": "Tools", className: styles$E.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ToolsConfig, { tools: event.tools, toolChoice: event.tool_choice }) }),
+        event.tools.length > 1 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-name": "Tools", className: styles$D.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ToolsConfig, { tools: event.tools, toolChoice: event.tool_choice }) }),
         event.call ? /* @__PURE__ */ jsxRuntimeExports.jsx(
           APIView,
           {
             "data-name": "API",
             call: event.call,
-            className: styles$E.container
+            className: styles$D.container
           }
         ) : ""
       ]
@@ -146235,11 +146365,11 @@ const APICodeCell = ({ id, sourceCode }) => {
   if (!sourceCode) {
     return null;
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: sourceCodeRef, className: clsx("model-call"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$E.codePre), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: sourceCodeRef, className: clsx("model-call"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$D.codePre), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     "code",
     {
       id,
-      className: clsx("language-json", styles$E.code, "text-size-small"),
+      className: clsx("language-json", styles$D.code, "text-size-small"),
       children: sourceCode
     }
   ) }) });
@@ -146252,8 +146382,8 @@ const ToolsConfig = ({ tools: tools2, toolChoice: toolChoice2 }) => {
     ] }, `${tool2.name}-${idx}`);
   });
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$E.toolConfig, "text-size-small"), children: toolEls }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$E.toolChoice, "text-size-small"), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$D.toolConfig, "text-size-small"), children: toolEls }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$D.toolChoice, "text-size-small"), children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-style-secondary"), children: "Tool Choice" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(ToolChoiceView, { toolChoice: toolChoice2 }) })
     ] })
@@ -146275,7 +146405,7 @@ const code$2 = "_code_1a3fk_5";
 const sample = "_sample_1a3fk_10";
 const section$1 = "_section_1a3fk_14";
 const metadata$1 = "_metadata_1a3fk_21";
-const styles$D = {
+const styles$C = {
   noMargin,
   code: code$2,
   sample,
@@ -146292,13 +146422,13 @@ const SampleInitEventView = ({
   if (event.sample.files && Object.keys(event.sample.files).length > 0) {
     sections.push(
       /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Files", children: Object.keys(event.sample.files).map((file) => {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$D.noMargin, children: file }, `sample-init-file-${file}`);
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$C.noMargin, children: file }, `sample-init-file-${file}`);
       }) }, `event-${eventNode.id}`)
     );
   }
   if (event.sample.setup) {
     sections.push(
-      /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Setup", children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$D.code, children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: "sourceCode", children: event.sample.setup }) }) }, `${eventNode.id}-section-setup`)
+      /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Setup", children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: styles$C.code, children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: "sourceCode", children: event.sample.setup }) }) }, `${eventNode.id}-section-setup`)
     );
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -146310,7 +146440,7 @@ const SampleInitEventView = ({
       icon: TranscriptIcons.sample,
       subTitle: event.timestamp ? formatDateTime$1(new Date(event.timestamp)) : void 0,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Sample", className: styles$D.sample, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Sample", className: styles$C.sample, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             ChatView,
             {
@@ -146326,7 +146456,7 @@ const SampleInitEventView = ({
                 choice
               ] }, `$choice-{choice}`);
             }) : "",
-            sections.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$D.section, children: sections }) : "",
+            sections.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$C.section, children: sections }) : "",
             event.sample.target ? /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Target", children: toArray(event.sample.target).map((target2) => {
               return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-base"), children: target2 }, target2);
             }) }) : void 0
@@ -146336,7 +146466,7 @@ const SampleInitEventView = ({
           MetaDataGrid,
           {
             "data-name": "Metadata",
-            className: styles$D.metadata,
+            className: styles$C.metadata,
             entries: event.sample.metadata
           }
         ) : ""
@@ -146402,7 +146532,7 @@ const exec = "_exec_1irga_15";
 const result = "_result_1irga_19";
 const fileLabel = "_fileLabel_1irga_23";
 const wrapPre = "_wrapPre_1irga_28";
-const styles$C = {
+const styles$B = {
   twoColumn,
   exec,
   result,
@@ -146435,10 +146565,10 @@ const ExecView = ({ id, event }) => {
   const input2 = event.input;
   const result2 = event.result;
   const output2 = event.output ? event.output.trim() : void 0;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$C.exec), children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: `Command`, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$C.twoColumn), children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$C.wrapPre), children: cmd2 }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$C.wrapPre), children: input2 !== null ? input2?.trim() : void 0 }),
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$B.exec), children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: `Command`, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$B.twoColumn), children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$B.wrapPre), children: cmd2 }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$B.wrapPre), children: input2 !== null ? input2?.trim() : void 0 }),
       options && Object.keys(options).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: `Options`, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         MetaDataGrid,
         {
@@ -146455,7 +146585,7 @@ const ExecView = ({ id, event }) => {
           entry: { name: "sandbox_output", value: output2 }
         }
       ) }) : void 0,
-      result2 !== 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$C.result, "text-size-base"), children: [
+      result2 !== 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$B.result, "text-size-base"), children: [
         "(exited with code ",
         result2,
         ")"
@@ -146481,7 +146611,7 @@ const WriteFileView = ({ id, event }) => {
 };
 const FileView = ({ id, file, contents: contents2 }) => {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "File", children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$C.fileLabel), children: file }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "File", children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$B.fileLabel), children: file }) }),
     contents2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(EventSection, { title: "Contents", children: /* @__PURE__ */ jsxRuntimeExports.jsx(ExpandablePanel, { id: `${id}-file`, collapse: false, children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { children: contents2 }) }) }) : void 0
   ] });
 };
@@ -146491,7 +146621,7 @@ const separator$2 = "_separator_io1r0_13";
 const unchanged = "_unchanged_io1r0_22";
 const section = "_section_io1r0_27";
 const spacer = "_spacer_io1r0_31";
-const styles$B = {
+const styles$A = {
   container: container$c,
   wrappingContent: wrappingContent$1,
   separator: separator$2,
@@ -146534,46 +146664,46 @@ const ScoreEditEventView = ({
             className: clsx(
               "text-style-label",
               "text-style-secondary",
-              styles$B.section
+              styles$A.section
             ),
             children: "Updated Values"
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$B.container), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$A.container), children: [
           event.edit.value ? /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$B.separator) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.separator) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Value" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx(ScoreValue, { score: event.edit.value })
           ] }) : "",
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$B.separator) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.separator) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Answer" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$B.wrappingContent), children: event.edit.answer === kUnchangedSentinel ? /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$B.unchanged), children: "[unchanged]" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.edit.answer || "" }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$B.separator) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.wrappingContent), children: event.edit.answer === kUnchangedSentinel ? /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: clsx(styles$A.unchanged), children: "[unchanged]" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.edit.answer || "" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.separator) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Explanation" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$B.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.edit.explanation || "" }) })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.edit.explanation || "" }) })
         ] }),
-        event.edit.provenance ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$B.container), children: [
+        event.edit.provenance ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$A.container), children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "div",
             {
               className: clsx(
                 "text-style-label",
                 "text-style-secondary",
-                styles$B.section
+                styles$A.section
               ),
               children: "Provenance"
             }
           ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$B.spacer) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$B.separator) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.spacer) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.separator) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Author" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$B.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.edit.provenance.author }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$B.separator) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.edit.provenance.author }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.separator) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Reason" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$B.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.edit.provenance.reason || "" }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$B.separator) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.edit.provenance.reason || "" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.separator) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Time" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$B.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             RenderedText,
             {
               markdown: event.edit.provenance.timestamp ? formatDateTime$1(new Date(event.edit.provenance.timestamp)) : ""
@@ -146585,7 +146715,7 @@ const ScoreEditEventView = ({
           {
             id: `${eventNode.id}-score-metadata`,
             record: event.edit.metadata || {},
-            className: styles$B.metadataTree,
+            className: styles$A.metadataTree,
             defaultExpandLevel: 0
           }
         ) }) : void 0
@@ -146596,7 +146726,7 @@ const ScoreEditEventView = ({
 const explanation = "_explanation_1k2k0_1";
 const wrappingContent = "_wrappingContent_1k2k0_8";
 const separator$1 = "_separator_1k2k0_13";
-const styles$A = {
+const styles$z = {
   explanation,
   wrappingContent,
   separator: separator$1
@@ -146617,29 +146747,29 @@ const ScoreEventView = ({
       icon: TranscriptIcons.scorer,
       collapsibleContent: true,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Explanation", className: clsx(styles$A.explanation), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Explanation", className: clsx(styles$z.explanation), children: [
           event.target ? /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.separator) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$z.separator) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Target" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: resolvedTarget || "" }) })
           ] }) : "",
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.separator) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$z.separator) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Answer" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.score.answer || "" }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.separator) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$z.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.score.answer || "" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$z.separator) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Explanation" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.score.explanation || "" }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.separator) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$z.wrappingContent), children: /* @__PURE__ */ jsxRuntimeExports.jsx(RenderedText, { markdown: event.score.explanation || "" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$z.separator) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-style-label", children: "Score" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(ScoreValue, { score: event.score.value }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$A.separator) })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$z.separator) })
         ] }),
         event.score.metadata ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-name": "Metadata", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           RecordTree,
           {
             id: `${eventNode.id}-score-metadata`,
             record: event.score.metadata,
-            className: styles$A.metadataTree,
+            className: styles$z.metadataTree,
             defaultExpandLevel: 0
           }
         ) }) : void 0
@@ -146731,7 +146861,7 @@ const spanDescriptor = (event) => {
 };
 const diff = "_diff_eobja_1";
 const summary$2 = "_summary_eobja_6";
-const styles$z = {
+const styles$y = {
   diff,
   summary: summary$2
 };
@@ -146778,14 +146908,14 @@ const StateEventView = ({
       collapsibleContent: true,
       eventCallbacks,
       children: [
-        changePreview ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-name": "Summary", className: clsx(styles$z.summary), children: changePreview }) : void 0,
+        changePreview ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-name": "Summary", className: clsx(styles$y.summary), children: changePreview }) : void 0,
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           StateDiffView,
           {
             before,
             after,
             "data-name": "Diff",
-            className: clsx(styles$z.diff)
+            className: clsx(styles$y.diff)
           }
         )
       ]
@@ -147076,7 +147206,7 @@ const summary$1 = "_summary_ac4z2_1";
 const summaryRendered = "_summaryRendered_ac4z2_6";
 const subtaskSummary = "_subtaskSummary_ac4z2_10";
 const subtaskLabel = "_subtaskLabel_ac4z2_17";
-const styles$y = {
+const styles$x = {
   summary: summary$1,
   summaryRendered,
   subtaskSummary,
@@ -147093,9 +147223,9 @@ const SubtaskEventView = ({
   const body2 = [];
   if (event.type === "fork") {
     body2.push(
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { title: "Summary", className: clsx(styles$y.summary), children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { title: "Summary", className: clsx(styles$x.summary), children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Inputs" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$y.summaryRendered), children: /* @__PURE__ */ jsxRuntimeExports.jsx(Rendered, { values: event.input }) })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$x.summaryRendered), children: /* @__PURE__ */ jsxRuntimeExports.jsx(Rendered, { values: event.input }) })
       ] })
     );
   } else {
@@ -147131,12 +147261,12 @@ const SubtaskEventView = ({
 };
 const SubtaskSummary = ({ input: input2, result: result2 }) => {
   const output2 = typeof result2 === "object" ? result2 : { result: result2 };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$y.subtaskSummary), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$x.subtaskSummary), children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-size-small"), children: "Input" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-large", styles$y.subtaskLabel) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-large", styles$x.subtaskLabel) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label", "text-size-small"), children: "Output" }),
     input2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(Rendered, { values: input2 }) : void 0,
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-title-secondary", styles$y.subtaskLabel), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: kArrowRightIcon }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-size-title-secondary", styles$x.subtaskLabel), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: kArrowRightIcon }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: output2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(Rendered, { values: output2 }) : "-" })
   ] });
 };
@@ -147161,7 +147291,7 @@ const None = () => {
 const summary = "_summary_1qsnv_1";
 const approval = "_approval_1qsnv_6";
 const progress = "_progress_1qsnv_12";
-const styles$x = {
+const styles$w = {
   summary,
   approval,
   progress
@@ -147211,7 +147341,7 @@ const ToolEventView = ({
       collapseControl: "bottom",
       turnLabel: turnLabel2,
       eventCallbacks,
-      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Summary", className: styles$x.summary, children: [
+      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-name": "Summary", className: styles$w.summary, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           ToolCallView,
           {
@@ -147238,10 +147368,10 @@ const ToolEventView = ({
           ApprovalEventView,
           {
             eventNode: approvalNode,
-            className: styles$x.approval
+            className: styles$w.approval
           }
         ) : "",
-        event.pending ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$x.progress), children: /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false, size: "medium" }) }) : void 0
+        event.pending ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$w.progress), children: /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false, size: "medium" }) }) : void 0
       ] })
     }
   );
@@ -147251,7 +147381,7 @@ const attached = "_attached_1nuy2_5";
 const attachedParent = "_attachedParent_1nuy2_9";
 const attachedChild = "_attachedChild_1nuy2_16";
 const last = "_last_1nuy2_21";
-const styles$w = {
+const styles$v = {
   node,
   attached,
   attachedParent,
@@ -147330,16 +147460,16 @@ const TranscriptVirtualListComponent = ({
   }, [eventNodes, hasToolEventsAtCurrentDepth, turnMap]);
   const renderRow = reactExports.useCallback(
     (index, item2, style2) => {
-      const paddingClass = index === 0 ? styles$w.first : void 0;
+      const paddingClass = index === 0 ? styles$v.first : void 0;
       const previousIndex = index - 1;
       const nextIndex2 = index + 1;
       const previous = previousIndex >= 0 && previousIndex < eventNodes.length ? eventNodes[previousIndex] : void 0;
       const next = nextIndex2 < eventNodes.length ? eventNodes[nextIndex2] : void 0;
       const attached2 = item2.event.event === "tool" && (previous?.event.event === "tool" || previous?.event.event === "model");
       const attachedParent2 = item2.event.event === "model" && next?.event.event === "tool";
-      const attachedClass = attached2 ? styles$w.attached : void 0;
-      const attachedChildClass = attached2 ? styles$w.attachedChild : void 0;
-      const attachedParentClass = attachedParent2 ? styles$w.attachedParent : void 0;
+      const attachedClass = attached2 ? styles$v.attached : void 0;
+      const attachedChildClass = attached2 ? styles$v.attachedChild : void 0;
+      const attachedParentClass = attachedParent2 ? styles$v.attachedParent : void 0;
       const context = contextMap.get(item2.id);
       const isLast = index === eventNodes.length - 1;
       return /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -147347,9 +147477,9 @@ const TranscriptVirtualListComponent = ({
         {
           id: item2.id,
           className: clsx(
-            styles$w.node,
+            styles$v.node,
             paddingClass,
-            isLast ? styles$w.last : void 0,
+            isLast ? styles$v.last : void 0,
             attachedClass
           ),
           style: {
@@ -147948,7 +148078,7 @@ const TranscriptLayout = ({
     (debounce2) => onHeadroomResetAnchor?.(debounce2),
     [onHeadroomResetAnchor]
   );
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(TimelineSelectContext.Provider, { value: selectBySpanId, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$J.root, className2), children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(TimelineSelectContext.Provider, { value: selectBySpanId, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$I.root, className2), children: [
     showSwimlanes && /* @__PURE__ */ jsxRuntimeExports.jsx(
       StickyScroll,
       {
@@ -147978,9 +148108,9 @@ const TranscriptLayout = ({
       "div",
       {
         className: clsx(
-          styles$J.container,
-          !outline2 && styles$J.noOutline,
-          outline2 && isOutlineCollapsed && styles$J.outlineCollapsed
+          styles$I.container,
+          !outline2 && styles$I.noOutline,
+          outline2 && isOutlineCollapsed && styles$I.outlineCollapsed
         ),
         style: {
           "--outline-top": `${effectiveOffsetTop}px`
@@ -147991,7 +148121,7 @@ const TranscriptLayout = ({
               StickyScroll,
               {
                 scrollRef,
-                className: styles$J.outline,
+                className: styles$I.outline,
                 offsetTop: effectiveOffsetTop,
                 children: [
                   !isOutlineCollapsed && /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -148019,7 +148149,7 @@ const TranscriptLayout = ({
                     "button",
                     {
                       type: "button",
-                      className: styles$J.outlineToggle,
+                      className: styles$I.outlineToggle,
                       onClick: outlineHasNodes && !outline2.toggleDisabled ? () => outline2.onCollapsedChange(!isOutlineCollapsed) : void 0,
                       "aria-disabled": outline2.toggleDisabled || !outlineHasNodes,
                       title: outline2.toggleTitle ?? (!outlineHasNodes ? "No outline available for the current filter" : void 0),
@@ -148030,7 +148160,7 @@ const TranscriptLayout = ({
                 ]
               }
             ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$J.separator })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$I.separator })
           ] }),
           hasMatchingEvents ? /* @__PURE__ */ jsxRuntimeExports.jsx(
             TranscriptViewNodes,
@@ -148042,7 +148172,7 @@ const TranscriptLayout = ({
               running,
               initialEventId: effectiveInitialEventId,
               offsetTop: effectiveOffsetTop,
-              className: styles$J.eventsList,
+              className: styles$I.eventsList,
               scrollRef,
               renderAgentCard: showSwimlanes ? renderAgentCard : void 0,
               getEventUrl,
@@ -148892,7 +149022,7 @@ const sampleInfo$1 = "_sampleInfo_14cqz_11";
 const sampleNav = "_sampleNav_14cqz_17";
 const nav$1 = "_nav_14cqz_25";
 const disabled = "_disabled_14cqz_25";
-const styles$v = {
+const styles$u = {
   detail,
   panel: panel$3,
   sampleInfo: sampleInfo$1,
@@ -148989,7 +149119,7 @@ const SampleDetailComponent = ({
   );
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(ExtendedFindProvider, { children: [
     showFind ? /* @__PURE__ */ jsxRuntimeExports.jsx(FindBand, {}) : "",
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$v.detail, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: styles$u.detail, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         ApplicationNavbar,
         {
@@ -148997,7 +149127,7 @@ const SampleDetailComponent = ({
           fnNavigationUrl,
           bordered: bordered2,
           breadcrumbsEnabled,
-          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$v.sampleNav), children: [
+          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$u.sampleNav), children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "div",
               {
@@ -149007,11 +149137,11 @@ const SampleDetailComponent = ({
                 role: "button",
                 "aria-label": "Previous sample",
                 "aria-disabled": !hasPrevious,
-                className: clsx(!hasPrevious && styles$v.disabled, styles$v.nav),
+                className: clsx(!hasPrevious && styles$u.disabled, styles$u.nav),
                 children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.previous) })
               }
             ),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$v.sampleInfo, "text-size-smallest"), children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(styles$u.sampleInfo, "text-size-smallest"), children: [
               "Sample ",
               sampleId,
               " (Epoch ",
@@ -149027,7 +149157,7 @@ const SampleDetailComponent = ({
                 role: "button",
                 "aria-label": "Next sample",
                 "aria-disabled": !hasNext,
-                className: clsx(!hasNext && styles$v.disabled, styles$v.nav),
+                className: clsx(!hasNext && styles$u.disabled, styles$u.nav),
                 children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(ApplicationIcons.next) })
               }
             )
@@ -149038,7 +149168,7 @@ const SampleDetailComponent = ({
         InlineSampleComponent,
         {
           showActivity: sampleStatus2 === "loading" || sampleStatus2 === "streaming",
-          className: styles$v.panel
+          className: styles$u.panel
         }
       )
     ] })
@@ -149188,7 +149318,7 @@ const tabContainer = "_tabContainer_kf1qa_6";
 const tabSet = "_tabSet_kf1qa_14";
 const tabs = "_tabs_kf1qa_21";
 const tabPanels = "_tabPanels_kf1qa_29";
-const styles$u = {
+const styles$t = {
   workspace,
   tabContainer,
   tabSet,
@@ -149196,7 +149326,7 @@ const styles$u = {
   tabPanels
 };
 const message = "_message_1gb2h_5";
-const styles$t = {
+const styles$s = {
   "task-error-display": "_task-error-display_1gb2h_1",
   message
 };
@@ -149215,7 +149345,7 @@ const TaskErrorCard = ({ error: error2 }) => {
         {
           id: "task-error-collapse",
           collapse: true,
-          className: clsx("text-size-smaller", styles$t.message),
+          className: clsx("text-size-smaller", styles$s.message),
           children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             RenderedContent,
             {
@@ -149229,7 +149359,7 @@ const TaskErrorCard = ({ error: error2 }) => {
         ANSIDisplay,
         {
           output: error2.traceback_ansi,
-          className: styles$t["task-error-display"]
+          className: styles$s["task-error-display"]
         }
       )
     ] })
@@ -149295,7 +149425,7 @@ const MessageBand = ({
   ] });
 };
 const item$1 = "_item_1uzhd_1";
-const styles$s = {
+const styles$r = {
   item: item$1
 };
 const DatasetDetailView = ({
@@ -149306,12 +149436,12 @@ const DatasetDetailView = ({
     Object.entries(dataset).filter(([key2]) => key2 !== "sample_ids")
   );
   if (!dataset || Object.keys(filtered).length === 0) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-size-base", styles$s.item), style: style2, children: "No dataset information available" });
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: clsx("text-size-base", styles$r.item), style: style2, children: "No dataset information available" });
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     MetaDataGrid,
     {
-      className: clsx("text-size-base", styles$s.item),
+      className: clsx("text-size-base", styles$r.item),
       entries: filtered,
       style: style2,
       options: { plain: true }
@@ -149323,7 +149453,7 @@ const wideCol = "_wideCol_1n79r_9";
 const planCol = "_planCol_1n79r_24";
 const container$b = "_container_1n79r_29";
 const grid$3 = "_grid_1n79r_35";
-const styles$r = {
+const styles$q = {
   floatingCol,
   wideCol,
   planCol,
@@ -149333,7 +149463,7 @@ const styles$r = {
 const icon$1 = "_icon_59zaz_1";
 const container$a = "_container_59zaz_5";
 const metadata = "_metadata_59zaz_11";
-const styles$q = {
+const styles$p = {
   icon: icon$1,
   container: container$a,
   metadata
@@ -149344,22 +149474,22 @@ const DetailStep = ({
   params,
   className: className2
 }) => {
-  const iconHtml = icon2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, styles$q.icon) }) : "";
+  const iconHtml = icon2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, styles$p.icon) }) : "";
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: clsx(className2), children: [
     iconHtml,
     " ",
     name2,
-    params && Object.keys(params).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$q.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    params && Object.keys(params).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$p.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       MetaDataGrid,
       {
         entries: params,
-        className: clsx("text-size-small", styles$q.metadata)
+        className: clsx("text-size-small", styles$p.metadata)
       }
     ) }) : ""
   ] });
 };
 const item = "_item_leq25_1";
-const styles$p = {
+const styles$o = {
   item
 };
 const ScorerDetailView = ({
@@ -149376,31 +149506,31 @@ const ScorerDetailView = ({
       icon: ApplicationIcons.scorer,
       name: name2,
       params,
-      className: clsx(styles$p.item, "text-size-base")
+      className: clsx(styles$o.item, "text-size-base")
     }
   );
 };
 const container$9 = "_container_12j2k_1";
 const separator = "_separator_12j2k_11";
-const styles$o = {
+const styles$n = {
   container: container$9,
   separator
 };
 const SolversDetailView = ({ steps }) => {
-  const separator2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$o.items, "text-size-small", styles$o.separator), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.arrows.right }) });
+  const separator2 = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$n.items, "text-size-small", styles$n.separator), children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: ApplicationIcons.arrows.right }) });
   const details = steps?.map((step, index) => {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(reactExports.Fragment, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         DetailStep,
         {
           name: step.solver,
-          className: clsx(styles$o.items, "text-size-small")
+          className: clsx(styles$n.items, "text-size-small")
         }
       ),
       index < steps.length - 1 ? separator2 : ""
     ] }, `solver-step-${index}`);
   });
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$o.container, children: details });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$n.container, children: details });
 };
 const PlanDetailView = ({
   evaluation,
@@ -149414,13 +149544,13 @@ const PlanDetailView = ({
   const taskColumns = [];
   taskColumns.push({
     title: "Dataset",
-    className: styles$r.floatingCol,
+    className: styles$q.floatingCol,
     contents: /* @__PURE__ */ jsxRuntimeExports.jsx(DatasetDetailView, { dataset: evaluation.dataset })
   });
   if (steps) {
     taskColumns.push({
       title: "Solvers",
-      className: styles$r.wideCol,
+      className: styles$q.wideCol,
       contents: /* @__PURE__ */ jsxRuntimeExports.jsx(SolversDetailView, { steps })
     });
   }
@@ -149454,15 +149584,15 @@ const PlanDetailView = ({
       });
       taskColumns.push({
         title: label2,
-        className: styles$r.floatingCol,
+        className: styles$q.floatingCol,
         contents: scorerPanels
       });
     }
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$r.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$q.container, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
     {
-      className: styles$r.grid,
+      className: styles$q.grid,
       style: {
         gridTemplateColumns: `repeat(${taskColumns.length}, fit-content(50%))`
       },
@@ -149490,7 +149620,7 @@ const PlanColumn = ({ title: title2, className: className2, children: children2 
           "text-size-small",
           "text-style-label",
           "text-style-secondary",
-          styles$r.planCol
+          styles$q.planCol
         ),
         children: title2
       }
@@ -151946,7 +152076,7 @@ const clientApi = (api2, log_file, debug = false) => {
     }
     return api2.eval_pending_samples(log_file2, etag);
   };
-  const get_log_sample_data = (log_file2, id, epoch, last_event, last_attachment) => {
+  const get_log_sample_data = (log_file2, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool) => {
     if (!api2.eval_log_sample_data) {
       throw new Error("API doesn't supported streamed sample data");
     }
@@ -151955,7 +152085,9 @@ const clientApi = (api2, log_file, debug = false) => {
       id,
       epoch,
       last_event,
-      last_attachment
+      last_attachment,
+      last_message_pool,
+      last_call_pool
     );
   };
   const middleware = debug ? createMiddlewareWrapper([debugMiddleware]) : (_name, fn3) => fn3;
@@ -152613,7 +152745,7 @@ function viewServerApi(options = {}) {
     );
     return result2.parsed;
   };
-  const eval_log_sample_data2 = async (log_file, id, epoch, last_event, last_attachment) => {
+  const eval_log_sample_data2 = async (log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool) => {
     const params = new URLSearchParams();
     params.append("log", log_file);
     params.append("id", String(id));
@@ -152623,6 +152755,12 @@ function viewServerApi(options = {}) {
     }
     if (last_attachment !== void 0) {
       params.append("after-attachment-id", String(last_attachment));
+    }
+    if (last_message_pool !== void 0) {
+      params.append("after-message-pool-id", String(last_message_pool));
+    }
+    if (last_call_pool !== void 0) {
+      params.append("after-call-pool-id", String(last_call_pool));
     }
     const request = {
       headers: {},
@@ -152868,13 +153006,15 @@ async function eval_pending_samples(log_file, etag) {
     throw new Error(`Unable to load pending samples ${log_file}.`);
   }
 }
-async function eval_log_sample_data(log_file, id, epoch, last_event, last_attachment) {
+async function eval_log_sample_data(log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool) {
   const response = await vscodeClient(kMethodSampleData, [
     log_file,
     id,
     epoch,
     last_event,
-    last_attachment
+    last_attachment,
+    last_message_pool,
+    last_call_pool
   ]);
   if (response) {
     if (response === kNotModifiedSignal) {
@@ -153002,7 +153142,7 @@ const DownloadPanel = ({
   ] }) });
 };
 const jsonTab = "_jsonTab_6pq03_1";
-const styles$n = {
+const styles$m = {
   jsonTab
 };
 const kJsonMaxSize = 1e7;
@@ -153060,7 +153200,7 @@ const JsonTab = ({ logFile, json }) => {
   const downloadFiles = useStore((state) => state.capabilities.downloadFiles);
   if (logFile && json.length > kJsonMaxSize && downloadFiles) {
     const file = `${filename(logFile)}.json`;
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$n.jsonTab, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$m.jsonTab, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       DownloadPanel,
       {
         message: "The JSON for this log file is too large to render.",
@@ -153070,14 +153210,14 @@ const JsonTab = ({ logFile, json }) => {
       }
     ) });
   } else {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$n.jsonTab, children: /* @__PURE__ */ jsxRuntimeExports.jsx(JSONPanel, { id: "task-json-contents", json, simple: true }) });
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$m.jsonTab, children: /* @__PURE__ */ jsxRuntimeExports.jsx(JSONPanel, { id: "task-json-contents", json, simple: true }) });
   }
 };
 const container$8 = "_container_4wzpj_1";
 const modelInfo = "_modelInfo_4wzpj_8";
 const role = "_role_4wzpj_15";
 const sep = "_sep_4wzpj_19";
-const styles$m = {
+const styles$l = {
   container: container$8,
   modelInfo,
   role,
@@ -153099,31 +153239,31 @@ const ModelCard = ({ evalSpec }) => {
   const noneEl = /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-style-secondary", children: "None" });
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { label: "Models" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: "task-model-card-body", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$m.container, children: Object.keys(modelsInfo || {}).map((modelKey) => {
+    /* @__PURE__ */ jsxRuntimeExports.jsx(CardBody, { id: "task-model-card-body", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$l.container, children: Object.keys(modelsInfo || {}).map((modelKey) => {
       const modelInfo2 = modelsInfo[modelKey];
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
         {
-          className: clsx(styles$m.modelInfo, "text-size-small"),
+          className: clsx(styles$l.modelInfo, "text-size-small"),
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "div",
               {
                 className: clsx(
-                  styles$m.role,
+                  styles$l.role,
                   "text-style-label",
                   "text-style-secondary"
                 ),
                 children: modelKey
               }
             ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$m.sep) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$l.sep) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Model" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: modelInfo2.model }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$m.sep) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$l.sep) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Base Url" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-size-small", children: modelInfo2.base_url || noneEl }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$m.sep) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$l.sep) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Configuration" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-size-small", children: modelInfo2.config && Object.keys(modelInfo2.config).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
               MetaDataGrid,
@@ -153131,7 +153271,7 @@ const ModelCard = ({ evalSpec }) => {
                 entries: modelInfo2.config
               }
             ) : noneEl }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$m.sep) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$l.sep) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("text-style-label"), children: "Args" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-size-small", children: Object.keys(modelInfo2.args).length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
               MetaDataGrid,
@@ -153139,7 +153279,7 @@ const ModelCard = ({ evalSpec }) => {
                 entries: modelInfo2.args
               }
             ) : noneEl }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$m.sep) })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx(styles$l.sep) })
           ]
         },
         modelKey
@@ -153186,43 +153326,6 @@ const ModelTab = ({
       ]
     }
   ) });
-};
-const statusCell = "_statusCell_hunte_1";
-const error = "_error_hunte_7";
-const success = "_success_hunte_11";
-const cancelled = "_cancelled_hunte_15";
-const styles$l = {
-  statusCell,
-  error,
-  success,
-  cancelled
-};
-const sampleStatus = (completed, error2) => {
-  if (error2) {
-    return errorType(error2) === "CancelledError" ? "cancelled" : "error";
-  }
-  return completed ? "ok" : "running";
-};
-const kDefaultSampleSortValue = "3:ok";
-const sampleStatusSortValue = (status2, error2) => {
-  switch (status2) {
-    case "running":
-      return "0:running";
-    case "error":
-      return `1:error:${errorType(error2)}`;
-    case "cancelled":
-      return "2:cancelled";
-    default:
-      return kDefaultSampleSortValue;
-  }
-};
-const SampleStatusIcon = ({ status: status2 }) => {
-  if (status2 === "running") {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$l.statusCell, children: /* @__PURE__ */ jsxRuntimeExports.jsx(PulsingDots, { subtle: false }) });
-  }
-  const icon2 = status2 === "error" ? ApplicationIcons.error : status2 === "cancelled" ? ApplicationIcons.cancelled : ApplicationIcons.success;
-  const colorClass = status2 === "error" ? styles$l.error : status2 === "cancelled" ? styles$l.cancelled : styles$l.success;
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: styles$l.statusCell, children: /* @__PURE__ */ jsxRuntimeExports.jsx("i", { className: clsx(icon2, colorClass) }) });
 };
 const mainLayout = "_mainLayout_1pg7l_1";
 const samplesListGrid = "_samplesListGrid_1pg7l_7";
@@ -153444,6 +153547,36 @@ function buildColumnDefs(samplesDescriptor, selectedScores, scores2, epochs) {
               styles$k.centered
             ),
             children: data2.retries && data2.retries > 0 ? data2.retries : void 0
+          }
+        );
+      }
+    },
+    {
+      colId: "sampleStatusMsg",
+      headerName: "Status",
+      width: (shape?.errorSize ?? 1) * 26,
+      minWidth: 28,
+      hide: !shape?.errorSize,
+      valueGetter: (params) => {
+        if (!params.data) return "";
+        const s4 = sampleStatus(params.data.completed, params.data.data.error);
+        return s4;
+      },
+      cellRenderer: (params) => {
+        if (!params.data) return null;
+        const error2 = params.data.data.error;
+        const s4 = sampleStatus(params.data.completed, params.data.data.error);
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: clsx(
+              "sample-status",
+              "text-size-small",
+              "three-line-clamp",
+              styles$k.cell,
+              styles$k.wrapAnywhere
+            ),
+            children: s4 === "cancelled" ? s4 : error2 ? error2 : s4
           }
         );
       }
@@ -176589,15 +176722,15 @@ const LogView = () => {
           status: selectedLogDetails?.status
         }
       ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: divRef, className: clsx("workspace", styles$u.workspace), children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("log-detail", styles$u.tabContainer), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: divRef, className: clsx("workspace", styles$t.workspace), children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: clsx("log-detail", styles$t.tabContainer), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         TabSet,
         {
           id: "log-details",
           tools: tabTools2,
           type: "pills",
-          className: clsx(styles$u.tabSet, "text-size-smaller"),
-          tabControlsClassName: clsx(styles$u.tabs, "text-size-smaller"),
-          tabPanelsClassName: clsx(styles$u.tabPanels),
+          className: clsx(styles$t.tabSet, "text-size-smaller"),
+          tabControlsClassName: clsx(styles$t.tabs, "text-size-smaller"),
+          tabPanelsClassName: clsx(styles$t.tabPanels),
           children: Object.keys(tabs2).map((key2) => {
             const tab2 = tabs2[key2];
             return /* @__PURE__ */ jsxRuntimeExports.jsx(
