@@ -121278,10 +121278,7 @@ var transformers = () => {
 */
 var elevateChildNode = (node, childEventType) => {
 	const targetIndex = node.children.findIndex((child) => child.event.event === childEventType);
-	if (targetIndex === -1) {
-		console.log(`No ${childEventType} event found in a span, this is very unexpected.`);
-		return null;
-	}
+	if (targetIndex === -1) return null;
 	const targetNode = { ...node.children[targetIndex] };
 	const remainingChildren = node.children.filter((_, i) => i !== targetIndex);
 	targetNode.depth = node.depth;
@@ -124368,6 +124365,7 @@ var TimelineEvent = class {
 	* `branchedFrom` is a message ID (not an event UUID). It may match:
 	* 1. A model event's output message ID (`output.choices[0].message.id`)
 	* 2. A tool event's message ID (`message_id`)
+	* 3. A model event's input message ID (any message in `input` with matching `id`)
 	*
 	* This is used to locate the fork point for branches.
 	*/
@@ -124375,6 +124373,10 @@ var TimelineEvent = class {
 		const e = this.event;
 		if (e.event === "model") {
 			if (e.output?.choices?.[0]?.message?.id === messageId) return true;
+			const input = e.input;
+			if (input) {
+				for (const msg of input) if (msg.id === messageId) return true;
+			}
 		} else if (e.event === "tool") {
 			if (e.message_id === messageId) return true;
 		}
@@ -125413,13 +125415,16 @@ function collectBranchMarkers(node, markers) {
 *
 * `branch.branchedFrom` is a message ID (not an event UUID). Searches
 * parent events for one that produced or carries this message ID.
-* Falls back to `branch.startTime()` when branchedFrom is missing or
-* no matching event is found.
+*
+* When `branchedFrom` is empty the branch is unrolled from the very
+* beginning, so we return the parent's start time.
+*
+* Falls back to `parent.startTime()` when no matching event is found.
 */
 function resolveForkTimestamp(parent, branch) {
-	if (!branch.branchedFrom) return branch.startTime();
+	if (!branch.branchedFrom) return parent.startTime();
 	for (const item of parent.content) if (item.type === "event" && item.matchesMessageId(branch.branchedFrom)) return item.startTime();
-	return branch.startTime();
+	return parent.startTime();
 }
 /**
 * Builds a tooltip string summarizing branches at a fork point.
@@ -125638,18 +125643,6 @@ function flattenChildren(nodes, parentDepth, parentKey, includeUtility, showBran
 	}
 	entries.sort((a, b) => a.groupStartTime.getTime() - b.groupStartTime.getTime() || a.laneIndex - b.laneIndex || compareByTime(a, b));
 	const result = [];
-	for (const entry of entries) {
-		result.push({
-			key: entry.key,
-			name: entry.displayName,
-			depth,
-			spans: entry.rowSpans,
-			totalTokens: entry.totalTokens,
-			startTime: entry.startTime,
-			endTime: entry.endTime
-		});
-		result.push(...flattenChildren(entry.spans, depth, entry.key, includeUtility, showBranches));
-	}
 	if (showBranches) for (const node of nodes) {
 		const forkPositions = /* @__PURE__ */ new Map();
 		for (const branch of node.branches) {
@@ -125687,6 +125680,18 @@ function flattenChildren(nodes, parentDepth, parentKey, includeUtility, showBran
 			});
 			result.push(...flattenChildren([branchSpan], depth, branchKey, includeUtility, showBranches, `${label}.`));
 		}
+	}
+	for (const entry of entries) {
+		result.push({
+			key: entry.key,
+			name: entry.displayName,
+			depth,
+			spans: entry.rowSpans,
+			totalTokens: entry.totalTokens,
+			startTime: entry.startTime,
+			endTime: entry.endTime
+		});
+		result.push(...flattenChildren(entry.spans, depth, entry.key, includeUtility, showBranches));
 	}
 	return result;
 }
@@ -126101,22 +126106,23 @@ function computeTimeMapping(node) {
 *
 * The branch's wall-clock range [branchStart, branchEnd] is linearly remapped
 * so that it starts at `forkPercent` in the timeline's percentage space and
-* fills to 100%. This ensures branches are always visually prominent regardless
-* of how small their duration is relative to the parent timeline.
+* uses the trunk mapping's time scale for its width. This makes branch bars
+* proportional to their actual duration rather than stretching to 100%.
 *
-* @param branchStart  Branch content start time
-* @param branchEnd    Branch content end time
-* @param forkPercent  The fork marker's percentage position on the parent row (0-100)
+* @param branchStart   Branch content start time
+* @param branchEnd     Branch content end time
+* @param forkPercent   The fork marker's percentage position on the parent row (0-100)
+* @param trunkMapping  The parent/trunk time mapping, used to derive the time scale
 */
-function createShiftedMapping(branchStart, branchEnd, forkPercent) {
+function createShiftedMapping(branchStart, branchEnd, forkPercent, trunkMapping) {
 	const startMs = branchStart.getTime();
 	const branchDurationMs = branchEnd.getTime() - startMs;
-	const availablePercent = 100 - forkPercent;
+	const branchWidthPercent = trunkMapping.toPercent(branchEnd) - trunkMapping.toPercent(branchStart);
 	return {
 		toPercent(timestamp) {
 			if (branchDurationMs <= 0) return forkPercent;
 			const t = (timestamp.getTime() - startMs) / branchDurationMs;
-			return Math.max(0, Math.min(100, forkPercent + t * availablePercent));
+			return Math.max(0, Math.min(100, forkPercent + t * branchWidthPercent));
 		},
 		hasCompression: false,
 		gaps: []
@@ -127004,48 +127010,48 @@ function attachSourceSpans(nodes, spanMap) {
 	}
 }
 var TimelineSwimLanes_module_default = {
-	swimlane: "_swimlane_1u7je_1",
-	pinnedSection: "_pinnedSection_1u7je_17",
-	scrollSection: "_scrollSection_1u7je_25",
-	collapsibleSection: "_collapsibleSection_1u7je_40",
-	collapsibleCollapsed: "_collapsibleCollapsed_1u7je_53",
-	swimlaneSticky: "_swimlaneSticky_1u7je_63",
-	collapsibleInner: "_collapsibleInner_1u7je_67",
-	collapseToggle: "_collapseToggle_1u7je_77",
-	row: "_row_1u7je_105",
-	label: "_label_1u7je_111",
-	labelSelected: "_labelSelected_1u7je_129",
-	labelHighlighted: "_labelHighlighted_1u7je_134",
-	chevron: "_chevron_1u7je_141",
-	chevronSpacer: "_chevronSpacer_1u7je_156",
-	barArea: "_barArea_1u7je_164",
-	barInner: "_barInner_1u7je_170",
-	fill: "_fill_1u7je_176",
-	fillParent: "_fillParent_1u7je_194",
-	fillSelected: "_fillSelected_1u7je_198",
-	fillHighlight: "_fillHighlight_1u7je_206",
-	fillDimmed: "_fillDimmed_1u7je_217",
-	regionSegment: "_regionSegment_1u7je_224",
-	regionDefault: "_regionDefault_1u7je_223",
-	regionHover: "_regionHover_1u7je_223",
-	regionFirst: "_regionFirst_1u7je_244",
-	regionLast: "_regionLast_1u7je_248",
-	regionMiddle: "_regionMiddle_1u7je_252",
-	parallelBadge: "_parallelBadge_1u7je_256",
-	marker: "_marker_1u7je_263",
-	markerBranch: "_markerBranch_1u7je_277",
-	markerError: "_markerError_1u7je_291",
-	markerCompaction: "_markerCompaction_1u7je_312",
-	branchConnector: "_branchConnector_1u7je_332",
-	connectorArrow: "_connectorArrow_1u7je_343",
-	breadcrumbRow: "_breadcrumbRow_1u7je_371",
-	optionsButton: "_optionsButton_1u7je_380",
-	breadcrumbTrail: "_breadcrumbTrail_1u7je_404",
-	breadcrumbSegment: "_breadcrumbSegment_1u7je_412",
-	breadcrumbDivider: "_breadcrumbDivider_1u7je_418",
-	breadcrumbLink: "_breadcrumbLink_1u7je_426",
-	breadcrumbCurrent: "_breadcrumbCurrent_1u7je_440",
-	tokens: "_tokens_1u7je_451"
+	swimlane: "_swimlane_16dh6_1",
+	pinnedSection: "_pinnedSection_16dh6_17",
+	scrollSection: "_scrollSection_16dh6_25",
+	collapsibleSection: "_collapsibleSection_16dh6_40",
+	collapsibleCollapsed: "_collapsibleCollapsed_16dh6_53",
+	swimlaneSticky: "_swimlaneSticky_16dh6_63",
+	collapsibleInner: "_collapsibleInner_16dh6_67",
+	collapseToggle: "_collapseToggle_16dh6_77",
+	row: "_row_16dh6_105",
+	label: "_label_16dh6_111",
+	labelSelected: "_labelSelected_16dh6_129",
+	labelHighlighted: "_labelHighlighted_16dh6_134",
+	chevron: "_chevron_16dh6_141",
+	chevronSpacer: "_chevronSpacer_16dh6_156",
+	barArea: "_barArea_16dh6_164",
+	barInner: "_barInner_16dh6_170",
+	fill: "_fill_16dh6_176",
+	fillParent: "_fillParent_16dh6_194",
+	fillSelected: "_fillSelected_16dh6_198",
+	fillHighlight: "_fillHighlight_16dh6_206",
+	fillDimmed: "_fillDimmed_16dh6_217",
+	regionSegment: "_regionSegment_16dh6_224",
+	regionDefault: "_regionDefault_16dh6_223",
+	regionHover: "_regionHover_16dh6_223",
+	regionFirst: "_regionFirst_16dh6_244",
+	regionLast: "_regionLast_16dh6_248",
+	regionMiddle: "_regionMiddle_16dh6_252",
+	parallelBadge: "_parallelBadge_16dh6_256",
+	marker: "_marker_16dh6_263",
+	markerBranch: "_markerBranch_16dh6_277",
+	markerError: "_markerError_16dh6_291",
+	markerCompaction: "_markerCompaction_16dh6_312",
+	branchConnector: "_branchConnector_16dh6_332",
+	connectorArrow: "_connectorArrow_16dh6_343",
+	breadcrumbRow: "_breadcrumbRow_16dh6_371",
+	optionsButton: "_optionsButton_16dh6_380",
+	breadcrumbTrail: "_breadcrumbTrail_16dh6_404",
+	breadcrumbSegment: "_breadcrumbSegment_16dh6_412",
+	breadcrumbDivider: "_breadcrumbDivider_16dh6_418",
+	breadcrumbLink: "_breadcrumbLink_16dh6_426",
+	breadcrumbCurrent: "_breadcrumbCurrent_16dh6_440",
+	tokens: "_tokens_16dh6_451"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/timeline/components/TimelineSwimLanes.tsx
@@ -127765,9 +127771,174 @@ function useTimelineConfig() {
 * memoization in every call site that needs the timelines array before
 * `useTranscriptTimeline` builds it internally.
 */
+/**
+* Collect all event UUIDs and span IDs referenced within a timeline's tree.
+*/
+function collectReferencedIds(items, uuids, spanIds) {
+	for (const item of items) if (item.type === "event") {
+		const uuid = item.event.uuid;
+		if (uuid) uuids.add(uuid);
+	} else {
+		spanIds.add(item.id);
+		collectReferencedIds(item.content, uuids, spanIds);
+		collectReferencedIds(item.branches, uuids, spanIds);
+	}
+}
+/**
+* Build a lookup of span_begin events and collect span_end events.
+*/
+function buildSpanLookup(events) {
+	const spans = /* @__PURE__ */ new Map();
+	for (const event of events) if (event.event === "span_begin") spans.set(event.id, {
+		id: event.id,
+		name: event.name,
+		type: event.type,
+		parentId: event.parent_id,
+		beginEvent: event
+	});
+	for (const event of events) if (event.event === "span_end") {
+		const span = spans.get(event.id);
+		if (span) span.endEvent = event;
+	}
+	return spans;
+}
+/**
+* Build orphan content items, preserving the minimal span tree needed to
+* house orphaned events.
+*
+* Walks the orphaned events, groups them by their direct parent span, and
+* recursively builds only the ancestor spans that contain at least one orphan.
+* Spans that are already represented in a server timeline are not recreated —
+* their orphaned children are promoted to the level above.
+*/
+function buildOrphanContent(orphanEvents, spanLookup, referencedSpanIds) {
+	const bySpan = /* @__PURE__ */ new Map();
+	for (const event of orphanEvents) {
+		const spanId = event.span_id ?? null;
+		const effectiveSpanId = spanId && !referencedSpanIds.has(spanId) && spanLookup.has(spanId) ? spanId : null;
+		let group = bySpan.get(effectiveSpanId);
+		if (!group) {
+			group = [];
+			bySpan.set(effectiveSpanId, group);
+		}
+		group.push(event);
+	}
+	const neededSpanIds = /* @__PURE__ */ new Set();
+	for (const spanId of bySpan.keys()) if (spanId !== null) neededSpanIds.add(spanId);
+	const allNeededSpanIds = new Set(neededSpanIds);
+	for (const spanId of neededSpanIds) {
+		let current = spanLookup.get(spanId);
+		while (current?.parentId) {
+			if (referencedSpanIds.has(current.parentId)) break;
+			if (!spanLookup.has(current.parentId)) break;
+			allNeededSpanIds.add(current.parentId);
+			current = spanLookup.get(current.parentId);
+		}
+	}
+	const spanChildren = /* @__PURE__ */ new Map();
+	for (const [spanId, events] of bySpan) {
+		const items = events.map((e) => new TimelineEvent(e));
+		let group = spanChildren.get(spanId);
+		if (!group) {
+			group = [];
+			spanChildren.set(spanId, group);
+		}
+		group.push(...items);
+	}
+	const spanDepth = (id) => {
+		let depth = 0;
+		let current = spanLookup.get(id);
+		while (current?.parentId && allNeededSpanIds.has(current.parentId)) {
+			depth++;
+			current = spanLookup.get(current.parentId);
+		}
+		return depth;
+	};
+	const sortedSpanIds = [...allNeededSpanIds].sort((a, b) => spanDepth(b) - spanDepth(a));
+	for (const spanId of sortedSpanIds) {
+		const info = spanLookup.get(spanId);
+		const children = spanChildren.get(spanId) ?? [];
+		children.sort((a, b) => a.startTime().getTime() - b.startTime().getTime());
+		if (children.length === 0) continue;
+		const span = new TimelineSpan({
+			id: info.id,
+			name: info.name,
+			spanType: info.type ?? null,
+			content: children,
+			utility: false
+		});
+		let parentId = null;
+		let current = info;
+		while (current.parentId) {
+			if (allNeededSpanIds.has(current.parentId)) {
+				parentId = current.parentId;
+				break;
+			}
+			current = spanLookup.get(current.parentId) ?? current;
+			if (current === info) break;
+		}
+		let parentGroup = spanChildren.get(parentId);
+		if (!parentGroup) {
+			parentGroup = [];
+			spanChildren.set(parentId, parentGroup);
+		}
+		parentGroup.push(span);
+	}
+	const rootItems = spanChildren.get(null) ?? [];
+	rootItems.sort((a, b) => a.startTime().getTime() - b.startTime().getTime());
+	return rootItems;
+}
+/**
+* Merge orphaned events into the first timeline's root, preserving time order.
+*
+* When server-provided timelines don't reference every event (e.g. scorer
+* events), the unreferenced events are collected, wrapped in their minimal
+* parent span tree, and inserted into the first timeline's root content in
+* chronological order.
+*/
+function attachOrphanedEvents(timelines, events) {
+	if (timelines.length === 0 || events.length === 0) return timelines;
+	const referencedUuids = /* @__PURE__ */ new Set();
+	const referencedSpanIds = /* @__PURE__ */ new Set();
+	for (const tl of timelines) {
+		collectReferencedIds(tl.root.content, referencedUuids, referencedSpanIds);
+		collectReferencedIds(tl.root.branches, referencedUuids, referencedSpanIds);
+		referencedSpanIds.add(tl.root.id);
+	}
+	const orphanEvents = [];
+	for (const event of events) {
+		if (event.event === "span_begin" || event.event === "span_end") continue;
+		const uuid = event.uuid;
+		if (uuid && !referencedUuids.has(uuid)) orphanEvents.push(event);
+	}
+	if (orphanEvents.length === 0) return timelines;
+	const orphanContent = buildOrphanContent(orphanEvents, buildSpanLookup(events), referencedSpanIds);
+	if (orphanContent.length === 0) return timelines;
+	const first = timelines[0];
+	const mergedContent = [...first.root.content, ...orphanContent];
+	mergedContent.sort((a, b) => a.startTime().getTime() - b.startTime().getTime());
+	const newRoot = new TimelineSpan({
+		id: first.root.id,
+		name: first.root.name,
+		spanType: first.root.spanType,
+		content: mergedContent,
+		branches: first.root.branches,
+		branchedFrom: first.root.branchedFrom,
+		description: first.root.description,
+		utility: first.root.utility,
+		agentResult: first.root.agentResult,
+		outline: first.root.outline
+	});
+	return [{
+		name: first.name,
+		description: first.description,
+		root: newRoot
+	}, ...timelines.slice(1)];
+}
 function useTimelinesArray(events, serverTimelines) {
 	const builtTimeline = (0, import_react.useMemo)(() => buildTimeline(events), [events]);
-	return (0, import_react.useMemo)(() => serverTimelines && serverTimelines.length > 0 ? serverTimelines.map((tl) => convertServerTimeline(tl, events)) : null, [serverTimelines, events]) ?? [builtTimeline];
+	const convertedTimelines = (0, import_react.useMemo)(() => serverTimelines && serverTimelines.length > 0 ? serverTimelines.map((tl) => convertServerTimeline(tl, events)) : null, [serverTimelines, events]);
+	return (0, import_react.useMemo)(() => convertedTimelines ? attachOrphanedEvents(convertedTimelines, events) : null, [convertedTimelines, events]) ?? [builtTimeline];
 }
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/timeline/hooks/useTranscriptTimeline.ts
@@ -127919,7 +128090,7 @@ function computeBranchMappings(rows, trunkMapping) {
 	const rowByKey = /* @__PURE__ */ new Map();
 	for (const row of rows) rowByKey.set(row.key, row);
 	for (const row of rows) {
-		if (!row.branch || !row.branchedFrom) continue;
+		if (!row.branch) continue;
 		const parentKey = row.key.replace(kBranchKeyPattern, "");
 		const parentRow = rowByKey.get(parentKey);
 		if (!parentRow) continue;
@@ -127931,7 +128102,7 @@ function computeBranchMappings(rows, trunkMapping) {
 		if (!branchSpan) continue;
 		const forkTimestamp = resolveForkTimestamp(parentSpan, branchSpan);
 		const forkPercent = (mappings.get(parentKey) ?? trunkMapping).toPercent(forkTimestamp);
-		mappings.set(row.key, createShiftedMapping(row.startTime, row.endTime, forkPercent));
+		mappings.set(row.key, createShiftedMapping(row.startTime, row.endTime, forkPercent, trunkMapping));
 	}
 	return mappings;
 }
