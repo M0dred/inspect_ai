@@ -128459,12 +128459,11 @@ var ModelEventView = ({ eventNode, showToolCalls, className, context, eventCallb
 };
 var APIView = ({ call, className }) => {
 	const requestCode = (0, import_react.useMemo)(() => {
-		return JSON.stringify(call.request, void 0, 2);
+		return JSON.stringify(call.request, void 0, 2) ?? "";
 	}, [call.request]);
 	const responseCode = (0, import_react.useMemo)(() => {
-		return JSON.stringify(call.response, void 0, 2);
+		return JSON.stringify(call.response, void 0, 2) ?? "";
 	}, [call.response]);
-	if (!call) return null;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: clsx(className),
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventSection, {
