@@ -7,7 +7,7 @@ var __getOwnPropDesc$1 = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames$1 = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp$1 = Object.prototype.hasOwnProperty;
-var __commonJSMin = (cb, mod) => () => (mod || cb((mod = { exports: {} }).exports, mod), mod.exports);
+var __commonJSMin = (cb, mod) => () => (mod || (cb((mod = { exports: {} }).exports, mod), cb = null), mod.exports);
 var __exportAll = (all, no_symbols) => {
 	let target = {};
 	for (var name in all) __defProp$1(target, name, {
@@ -29040,7 +29040,8 @@ async function init(options) {
 }
 var Clock = class {
 	constructor() {
-		this.speed = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : 1;
+		let speed = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : 1;
+		this.speed = speed;
 		this.startTime = performance.now();
 	}
 	getTime() {
@@ -36811,7 +36812,9 @@ __decorate$32([n$5({
 	reflect: true
 })], VscodeCollapsible$1.prototype, "open", void 0);
 VscodeCollapsible$1 = __decorate$32([customElement("vscode-collapsible")], VscodeCollapsible$1);
-o$7({
+//#endregion
+//#region ../../node_modules/.pnpm/@vscode-elements+react-elements@2.4.0_@types+react@19.2.14_@vscode+codicons@0.0.44_reac_f6b438ed8146082902c146554ff7c5e1/node_modules/@vscode-elements/react-elements/dist/components/VscodeCollapsible.js
+var VscodeCollapsible = o$7({
 	tagName: "vscode-collapsible",
 	elementClass: VscodeCollapsible$1,
 	react: import_react.default,
@@ -37994,7 +37997,8 @@ var OptionListController = class {
 	}
 	set selectedIndex(index) {
 		if (this._selectedIndex !== -1 && this._options[this._selectedIndex]) this._options[this._selectedIndex].selected ??= false;
-		this._selectedIndex = this.getOptionByIndex(index) ? index : -1;
+		const op = this.getOptionByIndex(index);
+		this._selectedIndex = op ? index : -1;
 		this._host.requestUpdate();
 	}
 	get selectedIndexes() {
@@ -39748,7 +39752,10 @@ var VscodeMultiSelect$1 = class VscodeMultiSelect extends VscodeSelectBase {
 		});
 	}
 	_setDefaultValue() {
-		if (Array.isArray(this.defaultValue) && this.defaultValue.length > 0) this.value = this.defaultValue.map((v) => String(v));
+		if (Array.isArray(this.defaultValue) && this.defaultValue.length > 0) {
+			const val = this.defaultValue.map((v) => String(v));
+			this.value = val;
+		}
 	}
 	_dispatchChangeEvent() {
 		super._dispatchChangeEvent();
@@ -39973,9 +39980,7 @@ o$7({
 		onVscMultiSelectCreateOption: "vsc-multi-select-create-option"
 	}
 });
-//#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+react-elements@2.4.0_@types+react@19.2.14_@vscode+codicons@0.0.44_reac_f6b438ed8146082902c146554ff7c5e1/node_modules/@vscode-elements/react-elements/dist/components/VscodeOption.js
-var VscodeOption = o$7({
+o$7({
 	tagName: "vscode-option",
 	elementClass: VscodeOption$1,
 	react: import_react.default,
@@ -41039,9 +41044,7 @@ __decorate$16([n$5({
 })], VscodeSingleSelect$1.prototype, "required", void 0);
 __decorate$16([e$6(".face")], VscodeSingleSelect$1.prototype, "_face", void 0);
 VscodeSingleSelect$1 = __decorate$16([customElement("vscode-single-select")], VscodeSingleSelect$1);
-//#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+react-elements@2.4.0_@types+react@19.2.14_@vscode+codicons@0.0.44_reac_f6b438ed8146082902c146554ff7c5e1/node_modules/@vscode-elements/react-elements/dist/components/VscodeSingleSelect.js
-var VscodeSingleSelect = o$7({
+o$7({
 	tagName: "vscode-single-select",
 	elementClass: VscodeSingleSelect$1,
 	react: import_react.default,
@@ -43456,7 +43459,8 @@ var VscodeTextarea$1 = class VscodeTextarea extends VscElement {
 		const SCROLLBAR_WIDTH = 14;
 		const BORDER_WIDTH = 1;
 		const br = this._textareaEl.getBoundingClientRect();
-		this._textareaPointerCursor = ev.clientX >= br.left + br.width - SCROLLBAR_WIDTH - BORDER_WIDTH * 2;
+		const x = ev.clientX;
+		this._textareaPointerCursor = x >= br.left + br.width - SCROLLBAR_WIDTH - BORDER_WIDTH * 2;
 	}
 	_handleScroll() {
 		this._shadow = this._textareaEl.scrollTop > 0;
@@ -43711,7 +43715,7 @@ var VscodeTextfield$1 = class VscodeTextfield extends VscElement {
 	* The supported ones are: `color`,`date`,`datetime-local`,`email`,`file`,`month`,`number`,`password`,`search`,`tel`,`text`,`time`,`url`,`week`
 	*/
 	set type(val) {
-		this._type = [
+		const validTypes = [
 			"color",
 			"date",
 			"datetime-local",
@@ -43726,7 +43730,8 @@ var VscodeTextfield$1 = class VscodeTextfield extends VscElement {
 			"time",
 			"url",
 			"week"
-		].includes(val) ? val : "text";
+		];
+		this._type = validTypes.includes(val) ? val : "text";
 	}
 	get type() {
 		return this._type;
@@ -54816,8 +54821,8 @@ var extractSize = (value, label, defaultValue) => {
 	else return defaultValue;
 };
 //#endregion
-//#region ../../node_modules/.pnpm/react-virtuoso@4.18.4_react-dom@19.2.5_react@19.2.5__react@19.2.5/node_modules/react-virtuoso/dist/index.mjs
-var we = 0, Wt = 1, Zt = 2, kn = 4;
+//#region ../../node_modules/.pnpm/react-virtuoso@4.18.5_react-dom@19.2.5_react@19.2.5__react@19.2.5/node_modules/react-virtuoso/dist/index.mjs
+var we = 0, Gt = 1, Zt = 2, kn = 4;
 function un(t) {
 	return () => t;
 }
@@ -54852,7 +54857,7 @@ function ot(...t) {
 	return t;
 }
 function Y(t, e) {
-	return t(Wt, e);
+	return t(Gt, e);
 }
 function _(t, e) {
 	t(we, e);
@@ -54867,7 +54872,7 @@ function L(t, e) {
 	return Y(t, mo(e, we));
 }
 function yt(t, e) {
-	const n = t(Wt, (o) => {
+	const n = t(Gt, (o) => {
 		n(), e(o);
 	});
 	return n;
@@ -54889,7 +54894,7 @@ function et$1(t = Ln) {
 		t(e, o) || (e = o, n(o));
 	};
 }
-function W(t) {
+function G(t) {
 	return (e) => (n) => {
 		t(n) && e(n);
 	};
@@ -54909,7 +54914,7 @@ function I(t, ...e) {
 			case Zt:
 				Me(t);
 				return;
-			case Wt: return Y(t, n(r));
+			case Gt: return Y(t, n(r));
 		}
 	});
 }
@@ -54956,7 +54961,7 @@ function Io(t) {
 	const o = () => e?.();
 	return function(r, s) {
 		switch (r) {
-			case Wt: return s ? n === s ? void 0 : (o(), n = s, e = Y(t, s), e) : (o(), Xt);
+			case Gt: return s ? n === s ? void 0 : (o(), n = s, e = Y(t, s), e) : (o(), Xt);
 			case Zt:
 				o(), n = null;
 				return;
@@ -54971,7 +54976,7 @@ function v(t) {
 			case we:
 				e = r;
 				break;
-			case Wt:
+			case Gt:
 				r(e);
 				break;
 			case kn: return e;
@@ -54994,7 +54999,7 @@ function U() {
 			case Zt:
 				t.splice(0, t.length);
 				return;
-			case Wt: return t.push(n), () => {
+			case Gt: return t.push(n), () => {
 				const o = t.indexOf(n);
 				o > -1 && t.splice(o, 1);
 			};
@@ -55035,7 +55040,7 @@ function at(...t) {
 			case Zt:
 				Me(e);
 				return;
-			case Wt: return o === r && i(n), Y(e, i);
+			case Gt: return o === r && i(n), Y(e, i);
 		}
 	};
 }
@@ -55046,7 +55051,7 @@ function ze(...t) {
 	return function(e, n) {
 		switch (e) {
 			case Zt: return;
-			case Wt: return po(...t.map((o) => Y(o, n)));
+			case Gt: return po(...t.map((o) => Y(o, n)));
 		}
 	};
 }
@@ -55060,7 +55065,7 @@ var ft = {
 	[ft.ERROR]: "error",
 	[ft.INFO]: "log",
 	[ft.WARN]: "warn"
-}, vo = () => typeof globalThis > "u" ? window : globalThis, Gt = j(() => {
+}, vo = () => typeof globalThis > "u" ? window : globalThis, Wt = j(() => {
 	const t = v(ft.ERROR);
 	return {
 		log: v((n, o, r = ft.INFO) => {
@@ -55231,7 +55236,7 @@ function Rt(t, e, n = "k") {
 	return Rt(t.l, e, n);
 }
 function Tt(t, e, n) {
-	return J(t) ? Wn(e, n, 1) : e === t.k ? dt(t, {
+	return J(t) ? Gn(e, n, 1) : e === t.k ? dt(t, {
 		k: e,
 		v: n
 	}) : e < t.k ? mn(dt(t, { l: Tt(t.l, e, n) })) : mn(dt(t, { r: Tt(t.r, e, n) }));
@@ -55282,7 +55287,7 @@ function Se(t) {
 	const { l: e, lvl: n, r: o } = t;
 	if (o.lvl >= n - 1 && e.lvl >= n - 1) return t;
 	if (n > o.lvl + 1) {
-		if (Ee(e)) return Gn(dt(t, { lvl: n - 1 }));
+		if (Ee(e)) return Wn(dt(t, { lvl: n - 1 }));
 		if (!J(e) && !J(e.r)) return dt(e.r, {
 			l: dt(e, { r: e.r.l }),
 			lvl: n,
@@ -55311,7 +55316,7 @@ function Se(t) {
 	throw new Error("Unexpected empty nodes");
 }
 function dt(t, e) {
-	return Wn(e.k !== void 0 ? e.k : t.k, e.v !== void 0 ? e.v : t.v, e.lvl !== void 0 ? e.lvl : t.lvl, e.l !== void 0 ? e.l : t.l, e.r !== void 0 ? e.r : t.r);
+	return Gn(e.k !== void 0 ? e.k : t.k, e.v !== void 0 ? e.v : t.v, e.lvl !== void 0 ? e.lvl : t.lvl, e.l !== void 0 ? e.l : t.l, e.r !== void 0 ? e.r : t.r);
 }
 function Vn(t) {
 	return J(t.r) ? t.l : Se(dt(t, { r: Vn(t.r) }));
@@ -55322,7 +55327,7 @@ function Ee(t) {
 function Pn(t) {
 	return J(t.r) ? [t.k, t.v] : Pn(t.r);
 }
-function Wn(t, e, n, o = se, r = se) {
+function Gn(t, e, n, o = se, r = se) {
 	return {
 		k: t,
 		l: o,
@@ -55332,9 +55337,9 @@ function Wn(t, e, n, o = se, r = se) {
 	};
 }
 function mn(t) {
-	return Pe(Gn(t));
+	return Pe(Wn(t));
 }
-function Gn(t) {
+function Wn(t) {
 	const { l: e } = t;
 	return !J(e) && e.lvl === t.lvl ? dt(e, { r: dt(t, { l: e.r }) }) : t;
 }
@@ -55450,7 +55455,7 @@ function Oo(t, [e, n, o, r]) {
 		i = n.reduce((w, R) => Tt(Tt(w, R, p), R + 1, T), i);
 	} else [i, l] = Ro(i, e);
 	if (i === s) return t;
-	const { lastIndex: c, lastOffset: d, lastSize: m, offsetTree: x } = We(t.offsetTree, l, i, r);
+	const { lastIndex: c, lastOffset: d, lastSize: m, offsetTree: x } = Ge(t.offsetTree, l, i, r);
 	return {
 		groupIndices: n,
 		groupOffsetTree: n.reduce((p, T) => Tt(p, T, ce(T, x, r)), qt()),
@@ -55476,7 +55481,7 @@ function pn(t, e) {
 	for (; n < t;) n += e[o + 1] - e[o] - 1, o++;
 	return o - (n === t ? 0 : 1);
 }
-function We(t, e, n, o) {
+function Ge(t, e, n, o) {
 	let r = t, s = 0, i = 0, l = 0, c = 0;
 	if (e !== 0) {
 		c = ve(r, e - 1, $e), l = r[c].offset;
@@ -55519,20 +55524,20 @@ var Fo = {
 		current: [],
 		prev: []
 	}), B(({ prev: u }) => u)), []);
-	L(I(c, W((u) => u.length > 0), $(f, R), B(([u, g, C]) => {
+	L(I(c, G((u) => u.length > 0), $(f, R), B(([u, g, C]) => {
 		const z = u.reduce((O, V, N) => Tt(O, V, ce(V, g.offsetTree, C) || N), qt());
 		return {
 			...g,
 			groupIndices: u,
 			groupOffsetTree: z
 		};
-	})), f), L(I(o, $(f), W(([u, { lastIndex: g }]) => u < g), B(([u, { lastIndex: g, lastSize: C }]) => [{
+	})), f), L(I(o, $(f), G(([u, { lastIndex: g }]) => u < g), B(([u, { lastIndex: g, lastSize: C }]) => [{
 		endIndex: g,
 		size: C,
 		startIndex: u
 	}])), n), L(d, m);
 	const S = ht(I(d, B((u) => u === void 0)), !0);
-	L(I(m, W((u) => u !== void 0 && J(it(f).sizeTree)), B((u) => {
+	L(I(m, G((u) => u !== void 0 && J(it(f).sizeTree)), B((u) => {
 		const g = it(x), C = it(c).length > 0;
 		return g !== void 0 && g !== 0 ? C ? [{
 			endIndex: 0,
@@ -55547,7 +55552,7 @@ var Fo = {
 			size: u,
 			startIndex: 0
 		}];
-	})), n), L(I(p, W((u) => u !== void 0 && u.length > 0 && J(it(f).sizeTree)), B((u) => {
+	})), n), L(I(p, G((u) => u !== void 0 && u.length > 0 && J(it(f).sizeTree)), B((u) => {
 		const g = [];
 		let C = u[0], z = 0;
 		for (let O = 1; O < u.length; O++) {
@@ -55563,7 +55568,7 @@ var Fo = {
 			size: C,
 			startIndex: z
 		}), g;
-	})), n), L(I(c, $(x, m), W(([, u, g]) => u !== void 0 && g !== void 0), B(([u, g, C]) => {
+	})), n), L(I(c, $(x, m), G(([, u, g]) => u !== void 0 && g !== void 0), B(([u, g, C]) => {
 		const z = [];
 		for (let O = 0; O < u.length; O++) {
 			const V = u[O], N = u[O + 1];
@@ -55675,14 +55680,14 @@ var Fo = {
 			return {
 				...g,
 				sizeTree: V,
-				...We(g.offsetTree, 0, V, C)
+				...Ge(g.offsetTree, 0, V, C)
 			};
 		}
 		const O = _t(g.sizeTree).reduce((V, { k: N, v: Z }) => Tt(V, Math.max(0, N + u), Z), qt());
 		return {
 			...g,
 			sizeTree: O,
-			...We(g.offsetTree, 0, O, C)
+			...Ge(g.offsetTree, 0, O, C)
 		};
 	})), f), {
 		beforeUnshiftWith: y,
@@ -55705,7 +55710,7 @@ var Fo = {
 		trackItemSizes: S,
 		unshiftWith: s
 	};
-}, ot(Gt, De), { singleton: !0 });
+}, ot(Wt, De), { singleton: !0 });
 function Vo(t) {
 	return t.reduce((e, n) => (e.groupIndices.push(e.totalCount), e.totalCount += n + 1, e), {
 		groupIndices: [],
@@ -55714,19 +55719,19 @@ function Vo(t) {
 }
 var Dn = j(([{ groupIndices: t, sizes: e, totalCount: n }, { headerHeight: o, scrollTop: r }]) => {
 	const s = U(), i = U(), l = vt(I(s, B(Vo)));
-	return L(I(l, B((c) => c.totalCount)), n), L(I(l, B((c) => c.groupIndices)), t), L(I(at(r, e, o), W(([c, d]) => be(d)), B(([c, d, m]) => Rt(d.groupOffsetTree, Math.max(c - m, 0), "v")[0]), et$1(), B((c) => [c])), i), {
+	return L(I(l, B((c) => c.totalCount)), n), L(I(l, B((c) => c.groupIndices)), t), L(I(at(r, e, o), G(([c, d]) => be(d)), B(([c, d, m]) => Rt(d.groupOffsetTree, Math.max(c - m, 0), "v")[0]), et$1(), B((c) => [c])), i), {
 		groupCounts: s,
 		topItemsIndexes: i
 	};
 }, ot(Lt, It)), At = j(([{ log: t }]) => {
-	const e = v(!1), n = vt(I(e, W((o) => o), et$1()));
+	const e = v(!1), n = vt(I(e, G((o) => o), et$1()));
 	return Y(e, (o) => {
 		o && it(t)("props updated", {}, ft.DEBUG);
 	}), {
 		didMount: n,
 		propsReady: e
 	};
-}, ot(Gt), { singleton: !0 }), Po = typeof document < "u" && "scrollBehavior" in document.documentElement.style;
+}, ot(Wt), { singleton: !0 }), Po = typeof document < "u" && "scrollBehavior" in document.documentElement.style;
 function $n(t) {
 	const e = typeof t == "number" ? { index: t } : t;
 	return e.align || (e.align = "start"), (!e.behavior || !Po) && (e.behavior = "auto"), e.offset === void 0 && (e.offset = 0), e;
@@ -55751,7 +55756,7 @@ var fe = j(([{ gap: t, listRefresh: e, sizes: n, totalCount: o }, { fixedFooterH
 			}), h = yt(m, () => {
 				Ft(pt);
 			});
-		} else h = yt(I(e, Wo(150)), Ft);
+		} else h = yt(I(e, Go(150)), Ft);
 		return f = setTimeout(() => {
 			S();
 		}, 1200), _(c, !0), O("scrolling from index to", {
@@ -55767,8 +55772,8 @@ var fe = j(([{ gap: t, listRefresh: e, sizes: n, totalCount: o }, { fixedFooterH
 		scrollToIndex: T,
 		topListHeight: R
 	};
-}, ot(Lt, It, Gt), { singleton: !0 });
-function Wo(t) {
+}, ot(Lt, It, Wt), { singleton: !0 });
+function Go(t) {
 	return (e) => {
 		const n = setTimeout(() => {
 			e(!1);
@@ -55789,7 +55794,7 @@ function Ke(t, e) {
 }
 var me = j(([{ defaultItemSize: t, listRefresh: e, sizes: n }, { scrollTop: o }, { scrollTargetReached: r, scrollToIndex: s }, { didMount: i }]) => {
 	const l = v(!0), c = v(0), d = v(!0);
-	return L(I(i, $(c), W(([m, x]) => x !== 0), Bt(!1)), l), L(I(i, $(c), W(([m, x]) => x !== 0), Bt(!1)), d), Y(I(at(e, i), $(l, n, t, d), W(([[, m], x, { sizeTree: p }, T, w]) => m && (!J(p) || Ae(T)) && !x && !w), $(c)), ([, m]) => {
+	return L(I(i, $(c), G(([m, x]) => x !== 0), Bt(!1)), l), L(I(i, $(c), G(([m, x]) => x !== 0), Bt(!1)), d), Y(I(at(e, i), $(l, n, t, d), G(([[, m], x, { sizeTree: p }, T, w]) => m && (!J(p) || Ae(T)) && !x && !w), $(c)), ([, m]) => {
 		yt(r, () => {
 			_(d, !0);
 		}), Ue(4, () => {
@@ -55806,7 +55811,7 @@ var me = j(([{ defaultItemSize: t, listRefresh: e, sizes: n }, { scrollTop: o },
 function Un(t, e) {
 	return Math.abs(t - e) < 1.01;
 }
-var ue = "up", ne = "down", Go = "none", Ao = {
+var ue = "up", ne = "down", Wo = "none", Ao = {
 	atBottom: !1,
 	notAtBottomBecause: "NOT_SHOWING_LAST_ITEM",
 	state: {
@@ -55865,7 +55870,7 @@ var ue = "up", ne = "down", Go = "none", Ao = {
 		jump: 0,
 		scrollHeight: 0,
 		scrollTop: 0
-	}), W((a) => a.changed), B((a) => a.jump)), 0);
+	}), G((a) => a.changed), B((a) => a.jump)), 0);
 	L(I(w, B((a) => a.atBottom)), i), L(I(i, zt(50)), c);
 	const h = v(ne);
 	L(I(o, B(({ scrollTop: a }) => a), et$1(), Ot((a, S) => it(T) ? {
@@ -55877,9 +55882,9 @@ var ue = "up", ne = "down", Go = "none", Ao = {
 	}, {
 		direction: ne,
 		prevScrollTop: 0
-	}), B((a) => a.direction)), h), L(I(o, zt(50), Bt(Go)), h);
+	}), B((a) => a.direction)), h), L(I(o, zt(50), Bt(Wo)), h);
 	const f = v(0);
-	return L(I(p, W((a) => !a), Bt(0)), f), L(I(r, zt(100), $(p), W(([a, S]) => S), Ot(([a, S], [H]) => [S, H], [0, 0]), B(([a, S]) => S - a)), f), {
+	return L(I(p, G((a) => !a), Bt(0)), f), L(I(r, zt(100), $(p), G(([a, S]) => S), Ot(([a, S], [H]) => [S, H], [0, 0]), B(([a, S]) => S - a)), f), {
 		atBottomState: w,
 		atBottomStateChange: c,
 		atBottomThreshold: m,
@@ -55911,7 +55916,7 @@ var je = j(([{ deviation: t, fixedHeaderHeight: e, headerHeight: n, scrollTop: o
 			let u = hn;
 			const g = In(S, ae), C = In(S, de);
 			return T -= a, T += p + f, w += p + f, w -= a, T > m + y - g && (u = ue), w < m - k + x + C && (u = ne), u !== hn ? [Math.max(H - p - gn(R, ae, u) - g, 0), H - k - f + x + gn(R, de, u) + C] : null;
-		}), W((m) => m !== null), et$1(le)), [0, 0])
+		}), G((m) => m !== null), et$1(le)), [0, 0])
 	};
 }, ot(It), { singleton: !0 });
 function _o(t, e, n) {
@@ -56015,7 +56020,7 @@ function Sn(t, e) {
 var Ut = j(([{ data: t, firstItemIndex: e, gap: n, sizes: o, totalCount: r }, s, { listBoundary: i, topListHeight: l, visibleRange: c }, { initialTopMostItemIndex: d, scrolledToInitialItem: m }, { topListHeight: x }, p, { didMount: T }, { recalcInProgress: w }]) => {
 	const R = v([]), h = v(0), f = U(), a = v(0);
 	L(s.topItemsIndexes, R);
-	const S = ht(I(at(T, w, P(c, le), P(r), P(o), P(d), m, P(R), P(e), P(n), P(a), t), W(([u, g, , C, , , , , , , , z]) => {
+	const S = ht(I(at(T, w, P(c, le), P(r), P(o), P(d), m, P(R), P(e), P(n), P(a), t), G(([u, g, , C, , , , , , , , z]) => {
 		const O = z !== void 0 && z.length !== C;
 		return u && !g && !O;
 	}), B(([, , [u, g], C, z, O, V, N, Z, F, mt, q]) => {
@@ -56097,16 +56102,16 @@ var Ut = j(([{ data: t, firstItemIndex: e, gap: n, sizes: o, totalCount: r }, s,
 			}
 		}
 		return Te(Et, Ft, C, F, Q, Z);
-	}), W((u) => u !== null), et$1()), Be);
-	L(I(t, W(Ae), B((u) => u?.length)), r), L(I(S, B((u) => u.topListHeight)), x), L(x, l), L(I(S, B((u) => [u.top, u.bottom])), i), L(I(S, B((u) => u.items)), f);
-	const H = vt(I(S, W(({ items: u }) => u.length > 0), $(r, t), W(([{ items: u }, g]) => u[u.length - 1].originalIndex === g - 1), B(([, u, g]) => [u - 1, g]), et$1(le), B(([u]) => u))), y = vt(I(S, zt(200), W(({ items: u, topItems: g }) => u.length > 0 && u[0].originalIndex === g.length), B(({ items: u }) => u[0].index), et$1()));
+	}), G((u) => u !== null), et$1()), Be);
+	L(I(t, G(Ae), B((u) => u?.length)), r), L(I(S, B((u) => u.topListHeight)), x), L(x, l), L(I(S, B((u) => [u.top, u.bottom])), i), L(I(S, B((u) => u.items)), f);
+	const H = vt(I(S, G(({ items: u }) => u.length > 0), $(r, t), G(([{ items: u }, g]) => u[u.length - 1].originalIndex === g - 1), B(([, u, g]) => [u - 1, g]), et$1(le), B(([u]) => u))), y = vt(I(S, zt(200), G(({ items: u, topItems: g }) => u.length > 0 && u[0].originalIndex === g.length), B(({ items: u }) => u[0].index), et$1()));
 	return {
 		endReached: H,
 		initialItemCount: h,
 		itemsRendered: f,
 		listState: S,
 		minOverscanItemCount: a,
-		rangeChanged: vt(I(S, W(({ items: u }) => u.length > 0), B(({ items: u }) => {
+		rangeChanged: vt(I(S, G(({ items: u }) => u.length > 0), B(({ items: u }) => {
 			let g = 0, C = u.length - 1;
 			for (; u[g].type === "group" && g < C;) g++;
 			for (; u[C].type === "group" && C > g;) C--;
@@ -56129,7 +56134,7 @@ var Ut = j(([{ data: t, firstItemIndex: e, gap: n, sizes: o, totalCount: r }, s,
 	const n = v(!1);
 	return {
 		alignToBottom: n,
-		paddingTopAddition: ht(I(at(n, t, e), W(([r]) => r), B(([, r, s]) => Math.max(0, r - s)), zt(0), et$1()), 0)
+		paddingTopAddition: ht(I(at(n, t, e), G(([r]) => r), B(([, r, s]) => Math.max(0, r - s)), zt(0), et$1()), 0)
 	};
 }, ot(It, jn), { singleton: !0 }), qn = j(() => ({ context: v(null) })), Do = ({ itemBottom: t, itemTop: e, locationParams: { align: n, behavior: o, ...r }, viewportBottom: s, viewportTop: i }) => e < i ? {
 	...r,
@@ -56149,9 +56154,9 @@ var Ut = j(([{ data: t, firstItemIndex: e, gap: n, sizes: o, totalCount: r }, s,
 			viewportBottom: a + T - f,
 			viewportTop: z
 		});
-		return V !== null ? y && yt(I(i, W((N) => !N), $t(it(i) ? 1 : 2)), y) : y?.(), V;
-	}), W((x) => x !== null)), d), { scrollIntoView: m };
-}, ot(Lt, It, fe, Ut, Gt), { singleton: !0 });
+		return V !== null ? y && yt(I(i, G((N) => !N), $t(it(i) ? 1 : 2)), y) : y?.(), V;
+	}), G((x) => x !== null)), d), { scrollIntoView: m };
+}, ot(Lt, It, fe, Ut, Wt), { singleton: !0 });
 function Tn(t) {
 	return t === !1 ? !1 : t === "smooth" ? "smooth" : "auto";
 }
@@ -56172,7 +56177,7 @@ var $o = (t, e) => typeof t == "function" ? Tn(t(e)) : e && Tn(t), Uo = j(([{ li
 			shouldFollow: O,
 			totalCount: y
 		};
-	}), W(({ shouldFollow: y }) => y)), ({ followOutputBehavior: y, totalCount: k }) => {
+	}), G(({ shouldFollow: y }) => y)), ({ followOutputBehavior: y, totalCount: k }) => {
 		h !== null && (h(), h = null), it(n) !== void 0 ? requestAnimationFrame(() => {
 			it(m)("following output to ", { totalCount: k }, ft.DEBUG), f(y);
 		}) : h = yt(t, () => {
@@ -56185,13 +56190,13 @@ var $o = (t, e) => typeof t == "function" ? Tn(t(e)) : e && Tn(t), Uo = j(([{ li
 		});
 		setTimeout(k, 100);
 	}
-	Y(I(at(P(w), e, d), W(([y, , k]) => y !== !1 && k), Ot(({ value: y }, [, k]) => ({
+	Y(I(at(P(w), e, d), G(([y, , k]) => y !== !1 && k), Ot(({ value: y }, [, k]) => ({
 		refreshed: y === k,
 		value: k
 	}), {
 		refreshed: !1,
 		value: 0
-	}), W(({ refreshed: y }) => y), $(w, e)), ([, y]) => {
+	}), G(({ refreshed: y }) => y), $(w, e)), ([, y]) => {
 		it(l) && a(y !== !1);
 	}), Y(R, () => {
 		a(it(w) !== !1);
@@ -56203,7 +56208,7 @@ var $o = (t, e) => typeof t == "function" ? Tn(t(e)) : e && Tn(t), Uo = j(([{ li
 		context: z,
 		totalCount: y,
 		scrollingInProgress: C
-	})), W((y) => !!y), zt(0)), (y) => {
+	})), G((y) => !!y), zt(0)), (y) => {
 		h !== null && (h(), h = null), it(n) !== void 0 ? requestAnimationFrame(() => {
 			it(m)("scrolling into view", {}), _(T, y);
 		}) : h = yt(t, () => {
@@ -56214,10 +56219,10 @@ var $o = (t, e) => typeof t == "function" ? Tn(t(e)) : e && Tn(t), Uo = j(([{ li
 		followOutput: w,
 		scrollIntoViewOnChange: S
 	};
-}, ot(Lt, pe, fe, me, At, Gt, It, qn, Yn)), Ko = j(([{ data: t, firstItemIndex: e, gap: n, sizes: o }, { initialTopMostItemIndex: r }, { initialItemCount: s, listState: i }, { didMount: l }]) => (L(I(l, $(s), W(([, c]) => c !== 0), $(r, o, e, n, t), B(([[, c], d, m, x, p, T = []]) => Kn(c, d, m, x, p, T))), i), {}), ot(Lt, me, Ut, At), { singleton: !0 }), jo = j(([{ didMount: t }, { scrollTo: e }, { listState: n }]) => {
+}, ot(Lt, pe, fe, me, At, Wt, It, qn, Yn)), Ko = j(([{ data: t, firstItemIndex: e, gap: n, sizes: o }, { initialTopMostItemIndex: r }, { initialItemCount: s, listState: i }, { didMount: l }]) => (L(I(l, $(s), G(([, c]) => c !== 0), $(r, o, e, n, t), B(([[, c], d, m, x, p, T = []]) => Kn(c, d, m, x, p, T))), i), {}), ot(Lt, me, Ut, At), { singleton: !0 }), jo = j(([{ didMount: t }, { scrollTo: e }, { listState: n }]) => {
 	const o = v(0);
-	return Y(I(t, $(o), W(([, r]) => r !== 0), B(([, r]) => ({ top: r }))), (r) => {
-		yt(I(n, $t(1), W((s) => s.items.length > 1)), () => {
+	return Y(I(t, $(o), G(([, r]) => r !== 0), B(([, r]) => ({ top: r }))), (r) => {
+		yt(I(n, $t(1), G((s) => s.items.length > 1)), () => {
 			requestAnimationFrame(() => {
 				_(e, r);
 			});
@@ -56225,7 +56230,7 @@ var $o = (t, e) => typeof t == "function" ? Tn(t(e)) : e && Tn(t), Uo = j(([{ li
 	}), { initialScrollTop: o };
 }, ot(At, It, Ut), { singleton: !0 }), Zn = j(([{ scrollVelocity: t }]) => {
 	const e = v(!1), n = U(), o = v(!1);
-	return L(I(t, $(o, e, n), W(([r, s]) => s !== !1 && s !== void 0), B(([r, s, i, l]) => {
+	return L(I(t, $(o, e, n), G(([r, s]) => s !== !1 && s !== void 0), B(([r, s, i, l]) => {
 		const { enter: c, exit: d } = s;
 		if (i) {
 			if (d(r, l)) return !1;
@@ -56263,7 +56268,7 @@ var $o = (t, e) => typeof t == "function" ? Tn(t(e)) : e && Tn(t), Uo = j(([{ li
 			ranges: H,
 			scrollTop: R
 		});
-	}), L(I(m, W(Ae), B(Yo)), r), L(I(s, $(m), W(([, T]) => T !== void 0), et$1(), B(([, T]) => T.ranges)), t), {
+	}), L(I(m, G(Ae), B(Yo)), r), L(I(s, $(m), G(([, T]) => T !== void 0), et$1(), B(([, T]) => T.ranges)), t), {
 		getState: d,
 		restoreStateFrom: m
 	};
@@ -56277,7 +56282,7 @@ function Yo(t) {
 }
 var Zo = j(([{ topItemsIndexes: t }]) => {
 	const e = v(0);
-	return L(I(e, W((n) => n >= 0), B((n) => Array.from({ length: n }).map((o, r) => r))), t), { topItemCount: e };
+	return L(I(e, G((n) => n >= 0), B((n) => Array.from({ length: n }).map((o, r) => r))), t), { topItemCount: e };
 }, ot(Ut));
 function Xn(t) {
 	let e = !1, n;
@@ -56331,7 +56336,7 @@ var Xo = Xn(() => /iP(ad|od|hone)/i.test(navigator.userAgent) && /WebKit/i.test(
 		[],
 		0,
 		0
-	]), W(([f]) => f !== 0), $(o, l, n, r, T, w), W(([, f, a, S, , , H]) => !H && !S && f !== 0 && a === ue), B(([[f], , , , , a]) => (a("Upward scrolling compensation", { amount: f }, ft.DEBUG), f))));
+	]), G(([f]) => f !== 0), $(o, l, n, r, T, w), G(([, f, a, S, , , H]) => !H && !S && f !== 0 && a === ue), B(([[f], , , , , a]) => (a("Upward scrolling compensation", { amount: f }, ft.DEBUG), f))));
 	function h(f) {
 		f > 0 ? (_(e, {
 			behavior: "auto",
@@ -56343,7 +56348,7 @@ var Xo = Xn(() => /iP(ad|od|hone)/i.test(navigator.userAgent) && /WebKit/i.test(
 	}
 	return Y(I(R, $(t, s)), ([f, a, S]) => {
 		S && Xo() ? _(t, a - f) : h(-f);
-	}), Y(I(at(ht(s, !1), t, w), W(([f, a, S]) => !f && !S && a !== 0), B(([f, a]) => a), zt(1)), h), L(I(x, B((f) => ({ top: -f }))), e), Y(I(d, $(p, m), B(([f, { groupIndices: a, lastSize: S, sizeTree: H }, y]) => {
+	}), Y(I(at(ht(s, !1), t, w), G(([f, a, S]) => !f && !S && a !== 0), B(([f, a]) => a), zt(1)), h), L(I(x, B((f) => ({ top: -f }))), e), Y(I(d, $(p, m), B(([f, { groupIndices: a, lastSize: S, sizeTree: H }, y]) => {
 		function k(O) {
 			return O * (S + y);
 		}
@@ -56364,7 +56369,7 @@ var Xo = Xn(() => /iP(ad|od|hone)/i.test(navigator.userAgent) && /WebKit/i.test(
 			});
 		});
 	}), { deviation: t };
-}, ot(It, pe, Ut, Lt, Gt, De)), Zo, Dn, j(([t, e, n, o, r, s, i, l, c, d, m]) => ({
+}, ot(It, pe, Ut, Lt, Wt, De)), Zo, Dn, j(([t, e, n, o, r, s, i, l, c, d, m]) => ({
 	...t,
 	...e,
 	...n,
@@ -56376,7 +56381,7 @@ var Xo = Xn(() => /iP(ad|od|hone)/i.test(navigator.userAgent) && /WebKit/i.test(
 	...c,
 	...d,
 	...m
-}), ot(je, Ko, At, Zn, jn, jo, No, qe, Yn, Gt, qn))));
+}), ot(je, Ko, At, Zn, jn, jo, No, qe, Yn, Wt, qn))));
 function tr(t, e) {
 	const n = {}, o = {};
 	let r = 0;
@@ -56442,6 +56447,9 @@ function Ye(t, e, n) {
 		return import_react.useCallback((S) => {
 			_(a[f], S);
 		}, [a, f]);
+	}, T = (f) => {
+		const S = import_react.useContext(l)[f], H = import_react.useCallback((y) => Y(S, y), [S]);
+		return import_react.useSyncExternalStore(H, () => it(S), () => it(S));
 	}, w = (f) => {
 		const S = import_react.useContext(l)[f], [H, y] = import_react.useState(an(it, S));
 		return Ie(() => Y(S, (k) => {
@@ -56454,7 +56462,7 @@ function Ye(t, e, n) {
 			const H = import_react.useContext(l)[f];
 			Ie(() => Y(H, a), [a, H]);
 		},
-		useEmitterValue: ("19.2.5".startsWith("18"), w),
+		useEmitterValue: parseInt("19.2.5") >= 18 ? T : w,
 		usePublisher: p
 	};
 }
@@ -57101,15 +57109,15 @@ var Lr = /* @__PURE__ */ j(([{ increaseViewportBy: t, listBoundary: e, overscan:
 		column: 0,
 		row: 0
 	}), mt = U(), q = U(), Q = v(!1), gt = v(0), ut = v(!0), xt = v(!1), Ft = v(!1);
-	Y(I(w, $(gt), W(([b, D]) => D !== 0)), () => {
+	Y(I(w, $(gt), G(([b, D]) => D !== 0)), () => {
 		_(ut, !1);
-	}), Y(I(at(w, ut, z, C, gt, xt), W(([b, D, K, rt, , tt]) => b && !D && K.height !== 0 && rt.height !== 0 && !tt)), ([, , , , b]) => {
+	}), Y(I(at(w, ut, z, C, gt, xt), G(([b, D, K, rt, , tt]) => b && !D && K.height !== 0 && rt.height !== 0 && !tt)), ([, , , , b]) => {
 		_(xt, !0), Ue(1, () => {
 			_(O, b);
 		}), yt(I(d), () => {
 			_(e, [0, 0]), _(ut, !0);
 		});
-	}), L(I(q, W((b) => b != null && b.scrollTop > 0), Bt(0)), u), Y(I(w, $(q), W(([, b]) => b != null)), ([, b]) => {
+	}), L(I(q, G((b) => b != null && b.scrollTop > 0), Bt(0)), u), Y(I(w, $(q), G(([, b]) => b != null)), ([, b]) => {
 		b && (_(C, b.viewport), _(z, b.item), _(F, b.gap), b.scrollTop > 0 && (_(Q, !0), yt(I(d, $t(1)), (D) => {
 			_(Q, !1);
 		}), _(c, { top: b.scrollTop })));
@@ -57118,7 +57126,7 @@ var Lr = /* @__PURE__ */ j(([{ increaseViewportBy: t, listBoundary: e, overscan:
 		item: D,
 		scrollTop: rt,
 		viewport: b
-	}))), mt), L(I(at(P(k), o, P(F, kr), P(z, xe), P(C, xe), P(Z), P(u), P(Q), P(ut), P(gt)), W(([, , , , , , , b]) => !b), B(([b, [D, K], rt, tt, X, lt, St, , ct, Vt]) => {
+	}))), mt), L(I(at(P(k), o, P(F, kr), P(z, xe), P(C, xe), P(Z), P(u), P(Q), P(ut), P(gt)), G(([, , , , , , , b]) => !b), B(([b, [D, K], rt, tt, X, lt, St, , ct, Vt]) => {
 		const { column: Pt, row: ee } = rt, { height: he, width: He } = tt, { width: nn } = X;
 		if (St === 0 && (b === 0 || nn === 0)) return bn;
 		if (He === 0) {
@@ -57138,16 +57146,16 @@ var Lr = /* @__PURE__ */ j(([{ increaseViewportBy: t, listBoundary: e, overscan:
 			offsetTop: sn,
 			top: sn
 		};
-	})), g), L(I(Z, W((b) => b !== null), B((b) => b.length)), k), L(I(at(C, z, g, F), W(([b, D, { items: K }]) => K.length > 0 && D.height !== 0 && b.height !== 0), B(([b, D, { items: K }, rt]) => {
+	})), g), L(I(Z, G((b) => b !== null), B((b) => b.length)), k), L(I(at(C, z, g, F), G(([b, D, { items: K }]) => K.length > 0 && D.height !== 0 && b.height !== 0), B(([b, D, { items: K }, rt]) => {
 		const { bottom: tt, top: X } = Bn(b, rt, D, K);
 		return [X, tt];
 	}), et$1(le)), e);
 	const pt = v(!1);
 	L(I(d, $(pt), B(([b, D]) => D || b !== 0)), pt);
-	const Kt = vt(I(at(g, k), W(([{ items: b }]) => b.length > 0), $(pt), W(([[b, D], K]) => {
+	const Kt = vt(I(at(g, k), G(([{ items: b }]) => b.length > 0), $(pt), G(([[b, D], K]) => {
 		const tt = b.items[b.items.length - 1].index === D - 1;
 		return (K || b.bottom > 0 && b.itemHeight > 0 && b.offsetBottom === 0 && b.items.length === D) && tt;
-	}), B(([[, b]]) => b - 1), et$1())), Qt = vt(I(P(g), W(({ items: b }) => b.length > 0 && b[0].index === 0), Bt(0), et$1())), Et = vt(I(P(g), $(Q), W(([{ items: b }, D]) => b.length > 0 && !D), B(([{ items: b }]) => ({
+	}), B(([[, b]]) => b - 1), et$1())), Qt = vt(I(P(g), G(({ items: b }) => b.length > 0 && b[0].index === 0), Bt(0), et$1())), Et = vt(I(P(g), $(Q), G(([{ items: b }, D]) => b.length > 0 && !D), B(([{ items: b }]) => ({
 		endIndex: b[b.length - 1].index,
 		startIndex: b[0].index
 	})), et$1(An), zt(0)));
@@ -57155,7 +57163,7 @@ var Lr = /* @__PURE__ */ j(([{ increaseViewportBy: t, listBoundary: e, overscan:
 		const X = $n(b), { align: lt, behavior: St, offset: ct } = X;
 		let Vt = X.index;
 		Vt === "LAST" && (Vt = rt - 1), Vt = oe(0, Vt, Le(rt - 1, Vt));
-		let Pt = Ge(D, tt, K, Vt);
+		let Pt = We(D, tt, K, Vt);
 		return lt === "end" ? Pt = Hn(Pt - D.height + K.height) : lt === "center" && (Pt = Hn(Pt - D.height / 2 + K.height / 2)), ct !== void 0 && ct !== 0 && (Pt += ct), {
 			behavior: St,
 			top: Pt
@@ -57204,7 +57212,7 @@ var Lr = /* @__PURE__ */ j(([{ increaseViewportBy: t, listBoundary: e, overscan:
 		stateRestoreInProgress: Q,
 		...y
 	};
-}, ot(je, It, pe, Zn, At, qe, Gt));
+}, ot(je, It, pe, Zn, At, qe, Wt));
 function io(t, e, n) {
 	return oe(1, Ce((t + n) / (Ce(e) + n)));
 }
@@ -57214,13 +57222,13 @@ function Bn(t, e, n, o) {
 		bottom: 0,
 		top: 0
 	};
-	const s = Ge(t, e, n, o[0].index);
+	const s = We(t, e, n, o[0].index);
 	return {
-		bottom: Ge(t, e, n, o[o.length - 1].index) + r,
+		bottom: We(t, e, n, o[o.length - 1].index) + r,
 		top: s
 	};
 }
-function Ge(t, e, n, o) {
+function We(t, e, n, o) {
 	const s = Ce(o / io(t.width, n.width, e.column)), i = s * n.height + oe(0, s - 1) * e.row;
 	return i > 0 ? i + e.row : i;
 }
@@ -57303,7 +57311,7 @@ var Fr = /* @__PURE__ */ j(([t, e]) => ({
 		ref: r,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(e, { ...nt(e, s) })
 	}) : null;
-}), Wr = import_react.memo(function() {
+}), Gr = import_react.memo(function() {
 	const e = st("FooterComponent"), n = wt("footerHeight"), o = st("headerFooterTag"), r = kt(import_react.useMemo(() => (i) => {
 		n(Ht(i, "height"));
 	}, [n]), !0, !1), s = st("context");
@@ -57311,7 +57319,7 @@ var Fr = /* @__PURE__ */ j(([t, e]) => ({
 		ref: r,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(e, { ...nt(e, s) })
 	}) : null;
-}), Gr = ({ children: t }) => {
+}), Wr = ({ children: t }) => {
 	const e = import_react.useContext(Qn), n = wt("itemDimensions"), o = wt("viewportDimensions"), r = kt(import_react.useMemo(() => (s) => {
 		o(s.getBoundingClientRect());
 	}, [o]), !0, !1);
@@ -57391,14 +57399,14 @@ var Fr = /* @__PURE__ */ j(([t, e]) => ({
 		readyStateChanged: "readyStateChanged"
 	}
 }, /* @__PURE__ */ import_react.memo(function({ ...e }) {
-	const n = st("useWindowScroll"), o = st("customScrollParent"), r = o || n ? Dr : Nr, s = o || n ? Ar : Gr, i = st("context");
+	const n = st("useWindowScroll"), o = st("customScrollParent"), r = o || n ? Dr : Nr, s = o || n ? Ar : Wr, i = st("context");
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(r, {
 		...e,
 		...nt(r, i),
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(s, { children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Pr, {}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Vr, {}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Wr, {})
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Gr, {})
 		] })
 	});
 })), Nr = /* @__PURE__ */ Je({
@@ -66295,7 +66303,8 @@ var RecordTree = ({ id, record, className, scrollRef, defaultExpandLevel = 1, pr
 	(0, import_react.useEffect)(() => {
 		if (collapsedIds) return;
 		setCollapsedIds(items.reduce((prev, item) => {
-			if (item.depth >= defaultExpandLevel && item.hasChildren) prev[item.id] = true;
+			if (!item.hasChildren) return prev;
+			if (item.depth >= defaultExpandLevel || item.childCount !== void 0 && item.childCount > 5) prev[item.id] = true;
 			return prev;
 		}, {}));
 	}, [collapsedIds, items]);
@@ -66433,11 +66442,14 @@ var processNodeRecursive = (key, value, depth, parentPath, thisPath, collapsedId
 	}
 	let displayValue = null;
 	let processChildren = false;
+	let childCount;
 	if (Array.isArray(value)) {
 		processChildren = true;
+		childCount = value.length;
 		displayValue = `Array(${value.length})`;
 	} else if (typeof value === "object" && value !== null) {
 		processChildren = true;
+		childCount = Object.keys(value).length;
 		displayValue = `Object(${Object.keys(value).length})`;
 	} else {
 		displayValue = String(value);
@@ -66448,7 +66460,8 @@ var processNodeRecursive = (key, value, depth, parentPath, thisPath, collapsedId
 		key,
 		value: displayValue,
 		depth,
-		hasChildren: true
+		hasChildren: true,
+		childCount
 	});
 	if (processChildren && !collapsedIds[id]) {
 		const childDepth = depth + 1;
@@ -97589,7 +97602,8 @@ var RowCtrl = class extends BeanStub {
 	}
 	updateRowBusinessKey() {
 		if (typeof this.businessKeyForNodeFunc !== "function") return;
-		this.businessKey = _escapeString(this.businessKeyForNodeFunc(this.rowNode));
+		const businessKey = this.businessKeyForNodeFunc(this.rowNode);
+		this.businessKey = _escapeString(businessKey);
 	}
 	updateGui(containerType, gui) {
 		if (containerType === "left") this.leftGui = gui;
@@ -99320,7 +99334,8 @@ var AriaAnnouncementService = class extends BeanStub {
 	}
 	postConstruct() {
 		const beans = this.beans;
-		const div = this.descriptionContainer = _getDocument(beans).createElement("div");
+		const eDocument = _getDocument(beans);
+		const div = this.descriptionContainer = eDocument.createElement("div");
 		div.classList.add("ag-aria-description-container");
 		_setAriaLive(div, "polite");
 		_setAriaRelevant(div, "additions text");
@@ -99864,7 +99879,8 @@ var RowRenderer = class extends BeanStub {
 	initialiseCache() {
 		if (this.gos.get("keepDetailRows")) {
 			const countProp = this.getKeepDetailRowsCount();
-			this.cachedRowCtrls = new RowCtrlCache(countProp != null ? countProp : 3);
+			const count = countProp != null ? countProp : 3;
+			this.cachedRowCtrls = new RowCtrlCache(count);
 		}
 	}
 	getKeepDetailRowsCount() {
@@ -109436,9 +109452,10 @@ var SelectionColService = class extends BeanStub {
 		destroyCollection();
 		const { colGroupSvc } = this.beans;
 		const treeDepth = colGroupSvc?.findDepth(cols.tree) ?? 0;
+		const tree = colGroupSvc?.balanceTreeForAutoCols(list, treeDepth) ?? [];
 		this.columns = {
 			list,
-			tree: colGroupSvc?.balanceTreeForAutoCols(list, treeDepth) ?? [],
+			tree,
 			treeDepth,
 			map: {}
 		};
@@ -113798,7 +113815,8 @@ var PaginationComp = class extends TabGuardComp {
 		this.toggleButtonDisabled(this.btFirst, this.previousAndFirstButtonsDisabled);
 		this.toggleButtonDisabled(this.btPrevious, this.previousAndFirstButtonsDisabled);
 		const zeroPagesToDisplay = this.isZeroPagesToDisplay();
-		this.nextButtonDisabled = currentPage === totalPages - 1 || zeroPagesToDisplay;
+		const onLastPage = currentPage === totalPages - 1;
+		this.nextButtonDisabled = onLastPage || zeroPagesToDisplay;
 		this.lastButtonDisabled = !maxRowFound || zeroPagesToDisplay || currentPage === totalPages - 1;
 		this.toggleButtonDisabled(this.btNext, this.nextButtonDisabled);
 		this.toggleButtonDisabled(this.btLast, this.lastButtonDisabled);
@@ -114034,7 +114052,10 @@ var PaginationService = class extends BeanStub {
 		if (masterPageEndIndex > masterLastRowIndex) masterPageEndIndex = masterLastRowIndex;
 		this.topDisplayedRowIndex = rowModel.getTopLevelRowDisplayedIndex(masterPageStartIndex);
 		if (masterPageEndIndex === masterLastRowIndex) this.bottomDisplayedRowIndex = rowModel.getRowCount() - 1;
-		else this.bottomDisplayedRowIndex = rowModel.getTopLevelRowDisplayedIndex(masterPageEndIndex + 1) - 1;
+		else {
+			const firstIndexNotToShow = rowModel.getTopLevelRowDisplayedIndex(masterPageEndIndex + 1);
+			this.bottomDisplayedRowIndex = firstIndexNotToShow - 1;
+		}
 	}
 	getMasterRowCount() {
 		return this.masterRowCount;
@@ -128469,24 +128490,24 @@ var useEventNodes = (events, running, sourceSpans) => {
 	};
 };
 var TranscriptLayout_module_default = {
-	root: "_root_1atfx_1",
-	container: "_container_1atfx_9",
-	outlineCollapsed: "_outlineCollapsed_1atfx_24",
-	noOutline: "_noOutline_1atfx_28",
-	rightPaneCollapsed: "_rightPaneCollapsed_1atfx_32",
-	noRightPane: "_noRightPane_1atfx_44",
-	outline: "_outline_1atfx_24",
-	outlineToggle: "_outlineToggle_1atfx_73",
-	separator: "_separator_1atfx_87",
-	rightSeparator: "_rightSeparator_1atfx_91",
-	rightPane: "_rightPane_1atfx_32",
-	rightPaneResizer: "_rightPaneResizer_1atfx_110",
-	rightPaneToggle: "_rightPaneToggle_1atfx_129",
-	eventsList: "_eventsList_1atfx_138",
-	sidebarHeader: "_sidebarHeader_1atfx_142",
-	sidebarHeaderIcon: "_sidebarHeaderIcon_1atfx_150",
-	sidebarHeaderTitle: "_sidebarHeaderTitle_1atfx_155",
-	sidebarHeaderClose: "_sidebarHeaderClose_1atfx_166"
+	root: "_root_130zy_1",
+	container: "_container_130zy_9",
+	outlineCollapsed: "_outlineCollapsed_130zy_24",
+	noOutline: "_noOutline_130zy_28",
+	rightPaneCollapsed: "_rightPaneCollapsed_130zy_32",
+	noRightPane: "_noRightPane_130zy_44",
+	outline: "_outline_130zy_24",
+	outlineToggle: "_outlineToggle_130zy_73",
+	separator: "_separator_130zy_87",
+	rightSeparator: "_rightSeparator_130zy_91",
+	rightPane: "_rightPane_130zy_32",
+	rightPaneResizer: "_rightPaneResizer_130zy_110",
+	rightPaneToggle: "_rightPaneToggle_130zy_129",
+	eventsList: "_eventsList_130zy_138",
+	sidebarHeader: "_sidebarHeader_130zy_142",
+	sidebarHeaderIcon: "_sidebarHeaderIcon_130zy_150",
+	sidebarHeaderTitle: "_sidebarHeaderTitle_130zy_155",
+	sidebarHeaderClose: "_sidebarHeaderClose_130zy_166"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/ApprovalEventView.tsx
@@ -131634,38 +131655,38 @@ var Metadata = ({ metadata, references, options }) => {
 	}, key)) });
 };
 var MetadataValue = ({ id, value, references, options }) => {
-	if (typeof value === "string") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownDivWithReferences, {
-		markdown: value,
-		references,
-		options
-	});
-	if (typeof value === "object" && value !== null && !Array.isArray(value)) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
-		id: `metadata-${id}`,
-		record: value,
-		useBorders: false
-	});
-	if (Array.isArray(value)) {
-		const record = {};
-		value.forEach((item, i) => {
-			record[`[${i}]`] = item;
+	switch (typeof value) {
+		case "string": return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownDivWithReferences, {
+			markdown: value,
+			references,
+			options
 		});
-		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
-			id: `metadata-${id}`,
-			record,
-			useBorders: false
-		});
+		case "object":
+			if (value === null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", { children: "null" });
+			if (Array.isArray(value)) {
+				const record = {};
+				value.forEach((item, i) => {
+					record[`[${i}]`] = item;
+				});
+				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
+					id: `metadata-${id}`,
+					record,
+					useBorders: false
+				});
+			}
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
+				id: `metadata-${id}`,
+				record: value,
+				useBorders: false
+			});
+		default: return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: String(value) });
 	}
-	if (value === null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", { children: "null" });
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: String(value) });
 };
 var ScannerResultDetailView_module_default = {
-	container: "_container_2pqnu_1",
-	colspan: "_colspan_2pqnu_8",
-	label: "_label_2pqnu_12",
-	header: "_header_2pqnu_20",
-	values: "_values_2pqnu_24",
-	validation: "_validation_2pqnu_28",
-	validationLabel: "_validationLabel_2pqnu_34"
+	container: "_container_15g5f_1",
+	header: "_header_15g5f_8",
+	section: "_section_15g5f_12",
+	values: "_values_15g5f_23"
 };
 var ValidationResult_module_default = {
 	result: "_result_415jo_1",
@@ -131786,7 +131807,7 @@ var Value = ({ value, valueType, identifier, references, style = "block", maxTab
 		})
 	});
 	else if (isObjectValue(input)) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		title: import_dist.default.stringify(input.value, null, 2),
+		title: maxTableSize < Object.keys(input.value).length ? import_dist.default.stringify(input.value, null, 2) : void 0,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ValueTable, {
 			value: input.value,
 			identifier,
@@ -131867,31 +131888,29 @@ var renderValue = (index, val, identifier, references, interactive) => {
 };
 //#endregion
 //#region ../../packages/scout-components/src/scanner-result-detail/ScannerResultDetailView.tsx
+var kCollapseScope = "scanner-result-sections";
+var Section = ({ id, heading, open, onToggle, children }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(VscodeCollapsible, {
+		ref: (0, import_react.useCallback)((el) => {
+			if (!el) return;
+			const handler = (e) => {
+				const detail = e.detail;
+				onToggle(id, detail.open);
+			};
+			el.addEventListener("vsc-collapsible-toggle", handler);
+			return () => el.removeEventListener("vsc-collapsible-toggle", handler);
+		}, [id, onToggle]),
+		heading,
+		open,
+		className: ScannerResultDetailView_module_default.section,
+		children
+	});
+};
 var ScannerResultDetailView = ({ data, references, header, interactive = false, options }) => {
 	const hasValidation = data.validationResult !== void 0 && data.validationResult !== null;
 	const hasMetadata = data.metadata !== void 0 && Object.keys(data.metadata).length > 0;
-	const valueStacked = data.valueType === "object" || data.valueType === "array";
-	const valueNode = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Value, {
-		value: data.value,
-		valueType: data.valueType,
-		identifier: data.identifier,
-		style: "block",
-		maxTableSize: 1e3,
-		interactive,
-		references,
-		options
-	});
-	const validationNode = hasValidation ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: clsx(ScannerResultDetailView_module_default.validation),
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: clsx(ScannerResultDetailView_module_default.label, ScannerResultDetailView_module_default.validationLabel),
-			children: "Validation"
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ValidationResult, {
-			result: data.validationResult,
-			target: data.validationTarget,
-			label: data.label
-		})]
-	}) : null;
+	const [collapsedIds, setCollapsed] = useCollapsibleIds(kCollapseScope);
+	const isOpen = (id) => !collapsedIds[id];
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: clsx(ScannerResultDetailView_module_default.container, "text-size-small"),
 		children: [
@@ -131899,76 +131918,103 @@ var ScannerResultDetailView = ({ data, references, header, interactive = false, 
 				className: ScannerResultDetailView_module_default.header,
 				children: header
 			}) : null,
-			data.label ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: clsx(ScannerResultDetailView_module_default.label),
-				children: "Label"
-			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: data.label })] }) : null,
-			valueStacked ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: clsx(ScannerResultDetailView_module_default.colspan),
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: clsx(ScannerResultDetailView_module_default.label),
-					children: "Value"
-				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: clsx(hasValidation ? ScannerResultDetailView_module_default.values : void 0),
-					children: [valueNode, validationNode]
-				})]
-			}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: clsx(ScannerResultDetailView_module_default.label),
-				children: "Value"
-			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: clsx(hasValidation ? ScannerResultDetailView_module_default.values : void 0),
-				children: [valueNode, validationNode]
-			})] }),
-			data.answer ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: clsx(ScannerResultDetailView_module_default.label),
-				children: "Answer"
-			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: data.answer })] }) : null,
-			data.explanation ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: clsx(ScannerResultDetailView_module_default.colspan),
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: clsx(ScannerResultDetailView_module_default.label),
-					children: "Explanation"
-				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Explanation, {
+			data.explanation ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+				id: "explanation",
+				heading: "Explanation",
+				open: isOpen("explanation"),
+				onToggle: setCollapsedFromOpen(setCollapsed),
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Explanation, {
 					explanation: data.explanation,
 					references,
 					options
-				})]
+				})
 			}) : null,
-			hasMetadata ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: clsx(ScannerResultDetailView_module_default.colspan),
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: clsx("text-style-label", "text-style-secondary") }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Metadata, {
+			data.label ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+				id: "label",
+				heading: "Label",
+				open: isOpen("label"),
+				onToggle: setCollapsedFromOpen(setCollapsed),
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: data.label })
+			}) : null,
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+				id: "value",
+				heading: "Value",
+				open: isOpen("value"),
+				onToggle: setCollapsedFromOpen(setCollapsed),
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Value, {
+					value: data.value,
+					valueType: data.valueType,
+					identifier: data.identifier,
+					style: "block",
+					maxTableSize: 1e3,
+					interactive,
+					references,
+					options
+				})
+			}),
+			hasValidation ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+				id: "validation",
+				heading: "Validation",
+				open: isOpen("validation"),
+				onToggle: setCollapsedFromOpen(setCollapsed),
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ValidationResult, {
+					result: data.validationResult,
+					target: data.validationTarget,
+					label: data.label
+				})
+			}) : null,
+			data.answer ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+				id: "answer",
+				heading: "Answer",
+				open: isOpen("answer"),
+				onToggle: setCollapsedFromOpen(setCollapsed),
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: data.answer })
+			}) : null,
+			hasMetadata ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+				id: "metadata",
+				heading: "Metadata",
+				open: isOpen("metadata"),
+				onToggle: setCollapsedFromOpen(setCollapsed),
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Metadata, {
 					metadata: data.metadata,
 					references,
 					options
-				})]
+				})
 			}) : null
 		]
 	});
 };
-var SampleScannerPicker_module_default = { picker: "_picker_9870e_1" };
+var setCollapsedFromOpen = (setCollapsed) => (id, open) => setCollapsed(id, !open);
+var SampleScannerPicker_module_default = {
+	picker: "_picker_vehgx_1",
+	select: "_select_vehgx_7"
+};
 //#endregion
 //#region src/app/samples/scans/SampleScannerPicker.tsx
 var SampleScannerPicker = ({ scanners, selected, onChange }) => {
-	const handleChange = (0, import_react.useCallback)((e) => {
-		const value = e.target?.value;
-		if (typeof value === "string") onChange(value);
-	}, [onChange]);
+	const handleChange = (0, import_react.useCallback)((e) => onChange(e.target.value), [onChange]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: SampleScannerPicker_module_default.picker,
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 			className: clsx("text-size-smaller", "text-style-secondary"),
 			children: "scanner:"
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(VscodeSingleSelect, {
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", {
+			className: clsx("form-select", "form-select-sm", "text-size-smaller", SampleScannerPicker_module_default.select),
+			"aria-label": "Select scanner",
 			value: selected,
 			onChange: handleChange,
-			children: scanners.map((scanner) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(VscodeOption, {
+			children: scanners.map((scanner) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", {
 				value: scanner,
 				children: scanner
 			}, scanner))
 		})]
 	});
 };
-var SampleScansSidebar_module_default = { sidebar: "_sidebar_yd264_1" };
+var SampleScansSidebar_module_default = {
+	sidebar: "_sidebar_ei072_1",
+	header: "_header_ei072_10",
+	singleScanner: "_singleScanner_ei072_19"
+};
 //#endregion
 //#region src/app/samples/scans/scanReferences.ts
 /**
@@ -132060,15 +132106,17 @@ var SampleScansSidebar = ({ scores, makeCiteUrl, selected, onSelectedChange }) =
 		className: clsx(SampleScansSidebar_module_default.singleScanner, "text-size-smaller"),
 		children: scanners[0]
 	}) : null;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: SampleScansSidebar_module_default.sidebar,
 		"aria-label": "Sample scans",
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScannerResultDetailView, {
+		children: [header ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: SampleScansSidebar_module_default.header,
+			children: header
+		}) : null, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScannerResultDetailView, {
 			data,
 			references,
-			header,
 			options: { previewRefsOnHover: false }
-		})
+		})]
 	});
 };
 //#endregion
@@ -140169,7 +140217,8 @@ var LayerCursor = class {
 			break;
 		} else {
 			let chunkPos = this.layer.chunkPos[this.chunkIndex], chunk = this.layer.chunk[this.chunkIndex];
-			this.from = chunkPos + chunk.from[this.rangeIndex];
+			let from = chunkPos + chunk.from[this.rangeIndex];
+			this.from = from;
 			this.to = chunkPos + chunk.to[this.rangeIndex];
 			this.value = chunk.value[this.rangeIndex];
 			this.setRangeIndex(this.rangeIndex + 1);
@@ -140641,7 +140690,7 @@ function add(elt, child) {
 	else throw new RangeError("Unsupported child node: " + child);
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@codemirror+view@6.41.0/node_modules/@codemirror/view/dist/index.js
+//#region ../../node_modules/.pnpm/@codemirror+view@6.41.1/node_modules/@codemirror/view/dist/index.js
 var nav = typeof navigator != "undefined" ? navigator : {
 	userAgent: "",
 	vendor: "",
@@ -143838,11 +143887,12 @@ var InlineCoordsScan = class {
 			return this.scan(positions, getRects);
 		}
 		if (closestDx) {
-			if (above && above.bottom > closestRect.top) {
+			let { top, bottom } = closestRect;
+			if (above && above.bottom > (top + top + bottom) / 3) {
 				this.y = above.bottom - 1;
 				return this.scan(positions, getRects);
 			}
-			if (below && below.top < closestRect.bottom) {
+			if (below && below.top < (top + bottom + bottom) / 3) {
 				this.y = below.top + 1;
 				return this.scan(positions, getRects);
 			}
@@ -145703,7 +145753,8 @@ var ViewState = class {
 		this.defaultTextDirection = Direction.LTR;
 		this.visibleRanges = [];
 		this.mustEnforceCursorAssoc = false;
-		this.heightOracle = new HeightOracle(state.facet(contentAttributes).some((v) => typeof v != "function" && v.class == "cm-lineWrapping"));
+		let guessWrapping = state.facet(contentAttributes).some((v) => typeof v != "function" && v.class == "cm-lineWrapping");
+		this.heightOracle = new HeightOracle(guessWrapping);
 		this.stateDeco = staticDeco(state);
 		this.heightMap = HeightMap.empty().applyChanges(this.stateDeco, Text.empty, this.heightOracle.setDoc(state.doc), [new ChangedRange(0, 0, 0, state.doc.length)]);
 		for (let i = 0; i < 2; i++) {
@@ -147784,7 +147835,7 @@ var EditorView = class EditorView {
 	}
 	/**
 	Create a theme extension. The first argument can be a
-	[`style-mod`](https://github.com/marijnh/style-mod#documentation)
+	[`style-mod`](https://code.haverbeke.berlin/marijn/style-mod#documentation)
 	style spec providing the styles for the theme. These will be
 	prefixed with a generated class for the style.
 	
@@ -147829,7 +147880,7 @@ var EditorView = class EditorView {
 };
 /**
 Facet to add a [style
-module](https://github.com/marijnh/style-mod#documentation) to
+module](https://code.haverbeke.berlin/marijn/style-mod#documentation) to
 an editor view. The view will ensure that the module is
 mounted in its [document
 root](https://codemirror.net/6/docs/ref/#view.EditorView.constructor^config.root).
@@ -158513,7 +158564,8 @@ var RegExpCursor = class {
 		this.re = new RegExp(query, baseFlags + ((options === null || options === void 0 ? void 0 : options.ignoreCase) ? "i" : ""));
 		this.test = options === null || options === void 0 ? void 0 : options.test;
 		this.iter = text.iter();
-		this.curLineStart = text.lineAt(from).from;
+		let startLine = text.lineAt(from);
+		this.curLineStart = startLine.from;
 		this.matchPos = toCharEnd(text, from);
 		this.getLine(this.curLineStart);
 	}
