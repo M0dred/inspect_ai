@@ -53863,7 +53863,7 @@ var useCollapsibleIds = (key) => {
 	}, [removeAllFn, key]);
 	return (0, import_react.useMemo)(() => {
 		return [
-			entries || {},
+			entries,
 			collapseId,
 			clearIds
 		];
@@ -66283,38 +66283,31 @@ var RecordTree = ({ id, record, className, scrollRef, defaultExpandLevel = 1, pr
 	const listHandle = (0, import_react.useRef)(null);
 	const { getRestoreState } = useVirtuosoState(listHandle, `metadata-grid-${id}`);
 	const [collapsedIds, setCollapsed, clearIds] = useCollapsibleIds(id);
-	const setCollapsedIds = (0, import_react.useCallback)((values) => {
-		Object.entries(values).forEach(([key, value]) => {
-			setCollapsed(key, value);
-		});
-	}, [setCollapsed]);
 	(0, import_react.useEffect)(() => {
 		return () => {
 			clearIds();
 		};
 	}, [clearIds, id]);
+	const isItemCollapsed = (0, import_react.useCallback)((itemId, hasChildren, depth, childCount) => {
+		const explicit = collapsedIds?.[itemId];
+		if (explicit !== void 0) return explicit;
+		if (!hasChildren) return false;
+		return depth >= defaultExpandLevel || childCount !== void 0 && childCount > 5;
+	}, [collapsedIds, defaultExpandLevel]);
 	const items = (0, import_react.useMemo)(() => {
-		return toTreeItems(record, collapsedIds || {}, processStore ? [resolveStoreKeys] : []);
+		return toTreeItems(record, isItemCollapsed, processStore ? [resolveStoreKeys] : []);
 	}, [
 		record,
-		collapsedIds,
+		isItemCollapsed,
 		processStore
 	]);
-	(0, import_react.useEffect)(() => {
-		if (collapsedIds) return;
-		setCollapsedIds(items.reduce((prev, item) => {
-			if (!item.hasChildren) return prev;
-			if (item.depth >= defaultExpandLevel || item.childCount !== void 0 && item.childCount > 5) prev[item.id] = true;
-			return prev;
-		}, {}));
-	}, [collapsedIds, items]);
-	const keyUpHandler = (0, import_react.useCallback)((itemId, index) => {
+	const keyUpHandler = (0, import_react.useCallback)((item, index) => {
 		return (event) => {
 			switch (event.key) {
 				case "Enter":
 					event.preventDefault();
 					event.stopPropagation();
-					setCollapsed(itemId, !collapsedIds?.[id]);
+					setCollapsed(item.id, !item.isCollapsed);
 					break;
 				case "ArrowDown": {
 					event.preventDefault();
@@ -66335,16 +66328,20 @@ var RecordTree = ({ id, record, className, scrollRef, defaultExpandLevel = 1, pr
 				case "ArrowRight":
 					event.preventDefault();
 					event.stopPropagation();
-					setCollapsed(itemId, false);
+					setCollapsed(item.id, false);
 					break;
 				case "ArrowLeft":
 					event.preventDefault();
 					event.stopPropagation();
-					setCollapsed(itemId, true);
+					setCollapsed(item.id, true);
 					break;
 			}
 		};
-	}, [collapsedIds, items]);
+	}, [
+		setCollapsed,
+		items,
+		id
+	]);
 	const renderRow = (index) => {
 		const item = items[index];
 		if (!item) return null;
@@ -66354,19 +66351,19 @@ var RecordTree = ({ id, record, className, scrollRef, defaultExpandLevel = 1, pr
 			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 				"data-index": index,
 				className: clsx(kRecordTreeKey, RecordTree_module_default.key, "font-monospace", "text-style-secondary"),
-				onKeyUp: keyUpHandler(item.id, index),
+				onKeyUp: keyUpHandler(item, index),
 				tabIndex: 0,
 				onClick: () => {
-					setCollapsed(item.id, !collapsedIds?.[item.id]);
+					setCollapsed(item.id, !item.isCollapsed);
 				},
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: item.hasChildren ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", {
 					className: clsx(RecordTree_module_default.pre),
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(collapsedIds && collapsedIds[item.id] ? icons.tree.closed : icons.tree.open, RecordTree_module_default.treeIcon) })
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(item.isCollapsed ? icons.tree.closed : icons.tree.open, RecordTree_module_default.treeIcon) })
 				}) : void 0 }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("pre", {
 					className: clsx(RecordTree_module_default.pre),
 					children: [item.key, ":"]
 				})]
-			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: item.value !== null && (!item.hasChildren || collapsedIds?.[item.id]) ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: item.value !== null && (!item.hasChildren || item.isCollapsed) ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
 				id: `${id}-collapse-${item.id}`,
 				collapse: true,
 				lines: 15,
@@ -66382,7 +66379,6 @@ var RecordTree = ({ id, record, className, scrollRef, defaultExpandLevel = 1, pr
 			}) : void 0 })]
 		}, item.id);
 	};
-	if (!collapsedIds) return null;
 	if (!scrollRef) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		id,
 		className: clsx(className, "samples-list"),
@@ -66416,17 +66412,17 @@ var RecordTree = ({ id, record, className, scrollRef, defaultExpandLevel = 1, pr
 		tabIndex: 0
 	});
 };
-var toTreeItems = (record, collapsedIds, recordProcessors = [], currentDepth = 0, currentPath = []) => {
+var toTreeItems = (record, isCollapsed, recordProcessors = [], currentDepth = 0, currentPath = []) => {
 	if (!record) return [];
 	if (recordProcessors.length > 0) for (const processor of recordProcessors) record = processor(record);
 	const result = [];
 	Object.entries(record).forEach(([key, value], index) => {
 		const itemSegment = index.toString();
-		result.push(...processNodeRecursive(key, value, currentDepth, currentPath, itemSegment, collapsedIds));
+		result.push(...processNodeRecursive(key, value, currentDepth, currentPath, itemSegment, isCollapsed));
 	});
 	return result;
 };
-var processNodeRecursive = (key, value, depth, parentPath, thisPath, collapsedIds) => {
+var processNodeRecursive = (key, value, depth, parentPath, thisPath, isCollapsed) => {
 	const items = [];
 	const currentItemPath = [...parentPath, thisPath];
 	const id = `${depth}.${currentItemPath.join(".")}`;
@@ -66436,7 +66432,8 @@ var processNodeRecursive = (key, value, depth, parentPath, thisPath, collapsedId
 			key,
 			value: value === void 0 ? null : value,
 			depth,
-			hasChildren: false
+			hasChildren: false,
+			isCollapsed: false
 		});
 		return items;
 	}
@@ -66451,29 +66448,34 @@ var processNodeRecursive = (key, value, depth, parentPath, thisPath, collapsedId
 		processChildren = true;
 		childCount = Object.keys(value).length;
 		displayValue = `Object(${Object.keys(value).length})`;
+	} else if (typeof value === "function" || typeof value === "symbol" || typeof value === "bigint") {
+		displayValue = value.toString();
+		processChildren = false;
 	} else {
-		displayValue = String(value);
+		displayValue = null;
 		processChildren = false;
 	}
+	const collapsed = processChildren ? isCollapsed(id, true, depth, childCount) : false;
 	items.push({
 		id,
 		key,
 		value: displayValue,
 		depth,
-		hasChildren: true,
-		childCount
+		hasChildren: processChildren,
+		childCount,
+		isCollapsed: collapsed
 	});
-	if (processChildren && !collapsedIds[id]) {
+	if (processChildren && !collapsed) {
 		const childDepth = depth + 1;
 		if (Array.isArray(value)) {
 			if (value.length > 0) value.forEach((element, index) => {
 				const elementKey = `[${index}]`;
 				const elementIdentifier = `[${index}]`;
-				items.push(...processNodeRecursive(elementKey, element, childDepth, currentItemPath, elementIdentifier, collapsedIds));
+				items.push(...processNodeRecursive(elementKey, element, childDepth, currentItemPath, elementIdentifier, isCollapsed));
 			});
 		} else if (typeof value === "object" && value !== null) Object.entries(value).forEach(([childKey, childValue], index) => {
 			const childIdentifier = index.toString();
-			items.push(...processNodeRecursive(childKey, childValue, childDepth, currentItemPath, childIdentifier, collapsedIds));
+			items.push(...processNodeRecursive(childKey, childValue, childDepth, currentItemPath, childIdentifier, isCollapsed));
 		});
 	}
 	return items;
@@ -127452,7 +127454,7 @@ var TimelineSwimLanes = ({ layouts, timeline, header, isSticky, onMarkerNavigate
 		return keys;
 	}, [layouts, parentKeys]);
 	const isRowCollapsed = (0, import_react.useCallback)((rowKey) => {
-		const explicit = stableCollapsedBucket[rowKey];
+		const explicit = stableCollapsedBucket?.[rowKey];
 		if (explicit !== void 0) return explicit;
 		const layout = layouts.find((l) => l.key === rowKey);
 		if (!layout) return false;
@@ -131910,7 +131912,7 @@ var ScannerResultDetailView = ({ data, references, header, interactive = false, 
 	const hasValidation = data.validationResult !== void 0 && data.validationResult !== null;
 	const hasMetadata = data.metadata !== void 0 && Object.keys(data.metadata).length > 0;
 	const [collapsedIds, setCollapsed] = useCollapsibleIds(kCollapseScope);
-	const isOpen = (id) => !collapsedIds[id];
+	const isOpen = (id) => !collapsedIds?.[id];
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: clsx(ScannerResultDetailView_module_default.container, "text-size-small"),
 		children: [
