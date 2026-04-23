@@ -7,7 +7,7 @@ var __getOwnPropDesc$1 = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames$1 = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp$1 = Object.prototype.hasOwnProperty;
-var __commonJSMin = (cb, mod) => () => (mod || cb((mod = { exports: {} }).exports, mod), mod.exports);
+var __commonJSMin = (cb, mod) => () => (mod || (cb((mod = { exports: {} }).exports, mod), cb = null), mod.exports);
 var __exportAll = (all, no_symbols) => {
 	let target = {};
 	for (var name in all) __defProp$1(target, name, {
@@ -9941,6 +9941,48 @@ var isAnsiOutput = (text) => {
 	return /\x1b(?:\[[\x30-\x3f]*[\x20-\x2f]*[\x40-\x7e]|\].*?(?:\x07|\x1b\\)|[^[\]>])/g.test(text);
 };
 //#endregion
+//#region ../../packages/util/src/array.ts
+var printArray = (arr, size = 50) => {
+	const envelope = ["[", "]"];
+	const ellipsis = "…";
+	const separator = ", ";
+	let remainingSize = size - (envelope[0]?.length || 0) - (envelope[1]?.length || 0) - 2;
+	const headItems = [];
+	const tailItems = [];
+	let headIdx = 0;
+	let tailIdx = arr.length - 1;
+	while (headIdx <= tailIdx) {
+		const headStr = String(arr[headIdx]);
+		const tailStr = String(arr[tailIdx]);
+		if (headIdx === tailIdx) {
+			if (headStr.length <= remainingSize) headItems.push(headStr);
+			else headItems.push(ellipsis);
+			break;
+		}
+		const bothSize = headStr.length + tailStr.length + 2;
+		if (bothSize <= remainingSize) {
+			headItems.push(headStr);
+			tailItems.unshift(tailStr);
+			remainingSize -= bothSize;
+			headIdx++;
+			tailIdx--;
+		} else {
+			headItems.push(ellipsis);
+			break;
+		}
+	}
+	if (headItems.length === 0 && arr.length > 0) {
+		const firstStr = String(arr[0]);
+		const truncateSize = remainingSize - 1;
+		if (truncateSize > 0) {
+			headItems.push(firstStr.slice(0, truncateSize) + ellipsis);
+			headItems.push(ellipsis);
+		} else headItems.push(ellipsis);
+	}
+	const allItems = [...headItems, ...tailItems];
+	return envelope[0] + allItems.join(separator) + envelope[1];
+};
+//#endregion
 //#region ../../node_modules/.pnpm/arquero@8.0.3/node_modules/arquero/src/op/functions/bin.js
 /**
 * Truncate a value to a bin boundary.
@@ -11061,7 +11103,7 @@ var object_exports = /* @__PURE__ */ __exportAll({
 	has: () => has$2,
 	keys: () => keys$1,
 	object: () => object,
-	values: () => values
+	values: () => values$1
 });
 function array(iter) {
 	return Array.from(iter);
@@ -11103,7 +11145,7 @@ function keys$1(object) {
 *  or Set value.
 * @return {V[]} An array of property values.
 */
-function values(object) {
+function values$1(object) {
 	return isMapOrSet(object) ? array(object.values()) : object != null ? Object.values(object) : [];
 }
 /**
@@ -19500,6 +19542,54 @@ function compareWithNan(a, b) {
 //#region ../../packages/util/src/mime.ts
 var isImage = (mimeType) => {
 	return mimeType.startsWith("image/");
+};
+//#endregion
+//#region ../../packages/util/src/object.ts
+var printObject = (val, size = 50) => {
+	const envelope = ["{", "}"];
+	const ellipsis = "…";
+	const separator = ", ";
+	const kvSeparator = ": ";
+	let remainingSize = size - (envelope[0]?.length || 0) - (envelope[1]?.length || 0);
+	const entries = Object.entries(val);
+	const headItems = [];
+	const tailItems = [];
+	let headIdx = 0;
+	let tailIdx = entries.length - 1;
+	while (headIdx <= tailIdx) {
+		const headPair = `${entries[headIdx]?.[0]}${kvSeparator}${JSON.stringify(entries[headIdx]?.[1])}`;
+		const tailPair = `${entries[tailIdx]?.[0]}${kvSeparator}${JSON.stringify(entries[tailIdx]?.[1])}`;
+		if (headIdx === tailIdx) {
+			if (headPair.length <= remainingSize) headItems.push(headPair);
+			else headItems.push(ellipsis);
+			break;
+		}
+		const bothSize = headPair.length + tailPair.length + 2;
+		if (bothSize <= remainingSize) {
+			headItems.push(headPair);
+			tailItems.unshift(tailPair);
+			remainingSize -= bothSize;
+			headIdx++;
+			tailIdx--;
+		} else if (headPair.length + 2 + 1 <= remainingSize) {
+			headItems.push(headPair);
+			headItems.push(ellipsis);
+			break;
+		} else {
+			headItems.push(ellipsis);
+			break;
+		}
+	}
+	if (headItems.length === 0 && entries.length > 0) {
+		const firstPair = `${entries[0]?.[0]}${kvSeparator}${JSON.stringify(entries[0]?.[1])}`;
+		const truncateSize = remainingSize - 1 - 2;
+		if (truncateSize > 0) {
+			headItems.push(firstPair.slice(0, truncateSize) + ellipsis);
+			headItems.push(ellipsis);
+		} else headItems.push(ellipsis);
+	}
+	const allItems = [...headItems, ...tailItems];
+	return envelope[0] + allItems.join(separator) + envelope[1];
 };
 //#endregion
 //#region ../../packages/util/src/path.ts
@@ -28950,7 +29040,8 @@ async function init(options) {
 }
 var Clock = class {
 	constructor() {
-		this.speed = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : 1;
+		let speed = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : 1;
+		this.speed = speed;
 		this.startTime = performance.now();
 	}
 	getTime() {
@@ -36721,7 +36812,9 @@ __decorate$32([n$5({
 	reflect: true
 })], VscodeCollapsible$1.prototype, "open", void 0);
 VscodeCollapsible$1 = __decorate$32([customElement("vscode-collapsible")], VscodeCollapsible$1);
-o$7({
+//#endregion
+//#region ../../node_modules/.pnpm/@vscode-elements+react-elements@2.4.0_@types+react@19.2.14_@vscode+codicons@0.0.44_reac_f6b438ed8146082902c146554ff7c5e1/node_modules/@vscode-elements/react-elements/dist/components/VscodeCollapsible.js
+var VscodeCollapsible = o$7({
 	tagName: "vscode-collapsible",
 	elementClass: VscodeCollapsible$1,
 	react: import_react.default,
@@ -37904,7 +37997,8 @@ var OptionListController = class {
 	}
 	set selectedIndex(index) {
 		if (this._selectedIndex !== -1 && this._options[this._selectedIndex]) this._options[this._selectedIndex].selected ??= false;
-		this._selectedIndex = this.getOptionByIndex(index) ? index : -1;
+		const op = this.getOptionByIndex(index);
+		this._selectedIndex = op ? index : -1;
 		this._host.requestUpdate();
 	}
 	get selectedIndexes() {
@@ -39658,7 +39752,10 @@ var VscodeMultiSelect$1 = class VscodeMultiSelect extends VscodeSelectBase {
 		});
 	}
 	_setDefaultValue() {
-		if (Array.isArray(this.defaultValue) && this.defaultValue.length > 0) this.value = this.defaultValue.map((v) => String(v));
+		if (Array.isArray(this.defaultValue) && this.defaultValue.length > 0) {
+			const val = this.defaultValue.map((v) => String(v));
+			this.value = val;
+		}
 	}
 	_dispatchChangeEvent() {
 		super._dispatchChangeEvent();
@@ -43362,7 +43459,8 @@ var VscodeTextarea$1 = class VscodeTextarea extends VscElement {
 		const SCROLLBAR_WIDTH = 14;
 		const BORDER_WIDTH = 1;
 		const br = this._textareaEl.getBoundingClientRect();
-		this._textareaPointerCursor = ev.clientX >= br.left + br.width - SCROLLBAR_WIDTH - BORDER_WIDTH * 2;
+		const x = ev.clientX;
+		this._textareaPointerCursor = x >= br.left + br.width - SCROLLBAR_WIDTH - BORDER_WIDTH * 2;
 	}
 	_handleScroll() {
 		this._shadow = this._textareaEl.scrollTop > 0;
@@ -43617,7 +43715,7 @@ var VscodeTextfield$1 = class VscodeTextfield extends VscElement {
 	* The supported ones are: `color`,`date`,`datetime-local`,`email`,`file`,`month`,`number`,`password`,`search`,`tel`,`text`,`time`,`url`,`week`
 	*/
 	set type(val) {
-		this._type = [
+		const validTypes = [
 			"color",
 			"date",
 			"datetime-local",
@@ -43632,7 +43730,8 @@ var VscodeTextfield$1 = class VscodeTextfield extends VscElement {
 			"time",
 			"url",
 			"week"
-		].includes(val) ? val : "text";
+		];
+		this._type = validTypes.includes(val) ? val : "text";
 	}
 	get type() {
 		return this._type;
@@ -47555,7 +47654,7 @@ function block(state) {
 }
 //#endregion
 //#region ../../node_modules/.pnpm/markdown-it@14.1.1/node_modules/markdown-it/lib/rules_core/inline.mjs
-function inline(state) {
+function inline$1(state) {
 	const tokens = state.tokens;
 	for (let i = 0, l = tokens.length; i < l; i++) {
 		const tok = tokens[i];
@@ -47819,7 +47918,7 @@ function text_join(state) {
 var _rules$2 = [
 	["normalize", normalize],
 	["block", block],
-	["inline", inline],
+	["inline", inline$1],
 	["linkify", linkify$1],
 	["replacements", replace$1],
 	["smartquotes", smartquotes],
@@ -53097,11 +53196,16 @@ var PopOver = ({ id, isOpen, setIsOpen, positionEl, children, placement = "botto
 		if (!isOpen || hoverDelay <= 0) {
 			setShouldShowPopover(isOpen);
 			let mouseDownInsidePopover = false;
+			let mouseDownOnTrigger = false;
 			const captureListener = (event) => {
-				mouseDownInsidePopover = popperRef.current?.contains(event.target) ?? false;
+				const target = event.target;
+				mouseDownInsidePopover = popperRef.current?.contains(target) ?? false;
+				mouseDownOnTrigger = positionEl?.contains(target) ?? false;
 			};
 			const bubbleListener = () => {
-				if (popperRef.current && !mouseDownInsidePopover) setIsOpenRef.current(false);
+				if (!popperRef.current) return;
+				if (mouseDownInsidePopover || mouseDownOnTrigger) return;
+				setIsOpenRef.current(false);
 			};
 			document.addEventListener("mousedown", captureListener, true);
 			document.addEventListener("mousedown", bubbleListener);
@@ -53165,6 +53269,39 @@ var PopOver = ({ id, isOpen, setIsOpen, positionEl, children, placement = "botto
 		shouldShowPopover,
 		id
 	]);
+	const maxSizeModifier = import_react.useMemo(() => ({
+		name: "maxSize",
+		enabled: true,
+		phase: "main",
+		requiresIfExists: [
+			"offset",
+			"preventOverflow",
+			"flip"
+		],
+		options: { padding: 8 },
+		fn({ state, name, options }) {
+			const padding = typeof options?.padding === "number" ? options.padding : 8;
+			state.modifiersData[name] = {
+				width: Math.max(0, window.innerWidth - 2 * padding),
+				height: Math.max(0, window.innerHeight - 2 * padding)
+			};
+		}
+	}), []);
+	const applyMaxSizeModifier = import_react.useMemo(() => ({
+		name: "applyMaxSize",
+		enabled: true,
+		phase: "beforeWrite",
+		requires: ["maxSize"],
+		fn({ state }) {
+			const data = state.modifiersData.maxSize;
+			if (!data) return;
+			state.styles.popper = {
+				...state.styles.popper,
+				maxWidth: `${data.width}px`,
+				maxHeight: `${data.height}px`
+			};
+		}
+	}), []);
 	const modifiers = [
 		{
 			name: "offset",
@@ -53197,13 +53334,22 @@ var PopOver = ({ id, isOpen, setIsOpen, positionEl, children, placement = "botto
 				"bottom",
 				"left"
 			] }
-		}
+		},
+		maxSizeModifier,
+		applyMaxSizeModifier
 	];
 	const { styles: popperStyles, attributes, state, update } = usePopper(positionEl, popperRef.current, {
 		placement,
 		strategy: "fixed",
 		modifiers
 	});
+	const [prevIsOpen, setPrevIsOpen] = (0, import_react.useState)(isOpen);
+	const [openBaselineState, setOpenBaselineState] = (0, import_react.useState)(state);
+	if (prevIsOpen !== isOpen) {
+		setPrevIsOpen(isOpen);
+		if (isOpen) setOpenBaselineState(state);
+	}
+	const positionedThisOpen = isOpen && state !== null && state !== openBaselineState;
 	(0, import_react.useEffect)(() => {
 		if (update && isOpen && shouldShowPopover) {
 			const timer = setTimeout(() => {
@@ -53269,11 +53415,13 @@ var PopOver = ({ id, isOpen, setIsOpen, positionEl, children, placement = "botto
 		overflowY: "hidden"
 	};
 	if (!isOpen || hoverDelay > 0 && !shouldShowPopover) return null;
-	const positionedStyle = state && state.styles && state.styles.popper ? {
+	const positionedStyle = positionedThisOpen ? {
 		...popperStyles.popper,
-		opacity: 1
+		opacity: 1,
+		visibility: "visible"
 	} : {
 		...popperStyles.popper,
+		visibility: "hidden",
 		opacity: 0,
 		position: "fixed",
 		top: "-9999px",
@@ -53496,34 +53644,45 @@ var SegmentedControl = ({ id, segments, onSegmentChange, selectedId: selectedIdP
 };
 //#endregion
 //#region ../../packages/react/src/hooks/useScrollDirection.ts
+var asArray$2 = (v) => Array.isArray(v) ? v : [v];
 /**
-* Tracks scroll direction on a container element with hysteresis to prevent
-* jitter. Returns a `hidden` boolean suitable for driving headroom-style
-* show/hide behaviors.
+* Tracks scroll direction on one or more container elements with hysteresis
+* to prevent jitter. Returns a `hidden` boolean suitable for driving
+* headroom-style show/hide behaviors.
 *
-* Uses an anchor-based threshold: the direction only changes after the user
-* scrolls at least `threshold` px from the last recognized change point.
+* Uses per-element anchor-based thresholds: a given element's direction only
+* changes after the user scrolls at least `threshold` px from that element's
+* last recognized change point. Scroll events on any element participate —
+* useful when the view has several independently-scrollable regions (e.g.
+* a main list plus side panels) that should all drive the same headroom.
+*
 * After each state change, updates are suppressed for `transitionLockMs` to
 * let CSS animations settle without triggering feedback loops.
 *
-* The scroll container may be conditionally rendered (ref starts as null).
-* An internal MutationObserver on `document.body` detects when the element
-* appears so the scroll listener is attached promptly.
+* Scroll containers may be conditionally rendered (refs start as null).
+* An internal MutationObserver on `document.body` detects when elements
+* appear so scroll listeners are attached promptly.
 */
 function useScrollDirection(scrollRef, options) {
 	const threshold = options?.threshold ?? 40;
 	const transitionLockMs = options?.transitionLockMs ?? 250;
 	const suppressRef = options?.suppressRef;
-	const directionAnchorRef = (0, import_react.useRef)(0);
-	const lastDirectionRef = (0, import_react.useRef)("down");
+	const directionAnchorsRef = (0, import_react.useRef)(/* @__PURE__ */ new WeakMap());
+	const lastDirectionsRef = (0, import_react.useRef)(/* @__PURE__ */ new WeakMap());
 	const transitionLockedRef = (0, import_react.useRef)(false);
 	const programmaticLockRef = (0, import_react.useRef)(false);
 	const lockTimerRef = (0, import_react.useRef)(null);
 	const [hidden, setHidden] = (0, import_react.useState)(false);
-	const [scrollEl, setScrollEl] = (0, import_react.useState)(null);
+	const refArray = (0, import_react.useMemo)(() => asArray$2(scrollRef), Array.isArray(scrollRef) ? scrollRef : [scrollRef]);
+	const primaryRef = refArray[0];
+	const [scrollEls, setScrollEls] = (0, import_react.useState)([]);
 	(0, import_react.useEffect)(() => {
 		const sync = () => {
-			setScrollEl((prev) => prev === scrollRef.current ? prev : scrollRef.current ?? null);
+			const resolved = refArray.map((r) => r.current).filter((el) => el != null);
+			setScrollEls((prev) => {
+				if (prev.length === resolved.length && prev.every((el, i) => el === resolved[i])) return prev;
+				return resolved;
+			});
 		};
 		sync();
 		const observer = new MutationObserver(sync);
@@ -53532,43 +53691,44 @@ function useScrollDirection(scrollRef, options) {
 			subtree: true
 		});
 		return () => observer.disconnect();
-	}, [scrollRef]);
-	const [prevScrollEl, setPrevScrollEl] = (0, import_react.useState)(scrollEl);
-	if (prevScrollEl !== scrollEl) {
-		setPrevScrollEl(scrollEl);
+	}, [refArray]);
+	const [prevPrimary, setPrevPrimary] = (0, import_react.useState)(scrollEls[0] ?? null);
+	const primaryEl = scrollEls[0] ?? null;
+	if (prevPrimary !== primaryEl) {
+		setPrevPrimary(primaryEl);
 		if (hidden) setHidden(false);
 	}
 	(0, import_react.useEffect)(() => {
-		directionAnchorRef.current = 0;
-		lastDirectionRef.current = "up";
+		directionAnchorsRef.current = /* @__PURE__ */ new WeakMap();
+		lastDirectionsRef.current = /* @__PURE__ */ new WeakMap();
 		transitionLockedRef.current = false;
-		if (!scrollEl) return;
+		if (scrollEls.length === 0) return;
 		let wasSuppressed = suppressRef?.current ?? false;
-		const onScroll = () => {
+		const makeHandler = (el) => () => {
 			const isSuppressed = suppressRef?.current ?? false;
-			if (wasSuppressed && !isSuppressed) directionAnchorRef.current = scrollEl.scrollTop;
+			if (wasSuppressed && !isSuppressed) directionAnchorsRef.current.set(el, el.scrollTop);
 			wasSuppressed = isSuppressed;
 			if (isSuppressed) {
-				directionAnchorRef.current = scrollEl.scrollTop;
+				directionAnchorsRef.current.set(el, el.scrollTop);
 				return;
 			}
-			const scrollTop = scrollEl.scrollTop;
+			const scrollTop = el.scrollTop;
 			if (scrollTop <= 0) {
-				directionAnchorRef.current = 0;
-				lastDirectionRef.current = "up";
+				directionAnchorsRef.current.set(el, 0);
+				lastDirectionsRef.current.set(el, "up");
 				if (!transitionLockedRef.current) setHidden(false);
 				return;
 			}
-			if (scrollEl.scrollHeight - scrollTop - scrollEl.clientHeight < 1) {
-				directionAnchorRef.current = scrollTop;
+			if (el.scrollHeight - scrollTop - el.clientHeight < 1) {
+				directionAnchorsRef.current.set(el, scrollTop);
 				return;
 			}
-			const delta = scrollTop - directionAnchorRef.current;
+			const delta = scrollTop - (directionAnchorsRef.current.get(el) ?? 0);
 			if (Math.abs(delta) < threshold) return;
 			const direction = delta > 0 ? "down" : "up";
-			const directionChanged = direction !== lastDirectionRef.current;
-			directionAnchorRef.current = scrollTop;
-			if (directionChanged) lastDirectionRef.current = direction;
+			const directionChanged = direction !== (lastDirectionsRef.current.get(el) ?? "down");
+			directionAnchorsRef.current.set(el, scrollTop);
+			if (directionChanged) lastDirectionsRef.current.set(el, direction);
 			if (transitionLockedRef.current) {
 				if (programmaticLockRef.current && lockTimerRef.current !== null) {
 					clearTimeout(lockTimerRef.current);
@@ -53576,7 +53736,7 @@ function useScrollDirection(scrollRef, options) {
 						transitionLockedRef.current = false;
 						programmaticLockRef.current = false;
 						lockTimerRef.current = null;
-						directionAnchorRef.current = scrollEl.scrollTop;
+						directionAnchorsRef.current.set(el, el.scrollTop);
 					}, transitionLockMs);
 				}
 				return;
@@ -53593,10 +53753,19 @@ function useScrollDirection(scrollRef, options) {
 				return shouldHide;
 			});
 		};
-		scrollEl.addEventListener("scroll", onScroll, { passive: true });
-		return () => scrollEl.removeEventListener("scroll", onScroll);
+		const handlers = scrollEls.map((el) => {
+			const handler = makeHandler(el);
+			el.addEventListener("scroll", handler, { passive: true });
+			return {
+				el,
+				handler
+			};
+		});
+		return () => {
+			for (const { el, handler } of handlers) el.removeEventListener("scroll", handler);
+		};
 	}, [
-		scrollEl,
+		scrollEls,
 		threshold,
 		transitionLockMs,
 		suppressRef
@@ -53604,7 +53773,8 @@ function useScrollDirection(scrollRef, options) {
 	return {
 		hidden,
 		resetAnchor: (0, import_react.useCallback)((debounce) => {
-			if (scrollEl) directionAnchorRef.current = scrollEl.scrollTop;
+			const primary = primaryRef?.current ?? null;
+			if (primary) directionAnchorsRef.current.set(primary, primary.scrollTop);
 			transitionLockedRef.current = true;
 			programmaticLockRef.current = !!debounce;
 			if (lockTimerRef.current !== null) clearTimeout(lockTimerRef.current);
@@ -53613,7 +53783,7 @@ function useScrollDirection(scrollRef, options) {
 				programmaticLockRef.current = false;
 				lockTimerRef.current = null;
 			}, transitionLockMs);
-		}, [scrollEl, transitionLockMs])
+		}, [primaryRef, transitionLockMs])
 	};
 }
 //#endregion
@@ -53742,7 +53912,7 @@ var useCollapsibleIds = (key) => {
 	}, [removeAllFn, key]);
 	return (0, import_react.useMemo)(() => {
 		return [
-			entries || {},
+			entries,
 			collapseId,
 			clearIds
 		];
@@ -54127,8 +54297,13 @@ var SourceCodePanel = ({ id, code, language, simple = false, style, className })
 };
 //#endregion
 //#region ../../packages/react/src/components/StickyScroll.tsx
-var StickyScroll = ({ children, scrollRef, offsetTop = 0, zIndex = 100, className = "", stickyClassName = "is-sticky", onStickyChange, preserveHeight = false }) => {
+var StickyScroll = (0, import_react.forwardRef)(({ children, scrollRef, offsetTop = 0, zIndex = 100, className = "", stickyClassName = "is-sticky", onStickyChange, preserveHeight = false }, forwardedRef) => {
 	const contentRef = (0, import_react.useRef)(null);
+	const setRef = (0, import_react.useCallback)((el) => {
+		contentRef.current = el;
+		if (typeof forwardedRef === "function") forwardedRef(el);
+		else if (forwardedRef) forwardedRef.current = el;
+	}, [forwardedRef]);
 	const [isSticky, setIsSticky] = (0, import_react.useState)(false);
 	const [preStickHeight, setPreStickHeight] = (0, import_react.useState)(0);
 	const onStickyChangeRef = (0, import_react.useRef)(onStickyChange);
@@ -54181,7 +54356,7 @@ var StickyScroll = ({ children, scrollRef, offsetTop = 0, zIndex = 100, classNam
 		minHeight: isSticky && preserveHeight ? preStickHeight : void 0
 	};
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		ref: contentRef,
+		ref: setRef,
 		className: isSticky && stickyClassName ? `${className} ${stickyClassName}`.trim() : className,
 		style: stickyStyle,
 		children: preserveHeight ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -54189,7 +54364,8 @@ var StickyScroll = ({ children, scrollRef, offsetTop = 0, zIndex = 100, classNam
 			children
 		}) : children
 	});
-};
+});
+StickyScroll.displayName = "StickyScroll";
 //#endregion
 //#region ../../packages/react/src/components/StickyScrollContext.tsx
 /**
@@ -54236,50 +54412,89 @@ var TextInput = (0, import_react.forwardRef)(({ value, onChange, onFocus, icon, 
 });
 TextInput.displayName = "TextInput";
 var ToolDropdownButton_module_default = {
-	dropdownContainer: "_dropdownContainer_1fize_1",
-	toolButton: "_toolButton_1fize_7",
-	bodyColor: "_bodyColor_1fize_11",
-	chevron: "_chevron_1fize_27",
-	backdrop: "_backdrop_1fize_41",
-	dropdownMenu: "_dropdownMenu_1fize_50",
-	alignRight: "_alignRight_1fize_64",
-	dropdownItem: "_dropdownItem_1fize_69"
+	toolButton: "_toolButton_1q996_1",
+	bodyColor: "_bodyColor_1q996_5",
+	chevron: "_chevron_1q996_17",
+	backdrop: "_backdrop_1q996_31",
+	dropdownMenu: "_dropdownMenu_1q996_41",
+	dropdownItem: "_dropdownItem_1q996_52"
 };
 //#endregion
 //#region ../../packages/react/src/components/ToolDropdownButton.tsx
 var ToolDropdownButton = (0, import_react.forwardRef)(({ label, icon, className, items, dropdownAlign = "left", dropdownClassName, subtle, ...rest }, ref) => {
 	const icons = useComponentIcons();
 	const [isOpen, setIsOpen] = (0, import_react.useState)(false);
+	const buttonRef = (0, import_react.useRef)(null);
+	const [menuPosition, setMenuPosition] = (0, import_react.useState)(null);
+	const setRef = (0, import_react.useCallback)((el) => {
+		buttonRef.current = el;
+		if (typeof ref === "function") ref(el);
+		else if (ref && "current" in ref) ref.current = el;
+	}, [ref]);
+	const computePosition = (0, import_react.useCallback)(() => {
+		const btn = buttonRef.current;
+		if (!btn) return;
+		const rect = btn.getBoundingClientRect();
+		const top = rect.bottom;
+		const minWidth = rect.width;
+		if (dropdownAlign === "right") setMenuPosition({
+			top,
+			right: window.innerWidth - rect.right,
+			minWidth
+		});
+		else setMenuPosition({
+			top,
+			left: rect.left,
+			minWidth
+		});
+	}, [dropdownAlign]);
+	(0, import_react.useLayoutEffect)(() => {
+		if (!isOpen) return;
+		computePosition();
+	}, [isOpen, computePosition]);
+	(0, import_react.useEffect)(() => {
+		if (!isOpen) return;
+		const handler = () => computePosition();
+		window.addEventListener("resize", handler);
+		window.addEventListener("scroll", handler, true);
+		return () => {
+			window.removeEventListener("resize", handler);
+			window.removeEventListener("scroll", handler, true);
+		};
+	}, [isOpen, computePosition]);
 	const handleItemClick = (fn) => {
 		fn();
 		setIsOpen(false);
 	};
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: clsx(ToolDropdownButton_module_default.dropdownContainer),
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
-			ref,
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+		ref: setRef,
+		type: "button",
+		className: clsx("btn", "btn-tools", ToolDropdownButton_module_default.toolButton, subtle ? ToolDropdownButton_module_default.bodyColor : void 0, className),
+		onClick: () => setIsOpen(!isOpen),
+		...rest,
+		children: [
+			icon && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: `${icon}` }),
+			label,
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(icons.chevronDown, ToolDropdownButton_module_default.chevron) })
+		]
+	}), isOpen && menuPosition && (0, import_react_dom.createPortal)(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: ToolDropdownButton_module_default.backdrop,
+		onClick: () => setIsOpen(false)
+	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: clsx(ToolDropdownButton_module_default.dropdownMenu, dropdownClassName),
+		style: {
+			top: menuPosition.top,
+			left: menuPosition.left,
+			right: menuPosition.right,
+			minWidth: menuPosition.minWidth
+		},
+		children: Object.entries(items).map(([itemLabel, fn]) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 			type: "button",
-			className: clsx("btn", "btn-tools", ToolDropdownButton_module_default.toolButton, subtle ? ToolDropdownButton_module_default.bodyColor : void 0, className),
-			onClick: () => setIsOpen(!isOpen),
-			...rest,
-			children: [
-				icon && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: `${icon}` }),
-				label,
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(icons.chevronDown, ToolDropdownButton_module_default.chevron) })
-			]
-		}), isOpen && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: ToolDropdownButton_module_default.backdrop,
-			onClick: () => setIsOpen(false)
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: clsx(ToolDropdownButton_module_default.dropdownMenu, dropdownAlign === "right" ? ToolDropdownButton_module_default.alignRight : void 0, dropdownClassName),
-			children: Object.entries(items).map(([itemLabel, fn]) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-				type: "button",
-				className: ToolDropdownButton_module_default.dropdownItem,
-				onClick: () => handleItemClick(fn),
-				children: itemLabel
-			}, itemLabel))
-		})] })]
-	});
+			className: ToolDropdownButton_module_default.dropdownItem,
+			onClick: () => handleItemClick(fn),
+			children: itemLabel
+		}, itemLabel))
+	})] }), document.body)] });
 });
 ToolDropdownButton.displayName = "ToolDropdownButton";
 var TabSet_module_default = {
@@ -54655,8 +54870,8 @@ var extractSize = (value, label, defaultValue) => {
 	else return defaultValue;
 };
 //#endregion
-//#region ../../node_modules/.pnpm/react-virtuoso@4.18.4_react-dom@19.2.5_react@19.2.5__react@19.2.5/node_modules/react-virtuoso/dist/index.mjs
-var we = 0, Wt = 1, Zt = 2, kn = 4;
+//#region ../../node_modules/.pnpm/react-virtuoso@4.18.5_react-dom@19.2.5_react@19.2.5__react@19.2.5/node_modules/react-virtuoso/dist/index.mjs
+var we = 0, Gt = 1, Zt = 2, kn = 4;
 function un(t) {
 	return () => t;
 }
@@ -54691,7 +54906,7 @@ function ot(...t) {
 	return t;
 }
 function Y(t, e) {
-	return t(Wt, e);
+	return t(Gt, e);
 }
 function _(t, e) {
 	t(we, e);
@@ -54706,7 +54921,7 @@ function L(t, e) {
 	return Y(t, mo(e, we));
 }
 function yt(t, e) {
-	const n = t(Wt, (o) => {
+	const n = t(Gt, (o) => {
 		n(), e(o);
 	});
 	return n;
@@ -54728,7 +54943,7 @@ function et$1(t = Ln) {
 		t(e, o) || (e = o, n(o));
 	};
 }
-function W(t) {
+function G(t) {
 	return (e) => (n) => {
 		t(n) && e(n);
 	};
@@ -54748,7 +54963,7 @@ function I(t, ...e) {
 			case Zt:
 				Me(t);
 				return;
-			case Wt: return Y(t, n(r));
+			case Gt: return Y(t, n(r));
 		}
 	});
 }
@@ -54795,7 +55010,7 @@ function Io(t) {
 	const o = () => e?.();
 	return function(r, s) {
 		switch (r) {
-			case Wt: return s ? n === s ? void 0 : (o(), n = s, e = Y(t, s), e) : (o(), Xt);
+			case Gt: return s ? n === s ? void 0 : (o(), n = s, e = Y(t, s), e) : (o(), Xt);
 			case Zt:
 				o(), n = null;
 				return;
@@ -54810,7 +55025,7 @@ function v(t) {
 			case we:
 				e = r;
 				break;
-			case Wt:
+			case Gt:
 				r(e);
 				break;
 			case kn: return e;
@@ -54833,7 +55048,7 @@ function U() {
 			case Zt:
 				t.splice(0, t.length);
 				return;
-			case Wt: return t.push(n), () => {
+			case Gt: return t.push(n), () => {
 				const o = t.indexOf(n);
 				o > -1 && t.splice(o, 1);
 			};
@@ -54874,7 +55089,7 @@ function at(...t) {
 			case Zt:
 				Me(e);
 				return;
-			case Wt: return o === r && i(n), Y(e, i);
+			case Gt: return o === r && i(n), Y(e, i);
 		}
 	};
 }
@@ -54885,7 +55100,7 @@ function ze(...t) {
 	return function(e, n) {
 		switch (e) {
 			case Zt: return;
-			case Wt: return po(...t.map((o) => Y(o, n)));
+			case Gt: return po(...t.map((o) => Y(o, n)));
 		}
 	};
 }
@@ -54899,7 +55114,7 @@ var ft = {
 	[ft.ERROR]: "error",
 	[ft.INFO]: "log",
 	[ft.WARN]: "warn"
-}, vo = () => typeof globalThis > "u" ? window : globalThis, Gt = j(() => {
+}, vo = () => typeof globalThis > "u" ? window : globalThis, Wt = j(() => {
 	const t = v(ft.ERROR);
 	return {
 		log: v((n, o, r = ft.INFO) => {
@@ -55070,7 +55285,7 @@ function Rt(t, e, n = "k") {
 	return Rt(t.l, e, n);
 }
 function Tt(t, e, n) {
-	return J(t) ? Wn(e, n, 1) : e === t.k ? dt(t, {
+	return J(t) ? Gn(e, n, 1) : e === t.k ? dt(t, {
 		k: e,
 		v: n
 	}) : e < t.k ? mn(dt(t, { l: Tt(t.l, e, n) })) : mn(dt(t, { r: Tt(t.r, e, n) }));
@@ -55121,7 +55336,7 @@ function Se(t) {
 	const { l: e, lvl: n, r: o } = t;
 	if (o.lvl >= n - 1 && e.lvl >= n - 1) return t;
 	if (n > o.lvl + 1) {
-		if (Ee(e)) return Gn(dt(t, { lvl: n - 1 }));
+		if (Ee(e)) return Wn(dt(t, { lvl: n - 1 }));
 		if (!J(e) && !J(e.r)) return dt(e.r, {
 			l: dt(e, { r: e.r.l }),
 			lvl: n,
@@ -55150,7 +55365,7 @@ function Se(t) {
 	throw new Error("Unexpected empty nodes");
 }
 function dt(t, e) {
-	return Wn(e.k !== void 0 ? e.k : t.k, e.v !== void 0 ? e.v : t.v, e.lvl !== void 0 ? e.lvl : t.lvl, e.l !== void 0 ? e.l : t.l, e.r !== void 0 ? e.r : t.r);
+	return Gn(e.k !== void 0 ? e.k : t.k, e.v !== void 0 ? e.v : t.v, e.lvl !== void 0 ? e.lvl : t.lvl, e.l !== void 0 ? e.l : t.l, e.r !== void 0 ? e.r : t.r);
 }
 function Vn(t) {
 	return J(t.r) ? t.l : Se(dt(t, { r: Vn(t.r) }));
@@ -55161,7 +55376,7 @@ function Ee(t) {
 function Pn(t) {
 	return J(t.r) ? [t.k, t.v] : Pn(t.r);
 }
-function Wn(t, e, n, o = se, r = se) {
+function Gn(t, e, n, o = se, r = se) {
 	return {
 		k: t,
 		l: o,
@@ -55171,9 +55386,9 @@ function Wn(t, e, n, o = se, r = se) {
 	};
 }
 function mn(t) {
-	return Pe(Gn(t));
+	return Pe(Wn(t));
 }
-function Gn(t) {
+function Wn(t) {
 	const { l: e } = t;
 	return !J(e) && e.lvl === t.lvl ? dt(e, { r: dt(t, { l: e.r }) }) : t;
 }
@@ -55289,7 +55504,7 @@ function Oo(t, [e, n, o, r]) {
 		i = n.reduce((w, R) => Tt(Tt(w, R, p), R + 1, T), i);
 	} else [i, l] = Ro(i, e);
 	if (i === s) return t;
-	const { lastIndex: c, lastOffset: d, lastSize: m, offsetTree: x } = We(t.offsetTree, l, i, r);
+	const { lastIndex: c, lastOffset: d, lastSize: m, offsetTree: x } = Ge(t.offsetTree, l, i, r);
 	return {
 		groupIndices: n,
 		groupOffsetTree: n.reduce((p, T) => Tt(p, T, ce(T, x, r)), qt()),
@@ -55315,7 +55530,7 @@ function pn(t, e) {
 	for (; n < t;) n += e[o + 1] - e[o] - 1, o++;
 	return o - (n === t ? 0 : 1);
 }
-function We(t, e, n, o) {
+function Ge(t, e, n, o) {
 	let r = t, s = 0, i = 0, l = 0, c = 0;
 	if (e !== 0) {
 		c = ve(r, e - 1, $e), l = r[c].offset;
@@ -55358,20 +55573,20 @@ var Fo = {
 		current: [],
 		prev: []
 	}), B(({ prev: u }) => u)), []);
-	L(I(c, W((u) => u.length > 0), $(f, R), B(([u, g, C]) => {
+	L(I(c, G((u) => u.length > 0), $(f, R), B(([u, g, C]) => {
 		const z = u.reduce((O, V, N) => Tt(O, V, ce(V, g.offsetTree, C) || N), qt());
 		return {
 			...g,
 			groupIndices: u,
 			groupOffsetTree: z
 		};
-	})), f), L(I(o, $(f), W(([u, { lastIndex: g }]) => u < g), B(([u, { lastIndex: g, lastSize: C }]) => [{
+	})), f), L(I(o, $(f), G(([u, { lastIndex: g }]) => u < g), B(([u, { lastIndex: g, lastSize: C }]) => [{
 		endIndex: g,
 		size: C,
 		startIndex: u
 	}])), n), L(d, m);
 	const S = ht(I(d, B((u) => u === void 0)), !0);
-	L(I(m, W((u) => u !== void 0 && J(it(f).sizeTree)), B((u) => {
+	L(I(m, G((u) => u !== void 0 && J(it(f).sizeTree)), B((u) => {
 		const g = it(x), C = it(c).length > 0;
 		return g !== void 0 && g !== 0 ? C ? [{
 			endIndex: 0,
@@ -55386,7 +55601,7 @@ var Fo = {
 			size: u,
 			startIndex: 0
 		}];
-	})), n), L(I(p, W((u) => u !== void 0 && u.length > 0 && J(it(f).sizeTree)), B((u) => {
+	})), n), L(I(p, G((u) => u !== void 0 && u.length > 0 && J(it(f).sizeTree)), B((u) => {
 		const g = [];
 		let C = u[0], z = 0;
 		for (let O = 1; O < u.length; O++) {
@@ -55402,7 +55617,7 @@ var Fo = {
 			size: C,
 			startIndex: z
 		}), g;
-	})), n), L(I(c, $(x, m), W(([, u, g]) => u !== void 0 && g !== void 0), B(([u, g, C]) => {
+	})), n), L(I(c, $(x, m), G(([, u, g]) => u !== void 0 && g !== void 0), B(([u, g, C]) => {
 		const z = [];
 		for (let O = 0; O < u.length; O++) {
 			const V = u[O], N = u[O + 1];
@@ -55514,14 +55729,14 @@ var Fo = {
 			return {
 				...g,
 				sizeTree: V,
-				...We(g.offsetTree, 0, V, C)
+				...Ge(g.offsetTree, 0, V, C)
 			};
 		}
 		const O = _t(g.sizeTree).reduce((V, { k: N, v: Z }) => Tt(V, Math.max(0, N + u), Z), qt());
 		return {
 			...g,
 			sizeTree: O,
-			...We(g.offsetTree, 0, O, C)
+			...Ge(g.offsetTree, 0, O, C)
 		};
 	})), f), {
 		beforeUnshiftWith: y,
@@ -55544,7 +55759,7 @@ var Fo = {
 		trackItemSizes: S,
 		unshiftWith: s
 	};
-}, ot(Gt, De), { singleton: !0 });
+}, ot(Wt, De), { singleton: !0 });
 function Vo(t) {
 	return t.reduce((e, n) => (e.groupIndices.push(e.totalCount), e.totalCount += n + 1, e), {
 		groupIndices: [],
@@ -55553,19 +55768,19 @@ function Vo(t) {
 }
 var Dn = j(([{ groupIndices: t, sizes: e, totalCount: n }, { headerHeight: o, scrollTop: r }]) => {
 	const s = U(), i = U(), l = vt(I(s, B(Vo)));
-	return L(I(l, B((c) => c.totalCount)), n), L(I(l, B((c) => c.groupIndices)), t), L(I(at(r, e, o), W(([c, d]) => be(d)), B(([c, d, m]) => Rt(d.groupOffsetTree, Math.max(c - m, 0), "v")[0]), et$1(), B((c) => [c])), i), {
+	return L(I(l, B((c) => c.totalCount)), n), L(I(l, B((c) => c.groupIndices)), t), L(I(at(r, e, o), G(([c, d]) => be(d)), B(([c, d, m]) => Rt(d.groupOffsetTree, Math.max(c - m, 0), "v")[0]), et$1(), B((c) => [c])), i), {
 		groupCounts: s,
 		topItemsIndexes: i
 	};
 }, ot(Lt, It)), At = j(([{ log: t }]) => {
-	const e = v(!1), n = vt(I(e, W((o) => o), et$1()));
+	const e = v(!1), n = vt(I(e, G((o) => o), et$1()));
 	return Y(e, (o) => {
 		o && it(t)("props updated", {}, ft.DEBUG);
 	}), {
 		didMount: n,
 		propsReady: e
 	};
-}, ot(Gt), { singleton: !0 }), Po = typeof document < "u" && "scrollBehavior" in document.documentElement.style;
+}, ot(Wt), { singleton: !0 }), Po = typeof document < "u" && "scrollBehavior" in document.documentElement.style;
 function $n(t) {
 	const e = typeof t == "number" ? { index: t } : t;
 	return e.align || (e.align = "start"), (!e.behavior || !Po) && (e.behavior = "auto"), e.offset === void 0 && (e.offset = 0), e;
@@ -55590,7 +55805,7 @@ var fe = j(([{ gap: t, listRefresh: e, sizes: n, totalCount: o }, { fixedFooterH
 			}), h = yt(m, () => {
 				Ft(pt);
 			});
-		} else h = yt(I(e, Wo(150)), Ft);
+		} else h = yt(I(e, Go(150)), Ft);
 		return f = setTimeout(() => {
 			S();
 		}, 1200), _(c, !0), O("scrolling from index to", {
@@ -55606,8 +55821,8 @@ var fe = j(([{ gap: t, listRefresh: e, sizes: n, totalCount: o }, { fixedFooterH
 		scrollToIndex: T,
 		topListHeight: R
 	};
-}, ot(Lt, It, Gt), { singleton: !0 });
-function Wo(t) {
+}, ot(Lt, It, Wt), { singleton: !0 });
+function Go(t) {
 	return (e) => {
 		const n = setTimeout(() => {
 			e(!1);
@@ -55628,7 +55843,7 @@ function Ke(t, e) {
 }
 var me = j(([{ defaultItemSize: t, listRefresh: e, sizes: n }, { scrollTop: o }, { scrollTargetReached: r, scrollToIndex: s }, { didMount: i }]) => {
 	const l = v(!0), c = v(0), d = v(!0);
-	return L(I(i, $(c), W(([m, x]) => x !== 0), Bt(!1)), l), L(I(i, $(c), W(([m, x]) => x !== 0), Bt(!1)), d), Y(I(at(e, i), $(l, n, t, d), W(([[, m], x, { sizeTree: p }, T, w]) => m && (!J(p) || Ae(T)) && !x && !w), $(c)), ([, m]) => {
+	return L(I(i, $(c), G(([m, x]) => x !== 0), Bt(!1)), l), L(I(i, $(c), G(([m, x]) => x !== 0), Bt(!1)), d), Y(I(at(e, i), $(l, n, t, d), G(([[, m], x, { sizeTree: p }, T, w]) => m && (!J(p) || Ae(T)) && !x && !w), $(c)), ([, m]) => {
 		yt(r, () => {
 			_(d, !0);
 		}), Ue(4, () => {
@@ -55645,7 +55860,7 @@ var me = j(([{ defaultItemSize: t, listRefresh: e, sizes: n }, { scrollTop: o },
 function Un(t, e) {
 	return Math.abs(t - e) < 1.01;
 }
-var ue = "up", ne = "down", Go = "none", Ao = {
+var ue = "up", ne = "down", Wo = "none", Ao = {
 	atBottom: !1,
 	notAtBottomBecause: "NOT_SHOWING_LAST_ITEM",
 	state: {
@@ -55704,7 +55919,7 @@ var ue = "up", ne = "down", Go = "none", Ao = {
 		jump: 0,
 		scrollHeight: 0,
 		scrollTop: 0
-	}), W((a) => a.changed), B((a) => a.jump)), 0);
+	}), G((a) => a.changed), B((a) => a.jump)), 0);
 	L(I(w, B((a) => a.atBottom)), i), L(I(i, zt(50)), c);
 	const h = v(ne);
 	L(I(o, B(({ scrollTop: a }) => a), et$1(), Ot((a, S) => it(T) ? {
@@ -55716,9 +55931,9 @@ var ue = "up", ne = "down", Go = "none", Ao = {
 	}, {
 		direction: ne,
 		prevScrollTop: 0
-	}), B((a) => a.direction)), h), L(I(o, zt(50), Bt(Go)), h);
+	}), B((a) => a.direction)), h), L(I(o, zt(50), Bt(Wo)), h);
 	const f = v(0);
-	return L(I(p, W((a) => !a), Bt(0)), f), L(I(r, zt(100), $(p), W(([a, S]) => S), Ot(([a, S], [H]) => [S, H], [0, 0]), B(([a, S]) => S - a)), f), {
+	return L(I(p, G((a) => !a), Bt(0)), f), L(I(r, zt(100), $(p), G(([a, S]) => S), Ot(([a, S], [H]) => [S, H], [0, 0]), B(([a, S]) => S - a)), f), {
 		atBottomState: w,
 		atBottomStateChange: c,
 		atBottomThreshold: m,
@@ -55750,7 +55965,7 @@ var je = j(([{ deviation: t, fixedHeaderHeight: e, headerHeight: n, scrollTop: o
 			let u = hn;
 			const g = In(S, ae), C = In(S, de);
 			return T -= a, T += p + f, w += p + f, w -= a, T > m + y - g && (u = ue), w < m - k + x + C && (u = ne), u !== hn ? [Math.max(H - p - gn(R, ae, u) - g, 0), H - k - f + x + gn(R, de, u) + C] : null;
-		}), W((m) => m !== null), et$1(le)), [0, 0])
+		}), G((m) => m !== null), et$1(le)), [0, 0])
 	};
 }, ot(It), { singleton: !0 });
 function _o(t, e, n) {
@@ -55854,7 +56069,7 @@ function Sn(t, e) {
 var Ut = j(([{ data: t, firstItemIndex: e, gap: n, sizes: o, totalCount: r }, s, { listBoundary: i, topListHeight: l, visibleRange: c }, { initialTopMostItemIndex: d, scrolledToInitialItem: m }, { topListHeight: x }, p, { didMount: T }, { recalcInProgress: w }]) => {
 	const R = v([]), h = v(0), f = U(), a = v(0);
 	L(s.topItemsIndexes, R);
-	const S = ht(I(at(T, w, P(c, le), P(r), P(o), P(d), m, P(R), P(e), P(n), P(a), t), W(([u, g, , C, , , , , , , , z]) => {
+	const S = ht(I(at(T, w, P(c, le), P(r), P(o), P(d), m, P(R), P(e), P(n), P(a), t), G(([u, g, , C, , , , , , , , z]) => {
 		const O = z !== void 0 && z.length !== C;
 		return u && !g && !O;
 	}), B(([, , [u, g], C, z, O, V, N, Z, F, mt, q]) => {
@@ -55936,16 +56151,16 @@ var Ut = j(([{ data: t, firstItemIndex: e, gap: n, sizes: o, totalCount: r }, s,
 			}
 		}
 		return Te(Et, Ft, C, F, Q, Z);
-	}), W((u) => u !== null), et$1()), Be);
-	L(I(t, W(Ae), B((u) => u?.length)), r), L(I(S, B((u) => u.topListHeight)), x), L(x, l), L(I(S, B((u) => [u.top, u.bottom])), i), L(I(S, B((u) => u.items)), f);
-	const H = vt(I(S, W(({ items: u }) => u.length > 0), $(r, t), W(([{ items: u }, g]) => u[u.length - 1].originalIndex === g - 1), B(([, u, g]) => [u - 1, g]), et$1(le), B(([u]) => u))), y = vt(I(S, zt(200), W(({ items: u, topItems: g }) => u.length > 0 && u[0].originalIndex === g.length), B(({ items: u }) => u[0].index), et$1()));
+	}), G((u) => u !== null), et$1()), Be);
+	L(I(t, G(Ae), B((u) => u?.length)), r), L(I(S, B((u) => u.topListHeight)), x), L(x, l), L(I(S, B((u) => [u.top, u.bottom])), i), L(I(S, B((u) => u.items)), f);
+	const H = vt(I(S, G(({ items: u }) => u.length > 0), $(r, t), G(([{ items: u }, g]) => u[u.length - 1].originalIndex === g - 1), B(([, u, g]) => [u - 1, g]), et$1(le), B(([u]) => u))), y = vt(I(S, zt(200), G(({ items: u, topItems: g }) => u.length > 0 && u[0].originalIndex === g.length), B(({ items: u }) => u[0].index), et$1()));
 	return {
 		endReached: H,
 		initialItemCount: h,
 		itemsRendered: f,
 		listState: S,
 		minOverscanItemCount: a,
-		rangeChanged: vt(I(S, W(({ items: u }) => u.length > 0), B(({ items: u }) => {
+		rangeChanged: vt(I(S, G(({ items: u }) => u.length > 0), B(({ items: u }) => {
 			let g = 0, C = u.length - 1;
 			for (; u[g].type === "group" && g < C;) g++;
 			for (; u[C].type === "group" && C > g;) C--;
@@ -55968,7 +56183,7 @@ var Ut = j(([{ data: t, firstItemIndex: e, gap: n, sizes: o, totalCount: r }, s,
 	const n = v(!1);
 	return {
 		alignToBottom: n,
-		paddingTopAddition: ht(I(at(n, t, e), W(([r]) => r), B(([, r, s]) => Math.max(0, r - s)), zt(0), et$1()), 0)
+		paddingTopAddition: ht(I(at(n, t, e), G(([r]) => r), B(([, r, s]) => Math.max(0, r - s)), zt(0), et$1()), 0)
 	};
 }, ot(It, jn), { singleton: !0 }), qn = j(() => ({ context: v(null) })), Do = ({ itemBottom: t, itemTop: e, locationParams: { align: n, behavior: o, ...r }, viewportBottom: s, viewportTop: i }) => e < i ? {
 	...r,
@@ -55988,9 +56203,9 @@ var Ut = j(([{ data: t, firstItemIndex: e, gap: n, sizes: o, totalCount: r }, s,
 			viewportBottom: a + T - f,
 			viewportTop: z
 		});
-		return V !== null ? y && yt(I(i, W((N) => !N), $t(it(i) ? 1 : 2)), y) : y?.(), V;
-	}), W((x) => x !== null)), d), { scrollIntoView: m };
-}, ot(Lt, It, fe, Ut, Gt), { singleton: !0 });
+		return V !== null ? y && yt(I(i, G((N) => !N), $t(it(i) ? 1 : 2)), y) : y?.(), V;
+	}), G((x) => x !== null)), d), { scrollIntoView: m };
+}, ot(Lt, It, fe, Ut, Wt), { singleton: !0 });
 function Tn(t) {
 	return t === !1 ? !1 : t === "smooth" ? "smooth" : "auto";
 }
@@ -56011,7 +56226,7 @@ var $o = (t, e) => typeof t == "function" ? Tn(t(e)) : e && Tn(t), Uo = j(([{ li
 			shouldFollow: O,
 			totalCount: y
 		};
-	}), W(({ shouldFollow: y }) => y)), ({ followOutputBehavior: y, totalCount: k }) => {
+	}), G(({ shouldFollow: y }) => y)), ({ followOutputBehavior: y, totalCount: k }) => {
 		h !== null && (h(), h = null), it(n) !== void 0 ? requestAnimationFrame(() => {
 			it(m)("following output to ", { totalCount: k }, ft.DEBUG), f(y);
 		}) : h = yt(t, () => {
@@ -56024,13 +56239,13 @@ var $o = (t, e) => typeof t == "function" ? Tn(t(e)) : e && Tn(t), Uo = j(([{ li
 		});
 		setTimeout(k, 100);
 	}
-	Y(I(at(P(w), e, d), W(([y, , k]) => y !== !1 && k), Ot(({ value: y }, [, k]) => ({
+	Y(I(at(P(w), e, d), G(([y, , k]) => y !== !1 && k), Ot(({ value: y }, [, k]) => ({
 		refreshed: y === k,
 		value: k
 	}), {
 		refreshed: !1,
 		value: 0
-	}), W(({ refreshed: y }) => y), $(w, e)), ([, y]) => {
+	}), G(({ refreshed: y }) => y), $(w, e)), ([, y]) => {
 		it(l) && a(y !== !1);
 	}), Y(R, () => {
 		a(it(w) !== !1);
@@ -56042,7 +56257,7 @@ var $o = (t, e) => typeof t == "function" ? Tn(t(e)) : e && Tn(t), Uo = j(([{ li
 		context: z,
 		totalCount: y,
 		scrollingInProgress: C
-	})), W((y) => !!y), zt(0)), (y) => {
+	})), G((y) => !!y), zt(0)), (y) => {
 		h !== null && (h(), h = null), it(n) !== void 0 ? requestAnimationFrame(() => {
 			it(m)("scrolling into view", {}), _(T, y);
 		}) : h = yt(t, () => {
@@ -56053,10 +56268,10 @@ var $o = (t, e) => typeof t == "function" ? Tn(t(e)) : e && Tn(t), Uo = j(([{ li
 		followOutput: w,
 		scrollIntoViewOnChange: S
 	};
-}, ot(Lt, pe, fe, me, At, Gt, It, qn, Yn)), Ko = j(([{ data: t, firstItemIndex: e, gap: n, sizes: o }, { initialTopMostItemIndex: r }, { initialItemCount: s, listState: i }, { didMount: l }]) => (L(I(l, $(s), W(([, c]) => c !== 0), $(r, o, e, n, t), B(([[, c], d, m, x, p, T = []]) => Kn(c, d, m, x, p, T))), i), {}), ot(Lt, me, Ut, At), { singleton: !0 }), jo = j(([{ didMount: t }, { scrollTo: e }, { listState: n }]) => {
+}, ot(Lt, pe, fe, me, At, Wt, It, qn, Yn)), Ko = j(([{ data: t, firstItemIndex: e, gap: n, sizes: o }, { initialTopMostItemIndex: r }, { initialItemCount: s, listState: i }, { didMount: l }]) => (L(I(l, $(s), G(([, c]) => c !== 0), $(r, o, e, n, t), B(([[, c], d, m, x, p, T = []]) => Kn(c, d, m, x, p, T))), i), {}), ot(Lt, me, Ut, At), { singleton: !0 }), jo = j(([{ didMount: t }, { scrollTo: e }, { listState: n }]) => {
 	const o = v(0);
-	return Y(I(t, $(o), W(([, r]) => r !== 0), B(([, r]) => ({ top: r }))), (r) => {
-		yt(I(n, $t(1), W((s) => s.items.length > 1)), () => {
+	return Y(I(t, $(o), G(([, r]) => r !== 0), B(([, r]) => ({ top: r }))), (r) => {
+		yt(I(n, $t(1), G((s) => s.items.length > 1)), () => {
 			requestAnimationFrame(() => {
 				_(e, r);
 			});
@@ -56064,7 +56279,7 @@ var $o = (t, e) => typeof t == "function" ? Tn(t(e)) : e && Tn(t), Uo = j(([{ li
 	}), { initialScrollTop: o };
 }, ot(At, It, Ut), { singleton: !0 }), Zn = j(([{ scrollVelocity: t }]) => {
 	const e = v(!1), n = U(), o = v(!1);
-	return L(I(t, $(o, e, n), W(([r, s]) => s !== !1 && s !== void 0), B(([r, s, i, l]) => {
+	return L(I(t, $(o, e, n), G(([r, s]) => s !== !1 && s !== void 0), B(([r, s, i, l]) => {
 		const { enter: c, exit: d } = s;
 		if (i) {
 			if (d(r, l)) return !1;
@@ -56102,7 +56317,7 @@ var $o = (t, e) => typeof t == "function" ? Tn(t(e)) : e && Tn(t), Uo = j(([{ li
 			ranges: H,
 			scrollTop: R
 		});
-	}), L(I(m, W(Ae), B(Yo)), r), L(I(s, $(m), W(([, T]) => T !== void 0), et$1(), B(([, T]) => T.ranges)), t), {
+	}), L(I(m, G(Ae), B(Yo)), r), L(I(s, $(m), G(([, T]) => T !== void 0), et$1(), B(([, T]) => T.ranges)), t), {
 		getState: d,
 		restoreStateFrom: m
 	};
@@ -56116,7 +56331,7 @@ function Yo(t) {
 }
 var Zo = j(([{ topItemsIndexes: t }]) => {
 	const e = v(0);
-	return L(I(e, W((n) => n >= 0), B((n) => Array.from({ length: n }).map((o, r) => r))), t), { topItemCount: e };
+	return L(I(e, G((n) => n >= 0), B((n) => Array.from({ length: n }).map((o, r) => r))), t), { topItemCount: e };
 }, ot(Ut));
 function Xn(t) {
 	let e = !1, n;
@@ -56170,7 +56385,7 @@ var Xo = Xn(() => /iP(ad|od|hone)/i.test(navigator.userAgent) && /WebKit/i.test(
 		[],
 		0,
 		0
-	]), W(([f]) => f !== 0), $(o, l, n, r, T, w), W(([, f, a, S, , , H]) => !H && !S && f !== 0 && a === ue), B(([[f], , , , , a]) => (a("Upward scrolling compensation", { amount: f }, ft.DEBUG), f))));
+	]), G(([f]) => f !== 0), $(o, l, n, r, T, w), G(([, f, a, S, , , H]) => !H && !S && f !== 0 && a === ue), B(([[f], , , , , a]) => (a("Upward scrolling compensation", { amount: f }, ft.DEBUG), f))));
 	function h(f) {
 		f > 0 ? (_(e, {
 			behavior: "auto",
@@ -56182,7 +56397,7 @@ var Xo = Xn(() => /iP(ad|od|hone)/i.test(navigator.userAgent) && /WebKit/i.test(
 	}
 	return Y(I(R, $(t, s)), ([f, a, S]) => {
 		S && Xo() ? _(t, a - f) : h(-f);
-	}), Y(I(at(ht(s, !1), t, w), W(([f, a, S]) => !f && !S && a !== 0), B(([f, a]) => a), zt(1)), h), L(I(x, B((f) => ({ top: -f }))), e), Y(I(d, $(p, m), B(([f, { groupIndices: a, lastSize: S, sizeTree: H }, y]) => {
+	}), Y(I(at(ht(s, !1), t, w), G(([f, a, S]) => !f && !S && a !== 0), B(([f, a]) => a), zt(1)), h), L(I(x, B((f) => ({ top: -f }))), e), Y(I(d, $(p, m), B(([f, { groupIndices: a, lastSize: S, sizeTree: H }, y]) => {
 		function k(O) {
 			return O * (S + y);
 		}
@@ -56203,7 +56418,7 @@ var Xo = Xn(() => /iP(ad|od|hone)/i.test(navigator.userAgent) && /WebKit/i.test(
 			});
 		});
 	}), { deviation: t };
-}, ot(It, pe, Ut, Lt, Gt, De)), Zo, Dn, j(([t, e, n, o, r, s, i, l, c, d, m]) => ({
+}, ot(It, pe, Ut, Lt, Wt, De)), Zo, Dn, j(([t, e, n, o, r, s, i, l, c, d, m]) => ({
 	...t,
 	...e,
 	...n,
@@ -56215,7 +56430,7 @@ var Xo = Xn(() => /iP(ad|od|hone)/i.test(navigator.userAgent) && /WebKit/i.test(
 	...c,
 	...d,
 	...m
-}), ot(je, Ko, At, Zn, jn, jo, No, qe, Yn, Gt, qn))));
+}), ot(je, Ko, At, Zn, jn, jo, No, qe, Yn, Wt, qn))));
 function tr(t, e) {
 	const n = {}, o = {};
 	let r = 0;
@@ -56281,6 +56496,9 @@ function Ye(t, e, n) {
 		return import_react.useCallback((S) => {
 			_(a[f], S);
 		}, [a, f]);
+	}, T = (f) => {
+		const S = import_react.useContext(l)[f], H = import_react.useCallback((y) => Y(S, y), [S]);
+		return import_react.useSyncExternalStore(H, () => it(S), () => it(S));
 	}, w = (f) => {
 		const S = import_react.useContext(l)[f], [H, y] = import_react.useState(an(it, S));
 		return Ie(() => Y(S, (k) => {
@@ -56293,7 +56511,7 @@ function Ye(t, e, n) {
 			const H = import_react.useContext(l)[f];
 			Ie(() => Y(H, a), [a, H]);
 		},
-		useEmitterValue: ("19.2.5".startsWith("18"), w),
+		useEmitterValue: parseInt("19.2.5") >= 18 ? T : w,
 		usePublisher: p
 	};
 }
@@ -56940,15 +57158,15 @@ var Lr = /* @__PURE__ */ j(([{ increaseViewportBy: t, listBoundary: e, overscan:
 		column: 0,
 		row: 0
 	}), mt = U(), q = U(), Q = v(!1), gt = v(0), ut = v(!0), xt = v(!1), Ft = v(!1);
-	Y(I(w, $(gt), W(([b, D]) => D !== 0)), () => {
+	Y(I(w, $(gt), G(([b, D]) => D !== 0)), () => {
 		_(ut, !1);
-	}), Y(I(at(w, ut, z, C, gt, xt), W(([b, D, K, rt, , tt]) => b && !D && K.height !== 0 && rt.height !== 0 && !tt)), ([, , , , b]) => {
+	}), Y(I(at(w, ut, z, C, gt, xt), G(([b, D, K, rt, , tt]) => b && !D && K.height !== 0 && rt.height !== 0 && !tt)), ([, , , , b]) => {
 		_(xt, !0), Ue(1, () => {
 			_(O, b);
 		}), yt(I(d), () => {
 			_(e, [0, 0]), _(ut, !0);
 		});
-	}), L(I(q, W((b) => b != null && b.scrollTop > 0), Bt(0)), u), Y(I(w, $(q), W(([, b]) => b != null)), ([, b]) => {
+	}), L(I(q, G((b) => b != null && b.scrollTop > 0), Bt(0)), u), Y(I(w, $(q), G(([, b]) => b != null)), ([, b]) => {
 		b && (_(C, b.viewport), _(z, b.item), _(F, b.gap), b.scrollTop > 0 && (_(Q, !0), yt(I(d, $t(1)), (D) => {
 			_(Q, !1);
 		}), _(c, { top: b.scrollTop })));
@@ -56957,7 +57175,7 @@ var Lr = /* @__PURE__ */ j(([{ increaseViewportBy: t, listBoundary: e, overscan:
 		item: D,
 		scrollTop: rt,
 		viewport: b
-	}))), mt), L(I(at(P(k), o, P(F, kr), P(z, xe), P(C, xe), P(Z), P(u), P(Q), P(ut), P(gt)), W(([, , , , , , , b]) => !b), B(([b, [D, K], rt, tt, X, lt, St, , ct, Vt]) => {
+	}))), mt), L(I(at(P(k), o, P(F, kr), P(z, xe), P(C, xe), P(Z), P(u), P(Q), P(ut), P(gt)), G(([, , , , , , , b]) => !b), B(([b, [D, K], rt, tt, X, lt, St, , ct, Vt]) => {
 		const { column: Pt, row: ee } = rt, { height: he, width: He } = tt, { width: nn } = X;
 		if (St === 0 && (b === 0 || nn === 0)) return bn;
 		if (He === 0) {
@@ -56977,16 +57195,16 @@ var Lr = /* @__PURE__ */ j(([{ increaseViewportBy: t, listBoundary: e, overscan:
 			offsetTop: sn,
 			top: sn
 		};
-	})), g), L(I(Z, W((b) => b !== null), B((b) => b.length)), k), L(I(at(C, z, g, F), W(([b, D, { items: K }]) => K.length > 0 && D.height !== 0 && b.height !== 0), B(([b, D, { items: K }, rt]) => {
+	})), g), L(I(Z, G((b) => b !== null), B((b) => b.length)), k), L(I(at(C, z, g, F), G(([b, D, { items: K }]) => K.length > 0 && D.height !== 0 && b.height !== 0), B(([b, D, { items: K }, rt]) => {
 		const { bottom: tt, top: X } = Bn(b, rt, D, K);
 		return [X, tt];
 	}), et$1(le)), e);
 	const pt = v(!1);
 	L(I(d, $(pt), B(([b, D]) => D || b !== 0)), pt);
-	const Kt = vt(I(at(g, k), W(([{ items: b }]) => b.length > 0), $(pt), W(([[b, D], K]) => {
+	const Kt = vt(I(at(g, k), G(([{ items: b }]) => b.length > 0), $(pt), G(([[b, D], K]) => {
 		const tt = b.items[b.items.length - 1].index === D - 1;
 		return (K || b.bottom > 0 && b.itemHeight > 0 && b.offsetBottom === 0 && b.items.length === D) && tt;
-	}), B(([[, b]]) => b - 1), et$1())), Qt = vt(I(P(g), W(({ items: b }) => b.length > 0 && b[0].index === 0), Bt(0), et$1())), Et = vt(I(P(g), $(Q), W(([{ items: b }, D]) => b.length > 0 && !D), B(([{ items: b }]) => ({
+	}), B(([[, b]]) => b - 1), et$1())), Qt = vt(I(P(g), G(({ items: b }) => b.length > 0 && b[0].index === 0), Bt(0), et$1())), Et = vt(I(P(g), $(Q), G(([{ items: b }, D]) => b.length > 0 && !D), B(([{ items: b }]) => ({
 		endIndex: b[b.length - 1].index,
 		startIndex: b[0].index
 	})), et$1(An), zt(0)));
@@ -56994,7 +57212,7 @@ var Lr = /* @__PURE__ */ j(([{ increaseViewportBy: t, listBoundary: e, overscan:
 		const X = $n(b), { align: lt, behavior: St, offset: ct } = X;
 		let Vt = X.index;
 		Vt === "LAST" && (Vt = rt - 1), Vt = oe(0, Vt, Le(rt - 1, Vt));
-		let Pt = Ge(D, tt, K, Vt);
+		let Pt = We(D, tt, K, Vt);
 		return lt === "end" ? Pt = Hn(Pt - D.height + K.height) : lt === "center" && (Pt = Hn(Pt - D.height / 2 + K.height / 2)), ct !== void 0 && ct !== 0 && (Pt += ct), {
 			behavior: St,
 			top: Pt
@@ -57043,7 +57261,7 @@ var Lr = /* @__PURE__ */ j(([{ increaseViewportBy: t, listBoundary: e, overscan:
 		stateRestoreInProgress: Q,
 		...y
 	};
-}, ot(je, It, pe, Zn, At, qe, Gt));
+}, ot(je, It, pe, Zn, At, qe, Wt));
 function io(t, e, n) {
 	return oe(1, Ce((t + n) / (Ce(e) + n)));
 }
@@ -57053,13 +57271,13 @@ function Bn(t, e, n, o) {
 		bottom: 0,
 		top: 0
 	};
-	const s = Ge(t, e, n, o[0].index);
+	const s = We(t, e, n, o[0].index);
 	return {
-		bottom: Ge(t, e, n, o[o.length - 1].index) + r,
+		bottom: We(t, e, n, o[o.length - 1].index) + r,
 		top: s
 	};
 }
-function Ge(t, e, n, o) {
+function We(t, e, n, o) {
 	const s = Ce(o / io(t.width, n.width, e.column)), i = s * n.height + oe(0, s - 1) * e.row;
 	return i > 0 ? i + e.row : i;
 }
@@ -57142,7 +57360,7 @@ var Fr = /* @__PURE__ */ j(([t, e]) => ({
 		ref: r,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(e, { ...nt(e, s) })
 	}) : null;
-}), Wr = import_react.memo(function() {
+}), Gr = import_react.memo(function() {
 	const e = st("FooterComponent"), n = wt("footerHeight"), o = st("headerFooterTag"), r = kt(import_react.useMemo(() => (i) => {
 		n(Ht(i, "height"));
 	}, [n]), !0, !1), s = st("context");
@@ -57150,7 +57368,7 @@ var Fr = /* @__PURE__ */ j(([t, e]) => ({
 		ref: r,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(e, { ...nt(e, s) })
 	}) : null;
-}), Gr = ({ children: t }) => {
+}), Wr = ({ children: t }) => {
 	const e = import_react.useContext(Qn), n = wt("itemDimensions"), o = wt("viewportDimensions"), r = kt(import_react.useMemo(() => (s) => {
 		o(s.getBoundingClientRect());
 	}, [o]), !0, !1);
@@ -57230,14 +57448,14 @@ var Fr = /* @__PURE__ */ j(([t, e]) => ({
 		readyStateChanged: "readyStateChanged"
 	}
 }, /* @__PURE__ */ import_react.memo(function({ ...e }) {
-	const n = st("useWindowScroll"), o = st("customScrollParent"), r = o || n ? Dr : Nr, s = o || n ? Ar : Gr, i = st("context");
+	const n = st("useWindowScroll"), o = st("customScrollParent"), r = o || n ? Dr : Nr, s = o || n ? Ar : Wr, i = st("context");
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(r, {
 		...e,
 		...nt(r, i),
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(s, { children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Pr, {}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Vr, {}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Wr, {})
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Gr, {})
 		] })
 	});
 })), Nr = /* @__PURE__ */ Je({
@@ -57609,38 +57827,38 @@ var MarkdownDivWithReferences = (0, import_react.forwardRef)(({ markdown, refere
 		const container = containerRef.current;
 		if (!container) return;
 		if (options?.previewRefsOnHover === false) return;
-		const citeLinks = container.querySelectorAll(`.${MarkdownDivWithReferences_module_default.cite}`);
-		const handleMouseEnter = (e) => {
-			const el = e.currentTarget;
+		const citeSelector = `.${MarkdownDivWithReferences_module_default.cite}`;
+		const findCiteLink = (target) => {
+			if (!(target instanceof Element)) return null;
+			return target.closest(citeSelector);
+		};
+		const handleMouseOver = (e) => {
+			const el = findCiteLink(e.target);
+			if (!el) return;
+			const related = e.relatedTarget;
+			if (related instanceof Node && el.contains(related)) return;
 			const id = el.getAttribute("data-ref-id");
 			if (!id) return;
 			const r = refMap.get(id);
-			if (!r) return;
-			if (!r.citePreview) return;
+			if (!r || !r.citePreview) return;
 			setPositionEl(el);
 			setCurrentRef(r);
 			setVisibleKey(popoverKey(r));
 		};
 		const handleClick = (e) => {
+			if (!findCiteLink(e.target)) return;
 			clearVisibleKey();
 			setCurrentRef(null);
 			setPositionEl(null);
 			e.stopPropagation();
 		};
-		const cleanup = [];
-		citeLinks.forEach((link) => {
-			link.addEventListener("mouseenter", handleMouseEnter);
-			link.addEventListener("click", handleClick);
-			cleanup.push(() => {
-				link.removeEventListener("mouseenter", handleMouseEnter);
-				link.removeEventListener("click", handleClick);
-			});
-		});
+		container.addEventListener("mouseover", handleMouseOver);
+		container.addEventListener("click", handleClick);
 		return () => {
-			cleanup.forEach((fn) => fn());
+			container.removeEventListener("mouseover", handleMouseOver);
+			container.removeEventListener("click", handleClick);
 		};
 	}, [
-		markdown,
 		refMap,
 		options?.previewRefsOnHover,
 		setVisibleKey,
@@ -57662,8 +57880,12 @@ var MarkdownDivWithReferences = (0, import_react.forwardRef)(({ markdown, refere
 				}
 			},
 			placement: "auto",
-			hoverDelay: 400,
+			hoverDelay: 1e3,
 			showArrow: true,
+			styles: {
+				maxHeight: "70vh",
+				overflowY: "auto"
+			},
 			children: currentRef.citePreview && currentRef.citePreview() || /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, { text: "No preview available." })
 		})]
 	});
@@ -63425,6 +63647,7 @@ var sampleHandlesEqual = (sample1, sample2) => {
 //#endregion
 //#region src/client/utils/type-utils.ts
 var toLogPreview = (header) => {
+	const model_roles = header.eval.model_roles ? Object.fromEntries(Object.entries(header.eval.model_roles).map(([role, cfg]) => [role, cfg.model])) : void 0;
 	return {
 		eval_id: header.eval.eval_id,
 		run_id: header.eval.run_id,
@@ -63435,6 +63658,7 @@ var toLogPreview = (header) => {
 		status: header.status,
 		error: header.error,
 		model: header.eval.model,
+		model_roles,
 		started_at: header.stats?.started_at,
 		completed_at: header.stats?.completed_at,
 		primary_metric: primaryMetric(header.results)
@@ -65398,6 +65622,7 @@ var ApplicationIcons = {
 	samples: "bi bi-file-spreadsheet",
 	sandbox: "bi bi-box-seam",
 	scorer: "bi bi-calculator",
+	scoringSidebar: "bi bi-radar",
 	search: "bi bi-search",
 	sidebar: "bi bi-list",
 	solvers: {
@@ -65624,10 +65849,10 @@ var numericScoreDescriptor = (values) => {
 	};
 };
 var ObjectScoreDescriptor_module_default = {
-	container: "_container_1ramc_1",
-	padded: "_padded_1ramc_8",
-	key: "_key_1ramc_12",
-	value: "_value_1ramc_16"
+	container: "_container_kmi4b_1",
+	padded: "_padded_kmi4b_8",
+	key: "_key_kmi4b_12",
+	value: "_value_kmi4b_20"
 };
 //#endregion
 //#region src/app/samples/descriptor/score/ObjectScoreDescriptor.tsx
@@ -65657,13 +65882,14 @@ var objectScoreDescriptor = (values) => {
 				if (typeof score !== "object" || Array.isArray(score)) throw new Error("Unexpected use of object score descriptor for non-score object");
 				const value = score[key];
 				const formattedValue = value && isNumeric$1(value) ? formatPrettyDecimal(typeof value === "number" ? value : parseFloat(value === true ? "1" : value)) : String(value);
-				scores.push(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				scores.push(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					className: clsx(ObjectScoreDescriptor_module_default.key, "text-size-smaller"),
+					title: key,
 					children: key
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					className: clsx(ObjectScoreDescriptor_module_default.value, "text-size-base"),
 					children: formattedValue
-				})] }));
+				})] }, key));
 			});
 			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: clsx(ObjectScoreDescriptor_module_default.container),
@@ -66112,37 +66338,31 @@ var RecordTree = ({ id, record, className, scrollRef, defaultExpandLevel = 1, pr
 	const listHandle = (0, import_react.useRef)(null);
 	const { getRestoreState } = useVirtuosoState(listHandle, `metadata-grid-${id}`);
 	const [collapsedIds, setCollapsed, clearIds] = useCollapsibleIds(id);
-	const setCollapsedIds = (0, import_react.useCallback)((values) => {
-		Object.entries(values).forEach(([key, value]) => {
-			setCollapsed(key, value);
-		});
-	}, [setCollapsed]);
 	(0, import_react.useEffect)(() => {
 		return () => {
 			clearIds();
 		};
 	}, [clearIds, id]);
+	const isItemCollapsed = (0, import_react.useCallback)((itemId, hasChildren, depth, childCount) => {
+		const explicit = collapsedIds?.[itemId];
+		if (explicit !== void 0) return explicit;
+		if (!hasChildren) return false;
+		return depth >= defaultExpandLevel || childCount !== void 0 && childCount > 5;
+	}, [collapsedIds, defaultExpandLevel]);
 	const items = (0, import_react.useMemo)(() => {
-		return toTreeItems(record, collapsedIds || {}, processStore ? [resolveStoreKeys] : []);
+		return toTreeItems(record, isItemCollapsed, processStore ? [resolveStoreKeys] : []);
 	}, [
 		record,
-		collapsedIds,
+		isItemCollapsed,
 		processStore
 	]);
-	(0, import_react.useEffect)(() => {
-		if (collapsedIds) return;
-		setCollapsedIds(items.reduce((prev, item) => {
-			if (item.depth >= defaultExpandLevel && item.hasChildren) prev[item.id] = true;
-			return prev;
-		}, {}));
-	}, [collapsedIds, items]);
-	const keyUpHandler = (0, import_react.useCallback)((itemId, index) => {
+	const keyUpHandler = (0, import_react.useCallback)((item, index) => {
 		return (event) => {
 			switch (event.key) {
 				case "Enter":
 					event.preventDefault();
 					event.stopPropagation();
-					setCollapsed(itemId, !collapsedIds?.[id]);
+					setCollapsed(item.id, !item.isCollapsed);
 					break;
 				case "ArrowDown": {
 					event.preventDefault();
@@ -66163,16 +66383,20 @@ var RecordTree = ({ id, record, className, scrollRef, defaultExpandLevel = 1, pr
 				case "ArrowRight":
 					event.preventDefault();
 					event.stopPropagation();
-					setCollapsed(itemId, false);
+					setCollapsed(item.id, false);
 					break;
 				case "ArrowLeft":
 					event.preventDefault();
 					event.stopPropagation();
-					setCollapsed(itemId, true);
+					setCollapsed(item.id, true);
 					break;
 			}
 		};
-	}, [collapsedIds, items]);
+	}, [
+		setCollapsed,
+		items,
+		id
+	]);
 	const renderRow = (index) => {
 		const item = items[index];
 		if (!item) return null;
@@ -66182,19 +66406,19 @@ var RecordTree = ({ id, record, className, scrollRef, defaultExpandLevel = 1, pr
 			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 				"data-index": index,
 				className: clsx(kRecordTreeKey, RecordTree_module_default.key, "font-monospace", "text-style-secondary"),
-				onKeyUp: keyUpHandler(item.id, index),
+				onKeyUp: keyUpHandler(item, index),
 				tabIndex: 0,
 				onClick: () => {
-					setCollapsed(item.id, !collapsedIds?.[item.id]);
+					setCollapsed(item.id, !item.isCollapsed);
 				},
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: item.hasChildren ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", {
 					className: clsx(RecordTree_module_default.pre),
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(collapsedIds && collapsedIds[item.id] ? icons.tree.closed : icons.tree.open, RecordTree_module_default.treeIcon) })
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(item.isCollapsed ? icons.tree.closed : icons.tree.open, RecordTree_module_default.treeIcon) })
 				}) : void 0 }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("pre", {
 					className: clsx(RecordTree_module_default.pre),
 					children: [item.key, ":"]
 				})]
-			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: item.value !== null && (!item.hasChildren || collapsedIds?.[item.id]) ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: item.value !== null && (!item.hasChildren || item.isCollapsed) ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
 				id: `${id}-collapse-${item.id}`,
 				collapse: true,
 				lines: 15,
@@ -66210,7 +66434,6 @@ var RecordTree = ({ id, record, className, scrollRef, defaultExpandLevel = 1, pr
 			}) : void 0 })]
 		}, item.id);
 	};
-	if (!collapsedIds) return null;
 	if (!scrollRef) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		id,
 		className: clsx(className, "samples-list"),
@@ -66244,17 +66467,17 @@ var RecordTree = ({ id, record, className, scrollRef, defaultExpandLevel = 1, pr
 		tabIndex: 0
 	});
 };
-var toTreeItems = (record, collapsedIds, recordProcessors = [], currentDepth = 0, currentPath = []) => {
+var toTreeItems = (record, isCollapsed, recordProcessors = [], currentDepth = 0, currentPath = []) => {
 	if (!record) return [];
 	if (recordProcessors.length > 0) for (const processor of recordProcessors) record = processor(record);
 	const result = [];
 	Object.entries(record).forEach(([key, value], index) => {
 		const itemSegment = index.toString();
-		result.push(...processNodeRecursive(key, value, currentDepth, currentPath, itemSegment, collapsedIds));
+		result.push(...processNodeRecursive(key, value, currentDepth, currentPath, itemSegment, isCollapsed));
 	});
 	return result;
 };
-var processNodeRecursive = (key, value, depth, parentPath, thisPath, collapsedIds) => {
+var processNodeRecursive = (key, value, depth, parentPath, thisPath, isCollapsed) => {
 	const items = [];
 	const currentItemPath = [...parentPath, thisPath];
 	const id = `${depth}.${currentItemPath.join(".")}`;
@@ -66264,40 +66487,50 @@ var processNodeRecursive = (key, value, depth, parentPath, thisPath, collapsedId
 			key,
 			value: value === void 0 ? null : value,
 			depth,
-			hasChildren: false
+			hasChildren: false,
+			isCollapsed: false
 		});
 		return items;
 	}
 	let displayValue = null;
 	let processChildren = false;
+	let childCount;
 	if (Array.isArray(value)) {
 		processChildren = true;
+		childCount = value.length;
 		displayValue = `Array(${value.length})`;
 	} else if (typeof value === "object" && value !== null) {
 		processChildren = true;
+		childCount = Object.keys(value).length;
 		displayValue = `Object(${Object.keys(value).length})`;
+	} else if (typeof value === "function" || typeof value === "symbol" || typeof value === "bigint") {
+		displayValue = value.toString();
+		processChildren = false;
 	} else {
-		displayValue = String(value);
+		displayValue = null;
 		processChildren = false;
 	}
+	const collapsed = processChildren ? isCollapsed(id, true, depth, childCount) : false;
 	items.push({
 		id,
 		key,
 		value: displayValue,
 		depth,
-		hasChildren: true
+		hasChildren: processChildren,
+		childCount,
+		isCollapsed: collapsed
 	});
-	if (processChildren && !collapsedIds[id]) {
+	if (processChildren && !collapsed) {
 		const childDepth = depth + 1;
 		if (Array.isArray(value)) {
 			if (value.length > 0) value.forEach((element, index) => {
 				const elementKey = `[${index}]`;
 				const elementIdentifier = `[${index}]`;
-				items.push(...processNodeRecursive(elementKey, element, childDepth, currentItemPath, elementIdentifier, collapsedIds));
+				items.push(...processNodeRecursive(elementKey, element, childDepth, currentItemPath, elementIdentifier, isCollapsed));
 			});
 		} else if (typeof value === "object" && value !== null) Object.entries(value).forEach(([childKey, childValue], index) => {
 			const childIdentifier = index.toString();
-			items.push(...processNodeRecursive(childKey, childValue, childDepth, currentItemPath, childIdentifier, collapsedIds));
+			items.push(...processNodeRecursive(childKey, childValue, childDepth, currentItemPath, childIdentifier, isCollapsed));
 		});
 	}
 	return items;
@@ -69640,44 +69873,54 @@ var useDocumentTitle = () => {
 	return { setDocumentTitle };
 };
 var simplifiedStatusForDeduplication = (status) => status === "started" || status === "success" ? status : "_other_";
+/**
+* Pure dedup logic for {@link useLogsWithretried}.
+*
+* Groups logs by (parent directory, task_id) so that logs sharing a task_id
+* across different folders (e.g. copied log directories under a shared parent)
+* are not treated as retries of each other. Within each group, the "best"
+* log wins (started > success > other, ties broken by newest mtime) and is
+* marked `retried: false`; the rest are marked `retried: true`.
+*/
+var computeLogsWithRetried = (logs, logPreviews) => {
+	const logsByGroup = logs.reduce((acc, log) => {
+		const taskId = log.task_id;
+		if (taskId) {
+			const slash = log.name.lastIndexOf("/");
+			const key = `${slash >= 0 ? log.name.substring(0, slash) : ""}|${taskId}`;
+			if (!(key in acc)) acc[key] = [];
+			acc[key].push(log);
+		}
+		return acc;
+	}, {});
+	const bestByName = {};
+	for (const items of Object.values(logsByGroup)) {
+		items.sort((a, b) => {
+			const as = simplifiedStatusForDeduplication(logPreviews[a.name]?.status);
+			const bs = simplifiedStatusForDeduplication(logPreviews[b.name]?.status);
+			if (as === bs) return b.name.localeCompare(a.name);
+			if (as === "started") return -1;
+			if (bs === "started") return 1;
+			if (as === "success") return -1;
+			if (bs === "success") return 1;
+			console.warn(`Unexpected status combination: ${as}, ${bs}`, a, b);
+			return 0;
+		});
+		const { name } = items[0];
+		bestByName[name] = {
+			...items[0],
+			retried: false
+		};
+	}
+	return logs.map((log) => bestByName[log.name] ?? {
+		...log,
+		retried: log.task_id ? true : void 0
+	});
+};
 var useLogsWithretried = () => {
 	const logs = useStore((state) => state.logs.logs);
 	const logPreviews = useStore((state) => state.logs.logPreviews);
-	return (0, import_react.useMemo)(() => {
-		const logsByTaskId = logs.reduce((acc, log) => {
-			const taskId = log.task_id;
-			if (taskId) {
-				if (!(taskId in acc)) acc[taskId] = [];
-				acc[taskId].push(log);
-			}
-			return acc;
-		}, {});
-		const bestByName = {};
-		for (const items of Object.values(logsByTaskId)) {
-			items.sort((a, b) => {
-				const as = simplifiedStatusForDeduplication(logPreviews[a.name]?.status);
-				const bs = simplifiedStatusForDeduplication(logPreviews[b.name]?.status);
-				const am = a.mtime ?? 0;
-				const bm = b.mtime ?? 0;
-				if (as === bs) return bm - am;
-				if (as === "started") return -1;
-				if (bs === "started") return 1;
-				if (as === "success") return -1;
-				if (bs === "success") return 1;
-				console.warn(`Unexpected status combination: ${as}, ${bs}`, a, b);
-				return 0;
-			});
-			const { name } = items[0];
-			bestByName[name] = {
-				...items[0],
-				retried: false
-			};
-		}
-		return logs.map((log) => bestByName[log.name] ?? {
-			...log,
-			retried: log.task_id ? true : void 0
-		});
-	}, [logs, logPreviews]);
+	return (0, import_react.useMemo)(() => computeLogsWithRetried(logs, logPreviews), [logs, logPreviews]);
 };
 //#endregion
 //#region src/state/clientEvents.ts
@@ -70412,13 +70655,16 @@ var ApplicationNavbar = ({ currentPath, fnNavigationUrl, bordered, children, sho
 		]
 	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ActivityBar, { animating: hasActivity })] });
 };
-var NavbarButton_module_default = { navbarButton: "_navbarButton_1gksz_1" };
+var NavbarButton_module_default = {
+	navbarButton: "_navbarButton_7hxb6_1",
+	dropdownChevron: "_dropdownChevron_7hxb6_6"
+};
 //#endregion
 //#region src/app/navbar/NavbarButton.tsx
-var NavbarButton = (0, import_react.forwardRef)(({ label, className, icon, latched, ...rest }, ref) => {
+var NavbarButton = (0, import_react.forwardRef)(({ label, className, icon, latched, dropdown, ...rest }, ref) => {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolButton, {
 		ref,
-		label,
+		label: dropdown ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [label, /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(ApplicationIcons.chevron.down, NavbarButton_module_default.dropdownChevron) })] }) : label,
 		className: clsx(className, NavbarButton_module_default.navbarButton),
 		icon,
 		latched,
@@ -70487,20 +70733,23 @@ var createGridColumnResizer = (gridRef, delayMs = 10) => {
 	}, delayMs);
 };
 var ColumnSelectorPopover_module_default = {
-	checkboxWrapper: "_checkboxWrapper_vtlwq_1",
-	label: "_label_vtlwq_5",
-	checkbox: "_checkbox_vtlwq_1",
-	filterIcon: "_filterIcon_vtlwq_16",
-	scrollableContainer: "_scrollableContainer_vtlwq_21",
-	section: "_section_vtlwq_26",
-	headerRow: "_headerRow_vtlwq_30",
-	buttonContainer: "_buttonContainer_vtlwq_39",
-	button: "_button_vtlwq_39",
-	columnsLayout: "_columnsLayout_vtlwq_54"
+	checkboxWrapper: "_checkboxWrapper_97vbj_1",
+	label: "_label_97vbj_5",
+	checkbox: "_checkbox_97vbj_1",
+	filterIcon: "_filterIcon_97vbj_16",
+	scrollableContainer: "_scrollableContainer_97vbj_21",
+	section: "_section_97vbj_33",
+	headerRow: "_headerRow_97vbj_37",
+	scoresHeadingGroup: "_scoresHeadingGroup_97vbj_47",
+	scoresViewModeControl: "_scoresViewModeControl_97vbj_53",
+	buttonContainer: "_buttonContainer_97vbj_57",
+	button: "_button_97vbj_57",
+	columnsLayout: "_columnsLayout_97vbj_72"
 };
 //#endregion
 //#region src/app/shared/ColumnSelectorPopover.tsx
-var ColumnSelectorPopover = ({ showing, setShowing, columns, onVisibilityChange, positionEl, filteredFields = [] }) => {
+var isScoreField = (field) => field.startsWith("score_") || field.startsWith("metric_");
+var ColumnSelectorPopover = ({ showing, setShowing, columns, onVisibilityChange, positionEl, filteredFields = [], scoresHeading = "Scorers", groupableScores = false, scoresViewMode = "by-metric", onScoresViewModeChange }) => {
 	const currentVisibility = (0, import_react.useMemo)(() => columns.reduce((acc, col) => ({
 		...acc,
 		[getFieldKey(col)]: !col.hide
@@ -70513,8 +70762,8 @@ var ColumnSelectorPopover = ({ showing, setShowing, columns, onVisibilityChange,
 	};
 	const columnGroups = (0, import_react.useMemo)(() => {
 		return {
-			base: columns.filter((col) => !getFieldKey(col).startsWith("score_")),
-			scores: columns.filter((col) => getFieldKey(col).startsWith("score_"))
+			base: columns.filter((col) => !isScoreField(getFieldKey(col))),
+			scores: columns.filter((col) => isScoreField(getFieldKey(col)))
 		};
 	}, [columns]);
 	const handleSelectAllBase = () => {
@@ -70567,9 +70816,11 @@ var ColumnSelectorPopover = ({ showing, setShowing, columns, onVisibilityChange,
 		isOpen: showing,
 		setIsOpen: setShowing,
 		positionEl,
-		placement: "bottom-start",
+		placement: "bottom-end",
 		showArrow: false,
 		hoverDelay: -1,
+		closeOnMouseLeave: false,
+		offset: [0, 1],
 		className: ColumnSelectorPopover_module_default.popover,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: clsx(ColumnSelectorPopover_module_default.scrollableContainer, "text-size-small"),
@@ -70599,7 +70850,24 @@ var ColumnSelectorPopover = ({ showing, setShowing, columns, onVisibilityChange,
 				})]
 			}), columnGroups.scores.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 				className: ColumnSelectorPopover_module_default.headerRow,
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("b", { children: "Scorers" }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: ColumnSelectorPopover_module_default.scoresHeadingGroup,
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("b", { children: scoresHeading }), groupableScores && onScoresViewModeChange && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: ColumnSelectorPopover_module_default.scoresViewModeControl,
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SegmentedControl, {
+							id: "column-selector-scores-view-mode",
+							segments: [{
+								id: "by-metric",
+								label: "By Metric"
+							}, {
+								id: "per-scorer",
+								label: "Per Scorer"
+							}],
+							selectedId: scoresViewMode,
+							onSegmentChange: (id) => onScoresViewModeChange(id)
+						})
+					})]
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: ColumnSelectorPopover_module_default.buttonContainer,
 					children: [
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
@@ -70733,15 +71001,17 @@ var PreformattedTooltip = ({ value }) => {
 	});
 };
 var columns_module_default = {
-	nameCell: "_nameCell_1jtud_1",
-	modelCell: "_modelCell_1jtud_8",
-	scoreCell: "_scoreCell_1jtud_15",
-	error: "_error_1jtud_22",
-	started: "_started_1jtud_26",
-	success: "_success_1jtud_30",
-	cancelled: "_cancelled_1jtud_34",
-	statusCell: "_statusCell_1jtud_38",
-	dateCell: "_dateCell_1jtud_45"
+	nameCell: "_nameCell_90rs9_1",
+	modelCell: "_modelCell_90rs9_8",
+	modelCellPrimary: "_modelCellPrimary_90rs9_15",
+	scoreCell: "_scoreCell_90rs9_22",
+	multiScorerBadge: "_multiScorerBadge_90rs9_29",
+	error: "_error_90rs9_41",
+	started: "_started_90rs9_45",
+	success: "_success_90rs9_49",
+	cancelled: "_cancelled_90rs9_53",
+	statusCell: "_statusCell_90rs9_57",
+	dateCell: "_dateCell_90rs9_64"
 };
 //#endregion
 //#region src/app/log-list/grid/columns/hooks.tsx
@@ -70750,26 +71020,62 @@ var styles = {
 	...columns_module_default
 };
 var EmptyCell = () => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: "-" });
-var useLogListColumns = (mode = "logs") => {
+var displayModelRoles = (row) => {
+	if (!row) return [];
+	if (row.model && row.model !== "none/none") return [];
+	return row.modelRoles ? Object.entries(row.modelRoles) : [];
+};
+var primaryModelValue = (row) => {
+	if (!row) return void 0;
+	if (row.model && row.model !== "none/none") return row.model;
+	return displayModelRoles(row)[0]?.[1];
+};
+/**
+* Build a stable, unique column key for a (scorer, metric) pair. The reducer
+* is intentionally omitted so the same logical metric is one column regardless
+* of whether the log recorded `reducer=null` (default, silently mean) or
+* `reducer="mean"` (explicit). "/" is used as separator because ag-grid treats
+* "." in `field` as nested-object access.
+*/
+var scorerMetricKey = (scorerName, metricName) => `${scorerName}/${metricName}`;
+/** Human-readable header: "scorer / metric". */
+var scorerMetricHeader = (scorerName, metricName) => `${scorerName} / ${metricName}`;
+/**
+* Field key for the synthetic "by metric" column that aggregates across
+* scorers. Uses a `metric_` prefix (no slash) so it can never collide with
+* the per-scorer `score_<scorer>/<metric>` field keys.
+*/
+var byMetricField = (metricName) => `metric_${metricName}`;
+var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => {
 	const columnVisibility = useStore((state) => state.logs.listing.columnVisibility);
 	const setColumnVisibility = useStore((state) => state.logsActions.setLogsColumnVisibility);
 	const logDetails = useStore((state) => state.logs.logDetails);
 	const scorerMap = (0, import_react.useMemo)(() => {
-		const scoreTypes = {};
-		for (const details of Object.values(logDetails)) if (details.results?.scores) {
-			for (const evalScore of details.results.scores) if (evalScore.metrics) for (const [metricName, metric] of Object.entries(evalScore.metrics)) scoreTypes[metricName] = typeof metric.value;
-		}
-		return scoreTypes;
-	}, [logDetails]);
-	(0, import_react.useEffect)(() => {
-		const scorerNames = Object.keys(scorerMap);
-		if (scorerNames.length === 0) return;
-		if (scorerNames.some((name) => !(`score_${name}` in columnVisibility))) {
-			const newVisibility = { ...columnVisibility };
-			for (const scorerName of scorerNames) {
-				const field = `score_${scorerName}`;
-				if (!(field in columnVisibility)) newVisibility[field] = false;
+		const info = {};
+		for (const [logName, details] of Object.entries(logDetails)) {
+			if (scopePrefix && !logName.startsWith(scopePrefix)) continue;
+			if (details.results?.scores) {
+				for (const evalScore of details.results.scores) if (evalScore.metrics) for (const [metricName, metric] of Object.entries(evalScore.metrics)) {
+					const key = scorerMetricKey(evalScore.name, metricName);
+					info[key] = {
+						scorerName: evalScore.name,
+						metricName,
+						valueType: typeof metric.value
+					};
+				}
 			}
+		}
+		return info;
+	}, [logDetails, scopePrefix]);
+	(0, import_react.useEffect)(() => {
+		const scorerKeys = Object.keys(scorerMap);
+		if (scorerKeys.length === 0) return;
+		const metricNames = /* @__PURE__ */ new Set();
+		for (const { metricName } of Object.values(scorerMap)) metricNames.add(metricName);
+		const allFields = [...scorerKeys.map((key) => `score_${key}`), ...[...metricNames].map(byMetricField)];
+		if (allFields.some((field) => !(field in columnVisibility))) {
+			const newVisibility = { ...columnVisibility };
+			for (const field of allFields) if (!(field in columnVisibility)) newVisibility[field] = false;
 			setColumnVisibility(newVisibility);
 		}
 	}, [
@@ -70832,7 +71138,7 @@ var useLogListColumns = (mode = "logs") => {
 				}
 			},
 			{
-				field: "model",
+				colId: "model",
 				headerName: "Model",
 				initialWidth: 300,
 				minWidth: 100,
@@ -70840,14 +71146,36 @@ var useLogListColumns = (mode = "logs") => {
 				sortable: true,
 				filter: true,
 				resizable: true,
-				tooltipField: "model",
+				valueGetter: (params) => primaryModelValue(params.data),
+				tooltipValueGetter: (params) => {
+					const roles = displayModelRoles(params.data);
+					if (roles.length > 0) return roles.map(([role, model]) => `${role}: ${model}`).join("\n");
+					const model = params.data?.model;
+					return model && model !== "none/none" ? model : void 0;
+				},
+				tooltipComponent: PreformattedTooltip,
 				cellRenderer: (params) => {
 					const item = params.data;
 					if (!item) return null;
-					if (item.model) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					if (item.model && item.model !== "none/none") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 						className: styles.modelCell,
 						children: item.model
 					});
+					const roles = displayModelRoles(item);
+					if (roles.length > 0) {
+						const [, primary] = roles[0];
+						const extras = roles.length - 1;
+						return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: styles.modelCell,
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								className: styles.modelCellPrimary,
+								children: primary
+							}), extras > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+								className: styles.multiScorerBadge,
+								children: ["+", extras]
+							})]
+						});
+					}
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
 				}
 			},
@@ -70882,6 +71210,12 @@ var useLogListColumns = (mode = "logs") => {
 				sortable: true,
 				filter: true,
 				resizable: true,
+				tooltipValueGetter: (params) => {
+					const item = params.data;
+					if (!item) return void 0;
+					if (item.status === "error" && item.errorMessage) return item.errorMessage;
+					return item.status || void 0;
+				},
 				cellRenderer: (params) => {
 					const item = params.data;
 					if (!item) return null;
@@ -71093,13 +71427,90 @@ var useLogListColumns = (mode = "logs") => {
 					return JSON.stringify(raw, null, 2);
 				},
 				tooltipComponent: PreformattedTooltip
+			},
+			{
+				field: "tags",
+				headerName: "Tags",
+				initialWidth: 80,
+				minWidth: 80,
+				sortable: true,
+				filter: true,
+				resizable: true,
+				valueGetter: (params) => {
+					const tags = params.data?.tags;
+					if (!tags || tags.length === 0) return "";
+					return tags.join(", ");
+				},
+				tooltipValueGetter: (params) => params.value || void 0,
+				cellRenderer: (params) => {
+					if (!params.value) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: styles.nameCell,
+						children: params.value
+					});
+				}
+			},
+			{
+				field: "percentCompleted",
+				headerName: "% Completed",
+				initialWidth: 110,
+				minWidth: 80,
+				maxWidth: 140,
+				sortable: true,
+				filter: "agNumberColumnFilter",
+				resizable: true,
+				valueFormatter: (params) => {
+					if (params.value === void 0 || params.value === null) return "";
+					return `${formatPrettyDecimal(params.value)}%`;
+				},
+				cellRenderer: (params) => {
+					if (params.value === void 0 || params.value === null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [formatPrettyDecimal(params.value), "%"] });
+				}
+			},
+			{
+				field: "sampleErrors",
+				headerName: "Sample Errors",
+				initialWidth: 110,
+				minWidth: 60,
+				maxWidth: 140,
+				sortable: true,
+				filter: "agNumberColumnFilter",
+				resizable: true,
+				cellRenderer: (params) => {
+					if (params.value === void 0 || params.value === null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: formatNumber$1(params.value) });
+				}
+			},
+			{
+				field: "errorMessage",
+				headerName: "Error",
+				initialWidth: 300,
+				minWidth: 100,
+				sortable: true,
+				filter: true,
+				resizable: true,
+				valueGetter: (params) => {
+					const msg = params.data?.errorMessage;
+					if (!msg) return "";
+					return msg.split("\n")[0];
+				},
+				tooltipValueGetter: (params) => params.data?.errorMessage || void 0,
+				cellRenderer: (params) => {
+					if (!params.value) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: styles.nameCell,
+						children: params.value
+					});
+				}
 			}
 		];
-		const scorerColumns = Object.keys(scorerMap).map((scorerName) => {
-			const scoreType = scorerMap[scorerName];
+		const perScorerColumns = Object.keys(scorerMap).sort((a, b) => a.localeCompare(b)).map((key) => {
+			const { scorerName, metricName, valueType } = scorerMap[key];
+			const scoreType = valueType;
 			return {
-				field: `score_${scorerName}`,
-				headerName: scorerName,
+				field: `score_${key}`,
+				headerName: scorerMetricHeader(scorerName, metricName),
 				initialWidth: 100,
 				minWidth: 100,
 				sortable: true,
@@ -71125,7 +71536,76 @@ var useLogListColumns = (mode = "logs") => {
 				})
 			};
 		});
-		const allCols = [...baseColumns, ...scorerColumns];
+		const metricGroups = /* @__PURE__ */ new Map();
+		for (const { scorerName, metricName, valueType } of Object.values(scorerMap)) {
+			const list = metricGroups.get(metricName) ?? [];
+			list.push({
+				scorerName,
+				valueType
+			});
+			metricGroups.set(metricName, list);
+		}
+		const byMetricColumns = [...metricGroups.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([metricName, entries]) => {
+			const scorerOrder = entries.map((e) => e.scorerName).sort((a, b) => a.localeCompare(b));
+			const allNumeric = entries.every((e) => e.valueType === "number");
+			const readContributors = (row) => {
+				if (!row) return [];
+				const contributors = [];
+				for (const scorer of scorerOrder) {
+					const v = row[`score_${scorer}/${metricName}`];
+					if (v !== void 0 && v !== null && v !== "") contributors.push({
+						scorer,
+						value: v
+					});
+				}
+				return contributors;
+			};
+			return {
+				field: byMetricField(metricName),
+				headerName: metricName,
+				initialWidth: 100,
+				minWidth: 100,
+				sortable: true,
+				filter: allNumeric ? "agNumberColumnFilter" : "agTextColumnFilter",
+				resizable: true,
+				valueGetter: (params) => {
+					return readContributors(params.data)[0]?.value;
+				},
+				valueFormatter: (params) => {
+					const value = params.value;
+					if (value === "" || value === null || value === void 0) return "";
+					if (typeof value === "number") return formatPrettyDecimal(value);
+					return String(value);
+				},
+				cellRenderer: (params) => {
+					const contributors = readContributors(params.data);
+					if (contributors.length === 0) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					const primary = contributors[0].value;
+					const extras = contributors.slice(1);
+					const primaryText = typeof primary === "number" ? formatPrettyDecimal(primary) : String(primary);
+					return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: styles.scoreCell,
+						children: [primaryText, extras.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+							className: styles.multiScorerBadge,
+							title: extras.map((c) => {
+								const v = typeof c.value === "number" ? formatPrettyDecimal(c.value) : String(c.value);
+								return `${c.scorer}: ${v}`;
+							}).join("\n"),
+							children: ["+", extras.length]
+						})]
+					});
+				},
+				comparator: createFolderFirstComparator((valA, valB) => {
+					if (typeof valA === "number" && typeof valB === "number") return valA - valB;
+					return String(valA || "").localeCompare(String(valB || ""));
+				})
+			};
+		});
+		const allCols = [
+			...baseColumns,
+			...perScorerColumns,
+			...byMetricColumns
+		];
 		if (mode === "tasks") {
 			const typeIdx = allCols.findIndex((col) => col.field === "type");
 			if (typeIdx >= 0) allCols.splice(typeIdx, 1);
@@ -71134,12 +71614,16 @@ var useLogListColumns = (mode = "logs") => {
 				"task",
 				"model",
 				"taskArgs",
+				"tags",
 				"score",
 				"completedAt",
 				"totalSamples",
 				"completedSamples",
+				"percentCompleted",
+				"sampleErrors",
 				"totalTokens",
 				"duration",
+				"errorMessage",
 				"name",
 				"sandbox",
 				"taskFile"
@@ -71177,24 +71661,36 @@ var useLogListColumns = (mode = "logs") => {
 			hidden.add("sandbox");
 			hidden.add("taskFile");
 		}
+		hidden.add("percentCompleted");
+		hidden.add("sampleErrors");
+		hidden.add("errorMessage");
 		return hidden;
 	}, [mode]);
+	const matchesActiveMode = (field) => {
+		if (field.startsWith("score_")) return viewMode === "per-scorer";
+		if (field.startsWith("metric_")) return viewMode === "by-metric";
+		return true;
+	};
+	const columns = (0, import_react.useMemo)(() => {
+		return allColumns.map((col) => {
+			const field = getFieldKey(col);
+			const defaultVisible = field.startsWith("score_") || field.startsWith("metric_") ? false : !defaultHiddenFields.has(field);
+			const isVisible = columnVisibility[field] ?? defaultVisible;
+			return {
+				...col,
+				hide: !isVisible
+			};
+		});
+	}, [
+		allColumns,
+		columnVisibility,
+		defaultHiddenFields
+	]);
 	return {
-		columns: (0, import_react.useMemo)(() => {
-			return allColumns.map((col) => {
-				const field = getFieldKey(col);
-				const defaultVisible = field.startsWith("score_") ? false : !defaultHiddenFields.has(field);
-				const isVisible = columnVisibility[field] ?? defaultVisible;
-				return {
-					...col,
-					hide: !isVisible
-				};
-			});
-		}, [
-			allColumns,
-			columnVisibility,
-			defaultHiddenFields
-		]),
+		columns,
+		pickerColumns: (0, import_react.useMemo)(() => {
+			return columns.filter((col) => matchesActiveMode(getFieldKey(col)));
+		}, [columns, viewMode]),
 		setColumnVisibility
 	};
 };
@@ -97337,7 +97833,8 @@ var RowCtrl = class extends BeanStub {
 	}
 	updateRowBusinessKey() {
 		if (typeof this.businessKeyForNodeFunc !== "function") return;
-		this.businessKey = _escapeString(this.businessKeyForNodeFunc(this.rowNode));
+		const businessKey = this.businessKeyForNodeFunc(this.rowNode);
+		this.businessKey = _escapeString(businessKey);
 	}
 	updateGui(containerType, gui) {
 		if (containerType === "left") this.leftGui = gui;
@@ -99068,7 +99565,8 @@ var AriaAnnouncementService = class extends BeanStub {
 	}
 	postConstruct() {
 		const beans = this.beans;
-		const div = this.descriptionContainer = _getDocument(beans).createElement("div");
+		const eDocument = _getDocument(beans);
+		const div = this.descriptionContainer = eDocument.createElement("div");
 		div.classList.add("ag-aria-description-container");
 		_setAriaLive(div, "polite");
 		_setAriaRelevant(div, "additions text");
@@ -99612,7 +100110,8 @@ var RowRenderer = class extends BeanStub {
 	initialiseCache() {
 		if (this.gos.get("keepDetailRows")) {
 			const countProp = this.getKeepDetailRowsCount();
-			this.cachedRowCtrls = new RowCtrlCache(countProp != null ? countProp : 3);
+			const count = countProp != null ? countProp : 3;
+			this.cachedRowCtrls = new RowCtrlCache(count);
 		}
 	}
 	getKeepDetailRowsCount() {
@@ -109184,9 +109683,10 @@ var SelectionColService = class extends BeanStub {
 		destroyCollection();
 		const { colGroupSvc } = this.beans;
 		const treeDepth = colGroupSvc?.findDepth(cols.tree) ?? 0;
+		const tree = colGroupSvc?.balanceTreeForAutoCols(list, treeDepth) ?? [];
 		this.columns = {
 			list,
-			tree: colGroupSvc?.balanceTreeForAutoCols(list, treeDepth) ?? [],
+			tree,
 			treeDepth,
 			map: {}
 		};
@@ -113546,7 +114046,8 @@ var PaginationComp = class extends TabGuardComp {
 		this.toggleButtonDisabled(this.btFirst, this.previousAndFirstButtonsDisabled);
 		this.toggleButtonDisabled(this.btPrevious, this.previousAndFirstButtonsDisabled);
 		const zeroPagesToDisplay = this.isZeroPagesToDisplay();
-		this.nextButtonDisabled = currentPage === totalPages - 1 || zeroPagesToDisplay;
+		const onLastPage = currentPage === totalPages - 1;
+		this.nextButtonDisabled = onLastPage || zeroPagesToDisplay;
 		this.lastButtonDisabled = !maxRowFound || zeroPagesToDisplay || currentPage === totalPages - 1;
 		this.toggleButtonDisabled(this.btNext, this.nextButtonDisabled);
 		this.toggleButtonDisabled(this.btLast, this.lastButtonDisabled);
@@ -113782,7 +114283,10 @@ var PaginationService = class extends BeanStub {
 		if (masterPageEndIndex > masterLastRowIndex) masterPageEndIndex = masterLastRowIndex;
 		this.topDisplayedRowIndex = rowModel.getTopLevelRowDisplayedIndex(masterPageStartIndex);
 		if (masterPageEndIndex === masterLastRowIndex) this.bottomDisplayedRowIndex = rowModel.getRowCount() - 1;
-		else this.bottomDisplayedRowIndex = rowModel.getTopLevelRowDisplayedIndex(masterPageEndIndex + 1) - 1;
+		else {
+			const firstIndexNotToShow = rowModel.getTopLevelRowDisplayedIndex(masterPageEndIndex + 1);
+			this.bottomDisplayedRowIndex = firstIndexNotToShow - 1;
+		}
 	}
 	getMasterRowCount() {
 		return this.masterRowCount;
@@ -118169,7 +118673,9 @@ var LogListGrid = ({ items, currentPath, gridRef: externalGridRef, mode = "logs"
 	const logFiles = (0, import_react.useMemo)(() => {
 		return items.filter((item) => item.type === "file").map((item) => item.log).filter((file) => file !== void 0);
 	}, [items]);
-	const { columns } = useLogListColumns(mode);
+	const scopePrefix = mode === "logs" ? currentPath : void 0;
+	const [scoresViewMode] = useProperty("log-list-scores-view", "mode", { defaultValue: "by-metric" });
+	const { columns } = useLogListColumns(mode, scopePrefix, scoresViewMode);
 	const initialGridState = (0, import_react.useMemo)(() => {
 		if (previousLogPath !== void 0 && previousLogPath !== currentPath) {
 			const result = { ...gridState };
@@ -118212,6 +118718,12 @@ var LogListGrid = ({ items, currentPath, gridRef: externalGridRef, mode = "logs"
 				const entries = Object.entries(details.eval.task_args);
 				if (entries.length > 0) taskArgs = entries.map(([k, v]) => `${k}=${JSON.stringify(v)}`).join(", ");
 			}
+			let percentCompleted;
+			const total = details?.results?.total_samples;
+			const completed = details?.results?.completed_samples;
+			if (total && total > 0 && completed !== void 0) percentCompleted = completed / total * 100;
+			let sampleErrors;
+			if (details?.sampleSummaries) sampleErrors = details.sampleSummaries.filter((s) => s.error).length;
 			const row = {
 				id: item.id,
 				name: item.name,
@@ -118220,6 +118732,7 @@ var LogListGrid = ({ items, currentPath, gridRef: externalGridRef, mode = "logs"
 				url: item.url,
 				task: item.type === "file" ? preview?.task : item.name,
 				model: item.type === "file" ? preview?.model : item.type === "pending-task" ? item.model : void 0,
+				modelRoles: item.type === "file" ? preview?.model_roles ?? void 0 : void 0,
 				score: preview?.primary_metric?.value,
 				status: preview?.status,
 				completedAt: preview?.completed_at,
@@ -118233,17 +118746,15 @@ var LogListGrid = ({ items, currentPath, gridRef: externalGridRef, mode = "logs"
 				duration,
 				taskFile: details?.eval?.task_file ?? void 0,
 				taskArgs,
-				taskArgsRaw: details?.eval?.task_args ?? void 0
+				taskArgsRaw: details?.eval?.task_args ?? void 0,
+				tags: details?.tags,
+				percentCompleted,
+				sampleErrors,
+				errorMessage: details?.error?.message
 			};
 			if (details?.results?.scores) {
-				for (const evalScore of details.results.scores) if (evalScore.metrics) for (const [metricName, metric] of Object.entries(evalScore.metrics)) row[`score_${metricName}`] = metric.value;
+				for (const evalScore of details.results.scores) if (evalScore.metrics) for (const [metricName, metric] of Object.entries(evalScore.metrics)) row[`score_${evalScore.name}/${metricName}`] = metric.value;
 			}
-			row.searchText = [
-				row.name,
-				row.task,
-				row.model,
-				row.id
-			].filter(Boolean).join(" ").toLowerCase();
 			return row;
 		});
 	}, [items, logDetails]);
@@ -118321,6 +118832,11 @@ var LogListGrid = ({ items, currentPath, gridRef: externalGridRef, mode = "logs"
 	(0, import_react.useEffect)(() => {
 		resizeGridColumns();
 	}, [columns, resizeGridColumns]);
+	const searchCacheRef = (0, import_react.useRef)({
+		data: null,
+		columns: null,
+		cache: /* @__PURE__ */ new Map()
+	});
 	const performSearch = (0, import_react.useCallback)((term) => {
 		const api = gridRef.current?.api;
 		if (!api || !term) {
@@ -118328,12 +118844,36 @@ var LogListGrid = ({ items, currentPath, gridRef: externalGridRef, mode = "logs"
 			setCurrentMatchIndex(0);
 			return;
 		}
+		const cached = searchCacheRef.current;
+		let cache = cached.cache;
+		if (cached.data !== data || cached.columns !== columns) {
+			cache = /* @__PURE__ */ new Map();
+			const displayedColumns = api.getAllDisplayedColumns();
+			api.forEachNode((node) => {
+				if (!node.data) return;
+				const parts = [];
+				for (const col of displayedColumns) {
+					const value = api.getCellValue({
+						rowNode: node,
+						colKey: col,
+						useFormatter: true
+					});
+					if (value) parts.push(String(value));
+				}
+				cache.set(node.data.id, parts.join(" ").toLowerCase());
+			});
+			searchCacheRef.current = {
+				data,
+				columns,
+				cache
+			};
+		}
 		const lowerTerm = term.toLowerCase();
 		const foundIds = [];
 		api.forEachNode((node) => {
-			const rowData = node.data;
-			if (!rowData?.searchText) return;
-			if (rowData.searchText.includes(lowerTerm)) foundIds.push(rowData.id);
+			if (!node.data) return;
+			const text = cache.get(node.data.id);
+			if (text && text.includes(lowerTerm)) foundIds.push(node.data.id);
 		});
 		setMatchIds(foundIds);
 		setCurrentMatchIndex(0);
@@ -118345,7 +118885,11 @@ var LogListGrid = ({ items, currentPath, gridRef: externalGridRef, mode = "logs"
 				firstNode.setSelected(true, true);
 			}
 		}
-	}, [gridRef]);
+	}, [
+		data,
+		columns,
+		gridRef
+	]);
 	const goToMatch = (0, import_react.useCallback)((index) => {
 		if (matchIds.length === 0) return;
 		const idx = (index % matchIds.length + matchIds.length) % matchIds.length;
@@ -118617,18 +119161,25 @@ var LogsPanel = ({ maybeShowSingleLog, mode = "logs" }) => {
 		logPreviews,
 		showRetriedLogs
 	]);
-	const { columns, setColumnVisibility } = useLogListColumns(mode);
+	const scopePrefix = mode === "logs" ? currentDir : void 0;
+	const [scoresViewMode, setScoresViewMode] = useProperty("log-list-scores-view", "mode", { defaultValue: "by-metric" });
+	const { pickerColumns, setColumnVisibility } = useLogListColumns(mode, scopePrefix, scoresViewMode);
+	const currentColumnVisibility = useStore((state) => state.logs.listing.columnVisibility);
 	const handleColumnVisibilityChange = (0, import_react.useCallback)((newVisibility) => {
+		const mergedVisibility = {
+			...currentColumnVisibility,
+			...newVisibility
+		};
 		if (gridRef.current?.api) {
 			const currentFilterModel = gridRef.current.api.getFilterModel() || {};
 			let filtersRemoved = false;
 			const newFilterModel = {};
-			for (const [field, filter] of Object.entries(currentFilterModel)) if (newVisibility[field] === false) filtersRemoved = true;
+			for (const [field, filter] of Object.entries(currentFilterModel)) if (mergedVisibility[field] === false) filtersRemoved = true;
 			else newFilterModel[field] = filter;
 			if (filtersRemoved) gridRef.current.api.setFilterModel(newFilterModel);
 		}
-		setColumnVisibility(newVisibility);
-	}, [setColumnVisibility]);
+		setColumnVisibility(mergedVisibility);
+	}, [currentColumnVisibility, setColumnVisibility]);
 	const progress = (0, import_react.useMemo)(() => {
 		let pending = 0;
 		let total = 0;
@@ -118683,6 +119234,7 @@ var LogsPanel = ({ maybeShowSingleLog, mode = "logs" }) => {
 						ref: columnButtonRef,
 						label: "Choose Columns",
 						icon: ApplicationIcons.checkbox.checked,
+						dropdown: true,
 						onClick: (e) => {
 							e.stopPropagation();
 							setShowColumnSelector((prev) => !prev);
@@ -118695,10 +119247,14 @@ var LogsPanel = ({ maybeShowSingleLog, mode = "logs" }) => {
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ColumnSelectorPopover, {
 				showing: showColumnSelector,
 				setShowing: setShowColumnSelector,
-				columns,
+				columns: pickerColumns,
 				onVisibilityChange: handleColumnVisibilityChange,
 				positionEl: columnButtonRef.current,
-				filteredFields
+				filteredFields,
+				scoresHeading: "Metrics",
+				groupableScores: true,
+				scoresViewMode,
+				onScoresViewModeChange: setScoresViewMode
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: clsx(LogsPanel_module_default.list, "text-size-smaller"),
@@ -120753,18 +121309,21 @@ var ChatMessageRow = ({ index, parentName, resolvedMessage, className, display, 
 	const views = [];
 	const viewLabels = [];
 	const useLabels = showLabels || Object.keys(labelValues || {}).length > 0;
-	if (useLabels) {
+	const skipChatMessage = toolCallStyle !== "omit" && resolvedMessage.message.role === "assistant" && !!resolvedMessage.message.tool_calls && resolvedMessage.message.tool_calls.length > 0 && !hasVisibleContent(resolvedMessage.message);
+	const rowLabel = useLabels ? (() => {
 		const number = index + 1;
 		const maxlabelLen = maxLabelLength ?? 3;
-		const chatMessageLabel = labelValues && resolvedMessage.message.id ? labelValues[resolvedMessage.message.id] || "\xA0".repeat(maxlabelLen * 2) : String(number) || void 0;
-		viewLabels.push(chatMessageLabel);
+		return labelValues && resolvedMessage.message.id ? labelValues[resolvedMessage.message.id] || "\xA0".repeat(maxlabelLen * 2) : String(number) || void 0;
+	})() : void 0;
+	if (!skipChatMessage) {
+		if (useLabels) viewLabels.push(rowLabel);
+		views.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChatMessage, {
+			id: `${parentName}-chat-messages-${index}`,
+			message: resolvedMessage.message,
+			display,
+			linking
+		}));
 	}
-	views.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChatMessage, {
-		id: `${parentName}-chat-messages-${index}`,
-		message: resolvedMessage.message,
-		display,
-		linking
-	}));
 	if (toolCallStyle !== "omit" && resolvedMessage.message.role === "assistant" && resolvedMessage.message.tool_calls && resolvedMessage.message.tool_calls.length) {
 		const toolMessages = resolvedMessage.toolMessages || [];
 		let idx = 0;
@@ -120775,7 +121334,7 @@ var ChatMessageRow = ({ index, parentName, resolvedMessage, className, display, 
 				return msg.tool_call_id === tool_call.id;
 			});
 			else toolMessage = toolMessages[idx];
-			const toolLabel = labelValues?.[toolMessage?.id || ""] || void 0;
+			const toolLabel = labelValues?.[toolMessage?.id || ""] || (skipChatMessage && idx === 0 ? rowLabel : void 0);
 			const resolvedToolOutput = resolveToolMessage(toolMessage);
 			if (useLabels) viewLabels.push(toolLabel);
 			if (toolCallStyle === "compact") views.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallViewCompact, {
@@ -120846,6 +121405,25 @@ var resolveToolMessage = (toolMessage) => {
 		};
 	}).filter((con) => con !== void 0);
 };
+var hasVisibleContent = (message) => {
+	const content = message.content;
+	if (typeof content === "string") return content.trim().length > 0;
+	if (!Array.isArray(content)) return false;
+	return content.some((c) => {
+		if (c.type === "tool_use") return false;
+		if (c.type === "text") {
+			const hasText = c.text.trim().length > 0;
+			const hasCitations = !!c.citations && c.citations.length > 0;
+			return hasText || hasCitations;
+		}
+		if (c.type === "reasoning") {
+			const hasReasoning = c.reasoning.trim().length > 0;
+			const hasSummary = (c.summary?.trim().length ?? 0) > 0;
+			return hasReasoning || hasSummary || !!c.redacted;
+		}
+		return true;
+	});
+};
 var ToolCallViewCompact = ({ idx, functionCall }) => {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("code", {
 		className: clsx(ChatMessageRow_module_default.codeCompact),
@@ -120894,10 +121472,7 @@ var ChatView = ({ id, messages, className, display, labels, linking, tools }) =>
 		})
 	});
 };
-var ChatViewVirtualList_module_default = {
-	list: "_list_5fj0m_1",
-	item: "_item_5fj0m_6"
-};
+var ChatViewVirtualList_module_default = { list: "_list_1emnm_1" };
 //#endregion
 //#region ../../packages/inspect-components/src/chat/ChatViewVirtualList.tsx
 var ChatViewVirtualList = (0, import_react.memo)(function ChatViewVirtualList({ id, messages, initialMessageId, offsetTop, className, scrollRef, running, onNativeFindChanged, display, labels, linking, tools }) {
@@ -121016,12 +121591,15 @@ var hasSpans = (events) => {
 //#region ../../packages/inspect-components/src/transcript/types.ts
 var kTranscriptCollapseScope = "transcript-collapse";
 var kTranscriptOutlineCollapseScope = "transcript-outline";
+/** Event types whose *children* can be collapsed (tree collapse). */
 var kCollapsibleEventTypes = [
 	STEP,
 	SPAN_BEGIN,
 	TYPE_TOOL,
 	TYPE_SUBTASK
 ];
+/** Event types whose *content* can be collapsed (panel-level collapse). */
+var kContentCollapsibleEventTypes = ["state", "store"];
 var EventNode = class {
 	id;
 	event;
@@ -121278,10 +121856,7 @@ var transformers = () => {
 */
 var elevateChildNode = (node, childEventType) => {
 	const targetIndex = node.children.findIndex((child) => child.event.event === childEventType);
-	if (targetIndex === -1) {
-		console.log(`No ${childEventType} event found in a span, this is very unexpected.`);
-		return null;
-	}
+	if (targetIndex === -1) return null;
 	const targetNode = { ...node.children[targetIndex] };
 	const remainingChildren = node.children.filter((_, i) => i !== targetIndex);
 	targetNode.depth = node.depth;
@@ -124107,7 +124682,7 @@ function useOutlineWidth(outlineNodes, _font, agentName) {
 			header.className = [
 				TranscriptOutline_module_default.rootHeader ?? "",
 				"text-size-smaller",
-				"text-style-label"
+				"text-style-secondary"
 			].join(" ");
 			header.style.overflow = "visible";
 			header.style.textOverflow = "clip";
@@ -124304,7 +124879,7 @@ var TranscriptOutline = ({ eventNodes, defaultCollapsedIds, running, className, 
 		ref: rootRef,
 		style,
 		children: [agentName && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: clsx(TranscriptOutline_module_default.rootHeader, "text-size-smaller", "text-style-label"),
+			className: clsx(TranscriptOutline_module_default.rootHeader, "text-size-smaller", "text-style-secondary"),
 			children: agentName
 		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(qr, {
 			ref: listHandle,
@@ -124368,6 +124943,7 @@ var TimelineEvent = class {
 	* `branchedFrom` is a message ID (not an event UUID). It may match:
 	* 1. A model event's output message ID (`output.choices[0].message.id`)
 	* 2. A tool event's message ID (`message_id`)
+	* 3. A model event's input message ID (any message in `input` with matching `id`)
 	*
 	* This is used to locate the fork point for branches.
 	*/
@@ -124375,6 +124951,10 @@ var TimelineEvent = class {
 		const e = this.event;
 		if (e.event === "model") {
 			if (e.output?.choices?.[0]?.message?.id === messageId) return true;
+			const input = e.input;
+			if (input) {
+				for (const msg of input) if (msg.id === messageId) return true;
+			}
 		} else if (e.event === "tool") {
 			if (e.message_id === messageId) return true;
 		}
@@ -125413,13 +125993,16 @@ function collectBranchMarkers(node, markers) {
 *
 * `branch.branchedFrom` is a message ID (not an event UUID). Searches
 * parent events for one that produced or carries this message ID.
-* Falls back to `branch.startTime()` when branchedFrom is missing or
-* no matching event is found.
+*
+* When `branchedFrom` is empty the branch is unrolled from the very
+* beginning, so we return the parent's start time.
+*
+* Falls back to `parent.startTime()` when no matching event is found.
 */
 function resolveForkTimestamp(parent, branch) {
-	if (!branch.branchedFrom) return branch.startTime();
+	if (!branch.branchedFrom) return parent.startTime();
 	for (const item of parent.content) if (item.type === "event" && item.matchesMessageId(branch.branchedFrom)) return item.startTime();
-	return branch.startTime();
+	return parent.startTime();
 }
 /**
 * Builds a tooltip string summarizing branches at a fork point.
@@ -125638,18 +126221,6 @@ function flattenChildren(nodes, parentDepth, parentKey, includeUtility, showBran
 	}
 	entries.sort((a, b) => a.groupStartTime.getTime() - b.groupStartTime.getTime() || a.laneIndex - b.laneIndex || compareByTime(a, b));
 	const result = [];
-	for (const entry of entries) {
-		result.push({
-			key: entry.key,
-			name: entry.displayName,
-			depth,
-			spans: entry.rowSpans,
-			totalTokens: entry.totalTokens,
-			startTime: entry.startTime,
-			endTime: entry.endTime
-		});
-		result.push(...flattenChildren(entry.spans, depth, entry.key, includeUtility, showBranches));
-	}
 	if (showBranches) for (const node of nodes) {
 		const forkPositions = /* @__PURE__ */ new Map();
 		for (const branch of node.branches) {
@@ -125687,6 +126258,18 @@ function flattenChildren(nodes, parentDepth, parentKey, includeUtility, showBran
 			});
 			result.push(...flattenChildren([branchSpan], depth, branchKey, includeUtility, showBranches, `${label}.`));
 		}
+	}
+	for (const entry of entries) {
+		result.push({
+			key: entry.key,
+			name: entry.displayName,
+			depth,
+			spans: entry.rowSpans,
+			totalTokens: entry.totalTokens,
+			startTime: entry.startTime,
+			endTime: entry.endTime
+		});
+		result.push(...flattenChildren(entry.spans, depth, entry.key, includeUtility, showBranches));
 	}
 	return result;
 }
@@ -126101,22 +126684,23 @@ function computeTimeMapping(node) {
 *
 * The branch's wall-clock range [branchStart, branchEnd] is linearly remapped
 * so that it starts at `forkPercent` in the timeline's percentage space and
-* fills to 100%. This ensures branches are always visually prominent regardless
-* of how small their duration is relative to the parent timeline.
+* uses the trunk mapping's time scale for its width. This makes branch bars
+* proportional to their actual duration rather than stretching to 100%.
 *
-* @param branchStart  Branch content start time
-* @param branchEnd    Branch content end time
-* @param forkPercent  The fork marker's percentage position on the parent row (0-100)
+* @param branchStart   Branch content start time
+* @param branchEnd     Branch content end time
+* @param forkPercent   The fork marker's percentage position on the parent row (0-100)
+* @param trunkMapping  The parent/trunk time mapping, used to derive the time scale
 */
-function createShiftedMapping(branchStart, branchEnd, forkPercent) {
+function createShiftedMapping(branchStart, branchEnd, forkPercent, trunkMapping) {
 	const startMs = branchStart.getTime();
 	const branchDurationMs = branchEnd.getTime() - startMs;
-	const availablePercent = 100 - forkPercent;
+	const branchWidthPercent = trunkMapping.toPercent(branchEnd) - trunkMapping.toPercent(branchStart);
 	return {
 		toPercent(timestamp) {
 			if (branchDurationMs <= 0) return forkPercent;
 			const t = (timestamp.getTime() - startMs) / branchDurationMs;
-			return Math.max(0, Math.min(100, forkPercent + t * availablePercent));
+			return Math.max(0, Math.min(100, forkPercent + t * branchWidthPercent));
 		},
 		hasCompression: false,
 		gaps: []
@@ -127004,48 +127588,48 @@ function attachSourceSpans(nodes, spanMap) {
 	}
 }
 var TimelineSwimLanes_module_default = {
-	swimlane: "_swimlane_1u7je_1",
-	pinnedSection: "_pinnedSection_1u7je_17",
-	scrollSection: "_scrollSection_1u7je_25",
-	collapsibleSection: "_collapsibleSection_1u7je_40",
-	collapsibleCollapsed: "_collapsibleCollapsed_1u7je_53",
-	swimlaneSticky: "_swimlaneSticky_1u7je_63",
-	collapsibleInner: "_collapsibleInner_1u7je_67",
-	collapseToggle: "_collapseToggle_1u7je_77",
-	row: "_row_1u7je_105",
-	label: "_label_1u7je_111",
-	labelSelected: "_labelSelected_1u7je_129",
-	labelHighlighted: "_labelHighlighted_1u7je_134",
-	chevron: "_chevron_1u7je_141",
-	chevronSpacer: "_chevronSpacer_1u7je_156",
-	barArea: "_barArea_1u7je_164",
-	barInner: "_barInner_1u7je_170",
-	fill: "_fill_1u7je_176",
-	fillParent: "_fillParent_1u7je_194",
-	fillSelected: "_fillSelected_1u7je_198",
-	fillHighlight: "_fillHighlight_1u7je_206",
-	fillDimmed: "_fillDimmed_1u7je_217",
-	regionSegment: "_regionSegment_1u7je_224",
-	regionDefault: "_regionDefault_1u7je_223",
-	regionHover: "_regionHover_1u7je_223",
-	regionFirst: "_regionFirst_1u7je_244",
-	regionLast: "_regionLast_1u7je_248",
-	regionMiddle: "_regionMiddle_1u7je_252",
-	parallelBadge: "_parallelBadge_1u7je_256",
-	marker: "_marker_1u7je_263",
-	markerBranch: "_markerBranch_1u7je_277",
-	markerError: "_markerError_1u7je_291",
-	markerCompaction: "_markerCompaction_1u7je_312",
-	branchConnector: "_branchConnector_1u7je_332",
-	connectorArrow: "_connectorArrow_1u7je_343",
-	breadcrumbRow: "_breadcrumbRow_1u7je_371",
-	optionsButton: "_optionsButton_1u7je_380",
-	breadcrumbTrail: "_breadcrumbTrail_1u7je_404",
-	breadcrumbSegment: "_breadcrumbSegment_1u7je_412",
-	breadcrumbDivider: "_breadcrumbDivider_1u7je_418",
-	breadcrumbLink: "_breadcrumbLink_1u7je_426",
-	breadcrumbCurrent: "_breadcrumbCurrent_1u7je_440",
-	tokens: "_tokens_1u7je_451"
+	swimlane: "_swimlane_16dh6_1",
+	pinnedSection: "_pinnedSection_16dh6_17",
+	scrollSection: "_scrollSection_16dh6_25",
+	collapsibleSection: "_collapsibleSection_16dh6_40",
+	collapsibleCollapsed: "_collapsibleCollapsed_16dh6_53",
+	swimlaneSticky: "_swimlaneSticky_16dh6_63",
+	collapsibleInner: "_collapsibleInner_16dh6_67",
+	collapseToggle: "_collapseToggle_16dh6_77",
+	row: "_row_16dh6_105",
+	label: "_label_16dh6_111",
+	labelSelected: "_labelSelected_16dh6_129",
+	labelHighlighted: "_labelHighlighted_16dh6_134",
+	chevron: "_chevron_16dh6_141",
+	chevronSpacer: "_chevronSpacer_16dh6_156",
+	barArea: "_barArea_16dh6_164",
+	barInner: "_barInner_16dh6_170",
+	fill: "_fill_16dh6_176",
+	fillParent: "_fillParent_16dh6_194",
+	fillSelected: "_fillSelected_16dh6_198",
+	fillHighlight: "_fillHighlight_16dh6_206",
+	fillDimmed: "_fillDimmed_16dh6_217",
+	regionSegment: "_regionSegment_16dh6_224",
+	regionDefault: "_regionDefault_16dh6_223",
+	regionHover: "_regionHover_16dh6_223",
+	regionFirst: "_regionFirst_16dh6_244",
+	regionLast: "_regionLast_16dh6_248",
+	regionMiddle: "_regionMiddle_16dh6_252",
+	parallelBadge: "_parallelBadge_16dh6_256",
+	marker: "_marker_16dh6_263",
+	markerBranch: "_markerBranch_16dh6_277",
+	markerError: "_markerError_16dh6_291",
+	markerCompaction: "_markerCompaction_16dh6_312",
+	branchConnector: "_branchConnector_16dh6_332",
+	connectorArrow: "_connectorArrow_16dh6_343",
+	breadcrumbRow: "_breadcrumbRow_16dh6_371",
+	optionsButton: "_optionsButton_16dh6_380",
+	breadcrumbTrail: "_breadcrumbTrail_16dh6_404",
+	breadcrumbSegment: "_breadcrumbSegment_16dh6_412",
+	breadcrumbDivider: "_breadcrumbDivider_16dh6_418",
+	breadcrumbLink: "_breadcrumbLink_16dh6_426",
+	breadcrumbCurrent: "_breadcrumbCurrent_16dh6_440",
+	tokens: "_tokens_16dh6_451"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/timeline/components/TimelineSwimLanes.tsx
@@ -127114,7 +127698,7 @@ var TimelineSwimLanes = ({ layouts, timeline, header, isSticky, onMarkerNavigate
 		return keys;
 	}, [layouts, parentKeys]);
 	const isRowCollapsed = (0, import_react.useCallback)((rowKey) => {
-		const explicit = stableCollapsedBucket[rowKey];
+		const explicit = stableCollapsedBucket?.[rowKey];
 		if (explicit !== void 0) return explicit;
 		const layout = layouts.find((l) => l.key === rowKey);
 		if (!layout) return false;
@@ -127765,9 +128349,174 @@ function useTimelineConfig() {
 * memoization in every call site that needs the timelines array before
 * `useTranscriptTimeline` builds it internally.
 */
+/**
+* Collect all event UUIDs and span IDs referenced within a timeline's tree.
+*/
+function collectReferencedIds(items, uuids, spanIds) {
+	for (const item of items) if (item.type === "event") {
+		const uuid = item.event.uuid;
+		if (uuid) uuids.add(uuid);
+	} else {
+		spanIds.add(item.id);
+		collectReferencedIds(item.content, uuids, spanIds);
+		collectReferencedIds(item.branches, uuids, spanIds);
+	}
+}
+/**
+* Build a lookup of span_begin events and collect span_end events.
+*/
+function buildSpanLookup(events) {
+	const spans = /* @__PURE__ */ new Map();
+	for (const event of events) if (event.event === "span_begin") spans.set(event.id, {
+		id: event.id,
+		name: event.name,
+		type: event.type,
+		parentId: event.parent_id,
+		beginEvent: event
+	});
+	for (const event of events) if (event.event === "span_end") {
+		const span = spans.get(event.id);
+		if (span) span.endEvent = event;
+	}
+	return spans;
+}
+/**
+* Build orphan content items, preserving the minimal span tree needed to
+* house orphaned events.
+*
+* Walks the orphaned events, groups them by their direct parent span, and
+* recursively builds only the ancestor spans that contain at least one orphan.
+* Spans that are already represented in a server timeline are not recreated —
+* their orphaned children are promoted to the level above.
+*/
+function buildOrphanContent(orphanEvents, spanLookup, referencedSpanIds) {
+	const bySpan = /* @__PURE__ */ new Map();
+	for (const event of orphanEvents) {
+		const spanId = event.span_id ?? null;
+		const effectiveSpanId = spanId && !referencedSpanIds.has(spanId) && spanLookup.has(spanId) ? spanId : null;
+		let group = bySpan.get(effectiveSpanId);
+		if (!group) {
+			group = [];
+			bySpan.set(effectiveSpanId, group);
+		}
+		group.push(event);
+	}
+	const neededSpanIds = /* @__PURE__ */ new Set();
+	for (const spanId of bySpan.keys()) if (spanId !== null) neededSpanIds.add(spanId);
+	const allNeededSpanIds = new Set(neededSpanIds);
+	for (const spanId of neededSpanIds) {
+		let current = spanLookup.get(spanId);
+		while (current?.parentId) {
+			if (referencedSpanIds.has(current.parentId)) break;
+			if (!spanLookup.has(current.parentId)) break;
+			allNeededSpanIds.add(current.parentId);
+			current = spanLookup.get(current.parentId);
+		}
+	}
+	const spanChildren = /* @__PURE__ */ new Map();
+	for (const [spanId, events] of bySpan) {
+		const items = events.map((e) => new TimelineEvent(e));
+		let group = spanChildren.get(spanId);
+		if (!group) {
+			group = [];
+			spanChildren.set(spanId, group);
+		}
+		group.push(...items);
+	}
+	const spanDepth = (id) => {
+		let depth = 0;
+		let current = spanLookup.get(id);
+		while (current?.parentId && allNeededSpanIds.has(current.parentId)) {
+			depth++;
+			current = spanLookup.get(current.parentId);
+		}
+		return depth;
+	};
+	const sortedSpanIds = [...allNeededSpanIds].sort((a, b) => spanDepth(b) - spanDepth(a));
+	for (const spanId of sortedSpanIds) {
+		const info = spanLookup.get(spanId);
+		const children = spanChildren.get(spanId) ?? [];
+		children.sort((a, b) => a.startTime().getTime() - b.startTime().getTime());
+		if (children.length === 0) continue;
+		const span = new TimelineSpan({
+			id: info.id,
+			name: info.name,
+			spanType: info.type ?? null,
+			content: children,
+			utility: false
+		});
+		let parentId = null;
+		let current = info;
+		while (current.parentId) {
+			if (allNeededSpanIds.has(current.parentId)) {
+				parentId = current.parentId;
+				break;
+			}
+			current = spanLookup.get(current.parentId) ?? current;
+			if (current === info) break;
+		}
+		let parentGroup = spanChildren.get(parentId);
+		if (!parentGroup) {
+			parentGroup = [];
+			spanChildren.set(parentId, parentGroup);
+		}
+		parentGroup.push(span);
+	}
+	const rootItems = spanChildren.get(null) ?? [];
+	rootItems.sort((a, b) => a.startTime().getTime() - b.startTime().getTime());
+	return rootItems;
+}
+/**
+* Merge orphaned events into the first timeline's root, preserving time order.
+*
+* When server-provided timelines don't reference every event (e.g. scorer
+* events), the unreferenced events are collected, wrapped in their minimal
+* parent span tree, and inserted into the first timeline's root content in
+* chronological order.
+*/
+function attachOrphanedEvents(timelines, events) {
+	if (timelines.length === 0 || events.length === 0) return timelines;
+	const referencedUuids = /* @__PURE__ */ new Set();
+	const referencedSpanIds = /* @__PURE__ */ new Set();
+	for (const tl of timelines) {
+		collectReferencedIds(tl.root.content, referencedUuids, referencedSpanIds);
+		collectReferencedIds(tl.root.branches, referencedUuids, referencedSpanIds);
+		referencedSpanIds.add(tl.root.id);
+	}
+	const orphanEvents = [];
+	for (const event of events) {
+		if (event.event === "span_begin" || event.event === "span_end") continue;
+		const uuid = event.uuid;
+		if (uuid && !referencedUuids.has(uuid)) orphanEvents.push(event);
+	}
+	if (orphanEvents.length === 0) return timelines;
+	const orphanContent = buildOrphanContent(orphanEvents, buildSpanLookup(events), referencedSpanIds);
+	if (orphanContent.length === 0) return timelines;
+	const first = timelines[0];
+	const mergedContent = [...first.root.content, ...orphanContent];
+	mergedContent.sort((a, b) => a.startTime().getTime() - b.startTime().getTime());
+	const newRoot = new TimelineSpan({
+		id: first.root.id,
+		name: first.root.name,
+		spanType: first.root.spanType,
+		content: mergedContent,
+		branches: first.root.branches,
+		branchedFrom: first.root.branchedFrom,
+		description: first.root.description,
+		utility: first.root.utility,
+		agentResult: first.root.agentResult,
+		outline: first.root.outline
+	});
+	return [{
+		name: first.name,
+		description: first.description,
+		root: newRoot
+	}, ...timelines.slice(1)];
+}
 function useTimelinesArray(events, serverTimelines) {
 	const builtTimeline = (0, import_react.useMemo)(() => buildTimeline(events), [events]);
-	return (0, import_react.useMemo)(() => serverTimelines && serverTimelines.length > 0 ? serverTimelines.map((tl) => convertServerTimeline(tl, events)) : null, [serverTimelines, events]) ?? [builtTimeline];
+	const convertedTimelines = (0, import_react.useMemo)(() => serverTimelines && serverTimelines.length > 0 ? serverTimelines.map((tl) => convertServerTimeline(tl, events)) : null, [serverTimelines, events]);
+	return (0, import_react.useMemo)(() => convertedTimelines ? attachOrphanedEvents(convertedTimelines, events) : null, [convertedTimelines, events]) ?? [builtTimeline];
 }
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/timeline/hooks/useTranscriptTimeline.ts
@@ -127919,7 +128668,7 @@ function computeBranchMappings(rows, trunkMapping) {
 	const rowByKey = /* @__PURE__ */ new Map();
 	for (const row of rows) rowByKey.set(row.key, row);
 	for (const row of rows) {
-		if (!row.branch || !row.branchedFrom) continue;
+		if (!row.branch) continue;
 		const parentKey = row.key.replace(kBranchKeyPattern, "");
 		const parentRow = rowByKey.get(parentKey);
 		if (!parentRow) continue;
@@ -127931,7 +128680,7 @@ function computeBranchMappings(rows, trunkMapping) {
 		if (!branchSpan) continue;
 		const forkTimestamp = resolveForkTimestamp(parentSpan, branchSpan);
 		const forkPercent = (mappings.get(parentKey) ?? trunkMapping).toPercent(forkTimestamp);
-		mappings.set(row.key, createShiftedMapping(row.startTime, row.endTime, forkPercent));
+		mappings.set(row.key, createShiftedMapping(row.startTime, row.endTime, forkPercent, trunkMapping));
 	}
 	return mappings;
 }
@@ -127987,14 +128736,24 @@ var useEventNodes = (events, running, sourceSpans) => {
 	};
 };
 var TranscriptLayout_module_default = {
-	root: "_root_4pe3a_1",
-	container: "_container_4pe3a_9",
-	outlineCollapsed: "_outlineCollapsed_4pe3a_20",
-	noOutline: "_noOutline_4pe3a_24",
-	outline: "_outline_4pe3a_20",
-	outlineToggle: "_outlineToggle_4pe3a_44",
-	separator: "_separator_4pe3a_58",
-	eventsList: "_eventsList_4pe3a_62"
+	root: "_root_130zy_1",
+	container: "_container_130zy_9",
+	outlineCollapsed: "_outlineCollapsed_130zy_24",
+	noOutline: "_noOutline_130zy_28",
+	rightPaneCollapsed: "_rightPaneCollapsed_130zy_32",
+	noRightPane: "_noRightPane_130zy_44",
+	outline: "_outline_130zy_24",
+	outlineToggle: "_outlineToggle_130zy_73",
+	separator: "_separator_130zy_87",
+	rightSeparator: "_rightSeparator_130zy_91",
+	rightPane: "_rightPane_130zy_32",
+	rightPaneResizer: "_rightPaneResizer_130zy_110",
+	rightPaneToggle: "_rightPaneToggle_130zy_129",
+	eventsList: "_eventsList_130zy_138",
+	sidebarHeader: "_sidebarHeader_130zy_142",
+	sidebarHeaderIcon: "_sidebarHeaderIcon_130zy_150",
+	sidebarHeaderTitle: "_sidebarHeaderTitle_130zy_155",
+	sidebarHeaderClose: "_sidebarHeaderClose_130zy_166"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/ApprovalEventView.tsx
@@ -128362,6 +129121,7 @@ var ModelEventView = ({ eventNode, showToolCalls, className, context, eventCallb
 		icon: TranscriptIcons.model,
 		turnLabel,
 		eventCallbacks,
+		collapsibleContent: true,
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 				"data-name": "Summary",
@@ -128385,7 +129145,7 @@ var ModelEventView = ({ eventNode, showToolCalls, className, context, eventCallb
 							callStyle: showToolCalls ? "complete" : "omit",
 							collapseToolMessages: context?.hasToolEvents !== false
 						},
-						labels: { show: false }
+						labels: context?.messageLabels ? { messageLabels: context.messageLabels } : { show: false }
 					}),
 					event.error ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventSection, {
 						title: "Error",
@@ -128787,7 +129547,6 @@ var ScoreEditEventView = ({ eventNode, className }) => {
 		title: "Edit Score",
 		className: clsx(className, "text-size-small"),
 		subTitle: subtitle,
-		collapsibleContent: true,
 		icon: TranscriptIcons.edit,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			"data-name": "Summary",
@@ -128897,7 +129656,6 @@ var ScoreEventView = ({ eventNode, className }) => {
 		className: clsx(className, "text-size-small"),
 		subTitle: event.timestamp ? formatDateTime$1(new Date(event.timestamp)) : void 0,
 		icon: TranscriptIcons.scorer,
-		collapsibleContent: true,
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			"data-name": "Explanation",
 			className: clsx(ScoreEventView_module_default.explanation),
@@ -129689,8 +130447,8 @@ var RenderedEventNode = (0, import_react.memo)(RenderedEventNodeInner);
 var TranscriptViewNodes = (0, import_react.forwardRef)(function TranscriptViewNodes({ id, eventNodes, defaultCollapsedIds, running, scrollRef, initialEventId, offsetTop = 10, className, renderAgentCard, turnMap, getEventUrl, linkingEnabled, collapsedTranscript, collapsedOutline, onCollapseTranscript, eventNodeContext }, ref) {
 	const listHandle = (0, import_react.useRef)(null);
 	const getCollapsed = (0, import_react.useCallback)((nodeId) => {
-		return collapsedTranscript?.[nodeId] === true;
-	}, [collapsedTranscript]);
+		return (collapsedTranscript || defaultCollapsedIds)[nodeId] === true;
+	}, [collapsedTranscript, defaultCollapsedIds]);
 	const eventCallbacks = (0, import_react.useMemo)(() => ({
 		onCollapse: onCollapseTranscript,
 		getCollapsed,
@@ -129804,14 +130562,14 @@ var collectAllCollapsibleIds = (nodes) => {
 	const result = {};
 	const traverse = (nodeList) => {
 		for (const node of nodeList) {
-			if (kCollapsibleEventTypes.includes(node.event.event)) result[node.id] = true;
+			if (kCollapsibleEventTypes.includes(node.event.event) || kContentCollapsibleEventTypes.includes(node.event.event)) result[node.id] = true;
 			if (node.children.length > 0) traverse(node.children);
 		}
 	};
 	traverse(nodes);
 	return result;
 };
-var TranscriptLayout = ({ events, running = false, scrollRef, offsetTop = 0, timelineSelection, activeTimeline, serverTimelines, markerConfig: markerConfigOverride, agentConfig: agentConfigOverride, showSwimlanes: showSwimlanesOption = "auto", onMarkerNavigate, onScrollToTop, headroomHidden, onHeadroomResetAnchor, listId, initialEventId, initialMessageId, eventsListRef, getEventUrl, linkingEnabled, bulkCollapse, collapseState, outline, eventNodeContext, emptyText = "No events match the current filter", className }) => {
+var TranscriptLayout = ({ events, running = false, scrollRef, offsetTop = 0, timelineSelection, activeTimeline, serverTimelines, markerConfig: markerConfigOverride, agentConfig: agentConfigOverride, showSwimlanes: showSwimlanesOption = "auto", onMarkerNavigate, onScrollToTop, headroomHidden, onHeadroomResetAnchor, listId, initialEventId, initialMessageId, eventsListRef, getEventUrl, linkingEnabled, bulkCollapse, collapseState, outline, outlineScrollRef, rightPane, rightPaneScrollRef, eventNodeContext, emptyText = "No events match the current filter", className }) => {
 	const timelineConfig = useTimelineConfig();
 	const { timeline: timelineData, state: timelineState, layouts: timelineLayouts, rootTimeMapping, selectedEvents, sourceSpans, minimapSelection, hasTimeline, timelines, activeTimelineIndex, setActiveTimeline, regionCounts, branchScrollTarget, highlightedKeys, selectedRowName } = useTranscriptTimeline({
 		events,
@@ -129920,14 +130678,27 @@ var TranscriptLayout = ({ events, running = false, scrollRef, offsetTop = 0, tim
 	const onSetTranscriptCollapsed = collapseState?.onSetTranscriptCollapsed;
 	(0, import_react.useEffect)(() => {
 		if (events.length <= 0 || !bulkCollapse || !onSetTranscriptCollapsed) return;
-		if (bulkCollapse === "expand" && Object.keys(defaultCollapsedIds).length > 0) onSetTranscriptCollapsed(defaultCollapsedIds);
+		if (bulkCollapse === "expand") onSetTranscriptCollapsed({});
 		else if (bulkCollapse === "collapse") onSetTranscriptCollapsed(collectAllCollapsibleIds(eventNodes));
 	}, [
-		defaultCollapsedIds,
 		eventNodes,
 		bulkCollapse,
 		onSetTranscriptCollapsed,
 		events.length
+	]);
+	const onCollapseTranscriptRaw = collapseState?.onCollapseTranscript;
+	const onCollapseTranscript = (0, import_react.useCallback)((nodeId, collapsed) => {
+		if (!onCollapseTranscriptRaw || !onSetTranscriptCollapsed) return;
+		if (!collapseState?.transcript) onSetTranscriptCollapsed({
+			...defaultCollapsedIds,
+			[nodeId]: collapsed
+		});
+		else onCollapseTranscriptRaw(nodeId, collapsed);
+	}, [
+		onCollapseTranscriptRaw,
+		onSetTranscriptCollapsed,
+		collapseState?.transcript,
+		defaultCollapsedIds
 	]);
 	const [reportedHasNodes, setReportedHasNodes] = (0, import_react.useState)(true);
 	const [prevEventNodes, setPrevEventNodes] = (0, import_react.useState)(eventNodes);
@@ -129951,6 +130722,110 @@ var TranscriptLayout = ({ events, running = false, scrollRef, offsetTop = 0, tim
 		});
 	}, []);
 	const handleLayoutShift = (0, import_react.useCallback)((debounce) => onHeadroomResetAnchor?.(debounce), [onHeadroomResetAnchor]);
+	const outlineCollapsedFlag = outline?.collapsed ?? null;
+	const rightPaneCollapsedFlag = rightPane?.collapsed ?? null;
+	(0, import_react.useEffect)(() => {
+		const el = scrollRef.current;
+		if (!el) return;
+		const timer = setTimeout(() => {
+			el.dispatchEvent(new Event("scroll"));
+		}, 0);
+		return () => clearTimeout(timer);
+	}, [
+		outlineCollapsedFlag,
+		rightPaneCollapsedFlag,
+		scrollRef
+	]);
+	const effectiveOffsetTopRef = (0, import_react.useRef)(effectiveOffsetTop);
+	(0, import_react.useEffect)(() => {
+		effectiveOffsetTopRef.current = effectiveOffsetTop;
+	}, [effectiveOffsetTop]);
+	(0, import_react.useEffect)(() => {
+		const main = scrollRef.current;
+		const outlineEl = outlineScrollRef?.current ?? null;
+		const rightEl = rightPaneScrollRef?.current ?? null;
+		if (!main) return;
+		const makeHandler = (sidebar) => (e) => {
+			const mainMaxTop = main.scrollHeight - main.clientHeight;
+			const mainRect = main.getBoundingClientRect();
+			if (!(sidebar.getBoundingClientRect().top - mainRect.top <= effectiveOffsetTopRef.current + 1)) {
+				if (e.deltaY > 0 && main.scrollTop < mainMaxTop - .5 || e.deltaY < 0 && main.scrollTop > .5) {
+					e.preventDefault();
+					main.scrollBy({
+						top: e.deltaY,
+						behavior: "auto"
+					});
+				}
+			} else if (e.deltaY < 0 && sidebar.scrollTop <= 0 && main.scrollTop > 0) {
+				e.preventDefault();
+				main.scrollBy({
+					top: e.deltaY,
+					behavior: "auto"
+				});
+			}
+		};
+		const entries = [outlineEl, rightEl].filter((el) => el != null).map((t) => {
+			const handler = makeHandler(t);
+			t.addEventListener("wheel", handler, { passive: false });
+			return {
+				t,
+				handler
+			};
+		});
+		return () => {
+			for (const { t, handler } of entries) t.removeEventListener("wheel", handler);
+		};
+	}, [
+		scrollRef,
+		outlineScrollRef,
+		rightPaneScrollRef,
+		outlineCollapsedFlag,
+		rightPaneCollapsedFlag
+	]);
+	const [scrollerHeight, setScrollerHeight] = (0, import_react.useState)(0);
+	(0, import_react.useEffect)(() => {
+		const el = scrollRef.current;
+		if (!el) return;
+		const update = () => setScrollerHeight(el.getBoundingClientRect().height);
+		update();
+		const observer = new ResizeObserver(update);
+		observer.observe(el);
+		window.addEventListener("resize", update);
+		return () => {
+			observer.disconnect();
+			window.removeEventListener("resize", update);
+		};
+	}, [scrollRef]);
+	const rightPaneWidth = rightPane?.width ?? 360;
+	const rightPaneMinWidth = rightPane?.minWidth ?? 240;
+	const rightPaneMaxWidth = rightPane?.maxWidth ?? 800;
+	const rightPaneOnWidthChange = rightPane?.onWidthChange;
+	const rightPaneDragRef = (0, import_react.useRef)(null);
+	const handleRightPanePointerDown = (0, import_react.useCallback)((e) => {
+		if (!rightPaneOnWidthChange) return;
+		e.preventDefault();
+		e.target.setPointerCapture(e.pointerId);
+		rightPaneDragRef.current = {
+			startX: e.clientX,
+			startWidth: rightPaneWidth
+		};
+	}, [rightPaneOnWidthChange, rightPaneWidth]);
+	const handleRightPanePointerMove = (0, import_react.useCallback)((e) => {
+		if (!rightPaneOnWidthChange || !rightPaneDragRef.current) return;
+		const { startX, startWidth } = rightPaneDragRef.current;
+		const next = startWidth - (e.clientX - startX);
+		rightPaneOnWidthChange(Math.max(rightPaneMinWidth, Math.min(rightPaneMaxWidth, next)));
+	}, [
+		rightPaneOnWidthChange,
+		rightPaneMinWidth,
+		rightPaneMaxWidth
+	]);
+	const handleRightPanePointerUp = (0, import_react.useCallback)((e) => {
+		rightPaneDragRef.current = null;
+		try {
+			e.target.releasePointerCapture(e.pointerId);
+		} catch {}
+	}, []);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TimelineSelectContext.Provider, {
 		value: selectBySpanId,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -129977,56 +130852,122 @@ var TranscriptLayout = ({ events, running = false, scrollRef, offsetTop = 0, tim
 					})
 				})
 			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: clsx(TranscriptLayout_module_default.container, !outline && TranscriptLayout_module_default.noOutline, outline && isOutlineCollapsed && TranscriptLayout_module_default.outlineCollapsed),
-				style: { "--outline-top": `${effectiveOffsetTop}px` },
-				children: [outline && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(StickyScroll, {
-					scrollRef,
-					className: TranscriptLayout_module_default.outline,
-					offsetTop: effectiveOffsetTop,
-					children: [!isOutlineCollapsed && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptOutline, {
+				className: clsx(TranscriptLayout_module_default.container, !outline && TranscriptLayout_module_default.noOutline, outline && isOutlineCollapsed && TranscriptLayout_module_default.outlineCollapsed, !rightPane && TranscriptLayout_module_default.noRightPane, rightPane && rightPane.collapsed && TranscriptLayout_module_default.rightPaneCollapsed),
+				style: {
+					"--outline-top": `${effectiveOffsetTop}px`,
+					"--right-pane-width": `${rightPaneWidth}px`,
+					"--scroller-height": scrollerHeight ? `${scrollerHeight}px` : "100vh"
+				},
+				children: [
+					outline && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(StickyScroll, {
+						ref: outlineScrollRef,
+						scrollRef,
+						className: TranscriptLayout_module_default.outline,
+						offsetTop: effectiveOffsetTop,
+						children: !isOutlineCollapsed ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
+							outline.title && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: TranscriptLayout_module_default.sidebarHeader,
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: clsx(TranscriptLayout_module_default.sidebarHeaderTitle, "text-size-smaller"),
+									children: outline.title
+								})
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+								type: "button",
+								className: TranscriptLayout_module_default.sidebarHeaderClose,
+								onClick: () => outline.onCollapsedChange(true),
+								"aria-label": "Hide outline",
+								title: outline.toggleTitle ?? "Hide outline",
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: "bi bi-x" })
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptOutline, {
+								eventNodes,
+								defaultCollapsedIds,
+								scrollRef,
+								running,
+								agentName: outline.name ?? (showSwimlanes ? selectedRowName : void 0),
+								scrollTrackOffset: effectiveOffsetTop,
+								getCollapsed: collapseState?.outline ? (nodeId) => collapseState.outline?.[nodeId] === true : void 0,
+								setCollapsed: collapseState?.onCollapseOutline,
+								collapsedEvents: collapseState?.outline,
+								setCollapsedEvents: collapseState?.onSetOutlineCollapsed,
+								selectedOutlineId: outline.selectedId,
+								setSelectedOutlineId: outline.setSelectedId,
+								getEventUrl,
+								renderLink: outline.renderLink,
+								onNavigateToEvent: outline.onNavigateToEvent,
+								onHasNodesChange: handleOutlineHasNodesChange
+							})
+						] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+							type: "button",
+							className: TranscriptLayout_module_default.outlineToggle,
+							onClick: outlineHasNodes && !outline.toggleDisabled ? () => outline.onCollapsedChange(false) : void 0,
+							"aria-disabled": outline.toggleDisabled || !outlineHasNodes,
+							title: outline.toggleTitle ?? (!outlineHasNodes ? "No outline available for the current filter" : void 0),
+							"aria-label": "Show outline",
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: outline.toggleIcon })
+						})
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: TranscriptLayout_module_default.separator })] }),
+					hasMatchingEvents ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptViewNodes, {
+						ref: eventsListRef,
+						id: effectiveListId,
 						eventNodes,
 						defaultCollapsedIds,
-						scrollRef,
 						running,
-						agentName: outline.name ?? (showSwimlanes ? selectedRowName : void 0),
-						scrollTrackOffset: effectiveOffsetTop,
-						getCollapsed: collapseState?.outline ? (nodeId) => collapseState.outline?.[nodeId] === true : void 0,
-						setCollapsed: collapseState?.onCollapseOutline,
-						collapsedEvents: collapseState?.outline,
-						setCollapsedEvents: collapseState?.onSetOutlineCollapsed,
-						selectedOutlineId: outline.selectedId,
-						setSelectedOutlineId: outline.setSelectedId,
+						initialEventId: effectiveInitialEventId,
+						offsetTop: effectiveOffsetTop,
+						className: TranscriptLayout_module_default.eventsList,
+						scrollRef,
+						renderAgentCard: showSwimlanes ? renderAgentCard : void 0,
 						getEventUrl,
-						renderLink: outline.renderLink,
-						onNavigateToEvent: outline.onNavigateToEvent,
-						onHasNodesChange: handleOutlineHasNodesChange
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-						type: "button",
-						className: TranscriptLayout_module_default.outlineToggle,
-						onClick: outlineHasNodes && !outline.toggleDisabled ? () => outline.onCollapsedChange(!isOutlineCollapsed) : void 0,
-						"aria-disabled": outline.toggleDisabled || !outlineHasNodes,
-						title: outline.toggleTitle ?? (!outlineHasNodes ? "No outline available for the current filter" : void 0),
-						"aria-label": isOutlineCollapsed ? "Show outline" : "Hide outline",
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: outline.toggleIcon })
-					})]
-				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: TranscriptLayout_module_default.separator })] }), hasMatchingEvents ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptViewNodes, {
-					ref: eventsListRef,
-					id: effectiveListId,
-					eventNodes,
-					defaultCollapsedIds,
-					running,
-					initialEventId: effectiveInitialEventId,
-					offsetTop: effectiveOffsetTop,
-					className: TranscriptLayout_module_default.eventsList,
-					scrollRef,
-					renderAgentCard: showSwimlanes ? renderAgentCard : void 0,
-					getEventUrl,
-					linkingEnabled,
-					collapsedTranscript: collapseState?.transcript,
-					collapsedOutline: collapseState?.outline,
-					onCollapseTranscript: collapseState?.onCollapseTranscript,
-					eventNodeContext
-				}, effectiveListId) : emptyText !== null ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, { text: emptyText }) : null]
+						linkingEnabled,
+						collapsedTranscript: collapseState?.transcript,
+						collapsedOutline: collapseState?.outline,
+						onCollapseTranscript,
+						eventNodeContext
+					}, effectiveListId) : emptyText !== null ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, { text: emptyText }) : null,
+					rightPane && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: TranscriptLayout_module_default.rightSeparator }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StickyScroll, {
+						ref: rightPaneScrollRef,
+						scrollRef,
+						className: TranscriptLayout_module_default.rightPane,
+						offsetTop: effectiveOffsetTop,
+						children: !rightPane.collapsed ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
+							rightPaneOnWidthChange && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: TranscriptLayout_module_default.rightPaneResizer,
+								role: "separator",
+								"aria-orientation": "vertical",
+								"aria-label": `Resize ${rightPane.label ?? "pane"}`,
+								onPointerDown: handleRightPanePointerDown,
+								onPointerMove: handleRightPanePointerMove,
+								onPointerUp: handleRightPanePointerUp,
+								onPointerCancel: handleRightPanePointerUp
+							}),
+							rightPane.title && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: TranscriptLayout_module_default.sidebarHeader,
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: clsx(TranscriptLayout_module_default.sidebarHeaderTitle, "text-size-smaller"),
+									children: rightPane.title
+								})
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+								type: "button",
+								className: TranscriptLayout_module_default.sidebarHeaderClose,
+								onClick: () => rightPane.onCollapsedChange(true),
+								"aria-label": `Hide ${rightPane.label ?? "pane"}`,
+								title: rightPane.toggleTitle ?? `Hide ${rightPane.label ?? "pane"}`,
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: "bi bi-x" })
+							}),
+							rightPane.content
+						] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+							type: "button",
+							className: TranscriptLayout_module_default.rightPaneToggle,
+							onClick: () => rightPane.onCollapsedChange(false),
+							title: rightPane.toggleTitle ?? `Show ${rightPane.label ?? "pane"}`,
+							"aria-label": `Show ${rightPane.label ?? "pane"}`,
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: rightPane.toggleIcon })
+						})
+					})] })
+				]
 			})]
 		})
 	});
@@ -130035,7 +130976,7 @@ var TranscriptLayout = ({ events, running = false, scrollRef, offsetTop = 0, tim
 //#region src/app/samples/messagesFromEvents.ts
 var messagesFromEvents = (runningEvents) => {
 	const messages = /* @__PURE__ */ new Map();
-	runningEvents.filter((e) => e.event === "model").forEach((e) => {
+	runningEvents.filter((e) => e.event === "model").filter((e) => !e.error).forEach((e) => {
 		for (const m of e.input) {
 			const inputMessage = m;
 			if (inputMessage.id && !messages.has(inputMessage.id)) messages.set(inputMessage.id, inputMessage);
@@ -130047,19 +130988,17 @@ var messagesFromEvents = (runningEvents) => {
 	else return [];
 };
 var SampleDisplay_module_default = {
-	tabPanel: "_tabPanel_9o62g_1",
-	tabControls: "_tabControls_9o62g_5",
-	fullWidth: "_fullWidth_9o62g_14",
-	metadataPanel: "_metadataPanel_9o62g_18",
-	padded: "_padded_9o62g_24",
-	error: "_error_9o62g_29",
-	ansi: "_ansi_9o62g_33",
-	noTop: "_noTop_9o62g_37",
-	timePanel: "_timePanel_9o62g_41",
-	chat: "_chat_9o62g_49",
-	transcriptContainer: "_transcriptContainer_9o62g_57",
-	overflowVisible: "_overflowVisible_9o62g_61",
-	retriedErrors: "_retriedErrors_9o62g_65"
+	tabControls: "_tabControls_1si8b_1",
+	fullWidth: "_fullWidth_1si8b_10",
+	metadataPanel: "_metadataPanel_1si8b_14",
+	padded: "_padded_1si8b_20",
+	error: "_error_1si8b_25",
+	ansi: "_ansi_1si8b_29",
+	noTop: "_noTop_1si8b_33",
+	timePanel: "_timePanel_1si8b_37",
+	chat: "_chat_1si8b_45",
+	overflowVisible: "_overflowVisible_1si8b_53",
+	retriedErrors: "_retriedErrors_1si8b_57"
 };
 //#endregion
 //#region src/app/samples/SampleJSONView.tsx
@@ -130133,7 +131072,8 @@ var SampleRetriedErrors = ({ id, retries, scrollRef }) => {
 				children: [retries.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolDropdownButton, {
 					label: `Attempt ${selectedIndex + 1}`,
 					items: dropdownItems,
-					className: clsx("text-size-smallest", SampleRetriedErrors_module_default.attemptDropdown)
+					className: clsx("text-size-smallest", SampleRetriedErrors_module_default.attemptDropdown),
+					dropdownClassName: "text-size-smallest"
 				}), hasEvents && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SegmentedControl, {
 					segments: kViewSegments,
 					selectedId: view,
@@ -130630,14 +131570,14 @@ var SampleScores = ({ sample, scorer }) => {
 	return getScoreDescriptorForValues([scoreData.value], [typeof scoreData.value])?.render(scoreData.value);
 };
 var SampleScoresGrid_module_default = {
-	container: "_container_kwhbh_1",
-	cell: "_cell_kwhbh_9",
-	fullWidth: "_fullWidth_kwhbh_13",
-	heading: "_heading_kwhbh_17",
-	padded: "_padded_kwhbh_21",
-	separator: "_separator_kwhbh_25",
-	separatorPadded: "_separatorPadded_kwhbh_30",
-	headerSep: "_headerSep_kwhbh_35"
+	container: "_container_1rxdt_1",
+	cell: "_cell_1rxdt_9",
+	fullWidth: "_fullWidth_1rxdt_15",
+	heading: "_heading_1rxdt_19",
+	padded: "_padded_1rxdt_23",
+	separator: "_separator_1rxdt_27",
+	separatorPadded: "_separatorPadded_1rxdt_32",
+	headerSep: "_headerSep_1rxdt_37"
 };
 //#endregion
 //#region src/app/samples/scores/SampleScoresGrid.tsx
@@ -130908,15 +131848,2643 @@ var TranscriptFilterPopover = ({ showing, positionEl, setShowing }) => {
 	});
 };
 //#endregion
+//#region ../../packages/scout-components/src/sentinels/scannerReferences.ts
+var kScannerReferencesKey = "scanner_references";
+var kScannerContentKey = "scanner_content";
+function isScannerScore(metadata) {
+	return !!metadata && kScannerReferencesKey in metadata;
+}
+function metadataWithoutScannerKeys(metadata) {
+	if (!metadata) return {};
+	const { [kScannerReferencesKey]: _refs, [kScannerContentKey]: _content, ...rest } = metadata;
+	return rest;
+}
+function readScannerReferences(metadata) {
+	if (!metadata) return [];
+	const raw = metadata[kScannerReferencesKey];
+	if (!Array.isArray(raw)) return [];
+	const entries = [];
+	for (const item of raw) {
+		if (!item || typeof item !== "object") continue;
+		const { type, id, cite } = item;
+		if ((type === "message" || type === "event") && typeof id === "string" && typeof cite === "string" && cite.length > 0) entries.push({
+			type,
+			id,
+			cite
+		});
+	}
+	return entries;
+}
+//#endregion
+//#region ../../node_modules/.pnpm/picomatch@4.0.4/node_modules/picomatch/lib/constants.js
+var require_constants = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	var WIN_SLASH = "\\\\/";
+	var WIN_NO_SLASH = `[^${WIN_SLASH}]`;
+	var DEFAULT_MAX_EXTGLOB_RECURSION = 0;
+	/**
+	* Posix glob regex
+	*/
+	var DOT_LITERAL = "\\.";
+	var PLUS_LITERAL = "\\+";
+	var QMARK_LITERAL = "\\?";
+	var SLASH_LITERAL = "\\/";
+	var ONE_CHAR = "(?=.)";
+	var QMARK = "[^/]";
+	var END_ANCHOR = `(?:${SLASH_LITERAL}|$)`;
+	var START_ANCHOR = `(?:^|${SLASH_LITERAL})`;
+	var DOTS_SLASH = `${DOT_LITERAL}{1,2}${END_ANCHOR}`;
+	var POSIX_CHARS = {
+		DOT_LITERAL,
+		PLUS_LITERAL,
+		QMARK_LITERAL,
+		SLASH_LITERAL,
+		ONE_CHAR,
+		QMARK,
+		END_ANCHOR,
+		DOTS_SLASH,
+		NO_DOT: `(?!${DOT_LITERAL})`,
+		NO_DOTS: `(?!${START_ANCHOR}${DOTS_SLASH})`,
+		NO_DOT_SLASH: `(?!${DOT_LITERAL}{0,1}${END_ANCHOR})`,
+		NO_DOTS_SLASH: `(?!${DOTS_SLASH})`,
+		QMARK_NO_DOT: `[^.${SLASH_LITERAL}]`,
+		STAR: `${QMARK}*?`,
+		START_ANCHOR,
+		SEP: "/"
+	};
+	/**
+	* Windows glob regex
+	*/
+	var WINDOWS_CHARS = {
+		...POSIX_CHARS,
+		SLASH_LITERAL: `[${WIN_SLASH}]`,
+		QMARK: WIN_NO_SLASH,
+		STAR: `${WIN_NO_SLASH}*?`,
+		DOTS_SLASH: `${DOT_LITERAL}{1,2}(?:[${WIN_SLASH}]|$)`,
+		NO_DOT: `(?!${DOT_LITERAL})`,
+		NO_DOTS: `(?!(?:^|[${WIN_SLASH}])${DOT_LITERAL}{1,2}(?:[${WIN_SLASH}]|$))`,
+		NO_DOT_SLASH: `(?!${DOT_LITERAL}{0,1}(?:[${WIN_SLASH}]|$))`,
+		NO_DOTS_SLASH: `(?!${DOT_LITERAL}{1,2}(?:[${WIN_SLASH}]|$))`,
+		QMARK_NO_DOT: `[^.${WIN_SLASH}]`,
+		START_ANCHOR: `(?:^|[${WIN_SLASH}])`,
+		END_ANCHOR: `(?:[${WIN_SLASH}]|$)`,
+		SEP: "\\"
+	};
+	module.exports = {
+		DEFAULT_MAX_EXTGLOB_RECURSION,
+		MAX_LENGTH: 1024 * 64,
+		POSIX_REGEX_SOURCE: {
+			__proto__: null,
+			alnum: "a-zA-Z0-9",
+			alpha: "a-zA-Z",
+			ascii: "\\x00-\\x7F",
+			blank: " \\t",
+			cntrl: "\\x00-\\x1F\\x7F",
+			digit: "0-9",
+			graph: "\\x21-\\x7E",
+			lower: "a-z",
+			print: "\\x20-\\x7E ",
+			punct: "\\-!\"#$%&'()\\*+,./:;<=>?@[\\]^_`{|}~",
+			space: " \\t\\r\\n\\v\\f",
+			upper: "A-Z",
+			word: "A-Za-z0-9_",
+			xdigit: "A-Fa-f0-9"
+		},
+		REGEX_BACKSLASH: /\\(?![*+?^${}(|)[\]])/g,
+		REGEX_NON_SPECIAL_CHARS: /^[^@![\].,$*+?^{}()|\\/]+/,
+		REGEX_SPECIAL_CHARS: /[-*+?.^${}(|)[\]]/,
+		REGEX_SPECIAL_CHARS_BACKREF: /(\\?)((\W)(\3*))/g,
+		REGEX_SPECIAL_CHARS_GLOBAL: /([-*+?.^${}(|)[\]])/g,
+		REGEX_REMOVE_BACKSLASH: /(?:\[.*?[^\\]\]|\\(?=.))/g,
+		REPLACEMENTS: {
+			__proto__: null,
+			"***": "*",
+			"**/**": "**",
+			"**/**/**": "**"
+		},
+		CHAR_0: 48,
+		CHAR_9: 57,
+		CHAR_UPPERCASE_A: 65,
+		CHAR_LOWERCASE_A: 97,
+		CHAR_UPPERCASE_Z: 90,
+		CHAR_LOWERCASE_Z: 122,
+		CHAR_LEFT_PARENTHESES: 40,
+		CHAR_RIGHT_PARENTHESES: 41,
+		CHAR_ASTERISK: 42,
+		CHAR_AMPERSAND: 38,
+		CHAR_AT: 64,
+		CHAR_BACKWARD_SLASH: 92,
+		CHAR_CARRIAGE_RETURN: 13,
+		CHAR_CIRCUMFLEX_ACCENT: 94,
+		CHAR_COLON: 58,
+		CHAR_COMMA: 44,
+		CHAR_DOT: 46,
+		CHAR_DOUBLE_QUOTE: 34,
+		CHAR_EQUAL: 61,
+		CHAR_EXCLAMATION_MARK: 33,
+		CHAR_FORM_FEED: 12,
+		CHAR_FORWARD_SLASH: 47,
+		CHAR_GRAVE_ACCENT: 96,
+		CHAR_HASH: 35,
+		CHAR_HYPHEN_MINUS: 45,
+		CHAR_LEFT_ANGLE_BRACKET: 60,
+		CHAR_LEFT_CURLY_BRACE: 123,
+		CHAR_LEFT_SQUARE_BRACKET: 91,
+		CHAR_LINE_FEED: 10,
+		CHAR_NO_BREAK_SPACE: 160,
+		CHAR_PERCENT: 37,
+		CHAR_PLUS: 43,
+		CHAR_QUESTION_MARK: 63,
+		CHAR_RIGHT_ANGLE_BRACKET: 62,
+		CHAR_RIGHT_CURLY_BRACE: 125,
+		CHAR_RIGHT_SQUARE_BRACKET: 93,
+		CHAR_SEMICOLON: 59,
+		CHAR_SINGLE_QUOTE: 39,
+		CHAR_SPACE: 32,
+		CHAR_TAB: 9,
+		CHAR_UNDERSCORE: 95,
+		CHAR_VERTICAL_LINE: 124,
+		CHAR_ZERO_WIDTH_NOBREAK_SPACE: 65279,
+		extglobChars(chars) {
+			return {
+				"!": {
+					type: "negate",
+					open: "(?:(?!(?:",
+					close: `))${chars.STAR})`
+				},
+				"?": {
+					type: "qmark",
+					open: "(?:",
+					close: ")?"
+				},
+				"+": {
+					type: "plus",
+					open: "(?:",
+					close: ")+"
+				},
+				"*": {
+					type: "star",
+					open: "(?:",
+					close: ")*"
+				},
+				"@": {
+					type: "at",
+					open: "(?:",
+					close: ")"
+				}
+			};
+		},
+		globChars(win32) {
+			return win32 === true ? WINDOWS_CHARS : POSIX_CHARS;
+		}
+	};
+}));
+//#endregion
+//#region ../../node_modules/.pnpm/picomatch@4.0.4/node_modules/picomatch/lib/utils.js
+var require_utils = /* @__PURE__ */ __commonJSMin(((exports) => {
+	var { REGEX_BACKSLASH, REGEX_REMOVE_BACKSLASH, REGEX_SPECIAL_CHARS, REGEX_SPECIAL_CHARS_GLOBAL } = require_constants();
+	exports.isObject = (val) => val !== null && typeof val === "object" && !Array.isArray(val);
+	exports.hasRegexChars = (str) => REGEX_SPECIAL_CHARS.test(str);
+	exports.isRegexChar = (str) => str.length === 1 && exports.hasRegexChars(str);
+	exports.escapeRegex = (str) => str.replace(REGEX_SPECIAL_CHARS_GLOBAL, "\\$1");
+	exports.toPosixSlashes = (str) => str.replace(REGEX_BACKSLASH, "/");
+	exports.isWindows = () => {
+		if (typeof navigator !== "undefined" && navigator.platform) {
+			const platform = navigator.platform.toLowerCase();
+			return platform === "win32" || platform === "windows";
+		}
+		if (typeof process !== "undefined" && process.platform) return process.platform === "win32";
+		return false;
+	};
+	exports.removeBackslashes = (str) => {
+		return str.replace(REGEX_REMOVE_BACKSLASH, (match) => {
+			return match === "\\" ? "" : match;
+		});
+	};
+	exports.escapeLast = (input, char, lastIdx) => {
+		const idx = input.lastIndexOf(char, lastIdx);
+		if (idx === -1) return input;
+		if (input[idx - 1] === "\\") return exports.escapeLast(input, char, idx - 1);
+		return `${input.slice(0, idx)}\\${input.slice(idx)}`;
+	};
+	exports.removePrefix = (input, state = {}) => {
+		let output = input;
+		if (output.startsWith("./")) {
+			output = output.slice(2);
+			state.prefix = "./";
+		}
+		return output;
+	};
+	exports.wrapOutput = (input, state = {}, options = {}) => {
+		let output = `${options.contains ? "" : "^"}(?:${input})${options.contains ? "" : "$"}`;
+		if (state.negated === true) output = `(?:^(?!${output}).*$)`;
+		return output;
+	};
+	exports.basename = (path, { windows } = {}) => {
+		const segs = path.split(windows ? /[\\/]/ : "/");
+		const last = segs[segs.length - 1];
+		if (last === "") return segs[segs.length - 2];
+		return last;
+	};
+}));
+//#endregion
+//#region ../../node_modules/.pnpm/picomatch@4.0.4/node_modules/picomatch/lib/scan.js
+var require_scan = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	var utils = require_utils();
+	var { CHAR_ASTERISK, CHAR_AT, CHAR_BACKWARD_SLASH, CHAR_COMMA, CHAR_DOT, CHAR_EXCLAMATION_MARK, CHAR_FORWARD_SLASH, CHAR_LEFT_CURLY_BRACE, CHAR_LEFT_PARENTHESES, CHAR_LEFT_SQUARE_BRACKET, CHAR_PLUS, CHAR_QUESTION_MARK, CHAR_RIGHT_CURLY_BRACE, CHAR_RIGHT_PARENTHESES, CHAR_RIGHT_SQUARE_BRACKET } = require_constants();
+	var isPathSeparator = (code) => {
+		return code === CHAR_FORWARD_SLASH || code === CHAR_BACKWARD_SLASH;
+	};
+	var depth = (token) => {
+		if (token.isPrefix !== true) token.depth = token.isGlobstar ? Infinity : 1;
+	};
+	/**
+	* Quickly scans a glob pattern and returns an object with a handful of
+	* useful properties, like `isGlob`, `path` (the leading non-glob, if it exists),
+	* `glob` (the actual pattern), `negated` (true if the path starts with `!` but not
+	* with `!(`) and `negatedExtglob` (true if the path starts with `!(`).
+	*
+	* ```js
+	* const pm = require('picomatch');
+	* console.log(pm.scan('foo/bar/*.js'));
+	* { isGlob: true, input: 'foo/bar/*.js', base: 'foo/bar', glob: '*.js' }
+	* ```
+	* @param {String} `str`
+	* @param {Object} `options`
+	* @return {Object} Returns an object with tokens and regex source string.
+	* @api public
+	*/
+	var scan = (input, options) => {
+		const opts = options || {};
+		const length = input.length - 1;
+		const scanToEnd = opts.parts === true || opts.scanToEnd === true;
+		const slashes = [];
+		const tokens = [];
+		const parts = [];
+		let str = input;
+		let index = -1;
+		let start = 0;
+		let lastIndex = 0;
+		let isBrace = false;
+		let isBracket = false;
+		let isGlob = false;
+		let isExtglob = false;
+		let isGlobstar = false;
+		let braceEscaped = false;
+		let backslashes = false;
+		let negated = false;
+		let negatedExtglob = false;
+		let finished = false;
+		let braces = 0;
+		let prev;
+		let code;
+		let token = {
+			value: "",
+			depth: 0,
+			isGlob: false
+		};
+		const eos = () => index >= length;
+		const peek = () => str.charCodeAt(index + 1);
+		const advance = () => {
+			prev = code;
+			return str.charCodeAt(++index);
+		};
+		while (index < length) {
+			code = advance();
+			let next;
+			if (code === CHAR_BACKWARD_SLASH) {
+				backslashes = token.backslashes = true;
+				code = advance();
+				if (code === CHAR_LEFT_CURLY_BRACE) braceEscaped = true;
+				continue;
+			}
+			if (braceEscaped === true || code === CHAR_LEFT_CURLY_BRACE) {
+				braces++;
+				while (eos() !== true && (code = advance())) {
+					if (code === CHAR_BACKWARD_SLASH) {
+						backslashes = token.backslashes = true;
+						advance();
+						continue;
+					}
+					if (code === CHAR_LEFT_CURLY_BRACE) {
+						braces++;
+						continue;
+					}
+					if (braceEscaped !== true && code === CHAR_DOT && (code = advance()) === CHAR_DOT) {
+						isBrace = token.isBrace = true;
+						isGlob = token.isGlob = true;
+						finished = true;
+						if (scanToEnd === true) continue;
+						break;
+					}
+					if (braceEscaped !== true && code === CHAR_COMMA) {
+						isBrace = token.isBrace = true;
+						isGlob = token.isGlob = true;
+						finished = true;
+						if (scanToEnd === true) continue;
+						break;
+					}
+					if (code === CHAR_RIGHT_CURLY_BRACE) {
+						braces--;
+						if (braces === 0) {
+							braceEscaped = false;
+							isBrace = token.isBrace = true;
+							finished = true;
+							break;
+						}
+					}
+				}
+				if (scanToEnd === true) continue;
+				break;
+			}
+			if (code === CHAR_FORWARD_SLASH) {
+				slashes.push(index);
+				tokens.push(token);
+				token = {
+					value: "",
+					depth: 0,
+					isGlob: false
+				};
+				if (finished === true) continue;
+				if (prev === CHAR_DOT && index === start + 1) {
+					start += 2;
+					continue;
+				}
+				lastIndex = index + 1;
+				continue;
+			}
+			if (opts.noext !== true) {
+				if ((code === CHAR_PLUS || code === CHAR_AT || code === CHAR_ASTERISK || code === CHAR_QUESTION_MARK || code === CHAR_EXCLAMATION_MARK) === true && peek() === CHAR_LEFT_PARENTHESES) {
+					isGlob = token.isGlob = true;
+					isExtglob = token.isExtglob = true;
+					finished = true;
+					if (code === CHAR_EXCLAMATION_MARK && index === start) negatedExtglob = true;
+					if (scanToEnd === true) {
+						while (eos() !== true && (code = advance())) {
+							if (code === CHAR_BACKWARD_SLASH) {
+								backslashes = token.backslashes = true;
+								code = advance();
+								continue;
+							}
+							if (code === CHAR_RIGHT_PARENTHESES) {
+								isGlob = token.isGlob = true;
+								finished = true;
+								break;
+							}
+						}
+						continue;
+					}
+					break;
+				}
+			}
+			if (code === CHAR_ASTERISK) {
+				if (prev === CHAR_ASTERISK) isGlobstar = token.isGlobstar = true;
+				isGlob = token.isGlob = true;
+				finished = true;
+				if (scanToEnd === true) continue;
+				break;
+			}
+			if (code === CHAR_QUESTION_MARK) {
+				isGlob = token.isGlob = true;
+				finished = true;
+				if (scanToEnd === true) continue;
+				break;
+			}
+			if (code === CHAR_LEFT_SQUARE_BRACKET) {
+				while (eos() !== true && (next = advance())) {
+					if (next === CHAR_BACKWARD_SLASH) {
+						backslashes = token.backslashes = true;
+						advance();
+						continue;
+					}
+					if (next === CHAR_RIGHT_SQUARE_BRACKET) {
+						isBracket = token.isBracket = true;
+						isGlob = token.isGlob = true;
+						finished = true;
+						break;
+					}
+				}
+				if (scanToEnd === true) continue;
+				break;
+			}
+			if (opts.nonegate !== true && code === CHAR_EXCLAMATION_MARK && index === start) {
+				negated = token.negated = true;
+				start++;
+				continue;
+			}
+			if (opts.noparen !== true && code === CHAR_LEFT_PARENTHESES) {
+				isGlob = token.isGlob = true;
+				if (scanToEnd === true) {
+					while (eos() !== true && (code = advance())) {
+						if (code === CHAR_LEFT_PARENTHESES) {
+							backslashes = token.backslashes = true;
+							code = advance();
+							continue;
+						}
+						if (code === CHAR_RIGHT_PARENTHESES) {
+							finished = true;
+							break;
+						}
+					}
+					continue;
+				}
+				break;
+			}
+			if (isGlob === true) {
+				finished = true;
+				if (scanToEnd === true) continue;
+				break;
+			}
+		}
+		if (opts.noext === true) {
+			isExtglob = false;
+			isGlob = false;
+		}
+		let base = str;
+		let prefix = "";
+		let glob = "";
+		if (start > 0) {
+			prefix = str.slice(0, start);
+			str = str.slice(start);
+			lastIndex -= start;
+		}
+		if (base && isGlob === true && lastIndex > 0) {
+			base = str.slice(0, lastIndex);
+			glob = str.slice(lastIndex);
+		} else if (isGlob === true) {
+			base = "";
+			glob = str;
+		} else base = str;
+		if (base && base !== "" && base !== "/" && base !== str) {
+			if (isPathSeparator(base.charCodeAt(base.length - 1))) base = base.slice(0, -1);
+		}
+		if (opts.unescape === true) {
+			if (glob) glob = utils.removeBackslashes(glob);
+			if (base && backslashes === true) base = utils.removeBackslashes(base);
+		}
+		const state = {
+			prefix,
+			input,
+			start,
+			base,
+			glob,
+			isBrace,
+			isBracket,
+			isGlob,
+			isExtglob,
+			isGlobstar,
+			negated,
+			negatedExtglob
+		};
+		if (opts.tokens === true) {
+			state.maxDepth = 0;
+			if (!isPathSeparator(code)) tokens.push(token);
+			state.tokens = tokens;
+		}
+		if (opts.parts === true || opts.tokens === true) {
+			let prevIndex;
+			for (let idx = 0; idx < slashes.length; idx++) {
+				const n = prevIndex ? prevIndex + 1 : start;
+				const i = slashes[idx];
+				const value = input.slice(n, i);
+				if (opts.tokens) {
+					if (idx === 0 && start !== 0) {
+						tokens[idx].isPrefix = true;
+						tokens[idx].value = prefix;
+					} else tokens[idx].value = value;
+					depth(tokens[idx]);
+					state.maxDepth += tokens[idx].depth;
+				}
+				if (idx !== 0 || value !== "") parts.push(value);
+				prevIndex = i;
+			}
+			if (prevIndex && prevIndex + 1 < input.length) {
+				const value = input.slice(prevIndex + 1);
+				parts.push(value);
+				if (opts.tokens) {
+					tokens[tokens.length - 1].value = value;
+					depth(tokens[tokens.length - 1]);
+					state.maxDepth += tokens[tokens.length - 1].depth;
+				}
+			}
+			state.slashes = slashes;
+			state.parts = parts;
+		}
+		return state;
+	};
+	module.exports = scan;
+}));
+//#endregion
+//#region ../../node_modules/.pnpm/picomatch@4.0.4/node_modules/picomatch/lib/parse.js
+var require_parse = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	var constants = require_constants();
+	var utils = require_utils();
+	/**
+	* Constants
+	*/
+	var { MAX_LENGTH, POSIX_REGEX_SOURCE, REGEX_NON_SPECIAL_CHARS, REGEX_SPECIAL_CHARS_BACKREF, REPLACEMENTS } = constants;
+	/**
+	* Helpers
+	*/
+	var expandRange = (args, options) => {
+		if (typeof options.expandRange === "function") return options.expandRange(...args, options);
+		args.sort();
+		const value = `[${args.join("-")}]`;
+		try {
+			new RegExp(value);
+		} catch (ex) {
+			return args.map((v) => utils.escapeRegex(v)).join("..");
+		}
+		return value;
+	};
+	/**
+	* Create the message for a syntax error
+	*/
+	var syntaxError = (type, char) => {
+		return `Missing ${type}: "${char}" - use "\\\\${char}" to match literal characters`;
+	};
+	var splitTopLevel = (input) => {
+		const parts = [];
+		let bracket = 0;
+		let paren = 0;
+		let quote = 0;
+		let value = "";
+		let escaped = false;
+		for (const ch of input) {
+			if (escaped === true) {
+				value += ch;
+				escaped = false;
+				continue;
+			}
+			if (ch === "\\") {
+				value += ch;
+				escaped = true;
+				continue;
+			}
+			if (ch === "\"") {
+				quote = quote === 1 ? 0 : 1;
+				value += ch;
+				continue;
+			}
+			if (quote === 0) {
+				if (ch === "[") bracket++;
+				else if (ch === "]" && bracket > 0) bracket--;
+				else if (bracket === 0) {
+					if (ch === "(") paren++;
+					else if (ch === ")" && paren > 0) paren--;
+					else if (ch === "|" && paren === 0) {
+						parts.push(value);
+						value = "";
+						continue;
+					}
+				}
+			}
+			value += ch;
+		}
+		parts.push(value);
+		return parts;
+	};
+	var isPlainBranch = (branch) => {
+		let escaped = false;
+		for (const ch of branch) {
+			if (escaped === true) {
+				escaped = false;
+				continue;
+			}
+			if (ch === "\\") {
+				escaped = true;
+				continue;
+			}
+			if (/[?*+@!()[\]{}]/.test(ch)) return false;
+		}
+		return true;
+	};
+	var normalizeSimpleBranch = (branch) => {
+		let value = branch.trim();
+		let changed = true;
+		while (changed === true) {
+			changed = false;
+			if (/^@\([^\\()[\]{}|]+\)$/.test(value)) {
+				value = value.slice(2, -1);
+				changed = true;
+			}
+		}
+		if (!isPlainBranch(value)) return;
+		return value.replace(/\\(.)/g, "$1");
+	};
+	var hasRepeatedCharPrefixOverlap = (branches) => {
+		const values = branches.map(normalizeSimpleBranch).filter(Boolean);
+		for (let i = 0; i < values.length; i++) for (let j = i + 1; j < values.length; j++) {
+			const a = values[i];
+			const b = values[j];
+			const char = a[0];
+			if (!char || a !== char.repeat(a.length) || b !== char.repeat(b.length)) continue;
+			if (a === b || a.startsWith(b) || b.startsWith(a)) return true;
+		}
+		return false;
+	};
+	var parseRepeatedExtglob = (pattern, requireEnd = true) => {
+		if (pattern[0] !== "+" && pattern[0] !== "*" || pattern[1] !== "(") return;
+		let bracket = 0;
+		let paren = 0;
+		let quote = 0;
+		let escaped = false;
+		for (let i = 1; i < pattern.length; i++) {
+			const ch = pattern[i];
+			if (escaped === true) {
+				escaped = false;
+				continue;
+			}
+			if (ch === "\\") {
+				escaped = true;
+				continue;
+			}
+			if (ch === "\"") {
+				quote = quote === 1 ? 0 : 1;
+				continue;
+			}
+			if (quote === 1) continue;
+			if (ch === "[") {
+				bracket++;
+				continue;
+			}
+			if (ch === "]" && bracket > 0) {
+				bracket--;
+				continue;
+			}
+			if (bracket > 0) continue;
+			if (ch === "(") {
+				paren++;
+				continue;
+			}
+			if (ch === ")") {
+				paren--;
+				if (paren === 0) {
+					if (requireEnd === true && i !== pattern.length - 1) return;
+					return {
+						type: pattern[0],
+						body: pattern.slice(2, i),
+						end: i
+					};
+				}
+			}
+		}
+	};
+	var getStarExtglobSequenceOutput = (pattern) => {
+		let index = 0;
+		const chars = [];
+		while (index < pattern.length) {
+			const match = parseRepeatedExtglob(pattern.slice(index), false);
+			if (!match || match.type !== "*") return;
+			const branches = splitTopLevel(match.body).map((branch) => branch.trim());
+			if (branches.length !== 1) return;
+			const branch = normalizeSimpleBranch(branches[0]);
+			if (!branch || branch.length !== 1) return;
+			chars.push(branch);
+			index += match.end + 1;
+		}
+		if (chars.length < 1) return;
+		return `${chars.length === 1 ? utils.escapeRegex(chars[0]) : `[${chars.map((ch) => utils.escapeRegex(ch)).join("")}]`}*`;
+	};
+	var repeatedExtglobRecursion = (pattern) => {
+		let depth = 0;
+		let value = pattern.trim();
+		let match = parseRepeatedExtglob(value);
+		while (match) {
+			depth++;
+			value = match.body.trim();
+			match = parseRepeatedExtglob(value);
+		}
+		return depth;
+	};
+	var analyzeRepeatedExtglob = (body, options) => {
+		if (options.maxExtglobRecursion === false) return { risky: false };
+		const max = typeof options.maxExtglobRecursion === "number" ? options.maxExtglobRecursion : constants.DEFAULT_MAX_EXTGLOB_RECURSION;
+		const branches = splitTopLevel(body).map((branch) => branch.trim());
+		if (branches.length > 1) {
+			if (branches.some((branch) => branch === "") || branches.some((branch) => /^[*?]+$/.test(branch)) || hasRepeatedCharPrefixOverlap(branches)) return { risky: true };
+		}
+		for (const branch of branches) {
+			const safeOutput = getStarExtglobSequenceOutput(branch);
+			if (safeOutput) return {
+				risky: true,
+				safeOutput
+			};
+			if (repeatedExtglobRecursion(branch) > max) return { risky: true };
+		}
+		return { risky: false };
+	};
+	/**
+	* Parse the given input string.
+	* @param {String} input
+	* @param {Object} options
+	* @return {Object}
+	*/
+	var parse = (input, options) => {
+		if (typeof input !== "string") throw new TypeError("Expected a string");
+		input = REPLACEMENTS[input] || input;
+		const opts = { ...options };
+		const max = typeof opts.maxLength === "number" ? Math.min(MAX_LENGTH, opts.maxLength) : MAX_LENGTH;
+		let len = input.length;
+		if (len > max) throw new SyntaxError(`Input length: ${len}, exceeds maximum allowed length: ${max}`);
+		const bos = {
+			type: "bos",
+			value: "",
+			output: opts.prepend || ""
+		};
+		const tokens = [bos];
+		const capture = opts.capture ? "" : "?:";
+		const PLATFORM_CHARS = constants.globChars(opts.windows);
+		const EXTGLOB_CHARS = constants.extglobChars(PLATFORM_CHARS);
+		const { DOT_LITERAL, PLUS_LITERAL, SLASH_LITERAL, ONE_CHAR, DOTS_SLASH, NO_DOT, NO_DOT_SLASH, NO_DOTS_SLASH, QMARK, QMARK_NO_DOT, STAR, START_ANCHOR } = PLATFORM_CHARS;
+		const globstar = (opts) => {
+			return `(${capture}(?:(?!${START_ANCHOR}${opts.dot ? DOTS_SLASH : DOT_LITERAL}).)*?)`;
+		};
+		const nodot = opts.dot ? "" : NO_DOT;
+		const qmarkNoDot = opts.dot ? QMARK : QMARK_NO_DOT;
+		let star = opts.bash === true ? globstar(opts) : STAR;
+		if (opts.capture) star = `(${star})`;
+		if (typeof opts.noext === "boolean") opts.noextglob = opts.noext;
+		const state = {
+			input,
+			index: -1,
+			start: 0,
+			dot: opts.dot === true,
+			consumed: "",
+			output: "",
+			prefix: "",
+			backtrack: false,
+			negated: false,
+			brackets: 0,
+			braces: 0,
+			parens: 0,
+			quotes: 0,
+			globstar: false,
+			tokens
+		};
+		input = utils.removePrefix(input, state);
+		len = input.length;
+		const extglobs = [];
+		const braces = [];
+		const stack = [];
+		let prev = bos;
+		let value;
+		/**
+		* Tokenizing helpers
+		*/
+		const eos = () => state.index === len - 1;
+		const peek = state.peek = (n = 1) => input[state.index + n];
+		const advance = state.advance = () => input[++state.index] || "";
+		const remaining = () => input.slice(state.index + 1);
+		const consume = (value = "", num = 0) => {
+			state.consumed += value;
+			state.index += num;
+		};
+		const append = (token) => {
+			state.output += token.output != null ? token.output : token.value;
+			consume(token.value);
+		};
+		const negate = () => {
+			let count = 1;
+			while (peek() === "!" && (peek(2) !== "(" || peek(3) === "?")) {
+				advance();
+				state.start++;
+				count++;
+			}
+			if (count % 2 === 0) return false;
+			state.negated = true;
+			state.start++;
+			return true;
+		};
+		const increment = (type) => {
+			state[type]++;
+			stack.push(type);
+		};
+		const decrement = (type) => {
+			state[type]--;
+			stack.pop();
+		};
+		/**
+		* Push tokens onto the tokens array. This helper speeds up
+		* tokenizing by 1) helping us avoid backtracking as much as possible,
+		* and 2) helping us avoid creating extra tokens when consecutive
+		* characters are plain text. This improves performance and simplifies
+		* lookbehinds.
+		*/
+		const push = (tok) => {
+			if (prev.type === "globstar") {
+				const isBrace = state.braces > 0 && (tok.type === "comma" || tok.type === "brace");
+				const isExtglob = tok.extglob === true || extglobs.length && (tok.type === "pipe" || tok.type === "paren");
+				if (tok.type !== "slash" && tok.type !== "paren" && !isBrace && !isExtglob) {
+					state.output = state.output.slice(0, -prev.output.length);
+					prev.type = "star";
+					prev.value = "*";
+					prev.output = star;
+					state.output += prev.output;
+				}
+			}
+			if (extglobs.length && tok.type !== "paren") extglobs[extglobs.length - 1].inner += tok.value;
+			if (tok.value || tok.output) append(tok);
+			if (prev && prev.type === "text" && tok.type === "text") {
+				prev.output = (prev.output || prev.value) + tok.value;
+				prev.value += tok.value;
+				return;
+			}
+			tok.prev = prev;
+			tokens.push(tok);
+			prev = tok;
+		};
+		const extglobOpen = (type, value) => {
+			const token = {
+				...EXTGLOB_CHARS[value],
+				conditions: 1,
+				inner: ""
+			};
+			token.prev = prev;
+			token.parens = state.parens;
+			token.output = state.output;
+			token.startIndex = state.index;
+			token.tokensIndex = tokens.length;
+			const output = (opts.capture ? "(" : "") + token.open;
+			increment("parens");
+			push({
+				type,
+				value,
+				output: state.output ? "" : ONE_CHAR
+			});
+			push({
+				type: "paren",
+				extglob: true,
+				value: advance(),
+				output
+			});
+			extglobs.push(token);
+		};
+		const extglobClose = (token) => {
+			const literal = input.slice(token.startIndex, state.index + 1);
+			const analysis = analyzeRepeatedExtglob(input.slice(token.startIndex + 2, state.index), opts);
+			if ((token.type === "plus" || token.type === "star") && analysis.risky) {
+				const safeOutput = analysis.safeOutput ? (token.output ? "" : ONE_CHAR) + (opts.capture ? `(${analysis.safeOutput})` : analysis.safeOutput) : void 0;
+				const open = tokens[token.tokensIndex];
+				open.type = "text";
+				open.value = literal;
+				open.output = safeOutput || utils.escapeRegex(literal);
+				for (let i = token.tokensIndex + 1; i < tokens.length; i++) {
+					tokens[i].value = "";
+					tokens[i].output = "";
+					delete tokens[i].suffix;
+				}
+				state.output = token.output + open.output;
+				state.backtrack = true;
+				push({
+					type: "paren",
+					extglob: true,
+					value,
+					output: ""
+				});
+				decrement("parens");
+				return;
+			}
+			let output = token.close + (opts.capture ? ")" : "");
+			let rest;
+			if (token.type === "negate") {
+				let extglobStar = star;
+				if (token.inner && token.inner.length > 1 && token.inner.includes("/")) extglobStar = globstar(opts);
+				if (extglobStar !== star || eos() || /^\)+$/.test(remaining())) output = token.close = `)$))${extglobStar}`;
+				if (token.inner.includes("*") && (rest = remaining()) && /^\.[^\\/.]+$/.test(rest)) output = token.close = `)${parse(rest, {
+					...options,
+					fastpaths: false
+				}).output})${extglobStar})`;
+				if (token.prev.type === "bos") state.negatedExtglob = true;
+			}
+			push({
+				type: "paren",
+				extglob: true,
+				value,
+				output
+			});
+			decrement("parens");
+		};
+		/**
+		* Fast paths
+		*/
+		if (opts.fastpaths !== false && !/(^[*!]|[/()[\]{}"])/.test(input)) {
+			let backslashes = false;
+			let output = input.replace(REGEX_SPECIAL_CHARS_BACKREF, (m, esc, chars, first, rest, index) => {
+				if (first === "\\") {
+					backslashes = true;
+					return m;
+				}
+				if (first === "?") {
+					if (esc) return esc + first + (rest ? QMARK.repeat(rest.length) : "");
+					if (index === 0) return qmarkNoDot + (rest ? QMARK.repeat(rest.length) : "");
+					return QMARK.repeat(chars.length);
+				}
+				if (first === ".") return DOT_LITERAL.repeat(chars.length);
+				if (first === "*") {
+					if (esc) return esc + first + (rest ? star : "");
+					return star;
+				}
+				return esc ? m : `\\${m}`;
+			});
+			if (backslashes === true) if (opts.unescape === true) output = output.replace(/\\/g, "");
+			else output = output.replace(/\\+/g, (m) => {
+				return m.length % 2 === 0 ? "\\\\" : m ? "\\" : "";
+			});
+			if (output === input && opts.contains === true) {
+				state.output = input;
+				return state;
+			}
+			state.output = utils.wrapOutput(output, state, options);
+			return state;
+		}
+		/**
+		* Tokenize input until we reach end-of-string
+		*/
+		while (!eos()) {
+			value = advance();
+			if (value === "\0") continue;
+			/**
+			* Escaped characters
+			*/
+			if (value === "\\") {
+				const next = peek();
+				if (next === "/" && opts.bash !== true) continue;
+				if (next === "." || next === ";") continue;
+				if (!next) {
+					value += "\\";
+					push({
+						type: "text",
+						value
+					});
+					continue;
+				}
+				const match = /^\\+/.exec(remaining());
+				let slashes = 0;
+				if (match && match[0].length > 2) {
+					slashes = match[0].length;
+					state.index += slashes;
+					if (slashes % 2 !== 0) value += "\\";
+				}
+				if (opts.unescape === true) value = advance();
+				else value += advance();
+				if (state.brackets === 0) {
+					push({
+						type: "text",
+						value
+					});
+					continue;
+				}
+			}
+			/**
+			* If we're inside a regex character class, continue
+			* until we reach the closing bracket.
+			*/
+			if (state.brackets > 0 && (value !== "]" || prev.value === "[" || prev.value === "[^")) {
+				if (opts.posix !== false && value === ":") {
+					const inner = prev.value.slice(1);
+					if (inner.includes("[")) {
+						prev.posix = true;
+						if (inner.includes(":")) {
+							const idx = prev.value.lastIndexOf("[");
+							const pre = prev.value.slice(0, idx);
+							const posix = POSIX_REGEX_SOURCE[prev.value.slice(idx + 2)];
+							if (posix) {
+								prev.value = pre + posix;
+								state.backtrack = true;
+								advance();
+								if (!bos.output && tokens.indexOf(prev) === 1) bos.output = ONE_CHAR;
+								continue;
+							}
+						}
+					}
+				}
+				if (value === "[" && peek() !== ":" || value === "-" && peek() === "]") value = `\\${value}`;
+				if (value === "]" && (prev.value === "[" || prev.value === "[^")) value = `\\${value}`;
+				if (opts.posix === true && value === "!" && prev.value === "[") value = "^";
+				prev.value += value;
+				append({ value });
+				continue;
+			}
+			/**
+			* If we're inside a quoted string, continue
+			* until we reach the closing double quote.
+			*/
+			if (state.quotes === 1 && value !== "\"") {
+				value = utils.escapeRegex(value);
+				prev.value += value;
+				append({ value });
+				continue;
+			}
+			/**
+			* Double quotes
+			*/
+			if (value === "\"") {
+				state.quotes = state.quotes === 1 ? 0 : 1;
+				if (opts.keepQuotes === true) push({
+					type: "text",
+					value
+				});
+				continue;
+			}
+			/**
+			* Parentheses
+			*/
+			if (value === "(") {
+				increment("parens");
+				push({
+					type: "paren",
+					value
+				});
+				continue;
+			}
+			if (value === ")") {
+				if (state.parens === 0 && opts.strictBrackets === true) throw new SyntaxError(syntaxError("opening", "("));
+				const extglob = extglobs[extglobs.length - 1];
+				if (extglob && state.parens === extglob.parens + 1) {
+					extglobClose(extglobs.pop());
+					continue;
+				}
+				push({
+					type: "paren",
+					value,
+					output: state.parens ? ")" : "\\)"
+				});
+				decrement("parens");
+				continue;
+			}
+			/**
+			* Square brackets
+			*/
+			if (value === "[") {
+				if (opts.nobracket === true || !remaining().includes("]")) {
+					if (opts.nobracket !== true && opts.strictBrackets === true) throw new SyntaxError(syntaxError("closing", "]"));
+					value = `\\${value}`;
+				} else increment("brackets");
+				push({
+					type: "bracket",
+					value
+				});
+				continue;
+			}
+			if (value === "]") {
+				if (opts.nobracket === true || prev && prev.type === "bracket" && prev.value.length === 1) {
+					push({
+						type: "text",
+						value,
+						output: `\\${value}`
+					});
+					continue;
+				}
+				if (state.brackets === 0) {
+					if (opts.strictBrackets === true) throw new SyntaxError(syntaxError("opening", "["));
+					push({
+						type: "text",
+						value,
+						output: `\\${value}`
+					});
+					continue;
+				}
+				decrement("brackets");
+				const prevValue = prev.value.slice(1);
+				if (prev.posix !== true && prevValue[0] === "^" && !prevValue.includes("/")) value = `/${value}`;
+				prev.value += value;
+				append({ value });
+				if (opts.literalBrackets === false || utils.hasRegexChars(prevValue)) continue;
+				const escaped = utils.escapeRegex(prev.value);
+				state.output = state.output.slice(0, -prev.value.length);
+				if (opts.literalBrackets === true) {
+					state.output += escaped;
+					prev.value = escaped;
+					continue;
+				}
+				prev.value = `(${capture}${escaped}|${prev.value})`;
+				state.output += prev.value;
+				continue;
+			}
+			/**
+			* Braces
+			*/
+			if (value === "{" && opts.nobrace !== true) {
+				increment("braces");
+				const open = {
+					type: "brace",
+					value,
+					output: "(",
+					outputIndex: state.output.length,
+					tokensIndex: state.tokens.length
+				};
+				braces.push(open);
+				push(open);
+				continue;
+			}
+			if (value === "}") {
+				const brace = braces[braces.length - 1];
+				if (opts.nobrace === true || !brace) {
+					push({
+						type: "text",
+						value,
+						output: value
+					});
+					continue;
+				}
+				let output = ")";
+				if (brace.dots === true) {
+					const arr = tokens.slice();
+					const range = [];
+					for (let i = arr.length - 1; i >= 0; i--) {
+						tokens.pop();
+						if (arr[i].type === "brace") break;
+						if (arr[i].type !== "dots") range.unshift(arr[i].value);
+					}
+					output = expandRange(range, opts);
+					state.backtrack = true;
+				}
+				if (brace.comma !== true && brace.dots !== true) {
+					const out = state.output.slice(0, brace.outputIndex);
+					const toks = state.tokens.slice(brace.tokensIndex);
+					brace.value = brace.output = "\\{";
+					value = output = "\\}";
+					state.output = out;
+					for (const t of toks) state.output += t.output || t.value;
+				}
+				push({
+					type: "brace",
+					value,
+					output
+				});
+				decrement("braces");
+				braces.pop();
+				continue;
+			}
+			/**
+			* Pipes
+			*/
+			if (value === "|") {
+				if (extglobs.length > 0) extglobs[extglobs.length - 1].conditions++;
+				push({
+					type: "text",
+					value
+				});
+				continue;
+			}
+			/**
+			* Commas
+			*/
+			if (value === ",") {
+				let output = value;
+				const brace = braces[braces.length - 1];
+				if (brace && stack[stack.length - 1] === "braces") {
+					brace.comma = true;
+					output = "|";
+				}
+				push({
+					type: "comma",
+					value,
+					output
+				});
+				continue;
+			}
+			/**
+			* Slashes
+			*/
+			if (value === "/") {
+				if (prev.type === "dot" && state.index === state.start + 1) {
+					state.start = state.index + 1;
+					state.consumed = "";
+					state.output = "";
+					tokens.pop();
+					prev = bos;
+					continue;
+				}
+				push({
+					type: "slash",
+					value,
+					output: SLASH_LITERAL
+				});
+				continue;
+			}
+			/**
+			* Dots
+			*/
+			if (value === ".") {
+				if (state.braces > 0 && prev.type === "dot") {
+					if (prev.value === ".") prev.output = DOT_LITERAL;
+					const brace = braces[braces.length - 1];
+					prev.type = "dots";
+					prev.output += value;
+					prev.value += value;
+					brace.dots = true;
+					continue;
+				}
+				if (state.braces + state.parens === 0 && prev.type !== "bos" && prev.type !== "slash") {
+					push({
+						type: "text",
+						value,
+						output: DOT_LITERAL
+					});
+					continue;
+				}
+				push({
+					type: "dot",
+					value,
+					output: DOT_LITERAL
+				});
+				continue;
+			}
+			/**
+			* Question marks
+			*/
+			if (value === "?") {
+				if (!(prev && prev.value === "(") && opts.noextglob !== true && peek() === "(" && peek(2) !== "?") {
+					extglobOpen("qmark", value);
+					continue;
+				}
+				if (prev && prev.type === "paren") {
+					const next = peek();
+					let output = value;
+					if (prev.value === "(" && !/[!=<:]/.test(next) || next === "<" && !/<([!=]|\w+>)/.test(remaining())) output = `\\${value}`;
+					push({
+						type: "text",
+						value,
+						output
+					});
+					continue;
+				}
+				if (opts.dot !== true && (prev.type === "slash" || prev.type === "bos")) {
+					push({
+						type: "qmark",
+						value,
+						output: QMARK_NO_DOT
+					});
+					continue;
+				}
+				push({
+					type: "qmark",
+					value,
+					output: QMARK
+				});
+				continue;
+			}
+			/**
+			* Exclamation
+			*/
+			if (value === "!") {
+				if (opts.noextglob !== true && peek() === "(") {
+					if (peek(2) !== "?" || !/[!=<:]/.test(peek(3))) {
+						extglobOpen("negate", value);
+						continue;
+					}
+				}
+				if (opts.nonegate !== true && state.index === 0) {
+					negate();
+					continue;
+				}
+			}
+			/**
+			* Plus
+			*/
+			if (value === "+") {
+				if (opts.noextglob !== true && peek() === "(" && peek(2) !== "?") {
+					extglobOpen("plus", value);
+					continue;
+				}
+				if (prev && prev.value === "(" || opts.regex === false) {
+					push({
+						type: "plus",
+						value,
+						output: PLUS_LITERAL
+					});
+					continue;
+				}
+				if (prev && (prev.type === "bracket" || prev.type === "paren" || prev.type === "brace") || state.parens > 0) {
+					push({
+						type: "plus",
+						value
+					});
+					continue;
+				}
+				push({
+					type: "plus",
+					value: PLUS_LITERAL
+				});
+				continue;
+			}
+			/**
+			* Plain text
+			*/
+			if (value === "@") {
+				if (opts.noextglob !== true && peek() === "(" && peek(2) !== "?") {
+					push({
+						type: "at",
+						extglob: true,
+						value,
+						output: ""
+					});
+					continue;
+				}
+				push({
+					type: "text",
+					value
+				});
+				continue;
+			}
+			/**
+			* Plain text
+			*/
+			if (value !== "*") {
+				if (value === "$" || value === "^") value = `\\${value}`;
+				const match = REGEX_NON_SPECIAL_CHARS.exec(remaining());
+				if (match) {
+					value += match[0];
+					state.index += match[0].length;
+				}
+				push({
+					type: "text",
+					value
+				});
+				continue;
+			}
+			/**
+			* Stars
+			*/
+			if (prev && (prev.type === "globstar" || prev.star === true)) {
+				prev.type = "star";
+				prev.star = true;
+				prev.value += value;
+				prev.output = star;
+				state.backtrack = true;
+				state.globstar = true;
+				consume(value);
+				continue;
+			}
+			let rest = remaining();
+			if (opts.noextglob !== true && /^\([^?]/.test(rest)) {
+				extglobOpen("star", value);
+				continue;
+			}
+			if (prev.type === "star") {
+				if (opts.noglobstar === true) {
+					consume(value);
+					continue;
+				}
+				const prior = prev.prev;
+				const before = prior.prev;
+				const isStart = prior.type === "slash" || prior.type === "bos";
+				const afterStar = before && (before.type === "star" || before.type === "globstar");
+				if (opts.bash === true && (!isStart || rest[0] && rest[0] !== "/")) {
+					push({
+						type: "star",
+						value,
+						output: ""
+					});
+					continue;
+				}
+				const isBrace = state.braces > 0 && (prior.type === "comma" || prior.type === "brace");
+				const isExtglob = extglobs.length && (prior.type === "pipe" || prior.type === "paren");
+				if (!isStart && prior.type !== "paren" && !isBrace && !isExtglob) {
+					push({
+						type: "star",
+						value,
+						output: ""
+					});
+					continue;
+				}
+				while (rest.slice(0, 3) === "/**") {
+					const after = input[state.index + 4];
+					if (after && after !== "/") break;
+					rest = rest.slice(3);
+					consume("/**", 3);
+				}
+				if (prior.type === "bos" && eos()) {
+					prev.type = "globstar";
+					prev.value += value;
+					prev.output = globstar(opts);
+					state.output = prev.output;
+					state.globstar = true;
+					consume(value);
+					continue;
+				}
+				if (prior.type === "slash" && prior.prev.type !== "bos" && !afterStar && eos()) {
+					state.output = state.output.slice(0, -(prior.output + prev.output).length);
+					prior.output = `(?:${prior.output}`;
+					prev.type = "globstar";
+					prev.output = globstar(opts) + (opts.strictSlashes ? ")" : "|$)");
+					prev.value += value;
+					state.globstar = true;
+					state.output += prior.output + prev.output;
+					consume(value);
+					continue;
+				}
+				if (prior.type === "slash" && prior.prev.type !== "bos" && rest[0] === "/") {
+					const end = rest[1] !== void 0 ? "|$" : "";
+					state.output = state.output.slice(0, -(prior.output + prev.output).length);
+					prior.output = `(?:${prior.output}`;
+					prev.type = "globstar";
+					prev.output = `${globstar(opts)}${SLASH_LITERAL}|${SLASH_LITERAL}${end})`;
+					prev.value += value;
+					state.output += prior.output + prev.output;
+					state.globstar = true;
+					consume(value + advance());
+					push({
+						type: "slash",
+						value: "/",
+						output: ""
+					});
+					continue;
+				}
+				if (prior.type === "bos" && rest[0] === "/") {
+					prev.type = "globstar";
+					prev.value += value;
+					prev.output = `(?:^|${SLASH_LITERAL}|${globstar(opts)}${SLASH_LITERAL})`;
+					state.output = prev.output;
+					state.globstar = true;
+					consume(value + advance());
+					push({
+						type: "slash",
+						value: "/",
+						output: ""
+					});
+					continue;
+				}
+				state.output = state.output.slice(0, -prev.output.length);
+				prev.type = "globstar";
+				prev.output = globstar(opts);
+				prev.value += value;
+				state.output += prev.output;
+				state.globstar = true;
+				consume(value);
+				continue;
+			}
+			const token = {
+				type: "star",
+				value,
+				output: star
+			};
+			if (opts.bash === true) {
+				token.output = ".*?";
+				if (prev.type === "bos" || prev.type === "slash") token.output = nodot + token.output;
+				push(token);
+				continue;
+			}
+			if (prev && (prev.type === "bracket" || prev.type === "paren") && opts.regex === true) {
+				token.output = value;
+				push(token);
+				continue;
+			}
+			if (state.index === state.start || prev.type === "slash" || prev.type === "dot") {
+				if (prev.type === "dot") {
+					state.output += NO_DOT_SLASH;
+					prev.output += NO_DOT_SLASH;
+				} else if (opts.dot === true) {
+					state.output += NO_DOTS_SLASH;
+					prev.output += NO_DOTS_SLASH;
+				} else {
+					state.output += nodot;
+					prev.output += nodot;
+				}
+				if (peek() !== "*") {
+					state.output += ONE_CHAR;
+					prev.output += ONE_CHAR;
+				}
+			}
+			push(token);
+		}
+		while (state.brackets > 0) {
+			if (opts.strictBrackets === true) throw new SyntaxError(syntaxError("closing", "]"));
+			state.output = utils.escapeLast(state.output, "[");
+			decrement("brackets");
+		}
+		while (state.parens > 0) {
+			if (opts.strictBrackets === true) throw new SyntaxError(syntaxError("closing", ")"));
+			state.output = utils.escapeLast(state.output, "(");
+			decrement("parens");
+		}
+		while (state.braces > 0) {
+			if (opts.strictBrackets === true) throw new SyntaxError(syntaxError("closing", "}"));
+			state.output = utils.escapeLast(state.output, "{");
+			decrement("braces");
+		}
+		if (opts.strictSlashes !== true && (prev.type === "star" || prev.type === "bracket")) push({
+			type: "maybe_slash",
+			value: "",
+			output: `${SLASH_LITERAL}?`
+		});
+		if (state.backtrack === true) {
+			state.output = "";
+			for (const token of state.tokens) {
+				state.output += token.output != null ? token.output : token.value;
+				if (token.suffix) state.output += token.suffix;
+			}
+		}
+		return state;
+	};
+	/**
+	* Fast paths for creating regular expressions for common glob patterns.
+	* This can significantly speed up processing and has very little downside
+	* impact when none of the fast paths match.
+	*/
+	parse.fastpaths = (input, options) => {
+		const opts = { ...options };
+		const max = typeof opts.maxLength === "number" ? Math.min(MAX_LENGTH, opts.maxLength) : MAX_LENGTH;
+		const len = input.length;
+		if (len > max) throw new SyntaxError(`Input length: ${len}, exceeds maximum allowed length: ${max}`);
+		input = REPLACEMENTS[input] || input;
+		const { DOT_LITERAL, SLASH_LITERAL, ONE_CHAR, DOTS_SLASH, NO_DOT, NO_DOTS, NO_DOTS_SLASH, STAR, START_ANCHOR } = constants.globChars(opts.windows);
+		const nodot = opts.dot ? NO_DOTS : NO_DOT;
+		const slashDot = opts.dot ? NO_DOTS_SLASH : NO_DOT;
+		const capture = opts.capture ? "" : "?:";
+		const state = {
+			negated: false,
+			prefix: ""
+		};
+		let star = opts.bash === true ? ".*?" : STAR;
+		if (opts.capture) star = `(${star})`;
+		const globstar = (opts) => {
+			if (opts.noglobstar === true) return star;
+			return `(${capture}(?:(?!${START_ANCHOR}${opts.dot ? DOTS_SLASH : DOT_LITERAL}).)*?)`;
+		};
+		const create = (str) => {
+			switch (str) {
+				case "*": return `${nodot}${ONE_CHAR}${star}`;
+				case ".*": return `${DOT_LITERAL}${ONE_CHAR}${star}`;
+				case "*.*": return `${nodot}${star}${DOT_LITERAL}${ONE_CHAR}${star}`;
+				case "*/*": return `${nodot}${star}${SLASH_LITERAL}${ONE_CHAR}${slashDot}${star}`;
+				case "**": return nodot + globstar(opts);
+				case "**/*": return `(?:${nodot}${globstar(opts)}${SLASH_LITERAL})?${slashDot}${ONE_CHAR}${star}`;
+				case "**/*.*": return `(?:${nodot}${globstar(opts)}${SLASH_LITERAL})?${slashDot}${star}${DOT_LITERAL}${ONE_CHAR}${star}`;
+				case "**/.*": return `(?:${nodot}${globstar(opts)}${SLASH_LITERAL})?${DOT_LITERAL}${ONE_CHAR}${star}`;
+				default: {
+					const match = /^(.*?)\.(\w+)$/.exec(str);
+					if (!match) return;
+					const source = create(match[1]);
+					if (!source) return;
+					return source + DOT_LITERAL + match[2];
+				}
+			}
+		};
+		let source = create(utils.removePrefix(input, state));
+		if (source && opts.strictSlashes !== true) source += `${SLASH_LITERAL}?`;
+		return source;
+	};
+	module.exports = parse;
+}));
+//#endregion
+//#region ../../node_modules/.pnpm/picomatch@4.0.4/node_modules/picomatch/lib/picomatch.js
+var require_picomatch$1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	var scan = require_scan();
+	var parse = require_parse();
+	var utils = require_utils();
+	var constants = require_constants();
+	var isObject = (val) => val && typeof val === "object" && !Array.isArray(val);
+	/**
+	* Creates a matcher function from one or more glob patterns. The
+	* returned function takes a string to match as its first argument,
+	* and returns true if the string is a match. The returned matcher
+	* function also takes a boolean as the second argument that, when true,
+	* returns an object with additional information.
+	*
+	* ```js
+	* const picomatch = require('picomatch');
+	* // picomatch(glob[, options]);
+	*
+	* const isMatch = picomatch('*.!(*a)');
+	* console.log(isMatch('a.a')); //=> false
+	* console.log(isMatch('a.b')); //=> true
+	* ```
+	* @name picomatch
+	* @param {String|Array} `globs` One or more glob patterns.
+	* @param {Object=} `options`
+	* @return {Function=} Returns a matcher function.
+	* @api public
+	*/
+	var picomatch = (glob, options, returnState = false) => {
+		if (Array.isArray(glob)) {
+			const fns = glob.map((input) => picomatch(input, options, returnState));
+			const arrayMatcher = (str) => {
+				for (const isMatch of fns) {
+					const state = isMatch(str);
+					if (state) return state;
+				}
+				return false;
+			};
+			return arrayMatcher;
+		}
+		const isState = isObject(glob) && glob.tokens && glob.input;
+		if (glob === "" || typeof glob !== "string" && !isState) throw new TypeError("Expected pattern to be a non-empty string");
+		const opts = options || {};
+		const posix = opts.windows;
+		const regex = isState ? picomatch.compileRe(glob, options) : picomatch.makeRe(glob, options, false, true);
+		const state = regex.state;
+		delete regex.state;
+		let isIgnored = () => false;
+		if (opts.ignore) {
+			const ignoreOpts = {
+				...options,
+				ignore: null,
+				onMatch: null,
+				onResult: null
+			};
+			isIgnored = picomatch(opts.ignore, ignoreOpts, returnState);
+		}
+		const matcher = (input, returnObject = false) => {
+			const { isMatch, match, output } = picomatch.test(input, regex, options, {
+				glob,
+				posix
+			});
+			const result = {
+				glob,
+				state,
+				regex,
+				posix,
+				input,
+				output,
+				match,
+				isMatch
+			};
+			if (typeof opts.onResult === "function") opts.onResult(result);
+			if (isMatch === false) {
+				result.isMatch = false;
+				return returnObject ? result : false;
+			}
+			if (isIgnored(input)) {
+				if (typeof opts.onIgnore === "function") opts.onIgnore(result);
+				result.isMatch = false;
+				return returnObject ? result : false;
+			}
+			if (typeof opts.onMatch === "function") opts.onMatch(result);
+			return returnObject ? result : true;
+		};
+		if (returnState) matcher.state = state;
+		return matcher;
+	};
+	/**
+	* Test `input` with the given `regex`. This is used by the main
+	* `picomatch()` function to test the input string.
+	*
+	* ```js
+	* const picomatch = require('picomatch');
+	* // picomatch.test(input, regex[, options]);
+	*
+	* console.log(picomatch.test('foo/bar', /^(?:([^/]*?)\/([^/]*?))$/));
+	* // { isMatch: true, match: [ 'foo/', 'foo', 'bar' ], output: 'foo/bar' }
+	* ```
+	* @param {String} `input` String to test.
+	* @param {RegExp} `regex`
+	* @return {Object} Returns an object with matching info.
+	* @api public
+	*/
+	picomatch.test = (input, regex, options, { glob, posix } = {}) => {
+		if (typeof input !== "string") throw new TypeError("Expected input to be a string");
+		if (input === "") return {
+			isMatch: false,
+			output: ""
+		};
+		const opts = options || {};
+		const format = opts.format || (posix ? utils.toPosixSlashes : null);
+		let match = input === glob;
+		let output = match && format ? format(input) : input;
+		if (match === false) {
+			output = format ? format(input) : input;
+			match = output === glob;
+		}
+		if (match === false || opts.capture === true) if (opts.matchBase === true || opts.basename === true) match = picomatch.matchBase(input, regex, options, posix);
+		else match = regex.exec(output);
+		return {
+			isMatch: Boolean(match),
+			match,
+			output
+		};
+	};
+	/**
+	* Match the basename of a filepath.
+	*
+	* ```js
+	* const picomatch = require('picomatch');
+	* // picomatch.matchBase(input, glob[, options]);
+	* console.log(picomatch.matchBase('foo/bar.js', '*.js'); // true
+	* ```
+	* @param {String} `input` String to test.
+	* @param {RegExp|String} `glob` Glob pattern or regex created by [.makeRe](#makeRe).
+	* @return {Boolean}
+	* @api public
+	*/
+	picomatch.matchBase = (input, glob, options) => {
+		return (glob instanceof RegExp ? glob : picomatch.makeRe(glob, options)).test(utils.basename(input));
+	};
+	/**
+	* Returns true if **any** of the given glob `patterns` match the specified `string`.
+	*
+	* ```js
+	* const picomatch = require('picomatch');
+	* // picomatch.isMatch(string, patterns[, options]);
+	*
+	* console.log(picomatch.isMatch('a.a', ['b.*', '*.a'])); //=> true
+	* console.log(picomatch.isMatch('a.a', 'b.*')); //=> false
+	* ```
+	* @param {String|Array} str The string to test.
+	* @param {String|Array} patterns One or more glob patterns to use for matching.
+	* @param {Object} [options] See available [options](#options).
+	* @return {Boolean} Returns true if any patterns match `str`
+	* @api public
+	*/
+	picomatch.isMatch = (str, patterns, options) => picomatch(patterns, options)(str);
+	/**
+	* Parse a glob pattern to create the source string for a regular
+	* expression.
+	*
+	* ```js
+	* const picomatch = require('picomatch');
+	* const result = picomatch.parse(pattern[, options]);
+	* ```
+	* @param {String} `pattern`
+	* @param {Object} `options`
+	* @return {Object} Returns an object with useful properties and output to be used as a regex source string.
+	* @api public
+	*/
+	picomatch.parse = (pattern, options) => {
+		if (Array.isArray(pattern)) return pattern.map((p) => picomatch.parse(p, options));
+		return parse(pattern, {
+			...options,
+			fastpaths: false
+		});
+	};
+	/**
+	* Scan a glob pattern to separate the pattern into segments.
+	*
+	* ```js
+	* const picomatch = require('picomatch');
+	* // picomatch.scan(input[, options]);
+	*
+	* const result = picomatch.scan('!./foo/*.js');
+	* console.log(result);
+	* { prefix: '!./',
+	*   input: '!./foo/*.js',
+	*   start: 3,
+	*   base: 'foo',
+	*   glob: '*.js',
+	*   isBrace: false,
+	*   isBracket: false,
+	*   isGlob: true,
+	*   isExtglob: false,
+	*   isGlobstar: false,
+	*   negated: true }
+	* ```
+	* @param {String} `input` Glob pattern to scan.
+	* @param {Object} `options`
+	* @return {Object} Returns an object with
+	* @api public
+	*/
+	picomatch.scan = (input, options) => scan(input, options);
+	/**
+	* Compile a regular expression from the `state` object returned by the
+	* [parse()](#parse) method.
+	*
+	* ```js
+	* const picomatch = require('picomatch');
+	* const state = picomatch.parse('*.js');
+	* // picomatch.compileRe(state[, options]);
+	*
+	* console.log(picomatch.compileRe(state));
+	* //=> /^(?:(?!\.)(?=.)[^/]*?\.js)$/
+	* ```
+	* @param {Object} `state`
+	* @param {Object} `options`
+	* @param {Boolean} `returnOutput` Intended for implementors, this argument allows you to return the raw output from the parser.
+	* @param {Boolean} `returnState` Adds the state to a `state` property on the returned regex. Useful for implementors and debugging.
+	* @return {RegExp}
+	* @api public
+	*/
+	picomatch.compileRe = (state, options, returnOutput = false, returnState = false) => {
+		if (returnOutput === true) return state.output;
+		const opts = options || {};
+		const prepend = opts.contains ? "" : "^";
+		const append = opts.contains ? "" : "$";
+		let source = `${prepend}(?:${state.output})${append}`;
+		if (state && state.negated === true) source = `^(?!${source}).*$`;
+		const regex = picomatch.toRegex(source, options);
+		if (returnState === true) regex.state = state;
+		return regex;
+	};
+	/**
+	* Create a regular expression from a parsed glob pattern.
+	*
+	* ```js
+	* const picomatch = require('picomatch');
+	* // picomatch.makeRe(state[, options]);
+	*
+	* const result = picomatch.makeRe('*.js');
+	* console.log(result);
+	* //=> /^(?:(?!\.)(?=.)[^/]*?\.js)$/
+	* ```
+	* @param {String} `state` The object returned from the `.parse` method.
+	* @param {Object} `options`
+	* @param {Boolean} `returnOutput` Implementors may use this argument to return the compiled output, instead of a regular expression. This is not exposed on the options to prevent end-users from mutating the result.
+	* @param {Boolean} `returnState` Implementors may use this argument to return the state from the parsed glob with the returned regular expression.
+	* @return {RegExp} Returns a regex created from the given pattern.
+	* @api public
+	*/
+	picomatch.makeRe = (input, options = {}, returnOutput = false, returnState = false) => {
+		if (!input || typeof input !== "string") throw new TypeError("Expected a non-empty string");
+		let parsed = {
+			negated: false,
+			fastpaths: true
+		};
+		if (options.fastpaths !== false && (input[0] === "." || input[0] === "*")) parsed.output = parse.fastpaths(input, options);
+		if (!parsed.output) parsed = parse(input, options);
+		return picomatch.compileRe(parsed, options, returnOutput, returnState);
+	};
+	/**
+	* Create a regular expression from the given regex source string.
+	*
+	* ```js
+	* const picomatch = require('picomatch');
+	* // picomatch.toRegex(source[, options]);
+	*
+	* const { output } = picomatch.parse('*.js');
+	* console.log(picomatch.toRegex(output));
+	* //=> /^(?:(?!\.)(?=.)[^/]*?\.js)$/
+	* ```
+	* @param {String} `source` Regular expression source string.
+	* @param {Object} `options`
+	* @return {RegExp}
+	* @api public
+	*/
+	picomatch.toRegex = (source, options) => {
+		try {
+			const opts = options || {};
+			return new RegExp(source, opts.flags || (opts.nocase ? "i" : ""));
+		} catch (err) {
+			if (options && options.debug === true) throw err;
+			return /$^/;
+		}
+	};
+	/**
+	* Picomatch constants.
+	* @return {Object}
+	*/
+	picomatch.constants = constants;
+	/**
+	* Expose "picomatch"
+	*/
+	module.exports = picomatch;
+}));
+//#endregion
+//#region ../../packages/scout-components/src/sentinels/viewerConfig.ts
+var import_picomatch = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((exports, module) => {
+	var pico = require_picomatch$1();
+	var utils = require_utils();
+	function picomatch(glob, options, returnState = false) {
+		if (options && (options.windows === null || options.windows === void 0)) options = {
+			...options,
+			windows: utils.isWindows()
+		};
+		return pico(glob, options, returnState);
+	}
+	Object.assign(picomatch, pico);
+	module.exports = picomatch;
+})))(), 1);
+/** Built-in section names in the order they render by default. Every other
+* list / set of builtin names in this module is derived from this one. */
+var kBuiltinFieldOrder = [
+	"explanation",
+	"label",
+	"value",
+	"validation",
+	"answer",
+	"metadata"
+];
+var kBuiltinNames = new Set(kBuiltinFieldOrder);
+/** Built-in default order when no scanner pattern matches. */
+var kDefaultFields = kBuiltinFieldOrder.map((name) => ({
+	kind: "builtin",
+	name,
+	collapsed: false
+}));
+/** The resolved value returned when no viewer config is provided at all. */
+var kDefaultResolvedView = {
+	fields: [...kDefaultFields],
+	excludedMetadataKeys: []
+};
+var kMetadataPrefix = "metadata.";
+function resolveScannerResultView(viewer, scannerName) {
+	const entries = scannerResultViewEntries(viewer);
+	if (entries.length === 0) return kDefaultResolvedView;
+	const matches = rankMatchingEntries(entries, scannerName);
+	const mostSpecific = matches[0];
+	if (!mostSpecific) return kDefaultResolvedView;
+	const userFields = mostSpecific.view.fields === null || mostSpecific.view.fields === void 0 ? [] : coerceFields(mostSpecific.view.fields);
+	const mentionedBuiltins = /* @__PURE__ */ new Set();
+	for (const f of userFields) if (f.kind === "builtin") mentionedBuiltins.add(f.name);
+	const unlistedDefaults = kDefaultFields.filter((f) => f.kind === "builtin" && !mentionedBuiltins.has(f.name));
+	const baseFields = [...userFields, ...unlistedDefaults];
+	const exclusions = matches.flatMap((m) => coerceFields(m.view.exclude_fields));
+	const excludeBuiltinNames = /* @__PURE__ */ new Set();
+	const directlyExcludedMetadataKeys = /* @__PURE__ */ new Set();
+	for (const f of exclusions) if (f.kind === "builtin") excludeBuiltinNames.add(f.name);
+	else directlyExcludedMetadataKeys.add(f.key);
+	const fields = baseFields.filter((f) => f.kind === "builtin" ? !excludeBuiltinNames.has(f.name) : !directlyExcludedMetadataKeys.has(f.key));
+	const promotedKeys = /* @__PURE__ */ new Set();
+	for (const f of fields) if (f.kind === "metadata") promotedKeys.add(f.key);
+	return {
+		fields,
+		excludedMetadataKeys: Array.from(new Set([...promotedKeys, ...directlyExcludedMetadataKeys]))
+	};
+}
+function scannerResultViewEntries(viewer) {
+	if (!viewer) return [];
+	const raw = viewer.scanner_result_view;
+	if (!raw) return [];
+	if (isScannerResultView(raw)) return [{
+		pattern: "*",
+		view: raw
+	}];
+	return Object.entries(raw).map(([pattern, view]) => ({
+		pattern,
+		view
+	}));
+}
+function isScannerResultView(v) {
+	if (!v || typeof v !== "object") return false;
+	return "fields" in v || "exclude_fields" in v;
+}
+function rankMatchingEntries(entries, scannerName) {
+	const matches = [];
+	entries.forEach(({ pattern, view }, order) => {
+		if (!globMatches(pattern, scannerName)) return;
+		matches.push({
+			pattern,
+			view,
+			specificity: specificityOf(pattern),
+			order
+		});
+	});
+	matches.sort((a, b) => {
+		if (a.specificity !== b.specificity) return b.specificity - a.specificity;
+		return a.order - b.order;
+	});
+	return matches;
+}
+var kGlobOptions = {
+	nobrace: true,
+	nonegate: true,
+	noextglob: true
+};
+function globMatches(pattern, value) {
+	return import_picomatch.default.isMatch(value, pattern, kGlobOptions);
+}
+function specificityOf(pattern) {
+	let n = 0;
+	for (const ch of pattern) if (ch !== "*" && ch !== "?") n++;
+	return n;
+}
+function coerceFields(raw) {
+	const out = [];
+	for (const entry of raw) {
+		const coerced = coerceField(entry);
+		if (coerced) out.push(coerced);
+	}
+	return out;
+}
+/**
+* String shorthand:
+*   `"metadata.<key>"` → `MetadataField(key=<key>)`
+*   `"<builtin>"`      → `ScannerResultField(name=<builtin>)`
+*
+* Entries with an unknown `kind` (e.g. hand-edited eval logs) or invalid
+* builtin names are dropped defensively.
+*/
+function coerceField(entry) {
+	if (typeof entry === "string") {
+		if (entry.startsWith(kMetadataPrefix) && entry.length > 9) return {
+			kind: "metadata",
+			key: entry.slice(9),
+			collapsed: false
+		};
+		if (kBuiltinNames.has(entry)) return {
+			kind: "builtin",
+			name: entry,
+			collapsed: false
+		};
+		return null;
+	}
+	if (entry.kind === "builtin") {
+		if (!kBuiltinNames.has(entry.name)) return null;
+		return entry;
+	}
+	if (entry.kind === "metadata") return entry;
+	return null;
+}
+//#endregion
+//#region ../../packages/scout-components/src/scanner-result-detail/Explanation.tsx
+var Explanation = ({ explanation, references, options }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownDivWithReferences, {
+		markdown: explanation ?? "",
+		references,
+		options
+	});
+};
+var Metadata_module_default = { entry: "_entry_a2fxh_1" };
+//#endregion
+//#region ../../packages/scout-components/src/scanner-result-detail/Metadata.tsx
+var Metadata = ({ metadata, references, options, excludeKeys }) => {
+	const excluded = excludeKeys ? new Set(excludeKeys) : null;
+	const entries = Object.entries(metadata).filter(([key]) => !excluded?.has(key));
+	if (entries.length === 0) return null;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: entries.map(([key, value]) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
+		label: key,
+		className: Metadata_module_default.entry,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetadataValue, {
+			id: key,
+			value,
+			references,
+			options
+		})
+	}, key)) });
+};
+var MetadataValue = ({ id, value, references, options }) => {
+	switch (typeof value) {
+		case "string": return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownDivWithReferences, {
+			markdown: value,
+			references,
+			options
+		});
+		case "object":
+			if (value === null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", { children: "null" });
+			if (Array.isArray(value)) {
+				const record = {};
+				value.forEach((item, i) => {
+					record[`[${i}]`] = item;
+				});
+				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
+					id: `metadata-${id}`,
+					record,
+					useBorders: false
+				});
+			}
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
+				id: `metadata-${id}`,
+				record: value,
+				useBorders: false
+			});
+		default: return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: String(value) });
+	}
+};
+var ScannerResultDetailView_module_default = {
+	container: "_container_15g5f_1",
+	header: "_header_15g5f_8",
+	section: "_section_15g5f_12",
+	values: "_values_15g5f_23"
+};
+var ValidationResult_module_default = {
+	result: "_result_415jo_1",
+	"true": "_true_415jo_11",
+	"false": "_false_415jo_16",
+	resultContainer: "_resultContainer_415jo_21",
+	targetValue: "_targetValue_415jo_28",
+	validationTable: "_validationTable_415jo_36"
+};
+//#endregion
+//#region ../../packages/scout-components/src/scanner-result-detail/ValidationResult.tsx
+var ValidationResult = ({ result, target, label }) => {
+	if (typeof result === "boolean") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Result, {
+		value: result,
+		targetValue: valueStr(resolveTargetValue(target, label))
+	});
+	else if (result !== null && typeof result === "object") {
+		const entries = Object.entries(result);
+		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: clsx(ValidationResult_module_default.validationTable),
+			children: entries.map(([key, value]) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Result, {
+				value,
+				targetValue: valueStr(resolveTargetValue(target, key))
+			}) }, `validation-result-${key}`))
+		});
+	}
+};
+var Result = ({ value, targetValue }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: clsx(value ? ValidationResult_module_default.true : ValidationResult_module_default.false, ValidationResult_module_default.result),
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx("bi", value ? "bi-check" : "bi-x") })
+	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+		className: clsx(ValidationResult_module_default.targetValue, "text-size-smallestest", "text-style-secondary"),
+		title: targetValue,
+		children: targetValue
+	})] });
+};
+var resolveTargetValue = (target, key) => {
+	if (target === void 0) return "";
+	if (key === void 0) return target;
+	if (target && typeof target === "object" && !Array.isArray(target)) return target[key] ?? false;
+	return target;
+};
+var valueStr = (target) => {
+	if (target === null) return "null";
+	else if (typeof target === "string") return target;
+	else if (typeof target === "number" || typeof target === "boolean") return target.toString();
+	else if (Array.isArray(target)) return `[Array(${target.length})]`;
+	else if (typeof target === "object") return "{Object}";
+	else return "undefined";
+};
+//#endregion
+//#region ../../packages/scout-components/src/scanner-result-detail/types.ts
+function isStringValue(r) {
+	return r.valueType === "string";
+}
+function isNumberValue(r) {
+	return r.valueType === "number";
+}
+function isBooleanValue(r) {
+	return r.valueType === "boolean";
+}
+function isNullValue(r) {
+	return r.valueType === "null";
+}
+function isArrayValue(r) {
+	return r.valueType === "array";
+}
+function isObjectValue(r) {
+	return r.valueType === "object";
+}
+function inferValueType(value) {
+	if (value === null) return "null";
+	if (typeof value === "boolean") return "boolean";
+	if (typeof value === "number") return "number";
+	if (typeof value === "string") return "string";
+	if (Array.isArray(value)) return "array";
+	if (typeof value === "object") return "object";
+	return "string";
+}
+var Value_module_default = {
+	boolean: "_boolean_8citi_1",
+	"true": "_true_8citi_13",
+	"false": "_false_8citi_19",
+	valueTable: "_valueTable_8citi_25",
+	valueKey: "_valueKey_8citi_32",
+	inline: "_inline_8citi_38",
+	valueValue: "_valueValue_8citi_38",
+	value: "_value_8citi_25"
+};
+//#endregion
+//#region ../../packages/scout-components/src/scanner-result-detail/Value.tsx
+var Value = ({ value, valueType, identifier, references, style = "block", maxTableSize = 5, interactive = false, options }) => {
+	const input = {
+		value,
+		valueType
+	};
+	if (isStringValue(input)) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownDivWithReferences, {
+		markdown: input.value,
+		references,
+		options
+	});
+	else if (isNumberValue(input) && input.value !== null) return formatPrettyDecimal(input.value);
+	else if (isBooleanValue(input)) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: clsx(Value_module_default.boolean, input.value ? Value_module_default.true : Value_module_default.false),
+		children: String(input.value)
+	});
+	else if (isNullValue(input)) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", { children: "null" });
+	else if (isArrayValue(input)) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		title: import_dist.default.stringify(input.value, null, 2),
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ValueList, {
+			value: input.value,
+			identifier,
+			references,
+			style,
+			maxListSize: maxTableSize,
+			interactive
+		})
+	});
+	else if (isObjectValue(input)) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		title: maxTableSize < Object.keys(input.value).length ? import_dist.default.stringify(input.value, null, 2) : void 0,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ValueTable, {
+			value: input.value,
+			identifier,
+			references,
+			style,
+			maxTableSize,
+			interactive
+		})
+	});
+	else return "Unknown value type";
+};
+var ValueList = ({ value, identifier, maxListSize, interactive, references, style }) => {
+	const itemsToDisplay = value.slice(0, maxListSize);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: clsx(Value_module_default.valueTable, style === "inline" ? Value_module_default.inline : Value_module_default.block),
+		children: itemsToDisplay.map((item, index) => {
+			const displayValue = renderValue(index, item, identifier, references, interactive);
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: clsx(Value_module_default.valueKey, "text-style-label", "text-style-secondary", "text-size-smallest"),
+				children: [
+					"[",
+					index,
+					"]"
+				]
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: clsx(Value_module_default.valueValue),
+				children: displayValue
+			})] }, `value-table-row-${index}`);
+		})
+	});
+};
+var ValueTable = ({ value, identifier, maxTableSize, interactive, references, style }) => {
+	const keysToDisplay = Object.keys(value).sort((a, b) => {
+		const aVal = value[a];
+		const bVal = value[b];
+		if (typeof aVal === "boolean" && typeof bVal === "boolean") return Number(bVal) - Number(aVal);
+		else if (typeof aVal === "number" && typeof bVal === "number") return bVal - aVal;
+		else return 0;
+	}).slice(0, maxTableSize);
+	const notShown = Object.keys(value).length - maxTableSize;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: clsx(Value_module_default.valueTable, style === "inline" ? Value_module_default.inline : Value_module_default.block),
+		children: [keysToDisplay.map((key, index) => {
+			const displayValue = renderValue(index, value[key], identifier, references, interactive);
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: clsx(Value_module_default.valueKey, "text-style-label", "text-style-secondary", "text-size-smallest"),
+				children: key
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: clsx(Value_module_default.valueValue),
+				children: displayValue
+			})] }, `value-table-row-${key}`);
+		}), notShown > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: clsx(Value_module_default.valueKey, "text-style-label", "text-style-secondary", "text-size-smallest"),
+			children: [notShown, " more…"]
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: clsx(Value_module_default.valueValue) })] }, `value-table-row-more`)]
+	});
+};
+var renderValue = (index, val, identifier, references, interactive) => {
+	if (typeof val === "string") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownDivWithReferences, {
+		markdown: val,
+		references
+	});
+	else if (typeof val === "number") return formatPrettyDecimal(val);
+	else if (typeof val === "boolean") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: clsx(Value_module_default.boolean, val ? Value_module_default.true : Value_module_default.false),
+		children: String(val)
+	});
+	else if (val === null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", {
+		className: clsx(Value_module_default.value),
+		children: "null"
+	});
+	else if (Array.isArray(val)) return printArray(val, 35);
+	else if (typeof val === "object") return !interactive ? printObject(val, 35) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
+		id: `value-record-${identifier ?? "na"}-${index}`,
+		record: val
+	});
+	else return "Unknown value type";
+};
+//#endregion
+//#region ../../packages/scout-components/src/scanner-result-detail/ScannerResultDetailView.tsx
+var kCollapseScope = "scanner-result-sections";
+var ScannerResultDetailView = ({ data, references, header, interactive = false, options, config = kDefaultResolvedView }) => {
+	const [collapsedIds, setCollapsed] = useCollapsibleIds(kCollapseScope);
+	const onToggle = (0, import_react.useCallback)((id, open) => setCollapsed(id, !open), [setCollapsed]);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: clsx(ScannerResultDetailView_module_default.container, "text-size-small"),
+		children: [header ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: ScannerResultDetailView_module_default.header,
+			children: header
+		}) : null, config.fields.map((field) => {
+			const rendered = renderField(field, data, references, options, interactive, config, collapsedIds, onToggle);
+			if (!rendered) return null;
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FieldFragment, { children: rendered }, fieldId(field));
+		})]
+	});
+};
+var FieldFragment = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children });
+var Section = ({ id, heading, open, onToggle, children }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(VscodeCollapsible, {
+		ref: (0, import_react.useCallback)((el) => {
+			if (!el) return;
+			const handler = (e) => {
+				const detail = e.detail;
+				onToggle(id, detail.open);
+			};
+			el.addEventListener("vsc-collapsible-toggle", handler);
+			return () => el.removeEventListener("vsc-collapsible-toggle", handler);
+		}, [id, onToggle]),
+		heading,
+		open,
+		className: ScannerResultDetailView_module_default.section,
+		children
+	});
+};
+function fieldId(field) {
+	return field.kind === "builtin" ? `builtin:${field.name}` : `metadata:${field.key}`;
+}
+function sectionOpen(field, collapsedIds) {
+	const toggled = collapsedIds?.[fieldId(field)];
+	if (toggled === void 0) return !field.collapsed;
+	return !toggled;
+}
+function renderField(field, data, references, options, interactive, config, collapsedIds, onToggle) {
+	const id = fieldId(field);
+	const open = sectionOpen(field, collapsedIds);
+	if (field.kind === "metadata") {
+		const value = data.metadata?.[field.key];
+		if (value === void 0) return null;
+		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+			id,
+			heading: field.label ?? field.key,
+			open,
+			onToggle,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetadataValue, {
+				id: field.key,
+				value,
+				references,
+				options
+			})
+		});
+	}
+	switch (field.name) {
+		case "label":
+			if (!data.label) return null;
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+				id,
+				heading: field.label ?? "Label",
+				open,
+				onToggle,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: data.label })
+			});
+		case "value": return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+			id,
+			heading: field.label ?? "Value",
+			open,
+			onToggle,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Value, {
+				value: data.value,
+				valueType: data.valueType,
+				identifier: data.identifier,
+				style: "block",
+				maxTableSize: 1e3,
+				interactive,
+				references,
+				options
+			})
+		});
+		case "validation":
+			if (data.validationResult === void 0 || data.validationResult === null) return null;
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+				id,
+				heading: field.label ?? "Validation",
+				open,
+				onToggle,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ValidationResult, {
+					result: data.validationResult,
+					target: data.validationTarget,
+					label: data.label
+				})
+			});
+		case "answer":
+			if (!data.answer) return null;
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+				id,
+				heading: field.label ?? "Answer",
+				open,
+				onToggle,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: data.answer })
+			});
+		case "explanation":
+			if (!data.explanation) return null;
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+				id,
+				heading: field.label ?? "Explanation",
+				open,
+				onToggle,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Explanation, {
+					explanation: data.explanation,
+					references,
+					options
+				})
+			});
+		case "metadata":
+			if (data.metadata === void 0 || Object.keys(data.metadata).length === 0) return null;
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+				id,
+				heading: field.label ?? "Metadata",
+				open,
+				onToggle,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Metadata, {
+					metadata: data.metadata,
+					references,
+					options,
+					excludeKeys: config.excludedMetadataKeys
+				})
+			});
+	}
+}
+var SampleScannerPicker_module_default = {
+	picker: "_picker_vehgx_1",
+	select: "_select_vehgx_7"
+};
+//#endregion
+//#region src/app/samples/scans/SampleScannerPicker.tsx
+var SampleScannerPicker = ({ scanners, selected, onChange }) => {
+	const handleChange = (0, import_react.useCallback)((e) => onChange(e.target.value), [onChange]);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: SampleScannerPicker_module_default.picker,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+			className: clsx("text-size-smaller", "text-style-secondary"),
+			children: "scanner:"
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", {
+			className: clsx("form-select", "form-select-sm", "text-size-smaller", SampleScannerPicker_module_default.select),
+			"aria-label": "Select scanner",
+			value: selected,
+			onChange: handleChange,
+			children: scanners.map((scanner) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", {
+				value: scanner,
+				children: scanner
+			}, scanner))
+		})]
+	});
+};
+var SampleScansSidebar_module_default = {
+	sidebar: "_sidebar_ei072_1",
+	header: "_header_ei072_10",
+	singleScanner: "_singleScanner_ei072_19"
+};
+//#endregion
+//#region src/app/samples/scans/scanReferencePreviews.tsx
+var EMPTY_COLLAPSE = {};
+var noopCollapse = () => {};
+var TranscriptPreview = ({ id, events }) => {
+	const { eventNodes, defaultCollapsedIds } = useEventNodes(events, false);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptViewNodes, {
+		id,
+		eventNodes,
+		defaultCollapsedIds,
+		collapsedTranscript: EMPTY_COLLAPSE,
+		onCollapseTranscript: noopCollapse
+	});
+};
+/**
+* Walk events and build a lookup of reference id → preview renderer.
+*
+* Scanner references can point to either an event uuid or a message id.
+* Event previews render the event inline via a transcript view; message
+* previews render the message inline via a chat view. Messages can live
+* inside ModelEvent input/output, so those are harvested here too.
+*/
+function buildScanReferencePreviews(events) {
+	if (!events || events.length === 0) return {};
+	const table = {};
+	const addMessage = (msg) => {
+		if (!msg?.id || table[msg.id]) return;
+		const captured = msg;
+		table[msg.id] = () => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChatView, {
+			id: `ref-preview-${captured.id}`,
+			messages: [captured],
+			labels: { show: false },
+			tools: { collapseToolMessages: false }
+		});
+	};
+	for (const event of events) {
+		if (event.uuid && !table[event.uuid]) {
+			const captured = event;
+			table[event.uuid] = () => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptPreview, {
+				id: `ref-preview-${captured.uuid}`,
+				events: [captured]
+			});
+		}
+		if (event.event === "model") {
+			for (const msg of event.input ?? []) addMessage(msg);
+			for (const choice of event.output?.choices ?? []) addMessage(choice.message);
+		}
+	}
+	return table;
+}
+//#endregion
+//#region src/app/samples/scans/scanReferences.ts
+/**
+* Walk a list of events to find the event that contains a given message id.
+*
+* Scanner message references can point to messages that live inside a
+* ModelEvent's input/output (sub-agent conversations) rather than in the
+* sample's top-level `messages` list. The transcript renders events, not the
+* flat message list, so every reference — message or event — ultimately
+* navigates to an event uuid.
+*
+* Priorities (mirror of inspect-components' resolveMessageToEvent):
+*   1. ModelEvent.output[*].message.id
+*   2. ToolEvent.message_id
+*   3. ModelEvent.input[*].id
+*/
+function findEventForMessage(messageId, events) {
+	if (!events) return void 0;
+	let inputMatch;
+	let toolMatch;
+	for (const e of events) if (e.event === "model") {
+		if (!e.uuid) continue;
+		for (const choice of e.output?.choices ?? []) if (choice.message?.id === messageId) return e.uuid;
+		if (!inputMatch) {
+			for (const msg of e.input ?? []) if (msg.id === messageId) {
+				inputMatch = e.uuid;
+				break;
+			}
+		}
+	} else if (e.event === "tool") {
+		if (!toolMatch && e.uuid && e.message_id === messageId) toolMatch = e.uuid;
+	}
+	return toolMatch ?? inputMatch;
+}
+function buildScoreMarkdownRefs(metadata, makeUrl, previewTable) {
+	return readScannerReferences(metadata).map((ref) => ({
+		id: ref.id,
+		cite: ref.cite,
+		citeUrl: makeUrl(ref.id, ref.type),
+		citePreview: previewTable?.[ref.id]
+	}));
+}
+/**
+* Hook that returns a cite URL builder closing over the sample's events and
+* identifiers. Call this wherever those values are already available and pass
+* the returned function to `buildScoreMarkdownRefs` (or `SampleScansSidebar`)
+* so the score-rendering components don't have to know about navigation.
+*/
+function useMakeCiteUrl(opts) {
+	const { events, sampleId, sampleEpoch } = opts;
+	const builder = useSampleUrlBuilder();
+	const { logPath: urlLogPath, id: urlSampleId, epoch: urlEpoch } = useLogOrSampleRouteParams();
+	return (0, import_react.useCallback)((id, type) => {
+		if (!urlLogPath) return void 0;
+		const effectiveSampleId = sampleId ?? urlSampleId;
+		const effectiveEpoch = sampleEpoch ?? urlEpoch;
+		const eventId = type === "event" ? id : findEventForMessage(id, events);
+		if (!eventId) return void 0;
+		const path = sampleEventUrl(builder, eventId, urlLogPath, effectiveSampleId, effectiveEpoch);
+		return path ? `#${path}` : void 0;
+	}, [
+		events,
+		sampleId,
+		sampleEpoch,
+		builder,
+		urlLogPath,
+		urlSampleId,
+		urlEpoch
+	]);
+}
+//#endregion
+//#region src/app/samples/scans/SampleScansSidebar.tsx
+var SampleScansSidebar = ({ scores, events, makeCiteUrl, selected, onSelectedChange }) => {
+	const scanners = Object.keys(scores);
+	const score = selected ? scores[selected] : void 0;
+	const previewTable = (0, import_react.useMemo)(() => buildScanReferencePreviews(events ?? void 0), [events]);
+	const references = (0, import_react.useMemo)(() => buildScoreMarkdownRefs(score?.metadata ?? null, makeCiteUrl, previewTable), [
+		score?.metadata,
+		makeCiteUrl,
+		previewTable
+	]);
+	const viewer = useEvalSpec()?.viewer;
+	const config = (0, import_react.useMemo)(() => resolveScannerResultView(viewer, selected), [viewer, selected]);
+	if (!score) return null;
+	const data = {
+		value: score.value,
+		valueType: inferValueType(score.value),
+		answer: score.answer ?? void 0,
+		explanation: score.explanation ?? void 0,
+		metadata: metadataWithoutScannerKeys(score.metadata)
+	};
+	const header = scanners.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleScannerPicker, {
+		scanners,
+		selected,
+		onChange: onSelectedChange
+	}) : scanners.length === 1 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+		className: clsx(SampleScansSidebar_module_default.singleScanner, "text-size-smaller"),
+		children: scanners[0]
+	}) : null;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: SampleScansSidebar_module_default.sidebar,
+		"aria-label": "Sample scans",
+		children: [header ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: SampleScansSidebar_module_default.header,
+			children: header
+		}) : null, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScannerResultDetailView, {
+			data,
+			references,
+			config
+		})]
+	});
+};
+//#endregion
 //#region src/app/samples/transcript/TranscriptPanel.tsx
 /**
 * Renders the Transcript Virtual List, with optional timeline swimlanes
 * when the sample provides timeline data.
 */
 var TranscriptPanel = (0, import_react.memo)((props) => {
-	const { id, scrollRef, events, running, initialEventId, offsetTop, eventsCleared, timelines: serverTimelines } = props;
+	const { id, scrollRef, events, running, initialEventId, offsetTop, timelines: serverTimelines, scans: allScores, sampleId, sampleEpoch } = props;
+	const scores = (0, import_react.useMemo)(() => {
+		if (!allScores) return null;
+		const filtered = {};
+		for (const [key, score] of Object.entries(allScores)) if (isScannerScore(score.metadata)) filtered[key] = score;
+		return filtered;
+	}, [allScores]);
+	const makeCiteUrl = useMakeCiteUrl({
+		events,
+		sampleId,
+		sampleEpoch
+	});
 	const filteredEventTypes = useStore((state) => state.sample.eventFilter.filteredTypes);
-	const sampleStatus = useStore((state) => state.sample.sampleStatus);
 	const filteredEvents = (0, import_react.useMemo)(() => {
 		if (filteredEventTypes.length === 0) return events;
 		return events.filter((event) => {
@@ -130938,28 +134506,39 @@ var TranscriptPanel = (0, import_react.memo)((props) => {
 	const collapsedEvents = useStore((state) => state.sample.collapsedEvents);
 	const setCollapsedEventsStore = useStore((state) => state.sampleActions.setCollapsedEvents);
 	const collapseEventStore = useStore((state) => state.sampleActions.collapseEvent);
+	const onCollapseTranscript = (0, import_react.useCallback)((nodeId, collapsed) => collapseEventStore(kTranscriptCollapseScope, nodeId, collapsed), [collapseEventStore]);
+	const onCollapseOutline = (0, import_react.useCallback)((nodeId, collapsed) => collapseEventStore(kTranscriptOutlineCollapseScope, nodeId, collapsed), [collapseEventStore]);
+	const onSetTranscriptCollapsed = (0, import_react.useCallback)((ids) => setCollapsedEventsStore(kTranscriptCollapseScope, ids), [setCollapsedEventsStore]);
+	const onSetOutlineCollapsed = (0, import_react.useCallback)((ids) => setCollapsedEventsStore(kTranscriptOutlineCollapseScope, ids), [setCollapsedEventsStore]);
 	const collapseState = (0, import_react.useMemo)(() => {
 		const events = collapsedEvents ?? void 0;
 		return {
 			transcript: events?.[kTranscriptCollapseScope],
 			outline: events?.[kTranscriptOutlineCollapseScope],
-			onCollapseTranscript: (nodeId, collapsed) => collapseEventStore(kTranscriptCollapseScope, nodeId, collapsed),
-			onCollapseOutline: (nodeId, collapsed) => collapseEventStore(kTranscriptOutlineCollapseScope, nodeId, collapsed),
-			onSetTranscriptCollapsed: (ids) => setCollapsedEventsStore(kTranscriptCollapseScope, ids),
-			onSetOutlineCollapsed: (ids) => setCollapsedEventsStore(kTranscriptOutlineCollapseScope, ids)
+			onCollapseTranscript,
+			onCollapseOutline,
+			onSetTranscriptCollapsed,
+			onSetOutlineCollapsed
 		};
 	}, [
 		collapsedEvents,
-		collapseEventStore,
-		setCollapsedEventsStore
+		onCollapseTranscript,
+		onCollapseOutline,
+		onSetTranscriptCollapsed,
+		onSetOutlineCollapsed
 	]);
 	const collapsedMode = useStore((state) => state.sample.collapsedMode);
 	const bulkCollapse = (0, import_react.useMemo)(() => {
 		if (collapsedMode === "collapsed") return "collapse";
 		if (collapsedMode === "expanded") return "expand";
-		if (!collapsedEvents) return "expand";
-	}, [collapsedMode, collapsedEvents]);
-	const { hidden: headroomHidden, resetAnchor: headroomResetAnchor } = useScrollDirection(scrollRef);
+	}, [collapsedMode]);
+	const outlineScrollRef = (0, import_react.useRef)(null);
+	const rightPaneScrollRef = (0, import_react.useRef)(null);
+	const { hidden: headroomHidden, resetAnchor: headroomResetAnchor } = useScrollDirection((0, import_react.useMemo)(() => [
+		scrollRef,
+		outlineScrollRef,
+		rightPaneScrollRef
+	], [scrollRef]));
 	const onHeadroomResetAnchor = (0, import_react.useCallback)((debounce) => headroomResetAnchor(debounce), [headroomResetAnchor]);
 	const { logPath } = useLogRouteParams();
 	const outlineKey = `transcript-panel-${logPath || "na"}`;
@@ -130971,6 +134550,41 @@ var TranscriptPanel = (0, import_react.memo)((props) => {
 		setPropertyValue("collapse-state-scope", outlineKey, value);
 	}, [setPropertyValue, outlineKey]);
 	const outlineCollapsed = outlineCollapsedRaw ?? false;
+	const scoresKey = `transcript-scores-${logPath || "na"}`;
+	const scoresCollapsedRaw = useStore((state) => {
+		return state.app.propertyBags["collapse-state-scope"]?.[scoresKey];
+	});
+	const setScoresCollapsed = (0, import_react.useCallback)((value) => {
+		setPropertyValue("collapse-state-scope", scoresKey, value);
+	}, [setPropertyValue, scoresKey]);
+	const scoresCollapsed = scoresCollapsedRaw ?? false;
+	const scoresWidth = useStore((state) => {
+		return state.app.propertyBags["sidebar-widths"]?.["scores"];
+	}) ?? 380;
+	const setScoresWidth = (0, import_react.useCallback)((value) => {
+		setPropertyValue("sidebar-widths", "scores", value);
+	}, [setPropertyValue]);
+	const hasScores = !!scores && Object.keys(scores).length > 0;
+	const [selectedScanner, setSelectedScanner] = (0, import_react.useState)("");
+	(0, import_react.useEffect)(() => {
+		const scanners = scores ? Object.keys(scores) : [];
+		if (scanners.length === 0) {
+			if (selectedScanner !== "") setSelectedScanner("");
+		} else if (!scanners.includes(selectedScanner)) setSelectedScanner(scanners[0]);
+	}, [scores, selectedScanner]);
+	const messageLabels = (0, import_react.useMemo)(() => {
+		if (!hasScores || scoresCollapsed) return {};
+		const refs = readScannerReferences((selectedScanner ? scores?.[selectedScanner] : void 0)?.metadata);
+		const map = {};
+		for (const r of refs) if (r.type === "message" && r.id && r.cite) map[r.id] = r.cite;
+		return map;
+	}, [
+		hasScores,
+		scoresCollapsed,
+		scores,
+		selectedScanner
+	]);
+	const eventNodeContext = (0, import_react.useMemo)(() => Object.keys(messageLabels).length > 0 ? { messageLabels } : void 0, [messageLabels]);
 	const selectedOutlineId = useStore((state) => state.sample.selectedOutlineId);
 	const setSelectedOutlineId = useStore((state) => state.sampleActions.setSelectedOutlineId);
 	(0, import_react.useEffect)(() => {
@@ -130998,18 +134612,6 @@ var TranscriptPanel = (0, import_react.memo)((props) => {
 		children
 	}), []);
 	const navigate = useNavigate();
-	const onMarkerNavigate = (0, import_react.useCallback)((eventId, selectedKey) => {
-		const url = getEventUrl(eventId);
-		if (!url) return;
-		if (selectedKey) setTimelineSelected(selectedKey);
-		navigate(url);
-	}, [
-		getEventUrl,
-		navigate,
-		setTimelineSelected
-	]);
-	if (sampleStatus === "loading" && events.length === 0) return;
-	if (events.length === 0) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, { text: eventsCleared ? "Transcript events were removed because this sample exceeds the browser's size limit. Use the Messages tab to view the conversation." : "No events to display." });
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptLayout, {
 		events: filteredEvents,
 		running,
@@ -131019,23 +134621,52 @@ var TranscriptPanel = (0, import_react.memo)((props) => {
 		activeTimeline,
 		serverTimelines,
 		showSwimlanes: "auto",
-		onMarkerNavigate,
+		onMarkerNavigate: (0, import_react.useCallback)((eventId, selectedKey) => {
+			const url = getEventUrl(eventId);
+			if (!url) return;
+			if (selectedKey) setTimelineSelected(selectedKey);
+			navigate(url);
+		}, [
+			getEventUrl,
+			navigate,
+			setTimelineSelected
+		]),
 		headroomHidden,
 		onHeadroomResetAnchor,
+		eventNodeContext,
 		listId: id,
 		initialEventId,
 		getEventUrl,
 		linkingEnabled: true,
 		bulkCollapse,
 		collapseState,
+		outlineScrollRef,
+		rightPaneScrollRef,
 		outline: {
 			collapsed: outlineCollapsed,
 			onCollapsedChange: setOutlineCollapsed,
 			toggleIcon: ApplicationIcons.sidebar,
+			toggleTitle: outlineCollapsed ? "Show transcript outline" : "Hide transcript outline",
 			renderLink,
 			selectedId: selectedOutlineId,
 			setSelectedId: setSelectedOutlineId
 		},
+		rightPane: hasScores && scores ? {
+			collapsed: scoresCollapsed,
+			onCollapsedChange: setScoresCollapsed,
+			toggleIcon: ApplicationIcons.scoringSidebar,
+			toggleTitle: scoresCollapsed ? "Show scan results" : "Hide scan results",
+			label: "scans",
+			width: scoresWidth,
+			onWidthChange: setScoresWidth,
+			content: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleScansSidebar, {
+				scores,
+				events,
+				makeCiteUrl,
+				selected: selectedScanner,
+				onSelectedChange: setSelectedScanner
+			})
+		} : void 0,
 		emptyText: filteredEventTypes.length > 0 ? "The currently applied filter hides all events." : void 0
 	});
 });
@@ -131191,6 +134822,7 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 	tools.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolDropdownButton, {
 		label: "Copy",
 		icon,
+		dropdownClassName: "text-size-smallest",
 		items: {
 			UUID: () => {
 				if (sample?.uuid) {
@@ -131226,6 +134858,7 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 		tools.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolDropdownButton, {
 			label: "Download",
 			icon: ApplicationIcons.downloadLog,
+			dropdownClassName: "text-size-smallest",
 			items: {
 				"Sample JSON": () => {
 					api.download_file(`${sampleId}.json`, JSON.stringify(sample, null, 2));
@@ -131305,15 +134938,17 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 							showing: isShowing,
 							setShowing,
 							positionEl: filterRef.current
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptPanel, {
+						}), !sampleEvents || sampleEvents.length === 0 ? sampleData.status === "loading" ? null : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, { text: eventsCleared ? "Transcript events were removed because this sample exceeds the browser's size limit. Use the Messages tab to view the conversation." : "No events to display." }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptPanel, {
 							id: `${baseId}-transcript-display-${id}`,
-							events: sampleEvents || [],
-							eventsCleared,
-							initialEventId: sampleDetailNavigation.event,
-							offsetTop: tabsHeight,
-							running,
 							scrollRef,
-							timelines: sample?.timelines ?? void 0
+							offsetTop: tabsHeight,
+							sampleId: sample?.id ?? void 0,
+							sampleEpoch: sample?.epoch ?? void 0,
+							running,
+							events: sampleEvents,
+							timelines: sample?.timelines ?? void 0,
+							scans: sample?.scores ?? void 0,
+							initialEventId: sampleDetailNavigation.event
 						}, `${baseId}-transcript-display-${id}`)]
 					}, kSampleTranscriptTabId),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabPanel, {
@@ -134789,6 +138424,7 @@ function viewServerApi(options = {}) {
 		const metric = scores.length > 0 ? scores[0].metrics : void 0;
 		const evalMetrics = Object.values(metric || {});
 		const primary_metric = evalMetrics.length > 0 ? evalMetrics[0] : void 0;
+		const model_roles = header.eval.model_roles ? Object.fromEntries(Object.entries(header.eval.model_roles).map(([role, cfg]) => [role, cfg.model])) : void 0;
 		return {
 			eval_id: header.eval.eval_id,
 			run_id: header.eval.run_id,
@@ -134799,6 +138435,7 @@ function viewServerApi(options = {}) {
 			status: header.status,
 			error: header.error,
 			model: header.eval.model,
+			model_roles,
 			started_at: header.stats?.started_at,
 			completed_at: header.stats?.completed_at,
 			primary_metric
@@ -138929,7 +142566,8 @@ var LayerCursor = class {
 			break;
 		} else {
 			let chunkPos = this.layer.chunkPos[this.chunkIndex], chunk = this.layer.chunk[this.chunkIndex];
-			this.from = chunkPos + chunk.from[this.rangeIndex];
+			let from = chunkPos + chunk.from[this.rangeIndex];
+			this.from = from;
 			this.to = chunkPos + chunk.to[this.rangeIndex];
 			this.value = chunk.value[this.rangeIndex];
 			this.setRangeIndex(this.rangeIndex + 1);
@@ -139401,7 +143039,7 @@ function add(elt, child) {
 	else throw new RangeError("Unsupported child node: " + child);
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@codemirror+view@6.41.0/node_modules/@codemirror/view/dist/index.js
+//#region ../../node_modules/.pnpm/@codemirror+view@6.41.1/node_modules/@codemirror/view/dist/index.js
 var nav = typeof navigator != "undefined" ? navigator : {
 	userAgent: "",
 	vendor: "",
@@ -142598,11 +146236,12 @@ var InlineCoordsScan = class {
 			return this.scan(positions, getRects);
 		}
 		if (closestDx) {
-			if (above && above.bottom > closestRect.top) {
+			let { top, bottom } = closestRect;
+			if (above && above.bottom > (top + top + bottom) / 3) {
 				this.y = above.bottom - 1;
 				return this.scan(positions, getRects);
 			}
-			if (below && below.top < closestRect.bottom) {
+			if (below && below.top < (top + bottom + bottom) / 3) {
 				this.y = below.top + 1;
 				return this.scan(positions, getRects);
 			}
@@ -144463,7 +148102,8 @@ var ViewState = class {
 		this.defaultTextDirection = Direction.LTR;
 		this.visibleRanges = [];
 		this.mustEnforceCursorAssoc = false;
-		this.heightOracle = new HeightOracle(state.facet(contentAttributes).some((v) => typeof v != "function" && v.class == "cm-lineWrapping"));
+		let guessWrapping = state.facet(contentAttributes).some((v) => typeof v != "function" && v.class == "cm-lineWrapping");
+		this.heightOracle = new HeightOracle(guessWrapping);
 		this.stateDeco = staticDeco(state);
 		this.heightMap = HeightMap.empty().applyChanges(this.stateDeco, Text.empty, this.heightOracle.setDoc(state.doc), [new ChangedRange(0, 0, 0, state.doc.length)]);
 		for (let i = 0; i < 2; i++) {
@@ -146544,7 +150184,7 @@ var EditorView = class EditorView {
 	}
 	/**
 	Create a theme extension. The first argument can be a
-	[`style-mod`](https://github.com/marijnh/style-mod#documentation)
+	[`style-mod`](https://code.haverbeke.berlin/marijn/style-mod#documentation)
 	style spec providing the styles for the theme. These will be
 	prefixed with a generated class for the style.
 	
@@ -146589,7 +150229,7 @@ var EditorView = class EditorView {
 };
 /**
 Facet to add a [style
-module](https://github.com/marijnh/style-mod#documentation) to
+module](https://code.haverbeke.berlin/marijn/style-mod#documentation) to
 an editor view. The view will ensure that the module is
 mounted in its [document
 root](https://codemirror.net/6/docs/ref/#view.EditorView.constructor^config.root).
@@ -157273,7 +160913,8 @@ var RegExpCursor = class {
 		this.re = new RegExp(query, baseFlags + ((options === null || options === void 0 ? void 0 : options.ignoreCase) ? "i" : ""));
 		this.test = options === null || options === void 0 ? void 0 : options.test;
 		this.iter = text.iter();
-		this.curLineStart = text.lineAt(from).from;
+		let startLine = text.lineAt(from);
+		this.curLineStart = startLine.from;
 		this.matchPos = toCharEnd(text, from);
 		this.getLine(this.curLineStart);
 	}
@@ -159402,19 +163043,20 @@ var LinkButton = ({ id, text, icon, className, onClick }) => {
 	});
 };
 var Modal_module_default = {
-	modal: "_modal_o64lp_1",
-	header: "_header_o64lp_14",
-	modalTitle: "_modalTitle_o64lp_18",
-	btnClose: "_btnClose_o64lp_22",
-	backdrop: "_backdrop_o64lp_28",
-	overflowVisible: "_overflowVisible_o64lp_40",
-	overflowHidden: "_overflowHidden_o64lp_44",
-	overflowScroll: "_overflowScroll_o64lp_48",
-	overflowAuto: "_overflowAuto_o64lp_52"
+	modal: "_modal_1tj8p_1",
+	header: "_header_1tj8p_14",
+	modalTitle: "_modalTitle_1tj8p_18",
+	btnClose: "_btnClose_1tj8p_22",
+	backdrop: "_backdrop_1tj8p_28",
+	overflowVisible: "_overflowVisible_1tj8p_40",
+	overflowHidden: "_overflowHidden_1tj8p_44",
+	overflowScroll: "_overflowScroll_1tj8p_48",
+	overflowAuto: "_overflowAuto_1tj8p_52",
+	noPadding: "_noPadding_1tj8p_56"
 };
 //#endregion
 //#region src/components/Modal.tsx
-var Modal = ({ id, title, showing, setShowing, children, className, overflow = "visible" }) => {
+var Modal = ({ id, title, showing, setShowing, children, className, overflow = "visible", padded = true }) => {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [showing && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		className: Modal_module_default.backdrop,
 		onClick: () => setShowing(false)
@@ -159444,7 +163086,7 @@ var Modal = ({ id, title, showing, setShowing, children, className, overflow = "
 						})]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: clsx("modal-body", overflow === "auto" ? Modal_module_default.overflowAuto : overflow === "hidden" ? Modal_module_default.overflowHidden : overflow === "scroll" ? Modal_module_default.overflowScroll : Modal_module_default.overflowVisible),
+						className: clsx("modal-body", !padded && Modal_module_default.noPadding, overflow === "auto" ? Modal_module_default.overflowAuto : overflow === "hidden" ? Modal_module_default.overflowHidden : overflow === "scroll" ? Modal_module_default.overflowScroll : Modal_module_default.overflowVisible),
 						children
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -159481,30 +163123,28 @@ var metricsKey = (metrics) => {
 	return metrics.map((m) => m.name).join("");
 };
 var ResultsPanel_module_default = {
-	simpleMetricsRows: "_simpleMetricsRows_1itqo_1",
-	multiMetricsRows: "_multiMetricsRows_1itqo_12",
-	verticalMetricReducer: "_verticalMetricReducer_1itqo_26",
-	verticalMetricName: "_verticalMetricName_1itqo_33",
-	verticalMetricValue: "_verticalMetricValue_1itqo_41",
-	multiScorer: "_multiScorer_1itqo_46",
-	multiScorerIndent: "_multiScorerIndent_1itqo_53",
-	multiScorerReducer: "_multiScorerReducer_1itqo_57",
-	multiScorerLabel: "_multiScorerLabel_1itqo_63",
-	multiScorerValue: "_multiScorerValue_1itqo_69",
-	multiScorerValueContent: "_multiScorerValueContent_1itqo_78",
-	multiScoreMetricGrid: "_multiScoreMetricGrid_1itqo_83",
-	moreButton: "_moreButton_1itqo_91",
-	metricsSummary: "_metricsSummary_1itqo_97",
-	modalScores: "_modalScores_1itqo_104"
+	simpleMetricsRows: "_simpleMetricsRows_13tuz_1",
+	multiMetricsRows: "_multiMetricsRows_13tuz_12",
+	verticalMetricReducer: "_verticalMetricReducer_13tuz_26",
+	verticalMetricName: "_verticalMetricName_13tuz_33",
+	verticalMetricValue: "_verticalMetricValue_13tuz_41",
+	multiScorer: "_multiScorer_13tuz_46",
+	multiScorerIndent: "_multiScorerIndent_13tuz_53",
+	multiScorerReducer: "_multiScorerReducer_13tuz_57",
+	multiScorerLabel: "_multiScorerLabel_13tuz_63",
+	multiScorerValue: "_multiScorerValue_13tuz_69",
+	multiScorerValueContent: "_multiScorerValueContent_13tuz_78",
+	multiScoreMetricGrid: "_multiScoreMetricGrid_13tuz_83",
+	moreButton: "_moreButton_13tuz_91",
+	metricsSummary: "_metricsSummary_13tuz_97",
+	scoringDetailModal: "_scoringDetailModal_13tuz_104"
 };
-var ScoreGrid_module_default = {
-	table: "_table_12koy_1",
-	scorer: "_scorer_12koy_5",
-	value: "_value_12koy_6",
-	label: "_label_12koy_11",
-	groupSeparator: "_groupSeparator_12koy_28",
-	tableBody: "_tableBody_12koy_33",
-	tableSeparator: "_tableSeparator_12koy_45"
+var ScoreAgGrid_module_default = {
+	gridContainer: "_gridContainer_2wkq3_1",
+	firstCell: "_firstCell_2wkq3_12",
+	firstHeader: "_firstHeader_2wkq3_13",
+	lastCell: "_lastCell_2wkq3_17",
+	lastHeader: "_lastHeader_2wkq3_18"
 };
 var UnscoredSamplesView_module_default = { unscoredSamples: "_unscoredSamples_1h85z_1" };
 //#endregion
@@ -159523,6 +163163,94 @@ var UnscoredSamples = ({ scoredSamples, unscoredSamples }) => {
 			")"
 		]
 	});
+};
+//#endregion
+//#region src/app/log-view/title-view/ScoreAgGrid.tsx
+var ScoreAgGrid = ({ scoreGroups, showReducer, className }) => {
+	const kScorerColWidth = 280;
+	const kMetricColWidth = 120;
+	const { rowData, columnDefs, naturalWidth } = (0, import_react.useMemo)(() => {
+		const metricNames = [];
+		const metricNameSet = /* @__PURE__ */ new Set();
+		for (const group of scoreGroups) for (const score of group) for (const metric of score.metrics) if (!metricNameSet.has(metric.name)) {
+			metricNameSet.add(metric.name);
+			metricNames.push(metric.name);
+		}
+		const rows = [];
+		for (const group of scoreGroups) for (const score of group) {
+			const row = {
+				scorer: score.scorer + (showReducer && score.reducer ? ` (${score.reducer})` : ""),
+				scoredSamples: score.scoredSamples,
+				unscoredSamples: score.unscoredSamples
+			};
+			for (const metric of score.metrics) row[`metric_${metric.name}`] = metric.value;
+			rows.push(row);
+		}
+		const lastIdx = metricNames.length - 1;
+		return {
+			rowData: rows,
+			columnDefs: [{
+				headerName: "Scorer",
+				field: "scorer",
+				sortable: true,
+				resizable: true,
+				width: kScorerColWidth,
+				minWidth: 150,
+				cellClass: ScoreAgGrid_module_default.firstCell,
+				headerClass: ScoreAgGrid_module_default.firstHeader,
+				cellRenderer: (params) => {
+					const data = params.data;
+					if (!data) return null;
+					return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { children: [
+						data.scorer,
+						" ",
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(UnscoredSamples, {
+							scoredSamples: data.scoredSamples || 0,
+							unscoredSamples: data.unscoredSamples || 0
+						})
+					] });
+				}
+			}, ...metricNames.map((name, i) => ({
+				headerName: name,
+				field: `metric_${name}`,
+				sortable: true,
+				resizable: true,
+				width: kMetricColWidth,
+				cellClass: i === lastIdx ? ScoreAgGrid_module_default.lastCell : void 0,
+				headerClass: i === lastIdx ? ScoreAgGrid_module_default.lastHeader : void 0,
+				valueFormatter: (params) => {
+					if (params.value == null) return "";
+					return formatPrettyDecimal(params.value);
+				},
+				type: "numericColumn"
+			}))],
+			naturalWidth: kScorerColWidth + metricNames.length * kMetricColWidth
+		};
+	}, [scoreGroups, showReducer]);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: clsx(className, ScoreAgGrid_module_default.gridContainer),
+		style: { width: naturalWidth },
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AgGridReact, {
+			rowData,
+			columnDefs,
+			theme: themeBalham,
+			domLayout: "autoHeight",
+			headerHeight: 28,
+			rowHeight: 32,
+			suppressCellFocus: true,
+			enableCellTextSelection: true,
+			animateRows: false
+		})
+	});
+};
+var ScoreGrid_module_default = {
+	table: "_table_12koy_1",
+	scorer: "_scorer_12koy_5",
+	value: "_value_12koy_6",
+	label: "_label_12koy_11",
+	groupSeparator: "_groupSeparator_12koy_28",
+	tableBody: "_tableBody_12koy_33",
+	tableSeparator: "_tableSeparator_12koy_45"
 };
 //#endregion
 //#region src/app/log-view/title-view/ScoreGrid.tsx
@@ -159665,12 +163393,12 @@ var ResultsPanel = ({ scorers }) => {
 				showing,
 				setShowing,
 				title: "Scoring Detail",
-				overflow: "scroll",
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreGrid, {
+				overflow: "hidden",
+				padded: false,
+				className: ResultsPanel_module_default.scoringDetailModal,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreAgGrid, {
 					scoreGroups: grouped,
-					showReducer,
-					className: ResultsPanel_module_default.modalScores,
-					striped: false
+					showReducer
 				})
 			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LinkButton, {
 				className: ResultsPanel_module_default.moreButton,
@@ -160763,7 +164491,7 @@ var useSampleColumns = (logDetails) => {
 				}
 			}
 		];
-		const scoreColumns = Object.keys(scoreMap).map((scoreName) => {
+		const scoreColumns = Object.keys(scoreMap).sort((a, b) => a.localeCompare(b)).map((scoreName) => {
 			const scoreType = scoreMap[scoreName];
 			return {
 				field: `score_${scoreName}`,
@@ -161201,6 +164929,7 @@ var SamplesPanel = () => {
 						ref: columnButtonRef,
 						label: "Choose Columns",
 						icon: ApplicationIcons.checkbox.checked,
+						dropdown: true,
 						onClick: (e) => {
 							e.stopPropagation();
 							setShowColumnSelector((prev) => !prev);
