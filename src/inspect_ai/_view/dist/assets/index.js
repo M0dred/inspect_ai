@@ -11447,7 +11447,7 @@ function toString$2(v) {
 ({ ...functions });
 //#endregion
 //#region ../../node_modules/.pnpm/arquero@8.0.3/node_modules/arquero/src/util/error.js
-function error$6(message, cause) {
+function error$7(message, cause) {
 	throw Error(message, { cause });
 }
 //#endregion
@@ -11976,7 +11976,7 @@ var windowFunctions = {
 	ntile: {
 		create(num) {
 			num = +num;
-			if (!(num > 0)) error$6("ntile num must be greater than zero.");
+			if (!(num > 0)) error$7("ntile num must be greater than zero.");
 			const { init, value } = cume_dist.create();
 			return {
 				init,
@@ -12032,7 +12032,7 @@ var windowFunctions = {
 	nth_value: {
 		create(nth) {
 			nth = +nth;
-			if (!(nth > 0)) error$6("nth_value nth must be greater than zero.");
+			if (!(nth > 0)) error$7("nth_value nth must be greater than zero.");
 			return {
 				init: noop$1,
 				value: (w, f) => {
@@ -50422,7 +50422,7 @@ var stringFromCharCode = String.fromCharCode;
 * @param {String} type The error type.
 * @returns {Error} Throws a `RangeError` with the applicable error message.
 */
-function error$5(type) {
+function error$6(type) {
 	throw new RangeError(errors[type]);
 }
 /**
@@ -50556,26 +50556,26 @@ var decode = function(input) {
 	let basic = input.lastIndexOf(delimiter);
 	if (basic < 0) basic = 0;
 	for (let j = 0; j < basic; ++j) {
-		if (input.charCodeAt(j) >= 128) error$5("not-basic");
+		if (input.charCodeAt(j) >= 128) error$6("not-basic");
 		output.push(input.charCodeAt(j));
 	}
 	for (let index = basic > 0 ? basic + 1 : 0; index < inputLength;) {
 		const oldi = i;
 		for (let w = 1, k = base$1;; k += base$1) {
-			if (index >= inputLength) error$5("invalid-input");
+			if (index >= inputLength) error$6("invalid-input");
 			const digit = basicToDigit(input.charCodeAt(index++));
-			if (digit >= base$1) error$5("invalid-input");
-			if (digit > floor((maxInt - i) / w)) error$5("overflow");
+			if (digit >= base$1) error$6("invalid-input");
+			if (digit > floor((maxInt - i) / w)) error$6("overflow");
 			i += digit * w;
 			const t = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias;
 			if (digit < t) break;
 			const baseMinusT = base$1 - t;
-			if (w > floor(maxInt / baseMinusT)) error$5("overflow");
+			if (w > floor(maxInt / baseMinusT)) error$6("overflow");
 			w *= baseMinusT;
 		}
 		const out = output.length + 1;
 		bias = adapt(i - oldi, out, oldi == 0);
-		if (floor(i / out) > maxInt - n) error$5("overflow");
+		if (floor(i / out) > maxInt - n) error$6("overflow");
 		n += floor(i / out);
 		i %= out;
 		output.splice(i++, 0, n);
@@ -50604,11 +50604,11 @@ var encode = function(input) {
 		let m = maxInt;
 		for (const currentValue of input) if (currentValue >= n && currentValue < m) m = currentValue;
 		const handledCPCountPlusOne = handledCPCount + 1;
-		if (m - n > floor((maxInt - delta) / handledCPCountPlusOne)) error$5("overflow");
+		if (m - n > floor((maxInt - delta) / handledCPCountPlusOne)) error$6("overflow");
 		delta += (m - n) * handledCPCountPlusOne;
 		n = m;
 		for (const currentValue of input) {
-			if (currentValue < n && ++delta > maxInt) error$5("overflow");
+			if (currentValue < n && ++delta > maxInt) error$6("overflow");
 			if (currentValue === n) {
 				let q = delta;
 				for (let k = base$1;; k += base$1) {
@@ -121083,9 +121083,9 @@ var isValidView = (view) => {
 	return true;
 };
 var ToolTitle_module_default = {
-	image: "_image_1vcac_1",
-	toolTitle: "_toolTitle_1vcac_6",
-	description: "_description_1vcac_10"
+	image: "_image_1gmrl_1",
+	toolTitle: "_toolTitle_1gmrl_6",
+	description: "_description_1gmrl_11"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/chat/tools/ToolTitle.tsx
@@ -121179,10 +121179,10 @@ var ToolCallView = ({ id, tool, functionCall, input, description, contentType, v
 				contents: normalizedContent,
 				context
 			})
-		}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageContent, {
+		}) : hasContent ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageContent, {
 			contents: normalizedContent,
 			context
-		})]
+		}) : null]
 	});
 };
 /**
@@ -121210,6 +121210,22 @@ var normalizeContent = (output) => {
 			citations: null
 		}]
 	}];
+};
+var ToolCallErrorView_module_default = {
+	error: "_error_1lozs_1",
+	type: "_type_1lozs_11",
+	message: "_message_1lozs_17"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/chat/tools/ToolCallErrorView.tsx
+var ToolCallErrorView = ({ error, className }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: clsx(ToolCallErrorView_module_default.error, "text-size-smallest", className),
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: ToolCallErrorView_module_default.message,
+			children: error.message
+		})
+	});
 };
 var ChatMessage_module_default = {
 	message: "_message_1kuwu_1",
@@ -121251,7 +121267,7 @@ var ChatMessage = (0, import_react.memo)(function ChatMessage({ id, message, dis
 			className: clsx(ChatMessage_module_default.messageGrid, message.role === "tool" ? ChatMessage_module_default.toolMessageGrid : void 0, "text-style-label"),
 			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
 				message.role,
-				message.role === "tool" ? `: ${message.function}` : "",
+				message.role === "tool" ? message.function ? `: ${message.function}` : "" : "",
 				linkingEnabled && messageUrl ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CopyButton, {
 					icon: linkIcon,
 					value: messageUrl,
@@ -121282,24 +121298,24 @@ var ChatMessage = (0, import_react.memo)(function ChatMessage({ id, message, dis
 	});
 });
 var ChatMessageRow_module_default = {
-	grid: "_grid_1tam7_1",
-	number: "_number_1tam7_9",
-	user: "_user_1tam7_13",
-	container: "_container_1tam7_19",
-	first: "_first_1tam7_27",
-	last: "_last_1tam7_34",
-	label: "_label_1tam7_41",
-	highlight: "_highlight_1tam7_45",
-	bottomMargin: "_bottomMargin_1tam7_49",
-	codeCompact: "_codeCompact_1tam7_53",
-	simple: "_simple_1tam7_57"
+	grid: "_grid_13k8p_1",
+	number: "_number_13k8p_8",
+	user: "_user_13k8p_12",
+	container: "_container_13k8p_18",
+	first: "_first_13k8p_26",
+	last: "_last_13k8p_33",
+	label: "_label_13k8p_40",
+	highlight: "_highlight_13k8p_45",
+	bottomMargin: "_bottomMargin_13k8p_49",
+	codeCompact: "_codeCompact_13k8p_53",
+	simple: "_simple_13k8p_57"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/chat/ChatMessageRow.tsx
 /**
 * Renders the ChatMessage component.
 */
-var ChatMessageRow = ({ index, parentName, resolvedMessage, className, display, labels, linking, tools, maxLabelLength }) => {
+var ChatMessageRow = ({ index, parentName, resolvedMessage, className, display, labels, maxLabelLength, linking, tools }) => {
 	const highlightUserMessage = display?.highlightUserMessage ?? true;
 	const showLabels = labels?.show ?? true;
 	const labelValues = labels?.messageLabels;
@@ -121310,11 +121326,7 @@ var ChatMessageRow = ({ index, parentName, resolvedMessage, className, display, 
 	const viewLabels = [];
 	const useLabels = showLabels || Object.keys(labelValues || {}).length > 0;
 	const skipChatMessage = toolCallStyle !== "omit" && resolvedMessage.message.role === "assistant" && !!resolvedMessage.message.tool_calls && resolvedMessage.message.tool_calls.length > 0 && !hasVisibleContent(resolvedMessage.message);
-	const rowLabel = useLabels ? (() => {
-		const number = index + 1;
-		const maxlabelLen = maxLabelLength ?? 3;
-		return labelValues && resolvedMessage.message.id ? labelValues[resolvedMessage.message.id] || "\xA0".repeat(maxlabelLen * 2) : String(number) || void 0;
-	})() : void 0;
+	const rowLabel = useLabels ? labelValues && resolvedMessage.message.id ? labelValues[resolvedMessage.message.id] : String(index + 1) : void 0;
 	if (!skipChatMessage) {
 		if (useLabels) viewLabels.push(rowLabel);
 		views.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChatMessage, {
@@ -121352,6 +121364,10 @@ var ChatMessageRow = ({ index, parentName, resolvedMessage, className, display, 
 				view: tool_call.view ? substituteToolCallContent(tool_call.view, tool_call.arguments) : void 0,
 				getCustomToolView
 			}, `tool-call-${idx}`));
+			if (toolMessage?.error) {
+				if (useLabels) viewLabels.push(void 0);
+				views.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallErrorView, { error: toolMessage.error }, `tool-call-${idx}-error`));
+			}
 			idx++;
 		}
 	}
@@ -121361,6 +121377,7 @@ var ChatMessageRow = ({ index, parentName, resolvedMessage, className, display, 
 			const label = viewLabels[idx];
 			return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: clsx("text-size-smaller", "text-style-secondary", ChatMessageRow_module_default.number, ChatMessageRow_module_default.label),
+				style: { minWidth: `${maxLabelLength ?? 3}ch` },
 				children: label
 			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: clsx(ChatMessageRow_module_default.container, highlightUserMessage && resolvedMessage.message.role === "user" ? ChatMessageRow_module_default.user : void 0, idx === 0 ? ChatMessageRow_module_default.first : void 0, idx === views.length - 1 ? ChatMessageRow_module_default.last : void 0, highlightLabeled && label?.trim() ? ChatMessageRow_module_default.highlight : void 0),
@@ -121376,8 +121393,8 @@ var ChatMessageRow = ({ index, parentName, resolvedMessage, className, display, 
 	});
 };
 var resolveToolMessage = (toolMessage) => {
-	if (!toolMessage) return [];
-	const content = toolMessage.error !== null && toolMessage.error ? toolMessage.error.message : toolMessage.content;
+	if (!toolMessage || toolMessage.error) return [];
+	const content = toolMessage.content;
 	if (typeof content === "string") return [{
 		type: "tool",
 		content: [{
@@ -129073,18 +129090,18 @@ var UsageCard = ({ usage, label = "Usage" }) => {
 	})] });
 };
 var ModelEventView_module_default = {
-	container: "_container_hxt3q_1",
-	all: "_all_hxt3q_6",
-	tableSelection: "_tableSelection_hxt3q_12",
-	tools: "_tools_hxt3q_18",
-	codePre: "_codePre_hxt3q_22",
-	code: "_code_hxt3q_22",
-	progress: "_progress_hxt3q_34",
-	error: "_error_hxt3q_38",
-	showAllLink: "_showAllLink_hxt3q_49",
-	showAllIcon: "_showAllIcon_hxt3q_60",
-	toolConfig: "_toolConfig_hxt3q_69",
-	toolChoice: "_toolChoice_hxt3q_77"
+	container: "_container_1m4t0_1",
+	all: "_all_1m4t0_6",
+	tableSelection: "_tableSelection_1m4t0_12",
+	tools: "_tools_1m4t0_18",
+	codePre: "_codePre_1m4t0_22",
+	code: "_code_1m4t0_22",
+	progress: "_progress_1m4t0_34",
+	error: "_error_1m4t0_38",
+	showAllLink: "_showAllLink_1m4t0_49",
+	showAllIcon: "_showAllIcon_1m4t0_60",
+	toolConfig: "_toolConfig_1m4t0_69",
+	toolChoice: "_toolChoice_1m4t0_78"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/ModelEventView.tsx
@@ -129097,20 +129114,33 @@ var ModelEventView = ({ eventNode, showToolCalls, className, context, eventCallb
 	});
 	const entries = { ...event.config };
 	delete entries["max_connections"];
-	const userMessages = [];
-	if (!!!event.agentResultsFiltered) {
-		let offset = void 0;
-		const lastMessage = event.input.at(-1);
-		if (lastMessage?.role === "assistant") {
-			userMessages.push(lastMessage);
-			offset = -1;
+	const userMessages = (0, import_react.useMemo)(() => {
+		const result = [];
+		if (!!!event.agentResultsFiltered) {
+			let offset = void 0;
+			const lastMessage = event.input.at(-1);
+			if (lastMessage?.role === "assistant") {
+				result.push(lastMessage);
+				offset = -1;
+			}
+			for (const msg of event.input.slice(offset).reverse()) if (msg.role === "user" && !msg.tool_call_id || msg.role === "system" || context?.hasToolEvents === false && msg.role === "tool") result.unshift(msg);
+			else break;
 		}
-		for (const msg of event.input.slice(offset).reverse()) if (msg.role === "user" && !msg.tool_call_id || msg.role === "system" || context?.hasToolEvents === false && msg.role === "tool") userMessages.unshift(msg);
-		else break;
-	}
+		return result;
+	}, [event, context?.hasToolEvents]);
 	const hasHiddenMessages = event.input.length > userMessages.length;
 	const [showAllMessages, setShowAllMessages] = (0, import_react.useState)(false);
-	const summaryMessages = showAllMessages ? [...event.input, ...outputMessages || []] : [...userMessages, ...outputMessages || []];
+	const summaryMessages = (0, import_react.useMemo)(() => showAllMessages ? [...event.input, ...outputMessages || []] : [...userMessages, ...outputMessages || []], [
+		showAllMessages,
+		event.input,
+		outputMessages,
+		userMessages
+	]);
+	const summaryLabels = (0, import_react.useMemo)(() => {
+		const map = context?.messageLabels;
+		if (!map) return { show: false };
+		return summaryMessages.some((m) => !!m.id && !!map[m.id]) ? { messageLabels: map } : { show: false };
+	}, [context?.messageLabels, summaryMessages]);
 	const panelTitle = event.role ? `Model Call (${event.role}): ${event.model}` : `Model Call: ${event.model}`;
 	const turnLabel = context?.turnInfo ? `turn ${context.turnInfo.turnNumber}/${context.turnInfo.totalTurns}` : void 0;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(EventPanel, {
@@ -129145,7 +129175,7 @@ var ModelEventView = ({ eventNode, showToolCalls, className, context, eventCallb
 							callStyle: showToolCalls ? "complete" : "omit",
 							collapseToolMessages: context?.hasToolEvents !== false
 						},
-						labels: context?.messageLabels ? { messageLabels: context.messageLabels } : { show: false }
+						labels: summaryLabels
 					}),
 					event.error ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventSection, {
 						title: "Error",
@@ -129259,7 +129289,11 @@ var ToolsConfig = ({ tools, toolChoice }) => {
 		return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			className: clsx("text-style-label", "text-style-secondary"),
 			children: tool.name
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: tool.description })] }, `${tool.name}-${idx}`);
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
+			id: `config-${tool.name}-${idx}`,
+			collapse: true,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownDiv, { markdown: tool.description })
+		})] }, `${tool.name}-${idx}`);
 	});
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		className: clsx(ModelEventView_module_default.toolConfig, "text-size-small"),
@@ -130158,7 +130192,8 @@ var ToolEventView = ({ eventNode, childNodes, className, context, eventCallbacks
 			})
 		};
 	}, [event.events]);
-	const title = `Tool: ${resolvedView?.title || name}`;
+	const displayName = resolvedView?.title || name;
+	const title = displayName ? `Tool: ${displayName}` : "Tool";
 	const turnLabel = context?.turnInfo ? `turn ${context.turnInfo.turnNumber}/${context.turnInfo.totalTurns}` : void 0;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventPanel, {
 		eventNodeId: eventNode.id,
@@ -130181,10 +130216,11 @@ var ToolEventView = ({ eventNode, childNodes, className, context, eventCallbacks
 					input,
 					description,
 					contentType,
-					output: event.error?.message || event.result || "",
+					output: event.error ? "" : event.result || "",
 					mode: "compact",
 					view: resolvedView
 				}),
+				event.error ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallErrorView, { error: event.error }) : null,
 				lastModelNode ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChatView, {
 					id: `${eventNode.id}-toolcall-chatmessage`,
 					messages: lastModelNode.event.output.choices.map((m) => m.message),
