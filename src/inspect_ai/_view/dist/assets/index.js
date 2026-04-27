@@ -54589,74 +54589,96 @@ var flattenChildren$1 = (children) => {
 	});
 };
 var ExpandablePanel_module_default = {
-	expandablePanel: "_expandablePanel_1ka1g_1",
-	expandableBordered: "_expandableBordered_1ka1g_5",
-	expandableTogglable: "_expandableTogglable_1ka1g_10",
-	expandableContents: "_expandableContents_1ka1g_14",
-	expandableCollapsed: "_expandableCollapsed_1ka1g_18",
-	moreToggle: "_moreToggle_1ka1g_22",
-	bordered: "_bordered_1ka1g_32",
-	moreToggleButton: "_moreToggleButton_1ka1g_36",
-	separator: "_separator_1ka1g_44",
-	inlineRight: "_inlineRight_1ka1g_50",
-	blockLeft: "_blockLeft_1ka1g_56"
+	outer: "_outer_1j47y_1",
+	expandablePanel: "_expandablePanel_1j47y_8",
+	expandableBordered: "_expandableBordered_1j47y_12",
+	expandableTogglable: "_expandableTogglable_1j47y_17",
+	expandableContents: "_expandableContents_1j47y_21",
+	expandableTruncated: "_expandableTruncated_1j47y_37",
+	moreToggle: "_moreToggle_1j47y_46",
+	bordered: "_bordered_1j47y_56",
+	moreToggleButton: "_moreToggleButton_1j47y_60",
+	separator: "_separator_1j47y_68",
+	inlineToggleHolder: "_inlineToggleHolder_1j47y_77",
+	inlineToggleSticky: "_inlineToggleSticky_1j47y_89",
+	blockLeft: "_blockLeft_1j47y_95"
 };
 //#endregion
 //#region ../../packages/react/src/components/ExpandablePanel.tsx
 var ExpandablePanel = (0, import_react.memo)(({ id, collapse, border, lines = 15, children, className, togglePosition: layout = "inline-right" }) => {
 	const [collapsed, setCollapsed] = useCollapsedState(id, collapse);
 	const [showToggle, setShowToggle] = (0, import_react.useState)(false);
-	const baseFontSizeRef = (0, import_react.useRef)(0);
+	const rootFontSizeRef = (0, import_react.useRef)(0);
 	const contentRef = useResizeObserver((0, import_react.useCallback)((entry) => {
 		const element = entry.target;
-		if (baseFontSizeRef.current === 0) {
-			const computedStyle = window.getComputedStyle(element);
-			baseFontSizeRef.current = parseFloat(computedStyle.fontSize);
+		if (rootFontSizeRef.current === 0) {
+			const rootStyle = window.getComputedStyle(document.documentElement);
+			rootFontSizeRef.current = parseFloat(rootStyle.fontSize);
 		}
-		const maxCollapsedHeight = baseFontSizeRef.current * lines;
+		const maxCollapsedHeight = rootFontSizeRef.current * lines;
 		const contentHeight = element.scrollHeight;
-		setShowToggle(contentHeight > maxCollapsedHeight);
+		setShowToggle(contentHeight - maxCollapsedHeight > 1);
 	}, [lines]));
-	const baseStyles = {
+	const contentStyles = collapsed ? {
 		overflow: "hidden",
-		...collapsed && { maxHeight: `${lines}rem` }
-	};
+		maxHeight: `${lines}rem`
+	} : {};
+	const handleToggle = (0, import_react.useCallback)(() => {
+		const tallerThanViewport = !collapsed && !!contentRef.current && contentRef.current.getBoundingClientRect().height > window.innerHeight;
+		setCollapsed(!collapsed);
+		if (tallerThanViewport) requestAnimationFrame(() => {
+			contentRef.current?.scrollIntoView({
+				block: "end",
+				behavior: "smooth"
+			});
+		});
+	}, [
+		collapsed,
+		setCollapsed,
+		contentRef
+	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: clsx(className),
+		className: clsx(ExpandablePanel_module_default.outer, className),
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				style: baseStyles,
-				ref: contentRef,
 				"data-expandable-panel": "true",
-				className: clsx(ExpandablePanel_module_default.expandablePanel, collapsed ? ExpandablePanel_module_default.expandableCollapsed : void 0, border ? ExpandablePanel_module_default.expandableBordered : void 0, showToggle ? ExpandablePanel_module_default.padBottom : void 0, className),
-				children: [children, showToggle && layout === "inline-right" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MoreToggle, {
-					collapsed,
-					setCollapsed,
-					border: !border,
-					position: "inline-right"
-				}) })]
+				className: clsx(ExpandablePanel_module_default.expandablePanel, border ? ExpandablePanel_module_default.expandableBordered : void 0, className),
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					ref: contentRef,
+					style: contentStyles,
+					className: clsx(ExpandablePanel_module_default.expandableContentWrap, collapsed && showToggle ? ExpandablePanel_module_default.expandableTruncated : void 0),
+					children
+				}), showToggle && layout === "inline-right" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: ExpandablePanel_module_default.inlineToggleHolder,
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: ExpandablePanel_module_default.inlineToggleSticky,
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MoreToggle, {
+							collapsed,
+							onToggle: handleToggle,
+							border: !border,
+							position: "inline-right"
+						})
+					})
+				})]
 			}),
-			showToggle && layout === "block-left" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MoreToggle, {
+			showToggle && layout === "block-left" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MoreToggle, {
 				collapsed,
-				setCollapsed,
+				onToggle: handleToggle,
 				border: !border,
 				position: "block-left"
-			}) }),
+			}),
 			showToggle && layout === "inline-right" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: clsx(ExpandablePanel_module_default.separator) })
 		]
 	});
 });
-var MoreToggle = ({ collapsed, border, setCollapsed, style, position }) => {
+var MoreToggle = ({ collapsed, border, onToggle, style, position }) => {
 	const text = collapsed ? "more" : "less";
-	const handleClick = (0, import_react.useCallback)(() => {
-		setCollapsed(!collapsed);
-	}, [setCollapsed, collapsed]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: clsx(ExpandablePanel_module_default.moreToggle, border ? ExpandablePanel_module_default.bordered : void 0, position === "inline-right" ? ExpandablePanel_module_default.inlineRight : ExpandablePanel_module_default.blockLeft),
+		className: clsx(ExpandablePanel_module_default.moreToggle, border ? ExpandablePanel_module_default.bordered : void 0, position === "block-left" ? ExpandablePanel_module_default.blockLeft : void 0),
 		style,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
 			className: clsx("btn", ExpandablePanel_module_default.moreToggleButton, "text-size-smallest"),
-			onClick: handleClick,
+			onClick: onToggle,
 			children: [text, "..."]
 		})
 	});
@@ -57702,16 +57724,25 @@ var LiveVirtualList = ({ id, listHandle, className, data, renderRow, scrollRef, 
 	}, [offsetTop]);
 	(0, import_react.useEffect)(() => {
 		if (initialTopMostItemIndex !== void 0 && listHandle.current) {
-			const timer = setTimeout(() => {
+			const doScroll = () => {
 				listHandle.current?.scrollToIndex({
 					index: initialTopMostItemIndex,
 					align: "start",
 					behavior: !animation ? "auto" : !hasScrolled.current ? "auto" : "smooth",
 					offset: offsetTopRef.current ? -offsetTopRef.current : void 0
 				});
-				hasScrolled.current = true;
-			}, 50);
-			return () => clearTimeout(timer);
+			};
+			let frame = requestAnimationFrame(() => {
+				doScroll();
+				frame = requestAnimationFrame(() => {
+					doScroll();
+					hasScrolled.current = true;
+					frame = null;
+				});
+			});
+			return () => {
+				if (frame !== null) cancelAnimationFrame(frame);
+			};
 		}
 	}, [
 		initialTopMostItemIndex,
@@ -57801,7 +57832,7 @@ var MarkdownDivWithReferences = (0, import_react.forwardRef)(({ markdown, refere
 			const href = anchor.getAttribute("href");
 			if (href?.startsWith("#/")) {
 				e.preventDefault();
-				navigate(href.slice(1));
+				navigate(href.slice(1), { replace: true });
 			}
 		}
 	}, [navigate]);
@@ -57823,6 +57854,7 @@ var MarkdownDivWithReferences = (0, import_react.forwardRef)(({ markdown, refere
 		omitMath,
 		handleLinkClick
 	]);
+	const suppressedIdRef = (0, import_react.useRef)(null);
 	(0, import_react.useEffect)(() => {
 		const container = containerRef.current;
 		if (!container) return;
@@ -57839,23 +57871,37 @@ var MarkdownDivWithReferences = (0, import_react.forwardRef)(({ markdown, refere
 			if (related instanceof Node && el.contains(related)) return;
 			const id = el.getAttribute("data-ref-id");
 			if (!id) return;
+			if (suppressedIdRef.current === id) return;
 			const r = refMap.get(id);
 			if (!r || !r.citePreview) return;
 			setPositionEl(el);
 			setCurrentRef(r);
 			setVisibleKey(popoverKey(r));
 		};
+		const handleMouseOut = (e) => {
+			const el = findCiteLink(e.target);
+			if (!el) return;
+			const id = el.getAttribute("data-ref-id");
+			if (!id || suppressedIdRef.current !== id) return;
+			const related = e.relatedTarget;
+			if (related instanceof Node && el.contains(related)) return;
+			suppressedIdRef.current = null;
+		};
 		const handleClick = (e) => {
-			if (!findCiteLink(e.target)) return;
+			const el = findCiteLink(e.target);
+			if (!el) return;
 			clearVisibleKey();
 			setCurrentRef(null);
 			setPositionEl(null);
+			suppressedIdRef.current = el.getAttribute("data-ref-id");
 			e.stopPropagation();
 		};
 		container.addEventListener("mouseover", handleMouseOver);
+		container.addEventListener("mouseout", handleMouseOut);
 		container.addEventListener("click", handleClick);
 		return () => {
 			container.removeEventListener("mouseover", handleMouseOver);
+			container.removeEventListener("mouseout", handleMouseOut);
 			container.removeEventListener("click", handleClick);
 		};
 	}, [
@@ -64081,7 +64127,10 @@ var initialState$1 = {
 	logPreviews: {},
 	logDetails: {},
 	selectedLogFile: void 0,
-	listing: { columnVisibility: {} },
+	listing: {
+		columnVisibility: {},
+		gridStateByScope: {}
+	},
 	pendingRequests: /* @__PURE__ */ new Map(),
 	dbStats: {
 		logCount: 0,
@@ -64100,8 +64149,7 @@ var createLogsSlice = (set, get, _store) => {
 					if (logDir !== state.logs.logDir) {
 						state.logs.logDir = logDir;
 						state.logs.samplesListState.gridState = void 0;
-						state.logs.listing.gridState = void 0;
-						state.logs.listing.previousLogPath = void 0;
+						state.logs.listing.gridStateByScope = {};
 					}
 				});
 			},
@@ -64317,19 +64365,15 @@ var createLogsSlice = (set, get, _store) => {
 					state.logs.listing.selectedRowIndex = index;
 				});
 			},
-			setLogsGridState: (gridState) => {
+			setLogsGridState: (scope, gridState) => {
 				set((state) => {
-					state.logs.listing.gridState = gridState;
+					state.logs.listing.gridStateByScope[scope] = gridState;
 				});
 			},
-			clearLogsGridState: () => {
+			clearLogsGridState: (scope) => {
 				set((state) => {
-					state.logs.listing.gridState = void 0;
-				});
-			},
-			setPreviousLogsPath: (path) => {
-				set((state) => {
-					state.logs.listing.previousLogPath = path;
+					if (scope === void 0) state.logs.listing.gridStateByScope = {};
+					else delete state.logs.listing.gridStateByScope[scope];
 				});
 			},
 			setLogsColumnVisibility: (visibility) => {
@@ -65470,7 +65514,7 @@ var initializeStore = (api, capabilities, storage) => {
 			logs: state.logs,
 			sample: state.sample
 		}),
-		version: 1,
+		version: 3,
 		onRehydrateStorage: (state) => {
 			return (hydrationState, error) => {
 				handleRehydrate(state);
@@ -69854,11 +69898,9 @@ var useLogsListing = () => {
 	return {
 		filteredCount: useStore((state) => state.logs.listing.filteredCount),
 		setFilteredCount: useStore((state) => state.logsActions.setFilteredCount),
-		gridState: useStore((state) => state.logs.listing.gridState),
+		gridStateByScope: useStore((state) => state.logs.listing.gridStateByScope),
 		setGridState: useStore((state) => state.logsActions.setLogsGridState),
-		clearGridState: useStore((state) => state.logsActions.clearLogsGridState),
-		previousLogPath: useStore((state) => state.logs.listing.previousLogPath),
-		setPreviousLogPath: useStore((state) => state.logsActions.setPreviousLogsPath)
+		clearGridState: useStore((state) => state.logsActions.clearLogsGridState)
 	};
 };
 var useDocumentTitle = () => {
@@ -70174,8 +70216,14 @@ var samplesSampleUrl = (logPath, sampleId, epoch, sampleTabId) => {
 var sampleEventUrl = (builder, eventId, logPath, sampleId, sampleEpoch) => {
 	return `${builder(logPath, sampleId, sampleEpoch, kSampleTranscriptTabId)}?event=${eventId}`;
 };
-var sampleMessageUrl = (builder, messageId, logPath, sampleId, sampleEpoch) => {
-	return `${builder(logPath, sampleId, sampleEpoch, kSampleMessagesTabId)}?message=${messageId}`;
+/**
+* Deep link to a message ID. `tab` selects the destination tab — Messages
+* (default) shows the message in the chat list; Transcript routes through
+* the transcript's resolver, which picks the best matching event in the
+* user's currently selected branch (and falls back to other branches).
+*/
+var sampleMessageUrl = (builder, messageId, logPath, sampleId, sampleEpoch, tab = kSampleMessagesTabId) => {
+	return `${builder(logPath, sampleId, sampleEpoch, tab)}?message=${messageId}`;
 };
 var tasksUrl = (log_file, log_dir) => {
 	const path = makeLogsPath(log_file, log_dir);
@@ -71019,7 +71067,7 @@ var styles = {
 	...gridCells_module_default,
 	...columns_module_default
 };
-var EmptyCell = () => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: "-" });
+var EmptyCell$1 = () => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: "-" });
 var displayModelRoles = (row) => {
 	if (!row) return [];
 	if (row.model && row.model !== "none/none") return [];
@@ -71176,7 +71224,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 							})]
 						});
 					}
-					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell$1, {});
 				}
 			},
 			{
@@ -71194,7 +71242,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 				},
 				cellRenderer: (params) => {
 					const item = params.data;
-					if (!item || item.score === void 0) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					if (!item || item.score === void 0) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell$1, {});
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 						className: styles.scoreCell,
 						children: formatPrettyDecimal(item.score)
@@ -71220,7 +71268,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 					const item = params.data;
 					if (!item) return null;
 					const status = item.status;
-					if (!status && item.type !== "pending-task") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					if (!status && item.type !== "pending-task") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell$1, {});
 					const icon = item.type === "pending-task" ? ApplicationIcons.pendingTask : status === "error" ? ApplicationIcons.error : status === "started" ? ApplicationIcons.running : status === "cancelled" ? ApplicationIcons.cancelled : ApplicationIcons.success;
 					const clz = item.type === "pending-task" ? styles.started : status === "error" ? styles.error : status === "started" ? styles.started : status === "cancelled" ? styles.cancelled : styles.success;
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -71251,7 +71299,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 				},
 				cellRenderer: (params) => {
 					const completed = params.data?.completedAt;
-					if (!completed) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					if (!completed) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell$1, {});
 					const timeStr = formatDateTime(new Date(completed));
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 						className: styles.dateCell,
@@ -71278,7 +71326,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 				},
 				cellRenderer: (params) => {
 					const item = params.data;
-					if (!item || item.type === "pending-task") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					if (!item || item.type === "pending-task") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell$1, {});
 					if (item.type === "folder") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 						className: styles.nameCell,
 						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
@@ -71304,7 +71352,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 				tooltipField: "path",
 				cellRenderer: (params) => {
 					const item = params.data;
-					if (!item?.path) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					if (!item?.path) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell$1, {});
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 						className: styles.nameCell,
 						children: item.path
@@ -71321,7 +71369,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 				filter: "agNumberColumnFilter",
 				resizable: true,
 				cellRenderer: (params) => {
-					if (params.value === void 0 || params.value === null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					if (params.value === void 0 || params.value === null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell$1, {});
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: formatNumber$1(params.value) });
 				}
 			},
@@ -71335,7 +71383,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 				filter: "agNumberColumnFilter",
 				resizable: true,
 				cellRenderer: (params) => {
-					if (params.value === void 0 || params.value === null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					if (params.value === void 0 || params.value === null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell$1, {});
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: formatNumber$1(params.value) });
 				}
 			},
@@ -71349,7 +71397,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 				filter: true,
 				resizable: true,
 				cellRenderer: (params) => {
-					if (!params.value) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					if (!params.value) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell$1, {});
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: params.value });
 				}
 			},
@@ -71363,7 +71411,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 				filter: "agNumberColumnFilter",
 				resizable: true,
 				cellRenderer: (params) => {
-					if (params.value === void 0 || params.value === null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					if (params.value === void 0 || params.value === null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell$1, {});
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: formatNumber$1(params.value) });
 				}
 			},
@@ -71381,7 +71429,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 					return formatTime(params.value);
 				},
 				cellRenderer: (params) => {
-					if (params.value === void 0 || params.value === null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					if (params.value === void 0 || params.value === null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell$1, {});
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: formatTime(params.value) });
 				},
 				tooltipValueGetter: (params) => {
@@ -71399,7 +71447,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 				resizable: true,
 				tooltipField: "taskFile",
 				cellRenderer: (params) => {
-					if (!params.value) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					if (!params.value) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell$1, {});
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 						className: styles.nameCell,
 						children: params.value
@@ -71415,7 +71463,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 				filter: true,
 				resizable: true,
 				cellRenderer: (params) => {
-					if (!params.value) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					if (!params.value) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell$1, {});
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 						className: styles.nameCell,
 						children: params.value
@@ -71443,7 +71491,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 				},
 				tooltipValueGetter: (params) => params.value || void 0,
 				cellRenderer: (params) => {
-					if (!params.value) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					if (!params.value) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell$1, {});
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 						className: styles.nameCell,
 						children: params.value
@@ -71464,7 +71512,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 					return `${formatPrettyDecimal(params.value)}%`;
 				},
 				cellRenderer: (params) => {
-					if (params.value === void 0 || params.value === null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					if (params.value === void 0 || params.value === null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell$1, {});
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [formatPrettyDecimal(params.value), "%"] });
 				}
 			},
@@ -71478,7 +71526,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 				filter: "agNumberColumnFilter",
 				resizable: true,
 				cellRenderer: (params) => {
-					if (params.value === void 0 || params.value === null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					if (params.value === void 0 || params.value === null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell$1, {});
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: formatNumber$1(params.value) });
 				}
 			},
@@ -71497,7 +71545,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 				},
 				tooltipValueGetter: (params) => params.data?.errorMessage || void 0,
 				cellRenderer: (params) => {
-					if (!params.value) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					if (!params.value) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell$1, {});
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 						className: styles.nameCell,
 						children: params.value
@@ -71524,7 +71572,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 				},
 				cellRenderer: (params) => {
 					const value = params.value;
-					if (value === void 0 || value === null || value === "") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					if (value === void 0 || value === null || value === "") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell$1, {});
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 						className: styles.scoreCell,
 						children: formatPrettyDecimal(value)
@@ -71579,7 +71627,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 				},
 				cellRenderer: (params) => {
 					const contributors = readContributors(params.data);
-					if (contributors.length === 0) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					if (contributors.length === 0) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell$1, {});
 					const primary = contributors[0].value;
 					const extras = contributors.slice(1);
 					const primaryText = typeof primary === "number" ? formatPrettyDecimal(primary) : String(primary);
@@ -118647,8 +118695,9 @@ var createGridKeyboardHandler = ({ gridRef, onOpenRow, pageJump = 10 }) => {
 };
 //#endregion
 //#region src/app/log-list/grid/LogListGrid.tsx
-var LogListGrid = ({ items, currentPath, gridRef: externalGridRef, mode = "logs" }) => {
-	const { gridState, setGridState, setFilteredCount, previousLogPath, setPreviousLogPath } = useLogsListing();
+var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mode = "logs" }) => {
+	const { gridStateByScope, setGridState, setFilteredCount } = useLogsListing();
+	const gridState = scopeKey ? gridStateByScope[scopeKey] : void 0;
 	const { loadLogOverviews, loadAllLogOverviews } = useLogs();
 	const loading = useStore((state) => state.app.status.loading);
 	const syncing = useStore((state) => state.app.status.syncing);
@@ -118676,25 +118725,7 @@ var LogListGrid = ({ items, currentPath, gridRef: externalGridRef, mode = "logs"
 	const scopePrefix = mode === "logs" ? currentPath : void 0;
 	const [scoresViewMode] = useProperty("log-list-scores-view", "mode", { defaultValue: "by-metric" });
 	const { columns } = useLogListColumns(mode, scopePrefix, scoresViewMode);
-	const initialGridState = (0, import_react.useMemo)(() => {
-		if (previousLogPath !== void 0 && previousLogPath !== currentPath) {
-			const result = { ...gridState };
-			delete result.filter;
-			return result;
-		}
-		return gridState;
-	}, [
-		currentPath,
-		gridState,
-		previousLogPath
-	]);
-	(0, import_react.useEffect)(() => {
-		if (currentPath !== previousLogPath) setPreviousLogPath(currentPath);
-	}, [
-		currentPath,
-		previousLogPath,
-		setPreviousLogPath
-	]);
+	const initialGridState = gridState;
 	(0, import_react.useEffect)(() => {
 		gridContainerRef.current?.focus();
 	}, []);
@@ -118808,6 +118839,7 @@ var LogListGrid = ({ items, currentPath, gridRef: externalGridRef, mode = "logs"
 		setWatchedLogs,
 		logPreviews
 	]);
+	const handleGridReady = (0, import_react.useCallback)((e) => {}, []);
 	const handleSortChanged = (0, import_react.useCallback)(async () => {
 		await loadAllLogOverviews();
 		setWatchedLogs(logFiles);
@@ -118985,15 +119017,16 @@ var LogListGrid = ({ items, currentPath, gridRef: externalGridRef, mode = "logs"
 				initialState: initialGridState,
 				suppressCellFocus: true,
 				onStateUpdated: (e) => {
-					setGridState(e.state);
+					if (scopeKey !== void 0) setGridState(scopeKey, e.state);
 				},
+				onGridReady: handleGridReady,
 				onRowClicked: handleRowClick,
 				onCellMouseDown: handleCellMouseDown,
 				onSortChanged: handleSortChanged,
 				onFilterChanged: handleFilterChanged,
 				onModelUpdated: handleModelUpdated,
 				loading: data.length === 0 && (loading > 0 || syncing)
-			})
+			}, scopeKey ?? "pending")
 		})]
 	});
 };
@@ -119068,6 +119101,7 @@ var LogsPanel = ({ maybeShowSingleLog, mode = "logs" }) => {
 	const navigate = useNavigate();
 	const { logPath } = useLogRouteParams();
 	const currentDir = join(logPath || "", logDir);
+	const scopeKey = logDir === void 0 ? void 0 : `${mode}::${currentDir}`;
 	useFlowServerData(logPath || "");
 	const flowData = useStore((state) => state.logs.flow);
 	const { startPolling, stopPolling } = useClientEvents();
@@ -119261,6 +119295,7 @@ var LogsPanel = ({ maybeShowSingleLog, mode = "logs" }) => {
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LogListGrid, {
 					items: logItems,
 					currentPath: currentDir,
+					scopeKey,
 					gridRef,
 					mode
 				})
@@ -120208,13 +120243,17 @@ var resolveToolInput = (fn, toolArgs) => {
 	const inputDescriptor = extractInputMetadata(toolName);
 	const { input, description, args } = extractInput(toolArgs, inputDescriptor);
 	const functionCall = args.length > 0 ? `${toolName}(${args.join(", ")})` : toolName;
-	if (fn === "Task" && typeof toolArgs.subagent_type === "string") return {
-		name: fn,
-		functionCall: `Task: ${toolArgs.subagent_type}`,
-		input,
-		description,
-		contentType: "markdown"
-	};
+	if ((fn === "Task" || fn === "task") && typeof toolArgs.subagent_type === "string") {
+		const subagentType = toolArgs.subagent_type;
+		return {
+			name: fn,
+			functionCall: `Task: ${subagentType}`,
+			title: `${fn}: ${subagentType}`,
+			input,
+			description,
+			contentType: "markdown"
+		};
+	}
 	return {
 		name: fn,
 		functionCall,
@@ -120261,9 +120300,18 @@ var extractInputMetadata = (toolName) => {
 		inputArg: "plan",
 		contentType: kToolTodoContentType
 	};
+	else if (toolName == "todo_write") return {
+		inputArg: "todos",
+		contentType: kToolTodoContentType
+	};
 	else if (toolName === "Task") return {
 		inputArg: "prompt",
 		descriptionArg: "description",
+		contentType: "markdown"
+	};
+	else if (toolName === "task") return {
+		inputArg: "prompt",
+		descriptionArg: "task_description",
 		contentType: "markdown"
 	};
 	else return;
@@ -121250,8 +121298,8 @@ var ChatMessage = (0, import_react.memo)(function ChatMessage({ id, message, dis
 	const linkIcon = linking?.icon ?? "bi bi-link-45deg";
 	const messageUrl = getMessageUrl?.(message.id || "");
 	const [mouseOver, setMouseOver] = (0, import_react.useState)(false);
-	const isNonTaskTool = message.role === "tool" && message.function !== "Task";
-	const collapse = message.role === "system" || message.role === "user";
+	const isNonTaskTool = message.role === "tool" && message.function !== "Task" && message.function !== "task";
+	const collapse = message.role === "system" || message.role === "user" || message.role === "assistant" || message.role === "tool";
 	const hideRole = unlabeledRoles?.includes(message.role) ?? false;
 	if (hideRole) {
 		const content = message.content;
@@ -121260,6 +121308,7 @@ var ChatMessage = (0, import_react.memo)(function ChatMessage({ id, message, dis
 		if (!hasVisibleContent && !hasToolCalls) return null;
 	}
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		"data-message-id": message.id || void 0,
 		className: clsx(message.role, "text-size-base", ChatMessage_module_default.message, message.role === "system" ? ChatMessage_module_default.systemRole : void 0, message.role === "user" ? ChatMessage_module_default.userRole : void 0, mouseOver ? ChatMessage_module_default.hover : void 0),
 		onMouseEnter: () => setMouseOver(true),
 		onMouseLeave: () => setMouseOver(false),
@@ -121283,7 +121332,7 @@ var ChatMessage = (0, import_react.memo)(function ChatMessage({ id, message, dis
 			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
 				id: `${id}-message`,
 				collapse,
-				lines: collapse ? 15 : 25,
+				lines: message.role === "tool" ? 30 : message.role === "assistant" ? 25 : collapse ? 15 : 25,
 				children: isNonTaskTool ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolOutput, { output: typeof message.content === "string" ? message.content : message.content.filter((c) => c.type === "text" || c.type === "image") }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageContents, { message }, `${id}-contents`)
 			}), message.metadata && Object.keys(message.metadata).length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
 				label: "Metadata",
@@ -122266,6 +122315,1241 @@ var extractContentText = (content) => {
 	return texts;
 };
 //#endregion
+//#region ../../packages/inspect-components/src/transcript/timeline/core.ts
+function isSpanNode(item) {
+	return typeof item === "object" && item !== null && "children" in item && Array.isArray(item.children);
+}
+/**
+* Wraps a single Event with computed timing and token methods.
+*/
+var TimelineEvent = class {
+	type = "event";
+	event;
+	constructor(event) {
+		this.event = event;
+	}
+	startTime() {
+		return new Date(this.event.timestamp ?? 0);
+	}
+	endTime() {
+		const completed = this.event.completed;
+		return completed ? new Date(completed) : this.startTime();
+	}
+	totalTokens() {
+		return getEventTokens(this.event);
+	}
+	idleTime() {
+		return 0;
+	}
+	/**
+	* Returns true if this event produced or carries the given message ID.
+	*
+	* `branchedFrom` is a message ID (not an event UUID). It may match:
+	* 1. A model event's output message ID (`output.choices[0].message.id`)
+	* 2. A tool event's message ID (`message_id`)
+	* 3. A model event's input message ID (any message in `input` with matching `id`)
+	*
+	* This is used to locate the fork point for branches.
+	*/
+	matchesMessageId(messageId) {
+		const e = this.event;
+		if (e.event === "model") {
+			if (e.output?.choices?.[0]?.message?.id === messageId) return true;
+			const input = e.input;
+			if (input) {
+				for (const msg of input) if (msg.id === messageId) return true;
+			}
+		} else if (e.event === "tool") {
+			if (e.message_id === messageId) return true;
+		}
+		return false;
+	}
+};
+/**
+* A span of execution — agent, scorer, tool, or root.
+*/
+var TimelineSpan = class {
+	type = "span";
+	id;
+	name;
+	spanType;
+	content;
+	branches;
+	branchedFrom;
+	description;
+	utility;
+	agentResult;
+	outline;
+	constructor(props) {
+		this.id = props.id;
+		this.name = props.name;
+		this.spanType = props.spanType;
+		this.content = props.content ?? [];
+		this.branches = props.branches ?? [];
+		this.branchedFrom = props.branchedFrom ?? null;
+		this.description = props.description;
+		this.utility = props.utility ?? false;
+		this.agentResult = props.agentResult;
+		this.outline = props.outline;
+	}
+	startTime(includeBranches = true) {
+		const items = includeBranches ? [...this.content, ...this.branches] : this.content;
+		return items.length > 0 ? minStartTime(items) : /* @__PURE__ */ new Date(0);
+	}
+	endTime(includeBranches = true) {
+		const items = includeBranches ? [...this.content, ...this.branches] : this.content;
+		return items.length > 0 ? maxEndTime(items) : /* @__PURE__ */ new Date(0);
+	}
+	totalTokens(includeBranches = true) {
+		return sumTokens(includeBranches ? [...this.content, ...this.branches] : this.content);
+	}
+	idleTime(includeBranches = true) {
+		return computeIdleTime(includeBranches ? [...this.content, ...this.branches] : this.content, this.startTime(includeBranches), this.endTime(includeBranches));
+	}
+};
+/**
+* True if `span` (or any descendant span in its content tree) has branches.
+*/
+function spanHasBranches(span) {
+	if (span.branches.length > 0) return true;
+	for (const item of span.content) if (item.type === "span" && spanHasBranches(item)) return true;
+	return false;
+}
+/**
+* Creates a display-ready TimelineSpan from a branch span.
+*
+* If the branch has exactly one child span, returns that span directly.
+* Otherwise creates a synthetic container. The returned span's name is
+* clean (no arrow prefix) — callers that need a display prefix (e.g. the
+* swimlane row label) should add it themselves.
+*/
+function createBranchSpan(branch, label) {
+	const name = deriveBranchLabel(branch, label);
+	return new TimelineSpan({
+		id: branch.id,
+		name,
+		spanType: "branch",
+		content: branch.content,
+		branches: branch.branches,
+		branchedFrom: branch.branchedFrom,
+		description: branch.description,
+		utility: branch.utility,
+		agentResult: branch.agentResult,
+		outline: branch.outline
+	});
+}
+function deriveBranchLabel(branch, label) {
+	for (const item of branch.content) if (item.type === "span") return item.name;
+	return `Branch ${label}`;
+}
+/**
+* Build an event lookup map from a flat event array, keyed by UUID.
+*/
+function buildEventLookup(events) {
+	const map = /* @__PURE__ */ new Map();
+	for (const event of events) {
+		const uuid = event.uuid;
+		if (uuid) map.set(uuid, event);
+	}
+	return map;
+}
+/**
+* Convert a server-provided Timeline (snake_case) to the client-side Timeline
+* (camelCase with computed Date/token/idle properties).
+*
+* Server timelines store event references as UUID strings. The `events` array
+* is used to resolve these references to full Event objects.
+*/
+function convertServerTimeline(server, events) {
+	const lookup = buildEventLookup(events);
+	const root = convertServerSpan(server.root, lookup);
+	return {
+		name: server.name,
+		description: server.description,
+		root
+	};
+}
+function convertServerContentItem(item, lookup) {
+	if (item.type === "event") return convertServerEvent(item, lookup);
+	return convertServerSpan(item, lookup);
+}
+function convertServerEvent(server, lookup) {
+	const eventRef = server.event;
+	const event = lookup.get(eventRef);
+	if (!event) return null;
+	return new TimelineEvent(event);
+}
+function convertServerSpan(server, lookup) {
+	const content = (server.content ?? []).map((item) => convertServerContentItem(item, lookup)).filter((item) => item !== null);
+	const branches = (server.branches ?? []).map((b) => convertServerSpan(b, lookup)).filter((b) => b.content.length > 0);
+	return new TimelineSpan({
+		id: server.id,
+		name: server.name,
+		spanType: server.span_type ?? null,
+		branchedFrom: server.branched_from ?? null,
+		content,
+		branches,
+		description: server.description ?? void 0,
+		utility: server.utility,
+		agentResult: server.agent_result ?? void 0,
+		outline: server.outline ?? void 0
+	});
+}
+/**
+* Get tokens from an event (ModelEvent only).
+*/
+function getEventTokens(event) {
+	if (event.event === "model") {
+		const usage = event.output?.usage;
+		if (usage) {
+			const inputTokens = usage.input_tokens ?? 0;
+			const cacheRead = usage.input_tokens_cache_read ?? 0;
+			const cacheWrite = usage.input_tokens_cache_write ?? 0;
+			const outputTokens = usage.output_tokens ?? 0;
+			return inputTokens + cacheRead + cacheWrite + outputTokens;
+		}
+	}
+	return 0;
+}
+/**
+* Return the earliest start time among nodes.
+* Requires at least one node (all nodes have non-null startTime).
+*/
+function minStartTime(nodes) {
+	const first = nodes[0];
+	if (!first) throw new Error("minStartTime requires at least one node");
+	return nodes.reduce((min, n) => n.startTime() < min ? n.startTime() : min, first.startTime());
+}
+/**
+* Return the latest end time among nodes.
+* Requires at least one node (all nodes have non-null endTime).
+*/
+function maxEndTime(nodes) {
+	const first = nodes[0];
+	if (!first) throw new Error("maxEndTime requires at least one node");
+	return nodes.reduce((max, n) => n.endTime() > max ? n.endTime() : max, first.endTime());
+}
+/**
+* Sum total tokens across all nodes.
+*/
+function sumTokens(nodes) {
+	return nodes.reduce((sum, n) => sum + n.totalTokens(), 0);
+}
+var IDLE_THRESHOLD_MS = 3e5;
+/**
+* Compute idle time using gap-based detection between children.
+*
+* Any gap > 5 min between consecutive children (sorted by startTime)
+* is counted as idle. Children's own idleTime is summed recursively.
+*/
+function computeIdleTime(content, startTime, endTime) {
+	if (content.length === 0) return 0;
+	const sorted = [...content].sort((a, b) => a.startTime().getTime() - b.startTime().getTime());
+	let idleMs = 0;
+	for (const child of sorted) idleMs += child.idleTime() * 1e3;
+	const firstGap = sorted[0].startTime().getTime() - startTime.getTime();
+	if (firstGap > IDLE_THRESHOLD_MS) idleMs += firstGap;
+	for (let i = 1; i < sorted.length; i++) {
+		const gap = sorted[i].startTime().getTime() - sorted[i - 1].endTime().getTime();
+		if (gap > IDLE_THRESHOLD_MS) idleMs += gap;
+	}
+	const lastGap = endTime.getTime() - sorted[sorted.length - 1].endTime().getTime();
+	if (lastGap > IDLE_THRESHOLD_MS) idleMs += lastGap;
+	return Math.max(0, idleMs / 1e3);
+}
+/**
+* Create a TimelineEvent from an Event.
+*/
+function createTimelineEvent(event) {
+	return new TimelineEvent(event);
+}
+/**
+* Create a TimelineSpan with computed properties.
+*/
+function createTimelineSpan(id, name, spanType, content, utility = false, branches = [], description, branchedFrom = null) {
+	if (content.length === 0) throw new Error(`createTimelineSpan called with empty content for span "${name}" (id=${id}). Callers must guard against empty content before calling the factory.`);
+	return new TimelineSpan({
+		id,
+		name: name.toLowerCase(),
+		spanType,
+		content,
+		utility,
+		branches,
+		description,
+		branchedFrom
+	});
+}
+/**
+* Build a span tree from a flat event list.
+*
+* Parses span_begin/span_end events to create hierarchical structure.
+* Events are associated with spans via their span_id field.
+*/
+function buildSpanTree(events) {
+	const root = [];
+	const spansById = /* @__PURE__ */ new Map();
+	const spanStack = [];
+	for (const event of events) if (event.event === "span_begin") {
+		const span = {
+			id: event.id,
+			name: event.name,
+			type: event.type ?? void 0,
+			parentId: event.parent_id,
+			metadata: event.metadata ?? void 0,
+			children: [],
+			beginEvent: event
+		};
+		spansById.set(span.id, span);
+	}
+	for (const event of events) if (event.event === "span_begin") {
+		const span = spansById.get(event.id);
+		if (span.parentId && spansById.has(span.parentId)) spansById.get(span.parentId).children.push(span);
+		else if (spanStack.length > 0) {
+			const currentSpan = spanStack[spanStack.length - 1];
+			if (currentSpan) currentSpan.children.push(span);
+		} else root.push(span);
+		spanStack.push(span);
+	} else if (event.event === "span_end") {
+		const endSpan = spansById.get(event.id);
+		if (endSpan) endSpan.endEvent = event;
+		if (spanStack.length > 0) spanStack.pop();
+	} else {
+		const spanId = event.span_id;
+		if (spanId && spansById.has(spanId)) spansById.get(spanId).children.push(event);
+		else if (spanStack.length > 0) {
+			const currentSpan = spanStack[spanStack.length - 1];
+			if (currentSpan) currentSpan.children.push(event);
+		} else root.push(event);
+	}
+	const getTimestamp = (item) => {
+		if (isSpanNode(item)) return item.beginEvent.timestamp;
+		return item.timestamp;
+	};
+	for (const span of spansById.values()) span.children.sort((a, b) => getTimestamp(a).localeCompare(getTimestamp(b)));
+	return root;
+}
+/**
+* Flatten a tree item recursively to get all events.
+*/
+function eventSequence(items) {
+	const events = [];
+	for (const item of items) if (isSpanNode(item)) events.push(...eventSequence(item.children));
+	else events.push(item);
+	return events;
+}
+/**
+* Check if a span contains any ModelEvent (recursively).
+*/
+function containsModelEvents(span) {
+	for (const child of span.children) if (isSpanNode(child)) {
+		if (containsModelEvents(child)) return true;
+	} else if (child.event === "model") return true;
+	return false;
+}
+/**
+* Check if a span has any descendant span with type="agent".
+*
+* Used to suppress tool→agent classification when the tool already
+* wraps an explicit agent span (which will represent the agent itself).
+*/
+function containsAgentSpan(span) {
+	for (const child of span.children) if (isSpanNode(child)) {
+		if (child.type === "agent" || containsAgentSpan(child)) return true;
+	}
+	return false;
+}
+/**
+* Convert an Event to a TimelineEvent or TimelineSpan.
+*
+* Handles ToolEvents that spawn nested agents, recursively processing
+* nested events to detect further agent spawning.
+*/
+function eventToNode(event) {
+	if (event.event === "tool") {
+		const agentName = event.agent;
+		const nestedEvents = event.events;
+		if (agentName && nestedEvents && nestedEvents.length > 0) {
+			const nestedContent = nestedEvents.map((e) => eventToNode(e));
+			if (nestedContent.length > 0) {
+				const span = createTimelineSpan(`tool-agent-${event.id}`, agentName, "agent", nestedContent);
+				const agentResult = extractToolEventResult(event.result);
+				if (agentResult) span.agentResult = agentResult;
+				return span;
+			}
+		}
+	}
+	return createTimelineEvent(event);
+}
+/**
+* Check if a SpanNode represents an agent trajectory.
+*
+* Agent spans are:
+* - Explicit agent spans (type="agent")
+* - Solver spans (type="solver")
+* - Tool spans containing model events (tool-spawned agents)
+*/
+function isAgentSpan(span) {
+	if (span.type === "agent" || span.type === "solver") return true;
+	if (span.type === "tool" && containsModelEvents(span) && !containsAgentSpan(span)) return true;
+	return false;
+}
+/**
+* Convert a tree item (SpanNode or Event) to a TimelineEvent, TimelineSpan,
+* or null if the resulting span would be empty.
+*/
+function treeItemToNode(item) {
+	if (isSpanNode(item)) if (item.type === "agent" || item.type === "solver") return buildSpanFromAgentSpan(item);
+	else return buildSpanFromGenericSpan(item);
+	else return eventToNode(item);
+}
+/**
+* Build a TimelineSpan from a SpanNode with type='agent'.
+*/
+function buildSpanFromAgentSpan(span, extraItems) {
+	const content = [];
+	if (extraItems) for (const item of extraItems) if (isSpanNode(item) && !isAgentSpan(item)) unrollSpan(item, content);
+	else {
+		const node = treeItemToNode(item);
+		if (node !== null) content.push(node);
+	}
+	const [childContent, branches] = processChildren(span.children);
+	content.push(...childContent);
+	if (content.length === 0) return null;
+	const description = typeof span.metadata?.description === "string" ? span.metadata.description : void 0;
+	return createTimelineSpan(span.id, span.name, "agent", content, false, branches, description);
+}
+/**
+* Build a TimelineSpan from a non-agent SpanNode.
+*
+* If the span is a tool span (type="tool") containing model events,
+* we treat it as a tool-spawned agent (spanType="agent").
+*/
+function buildSpanFromGenericSpan(span) {
+	const [content, branches] = processChildren(span.children);
+	if (content.length === 0) return null;
+	const spanType = span.type === "tool" && containsModelEvents(span) && !containsAgentSpan(span) ? "agent" : span.type ?? null;
+	return createTimelineSpan(span.id, span.name, spanType, content, false, branches);
+}
+/**
+* Recursively unwrap solver-type spans that contain exactly one agent child.
+*
+* This flattens unnecessary nesting (e.g. a "react" solver wrapping a single
+* agent) so the timeline shows the agent directly.
+*/
+function unwrapSolverSpan(span) {
+	while (span.type === "solver") {
+		const agentChildren = span.children.filter((child) => isSpanNode(child) && child.type === "agent");
+		if (agentChildren.length !== 1) break;
+		span = agentChildren[0];
+	}
+	return span;
+}
+/**
+* Build agent hierarchy from the solvers span.
+*
+* Looks for explicit agent spans (type='agent') within the solvers span.
+* If found, builds the agent tree from those spans. If not found, uses
+* the solvers span itself as the agent container.
+*/
+function buildAgentFromSolversSpan(solversSpan) {
+	if (solversSpan.children.length === 0) return null;
+	const agentSpans = [];
+	const otherItems = [];
+	for (const child of solversSpan.children) if (isSpanNode(child) && isAgentSpan(child)) agentSpans.push(child);
+	else otherItems.push(child);
+	if (agentSpans.length > 0) {
+		const firstAgentSpan = agentSpans[0];
+		if (agentSpans.length === 1 && firstAgentSpan) {
+			const target = unwrapSolverSpan(firstAgentSpan);
+			const result = buildSpanFromAgentSpan(target, otherItems);
+			if (result !== null) return result;
+			return new TimelineSpan({
+				id: target.id,
+				name: target.name.toLowerCase(),
+				spanType: "agent"
+			});
+		} else {
+			const children = [];
+			for (const span of agentSpans) {
+				const node = buildSpanFromAgentSpan(span);
+				if (node !== null) children.push(node);
+			}
+			for (const item of otherItems) if (isSpanNode(item) && !isAgentSpan(item)) {
+				const orphanContent = [];
+				unrollSpan(item, orphanContent);
+				for (let i = orphanContent.length - 1; i >= 0; i--) children.unshift(orphanContent[i]);
+			} else {
+				const node = treeItemToNode(item);
+				if (node !== null) children.unshift(node);
+			}
+			if (children.length === 0) return null;
+			return createTimelineSpan("root", "main", "agent", children);
+		}
+	} else {
+		const [content, branches] = processChildren(solversSpan.children);
+		if (content.length === 0) return null;
+		return createTimelineSpan(solversSpan.id, solversSpan.name, "agent", content, false, branches);
+	}
+}
+/**
+* Build agent from a list of tree items when no explicit phase spans exist.
+*
+* Creates a synthetic "main" agent containing all tree items as content.
+*/
+function buildAgentFromTree(tree) {
+	const [content, branches] = processChildren(tree);
+	if (content.length === 0) return null;
+	return createTimelineSpan("main", "main", "agent", content, false, branches);
+}
+/**
+* Dissolve a non-agent span, emitting its begin/end as regular events.
+*
+* Recursively unrolls nested non-agent spans while preserving any
+* nested agent spans as TimelineSpan nodes.
+*/
+function unrollSpan(span, into) {
+	into.push(createTimelineEvent(span.beginEvent));
+	for (const child of span.children) if (isSpanNode(child)) if (isAgentSpan(child)) {
+		const node = treeItemToNode(child);
+		if (node === null) continue;
+		if (node.type === "span" && node.content.length === 0) continue;
+		into.push(node);
+	} else unrollSpan(child, into);
+	else into.push(eventToNode(child));
+	if (span.endEvent) into.push(createTimelineEvent(span.endEvent));
+}
+/**
+* Process a span's children with branch awareness.
+*
+* Collects adjacent type="branch" SpanNode runs and builds branch TimelineSpan
+* objects from those that contain a BranchEvent. Branch spans without a
+* BranchEvent are processed as normal content.
+*/
+function processChildren(children) {
+	const content = [];
+	const branches = [];
+	let branchRun = [];
+	function flushBranchRun(run, parentContent) {
+		const result = [];
+		for (const span of run) {
+			const branchEvent = findBranchEvent(span);
+			if (branchEvent === null) {
+				processSpanAsContent(span, parentContent);
+				continue;
+			}
+			const branchContent = [];
+			for (const child of span.children) if (isSpanNode(child) && !isAgentSpan(child)) unrollSpan(child, branchContent);
+			else {
+				const node = treeItemToNode(child);
+				if (node === null) continue;
+				branchContent.push(node);
+			}
+			if (branchContent.length === 0) continue;
+			const branchedFrom = branchEvent.from_message;
+			const branchSpan = createTimelineSpan(span.id, span.name || "branch", "branch", branchContent, false, [], void 0, branchedFrom);
+			branchFromSpanMap.set(branchSpan.id, branchEvent.from_span);
+			result.push(branchSpan);
+		}
+		return result;
+	}
+	for (const item of children) if (isSpanNode(item) && item.type === "branch") branchRun.push(item);
+	else {
+		if (branchRun.length > 0) {
+			branches.push(...flushBranchRun(branchRun, content));
+			branchRun = [];
+		}
+		if (isSpanNode(item) && !isAgentSpan(item)) unrollSpan(item, content);
+		else {
+			const node = treeItemToNode(item);
+			if (node === null) continue;
+			content.push(node);
+		}
+	}
+	if (branchRun.length > 0) branches.push(...flushBranchRun(branchRun, content));
+	return [content, branches];
+}
+/**
+* Find a BranchEvent in a span's direct children.
+*/
+function findBranchEvent(span) {
+	for (const child of span.children) if (!isSpanNode(child) && child.event === "branch") return child;
+	return null;
+}
+/**
+* Process a branch span as normal content when it has no BranchEvent.
+*/
+function processSpanAsContent(span, into) {
+	for (const child of span.children) if (isSpanNode(child) && !isAgentSpan(child)) unrollSpan(child, into);
+	else {
+		const node = treeItemToNode(child);
+		if (node === null) continue;
+		if (node.type === "span" && node.content.length === 0) continue;
+		into.push(node);
+	}
+}
+/**
+* Recursively classify branches in the agent tree.
+*
+* Recurses into child spans in both content and branches.
+*/
+function classifyBranches(span) {
+	for (const item of span.content) if (item.type === "span") classifyBranches(item);
+	for (const branch of span.branches) {
+		classifyBranches(branch);
+		for (const item of branch.content) if (item.type === "span") classifyBranches(item);
+	}
+}
+/**
+* Maps branch span ID → fromSpan (the span ID the branch originated from).
+*
+* Populated during `processChildren` and consumed by `relocateBranches`.
+* This is build-time-only metadata that doesn't belong on the public
+* `TimelineSpan` type.
+*/
+var branchFromSpanMap = /* @__PURE__ */ new Map();
+/**
+* Recursively collect all TimelineSpans into a span_id → span map.
+*/
+function collectSpans(span, spanMap) {
+	spanMap.set(span.id, span);
+	for (const item of span.content) if (item.type === "span") collectSpans(item, spanMap);
+	for (const branch of span.branches) collectSpans(branch, spanMap);
+}
+/**
+* Relocate branches to the span identified by fromSpan.
+*
+* After initial discovery, all branches from the same processChildren
+* call are flat siblings. If a branch's fromSpan points to a span
+* inside a sibling branch, move it there.
+*/
+function relocateBranches(root) {
+	const spanMap = /* @__PURE__ */ new Map();
+	collectSpans(root, spanMap);
+	doRelocate(root, spanMap);
+}
+/**
+* Recursively relocate branches in a span and its children.
+*/
+function doRelocate(span, spanMap) {
+	for (const item of span.content) if (item.type === "span") doRelocate(item, spanMap);
+	for (const branch of span.branches) doRelocate(branch, spanMap);
+	const remaining = [];
+	for (const branch of span.branches) {
+		const fromSpan = branchFromSpanMap.get(branch.id);
+		const targetSpan = fromSpan ? spanMap.get(fromSpan) : void 0;
+		if (targetSpan !== void 0 && targetSpan !== span) targetSpan.branches.push(branch);
+		else remaining.push(branch);
+	}
+	span.branches = remaining;
+}
+/**
+* Strip the per-call billing header from a system prompt.
+*
+* Claude Code prepends a line like `x-anthropic-billing-header: ...`
+* with a varying `cch=` hash. Removing it lets us compare prompts
+* across calls.
+*/
+function normalizeSystemPrompt(prompt) {
+	if (prompt.startsWith("x-anthropic-billing-header:")) {
+		const idx = prompt.indexOf("\n");
+		if (idx !== -1) return prompt.substring(idx + 1);
+		return "";
+	}
+	return prompt;
+}
+/**
+* Extract and normalize the system prompt from a single ModelEvent.
+*/
+function getSystemPromptForEvent(event) {
+	const input = event.input;
+	if (!input) return null;
+	for (const msg of input) if (msg.role === "system") {
+		if (typeof msg.content === "string") return normalizeSystemPrompt(msg.content);
+		if (Array.isArray(msg.content)) {
+			const parts = [];
+			for (const c of msg.content) if ("text" in c && typeof c.text === "string") parts.push(c.text);
+			const raw = parts.length > 0 ? parts.join("\n") : null;
+			return raw ? normalizeSystemPrompt(raw) : null;
+		}
+	}
+	return null;
+}
+/**
+* Check whether a ModelEvent's output contains tool calls.
+*/
+function hasToolCalls(event) {
+	const choices = event.output?.choices;
+	if (choices && choices.length > 0) {
+		const msg = choices[0].message;
+		if (msg.tool_calls && msg.tool_calls.length > 0) return true;
+	}
+	return false;
+}
+/**
+* Wrap foreign-prompt model calls as synthetic utility spans.
+*
+* Within bridge-based agent spans (e.g. Claude Code), short extraction
+* model calls use a different system prompt and produce no tool calls.
+* This function detects them and wraps each one in a TimelineSpan
+* with utility=true so downstream code treats them as utility agents.
+*
+* Operates recursively on the entire span tree.
+*/
+function wrapUtilityEvents(agent) {
+	let primaryPrompt = null;
+	for (const item of agent.content) if (item.type === "event" && item.event.event === "model") {
+		const modelEvt = item.event;
+		if (hasToolCalls(modelEvt)) {
+			primaryPrompt = getSystemPromptForEvent(modelEvt);
+			break;
+		}
+	}
+	if (primaryPrompt === null) {
+		for (const item of agent.content) if (item.type === "event" && item.event.event === "model") {
+			primaryPrompt = getSystemPromptForEvent(item.event);
+			break;
+		}
+	}
+	if (primaryPrompt === null) {
+		for (const item of agent.content) if (item.type === "span") wrapUtilityEvents(item);
+		for (const branch of agent.branches) {
+			wrapUtilityEvents(branch);
+			for (const item of branch.content) if (item.type === "span") wrapUtilityEvents(item);
+		}
+		return;
+	}
+	const newContent = [];
+	for (const item of agent.content) {
+		if (item.type === "event" && item.event.event === "model") {
+			const modelEvt = item.event;
+			if (isWarmupCall(modelEvt)) {
+				const wrapper = createTimelineSpan(`utility-${item.event.uuid ?? "unknown"}`, "utility", "agent", [item]);
+				wrapper.utility = true;
+				newContent.push(wrapper);
+				continue;
+			}
+			const evtPrompt = getSystemPromptForEvent(modelEvt);
+			if (evtPrompt !== null && evtPrompt !== primaryPrompt && !hasToolCalls(modelEvt)) {
+				const wrapper = createTimelineSpan(`utility-${item.event.uuid ?? "unknown"}`, "utility", "agent", [item]);
+				wrapper.utility = true;
+				newContent.push(wrapper);
+				continue;
+			}
+		}
+		newContent.push(item);
+	}
+	agent.content = newContent;
+	for (const item of agent.content) if (item.type === "span") wrapUtilityEvents(item);
+	for (const branch of agent.branches) {
+		wrapUtilityEvents(branch);
+		for (const item of branch.content) if (item.type === "span") wrapUtilityEvents(item);
+	}
+}
+function isWarmupCall(event) {
+	if (event.config?.max_tokens == null || event.config.max_tokens > 1) return false;
+	const input = event.input;
+	if (!input) return false;
+	for (let i = input.length - 1; i >= 0; i--) {
+		const msg = input[i];
+		if (msg?.role === "user") {
+			if (typeof msg.content === "string") return msg.content.trim().split(/\s+/).length <= 1;
+			return false;
+		}
+	}
+	return false;
+}
+/**
+* Extract system prompt from the first ModelEvent in span's direct content.
+*/
+function getSystemPrompt(span) {
+	for (const item of span.content) if (item.type === "event" && item.event.event === "model") {
+		const input = item.event.input;
+		if (input) {
+			for (const msg of input) if (msg.role === "system") {
+				if (typeof msg.content === "string") return normalizeSystemPrompt(msg.content);
+				if (Array.isArray(msg.content)) {
+					const parts = [];
+					for (const c of msg.content) if ("text" in c && typeof c.text === "string") parts.push(c.text);
+					if (parts.length > 0) return normalizeSystemPrompt(parts.join("\n"));
+					return null;
+				}
+			}
+		}
+		return null;
+	}
+	return null;
+}
+/**
+* Check if span has a single turn or single tool-calling turn.
+*
+* A single turn is 1 ModelEvent with no ToolEvents.
+* A single tool-calling turn is 2 ModelEvents with a ToolEvent between them.
+*/
+function isSingleTurn(span) {
+	const directEvents = [];
+	for (const item of span.content) if (item.type === "event") {
+		if (item.event.event === "model") directEvents.push("model");
+		else if (item.event.event === "tool") directEvents.push("tool");
+	}
+	const modelCount = directEvents.filter((e) => e === "model").length;
+	const toolCount = directEvents.filter((e) => e === "tool").length;
+	if (modelCount === 1) return true;
+	if (modelCount === 2 && toolCount >= 1) {
+		const firstModel = directEvents.indexOf("model");
+		const secondModel = directEvents.lastIndexOf("model");
+		return directEvents.slice(firstModel + 1, secondModel).includes("tool");
+	}
+	return false;
+}
+/**
+* Classify utility agents in the tree via post-processing.
+*
+* An agent is utility if it has a single turn (or single tool-calling turn)
+* and a different system prompt than its parent.
+*/
+function classifyUtilityAgents(node, parentSystemPrompt = null) {
+	const agentSystemPrompt = getSystemPrompt(node);
+	if (parentSystemPrompt !== null && agentSystemPrompt !== null) {
+		if (agentSystemPrompt !== parentSystemPrompt && isSingleTurn(node)) node.utility = true;
+	}
+	const effectivePrompt = agentSystemPrompt ?? parentSystemPrompt;
+	for (const item of node.content) if (item.type === "span") classifyUtilityAgents(item, effectivePrompt);
+}
+/**
+* Build a Timeline from a flat event list.
+*
+* Transforms a flat event stream into a hierarchical Timeline tree
+* with agent-centric interpretation. The pipeline has two phases:
+*
+* **Phase 1 — Structure extraction:**
+*
+* Parses span_begin/span_end events into a tree, then looks for
+* top-level phase spans ("init", "solvers", "scorers"):
+* - If present, partitions events into init (setup), agent (solvers),
+*   and scoring sections.
+* - If absent, treats the entire event stream as the agent.
+*
+* **Phase 2 — Agent classification:**
+*
+* Within the agent section, spans are classified as agents or unrolled:
+* - type="agent"                → TimelineSpan (spanType="agent")
+* - type="solver"               → TimelineSpan (spanType="agent")
+* - type="tool" + ModelEvents   → TimelineSpan (spanType="agent")
+* - ToolEvent with agent field  → TimelineSpan (spanType="agent")
+* - type="tool" (no models)     → Unrolled into parent
+* - Any other span type         → Unrolled into parent
+*
+* "Unrolled" means the span wrapper is removed and its child events
+* dissolve into the parent's content list.
+*
+* **Phase 3 — Post-processing passes:**
+* - Utility event wrapping (bridge-based agents with foreign prompts)
+* - Utility agent classification (single-turn, different system prompt)
+* - Recursive branch classification
+*/
+/**
+* Returns the pre-extracted agent result for a span.
+* Results are extracted during timeline building by `extractAgentResults()`.
+*/
+function getSpanToolResult(span) {
+	return span.agentResult;
+}
+/**
+* Extract a string result from a ToolEvent result field.
+*/
+function extractToolEventResult(result) {
+	if (typeof result === "string" && result) return result;
+	if (Array.isArray(result)) {
+		const parts = [];
+		for (const c of result) if (c && typeof c === "object" && "text" in c) parts.push(c.text);
+		return parts.length > 0 ? parts.join("\n") : void 0;
+	}
+}
+/**
+* Extract agentResult for each agent sub-span.
+*
+* Three sources (checked in order):
+* 1. Tool-spawned agents: result already set during eventToNode
+* 2. Span-based agents (static flow): sibling ToolEvent with agent_span_id === span.id
+* 3. Bridge flow: next ModelEvent's input has tool message with function === span.name
+*/
+function extractAgentResults(parent) {
+	const content = parent.content;
+	for (let i = 0; i < content.length; i++) {
+		const item = content[i];
+		if (item.type !== "span") continue;
+		if (item.spanType !== "agent") {
+			extractAgentResults(item);
+			continue;
+		}
+		if (item.agentResult) {
+			extractAgentResults(item);
+			continue;
+		}
+		for (const sibling of content) if (sibling.type === "event" && sibling.event.event === "tool" && sibling.event.agent_span_id === item.id) {
+			const resultText = extractToolEventResult(sibling.event.result);
+			if (resultText) item.agentResult = resultText;
+			break;
+		}
+		const toolCallId = item.id.startsWith("agent-") ? item.id.slice(6) : null;
+		if (!item.agentResult && toolCallId) for (let j = i + 1; j < content.length; j++) {
+			const nextItem = content[j];
+			if (nextItem.type !== "event") continue;
+			if (nextItem.event.event === "model") {
+				const modelEvent = nextItem.event;
+				if (modelEvent.input) {
+					for (const msg of modelEvent.input) if (msg.role === "tool" && "tool_call_id" in msg && msg.tool_call_id === toolCallId) {
+						const text = extractToolEventResult(msg.content);
+						if (text) item.agentResult = text;
+					}
+				}
+				if (item.agentResult) break;
+			}
+		}
+		extractAgentResults(item);
+	}
+}
+/**
+* Derive a display label for a utility agent span.
+*
+* Synthetic utility spans created by `wrapUtilityEvents` are named "utility"
+* which is redundant when paired with a "utility:" prefix. For these, extract
+* the model name from the inner model event. For classified utility agents
+* (real spans with meaningful names like "explore"), keep the existing name.
+*/
+function getUtilityAgentLabel(span) {
+	const name = span.name.toLowerCase();
+	if (name !== "utility") return name;
+	for (const item of span.content) if (item.type === "event" && item.event.event === "model") return item.event.model;
+	return name;
+}
+function buildTimeline(events) {
+	branchFromSpanMap = /* @__PURE__ */ new Map();
+	if (events.length === 0) return {
+		name: "Default",
+		description: "",
+		root: new TimelineSpan({
+			id: "root",
+			name: "main",
+			spanType: null
+		})
+	};
+	const tree = buildSpanTree(events);
+	const topSpans = /* @__PURE__ */ new Map();
+	for (const item of tree) if (isSpanNode(item) && (item.name === "init" || item.name === "solvers" || item.name === "scorers")) topSpans.set(item.name, item);
+	const hasPhaseSpans = topSpans.has("init") || topSpans.has("solvers") || topSpans.has("scorers");
+	let root;
+	if (hasPhaseSpans) {
+		const initSpan = topSpans.get("init");
+		const solversSpan = topSpans.get("solvers");
+		const scorersSpan = topSpans.get("scorers");
+		let initSpanObj = null;
+		if (initSpan) {
+			const initContent = eventSequence(initSpan.children).map((e) => createTimelineEvent(e));
+			if (initContent.length > 0) initSpanObj = createTimelineSpan(initSpan.id, "init", "init", initContent);
+		}
+		const agentNode = solversSpan ? buildAgentFromSolversSpan(solversSpan) : null;
+		let scoringSpan = null;
+		if (scorersSpan) {
+			const scoringContent = eventSequence(scorersSpan.children).map((e) => createTimelineEvent(e));
+			if (scoringContent.length > 0) scoringSpan = createTimelineSpan(scorersSpan.id, "scoring", "scorers", scoringContent);
+		}
+		if (agentNode) {
+			agentNode.name = "main";
+			wrapUtilityEvents(agentNode);
+			classifyUtilityAgents(agentNode);
+			classifyBranches(agentNode);
+			relocateBranches(agentNode);
+			extractAgentResults(agentNode);
+			if (initSpanObj) agentNode.content = [initSpanObj, ...agentNode.content];
+			if (scoringSpan) agentNode.content.push(scoringSpan);
+			root = agentNode;
+		} else {
+			const rootContent = [];
+			if (initSpanObj) rootContent.push(initSpanObj);
+			if (scoringSpan) rootContent.push(scoringSpan);
+			if (rootContent.length > 0) root = createTimelineSpan("root", "main", null, rootContent);
+			else root = new TimelineSpan({
+				id: "root",
+				name: "main",
+				spanType: null
+			});
+		}
+	} else {
+		const agentRoot = buildAgentFromTree(tree);
+		if (agentRoot) {
+			wrapUtilityEvents(agentRoot);
+			classifyUtilityAgents(agentRoot);
+			classifyBranches(agentRoot);
+			relocateBranches(agentRoot);
+			extractAgentResults(agentRoot);
+			root = agentRoot;
+		} else root = new TimelineSpan({
+			id: "root",
+			name: "main",
+			spanType: null
+		});
+	}
+	return {
+		name: "Default",
+		description: "",
+		root
+	};
+}
+//#endregion
+//#region ../../packages/inspect-components/src/transcript/timeline/swimlaneRows.ts
+/**
+* Swimlane row computation for the timeline UI.
+*
+* Transforms a TimelineSpan's children into SwimlaneRow[] for rendering
+* as horizontal swimlane bars. Handles sequential, iterative (multiple spans),
+* and parallel (overlapping) span patterns.
+*/
+/** Compare rows/entries by start time, with end time as tiebreaker. */
+function compareByTime(a, b) {
+	return a.startTime.getTime() - b.startTime.getTime() || a.endTime.getTime() - b.endTime.getTime();
+}
+/** Compare TimelineSpans by start time, with end time as tiebreaker. */
+function compareSpansByTime(a, b) {
+	return a.startTime(false).getTime() - b.startTime(false).getTime() || a.endTime(false).getTime() - b.endTime(false).getTime();
+}
+function isSingleSpan(span) {
+	return "agent" in span;
+}
+/** Unwrap a RowSpan to a flat array of TimelineSpan agents. */
+function getAgents(span) {
+	return isSingleSpan(span) ? [span.agent] : span.agents;
+}
+/** Tolerance in milliseconds for considering two spans as overlapping. */
+var OVERLAP_TOLERANCE_MS = 100;
+/**
+* Assigns time-sorted spans to lanes using greedy bin-packing.
+*
+* Each lane contains non-overlapping spans. The number of lanes equals
+* the maximum parallelism level (minimum possible).
+* Input must be sorted by start time.
+*/
+function assignToLanes(sorted) {
+	if (sorted.length === 0) return [];
+	const lanes = [];
+	for (const span of sorted) {
+		const spanStart = span.startTime().getTime();
+		let assigned = false;
+		for (const lane of lanes) if (lane.endTime + OVERLAP_TOLERANCE_MS <= spanStart) {
+			lane.spans.push(span);
+			lane.endTime = span.endTime().getTime();
+			assigned = true;
+			break;
+		}
+		if (!assigned) lanes.push({
+			spans: [span],
+			endTime: span.endTime().getTime()
+		});
+	}
+	return lanes.map((l) => l.spans);
+}
+/**
+* Partitions time-sorted spans into clusters of overlapping spans.
+*
+* Uses a sweep-line: extends the current cluster while spans overlap its
+* time range, then starts a new cluster when a gap is found.
+* Input must be sorted by start time.
+*/
+function partitionIntoClusters(sorted) {
+	if (sorted.length === 0) return [];
+	const clusters = [];
+	let current = [sorted[0]];
+	let clusterEnd = sorted[0].endTime().getTime();
+	for (let i = 1; i < sorted.length; i++) {
+		const span = sorted[i];
+		if (span.startTime().getTime() < clusterEnd + OVERLAP_TOLERANCE_MS) {
+			current.push(span);
+			clusterEnd = Math.max(clusterEnd, span.endTime().getTime());
+		} else {
+			clusters.push(current);
+			current = [span];
+			clusterEnd = span.endTime().getTime();
+		}
+	}
+	clusters.push(current);
+	return clusters;
+}
+function buildParentRow(node) {
+	return {
+		key: node.name.toLowerCase(),
+		name: node.name,
+		depth: 0,
+		spans: [{ agent: node }],
+		totalTokens: node.totalTokens(false),
+		startTime: node.startTime(false),
+		endTime: node.endTime(false)
+	};
+}
+/**
+* Groups spans by name (case-insensitive), preserving the display name
+* from the first span encountered in each group.
+*
+* Returns entries in insertion order (first-seen order).
+*/
+function groupByName(spans) {
+	const map = /* @__PURE__ */ new Map();
+	for (const span of spans) {
+		const key = span.name.toLowerCase();
+		const existing = map.get(key);
+		if (existing) existing.spans.push(span);
+		else map.set(key, {
+			displayName: span.name,
+			spans: [span]
+		});
+	}
+	return Array.from(map.values()).map((g) => [g.displayName, g.spans]);
+}
+/**
+* Computes a fully expanded flat list of swimlane rows from the entire span tree.
+*
+* Unlike `computeSwimlaneRows` (which only shows direct children), this function
+* recursively walks all descendant spans in depth-first pre-order. Each row carries
+* a `depth` for indentation and a unique `key` for selection.
+*
+* Same-name non-overlapping spans (iterative) are collapsed onto a single row
+* with multiple bars. Same-name overlapping spans (parallel) are expanded into
+* separate numbered rows.
+*/
+function computeFlatSwimlaneRows(root, options) {
+	const includeUtility = options?.includeUtility ?? false;
+	const showBranches = options?.showBranches ?? false;
+	return [buildParentRow(root), ...flattenChildren([root], 0, root.name.toLowerCase(), includeUtility, showBranches)];
+}
+/**
+* Recursively flattens descendant spans into rows in depth-first pre-order.
+*
+* Accepts multiple parent nodes so that iterative spans at the same level
+* can have their children merged before recursing.
+*
+* For each name group, partitions into overlapping clusters:
+* - If no cluster has >1 span (all iterative/sequential) → one row, multiple bars
+* - If any cluster has >1 span (parallel) → lanes via bin-packing, reusing lanes
+*   for non-overlapping spans (number of lanes = max parallelism level)
+*/
+function flattenChildren(nodes, parentDepth, parentKey, includeUtility, showBranches, branchPrefix = "") {
+	const children = [];
+	for (const node of nodes) for (const item of node.content) if (item.type === "span" && (includeUtility || !item.utility)) children.push(item);
+	if (children.length === 0 && !showBranches) return [];
+	const groups = groupByName(children);
+	const depth = parentDepth + 1;
+	const entries = [];
+	for (const [displayName, spans] of groups) {
+		const sorted = [...spans].sort(compareSpansByTime);
+		const baseName = displayName.toLowerCase();
+		const hasParallel = partitionIntoClusters(sorted).some((c) => c.length > 1);
+		const groupStartTime = sorted[0].startTime(false);
+		if (!hasParallel) {
+			const rowSpans = sorted.map((s) => ({ agent: s }));
+			const first = sorted[0];
+			const endTime = sorted.reduce((latest, s) => s.endTime(false).getTime() > latest.getTime() ? s.endTime(false) : latest, first.endTime(false));
+			entries.push({
+				displayName,
+				key: `${parentKey}/${baseName}`,
+				spans: sorted,
+				rowSpans,
+				totalTokens: sorted.reduce((sum, s) => sum + s.totalTokens(false), 0),
+				startTime: first.startTime(false),
+				endTime,
+				groupStartTime,
+				laneIndex: -1
+			});
+		} else {
+			const lanes = assignToLanes(sorted);
+			if (lanes.length === 1) {
+				const laneSpans = lanes[0];
+				const rowSpans = laneSpans.map((s) => ({ agent: s }));
+				const first = laneSpans[0];
+				const endTime = laneSpans.reduce((latest, s) => s.endTime(false).getTime() > latest.getTime() ? s.endTime(false) : latest, first.endTime(false));
+				entries.push({
+					displayName,
+					key: `${parentKey}/${baseName}`,
+					spans: laneSpans,
+					rowSpans,
+					totalTokens: laneSpans.reduce((sum, s) => sum + s.totalTokens(false), 0),
+					startTime: first.startTime(false),
+					endTime,
+					groupStartTime,
+					laneIndex: -1
+				});
+			} else for (let i = 0; i < lanes.length; i++) {
+				const laneSpans = lanes[i];
+				const rowSpans = laneSpans.map((s) => ({ agent: s }));
+				const first = laneSpans[0];
+				const endTime = laneSpans.reduce((latest, s) => s.endTime(false).getTime() > latest.getTime() ? s.endTime(false) : latest, first.endTime(false));
+				entries.push({
+					displayName: `${displayName} ${i + 1}`,
+					key: `${parentKey}/${baseName}-${i + 1}`,
+					spans: laneSpans,
+					rowSpans,
+					totalTokens: laneSpans.reduce((sum, s) => sum + s.totalTokens(false), 0),
+					startTime: first.startTime(false),
+					endTime,
+					groupStartTime,
+					laneIndex: i
+				});
+			}
+		}
+	}
+	entries.sort((a, b) => a.groupStartTime.getTime() - b.groupStartTime.getTime() || a.laneIndex - b.laneIndex || compareByTime(a, b));
+	const result = [];
+	if (showBranches) for (const node of nodes) {
+		const forkPositions = /* @__PURE__ */ new Map();
+		for (const branch of node.branches) {
+			if (!branch.branchedFrom) continue;
+			for (let ci = 0; ci < node.content.length; ci++) {
+				const item = node.content[ci];
+				if (item.type === "event" && item.matchesMessageId(branch.branchedFrom)) {
+					forkPositions.set(branch.branchedFrom, ci);
+					break;
+				}
+			}
+		}
+		const sorted = node.branches.map((branch, origIndex) => ({
+			branch,
+			origIndex
+		})).sort((a, b) => {
+			const ai = a.branch.branchedFrom ? forkPositions.get(a.branch.branchedFrom) ?? -1 : -1;
+			return (b.branch.branchedFrom ? forkPositions.get(b.branch.branchedFrom) ?? -1 : -1) - ai;
+		});
+		for (let i = 0; i < sorted.length; i++) {
+			const { branch } = sorted[i];
+			const label = `${branchPrefix}${i + 1}`;
+			const branchSpan = createBranchSpan(branch, label);
+			const branchKey = `${parentKey}/branch-${branch.branchedFrom}-${i + 1}`;
+			result.push({
+				key: branchKey,
+				name: branchSpan.name,
+				depth,
+				spans: [{ agent: branchSpan }],
+				totalTokens: branchSpan.totalTokens(false),
+				startTime: branchSpan.startTime(false),
+				endTime: branchSpan.endTime(false),
+				branch: true,
+				branchedFrom: branch.branchedFrom ?? void 0
+			});
+			result.push(...flattenChildren([branchSpan], depth, branchKey, includeUtility, showBranches, `${label}.`));
+		}
+	}
+	for (const entry of entries) {
+		result.push({
+			key: entry.key,
+			name: entry.displayName,
+			depth,
+			spans: entry.rowSpans,
+			totalTokens: entry.totalTokens,
+			startTime: entry.startTime,
+			endTime: entry.endTime
+		});
+		result.push(...flattenChildren(entry.spans, depth, entry.key, includeUtility, showBranches));
+	}
+	return result;
+}
+//#endregion
 //#region ../../packages/inspect-components/src/transcript/resolveMessageToEvent.ts
 /**
 * Resolves a message ID to the best matching event in the timeline tree.
@@ -122281,6 +123565,34 @@ function resolveMessageToEvent(messageId, root) {
 		eventId: best.eventId,
 		agentSpanId: best.agentSpanId
 	};
+}
+/**
+* Walks branches across the timeline tree to find a message. Returns the
+* first branch hit (in swimlane row order — latest fork first) along with
+* the branch's swimlane row key so the caller can select that row.
+*
+* Use this as a fallback when `resolveMessageToEvent` returns undefined
+* for the main content tree.
+*/
+function resolveMessageInBranches(messageId, root) {
+	const rows = computeFlatSwimlaneRows(root, {
+		includeUtility: true,
+		showBranches: true
+	});
+	for (const row of rows) {
+		if (!row.branch) continue;
+		for (const rowSpan of row.spans) {
+			const agents = isSingleSpan(rowSpan) ? [rowSpan.agent] : rowSpan.agents;
+			for (const agent of agents) {
+				const match = walkContent(messageId, agent.content, null);
+				if (match) return {
+					eventId: match.eventId,
+					agentSpanId: match.agentSpanId,
+					branchRowKey: row.key
+				};
+			}
+		}
+	}
 }
 var PRIORITY_MODEL_OUTPUT = 1;
 var PRIORITY_AGENT_CARD_RESULT = 2;
@@ -122812,8 +124124,9 @@ function hasDataDefault(node) {
 	return (0, import_react.isValidElement)(node) && node.props !== null && typeof node.props === "object" && "data-default" in node.props;
 }
 var EventRow_module_default = {
-	title: "_title_19l1b_1",
-	contents: "_contents_19l1b_8"
+	title: "_title_xefxk_1",
+	contents: "_contents_xefxk_7",
+	below: "_below_xefxk_14"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/event/EventRow.tsx
@@ -122821,18 +124134,21 @@ var kDefaultIcon = "bi bi-table";
 /**
 * Renders the EventRow component.
 */
-var EventRow = ({ title, icon, className, children }) => {
-	const contentEl = title ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+var EventRow = ({ title, icon, iconClassName, className, children, below }) => {
+	const contentEl = title ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: clsx("text-size-small", EventRow_module_default.title, className),
 		children: [
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: icon || kDefaultIcon }),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(icon || kDefaultIcon, iconClassName) }),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: clsx("text-style-label"),
 				children: title
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children })
 		]
-	}) : "";
+	}), below ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: clsx("text-size-small", EventRow_module_default.below),
+		children: below
+	}) : null] }) : "";
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		className: clsx("card", EventRow_module_default.contents),
 		children: contentEl
@@ -124464,9 +125780,11 @@ var kVirtuosoKeyPrefix = "live-virtual-list-";
 * When `selected` changes (agent selection in swimlanes):
 * - Clears saved Virtuoso state for the target agent so it mounts fresh
 * - When navigating "up" (from a child to a parent), clears all child positions
-* - Scrolls the container to top
+* - Scrolls the container to top (unless `hasScrollTarget` is true, in which
+*   case the caller has a specific event to scroll to and we leave the
+*   container alone so the imperative scroll wins)
 */
-function useListPositionManager(baseListId, selected, scrollRef) {
+function useListPositionManager(baseListId, selected, scrollRef, hasScrollTarget = false) {
 	const { useRemoveValue, useRemoveByPrefix } = useComponentStateHooks();
 	const removeValue = useRemoveValue();
 	const removeByPrefix = useRemoveByPrefix();
@@ -124483,14 +125801,15 @@ function useListPositionManager(baseListId, selected, scrollRef) {
 		prevSelectedRef.current = selected;
 		removeValue("listPosition", `${kVirtuosoKeyPrefix}${effectiveListId}`);
 		if (selected && prevSelected && prevSelected.startsWith(selected + "/")) removeByPrefix("listPosition", `${kVirtuosoKeyPrefix}${baseListId}:${selected}/`);
-		scrollRef.current?.scrollTo({ top: 0 });
+		if (!hasScrollTarget) scrollRef.current?.scrollTo({ top: 0 });
 	}, [
 		selected,
 		effectiveListId,
 		baseListId,
 		scrollRef,
 		removeValue,
-		removeByPrefix
+		removeByPrefix,
+		hasScrollTarget
 	]);
 	/**
 	* Clean up all per-agent positions when the component unmounts
@@ -124928,968 +126247,6 @@ function useTimelineSelect() {
 	return (0, import_react.useContext)(TimelineSelectContext);
 }
 //#endregion
-//#region ../../packages/inspect-components/src/transcript/timeline/core.ts
-function isSpanNode(item) {
-	return typeof item === "object" && item !== null && "children" in item && Array.isArray(item.children);
-}
-/**
-* Wraps a single Event with computed timing and token methods.
-*/
-var TimelineEvent = class {
-	type = "event";
-	event;
-	constructor(event) {
-		this.event = event;
-	}
-	startTime() {
-		return new Date(this.event.timestamp ?? 0);
-	}
-	endTime() {
-		const completed = this.event.completed;
-		return completed ? new Date(completed) : this.startTime();
-	}
-	totalTokens() {
-		return getEventTokens(this.event);
-	}
-	idleTime() {
-		return 0;
-	}
-	/**
-	* Returns true if this event produced or carries the given message ID.
-	*
-	* `branchedFrom` is a message ID (not an event UUID). It may match:
-	* 1. A model event's output message ID (`output.choices[0].message.id`)
-	* 2. A tool event's message ID (`message_id`)
-	* 3. A model event's input message ID (any message in `input` with matching `id`)
-	*
-	* This is used to locate the fork point for branches.
-	*/
-	matchesMessageId(messageId) {
-		const e = this.event;
-		if (e.event === "model") {
-			if (e.output?.choices?.[0]?.message?.id === messageId) return true;
-			const input = e.input;
-			if (input) {
-				for (const msg of input) if (msg.id === messageId) return true;
-			}
-		} else if (e.event === "tool") {
-			if (e.message_id === messageId) return true;
-		}
-		return false;
-	}
-};
-/**
-* A span of execution — agent, scorer, tool, or root.
-*/
-var TimelineSpan = class {
-	type = "span";
-	id;
-	name;
-	spanType;
-	content;
-	branches;
-	branchedFrom;
-	description;
-	utility;
-	agentResult;
-	outline;
-	constructor(props) {
-		this.id = props.id;
-		this.name = props.name;
-		this.spanType = props.spanType;
-		this.content = props.content ?? [];
-		this.branches = props.branches ?? [];
-		this.branchedFrom = props.branchedFrom ?? null;
-		this.description = props.description;
-		this.utility = props.utility ?? false;
-		this.agentResult = props.agentResult;
-		this.outline = props.outline;
-	}
-	startTime(includeBranches = true) {
-		const items = includeBranches ? [...this.content, ...this.branches] : this.content;
-		return items.length > 0 ? minStartTime(items) : /* @__PURE__ */ new Date(0);
-	}
-	endTime(includeBranches = true) {
-		const items = includeBranches ? [...this.content, ...this.branches] : this.content;
-		return items.length > 0 ? maxEndTime(items) : /* @__PURE__ */ new Date(0);
-	}
-	totalTokens(includeBranches = true) {
-		return sumTokens(includeBranches ? [...this.content, ...this.branches] : this.content);
-	}
-	idleTime(includeBranches = true) {
-		return computeIdleTime(includeBranches ? [...this.content, ...this.branches] : this.content, this.startTime(includeBranches), this.endTime(includeBranches));
-	}
-};
-/**
-* Creates a display-ready TimelineSpan from a branch span.
-*
-* If the branch has exactly one child span, returns that span directly.
-* Otherwise creates a synthetic container. The returned span's name is
-* clean (no arrow prefix) — callers that need a display prefix (e.g. the
-* swimlane row label) should add it themselves.
-*/
-function createBranchSpan(branch, label) {
-	const name = deriveBranchLabel(branch, label);
-	return new TimelineSpan({
-		id: branch.id,
-		name,
-		spanType: "branch",
-		content: branch.content,
-		branches: branch.branches,
-		branchedFrom: branch.branchedFrom,
-		description: branch.description,
-		utility: branch.utility,
-		agentResult: branch.agentResult,
-		outline: branch.outline
-	});
-}
-function deriveBranchLabel(branch, label) {
-	for (const item of branch.content) if (item.type === "span") return item.name;
-	return `Branch ${label}`;
-}
-/**
-* Build an event lookup map from a flat event array, keyed by UUID.
-*/
-function buildEventLookup(events) {
-	const map = /* @__PURE__ */ new Map();
-	for (const event of events) {
-		const uuid = event.uuid;
-		if (uuid) map.set(uuid, event);
-	}
-	return map;
-}
-/**
-* Convert a server-provided Timeline (snake_case) to the client-side Timeline
-* (camelCase with computed Date/token/idle properties).
-*
-* Server timelines store event references as UUID strings. The `events` array
-* is used to resolve these references to full Event objects.
-*/
-function convertServerTimeline(server, events) {
-	const lookup = buildEventLookup(events);
-	const root = convertServerSpan(server.root, lookup);
-	return {
-		name: server.name,
-		description: server.description,
-		root
-	};
-}
-function convertServerContentItem(item, lookup) {
-	if (item.type === "event") return convertServerEvent(item, lookup);
-	return convertServerSpan(item, lookup);
-}
-function convertServerEvent(server, lookup) {
-	const eventRef = server.event;
-	const event = lookup.get(eventRef);
-	if (!event) return null;
-	return new TimelineEvent(event);
-}
-function convertServerSpan(server, lookup) {
-	const content = (server.content ?? []).map((item) => convertServerContentItem(item, lookup)).filter((item) => item !== null);
-	const branches = (server.branches ?? []).map((b) => convertServerSpan(b, lookup)).filter((b) => b.content.length > 0);
-	return new TimelineSpan({
-		id: server.id,
-		name: server.name,
-		spanType: server.span_type ?? null,
-		branchedFrom: server.branched_from ?? null,
-		content,
-		branches,
-		description: server.description ?? void 0,
-		utility: server.utility,
-		agentResult: server.agent_result ?? void 0,
-		outline: server.outline ?? void 0
-	});
-}
-/**
-* Get tokens from an event (ModelEvent only).
-*/
-function getEventTokens(event) {
-	if (event.event === "model") {
-		const usage = event.output?.usage;
-		if (usage) {
-			const inputTokens = usage.input_tokens ?? 0;
-			const cacheRead = usage.input_tokens_cache_read ?? 0;
-			const cacheWrite = usage.input_tokens_cache_write ?? 0;
-			const outputTokens = usage.output_tokens ?? 0;
-			return inputTokens + cacheRead + cacheWrite + outputTokens;
-		}
-	}
-	return 0;
-}
-/**
-* Return the earliest start time among nodes.
-* Requires at least one node (all nodes have non-null startTime).
-*/
-function minStartTime(nodes) {
-	const first = nodes[0];
-	if (!first) throw new Error("minStartTime requires at least one node");
-	return nodes.reduce((min, n) => n.startTime() < min ? n.startTime() : min, first.startTime());
-}
-/**
-* Return the latest end time among nodes.
-* Requires at least one node (all nodes have non-null endTime).
-*/
-function maxEndTime(nodes) {
-	const first = nodes[0];
-	if (!first) throw new Error("maxEndTime requires at least one node");
-	return nodes.reduce((max, n) => n.endTime() > max ? n.endTime() : max, first.endTime());
-}
-/**
-* Sum total tokens across all nodes.
-*/
-function sumTokens(nodes) {
-	return nodes.reduce((sum, n) => sum + n.totalTokens(), 0);
-}
-var IDLE_THRESHOLD_MS = 3e5;
-/**
-* Compute idle time using gap-based detection between children.
-*
-* Any gap > 5 min between consecutive children (sorted by startTime)
-* is counted as idle. Children's own idleTime is summed recursively.
-*/
-function computeIdleTime(content, startTime, endTime) {
-	if (content.length === 0) return 0;
-	const sorted = [...content].sort((a, b) => a.startTime().getTime() - b.startTime().getTime());
-	let idleMs = 0;
-	for (const child of sorted) idleMs += child.idleTime() * 1e3;
-	const firstGap = sorted[0].startTime().getTime() - startTime.getTime();
-	if (firstGap > IDLE_THRESHOLD_MS) idleMs += firstGap;
-	for (let i = 1; i < sorted.length; i++) {
-		const gap = sorted[i].startTime().getTime() - sorted[i - 1].endTime().getTime();
-		if (gap > IDLE_THRESHOLD_MS) idleMs += gap;
-	}
-	const lastGap = endTime.getTime() - sorted[sorted.length - 1].endTime().getTime();
-	if (lastGap > IDLE_THRESHOLD_MS) idleMs += lastGap;
-	return Math.max(0, idleMs / 1e3);
-}
-/**
-* Create a TimelineEvent from an Event.
-*/
-function createTimelineEvent(event) {
-	return new TimelineEvent(event);
-}
-/**
-* Create a TimelineSpan with computed properties.
-*/
-function createTimelineSpan(id, name, spanType, content, utility = false, branches = [], description, branchedFrom = null) {
-	if (content.length === 0) throw new Error(`createTimelineSpan called with empty content for span "${name}" (id=${id}). Callers must guard against empty content before calling the factory.`);
-	return new TimelineSpan({
-		id,
-		name: name.toLowerCase(),
-		spanType,
-		content,
-		utility,
-		branches,
-		description,
-		branchedFrom
-	});
-}
-/**
-* Build a span tree from a flat event list.
-*
-* Parses span_begin/span_end events to create hierarchical structure.
-* Events are associated with spans via their span_id field.
-*/
-function buildSpanTree(events) {
-	const root = [];
-	const spansById = /* @__PURE__ */ new Map();
-	const spanStack = [];
-	for (const event of events) if (event.event === "span_begin") {
-		const span = {
-			id: event.id,
-			name: event.name,
-			type: event.type ?? void 0,
-			parentId: event.parent_id,
-			metadata: event.metadata ?? void 0,
-			children: [],
-			beginEvent: event
-		};
-		spansById.set(span.id, span);
-	}
-	for (const event of events) if (event.event === "span_begin") {
-		const span = spansById.get(event.id);
-		if (span.parentId && spansById.has(span.parentId)) spansById.get(span.parentId).children.push(span);
-		else if (spanStack.length > 0) {
-			const currentSpan = spanStack[spanStack.length - 1];
-			if (currentSpan) currentSpan.children.push(span);
-		} else root.push(span);
-		spanStack.push(span);
-	} else if (event.event === "span_end") {
-		const endSpan = spansById.get(event.id);
-		if (endSpan) endSpan.endEvent = event;
-		if (spanStack.length > 0) spanStack.pop();
-	} else {
-		const spanId = event.span_id;
-		if (spanId && spansById.has(spanId)) spansById.get(spanId).children.push(event);
-		else if (spanStack.length > 0) {
-			const currentSpan = spanStack[spanStack.length - 1];
-			if (currentSpan) currentSpan.children.push(event);
-		} else root.push(event);
-	}
-	const getTimestamp = (item) => {
-		if (isSpanNode(item)) return item.beginEvent.timestamp;
-		return item.timestamp;
-	};
-	for (const span of spansById.values()) span.children.sort((a, b) => getTimestamp(a).localeCompare(getTimestamp(b)));
-	return root;
-}
-/**
-* Flatten a tree item recursively to get all events.
-*/
-function eventSequence(items) {
-	const events = [];
-	for (const item of items) if (isSpanNode(item)) events.push(...eventSequence(item.children));
-	else events.push(item);
-	return events;
-}
-/**
-* Check if a span contains any ModelEvent (recursively).
-*/
-function containsModelEvents(span) {
-	for (const child of span.children) if (isSpanNode(child)) {
-		if (containsModelEvents(child)) return true;
-	} else if (child.event === "model") return true;
-	return false;
-}
-/**
-* Convert an Event to a TimelineEvent or TimelineSpan.
-*
-* Handles ToolEvents that spawn nested agents, recursively processing
-* nested events to detect further agent spawning.
-*/
-function eventToNode(event) {
-	if (event.event === "tool") {
-		const agentName = event.agent;
-		const nestedEvents = event.events;
-		if (agentName && nestedEvents && nestedEvents.length > 0) {
-			const nestedContent = nestedEvents.map((e) => eventToNode(e));
-			if (nestedContent.length > 0) {
-				const span = createTimelineSpan(`tool-agent-${event.id}`, agentName, "agent", nestedContent);
-				const agentResult = extractToolEventResult(event.result);
-				if (agentResult) span.agentResult = agentResult;
-				return span;
-			}
-		}
-	}
-	return createTimelineEvent(event);
-}
-/**
-* Check if a SpanNode represents an agent trajectory.
-*
-* Agent spans are:
-* - Explicit agent spans (type="agent")
-* - Solver spans (type="solver")
-* - Tool spans containing model events (tool-spawned agents)
-*/
-function isAgentSpan(span) {
-	if (span.type === "agent" || span.type === "solver") return true;
-	if (span.type === "tool" && containsModelEvents(span)) return true;
-	return false;
-}
-/**
-* Convert a tree item (SpanNode or Event) to a TimelineEvent, TimelineSpan,
-* or null if the resulting span would be empty.
-*/
-function treeItemToNode(item) {
-	if (isSpanNode(item)) if (item.type === "agent" || item.type === "solver") return buildSpanFromAgentSpan(item);
-	else return buildSpanFromGenericSpan(item);
-	else return eventToNode(item);
-}
-/**
-* Build a TimelineSpan from a SpanNode with type='agent'.
-*/
-function buildSpanFromAgentSpan(span, extraItems) {
-	const content = [];
-	if (extraItems) for (const item of extraItems) if (isSpanNode(item) && !isAgentSpan(item)) unrollSpan(item, content);
-	else {
-		const node = treeItemToNode(item);
-		if (node !== null) content.push(node);
-	}
-	const [childContent, branches] = processChildren(span.children);
-	content.push(...childContent);
-	if (content.length === 0) return null;
-	const description = typeof span.metadata?.description === "string" ? span.metadata.description : void 0;
-	return createTimelineSpan(span.id, span.name, "agent", content, false, branches, description);
-}
-/**
-* Build a TimelineSpan from a non-agent SpanNode.
-*
-* If the span is a tool span (type="tool") containing model events,
-* we treat it as a tool-spawned agent (spanType="agent").
-*/
-function buildSpanFromGenericSpan(span) {
-	const [content, branches] = processChildren(span.children);
-	if (content.length === 0) return null;
-	const spanType = span.type === "tool" && containsModelEvents(span) ? "agent" : span.type ?? null;
-	return createTimelineSpan(span.id, span.name, spanType, content, false, branches);
-}
-/**
-* Recursively unwrap solver-type spans that contain exactly one agent child.
-*
-* This flattens unnecessary nesting (e.g. a "react" solver wrapping a single
-* agent) so the timeline shows the agent directly.
-*/
-function unwrapSolverSpan(span) {
-	while (span.type === "solver") {
-		const agentChildren = span.children.filter((child) => isSpanNode(child) && child.type === "agent");
-		if (agentChildren.length !== 1) break;
-		span = agentChildren[0];
-	}
-	return span;
-}
-/**
-* Build agent hierarchy from the solvers span.
-*
-* Looks for explicit agent spans (type='agent') within the solvers span.
-* If found, builds the agent tree from those spans. If not found, uses
-* the solvers span itself as the agent container.
-*/
-function buildAgentFromSolversSpan(solversSpan) {
-	if (solversSpan.children.length === 0) return null;
-	const agentSpans = [];
-	const otherItems = [];
-	for (const child of solversSpan.children) if (isSpanNode(child) && isAgentSpan(child)) agentSpans.push(child);
-	else otherItems.push(child);
-	if (agentSpans.length > 0) {
-		const firstAgentSpan = agentSpans[0];
-		if (agentSpans.length === 1 && firstAgentSpan) {
-			const target = unwrapSolverSpan(firstAgentSpan);
-			const result = buildSpanFromAgentSpan(target, otherItems);
-			if (result !== null) return result;
-			return new TimelineSpan({
-				id: target.id,
-				name: target.name.toLowerCase(),
-				spanType: "agent"
-			});
-		} else {
-			const children = [];
-			for (const span of agentSpans) {
-				const node = buildSpanFromAgentSpan(span);
-				if (node !== null) children.push(node);
-			}
-			for (const item of otherItems) if (isSpanNode(item) && !isAgentSpan(item)) {
-				const orphanContent = [];
-				unrollSpan(item, orphanContent);
-				for (let i = orphanContent.length - 1; i >= 0; i--) children.unshift(orphanContent[i]);
-			} else {
-				const node = treeItemToNode(item);
-				if (node !== null) children.unshift(node);
-			}
-			if (children.length === 0) return null;
-			return createTimelineSpan("root", "main", "agent", children);
-		}
-	} else {
-		const [content, branches] = processChildren(solversSpan.children);
-		if (content.length === 0) return null;
-		return createTimelineSpan(solversSpan.id, solversSpan.name, "agent", content, false, branches);
-	}
-}
-/**
-* Build agent from a list of tree items when no explicit phase spans exist.
-*
-* Creates a synthetic "main" agent containing all tree items as content.
-*/
-function buildAgentFromTree(tree) {
-	const [content, branches] = processChildren(tree);
-	if (content.length === 0) return null;
-	return createTimelineSpan("main", "main", "agent", content, false, branches);
-}
-/**
-* Dissolve a non-agent span, emitting its begin/end as regular events.
-*
-* Recursively unrolls nested non-agent spans while preserving any
-* nested agent spans as TimelineSpan nodes.
-*/
-function unrollSpan(span, into) {
-	into.push(createTimelineEvent(span.beginEvent));
-	for (const child of span.children) if (isSpanNode(child)) if (isAgentSpan(child)) {
-		const node = treeItemToNode(child);
-		if (node === null) continue;
-		if (node.type === "span" && node.content.length === 0) continue;
-		into.push(node);
-	} else unrollSpan(child, into);
-	else into.push(eventToNode(child));
-	if (span.endEvent) into.push(createTimelineEvent(span.endEvent));
-}
-/**
-* Process a span's children with branch awareness.
-*
-* Collects adjacent type="branch" SpanNode runs and builds branch TimelineSpan
-* objects from those that contain a BranchEvent. Branch spans without a
-* BranchEvent are processed as normal content.
-*/
-function processChildren(children) {
-	const content = [];
-	const branches = [];
-	let branchRun = [];
-	function flushBranchRun(run, parentContent) {
-		const result = [];
-		for (const span of run) {
-			const branchEvent = findBranchEvent(span);
-			if (branchEvent === null) {
-				processSpanAsContent(span, parentContent);
-				continue;
-			}
-			const branchContent = [];
-			for (const child of span.children) if (isSpanNode(child) && !isAgentSpan(child)) unrollSpan(child, branchContent);
-			else {
-				const node = treeItemToNode(child);
-				if (node === null) continue;
-				branchContent.push(node);
-			}
-			if (branchContent.length === 0) continue;
-			const branchedFrom = branchEvent.from_message;
-			const branchSpan = createTimelineSpan(span.id, span.name || "branch", "branch", branchContent, false, [], void 0, branchedFrom);
-			branchFromSpanMap.set(branchSpan.id, branchEvent.from_span);
-			result.push(branchSpan);
-		}
-		return result;
-	}
-	for (const item of children) if (isSpanNode(item) && item.type === "branch") branchRun.push(item);
-	else {
-		if (branchRun.length > 0) {
-			branches.push(...flushBranchRun(branchRun, content));
-			branchRun = [];
-		}
-		if (isSpanNode(item) && !isAgentSpan(item)) unrollSpan(item, content);
-		else {
-			const node = treeItemToNode(item);
-			if (node === null) continue;
-			content.push(node);
-		}
-	}
-	if (branchRun.length > 0) branches.push(...flushBranchRun(branchRun, content));
-	return [content, branches];
-}
-/**
-* Find a BranchEvent in a span's direct children.
-*/
-function findBranchEvent(span) {
-	for (const child of span.children) if (!isSpanNode(child) && child.event === "branch") return child;
-	return null;
-}
-/**
-* Process a branch span as normal content when it has no BranchEvent.
-*/
-function processSpanAsContent(span, into) {
-	for (const child of span.children) if (isSpanNode(child) && !isAgentSpan(child)) unrollSpan(child, into);
-	else {
-		const node = treeItemToNode(child);
-		if (node === null) continue;
-		if (node.type === "span" && node.content.length === 0) continue;
-		into.push(node);
-	}
-}
-/**
-* Recursively classify branches in the agent tree.
-*
-* Recurses into child spans in both content and branches.
-*/
-function classifyBranches(span) {
-	for (const item of span.content) if (item.type === "span") classifyBranches(item);
-	for (const branch of span.branches) {
-		classifyBranches(branch);
-		for (const item of branch.content) if (item.type === "span") classifyBranches(item);
-	}
-}
-/**
-* Maps branch span ID → fromSpan (the span ID the branch originated from).
-*
-* Populated during `processChildren` and consumed by `relocateBranches`.
-* This is build-time-only metadata that doesn't belong on the public
-* `TimelineSpan` type.
-*/
-var branchFromSpanMap = /* @__PURE__ */ new Map();
-/**
-* Recursively collect all TimelineSpans into a span_id → span map.
-*/
-function collectSpans(span, spanMap) {
-	spanMap.set(span.id, span);
-	for (const item of span.content) if (item.type === "span") collectSpans(item, spanMap);
-	for (const branch of span.branches) collectSpans(branch, spanMap);
-}
-/**
-* Relocate branches to the span identified by fromSpan.
-*
-* After initial discovery, all branches from the same processChildren
-* call are flat siblings. If a branch's fromSpan points to a span
-* inside a sibling branch, move it there.
-*/
-function relocateBranches(root) {
-	const spanMap = /* @__PURE__ */ new Map();
-	collectSpans(root, spanMap);
-	doRelocate(root, spanMap);
-}
-/**
-* Recursively relocate branches in a span and its children.
-*/
-function doRelocate(span, spanMap) {
-	for (const item of span.content) if (item.type === "span") doRelocate(item, spanMap);
-	for (const branch of span.branches) doRelocate(branch, spanMap);
-	const remaining = [];
-	for (const branch of span.branches) {
-		const fromSpan = branchFromSpanMap.get(branch.id);
-		const targetSpan = fromSpan ? spanMap.get(fromSpan) : void 0;
-		if (targetSpan !== void 0 && targetSpan !== span) targetSpan.branches.push(branch);
-		else remaining.push(branch);
-	}
-	span.branches = remaining;
-}
-/**
-* Strip the per-call billing header from a system prompt.
-*
-* Claude Code prepends a line like `x-anthropic-billing-header: ...`
-* with a varying `cch=` hash. Removing it lets us compare prompts
-* across calls.
-*/
-function normalizeSystemPrompt(prompt) {
-	if (prompt.startsWith("x-anthropic-billing-header:")) {
-		const idx = prompt.indexOf("\n");
-		if (idx !== -1) return prompt.substring(idx + 1);
-		return "";
-	}
-	return prompt;
-}
-/**
-* Extract and normalize the system prompt from a single ModelEvent.
-*/
-function getSystemPromptForEvent(event) {
-	const input = event.input;
-	if (!input) return null;
-	for (const msg of input) if (msg.role === "system") {
-		if (typeof msg.content === "string") return normalizeSystemPrompt(msg.content);
-		if (Array.isArray(msg.content)) {
-			const parts = [];
-			for (const c of msg.content) if ("text" in c && typeof c.text === "string") parts.push(c.text);
-			const raw = parts.length > 0 ? parts.join("\n") : null;
-			return raw ? normalizeSystemPrompt(raw) : null;
-		}
-	}
-	return null;
-}
-/**
-* Check whether a ModelEvent's output contains tool calls.
-*/
-function hasToolCalls(event) {
-	const choices = event.output?.choices;
-	if (choices && choices.length > 0) {
-		const msg = choices[0].message;
-		if (msg.tool_calls && msg.tool_calls.length > 0) return true;
-	}
-	return false;
-}
-/**
-* Wrap foreign-prompt model calls as synthetic utility spans.
-*
-* Within bridge-based agent spans (e.g. Claude Code), short extraction
-* model calls use a different system prompt and produce no tool calls.
-* This function detects them and wraps each one in a TimelineSpan
-* with utility=true so downstream code treats them as utility agents.
-*
-* Operates recursively on the entire span tree.
-*/
-function wrapUtilityEvents(agent) {
-	let primaryPrompt = null;
-	for (const item of agent.content) if (item.type === "event" && item.event.event === "model") {
-		const modelEvt = item.event;
-		if (hasToolCalls(modelEvt)) {
-			primaryPrompt = getSystemPromptForEvent(modelEvt);
-			break;
-		}
-	}
-	if (primaryPrompt === null) {
-		for (const item of agent.content) if (item.type === "event" && item.event.event === "model") {
-			primaryPrompt = getSystemPromptForEvent(item.event);
-			break;
-		}
-	}
-	if (primaryPrompt === null) {
-		for (const item of agent.content) if (item.type === "span") wrapUtilityEvents(item);
-		for (const branch of agent.branches) {
-			wrapUtilityEvents(branch);
-			for (const item of branch.content) if (item.type === "span") wrapUtilityEvents(item);
-		}
-		return;
-	}
-	const newContent = [];
-	for (const item of agent.content) {
-		if (item.type === "event" && item.event.event === "model") {
-			const modelEvt = item.event;
-			if (isWarmupCall(modelEvt)) {
-				const wrapper = createTimelineSpan(`utility-${item.event.uuid ?? "unknown"}`, "utility", "agent", [item]);
-				wrapper.utility = true;
-				newContent.push(wrapper);
-				continue;
-			}
-			const evtPrompt = getSystemPromptForEvent(modelEvt);
-			if (evtPrompt !== null && evtPrompt !== primaryPrompt && !hasToolCalls(modelEvt)) {
-				const wrapper = createTimelineSpan(`utility-${item.event.uuid ?? "unknown"}`, "utility", "agent", [item]);
-				wrapper.utility = true;
-				newContent.push(wrapper);
-				continue;
-			}
-		}
-		newContent.push(item);
-	}
-	agent.content = newContent;
-	for (const item of agent.content) if (item.type === "span") wrapUtilityEvents(item);
-	for (const branch of agent.branches) {
-		wrapUtilityEvents(branch);
-		for (const item of branch.content) if (item.type === "span") wrapUtilityEvents(item);
-	}
-}
-function isWarmupCall(event) {
-	if (event.config?.max_tokens == null || event.config.max_tokens > 1) return false;
-	const input = event.input;
-	if (!input) return false;
-	for (let i = input.length - 1; i >= 0; i--) {
-		const msg = input[i];
-		if (msg?.role === "user") {
-			if (typeof msg.content === "string") return msg.content.trim().split(/\s+/).length <= 1;
-			return false;
-		}
-	}
-	return false;
-}
-/**
-* Extract system prompt from the first ModelEvent in span's direct content.
-*/
-function getSystemPrompt(span) {
-	for (const item of span.content) if (item.type === "event" && item.event.event === "model") {
-		const input = item.event.input;
-		if (input) {
-			for (const msg of input) if (msg.role === "system") {
-				if (typeof msg.content === "string") return normalizeSystemPrompt(msg.content);
-				if (Array.isArray(msg.content)) {
-					const parts = [];
-					for (const c of msg.content) if ("text" in c && typeof c.text === "string") parts.push(c.text);
-					if (parts.length > 0) return normalizeSystemPrompt(parts.join("\n"));
-					return null;
-				}
-			}
-		}
-		return null;
-	}
-	return null;
-}
-/**
-* Check if span has a single turn or single tool-calling turn.
-*
-* A single turn is 1 ModelEvent with no ToolEvents.
-* A single tool-calling turn is 2 ModelEvents with a ToolEvent between them.
-*/
-function isSingleTurn(span) {
-	const directEvents = [];
-	for (const item of span.content) if (item.type === "event") {
-		if (item.event.event === "model") directEvents.push("model");
-		else if (item.event.event === "tool") directEvents.push("tool");
-	}
-	const modelCount = directEvents.filter((e) => e === "model").length;
-	const toolCount = directEvents.filter((e) => e === "tool").length;
-	if (modelCount === 1) return true;
-	if (modelCount === 2 && toolCount >= 1) {
-		const firstModel = directEvents.indexOf("model");
-		const secondModel = directEvents.lastIndexOf("model");
-		return directEvents.slice(firstModel + 1, secondModel).includes("tool");
-	}
-	return false;
-}
-/**
-* Classify utility agents in the tree via post-processing.
-*
-* An agent is utility if it has a single turn (or single tool-calling turn)
-* and a different system prompt than its parent.
-*/
-function classifyUtilityAgents(node, parentSystemPrompt = null) {
-	const agentSystemPrompt = getSystemPrompt(node);
-	if (parentSystemPrompt !== null && agentSystemPrompt !== null) {
-		if (agentSystemPrompt !== parentSystemPrompt && isSingleTurn(node)) node.utility = true;
-	}
-	const effectivePrompt = agentSystemPrompt ?? parentSystemPrompt;
-	for (const item of node.content) if (item.type === "span") classifyUtilityAgents(item, effectivePrompt);
-}
-/**
-* Build a Timeline from a flat event list.
-*
-* Transforms a flat event stream into a hierarchical Timeline tree
-* with agent-centric interpretation. The pipeline has two phases:
-*
-* **Phase 1 — Structure extraction:**
-*
-* Parses span_begin/span_end events into a tree, then looks for
-* top-level phase spans ("init", "solvers", "scorers"):
-* - If present, partitions events into init (setup), agent (solvers),
-*   and scoring sections.
-* - If absent, treats the entire event stream as the agent.
-*
-* **Phase 2 — Agent classification:**
-*
-* Within the agent section, spans are classified as agents or unrolled:
-* - type="agent"                → TimelineSpan (spanType="agent")
-* - type="solver"               → TimelineSpan (spanType="agent")
-* - type="tool" + ModelEvents   → TimelineSpan (spanType="agent")
-* - ToolEvent with agent field  → TimelineSpan (spanType="agent")
-* - type="tool" (no models)     → Unrolled into parent
-* - Any other span type         → Unrolled into parent
-*
-* "Unrolled" means the span wrapper is removed and its child events
-* dissolve into the parent's content list.
-*
-* **Phase 3 — Post-processing passes:**
-* - Utility event wrapping (bridge-based agents with foreign prompts)
-* - Utility agent classification (single-turn, different system prompt)
-* - Recursive branch classification
-*/
-/**
-* Returns the pre-extracted agent result for a span.
-* Results are extracted during timeline building by `extractAgentResults()`.
-*/
-function getSpanToolResult(span) {
-	return span.agentResult;
-}
-/**
-* Extract a string result from a ToolEvent result field.
-*/
-function extractToolEventResult(result) {
-	if (typeof result === "string" && result) return result;
-	if (Array.isArray(result)) {
-		const parts = [];
-		for (const c of result) if (c && typeof c === "object" && "text" in c) parts.push(c.text);
-		return parts.length > 0 ? parts.join("\n") : void 0;
-	}
-}
-/**
-* Extract agentResult for each agent sub-span.
-*
-* Three sources (checked in order):
-* 1. Tool-spawned agents: result already set during eventToNode
-* 2. Span-based agents (static flow): sibling ToolEvent with agent_span_id === span.id
-* 3. Bridge flow: next ModelEvent's input has tool message with function === span.name
-*/
-function extractAgentResults(parent) {
-	const content = parent.content;
-	for (let i = 0; i < content.length; i++) {
-		const item = content[i];
-		if (item.type !== "span") continue;
-		if (item.spanType !== "agent") {
-			extractAgentResults(item);
-			continue;
-		}
-		if (item.agentResult) {
-			extractAgentResults(item);
-			continue;
-		}
-		for (const sibling of content) if (sibling.type === "event" && sibling.event.event === "tool" && sibling.event.agent_span_id === item.id) {
-			const resultText = extractToolEventResult(sibling.event.result);
-			if (resultText) item.agentResult = resultText;
-			break;
-		}
-		const toolCallId = item.id.startsWith("agent-") ? item.id.slice(6) : null;
-		if (!item.agentResult && toolCallId) for (let j = i + 1; j < content.length; j++) {
-			const nextItem = content[j];
-			if (nextItem.type !== "event") continue;
-			if (nextItem.event.event === "model") {
-				const modelEvent = nextItem.event;
-				if (modelEvent.input) {
-					for (const msg of modelEvent.input) if (msg.role === "tool" && "tool_call_id" in msg && msg.tool_call_id === toolCallId) {
-						const text = extractToolEventResult(msg.content);
-						if (text) item.agentResult = text;
-					}
-				}
-				if (item.agentResult) break;
-			}
-		}
-		extractAgentResults(item);
-	}
-}
-/**
-* Derive a display label for a utility agent span.
-*
-* Synthetic utility spans created by `wrapUtilityEvents` are named "utility"
-* which is redundant when paired with a "utility:" prefix. For these, extract
-* the model name from the inner model event. For classified utility agents
-* (real spans with meaningful names like "explore"), keep the existing name.
-*/
-function getUtilityAgentLabel(span) {
-	const name = span.name.toLowerCase();
-	if (name !== "utility") return name;
-	for (const item of span.content) if (item.type === "event" && item.event.event === "model") return item.event.model;
-	return name;
-}
-function buildTimeline(events) {
-	branchFromSpanMap = /* @__PURE__ */ new Map();
-	if (events.length === 0) return {
-		name: "Default",
-		description: "",
-		root: new TimelineSpan({
-			id: "root",
-			name: "main",
-			spanType: null
-		})
-	};
-	const tree = buildSpanTree(events);
-	const topSpans = /* @__PURE__ */ new Map();
-	for (const item of tree) if (isSpanNode(item) && (item.name === "init" || item.name === "solvers" || item.name === "scorers")) topSpans.set(item.name, item);
-	const hasPhaseSpans = topSpans.has("init") || topSpans.has("solvers") || topSpans.has("scorers");
-	let root;
-	if (hasPhaseSpans) {
-		const initSpan = topSpans.get("init");
-		const solversSpan = topSpans.get("solvers");
-		const scorersSpan = topSpans.get("scorers");
-		let initSpanObj = null;
-		if (initSpan) {
-			const initContent = eventSequence(initSpan.children).map((e) => createTimelineEvent(e));
-			if (initContent.length > 0) initSpanObj = createTimelineSpan(initSpan.id, "init", "init", initContent);
-		}
-		const agentNode = solversSpan ? buildAgentFromSolversSpan(solversSpan) : null;
-		let scoringSpan = null;
-		if (scorersSpan) {
-			const scoringContent = eventSequence(scorersSpan.children).map((e) => createTimelineEvent(e));
-			if (scoringContent.length > 0) scoringSpan = createTimelineSpan(scorersSpan.id, "scoring", "scorers", scoringContent);
-		}
-		if (agentNode) {
-			agentNode.name = "main";
-			wrapUtilityEvents(agentNode);
-			classifyUtilityAgents(agentNode);
-			classifyBranches(agentNode);
-			relocateBranches(agentNode);
-			extractAgentResults(agentNode);
-			if (initSpanObj) agentNode.content = [initSpanObj, ...agentNode.content];
-			if (scoringSpan) agentNode.content.push(scoringSpan);
-			root = agentNode;
-		} else {
-			const rootContent = [];
-			if (initSpanObj) rootContent.push(initSpanObj);
-			if (scoringSpan) rootContent.push(scoringSpan);
-			if (rootContent.length > 0) root = createTimelineSpan("root", "main", null, rootContent);
-			else root = new TimelineSpan({
-				id: "root",
-				name: "main",
-				spanType: null
-			});
-		}
-	} else {
-		const agentRoot = buildAgentFromTree(tree);
-		if (agentRoot) {
-			wrapUtilityEvents(agentRoot);
-			classifyUtilityAgents(agentRoot);
-			classifyBranches(agentRoot);
-			relocateBranches(agentRoot);
-			extractAgentResults(agentRoot);
-			root = agentRoot;
-		} else root = new TimelineSpan({
-			id: "root",
-			name: "main",
-			spanType: null
-		});
-	}
-	return {
-		name: "Default",
-		description: "",
-		root
-	};
-}
-//#endregion
 //#region ../../packages/inspect-components/src/transcript/timeline/markers.ts
 var defaultMarkerConfig = {
 	kinds: ["compaction", "branch"],
@@ -125899,12 +126256,22 @@ var defaultMarkerConfig = {
 * Returns true if the event is an error event.
 *
 * An event is an error if:
-* - It's a ToolEvent with `.error !== null`
-* - It's a ModelEvent with `.error !== null` or `.output.error !== null`
+* - It's a ToolEvent with a non-null `.error`
+* - It's a ModelEvent with a non-null `.error`
+*
+* Noneable fields are stripped during serialization (`exclude_none=True`), so
+* `null`/missing both manifest as `undefined` at runtime — hence the `!= null`
+* check. See packages/inspect-common/src/types/index.ts.
+*
+* Note: `ModelOutput.error` (a soft-refusal/content-filter channel populated
+* by some providers without raising) is intentionally excluded — the
+* transcript's ModelEventView only renders `event.error`, so flagging on
+* `output.error` produces markers that navigate to a card with no visible
+* error.
 */
 function isErrorEvent(event) {
-	if (event.event === "tool") return event.error !== null;
-	if (event.event === "model") return event.error !== null || event.output.error !== null;
+	if (event.event === "tool") return event.error != null;
+	if (event.event === "model") return event.error != null;
 	return false;
 }
 /**
@@ -125922,7 +126289,7 @@ function errorTooltip(event) {
 		return `Error (${event.function}): ${msg}`;
 	}
 	if (event.event === "model") {
-		const msg = (typeof event.error === "string" ? event.error : null) ?? (typeof event.output.error === "string" ? event.output.error : null) ?? "Unknown error";
+		const msg = (typeof event.error === "string" ? event.error : null) ?? "Unknown error";
 		return `Error (${event.model}): ${msg}`;
 	}
 	return "Error";
@@ -126036,259 +126403,6 @@ function branchTooltip(branches) {
 */
 function formatCompactTokens(tokens) {
 	return `${formatTokenCount(tokens)} tokens`;
-}
-//#endregion
-//#region ../../packages/inspect-components/src/transcript/timeline/swimlaneRows.ts
-/**
-* Swimlane row computation for the timeline UI.
-*
-* Transforms a TimelineSpan's children into SwimlaneRow[] for rendering
-* as horizontal swimlane bars. Handles sequential, iterative (multiple spans),
-* and parallel (overlapping) span patterns.
-*/
-/** Compare rows/entries by start time, with end time as tiebreaker. */
-function compareByTime(a, b) {
-	return a.startTime.getTime() - b.startTime.getTime() || a.endTime.getTime() - b.endTime.getTime();
-}
-/** Compare TimelineSpans by start time, with end time as tiebreaker. */
-function compareSpansByTime(a, b) {
-	return a.startTime(false).getTime() - b.startTime(false).getTime() || a.endTime(false).getTime() - b.endTime(false).getTime();
-}
-function isSingleSpan(span) {
-	return "agent" in span;
-}
-/** Unwrap a RowSpan to a flat array of TimelineSpan agents. */
-function getAgents(span) {
-	return isSingleSpan(span) ? [span.agent] : span.agents;
-}
-/** Tolerance in milliseconds for considering two spans as overlapping. */
-var OVERLAP_TOLERANCE_MS = 100;
-/**
-* Assigns time-sorted spans to lanes using greedy bin-packing.
-*
-* Each lane contains non-overlapping spans. The number of lanes equals
-* the maximum parallelism level (minimum possible).
-* Input must be sorted by start time.
-*/
-function assignToLanes(sorted) {
-	if (sorted.length === 0) return [];
-	const lanes = [];
-	for (const span of sorted) {
-		const spanStart = span.startTime().getTime();
-		let assigned = false;
-		for (const lane of lanes) if (lane.endTime + OVERLAP_TOLERANCE_MS <= spanStart) {
-			lane.spans.push(span);
-			lane.endTime = span.endTime().getTime();
-			assigned = true;
-			break;
-		}
-		if (!assigned) lanes.push({
-			spans: [span],
-			endTime: span.endTime().getTime()
-		});
-	}
-	return lanes.map((l) => l.spans);
-}
-/**
-* Partitions time-sorted spans into clusters of overlapping spans.
-*
-* Uses a sweep-line: extends the current cluster while spans overlap its
-* time range, then starts a new cluster when a gap is found.
-* Input must be sorted by start time.
-*/
-function partitionIntoClusters(sorted) {
-	if (sorted.length === 0) return [];
-	const clusters = [];
-	let current = [sorted[0]];
-	let clusterEnd = sorted[0].endTime().getTime();
-	for (let i = 1; i < sorted.length; i++) {
-		const span = sorted[i];
-		if (span.startTime().getTime() < clusterEnd + OVERLAP_TOLERANCE_MS) {
-			current.push(span);
-			clusterEnd = Math.max(clusterEnd, span.endTime().getTime());
-		} else {
-			clusters.push(current);
-			current = [span];
-			clusterEnd = span.endTime().getTime();
-		}
-	}
-	clusters.push(current);
-	return clusters;
-}
-function buildParentRow(node) {
-	return {
-		key: node.name.toLowerCase(),
-		name: node.name,
-		depth: 0,
-		spans: [{ agent: node }],
-		totalTokens: node.totalTokens(false),
-		startTime: node.startTime(false),
-		endTime: node.endTime(false)
-	};
-}
-/**
-* Groups spans by name (case-insensitive), preserving the display name
-* from the first span encountered in each group.
-*
-* Returns entries in insertion order (first-seen order).
-*/
-function groupByName(spans) {
-	const map = /* @__PURE__ */ new Map();
-	for (const span of spans) {
-		const key = span.name.toLowerCase();
-		const existing = map.get(key);
-		if (existing) existing.spans.push(span);
-		else map.set(key, {
-			displayName: span.name,
-			spans: [span]
-		});
-	}
-	return Array.from(map.values()).map((g) => [g.displayName, g.spans]);
-}
-/**
-* Computes a fully expanded flat list of swimlane rows from the entire span tree.
-*
-* Unlike `computeSwimlaneRows` (which only shows direct children), this function
-* recursively walks all descendant spans in depth-first pre-order. Each row carries
-* a `depth` for indentation and a unique `key` for selection.
-*
-* Same-name non-overlapping spans (iterative) are collapsed onto a single row
-* with multiple bars. Same-name overlapping spans (parallel) are expanded into
-* separate numbered rows.
-*/
-function computeFlatSwimlaneRows(root, options) {
-	const includeUtility = options?.includeUtility ?? false;
-	const showBranches = options?.showBranches ?? false;
-	return [buildParentRow(root), ...flattenChildren([root], 0, root.name.toLowerCase(), includeUtility, showBranches)];
-}
-/**
-* Recursively flattens descendant spans into rows in depth-first pre-order.
-*
-* Accepts multiple parent nodes so that iterative spans at the same level
-* can have their children merged before recursing.
-*
-* For each name group, partitions into overlapping clusters:
-* - If no cluster has >1 span (all iterative/sequential) → one row, multiple bars
-* - If any cluster has >1 span (parallel) → lanes via bin-packing, reusing lanes
-*   for non-overlapping spans (number of lanes = max parallelism level)
-*/
-function flattenChildren(nodes, parentDepth, parentKey, includeUtility, showBranches, branchPrefix = "") {
-	const children = [];
-	for (const node of nodes) for (const item of node.content) if (item.type === "span" && (includeUtility || !item.utility)) children.push(item);
-	if (children.length === 0 && !showBranches) return [];
-	const groups = groupByName(children);
-	const depth = parentDepth + 1;
-	const entries = [];
-	for (const [displayName, spans] of groups) {
-		const sorted = [...spans].sort(compareSpansByTime);
-		const baseName = displayName.toLowerCase();
-		const hasParallel = partitionIntoClusters(sorted).some((c) => c.length > 1);
-		const groupStartTime = sorted[0].startTime(false);
-		if (!hasParallel) {
-			const rowSpans = sorted.map((s) => ({ agent: s }));
-			const first = sorted[0];
-			const endTime = sorted.reduce((latest, s) => s.endTime(false).getTime() > latest.getTime() ? s.endTime(false) : latest, first.endTime(false));
-			entries.push({
-				displayName,
-				key: `${parentKey}/${baseName}`,
-				spans: sorted,
-				rowSpans,
-				totalTokens: sorted.reduce((sum, s) => sum + s.totalTokens(false), 0),
-				startTime: first.startTime(false),
-				endTime,
-				groupStartTime,
-				laneIndex: -1
-			});
-		} else {
-			const lanes = assignToLanes(sorted);
-			if (lanes.length === 1) {
-				const laneSpans = lanes[0];
-				const rowSpans = laneSpans.map((s) => ({ agent: s }));
-				const first = laneSpans[0];
-				const endTime = laneSpans.reduce((latest, s) => s.endTime(false).getTime() > latest.getTime() ? s.endTime(false) : latest, first.endTime(false));
-				entries.push({
-					displayName,
-					key: `${parentKey}/${baseName}`,
-					spans: laneSpans,
-					rowSpans,
-					totalTokens: laneSpans.reduce((sum, s) => sum + s.totalTokens(false), 0),
-					startTime: first.startTime(false),
-					endTime,
-					groupStartTime,
-					laneIndex: -1
-				});
-			} else for (let i = 0; i < lanes.length; i++) {
-				const laneSpans = lanes[i];
-				const rowSpans = laneSpans.map((s) => ({ agent: s }));
-				const first = laneSpans[0];
-				const endTime = laneSpans.reduce((latest, s) => s.endTime(false).getTime() > latest.getTime() ? s.endTime(false) : latest, first.endTime(false));
-				entries.push({
-					displayName: `${displayName} ${i + 1}`,
-					key: `${parentKey}/${baseName}-${i + 1}`,
-					spans: laneSpans,
-					rowSpans,
-					totalTokens: laneSpans.reduce((sum, s) => sum + s.totalTokens(false), 0),
-					startTime: first.startTime(false),
-					endTime,
-					groupStartTime,
-					laneIndex: i
-				});
-			}
-		}
-	}
-	entries.sort((a, b) => a.groupStartTime.getTime() - b.groupStartTime.getTime() || a.laneIndex - b.laneIndex || compareByTime(a, b));
-	const result = [];
-	if (showBranches) for (const node of nodes) {
-		const forkPositions = /* @__PURE__ */ new Map();
-		for (const branch of node.branches) {
-			if (!branch.branchedFrom) continue;
-			for (let ci = 0; ci < node.content.length; ci++) {
-				const item = node.content[ci];
-				if (item.type === "event" && item.matchesMessageId(branch.branchedFrom)) {
-					forkPositions.set(branch.branchedFrom, ci);
-					break;
-				}
-			}
-		}
-		const sorted = node.branches.map((branch, origIndex) => ({
-			branch,
-			origIndex
-		})).sort((a, b) => {
-			const ai = a.branch.branchedFrom ? forkPositions.get(a.branch.branchedFrom) ?? -1 : -1;
-			return (b.branch.branchedFrom ? forkPositions.get(b.branch.branchedFrom) ?? -1 : -1) - ai;
-		});
-		for (let i = 0; i < sorted.length; i++) {
-			const { branch } = sorted[i];
-			const label = `${branchPrefix}${i + 1}`;
-			const branchSpan = createBranchSpan(branch, label);
-			const branchKey = `${parentKey}/branch-${branch.branchedFrom}-${i + 1}`;
-			result.push({
-				key: branchKey,
-				name: branchSpan.name,
-				depth,
-				spans: [{ agent: branchSpan }],
-				totalTokens: branchSpan.totalTokens(false),
-				startTime: branchSpan.startTime(false),
-				endTime: branchSpan.endTime(false),
-				branch: true,
-				branchedFrom: branch.branchedFrom ?? void 0
-			});
-			result.push(...flattenChildren([branchSpan], depth, branchKey, includeUtility, showBranches, `${label}.`));
-		}
-	}
-	for (const entry of entries) {
-		result.push({
-			key: entry.key,
-			name: entry.displayName,
-			depth,
-			spans: entry.rowSpans,
-			totalTokens: entry.totalTokens,
-			startTime: entry.startTime,
-			endTime: entry.endTime
-		});
-		result.push(...flattenChildren(entry.spans, depth, entry.key, includeUtility, showBranches));
-	}
-	return result;
 }
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/timeline/swimlaneLayout.ts
@@ -127281,7 +127395,7 @@ function collectRawEvents(spans, options) {
 			const regions = computeCompactionRegions(span.content);
 			if (regionIndex >= 0 && regionIndex < regions.length) content = regions[regionIndex];
 		}
-		collectFromContent(content, events, sourceSpans, agentSpanId, includeUtility, showBranches, span.branches.length > 0 ? span.branches : void 0, branchPrefix);
+		collectFromContent(content, events, sourceSpans, agentSpanId, includeUtility, showBranches, span.branches.length > 0 ? span.branches : void 0, branchPrefix, false);
 	} else collectFromContent(spans, events, sourceSpans, void 0, includeUtility, showBranches, void 0, branchPrefix);
 	return {
 		events,
@@ -127321,8 +127435,8 @@ function emitBranchSpan(branch, label, out, sourceSpans, parentSpanId) {
 	};
 	out.push(branchEnd);
 }
-function collectFromContent(content, out, sourceSpans, skipAgentSpanId, includeUtility = false, showBranches = false, branches, branchPrefix = "") {
-	const agentSpans = content.filter((item) => item.type === "span" && item.spanType === "agent");
+function collectFromContent(content, out, sourceSpans, skipAgentSpanId, includeUtility = false, showBranches = false, branches, branchPrefix = "", isRoot = true) {
+	const agentSpans = isRoot ? content.filter((item) => item.type === "span" && item.spanType === "agent") : [];
 	const inlineAgentId = agentSpans.length === 1 ? agentSpans[0]?.id : void 0;
 	const pendingToolCallIds = /* @__PURE__ */ new Set();
 	const branchByBranchedFrom = /* @__PURE__ */ new Map();
@@ -127374,7 +127488,7 @@ function collectFromContent(content, out, sourceSpans, skipAgentSpanId, includeU
 		if (item.spanType === "agent" && item.id !== inlineAgentId) {
 			sourceSpans.set(item.id, item);
 			if (item.agentResult && item.id.startsWith("agent-")) pendingToolCallIds.add(item.id.slice(6));
-		} else collectFromContent(item.content, out, sourceSpans, void 0, includeUtility, showBranches, item.branches.length > 0 ? item.branches : void 0);
+		} else collectFromContent(item.content, out, sourceSpans, void 0, includeUtility, showBranches, item.branches.length > 0 ? item.branches : void 0, "", false);
 		const endEvent = {
 			event: "span_end",
 			id: `${item.id}-end`,
@@ -128243,6 +128357,16 @@ function useActiveTimeline(timelines, props) {
 * Selection state is owned by the caller via `selected` / `onSelect` props,
 * so both apps can persist it however they like (URL params, Zustand, etc.).
 */
+/** URL search-param keys used as transcript scroll-target deep links. */
+var kDeepLinkParams = ["event", "message"];
+/** Removes the deep-link search params (`?event=`, `?message=`) from the
+*  given `URLSearchParams`. Hosts whose `onSelect` adapter writes to URL
+*  state should call this when `preserveDeepLink` is not set, so any
+*  stale deep-link target doesn't fight the new selection's scroll. */
+function clearDeepLinkParams(params) {
+	for (const key of kDeepLinkParams) params.delete(key);
+	return params;
+}
 /**
 * Timeline state hook.
 *
@@ -128271,8 +128395,8 @@ function useTimeline(timeline, options, props) {
 			if (selectedParam !== null) return selectedParam;
 			return rows[0]?.key ?? null;
 		}, [selectedParam, rows]),
-		select: (0, import_react.useCallback)((key) => {
-			onSelect?.(key);
+		select: (0, import_react.useCallback)((key, selectOptions) => {
+			onSelect?.(key, selectOptions);
 		}, [onSelect]),
 		clearSelection: (0, import_react.useCallback)(() => {
 			onSelect?.(null);
@@ -128288,27 +128412,28 @@ function useTimeline(timeline, options, props) {
 * so values persist in the store across unmounts. Settings are intentionally
 * global — they apply to all samples/timelines as shared user preferences
 * rather than per-sample state.
+*
+* `branchesPresent` shifts the *unset* default for `showBranches`: when the
+* user has never explicitly toggled it and the current sample contains
+* branches, branches are shown by default. An explicit user toggle (stored
+* value) always wins.
 */
 var kDefaultMarkerKinds = defaultMarkerConfig.kinds;
 var kDefaultMarkerDepth = defaultMarkerConfig.depth;
 var kDefaultIncludeUtility = false;
 var kDefaultShowBranches = false;
 var kDefaultForkRelative = false;
-function arraysEqual(a, b) {
-	if (a.length !== b.length) return false;
-	const set = new Set(a);
-	return b.every((v) => set.has(v));
-}
-function useTimelineConfig() {
-	const [storedKinds, setStoredKinds] = useProperty("timeline", "markerKinds");
-	const [storedDepth, setStoredDepth] = useProperty("timeline", "markerDepth");
-	const [storedUtility, setStoredUtility] = useProperty("timeline", "includeUtility");
-	const [storedShowBranches, setStoredShowBranches] = useProperty("timeline", "showBranches");
-	const [storedForkRelative, setStoredForkRelative] = useProperty("timeline", "forkRelative");
+function useTimelineConfig(options = {}) {
+	const { branchesPresent = false } = options;
+	const [storedKinds, setStoredKinds, removeStoredKinds] = useProperty("timeline", "markerKinds");
+	const [storedDepth, setStoredDepth, removeStoredDepth] = useProperty("timeline", "markerDepth");
+	const [storedUtility, setStoredUtility, removeStoredUtility] = useProperty("timeline", "includeUtility");
+	const [storedShowBranches, setStoredShowBranches, removeStoredShowBranches] = useProperty("timeline", "showBranches");
+	const [storedForkRelative, setStoredForkRelative, removeStoredForkRelative] = useProperty("timeline", "forkRelative");
 	const markerKinds = storedKinds ?? kDefaultMarkerKinds;
 	const markerDepth = storedDepth ?? kDefaultMarkerDepth;
 	const includeUtility = storedUtility ?? kDefaultIncludeUtility;
-	const showBranches = storedShowBranches ?? kDefaultShowBranches;
+	const showBranches = storedShowBranches ?? (branchesPresent || kDefaultShowBranches);
 	const forkRelative = storedForkRelative ?? (showBranches || kDefaultForkRelative);
 	const markerConfig = (0, import_react.useMemo)(() => ({
 		kinds: markerKinds,
@@ -128323,7 +128448,7 @@ function useTimelineConfig() {
 		showBranches,
 		forkRelative
 	]);
-	const isDefault = arraysEqual(markerKinds, kDefaultMarkerKinds) && markerDepth === kDefaultMarkerDepth && includeUtility === kDefaultIncludeUtility && showBranches === kDefaultShowBranches && forkRelative === kDefaultForkRelative;
+	const isDefault = storedKinds === void 0 && storedDepth === void 0 && storedUtility === void 0 && storedShowBranches === void 0 && storedForkRelative === void 0;
 	return {
 		markerConfig,
 		agentConfig,
@@ -128342,17 +128467,17 @@ function useTimelineConfig() {
 			setStoredKinds(current.includes(kind) ? current.filter((k) => k !== kind) : [...current, kind]);
 		}, [storedKinds, setStoredKinds]),
 		resetToDefaults: (0, import_react.useCallback)(() => {
-			setStoredKinds(kDefaultMarkerKinds);
-			setStoredDepth(kDefaultMarkerDepth);
-			setStoredUtility(kDefaultIncludeUtility);
-			setStoredShowBranches(kDefaultShowBranches);
-			setStoredForkRelative(kDefaultForkRelative);
+			removeStoredKinds();
+			removeStoredDepth();
+			removeStoredUtility();
+			removeStoredShowBranches();
+			removeStoredForkRelative();
 		}, [
-			setStoredKinds,
-			setStoredDepth,
-			setStoredUtility,
-			setStoredShowBranches,
-			setStoredForkRelative
+			removeStoredKinds,
+			removeStoredDepth,
+			removeStoredUtility,
+			removeStoredShowBranches,
+			removeStoredForkRelative
 		]),
 		isDefault
 	};
@@ -128772,6 +128897,11 @@ var TranscriptLayout_module_default = {
 	sidebarHeaderTitle: "_sidebarHeaderTitle_130zy_155",
 	sidebarHeaderClose: "_sidebarHeaderClose_130zy_166"
 };
+var ApprovalEventView_module_default = {
+	headline: "_headline_1l22a_1",
+	inlineExplanation: "_inlineExplanation_1l22a_6",
+	rejected: "_rejected_1l22a_10"
+};
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/ApprovalEventView.tsx
 /**
@@ -128779,11 +128909,34 @@ var TranscriptLayout_module_default = {
 */
 var ApprovalEventView = ({ eventNode, className }) => {
 	const event = eventNode.event;
+	const decision = event.decision;
+	const explanation = event.explanation?.trim() ?? "";
+	const approver = event.approver;
+	const alarming = decision === "reject" || decision === "terminate";
+	const explanationIsBlock = explanation.includes("\n");
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventRow, {
-		title: decisionLabel(event.decision),
-		icon: decisionIcon(event.decision),
+		title: alarming ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+			className: ApprovalEventView_module_default.rejected,
+			children: decisionLabel(decision)
+		}) : decisionLabel(decision),
+		icon: decisionIcon(decision),
+		iconClassName: alarming ? ApprovalEventView_module_default.rejected : void 0,
 		className,
-		children: event.explanation || ""
+		below: explanation && explanationIsBlock ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownDiv, { markdown: explanation }) : void 0,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+			className: ApprovalEventView_module_default.headline,
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+				className: clsx("text-style-secondary"),
+				children: [
+					"(",
+					approver,
+					")"
+				]
+			}), explanation && !explanationIsBlock ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: ApprovalEventView_module_default.inlineExplanation,
+				children: explanation
+			}) : null]
+		})
 	});
 };
 var decisionLabel = (decision) => {
@@ -130172,32 +130325,29 @@ var None = () => {
 	});
 };
 var ToolEventView_module_default = {
-	summary: "_summary_1qsnv_1",
-	approval: "_approval_1qsnv_6",
-	progress: "_progress_1qsnv_12"
+	summary: "_summary_1gtzx_1",
+	approvalWrap: "_approvalWrap_1gtzx_6",
+	approval: "_approval_1gtzx_6",
+	progress: "_progress_1gtzx_16"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/ToolEventView.tsx
 var ToolEventView = ({ eventNode, childNodes, className, context, eventCallbacks }) => {
 	const event = eventNode.event;
-	const { name, input, description, functionCall, contentType } = (0, import_react.useMemo)(() => resolveToolInput(event.function, event.arguments), [event.function, event.arguments]);
+	const { name, input, description, functionCall, contentType, title } = (0, import_react.useMemo)(() => resolveToolInput(event.function, event.arguments), [event.function, event.arguments]);
 	const resolvedView = (0, import_react.useMemo)(() => event.view ? substituteToolCallContent(event.view, event.arguments) : void 0, [event.view, event.arguments]);
-	const { approvalNode, lastModelNode } = (0, import_react.useMemo)(() => {
-		return {
-			approvalNode: childNodes.find((e) => {
-				return e.event.event === "approval";
-			}),
-			lastModelNode: childNodes.findLast((e) => {
-				return e.event.event === "model";
-			})
-		};
+	const approvalNode = context?.toolApprovals?.get(event.id);
+	const lastModelNode = (0, import_react.useMemo)(() => {
+		return childNodes.findLast((e) => {
+			return e.event.event === "model";
+		});
 	}, [event.events]);
-	const displayName = resolvedView?.title || name;
-	const title = displayName ? `Tool: ${displayName}` : "Tool";
+	const displayName = resolvedView?.title || title || name;
+	const panelTitle = displayName ? `Tool: ${displayName}` : "Tool";
 	const turnLabel = context?.turnInfo ? `turn ${context.turnInfo.turnNumber}/${context.turnInfo.totalTurns}` : void 0;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventPanel, {
 		eventNodeId: eventNode.id,
-		title: formatTitle(title, void 0, event.working_time),
+		title: formatTitle(panelTitle, void 0, event.working_time),
 		className,
 		subTitle: event.timestamp ? formatTiming(event.timestamp, event.working_start) : void 0,
 		icon: TranscriptIcons.solvers.use_tools,
@@ -130226,9 +130376,12 @@ var ToolEventView = ({ eventNode, childNodes, className, context, eventCallbacks
 					messages: lastModelNode.event.output.choices.map((m) => m.message),
 					tools: { callStyle: "compact" }
 				}) : void 0,
-				approvalNode ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ApprovalEventView, {
-					eventNode: approvalNode,
-					className: ToolEventView_module_default.approval
+				approvalNode ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: ToolEventView_module_default.approvalWrap,
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ApprovalEventView, {
+						eventNode: approvalNode,
+						className: ToolEventView_module_default.approval
+					})
 				}) : "",
 				event.pending ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					className: clsx(ToolEventView_module_default.progress),
@@ -130242,11 +130395,12 @@ var ToolEventView = ({ eventNode, childNodes, className, context, eventCallbacks
 	});
 };
 var TranscriptVirtualListComponent_module_default = {
-	node: "_node_1nuy2_1",
-	attached: "_attached_1nuy2_5",
-	attachedParent: "_attachedParent_1nuy2_9",
-	attachedChild: "_attachedChild_1nuy2_16",
-	last: "_last_1nuy2_21"
+	node: "_node_miohh_1",
+	attached: "_attached_miohh_5",
+	attachedParent: "_attachedParent_miohh_9",
+	attachedChild: "_attachedChild_miohh_16",
+	depthRoot: "_depthRoot_miohh_21",
+	last: "_last_miohh_27"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/TranscriptVirtualListComponent.tsx
@@ -130254,23 +130408,15 @@ var TranscriptVirtualListComponent_module_default = {
 * Renders the Transcript component.
 */
 var TranscriptVirtualListComponent = ({ id, listHandle, eventNodes, scrollRef, running, initialEventId, offsetTop, className, turnMap, disableVirtualization, onNativeFindChanged, onAutoCollapse, renderAgentCard, eventCallbacks, eventNodeContext }) => {
-	const useVirtualization = !disableVirtualization && (running || eventNodes.length > 100);
+	const useVirtualization = !disableVirtualization;
 	(0, import_react.useEffect)(() => {
 		onNativeFindChanged?.(!useVirtualization);
 	}, [onNativeFindChanged, useVirtualization]);
-	const [initialEventIndex, setInitialEventIndex] = (0, import_react.useState)(() => {
+	const [initialEventIndex] = (0, import_react.useState)(() => {
 		if (initialEventId === null || initialEventId === void 0) return void 0;
 		const idx = eventNodes.findIndex((e) => e.id === initialEventId);
 		return idx === -1 ? void 0 : idx;
 	});
-	(0, import_react.useEffect)(() => {
-		if (initialEventId === null || initialEventId === void 0) {
-			setInitialEventIndex(void 0);
-			return;
-		}
-		const idx = eventNodes.findIndex((e) => e.id === initialEventId);
-		setInitialEventIndex(idx === -1 ? void 0 : idx);
-	}, [initialEventId]);
 	const hasToolEventsAtCurrentDepth = (0, import_react.useCallback)((startIndex) => {
 		const startNode = eventNodes[startIndex];
 		if (!startNode) return false;
@@ -130315,6 +130461,7 @@ var TranscriptVirtualListComponent = ({ id, listHandle, eventNodes, scrollRef, r
 		const attachedClass = attached ? TranscriptVirtualListComponent_module_default.attached : void 0;
 		const attachedChildClass = attached ? TranscriptVirtualListComponent_module_default.attachedChild : void 0;
 		const attachedParentClass = attachedParent ? TranscriptVirtualListComponent_module_default.attachedParent : void 0;
+		const depthRootClass = item.depth === 0 ? TranscriptVirtualListComponent_module_default.depthRoot : void 0;
 		const context = contextMap.get(item.id);
 		const isLast = index === eventNodes.length - 1;
 		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -130328,7 +130475,7 @@ var TranscriptVirtualListComponent = ({ id, listHandle, eventNodes, scrollRef, r
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedEventNode, {
 				node: item,
 				next,
-				className: clsx(attachedParentClass, attachedChildClass),
+				className: clsx(attachedParentClass, attachedChildClass, depthRootClass),
 				context,
 				onAutoCollapse,
 				renderAgentCard,
@@ -130480,7 +130627,91 @@ var RenderedEventNode = (0, import_react.memo)(RenderedEventNodeInner);
 * collapse state, turn-map computation, keyboard navigation, and imperative
 * scroll-to-event/index. Apps provide collapse state via callback props.
 */
-var TranscriptViewNodes = (0, import_react.forwardRef)(function TranscriptViewNodes({ id, eventNodes, defaultCollapsedIds, running, scrollRef, initialEventId, offsetTop = 10, className, renderAgentCard, turnMap, getEventUrl, linkingEnabled, collapsedTranscript, collapsedOutline, onCollapseTranscript, eventNodeContext }, ref) {
+/** Pixels of breathing room below the sticky bar where the target lands. */
+var kPaddingBelowSticky = 20;
+/** Settle iteration budget — caps how long we keep adjusting scroll while
+*  Virtuoso re-measures items after a mount. ~1.5s at 60fps. */
+var kSettleAttemptLimit = 90;
+/** Frames the computed scroll target must hold steady before we stop. */
+var kSettleStableFrames = 8;
+/** Sticky-bar candidates must span at least this fraction of the container's
+*  width — filters out the (also-sticky) outline / right-pane side panels. */
+var kStickyMinWidthRatio = .4;
+var escapeAttr = (id) => typeof CSS !== "undefined" && CSS.escape ? CSS.escape(id) : id.replace(/"/g, "\\\"");
+/** Worst-case bottom edge of the top-pinned sticky bar (relative to the
+*  scroll container's top), based on each sticky element's CSS `top` +
+*  measured height. Independent of current scroll state, so iterative
+*  re-scrolling won't oscillate as sticky pins toggle on/off. */
+function measureStickyBottom(container, fallback) {
+	const minWidth = container.getBoundingClientRect().width * kStickyMinWidthRatio;
+	let bottom = fallback;
+	for (const el of container.querySelectorAll("*")) {
+		const style = getComputedStyle(el);
+		if (style.position !== "sticky") continue;
+		const rect = el.getBoundingClientRect();
+		if (rect.width < minWidth || rect.height === 0) continue;
+		const stuckBottom = (parseFloat(style.top) || 0) + rect.height;
+		if (stuckBottom > bottom) bottom = stuckBottom;
+	}
+	return bottom;
+}
+/**
+* Scrolls the given Virtuoso list so the element matching `targetSelector`
+* lands `paddingBelowSticky` below the (worst-case) top sticky bar.
+*
+* Stage 1: two-pass `scrollToIndex` via rAF so the target's row mounts and
+* the sticky swimlane activates with the row clearing it.
+* Stage 2: re-scroll the container based on the target element's actual
+* DOM position, retrying for several frames while Virtuoso re-measures
+* items (markdown / code-block layout shifts the target around).
+*
+* Returns a cleanup that cancels any in-flight rAF.
+*/
+function scrollToEventTarget({ listHandle, index, container, targetSelector, getStickyOffset, paddingBelowSticky }) {
+	const scrollListToIndex = () => {
+		const offset = getStickyOffset();
+		listHandle?.scrollToIndex({
+			index,
+			align: "start",
+			behavior: "auto",
+			offset: offset ? -offset : void 0
+		});
+	};
+	let lastTarget = null;
+	let stableFrames = 0;
+	let attempt = 0;
+	const settle = () => {
+		attempt++;
+		const el = container.querySelector(targetSelector);
+		if (el) {
+			const containerRect = container.getBoundingClientRect();
+			const elRect = el.getBoundingClientRect();
+			const stickyBottom = measureStickyBottom(container, getStickyOffset());
+			const target = container.scrollTop + (elRect.top - containerRect.top) - (stickyBottom + paddingBelowSticky);
+			if (target !== lastTarget) {
+				lastTarget = target;
+				stableFrames = 0;
+				container.scrollTo({
+					top: target,
+					behavior: "auto"
+				});
+			} else stableFrames++;
+		}
+		if (stableFrames < kSettleStableFrames && attempt < kSettleAttemptLimit) frame = requestAnimationFrame(settle);
+		else frame = null;
+	};
+	let frame = requestAnimationFrame(() => {
+		scrollListToIndex();
+		frame = requestAnimationFrame(() => {
+			scrollListToIndex();
+			frame = requestAnimationFrame(settle);
+		});
+	});
+	return () => {
+		if (frame !== null) cancelAnimationFrame(frame);
+	};
+}
+var TranscriptViewNodes = (0, import_react.forwardRef)(function TranscriptViewNodes({ id, eventNodes, defaultCollapsedIds, running, scrollRef, initialEventId, initialMessageId, offsetTop = 10, className, renderAgentCard, turnMap, getEventUrl, linkingEnabled, collapsedTranscript, collapsedOutline, onCollapseTranscript, eventNodeContext }, ref) {
 	const listHandle = (0, import_react.useRef)(null);
 	const getCollapsed = (0, import_react.useCallback)((nodeId) => {
 		return (collapsedTranscript || defaultCollapsedIds)[nodeId] === true;
@@ -130496,13 +130727,48 @@ var TranscriptViewNodes = (0, import_react.forwardRef)(function TranscriptViewNo
 		getEventUrl,
 		linkingEnabled
 	]);
+	const { toolApprovals, hiddenApprovalIds } = (0, import_react.useMemo)(() => {
+		const toolIds = /* @__PURE__ */ new Set();
+		const walkTools = (nodes) => {
+			for (const n of nodes) {
+				if (n.event.event === "tool") toolIds.add(n.event.id);
+				if (n.children.length) walkTools(n.children);
+			}
+		};
+		walkTools(eventNodes);
+		const approvals = /* @__PURE__ */ new Map();
+		const hidden = /* @__PURE__ */ new Set();
+		const walkApprovals = (nodes) => {
+			for (const n of nodes) {
+				if (n.event.event === "approval") {
+					if (n.event.approver === "auto" && n.event.decision === "approve") hidden.add(n.id);
+					else if (toolIds.has(n.event.call.id)) {
+						approvals.set(n.event.call.id, n);
+						hidden.add(n.id);
+					}
+				}
+				if (n.children.length) walkApprovals(n.children);
+			}
+		};
+		walkApprovals(eventNodes);
+		return {
+			toolApprovals: approvals,
+			hiddenApprovalIds: hidden
+		};
+	}, [eventNodes]);
 	const flattenedNodes = (0, import_react.useMemo)(() => {
-		return flatTree(eventNodes, collapsedTranscript || defaultCollapsedIds);
+		const all = flatTree(eventNodes, collapsedTranscript || defaultCollapsedIds);
+		return hiddenApprovalIds.size === 0 ? all : all.filter((n) => !hiddenApprovalIds.has(n.id));
 	}, [
 		eventNodes,
 		collapsedTranscript,
-		defaultCollapsedIds
+		defaultCollapsedIds,
+		hiddenApprovalIds
 	]);
+	const mergedEventNodeContext = (0, import_react.useMemo)(() => ({
+		...eventNodeContext,
+		toolApprovals
+	}), [eventNodeContext, toolApprovals]);
 	const computedTurnMap = (0, import_react.useMemo)(() => {
 		if (turnMap) return turnMap;
 		return computeTurnMap(flatTree(eventNodes, collapsedOutline || defaultCollapsedIds, [
@@ -130531,7 +130797,7 @@ var TranscriptViewNodes = (0, import_react.forwardRef)(function TranscriptViewNo
 			behavior: "auto",
 			offset: offsetTop ? -offsetTop : void 0
 		});
-		else (scrollRef?.current?.querySelector(`[id="${eventId}"]`))?.scrollIntoView({
+		else (scrollRef?.current?.querySelector(`[id="${escapeAttr(eventId)}"]`))?.scrollIntoView({
 			block: "start",
 			behavior: "auto"
 		});
@@ -130552,6 +130818,38 @@ var TranscriptViewNodes = (0, import_react.forwardRef)(function TranscriptViewNo
 		scrollToEvent,
 		scrollToIndex
 	}), [scrollToEvent, scrollToIndex]);
+	const lastScrolledKeyRef = (0, import_react.useRef)(null);
+	const offsetTopRef = (0, import_react.useRef)(offsetTop);
+	(0, import_react.useEffect)(() => {
+		offsetTopRef.current = offsetTop;
+	}, [offsetTop]);
+	(0, import_react.useEffect)(() => {
+		if (!initialEventId) {
+			lastScrolledKeyRef.current = null;
+			return;
+		}
+		const targetKey = `${initialEventId}:${initialMessageId ?? ""}`;
+		if (lastScrolledKeyRef.current === targetKey) return;
+		const idx = flattenedNodes.findIndex((n) => n.id === initialEventId);
+		if (idx === -1) return;
+		const container = scrollRef?.current;
+		if (!container) return;
+		lastScrolledKeyRef.current = targetKey;
+		const targetSelector = initialMessageId ? `[data-message-id="${escapeAttr(initialMessageId)}"]` : `[id="${escapeAttr(initialEventId)}"]`;
+		return scrollToEventTarget({
+			listHandle: listHandle.current,
+			index: idx,
+			container,
+			targetSelector,
+			getStickyOffset: () => offsetTopRef.current ?? 0,
+			paddingBelowSticky: kPaddingBelowSticky
+		});
+	}, [
+		initialEventId,
+		initialMessageId,
+		flattenedNodes,
+		scrollRef
+	]);
 	useListKeyboardNavigation({
 		listHandle,
 		scrollRef,
@@ -130573,7 +130871,7 @@ var TranscriptViewNodes = (0, import_react.forwardRef)(function TranscriptViewNo
 				renderAgentCard,
 				turnMap: computedTurnMap,
 				eventCallbacks,
-				eventNodeContext
+				eventNodeContext: mergedEventNodeContext
 			})
 		})
 	});
@@ -130606,7 +130904,8 @@ var collectAllCollapsibleIds = (nodes) => {
 	return result;
 };
 var TranscriptLayout = ({ events, running = false, scrollRef, offsetTop = 0, timelineSelection, activeTimeline, serverTimelines, markerConfig: markerConfigOverride, agentConfig: agentConfigOverride, showSwimlanes: showSwimlanesOption = "auto", onMarkerNavigate, onScrollToTop, headroomHidden, onHeadroomResetAnchor, listId, initialEventId, initialMessageId, eventsListRef, getEventUrl, linkingEnabled, bulkCollapse, collapseState, outline, outlineScrollRef, rightPane, rightPaneScrollRef, eventNodeContext, emptyText = "No events match the current filter", className }) => {
-	const timelineConfig = useTimelineConfig();
+	const timelinesForBranchDetection = useTimelinesArray(events, serverTimelines);
+	const timelineConfig = useTimelineConfig({ branchesPresent: (0, import_react.useMemo)(() => timelinesForBranchDetection.some((tl) => spanHasBranches(tl.root)), [timelinesForBranchDetection]) });
 	const { timeline: timelineData, state: timelineState, layouts: timelineLayouts, rootTimeMapping, selectedEvents, sourceSpans, minimapSelection, hasTimeline, timelines, activeTimelineIndex, setActiveTimeline, regionCounts, branchScrollTarget, highlightedKeys, selectedRowName } = useTranscriptTimeline({
 		events,
 		markerConfig: markerConfigOverride ?? timelineConfig.markerConfig,
@@ -130635,7 +130934,8 @@ var TranscriptLayout = ({ events, running = false, scrollRef, offsetTop = 0, tim
 	const { eventNodes, defaultCollapsedIds } = useEventNodes(showSwimlanes ? selectedEvents : events, running, showSwimlanes ? sourceSpans : void 0);
 	const { stickySwimLaneHeight, isSwimLaneSticky, swimLaneStickyContentRef, handleSwimLaneStickyChange } = useStickySwimLaneHeight();
 	const effectiveOffsetTop = offsetTop + stickySwimLaneHeight;
-	const { effectiveListId } = useListPositionManager(listId, timelineState.selected, scrollRef);
+	const hasScrollTarget = !!(initialEventId || initialMessageId);
+	const { effectiveListId } = useListPositionManager(listId, timelineState.selected, scrollRef, hasScrollTarget);
 	const [scrubberProgress, scrubTo] = useScrubberProgress(scrollRef);
 	const handleScrub = (0, import_react.useCallback)((progress) => {
 		onHeadroomResetAnchor?.(true);
@@ -130690,7 +130990,9 @@ var TranscriptLayout = ({ events, running = false, scrollRef, offsetTop = 0, tim
 	]);
 	const resolvedRoot = (0, import_react.useMemo)(() => {
 		if (initialEventId || !initialMessageId || resolvedLocal) return void 0;
-		return resolveMessageToEvent(initialMessageId, timelineData.root);
+		const main = resolveMessageToEvent(initialMessageId, timelineData.root);
+		if (main) return main;
+		return resolveMessageInBranches(initialMessageId, timelineData.root);
 	}, [
 		initialEventId,
 		initialMessageId,
@@ -130698,19 +131000,26 @@ var TranscriptLayout = ({ events, running = false, scrollRef, offsetTop = 0, tim
 		timelineData.root
 	]);
 	const resolved = resolvedLocal ?? resolvedRoot;
+	const prevMessageIdRef = (0, import_react.useRef)(void 0);
 	(0, import_react.useEffect)(() => {
+		if (prevMessageIdRef.current === initialMessageId) return;
+		prevMessageIdRef.current = initialMessageId;
 		if (!resolvedRoot) return;
-		if (resolvedRoot.agentSpanId) selectBySpanId(resolvedRoot.agentSpanId);
-		else if (timelineState.selected) timelineState.clearSelection();
+		let targetKey = null;
+		if (resolvedRoot.branchRowKey) targetKey = resolvedRoot.branchRowKey;
+		else if (resolvedRoot.agentSpanId) targetKey = spanSelectKeys.get(resolvedRoot.agentSpanId)?.key ?? null;
+		if (timelineState.selected === targetKey) return;
+		timelineState.select(targetKey, { preserveDeepLink: true });
 	}, [
+		initialMessageId,
 		resolvedRoot,
-		selectBySpanId,
+		spanSelectKeys,
 		timelineState
 	]);
 	const effectiveInitialEventId = initialEventId ?? resolved?.eventId ?? branchScrollTarget ?? null;
 	(0, import_react.useEffect)(() => {
-		if (branchScrollTarget) onHeadroomResetAnchor?.(true);
-	}, [branchScrollTarget, onHeadroomResetAnchor]);
+		if (effectiveInitialEventId) onHeadroomResetAnchor?.(true);
+	}, [effectiveInitialEventId, onHeadroomResetAnchor]);
 	const onSetTranscriptCollapsed = collapseState?.onSetTranscriptCollapsed;
 	(0, import_react.useEffect)(() => {
 		if (events.length <= 0 || !bulkCollapse || !onSetTranscriptCollapsed) return;
@@ -130951,6 +131260,7 @@ var TranscriptLayout = ({ events, running = false, scrollRef, offsetTop = 0, tim
 						defaultCollapsedIds,
 						running,
 						initialEventId: effectiveInitialEventId,
+						initialMessageId,
 						offsetTop: effectiveOffsetTop,
 						className: TranscriptLayout_module_default.eventsList,
 						scrollRef,
@@ -134391,38 +134701,6 @@ function buildScanReferencePreviews(events) {
 }
 //#endregion
 //#region src/app/samples/scans/scanReferences.ts
-/**
-* Walk a list of events to find the event that contains a given message id.
-*
-* Scanner message references can point to messages that live inside a
-* ModelEvent's input/output (sub-agent conversations) rather than in the
-* sample's top-level `messages` list. The transcript renders events, not the
-* flat message list, so every reference — message or event — ultimately
-* navigates to an event uuid.
-*
-* Priorities (mirror of inspect-components' resolveMessageToEvent):
-*   1. ModelEvent.output[*].message.id
-*   2. ToolEvent.message_id
-*   3. ModelEvent.input[*].id
-*/
-function findEventForMessage(messageId, events) {
-	if (!events) return void 0;
-	let inputMatch;
-	let toolMatch;
-	for (const e of events) if (e.event === "model") {
-		if (!e.uuid) continue;
-		for (const choice of e.output?.choices ?? []) if (choice.message?.id === messageId) return e.uuid;
-		if (!inputMatch) {
-			for (const msg of e.input ?? []) if (msg.id === messageId) {
-				inputMatch = e.uuid;
-				break;
-			}
-		}
-	} else if (e.event === "tool") {
-		if (!toolMatch && e.uuid && e.message_id === messageId) toolMatch = e.uuid;
-	}
-	return toolMatch ?? inputMatch;
-}
 function buildScoreMarkdownRefs(metadata, makeUrl, previewTable) {
 	return readScannerReferences(metadata).map((ref) => ({
 		id: ref.id,
@@ -134438,19 +134716,16 @@ function buildScoreMarkdownRefs(metadata, makeUrl, previewTable) {
 * so the score-rendering components don't have to know about navigation.
 */
 function useMakeCiteUrl(opts) {
-	const { events, sampleId, sampleEpoch } = opts;
+	const { sampleId, sampleEpoch } = opts;
 	const builder = useSampleUrlBuilder();
 	const { logPath: urlLogPath, id: urlSampleId, epoch: urlEpoch } = useLogOrSampleRouteParams();
 	return (0, import_react.useCallback)((id, type) => {
 		if (!urlLogPath) return void 0;
 		const effectiveSampleId = sampleId ?? urlSampleId;
 		const effectiveEpoch = sampleEpoch ?? urlEpoch;
-		const eventId = type === "event" ? id : findEventForMessage(id, events);
-		if (!eventId) return void 0;
-		const path = sampleEventUrl(builder, eventId, urlLogPath, effectiveSampleId, effectiveEpoch);
+		const path = type === "event" ? sampleEventUrl(builder, id, urlLogPath, effectiveSampleId, effectiveEpoch) : sampleMessageUrl(builder, id, urlLogPath, effectiveSampleId, effectiveEpoch, kSampleTranscriptTabId);
 		return path ? `#${path}` : void 0;
 	}, [
-		events,
 		sampleId,
 		sampleEpoch,
 		builder,
@@ -134508,7 +134783,7 @@ var SampleScansSidebar = ({ scores, events, makeCiteUrl, selected, onSelectedCha
 * when the sample provides timeline data.
 */
 var TranscriptPanel = (0, import_react.memo)((props) => {
-	const { id, scrollRef, events, running, initialEventId, offsetTop, timelines: serverTimelines, scans: allScores, sampleId, sampleEpoch } = props;
+	const { id, scrollRef, events, running, initialEventId, initialMessageId, offsetTop, timelines: serverTimelines, scans: allScores, sampleId, sampleEpoch } = props;
 	const scores = (0, import_react.useMemo)(() => {
 		if (!allScores) return null;
 		const filtered = {};
@@ -134516,7 +134791,6 @@ var TranscriptPanel = (0, import_react.memo)((props) => {
 		return filtered;
 	}, [allScores]);
 	const makeCiteUrl = useMakeCiteUrl({
-		events,
 		sampleId,
 		sampleEpoch
 	});
@@ -134528,9 +134802,20 @@ var TranscriptPanel = (0, import_react.memo)((props) => {
 		});
 	}, [events, filteredEventTypes]);
 	const timelineSelected = useStore((state) => state.sample.timelineSelected);
-	const setTimelineSelected = useStore((state) => state.sampleActions.setTimelineSelected);
+	const setTimelineSelectedStore = useStore((state) => state.sampleActions.setTimelineSelected);
 	const activeTimelineIndex = useStore((state) => state.sample.activeTimelineIndex);
 	const setActiveTimelineIndex = useStore((state) => state.sampleActions.setActiveTimelineIndex);
+	const [, setSearchParams] = useSearchParams();
+	const setTimelineSelected = (0, import_react.useCallback)((key, options) => {
+		setTimelineSelectedStore(key);
+		if (options?.preserveDeepLink) return;
+		scrollRef.current?.scrollTo({ top: 0 });
+		setSearchParams((prev) => clearDeepLinkParams(new URLSearchParams(prev)), { replace: true });
+	}, [
+		setTimelineSelectedStore,
+		setSearchParams,
+		scrollRef
+	]);
 	const timelineSelection = (0, import_react.useMemo)(() => ({
 		selected: timelineSelected,
 		onSelect: setTimelineSelected
@@ -134645,9 +134930,24 @@ var TranscriptPanel = (0, import_react.memo)((props) => {
 	]);
 	const renderLink = (0, import_react.useCallback)((url, children) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
 		to: url,
+		replace: true,
 		children
 	}), []);
 	const navigate = useNavigate();
+	const onMarkerNavigate = (0, import_react.useCallback)((eventId, selectedKey) => {
+		const url = getEventUrl(eventId);
+		if (!url) return;
+		if (selectedKey) setTimelineSelected(selectedKey);
+		navigate(url, { replace: true });
+	}, [
+		getEventUrl,
+		navigate,
+		setTimelineSelected
+	]);
+	const eventsListRef = (0, import_react.useRef)(null);
+	const onOutlineNavigate = (0, import_react.useCallback)((eventId) => {
+		eventsListRef.current?.scrollToEvent(eventId);
+	}, []);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptLayout, {
 		events: filteredEvents,
 		running,
@@ -134657,25 +134957,18 @@ var TranscriptPanel = (0, import_react.memo)((props) => {
 		activeTimeline,
 		serverTimelines,
 		showSwimlanes: "auto",
-		onMarkerNavigate: (0, import_react.useCallback)((eventId, selectedKey) => {
-			const url = getEventUrl(eventId);
-			if (!url) return;
-			if (selectedKey) setTimelineSelected(selectedKey);
-			navigate(url);
-		}, [
-			getEventUrl,
-			navigate,
-			setTimelineSelected
-		]),
+		onMarkerNavigate,
 		headroomHidden,
 		onHeadroomResetAnchor,
 		eventNodeContext,
 		listId: id,
 		initialEventId,
+		initialMessageId,
 		getEventUrl,
 		linkingEnabled: true,
 		bulkCollapse,
 		collapseState,
+		eventsListRef,
 		outlineScrollRef,
 		rightPaneScrollRef,
 		outline: {
@@ -134684,6 +134977,7 @@ var TranscriptPanel = (0, import_react.memo)((props) => {
 			toggleIcon: ApplicationIcons.sidebar,
 			toggleTitle: outlineCollapsed ? "Show transcript outline" : "Hide transcript outline",
 			renderLink,
+			onNavigateToEvent: onOutlineNavigate,
 			selectedId: selectedOutlineId,
 			setSelectedId: setSelectedOutlineId
 		},
@@ -134984,7 +135278,8 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 							events: sampleEvents,
 							timelines: sample?.timelines ?? void 0,
 							scans: sample?.scores ?? void 0,
-							initialEventId: sampleDetailNavigation.event
+							initialEventId: sampleDetailNavigation.event,
+							initialMessageId: sampleDetailNavigation.message
 						}, `${baseId}-transcript-display-${id}`)]
 					}, kSampleTranscriptTabId),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabPanel, {
@@ -164386,6 +164681,7 @@ var SampleDetailView = () => {
 };
 //#endregion
 //#region src/app/samples-panel/samples-grid/hooks.tsx
+var EmptyCell = () => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: "-" });
 var useSampleColumns = (logDetails) => {
 	const optionalColumnsHaveAnyData = (0, import_react.useMemo)(() => {
 		let error = false;
@@ -164524,6 +164820,42 @@ var useSampleColumns = (logDetails) => {
 				cellStyle: {
 					overflow: "hidden",
 					textOverflow: "ellipsis"
+				}
+			},
+			{
+				field: "tokens",
+				headerName: "Tokens",
+				initialWidth: 100,
+				minWidth: 60,
+				maxWidth: 140,
+				sortable: true,
+				filter: "agNumberColumnFilter",
+				resizable: true,
+				cellRenderer: (params) => {
+					if (params.value === void 0 || params.value === null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: formatNumber$1(params.value) });
+				}
+			},
+			{
+				field: "duration",
+				headerName: "Duration",
+				initialWidth: 120,
+				minWidth: 70,
+				maxWidth: 160,
+				sortable: true,
+				filter: "agNumberColumnFilter",
+				resizable: true,
+				valueFormatter: (params) => {
+					if (params.value === void 0 || params.value === null) return "";
+					return formatTime(params.value);
+				},
+				cellRenderer: (params) => {
+					if (params.value === void 0 || params.value === null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
+					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: formatTime(params.value) });
+				},
+				tooltipValueGetter: (params) => {
+					if (params.value === void 0 || params.value === null) return;
+					return formatTime(params.value);
 				}
 			}
 		];
@@ -164910,6 +165242,14 @@ var SamplesPanel = () => {
 		}, {});
 		Object.entries(logDetailsInPath).forEach(([logFile, logDetail]) => {
 			logDetail.sampleSummaries.forEach((sampleSummary) => {
+				let tokens;
+				if (sampleSummary.model_usage) {
+					const usages = Object.values(sampleSummary.model_usage);
+					if (usages.length > 0) {
+						tokens = 0;
+						for (const usage of usages) tokens += usage.total_tokens ?? 0;
+					}
+				}
 				const row = {
 					logFile,
 					created: logDetail.eval.created,
@@ -164924,6 +165264,8 @@ var SamplesPanel = () => {
 					limit: sampleSummary.limit,
 					retries: sampleSummary.retries,
 					completed: sampleSummary.completed || false,
+					tokens,
+					duration: sampleSummary.total_time ?? void 0,
 					displayIndex: displayIndex++
 				};
 				if (sampleSummary.scores) Object.entries(sampleSummary.scores).forEach(([scoreName, score]) => {
@@ -165042,7 +165384,7 @@ var TasksRouter = () => {
 var AppLayout = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
-	const componentNavigation = (0, import_react.useMemo)(() => ({ navigate: (path) => navigate(path) }), [navigate]);
+	const componentNavigation = (0, import_react.useMemo)(() => ({ navigate: (path, options) => navigate(path, options) }), [navigate]);
 	(0, import_react.useEffect)(() => {
 		if (storeImplementation) storeImplementation.getState().appActions.setUrlHash(location.pathname);
 	}, [location]);
