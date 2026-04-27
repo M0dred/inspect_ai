@@ -54498,16 +54498,17 @@ var ToolDropdownButton = (0, import_react.forwardRef)(({ label, icon, className,
 });
 ToolDropdownButton.displayName = "ToolDropdownButton";
 var TabSet_module_default = {
-	tabs: "_tabs_13md5_1",
-	tabContents: "_tabContents_13md5_5",
-	scrollable: "_scrollable_13md5_11",
-	tab: "_tab_13md5_1",
-	tabItem: "_tabItem_13md5_27",
-	pillSmallContainer: "_pillSmallContainer_13md5_31",
-	pillSmall: "_pillSmall_13md5_31",
-	tabIcon: "_tabIcon_13md5_39",
-	tabTools: "_tabTools_13md5_43",
-	tabStyle: "_tabStyle_13md5_53"
+	tabs: "_tabs_1wfac_1",
+	tabContents: "_tabContents_1wfac_5",
+	scrollable: "_scrollable_1wfac_11",
+	tab: "_tab_1wfac_1",
+	tabItem: "_tabItem_1wfac_27",
+	pillSmallContainer: "_pillSmallContainer_1wfac_31",
+	pillSmall: "_pillSmall_1wfac_31",
+	tabIcon: "_tabIcon_1wfac_39",
+	tabSpacer: "_tabSpacer_1wfac_43",
+	tabTools: "_tabTools_1wfac_49",
+	tabStyle: "_tabStyle_1wfac_59"
 };
 //#endregion
 //#region ../../packages/react/src/components/TabSet.tsx
@@ -54525,7 +54526,10 @@ var TabSet = ({ id, type = "tabs", className, tabPanelsClassName, tabControlsCla
 			type,
 			tab,
 			className: clsx(tabControlsClassName)
-		}, tab.props.id)), tools && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabTools, { tools })]
+		}, tab.props.id)), tools && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
+			className: TabSet_module_default.tabSpacer,
+			"aria-hidden": "true"
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabTools, { tools })] })]
 	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabPanels, {
 		id,
 		tabs: validTabs,
@@ -64600,13 +64604,14 @@ function createSamplePolling(store) {
 			log$6.debug(`Aleady polling, ignoring start`);
 			return;
 		}
-		if (currentPolling) {
-			log$6.debug(`Resetting existing polling`);
-			currentPolling.stop();
+		if (currentPolling || abortController && !abortController.signal.aborted) {
+			log$6.debug(`Resetting existing polling session`);
+			stopPolling();
 			store.getState().sampleActions.setRunningEvents([]);
 		}
 		resetPollingState(pollingState);
-		abortController = new AbortController();
+		const localAbort = new AbortController();
+		abortController = localAbort;
 		log$6.debug(`Polling sample: ${summary.id}-${summary.epoch}`);
 		const pollCallback = async () => {
 			const state = store.getState();
@@ -64614,18 +64619,13 @@ function createSamplePolling(store) {
 			const api = state.api;
 			if (!api) throw new Error("Required API is missing");
 			if (!api.get_log_sample_data) throw new Error("Required API get_log_sample_data is undefined.");
-			if (abortController.signal.aborted) return false;
-			const eventId = pollingState.eventId;
-			const attachmentId = pollingState.attachmentId;
-			const messagePoolId = pollingState.messagePoolId;
-			const callPoolId = pollingState.callPoolId;
-			const sampleDataResponse = await api.get_log_sample_data(logFile, summary.id, summary.epoch, eventId, attachmentId, messagePoolId !== kNoId ? messagePoolId : void 0, callPoolId !== kNoId ? callPoolId : void 0);
-			if (abortController.signal.aborted) return false;
-			if (sampleDataResponse?.status === "NotFound") {
-				stopPolling();
-				if (state.sample.runningEvents.length > 0) try {
-					log$6.debug(`LOADING COMPLETED SAMPLE AFTER FLUSH: ${summary.id}-${summary.epoch}`);
+			if (localAbort.signal.aborted) return false;
+			const loadCompletedSample = async (message) => {
+				stopPollingTimer();
+				try {
+					log$6.debug(message);
 					const sample = await api.get_log_sample(logFile, summary.id, summary.epoch);
+					if (localAbort.signal.aborted) return false;
 					if (sample) {
 						const migratedSample = resolveSample$1(sample);
 						sampleActions.setSelectedSample(migratedSample, logFile);
@@ -64637,18 +64637,23 @@ function createSamplePolling(store) {
 						sampleActions.setRunningEvents([]);
 					}
 				} catch (e) {
+					if (localAbort.signal.aborted) return false;
 					sampleActions.setSampleError(e);
 					sampleActions.setSampleStatus("error");
 					sampleActions.setRunningEvents([]);
 				}
-				else {
-					if (state.sample.sampleStatus === "streaming") sampleActions.setSampleStatus("ok");
-					sampleActions.setRunningEvents([]);
-				}
 				return false;
-			}
+			};
+			const eventId = pollingState.eventId;
+			const attachmentId = pollingState.attachmentId;
+			const messagePoolId = pollingState.messagePoolId;
+			const callPoolId = pollingState.callPoolId;
+			const sampleDataResponse = await api.get_log_sample_data(logFile, summary.id, summary.epoch, eventId, attachmentId, messagePoolId !== kNoId ? messagePoolId : void 0, callPoolId !== kNoId ? callPoolId : void 0);
+			if (localAbort.signal.aborted) return false;
+			if (sampleDataResponse?.status === "NotFound") return await loadCompletedSample(`LOADING COMPLETED SAMPLE AFTER FLUSH: ${summary.id}-${summary.epoch}`);
+			if (shouldFinalizeStreamingSample(sampleDataResponse, hasCompletedLogSummary(store.getState(), summary.id, summary.epoch))) return await loadCompletedSample(`LOADING COMPLETED SAMPLE AFTER SUMMARY UPDATE: ${summary.id}-${summary.epoch}`);
 			if (sampleDataResponse?.status === "OK" && sampleDataResponse.sampleData) {
-				if (abortController.signal.aborted) return false;
+				if (localAbort.signal.aborted) return false;
 				sampleActions.setSampleStatus("streaming");
 				if (sampleDataResponse.sampleData) {
 					processAttachments(sampleDataResponse.sampleData, pollingState);
@@ -64678,6 +64683,10 @@ function createSamplePolling(store) {
 		polling.start();
 	};
 	const stopPolling = () => {
+		if (abortController) abortController.abort();
+		stopPollingTimer();
+	};
+	const stopPollingTimer = () => {
 		if (currentPolling) {
 			currentPolling.stop();
 			currentPolling = null;
@@ -64694,6 +64703,17 @@ function createSamplePolling(store) {
 		cleanup
 	};
 }
+var hasCompletedLogSummary = (state, sampleId, sampleEpoch) => {
+	return state.log.selectedLogDetails?.sampleSummaries.some((sampleSummary) => sampleIdsEqual(sampleSummary.id, sampleId) && sampleSummary.epoch === sampleEpoch && sampleSummary.completed !== false);
+};
+var hasSampleDataUpdates = (sampleData) => {
+	if (!sampleData) return false;
+	return sampleData.events.length > 0 || sampleData.attachments.length > 0 || sampleData.message_pool.length > 0 || sampleData.call_pool.length > 0;
+};
+var shouldFinalizeStreamingSample = (sampleDataResponse, completedInLog) => {
+	if (!completedInLog || !sampleDataResponse) return false;
+	return sampleDataResponse.status === "NotModified" || sampleDataResponse.status === "OK" && !hasSampleDataUpdates(sampleDataResponse.sampleData);
+};
 var resetPollingState = (state) => {
 	state.eventId = kNoId;
 	state.attachmentId = kNoId;
@@ -69629,7 +69649,7 @@ var mergeSampleSummaries = (logSamples, pendingSamples) => {
 	const uniquePendingSamples = pendingSamples.filter((sample) => !existingSampleIds.has(`${sample.id}-${sample.epoch}`)).map((sample) => {
 		return {
 			...sample,
-			completed: sample.completed ?? false
+			completed: false
 		};
 	});
 	return [...logSamples, ...uniquePendingSamples];
@@ -131731,7 +131751,7 @@ var SampleStatusIcon = ({ status }) => {
 };
 //#endregion
 //#region src/app/samples/SampleSummaryView.tsx
-var kMaxCellTextLength = 256;
+var kMaxCellTextLength = 128;
 function isEvalSample(sample) {
 	return "store" in sample;
 }
@@ -131785,7 +131805,8 @@ var SampleSummaryView = ({ parent_id, sample }) => {
 	columns.push({
 		label: "Input",
 		value: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedText, { markdown: truncateMarkdown(fields.input.join(" "), kMaxCellTextLength) }),
-		size: `minmax(auto, 5fr)`
+		size: `minmax(auto, 5fr)`,
+		clamp: true
 	});
 	if (fields.target) columns.push({
 		label: "Target",
