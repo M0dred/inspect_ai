@@ -11444,7 +11444,14 @@ function isBigInt(value) {
 function toString$2(v) {
 	return v === void 0 ? v + "" : isBigInt(v) ? v + "n" : JSON.stringify(v);
 }
-({ ...functions });
+(
+/**
+* Generate an object representing the current table row.
+* @param {...string} names The column names to include in the object.
+*  If unspecified, all columns are included.
+* @return {Struct} The generated row object.
+*/
+{ ...functions });
 //#endregion
 //#region ../../node_modules/.pnpm/arquero@8.0.3/node_modules/arquero/src/util/error.js
 function error$7(message, cause) {
@@ -11614,10 +11621,12 @@ function initProduct(s, value) {
 * Aggregate operator definitions.
 */
 var aggregateFunctions = {
+	/** @type {AggregateDef} */
 	count: {
 		create: () => initOp({ value: (s) => s.count }),
 		param: []
 	},
+	/** @type {AggregateDef} */
 	array_agg: {
 		create: () => initOp({
 			init: (s) => s.values = true,
@@ -11625,6 +11634,7 @@ var aggregateFunctions = {
 		}),
 		param: [1]
 	},
+	/** @type {AggregateDef} */
 	object_agg: {
 		create: () => initOp({
 			init: (s) => s.values = true,
@@ -11632,6 +11642,7 @@ var aggregateFunctions = {
 		}),
 		param: [2]
 	},
+	/** @type {AggregateDef} */
 	map_agg: {
 		create: () => initOp({
 			init: (s) => s.values = true,
@@ -11639,6 +11650,7 @@ var aggregateFunctions = {
 		}),
 		param: [2]
 	},
+	/** @type {AggregateDef} */
 	entries_agg: {
 		create: () => initOp({
 			init: (s) => s.values = true,
@@ -11646,6 +11658,7 @@ var aggregateFunctions = {
 		}),
 		param: [2]
 	},
+	/** @type {AggregateDef} */
 	any: {
 		create: () => initOp({
 			add: (s, v) => {
@@ -11655,14 +11668,17 @@ var aggregateFunctions = {
 		}),
 		param: [1]
 	},
+	/** @type {AggregateDef} */
 	valid: {
 		create: () => initOp({ value: (s) => s.valid }),
 		param: [1]
 	},
+	/** @type {AggregateDef} */
 	invalid: {
 		create: () => initOp({ value: (s) => s.count - s.valid }),
 		param: [1]
 	},
+	/** @type {AggregateDef} */
 	distinct: {
 		create: () => ({
 			init: (s) => s.distinct = distinctMap(),
@@ -11672,11 +11688,13 @@ var aggregateFunctions = {
 		}),
 		param: [1]
 	},
+	/** @type {AggregateDef} */
 	array_agg_distinct: {
 		create: () => initOp({ value: (s) => s.distinct.values() }),
 		param: [1],
 		req: ["distinct"]
 	},
+	/** @type {AggregateDef} */
 	mode: {
 		create: () => initOp({ value: (s) => {
 			let mode = void 0;
@@ -11692,6 +11710,7 @@ var aggregateFunctions = {
 		param: [1],
 		req: ["distinct"]
 	},
+	/** @type {AggregateDef} */
 	sum: {
 		create: () => ({
 			init: (s) => s.sum = 0,
@@ -11701,6 +11720,7 @@ var aggregateFunctions = {
 		}),
 		param: [1]
 	},
+	/** @type {AggregateDef} */
 	product: {
 		create: () => ({
 			init: (s) => initProduct(s, 1),
@@ -11711,6 +11731,7 @@ var aggregateFunctions = {
 		param: [1],
 		stream: ["array_agg"]
 	},
+	/** @type {AggregateDef} */
 	mean: {
 		create: () => ({
 			init: (s) => s.mean = 0,
@@ -11726,11 +11747,13 @@ var aggregateFunctions = {
 		}),
 		param: [1]
 	},
+	/** @type {AggregateDef} */
 	average: {
 		create: () => initOp({ value: (s) => s.valid ? s.mean : void 0 }),
 		param: [1],
 		req: ["mean"]
 	},
+	/** @type {AggregateDef} */
 	variance: {
 		create: () => ({
 			init: (s) => s.dev = 0,
@@ -11741,21 +11764,25 @@ var aggregateFunctions = {
 		param: [1],
 		req: ["mean"]
 	},
+	/** @type {AggregateDef} */
 	variancep: {
 		create: () => initOp({ value: (s) => s.valid > 1 ? s.dev / s.valid : void 0 }),
 		param: [1],
 		req: ["variance"]
 	},
+	/** @type {AggregateDef} */
 	stdev: {
 		create: () => initOp({ value: (s) => s.valid > 1 ? Math.sqrt(s.dev / (s.valid - 1)) : void 0 }),
 		param: [1],
 		req: ["variance"]
 	},
+	/** @type {AggregateDef} */
 	stdevp: {
 		create: () => initOp({ value: (s) => s.valid > 1 ? Math.sqrt(s.dev / s.valid) : void 0 }),
 		param: [1],
 		req: ["variance"]
 	},
+	/** @type {AggregateDef} */
 	min: {
 		create: () => ({
 			init: (s) => s.min = void 0,
@@ -11770,6 +11797,7 @@ var aggregateFunctions = {
 		param: [1],
 		stream: ["array_agg"]
 	},
+	/** @type {AggregateDef} */
 	max: {
 		create: () => ({
 			init: (s) => s.max = void 0,
@@ -11784,16 +11812,19 @@ var aggregateFunctions = {
 		param: [1],
 		stream: ["array_agg"]
 	},
+	/** @type {AggregateDef} */
 	quantile: {
 		create: (p) => initOp({ value: (s) => s.list.quantile(p) }),
 		param: [1, 1],
 		req: ["array_agg"]
 	},
+	/** @type {AggregateDef} */
 	median: {
 		create: () => initOp({ value: (s) => s.list.quantile(.5) }),
 		param: [1],
 		req: ["array_agg"]
 	},
+	/** @type {AggregateDef} */
 	covariance: {
 		create: () => ({
 			init: (s) => {
@@ -11823,16 +11854,19 @@ var aggregateFunctions = {
 		}),
 		param: [2]
 	},
+	/** @type {AggregateDef} */
 	covariancep: {
 		create: () => initOp({ value: (s) => s.valid > 1 ? s.cov / s.valid : void 0 }),
 		param: [2],
 		req: ["covariance"]
 	},
+	/** @type {AggregateDef} */
 	corr: {
 		create: () => initOp({ value: (s) => s.valid > 1 ? s.cov / (Math.sqrt(s.dev_x) * Math.sqrt(s.dev_y)) : void 0 }),
 		param: [2],
 		req: ["covariance"]
 	},
+	/** @type {AggregateDef} */
 	bins: {
 		create: (maxbins, nice, minstep, step) => initOp({ value: (s) => bins(s.min, s.max, maxbins, nice, minstep, step) }),
 		param: [1, 4],
@@ -11922,6 +11956,7 @@ var cume_dist = {
 * Window operator definitions.
 */
 var windowFunctions = {
+	/** @type {WindowDef} */
 	row_number: {
 		create() {
 			return {
@@ -11931,7 +11966,9 @@ var windowFunctions = {
 		},
 		param: []
 	},
+	/** @type {WindowDef} */
 	rank,
+	/** @type {WindowDef} */
 	avg_rank: {
 		create() {
 			let j, rank;
@@ -11949,6 +11986,7 @@ var windowFunctions = {
 		},
 		param: []
 	},
+	/** @type {WindowDef} */
 	dense_rank: {
 		create() {
 			let drank;
@@ -11962,6 +12000,7 @@ var windowFunctions = {
 		},
 		param: []
 	},
+	/** @type {WindowDef} */
 	percent_rank: {
 		create() {
 			const { init, value } = rank.create();
@@ -11972,7 +12011,9 @@ var windowFunctions = {
 		},
 		param: []
 	},
+	/** @type {WindowDef} */
 	cume_dist,
+	/** @type {WindowDef} */
 	ntile: {
 		create(num) {
 			num = +num;
@@ -11985,6 +12026,7 @@ var windowFunctions = {
 		},
 		param: [0, 1]
 	},
+	/** @type {WindowDef} */
 	lag: {
 		create(offset, defaultValue = void 0) {
 			offset = +offset || 1;
@@ -11998,6 +12040,7 @@ var windowFunctions = {
 		},
 		param: [1, 2]
 	},
+	/** @type {WindowDef} */
 	lead: {
 		create(offset, defaultValue = void 0) {
 			offset = +offset || 1;
@@ -12011,6 +12054,7 @@ var windowFunctions = {
 		},
 		param: [1, 2]
 	},
+	/** @type {WindowDef} */
 	first_value: {
 		create() {
 			return {
@@ -12020,6 +12064,7 @@ var windowFunctions = {
 		},
 		param: [1]
 	},
+	/** @type {WindowDef} */
 	last_value: {
 		create() {
 			return {
@@ -12029,6 +12074,7 @@ var windowFunctions = {
 		},
 		param: [1]
 	},
+	/** @type {WindowDef} */
 	nth_value: {
 		create(nth) {
 			nth = +nth;
@@ -12043,6 +12089,7 @@ var windowFunctions = {
 		},
 		param: [1, 1]
 	},
+	/** @type {WindowDef} */
 	fill_down: {
 		create(defaultValue = void 0) {
 			let value;
@@ -12056,6 +12103,7 @@ var windowFunctions = {
 		},
 		param: [1, 1]
 	},
+	/** @type {WindowDef} */
 	fill_up: {
 		create(defaultValue = void 0) {
 			let value, idx;
@@ -19832,21 +19880,104 @@ var import_prism = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
 		var uniqueId = 0;
 		var plainTextGrammar = {};
 		var _ = {
+			/**
+			* By default, Prism will attempt to highlight all code elements (by calling {@link Prism.highlightAll}) on the
+			* current page after the page finished loading. This might be a problem if e.g. you wanted to asynchronously load
+			* additional languages or plugins yourself.
+			*
+			* By setting this value to `true`, Prism will not automatically highlight all code elements on the page.
+			*
+			* You obviously have to change this value before the automatic highlighting started. To do this, you can add an
+			* empty Prism object into the global scope before loading the Prism script like this:
+			*
+			* ```js
+			* window.Prism = window.Prism || {};
+			* Prism.manual = true;
+			* // add a new <script> to load Prism's script
+			* ```
+			*
+			* @default false
+			* @type {boolean}
+			* @memberof Prism
+			* @public
+			*/
 			manual: _self.Prism && _self.Prism.manual,
+			/**
+			* By default, if Prism is in a web worker, it assumes that it is in a worker it created itself, so it uses
+			* `addEventListener` to communicate with its parent instance. However, if you're using Prism manually in your
+			* own worker, you don't want it to do this.
+			*
+			* By setting this value to `true`, Prism will not add its own listeners to the worker.
+			*
+			* You obviously have to change this value before Prism executes. To do this, you can add an
+			* empty Prism object into the global scope before loading the Prism script like this:
+			*
+			* ```js
+			* window.Prism = window.Prism || {};
+			* Prism.disableWorkerMessageHandler = true;
+			* // Load Prism's script
+			* ```
+			*
+			* @default false
+			* @type {boolean}
+			* @memberof Prism
+			* @public
+			*/
 			disableWorkerMessageHandler: _self.Prism && _self.Prism.disableWorkerMessageHandler,
+			/**
+			* A namespace for utility methods.
+			*
+			* All function in this namespace that are not explicitly marked as _public_ are for __internal use only__ and may
+			* change or disappear at any time.
+			*
+			* @namespace
+			* @memberof Prism
+			*/
 			util: {
 				encode: function encode(tokens) {
 					if (tokens instanceof Token) return new Token(tokens.type, encode(tokens.content), tokens.alias);
 					else if (Array.isArray(tokens)) return tokens.map(encode);
 					else return tokens.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/\u00a0/g, " ");
 				},
+				/**
+				* Returns the name of the type of the given value.
+				*
+				* @param {any} o
+				* @returns {string}
+				* @example
+				* type(null)      === 'Null'
+				* type(undefined) === 'Undefined'
+				* type(123)       === 'Number'
+				* type('foo')     === 'String'
+				* type(true)      === 'Boolean'
+				* type([1, 2])    === 'Array'
+				* type({})        === 'Object'
+				* type(String)    === 'Function'
+				* type(/abc+/)    === 'RegExp'
+				*/
 				type: function(o) {
 					return Object.prototype.toString.call(o).slice(8, -1);
 				},
+				/**
+				* Returns a unique number for the given object. Later calls will still return the same number.
+				*
+				* @param {Object} obj
+				* @returns {number}
+				*/
 				objId: function(obj) {
 					if (!obj["__id"]) Object.defineProperty(obj, "__id", { value: ++uniqueId });
 					return obj["__id"];
 				},
+				/**
+				* Creates a deep clone of the given object.
+				*
+				* The main intended use of this function is to clone language definitions.
+				*
+				* @param {T} o
+				* @param {Record<number, any>} [visited]
+				* @returns {T}
+				* @template T
+				*/
 				clone: function deepClone(o, visited) {
 					visited = visited || {};
 					var clone;
@@ -19871,6 +20002,14 @@ var import_prism = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
 						default: return o;
 					}
 				},
+				/**
+				* Returns the Prism language of the given element set by a `language-xxxx` or `lang-xxxx` class.
+				*
+				* If no language is set for the element or the element is `null` or `undefined`, `none` will be returned.
+				*
+				* @param {Element} element
+				* @returns {string}
+				*/
 				getLanguage: function(element) {
 					while (element) {
 						var m = lang.exec(element.className);
@@ -19879,10 +20018,24 @@ var import_prism = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
 					}
 					return "none";
 				},
+				/**
+				* Sets the Prism `language-xxxx` class of the given element.
+				*
+				* @param {Element} element
+				* @param {string} language
+				* @returns {void}
+				*/
 				setLanguage: function(element, language) {
 					element.className = element.className.replace(RegExp(lang, "gi"), "");
 					element.classList.add("language-" + language);
 				},
+				/**
+				* Returns the script element that is currently executing.
+				*
+				* This does __not__ work for line script element.
+				*
+				* @returns {HTMLScriptElement | null}
+				*/
 				currentScript: function() {
 					if (typeof document === "undefined") return null;
 					if (document.currentScript && document.currentScript.tagName === "SCRIPT" && true) return document.currentScript;
@@ -19897,6 +20050,25 @@ var import_prism = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
 						return null;
 					}
 				},
+				/**
+				* Returns whether a given class is active for `element`.
+				*
+				* The class can be activated if `element` or one of its ancestors has the given class and it can be deactivated
+				* if `element` or one of its ancestors has the negated version of the given class. The _negated version_ of the
+				* given class is just the given class with a `no-` prefix.
+				*
+				* Whether the class is active is determined by the closest ancestor of `element` (where `element` itself is
+				* closest ancestor) that has the given class or the negated version of it. If neither `element` nor any of its
+				* ancestors have the given class or the negated version of it, then the default activation will be returned.
+				*
+				* In the paradoxical situation where the closest ancestor contains __both__ the given class and the negated
+				* version of it, the class is considered active.
+				*
+				* @param {Element} element
+				* @param {string} className
+				* @param {boolean} [defaultActivation=false]
+				* @returns {boolean}
+				*/
 				isActive: function(element, className, defaultActivation) {
 					var no = "no-" + className;
 					while (element) {
@@ -19908,16 +20080,129 @@ var import_prism = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
 					return !!defaultActivation;
 				}
 			},
+			/**
+			* This namespace contains all currently loaded languages and the some helper functions to create and modify languages.
+			*
+			* @namespace
+			* @memberof Prism
+			* @public
+			*/
 			languages: {
+				/**
+				* The grammar for plain, unformatted text.
+				*/
 				plain: plainTextGrammar,
 				plaintext: plainTextGrammar,
 				text: plainTextGrammar,
 				txt: plainTextGrammar,
+				/**
+				* Creates a deep copy of the language with the given id and appends the given tokens.
+				*
+				* If a token in `redef` also appears in the copied language, then the existing token in the copied language
+				* will be overwritten at its original position.
+				*
+				* ## Best practices
+				*
+				* Since the position of overwriting tokens (token in `redef` that overwrite tokens in the copied language)
+				* doesn't matter, they can technically be in any order. However, this can be confusing to others that trying to
+				* understand the language definition because, normally, the order of tokens matters in Prism grammars.
+				*
+				* Therefore, it is encouraged to order overwriting tokens according to the positions of the overwritten tokens.
+				* Furthermore, all non-overwriting tokens should be placed after the overwriting ones.
+				*
+				* @param {string} id The id of the language to extend. This has to be a key in `Prism.languages`.
+				* @param {Grammar} redef The new tokens to append.
+				* @returns {Grammar} The new language created.
+				* @public
+				* @example
+				* Prism.languages['css-with-colors'] = Prism.languages.extend('css', {
+				*     // Prism.languages.css already has a 'comment' token, so this token will overwrite CSS' 'comment' token
+				*     // at its original position
+				*     'comment': { ... },
+				*     // CSS doesn't have a 'color' token, so this token will be appended
+				*     'color': /\b(?:red|green|blue)\b/
+				* });
+				*/
 				extend: function(id, redef) {
 					var lang = _.util.clone(_.languages[id]);
 					for (var key in redef) lang[key] = redef[key];
 					return lang;
 				},
+				/**
+				* Inserts tokens _before_ another token in a language definition or any other grammar.
+				*
+				* ## Usage
+				*
+				* This helper method makes it easy to modify existing languages. For example, the CSS language definition
+				* not only defines CSS highlighting for CSS documents, but also needs to define highlighting for CSS embedded
+				* in HTML through `<style>` elements. To do this, it needs to modify `Prism.languages.markup` and add the
+				* appropriate tokens. However, `Prism.languages.markup` is a regular JavaScript object literal, so if you do
+				* this:
+				*
+				* ```js
+				* Prism.languages.markup.style = {
+				*     // token
+				* };
+				* ```
+				*
+				* then the `style` token will be added (and processed) at the end. `insertBefore` allows you to insert tokens
+				* before existing tokens. For the CSS example above, you would use it like this:
+				*
+				* ```js
+				* Prism.languages.insertBefore('markup', 'cdata', {
+				*     'style': {
+				*         // token
+				*     }
+				* });
+				* ```
+				*
+				* ## Special cases
+				*
+				* If the grammars of `inside` and `insert` have tokens with the same name, the tokens in `inside`'s grammar
+				* will be ignored.
+				*
+				* This behavior can be used to insert tokens after `before`:
+				*
+				* ```js
+				* Prism.languages.insertBefore('markup', 'comment', {
+				*     'comment': Prism.languages.markup.comment,
+				*     // tokens after 'comment'
+				* });
+				* ```
+				*
+				* ## Limitations
+				*
+				* The main problem `insertBefore` has to solve is iteration order. Since ES2015, the iteration order for object
+				* properties is guaranteed to be the insertion order (except for integer keys) but some browsers behave
+				* differently when keys are deleted and re-inserted. So `insertBefore` can't be implemented by temporarily
+				* deleting properties which is necessary to insert at arbitrary positions.
+				*
+				* To solve this problem, `insertBefore` doesn't actually insert the given tokens into the target object.
+				* Instead, it will create a new object and replace all references to the target object with the new one. This
+				* can be done without temporarily deleting properties, so the iteration order is well-defined.
+				*
+				* However, only references that can be reached from `Prism.languages` or `insert` will be replaced. I.e. if
+				* you hold the target object in a variable, then the value of the variable will not change.
+				*
+				* ```js
+				* var oldMarkup = Prism.languages.markup;
+				* var newMarkup = Prism.languages.insertBefore('markup', 'comment', { ... });
+				*
+				* assert(oldMarkup !== Prism.languages.markup);
+				* assert(newMarkup === Prism.languages.markup);
+				* ```
+				*
+				* @param {string} inside The property of `root` (e.g. a language id in `Prism.languages`) that contains the
+				* object to be modified.
+				* @param {string} before The key to insert before.
+				* @param {Grammar} insert An object containing the key-value pairs to be inserted.
+				* @param {Object<string, any>} [root] The object containing `inside`, i.e. the object that contains the
+				* object to be modified.
+				*
+				* Defaults to `Prism.languages`.
+				* @returns {Grammar} The new grammar object.
+				* @public
+				*/
 				insertBefore: function(inside, before, insert, root) {
 					root = root || _.languages;
 					var grammar = root[inside];
@@ -19954,9 +20239,36 @@ var import_prism = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
 				}
 			},
 			plugins: {},
+			/**
+			* This is the most high-level function in Prism’s API.
+			* It fetches all the elements that have a `.language-xxxx` class and then calls {@link Prism.highlightElement} on
+			* each one of them.
+			*
+			* This is equivalent to `Prism.highlightAllUnder(document, async, callback)`.
+			*
+			* @param {boolean} [async=false] Same as in {@link Prism.highlightAllUnder}.
+			* @param {HighlightCallback} [callback] Same as in {@link Prism.highlightAllUnder}.
+			* @memberof Prism
+			* @public
+			*/
 			highlightAll: function(async, callback) {
 				_.highlightAllUnder(document, async, callback);
 			},
+			/**
+			* Fetches all the descendants of `container` that have a `.language-xxxx` class and then calls
+			* {@link Prism.highlightElement} on each one of them.
+			*
+			* The following hooks will be run:
+			* 1. `before-highlightall`
+			* 2. `before-all-elements-highlight`
+			* 3. All hooks of {@link Prism.highlightElement} for each element.
+			*
+			* @param {ParentNode} container The root element, whose descendants that have a `.language-xxxx` class will be highlighted.
+			* @param {boolean} [async=false] Whether each element is to be highlighted asynchronously using Web Workers.
+			* @param {HighlightCallback} [callback] An optional callback to be invoked on each element after its highlighting is done.
+			* @memberof Prism
+			* @public
+			*/
 			highlightAllUnder: function(container, async, callback) {
 				var env = {
 					callback,
@@ -19968,6 +20280,34 @@ var import_prism = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
 				_.hooks.run("before-all-elements-highlight", env);
 				for (var i = 0, element; element = env.elements[i++];) _.highlightElement(element, async === true, env.callback);
 			},
+			/**
+			* Highlights the code inside a single element.
+			*
+			* The following hooks will be run:
+			* 1. `before-sanity-check`
+			* 2. `before-highlight`
+			* 3. All hooks of {@link Prism.highlight}. These hooks will be run by an asynchronous worker if `async` is `true`.
+			* 4. `before-insert`
+			* 5. `after-highlight`
+			* 6. `complete`
+			*
+			* Some the above hooks will be skipped if the element doesn't contain any text or there is no grammar loaded for
+			* the element's language.
+			*
+			* @param {Element} element The element containing the code.
+			* It must have a class of `language-xxxx` to be processed, where `xxxx` is a valid language identifier.
+			* @param {boolean} [async=false] Whether the element is to be highlighted asynchronously using Web Workers
+			* to improve performance and avoid blocking the UI when highlighting very large chunks of code. This option is
+			* [disabled by default](https://prismjs.com/faq.html#why-is-asynchronous-highlighting-disabled-by-default).
+			*
+			* Note: All language definitions required to highlight the code must be included in the main `prism.js` file for
+			* asynchronous highlighting to work. You can build your own bundle on the
+			* [Download page](https://prismjs.com/download.html).
+			* @param {HighlightCallback} [callback] An optional callback to be invoked after the highlighting is done.
+			* Mostly useful when `async` is `true`, since in that case, the highlighting is done asynchronously.
+			* @memberof Prism
+			* @public
+			*/
 			highlightElement: function(element, async, callback) {
 				var language = _.util.getLanguage(element);
 				var grammar = _.languages[language];
@@ -20013,6 +20353,26 @@ var import_prism = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
 					}));
 				} else insertHighlightedCode(_.highlight(env.code, env.grammar, env.language));
 			},
+			/**
+			* Low-level function, only use if you know what you’re doing. It accepts a string of text as input
+			* and the language definitions to use, and returns a string with the HTML produced.
+			*
+			* The following hooks will be run:
+			* 1. `before-tokenize`
+			* 2. `after-tokenize`
+			* 3. `wrap`: On each {@link Token}.
+			*
+			* @param {string} text A string with the code to be highlighted.
+			* @param {Grammar} grammar An object containing the tokens to use.
+			*
+			* Usually a language definition like `Prism.languages.markup`.
+			* @param {string} language The name of the language definition passed to `grammar`.
+			* @returns {string} The highlighted HTML.
+			* @memberof Prism
+			* @public
+			* @example
+			* Prism.highlight('var foo = true;', Prism.languages.javascript, 'javascript');
+			*/
 			highlight: function(text, grammar, language) {
 				var env = {
 					code: text,
@@ -20025,6 +20385,30 @@ var import_prism = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
 				_.hooks.run("after-tokenize", env);
 				return Token.stringify(_.util.encode(env.tokens), env.language);
 			},
+			/**
+			* This is the heart of Prism, and the most low-level function you can use. It accepts a string of text as input
+			* and the language definitions to use, and returns an array with the tokenized code.
+			*
+			* When the language definition includes nested tokens, the function is called recursively on each of these tokens.
+			*
+			* This method could be useful in other contexts as well, as a very crude parser.
+			*
+			* @param {string} text A string with the code to be highlighted.
+			* @param {Grammar} grammar An object containing the tokens to use.
+			*
+			* Usually a language definition like `Prism.languages.markup`.
+			* @returns {TokenStream} An array of strings and tokens, a token stream.
+			* @memberof Prism
+			* @public
+			* @example
+			* let code = `var foo = 0;`;
+			* let tokens = Prism.tokenize(code, Prism.languages.javascript);
+			* tokens.forEach(token => {
+			*     if (token instanceof Prism.Token && token.type === 'number') {
+			*         console.log(`Found numeric literal: ${token.content}`);
+			*     }
+			* });
+			*/
 			tokenize: function(text, grammar) {
 				var rest = grammar.rest;
 				if (rest) {
@@ -20036,13 +20420,39 @@ var import_prism = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
 				matchGrammar(text, tokenList, grammar, tokenList.head, 0);
 				return toArray(tokenList);
 			},
+			/**
+			* @namespace
+			* @memberof Prism
+			* @public
+			*/
 			hooks: {
 				all: {},
+				/**
+				* Adds the given callback to the list of callbacks for the given hook.
+				*
+				* The callback will be invoked when the hook it is registered for is run.
+				* Hooks are usually directly run by a highlight function but you can also run hooks yourself.
+				*
+				* One callback function can be registered to multiple hooks and the same hook multiple times.
+				*
+				* @param {string} name The name of the hook.
+				* @param {HookCallback} callback The callback function which is given environment variables.
+				* @public
+				*/
 				add: function(name, callback) {
 					var hooks = _.hooks.all;
 					hooks[name] = hooks[name] || [];
 					hooks[name].push(callback);
 				},
+				/**
+				* Runs a hook invoking all registered callbacks with the given environment variables.
+				*
+				* Callbacks will be invoked synchronously and in the order in which they were registered.
+				*
+				* @param {string} name The name of the hook.
+				* @param {Object<string, any>} env The environment variables of the hook passed to all callbacks registered.
+				* @public
+				*/
 				run: function(name, env) {
 					var callbacks = _.hooks.all[name];
 					if (!callbacks || !callbacks.length) return;
@@ -20480,7 +20890,19 @@ var import_prism = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
 	Prism.hooks.add("wrap", function(env) {
 		if (env.type === "entity") env.attributes["title"] = env.content.replace(/&amp;/, "&");
 	});
-	Object.defineProperty(Prism.languages.markup.tag, "addInlined", { value: function addInlined(tagName, lang) {
+	Object.defineProperty(Prism.languages.markup.tag, "addInlined", { 
+	/**
+	* Adds an inlined language to markup.
+	*
+	* An example of an inlined language is CSS with `<style>` tags.
+	*
+	* @param {string} tagName The name of the tag that contains the inlined language. This name will be treated as
+	* case insensitive.
+	* @param {string} lang The language key.
+	* @example
+	* addInlined('style', 'css');
+	*/
+value: function addInlined(tagName, lang) {
 		var includedCdataInside = {};
 		includedCdataInside["language-" + lang] = {
 			pattern: /(^<!\[CDATA\[)[\s\S]+?(?=\]\]>$)/i,
@@ -20507,7 +20929,19 @@ var import_prism = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
 		};
 		Prism.languages.insertBefore("markup", "cdata", def);
 	} });
-	Object.defineProperty(Prism.languages.markup.tag, "addAttribute", { value: function(attrName, lang) {
+	Object.defineProperty(Prism.languages.markup.tag, "addAttribute", { 
+	/**
+	* Adds an pattern to highlight languages embedded in HTML attributes.
+	*
+	* An example of an inlined language is CSS with `style` attributes.
+	*
+	* @param {string} attrName The name of the tag that contains the inlined language. This name will be treated as
+	* case insensitive.
+	* @param {string} lang The language key.
+	* @example
+	* addAttribute('style', 'css');
+	*/
+value: function(attrName, lang) {
 		Prism.languages.markup.tag.inside["special-attr"].push({
 			pattern: RegExp(/(^|["'\s])/.source + "(?:" + attrName + ")" + /\s*=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+(?=[\s>]))/.source, "i"),
 			lookbehind: true,
@@ -20832,7 +21266,15 @@ var import_prism = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
 				});
 			}
 		});
-		Prism.plugins.fileHighlight = { highlight: function highlight(container) {
+		Prism.plugins.fileHighlight = { 
+		/**
+		* Executes the File Highlight plugin for all matching `pre` elements under the given container.
+		*
+		* Note: Elements which are already loaded or currently loading will not be touched by this method.
+		*
+		* @param {ParentNode} [container=document]
+		*/
+highlight: function highlight(container) {
 			var elements = (container || document).querySelectorAll(SELECTOR);
 			for (var i = 0, element; element = elements[i++];) Prism.highlightElement(element);
 		} };
@@ -21616,6 +22058,10 @@ var require_clipboard = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 							},
 							{
 								key: "defaultText",
+								/**
+								* Default `text` lookup function.
+								* @param {Element} trigger
+								*/
 								value: function defaultText(trigger) {
 									return getAttributeValue("text", trigger);
 								}
@@ -22009,9 +22455,9 @@ var __vitePreload = function preload(baseModule, deps, importerUrl) {
 	});
 };
 //#endregion
-//#region ../../node_modules/.pnpm/react-router@7.14.1_react-dom@19.2.5_react@19.2.5__react@19.2.5/node_modules/react-router/dist/development/chunk-OE4NN4TA.mjs
+//#region ../../node_modules/.pnpm/react-router@7.14.2_react-dom@19.2.5_react@19.2.5__react@19.2.5/node_modules/react-router/dist/development/chunk-EVOBXE3Y.mjs
 /**
-* react-router v7.14.1
+* react-router v7.14.2
 *
 * Copyright (c) Remix Software Inc.
 *
@@ -23671,7 +24117,14 @@ function createRouter(init) {
 		let match = getTargetMatch(matches, path);
 		fetchControllers.set(key, abortController);
 		let originatingLoadId = incrementingLoadId;
-		let result = (await callDataStrategy(fetchRequest, path, getTargetedDataStrategyMatches(mapRouteProperties2, manifest, fetchRequest, path, matches, match, hydrationRouteProperties2, scopedContext), scopedContext, key))[match.route.id];
+		let results = await callDataStrategy(fetchRequest, path, getTargetedDataStrategyMatches(mapRouteProperties2, manifest, fetchRequest, path, matches, match, hydrationRouteProperties2, scopedContext), scopedContext, key);
+		let result = results[match.route.id];
+		if (!result) {
+			for (let match2 of matches) if (results[match2.route.id]) {
+				result = results[match2.route.id];
+				break;
+			}
+		}
 		if (fetchControllers.get(key) === abortController) fetchControllers.delete(key);
 		if (fetchRequest.signal.aborted) return;
 		if (fetchersQueuedForDeletion.has(key)) {
@@ -25319,8 +25772,7 @@ function useOutlet(context) {
 }
 function useParams() {
 	let { matches } = import_react.useContext(RouteContext);
-	let routeMatch = matches[matches.length - 1];
-	return routeMatch ? routeMatch.params : {};
+	return matches[matches.length - 1]?.params ?? {};
 }
 function useResolvedPath(to, { relative } = {}) {
 	let { matches } = import_react.useContext(RouteContext);
@@ -26436,7 +26888,7 @@ function mergeRefs(...refs) {
 import_react.Component;
 var isBrowser2 = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined";
 try {
-	if (isBrowser2) window.__reactRouterVersion = "7.14.1";
+	if (isBrowser2) window.__reactRouterVersion = "7.14.2";
 } catch (e) {}
 function createHashRouter(routes, opts) {
 	return createRouter({
@@ -26891,9 +27343,9 @@ function useViewTransitionState(to, { relative } = {}) {
 	return matchPath(path.pathname, nextPath) != null || matchPath(path.pathname, currentPath) != null;
 }
 //#endregion
-//#region ../../node_modules/.pnpm/react-router@7.14.1_react-dom@19.2.5_react@19.2.5__react@19.2.5/node_modules/react-router/dist/development/dom-export.mjs
+//#region ../../node_modules/.pnpm/react-router@7.14.2_react-dom@19.2.5_react@19.2.5__react@19.2.5/node_modules/react-router/dist/development/dom-export.mjs
 /**
-* react-router v7.14.1
+* react-router v7.14.2
 *
 * Copyright (c) Remix Software Inc.
 *
@@ -34649,7 +35101,7 @@ var S = class S {
 						index: l,
 						name: e[2],
 						strings: s,
-						ctor: "." === e[1] ? I$1 : "?" === e[1] ? L$1 : "@" === e[1] ? z : H
+						ctor: "." === e[1] ? I$1 : "?" === e[1] ? L : "@" === e[1] ? z : H
 					}), r.removeAttribute(t);
 				} else t.startsWith(o$4) && (d.push({
 					type: 6,
@@ -34708,7 +35160,7 @@ var R = class {
 		for (; void 0 !== r;) {
 			if (o === r.index) {
 				let i;
-				2 === r.type ? i = new k(h, h.nextSibling, this, t) : 1 === r.type ? i = new r.ctor(h, r.name, r.strings, this, t) : 6 === r.type && (i = new Z(h, this, t)), this._$AV.push(i), r = s[++n];
+				2 === r.type ? i = new k$1(h, h.nextSibling, this, t) : 1 === r.type ? i = new r.ctor(h, r.name, r.strings, this, t) : 6 === r.type && (i = new Z(h, this, t)), this._$AV.push(i), r = s[++n];
 			}
 			o !== r?.index && (h = P$1.nextNode(), o++);
 		}
@@ -34719,7 +35171,7 @@ var R = class {
 		for (const s of this._$AV) void 0 !== s && (void 0 !== s.strings ? (s._$AI(t, s, i), i += s.strings.length - 2) : s._$AI(t[i])), i++;
 	}
 };
-var k = class k {
+var k$1 = class k$1 {
 	get _$AU() {
 		return this._$AM?._$AU ?? this._$Cv;
 	}
@@ -34765,7 +35217,7 @@ var k = class k {
 		u$2(this._$AH) || (this._$AH = [], this._$AR());
 		const i = this._$AH;
 		let s, e = 0;
-		for (const h of t) e === i.length ? i.push(s = new k(this.O(c$3()), this.O(c$3()), this, this.options)) : s = i[e], s._$AI(h), e++;
+		for (const h of t) e === i.length ? i.push(s = new k$1(this.O(c$3()), this.O(c$3()), this, this.options)) : s = i[e], s._$AI(h), e++;
 		e < i.length && (this._$AR(s && s._$AB.nextSibling, e), i.length = e);
 	}
 	_$AR(t = this._$AA.nextSibling, s) {
@@ -34811,7 +35263,7 @@ var I$1 = class extends H {
 		this.element[this.name] = t === A$1 ? void 0 : t;
 	}
 };
-var L$1 = class extends H {
+var L = class extends H {
 	constructor() {
 		super(...arguments), this.type = 4;
 	}
@@ -34852,20 +35304,20 @@ var j$2 = {
 	R,
 	D: d$1,
 	V: M$2,
-	I: k,
+	I: k$1,
 	H,
-	N: L$1,
+	N: L,
 	U: z,
 	B: I$1,
 	F: Z
 }, B$1 = t$4.litHtmlPolyfillSupport;
-B$1?.(S, k), (t$4.litHtmlVersions ??= []).push("3.3.2");
+B$1?.(S, k$1), (t$4.litHtmlVersions ??= []).push("3.3.2");
 var D = (t, i, s) => {
 	const e = s?.renderBefore ?? i;
 	let h = e._$litPart$;
 	if (void 0 === h) {
 		const t = s?.renderBefore ?? null;
-		e._$litPart$ = h = new k(i.insertBefore(c$3(), t), t, void 0, s ?? {});
+		e._$litPart$ = h = new k$1(i.insertBefore(c$3(), t), t, void 0, s ?? {});
 	}
 	return h._$AI(t), h;
 };
@@ -48362,7 +48814,7 @@ function blockquote(state, startLine, endLine, silent) {
 }
 //#endregion
 //#region ../../node_modules/.pnpm/markdown-it@14.1.1/node_modules/markdown-it/lib/rules_block/hr.mjs
-function hr(state, startLine, endLine, silent) {
+function hr$1(state, startLine, endLine, silent) {
 	const max = state.eMarks[startLine];
 	if (state.sCount[startLine] - state.blkIndent >= 4) return false;
 	let pos = state.bMarks[startLine] + state.tShift[startLine];
@@ -48955,7 +49407,7 @@ var _rules$1 = [
 	],
 	[
 		"hr",
-		hr,
+		hr$1,
 		[
 			"paragraph",
 			"reference",
@@ -50664,7 +51116,19 @@ var toASCII = function(input) {
 };
 /** Define the public API */
 var punycode = {
+	/**
+	* A string representing the current Punycode.js version number.
+	* @memberOf punycode
+	* @type String
+	*/
 	"version": "2.3.1",
+	/**
+	* An object of methods to convert from JavaScript's internal character
+	* representation (UCS-2) to Unicode code points, and back.
+	* @see <https://mathiasbynens.be/notes/javascript-encoding>
+	* @memberOf punycode
+	* @type Object
+	*/
 	"ucs2": {
 		"decode": ucs2decode,
 		"encode": ucs2encode
@@ -51700,14 +52164,14 @@ var fromEntries = function fromEntries(entries) {
 */
 var useIsomorphicLayoutEffect = typeof window !== "undefined" && window.document && window.document.createElement ? import_react.useLayoutEffect : import_react.useEffect;
 var bottom = "bottom";
-var right$2 = "right";
-var left$2 = "left";
+var right$3 = "right";
+var left$3 = "left";
 var auto = "auto";
 var basePlacements = [
 	"top",
 	bottom,
-	right$2,
-	left$2
+	right$3,
+	left$3
 ];
 var start = "start";
 var clippingParents = "clippingParents";
@@ -52006,8 +52470,8 @@ function arrow(_ref) {
 	if (!arrowElement || !popperOffsets) return;
 	var paddingObject = toPaddingObject(options.padding, state);
 	var arrowRect = getLayoutRect(arrowElement);
-	var minProp = axis === "y" ? "top" : left$2;
-	var maxProp = axis === "y" ? bottom : right$2;
+	var minProp = axis === "y" ? "top" : left$3;
+	var maxProp = axis === "y" ? bottom : right$3;
 	var endDiff = state.rects.reference[len] + state.rects.reference[axis] - popperOffsets[axis] - state.rects.popper[len];
 	var startDiff = popperOffsets[axis] - state.rects.reference[axis];
 	var arrowOffsetParent = getOffsetParent(arrowElement);
@@ -52076,7 +52540,7 @@ function mapToStyles(_ref2) {
 	y = _ref3.y;
 	var hasX = offsets.hasOwnProperty("x");
 	var hasY = offsets.hasOwnProperty("y");
-	var sideX = left$2;
+	var sideX = left$3;
 	var sideY = "top";
 	var win = window;
 	if (adaptive) {
@@ -52098,7 +52562,7 @@ function mapToStyles(_ref2) {
 			y *= gpuAcceleration ? 1 : -1;
 		}
 		if (placement === "left" || (placement === "top" || placement === "bottom") && variation === "end") {
-			sideX = right$2;
+			sideX = right$3;
 			var offsetX = isFixed && offsetParent === win && win.visualViewport ? win.visualViewport.width : offsetParent[widthProp];
 			x -= offsetX - popperRect.width;
 			x *= gpuAcceleration ? 1 : -1;
@@ -52366,13 +52830,13 @@ function computeOffsets(_ref) {
 				y: reference.y + reference.height
 			};
 			break;
-		case right$2:
+		case right$3:
 			offsets = {
 				x: reference.x + reference.width,
 				y: commonY
 			};
 			break;
-		case left$2:
+		case left$3:
 			offsets = {
 				x: reference.x - element.width,
 				y: commonY
@@ -52506,7 +52970,7 @@ function flip(_ref) {
 			altBoundary,
 			padding
 		});
-		var mainVariationSide = isVertical ? isStartVariation ? right$2 : left$2 : isStartVariation ? bottom : "top";
+		var mainVariationSide = isVertical ? isStartVariation ? right$3 : left$3 : isStartVariation ? bottom : "top";
 		if (referenceRect[len] > popperRect[len]) mainVariationSide = getOppositePlacement(mainVariationSide);
 		var altVariationSide = getOppositePlacement(mainVariationSide);
 		var checks = [];
@@ -52568,9 +53032,9 @@ function getSideOffsets(overflow, rect, preventedOffsets) {
 function isAnySideFullyClipped(overflow) {
 	return [
 		"top",
-		right$2,
+		right$3,
 		bottom,
-		left$2
+		left$3
 	].some(function(side) {
 		return overflow[side] >= 0;
 	});
@@ -52699,8 +53163,8 @@ function preventOverflow(_ref) {
 	if (!popperOffsets) return;
 	if (checkMainAxis) {
 		var _offsetModifierState$;
-		var mainSide = mainAxis === "y" ? "top" : left$2;
-		var altSide = mainAxis === "y" ? bottom : right$2;
+		var mainSide = mainAxis === "y" ? "top" : left$3;
+		var altSide = mainAxis === "y" ? bottom : right$3;
 		var len = mainAxis === "y" ? "height" : "width";
 		var offset = popperOffsets[mainAxis];
 		var min$1 = offset + overflow[mainSide];
@@ -52730,13 +53194,13 @@ function preventOverflow(_ref) {
 	}
 	if (checkAltAxis) {
 		var _offsetModifierState$2;
-		var _mainSide = mainAxis === "x" ? "top" : left$2;
-		var _altSide = mainAxis === "x" ? bottom : right$2;
+		var _mainSide = mainAxis === "x" ? "top" : left$3;
+		var _altSide = mainAxis === "x" ? bottom : right$3;
 		var _offset = popperOffsets[altAxis];
 		var _len = altAxis === "y" ? "height" : "width";
 		var _min = _offset + overflow[_mainSide];
 		var _max = _offset - overflow[_altSide];
-		var isOriginSide = ["top", left$2].indexOf(basePlacement) !== -1;
+		var isOriginSide = ["top", left$3].indexOf(basePlacement) !== -1;
 		var _offsetModifierValue = (_offsetModifierState$2 = offsetModifierState == null ? void 0 : offsetModifierState[altAxis]) != null ? _offsetModifierState$2 : 0;
 		var _tetherMin = isOriginSide ? _min : _offset - referenceRect[_len] - popperRect[_len] - _offsetModifierValue + normalizedTetherOffsetValue.altAxis;
 		var _tetherMax = isOriginSide ? _offset + referenceRect[_len] + popperRect[_len] - _offsetModifierValue - normalizedTetherOffsetValue.altAxis : _max;
@@ -54896,46 +55360,46 @@ var extractSize = (value, label, defaultValue) => {
 	else return defaultValue;
 };
 //#endregion
-//#region ../../node_modules/.pnpm/react-virtuoso@4.18.5_react-dom@19.2.5_react@19.2.5__react@19.2.5/node_modules/react-virtuoso/dist/index.mjs
-var we = 0, Gt = 1, Zt = 2, kn = 4;
-function un(t) {
+//#region ../../node_modules/.pnpm/react-virtuoso@4.18.6_react-dom@19.2.5_react@19.2.5__react@19.2.5/node_modules/react-virtuoso/dist/index.mjs
+var Ce = 0, Pt = 1, Zt = 2, kn = 4;
+function an(t) {
 	return () => t;
 }
-function fo(t) {
+function mo(t) {
 	t();
 }
-function re(t, e) {
+function oe(t, e) {
 	return (n) => t(e(n));
 }
-function an(t, e) {
+function dn(t, e) {
 	return () => t(e);
 }
-function mo(t, e) {
+function po(t, e) {
 	return (n) => t(e, n);
 }
 function Ae(t) {
 	return t !== void 0;
 }
-function po(...t) {
+function ho(...t) {
 	return () => {
-		t.map(fo);
+		t.map(mo);
 	};
 }
 function Xt() {}
-function ye(t, e) {
+function we(t, e) {
 	return e(t), t;
 }
-function ho(t, e) {
+function go(t, e) {
 	return e(t);
 }
-function ot(...t) {
+function rt(...t) {
 	return t;
 }
 function Y(t, e) {
-	return t(Gt, e);
+	return t(Pt, e);
 }
 function _(t, e) {
-	t(we, e);
+	t(Ce, e);
 }
 function Me(t) {
 	t(Zt);
@@ -54943,16 +55407,16 @@ function Me(t) {
 function it(t) {
 	return t(kn);
 }
-function L(t, e) {
-	return Y(t, mo(e, we));
+function k(t, e) {
+	return Y(t, po(e, Ce));
 }
 function yt(t, e) {
-	const n = t(Gt, (o) => {
+	const n = t(Pt, (o) => {
 		n(), e(o);
 	});
 	return n;
 }
-function dn(t) {
+function fn(t) {
 	let e, n;
 	return (o) => (r) => {
 		e = r, n && clearTimeout(n), n = setTimeout(() => {
@@ -54960,22 +55424,22 @@ function dn(t) {
 		}, t);
 	};
 }
-function Ln(t, e) {
+function zn(t, e) {
 	return t === e;
 }
-function et$1(t = Ln) {
+function nt(t = zn) {
 	let e;
 	return (n) => (o) => {
 		t(e, o) || (e = o, n(o));
 	};
 }
-function G(t) {
+function P(t) {
 	return (e) => (n) => {
 		t(n) && e(n);
 	};
 }
 function B(t) {
-	return (e) => re(e, t);
+	return (e) => oe(e, t);
 }
 function Bt(t) {
 	return (e) => () => {
@@ -54983,13 +55447,13 @@ function Bt(t) {
 	};
 }
 function I(t, ...e) {
-	const n = go(...e);
+	const n = Io(...e);
 	return ((o, r) => {
 		switch (o) {
 			case Zt:
 				Me(t);
 				return;
-			case Gt: return Y(t, n(r));
+			case Pt: return Y(t, n(r));
 		}
 	});
 }
@@ -55028,15 +55492,15 @@ function $(...t) {
 		n === r ? l() : o = l;
 	};
 }
-function go(...t) {
-	return (e) => t.reduceRight(ho, e);
+function Io(...t) {
+	return (e) => t.reduceRight(go, e);
 }
-function Io(t) {
+function So(t) {
 	let e, n;
 	const o = () => e?.();
 	return function(r, s) {
 		switch (r) {
-			case Gt: return s ? n === s ? void 0 : (o(), n = s, e = Y(t, s), e) : (o(), Xt);
+			case Pt: return s ? n === s ? void 0 : (o(), n = s, e = Y(t, s), e) : (o(), Xt);
 			case Zt:
 				o(), n = null;
 				return;
@@ -55048,10 +55512,10 @@ function v(t) {
 	const n = U();
 	return ((o, r) => {
 		switch (o) {
-			case we:
+			case Ce:
 				e = r;
 				break;
-			case Gt:
+			case Pt:
 				r(e);
 				break;
 			case kn: return e;
@@ -55060,13 +55524,13 @@ function v(t) {
 	});
 }
 function ht(t, e) {
-	return ye(v(e), (n) => L(t, n));
+	return we(v(e), (n) => k(t, n));
 }
 function U() {
 	const t = [];
 	return ((e, n) => {
 		switch (e) {
-			case we:
+			case Ce:
 				t.slice().forEach((o) => {
 					o(n);
 				});
@@ -55074,7 +55538,7 @@ function U() {
 			case Zt:
 				t.splice(0, t.length);
 				return;
-			case Gt: return t.push(n), () => {
+			case Pt: return t.push(n), () => {
 				const o = t.indexOf(n);
 				o > -1 && t.splice(o, 1);
 			};
@@ -55082,7 +55546,7 @@ function U() {
 	});
 }
 function vt(t) {
-	return ye(U(), (e) => L(t, e));
+	return we(U(), (e) => k(t, e));
 }
 function j(t, e = [], { singleton: n } = { singleton: !0 }) {
 	return {
@@ -55093,7 +55557,7 @@ function j(t, e = [], { singleton: n } = { singleton: !0 }) {
 	};
 }
 var xo = () => Symbol();
-function So(t) {
+function To(t) {
 	const e = /* @__PURE__ */ new Map(), n = ({ constructor: o, dependencies: r, id: s, singleton: i }) => {
 		if (i && e.has(s)) return e.get(s);
 		const l = o(r.map((c) => n(c)));
@@ -55115,41 +55579,45 @@ function at(...t) {
 			case Zt:
 				Me(e);
 				return;
-			case Gt: return o === r && i(n), Y(e, i);
+			case Pt: return o === r && i(n), Y(e, i);
 		}
 	};
 }
-function P(t, e = Ln) {
-	return I(t, et$1(e));
+function W(t, e = zn) {
+	return I(t, nt(e));
 }
 function ze(...t) {
 	return function(e, n) {
 		switch (e) {
 			case Zt: return;
-			case Gt: return po(...t.map((o) => Y(o, n)));
+			case Pt: return ho(...t.map((o) => Y(o, n)));
 		}
 	};
 }
 var ft = {
+	/** Detailed debugging information including item measurements */
 	DEBUG: 0,
+	/** General informational messages */
 	INFO: 1,
+	/** Warning messages for potential issues */
 	WARN: 2,
+	/** Error messages for failures (default level) */
 	ERROR: 3
-}, To = {
+}, vo = {
 	[ft.DEBUG]: "debug",
 	[ft.ERROR]: "error",
 	[ft.INFO]: "log",
 	[ft.WARN]: "warn"
-}, vo = () => typeof globalThis > "u" ? window : globalThis, Wt = j(() => {
+}, Co = () => typeof globalThis > "u" ? window : globalThis, Gt = j(() => {
 	const t = v(ft.ERROR);
 	return {
 		log: v((n, o, r = ft.INFO) => {
-			r >= (vo().VIRTUOSO_LOG_LEVEL ?? it(t)) && console[To[r]]("%creact-virtuoso: %c%s %o", "color: #0253b3; font-weight: bold", "color: initial", n, o);
+			r >= (Co().VIRTUOSO_LOG_LEVEL ?? it(t)) && console[vo[r]]("%creact-virtuoso: %c%s %o", "color: #0253b3; font-weight: bold", "color: initial", n, o);
 		}),
 		logLevel: t
 	};
 }, [], { singleton: !0 });
-function kt(t, e, n) {
+function Lt(t, e, n) {
 	return _e(t, e, n).callbackRef;
 }
 function _e(t, e, n) {
@@ -55169,9 +55637,9 @@ function _e(t, e, n) {
 		ref: o
 	};
 }
-function zn(t, e, n, o, r, s, i, l, c) {
+function Fn(t, e, n, o, r, s, i, l, c) {
 	return _e(import_react.useCallback((m) => {
-		const x = Co(m.children, e, l ? "offsetWidth" : "offsetHeight", r);
+		const S = wo(m.children, e, l ? "offsetWidth" : "offsetHeight", r);
 		let p = m.parentElement;
 		for (; p.dataset.virtuosoScroller === void 0;) p = p.parentElement;
 		const T = p.lastElementChild.dataset.viewportType === "window";
@@ -55182,7 +55650,7 @@ function zn(t, e, n, o, r, s, i, l, c) {
 			scrollHeight: h,
 			scrollTop: Math.max(R, 0),
 			viewportHeight: f
-		}), s?.(l ? fn("column-gap", getComputedStyle(m).columnGap, r) : fn("row-gap", getComputedStyle(m).rowGap, r)), x !== null && t(x);
+		}), s?.(l ? mn("column-gap", getComputedStyle(m).columnGap, r) : mn("row-gap", getComputedStyle(m).rowGap, r)), S !== null && t(S);
 	}, [
 		t,
 		e,
@@ -55193,7 +55661,7 @@ function zn(t, e, n, o, r, s, i, l, c) {
 		l
 	]), n, c);
 }
-function Co(t, e, n, o) {
+function wo(t, e, n, o) {
 	const r = t.length;
 	if (r === 0) return null;
 	const s = [];
@@ -55202,8 +55670,8 @@ function Co(t, e, n, o) {
 		if (l.dataset.index === void 0) continue;
 		const c = parseInt(l.dataset.index), d = parseFloat(l.dataset.knownSize), m = e(l, n);
 		if (m === 0 && o("Zero-sized element, this should not happen", { child: l }, ft.ERROR), m === d) continue;
-		const x = s[s.length - 1];
-		s.length === 0 || x.size !== m || x.endIndex !== c - 1 ? s.push({
+		const S = s[s.length - 1];
+		s.length === 0 || S.size !== m || S.endIndex !== c - 1 ? s.push({
 			endIndex: c,
 			size: m,
 			startIndex: c
@@ -55211,24 +55679,24 @@ function Co(t, e, n, o) {
 	}
 	return s;
 }
-function fn(t, e, n) {
+function mn(t, e, n) {
 	return e !== "normal" && e?.endsWith("px") !== !0 && n(`${t} was not resolved to pixel value correctly`, e, ft.WARN), e === "normal" ? 0 : parseInt(e ?? "0", 10);
 }
 function Ne(t, e, n) {
 	const o = import_react.useRef(null), r = import_react.useCallback((c) => {
 		if (!c?.offsetParent) return;
 		const d = c.getBoundingClientRect(), m = d.width;
-		let x, p;
+		let S, p;
 		if (e) {
 			const T = e.getBoundingClientRect(), w = d.top - T.top;
-			p = T.height - Math.max(0, w), x = w + e.scrollTop;
+			p = T.height - Math.max(0, w), S = w + e.scrollTop;
 		} else {
 			const T = i.current.ownerDocument.defaultView;
-			p = T.innerHeight - Math.max(0, d.top), x = d.top + T.scrollY;
+			p = T.innerHeight - Math.max(0, d.top), S = d.top + T.scrollY;
 		}
 		o.current = {
 			listHeight: d.height,
-			offsetTop: x,
+			offsetTop: S,
 			visibleHeight: p,
 			visibleWidth: m
 		}, t(o.current);
@@ -55256,8 +55724,8 @@ function Ne(t, e, n) {
 	]), s;
 }
 var It = j(() => {
-	const t = U(), e = U(), n = v(0), o = U(), r = v(0), s = U(), i = U(), l = v(0), c = v(0), d = v(0), m = v(0), x = U(), p = U(), T = v(!1), w = v(!1), R = v(!1);
-	return L(I(t, B(({ scrollTop: h }) => h)), e), L(I(t, B(({ scrollHeight: h }) => h)), i), L(e, r), {
+	const t = U(), e = U(), n = v(0), o = U(), r = v(0), s = U(), i = U(), l = v(0), c = v(0), d = v(0), m = v(0), S = U(), p = U(), T = v(!1), w = v(!1), R = v(!1);
+	return k(I(t, B(({ scrollTop: h }) => h)), e), k(I(t, B(({ scrollHeight: h }) => h)), i), k(e, r), {
 		deviation: n,
 		fixedFooterHeight: d,
 		fixedHeaderHeight: c,
@@ -55268,15 +55736,15 @@ var It = j(() => {
 		scrollContainerState: t,
 		scrollHeight: i,
 		scrollingInProgress: T,
-		scrollTo: x,
+		scrollTo: S,
 		scrollTop: e,
 		skipAnimationFrameInResizeObserver: R,
 		smoothScrollTargetReached: o,
 		statefulScrollTop: r,
 		viewportHeight: s
 	};
-}, [], { singleton: !0 }), se = { lvl: 0 };
-function Fn(t, e) {
+}, [], { singleton: !0 }), re = { lvl: 0 };
+function Vn(t, e) {
 	const n = t.length;
 	if (n === 0) return [];
 	let { index: o, value: r } = e(t[0]);
@@ -55296,10 +55764,10 @@ function Fn(t, e) {
 	}), s;
 }
 function J(t) {
-	return t === se;
+	return t === re;
 }
-function ie$2(t, e) {
-	if (!J(t)) return e === t.k ? t.v : e < t.k ? ie$2(t.l, e) : ie$2(t.r, e);
+function se(t, e) {
+	if (!J(t)) return e === t.k ? t.v : e < t.k ? se(t.l, e) : se(t.r, e);
 }
 function Rt(t, e, n = "k") {
 	if (J(t)) return [-Infinity, void 0];
@@ -55314,18 +55782,18 @@ function Tt(t, e, n) {
 	return J(t) ? Gn(e, n, 1) : e === t.k ? dt(t, {
 		k: e,
 		v: n
-	}) : e < t.k ? mn(dt(t, { l: Tt(t.l, e, n) })) : mn(dt(t, { r: Tt(t.r, e, n) }));
+	}) : e < t.k ? pn(dt(t, { l: Tt(t.l, e, n) })) : pn(dt(t, { r: Tt(t.r, e, n) }));
 }
 function qt() {
-	return se;
+	return re;
 }
 function Yt(t, e, n) {
 	if (J(t)) return [];
 	const o = Rt(t, e)[0];
-	return wo(Ve(t, o, n));
+	return yo(Ve(t, o, n));
 }
 function Fe(t, e) {
-	if (J(t)) return se;
+	if (J(t)) return re;
 	const { k: n, l: o, r } = t;
 	if (e === n) {
 		if (J(o)) return r;
@@ -55333,7 +55801,7 @@ function Fe(t, e) {
 		const [s, i] = Pn(o);
 		return Se(dt(t, {
 			k: s,
-			l: Vn(o),
+			l: Wn(o),
 			v: i
 		}));
 	}
@@ -55362,7 +55830,7 @@ function Se(t) {
 	const { l: e, lvl: n, r: o } = t;
 	if (o.lvl >= n - 1 && e.lvl >= n - 1) return t;
 	if (n > o.lvl + 1) {
-		if (Ee(e)) return Wn(dt(t, { lvl: n - 1 }));
+		if (Ee(e)) return An(dt(t, { lvl: n - 1 }));
 		if (!J(e) && !J(e.r)) return dt(e.r, {
 			l: dt(e, { r: e.r.l }),
 			lvl: n,
@@ -55373,7 +55841,7 @@ function Se(t) {
 		});
 		throw new Error("Unexpected empty nodes");
 	}
-	if (Ee(t)) return Pe(dt(t, { lvl: n - 1 }));
+	if (Ee(t)) return We(dt(t, { lvl: n - 1 }));
 	if (!J(o) && !J(o.l)) {
 		const r = o.l, s = Ee(r) ? o.lvl - 1 : o.lvl;
 		return dt(r, {
@@ -55382,7 +55850,7 @@ function Se(t) {
 				r: r.l
 			}),
 			lvl: r.lvl + 1,
-			r: Pe(dt(o, {
+			r: We(dt(o, {
 				l: r.r,
 				lvl: s
 			}))
@@ -55393,8 +55861,8 @@ function Se(t) {
 function dt(t, e) {
 	return Gn(e.k !== void 0 ? e.k : t.k, e.v !== void 0 ? e.v : t.v, e.lvl !== void 0 ? e.lvl : t.lvl, e.l !== void 0 ? e.l : t.l, e.r !== void 0 ? e.r : t.r);
 }
-function Vn(t) {
-	return J(t.r) ? t.l : Se(dt(t, { r: Vn(t.r) }));
+function Wn(t) {
+	return J(t.r) ? t.l : Se(dt(t, { r: Wn(t.r) }));
 }
 function Ee(t) {
 	return J(t) || t.lvl > t.r.lvl;
@@ -55402,7 +55870,7 @@ function Ee(t) {
 function Pn(t) {
 	return J(t.r) ? [t.k, t.v] : Pn(t.r);
 }
-function Gn(t, e, n, o = se, r = se) {
+function Gn(t, e, n, o = re, r = re) {
 	return {
 		k: t,
 		l: o,
@@ -55411,37 +55879,37 @@ function Gn(t, e, n, o = se, r = se) {
 		v: e
 	};
 }
-function mn(t) {
-	return Pe(Wn(t));
+function pn(t) {
+	return We(An(t));
 }
-function Wn(t) {
+function An(t) {
 	const { l: e } = t;
 	return !J(e) && e.lvl === t.lvl ? dt(e, { r: dt(t, { l: e.r }) }) : t;
 }
-function Pe(t) {
+function We(t) {
 	const { lvl: e, r: n } = t;
 	return !J(n) && !J(n.r) && n.lvl === e && n.r.lvl === e ? dt(n, {
 		l: dt(t, { r: n.l }),
 		lvl: e + 1
 	}) : t;
 }
-function wo(t) {
-	return Fn(t, ({ k: e, v: n }) => ({
+function yo(t) {
+	return Vn(t, ({ k: e, v: n }) => ({
 		index: e,
 		value: n
 	}));
 }
-function An(t, e) {
+function Mn(t, e) {
 	return !!(t && t.startIndex === e.startIndex && t.endIndex === e.endIndex);
 }
-function le(t, e) {
+function ie$2(t, e) {
 	return !!(t && t[0] === e[0] && t[1] === e[1]);
 }
 var De = j(() => ({ recalcInProgress: v(!1) }), [], { singleton: !0 });
-function Mn(t, e, n) {
-	return t[ve(t, e, n)];
+function _n(t, e, n) {
+	return t[Te(t, e, n)];
 }
-function ve(t, e, n, o = 0) {
+function Te(t, e, n, o = 0) {
 	let r = t.length - 1;
 	for (; o <= r;) {
 		const s = Math.floor((o + r) / 2), i = t[s], l = n(i, e);
@@ -55456,20 +55924,20 @@ function ve(t, e, n, o = 0) {
 	}
 	throw new Error(`Failed binary finding record in array - ${t.join(",")}, searched for ${e}`);
 }
-function yo(t, e, n, o) {
-	const r = ve(t, e, o), s = ve(t, n, o, r);
+function bo(t, e, n, o) {
+	const r = Te(t, e, o), s = Te(t, n, o, r);
 	return t.slice(r, s + 1);
 }
 function Ht(t, e) {
 	return Math.round(t.getBoundingClientRect()[e]);
 }
-function be(t) {
+function ye(t) {
 	return !J(t.groupOffsetTree);
 }
 function $e({ index: t }, e) {
 	return e === t ? 0 : e < t ? -1 : 1;
 }
-function bo() {
+function Ro() {
 	return {
 		groupIndices: [],
 		groupOffsetTree: qt(),
@@ -55480,7 +55948,7 @@ function bo() {
 		sizeTree: qt()
 	};
 }
-function Ro(t, e) {
+function Ho(t, e) {
 	let n = J(t) ? 0 : Infinity;
 	for (const o of e) {
 		const { endIndex: r, size: s, startIndex: i } = o;
@@ -55489,55 +55957,55 @@ function Ro(t, e) {
 			continue;
 		}
 		const l = Yt(t, i - 1, r + 1);
-		if (l.some(zo(o))) continue;
+		if (l.some(Fo(o))) continue;
 		let c = !1, d = !1;
-		for (const { end: m, start: x, value: p } of l) c ? (r >= x || s === p) && (t = Fe(t, x)) : (d = p !== s, c = !0), m > r && r >= x && p !== s && (t = Tt(t, r + 1, p));
+		for (const { end: m, start: S, value: p } of l) c ? (r >= S || s === p) && (t = Fe(t, S)) : (d = p !== s, c = !0), m > r && r >= S && p !== s && (t = Tt(t, r + 1, p));
 		d && (t = Tt(t, i, s));
 	}
 	return [t, n];
 }
-function Ho(t) {
+function Eo(t) {
 	return typeof t.groupIndex < "u";
 }
-function Eo({ offset: t }, e) {
+function Bo({ offset: t }, e) {
 	return e === t ? 0 : e < t ? -1 : 1;
 }
-function ce(t, e, n) {
+function le(t, e, n) {
 	if (e.length === 0) return 0;
-	const { index: o, offset: r, size: s } = Mn(e, t, $e), i = t - o, l = s * i + (i - 1) * n + r;
+	const { index: o, offset: r, size: s } = _n(e, t, $e), i = t - o, l = s * i + (i - 1) * n + r;
 	return l > 0 ? l + n : l;
 }
-function _n(t, e) {
-	if (!be(e)) return t;
+function Nn(t, e) {
+	if (!ye(e)) return t;
 	let n = 0;
 	for (; e.groupIndices[n] <= t + n;) n++;
 	return t + n;
 }
-function Nn(t, e, n) {
-	if (Ho(t)) return e.groupIndices[t.groupIndex] + 1;
-	let r = _n(t.index === "LAST" ? n : t.index, e);
+function Dn(t, e, n) {
+	if (Eo(t)) return e.groupIndices[t.groupIndex] + 1;
+	let r = Nn(t.index === "LAST" ? n : t.index, e);
 	return r = Math.max(0, r, Math.min(n, r)), r;
 }
-function Bo(t, e, n, o = 0) {
-	return o > 0 && (e = Math.max(e, Mn(t, o, $e).offset)), Fn(yo(t, e, n, Eo), Lo);
+function Oo(t, e, n, o = 0) {
+	return o > 0 && (e = Math.max(e, _n(t, o, $e).offset)), Vn(bo(t, e, n, Bo), zo);
 }
-function Oo(t, [e, n, o, r]) {
+function Lo(t, [e, n, o, r]) {
 	e.length > 0 && o("received item sizes", e, ft.DEBUG);
 	const s = t.sizeTree;
 	let i = s, l = 0;
 	if (n.length > 0 && J(s) && e.length === 2) {
 		const p = e[0].size, T = e[1].size;
 		i = n.reduce((w, R) => Tt(Tt(w, R, p), R + 1, T), i);
-	} else [i, l] = Ro(i, e);
+	} else [i, l] = Ho(i, e);
 	if (i === s) return t;
-	const { lastIndex: c, lastOffset: d, lastSize: m, offsetTree: x } = Ge(t.offsetTree, l, i, r);
+	const { lastIndex: c, lastOffset: d, lastSize: m, offsetTree: S } = Pe(t.offsetTree, l, i, r);
 	return {
 		groupIndices: n,
-		groupOffsetTree: n.reduce((p, T) => Tt(p, T, ce(T, x, r)), qt()),
+		groupOffsetTree: n.reduce((p, T) => Tt(p, T, le(T, S, r)), qt()),
 		lastIndex: c,
 		lastOffset: d,
 		lastSize: m,
-		offsetTree: x,
+		offsetTree: S,
 		sizeTree: i
 	};
 }
@@ -55551,20 +56019,20 @@ function ko(t) {
 		};
 	});
 }
-function pn(t, e) {
+function hn(t, e) {
 	let n = 0, o = 0;
 	for (; n < t;) n += e[o + 1] - e[o] - 1, o++;
 	return o - (n === t ? 0 : 1);
 }
-function Ge(t, e, n, o) {
+function Pe(t, e, n, o) {
 	let r = t, s = 0, i = 0, l = 0, c = 0;
 	if (e !== 0) {
-		c = ve(r, e - 1, $e), l = r[c].offset;
+		c = Te(r, e - 1, $e), l = r[c].offset;
 		const m = Rt(n, e - 1);
 		s = m[0], i = m[1], r.length && r[c].size === Rt(n, e)[1] && (c -= 1), r = r.slice(0, c + 1);
 	} else r = [];
 	for (const { start: d, value: m } of Yt(n, e, Infinity)) {
-		const x = d - s, p = x * i + l + x * o;
+		const S = d - s, p = S * i + l + S * o;
 		r.push({
 			index: d,
 			offset: p,
@@ -55578,42 +56046,42 @@ function Ge(t, e, n, o) {
 		offsetTree: r
 	};
 }
-function Lo(t) {
+function zo(t) {
 	return {
 		index: t.index,
 		value: t
 	};
 }
-function zo(t) {
+function Fo(t) {
 	const { endIndex: e, size: n, startIndex: o } = t;
 	return (r) => r.start === o && (r.end === e || r.end === Infinity) && r.value === n;
 }
-var Fo = {
+var Vo = {
 	offsetHeight: "height",
 	offsetWidth: "width"
-}, Lt = j(([{ log: t }, { recalcInProgress: e }]) => {
-	const n = U(), o = U(), r = ht(o, 0), s = U(), i = U(), l = v(0), c = v([]), d = v(void 0), m = v(void 0), x = v(void 0), p = v(void 0), T = v((u, g) => Ht(u, Fo[g])), w = v(void 0), R = v(0), h = bo(), f = ht(I(n, $(c, t, R), Ot(Oo, h), et$1()), h), a = ht(I(c, et$1(), Ot((u, g) => ({
+}, kt = j(([{ log: t }, { recalcInProgress: e }]) => {
+	const n = U(), o = U(), r = ht(o, 0), s = U(), i = U(), l = v(0), c = v([]), d = v(void 0), m = v(void 0), S = v(void 0), p = v(void 0), T = v((u, g) => Ht(u, Vo[g])), w = v(void 0), R = v(0), h = Ro(), f = ht(I(n, $(c, t, R), Ot(Lo, h), nt()), h), a = ht(I(c, nt(), Ot((u, g) => ({
 		current: g,
 		prev: u.current
 	}), {
 		current: [],
 		prev: []
 	}), B(({ prev: u }) => u)), []);
-	L(I(c, G((u) => u.length > 0), $(f, R), B(([u, g, C]) => {
-		const z = u.reduce((O, V, N) => Tt(O, V, ce(V, g.offsetTree, C) || N), qt());
+	k(I(c, P((u) => u.length > 0), $(f, R), B(([u, g, C]) => {
+		const z = u.reduce((O, V, N) => Tt(O, V, le(V, g.offsetTree, C) || N), qt());
 		return {
 			...g,
 			groupIndices: u,
 			groupOffsetTree: z
 		};
-	})), f), L(I(o, $(f), G(([u, { lastIndex: g }]) => u < g), B(([u, { lastIndex: g, lastSize: C }]) => [{
+	})), f), k(I(o, $(f), P(([u, { lastIndex: g }]) => u < g), B(([u, { lastIndex: g, lastSize: C }]) => [{
 		endIndex: g,
 		size: C,
 		startIndex: u
-	}])), n), L(d, m);
-	const S = ht(I(d, B((u) => u === void 0)), !0);
-	L(I(m, G((u) => u !== void 0 && J(it(f).sizeTree)), B((u) => {
-		const g = it(x), C = it(c).length > 0;
+	}])), n), k(d, m);
+	const x = ht(I(d, B((u) => u === void 0)), !0);
+	k(I(m, P((u) => u !== void 0 && J(it(f).sizeTree)), B((u) => {
+		const g = it(S), C = it(c).length > 0;
 		return g !== void 0 && g !== 0 ? C ? [{
 			endIndex: 0,
 			size: g,
@@ -55627,7 +56095,7 @@ var Fo = {
 			size: u,
 			startIndex: 0
 		}];
-	})), n), L(I(p, G((u) => u !== void 0 && u.length > 0 && J(it(f).sizeTree)), B((u) => {
+	})), n), k(I(p, P((u) => u !== void 0 && u.length > 0 && J(it(f).sizeTree)), B((u) => {
 		const g = [];
 		let C = u[0], z = 0;
 		for (let O = 1; O < u.length; O++) {
@@ -55643,7 +56111,7 @@ var Fo = {
 			size: C,
 			startIndex: z
 		}), g;
-	})), n), L(I(c, $(x, m), G(([, u, g]) => u !== void 0 && g !== void 0), B(([u, g, C]) => {
+	})), n), k(I(c, $(S, m), P(([, u, g]) => u !== void 0 && g !== void 0), B(([u, g, C]) => {
 		const z = [];
 		for (let O = 0; O < u.length; O++) {
 			const V = u[O], N = u[O + 1];
@@ -55674,19 +56142,19 @@ var Fo = {
 		prev: 0
 	}), B((u) => u.diff)), (u) => {
 		const { groupIndices: g } = it(f);
-		if (u > 0) _(e, !0), _(s, u + pn(u, g));
+		if (u > 0) _(e, !0), _(s, u + hn(u, g));
 		else if (u < 0) {
 			const C = it(a);
-			C.length > 0 && (u -= pn(-u, C)), _(i, u);
+			C.length > 0 && (u -= hn(-u, C)), _(i, u);
 		}
 	}), Y(I(l, $(t)), ([u, g]) => {
 		u < 0 && g("`firstItemIndex` prop should not be set to less than zero. If you don't know the total count, just use a very high value", { firstItemIndex: l }, ft.ERROR);
 	});
 	const y = vt(s);
-	L(I(s, $(f), B(([u, g]) => {
+	k(I(s, $(f), B(([u, g]) => {
 		const C = g.groupIndices.length > 0, z = [], O = g.lastSize;
 		if (C) {
-			const V = ie$2(g.sizeTree, 0);
+			const V = se(g.sizeTree, 0);
 			let N = 0, Z = 0;
 			for (; N < u;) {
 				const q = g.groupIndices[Z], Q = g.groupIndices.length === Z + 1 ? Infinity : g.groupIndices[Z + 1] - q - 1;
@@ -55732,10 +56200,10 @@ var Fo = {
 			ranges: []
 		}).ranges;
 	})), n);
-	const k = vt(I(i, $(f, R), B(([u, { offsetTree: g }, C]) => {
-		return ce(-u, g, C);
+	const L = vt(I(i, $(f, R), B(([u, { offsetTree: g }, C]) => {
+		return le(-u, g, C);
 	})));
-	return L(I(i, $(f, R), B(([u, g, C]) => {
+	return k(I(i, $(f, R), B(([u, g, C]) => {
 		if (g.groupIndices.length > 0) {
 			if (J(g.sizeTree)) return g;
 			let V = qt();
@@ -55747,7 +56215,7 @@ var Fo = {
 				F++, Z += Q + 1;
 			}
 			if (V = _t(g.sizeTree).reduce((Q, { k: gt, v: ut }) => Tt(Q, Math.max(0, gt + u), ut), V), Z !== -u) {
-				const Q = ie$2(g.sizeTree, mt);
+				const Q = se(g.sizeTree, mt);
 				V = Tt(V, 0, Q);
 				const gt = Rt(g.sizeTree, -u + 1)[1];
 				V = Tt(V, 1, gt);
@@ -55755,14 +56223,14 @@ var Fo = {
 			return {
 				...g,
 				sizeTree: V,
-				...Ge(g.offsetTree, 0, V, C)
+				...Pe(g.offsetTree, 0, V, C)
 			};
 		}
 		const O = _t(g.sizeTree).reduce((V, { k: N, v: Z }) => Tt(V, Math.max(0, N + u), Z), qt());
 		return {
 			...g,
 			sizeTree: O,
-			...Ge(g.offsetTree, 0, O, C)
+			...Pe(g.offsetTree, 0, O, C)
 		};
 	})), f), {
 		beforeUnshiftWith: y,
@@ -55770,61 +56238,61 @@ var Fo = {
 		defaultItemSize: m,
 		firstItemIndex: l,
 		fixedItemSize: d,
-		fixedGroupSize: x,
+		fixedGroupSize: S,
 		gap: R,
 		groupIndices: c,
 		heightEstimates: p,
 		itemSize: T,
 		listRefresh: H,
 		shiftWith: i,
-		shiftWithOffset: k,
+		shiftWithOffset: L,
 		sizeRanges: n,
 		sizes: f,
 		statefulTotalCount: r,
 		totalCount: o,
-		trackItemSizes: S,
+		trackItemSizes: x,
 		unshiftWith: s
 	};
-}, ot(Wt, De), { singleton: !0 });
-function Vo(t) {
+}, rt(Gt, De), { singleton: !0 });
+function Wo(t) {
 	return t.reduce((e, n) => (e.groupIndices.push(e.totalCount), e.totalCount += n + 1, e), {
 		groupIndices: [],
 		totalCount: 0
 	});
 }
-var Dn = j(([{ groupIndices: t, sizes: e, totalCount: n }, { headerHeight: o, scrollTop: r }]) => {
-	const s = U(), i = U(), l = vt(I(s, B(Vo)));
-	return L(I(l, B((c) => c.totalCount)), n), L(I(l, B((c) => c.groupIndices)), t), L(I(at(r, e, o), G(([c, d]) => be(d)), B(([c, d, m]) => Rt(d.groupOffsetTree, Math.max(c - m, 0), "v")[0]), et$1(), B((c) => [c])), i), {
+var $n = j(([{ groupIndices: t, sizes: e, totalCount: n }, { headerHeight: o, scrollTop: r }]) => {
+	const s = U(), i = U(), l = vt(I(s, B(Wo)));
+	return k(I(l, B((c) => c.totalCount)), n), k(I(l, B((c) => c.groupIndices)), t), k(I(at(r, e, o), P(([c, d]) => ye(d)), B(([c, d, m]) => Rt(d.groupOffsetTree, Math.max(c - m, 0), "v")[0]), nt(), B((c) => [c])), i), {
 		groupCounts: s,
 		topItemsIndexes: i
 	};
-}, ot(Lt, It)), At = j(([{ log: t }]) => {
-	const e = v(!1), n = vt(I(e, G((o) => o), et$1()));
+}, rt(kt, It)), At = j(([{ log: t }]) => {
+	const e = v(!1), n = vt(I(e, P((o) => o), nt()));
 	return Y(e, (o) => {
 		o && it(t)("props updated", {}, ft.DEBUG);
 	}), {
 		didMount: n,
 		propsReady: e
 	};
-}, ot(Wt), { singleton: !0 }), Po = typeof document < "u" && "scrollBehavior" in document.documentElement.style;
-function $n(t) {
+}, rt(Gt), { singleton: !0 }), Po = typeof document < "u" && "scrollBehavior" in document.documentElement.style;
+function Un(t) {
 	const e = typeof t == "number" ? { index: t } : t;
 	return e.align || (e.align = "start"), (!e.behavior || !Po) && (e.behavior = "auto"), e.offset === void 0 && (e.offset = 0), e;
 }
-var fe = j(([{ gap: t, listRefresh: e, sizes: n, totalCount: o }, { fixedFooterHeight: r, fixedHeaderHeight: s, footerHeight: i, headerHeight: l, scrollingInProgress: c, scrollTo: d, smoothScrollTargetReached: m, viewportHeight: x }, { log: p }]) => {
+var de = j(([{ gap: t, listRefresh: e, sizes: n, totalCount: o }, { fixedFooterHeight: r, fixedHeaderHeight: s, footerHeight: i, headerHeight: l, scrollingInProgress: c, scrollTo: d, smoothScrollTargetReached: m, viewportHeight: S }, { log: p }]) => {
 	const T = U(), w = U(), R = v(0);
 	let h = null, f = null, a = null;
-	function S() {
+	function x() {
 		h !== null && (h(), h = null), a !== null && (a(), a = null), f && (clearTimeout(f), f = null), _(c, !1);
 	}
-	return L(I(T, $(n, x, o, R, l, i, p), $(t, s, r), B(([[H, y, k, u, g, C, z, O], V, N, Z]) => {
-		const F = $n(H), { align: mt, behavior: q, offset: Q } = F, gt = u - 1, ut = Nn(F, y, gt);
-		let xt = ce(ut, y.offsetTree, V) + C;
-		mt === "end" ? (xt += N + Rt(y.sizeTree, ut)[1] - k + Z, ut === gt && (xt += z)) : mt === "center" ? xt += (N + Rt(y.sizeTree, ut)[1] - k + Z) / 2 : xt -= g, Q !== void 0 && Q !== 0 && (xt += Q);
+	return k(I(T, $(n, S, o, R, l, i, p), $(t, s, r), B(([[H, y, L, u, g, C, z, O], V, N, Z]) => {
+		const F = Un(H), { align: mt, behavior: q, offset: Q } = F, gt = u - 1, ut = Dn(F, y, gt);
+		let St = le(ut, y.offsetTree, V) + C;
+		mt === "end" ? (St += N + Rt(y.sizeTree, ut)[1] - L + Z, ut === gt && (St += z)) : mt === "center" ? St += (N + Rt(y.sizeTree, ut)[1] - L + Z) / 2 : St -= g, Q !== void 0 && Q !== 0 && (St += Q);
 		const Ft = (pt) => {
-			S(), pt ? (O("retrying to scroll to", { location: H }, ft.DEBUG), _(T, H)) : (_(w, !0), O("list did not change, scroll successful", {}, ft.DEBUG));
+			x(), pt ? (O("retrying to scroll to", { location: H }, ft.DEBUG), _(T, H)) : (_(w, !0), O("list did not change, scroll successful", {}, ft.DEBUG));
 		};
-		if (S(), q === "smooth") {
+		if (x(), q === "smooth") {
 			let pt = !1;
 			a = Y(e, (Kt) => {
 				pt = pt || Kt;
@@ -55833,21 +56301,21 @@ var fe = j(([{ gap: t, listRefresh: e, sizes: n, totalCount: o }, { fixedFooterH
 			});
 		} else h = yt(I(e, Go(150)), Ft);
 		return f = setTimeout(() => {
-			S();
+			x();
 		}, 1200), _(c, !0), O("scrolling from index to", {
 			behavior: q,
 			index: ut,
-			top: xt
+			top: St
 		}, ft.DEBUG), {
 			behavior: q,
-			top: xt
+			top: St
 		};
 	})), d), {
 		scrollTargetReached: w,
 		scrollToIndex: T,
 		topListHeight: R
 	};
-}, ot(Lt, It, Wt), { singleton: !0 });
+}, rt(kt, It, Gt), { singleton: !0 });
 function Go(t) {
 	return (e) => {
 		const n = setTimeout(() => {
@@ -55867,9 +56335,9 @@ function Ke(t, e) {
 	const n = e - 1;
 	return typeof t == "number" ? t : t.index === "LAST" ? n : t.index;
 }
-var me = j(([{ defaultItemSize: t, listRefresh: e, sizes: n }, { scrollTop: o }, { scrollTargetReached: r, scrollToIndex: s }, { didMount: i }]) => {
+var fe = j(([{ defaultItemSize: t, listRefresh: e, sizes: n }, { scrollTop: o }, { scrollTargetReached: r, scrollToIndex: s }, { didMount: i }]) => {
 	const l = v(!0), c = v(0), d = v(!0);
-	return L(I(i, $(c), G(([m, x]) => x !== 0), Bt(!1)), l), L(I(i, $(c), G(([m, x]) => x !== 0), Bt(!1)), d), Y(I(at(e, i), $(l, n, t, d), G(([[, m], x, { sizeTree: p }, T, w]) => m && (!J(p) || Ae(T)) && !x && !w), $(c)), ([, m]) => {
+	return k(I(i, $(c), P(([m, S]) => S !== 0), Bt(!1)), l), k(I(i, $(c), P(([m, S]) => S !== 0), Bt(!1)), d), Y(I(at(e, i), $(l, n, t, d), P(([[, m], S, { sizeTree: p }, T, w]) => m && (!J(p) || Ae(T)) && !S && !w), $(c)), ([, m]) => {
 		yt(r, () => {
 			_(d, !0);
 		}), Ue(4, () => {
@@ -55882,11 +56350,11 @@ var me = j(([{ defaultItemSize: t, listRefresh: e, sizes: n }, { scrollTop: o },
 		initialTopMostItemIndex: c,
 		scrolledToInitialItem: l
 	};
-}, ot(Lt, It, fe, At), { singleton: !0 });
-function Un(t, e) {
+}, rt(kt, It, de, At), { singleton: !0 });
+function Kn(t, e) {
 	return Math.abs(t - e) < 1.01;
 }
-var ue = "up", ne = "down", Wo = "none", Ao = {
+var ce = "up", ee = "down", Ao = "none", Mo = {
 	atBottom: !1,
 	notAtBottomBecause: "NOT_SHOWING_LAST_ITEM",
 	state: {
@@ -55895,12 +56363,12 @@ var ue = "up", ne = "down", Wo = "none", Ao = {
 		scrollTop: 0,
 		viewportHeight: 0
 	}
-}, Mo = 0, pe = j(([{ footerHeight: t, headerHeight: e, scrollBy: n, scrollContainerState: o, scrollTop: r, viewportHeight: s }]) => {
-	const i = v(!1), l = v(!0), c = U(), d = U(), m = v(4), x = v(Mo), p = ht(I(ze(I(P(r), $t(1), Bt(!0)), I(P(r), $t(1), Bt(!1), dn(100))), et$1()), !1), T = ht(I(ze(I(n, Bt(!0)), I(n, Bt(!1), dn(200))), et$1()), !1);
-	L(I(at(P(r), P(x)), B(([a, S]) => a <= S), et$1()), l), L(I(l, zt(50)), d);
-	const w = vt(I(at(o, P(s), P(e), P(t), P(m)), Ot((a, [{ scrollHeight: S, scrollTop: H }, y, k, u, g]) => {
-		const C = H + y - S > -g, z = {
-			scrollHeight: S,
+}, _o = 0, me = j(([{ footerHeight: t, headerHeight: e, scrollBy: n, scrollContainerState: o, scrollTop: r, viewportHeight: s }]) => {
+	const i = v(!1), l = v(!0), c = U(), d = U(), m = v(4), S = v(_o), p = ht(I(ze(I(W(r), $t(1), Bt(!0)), I(W(r), $t(1), Bt(!1), fn(100))), nt()), !1), T = ht(I(ze(I(n, Bt(!0)), I(n, Bt(!1), fn(200))), nt()), !1);
+	k(I(at(W(r), W(S)), B(([a, x]) => a <= x), nt()), l), k(I(l, zt(50)), d);
+	const w = vt(I(at(o, W(s), W(e), W(t), W(m)), Ot((a, [{ scrollHeight: x, scrollTop: H }, y, L, u, g]) => {
+		const C = H + y - x > -g, z = {
+			scrollHeight: x,
 			scrollTop: H,
 			viewportHeight: y
 		};
@@ -55919,25 +56387,25 @@ var ue = "up", ne = "down", Wo = "none", Ao = {
 			notAtBottomBecause: O,
 			state: z
 		};
-	}, Ao), et$1((a, S) => a !== void 0 && a.atBottom === S.atBottom))), R = ht(I(o, Ot((a, { scrollHeight: S, scrollTop: H, viewportHeight: y }) => {
-		if (!Un(a.scrollHeight, S)) {
-			const k = S - (H + y) < 1;
-			return a.scrollTop !== H && k ? {
+	}, Mo), nt((a, x) => a !== void 0 && a.atBottom === x.atBottom))), R = ht(I(o, Ot((a, { scrollHeight: x, scrollTop: H, viewportHeight: y }) => {
+		if (!Kn(a.scrollHeight, x)) {
+			const L = x - (H + y) < 1;
+			return a.scrollTop !== H && L ? {
 				changed: !0,
 				jump: a.scrollTop - H,
-				scrollHeight: S,
+				scrollHeight: x,
 				scrollTop: H
 			} : {
 				changed: !0,
 				jump: 0,
-				scrollHeight: S,
+				scrollHeight: x,
 				scrollTop: H
 			};
 		}
 		return {
 			changed: !1,
 			jump: 0,
-			scrollHeight: S,
+			scrollHeight: x,
 			scrollTop: H
 		};
 	}, {
@@ -55945,26 +56413,26 @@ var ue = "up", ne = "down", Wo = "none", Ao = {
 		jump: 0,
 		scrollHeight: 0,
 		scrollTop: 0
-	}), G((a) => a.changed), B((a) => a.jump)), 0);
-	L(I(w, B((a) => a.atBottom)), i), L(I(i, zt(50)), c);
-	const h = v(ne);
-	L(I(o, B(({ scrollTop: a }) => a), et$1(), Ot((a, S) => it(T) ? {
+	}), P((a) => a.changed), B((a) => a.jump)), 0);
+	k(I(w, B((a) => a.atBottom)), i), k(I(i, zt(50)), c);
+	const h = v(ee);
+	k(I(o, B(({ scrollTop: a }) => a), nt(), Ot((a, x) => it(T) ? {
 		direction: a.direction,
-		prevScrollTop: S
+		prevScrollTop: x
 	} : {
-		direction: S < a.prevScrollTop ? ue : ne,
-		prevScrollTop: S
+		direction: x < a.prevScrollTop ? ce : ee,
+		prevScrollTop: x
 	}, {
-		direction: ne,
+		direction: ee,
 		prevScrollTop: 0
-	}), B((a) => a.direction)), h), L(I(o, zt(50), Bt(Wo)), h);
+	}), B((a) => a.direction)), h), k(I(o, zt(50), Bt(Ao)), h);
 	const f = v(0);
-	return L(I(p, G((a) => !a), Bt(0)), f), L(I(r, zt(100), $(p), G(([a, S]) => S), Ot(([a, S], [H]) => [S, H], [0, 0]), B(([a, S]) => S - a)), f), {
+	return k(I(p, P((a) => !a), Bt(0)), f), k(I(r, zt(100), $(p), P(([a, x]) => x), Ot(([a, x], [H]) => [x, H], [0, 0]), B(([a, x]) => x - a)), f), {
 		atBottomState: w,
 		atBottomStateChange: c,
 		atBottomThreshold: m,
 		atTopStateChange: d,
-		atTopThreshold: x,
+		atTopThreshold: S,
 		isAtBottom: i,
 		isAtTop: l,
 		isScrolling: p,
@@ -55972,11 +56440,11 @@ var ue = "up", ne = "down", Wo = "none", Ao = {
 		scrollDirection: h,
 		scrollVelocity: f
 	};
-}, ot(It)), ae = "top", de = "bottom", hn = "none";
-function gn(t, e, n) {
-	return typeof t == "number" ? n === ue && e === ae || n === ne && e === de ? t : 0 : n === ue ? e === ae ? t.main : t.reverse : e === de ? t.main : t.reverse;
+}, rt(It)), ue = "top", ae = "bottom", gn = "none";
+function In(t, e, n) {
+	return typeof t == "number" ? n === ce && e === ue || n === ee && e === ae ? t : 0 : n === ce ? e === ue ? t.main : t.reverse : e === ae ? t.main : t.reverse;
 }
-function In(t, e) {
+function Sn(t, e) {
 	return typeof t == "number" ? t : t[e] ?? 0;
 }
 var je = j(([{ deviation: t, fixedHeaderHeight: e, headerHeight: n, scrollTop: o, viewportHeight: r }]) => {
@@ -55986,17 +56454,17 @@ var je = j(([{ deviation: t, fixedHeaderHeight: e, headerHeight: n, scrollTop: o
 		listBoundary: s,
 		overscan: c,
 		topListHeight: i,
-		visibleRange: ht(I(at(P(o), P(r), P(n), P(s, le), P(c), P(i), P(e), P(t), P(l)), B(([m, x, p, [T, w], R, h, f, a, S]) => {
-			const H = m - a, y = h + f, k = Math.max(p - H, 0);
-			let u = hn;
-			const g = In(S, ae), C = In(S, de);
-			return T -= a, T += p + f, w += p + f, w -= a, T > m + y - g && (u = ue), w < m - k + x + C && (u = ne), u !== hn ? [Math.max(H - p - gn(R, ae, u) - g, 0), H - k - f + x + gn(R, de, u) + C] : null;
-		}), G((m) => m !== null), et$1(le)), [0, 0])
+		visibleRange: ht(I(at(W(o), W(r), W(n), W(s, ie$2), W(c), W(i), W(e), W(t), W(l)), B(([m, S, p, [T, w], R, h, f, a, x]) => {
+			const H = m - a, y = h + f, L = Math.max(p - H, 0);
+			let u = gn;
+			const g = Sn(x, ue), C = Sn(x, ae);
+			return T -= a, T += p + f, w += p + f, w -= a, T > m + y - g && (u = ce), w < m - L + S + C && (u = ee), u !== gn ? [Math.max(H - p - In(R, ue, u) - g, 0), H - L - f + S + In(R, ae, u) + C] : null;
+		}), P((m) => m !== null), nt(ie$2)), [0, 0])
 	};
-}, ot(It), { singleton: !0 });
-function _o(t, e, n) {
-	if (be(e)) {
-		const o = _n(t, e);
+}, rt(It), { singleton: !0 });
+function No(t, e, n) {
+	if (ye(e)) {
+		const o = Nn(t, e);
 		return [{
 			index: Rt(e.groupOffsetTree, o)[0],
 			offset: 0,
@@ -56026,7 +56494,7 @@ var Be = {
 	topListHeight: 0,
 	totalCount: 0
 };
-function Te(t, e, n, o, r, s) {
+function xe(t, e, n, o, r, s) {
 	const { lastIndex: i, lastOffset: l, lastSize: c } = r;
 	let d = 0, m = 0;
 	if (t.length > 0) {
@@ -56034,7 +56502,7 @@ function Te(t, e, n, o, r, s) {
 		const R = t[t.length - 1];
 		m = R.offset + R.size;
 	}
-	const x = n - i, p = l + x * c + (x - 1) * o, T = d, w = p - m;
+	const S = n - i, p = l + S * c + (S - 1) * o, T = d, w = p - m;
 	return {
 		bottom: m,
 		firstItemIndex: s,
@@ -56047,23 +56515,23 @@ function Te(t, e, n, o, r, s) {
 		totalCount: n
 	};
 }
-function Kn(t, e, n, o, r, s) {
+function jn(t, e, n, o, r, s) {
 	let i = 0;
 	if (n.groupIndices.length > 0) for (const m of n.groupIndices) {
 		if (m - i >= t) break;
 		i++;
 	}
 	const l = t + i, c = Ke(e, l);
-	return Te(Array.from({ length: l }).map((m, x) => ({
-		data: s[x + c],
-		index: x + c,
+	return xe(Array.from({ length: l }).map((m, S) => ({
+		data: s[S + c],
+		index: S + c,
 		offset: 0,
 		size: 0
 	})), [], l, r, n, o);
 }
 function xn(t, e, n) {
 	if (t.length === 0) return [];
-	if (!be(e)) return t.map((d) => ({
+	if (!ye(e)) return t.map((d) => ({
 		...d,
 		index: d.index + n,
 		originalIndex: d.index
@@ -56089,69 +56557,69 @@ function xn(t, e, n) {
 	}
 	return s;
 }
-function Sn(t, e) {
+function Tn(t, e) {
 	return t === void 0 ? 0 : typeof t == "number" ? t : t[e] ?? 0;
 }
-var Ut = j(([{ data: t, firstItemIndex: e, gap: n, sizes: o, totalCount: r }, s, { listBoundary: i, topListHeight: l, visibleRange: c }, { initialTopMostItemIndex: d, scrolledToInitialItem: m }, { topListHeight: x }, p, { didMount: T }, { recalcInProgress: w }]) => {
+var Ut = j(([{ data: t, firstItemIndex: e, gap: n, sizes: o, totalCount: r }, s, { listBoundary: i, topListHeight: l, visibleRange: c }, { initialTopMostItemIndex: d, scrolledToInitialItem: m }, { topListHeight: S }, p, { didMount: T }, { recalcInProgress: w }]) => {
 	const R = v([]), h = v(0), f = U(), a = v(0);
-	L(s.topItemsIndexes, R);
-	const S = ht(I(at(T, w, P(c, le), P(r), P(o), P(d), m, P(R), P(e), P(n), P(a), t), G(([u, g, , C, , , , , , , , z]) => {
+	k(s.topItemsIndexes, R);
+	const x = ht(I(at(T, w, W(c, ie$2), W(r), W(o), W(d), m, W(R), W(e), W(n), W(a), t), P(([u, g, , C, , , , , , , , z]) => {
 		const O = z !== void 0 && z.length !== C;
 		return u && !g && !O;
 	}), B(([, , [u, g], C, z, O, V, N, Z, F, mt, q]) => {
-		const Q = z, { offsetTree: gt, sizeTree: ut } = Q, xt = it(h);
+		const Q = z, { offsetTree: gt, sizeTree: ut } = Q, St = it(h);
 		if (C === 0) return {
 			...Be,
 			totalCount: C
 		};
-		if (u === 0 && g === 0) return xt === 0 ? {
+		if (u === 0 && g === 0) return St === 0 ? {
 			...Be,
 			totalCount: C
-		} : Kn(xt, O, z, Z, F, q || []);
-		if (J(ut)) return xt > 0 ? null : Te(_o(Ke(O, C), Q, q), [], C, F, Q, Z);
+		} : jn(St, O, z, Z, F, q || []);
+		if (J(ut)) return St > 0 ? null : xe(No(Ke(O, C), Q, q), [], C, F, Q, Z);
 		const Ft = [];
 		if (N.length > 0) {
 			const D = N[0], K = N[N.length - 1];
-			let rt = 0;
+			let st = 0;
 			for (const tt of Yt(ut, D, K)) {
-				const X = tt.value, lt = Math.max(tt.start, D), St = Math.min(tt.end, K);
-				for (let ct = lt; ct <= St; ct++) Ft.push({
+				const X = tt.value, lt = Math.max(tt.start, D), xt = Math.min(tt.end, K);
+				for (let ct = lt; ct <= xt; ct++) Ft.push({
 					data: q?.[ct],
 					index: ct,
-					offset: rt,
+					offset: st,
 					size: X
-				}), rt += X;
+				}), st += X;
 			}
 		}
-		if (!V) return Te([], Ft, C, F, Q, Z);
-		const pt = N.length > 0 ? N[N.length - 1] + 1 : 0, Kt = Bo(gt, u, g, pt);
+		if (!V) return xe([], Ft, C, F, Q, Z);
+		const pt = N.length > 0 ? N[N.length - 1] + 1 : 0, Kt = Oo(gt, u, g, pt);
 		if (Kt.length === 0) return null;
-		const Qt = C - 1, Et = ye([], (D) => {
+		const Jt = C - 1, Et = we([], (D) => {
 			for (const K of Kt) {
-				const rt = K.value;
-				let tt = rt.offset, X = K.start;
-				const lt = rt.size;
-				if (rt.offset < u) {
-					X += Math.floor((u - rt.offset + F) / (lt + F));
+				const st = K.value;
+				let tt = st.offset, X = K.start;
+				const lt = st.size;
+				if (st.offset < u) {
+					X += Math.floor((u - st.offset + F) / (lt + F));
 					const ct = X - K.start;
 					tt += ct * lt + ct * F;
 				}
 				X < pt && (tt += (pt - X) * lt, X = pt);
-				const St = Math.min(K.end, Qt);
-				for (let ct = X; ct <= St && !(tt >= g); ct++) D.push({
+				const xt = Math.min(K.end, Jt);
+				for (let ct = X; ct <= xt && !(tt >= g); ct++) D.push({
 					data: q?.[ct],
 					index: ct,
 					offset: tt,
 					size: lt
 				}), tt += lt + F;
 			}
-		}), te = Sn(mt, ae), b = Sn(mt, de);
-		if (Et.length > 0 && (te > 0 || b > 0)) {
+		}), Qt = Tn(mt, ue), b = Tn(mt, ae);
+		if (Et.length > 0 && (Qt > 0 || b > 0)) {
 			const D = Et[0], K = Et[Et.length - 1];
-			if (te > 0 && D.index > pt) {
-				const rt = Math.min(te, D.index - pt), tt = [];
+			if (Qt > 0 && D.index > pt) {
+				const st = Math.min(Qt, D.index - pt), tt = [];
 				let X = D.offset;
-				for (let lt = D.index - 1; lt >= D.index - rt; lt--) {
+				for (let lt = D.index - 1; lt >= D.index - st; lt--) {
 					const ct = Yt(ut, lt, lt)[0]?.value ?? D.size;
 					X -= ct + F, tt.unshift({
 						data: q?.[lt],
@@ -56162,31 +56630,31 @@ var Ut = j(([{ data: t, firstItemIndex: e, gap: n, sizes: o, totalCount: r }, s,
 				}
 				Et.unshift(...tt);
 			}
-			if (b > 0 && K.index < Qt) {
-				const rt = Math.min(b, Qt - K.index);
+			if (b > 0 && K.index < Jt) {
+				const st = Math.min(b, Jt - K.index);
 				let tt = K.offset + K.size + F;
-				for (let X = K.index + 1; X <= K.index + rt; X++) {
-					const St = Yt(ut, X, X)[0]?.value ?? K.size;
+				for (let X = K.index + 1; X <= K.index + st; X++) {
+					const xt = Yt(ut, X, X)[0]?.value ?? K.size;
 					Et.push({
 						data: q?.[X],
 						index: X,
 						offset: tt,
-						size: St
-					}), tt += St + F;
+						size: xt
+					}), tt += xt + F;
 				}
 			}
 		}
-		return Te(Et, Ft, C, F, Q, Z);
-	}), G((u) => u !== null), et$1()), Be);
-	L(I(t, G(Ae), B((u) => u?.length)), r), L(I(S, B((u) => u.topListHeight)), x), L(x, l), L(I(S, B((u) => [u.top, u.bottom])), i), L(I(S, B((u) => u.items)), f);
-	const H = vt(I(S, G(({ items: u }) => u.length > 0), $(r, t), G(([{ items: u }, g]) => u[u.length - 1].originalIndex === g - 1), B(([, u, g]) => [u - 1, g]), et$1(le), B(([u]) => u))), y = vt(I(S, zt(200), G(({ items: u, topItems: g }) => u.length > 0 && u[0].originalIndex === g.length), B(({ items: u }) => u[0].index), et$1()));
+		return xe(Et, Ft, C, F, Q, Z);
+	}), P((u) => u !== null), nt()), Be);
+	k(I(t, P(Ae), B((u) => u?.length)), r), k(I(x, B((u) => u.topListHeight)), S), k(S, l), k(I(x, B((u) => [u.top, u.bottom])), i), k(I(x, B((u) => u.items)), f);
+	const H = vt(I(x, P(({ items: u }) => u.length > 0), $(r, t), P(([{ items: u }, g]) => u[u.length - 1].originalIndex === g - 1), B(([, u, g]) => [u - 1, g]), nt(ie$2), B(([u]) => u))), y = vt(I(x, zt(200), P(({ items: u, topItems: g }) => u.length > 0 && u[0].originalIndex === g.length), B(({ items: u }) => u[0].index), nt()));
 	return {
 		endReached: H,
 		initialItemCount: h,
 		itemsRendered: f,
-		listState: S,
+		listState: x,
 		minOverscanItemCount: a,
-		rangeChanged: vt(I(S, G(({ items: u }) => u.length > 0), B(({ items: u }) => {
+		rangeChanged: vt(I(x, P(({ items: u }) => u.length > 0), B(({ items: u }) => {
 			let g = 0, C = u.length - 1;
 			for (; u[g].type === "group" && g < C;) g++;
 			for (; u[C].type === "group" && C > g;) C--;
@@ -56194,24 +56662,24 @@ var Ut = j(([{ data: t, firstItemIndex: e, gap: n, sizes: o, totalCount: r }, s,
 				endIndex: u[C].index,
 				startIndex: u[g].index
 			};
-		}), et$1(An))),
+		}), nt(Mn))),
 		startReached: y,
 		topItemsIndexes: R,
 		...p
 	};
-}, ot(Lt, Dn, je, me, fe, pe, At, De), { singleton: !0 }), jn = j(([{ fixedFooterHeight: t, fixedHeaderHeight: e, footerHeight: n, headerHeight: o }, { listState: r }]) => {
-	const s = U(), i = ht(I(at(n, t, o, e, r), B(([l, c, d, m, x]) => l + c + d + m + x.offsetBottom + x.bottom)), 0);
-	return L(P(i), s), {
+}, rt(kt, $n, je, fe, de, me, At, De), { singleton: !0 }), qn = j(([{ fixedFooterHeight: t, fixedHeaderHeight: e, footerHeight: n, headerHeight: o }, { listState: r }]) => {
+	const s = U(), i = ht(I(at(n, t, o, e, r), B(([l, c, d, m, S]) => l + c + d + m + S.offsetBottom + S.bottom)), 0);
+	return k(W(i), s), {
 		totalListHeight: i,
 		totalListHeightChanged: s
 	};
-}, ot(It, Ut), { singleton: !0 }), No = j(([{ viewportHeight: t }, { totalListHeight: e }]) => {
+}, rt(It, Ut), { singleton: !0 }), Do = j(([{ viewportHeight: t }, { totalListHeight: e }]) => {
 	const n = v(!1);
 	return {
 		alignToBottom: n,
-		paddingTopAddition: ht(I(at(n, t, e), G(([r]) => r), B(([, r, s]) => Math.max(0, r - s)), zt(0), et$1()), 0)
+		paddingTopAddition: ht(I(at(n, t, e), P(([r]) => r), B(([, r, s]) => Math.max(0, r - s)), zt(0), nt()), 0)
 	};
-}, ot(It, jn), { singleton: !0 }), qn = j(() => ({ context: v(null) })), Do = ({ itemBottom: t, itemTop: e, locationParams: { align: n, behavior: o, ...r }, viewportBottom: s, viewportTop: i }) => e < i ? {
+}, rt(It, qn), { singleton: !0 }), Yn = j(() => ({ context: v(null) })), $o = ({ itemBottom: t, itemTop: e, locationParams: { align: n, behavior: o, ...r }, viewportBottom: s, viewportTop: i }) => e < i ? {
 	...r,
 	align: n ?? "start",
 	...o !== void 0 ? { behavior: o } : {}
@@ -56219,23 +56687,23 @@ var Ut = j(([{ data: t, firstItemIndex: e, gap: n, sizes: o, totalCount: r }, s,
 	...r,
 	align: n ?? "end",
 	...o !== void 0 ? { behavior: o } : {}
-} : null, Yn = j(([{ gap: t, sizes: e, totalCount: n }, { fixedFooterHeight: o, fixedHeaderHeight: r, headerHeight: s, scrollingInProgress: i, scrollTop: l, viewportHeight: c }, { scrollToIndex: d }]) => {
+} : null, Zn = j(([{ gap: t, sizes: e, totalCount: n }, { fixedFooterHeight: o, fixedHeaderHeight: r, headerHeight: s, scrollingInProgress: i, scrollTop: l, viewportHeight: c }, { scrollToIndex: d }]) => {
 	const m = U();
-	return L(I(m, $(e, c, n, s, r, o, l), $(t), B(([[x, p, T, w, R, h, f, a], S]) => {
-		const { calculateViewLocation: H = Do, done: y, ...k } = x, u = Nn(x, p, w - 1), g = ce(u, p.offsetTree, S) + R + h, C = g + Rt(p.sizeTree, u)[1], z = a + h, V = H({
+	return k(I(m, $(e, c, n, s, r, o, l), $(t), B(([[S, p, T, w, R, h, f, a], x]) => {
+		const { calculateViewLocation: H = $o, done: y, ...L } = S, u = Dn(S, p, w - 1), g = le(u, p.offsetTree, x) + R + h, C = g + Rt(p.sizeTree, u)[1], z = a + h, V = H({
 			itemBottom: C,
 			itemTop: g,
-			locationParams: k,
+			locationParams: L,
 			viewportBottom: a + T - f,
 			viewportTop: z
 		});
-		return V !== null ? y && yt(I(i, G((N) => !N), $t(it(i) ? 1 : 2)), y) : y?.(), V;
-	}), G((x) => x !== null)), d), { scrollIntoView: m };
-}, ot(Lt, It, fe, Ut, Wt), { singleton: !0 });
-function Tn(t) {
+		return V !== null ? y && yt(I(i, P((N) => !N), $t(it(i) ? 1 : 2)), y) : y?.(), V;
+	}), P((S) => S !== null)), d), { scrollIntoView: m };
+}, rt(kt, It, de, Ut, Gt), { singleton: !0 });
+function vn(t) {
 	return t === !1 ? !1 : t === "smooth" ? "smooth" : "auto";
 }
-var $o = (t, e) => typeof t == "function" ? Tn(t(e)) : e && Tn(t), Uo = j(([{ listRefresh: t, totalCount: e, fixedItemSize: n, data: o }, { atBottomState: r, isAtBottom: s }, { scrollToIndex: i }, { scrolledToInitialItem: l }, { didMount: c, propsReady: d }, { log: m }, { scrollingInProgress: x }, { context: p }, { scrollIntoView: T }]) => {
+var Uo = (t, e) => typeof t == "function" ? vn(t(e)) : e && vn(t), Ko = j(([{ listRefresh: t, totalCount: e, fixedItemSize: n, data: o }, { atBottomState: r, isAtBottom: s }, { scrollToIndex: i }, { scrolledToInitialItem: l }, { didMount: c, propsReady: d }, { log: m }, { scrollingInProgress: S }, { context: p }, { scrollIntoView: T }]) => {
 	const w = v(!1), R = U();
 	let h = null;
 	function f(y) {
@@ -56245,45 +56713,45 @@ var $o = (t, e) => typeof t == "function" ? Tn(t(e)) : e && Tn(t), Uo = j(([{ li
 			index: "LAST"
 		});
 	}
-	Y(I(at(I(P(e), $t(1)), c), $(P(w), s, l, x), B(([[y, k], u, g, C, z]) => {
-		let O = k && C, V = "auto";
-		return O && (V = $o(u, g || z), O = O && V !== !1), {
+	Y(I(at(I(W(e), $t(1)), c), $(W(w), s, l, S), B(([[y, L], u, g, C, z]) => {
+		let O = L && C, V = "auto";
+		return O && (V = Uo(u, g || z), O = O && V !== !1), {
 			followOutputBehavior: V,
 			shouldFollow: O,
 			totalCount: y
 		};
-	}), G(({ shouldFollow: y }) => y)), ({ followOutputBehavior: y, totalCount: k }) => {
+	}), P(({ shouldFollow: y }) => y)), ({ followOutputBehavior: y, totalCount: L }) => {
 		h !== null && (h(), h = null), it(n) !== void 0 ? requestAnimationFrame(() => {
-			it(m)("following output to ", { totalCount: k }, ft.DEBUG), f(y);
+			it(m)("following output to ", { totalCount: L }, ft.DEBUG), f(y);
 		}) : h = yt(t, () => {
-			it(m)("following output to ", { totalCount: k }, ft.DEBUG), f(y), h = null;
+			it(m)("following output to ", { totalCount: L }, ft.DEBUG), f(y), h = null;
 		});
 	});
 	function a(y) {
-		const k = yt(r, (u) => {
+		const L = yt(r, (u) => {
 			y && !u.atBottom && u.notAtBottomBecause === "SIZE_INCREASED" && h === null && (it(m)("scrolling to bottom due to increased size", {}, ft.DEBUG), f("auto"));
 		});
-		setTimeout(k, 100);
+		setTimeout(L, 100);
 	}
-	Y(I(at(P(w), e, d), G(([y, , k]) => y !== !1 && k), Ot(({ value: y }, [, k]) => ({
-		refreshed: y === k,
-		value: k
+	Y(I(at(W(w), e, d), P(([y, , L]) => y !== !1 && L), Ot(({ value: y }, [, L]) => ({
+		refreshed: y === L,
+		value: L
 	}), {
 		refreshed: !1,
 		value: 0
-	}), G(({ refreshed: y }) => y), $(w, e)), ([, y]) => {
+	}), P(({ refreshed: y }) => y), $(w, e)), ([, y]) => {
 		it(l) && a(y !== !1);
 	}), Y(R, () => {
 		a(it(w) !== !1);
-	}), Y(at(P(w), r), ([y, k]) => {
-		y !== !1 && !k.atBottom && k.notAtBottomBecause === "VIEWPORT_HEIGHT_DECREASING" && f("auto");
+	}), Y(at(W(w), r), ([y, L]) => {
+		y !== !1 && !L.atBottom && L.notAtBottomBecause === "VIEWPORT_HEIGHT_DECREASING" && f("auto");
 	});
-	const S = v(null), H = U();
-	return L(ze(I(P(o), B((y) => y?.length ?? 0)), I(P(e))), H), Y(I(at(I(H, $t(1)), c), $(P(S), l, x, p), B(([[y, k], u, g, C, z]) => k && g && u?.({
+	const x = v(null), H = U();
+	return k(ze(I(W(o), B((y) => y?.length ?? 0)), I(W(e))), H), Y(I(at(I(H, $t(1)), c), $(W(x), l, S, p), B(([[y, L], u, g, C, z]) => L && g && u?.({
 		context: z,
 		totalCount: y,
 		scrollingInProgress: C
-	})), G((y) => !!y), zt(0)), (y) => {
+	})), P((y) => !!y), zt(0)), (y) => {
 		h !== null && (h(), h = null), it(n) !== void 0 ? requestAnimationFrame(() => {
 			it(m)("scrolling into view", {}), _(T, y);
 		}) : h = yt(t, () => {
@@ -56292,26 +56760,26 @@ var $o = (t, e) => typeof t == "function" ? Tn(t(e)) : e && Tn(t), Uo = j(([{ li
 	}), {
 		autoscrollToBottom: R,
 		followOutput: w,
-		scrollIntoViewOnChange: S
+		scrollIntoViewOnChange: x
 	};
-}, ot(Lt, pe, fe, me, At, Wt, It, qn, Yn)), Ko = j(([{ data: t, firstItemIndex: e, gap: n, sizes: o }, { initialTopMostItemIndex: r }, { initialItemCount: s, listState: i }, { didMount: l }]) => (L(I(l, $(s), G(([, c]) => c !== 0), $(r, o, e, n, t), B(([[, c], d, m, x, p, T = []]) => Kn(c, d, m, x, p, T))), i), {}), ot(Lt, me, Ut, At), { singleton: !0 }), jo = j(([{ didMount: t }, { scrollTo: e }, { listState: n }]) => {
+}, rt(kt, me, de, fe, At, Gt, It, Yn, Zn)), jo = j(([{ data: t, firstItemIndex: e, gap: n, sizes: o }, { initialTopMostItemIndex: r }, { initialItemCount: s, listState: i }, { didMount: l }]) => (k(I(l, $(s), P(([, c]) => c !== 0), $(r, o, e, n, t), B(([[, c], d, m, S, p, T = []]) => jn(c, d, m, S, p, T))), i), {}), rt(kt, fe, Ut, At), { singleton: !0 }), qo = j(([{ didMount: t }, { scrollTo: e }, { listState: n }]) => {
 	const o = v(0);
-	return Y(I(t, $(o), G(([, r]) => r !== 0), B(([, r]) => ({ top: r }))), (r) => {
-		yt(I(n, $t(1), G((s) => s.items.length > 1)), () => {
+	return Y(I(t, $(o), P(([, r]) => r !== 0), B(([, r]) => ({ top: r }))), (r) => {
+		yt(I(n, $t(1), P((s) => s.items.length > 1)), () => {
 			requestAnimationFrame(() => {
 				_(e, r);
 			});
 		});
 	}), { initialScrollTop: o };
-}, ot(At, It, Ut), { singleton: !0 }), Zn = j(([{ scrollVelocity: t }]) => {
+}, rt(At, It, Ut), { singleton: !0 }), Xn = j(([{ scrollVelocity: t }]) => {
 	const e = v(!1), n = U(), o = v(!1);
-	return L(I(t, $(o, e, n), G(([r, s]) => s !== !1 && s !== void 0), B(([r, s, i, l]) => {
+	return k(I(t, $(o, e, n), P(([r, s]) => s !== !1 && s !== void 0), B(([r, s, i, l]) => {
 		const { enter: c, exit: d } = s;
 		if (i) {
 			if (d(r, l)) return !1;
 		} else if (c(r, l)) return !0;
 		return i;
-	}), et$1()), e), Y(I(at(e, t, n), $(o)), ([[r, s, i], l]) => {
+	}), nt()), e), Y(I(at(e, t, n), $(o)), ([[r, s, i], l]) => {
 		r && l !== !1 && l !== void 0 && l.change && l.change(s, i);
 	}), {
 		isSeeking: e,
@@ -56319,13 +56787,13 @@ var $o = (t, e) => typeof t == "function" ? Tn(t(e)) : e && Tn(t), Uo = j(([{ li
 		scrollSeekRangeChanged: n,
 		scrollVelocity: t
 	};
-}, ot(pe), { singleton: !0 }), qe = j(([{ scrollContainerState: t, scrollTo: e }]) => {
+}, rt(me), { singleton: !0 }), qe = j(([{ scrollContainerState: t, scrollTo: e }]) => {
 	const n = U(), o = U(), r = U(), s = v(!1), i = v(void 0);
-	return L(I(at(n, o), B(([{ scrollTop: l, viewportHeight: c }, { offsetTop: d, listHeight: m }]) => ({
+	return k(I(at(n, o), B(([{ scrollTop: l, viewportHeight: c }, { offsetTop: d, listHeight: m }]) => ({
 		scrollHeight: m,
 		scrollTop: Math.max(0, l - d),
 		viewportHeight: c
-	}))), t), L(I(e, $(o), B(([l, { offsetTop: c }]) => ({
+	}))), t), k(I(e, $(o), B(([l, { offsetTop: c }]) => ({
 		...l,
 		top: l.top + c
 	}))), r), {
@@ -56335,37 +56803,37 @@ var $o = (t, e) => typeof t == "function" ? Tn(t(e)) : e && Tn(t), Uo = j(([{ li
 		windowScrollTo: r,
 		windowViewportRect: o
 	};
-}, ot(It)), qo = j(([{ sizeRanges: t, sizes: e }, { headerHeight: n, scrollTop: o }, { initialTopMostItemIndex: r }, { didMount: s }, { useWindowScroll: i, windowScrollContainerState: l, windowViewportRect: c }]) => {
-	const d = U(), m = v(void 0), x = v(null), p = v(null);
-	return L(l, x), L(c, p), Y(I(d, $(e, o, i, x, p, n)), ([T, w, R, h, f, a, S]) => {
+}, rt(It)), Yo = j(([{ sizeRanges: t, sizes: e }, { headerHeight: n, scrollTop: o }, { initialTopMostItemIndex: r }, { didMount: s }, { useWindowScroll: i, windowScrollContainerState: l, windowViewportRect: c }]) => {
+	const d = U(), m = v(void 0), S = v(null), p = v(null);
+	return k(l, S), k(c, p), Y(I(d, $(e, o, i, S, p, n)), ([T, w, R, h, f, a, x]) => {
 		const H = ko(w.sizeTree);
-		h && f !== null && a !== null && (R = f.scrollTop - a.offsetTop), R -= S, T({
+		h && f !== null && a !== null && (R = f.scrollTop - a.offsetTop), R -= x, T({
 			ranges: H,
 			scrollTop: R
 		});
-	}), L(I(m, G(Ae), B(Yo)), r), L(I(s, $(m), G(([, T]) => T !== void 0), et$1(), B(([, T]) => T.ranges)), t), {
+	}), k(I(m, P(Ae), B(Zo)), r), k(I(s, $(m), P(([, T]) => T !== void 0), nt(), B(([, T]) => T.ranges)), t), {
 		getState: d,
 		restoreStateFrom: m
 	};
-}, ot(Lt, It, me, At, qe));
-function Yo(t) {
+}, rt(kt, It, fe, At, qe));
+function Zo(t) {
 	return {
 		align: "start",
 		index: 0,
 		offset: t.scrollTop
 	};
 }
-var Zo = j(([{ topItemsIndexes: t }]) => {
+var Xo = j(([{ topItemsIndexes: t }]) => {
 	const e = v(0);
-	return L(I(e, G((n) => n >= 0), B((n) => Array.from({ length: n }).map((o, r) => r))), t), { topItemCount: e };
-}, ot(Ut));
-function Xn(t) {
+	return k(I(e, P((n) => n >= 0), B((n) => Array.from({ length: n }).map((o, r) => r))), t), { topItemCount: e };
+}, rt(Ut));
+function Jn(t) {
 	let e = !1, n;
 	return (() => (e || (e = !0, n = t()), n));
 }
-var Xo = Xn(() => /iP(ad|od|hone)/i.test(navigator.userAgent) && /WebKit/i.test(navigator.userAgent)), Jn = j(([{ data: t, defaultItemSize: e, firstItemIndex: n, fixedItemSize: o, fixedGroupSize: r, gap: s, groupIndices: i, heightEstimates: l, itemSize: c, sizeRanges: d, sizes: m, statefulTotalCount: x, totalCount: p, trackItemSizes: T }, { initialItemFinalLocationReached: w, initialTopMostItemIndex: R, scrolledToInitialItem: h }, f, a, S, H, { scrollToIndex: y }, k, { topItemCount: u }, { groupCounts: g }, C]) => {
+var Jo = Jn(() => /iP(ad|od|hone)/i.test(navigator.userAgent) && /WebKit/i.test(navigator.userAgent)), Qn = j(([{ data: t, defaultItemSize: e, firstItemIndex: n, fixedItemSize: o, fixedGroupSize: r, gap: s, groupIndices: i, heightEstimates: l, itemSize: c, sizeRanges: d, sizes: m, statefulTotalCount: S, totalCount: p, trackItemSizes: T }, { initialItemFinalLocationReached: w, initialTopMostItemIndex: R, scrolledToInitialItem: h }, f, a, x, H, { scrollToIndex: y }, L, { topItemCount: u }, { groupCounts: g }, C]) => {
 	const { listState: z, minOverscanItemCount: O, topItemsIndexes: V, rangeChanged: N, ...Z } = H;
-	return L(N, C.scrollSeekRangeChanged), L(I(C.windowViewportRect, B((F) => F.visibleHeight)), f.viewportHeight), {
+	return k(N, C.scrollSeekRangeChanged), k(I(C.windowViewportRect, B((F) => F.visibleHeight)), f.viewportHeight), {
 		data: t,
 		defaultItemHeight: e,
 		firstItemIndex: n,
@@ -56381,13 +56849,13 @@ var Xo = Xn(() => /iP(ad|od|hone)/i.test(navigator.userAgent) && /WebKit/i.test(
 		topItemCount: u,
 		topItemsIndexes: V,
 		totalCount: p,
-		...S,
+		...x,
 		groupIndices: i,
 		itemSize: c,
 		listState: z,
 		minOverscanItemCount: O,
 		scrollToIndex: y,
-		statefulTotalCount: x,
+		statefulTotalCount: S,
 		trackItemSizes: T,
 		rangeChanged: N,
 		...Z,
@@ -56396,11 +56864,11 @@ var Xo = Xn(() => /iP(ad|od|hone)/i.test(navigator.userAgent) && /WebKit/i.test(
 		sizes: m,
 		...a
 	};
-}, ot(Lt, me, It, qo, Uo, Ut, fe, j(([{ deviation: t, scrollBy: e, scrollingInProgress: n, scrollTop: o }, { isAtBottom: r, isScrolling: s, lastJumpDueToItemResize: i, scrollDirection: l }, { listState: c }, { beforeUnshiftWith: d, gap: m, shiftWithOffset: x, sizes: p }, { log: T }, { recalcInProgress: w }]) => {
-	const R = vt(I(c, $(i), Ot(([, f, a, S], [{ bottom: H, items: y, offsetBottom: k, totalCount: u }, g]) => {
-		const C = H + k;
+}, rt(kt, fe, It, Yo, Ko, Ut, de, j(([{ deviation: t, scrollBy: e, scrollingInProgress: n, scrollTop: o }, { isAtBottom: r, isScrolling: s, lastJumpDueToItemResize: i, scrollDirection: l }, { listState: c }, { beforeUnshiftWith: d, gap: m, shiftWithOffset: S, sizes: p }, { log: T }, { recalcInProgress: w }]) => {
+	const R = vt(I(c, $(i), Ot(([, f, a, x], [{ bottom: H, items: y, offsetBottom: L, totalCount: u }, g]) => {
+		const C = H + L;
 		let z = 0;
-		return a === u && f.length > 0 && y.length > 0 && (y[0].originalIndex === 0 && f[0].originalIndex === 0 || (z = C - S, z !== 0 && (z += g))), [
+		return a === u && f.length > 0 && y.length > 0 && (y[0].originalIndex === 0 && f[0].originalIndex === 0 || (z = C - x, z !== 0 && (z += g))), [
 			z,
 			y,
 			u,
@@ -56411,7 +56879,7 @@ var Xo = Xn(() => /iP(ad|od|hone)/i.test(navigator.userAgent) && /WebKit/i.test(
 		[],
 		0,
 		0
-	]), G(([f]) => f !== 0), $(o, l, n, r, T, w), G(([, f, a, S, , , H]) => !H && !S && f !== 0 && a === ue), B(([[f], , , , , a]) => (a("Upward scrolling compensation", { amount: f }, ft.DEBUG), f))));
+	]), P(([f]) => f !== 0), $(o, l, n, r, T, w), P(([, f, a, x, , , H]) => !H && !x && f !== 0 && a === ce), B(([[f], , , , , a]) => (a("Upward scrolling compensation", { amount: f }, ft.DEBUG), f))));
 	function h(f) {
 		f > 0 ? (_(e, {
 			behavior: "auto",
@@ -56421,20 +56889,20 @@ var Xo = Xn(() => /iP(ad|od|hone)/i.test(navigator.userAgent) && /WebKit/i.test(
 			top: -f
 		}));
 	}
-	return Y(I(R, $(t, s)), ([f, a, S]) => {
-		S && Xo() ? _(t, a - f) : h(-f);
-	}), Y(I(at(ht(s, !1), t, w), G(([f, a, S]) => !f && !S && a !== 0), B(([f, a]) => a), zt(1)), h), L(I(x, B((f) => ({ top: -f }))), e), Y(I(d, $(p, m), B(([f, { groupIndices: a, lastSize: S, sizeTree: H }, y]) => {
-		function k(O) {
-			return O * (S + y);
+	return Y(I(R, $(t, s)), ([f, a, x]) => {
+		x && Jo() ? _(t, a - f) : h(-f);
+	}), Y(I(at(ht(s, !1), t, w), P(([f, a, x]) => !f && !x && a !== 0), B(([f, a]) => a), zt(1)), h), k(I(S, B((f) => ({ top: -f }))), e), Y(I(d, $(p, m), B(([f, { groupIndices: a, lastSize: x, sizeTree: H }, y]) => {
+		function L(O) {
+			return O * (x + y);
 		}
-		if (a.length === 0) return k(f);
+		if (a.length === 0) return L(f);
 		let u = 0;
-		const g = ie$2(H, 0);
+		const g = se(H, 0);
 		let C = 0, z = 0;
 		for (; C < f;) {
 			C++, u += g;
 			let O = a.length === z + 1 ? Infinity : a[z + 1] - a[z] - 1;
-			C + O > f && (u -= g, O = f - C + 1), C += O, u += k(O), z++;
+			C + O > f && (u -= g, O = f - C + 1), C += O, u += L(O), z++;
 		}
 		return u;
 	})), (f) => {
@@ -56444,7 +56912,7 @@ var Xo = Xn(() => /iP(ad|od|hone)/i.test(navigator.userAgent) && /WebKit/i.test(
 			});
 		});
 	}), { deviation: t };
-}, ot(It, pe, Ut, Lt, Wt, De)), Zo, Dn, j(([t, e, n, o, r, s, i, l, c, d, m]) => ({
+}, rt(It, me, Ut, kt, Gt, De)), Xo, $n, j(([t, e, n, o, r, s, i, l, c, d, m]) => ({
 	...t,
 	...e,
 	...n,
@@ -56456,8 +56924,8 @@ var Xo = Xn(() => /iP(ad|od|hone)/i.test(navigator.userAgent) && /WebKit/i.test(
 	...c,
 	...d,
 	...m
-}), ot(je, Ko, At, Zn, jn, jo, No, qe, Yn, Wt, qn))));
-function tr(t, e) {
+}), rt(je, jo, At, Xn, qn, qo, Do, qe, Zn, Gt, Yn))));
+function er(t, e) {
 	const n = {}, o = {};
 	let r = 0;
 	const s = t.length;
@@ -56465,35 +56933,35 @@ function tr(t, e) {
 	for (const i in e) Object.hasOwn(o, i) || (n[i] = e[i]);
 	return n;
 }
-var Ie = typeof document < "u" ? import_react.useLayoutEffect : import_react.useEffect;
+var ge = typeof document < "u" ? import_react.useLayoutEffect : import_react.useEffect;
 function Ye(t, e, n) {
 	const o = Object.keys(e.required || {}), r = Object.keys(e.optional || {}), s = Object.keys(e.methods || {}), i = Object.keys(e.events || {}), l = import_react.createContext({});
 	function c(f, a) {
 		f.propsReady !== void 0 && _(f.propsReady, !1);
-		for (const S of o) {
-			const H = f[e.required[S]];
-			_(H, a[S]);
+		for (const x of o) {
+			const H = f[e.required[x]];
+			_(H, a[x]);
 		}
-		for (const S of r) if (S in a) {
-			const H = f[e.optional[S]];
-			_(H, a[S]);
+		for (const x of r) if (x in a) {
+			const H = f[e.optional[x]];
+			_(H, a[x]);
 		}
 		f.propsReady !== void 0 && _(f.propsReady, !0);
 	}
 	function d(f) {
-		return s.reduce((a, S) => (a[S] = (H) => {
-			const y = f[e.methods[S]];
+		return s.reduce((a, x) => (a[x] = (H) => {
+			const y = f[e.methods[x]];
 			_(y, H);
 		}, a), {});
 	}
 	function m(f) {
-		return i.reduce((a, S) => (a[S] = Io(f[e.events[S]]), a), {});
+		return i.reduce((a, x) => (a[x] = So(f[e.events[x]]), a), {});
 	}
-	const x = import_react.forwardRef(function(a, S) {
-		const { children: H, ...y } = a, [k] = import_react.useState(() => ye(So(t), (C) => {
+	const S = import_react.forwardRef(function(a, x) {
+		const { children: H, ...y } = a, [L] = import_react.useState(() => we(To(t), (C) => {
 			c(C, y);
-		})), [u] = import_react.useState(an(m, k));
-		Ie(() => {
+		})), [u] = import_react.useState(dn(m, L));
+		ge(() => {
 			for (const C of i) C in y && Y(u[C], y[C]);
 			return () => {
 				Object.values(u).map(Me);
@@ -56501,15 +56969,15 @@ function Ye(t, e, n) {
 		}, [
 			y,
 			u,
-			k
-		]), Ie(() => {
-			c(k, y);
-		}), import_react.useImperativeHandle(S, un(d(k)));
+			L
+		]), ge(() => {
+			c(L, y);
+		}), import_react.useImperativeHandle(x, an(d(L)));
 		const g = n;
 		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(l.Provider, {
-			value: k,
+			value: L,
 			children: n !== void 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(g, {
-				...tr([
+				...er([
 					...o,
 					...r,
 					...i
@@ -56519,45 +56987,45 @@ function Ye(t, e, n) {
 		});
 	}), p = (f) => {
 		const a = import_react.useContext(l);
-		return import_react.useCallback((S) => {
-			_(a[f], S);
+		return import_react.useCallback((x) => {
+			_(a[f], x);
 		}, [a, f]);
 	}, T = (f) => {
-		const S = import_react.useContext(l)[f], H = import_react.useCallback((y) => Y(S, y), [S]);
-		return import_react.useSyncExternalStore(H, () => it(S), () => it(S));
+		const x = import_react.useContext(l)[f], H = import_react.useCallback((y) => Y(x, y), [x]);
+		return import_react.useSyncExternalStore(H, () => it(x), () => it(x));
 	}, w = (f) => {
-		const S = import_react.useContext(l)[f], [H, y] = import_react.useState(an(it, S));
-		return Ie(() => Y(S, (k) => {
-			k !== H && y(un(k));
-		}), [S, H]), H;
+		const x = import_react.useContext(l)[f], [H, y] = import_react.useState(dn(it, x));
+		return ge(() => Y(x, (L) => {
+			L !== H && y(an(L));
+		}), [x, H]), H;
 	};
 	return {
-		Component: x,
+		Component: S,
 		useEmitter: (f, a) => {
 			const H = import_react.useContext(l)[f];
-			Ie(() => Y(H, a), [a, H]);
+			ge(() => Y(H, a), [a, H]);
 		},
 		useEmitterValue: parseInt("19.2.5") >= 18 ? T : w,
 		usePublisher: p
 	};
 }
-var Re = import_react.createContext(void 0), Qn = import_react.createContext(void 0), Oe = "-webkit-sticky", vn = "sticky", Ze = Xn(() => {
-	if (typeof document > "u") return vn;
+var be = import_react.createContext(void 0), to = import_react.createContext(void 0), Oe = "-webkit-sticky", Cn = "sticky", Ze = Jn(() => {
+	if (typeof document > "u") return Cn;
 	const t = document.createElement("div");
-	return t.style.position = Oe, t.style.position === Oe ? Oe : vn;
-}), to = typeof document < "u" ? import_react.useLayoutEffect : import_react.useEffect;
-function ke(t) {
+	return t.style.position = Oe, t.style.position === Oe ? Oe : Cn;
+}), eo = typeof document < "u" ? import_react.useLayoutEffect : import_react.useEffect;
+function Le(t) {
 	return "self" in t;
 }
-function er(t) {
+function nr(t) {
 	return "body" in t;
 }
-function eo(t, e, n, o = Xt, r, s) {
+function no(t, e, n, o = Xt, r, s) {
 	const i = import_react.useRef(null), l = import_react.useRef(null), c = import_react.useRef(null), d = import_react.useCallback((p) => {
 		let T, w, R;
 		const h = p.target;
-		if (er(h) || ke(h)) {
-			const a = ke(h) ? h : h.defaultView;
+		if (nr(h) || Le(h)) {
+			const a = Le(h) ? h : h.defaultView;
 			R = s === !0 ? a.scrollX : a.scrollY, T = s === !0 ? a.document.documentElement.scrollWidth : a.document.documentElement.scrollHeight, w = s === !0 ? a.innerWidth : a.innerHeight;
 		} else R = s === !0 ? h.scrollLeft : h.scrollTop, T = s === !0 ? h.scrollWidth : h.scrollHeight, w = s === !0 ? h.offsetWidth : h.offsetHeight;
 		const f = () => {
@@ -56593,9 +57061,9 @@ function eo(t, e, n, o = Xt, r, s) {
 		if (!T || (s === !0 ? "offsetWidth" in T && T.offsetWidth === 0 : "offsetHeight" in T && T.offsetHeight === 0)) return;
 		const w = p.behavior === "smooth";
 		let R, h, f;
-		ke(T) ? (h = Math.max(Ht(T.document.documentElement, s === !0 ? "width" : "height"), s === !0 ? T.document.documentElement.scrollWidth : T.document.documentElement.scrollHeight), R = s === !0 ? T.innerWidth : T.innerHeight, f = s === !0 ? window.scrollX : window.scrollY) : (h = T[s === !0 ? "scrollWidth" : "scrollHeight"], R = Ht(T, s === !0 ? "width" : "height"), f = T[s === !0 ? "scrollLeft" : "scrollTop"]);
+		Le(T) ? (h = Math.max(Ht(T.document.documentElement, s === !0 ? "width" : "height"), s === !0 ? T.document.documentElement.scrollWidth : T.document.documentElement.scrollHeight), R = s === !0 ? T.innerWidth : T.innerHeight, f = s === !0 ? window.scrollX : window.scrollY) : (h = T[s === !0 ? "scrollWidth" : "scrollHeight"], R = Ht(T, s === !0 ? "width" : "height"), f = T[s === !0 ? "scrollLeft" : "scrollTop"]);
 		const a = h - R;
-		if (p.top = Math.ceil(Math.max(Math.min(a, p.top), 0)), Un(R, h) || p.top === f) {
+		if (p.top = Math.ceil(Math.max(Math.min(a, p.top), 0)), Kn(R, h) || p.top === f) {
 			t({
 				scrollHeight: h,
 				scrollTop: f,
@@ -56610,14 +57078,14 @@ function eo(t, e, n, o = Xt, r, s) {
 			left: p.top
 		}), T.scrollTo(p);
 	}
-	function x(p) {
+	function S(p) {
 		s === !0 && (p = {
 			...p.behavior !== void 0 ? { behavior: p.behavior } : {},
 			...p.top !== void 0 ? { left: p.top } : {}
 		}), i.current.scrollBy(p);
 	}
 	return {
-		scrollByCallback: x,
+		scrollByCallback: S,
 		scrollerRef: i,
 		scrollToCallback: m
 	};
@@ -56625,11 +57093,11 @@ function eo(t, e, n, o = Xt, r, s) {
 function Xe(t) {
 	return t;
 }
-var or = /* @__PURE__ */ j(([t, e]) => ({
+var rr = /* @__PURE__ */ j(([t, e]) => ({
 	...t,
 	...e
-}), ot(Jn, /* @__PURE__ */ j(() => {
-	const t = v((l) => `Item ${l}`), e = v((l) => `Group ${l}`), n = v({}), o = v(Xe), r = v("div"), s = v(Xt), i = (l, c = null) => ht(I(n, B((d) => d[l]), et$1()), c);
+}), rt(Qn, /* @__PURE__ */ j(() => {
+	const t = v((l) => `Item ${l}`), e = v((l) => `Group ${l}`), n = v({}), o = v(Xe), r = v("div"), s = v(Xt), i = (l, c = null) => ht(I(n, B((d) => d[l]), nt()), c);
 	return {
 		components: n,
 		computeItemKey: o,
@@ -56647,20 +57115,20 @@ var or = /* @__PURE__ */ j(([t, e]) => ({
 		ScrollSeekPlaceholder: i("ScrollSeekPlaceholder"),
 		TopItemListComponent: i("TopItemList")
 	};
-}))), rr = ({ height: t }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: t } }), sr = {
+}))), sr = ({ height: t }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: t } }), ir = {
 	overflowAnchor: "none",
 	position: Ze(),
 	zIndex: 1
-}, no = { overflowAnchor: "none" }, ir = {
-	...no,
+}, oo = { overflowAnchor: "none" }, lr = {
+	...oo,
 	display: "inline-block",
 	height: "100%"
-}, Cn = /* @__PURE__ */ import_react.memo(function({ showTopList: e = !1 }) {
-	const n = A("listState"), o = Ct("sizeRanges"), r = A("useWindowScroll"), s = A("customScrollParent"), i = Ct("windowScrollContainerState"), l = Ct("scrollContainerState"), c = s || r ? i : l, d = A("itemContent"), m = A("context"), x = A("groupContent"), p = A("trackItemSizes"), T = A("itemSize"), w = A("log"), R = Ct("gap"), h = A("horizontalDirection"), { callbackRef: f } = zn(o, T, p, e ? Xt : c, w, R, s, h, A("skipAnimationFrameInResizeObserver")), [a, S] = import_react.useState(0);
-	tn("deviation", (F) => {
-		a !== F && S(F);
+}, wn = /* @__PURE__ */ import_react.memo(function({ showTopList: e = !1 }) {
+	const n = A("listState"), o = Ct("sizeRanges"), r = A("useWindowScroll"), s = A("customScrollParent"), i = Ct("windowScrollContainerState"), l = Ct("scrollContainerState"), c = s || r ? i : l, d = A("itemContent"), m = A("context"), S = A("groupContent"), p = A("trackItemSizes"), T = A("itemSize"), w = A("log"), R = Ct("gap"), h = A("horizontalDirection"), { callbackRef: f } = Fn(o, T, p, e ? Xt : c, w, R, s, h, A("skipAnimationFrameInResizeObserver")), [a, x] = import_react.useState(0);
+	en("deviation", (F) => {
+		a !== F && x(F);
 	});
-	const H = A("EmptyPlaceholder"), y = A("ScrollSeekPlaceholder") ?? rr, k = A("ListComponent"), u = A("ItemComponent"), g = A("GroupComponent"), C = A("computeItemKey"), z = A("isSeeking"), O = A("groupIndices").length > 0, V = A("alignToBottom"), N = A("initialItemFinalLocationReached"), Z = e ? {} : {
+	const H = A("EmptyPlaceholder"), y = A("ScrollSeekPlaceholder") ?? sr, L = A("ListComponent"), u = A("ItemComponent"), g = A("GroupComponent"), C = A("computeItemKey"), z = A("isSeeking"), O = A("groupIndices").length > 0, V = A("alignToBottom"), N = A("initialItemFinalLocationReached"), Z = e ? {} : {
 		boxSizing: "border-box",
 		...h ? {
 			display: "inline-block",
@@ -56676,50 +57144,50 @@ var or = /* @__PURE__ */ j(([t, e]) => ({
 		},
 		...N ? {} : { visibility: "hidden" }
 	};
-	return !e && n.totalCount === 0 && H !== null && H !== void 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(H, { ...nt(H, m) }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(k, {
-		...nt(k, m),
+	return !e && n.totalCount === 0 && H !== null && H !== void 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(H, { ...ot(H, m) }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(L, {
+		...ot(L, m),
 		"data-testid": e ? "virtuoso-top-item-list" : "virtuoso-item-list",
 		ref: f,
 		style: Z,
 		children: (e ? n.topItems : n.items).map((F) => {
 			const mt = F.originalIndex, q = C(mt + n.firstItemIndex, F.data, m);
 			return z ? /* @__PURE__ */ (0, import_react.createElement)(y, {
-				...nt(y, m),
+				...ot(y, m),
 				height: F.size,
 				index: F.index,
 				key: q,
 				type: F.type || "item",
 				...F.type === "group" ? {} : { groupIndex: F.groupIndex }
 			}) : F.type === "group" ? /* @__PURE__ */ (0, import_react.createElement)(g, {
-				...nt(g, m),
+				...ot(g, m),
 				"data-index": mt,
 				"data-item-index": F.index,
 				"data-known-size": F.size,
 				key: q,
-				style: sr
-			}, x(F.index, m)) : /* @__PURE__ */ (0, import_react.createElement)(u, {
-				...nt(u, m),
-				...oo(u, F.data),
+				style: ir
+			}, S(F.index, m)) : /* @__PURE__ */ (0, import_react.createElement)(u, {
+				...ot(u, m),
+				...ro(u, F.data),
 				"data-index": mt,
 				"data-item-group-index": F.groupIndex,
 				"data-item-index": F.index,
 				"data-known-size": F.size,
 				key: q,
-				style: h ? ir : no
+				style: h ? lr : oo
 			}, O ? d(F.index, F.groupIndex, F.data, m) : d(F.index, F.data, m));
 		})
 	});
-}), lr = {
+}), cr = {
 	height: "100%",
 	outline: "none",
 	overflowY: "auto",
 	position: "relative",
 	WebkitOverflowScrolling: "touch"
-}, cr = {
+}, ur = {
 	outline: "none",
 	overflowX: "auto",
 	position: "relative"
-}, Jt = (t) => ({
+}, Re = (t) => ({
 	height: "100%",
 	position: "absolute",
 	top: 0,
@@ -56728,59 +57196,63 @@ var or = /* @__PURE__ */ j(([t, e]) => ({
 		display: "flex",
 		flexDirection: "column"
 	} : void 0
-}), ur = {
+}), Je = (t, e, n = 0) => ({
+	...Re(t),
+	position: e ? "relative" : "absolute",
+	top: e ? -n : 0
+}), ar = {
 	position: Ze(),
 	top: 0,
 	width: "100%",
 	zIndex: 1
 };
-function nt(t, e) {
+function ot(t, e) {
 	if (typeof t != "string") return { context: e };
 }
-function oo(t, e) {
+function ro(t, e) {
 	return { item: typeof t == "string" ? void 0 : e };
 }
-var ar = /* @__PURE__ */ import_react.memo(function() {
-	const e = A("HeaderComponent"), n = Ct("headerHeight"), o = A("HeaderFooterTag"), r = kt(import_react.useMemo(() => (i) => {
+var dr = /* @__PURE__ */ import_react.memo(function() {
+	const e = A("HeaderComponent"), n = Ct("headerHeight"), o = A("HeaderFooterTag"), r = Lt(import_react.useMemo(() => (i) => {
 		n(Ht(i, "height"));
 	}, [n]), !0, A("skipAnimationFrameInResizeObserver")), s = A("context");
 	return e != null ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(o, {
 		ref: r,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(e, { ...nt(e, s) })
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(e, { ...ot(e, s) })
 	}) : null;
-}), dr = /* @__PURE__ */ import_react.memo(function() {
-	const e = A("FooterComponent"), n = Ct("footerHeight"), o = A("HeaderFooterTag"), r = kt(import_react.useMemo(() => (i) => {
+}), fr = /* @__PURE__ */ import_react.memo(function() {
+	const e = A("FooterComponent"), n = Ct("footerHeight"), o = A("HeaderFooterTag"), r = Lt(import_react.useMemo(() => (i) => {
 		n(Ht(i, "height"));
 	}, [n]), !0, A("skipAnimationFrameInResizeObserver")), s = A("context");
 	return e != null ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(o, {
 		ref: r,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(e, { ...nt(e, s) })
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(e, { ...ot(e, s) })
 	}) : null;
 });
-function Je({ useEmitter: t, useEmitterValue: e, usePublisher: n }) {
+function Qe({ useEmitter: t, useEmitterValue: e, usePublisher: n }) {
 	return import_react.memo(function({ children: s, style: i, context: l, ...c }) {
-		const d = n("scrollContainerState"), m = e("ScrollerComponent"), x = n("smoothScrollTargetReached"), p = e("scrollerRef"), T = e("horizontalDirection") || !1, { scrollByCallback: w, scrollerRef: R, scrollToCallback: h } = eo(d, x, m, p, void 0, T);
+		const d = n("scrollContainerState"), m = e("ScrollerComponent"), S = n("smoothScrollTargetReached"), p = e("scrollerRef"), T = e("horizontalDirection") || !1, { scrollByCallback: w, scrollerRef: R, scrollToCallback: h } = no(d, S, m, p, void 0, T);
 		return t("scrollTo", h), t("scrollBy", w), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(m, {
 			"data-testid": "virtuoso-scroller",
 			"data-virtuoso-scroller": !0,
 			ref: R,
 			style: {
-				...T ? cr : lr,
+				...T ? ur : cr,
 				...i
 			},
 			tabIndex: 0,
 			...c,
-			...nt(m, l),
+			...ot(m, l),
 			children: s
 		});
 	});
 }
-function Qe({ useEmitter: t, useEmitterValue: e, usePublisher: n }) {
+function tn({ useEmitter: t, useEmitterValue: e, usePublisher: n }) {
 	return import_react.memo(function({ children: s, style: i, context: l, ...c }) {
-		const d = n("windowScrollContainerState"), m = e("ScrollerComponent"), x = n("smoothScrollTargetReached"), p = e("totalListHeight"), T = e("deviation"), w = e("customScrollParent"), R = import_react.useRef(null), { scrollByCallback: f, scrollerRef: a, scrollToCallback: S } = eo(d, x, m, e("scrollerRef"), w);
-		return to(() => (a.current = w || R.current?.ownerDocument.defaultView, () => {
+		const d = n("windowScrollContainerState"), m = e("ScrollerComponent"), S = n("smoothScrollTargetReached"), p = e("totalListHeight"), T = e("deviation"), w = e("customScrollParent"), R = import_react.useRef(null), { scrollByCallback: f, scrollerRef: a, scrollToCallback: x } = no(d, S, m, e("scrollerRef"), w);
+		return eo(() => (a.current = w || R.current?.ownerDocument.defaultView, () => {
 			a.current = null;
-		}), [a, w]), t("windowScrollTo", S), t("scrollBy", f), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(m, {
+		}), [a, w]), t("windowScrollTo", x), t("scrollBy", f), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(m, {
 			ref: R,
 			"data-virtuoso-scroller": !0,
 			style: {
@@ -56789,13 +57261,13 @@ function Qe({ useEmitter: t, useEmitterValue: e, usePublisher: n }) {
 				...p !== 0 ? { height: p + T } : void 0
 			},
 			...c,
-			...nt(m, l),
+			...ot(m, l),
 			children: s
 		});
 	});
 }
-var fr = ({ children: t }) => {
-	const e = import_react.useContext(Re), n = Ct("viewportHeight"), o = Ct("fixedItemHeight"), r = A("alignToBottom"), s = A("horizontalDirection"), l = kt(import_react.useMemo(() => re(n, (c) => Ht(c, s ? "width" : "height")), [n, s]), !0, A("skipAnimationFrameInResizeObserver"));
+var mr = ({ children: t }) => {
+	const e = import_react.useContext(be), n = Ct("viewportHeight"), o = Ct("fixedItemHeight"), r = A("alignToBottom"), s = A("horizontalDirection"), l = Lt(import_react.useMemo(() => oe(n, (c) => Ht(c, s ? "width" : "height")), [n, s]), !0, A("skipAnimationFrameInResizeObserver"));
 	return import_react.useEffect(() => {
 		e && (n(e.viewportHeight), o(e.itemHeight));
 	}, [
@@ -56805,11 +57277,11 @@ var fr = ({ children: t }) => {
 	]), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		"data-viewport-type": "element",
 		ref: l,
-		style: Jt(r),
+		style: Re(r),
 		children: t
 	});
-}, mr = ({ children: t }) => {
-	const e = import_react.useContext(Re), n = Ct("windowViewportRect"), o = Ct("fixedItemHeight"), s = Ne(n, A("customScrollParent"), A("skipAnimationFrameInResizeObserver")), i = A("alignToBottom");
+}, pr = ({ children: t }) => {
+	const e = import_react.useContext(be), n = Ct("windowViewportRect"), o = Ct("fixedItemHeight"), r = A("customScrollParent"), s = A("useWindowScroll"), i = A("topListHeight"), l = Ne(n, r, A("skipAnimationFrameInResizeObserver")), c = A("alignToBottom");
 	return import_react.useEffect(() => {
 		e && (o(e.itemHeight), n({
 			listHeight: 0,
@@ -56823,21 +57295,21 @@ var fr = ({ children: t }) => {
 		o
 	]), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		"data-viewport-type": "window",
-		ref: s,
-		style: Jt(i),
+		ref: l,
+		style: Je(c, s, i),
 		children: t
 	});
-}, pr = ({ children: t }) => {
+}, hr = ({ children: t }) => {
 	const e = A("TopItemListComponent") ?? "div", n = A("headerHeight");
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(e, {
 		style: {
-			...ur,
+			...ar,
 			marginTop: `${n}px`
 		},
-		...nt(e, A("context")),
+		...ot(e, A("context")),
 		children: t
 	});
-}, { Component: ro, useEmitter: tn, useEmitterValue: A, usePublisher: Ct } = /* @__PURE__ */ Ye(or, {
+}, { Component: so, useEmitter: en, useEmitterValue: A, usePublisher: Ct } = /* @__PURE__ */ Ye(rr, {
 	optional: {
 		restoreStateFrom: "restoreStateFrom",
 		context: "context",
@@ -56896,31 +57368,31 @@ var fr = ({ children: t }) => {
 	}
 }, /* @__PURE__ */ import_react.memo(function(e) {
 	const n = A("useWindowScroll"), o = A("topItemsIndexes").length > 0, r = A("customScrollParent"), s = A("context");
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(r || n ? Ir : gr, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(r || n ? Sr : Ir, {
 		...e,
 		context: s,
-		children: [o && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(pr, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Cn, { showTopList: !0 }) }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(r || n ? mr : fr, { children: [
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ar, {}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Cn, {}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(dr, {})
+		children: [o && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(hr, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(wn, { showTopList: !0 }) }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(r || n ? pr : mr, { children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(dr, {}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(wn, {}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(fr, {})
 		] })]
 	});
-})), gr = /* @__PURE__ */ Je({
-	useEmitter: tn,
+})), Ir = /* @__PURE__ */ Qe({
+	useEmitter: en,
 	useEmitterValue: A,
 	usePublisher: Ct
-}), Ir = /* @__PURE__ */ Qe({
-	useEmitter: tn,
+}), Sr = /* @__PURE__ */ tn({
+	useEmitter: en,
 	useEmitterValue: A,
 	usePublisher: Ct
-}), qr = ro, Sr = /* @__PURE__ */ j(([t, e]) => ({
+}), Yr = so, Tr = /* @__PURE__ */ j(([t, e]) => ({
 	...t,
 	...e
-}), ot(Jn, /* @__PURE__ */ j(() => {
+}), rt(Qn, /* @__PURE__ */ j(() => {
 	const t = v((d) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("td", { children: ["Item $", d] })), e = v(null), n = v((d) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("td", {
 		colSpan: 1e3,
 		children: ["Group ", d]
-	})), o = v(null), r = v(null), s = v({}), i = v(Xe), l = v(Xt), c = (d, m = null) => ht(I(s, B((x) => x[d]), et$1()), m);
+	})), o = v(null), r = v(null), s = v({}), i = v(Xe), l = v(Xt), c = (d, m = null) => ht(I(s, B((S) => S[d]), nt()), m);
 	return {
 		components: s,
 		computeItemKey: i,
@@ -56941,56 +57413,56 @@ var fr = ({ children: t }) => {
 		TableRowComponent: c("TableRow", "tr"),
 		GroupComponent: c("Group", "tr")
 	};
-}))), Tr = ({ height: t }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { height: t } }) }), vr = ({ height: t }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: {
+}))), vr = ({ height: t }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { height: t } }) }), Cr = ({ height: t }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: {
 	border: 0,
 	height: t,
 	padding: 0
-} }) }), Cr = { overflowAnchor: "none" }, wn = {
+} }) }), wr = { overflowAnchor: "none" }, yn = {
 	position: Ze(),
 	zIndex: 2,
 	overflowAnchor: "none"
-}, yn = /* @__PURE__ */ import_react.memo(function({ showTopList: e = !1 }) {
-	const n = M("listState"), o = M("computeItemKey"), r = M("firstItemIndex"), s = M("context"), i = M("isSeeking"), l = M("fixedHeaderHeight"), c = M("groupIndices").length > 0, d = M("itemContent"), m = M("groupContent"), x = M("ScrollSeekPlaceholder") ?? Tr, p = M("GroupComponent"), T = M("TableRowComponent"), w = (e ? n.topItems : []).reduce((h, f, a) => (a === 0 ? h.push(f.size) : h.push(h[a - 1] + f.size), h), []);
+}, bn = /* @__PURE__ */ import_react.memo(function({ showTopList: e = !1 }) {
+	const n = M("listState"), o = M("computeItemKey"), r = M("firstItemIndex"), s = M("context"), i = M("isSeeking"), l = M("fixedHeaderHeight"), c = M("groupIndices").length > 0, d = M("itemContent"), m = M("groupContent"), S = M("ScrollSeekPlaceholder") ?? vr, p = M("GroupComponent"), T = M("TableRowComponent"), w = (e ? n.topItems : []).reduce((h, f, a) => (a === 0 ? h.push(f.size) : h.push(h[a - 1] + f.size), h), []);
 	return (e ? n.topItems : n.items).map((h) => {
-		const f = h.originalIndex, a = o(f + r, h.data, s), S = e ? f === 0 ? 0 : w[f - 1] : 0;
-		return i ? /* @__PURE__ */ (0, import_react.createElement)(x, {
-			...nt(x, s),
+		const f = h.originalIndex, a = o(f + r, h.data, s), x = e ? f === 0 ? 0 : w[f - 1] : 0;
+		return i ? /* @__PURE__ */ (0, import_react.createElement)(S, {
+			...ot(S, s),
 			height: h.size,
 			index: h.index,
 			key: a,
 			type: h.type || "item"
 		}) : h.type === "group" ? /* @__PURE__ */ (0, import_react.createElement)(p, {
-			...nt(p, s),
+			...ot(p, s),
 			"data-index": f,
 			"data-item-index": h.index,
 			"data-known-size": h.size,
 			key: a,
 			style: {
-				...wn,
+				...yn,
 				top: l
 			}
 		}, m(h.index, s)) : /* @__PURE__ */ (0, import_react.createElement)(T, {
-			...nt(T, s),
-			...oo(T, h.data),
+			...ot(T, s),
+			...ro(T, h.data),
 			"data-index": f,
 			"data-item-index": h.index,
 			"data-known-size": h.size,
 			"data-item-group-index": h.groupIndex,
 			key: a,
 			style: e ? {
-				...wn,
-				top: l + S
-			} : Cr
+				...yn,
+				top: l + x
+			} : wr
 		}, c ? d(h.index, h.groupIndex, h.data, s) : d(h.index, h.data, s));
 	});
-}), wr = /* @__PURE__ */ import_react.memo(function() {
-	const e = M("listState"), n = M("topItemsIndexes").length > 0, o = bt("sizeRanges"), r = M("useWindowScroll"), s = M("customScrollParent"), i = bt("windowScrollContainerState"), l = bt("scrollContainerState"), c = s || r ? i : l, d = M("trackItemSizes"), { callbackRef: p, ref: T } = zn(o, M("itemSize"), d, c, M("log"), void 0, s, !1, M("skipAnimationFrameInResizeObserver")), [w, R] = import_react.useState(0);
-	en("deviation", (O) => {
+}), yr = /* @__PURE__ */ import_react.memo(function() {
+	const e = M("listState"), n = M("topItemsIndexes").length > 0, o = bt("sizeRanges"), r = M("useWindowScroll"), s = M("customScrollParent"), i = bt("windowScrollContainerState"), l = bt("scrollContainerState"), c = s || r ? i : l, d = M("trackItemSizes"), { callbackRef: p, ref: T } = Fn(o, M("itemSize"), d, c, M("log"), void 0, s, !1, M("skipAnimationFrameInResizeObserver")), [w, R] = import_react.useState(0);
+	nn("deviation", (O) => {
 		w !== O && (T.current.style.marginTop = `${O}px`, R(O));
 	});
-	const h = M("EmptyPlaceholder"), f = M("FillerRow") ?? vr, a = M("TableBodyComponent"), S = M("paddingTopAddition"), H = M("statefulTotalCount"), y = M("context");
-	if (H === 0 && h !== null && h !== void 0) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(h, { ...nt(h, y) });
-	const k = (n ? e.topItems : []).reduce((O, V) => O + V.size, 0), u = e.offsetTop + S + w - k, g = e.offsetBottom, C = u > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(f, {
+	const h = M("EmptyPlaceholder"), f = M("FillerRow") ?? Cr, a = M("TableBodyComponent"), x = M("paddingTopAddition"), H = M("statefulTotalCount"), y = M("context");
+	if (H === 0 && h !== null && h !== void 0) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(h, { ...ot(h, y) });
+	const L = (n ? e.topItems : []).reduce((O, V) => O + V.size, 0), u = e.offsetTop + x + w - L, g = e.offsetBottom, C = u > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(f, {
 		context: y,
 		height: u
 	}, "padding-top") : null, z = g > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(f, {
@@ -57000,16 +57472,16 @@ var fr = ({ children: t }) => {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(a, {
 		"data-testid": "virtuoso-item-list",
 		ref: p,
-		...nt(a, y),
+		...ot(a, y),
 		children: [
 			C,
-			n && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(yn, { showTopList: !0 }),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(yn, {}),
+			n && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(bn, { showTopList: !0 }),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(bn, {}),
 			z
 		]
 	});
-}), yr = ({ children: t }) => {
-	const e = import_react.useContext(Re), n = bt("viewportHeight"), o = bt("fixedItemHeight"), r = kt(import_react.useMemo(() => re(n, (s) => Ht(s, "height")), [n]), !0, M("skipAnimationFrameInResizeObserver"));
+}), br = ({ children: t }) => {
+	const e = import_react.useContext(be), n = bt("viewportHeight"), o = bt("fixedItemHeight"), r = Lt(import_react.useMemo(() => oe(n, (s) => Ht(s, "height")), [n]), !0, M("skipAnimationFrameInResizeObserver"));
 	return import_react.useEffect(() => {
 		e && (n(e.viewportHeight), o(e.itemHeight));
 	}, [
@@ -57019,11 +57491,11 @@ var fr = ({ children: t }) => {
 	]), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		"data-viewport-type": "element",
 		ref: r,
-		style: Jt(!1),
+		style: Re(!1),
 		children: t
 	});
-}, br = ({ children: t }) => {
-	const e = import_react.useContext(Re), n = bt("windowViewportRect"), o = bt("fixedItemHeight"), s = Ne(n, M("customScrollParent"), M("skipAnimationFrameInResizeObserver"));
+}, Rr = ({ children: t }) => {
+	const e = import_react.useContext(be), n = bt("windowViewportRect"), o = bt("fixedItemHeight"), r = M("customScrollParent"), s = M("useWindowScroll"), i = Ne(n, r, M("skipAnimationFrameInResizeObserver"));
 	return import_react.useEffect(() => {
 		e && (o(e.itemHeight), n({
 			listHeight: 0,
@@ -57037,11 +57509,11 @@ var fr = ({ children: t }) => {
 		o
 	]), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		"data-viewport-type": "window",
-		ref: s,
-		style: Jt(!1),
+		ref: i,
+		style: Je(!1, s),
 		children: t
 	});
-}, { Component: so, useEmitter: en, useEmitterValue: M, usePublisher: bt } = /* @__PURE__ */ Ye(Sr, {
+}, { Component: io, useEmitter: nn, useEmitterValue: M, usePublisher: bt } = /* @__PURE__ */ Ye(Tr, {
 	optional: {
 		restoreStateFrom: "restoreStateFrom",
 		context: "context",
@@ -57095,14 +57567,14 @@ var fr = ({ children: t }) => {
 		groupIndices: "groupIndices"
 	}
 }, /* @__PURE__ */ import_react.memo(function(e) {
-	const n = M("useWindowScroll"), o = M("customScrollParent"), r = bt("fixedHeaderHeight"), s = bt("fixedFooterHeight"), i = M("fixedHeaderContent"), l = M("fixedFooterContent"), c = M("context"), d = kt(import_react.useMemo(() => re(r, (a) => Ht(a, "height")), [r]), !0, M("skipAnimationFrameInResizeObserver")), m = kt(import_react.useMemo(() => re(s, (a) => Ht(a, "height")), [s]), !0, M("skipAnimationFrameInResizeObserver")), x = o || n ? Er : Hr, p = o || n ? br : yr, T = M("TableComponent"), w = M("TableHeadComponent"), R = M("TableFooterComponent"), h = i ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(w, {
+	const n = M("useWindowScroll"), o = M("customScrollParent"), r = bt("fixedHeaderHeight"), s = bt("fixedFooterHeight"), i = M("fixedHeaderContent"), l = M("fixedFooterContent"), c = M("context"), d = Lt(import_react.useMemo(() => oe(r, (a) => Ht(a, "height")), [r]), !0, M("skipAnimationFrameInResizeObserver")), m = Lt(import_react.useMemo(() => oe(s, (a) => Ht(a, "height")), [s]), !0, M("skipAnimationFrameInResizeObserver")), S = o || n ? Br : Er, p = o || n ? Rr : br, T = M("TableComponent"), w = M("TableHeadComponent"), R = M("TableFooterComponent"), h = i ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(w, {
 		ref: d,
 		style: {
 			position: "sticky",
 			top: 0,
 			zIndex: 2
 		},
-		...nt(w, c),
+		...ot(w, c),
 		children: i()
 	}, "TableHead") : null, f = l ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(R, {
 		ref: m,
@@ -57111,34 +57583,34 @@ var fr = ({ children: t }) => {
 			position: "sticky",
 			zIndex: 1
 		},
-		...nt(R, c),
+		...ot(R, c),
 		children: l()
 	}, "TableFoot") : null;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(x, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(S, {
 		...e,
-		...nt(x, c),
+		...ot(S, c),
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(p, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(T, {
 			style: {
 				borderSpacing: 0,
 				overflowAnchor: "none"
 			},
-			...nt(T, c),
+			...ot(T, c),
 			children: [
 				h,
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(wr, {}, "TableBody"),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(yr, {}, "TableBody"),
 				f
 			]
 		}) })
 	});
-})), Hr = /* @__PURE__ */ Je({
-	useEmitter: en,
+})), Er = /* @__PURE__ */ Qe({
+	useEmitter: nn,
 	useEmitterValue: M,
 	usePublisher: bt
-}), Er = /* @__PURE__ */ Qe({
-	useEmitter: en,
+}), Br = /* @__PURE__ */ tn({
+	useEmitter: nn,
 	useEmitterValue: M,
 	usePublisher: bt
-}), bn = {
+}), Rn = {
 	bottom: 0,
 	itemHeight: 0,
 	items: [],
@@ -57146,7 +57618,7 @@ var fr = ({ children: t }) => {
 	offsetBottom: 0,
 	offsetTop: 0,
 	top: 0
-}, Br = {
+}, Or = {
 	bottom: 0,
 	itemHeight: 0,
 	items: [{ index: 0 }],
@@ -57154,27 +57626,27 @@ var fr = ({ children: t }) => {
 	offsetBottom: 0,
 	offsetTop: 0,
 	top: 0
-}, { ceil: Rn, floor: Ce, max: oe, min: Le, round: Hn } = Math;
-function En(t, e, n) {
+}, { ceil: Hn, floor: ve, max: ne, min: ke, round: En } = Math;
+function Bn(t, e, n) {
 	return Array.from({ length: e - t + 1 }).map((o, r) => ({
 		data: n === null ? null : n[r + t],
 		index: r + t
 	}));
 }
-function Or(t) {
+function Lr(t) {
 	return {
-		...Br,
+		...Or,
 		items: t
 	};
 }
-function xe(t, e) {
+function Ie(t, e) {
 	return t !== void 0 && t.width === e.width && t.height === e.height;
 }
 function kr(t, e) {
 	return t !== void 0 && t.column === e.column && t.row === e.row;
 }
-var Lr = /* @__PURE__ */ j(([{ increaseViewportBy: t, listBoundary: e, overscan: n, visibleRange: o }, { footerHeight: r, headerHeight: s, scrollBy: i, scrollContainerState: l, scrollTo: c, scrollTop: d, smoothScrollTargetReached: m, viewportHeight: x }, p, T, { didMount: w, propsReady: R }, { customScrollParent: h, useWindowScroll: f, windowScrollContainerState: a, windowScrollTo: S, windowViewportRect: H }, y]) => {
-	const k = v(0), u = v(0), g = v(bn), C = v({
+var zr = /* @__PURE__ */ j(([{ increaseViewportBy: t, listBoundary: e, overscan: n, visibleRange: o }, { footerHeight: r, headerHeight: s, scrollBy: i, scrollContainerState: l, scrollTo: c, scrollTop: d, smoothScrollTargetReached: m, viewportHeight: S }, p, T, { didMount: w, propsReady: R }, { customScrollParent: h, useWindowScroll: f, windowScrollContainerState: a, windowScrollTo: x, windowViewportRect: H }, y]) => {
+	const L = v(0), u = v(0), g = v(Rn), C = v({
 		height: 0,
 		width: 0
 	}), z = v({
@@ -57183,69 +57655,69 @@ var Lr = /* @__PURE__ */ j(([{ increaseViewportBy: t, listBoundary: e, overscan:
 	}), O = U(), V = U(), N = v(0), Z = v(null), F = v({
 		column: 0,
 		row: 0
-	}), mt = U(), q = U(), Q = v(!1), gt = v(0), ut = v(!0), xt = v(!1), Ft = v(!1);
-	Y(I(w, $(gt), G(([b, D]) => D !== 0)), () => {
+	}), mt = U(), q = U(), Q = v(!1), gt = v(0), ut = v(!0), St = v(!1), Ft = v(!1);
+	Y(I(w, $(gt), P(([b, D]) => D !== 0)), () => {
 		_(ut, !1);
-	}), Y(I(at(w, ut, z, C, gt, xt), G(([b, D, K, rt, , tt]) => b && !D && K.height !== 0 && rt.height !== 0 && !tt)), ([, , , , b]) => {
-		_(xt, !0), Ue(1, () => {
+	}), Y(I(at(w, ut, z, C, gt, St), P(([b, D, K, st, , tt]) => b && !D && K.height !== 0 && st.height !== 0 && !tt)), ([, , , , b]) => {
+		_(St, !0), Ue(1, () => {
 			_(O, b);
 		}), yt(I(d), () => {
 			_(e, [0, 0]), _(ut, !0);
 		});
-	}), L(I(q, G((b) => b != null && b.scrollTop > 0), Bt(0)), u), Y(I(w, $(q), G(([, b]) => b != null)), ([, b]) => {
+	}), k(I(q, P((b) => b != null && b.scrollTop > 0), Bt(0)), u), Y(I(w, $(q), P(([, b]) => b != null)), ([, b]) => {
 		b && (_(C, b.viewport), _(z, b.item), _(F, b.gap), b.scrollTop > 0 && (_(Q, !0), yt(I(d, $t(1)), (D) => {
 			_(Q, !1);
 		}), _(c, { top: b.scrollTop })));
-	}), L(I(C, B(({ height: b }) => b)), x), L(I(at(P(C, xe), P(z, xe), P(F, (b, D) => b !== void 0 && b.column === D.column && b.row === D.row), P(d)), B(([b, D, K, rt]) => ({
+	}), k(I(C, B(({ height: b }) => b)), S), k(I(at(W(C, Ie), W(z, Ie), W(F, (b, D) => b !== void 0 && b.column === D.column && b.row === D.row), W(d)), B(([b, D, K, st]) => ({
 		gap: K,
 		item: D,
-		scrollTop: rt,
+		scrollTop: st,
 		viewport: b
-	}))), mt), L(I(at(P(k), o, P(F, kr), P(z, xe), P(C, xe), P(Z), P(u), P(Q), P(ut), P(gt)), G(([, , , , , , , b]) => !b), B(([b, [D, K], rt, tt, X, lt, St, , ct, Vt]) => {
-		const { column: Pt, row: ee } = rt, { height: he, width: He } = tt, { width: nn } = X;
-		if (St === 0 && (b === 0 || nn === 0)) return bn;
+	}))), mt), k(I(at(W(L), o, W(F, kr), W(z, Ie), W(C, Ie), W(Z), W(u), W(Q), W(ut), W(gt)), P(([, , , , , , , b]) => !b), B(([b, [D, K], st, tt, X, lt, xt, , ct, Vt]) => {
+		const { column: Wt, row: te } = st, { height: pe, width: He } = tt, { width: on } = X;
+		if (xt === 0 && (b === 0 || on === 0)) return Rn;
 		if (He === 0) {
-			const cn = Ke(Vt, b);
-			return Or(En(cn, cn + Math.max(St - 1, 0), lt));
+			const un = Ke(Vt, b);
+			return Lr(Bn(un, un + Math.max(xt - 1, 0), lt));
 		}
-		const ge = io(nn, He, Pt);
+		const he = lo(on, He, Wt);
 		let jt, Mt;
-		ct ? D === 0 && K === 0 && St > 0 ? (jt = 0, Mt = St - 1) : (jt = ge * Ce((D + ee) / (he + ee)), Mt = ge * Rn((K + ee) / (he + ee)) - 1, Mt = Le(b - 1, oe(Mt, ge - 1)), jt = Le(Mt, oe(0, jt))) : (jt = 0, Mt = -1);
-		const on = En(jt, Mt, lt), { bottom: rn, top: sn } = Bn(X, rt, tt, on), ln = Rn(b / ge);
+		ct ? D === 0 && K === 0 && xt > 0 ? (jt = 0, Mt = xt - 1) : (jt = he * ve((D + te) / (pe + te)), Mt = he * Hn((K + te) / (pe + te)) - 1, Mt = ke(b - 1, ne(Mt, he - 1)), jt = ke(Mt, ne(0, jt))) : (jt = 0, Mt = -1);
+		const rn = Bn(jt, Mt, lt), { bottom: sn, top: ln } = On(X, st, tt, rn), cn = Hn(b / he);
 		return {
-			bottom: rn,
-			itemHeight: he,
-			items: on,
+			bottom: sn,
+			itemHeight: pe,
+			items: rn,
 			itemWidth: He,
-			offsetBottom: ln * he + (ln - 1) * ee - rn,
-			offsetTop: sn,
-			top: sn
+			offsetBottom: cn * pe + (cn - 1) * te - sn,
+			offsetTop: ln,
+			top: ln
 		};
-	})), g), L(I(Z, G((b) => b !== null), B((b) => b.length)), k), L(I(at(C, z, g, F), G(([b, D, { items: K }]) => K.length > 0 && D.height !== 0 && b.height !== 0), B(([b, D, { items: K }, rt]) => {
-		const { bottom: tt, top: X } = Bn(b, rt, D, K);
+	})), g), k(I(Z, P((b) => b !== null), B((b) => b.length)), L), k(I(at(C, z, g, F), P(([b, D, { items: K }]) => K.length > 0 && D.height !== 0 && b.height !== 0), B(([b, D, { items: K }, st]) => {
+		const { bottom: tt, top: X } = On(b, st, D, K);
 		return [X, tt];
-	}), et$1(le)), e);
+	}), nt(ie$2)), e);
 	const pt = v(!1);
-	L(I(d, $(pt), B(([b, D]) => D || b !== 0)), pt);
-	const Kt = vt(I(at(g, k), G(([{ items: b }]) => b.length > 0), $(pt), G(([[b, D], K]) => {
+	k(I(d, $(pt), B(([b, D]) => D || b !== 0)), pt);
+	const Kt = vt(I(at(g, L), P(([{ items: b }]) => b.length > 0), $(pt), P(([[b, D], K]) => {
 		const tt = b.items[b.items.length - 1].index === D - 1;
 		return (K || b.bottom > 0 && b.itemHeight > 0 && b.offsetBottom === 0 && b.items.length === D) && tt;
-	}), B(([[, b]]) => b - 1), et$1())), Qt = vt(I(P(g), G(({ items: b }) => b.length > 0 && b[0].index === 0), Bt(0), et$1())), Et = vt(I(P(g), $(Q), G(([{ items: b }, D]) => b.length > 0 && !D), B(([{ items: b }]) => ({
+	}), B(([[, b]]) => b - 1), nt())), Jt = vt(I(W(g), P(({ items: b }) => b.length > 0 && b[0].index === 0), Bt(0), nt())), Et = vt(I(W(g), $(Q), P(([{ items: b }, D]) => b.length > 0 && !D), B(([{ items: b }]) => ({
 		endIndex: b[b.length - 1].index,
 		startIndex: b[0].index
-	})), et$1(An), zt(0)));
-	L(Et, T.scrollSeekRangeChanged), L(I(O, $(C, z, k, F), B(([b, D, K, rt, tt]) => {
-		const X = $n(b), { align: lt, behavior: St, offset: ct } = X;
+	})), nt(Mn), zt(0)));
+	k(Et, T.scrollSeekRangeChanged), k(I(O, $(C, z, L, F), B(([b, D, K, st, tt]) => {
+		const X = Un(b), { align: lt, behavior: xt, offset: ct } = X;
 		let Vt = X.index;
-		Vt === "LAST" && (Vt = rt - 1), Vt = oe(0, Vt, Le(rt - 1, Vt));
-		let Pt = We(D, tt, K, Vt);
-		return lt === "end" ? Pt = Hn(Pt - D.height + K.height) : lt === "center" && (Pt = Hn(Pt - D.height / 2 + K.height / 2)), ct !== void 0 && ct !== 0 && (Pt += ct), {
-			behavior: St,
-			top: Pt
+		Vt === "LAST" && (Vt = st - 1), Vt = ne(0, Vt, ke(st - 1, Vt));
+		let Wt = Ge(D, tt, K, Vt);
+		return lt === "end" ? Wt = En(Wt - D.height + K.height) : lt === "center" && (Wt = En(Wt - D.height / 2 + K.height / 2)), ct !== void 0 && ct !== 0 && (Wt += ct), {
+			behavior: xt,
+			top: Wt
 		};
 	})), c);
-	const te = ht(I(g, B((b) => b.offsetBottom + b.bottom)), 0);
-	return L(I(H, B((b) => ({
+	const Qt = ht(I(g, B((b) => b.offsetBottom + b.bottom)), 0);
+	return k(I(H, B((b) => ({
 		height: b.visibleHeight,
 		width: b.visibleWidth
 	}))), C), {
@@ -57267,52 +57739,52 @@ var Lr = /* @__PURE__ */ j(([{ increaseViewportBy: t, listBoundary: e, overscan:
 		scrollToIndex: O,
 		scrollTop: d,
 		smoothScrollTargetReached: m,
-		totalCount: k,
+		totalCount: L,
 		useWindowScroll: f,
 		viewportDimensions: C,
 		windowScrollContainerState: a,
-		windowScrollTo: S,
+		windowScrollTo: x,
 		windowViewportRect: H,
 		...T,
 		gridState: g,
 		horizontalDirection: Ft,
 		initialTopMostItemIndex: gt,
-		totalListHeight: te,
+		totalListHeight: Qt,
 		...p,
 		endReached: Kt,
 		propsReady: R,
 		rangeChanged: Et,
-		startReached: Qt,
+		startReached: Jt,
 		stateChanged: mt,
 		stateRestoreInProgress: Q,
 		...y
 	};
-}, ot(je, It, pe, Zn, At, qe, Wt));
-function io(t, e, n) {
-	return oe(1, Ce((t + n) / (Ce(e) + n)));
+}, rt(je, It, me, Xn, At, qe, Gt));
+function lo(t, e, n) {
+	return ne(1, ve((t + n) / (ve(e) + n)));
 }
-function Bn(t, e, n, o) {
+function On(t, e, n, o) {
 	const { height: r } = n;
 	if (r === void 0 || o.length === 0) return {
 		bottom: 0,
 		top: 0
 	};
-	const s = We(t, e, n, o[0].index);
+	const s = Ge(t, e, n, o[0].index);
 	return {
-		bottom: We(t, e, n, o[o.length - 1].index) + r,
+		bottom: Ge(t, e, n, o[o.length - 1].index) + r,
 		top: s
 	};
 }
-function We(t, e, n, o) {
-	const s = Ce(o / io(t.width, n.width, e.column)), i = s * n.height + oe(0, s - 1) * e.row;
+function Ge(t, e, n, o) {
+	const s = ve(o / lo(t.width, n.width, e.column)), i = s * n.height + ne(0, s - 1) * e.row;
 	return i > 0 ? i + e.row : i;
 }
-var Fr = /* @__PURE__ */ j(([t, e]) => ({
+var Vr = /* @__PURE__ */ j(([t, e]) => ({
 	...t,
 	...e
-}), ot(Lr, /* @__PURE__ */ j(() => {
-	const t = v((x) => `Item ${x}`), e = v({}), n = v(null), o = v("virtuoso-grid-item"), r = v("virtuoso-grid-list"), s = v(Xe), i = v("div"), l = v(Xt), c = (x, p = null) => ht(I(e, B((T) => T[x]), et$1()), p), d = v(!1), m = v(!1);
-	return L(P(m), d), {
+}), rt(zr, /* @__PURE__ */ j(() => {
+	const t = v((S) => `Item ${S}`), e = v({}), n = v(null), o = v("virtuoso-grid-item"), r = v("virtuoso-grid-list"), s = v(Xe), i = v("div"), l = v(Xt), c = (S, p = null) => ht(I(e, B((T) => T[S]), nt()), p), d = v(!1), m = v(!1);
+	return k(W(m), d), {
 		components: e,
 		computeItemKey: s,
 		context: n,
@@ -57330,21 +57802,21 @@ var Fr = /* @__PURE__ */ j(([t, e]) => ({
 		scrollerRef: l,
 		ScrollSeekPlaceholder: c("ScrollSeekPlaceholder", "div")
 	};
-}))), Vr = /* @__PURE__ */ import_react.memo(function() {
-	const e = st("gridState"), n = st("listClassName"), o = st("itemClassName"), r = st("itemContent"), s = st("computeItemKey"), i = st("isSeeking"), l = wt("scrollHeight"), c = st("ItemComponent"), d = st("ListComponent"), m = st("ScrollSeekPlaceholder"), x = st("context"), p = wt("itemDimensions"), T = wt("gap"), w = st("log"), R = st("stateRestoreInProgress"), h = wt("reportReadyState"), f = kt(import_react.useMemo(() => (a) => {
-		const S = a.parentElement.parentElement.scrollHeight;
-		l(S);
+}))), Wr = /* @__PURE__ */ import_react.memo(function() {
+	const e = et$1("gridState"), n = et$1("listClassName"), o = et$1("itemClassName"), r = et$1("itemContent"), s = et$1("computeItemKey"), i = et$1("isSeeking"), l = wt("scrollHeight"), c = et$1("ItemComponent"), d = et$1("ListComponent"), m = et$1("ScrollSeekPlaceholder"), S = et$1("context"), p = wt("itemDimensions"), T = wt("gap"), w = et$1("log"), R = et$1("stateRestoreInProgress"), h = wt("reportReadyState"), f = Lt(import_react.useMemo(() => (a) => {
+		const x = a.parentElement.parentElement.scrollHeight;
+		l(x);
 		const H = a.firstChild;
 		if (H !== null) {
-			const { height: y, width: k } = H.getBoundingClientRect();
+			const { height: y, width: L } = H.getBoundingClientRect();
 			p({
 				height: y,
-				width: k
+				width: L
 			});
 		}
 		T({
-			column: On("column-gap", getComputedStyle(a).columnGap, w),
-			row: On("row-gap", getComputedStyle(a).rowGap, w)
+			column: Ln("column-gap", getComputedStyle(a).columnGap, w),
+			row: Ln("row-gap", getComputedStyle(a).rowGap, w)
 		});
 	}, [
 		l,
@@ -57352,50 +57824,50 @@ var Fr = /* @__PURE__ */ j(([t, e]) => ({
 		T,
 		w
 	]), !0, !1);
-	return to(() => {
+	return eo(() => {
 		e.itemHeight > 0 && e.itemWidth > 0 && h(!0);
 	}, [e]), R ? null : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(d, {
 		className: n,
 		ref: f,
-		...nt(d, x),
+		...ot(d, S),
 		"data-testid": "virtuoso-item-list",
 		style: {
 			paddingBottom: e.offsetBottom,
 			paddingTop: e.offsetTop
 		},
 		children: e.items.map((a) => {
-			const S = s(a.index, a.data, x);
+			const x = s(a.index, a.data, S);
 			return i ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(m, {
-				...nt(m, x),
+				...ot(m, S),
 				height: e.itemHeight,
 				index: a.index,
 				width: e.itemWidth
-			}, S) : /* @__PURE__ */ (0, import_react.createElement)(c, {
-				...nt(c, x),
+			}, x) : /* @__PURE__ */ (0, import_react.createElement)(c, {
+				...ot(c, S),
 				className: o,
 				"data-index": a.index,
-				key: S
-			}, r(a.index, a.data, x));
+				key: x
+			}, r(a.index, a.data, S));
 		})
 	});
 }), Pr = import_react.memo(function() {
-	const e = st("HeaderComponent"), n = wt("headerHeight"), o = st("headerFooterTag"), r = kt(import_react.useMemo(() => (i) => {
+	const e = et$1("HeaderComponent"), n = wt("headerHeight"), o = et$1("headerFooterTag"), r = Lt(import_react.useMemo(() => (i) => {
 		n(Ht(i, "height"));
-	}, [n]), !0, !1), s = st("context");
+	}, [n]), !0, !1), s = et$1("context");
 	return e != null ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(o, {
 		ref: r,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(e, { ...nt(e, s) })
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(e, { ...ot(e, s) })
 	}) : null;
 }), Gr = import_react.memo(function() {
-	const e = st("FooterComponent"), n = wt("footerHeight"), o = st("headerFooterTag"), r = kt(import_react.useMemo(() => (i) => {
+	const e = et$1("FooterComponent"), n = wt("footerHeight"), o = et$1("headerFooterTag"), r = Lt(import_react.useMemo(() => (i) => {
 		n(Ht(i, "height"));
-	}, [n]), !0, !1), s = st("context");
+	}, [n]), !0, !1), s = et$1("context");
 	return e != null ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(o, {
 		ref: r,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(e, { ...nt(e, s) })
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(e, { ...ot(e, s) })
 	}) : null;
-}), Wr = ({ children: t }) => {
-	const e = import_react.useContext(Qn), n = wt("itemDimensions"), o = wt("viewportDimensions"), r = kt(import_react.useMemo(() => (s) => {
+}), Ar = ({ children: t }) => {
+	const e = import_react.useContext(to), n = wt("itemDimensions"), o = wt("viewportDimensions"), r = Lt(import_react.useMemo(() => (s) => {
 		o(s.getBoundingClientRect());
 	}, [o]), !0, !1);
 	return import_react.useEffect(() => {
@@ -57412,11 +57884,11 @@ var Fr = /* @__PURE__ */ j(([t, e]) => ({
 		n
 	]), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		ref: r,
-		style: Jt(!1),
+		style: Re(!1),
 		children: t
 	});
-}, Ar = ({ children: t }) => {
-	const e = import_react.useContext(Qn), n = wt("windowViewportRect"), o = wt("itemDimensions"), s = Ne(n, st("customScrollParent"), !1);
+}, Mr = ({ children: t }) => {
+	const e = import_react.useContext(to), n = wt("windowViewportRect"), o = wt("itemDimensions"), r = et$1("customScrollParent"), s = et$1("useWindowScroll"), i = Ne(n, r, !1);
 	return import_react.useEffect(() => {
 		e && (o({
 			height: e.itemHeight,
@@ -57432,11 +57904,11 @@ var Fr = /* @__PURE__ */ j(([t, e]) => ({
 		n,
 		o
 	]), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		ref: s,
-		style: Jt(!1),
+		ref: i,
+		style: Je(!1, s),
 		children: t
 	});
-}, { Component: _r, useEmitter: lo, useEmitterValue: st, usePublisher: wt } = /* @__PURE__ */ Ye(Fr, {
+}, { Component: Nr, useEmitter: co, useEmitterValue: et$1, usePublisher: wt } = /* @__PURE__ */ Ye(Vr, {
 	optional: {
 		context: "context",
 		totalCount: "totalCount",
@@ -57474,26 +57946,26 @@ var Fr = /* @__PURE__ */ j(([t, e]) => ({
 		readyStateChanged: "readyStateChanged"
 	}
 }, /* @__PURE__ */ import_react.memo(function({ ...e }) {
-	const n = st("useWindowScroll"), o = st("customScrollParent"), r = o || n ? Dr : Nr, s = o || n ? Ar : Wr, i = st("context");
+	const n = et$1("useWindowScroll"), o = et$1("customScrollParent"), r = o || n ? $r : Dr, s = o || n ? Mr : Ar, i = et$1("context");
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(r, {
 		...e,
-		...nt(r, i),
+		...ot(r, i),
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(s, { children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Pr, {}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Vr, {}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Wr, {}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Gr, {})
 		] })
 	});
-})), Nr = /* @__PURE__ */ Je({
-	useEmitter: lo,
-	useEmitterValue: st,
+})), Dr = /* @__PURE__ */ Qe({
+	useEmitter: co,
+	useEmitterValue: et$1,
 	usePublisher: wt
-}), Dr = /* @__PURE__ */ Qe({
-	useEmitter: lo,
-	useEmitterValue: st,
+}), $r = /* @__PURE__ */ tn({
+	useEmitter: co,
+	useEmitterValue: et$1,
 	usePublisher: wt
 });
-function On(t, e, n) {
+function Ln(t, e, n) {
 	return e !== "normal" && e?.endsWith("px") !== !0 && n(`${t} was not resolved to pixel value correctly`, e, ft.WARN), e === "normal" ? 0 : parseInt(e ?? "0", 10);
 }
 var LiveVirtualList_module_default = {
@@ -57764,7 +58236,7 @@ var LiveVirtualList = ({ id, listHandle, className, data, renderRow, scrollRef, 
 		setIsCurrentlyScrolling(scrolling);
 		isScrolling(scrolling);
 	}, [isScrolling]);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(qr, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Yr, {
 		ref: listHandle,
 		customScrollParent: scrollParent ?? void 0,
 		style: {
@@ -64141,7 +64613,10 @@ var initialState$1 = {
 		previewCount: 0,
 		detailsCount: 0
 	},
-	samplesListState: { columnVisibility: {} },
+	samplesListState: { byScope: {
+		samplesPanel: { columnVisibility: {} },
+		logViewSamples: { columnVisibility: {} }
+	} },
 	showRetriedLogs: false
 };
 var createLogsSlice = (set, get, _store) => {
@@ -64152,7 +64627,8 @@ var createLogsSlice = (set, get, _store) => {
 				set((state) => {
 					if (logDir !== state.logs.logDir) {
 						state.logs.logDir = logDir;
-						state.logs.samplesListState.gridState = void 0;
+						state.logs.samplesListState.byScope.samplesPanel.gridState = void 0;
+						state.logs.samplesListState.byScope.logViewSamples.gridState = void 0;
 						state.logs.listing.gridStateByScope = {};
 					}
 				});
@@ -64188,14 +64664,14 @@ var createLogsSlice = (set, get, _store) => {
 					...details
 				};
 			}),
-			setGridState: (gridState) => {
+			setSamplesGridState: (scope, gridState) => {
 				set((state) => {
-					state.logs.samplesListState.gridState = gridState;
+					state.logs.samplesListState.byScope[scope].gridState = gridState;
 				});
 			},
-			clearGridState: () => {
+			clearSamplesGridState: (scope) => {
 				set((state) => {
-					state.logs.samplesListState.gridState = void 0;
+					state.logs.samplesListState.byScope[scope].gridState = void 0;
 				});
 			},
 			setDisplayedSamples: (samples) => {
@@ -64209,9 +64685,9 @@ var createLogsSlice = (set, get, _store) => {
 					state.logs.samplesListState.displayedSamples = void 0;
 				});
 			},
-			setSamplesColumnVisibility: (visibility) => {
+			setSamplesColumnVisibility: (scope, visibility) => {
 				set((state) => {
-					state.logs.samplesListState.columnVisibility = visibility;
+					state.logs.samplesListState.byScope[scope].columnVisibility = visibility;
 				});
 			},
 			setPreviousSamplesPath: (path) => {
@@ -65600,6 +66076,7 @@ var ApplicationIcons = {
 	"clear-text": "bi bi-x-circle-fill",
 	close: "bi bi-x",
 	code: "bi bi-code-slash",
+	columns: "bi bi-layout-three-columns",
 	collapse: {
 		all: "bi bi-arrows-collapse",
 		up: "bi bi-chevron-up"
@@ -66505,7 +66982,7 @@ var RecordTree = ({ id, record, className, scrollRef, defaultExpandLevel = 1, pr
 		tabIndex: 0,
 		children: items.map((_, index) => renderRow(index))
 	});
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(qr, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Yr, {
 		ref: listHandle,
 		customScrollParent: scrollRef?.current ? scrollRef.current : void 0,
 		id,
@@ -69329,6 +69806,7 @@ function compileExpression(expression, options) {
 		}
 	};
 }
+var kSampleUuidVariable = "uuid";
 var kSampleMetadataVariable = "metadata";
 var kSampleMetadataPrefix = kSampleMetadataVariable + ".";
 var KEYWORDS = [
@@ -69356,6 +69834,7 @@ var SAMPLE_VARIABLES = [
 	["has_error", "Checks if the sample has an error"],
 	["has_retries", "Checks if the sample has been retried"],
 	["id", "The unique identifier of the sample"],
+	[kSampleUuidVariable, "The globally unique identifier of the sample run"],
 	[kSampleMetadataVariable, "Metadata associated with the sample"]
 ];
 var SAMPLE_FUNCTIONS = [
@@ -69441,6 +69920,7 @@ var sampleVariables = (sample) => {
 		has_error: !!sample.error,
 		has_retries: sample.retries !== void 0 && sample.retries > 0,
 		id: sample.id,
+		uuid: sample.uuid ?? null,
 		metadata: sample.metadata
 	};
 };
@@ -70724,18 +71204,19 @@ var ApplicationNavbar = ({ currentPath, fnNavigationUrl, bordered, children, sho
 	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ActivityBar, { animating: hasActivity })] });
 };
 var NavbarButton_module_default = {
-	navbarButton: "_navbarButton_7hxb6_1",
-	dropdownChevron: "_dropdownChevron_7hxb6_6"
+	navbarButton: "_navbarButton_i4zyi_1",
+	dropdownChevron: "_dropdownChevron_i4zyi_9"
 };
 //#endregion
 //#region src/app/navbar/NavbarButton.tsx
-var NavbarButton = (0, import_react.forwardRef)(({ label, className, icon, latched, dropdown, ...rest }, ref) => {
+var NavbarButton = (0, import_react.forwardRef)(({ label, className, icon, latched, subtle, dropdown, ...rest }, ref) => {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolButton, {
 		ref,
 		label: dropdown ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [label, /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(ApplicationIcons.chevron.down, NavbarButton_module_default.dropdownChevron) })] }) : label,
 		className: clsx(className, NavbarButton_module_default.navbarButton),
 		icon,
 		latched,
+		subtle,
 		...rest
 	});
 });
@@ -70778,14 +71259,21 @@ var ViewSegmentedControl = ({ selectedSegment }) => {
 //#endregion
 //#region src/app/shared/gridUtils.ts
 /**
-* Gets the field key from a column definition.
-* Returns the field name, header name, or "?" as fallback.
+* Resolves the runtime column id ag-grid will use for a column definition.
+* Prefers an explicit `colId`, falls back to `field`, then `headerName`,
+* then `"?"`. This is what should be used both as a key into a
+* visibility/state map AND as the `colId` passed to
+* `api.applyColumnState({ state })` so the two stay in sync.
+*
+* (ag-grid itself uses `colId ?? field` as the runtime id when a column
+* has only one of the two; matching that here means a column with only
+* `colId` — like the pinned `#` index column — round-trips correctly.)
 *
 * @param col - AG Grid column definition
 * @returns The field key for the column
 */
 var getFieldKey = (col) => {
-	return col.field || col.headerName || "?";
+	return col.colId || col.field || col.headerName || "?";
 };
 /**
 * Creates a debounced resize function for AG Grid columns.
@@ -70817,11 +71305,15 @@ var ColumnSelectorPopover_module_default = {
 //#endregion
 //#region src/app/shared/ColumnSelectorPopover.tsx
 var isScoreField = (field) => field.startsWith("score_") || field.startsWith("metric_");
-var ColumnSelectorPopover = ({ showing, setShowing, columns, onVisibilityChange, positionEl, filteredFields = [], scoresHeading = "Scorers", groupableScores = false, scoresViewMode = "by-metric", onScoresViewModeChange }) => {
-	const currentVisibility = (0, import_react.useMemo)(() => columns.reduce((acc, col) => ({
-		...acc,
-		[getFieldKey(col)]: !col.hide
-	}), {}), [columns]);
+var ColumnSelectorPopover = ({ showing, setShowing, columns, onVisibilityChange, positionEl, filteredFields = [], scoresHeading = "Scorers", splitScores = true, visibility, groupableScores = false, scoresViewMode = "by-metric", onScoresViewModeChange }) => {
+	const currentVisibility = (0, import_react.useMemo)(() => columns.reduce((acc, col) => {
+		const key = getFieldKey(col);
+		const vis = visibility ? visibility[key] !== false : !col.hide;
+		return {
+			...acc,
+			[key]: vis
+		};
+	}, {}), [columns, visibility]);
 	const handleToggle = (field) => {
 		onVisibilityChange({
 			...currentVisibility,
@@ -70829,11 +71321,15 @@ var ColumnSelectorPopover = ({ showing, setShowing, columns, onVisibilityChange,
 		});
 	};
 	const columnGroups = (0, import_react.useMemo)(() => {
+		if (!splitScores) return {
+			base: columns,
+			scores: []
+		};
 		return {
 			base: columns.filter((col) => !isScoreField(getFieldKey(col))),
 			scores: columns.filter((col) => isScoreField(getFieldKey(col)))
 		};
-	}, [columns]);
+	}, [columns, splitScores]);
 	const handleSelectAllBase = () => {
 		onVisibilityChange({
 			...currentVisibility,
@@ -70896,7 +71392,7 @@ var ColumnSelectorPopover = ({ showing, setShowing, columns, onVisibilityChange,
 				className: clsx(ColumnSelectorPopover_module_default.section),
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: ColumnSelectorPopover_module_default.headerRow,
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("b", { children: "Base" }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					children: [splitScores ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("b", { children: "Base" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("b", { children: "Columns" }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 						className: clsx(ColumnSelectorPopover_module_default.buttonContainer, "text-size-small"),
 						children: [
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
@@ -70916,7 +71412,7 @@ var ColumnSelectorPopover = ({ showing, setShowing, columns, onVisibilityChange,
 					className: ColumnSelectorPopover_module_default.columnsLayout,
 					children: columnGroups.base.map((col) => renderColumnCheckbox(col))
 				})]
-			}), columnGroups.scores.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			}), splitScores && columnGroups.scores.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 				className: ColumnSelectorPopover_module_default.headerRow,
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: ColumnSelectorPopover_module_default.scoresHeadingGroup,
@@ -71041,9 +71537,11 @@ function createFolderFirstComparator(compareFn) {
 * Common comparison functions for use with createFolderFirstComparator
 */
 var comparators = {
+	/** Compare values as numbers */
 	number: (a, b) => {
 		return Number(a || 0) - Number(b || 0);
 	},
+	/** Compare values as dates */
 	date: (a, b) => {
 		return (a ? new Date(a).getTime() : 0) - (b ? new Date(b).getTime() : 0);
 	}
@@ -71739,26 +72237,24 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 		if (field.startsWith("metric_")) return viewMode === "by-metric";
 		return true;
 	};
-	const columns = (0, import_react.useMemo)(() => {
-		return allColumns.map((col) => {
-			const field = getFieldKey(col);
-			const defaultVisible = field.startsWith("score_") || field.startsWith("metric_") ? false : !defaultHiddenFields.has(field);
-			const isVisible = columnVisibility[field] ?? defaultVisible;
-			return {
-				...col,
-				hide: !isVisible
-			};
-		});
-	}, [
-		allColumns,
-		columnVisibility,
-		defaultHiddenFields
-	]);
 	return {
-		columns,
+		columns: allColumns,
+		visibility: (0, import_react.useMemo)(() => {
+			const v = {};
+			for (const col of allColumns) {
+				const field = getFieldKey(col);
+				const defaultVisible = field.startsWith("score_") || field.startsWith("metric_") ? false : !defaultHiddenFields.has(field);
+				v[field] = columnVisibility[field] ?? defaultVisible;
+			}
+			return v;
+		}, [
+			allColumns,
+			columnVisibility,
+			defaultHiddenFields
+		]),
 		pickerColumns: (0, import_react.useMemo)(() => {
-			return columns.filter((col) => matchesActiveMode(getFieldKey(col)));
-		}, [columns, viewMode]),
+			return allColumns.filter((col) => matchesActiveMode(getFieldKey(col)));
+		}, [allColumns, viewMode]),
 		setColumnVisibility
 	};
 };
@@ -101604,15 +102100,25 @@ var CommunityCoreModule = {
 	],
 	icons: {
 		selectOpen: "small-down",
+		/** @deprecated v33 */
 		smallDown: "small-down",
+		/** @deprecated v33 */
 		colorPicker: "color-picker",
+		/** @deprecated v33 */
 		smallUp: "small-up",
+		/** @deprecated v33 */
 		checkboxChecked: "small-up",
+		/** @deprecated v33 */
 		checkboxIndeterminate: "checkbox-indeterminate",
+		/** @deprecated v33 */
 		checkboxUnchecked: "checkbox-unchecked",
+		/** @deprecated v33 */
 		radioButtonOn: "radio-button-on",
+		/** @deprecated v33 */
 		radioButtonOff: "radio-button-off",
+		/** @deprecated v33 */
 		smallLeft: "small-left",
+		/** @deprecated v33 */
 		smallRight: "small-right"
 	},
 	apiFunctions: {
@@ -118713,6 +119219,57 @@ var createGridKeyboardHandler = ({ gridRef, onOpenRow, pageJump = 10 }) => {
 		}
 	};
 };
+var SamplesGrid_module_default = {
+	gridWrapper: "_gridWrapper_egqgb_1",
+	gridContainer: "_gridContainer_egqgb_7",
+	gridChrome: "_gridChrome_egqgb_18",
+	listMode: "_listMode_egqgb_50",
+	gridMode: "_gridMode_egqgb_58",
+	cell: "_cell_egqgb_63",
+	wrapAnywhere: "_wrapAnywhere_egqgb_67",
+	noLeft: "_noLeft_egqgb_71",
+	score: "_score_egqgb_75",
+	centered: "_centered_egqgb_82"
+};
+//#endregion
+//#region src/app/shared/useApplyColumnVisibility.ts
+/**
+* Applies a `Record<colId, visible>` map to an ag-grid instance via
+* `api.applyColumnState`. Used in place of putting `hide:` on each
+* `ColDef` so that visibility changes don't force a `columnDefs`
+* reference change — which would reset user-driven width and order.
+*
+* The hook fires the apply both on the dep change (visibility,
+* columnDefs) and once more from the returned callback. Callers should
+* invoke that callback from their `onGridReady` handler so the very
+* first apply (which runs before the api exists) gets retried.
+*
+* Both the seed/lookup and the `applyColumnState` colId use
+* `getFieldKey` so the two stay in lockstep across columns that set
+* only `colId` (e.g. the pinned `#` index column).
+*/
+function useApplyColumnVisibility(gridRef, columnDefs, visibility) {
+	const apply = (0, import_react.useCallback)(() => {
+		const api = gridRef.current?.api;
+		if (!api || !visibility) return;
+		const state = columnDefs.map((c) => {
+			const id = getFieldKey(c);
+			return {
+				colId: id,
+				hide: visibility[id] === false
+			};
+		});
+		if (state.length > 0) api.applyColumnState({ state });
+	}, [
+		gridRef,
+		columnDefs,
+		visibility
+	]);
+	(0, import_react.useEffect)(() => {
+		apply();
+	}, [apply]);
+	return apply;
+}
 //#endregion
 //#region src/app/log-list/grid/LogListGrid.tsx
 var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mode = "logs" }) => {
@@ -118744,7 +119301,7 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 	}, [items]);
 	const scopePrefix = mode === "logs" ? currentPath : void 0;
 	const [scoresViewMode] = useProperty("log-list-scores-view", "mode", { defaultValue: "by-metric" });
-	const { columns } = useLogListColumns(mode, scopePrefix, scoresViewMode);
+	const { columns, visibility } = useLogListColumns(mode, scopePrefix, scoresViewMode);
 	const initialGridState = gridState;
 	(0, import_react.useEffect)(() => {
 		gridContainerRef.current?.focus();
@@ -118764,9 +119321,10 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 				const end = new Date(details.stats.completed_at).getTime();
 				if (start && end && end > start) duration = (end - start) / 1e3;
 			}
+			const taskArgsSource = details?.eval?.task_args_passed ?? details?.eval?.task_args;
 			let taskArgs;
-			if (details?.eval?.task_args) {
-				const entries = Object.entries(details.eval.task_args);
+			if (taskArgsSource) {
+				const entries = Object.entries(taskArgsSource);
 				if (entries.length > 0) taskArgs = entries.map(([k, v]) => `${k}=${JSON.stringify(v)}`).join(", ");
 			}
 			let percentCompleted;
@@ -118797,7 +119355,7 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 				duration,
 				taskFile: details?.eval?.task_file ?? void 0,
 				taskArgs,
-				taskArgsRaw: details?.eval?.task_args ?? void 0,
+				taskArgsRaw: taskArgsSource ?? void 0,
 				tags: details?.tags,
 				percentCompleted,
 				sampleErrors,
@@ -118859,7 +119417,10 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 		setWatchedLogs,
 		logPreviews
 	]);
-	const handleGridReady = (0, import_react.useCallback)((e) => {}, []);
+	const applyVisibility = useApplyColumnVisibility(gridRef, columns, visibility);
+	const handleGridReady = (0, import_react.useCallback)((e) => {
+		applyVisibility();
+	}, [applyVisibility]);
 	const handleSortChanged = (0, import_react.useCallback)(async () => {
 		await loadAllLogOverviews();
 		setWatchedLogs(logFiles);
@@ -118884,6 +119445,13 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 	(0, import_react.useEffect)(() => {
 		resizeGridColumns();
 	}, [columns, resizeGridColumns]);
+	const handleGridColumnsChanged = (0, import_react.useCallback)((e) => {
+		const cols = e.api.getColumnDefs();
+		if (cols && cols.length > maxColCount.current) {
+			maxColCount.current = cols.length;
+			resizeGridColumns();
+		}
+	}, [resizeGridColumns]);
 	const searchCacheRef = (0, import_react.useRef)({
 		data: null,
 		columns: null,
@@ -119002,13 +119570,14 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 			matchIndex: findTerm ? currentMatchIndex : void 0
 		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			ref: gridContainerRef,
-			className: gridCells_module_default.gridContainer,
+			className: clsx(gridCells_module_default.gridContainer, SamplesGrid_module_default.gridChrome),
 			tabIndex: 0,
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AgGridReact, {
 				ref: gridRef,
 				rowData: data,
 				animateRows: false,
 				columnDefs: columns,
+				maintainColumnOrder: true,
 				defaultColDef: {
 					sortable: true,
 					filter: true,
@@ -119024,13 +119593,7 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 					checkboxes: false
 				},
 				getRowId: (params) => params.data.id,
-				onGridColumnsChanged: (e) => {
-					const cols = e.api.getColumnDefs();
-					if (cols && cols?.length > maxColCount.current) {
-						maxColCount.current = cols.length;
-						resizeGridColumns();
-					}
-				},
+				onGridColumnsChanged: handleGridColumnsChanged,
 				onGridSizeChanged: resizeGridColumns,
 				theme: themeBalham,
 				enableCellTextSelection: true,
@@ -119217,7 +119780,7 @@ var LogsPanel = ({ maybeShowSingleLog, mode = "logs" }) => {
 	]);
 	const scopePrefix = mode === "logs" ? currentDir : void 0;
 	const [scoresViewMode, setScoresViewMode] = useProperty("log-list-scores-view", "mode", { defaultValue: "by-metric" });
-	const { pickerColumns, setColumnVisibility } = useLogListColumns(mode, scopePrefix, scoresViewMode);
+	const { pickerColumns, visibility, setColumnVisibility } = useLogListColumns(mode, scopePrefix, scoresViewMode);
 	const currentColumnVisibility = useStore((state) => state.logs.listing.columnVisibility);
 	const handleColumnVisibilityChange = (0, import_react.useCallback)((newVisibility) => {
 		const mergedVisibility = {
@@ -119282,13 +119845,15 @@ var LogsPanel = ({ maybeShowSingleLog, mode = "logs" }) => {
 						label: "Show Retried Logs",
 						icon: showRetriedLogs ? ApplicationIcons.toggle.on : ApplicationIcons.toggle.off,
 						latched: showRetriedLogs,
+						subtle: true,
 						onClick: () => setShowRetriedLogs(!showRetriedLogs)
 					}, "show-retried"),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(NavbarButton, {
 						ref: columnButtonRef,
-						label: "Choose Columns",
-						icon: ApplicationIcons.checkbox.checked,
+						label: "Columns",
+						icon: ApplicationIcons.columns,
 						dropdown: true,
+						subtle: true,
 						onClick: (e) => {
 							e.stopPropagation();
 							setShowColumnSelector((prev) => !prev);
@@ -119302,6 +119867,7 @@ var LogsPanel = ({ maybeShowSingleLog, mode = "logs" }) => {
 				showing: showColumnSelector,
 				setShowing: setShowColumnSelector,
 				columns: pickerColumns,
+				visibility,
 				onVisibilityChange: handleColumnVisibilityChange,
 				positionEl: columnButtonRef.current,
 				filteredFields,
@@ -120187,9 +120753,9 @@ var textFromContent = (content, excludeToolUsage, excludeReasoning) => {
 		case "text": return content.text;
 		case "reasoning": {
 			if (excludeReasoning) return null;
-			const reasoning = content.redacted ? content.summary : content.reasoning;
-			if (!reasoning) return null;
-			return `\n<think>${reasoning}</think>`;
+			const text = content.redacted ? content.summary : content.reasoning || content.summary;
+			if (!text) return null;
+			return `\n<think>${text}</think>`;
 		}
 		case "tool_use": {
 			if (excludeToolUsage) return null;
@@ -122143,6 +122709,32 @@ var formatTitle = (title, total_tokens, working_start, role) => {
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/eventText.ts
+var SANITIZED_CONTENT_KEYS = {
+	image: "image",
+	audio: "audio",
+	video: "video",
+	data: "data",
+	document: "document"
+};
+var sanitizeContent = (val) => {
+	if (val === null || typeof val !== "object" || !("type" in val)) return;
+	if (val.type === "reasoning" && "reasoning" in val) {
+		const r = val;
+		return r.redacted ? r.summary ?? "" : r.reasoning || r.summary || "";
+	}
+	if (typeof val.type === "string") {
+		const payloadKey = SANITIZED_CONTENT_KEYS[val.type];
+		if (payloadKey && payloadKey in val) return `<${val.type} />`;
+	}
+};
+var sanitizeStringify = (v) => {
+	const rootSanitized = sanitizeContent(v);
+	if (rootSanitized !== void 0) return rootSanitized;
+	return JSON.stringify(v, (_key, val) => {
+		const replacement = sanitizeContent(val);
+		return replacement !== void 0 ? replacement : val;
+	});
+};
 /**
 * Extracts labeled fields from an event for search and text serialization.
 */
@@ -122171,7 +122763,7 @@ var extractEventFields = (event) => {
 			if (toolEvent.function) fields.push(["function", toolEvent.function]);
 			if (toolEvent.arguments) fields.push(["arguments", JSON.stringify(toolEvent.arguments)]);
 			if (toolEvent.result) if (typeof toolEvent.result === "string") fields.push(["result", toolEvent.result]);
-			else fields.push(["result", JSON.stringify(toolEvent.result)]);
+			else fields.push(["result", sanitizeStringify(toolEvent.result)]);
 			if (toolEvent.error?.message) fields.push(["error", toolEvent.error.message]);
 			break;
 		}
@@ -122191,7 +122783,7 @@ var extractEventFields = (event) => {
 			const infoEvent = event;
 			if (infoEvent.source) fields.push(["source", infoEvent.source]);
 			if (infoEvent.data) if (typeof infoEvent.data === "string") fields.push(["data", infoEvent.data]);
-			else fields.push(["data", JSON.stringify(infoEvent.data)]);
+			else fields.push(["data", sanitizeStringify(infoEvent.data)]);
 			break;
 		}
 		case "branch": {
@@ -122202,8 +122794,10 @@ var extractEventFields = (event) => {
 		}
 		case "compaction": {
 			const compactionEvent = event;
-			if (compactionEvent.source) fields.push(["source", compactionEvent.source]);
-			fields.push(["event", JSON.stringify(compactionEvent)]);
+			if (compactionEvent.source && compactionEvent.source !== "inspect") fields.push(["source", compactionEvent.source]);
+			if (compactionEvent.tokens_before != null) fields.push(["tokens_before", String(compactionEvent.tokens_before)]);
+			if (compactionEvent.tokens_after != null) fields.push(["tokens_after", String(compactionEvent.tokens_after)]);
+			if (compactionEvent.metadata) for (const [k, v] of Object.entries(compactionEvent.metadata)) fields.push([k, typeof v === "string" ? v : sanitizeStringify(v)]);
 			break;
 		}
 		case "step": {
@@ -122216,8 +122810,8 @@ var extractEventFields = (event) => {
 			const subtaskEvent = event;
 			if (subtaskEvent.name) fields.push(["name", subtaskEvent.name]);
 			if (subtaskEvent.type) fields.push(["type", subtaskEvent.type]);
-			if (subtaskEvent.input) fields.push(["input", JSON.stringify(subtaskEvent.input)]);
-			if (subtaskEvent.result) fields.push(["result", JSON.stringify(subtaskEvent.result)]);
+			if (subtaskEvent.input) fields.push(["input", sanitizeStringify(subtaskEvent.input)]);
+			if (subtaskEvent.result) fields.push(["result", sanitizeStringify(subtaskEvent.result)]);
 			break;
 		}
 		case "span_begin": {
@@ -122251,7 +122845,7 @@ var extractEventFields = (event) => {
 			const sample = event.sample;
 			if (sample.target) if (typeof sample.target === "string") fields.push(["target", sample.target]);
 			else fields.push(["target", JSON.stringify(sample.target)]);
-			if (sample.metadata && Object.keys(sample.metadata).length > 0) fields.push(["metadata", JSON.stringify(sample.metadata)]);
+			if (sample.metadata && Object.keys(sample.metadata).length > 0) fields.push(["metadata", sanitizeStringify(sample.metadata)]);
 			break;
 		}
 		case "sample_limit": {
@@ -122285,7 +122879,7 @@ var extractEventFields = (event) => {
 			const stateEvent = event;
 			for (const change of stateEvent.changes) {
 				fields.push(["path", change.path]);
-				if (change.value !== void 0) fields.push(["value", typeof change.value === "string" ? change.value : JSON.stringify(change.value)]);
+				if (change.value !== void 0) fields.push(["value", typeof change.value === "string" ? change.value : sanitizeStringify(change.value)]);
 			}
 			break;
 		}
@@ -122320,17 +122914,25 @@ var extractContentText = (content) => {
 			texts.push(item.text);
 			break;
 		case "reasoning": {
-			const reasoning = item;
-			if (reasoning.reasoning) texts.push(reasoning.reasoning);
-			else if (reasoning.summary) texts.push(reasoning.summary);
+			const text = item.redacted ? item.summary : item.reasoning || item.summary;
+			if (text) texts.push(text);
 			break;
 		}
 		case "tool_use": {
 			const toolUse = item;
 			if (toolUse.name) texts.push(toolUse.name);
-			if (toolUse.arguments) texts.push(JSON.stringify(toolUse.arguments));
+			if (toolUse.arguments) texts.push(sanitizeStringify(toolUse.arguments));
+			if (toolUse.result) texts.push(typeof toolUse.result === "string" ? toolUse.result : sanitizeStringify(toolUse.result));
+			if (toolUse.error) texts.push(toolUse.error);
 			break;
 		}
+		case "image":
+		case "audio":
+		case "video":
+		case "data":
+		case "document":
+			texts.push(`<${item.type} />`);
+			break;
 	}
 	return texts;
 };
@@ -126237,7 +126839,7 @@ var TranscriptOutline = ({ eventNodes, defaultCollapsedIds, running, className, 
 		children: [agentName && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			className: clsx(TranscriptOutline_module_default.rootHeader, "text-size-smaller", "text-style-secondary"),
 			children: agentName
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(qr, {
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Yr, {
 			ref: listHandle,
 			customScrollParent: scrollRef?.current ? scrollRef.current : void 0,
 			id,
@@ -130390,7 +130992,7 @@ var ToolEventView = ({ eventNode, childNodes, className, context, eventCallbacks
 					mode: "compact",
 					view: resolvedView
 				}),
-				event.error ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallErrorView, { error: event.error }) : null,
+				event.error && event.error.type !== "approval" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallErrorView, { error: event.error }) : null,
 				lastModelNode ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChatView, {
 					id: `${eventNode.id}-toolcall-chatmessage`,
 					messages: lastModelNode.event.output.choices.map((m) => m.message),
@@ -132371,6 +132973,9 @@ var require_constants = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		CHAR_UNDERSCORE: 95,
 		CHAR_VERTICAL_LINE: 124,
 		CHAR_ZERO_WIDTH_NOBREAK_SPACE: 65279,
+		/**
+		* Create EXTGLOB_CHARS
+		*/
 		extglobChars(chars) {
 			return {
 				"!": {
@@ -132400,6 +133005,9 @@ var require_constants = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				}
 			};
 		},
+		/**
+		* Create GLOB_CHARS
+		*/
 		globChars(win32) {
 			return win32 === true ? WINDOWS_CHARS : POSIX_CHARS;
 		}
@@ -135481,18 +136089,20 @@ var isRunning = (sampleSummary, runningSampleData, sampleStatus) => {
 /**
 * Inline Sample Display
 */
-var InlineSampleDisplay = ({ showActivity, className }) => {
+var InlineSampleDisplay = ({ showActivity, className, scrollRef }) => {
 	useLoadSample();
 	usePollSample();
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(InlineSampleComponent, {
 		showActivity,
-		className
+		className,
+		scrollRef
 	});
 };
-var InlineSampleComponent = ({ showActivity, className }) => {
+var InlineSampleComponent = ({ showActivity, className, scrollRef: externalScrollRef }) => {
 	const sampleData = useSampleData();
 	const sampleProgress = sampleData.status === "loading" && sampleData.downloadProgress && sampleData.downloadProgress.total > 0 ? sampleData.downloadProgress.complete / sampleData.downloadProgress.total : void 0;
-	const scrollRef = (0, import_react.useRef)(null);
+	const localScrollRef = (0, import_react.useRef)(null);
+	const scrollRef = externalScrollRef ?? localScrollRef;
 	useStatefulScrollPosition(scrollRef, `inline-sample-scroller-${useStore((state) => state.app.tabs.sample)}`);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		className: clsx(className, InlineSampleDisplay_module_default.container),
@@ -135792,11 +136402,11 @@ var useLogNavigation = () => {
 	]) };
 };
 var LogView_module_default = {
-	workspace: "_workspace_kf1qa_1",
-	tabContainer: "_tabContainer_kf1qa_6",
-	tabSet: "_tabSet_kf1qa_14",
-	tabs: "_tabs_kf1qa_21",
-	tabPanels: "_tabPanels_kf1qa_29"
+	workspace: "_workspace_rc1vz_1",
+	tabContainer: "_tabContainer_rc1vz_6",
+	tabSet: "_tabSet_rc1vz_14",
+	tabs: "_tabs_rc1vz_21",
+	tabPanels: "_tabPanels_rc1vz_29"
 };
 var TaskErrorPanel_module_default = {
 	"task-error-display": "_task-error-display_1gb2h_1",
@@ -138075,6 +138685,9 @@ var openRemoteLogFile = async (api, url, concurrency) => {
 			};
 		},
 		readSample,
+		/**
+		* Reads the complete log file.
+		*/
 		readCompleteLog: async () => {
 			const [evalLogHeader, samples] = await Promise.all([readHeader(), listSamples().then((sampleIds) => Promise.all(sampleIds.map(({ sampleId, epoch }) => readSample(sampleId, epoch).then((sample) => sample))))]);
 			return {
@@ -139329,213 +139942,190 @@ var ModelTab = ({ evalSpec, evalStats, evalStatus }) => {
 		})
 	});
 };
-var SampleList_module_default = {
-	mainLayout: "_mainLayout_1pg7l_1",
-	samplesListGrid: "_samplesListGrid_1pg7l_7",
-	cell: "_cell_1pg7l_43",
-	wrapAnywhere: "_wrapAnywhere_1pg7l_47",
-	noLeft: "_noLeft_1pg7l_51",
-	score: "_score_1pg7l_55",
-	centered: "_centered_1pg7l_62"
-};
 //#endregion
-//#region src/app/samples/list/columns.tsx
-/** Wrapper for the score column cells (used in every branch of the score renderer). */
-var ScoreCellDiv = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-	className: clsx("text-size-small", SampleList_module_default.cell, SampleList_module_default.score),
-	children
+//#region src/app/shared/samples-grid/SamplesGrid.tsx
+var kListModeRowHeight = 88;
+var kGridModeRowHeight = 30;
+var rowHeightForMode = (mode) => mode === "list" ? kListModeRowHeight : kGridModeRowHeight;
+var makeKeyboardHandler = (gridRef, onRowOpen) => createGridKeyboardHandler({
+	gridRef,
+	onOpenRow: (rowNode, e) => {
+		if (rowNode.data) {
+			const newWindow = e.metaKey || e.ctrlKey || e.shiftKey;
+			onRowOpen(rowNode.data, {
+				newWindow,
+				via: "key"
+			});
+		}
+	}
 });
-/** Shared cell for columns that render truncated markdown (input, target, answer). */
-var MarkdownCellDiv = ({ semanticClass, text, trimRenderedText }) => {
-	const markdown = truncateMarkdown(text, 250);
+var SamplesGrid = (props) => {
+	const { rowData, columnDefs, columnVisibility, defaultColDef, viewMode, rowHeight, getRowId, selectedRowId, onRowOpen, followOutput = false, scrollRef, onFirstDataRendered, initialState, onStateUpdated, onFilterChanged, loading, autoSizeStrategy, refitOnSizeChange = false, gridRef: externalGridRef, className } = props;
+	const internalGridRef = (0, import_react.useRef)(null);
+	const gridRef = externalGridRef ?? internalGridRef;
+	const gridContainerRef = (0, import_react.useRef)(null);
+	(0, import_react.useEffect)(() => {
+		gridContainerRef.current?.focus();
+	}, []);
+	const handleKeyDown = (0, import_react.useMemo)(() => makeKeyboardHandler(gridRef, onRowOpen), [gridRef, onRowOpen]);
+	(0, import_react.useEffect)(() => {
+		const el = gridContainerRef.current;
+		if (!el) return;
+		el.addEventListener("keydown", handleKeyDown);
+		return () => el.removeEventListener("keydown", handleKeyDown);
+	}, [handleKeyDown]);
+	const handleRowClick = (0, import_react.useCallback)((e) => {
+		if (!e.data || !e.node || !gridRef.current?.api) return;
+		gridRef.current.api.deselectAll();
+		e.node.setSelected(true);
+		const me = e.event;
+		const newWindow = !!(me?.metaKey || me?.ctrlKey || me?.shiftKey || me?.button === 1);
+		onRowOpen(e.data, {
+			newWindow,
+			via: "click"
+		});
+	}, [gridRef, onRowOpen]);
+	const handleCellMouseDown = (0, import_react.useCallback)((e) => {
+		const me = e.event;
+		if (me?.button === 1 && e.data) {
+			me.preventDefault();
+			onRowOpen(e.data, {
+				newWindow: true,
+				via: "click"
+			});
+		}
+	}, [onRowOpen]);
+	const selectExternalRow = (0, import_react.useCallback)(() => {
+		if (!gridRef.current?.api || !selectedRowId) return;
+		const node = gridRef.current.api.getRowNode(selectedRowId);
+		if (node) {
+			gridRef.current.api.deselectAll();
+			node.setSelected(true);
+			gridRef.current.api.ensureNodeVisible(node, "middle");
+		}
+	}, [gridRef, selectedRowId]);
+	(0, import_react.useEffect)(() => {
+		selectExternalRow();
+	}, [selectExternalRow]);
+	const followingRef = (0, import_react.useRef)(followOutput);
+	const prevCountRef = (0, import_react.useRef)(rowData.length);
+	(0, import_react.useEffect)(() => {
+		if (followOutput) followingRef.current = true;
+	}, [followOutput]);
+	(0, import_react.useEffect)(() => {
+		if (followOutput && followingRef.current && rowData.length > prevCountRef.current && gridRef.current?.api) gridRef.current.api.ensureIndexVisible(rowData.length - 1, "bottom");
+		prevCountRef.current = rowData.length;
+	}, [
+		rowData.length,
+		followOutput,
+		gridRef
+	]);
+	const prevFollowRef = (0, import_react.useRef)(followOutput);
+	(0, import_react.useEffect)(() => {
+		if (!followOutput && prevFollowRef.current && gridRef.current?.api) {
+			followingRef.current = false;
+			setTimeout(() => {
+				gridRef.current?.api?.ensureIndexVisible(0, "top");
+			}, 100);
+		}
+		prevFollowRef.current = followOutput;
+	}, [followOutput, gridRef]);
+	const effectiveRowHeight = rowHeight ?? rowHeightForMode(viewMode);
+	const handleBodyScroll = (0, import_react.useCallback)(() => {
+		if (!followOutput || !gridRef.current?.api) return;
+		const api = gridRef.current.api;
+		const v = api.getVerticalPixelRange();
+		const totalH = api.getDisplayedRowCount() * effectiveRowHeight;
+		const viewportH = v.bottom - v.top;
+		followingRef.current = v.bottom >= totalH - viewportH * .1;
+	}, [
+		followOutput,
+		gridRef,
+		effectiveRowHeight
+	]);
+	const applyVisibility = useApplyColumnVisibility(gridRef, columnDefs, columnVisibility);
+	const handleStateUpdated = (0, import_react.useCallback)((e) => {
+		onStateUpdated?.(e.state);
+	}, [onStateUpdated]);
+	const handleFilterChanged = (0, import_react.useCallback)(() => {
+		if (gridRef.current?.api) onFilterChanged?.(gridRef.current.api);
+	}, [gridRef, onFilterChanged]);
+	const refitColumns = (0, import_react.useRef)(createGridColumnResizer(gridRef)).current;
+	const maxColCount = (0, import_react.useRef)(0);
+	const handleGridColumnsChanged = (0, import_react.useCallback)((e) => {
+		if (!refitOnSizeChange) return;
+		const cols = e.api.getColumnDefs();
+		if (cols && cols.length > maxColCount.current) {
+			maxColCount.current = cols.length;
+			refitColumns();
+		}
+	}, [refitOnSizeChange, refitColumns]);
+	const handleGridSizeChanged = (0, import_react.useCallback)(() => {
+		if (refitOnSizeChange) refitColumns();
+	}, [refitOnSizeChange, refitColumns]);
+	(0, import_react.useEffect)(() => {
+		if (refitOnSizeChange) refitColumns();
+	}, [
+		columnDefs,
+		refitOnSizeChange,
+		refitColumns
+	]);
+	const handleGridReady = (0, import_react.useCallback)(() => {
+		if (scrollRef) scrollRef.current = gridContainerRef.current?.querySelector(".ag-body-viewport") ?? null;
+		applyVisibility();
+	}, [scrollRef, applyVisibility]);
+	const handleFirstDataRendered = (0, import_react.useCallback)(() => {
+		if (followOutput && followingRef.current && gridRef.current?.api) gridRef.current.api.ensureIndexVisible(rowData.length - 1, "bottom");
+		selectExternalRow();
+		if (gridRef.current?.api) onFirstDataRendered?.(gridRef.current.api);
+	}, [
+		followOutput,
+		rowData.length,
+		selectExternalRow,
+		gridRef,
+		onFirstDataRendered
+	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: clsx(semanticClass, "text-size-base", "three-line-clamp", SampleList_module_default.cell, SampleList_module_default.wrapAnywhere),
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedText, {
-			markdown,
-			className: trimRenderedText ? clsx("no-last-para-padding", SampleList_module_default.noLeft) : void 0,
-			forceRender: true,
-			omitMedia: true
+		className: clsx(SamplesGrid_module_default.gridWrapper, className),
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			ref: gridContainerRef,
+			className: clsx(SamplesGrid_module_default.gridContainer, SamplesGrid_module_default.gridChrome, viewMode === "list" ? SamplesGrid_module_default.listMode : SamplesGrid_module_default.gridMode),
+			tabIndex: 0,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AgGridReact, {
+				ref: gridRef,
+				rowData,
+				columnDefs,
+				defaultColDef,
+				maintainColumnOrder: true,
+				theme: themeBalham,
+				animateRows: false,
+				tooltipShowDelay: 300,
+				headerHeight: 25,
+				rowHeight: effectiveRowHeight,
+				getRowId,
+				rowSelection: {
+					mode: "singleRow",
+					checkboxes: false
+				},
+				enableCellTextSelection: true,
+				suppressCellFocus: true,
+				domLayout: "normal",
+				initialState,
+				onRowClicked: handleRowClick,
+				onCellMouseDown: handleCellMouseDown,
+				onStateUpdated: handleStateUpdated,
+				onFilterChanged: handleFilterChanged,
+				onBodyScroll: handleBodyScroll,
+				onGridReady: handleGridReady,
+				onFirstDataRendered: handleFirstDataRendered,
+				onGridColumnsChanged: handleGridColumnsChanged,
+				onGridSizeChanged: handleGridSizeChanged,
+				autoSizeStrategy,
+				loading
+			})
 		})
 	});
 };
-function buildColumnDefs(samplesDescriptor, selectedScores, scores, epochs) {
-	const shape = samplesDescriptor?.messageShape;
-	const inputFlex = shape?.inputSize || 3;
-	const targetFlex = shape?.targetSize || 1;
-	const answerFlex = shape?.answerSize || 1;
-	const scoreLabels = !selectedScores || selectedScores.length === 0 ? [] : scores && scores.length === 1 ? ["Score"] : selectedScores?.map((s) => s.name) ?? [];
-	const columns = [
-		{
-			colId: "sampleStatus",
-			headerName: "",
-			headerTooltipValueGetter: () => "Sample Status",
-			width: 24,
-			valueGetter: (params) => {
-				if (!params.data) return kDefaultSampleSortValue;
-				return sampleStatusSortValue(sampleStatus(params.data.completed, params.data.data.error), params.data.data.error);
-			},
-			cellRenderer: (params) => {
-				if (!params.data) return null;
-				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleStatusIcon, { status: sampleStatus(params.data.completed, params.data.data.error) });
-			},
-			tooltipValueGetter: (params) => {
-				if (!params.data) return null;
-				return params.data.data.error ? params.data.data.error : sampleStatus(params.data.completed, params.data.data.error);
-			}
-		},
-		{
-			colId: "id",
-			headerName: "Id",
-			width: (shape?.idSize ?? 2) * 16,
-			minWidth: 35,
-			valueGetter: (params) => params.data?.data?.id,
-			cellRenderer: (params) => {
-				if (!params.data) return null;
-				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: clsx("sample-id", "text-size-base", "three-line-clamp", SampleList_module_default.cell, SampleList_module_default.wrapAnywhere),
-					children: params.data.data.id
-				});
-			}
-		},
-		{
-			colId: "epoch",
-			headerName: "Epoch",
-			width: 50,
-			minWidth: 28,
-			hide: epochs <= 1,
-			valueGetter: (params) => params.data?.data?.epoch,
-			cellRenderer: (params) => {
-				if (!params.data) return null;
-				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: clsx("sample-epoch", "text-size-base", SampleList_module_default.cell, SampleList_module_default.centered),
-					children: params.data.data.epoch
-				});
-			}
-		},
-		{
-			colId: "input",
-			headerName: "Input",
-			flex: inputFlex,
-			minWidth: 80,
-			hide: !shape?.inputSize,
-			valueGetter: (params) => {
-				return params.data ? inputString(params.data.data.input).join(" ") : "";
-			},
-			cellRenderer: (params) => {
-				if (!params.data) return null;
-				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownCellDiv, {
-					semanticClass: "sample-input",
-					text: inputString(params.data.data.input).join(" ")
-				});
-			}
-		},
-		{
-			colId: "target",
-			headerName: "Target",
-			flex: targetFlex,
-			minWidth: 80,
-			hide: !shape?.targetSize,
-			valueGetter: (params) => {
-				return params.data?.data?.target != null ? arrayToString(params.data.data.target) : "";
-			},
-			cellRenderer: (params) => {
-				if (!params.data?.data?.target) return null;
-				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownCellDiv, {
-					semanticClass: "sample-target",
-					text: arrayToString(params.data.data.target),
-					trimRenderedText: true
-				});
-			}
-		},
-		{
-			colId: "answer",
-			headerName: "Answer",
-			flex: answerFlex,
-			minWidth: 80,
-			hide: !shape?.answerSize,
-			valueGetter: (params) => params.data?.answer ?? "",
-			cellRenderer: (params) => {
-				if (!params.data) return null;
-				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownCellDiv, {
-					semanticClass: "sample-answer",
-					text: params.data.answer || "",
-					trimRenderedText: true
-				});
-			}
-		},
-		{
-			colId: "limit",
-			headerName: "Limit",
-			width: (shape?.limitSize ?? 1) * 16,
-			minWidth: 28,
-			hide: !shape?.limitSize,
-			valueGetter: (params) => params.data?.data?.limit,
-			cellRenderer: (params) => {
-				if (!params.data) return null;
-				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: clsx("sample-limit", "text-size-small", "three-line-clamp", SampleList_module_default.cell, SampleList_module_default.wrapAnywhere),
-					children: params.data.data.limit
-				});
-			}
-		},
-		{
-			colId: "retries",
-			headerName: "Retries",
-			width: (shape?.retriesSize ?? 1) * 16,
-			minWidth: 28,
-			hide: !shape?.retriesSize,
-			valueGetter: (params) => params.data?.data?.retries,
-			cellRenderer: (params) => {
-				if (!params.data) return null;
-				const { data } = params.data;
-				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: clsx("sample-retries", "text-size-small", "three-line-clamp", SampleList_module_default.cell, SampleList_module_default.centered),
-					children: data.retries && data.retries > 0 ? data.retries : void 0
-				});
-			}
-		},
-		{
-			colId: "sampleStatusMsg",
-			headerName: "Status",
-			width: (shape?.errorSize ?? 1) * 26,
-			minWidth: 28,
-			hide: !shape?.errorSize,
-			valueGetter: (params) => {
-				if (!params.data) return "";
-				return sampleStatus(params.data.completed, params.data.data.error);
-			},
-			cellRenderer: (params) => {
-				if (!params.data) return null;
-				const error = params.data.data.error;
-				const s = sampleStatus(params.data.completed, params.data.data.error);
-				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: clsx("sample-status", "text-size-small", "three-line-clamp", SampleList_module_default.cell, SampleList_module_default.wrapAnywhere),
-					children: s === "cancelled" ? s : error ? error : s
-				});
-			}
-		}
-	];
-	scoreLabels.forEach((label, i) => {
-		columns.push({
-			headerName: label,
-			colId: `score-${i}`,
-			width: 80,
-			minWidth: 28,
-			valueGetter: (params) => {
-				if (!params.data?.data || !samplesDescriptor) return void 0;
-				return samplesDescriptor.evalDescriptor.score(params.data.data, selectedScores[i])?.value;
-			},
-			cellRenderer: (params) => {
-				if (!params.data) return null;
-				const { data, completed } = params.data;
-				const rendered = samplesDescriptor?.evalDescriptor.score(data, selectedScores[i])?.render();
-				if (completed && rendered !== void 0) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreCellDiv, { children: rendered });
-				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreCellDiv, {});
-			}
-		});
-	});
-	return columns;
-}
 var SampleFooter_module_default = {
 	footer: "_footer_vkofn_1",
 	spinnerContainer: "_spinnerContainer_vkofn_11",
@@ -139563,129 +140153,47 @@ var SampleFooter = ({ sampleCount, totalSampleCount, running }) => {
 		}) : void 0 }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: sampleCount < totalSampleCount ? `${sampleCount} / ${totalSampleCount} Samples` : `${sampleCount} Samples` })]
 	});
 };
+var SampleList_module_default = {
+	mainLayout: "_mainLayout_1qj8a_1",
+	cell: "_cell_1qj8a_10",
+	wrapAnywhere: "_wrapAnywhere_1qj8a_14",
+	noLeft: "_noLeft_1qj8a_18",
+	score: "_score_1qj8a_22",
+	centered: "_centered_1qj8a_29"
+};
 //#endregion
 //#region src/app/samples/list/SampleList.tsx
-var kSampleHeight = 88;
 var makeSampleRowId = (id, epoch) => `${id}-${epoch}`.replace(/\s+/g, "_");
 var SampleList = (0, import_react.memo)((props) => {
-	const { items, earlyStopping, totalItemCount, running, className, listHandle } = props;
+	const { items, columns, columnVisibility, earlyStopping, totalItemCount, running, className, listHandle, scrollRef, gridState, onGridStateChange, onFilterChanged } = props;
 	(0, import_react.useEffect)(() => {
 		listHandle.current?.api?.ensureIndexVisible(0, "top");
 	}, [listHandle, useStore((state) => state.logs.selectedLogFile)]);
 	const sampleNavigation = useSampleNavigation();
 	const selectedSampleHandle = useStore((state) => state.log.selectedSampleHandle);
 	const evalSpec = useStore((state) => state.log.selectedLogDetails)?.eval;
-	const epochs = evalSpec?.config?.epochs || 1;
 	const { setDocumentTitle } = useDocumentTitle();
 	(0, import_react.useEffect)(() => {
 		setDocumentTitle({ evalSpec });
 	}, [setDocumentTitle, evalSpec]);
-	const followOutputRef = (0, import_react.useRef)(running);
-	const prevItemCountRef = (0, import_react.useRef)(items.length);
-	(0, import_react.useEffect)(() => {
-		if (running) followOutputRef.current = true;
-	}, [running]);
-	(0, import_react.useEffect)(() => {
-		if (running && followOutputRef.current && items.length > prevItemCountRef.current && listHandle.current?.api) listHandle.current.api.ensureIndexVisible(items.length - 1, "bottom");
-		prevItemCountRef.current = items.length;
-	}, [
-		items.length,
-		running,
-		listHandle
-	]);
-	const handleBodyScroll = (0, import_react.useCallback)(() => {
-		if (!running || !listHandle.current?.api) return;
-		const api = listHandle.current.api;
-		const vPixel = api.getVerticalPixelRange();
-		const totalHeight = api.getDisplayedRowCount() * kSampleHeight;
-		const viewportHeight = vPixel.bottom - vPixel.top;
-		followOutputRef.current = vPixel.bottom >= totalHeight - viewportHeight * .1;
-	}, [running, listHandle]);
-	const prevRunningRef = (0, import_react.useRef)(running);
-	(0, import_react.useEffect)(() => {
-		if (!running && prevRunningRef.current && listHandle.current?.api) {
-			followOutputRef.current = false;
-			setTimeout(() => {
-				listHandle.current?.api?.ensureIndexVisible(0, "top");
-			}, 100);
-		}
-		prevRunningRef.current = running;
-	}, [running, listHandle]);
-	const handleRowClick = (0, import_react.useCallback)((e) => {
-		if (e.data && e.node && listHandle.current?.api) {
-			listHandle.current.api.deselectAll();
-			e.node.setSelected(true);
-			const mouseEvent = e.event;
-			if (mouseEvent?.metaKey || mouseEvent?.ctrlKey || mouseEvent?.shiftKey || mouseEvent?.button === 1) {
-				const url = sampleNavigation.getSampleUrl(e.data.data.id, e.data.data.epoch);
-				if (url) window.open(url, "_blank");
-			} else sampleNavigation.showSample(e.data.data.id, e.data.data.epoch);
-		}
-	}, [sampleNavigation, listHandle]);
-	const handleOpenRow = (0, import_react.useCallback)((rowNode, _e) => {
-		if (rowNode.data) sampleNavigation.showSample(rowNode.data.data.id, rowNode.data.data.epoch);
-	}, [sampleNavigation]);
-	const gridContainerRef = (0, import_react.useRef)(null);
-	const handleKeyDown = (0, import_react.useMemo)(() => createGridKeyboardHandler({
-		gridRef: listHandle,
-		onOpenRow: handleOpenRow
-	}), [listHandle, handleOpenRow]);
-	(0, import_react.useEffect)(() => {
-		const el = gridContainerRef.current;
-		if (!el) return;
-		el.addEventListener("keydown", handleKeyDown);
-		return () => {
-			el.removeEventListener("keydown", handleKeyDown);
-		};
-	}, [handleKeyDown]);
-	const handleCellMouseDown = (0, import_react.useCallback)((e) => {
-		const mouseEvent = e.event;
-		if (mouseEvent?.button === 1 && e.data) {
-			mouseEvent.preventDefault();
-			const url = sampleNavigation.getSampleUrl(e.data.data.id, e.data.data.epoch);
+	const handleRowOpen = (0, import_react.useCallback)((row, opts) => {
+		if (opts.newWindow) {
+			const url = sampleNavigation.getSampleUrl(row.sampleId, row.epoch);
 			if (url) window.open(url, "_blank");
-		}
+		} else sampleNavigation.showSample(row.sampleId, row.epoch);
 	}, [sampleNavigation]);
-	const selectCurrentSample = (0, import_react.useCallback)(() => {
-		if (!listHandle.current?.api || !selectedSampleHandle) return;
-		const rowId = makeSampleRowId(selectedSampleHandle.id, selectedSampleHandle.epoch);
-		const node = listHandle.current.api.getRowNode(rowId);
-		if (node) {
-			listHandle.current.api.deselectAll();
-			node.setSelected(true);
-			listHandle.current.api.ensureNodeVisible(node, "middle");
-		}
-	}, [listHandle, selectedSampleHandle]);
-	(0, import_react.useEffect)(() => {
-		selectCurrentSample();
-	}, [selectedSampleHandle, selectCurrentSample]);
-	const selectedScores = useSelectedScores();
-	const scores = useScores();
-	const samplesDescriptor = useSampleDescriptor();
-	const columnDefs = (0, import_react.useMemo)(() => buildColumnDefs(samplesDescriptor, selectedScores, scores, epochs), [
-		samplesDescriptor,
-		selectedScores,
-		scores,
-		epochs
-	]);
-	const getRowId = (0, import_react.useCallback)((params) => {
-		return makeSampleRowId(params.data.data.id, params.data.data.epoch);
-	}, []);
-	const manuallyResized = (0, import_react.useRef)(/* @__PURE__ */ new Set());
-	const handleColumnResized = (0, import_react.useCallback)((event) => {
-		if (event.finished && event.source === "uiColumnResized" && event.column) {
-			manuallyResized.current.add(event.column.getColId());
-			const state = columnDefs.filter((c) => c.colId && c.flex && !manuallyResized.current.has(c.colId)).map((c) => ({
-				colId: c.colId,
-				flex: c.flex
-			}));
-			if (state.length > 0) listHandle.current?.api?.applyColumnState({ state });
-		}
-	}, [listHandle, columnDefs]);
+	const getRowId = (0, import_react.useCallback)((params) => makeSampleRowId(params.data.sampleId, params.data.epoch), []);
+	const selectedRowId = selectedSampleHandle ? makeSampleRowId(selectedSampleHandle.id, selectedSampleHandle.epoch) : void 0;
+	const handleStateUpdated = (0, import_react.useCallback)((state) => {
+		onGridStateChange?.(state);
+	}, [onGridStateChange]);
+	const handleFilterChanged = (0, import_react.useCallback)((api) => {
+		onFilterChanged?.(api);
+	}, [onFilterChanged]);
 	const sampleCount = items.length;
 	const warnings = (0, import_react.useMemo)(() => {
-		const errorCount = items.reduce((prev, item) => item.data.error ? prev + 1 : prev, 0);
-		const limitCount = items.reduce((prev, item) => item.data.limit ? prev + 1 : prev, 0);
+		const errorCount = items.reduce((prev, item) => item.error || item.data?.error ? prev + 1 : prev, 0);
+		const limitCount = items.reduce((prev, item) => item.limit || item.data?.limit ? prev + 1 : prev, 0);
 		const percentError = sampleCount > 0 ? errorCount / sampleCount * 100 : 0;
 		const percentLimit = sampleCount > 0 ? limitCount / sampleCount * 100 : 0;
 		const result = [];
@@ -139715,46 +140223,27 @@ var SampleList = (0, import_react.memo)((props) => {
 				message: warning.msg,
 				type: warning.type
 			}, `sample-warning-message-${index}`)),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				ref: gridContainerRef,
-				className: clsx(className, SampleList_module_default.samplesListGrid, "samples-list"),
-				style: {
-					flex: 1,
-					minHeight: 0,
-					display: "flex",
-					flexDirection: "column"
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SamplesGrid, {
+				rowData: items,
+				columnDefs: columns,
+				columnVisibility,
+				defaultColDef: {
+					sortable: true,
+					filter: true,
+					resizable: true,
+					headerTooltipValueGetter: (params) => params.colDef?.headerName
 				},
-				tabIndex: 0,
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AgGridReact, {
-					ref: listHandle,
-					rowData: items,
-					columnDefs,
-					defaultColDef: {
-						filter: false,
-						headerTooltipValueGetter: (params) => params.colDef?.headerName
-					},
-					tooltipShowDelay: 300,
-					animateRows: false,
-					rowHeight: kSampleHeight,
-					headerHeight: 25,
-					getRowId,
-					rowSelection: {
-						mode: "singleRow",
-						checkboxes: false
-					},
-					onRowClicked: handleRowClick,
-					onCellMouseDown: handleCellMouseDown,
-					onColumnResized: handleColumnResized,
-					theme: themeBalham,
-					enableCellTextSelection: true,
-					suppressCellFocus: true,
-					domLayout: "normal",
-					onBodyScroll: handleBodyScroll,
-					onFirstDataRendered: () => {
-						if (running && followOutputRef.current) listHandle.current?.api?.ensureIndexVisible(items.length - 1, "bottom");
-						selectCurrentSample();
-					}
-				})
+				viewMode: "list",
+				gridRef: listHandle,
+				getRowId,
+				selectedRowId,
+				onRowOpen: handleRowOpen,
+				followOutput: running,
+				scrollRef,
+				initialState: gridState,
+				onStateUpdated: onGridStateChange ? handleStateUpdated : void 0,
+				onFilterChanged: handleFilterChanged,
+				className
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleFooter, {
 				sampleCount,
@@ -141442,10 +141931,29 @@ final ordering of extensions is determined by first sorting by
 precedence and then by order within each precedence.
 */
 var Prec = {
+	/**
+	The highest precedence level, for extensions that should end up
+	near the start of the precedence ordering.
+	*/
 	highest: /* @__PURE__ */ prec(Prec_.highest),
+	/**
+	A higher-than-default precedence, for extensions that should
+	come before those with default precedence.
+	*/
 	high: /* @__PURE__ */ prec(Prec_.high),
+	/**
+	The default precedence, which is also used for extensions
+	without an explicit precedence.
+	*/
 	default: /* @__PURE__ */ prec(Prec_.default),
+	/**
+	A lower-than-default precedence.
+	*/
 	low: /* @__PURE__ */ prec(Prec_.low),
+	/**
+	The lowest precedence level. Meant for things that should end up
+	near the end of the extension order.
+	*/
 	lowest: /* @__PURE__ */ prec(Prec_.lowest)
 };
 var PrecExtension = class {
@@ -154970,89 +155478,369 @@ For tags that extend some parent tag, the documentation links to
 the parent.
 */
 var tags = {
+	/**
+	A comment.
+	*/
 	comment,
+	/**
+	A line [comment](#highlight.tags.comment).
+	*/
 	lineComment: t(comment),
+	/**
+	A block [comment](#highlight.tags.comment).
+	*/
 	blockComment: t(comment),
+	/**
+	A documentation [comment](#highlight.tags.comment).
+	*/
 	docComment: t(comment),
+	/**
+	Any kind of identifier.
+	*/
 	name,
+	/**
+	The [name](#highlight.tags.name) of a variable.
+	*/
 	variableName: t(name),
+	/**
+	A type [name](#highlight.tags.name).
+	*/
 	typeName,
+	/**
+	A tag name (subtag of [`typeName`](#highlight.tags.typeName)).
+	*/
 	tagName: t(typeName),
+	/**
+	A property or field [name](#highlight.tags.name).
+	*/
 	propertyName,
+	/**
+	An attribute name (subtag of [`propertyName`](#highlight.tags.propertyName)).
+	*/
 	attributeName: t(propertyName),
+	/**
+	The [name](#highlight.tags.name) of a class.
+	*/
 	className: t(name),
+	/**
+	A label [name](#highlight.tags.name).
+	*/
 	labelName: t(name),
+	/**
+	A namespace [name](#highlight.tags.name).
+	*/
 	namespace: t(name),
+	/**
+	The [name](#highlight.tags.name) of a macro.
+	*/
 	macroName: t(name),
+	/**
+	A literal value.
+	*/
 	literal,
+	/**
+	A string [literal](#highlight.tags.literal).
+	*/
 	string,
+	/**
+	A documentation [string](#highlight.tags.string).
+	*/
 	docString: t(string),
+	/**
+	A character literal (subtag of [string](#highlight.tags.string)).
+	*/
 	character: t(string),
+	/**
+	An attribute value (subtag of [string](#highlight.tags.string)).
+	*/
 	attributeValue: t(string),
+	/**
+	A number [literal](#highlight.tags.literal).
+	*/
 	number,
+	/**
+	An integer [number](#highlight.tags.number) literal.
+	*/
 	integer: t(number),
+	/**
+	A floating-point [number](#highlight.tags.number) literal.
+	*/
 	float: t(number),
+	/**
+	A boolean [literal](#highlight.tags.literal).
+	*/
 	bool: t(literal),
+	/**
+	Regular expression [literal](#highlight.tags.literal).
+	*/
 	regexp: t(literal),
+	/**
+	An escape [literal](#highlight.tags.literal), for example a
+	backslash escape in a string.
+	*/
 	escape: t(literal),
+	/**
+	A color [literal](#highlight.tags.literal).
+	*/
 	color: t(literal),
+	/**
+	A URL [literal](#highlight.tags.literal).
+	*/
 	url: t(literal),
+	/**
+	A language keyword.
+	*/
 	keyword,
+	/**
+	The [keyword](#highlight.tags.keyword) for the self or this
+	object.
+	*/
 	self: t(keyword),
+	/**
+	The [keyword](#highlight.tags.keyword) for null.
+	*/
 	null: t(keyword),
+	/**
+	A [keyword](#highlight.tags.keyword) denoting some atomic value.
+	*/
 	atom: t(keyword),
+	/**
+	A [keyword](#highlight.tags.keyword) that represents a unit.
+	*/
 	unit: t(keyword),
+	/**
+	A modifier [keyword](#highlight.tags.keyword).
+	*/
 	modifier: t(keyword),
+	/**
+	A [keyword](#highlight.tags.keyword) that acts as an operator.
+	*/
 	operatorKeyword: t(keyword),
+	/**
+	A control-flow related [keyword](#highlight.tags.keyword).
+	*/
 	controlKeyword: t(keyword),
+	/**
+	A [keyword](#highlight.tags.keyword) that defines something.
+	*/
 	definitionKeyword: t(keyword),
+	/**
+	A [keyword](#highlight.tags.keyword) related to defining or
+	interfacing with modules.
+	*/
 	moduleKeyword: t(keyword),
+	/**
+	An operator.
+	*/
 	operator,
+	/**
+	An [operator](#highlight.tags.operator) that dereferences something.
+	*/
 	derefOperator: t(operator),
+	/**
+	Arithmetic-related [operator](#highlight.tags.operator).
+	*/
 	arithmeticOperator: t(operator),
+	/**
+	Logical [operator](#highlight.tags.operator).
+	*/
 	logicOperator: t(operator),
+	/**
+	Bit [operator](#highlight.tags.operator).
+	*/
 	bitwiseOperator: t(operator),
+	/**
+	Comparison [operator](#highlight.tags.operator).
+	*/
 	compareOperator: t(operator),
+	/**
+	[Operator](#highlight.tags.operator) that updates its operand.
+	*/
 	updateOperator: t(operator),
+	/**
+	[Operator](#highlight.tags.operator) that defines something.
+	*/
 	definitionOperator: t(operator),
+	/**
+	Type-related [operator](#highlight.tags.operator).
+	*/
 	typeOperator: t(operator),
+	/**
+	Control-flow [operator](#highlight.tags.operator).
+	*/
 	controlOperator: t(operator),
+	/**
+	Program or markup punctuation.
+	*/
 	punctuation,
+	/**
+	[Punctuation](#highlight.tags.punctuation) that separates
+	things.
+	*/
 	separator: t(punctuation),
+	/**
+	Bracket-style [punctuation](#highlight.tags.punctuation).
+	*/
 	bracket,
+	/**
+	Angle [brackets](#highlight.tags.bracket) (usually `<` and `>`
+	tokens).
+	*/
 	angleBracket: t(bracket),
+	/**
+	Square [brackets](#highlight.tags.bracket) (usually `[` and `]`
+	tokens).
+	*/
 	squareBracket: t(bracket),
+	/**
+	Parentheses (usually `(` and `)` tokens). Subtag of
+	[bracket](#highlight.tags.bracket).
+	*/
 	paren: t(bracket),
+	/**
+	Braces (usually `{` and `}` tokens). Subtag of
+	[bracket](#highlight.tags.bracket).
+	*/
 	brace: t(bracket),
+	/**
+	Content, for example plain text in XML or markup documents.
+	*/
 	content,
+	/**
+	[Content](#highlight.tags.content) that represents a heading.
+	*/
 	heading,
+	/**
+	A level 1 [heading](#highlight.tags.heading).
+	*/
 	heading1: t(heading),
+	/**
+	A level 2 [heading](#highlight.tags.heading).
+	*/
 	heading2: t(heading),
+	/**
+	A level 3 [heading](#highlight.tags.heading).
+	*/
 	heading3: t(heading),
+	/**
+	A level 4 [heading](#highlight.tags.heading).
+	*/
 	heading4: t(heading),
+	/**
+	A level 5 [heading](#highlight.tags.heading).
+	*/
 	heading5: t(heading),
+	/**
+	A level 6 [heading](#highlight.tags.heading).
+	*/
 	heading6: t(heading),
+	/**
+	A prose [content](#highlight.tags.content) separator (such as a horizontal rule).
+	*/
 	contentSeparator: t(content),
+	/**
+	[Content](#highlight.tags.content) that represents a list.
+	*/
 	list: t(content),
+	/**
+	[Content](#highlight.tags.content) that represents a quote.
+	*/
 	quote: t(content),
+	/**
+	[Content](#highlight.tags.content) that is emphasized.
+	*/
 	emphasis: t(content),
+	/**
+	[Content](#highlight.tags.content) that is styled strong.
+	*/
 	strong: t(content),
+	/**
+	[Content](#highlight.tags.content) that is part of a link.
+	*/
 	link: t(content),
+	/**
+	[Content](#highlight.tags.content) that is styled as code or
+	monospace.
+	*/
 	monospace: t(content),
+	/**
+	[Content](#highlight.tags.content) that has a strike-through
+	style.
+	*/
 	strikethrough: t(content),
+	/**
+	Inserted text in a change-tracking format.
+	*/
 	inserted: t(),
+	/**
+	Deleted text.
+	*/
 	deleted: t(),
+	/**
+	Changed text.
+	*/
 	changed: t(),
+	/**
+	An invalid or unsyntactic element.
+	*/
 	invalid: t(),
+	/**
+	Metadata or meta-instruction.
+	*/
 	meta,
+	/**
+	[Metadata](#highlight.tags.meta) that applies to the entire
+	document.
+	*/
 	documentMeta: t(meta),
+	/**
+	[Metadata](#highlight.tags.meta) that annotates or adds
+	attributes to a given syntactic element.
+	*/
 	annotation: t(meta),
+	/**
+	Processing instruction or preprocessor directive. Subtag of
+	[meta](#highlight.tags.meta).
+	*/
 	processingInstruction: t(meta),
+	/**
+	[Modifier](#highlight.Tag^defineModifier) that indicates that a
+	given element is being defined. Expected to be used with the
+	various [name](#highlight.tags.name) tags.
+	*/
 	definition: Tag.defineModifier("definition"),
+	/**
+	[Modifier](#highlight.Tag^defineModifier) that indicates that
+	something is constant. Mostly expected to be used with
+	[variable names](#highlight.tags.variableName).
+	*/
 	constant: Tag.defineModifier("constant"),
+	/**
+	[Modifier](#highlight.Tag^defineModifier) used to indicate that
+	a [variable](#highlight.tags.variableName) or [property
+	name](#highlight.tags.propertyName) is being called or defined
+	as a function.
+	*/
 	function: Tag.defineModifier("function"),
+	/**
+	[Modifier](#highlight.Tag^defineModifier) that can be applied to
+	[names](#highlight.tags.name) to indicate that they belong to
+	the language's standard environment.
+	*/
 	standard: Tag.defineModifier("standard"),
+	/**
+	[Modifier](#highlight.Tag^defineModifier) that indicates a given
+	[names](#highlight.tags.name) is local to some scope.
+	*/
 	local: Tag.defineModifier("local"),
+	/**
+	A generic variant [modifier](#highlight.Tag^defineModifier) that
+	can be used to tag language-specific alternative variants of
+	some common tag. It is recommended for themes to define special
+	forms of at least the [string](#highlight.tags.string) and
+	[variable name](#highlight.tags.variableName) tags, since those
+	come up a lot.
+	*/
 	special: Tag.defineModifier("special")
 };
 for (let name in tags) {
@@ -162378,7 +163166,7 @@ var makeSampleVariableCompletion = ([label, info]) => ({
 	label,
 	type: "variable",
 	info,
-	apply: label === "metadata" ? applyWithDot : label === "id" ? applyWithSpace : void 0,
+	apply: label === "metadata" ? applyWithDot : label === "id" || label === "uuid" ? applyWithSpace : void 0,
 	boost: 10
 });
 var makeLiteralCompletion = (k) => ({
@@ -162403,6 +163191,11 @@ var getSampleIds = (samples) => {
 	const ids = /* @__PURE__ */ new Set();
 	for (const sample of samples) ids.add(sample.id);
 	return ids;
+};
+var getSampleUuids = (samples) => {
+	const uuids = /* @__PURE__ */ new Set();
+	for (const sample of samples) if (sample.uuid) uuids.add(sample.uuid);
+	return uuids;
 };
 var getMetadataPropertyValues = (samples, propertyPath) => {
 	const values = /* @__PURE__ */ new Set();
@@ -162476,6 +163269,12 @@ var makeSampleIdCompletion = (id) => ({
 	label: typeof id === "string" ? `"${id}"` : String(id),
 	type: "text",
 	info: `Sample ID: ${id}`,
+	boost: 25
+});
+var makeSampleUuidCompletion = (uuid) => ({
+	label: `"${uuid}"`,
+	type: "text",
+	info: `Sample UUID: ${uuid}`,
 	boost: 25
 });
 var makeMetadataValueCompletion = (value) => {
@@ -162642,6 +163441,7 @@ function getCompletions(context, filterItems, samples) {
 		if (isMetadataProperty(tokens, currentTokenIndex)) return customRelationCompletions();
 		if (varName === "epoch") return continuousRelationCompletions();
 		if (varName === "id") return discreteRelationCompletions();
+		if (varName === "uuid") return discreteRelationCompletions();
 		if (varName === "metadata") return customRelationCompletions();
 		if (varName === "has_error" || varName === "has_retries") return logicalOpCompletions();
 		switch (findFilterItem(1)?.scoreType || "") {
@@ -162669,6 +163469,11 @@ function getCompletions(context, filterItems, samples) {
 			return makeCompletions((currentQuery ? sampleIds.filter((id) => {
 				return (typeof id === "string" ? `"${id}"` : String(id)).toLowerCase().startsWith(currentQuery.toLowerCase());
 			}) : sampleIds).map(makeSampleIdCompletion), { includeDefault: false });
+		}
+		if (varName === "uuid" && samples) {
+			const sampleUuids = Array.from(getSampleUuids(samples));
+			const currentQuery = currentToken?.text || "";
+			return makeCompletions((currentQuery ? sampleUuids.filter((uuid) => `"${uuid}"`.toLowerCase().startsWith(currentQuery.toLowerCase())) : sampleUuids).map(makeSampleUuidCompletion), { includeDefault: false });
 		}
 		if (varName === "epoch" && samples) {
 			const epochCompletions = Array.from(new Set(samples.map((s) => s.epoch).filter((e) => e !== void 0))).sort((a, b) => a - b).map((e) => makeLiteralCompletion(String(e)));
@@ -162972,14 +163777,7 @@ var ScoreCheckboxes = ({ scores, selectedKeys, setSelectedScores }) => {
 //#endregion
 //#region src/app/samples/SamplesTools.tsx
 var SampleTools = () => {
-	const scores = useScores();
-	const selectedScores = useSelectedScores();
-	const setSelectedScores = useStore((state) => state.logActions.setSelectedScores);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleFilter, {}), scores?.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectScorer, {
-		scores,
-		selectedScores,
-		setSelectedScores
-	}) : void 0] });
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleFilter, {});
 };
 var ScoreFilterTools = () => {
 	const scores = useScores();
@@ -162992,6 +163790,477 @@ var ScoreFilterTools = () => {
 		setSelectedScores
 	});
 };
+//#endregion
+//#region src/app/shared/samples-grid/cells.tsx
+/** Wraps truncated markdown in a 3-line-clamped cell. Used by list-mode
+*  renderers for `input`, `target`, `answer`. */
+var MarkdownCellDiv = ({ semanticClass, text, trimRenderedText, truncateAt = 250 }) => {
+	const markdown = truncateMarkdown(text, truncateAt);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: clsx(semanticClass, "text-size-base", "three-line-clamp", SamplesGrid_module_default.cell, SamplesGrid_module_default.wrapAnywhere),
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedText, {
+			markdown,
+			className: trimRenderedText ? clsx("no-last-para-padding", SamplesGrid_module_default.noLeft) : void 0,
+			forceRender: true,
+			omitMedia: true
+		})
+	});
+};
+/** Centered single-line cell for score values. */
+var ScoreCellDiv = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+	className: clsx("text-size-small", SamplesGrid_module_default.cell, SamplesGrid_module_default.score),
+	children
+});
+//#endregion
+//#region src/app/shared/samples-grid/columns.tsx
+var EmptyCell = () => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: "-" });
+var SCORE_FIELD_RAW_PREFIX = "score_";
+var SCORE_FIELD_PER_SCORER_PREFIX = "score__";
+var perScorerFieldKey = (label) => `${SCORE_FIELD_PER_SCORER_PREFIX}${label.scorer}__${label.name}`;
+var rawScoreFieldKey = (name) => `${SCORE_FIELD_RAW_PREFIX}${name}`;
+/** Build the superset of sample columns. Visibility is *not* applied here
+*  — the caller (via `useSampleGridState`) controls `hide`. */
+function buildSampleColumns(ctx) {
+	const { viewMode, multiLog, descriptor, epochs } = ctx;
+	const isList = viewMode === "list";
+	const shape = descriptor?.messageShape;
+	const cols = [];
+	if (multiLog) cols.push({
+		colId: "displayIndex",
+		headerName: "#",
+		initialWidth: 80,
+		minWidth: 50,
+		maxWidth: 80,
+		sortable: false,
+		filter: false,
+		resizable: false,
+		pinned: "left",
+		cellRenderer: (params) => {
+			if (params.data?.displayIndex === void 0) return "";
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: gridCells_module_default.numberCell,
+				children: params.data.displayIndex
+			});
+		}
+	});
+	cols.push({
+		colId: "sampleStatus",
+		field: "sampleStatus",
+		headerName: isList ? "" : "Sample Status",
+		headerTooltipValueGetter: () => "Sample Status",
+		initialWidth: isList ? 28 : 100,
+		minWidth: isList ? 28 : 80,
+		valueGetter: (params) => {
+			const row = params.data;
+			if (!row) return kDefaultSampleSortValue;
+			const completed = row.completed ?? row.data?.completed;
+			const error = row.error ?? row.data?.error;
+			return sampleStatusSortValue(sampleStatus(completed, error), error);
+		},
+		cellRenderer: (params) => {
+			if (!params.data) return null;
+			const row = params.data;
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleStatusIcon, { status: sampleStatus(row.completed ?? row.data?.completed, row.error ?? row.data?.error) });
+		},
+		tooltipValueGetter: (params) => {
+			const row = params.data;
+			if (!row) return null;
+			const completed = row.completed ?? row.data?.completed;
+			const error = row.error ?? row.data?.error;
+			return error ? error : sampleStatus(completed, error);
+		}
+	});
+	if (multiLog) cols.push({
+		colId: "status",
+		field: "status",
+		headerName: "Eval Status",
+		initialWidth: 110,
+		minWidth: 80,
+		sortable: true,
+		filter: true,
+		resizable: true
+	}, {
+		colId: "task",
+		field: "task",
+		headerName: "Task",
+		initialFlex: 1,
+		minWidth: 100,
+		sortable: true,
+		filter: true,
+		resizable: true
+	}, {
+		colId: "model",
+		field: "model",
+		headerName: "Model",
+		initialFlex: 1,
+		minWidth: 100,
+		sortable: true,
+		filter: true,
+		resizable: true
+	}, {
+		colId: "logFile",
+		field: "logFile",
+		headerName: "Log File",
+		initialFlex: 1,
+		minWidth: 150,
+		sortable: true,
+		filter: true,
+		resizable: true,
+		valueFormatter: (params) => filename(params.value)
+	});
+	cols.push({
+		colId: "sampleId",
+		field: "sampleId",
+		headerName: "Id",
+		initialWidth: shape ? Math.max(35, (shape.idSize ?? 2) * 16) : 120,
+		minWidth: 35,
+		sortable: true,
+		filter: true,
+		resizable: true,
+		valueGetter: (params) => String(params.data?.sampleId ?? "")
+	});
+	cols.push({
+		colId: "sampleUuid",
+		headerName: "UUID",
+		initialWidth: 280,
+		minWidth: 80,
+		sortable: true,
+		filter: true,
+		resizable: true,
+		valueGetter: (params) => params.data?.data?.uuid ?? ""
+	});
+	cols.push({
+		colId: "epoch",
+		field: "epoch",
+		headerName: "Epoch",
+		initialWidth: 60,
+		minWidth: 40,
+		sortable: true,
+		filter: true,
+		resizable: true,
+		cellStyle: { textAlign: "center" },
+		comparator: comparators.number,
+		hide: !multiLog && epochs !== void 0 && epochs <= 1
+	});
+	cols.push({
+		colId: "input",
+		field: "input",
+		headerName: "Input",
+		initialFlex: shape?.inputSize ? shape.inputSize : 3,
+		minWidth: 80,
+		sortable: true,
+		filter: true,
+		resizable: true,
+		cellStyle: isList ? void 0 : {
+			overflow: "hidden",
+			textOverflow: "ellipsis"
+		},
+		valueGetter: (params) => {
+			const row = params.data;
+			if (!row) return "";
+			if (row.input !== void 0) return row.input;
+			if (row.data) return inputString(row.data.input).join(" ");
+			return "";
+		},
+		cellRenderer: isList ? (params) => {
+			const row = params.data;
+			if (!row) return null;
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownCellDiv, {
+				semanticClass: "sample-input",
+				text: row.input ?? (row.data ? inputString(row.data.input).join(" ") : "")
+			});
+		} : void 0
+	});
+	cols.push({
+		colId: "target",
+		field: "target",
+		headerName: "Target",
+		initialFlex: shape?.targetSize ? shape.targetSize : 1,
+		minWidth: 80,
+		sortable: true,
+		filter: true,
+		resizable: true,
+		cellStyle: isList ? void 0 : {
+			overflow: "hidden",
+			textOverflow: "ellipsis"
+		},
+		valueGetter: (params) => {
+			const row = params.data;
+			if (!row) return "";
+			if (row.target !== void 0) return row.target;
+			if (row.data?.target != null) return arrayToString(row.data.target);
+			return "";
+		},
+		cellRenderer: isList ? (params) => {
+			const row = params.data;
+			if (!row) return null;
+			const text = row.target ?? (row.data?.target != null ? arrayToString(row.data.target) : "");
+			if (!text) return null;
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownCellDiv, {
+				semanticClass: "sample-target",
+				text,
+				trimRenderedText: true
+			});
+		} : void 0
+	});
+	if (descriptor) cols.push({
+		colId: "answer",
+		field: "answer",
+		headerName: "Answer",
+		initialFlex: shape?.answerSize ? shape.answerSize : 1,
+		minWidth: 80,
+		sortable: true,
+		filter: true,
+		resizable: true,
+		cellStyle: isList ? void 0 : {
+			overflow: "hidden",
+			textOverflow: "ellipsis"
+		},
+		valueGetter: (params) => params.data?.answer ?? "",
+		cellRenderer: isList ? (params) => {
+			if (!params.data) return null;
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownCellDiv, {
+				semanticClass: "sample-answer",
+				text: params.data.answer || "",
+				trimRenderedText: true
+			});
+		} : void 0
+	});
+	cols.push({
+		colId: "tokens",
+		field: "tokens",
+		headerName: "Tokens",
+		initialWidth: 100,
+		minWidth: 60,
+		maxWidth: 140,
+		sortable: true,
+		filter: "agNumberColumnFilter",
+		resizable: true,
+		cellRenderer: (params) => params.value === void 0 || params.value === null ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: formatNumber$1(params.value) })
+	});
+	cols.push({
+		colId: "duration",
+		field: "duration",
+		headerName: "Duration",
+		initialWidth: 120,
+		minWidth: 70,
+		maxWidth: 160,
+		sortable: true,
+		filter: "agNumberColumnFilter",
+		resizable: true,
+		valueFormatter: (params) => params.value === void 0 || params.value === null ? "" : formatTime(params.value),
+		cellRenderer: (params) => params.value === void 0 || params.value === null ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: formatTime(params.value) }),
+		tooltipValueGetter: (params) => params.value === void 0 || params.value === null ? void 0 : formatTime(params.value)
+	});
+	cols.push(...buildScoreColumns(ctx));
+	if (multiLog) cols.push({
+		colId: "created",
+		field: "created",
+		headerName: "Created",
+		initialWidth: 130,
+		minWidth: 80,
+		maxWidth: 140,
+		sortable: true,
+		filter: true,
+		resizable: true,
+		cellDataType: "date",
+		filterValueGetter: (params) => {
+			if (!params.data?.created) return void 0;
+			const d = new Date(params.data.created);
+			return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+		},
+		valueFormatter: (params) => params.value ? formatDateTime(new Date(params.value)) : ""
+	});
+	cols.push({
+		colId: "error",
+		field: "error",
+		headerName: "Error",
+		initialFlex: 1,
+		minWidth: 100,
+		sortable: true,
+		filter: true,
+		resizable: true,
+		cellStyle: isList ? void 0 : {
+			overflow: "hidden",
+			textOverflow: "ellipsis"
+		},
+		valueGetter: (params) => params.data?.error ?? params.data?.data?.error ?? "",
+		cellRenderer: isList ? (params) => {
+			const text = params.value;
+			if (!text) return null;
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: clsx("sample-error", SamplesGrid_module_default.cell, SamplesGrid_module_default.wrapAnywhere, "three-line-clamp"),
+				children: text
+			});
+		} : void 0
+	}, {
+		colId: "limit",
+		field: "limit",
+		headerName: "Limit",
+		initialWidth: shape ? (shape.limitSize ?? 1) * 16 : 100,
+		minWidth: 28,
+		sortable: true,
+		filter: true,
+		resizable: true,
+		valueGetter: (params) => params.data?.limit ?? params.data?.data?.limit
+	}, {
+		colId: "retries",
+		field: "retries",
+		headerName: "Retries",
+		initialWidth: shape ? (shape.retriesSize ?? 1) * 16 : 80,
+		minWidth: 28,
+		sortable: true,
+		filter: "agNumberColumnFilter",
+		resizable: true,
+		cellStyle: { textAlign: "center" },
+		comparator: comparators.number,
+		valueGetter: (params) => params.data?.retries ?? params.data?.data?.retries
+	});
+	return cols;
+}
+/** Score columns — emitted in one of two modes. */
+function buildScoreColumns(ctx) {
+	const { descriptor, scores, logDetails } = ctx;
+	if (descriptor && scores && scores.length > 0) {
+		const useLabelHeader = scores.length !== 1;
+		return scores.map((label) => {
+			const colId = perScorerFieldKey(label);
+			return {
+				colId,
+				field: colId,
+				headerName: useLabelHeader ? label.name : "Score",
+				initialWidth: 80,
+				minWidth: 28,
+				sortable: true,
+				filter: "agNumberColumnFilter",
+				resizable: true,
+				valueGetter: (params) => {
+					const data = params.data?.data;
+					if (!data) return void 0;
+					return descriptor.evalDescriptor.score(data, label)?.value;
+				},
+				cellRenderer: (params) => {
+					const row = params.data;
+					if (!row?.data) return null;
+					const completed = row.completed ?? row.data.completed;
+					const rendered = descriptor.evalDescriptor.score(row.data, label)?.render();
+					if (completed && rendered !== void 0) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreCellDiv, { children: rendered });
+					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreCellDiv, {});
+				}
+			};
+		});
+	}
+	const types = {};
+	for (const details of Object.values(logDetails ?? {})) for (const sample of details.sampleSummaries) {
+		if (!sample.scores) continue;
+		for (const [name, score] of Object.entries(sample.scores)) {
+			if (!types[name]) types[name] = /* @__PURE__ */ new Set();
+			types[name].add(typeof score.value);
+		}
+	}
+	return Object.keys(types).sort((a, b) => a.localeCompare(b)).map((name) => {
+		const isUniformNumber = types[name].size === 1 && types[name].has("number");
+		return {
+			colId: rawScoreFieldKey(name),
+			field: rawScoreFieldKey(name),
+			headerName: name,
+			initialWidth: 100,
+			minWidth: 60,
+			sortable: true,
+			filter: isUniformNumber ? "agNumberColumnFilter" : "agTextColumnFilter",
+			resizable: true,
+			valueFormatter: (params) => {
+				const v = params.value;
+				if (v === "" || v === null || v === void 0) return "";
+				if (Array.isArray(v)) return v.join(", ");
+				if (typeof v === "object") return JSON.stringify(v);
+				if (typeof v === "number") return v.toFixed(3);
+				return String(v);
+			},
+			comparator: isUniformNumber ? comparators.number : (a, b) => String(a ?? "").localeCompare(String(b ?? ""))
+		};
+	});
+}
+//#endregion
+//#region src/app/shared/samples-grid/useSampleGridState.ts
+/** Removes any active filter for a field whose visibility map says
+*  hidden. Exported so callers (e.g. `SamplesTab`) that split visibility
+*  across multiple stores can still trigger filter-clearing on the full
+*  map. */
+function clearFiltersForHiddenColumns(api, visibility) {
+	const current = api.getFilterModel() ?? {};
+	const next = {};
+	let removed = false;
+	for (const [field, filter] of Object.entries(current)) if (visibility[field] === false) removed = true;
+	else next[field] = filter;
+	if (removed) api.setFilterModel(next);
+}
+/**
+* Per-scope persistence for the shared samples grid. Each scope
+* (`samplesPanel` | `logViewSamples`) has its own column-visibility map
+* and ag-grid GridState. Defaults are seeded from the supplied
+* `defaultsForUnseededColumns` predicate the first time a column is
+* encountered with no entry in the visibility map; user toggles take
+* precedence after that.
+*/
+function useSampleGridState(scope, allColumns, options) {
+	const { defaultsForUnseededColumns, gridRef } = options ?? {};
+	const columnVisibility = useStore((state) => state.logs.samplesListState.byScope[scope].columnVisibility);
+	const gridState = useStore((state) => state.logs.samplesListState.byScope[scope].gridState);
+	const setSamplesColumnVisibility = useStore((state) => state.logsActions.setSamplesColumnVisibility);
+	const setSamplesGridState = useStore((state) => state.logsActions.setSamplesGridState);
+	const clearSamplesGridState = useStore((state) => state.logsActions.clearSamplesGridState);
+	(0, import_react.useEffect)(() => {
+		if (!defaultsForUnseededColumns) return;
+		const additions = {};
+		let changed = false;
+		for (const col of allColumns) {
+			const key = getFieldKey(col);
+			if (!(key in columnVisibility)) {
+				additions[key] = defaultsForUnseededColumns(col);
+				changed = true;
+			}
+		}
+		if (changed) setSamplesColumnVisibility(scope, {
+			...columnVisibility,
+			...additions
+		});
+	}, [
+		allColumns,
+		columnVisibility,
+		defaultsForUnseededColumns,
+		scope,
+		setSamplesColumnVisibility
+	]);
+	const setColumnVisibility = (0, import_react.useCallback)((visibility) => {
+		const api = gridRef?.current?.api;
+		if (api) clearFiltersForHiddenColumns(api, visibility);
+		setSamplesColumnVisibility(scope, visibility);
+	}, [
+		gridRef,
+		scope,
+		setSamplesColumnVisibility
+	]);
+	const setGridState = (0, import_react.useCallback)((state) => {
+		setSamplesGridState(scope, state);
+	}, [scope, setSamplesGridState]);
+	const clearGridState = (0, import_react.useCallback)(() => {
+		clearSamplesGridState(scope);
+	}, [scope, clearSamplesGridState]);
+	return (0, import_react.useMemo)(() => ({
+		columnVisibility,
+		setColumnVisibility,
+		gridState,
+		setGridState,
+		clearGridState
+	}), [
+		columnVisibility,
+		setColumnVisibility,
+		gridState,
+		setGridState,
+		clearGridState
+	]);
+}
 var RunningNoSamples_module_default = {
 	panel: "_panel_1yknn_1",
 	container: "_container_1yknn_7",
@@ -163025,28 +164294,55 @@ var useSamplesTabConfig = (evalStatus, refreshLog) => {
 	const totalSampleCount = useTotalSampleCount();
 	const samplesDescriptor = useSampleDescriptor();
 	const streamSamples = useStore((state) => state.capabilities.streamSamples);
+	const scrollRef = (0, import_react.useRef)(null);
+	const [showColumnSelector, setShowColumnSelector] = (0, import_react.useState)(false);
+	const columnButtonRef = (0, import_react.useRef)(null);
+	const handleToggleColumnSelector = (0, import_react.useCallback)(() => {
+		setShowColumnSelector((p) => !p);
+	}, []);
 	return (0, import_react.useMemo)(() => {
+		const samplesAvailable = samplesDescriptor !== void 0 && totalSampleCount > 1;
 		return {
 			id: kLogViewSamplesTabId,
 			scrollable: false,
+			scrollRef,
 			label: totalSampleCount > 1 ? "Samples" : "Sample",
 			component: SamplesTab,
-			componentProps: { running: evalStatus === "started" },
-			tools: () => !samplesDescriptor ? void 0 : totalSampleCount === 1 ? [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreFilterTools, {}, "sample-score-tool")] : [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleTools, {}, "sample-tools"), evalStatus === "started" && !streamSamples && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolButton, {
-				label: "Refresh",
-				icon: ApplicationIcons.refresh,
-				onClick: refreshLog
-			}, "refresh")]
+			componentProps: {
+				running: evalStatus === "started",
+				scrollRef,
+				showColumnSelector,
+				setShowColumnSelector,
+				columnButtonRef
+			},
+			tools: () => !samplesDescriptor ? void 0 : totalSampleCount === 1 ? [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreFilterTools, {}, "sample-score-tool")] : [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleTools, {}, "sample-tools"),
+				evalStatus === "started" && !streamSamples && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolButton, {
+					label: "Refresh",
+					icon: ApplicationIcons.refresh,
+					onClick: refreshLog
+				}, "refresh"),
+				samplesAvailable && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NavbarButton, {
+					ref: columnButtonRef,
+					label: "Columns",
+					icon: ApplicationIcons.columns,
+					dropdown: true,
+					subtle: true,
+					onClick: handleToggleColumnSelector
+				}, "choose-columns")
+			]
 		};
 	}, [
 		evalStatus,
 		refreshLog,
 		samplesDescriptor,
 		streamSamples,
-		totalSampleCount
+		totalSampleCount,
+		showColumnSelector,
+		handleToggleColumnSelector
 	]);
 };
-var SamplesTab = ({ running }) => {
+var SamplesTab = ({ running, scrollRef, showColumnSelector, setShowColumnSelector, columnButtonRef }) => {
 	const sampleSummaries = useFilteredSamples();
 	const selectedLogDetails = useStore((state) => state.log.selectedLogDetails);
 	const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
@@ -163060,17 +164356,99 @@ var SamplesTab = ({ running }) => {
 	]);
 	const totalSampleCount = useTotalSampleCount();
 	const samplesDescriptor = useSampleDescriptor();
+	const selectedScores = useSelectedScores();
+	const scores = useScores();
+	const setSelectedScores = useStore((state) => state.logActions.setSelectedScores);
+	const epochs = selectedLogDetails?.eval.config?.epochs || 1;
 	const selectSample = useStore((state) => state.logActions.selectSample);
 	const sampleStatus = useStore((state) => state.sample.sampleStatus);
 	const sampleListHandle = (0, import_react.useRef)(null);
+	const allColumns = (0, import_react.useMemo)(() => buildSampleColumns({
+		viewMode: "list",
+		multiLog: false,
+		descriptor: samplesDescriptor,
+		scores,
+		epochs
+	}), [
+		samplesDescriptor,
+		scores,
+		epochs
+	]);
+	const shape = samplesDescriptor?.messageShape;
+	const { columnVisibility, setColumnVisibility, gridState, setGridState } = useSampleGridState("logViewSamples", allColumns, {
+		defaultsForUnseededColumns: (0, import_react.useCallback)((col) => {
+			const id = col.colId;
+			if (id === "limit") return !!shape?.limitSize;
+			if (id === "retries") return !!shape?.retriesSize;
+			if (id === "error") return !!shape?.errorSize;
+			if (id === "sampleUuid") return false;
+			return true;
+		}, [shape]),
+		gridRef: sampleListHandle
+	});
+	const selectedScoreFields = (0, import_react.useMemo)(() => new Set(selectedScores.map(perScorerFieldKey)), [selectedScores]);
+	const visibilityForGrid = (0, import_react.useMemo)(() => {
+		const v = {};
+		for (const col of allColumns) {
+			const key = getFieldKey(col);
+			const seeded = columnVisibility[key];
+			v[key] = seeded === void 0 ? !col.hide : seeded;
+		}
+		for (const label of scores) {
+			const id = perScorerFieldKey(label);
+			v[id] = selectedScoreFields.has(id);
+		}
+		return v;
+	}, [
+		allColumns,
+		columnVisibility,
+		scores,
+		selectedScoreFields
+	]);
+	const allScoreFields = (0, import_react.useMemo)(() => new Set(scores.map(perScorerFieldKey)), [scores]);
+	const handleVisibilityChange = (0, import_react.useCallback)((next) => {
+		const api = sampleListHandle.current?.api;
+		if (api) clearFiltersForHiddenColumns(api, next);
+		const newSelected = scores.filter((label) => next[perScorerFieldKey(label)] !== false);
+		if (!(newSelected.length === selectedScores.length && newSelected.every((s, i) => {
+			const cur = selectedScores[i];
+			return cur && cur.scorer === s.scorer && cur.name === s.name;
+		}))) setSelectedScores(newSelected);
+		const nonScoreVisibility = {};
+		for (const [key, value] of Object.entries(next)) if (!allScoreFields.has(key)) nonScoreVisibility[key] = value;
+		setColumnVisibility(nonScoreVisibility);
+	}, [
+		scores,
+		selectedScores,
+		setSelectedScores,
+		setColumnVisibility,
+		allScoreFields
+	]);
 	const items = (0, import_react.useMemo)(() => {
-		if (!samplesDescriptor) return [];
-		return sampleSummaries.map((sample) => ({
-			data: sample,
-			answer: samplesDescriptor.selectedScorerDescriptor(sample)?.answer() || "",
-			completed: sample.completed !== void 0 ? sample.completed : true
-		}));
-	}, [sampleSummaries, samplesDescriptor]);
+		if (!samplesDescriptor || !selectedLogFile) return [];
+		return sampleSummaries.map((sample) => {
+			const tokens = sample.model_usage ? Object.values(sample.model_usage).reduce((sum, u) => sum + (u.total_tokens ?? 0), 0) : void 0;
+			return {
+				logFile: selectedLogFile,
+				sampleId: sample.id,
+				epoch: sample.epoch,
+				data: sample,
+				answer: samplesDescriptor.selectedScorerDescriptor(sample)?.answer() ?? "",
+				completed: sample.completed ?? true,
+				input: inputString(sample.input).join(" "),
+				target: Array.isArray(sample.target) ? sample.target.join(", ") : sample.target,
+				error: sample.error,
+				limit: sample.limit,
+				retries: sample.retries,
+				tokens,
+				duration: sample.total_time ?? void 0
+			};
+		});
+	}, [
+		sampleSummaries,
+		samplesDescriptor,
+		selectedLogFile
+	]);
 	(0, import_react.useEffect)(() => {
 		if (sampleSummaries.length === 1 && selectedLogFile) {
 			const sample = sampleSummaries[0];
@@ -163081,15 +164459,43 @@ var SamplesTab = ({ running }) => {
 		selectSample,
 		selectedLogFile
 	]);
+	const [filteredFields, setFilteredFields] = (0, import_react.useState)([]);
+	const handleFilterChanged = (0, import_react.useCallback)((api) => {
+		setFilteredFields(Object.keys(api.getFilterModel() ?? {}));
+	}, []);
 	if (totalSampleCount === 0) if (running) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RunningNoSamples, {});
 	else return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, { text: "No samples" });
-	else return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [samplesDescriptor && totalSampleCount === 1 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(InlineSampleDisplay, { showActivity: sampleStatus === "loading" || sampleStatus === "streaming" }) : void 0, samplesDescriptor && totalSampleCount > 1 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleList, {
-		listHandle: sampleListHandle,
-		items,
-		earlyStopping: selectedLogDetails?.results?.early_stopping,
-		totalItemCount: evalSampleCount,
-		running
-	}) : void 0] });
+	const inlineDisplay = samplesDescriptor && totalSampleCount === 1;
+	const listDisplay = samplesDescriptor && totalSampleCount > 1;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [
+		inlineDisplay ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(InlineSampleDisplay, {
+			showActivity: sampleStatus === "loading" || sampleStatus === "streaming",
+			scrollRef
+		}) : null,
+		listDisplay ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleList, {
+			listHandle: sampleListHandle,
+			items,
+			columns: allColumns,
+			columnVisibility: visibilityForGrid,
+			earlyStopping: selectedLogDetails?.results?.early_stopping,
+			totalItemCount: evalSampleCount,
+			running,
+			scrollRef,
+			gridState,
+			onGridStateChange: setGridState,
+			onFilterChanged: handleFilterChanged
+		}) : null,
+		listDisplay ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ColumnSelectorPopover, {
+			showing: showColumnSelector,
+			setShowing: setShowColumnSelector,
+			columns: allColumns,
+			visibility: visibilityForGrid,
+			onVisibilityChange: handleVisibilityChange,
+			positionEl: columnButtonRef.current,
+			filteredFields,
+			scoresHeading: "Scores"
+		}) : null
+	] });
 };
 var TaskTab_module_default = { grid: "_grid_er9fb_1" };
 //#endregion
@@ -163188,52 +164594,89 @@ var TaskTab = ({ evalSpec, evalStats, earlyStopping, tags }) => {
 		})
 	});
 };
-var DownloadLogButton_module_default = { downloadLogButton: "_downloadLogButton_fi3zx_1" };
+var LinkButton_module_default = {
+	button: "_button_12472_1",
+	label: "_label_12472_14"
+};
 //#endregion
-//#region src/components/DownloadLogButton.tsx
-var DownloadLogButton = ({ log_file, className = "", ariaLabel = "Download log as EVAL" }) => {
-	const [downloadState, setDownloadState] = (0, import_react.useState)("idle");
-	const api = useStore((state) => state.api);
-	const handleClick = async () => {
-		if (!api?.download_log) return;
-		setDownloadState("downloading");
-		try {
-			await api.download_log(log_file);
-			setDownloadState("success");
-		} catch (error) {
-			console.error("Failed to download log:", error);
-			setDownloadState("error");
-		} finally {
-			setTimeout(() => {
-				setDownloadState("idle");
-			}, 1250);
-		}
-	};
-	const getIcon = () => {
-		switch (downloadState) {
-			case "downloading": return ApplicationIcons.loading;
-			case "success": return ApplicationIcons.confirm;
-			case "error": return ApplicationIcons.error;
-			default: return ApplicationIcons.downloadLog;
-		}
-	};
-	const getIconClass = () => {
-		const icon = getIcon();
-		if (downloadState === "success") return `${icon} primary`;
-		if (downloadState === "error") return `${icon} text-danger`;
-		return icon;
-	};
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-		type: "button",
-		className: clsx("download-log-button", DownloadLogButton_module_default.downloadLogButton, className),
-		onClick: handleClick,
-		"aria-label": ariaLabel,
-		disabled: downloadState !== "idle",
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", {
-			className: getIconClass(),
-			"aria-hidden": "true"
-		})
+//#region src/components/LinkButton.tsx
+/**
+* LightboxCarousel component provides a carousel with lightbox functionality.
+*/
+var LinkButton = ({ id, text, icon, className, onClick }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+		id,
+		onClick,
+		className: clsx(className, LinkButton_module_default.button, "text-size-smaller"),
+		children: [icon ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(icon) }) : void 0, text ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: clsx(LinkButton_module_default.label),
+			children: text
+		}) : void 0]
 	});
+};
+var Modal_module_default = {
+	modal: "_modal_1tj8p_1",
+	header: "_header_1tj8p_14",
+	modalTitle: "_modalTitle_1tj8p_18",
+	btnClose: "_btnClose_1tj8p_22",
+	backdrop: "_backdrop_1tj8p_28",
+	overflowVisible: "_overflowVisible_1tj8p_40",
+	overflowHidden: "_overflowHidden_1tj8p_44",
+	overflowScroll: "_overflowScroll_1tj8p_48",
+	overflowAuto: "_overflowAuto_1tj8p_52",
+	noPadding: "_noPadding_1tj8p_56"
+};
+//#endregion
+//#region src/components/Modal.tsx
+var Modal = ({ id, title, showing, setShowing, children, className, overflow = "visible", padded = true }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [showing && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: Modal_module_default.backdrop,
+		onClick: () => setShowing(false)
+	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		id,
+		className: clsx("modal", "fade", showing ? "show" : "", className),
+		tabIndex: -1,
+		style: { display: showing ? "block" : "none" },
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: clsx("modal-dialog", Modal_module_default.modal),
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: "modal-content",
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: clsx("modal-header", Modal_module_default.header),
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: clsx("modal-title", "text-size-base", Modal_module_default.modalTitle),
+							children: title
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+							type: "button",
+							className: clsx("btn-close", "text-size-smaller", Modal_module_default.btnClose),
+							"data-bs-dismiss": "modal",
+							"aria-label": "Close",
+							onClick: () => {
+								setShowing(!showing);
+							}
+						})]
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: clsx("modal-body", !padded && Modal_module_default.noPadding, overflow === "auto" ? Modal_module_default.overflowAuto : overflow === "hidden" ? Modal_module_default.overflowHidden : overflow === "scroll" ? Modal_module_default.overflowScroll : Modal_module_default.overflowVisible),
+						children
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: "modal-footer",
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+							type: "button",
+							className: "btn btn-secondary",
+							"data-bs-dismiss": "modal",
+							onClick: () => {
+								setShowing(!showing);
+							},
+							children: "Close"
+						})
+					})
+				]
+			})
+		})
+	})] });
 };
 //#endregion
 //#region src/scoring/metrics.ts
@@ -163334,130 +164777,6 @@ var expandGroupedMetrics = (scorers) => {
 	}
 	return result;
 };
-var ModelRolesView_module_default = {
-	container: "_container_q17yq_1",
-	grid: "_grid_q17yq_10"
-};
-//#endregion
-//#region src/app/log-view/title-view/ModelRolesView.tsx
-/**
-* Renders the Navbar
-*/
-var ModelRolesView = ({ roles }) => {
-	roles = roles || {};
-	const singleLine = Object.keys(roles).length !== 1;
-	const modelEls = Object.keys(roles).map((key) => {
-		const role = key;
-		const model = roles[role].model;
-		return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: clsx(singleLine ? ModelRolesView_module_default.grid : void 0, "text-style-secondary", "text-size-smallest"),
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-				className: clsx("text-style-label"),
-				children: [role, ":"]
-			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: model })]
-		}, key);
-	});
-	return modelEls.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: ModelRolesView_module_default.container,
-		children: modelEls
-	}) : void 0;
-};
-var PrimaryBar_module_default = {
-	container: "_container_17txe_1",
-	wrapper: "_wrapper_17txe_8",
-	toggle: "_toggle_17txe_14",
-	body: "_body_17txe_21",
-	bodyContainer: "_bodyContainer_17txe_27",
-	taskTitle: "_taskTitle_17txe_33",
-	taskModel: "_taskModel_17txe_38",
-	taskStatus: "_taskStatus_17txe_42",
-	secondaryContainer: "_secondaryContainer_17txe_49",
-	buttonGroup: "_buttonGroup_17txe_58"
-};
-var LinkButton_module_default = {
-	button: "_button_12472_1",
-	label: "_label_12472_14"
-};
-//#endregion
-//#region src/components/LinkButton.tsx
-/**
-* LightboxCarousel component provides a carousel with lightbox functionality.
-*/
-var LinkButton = ({ id, text, icon, className, onClick }) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
-		id,
-		onClick,
-		className: clsx(className, LinkButton_module_default.button, "text-size-smaller"),
-		children: [icon ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(icon) }) : void 0, text ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: clsx(LinkButton_module_default.label),
-			children: text
-		}) : void 0]
-	});
-};
-var Modal_module_default = {
-	modal: "_modal_1tj8p_1",
-	header: "_header_1tj8p_14",
-	modalTitle: "_modalTitle_1tj8p_18",
-	btnClose: "_btnClose_1tj8p_22",
-	backdrop: "_backdrop_1tj8p_28",
-	overflowVisible: "_overflowVisible_1tj8p_40",
-	overflowHidden: "_overflowHidden_1tj8p_44",
-	overflowScroll: "_overflowScroll_1tj8p_48",
-	overflowAuto: "_overflowAuto_1tj8p_52",
-	noPadding: "_noPadding_1tj8p_56"
-};
-//#endregion
-//#region src/components/Modal.tsx
-var Modal = ({ id, title, showing, setShowing, children, className, overflow = "visible", padded = true }) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [showing && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: Modal_module_default.backdrop,
-		onClick: () => setShowing(false)
-	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		id,
-		className: clsx("modal", "fade", showing ? "show" : "", className),
-		tabIndex: -1,
-		style: { display: showing ? "block" : "none" },
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: clsx("modal-dialog", Modal_module_default.modal),
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: "modal-content",
-				children: [
-					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: clsx("modal-header", Modal_module_default.header),
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							className: clsx("modal-title", "text-size-base", Modal_module_default.modalTitle),
-							children: title
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-							type: "button",
-							className: clsx("btn-close", "text-size-smaller", Modal_module_default.btnClose),
-							"data-bs-dismiss": "modal",
-							"aria-label": "Close",
-							onClick: () => {
-								setShowing(!showing);
-							}
-						})]
-					}),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: clsx("modal-body", !padded && Modal_module_default.noPadding, overflow === "auto" ? Modal_module_default.overflowAuto : overflow === "hidden" ? Modal_module_default.overflowHidden : overflow === "scroll" ? Modal_module_default.overflowScroll : Modal_module_default.overflowVisible),
-						children
-					}),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: "modal-footer",
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-							type: "button",
-							className: "btn btn-secondary",
-							"data-bs-dismiss": "modal",
-							onClick: () => {
-								setShowing(!showing);
-							},
-							children: "Close"
-						})
-					})
-				]
-			})
-		})
-	})] });
-};
 //#endregion
 //#region src/scoring/scores.ts
 var groupScorers = (scorers) => {
@@ -163473,6 +164792,21 @@ var groupScorers = (scorers) => {
 };
 var metricsKey = (metrics) => {
 	return metrics.map((m) => m.name).join("");
+};
+var CollapsedTitleBar_module_default = {
+	container: "_container_w43k4_1",
+	left: "_left_w43k4_11",
+	task: "_task_w43k4_19",
+	model: "_model_w43k4_24",
+	right: "_right_w43k4_30",
+	inlineMetrics: "_inlineMetrics_w43k4_38",
+	inlineMetric: "_inlineMetric_w43k4_38",
+	inlineMetricLabel: "_inlineMetricLabel_w43k4_50",
+	inlineMetricValue: "_inlineMetricValue_w43k4_54",
+	statusBadge: "_statusBadge_w43k4_58",
+	statusIcon: "_statusIcon_w43k4_64",
+	statusCount: "_statusCount_w43k4_68",
+	scoringDetailModal: "_scoringDetailModal_w43k4_72"
 };
 var ResultsPanel_module_default = {
 	simpleMetricsRows: "_simpleMetricsRows_13tuz_1",
@@ -163786,6 +165120,223 @@ var VerticalMetric = ({ metric, reducer, isFirst, showReducer, scoredSamples, un
 		]
 	});
 };
+//#endregion
+//#region src/app/log-view/title-view/CollapsedTitleBar.tsx
+var kInlineMetricLimit = 2;
+var CollapsedTitleBar = ({ evalSpec, evalResults, runningMetrics, status, sampleCount }) => {
+	const showMetrics = status === "success" || status === "started" && (runningMetrics?.length ?? 0) > 0 || status === "error" && evalSpec?.config["continue_on_fail"];
+	const expandedScorers = expandGroupedMetrics((runningMetrics ? displayScorersFromRunningMetrics(runningMetrics) : toDisplayScorers(evalResults?.scores)) ?? []);
+	const totalMetrics = expandedScorers.reduce((n, s) => n + s.metrics.length, 0);
+	const modelText = formatModelText(evalSpec);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: clsx("navbar-brand", "navbar-text", "mb-0", CollapsedTitleBar_module_default.container),
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: clsx(CollapsedTitleBar_module_default.left),
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				id: "task-title-collapsed",
+				className: clsx("task-title", "text-truncate", "text-size-larger", CollapsedTitleBar_module_default.task),
+				title: evalSpec?.task,
+				children: evalSpec?.task
+			}), modelText ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+				id: "task-model-collapsed",
+				className: clsx("task-model", "text-truncate", "text-size-small", CollapsedTitleBar_module_default.model),
+				title: modelText,
+				children: [
+					"(",
+					modelText,
+					")"
+				]
+			}) : null]
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: clsx(CollapsedTitleBar_module_default.right, "text-size-smaller"),
+			children: showMetrics && totalMetrics > 0 ? totalMetrics <= kInlineMetricLimit ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(InlineMetrics, { scorers: expandedScorers }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetricsLink, { scorers: expandedScorers }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StatusBadge, {
+				status,
+				sampleCount
+			})
+		})]
+	});
+};
+var formatModelText = (evalSpec) => {
+	if (!evalSpec) return void 0;
+	const roles = evalSpec.model_roles;
+	if (roles && Object.keys(roles).length > 0) return Object.entries(roles).map(([role, data]) => `${role}: ${data.model}`).join(", ");
+	if (evalSpec.model && evalSpec.model !== "none/none") return evalSpec.model;
+};
+var InlineMetrics = ({ scorers }) => {
+	const items = [];
+	scorers.forEach((scorer, scorerIdx) => {
+		scorer.metrics.forEach((metric, metricIdx) => {
+			items.push({
+				key: `${scorerIdx}-${metricIdx}`,
+				label: metricDisplayName(metric),
+				value: metric.value !== void 0 && metric.value !== null ? formatPrettyDecimal(metric.value) : "n/a"
+			});
+		});
+	});
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: CollapsedTitleBar_module_default.inlineMetrics,
+		children: items.map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+			className: CollapsedTitleBar_module_default.inlineMetric,
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: clsx("text-style-label", CollapsedTitleBar_module_default.inlineMetricLabel),
+				children: item.label
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: CollapsedTitleBar_module_default.inlineMetricValue,
+				children: item.value
+			})]
+		}, item.key))
+	});
+};
+var StatusBadge = ({ status, sampleCount }) => {
+	const display = statusDisplay(status);
+	if (!display) return null;
+	const count = sampleCount ?? 0;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: CollapsedTitleBar_module_default.statusBadge,
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(display.icon, CollapsedTitleBar_module_default.statusIcon) }),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: "text-style-label",
+				children: display.label
+			}),
+			count > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+				className: CollapsedTitleBar_module_default.statusCount,
+				children: [
+					"(",
+					count,
+					" ",
+					count === 1 ? "sample" : "samples",
+					")"
+				]
+			}) : null
+		]
+	});
+};
+var statusDisplay = (status) => {
+	switch (status) {
+		case "started": return {
+			icon: ApplicationIcons.running,
+			label: "Running"
+		};
+		case "cancelled": return {
+			icon: ApplicationIcons.logging.info,
+			label: "Cancelled"
+		};
+		case "error": return {
+			icon: ApplicationIcons.logging.error,
+			label: "Task Failed"
+		};
+		default: return;
+	}
+};
+var MetricsLink = ({ scorers }) => {
+	const grouped = groupScorers(scorers);
+	const showReducer = scorers.findIndex((s) => !!s.reducer) !== -1;
+	const [showing, setShowing] = (0, import_react.useState)(false);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LinkButton, {
+		text: "View metrics…",
+		onClick: () => setShowing(true)
+	}), (0, import_react_dom.createPortal)(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Modal, {
+		id: "collapsed-title-bar-metrics",
+		showing,
+		setShowing,
+		title: "Scoring Detail",
+		overflow: "hidden",
+		padded: false,
+		className: CollapsedTitleBar_module_default.scoringDetailModal,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreAgGrid, {
+			scoreGroups: grouped,
+			showReducer
+		})
+	}), document.body)] });
+};
+var DownloadLogButton_module_default = { downloadLogButton: "_downloadLogButton_fi3zx_1" };
+//#endregion
+//#region src/components/DownloadLogButton.tsx
+var DownloadLogButton = ({ log_file, className = "", ariaLabel = "Download log as EVAL" }) => {
+	const [downloadState, setDownloadState] = (0, import_react.useState)("idle");
+	const api = useStore((state) => state.api);
+	const handleClick = async () => {
+		if (!api?.download_log) return;
+		setDownloadState("downloading");
+		try {
+			await api.download_log(log_file);
+			setDownloadState("success");
+		} catch (error) {
+			console.error("Failed to download log:", error);
+			setDownloadState("error");
+		} finally {
+			setTimeout(() => {
+				setDownloadState("idle");
+			}, 1250);
+		}
+	};
+	const getIcon = () => {
+		switch (downloadState) {
+			case "downloading": return ApplicationIcons.loading;
+			case "success": return ApplicationIcons.confirm;
+			case "error": return ApplicationIcons.error;
+			default: return ApplicationIcons.downloadLog;
+		}
+	};
+	const getIconClass = () => {
+		const icon = getIcon();
+		if (downloadState === "success") return `${icon} primary`;
+		if (downloadState === "error") return `${icon} text-danger`;
+		return icon;
+	};
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+		type: "button",
+		className: clsx("download-log-button", DownloadLogButton_module_default.downloadLogButton, className),
+		onClick: handleClick,
+		"aria-label": ariaLabel,
+		disabled: downloadState !== "idle",
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", {
+			className: getIconClass(),
+			"aria-hidden": "true"
+		})
+	});
+};
+var ModelRolesView_module_default = {
+	container: "_container_q17yq_1",
+	grid: "_grid_q17yq_10"
+};
+//#endregion
+//#region src/app/log-view/title-view/ModelRolesView.tsx
+/**
+* Renders the Navbar
+*/
+var ModelRolesView = ({ roles }) => {
+	roles = roles || {};
+	const singleLine = Object.keys(roles).length !== 1;
+	const modelEls = Object.keys(roles).map((key) => {
+		const role = key;
+		const model = roles[role].model;
+		return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: clsx(singleLine ? ModelRolesView_module_default.grid : void 0, "text-style-secondary", "text-size-smallest"),
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+				className: clsx("text-style-label"),
+				children: [role, ":"]
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: model })]
+		}, key);
+	});
+	return modelEls.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: ModelRolesView_module_default.container,
+		children: modelEls
+	}) : void 0;
+};
+var PrimaryBar_module_default = {
+	container: "_container_17txe_1",
+	wrapper: "_wrapper_17txe_8",
+	toggle: "_toggle_17txe_14",
+	body: "_body_17txe_21",
+	bodyContainer: "_bodyContainer_17txe_27",
+	taskTitle: "_taskTitle_17txe_33",
+	taskModel: "_taskModel_17txe_38",
+	taskStatus: "_taskStatus_17txe_42",
+	secondaryContainer: "_secondaryContainer_17txe_49",
+	buttonGroup: "_buttonGroup_17txe_58"
+};
 var RunningStatusPanel_module_default = {
 	statusContainer: "_statusContainer_1sckj_1",
 	status: "_status_1sckj_1",
@@ -164070,39 +165621,60 @@ var InvalidationStatus = ({ invalidation }) => {
 	});
 };
 var TitleView_module_default = {
-	navbarContainer: "_navbarContainer_838qu_1",
-	navbarToggle: "_navbarToggle_838qu_8",
-	navbarBody: "_navbarBody_838qu_13",
-	navbarBodyContainer: "_navbarBodyContainer_838qu_19",
-	navbarTaskTitle: "_navbarTaskTitle_838qu_25",
-	navbarTaskModel: "_navbarTaskModel_838qu_30",
-	navbarSecondaryContainer: "_navbarSecondaryContainer_838qu_34",
-	navbarStatus: "_navbarStatus_838qu_42",
-	navbarWrapper: "_navbarWrapper_838qu_48",
-	navbarInnerWrapper: "_navbarInnerWrapper_838qu_51"
+	navbarContainer: "_navbarContainer_de7i3_1",
+	navbarToggle: "_navbarToggle_de7i3_8",
+	navbarBody: "_navbarBody_de7i3_13",
+	navbarBodyContainer: "_navbarBodyContainer_de7i3_19",
+	navbarTaskTitle: "_navbarTaskTitle_de7i3_25",
+	navbarTaskModel: "_navbarTaskModel_de7i3_30",
+	navbarSecondaryContainer: "_navbarSecondaryContainer_de7i3_34",
+	navbarStatus: "_navbarStatus_de7i3_42",
+	navbarWrapper: "_navbarWrapper_de7i3_48",
+	navbarInnerWrapper: "_navbarInnerWrapper_de7i3_57",
+	expandedSlot: "_expandedSlot_de7i3_69",
+	collapsedSlot: "_collapsedSlot_de7i3_70",
+	collapsed: "_collapsed_de7i3_70",
+	expandedInner: "_expandedInner_de7i3_99"
 };
 //#endregion
 //#region src/app/log-view/title-view/TitleView.tsx
 /**
 * Renders the Navbar
 */
-var TitleView = ({ evalSpec, evalPlan, evalResults, evalStats, status, runningMetrics }) => {
+var TitleView = ({ evalSpec, evalPlan, evalResults, evalStats, status, runningMetrics, collapsed }) => {
 	const totalSampleCount = useTotalSampleCount();
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("nav", {
-		className: clsx("navbar", "sticky-top", TitleView_module_default.navbarWrapper),
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(PrimaryBar, {
-			evalSpec,
-			evalResults,
-			status,
-			runningMetrics,
-			sampleCount: totalSampleCount
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SecondaryBar, {
-			evalSpec,
-			evalPlan,
-			evalResults,
-			evalStats,
-			status,
-			sampleCount: totalSampleCount
+		className: clsx("navbar", "sticky-top", TitleView_module_default.navbarWrapper, collapsed ? TitleView_module_default.collapsed : TitleView_module_default.expanded),
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: TitleView_module_default.expandedSlot,
+			"aria-hidden": collapsed,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: TitleView_module_default.expandedInner,
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(PrimaryBar, {
+					evalSpec,
+					evalResults,
+					status,
+					runningMetrics,
+					sampleCount: totalSampleCount
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SecondaryBar, {
+					evalSpec,
+					evalPlan,
+					evalResults,
+					evalStats,
+					status,
+					sampleCount: totalSampleCount
+				})]
+			})
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: TitleView_module_default.collapsedSlot,
+			"aria-hidden": !collapsed,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CollapsedTitleBar, {
+				evalSpec,
+				evalResults,
+				runningMetrics,
+				status,
+				sampleCount: totalSampleCount
+			})
 		})]
 	});
 };
@@ -164129,6 +165701,14 @@ var LogView = () => {
 		...selectedLogDetails?.error ? { error: errorTabConfig } : {},
 		json: jsonTabConfig
 	};
+	const { hidden: titleCollapsed } = useScrollDirection((0, import_react.useMemo)(() => {
+		const refs = [];
+		for (const key of Object.keys(tabs)) {
+			const ref = tabs[key].scrollRef;
+			if (ref) refs.push(ref);
+		}
+		return refs;
+	}, [Object.keys(tabs).join(",")]));
 	const selectedTab = useStore((state) => state.app.tabs.workspace);
 	const setSelectedTab = useStore((state) => state.appActions.setWorkspaceTab);
 	const onSelected = (0, import_react.useCallback)((e) => {
@@ -164154,7 +165734,8 @@ var LogView = () => {
 			evalResults: selectedLogDetails?.results,
 			runningMetrics,
 			evalStats: selectedLogDetails?.stats,
-			status: selectedLogDetails?.status
+			status: selectedLogDetails?.status,
+			collapsed: titleCollapsed
 		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			ref: divRef,
 			className: clsx("workspace", LogView_module_default.workspace),
@@ -164175,7 +165756,7 @@ var LogView = () => {
 							onSelected,
 							selected: selectedTab === tab.id,
 							scrollable: !!tab.scrollable,
-							scrollRef: tab.scrollRef,
+							scrollRef: tab.scrollable ? tab.scrollRef : void 0,
 							className: clsx(tab.className),
 							style: { height: tab.scrollable ? "100%" : void 0 },
 							children: (0, import_react.createElement)(tab.component, tab.componentProps)
@@ -164700,481 +166281,26 @@ var SampleDetailView = () => {
 		}
 	});
 };
-//#endregion
-//#region src/app/samples-panel/samples-grid/hooks.tsx
-var EmptyCell = () => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: "-" });
-var useSampleColumns = (logDetails) => {
-	const optionalColumnsHaveAnyData = (0, import_react.useMemo)(() => {
-		let error = false;
-		let limit = false;
-		let retries = false;
-		outerLoop: for (const details of Object.values(logDetails)) for (const sample of details.sampleSummaries) {
-			if (sample.error) error = true;
-			if (sample.limit) limit = true;
-			if (sample.retries) retries = true;
-			if (error && limit && retries) break outerLoop;
-		}
-		return {
-			error,
-			limit,
-			retries
-		};
-	}, [logDetails]);
-	const columnVisibility = useStore((state) => state.logs.samplesListState.columnVisibility);
-	const setColumnVisibility = useStore((state) => state.logsActions.setSamplesColumnVisibility);
-	const scoreMap = (0, import_react.useMemo)(() => {
-		const scoreTypes = {};
-		for (const details of Object.values(logDetails)) for (const sample of details.sampleSummaries) if (sample.scores) for (const [name, score] of Object.entries(sample.scores)) scoreTypes[name] = typeof score.value;
-		return scoreTypes;
-	}, [logDetails]);
-	(0, import_react.useEffect)(() => {
-		const { error, limit, retries } = optionalColumnsHaveAnyData;
-		if ("error" in columnVisibility || "limit" in columnVisibility || "retries" in columnVisibility || !error && !limit && !retries) return;
-		const newVisibility = { ...columnVisibility };
-		if (error && !("error" in columnVisibility)) newVisibility.error = true;
-		if (limit && !("limit" in columnVisibility)) newVisibility.limit = true;
-		if (retries && !("retries" in columnVisibility)) newVisibility.retries = true;
-		setColumnVisibility(newVisibility);
-	}, [
-		optionalColumnsHaveAnyData,
-		columnVisibility,
-		setColumnVisibility
-	]);
-	const allColumns = (0, import_react.useMemo)(() => {
-		const baseColumns = [
-			{
-				headerName: "#",
-				initialWidth: 80,
-				minWidth: 50,
-				maxWidth: 80,
-				sortable: false,
-				filter: false,
-				resizable: false,
-				pinned: "left",
-				cellRenderer: (params) => {
-					if (params.data?.displayIndex !== void 0) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: gridCells_module_default.numberCell,
-						children: params.data.displayIndex
-					});
-					return "";
-				}
-			},
-			{
-				field: "task",
-				headerName: "Task",
-				initialWidth: 150,
-				minWidth: 100,
-				sortable: true,
-				filter: true,
-				resizable: true
-			},
-			{
-				field: "model",
-				headerName: "Model",
-				initialWidth: 150,
-				minWidth: 100,
-				sortable: true,
-				filter: true,
-				resizable: true
-			},
-			{
-				field: "sampleId",
-				headerName: "Sample ID",
-				initialWidth: 120,
-				minWidth: 100,
-				sortable: true,
-				filter: true,
-				resizable: true,
-				valueGetter: (params) => String(params.data?.sampleId ?? "")
-			},
-			{
-				field: "epoch",
-				headerName: "Epoch",
-				initialWidth: 70,
-				minWidth: 70,
-				sortable: true,
-				filter: true,
-				resizable: true,
-				cellStyle: { textAlign: "center" },
-				comparator: comparators.number
-			},
-			{
-				field: "input",
-				headerName: "Input",
-				initialWidth: 250,
-				minWidth: 150,
-				sortable: true,
-				filter: true,
-				resizable: true,
-				cellStyle: {
-					overflow: "hidden",
-					textOverflow: "ellipsis"
-				}
-			},
-			{
-				field: "status",
-				headerName: "Status",
-				initialWidth: 100,
-				minWidth: 80,
-				sortable: true,
-				resizable: true,
-				filter: true
-			},
-			{
-				field: "logFile",
-				headerName: "Log File",
-				initialWidth: 200,
-				minWidth: 150,
-				sortable: true,
-				filter: true,
-				resizable: true,
-				valueFormatter: (params) => filename(params.value)
-			},
-			{
-				field: "target",
-				headerName: "Target",
-				initialWidth: 150,
-				minWidth: 100,
-				sortable: true,
-				filter: true,
-				resizable: true,
-				cellStyle: {
-					overflow: "hidden",
-					textOverflow: "ellipsis"
-				}
-			},
-			{
-				field: "tokens",
-				headerName: "Tokens",
-				initialWidth: 100,
-				minWidth: 60,
-				maxWidth: 140,
-				sortable: true,
-				filter: "agNumberColumnFilter",
-				resizable: true,
-				cellRenderer: (params) => {
-					if (params.value === void 0 || params.value === null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
-					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: formatNumber$1(params.value) });
-				}
-			},
-			{
-				field: "duration",
-				headerName: "Duration",
-				initialWidth: 120,
-				minWidth: 70,
-				maxWidth: 160,
-				sortable: true,
-				filter: "agNumberColumnFilter",
-				resizable: true,
-				valueFormatter: (params) => {
-					if (params.value === void 0 || params.value === null) return "";
-					return formatTime(params.value);
-				},
-				cellRenderer: (params) => {
-					if (params.value === void 0 || params.value === null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {});
-					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: formatTime(params.value) });
-				},
-				tooltipValueGetter: (params) => {
-					if (params.value === void 0 || params.value === null) return;
-					return formatTime(params.value);
-				}
-			}
-		];
-		const scoreColumns = Object.keys(scoreMap).sort((a, b) => a.localeCompare(b)).map((scoreName) => {
-			const scoreType = scoreMap[scoreName];
-			return {
-				field: `score_${scoreName}`,
-				headerName: scoreName,
-				initialWidth: 100,
-				minWidth: 100,
-				sortable: true,
-				filter: scoreType === "number" ? "agNumberColumnFilter" : "agTextColumnFilter",
-				resizable: true,
-				valueFormatter: (params) => {
-					const value = params.value;
-					if (value === "" || value === null || value === void 0) return "";
-					if (Array.isArray(value)) return value.join(", ");
-					else if (typeof value === "object") return JSON.stringify(value);
-					else if (typeof value === "number") return value.toFixed(3);
-					return String(value);
-				},
-				comparator: (valA, valB) => {
-					if (typeof valA === "number" && typeof valB === "number") return valA - valB;
-					return String(valA || "").localeCompare(String(valB || ""));
-				}
-			};
-		});
-		const optionalColumns = [
-			{
-				field: "created",
-				headerName: "Created",
-				initialWidth: 130,
-				minWidth: 80,
-				maxWidth: 140,
-				sortable: true,
-				filter: true,
-				resizable: true,
-				cellDataType: "date",
-				filterValueGetter: (params) => {
-					if (!params.data?.created) return void 0;
-					const d = new Date(params.data.created);
-					return new Date(d.getFullYear(), d.getMonth(), d.getDate());
-				},
-				valueFormatter: (params) => formatDateTime(new Date(params.value))
-			},
-			{
-				field: "error",
-				headerName: "Error",
-				initialWidth: 150,
-				minWidth: 100,
-				sortable: true,
-				filter: true,
-				resizable: true,
-				cellStyle: {
-					overflow: "hidden",
-					textOverflow: "ellipsis"
-				}
-			},
-			{
-				field: "limit",
-				headerName: "Limit",
-				initialWidth: 100,
-				minWidth: 80,
-				sortable: true,
-				filter: true,
-				resizable: true
-			},
-			{
-				field: "retries",
-				headerName: "Retries",
-				initialWidth: 80,
-				minWidth: 60,
-				sortable: true,
-				filter: true,
-				resizable: true,
-				comparator: comparators.number
-			}
-		];
-		return [
-			...baseColumns,
-			...scoreColumns,
-			...optionalColumns
-		];
-	}, [scoreMap]);
-	return {
-		columns: (0, import_react.useMemo)(() => {
-			return allColumns.map((col) => {
-				const field = getFieldKey(col);
-				const isVisible = (columnVisibility[field] ?? optionalColumnsHaveAnyData[field]) !== false;
-				return {
-					...col,
-					hide: !isVisible
-				};
-			});
-		}, [
-			allColumns,
-			columnVisibility,
-			optionalColumnsHaveAnyData
-		]),
-		setColumnVisibility
-	};
-};
-//#endregion
-//#region src/app/samples-panel/samples-grid/SamplesGrid.tsx
-var SamplesGrid = ({ items, samplesPath, gridRef: externalGridRef, columns }) => {
-	const gridState = useStore((state) => state.logs.samplesListState.gridState);
-	const setGridState = useStore((state) => state.logsActions.setGridState);
-	const { navigateToSampleDetail } = useSamplesGridNavigation();
-	const setFilteredSampleCount = useStore((state) => state.logActions.setFilteredSampleCount);
-	const setDisplayedSamples = useStore((state) => state.logsActions.setDisplayedSamples);
-	const clearDisplayedSamples = useStore((state) => state.logsActions.clearDisplayedSamples);
-	const clearSelectedSample = useStore((state) => state.sampleActions.clearSelectedSample);
-	const previousSamplesPath = useStore((state) => state.logs.samplesListState.previousSamplesPath);
-	const setPreviousSamplesPath = useStore((state) => state.logsActions.setPreviousSamplesPath);
-	const loading = useStore((state) => state.app.status.loading);
-	const syncing = useStore((state) => state.app.status.syncing);
-	const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
-	const selectedSampleHandle = useStore((state) => state.log.selectedSampleHandle);
-	const internalGridRef = (0, import_react.useRef)(null);
-	const gridRef = externalGridRef ?? internalGridRef;
-	const gridContainerRef = (0, import_react.useRef)(null);
-	const { startPolling, stopPolling } = useClientEvents();
-	(0, import_react.useEffect)(() => {
-		startPolling([]);
-		return () => {
-			stopPolling();
-		};
-	}, [startPolling, stopPolling]);
-	const initialGridState = (0, import_react.useMemo)(() => {
-		if (previousSamplesPath !== void 0 && previousSamplesPath !== samplesPath) {
-			clearDisplayedSamples();
-			const result = { ...gridState };
-			delete result?.filter;
-			return result;
-		} else return gridState;
-	}, [
-		previousSamplesPath,
-		samplesPath,
-		clearDisplayedSamples,
-		gridState
-	]);
-	(0, import_react.useEffect)(() => {
-		if (samplesPath !== previousSamplesPath) setPreviousSamplesPath(samplesPath);
-	}, [
-		samplesPath,
-		previousSamplesPath,
-		setPreviousSamplesPath
-	]);
-	(0, import_react.useEffect)(() => {
-		gridContainerRef.current?.focus();
-	}, []);
-	const handleRowClick = (0, import_react.useCallback)((e) => {
-		if (e.data && e.node && gridRef.current?.api) {
-			gridRef.current.api.deselectAll();
-			e.node.setSelected(true);
-			const mouseEvent = e.event;
-			const openInNewWindow = mouseEvent?.metaKey || mouseEvent?.ctrlKey || mouseEvent?.shiftKey || mouseEvent?.button === 1;
-			const logFile = e.data.logFile;
-			const sampleId = e.data.sampleId;
-			const epoch = e.data.epoch;
-			setTimeout(() => {
-				navigateToSampleDetail(logFile, sampleId, epoch, openInNewWindow);
-			}, 10);
-		}
-	}, [navigateToSampleDetail, gridRef]);
-	const handleOpenRow = (0, import_react.useCallback)((rowNode, e) => {
-		const openInNewWindow = e.metaKey || e.ctrlKey || e.shiftKey;
-		if (rowNode.data) navigateToSampleDetail(rowNode.data.logFile, rowNode.data.sampleId, rowNode.data.epoch, openInNewWindow);
-	}, [navigateToSampleDetail]);
-	const handleKeyDown = (0, import_react.useMemo)(() => createGridKeyboardHandler({
-		gridRef,
-		onOpenRow: handleOpenRow
-	}), [gridRef, handleOpenRow]);
-	(0, import_react.useEffect)(() => {
-		const gridElement = gridContainerRef.current;
-		if (!gridElement) return;
-		gridElement.addEventListener("keydown", handleKeyDown);
-		return () => {
-			gridElement.removeEventListener("keydown", handleKeyDown);
-		};
-	}, [handleKeyDown]);
-	const handleCellMouseDown = (0, import_react.useCallback)((e) => {
-		const mouseEvent = e.event;
-		if (mouseEvent?.button === 1 && e.data) {
-			mouseEvent.preventDefault();
-			navigateToSampleDetail(e.data.logFile, e.data.sampleId, e.data.epoch, true);
-		}
-	}, [navigateToSampleDetail]);
-	const sampleRowId = (logFile, sampleId, epoch) => {
-		return `${logFile}-${sampleId}-${epoch}`.replace(/\s+/g, "_");
-	};
-	const selectCurrentSample = (0, import_react.useCallback)(() => {
-		if (!gridRef.current?.api || !selectedSampleHandle || !selectedLogFile) return;
-		const rowId = sampleRowId(selectedLogFile, selectedSampleHandle.id, selectedSampleHandle.epoch);
-		const node = gridRef.current.api.getRowNode(rowId);
-		if (node) {
-			gridRef.current.api.deselectAll();
-			node.setSelected(true);
-			gridRef.current.api.ensureNodeVisible(node, "middle");
-		}
-	}, [
-		gridRef,
-		selectedSampleHandle,
-		selectedLogFile
-	]);
-	(0, import_react.useEffect)(() => {
-		selectCurrentSample();
-	}, [
-		selectedSampleHandle,
-		selectedLogFile,
-		selectCurrentSample
-	]);
-	const maxColCount = (0, import_react.useRef)(0);
-	const resizeGridColumns = (0, import_react.useRef)(createGridColumnResizer(gridRef)).current;
-	(0, import_react.useEffect)(() => {
-		resizeGridColumns();
-	}, [columns, resizeGridColumns]);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: gridCells_module_default.gridWrapper,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			ref: gridContainerRef,
-			className: gridCells_module_default.gridContainer,
-			tabIndex: 0,
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AgGridReact, {
-				ref: gridRef,
-				rowData: items,
-				animateRows: false,
-				columnDefs: columns,
-				defaultColDef: {
-					sortable: true,
-					filter: true,
-					resizable: true
-				},
-				tooltipShowDelay: 300,
-				autoSizeStrategy: { type: "fitGridWidth" },
-				headerHeight: 25,
-				rowSelection: {
-					mode: "singleRow",
-					checkboxes: false
-				},
-				getRowId: (params) => sampleRowId(params.data.logFile, params.data.sampleId, params.data.epoch),
-				onGridColumnsChanged: (e) => {
-					const cols = e.api.getColumnDefs();
-					if (cols && cols?.length > maxColCount.current) {
-						maxColCount.current = cols.length;
-						resizeGridColumns();
-					}
-				},
-				onGridSizeChanged: resizeGridColumns,
-				theme: themeBalham,
-				enableCellTextSelection: true,
-				initialState: initialGridState,
-				suppressCellFocus: true,
-				onStateUpdated: (e) => {
-					setGridState(e.state);
-					if (gridRef.current?.api) {
-						const gridCurrentSamples = gridDisplayedSamples(gridRef.current.api);
-						setFilteredSampleCount(gridCurrentSamples.length);
-						setDisplayedSamples(gridCurrentSamples);
-					}
-				},
-				onRowClicked: handleRowClick,
-				onCellMouseDown: handleCellMouseDown,
-				onFilterChanged: () => {
-					if (gridRef.current?.api) {
-						const newDisplayedSamples = gridDisplayedSamples(gridRef.current.api);
-						setFilteredSampleCount(newDisplayedSamples.length);
-						setDisplayedSamples(newDisplayedSamples);
-					}
-				},
-				onFirstDataRendered: () => {
-					selectCurrentSample();
-					clearSelectedSample();
-				},
-				loading: items.length === 0 && (loading > 0 || syncing)
-			})
-		})
-	});
-};
-var gridDisplayedSamples = (gridApi) => {
-	const displayedSamples = [];
-	const displayedRowCount = gridApi.getDisplayedRowCount();
-	for (let i = 0; i < displayedRowCount; i++) {
-		const node = gridApi.getDisplayedRowAtIndex(i);
-		if (node?.data) displayedSamples.push({
-			logFile: node.data.logFile,
-			sampleId: node.data.sampleId,
-			epoch: node.data.epoch
-		});
-	}
-	return displayedSamples;
-};
 var SamplesPanel_module_default = {
 	panel: "_panel_18nhs_1",
 	list: "_list_18nhs_8"
 };
 //#endregion
 //#region src/app/samples-panel/SamplesPanel.tsx
+var sampleRowId = (logFile, sampleId, epoch) => `${logFile}-${sampleId}-${epoch}`.replace(/\s+/g, "_");
+var gridDisplayedSamples = (api) => {
+	const out = [];
+	const count = api.getDisplayedRowCount();
+	for (let i = 0; i < count; i++) {
+		const node = api.getDisplayedRowAtIndex(i);
+		if (node?.data) out.push({
+			logFile: node.data.logFile,
+			sampleId: node.data.sampleId,
+			epoch: node.data.epoch
+		});
+	}
+	return out;
+};
 var SamplesPanel = () => {
 	const { samplesPath } = useSamplesRouteParams();
 	const { loadLogs } = useLogs();
@@ -165185,25 +166311,24 @@ var SamplesPanel = () => {
 	const setShowRetriedLogs = useStore((state) => state.logsActions.setShowRetriedLogs);
 	const filteredSamplesCount = useStore((state) => state.log.filteredSampleCount);
 	const setFilteredSampleCount = useStore((state) => state.logActions.setFilteredSampleCount);
+	const setDisplayedSamples = useStore((state) => state.logsActions.setDisplayedSamples);
+	const clearDisplayedSamples = useStore((state) => state.logsActions.clearDisplayedSamples);
+	const clearSelectedSample = useStore((state) => state.sampleActions.clearSelectedSample);
+	const previousSamplesPath = useStore((state) => state.logs.samplesListState.previousSamplesPath);
+	const setPreviousSamplesPath = useStore((state) => state.logsActions.setPreviousSamplesPath);
+	const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
+	const selectedSampleHandle = useStore((state) => state.log.selectedSampleHandle);
 	const gridRef = (0, import_react.useRef)(null);
 	const [showColumnSelector, setShowColumnSelector] = (0, import_react.useState)(false);
 	const columnButtonRef = (0, import_react.useRef)(null);
 	const logDetails = useStore((state) => state.logs.logDetails);
-	const { columns, setColumnVisibility } = useSampleColumns(logDetails);
-	const handleColumnVisibilityChange = (0, import_react.useCallback)((newVisibility) => {
-		if (gridRef.current?.api) {
-			const currentFilterModel = gridRef.current.api.getFilterModel() || {};
-			let filtersRemoved = false;
-			const newFilterModel = {};
-			for (const [field, filter] of Object.entries(currentFilterModel)) if (newVisibility[field] === false) filtersRemoved = true;
-			else newFilterModel[field] = filter;
-			if (filtersRemoved) gridRef.current.api.setFilterModel(newFilterModel);
-		}
-		setColumnVisibility(newVisibility);
-	}, [setColumnVisibility]);
-	const handleResetFilters = () => {
-		if (gridRef.current?.api) gridRef.current.api.setFilterModel(null);
-	};
+	const { startPolling, stopPolling } = useClientEvents();
+	(0, import_react.useEffect)(() => {
+		startPolling([]);
+		return () => {
+			stopPolling();
+		};
+	}, [startPolling, stopPolling]);
 	useFlowServerData(samplesPath || "");
 	const flowData = useStore((state) => state.logs.flow);
 	const currentDir = join(samplesPath || "", logDir);
@@ -165252,6 +166377,68 @@ var SamplesPanel = () => {
 		logDir,
 		samplesPath
 	]);
+	const allColumns = (0, import_react.useMemo)(() => buildSampleColumns({
+		viewMode: "grid",
+		multiLog: true,
+		logDetails: logDetailsInPath
+	}), [logDetailsInPath]);
+	const optionalHasData = (0, import_react.useMemo)(() => {
+		let error = false, limit = false, retries = false;
+		outer: for (const details of Object.values(logDetailsInPath)) for (const sample of details.sampleSummaries) {
+			if (sample.error) error = true;
+			if (sample.limit) limit = true;
+			if (sample.retries) retries = true;
+			if (error && limit && retries) break outer;
+		}
+		return {
+			error,
+			limit,
+			retries
+		};
+	}, [logDetailsInPath]);
+	const { columnVisibility, setColumnVisibility, gridState, setGridState } = useSampleGridState("samplesPanel", allColumns, {
+		defaultsForUnseededColumns: (0, import_react.useCallback)((col) => {
+			const id = col.colId;
+			if (id === "error") return optionalHasData.error;
+			if (id === "limit") return optionalHasData.limit;
+			if (id === "retries") return optionalHasData.retries;
+			if (id === "created") return false;
+			if (id === "sampleUuid") return false;
+			return true;
+		}, [optionalHasData]),
+		gridRef
+	});
+	const visibilityForGrid = (0, import_react.useMemo)(() => {
+		const v = {};
+		for (const col of allColumns) {
+			const key = getFieldKey(col);
+			const seeded = columnVisibility[key];
+			v[key] = seeded === void 0 ? !col.hide : seeded;
+		}
+		return v;
+	}, [allColumns, columnVisibility]);
+	const initialState = (0, import_react.useMemo)(() => {
+		if (previousSamplesPath !== void 0 && previousSamplesPath !== samplesPath) {
+			const result = { ...gridState };
+			delete result?.filter;
+			return result;
+		}
+		return gridState;
+	}, [
+		previousSamplesPath,
+		samplesPath,
+		gridState
+	]);
+	(0, import_react.useEffect)(() => {
+		if (samplesPath === previousSamplesPath) return;
+		if (previousSamplesPath !== void 0) clearDisplayedSamples();
+		setPreviousSamplesPath(samplesPath);
+	}, [
+		samplesPath,
+		previousSamplesPath,
+		clearDisplayedSamples,
+		setPreviousSamplesPath
+	]);
 	const [sampleRows, hasRetriedLogs] = (0, import_react.useMemo)(() => {
 		const allRows = [];
 		let displayIndex = 1;
@@ -165262,45 +166449,56 @@ var SamplesPanel = () => {
 			return acc;
 		}, {});
 		Object.entries(logDetailsInPath).forEach(([logFile, logDetail]) => {
-			logDetail.sampleSummaries.forEach((sampleSummary) => {
-				let tokens;
-				if (sampleSummary.model_usage) {
-					const usages = Object.values(sampleSummary.model_usage);
-					if (usages.length > 0) {
-						tokens = 0;
-						for (const usage of usages) tokens += usage.total_tokens ?? 0;
-					}
-				}
+			logDetail.sampleSummaries.forEach((sample) => {
+				const tokens = sample.model_usage ? Object.values(sample.model_usage).reduce((sum, u) => sum + (u.total_tokens ?? 0), 0) : void 0;
 				const row = {
 					logFile,
+					sampleId: sample.id,
+					epoch: sample.epoch,
+					data: sample,
+					displayIndex: displayIndex++,
 					created: logDetail.eval.created,
 					task: logDetail.eval.task || "",
 					model: logDetail.eval.model || "",
 					status: logDetail.status,
-					sampleId: sampleSummary.id,
-					epoch: sampleSummary.epoch,
-					input: inputString(sampleSummary.input).join("\n"),
-					target: Array.isArray(sampleSummary.target) ? sampleSummary.target.join(", ") : sampleSummary.target,
-					error: sampleSummary.error,
-					limit: sampleSummary.limit,
-					retries: sampleSummary.retries,
-					completed: sampleSummary.completed || false,
+					input: inputString(sample.input).join("\n"),
+					target: Array.isArray(sample.target) ? sample.target.join(", ") : sample.target,
+					error: sample.error,
+					limit: sample.limit,
+					retries: sample.retries,
+					completed: sample.completed ?? false,
 					tokens,
-					duration: sampleSummary.total_time ?? void 0,
-					displayIndex: displayIndex++
+					duration: sample.total_time ?? void 0
 				};
-				if (sampleSummary.scores) Object.entries(sampleSummary.scores).forEach(([scoreName, score]) => {
-					row[`score_${scoreName}`] = score.value;
-				});
+				if (sample.scores) for (const [scoreName, score] of Object.entries(sample.scores)) row[`${SCORE_FIELD_RAW_PREFIX}${scoreName}`] = score.value;
 				allRows.push(row);
 			});
 		});
 		const _sampleRows = allRows.filter((row) => row.logFile in logInCurrentDirByName);
 		return [_sampleRows, _sampleRows.length < allRows.length || anyLogInCurrentDirCouldBeSkipped];
 	}, [logDetailsInPath, currentDirLogFiles]);
-	const filterModel = gridRef.current?.api?.getFilterModel() || {};
-	const filteredFields = Object.keys(filterModel);
+	const { navigateToSampleDetail } = useSamplesGridNavigation();
+	const handleRowOpen = (0, import_react.useCallback)((row, opts) => {
+		navigateToSampleDetail(row.logFile, row.sampleId, row.epoch, opts.newWindow);
+	}, [navigateToSampleDetail]);
+	const [filteredFields, setFilteredFields] = (0, import_react.useState)([]);
 	const hasFilter = filteredFields.length > 0;
+	const updateDisplayedFromApi = (0, import_react.useCallback)((api) => {
+		const displayed = gridDisplayedSamples(api);
+		setFilteredSampleCount(displayed.length);
+		setDisplayedSamples(displayed);
+		setFilteredFields(Object.keys(api.getFilterModel() ?? {}));
+	}, [setFilteredSampleCount, setDisplayedSamples]);
+	const handleFirstDataRendered = (0, import_react.useCallback)((api) => {
+		updateDisplayedFromApi(api);
+		clearSelectedSample();
+	}, [updateDisplayedFromApi, clearSelectedSample]);
+	const getRowId = (0, import_react.useCallback)((params) => sampleRowId(params.data.logFile, params.data.sampleId, params.data.epoch), []);
+	const selectedRowId = selectedSampleHandle && selectedLogFile ? sampleRowId(selectedLogFile, selectedSampleHandle.id, selectedSampleHandle.epoch) : void 0;
+	const isEmptyAndLoading = sampleRows.length === 0 && (loading > 0 || syncing);
+	const handleResetFilters = () => {
+		if (gridRef.current?.api) gridRef.current.api.setFilterModel(null);
+	};
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: clsx(SamplesPanel_module_default.panel),
 		children: [
@@ -165317,6 +166515,7 @@ var SamplesPanel = () => {
 						label: "Show Retried Logs",
 						icon: showRetriedLogs ? ApplicationIcons.toggle.on : ApplicationIcons.toggle.off,
 						latched: showRetriedLogs,
+						subtle: true,
 						onClick: () => {
 							setShowRetriedLogs(!showRetriedLogs);
 							setTimeout(() => {
@@ -165326,9 +166525,10 @@ var SamplesPanel = () => {
 					}, "show-retried"),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(NavbarButton, {
 						ref: columnButtonRef,
-						label: "Choose Columns",
-						icon: ApplicationIcons.checkbox.checked,
+						label: "Columns",
+						icon: ApplicationIcons.columns,
 						dropdown: true,
+						subtle: true,
 						onClick: (e) => {
 							e.stopPropagation();
 							setShowColumnSelector((prev) => !prev);
@@ -165341,19 +166541,39 @@ var SamplesPanel = () => {
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ColumnSelectorPopover, {
 				showing: showColumnSelector,
 				setShowing: setShowColumnSelector,
-				columns,
-				onVisibilityChange: handleColumnVisibilityChange,
+				columns: allColumns,
+				visibility: visibilityForGrid,
+				onVisibilityChange: setColumnVisibility,
 				positionEl: columnButtonRef.current,
-				filteredFields
+				filteredFields,
+				scoresHeading: "Scores"
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ActivityBar, { animating: !!loading }),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: clsx(SamplesPanel_module_default.list, "text-size-smaller"),
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SamplesGrid, {
-					items: sampleRows,
-					samplesPath,
+					rowData: sampleRows,
+					columnDefs: allColumns,
+					columnVisibility: visibilityForGrid,
+					defaultColDef: {
+						sortable: true,
+						filter: true,
+						resizable: true
+					},
+					viewMode: "grid",
 					gridRef,
-					columns
+					getRowId,
+					selectedRowId,
+					onRowOpen: handleRowOpen,
+					initialState,
+					onStateUpdated: setGridState,
+					onFilterChanged: updateDisplayedFromApi,
+					onFirstDataRendered: handleFirstDataRendered,
+					loading: isEmptyAndLoading,
+					autoSizeStrategy: {
+						type: "fitCellContents",
+						scaleUpToFitGridWidth: true
+					}
 				})
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LogListFooter, {
