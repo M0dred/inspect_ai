@@ -65071,6 +65071,8 @@ function createSamplePolling(store) {
 		attachments: {},
 		messagePool: [],
 		callPool: [],
+		messagePoolEntryIds: /* @__PURE__ */ new Set(),
+		callPoolEntryIds: /* @__PURE__ */ new Set(),
 		events: []
 	};
 	const startPolling = (logFile, summary) => {
@@ -65199,6 +65201,8 @@ var resetPollingState = (state) => {
 	state.attachments = {};
 	state.messagePool = [];
 	state.callPool = [];
+	state.messagePoolEntryIds.clear();
+	state.callPoolEntryIds.clear();
 	state.events = [];
 };
 function processAttachments(sampleData, pollingState) {
@@ -65210,15 +65214,19 @@ function processAttachments(sampleData, pollingState) {
 function processMessagePool(sampleData, pollingState) {
 	if (!sampleData.message_pool.length) return;
 	for (const entry of sampleData.message_pool) {
-		pollingState.messagePool.push(JSON.parse(entry.data));
 		pollingState.messagePoolId = Math.max(pollingState.messagePoolId, entry.id);
+		if (pollingState.messagePoolEntryIds.has(entry.id)) continue;
+		pollingState.messagePoolEntryIds.add(entry.id);
+		pollingState.messagePool.push(JSON.parse(entry.data));
 	}
 }
 function processCallPool(sampleData, pollingState) {
 	if (!sampleData.call_pool.length) return;
 	for (const entry of sampleData.call_pool) {
-		pollingState.callPool.push(JSON.parse(entry.data));
 		pollingState.callPoolId = Math.max(pollingState.callPoolId, entry.id);
+		if (pollingState.callPoolEntryIds.has(entry.id)) continue;
+		pollingState.callPoolEntryIds.add(entry.id);
+		pollingState.callPool.push(JSON.parse(entry.data));
 	}
 }
 function processEvents(sampleData, pollingState, api, log_file) {
@@ -69840,7 +69848,8 @@ var SAMPLE_VARIABLES = [
 var SAMPLE_FUNCTIONS = [
 	["input_contains", "Checks if input contains a regular expression"],
 	["target_contains", "Checks if target contains a regular expression"],
-	["error_contains", "Checks if error contains a regular expression"]
+	["error_contains", "Checks if error contains a regular expression"],
+	["is_nan", "Checks if a numeric value is NaN (e.g. is_nan(score))"]
 ];
 //#endregion
 //#region src/app/samples/sample-tools/filters.ts
@@ -69998,10 +70007,12 @@ var filterExpression = (evalDescriptor, sample, filterValue) => {
 		const errorContains = (regex) => {
 			return !!sample.error?.match(new RegExp(regex, "i"));
 		};
+		const isNan = (value) => typeof value === "number" && Number.isNaN(value);
 		const extraFunctions = {
 			input_contains: inputContains,
 			target_contains: targetContains,
-			error_contains: errorContains
+			error_contains: errorContains,
+			is_nan: isNan
 		};
 		const mySampleVariables = sampleVariables(sample);
 		const vars = {
@@ -70035,7 +70046,8 @@ var filterExpression = (evalDescriptor, sample, filterValue) => {
 					matches: false,
 					error: void 0
 				};
-				const match = new RegExp(`\\b${propertyName}\\b`).exec(filterValue);
+				const escaped = propertyName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+				const match = new RegExp(`\\b${escaped}\\b`).exec(filterValue);
 				if (match) return {
 					matches: false,
 					error: {
@@ -71533,13 +71545,25 @@ function createFolderFirstComparator(compareFn) {
 		return compareFn(valueA, valueB, itemA, itemB);
 	};
 }
+var isMissingNumber = (v) => v === null || v === void 0 || v === "" || typeof v === "number" && Number.isNaN(v);
 /**
 * Common comparison functions for use with createFolderFirstComparator
 */
 var comparators = {
-	/** Compare values as numbers */
-	number: (a, b) => {
-		return Number(a || 0) - Number(b || 0);
+	/**
+	* Compare values as numbers. NaN / null / undefined / "" are pinned to the
+	* bottom regardless of sort direction — the sentinel is flipped on
+	* `isDescending` so ag-grid's reversal still leaves missing rows last.
+	* A non-NaN-aware comparator returns 0 for any pair involving NaN, which
+	* violates transitivity and scrambles the non-NaN rows too.
+	*/
+	number: (a, b, _nodeA, _nodeB, isDescending) => {
+		const aMissing = isMissingNumber(a);
+		const bMissing = isMissingNumber(b);
+		if (aMissing && bMissing) return 0;
+		if (aMissing) return isDescending ? -1 : 1;
+		if (bMissing) return isDescending ? 1 : -1;
+		return Number(a) - Number(b);
 	},
 	/** Compare values as dates */
 	date: (a, b) => {
@@ -163500,6 +163524,7 @@ Filter samples by:
   • Epoch: e.g. "epoch == 1" or "epoch <= 2"
   • Samples with errors: has_error
   • Input, target and error regex search: input_contains, target_contains, error_contains
+  • Samples with NaN scores: is_nan, e.g. "is_nan(score)" or "not is_nan(score)"
   • Samples that have been retried: has_retries
   • Sample Id: e.g. "id == 'sample123'"
   • Sample metadata: e.g. "metadata.key == 'value'"
@@ -164134,6 +164159,7 @@ function buildScoreColumns(ctx) {
 				sortable: true,
 				filter: "agNumberColumnFilter",
 				resizable: true,
+				comparator: comparators.number,
 				valueGetter: (params) => {
 					const data = params.data?.data;
 					if (!data) return void 0;
@@ -166570,10 +166596,7 @@ var SamplesPanel = () => {
 					onFilterChanged: updateDisplayedFromApi,
 					onFirstDataRendered: handleFirstDataRendered,
 					loading: isEmptyAndLoading,
-					autoSizeStrategy: {
-						type: "fitCellContents",
-						scaleUpToFitGridWidth: true
-					}
+					autoSizeStrategy: { type: "fitGridWidth" }
 				})
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LogListFooter, {
