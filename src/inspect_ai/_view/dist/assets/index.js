@@ -10153,7 +10153,7 @@ function isValid(value) {
 //#endregion
 //#region ../../node_modules/.pnpm/arquero@8.0.3/node_modules/arquero/src/op/functions/array.js
 var array_exports = /* @__PURE__ */ __exportAll({
-	compact: () => compact,
+	compact: () => compact$1,
 	concat: () => concat,
 	includes: () => includes,
 	indexof: () => indexof,
@@ -10172,7 +10172,7 @@ var isSeq = (seq) => isArrayType(seq) || isString$2(seq);
 * @param {T[]} array The input array.
 * @return {T[]} A compacted array.
 */
-function compact(array) {
+function compact$1(array) {
 	return isArrayType(array) ? array.filter((v) => isValid(v)) : array;
 }
 /**
@@ -28636,10 +28636,10 @@ var AnsiDisplay_module_default = {
 	"ansi-display-run-blink": "_ansi-display-run-blink_1749m_1"
 };
 var ToolButton_module_default = {
-	toolButton: "_toolButton_wcmr6_1",
-	marginRight: "_marginRight_wcmr6_6",
-	latched: "_latched_wcmr6_18",
-	subtle: "_subtle_wcmr6_25"
+	toolButton: "_toolButton_dd6ny_1",
+	marginRight: "_marginRight_dd6ny_6",
+	latched: "_latched_dd6ny_18",
+	subtle: "_subtle_dd6ny_25"
 };
 //#endregion
 //#region ../../packages/react/src/components/ToolButton.tsx
@@ -28970,7 +28970,7 @@ function oklabToHex(lab) {
 	return srgbToHex(oklabToSrgb(oklchToOklab(best)));
 }
 function oklabToSrgb(lab) {
-	const L = clamp$2(lab[0], 0, 1);
+	const L = clamp$3(lab[0], 0, 1);
 	const a = lab[1];
 	const b = lab[2];
 	const l_ = L + .3963377774 * a + .2158037573 * b;
@@ -29013,7 +29013,7 @@ function hexToSrgb(hex) {
 }
 function srgbToHex(rgb) {
 	const toHex = (value) => {
-		return Math.round(clamp$2(value, 0, 1) * 255).toString(16).padStart(2, "0");
+		return Math.round(clamp$3(value, 0, 1) * 255).toString(16).padStart(2, "0");
 	};
 	return `#${toHex(rgb[0])}${toHex(rgb[1])}${toHex(rgb[2])}`;
 }
@@ -29029,7 +29029,7 @@ function isSrgbInGamut(_ref3) {
 	let [r, g, b] = _ref3;
 	return r >= 0 && r <= 1 && g >= 0 && g <= 1 && b >= 0 && b <= 1;
 }
-function clamp$2(value, min, max) {
+function clamp$3(value, min, max) {
 	return Math.max(min, Math.min(max, value));
 }
 var DummyLogger = class {
@@ -30567,7 +30567,7 @@ function adaptiveBufferTimeProvider() {
 		}
 		let newBufferLevel;
 		if (smoothedIdealBufferTime <= minBufferTime) newBufferLevel = 0;
-		else newBufferLevel = clamp$1(Math.ceil(smoothedIdealBufferTime / bufferLevelStep), 1, maxBufferLevel);
+		else newBufferLevel = clamp$2(Math.ceil(smoothedIdealBufferTime / bufferLevelStep), 1, maxBufferLevel);
 		if (latency > bufferTime) logger.debug("buffer underrun", {
 			latency,
 			bufferTime
@@ -30607,7 +30607,7 @@ function adaptiveBufferTimeProvider() {
 		return bufferTime;
 	};
 }
-function clamp$1(x, lo, hi) {
+function clamp$2(x, lo, hi) {
 	return Math.min(hi, Math.max(lo, x));
 }
 var ONE_SEC_IN_USEC = 1e6;
@@ -49602,7 +49602,7 @@ function isTerminatorChar(ch) {
 		default: return false;
 	}
 }
-function text$1(state, silent) {
+function text$2(state, silent) {
 	let pos = state.pos;
 	while (pos < state.posMax && !isTerminatorChar(state.src.charCodeAt(pos))) pos++;
 	if (pos === state.pos) return false;
@@ -50257,7 +50257,7 @@ function fragments_join(state) {
 * Tokenizes paragraph content.
 **/
 var _rules = [
-	["text", text$1],
+	["text", text$2],
 	["linkify", linkify],
 	["newline", newline],
 	["escape", escape],
@@ -52164,14 +52164,14 @@ var fromEntries = function fromEntries(entries) {
 */
 var useIsomorphicLayoutEffect = typeof window !== "undefined" && window.document && window.document.createElement ? import_react.useLayoutEffect : import_react.useEffect;
 var bottom = "bottom";
-var right$3 = "right";
-var left$3 = "left";
+var right$4 = "right";
+var left$4 = "left";
 var auto = "auto";
 var basePlacements = [
 	"top",
 	bottom,
-	right$3,
-	left$3
+	right$4,
+	left$4
 ];
 var start = "start";
 var clippingParents = "clippingParents";
@@ -52470,8 +52470,8 @@ function arrow(_ref) {
 	if (!arrowElement || !popperOffsets) return;
 	var paddingObject = toPaddingObject(options.padding, state);
 	var arrowRect = getLayoutRect(arrowElement);
-	var minProp = axis === "y" ? "top" : left$3;
-	var maxProp = axis === "y" ? bottom : right$3;
+	var minProp = axis === "y" ? "top" : left$4;
+	var maxProp = axis === "y" ? bottom : right$4;
 	var endDiff = state.rects.reference[len] + state.rects.reference[axis] - popperOffsets[axis] - state.rects.popper[len];
 	var startDiff = popperOffsets[axis] - state.rects.reference[axis];
 	var arrowOffsetParent = getOffsetParent(arrowElement);
@@ -52540,7 +52540,7 @@ function mapToStyles(_ref2) {
 	y = _ref3.y;
 	var hasX = offsets.hasOwnProperty("x");
 	var hasY = offsets.hasOwnProperty("y");
-	var sideX = left$3;
+	var sideX = left$4;
 	var sideY = "top";
 	var win = window;
 	if (adaptive) {
@@ -52562,7 +52562,7 @@ function mapToStyles(_ref2) {
 			y *= gpuAcceleration ? 1 : -1;
 		}
 		if (placement === "left" || (placement === "top" || placement === "bottom") && variation === "end") {
-			sideX = right$3;
+			sideX = right$4;
 			var offsetX = isFixed && offsetParent === win && win.visualViewport ? win.visualViewport.width : offsetParent[widthProp];
 			x -= offsetX - popperRect.width;
 			x *= gpuAcceleration ? 1 : -1;
@@ -52830,13 +52830,13 @@ function computeOffsets(_ref) {
 				y: reference.y + reference.height
 			};
 			break;
-		case right$3:
+		case right$4:
 			offsets = {
 				x: reference.x + reference.width,
 				y: commonY
 			};
 			break;
-		case left$3:
+		case left$4:
 			offsets = {
 				x: reference.x - element.width,
 				y: commonY
@@ -52970,7 +52970,7 @@ function flip(_ref) {
 			altBoundary,
 			padding
 		});
-		var mainVariationSide = isVertical ? isStartVariation ? right$3 : left$3 : isStartVariation ? bottom : "top";
+		var mainVariationSide = isVertical ? isStartVariation ? right$4 : left$4 : isStartVariation ? bottom : "top";
 		if (referenceRect[len] > popperRect[len]) mainVariationSide = getOppositePlacement(mainVariationSide);
 		var altVariationSide = getOppositePlacement(mainVariationSide);
 		var checks = [];
@@ -53032,9 +53032,9 @@ function getSideOffsets(overflow, rect, preventedOffsets) {
 function isAnySideFullyClipped(overflow) {
 	return [
 		"top",
-		right$3,
+		right$4,
 		bottom,
-		left$3
+		left$4
 	].some(function(side) {
 		return overflow[side] >= 0;
 	});
@@ -53163,8 +53163,8 @@ function preventOverflow(_ref) {
 	if (!popperOffsets) return;
 	if (checkMainAxis) {
 		var _offsetModifierState$;
-		var mainSide = mainAxis === "y" ? "top" : left$3;
-		var altSide = mainAxis === "y" ? bottom : right$3;
+		var mainSide = mainAxis === "y" ? "top" : left$4;
+		var altSide = mainAxis === "y" ? bottom : right$4;
 		var len = mainAxis === "y" ? "height" : "width";
 		var offset = popperOffsets[mainAxis];
 		var min$1 = offset + overflow[mainSide];
@@ -53194,13 +53194,13 @@ function preventOverflow(_ref) {
 	}
 	if (checkAltAxis) {
 		var _offsetModifierState$2;
-		var _mainSide = mainAxis === "x" ? "top" : left$3;
-		var _altSide = mainAxis === "x" ? bottom : right$3;
+		var _mainSide = mainAxis === "x" ? "top" : left$4;
+		var _altSide = mainAxis === "x" ? bottom : right$4;
 		var _offset = popperOffsets[altAxis];
 		var _len = altAxis === "y" ? "height" : "width";
 		var _min = _offset + overflow[_mainSide];
 		var _max = _offset - overflow[_altSide];
-		var isOriginSide = ["top", left$3].indexOf(basePlacement) !== -1;
+		var isOriginSide = ["top", left$4].indexOf(basePlacement) !== -1;
 		var _offsetModifierValue = (_offsetModifierState$2 = offsetModifierState == null ? void 0 : offsetModifierState[altAxis]) != null ? _offsetModifierState$2 : 0;
 		var _tetherMin = isOriginSide ? _min : _offset - referenceRect[_len] - popperRect[_len] - _offsetModifierValue + normalizedTetherOffsetValue.altAxis;
 		var _tetherMax = isOriginSide ? _offset + referenceRect[_len] + popperRect[_len] - _offsetModifierValue - normalizedTetherOffsetValue.altAxis : _max;
@@ -54084,13 +54084,14 @@ var PulsingDots = ({ text = "Loading...", dotsCount = 3, subtle = true, size = "
 	});
 };
 var SegmentedControl_module_default = {
-	rootControl: "_rootControl_19z32_1",
-	segment: "_segment_19z32_10",
-	selected: "_selected_19z32_10"
+	rootControl: "_rootControl_13qph_1",
+	segment: "_segment_13qph_10",
+	selected: "_selected_13qph_10",
+	compact: "_compact_13qph_31"
 };
 //#endregion
 //#region ../../packages/react/src/components/SegmentedControl.tsx
-var SegmentedControl = ({ id, segments, onSegmentChange, selectedId: selectedIdProp }) => {
+var SegmentedControl = ({ id, segments, onSegmentChange, selectedId: selectedIdProp, compact = false }) => {
 	const handleSegmentClick = (0, import_react.useCallback)((segmentId, index) => {
 		onSegmentChange(segmentId, index);
 	}, [onSegmentChange]);
@@ -54099,10 +54100,12 @@ var SegmentedControl = ({ id, segments, onSegmentChange, selectedId: selectedIdP
 		id,
 		className: clsx(SegmentedControl_module_default.rootControl),
 		children: segments.map((segment, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
-			className: clsx(SegmentedControl_module_default.segment, selectedId === segment.id && SegmentedControl_module_default.selected, "text-size-smallest", selectedId === segment.id ? void 0 : "text-style-secondary"),
+			className: clsx(SegmentedControl_module_default.segment, selectedId === segment.id && SegmentedControl_module_default.selected, compact && SegmentedControl_module_default.compact, "text-size-smallest", selectedId === segment.id ? void 0 : "text-style-secondary"),
 			onClick: () => handleSegmentClick(segment.id, index),
 			"aria-pressed": selectedId === segment.id,
-			children: [segment.icon && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: segment.icon }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: segment.label })]
+			"aria-label": compact ? segment.label : void 0,
+			title: compact ? segment.label : void 0,
+			children: [segment.icon && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: segment.icon }), !compact && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: segment.label })]
 		}, segment.id))
 	});
 };
@@ -54876,12 +54879,12 @@ var TextInput = (0, import_react.forwardRef)(({ value, onChange, onFocus, icon, 
 });
 TextInput.displayName = "TextInput";
 var ToolDropdownButton_module_default = {
-	toolButton: "_toolButton_1q996_1",
-	bodyColor: "_bodyColor_1q996_5",
-	chevron: "_chevron_1q996_17",
-	backdrop: "_backdrop_1q996_31",
-	dropdownMenu: "_dropdownMenu_1q996_41",
-	dropdownItem: "_dropdownItem_1q996_52"
+	toolButton: "_toolButton_1swkv_1",
+	bodyColor: "_bodyColor_1swkv_5",
+	chevron: "_chevron_1swkv_17",
+	backdrop: "_backdrop_1swkv_31",
+	dropdownMenu: "_dropdownMenu_1swkv_41",
+	dropdownItem: "_dropdownItem_1swkv_52"
 };
 //#endregion
 //#region ../../packages/react/src/components/ToolDropdownButton.tsx
@@ -70124,16 +70127,6 @@ var getAvailableScorers = (_log, sampleSummaries) => {
 	const sampleScorers = getScorersFromSamples(sampleSummaries);
 	if (sampleScorers.length > 0) return sampleScorers;
 };
-/**
-* Gets the default scorer to use, preferring the first scorer from results
-* or falling back to the first scorer from samples
-*/
-var getDefaultScorer = (log, sampleSummaries) => {
-	if (sampleSummaries.length === 0) return;
-	const allScorers = getAvailableScorers(log, sampleSummaries);
-	if (allScorers) return allScorers[0];
-	else return;
-};
 //#endregion
 //#region src/state/utils.ts
 var mergeSampleSummaries = (logSamples, pendingSamples) => {
@@ -70148,6 +70141,73 @@ var mergeSampleSummaries = (logSamples, pendingSamples) => {
 };
 //#endregion
 //#region src/state/hooks.ts
+var kScorePanelViewBag = "score-panel-view";
+var kScorePanelViewKey = "view";
+var kScorePanelSortBag = "score-panel-sort";
+var kScorePanelSortKey = "sort";
+var kDefaultScorePanelSort = {
+	column: null,
+	dir: "asc"
+};
+/**
+* Read / write the user's preferred V2 score panel view (chips vs grid).
+* Persisted globally via the app property bag so the choice carries
+* across samples. Returns the *stored* value; callers resolve their
+* own default (typically `chips` for ≤ 6 scores, `grid` for 7+).
+*/
+var useScorePanelView = () => {
+	const stored = useStore((state) => state.app.propertyBags[kScorePanelViewBag]?.[kScorePanelViewKey]);
+	const setPropertyValue = useStore((state) => state.appActions.setPropertyValue);
+	return [stored, (0, import_react.useCallback)((view) => {
+		setPropertyValue(kScorePanelViewBag, kScorePanelViewKey, view);
+	}, [setPropertyValue])];
+};
+/**
+* Resolve the stored / eval-supplied / default view given the score count.
+* Priority: user override (stored) > eval default > built-in count rule.
+*/
+var resolveScorePanelView = (stored, evalDefault, count) => stored ?? evalDefault ?? (count <= 6 ? "chips" : "grid");
+/**
+* Read / write the user's V2 score panel sort. Persisted globally via
+* the app property bag (mirrors `useScorePanelView`) so the sort
+* carries across samples in the same session. Returns the *stored*
+* value; callers resolve their own default via `resolveScorePanelSort`.
+*/
+var useScorePanelSort = () => {
+	const stored = useStore((state) => state.app.propertyBags[kScorePanelSortBag]?.[kScorePanelSortKey]);
+	const setPropertyValue = useStore((state) => state.appActions.setPropertyValue);
+	return [stored, (0, import_react.useCallback)((sort) => {
+		setPropertyValue(kScorePanelSortBag, kScorePanelSortKey, sort);
+	}, [setPropertyValue])];
+};
+/**
+* Resolve the stored / eval-supplied / default sort.
+* Priority: user override (stored) > eval default > unsorted.
+*/
+var resolveScorePanelSort = (stored, evalDefault) => stored ?? evalDefault ?? kDefaultScorePanelSort;
+/**
+* Read the eval-author-declared default score-panel view from
+* `Task(viewer=ViewerConfig(score_panel_view=ScorePanelView(view=...)))`.
+* Returns a primitive so Zustand's reference equality is stable.
+*/
+var useEvalScorePanelView = () => useStore((state) => state.log.selectedLogDetails?.eval.viewer?.score_panel_view?.view ?? void 0);
+/**
+* Read the eval-author-declared default score-panel sort. The raw
+* stored object reference is stable across renders (it lives on
+* `selectedLogDetails`); we normalize the nullable fields inside a
+* `useMemo` keyed on that reference to avoid feeding a fresh object
+* back into Zustand on every render.
+*/
+var useEvalScorePanelSort = () => {
+	const stored = useStore((state) => state.log.selectedLogDetails?.eval.viewer?.score_panel_view?.sort);
+	return (0, import_react.useMemo)(() => {
+		if (!stored) return void 0;
+		return {
+			column: stored.column ?? null,
+			dir: stored.dir ?? "asc"
+		};
+	}, [stored]);
+};
 var log$3 = createLogger("hooks");
 var useEvalSpec = () => {
 	return useStore((state) => state.log.selectedLogDetails)?.eval;
@@ -70191,10 +70251,7 @@ var useSelectedScores = () => {
 	const selected = useStore((state) => state.log.selectedScores);
 	return (0, import_react.useMemo)(() => {
 		if (selected !== void 0) return selected;
-		else if (selectedLogDetails) {
-			const defaultScorer = getDefaultScorer(selectedLogDetails, sampleSummaries);
-			if (defaultScorer) return [defaultScorer];
-		}
+		if (selectedLogDetails) return getAvailableScorers(selectedLogDetails, sampleSummaries) ?? [];
 		return [];
 	}, [
 		selectedLogDetails,
@@ -77719,7 +77776,7 @@ ${css}`;
 var kebabCase = (str) => str.replace(/[A-Z]/g, (m) => `-${m}`).toLowerCase();
 var paramToVariableName = (paramName) => `--ag-${kebabCase(paramName)}`;
 var paramToVariableExpression = (paramName) => `var(${paramToVariableName(paramName)})`;
-var clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+var clamp$1 = (value, min, max) => Math.max(min, Math.min(max, value));
 var memoize = (fn) => {
 	const values = /* @__PURE__ */ new Map();
 	return (a) => {
@@ -77855,7 +77912,7 @@ var colorValueToCss = (value) => {
 	if (value && "ref" in value) {
 		const colorExpr = paramToVariableExpression(value.ref);
 		if (value.mix == null) return colorExpr;
-		return `color-mix(in srgb, ${value.onto ? paramToVariableExpression(value.onto) : "transparent"}, ${colorExpr} ${clamp(value.mix * 100, 0, 100)}%)`;
+		return `color-mix(in srgb, ${value.onto ? paramToVariableExpression(value.onto) : "transparent"}, ${colorExpr} ${clamp$1(value.mix * 100, 0, 100)}%)`;
 	}
 	return false;
 };
@@ -119244,16 +119301,16 @@ var createGridKeyboardHandler = ({ gridRef, onOpenRow, pageJump = 10 }) => {
 	};
 };
 var SamplesGrid_module_default = {
-	gridWrapper: "_gridWrapper_egqgb_1",
-	gridContainer: "_gridContainer_egqgb_7",
-	gridChrome: "_gridChrome_egqgb_18",
-	listMode: "_listMode_egqgb_50",
-	gridMode: "_gridMode_egqgb_58",
-	cell: "_cell_egqgb_63",
-	wrapAnywhere: "_wrapAnywhere_egqgb_67",
-	noLeft: "_noLeft_egqgb_71",
-	score: "_score_egqgb_75",
-	centered: "_centered_egqgb_82"
+	gridWrapper: "_gridWrapper_1ljdd_1",
+	gridContainer: "_gridContainer_1ljdd_7",
+	gridChrome: "_gridChrome_1ljdd_18",
+	listMode: "_listMode_1ljdd_61",
+	gridMode: "_gridMode_1ljdd_69",
+	cell: "_cell_1ljdd_74",
+	wrapAnywhere: "_wrapAnywhere_1ljdd_78",
+	noLeft: "_noLeft_1ljdd_82",
+	score: "_score_1ljdd_86",
+	centered: "_centered_1ljdd_93"
 };
 //#endregion
 //#region src/app/shared/useApplyColumnVisibility.ts
@@ -119600,6 +119657,7 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 				ref: gridRef,
 				rowData: data,
 				animateRows: false,
+				suppressColumnMoveAnimation: true,
 				columnDefs: columns,
 				maintainColumnOrder: true,
 				defaultColDef: {
@@ -129524,24 +129582,25 @@ var useEventNodes = (events, running, sourceSpans) => {
 	};
 };
 var TranscriptLayout_module_default = {
-	root: "_root_130zy_1",
-	container: "_container_130zy_9",
-	outlineCollapsed: "_outlineCollapsed_130zy_24",
-	noOutline: "_noOutline_130zy_28",
-	rightPaneCollapsed: "_rightPaneCollapsed_130zy_32",
-	noRightPane: "_noRightPane_130zy_44",
-	outline: "_outline_130zy_24",
-	outlineToggle: "_outlineToggle_130zy_73",
-	separator: "_separator_130zy_87",
-	rightSeparator: "_rightSeparator_130zy_91",
-	rightPane: "_rightPane_130zy_32",
-	rightPaneResizer: "_rightPaneResizer_130zy_110",
-	rightPaneToggle: "_rightPaneToggle_130zy_129",
-	eventsList: "_eventsList_130zy_138",
-	sidebarHeader: "_sidebarHeader_130zy_142",
-	sidebarHeaderIcon: "_sidebarHeaderIcon_130zy_150",
-	sidebarHeaderTitle: "_sidebarHeaderTitle_130zy_155",
-	sidebarHeaderClose: "_sidebarHeaderClose_130zy_166"
+	root: "_root_1mbr3_1",
+	container: "_container_1mbr3_9",
+	outlineCollapsed: "_outlineCollapsed_1mbr3_24",
+	noOutline: "_noOutline_1mbr3_28",
+	rightPaneCollapsed: "_rightPaneCollapsed_1mbr3_32",
+	noRightPane: "_noRightPane_1mbr3_44",
+	outline: "_outline_1mbr3_24",
+	outlineToggle: "_outlineToggle_1mbr3_73",
+	separator: "_separator_1mbr3_87",
+	rightSeparator: "_rightSeparator_1mbr3_91",
+	rightPane: "_rightPane_1mbr3_32",
+	rightPaneResizer: "_rightPaneResizer_1mbr3_110",
+	rightPaneToggle: "_rightPaneToggle_1mbr3_129",
+	eventsList: "_eventsList_1mbr3_138",
+	sidebarHeader: "_sidebarHeader_1mbr3_142",
+	sidebarHeaderIcon: "_sidebarHeaderIcon_1mbr3_150",
+	sidebarHeaderTitle: "_sidebarHeaderTitle_1mbr3_155",
+	sidebarHeaderCloseAnchor: "_sidebarHeaderCloseAnchor_1mbr3_171",
+	sidebarHeaderClose: "_sidebarHeaderClose_1mbr3_171"
 };
 var ApprovalEventView_module_default = {
 	headline: "_headline_1l22a_1",
@@ -131863,13 +131922,16 @@ var TranscriptLayout = ({ events, running = false, scrollRef, offsetTop = 0, tim
 									children: outline.title
 								})
 							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-								type: "button",
-								className: TranscriptLayout_module_default.sidebarHeaderClose,
-								onClick: () => outline.onCollapsedChange(true),
-								"aria-label": "Hide outline",
-								title: outline.toggleTitle ?? "Hide outline",
-								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: "bi bi-x" })
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: TranscriptLayout_module_default.sidebarHeaderCloseAnchor,
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+									type: "button",
+									className: TranscriptLayout_module_default.sidebarHeaderClose,
+									onClick: () => outline.onCollapsedChange(true),
+									"aria-label": "Hide outline",
+									title: outline.toggleTitle ?? "Hide outline",
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: "bi bi-x" })
+								})
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptOutline, {
 								eventNodes,
@@ -131941,13 +132003,16 @@ var TranscriptLayout = ({ events, running = false, scrollRef, offsetTop = 0, tim
 									children: rightPane.title
 								})
 							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-								type: "button",
-								className: TranscriptLayout_module_default.sidebarHeaderClose,
-								onClick: () => rightPane.onCollapsedChange(true),
-								"aria-label": `Hide ${rightPane.label ?? "pane"}`,
-								title: rightPane.toggleTitle ?? `Hide ${rightPane.label ?? "pane"}`,
-								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: "bi bi-x" })
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: TranscriptLayout_module_default.sidebarHeaderCloseAnchor,
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+									type: "button",
+									className: TranscriptLayout_module_default.sidebarHeaderClose,
+									onClick: () => rightPane.onCollapsedChange(true),
+									"aria-label": `Hide ${rightPane.label ?? "pane"}`,
+									title: rightPane.toggleTitle ?? `Hide ${rightPane.label ?? "pane"}`,
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: "bi bi-x" })
+								})
 							}),
 							rightPane.content
 						] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
@@ -131980,17 +132045,17 @@ var messagesFromEvents = (runningEvents) => {
 	else return [];
 };
 var SampleDisplay_module_default = {
-	tabControls: "_tabControls_1si8b_1",
-	fullWidth: "_fullWidth_1si8b_10",
-	metadataPanel: "_metadataPanel_1si8b_14",
-	padded: "_padded_1si8b_20",
-	error: "_error_1si8b_25",
-	ansi: "_ansi_1si8b_29",
-	noTop: "_noTop_1si8b_33",
-	timePanel: "_timePanel_1si8b_37",
-	chat: "_chat_1si8b_45",
-	overflowVisible: "_overflowVisible_1si8b_53",
-	retriedErrors: "_retriedErrors_1si8b_57"
+	tabControls: "_tabControls_10ac3_7",
+	fullWidth: "_fullWidth_10ac3_16",
+	metadataPanel: "_metadataPanel_10ac3_20",
+	padded: "_padded_10ac3_26",
+	error: "_error_10ac3_31",
+	ansi: "_ansi_10ac3_35",
+	noTop: "_noTop_10ac3_39",
+	timePanel: "_timePanel_10ac3_43",
+	chat: "_chat_10ac3_51",
+	overflowVisible: "_overflowVisible_10ac3_59",
+	retriedErrors: "_retriedErrors_10ac3_63"
 };
 //#endregion
 //#region src/app/samples/SampleJSONView.tsx
@@ -132090,6 +132155,21 @@ var RetryTraceback = ({ retry }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
 	output: retry.traceback_ansi,
 	className: SampleRetriedErrors_module_default.ansi
 });
+//#endregion
+//#region src/utils/evalModel.ts
+/**
+* Resolve the model display string for an EvalSpec.
+*
+* - If `model_roles` is populated, formats it as `role: model[, role: model]…`.
+* - Otherwise falls back to `eval.model`, ignoring the placeholder `none/none`.
+* - Returns `undefined` if neither source has anything meaningful.
+*/
+var formatModelText = (evalSpec) => {
+	if (!evalSpec) return void 0;
+	const roles = evalSpec.model_roles;
+	if (roles && Object.keys(roles).length > 0) return Object.entries(roles).map(([role, data]) => `${role}: ${data.model}`).join(", ");
+	if (evalSpec.model && evalSpec.model !== "none/none") return evalSpec.model;
+};
 //#endregion
 //#region src/utils/markdown.ts
 /**
@@ -132316,21 +132396,391 @@ var SampleErrorView = ({ message, align }) => {
 var isCanceledError = (type) => {
 	return type === "CancelledError";
 };
+var ScorePanel_module_default = {
+	panel: "_panel_h02oy_1",
+	panelHeader: "_panelHeader_h02oy_9",
+	scoresHeader: "_scoresHeader_h02oy_19",
+	scoresCount: "_scoresCount_h02oy_27",
+	columnLabel: "_columnLabel_h02oy_33",
+	headerControls: "_headerControls_h02oy_41",
+	sortWrapper: "_sortWrapper_h02oy_51",
+	sortButton: "_sortButton_h02oy_58",
+	panelBody: "_panelBody_h02oy_80",
+	bodyGrid: "_bodyGrid_h02oy_84",
+	tight: "_tight_h02oy_88",
+	bodyChips: "_bodyChips_h02oy_92",
+	dense: "_dense_h02oy_107",
+	row: "_row_h02oy_113",
+	rowTight: "_rowTight_h02oy_122",
+	rowName: "_rowName_h02oy_127",
+	chip: "_chip_h02oy_138",
+	chipFail: "_chipFail_h02oy_152",
+	chipWarn: "_chipWarn_h02oy_156",
+	chipName: "_chipName_h02oy_160"
+};
+//#endregion
+//#region src/app/samples/header-v2/scoreTone.ts
+/**
+* Maps a score value to a visual tone for the V2 sample header.
+*
+* The classification is intentionally conservative for numeric scores —
+* inspect numbers can mean accuracy, latency, token counts, anything,
+* so we never auto-color them. Grades (passfail) and booleans have
+* unambiguous semantics; strings honor only an explicit pass/fail
+* vocabulary.
+*/
+function scoreTone(value, scoreType) {
+	if (value === void 0 || value === null) return "neutral";
+	if (scoreType === "passfail") {
+		const s = String(value).toUpperCase();
+		if (s === "C" || s === "A" || s === "B") return "pass";
+		if (s === "I" || s === "F" || s === "N") return "fail";
+		if (s === "P") return "warn";
+		return "neutral";
+	}
+	if (scoreType === "boolean" || typeof value === "boolean") return value ? "pass" : "fail";
+	if (typeof value === "string") {
+		const s = value.toLowerCase().trim();
+		if (s === "pass" || s === "yes" || s === "ok" || s === "true") return "pass";
+		if (s === "fail" || s === "no" || s === "false") return "fail";
+		return "neutral";
+	}
+	return "neutral";
+}
+var ScoreValueDisplay_module_default = {
+	circle: "_circle_kcau9_1",
+	circlePass: "_circlePass_kcau9_13",
+	circleFail: "_circleFail_kcau9_17",
+	circleWarn: "_circleWarn_kcau9_21",
+	circleNeutral: "_circleNeutral_kcau9_25",
+	text: "_text_kcau9_29",
+	textPass: "_textPass_kcau9_41",
+	textFail: "_textFail_kcau9_45",
+	textWarn: "_textWarn_kcau9_49",
+	textNeutral: "_textNeutral_kcau9_53",
+	miniPill: "_miniPill_kcau9_60",
+	miniPillPass: "_miniPillPass_kcau9_80",
+	miniPillFail: "_miniPillFail_kcau9_85",
+	miniPillWarn: "_miniPillWarn_kcau9_90",
+	miniPillNeutral: "_miniPillNeutral_kcau9_95"
+};
+//#endregion
+//#region src/app/samples/header-v2/ScoreValueDisplay.tsx
+/**
+* Standalone V2 renderer for a single score value. Bypasses the
+* existing per-descriptor `render()` so we can size grade/bool circles
+* independently for the header's compact / row / chip contexts.
+*
+* - passfail (C/A/B/I/F/P/N) → solid circle, white glyph
+* - boolean → solid circle with "T" or "F"
+* - everything else → tabular-nums text, tone-colored when explicit
+*
+* Colors come from theme tokens (--bs-success / --bs-danger /
+* --bs-orange) so dark/light handle automatically.
+*/
+/**
+* Shared circle renderer for passfail / boolean scores. Returns null
+* for any other score type so callers can fall through to their own
+* non-circle branch (plain text vs mini-pill).
+*/
+var CircleValue = ({ value, scoreType, size = 18 }) => {
+	const tone = scoreTone(value, scoreType);
+	const sizeStyle = {
+		width: size,
+		height: size,
+		fontSize: Math.round(size * .55)
+	};
+	if (scoreType === "passfail" && value !== void 0) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+		className: clsx(ScoreValueDisplay_module_default.circle, toneCircleClass(tone)),
+		style: sizeStyle,
+		children: String(value)
+	});
+	if (scoreType === "boolean") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+		className: clsx(ScoreValueDisplay_module_default.circle, toneCircleClass(tone)),
+		style: sizeStyle,
+		title: value ? "true" : "false",
+		children: value ? "T" : "F"
+	});
+	return null;
+};
+var isCircleScoreType = (scoreType, value) => scoreType === "passfail" && value !== void 0 || scoreType === "boolean";
+var ScoreValueDisplay = ({ value, scoreType, size = 18 }) => {
+	if (isCircleScoreType(scoreType, value)) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleValue, {
+		value,
+		scoreType,
+		size
+	});
+	const tone = scoreTone(value, scoreType);
+	const formatted = formatPlainValue(value);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+		className: clsx(ScoreValueDisplay_module_default.text, toneTextClass(tone)),
+		title: formatted,
+		children: formatted
+	});
+};
+/** Smaller variant used inside chip pills — numbers/strings render as
+*  a colored mini-pill instead of plain text so the tone reads at
+*  small sizes. */
+var ScoreChipValueDisplay = ({ value, scoreType, size = 16 }) => {
+	if (isCircleScoreType(scoreType, value)) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleValue, {
+		value,
+		scoreType,
+		size
+	});
+	const tone = scoreTone(value, scoreType);
+	const formatted = formatPlainValue(value);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+		className: clsx(ScoreValueDisplay_module_default.miniPill, toneMiniPillClass(tone)),
+		title: formatted,
+		children: formatted
+	});
+};
+function toneCircleClass(tone) {
+	if (tone === "pass") return ScoreValueDisplay_module_default.circlePass;
+	if (tone === "fail") return ScoreValueDisplay_module_default.circleFail;
+	if (tone === "warn") return ScoreValueDisplay_module_default.circleWarn;
+	return ScoreValueDisplay_module_default.circleNeutral;
+}
+function toneTextClass(tone) {
+	if (tone === "pass") return ScoreValueDisplay_module_default.textPass;
+	if (tone === "fail") return ScoreValueDisplay_module_default.textFail;
+	if (tone === "warn") return ScoreValueDisplay_module_default.textWarn;
+	return ScoreValueDisplay_module_default.textNeutral;
+}
+function toneMiniPillClass(tone) {
+	if (tone === "pass") return ScoreValueDisplay_module_default.miniPillPass;
+	if (tone === "fail") return ScoreValueDisplay_module_default.miniPillFail;
+	if (tone === "warn") return ScoreValueDisplay_module_default.miniPillWarn;
+	return ScoreValueDisplay_module_default.miniPillNeutral;
+}
+function formatPlainValue(v) {
+	if (v === void 0 || v === null) return "";
+	if (Array.isArray(v)) return v.join(", ");
+	if (typeof v === "object") return JSON.stringify(v);
+	return String(v);
+}
+//#endregion
+//#region src/app/samples/header-v2/ViewToggle.tsx
+/**
+* Two-segment Grid / Chips toggle for the V2 score panel header.
+* Built on the shared `SegmentedControl` in compact (icon-only) mode.
+*/
+var ViewToggle = ({ view, setView }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SegmentedControl, {
+		compact: true,
+		selectedId: view,
+		onSegmentChange: (0, import_react.useCallback)((id) => {
+			if (id === "grid" || id === "chips") setView(id);
+		}, [setView]),
+		segments: [{
+			id: "grid",
+			label: "Grid view",
+			icon: "bi bi-list-ul"
+		}, {
+			id: "chips",
+			label: "Chips view",
+			icon: "bi bi-grid-3x3-gap"
+		}]
+	});
+};
+//#endregion
+//#region src/app/samples/header-v2/ScorePanel.tsx
+/**
+* Score panel for the V2 sample header — the right column when there
+* are 3+ scores. Defaults to chips for ≤ 6 scores, grid for 7+; the
+* user can flip via the icon-only segmented control. The panel header
+* also carries a sort dropdown that re-orders the scores in either
+* view (so chips and grid share the same sort UX).
+*/
+var ScorePanel = ({ scores, sample, evalDescriptor }) => {
+	const renderedScores = (0, import_react.useMemo)(() => {
+		const initial = scores.map((label) => {
+			const selected = evalDescriptor.score(sample, label);
+			const descriptor = evalDescriptor.scoreDescriptor(label);
+			return {
+				label,
+				key: `${label.scorer}__${label.name}`,
+				value: selected?.value,
+				scoreType: descriptor.scoreType,
+				tone: scoreTone(selected?.value, descriptor.scoreType)
+			};
+		});
+		const numbers = initial.map((s) => typeof s.value === "number" ? s.value : null).filter((v) => v !== null);
+		const min = numbers.length ? Math.min(...numbers) : 0;
+		const range = (numbers.length ? Math.max(...numbers) : 0) - min;
+		return initial.map((s) => {
+			if (typeof s.value !== "number") return s;
+			const intensity = numbers.length <= 1 || range === 0 ? 1 : (s.value - min) / range;
+			return {
+				...s,
+				numericIntensity: intensity
+			};
+		});
+	}, [
+		scores,
+		sample,
+		evalDescriptor
+	]);
+	const count = renderedScores.length;
+	const tight = count <= 6;
+	const dense = count > 6;
+	const evalView = useEvalScorePanelView();
+	const evalSort = useEvalScorePanelSort();
+	const [storedView, setView] = useScorePanelView();
+	const view = resolveScorePanelView(storedView, evalView, count);
+	const [storedSort, setSort] = useScorePanelSort();
+	const sort = resolveScorePanelSort(storedSort, evalSort);
+	const sortedScores = (0, import_react.useMemo)(() => {
+		if (!sort.column) return renderedScores;
+		const cmp = makeCompare(sort.column);
+		const out = [...renderedScores].sort(cmp);
+		if (sort.dir === "desc") out.reverse();
+		return out;
+	}, [
+		renderedScores,
+		sort.column,
+		sort.dir
+	]);
+	const sortItems = {
+		Default: () => setSort({
+			column: null,
+			dir: "asc"
+		}),
+		"Score asc": () => setSort({
+			column: "value",
+			dir: "asc"
+		}),
+		"Score desc": () => setSort({
+			column: "value",
+			dir: "desc"
+		}),
+		"Scorer asc": () => setSort({
+			column: "name",
+			dir: "asc"
+		}),
+		"Scorer desc": () => setSort({
+			column: "name",
+			dir: "desc"
+		})
+	};
+	const sortIcon = !sort.column ? "bi bi-arrow-down-up" : sort.dir === "asc" ? "bi bi-sort-up" : "bi bi-sort-down";
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: clsx(ScorePanel_module_default.panel, tight && ScorePanel_module_default.tight),
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: ScorePanel_module_default.panelHeader,
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: ScorePanel_module_default.scoresHeader,
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+					className: ScorePanel_module_default.columnLabel,
+					children: "Scores"
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+					className: ScorePanel_module_default.scoresCount,
+					children: count
+				})]
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: ScorePanel_module_default.headerControls,
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: ScorePanel_module_default.sortWrapper,
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolDropdownButton, {
+						label: "",
+						icon: sortIcon,
+						subtle: true,
+						className: ScorePanel_module_default.sortButton,
+						dropdownAlign: "right",
+						dropdownClassName: "text-size-smallest",
+						items: sortItems,
+						"aria-label": "Sort scores",
+						title: "Sort scores"
+					})
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ViewToggle, {
+					view,
+					setView
+				})]
+			})]
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: clsx(ScorePanel_module_default.panelBody, view === "grid" ? ScorePanel_module_default.bodyGrid : ScorePanel_module_default.bodyChips, dense && ScorePanel_module_default.dense),
+			children: view === "grid" ? sortedScores.map((s) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreRow, {
+				score: s,
+				tight
+			}, s.key)) : sortedScores.map((s) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreChip, { score: s }, s.key))
+		})]
+	});
+};
+var ScoreRow = ({ score, tight }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: clsx(ScorePanel_module_default.row, tight && ScorePanel_module_default.rowTight),
+		title: score.label.name,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+			className: ScorePanel_module_default.rowName,
+			children: score.label.name
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreValueDisplay, {
+			value: score.value,
+			scoreType: score.scoreType,
+			size: 18
+		})]
+	});
+};
+var ScoreChip = ({ score }) => {
+	let style;
+	if (score.tone === "neutral" && score.numericIntensity !== void 0) style = { borderColor: `rgba(var(--bs-primary-rgb), ${(.25 + .75 * score.numericIntensity).toFixed(2)})` };
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+		className: clsx(ScorePanel_module_default.chip, score.tone === "fail" && ScorePanel_module_default.chipFail, score.tone === "warn" && ScorePanel_module_default.chipWarn),
+		style,
+		title: score.label.name,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreChipValueDisplay, {
+			value: score.value,
+			scoreType: score.scoreType,
+			size: 16
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+			className: ScorePanel_module_default.chipName,
+			children: score.label.name
+		})]
+	});
+};
+function makeCompare(column) {
+	if (column === "name") return (a, b) => a.label.name.localeCompare(b.label.name, void 0, {
+		numeric: true,
+		sensitivity: "base"
+	});
+	return (a, b) => {
+		const av = a.value;
+		const bv = b.value;
+		const an = typeof av === "number" ? av : null;
+		const bn = typeof bv === "number" ? bv : null;
+		if (an !== null && bn !== null) return an - bn;
+		if (an !== null) return -1;
+		if (bn !== null) return 1;
+		const as = av === void 0 ? "" : String(av);
+		const bs = bv === void 0 ? "" : String(bv);
+		return as.localeCompare(bs, void 0, { numeric: true });
+	};
+}
 var SampleSummaryView_module_default = {
-	target: "_target_1foh6_1",
-	answer: "_answer_1foh6_5",
-	grid: "_grid_1foh6_9",
-	centerLabel: "_centerLabel_1foh6_16",
-	centerValue: "_centerValue_1foh6_21",
-	wrap: "_wrap_1foh6_26",
-	titled: "_titled_1foh6_30",
-	value: "_value_1foh6_34",
-	invalidationBanner: "_invalidationBanner_1foh6_40",
-	invalidationIcon: "_invalidationIcon_1foh6_50",
-	invalidationContent: "_invalidationContent_1foh6_56",
-	invalidationTitle: "_invalidationTitle_1foh6_63",
-	invalidationDetails: "_invalidationDetails_1foh6_68",
-	invalidationReason: "_invalidationReason_1foh6_76"
+	root: "_root_rr9mf_1",
+	layout: "_layout_rr9mf_12",
+	wideRight: "_wideRight_rr9mf_17",
+	noRight: "_noRight_rr9mf_21",
+	left: "_left_rr9mf_25",
+	right: "_right_rr9mf_34",
+	metaLine: "_metaLine_rr9mf_42",
+	metaSep: "_metaSep_rr9mf_52",
+	metaId: "_metaId_rr9mf_56",
+	fields: "_fields_rr9mf_65",
+	field: "_field_rr9mf_65",
+	fieldTarget: "_fieldTarget_rr9mf_75",
+	fieldLabel: "_fieldLabel_rr9mf_79",
+	fieldValue: "_fieldValue_rr9mf_87",
+	clamp: "_clamp_rr9mf_94",
+	scoreField: "_scoreField_rr9mf_106",
+	scoreFieldValue: "_scoreFieldValue_rr9mf_110",
+	errorBlock: "_errorBlock_rr9mf_117",
+	collapsedMeta: "_collapsedMeta_rr9mf_127",
+	invalidationBanner: "_invalidationBanner_rr9mf_140",
+	invalidationIcon: "_invalidationIcon_rr9mf_150",
+	invalidationContent: "_invalidationContent_rr9mf_156",
+	invalidationTitle: "_invalidationTitle_rr9mf_163",
+	invalidationDetails: "_invalidationDetails_rr9mf_168",
+	invalidationReason: "_invalidationReason_rr9mf_176"
 };
 var sampleStatus_module_default = {
 	statusCell: "_statusCell_hunte_1",
@@ -132377,7 +132827,8 @@ var SampleStatusIcon = ({ status }) => {
 };
 //#endregion
 //#region src/app/samples/SampleSummaryView.tsx
-var kMaxCellTextLength = 128;
+var kBodyTruncate = 360;
+var kTargetTruncate = 160;
 function isEvalSample(sample) {
 	return "store" in sample;
 }
@@ -132399,6 +132850,7 @@ var resolveSample = (sample, sampleDescriptor) => {
 	const retries = isEvalSample(sample) ? sample.error_retries?.length : sample.retries;
 	return {
 		id: sample.id,
+		epoch: sample.epoch,
 		input,
 		target,
 		answer,
@@ -132410,114 +132862,177 @@ var resolveSample = (sample, sampleDescriptor) => {
 		cancelled
 	};
 };
+var MetaLine = ({ items }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+	className: clsx(SampleSummaryView_module_default.metaLine, "text-size-smaller"),
+	children: items.map((item, idx) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [idx > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+		className: SampleSummaryView_module_default.metaSep,
+		children: "·"
+	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+		title: item.title,
+		children: item.content
+	})] }, item.key))
+});
+var FieldLabel = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+	className: clsx(SampleSummaryView_module_default.fieldLabel),
+	"data-unsearchable": true,
+	children
+});
 /**
-* Component to display a sample with relevant context and visibility control.
+* The single-sample header that sits above the transcript / messages /
+* scores tabs. Renders sample id and meta on a single row, with
+* Input / Target / Answer beneath, and a right-hand score panel.
+*
+* The score panel is currently a simple stack of label-over-value
+* pairs; the next stage of the V2 redesign replaces this with a
+* dedicated `ScorePanel` (chips / sortable grid + view toggle).
 */
-var SampleSummaryView = ({ parent_id, sample }) => {
+var SampleSummaryView = ({ parent_id, sample, collapsed = false }) => {
 	const sampleDescriptor = useSampleDescriptor();
 	const selectedScores = useSelectedScores();
+	const taskName = useStore((state) => state.log.selectedLogDetails?.eval.task);
+	const modelText = useStore((state) => formatModelText(state.log.selectedLogDetails?.eval));
+	const [storedScoreView] = useScorePanelView();
+	const evalScoreView = useEvalScorePanelView();
 	if (!sampleDescriptor) return;
 	const fields = resolveSample(sample, sampleDescriptor);
-	const shape = sampleDescriptor?.messageShape;
-	const limitSize = shape?.limitSize ?? 0;
-	const retrySize = shape?.retriesSize ?? 0;
-	const idSize = shape?.idSize ?? 2;
-	const columns = [];
-	columns.push({
-		label: "Id",
-		value: fields.id,
-		size: `${idSize}em`
+	const visibleScores = selectedScores?.filter((scoreLabel) => {
+		const rendered = sampleDescriptor.evalDescriptor.score(sample, scoreLabel)?.render();
+		return rendered !== void 0 && rendered !== "";
+	}) ?? [];
+	const scoreCount = visibleScores.length;
+	const wideRight = scoreCount >= 3;
+	const compactScores = scoreCount > 0 && scoreCount <= 2;
+	const metaItems = [{
+		key: "id",
+		content: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+			className: SampleSummaryView_module_default.metaId,
+			children: String(fields.id)
+		})
+	}, {
+		key: "epoch",
+		content: `Epoch ${fields.epoch}`
+	}];
+	if (taskName) metaItems.push({
+		key: "task",
+		content: taskName
 	});
-	columns.push({
-		label: "Input",
-		value: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedText, { markdown: truncateMarkdown(fields.input.join(" "), kMaxCellTextLength) }),
-		size: `minmax(auto, 5fr)`,
-		clamp: true
+	if (modelText) metaItems.push({
+		key: "model",
+		content: modelText
 	});
-	if (fields.target) columns.push({
-		label: "Target",
-		value: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedText, {
-			markdown: truncateMarkdown(arrayToString(fields?.target || "none"), kMaxCellTextLength),
-			className: clsx("no-last-para-padding", SampleSummaryView_module_default.target)
-		}),
-		size: `minmax(auto, 3fr)`,
-		clamp: true
+	if (fields.total_time) metaItems.push({
+		key: "time",
+		content: formatTime(fields.total_time),
+		title: fields.working_time !== void 0 && fields.working_time !== null ? `Working time: ${formatTime(fields.working_time)}` : void 0
 	});
-	if (fields.answer) columns.push({
-		label: "Answer",
-		value: sample ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedText, {
-			markdown: truncateMarkdown(fields.answer || "", kMaxCellTextLength),
-			className: clsx("no-last-para-padding", SampleSummaryView_module_default.answer)
-		}) : "",
-		size: `minmax(auto, 5fr)`,
-		clamp: true
+	if (fields.limit) metaItems.push({
+		key: "limit",
+		content: `Limit: ${fields.limit}`
 	});
-	const toolTip = (working_time) => {
-		if (working_time === void 0 || working_time === null) return;
-		return `Working time: ${formatTime(working_time)}`;
-	};
-	if (fields.total_time) columns.push({
-		label: "Time",
-		value: formatTime(fields.total_time),
-		size: `fit-content(10rem)`,
-		center: true,
-		title: toolTip(fields.working_time)
+	if (fields.retries !== void 0 && fields.retries !== null && fields.retries > 0) metaItems.push({
+		key: "retries",
+		content: `Retries: ${fields.retries}`
 	});
-	if (fields?.limit && limitSize > 0) columns.push({
-		label: "Limit",
-		value: fields.limit,
-		size: `${limitSize}em`,
-		center: true
-	});
-	if (fields?.retries && retrySize > 0) columns.push({
-		label: "Retries",
-		value: fields.retries,
-		size: `${retrySize}em`,
-		center: true
-	});
-	if (selectedScores && selectedScores.length > 0) {
-		const scoreColumns = selectedScores.map((scoreLabel) => ({
-			label: selectedScores.length === 1 ? "Score" : scoreLabel.name,
-			value: sampleDescriptor?.evalDescriptor.score(sample, scoreLabel)?.render() || "",
-			size: "fit-content(15em)",
-			center: true
-		})).filter((col) => col.value !== "");
-		columns.push(...scoreColumns);
-	}
-	if (fields.error) columns.push({
-		label: "Error",
-		value: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleErrorView, { message: fields.error }),
-		size: `${shape?.errorSize ?? 1}em`,
-		center: true
-	});
-	if (fields.cancelled) columns.push({
-		label: "Status",
-		value: "Cancelled",
-		size: `10em`
+	if (fields.cancelled) metaItems.push({
+		key: "cancelled",
+		content: "Cancelled"
 	});
 	const invalidation = isEvalSample(sample) ? sample.invalidation : void 0;
+	if (collapsed) return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		id: `sample-heading-${parent_id}`,
+		className: SampleSummaryView_module_default.root,
+		children: [invalidation && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(InvalidationBanner, { invalidation }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: SampleSummaryView_module_default.collapsedMeta,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaLine, { items: metaItems })
+		})]
+	});
+	const fieldTracks = ["minmax(0, 1fr)"];
+	if (fields.target) fieldTracks.push("minmax(60px, auto)");
+	if (fields.answer) fieldTracks.push("minmax(0, 1fr)");
+	if (compactScores) for (let i = 0; i < scoreCount; i++) fieldTracks.push("auto");
+	const gridTemplateColumns = fieldTracks.join(" ");
+	const showRight = scoreCount > 0 && !compactScores;
+	const scorePanelView = resolveScorePanelView(storedScoreView, evalScoreView, scoreCount);
+	const dynamicRightMax = showRight ? scorePanelView === "grid" ? 320 : (() => {
+		const avgNameLen = visibleScores.reduce((acc, s) => acc + s.name.length, 0) / scoreCount;
+		const cappedChipPx = Math.min(220, 41 + avgNameLen * 6.5);
+		const target = Math.round(3 * cappedChipPx + 8 + 24);
+		return Math.max(220, Math.min(560, target));
+	})() : null;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		id: `sample-heading-${parent_id}`,
-		children: [invalidation && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(InvalidationBanner, { invalidation }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: clsx(SampleSummaryView_module_default.grid, "text-size-base"),
-			style: { gridTemplateColumns: `${columns.map((col) => {
-				return col.size;
-			}).join(" ")}` },
-			children: [columns.map((col, idx) => {
-				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: clsx("text-style-label", "text-style-secondary", "text-size-smallest", col.title ? SampleSummaryView_module_default.titled : void 0, col.center ? SampleSummaryView_module_default.centerLabel : void 0),
-					title: col.title,
-					"data-unsearchable": true,
-					children: col.label
-				}, `sample-summ-lbl-${idx}`);
-			}), columns.map((col, idx) => {
-				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: clsx(SampleSummaryView_module_default.value, SampleSummaryView_module_default.wrap, col.clamp ? "three-line-clamp" : void 0, col.center ? SampleSummaryView_module_default.centerValue : void 0),
-					"data-unsearchable": true,
-					children: col.value
-				}, `sample-summ-val-${idx}`);
-			})]
-		})]
+		className: SampleSummaryView_module_default.root,
+		children: [
+			invalidation && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(InvalidationBanner, { invalidation }),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: clsx(SampleSummaryView_module_default.layout, wideRight && SampleSummaryView_module_default.wideRight, !showRight && SampleSummaryView_module_default.noRight),
+				style: dynamicRightMax !== null ? { gridTemplateColumns: `minmax(0, 1fr) minmax(220px, ${dynamicRightMax}px)` } : void 0,
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: SampleSummaryView_module_default.left,
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaLine, { items: metaItems }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: SampleSummaryView_module_default.fields,
+						style: { gridTemplateColumns },
+						children: [
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: SampleSummaryView_module_default.field,
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FieldLabel, { children: "Input" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: clsx(SampleSummaryView_module_default.fieldValue, SampleSummaryView_module_default.clamp),
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedText, { markdown: truncateMarkdown(fields.input.join(" "), kBodyTruncate) })
+								})]
+							}),
+							fields.target ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: clsx(SampleSummaryView_module_default.field, SampleSummaryView_module_default.fieldTarget),
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FieldLabel, { children: "Target" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: clsx(SampleSummaryView_module_default.fieldValue, SampleSummaryView_module_default.clamp),
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedText, {
+										markdown: truncateMarkdown(arrayToString(fields.target || "none"), kTargetTruncate),
+										className: clsx("no-last-para-padding")
+									})
+								})]
+							}) : null,
+							fields.answer ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: SampleSummaryView_module_default.field,
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FieldLabel, { children: "Answer" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: clsx(SampleSummaryView_module_default.fieldValue, SampleSummaryView_module_default.clamp),
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedText, {
+										markdown: truncateMarkdown(fields.answer || "", kBodyTruncate),
+										className: clsx("no-last-para-padding")
+									})
+								})]
+							}) : null,
+							compactScores ? visibleScores.map((scoreLabel) => {
+								const selected = sampleDescriptor.evalDescriptor.score(sample, scoreLabel);
+								const desc = sampleDescriptor.evalDescriptor.scoreDescriptor(scoreLabel);
+								const label = visibleScores.length === 1 ? "Score" : scoreLabel.name;
+								return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: clsx(SampleSummaryView_module_default.field, SampleSummaryView_module_default.scoreField),
+									title: scoreLabel.name,
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FieldLabel, { children: label }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+										className: SampleSummaryView_module_default.scoreFieldValue,
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreValueDisplay, {
+											value: selected?.value,
+											scoreType: desc.scoreType,
+											size: 22
+										})
+									})]
+								}, `${scoreLabel.scorer}-${scoreLabel.name}`);
+							}) : null
+						]
+					})]
+				}), showRight ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: SampleSummaryView_module_default.right,
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScorePanel, {
+						scores: visibleScores,
+						sample,
+						evalDescriptor: sampleDescriptor.evalDescriptor
+					})
+				}) : null]
+			}),
+			fields.error ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: SampleSummaryView_module_default.errorBlock,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleErrorView, { message: fields.error })
+			}) : null
+		]
 	});
 };
 /**
@@ -135685,15 +136200,13 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 	const tabsRef = (0, import_react.useRef)(null);
 	const [tabsHeight, setTabsHeight] = (0, import_react.useState)(-1);
 	(0, import_react.useEffect)(() => {
-		const updateHeight = () => {
-			if (tabsRef.current) {
-				const height = tabsRef.current.getBoundingClientRect().height;
-				setTabsHeight(height);
-			}
-		};
-		updateHeight();
-		window.addEventListener("resize", updateHeight);
-		return () => window.removeEventListener("resize", updateHeight);
+		const el = tabsRef.current;
+		if (!el) return;
+		const apply = () => setTabsHeight(el.getBoundingClientRect().height);
+		apply();
+		const ro = new ResizeObserver(apply);
+		ro.observe(el);
+		return () => ro.disconnect();
 	}, []);
 	const selectedSampleSummary = useSelectedSampleSummary();
 	const sampleEvents = sample?.events || runningSampleData;
@@ -135805,6 +136318,7 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 	tools.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolDropdownButton, {
 		label: "Copy",
 		icon,
+		subtle: true,
 		dropdownClassName: "text-size-smallest",
 		items: {
 			UUID: () => {
@@ -135841,6 +136355,7 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 		tools.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolDropdownButton, {
 			label: "Download",
 			icon: ApplicationIcons.downloadLog,
+			subtle: true,
 			dropdownClassName: "text-size-smallest",
 			items: {
 				"Sample JSON": () => {
@@ -135861,12 +136376,14 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 			label: `Events: ${label}`,
 			icon: ApplicationIcons.filter,
 			onClick: toggleFilter,
-			ref: filterRef
+			ref: filterRef,
+			subtle: true
 		}, "sample-filter-transcript"));
 		tools.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolButton, {
 			label: isCollapsed(collapsedMode) ? "Expand" : "Collapse",
 			icon: isCollapsed(collapsedMode) ? ApplicationIcons.expand.all : ApplicationIcons.collapse.all,
-			onClick: toggleCollapsedMode
+			onClick: toggleCollapsedMode,
+			subtle: true
 		}, "sample-collapse-transcript"));
 	}
 	tools.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolButton, {
@@ -135874,12 +136391,14 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 		icon: ApplicationIcons.display,
 		onClick: toggleDisplayMode,
 		ref: optionsRef,
-		latched: displayMode === "raw"
+		latched: displayMode === "raw",
+		subtle: true
 	}, "options-button"));
 	if (!isVscode() && printLogPath && printSampleId && printEpoch) tools.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolButton, {
 		label: "Print",
 		icon: ApplicationIcons.copy,
-		onClick: handlePrintClick
+		onClick: handlePrintClick,
+		subtle: true
 	}, "sample-print-tool"));
 	const running = (0, import_react.useMemo)(() => {
 		return isRunning(selectedSampleSummary, runningSampleData, sampleData.status);
@@ -135890,150 +136409,186 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 	]);
 	const sampleDetailNavigation = useSampleDetailNavigation();
 	const displayModeContext = (0, import_react.useMemo)(() => ({ displayMode: displayMode ?? "rendered" }), [displayMode]);
+	const { hidden: headroomHidden } = useScrollDirection(scrollRef, { threshold: 80 });
+	const [isHeaderSticky, setIsHeaderSticky] = (0, import_react.useState)(false);
+	const handleHeaderStickyChange = (0, import_react.useCallback)((sticky) => {
+		setIsHeaderSticky(sticky);
+	}, []);
+	const headerCollapsed = isHeaderSticky && headroomHidden;
+	const headerWrapperRef = (0, import_react.useRef)(null);
+	const tabsContainerRef = (0, import_react.useRef)(null);
+	const [headerHeight, setHeaderHeight] = (0, import_react.useState)(0);
+	(0, import_react.useEffect)(() => {
+		const wrapper = headerWrapperRef.current;
+		const container = tabsContainerRef.current;
+		if (!wrapper || !container) return;
+		const apply = () => {
+			const h = wrapper.getBoundingClientRect().height;
+			setHeaderHeight(h);
+			container.style.setProperty("--inspect-sample-header-height", `${h}px`);
+		};
+		apply();
+		const ro = new ResizeObserver(apply);
+		ro.observe(wrapper);
+		return () => ro.disconnect();
+	}, [selectedSampleSummary]);
+	const stickyOffsetTop = tabsHeight + headerHeight;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DisplayModeContext.Provider, {
 		value: displayModeContext,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [
-			selectedSampleSummary ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleSummaryView, {
-				parent_id: id,
-				sample: selectedSampleSummary
+			selectedSampleSummary ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StickyScroll, {
+				scrollRef,
+				offsetTop: 0,
+				zIndex: 1002,
+				onStickyChange: handleHeaderStickyChange,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					ref: headerWrapperRef,
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleSummaryView, {
+						parent_id: id,
+						sample: selectedSampleSummary,
+						collapsed: headerCollapsed
+					})
+				})
 			}) : void 0,
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ActivityBar, {
 				animating: showActivity,
 				progress
 			}),
-			hasSampleData && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(TabSet, {
-				id: tabsetId,
-				tabsRef,
-				className: clsx(SampleDisplay_module_default.tabControls),
-				tabControlsClassName: clsx("text-size-base"),
-				tabPanelsClassName: clsx(SampleDisplay_module_default.tabPanel),
-				tools,
-				type: "pills-small",
-				children: [
-					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(TabPanel, {
-						id: kSampleTranscriptTabId,
-						className: clsx("sample-tab", SampleDisplay_module_default.transcriptContainer, SampleDisplay_module_default.overflowVisible),
-						title: "Transcript",
-						onSelected: onSelectedTab,
-						selected: effectiveSelectedTab === kSampleTranscriptTabId || effectiveSelectedTab === void 0,
-						scrollable: false,
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptFilterPopover, {
-							showing: isShowing,
-							setShowing,
-							positionEl: filterRef.current
-						}), !sampleEvents || sampleEvents.length === 0 ? sampleData.status === "loading" ? null : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, { text: eventsCleared ? "Transcript events were removed because this sample exceeds the browser's size limit. Use the Messages tab to view the conversation." : "No events to display." }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptPanel, {
-							id: `${baseId}-transcript-display-${id}`,
-							scrollRef,
-							offsetTop: tabsHeight,
-							sampleId: sample?.id ?? void 0,
-							sampleEpoch: sample?.epoch ?? void 0,
-							running,
-							events: sampleEvents,
-							timelines: sample?.timelines ?? void 0,
-							scans: sample?.scores ?? void 0,
-							initialEventId: sampleDetailNavigation.event,
-							initialMessageId: sampleDetailNavigation.message
-						}, `${baseId}-transcript-display-${id}`)]
-					}, kSampleTranscriptTabId),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabPanel, {
-						id: kSampleMessagesTabId,
-						className: clsx("sample-tab", SampleDisplay_module_default.fullWidth, SampleDisplay_module_default.chat, SampleDisplay_module_default.overflowVisible),
-						title: "Messages",
-						onSelected: onSelectedTab,
-						selected: effectiveSelectedTab === kSampleMessagesTabId,
-						scrollable: false,
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChatViewVirtualList, {
-							id: `${baseId}-chat-${id}`,
-							messages: sampleMessages,
-							initialMessageId: sampleDetailNavigation.message,
-							offsetTop: tabsHeight,
-							display: {
-								indented: true,
-								unlabeledRoles: ["assistant"],
-								formatDateTime
-							},
-							linking: {
-								enabled: isHostedEnvironment(),
-								getMessageUrl
-							},
-							onNativeFindChanged: setNativeFind,
-							scrollRef,
-							tools: { callStyle: "complete" },
-							running,
-							className: SampleDisplay_module_default.fullWidth
-						}, `${baseId}-chat-${id}`)
-					}, kSampleMessagesTabId),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabPanel, {
-						id: kSampleScoringTabId,
-						className: "sample-tab",
-						title: "Scoring",
-						onSelected: onSelectedTab,
-						selected: effectiveSelectedTab === kSampleScoringTabId,
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleScoresView, {
-							sample,
-							className: SampleDisplay_module_default.padded,
-							scrollRef
-						})
-					}, kSampleScoringTabId),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabPanel, {
-						id: kSampleMetdataTabId,
-						className: clsx("sample-tab"),
-						title: "Metadata",
-						onSelected: onSelectedTab,
-						selected: effectiveSelectedTab === kSampleMetdataTabId,
-						children: sampleMetadatas.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							className: clsx(SampleDisplay_module_default.padded, SampleDisplay_module_default.fullWidth, SampleDisplay_module_default.metadataPanel),
-							children: sampleMetadatas
-						}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, { text: "No sample metadata available" })
-					}),
-					sample?.error && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabPanel, {
-						id: kSampleErrorTabId,
-						className: "sample-tab",
-						title: "Error",
-						onSelected: onSelectedTab,
-						selected: effectiveSelectedTab === kSampleErrorTabId,
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							className: clsx(SampleDisplay_module_default.error),
-							children: sample?.error ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Card, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardHeader, { label: `Sample Error` }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardBody, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ANSIDisplay, {
-								output: sample.error.traceback_ansi,
-								className: clsx("text-size-small", SampleDisplay_module_default.ansi),
-								style: {
-									fontSize: "clamp(0.3rem, 1.1vw, 0.8rem)",
-									margin: "0.5em 0"
-								}
-							}) })] }, `sample-error}`) : void 0
-						})
-					}),
-					sample?.error_retries && sample.error_retries.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabPanel, {
-						id: kSampleRetriesTabId,
-						className: "sample-tab",
-						title: "Retries",
-						onSelected: onSelectedTab,
-						selected: effectiveSelectedTab === kSampleRetriesTabId,
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							className: SampleDisplay_module_default.retriedErrors,
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleRetriedErrors, {
-								id: sample.uuid || String(sample.id),
-								retries: sample.error_retries,
+			hasSampleData && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				ref: tabsContainerRef,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(TabSet, {
+					id: tabsetId,
+					tabsRef,
+					className: clsx(SampleDisplay_module_default.tabControls),
+					tabControlsClassName: clsx("text-size-base"),
+					tools,
+					type: "pills-small",
+					children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(TabPanel, {
+							id: kSampleTranscriptTabId,
+							className: clsx("sample-tab", SampleDisplay_module_default.transcriptContainer, SampleDisplay_module_default.overflowVisible),
+							title: "Transcript",
+							onSelected: onSelectedTab,
+							selected: effectiveSelectedTab === kSampleTranscriptTabId || effectiveSelectedTab === void 0,
+							scrollable: false,
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptFilterPopover, {
+								showing: isShowing,
+								setShowing,
+								positionEl: filterRef.current
+							}), !sampleEvents || sampleEvents.length === 0 ? sampleData.status === "loading" ? null : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, { text: eventsCleared ? "Transcript events were removed because this sample exceeds the browser's size limit. Use the Messages tab to view the conversation." : "No events to display." }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptPanel, {
+								id: `${baseId}-transcript-display-${id}`,
+								scrollRef,
+								offsetTop: stickyOffsetTop,
+								sampleId: sample?.id ?? void 0,
+								sampleEpoch: sample?.epoch ?? void 0,
+								running,
+								events: sampleEvents,
+								timelines: sample?.timelines ?? void 0,
+								scans: sample?.scores ?? void 0,
+								initialEventId: sampleDetailNavigation.event,
+								initialMessageId: sampleDetailNavigation.message
+							}, `${baseId}-transcript-display-${id}`)]
+						}, kSampleTranscriptTabId),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabPanel, {
+							id: kSampleMessagesTabId,
+							className: clsx("sample-tab", SampleDisplay_module_default.fullWidth, SampleDisplay_module_default.chat, SampleDisplay_module_default.overflowVisible),
+							title: "Messages",
+							onSelected: onSelectedTab,
+							selected: effectiveSelectedTab === kSampleMessagesTabId,
+							scrollable: false,
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChatViewVirtualList, {
+								id: `${baseId}-chat-${id}`,
+								messages: sampleMessages,
+								initialMessageId: sampleDetailNavigation.message,
+								offsetTop: stickyOffsetTop,
+								display: {
+									indented: true,
+									unlabeledRoles: ["assistant"],
+									formatDateTime
+								},
+								linking: {
+									enabled: isHostedEnvironment(),
+									getMessageUrl
+								},
+								onNativeFindChanged: setNativeFind,
+								scrollRef,
+								tools: { callStyle: "complete" },
+								running,
+								className: SampleDisplay_module_default.fullWidth
+							}, `${baseId}-chat-${id}`)
+						}, kSampleMessagesTabId),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabPanel, {
+							id: kSampleScoringTabId,
+							className: "sample-tab",
+							title: "Scoring",
+							onSelected: onSelectedTab,
+							selected: effectiveSelectedTab === kSampleScoringTabId,
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleScoresView, {
+								sample,
+								className: SampleDisplay_module_default.padded,
 								scrollRef
 							})
-						})
-					}) : null,
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabPanel, {
-						id: kSampleJsonTabId,
-						className: "sample-tab",
-						title: "JSON",
-						onSelected: onSelectedTab,
-						selected: effectiveSelectedTab === kSampleJsonTabId,
-						children: !sample ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, { text: "JSON not available" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							className: clsx(SampleDisplay_module_default.padded, SampleDisplay_module_default.fullWidth),
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleJSONView, {
-								sample,
-								className: clsx("text-size-small")
+						}, kSampleScoringTabId),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabPanel, {
+							id: kSampleMetdataTabId,
+							className: clsx("sample-tab"),
+							title: "Metadata",
+							onSelected: onSelectedTab,
+							selected: effectiveSelectedTab === kSampleMetdataTabId,
+							children: sampleMetadatas.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: clsx(SampleDisplay_module_default.padded, SampleDisplay_module_default.fullWidth, SampleDisplay_module_default.metadataPanel),
+								children: sampleMetadatas
+							}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, { text: "No sample metadata available" })
+						}),
+						sample?.error && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabPanel, {
+							id: kSampleErrorTabId,
+							className: "sample-tab",
+							title: "Error",
+							onSelected: onSelectedTab,
+							selected: effectiveSelectedTab === kSampleErrorTabId,
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: clsx(SampleDisplay_module_default.error),
+								children: sample?.error ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Card, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardHeader, { label: `Sample Error` }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardBody, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ANSIDisplay, {
+									output: sample.error.traceback_ansi,
+									className: clsx("text-size-small", SampleDisplay_module_default.ansi),
+									style: {
+										fontSize: "clamp(0.3rem, 1.1vw, 0.8rem)",
+										margin: "0.5em 0"
+									}
+								}) })] }, `sample-error}`) : void 0
+							})
+						}),
+						sample?.error_retries && sample.error_retries.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabPanel, {
+							id: kSampleRetriesTabId,
+							className: "sample-tab",
+							title: "Retries",
+							onSelected: onSelectedTab,
+							selected: effectiveSelectedTab === kSampleRetriesTabId,
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: SampleDisplay_module_default.retriedErrors,
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleRetriedErrors, {
+									id: sample.uuid || String(sample.id),
+									retries: sample.error_retries,
+									scrollRef
+								})
+							})
+						}) : null,
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabPanel, {
+							id: kSampleJsonTabId,
+							className: "sample-tab",
+							title: "JSON",
+							onSelected: onSelectedTab,
+							selected: effectiveSelectedTab === kSampleJsonTabId,
+							children: !sample ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, { text: "JSON not available" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: clsx(SampleDisplay_module_default.padded, SampleDisplay_module_default.fullWidth),
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleJSONView, {
+									sample,
+									className: clsx("text-size-small")
+								})
 							})
 						})
-					})
-				]
+					]
+				})
 			})
 		] })
 	});
@@ -140068,6 +140623,14 @@ var SamplesGrid = (props) => {
 		effectiveRowHeight
 	]);
 	const applyVisibility = useApplyColumnVisibility(gridRef, columnDefs, columnVisibility);
+	const mergedInitialState = (0, import_react.useMemo)(() => {
+		if (!columnVisibility) return initialState;
+		const hiddenColIds = Object.entries(columnVisibility).filter(([, visible]) => !visible).map(([id]) => id);
+		return {
+			...initialState,
+			columnVisibility: { hiddenColIds }
+		};
+	}, [initialState, columnVisibility]);
 	const handleStateUpdated = (0, import_react.useCallback)((e) => {
 		onStateUpdated?.(e.state);
 	}, [onStateUpdated]);
@@ -140123,6 +140686,7 @@ var SamplesGrid = (props) => {
 				maintainColumnOrder: true,
 				theme: themeBalham,
 				animateRows: false,
+				suppressColumnMoveAnimation: true,
 				tooltipShowDelay: 300,
 				headerHeight: 25,
 				rowHeight: effectiveRowHeight,
@@ -140134,7 +140698,7 @@ var SamplesGrid = (props) => {
 				enableCellTextSelection: true,
 				suppressCellFocus: true,
 				domLayout: "normal",
-				initialState,
+				initialState: mergedInitialState,
 				onRowClicked: handleRowClick,
 				onCellMouseDown: handleCellMouseDown,
 				onStateUpdated: handleStateUpdated,
@@ -163972,7 +164536,7 @@ function buildSampleColumns(ctx) {
 		field: "input",
 		headerName: "Input",
 		initialFlex: shape?.inputSize ? shape.inputSize : 3,
-		minWidth: 80,
+		minWidth: 240,
 		sortable: true,
 		filter: true,
 		resizable: true,
@@ -164001,7 +164565,7 @@ function buildSampleColumns(ctx) {
 		field: "target",
 		headerName: "Target",
 		initialFlex: shape?.targetSize ? shape.targetSize : 1,
-		minWidth: 80,
+		minWidth: 120,
 		sortable: true,
 		filter: true,
 		resizable: true,
@@ -164033,7 +164597,7 @@ function buildSampleColumns(ctx) {
 		field: "answer",
 		headerName: "Answer",
 		initialFlex: shape?.answerSize ? shape.answerSize : 1,
-		minWidth: 80,
+		minWidth: 120,
 		sortable: true,
 		filter: true,
 		resizable: true,
@@ -164150,12 +164714,14 @@ function buildScoreColumns(ctx) {
 		const useLabelHeader = scores.length !== 1;
 		return scores.map((label) => {
 			const colId = perScorerFieldKey(label);
+			const headerName = useLabelHeader ? label.name : "Score";
 			return {
 				colId,
 				field: colId,
-				headerName: useLabelHeader ? label.name : "Score",
-				initialWidth: 80,
-				minWidth: 28,
+				headerName,
+				initialWidth: Math.max(54, Math.round(headerName.length * 6.2) + 24),
+				minWidth: 44,
+				maxWidth: 120,
 				sortable: true,
 				filter: "agNumberColumnFilter",
 				resizable: true,
@@ -164404,12 +164970,13 @@ var SamplesTab = ({ running, scrollRef, showColumnSelector, setShowColumnSelecto
 	const { columnVisibility, setColumnVisibility, gridState, setGridState } = useSampleGridState("logViewSamples", allColumns, {
 		defaultsForUnseededColumns: (0, import_react.useCallback)((col) => {
 			const id = col.colId;
+			if (id === "epoch") return epochs > 1;
 			if (id === "limit") return !!shape?.limitSize;
 			if (id === "retries") return !!shape?.retriesSize;
 			if (id === "error") return !!shape?.errorSize;
 			if (id === "sampleUuid") return false;
 			return true;
-		}, [shape]),
+		}, [shape, epochs]),
 		gridRef: sampleListHandle
 	});
 	const selectedScoreFields = (0, import_react.useMemo)(() => new Set(selectedScores.map(perScorerFieldKey)), [selectedScores]);
@@ -165181,12 +165748,6 @@ var CollapsedTitleBar = ({ evalSpec, evalResults, runningMetrics, status, sample
 			})
 		})]
 	});
-};
-var formatModelText = (evalSpec) => {
-	if (!evalSpec) return void 0;
-	const roles = evalSpec.model_roles;
-	if (roles && Object.keys(roles).length > 0) return Object.entries(roles).map(([role, data]) => `${role}: ${data.model}`).join(", ");
-	if (evalSpec.model && evalSpec.model !== "none/none") return evalSpec.model;
 };
 var InlineMetrics = ({ scorers }) => {
 	const items = [];
