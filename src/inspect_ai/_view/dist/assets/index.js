@@ -70187,10 +70187,10 @@ var useScorePanelSort = () => {
 var resolveScorePanelSort = (stored, evalDefault) => stored ?? evalDefault ?? kDefaultScorePanelSort;
 /**
 * Read the eval-author-declared default score-panel view from
-* `Task(viewer=ViewerConfig(score_panel_view=ScorePanelView(view=...)))`.
+* `Task(viewer=ViewerConfig(sample_score_view=ScorePanelView(view=...)))`.
 * Returns a primitive so Zustand's reference equality is stable.
 */
-var useEvalScorePanelView = () => useStore((state) => state.log.selectedLogDetails?.eval.viewer?.score_panel_view?.view ?? void 0);
+var useEvalScorePanelView = () => useStore((state) => state.log.selectedLogDetails?.eval.viewer?.sample_score_view?.view ?? void 0);
 /**
 * Read the eval-author-declared default score-panel sort. The raw
 * stored object reference is stable across renders (it lives on
@@ -70199,7 +70199,7 @@ var useEvalScorePanelView = () => useStore((state) => state.log.selectedLogDetai
 * back into Zustand on every render.
 */
 var useEvalScorePanelSort = () => {
-	const stored = useStore((state) => state.log.selectedLogDetails?.eval.viewer?.score_panel_view?.sort);
+	const stored = useStore((state) => state.log.selectedLogDetails?.eval.viewer?.sample_score_view?.sort);
 	return (0, import_react.useMemo)(() => {
 		if (!stored) return void 0;
 		return {
