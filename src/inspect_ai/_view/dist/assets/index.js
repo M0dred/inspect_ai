@@ -13597,7 +13597,7 @@ function functionFlags(async, generator) {
 	return SCOPE_FUNCTION | (async ? SCOPE_ASYNC : 0) | (generator ? SCOPE_GENERATOR : 0);
 }
 var BIND_NONE = 0, BIND_VAR = 1, BIND_LEXICAL = 2, BIND_FUNCTION = 3, BIND_SIMPLE_CATCH = 4, BIND_OUTSIDE = 5;
-var Parser$1 = function Parser(options, input, startPos) {
+var Parser$2 = function Parser(options, input, startPos) {
 	this.options = options = getOptions(options);
 	this.sourceFile = options.sourceFile;
 	this.keywords = wordsRegexp(keywords$1[options.ecmaVersion >= 6 ? 6 : options.sourceType === "module" ? "5module" : 5]);
@@ -13652,7 +13652,7 @@ var prototypeAccessors = {
 	allowNewDotTarget: { configurable: true },
 	inClassStaticBlock: { configurable: true }
 };
-Parser$1.prototype.parse = function parse() {
+Parser$2.prototype.parse = function parse() {
 	var node = this.options.program || this.startNode();
 	this.nextToken();
 	return this.parseTopLevel(node);
@@ -13693,26 +13693,26 @@ prototypeAccessors.allowNewDotTarget.get = function() {
 prototypeAccessors.inClassStaticBlock.get = function() {
 	return (this.currentVarScope().flags & SCOPE_CLASS_STATIC_BLOCK) > 0;
 };
-Parser$1.extend = function extend() {
+Parser$2.extend = function extend() {
 	var plugins = [], len = arguments.length;
 	while (len--) plugins[len] = arguments[len];
 	var cls = this;
 	for (var i = 0; i < plugins.length; i++) cls = plugins[i](cls);
 	return cls;
 };
-Parser$1.parse = function parse(input, options) {
+Parser$2.parse = function parse(input, options) {
 	return new this(options, input).parse();
 };
-Parser$1.parseExpressionAt = function parseExpressionAt(input, pos, options) {
+Parser$2.parseExpressionAt = function parseExpressionAt(input, pos, options) {
 	var parser = new this(options, input, pos);
 	parser.nextToken();
 	return parser.parseExpression();
 };
-Parser$1.tokenizer = function tokenizer(input, options) {
+Parser$2.tokenizer = function tokenizer(input, options) {
 	return new this(options, input);
 };
-Object.defineProperties(Parser$1.prototype, prototypeAccessors);
-var pp$9 = Parser$1.prototype;
+Object.defineProperties(Parser$2.prototype, prototypeAccessors);
+var pp$9 = Parser$2.prototype;
 var literal$1 = /^(?:'((?:\\[^]|[^'\\])*?)'|"((?:\\[^]|[^"\\])*?)")/;
 pp$9.strictDirective = function(start) {
 	if (this.options.ecmaVersion < 5) return false;
@@ -13800,7 +13800,7 @@ pp$9.isSimpleAssignTarget = function(expr) {
 	if (expr.type === "ParenthesizedExpression") return this.isSimpleAssignTarget(expr.expression);
 	return expr.type === "Identifier" || expr.type === "MemberExpression";
 };
-var pp$8 = Parser$1.prototype;
+var pp$8 = Parser$2.prototype;
 pp$8.parseTopLevel = function(node) {
 	var exports = Object.create(null);
 	if (!node.body) node.body = [];
@@ -14643,7 +14643,7 @@ pp$8.adaptDirectivePrologue = function(statements) {
 pp$8.isDirectiveCandidate = function(statement) {
 	return this.options.ecmaVersion >= 5 && statement.type === "ExpressionStatement" && statement.expression.type === "Literal" && typeof statement.expression.value === "string" && (this.input[statement.start] === "\"" || this.input[statement.start] === "'");
 };
-var pp$7 = Parser$1.prototype;
+var pp$7 = Parser$2.prototype;
 pp$7.toAssignable = function(node, isBinding, refDestructuringErrors) {
 	if (this.options.ecmaVersion >= 6 && node) switch (node.type) {
 		case "Identifier":
@@ -14845,7 +14845,7 @@ var types$2 = {
 	f_expr_gen: new TokContext("function", true, false, null, true),
 	f_gen: new TokContext("function", false, false, null, true)
 };
-var pp$6 = Parser$1.prototype;
+var pp$6 = Parser$2.prototype;
 pp$6.initialContext = function() {
 	return [types$2.b_stat];
 };
@@ -14930,7 +14930,7 @@ types$1.name.updateContext = function(prevType) {
 	}
 	this.exprAllowed = allowed;
 };
-var pp$5 = Parser$1.prototype;
+var pp$5 = Parser$2.prototype;
 pp$5.checkPropClash = function(prop, propHash, refDestructuringErrors) {
 	if (this.options.ecmaVersion >= 9 && prop.type === "SpreadElement") return;
 	if (this.options.ecmaVersion >= 6 && (prop.computed || prop.method || prop.shorthand)) return;
@@ -15693,7 +15693,7 @@ pp$5.parseAwait = function(forInit) {
 	node.argument = this.parseMaybeUnary(null, true, false, forInit);
 	return this.finishNode(node, "AwaitExpression");
 };
-var pp$4 = Parser$1.prototype;
+var pp$4 = Parser$2.prototype;
 pp$4.raise = function(pos, message) {
 	var loc = getLineInfo(this.input, pos);
 	message += " (" + loc.line + ":" + loc.column + ")";
@@ -15708,7 +15708,7 @@ pp$4.raiseRecoverable = pp$4.raise;
 pp$4.curPosition = function() {
 	if (this.options.locations) return new Position(this.curLine, this.pos - this.lineStart);
 };
-var pp$3 = Parser$1.prototype;
+var pp$3 = Parser$2.prototype;
 var Scope = function Scope(flags) {
 	this.flags = flags;
 	this.var = [];
@@ -15775,7 +15775,7 @@ var Node$1 = function Node(parser, pos, loc) {
 	if (parser.options.directSourceFile) this.sourceFile = parser.options.directSourceFile;
 	if (parser.options.ranges) this.range = [pos, 0];
 };
-var pp$2 = Parser$1.prototype;
+var pp$2 = Parser$2.prototype;
 pp$2.startNode = function() {
 	return new Node$1(this, this.start, this.startLoc);
 };
@@ -15862,7 +15862,7 @@ for (var i$10 = 0, list$4 = [
 	var ecmaVersion = list$4[i$10];
 	buildUnicodeData(ecmaVersion);
 }
-var pp$1 = Parser$1.prototype;
+var pp$1 = Parser$2.prototype;
 var BranchID = function BranchID(parent, base) {
 	this.parent = parent;
 	this.base = base || this;
@@ -16766,7 +16766,7 @@ var Token$1 = function Token(p) {
 	if (p.options.locations) this.loc = new SourceLocation(p, p.startLoc, p.endLoc);
 	if (p.options.ranges) this.range = [p.start, p.end];
 };
-var pp = Parser$1.prototype;
+var pp = Parser$2.prototype;
 pp.next = function(ignoreEscapeSequenceInKeyword) {
 	if (!ignoreEscapeSequenceInKeyword && this.type.keyword && this.containsEsc) this.raiseRecoverable(this.start, "Escape sequence in keyword " + this.type.keyword);
 	if (this.options.onToken) this.options.onToken(new Token$1(this));
@@ -17352,8 +17352,8 @@ pp.readWord = function() {
 	if (this.keywords.test(word)) type = keywords[word];
 	return this.finishToken(type, word);
 };
-Parser$1.acorn = {
-	Parser: Parser$1,
+Parser$2.acorn = {
+	Parser: Parser$2,
 	version: "8.15.0",
 	defaultOptions: defaultOptions$1,
 	Position,
@@ -69901,15 +69901,26 @@ var MATH_FUNCTIONS = [
 ];
 var SAMPLE_VARIABLES = [
 	["epoch", "The epoch (run) number of the sample"],
+	["completed", "Whether the sample completed (true unless still running)"],
 	["has_error", "Checks if the sample has an error"],
+	["has_limit", "Checks if the sample stopped due to a limit"],
 	["has_retries", "Checks if the sample has been retried"],
 	["id", "The unique identifier of the sample"],
 	[kSampleUuidVariable, "The globally unique identifier of the sample run"],
+	["input", "The sample input as a string"],
+	["target", "The sample target as a string"],
+	["answer", "The sample answer (from the selected scorer)"],
+	["error", "The sample error message (or null)"],
+	["limit", "The limit kind that stopped the sample (or null)"],
+	["retries", "The number of times the sample was retried (0 if none)"],
+	["tokens", "Total tokens used across all models (or null)"],
+	["duration", "Total wall-clock time of the sample, in seconds (or null)"],
 	[kSampleMetadataVariable, "Metadata associated with the sample"]
 ];
 var SAMPLE_FUNCTIONS = [
 	["input_contains", "Checks if input contains a regular expression"],
 	["target_contains", "Checks if target contains a regular expression"],
+	["answer_contains", "Checks if answer contains a regular expression"],
 	["error_contains", "Checks if error contains a regular expression"],
 	["is_nan", "Checks if a numeric value is NaN (e.g. is_nan(score))"]
 ];
@@ -69985,13 +69996,28 @@ var getNestedPropertyValue = (obj, path) => {
 	else return;
 	return current;
 };
-var sampleVariables = (sample) => {
+var totalTokens = (sample) => {
+	if (!sample.model_usage) return null;
+	return Object.values(sample.model_usage).reduce((sum, u) => sum + (u.total_tokens ?? 0), 0);
+};
+var targetString = (target) => Array.isArray(target) ? target.join(", ") : target ?? "";
+var sampleVariables = (sample, samplesDescriptor) => {
 	return {
 		epoch: sample.epoch,
 		has_error: !!sample.error,
+		has_limit: !!sample.limit,
 		has_retries: sample.retries !== void 0 && sample.retries > 0,
+		completed: sample.completed ?? true,
 		id: sample.id,
 		uuid: sample.uuid ?? null,
+		input: inputString(sample.input).join(" "),
+		target: targetString(sample.target),
+		answer: samplesDescriptor?.selectedScorerDescriptor(sample)?.answer() ?? null,
+		error: sample.error ?? null,
+		limit: sample.limit ?? null,
+		retries: sample.retries ?? 0,
+		tokens: totalTokens(sample),
+		duration: sample.total_time ?? null,
 		metadata: sample.metadata
 	};
 };
@@ -70058,8 +70084,9 @@ var sampleFilterItems = (evalDescriptor) => {
 	}
 	return items;
 };
-var filterExpression = (evalDescriptor, sample, filterValue) => {
+var filterExpression = (samplesDescriptor, sample, filterValue) => {
 	try {
+		const evalDescriptor = samplesDescriptor.evalDescriptor;
 		const inputContains = (regex) => {
 			return inputString(sample.input).some((msg) => msg.match(new RegExp(regex, "i")));
 		};
@@ -70069,14 +70096,18 @@ var filterExpression = (evalDescriptor, sample, filterValue) => {
 		const errorContains = (regex) => {
 			return !!sample.error?.match(new RegExp(regex, "i"));
 		};
+		const answerContains = (regex) => {
+			return !!(samplesDescriptor.selectedScorerDescriptor(sample)?.answer())?.match(new RegExp(regex, "i"));
+		};
 		const isNan = (value) => typeof value === "number" && Number.isNaN(value);
 		const extraFunctions = {
 			input_contains: inputContains,
 			target_contains: targetContains,
 			error_contains: errorContains,
+			answer_contains: answerContains,
 			is_nan: isNan
 		};
-		const mySampleVariables = sampleVariables(sample);
+		const mySampleVariables = sampleVariables(sample, samplesDescriptor);
 		const vars = {
 			...mySampleVariables,
 			...scoreVariables(evalDescriptor, sample.scores)
@@ -70139,13 +70170,13 @@ var filterExpression = (evalDescriptor, sample, filterValue) => {
 		};
 	}
 };
-var filterSamples = (evalDescriptor, samples, filterValue) => {
+var filterSamples = (samplesDescriptor, samples, filterValue) => {
 	let error = void 0;
 	let errorCount = 0;
 	return {
 		result: samples.filter((sample) => {
 			if (filterValue) {
-				const { matches, error: sampleError } = filterExpression(evalDescriptor, sample, filterValue);
+				const { matches, error: sampleError } = filterExpression(samplesDescriptor, sample, filterValue);
 				error ||= sampleError;
 				if (sampleError) errorCount++;
 				return matches;
@@ -70334,13 +70365,13 @@ var useSampleDescriptor = () => {
 	]);
 };
 var useFilteredSamples = () => {
-	const evalDescriptor = useEvalDescriptor();
+	const samplesDescriptor = useSampleDescriptor();
 	const sampleSummaries = useSampleSummaries();
 	const filter = useStore((state) => state.log.filter);
 	const setFilterError = useStore((state) => state.logActions.setFilterError);
 	const clearFilterError = useStore((state) => state.logActions.clearFilterError);
 	return (0, import_react.useMemo)(() => {
-		const { result, error, allErrors } = evalDescriptor && filter ? filterSamples(evalDescriptor, sampleSummaries, filter) : {
+		const { result, error, allErrors } = samplesDescriptor && filter ? filterSamples(samplesDescriptor, sampleSummaries, filter) : {
 			result: sampleSummaries,
 			error: void 0,
 			allErrors: false
@@ -70355,7 +70386,7 @@ var useFilteredSamples = () => {
 			return a.epoch - b.epoch;
 		});
 	}, [
-		evalDescriptor,
+		samplesDescriptor,
 		sampleSummaries,
 		filter,
 		setFilterError,
@@ -119348,16 +119379,16 @@ var createGridKeyboardHandler = ({ gridRef, onOpenRow, pageJump = 10 }) => {
 	};
 };
 var SamplesGrid_module_default = {
-	gridWrapper: "_gridWrapper_1ljdd_1",
-	gridContainer: "_gridContainer_1ljdd_7",
-	gridChrome: "_gridChrome_1ljdd_18",
-	listMode: "_listMode_1ljdd_61",
-	gridMode: "_gridMode_1ljdd_69",
-	cell: "_cell_1ljdd_74",
-	wrapAnywhere: "_wrapAnywhere_1ljdd_78",
-	noLeft: "_noLeft_1ljdd_82",
-	score: "_score_1ljdd_86",
-	centered: "_centered_1ljdd_93"
+	gridWrapper: "_gridWrapper_gp0n4_1",
+	gridContainer: "_gridContainer_gp0n4_7",
+	gridChrome: "_gridChrome_gp0n4_18",
+	listMode: "_listMode_gp0n4_65",
+	gridMode: "_gridMode_gp0n4_73",
+	cell: "_cell_gp0n4_78",
+	wrapAnywhere: "_wrapAnywhere_gp0n4_82",
+	noLeft: "_noLeft_gp0n4_86",
+	score: "_score_gp0n4_90",
+	centered: "_centered_gp0n4_97"
 };
 //#endregion
 //#region src/app/shared/useApplyColumnVisibility.ts
@@ -122201,7 +122232,7 @@ var hasVisibleContent = (message) => {
 		if (c.type === "reasoning") {
 			const hasReasoning = c.reasoning.trim().length > 0;
 			const hasSummary = (c.summary?.trim().length ?? 0) > 0;
-			return hasReasoning || hasSummary || !!c.redacted;
+			return hasReasoning || hasSummary;
 		}
 		return true;
 	});
@@ -155705,7 +155736,7 @@ var TreeFragment = class TreeFragment {
 /**
 A superclass that parsers should extend.
 */
-var Parser = class {
+var Parser$1 = class {
 	/**
 	Start a parse, returning a [partial parse](#common.PartialParse)
 	object. [`fragments`](#common.TreeFragment) can be passed in to
@@ -156961,7 +156992,7 @@ var ParseContext = class ParseContext {
 	promise resolves.
 	*/
 	static getSkippingParser(until) {
-		return new class extends Parser {
+		return new class extends Parser$1 {
 			createParse(input, fragments, ranges) {
 				let from = ranges[0].from, to = ranges[ranges.length - 1].to;
 				return {
@@ -158419,7 +158450,7 @@ var StreamLanguage = class StreamLanguage extends Language {
 	constructor(parser) {
 		let data = defineLanguageFacet(parser.languageData);
 		let p = fullParser(parser), self;
-		let impl = new class extends Parser {
+		let impl = new class extends Parser$1 {
 			createParse(input, fragments, ranges) {
 				return new Parse(self, input, fragments, ranges);
 			}
@@ -163679,8 +163710,8 @@ var minimalSetup = [
 //#endregion
 //#region src/app/samples/sample-tools/sample-filter/tokenize.ts
 var TOKEN_PATTERNS = {
-	STRING: /^"[^"]*"/,
-	UNTERMINATED_STRING: /^"[^"]*/,
+	STRING: /^"(?:\\"|\\\\|[^"\\])*"/,
+	UNTERMINATED_STRING: /^"(?:\\"|\\\\|[^"\\])*/,
 	NUMBER: /^(-|\+)?\d+(\.\d+)?/,
 	RELATION: /^(==|!=|<=|>=|<|>|~=)/,
 	MISC_OPERATOR: /^(=|!|~)/,
@@ -164429,6 +164460,628 @@ var ScoreFilterTools = () => {
 	});
 };
 //#endregion
+//#region src/app/samples/sample-tools/astToFilterModel.ts
+var REGEX_META = ".*+?^${}()|[]\\";
+var META_FOR_CLASS = ".*+?^${}()|[]";
+/** Walk top-level `and` nodes, collecting leaf predicates. */
+var collectAndPredicates = (ast) => {
+	if (ast.kind === "binary" && ast.op === "and") return [...collectAndPredicates(ast.left), ...collectAndPredicates(ast.right)];
+	return [ast];
+};
+/** Try to interpret a `~=` regex literal as `^prefix`, `suffix$`, both, or
+*  plain `contains`. Returns `null` if the regex contains real metachars
+*  beyond the optional anchors. */
+var parseRegexLiteral = (raw) => {
+	let s = raw;
+	let anchorStart = false;
+	let anchorEnd = false;
+	if (s.startsWith("^")) {
+		anchorStart = true;
+		s = s.slice(1);
+	}
+	if (s.endsWith("$") && !s.endsWith("\\$")) {
+		anchorEnd = true;
+		s = s.slice(0, -1);
+	}
+	let literal = "";
+	let i = 0;
+	while (i < s.length) {
+		const ch = s[i];
+		if (ch === "[" && i + 2 < s.length && s[i + 2] === "]" && META_FOR_CLASS.includes(s[i + 1])) {
+			literal += s[i + 1];
+			i += 3;
+			continue;
+		}
+		if (ch === "\\" && i + 1 < s.length && s[i + 1] === "\\") {
+			literal += "\\";
+			i += 2;
+			continue;
+		}
+		if (REGEX_META.includes(ch)) return null;
+		literal += ch;
+		i++;
+	}
+	if (anchorStart && anchorEnd) return {
+		anchor: "both",
+		literal
+	};
+	if (anchorStart) return {
+		anchor: "start",
+		literal
+	};
+	if (anchorEnd) return {
+		anchor: "end",
+		literal
+	};
+	return {
+		anchor: "none",
+		literal
+	};
+};
+/** Walk past a leading `not` to surface the inner predicate plus the
+*  effective negation count (parity). */
+var stripNot = (ast) => {
+	let negated = false;
+	let inner = ast;
+	while (inner.kind === "unary" && inner.op === "not") {
+		negated = !negated;
+		inner = inner.arg;
+	}
+	return {
+		negated,
+		inner
+	};
+};
+var opposite = {
+	equals: "notEqual",
+	notEqual: "equals",
+	contains: "notContains",
+	notContains: "contains",
+	blank: "notBlank",
+	notBlank: "blank"
+};
+/** Map a leaf predicate to a single-column condition. Returns null when
+*  the predicate isn't round-trippable. */
+var predicateToCondition = (ast, registry) => {
+	const { negated, inner } = stripNot(ast);
+	const result = predicateToConditionInner(inner, registry);
+	if (!result) return null;
+	if (!negated) return result;
+	const flipped = opposite[result.condition.type];
+	if (!flipped) return null;
+	return {
+		...result,
+		condition: {
+			...result.condition,
+			type: flipped
+		}
+	};
+};
+/** The non-negated portion of `predicateToCondition`. */
+var predicateToConditionInner = (ast, registry) => {
+	if (ast.kind === "call" && ast.args.length === 1) {
+		const fn = ast.fn;
+		const arg = ast.args[0];
+		if (arg.kind !== "str") return null;
+		const colId = colIdForContainsFn(fn, registry);
+		if (!colId) return null;
+		const mapping = registry.byColId.get(colId);
+		const parsed = parseRegexLiteral(arg.value);
+		if (!parsed || parsed.anchor !== "none") return null;
+		return {
+			colId,
+			filterType: filterTypeFor(mapping),
+			condition: {
+				type: "contains",
+				filter: parsed.literal
+			}
+		};
+	}
+	if (ast.kind === "binary") return binaryToCondition(ast, registry);
+	return null;
+};
+var colIdForContainsFn = (fn, registry) => {
+	for (const [colId, mapping] of registry.byColId) if (mapping.containsFn === fn) return colId;
+	return null;
+};
+var filterTypeFor = (m) => m.kind === "number" ? "number" : "text";
+var binaryToCondition = (ast, registry) => {
+	if (ast.left.kind !== "var") return null;
+	const colId = registry.byVariable.get(ast.left.name);
+	if (!colId) return null;
+	const mapping = registry.byColId.get(colId);
+	if (ast.right.kind === "const" && ast.right.name === "None") {
+		if (ast.op === "==") return {
+			colId,
+			filterType: filterTypeFor(mapping),
+			condition: { type: "blank" }
+		};
+		if (ast.op === "!=") return {
+			colId,
+			filterType: filterTypeFor(mapping),
+			condition: { type: "notBlank" }
+		};
+		return null;
+	}
+	if (ast.op === "~=" && ast.right.kind === "str") {
+		if (mapping.kind !== "string") return null;
+		const parsed = parseRegexLiteral(ast.right.value);
+		if (!parsed) return null;
+		let type;
+		switch (parsed.anchor) {
+			case "both":
+				type = "equals";
+				break;
+			case "start":
+				type = "startsWith";
+				break;
+			case "end":
+				type = "endsWith";
+				break;
+			case "none":
+				type = "contains";
+				break;
+		}
+		return {
+			colId,
+			filterType: "text",
+			condition: {
+				type,
+				filter: parsed.literal
+			}
+		};
+	}
+	if (mapping.kind === "number" && ast.right.kind === "num") {
+		const type = {
+			"==": "equals",
+			"!=": "notEqual",
+			"<": "lessThan",
+			"<=": "lessThanOrEqual",
+			">": "greaterThan",
+			">=": "greaterThanOrEqual"
+		}[ast.op];
+		if (!type) return null;
+		return {
+			colId,
+			filterType: "number",
+			condition: {
+				type,
+				filter: ast.right.value
+			}
+		};
+	}
+	if (mapping.kind === "string" && ast.right.kind === "str") {
+		if (ast.op === "==") return {
+			colId,
+			filterType: "text",
+			condition: {
+				type: "equals",
+				filter: ast.right.value
+			}
+		};
+		if (ast.op === "!=") return {
+			colId,
+			filterType: "text",
+			condition: {
+				type: "notEqual",
+				filter: ast.right.value
+			}
+		};
+	}
+	return null;
+};
+/** Detect the inRange pattern: `>= a` AND `<= b` on the same numeric
+*  column. Returns the equivalent simple condition or null. */
+var tryInRange = (conds) => {
+	if (conds.length !== 2) return null;
+	const [a, b] = conds;
+	let lower;
+	let upper;
+	for (const c of [a, b]) if (c.type === "greaterThanOrEqual" && typeof c.filter === "number") lower = c.filter;
+	else if (c.type === "lessThanOrEqual" && typeof c.filter === "number") upper = c.filter;
+	if (lower === void 0 || upper === void 0) return null;
+	return {
+		type: "inRange",
+		filter: lower,
+		filterTo: upper
+	};
+};
+/**
+* Try to express the AST as an ag-grid `FilterModel`. The recognized
+* subset is a top-level conjunction of column predicates — anything
+* else (`or`, arithmetic, function calls outside `xxx_contains`,
+* unsupported operators) returns `null`, signaling to the caller that
+* the text is "expression-only".
+*/
+var astToFilterModel = (ast, registry) => {
+	const predicates = collectAndPredicates(ast);
+	const perColumn = /* @__PURE__ */ new Map();
+	for (const pred of predicates) {
+		const result = predicateToCondition(pred, registry);
+		if (!result) return null;
+		let entry = perColumn.get(result.colId);
+		if (!entry) {
+			entry = {
+				filterType: result.filterType,
+				conditions: []
+			};
+			perColumn.set(result.colId, entry);
+		}
+		if (entry.filterType !== result.filterType) return null;
+		entry.conditions.push(result.condition);
+	}
+	const model = {};
+	for (const [colId, entry] of perColumn) if (entry.conditions.length === 1) model[colId] = {
+		filterType: entry.filterType,
+		...entry.conditions[0]
+	};
+	else if (entry.conditions.length === 2) {
+		const range = tryInRange(entry.conditions);
+		if (range) model[colId] = {
+			filterType: entry.filterType,
+			...range
+		};
+		else model[colId] = {
+			filterType: entry.filterType,
+			operator: "AND",
+			conditions: entry.conditions
+		};
+	} else return null;
+	return model;
+};
+//#endregion
+//#region src/app/samples/sample-tools/filterAst.ts
+var RELATION_OPS = new Set([
+	"==",
+	"!=",
+	"<",
+	"<=",
+	">",
+	">=",
+	"~="
+]);
+var Parser = class {
+	pos = 0;
+	constructor(tokens) {
+		this.tokens = tokens;
+	}
+	peek(offset = 0) {
+		return this.tokens[this.pos + offset];
+	}
+	eat() {
+		return this.tokens[this.pos++];
+	}
+	match(type, text) {
+		const t = this.peek();
+		if (!t || t.type !== type) return false;
+		if (text !== void 0 && t.text !== text) return false;
+		return true;
+	}
+	consume(type, text) {
+		const t = this.peek();
+		if (!t || t.type !== type || text !== void 0 && t.text !== text) throw this.error(`Expected ${text ?? type}${t ? `, got "${t.text}"` : ""}`);
+		return this.eat();
+	}
+	error(message) {
+		return {
+			message,
+			position: this.peek()?.from ?? this.tokens.at(-1)?.to ?? 0
+		};
+	}
+	parse() {
+		const expr = this.parseOr();
+		if (this.pos < this.tokens.length) throw this.error(`Unexpected "${this.peek().text}"`);
+		return expr;
+	}
+	parseOr() {
+		let left = this.parseAnd();
+		while (this.match("keyword", "or")) {
+			this.eat();
+			const right = this.parseAnd();
+			left = {
+				kind: "binary",
+				op: "or",
+				left,
+				right
+			};
+		}
+		return left;
+	}
+	parseAnd() {
+		let left = this.parseNot();
+		while (this.match("keyword", "and")) {
+			this.eat();
+			const right = this.parseNot();
+			left = {
+				kind: "binary",
+				op: "and",
+				left,
+				right
+			};
+		}
+		return left;
+	}
+	parseNot() {
+		if (this.match("keyword", "not")) {
+			this.eat();
+			return {
+				kind: "unary",
+				op: "not",
+				arg: this.parseNot()
+			};
+		}
+		return this.parseInOrRelation();
+	}
+	parseInOrRelation() {
+		const left = this.parseRelation();
+		if (this.match("keyword", "in") || this.match("keyword", "not in")) {
+			const negated = this.peek().text === "not in";
+			this.eat();
+			this.consume("miscOperator", "(");
+			const values = [];
+			if (!this.match("miscOperator", ")")) {
+				values.push(this.parseOr());
+				while (this.match("miscOperator", ",")) {
+					this.eat();
+					values.push(this.parseOr());
+				}
+			}
+			this.consume("miscOperator", ")");
+			return {
+				kind: "in",
+				left,
+				values,
+				negated
+			};
+		}
+		return left;
+	}
+	parseRelation() {
+		const left = this.parseAdd();
+		const t = this.peek();
+		if (t && t.type === "relation" && RELATION_OPS.has(t.text)) {
+			this.eat();
+			const right = this.parseAdd();
+			return {
+				kind: "binary",
+				op: t.text,
+				left,
+				right
+			};
+		}
+		return left;
+	}
+	parseAdd() {
+		let left = this.parseMul();
+		while (this.match("miscOperator", "+") || this.match("miscOperator", "-")) {
+			const op = this.eat().text;
+			const right = this.parseMul();
+			left = {
+				kind: "binary",
+				op,
+				left,
+				right
+			};
+		}
+		return left;
+	}
+	parseMul() {
+		let left = this.parsePow();
+		while (this.match("miscOperator", "*") || this.match("miscOperator", "/") || this.match("keyword", "mod")) {
+			const op = this.eat().text;
+			const right = this.parsePow();
+			left = {
+				kind: "binary",
+				op,
+				left,
+				right
+			};
+		}
+		return left;
+	}
+	parsePow() {
+		const left = this.parseUnary();
+		if (this.match("miscOperator", "^")) {
+			this.eat();
+			return {
+				kind: "binary",
+				op: "^",
+				left,
+				right: this.parsePow()
+			};
+		}
+		return left;
+	}
+	parseUnary() {
+		if (this.match("miscOperator", "-")) {
+			this.eat();
+			return {
+				kind: "unary",
+				op: "-",
+				arg: this.parseUnary()
+			};
+		}
+		return this.parsePrimary();
+	}
+	parsePrimary() {
+		const t = this.peek();
+		if (!t) throw this.error("Unexpected end of expression");
+		if (t.type === "number") {
+			this.eat();
+			return {
+				kind: "num",
+				value: parseFloat(t.text)
+			};
+		}
+		if (t.type === "string") {
+			this.eat();
+			return {
+				kind: "str",
+				value: t.text.slice(1, -1).replace(/\\(["\\])/g, "$1")
+			};
+		}
+		if (t.type === "unterminatedString") throw this.error("Unterminated string literal");
+		if (t.type === "miscOperator" && t.text === "(") {
+			this.eat();
+			const inner = this.parseOr();
+			this.consume("miscOperator", ")");
+			return inner;
+		}
+		if (t.type === "variable" || t.type === "sampleFunction" || t.type === "mathFunction") {
+			this.eat();
+			const name = this.parseDottedTail(t.text);
+			if (this.match("miscOperator", "(")) {
+				this.eat();
+				const args = [];
+				if (!this.match("miscOperator", ")")) {
+					args.push(this.parseOr());
+					while (this.match("miscOperator", ",")) {
+						this.eat();
+						args.push(this.parseOr());
+					}
+				}
+				this.consume("miscOperator", ")");
+				return {
+					kind: "call",
+					fn: name,
+					args
+				};
+			}
+			if (name === "True" || name === "False" || name === "None") return {
+				kind: "const",
+				name
+			};
+			return {
+				kind: "var",
+				name
+			};
+		}
+		throw this.error(`Unexpected "${t.text}"`);
+	}
+	/** Consume `.ident` repeats and return the joined identifier. */
+	parseDottedTail(head) {
+		let name = head;
+		while (this.match("miscOperator", ".") && this.peek(1)?.type === "variable") {
+			this.eat();
+			name += "." + this.eat().text;
+		}
+		return name;
+	}
+};
+/** Parse a filtrex expression into an AST. Returns `{ ast: null, error }`
+*  on failure — callers fall back gracefully without recovery. */
+function parseFilter(text) {
+	if (text.trim() === "") return {
+		ast: null,
+		error: null
+	};
+	const parser = new Parser(tokenize(text).filter((t) => t.type !== "null"));
+	try {
+		return {
+			ast: parser.parse(),
+			error: null
+		};
+	} catch (e) {
+		if (typeof e === "object" && e !== null && "message" in e) return {
+			ast: null,
+			error: e
+		};
+		return {
+			ast: null,
+			error: {
+				message: String(e),
+				position: 0
+			}
+		};
+	}
+}
+//#endregion
+//#region src/app/samples/sample-tools/filterModelToText.ts
+var regexEscape = (s) => s.replace(/\\/g, "\\\\").replace(/[.*+?^${}()|[\]]/g, "[$&]");
+var stringLiteral = (s) => `"${s.replace(/[\\"]/g, "\\$&")}"`;
+var numberLiteral = (n) => String(n);
+/** Convert a single ag-grid simple condition into a filtrex predicate
+*  (string), or `null` if we can't represent it. */
+var conditionToFiltrex = (mapping, cond) => {
+	const v = mapping.variable;
+	const t = cond.type;
+	if (!t) return null;
+	if (t === "blank") return `${v} == None`;
+	if (t === "notBlank") return `${v} != None`;
+	if (mapping.kind === "number") {
+		const f = cond.filter;
+		if (typeof f !== "number" || !Number.isFinite(f)) return null;
+		switch (t) {
+			case "equals": return `${v} == ${numberLiteral(f)}`;
+			case "notEqual": return `${v} != ${numberLiteral(f)}`;
+			case "lessThan": return `${v} < ${numberLiteral(f)}`;
+			case "lessThanOrEqual": return `${v} <= ${numberLiteral(f)}`;
+			case "greaterThan": return `${v} > ${numberLiteral(f)}`;
+			case "greaterThanOrEqual": return `${v} >= ${numberLiteral(f)}`;
+			case "inRange": {
+				const to = cond.filterTo;
+				if (typeof to !== "number" || !Number.isFinite(to)) return null;
+				return `(${v} >= ${numberLiteral(f)} and ${v} <= ${numberLiteral(to)})`;
+			}
+			default: return null;
+		}
+	}
+	const f = cond.filter;
+	if (typeof f !== "string") return null;
+	switch (t) {
+		case "equals": return `${v} == ${stringLiteral(f)}`;
+		case "notEqual": return `${v} != ${stringLiteral(f)}`;
+		case "contains": return mapping.containsFn ? `${mapping.containsFn}(${stringLiteral(regexEscape(f))})` : `${v} ~= ${stringLiteral(regexEscape(f))}`;
+		case "notContains": return mapping.containsFn ? `not ${mapping.containsFn}(${stringLiteral(regexEscape(f))})` : `not (${v} ~= ${stringLiteral(regexEscape(f))})`;
+		case "startsWith": return `${v} ~= ${stringLiteral("^" + regexEscape(f))}`;
+		case "endsWith": return `${v} ~= ${stringLiteral(regexEscape(f) + "$")}`;
+		default: return null;
+	}
+};
+/** Convert a full per-column filter (simple OR combined) to a filtrex
+*  predicate. */
+var columnFilterToFiltrex = (mapping, filter) => {
+	const conditions = filter.conditions ?? [filter.condition1, filter.condition2].filter((c) => !!c);
+	if (conditions.length > 0 && filter.operator) {
+		if (filter.operator === "OR") return null;
+		const parts = conditions.map((c) => conditionToFiltrex(mapping, c)).filter((p) => p !== null);
+		if (parts.length === 0) return null;
+		if (parts.length === 1) return parts[0];
+		return `(${parts.join(" and ")})`;
+	}
+	return conditionToFiltrex(mapping, filter);
+};
+/**
+* Convert an ag-grid `FilterModel` into a filtrex expression suitable for
+* the toolbar text filter.
+*
+* Three return values, each with distinct semantics for the caller:
+*  - `""`     — the model is empty (no column filters); callers should
+*               clear the text.
+*  - `null`   — the model has entries but at least one isn't representable
+*               in the DSL (a partial conversion would lose information,
+*               so callers leave the text alone).
+*  - string   — every entry was representable; the synthesized expression.
+*
+* Returning `null` whenever *any* entry is unrepresentable (rather than
+* only when all are) is critical for round-trip safety: a partial text
+* would be projected back to a strict-subset model by the recognizer,
+* wiping the columns the synthesizer dropped.
+*/
+var filterModelToText = (model, registry) => {
+	if (!model || Object.keys(model).length === 0) return "";
+	const parts = [];
+	for (const [colId, filter] of Object.entries(model)) {
+		const mapping = registry.byColId.get(colId);
+		if (!mapping) return null;
+		const text = columnFilterToFiltrex(mapping, filter);
+		if (text === null) return null;
+		parts.push(text);
+	}
+	if (parts.length === 1) return parts[0];
+	return parts.join(" and ");
+};
+//#endregion
 //#region src/app/shared/samples-grid/cells.tsx
 /** Wraps truncated markdown in a 3-line-clamped cell. Used by list-mode
 *  renderers for `input`, `target`, `answer`. */
@@ -164764,17 +165417,19 @@ function buildScoreColumns(ctx) {
 		return scores.map((label) => {
 			const colId = perScorerFieldKey(label);
 			const headerName = useLabelHeader ? label.name : "Score";
+			const initialWidth = Math.max(70, Math.round(headerName.length * 6.2) + 40);
+			const isNumeric = descriptor.evalDescriptor.scoreDescriptor(label)?.scoreType === kScoreTypeNumeric;
 			return {
 				colId,
 				field: colId,
 				headerName,
-				initialWidth: Math.max(54, Math.round(headerName.length * 6.2) + 24),
-				minWidth: 44,
+				initialWidth,
+				minWidth: 60,
 				maxWidth: 120,
 				sortable: true,
-				filter: "agNumberColumnFilter",
+				filter: isNumeric ? "agNumberColumnFilter" : "agTextColumnFilter",
 				resizable: true,
-				comparator: comparators.number,
+				comparator: isNumeric ? comparators.number : (a, b) => String(a ?? "").localeCompare(String(b ?? "")),
 				valueGetter: (params) => {
 					const data = params.data?.data;
 					if (!data) return void 0;
@@ -164822,6 +165477,86 @@ function buildScoreColumns(ctx) {
 		};
 	});
 }
+//#endregion
+//#region src/app/samples/sample-tools/filterRegistry.ts
+var STATIC_ENTRIES = [
+	["sampleUuid", {
+		variable: "uuid",
+		kind: "string"
+	}],
+	["epoch", {
+		variable: "epoch",
+		kind: "number"
+	}],
+	["input", {
+		variable: "input",
+		kind: "string",
+		containsFn: "input_contains"
+	}],
+	["target", {
+		variable: "target",
+		kind: "string",
+		containsFn: "target_contains"
+	}],
+	["answer", {
+		variable: "answer",
+		kind: "string",
+		containsFn: "answer_contains"
+	}],
+	["tokens", {
+		variable: "tokens",
+		kind: "number"
+	}],
+	["duration", {
+		variable: "duration",
+		kind: "number"
+	}],
+	["error", {
+		variable: "error",
+		kind: "string",
+		containsFn: "error_contains"
+	}],
+	["limit", {
+		variable: "limit",
+		kind: "string"
+	}],
+	["retries", {
+		variable: "retries",
+		kind: "number"
+	}]
+];
+/** Build the column↔filtrex-variable registry. Score columns are added
+*  dynamically from `evalDescriptor.scores` so the variable name matches
+*  the same short/qualified rule used by `scoreVariables` in filters.ts. */
+var buildSampleFilterRegistry = (evalDescriptor) => {
+	const entries = [...STATIC_ENTRIES];
+	if (evalDescriptor) {
+		const banned = bannedShortScoreNames(evalDescriptor.scores);
+		for (const { name, scorer } of evalDescriptor.scores) {
+			const colId = perScorerFieldKey({
+				name,
+				scorer
+			});
+			const variable = name === scorer || !banned.has(name) ? name : `${scorer}.${name}`;
+			const scoreType = evalDescriptor.scoreDescriptor({
+				name,
+				scorer
+			})?.scoreType;
+			let kind;
+			if (scoreType === "numeric") kind = "number";
+			else if (scoreType === "categorical" || scoreType === "passfail") kind = "string";
+			else continue;
+			entries.push([colId, {
+				variable,
+				kind
+			}]);
+		}
+	}
+	return {
+		byColId: new Map(entries),
+		byVariable: new Map(entries.map(([colId, m]) => [m.variable, colId]))
+	};
+};
 //#endregion
 //#region src/app/shared/samples-grid/useSampleGridState.ts
 /** Removes any active filter for a field whose visibility map says
@@ -165102,9 +165837,54 @@ var SamplesTab = ({ running, scrollRef, showColumnSelector, setShowColumnSelecto
 		selectedLogFile
 	]);
 	const [filteredFields, setFilteredFields] = (0, import_react.useState)([]);
+	const filterRegistry = (0, import_react.useMemo)(() => buildSampleFilterRegistry(samplesDescriptor?.evalDescriptor), [samplesDescriptor]);
+	const setFilter = useStore((state) => state.logActions.setFilter);
+	const currentFilter = useStore((state) => state.log.filter);
+	const currentFilterRef = (0, import_react.useRef)(currentFilter);
+	currentFilterRef.current = currentFilter;
+	/** Parse `text` and project it to the FilterModel the column UI
+	*  should be holding — `{}` for empty or non-round-trippable text. */
+	const filterModelFromText = (0, import_react.useCallback)((text) => {
+		const { ast } = parseFilter(text);
+		return ast ? astToFilterModel(ast, filterRegistry) ?? {} : {};
+	}, [filterRegistry]);
 	const handleFilterChanged = (0, import_react.useCallback)((api) => {
-		setFilteredFields(Object.keys(api.getFilterModel() ?? {}));
-	}, []);
+		const model = api.getFilterModel() ?? {};
+		setFilteredFields(Object.keys(model));
+		const fromText = filterModelFromText(currentFilterRef.current);
+		if (JSON.stringify(fromText) === JSON.stringify(model)) return;
+		const synthesized = filterModelToText(model, filterRegistry);
+		if (synthesized === null) return;
+		if (synthesized !== currentFilterRef.current) setFilter(synthesized);
+	}, [
+		filterRegistry,
+		filterModelFromText,
+		setFilter
+	]);
+	(0, import_react.useEffect)(() => {
+		const api = sampleListHandle.current?.api;
+		if (!api) return;
+		const desired = filterModelFromText(currentFilter);
+		const current = api.getFilterModel() ?? {};
+		const merged = { ...desired };
+		for (const [colId, filter] of Object.entries(current)) if (!(filterModelToText({ [colId]: filter }, filterRegistry) !== null) && !(colId in desired)) merged[colId] = filter;
+		if (JSON.stringify(current) === JSON.stringify(merged)) return;
+		api.setFilterModel(merged);
+	}, [
+		currentFilter,
+		filterModelFromText,
+		filterRegistry
+	]);
+	const columnFilteringAllowed = (0, import_react.useMemo)(() => {
+		if (!currentFilter.trim()) return true;
+		const { ast } = parseFilter(currentFilter);
+		if (!ast) return false;
+		return astToFilterModel(ast, filterRegistry) !== null;
+	}, [currentFilter, filterRegistry]);
+	const gridColumns = (0, import_react.useMemo)(() => columnFilteringAllowed ? allColumns : allColumns.map((col) => ({
+		...col,
+		suppressHeaderFilterButton: true
+	})), [allColumns, columnFilteringAllowed]);
 	if (totalSampleCount === 0) if (running) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RunningNoSamples, {});
 	else return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, { text: "No samples" });
 	const inlineDisplay = samplesDescriptor && totalSampleCount === 1;
@@ -165117,7 +165897,7 @@ var SamplesTab = ({ running, scrollRef, showColumnSelector, setShowColumnSelecto
 		listDisplay ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleList, {
 			listHandle: sampleListHandle,
 			items,
-			columns: allColumns,
+			columns: gridColumns,
 			columnVisibility: visibilityForGrid,
 			earlyStopping: selectedLogDetails?.results?.early_stopping,
 			totalItemCount: evalSampleCount,
