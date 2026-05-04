@@ -65056,6 +65056,59 @@ var resolveSample$1 = (sample) => {
 	sample.attachments = {};
 	return sample;
 };
+/**
+* Build a minimal EvalSample from a pending-buffer summary that has errored.
+*
+* SampleSummary.error is a plain string but EvalSample.error is shaped
+* `{ message, traceback, traceback_ansi }`; we populate all three with the
+* same string since no real traceback is available.
+*/
+var synthesizeErroredSampleFromSummary = (summary) => {
+	if (!summary.error) throw new Error("synthesizeErroredSampleFromSummary requires summary.error to be set");
+	const errorMessage = summary.error;
+	return {
+		id: summary.id,
+		epoch: summary.epoch,
+		uuid: summary.uuid,
+		input: summary.input,
+		target: summary.target,
+		scores: summary.scores ?? null,
+		metadata: summary.metadata ?? {},
+		model_usage: summary.model_usage ?? {},
+		started_at: summary.started_at ?? null,
+		completed_at: summary.completed_at ?? null,
+		total_time: summary.total_time ?? null,
+		working_time: summary.working_time ?? null,
+		limit: null,
+		error: {
+			message: errorMessage,
+			traceback: errorMessage,
+			traceback_ansi: errorMessage
+		},
+		messages: [],
+		events: [],
+		attachments: {},
+		output: {
+			model: "",
+			choices: [],
+			usage: null
+		},
+		store: {}
+	};
+};
+//#endregion
+//#region src/state/utils.ts
+var mergeSampleSummaries = (logSamples, pendingSamples) => {
+	const existingSampleIds = new Set(logSamples.map((sample) => `${sample.id}-${sample.epoch}`));
+	const uniquePendingSamples = pendingSamples.filter((sample) => !existingSampleIds.has(`${sample.id}-${sample.epoch}`)).map((sample) => {
+		if (sample.completed === true && !!sample.error) return { ...sample };
+		return {
+			...sample,
+			completed: false
+		};
+	});
+	return [...logSamples, ...uniquePendingSamples];
+};
 //#endregion
 //#region src/state/samplePolling.ts
 var log$6 = createLogger("samplePolling");
@@ -65105,7 +65158,10 @@ function createSamplePolling(store) {
 				stopPollingTimer();
 				try {
 					log$6.debug(message);
-					const sample = await api.get_log_sample(logFile, summary.id, summary.epoch);
+					const sample = await api.get_log_sample(logFile, summary.id, summary.epoch) ?? (() => {
+						const liveSummary = findLiveSummary(store.getState(), summary.id, summary.epoch);
+						return liveSummary?.error ? synthesizeErroredSampleFromSummary(liveSummary) : void 0;
+					})();
 					if (localAbort.signal.aborted) return false;
 					if (sample) {
 						const migratedSample = resolveSample$1(sample);
@@ -65186,6 +65242,9 @@ function createSamplePolling(store) {
 }
 var hasCompletedLogSummary = (state, sampleId, sampleEpoch) => {
 	return state.log.selectedLogDetails?.sampleSummaries.some((sampleSummary) => sampleIdsEqual(sampleSummary.id, sampleId) && sampleSummary.epoch === sampleEpoch && sampleSummary.completed !== false);
+};
+var findLiveSummary = (state, sampleId, sampleEpoch) => {
+	return mergeSampleSummaries(state.log.selectedLogDetails?.sampleSummaries ?? [], state.log.pendingSampleSummaries?.samples ?? []).find((s) => sampleIdsEqual(s.id, sampleId) && s.epoch === sampleEpoch);
 };
 var hasSampleDataUpdates = (sampleData) => {
 	if (!sampleData) return false;
@@ -70126,18 +70185,6 @@ var getScorersFromSamples = (samples) => {
 var getAvailableScorers = (_log, sampleSummaries) => {
 	const sampleScorers = getScorersFromSamples(sampleSummaries);
 	if (sampleScorers.length > 0) return sampleScorers;
-};
-//#endregion
-//#region src/state/utils.ts
-var mergeSampleSummaries = (logSamples, pendingSamples) => {
-	const existingSampleIds = new Set(logSamples.map((sample) => `${sample.id}-${sample.epoch}`));
-	const uniquePendingSamples = pendingSamples.filter((sample) => !existingSampleIds.has(`${sample.id}-${sample.epoch}`)).map((sample) => {
-		return {
-			...sample,
-			completed: false
-		};
-	});
-	return [...logSamples, ...uniquePendingSamples];
 };
 //#endregion
 //#region src/state/hooks.ts
@@ -120017,7 +120064,7 @@ function useLoadSample() {
 	const prevLogFile = usePrevious(logSelection.logFile);
 	const prevSampleId = usePrevious(sampleId);
 	const prevSampleNeedsReload = usePrevious(sampleData.sampleNeedsReload);
-	const loadSample = (0, import_react.useCallback)(async (logFile, id, epoch, completed) => {
+	const loadSample = (0, import_react.useCallback)(async (logFile, id, epoch, completed, summary) => {
 		const currentId = sampleData.selectedSampleIdentifier;
 		const isSameSample = currentId?.id === id && currentId?.epoch === epoch && currentId?.logFile === logFile;
 		const isLoading = sampleData.status === "loading" || sampleData.status === "streaming";
@@ -120036,7 +120083,7 @@ function useLoadSample() {
 						total: bytesTotal
 					});
 				};
-				const sample = await api?.get_log_sample(logFile, id, epoch, onProgress);
+				const sample = await api?.get_log_sample(logFile, id, epoch, onProgress) ?? (summary?.error ? synthesizeErroredSampleFromSummary(summary) : void 0);
 				sampleActions.setDownloadProgress(void 0);
 				log$1.debug(`LOADED COMPLETED SAMPLE: ${id}-${epoch}`);
 				if (thisGeneration !== loadGeneration) {
@@ -120080,10 +120127,11 @@ function useLoadSample() {
 			const sampleIdChanged = prevSampleId !== void 0 && prevSampleId !== sampleId;
 			const completedChanged = prevCompleted !== void 0 && currentSampleCompleted !== prevCompleted;
 			const needsReloadChanged = prevSampleNeedsReload !== void 0 && prevSampleNeedsReload !== sampleData.sampleNeedsReload;
-			if (!isCurrentSampleLoaded && !isLoading && !isError || logFileChanged || sampleIdChanged || completedChanged || needsReloadChanged) loadSample(logSelection.logFile, sampleId, sampleEpoch, sampleCompleted);
+			if (!isCurrentSampleLoaded && !isLoading && !isError || logFileChanged || sampleIdChanged || completedChanged || needsReloadChanged) loadSample(logSelection.logFile, sampleId, sampleEpoch, sampleCompleted, logSelection.sample);
 		}
 	}, [
 		logSelection.logFile,
+		logSelection.sample,
 		sampleId,
 		sampleEpoch,
 		sampleCompleted,
@@ -139397,6 +139445,7 @@ var clientApi = (api, log_file, debug = false) => {
 				return await remoteLogFile.readSample(String(id), epoch, onProgress);
 			}
 			function handleError(error) {
+				if (error instanceof SampleNotFoundError) return void 0;
 				if (error instanceof FileSizeLimitError) throw new SampleSizeLimitedExceededError(id, epoch, error.maxBytes);
 				throw error;
 			}
@@ -139406,9 +139455,9 @@ var clientApi = (api, log_file, debug = false) => {
 				if (error instanceof SampleNotFoundError) try {
 					return await fetchSample(false);
 				} catch (retryError) {
-					handleError(retryError);
+					return handleError(retryError);
 				}
-				else handleError(error);
+				else return handleError(error);
 			}
 		} else {
 			const logContents = await get_log(log_file, true);
