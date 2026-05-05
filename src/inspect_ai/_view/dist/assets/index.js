@@ -28636,10 +28636,10 @@ var AnsiDisplay_module_default = {
 	"ansi-display-run-blink": "_ansi-display-run-blink_1749m_1"
 };
 var ToolButton_module_default = {
-	toolButton: "_toolButton_dd6ny_1",
-	marginRight: "_marginRight_dd6ny_6",
-	latched: "_latched_dd6ny_18",
-	subtle: "_subtle_dd6ny_25"
+	toolButton: "_toolButton_13erz_1",
+	marginRight: "_marginRight_13erz_7",
+	subtle: "_subtle_13erz_19",
+	latched: "_latched_13erz_23"
 };
 //#endregion
 //#region ../../packages/react/src/components/ToolButton.tsx
@@ -49602,7 +49602,7 @@ function isTerminatorChar(ch) {
 		default: return false;
 	}
 }
-function text$2(state, silent) {
+function text$3(state, silent) {
 	let pos = state.pos;
 	while (pos < state.posMax && !isTerminatorChar(state.src.charCodeAt(pos))) pos++;
 	if (pos === state.pos) return false;
@@ -50257,7 +50257,7 @@ function fragments_join(state) {
 * Tokenizes paragraph content.
 **/
 var _rules = [
-	["text", text$2],
+	["text", text$3],
 	["linkify", linkify],
 	["newline", newline],
 	["escape", escape],
@@ -64618,7 +64618,7 @@ var initialState$1 = {
 	},
 	samplesListState: { byScope: {
 		samplesPanel: { columnVisibility: {} },
-		logViewSamples: { columnVisibility: {} }
+		logViewSamples: {}
 	} },
 	showRetriedLogs: false
 };
@@ -64631,7 +64631,14 @@ var createLogsSlice = (set, get, _store) => {
 					if (logDir !== state.logs.logDir) {
 						state.logs.logDir = logDir;
 						state.logs.samplesListState.byScope.samplesPanel.gridState = void 0;
-						state.logs.samplesListState.byScope.logViewSamples.gridState = void 0;
+						const view = state.logs.samplesListState.byScope.logViewSamples.view;
+						if (view) {
+							view.filters = {
+								dsl: "",
+								extraColumnFilters: {}
+							};
+							view.sort = [];
+						}
 						state.logs.listing.gridStateByScope = {};
 					}
 				});
@@ -64675,6 +64682,11 @@ var createLogsSlice = (set, get, _store) => {
 			clearSamplesGridState: (scope) => {
 				set((state) => {
 					state.logs.samplesListState.byScope[scope].gridState = void 0;
+				});
+			},
+			setSampleListView: (view) => {
+				set((state) => {
+					state.logs.samplesListState.byScope.logViewSamples.view = view;
 				});
 			},
 			setDisplayedSamples: (samples) => {
@@ -66188,6 +66200,9 @@ var ApplicationIcons = {
 		cost: "bi bi-currency-dollar"
 	},
 	link: "bi bi-link-45deg",
+	"list-wrap": "bi bi-text-wrap",
+	"compact-scores": "bi bi-arrows-collapse-vertical",
+	"color-scales": "bi bi-palette",
 	loading: "bi bi-arrow-clockwise",
 	logging: {
 		notset: "bi bi-card-text",
@@ -66379,9 +66394,9 @@ var errorType = (message) => {
 	return "Error";
 };
 var BooleanScoreDescriptor_module_default = {
-	circle: "_circle_qymy9_1",
-	green: "_green_qymy9_12",
-	red: "_red_qymy9_18"
+	circle: "_circle_17gxn_1",
+	green: "_green_17gxn_10",
+	red: "_red_17gxn_16"
 };
 //#endregion
 //#region src/app/samples/descriptor/score/BooleanScoreDescriptor.tsx
@@ -66393,7 +66408,7 @@ var booleanScoreDescriptor = () => {
 		},
 		render: (score) => {
 			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-				className: clsx(BooleanScoreDescriptor_module_default.circle, "text-size-small", score ? BooleanScoreDescriptor_module_default.green : BooleanScoreDescriptor_module_default.red),
+				className: clsx(BooleanScoreDescriptor_module_default.circle, "text-size-smallest", score ? BooleanScoreDescriptor_module_default.green : BooleanScoreDescriptor_module_default.red),
 				children: String(score)
 			});
 		}
@@ -67169,10 +67184,10 @@ var otherScoreDescriptor = () => {
 	};
 };
 var PassFailScoreDescriptor_module_default = {
-	circle: "_circle_1iagp_1",
-	green: "_green_1iagp_12",
-	red: "_red_1iagp_18",
-	orange: "_orange_1iagp_24"
+	circle: "_circle_1seo2_1",
+	green: "_green_1seo2_10",
+	red: "_red_1seo2_16",
+	orange: "_orange_1seo2_22"
 };
 //#endregion
 //#region src/app/samples/descriptor/score/PassFailScoreDescriptor.tsx
@@ -67205,19 +67220,19 @@ var passFailScoreDescriptor = (values) => {
 		categories,
 		render: (score) => {
 			if (score === "C") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-				className: clsx("text-size-small", PassFailScoreDescriptor_module_default.circle, PassFailScoreDescriptor_module_default.green),
+				className: clsx("text-size-smallest", PassFailScoreDescriptor_module_default.circle, PassFailScoreDescriptor_module_default.green),
 				children: "C"
 			});
 			else if (score === "I") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-				className: clsx("text-size-small", PassFailScoreDescriptor_module_default.circle, PassFailScoreDescriptor_module_default.red),
+				className: clsx("text-size-smallest", PassFailScoreDescriptor_module_default.circle, PassFailScoreDescriptor_module_default.red),
 				children: "I"
 			});
 			else if (score === "P") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-				className: clsx("text-size-small", PassFailScoreDescriptor_module_default.circle, PassFailScoreDescriptor_module_default.orange),
+				className: clsx("text-size-smallest", PassFailScoreDescriptor_module_default.circle, PassFailScoreDescriptor_module_default.orange),
 				children: "P"
 			});
 			else if (score === "N") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-				className: clsx("text-size-small", PassFailScoreDescriptor_module_default.circle, PassFailScoreDescriptor_module_default.red),
+				className: clsx("text-size-smallest", PassFailScoreDescriptor_module_default.circle, PassFailScoreDescriptor_module_default.red),
 				children: "N"
 			});
 			else return String(score);
@@ -71452,7 +71467,7 @@ var ColumnSelectorPopover_module_default = {
 //#endregion
 //#region src/app/shared/ColumnSelectorPopover.tsx
 var isScoreField = (field) => field.startsWith("score_") || field.startsWith("metric_");
-var ColumnSelectorPopover = ({ showing, setShowing, columns, onVisibilityChange, positionEl, filteredFields = [], scoresHeading = "Scorers", splitScores = true, visibility, groupableScores = false, scoresViewMode = "by-metric", onScoresViewModeChange }) => {
+var ColumnSelectorPopover = ({ showing, setShowing, columns, onVisibilityChange, positionEl, filteredFields = [], scoresHeading = "Scorers", splitScores = true, visibility, groupableScores = false, scoresViewMode = "by-metric", onScoresViewModeChange, onResetToDefault }) => {
 	const currentVisibility = (0, import_react.useMemo)(() => columns.reduce((acc, col) => {
 		const key = getFieldKey(col);
 		const vis = visibility ? visibility[key] !== false : !col.hide;
@@ -71552,7 +71567,12 @@ var ColumnSelectorPopover = ({ showing, setShowing, columns, onVisibilityChange,
 								className: clsx(ColumnSelectorPopover_module_default.button),
 								onClick: handleDeselectAllBase,
 								children: "None"
-							})
+							}),
+							onResetToDefault && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: ["|", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+								className: clsx(ColumnSelectorPopover_module_default.button),
+								onClick: onResetToDefault,
+								children: "Default"
+							})] })
 						]
 					})]
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -119379,16 +119399,18 @@ var createGridKeyboardHandler = ({ gridRef, onOpenRow, pageJump = 10 }) => {
 	};
 };
 var SamplesGrid_module_default = {
-	gridWrapper: "_gridWrapper_gp0n4_1",
-	gridContainer: "_gridContainer_gp0n4_7",
-	gridChrome: "_gridChrome_gp0n4_18",
-	listMode: "_listMode_gp0n4_65",
-	gridMode: "_gridMode_gp0n4_73",
-	cell: "_cell_gp0n4_78",
-	wrapAnywhere: "_wrapAnywhere_gp0n4_82",
-	noLeft: "_noLeft_gp0n4_86",
-	score: "_score_gp0n4_90",
-	centered: "_centered_gp0n4_97"
+	gridWrapper: "_gridWrapper_yfmzu_1",
+	gridContainer: "_gridContainer_yfmzu_7",
+	gridChrome: "_gridChrome_yfmzu_19",
+	rotatedHeader: "_rotatedHeader_yfmzu_71",
+	spacerHeader: "_spacerHeader_yfmzu_98",
+	listMode: "_listMode_yfmzu_167",
+	gridMode: "_gridMode_yfmzu_176",
+	cell: "_cell_yfmzu_182",
+	wrapAnywhere: "_wrapAnywhere_yfmzu_186",
+	noLeft: "_noLeft_yfmzu_190",
+	score: "_score_yfmzu_176",
+	centered: "_centered_yfmzu_212"
 };
 //#endregion
 //#region src/app/shared/useApplyColumnVisibility.ts
@@ -135850,8 +135872,10 @@ function renderField(field, data, references, options, interactive, config, coll
 					options
 				})
 			});
-		case "metadata":
-			if (data.metadata === void 0 || Object.keys(data.metadata).length === 0) return null;
+		case "metadata": {
+			if (data.metadata === void 0) return null;
+			const excluded = new Set(config.excludedMetadataKeys);
+			if (Object.keys(data.metadata).filter((k) => !excluded.has(k)).length === 0) return null;
 			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
 				id,
 				heading: field.label ?? "Metadata",
@@ -135864,6 +135888,7 @@ function renderField(field, data, references, options, interactive, config, coll
 					excludeKeys: config.excludedMetadataKeys
 				})
 			});
+		}
 	}
 }
 var SampleScannerPicker_module_default = {
@@ -140603,8 +140628,10 @@ var ModelTab = ({ evalSpec, evalStats, evalStatus }) => {
 };
 //#endregion
 //#region src/app/shared/samples-grid/SamplesGrid.tsx
-var kListModeRowHeight = 88;
+var kListModeRowHeight = 70;
 var kGridModeRowHeight = 30;
+var kDefaultHeaderHeight = 25;
+var kRotatedHeaderHeight = 115;
 var rowHeightForMode = (mode) => mode === "list" ? kListModeRowHeight : kGridModeRowHeight;
 var makeKeyboardHandler = (gridRef, onRowOpen) => createGridKeyboardHandler({
 	gridRef,
@@ -140619,7 +140646,7 @@ var makeKeyboardHandler = (gridRef, onRowOpen) => createGridKeyboardHandler({
 	}
 });
 var SamplesGrid = (props) => {
-	const { rowData, columnDefs, columnVisibility, defaultColDef, viewMode, rowHeight, getRowId, selectedRowId, onRowOpen, followOutput = false, scrollRef, onFirstDataRendered, initialState, onStateUpdated, onFilterChanged, loading, autoSizeStrategy, refitOnSizeChange = false, gridRef: externalGridRef, className } = props;
+	const { rowData, columnDefs, columnVisibility, defaultColDef, viewMode, rowHeight, multiline, getRowId, selectedRowId, onRowOpen, followOutput = false, scrollRef, onFirstDataRendered, initialState, onStateUpdated, onFilterChanged, loading, autoSizeStrategy, refitOnSizeChange = false, gridRef: externalGridRef, className } = props;
 	const internalGridRef = (0, import_react.useRef)(null);
 	const gridRef = externalGridRef ?? internalGridRef;
 	const gridContainerRef = (0, import_react.useRef)(null);
@@ -140689,7 +140716,7 @@ var SamplesGrid = (props) => {
 		}
 		prevFollowRef.current = followOutput;
 	}, [followOutput, gridRef]);
-	const effectiveRowHeight = rowHeight ?? rowHeightForMode(viewMode);
+	const effectiveRowHeight = rowHeight ?? (multiline !== void 0 ? multiline ? kListModeRowHeight : kGridModeRowHeight : rowHeightForMode(viewMode));
 	const handleBodyScroll = (0, import_react.useCallback)(() => {
 		if (!followOutput || !gridRef.current?.api) return;
 		const api = gridRef.current.api;
@@ -140703,6 +140730,7 @@ var SamplesGrid = (props) => {
 		effectiveRowHeight
 	]);
 	const applyVisibility = useApplyColumnVisibility(gridRef, columnDefs, columnVisibility);
+	const headerHeight = (0, import_react.useMemo)(() => columnDefs.some((c) => c.headerClass === SamplesGrid_module_default.rotatedHeader) ? kRotatedHeaderHeight : kDefaultHeaderHeight, [columnDefs]);
 	const mergedInitialState = (0, import_react.useMemo)(() => {
 		if (!columnVisibility) return initialState;
 		const hiddenColIds = Object.entries(columnVisibility).filter(([, visible]) => !visible).map(([id]) => id);
@@ -140756,7 +140784,7 @@ var SamplesGrid = (props) => {
 		className: clsx(SamplesGrid_module_default.gridWrapper, className),
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			ref: gridContainerRef,
-			className: clsx(SamplesGrid_module_default.gridContainer, SamplesGrid_module_default.gridChrome, viewMode === "list" ? SamplesGrid_module_default.listMode : SamplesGrid_module_default.gridMode),
+			className: clsx(SamplesGrid_module_default.gridContainer, SamplesGrid_module_default.gridChrome, (multiline !== void 0 ? multiline : viewMode === "list") ? SamplesGrid_module_default.listMode : SamplesGrid_module_default.gridMode),
 			tabIndex: 0,
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AgGridReact, {
 				ref: gridRef,
@@ -140768,7 +140796,7 @@ var SamplesGrid = (props) => {
 				animateRows: false,
 				suppressColumnMoveAnimation: true,
 				tooltipShowDelay: 300,
-				headerHeight: 25,
+				headerHeight,
 				rowHeight: effectiveRowHeight,
 				getRowId,
 				rowSelection: {
@@ -140833,7 +140861,7 @@ var SampleList_module_default = {
 //#region src/app/samples/list/SampleList.tsx
 var makeSampleRowId = (id, epoch) => `${id}-${epoch}`.replace(/\s+/g, "_");
 var SampleList = (0, import_react.memo)((props) => {
-	const { items, columns, columnVisibility, earlyStopping, totalItemCount, running, className, listHandle, scrollRef, gridState, onGridStateChange, onFilterChanged } = props;
+	const { items, columns, columnVisibility, earlyStopping, totalItemCount, running, className, listHandle, scrollRef, gridState, onGridStateChange, onFilterChanged, multiline } = props;
 	(0, import_react.useEffect)(() => {
 		listHandle.current?.api?.ensureIndexVisible(0, "top");
 	}, [listHandle, useStore((state) => state.logs.selectedLogFile)]);
@@ -140902,6 +140930,7 @@ var SampleList = (0, import_react.memo)((props) => {
 					headerTooltipValueGetter: (params) => params.colDef?.headerName
 				},
 				viewMode: "list",
+				multiline,
 				gridRef: listHandle,
 				getRowId,
 				selectedRowId,
@@ -140921,6 +140950,361 @@ var SampleList = (0, import_react.memo)((props) => {
 		]
 	});
 });
+//#endregion
+//#region src/app/samples/list/samplesView.ts
+/**
+* The default view applied when neither the user nor the eval author
+* has specified anything. `columns` and `sort` are intentionally empty —
+* the SampleList consumer fills them from the live column registry
+* (`buildSampleColumns`) and seeds visibility from per-scope predicates
+* (e.g. `samplesPanel`'s error/limit/retries auto-promotion).
+*/
+var defaultSamplesView = () => ({
+	name: "Default",
+	columns: [],
+	sort: [],
+	filters: {
+		dsl: "",
+		extraColumnFilters: {}
+	},
+	multiline: true,
+	compactScores: false,
+	colorScalesEnabled: true,
+	userOverrides: {}
+});
+//#endregion
+//#region src/app/samples/list/samplesView.converters.ts
+/**
+* Lift a wire `SamplesView` into the runtime `SamplesViewState`.
+*
+* - Nullable wire fields collapse to defaults from `defaultSamplesView()`.
+* - Sort entries map `column` → `colId` to match ag-grid naming on the
+*   runtime side. Wire form keeps `column` to match the Python field.
+* - `extraColumnFilters` starts empty; ag-grid filterModel residue is
+*   only synthesized at runtime when the user sets column-header filters
+*   the DSL can't express.
+*/
+var liftEvalView = (wire) => {
+	const fallback = defaultSamplesView();
+	if (!wire) return fallback;
+	return {
+		name: wire.name,
+		columns: wire.columns ? wire.columns.map((c) => ({
+			id: c.id,
+			visible: c.visible ?? true
+		})) : fallback.columns,
+		sort: wire.sort ? wire.sort.map((s) => ({
+			colId: s.column,
+			dir: s.dir ?? "asc"
+		})) : fallback.sort,
+		filters: {
+			dsl: wire.filter ?? "",
+			extraColumnFilters: {}
+		},
+		multiline: wire.multiline ?? fallback.multiline,
+		compactScores: wire.compact_scores ?? fallback.compactScores,
+		colorScalesEnabled: wire.color_scales_enabled ?? fallback.colorScalesEnabled,
+		userOverrides: {}
+	};
+};
+/**
+* `task_samples_view` may be a single view, a list of views, or absent.
+* For Phase 0–2 we honour only the first entry of a list.
+*/
+var pickActiveView = (field) => {
+	if (!field) return void 0;
+	if (Array.isArray(field)) return field[0];
+	return field;
+};
+/**
+* Resolution priority: stored (user-modified runtime state) > eval default
+* (lifted from `eval.viewer.task_samples_view`) > built-in default.
+*
+* Per-field exception for the toolbar toggles (`multiline`, `compactScores`,
+* `colorScalesEnabled`): stored only wins if `userOverrides` records that
+* the user has actually flipped that toggle. Otherwise the eval-author
+* default takes precedence even when stored state already exists, so an
+* eval that ships e.g. `color_scales_enabled: false` isn't shadowed by a
+* stale `true` lifted from a previous eval.
+*/
+var resolveSamplesView = (stored, evalDefault) => {
+	if (!stored) return liftEvalView(evalDefault);
+	const lifted = liftEvalView(evalDefault);
+	const overrides = stored.userOverrides ?? {};
+	return {
+		...stored,
+		multiline: overrides.multiline ?? lifted.multiline,
+		compactScores: overrides.compactScores ?? lifted.compactScores,
+		colorScalesEnabled: overrides.colorScalesEnabled ?? lifted.colorScalesEnabled
+	};
+};
+/**
+* Project the runtime descriptor into the `GridState` ag-grid consumes.
+*
+* Column-id tolerance: any persisted reference to a column not present in
+* `availableColIds` (e.g. `score__judge__correctness` on a log without
+* that scorer) is excluded from the emitted GridState but **preserved
+* unchanged in the source descriptor**. The persisted view is never
+* mutated by a render.
+*
+* The DSL filter is intentionally *not* materialized into `filterModel`
+* here — that translation needs the live filter registry, which only
+* exists at runtime. Phase 2's `useSamplesView` layers the DSL→model
+* translation on top of this base GridState.
+*/
+var viewToGridState = (view, availableColIds) => {
+	const knownColumns = view.columns.filter((c) => availableColIds.has(c.id));
+	const sortModel = view.sort.filter((s) => availableColIds.has(s.colId)).map((s) => ({
+		colId: s.colId,
+		sort: s.dir
+	}));
+	const filterModel = Object.fromEntries(Object.entries(view.filters.extraColumnFilters).filter(([colId]) => availableColIds.has(colId)));
+	return {
+		columnVisibility: { hiddenColIds: knownColumns.filter((c) => !c.visible).map((c) => c.id) },
+		columnOrder: { orderedColIds: knownColumns.map((c) => c.id) },
+		sort: { sortModel },
+		filter: { filterModel }
+	};
+};
+/**
+* Fold a fresh ag-grid `GridState` back into the runtime descriptor,
+* preserving any unknown-id references from `prev` so they re-engage when
+* the user navigates back to a log that has those columns.
+*
+* Note: this updates `columns`, `sort`, and `filters.extraColumnFilters`.
+* The `dsl` half of `filters` is the responsibility of the caller — it
+* comes from a different signal (the toolbar text) and is partitioned
+* via `partitionFilterModel`.
+*/
+var gridStateToView = (prev, gridState, availableColIds) => {
+	const orderedColIds = gridState.columnOrder?.orderedColIds ?? [];
+	const hiddenColIds = new Set(gridState.columnVisibility?.hiddenColIds ?? []);
+	const knownColumns = orderedColIds.filter((id) => availableColIds.has(id)).map((id) => ({
+		id,
+		visible: !hiddenColIds.has(id)
+	}));
+	const unknownColumns = prev.columns.filter((c) => !availableColIds.has(c.id));
+	const knownSort = (gridState.sort?.sortModel ?? []).filter((s) => availableColIds.has(s.colId)).map((s) => ({
+		colId: s.colId,
+		dir: s.sort
+	}));
+	const unknownSort = prev.sort.filter((s) => !availableColIds.has(s.colId));
+	const fmModel = gridState.filter?.filterModel ?? {};
+	const knownExtras = Object.fromEntries(Object.entries(fmModel).filter(([colId]) => availableColIds.has(colId)));
+	const unknownExtras = Object.fromEntries(Object.entries(prev.filters.extraColumnFilters).filter(([colId]) => !availableColIds.has(colId)));
+	return {
+		...prev,
+		columns: [...knownColumns, ...unknownColumns],
+		sort: [...knownSort, ...unknownSort],
+		filters: {
+			dsl: prev.filters.dsl,
+			extraColumnFilters: {
+				...knownExtras,
+				...unknownExtras
+			}
+		}
+	};
+};
+//#endregion
+//#region src/app/samples/list/useSamplesView.ts
+/** Single subscription to the eval-author-supplied `task_samples_view`
+*  descriptor (after picking an active variant from a multi-view list).
+*  Backs every hook that reads from the wire side. */
+function useEvalDefaultSamplesView() {
+	const evalDefaultField = useStore((state) => state.log.selectedLogDetails?.eval.viewer?.task_samples_view ?? null);
+	return (0, import_react.useMemo)(() => pickActiveView(evalDefaultField), [evalDefaultField]);
+}
+/** Single subscription + resolution; backs every hook that needs a
+*  field off the resolved view. */
+function useResolvedSamplesView() {
+	const stored = useStore((state) => state.logs.samplesListState.byScope.logViewSamples.view);
+	const evalDefault = useEvalDefaultSamplesView();
+	return (0, import_react.useMemo)(() => resolveSamplesView(stored, evalDefault), [stored, evalDefault]);
+}
+/** Just the resolved `multiline` — for callers that need it before
+*  computing `allColumns` (which the full hook requires). */
+function useSamplesViewMultiline() {
+	return useResolvedSamplesView().multiline;
+}
+/** Eval-author-supplied score-label overrides. Read straight from
+*  the wire (no persistence) so a user's stored view from a prior
+*  eval can't shadow the current eval's labels. Returns an empty
+*  object when no overrides are present. */
+function useSamplesViewScoreLabels() {
+	return useEvalDefaultSamplesView()?.score_labels ?? {};
+}
+/** Eval-author-supplied score-cell colour scales. Same wire-only
+*  access pattern as `useSamplesViewScoreLabels` — never lifted into
+*  the persisted runtime state, so colour scales from a prior eval
+*  can't bleed into the current one. */
+function useSamplesViewScoreColorScales() {
+	return useEvalDefaultSamplesView()?.score_color_scales ?? {};
+}
+/** Resolved `colorScalesEnabled` — same access pattern as the
+*  multiline companion above. Read in `SamplesTab` so the columns
+*  builder can decide whether to attach a `cellStyle` callback. */
+function useSamplesViewColorScalesEnabled() {
+	return useResolvedSamplesView().colorScalesEnabled;
+}
+/** Resolved `compactScores` — same access pattern as the multiline
+*  companion above. Read in `SamplesTab` before columns are built so
+*  the flag can flow into `buildSampleColumns`. */
+function useSamplesViewCompactScores() {
+	return useResolvedSamplesView().compactScores;
+}
+/**
+* Window onto the SampleList scope's `SamplesView` descriptor. Resolves
+* stored > eval-author default > built-in default; seeds visibility for
+* unseeded columns; folds ag-grid `GridState` updates back into the view.
+*
+* Selected-scores projection (the `score__*` ↔ `selectedScores` split)
+* stays in `SamplesTab` for now.
+*/
+function useSamplesView(allColumns, options) {
+	const { seedDefaultVisibility } = options ?? {};
+	const evalDefault = useEvalDefaultSamplesView();
+	const view = useResolvedSamplesView();
+	const setSampleListView = useStore((state) => state.logsActions.setSampleListView);
+	const availableColIds = (0, import_react.useMemo)(() => {
+		const ids = /* @__PURE__ */ new Set();
+		if (allColumns) for (const col of allColumns) ids.add(getFieldKey(col));
+		return ids;
+	}, [allColumns]);
+	const columnVisibility = (0, import_react.useMemo)(() => {
+		const v = {};
+		for (const col of view.columns) v[col.id] = col.visible;
+		return v;
+	}, [view.columns]);
+	const gridState = (0, import_react.useMemo)(() => allColumns ? viewToGridState(view, availableColIds) : void 0, [
+		allColumns,
+		view,
+		availableColIds
+	]);
+	(0, import_react.useEffect)(() => {
+		if (!allColumns || !seedDefaultVisibility) return;
+		const known = new Set(view.columns.map((c) => c.id));
+		const additions = [];
+		for (const col of allColumns) {
+			const id = getFieldKey(col);
+			if (!known.has(id)) additions.push({
+				id,
+				visible: seedDefaultVisibility(col)
+			});
+		}
+		if (additions.length === 0) return;
+		setSampleListView({
+			...view,
+			columns: [...view.columns, ...additions]
+		});
+	}, [
+		allColumns,
+		view,
+		seedDefaultVisibility,
+		setSampleListView
+	]);
+	const patchView = (0, import_react.useCallback)((partial) => {
+		setSampleListView({
+			...view,
+			...partial
+		});
+	}, [view, setSampleListView]);
+	const setColumnVisibility = (0, import_react.useCallback)((visibility) => {
+		const seen = /* @__PURE__ */ new Set();
+		const nextColumns = [];
+		for (const c of view.columns) {
+			nextColumns.push(c.id in visibility ? {
+				id: c.id,
+				visible: visibility[c.id]
+			} : c);
+			seen.add(c.id);
+		}
+		for (const [id, visible] of Object.entries(visibility)) if (!seen.has(id)) nextColumns.push({
+			id,
+			visible
+		});
+		patchView({ columns: nextColumns });
+	}, [view.columns, patchView]);
+	const setGridState = (0, import_react.useCallback)((gs) => {
+		setSampleListView(gridStateToView(view, gs, availableColIds));
+	}, [
+		view,
+		availableColIds,
+		setSampleListView
+	]);
+	const setMultiline = (0, import_react.useCallback)((multiline) => patchView({
+		multiline,
+		userOverrides: {
+			...view.userOverrides,
+			multiline
+		}
+	}), [patchView, view.userOverrides]);
+	const setCompactScores = (0, import_react.useCallback)((compactScores) => patchView({
+		compactScores,
+		userOverrides: {
+			...view.userOverrides,
+			compactScores
+		}
+	}), [patchView, view.userOverrides]);
+	const setColorScalesEnabled = (0, import_react.useCallback)((colorScalesEnabled) => patchView({
+		colorScalesEnabled,
+		userOverrides: {
+			...view.userOverrides,
+			colorScalesEnabled
+		}
+	}), [patchView, view.userOverrides]);
+	return {
+		view,
+		columnVisibility,
+		gridState,
+		setView: (0, import_react.useCallback)((next) => setSampleListView(next), [setSampleListView]),
+		patchView,
+		setColumnVisibility,
+		setGridState,
+		setMultiline,
+		setCompactScores,
+		setColorScalesEnabled,
+		resetColumns: (0, import_react.useCallback)(() => {
+			if (!allColumns) return;
+			const evalCols = liftEvalView(evalDefault).columns;
+			const evalMap = new Map(evalCols.map((c) => [c.id, c.visible]));
+			patchView({ columns: allColumns.map((col) => {
+				const id = getFieldKey(col);
+				if (evalMap.has(id)) return {
+					id,
+					visible: evalMap.get(id)
+				};
+				return {
+					id,
+					visible: seedDefaultVisibility ? seedDefaultVisibility(col) : true
+				};
+			}) });
+		}, [
+			allColumns,
+			evalDefault,
+			seedDefaultVisibility,
+			patchView
+		])
+	};
+}
+//#endregion
+//#region src/app/samples/list/SamplesViewToggle.tsx
+var SETTERS = {
+	multiline: "setMultiline",
+	compactScores: "setCompactScores",
+	colorScalesEnabled: "setColorScalesEnabled"
+};
+var SamplesViewToggle = ({ field, icon, label }) => {
+	const samplesView = useSamplesView();
+	const value = samplesView.view[field];
+	const setter = samplesView[SETTERS[field]];
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NavbarButton, {
+		label,
+		icon,
+		latched: value,
+		subtle: true,
+		onClick: () => setter(!value)
+	});
+};
 //#endregion
 //#region ../../node_modules/.pnpm/@marijn+find-cluster-break@1.0.2/node_modules/@marijn/find-cluster-break/src/index.js
 var rangeFrom = [], rangeTo = [];
@@ -164156,9 +164540,10 @@ function getCompletions(context, filterItems, samples) {
 	return noCompletions();
 }
 var SampleFilter_module_default = {
-	label: "_label_jbrqc_1",
-	input: "_input_jbrqc_7",
-	help: "_help_jbrqc_11"
+	root: "_root_k7p3l_1",
+	label: "_label_k7p3l_9",
+	input: "_input_k7p3l_15",
+	help: "_help_k7p3l_19"
 };
 //#endregion
 //#region src/app/samples/sample-tools/sample-filter/SampleFilter.tsx
@@ -164320,7 +164705,7 @@ var SampleFilter = () => {
 		editorViewRef.current?.dispatch({ effects: linterCompartment.current.reconfigure(makeLinter()) });
 	}, [filterError, makeLinter]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		style: { display: "flex" },
+		className: SampleFilter_module_default.root,
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 				className: clsx("sample-filter-label", "text-size-smaller", "text-style-label", "text-style-secondary", SampleFilter_module_default.label),
@@ -164446,7 +164831,26 @@ var ScoreCheckboxes = ({ scores, selectedKeys, setSelectedScores }) => {
 //#endregion
 //#region src/app/samples/SamplesTools.tsx
 var SampleTools = () => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleFilter, {});
+	const scoreColorScales = useSamplesViewScoreColorScales();
+	const showColorScales = Object.keys(scoreColorScales).length > 0;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [
+		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleFilter, {}),
+		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SamplesViewToggle, {
+			field: "multiline",
+			label: "Multiline",
+			icon: ApplicationIcons["list-wrap"]
+		}),
+		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SamplesViewToggle, {
+			field: "compactScores",
+			label: "Compact scores",
+			icon: ApplicationIcons["compact-scores"]
+		}),
+		showColorScales && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SamplesViewToggle, {
+			field: "colorScalesEnabled",
+			label: "Score colors",
+			icon: ApplicationIcons["color-scales"]
+		})
+	] });
 };
 var ScoreFilterTools = () => {
 	const scores = useScores();
@@ -165088,7 +165492,7 @@ var filterModelToText = (model, registry) => {
 var MarkdownCellDiv = ({ semanticClass, text, trimRenderedText, truncateAt = 250 }) => {
 	const markdown = truncateMarkdown(text, truncateAt);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: clsx(semanticClass, "text-size-base", "three-line-clamp", SamplesGrid_module_default.cell, SamplesGrid_module_default.wrapAnywhere),
+		className: clsx(semanticClass, "three-line-clamp", SamplesGrid_module_default.cell, SamplesGrid_module_default.wrapAnywhere),
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedText, {
 			markdown,
 			className: trimRenderedText ? clsx("no-last-para-padding", SamplesGrid_module_default.noLeft) : void 0,
@@ -165099,9 +165503,184 @@ var MarkdownCellDiv = ({ semanticClass, text, trimRenderedText, truncateAt = 250
 };
 /** Centered single-line cell for score values. */
 var ScoreCellDiv = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-	className: clsx("text-size-small", SamplesGrid_module_default.cell, SamplesGrid_module_default.score),
+	className: clsx(SamplesGrid_module_default.cell, SamplesGrid_module_default.score),
 	children
 });
+//#endregion
+//#region src/app/shared/samples-grid/colorScale.ts
+var ROLE_TO_VAR = {
+	good: "var(--bs-success-bg-subtle)",
+	bad: "var(--bs-danger-bg-subtle)",
+	warn: "var(--bs-warning-bg-subtle)",
+	info: "var(--bs-info-bg-subtle)",
+	muted: "var(--bs-secondary-bg-subtle)"
+};
+var PALETTE_STOPS = {
+	"good-high": {
+		low: "var(--bs-danger-bg-subtle)",
+		mid: "var(--bs-warning-bg-subtle)",
+		high: "var(--bs-success-bg-subtle)"
+	},
+	"good-low": {
+		low: "var(--bs-success-bg-subtle)",
+		mid: "var(--bs-warning-bg-subtle)",
+		high: "var(--bs-danger-bg-subtle)"
+	},
+	neutral: {
+		low: "transparent",
+		mid: "color-mix(in srgb, var(--bs-info-bg-subtle) 50%, transparent)",
+		high: "var(--bs-info-bg-subtle)"
+	},
+	diverging: {
+		low: "var(--bs-danger-bg-subtle)",
+		mid: "transparent",
+		high: "var(--bs-success-bg-subtle)"
+	}
+};
+var isPaletteName = (s) => s === "good-high" || s === "good-low" || s === "neutral" || s === "diverging";
+var isScaleObject = (s) => typeof s === "object" && s !== null && "palette" in s;
+/**
+* Lift a wire-shape scale into the internal `ResolvedScale` form.
+*
+* - Named palettes need numeric `bounds` to anchor the gradient.
+*   The wire form `{ palette, min, max }` lets the author override
+*   either bound; missing bounds fall back to the descriptor's
+*   auto-detection. Without any usable range we return null so the
+*   caller leaves the cell unpainted.
+* - Categorical maps don't depend on bounds.
+*
+* Returns null when the scale can't be applied — the caller treats
+* that as "no background".
+*/
+function resolveScale(scale, bounds) {
+	if (typeof scale === "string") {
+		if (!isPaletteName(scale)) return null;
+		return resolveGradient(scale, bounds.min, bounds.max);
+	}
+	if (isScaleObject(scale)) return resolveGradient(scale.palette, scale.min ?? bounds.min, scale.max ?? bounds.max);
+	const colors = {};
+	for (const [value, role] of Object.entries(scale)) colors[value] = ROLE_TO_VAR[role];
+	return {
+		kind: "categorical",
+		colors
+	};
+}
+function resolveGradient(palette, min, max) {
+	if (!isPaletteName(palette)) return null;
+	if (typeof min !== "number" || typeof max !== "number" || min === max) return null;
+	return {
+		kind: "gradient",
+		...PALETTE_STOPS[palette],
+		min,
+		max
+	};
+}
+/**
+* Pick a CSS colour expression for a given score value.
+*
+* Returns undefined when the scale doesn't apply to the value:
+*   - gradient scale on non-numeric / NaN
+*   - categorical scale on a value not in the map
+*
+* The caller (a column's `cellStyle` callback) translates undefined
+* into "no background" so the cell renders transparent.
+*/
+function colorForValue(scale, value) {
+	if (scale.kind === "gradient") {
+		if (typeof value !== "number" || !Number.isFinite(value)) return void 0;
+		const t = clamp01((value - scale.min) / (scale.max - scale.min));
+		if (t <= .5) {
+			const pct = Math.round((1 - t * 2) * 100);
+			return `color-mix(in srgb, ${scale.low} ${pct}%, ${scale.mid})`;
+		}
+		const pct = Math.round((t - .5) * 2 * 100);
+		return `color-mix(in srgb, ${scale.high} ${pct}%, ${scale.mid})`;
+	}
+	if (value === null || value === void 0) return void 0;
+	const key = typeof value === "string" ? value : String(value);
+	return scale.colors[key];
+}
+var clamp01 = (n) => n < 0 ? 0 : n > 1 ? 1 : n;
+var RotatedHeader_module_default = {
+	label: "_label_1w6d0_5",
+	text: "_text_1w6d0_46",
+	sortIcon: "_sortIcon_1w6d0_57",
+	filterBtn: "_filterBtn_1w6d0_67",
+	filterBtnActive: "_filterBtnActive_1w6d0_91",
+	menuAnchor: "_menuAnchor_1w6d0_66"
+};
+//#endregion
+//#region src/app/shared/samples-grid/RotatedHeader.tsx
+/**
+* Custom header rendered as a parallelogram-shaped label rotated 45°
+* up-and-to-the-right from the cell's bottom-right corner. Lets the
+* column be much narrower than the label while keeping it readable.
+*
+* Re-implements sort + filter affordances since they no longer come
+* from ag-grid's default `.ag-header-cell-label`.
+*
+* The visible filter button lives at the end of the rotated label
+* (where it reads naturally with the text), but the column-menu popup
+* is anchored off a *hidden* element at the cell's actual bottom-right
+* corner. `showColumnMenu` positions the menu relative to the anchor
+* element you hand it, so anchoring off a non-rotated element keeps
+* the popup directly under the column even though the visible button
+* is up-and-right of it on the rotated parallelogram.
+*/
+var RotatedHeader = (props) => {
+	const menuAnchorRef = (0, import_react.useRef)(null);
+	const [sort, setSort] = (0, import_react.useState)(null);
+	const [filterActive, setFilterActive] = (0, import_react.useState)(false);
+	(0, import_react.useEffect)(() => {
+		const updateSort = () => setSort(props.column.getSort() ?? null);
+		const updateFilter = () => setFilterActive(props.column.isFilterActive());
+		props.column.addEventListener("sortChanged", updateSort);
+		props.column.addEventListener("filterChanged", updateFilter);
+		updateSort();
+		updateFilter();
+		return () => {
+			props.column.removeEventListener("sortChanged", updateSort);
+			props.column.removeEventListener("filterChanged", updateFilter);
+		};
+	}, [props.column]);
+	const handleLabelClick = (e) => {
+		if (props.enableSorting) props.progressSort(e.shiftKey);
+	};
+	const handleFilterClick = (e) => {
+		e.stopPropagation();
+		if (menuAnchorRef.current) props.showColumnMenu(menuAnchorRef.current);
+	};
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: RotatedHeader_module_default.label,
+		onClick: handleLabelClick,
+		title: props.displayName,
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: RotatedHeader_module_default.text,
+				children: props.displayName
+			}),
+			sort && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: clsx("ag-icon", sort === "asc" ? "ag-icon-asc" : "ag-icon-desc", RotatedHeader_module_default.sortIcon),
+				role: "presentation"
+			}),
+			props.enableFilterButton && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+				type: "button",
+				className: clsx(RotatedHeader_module_default.filterBtn, filterActive && RotatedHeader_module_default.filterBtnActive),
+				onClick: handleFilterClick,
+				"aria-label": "Filter",
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+					className: "ag-icon ag-icon-filter",
+					role: "presentation",
+					"aria-hidden": "true"
+				})
+			})
+		]
+	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+		ref: menuAnchorRef,
+		className: RotatedHeader_module_default.menuAnchor,
+		"aria-hidden": "true"
+	})] });
+};
 //#endregion
 //#region src/app/shared/samples-grid/columns.tsx
 var EmptyCell = () => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: "-" });
@@ -165407,28 +165986,68 @@ function buildSampleColumns(ctx) {
 		comparator: comparators.number,
 		valueGetter: (params) => params.data?.retries ?? params.data?.data?.retries
 	});
+	if (ctx.compactScores) cols.push({
+		colId: "compactSpacer",
+		headerName: "",
+		headerClass: SamplesGrid_module_default.spacerHeader,
+		width: 95,
+		minWidth: 95,
+		maxWidth: 95,
+		sortable: false,
+		filter: false,
+		resizable: false,
+		suppressMovable: true,
+		suppressNavigable: true,
+		lockVisible: true,
+		lockPosition: "right"
+	});
 	return cols;
 }
 /** Score columns — emitted in one of two modes. */
 function buildScoreColumns(ctx) {
-	const { descriptor, scores, logDetails } = ctx;
+	const { descriptor, scores, logDetails, compactScores, scoreLabels, scoreColorScales } = ctx;
+	const labelFor = (name) => scoreLabels?.[name] ?? name;
+	const cellStyleFor = (name, bounds) => {
+		const wire = scoreColorScales?.[name];
+		if (!wire) return void 0;
+		const resolved = resolveScale(wire, bounds);
+		if (!resolved) return void 0;
+		return (params) => {
+			const c = colorForValue(resolved, params.value);
+			return c ? { backgroundColor: c } : void 0;
+		};
+	};
 	if (descriptor && scores && scores.length > 0) {
 		const useLabelHeader = scores.length !== 1;
 		return scores.map((label) => {
 			const colId = perScorerFieldKey(label);
-			const headerName = useLabelHeader ? label.name : "Score";
-			const initialWidth = Math.max(70, Math.round(headerName.length * 6.2) + 40);
-			const isNumeric = descriptor.evalDescriptor.scoreDescriptor(label)?.scoreType === kScoreTypeNumeric;
+			const headerName = useLabelHeader ? labelFor(label.name) : "Score";
+			const scoreDesc = descriptor.evalDescriptor.scoreDescriptor(label);
+			const scoreType = scoreDesc?.scoreType;
+			const isNumeric = scoreType === kScoreTypeNumeric;
+			const cellStyle = scoreType !== "passfail" && scoreType !== "boolean" ? cellStyleFor(label.name, {
+				min: scoreDesc?.min,
+				max: scoreDesc?.max
+			}) : void 0;
+			const compactWidth = isNumeric ? 40 : 55;
 			return {
 				colId,
 				field: colId,
 				headerName,
-				initialWidth,
-				minWidth: 60,
-				maxWidth: 120,
+				...compactScores ? {
+					headerComponent: RotatedHeader,
+					headerClass: SamplesGrid_module_default.rotatedHeader,
+					initialWidth: compactWidth,
+					minWidth: compactWidth - 4
+				} : {
+					initialWidth: Math.max(70, Math.round(headerName.length * 6.2) + 40),
+					minWidth: 60,
+					maxWidth: 120
+				},
 				sortable: true,
 				filter: isNumeric ? "agNumberColumnFilter" : "agTextColumnFilter",
 				resizable: true,
+				cellStyle,
 				comparator: isNumeric ? comparators.number : (a, b) => String(a ?? "").localeCompare(String(b ?? "")),
 				valueGetter: (params) => {
 					const data = params.data?.data;
@@ -165447,24 +166066,47 @@ function buildScoreColumns(ctx) {
 		});
 	}
 	const types = {};
+	const ranges = {};
 	for (const details of Object.values(logDetails ?? {})) for (const sample of details.sampleSummaries) {
 		if (!sample.scores) continue;
 		for (const [name, score] of Object.entries(sample.scores)) {
 			if (!types[name]) types[name] = /* @__PURE__ */ new Set();
 			types[name].add(typeof score.value);
+			if (typeof score.value === "number" && Number.isFinite(score.value)) {
+				const r = ranges[name];
+				if (!r) ranges[name] = {
+					min: score.value,
+					max: score.value
+				};
+				else {
+					if (score.value < r.min) r.min = score.value;
+					if (score.value > r.max) r.max = score.value;
+				}
+			}
 		}
 	}
 	return Object.keys(types).sort((a, b) => a.localeCompare(b)).map((name) => {
 		const isUniformNumber = types[name].size === 1 && types[name].has("number");
+		const compactWidth = isUniformNumber ? 40 : 55;
+		const cellStyle = cellStyleFor(name, ranges[name] ?? {});
+		const headerCols = compactScores ? {
+			headerComponent: RotatedHeader,
+			headerClass: SamplesGrid_module_default.rotatedHeader,
+			initialWidth: compactWidth,
+			minWidth: compactWidth - 4
+		} : {
+			initialWidth: 100,
+			minWidth: 60
+		};
 		return {
 			colId: rawScoreFieldKey(name),
 			field: rawScoreFieldKey(name),
-			headerName: name,
-			initialWidth: 100,
-			minWidth: 60,
+			headerName: labelFor(name),
+			...headerCols,
 			sortable: true,
 			filter: isUniformNumber ? "agNumberColumnFilter" : "agTextColumnFilter",
 			resizable: true,
+			cellStyle,
 			valueFormatter: (params) => {
 				const v = params.value;
 				if (v === "" || v === null || v === void 0) return "";
@@ -165572,12 +166214,13 @@ function clearFiltersForHiddenColumns(api, visibility) {
 	if (removed) api.setFilterModel(next);
 }
 /**
-* Per-scope persistence for the shared samples grid. Each scope
-* (`samplesPanel` | `logViewSamples`) has its own column-visibility map
-* and ag-grid GridState. Defaults are seeded from the supplied
-* `defaultsForUnseededColumns` predicate the first time a column is
-* encountered with no entry in the visibility map; user toggles take
-* precedence after that.
+* Persistence for the cross-log SamplesPanel grid. Owns its own
+* column-visibility map and ag-grid GridState — defaults are seeded from
+* `defaultsForUnseededColumns` the first time a column is encountered
+* with no entry, after which user toggles win.
+*
+* The per-task SampleList scope (`logViewSamples`) flows through
+* `useSamplesView` instead — see `apps/inspect/src/app/samples/list/`.
 */
 function useSampleGridState(scope, allColumns, options) {
 	const { defaultsForUnseededColumns, gridRef } = options ?? {};
@@ -165739,30 +166382,40 @@ var SamplesTab = ({ running, scrollRef, showColumnSelector, setShowColumnSelecto
 	const selectSample = useStore((state) => state.logActions.selectSample);
 	const sampleStatus = useStore((state) => state.sample.sampleStatus);
 	const sampleListHandle = (0, import_react.useRef)(null);
+	const multiline = useSamplesViewMultiline();
+	const compactScores = useSamplesViewCompactScores();
+	const scoreLabels = useSamplesViewScoreLabels();
+	const wireScoreColorScales = useSamplesViewScoreColorScales();
+	const colorScalesEnabled = useSamplesViewColorScalesEnabled();
+	const scoreColorScales = (0, import_react.useMemo)(() => colorScalesEnabled ? wireScoreColorScales : {}, [colorScalesEnabled, wireScoreColorScales]);
 	const allColumns = (0, import_react.useMemo)(() => buildSampleColumns({
-		viewMode: "list",
+		viewMode: multiline ? "list" : "grid",
 		multiLog: false,
 		descriptor: samplesDescriptor,
 		scores,
-		epochs
+		epochs,
+		compactScores,
+		scoreLabels,
+		scoreColorScales
 	}), [
+		multiline,
 		samplesDescriptor,
 		scores,
-		epochs
+		epochs,
+		compactScores,
+		scoreLabels,
+		scoreColorScales
 	]);
 	const shape = samplesDescriptor?.messageShape;
-	const { columnVisibility, setColumnVisibility, gridState, setGridState } = useSampleGridState("logViewSamples", allColumns, {
-		defaultsForUnseededColumns: (0, import_react.useCallback)((col) => {
-			const id = col.colId;
-			if (id === "epoch") return epochs > 1;
-			if (id === "limit") return !!shape?.limitSize;
-			if (id === "retries") return !!shape?.retriesSize;
-			if (id === "error") return !!shape?.errorSize;
-			if (id === "sampleUuid") return false;
-			return true;
-		}, [shape, epochs]),
-		gridRef: sampleListHandle
-	});
+	const { view, columnVisibility, gridState, setColumnVisibility, setGridState, resetColumns } = useSamplesView(allColumns, { seedDefaultVisibility: (0, import_react.useCallback)((col) => {
+		const id = col.colId;
+		if (id === "epoch") return epochs > 1;
+		if (id === "limit") return !!shape?.limitSize;
+		if (id === "retries") return !!shape?.retriesSize;
+		if (id === "error") return !!shape?.errorSize;
+		if (id === "sampleUuid") return false;
+		return true;
+	}, [shape, epochs]) });
 	const selectedScoreFields = (0, import_react.useMemo)(() => new Set(selectedScores.map(perScorerFieldKey)), [selectedScores]);
 	const visibilityForGrid = (0, import_react.useMemo)(() => {
 		const v = {};
@@ -165875,6 +166528,28 @@ var SamplesTab = ({ running, scrollRef, showColumnSelector, setShowColumnSelecto
 		filterModelFromText,
 		filterRegistry
 	]);
+	(0, import_react.useEffect)(() => {
+		const api = sampleListHandle.current?.api;
+		if (!api) return;
+		const cols = api.getColumns();
+		if (!cols) return;
+		const state = cols.flatMap((c) => {
+			const colId = c.getColId();
+			if (!colId.startsWith("score_")) return [];
+			const w = c.getColDef().initialWidth;
+			return w === void 0 ? [] : [{
+				colId,
+				width: w,
+				flex: null
+			}];
+		});
+		if (state.length > 0) api.applyColumnState({ state });
+	}, [compactScores]);
+	(0, import_react.useEffect)(() => {
+		const api = sampleListHandle.current?.api;
+		if (!api) return;
+		api.redrawRows();
+	}, [colorScalesEnabled, scoreColorScales]);
 	const columnFilteringAllowed = (0, import_react.useMemo)(() => {
 		if (!currentFilter.trim()) return true;
 		const { ast } = parseFilter(currentFilter);
@@ -165905,7 +166580,8 @@ var SamplesTab = ({ running, scrollRef, showColumnSelector, setShowColumnSelecto
 			scrollRef,
 			gridState,
 			onGridStateChange: setGridState,
-			onFilterChanged: handleFilterChanged
+			onFilterChanged: handleFilterChanged,
+			multiline: view.multiline
 		}) : null,
 		listDisplay ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ColumnSelectorPopover, {
 			showing: showColumnSelector,
@@ -165915,7 +166591,8 @@ var SamplesTab = ({ running, scrollRef, showColumnSelector, setShowColumnSelecto
 			onVisibilityChange: handleVisibilityChange,
 			positionEl: columnButtonRef.current,
 			filteredFields,
-			scoresHeading: "Scores"
+			scoresHeading: "Scores",
+			onResetToDefault: resetColumns
 		}) : null
 	] });
 };
