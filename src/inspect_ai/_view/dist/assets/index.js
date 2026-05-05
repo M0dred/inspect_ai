@@ -54775,6 +54775,7 @@ var StickyScroll = (0, import_react.forwardRef)(({ children, scrollRef, offsetTo
 		else if (forwardedRef) forwardedRef.current = el;
 	}, [forwardedRef]);
 	const [isSticky, setIsSticky] = (0, import_react.useState)(false);
+	const isStickyRef = (0, import_react.useRef)(false);
 	const [preStickHeight, setPreStickHeight] = (0, import_react.useState)(0);
 	const onStickyChangeRef = (0, import_react.useRef)(onStickyChange);
 	(0, import_react.useEffect)(() => {
@@ -54787,12 +54788,11 @@ var StickyScroll = (0, import_react.forwardRef)(({ children, scrollRef, offsetTo
 		const checkSticky = () => {
 			const containerTop = scrollContainer.getBoundingClientRect().top;
 			const nowSticky = content.getBoundingClientRect().top <= containerTop + offsetTop + 1;
-			setIsSticky((prev) => {
-				if (prev === nowSticky) return prev;
-				if (nowSticky && preserveHeight && content) setPreStickHeight(content.getBoundingClientRect().height);
-				onStickyChangeRef.current?.(nowSticky);
-				return nowSticky;
-			});
+			if (isStickyRef.current === nowSticky) return;
+			isStickyRef.current = nowSticky;
+			if (nowSticky && preserveHeight) setPreStickHeight(content.getBoundingClientRect().height);
+			setIsSticky(nowSticky);
+			onStickyChangeRef.current?.(nowSticky);
 		};
 		checkSticky();
 		scrollContainer.addEventListener("scroll", checkSticky, { passive: true });
@@ -54803,10 +54803,6 @@ var StickyScroll = (0, import_react.forwardRef)(({ children, scrollRef, offsetTo
 		preserveHeight
 	]);
 	const childMeasureRef = (0, import_react.useRef)(null);
-	const isStickyRef = (0, import_react.useRef)(isSticky);
-	(0, import_react.useEffect)(() => {
-		isStickyRef.current = isSticky;
-	}, [isSticky]);
 	(0, import_react.useEffect)(() => {
 		if (!preserveHeight) return;
 		const el = childMeasureRef.current;
@@ -123346,6 +123342,7 @@ function ancestorChain(root, target) {
 function stripSuffix(e, suffix, trajId) {
 	const update = {};
 	if (e.span_id?.endsWith(suffix)) update.span_id = e.span_id.slice(0, -suffix.length);
+	else if (e.span_id === trajId) update.span_id = "";
 	if (e.event === "span_begin" || e.event === "span_end") {
 		if (e.id.endsWith(suffix)) update.id = e.id.slice(0, -suffix.length);
 	}
@@ -126722,6 +126719,7 @@ var toggleIcon = (node, collapsed) => {
 var iconForNode = (node) => {
 	if (node.sourceSpan?.spanType === "agent") return TranscriptIcons.agent;
 	if (node.sourceSpan?.spanType === "branch") return TranscriptIcons.fork;
+	if (node.event.event === "span_begin" && node.event.type === "fork_nav") return TranscriptIcons.fork;
 	switch (node.event.event) {
 		case "sample_limit": return TranscriptIcons.limits.custom;
 		case "score": return TranscriptIcons.scorer;
@@ -128340,30 +128338,36 @@ function branchesByAnchor(span, parentRowKey) {
 	});
 	return map;
 }
-function emitForkNav(events, anchorId, timestamp, data) {
+/** Push a synthetic span_begin/span_end pair onto `events`. */
+function emitSyntheticSpan(events, opts) {
 	events.push({
 		event: "span_begin",
-		name: data.options[data.selectedIndex]?.label ?? "fork",
-		id: `forknav-${anchorId}`,
-		span_id: `forknav-${anchorId}`,
-		type: "fork_nav",
-		timestamp,
-		parent_id: null,
+		name: opts.name,
+		id: opts.id,
+		span_id: opts.id,
+		type: opts.type,
+		timestamp: opts.start,
+		parent_id: opts.parentId,
 		pending: false,
 		working_start: 0,
-		uuid: `forknav-${anchorId}`,
-		metadata: { fork_nav: data }
+		uuid: opts.id,
+		metadata: opts.metadata ?? null
 	});
 	events.push({
 		event: "span_end",
-		id: `forknav-${anchorId}`,
-		span_id: `forknav-${anchorId}`,
-		timestamp,
+		id: opts.id,
+		span_id: opts.id,
+		timestamp: opts.end ?? opts.start,
 		pending: false,
 		working_start: 0,
 		uuid: null,
 		metadata: null
 	});
+}
+/** Outline label for a fork navigator: list children, capped to keep it short. */
+function forkNavLabel(children) {
+	if (children.length <= 2) return children.map((c) => c.label).join(", ");
+	return `${children[0].label} +${children.length - 1}`;
 }
 /**
 * Collect events for the root→selected path, emitting an inline fork navigator
@@ -128377,47 +128381,59 @@ function collectPathWithNavigators(rows, selectedRowKey) {
 	const events = [];
 	const sourceSpans = /* @__PURE__ */ new Map();
 	const path = buildPath(rows, selectedRowKey);
-	for (const seg of path) {
+	for (let segIdx = 0; segIdx < path.length; segIdx++) {
+		const seg = path[segIdx];
+		const nextRowKey = path[segIdx + 1]?.rowKey;
 		const forks = branchesByAnchor(seg.span, seg.rowKey);
+		const suffix = `:${seg.span.id}`;
 		sourceSpans.set(seg.span.id, seg.span);
-		const restartForks = forks.get("");
-		if (restartForks) {
+		/** Emit a navigator for `children` at `anchorId`; returns true if the path cuts here. */
+		const navAt = (anchorId, children, ts, parentId) => {
 			const options = [{
 				label: seg.span.name,
 				rowKey: seg.rowKey
-			}, ...restartForks];
-			const isCut = seg.cutAnchor === "";
-			const selectedIndex = isCut ? options.findIndex((o) => o.rowKey === path[path.indexOf(seg) + 1]?.rowKey) : 0;
-			emitForkNav(events, `restart-${seg.span.id}`, seg.span.startTime().toISOString(), {
-				anchorId: "",
-				options,
-				selectedIndex: Math.max(0, selectedIndex)
+			}, ...children];
+			const isCut = anchorId === seg.cutAnchor;
+			const sel = isCut ? options.findIndex((o) => o.rowKey === nextRowKey) : 0;
+			emitSyntheticSpan(events, {
+				id: `forknav-${seg.span.id}-${anchorId || "restart"}`,
+				name: forkNavLabel(children),
+				type: "fork_nav",
+				parentId,
+				start: ts,
+				metadata: { fork_nav: {
+					anchorId,
+					options,
+					selectedIndex: Math.max(0, sel)
+				} }
 			});
-			if (isCut) continue;
+			return isCut;
+		};
+		const restartForks = forks.get("");
+		if (restartForks) {
+			if (navAt("", restartForks, seg.span.startTime().toISOString(), null)) continue;
 		}
 		for (const item of seg.span.content) {
 			if (item.type === "span") {
 				sourceSpans.set(item.id, item);
-				emitSpanEnvelope(item, events);
+				emitSyntheticSpan(events, {
+					id: item.id,
+					name: item.name,
+					type: item.spanType,
+					parentId: null,
+					start: item.startTime().toISOString(),
+					end: item.endTime().toISOString()
+				});
 				continue;
 			}
-			events.push(item.event);
+			const stripped = stripSuffix(item.event, suffix, seg.span.id);
+			events.push(stripped);
 			if (item.event.event !== "anchor") continue;
 			const anchorId = item.event.anchor_id;
 			const children = forks.get(anchorId);
-			if (children && children.length > 0) {
-				const options = [{
-					label: seg.span.name,
-					rowKey: seg.rowKey
-				}, ...children];
-				const isCut = anchorId === seg.cutAnchor;
-				const selectedIndex = isCut ? options.findIndex((o) => o.rowKey === path[path.indexOf(seg) + 1]?.rowKey) : 0;
-				emitForkNav(events, anchorId, item.event.timestamp, {
-					anchorId,
-					options,
-					selectedIndex: Math.max(0, selectedIndex)
-				});
-				if (isCut) break;
+			if (children?.length) {
+				const ts = item.event.timestamp;
+				if (navAt(anchorId, children, ts, stripped.span_id ?? null)) break;
 			} else if (anchorId === seg.cutAnchor) break;
 		}
 	}
@@ -128425,32 +128441,6 @@ function collectPathWithNavigators(rows, selectedRowKey) {
 		events,
 		sourceSpans
 	};
-}
-/** Emit a span_begin/span_end pair so nested agent spans render as collapsed cards. */
-function emitSpanEnvelope(span, events) {
-	events.push({
-		event: "span_begin",
-		name: span.name,
-		id: span.id,
-		span_id: span.id,
-		type: span.spanType,
-		timestamp: span.startTime().toISOString(),
-		parent_id: null,
-		pending: false,
-		working_start: 0,
-		uuid: span.id,
-		metadata: null
-	});
-	events.push({
-		event: "span_end",
-		id: span.id,
-		span_id: span.id,
-		timestamp: span.endTime().toISOString(),
-		pending: false,
-		working_start: 0,
-		uuid: null,
-		metadata: null
-	});
 }
 /**
 * Builds a lookup from span ID to the selection key needed to select that span
@@ -129908,10 +129898,10 @@ var ErrorEventView = ({ eventNode, className }) => {
 	});
 };
 var ForkNavigatorView_module_default = {
-	nav: "_nav_1t82s_1",
-	btn: "_btn_1t82s_13",
-	count: "_count_1t82s_28",
-	label: "_label_1t82s_34"
+	nav: "_nav_1tozt_1",
+	icon: "_icon_1tozt_12",
+	pill: "_pill_1tozt_18",
+	selected: "_selected_1tozt_33"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/ForkNavigatorView.tsx
@@ -129920,41 +129910,15 @@ var ForkNavigatorView = ({ eventNode, className }) => {
 	const selectRow = useTimelineRowSelect();
 	if (!data || data.options.length < 2) return null;
 	const { options, selectedIndex } = data;
-	const n = options.length;
-	const go = (delta, el) => {
-		const next = (selectedIndex + delta + n) % n;
-		selectRow?.(options[next].rowKey, el.closest("[data-index]") ?? el);
-	};
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: clsx(ForkNavigatorView_module_default.nav, className),
-		children: [
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-				type: "button",
-				className: ForkNavigatorView_module_default.btn,
-				onClick: (e) => go(-1, e.currentTarget),
-				"aria-label": "Previous continuation",
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: "bi bi-chevron-left" })
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-				className: ForkNavigatorView_module_default.count,
-				children: [
-					selectedIndex + 1,
-					"/",
-					n
-				]
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-				type: "button",
-				className: ForkNavigatorView_module_default.btn,
-				onClick: (e) => go(1, e.currentTarget),
-				"aria-label": "Next continuation",
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: "bi bi-chevron-right" })
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-				className: ForkNavigatorView_module_default.label,
-				children: options[selectedIndex].label
-			})
-		]
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(TranscriptIcons.fork, ForkNavigatorView_module_default.icon) }), options.map((opt, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+			type: "button",
+			className: clsx(ForkNavigatorView_module_default.pill, i === selectedIndex && ForkNavigatorView_module_default.selected),
+			onClick: (e) => i === selectedIndex ? void 0 : selectRow?.(opt.rowKey, e.currentTarget.closest("[data-index]") ?? e.currentTarget),
+			"aria-current": i === selectedIndex ? "true" : void 0,
+			children: opt.label
+		}, opt.rowKey))]
 	});
 };
 var InfoEventView_module_default = { panel: "_panel_vz394_1" };
