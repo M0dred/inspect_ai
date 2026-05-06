@@ -64628,8 +64628,10 @@ var createLogsSlice = (set, get, _store) => {
 		logsActions: {
 			setLogDir: (logDir) => {
 				set((state) => {
-					if (logDir !== state.logs.logDir) {
-						state.logs.logDir = logDir;
+					const prev = state.logs.logDir;
+					if (logDir === prev) return;
+					state.logs.logDir = logDir;
+					if (prev !== void 0 && prev !== "" && logDir !== void 0 && logDir !== "") {
 						state.logs.samplesListState.byScope.samplesPanel.gridState = void 0;
 						const view = state.logs.samplesListState.byScope.logViewSamples.view;
 						if (view) {
@@ -71747,17 +71749,18 @@ var PreformattedTooltip = ({ value }) => {
 	});
 };
 var columns_module_default = {
-	nameCell: "_nameCell_90rs9_1",
-	modelCell: "_modelCell_90rs9_8",
-	modelCellPrimary: "_modelCellPrimary_90rs9_15",
-	scoreCell: "_scoreCell_90rs9_22",
-	multiScorerBadge: "_multiScorerBadge_90rs9_29",
-	error: "_error_90rs9_41",
-	started: "_started_90rs9_45",
-	success: "_success_90rs9_49",
-	cancelled: "_cancelled_90rs9_53",
-	statusCell: "_statusCell_90rs9_57",
-	dateCell: "_dateCell_90rs9_64"
+	rowLink: "_rowLink_37x2s_1",
+	nameCell: "_nameCell_37x2s_15",
+	modelCell: "_modelCell_37x2s_22",
+	modelCellPrimary: "_modelCellPrimary_37x2s_29",
+	scoreCell: "_scoreCell_37x2s_36",
+	multiScorerBadge: "_multiScorerBadge_37x2s_43",
+	error: "_error_37x2s_55",
+	started: "_started_37x2s_59",
+	success: "_success_37x2s_63",
+	cancelled: "_cancelled_37x2s_67",
+	statusCell: "_statusCell_37x2s_71",
+	dateCell: "_dateCell_37x2s_78"
 };
 //#endregion
 //#region src/app/log-list/grid/columns/hooks.tsx
@@ -71871,9 +71874,23 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 					if (!item) return null;
 					let value = item.name;
 					if (item.type === "file") value = item.task || parseLogFileName(item.name).name;
+					const href = item.url ? `${window.location.pathname}#${item.url}` : void 0;
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 						className: styles.nameCell,
-						children: item.type === "folder" && item.url ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+						children: href ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+							href,
+							className: styles.rowLink,
+							onClick: (e) => {
+								if (!e.metaKey && !e.ctrlKey && !e.shiftKey && e.button === 0) e.preventDefault();
+							},
+							children: item.type === "folder" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								className: styles.folder,
+								children: value
+							}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								className: styles.taskText,
+								children: value
+							})
+						}) : item.type === "folder" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 							className: styles.folder,
 							children: value
 						}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
@@ -119399,6 +119416,18 @@ var createGridKeyboardHandler = ({ gridRef, onOpenRow, pageJump = 10 }) => {
 		}
 	};
 };
+//#endregion
+//#region src/app/shared/openInNewTab.ts
+/**
+* Opens a hash-route URL in a new background tab.
+* Blurs the new window and refocuses the current window
+* so the new tab doesn't steal focus.
+*/
+function openInNewTab(hashRoute) {
+	const newWin = window.open(`${window.location.pathname}#${hashRoute}`, "_blank");
+	if (newWin) newWin.blur();
+	window.focus();
+}
 var SamplesGrid_module_default = {
 	gridWrapper: "_gridWrapper_yfmzu_1",
 	gridContainer: "_gridContainer_yfmzu_7",
@@ -119554,17 +119583,16 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 			gridRef.current.api.deselectAll();
 			e.node.setSelected(true);
 			const mouseEvent = e.event;
-			const openInNewWindow = mouseEvent?.metaKey || mouseEvent?.ctrlKey || mouseEvent?.shiftKey || mouseEvent?.button === 1;
+			if (mouseEvent?.metaKey || mouseEvent?.ctrlKey || mouseEvent?.shiftKey || mouseEvent?.button === 1) return;
 			const url = e.data.url;
 			if (url) setTimeout(() => {
-				if (openInNewWindow) window.open(`#${url}`, "_blank");
-				else navigate(url);
+				navigate(url);
 			}, 10);
 		}
 	}, [navigate, gridRef]);
 	const handleOpenRow = (0, import_react.useCallback)((rowNode, e) => {
 		if (!rowNode.data?.url) return;
-		if (e.metaKey || e.ctrlKey || e.shiftKey) window.open(`#${rowNode.data.url}`, "_blank");
+		if (e.metaKey || e.ctrlKey || e.shiftKey) openInNewTab(rowNode.data.url);
 		else navigate(rowNode.data.url);
 	}, [navigate]);
 	const handleKeyDown = (0, import_react.useMemo)(() => createGridKeyboardHandler({
@@ -119579,13 +119607,7 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 			gridElement.removeEventListener("keydown", handleKeyDown);
 		};
 	}, [handleKeyDown]);
-	const handleCellMouseDown = (0, import_react.useCallback)((e) => {
-		const mouseEvent = e.event;
-		if (mouseEvent?.button === 1 && e.data?.url) {
-			mouseEvent.preventDefault();
-			window.open(`#${e.data.url}`, "_blank");
-		}
-	}, []);
+	const handleCellMouseDown = (0, import_react.useCallback)((_e) => {}, []);
 	(0, import_react.useEffect)(() => {
 		const loadHeaders = async () => {
 			const filesToLoad = logFiles.filter((file) => !logPreviews[file.name]);
@@ -120353,7 +120375,7 @@ var useSamplesGridNavigation = () => {
 	const logDirectory = useStore((state) => state.logs.logDir);
 	return { navigateToSampleDetail: (0, import_react.useCallback)((logFile, sampleId, epoch, openInNewWindow = false) => {
 		const url = samplesSampleUrl(directoryRelativeUrl(logFile, logDirectory), sampleId, epoch);
-		if (openInNewWindow) window.open(`#${url}`, "_blank");
+		if (openInNewWindow) openInNewTab(url);
 		else navigate(url);
 	}, [navigate, logDirectory]) };
 };
@@ -131810,10 +131832,14 @@ var collectAllCollapsibleIds = (nodes) => {
 	return result;
 };
 var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, offsetTop = 0, timelineSelection, activeTimeline, serverTimelines, markerConfig: markerConfigOverride, agentConfig: agentConfigOverride, showSwimlanes: showSwimlanesOption = "auto", onMarkerNavigate, onScrollToTop, headroomHidden, onHeadroomResetAnchor, listId, initialEventId, initialMessageId, eventsListRef, getEventUrl, linkingEnabled, bulkCollapse, collapseState, outline, outlineScrollRef, rightPane, rightPaneScrollRef, eventNodeContext, emptyText = "No events match the current filter", className }) => {
-	const timelinesForBranchDetection = useTimelinesArray(events, serverTimelines);
+	const eventsForTimeline = (0, import_react.useMemo)(() => {
+		if (!hiddenEventTypes || hiddenEventTypes.length === 0) return events;
+		return events.filter((e) => e.event === "anchor" || !hiddenEventTypes.includes(e.event));
+	}, [events, hiddenEventTypes]);
+	const timelinesForBranchDetection = useTimelinesArray(eventsForTimeline, serverTimelines);
 	const timelineConfig = useTimelineConfig({ branchesPresent: (0, import_react.useMemo)(() => timelinesForBranchDetection.some((tl) => spanHasBranches(tl.root)), [timelinesForBranchDetection]) });
 	const { timeline: timelineData, state: timelineState, layouts: timelineLayouts, rootTimeMapping, selectedEvents, sourceSpans, minimapSelection, hasTimeline, timelines, activeTimelineIndex, setActiveTimeline, regionCounts, branchScrollTarget, highlightedKeys, selectedRowName, viewStack, pushView, popView } = useTranscriptTimeline({
-		events,
+		events: eventsForTimeline,
 		markerConfig: markerConfigOverride ?? timelineConfig.markerConfig,
 		timelineOptions: agentConfigOverride ?? timelineConfig.agentConfig,
 		serverTimelines,
@@ -136490,10 +136516,7 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 	const printSampleId = urlSampleId || selectedSampleHandle?.id?.toString();
 	const printEpoch = urlEpoch || selectedSampleHandle?.epoch?.toString();
 	const handlePrintClick = (0, import_react.useCallback)(() => {
-		if (printLogPath && printSampleId && printEpoch) {
-			const printUrl = printSampleUrl(printLogPath, printSampleId, printEpoch, effectiveSelectedTab, prefix);
-			window.open(`#${printUrl}`, "_blank");
-		}
+		if (printLogPath && printSampleId && printEpoch) openInNewTab(printSampleUrl(printLogPath, printSampleId, printEpoch, effectiveSelectedTab, prefix));
 	}, [
 		printLogPath,
 		printSampleId,
@@ -167215,20 +167238,20 @@ var ScoreGrid = ({ scoreGroups, showReducer, className, striped }) => {
 		for (let i = 0; i < columnCount; i++) if (metrics.length > i) cells.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)("th", {
 			className: clsx("text-style-label", "text-style-secondary", "text-size-small", ScoreGrid_module_default.label),
 			children: metrics[i].name
-		}));
-		else cells.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {}));
+		}, i));
+		else cells.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {}, i));
 		const headerRow = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("tr", {
 			className: clsx(ScoreGrid_module_default.headerRow),
 			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {}), cells]
 		}) });
 		const rows = [];
-		scoreGroup.forEach((g) => {
+		scoreGroup.forEach((g, rowIndex) => {
 			const cells = [];
 			for (let i = 0; i < columnCount; i++) if (metrics.length > i) cells.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
 				className: clsx(ScoreGrid_module_default.value, "text-size-small"),
 				children: formatPrettyDecimal(g.metrics[i].value)
-			}));
-			else cells.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { className: clsx(ScoreGrid_module_default.value) }));
+			}, i));
+			else cells.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { className: clsx(ScoreGrid_module_default.value) }, i));
 			rows.push(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("tr", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("th", {
 				className: clsx(ScoreGrid_module_default.scorer, "text-size-small"),
 				children: [
@@ -167240,9 +167263,9 @@ var ScoreGrid = ({ scoreGroups, showReducer, className, striped }) => {
 						unscoredSamples: g.unscoredSamples || 0
 					})
 				]
-			}), cells] }));
+			}), cells] }, rowIndex));
 		});
-		subTables.push(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
+		subTables.push(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [
 			index > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tbody", {
 				className: clsx(ScoreGrid_module_default.tableSeparator),
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
@@ -167255,7 +167278,7 @@ var ScoreGrid = ({ scoreGroups, showReducer, className, striped }) => {
 				className: clsx("table-group-divider", ScoreGrid_module_default.tableBody),
 				children: rows
 			})
-		] }));
+		] }, index));
 		index++;
 	}
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("table", {
