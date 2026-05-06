@@ -140864,6 +140864,7 @@ var SamplesGrid = (props) => {
 		};
 	}, [initialState, columnVisibility]);
 	const handleStateUpdated = (0, import_react.useCallback)((e) => {
+		if (!e.sources.some((s) => s === "columnVisibility" || s === "columnOrder" || s === "columnPinning" || s === "columnSizing" || s === "sort" || s === "filter")) return;
 		onStateUpdated?.(e.state);
 	}, [onStateUpdated]);
 	const handleFilterChanged = (0, import_react.useCallback)(() => {
