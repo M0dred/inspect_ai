@@ -54134,6 +54134,7 @@ function useScrollDirection(scrollRef, options) {
 	const threshold = options?.threshold ?? 40;
 	const transitionLockMs = options?.transitionLockMs ?? 250;
 	const suppressRef = options?.suppressRef;
+	const stayHiddenOnUpScroll = options?.stayHiddenOnUpScroll ?? false;
 	const directionAnchorsRef = (0, import_react.useRef)(/* @__PURE__ */ new WeakMap());
 	const lastDirectionsRef = (0, import_react.useRef)(/* @__PURE__ */ new WeakMap());
 	const transitionLockedRef = (0, import_react.useRef)(false);
@@ -54208,6 +54209,7 @@ function useScrollDirection(scrollRef, options) {
 				}
 				return;
 			}
+			if (stayHiddenOnUpScroll && direction === "up") return;
 			const shouldHide = direction === "down" && scrollTop > 10;
 			setHidden((prev) => {
 				if (prev === shouldHide) return prev;
@@ -54235,7 +54237,8 @@ function useScrollDirection(scrollRef, options) {
 		scrollEls,
 		threshold,
 		transitionLockMs,
-		suppressRef
+		suppressRef,
+		stayHiddenOnUpScroll
 	]);
 	return {
 		hidden,
@@ -54772,6 +54775,7 @@ var StickyScroll = (0, import_react.forwardRef)(({ children, scrollRef, offsetTo
 		else if (forwardedRef) forwardedRef.current = el;
 	}, [forwardedRef]);
 	const [isSticky, setIsSticky] = (0, import_react.useState)(false);
+	const isStickyRef = (0, import_react.useRef)(false);
 	const [preStickHeight, setPreStickHeight] = (0, import_react.useState)(0);
 	const onStickyChangeRef = (0, import_react.useRef)(onStickyChange);
 	(0, import_react.useEffect)(() => {
@@ -54784,12 +54788,11 @@ var StickyScroll = (0, import_react.forwardRef)(({ children, scrollRef, offsetTo
 		const checkSticky = () => {
 			const containerTop = scrollContainer.getBoundingClientRect().top;
 			const nowSticky = content.getBoundingClientRect().top <= containerTop + offsetTop + 1;
-			setIsSticky((prev) => {
-				if (prev === nowSticky) return prev;
-				if (nowSticky && preserveHeight && content) setPreStickHeight(content.getBoundingClientRect().height);
-				onStickyChangeRef.current?.(nowSticky);
-				return nowSticky;
-			});
+			if (isStickyRef.current === nowSticky) return;
+			isStickyRef.current = nowSticky;
+			if (nowSticky && preserveHeight) setPreStickHeight(content.getBoundingClientRect().height);
+			setIsSticky(nowSticky);
+			onStickyChangeRef.current?.(nowSticky);
 		};
 		checkSticky();
 		scrollContainer.addEventListener("scroll", checkSticky, { passive: true });
@@ -54800,10 +54803,6 @@ var StickyScroll = (0, import_react.forwardRef)(({ children, scrollRef, offsetTo
 		preserveHeight
 	]);
 	const childMeasureRef = (0, import_react.useRef)(null);
-	const isStickyRef = (0, import_react.useRef)(isSticky);
-	(0, import_react.useEffect)(() => {
-		isStickyRef.current = isSticky;
-	}, [isSticky]);
 	(0, import_react.useEffect)(() => {
 		if (!preserveHeight) return;
 		const el = childMeasureRef.current;
@@ -54820,7 +54819,8 @@ var StickyScroll = (0, import_react.forwardRef)(({ children, scrollRef, offsetTo
 		position: "sticky",
 		top: offsetTop,
 		zIndex,
-		minHeight: isSticky && preserveHeight ? preStickHeight : void 0
+		minHeight: isSticky && preserveHeight ? preStickHeight : void 0,
+		overflowAnchor: preserveHeight ? "none" : void 0
 	};
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		ref: setRef,
@@ -54965,17 +54965,17 @@ var ToolDropdownButton = (0, import_react.forwardRef)(({ label, icon, className,
 });
 ToolDropdownButton.displayName = "ToolDropdownButton";
 var TabSet_module_default = {
-	tabs: "_tabs_1wfac_1",
-	tabContents: "_tabContents_1wfac_5",
-	scrollable: "_scrollable_1wfac_11",
-	tab: "_tab_1wfac_1",
-	tabItem: "_tabItem_1wfac_27",
-	pillSmallContainer: "_pillSmallContainer_1wfac_31",
-	pillSmall: "_pillSmall_1wfac_31",
-	tabIcon: "_tabIcon_1wfac_39",
-	tabSpacer: "_tabSpacer_1wfac_43",
-	tabTools: "_tabTools_1wfac_49",
-	tabStyle: "_tabStyle_1wfac_59"
+	tabs: "_tabs_85ts4_1",
+	tabContents: "_tabContents_85ts4_5",
+	scrollable: "_scrollable_85ts4_11",
+	tab: "_tab_85ts4_1",
+	tabItem: "_tabItem_85ts4_27",
+	pillSmallContainer: "_pillSmallContainer_85ts4_31",
+	pillSmall: "_pillSmall_85ts4_31",
+	tabIcon: "_tabIcon_85ts4_39",
+	tabSpacer: "_tabSpacer_85ts4_43",
+	tabTools: "_tabTools_85ts4_49",
+	tabStyle: "_tabStyle_85ts4_63"
 };
 //#endregion
 //#region ../../packages/react/src/components/TabSet.tsx
@@ -64628,8 +64628,10 @@ var createLogsSlice = (set, get, _store) => {
 		logsActions: {
 			setLogDir: (logDir) => {
 				set((state) => {
-					if (logDir !== state.logs.logDir) {
-						state.logs.logDir = logDir;
+					const prev = state.logs.logDir;
+					if (logDir === prev) return;
+					state.logs.logDir = logDir;
+					if (prev !== void 0 && prev !== "" && logDir !== void 0 && logDir !== "") {
 						state.logs.samplesListState.byScope.samplesPanel.gridState = void 0;
 						const view = state.logs.samplesListState.byScope.logViewSamples.view;
 						if (view) {
@@ -65433,7 +65435,8 @@ var kDefaultExcludeEvents = [
 	"sandbox",
 	"state",
 	"store",
-	"branch"
+	"branch",
+	"anchor"
 ];
 var initialState = {
 	sample_identifier: void 0,
@@ -71746,17 +71749,18 @@ var PreformattedTooltip = ({ value }) => {
 	});
 };
 var columns_module_default = {
-	nameCell: "_nameCell_90rs9_1",
-	modelCell: "_modelCell_90rs9_8",
-	modelCellPrimary: "_modelCellPrimary_90rs9_15",
-	scoreCell: "_scoreCell_90rs9_22",
-	multiScorerBadge: "_multiScorerBadge_90rs9_29",
-	error: "_error_90rs9_41",
-	started: "_started_90rs9_45",
-	success: "_success_90rs9_49",
-	cancelled: "_cancelled_90rs9_53",
-	statusCell: "_statusCell_90rs9_57",
-	dateCell: "_dateCell_90rs9_64"
+	rowLink: "_rowLink_37x2s_1",
+	nameCell: "_nameCell_37x2s_15",
+	modelCell: "_modelCell_37x2s_22",
+	modelCellPrimary: "_modelCellPrimary_37x2s_29",
+	scoreCell: "_scoreCell_37x2s_36",
+	multiScorerBadge: "_multiScorerBadge_37x2s_43",
+	error: "_error_37x2s_55",
+	started: "_started_37x2s_59",
+	success: "_success_37x2s_63",
+	cancelled: "_cancelled_37x2s_67",
+	statusCell: "_statusCell_37x2s_71",
+	dateCell: "_dateCell_37x2s_78"
 };
 //#endregion
 //#region src/app/log-list/grid/columns/hooks.tsx
@@ -71870,9 +71874,23 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 					if (!item) return null;
 					let value = item.name;
 					if (item.type === "file") value = item.task || parseLogFileName(item.name).name;
+					const href = item.url ? `${window.location.pathname}#${item.url}` : void 0;
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 						className: styles.nameCell,
-						children: item.type === "folder" && item.url ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+						children: href ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+							href,
+							className: styles.rowLink,
+							onClick: (e) => {
+								if (!e.metaKey && !e.ctrlKey && !e.shiftKey && e.button === 0) e.preventDefault();
+							},
+							children: item.type === "folder" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								className: styles.folder,
+								children: value
+							}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								className: styles.taskText,
+								children: value
+							})
+						}) : item.type === "folder" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 							className: styles.folder,
 							children: value
 						}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
@@ -119398,6 +119416,18 @@ var createGridKeyboardHandler = ({ gridRef, onOpenRow, pageJump = 10 }) => {
 		}
 	};
 };
+//#endregion
+//#region src/app/shared/openInNewTab.ts
+/**
+* Opens a hash-route URL in a new background tab.
+* Blurs the new window and refocuses the current window
+* so the new tab doesn't steal focus.
+*/
+function openInNewTab(hashRoute) {
+	const newWin = window.open(`${window.location.pathname}#${hashRoute}`, "_blank");
+	if (newWin) newWin.blur();
+	window.focus();
+}
 var SamplesGrid_module_default = {
 	gridWrapper: "_gridWrapper_yfmzu_1",
 	gridContainer: "_gridContainer_yfmzu_7",
@@ -119553,17 +119583,16 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 			gridRef.current.api.deselectAll();
 			e.node.setSelected(true);
 			const mouseEvent = e.event;
-			const openInNewWindow = mouseEvent?.metaKey || mouseEvent?.ctrlKey || mouseEvent?.shiftKey || mouseEvent?.button === 1;
+			if (mouseEvent?.metaKey || mouseEvent?.ctrlKey || mouseEvent?.shiftKey || mouseEvent?.button === 1) return;
 			const url = e.data.url;
 			if (url) setTimeout(() => {
-				if (openInNewWindow) window.open(`#${url}`, "_blank");
-				else navigate(url);
+				navigate(url);
 			}, 10);
 		}
 	}, [navigate, gridRef]);
 	const handleOpenRow = (0, import_react.useCallback)((rowNode, e) => {
 		if (!rowNode.data?.url) return;
-		if (e.metaKey || e.ctrlKey || e.shiftKey) window.open(`#${rowNode.data.url}`, "_blank");
+		if (e.metaKey || e.ctrlKey || e.shiftKey) openInNewTab(rowNode.data.url);
 		else navigate(rowNode.data.url);
 	}, [navigate]);
 	const handleKeyDown = (0, import_react.useMemo)(() => createGridKeyboardHandler({
@@ -119578,13 +119607,7 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 			gridElement.removeEventListener("keydown", handleKeyDown);
 		};
 	}, [handleKeyDown]);
-	const handleCellMouseDown = (0, import_react.useCallback)((e) => {
-		const mouseEvent = e.event;
-		if (mouseEvent?.button === 1 && e.data?.url) {
-			mouseEvent.preventDefault();
-			window.open(`#${e.data.url}`, "_blank");
-		}
-	}, []);
+	const handleCellMouseDown = (0, import_react.useCallback)((_e) => {}, []);
 	(0, import_react.useEffect)(() => {
 		const loadHeaders = async () => {
 			const filesToLoad = logFiles.filter((file) => !logPreviews[file.name]);
@@ -120352,7 +120375,7 @@ var useSamplesGridNavigation = () => {
 	const logDirectory = useStore((state) => state.logs.logDir);
 	return { navigateToSampleDetail: (0, import_react.useCallback)((logFile, sampleId, epoch, openInNewWindow = false) => {
 		const url = samplesSampleUrl(directoryRelativeUrl(logFile, logDirectory), sampleId, epoch);
-		if (openInNewWindow) window.open(`#${url}`, "_blank");
+		if (openInNewWindow) openInNewTab(url);
 		else navigate(url);
 	}, [navigate, logDirectory]) };
 };
@@ -122969,12 +122992,13 @@ var extractEventFields = (event) => {
 			else fields.push(["data", sanitizeStringify(infoEvent.data)]);
 			break;
 		}
-		case "branch": {
-			const branchEvent = event;
-			if (branchEvent.from_span) fields.push(["from_span", branchEvent.from_span]);
-			if (branchEvent.from_message) fields.push(["from_message", branchEvent.from_message]);
+		case "branch":
+			if (event.from_anchor) fields.push(["from_anchor", event.from_anchor]);
 			break;
-		}
+		case "anchor":
+			fields.push(["anchor_id", event.anchor_id]);
+			if (event.source) fields.push(["source", event.source]);
+			break;
 		case "compaction": {
 			const compactionEvent = event;
 			if (compactionEvent.source && compactionEvent.source !== "inspect") fields.push(["source", compactionEvent.source]);
@@ -123147,27 +123171,13 @@ var TimelineEvent = class {
 		return 0;
 	}
 	/**
-	* Returns true if this event produced or carries the given message ID.
+	* Returns true if this event is the fork point for the given `branchedFrom`.
 	*
-	* `branchedFrom` is a message ID (not an event UUID). It may match:
-	* 1. A model event's output message ID (`output.choices[0].message.id`)
-	* 2. A tool event's message ID (`message_id`)
-	* 3. A model event's input message ID (any message in `input` with matching `id`)
-	*
-	* This is used to locate the fork point for branches.
+	* `branchedFrom` is an anchor ID; producers emit an `AnchorEvent` at each
+	* fork-able point (`timeline_branch()` does this automatically).
 	*/
-	matchesMessageId(messageId) {
-		const e = this.event;
-		if (e.event === "model") {
-			if (e.output?.choices?.[0]?.message?.id === messageId) return true;
-			const input = e.input;
-			if (input) {
-				for (const msg of input) if (msg.id === messageId) return true;
-			}
-		} else if (e.event === "tool") {
-			if (e.message_id === messageId) return true;
-		}
-		return false;
+	matchesForkPoint(id) {
+		return this.event.event === "anchor" && this.event.anchor_id === id;
 	}
 };
 /**
@@ -123243,7 +123253,13 @@ function createBranchSpan(branch, label) {
 		outline: branch.outline
 	});
 }
+var kGenericBranchNames = new Set([
+	"",
+	"branch",
+	"trajectory"
+]);
 function deriveBranchLabel(branch, label) {
+	if (!kGenericBranchNames.has(branch.name)) return branch.name;
 	for (const item of branch.content) if (item.type === "span") return item.name;
 	return `Branch ${label}`;
 }
@@ -123286,7 +123302,7 @@ function convertServerEvent(server, lookup) {
 }
 function convertServerSpan(server, lookup) {
 	const content = (server.content ?? []).map((item) => convertServerContentItem(item, lookup)).filter((item) => item !== null);
-	const branches = (server.branches ?? []).map((b) => convertServerSpan(b, lookup)).filter((b) => b.content.length > 0);
+	const branches = (server.branches ?? []).map((b) => convertServerSpan(b, lookup)).filter((b) => b.content.length > 0 || b.branches.length > 0);
 	return new TimelineSpan({
 		id: server.id,
 		name: server.name,
@@ -123299,6 +123315,67 @@ function convertServerSpan(server, lookup) {
 		agentResult: server.agent_result ?? void 0,
 		outline: server.outline ?? void 0
 	});
+}
+/**
+* Reconstruct `target`'s full event stream by concatenating ancestor prefixes.
+*
+* For each ancestor, take events up to the `AnchorEvent` matching the next
+* child's `branchedFrom`, strip the `:{span_id}` suffix from span IDs, and
+* concatenate. The result is what a standalone unbranched run of `target`'s
+* lineage would have produced.
+*/
+function splice(root, target) {
+	const chain = ancestorChain(root, target);
+	const out = [];
+	for (let i = 0; i < chain.length; i++) {
+		const node = chain[i];
+		let events = node.content.filter((it) => it.type === "event").map((it) => it.event);
+		if (i + 1 < chain.length) {
+			const anchor = chain[i + 1].branchedFrom;
+			if (!anchor) {
+				out.length = 0;
+				continue;
+			}
+			const cut = events.findIndex((e) => e.event === "anchor" && e.anchor_id === anchor);
+			if (cut < 0) throw new Error(`splice: anchor ${anchor} not found in ${node.name} (${node.id})`);
+			events = events.slice(0, cut + 1);
+		}
+		const suffix = `:${node.id}`;
+		for (const e of events) out.push(stripSuffix(e, suffix, node.id));
+	}
+	return out;
+}
+/** Splice `target` and rebuild it as a standalone (unbranched) Timeline. */
+function spliceToTimeline(root, target) {
+	return buildTimeline(splice(root, target));
+}
+function ancestorChain(root, target) {
+	const path = [];
+	function walk(node) {
+		path.push(node);
+		if (node === target || node.id === target.id) return true;
+		for (const child of node.branches) if (walk(child)) return true;
+		path.pop();
+		return false;
+	}
+	if (!walk(root)) throw new Error(`TimelineSpan ${target.id} not reachable from root`);
+	return path;
+}
+function stripSuffix(e, suffix, trajId) {
+	const update = {};
+	if (e.span_id?.endsWith(suffix)) update.span_id = e.span_id.slice(0, -suffix.length);
+	else if (e.span_id === trajId) update.span_id = "";
+	if (e.event === "span_begin" || e.event === "span_end") {
+		if (e.id.endsWith(suffix)) update.id = e.id.slice(0, -suffix.length);
+	}
+	if (e.event === "span_begin" && e.parent_id != null) {
+		if (e.parent_id.endsWith(suffix)) update.parent_id = e.parent_id.slice(0, -suffix.length);
+		else if (e.parent_id === trajId) update.parent_id = "";
+	}
+	return Object.keys(update).length > 0 ? {
+		...e,
+		...update
+	} : e;
 }
 /**
 * Get tokens from an event (ModelEvent only).
@@ -123650,10 +123727,7 @@ function processChildren(children) {
 				branchContent.push(node);
 			}
 			if (branchContent.length === 0) continue;
-			const branchedFrom = branchEvent.from_message;
-			const branchSpan = createTimelineSpan(span.id, span.name || "branch", "branch", branchContent, false, [], void 0, branchedFrom);
-			branchFromSpanMap.set(branchSpan.id, branchEvent.from_span);
-			result.push(branchSpan);
+			result.push(createTimelineSpan(span.id, span.name || "branch", "branch", branchContent, false, [], void 0, branchEvent.from_anchor));
 		}
 		return result;
 	}
@@ -123691,61 +123765,6 @@ function processSpanAsContent(span, into) {
 		if (node.type === "span" && node.content.length === 0) continue;
 		into.push(node);
 	}
-}
-/**
-* Recursively classify branches in the agent tree.
-*
-* Recurses into child spans in both content and branches.
-*/
-function classifyBranches(span) {
-	for (const item of span.content) if (item.type === "span") classifyBranches(item);
-	for (const branch of span.branches) {
-		classifyBranches(branch);
-		for (const item of branch.content) if (item.type === "span") classifyBranches(item);
-	}
-}
-/**
-* Maps branch span ID → fromSpan (the span ID the branch originated from).
-*
-* Populated during `processChildren` and consumed by `relocateBranches`.
-* This is build-time-only metadata that doesn't belong on the public
-* `TimelineSpan` type.
-*/
-var branchFromSpanMap = /* @__PURE__ */ new Map();
-/**
-* Recursively collect all TimelineSpans into a span_id → span map.
-*/
-function collectSpans(span, spanMap) {
-	spanMap.set(span.id, span);
-	for (const item of span.content) if (item.type === "span") collectSpans(item, spanMap);
-	for (const branch of span.branches) collectSpans(branch, spanMap);
-}
-/**
-* Relocate branches to the span identified by fromSpan.
-*
-* After initial discovery, all branches from the same processChildren
-* call are flat siblings. If a branch's fromSpan points to a span
-* inside a sibling branch, move it there.
-*/
-function relocateBranches(root) {
-	const spanMap = /* @__PURE__ */ new Map();
-	collectSpans(root, spanMap);
-	doRelocate(root, spanMap);
-}
-/**
-* Recursively relocate branches in a span and its children.
-*/
-function doRelocate(span, spanMap) {
-	for (const item of span.content) if (item.type === "span") doRelocate(item, spanMap);
-	for (const branch of span.branches) doRelocate(branch, spanMap);
-	const remaining = [];
-	for (const branch of span.branches) {
-		const fromSpan = branchFromSpanMap.get(branch.id);
-		const targetSpan = fromSpan ? spanMap.get(fromSpan) : void 0;
-		if (targetSpan !== void 0 && targetSpan !== span) targetSpan.branches.push(branch);
-		else remaining.push(branch);
-	}
-	span.branches = remaining;
 }
 /**
 * Strip the per-call billing header from a system prompt.
@@ -124029,7 +124048,6 @@ function getUtilityAgentLabel(span) {
 	return name;
 }
 function buildTimeline(events) {
-	branchFromSpanMap = /* @__PURE__ */ new Map();
 	if (events.length === 0) return {
 		name: "Default",
 		description: "",
@@ -124063,8 +124081,6 @@ function buildTimeline(events) {
 			agentNode.name = "main";
 			wrapUtilityEvents(agentNode);
 			classifyUtilityAgents(agentNode);
-			classifyBranches(agentNode);
-			relocateBranches(agentNode);
 			extractAgentResults(agentNode);
 			if (initSpanObj) agentNode.content = [initSpanObj, ...agentNode.content];
 			if (scoringSpan) agentNode.content.push(scoringSpan);
@@ -124085,8 +124101,6 @@ function buildTimeline(events) {
 		if (agentRoot) {
 			wrapUtilityEvents(agentRoot);
 			classifyUtilityAgents(agentRoot);
-			classifyBranches(agentRoot);
-			relocateBranches(agentRoot);
 			extractAgentResults(agentRoot);
 			root = agentRoot;
 		} else root = new TimelineSpan({
@@ -124302,43 +124316,23 @@ function flattenChildren(nodes, parentDepth, parentKey, includeUtility, showBran
 	}
 	entries.sort((a, b) => a.groupStartTime.getTime() - b.groupStartTime.getTime() || a.laneIndex - b.laneIndex || compareByTime(a, b));
 	const result = [];
-	if (showBranches) for (const node of nodes) {
-		const forkPositions = /* @__PURE__ */ new Map();
-		for (const branch of node.branches) {
-			if (!branch.branchedFrom) continue;
-			for (let ci = 0; ci < node.content.length; ci++) {
-				const item = node.content[ci];
-				if (item.type === "event" && item.matchesMessageId(branch.branchedFrom)) {
-					forkPositions.set(branch.branchedFrom, ci);
-					break;
-				}
-			}
-		}
-		const sorted = node.branches.map((branch, origIndex) => ({
-			branch,
-			origIndex
-		})).sort((a, b) => {
-			const ai = a.branch.branchedFrom ? forkPositions.get(a.branch.branchedFrom) ?? -1 : -1;
-			return (b.branch.branchedFrom ? forkPositions.get(b.branch.branchedFrom) ?? -1 : -1) - ai;
+	if (showBranches) for (const node of nodes) for (let i = 0; i < node.branches.length; i++) {
+		const branch = node.branches[i];
+		const label = `${branchPrefix}${i + 1}`;
+		const branchSpan = createBranchSpan(branch, label);
+		const branchKey = `${parentKey}/branch-${branch.branchedFrom}-${i + 1}`;
+		result.push({
+			key: branchKey,
+			name: branchSpan.name,
+			depth,
+			spans: [{ agent: branchSpan }],
+			totalTokens: branchSpan.totalTokens(false),
+			startTime: branchSpan.startTime(false),
+			endTime: branchSpan.endTime(false),
+			branch: true,
+			branchedFrom: branch.branchedFrom ?? void 0
 		});
-		for (let i = 0; i < sorted.length; i++) {
-			const { branch } = sorted[i];
-			const label = `${branchPrefix}${i + 1}`;
-			const branchSpan = createBranchSpan(branch, label);
-			const branchKey = `${parentKey}/branch-${branch.branchedFrom}-${i + 1}`;
-			result.push({
-				key: branchKey,
-				name: branchSpan.name,
-				depth,
-				spans: [{ agent: branchSpan }],
-				totalTokens: branchSpan.totalTokens(false),
-				startTime: branchSpan.startTime(false),
-				endTime: branchSpan.endTime(false),
-				branch: true,
-				branchedFrom: branch.branchedFrom ?? void 0
-			});
-			result.push(...flattenChildren([branchSpan], depth, branchKey, includeUtility, showBranches, `${label}.`));
-		}
+		result.push(...flattenChildren([branchSpan], depth, branchKey, includeUtility, showBranches, `${label}.`));
 	}
 	for (const entry of entries) {
 		result.push({
@@ -126589,11 +126583,17 @@ var kVirtuosoKeyPrefix = "live-virtual-list-";
 *   case the caller has a specific event to scroll to and we leave the
 *   container alone so the imperative scroll wins)
 */
+/** Strip `/branch-…` segments so all selections within a branch tree share
+*  one list id (in-place Virtuoso update, scroll preserved). */
+function listIdRoot(selected) {
+	return selected?.replace(/\/branch-[^/]+/g, "") ?? null;
+}
 function useListPositionManager(baseListId, selected, scrollRef, hasScrollTarget = false) {
 	const { useRemoveValue, useRemoveByPrefix } = useComponentStateHooks();
 	const removeValue = useRemoveValue();
 	const removeByPrefix = useRemoveByPrefix();
-	const effectiveListId = (0, import_react.useMemo)(() => selected ? `${baseListId}:${selected}` : baseListId, [baseListId, selected]);
+	const idSelection = (0, import_react.useMemo)(() => listIdRoot(selected), [selected]);
+	const effectiveListId = (0, import_react.useMemo)(() => idSelection ? `${baseListId}:${idSelection}` : baseListId, [baseListId, idSelection]);
 	const prevSelectedRef = (0, import_react.useRef)(selected);
 	const isFirstRender = (0, import_react.useRef)(true);
 	(0, import_react.useEffect)(() => {
@@ -126741,6 +126741,7 @@ var toggleIcon = (node, collapsed) => {
 var iconForNode = (node) => {
 	if (node.sourceSpan?.spanType === "agent") return TranscriptIcons.agent;
 	if (node.sourceSpan?.spanType === "branch") return TranscriptIcons.fork;
+	if (node.event.event === "span_begin" && node.event.type === "fork_nav") return TranscriptIcons.fork;
 	switch (node.event.event) {
 		case "sample_limit": return TranscriptIcons.limits.custom;
 		case "score": return TranscriptIcons.scorer;
@@ -127051,6 +127052,10 @@ var TimelineSelectContext = (0, import_react.createContext)(null);
 function useTimelineSelect() {
 	return (0, import_react.useContext)(TimelineSelectContext);
 }
+var TimelineRowSelectContext = (0, import_react.createContext)(null);
+function useTimelineRowSelect() {
+	return (0, import_react.useContext)(TimelineRowSelectContext);
+}
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/timeline/markers.ts
 var defaultMarkerConfig = {
@@ -127190,7 +127195,7 @@ function collectBranchMarkers(node, markers) {
 */
 function resolveForkTimestamp(parent, branch) {
 	if (!branch.branchedFrom) return parent.startTime();
-	for (const item of parent.content) if (item.type === "event" && item.matchesMessageId(branch.branchedFrom)) return item.startTime();
+	for (const item of parent.content) if (item.type === "event" && item.matchesForkPoint(branch.branchedFrom)) return item.startTime();
 	return parent.startTime();
 }
 /**
@@ -127385,9 +127390,11 @@ var TimelineIconsContext = (0, import_react.createContext)({
 	collapse: { up: "bi bi-chevron-up" },
 	chevron: {
 		down: "bi bi-chevron-down",
+		left: "bi bi-chevron-left",
 		right: "bi bi-chevron-right"
 	},
-	solvers: { default: "bi bi-arrow-return-right" }
+	solvers: { default: "bi bi-arrow-return-right" },
+	punchDown: "bi bi-arrows-angle-expand"
 });
 function useTimelineIcons() {
 	return (0, import_react.useContext)(TimelineIconsContext);
@@ -127613,33 +127620,6 @@ function computeTimeMapping(node) {
 		},
 		hasCompression: true,
 		gaps: gapRegions
-	};
-}
-/**
-* Creates a shifted time mapping for a branch row in fork-relative mode.
-*
-* The branch's wall-clock range [branchStart, branchEnd] is linearly remapped
-* so that it starts at `forkPercent` in the timeline's percentage space and
-* uses the trunk mapping's time scale for its width. This makes branch bars
-* proportional to their actual duration rather than stretching to 100%.
-*
-* @param branchStart   Branch content start time
-* @param branchEnd     Branch content end time
-* @param forkPercent   The fork marker's percentage position on the parent row (0-100)
-* @param trunkMapping  The parent/trunk time mapping, used to derive the time scale
-*/
-function createShiftedMapping(branchStart, branchEnd, forkPercent, trunkMapping) {
-	const startMs = branchStart.getTime();
-	const branchDurationMs = branchEnd.getTime() - startMs;
-	const branchWidthPercent = trunkMapping.toPercent(branchEnd) - trunkMapping.toPercent(branchStart);
-	return {
-		toPercent(timestamp) {
-			if (branchDurationMs <= 0) return forkPercent;
-			const t = (timestamp.getTime() - startMs) / branchDurationMs;
-			return Math.max(0, Math.min(100, forkPercent + t * branchWidthPercent));
-		},
-		hasCompression: false,
-		gaps: []
 	};
 }
 /**
@@ -128317,7 +128297,7 @@ function collectFromContent(content, out, sourceSpans, skipAgentSpanId, includeU
 function emitInlineBranches(item, branchByBranchedFrom, allBranches, emittedBranchedFroms, out, sourceSpans, branchPrefix = "") {
 	for (const [messageId, forkedBranches] of branchByBranchedFrom) {
 		if (emittedBranchedFroms.has(messageId)) continue;
-		if (!item.matchesMessageId(messageId)) continue;
+		if (!item.matchesForkPoint(messageId)) continue;
 		const parentSpanId = item.event.span_id;
 		for (const branch of forkedBranches) {
 			const globalIndex = allBranches.indexOf(branch);
@@ -128336,150 +128316,149 @@ function getParentKeyFromBranch(branchKey) {
 	const match = /^(.+)\/branch-[^/]+$/.exec(branchKey);
 	return match ? match[1] : null;
 }
-/**
-* Builds the ancestor chain from a branch row up to the outermost non-branch row.
-*
-* Returns links ordered outermost ancestor → innermost parent, each paired
-* with the fork UUID where the next level (or the target branch) branches off.
-*/
-function buildAncestorChain(rows, branchRowKey) {
-	const chain = [];
-	let currentKey = branchRowKey;
+function rowSpan(row) {
+	const s = row?.spans[0];
+	if (!s) return null;
+	return isSingleSpan(s) ? s.agent : getAgents(s)[0] ?? null;
+}
+/** Build root→selected segment list, each carrying its row key and cut anchor. */
+function buildPath(rows, selectedKey) {
+	const byKey = new Map(rows.map((r) => [r.key, r]));
+	const keys = [selectedKey];
+	let k = selectedKey;
 	while (true) {
-		const parentKey = getParentKeyFromBranch(currentKey);
-		if (!parentKey) break;
-		const parentRow = rows.find((r) => r.key === parentKey);
-		if (!parentRow || parentRow.spans.length === 0) break;
-		const firstSpan = parentRow.spans[0];
-		const parentSpan = isSingleSpan(firstSpan) ? firstSpan.agent : getAgents(firstSpan)[0];
-		if (!parentSpan) break;
-		const childRow = rows.find((r) => r.key === currentKey);
-		if (!childRow || childRow.spans.length === 0) break;
-		const childFirstSpan = childRow.spans[0];
-		const childSpan = isSingleSpan(childFirstSpan) ? childFirstSpan.agent : getAgents(childFirstSpan)[0];
-		if (!childSpan?.branchedFrom) break;
-		chain.unshift({
-			span: parentSpan,
-			forkMessageId: childSpan.branchedFrom
+		const parent = getParentKeyFromBranch(k);
+		if (!parent || !byKey.has(parent)) break;
+		keys.unshift(parent);
+		k = parent;
+	}
+	const segs = [];
+	for (let i = 0; i < keys.length; i++) {
+		const span = rowSpan(byKey.get(keys[i]));
+		if (!span) return segs;
+		const next = rowSpan(byKey.get(keys[i + 1] ?? ""));
+		segs.push({
+			span,
+			rowKey: keys[i],
+			cutAnchor: next?.branchedFrom ?? null
 		});
-		currentKey = parentKey;
-		if (!parentRow.branch) break;
 	}
-	return chain;
+	return segs;
 }
-/**
-* Collects events from a span's content, stopping after the event whose
-* message ID matches `forkMessageId` (inclusive — the fork event is the
-* last parent event before the branch point).
-*
-* Returns true if the fork event was found, false otherwise.
-*/
-function collectContentUpToFork(content, forkMessageId, out, sourceSpans, includeUtility) {
-	for (const item of content) if (item.type === "event") {
-		out.push(item.event);
-		if (item.matchesMessageId(forkMessageId)) return true;
-	} else if (!includeUtility && item.utility) continue;
-	else if (item.spanType === "agent") {
-		const beginEvent = {
-			event: "span_begin",
-			name: item.name,
-			id: item.id,
-			span_id: item.id,
-			type: item.spanType,
-			timestamp: item.startTime().toISOString(),
-			parent_id: null,
-			pending: false,
-			working_start: 0,
-			uuid: item.id,
-			metadata: null
+/** Group a span's branches by the anchor they fork from, preserving `.branches` order. */
+function branchesByAnchor(span, parentRowKey) {
+	const map = /* @__PURE__ */ new Map();
+	span.branches.forEach((b, i) => {
+		const anchor = b.branchedFrom ?? "";
+		const opt = {
+			label: b.name,
+			rowKey: `${parentRowKey}/branch-${b.branchedFrom}-${i + 1}`
 		};
-		out.push(beginEvent);
-		sourceSpans.set(item.id, item);
-		const endEvent = {
-			event: "span_end",
-			id: `${item.id}-end`,
-			span_id: item.id,
-			timestamp: item.endTime().toISOString(),
-			pending: false,
-			working_start: 0,
-			uuid: null,
-			metadata: null
-		};
-		out.push(endEvent);
-	} else {
-		const beginEvent = {
-			event: "span_begin",
-			name: item.name,
-			id: item.id,
-			span_id: item.id,
-			type: item.spanType,
-			timestamp: item.startTime().toISOString(),
-			parent_id: null,
-			pending: false,
-			working_start: 0,
-			uuid: item.id,
-			metadata: null
-		};
-		out.push(beginEvent);
-		const found = collectContentUpToFork(item.content, forkMessageId, out, sourceSpans, includeUtility);
-		const endEvent = {
-			event: "span_end",
-			id: `${item.id}-end`,
-			span_id: item.id,
-			timestamp: item.endTime().toISOString(),
-			pending: false,
-			working_start: 0,
-			uuid: null,
-			metadata: null
-		};
-		out.push(endEvent);
-		if (found) return true;
-	}
-	return false;
+		const arr = map.get(anchor);
+		if (arr) arr.push(opt);
+		else map.set(anchor, [opt]);
+	});
+	return map;
 }
-/**
-* Collects events for a branch with full ancestor context.
-*
-* The resulting event stream contains:
-* 1. Ancestor events from the root down to each fork point
-* 2. A branch separator (AgentCardView) at each fork
-* 3. The branch's own events
-*
-* For nested branches (Branch 1.1), the full chain is included:
-* root events → fork → Branch 1 events → fork → Branch 1.1 events.
-*/
-function collectBranchWithContext(rows, branchRowKey, branchSpan, options) {
-	const events = [];
-	const sourceSpans = /* @__PURE__ */ new Map();
-	const ancestorChain = buildAncestorChain(rows, branchRowKey);
-	for (const ancestor of ancestorChain) collectContentUpToFork(ancestor.span.content, ancestor.forkMessageId, events, sourceSpans, options.includeUtility);
-	sourceSpans.set(branchSpan.id, branchSpan);
-	const branchBegin = {
+/** Push a synthetic span_begin/span_end pair onto `events`. */
+function emitSyntheticSpan(events, opts) {
+	events.push({
 		event: "span_begin",
-		name: branchSpan.name,
-		id: branchSpan.id,
-		span_id: branchSpan.id,
-		type: branchSpan.spanType,
-		timestamp: branchSpan.startTime().toISOString(),
-		parent_id: null,
+		name: opts.name,
+		id: opts.id,
+		span_id: opts.id,
+		type: opts.type,
+		timestamp: opts.start,
+		parent_id: opts.parentId,
 		pending: false,
 		working_start: 0,
-		uuid: branchSpan.id,
-		metadata: null
-	};
-	events.push(branchBegin);
-	const branchEnd = {
+		uuid: opts.id,
+		metadata: opts.metadata ?? null
+	});
+	events.push({
 		event: "span_end",
-		id: `${branchSpan.id}-end`,
-		span_id: branchSpan.id,
-		timestamp: branchSpan.endTime().toISOString(),
+		id: opts.id,
+		span_id: opts.id,
+		timestamp: opts.end ?? opts.start,
 		pending: false,
 		working_start: 0,
 		uuid: null,
 		metadata: null
-	};
-	events.push(branchEnd);
-	collectFromContent(branchSpan.content, events, sourceSpans, void 0, options.includeUtility, options.showBranches, branchSpan.branches.length > 0 ? branchSpan.branches : void 0, options.branchPrefix);
+	});
+}
+/** Outline label for a fork navigator: list children, capped to keep it short. */
+function forkNavLabel(children) {
+	if (children.length <= 2) return children.map((c) => c.label).join(", ");
+	return `${children[0].label} +${children.length - 1}`;
+}
+/**
+* Collect events for the root→selected path, emitting an inline fork navigator
+* at every anchor where one or more branches fork off.
+*
+* The navigator's options are `[stay-on-segment, child₁, child₂, …]` for
+* children sharing that anchor. `selectedIndex` is whichever option the
+* current path follows next.
+*/
+function collectPathWithNavigators(rows, selectedRowKey) {
+	const events = [];
+	const sourceSpans = /* @__PURE__ */ new Map();
+	const path = buildPath(rows, selectedRowKey);
+	for (let segIdx = 0; segIdx < path.length; segIdx++) {
+		const seg = path[segIdx];
+		const nextRowKey = path[segIdx + 1]?.rowKey;
+		const forks = branchesByAnchor(seg.span, seg.rowKey);
+		const suffix = `:${seg.span.id}`;
+		sourceSpans.set(seg.span.id, seg.span);
+		/** Emit a navigator for `children` at `anchorId`; returns true if the path cuts here. */
+		const navAt = (anchorId, children, ts, parentId) => {
+			const options = [{
+				label: seg.span.name,
+				rowKey: seg.rowKey
+			}, ...children];
+			const isCut = anchorId === seg.cutAnchor;
+			const sel = isCut ? options.findIndex((o) => o.rowKey === nextRowKey) : 0;
+			emitSyntheticSpan(events, {
+				id: `forknav-${seg.span.id}-${anchorId || "restart"}`,
+				name: forkNavLabel(children),
+				type: "fork_nav",
+				parentId,
+				start: ts,
+				metadata: { fork_nav: {
+					anchorId,
+					options,
+					selectedIndex: Math.max(0, sel)
+				} }
+			});
+			return isCut;
+		};
+		const restartForks = forks.get("");
+		if (restartForks) {
+			if (navAt("", restartForks, seg.span.startTime().toISOString(), null)) continue;
+		}
+		for (const item of seg.span.content) {
+			if (item.type === "span") {
+				sourceSpans.set(item.id, item);
+				emitSyntheticSpan(events, {
+					id: item.id,
+					name: item.name,
+					type: item.spanType,
+					parentId: null,
+					start: item.startTime().toISOString(),
+					end: item.endTime().toISOString()
+				});
+				continue;
+			}
+			const stripped = stripSuffix(item.event, suffix, seg.span.id);
+			events.push(stripped);
+			if (item.event.event !== "anchor") continue;
+			const anchorId = item.event.anchor_id;
+			const children = forks.get(anchorId);
+			if (children?.length) {
+				const ts = item.event.timestamp;
+				if (navAt(anchorId, children, ts, stripped.span_id ?? null)) break;
+			} else if (anchorId === seg.cutAnchor) break;
+		}
+	}
 	return {
 		events,
 		sourceSpans
@@ -128524,48 +128503,50 @@ function attachSourceSpans(nodes, spanMap) {
 	}
 }
 var TimelineSwimLanes_module_default = {
-	swimlane: "_swimlane_16dh6_1",
-	pinnedSection: "_pinnedSection_16dh6_17",
-	scrollSection: "_scrollSection_16dh6_25",
-	collapsibleSection: "_collapsibleSection_16dh6_40",
-	collapsibleCollapsed: "_collapsibleCollapsed_16dh6_53",
-	swimlaneSticky: "_swimlaneSticky_16dh6_63",
-	collapsibleInner: "_collapsibleInner_16dh6_67",
-	collapseToggle: "_collapseToggle_16dh6_77",
-	row: "_row_16dh6_105",
-	label: "_label_16dh6_111",
-	labelSelected: "_labelSelected_16dh6_129",
-	labelHighlighted: "_labelHighlighted_16dh6_134",
-	chevron: "_chevron_16dh6_141",
-	chevronSpacer: "_chevronSpacer_16dh6_156",
-	barArea: "_barArea_16dh6_164",
-	barInner: "_barInner_16dh6_170",
-	fill: "_fill_16dh6_176",
-	fillParent: "_fillParent_16dh6_194",
-	fillSelected: "_fillSelected_16dh6_198",
-	fillHighlight: "_fillHighlight_16dh6_206",
-	fillDimmed: "_fillDimmed_16dh6_217",
-	regionSegment: "_regionSegment_16dh6_224",
-	regionDefault: "_regionDefault_16dh6_223",
-	regionHover: "_regionHover_16dh6_223",
-	regionFirst: "_regionFirst_16dh6_244",
-	regionLast: "_regionLast_16dh6_248",
-	regionMiddle: "_regionMiddle_16dh6_252",
-	parallelBadge: "_parallelBadge_16dh6_256",
-	marker: "_marker_16dh6_263",
-	markerBranch: "_markerBranch_16dh6_277",
-	markerError: "_markerError_16dh6_291",
-	markerCompaction: "_markerCompaction_16dh6_312",
-	branchConnector: "_branchConnector_16dh6_332",
-	connectorArrow: "_connectorArrow_16dh6_343",
-	breadcrumbRow: "_breadcrumbRow_16dh6_371",
-	optionsButton: "_optionsButton_16dh6_380",
-	breadcrumbTrail: "_breadcrumbTrail_16dh6_404",
-	breadcrumbSegment: "_breadcrumbSegment_16dh6_412",
-	breadcrumbDivider: "_breadcrumbDivider_16dh6_418",
-	breadcrumbLink: "_breadcrumbLink_16dh6_426",
-	breadcrumbCurrent: "_breadcrumbCurrent_16dh6_440",
-	tokens: "_tokens_16dh6_451"
+	swimlane: "_swimlane_1itnu_1",
+	pinnedSection: "_pinnedSection_1itnu_17",
+	scrollSection: "_scrollSection_1itnu_25",
+	collapsibleSection: "_collapsibleSection_1itnu_40",
+	collapsibleCollapsed: "_collapsibleCollapsed_1itnu_53",
+	swimlaneSticky: "_swimlaneSticky_1itnu_63",
+	collapsibleInner: "_collapsibleInner_1itnu_67",
+	collapseToggle: "_collapseToggle_1itnu_77",
+	row: "_row_1itnu_105",
+	label: "_label_1itnu_111",
+	labelSelected: "_labelSelected_1itnu_129",
+	labelHighlighted: "_labelHighlighted_1itnu_134",
+	chevron: "_chevron_1itnu_141",
+	chevronSpacer: "_chevronSpacer_1itnu_156",
+	punchDownBtn: "_punchDownBtn_1itnu_162",
+	viewStackBack: "_viewStackBack_1itnu_184",
+	barArea: "_barArea_1itnu_203",
+	barInner: "_barInner_1itnu_209",
+	fill: "_fill_1itnu_215",
+	fillParent: "_fillParent_1itnu_233",
+	fillSelected: "_fillSelected_1itnu_237",
+	fillHighlight: "_fillHighlight_1itnu_245",
+	fillDimmed: "_fillDimmed_1itnu_256",
+	regionSegment: "_regionSegment_1itnu_263",
+	regionDefault: "_regionDefault_1itnu_262",
+	regionHover: "_regionHover_1itnu_262",
+	regionFirst: "_regionFirst_1itnu_283",
+	regionLast: "_regionLast_1itnu_287",
+	regionMiddle: "_regionMiddle_1itnu_291",
+	parallelBadge: "_parallelBadge_1itnu_295",
+	marker: "_marker_1itnu_302",
+	markerBranch: "_markerBranch_1itnu_316",
+	markerError: "_markerError_1itnu_330",
+	markerCompaction: "_markerCompaction_1itnu_351",
+	branchConnector: "_branchConnector_1itnu_371",
+	connectorArrow: "_connectorArrow_1itnu_382",
+	breadcrumbRow: "_breadcrumbRow_1itnu_410",
+	optionsButton: "_optionsButton_1itnu_419",
+	breadcrumbTrail: "_breadcrumbTrail_1itnu_443",
+	breadcrumbSegment: "_breadcrumbSegment_1itnu_451",
+	breadcrumbDivider: "_breadcrumbDivider_1itnu_457",
+	breadcrumbLink: "_breadcrumbLink_1itnu_465",
+	breadcrumbCurrent: "_breadcrumbCurrent_1itnu_479",
+	tokens: "_tokens_1itnu_490"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/timeline/components/TimelineSwimLanes.tsx
@@ -128595,7 +128576,7 @@ function buildBreadcrumbs(layouts, selectedRowKey) {
 	}
 	return segments;
 }
-var TimelineSwimLanes = ({ layouts, timeline, header, isSticky, onMarkerNavigate, headroomCollapsed = false, onLayoutShift, regionCounts, defaultCollapsed: defaultCollapsedProp, highlightedKeys }) => {
+var TimelineSwimLanes = ({ layouts, timeline, header, isSticky, onMarkerNavigate, headroomCollapsed = false, onLayoutShift, regionCounts, defaultCollapsed: defaultCollapsedProp, highlightedKeys, onPunchDown }) => {
 	const icons = useTimelineIcons();
 	const { selected, select: onSelect, clearSelection } = timeline;
 	const [collapsed, setCollapsed] = useProperty("timeline", "swimlanesCollapsed");
@@ -128638,6 +128619,7 @@ var TimelineSwimLanes = ({ layouts, timeline, header, isSticky, onMarkerNavigate
 		if (explicit !== void 0) return explicit;
 		const layout = layouts.find((l) => l.key === rowKey);
 		if (!layout) return false;
+		if (layout.branch) return false;
 		if (!parentKeys.has(rowKey) && expandableKeys.has(rowKey)) return true;
 		return layout.depth >= 1 && parentKeys.has(rowKey);
 	}, [
@@ -128732,7 +128714,8 @@ var TimelineSwimLanes = ({ layouts, timeline, header, isSticky, onMarkerNavigate
 			onSelectRegion: (spanIndex, regionIndex) => onSelect(buildSelectionKey(layout.key, spanIndex, regionIndex)),
 			onBranchToggle: () => handleBranchMarkerClick(layout.key),
 			onMarkerNavigate,
-			connector: branchConnectors.get(layout.key)
+			connector: branchConnectors.get(layout.key),
+			onPunchDown: layout.branch && onPunchDown ? () => onPunchDown(layout.key, layout.name) : void 0
 		}, layout.key);
 	};
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -128799,7 +128782,7 @@ function computeBranchConnectors(layouts) {
 	}
 	return connectors;
 }
-var SwimlaneRow = ({ layout, displayName, isRowSelected, highlightClip, selectedSpanIndex, selectedRegionIndex, regionCount, isExpanded, onToggleExpand, onSelectRow, onSelectSpan, onSelectRegion, onBranchToggle, onMarkerNavigate, connector }) => {
+var SwimlaneRow = ({ layout, displayName, isRowSelected, highlightClip, selectedSpanIndex, selectedRegionIndex, regionCount, isExpanded, onToggleExpand, onSelectRow, onSelectSpan, onSelectRegion, onBranchToggle, onMarkerNavigate, connector, onPunchDown }) => {
 	const icons = useTimelineIcons();
 	const hasMultipleSpans = layout.spans.length > 1;
 	const hasChildren = isExpanded !== void 0;
@@ -128825,17 +128808,30 @@ var SwimlaneRow = ({ layout, displayName, isRowSelected, highlightClip, selected
 				className: clsx(TimelineSwimLanes_module_default.label, isRowSelected && TimelineSwimLanes_module_default.labelSelected, highlightClip !== void 0 && !isRowSelected && TimelineSwimLanes_module_default.labelHighlighted),
 				style: { paddingLeft: `${.3 + layout.depth * .5}rem` },
 				onClick: onSelectRow,
-				children: [hasChildren ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-					className: TimelineSwimLanes_module_default.chevron,
-					onClick: handleChevronClick,
-					role: "button",
-					"aria-label": isExpanded ? "Collapse" : "Expand",
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: isExpanded ? icons.chevron.down : icons.chevron.right })
-				}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: TimelineSwimLanes_module_default.chevronSpacer }), displayName ?? (layout.branch ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: icons.solvers.default }),
-					" ",
-					layout.name
-				] }) : layout.name)]
+				children: [
+					hasChildren ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+						className: TimelineSwimLanes_module_default.chevron,
+						onClick: handleChevronClick,
+						role: "button",
+						"aria-label": isExpanded ? "Collapse" : "Expand",
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: isExpanded ? icons.chevron.down : icons.chevron.right })
+					}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: TimelineSwimLanes_module_default.chevronSpacer }),
+					displayName ?? (layout.branch ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: icons.solvers.default }),
+						" ",
+						layout.name
+					] }) : layout.name),
+					onPunchDown && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+						type: "button",
+						className: TimelineSwimLanes_module_default.punchDownBtn,
+						title: "Open as standalone timeline",
+						onClick: (e) => {
+							e.stopPropagation();
+							onPunchDown();
+						},
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: icons.punchDown })
+					})
+				]
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: TimelineSwimLanes_module_default.barArea,
@@ -128886,7 +128882,7 @@ var SwimlaneRow = ({ layout, displayName, isRowSelected, highlightClip, selected
 		]
 	});
 };
-var HeaderRow = ({ rootLabel, minimap, onScrollToTop, breadcrumbs, onBreadcrumbSelect, timelineConfig, timelineSelector, onToggleBranches }) => {
+var HeaderRow = ({ rootLabel, minimap, onScrollToTop, breadcrumbs, onBreadcrumbSelect, timelineConfig, timelineSelector, onToggleBranches, viewStack, onPopView }) => {
 	const icons = useTimelineIcons();
 	const hasBreadcrumbs = breadcrumbs && breadcrumbs.length > 1;
 	const rootDisplay = rootLabel === "solvers" ? "main" : rootLabel;
@@ -128896,6 +128892,15 @@ var HeaderRow = ({ rootLabel, minimap, onScrollToTop, breadcrumbs, onBreadcrumbS
 		className: TimelineSwimLanes_module_default.breadcrumbRow,
 		children: [
 			timelineSelector && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TimelineSelector, { ...timelineSelector }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: TimelineSwimLanes_module_default.breadcrumbDivider,
+				children: "/"
+			})] }),
+			viewStack && viewStack.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+				className: TimelineSwimLanes_module_default.viewStackBack,
+				onClick: onPopView,
+				title: "Back to branch overview",
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: icons.chevron.left }), viewStack.at(-1).label]
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 				className: TimelineSwimLanes_module_default.breadcrumbDivider,
 				children: "/"
 			})] }),
@@ -129414,12 +129419,13 @@ function buildOrphanContent(orphanEvents, spanLookup, referencedSpanIds) {
 	return rootItems;
 }
 /**
-* Merge orphaned events into the first timeline's root, preserving time order.
+* Merge orphaned events into a host timeline's root, preserving time order.
 *
 * When server-provided timelines don't reference every event (e.g. scorer
 * events), the unreferenced events are collected, wrapped in their minimal
-* parent span tree, and inserted into the first timeline's root content in
-* chronological order.
+* parent span tree, and inserted into the host timeline's root content in
+* chronological order. The host is the first timeline whose root is not a
+* branch tree, falling back to the first timeline.
 */
 function attachOrphanedEvents(timelines, events) {
 	if (timelines.length === 0 || events.length === 0) return timelines;
@@ -129439,26 +129445,27 @@ function attachOrphanedEvents(timelines, events) {
 	if (orphanEvents.length === 0) return timelines;
 	const orphanContent = buildOrphanContent(orphanEvents, buildSpanLookup(events), referencedSpanIds);
 	if (orphanContent.length === 0) return timelines;
-	const first = timelines[0];
-	const mergedContent = [...first.root.content, ...orphanContent];
+	const hostIndex = Math.max(0, timelines.findIndex((tl) => tl.root.branches.length === 0));
+	const host = timelines[hostIndex];
+	const mergedContent = [...host.root.content, ...orphanContent];
 	mergedContent.sort((a, b) => a.startTime().getTime() - b.startTime().getTime());
 	const newRoot = new TimelineSpan({
-		id: first.root.id,
-		name: first.root.name,
-		spanType: first.root.spanType,
+		id: host.root.id,
+		name: host.root.name,
+		spanType: host.root.spanType,
 		content: mergedContent,
-		branches: first.root.branches,
-		branchedFrom: first.root.branchedFrom,
-		description: first.root.description,
-		utility: first.root.utility,
-		agentResult: first.root.agentResult,
-		outline: first.root.outline
+		branches: host.root.branches,
+		branchedFrom: host.root.branchedFrom,
+		description: host.root.description,
+		utility: host.root.utility,
+		agentResult: host.root.agentResult,
+		outline: host.root.outline
 	});
-	return [{
-		name: first.name,
-		description: first.description,
+	return timelines.map((tl, i) => i === hostIndex ? {
+		name: host.name,
+		description: host.description,
 		root: newRoot
-	}, ...timelines.slice(1)];
+	} : tl);
 }
 function useTimelinesArray(events, serverTimelines) {
 	const builtTimeline = (0, import_react.useMemo)(() => buildTimeline(events), [events]);
@@ -129485,7 +129492,28 @@ function useTranscriptTimeline(options) {
 	const forkRelative = timelineOptions?.forkRelative ?? false;
 	const timelines = useTimelinesArray(events, serverTimelines);
 	const { active: activeTimeline, activeIndex: activeTimelineIndex, setActive: setActiveTimeline } = useActiveTimeline(timelines, activeTimelineProps);
-	const timeline = activeTimeline;
+	const baseTimeline = activeTimeline;
+	const [viewStack, setViewStack] = (0, import_react.useState)([]);
+	const [stackBase, setStackBase] = (0, import_react.useState)(baseTimeline);
+	if (stackBase !== baseTimeline) {
+		setStackBase(baseTimeline);
+		setViewStack([]);
+	}
+	const timeline = viewStack.at(-1)?.timeline ?? baseTimeline;
+	const pushView = (0, import_react.useCallback)((branch, label) => {
+		setViewStack((s) => [...s, {
+			label,
+			timeline: spliceToTimeline(baseTimeline.root, branch),
+			priorSelected: timelineProps?.selected ?? null
+		}]);
+		timelineProps?.onSelect?.(null);
+	}, [baseTimeline.root, timelineProps]);
+	const popView = (0, import_react.useCallback)(() => {
+		const top = viewStack.at(-1);
+		if (!top) return;
+		setViewStack((s) => s.slice(0, -1));
+		timelineProps?.onSelect?.(top.priorSelected);
+	}, [viewStack, timelineProps]);
 	const state = useTimeline(timeline, timelineOptions, timelineProps);
 	const visibleRows = (0, import_react.useMemo)(() => state.rows.filter((row) => row.depth === 0 || rowHasEvents(row)), [state.rows]);
 	const timeMapping = (0, import_react.useMemo)(() => computeTimeMapping(state.node), [state.node]);
@@ -129515,17 +129543,13 @@ function useTranscriptTimeline(options) {
 			branchScrollTarget: null
 		};
 		const rowKey = parsed?.rowKey ?? "";
-		if (state.rows.find((r) => r.key === rowKey)?.branch && spans.length === 1) {
-			const branchSpan = spans[0];
-			const collected = collectBranchWithContext(state.rows, rowKey, branchSpan, {
-				includeUtility,
-				showBranches,
-				branchPrefix: getBranchPrefix(state.rows, state.selected)
-			});
+		const row = state.rows.find((r) => r.key === rowKey);
+		if (spans.length === 1 && (row?.branch || (spans[0]?.branches.length ?? 0) > 0)) {
+			const collected = collectPathWithNavigators(state.rows, rowKey);
 			return {
 				selectedEvents: collected.events,
 				sourceSpans: collected.sourceSpans,
-				branchScrollTarget: branchSpan.id
+				branchScrollTarget: null
 			};
 		}
 		const collected = collectRawEvents(spans, {
@@ -129591,7 +129615,7 @@ function useTranscriptTimeline(options) {
 		selectedEvents,
 		sourceSpans,
 		minimapSelection,
-		hasTimeline: timeline.root.content.length > 0 && (timeline.root.content.some((item) => item.type === "span") || timeline.root.branches.length > 0),
+		hasTimeline: timeline.root.content.length > 0 && (timeline.root.content.some((item) => item.type === "span" || item.type === "event" && item.event.event === "span_begin") || timeline.root.branches.length > 0),
 		timelines,
 		activeTimelineIndex,
 		setActiveTimeline,
@@ -129606,28 +129630,77 @@ function useTranscriptTimeline(options) {
 			state.selected,
 			state.rows,
 			timeline.root.name
-		])
+		]),
+		viewStack,
+		pushView,
+		popView
 	};
 }
 var kBranchKeyPattern = /\/branch-([^/]*)-(\d+)$/;
+/**
+* Compute per-row time mappings for fork-relative layout.
+*
+* Each row is placed at its parent's fork position and extends by its own
+* duration; the domain is the max logical extent across all rows. This fills
+* the full width regardless of how root content and branch execution times
+* relate in wall-clock terms.
+*/
 function computeBranchMappings(rows, trunkMapping) {
-	const mappings = /* @__PURE__ */ new Map();
+	if (!rows.some((r) => r.branch)) return void 0;
 	const rowByKey = /* @__PURE__ */ new Map();
 	for (const row of rows) rowByKey.set(row.key, row);
+	const root = rows.find((r) => r.depth === 0);
+	const rootStart = root?.startTime.getTime() ?? 0;
+	const singleSpan = (row) => {
+		const s = row?.spans[0];
+		return row?.spans.length === 1 && s && isSingleSpan(s) ? s.agent : null;
+	};
+	const nearestAncestor = (key) => {
+		let k = key;
+		while (true) {
+			const i = k.lastIndexOf("/");
+			if (i < 0) return root;
+			k = k.slice(0, i);
+			if (logicalStart.has(k)) return rowByKey.get(k);
+		}
+	};
+	const logicalStart = /* @__PURE__ */ new Map();
 	for (const row of rows) {
-		if (!row.branch) continue;
+		if (!row.branch) {
+			const anc = nearestAncestor(row.key);
+			const ancLogical = anc ? logicalStart.get(anc.key) ?? 0 : 0;
+			const ancStart = anc?.startTime.getTime() ?? rootStart;
+			logicalStart.set(row.key, ancLogical + (row.startTime.getTime() - ancStart));
+			continue;
+		}
 		const parentKey = row.key.replace(kBranchKeyPattern, "");
-		const parentRow = rowByKey.get(parentKey);
-		if (!parentRow) continue;
-		const parentFirstSpan = parentRow.spans[0];
-		const parentSpan = parentRow.spans.length === 1 && parentFirstSpan && isSingleSpan(parentFirstSpan) ? parentFirstSpan.agent : null;
-		if (!parentSpan) continue;
-		const branchFirstSpan = row.spans[0];
-		const branchSpan = row.spans.length === 1 && branchFirstSpan && isSingleSpan(branchFirstSpan) ? branchFirstSpan.agent : null;
-		if (!branchSpan) continue;
-		const forkTimestamp = resolveForkTimestamp(parentSpan, branchSpan);
-		const forkPercent = (mappings.get(parentKey) ?? trunkMapping).toPercent(forkTimestamp);
-		mappings.set(row.key, createShiftedMapping(row.startTime, row.endTime, forkPercent, trunkMapping));
+		const parentSpan = singleSpan(rowByKey.get(parentKey));
+		const branchSpan = singleSpan(row);
+		if (!parentSpan || !branchSpan) continue;
+		const forkTs = resolveForkTimestamp(parentSpan, branchSpan).getTime();
+		const parentStart = parentSpan.startTime(false).getTime();
+		const parentLogical = logicalStart.get(parentKey) ?? 0;
+		logicalStart.set(row.key, parentLogical + (forkTs - parentStart));
+	}
+	let maxEnd = 1;
+	for (const row of rows) {
+		const ls = logicalStart.get(row.key);
+		if (ls === void 0) continue;
+		maxEnd = Math.max(maxEnd, ls + (row.endTime.getTime() - row.startTime.getTime()));
+	}
+	const mappings = /* @__PURE__ */ new Map();
+	for (const row of rows) {
+		const ls = logicalStart.get(row.key);
+		if (ls === void 0) {
+			mappings.set(row.key, trunkMapping);
+			continue;
+		}
+		const wallStart = row.startTime.getTime();
+		mappings.set(row.key, {
+			toPercent: (ts) => Math.max(0, Math.min(100, (ls + (ts.getTime() - wallStart)) / maxEnd * 100)),
+			hasCompression: false,
+			gaps: []
+		});
 	}
 	return mappings;
 }
@@ -129656,6 +129729,7 @@ var useEventNodes = (events, running, sourceSpans) => {
 			return eventNodes.filter((node) => {
 				if (node.children && node.children.length > 0) node.children = filterEmpty(node.children);
 				if (node.sourceSpan) return true;
+				if (node.event.event === "span_begin" && node.event.type === "fork_nav") return true;
 				return node.event.event !== "span_begin" && node.event.event !== "step" || node.children && node.children.length > 0;
 			});
 		};
@@ -129702,6 +129776,23 @@ var TranscriptLayout_module_default = {
 	sidebarHeaderTitle: "_sidebarHeaderTitle_1mbr3_155",
 	sidebarHeaderCloseAnchor: "_sidebarHeaderCloseAnchor_1mbr3_171",
 	sidebarHeaderClose: "_sidebarHeaderClose_1mbr3_171"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/transcript/AnchorEventView.tsx
+var AnchorEventView = ({ eventNode, className }) => {
+	const event = eventNode.event;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(EventRow, {
+		title: "Anchor",
+		icon: TranscriptIcons.fork,
+		className,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", {
+			className: "text-style-secondary",
+			children: event.anchor_id
+		}), event.source ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+			className: "text-style-secondary",
+			children: [" · ", event.source]
+		}) : null]
+	});
 };
 var ApprovalEventView_module_default = {
 	headline: "_headline_1l22a_1",
@@ -129771,8 +129862,7 @@ var BranchEventView_module_default = { panel: "_panel_8zdtn_1" };
 var BranchEventView = ({ eventNode, className }) => {
 	const event = eventNode.event;
 	const data = {};
-	if (event.from_span) data["from_span"] = event.from_span;
-	if (event.from_message) data["from_message"] = event.from_message;
+	if (event.from_anchor) data["from_anchor"] = event.from_anchor;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventPanel, {
 		eventNodeId: eventNode.id,
 		title: formatTitle("Branch", void 0, event.working_start),
@@ -129827,6 +129917,30 @@ var ErrorEventView = ({ eventNode, className }) => {
 				margin: "0.5em 0"
 			}
 		})
+	});
+};
+var ForkNavigatorView_module_default = {
+	nav: "_nav_1tozt_1",
+	icon: "_icon_1tozt_12",
+	pill: "_pill_1tozt_18",
+	selected: "_selected_1tozt_33"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/transcript/ForkNavigatorView.tsx
+var ForkNavigatorView = ({ eventNode, className }) => {
+	const data = eventNode.event.metadata?.fork_nav;
+	const selectRow = useTimelineRowSelect();
+	if (!data || data.options.length < 2) return null;
+	const { options, selectedIndex } = data;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: clsx(ForkNavigatorView_module_default.nav, className),
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(TranscriptIcons.fork, ForkNavigatorView_module_default.icon) }), options.map((opt, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+			type: "button",
+			className: clsx(ForkNavigatorView_module_default.pill, i === selectedIndex && ForkNavigatorView_module_default.selected),
+			onClick: (e) => i === selectedIndex ? void 0 : selectRow?.(opt.rowKey, e.currentTarget.closest("[data-index]") ?? e.currentTarget),
+			"aria-current": i === selectedIndex ? "true" : void 0,
+			children: opt.label
+		}, opt.rowKey))]
 	});
 };
 var InfoEventView_module_default = { panel: "_panel_vz394_1" };
@@ -131340,6 +131454,10 @@ var RenderedEventNodeInner = ({ node, next, className, context, onAutoCollapse, 
 			eventNode: node,
 			className
 		});
+		case "anchor": return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AnchorEventView, {
+			eventNode: node,
+			className
+		});
 		case "compaction": return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CompactionEventView, {
 			eventNode: node,
 			className
@@ -131370,6 +131488,10 @@ var RenderedEventNodeInner = ({ node, next, className, context, onAutoCollapse, 
 			eventCallbacks
 		});
 		case "span_begin":
+			if (node.event.type === "fork_nav") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ForkNavigatorView, {
+				eventNode: node,
+				className
+			});
 			if (renderAgentCard && node.sourceSpan) {
 				const spanType = node.sourceSpan.spanType;
 				if (spanType === "agent" || spanType === "branch") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: renderAgentCard(node, className) });
@@ -131709,11 +131831,15 @@ var collectAllCollapsibleIds = (nodes) => {
 	traverse(nodes);
 	return result;
 };
-var TranscriptLayout = ({ events, running = false, scrollRef, offsetTop = 0, timelineSelection, activeTimeline, serverTimelines, markerConfig: markerConfigOverride, agentConfig: agentConfigOverride, showSwimlanes: showSwimlanesOption = "auto", onMarkerNavigate, onScrollToTop, headroomHidden, onHeadroomResetAnchor, listId, initialEventId, initialMessageId, eventsListRef, getEventUrl, linkingEnabled, bulkCollapse, collapseState, outline, outlineScrollRef, rightPane, rightPaneScrollRef, eventNodeContext, emptyText = "No events match the current filter", className }) => {
-	const timelinesForBranchDetection = useTimelinesArray(events, serverTimelines);
+var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, offsetTop = 0, timelineSelection, activeTimeline, serverTimelines, markerConfig: markerConfigOverride, agentConfig: agentConfigOverride, showSwimlanes: showSwimlanesOption = "auto", onMarkerNavigate, onScrollToTop, headroomHidden, onHeadroomResetAnchor, listId, initialEventId, initialMessageId, eventsListRef, getEventUrl, linkingEnabled, bulkCollapse, collapseState, outline, outlineScrollRef, rightPane, rightPaneScrollRef, eventNodeContext, emptyText = "No events match the current filter", className }) => {
+	const eventsForTimeline = (0, import_react.useMemo)(() => {
+		if (!hiddenEventTypes || hiddenEventTypes.length === 0) return events;
+		return events.filter((e) => e.event === "anchor" || !hiddenEventTypes.includes(e.event));
+	}, [events, hiddenEventTypes]);
+	const timelinesForBranchDetection = useTimelinesArray(eventsForTimeline, serverTimelines);
 	const timelineConfig = useTimelineConfig({ branchesPresent: (0, import_react.useMemo)(() => timelinesForBranchDetection.some((tl) => spanHasBranches(tl.root)), [timelinesForBranchDetection]) });
-	const { timeline: timelineData, state: timelineState, layouts: timelineLayouts, rootTimeMapping, selectedEvents, sourceSpans, minimapSelection, hasTimeline, timelines, activeTimelineIndex, setActiveTimeline, regionCounts, branchScrollTarget, highlightedKeys, selectedRowName } = useTranscriptTimeline({
-		events,
+	const { timeline: timelineData, state: timelineState, layouts: timelineLayouts, rootTimeMapping, selectedEvents, sourceSpans, minimapSelection, hasTimeline, timelines, activeTimelineIndex, setActiveTimeline, regionCounts, branchScrollTarget, highlightedKeys, selectedRowName, viewStack, pushView, popView } = useTranscriptTimeline({
+		events: eventsForTimeline,
 		markerConfig: markerConfigOverride ?? timelineConfig.markerConfig,
 		timelineOptions: agentConfigOverride ?? timelineConfig.agentConfig,
 		serverTimelines,
@@ -131737,10 +131863,12 @@ var TranscriptLayout = ({ events, running = false, scrollRef, offsetTop = 0, tim
 		hasTimeline,
 		regionCounts
 	]);
-	const { eventNodes, defaultCollapsedIds } = useEventNodes(showSwimlanes ? selectedEvents : events, running, showSwimlanes ? sourceSpans : void 0);
+	const rawEventsForNodes = showSwimlanes ? selectedEvents : events;
+	const { eventNodes, defaultCollapsedIds } = useEventNodes((0, import_react.useMemo)(() => hiddenEventTypes && hiddenEventTypes.length > 0 ? rawEventsForNodes.filter((e) => !hiddenEventTypes.includes(e.event)) : rawEventsForNodes, [rawEventsForNodes, hiddenEventTypes]), running, showSwimlanes ? sourceSpans : void 0);
 	const { stickySwimLaneHeight, isSwimLaneSticky, swimLaneStickyContentRef, handleSwimLaneStickyChange } = useStickySwimLaneHeight();
 	const effectiveOffsetTop = offsetTop + stickySwimLaneHeight;
-	const hasScrollTarget = !!(initialEventId || initialMessageId);
+	const [scrollAnchor, setScrollAnchor] = (0, import_react.useState)(null);
+	const hasScrollTarget = !!(initialEventId || initialMessageId || scrollAnchor);
 	const { effectiveListId } = useListPositionManager(listId, timelineState.selected, scrollRef, hasScrollTarget);
 	const [scrubberProgress, scrubTo] = useScrubberProgress(scrollRef);
 	const handleScrub = (0, import_react.useCallback)((progress) => {
@@ -131762,7 +131890,9 @@ var TranscriptLayout = ({ events, running = false, scrollRef, offsetTop = 0, tim
 			timelines,
 			activeIndex: activeTimelineIndex,
 			onSelect: setActiveTimeline
-		} : void 0
+		} : void 0,
+		viewStack,
+		onPopView: popView
 	}), [
 		timelineData.root,
 		onScrollToTop,
@@ -131773,14 +131903,24 @@ var TranscriptLayout = ({ events, running = false, scrollRef, offsetTop = 0, tim
 		timelineConfig,
 		timelines,
 		activeTimelineIndex,
-		setActiveTimeline
+		setActiveTimeline,
+		viewStack,
+		popView
 	]);
+	const handlePunchDown = (0, import_react.useCallback)((rowKey, label) => {
+		const span = timelineState.rows.find((r) => r.key === rowKey)?.spans[0];
+		if (span && "agent" in span) pushView(span.agent, label);
+	}, [timelineState.rows, pushView]);
 	const spanSelectKeys = (0, import_react.useMemo)(() => buildSpanSelectKeys(timelineState.rows), [timelineState.rows]);
 	const selectBySpanId = (0, import_react.useCallback)((spanId) => {
 		const key = spanSelectKeys.get(spanId);
 		if (!key) return;
 		timelineState.select(key.key);
 	}, [spanSelectKeys, timelineState]);
+	const selectByRowKey = (0, import_react.useCallback)((rowKey, anchorEl) => {
+		if (anchorEl && scrollRef.current) setScrollAnchor({ scrollTop: scrollRef.current.scrollTop });
+		timelineState.select(rowKey, { preserveScroll: true });
+	}, [timelineState, scrollRef]);
 	const resolvedLocal = (0, import_react.useMemo)(() => {
 		if (initialEventId || !initialMessageId) return void 0;
 		const selectedSpans = getSelectedSpans(timelineState.rows, timelineState.selected);
@@ -131823,6 +131963,12 @@ var TranscriptLayout = ({ events, running = false, scrollRef, offsetTop = 0, tim
 		timelineState
 	]);
 	const effectiveInitialEventId = initialEventId ?? resolved?.eventId ?? branchScrollTarget ?? null;
+	(0, import_react.useEffect)(() => {
+		if (!scrollAnchor) return;
+		requestAnimationFrame(() => {
+			scrollRef.current?.scrollTo({ top: scrollAnchor.scrollTop });
+		});
+	}, [scrollAnchor, scrollRef]);
 	(0, import_react.useEffect)(() => {
 		if (effectiveInitialEventId) onHeadroomResetAnchor?.(true);
 	}, [effectiveInitialEventId, onHeadroomResetAnchor]);
@@ -131979,154 +132125,158 @@ var TranscriptLayout = ({ events, running = false, scrollRef, offsetTop = 0, tim
 	}, []);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TimelineSelectContext.Provider, {
 		value: selectBySpanId,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: clsx(TranscriptLayout_module_default.root, className),
-			children: [showSwimlanes && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StickyScroll, {
-				scrollRef,
-				offsetTop,
-				zIndex: 500,
-				preserveHeight: true,
-				onStickyChange: handleSwimLaneStickyChange,
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					ref: swimLaneStickyContentRef,
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TimelineSwimLanes, {
-						layouts: timelineLayouts,
-						timeline: timelineState,
-						header: swimlaneHeader,
-						onMarkerNavigate,
-						isSticky: isSwimLaneSticky,
-						headroomCollapsed: !!headroomHidden && isSwimLaneSticky,
-						onLayoutShift: handleLayoutShift,
-						defaultCollapsed: swimlanesDefaultCollapsed,
-						regionCounts,
-						highlightedKeys
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TimelineRowSelectContext.Provider, {
+			value: selectByRowKey,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: clsx(TranscriptLayout_module_default.root, className),
+				children: [showSwimlanes && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StickyScroll, {
+					scrollRef,
+					offsetTop,
+					zIndex: 500,
+					preserveHeight: true,
+					onStickyChange: handleSwimLaneStickyChange,
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						ref: swimLaneStickyContentRef,
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TimelineSwimLanes, {
+							layouts: timelineLayouts,
+							timeline: timelineState,
+							header: swimlaneHeader,
+							onMarkerNavigate,
+							isSticky: isSwimLaneSticky,
+							headroomCollapsed: !!headroomHidden && isSwimLaneSticky,
+							onLayoutShift: handleLayoutShift,
+							defaultCollapsed: swimlanesDefaultCollapsed,
+							regionCounts,
+							highlightedKeys,
+							onPunchDown: handlePunchDown
+						})
 					})
-				})
-			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: clsx(TranscriptLayout_module_default.container, !outline && TranscriptLayout_module_default.noOutline, outline && isOutlineCollapsed && TranscriptLayout_module_default.outlineCollapsed, !rightPane && TranscriptLayout_module_default.noRightPane, rightPane && rightPane.collapsed && TranscriptLayout_module_default.rightPaneCollapsed),
-				style: {
-					"--outline-top": `${effectiveOffsetTop}px`,
-					"--right-pane-width": `${rightPaneWidth}px`,
-					"--scroller-height": scrollerHeight ? `${scrollerHeight}px` : "100vh"
-				},
-				children: [
-					outline && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(StickyScroll, {
-						ref: outlineScrollRef,
-						scrollRef,
-						className: TranscriptLayout_module_default.outline,
-						offsetTop: effectiveOffsetTop,
-						children: !isOutlineCollapsed ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
-							outline.title && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-								className: TranscriptLayout_module_default.sidebarHeader,
-								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-									className: clsx(TranscriptLayout_module_default.sidebarHeaderTitle, "text-size-smaller"),
-									children: outline.title
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: clsx(TranscriptLayout_module_default.container, !outline && TranscriptLayout_module_default.noOutline, outline && isOutlineCollapsed && TranscriptLayout_module_default.outlineCollapsed, !rightPane && TranscriptLayout_module_default.noRightPane, rightPane && rightPane.collapsed && TranscriptLayout_module_default.rightPaneCollapsed),
+					style: {
+						"--outline-top": `${effectiveOffsetTop}px`,
+						"--right-pane-width": `${rightPaneWidth}px`,
+						"--scroller-height": scrollerHeight ? `${scrollerHeight}px` : "100vh"
+					},
+					children: [
+						outline && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(StickyScroll, {
+							ref: outlineScrollRef,
+							scrollRef,
+							className: TranscriptLayout_module_default.outline,
+							offsetTop: effectiveOffsetTop,
+							children: !isOutlineCollapsed ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
+								outline.title && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: TranscriptLayout_module_default.sidebarHeader,
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										className: clsx(TranscriptLayout_module_default.sidebarHeaderTitle, "text-size-smaller"),
+										children: outline.title
+									})
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: TranscriptLayout_module_default.sidebarHeaderCloseAnchor,
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+										type: "button",
+										className: TranscriptLayout_module_default.sidebarHeaderClose,
+										onClick: () => outline.onCollapsedChange(true),
+										"aria-label": "Hide outline",
+										title: outline.toggleTitle ?? "Hide outline",
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: "bi bi-x" })
+									})
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptOutline, {
+									eventNodes,
+									defaultCollapsedIds,
+									scrollRef,
+									running,
+									agentName: outline.name ?? (showSwimlanes ? selectedRowName : void 0),
+									scrollTrackOffset: effectiveOffsetTop,
+									getCollapsed: collapseState?.outline ? (nodeId) => collapseState.outline?.[nodeId] === true : void 0,
+									setCollapsed: collapseState?.onCollapseOutline,
+									collapsedEvents: collapseState?.outline,
+									setCollapsedEvents: collapseState?.onSetOutlineCollapsed,
+									selectedOutlineId: outline.selectedId,
+									setSelectedOutlineId: outline.setSelectedId,
+									getEventUrl,
+									renderLink: outline.renderLink,
+									onNavigateToEvent: outline.onNavigateToEvent,
+									onHasNodesChange: handleOutlineHasNodesChange
 								})
-							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-								className: TranscriptLayout_module_default.sidebarHeaderCloseAnchor,
-								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-									type: "button",
-									className: TranscriptLayout_module_default.sidebarHeaderClose,
-									onClick: () => outline.onCollapsedChange(true),
-									"aria-label": "Hide outline",
-									title: outline.toggleTitle ?? "Hide outline",
-									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: "bi bi-x" })
-								})
-							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptOutline, {
-								eventNodes,
-								defaultCollapsedIds,
-								scrollRef,
-								running,
-								agentName: outline.name ?? (showSwimlanes ? selectedRowName : void 0),
-								scrollTrackOffset: effectiveOffsetTop,
-								getCollapsed: collapseState?.outline ? (nodeId) => collapseState.outline?.[nodeId] === true : void 0,
-								setCollapsed: collapseState?.onCollapseOutline,
-								collapsedEvents: collapseState?.outline,
-								setCollapsedEvents: collapseState?.onSetOutlineCollapsed,
-								selectedOutlineId: outline.selectedId,
-								setSelectedOutlineId: outline.setSelectedId,
-								getEventUrl,
-								renderLink: outline.renderLink,
-								onNavigateToEvent: outline.onNavigateToEvent,
-								onHasNodesChange: handleOutlineHasNodesChange
+							] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+								type: "button",
+								className: TranscriptLayout_module_default.outlineToggle,
+								onClick: outlineHasNodes && !outline.toggleDisabled ? () => outline.onCollapsedChange(false) : void 0,
+								"aria-disabled": outline.toggleDisabled || !outlineHasNodes,
+								title: outline.toggleTitle ?? (!outlineHasNodes ? "No outline available for the current filter" : void 0),
+								"aria-label": "Show outline",
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: outline.toggleIcon })
 							})
-						] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-							type: "button",
-							className: TranscriptLayout_module_default.outlineToggle,
-							onClick: outlineHasNodes && !outline.toggleDisabled ? () => outline.onCollapsedChange(false) : void 0,
-							"aria-disabled": outline.toggleDisabled || !outlineHasNodes,
-							title: outline.toggleTitle ?? (!outlineHasNodes ? "No outline available for the current filter" : void 0),
-							"aria-label": "Show outline",
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: outline.toggleIcon })
-						})
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: TranscriptLayout_module_default.separator })] }),
-					hasMatchingEvents ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptViewNodes, {
-						ref: eventsListRef,
-						id: effectiveListId,
-						eventNodes,
-						defaultCollapsedIds,
-						running,
-						initialEventId: effectiveInitialEventId,
-						initialMessageId,
-						offsetTop: effectiveOffsetTop,
-						className: TranscriptLayout_module_default.eventsList,
-						scrollRef,
-						renderAgentCard: showSwimlanes ? renderAgentCard : void 0,
-						getEventUrl,
-						linkingEnabled,
-						collapsedTranscript: collapseState?.transcript,
-						collapsedOutline: collapseState?.outline,
-						onCollapseTranscript,
-						eventNodeContext
-					}, effectiveListId) : emptyText !== null ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, { text: emptyText }) : null,
-					rightPane && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: TranscriptLayout_module_default.rightSeparator }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StickyScroll, {
-						ref: rightPaneScrollRef,
-						scrollRef,
-						className: TranscriptLayout_module_default.rightPane,
-						offsetTop: effectiveOffsetTop,
-						children: !rightPane.collapsed ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
-							rightPaneOnWidthChange && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-								className: TranscriptLayout_module_default.rightPaneResizer,
-								role: "separator",
-								"aria-orientation": "vertical",
-								"aria-label": `Resize ${rightPane.label ?? "pane"}`,
-								onPointerDown: handleRightPanePointerDown,
-								onPointerMove: handleRightPanePointerMove,
-								onPointerUp: handleRightPanePointerUp,
-								onPointerCancel: handleRightPanePointerUp
-							}),
-							rightPane.title && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-								className: TranscriptLayout_module_default.sidebarHeader,
-								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-									className: clsx(TranscriptLayout_module_default.sidebarHeaderTitle, "text-size-smaller"),
-									children: rightPane.title
-								})
-							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-								className: TranscriptLayout_module_default.sidebarHeaderCloseAnchor,
-								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-									type: "button",
-									className: TranscriptLayout_module_default.sidebarHeaderClose,
-									onClick: () => rightPane.onCollapsedChange(true),
-									"aria-label": `Hide ${rightPane.label ?? "pane"}`,
-									title: rightPane.toggleTitle ?? `Hide ${rightPane.label ?? "pane"}`,
-									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: "bi bi-x" })
-								})
-							}),
-							rightPane.content
-						] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-							type: "button",
-							className: TranscriptLayout_module_default.rightPaneToggle,
-							onClick: () => rightPane.onCollapsedChange(false),
-							title: rightPane.toggleTitle ?? `Show ${rightPane.label ?? "pane"}`,
-							"aria-label": `Show ${rightPane.label ?? "pane"}`,
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: rightPane.toggleIcon })
-						})
-					})] })
-				]
-			})]
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: TranscriptLayout_module_default.separator })] }),
+						hasMatchingEvents ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptViewNodes, {
+							ref: eventsListRef,
+							id: effectiveListId,
+							eventNodes,
+							defaultCollapsedIds,
+							running,
+							initialEventId: effectiveInitialEventId,
+							initialMessageId,
+							offsetTop: effectiveOffsetTop,
+							className: TranscriptLayout_module_default.eventsList,
+							scrollRef,
+							renderAgentCard: showSwimlanes ? renderAgentCard : void 0,
+							getEventUrl,
+							linkingEnabled,
+							collapsedTranscript: collapseState?.transcript,
+							collapsedOutline: collapseState?.outline,
+							onCollapseTranscript,
+							eventNodeContext
+						}, effectiveListId) : emptyText !== null ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, { text: emptyText }) : null,
+						rightPane && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: TranscriptLayout_module_default.rightSeparator }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StickyScroll, {
+							ref: rightPaneScrollRef,
+							scrollRef,
+							className: TranscriptLayout_module_default.rightPane,
+							offsetTop: effectiveOffsetTop,
+							children: !rightPane.collapsed ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
+								rightPaneOnWidthChange && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: TranscriptLayout_module_default.rightPaneResizer,
+									role: "separator",
+									"aria-orientation": "vertical",
+									"aria-label": `Resize ${rightPane.label ?? "pane"}`,
+									onPointerDown: handleRightPanePointerDown,
+									onPointerMove: handleRightPanePointerMove,
+									onPointerUp: handleRightPanePointerUp,
+									onPointerCancel: handleRightPanePointerUp
+								}),
+								rightPane.title && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: TranscriptLayout_module_default.sidebarHeader,
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										className: clsx(TranscriptLayout_module_default.sidebarHeaderTitle, "text-size-smaller"),
+										children: rightPane.title
+									})
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: TranscriptLayout_module_default.sidebarHeaderCloseAnchor,
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+										type: "button",
+										className: TranscriptLayout_module_default.sidebarHeaderClose,
+										onClick: () => rightPane.onCollapsedChange(true),
+										"aria-label": `Hide ${rightPane.label ?? "pane"}`,
+										title: rightPane.toggleTitle ?? `Hide ${rightPane.label ?? "pane"}`,
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: "bi bi-x" })
+									})
+								}),
+								rightPane.content
+							] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+								type: "button",
+								className: TranscriptLayout_module_default.rightPaneToggle,
+								onClick: () => rightPane.onCollapsedChange(false),
+								title: rightPane.toggleTitle ?? `Show ${rightPane.label ?? "pane"}`,
+								"aria-label": `Show ${rightPane.label ?? "pane"}`,
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: rightPane.toggleIcon })
+							})
+						})] })
+					]
+				})]
+			})
 		})
 	});
 };
@@ -133337,6 +133487,7 @@ var eventTypes = {
 	compaction: "Compaction",
 	info: "Info",
 	subtask: "Subtask",
+	anchor: "Anchor",
 	branch: "Branch",
 	step: "Step"
 };
@@ -136067,12 +136218,6 @@ var TranscriptPanel = (0, import_react.memo)((props) => {
 		sampleEpoch
 	});
 	const filteredEventTypes = useStore((state) => state.sample.eventFilter.filteredTypes);
-	const filteredEvents = (0, import_react.useMemo)(() => {
-		if (filteredEventTypes.length === 0) return events;
-		return events.filter((event) => {
-			return !filteredEventTypes.includes(event.event);
-		});
-	}, [events, filteredEventTypes]);
 	const timelineSelected = useStore((state) => state.sample.timelineSelected);
 	const setTimelineSelectedStore = useStore((state) => state.sampleActions.setTimelineSelected);
 	const activeTimelineIndex = useStore((state) => state.sample.activeTimelineIndex);
@@ -136081,7 +136226,7 @@ var TranscriptPanel = (0, import_react.memo)((props) => {
 	const setTimelineSelected = (0, import_react.useCallback)((key, options) => {
 		setTimelineSelectedStore(key);
 		if (options?.preserveDeepLink) return;
-		scrollRef.current?.scrollTo({ top: 0 });
+		if (!options?.preserveScroll) scrollRef.current?.scrollTo({ top: 0 });
 		setSearchParams((prev) => clearDeepLinkParams(new URLSearchParams(prev)), { replace: true });
 	}, [
 		setTimelineSelectedStore,
@@ -136221,7 +136366,8 @@ var TranscriptPanel = (0, import_react.memo)((props) => {
 		eventsListRef.current?.scrollToEvent(eventId);
 	}, []);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptLayout, {
-		events: filteredEvents,
+		events,
+		hiddenEventTypes: filteredEventTypes,
 		running,
 		scrollRef,
 		offsetTop,
@@ -136370,10 +136516,7 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 	const printSampleId = urlSampleId || selectedSampleHandle?.id?.toString();
 	const printEpoch = urlEpoch || selectedSampleHandle?.epoch?.toString();
 	const handlePrintClick = (0, import_react.useCallback)(() => {
-		if (printLogPath && printSampleId && printEpoch) {
-			const printUrl = printSampleUrl(printLogPath, printSampleId, printEpoch, effectiveSelectedTab, prefix);
-			window.open(`#${printUrl}`, "_blank");
-		}
+		if (printLogPath && printSampleId && printEpoch) openInNewTab(printSampleUrl(printLogPath, printSampleId, printEpoch, effectiveSelectedTab, prefix));
 	}, [
 		printLogPath,
 		printSampleId,
@@ -136513,7 +136656,10 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 	]);
 	const sampleDetailNavigation = useSampleDetailNavigation();
 	const displayModeContext = (0, import_react.useMemo)(() => ({ displayMode: displayMode ?? "rendered" }), [displayMode]);
-	const { hidden: headroomHidden } = useScrollDirection(scrollRef, { threshold: 80 });
+	const { hidden: headroomHidden } = useScrollDirection(scrollRef, {
+		threshold: 80,
+		stayHiddenOnUpScroll: true
+	});
 	const [isHeaderSticky, setIsHeaderSticky] = (0, import_react.useState)(false);
 	const handleHeaderStickyChange = (0, import_react.useCallback)((sticky) => {
 		setIsHeaderSticky(sticky);
@@ -140452,6 +140598,7 @@ var useJsonTabConfig = (logDetails) => {
 				icon: ApplicationIcons.copy,
 				className: clsx("task-btn-json-copy", "clipboard-button"),
 				"data-clipboard-target": "#task-json-contents",
+				subtle: true,
 				onClick: copyFeedback
 			}, "copy-json")]
 		};
@@ -140740,6 +140887,7 @@ var SamplesGrid = (props) => {
 		};
 	}, [initialState, columnVisibility]);
 	const handleStateUpdated = (0, import_react.useCallback)((e) => {
+		if (!e.sources.some((s) => s === "columnVisibility" || s === "columnOrder" || s === "columnPinning" || s === "columnSizing" || s === "sort" || s === "filter")) return;
 		onStateUpdated?.(e.state);
 	}, [onStateUpdated]);
 	const handleFilterChanged = (0, import_react.useCallback)(() => {
@@ -140950,6 +141098,11 @@ var SampleList = (0, import_react.memo)((props) => {
 		]
 	});
 });
+var SamplesViewOptionsPopover_module_default = {
+	container: "_container_1tduz_1",
+	row: "_row_1tduz_8",
+	checkbox: "_checkbox_1tduz_15"
+};
 //#endregion
 //#region src/app/samples/list/samplesView.ts
 /**
@@ -141287,22 +141440,54 @@ function useSamplesView(allColumns, options) {
 	};
 }
 //#endregion
-//#region src/app/samples/list/SamplesViewToggle.tsx
-var SETTERS = {
-	multiline: "setMultiline",
-	compactScores: "setCompactScores",
-	colorScalesEnabled: "setColorScalesEnabled"
-};
-var SamplesViewToggle = ({ field, icon, label }) => {
-	const samplesView = useSamplesView();
-	const value = samplesView.view[field];
-	const setter = samplesView[SETTERS[field]];
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NavbarButton, {
-		label,
-		icon,
-		latched: value,
-		subtle: true,
-		onClick: () => setter(!value)
+//#region src/app/samples/list/SamplesViewOptionsPopover.tsx
+var SamplesViewOptionsPopover = ({ showing, setShowing, positionEl }) => {
+	const { view, setMultiline, setCompactScores, setColorScalesEnabled } = useSamplesView();
+	const scoreColorScales = useSamplesViewScoreColorScales();
+	const showColorScales = Object.keys(scoreColorScales).length > 0;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopOver, {
+		id: "samples-view-options-popover",
+		isOpen: showing,
+		setIsOpen: setShowing,
+		positionEl,
+		placement: "bottom-end",
+		showArrow: false,
+		hoverDelay: -1,
+		closeOnMouseLeave: false,
+		offset: [0, 1],
+		className: SamplesViewOptionsPopover_module_default.popover,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: clsx(SamplesViewOptionsPopover_module_default.container, "text-size-small"),
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("label", {
+					className: SamplesViewOptionsPopover_module_default.row,
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+						type: "checkbox",
+						checked: view.multiline,
+						onChange: () => setMultiline(!view.multiline),
+						className: SamplesViewOptionsPopover_module_default.checkbox
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Multiline" })]
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("label", {
+					className: SamplesViewOptionsPopover_module_default.row,
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+						type: "checkbox",
+						checked: view.compactScores,
+						onChange: () => setCompactScores(!view.compactScores),
+						className: SamplesViewOptionsPopover_module_default.checkbox
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Compact scores" })]
+				}),
+				showColorScales && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("label", {
+					className: SamplesViewOptionsPopover_module_default.row,
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+						type: "checkbox",
+						checked: view.colorScalesEnabled,
+						onChange: () => setColorScalesEnabled(!view.colorScalesEnabled),
+						className: SamplesViewOptionsPopover_module_default.checkbox
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Score colors" })]
+				})
+			]
+		})
 	});
 };
 //#endregion
@@ -164540,10 +164725,10 @@ function getCompletions(context, filterItems, samples) {
 	return noCompletions();
 }
 var SampleFilter_module_default = {
-	root: "_root_k7p3l_1",
-	label: "_label_k7p3l_9",
-	input: "_input_k7p3l_15",
-	help: "_help_k7p3l_19"
+	root: "_root_1dunz_1",
+	label: "_label_1dunz_15",
+	input: "_input_1dunz_21",
+	help: "_help_1dunz_26"
 };
 //#endregion
 //#region src/app/samples/sample-tools/sample-filter/SampleFilter.tsx
@@ -164831,24 +165016,25 @@ var ScoreCheckboxes = ({ scores, selectedKeys, setSelectedScores }) => {
 //#endregion
 //#region src/app/samples/SamplesTools.tsx
 var SampleTools = () => {
-	const scoreColorScales = useSamplesViewScoreColorScales();
-	const showColorScales = Object.keys(scoreColorScales).length > 0;
+	const [showViewOptions, setShowViewOptions] = (0, import_react.useState)(false);
+	const viewButtonRef = (0, import_react.useRef)(null);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [
 		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleFilter, {}),
-		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SamplesViewToggle, {
-			field: "multiline",
-			label: "Multiline",
-			icon: ApplicationIcons["list-wrap"]
+		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(NavbarButton, {
+			ref: viewButtonRef,
+			label: "View",
+			icon: ApplicationIcons.options,
+			dropdown: true,
+			subtle: true,
+			onClick: (e) => {
+				e.stopPropagation();
+				setShowViewOptions((prev) => !prev);
+			}
 		}),
-		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SamplesViewToggle, {
-			field: "compactScores",
-			label: "Compact scores",
-			icon: ApplicationIcons["compact-scores"]
-		}),
-		showColorScales && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SamplesViewToggle, {
-			field: "colorScalesEnabled",
-			label: "Score colors",
-			icon: ApplicationIcons["color-scales"]
+		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SamplesViewOptionsPopover, {
+			showing: showViewOptions,
+			setShowing: setShowViewOptions,
+			positionEl: viewButtonRef.current
 		})
 	] });
 };
@@ -166339,6 +166525,7 @@ var useSamplesTabConfig = (evalStatus, refreshLog) => {
 				evalStatus === "started" && !streamSamples && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolButton, {
 					label: "Refresh",
 					icon: ApplicationIcons.refresh,
+					subtle: true,
 					onClick: refreshLog
 				}, "refresh"),
 				samplesAvailable && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NavbarButton, {
@@ -167051,20 +167238,20 @@ var ScoreGrid = ({ scoreGroups, showReducer, className, striped }) => {
 		for (let i = 0; i < columnCount; i++) if (metrics.length > i) cells.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)("th", {
 			className: clsx("text-style-label", "text-style-secondary", "text-size-small", ScoreGrid_module_default.label),
 			children: metrics[i].name
-		}));
-		else cells.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {}));
+		}, i));
+		else cells.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {}, i));
 		const headerRow = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("tr", {
 			className: clsx(ScoreGrid_module_default.headerRow),
 			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {}), cells]
 		}) });
 		const rows = [];
-		scoreGroup.forEach((g) => {
+		scoreGroup.forEach((g, rowIndex) => {
 			const cells = [];
 			for (let i = 0; i < columnCount; i++) if (metrics.length > i) cells.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
 				className: clsx(ScoreGrid_module_default.value, "text-size-small"),
 				children: formatPrettyDecimal(g.metrics[i].value)
-			}));
-			else cells.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { className: clsx(ScoreGrid_module_default.value) }));
+			}, i));
+			else cells.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { className: clsx(ScoreGrid_module_default.value) }, i));
 			rows.push(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("tr", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("th", {
 				className: clsx(ScoreGrid_module_default.scorer, "text-size-small"),
 				children: [
@@ -167076,9 +167263,9 @@ var ScoreGrid = ({ scoreGroups, showReducer, className, striped }) => {
 						unscoredSamples: g.unscoredSamples || 0
 					})
 				]
-			}), cells] }));
+			}), cells] }, rowIndex));
 		});
-		subTables.push(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
+		subTables.push(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [
 			index > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tbody", {
 				className: clsx(ScoreGrid_module_default.tableSeparator),
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
@@ -167091,7 +167278,7 @@ var ScoreGrid = ({ scoreGroups, showReducer, className, striped }) => {
 				className: clsx("table-group-divider", ScoreGrid_module_default.tableBody),
 				children: rows
 			})
-		] }));
+		] }, index));
 		index++;
 	}
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("table", {
@@ -167801,7 +167988,7 @@ var LogView = () => {
 			if (ref) refs.push(ref);
 		}
 		return refs;
-	}, [Object.keys(tabs).join(",")]));
+	}, [Object.keys(tabs).join(",")]), { stayHiddenOnUpScroll: true });
 	const selectedTab = useStore((state) => state.app.tabs.workspace);
 	const setSelectedTab = useStore((state) => state.appActions.setWorkspaceTab);
 	const onSelected = (0, import_react.useCallback)((e) => {
