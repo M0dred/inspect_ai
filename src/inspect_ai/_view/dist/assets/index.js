@@ -64279,12 +64279,17 @@ var createPolling = (name, callback, options) => {
 		try {
 			log.debug("Poll");
 			if (!isPolling || isStopped) return;
-			if (await callback() === false) {
+			const shouldContinue = await callback();
+			if (shouldContinue === false) {
 				stop();
 				return;
 			}
 			retryCount = 0;
 			if (!isPolling || isStopped) return;
+			if (shouldContinue === "immediate") {
+				timeoutId = setTimeout(poll, 0);
+				return;
+			}
 			timeoutId = setTimeout(poll, interval * 1e3);
 		} catch (e) {
 			if (!isPolling || isStopped) return;
@@ -65195,34 +65200,34 @@ function createSamplePolling(store) {
 				}
 				return false;
 			};
-			const eventId = pollingState.eventId;
-			const attachmentId = pollingState.attachmentId;
-			const messagePoolId = pollingState.messagePoolId;
-			const callPoolId = pollingState.callPoolId;
-			const sampleDataResponse = await api.get_log_sample_data(logFile, summary.id, summary.epoch, eventId, attachmentId, messagePoolId !== kNoId ? messagePoolId : void 0, callPoolId !== kNoId ? callPoolId : void 0);
+			const priorEventId = pollingState.eventId;
+			const priorAttachmentId = pollingState.attachmentId;
+			const priorMessagePoolId = pollingState.messagePoolId;
+			const priorCallPoolId = pollingState.callPoolId;
+			const sampleDataResponse = await api.get_log_sample_data(logFile, summary.id, summary.epoch, priorEventId, priorAttachmentId, priorMessagePoolId, priorCallPoolId);
 			if (localAbort.signal.aborted) return false;
 			if (sampleDataResponse?.status === "NotFound") return await loadCompletedSample(`LOADING COMPLETED SAMPLE AFTER FLUSH: ${summary.id}-${summary.epoch}`);
 			if (shouldFinalizeStreamingSample(sampleDataResponse, hasCompletedLogSummary(store.getState(), summary.id, summary.epoch))) return await loadCompletedSample(`LOADING COMPLETED SAMPLE AFTER SUMMARY UPDATE: ${summary.id}-${summary.epoch}`);
 			if (sampleDataResponse?.status === "OK" && sampleDataResponse.sampleData) {
 				if (localAbort.signal.aborted) return false;
 				sampleActions.setSampleStatus("streaming");
-				if (sampleDataResponse.sampleData) {
-					processAttachments(sampleDataResponse.sampleData, pollingState);
-					processMessagePool(sampleDataResponse.sampleData, pollingState);
-					processCallPool(sampleDataResponse.sampleData, pollingState);
-					const processedEvents = processEvents(sampleDataResponse.sampleData, pollingState, api, logFile);
-					if (sampleDataResponse.sampleData.attachments.length > 0) {
-						const maxAttachment = findMaxId(sampleDataResponse.sampleData.attachments, pollingState.attachmentId);
-						log$6.debug(`New max attachment ${maxAttachment}`);
-						pollingState.attachmentId = maxAttachment;
-					}
-					if (sampleDataResponse.sampleData.events.length > 0) {
-						const maxEvent = findMaxId(sampleDataResponse.sampleData.events, pollingState.eventId);
-						log$6.debug(`New max event ${maxEvent}`);
-						pollingState.eventId = maxEvent;
-					}
-					if (processedEvents) sampleActions.setRunningEvents([...pollingState.events]);
+				processAttachments(sampleDataResponse.sampleData, pollingState);
+				processMessagePool(sampleDataResponse.sampleData, pollingState);
+				processCallPool(sampleDataResponse.sampleData, pollingState);
+				const processedEvents = processEvents(sampleDataResponse.sampleData, pollingState, api, logFile);
+				if (sampleDataResponse.sampleData.attachments.length > 0) {
+					const maxAttachment = findMaxId(sampleDataResponse.sampleData.attachments, pollingState.attachmentId);
+					log$6.debug(`New max attachment ${maxAttachment}`);
+					pollingState.attachmentId = maxAttachment;
 				}
+				if (sampleDataResponse.sampleData.events.length > 0) {
+					const maxEvent = findMaxId(sampleDataResponse.sampleData.events, pollingState.eventId);
+					log$6.debug(`New max event ${maxEvent}`);
+					pollingState.eventId = maxEvent;
+				}
+				if (processedEvents) sampleActions.setRunningEvents([...pollingState.events]);
+				const advanced = pollingState.eventId > priorEventId || pollingState.attachmentId > priorAttachmentId || pollingState.messagePoolId > priorMessagePoolId || pollingState.callPoolId > priorCallPoolId;
+				if (sampleDataResponse.has_more === true && advanced) return "immediate";
 			}
 			return true;
 		};
@@ -124775,18 +124780,20 @@ var EventNavs = ({ navs, selectedNav, setSelectedNav }) => {
 	});
 };
 var EventPanel_module_default = {
-	stickyWrapper: "_stickyWrapper_osq4e_1",
-	label: "_label_osq4e_18",
-	navs: "_navs_osq4e_23",
-	turnLabel: "_turnLabel_osq4e_29",
-	card: "_card_osq4e_35",
-	cardContent: "_cardContent_osq4e_43",
-	hidden: "_hidden_osq4e_48",
-	copyLink: "_copyLink_osq4e_56",
-	hover: "_hover_osq4e_64",
-	root: "_root_osq4e_68",
-	bottomDongle: "_bottomDongle_osq4e_73",
-	dongleIcon: "_dongleIcon_osq4e_89"
+	stickyWrapper: "_stickyWrapper_12thy_1",
+	label: "_label_12thy_18",
+	title: "_title_12thy_23",
+	titleExtra: "_titleExtra_12thy_28",
+	navs: "_navs_12thy_35",
+	turnLabel: "_turnLabel_12thy_41",
+	card: "_card_12thy_47",
+	cardContent: "_cardContent_12thy_55",
+	hidden: "_hidden_12thy_60",
+	copyLink: "_copyLink_12thy_68",
+	hover: "_hover_12thy_78",
+	root: "_root_12thy_82",
+	bottomDongle: "_bottomDongle_12thy_87",
+	dongleIcon: "_dongleIcon_12thy_103"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/event/EventPanel.tsx
@@ -124797,7 +124804,7 @@ var kDefaultIcon$1 = "bi bi-table";
 /**
 * Renders a collapsible event panel with optional tabs, icons, and deep linking.
 */
-var EventPanel = ({ eventNodeId, className, title, subTitle, text, icon, children, childIds, collapsibleContent, collapseControl = "top", muted, depth, turnLabel, eventCallbacks }) => {
+var EventPanel = ({ eventNodeId, className, title, subTitle, text, icon, children, childIds, collapsibleContent, collapseControl = "top", muted, depth, turnLabel, headerExtra, eventCallbacks }) => {
 	const { onCollapse, getCollapsed, getEventUrl, linkingEnabled } = eventCallbacks ?? {};
 	const collapsed = getCollapsed?.(eventNodeId) ?? false;
 	const setCollapsed = (0, import_react.useCallback)((value) => {
@@ -124818,11 +124825,10 @@ var EventPanel = ({ eventNodeId, className, title, subTitle, text, icon, childre
 	const gridColumns = [];
 	if (isCollapsible && !useBottomDongle) gridColumns.push("minmax(0, max-content)");
 	if (icon) gridColumns.push("max-content");
-	gridColumns.push("minmax(0, max-content)");
-	if (url) gridColumns.push("minmax(0, max-content)");
-	gridColumns.push("auto");
-	gridColumns.push("minmax(0, max-content)");
-	gridColumns.push("minmax(0, max-content)");
+	gridColumns.push("minmax(0px, auto)");
+	gridColumns.push("minmax(0px, 1fr)");
+	gridColumns.push("minmax(0px, max-content)");
+	gridColumns.push("minmax(0px, max-content)");
 	const toggleCollapse = (0, import_react.useCallback)(() => {
 		setCollapsed(!collapsed);
 	}, [setCollapsed, collapsed]);
@@ -124848,16 +124854,26 @@ var EventPanel = ({ eventNodeId, className, title, subTitle, text, icon, childre
 				className: clsx(icon || kDefaultIcon$1, "text-style-secondary"),
 				onClick: toggleCollapse
 			}) : "",
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: clsx("text-style-secondary", "text-style-label"),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: clsx("text-style-secondary", "text-style-label", EventPanel_module_default.title),
 				onClick: toggleCollapse,
-				children: title
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: title }),
+					headerExtra ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+						className: EventPanel_module_default.titleExtra,
+						onClick: (e) => e.stopPropagation(),
+						children: headerExtra
+					}) : null,
+					url ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+						onClick: (e) => e.stopPropagation(),
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CopyButton, {
+							value: url,
+							icon: kLinkIcon,
+							className: clsx(EventPanel_module_default.copyLink)
+						})
+					}) : null
+				]
 			}),
-			url ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CopyButton, {
-				value: url,
-				icon: kLinkIcon,
-				className: clsx(EventPanel_module_default.copyLink)
-			}) : "",
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { onClick: toggleCollapse }),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: clsx("text-style-secondary", EventPanel_module_default.label),
@@ -126782,9 +126798,9 @@ var labelForNode = (node) => {
 	}
 };
 var TranscriptOutline_module_default = {
-	node: "_node_79lc7_1",
-	rootHeader: "_rootHeader_79lc7_7",
-	panel: "_panel_79lc7_15"
+	node: "_node_1eney_1",
+	rootHeader: "_rootHeader_1eney_7",
+	panel: "_panel_1eney_18"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/outline/useOutlineWidth.ts
@@ -129293,6 +129309,44 @@ function useTimelineConfig(options = {}) {
 	};
 }
 //#endregion
+//#region ../../packages/inspect-components/src/transcript/timeline/retryOrdering.ts
+var EPSILON_MS = 1;
+/**
+* Return `events` with retry-inverted ModelEvent timestamps repaired.
+*
+* Returns the input array reference unchanged when no inversion is
+* detected, so callers can safely memoize on the result.
+*
+* Comparisons are done in parsed epoch milliseconds so mixed input
+* formats (the backend emits `+00:00`; corrected outputs use `Z`) sort
+* correctly. The output timestamp is always normalized to ISO-Z via
+* `new Date(epoch).toISOString()`.
+*/
+function correctRetryTimestamps(events) {
+	const lastModelTs = /* @__PURE__ */ new Map();
+	let result = null;
+	for (let i = 0; i < events.length; i++) {
+		const e = events[i];
+		if (e.event !== "model") continue;
+		if (!e.timestamp) continue;
+		const epoch = Date.parse(e.timestamp);
+		if (Number.isNaN(epoch)) continue;
+		const key = e.span_id ?? null;
+		const prev = lastModelTs.get(key);
+		if (prev != null && epoch < prev) {
+			const correctedEpoch = prev + EPSILON_MS;
+			const correctedIso = new Date(correctedEpoch).toISOString();
+			if (!result) result = events.slice();
+			result[i] = {
+				...e,
+				timestamp: correctedIso
+			};
+			lastModelTs.set(key, correctedEpoch);
+		} else lastModelTs.set(key, epoch);
+	}
+	return result ?? events;
+}
+//#endregion
 //#region ../../packages/inspect-components/src/transcript/timeline/hooks/useTimelinesArray.ts
 /**
 * Builds the array of Timeline objects from events and optional server timelines.
@@ -129486,7 +129540,8 @@ function useTimelinesArray(events, serverTimelines) {
 var emptySourceSpans = /* @__PURE__ */ new Map();
 var emptyHighlightedKeys = /* @__PURE__ */ new Map();
 function useTranscriptTimeline(options) {
-	const { events, markerConfig = defaultMarkerConfig, timelineOptions, serverTimelines, timelineProps, activeTimelineProps } = options;
+	const { events: rawEvents, markerConfig = defaultMarkerConfig, timelineOptions, serverTimelines, timelineProps, activeTimelineProps } = options;
+	const events = (0, import_react.useMemo)(() => correctRetryTimestamps(rawEvents), [rawEvents]);
 	const includeUtility = timelineOptions?.includeUtility ?? false;
 	const showBranches = timelineOptions?.showBranches ?? false;
 	const forkRelative = timelineOptions?.forkRelative ?? false;
@@ -129705,6 +129760,66 @@ function computeBranchMappings(rows, trunkMapping) {
 	return mappings;
 }
 //#endregion
+//#region ../../packages/inspect-components/src/transcript/timeline/retryGrouping.ts
+var retryAttemptKey = (event) => {
+	if (event.uuid) return `uuid:${event.uuid}`;
+	const epoch = Date.parse(event.timestamp);
+	const tsPart = Number.isNaN(epoch) ? event.timestamp : String(epoch);
+	return `ts:${event.span_id ?? ""}:${tsPart}`;
+};
+function toolChoiceEqual(a, b) {
+	if (a === b) return true;
+	if (typeof a === "string" || typeof b === "string") return a === b;
+	return a?.name === b?.name;
+}
+function toolsEqual(a, b) {
+	if (a.length !== b.length) return false;
+	for (let i = 0; i < a.length; i++) if (a[i]?.name !== b[i]?.name) return false;
+	return true;
+}
+function isSameCall(failed, success) {
+	return failed.model === success.model && failed.input.length === success.input.length && toolsEqual(failed.tools, success.tools) && toolChoiceEqual(failed.tool_choice, success.tool_choice);
+}
+function groupRetryAttempts(events) {
+	const attempts = /* @__PURE__ */ new Map();
+	const pendingFailed = /* @__PURE__ */ new Map();
+	const dropIndices = /* @__PURE__ */ new Set();
+	for (let i = 0; i < events.length; i++) {
+		const e = events[i];
+		if (e.event !== "model") continue;
+		const m = e;
+		const key = m.span_id ?? "";
+		if (m.error != null) {
+			const run = pendingFailed.get(key) ?? [];
+			run.push({
+				event: m,
+				index: i
+			});
+			pendingFailed.set(key, run);
+			continue;
+		}
+		const run = pendingFailed.get(key);
+		if (run && run.length > 0) {
+			const matches = run.filter((p) => isSameCall(p.event, m));
+			if (matches.length > 0) {
+				attempts.set(retryAttemptKey(m), [...matches.map((p) => p.event), m]);
+				for (const p of matches) dropIndices.add(p.index);
+			}
+			pendingFailed.delete(key);
+		}
+	}
+	if (dropIndices.size === 0) return {
+		events,
+		attempts
+	};
+	const filtered = [];
+	for (let i = 0; i < events.length; i++) if (!dropIndices.has(i)) filtered.push(events[i]);
+	return {
+		events: filtered,
+		attempts
+	};
+}
+//#endregion
 //#region ../../packages/inspect-components/src/transcript/timeline/hooks/useEventNodes.ts
 /**
 * Shared hook that builds an EventNode tree from raw events.
@@ -129722,8 +129837,9 @@ var collapseFilters = [
 	(event) => event.event === "subtask"
 ];
 var useEventNodes = (events, running, sourceSpans) => {
-	const { eventTree, defaultCollapsedIds } = (0, import_react.useMemo)(() => {
-		const rawEventTree = treeifyEvents(fixupEventStream(events, !running), 0);
+	const { eventTree, defaultCollapsedIds, retryAttempts } = (0, import_react.useMemo)(() => {
+		const { events: groupedEvents, attempts: retryAttempts } = groupRetryAttempts(correctRetryTimestamps(events));
+		const rawEventTree = treeifyEvents(fixupEventStream(groupedEvents, !running), 0);
 		if (sourceSpans && sourceSpans.size > 0) attachSourceSpans(rawEventTree, sourceSpans);
 		const filterEmpty = (eventNodes) => {
 			return eventNodes.filter((node) => {
@@ -129744,7 +129860,8 @@ var useEventNodes = (events, running, sourceSpans) => {
 		findCollapsibleEvents(eventTree);
 		return {
 			eventTree,
-			defaultCollapsedIds
+			defaultCollapsedIds,
+			retryAttempts
 		};
 	}, [
 		events,
@@ -129753,29 +129870,30 @@ var useEventNodes = (events, running, sourceSpans) => {
 	]);
 	return {
 		eventNodes: eventTree,
-		defaultCollapsedIds
+		defaultCollapsedIds,
+		retryAttempts
 	};
 };
 var TranscriptLayout_module_default = {
-	root: "_root_1mbr3_1",
-	container: "_container_1mbr3_9",
-	outlineCollapsed: "_outlineCollapsed_1mbr3_24",
-	noOutline: "_noOutline_1mbr3_28",
-	rightPaneCollapsed: "_rightPaneCollapsed_1mbr3_32",
-	noRightPane: "_noRightPane_1mbr3_44",
-	outline: "_outline_1mbr3_24",
-	outlineToggle: "_outlineToggle_1mbr3_73",
-	separator: "_separator_1mbr3_87",
-	rightSeparator: "_rightSeparator_1mbr3_91",
-	rightPane: "_rightPane_1mbr3_32",
-	rightPaneResizer: "_rightPaneResizer_1mbr3_110",
-	rightPaneToggle: "_rightPaneToggle_1mbr3_129",
-	eventsList: "_eventsList_1mbr3_138",
-	sidebarHeader: "_sidebarHeader_1mbr3_142",
-	sidebarHeaderIcon: "_sidebarHeaderIcon_1mbr3_150",
-	sidebarHeaderTitle: "_sidebarHeaderTitle_1mbr3_155",
-	sidebarHeaderCloseAnchor: "_sidebarHeaderCloseAnchor_1mbr3_171",
-	sidebarHeaderClose: "_sidebarHeaderClose_1mbr3_171"
+	root: "_root_t7oq7_1",
+	container: "_container_t7oq7_9",
+	outlineCollapsed: "_outlineCollapsed_t7oq7_24",
+	noOutline: "_noOutline_t7oq7_28",
+	rightPaneCollapsed: "_rightPaneCollapsed_t7oq7_32",
+	noRightPane: "_noRightPane_t7oq7_44",
+	outline: "_outline_t7oq7_24",
+	outlineToggle: "_outlineToggle_t7oq7_72",
+	separator: "_separator_t7oq7_86",
+	rightSeparator: "_rightSeparator_t7oq7_90",
+	rightPane: "_rightPane_t7oq7_32",
+	rightPaneResizer: "_rightPaneResizer_t7oq7_109",
+	rightPaneToggle: "_rightPaneToggle_t7oq7_128",
+	eventsList: "_eventsList_t7oq7_137",
+	sidebarHeader: "_sidebarHeader_t7oq7_141",
+	sidebarHeaderIcon: "_sidebarHeaderIcon_t7oq7_149",
+	sidebarHeaderTitle: "_sidebarHeaderTitle_t7oq7_154",
+	sidebarHeaderCloseAnchor: "_sidebarHeaderCloseAnchor_t7oq7_170",
+	sidebarHeaderClose: "_sidebarHeaderClose_t7oq7_170"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/AnchorEventView.tsx
@@ -130162,6 +130280,140 @@ var UsageCard = ({ usage, label = "Usage" }) => {
 		})
 	})] });
 };
+//#endregion
+//#region ../../packages/inspect-components/src/transcript/event/attemptDuration.ts
+/**
+* Best-effort duration in seconds for a single ModelEvent attempt.
+*
+* Falls back to (completed - timestamp) when neither `output.time` nor
+* `working_time` is set (typical for failed attempts whose duration must
+* be inferred from start/end timestamps). Returns `null` when no
+* dependable duration can be derived.
+*/
+function attemptDurationSec(event) {
+	const explicit = event.output?.time ?? event.working_time;
+	if (typeof explicit === "number" && !Number.isNaN(explicit)) return explicit;
+	if (event.timestamp && event.completed) {
+		const start = Date.parse(event.timestamp);
+		const end = Date.parse(event.completed);
+		if (Number.isFinite(start) && Number.isFinite(end) && end >= start) return (end - start) / 1e3;
+	}
+	return null;
+}
+var RetryChip_module_default = {
+	wrap: "_wrap_fjhll_1",
+	chip: "_chip_fjhll_6",
+	chipOpen: "_chipOpen_fjhll_25",
+	chipText: "_chipText_fjhll_30",
+	chipIcon: "_chipIcon_fjhll_35",
+	chipChevron: "_chipChevron_fjhll_40",
+	backdrop: "_backdrop_fjhll_45",
+	menu: "_menu_fjhll_51",
+	item: "_item_fjhll_65",
+	itemActive: "_itemActive_fjhll_85",
+	itemNum: "_itemNum_fjhll_89",
+	itemLabel: "_itemLabel_fjhll_104",
+	itemStatus: "_itemStatus_fjhll_112"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/transcript/event/summarizeModelError.ts
+/**
+* Short, neutral label for a model error string. Used in the retry-attempt
+* dropdown menu (e.g. "Attempt 1 · 429 rate limit"). Keep wording
+* informational; avoid alerting language ("failure", "error", "warning").
+*/
+function summarizeModelError(err) {
+	if (!err) return "error";
+	const s = err.trim();
+	const lower = s.toLowerCase();
+	if (/\b429\b/.test(s) || lower.includes("rate limit")) return "429 rate limit";
+	if (lower.includes("timeout") || lower.includes("timed out")) return "timeout";
+	if (lower.includes("context length") || lower.includes("too long")) return "context length";
+	if (lower.includes("api key") || lower.includes("unauthorized") || lower.includes("authentication") || /\b401\b/.test(s) || /\b403\b/.test(s)) return "auth error";
+	if (/\b5\d{2}\b/.test(s)) return "5xx error";
+	if (/\b4\d{2}\b/.test(s)) return "4xx error";
+	if (lower.includes("connection")) return "connection error";
+	const first = s.split(/[\n.:]/)[0] ?? s;
+	return first.length > 40 ? first.slice(0, 37) + "…" : first;
+}
+//#endregion
+//#region ../../packages/inspect-components/src/transcript/event/RetryChip.tsx
+var RetryChip = ({ attempts, selectedKey, onSelect, keyOf }) => {
+	const [open, setOpen] = (0, import_react.useState)(false);
+	(0, import_react.useEffect)(() => {
+		if (!open) return;
+		const onKey = (e) => {
+			if (e.key === "Escape") setOpen(false);
+		};
+		window.addEventListener("keydown", onKey);
+		return () => window.removeEventListener("keydown", onKey);
+	}, [open]);
+	if (attempts.length <= 1) return null;
+	const priorCount = attempts.length - 1;
+	const selectedIndex = attempts.findIndex((a) => keyOf(a) === selectedKey);
+	const chipText = selectedIndex === -1 || selectedIndex === attempts.length - 1 ? priorCount === 1 ? "1 prior retry" : `${priorCount} prior retries` : `attempt ${selectedIndex + 1} · ${summarizeModelError(attempts[selectedIndex]?.error)}`;
+	const handleSelect = (key) => {
+		setOpen(false);
+		onSelect(key);
+	};
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+		className: RetryChip_module_default.wrap,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+			type: "button",
+			className: clsx(RetryChip_module_default.chip, open && RetryChip_module_default.chipOpen),
+			title: `${chipText} — click to view`,
+			"aria-expanded": open,
+			onClick: () => setOpen((v) => !v),
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", {
+					className: clsx("bi", "bi-arrow-repeat", RetryChip_module_default.chipIcon),
+					"aria-hidden": "true"
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+					className: RetryChip_module_default.chipText,
+					children: chipText
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", {
+					className: clsx("bi", "bi-chevron-down", RetryChip_module_default.chipChevron),
+					"aria-hidden": "true"
+				})
+			]
+		}), open && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: RetryChip_module_default.backdrop,
+			onClick: () => setOpen(false)
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: RetryChip_module_default.menu,
+			children: attempts.map((attempt, idx) => {
+				const key = keyOf(attempt);
+				const label = idx === attempts.length - 1 ? `Attempt ${idx + 1} · current` : `Attempt ${idx + 1} · ${summarizeModelError(attempt.error)}`;
+				const duration = formatAttemptDuration(attempt);
+				return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+					type: "button",
+					className: clsx(RetryChip_module_default.item, selectedKey === key && RetryChip_module_default.itemActive),
+					onClick: () => handleSelect(key),
+					children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							className: RetryChip_module_default.itemNum,
+							children: idx + 1
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							className: RetryChip_module_default.itemLabel,
+							children: label
+						}),
+						duration && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							className: RetryChip_module_default.itemStatus,
+							children: duration
+						})
+					]
+				}, key);
+			})
+		})] })]
+	});
+};
+function formatAttemptDuration(event) {
+	const sec = attemptDurationSec(event);
+	return sec != null ? formatTime$2(sec) : null;
+}
 var ModelEventView_module_default = {
 	container: "_container_1m4t0_1",
 	all: "_all_1m4t0_6",
@@ -130179,10 +130431,15 @@ var ModelEventView_module_default = {
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/ModelEventView.tsx
 var ModelEventView = ({ eventNode, showToolCalls, className, context, eventCallbacks }) => {
-	const event = eventNode.event;
-	const totalUsage = event.output.usage?.total_tokens;
-	const callTime = event.output.time;
-	const outputMessages = event.output.choices?.map((choice) => {
+	const successEvent = eventNode.event;
+	const attempts = context?.retryAttempts?.get(retryAttemptKey(successEvent));
+	const successKey = retryAttemptKey(successEvent);
+	const [selectedAttemptKey, setSelectedAttemptKey] = useProperty(eventNode.id, "selectedAttempt", { defaultValue: successKey });
+	const event = attempts?.find((a) => retryAttemptKey(a) === selectedAttemptKey) ?? successEvent;
+	const isFailed = !!event.error;
+	const totalUsage = event.output?.usage?.total_tokens;
+	const callTime = event.output?.time;
+	const outputMessages = event.output?.choices?.map((choice) => {
 		return choice.message;
 	});
 	const entries = { ...event.config };
@@ -130215,14 +130472,22 @@ var ModelEventView = ({ eventNode, showToolCalls, className, context, eventCallb
 		return summaryMessages.some((m) => !!m.id && !!map[m.id]) ? { messageLabels: map } : { show: false };
 	}, [context?.messageLabels, summaryMessages]);
 	const panelTitle = event.role ? `Model Call (${event.role}): ${event.model}` : `Model Call: ${event.model}`;
+	const titleString = isFailed ? `${panelTitle} · FAILED${formatFailureTime(event)}` : formatTitle(panelTitle, totalUsage, callTime);
 	const turnLabel = context?.turnInfo ? `turn ${context.turnInfo.turnNumber}/${context.turnInfo.totalTurns}` : void 0;
+	const retryChip = attempts ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RetryChip, {
+		attempts,
+		selectedKey: selectedAttemptKey,
+		onSelect: setSelectedAttemptKey,
+		keyOf: retryAttemptKey
+	}) : void 0;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(EventPanel, {
 		eventNodeId: eventNode.id,
 		className,
-		title: formatTitle(panelTitle, totalUsage, callTime),
+		title: titleString,
 		subTitle: event.timestamp ? formatTiming(event.timestamp, event.working_start) : void 0,
 		icon: TranscriptIcons.model,
 		turnLabel,
+		headerExtra: retryChip,
 		eventCallbacks,
 		collapsibleContent: true,
 		children: [
@@ -130320,6 +130585,10 @@ var ModelEventView = ({ eventNode, showToolCalls, className, context, eventCallb
 		]
 	});
 };
+function formatFailureTime(event) {
+	const sec = attemptDurationSec(event);
+	return sec != null ? ` · ${formatTime$2(sec)}` : "";
+}
 var APIView = ({ call, className }) => {
 	const requestCode = (0, import_react.useMemo)(() => {
 		return JSON.stringify(call.request, void 0, 2) ?? "";
@@ -131864,7 +132133,11 @@ var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, 
 		regionCounts
 	]);
 	const rawEventsForNodes = showSwimlanes ? selectedEvents : events;
-	const { eventNodes, defaultCollapsedIds } = useEventNodes((0, import_react.useMemo)(() => hiddenEventTypes && hiddenEventTypes.length > 0 ? rawEventsForNodes.filter((e) => !hiddenEventTypes.includes(e.event)) : rawEventsForNodes, [rawEventsForNodes, hiddenEventTypes]), running, showSwimlanes ? sourceSpans : void 0);
+	const { eventNodes, defaultCollapsedIds, retryAttempts } = useEventNodes((0, import_react.useMemo)(() => hiddenEventTypes && hiddenEventTypes.length > 0 ? rawEventsForNodes.filter((e) => !hiddenEventTypes.includes(e.event)) : rawEventsForNodes, [rawEventsForNodes, hiddenEventTypes]), running, showSwimlanes ? sourceSpans : void 0);
+	const mergedEventNodeContext = (0, import_react.useMemo)(() => ({
+		...eventNodeContext,
+		retryAttempts
+	}), [eventNodeContext, retryAttempts]);
 	const { stickySwimLaneHeight, isSwimLaneSticky, swimLaneStickyContentRef, handleSwimLaneStickyChange } = useStickySwimLaneHeight();
 	const effectiveOffsetTop = offsetTop + stickySwimLaneHeight;
 	const [scrollAnchor, setScrollAnchor] = (0, import_react.useState)(null);
@@ -132228,7 +132501,7 @@ var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, 
 							collapsedTranscript: collapseState?.transcript,
 							collapsedOutline: collapseState?.outline,
 							onCollapseTranscript,
-							eventNodeContext
+							eventNodeContext: mergedEventNodeContext
 						}, effectiveListId) : emptyText !== null ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, { text: emptyText }) : null,
 						rightPane && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: TranscriptLayout_module_default.rightSeparator }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StickyScroll, {
 							ref: rightPaneScrollRef,
@@ -132282,18 +132555,75 @@ var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, 
 };
 //#endregion
 //#region src/app/samples/messagesFromEvents.ts
-var messagesFromEvents = (runningEvents) => {
-	const messages = /* @__PURE__ */ new Map();
-	runningEvents.filter((e) => e.event === "model").filter((e) => !e.error).forEach((e) => {
-		for (const m of e.input) {
-			const inputMessage = m;
-			if (inputMessage.id && !messages.has(inputMessage.id)) messages.set(inputMessage.id, inputMessage);
+var isSuccessfulModelEvent = (e) => e.event === "model" && !e.error;
+var createState = () => ({
+	messages: [],
+	positions: /* @__PURE__ */ new Map(),
+	events: [],
+	lastResult: []
+});
+var insertAt = (state, index, m) => {
+	state.messages.splice(index, 0, m);
+	for (let i = index; i < state.messages.length; i++) {
+		const id = state.messages[i].id;
+		if (id) state.positions.set(id, i);
+	}
+};
+var processEvent = (state, e) => {
+	let cursor = state.messages.length - 1;
+	const seenInEvent = /* @__PURE__ */ new Set();
+	for (const m of e.input) {
+		if (!m.id || seenInEvent.has(m.id)) continue;
+		seenInEvent.add(m.id);
+		const known = state.positions.get(m.id);
+		if (known !== void 0) cursor = known;
+		else {
+			cursor += 1;
+			insertAt(state, cursor, m);
 		}
-		const outputMessage = e.output.choices[0].message;
-		if (outputMessage.id) messages.set(outputMessage.id, outputMessage);
-	});
-	if (messages.size > 0) return messages.values().toArray();
-	else return [];
+	}
+	const out = e.output.choices[0]?.message;
+	if (out?.id && !state.positions.has(out.id)) {
+		state.positions.set(out.id, state.messages.length);
+		state.messages.push(out);
+	}
+};
+/**
+* Reconstruct the conversation message list shown in the running-sample
+* Messages tab from a stream of events.
+*
+* If `stateRef` is supplied, the function tries to reuse cached work
+* from the previous call. When `events` is a pure prefix-extension of
+* the prior snapshot (events[i] === prior.events[i] for all prior
+* indices), only the new tail is processed; otherwise we recompute
+* from scratch. The cache is updated in place via `stateRef.current`.
+*
+* Note: the polling pipeline replaces the trailing event in place when
+* a streaming model call produces successive output chunks. That shows
+* up as divergence at the last index and forces a rebuild every poll
+* for the active turn, so the cache mainly earns its keep between
+* turns and on idle polls, not while a single model call is streaming.
+*/
+var messagesFromEvents = (events, stateRef) => {
+	const prior = stateRef?.current ?? null;
+	let startFrom = 0;
+	if (prior) while (startFrom < prior.events.length && startFrom < events.length && prior.events[startFrom] === events[startFrom]) startFrom++;
+	const canReuse = prior !== null && startFrom === prior.events.length && events.length >= prior.events.length;
+	let state;
+	if (canReuse) state = prior;
+	else {
+		state = createState();
+		startFrom = 0;
+	}
+	const priorLen = state.messages.length;
+	for (let i = startFrom; i < events.length; i++) {
+		const e = events[i];
+		if (isSuccessfulModelEvent(e)) processEvent(state, e);
+	}
+	state.events = events;
+	if (!canReuse || state.messages.length !== priorLen) state.lastResult = state.messages.slice();
+	if (stateRef) stateRef.current = state;
+	return state.lastResult;
 };
 var SampleDisplay_module_default = {
 	tabControls: "_tabControls_10ac3_7",
@@ -132647,6 +132977,437 @@ var SampleErrorView = ({ message, align }) => {
 var isCanceledError = (type) => {
 	return type === "CancelledError";
 };
+//#endregion
+//#region src/app/shared/samples-grid/colorScale.ts
+var ROLE_TO_VAR = {
+	good: "var(--bs-success-bg-subtle)",
+	bad: "var(--bs-danger-bg-subtle)",
+	warn: "var(--bs-warning-bg-subtle)",
+	info: "var(--bs-info-bg-subtle)",
+	muted: "var(--bs-secondary-bg-subtle)"
+};
+var PALETTE_STOPS = {
+	"good-high": {
+		low: "var(--bs-danger-bg-subtle)",
+		mid: "var(--bs-warning-bg-subtle)",
+		high: "var(--bs-success-bg-subtle)"
+	},
+	"good-low": {
+		low: "var(--bs-success-bg-subtle)",
+		mid: "var(--bs-warning-bg-subtle)",
+		high: "var(--bs-danger-bg-subtle)"
+	},
+	neutral: {
+		low: "transparent",
+		mid: "color-mix(in srgb, var(--bs-info-bg-subtle) 50%, transparent)",
+		high: "var(--bs-info-bg-subtle)"
+	},
+	diverging: {
+		low: "var(--bs-danger-bg-subtle)",
+		mid: "transparent",
+		high: "var(--bs-success-bg-subtle)"
+	}
+};
+var isPaletteName = (s) => s === "good-high" || s === "good-low" || s === "neutral" || s === "diverging";
+var isScaleObject = (s) => typeof s === "object" && s !== null && "palette" in s;
+/**
+* Lift a wire-shape scale into the internal `ResolvedScale` form.
+*
+* - Named palettes need numeric `bounds` to anchor the gradient.
+*   The wire form `{ palette, min, max }` lets the author override
+*   either bound; missing bounds fall back to the descriptor's
+*   auto-detection. Without any usable range we return null so the
+*   caller leaves the cell unpainted.
+* - Categorical maps don't depend on bounds.
+*
+* Returns null when the scale can't be applied — the caller treats
+* that as "no background".
+*/
+function resolveScale(scale, bounds) {
+	if (typeof scale === "string") {
+		if (!isPaletteName(scale)) return null;
+		return resolveGradient(scale, bounds.min, bounds.max);
+	}
+	if (isScaleObject(scale)) return resolveGradient(scale.palette, scale.min ?? bounds.min, scale.max ?? bounds.max);
+	const colors = {};
+	for (const [value, role] of Object.entries(scale)) colors[value] = ROLE_TO_VAR[role];
+	return {
+		kind: "categorical",
+		colors
+	};
+}
+function resolveGradient(palette, min, max) {
+	if (!isPaletteName(palette)) return null;
+	if (typeof min !== "number" || typeof max !== "number" || min === max) return null;
+	return {
+		kind: "gradient",
+		...PALETTE_STOPS[palette],
+		min,
+		max
+	};
+}
+/**
+* Pick a CSS colour expression for a given score value.
+*
+* Returns undefined when the scale doesn't apply to the value:
+*   - gradient scale on non-numeric / NaN
+*   - categorical scale on a value not in the map
+*
+* The caller (a column's `cellStyle` callback) translates undefined
+* into "no background" so the cell renders transparent.
+*/
+function colorForValue(scale, value) {
+	if (scale.kind === "gradient") {
+		if (typeof value !== "number" || !Number.isFinite(value)) return void 0;
+		const t = clamp01((value - scale.min) / (scale.max - scale.min));
+		if (t <= .5) {
+			const pct = Math.round((1 - t * 2) * 100);
+			return `color-mix(in srgb, ${scale.low} ${pct}%, ${scale.mid})`;
+		}
+		const pct = Math.round((t - .5) * 2 * 100);
+		return `color-mix(in srgb, ${scale.high} ${pct}%, ${scale.mid})`;
+	}
+	if (value === null || value === void 0) return void 0;
+	const key = typeof value === "string" ? value : String(value);
+	return scale.colors[key];
+}
+var clamp01 = (n) => n < 0 ? 0 : n > 1 ? 1 : n;
+//#endregion
+//#region src/app/samples/list/samplesView.ts
+/**
+* The default view applied when neither the user nor the eval author
+* has specified anything. `columns` and `sort` are intentionally empty —
+* the SampleList consumer fills them from the live column registry
+* (`buildSampleColumns`) and seeds visibility from per-scope predicates
+* (e.g. `samplesPanel`'s error/limit/retries auto-promotion).
+*/
+var defaultSamplesView = () => ({
+	name: "Default",
+	columns: [],
+	sort: [],
+	filters: {
+		dsl: "",
+		extraColumnFilters: {}
+	},
+	multiline: true,
+	compactScores: false,
+	colorScalesEnabled: true,
+	userOverrides: {}
+});
+//#endregion
+//#region src/app/samples/list/samplesView.converters.ts
+/**
+* Lift a wire `SamplesView` into the runtime `SamplesViewState`.
+*
+* - Nullable wire fields collapse to defaults from `defaultSamplesView()`.
+* - Sort entries map `column` → `colId` to match ag-grid naming on the
+*   runtime side. Wire form keeps `column` to match the Python field.
+* - `extraColumnFilters` starts empty; ag-grid filterModel residue is
+*   only synthesized at runtime when the user sets column-header filters
+*   the DSL can't express.
+*/
+var liftEvalView = (wire) => {
+	const fallback = defaultSamplesView();
+	if (!wire) return fallback;
+	return {
+		name: wire.name,
+		columns: wire.columns ? wire.columns.map((c) => ({
+			id: c.id,
+			visible: c.visible ?? true
+		})) : fallback.columns,
+		sort: wire.sort ? wire.sort.map((s) => ({
+			colId: s.column,
+			dir: s.dir ?? "asc"
+		})) : fallback.sort,
+		filters: {
+			dsl: wire.filter ?? "",
+			extraColumnFilters: {}
+		},
+		multiline: wire.multiline ?? fallback.multiline,
+		compactScores: wire.compact_scores ?? fallback.compactScores,
+		colorScalesEnabled: wire.color_scales_enabled ?? fallback.colorScalesEnabled,
+		userOverrides: {}
+	};
+};
+/**
+* `task_samples_view` may be a single view, a list of views, or absent.
+* For Phase 0–2 we honour only the first entry of a list.
+*/
+var pickActiveView = (field) => {
+	if (!field) return void 0;
+	if (Array.isArray(field)) return field[0];
+	return field;
+};
+/**
+* Resolution priority: stored (user-modified runtime state) > eval default
+* (lifted from `eval.viewer.task_samples_view`) > built-in default.
+*
+* Per-field exception for the toolbar toggles (`multiline`, `compactScores`,
+* `colorScalesEnabled`): stored only wins if `userOverrides` records that
+* the user has actually flipped that toggle. Otherwise the eval-author
+* default takes precedence even when stored state already exists, so an
+* eval that ships e.g. `color_scales_enabled: false` isn't shadowed by a
+* stale `true` lifted from a previous eval.
+*/
+var resolveSamplesView = (stored, evalDefault) => {
+	if (!stored) return liftEvalView(evalDefault);
+	const lifted = liftEvalView(evalDefault);
+	const overrides = stored.userOverrides ?? {};
+	return {
+		...stored,
+		multiline: overrides.multiline ?? lifted.multiline,
+		compactScores: overrides.compactScores ?? lifted.compactScores,
+		colorScalesEnabled: overrides.colorScalesEnabled ?? lifted.colorScalesEnabled
+	};
+};
+/**
+* Project the runtime descriptor into the `GridState` ag-grid consumes.
+*
+* Column-id tolerance: any persisted reference to a column not present in
+* `availableColIds` (e.g. `score__judge__correctness` on a log without
+* that scorer) is excluded from the emitted GridState but **preserved
+* unchanged in the source descriptor**. The persisted view is never
+* mutated by a render.
+*
+* The DSL filter is intentionally *not* materialized into `filterModel`
+* here — that translation needs the live filter registry, which only
+* exists at runtime. Phase 2's `useSamplesView` layers the DSL→model
+* translation on top of this base GridState.
+*/
+var viewToGridState = (view, availableColIds) => {
+	const knownColumns = view.columns.filter((c) => availableColIds.has(c.id));
+	const sortModel = view.sort.filter((s) => availableColIds.has(s.colId)).map((s) => ({
+		colId: s.colId,
+		sort: s.dir
+	}));
+	const filterModel = Object.fromEntries(Object.entries(view.filters.extraColumnFilters).filter(([colId]) => availableColIds.has(colId)));
+	return {
+		columnVisibility: { hiddenColIds: knownColumns.filter((c) => !c.visible).map((c) => c.id) },
+		columnOrder: { orderedColIds: knownColumns.map((c) => c.id) },
+		sort: { sortModel },
+		filter: { filterModel }
+	};
+};
+/**
+* Fold a fresh ag-grid `GridState` back into the runtime descriptor,
+* preserving any unknown-id references from `prev` so they re-engage when
+* the user navigates back to a log that has those columns.
+*
+* Note: this updates `columns`, `sort`, and `filters.extraColumnFilters`.
+* The `dsl` half of `filters` is the responsibility of the caller — it
+* comes from a different signal (the toolbar text) and is partitioned
+* via `partitionFilterModel`.
+*/
+var gridStateToView = (prev, gridState, availableColIds) => {
+	const orderedColIds = gridState.columnOrder?.orderedColIds ?? [];
+	const hiddenColIds = new Set(gridState.columnVisibility?.hiddenColIds ?? []);
+	const knownColumns = orderedColIds.filter((id) => availableColIds.has(id)).map((id) => ({
+		id,
+		visible: !hiddenColIds.has(id)
+	}));
+	const unknownColumns = prev.columns.filter((c) => !availableColIds.has(c.id));
+	const knownSort = (gridState.sort?.sortModel ?? []).filter((s) => availableColIds.has(s.colId)).map((s) => ({
+		colId: s.colId,
+		dir: s.sort
+	}));
+	const unknownSort = prev.sort.filter((s) => !availableColIds.has(s.colId));
+	const fmModel = gridState.filter?.filterModel ?? {};
+	const knownExtras = Object.fromEntries(Object.entries(fmModel).filter(([colId]) => availableColIds.has(colId)));
+	const unknownExtras = Object.fromEntries(Object.entries(prev.filters.extraColumnFilters).filter(([colId]) => !availableColIds.has(colId)));
+	return {
+		...prev,
+		columns: [...knownColumns, ...unknownColumns],
+		sort: [...knownSort, ...unknownSort],
+		filters: {
+			dsl: prev.filters.dsl,
+			extraColumnFilters: {
+				...knownExtras,
+				...unknownExtras
+			}
+		}
+	};
+};
+//#endregion
+//#region src/app/samples/list/useSamplesView.ts
+/** Single subscription to the eval-author-supplied `task_samples_view`
+*  descriptor (after picking an active variant from a multi-view list).
+*  Backs every hook that reads from the wire side. */
+function useEvalDefaultSamplesView() {
+	const evalDefaultField = useStore((state) => state.log.selectedLogDetails?.eval.viewer?.task_samples_view ?? null);
+	return (0, import_react.useMemo)(() => pickActiveView(evalDefaultField), [evalDefaultField]);
+}
+/** Single subscription + resolution; backs every hook that needs a
+*  field off the resolved view. */
+function useResolvedSamplesView() {
+	const stored = useStore((state) => state.logs.samplesListState.byScope.logViewSamples.view);
+	const evalDefault = useEvalDefaultSamplesView();
+	return (0, import_react.useMemo)(() => resolveSamplesView(stored, evalDefault), [stored, evalDefault]);
+}
+/** Just the resolved `multiline` — for callers that need it before
+*  computing `allColumns` (which the full hook requires). */
+function useSamplesViewMultiline() {
+	return useResolvedSamplesView().multiline;
+}
+/** Eval-author-supplied score-label overrides. Read straight from
+*  the wire (no persistence) so a user's stored view from a prior
+*  eval can't shadow the current eval's labels. Returns an empty
+*  object when no overrides are present. */
+function useSamplesViewScoreLabels() {
+	return useEvalDefaultSamplesView()?.score_labels ?? {};
+}
+/** Eval-author-supplied score-cell colour scales. Same wire-only
+*  access pattern as `useSamplesViewScoreLabels` — never lifted into
+*  the persisted runtime state, so colour scales from a prior eval
+*  can't bleed into the current one. */
+function useSamplesViewScoreColorScales() {
+	return useEvalDefaultSamplesView()?.score_color_scales ?? {};
+}
+/** Resolved `colorScalesEnabled` — same access pattern as the
+*  multiline companion above. Read in `SamplesTab` so the columns
+*  builder can decide whether to attach a `cellStyle` callback. */
+function useSamplesViewColorScalesEnabled() {
+	return useResolvedSamplesView().colorScalesEnabled;
+}
+/** Resolved `compactScores` — same access pattern as the multiline
+*  companion above. Read in `SamplesTab` before columns are built so
+*  the flag can flow into `buildSampleColumns`. */
+function useSamplesViewCompactScores() {
+	return useResolvedSamplesView().compactScores;
+}
+/**
+* Window onto the SampleList scope's `SamplesView` descriptor. Resolves
+* stored > eval-author default > built-in default; seeds visibility for
+* unseeded columns; folds ag-grid `GridState` updates back into the view.
+*
+* Selected-scores projection (the `score__*` ↔ `selectedScores` split)
+* stays in `SamplesTab` for now.
+*/
+function useSamplesView(allColumns, options) {
+	const { seedDefaultVisibility } = options ?? {};
+	const evalDefault = useEvalDefaultSamplesView();
+	const view = useResolvedSamplesView();
+	const setSampleListView = useStore((state) => state.logsActions.setSampleListView);
+	const availableColIds = (0, import_react.useMemo)(() => {
+		const ids = /* @__PURE__ */ new Set();
+		if (allColumns) for (const col of allColumns) ids.add(getFieldKey(col));
+		return ids;
+	}, [allColumns]);
+	const columnVisibility = (0, import_react.useMemo)(() => {
+		const v = {};
+		for (const col of view.columns) v[col.id] = col.visible;
+		return v;
+	}, [view.columns]);
+	const gridState = (0, import_react.useMemo)(() => allColumns ? viewToGridState(view, availableColIds) : void 0, [
+		allColumns,
+		view,
+		availableColIds
+	]);
+	(0, import_react.useEffect)(() => {
+		if (!allColumns || !seedDefaultVisibility) return;
+		const known = new Set(view.columns.map((c) => c.id));
+		const additions = [];
+		for (const col of allColumns) {
+			const id = getFieldKey(col);
+			if (!known.has(id)) additions.push({
+				id,
+				visible: seedDefaultVisibility(col)
+			});
+		}
+		if (additions.length === 0) return;
+		setSampleListView({
+			...view,
+			columns: [...view.columns, ...additions]
+		});
+	}, [
+		allColumns,
+		view,
+		seedDefaultVisibility,
+		setSampleListView
+	]);
+	const patchView = (0, import_react.useCallback)((partial) => {
+		setSampleListView({
+			...view,
+			...partial
+		});
+	}, [view, setSampleListView]);
+	const setColumnVisibility = (0, import_react.useCallback)((visibility) => {
+		const seen = /* @__PURE__ */ new Set();
+		const nextColumns = [];
+		for (const c of view.columns) {
+			nextColumns.push(c.id in visibility ? {
+				id: c.id,
+				visible: visibility[c.id]
+			} : c);
+			seen.add(c.id);
+		}
+		for (const [id, visible] of Object.entries(visibility)) if (!seen.has(id)) nextColumns.push({
+			id,
+			visible
+		});
+		patchView({ columns: nextColumns });
+	}, [view.columns, patchView]);
+	const setGridState = (0, import_react.useCallback)((gs) => {
+		setSampleListView(gridStateToView(view, gs, availableColIds));
+	}, [
+		view,
+		availableColIds,
+		setSampleListView
+	]);
+	const setMultiline = (0, import_react.useCallback)((multiline) => patchView({
+		multiline,
+		userOverrides: {
+			...view.userOverrides,
+			multiline
+		}
+	}), [patchView, view.userOverrides]);
+	const setCompactScores = (0, import_react.useCallback)((compactScores) => patchView({
+		compactScores,
+		userOverrides: {
+			...view.userOverrides,
+			compactScores
+		}
+	}), [patchView, view.userOverrides]);
+	const setColorScalesEnabled = (0, import_react.useCallback)((colorScalesEnabled) => patchView({
+		colorScalesEnabled,
+		userOverrides: {
+			...view.userOverrides,
+			colorScalesEnabled
+		}
+	}), [patchView, view.userOverrides]);
+	return {
+		view,
+		columnVisibility,
+		gridState,
+		setView: (0, import_react.useCallback)((next) => setSampleListView(next), [setSampleListView]),
+		patchView,
+		setColumnVisibility,
+		setGridState,
+		setMultiline,
+		setCompactScores,
+		setColorScalesEnabled,
+		resetColumns: (0, import_react.useCallback)(() => {
+			if (!allColumns) return;
+			const evalCols = liftEvalView(evalDefault).columns;
+			const evalMap = new Map(evalCols.map((c) => [c.id, c.visible]));
+			patchView({ columns: allColumns.map((col) => {
+				const id = getFieldKey(col);
+				if (evalMap.has(id)) return {
+					id,
+					visible: evalMap.get(id)
+				};
+				return {
+					id,
+					visible: seedDefaultVisibility ? seedDefaultVisibility(col) : true
+				};
+			}) });
+		}, [
+			allColumns,
+			evalDefault,
+			seedDefaultVisibility,
+			patchView
+		])
+	};
+}
 var ScorePanel_module_default = {
 	panel: "_panel_h02oy_1",
 	panelHeader: "_panelHeader_h02oy_9",
@@ -132772,7 +133533,7 @@ var ScoreValueDisplay = ({ value, scoreType, size = 18 }) => {
 /** Smaller variant used inside chip pills — numbers/strings render as
 *  a colored mini-pill instead of plain text so the tone reads at
 *  small sizes. */
-var ScoreChipValueDisplay = ({ value, scoreType, size = 16 }) => {
+var ScoreChipValueDisplay = ({ value, scoreType, size = 16, bgColor }) => {
 	if (isCircleScoreType(scoreType, value)) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleValue, {
 		value,
 		scoreType,
@@ -132780,8 +133541,10 @@ var ScoreChipValueDisplay = ({ value, scoreType, size = 16 }) => {
 	});
 	const tone = scoreTone(value, scoreType);
 	const formatted = formatPlainValue(value);
+	const pillStyle = bgColor ? { backgroundColor: bgColor } : void 0;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-		className: clsx(ScoreValueDisplay_module_default.miniPill, toneMiniPillClass(tone)),
+		className: clsx(ScoreValueDisplay_module_default.miniPill, !bgColor && toneMiniPillClass(tone)),
+		style: pillStyle,
 		title: formatted,
 		children: formatted
 	});
@@ -132844,16 +133607,31 @@ var ViewToggle = ({ view, setView }) => {
 * view (so chips and grid share the same sort UX).
 */
 var ScorePanel = ({ scores, sample, evalDescriptor }) => {
+	const wireScoreColorScales = useSamplesViewScoreColorScales();
+	const colorScalesEnabled = useSamplesViewColorScalesEnabled();
 	const renderedScores = (0, import_react.useMemo)(() => {
 		const initial = scores.map((label) => {
 			const selected = evalDescriptor.score(sample, label);
 			const descriptor = evalDescriptor.scoreDescriptor(label);
+			const acceptsColorScale = colorScalesEnabled && descriptor.scoreType !== "passfail" && descriptor.scoreType !== "boolean";
+			let bgColor;
+			if (acceptsColorScale) {
+				const wire = wireScoreColorScales[label.name];
+				if (wire) {
+					const resolved = resolveScale(wire, {
+						min: descriptor.min,
+						max: descriptor.max
+					});
+					if (resolved) bgColor = colorForValue(resolved, selected?.value);
+				}
+			}
 			return {
 				label,
 				key: `${label.scorer}__${label.name}`,
 				value: selected?.value,
 				scoreType: descriptor.scoreType,
-				tone: scoreTone(selected?.value, descriptor.scoreType)
+				tone: scoreTone(selected?.value, descriptor.scoreType),
+				bgColor
 			};
 		});
 		const numbers = initial.map((s) => typeof s.value === "number" ? s.value : null).filter((v) => v !== null);
@@ -132870,7 +133648,9 @@ var ScorePanel = ({ scores, sample, evalDescriptor }) => {
 	}, [
 		scores,
 		sample,
-		evalDescriptor
+		evalDescriptor,
+		wireScoreColorScales,
+		colorScalesEnabled
 	]);
 	const count = renderedScores.length;
 	const tight = count <= 6;
@@ -132973,7 +133753,8 @@ var ScoreRow = ({ score, tight }) => {
 };
 var ScoreChip = ({ score }) => {
 	let style;
-	if (score.tone === "neutral" && score.numericIntensity !== void 0) style = { borderColor: `rgba(var(--bs-primary-rgb), ${(.25 + .75 * score.numericIntensity).toFixed(2)})` };
+	if (score.bgColor) style = { borderColor: score.bgColor };
+	else if (score.tone === "neutral" && score.numericIntensity !== void 0) style = { borderColor: `rgba(var(--bs-primary-rgb), ${(.25 + .75 * score.numericIntensity).toFixed(2)})` };
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
 		className: clsx(ScorePanel_module_default.chip, score.tone === "fail" && ScorePanel_module_default.chipFail, score.tone === "warn" && ScorePanel_module_default.chipWarn),
 		style,
@@ -132981,7 +133762,8 @@ var ScoreChip = ({ score }) => {
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreChipValueDisplay, {
 			value: score.value,
 			scoreType: score.scoreType,
-			size: 16
+			size: 16,
+			bgColor: score.bgColor
 		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 			className: ScorePanel_module_default.chipName,
 			children: score.label.name
@@ -136460,10 +137242,16 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 	}, []);
 	const selectedSampleSummary = useSelectedSampleSummary();
 	const sampleEvents = sample?.events || runningSampleData;
+	const messagesRef = (0, import_react.useRef)(null);
 	const sampleMessages = (0, import_react.useMemo)(() => {
-		if (sample?.messages) return sample.messages;
-		else if (runningSampleData) return messagesFromEvents(runningSampleData);
-		else return [];
+		if (sample?.messages) {
+			messagesRef.current = null;
+			return sample.messages;
+		} else if (runningSampleData) return messagesFromEvents(runningSampleData, messagesRef);
+		else {
+			messagesRef.current = null;
+			return [];
+		}
 	}, [sample?.messages, runningSampleData]);
 	const hasSampleData = sample !== void 0 || sampleEvents !== void 0 || sampleMessages !== void 0;
 	const { logPath: urlLogPath, id: urlSampleId, epoch: urlEpoch, sampleTabId } = useLogOrSampleRouteParams();
@@ -139250,6 +140038,41 @@ var openRemoteZipFile = async (url, contentLength, fetchBytes = fetchRange) => {
 		}
 	};
 };
+/**
+* Opens an in-memory ZIP buffer and provides a method to read files within it.
+*/
+var openZipFileFromBuffer = async (bytes) => {
+	const contentLength = bytes.length;
+	if (contentLength < 22) throw new Error("Buffer too small to be a ZIP file");
+	const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+	const eocdrStart = contentLength - 22;
+	if (view.getUint32(eocdrStart, true) !== 101010256) throw new Error("End of central directory record not found");
+	let centralDirOffset = view.getUint32(eocdrStart + 16, true);
+	let centralDirSize = view.getUint32(eocdrStart + 12, true);
+	if (centralDirOffset === 4294967295 || centralDirSize === 4294967295) {
+		const locatorStart = eocdrStart - 20;
+		if (view.getUint32(locatorStart, true) !== 117853008) throw new Error("ZIP64 End of central directory locator not found");
+		const zip64EOCDOffset = Number(view.getBigUint64(locatorStart + 8, true));
+		if (view.getUint32(zip64EOCDOffset, true) !== 101075792) throw new Error("ZIP64 End of central directory record not found");
+		centralDirSize = Number(view.getBigUint64(zip64EOCDOffset + 40, true));
+		centralDirOffset = Number(view.getBigUint64(zip64EOCDOffset + 48, true));
+	}
+	const centralDirectory = parseCentralDirectory(bytes.slice(centralDirOffset, centralDirOffset + centralDirSize));
+	return {
+		centralDirectory,
+		readFile: async (file, maxBytes) => {
+			const entry = centralDirectory.get(file);
+			if (!entry) throw new Error(`File not found: ${file}`);
+			const headerSize = 30;
+			if (entry.fileOffset + headerSize > bytes.length) throw new Error(`File entry header is truncated for ${file}`);
+			const extraFieldLength = bytes[entry.fileOffset + 28] + (bytes[entry.fileOffset + 29] << 8);
+			const totalSize = headerSize + entry.filenameLength + extraFieldLength + entry.compressedSize;
+			if (maxBytes && totalSize > maxBytes) throw new FileSizeLimitError(file, maxBytes);
+			const zipFileEntry = await parseZipFileEntry(file, bytes.slice(entry.fileOffset, entry.fileOffset + totalSize));
+			return decompressData(zipFileEntry.data, zipFileEntry.compressionMethod, zipFileEntry.uncompressedSize, file);
+		}
+	};
+};
 var fetchSize = async (url) => {
 	const acceptResponse = await fetch(url, { method: "HEAD" });
 	if (acceptResponse.headers.get("Accept-Ranges") === "bytes") {
@@ -139722,8 +140545,26 @@ var clientApi = (api, log_file, debug = false) => {
 		if (!api.eval_pending_samples) throw new Error("API doesn't support streamed samples");
 		return api.eval_pending_samples(log_file, etag);
 	};
-	const get_log_sample_data = (log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool) => {
+	const sampleDataPathByLog = /* @__PURE__ */ new Map();
+	const get_log_sample_data = async (log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool) => {
 		if (!api.eval_log_sample_data) throw new Error("API doesn't supported streamed sample data");
+		let path = sampleDataPathByLog.get(log_file);
+		if (path === void 0 && api.eval_log_sample_data_direct) {
+			const probe = await api.eval_log_sample_data_direct(log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool);
+			if (probe !== void 0) {
+				sampleDataPathByLog.set(log_file, "direct");
+				return probe;
+			}
+		}
+		if (path === void 0) {
+			path = "proxy";
+			sampleDataPathByLog.set(log_file, path);
+		}
+		if (path === "direct") {
+			const result = await api.eval_log_sample_data_direct(log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool);
+			if (result === void 0) throw new Error("Direct pending-sample-data path returned 'not supported' after probe");
+			return result;
+		}
 		return api.eval_log_sample_data(log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool);
 	};
 	const middleware = debug ? createMiddlewareWrapper([debugMiddleware]) : (_name, fn) => fn;
@@ -140143,6 +140984,60 @@ function serverRequestApi(baseUrl, getHeaders) {
 	};
 }
 //#endregion
+//#region src/client/remote/remotePendingSampleData.ts
+var SEGMENT_CAP_PER_CALL = 25;
+/**
+* Fetch one chunk of pending-sample data via presigned S3 URLs.
+* Returns `undefined` when this transport isn't supported (404, or any
+* segment lacks a presigned URL); all other failures throw.
+*/
+var fetchPendingSampleDataDirect = async (getUrls, log_file, id, epoch, cursors) => {
+	let urls;
+	try {
+		urls = await getUrls(log_file, id, epoch, cursors.last_event, cursors.last_attachment, cursors.last_message_pool, cursors.last_call_pool, SEGMENT_CAP_PER_CALL);
+	} catch (e) {
+		if (e instanceof ApiError && e.status === 404) return;
+		throw e;
+	}
+	if (urls.segments.length === 0) return {
+		sampleData: {
+			events: [],
+			attachments: [],
+			message_pool: [],
+			call_pool: []
+		},
+		has_more: urls.has_more
+	};
+	if (!urls.segments.every((s) => s.direct_url != null)) return;
+	const parts = await Promise.all(urls.segments.map((seg) => readSegment(seg)));
+	return {
+		sampleData: applyCursorFilter({
+			events: parts.flatMap((p) => p.events),
+			attachments: parts.flatMap((p) => p.attachments),
+			message_pool: parts.flatMap((p) => p.message_pool),
+			call_pool: parts.flatMap((p) => p.call_pool)
+		}, cursors),
+		has_more: urls.has_more
+	};
+};
+var readSegment = async (seg) => {
+	const url = seg.direct_url;
+	const resp = await fetch(url);
+	if (!resp.ok) throw new Error(`Failed to fetch segment: ${resp.status} ${resp.statusText}`);
+	return await asyncJsonParseBytes(await (await openZipFileFromBuffer(new Uint8Array(await resp.arrayBuffer()))).readFile(seg.member_name));
+};
+var applyCursorFilter = (out, cursors) => {
+	const lastEvent = cursors.last_event ?? -1;
+	const lastAttachment = cursors.last_attachment ?? -1;
+	const lastMessagePool = cursors.last_message_pool ?? -1;
+	const lastCallPool = cursors.last_call_pool ?? -1;
+	out.events = out.events.filter((e) => e.id > lastEvent);
+	out.attachments = out.attachments.filter((a) => a.id > lastAttachment);
+	out.message_pool = out.message_pool.filter((m) => m.id > lastMessagePool);
+	out.call_pool = out.call_pool.filter((c) => c.id > lastCallPool);
+	return out;
+};
+//#endregion
 //#region src/client/api/view-server/api-view-server.ts
 var LOADED_TIME = Date.now();
 var lastEvalTime = 0;
@@ -140296,6 +141191,37 @@ function viewServerApi(options = {}) {
 			}
 		})).parsed;
 	};
+	const get_pending_sample_data_urls = async (log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool, max_segments) => {
+		const params = new URLSearchParams();
+		params.append("log", log_file);
+		params.append("id", String(id));
+		params.append("epoch", String(epoch));
+		if (last_event !== void 0) params.append("last-event-id", String(last_event));
+		if (last_attachment !== void 0) params.append("after-attachment-id", String(last_attachment));
+		if (last_message_pool !== void 0) params.append("after-message-pool-id", String(last_message_pool));
+		if (last_call_pool !== void 0) params.append("after-call-pool-id", String(last_call_pool));
+		if (max_segments !== void 0) params.append("max-segments", String(max_segments));
+		return (await requestApi.fetchType("GET", `/pending-sample-data-urls?${params.toString()}`, {
+			headers: {},
+			parse: async (text) => {
+				return await asyncJsonParse(text);
+			}
+		})).parsed;
+	};
+	const eval_log_sample_data_direct = async (log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool) => {
+		const direct = await fetchPendingSampleDataDirect(get_pending_sample_data_urls, log_file, id, epoch, {
+			last_event,
+			last_attachment,
+			last_message_pool,
+			last_call_pool
+		});
+		if (direct === void 0) return;
+		return {
+			status: "OK",
+			sampleData: direct.sampleData,
+			has_more: direct.has_more
+		};
+	};
 	const download_log = async (log_file) => {
 		const url = `${apiBaseUrl || "/api"}/log-download/${encodeURIComponent(log_file)}`;
 		const link = document.createElement("a");
@@ -140321,7 +141247,8 @@ function viewServerApi(options = {}) {
 		download_log,
 		open_log_file: async () => {},
 		eval_pending_samples,
-		eval_log_sample_data
+		eval_log_sample_data,
+		eval_log_sample_data_direct
 	};
 }
 //#endregion
@@ -141103,342 +142030,6 @@ var SamplesViewOptionsPopover_module_default = {
 	row: "_row_1tduz_8",
 	checkbox: "_checkbox_1tduz_15"
 };
-//#endregion
-//#region src/app/samples/list/samplesView.ts
-/**
-* The default view applied when neither the user nor the eval author
-* has specified anything. `columns` and `sort` are intentionally empty —
-* the SampleList consumer fills them from the live column registry
-* (`buildSampleColumns`) and seeds visibility from per-scope predicates
-* (e.g. `samplesPanel`'s error/limit/retries auto-promotion).
-*/
-var defaultSamplesView = () => ({
-	name: "Default",
-	columns: [],
-	sort: [],
-	filters: {
-		dsl: "",
-		extraColumnFilters: {}
-	},
-	multiline: true,
-	compactScores: false,
-	colorScalesEnabled: true,
-	userOverrides: {}
-});
-//#endregion
-//#region src/app/samples/list/samplesView.converters.ts
-/**
-* Lift a wire `SamplesView` into the runtime `SamplesViewState`.
-*
-* - Nullable wire fields collapse to defaults from `defaultSamplesView()`.
-* - Sort entries map `column` → `colId` to match ag-grid naming on the
-*   runtime side. Wire form keeps `column` to match the Python field.
-* - `extraColumnFilters` starts empty; ag-grid filterModel residue is
-*   only synthesized at runtime when the user sets column-header filters
-*   the DSL can't express.
-*/
-var liftEvalView = (wire) => {
-	const fallback = defaultSamplesView();
-	if (!wire) return fallback;
-	return {
-		name: wire.name,
-		columns: wire.columns ? wire.columns.map((c) => ({
-			id: c.id,
-			visible: c.visible ?? true
-		})) : fallback.columns,
-		sort: wire.sort ? wire.sort.map((s) => ({
-			colId: s.column,
-			dir: s.dir ?? "asc"
-		})) : fallback.sort,
-		filters: {
-			dsl: wire.filter ?? "",
-			extraColumnFilters: {}
-		},
-		multiline: wire.multiline ?? fallback.multiline,
-		compactScores: wire.compact_scores ?? fallback.compactScores,
-		colorScalesEnabled: wire.color_scales_enabled ?? fallback.colorScalesEnabled,
-		userOverrides: {}
-	};
-};
-/**
-* `task_samples_view` may be a single view, a list of views, or absent.
-* For Phase 0–2 we honour only the first entry of a list.
-*/
-var pickActiveView = (field) => {
-	if (!field) return void 0;
-	if (Array.isArray(field)) return field[0];
-	return field;
-};
-/**
-* Resolution priority: stored (user-modified runtime state) > eval default
-* (lifted from `eval.viewer.task_samples_view`) > built-in default.
-*
-* Per-field exception for the toolbar toggles (`multiline`, `compactScores`,
-* `colorScalesEnabled`): stored only wins if `userOverrides` records that
-* the user has actually flipped that toggle. Otherwise the eval-author
-* default takes precedence even when stored state already exists, so an
-* eval that ships e.g. `color_scales_enabled: false` isn't shadowed by a
-* stale `true` lifted from a previous eval.
-*/
-var resolveSamplesView = (stored, evalDefault) => {
-	if (!stored) return liftEvalView(evalDefault);
-	const lifted = liftEvalView(evalDefault);
-	const overrides = stored.userOverrides ?? {};
-	return {
-		...stored,
-		multiline: overrides.multiline ?? lifted.multiline,
-		compactScores: overrides.compactScores ?? lifted.compactScores,
-		colorScalesEnabled: overrides.colorScalesEnabled ?? lifted.colorScalesEnabled
-	};
-};
-/**
-* Project the runtime descriptor into the `GridState` ag-grid consumes.
-*
-* Column-id tolerance: any persisted reference to a column not present in
-* `availableColIds` (e.g. `score__judge__correctness` on a log without
-* that scorer) is excluded from the emitted GridState but **preserved
-* unchanged in the source descriptor**. The persisted view is never
-* mutated by a render.
-*
-* The DSL filter is intentionally *not* materialized into `filterModel`
-* here — that translation needs the live filter registry, which only
-* exists at runtime. Phase 2's `useSamplesView` layers the DSL→model
-* translation on top of this base GridState.
-*/
-var viewToGridState = (view, availableColIds) => {
-	const knownColumns = view.columns.filter((c) => availableColIds.has(c.id));
-	const sortModel = view.sort.filter((s) => availableColIds.has(s.colId)).map((s) => ({
-		colId: s.colId,
-		sort: s.dir
-	}));
-	const filterModel = Object.fromEntries(Object.entries(view.filters.extraColumnFilters).filter(([colId]) => availableColIds.has(colId)));
-	return {
-		columnVisibility: { hiddenColIds: knownColumns.filter((c) => !c.visible).map((c) => c.id) },
-		columnOrder: { orderedColIds: knownColumns.map((c) => c.id) },
-		sort: { sortModel },
-		filter: { filterModel }
-	};
-};
-/**
-* Fold a fresh ag-grid `GridState` back into the runtime descriptor,
-* preserving any unknown-id references from `prev` so they re-engage when
-* the user navigates back to a log that has those columns.
-*
-* Note: this updates `columns`, `sort`, and `filters.extraColumnFilters`.
-* The `dsl` half of `filters` is the responsibility of the caller — it
-* comes from a different signal (the toolbar text) and is partitioned
-* via `partitionFilterModel`.
-*/
-var gridStateToView = (prev, gridState, availableColIds) => {
-	const orderedColIds = gridState.columnOrder?.orderedColIds ?? [];
-	const hiddenColIds = new Set(gridState.columnVisibility?.hiddenColIds ?? []);
-	const knownColumns = orderedColIds.filter((id) => availableColIds.has(id)).map((id) => ({
-		id,
-		visible: !hiddenColIds.has(id)
-	}));
-	const unknownColumns = prev.columns.filter((c) => !availableColIds.has(c.id));
-	const knownSort = (gridState.sort?.sortModel ?? []).filter((s) => availableColIds.has(s.colId)).map((s) => ({
-		colId: s.colId,
-		dir: s.sort
-	}));
-	const unknownSort = prev.sort.filter((s) => !availableColIds.has(s.colId));
-	const fmModel = gridState.filter?.filterModel ?? {};
-	const knownExtras = Object.fromEntries(Object.entries(fmModel).filter(([colId]) => availableColIds.has(colId)));
-	const unknownExtras = Object.fromEntries(Object.entries(prev.filters.extraColumnFilters).filter(([colId]) => !availableColIds.has(colId)));
-	return {
-		...prev,
-		columns: [...knownColumns, ...unknownColumns],
-		sort: [...knownSort, ...unknownSort],
-		filters: {
-			dsl: prev.filters.dsl,
-			extraColumnFilters: {
-				...knownExtras,
-				...unknownExtras
-			}
-		}
-	};
-};
-//#endregion
-//#region src/app/samples/list/useSamplesView.ts
-/** Single subscription to the eval-author-supplied `task_samples_view`
-*  descriptor (after picking an active variant from a multi-view list).
-*  Backs every hook that reads from the wire side. */
-function useEvalDefaultSamplesView() {
-	const evalDefaultField = useStore((state) => state.log.selectedLogDetails?.eval.viewer?.task_samples_view ?? null);
-	return (0, import_react.useMemo)(() => pickActiveView(evalDefaultField), [evalDefaultField]);
-}
-/** Single subscription + resolution; backs every hook that needs a
-*  field off the resolved view. */
-function useResolvedSamplesView() {
-	const stored = useStore((state) => state.logs.samplesListState.byScope.logViewSamples.view);
-	const evalDefault = useEvalDefaultSamplesView();
-	return (0, import_react.useMemo)(() => resolveSamplesView(stored, evalDefault), [stored, evalDefault]);
-}
-/** Just the resolved `multiline` — for callers that need it before
-*  computing `allColumns` (which the full hook requires). */
-function useSamplesViewMultiline() {
-	return useResolvedSamplesView().multiline;
-}
-/** Eval-author-supplied score-label overrides. Read straight from
-*  the wire (no persistence) so a user's stored view from a prior
-*  eval can't shadow the current eval's labels. Returns an empty
-*  object when no overrides are present. */
-function useSamplesViewScoreLabels() {
-	return useEvalDefaultSamplesView()?.score_labels ?? {};
-}
-/** Eval-author-supplied score-cell colour scales. Same wire-only
-*  access pattern as `useSamplesViewScoreLabels` — never lifted into
-*  the persisted runtime state, so colour scales from a prior eval
-*  can't bleed into the current one. */
-function useSamplesViewScoreColorScales() {
-	return useEvalDefaultSamplesView()?.score_color_scales ?? {};
-}
-/** Resolved `colorScalesEnabled` — same access pattern as the
-*  multiline companion above. Read in `SamplesTab` so the columns
-*  builder can decide whether to attach a `cellStyle` callback. */
-function useSamplesViewColorScalesEnabled() {
-	return useResolvedSamplesView().colorScalesEnabled;
-}
-/** Resolved `compactScores` — same access pattern as the multiline
-*  companion above. Read in `SamplesTab` before columns are built so
-*  the flag can flow into `buildSampleColumns`. */
-function useSamplesViewCompactScores() {
-	return useResolvedSamplesView().compactScores;
-}
-/**
-* Window onto the SampleList scope's `SamplesView` descriptor. Resolves
-* stored > eval-author default > built-in default; seeds visibility for
-* unseeded columns; folds ag-grid `GridState` updates back into the view.
-*
-* Selected-scores projection (the `score__*` ↔ `selectedScores` split)
-* stays in `SamplesTab` for now.
-*/
-function useSamplesView(allColumns, options) {
-	const { seedDefaultVisibility } = options ?? {};
-	const evalDefault = useEvalDefaultSamplesView();
-	const view = useResolvedSamplesView();
-	const setSampleListView = useStore((state) => state.logsActions.setSampleListView);
-	const availableColIds = (0, import_react.useMemo)(() => {
-		const ids = /* @__PURE__ */ new Set();
-		if (allColumns) for (const col of allColumns) ids.add(getFieldKey(col));
-		return ids;
-	}, [allColumns]);
-	const columnVisibility = (0, import_react.useMemo)(() => {
-		const v = {};
-		for (const col of view.columns) v[col.id] = col.visible;
-		return v;
-	}, [view.columns]);
-	const gridState = (0, import_react.useMemo)(() => allColumns ? viewToGridState(view, availableColIds) : void 0, [
-		allColumns,
-		view,
-		availableColIds
-	]);
-	(0, import_react.useEffect)(() => {
-		if (!allColumns || !seedDefaultVisibility) return;
-		const known = new Set(view.columns.map((c) => c.id));
-		const additions = [];
-		for (const col of allColumns) {
-			const id = getFieldKey(col);
-			if (!known.has(id)) additions.push({
-				id,
-				visible: seedDefaultVisibility(col)
-			});
-		}
-		if (additions.length === 0) return;
-		setSampleListView({
-			...view,
-			columns: [...view.columns, ...additions]
-		});
-	}, [
-		allColumns,
-		view,
-		seedDefaultVisibility,
-		setSampleListView
-	]);
-	const patchView = (0, import_react.useCallback)((partial) => {
-		setSampleListView({
-			...view,
-			...partial
-		});
-	}, [view, setSampleListView]);
-	const setColumnVisibility = (0, import_react.useCallback)((visibility) => {
-		const seen = /* @__PURE__ */ new Set();
-		const nextColumns = [];
-		for (const c of view.columns) {
-			nextColumns.push(c.id in visibility ? {
-				id: c.id,
-				visible: visibility[c.id]
-			} : c);
-			seen.add(c.id);
-		}
-		for (const [id, visible] of Object.entries(visibility)) if (!seen.has(id)) nextColumns.push({
-			id,
-			visible
-		});
-		patchView({ columns: nextColumns });
-	}, [view.columns, patchView]);
-	const setGridState = (0, import_react.useCallback)((gs) => {
-		setSampleListView(gridStateToView(view, gs, availableColIds));
-	}, [
-		view,
-		availableColIds,
-		setSampleListView
-	]);
-	const setMultiline = (0, import_react.useCallback)((multiline) => patchView({
-		multiline,
-		userOverrides: {
-			...view.userOverrides,
-			multiline
-		}
-	}), [patchView, view.userOverrides]);
-	const setCompactScores = (0, import_react.useCallback)((compactScores) => patchView({
-		compactScores,
-		userOverrides: {
-			...view.userOverrides,
-			compactScores
-		}
-	}), [patchView, view.userOverrides]);
-	const setColorScalesEnabled = (0, import_react.useCallback)((colorScalesEnabled) => patchView({
-		colorScalesEnabled,
-		userOverrides: {
-			...view.userOverrides,
-			colorScalesEnabled
-		}
-	}), [patchView, view.userOverrides]);
-	return {
-		view,
-		columnVisibility,
-		gridState,
-		setView: (0, import_react.useCallback)((next) => setSampleListView(next), [setSampleListView]),
-		patchView,
-		setColumnVisibility,
-		setGridState,
-		setMultiline,
-		setCompactScores,
-		setColorScalesEnabled,
-		resetColumns: (0, import_react.useCallback)(() => {
-			if (!allColumns) return;
-			const evalCols = liftEvalView(evalDefault).columns;
-			const evalMap = new Map(evalCols.map((c) => [c.id, c.visible]));
-			patchView({ columns: allColumns.map((col) => {
-				const id = getFieldKey(col);
-				if (evalMap.has(id)) return {
-					id,
-					visible: evalMap.get(id)
-				};
-				return {
-					id,
-					visible: seedDefaultVisibility ? seedDefaultVisibility(col) : true
-				};
-			}) });
-		}, [
-			allColumns,
-			evalDefault,
-			seedDefaultVisibility,
-			patchView
-		])
-	};
-}
 //#endregion
 //#region src/app/samples/list/SamplesViewOptionsPopover.tsx
 var SamplesViewOptionsPopover = ({ showing, setShowing, positionEl }) => {
@@ -165692,101 +166283,6 @@ var ScoreCellDiv = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)
 	className: clsx(SamplesGrid_module_default.cell, SamplesGrid_module_default.score),
 	children
 });
-//#endregion
-//#region src/app/shared/samples-grid/colorScale.ts
-var ROLE_TO_VAR = {
-	good: "var(--bs-success-bg-subtle)",
-	bad: "var(--bs-danger-bg-subtle)",
-	warn: "var(--bs-warning-bg-subtle)",
-	info: "var(--bs-info-bg-subtle)",
-	muted: "var(--bs-secondary-bg-subtle)"
-};
-var PALETTE_STOPS = {
-	"good-high": {
-		low: "var(--bs-danger-bg-subtle)",
-		mid: "var(--bs-warning-bg-subtle)",
-		high: "var(--bs-success-bg-subtle)"
-	},
-	"good-low": {
-		low: "var(--bs-success-bg-subtle)",
-		mid: "var(--bs-warning-bg-subtle)",
-		high: "var(--bs-danger-bg-subtle)"
-	},
-	neutral: {
-		low: "transparent",
-		mid: "color-mix(in srgb, var(--bs-info-bg-subtle) 50%, transparent)",
-		high: "var(--bs-info-bg-subtle)"
-	},
-	diverging: {
-		low: "var(--bs-danger-bg-subtle)",
-		mid: "transparent",
-		high: "var(--bs-success-bg-subtle)"
-	}
-};
-var isPaletteName = (s) => s === "good-high" || s === "good-low" || s === "neutral" || s === "diverging";
-var isScaleObject = (s) => typeof s === "object" && s !== null && "palette" in s;
-/**
-* Lift a wire-shape scale into the internal `ResolvedScale` form.
-*
-* - Named palettes need numeric `bounds` to anchor the gradient.
-*   The wire form `{ palette, min, max }` lets the author override
-*   either bound; missing bounds fall back to the descriptor's
-*   auto-detection. Without any usable range we return null so the
-*   caller leaves the cell unpainted.
-* - Categorical maps don't depend on bounds.
-*
-* Returns null when the scale can't be applied — the caller treats
-* that as "no background".
-*/
-function resolveScale(scale, bounds) {
-	if (typeof scale === "string") {
-		if (!isPaletteName(scale)) return null;
-		return resolveGradient(scale, bounds.min, bounds.max);
-	}
-	if (isScaleObject(scale)) return resolveGradient(scale.palette, scale.min ?? bounds.min, scale.max ?? bounds.max);
-	const colors = {};
-	for (const [value, role] of Object.entries(scale)) colors[value] = ROLE_TO_VAR[role];
-	return {
-		kind: "categorical",
-		colors
-	};
-}
-function resolveGradient(palette, min, max) {
-	if (!isPaletteName(palette)) return null;
-	if (typeof min !== "number" || typeof max !== "number" || min === max) return null;
-	return {
-		kind: "gradient",
-		...PALETTE_STOPS[palette],
-		min,
-		max
-	};
-}
-/**
-* Pick a CSS colour expression for a given score value.
-*
-* Returns undefined when the scale doesn't apply to the value:
-*   - gradient scale on non-numeric / NaN
-*   - categorical scale on a value not in the map
-*
-* The caller (a column's `cellStyle` callback) translates undefined
-* into "no background" so the cell renders transparent.
-*/
-function colorForValue(scale, value) {
-	if (scale.kind === "gradient") {
-		if (typeof value !== "number" || !Number.isFinite(value)) return void 0;
-		const t = clamp01((value - scale.min) / (scale.max - scale.min));
-		if (t <= .5) {
-			const pct = Math.round((1 - t * 2) * 100);
-			return `color-mix(in srgb, ${scale.low} ${pct}%, ${scale.mid})`;
-		}
-		const pct = Math.round((t - .5) * 2 * 100);
-		return `color-mix(in srgb, ${scale.high} ${pct}%, ${scale.mid})`;
-	}
-	if (value === null || value === void 0) return void 0;
-	const key = typeof value === "string" ? value : String(value);
-	return scale.colors[key];
-}
-var clamp01 = (n) => n < 0 ? 0 : n > 1 ? 1 : n;
 var RotatedHeader_module_default = {
 	label: "_label_1w6d0_5",
 	text: "_text_1w6d0_46",
