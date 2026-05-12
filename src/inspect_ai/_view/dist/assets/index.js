@@ -70684,14 +70684,15 @@ var useDocumentTitle = () => {
 	};
 	return { setDocumentTitle };
 };
-var simplifiedStatusForDeduplication = (status) => status === "started" || status === "success" ? status : "_other_";
+var isActiveStatus = (status) => status === "started" || status === "success";
 /**
 * Pure dedup logic for {@link useLogsWithretried}.
 *
 * Groups logs by (parent directory, task_id) so that logs sharing a task_id
 * across different folders (e.g. copied log directories under a shared parent)
-* are not treated as retries of each other. Within each group, the "best"
-* log wins (started > success > other, ties broken by newest mtime) and is
+* are not treated as retries of each other. Within each group, logs whose
+* status is `started` or `success` rank above other statuses; ties are
+* broken by filename descending so the newest run wins. The winner is
 * marked `retried: false`; the rest are marked `retried: true`.
 */
 var computeLogsWithRetried = (logs, logPreviews) => {
@@ -70708,15 +70709,9 @@ var computeLogsWithRetried = (logs, logPreviews) => {
 	const bestByName = {};
 	for (const items of Object.values(logsByGroup)) {
 		items.sort((a, b) => {
-			const as = simplifiedStatusForDeduplication(logPreviews[a.name]?.status);
-			const bs = simplifiedStatusForDeduplication(logPreviews[b.name]?.status);
-			if (as === bs) return b.name.localeCompare(a.name);
-			if (as === "started") return -1;
-			if (bs === "started") return 1;
-			if (as === "success") return -1;
-			if (bs === "success") return 1;
-			console.warn(`Unexpected status combination: ${as}, ${bs}`, a, b);
-			return 0;
+			const aActive = isActiveStatus(logPreviews[a.name]?.status);
+			if (aActive !== isActiveStatus(logPreviews[b.name]?.status)) return aActive ? -1 : 1;
+			return b.name.localeCompare(a.name);
 		});
 		const { name } = items[0];
 		bestByName[name] = {
