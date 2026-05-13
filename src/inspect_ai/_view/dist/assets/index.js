@@ -51899,21 +51899,28 @@ var dist_default = (/* @__PURE__ */ __commonJS({ "src/index.ts": ((exports, modu
 * Extracted for testability (no CSS/React imports).
 */
 var mdInstanceCache = {};
-var getOptionsKey = (omitMedia, omitMath) => `${omitMedia ? "1" : "0"}:${omitMath ? "1" : "0"}`;
+var defaultMarkdownRenderer = "full";
 /** Unescape HTML entities within math token content before MathJax processing.
 *  This is safe because MathJax renders TeX to SVG/MathML, not raw HTML. */
 var unescapeHtmlForMath = (content) => {
 	return content.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/&apos;/g, "'").replace(/&quot;/g, "\"");
 };
-var getMarkdownInstance = (omitMedia, omitMath) => {
-	const key = getOptionsKey(omitMedia, omitMath);
-	const cached = mdInstanceCache[key];
+var getMarkdownInstance = (renderer) => {
+	const cached = mdInstanceCache[renderer];
 	if (cached) return cached;
+	if (renderer === "textOnly") {
+		const md = new MarkdownIt("zero", {
+			breaks: true,
+			html: false
+		}).enable(["emphasis", "newline"]);
+		mdInstanceCache[renderer] = md;
+		return md;
+	}
 	const md = new MarkdownIt({
 		breaks: true,
 		html: true
 	});
-	if (!omitMath) {
+	if (renderer === "full" || renderer === "fragment") {
 		md.use(dist_default);
 		const origInline = md.renderer.rules.math_inline;
 		const origBlock = md.renderer.rules.math_block;
@@ -51928,8 +51935,8 @@ var getMarkdownInstance = (omitMedia, omitMath) => {
 			return origBlock(tokens, idx, options, env, self);
 		};
 	}
-	if (omitMedia) md.disable(["image"]);
-	mdInstanceCache[key] = md;
+	if (renderer === "fragment") md.disable(["image"]);
+	mdInstanceCache[renderer] = md;
 	return md;
 };
 var escapeHtmlCharacters = (content) => {
@@ -52018,13 +52025,40 @@ function unescapeCodeHtmlEntities(str) {
 		return starttag + content.replace(/&(?:amp|lt|gt|quot|#39|#x2F|#x5C|#96);/g, (entity) => htmlEntities[entity] || entity) + endtag;
 	});
 }
+var renderFullPipelineMarkdown = (markdown, renderer) => {
+	const preparedForMarkdown = restoreBackslashesForLatex(protectMarkdown(preRenderText(escapeHtmlCharacters(protectBackslashesInLatex(markdown)))));
+	let html = preparedForMarkdown;
+	try {
+		html = getMarkdownInstance(renderer).render(preparedForMarkdown);
+	} catch (ex) {
+		console.log("Unable to markdown render content");
+		console.error(ex);
+	}
+	return unescapeSupHtmlEntities(unescapeCodeHtmlEntities(unprotectMarkdown(html)));
+};
+var renderTextOnlyMarkdown = (markdown) => {
+	try {
+		return getMarkdownInstance("textOnly").render(markdown);
+	} catch (ex) {
+		console.log("Unable to markdown render content");
+		console.error(ex);
+		return escapeHtmlCharacters(markdown).replace(/\n/g, "<br/>");
+	}
+};
+var markdownRenderers = {
+	full: (markdown) => renderFullPipelineMarkdown(markdown, "full"),
+	fragment: (markdown) => renderFullPipelineMarkdown(markdown, "fragment"),
+	textOnly: renderTextOnlyMarkdown
+};
+var renderMarkdown = (markdown, renderer = defaultMarkdownRenderer) => markdownRenderers[renderer](markdown);
 //#endregion
 //#region ../../packages/react/src/components/MarkdownDiv.tsx
 var sanitizeMarkdown = (md) => {
 	return escapeHtmlCharacters(md).replace(/\n/g, "<br/>");
 };
-var MarkdownDivComponent = (0, import_react.forwardRef)(({ markdown, omitMedia, omitMath, style, className, postProcess, onClick }, ref) => {
-	const cacheKey = `${markdown}:${`${omitMedia ? "1" : "0"}:${omitMath ? "1" : "0"}`}`;
+var MarkdownDivComponent = (0, import_react.forwardRef)(({ markdown, renderer, style, className, postProcess, onClick }, ref) => {
+	const rendererName = renderer ?? "full";
+	const cacheKey = `${rendererName}:${markdown}`;
 	const cachedHtml = renderCache.get(cacheKey);
 	const applyPostProcess = (0, import_react.useCallback)((html) => {
 		return postProcess ? postProcess(html) : html;
@@ -52042,17 +52076,7 @@ var MarkdownDivComponent = (0, import_react.forwardRef)(({ markdown, omitMedia, 
 			return;
 		}
 		setRenderedHtml(sanitizeMarkdown(markdown));
-		const { promise, cancel } = renderQueue.enqueue(() => {
-			const preparedForMarkdown = restoreBackslashesForLatex(protectMarkdown(preRenderText(escapeHtmlCharacters(protectBackslashesInLatex(markdown)))));
-			let html = preparedForMarkdown;
-			try {
-				html = getMarkdownInstance(omitMedia, omitMath).render(preparedForMarkdown);
-			} catch (ex) {
-				console.log("Unable to markdown render content");
-				console.error(ex);
-			}
-			return unescapeSupHtmlEntities(unescapeCodeHtmlEntities(unprotectMarkdown(html)));
-		});
+		const { promise, cancel } = renderQueue.enqueue(() => renderMarkdown(markdown, rendererName));
 		promise.then((result) => {
 			if (renderCache.size >= MAX_CACHE_SIZE) {
 				const firstKey = renderCache.keys().next().value;
@@ -52071,8 +52095,7 @@ var MarkdownDivComponent = (0, import_react.forwardRef)(({ markdown, omitMedia, 
 		};
 	}, [
 		markdown,
-		omitMedia,
-		omitMath,
+		rendererName,
 		cachedHtml,
 		renderedHtml,
 		cacheKey,
@@ -54117,6 +54140,7 @@ var SegmentedControl = ({ id, segments, onSegmentChange, selectedId: selectedIdP
 		id,
 		className: clsx(SegmentedControl_module_default.rootControl),
 		children: segments.map((segment, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+			type: "button",
 			className: clsx(SegmentedControl_module_default.segment, selectedId === segment.id && SegmentedControl_module_default.selected, compact && SegmentedControl_module_default.compact, segment.disabled && SegmentedControl_module_default.disabled, "text-size-smallest", selectedId === segment.id ? void 0 : "text-style-secondary"),
 			onClick: () => handleSegmentClick(segment.id, index),
 			disabled: segment.disabled,
@@ -58394,7 +58418,7 @@ var useComponentNavigation = () => {
 var MarkdownDivWithReferences_module_default = { cite: "_cite_1t1bm_1" };
 //#endregion
 //#region ../../packages/react/src/components/MarkdownDivWithReferences.tsx
-var MarkdownDivWithReferences = (0, import_react.forwardRef)(({ markdown, references, options, className, style, omitMedia, omitMath }, ref) => {
+var MarkdownDivWithReferences = (0, import_react.forwardRef)(({ markdown, references, options, className, style, renderer }, ref) => {
 	const containerRef = (0, import_react.useRef)(null);
 	const [positionEl, setPositionEl] = (0, import_react.useState)(null);
 	const [currentRef, setCurrentRef] = (0, import_react.useState)(null);
@@ -58417,16 +58441,14 @@ var MarkdownDivWithReferences = (0, import_react.forwardRef)(({ markdown, refere
 		markdown,
 		postProcess,
 		style,
-		omitMedia,
-		omitMath,
+		renderer,
 		onClick: handleLinkClick
 	}), [
 		ref,
 		markdown,
 		postProcess,
 		style,
-		omitMedia,
-		omitMath,
+		renderer,
 		handleLinkClick
 	]);
 	const suppressedIdRef = (0, import_react.useRef)(null);
@@ -66683,7 +66705,7 @@ var RenderedContent_module_default = {
 };
 //#endregion
 //#region ../../packages/inspect-components/src/content/RenderedText.tsx
-var RenderedText = (0, import_react.forwardRef)(({ markdown, references, style, className, forceRender, omitMedia, omitMath, options }, ref) => {
+var RenderedText = (0, import_react.forwardRef)(({ markdown, references, style, className, forceRender, renderer, options }, ref) => {
 	const displayMode = useDisplayMode();
 	if (forceRender || displayMode === "rendered") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownDivWithReferences, {
 		ref,
@@ -66692,8 +66714,7 @@ var RenderedText = (0, import_react.forwardRef)(({ markdown, references, style, 
 		options,
 		style,
 		className,
-		omitMedia,
-		omitMath
+		renderer
 	});
 	else return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Preformatted, {
 		ref,
@@ -120767,6 +120788,11 @@ var FindBand = () => {
 			if (e.key.length !== 1 && e.key !== "Backspace" && e.key !== "Delete") return;
 			const input = searchBoxRef.current;
 			if (!input) return;
+			if (document.activeElement !== input) {
+				let active = document.activeElement;
+				while (active?.shadowRoot?.activeElement) active = active.shadowRoot.activeElement;
+				if (active instanceof HTMLInputElement || active instanceof HTMLTextAreaElement || active instanceof HTMLElement && active.isContentEditable) return;
+			}
 			if (!(input.selectionStart !== input.selectionEnd)) restoreCursor();
 			if (document.activeElement !== input) input.focus();
 		};
@@ -121666,7 +121692,7 @@ var ToolTextOutput = ({ text }) => {
 * Renders message content based on its type.
 * Supports rendering strings, images, and tools using specific renderers.
 */
-var MessageContent = ({ contents, context }) => {
+var MessageContent = ({ contents, context, references }) => {
 	const normalized = normalizeContent$1(contents);
 	if (Array.isArray(normalized)) return normalized.map((content, index) => {
 		if (typeof content === "string") return messageRenderers["text"]?.render(`text-content-${index}`, {
@@ -121675,10 +121701,10 @@ var MessageContent = ({ contents, context }) => {
 			refusal: null,
 			internal: null,
 			citations: null
-		}, index === contents.length - 1, context);
+		}, index === contents.length - 1, context, references);
 		else if (content) {
 			const renderer = messageRenderers[content.type];
-			if (renderer) return renderer.render(`text-${content.type}-${index}`, content, index === contents.length - 1, context);
+			if (renderer) return renderer.render(`text-${content.type}-${index}`, content, index === contents.length - 1, context, references);
 			else console.error(`Unknown message content type '${content.type}'`);
 		}
 	});
@@ -121690,11 +121716,11 @@ var MessageContent = ({ contents, context }) => {
 			internal: null,
 			citations: null
 		};
-		return messageRenderers["text"]?.render("text-message-content", contentText, true, context);
+		return messageRenderers["text"]?.render("text-message-content", contentText, true, context, references);
 	}
 };
 var messageRenderers = {
-	text: { render: (key, content, isLast) => {
+	text: { render: (key, content, isLast, _context, references) => {
 		const c = content;
 		const cites = c.citations ?? [];
 		if (!c.text && !cites.length) return;
@@ -121717,7 +121743,8 @@ var messageRenderers = {
 			});
 		} else return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedText, {
 			markdown: purgeInternalContainers(c.text) || "",
-			className: clsx(isLast ? "no-last-para-padding" : "", MessageContent_module_default.breakable)
+			className: clsx(isLast ? "no-last-para-padding" : "", MessageContent_module_default.breakable),
+			references
 		}), c.citations && c.citations.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageCitations, { citations: c.citations }) : void 0] }, key);
 	} },
 	reasoning: { render: (key, content, isLast) => {
@@ -121904,11 +121931,12 @@ var CodePanel = ({ code, language = "json" }) => {
 var defaultContext = () => {
 	return { citations: [] };
 };
-var MessageContents = ({ message }) => {
+var MessageContents = ({ message, references }) => {
 	const context = defaultContext();
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: message.content && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageContent, {
 		contents: message.content,
-		context
+		context,
+		references
 	}) });
 };
 //#endregion
@@ -122161,7 +122189,7 @@ var ChatMessage_module_default = {
 };
 //#endregion
 //#region ../../packages/inspect-components/src/chat/ChatMessage.tsx
-var ChatMessage = (0, import_react.memo)(function ChatMessage({ id, message, display, linking }) {
+var ChatMessage = (0, import_react.memo)(function ChatMessage({ id, message, display, linking, references }) {
 	const indented = display?.indented ?? false;
 	const unlabeledRoles = display?.unlabeledRoles;
 	const formatDateTime = display?.formatDateTime;
@@ -122205,7 +122233,10 @@ var ChatMessage = (0, import_react.memo)(function ChatMessage({ id, message, dis
 				id: `${id}-message`,
 				collapse,
 				lines: message.role === "tool" ? 30 : message.role === "assistant" ? 25 : collapse ? 15 : 25,
-				children: isNonTaskTool ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolOutput, { output: typeof message.content === "string" ? message.content : message.content.filter((c) => c.type === "text" || c.type === "image") }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageContents, { message }, `${id}-contents`)
+				children: isNonTaskTool ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolOutput, { output: typeof message.content === "string" ? message.content : message.content.filter((c) => c.type === "text" || c.type === "image") }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageContents, {
+					message,
+					references
+				}, `${id}-contents`)
 			}), message.metadata && Object.keys(message.metadata).length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
 				label: "Metadata",
 				className: clsx(ChatMessage_module_default.metadataLabel, "text-size-smaller"),
@@ -122236,7 +122267,7 @@ var ChatMessageRow_module_default = {
 /**
 * Renders the ChatMessage component.
 */
-var ChatMessageRow = ({ index, parentName, resolvedMessage, className, display, labels, maxLabelLength, linking, tools }) => {
+var ChatMessageRow = ({ index, parentName, resolvedMessage, references, className, display, labels, maxLabelLength, linking, tools }) => {
 	const highlightUserMessage = display?.highlightUserMessage ?? true;
 	const showLabels = labels?.show ?? true;
 	const labelValues = labels?.messageLabels;
@@ -122254,7 +122285,8 @@ var ChatMessageRow = ({ index, parentName, resolvedMessage, className, display, 
 			id: `${parentName}-chat-messages-${index}`,
 			message: resolvedMessage.message,
 			display,
-			linking
+			linking,
+			references
 		}));
 	}
 	if (toolCallStyle !== "omit" && resolvedMessage.message.role === "assistant" && resolvedMessage.message.tool_calls && resolvedMessage.message.tool_calls.length) {
@@ -122263,9 +122295,7 @@ var ChatMessageRow = ({ index, parentName, resolvedMessage, className, display, 
 		for (const tool_call of resolvedMessage.message.tool_calls) {
 			const { name, input, description, functionCall, contentType } = resolveToolInput(tool_call.function, tool_call.arguments);
 			let toolMessage;
-			if (tool_call.id) toolMessage = toolMessages.find((msg) => {
-				return msg.tool_call_id === tool_call.id;
-			});
+			if (tool_call.id) toolMessage = toolMessages.find((msg) => msg.tool_call_id === tool_call.id);
 			else toolMessage = toolMessages[idx];
 			const toolLabel = labelValues?.[toolMessage?.id || ""] || (skipChatMessage && idx === 0 ? rowLabel : void 0);
 			const resolvedToolOutput = resolveToolMessage(toolMessage);
@@ -122386,7 +122416,7 @@ function computeMaxLabelLength(messageLabels) {
 /**
 * Renders the ChatView component.
 */
-var ChatView = ({ id, messages, className, display, labels, linking, tools }) => {
+var ChatView = ({ id, messages, className, display, labels, linking, tools, references }) => {
 	const collapsedMessages = tools?.collapseToolMessages ?? true ? resolveMessages(messages) : messages.map((msg) => {
 		return {
 			message: msg,
@@ -122405,7 +122435,8 @@ var ChatView = ({ id, messages, className, display, labels, linking, tools }) =>
 				labels,
 				linking,
 				tools,
-				maxLabelLength
+				maxLabelLength,
+				references
 			}, `${id}-msg-${index}`);
 		})
 	});
@@ -122426,44 +122457,15 @@ var ChatVirtuosoItem = ({ children, ...props }) => {
 };
 var chatVirtuosoComponents = { Item: ChatVirtuosoItem };
 var ChatViewVirtualList = (0, import_react.memo)(function ChatViewVirtualList({ id, messages, initialMessageId, offsetTop, className, scrollRef, running, onNativeFindChanged, display, labels, linking, tools }) {
-	const useVirtuoso = running || messages.length > 200;
 	const listHandle = (0, import_react.useRef)(null);
 	(0, import_react.useEffect)(() => {
-		onNativeFindChanged?.(!useVirtuoso);
-	}, [onNativeFindChanged, useVirtuoso]);
+		onNativeFindChanged?.(false);
+	}, [onNativeFindChanged]);
 	useListKeyboardNavigation({
 		listHandle,
 		scrollRef,
 		itemCount: messages.length
 	});
-	if (!useVirtuoso) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChatView, {
-		id,
-		messages,
-		className,
-		display,
-		labels,
-		linking,
-		tools
-	});
-	else return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChatViewVirtualListComponent, {
-		id,
-		listHandle,
-		className,
-		scrollRef,
-		messages,
-		initialMessageId,
-		offsetTop,
-		running,
-		display,
-		labels,
-		linking,
-		tools
-	});
-});
-/**
-* Renders the ChatViewVirtualList component.
-*/
-var ChatViewVirtualListComponent = (0, import_react.memo)(function ChatViewVirtualListComponent({ id, listHandle, messages, initialMessageId, offsetTop, className, scrollRef, running, display, labels, linking, tools }) {
 	const resolveInto = tools?.collapseToolMessages ?? true;
 	const collapsedMessages = (0, import_react.useMemo)(() => {
 		return resolveInto ? resolveMessages(messages) : messages.map((msg) => ({
@@ -124738,6 +124740,9 @@ var computeTurnMap = (outlineFilteredNodes, flattenedNodes) => {
 	return map;
 };
 //#endregion
+//#region ../../packages/inspect-components/src/transcript/EventLabelContext.ts
+var EventLabelContext = (0, import_react.createContext)(void 0);
+//#endregion
 //#region ../../packages/inspect-components/src/transcript/hooks/useStickyObserver.ts
 var scrollListenerMap = /* @__PURE__ */ new Map();
 function updateStickyState(container, elements) {
@@ -125004,20 +125009,21 @@ var EventNavs = ({ navs, selectedNav, setSelectedNav }) => {
 	});
 };
 var EventPanel_module_default = {
-	stickyWrapper: "_stickyWrapper_1ox4y_1",
-	label: "_label_1ox4y_18",
-	title: "_title_1ox4y_23",
-	titleExtra: "_titleExtra_1ox4y_28",
-	navs: "_navs_1ox4y_35",
-	turnLabel: "_turnLabel_1ox4y_42",
-	card: "_card_1ox4y_49",
-	cardContent: "_cardContent_1ox4y_57",
-	hidden: "_hidden_1ox4y_62",
-	copyLink: "_copyLink_1ox4y_70",
-	hover: "_hover_1ox4y_80",
-	root: "_root_1ox4y_84",
-	bottomDongle: "_bottomDongle_1ox4y_89",
-	dongleIcon: "_dongleIcon_1ox4y_105"
+	stickyWrapper: "_stickyWrapper_14ib7_1",
+	label: "_label_14ib7_18",
+	title: "_title_14ib7_23",
+	titleExtra: "_titleExtra_14ib7_28",
+	navs: "_navs_14ib7_35",
+	turnLabel: "_turnLabel_14ib7_42",
+	card: "_card_14ib7_49",
+	cardContent: "_cardContent_14ib7_57",
+	hidden: "_hidden_14ib7_62",
+	copyLink: "_copyLink_14ib7_70",
+	hover: "_hover_14ib7_80",
+	eventLabel: "_eventLabel_14ib7_87",
+	root: "_root_14ib7_91",
+	bottomDongle: "_bottomDongle_14ib7_96",
+	dongleIcon: "_dongleIcon_14ib7_112"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/event/EventPanel.tsx
@@ -125030,6 +125036,7 @@ var kDefaultIcon$1 = "bi bi-table";
 */
 var EventPanel = ({ eventNodeId, className, title, subTitle, text, icon, children, childIds, collapsibleContent, collapseControl = "top", muted, depth, turnLabel, headerExtra, eventCallbacks }) => {
 	const { onCollapse, getCollapsed, getEventUrl, linkingEnabled } = eventCallbacks ?? {};
+	const eventLabel = (0, import_react.useContext)(EventLabelContext);
 	const collapsed = getCollapsed?.(eventNodeId) ?? false;
 	const setCollapsed = (0, import_react.useCallback)((value) => {
 		onCollapse?.(eventNodeId, value);
@@ -125037,17 +125044,14 @@ var EventPanel = ({ eventNodeId, className, title, subTitle, text, icon, childre
 	const isCollapsible = (childIds || []).length > 0 || collapsibleContent;
 	const useBottomDongle = isCollapsible && collapseControl === "bottom";
 	const url = linkingEnabled && getEventUrl ? getEventUrl(eventNodeId) : void 0;
-	const pillId = (index) => {
-		return `${eventNodeId}-nav-pill-${index}`;
-	};
-	const filteredArrChildren = (Array.isArray(children) ? children : [children]).filter((child) => !!child);
-	const defaultPill = filteredArrChildren.findIndex((node) => {
-		return hasDataDefault(node) && node.props["data-default"];
-	});
+	const pillId = (index) => `${eventNodeId}-nav-pill-${index}`;
+	const filteredArrChildren = (Array.isArray(children) ? children : [children]).filter(Boolean);
+	const defaultPill = filteredArrChildren.findIndex((node) => hasDataDefault(node) && node.props["data-default"]);
 	const [selectedNav, setSelectedNav] = useProperty(eventNodeId, "selectedNav", { defaultValue: defaultPill !== -1 ? pillId(defaultPill) : pillId(0) });
 	const stickyRef = useStickyObserver();
 	const gridColumns = [];
 	if (isCollapsible && !useBottomDongle) gridColumns.push("minmax(0, max-content)");
+	if (eventLabel) gridColumns.push("minmax(0, max-content)");
 	if (icon) gridColumns.push("max-content");
 	gridColumns.push("minmax(0, max-content)");
 	gridColumns.push("minmax(0, 1fr)");
@@ -125058,7 +125062,7 @@ var EventPanel = ({ eventNodeId, className, title, subTitle, text, icon, childre
 		setCollapsed(!collapsed);
 	}, [setCollapsed, collapsed]);
 	const [mouseOver, setMouseOver] = (0, import_react.useState)(false);
-	const titleEl = title || icon || filteredArrChildren.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+	const titleEl = eventLabel || title || icon || filteredArrChildren.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		title: subTitle,
 		className: clsx("text-size-small", mouseOver ? EventPanel_module_default.hover : "", turnLabel ? EventPanel_module_default.stickyWrapper : ""),
 		ref: turnLabel ? stickyRef : null,
@@ -125074,6 +125078,11 @@ var EventPanel = ({ eventNodeId, className, title, subTitle, text, icon, childre
 			isCollapsible && !useBottomDongle ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", {
 				onClick: toggleCollapse,
 				className: collapsed ? kChevronRight : kChevronDown
+			}) : "",
+			eventLabel ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: clsx("text-style-secondary", "text-style-label", EventPanel_module_default.eventLabel),
+				onClick: toggleCollapse,
+				children: [eventLabel, " -"]
 			}) : "",
 			icon ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", {
 				className: clsx(icon || kDefaultIcon$1, "text-style-secondary"),
@@ -131480,8 +131489,8 @@ var ModelEventView = ({ eventNode, showToolCalls, className, context, eventCallb
 	const summaryLabels = (0, import_react.useMemo)(() => {
 		const map = context?.messageLabels;
 		if (!map) return { show: false };
-		return summaryMessages.some((m) => !!m.id && !!map[m.id]) ? { messageLabels: map } : { show: false };
-	}, [context?.messageLabels, summaryMessages]);
+		return { messageLabels: map };
+	}, [context?.messageLabels]);
 	const panelTitle = event.role ? `Model Call (${event.role}): ${event.model}` : `Model Call: ${event.model}`;
 	const titleString = isFailed ? `${panelTitle} · FAILED${formatFailureTime(event)}` : formatTitle(panelTitle, totalUsage, callTime);
 	const turnLabel = context?.turnInfo ? `turn ${context.turnInfo.turnNumber}/${context.turnInfo.totalTurns}` : void 0;
@@ -132516,10 +132525,13 @@ var None = () => {
 	});
 };
 var ToolEventView_module_default = {
-	summary: "_summary_1gtzx_1",
-	approvalWrap: "_approvalWrap_1gtzx_6",
-	approval: "_approval_1gtzx_6",
-	progress: "_progress_1gtzx_16"
+	summary: "_summary_1hdvz_1",
+	labeledToolCall: "_labeledToolCall_1hdvz_6",
+	label: "_label_1hdvz_6",
+	labeledToolContent: "_labeledToolContent_1hdvz_17",
+	approvalWrap: "_approvalWrap_1hdvz_21",
+	approval: "_approval_1hdvz_21",
+	progress: "_progress_1hdvz_31"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/ToolEventView.tsx
@@ -132536,6 +132548,31 @@ var ToolEventView = ({ eventNode, childNodes, className, context, eventCallbacks
 	const displayName = resolvedView?.title || title || name;
 	const panelTitle = displayName ? `Tool: ${displayName}` : "Tool";
 	const turnLabel = context?.turnInfo ? `turn ${context.turnInfo.turnNumber}/${context.turnInfo.totalTurns}` : void 0;
+	const toolLabels = (0, import_react.useMemo)(() => {
+		const messageLabels = context?.messageLabels;
+		if (!messageLabels) return { show: false };
+		const label = (event.message_id ? messageLabels[event.message_id] : void 0) ?? context?.toolLabels?.[event.id];
+		return { messageLabels: label ? { [event.id]: label } : {} };
+	}, [
+		context?.messageLabels,
+		context?.toolLabels,
+		event.id,
+		event.message_id
+	]);
+	const maxLabelLength = (0, import_react.useMemo)(() => computeMaxLabelLength(context?.messageLabels), [context?.messageLabels]);
+	const toolCallView = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallView, {
+		id: `${eventNode.id}-tool-call`,
+		tool: name,
+		functionCall,
+		input,
+		description,
+		contentType,
+		output: event.error ? "" : event.result || "",
+		mode: "compact",
+		view: resolvedView
+	});
+	const toolCallError = event.error && event.error.type !== "approval" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallErrorView, { error: event.error }) : null;
+	const toolLabel = toolLabels.messageLabels?.[event.id];
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventPanel, {
 		eventNodeId: eventNode.id,
 		title: formatTitle(panelTitle, void 0, event.working_time),
@@ -132550,18 +132587,17 @@ var ToolEventView = ({ eventNode, childNodes, className, context, eventCallbacks
 			"data-name": "Summary",
 			className: ToolEventView_module_default.summary,
 			children: [
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallView, {
-					id: `${eventNode.id}-tool-call`,
-					tool: name,
-					functionCall,
-					input,
-					description,
-					contentType,
-					output: event.error ? "" : event.result || "",
-					mode: "compact",
-					view: resolvedView
+				toolLabels.show === false ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [toolCallView, toolCallError] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: ToolEventView_module_default.labeledToolCall,
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: clsx("text-size-smaller", "text-style-secondary", ToolEventView_module_default.label),
+						style: { minWidth: `${maxLabelLength}ch` },
+						children: toolLabel
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: ToolEventView_module_default.labeledToolContent,
+						children: [toolCallView, toolCallError]
+					})]
 				}),
-				event.error && event.error.type !== "approval" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallErrorView, { error: event.error }) : null,
 				lastModelNode ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChatView, {
 					id: `${eventNode.id}-toolcall-chatmessage`,
 					messages: lastModelNode.event.output.choices.map((m) => m.message),
@@ -132641,6 +132677,7 @@ var TranscriptVirtualListComponent = ({ id, listHandle, eventNodes, scrollRef, r
 		turnMap,
 		eventNodeContext
 	]);
+	const eventLabels = eventNodeContext?.eventLabels;
 	const renderRow = (0, import_react.useCallback)((index, item, style) => {
 		const paddingClass = index === 0 ? TranscriptVirtualListComponent_module_default.first : void 0;
 		const previousIndex = index - 1;
@@ -132655,14 +132692,8 @@ var TranscriptVirtualListComponent = ({ id, listHandle, eventNodes, scrollRef, r
 		const depthRootClass = item.depth === 0 ? TranscriptVirtualListComponent_module_default.depthRoot : void 0;
 		const context = contextMap.get(item.id);
 		const isLast = index === eventNodes.length - 1;
-		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			id: item.id,
-			className: clsx(TranscriptVirtualListComponent_module_default.node, paddingClass, isLast ? TranscriptVirtualListComponent_module_default.last : void 0, attachedClass),
-			style: {
-				...style,
-				paddingLeft: `${item.depth <= 1 ? item.depth * .7 : (.7 + item.depth - 1) * 1}em`,
-				paddingRight: `${item.depth === 0 ? void 0 : ".7em"} `
-			},
+		const renderedNode = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventLabelContext.Provider, {
+			value: eventLabels?.[item.id],
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedEventNode, {
 				node: item,
 				next,
@@ -132672,13 +132703,24 @@ var TranscriptVirtualListComponent = ({ id, listHandle, eventNodes, scrollRef, r
 				renderAgentCard,
 				eventCallbacks
 			})
+		});
+		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			id: item.id,
+			className: clsx(TranscriptVirtualListComponent_module_default.node, paddingClass, isLast ? TranscriptVirtualListComponent_module_default.last : void 0, attachedClass),
+			style: {
+				...style,
+				paddingLeft: `${item.depth <= 1 ? item.depth * .7 : (.7 + item.depth - 1) * 1}em`,
+				paddingRight: `${item.depth === 0 ? void 0 : ".7em"} `
+			},
+			children: renderedNode
 		}, item.id);
 	}, [
 		eventNodes,
 		contextMap,
 		onAutoCollapse,
 		renderAgentCard,
-		eventCallbacks
+		eventCallbacks,
+		eventLabels
 	]);
 	if (useVirtualization) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LiveVirtualList, {
 		listHandle,
@@ -133172,6 +133214,19 @@ var collectAllCollapsibleIds = (nodes) => {
 	traverse(nodes);
 	return result;
 };
+var buildToolLabels = (events, messageLabels) => {
+	if (!messageLabels) return void 0;
+	const toolLabels = {};
+	for (const event of events) if (event.event === "tool") {
+		const label = event.message_id ? messageLabels[event.message_id] : void 0;
+		if (label) toolLabels[event.id] = label;
+	} else if (event.event === "model") for (const message of event.input ?? []) {
+		if (message.role !== "tool" || !message.id) continue;
+		const label = messageLabels[message.id];
+		if (label && message.tool_call_id) toolLabels[message.tool_call_id] = label;
+	}
+	return Object.keys(toolLabels).length > 0 ? toolLabels : void 0;
+};
 var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, offsetTop = 0, timelineSelection, activeTimeline, serverTimelines, markerConfig: markerConfigOverride, agentConfig: agentConfigOverride, showSwimlanes: showSwimlanesOption = "auto", onMarkerNavigate, onScrollToTop, headroomHidden, onHeadroomResetAnchor, onHeadroomSetHidden, listId, initialEventId, initialMessageId, eventsListRef, getEventUrl, linkingEnabled, bulkCollapse, collapseState, outline, outlineScrollRef, rightPane, rightPaneScrollRef, eventNodeContext, emptyText = "No events match the current filter", className }) => {
 	const eventsForTimeline = (0, import_react.useMemo)(() => {
 		if (!hiddenEventTypes || hiddenEventTypes.length === 0) return events;
@@ -133205,11 +133260,20 @@ var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, 
 		regionCounts
 	]);
 	const rawEventsForNodes = showSwimlanes ? selectedEvents : events;
-	const { eventNodes, defaultCollapsedIds, retryAttempts } = useEventNodes((0, import_react.useMemo)(() => hiddenEventTypes && hiddenEventTypes.length > 0 ? rawEventsForNodes.filter((e) => !hiddenEventTypes.includes(e.event)) : rawEventsForNodes, [rawEventsForNodes, hiddenEventTypes]), running, showSwimlanes ? sourceSpans : void 0);
-	const mergedEventNodeContext = (0, import_react.useMemo)(() => ({
-		...eventNodeContext,
+	const eventsForNodes = (0, import_react.useMemo)(() => hiddenEventTypes && hiddenEventTypes.length > 0 ? rawEventsForNodes.filter((e) => !hiddenEventTypes.includes(e.event)) : rawEventsForNodes, [rawEventsForNodes, hiddenEventTypes]);
+	const { eventNodes, defaultCollapsedIds, retryAttempts } = useEventNodes(eventsForNodes, running, showSwimlanes ? sourceSpans : void 0);
+	const mergedEventNodeContext = (0, import_react.useMemo)(() => {
+		const toolLabels = buildToolLabels(eventsForNodes, eventNodeContext?.messageLabels);
+		return {
+			...eventNodeContext,
+			retryAttempts,
+			...toolLabels ? { toolLabels } : {}
+		};
+	}, [
+		eventsForNodes,
+		eventNodeContext,
 		retryAttempts
-	}), [eventNodeContext, retryAttempts]);
+	]);
 	const nullViewNodesRef = (0, import_react.useRef)(null);
 	useTranscriptSearchSource({
 		id: listId,
@@ -168419,7 +168483,7 @@ var MarkdownCellDiv = ({ semanticClass, text, trimRenderedText, truncateAt = 250
 			markdown,
 			className: trimRenderedText ? clsx("no-last-para-padding", SamplesGrid_module_default.noLeft) : void 0,
 			forceRender: true,
-			omitMedia: true
+			renderer: "fragment"
 		})
 	});
 };
