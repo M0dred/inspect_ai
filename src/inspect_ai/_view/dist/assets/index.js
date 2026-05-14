@@ -123148,6 +123148,14 @@ var extractEventFields = (event) => {
 			if (inputEvent.input) fields.push(["input", inputEvent.input]);
 			break;
 		}
+		case "interrupt": {
+			const interruptEvent = event;
+			fields.push(["source", interruptEvent.source]);
+			fields.push(["interrupted", interruptEvent.interrupted]);
+			if (interruptEvent.interrupted_tool_call_id) fields.push(["interrupted_tool_call_id", interruptEvent.interrupted_tool_call_id]);
+			if (interruptEvent.interrupted_model_event_id) fields.push(["interrupted_model_event_id", interruptEvent.interrupted_model_event_id]);
+			break;
+		}
 		case "approval": {
 			const approvalEvent = event;
 			if (approvalEvent.decision) fields.push(["decision", approvalEvent.decision]);
@@ -126828,6 +126836,7 @@ var TranscriptIcons = {
 	fork: "bi bi-sign-intersection-y-fill",
 	info: "bi bi-info-circle",
 	input: "bi bi-terminal",
+	interrupt: "bi bi-slash-circle",
 	limits: {
 		messages: "bi bi-chat-right-text",
 		custom: "bi bi-exclamation-triangle",
@@ -130698,6 +130707,34 @@ var InputEventView = ({ eventNode, className }) => {
 		})
 	});
 };
+//#endregion
+//#region ../../packages/inspect-components/src/transcript/InterruptEventView.tsx
+var SOURCE_TITLES = {
+	user_cancel: "Interrupted by user",
+	limit: "Interrupted by limit",
+	system: "Interrupted by system"
+};
+var INTERRUPTED_DESCRIPTIONS = {
+	generate: "during model generation",
+	tool_call: "during tool execution",
+	between_turns: "between turns"
+};
+var InterruptEventView = ({ eventNode, className }) => {
+	const event = eventNode.event;
+	const title = SOURCE_TITLES[event.source];
+	const detail = INTERRUPTED_DESCRIPTIONS[event.interrupted];
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventPanel, {
+		eventNodeId: eventNode.id,
+		title,
+		icon: TranscriptIcons.interrupt,
+		className,
+		subTitle: event.timestamp ? formatDateTime$1(new Date(event.timestamp)) : void 0,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: clsx("text-size-smaller"),
+			children: detail
+		})
+	});
+};
 var LoggerEventView_module_default = {
 	grid: "_grid_1eq5o_1",
 	jsonPanel: "_jsonPanel_1eq5o_8"
@@ -132845,6 +132882,10 @@ var RenderedEventNodeInner = ({ node, next, className, context, onAutoCollapse, 
 			eventCallbacks
 		});
 		case "input": return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(InputEventView, {
+			eventNode: node,
+			className
+		});
+		case "interrupt": return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(InterruptEventView, {
 			eventNode: node,
 			className
 		});
@@ -135412,6 +135453,7 @@ var eventTypes = {
 	tool: "Tool",
 	approval: "Approval",
 	input: "Input",
+	interrupt: "Interrupt",
 	score: "Score",
 	score_edit: "Score Edit",
 	error: "Error",
