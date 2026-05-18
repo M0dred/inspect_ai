@@ -170912,13 +170912,19 @@ var LogViewContainer = () => {
 	const syncLogs = useStore((state) => state.logsActions.syncLogs);
 	const initLogDir = useStore((state) => state.logsActions.initLogDir);
 	(0, import_react.useEffect)(() => {
+		if (!logPath) return;
+		setWorkspaceTab(tabId ?? "samples");
+	}, [
+		logPath,
+		tabId,
+		setWorkspaceTab
+	]);
+	(0, import_react.useEffect)(() => {
 		const loadLogFromPath = async () => {
 			if (logPath) {
 				await initLogDir();
 				setSelectedLogFile(logPath);
 				syncLogs();
-				if (tabId) setWorkspaceTab(tabId);
-				else setWorkspaceTab(kLogViewSamplesTabId);
 				if (prevLogPath && logPath !== prevLogPath) {
 					clearSelectedSample();
 					clearSelectedLogSummary();
@@ -170928,9 +170934,7 @@ var LogViewContainer = () => {
 		loadLogFromPath();
 	}, [
 		logPath,
-		tabId,
 		setSelectedLogFile,
-		setWorkspaceTab,
 		initLogDir,
 		syncLogs,
 		prevLogPath,
