@@ -11499,16 +11499,16 @@ function bins(min, max, maxbins = 15, nice = true, minstep = 0, step) {
 }
 //#endregion
 //#region ../../node_modules/.pnpm/arquero@8.0.3/node_modules/arquero/src/util/key-function.js
-function key$2(value) {
+function key$3(value) {
 	const type = typeof value;
-	return type === "string" ? `"${value}"` : type !== "object" || !value ? value : isDate(value) ? +value : isArray$2(value) || isTypedArray(value) ? `[${value.map(key$2)}]` : isRegExp$1(value) ? value + "" : objectKey(value);
+	return type === "string" ? `"${value}"` : type !== "object" || !value ? value : isDate(value) ? +value : isArray$2(value) || isTypedArray(value) ? `[${value.map(key$3)}]` : isRegExp$1(value) ? value + "" : objectKey(value);
 }
 function objectKey(value) {
 	let s = "{";
 	let i = -1;
 	for (const k in value) {
 		if (++i > 0) s += ",";
-		s += `"${k}":${key$2(value[k])}`;
+		s += `"${k}":${key$3(value[k])}`;
 	}
 	s += "}";
 	return s;
@@ -11525,7 +11525,7 @@ function distinctMap() {
 			return Array.from(map.values(), (_) => _.v);
 		},
 		increment(v) {
-			const k = key$2(v);
+			const k = key$3(v);
 			const e = map.get(k);
 			e ? ++e.n : map.set(k, {
 				v,
@@ -11533,7 +11533,7 @@ function distinctMap() {
 			});
 		},
 		decrement(v) {
-			const k = key$2(v);
+			const k = key$3(v);
 			const e = map.get(k);
 			e.n === 1 ? map.delete(k) : --e.n;
 		},
@@ -14086,7 +14086,7 @@ pp$8.parseThrowStatement = function(node) {
 	this.semicolon();
 	return this.finishNode(node, "ThrowStatement");
 };
-var empty$1 = [];
+var empty$1$1 = [];
 pp$8.parseCatchClauseParam = function() {
 	var param = this.parseBindingAtom();
 	var simple = param.type === "Identifier";
@@ -14541,7 +14541,7 @@ pp$8.parseExportSpecifiers = function(exports) {
 pp$8.parseImport = function(node) {
 	this.next();
 	if (this.type === types$1.string) {
-		node.specifiers = empty$1;
+		node.specifiers = empty$1$1;
 		node.source = this.parseExprAtom();
 	} else {
 		node.specifiers = this.parseImportSpecifiers();
@@ -23222,14 +23222,14 @@ function getReadonlyRequest(request) {
 	};
 }
 function getReadonlyContext(context) {
-	if (isPlainObject$1(context)) {
+	if (isPlainObject$2(context)) {
 		let frozen = { ...context };
 		Object.freeze(frozen);
 		return frozen;
 	} else return { get: (ctx) => context.get(ctx) };
 }
 var objectProtoNames = Object.getOwnPropertyNames(Object.prototype).sort().join("\0");
-function isPlainObject$1(thing) {
+function isPlainObject$2(thing) {
 	if (thing === null || typeof thing !== "object") return false;
 	const proto = Object.getPrototypeOf(thing);
 	return proto === Object.prototype || proto === null || Object.getOwnPropertyNames(proto).sort().join("\0") === objectProtoNames;
@@ -58575,11 +58575,11 @@ var VALUE = "value";
 var isDraft = (value) => !!value && !!value[DRAFT_STATE];
 function isDraftable(value) {
 	if (!value) return false;
-	return isPlainObject(value) || isArray(value) || !!value[DRAFTABLE] || !!value[CONSTRUCTOR]?.[DRAFTABLE] || isMap(value) || isSet(value);
+	return isPlainObject$1(value) || isArray(value) || !!value[DRAFTABLE] || !!value[CONSTRUCTOR]?.[DRAFTABLE] || isMap(value) || isSet(value);
 }
 var objectCtorString = O[PROTOTYPE][CONSTRUCTOR].toString();
 var cachedCtorStrings = /* @__PURE__ */ new WeakMap();
-function isPlainObject(value) {
+function isPlainObject$1(value) {
 	if (!value || !isObjectish(value)) return false;
 	const proto = getPrototypeOf(value);
 	if (proto === null || proto === O[PROTOTYPE]) return true;
@@ -58638,7 +58638,7 @@ function shallowCopy(base, strict) {
 	if (isMap(base)) return new Map(base);
 	if (isSet(base)) return new Set(base);
 	if (isArray(base)) return Array[PROTOTYPE].slice.call(base);
-	const isPlain = isPlainObject(base);
+	const isPlain = isPlainObject$1(base);
 	if (strict === true || strict === "class_only" && !isPlain) {
 		const descriptors = O.getOwnPropertyDescriptors(base);
 		delete descriptors[DRAFT_STATE];
@@ -66691,11 +66691,24 @@ var useContentIcons = () => {
 	return (0, import_react.useContext)(IconsContext);
 };
 var MetadataGrid_module_default = {
-	grid: "_grid_1bdxe_1",
-	cell: "_cell_1bdxe_8",
-	value: "_value_1bdxe_12",
-	toggleContainer: "_toggleContainer_1bdxe_16",
-	toggleButton: "_toggleButton_1bdxe_27"
+	grid: "_grid_1qisc_5",
+	rows: "_rows_1qisc_14",
+	row: "_row_1qisc_14",
+	striped: "_striped_1qisc_35",
+	key: "_key_1qisc_43",
+	val: "_val_1qisc_52",
+	empty: "_empty_1qisc_63",
+	numVal: "_numVal_1qisc_69",
+	boolVal: "_boolVal_1qisc_73",
+	group: "_group_1qisc_79",
+	groupHeader: "_groupHeader_1qisc_91",
+	groupKey: "_groupKey_1qisc_99",
+	groupRule: "_groupRule_1qisc_107",
+	depth1: "_depth1_1qisc_115",
+	depth1Group: "_depth1Group_1qisc_128",
+	depth2: "_depth2_1qisc_143",
+	toggleContainer: "_toggleContainer_1qisc_153",
+	toggleButton: "_toggleButton_1qisc_164"
 };
 var RenderedContent_module_default = {
 	query: "_query_seqs2_1",
@@ -66940,67 +66953,90 @@ var contentRenderers = (icons, renderObject, externalRenderers) => {
 };
 //#endregion
 //#region ../../packages/inspect-components/src/content/MetaDataGrid.tsx
+var isPlainObject = (v) => v !== null && typeof v === "object" && !Array.isArray(v);
+var isNonEmptyObject = (v) => isPlainObject(v) && Object.keys(v).length > 0;
 /**
-* Renders the MetaDataView component.
+* Renders structured metadata as a grid with section cards.
+*
+* Top-level scalars render as key-value rows; nested objects are
+* promoted to titled sections with a header rule. Recurses for
+* deeply nested objects.
 */
-var MetaDataGrid = ({ id, entries, className, references, style, maxRows, options }) => {
-	const baseId = "metadata-grid";
-	const fontStyle = options?.size === "mini" ? "text-size-smallest" : "text-size-smaller";
-	const [expanded, setExpanded] = (0, import_react.useState)(false);
+var MetaDataGrid = ({ id, entries, className, references, style, maxRows, options, depth = 0 }) => {
+	const baseId = id ?? "metadata-grid";
 	const allEntries = entryRecords(entries);
-	const isCollapsible = maxRows != null && allEntries.length > maxRows;
-	const visibleEntries = isCollapsible && !expanded ? allEntries.slice(0, maxRows) : allEntries;
-	const entryEls = visibleEntries.map((entry, index) => {
-		const id = `${baseId}-value-${index}`;
-		return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [
-			index !== 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: {
-				gridColumn: "1 / -1",
-				borderBottom: `${!options?.plain ? "solid 1px var(--bs-light-border-subtle" : ""}`
-			} }) : void 0,
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: clsx(`${baseId}-key`, MetadataGrid_module_default.cell, "text-style-label", "text-style-secondary", fontStyle),
-				children: entry?.name
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: clsx(MetadataGrid_module_default.value, `${baseId}-value`, fontStyle),
-				children: entry && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedContent, {
-					id,
-					entry,
-					references,
-					renderOptions: {
-						renderString: "markdown",
-						previewRefsOnHover: options?.previewRefsOnHover
-					},
-					renderObject: (obj) => {
-						return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
-							id,
-							className: clsx(MetadataGrid_module_default.nested),
-							entries: obj,
-							options,
-							references
-						});
-					}
-				})
-			})
-		] }, `${baseId}-record-${index}`);
-	});
+	const scalars = allEntries.filter((e) => !isNonEmptyObject(e.value));
+	const groups = allEntries.filter((e) => isNonEmptyObject(e.value));
+	const [expanded, setExpanded] = (0, import_react.useState)(false);
+	const isCollapsible = maxRows != null && scalars.length > maxRows;
+	const visibleScalars = isCollapsible && !expanded ? scalars.slice(0, maxRows) : scalars;
+	const depthClass = depth === 1 ? MetadataGrid_module_default.depth1 : depth >= 2 ? MetadataGrid_module_default.depth2 : void 0;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		id,
-		className: clsx(className, MetadataGrid_module_default.grid),
-		style,
-		children: [entryEls, isCollapsible && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: MetadataGrid_module_default.toggleContainer,
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
-				className: clsx(MetadataGrid_module_default.toggleButton, "text-size-smallest"),
-				onClick: () => setExpanded((prev) => !prev),
-				children: [expanded ? "less" : `${allEntries.length - visibleEntries.length} more`, "..."]
+		id: depth === 0 ? id : void 0,
+		className: clsx(depth === 0 && className, MetadataGrid_module_default.grid, depthClass, options?.striped && depth === 0 && MetadataGrid_module_default.striped),
+		style: depth === 0 ? style : void 0,
+		children: [
+			visibleScalars.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: MetadataGrid_module_default.rows,
+				children: visibleScalars.map((entry, index) => {
+					const entryId = `${baseId}-value-${index}`;
+					return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: MetadataGrid_module_default.row,
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: MetadataGrid_module_default.key,
+							children: entry.name
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: MetadataGrid_module_default.val,
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedContent, {
+								id: entryId,
+								entry,
+								references,
+								renderOptions: {
+									renderString: "markdown",
+									previewRefsOnHover: options?.previewRefsOnHover
+								},
+								renderObject: (obj) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
+									id: entryId,
+									entries: obj,
+									options,
+									references,
+									depth: depth + 1
+								})
+							})
+						})]
+					}, entryId);
+				})
+			}),
+			isCollapsible && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: MetadataGrid_module_default.toggleContainer,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+					className: clsx(MetadataGrid_module_default.toggleButton, "text-size-smallest"),
+					onClick: () => setExpanded((prev) => !prev),
+					children: [expanded ? "less" : `${scalars.length - visibleScalars.length} more`, "..."]
+				})
+			}),
+			groups.map((entry, groupIndex) => {
+				const groupId = `${baseId}-group-${groupIndex}`;
+				return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
+					className: clsx(MetadataGrid_module_default.group, depth >= 1 && MetadataGrid_module_default.depth1Group),
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("header", {
+						className: MetadataGrid_module_default.groupHeader,
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							className: MetadataGrid_module_default.groupKey,
+							children: entry.name
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: MetadataGrid_module_default.groupRule })]
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
+						id: groupId,
+						entries: entry.value,
+						options,
+						references,
+						depth: depth + 1
+					})]
+				}, groupId);
 			})
-		})]
+		]
 	});
 };
-/**
-* Ensure the proper type for entries
-*/
 var entryRecords = (entries) => {
 	if (!entries) return [];
 	if (!Array.isArray(entries)) return Object.entries(entries || {}).map(([key, value]) => {
@@ -167727,6 +167763,7 @@ var SelectScorer = ({ scores, selectedScores, setSelectedScores }) => {
 	const selectedCount = selectedKeys.size;
 	const label = selectedCount === 0 ? "Score" : selectedCount === 1 ? selectedScores?.[0]?.name || "Score" : `${selectedCount} Scores`;
 	const allScoresSelected = selectedCount === scores.length;
+	const noneSelected = selectedCount === 0;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		style: { display: "flex" },
 		children: [
@@ -167766,6 +167803,14 @@ var SelectScorer = ({ scores, selectedScores, setSelectedScores }) => {
 								setSelectedScores(scores);
 							},
 							children: "All"
+						}),
+						"|",
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+							className: clsx(SelectScorer_module_default.link, noneSelected ? SelectScorer_module_default.selected : void 0),
+							onClick: () => {
+								setSelectedScores([]);
+							},
+							children: "None"
 						})
 					]
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
