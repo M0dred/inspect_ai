@@ -49441,7 +49441,7 @@ var emphasis_default = {
 };
 //#endregion
 //#region ../../node_modules/.pnpm/markdown-it@14.1.1/node_modules/markdown-it/lib/rules_inline/link.mjs
-function link(state, silent) {
+function link$1(state, silent) {
 	let code, label, res, ref;
 	let href = "";
 	let title = "";
@@ -49812,7 +49812,7 @@ var _rules = [
 	["backticks", backtick],
 	["strikethrough", strikethrough_default.tokenize],
 	["emphasis", emphasis_default.tokenize],
-	["link", link],
+	["link", link$1],
 	["image", image$1],
 	["autolink", autolink],
 	["html_inline", html_inline],
@@ -138812,12 +138812,16 @@ var MessageBand = ({ id, message, type, scope = "eval" }) => {
 		]
 	});
 };
-var EditButton_module_default = { button: "_button_xbrei_1" };
+var EditButton_module_default = {
+	button: "_button_1cp00_2",
+	link: "_link_1cp00_1",
+	pill: "_pill_1cp00_1"
+};
 //#endregion
 //#region src/app/log-view/title-view/EditButton.tsx
-var EditButton = ({ onClick, title }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+var EditButton = ({ onClick, title, variant = "link" }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
 	type: "button",
-	className: clsx(EditButton_module_default.button, "text-size-smaller"),
+	className: clsx(EditButton_module_default.button, variant === "pill" ? EditButton_module_default.pill : EditButton_module_default.link, "text-size-smaller"),
 	onClick,
 	title: title ?? "Edit",
 	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: ApplicationIcons.pencil }), "Edit"]
@@ -139436,6 +139440,7 @@ var EditMetadataDialog = ({ showing, setShowing, currentMetadata, logFile, onSav
 	const [reason, setReason] = (0, import_react.useState)("");
 	const [submitting, setSubmitting] = (0, import_react.useState)(false);
 	const [error, setError] = (0, import_react.useState)();
+	const [pendingFocusKey, setPendingFocusKey] = (0, import_react.useState)(null);
 	(0, import_react.useEffect)(() => {
 		if (!showing) return;
 		setEntries(initialEntries);
@@ -139494,7 +139499,21 @@ var EditMetadataDialog = ({ showing, setShowing, currentMetadata, logFile, onSav
 		}]);
 		setNewKey("");
 		setNewType("string");
+		setPendingFocusKey(k);
 	};
+	(0, import_react.useEffect)(() => {
+		if (pendingFocusKey == null) return;
+		const selector = `[data-meta-key="${CSS.escape(pendingFocusKey)}"]`;
+		const textarea = document.querySelector(selector)?.querySelector("textarea");
+		if (textarea) {
+			textarea.scrollIntoView({
+				behavior: "smooth",
+				block: "nearest"
+			});
+			textarea.focus();
+		}
+		setPendingFocusKey(null);
+	}, [pendingFocusKey]);
 	const handleNewKeyDown = (e) => {
 		if (e.key === "Enter") {
 			e.preventDefault();
@@ -139668,6 +139687,7 @@ var EditMetadataDialog = ({ showing, setShowing, currentMetadata, logFile, onSav
 };
 var MetaRow = ({ entry, first, onChange, onRemove, disabled }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 	className: clsx(EditMetadataDialog_module_default.row, !first && EditMetadataDialog_module_default.rowDivider, entry.isNew && EditMetadataDialog_module_default.rowNew),
+	"data-meta-key": entry.key,
 	children: [
 		/* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", {
 			className: clsx("text-size-smaller", EditMetadataDialog_module_default.key),
@@ -168303,10 +168323,10 @@ var EditTagsDialog_module_default = {
 	addButton: "_addButton_yxwie_27"
 };
 var TagChip_module_default = {
-	chip: "_chip_35bbk_1",
-	chipLabel: "_chipLabel_35bbk_21",
-	chipNew: "_chipNew_35bbk_28",
-	chipRemove: "_chipRemove_35bbk_33"
+	chip: "_chip_300at_1",
+	chipLabel: "_chipLabel_300at_22",
+	chipNew: "_chipNew_300at_31",
+	chipRemove: "_chipRemove_300at_36"
 };
 //#endregion
 //#region src/app/log-view/title-view/TagChip.tsx
@@ -168553,7 +168573,8 @@ var TaskTab = ({ evalSpec, evalStats, earlyStopping, tags }) => {
 		className: TaskTab_module_default.tagPillRow,
 		children: [tagList.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TagChip, { label: tag }, tag)), showTagEdit && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EditButton, {
 			onClick: () => setEditingTags(true),
-			title: "Edit tags"
+			title: "Edit tags",
+			variant: "pill"
 		})]
 	}) };
 	if (evalSpec?.sandbox) if (Array.isArray(evalSpec?.sandbox)) {
@@ -169372,7 +169393,8 @@ var TagStrip = ({ tags, showEdit, onEdit }) => {
 		}),
 		showEdit && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EditButton, {
 			onClick: onEdit,
-			title: "Edit tags"
+			title: "Edit tags",
+			variant: "pill"
 		})
 	] });
 };
