@@ -138819,12 +138819,12 @@ var EditButton_module_default = {
 };
 //#endregion
 //#region src/app/log-view/title-view/EditButton.tsx
-var EditButton = ({ onClick, title, variant = "link" }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+var EditButton = ({ onClick, title, variant = "link", children }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
 	type: "button",
 	className: clsx(EditButton_module_default.button, variant === "pill" ? EditButton_module_default.pill : EditButton_module_default.link, "text-size-smaller"),
 	onClick,
 	title: title ?? "Edit",
-	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: ApplicationIcons.pencil }), "Edit"]
+	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: ApplicationIcons.pencil }), children ?? "Edit"]
 });
 var Modal_module_default = {
 	modal: "_modal_154pu_1",
@@ -139881,9 +139881,11 @@ var PlanCard = ({ evalSpec, evalPlan, scores, metadata: metadataProp, scrollRef 
 	const hasMetadata = Object.keys(metadata).length > 0;
 	const canEditMetadata = useStore((state) => Boolean(state.api?.edit_log));
 	const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
+	const logStatus = useStore((state) => state.log.selectedLogDetails?.status);
 	const refreshLog = useRefreshLog();
 	const [editingMetadata, setEditingMetadata] = (0, import_react.useState)(false);
 	const onMetadataSaved = (0, import_react.useCallback)(() => refreshLog(), [refreshLog]);
+	const canEdit = canEditMetadata && !!selectedLogFile && !(logStatus === "started");
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
 		/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Card, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardHeader, { label: "Summary" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardBody, {
 			id: "task-plan-card-body",
@@ -139893,9 +139895,9 @@ var PlanCard = ({ evalSpec, evalPlan, scores, metadata: metadataProp, scrollRef 
 				scores
 			})
 		})] }),
-		(hasMetadata || canEditMetadata && !!selectedLogFile) && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Card, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardHeader, {
+		(hasMetadata || canEdit) && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Card, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardHeader, {
 			label: "Metadata",
-			children: canEditMetadata && selectedLogFile && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+			children: canEdit && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 				className: PlanCard_module_default.headerActions,
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EditButton, {
 					onClick: () => setEditingMetadata(true),
@@ -141656,6 +141658,26 @@ var SampleNotFoundError = class SampleNotFoundError extends Error {
 	}
 };
 /**
+* Synthesize an EvalHeader from a `_journal/start.json` payload.
+*
+* `header.json` is only written at end-of-eval, so while a log is in
+* progress the viewer falls back to `start.json` (which carries the
+* EvalSpec + EvalPlan). The Python side does the analogous lift via
+* `EvalLog.recompute_tags_and_metadata` on the model validator —
+* `log.tags` / `log.metadata` derive from `eval.tags` / `eval.metadata`
+* until `log_updates` adds edits on top. Mirror that here so a running
+* log's chips and metadata still render in the viewer.
+*
+* Exported for unit testing.
+*/
+var headerFromLogStart = (start) => ({
+	status: "started",
+	eval: start.eval,
+	plan: start.plan,
+	tags: start.eval?.tags ?? [],
+	metadata: start.eval?.metadata ?? {}
+});
+/**
 * Opens a remote log file and provides methods to read its contents.
 */
 var openRemoteLogFile = async (api, url, concurrency) => {
@@ -141721,14 +141743,7 @@ var openRemoteLogFile = async (api, url, concurrency) => {
 	*/
 	const readHeader = async () => {
 		if (remoteZipFile.centralDirectory.has("header.json")) return await readJSONFile("header.json");
-		else {
-			const evalSpec = await readJSONFile("_journal/start.json");
-			return {
-				status: "started",
-				eval: evalSpec.eval,
-				plan: evalSpec.plan
-			};
-		}
+		else return headerFromLogStart(await readJSONFile("_journal/start.json"));
 	};
 	const readEvalBasicInfo = async () => {
 		return toLogPreview(await readHeader());
@@ -168542,10 +168557,11 @@ var useTaskTabConfig = (evalSpec, evalStats, earlyStopping, tags) => {
 var TaskTab = ({ evalSpec, evalStats, earlyStopping, tags }) => {
 	const canEditTags = useStore((state) => Boolean(state.api?.edit_log));
 	const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
+	const logStatus = useStore((state) => state.log.selectedLogDetails?.status);
 	const refreshLog = useRefreshLog();
 	const [editingTags, setEditingTags] = (0, import_react.useState)(false);
 	const onTagsSaved = (0, import_react.useCallback)(() => refreshLog(), [refreshLog]);
-	const showTagEdit = canEditTags && !!selectedLogFile;
+	const showTagEdit = canEditTags && !!selectedLogFile && !(logStatus === "started");
 	const tagList = tags ?? [];
 	const config = {};
 	Object.entries(evalSpec?.config || {}).forEach((entry) => {
@@ -168574,7 +168590,8 @@ var TaskTab = ({ evalSpec, evalStats, earlyStopping, tags }) => {
 		children: [tagList.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TagChip, { label: tag }, tag)), showTagEdit && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EditButton, {
 			onClick: () => setEditingTags(true),
 			title: "Edit tags",
-			variant: "pill"
+			variant: "pill",
+			children: "Tags"
 		})]
 	}) };
 	if (evalSpec?.sandbox) if (Array.isArray(evalSpec?.sandbox)) {
@@ -169394,7 +169411,8 @@ var TagStrip = ({ tags, showEdit, onEdit }) => {
 		showEdit && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EditButton, {
 			onClick: onEdit,
 			title: "Edit tags",
-			variant: "pill"
+			variant: "pill",
+			children: "Tags"
 		})
 	] });
 };
@@ -169412,7 +169430,7 @@ var PrimaryBar = ({ status, evalResults, runningMetrics, evalSpec, sampleCount, 
 	const onTagsSaved = (0, import_react.useCallback)(() => refreshLog(), [refreshLog]);
 	const logFileName = selectedLogFile ? filename(selectedLogFile) : "";
 	const isEvalFile = selectedLogFile?.endsWith(".eval");
-	const showTagEdit = canEditTags && !!selectedLogFile;
+	const showTagEdit = canEditTags && !!selectedLogFile && !(status === "started");
 	const tagList = tags ?? [];
 	const copyValue = (() => {
 		if (!absLogDir || !selectedLogFile || !logDir) return selectedLogFile;
