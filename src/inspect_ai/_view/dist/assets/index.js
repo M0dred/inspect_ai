@@ -18153,6 +18153,39 @@ function formatDurationShort(start, end) {
 	if (remMins === 0) return `${hours}h`;
 	return `${hours}h ${remMins}m`;
 }
+/**
+* Formats a duration in milliseconds as a seconds string with up to 3 decimal
+* places (e.g. "1.234 s"). Always renders in seconds — does not decompose into
+* minutes/hours; use formatTime for that.
+*/
+function formatMs(ms) {
+	return `${(ms / 1e3).toLocaleString(navigator.language, {
+		minimumFractionDigits: 0,
+		maximumFractionDigits: 3
+	})} s`;
+}
+/**
+* Formats a byte count as a human-readable string (B, KB, MB, GB, TB).
+*/
+function formatBytes(bytes) {
+	const units = [
+		"B",
+		"KB",
+		"MB",
+		"GB",
+		"TB"
+	];
+	let value = bytes;
+	let unitIdx = 0;
+	while (value >= 1024 && unitIdx < units.length - 1) {
+		value /= 1024;
+		unitIdx++;
+	}
+	return `${value.toLocaleString(navigator.language, {
+		minimumFractionDigits: 0,
+		maximumFractionDigits: unitIdx === 0 ? 0 : 2
+	})} ${units[unitIdx]}`;
+}
 //#endregion
 //#region ../../packages/util/src/git.ts
 /**
@@ -65563,7 +65596,8 @@ var kDefaultExcludeEvents = [
 	"state",
 	"store",
 	"branch",
-	"anchor"
+	"anchor",
+	"checkpoint"
 ];
 var initialState = {
 	sample_identifier: void 0,
@@ -122823,6 +122857,11 @@ var transformers = () => {
 			process: (node) => {
 				return discardNode(node);
 			}
+		},
+		{
+			name: "discard_checkpoint_span",
+			matches: (node) => node.event.event === "span_begin" && node.event.type === "checkpoint",
+			process: (node) => discardNode(node)
 		}
 	];
 };
@@ -126857,6 +126896,7 @@ function useListPositionManager(baseListId, selected, scrollRef, hasScrollTarget
 var TranscriptIcons = {
 	agent: "bi bi-grid",
 	approve: "bi bi-shield",
+	checkpoint: "bi bi-bookmark-check-fill",
 	approvals: {
 		approve: "bi bi-shield-check",
 		reject: "bi bi-shield-x",
@@ -126998,6 +127038,7 @@ var labelForNode = (node) => {
 		case "step":
 			if (node.event.name === "53787D8A-D3FC-426D-B383-9F880B70E4AA") return "sandbox events";
 			return node.event.name;
+		case "checkpoint": return `checkpoint ${node.event.checkpoint_id}`;
 		default: return node.event.event;
 	}
 };
@@ -127089,6 +127130,7 @@ function labelForOutlineNode(node) {
 		case "model": return `model${node.event.role ? ` (${node.event.role})` : ""}`;
 		case "score": return "scoring";
 		case "step": return node.event.name;
+		case "checkpoint": return `checkpoint ${node.event.checkpoint_id}`;
 		default: return node.event.event;
 	}
 }
@@ -130636,6 +130678,93 @@ var BranchEventView = ({ eventNode, className }) => {
 		})
 	});
 };
+var CheckpointEventView_module_default = {
+	panel: "_panel_1dnhl_1",
+	metric: "_metric_1dnhl_5",
+	label: "_label_1dnhl_10",
+	section: "_section_1dnhl_15",
+	sectionTitle: "_sectionTitle_1dnhl_19",
+	indented: "_indented_1dnhl_23"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/transcript/CheckpointEventView.tsx
+var SizeAndDuration = ({ size_bytes, duration_ms }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
+	label: "Size",
+	layout: "row",
+	children: formatBytes(size_bytes)
+}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
+	label: "Duration",
+	layout: "row",
+	children: formatMs(duration_ms)
+})] });
+var CheckpointEventView = ({ eventNode, className }) => {
+	const event = eventNode.event;
+	const sandboxEntries = Object.entries(event.sandboxes);
+	const sections = [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: CheckpointEventView_module_default.section,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: CheckpointEventView_module_default.sectionTitle,
+			children: "Host"
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: CheckpointEventView_module_default.indented,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SizeAndDuration, {
+				size_bytes: event.host.size_bytes,
+				duration_ms: event.host.duration_ms
+			})
+		})]
+	}, "host")];
+	const onlySandbox = sandboxEntries.length === 1 ? sandboxEntries[0] : null;
+	if (onlySandbox) {
+		const [, details] = onlySandbox;
+		sections.push(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: CheckpointEventView_module_default.section,
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: CheckpointEventView_module_default.sectionTitle,
+				children: "Sandbox"
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: CheckpointEventView_module_default.indented,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SizeAndDuration, {
+					size_bytes: details.size_bytes,
+					duration_ms: details.duration_ms
+				})
+			})]
+		}, "sandbox"));
+	} else if (sandboxEntries.length > 1) sections.push(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: CheckpointEventView_module_default.section,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: CheckpointEventView_module_default.sectionTitle,
+			children: "Sandboxes"
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: CheckpointEventView_module_default.indented,
+			children: sandboxEntries.map(([name, details]) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: CheckpointEventView_module_default.section,
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: CheckpointEventView_module_default.sectionTitle,
+					children: name
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: CheckpointEventView_module_default.indented,
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SizeAndDuration, {
+						size_bytes: details.size_bytes,
+						duration_ms: details.duration_ms
+					})
+				})]
+			}, name))
+		})]
+	}, "sandboxes"));
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventRow, {
+		title: formatTitle(`Checkpoint ${event.checkpoint_id}`, void 0, event.duration_ms / 1e3),
+		icon: TranscriptIcons.checkpoint,
+		className,
+		below: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: CheckpointEventView_module_default.panel,
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
+				label: "Size",
+				layout: "row",
+				children: formatBytes(event.size_bytes)
+			}), sections]
+		})
+	});
+};
 var CompactionEventView_module_default = { panel: "_panel_8zdtn_1" };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/CompactionEventView.tsx
@@ -132934,6 +133063,10 @@ var RenderedEventNodeInner = ({ node, next, className, context, onAutoCollapse, 
 			className
 		});
 		case "sandbox": return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SandboxEventView, {
+			eventNode: node,
+			className
+		});
+		case "checkpoint": return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CheckpointEventView, {
 			eventNode: node,
 			className
 		});
@@ -135499,6 +135632,7 @@ var eventTypes = {
 	subtask: "Subtask",
 	anchor: "Anchor",
 	branch: "Branch",
+	checkpoint: "Checkpoint",
 	step: "Step"
 };
 var useTranscriptFilter = () => {
