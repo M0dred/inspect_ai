@@ -69979,6 +69979,26 @@ var useRefreshLog = () => {
 		setLoading
 	]);
 };
+/**
+* Capability + plumbing for an edit-the-current-log surface (tag, metadata,
+* score, …). Each edit dialog kind reads this and renders its own dialog
+* with its own payload — but the gate and the refresh wiring are shared.
+*
+* The in-progress gate mirrors the server: the edit API returns 409 while
+* the recorder still owns the file, so offering the action and failing
+* on save is worse than not offering it.
+*/
+var useLogEditAffordance = () => {
+	const hasEditApi = useStore((s) => Boolean(s.api?.edit_log));
+	const selectedLogFile = useStore((s) => s.logs.selectedLogFile);
+	const logStatus = useStore((s) => s.log.selectedLogDetails?.status);
+	const refreshLog = useRefreshLog();
+	return {
+		canEdit: hasEditApi && !!selectedLogFile && !(logStatus === "started"),
+		selectedLogFile,
+		refreshOnSave: refreshLog
+	};
+};
 var useSampleSummaries = () => {
 	const selectedLogDetails = useStore((state) => state.log.selectedLogDetails);
 	const pendingSampleSummaries = useStore((state) => state.log.pendingSampleSummaries);
@@ -138813,9 +138833,9 @@ var MessageBand = ({ id, message, type, scope = "eval" }) => {
 	});
 };
 var EditButton_module_default = {
-	button: "_button_1cp00_2",
-	link: "_link_1cp00_1",
-	pill: "_pill_1cp00_1"
+	button: "_button_1pdin_2",
+	link: "_link_1pdin_1",
+	pill: "_pill_1pdin_1"
 };
 //#endregion
 //#region src/app/log-view/title-view/EditButton.tsx
@@ -138827,17 +138847,17 @@ var EditButton = ({ onClick, title, variant = "link", children }) => /* @__PURE_
 	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: ApplicationIcons.pencil }), children ?? "Edit"]
 });
 var Modal_module_default = {
-	modal: "_modal_154pu_1",
-	header: "_header_154pu_14",
-	modalTitle: "_modalTitle_154pu_18",
-	btnClose: "_btnClose_154pu_22",
-	backdrop: "_backdrop_154pu_28",
-	overflowVisible: "_overflowVisible_154pu_40",
-	overflowHidden: "_overflowHidden_154pu_44",
-	overflowScroll: "_overflowScroll_154pu_48",
-	overflowAuto: "_overflowAuto_154pu_52",
-	noPadding: "_noPadding_154pu_56",
-	footerSlot: "_footerSlot_154pu_63"
+	modal: "_modal_8i1ew_1",
+	header: "_header_8i1ew_21",
+	modalTitle: "_modalTitle_8i1ew_26",
+	btnClose: "_btnClose_8i1ew_30",
+	backdrop: "_backdrop_8i1ew_36",
+	overflowVisible: "_overflowVisible_8i1ew_48",
+	overflowHidden: "_overflowHidden_8i1ew_52",
+	overflowScroll: "_overflowScroll_8i1ew_56",
+	overflowAuto: "_overflowAuto_8i1ew_60",
+	noPadding: "_noPadding_8i1ew_64",
+	footerSlot: "_footerSlot_8i1ew_73"
 };
 //#endregion
 //#region src/components/Modal.tsx
@@ -138892,7 +138912,7 @@ var Modal = ({ id, title, showing, setShowing, children, className, overflow = "
 		})
 	})] });
 };
-var AutogrowText_module_default = { textarea: "_textarea_1i52c_1" };
+var AutogrowText_module_default = { textarea: "_textarea_8mbr9_1" };
 //#endregion
 //#region src/app/log-view/title-view/AutogrowText.tsx
 var AutogrowText = ({ value, onChange, disabled, maxHeightPx }) => {
@@ -138925,12 +138945,13 @@ var AutogrowText = ({ value, onChange, disabled, maxHeightPx }) => {
 	});
 };
 var ChangeSummary_module_default = {
-	container: "_container_1y8hh_1",
-	label: "_label_1y8hh_10",
-	items: "_items_1y8hh_15",
-	accentAdding: "_accentAdding_1y8hh_19",
-	accentEditing: "_accentEditing_1y8hh_23",
-	accentRemoving: "_accentRemoving_1y8hh_27"
+	container: "_container_13ofn_1",
+	line: "_line_13ofn_18",
+	label: "_label_13ofn_24",
+	items: "_items_13ofn_29",
+	accentAdding: "_accentAdding_13ofn_33",
+	accentEditing: "_accentEditing_13ofn_37",
+	accentRemoving: "_accentRemoving_13ofn_41"
 };
 //#endregion
 //#region src/app/log-view/title-view/ChangeSummary.tsx
@@ -138957,43 +138978,51 @@ var ChangeSummary = ({ adding = [], editing = [], removing = [] }) => {
 		]
 	});
 };
-var Line$1 = ({ label, accent, items }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-	/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-		className: clsx(ChangeSummary_module_default.label, accent),
-		children: [label, ":"]
-	}),
-	" ",
-	/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-		className: ChangeSummary_module_default.items,
-		children: items.join(", ")
-	})
-] });
+var Line$1 = ({ label, accent, items }) => {
+	const joined = items.join(", ");
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: ChangeSummary_module_default.line,
+		title: `${label}: ${joined}`,
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+				className: clsx(ChangeSummary_module_default.label, accent),
+				children: [label, ":"]
+			}),
+			" ",
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: ChangeSummary_module_default.items,
+				children: joined
+			})
+		]
+	});
+};
 var EditAnnotationsDialog_module_default = {
-	body: "_body_1stg5_3",
-	section: "_section_1stg5_9",
-	labelRow: "_labelRow_1stg5_15",
-	label: "_label_1stg5_15",
-	hint: "_hint_1stg5_27",
-	required: "_required_1stg5_32",
-	divider: "_divider_1stg5_37",
-	provenance: "_provenance_1stg5_43",
-	error: "_error_1stg5_49",
-	footer: "_footer_1stg5_57"
+	body: "_body_1rmem_3",
+	section: "_section_1rmem_9",
+	labelRow: "_labelRow_1rmem_15",
+	label: "_label_1rmem_15",
+	hint: "_hint_1rmem_27",
+	required: "_required_1rmem_33",
+	divider: "_divider_1rmem_38",
+	provenance: "_provenance_1rmem_44",
+	error: "_error_1rmem_50",
+	footer: "_footer_1rmem_59",
+	footerActions: "_footerActions_1rmem_59"
 };
 var EditMetadataDialog_module_default = {
-	tableScroll: "_tableScroll_1g33t_5",
-	table: "_table_1g33t_5",
-	empty: "_empty_1g33t_17",
-	row: "_row_1g33t_22",
-	rowDivider: "_rowDivider_1g33t_30",
-	rowNew: "_rowNew_1g33t_34",
-	key: "_key_1g33t_38",
-	value: "_value_1g33t_45",
-	remove: "_remove_1g33t_49",
-	addRow: "_addRow_1g33t_70",
-	addKeyInput: "_addKeyInput_1g33t_77",
-	typeSelect: "_typeSelect_1g33t_81",
-	addButton: "_addButton_1g33t_85"
+	tableScroll: "_tableScroll_twuq5_5",
+	table: "_table_twuq5_5",
+	empty: "_empty_twuq5_23",
+	row: "_row_twuq5_30",
+	rowDivider: "_rowDivider_twuq5_37",
+	rowNew: "_rowNew_twuq5_41",
+	key: "_key_twuq5_50",
+	value: "_value_twuq5_56",
+	remove: "_remove_twuq5_61",
+	addRow: "_addRow_twuq5_81",
+	addKeyInput: "_addKeyInput_twuq5_88",
+	typeSelect: "_typeSelect_twuq5_92",
+	addButton: "_addButton_twuq5_96"
 };
 //#endregion
 //#region src/utils/json-worker.ts
@@ -139317,6 +139346,7 @@ function formatEditError(err) {
 		if (err.status === 400) return err.message.replace(/^API Error 400:\s*/, "");
 		return err.message;
 	}
+	if (err instanceof TypeError) return "Connection lost — view server unreachable.";
 	if (err instanceof Error) return err.message;
 	return String(err);
 }
@@ -139353,13 +139383,12 @@ var ProvenanceFields = ({ author, setAuthor, reason, setReason, disabled }) => /
 				children: "Reason"
 			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 				className: clsx("text-size-smaller", EditAnnotationsDialog_module_default.hint),
-				children: "optional — why this edit?"
+				children: "optional"
 			})]
 		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
 			id: "edit-annotations-reason",
 			type: "text",
 			className: clsx("form-control", "text-size-smaller"),
-			placeholder: "e.g. correcting after manual review",
 			value: reason,
 			onChange: (e) => setReason(e.target.value),
 			disabled
@@ -139562,18 +139591,25 @@ var EditMetadataDialog = ({ showing, setShowing, currentMetadata, logFile, onSav
 		width: "820px",
 		footer: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: EditAnnotationsDialog_module_default.footer,
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-				type: "button",
-				className: clsx("btn", "btn-secondary", "text-size-smaller"),
-				onClick: () => setShowing(false),
-				disabled: submitting,
-				children: "Cancel"
-			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-				type: "button",
-				className: clsx("btn", "btn-primary", "text-size-smaller"),
-				onClick: handleSave,
-				disabled: !canSave,
-				children: submitting ? "Saving…" : "Save"
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChangeSummary, {
+				adding,
+				editing,
+				removing: removed
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: EditAnnotationsDialog_module_default.footerActions,
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+					type: "button",
+					className: clsx("btn", "btn-secondary", "text-size-smaller"),
+					onClick: () => setShowing(false),
+					disabled: submitting,
+					children: "Cancel"
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+					type: "button",
+					className: clsx("btn", "btn-primary", "text-size-smaller"),
+					onClick: handleSave,
+					disabled: !canSave,
+					children: submitting ? "Saving…" : "Save"
+				})]
 			})]
 		}),
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -139607,11 +139643,6 @@ var EditMetadataDialog = ({ showing, setShowing, currentMetadata, logFile, onSav
 									disabled: submitting
 								}, entry.key))]
 							})
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChangeSummary, {
-							adding,
-							editing,
-							removing: removed
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							className: EditMetadataDialog_module_default.addRow,
@@ -139689,7 +139720,7 @@ var MetaRow = ({ entry, first, onChange, onRemove, disabled }) => /* @__PURE__ *
 	className: clsx(EditMetadataDialog_module_default.row, !first && EditMetadataDialog_module_default.rowDivider, entry.isNew && EditMetadataDialog_module_default.rowNew),
 	"data-meta-key": entry.key,
 	children: [
-		/* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", {
+		/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 			className: clsx("text-size-smaller", EditMetadataDialog_module_default.key),
 			children: entry.key
 		}),
@@ -139879,13 +139910,8 @@ var PlanCard_module_default = {
 var PlanCard = ({ evalSpec, evalPlan, scores, metadata: metadataProp, scrollRef }) => {
 	const metadata = metadataProp || {};
 	const hasMetadata = Object.keys(metadata).length > 0;
-	const canEditMetadata = useStore((state) => Boolean(state.api?.edit_log));
-	const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
-	const logStatus = useStore((state) => state.log.selectedLogDetails?.status);
-	const refreshLog = useRefreshLog();
+	const { canEdit, selectedLogFile, refreshOnSave } = useLogEditAffordance();
 	const [editingMetadata, setEditingMetadata] = (0, import_react.useState)(false);
-	const onMetadataSaved = (0, import_react.useCallback)(() => refreshLog(), [refreshLog]);
-	const canEdit = canEditMetadata && !!selectedLogFile && !(logStatus === "started");
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
 		/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Card, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardHeader, { label: "Summary" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardBody, {
 			id: "task-plan-card-body",
@@ -139920,7 +139946,7 @@ var PlanCard = ({ evalSpec, evalPlan, scores, metadata: metadataProp, scrollRef 
 			setShowing: setEditingMetadata,
 			currentMetadata: metadata,
 			logFile: selectedLogFile,
-			onSaved: onMetadataSaved
+			onSaved: refreshOnSave
 		})
 	] });
 };
@@ -168338,27 +168364,40 @@ var EditTagsDialog_module_default = {
 	addButton: "_addButton_yxwie_27"
 };
 var TagChip_module_default = {
-	chip: "_chip_300at_1",
-	chipLabel: "_chipLabel_300at_22",
-	chipNew: "_chipNew_300at_31",
-	chipRemove: "_chipRemove_300at_36"
+	chip: "_chip_1k2wf_1",
+	chipLabel: "_chipLabel_1k2wf_31",
+	chipNew: "_chipNew_1k2wf_40",
+	chipClickable: "_chipClickable_1k2wf_48",
+	chipRemove: "_chipRemove_1k2wf_61"
 };
 //#endregion
 //#region src/app/log-view/title-view/TagChip.tsx
-var TagChip = ({ label, isNew, onRemove }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-	className: clsx(TagChip_module_default.chip, isNew && TagChip_module_default.chipNew, "text-size-smaller"),
-	title: label,
-	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+var TagChip = ({ label, isNew, onRemove, onClick }) => {
+	const className = clsx(TagChip_module_default.chip, isNew && TagChip_module_default.chipNew, onClick && TagChip_module_default.chipClickable, "text-size-smaller");
+	const labelNode = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 		className: TagChip_module_default.chipLabel,
 		children: label
-	}), onRemove && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+	});
+	if (onClick) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 		type: "button",
-		className: TagChip_module_default.chipRemove,
-		"aria-label": `Remove ${label}`,
-		onClick: onRemove,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: ApplicationIcons.close })
-	})]
-});
+		className,
+		title: label,
+		"aria-label": `Edit tags (${label})`,
+		onClick,
+		children: labelNode
+	});
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+		className,
+		title: label,
+		children: [labelNode, onRemove && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+			type: "button",
+			className: TagChip_module_default.chipRemove,
+			"aria-label": `Remove ${label}`,
+			onClick: onRemove,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: ApplicationIcons.close })
+		})]
+	});
+};
 //#endregion
 //#region src/app/log-view/title-view/EditTagsDialog.tsx
 var EditTagsDialog = ({ showing, setShowing, currentTags, logFile, onSaved }) => {
@@ -168451,18 +168490,24 @@ var EditTagsDialog = ({ showing, setShowing, currentTags, logFile, onSaved }) =>
 		width: "580px",
 		footer: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: EditAnnotationsDialog_module_default.footer,
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-				type: "button",
-				className: clsx("btn", "btn-secondary", "text-size-smaller"),
-				onClick: () => setShowing(false),
-				disabled: submitting,
-				children: "Cancel"
-			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-				type: "button",
-				className: clsx("btn", "btn-primary", "text-size-smaller"),
-				onClick: handleSave,
-				disabled: !canSave,
-				children: submitting ? "Saving…" : "Save"
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChangeSummary, {
+				adding: tagsAdd,
+				removing: tagsRemove
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: EditAnnotationsDialog_module_default.footerActions,
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+					type: "button",
+					className: clsx("btn", "btn-secondary", "text-size-smaller"),
+					onClick: () => setShowing(false),
+					disabled: submitting,
+					children: "Cancel"
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+					type: "button",
+					className: clsx("btn", "btn-primary", "text-size-smaller"),
+					onClick: handleSave,
+					disabled: !canSave,
+					children: submitting ? "Saving…" : "Save"
+				})]
 			})]
 		}),
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -168504,10 +168549,6 @@ var EditTagsDialog = ({ showing, setShowing, currentTags, logFile, onSaved }) =>
 								disabled: submitting || !pending.trim(),
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: ApplicationIcons.changes.add }), " Add"]
 							})]
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChangeSummary, {
-							adding: tagsAdd,
-							removing: tagsRemove
 						})
 					]
 				}),
@@ -168527,9 +168568,135 @@ var EditTagsDialog = ({ showing, setShowing, currentTags, logFile, onSaved }) =>
 		})
 	});
 };
+var TagStrip_module_default = { tagRow: "_tagRow_pg3wd_4" };
+//#endregion
+//#region src/app/log-view/title-view/TagStrip.tsx
+var MAX_ROWS = 2;
+/**
+* Wrap-aware chip row: tag chips followed by the Edit pill as the
+* last item, so when chips wrap to additional lines the Edit pill
+* follows the last chip onto whichever line it lands on. Layout
+* context (alignment, margin, shrink) is supplied by the consumer via
+* `className`.
+*
+* With {@link TagStripProps.collapseOnWrap} on, the strip allows up to
+* {@link MAX_ROWS} rows of chips; if they would spill onto a third
+* row, it surfaces a "…" overflow pill (with a tooltip listing the
+* hidden tags) before the Edit pill. Sizing is measured via
+* ResizeObserver — when the row widens, the strip restarts from the
+* full set and re-trims, so growth actually surfaces more chips. The
+* same restart happens on tag-set changes (so saving in the edit
+* dialog re-runs the layout against the new tags).
+*/
+var TagStrip = ({ tags, showEdit, onEdit, className, collapseOnWrap = false }) => {
+	const rowRef = (0, import_react.useRef)(null);
+	const [visibleCount, setVisibleCount] = (0, import_react.useState)(tags.length);
+	const lastTagsRef = (0, import_react.useRef)(tags);
+	const enableCollapse = collapseOnWrap && showEdit;
+	if (lastTagsRef.current !== tags) {
+		lastTagsRef.current = tags;
+		if (visibleCount !== tags.length) setVisibleCount(tags.length);
+	}
+	(0, import_react.useLayoutEffect)(() => {
+		if (!enableCollapse || !rowRef.current) return;
+		const el = rowRef.current;
+		const kids = Array.from(el.children);
+		if (kids.length < 2) return;
+		const tops = /* @__PURE__ */ new Set();
+		for (const k of kids) tops.add(k.offsetTop);
+		if (tops.size > MAX_ROWS && visibleCount > 0) setVisibleCount((c) => Math.max(0, c - 1));
+	}, [
+		enableCollapse,
+		visibleCount,
+		tags,
+		showEdit
+	]);
+	(0, import_react.useLayoutEffect)(() => {
+		if (!enableCollapse || !rowRef.current) return;
+		const el = rowRef.current;
+		let lastWidth = el.clientWidth;
+		const ro = new ResizeObserver(() => {
+			const w = el.clientWidth;
+			if (Math.abs(w - lastWidth) > 1) {
+				lastWidth = w;
+				setVisibleCount(tags.length);
+			}
+		});
+		ro.observe(el);
+		return () => ro.disconnect();
+	}, [enableCollapse, tags.length]);
+	if (tags.length === 0 && !showEdit) return null;
+	const effectiveCount = Math.min(visibleCount, tags.length);
+	const hiddenTags = tags.slice(effectiveCount);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		ref: rowRef,
+		className: clsx(TagStrip_module_default.tagRow, className),
+		children: [
+			tags.slice(0, effectiveCount).map((tag) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TagChip, {
+				label: tag,
+				onClick: showEdit ? onEdit : void 0
+			}, tag)),
+			hiddenTags.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(OverflowPill, {
+				hiddenTags,
+				onClick: onEdit
+			}),
+			showEdit && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EditButton, {
+				onClick: onEdit,
+				title: "Edit tags",
+				variant: "pill",
+				children: tags.length === 0 ? "Tags" : "Edit"
+			})
+		]
+	});
+};
+/**
+* Outline pill rendered in place of overflowed chips. Matches the
+* Edit pill's visual via composed EditButton styles; the tooltip
+* reveals the hidden tag names. Clicking opens the same edit dialog
+* the Edit pill does, so the full list is one click away.
+*/
+var OverflowPill = ({ hiddenTags, onClick }) => {
+	const count = hiddenTags.length;
+	const title = `${count} more tag${count === 1 ? "" : "s"}: ${hiddenTags.join(", ")}`;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+		type: "button",
+		className: clsx(EditButton_module_default.button, EditButton_module_default.pill, "text-size-smaller"),
+		onClick,
+		title,
+		"aria-label": title,
+		children: "…"
+	});
+};
+//#endregion
+//#region src/app/log-view/title-view/TagsField.tsx
+/**
+* The full editable-tags surface: chip strip + Edit pill + dialog.
+*
+* Edit gating, target log, and post-save refresh come from
+* `useLogEditAffordance`; this component owns only the open/close state
+* for its dialog. Consumers pass the tag list and an optional className
+* for layout context.
+*/
+var TagsField = ({ tags, className, collapseOnWrap }) => {
+	const { canEdit, selectedLogFile, refreshOnSave } = useLogEditAffordance();
+	const [editingTags, setEditingTags] = (0, import_react.useState)(false);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TagStrip, {
+		tags,
+		showEdit: canEdit,
+		onEdit: () => setEditingTags(true),
+		className,
+		collapseOnWrap
+	}), selectedLogFile && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EditTagsDialog, {
+		showing: editingTags,
+		setShowing: setEditingTags,
+		currentTags: tags,
+		logFile: selectedLogFile,
+		onSaved: refreshOnSave
+	})] });
+};
 var TaskTab_module_default = {
-	grid: "_grid_1xxot_1",
-	tagPillRow: "_tagPillRow_1xxot_8"
+	grid: "_grid_q7chi_1",
+	tagPillAlign: "_tagPillAlign_q7chi_11"
 };
 //#endregion
 //#region src/app/log-view/tabs/TaskTab.tsx
@@ -168556,12 +168723,6 @@ var useTaskTabConfig = (evalSpec, evalStats, earlyStopping, tags) => {
 };
 var TaskTab = ({ evalSpec, evalStats, earlyStopping, tags }) => {
 	const canEditTags = useStore((state) => Boolean(state.api?.edit_log));
-	const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
-	const logStatus = useStore((state) => state.log.selectedLogDetails?.status);
-	const refreshLog = useRefreshLog();
-	const [editingTags, setEditingTags] = (0, import_react.useState)(false);
-	const onTagsSaved = (0, import_react.useCallback)(() => refreshLog(), [refreshLog]);
-	const showTagEdit = canEditTags && !!selectedLogFile && !(logStatus === "started");
 	const tagList = tags ?? [];
 	const config = {};
 	Object.entries(evalSpec?.config || {}).forEach((entry) => {
@@ -168585,14 +168746,9 @@ var TaskTab = ({ evalSpec, evalStats, earlyStopping, tags }) => {
 		if (names.length === 1) taskInformation["Inspect"] = names[0];
 		else taskInformation["Inspect"] = names;
 	}
-	if (tagList.length > 0 || showTagEdit) taskInformation["tags"] = { _html: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: TaskTab_module_default.tagPillRow,
-		children: [tagList.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TagChip, { label: tag }, tag)), showTagEdit && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EditButton, {
-			onClick: () => setEditingTags(true),
-			title: "Edit tags",
-			variant: "pill",
-			children: "Tags"
-		})]
+	if (tagList.length > 0 || canEditTags) taskInformation["tags"] = { _html: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TagsField, {
+		tags: tagList,
+		className: TaskTab_module_default.tagPillAlign
 	}) };
 	if (evalSpec?.sandbox) if (Array.isArray(evalSpec?.sandbox)) {
 		taskInformation["sandbox"] = evalSpec.sandbox[0];
@@ -168603,9 +168759,9 @@ var TaskTab = ({ evalSpec, evalStats, earlyStopping, tags }) => {
 	}
 	const totalDuration = formatDuration(new Date(evalStats?.started_at || 0), new Date(evalStats?.completed_at || 0));
 	const task_args = evalSpec?.task_args || {};
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		style: { width: "100%" },
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			style: {
 				padding: "0.5em 1em 0 1em",
 				width: "100%",
@@ -168640,13 +168796,7 @@ var TaskTab = ({ evalSpec, evalStats, earlyStopping, tags }) => {
 					}, `plan-md-task-args`)
 				})] })
 			]
-		}), selectedLogFile && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EditTagsDialog, {
-			showing: editingTags,
-			setShowing: setEditingTags,
-			currentTags: tagList,
-			logFile: selectedLogFile,
-			onSaved: onTagsSaved
-		})]
+		})
 	});
 };
 var LinkButton_module_default = {
@@ -169311,17 +169461,17 @@ var ModelRolesView = ({ roles }) => {
 	}) : void 0;
 };
 var PrimaryBar_module_default = {
-	container: "_container_1xr17_1",
-	wrapper: "_wrapper_1xr17_15",
-	toggle: "_toggle_1xr17_21",
-	body: "_body_1xr17_28",
-	bodyContainer: "_bodyContainer_1xr17_39",
-	tagRow: "_tagRow_1xr17_58",
-	taskTitle: "_taskTitle_1xr17_68",
-	taskModel: "_taskModel_1xr17_75",
-	taskStatus: "_taskStatus_1xr17_80",
-	secondaryContainer: "_secondaryContainer_1xr17_87",
-	buttonGroup: "_buttonGroup_1xr17_96"
+	container: "_container_1x0td_1",
+	wrapper: "_wrapper_1x0td_15",
+	toggle: "_toggle_1x0td_21",
+	body: "_body_1x0td_28",
+	bodyContainer: "_bodyContainer_1x0td_40",
+	tagRowHeader: "_tagRowHeader_1x0td_61",
+	taskTitle: "_taskTitle_1x0td_66",
+	taskModel: "_taskModel_1x0td_73",
+	taskStatus: "_taskStatus_1x0td_77",
+	secondaryContainer: "_secondaryContainer_1x0td_84",
+	buttonGroup: "_buttonGroup_1x0td_93"
 };
 var RunningStatusPanel_module_default = {
 	statusContainer: "_statusContainer_1sckj_1",
@@ -169385,28 +169535,6 @@ var StatusPanel = ({ icon, status, sampleCount }) => {
 	});
 };
 //#endregion
-//#region src/app/log-view/title-view/TagStrip.tsx
-/**
-* The inline tag chip block rendered in the viewer header.
-*
-* The chip strip is a single wrap-aware flex container — chips followed
-* by the Edit pill as the last item, matching the Task tab. When chips
-* wrap to additional lines, the Edit pill follows the last chip onto
-* whichever line it lands on.
-*/
-var TagStrip = ({ tags, showEdit, onEdit }) => {
-	if (tags.length === 0 && !showEdit) return null;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: PrimaryBar_module_default.tagRow,
-		children: [tags.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TagChip, { label: tag }, tag)), showEdit && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EditButton, {
-			onClick: onEdit,
-			title: "Edit tags",
-			variant: "pill",
-			children: "Tags"
-		})]
-	});
-};
-//#endregion
 //#region src/app/log-view/title-view/PrimaryBar.tsx
 var PrimaryBar = ({ status, evalResults, runningMetrics, evalSpec, sampleCount, tags }) => {
 	const streamSamples = useStore((state) => state.capabilities.streamSamples);
@@ -169414,13 +169542,8 @@ var PrimaryBar = ({ status, evalResults, runningMetrics, evalSpec, sampleCount, 
 	const absLogDir = useStore((state) => state.logs.absLogDir);
 	const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
 	const logDir = useStore((state) => state.logs.logDir);
-	const canEditTags = useStore((state) => Boolean(state.api?.edit_log));
-	const refreshLog = useRefreshLog();
-	const [editingTags, setEditingTags] = (0, import_react.useState)(false);
-	const onTagsSaved = (0, import_react.useCallback)(() => refreshLog(), [refreshLog]);
 	const logFileName = selectedLogFile ? filename(selectedLogFile) : "";
 	const isEvalFile = selectedLogFile?.endsWith(".eval");
-	const showTagEdit = canEditTags && !!selectedLogFile && !(status === "started");
 	const tagList = tags ?? [];
 	const copyValue = (() => {
 		if (!absLogDir || !selectedLogFile || !logDir) return selectedLogFile;
@@ -169452,10 +169575,10 @@ var PrimaryBar = ({ status, evalResults, runningMetrics, evalSpec, sampleCount, 
 									title: evalSpec?.model,
 									children: evalSpec?.model
 								}) : "",
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TagStrip, {
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TagsField, {
 									tags: tagList,
-									showEdit: showTagEdit,
-									onEdit: () => setEditingTags(true)
+									className: PrimaryBar_module_default.tagRowHeader,
+									collapseOnWrap: true
 								})
 							]
 						}),
@@ -169486,13 +169609,6 @@ var PrimaryBar = ({ status, evalResults, runningMetrics, evalSpec, sampleCount, 
 				id: "task-created",
 				style: { display: "none" },
 				children: evalSpec?.created
-			}),
-			selectedLogFile && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EditTagsDialog, {
-				showing: editingTags,
-				setShowing: setEditingTags,
-				currentTags: tagList,
-				logFile: selectedLogFile,
-				onSaved: onTagsSaved
 			})
 		]
 	});
