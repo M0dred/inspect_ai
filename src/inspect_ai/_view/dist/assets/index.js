@@ -169311,18 +169311,17 @@ var ModelRolesView = ({ roles }) => {
 	}) : void 0;
 };
 var PrimaryBar_module_default = {
-	container: "_container_ctxmw_1",
-	wrapper: "_wrapper_ctxmw_15",
-	toggle: "_toggle_ctxmw_21",
-	body: "_body_ctxmw_28",
-	bodyContainer: "_bodyContainer_ctxmw_40",
-	tagRow: "_tagRow_ctxmw_49",
-	tagSeparator: "_tagSeparator_ctxmw_65",
-	taskTitle: "_taskTitle_ctxmw_73",
-	taskModel: "_taskModel_ctxmw_85",
-	taskStatus: "_taskStatus_ctxmw_90",
-	secondaryContainer: "_secondaryContainer_ctxmw_97",
-	buttonGroup: "_buttonGroup_ctxmw_106"
+	container: "_container_1xr17_1",
+	wrapper: "_wrapper_1xr17_15",
+	toggle: "_toggle_1xr17_21",
+	body: "_body_1xr17_28",
+	bodyContainer: "_bodyContainer_1xr17_39",
+	tagRow: "_tagRow_1xr17_58",
+	taskTitle: "_taskTitle_1xr17_68",
+	taskModel: "_taskModel_1xr17_75",
+	taskStatus: "_taskStatus_1xr17_80",
+	secondaryContainer: "_secondaryContainer_1xr17_87",
+	buttonGroup: "_buttonGroup_1xr17_96"
 };
 var RunningStatusPanel_module_default = {
 	statusContainer: "_statusContainer_1sckj_1",
@@ -169390,31 +169389,22 @@ var StatusPanel = ({ icon, status, sampleCount }) => {
 /**
 * The inline tag chip block rendered in the viewer header.
 *
-* Lives as a Fragment of flex items inside the surrounding row
-* (`PrimaryBar`'s `bodyContainer`), not as a single wrapper element.
-* The `tagRow` div is wrap-aware so chips can overflow onto additional
-* lines, but the **Edit button is a sibling**, not a descendant — so
-* when chips wrap, the button stays anchored next to the chip block
-* instead of being pulled onto the wrap line with the last chip.
+* The chip strip is a single wrap-aware flex container — chips followed
+* by the Edit pill as the last item, matching the Task tab. When chips
+* wrap to additional lines, the Edit pill follows the last chip onto
+* whichever line it lands on.
 */
 var TagStrip = ({ tags, showEdit, onEdit }) => {
 	if (tags.length === 0 && !showEdit) return null;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [
-		tags.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-			className: PrimaryBar_module_default.tagSeparator,
-			"aria-hidden": "true"
-		}),
-		tags.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: PrimaryBar_module_default.tagRow,
-			children: tags.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TagChip, { label: tag }, tag))
-		}),
-		showEdit && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EditButton, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: PrimaryBar_module_default.tagRow,
+		children: [tags.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TagChip, { label: tag }, tag)), showEdit && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EditButton, {
 			onClick: onEdit,
 			title: "Edit tags",
 			variant: "pill",
 			children: "Tags"
-		})
-	] });
+		})]
+	});
 };
 //#endregion
 //#region src/app/log-view/title-view/PrimaryBar.tsx
@@ -169452,7 +169442,7 @@ var PrimaryBar = ({ status, evalResults, runningMetrics, evalSpec, sampleCount, 
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 									id: "task-title",
-									className: clsx("task-title", "text-truncate", PrimaryBar_module_default.taskTitle),
+									className: clsx("task-title", PrimaryBar_module_default.taskTitle),
 									title: evalSpec?.task,
 									children: evalSpec?.task
 								}),
