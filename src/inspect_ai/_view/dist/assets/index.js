@@ -11499,16 +11499,16 @@ function bins(min, max, maxbins = 15, nice = true, minstep = 0, step) {
 }
 //#endregion
 //#region ../../node_modules/.pnpm/arquero@8.0.3/node_modules/arquero/src/util/key-function.js
-function key$2(value) {
+function key$3(value) {
 	const type = typeof value;
-	return type === "string" ? `"${value}"` : type !== "object" || !value ? value : isDate(value) ? +value : isArray$2(value) || isTypedArray(value) ? `[${value.map(key$2)}]` : isRegExp$1(value) ? value + "" : objectKey(value);
+	return type === "string" ? `"${value}"` : type !== "object" || !value ? value : isDate(value) ? +value : isArray$2(value) || isTypedArray(value) ? `[${value.map(key$3)}]` : isRegExp$1(value) ? value + "" : objectKey(value);
 }
 function objectKey(value) {
 	let s = "{";
 	let i = -1;
 	for (const k in value) {
 		if (++i > 0) s += ",";
-		s += `"${k}":${key$2(value[k])}`;
+		s += `"${k}":${key$3(value[k])}`;
 	}
 	s += "}";
 	return s;
@@ -11525,7 +11525,7 @@ function distinctMap() {
 			return Array.from(map.values(), (_) => _.v);
 		},
 		increment(v) {
-			const k = key$2(v);
+			const k = key$3(v);
 			const e = map.get(k);
 			e ? ++e.n : map.set(k, {
 				v,
@@ -11533,7 +11533,7 @@ function distinctMap() {
 			});
 		},
 		decrement(v) {
-			const k = key$2(v);
+			const k = key$3(v);
 			const e = map.get(k);
 			e.n === 1 ? map.delete(k) : --e.n;
 		},
@@ -14086,7 +14086,7 @@ pp$8.parseThrowStatement = function(node) {
 	this.semicolon();
 	return this.finishNode(node, "ThrowStatement");
 };
-var empty$1 = [];
+var empty$1$1 = [];
 pp$8.parseCatchClauseParam = function() {
 	var param = this.parseBindingAtom();
 	var simple = param.type === "Identifier";
@@ -14541,7 +14541,7 @@ pp$8.parseExportSpecifiers = function(exports) {
 pp$8.parseImport = function(node) {
 	this.next();
 	if (this.type === types$1.string) {
-		node.specifiers = empty$1;
+		node.specifiers = empty$1$1;
 		node.source = this.parseExprAtom();
 	} else {
 		node.specifiers = this.parseImportSpecifiers();
@@ -23222,14 +23222,14 @@ function getReadonlyRequest(request) {
 	};
 }
 function getReadonlyContext(context) {
-	if (isPlainObject$1(context)) {
+	if (isPlainObject$2(context)) {
 		let frozen = { ...context };
 		Object.freeze(frozen);
 		return frozen;
 	} else return { get: (ctx) => context.get(ctx) };
 }
 var objectProtoNames = Object.getOwnPropertyNames(Object.prototype).sort().join("\0");
-function isPlainObject$1(thing) {
+function isPlainObject$2(thing) {
 	if (thing === null || typeof thing !== "object") return false;
 	const proto = Object.getPrototypeOf(thing);
 	return proto === Object.prototype || proto === null || Object.getOwnPropertyNames(proto).sort().join("\0") === objectProtoNames;
@@ -35503,7 +35503,7 @@ function r$2(r) {
 	};
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/VscElement.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/VscElement.js
 var VERSION$1 = "2.5.0";
 var CONFIG_KEY = "__vscodeElements_disableRegistryWarning__";
 var warn = (message, componentInstance) => {
@@ -35541,7 +35541,7 @@ var customElement = (tagName) => {
 	};
 };
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/default.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/default.styles.js
 var default_styles_default = i$9`
   :host([hidden]) {
     display: none;
@@ -35562,7 +35562,7 @@ function getDefaultFontStack() {
 	else return "sans-serif";
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-badge/vscode-badge.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-badge/vscode-badge.styles.js
 var styles$35 = [default_styles_default, i$9`
     :host {
       display: inline-block;
@@ -35614,7 +35614,7 @@ var styles$35 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-badge/vscode-badge.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-badge/vscode-badge.js
 var __decorate$40 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -35720,7 +35720,7 @@ var i$5 = class {
 * SPDX-License-Identifier: BSD-3-Clause
 */ var o = (o) => o ?? A$1;
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/style-property-map.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/style-property-map.js
 var StylePropertyMap = class extends i$5 {
 	constructor(partInfo) {
 		super(partInfo);
@@ -35749,7 +35749,7 @@ var StylePropertyMap = class extends i$5 {
 */
 var stylePropertyMap = e$4(StylePropertyMap);
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-icon/vscode-icon.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-icon/vscode-icon.styles.js
 var styles$34 = [default_styles_default, i$9`
     :host {
       color: var(--vscode-icon-foreground, #cccccc);
@@ -35812,7 +35812,7 @@ var styles$34 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-icon/vscode-icon.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-icon/vscode-icon.js
 var __decorate$39 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -35944,7 +35944,7 @@ __decorate$39([n$5({
 })], VscodeIcon$1.prototype, "actionIcon", void 0);
 VscodeIcon$1 = VscodeIcon_1 = __decorate$39([customElement("vscode-icon")], VscodeIcon$1);
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-button/vscode-button.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-button/vscode-button.styles.js
 var styles$33 = [default_styles_default, i$9`
     :host {
       cursor: pointer;
@@ -36131,7 +36131,7 @@ var styles$33 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-button/vscode-button.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-button/vscode-button.js
 var __decorate$38 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -36371,7 +36371,7 @@ o$7({
 	displayName: "VscodeButton"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-button-group/vscode-button-group.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-button-group/vscode-button-group.styles.js
 var styles$32 = [default_styles_default, i$9`
     :host {
       display: inline-block;
@@ -36407,7 +36407,7 @@ var styles$32 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-button-group/vscode-button-group.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-button-group/vscode-button-group.js
 var __decorate$37 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -36445,7 +36445,7 @@ o$7({
 	displayName: "VscodeButtonGroup"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/form-button-widget/FormButtonWidgetBase.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/form-button-widget/FormButtonWidgetBase.js
 var __decorate$36 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -36487,7 +36487,7 @@ __decorate$36([n$5({
 	reflect: true
 })], FormButtonWidgetBase.prototype, "focused", void 0);
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/form-button-widget/LabelledCheckboxOrRadio.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/form-button-widget/LabelledCheckboxOrRadio.js
 var __decorate$35 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -36520,7 +36520,7 @@ var LabelledCheckboxOrRadioMixin = (superClass) => {
 	return LabelledCheckboxOrRadio;
 };
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/form-button-widget/base.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/form-button-widget/base.styles.js
 var base_styles_default = [i$9`
     :host {
       display: inline-block;
@@ -36611,7 +36611,7 @@ var base_styles_default = [i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-checkbox/vscode-checkbox.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-checkbox/vscode-checkbox.styles.js
 var styles$31 = [
 	default_styles_default,
 	base_styles_default,
@@ -36711,7 +36711,7 @@ var styles$31 = [
   `
 ];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-checkbox/vscode-checkbox.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-checkbox/vscode-checkbox.js
 var __decorate$34 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -36976,7 +36976,7 @@ o$7({
 	events: { onChange: "change" }
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-checkbox-group/vscode-checkbox-group.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-checkbox-group/vscode-checkbox-group.styles.js
 var styles$30 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -37009,7 +37009,7 @@ var styles$30 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-checkbox-group/vscode-checkbox-group.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-checkbox-group/vscode-checkbox-group.js
 var __decorate$33 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -37047,7 +37047,7 @@ o$7({
 	displayName: "VscodeCheckboxGroup"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-collapsible/vscode-collapsible.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-collapsible/vscode-collapsible.styles.js
 var styles$29 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -37144,7 +37144,7 @@ var styles$29 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-collapsible/vscode-collapsible.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-collapsible/vscode-collapsible.js
 var __decorate$32 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -37277,7 +37277,7 @@ __decorate$32([n$5({
 })], VscodeCollapsible$1.prototype, "open", void 0);
 VscodeCollapsible$1 = __decorate$32([customElement("vscode-collapsible")], VscodeCollapsible$1);
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+react-elements@2.4.0_@types+react@19.2.14_@vscode+codicons@0.0.44_reac_b57721ac4df33c4cfbd4c5e9e073e30b/node_modules/@vscode-elements/react-elements/dist/components/VscodeCollapsible.js
+//#region ../../node_modules/.pnpm/@vscode-elements+react-elements@2.4.0_@types+react@19.2.14_@vscode+codicons@0.0.45_reac_77c7fe65a4271f54bb34ce10b58ee98c/node_modules/@vscode-elements/react-elements/dist/components/VscodeCollapsible.js
 var VscodeCollapsible = o$7({
 	tagName: "vscode-collapsible",
 	elementClass: VscodeCollapsible$1,
@@ -37285,7 +37285,7 @@ var VscodeCollapsible = o$7({
 	displayName: "VscodeCollapsible"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-context-menu-item/vscode-context-menu-item.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-context-menu-item/vscode-context-menu-item.styles.js
 var styles$28 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -37357,7 +37357,7 @@ var styles$28 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-context-menu-item/vscode-context-menu-item.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-context-menu-item/vscode-context-menu-item.js
 var __decorate$31 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -37430,7 +37430,7 @@ __decorate$31([n$5({
 __decorate$31([n$5({ type: Number })], VscodeContextMenuItem$1.prototype, "tabindex", void 0);
 VscodeContextMenuItem$1 = __decorate$31([customElement("vscode-context-menu-item")], VscodeContextMenuItem$1);
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-context-menu/vscode-context-menu.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-context-menu/vscode-context-menu.styles.js
 var styles$27 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -37458,7 +37458,7 @@ var styles$27 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-context-menu/vscode-context-menu.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-context-menu/vscode-context-menu.js
 var __decorate$30 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -37645,7 +37645,7 @@ o$7({
 	displayName: "VscodeContextMenuItem"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-divider/vscode-divider.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-divider/vscode-divider.styles.js
 var styles$26 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -37660,7 +37660,7 @@ var styles$26 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-divider/vscode-divider.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-divider/vscode-divider.js
 var __decorate$29 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -37691,7 +37691,7 @@ o$7({
 	displayName: "VscodeDivider"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-form-container/vscode-form-container.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-form-container/vscode-form-container.styles.js
 var styles$25 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -37699,7 +37699,7 @@ var styles$25 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-form-container/vscode-form-container.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-form-container/vscode-form-container.js
 var __decorate$28 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -37789,7 +37789,7 @@ o$7({
 	displayName: "VscodeFormContainer"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-form-group/vscode-form-group.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-form-group/vscode-form-group.styles.js
 var styles$24 = [default_styles_default, i$9`
     :host {
       --label-right-margin: 14px;
@@ -37877,7 +37877,7 @@ var styles$24 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-form-group/vscode-form-group.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-form-group/vscode-form-group.js
 var __decorate$27 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -37913,7 +37913,7 @@ o$7({
 	displayName: "VscodeFormGroup"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-form-helper/vscode-form-helper.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-form-helper/vscode-form-helper.styles.js
 var styles$23 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -37929,7 +37929,7 @@ var styles$23 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-form-helper/vscode-form-helper.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-form-helper/vscode-form-helper.js
 var __decorate$26 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -37980,14 +37980,14 @@ o$7({
 	displayName: "VscodeIcon"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/uniqueId.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/uniqueId.js
 var counter$1 = 0;
 var uniqueId = (prefix = "") => {
 	counter$1++;
 	return `${prefix}${counter$1}`;
 };
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-label/vscode-label.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-label/vscode-label.styles.js
 var styles$22 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -38018,7 +38018,7 @@ var styles$22 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-label/vscode-label.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-label/vscode-label.js
 var __decorate$25 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38122,7 +38122,7 @@ o$7({
 	displayName: "VscodeLabel"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/vscode-select/template-elements.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/vscode-select/template-elements.js
 var chevronDownIcon = b`
   <span class="icon">
     <svg
@@ -38248,10 +38248,10 @@ function n$2(n, r, t) {
 	return n ? r(n) : t?.(n);
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-option/vscode-option.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-option/vscode-option.styles.js
 var vscode_option_styles_default = default_styles_default;
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-option/vscode-option.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-option/vscode-option.js
 var __decorate$24 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38302,7 +38302,7 @@ __decorate$24([n$5({
 })], VscodeOption$1.prototype, "disabled", void 0);
 VscodeOption$1 = __decorate$24([customElement("vscode-option")], VscodeOption$1);
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/vscode-select/helpers.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/vscode-select/helpers.js
 var startsWithPerTermSearch = (subject, pattern) => {
 	const result = {
 		match: false,
@@ -38417,7 +38417,7 @@ var highlightRanges = (text, ranges) => {
 	return res;
 };
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/vscode-select/OptionListController.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/vscode-select/OptionListController.js
 var OptionListController = class {
 	constructor(host) {
 		this._activeIndex = -1;
@@ -38716,7 +38716,7 @@ var OptionListController = class {
 	}
 };
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-scrollable/vscode-scrollable.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-scrollable/vscode-scrollable.styles.js
 var styles$21 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -38822,7 +38822,7 @@ var styles$21 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-scrollable/vscode-scrollable.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-scrollable/vscode-scrollable.js
 var __decorate$23 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -39131,7 +39131,7 @@ __decorate$23([e$6(".scrollable-container")], VscodeScrollable$1.prototype, "_sc
 __decorate$23([o$1()], VscodeScrollable$1.prototype, "_assignedElements", void 0);
 VscodeScrollable$1 = __decorate$23([customElement("vscode-scrollable")], VscodeScrollable$1);
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/vscode-select/vscode-select-base.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/vscode-select/vscode-select-base.js
 var __decorate$22 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -39673,7 +39673,7 @@ __decorate$22([r$3()], VscodeSelectBase.prototype, "_isPlaceholderOptionActive",
 __decorate$22([r$3()], VscodeSelectBase.prototype, "_isBeingFiltered", void 0);
 __decorate$22([r$3()], VscodeSelectBase.prototype, "_optionListScrollPos", void 0);
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/vscode-select/styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/vscode-select/styles.js
 var styles_default = [default_styles_default, i$9`
     :host {
       display: inline-block;
@@ -40084,10 +40084,10 @@ var styles_default = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-multi-select/vscode-multi-select.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-multi-select/vscode-multi-select.styles.js
 var vscode_multi_select_styles_default = styles_default;
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-multi-select/vscode-multi-select.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-multi-select/vscode-multi-select.js
 var __decorate$21 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -40455,7 +40455,7 @@ o$7({
 	displayName: "VscodeOption"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-progress-bar/vscode-progress-bar.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-progress-bar/vscode-progress-bar.styles.js
 var styles$20 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -40532,7 +40532,7 @@ var styles$20 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-progress-bar/vscode-progress-bar.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-progress-bar/vscode-progress-bar.js
 var __decorate$20 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -40657,7 +40657,7 @@ o$7({
 	displayName: "VscodeProgressBar"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-progress-ring/vscode-progress-ring.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-progress-ring/vscode-progress-ring.styles.js
 var styles$19 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -40705,7 +40705,7 @@ var styles$19 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-progress-ring/vscode-progress-ring.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-progress-ring/vscode-progress-ring.js
 var __decorate$19 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -40761,7 +40761,7 @@ o$7({
 	displayName: "VscodeProgressRing"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-radio/vscode-radio.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-radio/vscode-radio.styles.js
 var styles$18 = [
 	default_styles_default,
 	base_styles_default,
@@ -40795,7 +40795,7 @@ var styles$18 = [
   `
 ];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-radio/vscode-radio.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-radio/vscode-radio.js
 var __decorate$18 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41048,7 +41048,7 @@ o$7({
 	}
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-radio-group/vscode-radio-group.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-radio-group/vscode-radio-group.styles.js
 var styles$17 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -41081,7 +41081,7 @@ var styles$17 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-radio-group/vscode-radio-group.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-radio-group/vscode-radio-group.js
 var __decorate$17 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41204,10 +41204,10 @@ o$7({
 	displayName: "VscodeScrollable"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-single-select/vscode-single-select.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-single-select/vscode-single-select.styles.js
 var vscode_single_select_styles_default = styles_default;
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-single-select/vscode-single-select.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-single-select/vscode-single-select.js
 var __decorate$16 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41524,7 +41524,7 @@ o$7({
 	}
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-split-layout/vscode-split-layout.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-split-layout/vscode-split-layout.styles.js
 var styles$16 = [default_styles_default, i$9`
     :host {
       --separator-border: var(--vscode-editorWidget-border, #454545);
@@ -41634,7 +41634,7 @@ var styles$16 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-split-layout/vscode-split-layout.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-split-layout/vscode-split-layout.js
 var __decorate$15 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -42033,7 +42033,7 @@ o$7({
 	events: { onVscSplitLayoutChange: "vsc-split-layout-change" }
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-tab-header/vscode-tab-header.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-tab-header/vscode-tab-header.styles.js
 var styles$15 = [default_styles_default, i$9`
     :host {
       cursor: pointer;
@@ -42135,7 +42135,7 @@ var styles$15 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-tab-header/vscode-tab-header.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-tab-header/vscode-tab-header.js
 var __decorate$14 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -42224,7 +42224,7 @@ o$7({
 	displayName: "VscTabHeader"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/sizes.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/sizes.js
 var px = (value) => value;
 var percent = (value) => value;
 var toPercent = (px, container) => percent(px / container * 100);
@@ -42386,7 +42386,7 @@ var styles$14 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table/calculations.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table/calculations.js
 function calculateColumnWidths(widths, splitterIndex, delta, minWidths) {
 	const result = [...widths];
 	if (delta === 0 || splitterIndex < 0 || splitterIndex >= widths.length - 1) return result;
@@ -42420,7 +42420,7 @@ function calculateColumnWidths(widths, splitterIndex, delta, minWidths) {
 	return result;
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table/ColumnResizeController.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table/ColumnResizeController.js
 var ColumnResizeController = class {
 	constructor(host) {
 		this._hostWidth = px(0);
@@ -42540,7 +42540,7 @@ var ColumnResizeController = class {
 	}
 };
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table/vscode-table.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table/vscode-table.js
 var __decorate$13 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -43020,7 +43020,7 @@ o$7({
 	displayName: "VscodeTable"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table-body/vscode-table-body.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table-body/vscode-table-body.styles.js
 var styles$13 = [default_styles_default, i$9`
     :host {
       display: table;
@@ -43037,7 +43037,7 @@ var styles$13 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table-body/vscode-table-body.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table-body/vscode-table-body.js
 var __decorate$12 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -43067,7 +43067,7 @@ o$7({
 	displayName: "VscodeTableBody"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table-cell/vscode-table-cell.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table-cell/vscode-table-cell.styles.js
 var styles$12 = [default_styles_default, i$9`
     :host {
       border-bottom-color: var(
@@ -43116,7 +43116,7 @@ var styles$12 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table-cell/vscode-table-cell.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table-cell/vscode-table-cell.js
 var __decorate$11 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -43171,7 +43171,7 @@ o$7({
 	displayName: "VscodeTableCell"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table-header/vscode-table-header.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table-header/vscode-table-header.styles.js
 var styles$11 = [default_styles_default, i$9`
     :host {
       background-color: var(
@@ -43184,7 +43184,7 @@ var styles$11 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table-header/vscode-table-header.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table-header/vscode-table-header.js
 var __decorate$10 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -43216,7 +43216,7 @@ o$7({
 	displayName: "VscodeTableHeader"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table-header-cell/vscode-table-header-cell.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table-header-cell/vscode-table-header-cell.styles.js
 var styles$10 = [default_styles_default, i$9`
     :host {
       box-sizing: border-box;
@@ -43244,7 +43244,7 @@ var styles$10 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table-header-cell/vscode-table-header-cell.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table-header-cell/vscode-table-header-cell.js
 var __decorate$9 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -43298,7 +43298,7 @@ o$7({
 	displayName: "VscodeTableHeaderCell"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table-row/vscode-table-row.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table-row/vscode-table-row.styles.js
 var styles$9 = [default_styles_default, i$9`
     :host {
       border-top-color: var(
@@ -43312,7 +43312,7 @@ var styles$9 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table-row/vscode-table-row.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table-row/vscode-table-row.js
 var __decorate$8 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -43344,7 +43344,7 @@ o$7({
 	displayName: "VscodeTableRow"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-tab-panel/vscode-tab-panel.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-tab-panel/vscode-tab-panel.styles.js
 var styles$8 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -43363,7 +43363,7 @@ var styles$8 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-tab-panel/vscode-tab-panel.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-tab-panel/vscode-tab-panel.js
 var __decorate$7 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -43421,7 +43421,7 @@ o$7({
 	displayName: "VscodeTabPanel"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-tabs/vscode-tabs.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-tabs/vscode-tabs.styles.js
 var styles$7 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -43461,7 +43461,7 @@ var styles$7 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-tabs/vscode-tabs.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-tabs/vscode-tabs.js
 var __decorate$6 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -43619,7 +43619,7 @@ o$7({
 	displayName: "VscodeTabs"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-textarea/vscode-textarea.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-textarea/vscode-textarea.styles.js
 var styles$6 = [default_styles_default, i$9`
     :host {
       display: inline-block;
@@ -43753,7 +43753,7 @@ var styles$6 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-textarea/vscode-textarea.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-textarea/vscode-textarea.js
 var __decorate$5 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -44033,7 +44033,7 @@ o$7({
 	}
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-textfield/vscode-textfield.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-textfield/vscode-textfield.styles.js
 var defaultFontStack = r$7(getDefaultFontStack());
 var styles$5 = [default_styles_default, i$9`
     :host {
@@ -44141,7 +44141,7 @@ var styles$5 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-textfield/vscode-textfield.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-textfield/vscode-textfield.js
 var __decorate$4 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -44457,7 +44457,7 @@ o$7({
 	}
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-toolbar-button/vscode-toolbar-button.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-toolbar-button/vscode-toolbar-button.styles.js
 var styles$4 = [default_styles_default, i$9`
     :host {
       display: inline-flex;
@@ -44529,7 +44529,7 @@ var styles$4 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-toolbar-button/vscode-toolbar-button.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-toolbar-button/vscode-toolbar-button.js
 var __decorate$3 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -44603,7 +44603,7 @@ o$7({
 	events: { onChange: "change" }
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-toolbar-container/vscode-toolbar-container.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-toolbar-container/vscode-toolbar-container.styles.js
 var styles$3 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -44616,7 +44616,7 @@ var styles$3 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-toolbar-container/vscode-toolbar-container.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-toolbar-container/vscode-toolbar-container.js
 var __decorate$2 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -44848,7 +44848,7 @@ var i$3 = class extends s {
 	};
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-tree/vscode-tree.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-tree/vscode-tree.styles.js
 var styles$2 = [default_styles_default, i$9`
     :host {
       --vsc-tree-item-arrow-display: flex;
@@ -44904,11 +44904,11 @@ var styles$2 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-tree/tree-context.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-tree/tree-context.js
 var treeContext = n$1("vscode-list");
 var configContext = n$1(Symbol("configContext"));
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-tree/helpers.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-tree/helpers.js
 var isTreeItem = (item) => item instanceof Element && item.matches("vscode-tree-item");
 var isTreeRoot = (item) => item instanceof Element && item.matches("vscode-tree");
 var initPathTrackerProps = (parentElement, items) => {
@@ -44974,7 +44974,7 @@ function findParentItem(childItem) {
 	return childItem.parentElement;
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-tree/vscode-tree.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-tree/vscode-tree.js
 var __decorate$1 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -45333,7 +45333,7 @@ o$7({
 	events: { onVscTreeSelect: "vsc-tree-select" }
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-tree-item/vscode-tree-item.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-tree-item/vscode-tree-item.styles.js
 var styles$1 = [default_styles_default, i$9`
     :host {
       --hover-outline-color: transparent;
@@ -45624,7 +45624,7 @@ var styles$1 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-tree-item/vscode-tree-item.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-tree-item/vscode-tree-item.js
 var __decorate = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -58575,11 +58575,11 @@ var VALUE = "value";
 var isDraft = (value) => !!value && !!value[DRAFT_STATE];
 function isDraftable(value) {
 	if (!value) return false;
-	return isPlainObject(value) || isArray(value) || !!value[DRAFTABLE] || !!value[CONSTRUCTOR]?.[DRAFTABLE] || isMap(value) || isSet(value);
+	return isPlainObject$1(value) || isArray(value) || !!value[DRAFTABLE] || !!value[CONSTRUCTOR]?.[DRAFTABLE] || isMap(value) || isSet(value);
 }
 var objectCtorString = O[PROTOTYPE][CONSTRUCTOR].toString();
 var cachedCtorStrings = /* @__PURE__ */ new WeakMap();
-function isPlainObject(value) {
+function isPlainObject$1(value) {
 	if (!value || !isObjectish(value)) return false;
 	const proto = getPrototypeOf(value);
 	if (proto === null || proto === O[PROTOTYPE]) return true;
@@ -58638,7 +58638,7 @@ function shallowCopy(base, strict) {
 	if (isMap(base)) return new Map(base);
 	if (isSet(base)) return new Set(base);
 	if (isArray(base)) return Array[PROTOTYPE].slice.call(base);
-	const isPlain = isPlainObject(base);
+	const isPlain = isPlainObject$1(base);
 	if (strict === true || strict === "class_only" && !isPlain) {
 		const descriptors = O.getOwnPropertyDescriptors(base);
 		delete descriptors[DRAFT_STATE];
@@ -66691,11 +66691,24 @@ var useContentIcons = () => {
 	return (0, import_react.useContext)(IconsContext);
 };
 var MetadataGrid_module_default = {
-	grid: "_grid_1bdxe_1",
-	cell: "_cell_1bdxe_8",
-	value: "_value_1bdxe_12",
-	toggleContainer: "_toggleContainer_1bdxe_16",
-	toggleButton: "_toggleButton_1bdxe_27"
+	grid: "_grid_1qisc_5",
+	rows: "_rows_1qisc_14",
+	row: "_row_1qisc_14",
+	striped: "_striped_1qisc_35",
+	key: "_key_1qisc_43",
+	val: "_val_1qisc_52",
+	empty: "_empty_1qisc_63",
+	numVal: "_numVal_1qisc_69",
+	boolVal: "_boolVal_1qisc_73",
+	group: "_group_1qisc_79",
+	groupHeader: "_groupHeader_1qisc_91",
+	groupKey: "_groupKey_1qisc_99",
+	groupRule: "_groupRule_1qisc_107",
+	depth1: "_depth1_1qisc_115",
+	depth1Group: "_depth1Group_1qisc_128",
+	depth2: "_depth2_1qisc_143",
+	toggleContainer: "_toggleContainer_1qisc_153",
+	toggleButton: "_toggleButton_1qisc_164"
 };
 var RenderedContent_module_default = {
 	query: "_query_seqs2_1",
@@ -66940,67 +66953,90 @@ var contentRenderers = (icons, renderObject, externalRenderers) => {
 };
 //#endregion
 //#region ../../packages/inspect-components/src/content/MetaDataGrid.tsx
+var isPlainObject = (v) => v !== null && typeof v === "object" && !Array.isArray(v);
+var isNonEmptyObject = (v) => isPlainObject(v) && Object.keys(v).length > 0;
 /**
-* Renders the MetaDataView component.
+* Renders structured metadata as a grid with section cards.
+*
+* Top-level scalars render as key-value rows; nested objects are
+* promoted to titled sections with a header rule. Recurses for
+* deeply nested objects.
 */
-var MetaDataGrid = ({ id, entries, className, references, style, maxRows, options }) => {
-	const baseId = "metadata-grid";
-	const fontStyle = options?.size === "mini" ? "text-size-smallest" : "text-size-smaller";
-	const [expanded, setExpanded] = (0, import_react.useState)(false);
+var MetaDataGrid = ({ id, entries, className, references, style, maxRows, options, depth = 0 }) => {
+	const baseId = id ?? "metadata-grid";
 	const allEntries = entryRecords(entries);
-	const isCollapsible = maxRows != null && allEntries.length > maxRows;
-	const visibleEntries = isCollapsible && !expanded ? allEntries.slice(0, maxRows) : allEntries;
-	const entryEls = visibleEntries.map((entry, index) => {
-		const id = `${baseId}-value-${index}`;
-		return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [
-			index !== 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: {
-				gridColumn: "1 / -1",
-				borderBottom: `${!options?.plain ? "solid 1px var(--bs-light-border-subtle" : ""}`
-			} }) : void 0,
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: clsx(`${baseId}-key`, MetadataGrid_module_default.cell, "text-style-label", "text-style-secondary", fontStyle),
-				children: entry?.name
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: clsx(MetadataGrid_module_default.value, `${baseId}-value`, fontStyle),
-				children: entry && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedContent, {
-					id,
-					entry,
-					references,
-					renderOptions: {
-						renderString: "markdown",
-						previewRefsOnHover: options?.previewRefsOnHover
-					},
-					renderObject: (obj) => {
-						return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
-							id,
-							className: clsx(MetadataGrid_module_default.nested),
-							entries: obj,
-							options,
-							references
-						});
-					}
-				})
-			})
-		] }, `${baseId}-record-${index}`);
-	});
+	const scalars = allEntries.filter((e) => !isNonEmptyObject(e.value));
+	const groups = allEntries.filter((e) => isNonEmptyObject(e.value));
+	const [expanded, setExpanded] = (0, import_react.useState)(false);
+	const isCollapsible = maxRows != null && scalars.length > maxRows;
+	const visibleScalars = isCollapsible && !expanded ? scalars.slice(0, maxRows) : scalars;
+	const depthClass = depth === 1 ? MetadataGrid_module_default.depth1 : depth >= 2 ? MetadataGrid_module_default.depth2 : void 0;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		id,
-		className: clsx(className, MetadataGrid_module_default.grid),
-		style,
-		children: [entryEls, isCollapsible && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: MetadataGrid_module_default.toggleContainer,
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
-				className: clsx(MetadataGrid_module_default.toggleButton, "text-size-smallest"),
-				onClick: () => setExpanded((prev) => !prev),
-				children: [expanded ? "less" : `${allEntries.length - visibleEntries.length} more`, "..."]
+		id: depth === 0 ? id : void 0,
+		className: clsx(depth === 0 && className, MetadataGrid_module_default.grid, depthClass, options?.striped && depth === 0 && MetadataGrid_module_default.striped),
+		style: depth === 0 ? style : void 0,
+		children: [
+			visibleScalars.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: MetadataGrid_module_default.rows,
+				children: visibleScalars.map((entry, index) => {
+					const entryId = `${baseId}-value-${index}`;
+					return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: MetadataGrid_module_default.row,
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: MetadataGrid_module_default.key,
+							children: entry.name
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: MetadataGrid_module_default.val,
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedContent, {
+								id: entryId,
+								entry,
+								references,
+								renderOptions: {
+									renderString: "markdown",
+									previewRefsOnHover: options?.previewRefsOnHover
+								},
+								renderObject: (obj) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
+									id: entryId,
+									entries: obj,
+									options,
+									references,
+									depth: depth + 1
+								})
+							})
+						})]
+					}, entryId);
+				})
+			}),
+			isCollapsible && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: MetadataGrid_module_default.toggleContainer,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+					className: clsx(MetadataGrid_module_default.toggleButton, "text-size-smallest"),
+					onClick: () => setExpanded((prev) => !prev),
+					children: [expanded ? "less" : `${scalars.length - visibleScalars.length} more`, "..."]
+				})
+			}),
+			groups.map((entry, groupIndex) => {
+				const groupId = `${baseId}-group-${groupIndex}`;
+				return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
+					className: clsx(MetadataGrid_module_default.group, depth >= 1 && MetadataGrid_module_default.depth1Group),
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("header", {
+						className: MetadataGrid_module_default.groupHeader,
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							className: MetadataGrid_module_default.groupKey,
+							children: entry.name
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: MetadataGrid_module_default.groupRule })]
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
+						id: groupId,
+						entries: entry.value,
+						options,
+						references,
+						depth: depth + 1
+					})]
+				}, groupId);
 			})
-		})]
+		]
 	});
 };
-/**
-* Ensure the proper type for entries
-*/
 var entryRecords = (entries) => {
 	if (!entries) return [];
 	if (!Array.isArray(entries)) return Object.entries(entries || {}).map(([key, value]) => {
@@ -123148,6 +123184,14 @@ var extractEventFields = (event) => {
 			if (inputEvent.input) fields.push(["input", inputEvent.input]);
 			break;
 		}
+		case "interrupt": {
+			const interruptEvent = event;
+			fields.push(["source", interruptEvent.source]);
+			fields.push(["interrupted", interruptEvent.interrupted]);
+			if (interruptEvent.interrupted_tool_call_id) fields.push(["interrupted_tool_call_id", interruptEvent.interrupted_tool_call_id]);
+			if (interruptEvent.interrupted_model_event_id) fields.push(["interrupted_model_event_id", interruptEvent.interrupted_model_event_id]);
+			break;
+		}
 		case "approval": {
 			const approvalEvent = event;
 			if (approvalEvent.decision) fields.push(["decision", approvalEvent.decision]);
@@ -126828,6 +126872,7 @@ var TranscriptIcons = {
 	fork: "bi bi-sign-intersection-y-fill",
 	info: "bi bi-info-circle",
 	input: "bi bi-terminal",
+	interrupt: "bi bi-slash-circle",
 	limits: {
 		messages: "bi bi-chat-right-text",
 		custom: "bi bi-exclamation-triangle",
@@ -130698,6 +130743,34 @@ var InputEventView = ({ eventNode, className }) => {
 		})
 	});
 };
+//#endregion
+//#region ../../packages/inspect-components/src/transcript/InterruptEventView.tsx
+var SOURCE_TITLES = {
+	user_cancel: "Interrupted by user",
+	limit: "Interrupted by limit",
+	system: "Interrupted by system"
+};
+var INTERRUPTED_DESCRIPTIONS = {
+	generate: "during model generation",
+	tool_call: "during tool execution",
+	between_turns: "between turns"
+};
+var InterruptEventView = ({ eventNode, className }) => {
+	const event = eventNode.event;
+	const title = SOURCE_TITLES[event.source];
+	const detail = INTERRUPTED_DESCRIPTIONS[event.interrupted];
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventPanel, {
+		eventNodeId: eventNode.id,
+		title,
+		icon: TranscriptIcons.interrupt,
+		className,
+		subTitle: event.timestamp ? formatDateTime$1(new Date(event.timestamp)) : void 0,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: clsx("text-size-smaller"),
+			children: detail
+		})
+	});
+};
 var LoggerEventView_module_default = {
 	grid: "_grid_1eq5o_1",
 	jsonPanel: "_jsonPanel_1eq5o_8"
@@ -132845,6 +132918,10 @@ var RenderedEventNodeInner = ({ node, next, className, context, onAutoCollapse, 
 			eventCallbacks
 		});
 		case "input": return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(InputEventView, {
+			eventNode: node,
+			className
+		});
+		case "interrupt": return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(InterruptEventView, {
 			eventNode: node,
 			className
 		});
@@ -135412,6 +135489,7 @@ var eventTypes = {
 	tool: "Tool",
 	approval: "Approval",
 	input: "Input",
+	interrupt: "Interrupt",
 	score: "Score",
 	score_edit: "Score Edit",
 	error: "Error",
@@ -167727,6 +167805,7 @@ var SelectScorer = ({ scores, selectedScores, setSelectedScores }) => {
 	const selectedCount = selectedKeys.size;
 	const label = selectedCount === 0 ? "Score" : selectedCount === 1 ? selectedScores?.[0]?.name || "Score" : `${selectedCount} Scores`;
 	const allScoresSelected = selectedCount === scores.length;
+	const noneSelected = selectedCount === 0;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		style: { display: "flex" },
 		children: [
@@ -167766,6 +167845,14 @@ var SelectScorer = ({ scores, selectedScores, setSelectedScores }) => {
 								setSelectedScores(scores);
 							},
 							children: "All"
+						}),
+						"|",
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+							className: clsx(SelectScorer_module_default.link, noneSelected ? SelectScorer_module_default.selected : void 0),
+							onClick: () => {
+								setSelectedScores([]);
+							},
+							children: "None"
 						})
 					]
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -170867,13 +170954,19 @@ var LogViewContainer = () => {
 	const syncLogs = useStore((state) => state.logsActions.syncLogs);
 	const initLogDir = useStore((state) => state.logsActions.initLogDir);
 	(0, import_react.useEffect)(() => {
+		if (!logPath) return;
+		setWorkspaceTab(tabId ?? "samples");
+	}, [
+		logPath,
+		tabId,
+		setWorkspaceTab
+	]);
+	(0, import_react.useEffect)(() => {
 		const loadLogFromPath = async () => {
 			if (logPath) {
 				await initLogDir();
 				setSelectedLogFile(logPath);
 				syncLogs();
-				if (tabId) setWorkspaceTab(tabId);
-				else setWorkspaceTab(kLogViewSamplesTabId);
 				if (prevLogPath && logPath !== prevLogPath) {
 					clearSelectedSample();
 					clearSelectedLogSummary();
@@ -170883,9 +170976,7 @@ var LogViewContainer = () => {
 		loadLogFromPath();
 	}, [
 		logPath,
-		tabId,
 		setSelectedLogFile,
-		setWorkspaceTab,
 		initLogDir,
 		syncLogs,
 		prevLogPath,
