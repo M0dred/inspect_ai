@@ -139218,21 +139218,6 @@ var EditAnnotationsDialog_module_default = {
 	footer: "_footer_13gwg_62",
 	footerActions: "_footerActions_13gwg_62"
 };
-var EditMetadataDialog_module_default = {
-	tableScroll: "_tableScroll_twuq5_5",
-	table: "_table_twuq5_5",
-	empty: "_empty_twuq5_23",
-	row: "_row_twuq5_30",
-	rowDivider: "_rowDivider_twuq5_37",
-	rowNew: "_rowNew_twuq5_41",
-	key: "_key_twuq5_50",
-	value: "_value_twuq5_56",
-	remove: "_remove_twuq5_61",
-	addRow: "_addRow_twuq5_81",
-	addKeyInput: "_addKeyInput_twuq5_88",
-	typeSelect: "_typeSelect_twuq5_92",
-	addButton: "_addButton_twuq5_96"
-};
 //#endregion
 //#region src/utils/json-worker.ts
 var JsonWorkerPool = class {
@@ -139579,6 +139564,21 @@ function formatEditError(err) {
 	if (err instanceof Error) return err.message;
 	return String(err);
 }
+var EditMetadataDialog_module_default = {
+	tableScroll: "_tableScroll_twuq5_5",
+	table: "_table_twuq5_5",
+	empty: "_empty_twuq5_23",
+	row: "_row_twuq5_30",
+	rowDivider: "_rowDivider_twuq5_37",
+	rowNew: "_rowNew_twuq5_41",
+	key: "_key_twuq5_50",
+	value: "_value_twuq5_56",
+	remove: "_remove_twuq5_61",
+	addRow: "_addRow_twuq5_81",
+	addKeyInput: "_addKeyInput_twuq5_88",
+	typeSelect: "_typeSelect_twuq5_92",
+	addButton: "_addButton_twuq5_96"
+};
 //#endregion
 //#region src/app/log-view/title-view/ProvenanceFields.tsx
 var ProvenanceFields = ({ author, setAuthor, reason, setReason, disabled }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -139972,6 +139972,10 @@ var MetaRow = ({ entry, first, onChange, onRemove, disabled }) => /* @__PURE__ *
 		})
 	]
 });
+var PlanCard_module_default = {
+	headerActions: "_headerActions_1fn25_1",
+	emptyMetadata: "_emptyMetadata_1fn25_10"
+};
 var DatasetDetailView_module_default = { item: "_item_1uzhd_1" };
 //#endregion
 //#region src/app/plan/DatasetDetailView.tsx
@@ -140126,10 +140130,6 @@ var PlanColumn = ({ title, className, children }) => {
 			children: title
 		}), children]
 	});
-};
-var PlanCard_module_default = {
-	headerActions: "_headerActions_1fn25_1",
-	emptyMetadata: "_emptyMetadata_1fn25_10"
 };
 //#endregion
 //#region src/app/plan/PlanCard.tsx
