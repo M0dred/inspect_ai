@@ -139439,6 +139439,27 @@ var ApiError = class extends Error {
 		this.status = status;
 	}
 };
+/**
+* Unwrap a FastAPI `HTTPException` body — wire-encoded as
+* `{"detail": "..."}` — into the bare detail string.
+*
+* Returns the input unchanged when:
+*   - the body isn't valid JSON (e.g. the server sent plain text), or
+*   - the JSON has no top-level `detail` string (older endpoints,
+*     custom error shapes).
+*
+* Used by callers that build their own `ApiError` from a non-OK
+* response so the dialog renders e.g. `Empty tag is not allowed`
+* instead of `{"detail": "Empty tag is not allowed"}`.
+*/
+function unwrapFastapiDetail(body) {
+	if (!body) return body;
+	try {
+		const parsed = JSON.parse(body);
+		if (parsed && typeof parsed === "object" && "detail" in parsed && typeof parsed.detail === "string") return parsed.detail;
+	} catch {}
+	return body;
+}
 function serverRequestApi(baseUrl, getHeaders) {
 	const apiUrl = baseUrl || "";
 	function buildApiUrl(path) {
@@ -139552,7 +139573,6 @@ function serverRequestApi(baseUrl, getHeaders) {
 function formatEditError(err) {
 	if (err instanceof ApiError) {
 		if (err.status === 412) return "This log was modified by someone else. Please reload and try again.";
-		if (err.status === 400) return err.message.replace(/^API Error 400:\s*/, "");
 		return err.message;
 	}
 	if (err instanceof TypeError) return "Connection lost — view server unreachable.";
@@ -142837,8 +142857,8 @@ function viewServerApi(options = {}) {
 			credentials: isCrossOrigin ? "include" : "same-origin"
 		});
 		if (!response.ok) {
-			const message = await response.text() || response.statusText;
-			throw new ApiError(response.status, `API Error ${response.status}: ${message}`);
+			const message = unwrapFastapiDetail(await response.text()) || response.statusText;
+			throw new ApiError(response.status, message);
 		}
 		return {
 			log: await asyncJsonParse(await response.text()),
