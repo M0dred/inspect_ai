@@ -138997,17 +138997,17 @@ var Line$1 = ({ label, accent, items }) => {
 	});
 };
 var EditAnnotationsDialog_module_default = {
-	body: "_body_1rmem_3",
-	section: "_section_1rmem_9",
-	labelRow: "_labelRow_1rmem_15",
-	label: "_label_1rmem_15",
-	hint: "_hint_1rmem_27",
-	required: "_required_1rmem_33",
-	divider: "_divider_1rmem_38",
-	provenance: "_provenance_1rmem_44",
-	error: "_error_1rmem_50",
-	footer: "_footer_1rmem_59",
-	footerActions: "_footerActions_1rmem_59"
+	body: "_body_13gwg_3",
+	section: "_section_13gwg_9",
+	labelRow: "_labelRow_13gwg_15",
+	label: "_label_13gwg_15",
+	hint: "_hint_13gwg_27",
+	required: "_required_13gwg_36",
+	divider: "_divider_13gwg_41",
+	provenance: "_provenance_13gwg_47",
+	error: "_error_13gwg_53",
+	footer: "_footer_13gwg_62",
+	footerActions: "_footerActions_13gwg_62"
 };
 var EditMetadataDialog_module_default = {
 	tableScroll: "_tableScroll_twuq5_5",
@@ -139550,10 +139550,11 @@ var EditMetadataDialog = ({ showing, setShowing, currentMetadata, logFile, onSav
 		}
 	};
 	const canSave = !submitting && hasChanges && author.trim().length > 0 && !!api?.edit_log;
+	const inFlightRef = (0, import_react.useRef)(false);
 	const handleSave = async () => {
-		if (!canSave || !api?.edit_log) return;
-		setSubmitting(true);
-		setError(void 0);
+		if (!canSave || inFlightRef.current || !api?.edit_log) return;
+		inFlightRef.current = true;
+		const indicatorTimer = window.setTimeout(() => setSubmitting(true), 200);
 		try {
 			const metadata_set = {};
 			for (const entry of entries) if (entry.isNew || entry.dirty) metadata_set[entry.key] = serializeEntry(entry);
@@ -139574,13 +139575,12 @@ var EditMetadataDialog = ({ showing, setShowing, currentMetadata, logFile, onSav
 			setShowing(false);
 			onSaved?.();
 		} catch (err) {
-			if (err instanceof MetadataParseError) {
-				setError(`Invalid JSON for "${err.key}". Use JSON syntax — quote keys and strings, e.g. {"a": 1} or "yes".`);
-				setSubmitting(false);
-				return;
-			}
-			setError(formatEditError(err));
+			if (err instanceof MetadataParseError) setError(`Invalid JSON for "${err.key}". Use JSON syntax — quote keys and strings, e.g. {"a": 1} or "yes".`);
+			else setError(formatEditError(err));
+		} finally {
+			window.clearTimeout(indicatorTimer);
 			setSubmitting(false);
+			inFlightRef.current = false;
 		}
 	};
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Modal, {
@@ -142673,6 +142673,8 @@ var kMethodEvalLogHeaders = "eval_log_headers";
 var kMethodPendingSamples = "eval_log_pending_samples";
 var kMethodSampleData = "eval_log_sample_data";
 var kMethodLogMessage = "log_message";
+var kMethodEditLog = "edit_log";
+var kMethodGetUserInfo = "get_user_info";
 function webViewJsonRpcClient(vscode) {
 	return jsonRpcPostMessageRequestTransport({
 		postMessage: (data) => {
@@ -142831,6 +142833,52 @@ async function log_message(log_file, message) {
 async function download_file() {
 	throw Error("Downloading files is not supported in VS Code");
 }
+/**
+* POSTs a LogUpdate (tag/metadata edits + provenance) to the VS Code
+* extension, which read-modifies-writes the log header and returns the
+* updated EvalLog (plus an ETag for S3-backed logs).
+*
+* Cross-process error mapping:
+*   - HTTP-style status codes (400/409/412/…) thrown by the extension
+*     come back through JSON-RPC with `error.code = <status>`. We
+*     re-throw them as `ApiError` so the existing dialog error mapper
+*     (`formatEditError`) handles 412 stale-ETag and 400 validation
+*     branches identically across the view-server and vscode paths.
+*   - `kJsonRpcMethodNotFound` means the extension predates edit
+*     support; surface an actionable message instead of the raw
+*     JSON-RPC text.
+*/
+async function edit_log(log_file, update, if_match_etag) {
+	try {
+		const response = await vscodeClient(kMethodEditLog, [
+			log_file,
+			update,
+			if_match_etag
+		]);
+		if (!response) throw new Error(`Edit returned no response for ${log_file}.`);
+		return import_dist.default.parse(response);
+	} catch (e) {
+		if (typeof e?.code === "number" && e.code >= 400 && e.code < 600) throw new ApiError(e.code, e?.message ?? `Edit failed (${e.code})`);
+		if (e?.code === -32601) throw new Error("Log editing requires a newer Inspect VS Code extension.");
+		throw e;
+	}
+}
+/**
+* Best-effort identity of the user editing logs, used to prefill the
+* Author field. Returns an empty object when the extension doesn't
+* expose the method (older extension); the dialog then leaves Author
+* blank and the user types it manually.
+*/
+async function get_user_info() {
+	try {
+		const response = await vscodeClient(kMethodGetUserInfo, []);
+		if (!response) return {};
+		return import_dist.default.parse(response) ?? {};
+	} catch (e) {
+		if (e?.code === -32601) return {};
+		throw e;
+	}
+}
 async function open_log_file(log_file, log_dir) {
 	const msg = {
 		type: "displayLogFile",
@@ -142854,7 +142902,9 @@ var api = {
 	download_file,
 	open_log_file,
 	eval_pending_samples,
-	eval_log_sample_data
+	eval_log_sample_data,
+	edit_log,
+	get_user_info
 };
 //#endregion
 //#region src/client/api/index.ts
@@ -168456,10 +168506,11 @@ var EditTagsDialog = ({ showing, setShowing, currentTags, logFile, onSaved }) =>
 		setTags((prev) => prev.filter((t) => t !== tag));
 	};
 	const canSave = !submitting && hasChanges && author.trim().length > 0 && !!api?.edit_log;
+	const inFlightRef = (0, import_react.useRef)(false);
 	const handleSave = async () => {
-		if (!canSave || !api?.edit_log) return;
-		setSubmitting(true);
-		setError(void 0);
+		if (!canSave || inFlightRef.current || !api?.edit_log) return;
+		inFlightRef.current = true;
+		const indicatorTimer = window.setTimeout(() => setSubmitting(true), 200);
 		try {
 			const edit = {
 				type: "tags",
@@ -168479,7 +168530,10 @@ var EditTagsDialog = ({ showing, setShowing, currentTags, logFile, onSaved }) =>
 			onSaved?.();
 		} catch (err) {
 			setError(formatEditError(err));
+		} finally {
+			window.clearTimeout(indicatorTimer);
 			setSubmitting(false);
+			inFlightRef.current = false;
 		}
 	};
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Modal, {
