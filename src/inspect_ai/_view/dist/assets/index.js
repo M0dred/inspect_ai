@@ -140103,19 +140103,19 @@ function formatEditError(err) {
 	return String(err);
 }
 var EditMetadataDialog_module_default = {
-	tableScroll: "_tableScroll_twuq5_5",
-	table: "_table_twuq5_5",
-	empty: "_empty_twuq5_23",
-	row: "_row_twuq5_30",
-	rowDivider: "_rowDivider_twuq5_37",
-	rowNew: "_rowNew_twuq5_41",
-	key: "_key_twuq5_50",
-	value: "_value_twuq5_56",
-	remove: "_remove_twuq5_61",
-	addRow: "_addRow_twuq5_81",
-	addKeyInput: "_addKeyInput_twuq5_88",
-	typeSelect: "_typeSelect_twuq5_92",
-	addButton: "_addButton_twuq5_96"
+	tableScroll: "_tableScroll_1i84k_5",
+	table: "_table_1i84k_5",
+	empty: "_empty_1i84k_23",
+	row: "_row_1i84k_30",
+	rowDivider: "_rowDivider_1i84k_37",
+	rowNew: "_rowNew_1i84k_41",
+	key: "_key_1i84k_54",
+	value: "_value_1i84k_51",
+	remove: "_remove_1i84k_54",
+	addRow: "_addRow_1i84k_87",
+	addKeyInput: "_addKeyInput_1i84k_94",
+	typeSelect: "_typeSelect_1i84k_98",
+	addButton: "_addButton_1i84k_102"
 };
 //#endregion
 //#region src/app/log-view/title-view/ProvenanceFields.tsx
@@ -143638,7 +143638,7 @@ async function edit_log(log_file, update, if_match_etag) {
 			if_match_etag
 		]);
 		if (!response) throw new Error(`Edit returned no response for ${log_file}.`);
-		return import_dist.default.parse(response);
+		return typeof response === "string" ? import_dist.default.parse(response) : response;
 	} catch (e) {
 		if (typeof e?.code === "number" && e.code >= 400 && e.code < 600) throw new ApiError(e.code, e?.message ?? `Edit failed (${e.code})`);
 		if (e?.code === -32601) throw new Error("Log editing requires a newer Inspect VS Code extension.");
@@ -143655,7 +143655,7 @@ async function get_user_info() {
 	try {
 		const response = await vscodeClient(kMethodGetUserInfo, []);
 		if (!response) return {};
-		return import_dist.default.parse(response) ?? {};
+		return (typeof response === "string" ? import_dist.default.parse(response) : response) ?? {};
 	} catch (e) {
 		if (e?.code === -32601) return {};
 		throw e;
