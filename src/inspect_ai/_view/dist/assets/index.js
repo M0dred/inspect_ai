@@ -18137,6 +18137,39 @@ function formatDurationShort(start, end) {
 	if (remMins === 0) return `${hours}h`;
 	return `${hours}h ${remMins}m`;
 }
+/**
+* Formats a duration in milliseconds as a seconds string with up to 3 decimal
+* places (e.g. "1.234 s"). Always renders in seconds — does not decompose into
+* minutes/hours; use formatTime for that.
+*/
+function formatMs(ms) {
+	return `${(ms / 1e3).toLocaleString(navigator.language, {
+		minimumFractionDigits: 0,
+		maximumFractionDigits: 3
+	})} s`;
+}
+/**
+* Formats a byte count as a human-readable string (B, KB, MB, GB, TB).
+*/
+function formatBytes(bytes) {
+	const units = [
+		"B",
+		"KB",
+		"MB",
+		"GB",
+		"TB"
+	];
+	let value = bytes;
+	let unitIdx = 0;
+	while (value >= 1024 && unitIdx < units.length - 1) {
+		value /= 1024;
+		unitIdx++;
+	}
+	return `${value.toLocaleString(navigator.language, {
+		minimumFractionDigits: 0,
+		maximumFractionDigits: unitIdx === 0 ? 0 : 2
+	})} ${units[unitIdx]}`;
+}
 //#endregion
 //#region ../../packages/util/src/git.ts
 /**
@@ -63739,11 +63772,6 @@ var createAppSlice = (set, get, _store) => {
 					state.app.urlHash = urlHash;
 				});
 			},
-			setSingleFileMode: (singleFile) => {
-				set((state) => {
-					state.app.singleFileMode = singleFile;
-				});
-			},
 			setDisplayMode: (mode) => {
 				set((state) => {
 					state.app.displayMode = mode;
@@ -64211,6 +64239,36 @@ var initalializeLogSlice = (set) => {
 	});
 };
 //#endregion
+//#region src/app/singleFileMode.ts
+/**
+* Single-file mode is set when the viewer is opened against a specific log
+* rather than a directory listing — e.g. an embedded iframe deep-link. We
+* need to know this before the first render so that AppRouter renders the
+* log view directly instead of mounting LogsPanel, which would otherwise
+* kick off directory-wide replication for every log in the directory.
+*/
+var detectInitialSingleFileMode = (location, doc) => {
+	if (doc.getElementById("logview-state")) return true;
+	const params = new URLSearchParams(location.search);
+	return params.has("log_file") || params.has("task_file");
+};
+/**
+* In single-file mode we don't ask the server for the log root (which would
+* walk the whole directory) — we derive the log dir from the selected file.
+*/
+var deriveSingleFileLogDir = (logFile) => {
+	if (!logFile) return void 0;
+	const dir = dirname(logFile);
+	return dir === "" ? void 0 : dir;
+};
+/**
+* Resolved once at module import. Whether the viewer is in single-file mode
+* is a startup-time property: it's a function of the URL the page loaded with
+* (or embedded state injected by VSCode) and never flips during the session,
+* so we don't need to thread it through application state.
+*/
+var isSingleFileMode = typeof window !== "undefined" ? detectInitialSingleFileMode(window.location, document) : false;
+//#endregion
 //#region src/state/logsSlice.ts
 var log$7 = createLogger("Log Slice");
 var initialState$1 = {
@@ -64326,28 +64384,33 @@ var createLogsSlice = (set, get, _store) => {
 				});
 			},
 			initLogDir: async () => {
-				const api = get().api;
-				if (!api) {
-					console.error("API not initialized in LogsStore");
-					return;
-				}
-				const loadLogInfo = async () => {
+				const state = get();
+				let logDir;
+				let absLogDir;
+				if (isSingleFileMode) {
+					if (state.logs.logDir !== void 0) return state.logs.logDir;
+					logDir = deriveSingleFileLogDir(state.logs.selectedLogFile);
+					if (logDir === void 0 && state.api?.get_log_dir) try {
+						logDir = await state.api.get_log_dir();
+					} catch (e) {
+						console.log(e);
+					}
+				} else {
+					const api = state.api;
+					if (!api) {
+						console.error("API not initialized in LogsStore");
+						return;
+					}
 					try {
 						const root = await api.get_log_root();
-						return {
-							logDir: root.log_dir,
-							absLogDir: root.abs_log_dir
-						};
+						logDir = root.log_dir;
+						absLogDir = root.abs_log_dir;
 					} catch (e) {
 						console.log(e);
 						get().appActions.setLoading(false, e);
-						return;
 					}
-				};
-				const info = await loadLogInfo();
-				const logDir = info?.logDir;
+				}
 				if (get().logs.logDir !== logDir) get().logsActions.setLogDir(logDir);
-				const absLogDir = info?.absLogDir;
 				if (get().logs.absLogDir !== absLogDir) set((state) => {
 					state.logs.absLogDir = absLogDir;
 				});
@@ -64383,7 +64446,7 @@ var createLogsSlice = (set, get, _store) => {
 							return;
 						}
 					};
-					if (!logDir || get().app.singleFileMode) {
+					if (!logDir || isSingleFileMode) {
 						if (useProgress) get().appActions.setLoading(false);
 						return [];
 					}
@@ -64446,7 +64509,7 @@ var createLogsSlice = (set, get, _store) => {
 			},
 			setSelectedLogFile: async (logFile) => {
 				const state = get();
-				if (!(state.logs.logs.findIndex((val) => val.name.endsWith(logFile)) !== -1)) if (state.replicationService?.isReplicating() && !state.app.singleFileMode) {
+				if (!(state.logs.logs.findIndex((val) => val.name.endsWith(logFile)) !== -1)) if (state.replicationService?.isReplicating() && !isSingleFileMode) {
 					await state.logsActions.syncLogs();
 					if (!get().logs.logs.find((val) => val.name.endsWith(logFile))) throw new Error(`Log file not found: ${logFile}`);
 				} else state.logsActions.setLogHandles([{ name: logFile }]);
@@ -65049,7 +65112,8 @@ var kDefaultExcludeEvents = [
 	"state",
 	"store",
 	"branch",
-	"anchor"
+	"anchor",
+	"checkpoint"
 ];
 var initialState = {
 	sample_identifier: void 0,
@@ -66977,6 +67041,8 @@ var createEvalDescriptor = (scores, samples) => {
 			return value !== null;
 		}).filter((value) => {
 			return value !== void 0;
+		}).filter((value) => {
+			return !(typeof value === "number" && Number.isNaN(value));
 		}))];
 		const scoreDescriptor = getScoreDescriptorForValues(uniqScoreValues, [...new Set(uniqScoreValues.map((scoreValue) => typeof scoreValue))]);
 		if (scoreDescriptor) scoreDescriptorMap[scoreLabelKey(scoreLabel)] = scoreDescriptor;
@@ -66989,6 +67055,7 @@ var createEvalDescriptor = (scores, samples) => {
 		const score = scoreValue(sample, scoreLabel);
 		if (score === null) return "null";
 		else if (score === void 0) return "";
+		else if (typeof score === "number" && Number.isNaN(score)) return "";
 		else if (descriptor && descriptor.render) return descriptor.render(score);
 		else return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: String(score) });
 	};
@@ -122091,12 +122158,13 @@ var fixupEventStream = (events, filterPending = true) => {
 };
 var processPendingEvents = (events, filter) => {
 	return filter ? events.filter((e) => !e.pending) : events.reduce((acc, event) => {
-		if (!event.pending) acc.push(event);
-		else {
-			const lastIndex = acc.length - 1;
-			if (lastIndex >= 0 && acc[lastIndex]?.pending && acc[lastIndex]?.event === event.event) acc[lastIndex] = event;
-			else acc.push(event);
+		if (!event.pending) {
+			acc.push(event);
+			return acc;
 		}
+		const lastIndex = acc.length - 1;
+		if (lastIndex >= 0 && event.uuid != null && acc[lastIndex]?.pending && acc[lastIndex]?.uuid === event.uuid) acc[lastIndex] = event;
+		else acc.push(event);
 		return acc;
 	}, []);
 };
@@ -122314,6 +122382,11 @@ var transformers = () => {
 			process: (node) => {
 				return discardNode(node);
 			}
+		},
+		{
+			name: "discard_checkpoint_span",
+			matches: (node) => node.event.event === "span_begin" && node.event.type === "checkpoint",
+			process: (node) => discardNode(node)
 		}
 	];
 };
@@ -122673,6 +122746,14 @@ var extractEventFields = (event) => {
 		case "input": {
 			const inputEvent = event;
 			if (inputEvent.input) fields.push(["input", inputEvent.input]);
+			break;
+		}
+		case "interrupt": {
+			const interruptEvent = event;
+			fields.push(["source", interruptEvent.source]);
+			fields.push(["interrupted", interruptEvent.interrupted]);
+			if (interruptEvent.interrupted_tool_call_id) fields.push(["interrupted_tool_call_id", interruptEvent.interrupted_tool_call_id]);
+			if (interruptEvent.interrupted_model_event_id) fields.push(["interrupted_model_event_id", interruptEvent.interrupted_model_event_id]);
 			break;
 		}
 		case "approval": {
@@ -126340,6 +126421,7 @@ function useListPositionManager(baseListId, selected, scrollRef, hasScrollTarget
 var TranscriptIcons = {
 	agent: "bi bi-grid",
 	approve: "bi bi-shield",
+	checkpoint: "bi bi-bookmark-check-fill",
 	approvals: {
 		approve: "bi bi-shield-check",
 		reject: "bi bi-shield-x",
@@ -126355,6 +126437,7 @@ var TranscriptIcons = {
 	fork: "bi bi-sign-intersection-y-fill",
 	info: "bi bi-info-circle",
 	input: "bi bi-terminal",
+	interrupt: "bi bi-slash-circle",
 	limits: {
 		messages: "bi bi-chat-right-text",
 		custom: "bi bi-exclamation-triangle",
@@ -126480,6 +126563,7 @@ var labelForNode = (node) => {
 		case "step":
 			if (node.event.name === "53787D8A-D3FC-426D-B383-9F880B70E4AA") return "sandbox events";
 			return node.event.name;
+		case "checkpoint": return `checkpoint ${node.event.checkpoint_id}`;
 		default: return node.event.event;
 	}
 };
@@ -126571,6 +126655,7 @@ function labelForOutlineNode(node) {
 		case "model": return `model${node.event.role ? ` (${node.event.role})` : ""}`;
 		case "score": return "scoring";
 		case "step": return node.event.name;
+		case "checkpoint": return `checkpoint ${node.event.checkpoint_id}`;
 		default: return node.event.event;
 	}
 }
@@ -130118,6 +130203,93 @@ var BranchEventView = ({ eventNode, className }) => {
 		})
 	});
 };
+var CheckpointEventView_module_default = {
+	panel: "_panel_1dnhl_1",
+	metric: "_metric_1dnhl_5",
+	label: "_label_1dnhl_10",
+	section: "_section_1dnhl_15",
+	sectionTitle: "_sectionTitle_1dnhl_19",
+	indented: "_indented_1dnhl_23"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/transcript/CheckpointEventView.tsx
+var SizeAndDuration = ({ size_bytes, duration_ms }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
+	label: "Size",
+	layout: "row",
+	children: formatBytes(size_bytes)
+}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
+	label: "Duration",
+	layout: "row",
+	children: formatMs(duration_ms)
+})] });
+var CheckpointEventView = ({ eventNode, className }) => {
+	const event = eventNode.event;
+	const sandboxEntries = Object.entries(event.sandboxes);
+	const sections = [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: CheckpointEventView_module_default.section,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: CheckpointEventView_module_default.sectionTitle,
+			children: "Host"
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: CheckpointEventView_module_default.indented,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SizeAndDuration, {
+				size_bytes: event.host.size_bytes,
+				duration_ms: event.host.duration_ms
+			})
+		})]
+	}, "host")];
+	const onlySandbox = sandboxEntries.length === 1 ? sandboxEntries[0] : null;
+	if (onlySandbox) {
+		const [, details] = onlySandbox;
+		sections.push(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: CheckpointEventView_module_default.section,
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: CheckpointEventView_module_default.sectionTitle,
+				children: "Sandbox"
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: CheckpointEventView_module_default.indented,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SizeAndDuration, {
+					size_bytes: details.size_bytes,
+					duration_ms: details.duration_ms
+				})
+			})]
+		}, "sandbox"));
+	} else if (sandboxEntries.length > 1) sections.push(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: CheckpointEventView_module_default.section,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: CheckpointEventView_module_default.sectionTitle,
+			children: "Sandboxes"
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: CheckpointEventView_module_default.indented,
+			children: sandboxEntries.map(([name, details]) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: CheckpointEventView_module_default.section,
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: CheckpointEventView_module_default.sectionTitle,
+					children: name
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: CheckpointEventView_module_default.indented,
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SizeAndDuration, {
+						size_bytes: details.size_bytes,
+						duration_ms: details.duration_ms
+					})
+				})]
+			}, name))
+		})]
+	}, "sandboxes"));
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventRow, {
+		title: formatTitle(`Checkpoint ${event.checkpoint_id}`, void 0, event.duration_ms / 1e3),
+		icon: TranscriptIcons.checkpoint,
+		className,
+		below: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: CheckpointEventView_module_default.panel,
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
+				label: "Size",
+				layout: "row",
+				children: formatBytes(event.size_bytes)
+			}), sections]
+		})
+	});
+};
 var CompactionEventView_module_default = { panel: "_panel_8zdtn_1" };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/CompactionEventView.tsx
@@ -130222,6 +130394,34 @@ var InputEventView = ({ eventNode, className }) => {
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ANSIDisplay, {
 			output: event.input_ansi,
 			style: { fontSize: "clamp(0.4rem, 1.15vw, 0.9rem)" }
+		})
+	});
+};
+//#endregion
+//#region ../../packages/inspect-components/src/transcript/InterruptEventView.tsx
+var SOURCE_TITLES = {
+	user_cancel: "Interrupted by user",
+	limit: "Interrupted by limit",
+	system: "Interrupted by system"
+};
+var INTERRUPTED_DESCRIPTIONS = {
+	generate: "during model generation",
+	tool_call: "during tool execution",
+	between_turns: "between turns"
+};
+var InterruptEventView = ({ eventNode, className }) => {
+	const event = eventNode.event;
+	const title = SOURCE_TITLES[event.source];
+	const detail = INTERRUPTED_DESCRIPTIONS[event.interrupted];
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventPanel, {
+		eventNodeId: eventNode.id,
+		title,
+		icon: TranscriptIcons.interrupt,
+		className,
+		subTitle: event.timestamp ? formatDateTime$1(new Date(event.timestamp)) : void 0,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: clsx("text-size-smaller"),
+			children: detail
 		})
 	});
 };
@@ -132375,6 +132575,10 @@ var RenderedEventNodeInner = ({ node, next, className, context, onAutoCollapse, 
 			eventNode: node,
 			className
 		});
+		case "interrupt": return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(InterruptEventView, {
+			eventNode: node,
+			className
+		});
 		case "error": return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ErrorEventView, {
 			eventNode: node,
 			className
@@ -132384,6 +132588,10 @@ var RenderedEventNodeInner = ({ node, next, className, context, onAutoCollapse, 
 			className
 		});
 		case "sandbox": return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SandboxEventView, {
+			eventNode: node,
+			className
+		});
+		case "checkpoint": return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CheckpointEventView, {
 			eventNode: node,
 			className
 		});
@@ -134788,14 +134996,14 @@ var SampleScores = ({ sample, scorer }) => {
 	return getScoreDescriptorForValues([scoreData.value], [typeof scoreData.value])?.render(scoreData.value);
 };
 var SampleScoresGrid_module_default = {
-	container: "_container_1rxdt_1",
-	cell: "_cell_1rxdt_9",
-	fullWidth: "_fullWidth_1rxdt_15",
-	heading: "_heading_1rxdt_19",
-	padded: "_padded_1rxdt_23",
-	separator: "_separator_1rxdt_27",
-	separatorPadded: "_separatorPadded_1rxdt_32",
-	headerSep: "_headerSep_1rxdt_37"
+	container: "_container_uifeh_1",
+	cell: "_cell_uifeh_9",
+	fullWidth: "_fullWidth_uifeh_15",
+	heading: "_heading_uifeh_19",
+	padded: "_padded_uifeh_23",
+	separator: "_separator_uifeh_27",
+	separatorPadded: "_separatorPadded_uifeh_32",
+	headerSep: "_headerSep_uifeh_37"
 };
 //#endregion
 //#region src/app/samples/scores/SampleScoresGrid.tsx
@@ -134939,6 +135147,7 @@ var eventTypes = {
 	tool: "Tool",
 	approval: "Approval",
 	input: "Input",
+	interrupt: "Interrupt",
 	score: "Score",
 	score_edit: "Score Edit",
 	error: "Error",
@@ -134948,6 +135157,7 @@ var eventTypes = {
 	subtask: "Subtask",
 	anchor: "Anchor",
 	branch: "Branch",
+	checkpoint: "Checkpoint",
 	step: "Step"
 };
 var useTranscriptFilter = () => {
@@ -138644,7 +138854,6 @@ var LogSampleDetailView = () => {
 	const selectSample = useStore((state) => state.logActions.selectSample);
 	const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
 	const selectedSampleHandle = useStore((state) => state.log.selectedSampleHandle);
-	const singleFileMode = useStore((state) => state.app.singleFileMode);
 	const logPath = routeLogPath || selectedLogFile;
 	const sampleId = routeSampleId || selectedSampleHandle?.id?.toString();
 	const epoch = routeEpoch || selectedSampleHandle?.epoch?.toString();
@@ -138703,7 +138912,7 @@ var LogSampleDetailView = () => {
 			currentPath: logPath ? `${logPath}/sample` : void 0,
 			fnNavigationUrl,
 			bordered: true,
-			breadcrumbsEnabled: !singleFileMode
+			breadcrumbsEnabled: !isSingleFileMode
 		}
 	});
 };
@@ -169979,7 +170188,6 @@ var LogViewLayout = () => {
 	const setShowFind = useStore((state) => state.appActions.setShowFind);
 	const nativeFind = useStore((state) => state.app.nativeFind);
 	const hideFind = useStore((state) => state.appActions.hideFind);
-	const singleFileMode = useStore((state) => state.app.singleFileMode);
 	const logDir = useStore((state) => state.logs.logDir);
 	const logFiles = useStore((state) => state.logs.logs);
 	const { logPath } = useLogRouteParams();
@@ -170007,11 +170215,11 @@ var LogViewLayout = () => {
 	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExtendedFindProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FindTargetProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		ref: mainAppRef,
-		className: clsx("app-main-grid", fullScreen ? "full-screen" : void 0, singleFileMode ? "single-file-mode" : void 0, "log-view"),
+		className: clsx("app-main-grid", fullScreen ? "full-screen" : void 0, isSingleFileMode ? "single-file-mode" : void 0, "log-view"),
 		tabIndex: 0,
 		children: [
 			showFind ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FindBand, {}) : "",
-			!singleFileMode ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ApplicationNavbar, {
+			!isSingleFileMode ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ApplicationNavbar, {
 				fnNavigationUrl: navigationUrl,
 				currentPath: logPath,
 				showActivity: "log"
@@ -170083,13 +170291,19 @@ var LogViewContainer = () => {
 	const syncLogs = useStore((state) => state.logsActions.syncLogs);
 	const initLogDir = useStore((state) => state.logsActions.initLogDir);
 	(0, import_react.useEffect)(() => {
+		if (!logPath) return;
+		setWorkspaceTab(tabId ?? "samples");
+	}, [
+		logPath,
+		tabId,
+		setWorkspaceTab
+	]);
+	(0, import_react.useEffect)(() => {
 		const loadLogFromPath = async () => {
 			if (logPath) {
 				await initLogDir();
 				setSelectedLogFile(logPath);
 				syncLogs();
-				if (tabId) setWorkspaceTab(tabId);
-				else setWorkspaceTab(kLogViewSamplesTabId);
 				if (prevLogPath && logPath !== prevLogPath) {
 					clearSelectedSample();
 					clearSelectedLogSummary();
@@ -170099,9 +170313,7 @@ var LogViewContainer = () => {
 		loadLogFromPath();
 	}, [
 		logPath,
-		tabId,
 		setSelectedLogFile,
-		setWorkspaceTab,
 		initLogDir,
 		syncLogs,
 		prevLogPath,
@@ -170413,7 +170625,6 @@ var SampleDetailView = () => {
 	const clearSelectedLogDetails = useStore((state) => state.logActions.clearSelectedLogDetails);
 	const clearLog = useStore((state) => state.logActions.clearLog);
 	const clearSampleTab = useStore((state) => state.appActions.clearSampleTab);
-	const singleFileMode = useStore((state) => state.app.singleFileMode);
 	const currentIndex = (0, import_react.useMemo)(() => {
 		if (!displayedSamples || !selectedLogFile || !sampleId || !epoch) return -1;
 		return displayedSamples.findIndex((s) => {
@@ -170478,7 +170689,7 @@ var SampleDetailView = () => {
 			currentPath: routeLogPath,
 			fnNavigationUrl: samplesUrl,
 			bordered: true,
-			breadcrumbsEnabled: !singleFileMode
+			breadcrumbsEnabled: !isSingleFileMode
 		}
 	});
 };
@@ -170827,9 +171038,8 @@ var AppLayout = () => {
 	(0, import_react.useEffect)(() => {
 		if (storeImplementation) storeImplementation.getState().appActions.setUrlHash(location.pathname);
 	}, [location]);
-	const singleFileMode = useStore((state) => state.app.singleFileMode);
 	const { sampleId, epoch, sampleUuid } = useLogRouteParams();
-	if (singleFileMode) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComponentNavigationProvider, {
+	if (isSingleFileMode) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComponentNavigationProvider, {
 		navigation: componentNavigation,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AppErrorBoundary, { children: sampleId && epoch || sampleUuid ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LogSampleDetailView, {}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LogViewContainer, {}) })
 	});
@@ -170907,12 +171117,12 @@ var App = ({ api }) => {
 	const setInitialState = useStore((state) => state.appActions.setInitialState);
 	const setLoading = useStore((state) => state.appActions.setLoading);
 	const syncLogs = useStore((state) => state.logsActions.syncLogs);
+	const initLogDir = useStore((state) => state.logsActions.initLogDir);
 	const setLogDir = useStore((state) => state.logsActions.setLogDir);
 	const setLogFiles = useStore((state) => state.logsActions.setLogHandles);
 	const setSelectedLogFile = useStore((state) => state.logsActions.setSelectedLogFile);
 	const loadLog = useStore((state) => state.logActions.syncLog);
 	const pollLog = useStore((state) => state.logActions.pollLog);
-	const setSingleFileMode = useStore((state) => state.appActions.setSingleFileMode);
 	(0, import_react.useEffect)(() => {
 		const loadSpecificLog = async () => {
 			if (!selectedLogFile) return;
@@ -170980,22 +171190,19 @@ var App = ({ api }) => {
 	(0, import_react.useEffect)(() => {
 		const loadLogsAndState = async () => {
 			const embeddedState = document.getElementById("logview-state");
-			if (embeddedState) {
-				onMessage({ data: import_dist.default.parse(embeddedState.textContent || "") });
-				setSingleFileMode(true);
-			} else {
+			if (embeddedState) onMessage({ data: import_dist.default.parse(embeddedState.textContent || "") });
+			else {
 				const urlParams = new URLSearchParams(window.location.search);
 				const logPath = urlParams.get("task_file");
 				const resolvedLogPath = logPath ? logPath.replace(" ", "+") : logPath;
 				if (resolvedLogPath) {
 					setLogDir(void 0);
 					setLogFiles([{ name: resolvedLogPath }]);
-					setSingleFileMode(true);
 				} else {
 					const log_file = urlParams.get("log_file");
 					if (log_file) {
+						await initLogDir();
 						setSelectedLogFile(log_file);
-						setSingleFileMode(true);
 					}
 				}
 			}
@@ -171006,9 +171213,9 @@ var App = ({ api }) => {
 		setLogDir,
 		setLogFiles,
 		setSelectedLogFile,
+		initLogDir,
 		syncLogs,
-		onMessage,
-		setSingleFileMode
+		onMessage
 	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComponentIconProvider, {
 		icons: componentIcons,
