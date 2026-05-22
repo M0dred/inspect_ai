@@ -141919,6 +141919,7 @@ var openRemoteLogFile = async (api, url, concurrency) => {
 	const queue = new AsyncQueue(concurrency);
 	const logInfo = await api.get_log_info(url);
 	const directUrl = logInfo.direct_url;
+	const initialEtag = logInfo.etag ?? void 0;
 	const fetchBytes = async (_url, start, end) => {
 		if (directUrl) try {
 			return await fetchRange(directUrl, start, end);
@@ -142022,7 +142023,8 @@ var openRemoteLogFile = async (api, url, concurrency) => {
 				tags: header.tags,
 				metadata: header.metadata,
 				log_updates: header.log_updates,
-				sampleSummaries
+				sampleSummaries,
+				etag: initialEtag
 			};
 		},
 		readSample,
@@ -142232,6 +142234,7 @@ var clientApi = (api, log_file, debug = false) => {
 		return api.eval_pending_samples(log_file, etag);
 	};
 	const sampleDataPathByLog = /* @__PURE__ */ new Map();
+	const editEtagByLog = /* @__PURE__ */ new Map();
 	const get_log_sample_data = async (log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool) => {
 		if (!api.eval_log_sample_data) throw new Error("API doesn't supported streamed sample data");
 		let path = sampleDataPathByLog.get(log_file);
@@ -142271,7 +142274,11 @@ var clientApi = (api, log_file, debug = false) => {
 			return api.get_flow(dir);
 		}),
 		get_log_summaries: middleware("get_log_summaries", get_log_summaries),
-		get_log_details: middleware("get_log_details", get_log_details),
+		get_log_details: middleware("get_log_details", async (log_file, cached) => {
+			const result = await get_log_details(log_file, cached);
+			if (result.etag) editEtagByLog.set(log_file, result.etag);
+			return result;
+		}),
 		get_log_sample: middleware("get_log_sample", get_log_sample),
 		open_log_file: middleware("open_log_file", (log_file, log_dir) => {
 			return api.open_log_file(log_file, log_dir);
@@ -142289,7 +142296,9 @@ var clientApi = (api, log_file, debug = false) => {
 		get_log_sample_data: api.eval_log_sample_data ? middleware("get_log_sample_data", get_log_sample_data) : void 0,
 		get_user_info: api.get_user_info ? middleware("get_user_info", () => api.get_user_info()) : void 0,
 		edit_log: api.edit_log ? middleware("edit_log", async (log_file, update, if_match_etag) => {
-			const result = await api.edit_log(log_file, update, if_match_etag);
+			const effective = if_match_etag ?? editEtagByLog.get(log_file);
+			const result = await api.edit_log(log_file, update, effective);
+			if (result.etag) editEtagByLog.set(log_file, result.etag);
 			if (current_path === log_file) {
 				current_log = void 0;
 				current_path = void 0;
