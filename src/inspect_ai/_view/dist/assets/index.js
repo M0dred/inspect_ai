@@ -67522,6 +67522,8 @@ var createEvalDescriptor = (scores, samples) => {
 			return value !== null;
 		}).filter((value) => {
 			return value !== void 0;
+		}).filter((value) => {
+			return !(typeof value === "number" && Number.isNaN(value));
 		}))];
 		const scoreDescriptor = getScoreDescriptorForValues(uniqScoreValues, [...new Set(uniqScoreValues.map((scoreValue) => typeof scoreValue))]);
 		if (scoreDescriptor) scoreDescriptorMap[scoreLabelKey(scoreLabel)] = scoreDescriptor;
@@ -67534,6 +67536,7 @@ var createEvalDescriptor = (scores, samples) => {
 		const score = scoreValue(sample, scoreLabel);
 		if (score === null) return "null";
 		else if (score === void 0) return "";
+		else if (typeof score === "number" && Number.isNaN(score)) return "";
 		else if (descriptor && descriptor.render) return descriptor.render(score);
 		else return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: String(score) });
 	};
@@ -122634,12 +122637,13 @@ var fixupEventStream = (events, filterPending = true) => {
 };
 var processPendingEvents = (events, filter) => {
 	return filter ? events.filter((e) => !e.pending) : events.reduce((acc, event) => {
-		if (!event.pending) acc.push(event);
-		else {
-			const lastIndex = acc.length - 1;
-			if (lastIndex >= 0 && acc[lastIndex]?.pending && acc[lastIndex]?.event === event.event) acc[lastIndex] = event;
-			else acc.push(event);
+		if (!event.pending) {
+			acc.push(event);
+			return acc;
 		}
+		const lastIndex = acc.length - 1;
+		if (lastIndex >= 0 && event.uuid != null && acc[lastIndex]?.pending && acc[lastIndex]?.uuid === event.uuid) acc[lastIndex] = event;
+		else acc.push(event);
 		return acc;
 	}, []);
 };
@@ -135471,14 +135475,14 @@ var SampleScores = ({ sample, scorer }) => {
 	return getScoreDescriptorForValues([scoreData.value], [typeof scoreData.value])?.render(scoreData.value);
 };
 var SampleScoresGrid_module_default = {
-	container: "_container_1rxdt_1",
-	cell: "_cell_1rxdt_9",
-	fullWidth: "_fullWidth_1rxdt_15",
-	heading: "_heading_1rxdt_19",
-	padded: "_padded_1rxdt_23",
-	separator: "_separator_1rxdt_27",
-	separatorPadded: "_separatorPadded_1rxdt_32",
-	headerSep: "_headerSep_1rxdt_37"
+	container: "_container_uifeh_1",
+	cell: "_cell_uifeh_9",
+	fullWidth: "_fullWidth_uifeh_15",
+	heading: "_heading_uifeh_19",
+	padded: "_padded_uifeh_23",
+	separator: "_separator_uifeh_27",
+	separatorPadded: "_separatorPadded_uifeh_32",
+	headerSep: "_headerSep_uifeh_37"
 };
 //#endregion
 //#region src/app/samples/scores/SampleScoresGrid.tsx
