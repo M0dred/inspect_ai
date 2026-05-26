@@ -11499,16 +11499,16 @@ function bins(min, max, maxbins = 15, nice = true, minstep = 0, step) {
 }
 //#endregion
 //#region ../../node_modules/.pnpm/arquero@8.0.3/node_modules/arquero/src/util/key-function.js
-function key$2(value) {
+function key$3(value) {
 	const type = typeof value;
-	return type === "string" ? `"${value}"` : type !== "object" || !value ? value : isDate(value) ? +value : isArray$2(value) || isTypedArray(value) ? `[${value.map(key$2)}]` : isRegExp$1(value) ? value + "" : objectKey(value);
+	return type === "string" ? `"${value}"` : type !== "object" || !value ? value : isDate(value) ? +value : isArray$2(value) || isTypedArray(value) ? `[${value.map(key$3)}]` : isRegExp$1(value) ? value + "" : objectKey(value);
 }
 function objectKey(value) {
 	let s = "{";
 	let i = -1;
 	for (const k in value) {
 		if (++i > 0) s += ",";
-		s += `"${k}":${key$2(value[k])}`;
+		s += `"${k}":${key$3(value[k])}`;
 	}
 	s += "}";
 	return s;
@@ -11525,7 +11525,7 @@ function distinctMap() {
 			return Array.from(map.values(), (_) => _.v);
 		},
 		increment(v) {
-			const k = key$2(v);
+			const k = key$3(v);
 			const e = map.get(k);
 			e ? ++e.n : map.set(k, {
 				v,
@@ -11533,7 +11533,7 @@ function distinctMap() {
 			});
 		},
 		decrement(v) {
-			const k = key$2(v);
+			const k = key$3(v);
 			const e = map.get(k);
 			e.n === 1 ? map.delete(k) : --e.n;
 		},
@@ -14086,7 +14086,7 @@ pp$8.parseThrowStatement = function(node) {
 	this.semicolon();
 	return this.finishNode(node, "ThrowStatement");
 };
-var empty$1 = [];
+var empty$1$1 = [];
 pp$8.parseCatchClauseParam = function() {
 	var param = this.parseBindingAtom();
 	var simple = param.type === "Identifier";
@@ -14541,7 +14541,7 @@ pp$8.parseExportSpecifiers = function(exports) {
 pp$8.parseImport = function(node) {
 	this.next();
 	if (this.type === types$1.string) {
-		node.specifiers = empty$1;
+		node.specifiers = empty$1$1;
 		node.source = this.parseExprAtom();
 	} else {
 		node.specifiers = this.parseImportSpecifiers();
@@ -18152,6 +18152,39 @@ function formatDurationShort(start, end) {
 	const remMins = mins % 60;
 	if (remMins === 0) return `${hours}h`;
 	return `${hours}h ${remMins}m`;
+}
+/**
+* Formats a duration in milliseconds as a seconds string with up to 3 decimal
+* places (e.g. "1.234 s"). Always renders in seconds — does not decompose into
+* minutes/hours; use formatTime for that.
+*/
+function formatMs(ms) {
+	return `${(ms / 1e3).toLocaleString(navigator.language, {
+		minimumFractionDigits: 0,
+		maximumFractionDigits: 3
+	})} s`;
+}
+/**
+* Formats a byte count as a human-readable string (B, KB, MB, GB, TB).
+*/
+function formatBytes(bytes) {
+	const units = [
+		"B",
+		"KB",
+		"MB",
+		"GB",
+		"TB"
+	];
+	let value = bytes;
+	let unitIdx = 0;
+	while (value >= 1024 && unitIdx < units.length - 1) {
+		value /= 1024;
+		unitIdx++;
+	}
+	return `${value.toLocaleString(navigator.language, {
+		minimumFractionDigits: 0,
+		maximumFractionDigits: unitIdx === 0 ? 0 : 2
+	})} ${units[unitIdx]}`;
 }
 //#endregion
 //#region ../../packages/util/src/git.ts
@@ -23222,14 +23255,14 @@ function getReadonlyRequest(request) {
 	};
 }
 function getReadonlyContext(context) {
-	if (isPlainObject$1(context)) {
+	if (isPlainObject$2(context)) {
 		let frozen = { ...context };
 		Object.freeze(frozen);
 		return frozen;
 	} else return { get: (ctx) => context.get(ctx) };
 }
 var objectProtoNames = Object.getOwnPropertyNames(Object.prototype).sort().join("\0");
-function isPlainObject$1(thing) {
+function isPlainObject$2(thing) {
 	if (thing === null || typeof thing !== "object") return false;
 	const proto = Object.getPrototypeOf(thing);
 	return proto === Object.prototype || proto === null || Object.getOwnPropertyNames(proto).sort().join("\0") === objectProtoNames;
@@ -28829,6 +28862,65 @@ var computeForegroundBackgroundColor = (colorType, color) => {
 		else return { background: `var(--${color})` };
 		default: if (colorType === kForeground) return { color };
 		else return { background: color };
+	}
+};
+var ErrorPanel_module_default = {
+	errorPanel: "_errorPanel_13pj6_1",
+	heading: "_heading_13pj6_9",
+	body: "_body_13pj6_13",
+	stack: "_stack_13pj6_23",
+	centeredFlex: "_centeredFlex_13pj6_28",
+	errorIcon: "_errorIcon_13pj6_35"
+};
+//#endregion
+//#region ../../packages/react/src/components/ErrorPanel.tsx
+var ErrorPanel = ({ title, error }) => {
+	const icons = useComponentIcons();
+	const message = error.message;
+	const stack = error.stack;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: clsx(ErrorPanel_module_default.errorPanel, ErrorPanel_module_default.centeredFlex),
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: clsx(ErrorPanel_module_default.heading, ErrorPanel_module_default.centeredFlex),
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(icons.error, ErrorPanel_module_default.errorIcon) }) }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: title || "" })]
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: ErrorPanel_module_default.body,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [message || "", stack && error.displayStack !== false && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", {
+				className: ErrorPanel_module_default.stack,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("code", { children: ["at ", stack] })
+			})] })
+		})]
+	});
+};
+//#endregion
+//#region ../../packages/react/src/components/AppErrorBoundary.tsx
+var AppErrorBoundary = class extends import_react.Component {
+	constructor(props) {
+		super(props);
+		this.state = { hasError: false };
+	}
+	static getDerivedStateFromError(error) {
+		return {
+			hasError: true,
+			error
+		};
+	}
+	componentDidCatch(error, errorInfo) {
+		console.log({
+			error,
+			errorInfo
+		});
+	}
+	render() {
+		if (this.state.hasError) {
+			console.error({ e: this.state.error });
+			if (this.state.error) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ErrorPanel, {
+				title: "An unexpected error occurred.",
+				error: this.state.error
+			});
+			else return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: "An unknown error with no additional information occured." });
+		}
+		return this.props.children;
 	}
 };
 var Card_module_default = {
@@ -35503,7 +35595,7 @@ function r$2(r) {
 	};
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/VscElement.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/VscElement.js
 var VERSION$1 = "2.5.0";
 var CONFIG_KEY = "__vscodeElements_disableRegistryWarning__";
 var warn = (message, componentInstance) => {
@@ -35541,7 +35633,7 @@ var customElement = (tagName) => {
 	};
 };
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/default.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/default.styles.js
 var default_styles_default = i$9`
   :host([hidden]) {
     display: none;
@@ -35562,7 +35654,7 @@ function getDefaultFontStack() {
 	else return "sans-serif";
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-badge/vscode-badge.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-badge/vscode-badge.styles.js
 var styles$35 = [default_styles_default, i$9`
     :host {
       display: inline-block;
@@ -35614,7 +35706,7 @@ var styles$35 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-badge/vscode-badge.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-badge/vscode-badge.js
 var __decorate$40 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -35720,7 +35812,7 @@ var i$5 = class {
 * SPDX-License-Identifier: BSD-3-Clause
 */ var o = (o) => o ?? A$1;
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/style-property-map.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/style-property-map.js
 var StylePropertyMap = class extends i$5 {
 	constructor(partInfo) {
 		super(partInfo);
@@ -35749,7 +35841,7 @@ var StylePropertyMap = class extends i$5 {
 */
 var stylePropertyMap = e$4(StylePropertyMap);
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-icon/vscode-icon.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-icon/vscode-icon.styles.js
 var styles$34 = [default_styles_default, i$9`
     :host {
       color: var(--vscode-icon-foreground, #cccccc);
@@ -35812,7 +35904,7 @@ var styles$34 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-icon/vscode-icon.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-icon/vscode-icon.js
 var __decorate$39 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -35944,7 +36036,7 @@ __decorate$39([n$5({
 })], VscodeIcon$1.prototype, "actionIcon", void 0);
 VscodeIcon$1 = VscodeIcon_1 = __decorate$39([customElement("vscode-icon")], VscodeIcon$1);
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-button/vscode-button.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-button/vscode-button.styles.js
 var styles$33 = [default_styles_default, i$9`
     :host {
       cursor: pointer;
@@ -36131,7 +36223,7 @@ var styles$33 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-button/vscode-button.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-button/vscode-button.js
 var __decorate$38 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -36371,7 +36463,7 @@ o$7({
 	displayName: "VscodeButton"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-button-group/vscode-button-group.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-button-group/vscode-button-group.styles.js
 var styles$32 = [default_styles_default, i$9`
     :host {
       display: inline-block;
@@ -36407,7 +36499,7 @@ var styles$32 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-button-group/vscode-button-group.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-button-group/vscode-button-group.js
 var __decorate$37 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -36445,7 +36537,7 @@ o$7({
 	displayName: "VscodeButtonGroup"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/form-button-widget/FormButtonWidgetBase.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/form-button-widget/FormButtonWidgetBase.js
 var __decorate$36 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -36487,7 +36579,7 @@ __decorate$36([n$5({
 	reflect: true
 })], FormButtonWidgetBase.prototype, "focused", void 0);
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/form-button-widget/LabelledCheckboxOrRadio.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/form-button-widget/LabelledCheckboxOrRadio.js
 var __decorate$35 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -36520,7 +36612,7 @@ var LabelledCheckboxOrRadioMixin = (superClass) => {
 	return LabelledCheckboxOrRadio;
 };
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/form-button-widget/base.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/form-button-widget/base.styles.js
 var base_styles_default = [i$9`
     :host {
       display: inline-block;
@@ -36611,7 +36703,7 @@ var base_styles_default = [i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-checkbox/vscode-checkbox.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-checkbox/vscode-checkbox.styles.js
 var styles$31 = [
 	default_styles_default,
 	base_styles_default,
@@ -36711,7 +36803,7 @@ var styles$31 = [
   `
 ];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-checkbox/vscode-checkbox.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-checkbox/vscode-checkbox.js
 var __decorate$34 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -36976,7 +37068,7 @@ o$7({
 	events: { onChange: "change" }
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-checkbox-group/vscode-checkbox-group.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-checkbox-group/vscode-checkbox-group.styles.js
 var styles$30 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -37009,7 +37101,7 @@ var styles$30 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-checkbox-group/vscode-checkbox-group.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-checkbox-group/vscode-checkbox-group.js
 var __decorate$33 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -37047,7 +37139,7 @@ o$7({
 	displayName: "VscodeCheckboxGroup"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-collapsible/vscode-collapsible.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-collapsible/vscode-collapsible.styles.js
 var styles$29 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -37144,7 +37236,7 @@ var styles$29 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-collapsible/vscode-collapsible.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-collapsible/vscode-collapsible.js
 var __decorate$32 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -37277,7 +37369,7 @@ __decorate$32([n$5({
 })], VscodeCollapsible$1.prototype, "open", void 0);
 VscodeCollapsible$1 = __decorate$32([customElement("vscode-collapsible")], VscodeCollapsible$1);
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+react-elements@2.4.0_@types+react@19.2.14_@vscode+codicons@0.0.44_reac_b57721ac4df33c4cfbd4c5e9e073e30b/node_modules/@vscode-elements/react-elements/dist/components/VscodeCollapsible.js
+//#region ../../node_modules/.pnpm/@vscode-elements+react-elements@2.4.0_@types+react@19.2.14_@vscode+codicons@0.0.45_reac_77c7fe65a4271f54bb34ce10b58ee98c/node_modules/@vscode-elements/react-elements/dist/components/VscodeCollapsible.js
 var VscodeCollapsible = o$7({
 	tagName: "vscode-collapsible",
 	elementClass: VscodeCollapsible$1,
@@ -37285,7 +37377,7 @@ var VscodeCollapsible = o$7({
 	displayName: "VscodeCollapsible"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-context-menu-item/vscode-context-menu-item.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-context-menu-item/vscode-context-menu-item.styles.js
 var styles$28 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -37357,7 +37449,7 @@ var styles$28 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-context-menu-item/vscode-context-menu-item.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-context-menu-item/vscode-context-menu-item.js
 var __decorate$31 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -37430,7 +37522,7 @@ __decorate$31([n$5({
 __decorate$31([n$5({ type: Number })], VscodeContextMenuItem$1.prototype, "tabindex", void 0);
 VscodeContextMenuItem$1 = __decorate$31([customElement("vscode-context-menu-item")], VscodeContextMenuItem$1);
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-context-menu/vscode-context-menu.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-context-menu/vscode-context-menu.styles.js
 var styles$27 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -37458,7 +37550,7 @@ var styles$27 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-context-menu/vscode-context-menu.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-context-menu/vscode-context-menu.js
 var __decorate$30 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -37645,7 +37737,7 @@ o$7({
 	displayName: "VscodeContextMenuItem"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-divider/vscode-divider.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-divider/vscode-divider.styles.js
 var styles$26 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -37660,7 +37752,7 @@ var styles$26 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-divider/vscode-divider.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-divider/vscode-divider.js
 var __decorate$29 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -37691,7 +37783,7 @@ o$7({
 	displayName: "VscodeDivider"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-form-container/vscode-form-container.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-form-container/vscode-form-container.styles.js
 var styles$25 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -37699,7 +37791,7 @@ var styles$25 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-form-container/vscode-form-container.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-form-container/vscode-form-container.js
 var __decorate$28 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -37789,7 +37881,7 @@ o$7({
 	displayName: "VscodeFormContainer"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-form-group/vscode-form-group.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-form-group/vscode-form-group.styles.js
 var styles$24 = [default_styles_default, i$9`
     :host {
       --label-right-margin: 14px;
@@ -37877,7 +37969,7 @@ var styles$24 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-form-group/vscode-form-group.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-form-group/vscode-form-group.js
 var __decorate$27 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -37913,7 +38005,7 @@ o$7({
 	displayName: "VscodeFormGroup"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-form-helper/vscode-form-helper.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-form-helper/vscode-form-helper.styles.js
 var styles$23 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -37929,7 +38021,7 @@ var styles$23 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-form-helper/vscode-form-helper.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-form-helper/vscode-form-helper.js
 var __decorate$26 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -37980,14 +38072,14 @@ o$7({
 	displayName: "VscodeIcon"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/uniqueId.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/uniqueId.js
 var counter$1 = 0;
 var uniqueId = (prefix = "") => {
 	counter$1++;
 	return `${prefix}${counter$1}`;
 };
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-label/vscode-label.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-label/vscode-label.styles.js
 var styles$22 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -38018,7 +38110,7 @@ var styles$22 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-label/vscode-label.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-label/vscode-label.js
 var __decorate$25 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38122,7 +38214,7 @@ o$7({
 	displayName: "VscodeLabel"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/vscode-select/template-elements.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/vscode-select/template-elements.js
 var chevronDownIcon = b`
   <span class="icon">
     <svg
@@ -38248,10 +38340,10 @@ function n$2(n, r, t) {
 	return n ? r(n) : t?.(n);
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-option/vscode-option.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-option/vscode-option.styles.js
 var vscode_option_styles_default = default_styles_default;
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-option/vscode-option.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-option/vscode-option.js
 var __decorate$24 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38302,7 +38394,7 @@ __decorate$24([n$5({
 })], VscodeOption$1.prototype, "disabled", void 0);
 VscodeOption$1 = __decorate$24([customElement("vscode-option")], VscodeOption$1);
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/vscode-select/helpers.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/vscode-select/helpers.js
 var startsWithPerTermSearch = (subject, pattern) => {
 	const result = {
 		match: false,
@@ -38417,7 +38509,7 @@ var highlightRanges = (text, ranges) => {
 	return res;
 };
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/vscode-select/OptionListController.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/vscode-select/OptionListController.js
 var OptionListController = class {
 	constructor(host) {
 		this._activeIndex = -1;
@@ -38716,7 +38808,7 @@ var OptionListController = class {
 	}
 };
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-scrollable/vscode-scrollable.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-scrollable/vscode-scrollable.styles.js
 var styles$21 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -38822,7 +38914,7 @@ var styles$21 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-scrollable/vscode-scrollable.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-scrollable/vscode-scrollable.js
 var __decorate$23 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -39131,7 +39223,7 @@ __decorate$23([e$6(".scrollable-container")], VscodeScrollable$1.prototype, "_sc
 __decorate$23([o$1()], VscodeScrollable$1.prototype, "_assignedElements", void 0);
 VscodeScrollable$1 = __decorate$23([customElement("vscode-scrollable")], VscodeScrollable$1);
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/vscode-select/vscode-select-base.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/vscode-select/vscode-select-base.js
 var __decorate$22 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -39673,7 +39765,7 @@ __decorate$22([r$3()], VscodeSelectBase.prototype, "_isPlaceholderOptionActive",
 __decorate$22([r$3()], VscodeSelectBase.prototype, "_isBeingFiltered", void 0);
 __decorate$22([r$3()], VscodeSelectBase.prototype, "_optionListScrollPos", void 0);
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/vscode-select/styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/vscode-select/styles.js
 var styles_default = [default_styles_default, i$9`
     :host {
       display: inline-block;
@@ -40084,10 +40176,10 @@ var styles_default = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-multi-select/vscode-multi-select.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-multi-select/vscode-multi-select.styles.js
 var vscode_multi_select_styles_default = styles_default;
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-multi-select/vscode-multi-select.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-multi-select/vscode-multi-select.js
 var __decorate$21 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -40455,7 +40547,7 @@ o$7({
 	displayName: "VscodeOption"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-progress-bar/vscode-progress-bar.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-progress-bar/vscode-progress-bar.styles.js
 var styles$20 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -40532,7 +40624,7 @@ var styles$20 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-progress-bar/vscode-progress-bar.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-progress-bar/vscode-progress-bar.js
 var __decorate$20 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -40657,7 +40749,7 @@ o$7({
 	displayName: "VscodeProgressBar"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-progress-ring/vscode-progress-ring.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-progress-ring/vscode-progress-ring.styles.js
 var styles$19 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -40705,7 +40797,7 @@ var styles$19 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-progress-ring/vscode-progress-ring.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-progress-ring/vscode-progress-ring.js
 var __decorate$19 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -40761,7 +40853,7 @@ o$7({
 	displayName: "VscodeProgressRing"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-radio/vscode-radio.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-radio/vscode-radio.styles.js
 var styles$18 = [
 	default_styles_default,
 	base_styles_default,
@@ -40795,7 +40887,7 @@ var styles$18 = [
   `
 ];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-radio/vscode-radio.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-radio/vscode-radio.js
 var __decorate$18 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41048,7 +41140,7 @@ o$7({
 	}
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-radio-group/vscode-radio-group.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-radio-group/vscode-radio-group.styles.js
 var styles$17 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -41081,7 +41173,7 @@ var styles$17 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-radio-group/vscode-radio-group.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-radio-group/vscode-radio-group.js
 var __decorate$17 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41204,10 +41296,10 @@ o$7({
 	displayName: "VscodeScrollable"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-single-select/vscode-single-select.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-single-select/vscode-single-select.styles.js
 var vscode_single_select_styles_default = styles_default;
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-single-select/vscode-single-select.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-single-select/vscode-single-select.js
 var __decorate$16 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41524,7 +41616,7 @@ o$7({
 	}
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-split-layout/vscode-split-layout.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-split-layout/vscode-split-layout.styles.js
 var styles$16 = [default_styles_default, i$9`
     :host {
       --separator-border: var(--vscode-editorWidget-border, #454545);
@@ -41634,7 +41726,7 @@ var styles$16 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-split-layout/vscode-split-layout.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-split-layout/vscode-split-layout.js
 var __decorate$15 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -42033,7 +42125,7 @@ o$7({
 	events: { onVscSplitLayoutChange: "vsc-split-layout-change" }
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-tab-header/vscode-tab-header.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-tab-header/vscode-tab-header.styles.js
 var styles$15 = [default_styles_default, i$9`
     :host {
       cursor: pointer;
@@ -42135,7 +42227,7 @@ var styles$15 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-tab-header/vscode-tab-header.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-tab-header/vscode-tab-header.js
 var __decorate$14 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -42224,7 +42316,7 @@ o$7({
 	displayName: "VscTabHeader"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/includes/sizes.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/includes/sizes.js
 var px = (value) => value;
 var percent = (value) => value;
 var toPercent = (px, container) => percent(px / container * 100);
@@ -42386,7 +42478,7 @@ var styles$14 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table/calculations.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table/calculations.js
 function calculateColumnWidths(widths, splitterIndex, delta, minWidths) {
 	const result = [...widths];
 	if (delta === 0 || splitterIndex < 0 || splitterIndex >= widths.length - 1) return result;
@@ -42420,7 +42512,7 @@ function calculateColumnWidths(widths, splitterIndex, delta, minWidths) {
 	return result;
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table/ColumnResizeController.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table/ColumnResizeController.js
 var ColumnResizeController = class {
 	constructor(host) {
 		this._hostWidth = px(0);
@@ -42540,7 +42632,7 @@ var ColumnResizeController = class {
 	}
 };
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table/vscode-table.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table/vscode-table.js
 var __decorate$13 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -43020,7 +43112,7 @@ o$7({
 	displayName: "VscodeTable"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table-body/vscode-table-body.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table-body/vscode-table-body.styles.js
 var styles$13 = [default_styles_default, i$9`
     :host {
       display: table;
@@ -43037,7 +43129,7 @@ var styles$13 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table-body/vscode-table-body.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table-body/vscode-table-body.js
 var __decorate$12 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -43067,7 +43159,7 @@ o$7({
 	displayName: "VscodeTableBody"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table-cell/vscode-table-cell.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table-cell/vscode-table-cell.styles.js
 var styles$12 = [default_styles_default, i$9`
     :host {
       border-bottom-color: var(
@@ -43116,7 +43208,7 @@ var styles$12 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table-cell/vscode-table-cell.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table-cell/vscode-table-cell.js
 var __decorate$11 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -43171,7 +43263,7 @@ o$7({
 	displayName: "VscodeTableCell"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table-header/vscode-table-header.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table-header/vscode-table-header.styles.js
 var styles$11 = [default_styles_default, i$9`
     :host {
       background-color: var(
@@ -43184,7 +43276,7 @@ var styles$11 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table-header/vscode-table-header.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table-header/vscode-table-header.js
 var __decorate$10 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -43216,7 +43308,7 @@ o$7({
 	displayName: "VscodeTableHeader"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table-header-cell/vscode-table-header-cell.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table-header-cell/vscode-table-header-cell.styles.js
 var styles$10 = [default_styles_default, i$9`
     :host {
       box-sizing: border-box;
@@ -43244,7 +43336,7 @@ var styles$10 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table-header-cell/vscode-table-header-cell.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table-header-cell/vscode-table-header-cell.js
 var __decorate$9 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -43298,7 +43390,7 @@ o$7({
 	displayName: "VscodeTableHeaderCell"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table-row/vscode-table-row.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table-row/vscode-table-row.styles.js
 var styles$9 = [default_styles_default, i$9`
     :host {
       border-top-color: var(
@@ -43312,7 +43404,7 @@ var styles$9 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-table-row/vscode-table-row.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-table-row/vscode-table-row.js
 var __decorate$8 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -43344,7 +43436,7 @@ o$7({
 	displayName: "VscodeTableRow"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-tab-panel/vscode-tab-panel.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-tab-panel/vscode-tab-panel.styles.js
 var styles$8 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -43363,7 +43455,7 @@ var styles$8 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-tab-panel/vscode-tab-panel.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-tab-panel/vscode-tab-panel.js
 var __decorate$7 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -43421,7 +43513,7 @@ o$7({
 	displayName: "VscodeTabPanel"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-tabs/vscode-tabs.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-tabs/vscode-tabs.styles.js
 var styles$7 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -43461,7 +43553,7 @@ var styles$7 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-tabs/vscode-tabs.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-tabs/vscode-tabs.js
 var __decorate$6 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -43619,7 +43711,7 @@ o$7({
 	displayName: "VscodeTabs"
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-textarea/vscode-textarea.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-textarea/vscode-textarea.styles.js
 var styles$6 = [default_styles_default, i$9`
     :host {
       display: inline-block;
@@ -43753,7 +43845,7 @@ var styles$6 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-textarea/vscode-textarea.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-textarea/vscode-textarea.js
 var __decorate$5 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -44033,7 +44125,7 @@ o$7({
 	}
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-textfield/vscode-textfield.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-textfield/vscode-textfield.styles.js
 var defaultFontStack = r$7(getDefaultFontStack());
 var styles$5 = [default_styles_default, i$9`
     :host {
@@ -44141,7 +44233,7 @@ var styles$5 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-textfield/vscode-textfield.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-textfield/vscode-textfield.js
 var __decorate$4 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -44457,7 +44549,7 @@ o$7({
 	}
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-toolbar-button/vscode-toolbar-button.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-toolbar-button/vscode-toolbar-button.styles.js
 var styles$4 = [default_styles_default, i$9`
     :host {
       display: inline-flex;
@@ -44529,7 +44621,7 @@ var styles$4 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-toolbar-button/vscode-toolbar-button.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-toolbar-button/vscode-toolbar-button.js
 var __decorate$3 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -44603,7 +44695,7 @@ o$7({
 	events: { onChange: "change" }
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-toolbar-container/vscode-toolbar-container.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-toolbar-container/vscode-toolbar-container.styles.js
 var styles$3 = [default_styles_default, i$9`
     :host {
       display: block;
@@ -44616,7 +44708,7 @@ var styles$3 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-toolbar-container/vscode-toolbar-container.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-toolbar-container/vscode-toolbar-container.js
 var __decorate$2 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -44848,7 +44940,7 @@ var i$3 = class extends s {
 	};
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-tree/vscode-tree.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-tree/vscode-tree.styles.js
 var styles$2 = [default_styles_default, i$9`
     :host {
       --vsc-tree-item-arrow-display: flex;
@@ -44904,11 +44996,11 @@ var styles$2 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-tree/tree-context.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-tree/tree-context.js
 var treeContext = n$1("vscode-list");
 var configContext = n$1(Symbol("configContext"));
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-tree/helpers.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-tree/helpers.js
 var isTreeItem = (item) => item instanceof Element && item.matches("vscode-tree-item");
 var isTreeRoot = (item) => item instanceof Element && item.matches("vscode-tree");
 var initPathTrackerProps = (parentElement, items) => {
@@ -44974,7 +45066,7 @@ function findParentItem(childItem) {
 	return childItem.parentElement;
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-tree/vscode-tree.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-tree/vscode-tree.js
 var __decorate$1 = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -45333,7 +45425,7 @@ o$7({
 	events: { onVscTreeSelect: "vsc-tree-select" }
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-tree-item/vscode-tree-item.styles.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-tree-item/vscode-tree-item.styles.js
 var styles$1 = [default_styles_default, i$9`
     :host {
       --hover-outline-color: transparent;
@@ -45624,7 +45716,7 @@ var styles$1 = [default_styles_default, i$9`
     }
   `];
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.44/node_modules/@vscode-elements/elements/dist/vscode-tree-item/vscode-tree-item.js
+//#region ../../node_modules/.pnpm/@vscode-elements+elements@2.5.0_@vscode+codicons@0.0.45/node_modules/@vscode-elements/elements/dist/vscode-tree-item/vscode-tree-item.js
 var __decorate = function(decorators, target, key, desc) {
 	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -46167,34 +46259,6 @@ var EmptyPanel = ({ children }) => {
 			className: "container",
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children })
 		})
-	});
-};
-var ErrorPanel_module_default = {
-	errorPanel: "_errorPanel_13pj6_1",
-	heading: "_heading_13pj6_9",
-	body: "_body_13pj6_13",
-	stack: "_stack_13pj6_23",
-	centeredFlex: "_centeredFlex_13pj6_28",
-	errorIcon: "_errorIcon_13pj6_35"
-};
-//#endregion
-//#region ../../packages/react/src/components/ErrorPanel.tsx
-var ErrorPanel = ({ title, error }) => {
-	const icons = useComponentIcons();
-	const message = error.message;
-	const stack = error.stack;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: clsx(ErrorPanel_module_default.errorPanel, ErrorPanel_module_default.centeredFlex),
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: clsx(ErrorPanel_module_default.heading, ErrorPanel_module_default.centeredFlex),
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(icons.error, ErrorPanel_module_default.errorIcon) }) }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: title || "" })]
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: ErrorPanel_module_default.body,
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [message || "", stack && error.displayStack !== false && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", {
-				className: ErrorPanel_module_default.stack,
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("code", { children: ["at ", stack] })
-			})] })
-		})]
 	});
 };
 //#endregion
@@ -54796,6 +54860,88 @@ function useListKeyboardNavigation({ listHandle, scrollRef, itemCount }) {
 		itemCount
 	]);
 }
+//#endregion
+//#region ../../packages/react/src/hooks/useBreadcrumbTruncation.ts
+var useBreadcrumbTruncation = (segments, containerRef) => {
+	const [truncatedData, setTruncatedData] = (0, import_react.useState)({
+		visibleSegments: segments,
+		hiddenCount: 0,
+		showEllipsis: false
+	});
+	(0, import_react.useEffect)(() => {
+		const measureAndTruncate = () => {
+			if (!containerRef.current || segments.length <= 3) {
+				setTruncatedData({
+					visibleSegments: segments,
+					hiddenCount: 0,
+					showEllipsis: false
+				});
+				return;
+			}
+			const container = containerRef.current;
+			const containerWidth = container.offsetWidth;
+			const testElement = document.createElement("ol");
+			testElement.className = "breadcrumb";
+			testElement.style.position = "absolute";
+			testElement.style.visibility = "hidden";
+			testElement.style.whiteSpace = "nowrap";
+			testElement.style.margin = "0";
+			testElement.style.padding = "0";
+			container.appendChild(testElement);
+			testElement.innerHTML = segments.map((segment) => `<li class="breadcrumb-item">${segment.text}</li>`).join("");
+			if (testElement.scrollWidth <= containerWidth) {
+				container.removeChild(testElement);
+				setTruncatedData({
+					visibleSegments: segments,
+					hiddenCount: 0,
+					showEllipsis: false
+				});
+				return;
+			}
+			const firstSegment = segments[0];
+			const lastSegment = segments[segments.length - 1];
+			if (!firstSegment || !lastSegment) {
+				container.removeChild(testElement);
+				return;
+			}
+			let maxVisible = 2;
+			for (let endCount = 1; endCount < segments.length - 1; endCount++) {
+				const candidateSegments = [
+					firstSegment,
+					...segments.slice(segments.length - 1 - endCount, -1),
+					lastSegment
+				];
+				testElement.innerHTML = [
+					`<li class="breadcrumb-item">${firstSegment.text}</li>`,
+					`<li class="breadcrumb-item">...</li>`,
+					...segments.slice(segments.length - 1 - endCount, -1).map((s) => `<li class="breadcrumb-item">${s.text}</li>`),
+					`<li class="breadcrumb-item">${lastSegment.text}</li>`
+				].join("");
+				if (testElement.scrollWidth <= containerWidth) {
+					maxVisible = candidateSegments.length;
+					setTruncatedData({
+						visibleSegments: candidateSegments,
+						hiddenCount: segments.length - candidateSegments.length,
+						showEllipsis: true
+					});
+				} else break;
+			}
+			if (maxVisible === 2) setTruncatedData({
+				visibleSegments: [firstSegment, lastSegment],
+				hiddenCount: segments.length - 2,
+				showEllipsis: true
+			});
+			container.removeChild(testElement);
+		};
+		measureAndTruncate();
+		const resizeObserver = new ResizeObserver(measureAndTruncate);
+		if (containerRef.current) resizeObserver.observe(containerRef.current);
+		return () => {
+			resizeObserver.disconnect();
+		};
+	}, [segments, containerRef]);
+	return truncatedData;
+};
 var SourceCodePanel_module_default = {
 	sourcePanel: "_sourcePanel_bat6y_1",
 	simple: "_simple_bat6y_6",
@@ -58575,11 +58721,11 @@ var VALUE = "value";
 var isDraft = (value) => !!value && !!value[DRAFT_STATE];
 function isDraftable(value) {
 	if (!value) return false;
-	return isPlainObject(value) || isArray(value) || !!value[DRAFTABLE] || !!value[CONSTRUCTOR]?.[DRAFTABLE] || isMap(value) || isSet(value);
+	return isPlainObject$1(value) || isArray(value) || !!value[DRAFTABLE] || !!value[CONSTRUCTOR]?.[DRAFTABLE] || isMap(value) || isSet(value);
 }
 var objectCtorString = O[PROTOTYPE][CONSTRUCTOR].toString();
 var cachedCtorStrings = /* @__PURE__ */ new WeakMap();
-function isPlainObject(value) {
+function isPlainObject$1(value) {
 	if (!value || !isObjectish(value)) return false;
 	const proto = getPrototypeOf(value);
 	if (proto === null || proto === O[PROTOTYPE]) return true;
@@ -58638,7 +58784,7 @@ function shallowCopy(base, strict) {
 	if (isMap(base)) return new Map(base);
 	if (isSet(base)) return new Set(base);
 	if (isArray(base)) return Array[PROTOTYPE].slice.call(base);
-	const isPlain = isPlainObject(base);
+	const isPlain = isPlainObject$1(base);
 	if (strict === true || strict === "class_only" && !isPlain) {
 		const descriptors = O.getOwnPropertyDescriptors(base);
 		delete descriptors[DRAFT_STATE];
@@ -64253,11 +64399,6 @@ var createAppSlice = (set, get, _store) => {
 					state.app.urlHash = urlHash;
 				});
 			},
-			setSingleFileMode: (singleFile) => {
-				set((state) => {
-					state.app.singleFileMode = singleFile;
-				});
-			},
 			setDisplayMode: (mode) => {
 				set((state) => {
 					state.app.displayMode = mode;
@@ -64725,6 +64866,36 @@ var initalializeLogSlice = (set) => {
 	});
 };
 //#endregion
+//#region src/app/singleFileMode.ts
+/**
+* Single-file mode is set when the viewer is opened against a specific log
+* rather than a directory listing — e.g. an embedded iframe deep-link. We
+* need to know this before the first render so that AppRouter renders the
+* log view directly instead of mounting LogsPanel, which would otherwise
+* kick off directory-wide replication for every log in the directory.
+*/
+var detectInitialSingleFileMode = (location, doc) => {
+	if (doc.getElementById("logview-state")) return true;
+	const params = new URLSearchParams(location.search);
+	return params.has("log_file") || params.has("task_file");
+};
+/**
+* In single-file mode we don't ask the server for the log root (which would
+* walk the whole directory) — we derive the log dir from the selected file.
+*/
+var deriveSingleFileLogDir = (logFile) => {
+	if (!logFile) return void 0;
+	const dir = dirname(logFile);
+	return dir === "" ? void 0 : dir;
+};
+/**
+* Resolved once at module import. Whether the viewer is in single-file mode
+* is a startup-time property: it's a function of the URL the page loaded with
+* (or embedded state injected by VSCode) and never flips during the session,
+* so we don't need to thread it through application state.
+*/
+var isSingleFileMode = typeof window !== "undefined" ? detectInitialSingleFileMode(window.location, document) : false;
+//#endregion
 //#region src/state/logsSlice.ts
 var log$7 = createLogger("Log Slice");
 var initialState$1 = {
@@ -64743,10 +64914,10 @@ var initialState$1 = {
 		previewCount: 0,
 		detailsCount: 0
 	},
-	samplesListState: { byScope: {
-		samplesPanel: { columnVisibility: {} },
-		logViewSamples: {}
-	} },
+	samplesListState: {
+		byScope: { samplesPanel: { columnVisibility: {} } },
+		byLog: {}
+	},
 	showRetriedLogs: false
 };
 var createLogsSlice = (set, get, _store) => {
@@ -64760,14 +64931,6 @@ var createLogsSlice = (set, get, _store) => {
 					state.logs.logDir = logDir;
 					if (prev !== void 0 && prev !== "" && logDir !== void 0 && logDir !== "") {
 						state.logs.samplesListState.byScope.samplesPanel.gridState = void 0;
-						const view = state.logs.samplesListState.byScope.logViewSamples.view;
-						if (view) {
-							view.filters = {
-								dsl: "",
-								extraColumnFilters: {}
-							};
-							view.sort = [];
-						}
 						state.logs.listing.gridStateByScope = {};
 					}
 				});
@@ -64813,9 +64976,9 @@ var createLogsSlice = (set, get, _store) => {
 					state.logs.samplesListState.byScope[scope].gridState = void 0;
 				});
 			},
-			setSampleListView: (view) => {
+			setSampleListView: (logFile, view) => {
 				set((state) => {
-					state.logs.samplesListState.byScope.logViewSamples.view = view;
+					state.logs.samplesListState.byLog[logFile] = view;
 				});
 			},
 			setDisplayedSamples: (samples) => {
@@ -64840,28 +65003,33 @@ var createLogsSlice = (set, get, _store) => {
 				});
 			},
 			initLogDir: async () => {
-				const api = get().api;
-				if (!api) {
-					console.error("API not initialized in LogsStore");
-					return;
-				}
-				const loadLogInfo = async () => {
+				const state = get();
+				let logDir;
+				let absLogDir;
+				if (isSingleFileMode) {
+					if (state.logs.logDir !== void 0) return state.logs.logDir;
+					logDir = deriveSingleFileLogDir(state.logs.selectedLogFile);
+					if (logDir === void 0 && state.api?.get_log_dir) try {
+						logDir = await state.api.get_log_dir();
+					} catch (e) {
+						console.log(e);
+					}
+				} else {
+					const api = state.api;
+					if (!api) {
+						console.error("API not initialized in LogsStore");
+						return;
+					}
 					try {
 						const root = await api.get_log_root();
-						return {
-							logDir: root.log_dir,
-							absLogDir: root.abs_log_dir
-						};
+						logDir = root.log_dir;
+						absLogDir = root.abs_log_dir;
 					} catch (e) {
 						console.log(e);
 						get().appActions.setLoading(false, e);
-						return;
 					}
-				};
-				const info = await loadLogInfo();
-				const logDir = info?.logDir;
+				}
 				if (get().logs.logDir !== logDir) get().logsActions.setLogDir(logDir);
-				const absLogDir = info?.absLogDir;
 				if (get().logs.absLogDir !== absLogDir) set((state) => {
 					state.logs.absLogDir = absLogDir;
 				});
@@ -64897,7 +65065,7 @@ var createLogsSlice = (set, get, _store) => {
 							return;
 						}
 					};
-					if (!logDir || get().app.singleFileMode) {
+					if (!logDir || isSingleFileMode) {
 						if (useProgress) get().appActions.setLoading(false);
 						return [];
 					}
@@ -64960,7 +65128,7 @@ var createLogsSlice = (set, get, _store) => {
 			},
 			setSelectedLogFile: async (logFile) => {
 				const state = get();
-				if (!(state.logs.logs.findIndex((val) => val.name.endsWith(logFile)) !== -1)) if (state.replicationService?.isReplicating() && !state.app.singleFileMode) {
+				if (!(state.logs.logs.findIndex((val) => val.name.endsWith(logFile)) !== -1)) if (state.replicationService?.isReplicating() && !isSingleFileMode) {
 					await state.logsActions.syncLogs();
 					if (!get().logs.logs.find((val) => val.name.endsWith(logFile))) throw new Error(`Log file not found: ${logFile}`);
 				} else state.logsActions.setLogHandles([{ name: logFile }]);
@@ -65563,7 +65731,8 @@ var kDefaultExcludeEvents = [
 	"state",
 	"store",
 	"branch",
-	"anchor"
+	"anchor",
+	"checkpoint"
 ];
 var initialState = {
 	sample_identifier: void 0,
@@ -66222,7 +66391,7 @@ var initializeStore = (api, capabilities, storage) => {
 			logs: state.logs,
 			sample: state.sample
 		}),
-		version: 3,
+		version: 4,
 		onRehydrateStorage: (state) => {
 			return (hydrationState, error) => {
 				handleRehydrate(state);
@@ -66252,6 +66421,8 @@ var inspectStateHooks = {
 	useRemoveAll: () => useStore((state) => state.appActions.removeAllProperties),
 	useRemoveByPrefix: () => useStore((state) => state.appActions.removeByPrefix)
 };
+//#endregion
+//#region src/app/appearance/icons.ts
 var ApplicationIcons = {
 	agent: "bi bi-grid",
 	approve: "bi bi-shield",
@@ -66288,7 +66459,6 @@ var ApplicationIcons = {
 	"clear-text": "bi bi-x-circle-fill",
 	close: "bi bi-x",
 	code: "bi bi-code-slash",
-	columns: "bi bi-layout-three-columns",
 	collapse: {
 		all: "bi bi-arrows-collapse",
 		up: "bi bi-chevron-up"
@@ -66297,10 +66467,7 @@ var ApplicationIcons = {
 	confirm: "bi bi-check",
 	copy: "bi bi-copy",
 	display: "bi bi-card-text",
-	downloadLog: "bi bi-download",
-	epoch: (epoch) => {
-		return `bi bi-${epoch}-circle`;
-	},
+	epoch: (epoch) => `bi bi-${epoch}-circle`,
 	edit: "bi bi-pencil-square",
 	error: "bi bi-exclamation-circle-fill",
 	eval: "bi bi-info-circle-fill",
@@ -66312,8 +66479,6 @@ var ApplicationIcons = {
 	file: "bi bi-file-code",
 	filter: "bi bi-funnel",
 	folder: "bi bi-folder",
-	fork: "bi bi-signpost-split",
-	flow: "ii inspect-flow",
 	home: "bi bi-house",
 	info: "bi bi-info-circle",
 	input: "bi bi-terminal",
@@ -66330,10 +66495,6 @@ var ApplicationIcons = {
 		cost: "bi bi-currency-dollar"
 	},
 	link: "bi bi-link-45deg",
-	"list-wrap": "bi bi-text-wrap",
-	"compact-scores": "bi bi-arrows-collapse-vertical",
-	"color-scales": "bi bi-palette",
-	loading: "bi bi-arrow-clockwise",
 	logging: {
 		notset: "bi bi-card-text",
 		debug: "bi bi-bug",
@@ -66361,7 +66522,6 @@ var ApplicationIcons = {
 	next: "bi bi-chevron-right",
 	noSamples: "bi bi-ban",
 	options: "bi bi-gear",
-	pendingTask: "bi bi-clock",
 	play: "bi bi-play-fill",
 	previous: "bi bi-chevron-left",
 	refresh: "bi bi-arrow-clockwise",
@@ -66378,7 +66538,6 @@ var ApplicationIcons = {
 	samples: "bi bi-file-spreadsheet",
 	sandbox: "bi bi-box-seam",
 	scorer: "bi bi-calculator",
-	scoringSidebar: "bi bi-radar",
 	search: "bi bi-search",
 	sidebar: "bi bi-list",
 	solvers: {
@@ -66392,10 +66551,6 @@ var ApplicationIcons = {
 	step: "bi bi-fast-forward-btn",
 	subtask: "bi bi-subtract",
 	success: "bi bi-check-circle-fill",
-	toggle: {
-		on: "bi bi-toggle-on",
-		off: "bi bi-toggle2-off"
-	},
 	threeDots: "bi bi-three-dots",
 	transcript: "bi bi-list-columns-reverse",
 	tree: {
@@ -66403,37 +66558,20 @@ var ApplicationIcons = {
 		closed: "bi bi-caret-right-fill"
 	},
 	turns: "bi bi-chat-left-text",
-	usage: "bi bi-stopwatch"
-};
-//#endregion
-//#region src/app/AppErrorBoundary.tsx
-var AppErrorBoundary = class extends import_react.Component {
-	constructor(props) {
-		super(props);
-		this.state = { hasError: false };
-	}
-	static getDerivedStateFromError(error) {
-		return {
-			hasError: true,
-			error
-		};
-	}
-	componentDidCatch(error, errorInfo) {
-		console.log({
-			error,
-			errorInfo
-		});
-	}
-	render() {
-		if (this.state.hasError) {
-			console.error({ e: this.state.error });
-			if (this.state.error) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ErrorPanel, {
-				title: "An unexpected error occurred.",
-				error: this.state.error
-			});
-			else return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: "An unknown error with no additional information occured." });
-		}
-		return this.props.children;
+	usage: "bi bi-stopwatch",
+	fork: "bi bi-signpost-split",
+	pendingTask: "bi bi-clock",
+	columns: "bi bi-layout-three-columns",
+	downloadLog: "bi bi-download",
+	flow: "ii inspect-flow",
+	"list-wrap": "bi bi-text-wrap",
+	"compact-scores": "bi bi-arrows-collapse-vertical",
+	"color-scales": "bi bi-palette",
+	loading: "bi bi-arrow-clockwise",
+	scoringSidebar: "bi bi-radar",
+	toggle: {
+		on: "bi bi-toggle-on",
+		off: "bi bi-toggle2-off"
 	}
 };
 //#endregion
@@ -66691,11 +66829,24 @@ var useContentIcons = () => {
 	return (0, import_react.useContext)(IconsContext);
 };
 var MetadataGrid_module_default = {
-	grid: "_grid_1bdxe_1",
-	cell: "_cell_1bdxe_8",
-	value: "_value_1bdxe_12",
-	toggleContainer: "_toggleContainer_1bdxe_16",
-	toggleButton: "_toggleButton_1bdxe_27"
+	grid: "_grid_1qisc_5",
+	rows: "_rows_1qisc_14",
+	row: "_row_1qisc_14",
+	striped: "_striped_1qisc_35",
+	key: "_key_1qisc_43",
+	val: "_val_1qisc_52",
+	empty: "_empty_1qisc_63",
+	numVal: "_numVal_1qisc_69",
+	boolVal: "_boolVal_1qisc_73",
+	group: "_group_1qisc_79",
+	groupHeader: "_groupHeader_1qisc_91",
+	groupKey: "_groupKey_1qisc_99",
+	groupRule: "_groupRule_1qisc_107",
+	depth1: "_depth1_1qisc_115",
+	depth1Group: "_depth1Group_1qisc_128",
+	depth2: "_depth2_1qisc_143",
+	toggleContainer: "_toggleContainer_1qisc_153",
+	toggleButton: "_toggleButton_1qisc_164"
 };
 var RenderedContent_module_default = {
 	query: "_query_seqs2_1",
@@ -66940,67 +67091,90 @@ var contentRenderers = (icons, renderObject, externalRenderers) => {
 };
 //#endregion
 //#region ../../packages/inspect-components/src/content/MetaDataGrid.tsx
+var isPlainObject = (v) => v !== null && typeof v === "object" && !Array.isArray(v);
+var isNonEmptyObject = (v) => isPlainObject(v) && Object.keys(v).length > 0;
 /**
-* Renders the MetaDataView component.
+* Renders structured metadata as a grid with section cards.
+*
+* Top-level scalars render as key-value rows; nested objects are
+* promoted to titled sections with a header rule. Recurses for
+* deeply nested objects.
 */
-var MetaDataGrid = ({ id, entries, className, references, style, maxRows, options }) => {
-	const baseId = "metadata-grid";
-	const fontStyle = options?.size === "mini" ? "text-size-smallest" : "text-size-smaller";
-	const [expanded, setExpanded] = (0, import_react.useState)(false);
+var MetaDataGrid = ({ id, entries, className, references, style, maxRows, options, depth = 0 }) => {
+	const baseId = id ?? "metadata-grid";
 	const allEntries = entryRecords(entries);
-	const isCollapsible = maxRows != null && allEntries.length > maxRows;
-	const visibleEntries = isCollapsible && !expanded ? allEntries.slice(0, maxRows) : allEntries;
-	const entryEls = visibleEntries.map((entry, index) => {
-		const id = `${baseId}-value-${index}`;
-		return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [
-			index !== 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: {
-				gridColumn: "1 / -1",
-				borderBottom: `${!options?.plain ? "solid 1px var(--bs-light-border-subtle" : ""}`
-			} }) : void 0,
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: clsx(`${baseId}-key`, MetadataGrid_module_default.cell, "text-style-label", "text-style-secondary", fontStyle),
-				children: entry?.name
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: clsx(MetadataGrid_module_default.value, `${baseId}-value`, fontStyle),
-				children: entry && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedContent, {
-					id,
-					entry,
-					references,
-					renderOptions: {
-						renderString: "markdown",
-						previewRefsOnHover: options?.previewRefsOnHover
-					},
-					renderObject: (obj) => {
-						return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
-							id,
-							className: clsx(MetadataGrid_module_default.nested),
-							entries: obj,
-							options,
-							references
-						});
-					}
-				})
-			})
-		] }, `${baseId}-record-${index}`);
-	});
+	const scalars = allEntries.filter((e) => !isNonEmptyObject(e.value));
+	const groups = allEntries.filter((e) => isNonEmptyObject(e.value));
+	const [expanded, setExpanded] = (0, import_react.useState)(false);
+	const isCollapsible = maxRows != null && scalars.length > maxRows;
+	const visibleScalars = isCollapsible && !expanded ? scalars.slice(0, maxRows) : scalars;
+	const depthClass = depth === 1 ? MetadataGrid_module_default.depth1 : depth >= 2 ? MetadataGrid_module_default.depth2 : void 0;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		id,
-		className: clsx(className, MetadataGrid_module_default.grid),
-		style,
-		children: [entryEls, isCollapsible && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: MetadataGrid_module_default.toggleContainer,
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
-				className: clsx(MetadataGrid_module_default.toggleButton, "text-size-smallest"),
-				onClick: () => setExpanded((prev) => !prev),
-				children: [expanded ? "less" : `${allEntries.length - visibleEntries.length} more`, "..."]
+		id: depth === 0 ? id : void 0,
+		className: clsx(depth === 0 && className, MetadataGrid_module_default.grid, depthClass, options?.striped && depth === 0 && MetadataGrid_module_default.striped),
+		style: depth === 0 ? style : void 0,
+		children: [
+			visibleScalars.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: MetadataGrid_module_default.rows,
+				children: visibleScalars.map((entry, index) => {
+					const entryId = `${baseId}-value-${index}`;
+					return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: MetadataGrid_module_default.row,
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: MetadataGrid_module_default.key,
+							children: entry.name
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: MetadataGrid_module_default.val,
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedContent, {
+								id: entryId,
+								entry,
+								references,
+								renderOptions: {
+									renderString: "markdown",
+									previewRefsOnHover: options?.previewRefsOnHover
+								},
+								renderObject: (obj) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
+									id: entryId,
+									entries: obj,
+									options,
+									references,
+									depth: depth + 1
+								})
+							})
+						})]
+					}, entryId);
+				})
+			}),
+			isCollapsible && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: MetadataGrid_module_default.toggleContainer,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+					className: clsx(MetadataGrid_module_default.toggleButton, "text-size-smallest"),
+					onClick: () => setExpanded((prev) => !prev),
+					children: [expanded ? "less" : `${scalars.length - visibleScalars.length} more`, "..."]
+				})
+			}),
+			groups.map((entry, groupIndex) => {
+				const groupId = `${baseId}-group-${groupIndex}`;
+				return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
+					className: clsx(MetadataGrid_module_default.group, depth >= 1 && MetadataGrid_module_default.depth1Group),
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("header", {
+						className: MetadataGrid_module_default.groupHeader,
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							className: MetadataGrid_module_default.groupKey,
+							children: entry.name
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: MetadataGrid_module_default.groupRule })]
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
+						id: groupId,
+						entries: entry.value,
+						options,
+						references,
+						depth: depth + 1
+					})]
+				}, groupId);
 			})
-		})]
+		]
 	});
 };
-/**
-* Ensure the proper type for entries
-*/
 var entryRecords = (entries) => {
 	if (!entries) return [];
 	if (!Array.isArray(entries)) return Object.entries(entries || {}).map(([key, value]) => {
@@ -67452,6 +67626,8 @@ var createEvalDescriptor = (scores, samples) => {
 			return value !== null;
 		}).filter((value) => {
 			return value !== void 0;
+		}).filter((value) => {
+			return !(typeof value === "number" && Number.isNaN(value));
 		}))];
 		const scoreDescriptor = getScoreDescriptorForValues(uniqScoreValues, [...new Set(uniqScoreValues.map((scoreValue) => typeof scoreValue))]);
 		if (scoreDescriptor) scoreDescriptorMap[scoreLabelKey(scoreLabel)] = scoreDescriptor;
@@ -67464,6 +67640,7 @@ var createEvalDescriptor = (scores, samples) => {
 		const score = scoreValue(sample, scoreLabel);
 		if (score === null) return "null";
 		else if (score === void 0) return "";
+		else if (typeof score === "number" && Number.isNaN(score)) return "";
 		else if (descriptor && descriptor.render) return descriptor.render(score);
 		else return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: String(score) });
 	};
@@ -70336,11 +70513,13 @@ var filterSamples = (samplesDescriptor, samples, filterValue) => {
 * Extracts scorer information from sample summaries
 */
 var getScorersFromSamples = (samples) => {
+	const dictScorers = /* @__PURE__ */ new Set();
 	const scoreLabelsMap = /* @__PURE__ */ new Map();
-	for (const sample of samples) if (!sample.error && sample.scores) {
+	for (const sample of samples) {
+		if (sample.error || !sample.scores) continue;
 		for (const [scorerKey, scoreValue] of Object.entries(sample.scores)) if (scoreValue.value && typeof scoreValue.value === "object" && !Array.isArray(scoreValue.value)) {
-			const valueDict = scoreValue.value;
-			for (const innerKey of Object.keys(valueDict)) {
+			dictScorers.add(scorerKey);
+			for (const innerKey of Object.keys(scoreValue.value)) {
 				const label = `${scorerKey}:${innerKey}`;
 				if (!scoreLabelsMap.has(label)) scoreLabelsMap.set(label, {
 					name: innerKey,
@@ -70352,6 +70531,7 @@ var getScorersFromSamples = (samples) => {
 			scorer: scorerKey
 		});
 	}
+	for (const scorerKey of dictScorers) scoreLabelsMap.delete(scorerKey);
 	return Array.from(scoreLabelsMap.values());
 };
 /**
@@ -71289,84 +71469,6 @@ var Navbar_module_default = {
 	right: "_right_1u3sd_41",
 	toolbarButton: "_toolbarButton_1u3sd_50",
 	pathContainer: "_pathContainer_1u3sd_58"
-};
-//#endregion
-//#region src/app/navbar/useBreadcrumbTruncation.ts
-var useBreadcrumbTruncation = (segments, containerRef) => {
-	const [truncatedData, setTruncatedData] = (0, import_react.useState)({
-		visibleSegments: segments,
-		hiddenCount: 0,
-		showEllipsis: false
-	});
-	const measureAndTruncate = (0, import_react.useCallback)(() => {
-		if (!containerRef.current || segments.length <= 3) {
-			setTruncatedData({
-				visibleSegments: segments,
-				hiddenCount: 0,
-				showEllipsis: false
-			});
-			return;
-		}
-		const container = containerRef.current;
-		const containerWidth = container.offsetWidth;
-		const testElement = document.createElement("ol");
-		testElement.className = "breadcrumb";
-		testElement.style.position = "absolute";
-		testElement.style.visibility = "hidden";
-		testElement.style.whiteSpace = "nowrap";
-		testElement.style.margin = "0";
-		testElement.style.padding = "0";
-		container.appendChild(testElement);
-		testElement.innerHTML = segments.map((segment) => `<li class="breadcrumb-item">${segment.text}</li>`).join("");
-		if (testElement.scrollWidth <= containerWidth) {
-			container.removeChild(testElement);
-			setTruncatedData({
-				visibleSegments: segments,
-				hiddenCount: 0,
-				showEllipsis: false
-			});
-			return;
-		}
-		const firstSegment = segments[0];
-		const lastSegment = segments[segments.length - 1];
-		let maxVisible = 2;
-		for (let endCount = 1; endCount < segments.length - 1; endCount++) {
-			const candidateSegments = [
-				firstSegment,
-				...segments.slice(segments.length - 1 - endCount, -1),
-				lastSegment
-			];
-			testElement.innerHTML = [
-				`<li class="breadcrumb-item">${firstSegment.text}</li>`,
-				`<li class="breadcrumb-item">...</li>`,
-				...segments.slice(segments.length - 1 - endCount, -1).map((s) => `<li class="breadcrumb-item">${s.text}</li>`),
-				`<li class="breadcrumb-item">${lastSegment.text}</li>`
-			].join("");
-			if (testElement.scrollWidth <= containerWidth) {
-				maxVisible = candidateSegments.length;
-				setTruncatedData({
-					visibleSegments: candidateSegments,
-					hiddenCount: segments.length - candidateSegments.length,
-					showEllipsis: true
-				});
-			} else break;
-		}
-		if (maxVisible === 2) setTruncatedData({
-			visibleSegments: [firstSegment, lastSegment],
-			hiddenCount: segments.length - 2,
-			showEllipsis: true
-		});
-		container.removeChild(testElement);
-	}, [segments, containerRef]);
-	(0, import_react.useEffect)(() => {
-		measureAndTruncate();
-		const resizeObserver = new ResizeObserver(measureAndTruncate);
-		if (containerRef.current) resizeObserver.observe(containerRef.current);
-		return () => {
-			resizeObserver.disconnect();
-		};
-	}, [containerRef, measureAndTruncate]);
-	return truncatedData;
 };
 //#endregion
 //#region src/app/navbar/Navbar.tsx
@@ -122564,12 +122666,13 @@ var fixupEventStream = (events, filterPending = true) => {
 };
 var processPendingEvents = (events, filter) => {
 	return filter ? events.filter((e) => !e.pending) : events.reduce((acc, event) => {
-		if (!event.pending) acc.push(event);
-		else {
-			const lastIndex = acc.length - 1;
-			if (lastIndex >= 0 && acc[lastIndex]?.pending && acc[lastIndex]?.event === event.event) acc[lastIndex] = event;
-			else acc.push(event);
+		if (!event.pending) {
+			acc.push(event);
+			return acc;
 		}
+		const lastIndex = acc.length - 1;
+		if (lastIndex >= 0 && event.uuid != null && acc[lastIndex]?.pending && acc[lastIndex]?.uuid === event.uuid) acc[lastIndex] = event;
+		else acc.push(event);
 		return acc;
 	}, []);
 };
@@ -122787,6 +122890,11 @@ var transformers = () => {
 			process: (node) => {
 				return discardNode(node);
 			}
+		},
+		{
+			name: "discard_checkpoint_span",
+			matches: (node) => node.event.event === "span_begin" && node.event.type === "checkpoint",
+			process: (node) => discardNode(node)
 		}
 	];
 };
@@ -126821,6 +126929,7 @@ function useListPositionManager(baseListId, selected, scrollRef, hasScrollTarget
 var TranscriptIcons = {
 	agent: "bi bi-grid",
 	approve: "bi bi-shield",
+	checkpoint: "bi bi-bookmark-check-fill",
 	approvals: {
 		approve: "bi bi-shield-check",
 		reject: "bi bi-shield-x",
@@ -126962,6 +127071,7 @@ var labelForNode = (node) => {
 		case "step":
 			if (node.event.name === "53787D8A-D3FC-426D-B383-9F880B70E4AA") return "sandbox events";
 			return node.event.name;
+		case "checkpoint": return `checkpoint ${node.event.checkpoint_id}`;
 		default: return node.event.event;
 	}
 };
@@ -127053,6 +127163,7 @@ function labelForOutlineNode(node) {
 		case "model": return `model${node.event.role ? ` (${node.event.role})` : ""}`;
 		case "score": return "scoring";
 		case "step": return node.event.name;
+		case "checkpoint": return `checkpoint ${node.event.checkpoint_id}`;
 		default: return node.event.event;
 	}
 }
@@ -130600,6 +130711,93 @@ var BranchEventView = ({ eventNode, className }) => {
 		})
 	});
 };
+var CheckpointEventView_module_default = {
+	panel: "_panel_1dnhl_1",
+	metric: "_metric_1dnhl_5",
+	label: "_label_1dnhl_10",
+	section: "_section_1dnhl_15",
+	sectionTitle: "_sectionTitle_1dnhl_19",
+	indented: "_indented_1dnhl_23"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/transcript/CheckpointEventView.tsx
+var SizeAndDuration = ({ size_bytes, duration_ms }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
+	label: "Size",
+	layout: "row",
+	children: formatBytes(size_bytes)
+}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
+	label: "Duration",
+	layout: "row",
+	children: formatMs(duration_ms)
+})] });
+var CheckpointEventView = ({ eventNode, className }) => {
+	const event = eventNode.event;
+	const sandboxEntries = Object.entries(event.sandboxes);
+	const sections = [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: CheckpointEventView_module_default.section,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: CheckpointEventView_module_default.sectionTitle,
+			children: "Host"
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: CheckpointEventView_module_default.indented,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SizeAndDuration, {
+				size_bytes: event.host.size_bytes,
+				duration_ms: event.host.duration_ms
+			})
+		})]
+	}, "host")];
+	const onlySandbox = sandboxEntries.length === 1 ? sandboxEntries[0] : null;
+	if (onlySandbox) {
+		const [, details] = onlySandbox;
+		sections.push(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: CheckpointEventView_module_default.section,
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: CheckpointEventView_module_default.sectionTitle,
+				children: "Sandbox"
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: CheckpointEventView_module_default.indented,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SizeAndDuration, {
+					size_bytes: details.size_bytes,
+					duration_ms: details.duration_ms
+				})
+			})]
+		}, "sandbox"));
+	} else if (sandboxEntries.length > 1) sections.push(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: CheckpointEventView_module_default.section,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: CheckpointEventView_module_default.sectionTitle,
+			children: "Sandboxes"
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: CheckpointEventView_module_default.indented,
+			children: sandboxEntries.map(([name, details]) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: CheckpointEventView_module_default.section,
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: CheckpointEventView_module_default.sectionTitle,
+					children: name
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: CheckpointEventView_module_default.indented,
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SizeAndDuration, {
+						size_bytes: details.size_bytes,
+						duration_ms: details.duration_ms
+					})
+				})]
+			}, name))
+		})]
+	}, "sandboxes"));
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventRow, {
+		title: formatTitle(`Checkpoint ${event.checkpoint_id}`, void 0, event.duration_ms / 1e3),
+		icon: TranscriptIcons.checkpoint,
+		className,
+		below: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: CheckpointEventView_module_default.panel,
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
+				label: "Size",
+				layout: "row",
+				children: formatBytes(event.size_bytes)
+			}), sections]
+		})
+	});
+};
 var CompactionEventView_module_default = { panel: "_panel_8zdtn_1" };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/CompactionEventView.tsx
@@ -132901,6 +133099,10 @@ var RenderedEventNodeInner = ({ node, next, className, context, onAutoCollapse, 
 			eventNode: node,
 			className
 		});
+		case "checkpoint": return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CheckpointEventView, {
+			eventNode: node,
+			className
+		});
 		default: return null;
 	}
 };
@@ -134354,16 +134556,16 @@ var resolveSamplesView = (stored, evalDefault) => {
 /**
 * Project the runtime descriptor into the `GridState` ag-grid consumes.
 *
-* Column-id tolerance: any persisted reference to a column not present in
-* `availableColIds` (e.g. `score__judge__correctness` on a log without
-* that scorer) is excluded from the emitted GridState but **preserved
-* unchanged in the source descriptor**. The persisted view is never
-* mutated by a render.
+* Column-id tolerance handles transient mismatches between a per-log
+* descriptor and its log's columns — e.g. samples loading in stages where
+* `allColumns` initially lacks scorer columns the user has customized.
+* Unknown ids are excluded from the emitted GridState but preserved
+* unchanged in the source descriptor.
 *
 * The DSL filter is intentionally *not* materialized into `filterModel`
 * here — that translation needs the live filter registry, which only
-* exists at runtime. Phase 2's `useSamplesView` layers the DSL→model
-* translation on top of this base GridState.
+* exists at runtime. `useSamplesView` layers the DSL→model translation
+* on top of this base GridState.
 */
 var viewToGridState = (view, availableColIds) => {
 	const knownColumns = view.columns.filter((c) => availableColIds.has(c.id));
@@ -134372,22 +134574,30 @@ var viewToGridState = (view, availableColIds) => {
 		sort: s.dir
 	}));
 	const filterModel = Object.fromEntries(Object.entries(view.filters.extraColumnFilters).filter(([colId]) => availableColIds.has(colId)));
+	const widths = view.columnWidths ?? {};
+	const columnSizingModel = Object.entries(widths).filter(([colId]) => availableColIds.has(colId)).map(([colId, width]) => ({
+		colId,
+		width
+	}));
 	return {
 		columnVisibility: { hiddenColIds: knownColumns.filter((c) => !c.visible).map((c) => c.id) },
 		columnOrder: { orderedColIds: knownColumns.map((c) => c.id) },
+		columnSizing: { columnSizingModel },
 		sort: { sortModel },
 		filter: { filterModel }
 	};
 };
 /**
 * Fold a fresh ag-grid `GridState` back into the runtime descriptor,
-* preserving any unknown-id references from `prev` so they re-engage when
-* the user navigates back to a log that has those columns.
+* preserving any unknown-id references from `prev`. Unknown ids occur
+* during transient column-load mismatches (e.g. user refreshes a log,
+* a write fires before scorer columns reappear); preservation keeps the
+* user's customizations alive across those frames.
 *
-* Note: this updates `columns`, `sort`, and `filters.extraColumnFilters`.
-* The `dsl` half of `filters` is the responsibility of the caller — it
-* comes from a different signal (the toolbar text) and is partitioned
-* via `partitionFilterModel`.
+* Updates `columns`, `sort`, and `filters.extraColumnFilters`. The `dsl`
+* half of `filters` is the responsibility of the caller — it comes from
+* a different signal (the toolbar text) and is partitioned via
+* `partitionFilterModel`.
 */
 var gridStateToView = (prev, gridState, availableColIds) => {
 	const orderedColIds = gridState.columnOrder?.orderedColIds ?? [];
@@ -134405,6 +134615,13 @@ var gridStateToView = (prev, gridState, availableColIds) => {
 	const fmModel = gridState.filter?.filterModel ?? {};
 	const knownExtras = Object.fromEntries(Object.entries(fmModel).filter(([colId]) => availableColIds.has(colId)));
 	const unknownExtras = Object.fromEntries(Object.entries(prev.filters.extraColumnFilters).filter(([colId]) => !availableColIds.has(colId)));
+	const prevWidths = prev.columnWidths ?? {};
+	const knownWidths = {};
+	for (const entry of gridState.columnSizing?.columnSizingModel ?? []) if (availableColIds.has(entry.colId) && typeof entry.width === "number") knownWidths[entry.colId] = entry.width;
+	const mergedWidths = {
+		...Object.fromEntries(Object.entries(prevWidths).filter(([colId]) => !availableColIds.has(colId))),
+		...knownWidths
+	};
 	return {
 		...prev,
 		columns: [...knownColumns, ...unknownColumns],
@@ -134415,7 +134632,8 @@ var gridStateToView = (prev, gridState, availableColIds) => {
 				...knownExtras,
 				...unknownExtras
 			}
-		}
+		},
+		columnWidths: Object.keys(mergedWidths).length > 0 ? mergedWidths : void 0
 	};
 };
 //#endregion
@@ -134428,9 +134646,12 @@ function useEvalDefaultSamplesView() {
 	return (0, import_react.useMemo)(() => pickActiveView(evalDefaultField), [evalDefaultField]);
 }
 /** Single subscription + resolution; backs every hook that needs a
-*  field off the resolved view. */
+*  field off the resolved view. Reads the per-log bucket keyed by the
+*  currently-selected log file so customizations don't bleed across logs
+*  with different scorers / eval config. */
 function useResolvedSamplesView() {
-	const stored = useStore((state) => state.logs.samplesListState.byScope.logViewSamples.view);
+	const logFile = useStore((state) => state.logs.selectedLogFile);
+	const stored = useStore((state) => logFile ? state.logs.samplesListState.byLog[logFile] : void 0);
 	const evalDefault = useEvalDefaultSamplesView();
 	return (0, import_react.useMemo)(() => resolveSamplesView(stored, evalDefault), [stored, evalDefault]);
 }
@@ -134477,7 +134698,12 @@ function useSamplesView(allColumns, options) {
 	const { seedDefaultVisibility } = options ?? {};
 	const evalDefault = useEvalDefaultSamplesView();
 	const view = useResolvedSamplesView();
-	const setSampleListView = useStore((state) => state.logsActions.setSampleListView);
+	const logFile = useStore((state) => state.logs.selectedLogFile);
+	const setSampleListViewAction = useStore((state) => state.logsActions.setSampleListView);
+	const setSampleListView = (0, import_react.useCallback)((next) => {
+		if (!logFile) return;
+		setSampleListViewAction(logFile, next);
+	}, [logFile, setSampleListViewAction]);
 	const availableColIds = (0, import_react.useMemo)(() => {
 		const ids = /* @__PURE__ */ new Set();
 		if (allColumns) for (const col of allColumns) ids.add(getFieldKey(col));
@@ -135302,14 +135528,14 @@ var SampleScores = ({ sample, scorer }) => {
 	return getScoreDescriptorForValues([scoreData.value], [typeof scoreData.value])?.render(scoreData.value);
 };
 var SampleScoresGrid_module_default = {
-	container: "_container_1rxdt_1",
-	cell: "_cell_1rxdt_9",
-	fullWidth: "_fullWidth_1rxdt_15",
-	heading: "_heading_1rxdt_19",
-	padded: "_padded_1rxdt_23",
-	separator: "_separator_1rxdt_27",
-	separatorPadded: "_separatorPadded_1rxdt_32",
-	headerSep: "_headerSep_1rxdt_37"
+	container: "_container_uifeh_1",
+	cell: "_cell_uifeh_9",
+	fullWidth: "_fullWidth_uifeh_15",
+	heading: "_heading_uifeh_19",
+	padded: "_padded_uifeh_23",
+	separator: "_separator_uifeh_27",
+	separatorPadded: "_separatorPadded_uifeh_32",
+	headerSep: "_headerSep_uifeh_37"
 };
 //#endregion
 //#region src/app/samples/scores/SampleScoresGrid.tsx
@@ -135463,6 +135689,7 @@ var eventTypes = {
 	subtask: "Subtask",
 	anchor: "Anchor",
 	branch: "Branch",
+	checkpoint: "Checkpoint",
 	step: "Step"
 };
 var useTranscriptFilter = () => {
@@ -139165,7 +139392,6 @@ var LogSampleDetailView = () => {
 	const selectSample = useStore((state) => state.logActions.selectSample);
 	const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
 	const selectedSampleHandle = useStore((state) => state.log.selectedSampleHandle);
-	const singleFileMode = useStore((state) => state.app.singleFileMode);
 	const logPath = routeLogPath || selectedLogFile;
 	const sampleId = routeSampleId || selectedSampleHandle?.id?.toString();
 	const epoch = routeEpoch || selectedSampleHandle?.epoch?.toString();
@@ -139224,7 +139450,7 @@ var LogSampleDetailView = () => {
 			currentPath: logPath ? `${logPath}/sample` : void 0,
 			fnNavigationUrl,
 			bordered: true,
-			breadcrumbsEnabled: !singleFileMode
+			breadcrumbsEnabled: !isSingleFileMode
 		}
 	});
 };
@@ -167769,6 +167995,7 @@ var SelectScorer = ({ scores, selectedScores, setSelectedScores }) => {
 	const selectedCount = selectedKeys.size;
 	const label = selectedCount === 0 ? "Score" : selectedCount === 1 ? selectedScores?.[0]?.name || "Score" : `${selectedCount} Scores`;
 	const allScoresSelected = selectedCount === scores.length;
+	const noneSelected = selectedCount === 0;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		style: { display: "flex" },
 		children: [
@@ -167808,6 +168035,14 @@ var SelectScorer = ({ scores, selectedScores, setSelectedScores }) => {
 								setSelectedScores(scores);
 							},
 							children: "All"
+						}),
+						"|",
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+							className: clsx(SelectScorer_module_default.link, noneSelected ? SelectScorer_module_default.selected : void 0),
+							onClick: () => {
+								setSelectedScores([]);
+							},
+							children: "None"
 						})
 					]
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -170805,7 +171040,6 @@ var LogViewLayout = () => {
 	const setShowFind = useStore((state) => state.appActions.setShowFind);
 	const nativeFind = useStore((state) => state.app.nativeFind);
 	const hideFind = useStore((state) => state.appActions.hideFind);
-	const singleFileMode = useStore((state) => state.app.singleFileMode);
 	const logDir = useStore((state) => state.logs.logDir);
 	const logFiles = useStore((state) => state.logs.logs);
 	const { logPath } = useLogRouteParams();
@@ -170833,11 +171067,11 @@ var LogViewLayout = () => {
 	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExtendedFindProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FindTargetProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		ref: mainAppRef,
-		className: clsx("app-main-grid", fullScreen ? "full-screen" : void 0, singleFileMode ? "single-file-mode" : void 0, "log-view"),
+		className: clsx("app-main-grid", fullScreen ? "full-screen" : void 0, isSingleFileMode ? "single-file-mode" : void 0, "log-view"),
 		tabIndex: 0,
 		children: [
 			showFind ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FindBand, {}) : "",
-			!singleFileMode ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ApplicationNavbar, {
+			!isSingleFileMode ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ApplicationNavbar, {
 				fnNavigationUrl: navigationUrl,
 				currentPath: logPath,
 				showActivity: "log"
@@ -170909,13 +171143,19 @@ var LogViewContainer = () => {
 	const syncLogs = useStore((state) => state.logsActions.syncLogs);
 	const initLogDir = useStore((state) => state.logsActions.initLogDir);
 	(0, import_react.useEffect)(() => {
+		if (!logPath) return;
+		setWorkspaceTab(tabId ?? "samples");
+	}, [
+		logPath,
+		tabId,
+		setWorkspaceTab
+	]);
+	(0, import_react.useEffect)(() => {
 		const loadLogFromPath = async () => {
 			if (logPath) {
 				await initLogDir();
 				setSelectedLogFile(logPath);
 				syncLogs();
-				if (tabId) setWorkspaceTab(tabId);
-				else setWorkspaceTab(kLogViewSamplesTabId);
 				if (prevLogPath && logPath !== prevLogPath) {
 					clearSelectedSample();
 					clearSelectedLogSummary();
@@ -170925,9 +171165,7 @@ var LogViewContainer = () => {
 		loadLogFromPath();
 	}, [
 		logPath,
-		tabId,
 		setSelectedLogFile,
-		setWorkspaceTab,
 		initLogDir,
 		syncLogs,
 		prevLogPath,
@@ -171239,7 +171477,6 @@ var SampleDetailView = () => {
 	const clearSelectedLogDetails = useStore((state) => state.logActions.clearSelectedLogDetails);
 	const clearLog = useStore((state) => state.logActions.clearLog);
 	const clearSampleTab = useStore((state) => state.appActions.clearSampleTab);
-	const singleFileMode = useStore((state) => state.app.singleFileMode);
 	const currentIndex = (0, import_react.useMemo)(() => {
 		if (!displayedSamples || !selectedLogFile || !sampleId || !epoch) return -1;
 		return displayedSamples.findIndex((s) => {
@@ -171304,7 +171541,7 @@ var SampleDetailView = () => {
 			currentPath: routeLogPath,
 			fnNavigationUrl: samplesUrl,
 			bordered: true,
-			breadcrumbsEnabled: !singleFileMode
+			breadcrumbsEnabled: !isSingleFileMode
 		}
 	});
 };
@@ -171653,9 +171890,8 @@ var AppLayout = () => {
 	(0, import_react.useEffect)(() => {
 		if (storeImplementation) storeImplementation.getState().appActions.setUrlHash(location.pathname);
 	}, [location]);
-	const singleFileMode = useStore((state) => state.app.singleFileMode);
 	const { sampleId, epoch, sampleUuid } = useLogRouteParams();
-	if (singleFileMode) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComponentNavigationProvider, {
+	if (isSingleFileMode) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComponentNavigationProvider, {
 		navigation: componentNavigation,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AppErrorBoundary, { children: sampleId && epoch || sampleUuid ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LogSampleDetailView, {}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LogViewContainer, {}) })
 	});
@@ -171733,12 +171969,12 @@ var App = ({ api }) => {
 	const setInitialState = useStore((state) => state.appActions.setInitialState);
 	const setLoading = useStore((state) => state.appActions.setLoading);
 	const syncLogs = useStore((state) => state.logsActions.syncLogs);
+	const initLogDir = useStore((state) => state.logsActions.initLogDir);
 	const setLogDir = useStore((state) => state.logsActions.setLogDir);
 	const setLogFiles = useStore((state) => state.logsActions.setLogHandles);
 	const setSelectedLogFile = useStore((state) => state.logsActions.setSelectedLogFile);
 	const loadLog = useStore((state) => state.logActions.syncLog);
 	const pollLog = useStore((state) => state.logActions.pollLog);
-	const setSingleFileMode = useStore((state) => state.appActions.setSingleFileMode);
 	(0, import_react.useEffect)(() => {
 		const loadSpecificLog = async () => {
 			if (!selectedLogFile) return;
@@ -171806,22 +172042,19 @@ var App = ({ api }) => {
 	(0, import_react.useEffect)(() => {
 		const loadLogsAndState = async () => {
 			const embeddedState = document.getElementById("logview-state");
-			if (embeddedState) {
-				onMessage({ data: import_dist.default.parse(embeddedState.textContent || "") });
-				setSingleFileMode(true);
-			} else {
+			if (embeddedState) onMessage({ data: import_dist.default.parse(embeddedState.textContent || "") });
+			else {
 				const urlParams = new URLSearchParams(window.location.search);
 				const logPath = urlParams.get("task_file");
 				const resolvedLogPath = logPath ? logPath.replace(" ", "+") : logPath;
 				if (resolvedLogPath) {
 					setLogDir(void 0);
 					setLogFiles([{ name: resolvedLogPath }]);
-					setSingleFileMode(true);
 				} else {
 					const log_file = urlParams.get("log_file");
 					if (log_file) {
+						await initLogDir();
 						setSelectedLogFile(log_file);
-						setSingleFileMode(true);
 					}
 				}
 			}
@@ -171832,9 +172065,9 @@ var App = ({ api }) => {
 		setLogDir,
 		setLogFiles,
 		setSelectedLogFile,
+		initLogDir,
 		syncLogs,
-		onMessage,
-		setSingleFileMode
+		onMessage
 	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComponentIconProvider, {
 		icons: componentIcons,
