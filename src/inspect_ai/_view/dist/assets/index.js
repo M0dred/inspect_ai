@@ -28864,6 +28864,65 @@ var computeForegroundBackgroundColor = (colorType, color) => {
 		else return { background: color };
 	}
 };
+var ErrorPanel_module_default = {
+	errorPanel: "_errorPanel_13pj6_1",
+	heading: "_heading_13pj6_9",
+	body: "_body_13pj6_13",
+	stack: "_stack_13pj6_23",
+	centeredFlex: "_centeredFlex_13pj6_28",
+	errorIcon: "_errorIcon_13pj6_35"
+};
+//#endregion
+//#region ../../packages/react/src/components/ErrorPanel.tsx
+var ErrorPanel = ({ title, error }) => {
+	const icons = useComponentIcons();
+	const message = error.message;
+	const stack = error.stack;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: clsx(ErrorPanel_module_default.errorPanel, ErrorPanel_module_default.centeredFlex),
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: clsx(ErrorPanel_module_default.heading, ErrorPanel_module_default.centeredFlex),
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(icons.error, ErrorPanel_module_default.errorIcon) }) }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: title || "" })]
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: ErrorPanel_module_default.body,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [message || "", stack && error.displayStack !== false && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", {
+				className: ErrorPanel_module_default.stack,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("code", { children: ["at ", stack] })
+			})] })
+		})]
+	});
+};
+//#endregion
+//#region ../../packages/react/src/components/AppErrorBoundary.tsx
+var AppErrorBoundary = class extends import_react.Component {
+	constructor(props) {
+		super(props);
+		this.state = { hasError: false };
+	}
+	static getDerivedStateFromError(error) {
+		return {
+			hasError: true,
+			error
+		};
+	}
+	componentDidCatch(error, errorInfo) {
+		console.log({
+			error,
+			errorInfo
+		});
+	}
+	render() {
+		if (this.state.hasError) {
+			console.error({ e: this.state.error });
+			if (this.state.error) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ErrorPanel, {
+				title: "An unexpected error occurred.",
+				error: this.state.error
+			});
+			else return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: "An unknown error with no additional information occured." });
+		}
+		return this.props.children;
+	}
+};
 var Card_module_default = {
 	headerContainer: "_headerContainer_gh2j2_1",
 	headerModern: "_headerModern_gh2j2_11",
@@ -46202,34 +46261,6 @@ var EmptyPanel = ({ children }) => {
 		})
 	});
 };
-var ErrorPanel_module_default = {
-	errorPanel: "_errorPanel_13pj6_1",
-	heading: "_heading_13pj6_9",
-	body: "_body_13pj6_13",
-	stack: "_stack_13pj6_23",
-	centeredFlex: "_centeredFlex_13pj6_28",
-	errorIcon: "_errorIcon_13pj6_35"
-};
-//#endregion
-//#region ../../packages/react/src/components/ErrorPanel.tsx
-var ErrorPanel = ({ title, error }) => {
-	const icons = useComponentIcons();
-	const message = error.message;
-	const stack = error.stack;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: clsx(ErrorPanel_module_default.errorPanel, ErrorPanel_module_default.centeredFlex),
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: clsx(ErrorPanel_module_default.heading, ErrorPanel_module_default.centeredFlex),
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(icons.error, ErrorPanel_module_default.errorIcon) }) }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: title || "" })]
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: ErrorPanel_module_default.body,
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [message || "", stack && error.displayStack !== false && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", {
-				className: ErrorPanel_module_default.stack,
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("code", { children: ["at ", stack] })
-			})] })
-		})]
-	});
-};
 //#endregion
 //#region ../../packages/react/src/components/ExtendedFindContext.tsx
 var ExtendedFindContext = (0, import_react.createContext)(null);
@@ -54829,6 +54860,88 @@ function useListKeyboardNavigation({ listHandle, scrollRef, itemCount }) {
 		itemCount
 	]);
 }
+//#endregion
+//#region ../../packages/react/src/hooks/useBreadcrumbTruncation.ts
+var useBreadcrumbTruncation = (segments, containerRef) => {
+	const [truncatedData, setTruncatedData] = (0, import_react.useState)({
+		visibleSegments: segments,
+		hiddenCount: 0,
+		showEllipsis: false
+	});
+	(0, import_react.useEffect)(() => {
+		const measureAndTruncate = () => {
+			if (!containerRef.current || segments.length <= 3) {
+				setTruncatedData({
+					visibleSegments: segments,
+					hiddenCount: 0,
+					showEllipsis: false
+				});
+				return;
+			}
+			const container = containerRef.current;
+			const containerWidth = container.offsetWidth;
+			const testElement = document.createElement("ol");
+			testElement.className = "breadcrumb";
+			testElement.style.position = "absolute";
+			testElement.style.visibility = "hidden";
+			testElement.style.whiteSpace = "nowrap";
+			testElement.style.margin = "0";
+			testElement.style.padding = "0";
+			container.appendChild(testElement);
+			testElement.innerHTML = segments.map((segment) => `<li class="breadcrumb-item">${segment.text}</li>`).join("");
+			if (testElement.scrollWidth <= containerWidth) {
+				container.removeChild(testElement);
+				setTruncatedData({
+					visibleSegments: segments,
+					hiddenCount: 0,
+					showEllipsis: false
+				});
+				return;
+			}
+			const firstSegment = segments[0];
+			const lastSegment = segments[segments.length - 1];
+			if (!firstSegment || !lastSegment) {
+				container.removeChild(testElement);
+				return;
+			}
+			let maxVisible = 2;
+			for (let endCount = 1; endCount < segments.length - 1; endCount++) {
+				const candidateSegments = [
+					firstSegment,
+					...segments.slice(segments.length - 1 - endCount, -1),
+					lastSegment
+				];
+				testElement.innerHTML = [
+					`<li class="breadcrumb-item">${firstSegment.text}</li>`,
+					`<li class="breadcrumb-item">...</li>`,
+					...segments.slice(segments.length - 1 - endCount, -1).map((s) => `<li class="breadcrumb-item">${s.text}</li>`),
+					`<li class="breadcrumb-item">${lastSegment.text}</li>`
+				].join("");
+				if (testElement.scrollWidth <= containerWidth) {
+					maxVisible = candidateSegments.length;
+					setTruncatedData({
+						visibleSegments: candidateSegments,
+						hiddenCount: segments.length - candidateSegments.length,
+						showEllipsis: true
+					});
+				} else break;
+			}
+			if (maxVisible === 2) setTruncatedData({
+				visibleSegments: [firstSegment, lastSegment],
+				hiddenCount: segments.length - 2,
+				showEllipsis: true
+			});
+			container.removeChild(testElement);
+		};
+		measureAndTruncate();
+		const resizeObserver = new ResizeObserver(measureAndTruncate);
+		if (containerRef.current) resizeObserver.observe(containerRef.current);
+		return () => {
+			resizeObserver.disconnect();
+		};
+	}, [segments, containerRef]);
+	return truncatedData;
+};
 var SourceCodePanel_module_default = {
 	sourcePanel: "_sourcePanel_bat6y_1",
 	simple: "_simple_bat6y_6",
@@ -64286,11 +64399,6 @@ var createAppSlice = (set, get, _store) => {
 					state.app.urlHash = urlHash;
 				});
 			},
-			setSingleFileMode: (singleFile) => {
-				set((state) => {
-					state.app.singleFileMode = singleFile;
-				});
-			},
 			setDisplayMode: (mode) => {
 				set((state) => {
 					state.app.displayMode = mode;
@@ -64758,6 +64866,36 @@ var initalializeLogSlice = (set) => {
 	});
 };
 //#endregion
+//#region src/app/singleFileMode.ts
+/**
+* Single-file mode is set when the viewer is opened against a specific log
+* rather than a directory listing — e.g. an embedded iframe deep-link. We
+* need to know this before the first render so that AppRouter renders the
+* log view directly instead of mounting LogsPanel, which would otherwise
+* kick off directory-wide replication for every log in the directory.
+*/
+var detectInitialSingleFileMode = (location, doc) => {
+	if (doc.getElementById("logview-state")) return true;
+	const params = new URLSearchParams(location.search);
+	return params.has("log_file") || params.has("task_file");
+};
+/**
+* In single-file mode we don't ask the server for the log root (which would
+* walk the whole directory) — we derive the log dir from the selected file.
+*/
+var deriveSingleFileLogDir = (logFile) => {
+	if (!logFile) return void 0;
+	const dir = dirname(logFile);
+	return dir === "" ? void 0 : dir;
+};
+/**
+* Resolved once at module import. Whether the viewer is in single-file mode
+* is a startup-time property: it's a function of the URL the page loaded with
+* (or embedded state injected by VSCode) and never flips during the session,
+* so we don't need to thread it through application state.
+*/
+var isSingleFileMode = typeof window !== "undefined" ? detectInitialSingleFileMode(window.location, document) : false;
+//#endregion
 //#region src/state/logsSlice.ts
 var log$7 = createLogger("Log Slice");
 var initialState$1 = {
@@ -64776,10 +64914,10 @@ var initialState$1 = {
 		previewCount: 0,
 		detailsCount: 0
 	},
-	samplesListState: { byScope: {
-		samplesPanel: { columnVisibility: {} },
-		logViewSamples: {}
-	} },
+	samplesListState: {
+		byScope: { samplesPanel: { columnVisibility: {} } },
+		byLog: {}
+	},
 	showRetriedLogs: false
 };
 var createLogsSlice = (set, get, _store) => {
@@ -64793,14 +64931,6 @@ var createLogsSlice = (set, get, _store) => {
 					state.logs.logDir = logDir;
 					if (prev !== void 0 && prev !== "" && logDir !== void 0 && logDir !== "") {
 						state.logs.samplesListState.byScope.samplesPanel.gridState = void 0;
-						const view = state.logs.samplesListState.byScope.logViewSamples.view;
-						if (view) {
-							view.filters = {
-								dsl: "",
-								extraColumnFilters: {}
-							};
-							view.sort = [];
-						}
 						state.logs.listing.gridStateByScope = {};
 					}
 				});
@@ -64846,9 +64976,9 @@ var createLogsSlice = (set, get, _store) => {
 					state.logs.samplesListState.byScope[scope].gridState = void 0;
 				});
 			},
-			setSampleListView: (view) => {
+			setSampleListView: (logFile, view) => {
 				set((state) => {
-					state.logs.samplesListState.byScope.logViewSamples.view = view;
+					state.logs.samplesListState.byLog[logFile] = view;
 				});
 			},
 			setDisplayedSamples: (samples) => {
@@ -64873,28 +65003,33 @@ var createLogsSlice = (set, get, _store) => {
 				});
 			},
 			initLogDir: async () => {
-				const api = get().api;
-				if (!api) {
-					console.error("API not initialized in LogsStore");
-					return;
-				}
-				const loadLogInfo = async () => {
+				const state = get();
+				let logDir;
+				let absLogDir;
+				if (isSingleFileMode) {
+					if (state.logs.logDir !== void 0) return state.logs.logDir;
+					logDir = deriveSingleFileLogDir(state.logs.selectedLogFile);
+					if (logDir === void 0 && state.api?.get_log_dir) try {
+						logDir = await state.api.get_log_dir();
+					} catch (e) {
+						console.log(e);
+					}
+				} else {
+					const api = state.api;
+					if (!api) {
+						console.error("API not initialized in LogsStore");
+						return;
+					}
 					try {
 						const root = await api.get_log_root();
-						return {
-							logDir: root.log_dir,
-							absLogDir: root.abs_log_dir
-						};
+						logDir = root.log_dir;
+						absLogDir = root.abs_log_dir;
 					} catch (e) {
 						console.log(e);
 						get().appActions.setLoading(false, e);
-						return;
 					}
-				};
-				const info = await loadLogInfo();
-				const logDir = info?.logDir;
+				}
 				if (get().logs.logDir !== logDir) get().logsActions.setLogDir(logDir);
-				const absLogDir = info?.absLogDir;
 				if (get().logs.absLogDir !== absLogDir) set((state) => {
 					state.logs.absLogDir = absLogDir;
 				});
@@ -64930,7 +65065,7 @@ var createLogsSlice = (set, get, _store) => {
 							return;
 						}
 					};
-					if (!logDir || get().app.singleFileMode) {
+					if (!logDir || isSingleFileMode) {
 						if (useProgress) get().appActions.setLoading(false);
 						return [];
 					}
@@ -64993,7 +65128,7 @@ var createLogsSlice = (set, get, _store) => {
 			},
 			setSelectedLogFile: async (logFile) => {
 				const state = get();
-				if (!(state.logs.logs.findIndex((val) => val.name.endsWith(logFile)) !== -1)) if (state.replicationService?.isReplicating() && !state.app.singleFileMode) {
+				if (!(state.logs.logs.findIndex((val) => val.name.endsWith(logFile)) !== -1)) if (state.replicationService?.isReplicating() && !isSingleFileMode) {
 					await state.logsActions.syncLogs();
 					if (!get().logs.logs.find((val) => val.name.endsWith(logFile))) throw new Error(`Log file not found: ${logFile}`);
 				} else state.logsActions.setLogHandles([{ name: logFile }]);
@@ -66256,7 +66391,7 @@ var initializeStore = (api, capabilities, storage) => {
 			logs: state.logs,
 			sample: state.sample
 		}),
-		version: 3,
+		version: 4,
 		onRehydrateStorage: (state) => {
 			return (hydrationState, error) => {
 				handleRehydrate(state);
@@ -66286,6 +66421,8 @@ var inspectStateHooks = {
 	useRemoveAll: () => useStore((state) => state.appActions.removeAllProperties),
 	useRemoveByPrefix: () => useStore((state) => state.appActions.removeByPrefix)
 };
+//#endregion
+//#region src/app/appearance/icons.ts
 var ApplicationIcons = {
 	agent: "bi bi-grid",
 	approve: "bi bi-shield",
@@ -66322,7 +66459,6 @@ var ApplicationIcons = {
 	"clear-text": "bi bi-x-circle-fill",
 	close: "bi bi-x",
 	code: "bi bi-code-slash",
-	columns: "bi bi-layout-three-columns",
 	collapse: {
 		all: "bi bi-arrows-collapse",
 		up: "bi bi-chevron-up"
@@ -66331,10 +66467,7 @@ var ApplicationIcons = {
 	confirm: "bi bi-check",
 	copy: "bi bi-copy",
 	display: "bi bi-card-text",
-	downloadLog: "bi bi-download",
-	epoch: (epoch) => {
-		return `bi bi-${epoch}-circle`;
-	},
+	epoch: (epoch) => `bi bi-${epoch}-circle`,
 	edit: "bi bi-pencil-square",
 	error: "bi bi-exclamation-circle-fill",
 	eval: "bi bi-info-circle-fill",
@@ -66346,8 +66479,6 @@ var ApplicationIcons = {
 	file: "bi bi-file-code",
 	filter: "bi bi-funnel",
 	folder: "bi bi-folder",
-	fork: "bi bi-signpost-split",
-	flow: "ii inspect-flow",
 	home: "bi bi-house",
 	info: "bi bi-info-circle",
 	input: "bi bi-terminal",
@@ -66364,10 +66495,6 @@ var ApplicationIcons = {
 		cost: "bi bi-currency-dollar"
 	},
 	link: "bi bi-link-45deg",
-	"list-wrap": "bi bi-text-wrap",
-	"compact-scores": "bi bi-arrows-collapse-vertical",
-	"color-scales": "bi bi-palette",
-	loading: "bi bi-arrow-clockwise",
 	logging: {
 		notset: "bi bi-card-text",
 		debug: "bi bi-bug",
@@ -66395,7 +66522,6 @@ var ApplicationIcons = {
 	next: "bi bi-chevron-right",
 	noSamples: "bi bi-ban",
 	options: "bi bi-gear",
-	pendingTask: "bi bi-clock",
 	play: "bi bi-play-fill",
 	previous: "bi bi-chevron-left",
 	refresh: "bi bi-arrow-clockwise",
@@ -66412,7 +66538,6 @@ var ApplicationIcons = {
 	samples: "bi bi-file-spreadsheet",
 	sandbox: "bi bi-box-seam",
 	scorer: "bi bi-calculator",
-	scoringSidebar: "bi bi-radar",
 	search: "bi bi-search",
 	sidebar: "bi bi-list",
 	solvers: {
@@ -66426,10 +66551,6 @@ var ApplicationIcons = {
 	step: "bi bi-fast-forward-btn",
 	subtask: "bi bi-subtract",
 	success: "bi bi-check-circle-fill",
-	toggle: {
-		on: "bi bi-toggle-on",
-		off: "bi bi-toggle2-off"
-	},
 	threeDots: "bi bi-three-dots",
 	transcript: "bi bi-list-columns-reverse",
 	tree: {
@@ -66437,37 +66558,20 @@ var ApplicationIcons = {
 		closed: "bi bi-caret-right-fill"
 	},
 	turns: "bi bi-chat-left-text",
-	usage: "bi bi-stopwatch"
-};
-//#endregion
-//#region src/app/AppErrorBoundary.tsx
-var AppErrorBoundary = class extends import_react.Component {
-	constructor(props) {
-		super(props);
-		this.state = { hasError: false };
-	}
-	static getDerivedStateFromError(error) {
-		return {
-			hasError: true,
-			error
-		};
-	}
-	componentDidCatch(error, errorInfo) {
-		console.log({
-			error,
-			errorInfo
-		});
-	}
-	render() {
-		if (this.state.hasError) {
-			console.error({ e: this.state.error });
-			if (this.state.error) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ErrorPanel, {
-				title: "An unexpected error occurred.",
-				error: this.state.error
-			});
-			else return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: "An unknown error with no additional information occured." });
-		}
-		return this.props.children;
+	usage: "bi bi-stopwatch",
+	fork: "bi bi-signpost-split",
+	pendingTask: "bi bi-clock",
+	columns: "bi bi-layout-three-columns",
+	downloadLog: "bi bi-download",
+	flow: "ii inspect-flow",
+	"list-wrap": "bi bi-text-wrap",
+	"compact-scores": "bi bi-arrows-collapse-vertical",
+	"color-scales": "bi bi-palette",
+	loading: "bi bi-arrow-clockwise",
+	scoringSidebar: "bi bi-radar",
+	toggle: {
+		on: "bi bi-toggle-on",
+		off: "bi bi-toggle2-off"
 	}
 };
 //#endregion
@@ -70409,11 +70513,13 @@ var filterSamples = (samplesDescriptor, samples, filterValue) => {
 * Extracts scorer information from sample summaries
 */
 var getScorersFromSamples = (samples) => {
+	const dictScorers = /* @__PURE__ */ new Set();
 	const scoreLabelsMap = /* @__PURE__ */ new Map();
-	for (const sample of samples) if (!sample.error && sample.scores) {
+	for (const sample of samples) {
+		if (sample.error || !sample.scores) continue;
 		for (const [scorerKey, scoreValue] of Object.entries(sample.scores)) if (scoreValue.value && typeof scoreValue.value === "object" && !Array.isArray(scoreValue.value)) {
-			const valueDict = scoreValue.value;
-			for (const innerKey of Object.keys(valueDict)) {
+			dictScorers.add(scorerKey);
+			for (const innerKey of Object.keys(scoreValue.value)) {
 				const label = `${scorerKey}:${innerKey}`;
 				if (!scoreLabelsMap.has(label)) scoreLabelsMap.set(label, {
 					name: innerKey,
@@ -70425,6 +70531,7 @@ var getScorersFromSamples = (samples) => {
 			scorer: scorerKey
 		});
 	}
+	for (const scorerKey of dictScorers) scoreLabelsMap.delete(scorerKey);
 	return Array.from(scoreLabelsMap.values());
 };
 /**
@@ -71362,84 +71469,6 @@ var Navbar_module_default = {
 	right: "_right_1u3sd_41",
 	toolbarButton: "_toolbarButton_1u3sd_50",
 	pathContainer: "_pathContainer_1u3sd_58"
-};
-//#endregion
-//#region src/app/navbar/useBreadcrumbTruncation.ts
-var useBreadcrumbTruncation = (segments, containerRef) => {
-	const [truncatedData, setTruncatedData] = (0, import_react.useState)({
-		visibleSegments: segments,
-		hiddenCount: 0,
-		showEllipsis: false
-	});
-	const measureAndTruncate = (0, import_react.useCallback)(() => {
-		if (!containerRef.current || segments.length <= 3) {
-			setTruncatedData({
-				visibleSegments: segments,
-				hiddenCount: 0,
-				showEllipsis: false
-			});
-			return;
-		}
-		const container = containerRef.current;
-		const containerWidth = container.offsetWidth;
-		const testElement = document.createElement("ol");
-		testElement.className = "breadcrumb";
-		testElement.style.position = "absolute";
-		testElement.style.visibility = "hidden";
-		testElement.style.whiteSpace = "nowrap";
-		testElement.style.margin = "0";
-		testElement.style.padding = "0";
-		container.appendChild(testElement);
-		testElement.innerHTML = segments.map((segment) => `<li class="breadcrumb-item">${segment.text}</li>`).join("");
-		if (testElement.scrollWidth <= containerWidth) {
-			container.removeChild(testElement);
-			setTruncatedData({
-				visibleSegments: segments,
-				hiddenCount: 0,
-				showEllipsis: false
-			});
-			return;
-		}
-		const firstSegment = segments[0];
-		const lastSegment = segments[segments.length - 1];
-		let maxVisible = 2;
-		for (let endCount = 1; endCount < segments.length - 1; endCount++) {
-			const candidateSegments = [
-				firstSegment,
-				...segments.slice(segments.length - 1 - endCount, -1),
-				lastSegment
-			];
-			testElement.innerHTML = [
-				`<li class="breadcrumb-item">${firstSegment.text}</li>`,
-				`<li class="breadcrumb-item">...</li>`,
-				...segments.slice(segments.length - 1 - endCount, -1).map((s) => `<li class="breadcrumb-item">${s.text}</li>`),
-				`<li class="breadcrumb-item">${lastSegment.text}</li>`
-			].join("");
-			if (testElement.scrollWidth <= containerWidth) {
-				maxVisible = candidateSegments.length;
-				setTruncatedData({
-					visibleSegments: candidateSegments,
-					hiddenCount: segments.length - candidateSegments.length,
-					showEllipsis: true
-				});
-			} else break;
-		}
-		if (maxVisible === 2) setTruncatedData({
-			visibleSegments: [firstSegment, lastSegment],
-			hiddenCount: segments.length - 2,
-			showEllipsis: true
-		});
-		container.removeChild(testElement);
-	}, [segments, containerRef]);
-	(0, import_react.useEffect)(() => {
-		measureAndTruncate();
-		const resizeObserver = new ResizeObserver(measureAndTruncate);
-		if (containerRef.current) resizeObserver.observe(containerRef.current);
-		return () => {
-			resizeObserver.disconnect();
-		};
-	}, [containerRef, measureAndTruncate]);
-	return truncatedData;
 };
 //#endregion
 //#region src/app/navbar/Navbar.tsx
@@ -134527,16 +134556,16 @@ var resolveSamplesView = (stored, evalDefault) => {
 /**
 * Project the runtime descriptor into the `GridState` ag-grid consumes.
 *
-* Column-id tolerance: any persisted reference to a column not present in
-* `availableColIds` (e.g. `score__judge__correctness` on a log without
-* that scorer) is excluded from the emitted GridState but **preserved
-* unchanged in the source descriptor**. The persisted view is never
-* mutated by a render.
+* Column-id tolerance handles transient mismatches between a per-log
+* descriptor and its log's columns — e.g. samples loading in stages where
+* `allColumns` initially lacks scorer columns the user has customized.
+* Unknown ids are excluded from the emitted GridState but preserved
+* unchanged in the source descriptor.
 *
 * The DSL filter is intentionally *not* materialized into `filterModel`
 * here — that translation needs the live filter registry, which only
-* exists at runtime. Phase 2's `useSamplesView` layers the DSL→model
-* translation on top of this base GridState.
+* exists at runtime. `useSamplesView` layers the DSL→model translation
+* on top of this base GridState.
 */
 var viewToGridState = (view, availableColIds) => {
 	const knownColumns = view.columns.filter((c) => availableColIds.has(c.id));
@@ -134545,22 +134574,30 @@ var viewToGridState = (view, availableColIds) => {
 		sort: s.dir
 	}));
 	const filterModel = Object.fromEntries(Object.entries(view.filters.extraColumnFilters).filter(([colId]) => availableColIds.has(colId)));
+	const widths = view.columnWidths ?? {};
+	const columnSizingModel = Object.entries(widths).filter(([colId]) => availableColIds.has(colId)).map(([colId, width]) => ({
+		colId,
+		width
+	}));
 	return {
 		columnVisibility: { hiddenColIds: knownColumns.filter((c) => !c.visible).map((c) => c.id) },
 		columnOrder: { orderedColIds: knownColumns.map((c) => c.id) },
+		columnSizing: { columnSizingModel },
 		sort: { sortModel },
 		filter: { filterModel }
 	};
 };
 /**
 * Fold a fresh ag-grid `GridState` back into the runtime descriptor,
-* preserving any unknown-id references from `prev` so they re-engage when
-* the user navigates back to a log that has those columns.
+* preserving any unknown-id references from `prev`. Unknown ids occur
+* during transient column-load mismatches (e.g. user refreshes a log,
+* a write fires before scorer columns reappear); preservation keeps the
+* user's customizations alive across those frames.
 *
-* Note: this updates `columns`, `sort`, and `filters.extraColumnFilters`.
-* The `dsl` half of `filters` is the responsibility of the caller — it
-* comes from a different signal (the toolbar text) and is partitioned
-* via `partitionFilterModel`.
+* Updates `columns`, `sort`, and `filters.extraColumnFilters`. The `dsl`
+* half of `filters` is the responsibility of the caller — it comes from
+* a different signal (the toolbar text) and is partitioned via
+* `partitionFilterModel`.
 */
 var gridStateToView = (prev, gridState, availableColIds) => {
 	const orderedColIds = gridState.columnOrder?.orderedColIds ?? [];
@@ -134578,6 +134615,13 @@ var gridStateToView = (prev, gridState, availableColIds) => {
 	const fmModel = gridState.filter?.filterModel ?? {};
 	const knownExtras = Object.fromEntries(Object.entries(fmModel).filter(([colId]) => availableColIds.has(colId)));
 	const unknownExtras = Object.fromEntries(Object.entries(prev.filters.extraColumnFilters).filter(([colId]) => !availableColIds.has(colId)));
+	const prevWidths = prev.columnWidths ?? {};
+	const knownWidths = {};
+	for (const entry of gridState.columnSizing?.columnSizingModel ?? []) if (availableColIds.has(entry.colId) && typeof entry.width === "number") knownWidths[entry.colId] = entry.width;
+	const mergedWidths = {
+		...Object.fromEntries(Object.entries(prevWidths).filter(([colId]) => !availableColIds.has(colId))),
+		...knownWidths
+	};
 	return {
 		...prev,
 		columns: [...knownColumns, ...unknownColumns],
@@ -134588,7 +134632,8 @@ var gridStateToView = (prev, gridState, availableColIds) => {
 				...knownExtras,
 				...unknownExtras
 			}
-		}
+		},
+		columnWidths: Object.keys(mergedWidths).length > 0 ? mergedWidths : void 0
 	};
 };
 //#endregion
@@ -134601,9 +134646,12 @@ function useEvalDefaultSamplesView() {
 	return (0, import_react.useMemo)(() => pickActiveView(evalDefaultField), [evalDefaultField]);
 }
 /** Single subscription + resolution; backs every hook that needs a
-*  field off the resolved view. */
+*  field off the resolved view. Reads the per-log bucket keyed by the
+*  currently-selected log file so customizations don't bleed across logs
+*  with different scorers / eval config. */
 function useResolvedSamplesView() {
-	const stored = useStore((state) => state.logs.samplesListState.byScope.logViewSamples.view);
+	const logFile = useStore((state) => state.logs.selectedLogFile);
+	const stored = useStore((state) => logFile ? state.logs.samplesListState.byLog[logFile] : void 0);
 	const evalDefault = useEvalDefaultSamplesView();
 	return (0, import_react.useMemo)(() => resolveSamplesView(stored, evalDefault), [stored, evalDefault]);
 }
@@ -134650,7 +134698,12 @@ function useSamplesView(allColumns, options) {
 	const { seedDefaultVisibility } = options ?? {};
 	const evalDefault = useEvalDefaultSamplesView();
 	const view = useResolvedSamplesView();
-	const setSampleListView = useStore((state) => state.logsActions.setSampleListView);
+	const logFile = useStore((state) => state.logs.selectedLogFile);
+	const setSampleListViewAction = useStore((state) => state.logsActions.setSampleListView);
+	const setSampleListView = (0, import_react.useCallback)((next) => {
+		if (!logFile) return;
+		setSampleListViewAction(logFile, next);
+	}, [logFile, setSampleListViewAction]);
 	const availableColIds = (0, import_react.useMemo)(() => {
 		const ids = /* @__PURE__ */ new Set();
 		if (allColumns) for (const col of allColumns) ids.add(getFieldKey(col));
@@ -139339,7 +139392,6 @@ var LogSampleDetailView = () => {
 	const selectSample = useStore((state) => state.logActions.selectSample);
 	const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
 	const selectedSampleHandle = useStore((state) => state.log.selectedSampleHandle);
-	const singleFileMode = useStore((state) => state.app.singleFileMode);
 	const logPath = routeLogPath || selectedLogFile;
 	const sampleId = routeSampleId || selectedSampleHandle?.id?.toString();
 	const epoch = routeEpoch || selectedSampleHandle?.epoch?.toString();
@@ -139398,7 +139450,7 @@ var LogSampleDetailView = () => {
 			currentPath: logPath ? `${logPath}/sample` : void 0,
 			fnNavigationUrl,
 			bordered: true,
-			breadcrumbsEnabled: !singleFileMode
+			breadcrumbsEnabled: !isSingleFileMode
 		}
 	});
 };
@@ -170988,7 +171040,6 @@ var LogViewLayout = () => {
 	const setShowFind = useStore((state) => state.appActions.setShowFind);
 	const nativeFind = useStore((state) => state.app.nativeFind);
 	const hideFind = useStore((state) => state.appActions.hideFind);
-	const singleFileMode = useStore((state) => state.app.singleFileMode);
 	const logDir = useStore((state) => state.logs.logDir);
 	const logFiles = useStore((state) => state.logs.logs);
 	const { logPath } = useLogRouteParams();
@@ -171016,11 +171067,11 @@ var LogViewLayout = () => {
 	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExtendedFindProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FindTargetProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		ref: mainAppRef,
-		className: clsx("app-main-grid", fullScreen ? "full-screen" : void 0, singleFileMode ? "single-file-mode" : void 0, "log-view"),
+		className: clsx("app-main-grid", fullScreen ? "full-screen" : void 0, isSingleFileMode ? "single-file-mode" : void 0, "log-view"),
 		tabIndex: 0,
 		children: [
 			showFind ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FindBand, {}) : "",
-			!singleFileMode ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ApplicationNavbar, {
+			!isSingleFileMode ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ApplicationNavbar, {
 				fnNavigationUrl: navigationUrl,
 				currentPath: logPath,
 				showActivity: "log"
@@ -171426,7 +171477,6 @@ var SampleDetailView = () => {
 	const clearSelectedLogDetails = useStore((state) => state.logActions.clearSelectedLogDetails);
 	const clearLog = useStore((state) => state.logActions.clearLog);
 	const clearSampleTab = useStore((state) => state.appActions.clearSampleTab);
-	const singleFileMode = useStore((state) => state.app.singleFileMode);
 	const currentIndex = (0, import_react.useMemo)(() => {
 		if (!displayedSamples || !selectedLogFile || !sampleId || !epoch) return -1;
 		return displayedSamples.findIndex((s) => {
@@ -171491,7 +171541,7 @@ var SampleDetailView = () => {
 			currentPath: routeLogPath,
 			fnNavigationUrl: samplesUrl,
 			bordered: true,
-			breadcrumbsEnabled: !singleFileMode
+			breadcrumbsEnabled: !isSingleFileMode
 		}
 	});
 };
@@ -171840,9 +171890,8 @@ var AppLayout = () => {
 	(0, import_react.useEffect)(() => {
 		if (storeImplementation) storeImplementation.getState().appActions.setUrlHash(location.pathname);
 	}, [location]);
-	const singleFileMode = useStore((state) => state.app.singleFileMode);
 	const { sampleId, epoch, sampleUuid } = useLogRouteParams();
-	if (singleFileMode) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComponentNavigationProvider, {
+	if (isSingleFileMode) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComponentNavigationProvider, {
 		navigation: componentNavigation,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AppErrorBoundary, { children: sampleId && epoch || sampleUuid ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LogSampleDetailView, {}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LogViewContainer, {}) })
 	});
@@ -171920,12 +171969,12 @@ var App = ({ api }) => {
 	const setInitialState = useStore((state) => state.appActions.setInitialState);
 	const setLoading = useStore((state) => state.appActions.setLoading);
 	const syncLogs = useStore((state) => state.logsActions.syncLogs);
+	const initLogDir = useStore((state) => state.logsActions.initLogDir);
 	const setLogDir = useStore((state) => state.logsActions.setLogDir);
 	const setLogFiles = useStore((state) => state.logsActions.setLogHandles);
 	const setSelectedLogFile = useStore((state) => state.logsActions.setSelectedLogFile);
 	const loadLog = useStore((state) => state.logActions.syncLog);
 	const pollLog = useStore((state) => state.logActions.pollLog);
-	const setSingleFileMode = useStore((state) => state.appActions.setSingleFileMode);
 	(0, import_react.useEffect)(() => {
 		const loadSpecificLog = async () => {
 			if (!selectedLogFile) return;
@@ -171993,22 +172042,19 @@ var App = ({ api }) => {
 	(0, import_react.useEffect)(() => {
 		const loadLogsAndState = async () => {
 			const embeddedState = document.getElementById("logview-state");
-			if (embeddedState) {
-				onMessage({ data: import_dist.default.parse(embeddedState.textContent || "") });
-				setSingleFileMode(true);
-			} else {
+			if (embeddedState) onMessage({ data: import_dist.default.parse(embeddedState.textContent || "") });
+			else {
 				const urlParams = new URLSearchParams(window.location.search);
 				const logPath = urlParams.get("task_file");
 				const resolvedLogPath = logPath ? logPath.replace(" ", "+") : logPath;
 				if (resolvedLogPath) {
 					setLogDir(void 0);
 					setLogFiles([{ name: resolvedLogPath }]);
-					setSingleFileMode(true);
 				} else {
 					const log_file = urlParams.get("log_file");
 					if (log_file) {
+						await initLogDir();
 						setSelectedLogFile(log_file);
-						setSingleFileMode(true);
 					}
 				}
 			}
@@ -172019,9 +172065,9 @@ var App = ({ api }) => {
 		setLogDir,
 		setLogFiles,
 		setSelectedLogFile,
+		initLogDir,
 		syncLogs,
-		onMessage,
-		setSingleFileMode
+		onMessage
 	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComponentIconProvider, {
 		icons: componentIcons,
