@@ -14995,7 +14995,7 @@ pp$5.parseParenItem = function(item) {
 pp$5.parseParenArrowList = function(startPos, startLoc, exprList, forInit) {
 	return this.parseArrowExpression(this.startNodeAt(startPos, startLoc), exprList, false, forInit);
 };
-var empty$4 = [];
+var empty$5 = [];
 pp$5.parseNew = function() {
 	if (this.containsEsc) this.raiseRecoverable(this.start, "Escape sequence in keyword new");
 	var node = this.startNode();
@@ -15015,7 +15015,7 @@ pp$5.parseNew = function() {
 	var startPos = this.start, startLoc = this.startLoc;
 	node.callee = this.parseSubscripts(this.parseExprAtom(null, false, true), startPos, startLoc, true, false);
 	if (this.eat(types$1.parenL)) node.arguments = this.parseExprList(types$1.parenR, this.options.ecmaVersion >= 8, false);
-	else node.arguments = empty$4;
+	else node.arguments = empty$5;
 	return this.finishNode(node, "NewExpression");
 };
 pp$5.parseTemplateElement = function(ref) {
@@ -40533,7 +40533,7 @@ var uc_micro_exports = /* @__PURE__ */ __exportAll({
 });
 //#endregion
 //#region ../../node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/esm/generated/decode-data-html.js
-var decode_data_html_default = new Uint16Array("ᵁ<Õıʊҝջאٵ۞ޢߖࠏ੊ઑඡ๭༉༦჊ረዡᐕᒝᓃᓟᔥ\0\0\0\0\0\0ᕫᛍᦍᰒᷝ὾⁠↰⊍⏀⏻⑂⠤⤒ⴈ⹈⿎〖㊺㘹㞬㣾㨨㩱㫠㬮ࠀEMabcfglmnoprstu\\bfms¦³¹ÈÏlig耻Æ䃆P耻&䀦cute耻Á䃁reve;䄂Āiyx}rc耻Â䃂;䐐r;쀀𝔄rave耻À䃀pha;䎑acr;䄀d;橓Āgp¡on;䄄f;쀀𝔸plyFunction;恡ing耻Å䃅Ācs¾Ãr;쀀𝒜ign;扔ilde耻Ã䃃ml耻Ä䃄ЀaceforsuåûþėĜĢħĪĀcrêòkslash;或Ŷöø;櫧ed;挆y;䐑ƀcrtąċĔause;戵noullis;愬a;䎒r;쀀𝔅pf;쀀𝔹eve;䋘còēmpeq;扎܀HOacdefhilorsuōőŖƀƞƢƵƷƺǜȕɳɸɾcy;䐧PY耻©䂩ƀcpyŝŢźute;䄆Ā;iŧŨ拒talDifferentialD;慅leys;愭ȀaeioƉƎƔƘron;䄌dil耻Ç䃇rc;䄈nint;戰ot;䄊ĀdnƧƭilla;䂸terDot;䂷òſi;䎧rcleȀDMPTǇǋǑǖot;抙inus;抖lus;投imes;抗oĀcsǢǸkwiseContourIntegral;戲eCurlyĀDQȃȏoubleQuote;思uote;怙ȀlnpuȞȨɇɕonĀ;eȥȦ户;橴ƀgitȯȶȺruent;扡nt;戯ourIntegral;戮ĀfrɌɎ;愂oduct;成nterClockwiseContourIntegral;戳oss;樯cr;쀀𝒞pĀ;Cʄʅ拓ap;才րDJSZacefiosʠʬʰʴʸˋ˗ˡ˦̳ҍĀ;oŹʥtrahd;椑cy;䐂cy;䐅cy;䐏ƀgrsʿ˄ˇger;怡r;憡hv;櫤Āayː˕ron;䄎;䐔lĀ;t˝˞戇a;䎔r;쀀𝔇Āaf˫̧Ācm˰̢riticalȀADGT̖̜̀̆cute;䂴oŴ̋̍;䋙bleAcute;䋝rave;䁠ilde;䋜ond;拄ferentialD;慆Ѱ̽\0\0\0͔͂\0Ѕf;쀀𝔻ƀ;DE͈͉͍䂨ot;惜qual;扐blèCDLRUVͣͲ΂ϏϢϸontourIntegraìȹoɴ͹\0\0ͻ»͉nArrow;懓Āeo·ΤftƀARTΐΖΡrrow;懐ightArrow;懔eåˊngĀLRΫτeftĀARγιrrow;柸ightArrow;柺ightArrow;柹ightĀATϘϞrrow;懒ee;抨pɁϩ\0\0ϯrrow;懑ownArrow;懕erticalBar;戥ǹABLRTaВЪаўѿͼrrowƀ;BUНОТ憓ar;椓pArrow;懵reve;䌑eft˒к\0ц\0ѐightVector;楐eeVector;楞ectorĀ;Bљњ憽ar;楖ightǔѧ\0ѱeeVector;楟ectorĀ;BѺѻ懁ar;楗eeĀ;A҆҇护rrow;憧ĀctҒҗr;쀀𝒟rok;䄐ࠀNTacdfglmopqstuxҽӀӄӋӞӢӧӮӵԡԯԶՒ՝ՠեG;䅊H耻Ð䃐cute耻É䃉ƀaiyӒӗӜron;䄚rc耻Ê䃊;䐭ot;䄖r;쀀𝔈rave耻È䃈ement;戈ĀapӺӾcr;䄒tyɓԆ\0\0ԒmallSquare;旻erySmallSquare;斫ĀgpԦԪon;䄘f;쀀𝔼silon;䎕uĀaiԼՉlĀ;TՂՃ橵ilde;扂librium;懌Āci՗՚r;愰m;橳a;䎗ml耻Ë䃋Āipժկsts;戃onentialE;慇ʀcfiosօֈ֍ֲ׌y;䐤r;쀀𝔉lledɓ֗\0\0֣mallSquare;旼erySmallSquare;斪Ͱֺ\0ֿ\0\0ׄf;쀀𝔽All;戀riertrf;愱cò׋؀JTabcdfgorstר׬ׯ׺؀ؒؖ؛؝أ٬ٲcy;䐃耻>䀾mmaĀ;d׷׸䎓;䏜reve;䄞ƀeiy؇،ؐdil;䄢rc;䄜;䐓ot;䄠r;쀀𝔊;拙pf;쀀𝔾eater̀EFGLSTصلَٖٛ٦qualĀ;Lؾؿ扥ess;招ullEqual;执reater;檢ess;扷lantEqual;橾ilde;扳cr;쀀𝒢;扫ЀAacfiosuڅڋږڛڞڪھۊRDcy;䐪Āctڐڔek;䋇;䁞irc;䄤r;愌lbertSpace;愋ǰگ\0ڲf;愍izontalLine;攀Āctۃۅòکrok;䄦mpńېۘownHumðįqual;扏܀EJOacdfgmnostuۺ۾܃܇܎ܚܞܡܨ݄ݸދޏޕcy;䐕lig;䄲cy;䐁cute耻Í䃍Āiyܓܘrc耻Î䃎;䐘ot;䄰r;愑rave耻Ì䃌ƀ;apܠܯܿĀcgܴܷr;䄪inaryI;慈lieóϝǴ݉\0ݢĀ;eݍݎ戬Āgrݓݘral;戫section;拂isibleĀCTݬݲomma;恣imes;恢ƀgptݿރވon;䄮f;쀀𝕀a;䎙cr;愐ilde;䄨ǫޚ\0ޞcy;䐆l耻Ï䃏ʀcfosuެ޷޼߂ߐĀiyޱ޵rc;䄴;䐙r;쀀𝔍pf;쀀𝕁ǣ߇\0ߌr;쀀𝒥rcy;䐈kcy;䐄΀HJacfosߤߨ߽߬߱ࠂࠈcy;䐥cy;䐌ppa;䎚Āey߶߻dil;䄶;䐚r;쀀𝔎pf;쀀𝕂cr;쀀𝒦րJTaceflmostࠥࠩࠬࡐࡣ঳সে্਷ੇcy;䐉耻<䀼ʀcmnpr࠷࠼ࡁࡄࡍute;䄹bda;䎛g;柪lacetrf;愒r;憞ƀaeyࡗ࡜ࡡron;䄽dil;䄻;䐛Āfsࡨ॰tԀACDFRTUVarࡾࢩࢱࣦ࣠ࣼयज़ΐ४Ānrࢃ࢏gleBracket;柨rowƀ;BR࢙࢚࢞憐ar;懤ightArrow;懆eiling;挈oǵࢷ\0ࣃbleBracket;柦nǔࣈ\0࣒eeVector;楡ectorĀ;Bࣛࣜ懃ar;楙loor;挊ightĀAV࣯ࣵrrow;憔ector;楎Āerँगeƀ;AVउऊऐ抣rrow;憤ector;楚iangleƀ;BEतथऩ抲ar;槏qual;抴pƀDTVषूौownVector;楑eeVector;楠ectorĀ;Bॖॗ憿ar;楘ectorĀ;B॥०憼ar;楒ightáΜs̀EFGLSTॾঋকঝঢভqualGreater;拚ullEqual;扦reater;扶ess;檡lantEqual;橽ilde;扲r;쀀𝔏Ā;eঽা拘ftarrow;懚idot;䄿ƀnpw৔ਖਛgȀLRlr৞৷ਂਐeftĀAR০৬rrow;柵ightArrow;柷ightArrow;柶eftĀarγਊightáοightáϊf;쀀𝕃erĀLRਢਬeftArrow;憙ightArrow;憘ƀchtਾੀੂòࡌ;憰rok;䅁;扪Ѐacefiosuਗ਼੝੠੷੼અઋ઎p;椅y;䐜Ādl੥੯iumSpace;恟lintrf;愳r;쀀𝔐nusPlus;戓pf;쀀𝕄cò੶;䎜ҀJacefostuણધભીଔଙඑ඗ඞcy;䐊cute;䅃ƀaey઴હાron;䅇dil;䅅;䐝ƀgswે૰଎ativeƀMTV૓૟૨ediumSpace;怋hiĀcn૦૘ë૙eryThiî૙tedĀGL૸ଆreaterGreateòٳessLesóੈLine;䀊r;쀀𝔑ȀBnptଢନଷ଺reak;恠BreakingSpace;䂠f;愕ڀ;CDEGHLNPRSTV୕ୖ୪୼஡௫ఄ౞಄ದ೘ൡඅ櫬Āou୛୤ngruent;扢pCap;扭oubleVerticalBar;戦ƀlqxஃஊ஛ement;戉ualĀ;Tஒஓ扠ilde;쀀≂̸ists;戄reater΀;EFGLSTஶஷ஽௉௓௘௥扯qual;扱ullEqual;쀀≧̸reater;쀀≫̸ess;批lantEqual;쀀⩾̸ilde;扵umpń௲௽ownHump;쀀≎̸qual;쀀≏̸eĀfsఊధtTriangleƀ;BEచఛడ拪ar;쀀⧏̸qual;括s̀;EGLSTవశ఼ౄోౘ扮qual;扰reater;扸ess;쀀≪̸lantEqual;쀀⩽̸ilde;扴estedĀGL౨౹reaterGreater;쀀⪢̸essLess;쀀⪡̸recedesƀ;ESಒಓಛ技qual;쀀⪯̸lantEqual;拠ĀeiಫಹverseElement;戌ghtTriangleƀ;BEೋೌ೒拫ar;쀀⧐̸qual;拭ĀquೝഌuareSuĀbp೨೹setĀ;E೰ೳ쀀⊏̸qual;拢ersetĀ;Eഃആ쀀⊐̸qual;拣ƀbcpഓതൎsetĀ;Eഛഞ쀀⊂⃒qual;抈ceedsȀ;ESTലള഻െ抁qual;쀀⪰̸lantEqual;拡ilde;쀀≿̸ersetĀ;E൘൛쀀⊃⃒qual;抉ildeȀ;EFT൮൯൵ൿ扁qual;扄ullEqual;扇ilde;扉erticalBar;戤cr;쀀𝒩ilde耻Ñ䃑;䎝܀Eacdfgmoprstuvලෂ෉෕ෛ෠෧෼ขภยา฿ไlig;䅒cute耻Ó䃓Āiy෎ීrc耻Ô䃔;䐞blac;䅐r;쀀𝔒rave耻Ò䃒ƀaei෮ෲ෶cr;䅌ga;䎩cron;䎟pf;쀀𝕆enCurlyĀDQฎบoubleQuote;怜uote;怘;橔Āclวฬr;쀀𝒪ash耻Ø䃘iŬื฼de耻Õ䃕es;樷ml耻Ö䃖erĀBP๋๠Āar๐๓r;怾acĀek๚๜;揞et;掴arenthesis;揜Ҁacfhilors๿ງຊຏຒດຝະ໼rtialD;戂y;䐟r;쀀𝔓i;䎦;䎠usMinus;䂱Āipຢອncareplanåڝf;愙Ȁ;eio຺ູ໠໤檻cedesȀ;EST່້໏໚扺qual;檯lantEqual;扼ilde;找me;怳Ādp໩໮uct;戏ortionĀ;aȥ໹l;戝Āci༁༆r;쀀𝒫;䎨ȀUfos༑༖༛༟OT耻\"䀢r;쀀𝔔pf;愚cr;쀀𝒬؀BEacefhiorsu༾གྷཇའཱིྦྷྪྭ႖ႩႴႾarr;椐G耻®䂮ƀcnrཎནབute;䅔g;柫rĀ;tཛྷཝ憠l;椖ƀaeyཧཬཱron;䅘dil;䅖;䐠Ā;vླྀཹ愜erseĀEUྂྙĀlq྇ྎement;戋uilibrium;懋pEquilibrium;楯r»ཹo;䎡ghtwƀ;BL࿜࿝࿡憒ar;懥eftArrow;懄eiling;按oǵ࿹\0စbleBracket;柧nǔည\0နeeVector;楝ectorĀ;Bဝသ懂ar;楕loor;挋Āerိ၃eƀ;AVဵံြ抢rrow;憦ector;楛iangleƀ;BEၐၑၕ抳ar;槐qual;抵pƀDTVၣၮၸownVector;楏eeVector;楜ectorĀ;Bႂႃ憾ar;楔ectorĀ;B႑႒懀ar;楓Āpuႛ႞f;愝ndImplies;楰ightarrow;懛ĀchႹႼr;愛;憱leDelayed;槴ڀHOacfhimoqstuფჱჷჽᄙᄞᅑᅖᅡᅧᆵᆻᆿĀCcჩხHcy;䐩y;䐨FTcy;䐬cute;䅚ʀ;aeiyᄈᄉᄎᄓᄗ檼ron;䅠dil;䅞rc;䅜;䐡r;쀀𝔖ortȀDLRUᄪᄴᄾᅉownArrow»ОeftArrow»࢚ightArrow»࿝pArrow;憑gma;䎣allCircle;战pf;쀀𝕊ɲᅭ\0\0ᅰt;戚areȀ;ISUᅻᅼᆉᆯ斡ntersection;抓uĀbpᆏᆞsetĀ;Eᆗᆘ抏qual;抑ersetĀ;Eᆨᆩ抐qual;抒nion;抔cr;쀀𝒮ar;拆ȀbcmpᇈᇛሉላĀ;sᇍᇎ拐etĀ;Eᇍᇕqual;抆ĀchᇠህeedsȀ;ESTᇭᇮᇴᇿ扻qual;檰lantEqual;扽ilde;承Tháྌ;我ƀ;esሒሓሣ拑rsetĀ;Eሜም抃qual;抇et»ሓրHRSacfhiorsሾቄ቉ቕ቞ቱቶኟዂወዑORN耻Þ䃞ADE;愢ĀHc቎ቒcy;䐋y;䐦Ābuቚቜ;䀉;䎤ƀaeyብቪቯron;䅤dil;䅢;䐢r;쀀𝔗Āeiቻ኉ǲኀ\0ኇefore;戴a;䎘Ācn኎ኘkSpace;쀀  Space;怉ldeȀ;EFTካኬኲኼ戼qual;扃ullEqual;扅ilde;扈pf;쀀𝕋ipleDot;惛Āctዖዛr;쀀𝒯rok;䅦ૡዷጎጚጦ\0ጬጱ\0\0\0\0\0ጸጽ፷ᎅ\0᏿ᐄᐊᐐĀcrዻጁute耻Ú䃚rĀ;oጇገ憟cir;楉rǣጓ\0጖y;䐎ve;䅬Āiyጞጣrc耻Û䃛;䐣blac;䅰r;쀀𝔘rave耻Ù䃙acr;䅪Ādiፁ፩erĀBPፈ፝Āarፍፐr;䁟acĀekፗፙ;揟et;掵arenthesis;揝onĀ;P፰፱拃lus;抎Āgp፻፿on;䅲f;쀀𝕌ЀADETadps᎕ᎮᎸᏄϨᏒᏗᏳrrowƀ;BDᅐᎠᎤar;椒ownArrow;懅ownArrow;憕quilibrium;楮eeĀ;AᏋᏌ报rrow;憥ownáϳerĀLRᏞᏨeftArrow;憖ightArrow;憗iĀ;lᏹᏺ䏒on;䎥ing;䅮cr;쀀𝒰ilde;䅨ml耻Ü䃜ҀDbcdefosvᐧᐬᐰᐳᐾᒅᒊᒐᒖash;披ar;櫫y;䐒ashĀ;lᐻᐼ抩;櫦Āerᑃᑅ;拁ƀbtyᑌᑐᑺar;怖Ā;iᑏᑕcalȀBLSTᑡᑥᑪᑴar;戣ine;䁼eparator;杘ilde;所ThinSpace;怊r;쀀𝔙pf;쀀𝕍cr;쀀𝒱dash;抪ʀcefosᒧᒬᒱᒶᒼirc;䅴dge;拀r;쀀𝔚pf;쀀𝕎cr;쀀𝒲Ȁfiosᓋᓐᓒᓘr;쀀𝔛;䎞pf;쀀𝕏cr;쀀𝒳ҀAIUacfosuᓱᓵᓹᓽᔄᔏᔔᔚᔠcy;䐯cy;䐇cy;䐮cute耻Ý䃝Āiyᔉᔍrc;䅶;䐫r;쀀𝔜pf;쀀𝕐cr;쀀𝒴ml;䅸ЀHacdefosᔵᔹᔿᕋᕏᕝᕠᕤcy;䐖cute;䅹Āayᕄᕉron;䅽;䐗ot;䅻ǲᕔ\0ᕛoWidtè૙a;䎖r;愨pf;愤cr;쀀𝒵௡ᖃᖊᖐ\0ᖰᖶᖿ\0\0\0\0ᗆᗛᗫᙟ᙭\0ᚕ᚛ᚲᚹ\0ᚾcute耻á䃡reve;䄃̀;Ediuyᖜᖝᖡᖣᖨᖭ戾;쀀∾̳;房rc耻â䃢te肻´̆;䐰lig耻æ䃦Ā;r²ᖺ;쀀𝔞rave耻à䃠ĀepᗊᗖĀfpᗏᗔsym;愵èᗓha;䎱ĀapᗟcĀclᗤᗧr;䄁g;樿ɤᗰ\0\0ᘊʀ;adsvᗺᗻᗿᘁᘇ戧nd;橕;橜lope;橘;橚΀;elmrszᘘᘙᘛᘞᘿᙏᙙ戠;榤e»ᘙsdĀ;aᘥᘦ戡ѡᘰᘲᘴᘶᘸᘺᘼᘾ;榨;榩;榪;榫;榬;榭;榮;榯tĀ;vᙅᙆ戟bĀ;dᙌᙍ抾;榝Āptᙔᙗh;戢»¹arr;捼Āgpᙣᙧon;䄅f;쀀𝕒΀;Eaeiop዁ᙻᙽᚂᚄᚇᚊ;橰cir;橯;扊d;手s;䀧roxĀ;e዁ᚒñᚃing耻å䃥ƀctyᚡᚦᚨr;쀀𝒶;䀪mpĀ;e዁ᚯñʈilde耻ã䃣ml耻ä䃤Āciᛂᛈoninôɲnt;樑ࠀNabcdefiklnoprsu᛭ᛱᜰ᜼ᝃᝈ᝸᝽០៦ᠹᡐᜍ᤽᥈ᥰot;櫭Ācrᛶ᜞kȀcepsᜀᜅᜍᜓong;扌psilon;䏶rime;怵imĀ;e᜚᜛戽q;拍Ŷᜢᜦee;抽edĀ;gᜬᜭ挅e»ᜭrkĀ;t፜᜷brk;掶Āoyᜁᝁ;䐱quo;怞ʀcmprtᝓ᝛ᝡᝤᝨausĀ;eĊĉptyv;榰séᜌnoõēƀahwᝯ᝱ᝳ;䎲;愶een;扬r;쀀𝔟g΀costuvwឍឝឳេ៕៛៞ƀaiuបពរðݠrc;旯p»፱ƀdptឤឨឭot;樀lus;樁imes;樂ɱឹ\0\0ើcup;樆ar;昅riangleĀdu៍្own;施p;斳plus;樄eåᑄåᒭarow;植ƀako៭ᠦᠵĀcn៲ᠣkƀlst៺֫᠂ozenge;槫riangleȀ;dlr᠒᠓᠘᠝斴own;斾eft;旂ight;斸k;搣Ʊᠫ\0ᠳƲᠯ\0ᠱ;斒;斑4;斓ck;斈ĀeoᠾᡍĀ;qᡃᡆ쀀=⃥uiv;쀀≡⃥t;挐Ȁptwxᡙᡞᡧᡬf;쀀𝕓Ā;tᏋᡣom»Ꮜtie;拈؀DHUVbdhmptuvᢅᢖᢪᢻᣗᣛᣬ᣿ᤅᤊᤐᤡȀLRlrᢎᢐᢒᢔ;敗;敔;敖;敓ʀ;DUduᢡᢢᢤᢦᢨ敐;敦;敩;敤;敧ȀLRlrᢳᢵᢷᢹ;敝;敚;敜;教΀;HLRhlrᣊᣋᣍᣏᣑᣓᣕ救;敬;散;敠;敫;敢;敟ox;槉ȀLRlrᣤᣦᣨᣪ;敕;敒;攐;攌ʀ;DUduڽ᣷᣹᣻᣽;敥;敨;攬;攴inus;抟lus;択imes;抠ȀLRlrᤙᤛᤝ᤟;敛;敘;攘;攔΀;HLRhlrᤰᤱᤳᤵᤷ᤻᤹攂;敪;敡;敞;攼;攤;攜Āevģ᥂bar耻¦䂦Ȁceioᥑᥖᥚᥠr;쀀𝒷mi;恏mĀ;e᜚᜜lƀ;bhᥨᥩᥫ䁜;槅sub;柈Ŭᥴ᥾lĀ;e᥹᥺怢t»᥺pƀ;Eeįᦅᦇ;檮Ā;qۜۛೡᦧ\0᧨ᨑᨕᨲ\0ᨷᩐ\0\0᪴\0\0᫁\0\0ᬡᬮ᭍᭒\0᯽\0ᰌƀcpr᦭ᦲ᧝ute;䄇̀;abcdsᦿᧀᧄ᧊᧕᧙戩nd;橄rcup;橉Āau᧏᧒p;橋p;橇ot;橀;쀀∩︀Āeo᧢᧥t;恁îړȀaeiu᧰᧻ᨁᨅǰ᧵\0᧸s;橍on;䄍dil耻ç䃧rc;䄉psĀ;sᨌᨍ橌m;橐ot;䄋ƀdmnᨛᨠᨦil肻¸ƭptyv;榲t脀¢;eᨭᨮ䂢räƲr;쀀𝔠ƀceiᨽᩀᩍy;䑇ckĀ;mᩇᩈ朓ark»ᩈ;䏇r΀;Ecefms᩟᩠ᩢᩫ᪤᪪᪮旋;槃ƀ;elᩩᩪᩭ䋆q;扗eɡᩴ\0\0᪈rrowĀlr᩼᪁eft;憺ight;憻ʀRSacd᪒᪔᪖᪚᪟»ཇ;擈st;抛irc;抚ash;抝nint;樐id;櫯cir;槂ubsĀ;u᪻᪼晣it»᪼ˬ᫇᫔᫺\0ᬊonĀ;eᫍᫎ䀺Ā;qÇÆɭ᫙\0\0᫢aĀ;t᫞᫟䀬;䁀ƀ;fl᫨᫩᫫戁îᅠeĀmx᫱᫶ent»᫩eóɍǧ᫾\0ᬇĀ;dኻᬂot;橭nôɆƀfryᬐᬔᬗ;쀀𝕔oäɔ脀©;sŕᬝr;愗Āaoᬥᬩrr;憵ss;朗Ācuᬲᬷr;쀀𝒸Ābpᬼ᭄Ā;eᭁᭂ櫏;櫑Ā;eᭉᭊ櫐;櫒dot;拯΀delprvw᭠᭬᭷ᮂᮬᯔ᯹arrĀlr᭨᭪;椸;椵ɰ᭲\0\0᭵r;拞c;拟arrĀ;p᭿ᮀ憶;椽̀;bcdosᮏᮐᮖᮡᮥᮨ截rcap;橈Āauᮛᮞp;橆p;橊ot;抍r;橅;쀀∪︀Ȁalrv᮵ᮿᯞᯣrrĀ;mᮼᮽ憷;椼yƀevwᯇᯔᯘqɰᯎ\0\0ᯒreã᭳uã᭵ee;拎edge;拏en耻¤䂤earrowĀlrᯮ᯳eft»ᮀight»ᮽeäᯝĀciᰁᰇoninôǷnt;戱lcty;挭ঀAHabcdefhijlorstuwz᰸᰻᰿ᱝᱩᱵᲊᲞᲬᲷ᳻᳿ᴍᵻᶑᶫᶻ᷆᷍rò΁ar;楥Ȁglrs᱈ᱍ᱒᱔ger;怠eth;愸òᄳhĀ;vᱚᱛ怐»ऊūᱡᱧarow;椏aã̕Āayᱮᱳron;䄏;䐴ƀ;ao̲ᱼᲄĀgrʿᲁr;懊tseq;橷ƀglmᲑᲔᲘ耻°䂰ta;䎴ptyv;榱ĀirᲣᲨsht;楿;쀀𝔡arĀlrᲳᲵ»ࣜ»သʀaegsv᳂͸᳖᳜᳠mƀ;oș᳊᳔ndĀ;ș᳑uit;晦amma;䏝in;拲ƀ;io᳧᳨᳸䃷de脀÷;o᳧ᳰntimes;拇nø᳷cy;䑒cɯᴆ\0\0ᴊrn;挞op;挍ʀlptuwᴘᴝᴢᵉᵕlar;䀤f;쀀𝕕ʀ;emps̋ᴭᴷᴽᵂqĀ;d͒ᴳot;扑inus;戸lus;戔quare;抡blebarwedgåúnƀadhᄮᵝᵧownarrowóᲃarpoonĀlrᵲᵶefôᲴighôᲶŢᵿᶅkaro÷གɯᶊ\0\0ᶎrn;挟op;挌ƀcotᶘᶣᶦĀryᶝᶡ;쀀𝒹;䑕l;槶rok;䄑Ādrᶰᶴot;拱iĀ;fᶺ᠖斿Āah᷀᷃ròЩaòྦangle;榦Āci᷒ᷕy;䑟grarr;柿ऀDacdefglmnopqrstuxḁḉḙḸոḼṉṡṾấắẽỡἪἷὄ὎὚ĀDoḆᴴoôᲉĀcsḎḔute耻é䃩ter;橮ȀaioyḢḧḱḶron;䄛rĀ;cḭḮ扖耻ê䃪lon;払;䑍ot;䄗ĀDrṁṅot;扒;쀀𝔢ƀ;rsṐṑṗ檚ave耻è䃨Ā;dṜṝ檖ot;檘Ȁ;ilsṪṫṲṴ檙nters;揧;愓Ā;dṹṺ檕ot;檗ƀapsẅẉẗcr;䄓tyƀ;svẒẓẕ戅et»ẓpĀ1;ẝẤĳạả;怄;怅怃ĀgsẪẬ;䅋p;怂ĀgpẴẸon;䄙f;쀀𝕖ƀalsỄỎỒrĀ;sỊị拕l;槣us;橱iƀ;lvỚớở䎵on»ớ;䏵ȀcsuvỪỳἋἣĀioữḱrc»Ḯɩỹ\0\0ỻíՈantĀglἂἆtr»ṝess»Ṻƀaeiἒ἖Ἒls;䀽st;扟vĀ;DȵἠD;橸parsl;槥ĀDaἯἳot;打rr;楱ƀcdiἾὁỸr;愯oô͒ĀahὉὋ;䎷耻ð䃰Āmrὓὗl耻ë䃫o;悬ƀcipὡὤὧl;䀡sôծĀeoὬὴctatioîՙnentialåչৡᾒ\0ᾞ\0ᾡᾧ\0\0ῆῌ\0ΐ\0ῦῪ \0 ⁚llingd;耀ﬀig;耀ﬄ;쀀𝔣lig;耀ﬁlig;쀀fjƀaltῙ῜ῡt;晭ig;耀ﬂns;斱of;䆒ǰ΅\0ῳf;쀀𝕗ĀakֿῷĀ;vῼ´拔;櫙artint;樍Āao‌⁕Ācs‑⁒α‚‰‸⁅⁈\0⁐β•‥‧‪‬\0‮耻½䂽;慓耻¼䂼;慕;慙;慛Ƴ‴\0‶;慔;慖ʴ‾⁁\0\0⁃耻¾䂾;慗;慜5;慘ƶ⁌\0⁎;慚;慝8;慞l;恄wn;挢cr;쀀𝒻ࢀEabcdefgijlnorstv₂₉₟₥₰₴⃰⃵⃺⃿℃ℒℸ̗ℾ⅒↞Ā;lٍ₇;檌ƀcmpₐₕ₝ute;䇵maĀ;dₜ᳚䎳;檆reve;䄟Āiy₪₮rc;䄝;䐳ot;䄡Ȁ;lqsؾق₽⃉ƀ;qsؾٌ⃄lanô٥Ȁ;cdl٥⃒⃥⃕c;檩otĀ;o⃜⃝檀Ā;l⃢⃣檂;檄Ā;e⃪⃭쀀⋛︀s;檔r;쀀𝔤Ā;gٳ؛mel;愷cy;䑓Ȁ;Eajٚℌℎℐ;檒;檥;檤ȀEaesℛℝ℩ℴ;扩pĀ;p℣ℤ檊rox»ℤĀ;q℮ℯ檈Ā;q℮ℛim;拧pf;쀀𝕘Āci⅃ⅆr;愊mƀ;el٫ⅎ⅐;檎;檐茀>;cdlqr׮ⅠⅪⅮⅳⅹĀciⅥⅧ;檧r;橺ot;拗Par;榕uest;橼ʀadelsↄⅪ←ٖ↛ǰ↉\0↎proø₞r;楸qĀlqؿ↖lesó₈ií٫Āen↣↭rtneqq;쀀≩︀Å↪ԀAabcefkosy⇄⇇⇱⇵⇺∘∝∯≨≽ròΠȀilmr⇐⇔⇗⇛rsðᒄf»․ilôکĀdr⇠⇤cy;䑊ƀ;cwࣴ⇫⇯ir;楈;憭ar;意irc;䄥ƀalr∁∎∓rtsĀ;u∉∊晥it»∊lip;怦con;抹r;쀀𝔥sĀew∣∩arow;椥arow;椦ʀamopr∺∾≃≞≣rr;懿tht;戻kĀlr≉≓eftarrow;憩ightarrow;憪f;쀀𝕙bar;怕ƀclt≯≴≸r;쀀𝒽asè⇴rok;䄧Ābp⊂⊇ull;恃hen»ᱛૡ⊣\0⊪\0⊸⋅⋎\0⋕⋳\0\0⋸⌢⍧⍢⍿\0⎆⎪⎴cute耻í䃭ƀ;iyݱ⊰⊵rc耻î䃮;䐸Ācx⊼⊿y;䐵cl耻¡䂡ĀfrΟ⋉;쀀𝔦rave耻ì䃬Ȁ;inoܾ⋝⋩⋮Āin⋢⋦nt;樌t;戭fin;槜ta;愩lig;䄳ƀaop⋾⌚⌝ƀcgt⌅⌈⌗r;䄫ƀelpܟ⌏⌓inåގarôܠh;䄱f;抷ed;䆵ʀ;cfotӴ⌬⌱⌽⍁are;愅inĀ;t⌸⌹戞ie;槝doô⌙ʀ;celpݗ⍌⍐⍛⍡al;抺Āgr⍕⍙eróᕣã⍍arhk;樗rod;樼Ȁcgpt⍯⍲⍶⍻y;䑑on;䄯f;쀀𝕚a;䎹uest耻¿䂿Āci⎊⎏r;쀀𝒾nʀ;EdsvӴ⎛⎝⎡ӳ;拹ot;拵Ā;v⎦⎧拴;拳Ā;iݷ⎮lde;䄩ǫ⎸\0⎼cy;䑖l耻ï䃯̀cfmosu⏌⏗⏜⏡⏧⏵Āiy⏑⏕rc;䄵;䐹r;쀀𝔧ath;䈷pf;쀀𝕛ǣ⏬\0⏱r;쀀𝒿rcy;䑘kcy;䑔Ѐacfghjos␋␖␢␧␭␱␵␻ppaĀ;v␓␔䎺;䏰Āey␛␠dil;䄷;䐺r;쀀𝔨reen;䄸cy;䑅cy;䑜pf;쀀𝕜cr;쀀𝓀஀ABEHabcdefghjlmnoprstuv⑰⒁⒆⒍⒑┎┽╚▀♎♞♥♹♽⚚⚲⛘❝❨➋⟀⠁⠒ƀart⑷⑺⑼rò৆òΕail;椛arr;椎Ā;gঔ⒋;檋ar;楢ॣ⒥\0⒪\0⒱\0\0\0\0\0⒵Ⓔ\0ⓆⓈⓍ\0⓹ute;䄺mptyv;榴raîࡌbda;䎻gƀ;dlࢎⓁⓃ;榑åࢎ;檅uo耻«䂫rЀ;bfhlpst࢙ⓞⓦⓩ⓫⓮⓱⓵Ā;f࢝ⓣs;椟s;椝ë≒p;憫l;椹im;楳l;憢ƀ;ae⓿─┄檫il;椙Ā;s┉┊檭;쀀⪭︀ƀabr┕┙┝rr;椌rk;杲Āak┢┬cĀek┨┪;䁻;䁛Āes┱┳;榋lĀdu┹┻;榏;榍Ȁaeuy╆╋╖╘ron;䄾Ādi═╔il;䄼ìࢰâ┩;䐻Ȁcqrs╣╦╭╽a;椶uoĀ;rนᝆĀdu╲╷har;楧shar;楋h;憲ʀ;fgqs▋▌উ◳◿扤tʀahlrt▘▤▷◂◨rrowĀ;t࢙□aé⓶arpoonĀdu▯▴own»њp»०eftarrows;懇ightƀahs◍◖◞rrowĀ;sࣴࢧarpoonó྘quigarro÷⇰hreetimes;拋ƀ;qs▋ও◺lanôবʀ;cdgsব☊☍☝☨c;檨otĀ;o☔☕橿Ā;r☚☛檁;檃Ā;e☢☥쀀⋚︀s;檓ʀadegs☳☹☽♉♋pproøⓆot;拖qĀgq♃♅ôউgtò⒌ôছiíলƀilr♕࣡♚sht;楼;쀀𝔩Ā;Eজ♣;檑š♩♶rĀdu▲♮Ā;l॥♳;楪lk;斄cy;䑙ʀ;achtੈ⚈⚋⚑⚖rò◁orneòᴈard;楫ri;旺Āio⚟⚤dot;䅀ustĀ;a⚬⚭掰che»⚭ȀEaes⚻⚽⛉⛔;扨pĀ;p⛃⛄檉rox»⛄Ā;q⛎⛏檇Ā;q⛎⚻im;拦Ѐabnoptwz⛩⛴⛷✚✯❁❇❐Ānr⛮⛱g;柬r;懽rëࣁgƀlmr⛿✍✔eftĀar০✇ightá৲apsto;柼ightá৽parrowĀlr✥✩efô⓭ight;憬ƀafl✶✹✽r;榅;쀀𝕝us;樭imes;樴š❋❏st;戗áፎƀ;ef❗❘᠀旊nge»❘arĀ;l❤❥䀨t;榓ʀachmt❳❶❼➅➇ròࢨorneòᶌarĀ;d྘➃;業;怎ri;抿̀achiqt➘➝ੀ➢➮➻quo;怹r;쀀𝓁mƀ;egল➪➬;檍;檏Ābu┪➳oĀ;rฟ➹;怚rok;䅂萀<;cdhilqrࠫ⟒☹⟜⟠⟥⟪⟰Āci⟗⟙;檦r;橹reå◲mes;拉arr;楶uest;橻ĀPi⟵⟹ar;榖ƀ;ef⠀भ᠛旃rĀdu⠇⠍shar;楊har;楦Āen⠗⠡rtneqq;쀀≨︀Å⠞܀Dacdefhilnopsu⡀⡅⢂⢎⢓⢠⢥⢨⣚⣢⣤ઃ⣳⤂Dot;戺Ȁclpr⡎⡒⡣⡽r耻¯䂯Āet⡗⡙;時Ā;e⡞⡟朠se»⡟Ā;sျ⡨toȀ;dluျ⡳⡷⡻owîҌefôएðᏑker;斮Āoy⢇⢌mma;権;䐼ash;怔asuredangle»ᘦr;쀀𝔪o;愧ƀcdn⢯⢴⣉ro耻µ䂵Ȁ;acdᑤ⢽⣀⣄sôᚧir;櫰ot肻·Ƶusƀ;bd⣒ᤃ⣓戒Ā;uᴼ⣘;横ţ⣞⣡p;櫛ò−ðઁĀdp⣩⣮els;抧f;쀀𝕞Āct⣸⣽r;쀀𝓂pos»ᖝƀ;lm⤉⤊⤍䎼timap;抸ఀGLRVabcdefghijlmoprstuvw⥂⥓⥾⦉⦘⧚⧩⨕⨚⩘⩝⪃⪕⪤⪨⬄⬇⭄⭿⮮ⰴⱧⱼ⳩Āgt⥇⥋;쀀⋙̸Ā;v⥐௏쀀≫⃒ƀelt⥚⥲⥶ftĀar⥡⥧rrow;懍ightarrow;懎;쀀⋘̸Ā;v⥻ే쀀≪⃒ightarrow;懏ĀDd⦎⦓ash;抯ash;抮ʀbcnpt⦣⦧⦬⦱⧌la»˞ute;䅄g;쀀∠⃒ʀ;Eiop඄⦼⧀⧅⧈;쀀⩰̸d;쀀≋̸s;䅉roø඄urĀ;a⧓⧔普lĀ;s⧓ସǳ⧟\0⧣p肻\xA0ଷmpĀ;e௹ఀʀaeouy⧴⧾⨃⨐⨓ǰ⧹\0⧻;橃on;䅈dil;䅆ngĀ;dൾ⨊ot;쀀⩭̸p;橂;䐽ash;怓΀;Aadqsxஒ⨩⨭⨻⩁⩅⩐rr;懗rĀhr⨳⨶k;椤Ā;oᏲᏰot;쀀≐̸uiöୣĀei⩊⩎ar;椨í஘istĀ;s஠டr;쀀𝔫ȀEest௅⩦⩹⩼ƀ;qs஼⩭௡ƀ;qs஼௅⩴lanô௢ií௪Ā;rஶ⪁»ஷƀAap⪊⪍⪑rò⥱rr;憮ar;櫲ƀ;svྍ⪜ྌĀ;d⪡⪢拼;拺cy;䑚΀AEadest⪷⪺⪾⫂⫅⫶⫹rò⥦;쀀≦̸rr;憚r;急Ȁ;fqs఻⫎⫣⫯tĀar⫔⫙rro÷⫁ightarro÷⪐ƀ;qs఻⪺⫪lanôౕĀ;sౕ⫴»శiíౝĀ;rవ⫾iĀ;eచథiäඐĀpt⬌⬑f;쀀𝕟膀¬;in⬙⬚⬶䂬nȀ;Edvஉ⬤⬨⬮;쀀⋹̸ot;쀀⋵̸ǡஉ⬳⬵;拷;拶iĀ;vಸ⬼ǡಸ⭁⭃;拾;拽ƀaor⭋⭣⭩rȀ;ast୻⭕⭚⭟lleì୻l;쀀⫽⃥;쀀∂̸lint;樔ƀ;ceಒ⭰⭳uåಥĀ;cಘ⭸Ā;eಒ⭽ñಘȀAait⮈⮋⮝⮧rò⦈rrƀ;cw⮔⮕⮙憛;쀀⤳̸;쀀↝̸ghtarrow»⮕riĀ;eೋೖ΀chimpqu⮽⯍⯙⬄୸⯤⯯Ȁ;cerല⯆ഷ⯉uå൅;쀀𝓃ortɭ⬅\0\0⯖ará⭖mĀ;e൮⯟Ā;q൴൳suĀbp⯫⯭å೸åഋƀbcp⯶ⰑⰙȀ;Ees⯿ⰀഢⰄ抄;쀀⫅̸etĀ;eഛⰋqĀ;qണⰀcĀ;eലⰗñസȀ;EesⰢⰣൟⰧ抅;쀀⫆̸etĀ;e൘ⰮqĀ;qൠⰣȀgilrⰽⰿⱅⱇìௗlde耻ñ䃱çృiangleĀlrⱒⱜeftĀ;eచⱚñదightĀ;eೋⱥñ೗Ā;mⱬⱭ䎽ƀ;esⱴⱵⱹ䀣ro;愖p;怇ҀDHadgilrsⲏⲔⲙⲞⲣⲰⲶⳓⳣash;抭arr;椄p;쀀≍⃒ash;抬ĀetⲨⲬ;쀀≥⃒;쀀>⃒nfin;槞ƀAetⲽⳁⳅrr;椂;쀀≤⃒Ā;rⳊⳍ쀀<⃒ie;쀀⊴⃒ĀAtⳘⳜrr;椃rie;쀀⊵⃒im;쀀∼⃒ƀAan⳰⳴ⴂrr;懖rĀhr⳺⳽k;椣Ā;oᏧᏥear;椧ቓ᪕\0\0\0\0\0\0\0\0\0\0\0\0\0ⴭ\0ⴸⵈⵠⵥ⵲ⶄᬇ\0\0ⶍⶫ\0ⷈⷎ\0ⷜ⸙⸫⸾⹃Ācsⴱ᪗ute耻ó䃳ĀiyⴼⵅrĀ;c᪞ⵂ耻ô䃴;䐾ʀabios᪠ⵒⵗǈⵚlac;䅑v;樸old;榼lig;䅓Ācr⵩⵭ir;榿;쀀𝔬ͯ⵹\0\0⵼\0ⶂn;䋛ave耻ò䃲;槁Ābmⶈ෴ar;榵Ȁacitⶕ⶘ⶥⶨrò᪀Āir⶝ⶠr;榾oss;榻nå๒;槀ƀaeiⶱⶵⶹcr;䅍ga;䏉ƀcdnⷀⷅǍron;䎿;榶pf;쀀𝕠ƀaelⷔ⷗ǒr;榷rp;榹΀;adiosvⷪⷫⷮ⸈⸍⸐⸖戨rò᪆Ȁ;efmⷷⷸ⸂⸅橝rĀ;oⷾⷿ愴f»ⷿ耻ª䂪耻º䂺gof;抶r;橖lope;橗;橛ƀclo⸟⸡⸧ò⸁ash耻ø䃸l;折iŬⸯ⸴de耻õ䃵esĀ;aǛ⸺s;樶ml耻ö䃶bar;挽ૡ⹞\0⹽\0⺀⺝\0⺢⺹\0\0⻋ຜ\0⼓\0\0⼫⾼\0⿈rȀ;astЃ⹧⹲຅脀¶;l⹭⹮䂶leìЃɩ⹸\0\0⹻m;櫳;櫽y;䐿rʀcimpt⺋⺏⺓ᡥ⺗nt;䀥od;䀮il;怰enk;怱r;쀀𝔭ƀimo⺨⺰⺴Ā;v⺭⺮䏆;䏕maô੶ne;明ƀ;tv⺿⻀⻈䏀chfork»´;䏖Āau⻏⻟nĀck⻕⻝kĀ;h⇴⻛;愎ö⇴sҀ;abcdemst⻳⻴ᤈ⻹⻽⼄⼆⼊⼎䀫cir;樣ir;樢Āouᵀ⼂;樥;橲n肻±ຝim;樦wo;樧ƀipu⼙⼠⼥ntint;樕f;쀀𝕡nd耻£䂣Ԁ;Eaceinosu່⼿⽁⽄⽇⾁⾉⾒⽾⾶;檳p;檷uå໙Ā;c໎⽌̀;acens່⽙⽟⽦⽨⽾pproø⽃urlyeñ໙ñ໎ƀaes⽯⽶⽺pprox;檹qq;⾙⾯ƀals⾠⾥⾪lar;挮ine;挒urf;挓Ā;t໻⾴ï໻rel;抰Āci⿀⿅r;쀀𝓅;䏈ncsp;怈̀fiopsu⿚⋢⿟⿥⿫⿱r;쀀𝔮pf;쀀𝕢rime;恗cr;쀀𝓆ƀaeo⿸〉〓tĀei⿾々rnionóڰnt;樖stĀ;e【】䀿ñἙô༔઀ABHabcdefhilmnoprstux぀けさすムㄎㄫㅇㅢㅲㆎ㈆㈕㈤㈩㉘㉮㉲㊐㊰㊷ƀartぇおがròႳòϝail;検aròᱥar;楤΀cdenqrtとふへみわゔヌĀeuねぱ;쀀∽̱te;䅕iãᅮmptyv;榳gȀ;del࿑らるろ;榒;榥å࿑uo耻»䂻rր;abcfhlpstw࿜ガクシスゼゾダッデナp;極Ā;f࿠ゴs;椠;椳s;椞ë≝ð✮l;楅im;楴l;憣;憝Āaiパフil;椚oĀ;nホボ戶aló༞ƀabrョリヮrò៥rk;杳ĀakンヽcĀekヹ・;䁽;䁝Āes㄂㄄;榌lĀduㄊㄌ;榎;榐Ȁaeuyㄗㄜㄧㄩron;䅙Ādiㄡㄥil;䅗ì࿲âヺ;䑀Ȁclqsㄴㄷㄽㅄa;椷dhar;楩uoĀ;rȎȍh;憳ƀacgㅎㅟངlȀ;ipsླྀㅘㅛႜnåႻarôྩt;断ƀilrㅩဣㅮsht;楽;쀀𝔯ĀaoㅷㆆrĀduㅽㅿ»ѻĀ;l႑ㆄ;楬Ā;vㆋㆌ䏁;䏱ƀgns㆕ㇹㇼht̀ahlrstㆤㆰ㇂㇘㇤㇮rrowĀ;t࿜ㆭaéトarpoonĀduㆻㆿowîㅾp»႒eftĀah㇊㇐rrowó࿪arpoonóՑightarrows;應quigarro÷ニhreetimes;拌g;䋚ingdotseñἲƀahm㈍㈐㈓rò࿪aòՑ;怏oustĀ;a㈞㈟掱che»㈟mid;櫮Ȁabpt㈲㈽㉀㉒Ānr㈷㈺g;柭r;懾rëဃƀafl㉇㉊㉎r;榆;쀀𝕣us;樮imes;樵Āap㉝㉧rĀ;g㉣㉤䀩t;榔olint;樒arò㇣Ȁachq㉻㊀Ⴜ㊅quo;怺r;쀀𝓇Ābu・㊊oĀ;rȔȓƀhir㊗㊛㊠reåㇸmes;拊iȀ;efl㊪ၙᠡ㊫方tri;槎luhar;楨;愞ൡ㋕㋛㋟㌬㌸㍱\0㍺㎤\0\0㏬㏰\0㐨㑈㑚㒭㒱㓊㓱\0㘖\0\0㘳cute;䅛quï➺Ԁ;Eaceinpsyᇭ㋳㋵㋿㌂㌋㌏㌟㌦㌩;檴ǰ㋺\0㋼;檸on;䅡uåᇾĀ;dᇳ㌇il;䅟rc;䅝ƀEas㌖㌘㌛;檶p;檺im;择olint;樓iíሄ;䑁otƀ;be㌴ᵇ㌵担;橦΀Aacmstx㍆㍊㍗㍛㍞㍣㍭rr;懘rĀhr㍐㍒ë∨Ā;oਸ਼਴t耻§䂧i;䀻war;椩mĀin㍩ðnuóñt;朶rĀ;o㍶⁕쀀𝔰Ȁacoy㎂㎆㎑㎠rp;景Āhy㎋㎏cy;䑉;䑈rtɭ㎙\0\0㎜iäᑤaraì⹯耻­䂭Āgm㎨㎴maƀ;fv㎱㎲㎲䏃;䏂Ѐ;deglnprካ㏅㏉㏎㏖㏞㏡㏦ot;橪Ā;q኱ኰĀ;E㏓㏔檞;檠Ā;E㏛㏜檝;檟e;扆lus;樤arr;楲aròᄽȀaeit㏸㐈㐏㐗Āls㏽㐄lsetmé㍪hp;樳parsl;槤Ādlᑣ㐔e;挣Ā;e㐜㐝檪Ā;s㐢㐣檬;쀀⪬︀ƀflp㐮㐳㑂tcy;䑌Ā;b㐸㐹䀯Ā;a㐾㐿槄r;挿f;쀀𝕤aĀdr㑍ЂesĀ;u㑔㑕晠it»㑕ƀcsu㑠㑹㒟Āau㑥㑯pĀ;sᆈ㑫;쀀⊓︀pĀ;sᆴ㑵;쀀⊔︀uĀbp㑿㒏ƀ;esᆗᆜ㒆etĀ;eᆗ㒍ñᆝƀ;esᆨᆭ㒖etĀ;eᆨ㒝ñᆮƀ;afᅻ㒦ְrť㒫ֱ»ᅼaròᅈȀcemt㒹㒾㓂㓅r;쀀𝓈tmîñiì㐕aræᆾĀar㓎㓕rĀ;f㓔ឿ昆Āan㓚㓭ightĀep㓣㓪psiloîỠhé⺯s»⡒ʀbcmnp㓻㕞ሉ㖋㖎Ҁ;Edemnprs㔎㔏㔑㔕㔞㔣㔬㔱㔶抂;櫅ot;檽Ā;dᇚ㔚ot;櫃ult;櫁ĀEe㔨㔪;櫋;把lus;檿arr;楹ƀeiu㔽㕒㕕tƀ;en㔎㕅㕋qĀ;qᇚ㔏eqĀ;q㔫㔨m;櫇Ābp㕚㕜;櫕;櫓c̀;acensᇭ㕬㕲㕹㕻㌦pproø㋺urlyeñᇾñᇳƀaes㖂㖈㌛pproø㌚qñ㌗g;晪ڀ123;Edehlmnps㖩㖬㖯ሜ㖲㖴㗀㗉㗕㗚㗟㗨㗭耻¹䂹耻²䂲耻³䂳;櫆Āos㖹㖼t;檾ub;櫘Ā;dሢ㗅ot;櫄sĀou㗏㗒l;柉b;櫗arr;楻ult;櫂ĀEe㗤㗦;櫌;抋lus;櫀ƀeiu㗴㘉㘌tƀ;enሜ㗼㘂qĀ;qሢ㖲eqĀ;q㗧㗤m;櫈Ābp㘑㘓;櫔;櫖ƀAan㘜㘠㘭rr;懙rĀhr㘦㘨ë∮Ā;oਫ਩war;椪lig耻ß䃟௡㙑㙝㙠ዎ㙳㙹\0㙾㛂\0\0\0\0\0㛛㜃\0㜉㝬\0\0\0㞇ɲ㙖\0\0㙛get;挖;䏄rë๟ƀaey㙦㙫㙰ron;䅥dil;䅣;䑂lrec;挕r;쀀𝔱Ȁeiko㚆㚝㚵㚼ǲ㚋\0㚑eĀ4fኄኁaƀ;sv㚘㚙㚛䎸ym;䏑Ācn㚢㚲kĀas㚨㚮pproø዁im»ኬsðኞĀas㚺㚮ð዁rn耻þ䃾Ǭ̟㛆⋧es膀×;bd㛏㛐㛘䃗Ā;aᤏ㛕r;樱;樰ƀeps㛡㛣㜀á⩍Ȁ;bcf҆㛬㛰㛴ot;挶ir;櫱Ā;o㛹㛼쀀𝕥rk;櫚á㍢rime;怴ƀaip㜏㜒㝤dåቈ΀adempst㜡㝍㝀㝑㝗㝜㝟ngleʀ;dlqr㜰㜱㜶㝀㝂斵own»ᶻeftĀ;e⠀㜾ñम;扜ightĀ;e㊪㝋ñၚot;旬inus;樺lus;樹b;槍ime;樻ezium;揢ƀcht㝲㝽㞁Āry㝷㝻;쀀𝓉;䑆cy;䑛rok;䅧Āio㞋㞎xô᝷headĀlr㞗㞠eftarro÷ࡏightarrow»ཝऀAHabcdfghlmoprstuw㟐㟓㟗㟤㟰㟼㠎㠜㠣㠴㡑㡝㡫㢩㣌㣒㣪㣶ròϭar;楣Ācr㟜㟢ute耻ú䃺òᅐrǣ㟪\0㟭y;䑞ve;䅭Āiy㟵㟺rc耻û䃻;䑃ƀabh㠃㠆㠋ròᎭlac;䅱aòᏃĀir㠓㠘sht;楾;쀀𝔲rave耻ù䃹š㠧㠱rĀlr㠬㠮»ॗ»ႃlk;斀Āct㠹㡍ɯ㠿\0\0㡊rnĀ;e㡅㡆挜r»㡆op;挏ri;旸Āal㡖㡚cr;䅫肻¨͉Āgp㡢㡦on;䅳f;쀀𝕦̀adhlsuᅋ㡸㡽፲㢑㢠ownáᎳarpoonĀlr㢈㢌efô㠭ighô㠯iƀ;hl㢙㢚㢜䏅»ᏺon»㢚parrows;懈ƀcit㢰㣄㣈ɯ㢶\0\0㣁rnĀ;e㢼㢽挝r»㢽op;挎ng;䅯ri;旹cr;쀀𝓊ƀdir㣙㣝㣢ot;拰lde;䅩iĀ;f㜰㣨»᠓Āam㣯㣲rò㢨l耻ü䃼angle;榧ހABDacdeflnoprsz㤜㤟㤩㤭㦵㦸㦽㧟㧤㧨㧳㧹㧽㨁㨠ròϷarĀ;v㤦㤧櫨;櫩asèϡĀnr㤲㤷grt;榜΀eknprst㓣㥆㥋㥒㥝㥤㦖appá␕othinçẖƀhir㓫⻈㥙opô⾵Ā;hᎷ㥢ïㆍĀiu㥩㥭gmá㎳Ābp㥲㦄setneqĀ;q㥽㦀쀀⊊︀;쀀⫋︀setneqĀ;q㦏㦒쀀⊋︀;쀀⫌︀Āhr㦛㦟etá㚜iangleĀlr㦪㦯eft»थight»ၑy;䐲ash»ံƀelr㧄㧒㧗ƀ;beⷪ㧋㧏ar;抻q;扚lip;拮Ābt㧜ᑨaòᑩr;쀀𝔳tré㦮suĀbp㧯㧱»ജ»൙pf;쀀𝕧roð໻tré㦴Ācu㨆㨋r;쀀𝓋Ābp㨐㨘nĀEe㦀㨖»㥾nĀEe㦒㨞»㦐igzag;榚΀cefoprs㨶㨻㩖㩛㩔㩡㩪irc;䅵Ādi㩀㩑Ābg㩅㩉ar;機eĀ;qᗺ㩏;扙erp;愘r;쀀𝔴pf;쀀𝕨Ā;eᑹ㩦atèᑹcr;쀀𝓌ૣណ㪇\0㪋\0㪐㪛\0\0㪝㪨㪫㪯\0\0㫃㫎\0㫘ៜ៟tré៑r;쀀𝔵ĀAa㪔㪗ròσrò৶;䎾ĀAa㪡㪤ròθrò৫að✓is;拻ƀdptឤ㪵㪾Āfl㪺ឩ;쀀𝕩imåឲĀAa㫇㫊ròώròਁĀcq㫒ីr;쀀𝓍Āpt៖㫜ré។Ѐacefiosu㫰㫽㬈㬌㬑㬕㬛㬡cĀuy㫶㫻te耻ý䃽;䑏Āiy㬂㬆rc;䅷;䑋n耻¥䂥r;쀀𝔶cy;䑗pf;쀀𝕪cr;쀀𝓎Ācm㬦㬩y;䑎l耻ÿ䃿Ԁacdefhiosw㭂㭈㭔㭘㭤㭩㭭㭴㭺㮀cute;䅺Āay㭍㭒ron;䅾;䐷ot;䅼Āet㭝㭡træᕟa;䎶r;쀀𝔷cy;䐶grarr;懝pf;쀀𝕫cr;쀀𝓏Ājn㮅㮇;怍j;怌".split("").map((c) => c.charCodeAt(0)));
+var decode_data_html_default = new Uint16Array("ᵁ<Õıʊҝջאٵ۞ޢߖࠏ੊ઑඡ๭༉༦჊ረዡᐕᒝᓃᓟᔥ\0\0\0\0\0\0ᕫᛍᦍᰒᷝ὾⁠↰⊍⏀⏻⑂⠤⤒ⴈ⹈⿎〖㊺㘹㞬㣾㨨㩱㫠㬮ࠀEMabcfglmnoprstu\\bfms¦³¹ÈÏlig耻Æ䃆P耻&䀦cute耻Á䃁reve;䄂Āiyx}rc耻Â䃂;䐐r;쀀𝔄rave耻À䃀pha;䎑acr;䄀d;橓Āgp¡on;䄄f;쀀𝔸plyFunction;恡ing耻Å䃅Ācs¾Ãr;쀀𝒜ign;扔ilde耻Ã䃃ml耻Ä䃄ЀaceforsuåûþėĜĢħĪĀcrêòkslash;或Ŷöø;櫧ed;挆y;䐑ƀcrtąċĔause;戵noullis;愬a;䎒r;쀀𝔅pf;쀀𝔹eve;䋘còēmpeq;扎܀HOacdefhilorsuōőŖƀƞƢƵƷƺǜȕɳɸɾcy;䐧PY耻©䂩ƀcpyŝŢźute;䄆Ā;iŧŨ拒talDifferentialD;慅leys;愭ȀaeioƉƎƔƘron;䄌dil耻Ç䃇rc;䄈nint;戰ot;䄊ĀdnƧƭilla;䂸terDot;䂷òſi;䎧rcleȀDMPTǇǋǑǖot;抙inus;抖lus;投imes;抗oĀcsǢǸkwiseContourIntegral;戲eCurlyĀDQȃȏoubleQuote;思uote;怙ȀlnpuȞȨɇɕonĀ;eȥȦ户;橴ƀgitȯȶȺruent;扡nt;戯ourIntegral;戮ĀfrɌɎ;愂oduct;成nterClockwiseContourIntegral;戳oss;樯cr;쀀𝒞pĀ;Cʄʅ拓ap;才րDJSZacefiosʠʬʰʴʸˋ˗ˡ˦̳ҍĀ;oŹʥtrahd;椑cy;䐂cy;䐅cy;䐏ƀgrsʿ˄ˇger;怡r;憡hv;櫤Āayː˕ron;䄎;䐔lĀ;t˝˞戇a;䎔r;쀀𝔇Āaf˫̧Ācm˰̢riticalȀADGT̖̜̀̆cute;䂴oŴ̋̍;䋙bleAcute;䋝rave;䁠ilde;䋜ond;拄ferentialD;慆Ѱ̽\0\0\0͔͂\0Ѕf;쀀𝔻ƀ;DE͈͉͍䂨ot;惜qual;扐blèCDLRUVͣͲ΂ϏϢϸontourIntegraìȹoɴ͹\0\0ͻ»͉nArrow;懓Āeo·ΤftƀARTΐΖΡrrow;懐ightArrow;懔eåˊngĀLRΫτeftĀARγιrrow;柸ightArrow;柺ightArrow;柹ightĀATϘϞrrow;懒ee;抨pɁϩ\0\0ϯrrow;懑ownArrow;懕erticalBar;戥ǹABLRTaВЪаўѿͼrrowƀ;BUНОТ憓ar;椓pArrow;懵reve;䌑eft˒к\0ц\0ѐightVector;楐eeVector;楞ectorĀ;Bљњ憽ar;楖ightǔѧ\0ѱeeVector;楟ectorĀ;BѺѻ懁ar;楗eeĀ;A҆҇护rrow;憧ĀctҒҗr;쀀𝒟rok;䄐ࠀNTacdfglmopqstuxҽӀӄӋӞӢӧӮӵԡԯԶՒ՝ՠեG;䅊H耻Ð䃐cute耻É䃉ƀaiyӒӗӜron;䄚rc耻Ê䃊;䐭ot;䄖r;쀀𝔈rave耻È䃈ement;戈ĀapӺӾcr;䄒tyɓԆ\0\0ԒmallSquare;旻erySmallSquare;斫ĀgpԦԪon;䄘f;쀀𝔼silon;䎕uĀaiԼՉlĀ;TՂՃ橵ilde;扂librium;懌Āci՗՚r;愰m;橳a;䎗ml耻Ë䃋Āipժկsts;戃onentialE;慇ʀcfiosօֈ֍ֲ׌y;䐤r;쀀𝔉lledɓ֗\0\0֣mallSquare;旼erySmallSquare;斪Ͱֺ\0ֿ\0\0ׄf;쀀𝔽All;戀riertrf;愱cò׋؀JTabcdfgorstר׬ׯ׺؀ؒؖ؛؝أ٬ٲcy;䐃耻>䀾mmaĀ;d׷׸䎓;䏜reve;䄞ƀeiy؇،ؐdil;䄢rc;䄜;䐓ot;䄠r;쀀𝔊;拙pf;쀀𝔾eater̀EFGLSTصلَٖٛ٦qualĀ;Lؾؿ扥ess;招ullEqual;执reater;檢ess;扷lantEqual;橾ilde;扳cr;쀀𝒢;扫ЀAacfiosuڅڋږڛڞڪھۊRDcy;䐪Āctڐڔek;䋇;䁞irc;䄤r;愌lbertSpace;愋ǰگ\0ڲf;愍izontalLine;攀Āctۃۅòکrok;䄦mpńېۘownHumðįqual;扏܀EJOacdfgmnostuۺ۾܃܇܎ܚܞܡܨ݄ݸދޏޕcy;䐕lig;䄲cy;䐁cute耻Í䃍Āiyܓܘrc耻Î䃎;䐘ot;䄰r;愑rave耻Ì䃌ƀ;apܠܯܿĀcgܴܷr;䄪inaryI;慈lieóϝǴ݉\0ݢĀ;eݍݎ戬Āgrݓݘral;戫section;拂isibleĀCTݬݲomma;恣imes;恢ƀgptݿރވon;䄮f;쀀𝕀a;䎙cr;愐ilde;䄨ǫޚ\0ޞcy;䐆l耻Ï䃏ʀcfosuެ޷޼߂ߐĀiyޱ޵rc;䄴;䐙r;쀀𝔍pf;쀀𝕁ǣ߇\0ߌr;쀀𝒥rcy;䐈kcy;䐄΀HJacfosߤߨ߽߬߱ࠂࠈcy;䐥cy;䐌ppa;䎚Āey߶߻dil;䄶;䐚r;쀀𝔎pf;쀀𝕂cr;쀀𝒦րJTaceflmostࠥࠩࠬࡐࡣ঳সে্਷ੇcy;䐉耻<䀼ʀcmnpr࠷࠼ࡁࡄࡍute;䄹bda;䎛g;柪lacetrf;愒r;憞ƀaeyࡗ࡜ࡡron;䄽dil;䄻;䐛Āfsࡨ॰tԀACDFRTUVarࡾࢩࢱࣦ࣠ࣼयज़ΐ४Ānrࢃ࢏gleBracket;柨rowƀ;BR࢙࢚࢞憐ar;懤ightArrow;懆eiling;挈oǵࢷ\0ࣃbleBracket;柦nǔࣈ\0࣒eeVector;楡ectorĀ;Bࣛࣜ懃ar;楙loor;挊ightĀAV࣯ࣵrrow;憔ector;楎Āerँगeƀ;AVउऊऐ抣rrow;憤ector;楚iangleƀ;BEतथऩ抲ar;槏qual;抴pƀDTVषूौownVector;楑eeVector;楠ectorĀ;Bॖॗ憿ar;楘ectorĀ;B॥०憼ar;楒ightáΜs̀EFGLSTॾঋকঝঢভqualGreater;拚ullEqual;扦reater;扶ess;檡lantEqual;橽ilde;扲r;쀀𝔏Ā;eঽা拘ftarrow;懚idot;䄿ƀnpw৔ਖਛgȀLRlr৞৷ਂਐeftĀAR০৬rrow;柵ightArrow;柷ightArrow;柶eftĀarγਊightáοightáϊf;쀀𝕃erĀLRਢਬeftArrow;憙ightArrow;憘ƀchtਾੀੂòࡌ;憰rok;䅁;扪Ѐacefiosuਗ਼੝੠੷੼અઋ઎p;椅y;䐜Ādl੥੯iumSpace;恟lintrf;愳r;쀀𝔐nusPlus;戓pf;쀀𝕄cò੶;䎜ҀJacefostuણધભીଔଙඑ඗ඞcy;䐊cute;䅃ƀaey઴હાron;䅇dil;䅅;䐝ƀgswે૰଎ativeƀMTV૓૟૨ediumSpace;怋hiĀcn૦૘ë૙eryThiî૙tedĀGL૸ଆreaterGreateòٳessLesóੈLine;䀊r;쀀𝔑ȀBnptଢନଷ଺reak;恠BreakingSpace;䂠f;愕ڀ;CDEGHLNPRSTV୕ୖ୪୼஡௫ఄ౞಄ದ೘ൡඅ櫬Āou୛୤ngruent;扢pCap;扭oubleVerticalBar;戦ƀlqxஃஊ஛ement;戉ualĀ;Tஒஓ扠ilde;쀀≂̸ists;戄reater΀;EFGLSTஶஷ஽௉௓௘௥扯qual;扱ullEqual;쀀≧̸reater;쀀≫̸ess;批lantEqual;쀀⩾̸ilde;扵umpń௲௽ownHump;쀀≎̸qual;쀀≏̸eĀfsఊధtTriangleƀ;BEచఛడ拪ar;쀀⧏̸qual;括s̀;EGLSTవశ఼ౄోౘ扮qual;扰reater;扸ess;쀀≪̸lantEqual;쀀⩽̸ilde;扴estedĀGL౨౹reaterGreater;쀀⪢̸essLess;쀀⪡̸recedesƀ;ESಒಓಛ技qual;쀀⪯̸lantEqual;拠ĀeiಫಹverseElement;戌ghtTriangleƀ;BEೋೌ೒拫ar;쀀⧐̸qual;拭ĀquೝഌuareSuĀbp೨೹setĀ;E೰ೳ쀀⊏̸qual;拢ersetĀ;Eഃആ쀀⊐̸qual;拣ƀbcpഓതൎsetĀ;Eഛഞ쀀⊂⃒qual;抈ceedsȀ;ESTലള഻െ抁qual;쀀⪰̸lantEqual;拡ilde;쀀≿̸ersetĀ;E൘൛쀀⊃⃒qual;抉ildeȀ;EFT൮൯൵ൿ扁qual;扄ullEqual;扇ilde;扉erticalBar;戤cr;쀀𝒩ilde耻Ñ䃑;䎝܀Eacdfgmoprstuvලෂ෉෕ෛ෠෧෼ขภยา฿ไlig;䅒cute耻Ó䃓Āiy෎ීrc耻Ô䃔;䐞blac;䅐r;쀀𝔒rave耻Ò䃒ƀaei෮ෲ෶cr;䅌ga;䎩cron;䎟pf;쀀𝕆enCurlyĀDQฎบoubleQuote;怜uote;怘;橔Āclวฬr;쀀𝒪ash耻Ø䃘iŬื฼de耻Õ䃕es;樷ml耻Ö䃖erĀBP๋๠Āar๐๓r;怾acĀek๚๜;揞et;掴arenthesis;揜Ҁacfhilors๿ງຊຏຒດຝະ໼rtialD;戂y;䐟r;쀀𝔓i;䎦;䎠usMinus;䂱Āipຢອncareplanåڝf;愙Ȁ;eio຺ູ໠໤檻cedesȀ;EST່້໏໚扺qual;檯lantEqual;扼ilde;找me;怳Ādp໩໮uct;戏ortionĀ;aȥ໹l;戝Āci༁༆r;쀀𝒫;䎨ȀUfos༑༖༛༟OT耻\"䀢r;쀀𝔔pf;愚cr;쀀𝒬؀BEacefhiorsu༾གྷཇའཱིྦྷྪྭ႖ႩႴႾarr;椐G耻®䂮ƀcnrཎནབute;䅔g;柫rĀ;tཛྷཝ憠l;椖ƀaeyཧཬཱron;䅘dil;䅖;䐠Ā;vླྀཹ愜erseĀEUྂྙĀlq྇ྎement;戋uilibrium;懋pEquilibrium;楯r»ཹo;䎡ghtЀACDFTUVa࿁࿫࿳ဢဨၛႇϘĀnr࿆࿒gleBracket;柩rowƀ;BL࿜࿝࿡憒ar;懥eftArrow;懄eiling;按oǵ࿹\0စbleBracket;柧nǔည\0နeeVector;楝ectorĀ;Bဝသ懂ar;楕loor;挋Āerိ၃eƀ;AVဵံြ抢rrow;憦ector;楛iangleƀ;BEၐၑၕ抳ar;槐qual;抵pƀDTVၣၮၸownVector;楏eeVector;楜ectorĀ;Bႂႃ憾ar;楔ectorĀ;B႑႒懀ar;楓Āpuႛ႞f;愝ndImplies;楰ightarrow;懛ĀchႹႼr;愛;憱leDelayed;槴ڀHOacfhimoqstuფჱჷჽᄙᄞᅑᅖᅡᅧᆵᆻᆿĀCcჩხHcy;䐩y;䐨FTcy;䐬cute;䅚ʀ;aeiyᄈᄉᄎᄓᄗ檼ron;䅠dil;䅞rc;䅜;䐡r;쀀𝔖ortȀDLRUᄪᄴᄾᅉownArrow»ОeftArrow»࢚ightArrow»࿝pArrow;憑gma;䎣allCircle;战pf;쀀𝕊ɲᅭ\0\0ᅰt;戚areȀ;ISUᅻᅼᆉᆯ斡ntersection;抓uĀbpᆏᆞsetĀ;Eᆗᆘ抏qual;抑ersetĀ;Eᆨᆩ抐qual;抒nion;抔cr;쀀𝒮ar;拆ȀbcmpᇈᇛሉላĀ;sᇍᇎ拐etĀ;Eᇍᇕqual;抆ĀchᇠህeedsȀ;ESTᇭᇮᇴᇿ扻qual;檰lantEqual;扽ilde;承Tháྌ;我ƀ;esሒሓሣ拑rsetĀ;Eሜም抃qual;抇et»ሓրHRSacfhiorsሾቄ቉ቕ቞ቱቶኟዂወዑORN耻Þ䃞ADE;愢ĀHc቎ቒcy;䐋y;䐦Ābuቚቜ;䀉;䎤ƀaeyብቪቯron;䅤dil;䅢;䐢r;쀀𝔗Āeiቻ኉ǲኀ\0ኇefore;戴a;䎘Ācn኎ኘkSpace;쀀  Space;怉ldeȀ;EFTካኬኲኼ戼qual;扃ullEqual;扅ilde;扈pf;쀀𝕋ipleDot;惛Āctዖዛr;쀀𝒯rok;䅦ૡዷጎጚጦ\0ጬጱ\0\0\0\0\0ጸጽ፷ᎅ\0᏿ᐄᐊᐐĀcrዻጁute耻Ú䃚rĀ;oጇገ憟cir;楉rǣጓ\0጖y;䐎ve;䅬Āiyጞጣrc耻Û䃛;䐣blac;䅰r;쀀𝔘rave耻Ù䃙acr;䅪Ādiፁ፩erĀBPፈ፝Āarፍፐr;䁟acĀekፗፙ;揟et;掵arenthesis;揝onĀ;P፰፱拃lus;抎Āgp፻፿on;䅲f;쀀𝕌ЀADETadps᎕ᎮᎸᏄϨᏒᏗᏳrrowƀ;BDᅐᎠᎤar;椒ownArrow;懅ownArrow;憕quilibrium;楮eeĀ;AᏋᏌ报rrow;憥ownáϳerĀLRᏞᏨeftArrow;憖ightArrow;憗iĀ;lᏹᏺ䏒on;䎥ing;䅮cr;쀀𝒰ilde;䅨ml耻Ü䃜ҀDbcdefosvᐧᐬᐰᐳᐾᒅᒊᒐᒖash;披ar;櫫y;䐒ashĀ;lᐻᐼ抩;櫦Āerᑃᑅ;拁ƀbtyᑌᑐᑺar;怖Ā;iᑏᑕcalȀBLSTᑡᑥᑪᑴar;戣ine;䁼eparator;杘ilde;所ThinSpace;怊r;쀀𝔙pf;쀀𝕍cr;쀀𝒱dash;抪ʀcefosᒧᒬᒱᒶᒼirc;䅴dge;拀r;쀀𝔚pf;쀀𝕎cr;쀀𝒲Ȁfiosᓋᓐᓒᓘr;쀀𝔛;䎞pf;쀀𝕏cr;쀀𝒳ҀAIUacfosuᓱᓵᓹᓽᔄᔏᔔᔚᔠcy;䐯cy;䐇cy;䐮cute耻Ý䃝Āiyᔉᔍrc;䅶;䐫r;쀀𝔜pf;쀀𝕐cr;쀀𝒴ml;䅸ЀHacdefosᔵᔹᔿᕋᕏᕝᕠᕤcy;䐖cute;䅹Āayᕄᕉron;䅽;䐗ot;䅻ǲᕔ\0ᕛoWidtè૙a;䎖r;愨pf;愤cr;쀀𝒵௡ᖃᖊᖐ\0ᖰᖶᖿ\0\0\0\0ᗆᗛᗫᙟ᙭\0ᚕ᚛ᚲᚹ\0ᚾcute耻á䃡reve;䄃̀;Ediuyᖜᖝᖡᖣᖨᖭ戾;쀀∾̳;房rc耻â䃢te肻´̆;䐰lig耻æ䃦Ā;r²ᖺ;쀀𝔞rave耻à䃠ĀepᗊᗖĀfpᗏᗔsym;愵èᗓha;䎱ĀapᗟcĀclᗤᗧr;䄁g;樿ɤᗰ\0\0ᘊʀ;adsvᗺᗻᗿᘁᘇ戧nd;橕;橜lope;橘;橚΀;elmrszᘘᘙᘛᘞᘿᙏᙙ戠;榤e»ᘙsdĀ;aᘥᘦ戡ѡᘰᘲᘴᘶᘸᘺᘼᘾ;榨;榩;榪;榫;榬;榭;榮;榯tĀ;vᙅᙆ戟bĀ;dᙌᙍ抾;榝Āptᙔᙗh;戢»¹arr;捼Āgpᙣᙧon;䄅f;쀀𝕒΀;Eaeiop዁ᙻᙽᚂᚄᚇᚊ;橰cir;橯;扊d;手s;䀧roxĀ;e዁ᚒñᚃing耻å䃥ƀctyᚡᚦᚨr;쀀𝒶;䀪mpĀ;e዁ᚯñʈilde耻ã䃣ml耻ä䃤Āciᛂᛈoninôɲnt;樑ࠀNabcdefiklnoprsu᛭ᛱᜰ᜼ᝃᝈ᝸᝽០៦ᠹᡐᜍ᤽᥈ᥰot;櫭Ācrᛶ᜞kȀcepsᜀᜅᜍᜓong;扌psilon;䏶rime;怵imĀ;e᜚᜛戽q;拍Ŷᜢᜦee;抽edĀ;gᜬᜭ挅e»ᜭrkĀ;t፜᜷brk;掶Āoyᜁᝁ;䐱quo;怞ʀcmprtᝓ᝛ᝡᝤᝨausĀ;eĊĉptyv;榰séᜌnoõēƀahwᝯ᝱ᝳ;䎲;愶een;扬r;쀀𝔟g΀costuvwឍឝឳេ៕៛៞ƀaiuបពរðݠrc;旯p»፱ƀdptឤឨឭot;樀lus;樁imes;樂ɱឹ\0\0ើcup;樆ar;昅riangleĀdu៍្own;施p;斳plus;樄eåᑄåᒭarow;植ƀako៭ᠦᠵĀcn៲ᠣkƀlst៺֫᠂ozenge;槫riangleȀ;dlr᠒᠓᠘᠝斴own;斾eft;旂ight;斸k;搣Ʊᠫ\0ᠳƲᠯ\0ᠱ;斒;斑4;斓ck;斈ĀeoᠾᡍĀ;qᡃᡆ쀀=⃥uiv;쀀≡⃥t;挐Ȁptwxᡙᡞᡧᡬf;쀀𝕓Ā;tᏋᡣom»Ꮜtie;拈؀DHUVbdhmptuvᢅᢖᢪᢻᣗᣛᣬ᣿ᤅᤊᤐᤡȀLRlrᢎᢐᢒᢔ;敗;敔;敖;敓ʀ;DUduᢡᢢᢤᢦᢨ敐;敦;敩;敤;敧ȀLRlrᢳᢵᢷᢹ;敝;敚;敜;教΀;HLRhlrᣊᣋᣍᣏᣑᣓᣕ救;敬;散;敠;敫;敢;敟ox;槉ȀLRlrᣤᣦᣨᣪ;敕;敒;攐;攌ʀ;DUduڽ᣷᣹᣻᣽;敥;敨;攬;攴inus;抟lus;択imes;抠ȀLRlrᤙᤛᤝ᤟;敛;敘;攘;攔΀;HLRhlrᤰᤱᤳᤵᤷ᤻᤹攂;敪;敡;敞;攼;攤;攜Āevģ᥂bar耻¦䂦Ȁceioᥑᥖᥚᥠr;쀀𝒷mi;恏mĀ;e᜚᜜lƀ;bhᥨᥩᥫ䁜;槅sub;柈Ŭᥴ᥾lĀ;e᥹᥺怢t»᥺pƀ;Eeįᦅᦇ;檮Ā;qۜۛೡᦧ\0᧨ᨑᨕᨲ\0ᨷᩐ\0\0᪴\0\0᫁\0\0ᬡᬮ᭍᭒\0᯽\0ᰌƀcpr᦭ᦲ᧝ute;䄇̀;abcdsᦿᧀᧄ᧊᧕᧙戩nd;橄rcup;橉Āau᧏᧒p;橋p;橇ot;橀;쀀∩︀Āeo᧢᧥t;恁îړȀaeiu᧰᧻ᨁᨅǰ᧵\0᧸s;橍on;䄍dil耻ç䃧rc;䄉psĀ;sᨌᨍ橌m;橐ot;䄋ƀdmnᨛᨠᨦil肻¸ƭptyv;榲t脀¢;eᨭᨮ䂢räƲr;쀀𝔠ƀceiᨽᩀᩍy;䑇ckĀ;mᩇᩈ朓ark»ᩈ;䏇r΀;Ecefms᩟᩠ᩢᩫ᪤᪪᪮旋;槃ƀ;elᩩᩪᩭ䋆q;扗eɡᩴ\0\0᪈rrowĀlr᩼᪁eft;憺ight;憻ʀRSacd᪒᪔᪖᪚᪟»ཇ;擈st;抛irc;抚ash;抝nint;樐id;櫯cir;槂ubsĀ;u᪻᪼晣it»᪼ˬ᫇᫔᫺\0ᬊonĀ;eᫍᫎ䀺Ā;qÇÆɭ᫙\0\0᫢aĀ;t᫞᫟䀬;䁀ƀ;fl᫨᫩᫫戁îᅠeĀmx᫱᫶ent»᫩eóɍǧ᫾\0ᬇĀ;dኻᬂot;橭nôɆƀfryᬐᬔᬗ;쀀𝕔oäɔ脀©;sŕᬝr;愗Āaoᬥᬩrr;憵ss;朗Ācuᬲᬷr;쀀𝒸Ābpᬼ᭄Ā;eᭁᭂ櫏;櫑Ā;eᭉᭊ櫐;櫒dot;拯΀delprvw᭠᭬᭷ᮂᮬᯔ᯹arrĀlr᭨᭪;椸;椵ɰ᭲\0\0᭵r;拞c;拟arrĀ;p᭿ᮀ憶;椽̀;bcdosᮏᮐᮖᮡᮥᮨ截rcap;橈Āauᮛᮞp;橆p;橊ot;抍r;橅;쀀∪︀Ȁalrv᮵ᮿᯞᯣrrĀ;mᮼᮽ憷;椼yƀevwᯇᯔᯘqɰᯎ\0\0ᯒreã᭳uã᭵ee;拎edge;拏en耻¤䂤earrowĀlrᯮ᯳eft»ᮀight»ᮽeäᯝĀciᰁᰇoninôǷnt;戱lcty;挭ঀAHabcdefhijlorstuwz᰸᰻᰿ᱝᱩᱵᲊᲞᲬᲷ᳻᳿ᴍᵻᶑᶫᶻ᷆᷍rò΁ar;楥Ȁglrs᱈ᱍ᱒᱔ger;怠eth;愸òᄳhĀ;vᱚᱛ怐»ऊūᱡᱧarow;椏aã̕Āayᱮᱳron;䄏;䐴ƀ;ao̲ᱼᲄĀgrʿᲁr;懊tseq;橷ƀglmᲑᲔᲘ耻°䂰ta;䎴ptyv;榱ĀirᲣᲨsht;楿;쀀𝔡arĀlrᲳᲵ»ࣜ»သʀaegsv᳂͸᳖᳜᳠mƀ;oș᳊᳔ndĀ;ș᳑uit;晦amma;䏝in;拲ƀ;io᳧᳨᳸䃷de脀÷;o᳧ᳰntimes;拇nø᳷cy;䑒cɯᴆ\0\0ᴊrn;挞op;挍ʀlptuwᴘᴝᴢᵉᵕlar;䀤f;쀀𝕕ʀ;emps̋ᴭᴷᴽᵂqĀ;d͒ᴳot;扑inus;戸lus;戔quare;抡blebarwedgåúnƀadhᄮᵝᵧownarrowóᲃarpoonĀlrᵲᵶefôᲴighôᲶŢᵿᶅkaro÷གɯᶊ\0\0ᶎrn;挟op;挌ƀcotᶘᶣᶦĀryᶝᶡ;쀀𝒹;䑕l;槶rok;䄑Ādrᶰᶴot;拱iĀ;fᶺ᠖斿Āah᷀᷃ròЩaòྦangle;榦Āci᷒ᷕy;䑟grarr;柿ऀDacdefglmnopqrstuxḁḉḙḸոḼṉṡṾấắẽỡἪἷὄ὎὚ĀDoḆᴴoôᲉĀcsḎḔute耻é䃩ter;橮ȀaioyḢḧḱḶron;䄛rĀ;cḭḮ扖耻ê䃪lon;払;䑍ot;䄗ĀDrṁṅot;扒;쀀𝔢ƀ;rsṐṑṗ檚ave耻è䃨Ā;dṜṝ檖ot;檘Ȁ;ilsṪṫṲṴ檙nters;揧;愓Ā;dṹṺ檕ot;檗ƀapsẅẉẗcr;䄓tyƀ;svẒẓẕ戅et»ẓpĀ1;ẝẤĳạả;怄;怅怃ĀgsẪẬ;䅋p;怂ĀgpẴẸon;䄙f;쀀𝕖ƀalsỄỎỒrĀ;sỊị拕l;槣us;橱iƀ;lvỚớở䎵on»ớ;䏵ȀcsuvỪỳἋἣĀioữḱrc»Ḯɩỹ\0\0ỻíՈantĀglἂἆtr»ṝess»Ṻƀaeiἒ἖Ἒls;䀽st;扟vĀ;DȵἠD;橸parsl;槥ĀDaἯἳot;打rr;楱ƀcdiἾὁỸr;愯oô͒ĀahὉὋ;䎷耻ð䃰Āmrὓὗl耻ë䃫o;悬ƀcipὡὤὧl;䀡sôծĀeoὬὴctatioîՙnentialåչৡᾒ\0ᾞ\0ᾡᾧ\0\0ῆῌ\0ΐ\0ῦῪ \0 ⁚llingdotseñṄy;䑄male;晀ƀilrᾭᾳ῁lig;耀ﬃɩᾹ\0\0᾽g;耀ﬀig;耀ﬄ;쀀𝔣lig;耀ﬁlig;쀀fjƀaltῙ῜ῡt;晭ig;耀ﬂns;斱of;䆒ǰ΅\0ῳf;쀀𝕗ĀakֿῷĀ;vῼ´拔;櫙artint;樍Āao‌⁕Ācs‑⁒α‚‰‸⁅⁈\0⁐β•‥‧‪‬\0‮耻½䂽;慓耻¼䂼;慕;慙;慛Ƴ‴\0‶;慔;慖ʴ‾⁁\0\0⁃耻¾䂾;慗;慜5;慘ƶ⁌\0⁎;慚;慝8;慞l;恄wn;挢cr;쀀𝒻ࢀEabcdefgijlnorstv₂₉₟₥₰₴⃰⃵⃺⃿℃ℒℸ̗ℾ⅒↞Ā;lٍ₇;檌ƀcmpₐₕ₝ute;䇵maĀ;dₜ᳚䎳;檆reve;䄟Āiy₪₮rc;䄝;䐳ot;䄡Ȁ;lqsؾق₽⃉ƀ;qsؾٌ⃄lanô٥Ȁ;cdl٥⃒⃥⃕c;檩otĀ;o⃜⃝檀Ā;l⃢⃣檂;檄Ā;e⃪⃭쀀⋛︀s;檔r;쀀𝔤Ā;gٳ؛mel;愷cy;䑓Ȁ;Eajٚℌℎℐ;檒;檥;檤ȀEaesℛℝ℩ℴ;扩pĀ;p℣ℤ檊rox»ℤĀ;q℮ℯ檈Ā;q℮ℛim;拧pf;쀀𝕘Āci⅃ⅆr;愊mƀ;el٫ⅎ⅐;檎;檐茀>;cdlqr׮ⅠⅪⅮⅳⅹĀciⅥⅧ;檧r;橺ot;拗Par;榕uest;橼ʀadelsↄⅪ←ٖ↛ǰ↉\0↎proø₞r;楸qĀlqؿ↖lesó₈ií٫Āen↣↭rtneqq;쀀≩︀Å↪ԀAabcefkosy⇄⇇⇱⇵⇺∘∝∯≨≽ròΠȀilmr⇐⇔⇗⇛rsðᒄf»․ilôکĀdr⇠⇤cy;䑊ƀ;cwࣴ⇫⇯ir;楈;憭ar;意irc;䄥ƀalr∁∎∓rtsĀ;u∉∊晥it»∊lip;怦con;抹r;쀀𝔥sĀew∣∩arow;椥arow;椦ʀamopr∺∾≃≞≣rr;懿tht;戻kĀlr≉≓eftarrow;憩ightarrow;憪f;쀀𝕙bar;怕ƀclt≯≴≸r;쀀𝒽asè⇴rok;䄧Ābp⊂⊇ull;恃hen»ᱛૡ⊣\0⊪\0⊸⋅⋎\0⋕⋳\0\0⋸⌢⍧⍢⍿\0⎆⎪⎴cute耻í䃭ƀ;iyݱ⊰⊵rc耻î䃮;䐸Ācx⊼⊿y;䐵cl耻¡䂡ĀfrΟ⋉;쀀𝔦rave耻ì䃬Ȁ;inoܾ⋝⋩⋮Āin⋢⋦nt;樌t;戭fin;槜ta;愩lig;䄳ƀaop⋾⌚⌝ƀcgt⌅⌈⌗r;䄫ƀelpܟ⌏⌓inåގarôܠh;䄱f;抷ed;䆵ʀ;cfotӴ⌬⌱⌽⍁are;愅inĀ;t⌸⌹戞ie;槝doô⌙ʀ;celpݗ⍌⍐⍛⍡al;抺Āgr⍕⍙eróᕣã⍍arhk;樗rod;樼Ȁcgpt⍯⍲⍶⍻y;䑑on;䄯f;쀀𝕚a;䎹uest耻¿䂿Āci⎊⎏r;쀀𝒾nʀ;EdsvӴ⎛⎝⎡ӳ;拹ot;拵Ā;v⎦⎧拴;拳Ā;iݷ⎮lde;䄩ǫ⎸\0⎼cy;䑖l耻ï䃯̀cfmosu⏌⏗⏜⏡⏧⏵Āiy⏑⏕rc;䄵;䐹r;쀀𝔧ath;䈷pf;쀀𝕛ǣ⏬\0⏱r;쀀𝒿rcy;䑘kcy;䑔Ѐacfghjos␋␖␢␧␭␱␵␻ppaĀ;v␓␔䎺;䏰Āey␛␠dil;䄷;䐺r;쀀𝔨reen;䄸cy;䑅cy;䑜pf;쀀𝕜cr;쀀𝓀஀ABEHabcdefghjlmnoprstuv⑰⒁⒆⒍⒑┎┽╚▀♎♞♥♹♽⚚⚲⛘❝❨➋⟀⠁⠒ƀart⑷⑺⑼rò৆òΕail;椛arr;椎Ā;gঔ⒋;檋ar;楢ॣ⒥\0⒪\0⒱\0\0\0\0\0⒵Ⓔ\0ⓆⓈⓍ\0⓹ute;䄺mptyv;榴raîࡌbda;䎻gƀ;dlࢎⓁⓃ;榑åࢎ;檅uo耻«䂫rЀ;bfhlpst࢙ⓞⓦⓩ⓫⓮⓱⓵Ā;f࢝ⓣs;椟s;椝ë≒p;憫l;椹im;楳l;憢ƀ;ae⓿─┄檫il;椙Ā;s┉┊檭;쀀⪭︀ƀabr┕┙┝rr;椌rk;杲Āak┢┬cĀek┨┪;䁻;䁛Āes┱┳;榋lĀdu┹┻;榏;榍Ȁaeuy╆╋╖╘ron;䄾Ādi═╔il;䄼ìࢰâ┩;䐻Ȁcqrs╣╦╭╽a;椶uoĀ;rนᝆĀdu╲╷har;楧shar;楋h;憲ʀ;fgqs▋▌উ◳◿扤tʀahlrt▘▤▷◂◨rrowĀ;t࢙□aé⓶arpoonĀdu▯▴own»њp»०eftarrows;懇ightƀahs◍◖◞rrowĀ;sࣴࢧarpoonó྘quigarro÷⇰hreetimes;拋ƀ;qs▋ও◺lanôবʀ;cdgsব☊☍☝☨c;檨otĀ;o☔☕橿Ā;r☚☛檁;檃Ā;e☢☥쀀⋚︀s;檓ʀadegs☳☹☽♉♋pproøⓆot;拖qĀgq♃♅ôউgtò⒌ôছiíলƀilr♕࣡♚sht;楼;쀀𝔩Ā;Eজ♣;檑š♩♶rĀdu▲♮Ā;l॥♳;楪lk;斄cy;䑙ʀ;achtੈ⚈⚋⚑⚖rò◁orneòᴈard;楫ri;旺Āio⚟⚤dot;䅀ustĀ;a⚬⚭掰che»⚭ȀEaes⚻⚽⛉⛔;扨pĀ;p⛃⛄檉rox»⛄Ā;q⛎⛏檇Ā;q⛎⚻im;拦Ѐabnoptwz⛩⛴⛷✚✯❁❇❐Ānr⛮⛱g;柬r;懽rëࣁgƀlmr⛿✍✔eftĀar০✇ightá৲apsto;柼ightá৽parrowĀlr✥✩efô⓭ight;憬ƀafl✶✹✽r;榅;쀀𝕝us;樭imes;樴š❋❏st;戗áፎƀ;ef❗❘᠀旊nge»❘arĀ;l❤❥䀨t;榓ʀachmt❳❶❼➅➇ròࢨorneòᶌarĀ;d྘➃;業;怎ri;抿̀achiqt➘➝ੀ➢➮➻quo;怹r;쀀𝓁mƀ;egল➪➬;檍;檏Ābu┪➳oĀ;rฟ➹;怚rok;䅂萀<;cdhilqrࠫ⟒☹⟜⟠⟥⟪⟰Āci⟗⟙;檦r;橹reå◲mes;拉arr;楶uest;橻ĀPi⟵⟹ar;榖ƀ;ef⠀भ᠛旃rĀdu⠇⠍shar;楊har;楦Āen⠗⠡rtneqq;쀀≨︀Å⠞܀Dacdefhilnopsu⡀⡅⢂⢎⢓⢠⢥⢨⣚⣢⣤ઃ⣳⤂Dot;戺Ȁclpr⡎⡒⡣⡽r耻¯䂯Āet⡗⡙;時Ā;e⡞⡟朠se»⡟Ā;sျ⡨toȀ;dluျ⡳⡷⡻owîҌefôएðᏑker;斮Āoy⢇⢌mma;権;䐼ash;怔asuredangle»ᘦr;쀀𝔪o;愧ƀcdn⢯⢴⣉ro耻µ䂵Ȁ;acdᑤ⢽⣀⣄sôᚧir;櫰ot肻·Ƶusƀ;bd⣒ᤃ⣓戒Ā;uᴼ⣘;横ţ⣞⣡p;櫛ò−ðઁĀdp⣩⣮els;抧f;쀀𝕞Āct⣸⣽r;쀀𝓂pos»ᖝƀ;lm⤉⤊⤍䎼timap;抸ఀGLRVabcdefghijlmoprstuvw⥂⥓⥾⦉⦘⧚⧩⨕⨚⩘⩝⪃⪕⪤⪨⬄⬇⭄⭿⮮ⰴⱧⱼ⳩Āgt⥇⥋;쀀⋙̸Ā;v⥐௏쀀≫⃒ƀelt⥚⥲⥶ftĀar⥡⥧rrow;懍ightarrow;懎;쀀⋘̸Ā;v⥻ే쀀≪⃒ightarrow;懏ĀDd⦎⦓ash;抯ash;抮ʀbcnpt⦣⦧⦬⦱⧌la»˞ute;䅄g;쀀∠⃒ʀ;Eiop඄⦼⧀⧅⧈;쀀⩰̸d;쀀≋̸s;䅉roø඄urĀ;a⧓⧔普lĀ;s⧓ସǳ⧟\0⧣p肻\xA0ଷmpĀ;e௹ఀʀaeouy⧴⧾⨃⨐⨓ǰ⧹\0⧻;橃on;䅈dil;䅆ngĀ;dൾ⨊ot;쀀⩭̸p;橂;䐽ash;怓΀;Aadqsxஒ⨩⨭⨻⩁⩅⩐rr;懗rĀhr⨳⨶k;椤Ā;oᏲᏰot;쀀≐̸uiöୣĀei⩊⩎ar;椨í஘istĀ;s஠டr;쀀𝔫ȀEest௅⩦⩹⩼ƀ;qs஼⩭௡ƀ;qs஼௅⩴lanô௢ií௪Ā;rஶ⪁»ஷƀAap⪊⪍⪑rò⥱rr;憮ar;櫲ƀ;svྍ⪜ྌĀ;d⪡⪢拼;拺cy;䑚΀AEadest⪷⪺⪾⫂⫅⫶⫹rò⥦;쀀≦̸rr;憚r;急Ȁ;fqs఻⫎⫣⫯tĀar⫔⫙rro÷⫁ightarro÷⪐ƀ;qs఻⪺⫪lanôౕĀ;sౕ⫴»శiíౝĀ;rవ⫾iĀ;eచథiäඐĀpt⬌⬑f;쀀𝕟膀¬;in⬙⬚⬶䂬nȀ;Edvஉ⬤⬨⬮;쀀⋹̸ot;쀀⋵̸ǡஉ⬳⬵;拷;拶iĀ;vಸ⬼ǡಸ⭁⭃;拾;拽ƀaor⭋⭣⭩rȀ;ast୻⭕⭚⭟lleì୻l;쀀⫽⃥;쀀∂̸lint;樔ƀ;ceಒ⭰⭳uåಥĀ;cಘ⭸Ā;eಒ⭽ñಘȀAait⮈⮋⮝⮧rò⦈rrƀ;cw⮔⮕⮙憛;쀀⤳̸;쀀↝̸ghtarrow»⮕riĀ;eೋೖ΀chimpqu⮽⯍⯙⬄୸⯤⯯Ȁ;cerല⯆ഷ⯉uå൅;쀀𝓃ortɭ⬅\0\0⯖ará⭖mĀ;e൮⯟Ā;q൴൳suĀbp⯫⯭å೸åഋƀbcp⯶ⰑⰙȀ;Ees⯿ⰀഢⰄ抄;쀀⫅̸etĀ;eഛⰋqĀ;qണⰀcĀ;eലⰗñസȀ;EesⰢⰣൟⰧ抅;쀀⫆̸etĀ;e൘ⰮqĀ;qൠⰣȀgilrⰽⰿⱅⱇìௗlde耻ñ䃱çృiangleĀlrⱒⱜeftĀ;eచⱚñదightĀ;eೋⱥñ೗Ā;mⱬⱭ䎽ƀ;esⱴⱵⱹ䀣ro;愖p;怇ҀDHadgilrsⲏⲔⲙⲞⲣⲰⲶⳓⳣash;抭arr;椄p;쀀≍⃒ash;抬ĀetⲨⲬ;쀀≥⃒;쀀>⃒nfin;槞ƀAetⲽⳁⳅrr;椂;쀀≤⃒Ā;rⳊⳍ쀀<⃒ie;쀀⊴⃒ĀAtⳘⳜrr;椃rie;쀀⊵⃒im;쀀∼⃒ƀAan⳰⳴ⴂrr;懖rĀhr⳺⳽k;椣Ā;oᏧᏥear;椧ቓ᪕\0\0\0\0\0\0\0\0\0\0\0\0\0ⴭ\0ⴸⵈⵠⵥ⵲ⶄᬇ\0\0ⶍⶫ\0ⷈⷎ\0ⷜ⸙⸫⸾⹃Ācsⴱ᪗ute耻ó䃳ĀiyⴼⵅrĀ;c᪞ⵂ耻ô䃴;䐾ʀabios᪠ⵒⵗǈⵚlac;䅑v;樸old;榼lig;䅓Ācr⵩⵭ir;榿;쀀𝔬ͯ⵹\0\0⵼\0ⶂn;䋛ave耻ò䃲;槁Ābmⶈ෴ar;榵Ȁacitⶕ⶘ⶥⶨrò᪀Āir⶝ⶠr;榾oss;榻nå๒;槀ƀaeiⶱⶵⶹcr;䅍ga;䏉ƀcdnⷀⷅǍron;䎿;榶pf;쀀𝕠ƀaelⷔ⷗ǒr;榷rp;榹΀;adiosvⷪⷫⷮ⸈⸍⸐⸖戨rò᪆Ȁ;efmⷷⷸ⸂⸅橝rĀ;oⷾⷿ愴f»ⷿ耻ª䂪耻º䂺gof;抶r;橖lope;橗;橛ƀclo⸟⸡⸧ò⸁ash耻ø䃸l;折iŬⸯ⸴de耻õ䃵esĀ;aǛ⸺s;樶ml耻ö䃶bar;挽ૡ⹞\0⹽\0⺀⺝\0⺢⺹\0\0⻋ຜ\0⼓\0\0⼫⾼\0⿈rȀ;astЃ⹧⹲຅脀¶;l⹭⹮䂶leìЃɩ⹸\0\0⹻m;櫳;櫽y;䐿rʀcimpt⺋⺏⺓ᡥ⺗nt;䀥od;䀮il;怰enk;怱r;쀀𝔭ƀimo⺨⺰⺴Ā;v⺭⺮䏆;䏕maô੶ne;明ƀ;tv⺿⻀⻈䏀chfork»´;䏖Āau⻏⻟nĀck⻕⻝kĀ;h⇴⻛;愎ö⇴sҀ;abcdemst⻳⻴ᤈ⻹⻽⼄⼆⼊⼎䀫cir;樣ir;樢Āouᵀ⼂;樥;橲n肻±ຝim;樦wo;樧ƀipu⼙⼠⼥ntint;樕f;쀀𝕡nd耻£䂣Ԁ;Eaceinosu່⼿⽁⽄⽇⾁⾉⾒⽾⾶;檳p;檷uå໙Ā;c໎⽌̀;acens່⽙⽟⽦⽨⽾pproø⽃urlyeñ໙ñ໎ƀaes⽯⽶⽺pprox;檹qq;檵im;拨iíໟmeĀ;s⾈ຮ怲ƀEas⽸⾐⽺ð⽵ƀdfp໬⾙⾯ƀals⾠⾥⾪lar;挮ine;挒urf;挓Ā;t໻⾴ï໻rel;抰Āci⿀⿅r;쀀𝓅;䏈ncsp;怈̀fiopsu⿚⋢⿟⿥⿫⿱r;쀀𝔮pf;쀀𝕢rime;恗cr;쀀𝓆ƀaeo⿸〉〓tĀei⿾々rnionóڰnt;樖stĀ;e【】䀿ñἙô༔઀ABHabcdefhilmnoprstux぀けさすムㄎㄫㅇㅢㅲㆎ㈆㈕㈤㈩㉘㉮㉲㊐㊰㊷ƀartぇおがròႳòϝail;検aròᱥar;楤΀cdenqrtとふへみわゔヌĀeuねぱ;쀀∽̱te;䅕iãᅮmptyv;榳gȀ;del࿑らるろ;榒;榥å࿑uo耻»䂻rր;abcfhlpstw࿜ガクシスゼゾダッデナp;極Ā;f࿠ゴs;椠;椳s;椞ë≝ð✮l;楅im;楴l;憣;憝Āaiパフil;椚oĀ;nホボ戶aló༞ƀabrョリヮrò៥rk;杳ĀakンヽcĀekヹ・;䁽;䁝Āes㄂㄄;榌lĀduㄊㄌ;榎;榐Ȁaeuyㄗㄜㄧㄩron;䅙Ādiㄡㄥil;䅗ì࿲âヺ;䑀Ȁclqsㄴㄷㄽㅄa;椷dhar;楩uoĀ;rȎȍh;憳ƀacgㅎㅟངlȀ;ipsླྀㅘㅛႜnåႻarôྩt;断ƀilrㅩဣㅮsht;楽;쀀𝔯ĀaoㅷㆆrĀduㅽㅿ»ѻĀ;l႑ㆄ;楬Ā;vㆋㆌ䏁;䏱ƀgns㆕ㇹㇼht̀ahlrstㆤㆰ㇂㇘㇤㇮rrowĀ;t࿜ㆭaéトarpoonĀduㆻㆿowîㅾp»႒eftĀah㇊㇐rrowó࿪arpoonóՑightarrows;應quigarro÷ニhreetimes;拌g;䋚ingdotseñἲƀahm㈍㈐㈓rò࿪aòՑ;怏oustĀ;a㈞㈟掱che»㈟mid;櫮Ȁabpt㈲㈽㉀㉒Ānr㈷㈺g;柭r;懾rëဃƀafl㉇㉊㉎r;榆;쀀𝕣us;樮imes;樵Āap㉝㉧rĀ;g㉣㉤䀩t;榔olint;樒arò㇣Ȁachq㉻㊀Ⴜ㊅quo;怺r;쀀𝓇Ābu・㊊oĀ;rȔȓƀhir㊗㊛㊠reåㇸmes;拊iȀ;efl㊪ၙᠡ㊫方tri;槎luhar;楨;愞ൡ㋕㋛㋟㌬㌸㍱\0㍺㎤\0\0㏬㏰\0㐨㑈㑚㒭㒱㓊㓱\0㘖\0\0㘳cute;䅛quï➺Ԁ;Eaceinpsyᇭ㋳㋵㋿㌂㌋㌏㌟㌦㌩;檴ǰ㋺\0㋼;檸on;䅡uåᇾĀ;dᇳ㌇il;䅟rc;䅝ƀEas㌖㌘㌛;檶p;檺im;择olint;樓iíሄ;䑁otƀ;be㌴ᵇ㌵担;橦΀Aacmstx㍆㍊㍗㍛㍞㍣㍭rr;懘rĀhr㍐㍒ë∨Ā;oਸ਼਴t耻§䂧i;䀻war;椩mĀin㍩ðnuóñt;朶rĀ;o㍶⁕쀀𝔰Ȁacoy㎂㎆㎑㎠rp;景Āhy㎋㎏cy;䑉;䑈rtɭ㎙\0\0㎜iäᑤaraì⹯耻­䂭Āgm㎨㎴maƀ;fv㎱㎲㎲䏃;䏂Ѐ;deglnprካ㏅㏉㏎㏖㏞㏡㏦ot;橪Ā;q኱ኰĀ;E㏓㏔檞;檠Ā;E㏛㏜檝;檟e;扆lus;樤arr;楲aròᄽȀaeit㏸㐈㐏㐗Āls㏽㐄lsetmé㍪hp;樳parsl;槤Ādlᑣ㐔e;挣Ā;e㐜㐝檪Ā;s㐢㐣檬;쀀⪬︀ƀflp㐮㐳㑂tcy;䑌Ā;b㐸㐹䀯Ā;a㐾㐿槄r;挿f;쀀𝕤aĀdr㑍ЂesĀ;u㑔㑕晠it»㑕ƀcsu㑠㑹㒟Āau㑥㑯pĀ;sᆈ㑫;쀀⊓︀pĀ;sᆴ㑵;쀀⊔︀uĀbp㑿㒏ƀ;esᆗᆜ㒆etĀ;eᆗ㒍ñᆝƀ;esᆨᆭ㒖etĀ;eᆨ㒝ñᆮƀ;afᅻ㒦ְrť㒫ֱ»ᅼaròᅈȀcemt㒹㒾㓂㓅r;쀀𝓈tmîñiì㐕aræᆾĀar㓎㓕rĀ;f㓔ឿ昆Āan㓚㓭ightĀep㓣㓪psiloîỠhé⺯s»⡒ʀbcmnp㓻㕞ሉ㖋㖎Ҁ;Edemnprs㔎㔏㔑㔕㔞㔣㔬㔱㔶抂;櫅ot;檽Ā;dᇚ㔚ot;櫃ult;櫁ĀEe㔨㔪;櫋;把lus;檿arr;楹ƀeiu㔽㕒㕕tƀ;en㔎㕅㕋qĀ;qᇚ㔏eqĀ;q㔫㔨m;櫇Ābp㕚㕜;櫕;櫓c̀;acensᇭ㕬㕲㕹㕻㌦pproø㋺urlyeñᇾñᇳƀaes㖂㖈㌛pproø㌚qñ㌗g;晪ڀ123;Edehlmnps㖩㖬㖯ሜ㖲㖴㗀㗉㗕㗚㗟㗨㗭耻¹䂹耻²䂲耻³䂳;櫆Āos㖹㖼t;檾ub;櫘Ā;dሢ㗅ot;櫄sĀou㗏㗒l;柉b;櫗arr;楻ult;櫂ĀEe㗤㗦;櫌;抋lus;櫀ƀeiu㗴㘉㘌tƀ;enሜ㗼㘂qĀ;qሢ㖲eqĀ;q㗧㗤m;櫈Ābp㘑㘓;櫔;櫖ƀAan㘜㘠㘭rr;懙rĀhr㘦㘨ë∮Ā;oਫ਩war;椪lig耻ß䃟௡㙑㙝㙠ዎ㙳㙹\0㙾㛂\0\0\0\0\0㛛㜃\0㜉㝬\0\0\0㞇ɲ㙖\0\0㙛get;挖;䏄rë๟ƀaey㙦㙫㙰ron;䅥dil;䅣;䑂lrec;挕r;쀀𝔱Ȁeiko㚆㚝㚵㚼ǲ㚋\0㚑eĀ4fኄኁaƀ;sv㚘㚙㚛䎸ym;䏑Ācn㚢㚲kĀas㚨㚮pproø዁im»ኬsðኞĀas㚺㚮ð዁rn耻þ䃾Ǭ̟㛆⋧es膀×;bd㛏㛐㛘䃗Ā;aᤏ㛕r;樱;樰ƀeps㛡㛣㜀á⩍Ȁ;bcf҆㛬㛰㛴ot;挶ir;櫱Ā;o㛹㛼쀀𝕥rk;櫚á㍢rime;怴ƀaip㜏㜒㝤dåቈ΀adempst㜡㝍㝀㝑㝗㝜㝟ngleʀ;dlqr㜰㜱㜶㝀㝂斵own»ᶻeftĀ;e⠀㜾ñम;扜ightĀ;e㊪㝋ñၚot;旬inus;樺lus;樹b;槍ime;樻ezium;揢ƀcht㝲㝽㞁Āry㝷㝻;쀀𝓉;䑆cy;䑛rok;䅧Āio㞋㞎xô᝷headĀlr㞗㞠eftarro÷ࡏightarrow»ཝऀAHabcdfghlmoprstuw㟐㟓㟗㟤㟰㟼㠎㠜㠣㠴㡑㡝㡫㢩㣌㣒㣪㣶ròϭar;楣Ācr㟜㟢ute耻ú䃺òᅐrǣ㟪\0㟭y;䑞ve;䅭Āiy㟵㟺rc耻û䃻;䑃ƀabh㠃㠆㠋ròᎭlac;䅱aòᏃĀir㠓㠘sht;楾;쀀𝔲rave耻ù䃹š㠧㠱rĀlr㠬㠮»ॗ»ႃlk;斀Āct㠹㡍ɯ㠿\0\0㡊rnĀ;e㡅㡆挜r»㡆op;挏ri;旸Āal㡖㡚cr;䅫肻¨͉Āgp㡢㡦on;䅳f;쀀𝕦̀adhlsuᅋ㡸㡽፲㢑㢠ownáᎳarpoonĀlr㢈㢌efô㠭ighô㠯iƀ;hl㢙㢚㢜䏅»ᏺon»㢚parrows;懈ƀcit㢰㣄㣈ɯ㢶\0\0㣁rnĀ;e㢼㢽挝r»㢽op;挎ng;䅯ri;旹cr;쀀𝓊ƀdir㣙㣝㣢ot;拰lde;䅩iĀ;f㜰㣨»᠓Āam㣯㣲rò㢨l耻ü䃼angle;榧ހABDacdeflnoprsz㤜㤟㤩㤭㦵㦸㦽㧟㧤㧨㧳㧹㧽㨁㨠ròϷarĀ;v㤦㤧櫨;櫩asèϡĀnr㤲㤷grt;榜΀eknprst㓣㥆㥋㥒㥝㥤㦖appá␕othinçẖƀhir㓫⻈㥙opô⾵Ā;hᎷ㥢ïㆍĀiu㥩㥭gmá㎳Ābp㥲㦄setneqĀ;q㥽㦀쀀⊊︀;쀀⫋︀setneqĀ;q㦏㦒쀀⊋︀;쀀⫌︀Āhr㦛㦟etá㚜iangleĀlr㦪㦯eft»थight»ၑy;䐲ash»ံƀelr㧄㧒㧗ƀ;beⷪ㧋㧏ar;抻q;扚lip;拮Ābt㧜ᑨaòᑩr;쀀𝔳tré㦮suĀbp㧯㧱»ജ»൙pf;쀀𝕧roð໻tré㦴Ācu㨆㨋r;쀀𝓋Ābp㨐㨘nĀEe㦀㨖»㥾nĀEe㦒㨞»㦐igzag;榚΀cefoprs㨶㨻㩖㩛㩔㩡㩪irc;䅵Ādi㩀㩑Ābg㩅㩉ar;機eĀ;qᗺ㩏;扙erp;愘r;쀀𝔴pf;쀀𝕨Ā;eᑹ㩦atèᑹcr;쀀𝓌ૣណ㪇\0㪋\0㪐㪛\0\0㪝㪨㪫㪯\0\0㫃㫎\0㫘ៜ៟tré៑r;쀀𝔵ĀAa㪔㪗ròσrò৶;䎾ĀAa㪡㪤ròθrò৫að✓is;拻ƀdptឤ㪵㪾Āfl㪺ឩ;쀀𝕩imåឲĀAa㫇㫊ròώròਁĀcq㫒ីr;쀀𝓍Āpt៖㫜ré។Ѐacefiosu㫰㫽㬈㬌㬑㬕㬛㬡cĀuy㫶㫻te耻ý䃽;䑏Āiy㬂㬆rc;䅷;䑋n耻¥䂥r;쀀𝔶cy;䑗pf;쀀𝕪cr;쀀𝓎Ācm㬦㬩y;䑎l耻ÿ䃿Ԁacdefhiosw㭂㭈㭔㭘㭤㭩㭭㭴㭺㮀cute;䅺Āay㭍㭒ron;䅾;䐷ot;䅼Āet㭝㭡træᕟa;䎶r;쀀𝔷cy;䐶grarr;懝pf;쀀𝕫cr;쀀𝓏Ājn㮅㮇;怍j;怌".split("").map((c) => c.charCodeAt(0)));
 //#endregion
 //#region ../../node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/esm/generated/decode-data-xml.js
 var decode_data_xml_default = new Uint16Array("Ȁaglq	\x1Bɭ\0\0p;䀦os;䀧t;䀾t;䀼uot;䀢".split("").map((c) => c.charCodeAt(0)));
@@ -58345,15 +58345,13 @@ var createPolling = (name, callback, options) => {
 var log$9 = createLogger("logPolling");
 var kRetries$1 = 10;
 var kPollingInterval$2 = 2;
-function createLogPolling(get, set) {
+function createLogPolling(get, set, api) {
 	let currentPolling = null;
 	let abortController;
 	const refreshLog = async (logFileName, clearPending = false) => {
 		if (abortController?.signal.aborted) return false;
-		const state = get();
-		const api = state.api;
-		const selectedLogFile = state.logs.selectedLogFile;
-		if (!api || !selectedLogFile) return false;
+		const selectedLogFile = get().logs.selectedLogFile;
+		if (!selectedLogFile) return false;
 		log$9.debug(`refresh: ${selectedLogFile}`);
 		try {
 			const logDetails = await api.get_log_details(selectedLogFile, false);
@@ -58386,8 +58384,7 @@ function createLogPolling(get, set) {
 				log$9.debug(`Component unmounted, stopping poll for: ${logFileName}`);
 				return false;
 			}
-			const api = get().api;
-			if (!api?.get_log_pending_samples) return false;
+			if (!api.get_log_pending_samples) return false;
 			if (abortController.signal.aborted) return false;
 			log$9.debug(`Polling running samples: ${logFileName}`);
 			const currentEtag = get().log.pendingSampleSummaries?.etag;
@@ -58462,8 +58459,8 @@ var initialState$2 = {
 	selectedScores: void 0,
 	scores: void 0
 };
-var createLogSlice = (set, get, _store) => {
-	const logPolling = createLogPolling(get, set);
+var createLogSlice = (set, get, _store, api) => {
+	const logPolling = createLogPolling(get, set, api);
 	const slice = {
 		log: initialState$2,
 		logActions: {
@@ -58533,14 +58530,9 @@ var createLogSlice = (set, get, _store) => {
 			}),
 			syncLog: async (logFileName) => {
 				const state = get();
-				const api = state.api;
 				let logDir = state.logs.logDir;
 				if (state.logs.logDir === void 0) logDir = await state.logsActions.initLogDir();
 				const logAbsPath = !isUri(logFileName) ? join(logFileName, logDir) : logFileName;
-				if (!api) {
-					console.error("API not initialized in Store");
-					return;
-				}
 				log$8.debug(`Load log: ${logAbsPath}`);
 				const dbService = state.databaseService;
 				if (dbService && dbService.opened()) try {
@@ -58591,9 +58583,8 @@ var createLogSlice = (set, get, _store) => {
 			},
 			refreshLog: async () => {
 				const state = get();
-				const api = state.api;
 				const selectedLogFile = state.logs.selectedLogFile;
-				if (!api || !selectedLogFile) return;
+				if (!selectedLogFile) return;
 				log$8.debug(`refresh: ${selectedLogFile}`);
 				try {
 					const logDetails = await api.get_log_details(selectedLogFile);
@@ -58680,7 +58671,7 @@ var initialState$1 = {
 	},
 	showRetriedLogs: false
 };
-var createLogsSlice = (set, get, _store) => {
+var createLogsSlice = (set, get, _store, api) => {
 	const slice = {
 		logs: initialState$1,
 		logsActions: {
@@ -58700,10 +58691,6 @@ var createLogsSlice = (set, get, _store) => {
 			}),
 			syncLogPreviews: async (logs) => {
 				const state = get();
-				if (!state.api) {
-					console.error("API not initialized in LogsStore");
-					return;
-				}
 				if (!state.replicationService) {
 					console.error("Replication service not initialized in LogsStore");
 					return;
@@ -58769,25 +58756,18 @@ var createLogsSlice = (set, get, _store) => {
 				if (isSingleFileMode) {
 					if (state.logs.logDir !== void 0) return state.logs.logDir;
 					logDir = deriveSingleFileLogDir(state.logs.selectedLogFile);
-					if (logDir === void 0 && state.api?.get_log_dir) try {
-						logDir = await state.api.get_log_dir();
+					if (logDir === void 0) try {
+						logDir = await api.get_log_dir();
 					} catch (e) {
 						console.log(e);
 					}
-				} else {
-					const api = state.api;
-					if (!api) {
-						console.error("API not initialized in LogsStore");
-						return;
-					}
-					try {
-						const root = await api.get_log_root();
-						logDir = root.log_dir;
-						absLogDir = root.abs_log_dir;
-					} catch (e) {
-						console.log(e);
-						get().appActions.setLoading(false, e);
-					}
+				} else try {
+					const root = await api.get_log_root();
+					logDir = root.log_dir;
+					absLogDir = root.abs_log_dir;
+				} catch (e) {
+					console.log(e);
+					get().appActions.setLoading(false, e);
 				}
 				if (get().logs.logDir !== logDir) get().logsActions.setLogDir(logDir);
 				if (get().logs.absLogDir !== absLogDir) set((state) => {
@@ -58800,11 +58780,6 @@ var createLogsSlice = (set, get, _store) => {
 				if (state.logs.logDir) await state.logsActions.syncLogs();
 			},
 			syncLogs: async () => {
-				const api = get().api;
-				if (!api) {
-					console.error("API not initialized in LogsStore");
-					return [];
-				}
 				const databaseService = get().databaseService;
 				const useProgress = !!databaseService?.getDatabaseHandle();
 				if (useProgress) get().appActions.setLoading(true);
@@ -58870,15 +58845,11 @@ var createLogsSlice = (set, get, _store) => {
 				return await get().replicationService?.sync(initDatabase) || [];
 			},
 			syncEvalSetInfo: async (logPath) => {
-				const api = get().api;
-				if (!api) {
-					console.error("API not initialized in LogsStore");
-					return;
-				}
 				const info = await api.get_eval_set(logPath);
 				set((state) => {
 					state.logs.evalSet = info;
 				});
+				return info;
 			},
 			updateFlowData: (flowPath, flowData) => {
 				set((state) => {
@@ -59184,7 +59155,7 @@ var log$6 = createLogger("samplePolling");
 var kNoId = -1;
 var kPollingInterval$1 = 2;
 var kPollingMaxRetries = 10;
-function createSamplePolling(store) {
+function createSamplePolling(store, api) {
 	let currentPolling = null;
 	let abortController;
 	const pollingState = {
@@ -59217,10 +59188,7 @@ function createSamplePolling(store) {
 		abortController = localAbort;
 		log$6.debug(`Polling sample: ${summary.id}-${summary.epoch}`);
 		const pollCallback = async () => {
-			const state = store.getState();
-			const { sampleActions } = state;
-			const api = state.api;
-			if (!api) throw new Error("Required API is missing");
+			const { sampleActions } = store.getState();
 			if (!api.get_log_sample_data) throw new Error("Required API get_log_sample_data is undefined.");
 			if (localAbort.signal.aborted) return false;
 			const loadCompletedSample = async (message) => {
@@ -59417,6 +59385,15 @@ var findMaxId = (items, currentMax) => {
 //#endregion
 //#region src/state/samplePollingInstance.ts
 var instance = null;
+var injectedApi = null;
+/**
+* Records the api that the polling singleton should use. Called from
+* initializeStore so the singleton stays consistent with the api the
+* consumer passed into the App tree.
+*/
+function setSamplePollingApi(api) {
+	injectedApi = api;
+}
 /**
 * Get the singleton sample polling instance.
 * Lazily creates the instance on first access.
@@ -59424,7 +59401,8 @@ var instance = null;
 function getSamplePolling() {
 	if (!instance) {
 		if (!storeImplementation) throw new Error("Store must be initialized before accessing samplePolling");
-		instance = createSamplePolling(storeImplementation);
+		if (!injectedApi) throw new Error("samplePolling api must be set via setSamplePollingApi before accessing samplePolling");
+		instance = createSamplePolling(storeImplementation, injectedApi);
 	}
 	return instance;
 }
@@ -59437,6 +59415,7 @@ function cleanupSamplePolling() {
 		instance.cleanup();
 		instance = null;
 	}
+	injectedApi = null;
 }
 //#endregion
 //#region src/state/store_filter.ts
@@ -60107,18 +60086,16 @@ var initializeStore = (api, capabilities, storage) => {
 	};
 	const store = create()(devtools(persist(immer((set, get, store) => {
 		const [appSlice, appCleanup] = createAppSlice(set, get, store);
-		const [logsSlice, logsCleanup] = createLogsSlice(set, get, store);
-		const [logSlice, logCleanup] = createLogSlice(set, get, store);
+		const [logsSlice, logsCleanup] = createLogsSlice(set, get, store, api);
+		const [logSlice, logCleanup] = createLogSlice(set, get, store, api);
 		const [sampleSlice, sampleCleanup] = createSampleSlice(set, get, store);
 		const databaseService = createDatabaseService();
 		const replicationService = new ReplicationService();
 		return {
-			api: null,
 			databaseService,
 			replicationService,
-			initialize: (api, capabilities) => {
+			initialize: (capabilities) => {
 				set((state) => {
-					state.api = api;
 					state.databaseService = databaseService;
 					state.replicationService = replicationService;
 				});
@@ -60165,7 +60142,15 @@ var initializeStore = (api, capabilities, storage) => {
 		}
 	})));
 	storeImplementation = store;
-	store.getState().initialize(api, capabilities);
+	setSamplePollingApi(api);
+	store.getState().initialize(capabilities);
+};
+var ApiContext = (0, import_react.createContext)(null);
+var ApiProvider = ApiContext.Provider;
+var useApi = () => {
+	const api = (0, import_react.useContext)(ApiContext);
+	if (!api) throw new Error("useApi must be used within ApiProvider");
+	return api;
 };
 //#endregion
 //#region src/state/componentStateAdapter.ts
@@ -60378,7 +60363,7 @@ var ClientEventsService = class {
 				return false;
 			}
 			log$4.debug(`Polling client events`);
-			const events = await api?.client_events();
+			const events = await api.client_events();
 			log$4.debug(`Received events`, events);
 			if (this.abortController?.signal.aborted) {
 				log$4.debug(`Polling aborted, stopping poll for client events`);
@@ -64407,7 +64392,8 @@ var useRefreshLog = () => {
 * on save is worse than not offering it.
 */
 var useLogEditAffordance = () => {
-	const hasEditApi = useStore((s) => Boolean(s.api?.edit_log));
+	const api = useApi();
+	const hasEditApi = Boolean(api.edit_log);
 	const selectedLogFile = useStore((s) => s.logs.selectedLogFile);
 	const logStatus = useStore((s) => s.log.selectedLogDetails?.status);
 	const refreshLog = useRefreshLog();
@@ -64719,7 +64705,7 @@ var log$2 = createLogger("Client-Events");
 function useClientEvents() {
 	const syncLogs = useStore((state) => state.logsActions.syncLogs);
 	const logPreviews = useStore((state) => state.logs.logPreviews);
-	const api = useStore((state) => state.api);
+	const api = useApi();
 	const { loadLogOverviews } = useLogs();
 	const refreshCallback = (0, import_react.useCallback)(async (logs) => {
 		log$2.debug("Refresh Log Files");
@@ -65049,12 +65035,12 @@ var FlowButton = (0, import_react.forwardRef)((_, ref) => {
 //#endregion
 //#region src/app/flow/hooks.ts
 var useFlowServerData = (dir) => {
-	const api = useStore((state) => state.api);
+	const api = useApi();
 	const flowDir = useStore((state) => state.logs.flowDir);
 	const updateFlowData = useStore((state) => state.logsActions.updateFlowData);
 	(0, import_react.useEffect)(() => {
 		const fetchFlow = async () => {
-			updateFlowData(dir, await api?.get_flow(dir));
+			updateFlowData(dir, await api.get_flow(dir));
 		};
 		if (dir !== flowDir) fetchFlow();
 	}, [
@@ -66252,6 +66238,19 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 				}
 			},
 			{
+				field: "sampleLimits",
+				headerName: "Sample Limits",
+				initialWidth: 140,
+				minWidth: 80,
+				sortable: true,
+				filter: true,
+				resizable: true,
+				cellRenderer: (params) => {
+					if (!params.value) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell$1, {});
+					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: params.value });
+				}
+			},
+			{
 				field: "errorMessage",
 				headerName: "Error",
 				initialWidth: 300,
@@ -66390,6 +66389,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 				"completedSamples",
 				"percentCompleted",
 				"sampleErrors",
+				"sampleLimits",
 				"totalTokens",
 				"duration",
 				"errorMessage",
@@ -66416,6 +66416,13 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 		}
 		return allCols;
 	}, [scorerMap, mode]);
+	const hasSampleLimits = (0, import_react.useMemo)(() => {
+		for (const [logName, details] of Object.entries(logDetails)) {
+			if (scopePrefix && !logName.startsWith(scopePrefix)) continue;
+			if (details.sampleSummaries?.some((s) => s.limit)) return true;
+		}
+		return false;
+	}, [logDetails, scopePrefix]);
 	const defaultHiddenFields = (0, import_react.useMemo)(() => {
 		const hidden = /* @__PURE__ */ new Set();
 		if (mode === "tasks") {
@@ -66432,9 +66439,10 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 		}
 		hidden.add("percentCompleted");
 		hidden.add("sampleErrors");
+		if (!hasSampleLimits) hidden.add("sampleLimits");
 		hidden.add("errorMessage");
 		return hidden;
-	}, [mode]);
+	}, [mode, hasSampleLimits]);
 	const matchesActiveMode = (field) => {
 		if (field.startsWith("score_")) return viewMode === "per-scorer";
 		if (field.startsWith("metric_")) return viewMode === "by-metric";
@@ -113550,6 +113558,12 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 			if (total && total > 0 && completed !== void 0) percentCompleted = completed / total * 100;
 			let sampleErrors;
 			if (details?.sampleSummaries) sampleErrors = details.sampleSummaries.filter((s) => s.error).length;
+			let sampleLimits;
+			if (details?.sampleSummaries) {
+				const limits = /* @__PURE__ */ new Set();
+				for (const s of details.sampleSummaries) if (s.limit) limits.add(s.limit);
+				if (limits.size > 0) sampleLimits = Array.from(limits).sort().join(", ");
+			}
 			const row = {
 				id: item.id,
 				name: item.name,
@@ -113576,6 +113590,7 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 				tags: details?.tags,
 				percentCompleted,
 				sampleErrors,
+				sampleLimits,
 				errorMessage: details?.error?.message
 			};
 			if (details?.results?.scores) {
@@ -114134,7 +114149,7 @@ var loadGeneration = 0;
 function useLoadSample() {
 	const sampleData = useSampleData();
 	const logSelection = useLogSelection();
-	const api = useStore((state) => state.api);
+	const api = useApi();
 	const sampleActions = useStore((state) => state.sampleActions);
 	const clearListPosition = useStore((state) => state.appActions.clearListPosition);
 	const getSelectedSample = useStore((state) => state.sampleActions.getSelectedSample);
@@ -114165,7 +114180,7 @@ function useLoadSample() {
 						total: bytesTotal
 					});
 				};
-				const sample = await api?.get_log_sample(logFile, id, epoch, onProgress) ?? (summary?.error ? synthesizeErroredSampleFromSummary(summary) : void 0);
+				const sample = await api.get_log_sample(logFile, id, epoch, onProgress) ?? (summary?.error ? synthesizeErroredSampleFromSummary(summary) : void 0);
 				sampleActions.setDownloadProgress(void 0);
 				log$1.debug(`LOADED COMPLETED SAMPLE: ${id}-${epoch}`);
 				if (thisGeneration !== loadGeneration) {
@@ -115026,11 +115041,11 @@ var resolveToolInput = (fn, toolArgs) => {
 	const inputDescriptor = extractInputMetadata(toolName);
 	const { input, description, args } = extractInput(toolArgs, inputDescriptor);
 	const functionCall = args.length > 0 ? `${toolName}(${args.join(", ")})` : toolName;
-	if ((fn === "Task" || fn === "task") && typeof toolArgs.subagent_type === "string") {
+	if ((fn === "Task" || fn === "task" || fn === "Agent" || fn === "agent") && typeof toolArgs.subagent_type === "string") {
 		const subagentType = toolArgs.subagent_type;
 		return {
 			name: fn,
-			functionCall: `Task: ${subagentType}`,
+			functionCall: `${fn}: ${subagentType}`,
 			title: `${fn}: ${subagentType}`,
 			input,
 			description,
@@ -115087,12 +115102,12 @@ var extractInputMetadata = (toolName) => {
 		inputArg: "todos",
 		contentType: kToolTodoContentType
 	};
-	else if (toolName === "Task") return {
+	else if (toolName === "Task" || toolName === "Agent") return {
 		inputArg: "prompt",
 		descriptionArg: "description",
 		contentType: "markdown"
 	};
-	else if (toolName === "task") return {
+	else if (toolName === "task" || toolName === "agent") return {
 		inputArg: "prompt",
 		descriptionArg: "task_description",
 		contentType: "markdown"
@@ -116083,7 +116098,7 @@ var ChatMessage = (0, import_react.memo)(function ChatMessage({ id, message, dis
 	const linkIcon = linking?.icon ?? "bi bi-link-45deg";
 	const messageUrl = getMessageUrl?.(message.id || "");
 	const [mouseOver, setMouseOver] = (0, import_react.useState)(false);
-	const isNonTaskTool = message.role === "tool" && message.function !== "Task" && message.function !== "task";
+	const isNonSubagentTool = message.role === "tool" && message.function !== "Task" && message.function !== "task" && message.function !== "Agent" && message.function !== "agent";
 	const collapse = message.role === "system" || message.role === "user" || message.role === "assistant" || message.role === "tool";
 	const hideRole = unlabeledRoles?.includes(message.role) ?? false;
 	if (hideRole) {
@@ -116118,7 +116133,7 @@ var ChatMessage = (0, import_react.memo)(function ChatMessage({ id, message, dis
 				id: `${id}-message`,
 				collapse,
 				lines: message.role === "tool" ? 30 : message.role === "assistant" ? 25 : collapse ? 15 : 25,
-				children: isNonTaskTool ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolOutput, { output: typeof message.content === "string" ? message.content : message.content.filter((c) => c.type === "text" || c.type === "image") }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageContents, {
+				children: isNonSubagentTool ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolOutput, { output: typeof message.content === "string" ? message.content : message.content.filter((c) => c.type === "text" || c.type === "image") }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageContents, {
 					message,
 					references
 				}, `${id}-contents`)
@@ -117203,6 +117218,45 @@ var TimelineSpan = class {
 		return computeIdleTime(includeBranches ? [...this.content, ...this.branches] : this.content, this.startTime(includeBranches), this.endTime(includeBranches));
 	}
 };
+/**
+* True if `span` has no visible content and no non-empty nested branches.
+* `anchor`, `branch`, and `step` events are structural and don't count.
+*/
+function isEmptyBranch(span) {
+	return !span.content.some((item) => {
+		if (item.type === "span") return true;
+		const evt = item.event.event;
+		return evt !== "anchor" && evt !== "branch" && evt !== "step";
+	}) && span.branches.length === 0;
+}
+/**
+* Return a copy of `timeline` with empty branches pruned recursively.
+* Walks the span tree, pruning empty branches bottom-up so that branches
+* which only carry other (empty) branches are themselves dropped.
+*/
+function filterEmptyBranches(timeline) {
+	return {
+		name: timeline.name,
+		description: timeline.description,
+		root: pruneEmptyBranches(timeline.root)
+	};
+}
+function pruneEmptyBranches(span) {
+	const content = span.content.map((item) => item.type === "span" ? pruneEmptyBranches(item) : item);
+	const branches = span.branches.map(pruneEmptyBranches).filter((b) => !isEmptyBranch(b));
+	return new TimelineSpan({
+		id: span.id,
+		name: span.name,
+		spanType: span.spanType,
+		content,
+		branches,
+		branchedFrom: span.branchedFrom,
+		description: span.description,
+		utility: span.utility,
+		agentResult: span.agentResult,
+		outline: span.outline
+	});
+}
 /**
 * True if `span` (or any descendant span in its content tree) has branches.
 */
@@ -122410,9 +122464,10 @@ var TimelineMinimap = ({ root, selection, mapping, scrubberProgress, onScrub }) 
 	});
 };
 var TimelineOptionsPopover_module_default = {
-	title: "_title_3h2qq_1",
-	rows: "_rows_3h2qq_8",
-	row: "_row_3h2qq_8"
+	title: "_title_1f23l_1",
+	rows: "_rows_1f23l_8",
+	row: "_row_1f23l_8",
+	groupHeader: "_groupHeader_1f23l_29"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/timeline/components/TimelineOptionsPopover.tsx
@@ -122464,6 +122519,10 @@ var TimelineOptionsPopover = ({ isOpen, setIsOpen, positionEl, config, onToggleB
 						}
 					}), "Utility agents"]
 				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: TimelineOptionsPopover_module_default.groupHeader,
+					children: "Branches"
+				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: TimelineOptionsPopover_module_default.row,
 					onClick: onToggleBranches,
@@ -122474,9 +122533,9 @@ var TimelineOptionsPopover = ({ isOpen, setIsOpen, positionEl, config, onToggleB
 							e.stopPropagation();
 							onToggleBranches();
 						}
-					}), "Branches"]
+					}), "Show branches"]
 				}),
-				config.showBranches && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				config.showBranches && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: TimelineOptionsPopover_module_default.row,
 					onClick: () => config.setForkRelative(!config.forkRelative),
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
@@ -122487,7 +122546,18 @@ var TimelineOptionsPopover = ({ isOpen, setIsOpen, positionEl, config, onToggleB
 							config.setForkRelative(!config.forkRelative);
 						}
 					}), "Fork-relative branches"]
-				})
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: TimelineOptionsPopover_module_default.row,
+					onClick: () => config.setShowEmptyBranches(!config.showEmptyBranches),
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+						type: "checkbox",
+						checked: config.showEmptyBranches,
+						onChange: (e) => {
+							e.stopPropagation();
+							config.setShowEmptyBranches(!config.showEmptyBranches);
+						}
+					}), "Show empty branches"]
+				})] })
 			]
 		})]
 	});
@@ -122927,8 +122997,13 @@ function emitSyntheticSpan(events, opts) {
 		metadata: null
 	});
 }
-/** Outline label for a fork navigator: list children, capped to keep it short. */
-function forkNavLabel(children) {
+/**
+* Outline label for a fork navigator. Flattens all groups' child options
+* (excluding the leading stay-on-segment entry, which is always groups[*].options[0])
+* and caps at "first, second +N".
+*/
+function forkNavLabel(groups) {
+	const children = groups.flatMap((g) => g.options.slice(1));
 	if (children.length <= 2) return children.map((c) => c.label).join(", ");
 	return `${children[0].label} +${children.length - 1}`;
 }
@@ -122940,10 +123015,11 @@ function forkNavLabel(children) {
 * children sharing that anchor. `selectedIndex` is whichever option the
 * current path follows next.
 */
-function collectPathWithNavigators(rows, selectedRowKey) {
+function collectPathWithNavigators(rows, selectedRowKey, rawEvents) {
 	const events = [];
 	const sourceSpans = /* @__PURE__ */ new Map();
 	const path = buildPath(rows, selectedRowKey);
+	let lastNavSegIdx = null;
 	for (let segIdx = 0; segIdx < path.length; segIdx++) {
 		const seg = path[segIdx];
 		const nextRowKey = path[segIdx + 1]?.rowKey;
@@ -122958,18 +123034,32 @@ function collectPathWithNavigators(rows, selectedRowKey) {
 			}, ...children];
 			const isCut = anchorId === seg.cutAnchor;
 			const sel = isCut ? options.findIndex((o) => o.rowKey === nextRowKey) : 0;
+			const group = {
+				anchorId,
+				options,
+				selectedIndex: Math.max(0, sel)
+			};
+			let i = events.length - 1;
+			while (i >= 0 && events[i].event === "anchor") i--;
+			const last = events[i];
+			const prev = events[i - 1];
+			if (lastNavSegIdx === segIdx && last && prev && last.event === "span_end" && prev.event === "span_begin" && prev.type === "fork_nav" && last.span_id === prev.span_id && prev.parent_id === parentId) {
+				const data = prev.metadata?.fork_nav;
+				if (data) {
+					data.groups.push(group);
+					prev.name = forkNavLabel(data.groups);
+					return isCut;
+				}
+			}
 			emitSyntheticSpan(events, {
 				id: `forknav-${seg.span.id}-${anchorId || "restart"}`,
-				name: forkNavLabel(children),
+				name: forkNavLabel([group]),
 				type: "fork_nav",
 				parentId,
 				start: ts,
-				metadata: { fork_nav: {
-					anchorId,
-					options,
-					selectedIndex: Math.max(0, sel)
-				} }
+				metadata: { fork_nav: { groups: [group] } }
 			});
+			lastNavSegIdx = segIdx;
 			return isCut;
 		};
 		const restartForks = forks.get("");
@@ -123000,6 +123090,24 @@ function collectPathWithNavigators(rows, selectedRowKey) {
 			} else if (anchorId === seg.cutAnchor) break;
 		}
 	}
+	const leaf = path[path.length - 1];
+	if (leaf && leaf.span.spanType === "branch") {
+		if (isEmptyBranch(leaf.span)) {
+			const terminator = rawEvents ? findTerminatorTool(rawEvents, leaf.span.id) : null;
+			const startTs = leaf.span.startTime().toISOString();
+			emitSyntheticSpan(events, {
+				id: `emptybranch-${leaf.span.id}`,
+				name: `${leaf.span.name} (empty)`,
+				type: "empty_branch",
+				parentId: null,
+				start: startTs,
+				metadata: { empty_branch: {
+					branchName: leaf.span.name,
+					terminator
+				} }
+			});
+		}
+	}
 	return {
 		events,
 		sourceSpans
@@ -123025,6 +123133,27 @@ function buildSpanSelectKeys(rows) {
 		}
 	}
 	return keys;
+}
+/**
+* Find the most recent tool event whose position sits inside the given
+* trajectory's span_begin/span_end range. Returns the tool's function name,
+* or null when no tool is found in range.
+*/
+function findTerminatorTool(events, trajectorySpanId) {
+	let begin = -1;
+	let end = -1;
+	for (let i = 0; i < events.length; i++) {
+		const e = events[i];
+		if (e.span_id !== trajectorySpanId) continue;
+		if (e.event === "span_begin" && begin === -1) begin = i;
+		else if (e.event === "span_end") end = i;
+	}
+	if (begin === -1 || end === -1) return null;
+	for (let i = end - 1; i > begin; i--) {
+		const e = events[i];
+		if (e.event === "tool") return e.function;
+	}
+	return null;
 }
 /**
 * Walks the EventNode tree and attaches sourceSpan to any span_begin node
@@ -123774,6 +123903,7 @@ var kDefaultMarkerDepth = defaultMarkerConfig.depth;
 var kDefaultIncludeUtility = false;
 var kDefaultShowBranches = false;
 var kDefaultForkRelative = false;
+var kDefaultShowEmptyBranches = false;
 function useTimelineConfig(options = {}) {
 	const { branchesPresent = false } = options;
 	const [storedKinds, setStoredKinds, removeStoredKinds] = useProperty("timeline", "markerKinds");
@@ -123781,11 +123911,13 @@ function useTimelineConfig(options = {}) {
 	const [storedUtility, setStoredUtility, removeStoredUtility] = useProperty("timeline", "includeUtility");
 	const [storedShowBranches, setStoredShowBranches, removeStoredShowBranches] = useProperty("timeline", "showBranches");
 	const [storedForkRelative, setStoredForkRelative, removeStoredForkRelative] = useProperty("timeline", "forkRelative");
+	const [storedShowEmptyBranches, setStoredShowEmptyBranches, removeStoredShowEmptyBranches] = useProperty("timeline", "showEmptyBranches");
 	const markerKinds = storedKinds ?? kDefaultMarkerKinds;
 	const markerDepth = storedDepth ?? kDefaultMarkerDepth;
 	const includeUtility = storedUtility ?? kDefaultIncludeUtility;
 	const showBranches = storedShowBranches ?? (branchesPresent || kDefaultShowBranches);
 	const forkRelative = storedForkRelative ?? (showBranches || kDefaultForkRelative);
+	const showEmptyBranches = storedShowEmptyBranches ?? kDefaultShowEmptyBranches;
 	const markerConfig = (0, import_react.useMemo)(() => ({
 		kinds: markerKinds,
 		depth: markerDepth
@@ -123793,13 +123925,15 @@ function useTimelineConfig(options = {}) {
 	const agentConfig = (0, import_react.useMemo)(() => ({
 		includeUtility,
 		showBranches,
-		forkRelative
+		forkRelative,
+		showEmptyBranches
 	}), [
 		includeUtility,
 		showBranches,
-		forkRelative
+		forkRelative,
+		showEmptyBranches
 	]);
-	const isDefault = storedKinds === void 0 && storedDepth === void 0 && storedUtility === void 0 && storedShowBranches === void 0 && storedForkRelative === void 0;
+	const isDefault = storedKinds === void 0 && storedDepth === void 0 && storedUtility === void 0 && storedShowBranches === void 0 && storedForkRelative === void 0 && storedShowEmptyBranches === void 0;
 	return {
 		markerConfig,
 		agentConfig,
@@ -123808,11 +123942,13 @@ function useTimelineConfig(options = {}) {
 		includeUtility,
 		showBranches,
 		forkRelative,
+		showEmptyBranches,
 		setMarkerKinds: setStoredKinds,
 		setMarkerDepth: setStoredDepth,
 		setIncludeUtility: setStoredUtility,
 		setShowBranches: setStoredShowBranches,
 		setForkRelative: setStoredForkRelative,
+		setShowEmptyBranches: setStoredShowEmptyBranches,
 		toggleMarkerKind: (0, import_react.useCallback)((kind) => {
 			const current = storedKinds ?? kDefaultMarkerKinds;
 			setStoredKinds(current.includes(kind) ? current.filter((k) => k !== kind) : [...current, kind]);
@@ -123823,12 +123959,14 @@ function useTimelineConfig(options = {}) {
 			removeStoredUtility();
 			removeStoredShowBranches();
 			removeStoredForkRelative();
+			removeStoredShowEmptyBranches();
 		}, [
 			removeStoredKinds,
 			removeStoredDepth,
 			removeStoredUtility,
 			removeStoredShowBranches,
-			removeStoredForkRelative
+			removeStoredForkRelative,
+			removeStoredShowEmptyBranches
 		]),
 		isDefault
 	};
@@ -124046,10 +124184,13 @@ function attachOrphanedEvents(timelines, events) {
 		root: newRoot
 	} : tl);
 }
-function useTimelinesArray(events, serverTimelines) {
+function useTimelinesArray(events, serverTimelines, options) {
+	const showEmptyBranches = options?.showEmptyBranches ?? false;
 	const builtTimeline = (0, import_react.useMemo)(() => buildTimeline(events), [events]);
 	const convertedTimelines = (0, import_react.useMemo)(() => serverTimelines && serverTimelines.length > 0 ? serverTimelines.map((tl) => convertServerTimeline(tl, events)) : null, [serverTimelines, events]);
-	return (0, import_react.useMemo)(() => convertedTimelines ? attachOrphanedEvents(convertedTimelines, events) : null, [convertedTimelines, events]) ?? [builtTimeline];
+	const withOrphans = (0, import_react.useMemo)(() => convertedTimelines ? attachOrphanedEvents(convertedTimelines, events) : null, [convertedTimelines, events]);
+	const resolved = (0, import_react.useMemo)(() => withOrphans ?? [builtTimeline], [withOrphans, builtTimeline]);
+	return (0, import_react.useMemo)(() => showEmptyBranches ? resolved : resolved.map(filterEmptyBranches), [resolved, showEmptyBranches]);
 }
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/timeline/hooks/useTranscriptTimeline.ts
@@ -124070,7 +124211,7 @@ function useTranscriptTimeline(options) {
 	const includeUtility = timelineOptions?.includeUtility ?? false;
 	const showBranches = timelineOptions?.showBranches ?? false;
 	const forkRelative = timelineOptions?.forkRelative ?? false;
-	const timelines = useTimelinesArray(events, serverTimelines);
+	const timelines = useTimelinesArray(events, serverTimelines, { showEmptyBranches: timelineOptions?.showEmptyBranches ?? false });
 	const { active: activeTimeline, activeIndex: activeTimelineIndex, setActive: setActiveTimeline } = useActiveTimeline(timelines, activeTimelineProps);
 	const baseTimeline = activeTimeline;
 	const [viewStack, setViewStack] = (0, import_react.useState)([]);
@@ -124125,7 +124266,7 @@ function useTranscriptTimeline(options) {
 		const rowKey = parsed?.rowKey ?? "";
 		const row = state.rows.find((r) => r.key === rowKey);
 		if (spans.length === 1 && (row?.branch || (spans[0]?.branches.length ?? 0) > 0)) {
-			const collected = collectPathWithNavigators(state.rows, rowKey);
+			const collected = collectPathWithNavigators(state.rows, rowKey, events);
 			return {
 				selectedEvents: collected.events,
 				sourceSpans: collected.sourceSpans,
@@ -124370,7 +124511,7 @@ var useEventNodes = (events, running, sourceSpans) => {
 			return eventNodes.filter((node) => {
 				if (node.children && node.children.length > 0) node.children = filterEmpty(node.children);
 				if (node.sourceSpan) return true;
-				if (node.event.event === "span_begin" && node.event.type === "fork_nav") return true;
+				if (node.event.event === "span_begin" && (node.event.type === "fork_nav" || node.event.type === "empty_branch")) return true;
 				return node.event.event !== "span_begin" && node.event.event !== "step" || node.children && node.children.length > 0;
 			});
 		};
@@ -124518,6 +124659,99 @@ var BranchEventView = ({ eventNode, className }) => {
 		})
 	});
 };
+var BranchPoint_module_default = {
+	branchPoint: "_branchPoint_m92x3_1",
+	label: "_label_m92x3_20",
+	glyph: "_glyph_m92x3_27",
+	labelText: "_labelText_m92x3_36",
+	segmented: "_segmented_m92x3_44",
+	segment: "_segment_m92x3_44",
+	continuesGlyph: "_continuesGlyph_m92x3_87"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/transcript/BranchPoint.tsx
+var BranchPoint = ({ parent, spawned, viewing, onSelect, className }) => {
+	if (spawned.length === 0) return null;
+	const options = [parent, ...spawned];
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		role: "group",
+		"aria-label": "Branch point",
+		className: clsx(BranchPoint_module_default.branchPoint, className),
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+			className: BranchPoint_module_default.label,
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", {
+				className: clsx(TranscriptIcons.fork, BranchPoint_module_default.glyph),
+				"aria-hidden": "true"
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: BranchPoint_module_default.labelText,
+				children: "Branch point"
+			})]
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			role: "radiogroup",
+			"aria-label": "Choose branch",
+			className: BranchPoint_module_default.segmented,
+			children: options.map((b) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Segment, {
+				branch: b,
+				isCurrent: b === viewing,
+				isParent: b === parent,
+				onSelect
+			}, b))
+		})]
+	});
+};
+var Segment = ({ branch, isCurrent, isParent, onSelect }) => {
+	const interactive = !!onSelect && !isCurrent;
+	const handleClick = (e) => {
+		if (interactive && onSelect) onSelect(branch, e.currentTarget);
+	};
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+		type: "button",
+		role: "radio",
+		className: BranchPoint_module_default.segment,
+		"data-testid": "bp-segment",
+		"data-branch": branch,
+		"aria-checked": isCurrent,
+		"aria-pressed": isCurrent ? "true" : "false",
+		onClick: interactive ? handleClick : void 0,
+		disabled: !interactive,
+		children: [isParent && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ContinuesGlyph, {}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: branch })]
+	});
+};
+var ContinuesGlyph = () => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+	className: BranchPoint_module_default.continuesGlyph,
+	viewBox: "0 0 9 9",
+	"aria-hidden": "true",
+	"data-testid": "bp-continues",
+	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M 1 1 L 8 4.5 L 1 8 Z" })
+});
+/**
+* Adapt a merged `fork_nav` payload to BranchPoint props.
+*/
+function forkNavToBranchPointProps(data) {
+	const first = data.groups[0];
+	if (!first || first.options.length === 0) return null;
+	const parent = first.options[0].label;
+	const spawned = [];
+	let viewing = parent;
+	for (const group of data.groups) {
+		for (let i = 1; i < group.options.length; i++) spawned.push(group.options[i].label);
+		if (group.selectedIndex > 0) viewing = group.options[group.selectedIndex].label;
+	}
+	if (spawned.length === 0) return null;
+	return {
+		parent,
+		spawned,
+		viewing
+	};
+}
+/**
+* Find the swimlane row key for a clicked branch label. First match wins
+* when labels collide across merged groups.
+*/
+function findRowKeyForLabel(data, label) {
+	for (const group of data.groups) for (const opt of group.options) if (opt.label === label) return opt.rowKey;
+	return null;
+}
 var CheckpointEventView_module_default = {
 	panel: "_panel_1dnhl_1",
 	metric: "_metric_1dnhl_5",
@@ -124630,6 +124864,28 @@ var CompactionEventView = ({ eventNode, className }) => {
 		})
 	});
 };
+var EmptyBranchView_module_default = {
+	empty: "_empty_f9al6_1",
+	headline: "_headline_f9al6_6",
+	detail: "_detail_f9al6_12"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/transcript/EmptyBranchView.tsx
+var EmptyBranchView = ({ eventNode, className }) => {
+	const data = eventNode.event.metadata?.empty_branch;
+	if (!data) return null;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: clsx(EmptyBranchView_module_default.empty, className),
+		role: "note",
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: EmptyBranchView_module_default.headline,
+			children: "No events in this branch"
+		}), data.terminator ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: EmptyBranchView_module_default.detail,
+			children: ["Branch ended via ", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", { children: data.terminator })]
+		}) : null]
+	});
+};
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/ErrorEventView.tsx
 var ErrorEventView = ({ eventNode, className }) => {
@@ -124647,30 +124903,6 @@ var ErrorEventView = ({ eventNode, className }) => {
 				margin: "0.5em 0"
 			}
 		})
-	});
-};
-var ForkNavigatorView_module_default = {
-	nav: "_nav_1tozt_1",
-	icon: "_icon_1tozt_12",
-	pill: "_pill_1tozt_18",
-	selected: "_selected_1tozt_33"
-};
-//#endregion
-//#region ../../packages/inspect-components/src/transcript/ForkNavigatorView.tsx
-var ForkNavigatorView = ({ eventNode, className }) => {
-	const data = eventNode.event.metadata?.fork_nav;
-	const selectRow = useTimelineRowSelect();
-	if (!data || data.options.length < 2) return null;
-	const { options, selectedIndex } = data;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: clsx(ForkNavigatorView_module_default.nav, className),
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(TranscriptIcons.fork, ForkNavigatorView_module_default.icon) }), options.map((opt, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-			type: "button",
-			className: clsx(ForkNavigatorView_module_default.pill, i === selectedIndex && ForkNavigatorView_module_default.selected),
-			onClick: (e) => i === selectedIndex ? void 0 : selectRow?.(opt.rowKey, e.currentTarget.closest("[data-index]") ?? e.currentTarget),
-			"aria-current": i === selectedIndex ? "true" : void 0,
-			children: opt.label
-		}, opt.rowKey))]
 	});
 };
 var InfoEventView_module_default = { panel: "_panel_vz394_1" };
@@ -126796,6 +127028,7 @@ TranscriptVirtualList.displayName = "TranscriptVirtualList";
 * Renders the event based on its type.
 */
 var RenderedEventNodeInner = ({ node, next, className, context, onAutoCollapse, renderAgentCard, eventCallbacks }) => {
+	const selectRow = useTimelineRowSelect();
 	switch (node.event.event) {
 		case "sample_init": return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleInitEventView, {
 			eventNode: node,
@@ -126847,7 +127080,21 @@ var RenderedEventNodeInner = ({ node, next, className, context, onAutoCollapse, 
 			eventCallbacks
 		});
 		case "span_begin":
-			if (node.event.type === "fork_nav") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ForkNavigatorView, {
+			if (node.event.type === "fork_nav") {
+				const data = node.event.metadata?.fork_nav;
+				if (!data) return null;
+				const props = forkNavToBranchPointProps(data);
+				if (!props) return null;
+				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(BranchPoint, {
+					...props,
+					className,
+					onSelect: (label, anchorEl) => {
+						const rowKey = findRowKeyForLabel(data, label);
+						if (rowKey) selectRow?.(rowKey, anchorEl);
+					}
+				});
+			}
+			if (node.event.type === "empty_branch") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyBranchView, {
 				eventNode: node,
 				className
 			});
@@ -129049,7 +129296,7 @@ var sampleStatus_module_default = {
 //#region src/app/samples/status/sampleStatus.tsx
 var sampleStatus = (completed, error) => {
 	if (error) return errorType(error) === "CancelledError" ? "cancelled" : "error";
-	return completed ? "ok" : "running";
+	return completed === false ? "running" : "ok";
 };
 var isCancelled = (sample) => {
 	if ("error" in sample && sample.error) {
@@ -132574,7 +132821,7 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 		setCollapsedMode(isCollapsed(collapsedMode) ? "expanded" : "collapsed");
 	}, [collapsedMode, setCollapsedMode]);
 	const { isDebugFilter, isDefaultFilter, isNoneFilter } = useTranscriptFilter();
-	const api = useStore((state) => state.api);
+	const api = useApi();
 	const downloadFiles = useStore((state) => state.capabilities.downloadFiles);
 	const tools = [];
 	const [icon, setIcon] = (0, import_react.useState)(ApplicationIcons.copy);
@@ -132613,7 +132860,7 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 			}
 		}
 	}, "sample-copy"));
-	if (downloadFiles && sample && api?.download_file) {
+	if (downloadFiles && sample && api.download_file) {
 		const sampleId = sample.id ?? "sample";
 		tools.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolDropdownButton, {
 			label: "Download",
@@ -133387,18 +133634,18 @@ var MessageBand = ({ id, message, type, scope = "eval" }) => {
 	});
 };
 var EditButton_module_default = {
-	button: "_button_1pdin_2",
-	link: "_link_1pdin_1",
-	pill: "_pill_1pdin_1"
+	button: "_button_u0dz8_2",
+	link: "_link_u0dz8_1",
+	pill: "_pill_u0dz8_1"
 };
 //#endregion
 //#region src/app/log-view/title-view/EditButton.tsx
 var EditButton = ({ onClick, title, variant = "link", children }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
 	type: "button",
-	className: clsx(EditButton_module_default.button, variant === "pill" ? EditButton_module_default.pill : EditButton_module_default.link, "text-size-smaller"),
+	className: clsx(EditButton_module_default.button, variant === "pill" ? EditButton_module_default.pill : EditButton_module_default.link, "text-size-smallest"),
 	onClick,
-	title: title ?? "Edit",
-	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: ApplicationIcons.pencil }), children ?? "Edit"]
+	title: title ?? "edit",
+	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: ApplicationIcons.pencil }), children ?? "edit"]
 });
 var Modal_module_default = {
 	modal: "_modal_8i1ew_1",
@@ -134032,7 +134279,7 @@ var seedFor = (type) => {
 	}
 };
 var EditMetadataDialog = ({ showing, setShowing, currentMetadata, logFile, onSaved }) => {
-	const api = useStore((state) => state.api);
+	const api = useApi();
 	const initialEntries = (0, import_react.useMemo)(() => Object.entries(currentMetadata).map(([key, value]) => ({
 		key,
 		text: toEditableString(value),
@@ -134583,2936 +134830,13 @@ var InfoTab = ({ evalSpec, evalPlan, evalResults, evalStatus, metadata, sampleCo
 	});
 };
 //#endregion
-//#region src/utils/clear-events-preprocessor.ts
-/**
-* JSON preprocessor that clears large events arrays at the byte level.
-* Works directly with Uint8Array to avoid creating gigabyte-sized strings.
-* Discards all events if the events array exceeds 100MB, leaving an empty array.
-*/
-var MAX_EVENTS_SIZE_BYTES = 350 * 1024 * 1024;
-var MAX_TOTAL_SIZE = 512 * 1024 * 1024;
-/**
-* Finds the "events": [ pattern in the byte array.
-* Returns the position of the opening bracket, or -1 if not found.
-*/
-function findEventsArrayStart(data) {
-	const pattern = new TextEncoder().encode("\"events\"");
-	for (let i = 0; i < data.length - pattern.length - 10; i++) {
-		let matches = true;
-		for (let j = 0; j < pattern.length; j++) if (data[i + j] !== pattern[j]) {
-			matches = false;
-			break;
-		}
-		if (matches) {
-			let pos = i + pattern.length;
-			while (pos < data.length && (data[pos] === 32 || data[pos] === 9 || data[pos] === 10 || data[pos] === 13)) pos++;
-			if (pos < data.length && data[pos] === 58) {
-				pos++;
-				while (pos < data.length && (data[pos] === 32 || data[pos] === 9 || data[pos] === 10 || data[pos] === 13)) pos++;
-				if (pos < data.length && data[pos] === 91) return pos;
-			}
-		}
-	}
-	return -1;
-}
-/**
-* Finds the closing bracket of an array starting at arrayStart.
-* Properly handles nested structures and strings.
-*/
-function findArrayEnd(data, arrayStart) {
-	let depth = 0;
-	let inString = false;
-	let escaped = false;
-	for (let i = arrayStart; i < data.length; i++) {
-		const byte = data[i];
-		if (escaped) {
-			escaped = false;
-			continue;
-		}
-		if (byte === 92) {
-			escaped = true;
-			continue;
-		}
-		if (byte === 34) {
-			inString = !inString;
-			continue;
-		}
-		if (inString) continue;
-		if (byte === 91 || byte === 123) depth++;
-		else if (byte === 93 || byte === 125) {
-			depth--;
-			if (depth === 0 && byte === 93) return i;
-		}
-	}
-	return -1;
-}
-/**
-* Clears events array at the byte level if it exceeds the size limits.
-* Replaces the entire events array with an empty array.
-* This allows handling gigabyte-sized files without running out of memory.
-*/
-function clearLargeEventsArray(data) {
-	if (data.length <= MAX_EVENTS_SIZE_BYTES) return data;
-	const arrayStart = findEventsArrayStart(data);
-	if (arrayStart === -1) return data;
-	const arrayEnd = findArrayEnd(data, arrayStart);
-	if (arrayEnd === -1) return data;
-	if (arrayEnd - arrayStart - 1 <= MAX_EVENTS_SIZE_BYTES && data.length <= MAX_TOTAL_SIZE) return data;
-	const before = data.slice(0, arrayStart + 1);
-	const after = data.slice(arrayEnd);
-	const result = new Uint8Array(before.length + after.length);
-	let offset = 0;
-	result.set(before, offset);
-	offset += before.length;
-	result.set(after, offset);
-	return result;
-}
-//#endregion
-//#region ../../node_modules/.pnpm/fflate@0.8.3/node_modules/fflate/esm/browser.js
-var ch2 = {};
-var wk = (function(c, id, msg, transfer, cb) {
-	var w = new Worker(ch2[id] || (ch2[id] = URL.createObjectURL(new Blob([c + ";addEventListener(\"error\",function(e){e=e.error;postMessage({$e$:[e.message,e.code,e.stack]})})"], { type: "text/javascript" }))));
-	w.onmessage = function(e) {
-		var d = e.data, ed = d.$e$;
-		if (ed) {
-			var err = new Error(ed[0]);
-			err["code"] = ed[1];
-			err.stack = ed[2];
-			cb(err, null);
-		} else cb(null, d);
-	};
-	w.postMessage(msg, transfer);
-	return w;
-});
-var u8$1 = Uint8Array, u16$1 = Uint16Array, i32$1 = Int32Array;
-var fleb = new u8$1([
-	0,
-	0,
-	0,
-	0,
-	0,
-	0,
-	0,
-	0,
-	1,
-	1,
-	1,
-	1,
-	2,
-	2,
-	2,
-	2,
-	3,
-	3,
-	3,
-	3,
-	4,
-	4,
-	4,
-	4,
-	5,
-	5,
-	5,
-	5,
-	0,
-	0,
-	0,
-	0
-]);
-var fdeb = new u8$1([
-	0,
-	0,
-	0,
-	0,
-	1,
-	1,
-	2,
-	2,
-	3,
-	3,
-	4,
-	4,
-	5,
-	5,
-	6,
-	6,
-	7,
-	7,
-	8,
-	8,
-	9,
-	9,
-	10,
-	10,
-	11,
-	11,
-	12,
-	12,
-	13,
-	13,
-	0,
-	0
-]);
-var clim = new u8$1([
-	16,
-	17,
-	18,
-	0,
-	8,
-	7,
-	9,
-	6,
-	10,
-	5,
-	11,
-	4,
-	12,
-	3,
-	13,
-	2,
-	14,
-	1,
-	15
-]);
-var freb = function(eb, start) {
-	var b = new u16$1(31);
-	for (var i = 0; i < 31; ++i) b[i] = start += 1 << eb[i - 1];
-	var r = new i32$1(b[30]);
-	for (var i = 1; i < 30; ++i) for (var j = b[i]; j < b[i + 1]; ++j) r[j] = j - b[i] << 5 | i;
-	return {
-		b,
-		r
-	};
-};
-var _a$1 = freb(fleb, 2), fl = _a$1.b, revfl = _a$1.r;
-fl[28] = 258, revfl[258] = 28;
-var _b = freb(fdeb, 0), fd = _b.b;
-_b.r;
-var rev = new u16$1(32768);
-for (var i$1 = 0; i$1 < 32768; ++i$1) {
-	var x = (i$1 & 43690) >> 1 | (i$1 & 21845) << 1;
-	x = (x & 52428) >> 2 | (x & 13107) << 2;
-	x = (x & 61680) >> 4 | (x & 3855) << 4;
-	rev[i$1] = ((x & 65280) >> 8 | (x & 255) << 8) >> 1;
-}
-var hMap = (function(cd, mb, r) {
-	var s = cd.length;
-	var i = 0;
-	var l = new u16$1(mb);
-	for (; i < s; ++i) if (cd[i]) ++l[cd[i] - 1];
-	var le = new u16$1(mb);
-	for (i = 1; i < mb; ++i) le[i] = le[i - 1] + l[i - 1] << 1;
-	var co;
-	if (r) {
-		co = new u16$1(1 << mb);
-		var rvb = 15 - mb;
-		for (i = 0; i < s; ++i) if (cd[i]) {
-			var sv = i << 4 | cd[i];
-			var r_1 = mb - cd[i];
-			var v = le[cd[i] - 1]++ << r_1;
-			for (var m = v | (1 << r_1) - 1; v <= m; ++v) co[rev[v] >> rvb] = sv;
-		}
-	} else {
-		co = new u16$1(s);
-		for (i = 0; i < s; ++i) if (cd[i]) co[i] = rev[le[cd[i] - 1]++] >> 15 - cd[i];
-	}
-	return co;
-});
-var flt = new u8$1(288);
-for (var i$1 = 0; i$1 < 144; ++i$1) flt[i$1] = 8;
-for (var i$1 = 144; i$1 < 256; ++i$1) flt[i$1] = 9;
-for (var i$1 = 256; i$1 < 280; ++i$1) flt[i$1] = 7;
-for (var i$1 = 280; i$1 < 288; ++i$1) flt[i$1] = 8;
-var fdt = new u8$1(32);
-for (var i$1 = 0; i$1 < 32; ++i$1) fdt[i$1] = 5;
-var flrm = /* @__PURE__ */ hMap(flt, 9, 1), fdrm = /* @__PURE__ */ hMap(fdt, 5, 1);
-var max = function(a) {
-	var m = a[0];
-	for (var i = 1; i < a.length; ++i) if (a[i] > m) m = a[i];
-	return m;
-};
-var bits = function(d, p, m) {
-	var o = p / 8 | 0;
-	return (d[o] | d[o + 1] << 8) >> (p & 7) & m;
-};
-var bits16 = function(d, p) {
-	var o = p / 8 | 0;
-	return (d[o] | d[o + 1] << 8 | d[o + 2] << 16) >> (p & 7);
-};
-var shft = function(p) {
-	return (p + 7) / 8 | 0;
-};
-var slc$1 = function(v, s, e) {
-	if (s == null || s < 0) s = 0;
-	if (e == null || e > v.length) e = v.length;
-	return new u8$1(v.subarray(s, e));
-};
-var ec$1 = [
-	"unexpected EOF",
-	"invalid block type",
-	"invalid length/literal",
-	"invalid distance",
-	"stream finished",
-	"no stream handler",
-	,
-	"no callback",
-	"invalid UTF-8 data",
-	"extra field too long",
-	"date not in range 1980-2099",
-	"filename too long",
-	"stream finishing",
-	"invalid zip data"
-];
-var err$1 = function(ind, msg, nt) {
-	var e = new Error(msg || ec$1[ind]);
-	e.code = ind;
-	if (Error.captureStackTrace) Error.captureStackTrace(e, err$1);
-	if (!nt) throw e;
-	return e;
-};
-var inflt = function(dat, st, buf, dict) {
-	var sl = dat.length, dl = dict ? dict.length : 0;
-	if (!sl || st.f && !st.l) return buf || new u8$1(0);
-	var noBuf = !buf;
-	var resize = noBuf || st.i != 2;
-	var noSt = st.i;
-	if (noBuf) buf = new u8$1(sl * 3);
-	var cbuf = function(l) {
-		var bl = buf.length;
-		if (l > bl) {
-			var nbuf = new u8$1(Math.max(bl * 2, l));
-			nbuf.set(buf);
-			buf = nbuf;
-		}
-	};
-	var final = st.f || 0, pos = st.p || 0, bt = st.b || 0, lm = st.l, dm = st.d, lbt = st.m, dbt = st.n;
-	var tbts = sl * 8;
-	do {
-		if (!lm) {
-			final = bits(dat, pos, 1);
-			var type = bits(dat, pos + 1, 3);
-			pos += 3;
-			if (!type) {
-				var s = shft(pos) + 4, l = dat[s - 4] | dat[s - 3] << 8, t = s + l;
-				if (t > sl) {
-					if (noSt) err$1(0);
-					break;
-				}
-				if (resize) cbuf(bt + l);
-				buf.set(dat.subarray(s, t), bt);
-				st.b = bt += l, st.p = pos = t * 8, st.f = final;
-				continue;
-			} else if (type == 1) lm = flrm, dm = fdrm, lbt = 9, dbt = 5;
-			else if (type == 2) {
-				var hLit = bits(dat, pos, 31) + 257, hcLen = bits(dat, pos + 10, 15) + 4;
-				var tl = hLit + bits(dat, pos + 5, 31) + 1;
-				pos += 14;
-				var ldt = new u8$1(tl);
-				var clt = new u8$1(19);
-				for (var i = 0; i < hcLen; ++i) clt[clim[i]] = bits(dat, pos + i * 3, 7);
-				pos += hcLen * 3;
-				var clb = max(clt), clbmsk = (1 << clb) - 1;
-				var clm = hMap(clt, clb, 1);
-				for (var i = 0; i < tl;) {
-					var r = clm[bits(dat, pos, clbmsk)];
-					pos += r & 15;
-					var s = r >> 4;
-					if (s < 16) ldt[i++] = s;
-					else {
-						var c = 0, n = 0;
-						if (s == 16) n = 3 + bits(dat, pos, 3), pos += 2, c = ldt[i - 1];
-						else if (s == 17) n = 3 + bits(dat, pos, 7), pos += 3;
-						else if (s == 18) n = 11 + bits(dat, pos, 127), pos += 7;
-						while (n--) ldt[i++] = c;
-					}
-				}
-				var lt = ldt.subarray(0, hLit), dt = ldt.subarray(hLit);
-				lbt = max(lt);
-				dbt = max(dt);
-				lm = hMap(lt, lbt, 1);
-				dm = hMap(dt, dbt, 1);
-			} else err$1(1);
-			if (pos > tbts) {
-				if (noSt) err$1(0);
-				break;
-			}
-		}
-		if (resize) cbuf(bt + 131072);
-		var lms = (1 << lbt) - 1, dms = (1 << dbt) - 1;
-		var lpos = pos;
-		for (;; lpos = pos) {
-			var c = lm[bits16(dat, pos) & lms], sym = c >> 4;
-			pos += c & 15;
-			if (pos > tbts) {
-				if (noSt) err$1(0);
-				break;
-			}
-			if (!c) err$1(2);
-			if (sym < 256) buf[bt++] = sym;
-			else if (sym == 256) {
-				lpos = pos, lm = null;
-				break;
-			} else {
-				var add = sym - 254;
-				if (sym > 264) {
-					var i = sym - 257, b = fleb[i];
-					add = bits(dat, pos, (1 << b) - 1) + fl[i];
-					pos += b;
-				}
-				var d = dm[bits16(dat, pos) & dms], dsym = d >> 4;
-				if (!d) err$1(3);
-				pos += d & 15;
-				var dt = fd[dsym];
-				if (dsym > 3) {
-					var b = fdeb[dsym];
-					dt += bits16(dat, pos) & (1 << b) - 1, pos += b;
-				}
-				if (pos > tbts) {
-					if (noSt) err$1(0);
-					break;
-				}
-				if (resize) cbuf(bt + 131072);
-				var end = bt + add;
-				if (bt < dt) {
-					var shift = dl - dt, dend = Math.min(dt, end);
-					if (shift + bt < 0) err$1(3);
-					for (; bt < dend; ++bt) buf[bt] = dict[shift + bt];
-				}
-				for (; bt < end; ++bt) buf[bt] = buf[bt - dt];
-			}
-		}
-		st.l = lm, st.p = lpos, st.b = bt, st.f = final;
-		if (lm) final = 1, st.m = lbt, st.d = dm, st.n = dbt;
-	} while (!final);
-	return bt != buf.length && noBuf ? slc$1(buf, 0, bt) : buf.subarray(0, bt);
-};
-var et = /* @__PURE__ */ new u8$1(0);
-var mrg = function(a, b) {
-	var o = {};
-	for (var k in a) o[k] = a[k];
-	for (var k in b) o[k] = b[k];
-	return o;
-};
-var wcln = function(fn, fnStr, td) {
-	var dt = fn();
-	var st = fn.toString();
-	var ks = st.slice(st.indexOf("[") + 1, st.lastIndexOf("]")).replace(/\s+/g, "").split(",");
-	for (var i = 0; i < dt.length; ++i) {
-		var v = dt[i], k = ks[i];
-		if (typeof v == "function") {
-			fnStr += ";" + k + "=";
-			var st_1 = v.toString();
-			if (v.prototype) if (st_1.indexOf("[native code]") != -1) {
-				var spInd = st_1.indexOf(" ", 8) + 1;
-				fnStr += st_1.slice(spInd, st_1.indexOf("(", spInd));
-			} else {
-				fnStr += st_1;
-				for (var t in v.prototype) fnStr += ";" + k + ".prototype." + t + "=" + v.prototype[t].toString();
-			}
-			else fnStr += st_1;
-		} else td[k] = v;
-	}
-	return fnStr;
-};
-var ch = [];
-var cbfs = function(v) {
-	var tl = [];
-	for (var k in v) if (v[k].buffer) tl.push((v[k] = new v[k].constructor(v[k])).buffer);
-	return tl;
-};
-var wrkr = function(fns, init, id, cb) {
-	if (!ch[id]) {
-		var fnStr = "", td_1 = {}, m = fns.length - 1;
-		for (var i = 0; i < m; ++i) fnStr = wcln(fns[i], fnStr, td_1);
-		ch[id] = {
-			c: wcln(fns[m], fnStr, td_1),
-			e: td_1
-		};
-	}
-	var td = mrg({}, ch[id].e);
-	return wk(ch[id].c + ";onmessage=function(e){for(var k in e.data)self[k]=e.data[k];onmessage=" + init.toString() + "}", id, td, cbfs(td), cb);
-};
-var bInflt = function() {
-	return [
-		u8$1,
-		u16$1,
-		i32$1,
-		fleb,
-		fdeb,
-		clim,
-		fl,
-		fd,
-		flrm,
-		fdrm,
-		rev,
-		ec$1,
-		hMap,
-		max,
-		bits,
-		bits16,
-		shft,
-		slc$1,
-		err$1,
-		inflt,
-		inflateSync,
-		pbf,
-		gopt
-	];
-};
-var guze = function() {
-	return [gzs, gzl];
-};
-var zule = function() {
-	return [zls];
-};
-var pbf = function(msg) {
-	return postMessage(msg, [msg.buffer]);
-};
-var gopt = function(o) {
-	return o && {
-		out: o.size && new u8$1(o.size),
-		dictionary: o.dictionary
-	};
-};
-var cbify = function(dat, opts, fns, init, id, cb) {
-	var w = wrkr(fns, init, id, function(err, dat) {
-		w.terminate();
-		cb(err, dat);
-	});
-	w.postMessage([dat, opts], opts.consume ? [dat.buffer] : []);
-	return function() {
-		w.terminate();
-	};
-};
-var gzs = function(d) {
-	if (d[0] != 31 || d[1] != 139 || d[2] != 8) err$1(6, "invalid gzip data");
-	var flg = d[3];
-	var st = 10;
-	if (flg & 4) st += (d[10] | d[11] << 8) + 2;
-	for (var zs = (flg >> 3 & 1) + (flg >> 4 & 1); zs > 0; zs -= !d[st++]);
-	return st + (flg & 2);
-};
-var gzl = function(d) {
-	var l = d.length;
-	return (d[l - 4] | d[l - 3] << 8 | d[l - 2] << 16 | d[l - 1] << 24) >>> 0;
-};
-var zls = function(d, dict) {
-	if ((d[0] & 15) != 8 || d[0] >> 4 > 7 || (d[0] << 8 | d[1]) % 31) err$1(6, "invalid zlib data");
-	if ((d[1] >> 5 & 1) == +!dict) err$1(6, "invalid zlib data: " + (d[1] & 32 ? "need" : "unexpected") + " dictionary");
-	return (d[1] >> 3 & 4) + 2;
-};
-function inflate(data, opts, cb) {
-	if (!cb) cb = opts, opts = {};
-	if (typeof cb != "function") err$1(7);
-	return cbify(data, opts, [bInflt], function(ev) {
-		return pbf(inflateSync(ev.data[0], gopt(ev.data[1])));
-	}, 1, cb);
-}
-function inflateSync(data, opts) {
-	return inflt(data, { i: 2 }, opts && opts.out, opts && opts.dictionary);
-}
-function gunzip(data, opts, cb) {
-	if (!cb) cb = opts, opts = {};
-	if (typeof cb != "function") err$1(7);
-	return cbify(data, opts, [
-		bInflt,
-		guze,
-		function() {
-			return [gunzipSync];
-		}
-	], function(ev) {
-		return pbf(gunzipSync(ev.data[0], ev.data[1]));
-	}, 3, cb);
-}
-function gunzipSync(data, opts) {
-	var st = gzs(data);
-	if (st + 8 > data.length) err$1(6, "invalid gzip data");
-	return inflt(data.subarray(st, -8), { i: 2 }, opts && opts.out || new u8$1(gzl(data)), opts && opts.dictionary);
-}
-function unzlib(data, opts, cb) {
-	if (!cb) cb = opts, opts = {};
-	if (typeof cb != "function") err$1(7);
-	return cbify(data, opts, [
-		bInflt,
-		zule,
-		function() {
-			return [unzlibSync];
-		}
-	], function(ev) {
-		return pbf(unzlibSync(ev.data[0], gopt(ev.data[1])));
-	}, 5, cb);
-}
-function unzlibSync(data, opts) {
-	return inflt(data.subarray(zls(data, opts && opts.dictionary), -4), { i: 2 }, opts && opts.out, opts && opts.dictionary);
-}
-function decompress$1(data, opts, cb) {
-	if (!cb) cb = opts, opts = {};
-	if (typeof cb != "function") err$1(7);
-	return data[0] == 31 && data[1] == 139 && data[2] == 8 ? gunzip(data, opts, cb) : (data[0] & 15) != 8 || data[0] >> 4 > 7 || (data[0] << 8 | data[1]) % 31 ? inflate(data, opts, cb) : unzlib(data, opts, cb);
-}
-var td = typeof TextDecoder != "undefined" && /* @__PURE__ */ new TextDecoder();
-try {
-	td.decode(et, { stream: true });
-} catch (e) {}
-//#endregion
-//#region ../../node_modules/.pnpm/fzstd@0.1.1/node_modules/fzstd/esm/index.mjs
-var ab = ArrayBuffer, u8 = Uint8Array, u16 = Uint16Array, i16 = Int16Array, i32 = Int32Array;
-var slc = function(v, s, e) {
-	if (u8.prototype.slice) return u8.prototype.slice.call(v, s, e);
-	if (s == null || s < 0) s = 0;
-	if (e == null || e > v.length) e = v.length;
-	var n = new u8(e - s);
-	n.set(v.subarray(s, e));
-	return n;
-};
-var fill = function(v, n, s, e) {
-	if (u8.prototype.fill) return u8.prototype.fill.call(v, n, s, e);
-	if (s == null || s < 0) s = 0;
-	if (e == null || e > v.length) e = v.length;
-	for (; s < e; ++s) v[s] = n;
-	return v;
-};
-var cpw = function(v, t, s, e) {
-	if (u8.prototype.copyWithin) return u8.prototype.copyWithin.call(v, t, s, e);
-	if (s == null || s < 0) s = 0;
-	if (e == null || e > v.length) e = v.length;
-	while (s < e) v[t++] = v[s++];
-};
-var ec = [
-	"invalid zstd data",
-	"window size too large (>2046MB)",
-	"invalid block type",
-	"FSE accuracy too high",
-	"match distance too far back",
-	"unexpected EOF"
-];
-var err = function(ind, msg, nt) {
-	var e = new Error(msg || ec[ind]);
-	e.code = ind;
-	if (Error.captureStackTrace) Error.captureStackTrace(e, err);
-	if (!nt) throw e;
-	return e;
-};
-var rb = function(d, b, n) {
-	var i = 0, o = 0;
-	for (; i < n; ++i) o |= d[b++] << (i << 3);
-	return o;
-};
-var b4 = function(d, b) {
-	return (d[b] | d[b + 1] << 8 | d[b + 2] << 16 | d[b + 3] << 24) >>> 0;
-};
-var rzfh = function(dat, w) {
-	var n3 = dat[0] | dat[1] << 8 | dat[2] << 16;
-	if (n3 == 3126568 && dat[3] == 253) {
-		var flg = dat[4];
-		var ss = flg >> 5 & 1, cc = flg >> 2 & 1, df = flg & 3, fcf = flg >> 6;
-		if (flg & 8) err(0);
-		var bt = 6 - ss;
-		var db = df == 3 ? 4 : df;
-		var di = rb(dat, bt, db);
-		bt += db;
-		var fsb = fcf ? 1 << fcf : ss;
-		var fss = rb(dat, bt, fsb) + (fcf == 1 && 256);
-		var ws = fss;
-		if (!ss) {
-			var wb = 1 << 10 + (dat[5] >> 3);
-			ws = wb + (wb >> 3) * (dat[5] & 7);
-		}
-		if (ws > 2145386496) err(1);
-		var buf = new u8((w == 1 ? fss || ws : w ? 0 : ws) + 12);
-		buf[0] = 1, buf[4] = 4, buf[8] = 8;
-		return {
-			b: bt + fsb,
-			y: 0,
-			l: 0,
-			d: di,
-			w: w && w != 1 ? w : buf.subarray(12),
-			e: ws,
-			o: new i32(buf.buffer, 0, 3),
-			u: fss,
-			c: cc,
-			m: Math.min(131072, ws)
-		};
-	} else if ((n3 >> 4 | dat[3] << 20) == 25481893) return b4(dat, 4) + 8;
-	err(0);
-};
-var msb = function(val) {
-	var bits = 0;
-	for (; 1 << bits <= val; ++bits);
-	return bits - 1;
-};
-var rfse = function(dat, bt, mal) {
-	var tpos = (bt << 3) + 4;
-	var al = (dat[bt] & 15) + 5;
-	if (al > mal) err(3);
-	var sz = 1 << al;
-	var probs = sz, sym = -1, re = -1, i = -1, ht = sz;
-	var buf = new ab(512 + (sz << 2));
-	var freq = new i16(buf, 0, 256);
-	var dstate = new u16(buf, 0, 256);
-	var nstate = new u16(buf, 512, sz);
-	var bb1 = 512 + (sz << 1);
-	var syms = new u8(buf, bb1, sz);
-	var nbits = new u8(buf, bb1 + sz);
-	while (sym < 255 && probs > 0) {
-		var bits = msb(probs + 1);
-		var cbt = tpos >> 3;
-		var msk = (1 << bits + 1) - 1;
-		var val = (dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (tpos & 7) & msk;
-		var msk1fb = (1 << bits) - 1;
-		var msv = msk - probs - 1;
-		var sval = val & msk1fb;
-		if (sval < msv) tpos += bits, val = sval;
-		else {
-			tpos += bits + 1;
-			if (val > msk1fb) val -= msv;
-		}
-		freq[++sym] = --val;
-		if (val == -1) {
-			probs += val;
-			syms[--ht] = sym;
-		} else probs -= val;
-		if (!val) do {
-			var rbt = tpos >> 3;
-			re = (dat[rbt] | dat[rbt + 1] << 8) >> (tpos & 7) & 3;
-			tpos += 2;
-			sym += re;
-		} while (re == 3);
-	}
-	if (sym > 255 || probs) err(0);
-	var sympos = 0;
-	var sstep = (sz >> 1) + (sz >> 3) + 3;
-	var smask = sz - 1;
-	for (var s = 0; s <= sym; ++s) {
-		var sf = freq[s];
-		if (sf < 1) {
-			dstate[s] = -sf;
-			continue;
-		}
-		for (i = 0; i < sf; ++i) {
-			syms[sympos] = s;
-			do
-				sympos = sympos + sstep & smask;
-			while (sympos >= ht);
-		}
-	}
-	if (sympos) err(0);
-	for (i = 0; i < sz; ++i) {
-		var ns = dstate[syms[i]]++;
-		nstate[i] = (ns << (nbits[i] = al - msb(ns))) - sz;
-	}
-	return [tpos + 7 >> 3, {
-		b: al,
-		s: syms,
-		n: nbits,
-		t: nstate
-	}];
-};
-var rhu = function(dat, bt) {
-	var i = 0, wc = -1;
-	var buf = new u8(292), hb = dat[bt];
-	var hw = buf.subarray(0, 256);
-	var rc = buf.subarray(256, 268);
-	var ri = new u16(buf.buffer, 268);
-	if (hb < 128) {
-		var _a = rfse(dat, bt + 1, 6), ebt = _a[0], fdt = _a[1];
-		bt += hb;
-		var epos = ebt << 3;
-		var lb = dat[bt];
-		if (!lb) err(0);
-		var st1 = 0, st2 = 0, btr1 = fdt.b, btr2 = btr1;
-		var fpos = (++bt << 3) - 8 + msb(lb);
-		for (;;) {
-			fpos -= btr1;
-			if (fpos < epos) break;
-			var cbt = fpos >> 3;
-			st1 += (dat[cbt] | dat[cbt + 1] << 8) >> (fpos & 7) & (1 << btr1) - 1;
-			hw[++wc] = fdt.s[st1];
-			fpos -= btr2;
-			if (fpos < epos) break;
-			cbt = fpos >> 3;
-			st2 += (dat[cbt] | dat[cbt + 1] << 8) >> (fpos & 7) & (1 << btr2) - 1;
-			hw[++wc] = fdt.s[st2];
-			btr1 = fdt.n[st1];
-			st1 = fdt.t[st1];
-			btr2 = fdt.n[st2];
-			st2 = fdt.t[st2];
-		}
-		if (++wc > 255) err(0);
-	} else {
-		wc = hb - 127;
-		for (; i < wc; i += 2) {
-			var byte = dat[++bt];
-			hw[i] = byte >> 4;
-			hw[i + 1] = byte & 15;
-		}
-		++bt;
-	}
-	var wes = 0;
-	for (i = 0; i < wc; ++i) {
-		var wt = hw[i];
-		if (wt > 11) err(0);
-		wes += wt && 1 << wt - 1;
-	}
-	var mb = msb(wes) + 1;
-	var ts = 1 << mb;
-	var rem = ts - wes;
-	if (rem & rem - 1) err(0);
-	hw[wc++] = msb(rem) + 1;
-	for (i = 0; i < wc; ++i) {
-		var wt = hw[i];
-		++rc[hw[i] = wt && mb + 1 - wt];
-	}
-	var hbuf = new u8(ts << 1);
-	var syms = hbuf.subarray(0, ts), nb = hbuf.subarray(ts);
-	ri[mb] = 0;
-	for (i = mb; i > 0; --i) {
-		var pv = ri[i];
-		fill(nb, i, pv, ri[i - 1] = pv + rc[i] * (1 << mb - i));
-	}
-	if (ri[0] != ts) err(0);
-	for (i = 0; i < wc; ++i) {
-		var bits = hw[i];
-		if (bits) {
-			var code = ri[bits];
-			fill(syms, i, code, ri[bits] = code + (1 << mb - bits));
-		}
-	}
-	return [bt, {
-		n: nb,
-		b: mb,
-		s: syms
-	}];
-};
-var dllt = rfse(/* @__PURE__ */ new u8([
-	81,
-	16,
-	99,
-	140,
-	49,
-	198,
-	24,
-	99,
-	12,
-	33,
-	196,
-	24,
-	99,
-	102,
-	102,
-	134,
-	70,
-	146,
-	4
-]), 0, 6)[1];
-var dmlt = rfse(/* @__PURE__ */ new u8([
-	33,
-	20,
-	196,
-	24,
-	99,
-	140,
-	33,
-	132,
-	16,
-	66,
-	8,
-	33,
-	132,
-	16,
-	66,
-	8,
-	33,
-	68,
-	68,
-	68,
-	68,
-	68,
-	68,
-	68,
-	68,
-	36,
-	9
-]), 0, 6)[1];
-var doct = rfse(/* @__PURE__ */ new u8([
-	32,
-	132,
-	16,
-	66,
-	102,
-	70,
-	68,
-	68,
-	68,
-	68,
-	36,
-	73,
-	2
-]), 0, 5)[1];
-var b2bl = function(b, s) {
-	var len = b.length, bl = new i32(len);
-	for (var i = 0; i < len; ++i) {
-		bl[i] = s;
-		s += 1 << b[i];
-	}
-	return bl;
-};
-var llb = /* @__PURE__ */ new u8((/* @__PURE__ */ new i32([
-	0,
-	0,
-	0,
-	0,
-	16843009,
-	50528770,
-	134678020,
-	202050057,
-	269422093
-])).buffer, 0, 36);
-var llbl = /* @__PURE__ */ b2bl(llb, 0);
-var mlb = /* @__PURE__ */ new u8((/* @__PURE__ */ new i32([
-	0,
-	0,
-	0,
-	0,
-	0,
-	0,
-	0,
-	0,
-	16843009,
-	50528770,
-	117769220,
-	185207048,
-	252579084,
-	16
-])).buffer, 0, 53);
-var mlbl = /* @__PURE__ */ b2bl(mlb, 3);
-var dhu = function(dat, out, hu) {
-	var len = dat.length, ss = out.length, lb = dat[len - 1], msk = (1 << hu.b) - 1, eb = -hu.b;
-	if (!lb) err(0);
-	var st = 0, btr = hu.b, pos = (len << 3) - 8 + msb(lb) - btr, i = -1;
-	for (; pos > eb && i < ss;) {
-		var cbt = pos >> 3;
-		var val = (dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (pos & 7);
-		st = (st << btr | val) & msk;
-		out[++i] = hu.s[st];
-		pos -= btr = hu.n[st];
-	}
-	if (pos != eb || i + 1 != ss) err(0);
-};
-var dhu4 = function(dat, out, hu) {
-	var bt = 6;
-	var sz1 = out.length + 3 >> 2, sz2 = sz1 << 1, sz3 = sz1 + sz2;
-	dhu(dat.subarray(bt, bt += dat[0] | dat[1] << 8), out.subarray(0, sz1), hu);
-	dhu(dat.subarray(bt, bt += dat[2] | dat[3] << 8), out.subarray(sz1, sz2), hu);
-	dhu(dat.subarray(bt, bt += dat[4] | dat[5] << 8), out.subarray(sz2, sz3), hu);
-	dhu(dat.subarray(bt), out.subarray(sz3), hu);
-};
-var rzb = function(dat, st, out) {
-	var _a;
-	var bt = st.b;
-	var b0 = dat[bt], btype = b0 >> 1 & 3;
-	st.l = b0 & 1;
-	var sz = b0 >> 3 | dat[bt + 1] << 5 | dat[bt + 2] << 13;
-	var ebt = (bt += 3) + sz;
-	if (btype == 1) {
-		if (bt >= dat.length) return;
-		st.b = bt + 1;
-		if (out) {
-			fill(out, dat[bt], st.y, st.y += sz);
-			return out;
-		}
-		return fill(new u8(sz), dat[bt]);
-	}
-	if (ebt > dat.length) return;
-	if (btype == 0) {
-		st.b = ebt;
-		if (out) {
-			out.set(dat.subarray(bt, ebt), st.y);
-			st.y += sz;
-			return out;
-		}
-		return slc(dat, bt, ebt);
-	}
-	if (btype == 2) {
-		var b3 = dat[bt], lbt = b3 & 3, sf = b3 >> 2 & 3;
-		var lss = b3 >> 4, lcs = 0, s4 = 0;
-		if (lbt < 2) if (sf & 1) lss |= dat[++bt] << 4 | (sf & 2 && dat[++bt] << 12);
-		else lss = b3 >> 3;
-		else {
-			s4 = sf;
-			if (sf < 2) lss |= (dat[++bt] & 63) << 4, lcs = dat[bt] >> 6 | dat[++bt] << 2;
-			else if (sf == 2) lss |= dat[++bt] << 4 | (dat[++bt] & 3) << 12, lcs = dat[bt] >> 2 | dat[++bt] << 6;
-			else lss |= dat[++bt] << 4 | (dat[++bt] & 63) << 12, lcs = dat[bt] >> 6 | dat[++bt] << 2 | dat[++bt] << 10;
-		}
-		++bt;
-		var buf = out ? out.subarray(st.y, st.y + st.m) : new u8(st.m);
-		var spl = buf.length - lss;
-		if (lbt == 0) buf.set(dat.subarray(bt, bt += lss), spl);
-		else if (lbt == 1) fill(buf, dat[bt++], spl);
-		else {
-			var hu = st.h;
-			if (lbt == 2) {
-				var hud = rhu(dat, bt);
-				lcs += bt - (bt = hud[0]);
-				st.h = hu = hud[1];
-			} else if (!hu) err(0);
-			(s4 ? dhu4 : dhu)(dat.subarray(bt, bt += lcs), buf.subarray(spl), hu);
-		}
-		var ns = dat[bt++];
-		if (ns) {
-			if (ns == 255) ns = (dat[bt++] | dat[bt++] << 8) + 32512;
-			else if (ns > 127) ns = ns - 128 << 8 | dat[bt++];
-			var scm = dat[bt++];
-			if (scm & 3) err(0);
-			var dts = [
-				dmlt,
-				doct,
-				dllt
-			];
-			for (var i = 2; i > -1; --i) {
-				var md = scm >> (i << 1) + 2 & 3;
-				if (md == 1) {
-					var rbuf = new u8([
-						0,
-						0,
-						dat[bt++]
-					]);
-					dts[i] = {
-						s: rbuf.subarray(2, 3),
-						n: rbuf.subarray(0, 1),
-						t: new u16(rbuf.buffer, 0, 1),
-						b: 0
-					};
-				} else if (md == 2) _a = rfse(dat, bt, 9 - (i & 1)), bt = _a[0], dts[i] = _a[1];
-				else if (md == 3) {
-					if (!st.t) err(0);
-					dts[i] = st.t[i];
-				}
-			}
-			var _b = st.t = dts, mlt = _b[0], oct = _b[1], llt = _b[2];
-			var lb = dat[ebt - 1];
-			if (!lb) err(0);
-			var spos = (ebt << 3) - 8 + msb(lb) - llt.b, cbt = spos >> 3, oubt = 0;
-			var lst = (dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << llt.b) - 1;
-			cbt = (spos -= oct.b) >> 3;
-			var ost = (dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << oct.b) - 1;
-			cbt = (spos -= mlt.b) >> 3;
-			var mst = (dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << mlt.b) - 1;
-			for (++ns; --ns;) {
-				var llc = llt.s[lst];
-				var lbtr = llt.n[lst];
-				var mlc = mlt.s[mst];
-				var mbtr = mlt.n[mst];
-				var ofc = oct.s[ost];
-				var obtr = oct.n[ost];
-				cbt = (spos -= ofc) >> 3;
-				var ofp = 1 << ofc;
-				var off = ofp + ((dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16 | dat[cbt + 3] << 24) >>> (spos & 7) & ofp - 1);
-				cbt = (spos -= mlb[mlc]) >> 3;
-				var ml = mlbl[mlc] + ((dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (spos & 7) & (1 << mlb[mlc]) - 1);
-				cbt = (spos -= llb[llc]) >> 3;
-				var ll = llbl[llc] + ((dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (spos & 7) & (1 << llb[llc]) - 1);
-				cbt = (spos -= lbtr) >> 3;
-				lst = llt.t[lst] + ((dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << lbtr) - 1);
-				cbt = (spos -= mbtr) >> 3;
-				mst = mlt.t[mst] + ((dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << mbtr) - 1);
-				cbt = (spos -= obtr) >> 3;
-				ost = oct.t[ost] + ((dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << obtr) - 1);
-				if (off > 3) {
-					st.o[2] = st.o[1];
-					st.o[1] = st.o[0];
-					st.o[0] = off -= 3;
-				} else {
-					var idx = off - (ll != 0);
-					if (idx) {
-						off = idx == 3 ? st.o[0] - 1 : st.o[idx];
-						if (idx > 1) st.o[2] = st.o[1];
-						st.o[1] = st.o[0];
-						st.o[0] = off;
-					} else off = st.o[0];
-				}
-				for (var i = 0; i < ll; ++i) buf[oubt + i] = buf[spl + i];
-				oubt += ll, spl += ll;
-				var stin = oubt - off;
-				if (stin < 0) {
-					var len = -stin;
-					var bs = st.e + stin;
-					if (len > ml) len = ml;
-					for (var i = 0; i < len; ++i) buf[oubt + i] = st.w[bs + i];
-					oubt += len, ml -= len, stin = 0;
-				}
-				for (var i = 0; i < ml; ++i) buf[oubt + i] = buf[stin + i];
-				oubt += ml;
-			}
-			if (oubt != spl) while (spl < buf.length) buf[oubt++] = buf[spl++];
-			else oubt = buf.length;
-			if (out) st.y += oubt;
-			else buf = slc(buf, 0, oubt);
-		} else if (out) {
-			st.y += lss;
-			if (spl) for (var i = 0; i < lss; ++i) buf[i] = buf[spl + i];
-		} else if (spl) buf = slc(buf, spl);
-		st.b = ebt;
-		return buf;
-	}
-	err(2);
-};
-var cct = function(bufs, ol) {
-	if (bufs.length == 1) return bufs[0];
-	var buf = new u8(ol);
-	for (var i = 0, b = 0; i < bufs.length; ++i) {
-		var chk = bufs[i];
-		buf.set(chk, b);
-		b += chk.length;
-	}
-	return buf;
-};
-/**
-* Decompresses Zstandard data
-* @param dat The input data
-* @param buf The output buffer. If unspecified, the function will allocate
-*            exactly enough memory to fit the decompressed data. If your
-*            data has multiple frames and you know the output size, specifying
-*            it will yield better performance.
-* @returns The decompressed data
-*/
-function decompress(dat, buf) {
-	var bufs = [], nb = +!buf;
-	var bt = 0, ol = 0;
-	for (; dat.length;) {
-		var st = rzfh(dat, nb || buf);
-		if (typeof st == "object") {
-			if (nb) {
-				buf = null;
-				if (st.w.length == st.u) {
-					bufs.push(buf = st.w);
-					ol += st.u;
-				}
-			} else {
-				bufs.push(buf);
-				st.e = 0;
-			}
-			for (; !st.l;) {
-				var blk = rzb(dat, st, buf);
-				if (!blk) err(5);
-				if (buf) st.e = st.y;
-				else {
-					bufs.push(blk);
-					ol += blk.length;
-					cpw(st.w, 0, blk.length);
-					st.w.set(blk, st.w.length - blk.length);
-				}
-			}
-			bt = st.b + st.c * 4;
-		} else bt = st;
-		dat = dat.subarray(bt);
-	}
-	return cct(bufs, ol);
-}
-//#endregion
-//#region src/client/remote/zstd-worker-code.ts
-/**
-* Zstandard decompression Web Worker code.
-*
-* This file contains the worker code as a string constant, along with
-* the base64-encoded fzstd library. The worker is loaded via Blob URL
-* to work in VSCode webviews which have CORS restrictions.
-*/
-/**
-* The worker script code that handles zstd decompression.
-*/
-var kZstdWorkerCode = `
-// fzstd decompress function, loaded dynamically
-let decompress = null;
-
-self.onmessage = function(e) {
-  const { type } = e.data || {};
-
-  if (type === 'init') {
-    const { scriptContent } = e.data;
-    try {
-      if (!decompress) {
-        // Decode and evaluate the fzstd UMD library
-        const script = atob(scriptContent);
-        // The UMD module self-executes and assigns to self.fzstd
-        new Function(script)();
-        if (!self.fzstd || typeof self.fzstd.decompress !== 'function') {
-          throw new Error('Failed to initialize fzstd decompressor');
-        }
-        decompress = self.fzstd.decompress;
-      }
-      self.postMessage({ type: 'init_complete', success: true });
-    } catch (err) {
-      console.error('fzstd init error in worker:', err);
-      self.postMessage({ type: 'init_complete', success: false, error: err.message || 'Unknown error' });
-    }
-    return;
-  }
-
-  if (type === 'decompress') {
-    const { requestId, data } = e.data;
-    try {
-      if (!decompress) {
-        throw new Error('Worker not initialized');
-      }
-      const result = decompress(data);
-      // Transfer the result buffer back to avoid copying
-      self.postMessage(
-        { requestId, success: true, data: result },
-        [result.buffer]
-      );
-    } catch (err) {
-      self.postMessage({
-        requestId,
-        success: false,
-        error: err instanceof Error ? err.message : 'Unknown error'
-      });
-    }
-  }
-};
-`;
-/**
-* Base64-encoded fzstd library (UMD version, ~8KB).
-* Source: node_modules/fzstd/umd/index.js
-*
-* The UMD format self-executes and assigns to self.fzstd, making
-* fzstd.decompress() available in the worker context.
-*/
-var kFzstdBase64 = `IWZ1bmN0aW9uKGYpe3R5cGVvZiBtb2R1bGUhPSd1bmRlZmluZWQnJiZ0eXBlb2YgZXhwb3J0cz09J29iamVjdCc/bW9kdWxlLmV4cG9ydHM9ZigpOnR5cGVvZiBkZWZpbmUhPSd1bmRlZmluZWQnJiZkZWZpbmUuYW1kP2RlZmluZShbJ2Z6c3RkJyxmXSk6KHR5cGVvZiBzZWxmIT0ndW5kZWZpbmVkJz9zZWxmOnRoaXMpLmZ6c3RkPWYoKX0oZnVuY3Rpb24oKXt2YXIgX2U9e307InVzZSBzdHJpY3QiO3ZhciByPUFycmF5QnVmZmVyLHQ9VWludDhBcnJheSxlPVVpbnQxNkFycmF5LG49SW50MTZBcnJheSxhPVVpbnQzMkFycmF5LHM9SW50MzJBcnJheSxpPWZ1bmN0aW9uKHIsZSxuKXtpZih0LnByb3RvdHlwZS5zbGljZSlyZXR1cm4gdC5wcm90b3R5cGUuc2xpY2UuY2FsbChyLGUsbik7KG51bGw9PWV8fGU8MCkmJihlPTApLChudWxsPT1ufHxuPnIubGVuZ3RoKSYmKG49ci5sZW5ndGgpO3ZhciBhPW5ldyB0KG4tZSk7cmV0dXJuIGEuc2V0KHIuc3ViYXJyYXkoZSxuKSksYX0sbz1mdW5jdGlvbihyLGUsbixhKXtpZih0LnByb3RvdHlwZS5maWxsKXJldHVybiB0LnByb3RvdHlwZS5maWxsLmNhbGwocixlLG4sYSk7Zm9yKChudWxsPT1ufHxuPDApJiYobj0wKSwobnVsbD09YXx8YT5yLmxlbmd0aCkmJihhPXIubGVuZ3RoKTtuPGE7KytuKXJbbl09ZTtyZXR1cm4gcn0sdT1mdW5jdGlvbihyLGUsbixhKXtpZih0LnByb3RvdHlwZS5jb3B5V2l0aGluKXJldHVybiB0LnByb3RvdHlwZS5jb3B5V2l0aGluLmNhbGwocixlLG4sYSk7Zm9yKChudWxsPT1ufHxuPDApJiYobj0wKSwobnVsbD09YXx8YT5yLmxlbmd0aCkmJihhPXIubGVuZ3RoKTtuPGE7KXJbZSsrXT1yW24rK119O19lLlpzdGRFcnJvckNvZGU9e0ludmFsaWREYXRhOjAsV2luZG93U2l6ZVRvb0xhcmdlOjEsSW52YWxpZEJsb2NrVHlwZToyLEZTRUFjY3VyYWN5VG9vSGlnaDozLERpc3RhbmNlVG9vRmFyQmFjazo0LFVuZXhwZWN0ZWRFT0Y6NX07dmFyIGg9WyJpbnZhbGlkIHpzdGQgZGF0YSIsIndpbmRvdyBzaXplIHRvbyBsYXJnZSAoPjIwNDZNQikiLCJpbnZhbGlkIGJsb2NrIHR5cGUiLCJGU0UgYWNjdXJhY3kgdG9vIGhpZ2giLCJtYXRjaCBkaXN0YW5jZSB0b28gZmFyIGJhY2siLCJ1bmV4cGVjdGVkIEVPRiJdLGY9ZnVuY3Rpb24ocix0LGUpe3ZhciBuPUVycm9yKHR8fGhbcl0pO2lmKG4uY29kZT1yLEVycm9yLmNhcHR1cmVTdGFja1RyYWNlJiZFcnJvci5jYXB0dXJlU3RhY2tUcmFjZShuLGYpLCFlKXRocm93IG47cmV0dXJuIG59LGw9ZnVuY3Rpb24ocix0LGUpe2Zvcih2YXIgbj0wLGE9MDtuPGU7KytuKWF8PXJbdCsrXTw8KG48PDMpO3JldHVybiBhfSx2PWZ1bmN0aW9uKHIsdCl7cmV0dXJuKHJbdF18clt0KzFdPDw4fHJbdCsyXTw8MTZ8clt0KzNdPDwyNCk+Pj4wfSxjPWZ1bmN0aW9uKHIsZSl7dmFyIG49clswXXxyWzFdPDw4fHJbMl08PDE2O2lmKDMxMjY1Njg9PW4mJjI1Mz09clszXSl7dmFyIGE9cls0XSxpPWE+PjUmMSxvPWE+PjImMSx1PTMmYSxoPWE+PjY7OCZhJiZmKDApO3ZhciBjPTYtaSxiPTM9PXU/NDp1LHk9bChyLGMsYikscD1oPzE8PGg6aSx3PWwocixjKz1iLHApKygxPT1oJiYyNTYpLGc9dztpZighaSl7dmFyIGQ9MTw8MTArKHJbNV0+PjMpO2c9ZCsoZD4+MykqKDcmcls1XSl9Zz4yMTQ1Mzg2NDk2JiZmKDEpO3ZhciBtPW5ldyB0KCgxPT1lP3d8fGc6ZT8wOmcpKzEyKTtyZXR1cm4gbVswXT0xLG1bNF09NCxtWzhdPTgse2I6YytwLHk6MCxsOjAsZDp5LHc6ZSYmMSE9ZT9lOm0uc3ViYXJyYXkoMTIpLGU6ZyxvOm5ldyBzKG0uYnVmZmVyLDAsMyksdTp3LGM6byxtOk1hdGgubWluKDEzMTA3MixnKX19aWYoMjU0ODE4OTM9PShuPj40fHJbM108PDIwKSlyZXR1cm4gdihyLDQpKzg7ZigwKX0sYj1mdW5jdGlvbihyKXtmb3IodmFyIHQ9MDsxPDx0PD1yOysrdCk7cmV0dXJuIHQtMX0seT1mdW5jdGlvbihhLHMsaSl7dmFyIG89NCsoczw8MyksdT01KygxNSZhW3NdKTt1PmkmJmYoMyk7Zm9yKHZhciBoPTE8PHUsbD1oLHY9LTEsYz0tMSx5PS0xLHA9aCx3PW5ldyByKDUxMisoaDw8MikpLGc9bmV3IG4odywwLDI1NiksZD1uZXcgZSh3LDAsMjU2KSxtPW5ldyBlKHcsNTEyLGgpLHo9NTEyKyhoPDwxKSxFPW5ldyB0KHcseixoKSxrPW5ldyB0KHcseitoKTt2PDI1NSYmbD4wOyl7dmFyIEE9YihsKzEpLFQ9bz4+Myx4PSgxPDxBKzEpLTEsRj0oYVtUXXxhW1QrMV08PDh8YVtUKzJdPDwxNik+Pig3Jm8pJngsUz0oMTw8QSktMSxCPXgtbC0xLEk9RiZTO2lmKEk8Qj8obys9QSxGPUkpOihvKz1BKzEsRj5TJiYoRi09QikpLGdbKyt2XT0tLUYsLTE9PUY/KGwrPUYsRVstLXBdPXYpOmwtPUYsIUYpZG97dmFyIFU9bz4+MztjPShhW1VdfGFbVSsxXTw8OCk+Pig3Jm8pJjMsbys9Mix2Kz1jfXdoaWxlKDM9PWMpfSh2PjI1NXx8bCkmJmYoMCk7Zm9yKHZhciBEPTAsTT0oaD4+MSkrKGg+PjMpKzMsVz1oLTEsTz0wO088PXY7KytPKXt2YXIgaj1nW09dO2lmKGo8MSlkW09dPS1qO2Vsc2UgZm9yKHk9MDt5PGo7Kyt5KXtFW0RdPU87ZG97RD1EK00mV313aGlsZShEPj1wKX19Zm9yKEQmJmYoMCkseT0wO3k8aDsrK3kpe3ZhciBDPWRbRVt5XV0rKyxIPWtbeV09dS1iKEMpO21beV09KEM8PEgpLWh9cmV0dXJuW28rNz4+Myx7Yjp1LHM6RSxuOmssdDptfV19LHA9ZnVuY3Rpb24ocixuKXt2YXIgYT0wLHM9LTEsaT1uZXcgdCgyOTIpLHU9cltuXSxoPWkuc3ViYXJyYXkoMCwyNTYpLGw9aS5zdWJhcnJheSgyNTYsMjY4KSx2PW5ldyBlKGkuYnVmZmVyLDI2OCk7aWYodTwxMjgpe3ZhciBjPXkocixuKzEsNikscD1jWzFdLHc9Y1swXTw8MyxnPXJbbis9dV07Z3x8ZigwKTtmb3IodmFyIGQ9MCxtPTAsej1wLmIsRT16LGs9KCsrbjw8MyktOCtiKGcpOyEoKGstPXopPHcpOyl7dmFyIEE9az4+MztpZihoWysrc109cC5zW2QrPShyW0FdfHJbQSsxXTw8OCk+Pig3JmspJigxPDx6KS0xXSwoay09RSk8dylicmVhaztoWysrc109cC5zW20rPShyW0E9az4+M118cltBKzFdPDw4KT4+KDcmaykmKDE8PEUpLTFdLHo9cC5uW2RdLGQ9cC50W2RdLEU9cC5uW21dLG09cC50W21dfSsrcz4yNTUmJmYoMCl9ZWxzZXtmb3Iocz11LTEyNzthPHM7YSs9Mil7dmFyIFQ9clsrK25dO2hbYV09VD4+NCxoW2ErMV09MTUmVH0rK259dmFyIHg9MDtmb3IoYT0wO2E8czsrK2EpKEk9aFthXSk+MTEmJmYoMCkseCs9SSYmMTw8SS0xO3ZhciBGPWIoeCkrMSxTPTE8PEYsQj1TLXg7Zm9yKEImQi0xJiZmKDApLGhbcysrXT1iKEIpKzEsYT0wO2E8czsrK2Epe3ZhciBJOysrbFtoW2FdPShJPWhbYV0pJiZGKzEtSV19dmFyIFU9bmV3IHQoUzw8MSksRD1VLnN1YmFycmF5KDAsUyksTT1VLnN1YmFycmF5KFMpO2Zvcih2W0ZdPTAsYT1GO2E+MDstLWEpe3ZhciBXPXZbYV07byhNLGEsVyx2W2EtMV09VytsW2FdKigxPDxGLWEpKX1mb3IodlswXSE9UyYmZigwKSxhPTA7YTxzOysrYSl7dmFyIE89aFthXTtpZihPKXt2YXIgaj12W09dO28oRCxhLGosdltPXT1qKygxPDxGLU8pKX19cmV0dXJuW24se246TSxiOkYsczpEfV19LHc9eShuZXcgdChbODEsMTYsOTksMTQwLDQ5LDE5OCwyNCw5OSwxMiwzMywxOTYsMjQsOTksMTAyLDEwMiwxMzQsNzAsMTQ2LDRdKSwwLDYpWzFdLGc9eShuZXcgdChbMzMsMjAsMTk2LDI0LDk5LDE0MCwzMywxMzIsMTYsNjYsOCwzMywxMzIsMTYsNjYsOCwzMyw2OCw2OCw2OCw2OCw2OCw2OCw2OCw2OCwzNiw5XSksMCw2KVsxXSxkPXkobmV3IHQoWzMyLDEzMiwxNiw2NiwxMDIsNzAsNjgsNjgsNjgsNjgsMzYsNzMsMl0pLDAsNSlbMV0sbT1mdW5jdGlvbihyLHQpe2Zvcih2YXIgZT1yLmxlbmd0aCxuPW5ldyBzKGUpLGE9MDthPGU7KythKW5bYV09dCx0Kz0xPDxyW2FdO3JldHVybiBufSx6PW5ldyB0KG5ldyBzKFswLDAsMCwwLDE2ODQzMDA5LDUwNTI4NzcwLDEzNDY3ODAyMCwyMDIwNTAwNTcsMjY5NDIyMDkzXSkuYnVmZmVyLDAsMzYpLEU9bSh6LDApLGs9bmV3IHQobmV3IHMoWzAsMCwwLDAsMCwwLDAsMCwxNjg0MzAwOSw1MDUyODc3MCwxMTc3NjkyMjAsMTg1MjA3MDQ4LDI1MjU3OTA4NCwxNl0pLmJ1ZmZlciwwLDUzKSxBPW0oaywzKSxUPWZ1bmN0aW9uKHIsdCxlKXt2YXIgbj1yLmxlbmd0aCxhPXQubGVuZ3RoLHM9cltuLTFdLGk9KDE8PGUuYiktMSxvPS1lLmI7c3x8ZigwKTtmb3IodmFyIHU9MCxoPWUuYixsPShuPDwzKS04K2IocyktaCx2PS0xO2w+byYmdjxhOyl7dmFyIGM9bD4+Mzt0Wysrdl09ZS5zW3U9KHU8PGh8KHJbY118cltjKzFdPDw4fHJbYysyXTw8MTYpPj4oNyZsKSkmaV0sbC09aD1lLm5bdV19bD09byYmdisxPT1hfHxmKDApfSx4PWZ1bmN0aW9uKHIsdCxlKXt2YXIgbj02LGE9dC5sZW5ndGgrMz4+MixzPWE8PDEsaT1hK3M7VChyLnN1YmFycmF5KG4sbis9clswXXxyWzFdPDw4KSx0LnN1YmFycmF5KDAsYSksZSksVChyLnN1YmFycmF5KG4sbis9clsyXXxyWzNdPDw4KSx0LnN1YmFycmF5KGEscyksZSksVChyLnN1YmFycmF5KG4sbis9cls0XXxyWzVdPDw4KSx0LnN1YmFycmF5KHMsaSksZSksVChyLnN1YmFycmF5KG4pLHQuc3ViYXJyYXkoaSksZSl9LEY9ZnVuY3Rpb24ocixuLGEpe3ZhciBzLHU9bi5iLGg9clt1XSxsPWg+PjEmMztuLmw9MSZoO3ZhciB2PWg+PjN8clt1KzFdPDw1fHJbdSsyXTw8MTMsYz0odSs9MykrdjtpZigxPT1sKXtpZih1Pj1yLmxlbmd0aClyZXR1cm47cmV0dXJuIG4uYj11KzEsYT8obyhhLHJbdV0sbi55LG4ueSs9diksYSk6byhuZXcgdCh2KSxyW3VdKX1pZighKGM+ci5sZW5ndGgpKXtpZigwPT1sKXJldHVybiBuLmI9YyxhPyhhLnNldChyLnN1YmFycmF5KHUsYyksbi55KSxuLnkrPXYsYSk6aShyLHUsYyk7aWYoMj09bCl7dmFyIG09clt1XSxGPTMmbSxTPW0+PjImMyxCPW0+PjQsST0wLFU9MDtGPDI/MSZTP0J8PXJbKyt1XTw8NHwoMiZTJiZyWysrdV08PDEyKTpCPW0+PjM6KFU9UyxTPDI/KEJ8PSg2MyZyWysrdV0pPDw0LEk9clt1XT4+NnxyWysrdV08PDIpOjI9PVM/KEJ8PXJbKyt1XTw8NHwoMyZyWysrdV0pPDwxMixJPXJbdV0+PjJ8clsrK3VdPDw2KTooQnw9clsrK3VdPDw0fCg2MyZyWysrdV0pPDwxMixJPXJbdV0+PjZ8clsrK3VdPDwyfHJbKyt1XTw8MTApKSwrK3U7dmFyIEQ9YT9hLnN1YmFycmF5KG4ueSxuLnkrbi5tKTpuZXcgdChuLm0pLE09RC5sZW5ndGgtQjtpZigwPT1GKUQuc2V0KHIuc3ViYXJyYXkodSx1Kz1CKSxNKTtlbHNlIGlmKDE9PUYpbyhELHJbdSsrXSxNKTtlbHNle3ZhciBXPW4uaDtpZigyPT1GKXt2YXIgTz1wKHIsdSk7SSs9dS0odT1PWzBdKSxuLmg9Vz1PWzFdfWVsc2UgV3x8ZigwKTsoVT94OlQpKHIuc3ViYXJyYXkodSx1Kz1JKSxELnN1YmFycmF5KE0pLFcpfXZhciBqPXJbdSsrXTtpZihqKXsyNTU9PWo/aj0zMjUxMisoclt1KytdfHJbdSsrXTw8OCk6aj4xMjcmJihqPWotMTI4PDw4fHJbdSsrXSk7dmFyIEM9clt1KytdOzMmQyYmZigwKTtmb3IodmFyIEg9W2csZCx3XSxMPTI7TD4tMTstLUwpe3ZhciBaPUM+PjIrKEw8PDEpJjM7aWYoMT09Wil7dmFyIHE9bmV3IHQoWzAsMCxyW3UrK11dKTtIW0xdPXtzOnEuc3ViYXJyYXkoMiwzKSxuOnEuc3ViYXJyYXkoMCwxKSx0Om5ldyBlKHEuYnVmZmVyLDAsMSksYjowfX1lbHNlIDI9PVo/KHU9KHM9eShyLHUsOS0oMSZMKSkpWzBdLEhbTF09c1sxXSk6Mz09WiYmKG4udHx8ZigwKSxIW0xdPW4udFtMXSl9dmFyIEc9bi50PUgsSj1HWzBdLEs9R1sxXSxOPUdbMl0sUD1yW2MtMV07UHx8ZigwKTt2YXIgUT0oYzw8MyktOCtiKFApLU4uYixSPVE+PjMsVj0wLFg9KHJbUl18cltSKzFdPDw4KT4+KDcmUSkmKDE8PE4uYiktMSxZPShyW1I9KFEtPUsuYik+PjNdfHJbUisxXTw8OCk+Pig3JlEpJigxPDxLLmIpLTEsJD0ocltSPShRLT1KLmIpPj4zXXxyW1IrMV08PDgpPj4oNyZRKSYoMTw8Si5iKS0xO2ZvcigrK2o7LS1qOyl7dmFyIF89Ti5zW1hdLHJyPU4ubltYXSx0cj1KLnNbJF0sZXI9Si5uWyRdLG5yPUsuc1tZXSxhcj1LLm5bWV0sc3I9MTw8bnIsaXI9c3IrKChyW1I9KFEtPW5yKT4+M118cltSKzFdPDw4fHJbUisyXTw8MTZ8cltSKzNdPDwyNCk+Pj4oNyZRKSZzci0xKTtSPShRLT1rW3RyXSk+PjM7dmFyIG9yPUFbdHJdKygocltSXXxyW1IrMV08PDh8cltSKzJdPDwxNik+Pig3JlEpJigxPDxrW3RyXSktMSk7Uj0oUS09eltfXSk+PjM7dmFyIHVyPUVbX10rKChyW1JdfHJbUisxXTw8OHxyW1IrMl08PDE2KT4+KDcmUSkmKDE8PHpbX10pLTEpO2lmKFI9KFEtPXJyKT4+MyxYPU4udFtYXSsoKHJbUl18cltSKzFdPDw4KT4+KDcmUSkmKDE8PHJyKS0xKSxSPShRLT1lcik+PjMsJD1KLnRbJF0rKChyW1JdfHJbUisxXTw8OCk+Pig3JlEpJigxPDxlciktMSksUj0oUS09YXIpPj4zLFk9Sy50W1ldKygocltSXXxyW1IrMV08PDgpPj4oNyZRKSYoMTw8YXIpLTEpLGlyPjMpbi5vWzJdPW4ub1sxXSxuLm9bMV09bi5vWzBdLG4ub1swXT1pci09MztlbHNle3ZhciBocj1pci0oMCE9dXIpO2hyPyhpcj0zPT1ocj9uLm9bMF0tMTpuLm9baHJdLGhyPjEmJihuLm9bMl09bi5vWzFdKSxuLm9bMV09bi5vWzBdLG4ub1swXT1pcik6aXI9bi5vWzBdfWZvcihMPTA7TDx1cjsrK0wpRFtWK0xdPURbTStMXTtNKz11cjt2YXIgZnI9KFYrPXVyKS1pcjtpZihmcjwwKXt2YXIgbHI9LWZyLHZyPW4uZStmcjtmb3IobHI+b3ImJihscj1vciksTD0wO0w8bHI7KytMKURbVitMXT1uLndbdnIrTF07Vis9bHIsb3ItPWxyLGZyPTB9Zm9yKEw9MDtMPG9yOysrTClEW1YrTF09RFtmcitMXTtWKz1vcn1pZihWIT1NKWZvcig7TTxELmxlbmd0aDspRFtWKytdPURbTSsrXTtlbHNlIFY9RC5sZW5ndGg7YT9uLnkrPVY6RD1pKEQsMCxWKX1lbHNlIGlmKGEpe2lmKG4ueSs9QixNKWZvcihMPTA7TDxCOysrTClEW0xdPURbTStMXX1lbHNlIE0mJihEPWkoRCxNKSk7cmV0dXJuIG4uYj1jLER9ZigyKX19LFM9ZnVuY3Rpb24ocixlKXtpZigxPT1yLmxlbmd0aClyZXR1cm4gclswXTtmb3IodmFyIG49bmV3IHQoZSksYT0wLHM9MDthPHIubGVuZ3RoOysrYSl7dmFyIGk9clthXTtuLnNldChpLHMpLHMrPWkubGVuZ3RofXJldHVybiBufTtmdW5jdGlvbiBCKHIsdCl7Zm9yKHZhciBlPVtdLG49KyF0LGE9MCxzPTA7ci5sZW5ndGg7KXt2YXIgaT1jKHIsbnx8dCk7aWYoIm9iamVjdCI9PXR5cGVvZiBpKXtmb3Iobj8odD1udWxsLGkudy5sZW5ndGg9PWkudSYmKGUucHVzaCh0PWkudykscys9aS51KSk6KGUucHVzaCh0KSxpLmU9MCk7IWkubDspe3ZhciBvPUYocixpLHQpO298fGYoNSksdD9pLmU9aS55OihlLnB1c2gobykscys9by5sZW5ndGgsdShpLncsMCxvLmxlbmd0aCksaS53LnNldChvLGkudy5sZW5ndGgtby5sZW5ndGgpKX1hPWkuYis0KmkuY31lbHNlIGE9aTtyPXIuc3ViYXJyYXkoYSl9cmV0dXJuIFMoZSxzKX1fZS5kZWNvbXByZXNzPUI7dmFyIEk9ZnVuY3Rpb24oKXtmdW5jdGlvbiByKHIpe3RoaXMub25kYXRhPXIsdGhpcy5jPVtdLHRoaXMubD0wLHRoaXMuej0wfXJldHVybiByLnByb3RvdHlwZS5wdXNoPWZ1bmN0aW9uKHIsZSl7aWYoIm51bWJlciI9PXR5cGVvZiB0aGlzLnMpe3ZhciBuPU1hdGgubWluKHIubGVuZ3RoLHRoaXMucyk7cj1yLnN1YmFycmF5KG4pLHRoaXMucy09bn12YXIgYT1yLmxlbmd0aCt0aGlzLmw7aWYoIXRoaXMucyl7aWYoZSl7aWYoIWEpcmV0dXJuIHZvaWQgdGhpcy5vbmRhdGEobmV3IHQoMCksITApO2E8NSYmZig1KX1lbHNlIGlmKGE8MTgpcmV0dXJuIHRoaXMuYy5wdXNoKHIpLHZvaWQodGhpcy5sPWEpO2lmKHRoaXMubCYmKHRoaXMuYy5wdXNoKHIpLHI9Uyh0aGlzLmMsYSksdGhpcy5jPVtdLHRoaXMubD0wKSwibnVtYmVyIj09dHlwZW9mKHRoaXMucz1jKHIpKSlyZXR1cm4gdGhpcy5wdXNoKHIsZSl9aWYoIm51bWJlciIhPXR5cGVvZiB0aGlzLnMpe2lmKGE8KHRoaXMuenx8MykpcmV0dXJuIGUmJmYoNSksdGhpcy5jLnB1c2gociksdm9pZCh0aGlzLmw9YSk7aWYodGhpcy5sJiYodGhpcy5jLnB1c2gocikscj1TKHRoaXMuYyxhKSx0aGlzLmM9W10sdGhpcy5sPTApLCF0aGlzLnomJmE8KHRoaXMuej0yJnJbdGhpcy5zLmJdPzQ6Mysoclt0aGlzLnMuYl0+PjN8clt0aGlzLnMuYisxXTw8NXxyW3RoaXMucy5iKzJdPDwxMykpKXJldHVybiBlJiZmKDUpLHRoaXMuYy5wdXNoKHIpLHZvaWQodGhpcy5sPWEpO2Zvcih0aGlzLno9MDs7KXt2YXIgcz1GKHIsdGhpcy5zKTtpZighcyl7ZSYmZig1KTt2YXIgaT1yLnN1YmFycmF5KHRoaXMucy5iKTtyZXR1cm4gdGhpcy5zLmI9MCx0aGlzLmMucHVzaChpKSx2b2lkKHRoaXMubCs9aS5sZW5ndGgpfWlmKHRoaXMub25kYXRhKHMsITEpLHUodGhpcy5zLncsMCxzLmxlbmd0aCksdGhpcy5zLncuc2V0KHMsdGhpcy5zLncubGVuZ3RoLXMubGVuZ3RoKSx0aGlzLnMubCl7dmFyIG89ci5zdWJhcnJheSh0aGlzLnMuYik7cmV0dXJuIHRoaXMucz00KnRoaXMucy5jLHZvaWQgdGhpcy5wdXNoKG8sZSl9fX1lbHNlIGUmJmYoNSl9LHJ9KCk7X2UuRGVjb21wcmVzcz1JO3JldHVybiBfZX0p`;
-//#endregion
-//#region src/client/remote/zstd-worker.ts
-/**
-* Zstandard decompression via Web Worker.
-*
-* Provides a simple async interface for zstd decompression that automatically
-* uses a Web Worker for large payloads to avoid blocking the main thread.
-*
-* Uses Blob URL to load the worker, which works in VSCode webviews that have
-* CORS restrictions preventing external worker script loading.
-*/
-/**
-* Threshold for using Web Worker (1MB compressed).
-* Below this, synchronous decompression is fast enough.
-*/
-var WORKER_THRESHOLD = 1024 * 1024;
-/**
-* Maximum window log supported by fzstd (2^25 = 32MB).
-* Ultra compression levels (20+) often use larger windows.
-*/
-var MAX_WINDOW_LOG = 25;
-/**
-* Error thrown when zstd data uses a window size too large for fzstd.
-*/
-var ZstdWindowSizeError = class ZstdWindowSizeError extends Error {
-	windowLog;
-	maxWindowLog;
-	constructor(windowLog) {
-		super(`Zstd window size too large (windowLog=${windowLog}, max=${MAX_WINDOW_LOG}). This file may have been compressed with zstd "ultra" mode (level 20+). Try recompressing with --long=${MAX_WINDOW_LOG} or a lower compression level.`);
-		this.name = "ZstdWindowSizeError";
-		this.windowLog = windowLog;
-		this.maxWindowLog = MAX_WINDOW_LOG;
-		Object.setPrototypeOf(this, ZstdWindowSizeError.prototype);
-	}
-};
-/**
-* Validates that the zstd frame's window size is within fzstd's limits.
-* Parses the frame header to extract the window descriptor.
-*
-* @param data - The zstd-compressed data
-* @throws ZstdWindowSizeError if window size exceeds 2^25 bytes
-*/
-function validateZstdWindowSize(data) {
-	if (data.length < 5) return;
-	if ((data[0] | data[1] << 8 | data[2] << 16 | data[3] << 24) !== 4247762216) return;
-	if (data[4] >> 5 & 1) return;
-	if (data.length < 6) return;
-	const windowLog = 10 + (data[5] >> 3);
-	if (windowLog > MAX_WINDOW_LOG) throw new ZstdWindowSizeError(windowLog);
-}
-/** Cached worker and blob URL */
-var zstdWorker = null;
-var blobURL = null;
-var workerInitPromise = null;
-/** Request ID counter for worker messages */
-var nextRequestId = 0;
-/** Pending decompression requests */
-var pendingRequests = /* @__PURE__ */ new Map();
-/** Whether message handlers have been attached to the worker */
-var handlersAttached = false;
-/**
-* Gets or creates the zstd decompression worker.
-* Uses a Blob URL to work in VSCode webviews which have CORS restrictions.
-* Returns a promise that resolves when the worker is fully initialized.
-*/
-function getZstdWorker() {
-	if (workerInitPromise) return workerInitPromise;
-	workerInitPromise = new Promise((resolve, reject) => {
-		const blob = new Blob([kZstdWorkerCode], { type: "application/javascript" });
-		blobURL = URL.createObjectURL(blob);
-		zstdWorker = new Worker(blobURL);
-		const initHandler = (event) => {
-			if (event.data.type === "init_complete") {
-				zstdWorker.removeEventListener("message", initHandler);
-				if (event.data.success) resolve(zstdWorker);
-				else reject(new Error(event.data.error || "Worker initialization failed"));
-			}
-		};
-		zstdWorker.addEventListener("message", initHandler);
-		zstdWorker.postMessage({
-			type: "init",
-			scriptContent: kFzstdBase64
-		});
-	});
-	return workerInitPromise;
-}
-/**
-* Decompresses zstd-compressed data.
-*
-* For small payloads (< 1MB), uses synchronous decompression.
-* For larger payloads, uses a Web Worker to avoid blocking the main thread.
-*
-* Data transfer efficiency:
-* - Input data is transferred (zero-copy) to the worker
-* - Output data is transferred (zero-copy) back from the worker
-*
-* @param data - The zstd-compressed data
-* @returns Promise resolving to the decompressed data
-*/
-async function decompressZstd(data) {
-	validateZstdWindowSize(data);
-	if (data.length < WORKER_THRESHOLD) return decompress(data);
-	const worker = await getZstdWorker();
-	return new Promise((resolve, reject) => {
-		const requestId = nextRequestId++;
-		pendingRequests.set(requestId, {
-			resolve,
-			reject
-		});
-		if (!handlersAttached) {
-			handlersAttached = true;
-			worker.addEventListener("message", (event) => {
-				const { requestId: respId, success, data: resultData, error } = event.data;
-				const pending = pendingRequests.get(respId);
-				if (!pending) return;
-				pendingRequests.delete(respId);
-				if (success) pending.resolve(resultData);
-				else pending.reject(new Error(error || "Decompression failed"));
-			});
-			worker.addEventListener("error", (error) => {
-				for (const [id, pending] of pendingRequests) {
-					pending.reject(/* @__PURE__ */ new Error(`Worker error: ${error.message}`));
-					pendingRequests.delete(id);
-				}
-			});
-		}
-		worker.postMessage({
-			type: "decompress",
-			requestId,
-			data
-		}, [data.buffer]);
-	});
-}
-//#endregion
-//#region src/client/remote/decompression.ts
-/** Supported ZIP compression methods */
-var CompressionMethod = {
-	STORED: 0,
-	DEFLATE: 8,
-	ZSTANDARD: 93
-};
-/**
-* Error thrown when an unsupported compression method is encountered.
-*/
-var UnsupportedCompressionError = class UnsupportedCompressionError extends Error {
-	method;
-	filename;
-	constructor(method, filename) {
-		super(`Unsupported compression method ${method} for file "${filename}"`);
-		this.name = "UnsupportedCompressionError";
-		this.method = method;
-		this.filename = filename;
-		Object.setPrototypeOf(this, UnsupportedCompressionError.prototype);
-	}
-};
-/**
-* Decompresses data based on the compression method.
-* Handles STORED (0), DEFLATE (8), and ZSTANDARD (93).
-*
-* @param data - The compressed data
-* @param compressionMethod - ZIP compression method code
-* @param uncompressedSize - Expected uncompressed size (used by deflate)
-* @param filename - Filename for error messages
-* @returns Decompressed data
-*/
-async function decompressData(data, compressionMethod, uncompressedSize, filename) {
-	switch (compressionMethod) {
-		case CompressionMethod.STORED: return data;
-		case CompressionMethod.DEFLATE: return decompressDeflate(data, uncompressedSize);
-		case CompressionMethod.ZSTANDARD: return decompressZstd(data);
-		default: throw new UnsupportedCompressionError(compressionMethod, filename);
-	}
-}
-/**
-* Deflate decompression using fflate's async worker-based API.
-*/
-async function decompressDeflate(data, size) {
-	return new Promise((resolve, reject) => {
-		decompress$1(data, { size }, (err, result) => {
-			if (err) reject(err);
-			else resolve(result);
-		});
-	});
-}
-//#endregion
-//#region src/client/remote/remoteZipFile.ts
-/**
-* Represents an error thrown when a file exceeds the maximum allowed size.
-*/
-var FileSizeLimitError = class FileSizeLimitError extends Error {
-	file;
-	maxBytes;
-	constructor(file, maxBytes) {
-		super(`File "${file}" exceeds the maximum size (${maxBytes} bytes) and cannot be loaded.`);
-		this.name = "FileSizeLimitError";
-		this.file = file;
-		this.maxBytes = maxBytes;
-		Object.setPrototypeOf(this, FileSizeLimitError.prototype);
-	}
-};
-var PARALLEL_CHUNK_THRESHOLD = 8 * 1024 * 1024;
-var PARALLEL_CHUNK_SIZE = 8 * 1024 * 1024;
-var MAX_PARALLEL_CHUNKS = 10;
-var fetchBytesParallel = async (fetchFn, url, start, end, onProgress) => {
-	const totalSize = end - start + 1;
-	if (totalSize <= PARALLEL_CHUNK_THRESHOLD) return fetchFn(url, start, end);
-	const chunks = [];
-	let offset = start;
-	while (offset <= end) {
-		const chunkEnd = Math.min(offset + PARALLEL_CHUNK_SIZE - 1, end);
-		chunks.push({
-			start: offset,
-			end: chunkEnd,
-			index: chunks.length
-		});
-		offset = chunkEnd + 1;
-	}
-	const concurrency = Math.min(chunks.length, MAX_PARALLEL_CHUNKS);
-	const results = new Array(chunks.length);
-	let nextChunk = 0;
-	let bytesLoaded = 0;
-	if (onProgress) onProgress(0, totalSize);
-	const worker = async () => {
-		while (nextChunk < chunks.length) {
-			const idx = nextChunk++;
-			const chunk = chunks[idx];
-			results[idx] = await fetchFn(url, chunk.start, chunk.end);
-			if (onProgress) {
-				bytesLoaded += results[idx].length;
-				onProgress(bytesLoaded, totalSize);
-			}
-		}
-	};
-	await Promise.all(Array.from({ length: concurrency }, () => worker()));
-	const combined = new Uint8Array(totalSize);
-	let pos = 0;
-	for (const chunk of results) {
-		combined.set(chunk, pos);
-		pos += chunk.length;
-	}
-	return combined;
-};
-/**
-* Opens a remote ZIP file from the specified URL, fetches and parses the central directory,
-* and provides a method to read files within the ZIP.
-*/
-var openRemoteZipFile = async (url, contentLength, fetchBytes = fetchRange) => {
-	contentLength = contentLength ?? await fetchSize(url);
-	const eocdrBuffer = await fetchBytes(url, contentLength - 22, contentLength - 1);
-	const eocdrView = new DataView(eocdrBuffer.buffer);
-	if (eocdrView.getUint32(0, true) !== 101010256) if (eocdrBuffer.length !== 22) throw new Error("Unexpected central directory size - does the HTTP server serving this file support HTTP range requests?");
-	else throw new Error("End of central directory record not found");
-	let centralDirOffset = eocdrView.getUint32(16, true);
-	let centralDirSize = eocdrView.getUint32(12, true);
-	if (centralDirOffset === 4294967295 || centralDirSize === 4294967295) {
-		const locatorBuffer = await fetchBytes(url, contentLength - 22 - 20, contentLength - 23);
-		const locatorView = new DataView(locatorBuffer.buffer);
-		if (locatorView.getUint32(0, true) !== 117853008) throw new Error("ZIP64 End of central directory locator not found");
-		const zip64EOCDOffset = Number(locatorView.getBigUint64(8, true));
-		const zip64EOCDBuffer = await fetchBytes(url, zip64EOCDOffset, zip64EOCDOffset + 56);
-		const zip64EOCDView = new DataView(zip64EOCDBuffer.buffer);
-		if (zip64EOCDView.getUint32(0, true) !== 101075792) throw new Error("ZIP64 End of central directory record not found");
-		centralDirSize = Number(zip64EOCDView.getBigUint64(40, true));
-		centralDirOffset = Number(zip64EOCDView.getBigUint64(48, true));
-	}
-	const centralDirectory = parseCentralDirectory(await fetchBytesParallel(fetchBytes, url, centralDirOffset, centralDirOffset + centralDirSize - 1));
-	return {
-		centralDirectory,
-		readFile: async (file, maxBytes, onProgress) => {
-			const entry = centralDirectory.get(file);
-			if (!entry) throw new Error(`File not found: ${file}`);
-			const headerSize = 30;
-			const estimatedSize = headerSize + entry.filenameLength + 256 + entry.compressedSize;
-			if (maxBytes && headerSize + entry.filenameLength + entry.compressedSize > maxBytes) throw new FileSizeLimitError(file, maxBytes);
-			let fileData = await fetchBytesParallel(fetchBytes, url, entry.fileOffset, entry.fileOffset + estimatedSize - 1, onProgress);
-			if (fileData.length < headerSize) throw new Error(`File entry header is truncated for ${file}`);
-			const actualExtraFieldLength = fileData[28] + (fileData[29] << 8);
-			const actualTotal = headerSize + entry.filenameLength + actualExtraFieldLength + entry.compressedSize;
-			if (maxBytes && actualTotal > maxBytes) throw new FileSizeLimitError(file, maxBytes);
-			if (actualTotal > estimatedSize) fileData = await fetchBytesParallel(fetchBytes, url, entry.fileOffset, entry.fileOffset + actualTotal - 1);
-			const zipFileEntry = await parseZipFileEntry(file, fileData);
-			return decompressData(zipFileEntry.data, zipFileEntry.compressionMethod, zipFileEntry.uncompressedSize, file);
-		}
-	};
-};
-/**
-* Opens an in-memory ZIP buffer and provides a method to read files within it.
-*/
-var openZipFileFromBuffer = async (bytes) => {
-	const contentLength = bytes.length;
-	if (contentLength < 22) throw new Error("Buffer too small to be a ZIP file");
-	const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
-	const eocdrStart = contentLength - 22;
-	if (view.getUint32(eocdrStart, true) !== 101010256) throw new Error("End of central directory record not found");
-	let centralDirOffset = view.getUint32(eocdrStart + 16, true);
-	let centralDirSize = view.getUint32(eocdrStart + 12, true);
-	if (centralDirOffset === 4294967295 || centralDirSize === 4294967295) {
-		const locatorStart = eocdrStart - 20;
-		if (view.getUint32(locatorStart, true) !== 117853008) throw new Error("ZIP64 End of central directory locator not found");
-		const zip64EOCDOffset = Number(view.getBigUint64(locatorStart + 8, true));
-		if (view.getUint32(zip64EOCDOffset, true) !== 101075792) throw new Error("ZIP64 End of central directory record not found");
-		centralDirSize = Number(view.getBigUint64(zip64EOCDOffset + 40, true));
-		centralDirOffset = Number(view.getBigUint64(zip64EOCDOffset + 48, true));
-	}
-	const centralDirectory = parseCentralDirectory(bytes.slice(centralDirOffset, centralDirOffset + centralDirSize));
-	return {
-		centralDirectory,
-		readFile: async (file, maxBytes) => {
-			const entry = centralDirectory.get(file);
-			if (!entry) throw new Error(`File not found: ${file}`);
-			const headerSize = 30;
-			if (entry.fileOffset + headerSize > bytes.length) throw new Error(`File entry header is truncated for ${file}`);
-			const extraFieldLength = bytes[entry.fileOffset + 28] + (bytes[entry.fileOffset + 29] << 8);
-			const totalSize = headerSize + entry.filenameLength + extraFieldLength + entry.compressedSize;
-			if (maxBytes && totalSize > maxBytes) throw new FileSizeLimitError(file, maxBytes);
-			const zipFileEntry = await parseZipFileEntry(file, bytes.slice(entry.fileOffset, entry.fileOffset + totalSize));
-			return decompressData(zipFileEntry.data, zipFileEntry.compressionMethod, zipFileEntry.uncompressedSize, file);
-		}
-	};
-};
-var fetchSize = async (url) => {
-	const acceptResponse = await fetch(url, { method: "HEAD" });
-	if (acceptResponse.headers.get("Accept-Ranges") === "bytes") {
-		const getResponse = await fetch(`${url}`, {
-			method: "GET",
-			headers: { Range: "bytes=0-0" }
-		});
-		const contentRange = getResponse.headers.get("Content-Range");
-		if (contentRange !== null) {
-			const rangeMatch = contentRange.match(/bytes (\d+)-(\d+)\/(\d+)/);
-			if (rangeMatch !== null) {
-				await getResponse.arrayBuffer();
-				return Number(rangeMatch[3]);
-			}
-		}
-		await getResponse.arrayBuffer();
-	}
-	const contentLength = acceptResponse.headers.get("Content-Length");
-	if (contentLength !== null) return Number(contentLength);
-	throw new Error(`Could not determine content length for ${url}`);
-};
-/**
-* Extracts and parses the header and data of a compressed ZIP entry from raw binary data.
-*/
-var parseZipFileEntry = async (file, rawData) => {
-	const view = new DataView(rawData.buffer);
-	let offset = 0;
-	if (view.getUint32(offset, true) !== 67324752) throw new Error(`Invalid ZIP entry signature for ${file}`);
-	offset += 4;
-	const versionNeeded = view.getUint16(offset, true);
-	offset += 2;
-	const bitFlag = view.getUint16(offset, true);
-	offset += 2;
-	const compressionMethod = view.getUint16(offset, true);
-	offset += 2;
-	offset += 4;
-	const crc32 = view.getUint32(offset, true);
-	offset += 4;
-	let compressedSize = view.getUint32(offset, true);
-	offset += 4;
-	let uncompressedSize = view.getUint32(offset, true);
-	offset += 4;
-	const filenameLength = view.getUint16(offset, true);
-	offset += 2;
-	const extraFieldLength = view.getUint16(offset, true);
-	offset += 2;
-	const headerOffset = offset;
-	if (compressedSize === 4294967295 || uncompressedSize === 4294967295) {
-		offset += filenameLength;
-		const extraFieldEnd = offset + extraFieldLength;
-		while (offset < extraFieldEnd) {
-			const tag = view.getUint16(offset, true);
-			const size = view.getUint16(offset + 2, true);
-			if (tag === 1) {
-				let zip64Offset = offset + 4;
-				if (uncompressedSize === 4294967295 && zip64Offset + 8 <= extraFieldEnd) {
-					uncompressedSize = Number(view.getBigUint64(zip64Offset, true));
-					zip64Offset += 8;
-				}
-				if (compressedSize === 4294967295 && zip64Offset + 8 <= extraFieldEnd) compressedSize = Number(view.getBigUint64(zip64Offset, true));
-				break;
-			}
-			offset += 4 + size;
-		}
-		offset = headerOffset;
-	}
-	offset += filenameLength + extraFieldLength;
-	const data = rawData.subarray(offset, offset + compressedSize);
-	return {
-		versionNeeded,
-		bitFlag,
-		compressionMethod,
-		crc32,
-		compressedSize,
-		uncompressedSize,
-		filenameLength,
-		extraFieldLength,
-		data
-	};
-};
-var kFileHeaderSize = 46;
-/**
-* Parses the central directory of a ZIP file from the provided buffer and returns a map of entries.
-*/
-var parseCentralDirectory = (buffer) => {
-	let offset = 0;
-	const view = new DataView(buffer.buffer);
-	const entries = /* @__PURE__ */ new Map();
-	while (offset < buffer.length) {
-		if (view.getUint32(offset, true) !== 33639248) break;
-		const filenameLength = view.getUint16(offset + 28, true);
-		const extraFieldLength = view.getUint16(offset + 30, true);
-		const fileCommentLength = view.getUint16(offset + 32, true);
-		let compressedSize = view.getUint32(offset + 20, true);
-		let uncompressedSize = view.getUint32(offset + 24, true);
-		let fileOffset = view.getUint32(offset + 42, true);
-		const filename = new TextDecoder().decode(buffer.subarray(offset + kFileHeaderSize, offset + kFileHeaderSize + filenameLength));
-		if (fileOffset === 4294967295 || compressedSize === 4294967295 || uncompressedSize === 4294967295) {
-			let extraOffset = offset + kFileHeaderSize + filenameLength;
-			const extraEnd = extraOffset + extraFieldLength;
-			while (extraOffset < extraEnd) {
-				const tag = view.getUint16(extraOffset, true);
-				const size = view.getUint16(extraOffset + 2, true);
-				if (tag === 1) {
-					let zip64Offset = extraOffset + 4;
-					if (uncompressedSize === 4294967295 && zip64Offset + 8 <= extraEnd) {
-						uncompressedSize = Number(view.getBigUint64(zip64Offset, true));
-						zip64Offset += 8;
-					}
-					if (compressedSize === 4294967295 && zip64Offset + 8 <= extraEnd) {
-						compressedSize = Number(view.getBigUint64(zip64Offset, true));
-						zip64Offset += 8;
-					}
-					if (fileOffset === 4294967295 && zip64Offset + 8 <= extraEnd) fileOffset = Number(view.getBigUint64(zip64Offset, true));
-					break;
-				}
-				extraOffset += 4 + size;
-			}
-		}
-		const entry = {
-			filename,
-			compressionMethod: view.getUint16(offset + 10, true),
-			compressedSize,
-			uncompressedSize,
-			fileOffset,
-			filenameLength
-		};
-		entries.set(filename, entry);
-		offset += kFileHeaderSize + filenameLength + extraFieldLength + fileCommentLength;
-	}
-	return entries;
-};
-//#endregion
-//#region src/client/remote/remoteLogFile.ts
-var OPEN_RETRY_LIMIT = 5;
-var MAX_SAMPLE_SIZE_BYTES = 2048 * 1024 * 1024;
-var SampleNotFoundError = class SampleNotFoundError extends Error {
-	constructor(message) {
-		super(message || "Sample not found");
-		this.name = "SampleNotFoundError";
-		Object.setPrototypeOf(this, SampleNotFoundError.prototype);
-	}
-};
-/**
-* Synthesize an EvalHeader from a `_journal/start.json` payload.
-*
-* `header.json` is only written at end-of-eval, so while a log is in
-* progress the viewer falls back to `start.json` (which carries the
-* EvalSpec + EvalPlan). The Python side does the analogous lift via
-* `EvalLog.recompute_tags_and_metadata` on the model validator —
-* `log.tags` / `log.metadata` derive from `eval.tags` / `eval.metadata`
-* until `log_updates` adds edits on top. Mirror that here so a running
-* log's chips and metadata still render in the viewer.
-*
-* Exported for unit testing.
-*/
-var headerFromLogStart = (start) => ({
-	status: "started",
-	eval: start.eval,
-	plan: start.plan,
-	tags: start.eval?.tags ?? [],
-	metadata: start.eval?.metadata ?? {}
-});
-/**
-* Opens a remote log file and provides methods to read its contents.
-*/
-var openRemoteLogFile = async (api, url, concurrency) => {
-	const queue = new AsyncQueue(concurrency);
-	const logInfo = await api.get_log_info(url);
-	const directUrl = logInfo.direct_url;
-	const initialEtag = logInfo.etag ?? void 0;
-	const fetchBytes = async (_url, start, end) => {
-		if (directUrl) try {
-			return await fetchRange(directUrl, start, end);
-		} catch (e) {
-			console.warn("Direct URL fetch failed, falling back to proxy", e);
-		}
-		return api.get_log_bytes(url, start, end);
-	};
-	let remoteZipFile = void 0;
-	let retryCount = 0;
-	while (!remoteZipFile && retryCount < OPEN_RETRY_LIMIT) try {
-		remoteZipFile = await openRemoteZipFile(url, logInfo.size, fetchBytes);
-	} catch {
-		retryCount++;
-		console.warn(`Failed to open remote log file at ${url}, retrying (${retryCount}/${OPEN_RETRY_LIMIT})...`);
-		await new Promise((resolve) => setTimeout(resolve, 100 * (retryCount + retryCount)));
-	}
-	if (!remoteZipFile) throw new Error(`Failed to open remote log file at ${url} after ${OPEN_RETRY_LIMIT} attempts.`);
-	/**
-	* Reads and parses a JSON file from the zip.
-	* Optionally applies a preprocessor to transform bytes before decoding.
-	*/
-	const readJSONFile = async (file, maxBytes, preprocessor, onProgress) => {
-		try {
-			let data = await remoteZipFile.readFile(file, maxBytes, onProgress);
-			if (preprocessor) data = preprocessor.preprocess(data);
-			return asyncJsonParseBytes(data);
-		} catch (error) {
-			if (error instanceof FileSizeLimitError) throw error;
-			else if (error instanceof Error) throw new Error(`Failed to read or parse file ${file}: ${error.message}`);
-			else throw new Error(`Failed to read or parse file ${file} - an unknown error occurred`);
-		}
-	};
-	/**
-	* Lists all samples in the zip file.
-	*/
-	const listSamples = async () => {
-		return Array.from(remoteZipFile.centralDirectory.keys()).filter((filename) => filename.startsWith("samples/") && filename.endsWith(".json")).map((filename) => {
-			const [sampleId, epochStr] = filename.split("/")[1].split("_epoch_");
-			return {
-				sampleId,
-				epoch: parseInt(epochStr.split(".")[0], 10)
-			};
-		});
-	};
-	/**
-	* Reads a specific sample file.
-	*/
-	const readSample = async (sampleId, epoch, onProgress) => {
-		const sampleFile = `samples/${sampleId}_epoch_${epoch}.json`;
-		if (!remoteZipFile.centralDirectory.has(sampleFile)) throw new SampleNotFoundError(`Unable to read sample file ${sampleFile} - it is not present in the manifest.`);
-		if (remoteZipFile.centralDirectory.get(sampleFile).uncompressedSize > MAX_SAMPLE_SIZE_BYTES) throw new FileSizeLimitError(sampleFile, MAX_SAMPLE_SIZE_BYTES);
-		return await readJSONFile(sampleFile, void 0, { preprocess: clearLargeEventsArray }, onProgress);
-	};
-	/**
-	* Reads the results.json file.
-	*/
-	const readHeader = async () => {
-		if (remoteZipFile.centralDirectory.has("header.json")) return await readJSONFile("header.json");
-		else return headerFromLogStart(await readJSONFile("_journal/start.json"));
-	};
-	const readEvalBasicInfo = async () => {
-		return toLogPreview(await readHeader());
-	};
-	/**
-	* Reads individual summary files when summaries.json is not available.
-	*/
-	const readFallbackSummaries = async () => {
-		const summaryFiles = Array.from(remoteZipFile.centralDirectory.keys()).filter((filename) => filename.startsWith("_journal/summaries/") && filename.endsWith(".json"));
-		const summaries = [];
-		const errors = [];
-		await Promise.all(summaryFiles.map((filename) => queue.enqueue(async () => {
-			try {
-				const partialSummary = await readJSONFile(filename);
-				summaries.push(...partialSummary);
-			} catch (error) {
-				errors.push(error);
-			}
-		})));
-		if (errors.length > 0) console.error(`Encountered ${errors.length} errors while reading summary files:`, errors);
-		return summaries;
-	};
-	/**
-	* Reads all summaries, falling back to individual files if necessary.
-	*/
-	const readSampleSummaries = async () => {
-		if (remoteZipFile.centralDirectory.has("summaries.json")) return await readJSONFile("summaries.json");
-		else return readFallbackSummaries();
-	};
-	return {
-		readEvalBasicInfo,
-		readLogSummary: async () => {
-			const [header, sampleSummaries] = await Promise.all([readHeader(), readSampleSummaries()]);
-			return {
-				status: header.status,
-				eval: header.eval,
-				plan: header.plan,
-				results: header.results,
-				stats: header.stats,
-				error: header.error,
-				tags: header.tags,
-				metadata: header.metadata,
-				log_updates: header.log_updates,
-				sampleSummaries,
-				etag: initialEtag
-			};
-		},
-		readSample,
-		/**
-		* Reads the complete log file.
-		*/
-		readCompleteLog: async () => {
-			const [evalLogHeader, samples] = await Promise.all([readHeader(), listSamples().then((sampleIds) => Promise.all(sampleIds.map(({ sampleId, epoch }) => readSample(sampleId, epoch).then((sample) => sample))))]);
-			return {
-				status: evalLogHeader.status,
-				eval: evalLogHeader.eval,
-				plan: evalLogHeader.plan,
-				results: evalLogHeader.results,
-				stats: evalLogHeader.stats,
-				error: evalLogHeader.error,
-				samples
-			};
-		}
-	};
-};
-//#endregion
-//#region src/client/api/client-api.ts
-var isEvalFile = (file) => {
-	return file.endsWith(".eval");
-};
-/**
-* Represents an error thrown when a file exceeds the maximum allowed size.
-*/
-var SampleSizeLimitedExceededError = class SampleSizeLimitedExceededError extends Error {
-	id;
-	epoch;
-	maxBytes;
-	displayStack;
-	constructor(id, epoch, maxBytes) {
-		super(`Sample ${id} in epoch ${epoch} exceeds the maximum supported size (${maxBytes / 1024 / 1024}MB) and cannot be loaded.`);
-		this.name = "SampleSizeLimitedExceededError";
-		this.id = id;
-		this.epoch = epoch;
-		this.maxBytes = maxBytes;
-		this.displayStack = false;
-		Object.setPrototypeOf(this, SampleSizeLimitedExceededError.prototype);
-	}
-};
-/**
-* This provides an API implementation that will serve a single
-* file using an http parameter, designed to be deployed
-* to a webserver without inspect or the ability to enumerate log
-* files
-*/
-var clientApi = (api, log_file, debug = false) => {
-	let current_log = void 0;
-	let current_path = void 0;
-	const loadedEvalFile = {
-		file: void 0,
-		remoteLog: void 0
-	};
-	const remoteEvalFile = async (log_file, cached = false) => {
-		if (cached && loadedEvalFile.file === log_file) return loadedEvalFile.remoteLog;
-		const remoteLog = await openRemoteLogFile(api, encodePathParts(log_file), 5);
-		if (cached) {
-			loadedEvalFile.file = log_file;
-			loadedEvalFile.remoteLog = remoteLog;
-		}
-		return remoteLog;
-	};
-	/**
-	* Gets a log
-	*/
-	const get_log = async (log_file, cached = false) => {
-		if (!cached || log_file !== current_path || !current_log) {
-			if (pending_log_promise) return pending_log_promise;
-			pending_log_promise = api.get_log_contents(log_file, 100).then((log) => {
-				current_log = log;
-				current_path = log_file;
-				pending_log_promise = null;
-				return log;
-			}).catch((err) => {
-				pending_log_promise = null;
-				throw err;
-			});
-			return pending_log_promise;
-		}
-		return current_log;
-	};
-	let pending_log_promise = null;
-	/**
-	* Gets a log summary
-	*/
-	const get_log_details = async (log_file, cached = true) => {
-		if (isEvalFile(log_file)) {
-			const remoteLogFile = await remoteEvalFile(log_file, cached);
-			if (remoteLogFile) return await remoteLogFile.readLogSummary();
-			else throw new Error("Unable to read remote eval file");
-		} else {
-			const logContents = await get_log(log_file);
-			/**
-			* @type {import("./Types.js").SampleSummary[]}
-			*/
-			const sampleSummaries = logContents.parsed.samples ? logContents.parsed.samples?.map((sample) => {
-				return {
-					id: sample.id,
-					epoch: sample.epoch,
-					input: sample.input,
-					target: sample.target,
-					scores: sample.scores,
-					metadata: sample.metadata,
-					error: sample.error?.message
-				};
-			}) : [];
-			const parsed = logContents.parsed;
-			return {
-				version: parsed.version,
-				status: parsed.status,
-				eval: parsed.eval,
-				plan: parsed.plan,
-				results: parsed.results,
-				stats: parsed.stats,
-				error: parsed.error,
-				tags: parsed.tags,
-				metadata: parsed.metadata,
-				log_updates: parsed.log_updates,
-				sampleSummaries
-			};
-		}
-	};
-	/**
-	* Gets a sample
-	*/
-	const get_log_sample = async (log_file, id, epoch, onProgress) => {
-		if (isEvalFile(log_file)) {
-			async function fetchSample(useCache) {
-				const remoteLogFile = await remoteEvalFile(log_file, useCache);
-				if (!remoteLogFile) throw new Error(`Unable to read remote eval file ${log_file}`);
-				return await remoteLogFile.readSample(String(id), epoch, onProgress);
-			}
-			function handleError(error) {
-				if (error instanceof SampleNotFoundError) return void 0;
-				if (error instanceof FileSizeLimitError) throw new SampleSizeLimitedExceededError(id, epoch, error.maxBytes);
-				throw error;
-			}
-			try {
-				return await fetchSample(true);
-			} catch (error) {
-				if (error instanceof SampleNotFoundError) try {
-					return await fetchSample(false);
-				} catch (retryError) {
-					return handleError(retryError);
-				}
-				else return handleError(error);
-			}
-		} else {
-			const logContents = await get_log(log_file, true);
-			if (logContents.parsed.samples && logContents.parsed.samples.length > 0) return logContents.parsed.samples.find((sample) => {
-				return sampleIdsEqual(sample.id, id) && sample.epoch === epoch;
-			});
-		}
-	};
-	const read_eval_file_log_summary = async (log_file) => {
-		if (api.get_log_summary) return api.get_log_summary(log_file);
-		else return (await openRemoteLogFile(api, encodePathParts(log_file), 5)).readEvalBasicInfo();
-	};
-	/**
-	* Gets log headers
-	*/
-	const get_log_summaries = async (log_files) => {
-		const eval_files = {};
-		const json_files = {};
-		let index = 0;
-		for (const file of log_files) {
-			if (isEvalFile(file)) eval_files[file] = index;
-			else json_files[file] = index;
-			index++;
-		}
-		const evalLogHeadersPromises = Object.keys(eval_files).map((file) => read_eval_file_log_summary(file).then((summary) => ({
-			index: eval_files[file],
-			summary
-		})));
-		const jsonLogHeadersPromise = api.get_log_summaries(Object.keys(json_files)).then((summaries) => summaries.map((summary, i) => ({
-			index: json_files[Object.keys(json_files)[i]],
-			summary
-		})));
-		return (await Promise.all([...evalLogHeadersPromises, jsonLogHeadersPromise])).flat().sort((a, b) => a.index - b.index).map(({ summary }) => summary);
-	};
-	const get_log_dir = async () => {
-		if (api.get_log_dir) return await api.get_log_dir();
-		else return (await api.get_log_root())?.log_dir;
-	};
-	const get_logs = async (mtime, clientFileCount) => {
-		if (api.get_logs) return await api.get_logs(mtime, clientFileCount);
-		else return {
-			files: (await api.get_log_root())?.logs || [],
-			response_type: "full"
-		};
-	};
-	const get_log_root = async () => {
-		const logFiles = await api.get_log_root();
-		if (logFiles) return logFiles;
-		else if (log_file) {
-			const summary = await get_log_details(log_file);
-			if (summary) return { logs: [{
-				name: log_file,
-				task: summary.eval.task,
-				task_id: summary.eval.task_id
-			}] };
-		}
-		throw new Error("Unable to determine log paths.");
-	};
-	const get_log_pending_samples = (log_file, etag) => {
-		if (!api.eval_pending_samples) throw new Error("API doesn't support streamed samples");
-		return api.eval_pending_samples(log_file, etag);
-	};
-	const sampleDataPathByLog = /* @__PURE__ */ new Map();
-	const editEtagByLog = /* @__PURE__ */ new Map();
-	const get_log_sample_data = async (log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool) => {
-		if (!api.eval_log_sample_data) throw new Error("API doesn't supported streamed sample data");
-		let path = sampleDataPathByLog.get(log_file);
-		if (path === void 0 && api.eval_log_sample_data_direct) {
-			const probe = await api.eval_log_sample_data_direct(log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool);
-			if (probe !== void 0) {
-				sampleDataPathByLog.set(log_file, "direct");
-				return probe;
-			}
-		}
-		if (path === void 0) {
-			path = "proxy";
-			sampleDataPathByLog.set(log_file, path);
-		}
-		if (path === "direct") {
-			const result = await api.eval_log_sample_data_direct(log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool);
-			if (result === void 0) throw new Error("Direct pending-sample-data path returned 'not supported' after probe");
-			return result;
-		}
-		return api.eval_log_sample_data(log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool);
-	};
-	const middleware = debug ? createMiddlewareWrapper([debugMiddleware]) : (_name, fn) => fn;
-	return {
-		client_events: middleware("client_events", () => {
-			return api.client_events();
-		}),
-		get_log_dir: middleware("get_log_dir", get_log_dir),
-		get_log_dir_handle: middleware("get_log_dir_handle", (log_dir) => {
-			return api.get_log_dir_handle ? api.get_log_dir_handle(log_dir) : log_dir || "default_log_dir";
-		}),
-		get_logs: middleware("get_log_files", get_logs),
-		get_log_root: middleware("get_log_root", get_log_root),
-		get_eval_set: middleware("get_eval_set", (dir) => {
-			return api.get_eval_set(dir);
-		}),
-		get_flow: middleware("get_flow", (dir) => {
-			return api.get_flow(dir);
-		}),
-		get_log_summaries: middleware("get_log_summaries", get_log_summaries),
-		get_log_details: middleware("get_log_details", async (log_file, cached) => {
-			const result = await get_log_details(log_file, cached);
-			if (result.etag) editEtagByLog.set(log_file, result.etag);
-			return result;
-		}),
-		get_log_sample: middleware("get_log_sample", get_log_sample),
-		open_log_file: middleware("open_log_file", (log_file, log_dir) => {
-			return api.open_log_file(log_file, log_dir);
-		}),
-		download_file: middleware("download_file", (download_file, file_contents) => {
-			return api.download_file(download_file, file_contents);
-		}),
-		download_log: api.download_log ? middleware("download_log", (log_file) => {
-			return api.download_log(log_file);
-		}) : void 0,
-		log_message: middleware("log_message", (log_file, message) => {
-			return api.log_message(log_file, message);
-		}),
-		get_log_pending_samples: api.eval_pending_samples ? middleware("get_log_pending_samples", get_log_pending_samples) : void 0,
-		get_log_sample_data: api.eval_log_sample_data ? middleware("get_log_sample_data", get_log_sample_data) : void 0,
-		get_user_info: api.get_user_info ? middleware("get_user_info", () => api.get_user_info()) : void 0,
-		edit_log: api.edit_log ? middleware("edit_log", async (log_file, update, if_match_etag) => {
-			const effective = if_match_etag ?? editEtagByLog.get(log_file);
-			const result = await api.edit_log(log_file, update, effective);
-			if (result.etag) editEtagByLog.set(log_file, result.etag);
-			if (current_path === log_file) {
-				current_log = void 0;
-				current_path = void 0;
-			}
-			if (loadedEvalFile.file === log_file) {
-				loadedEvalFile.file = void 0;
-				loadedEvalFile.remoteLog = void 0;
-			}
-			return result;
-		}) : void 0
-	};
-};
-var debugMiddleware = (name, _fn, args, result) => {
-	if (result instanceof Promise) {
-		const startTime = performance.now();
-		return result.then((returned) => {
-			const duration = performance.now() - startTime;
-			console.log(`[ClientAPI] ${name}`, {
-				args,
-				returned,
-				duration: `${duration.toFixed(2)}ms`
-			});
-			return returned;
-		});
-	} else {
-		console.log(`[ClientAPI] ${name}`, {
-			args,
-			returned: result
-		});
-		return result;
-	}
-};
-var applyMiddleware = (name, fn, middlewares) => {
-	if (middlewares.length === 0) return fn;
-	return ((...args) => {
-		let result = fn(...args);
-		for (const middleware of middlewares) result = middleware(name, fn, args, result);
-		return result;
-	});
-};
-var createMiddlewareWrapper = (middlewares) => {
-	return (name, fn) => {
-		return applyMiddleware(name, fn, middlewares);
-	};
-};
-//#endregion
-//#region src/client/api/shared/api-shared.ts
-/**
-* Downloads the provided content as a file using the browser's DOM API
-*/
-async function download_file$1(filename, filecontents) {
-	let blob;
-	if (typeof filecontents === "string" && filecontents.startsWith("data:")) blob = await (await fetch(filecontents)).blob();
-	else blob = new Blob([filecontents], { type: "text/plain" });
-	const link = document.createElement("a");
-	link.href = URL.createObjectURL(blob);
-	link.download = filename;
-	document.body.appendChild(link);
-	link.click();
-	document.body.removeChild(link);
-	URL.revokeObjectURL(link.href);
-}
-//#endregion
-//#region src/client/api/static-http/fetch.ts
-/**
-* Fetches a file from the specified URL as a string
-*/
-async function fetchTextFile(url, handleError) {
-	const safe_url = encodePathParts(url);
-	const response = await fetch(`${safe_url}`, { method: "GET" });
-	if (response.ok) return await response.text();
-	else if (response.status !== 200) {
-		if (handleError && handleError(response)) return;
-		const message = await response.text() || response.statusText;
-		throw /* @__PURE__ */ new Error(`${response.status}: ${message})`);
-	} else throw new Error(`${response.status} - ${response.statusText} `);
-}
-/**
-* Fetches a file from the specified URL and parses its content.
-*/
-async function fetchFile(url, parse, handleError) {
-	const safe_url = encodePathParts(url);
-	const response = await fetch(`${safe_url}`, { method: "GET" });
-	if (response.ok) return await parse(await response.text());
-	else if (response.status !== 200) {
-		if (handleError && handleError(response)) return;
-		const message = await response.text() || response.statusText;
-		throw /* @__PURE__ */ new Error(`${response.status}: ${message})`);
-	} else throw new Error(`${response.status} - ${response.statusText} `);
-}
-/**
-* Fetches a log file and parses its content, updating the log structure if necessary.
-*/
-var fetchLogFile = async (file) => {
-	return fetchFile(file, async (text) => {
-		const log = await asyncJsonParse(text);
-		if (log.version === 1) {
-			if (log.results) {
-				const untypedLog = log;
-				log.results.scores = [];
-				untypedLog.results.scorer.scorer = untypedLog.results.scorer.name;
-				log.results.scores.push(untypedLog.results.scorer);
-				delete untypedLog.results.scorer;
-				log.results.scores[0].metrics = untypedLog.results.metrics;
-				delete untypedLog.results.metrics;
-				const scorerName = log.results.scores[0].name;
-				log.samples?.forEach((sample) => {
-					const untypedSample = sample;
-					sample.scores = { [scorerName]: untypedSample.score };
-					delete untypedSample.score;
-				});
-			}
-		}
-		return {
-			raw: text,
-			parsed: log
-		};
-	});
-};
-/**
-* Fetches a log file and parses its content, updating the log structure if necessary.
-*/
-var fetchManifest = async (log_dir) => {
-	const parseListing = async (text) => {
-		return {
-			raw: text,
-			parsed: await asyncJsonParse(text)
-		};
-	};
-	return await fetchFile(log_dir + "/listing.json", parseListing);
-};
-/**
-* Fetches a file, parsing its content and returning the result.
-*/
-var fetchJsonFile = async (file, handleError) => {
-	return fetchFile(file, async (text) => {
-		return await asyncJsonParse(text);
-	}, handleError);
-};
-/**
-* Joins multiple URI segments into a single URI string.
-*
-* This function removes any leading or trailing slashes from each segment
-* and then joins them with a single slash (`/`).
-*/
-function joinURI(...segments) {
-	return segments.map((segment) => segment.replace(/(^\/+|\/+$)/g, "")).join("/");
-}
-//#endregion
-//#region src/client/api/static-http/api-static-http.ts
-/**
-* This provides an API implementation that will serve a single
-* file using an http parameter, designed to be deployed
-* to a webserver without inspect or the ability to enumerate log
-* files
-*/
-function staticHttpApi(log_dir, log_file, abs_log_dir) {
-	const resolved_log_dir = log_dir?.replace(" ", "+");
-	return staticHttpApiForLog({
-		log_file: log_file ? log_file.replace(" ", "+") : void 0,
-		log_dir: resolved_log_dir,
-		abs_log_dir
-	});
-}
-/**
-* Fetches a file from the specified URL and parses its content.
-*/
-function staticHttpApiForLog(logInfo) {
-	const log_dir = logInfo.log_dir;
-	const abs_log_dir = logInfo.abs_log_dir;
-	let manifest = void 0;
-	let manifestPromise = void 0;
-	const getManifest = async () => {
-		if (!manifest && log_dir) {
-			if (!manifestPromise) manifestPromise = fetchManifest(log_dir).then((manifestRaw) => {
-				manifest = manifestRaw?.parsed || {};
-				return manifest;
-			});
-			await manifestPromise;
-		}
-		return manifest || {};
-	};
-	async function open_log_file() {}
-	return {
-		client_events: async () => {
-			return Promise.resolve([]);
-		},
-		get_log_root: async () => {
-			if (log_dir) {
-				const manifest = await getManifest();
-				if (manifest) {
-					const logs = Object.keys(manifest).map((key) => {
-						return {
-							name: joinURI(log_dir, key),
-							task: manifest[key].task,
-							task_id: manifest[key].task_id
-						};
-					});
-					return Promise.resolve({
-						logs,
-						log_dir,
-						abs_log_dir
-					});
-				}
-			}
-		},
-		get_log_dir_handle: (log_dir) => {
-			return joinURI(`${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf("/"))}`, log_dir || "default_log_dir");
-		},
-		get_eval_set: async (dir) => {
-			const dirSegments = [];
-			if (log_dir) dirSegments.push(log_dir);
-			if (dir) dirSegments.push(dir);
-			return await fetchJsonFile(joinURI(...dirSegments, "eval-set.json"), (response) => {
-				if (400 <= response.status && response.status < 500) return true;
-				else return false;
-			});
-		},
-		get_flow: async (dir) => {
-			const dirSegments = [];
-			if (log_dir) dirSegments.push(log_dir);
-			if (dir) dirSegments.push(dir);
-			return await fetchTextFile(joinURI(...dirSegments, "flow.yaml"), (response) => {
-				if (400 <= response.status && response.status < 500) return true;
-				else return false;
-			});
-		},
-		log_message: async (log_file, message) => {
-			console.log(`[CLIENT MESSAGE] (${log_file}): ${message}`);
-		},
-		get_log_contents: async (log_file, _headerOnly, _capabilities) => {
-			const response = await fetchLogFile(log_file);
-			if (response) return response;
-			else throw new Error(`"Unable to load eval log ${log_file}`);
-		},
-		get_log_info: async (log_file) => {
-			return { size: await fetchSize(log_file) };
-		},
-		get_log_bytes: async (log_file, start, end) => {
-			return await fetchRange(log_file, start, end);
-		},
-		get_log_summary: async (log_file) => {
-			const manifest = await getManifest();
-			if (manifest) {
-				const manifestAbs = {};
-				Object.keys(manifest).forEach((key) => {
-					manifestAbs[joinURI(log_dir || "", key)] = manifest[key];
-				});
-				const header = manifestAbs[log_file];
-				if (header) return header;
-			}
-			throw new Error(`Unable to load eval log header for ${log_file}`);
-		},
-		get_log_summaries: async (files) => {
-			if (files.length === 0) return [];
-			if (log_dir) {
-				const manifest = await getManifest();
-				if (manifest) {
-					const keys = Object.keys(manifest);
-					const result = [];
-					files.forEach((file) => {
-						const fileKey = keys.find((key) => {
-							return file.endsWith(key);
-						});
-						if (fileKey) result.push(manifest[fileKey]);
-					});
-					return result;
-				}
-			}
-			throw new Error(`Failed to load a listing file using the directory: ${log_dir}. Please be sure you have deployed a manifest file (listing.json).`);
-		},
-		download_file: download_file$1,
-		open_log_file
-	};
-}
-//#endregion
-//#region src/client/remote/remotePendingSampleData.ts
-var SEGMENT_CAP_PER_CALL = 25;
-/**
-* Fetch one chunk of pending-sample data via presigned S3 URLs.
-* Returns `undefined` when this transport isn't supported (404, or any
-* segment lacks a presigned URL); all other failures throw.
-*/
-var fetchPendingSampleDataDirect = async (getUrls, log_file, id, epoch, cursors) => {
-	let urls;
-	try {
-		urls = await getUrls(log_file, id, epoch, cursors.last_event, cursors.last_attachment, cursors.last_message_pool, cursors.last_call_pool, SEGMENT_CAP_PER_CALL);
-	} catch (e) {
-		if (e instanceof ApiError && e.status === 404) return;
-		throw e;
-	}
-	if (urls.segments.length === 0) return {
-		sampleData: {
-			events: [],
-			attachments: [],
-			message_pool: [],
-			call_pool: []
-		},
-		has_more: urls.has_more
-	};
-	if (!urls.segments.every((s) => s.direct_url != null)) return;
-	const parts = await Promise.all(urls.segments.map((seg) => readSegment(seg)));
-	return {
-		sampleData: applyCursorFilter({
-			events: parts.flatMap((p) => p.events),
-			attachments: parts.flatMap((p) => p.attachments),
-			message_pool: parts.flatMap((p) => p.message_pool),
-			call_pool: parts.flatMap((p) => p.call_pool)
-		}, cursors),
-		has_more: urls.has_more
-	};
-};
-var readSegment = async (seg) => {
-	const url = seg.direct_url;
-	const resp = await fetch(url);
-	if (!resp.ok) throw new Error(`Failed to fetch segment: ${resp.status} ${resp.statusText}`);
-	return await asyncJsonParseBytes(await (await openZipFileFromBuffer(new Uint8Array(await resp.arrayBuffer()))).readFile(seg.member_name));
-};
-var applyCursorFilter = (out, cursors) => {
-	const lastEvent = cursors.last_event ?? -1;
-	const lastAttachment = cursors.last_attachment ?? -1;
-	const lastMessagePool = cursors.last_message_pool ?? -1;
-	const lastCallPool = cursors.last_call_pool ?? -1;
-	out.events = out.events.filter((e) => e.id > lastEvent);
-	out.attachments = out.attachments.filter((a) => a.id > lastAttachment);
-	out.message_pool = out.message_pool.filter((m) => m.id > lastMessagePool);
-	out.call_pool = out.call_pool.filter((c) => c.id > lastCallPool);
-	return out;
-};
-//#endregion
-//#region src/client/api/view-server/api-view-server.ts
-var LOADED_TIME = Date.now();
-var lastEvalTime = 0;
-/**
-* Create a view server API with optional server-side log listing
-*/
-function viewServerApi(options = {}) {
-	const { apiBaseUrl, logDir, headerProvider } = options;
-	const requestApi = serverRequestApi(apiBaseUrl || "/api", headerProvider);
-	const client_events = async () => {
-		const params = new URLSearchParams();
-		params.append("loaded_time", String(LOADED_TIME.valueOf()));
-		params.append("last_eval_time", String(lastEvalTime.valueOf()));
-		return (await requestApi.fetchString("GET", `/events?${params.toString()}`)).parsed;
-	};
-	const get_log_dir = async () => {
-		if (logDir) return logDir;
-		return (await requestApi.fetchString("GET", "/log-dir")).parsed.log_dir;
-	};
-	const get_log_root = async () => {
-		const path = logDir ? `/logs?log_dir=${encodeURIComponent(logDir)}` : "/logs";
-		const logs = await requestApi.fetchString("GET", path);
-		lastEvalTime = Date.now();
-		return logs.parsed;
-	};
-	const get_logs = async (mtime, clientFileCount) => {
-		const path = logDir ? `/log-files?log_dir=${encodeURIComponent(logDir)}` : "/log-files";
-		const headers = {};
-		const token = log_file_token(mtime, clientFileCount);
-		if (token) headers["If-None-Match"] = token;
-		lastEvalTime = Date.now();
-		return (await requestApi.fetchString("GET", path, headers)).parsed;
-	};
-	const log_file_token = (mtime, fileCount) => {
-		return `W/"${mtime}-${fileCount}"`;
-	};
-	const get_eval_set = async (dir) => {
-		const basePath = "/eval-set";
-		const params = new URLSearchParams();
-		if (logDir) params.append("log_dir", logDir);
-		if (dir) params.append("dir", dir);
-		const query = params.toString();
-		const path = query ? `${basePath}?${query}` : basePath;
-		try {
-			return (await requestApi.fetchString("GET", path)).parsed;
-		} catch (error) {
-			if (error instanceof ApiError && (error.status === 404 || error.status === 403)) return;
-			throw error;
-		}
-	};
-	const get_flow = async (dir) => {
-		const basePath = "/flow";
-		const params = new URLSearchParams();
-		if (logDir) params.append("log_dir", logDir);
-		if (dir) params.append("dir", dir);
-		const query = params.toString();
-		const path = query ? `${basePath}?${query}` : basePath;
-		try {
-			const bytes = await requestApi.fetchBytes("GET", path);
-			return new TextDecoder().decode(bytes);
-		} catch (error) {
-			if (error instanceof ApiError && (error.status === 404 || error.status === 403)) return;
-			throw error;
-		}
-	};
-	const get_log_contents = async (file, headerOnly, _capabilities) => {
-		return await requestApi.fetchString("GET", `/logs/${encodeURIComponent(file)}?header-only=${headerOnly}`);
-	};
-	const get_log_info = async (file) => {
-		return (await requestApi.fetchString("GET", `/log-info/${encodeURIComponent(file)}`)).parsed;
-	};
-	const toLogPreview = (header) => {
-		const scores = Object.values(header.results?.scores || {});
-		const metric = scores.length > 0 ? scores[0].metrics : void 0;
-		const evalMetrics = Object.values(metric || {});
-		const primary_metric = evalMetrics.length > 0 ? evalMetrics[0] : void 0;
-		const model_roles = header.eval.model_roles ? Object.fromEntries(Object.entries(header.eval.model_roles).map(([role, cfg]) => [role, cfg.model])) : void 0;
-		return {
-			eval_id: header.eval.eval_id,
-			run_id: header.eval.run_id,
-			task: header.eval.task,
-			task_id: header.eval.task_id,
-			task_version: header.eval.task_version,
-			version: header.version,
-			status: header.status,
-			error: header.error,
-			model: header.eval.model,
-			model_roles,
-			started_at: header.stats?.started_at,
-			completed_at: header.stats?.completed_at,
-			primary_metric
-		};
-	};
-	const get_log_bytes = async (file, start, end) => requestApi.fetchBytes("GET", `/log-bytes/${encodeURIComponent(file)}?start=${start}&end=${end}`);
-	const get_log_summaries = async (files) => {
-		const params = new URLSearchParams();
-		for (const file of files) params.append("file", file);
-		return (await requestApi.fetchString("GET", `/log-headers?${params.toString()}`)).parsed.map(toLogPreview);
-	};
-	const log_message = async (log_file, message) => {
-		const params = new URLSearchParams();
-		params.append("log_file", log_file);
-		params.append("message", message);
-		await requestApi.fetchType("GET", `/log-message?${params.toString()}`, {
-			headers: { "Content-Type": "text/plain" },
-			parse: async (text) => {
-				if (text !== "") throw new Error(`Unexpected response from log_message: ${text}`);
-			}
-		});
-	};
-	const eval_pending_samples = async (log_file, etag) => {
-		const params = new URLSearchParams();
-		params.append("log", log_file);
-		const headers = {};
-		if (etag) headers["If-None-Match"] = etag;
-		const request = {
-			headers,
-			parse: async (text) => {
-				return {
-					status: "OK",
-					pendingSamples: await asyncJsonParse(text)
-				};
-			},
-			handleError: (status) => {
-				if (status === 404) return { status: "NotFound" };
-				else if (status === 304) return { status: "NotModified" };
-			}
-		};
-		return (await requestApi.fetchType("GET", `/pending-samples?${params.toString()}`, request)).parsed;
-	};
-	const eval_log_sample_data = async (log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool) => {
-		const params = new URLSearchParams();
-		params.append("log", log_file);
-		params.append("id", String(id));
-		params.append("epoch", String(epoch));
-		if (last_event !== void 0) params.append("last-event-id", String(last_event));
-		if (last_attachment !== void 0) params.append("after-attachment-id", String(last_attachment));
-		if (last_message_pool !== void 0) params.append("after-message-pool-id", String(last_message_pool));
-		if (last_call_pool !== void 0) params.append("after-call-pool-id", String(last_call_pool));
-		return (await requestApi.fetchType("GET", `/pending-sample-data?${params.toString()}`, {
-			headers: {},
-			parse: async (text) => {
-				return {
-					status: "OK",
-					sampleData: await asyncJsonParse(text)
-				};
-			},
-			handleError: (status) => {
-				if (status === 404) return { status: "NotFound" };
-				else if (status === 304) return { status: "NotModified" };
-			}
-		})).parsed;
-	};
-	const get_pending_sample_data_urls = async (log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool, max_segments) => {
-		const params = new URLSearchParams();
-		params.append("log", log_file);
-		params.append("id", String(id));
-		params.append("epoch", String(epoch));
-		if (last_event !== void 0) params.append("last-event-id", String(last_event));
-		if (last_attachment !== void 0) params.append("after-attachment-id", String(last_attachment));
-		if (last_message_pool !== void 0) params.append("after-message-pool-id", String(last_message_pool));
-		if (last_call_pool !== void 0) params.append("after-call-pool-id", String(last_call_pool));
-		if (max_segments !== void 0) params.append("max-segments", String(max_segments));
-		return (await requestApi.fetchType("GET", `/pending-sample-data-urls?${params.toString()}`, {
-			headers: {},
-			parse: async (text) => {
-				return await asyncJsonParse(text);
-			}
-		})).parsed;
-	};
-	const eval_log_sample_data_direct = async (log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool) => {
-		const direct = await fetchPendingSampleDataDirect(get_pending_sample_data_urls, log_file, id, epoch, {
-			last_event,
-			last_attachment,
-			last_message_pool,
-			last_call_pool
-		});
-		if (direct === void 0) return;
-		return {
-			status: "OK",
-			sampleData: direct.sampleData,
-			has_more: direct.has_more
-		};
-	};
-	const edit_log = async (log_file, update, if_match_etag) => {
-		const baseUrl = apiBaseUrl || "/api";
-		const path = `/log-edit/${encodeURIComponent(log_file)}`;
-		const url = baseUrl ? `${baseUrl.replace(/\/$/, "")}${path}` : path;
-		const headers = {
-			Accept: "application/json",
-			"Content-Type": "application/json"
-		};
-		if (if_match_etag) headers["If-Match"] = if_match_etag;
-		if (headerProvider) Object.assign(headers, await headerProvider());
-		const isCrossOrigin = Boolean(apiBaseUrl && (() => {
-			try {
-				return new URL(apiBaseUrl).origin !== window.location.origin;
-			} catch {
-				return false;
-			}
-		})());
-		const response = await fetch(url, {
-			method: "POST",
-			headers,
-			body: JSON.stringify(update),
-			credentials: isCrossOrigin ? "include" : "same-origin"
-		});
-		if (!response.ok) {
-			const message = unwrapFastapiDetail(await response.text()) || response.statusText;
-			throw new ApiError(response.status, message);
-		}
-		return {
-			log: await asyncJsonParse(await response.text()),
-			etag: response.headers.get("ETag") ?? void 0
-		};
-	};
-	const get_user_info = async () => {
-		return (await requestApi.fetchString("GET", "/user-info")).parsed ?? {};
-	};
-	const download_log = async (log_file) => {
-		const url = `${apiBaseUrl || "/api"}/log-download/${encodeURIComponent(log_file)}`;
-		const link = document.createElement("a");
-		link.href = url;
-		link.download = "";
-		document.body.appendChild(link);
-		link.click();
-		document.body.removeChild(link);
-	};
-	return {
-		client_events,
-		get_log_root,
-		get_logs,
-		get_log_dir,
-		get_eval_set,
-		get_flow,
-		get_log_contents,
-		get_log_info,
-		get_log_bytes,
-		get_log_summaries,
-		log_message,
-		download_file: download_file$1,
-		download_log,
-		open_log_file: async () => {},
-		eval_pending_samples,
-		eval_log_sample_data,
-		eval_log_sample_data_direct,
-		edit_log,
-		get_user_info
-	};
-}
-//#endregion
-//#region src/client/api/vscode/jsonrpc.ts
-var kMethodEvalLogDir = "eval_log_dir";
-var kMethodEvalLogs = "eval_logs";
-var kMethodEvalLogFiles = "eval_log_files";
-var kMethodEvalLog = "eval_log";
-var kMethodEvalLogInfo = "eval_log_info";
-var kMethodEvalLogBytes = "eval_log_bytes";
-var kMethodEvalLogHeaders = "eval_log_headers";
-var kMethodPendingSamples = "eval_log_pending_samples";
-var kMethodSampleData = "eval_log_sample_data";
-var kMethodLogMessage = "log_message";
-var kMethodEditLog = "edit_log";
-var kMethodGetUserInfo = "get_user_info";
-function webViewJsonRpcClient(vscode) {
-	return jsonRpcPostMessageRequestTransport({
-		postMessage: (data) => {
-			vscode.postMessage(data);
-		},
-		onMessage: (handler) => {
-			const onMessage = (ev) => {
-				handler(ev.data);
-			};
-			window.addEventListener("message", onMessage);
-			return () => {
-				window.removeEventListener("message", onMessage);
-			};
-		}
-	}).request;
-}
-function jsonRpcPostMessageRequestTransport(target) {
-	const requests = /* @__PURE__ */ new Map();
-	return {
-		request: (method, params) => {
-			return new Promise((resolve, reject) => {
-				const requestId = Math.floor(Math.random() * 1e6);
-				requests.set(requestId, {
-					resolve,
-					reject
-				});
-				const request = {
-					jsonrpc: "2.0",
-					id: requestId,
-					method,
-					params
-				};
-				target.postMessage(request);
-			});
-		},
-		disconnect: target.onMessage((ev) => {
-			const response = asJsonRpcResponse(ev);
-			if (response) {
-				const request = requests.get(response.id);
-				if (request) {
-					requests.delete(response.id);
-					if (response.error) request.reject(response.error);
-					else request.resolve(response.result);
-				}
-			}
-		})
-	};
-}
-function isJsonRpcMessage(message) {
-	return message.jsonrpc !== void 0 && message.id !== void 0;
-}
-function asJsonRpcMessage(data) {
-	if (isJsonRpcMessage(data) && data.jsonrpc === "2.0") return data;
-	return null;
-}
-function asJsonRpcResponse(data) {
-	const message = asJsonRpcMessage(data);
-	if (message) return message;
-	return null;
-}
-//#endregion
-//#region src/client/api/vscode/api-vscode.ts
-var kNotFoundSignal = "NotFound";
-var kNotModifiedSignal = "NotModified";
-var vscodeClient = webViewJsonRpcClient(getVscodeApi());
-async function client_events() {
-	return [];
-}
-async function get_log_root() {
-	const response = await vscodeClient(kMethodEvalLogs, []);
-	if (response) {
-		const parsed = import_dist.default.parse(response);
-		if (Array.isArray(parsed)) return {
-			log_dir: "",
-			files: parsed
-		};
-		else return parsed;
-	} else return;
-}
-var get_log_dir = async () => {
-	const response = await vscodeClient(kMethodEvalLogDir, []);
-	if (response) return import_dist.default.parse(response).log_dir;
-};
-var get_logs = async (mtime, clientFileCount) => {
-	const response = await vscodeClient(kMethodEvalLogFiles, [mtime, clientFileCount]);
-	if (response) return import_dist.default.parse(response);
-	else return [];
-};
-async function get_eval_set() {}
-async function get_flow() {}
-async function get_log_contents(log_file, headerOnly, capabilities) {
-	const response = await vscodeClient(kMethodEvalLog, [log_file, headerOnly]);
-	if (response) {
-		let json;
-		if (capabilities?.webWorkers) json = await asyncJsonParse(response);
-		else json = import_dist.default.parse(response);
-		return {
-			parsed: json,
-			raw: response
-		};
-	} else throw new Error(`Unable to load eval log ${log_file}.`);
-}
-async function get_log_info(log_file) {
-	try {
-		return await vscodeClient(kMethodEvalLogInfo, [log_file]);
-	} catch (e) {
-		if (e?.code === -32601) return { size: await vscodeClient("eval_log_size", [log_file]) };
-		throw e;
-	}
-}
-async function get_log_bytes(log_file, start, end) {
-	return await vscodeClient(kMethodEvalLogBytes, [
-		log_file,
-		start,
-		end
-	]);
-}
-async function get_log_summaries(files) {
-	const response = await vscodeClient(kMethodEvalLogHeaders, [files]);
-	if (response) return import_dist.default.parse(response);
-	else return;
-}
-async function eval_pending_samples(log_file, etag) {
-	const response = await vscodeClient(kMethodPendingSamples, [log_file, etag]);
-	if (response) {
-		if (response === kNotModifiedSignal) return { status: "NotModified" };
-		else if (response === kNotFoundSignal) return { status: "NotFound" };
-		return {
-			status: "OK",
-			pendingSamples: await asyncJsonParse(response)
-		};
-	} else throw new Error(`Unable to load pending samples ${log_file}.`);
-}
-async function eval_log_sample_data(log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool) {
-	const response = await vscodeClient(kMethodSampleData, [
-		log_file,
-		id,
-		epoch,
-		last_event,
-		last_attachment,
-		last_message_pool,
-		last_call_pool
-	]);
-	if (response) {
-		if (response === kNotModifiedSignal) return { status: "NotModified" };
-		else if (response === kNotFoundSignal) return { status: "NotFound" };
-		return {
-			status: "OK",
-			sampleData: await asyncJsonParse(response)
-		};
-	} else throw new Error(`Unable to load live sample data ${log_file}.`);
-}
-async function log_message(log_file, message) {
-	await vscodeClient(kMethodLogMessage, [log_file, message]);
-}
-async function download_file() {
-	throw Error("Downloading files is not supported in VS Code");
-}
-/**
-* POSTs a LogUpdate (tag/metadata edits + provenance) to the VS Code
-* extension, which read-modifies-writes the log header and returns the
-* updated EvalLog (plus an ETag for S3-backed logs).
-*
-* Cross-process error mapping:
-*   - HTTP-style status codes (400/409/412/…) thrown by the extension
-*     come back through JSON-RPC with `error.code = <status>`. We
-*     re-throw them as `ApiError` so the existing dialog error mapper
-*     (`formatEditError`) handles 412 stale-ETag and 400 validation
-*     branches identically across the view-server and vscode paths.
-*   - `kJsonRpcMethodNotFound` means the extension predates edit
-*     support; surface an actionable message instead of the raw
-*     JSON-RPC text.
-*/
-async function edit_log(log_file, update, if_match_etag) {
-	try {
-		const response = await vscodeClient(kMethodEditLog, [
-			log_file,
-			update,
-			if_match_etag
-		]);
-		if (!response) throw new Error(`Edit returned no response for ${log_file}.`);
-		return typeof response === "string" ? import_dist.default.parse(response) : response;
-	} catch (e) {
-		if (typeof e?.code === "number" && e.code >= 400 && e.code < 600) throw new ApiError(e.code, e?.message ?? `Edit failed (${e.code})`);
-		if (e?.code === -32601) throw new Error("Log editing requires a newer Inspect VS Code extension.");
-		throw e;
-	}
-}
-/**
-* Best-effort identity of the user editing logs, used to prefill the
-* Author field. Returns an empty object when the extension doesn't
-* expose the method (older extension); the dialog then leaves Author
-* blank and the user types it manually.
-*/
-async function get_user_info() {
-	try {
-		const response = await vscodeClient(kMethodGetUserInfo, []);
-		if (!response) return {};
-		return (typeof response === "string" ? import_dist.default.parse(response) : response) ?? {};
-	} catch (e) {
-		if (e?.code === -32601) return {};
-		throw e;
-	}
-}
-async function open_log_file(log_file, log_dir) {
-	const msg = {
-		type: "displayLogFile",
-		url: log_file,
-		log_dir
-	};
-	getVscodeApi()?.postMessage(msg);
-}
-var api = {
-	client_events,
-	get_log_root,
-	get_log_dir,
-	get_logs,
-	get_eval_set,
-	get_flow,
-	get_log_contents,
-	get_log_info,
-	get_log_bytes,
-	get_log_summaries,
-	log_message,
-	download_file,
-	open_log_file,
-	eval_pending_samples,
-	eval_log_sample_data,
-	edit_log,
-	get_user_info
-};
-//#endregion
-//#region src/client/api/index.ts
-/**
-* Resolves the client API
-*/
-var resolveApi = () => {
-	const debug = false;
-	if (getVscodeApi()) return clientApi(api, void 0, debug);
-	else {
-		const scriptEl = document.getElementById("log_dir_context");
-		if (scriptEl) {
-			const context = scriptEl.textContent;
-			if (context !== null) {
-				const data = import_dist.default.parse(context);
-				if (data.log_dir || data.log_file) return clientApi(staticHttpApi(data.log_dir || dirname(data.log_file), data.log_file, data.abs_log_dir), data.log_file, debug);
-			}
-		}
-		const urlParams = new URLSearchParams(window.location.search);
-		const log_file = urlParams.get("log_file");
-		const log_dir = urlParams.get("log_dir");
-		const forceViewServerApi = urlParams.get("inspect_server") === "true";
-		const resolved_log_dir = log_dir ?? void 0;
-		const resolved_log_file = log_file ?? void 0;
-		if (forceViewServerApi) return clientApi(viewServerApi({ logDir: resolved_log_dir }), resolved_log_file, debug);
-		if (resolved_log_dir !== void 0 || resolved_log_file !== void 0) return clientApi(staticHttpApi(resolved_log_dir, resolved_log_file), resolved_log_file, debug);
-		return clientApi(viewServerApi(), void 0, debug);
-	}
-};
-var api_default = resolveApi();
-//#endregion
 //#region src/components/DownloadButton.tsx
 var DownloadButton = ({ label, fileName, fileContents }) => {
+	const api = useApi();
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 		className: "btn btn-outline-primary download-button",
 		onClick: async () => {
-			await api_default.download_file(fileName, fileContents);
+			await api.download_file(fileName, fileContents);
 		},
 		children: label
 	});
@@ -141674,11 +138998,11 @@ var shift = {
 };
 var mac = typeof navigator != "undefined" && /Mac/.test(navigator.platform);
 var ie$1 = typeof navigator != "undefined" && /MSIE \d|Trident\/(?:[7-9]|\d{2,})\..*rv:(\d+)/.exec(navigator.userAgent);
-for (var i = 0; i < 10; i++) base[48 + i] = base[96 + i] = String(i);
-for (var i = 1; i <= 24; i++) base[i + 111] = "F" + i;
-for (var i = 65; i <= 90; i++) {
-	base[i] = String.fromCharCode(i + 32);
-	shift[i] = String.fromCharCode(i);
+for (var i$1 = 0; i$1 < 10; i$1++) base[48 + i$1] = base[96 + i$1] = String(i$1);
+for (var i$1 = 1; i$1 <= 24; i$1++) base[i$1 + 111] = "F" + i$1;
+for (var i$1 = 65; i$1 <= 90; i$1++) {
+	base[i$1] = String.fromCharCode(i$1 + 32);
+	shift[i$1] = String.fromCharCode(i$1);
 }
 for (var code$1 in base) if (!shift.hasOwnProperty(code$1)) shift[code$1] = base[code$1];
 function keyName(event) {
@@ -153696,7 +151020,7 @@ tagHighlighter([
 ]);
 //#endregion
 //#region ../../node_modules/.pnpm/@codemirror+language@6.12.3/node_modules/@codemirror/language/dist/index.js
-var _a;
+var _a$1;
 /**
 Node prop stored in a parser's top syntax node to provide the
 facet that stores language-specific data for that language.
@@ -154129,7 +151453,7 @@ if (typeof requestIdleCallback != "undefined") requestIdle = (callback) => {
 	}, 100);
 	return () => idle < 0 ? clearTimeout(timeout) : cancelIdleCallback(idle);
 };
-var isInputPending = typeof navigator != "undefined" && ((_a = navigator.scheduling) === null || _a === void 0 ? void 0 : _a.isInputPending) ? () => navigator.scheduling.isInputPending() : null;
+var isInputPending = typeof navigator != "undefined" && ((_a$1 = navigator.scheduling) === null || _a$1 === void 0 ? void 0 : _a$1.isInputPending) ? () => navigator.scheduling.isInputPending() : null;
 var parseWorker = /* @__PURE__ */ ViewPlugin.fromClass(class ParseWorker {
 	constructor(view) {
 		this.view = view;
@@ -163507,6 +160831,25 @@ function buildSampleColumns(ctx) {
 		filter: true,
 		resizable: true,
 		valueFormatter: (params) => filename(params.value)
+	}, {
+		colId: "completed_at",
+		headerName: "Completed",
+		initialWidth: 140,
+		minWidth: 80,
+		maxWidth: 160,
+		sortable: true,
+		filter: true,
+		resizable: true,
+		cellDataType: "date",
+		valueGetter: (params) => params.data?.data?.completed_at ?? void 0,
+		filterValueGetter: (params) => {
+			const v = params.data?.data?.completed_at;
+			if (!v) return void 0;
+			const d = new Date(v);
+			return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+		},
+		valueFormatter: (params) => params.value ? formatDateTime(new Date(params.value)) : "",
+		comparator: comparators.date
 	});
 	cols.push({
 		colId: "sampleId",
@@ -163652,25 +160995,6 @@ function buildSampleColumns(ctx) {
 		cellRenderer: (params) => params.value === void 0 || params.value === null ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: formatTime(params.value) }),
 		tooltipValueGetter: (params) => params.value === void 0 || params.value === null ? void 0 : formatTime(params.value)
 	});
-	cols.push(...buildScoreColumns(ctx));
-	if (multiLog) cols.push({
-		colId: "created",
-		field: "created",
-		headerName: "Created",
-		initialWidth: 130,
-		minWidth: 80,
-		maxWidth: 140,
-		sortable: true,
-		filter: true,
-		resizable: true,
-		cellDataType: "date",
-		filterValueGetter: (params) => {
-			if (!params.data?.created) return void 0;
-			const d = new Date(params.data.created);
-			return new Date(d.getFullYear(), d.getMonth(), d.getDate());
-		},
-		valueFormatter: (params) => params.value ? formatDateTime(new Date(params.value)) : ""
-	});
 	cols.push({
 		colId: "error",
 		field: "error",
@@ -163715,6 +161039,25 @@ function buildSampleColumns(ctx) {
 		cellStyle: { textAlign: "center" },
 		comparator: comparators.number,
 		valueGetter: (params) => params.data?.retries ?? params.data?.data?.retries
+	});
+	cols.push(...buildScoreColumns(ctx));
+	if (multiLog) cols.push({
+		colId: "created",
+		field: "created",
+		headerName: "Eval Created",
+		initialWidth: 140,
+		minWidth: 80,
+		maxWidth: 160,
+		sortable: true,
+		filter: true,
+		resizable: true,
+		cellDataType: "date",
+		filterValueGetter: (params) => {
+			if (!params.data?.created) return void 0;
+			const d = new Date(params.data.created);
+			return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+		},
+		valueFormatter: (params) => params.value ? formatDateTime(new Date(params.value)) : ""
 	});
 	if (ctx.compactScores) cols.push({
 		colId: "compactSpacer",
@@ -164335,16 +161678,16 @@ var EditTagsDialog_module_default = {
 	addButton: "_addButton_yxwie_27"
 };
 var TagChip_module_default = {
-	chip: "_chip_1k2wf_1",
-	chipLabel: "_chipLabel_1k2wf_31",
-	chipNew: "_chipNew_1k2wf_40",
-	chipClickable: "_chipClickable_1k2wf_48",
-	chipRemove: "_chipRemove_1k2wf_61"
+	chip: "_chip_17zs5_1",
+	chipLabel: "_chipLabel_17zs5_31",
+	chipNew: "_chipNew_17zs5_40",
+	chipClickable: "_chipClickable_17zs5_48",
+	chipRemove: "_chipRemove_17zs5_61"
 };
 //#endregion
 //#region src/app/log-view/title-view/TagChip.tsx
 var TagChip = ({ label, isNew, onRemove, onClick }) => {
-	const className = clsx(TagChip_module_default.chip, isNew && TagChip_module_default.chipNew, onClick && TagChip_module_default.chipClickable, "text-size-smaller");
+	const className = clsx(TagChip_module_default.chip, isNew && TagChip_module_default.chipNew, onClick && TagChip_module_default.chipClickable, "text-size-smallest");
 	const labelNode = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 		className: TagChip_module_default.chipLabel,
 		children: label
@@ -164372,7 +161715,7 @@ var TagChip = ({ label, isNew, onRemove, onClick }) => {
 //#endregion
 //#region src/app/log-view/title-view/EditTagsDialog.tsx
 var EditTagsDialog = ({ showing, setShowing, currentTags, logFile, onSaved }) => {
-	const api = useStore((state) => state.api);
+	const api = useApi();
 	const [tags, setTags] = (0, import_react.useState)(currentTags);
 	const [pending, setPending] = (0, import_react.useState)("");
 	const [author, setAuthor] = (0, import_react.useState)("");
@@ -164619,7 +161962,7 @@ var TagStrip = ({ tags, showEdit, onEdit, className, collapseOnWrap = false }) =
 				onClick: onEdit,
 				title: "Edit tags",
 				variant: "pill",
-				children: tags.length === 0 ? "Tags" : "Edit"
+				children: tags.length === 0 ? "Tags" : "edit"
 			})
 		]
 	});
@@ -164697,7 +162040,8 @@ var useTaskTabConfig = (evalSpec, evalStats, earlyStopping, tags) => {
 	]);
 };
 var TaskTab = ({ evalSpec, evalStats, earlyStopping, tags }) => {
-	const canEditTags = useStore((state) => Boolean(state.api?.edit_log));
+	const api = useApi();
+	const canEditTags = Boolean(api.edit_log);
 	const tagList = tags ?? [];
 	const config = {};
 	Object.entries(evalSpec?.config || {}).forEach((entry) => {
@@ -165365,9 +162709,9 @@ var DownloadLogButton_module_default = { downloadLogButton: "_downloadLogButton_
 //#region src/components/DownloadLogButton.tsx
 var DownloadLogButton = ({ log_file, className = "", ariaLabel = "Download log as EVAL" }) => {
 	const [downloadState, setDownloadState] = (0, import_react.useState)("idle");
-	const api = useStore((state) => state.api);
+	const api = useApi();
 	const handleClick = async () => {
-		if (!api?.download_log) return;
+		if (!api.download_log) return;
 		setDownloadState("downloading");
 		try {
 			await api.download_log(log_file);
@@ -166542,12 +163886,19 @@ var SamplesPanel = () => {
 		return v;
 	}, [allColumns, columnVisibility]);
 	const initialState = (0, import_react.useMemo)(() => {
-		if (previousSamplesPath !== void 0 && previousSamplesPath !== samplesPath) {
+		const base = previousSamplesPath !== void 0 && previousSamplesPath !== samplesPath ? (() => {
 			const result = { ...gridState };
 			delete result?.filter;
 			return result;
-		}
-		return gridState;
+		})() : gridState;
+		if (!base?.sort?.sortModel?.length) return {
+			...base,
+			sort: { sortModel: [{
+				colId: "completed_at",
+				sort: "desc"
+			}] }
+		};
+		return base;
 	}, [
 		previousSamplesPath,
 		samplesPath,
@@ -166590,7 +163941,7 @@ var SamplesPanel = () => {
 					error: sample.error,
 					limit: sample.limit,
 					retries: sample.retries,
-					completed: sample.completed ?? false,
+					completed: sample.completed,
 					tokens,
 					duration: sample.total_time ?? void 0
 				};
@@ -166929,14 +164280,2941 @@ var App = ({ api }) => {
 		syncLogs,
 		onMessage
 	]);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComponentIconProvider, {
-		icons: componentIcons,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComponentStateProvider, {
-			hooks: inspectStateHooks,
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RouterProvider2, { router: AppRouter })
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ApiProvider, {
+		value: api,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComponentIconProvider, {
+			icons: componentIcons,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComponentStateProvider, {
+				hooks: inspectStateHooks,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RouterProvider2, { router: AppRouter })
+			})
 		})
 	});
 };
+//#endregion
+//#region src/utils/clear-events-preprocessor.ts
+/**
+* JSON preprocessor that clears large events arrays at the byte level.
+* Works directly with Uint8Array to avoid creating gigabyte-sized strings.
+* Discards all events if the events array exceeds 100MB, leaving an empty array.
+*/
+var MAX_EVENTS_SIZE_BYTES = 350 * 1024 * 1024;
+var MAX_TOTAL_SIZE = 512 * 1024 * 1024;
+/**
+* Finds the "events": [ pattern in the byte array.
+* Returns the position of the opening bracket, or -1 if not found.
+*/
+function findEventsArrayStart(data) {
+	const pattern = new TextEncoder().encode("\"events\"");
+	for (let i = 0; i < data.length - pattern.length - 10; i++) {
+		let matches = true;
+		for (let j = 0; j < pattern.length; j++) if (data[i + j] !== pattern[j]) {
+			matches = false;
+			break;
+		}
+		if (matches) {
+			let pos = i + pattern.length;
+			while (pos < data.length && (data[pos] === 32 || data[pos] === 9 || data[pos] === 10 || data[pos] === 13)) pos++;
+			if (pos < data.length && data[pos] === 58) {
+				pos++;
+				while (pos < data.length && (data[pos] === 32 || data[pos] === 9 || data[pos] === 10 || data[pos] === 13)) pos++;
+				if (pos < data.length && data[pos] === 91) return pos;
+			}
+		}
+	}
+	return -1;
+}
+/**
+* Finds the closing bracket of an array starting at arrayStart.
+* Properly handles nested structures and strings.
+*/
+function findArrayEnd(data, arrayStart) {
+	let depth = 0;
+	let inString = false;
+	let escaped = false;
+	for (let i = arrayStart; i < data.length; i++) {
+		const byte = data[i];
+		if (escaped) {
+			escaped = false;
+			continue;
+		}
+		if (byte === 92) {
+			escaped = true;
+			continue;
+		}
+		if (byte === 34) {
+			inString = !inString;
+			continue;
+		}
+		if (inString) continue;
+		if (byte === 91 || byte === 123) depth++;
+		else if (byte === 93 || byte === 125) {
+			depth--;
+			if (depth === 0 && byte === 93) return i;
+		}
+	}
+	return -1;
+}
+/**
+* Clears events array at the byte level if it exceeds the size limits.
+* Replaces the entire events array with an empty array.
+* This allows handling gigabyte-sized files without running out of memory.
+*/
+function clearLargeEventsArray(data) {
+	if (data.length <= MAX_EVENTS_SIZE_BYTES) return data;
+	const arrayStart = findEventsArrayStart(data);
+	if (arrayStart === -1) return data;
+	const arrayEnd = findArrayEnd(data, arrayStart);
+	if (arrayEnd === -1) return data;
+	if (arrayEnd - arrayStart - 1 <= MAX_EVENTS_SIZE_BYTES && data.length <= MAX_TOTAL_SIZE) return data;
+	const before = data.slice(0, arrayStart + 1);
+	const after = data.slice(arrayEnd);
+	const result = new Uint8Array(before.length + after.length);
+	let offset = 0;
+	result.set(before, offset);
+	offset += before.length;
+	result.set(after, offset);
+	return result;
+}
+//#endregion
+//#region ../../node_modules/.pnpm/fflate@0.8.3/node_modules/fflate/esm/browser.js
+var ch2 = {};
+var wk = (function(c, id, msg, transfer, cb) {
+	var w = new Worker(ch2[id] || (ch2[id] = URL.createObjectURL(new Blob([c + ";addEventListener(\"error\",function(e){e=e.error;postMessage({$e$:[e.message,e.code,e.stack]})})"], { type: "text/javascript" }))));
+	w.onmessage = function(e) {
+		var d = e.data, ed = d.$e$;
+		if (ed) {
+			var err = new Error(ed[0]);
+			err["code"] = ed[1];
+			err.stack = ed[2];
+			cb(err, null);
+		} else cb(null, d);
+	};
+	w.postMessage(msg, transfer);
+	return w;
+});
+var u8$1 = Uint8Array, u16$1 = Uint16Array, i32$1 = Int32Array;
+var fleb = new u8$1([
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	1,
+	1,
+	1,
+	1,
+	2,
+	2,
+	2,
+	2,
+	3,
+	3,
+	3,
+	3,
+	4,
+	4,
+	4,
+	4,
+	5,
+	5,
+	5,
+	5,
+	0,
+	0,
+	0,
+	0
+]);
+var fdeb = new u8$1([
+	0,
+	0,
+	0,
+	0,
+	1,
+	1,
+	2,
+	2,
+	3,
+	3,
+	4,
+	4,
+	5,
+	5,
+	6,
+	6,
+	7,
+	7,
+	8,
+	8,
+	9,
+	9,
+	10,
+	10,
+	11,
+	11,
+	12,
+	12,
+	13,
+	13,
+	0,
+	0
+]);
+var clim = new u8$1([
+	16,
+	17,
+	18,
+	0,
+	8,
+	7,
+	9,
+	6,
+	10,
+	5,
+	11,
+	4,
+	12,
+	3,
+	13,
+	2,
+	14,
+	1,
+	15
+]);
+var freb = function(eb, start) {
+	var b = new u16$1(31);
+	for (var i = 0; i < 31; ++i) b[i] = start += 1 << eb[i - 1];
+	var r = new i32$1(b[30]);
+	for (var i = 1; i < 30; ++i) for (var j = b[i]; j < b[i + 1]; ++j) r[j] = j - b[i] << 5 | i;
+	return {
+		b,
+		r
+	};
+};
+var _a = freb(fleb, 2), fl = _a.b, revfl = _a.r;
+fl[28] = 258, revfl[258] = 28;
+var _b = freb(fdeb, 0), fd = _b.b;
+_b.r;
+var rev = new u16$1(32768);
+for (var i = 0; i < 32768; ++i) {
+	var x = (i & 43690) >> 1 | (i & 21845) << 1;
+	x = (x & 52428) >> 2 | (x & 13107) << 2;
+	x = (x & 61680) >> 4 | (x & 3855) << 4;
+	rev[i] = ((x & 65280) >> 8 | (x & 255) << 8) >> 1;
+}
+var hMap = (function(cd, mb, r) {
+	var s = cd.length;
+	var i = 0;
+	var l = new u16$1(mb);
+	for (; i < s; ++i) if (cd[i]) ++l[cd[i] - 1];
+	var le = new u16$1(mb);
+	for (i = 1; i < mb; ++i) le[i] = le[i - 1] + l[i - 1] << 1;
+	var co;
+	if (r) {
+		co = new u16$1(1 << mb);
+		var rvb = 15 - mb;
+		for (i = 0; i < s; ++i) if (cd[i]) {
+			var sv = i << 4 | cd[i];
+			var r_1 = mb - cd[i];
+			var v = le[cd[i] - 1]++ << r_1;
+			for (var m = v | (1 << r_1) - 1; v <= m; ++v) co[rev[v] >> rvb] = sv;
+		}
+	} else {
+		co = new u16$1(s);
+		for (i = 0; i < s; ++i) if (cd[i]) co[i] = rev[le[cd[i] - 1]++] >> 15 - cd[i];
+	}
+	return co;
+});
+var flt = new u8$1(288);
+for (var i = 0; i < 144; ++i) flt[i] = 8;
+for (var i = 144; i < 256; ++i) flt[i] = 9;
+for (var i = 256; i < 280; ++i) flt[i] = 7;
+for (var i = 280; i < 288; ++i) flt[i] = 8;
+var fdt = new u8$1(32);
+for (var i = 0; i < 32; ++i) fdt[i] = 5;
+var flrm = /* @__PURE__ */ hMap(flt, 9, 1), fdrm = /* @__PURE__ */ hMap(fdt, 5, 1);
+var max = function(a) {
+	var m = a[0];
+	for (var i = 1; i < a.length; ++i) if (a[i] > m) m = a[i];
+	return m;
+};
+var bits = function(d, p, m) {
+	var o = p / 8 | 0;
+	return (d[o] | d[o + 1] << 8) >> (p & 7) & m;
+};
+var bits16 = function(d, p) {
+	var o = p / 8 | 0;
+	return (d[o] | d[o + 1] << 8 | d[o + 2] << 16) >> (p & 7);
+};
+var shft = function(p) {
+	return (p + 7) / 8 | 0;
+};
+var slc$1 = function(v, s, e) {
+	if (s == null || s < 0) s = 0;
+	if (e == null || e > v.length) e = v.length;
+	return new u8$1(v.subarray(s, e));
+};
+var ec$1 = [
+	"unexpected EOF",
+	"invalid block type",
+	"invalid length/literal",
+	"invalid distance",
+	"stream finished",
+	"no stream handler",
+	,
+	"no callback",
+	"invalid UTF-8 data",
+	"extra field too long",
+	"date not in range 1980-2099",
+	"filename too long",
+	"stream finishing",
+	"invalid zip data"
+];
+var err$1 = function(ind, msg, nt) {
+	var e = new Error(msg || ec$1[ind]);
+	e.code = ind;
+	if (Error.captureStackTrace) Error.captureStackTrace(e, err$1);
+	if (!nt) throw e;
+	return e;
+};
+var inflt = function(dat, st, buf, dict) {
+	var sl = dat.length, dl = dict ? dict.length : 0;
+	if (!sl || st.f && !st.l) return buf || new u8$1(0);
+	var noBuf = !buf;
+	var resize = noBuf || st.i != 2;
+	var noSt = st.i;
+	if (noBuf) buf = new u8$1(sl * 3);
+	var cbuf = function(l) {
+		var bl = buf.length;
+		if (l > bl) {
+			var nbuf = new u8$1(Math.max(bl * 2, l));
+			nbuf.set(buf);
+			buf = nbuf;
+		}
+	};
+	var final = st.f || 0, pos = st.p || 0, bt = st.b || 0, lm = st.l, dm = st.d, lbt = st.m, dbt = st.n;
+	var tbts = sl * 8;
+	do {
+		if (!lm) {
+			final = bits(dat, pos, 1);
+			var type = bits(dat, pos + 1, 3);
+			pos += 3;
+			if (!type) {
+				var s = shft(pos) + 4, l = dat[s - 4] | dat[s - 3] << 8, t = s + l;
+				if (t > sl) {
+					if (noSt) err$1(0);
+					break;
+				}
+				if (resize) cbuf(bt + l);
+				buf.set(dat.subarray(s, t), bt);
+				st.b = bt += l, st.p = pos = t * 8, st.f = final;
+				continue;
+			} else if (type == 1) lm = flrm, dm = fdrm, lbt = 9, dbt = 5;
+			else if (type == 2) {
+				var hLit = bits(dat, pos, 31) + 257, hcLen = bits(dat, pos + 10, 15) + 4;
+				var tl = hLit + bits(dat, pos + 5, 31) + 1;
+				pos += 14;
+				var ldt = new u8$1(tl);
+				var clt = new u8$1(19);
+				for (var i = 0; i < hcLen; ++i) clt[clim[i]] = bits(dat, pos + i * 3, 7);
+				pos += hcLen * 3;
+				var clb = max(clt), clbmsk = (1 << clb) - 1;
+				var clm = hMap(clt, clb, 1);
+				for (var i = 0; i < tl;) {
+					var r = clm[bits(dat, pos, clbmsk)];
+					pos += r & 15;
+					var s = r >> 4;
+					if (s < 16) ldt[i++] = s;
+					else {
+						var c = 0, n = 0;
+						if (s == 16) n = 3 + bits(dat, pos, 3), pos += 2, c = ldt[i - 1];
+						else if (s == 17) n = 3 + bits(dat, pos, 7), pos += 3;
+						else if (s == 18) n = 11 + bits(dat, pos, 127), pos += 7;
+						while (n--) ldt[i++] = c;
+					}
+				}
+				var lt = ldt.subarray(0, hLit), dt = ldt.subarray(hLit);
+				lbt = max(lt);
+				dbt = max(dt);
+				lm = hMap(lt, lbt, 1);
+				dm = hMap(dt, dbt, 1);
+			} else err$1(1);
+			if (pos > tbts) {
+				if (noSt) err$1(0);
+				break;
+			}
+		}
+		if (resize) cbuf(bt + 131072);
+		var lms = (1 << lbt) - 1, dms = (1 << dbt) - 1;
+		var lpos = pos;
+		for (;; lpos = pos) {
+			var c = lm[bits16(dat, pos) & lms], sym = c >> 4;
+			pos += c & 15;
+			if (pos > tbts) {
+				if (noSt) err$1(0);
+				break;
+			}
+			if (!c) err$1(2);
+			if (sym < 256) buf[bt++] = sym;
+			else if (sym == 256) {
+				lpos = pos, lm = null;
+				break;
+			} else {
+				var add = sym - 254;
+				if (sym > 264) {
+					var i = sym - 257, b = fleb[i];
+					add = bits(dat, pos, (1 << b) - 1) + fl[i];
+					pos += b;
+				}
+				var d = dm[bits16(dat, pos) & dms], dsym = d >> 4;
+				if (!d) err$1(3);
+				pos += d & 15;
+				var dt = fd[dsym];
+				if (dsym > 3) {
+					var b = fdeb[dsym];
+					dt += bits16(dat, pos) & (1 << b) - 1, pos += b;
+				}
+				if (pos > tbts) {
+					if (noSt) err$1(0);
+					break;
+				}
+				if (resize) cbuf(bt + 131072);
+				var end = bt + add;
+				if (bt < dt) {
+					var shift = dl - dt, dend = Math.min(dt, end);
+					if (shift + bt < 0) err$1(3);
+					for (; bt < dend; ++bt) buf[bt] = dict[shift + bt];
+				}
+				for (; bt < end; ++bt) buf[bt] = buf[bt - dt];
+			}
+		}
+		st.l = lm, st.p = lpos, st.b = bt, st.f = final;
+		if (lm) final = 1, st.m = lbt, st.d = dm, st.n = dbt;
+	} while (!final);
+	return bt != buf.length && noBuf ? slc$1(buf, 0, bt) : buf.subarray(0, bt);
+};
+var et = /* @__PURE__ */ new u8$1(0);
+var mrg = function(a, b) {
+	var o = {};
+	for (var k in a) o[k] = a[k];
+	for (var k in b) o[k] = b[k];
+	return o;
+};
+var wcln = function(fn, fnStr, td) {
+	var dt = fn();
+	var st = fn.toString();
+	var ks = st.slice(st.indexOf("[") + 1, st.lastIndexOf("]")).replace(/\s+/g, "").split(",");
+	for (var i = 0; i < dt.length; ++i) {
+		var v = dt[i], k = ks[i];
+		if (typeof v == "function") {
+			fnStr += ";" + k + "=";
+			var st_1 = v.toString();
+			if (v.prototype) if (st_1.indexOf("[native code]") != -1) {
+				var spInd = st_1.indexOf(" ", 8) + 1;
+				fnStr += st_1.slice(spInd, st_1.indexOf("(", spInd));
+			} else {
+				fnStr += st_1;
+				for (var t in v.prototype) fnStr += ";" + k + ".prototype." + t + "=" + v.prototype[t].toString();
+			}
+			else fnStr += st_1;
+		} else td[k] = v;
+	}
+	return fnStr;
+};
+var ch = [];
+var cbfs = function(v) {
+	var tl = [];
+	for (var k in v) if (v[k].buffer) tl.push((v[k] = new v[k].constructor(v[k])).buffer);
+	return tl;
+};
+var wrkr = function(fns, init, id, cb) {
+	if (!ch[id]) {
+		var fnStr = "", td_1 = {}, m = fns.length - 1;
+		for (var i = 0; i < m; ++i) fnStr = wcln(fns[i], fnStr, td_1);
+		ch[id] = {
+			c: wcln(fns[m], fnStr, td_1),
+			e: td_1
+		};
+	}
+	var td = mrg({}, ch[id].e);
+	return wk(ch[id].c + ";onmessage=function(e){for(var k in e.data)self[k]=e.data[k];onmessage=" + init.toString() + "}", id, td, cbfs(td), cb);
+};
+var bInflt = function() {
+	return [
+		u8$1,
+		u16$1,
+		i32$1,
+		fleb,
+		fdeb,
+		clim,
+		fl,
+		fd,
+		flrm,
+		fdrm,
+		rev,
+		ec$1,
+		hMap,
+		max,
+		bits,
+		bits16,
+		shft,
+		slc$1,
+		err$1,
+		inflt,
+		inflateSync,
+		pbf,
+		gopt
+	];
+};
+var guze = function() {
+	return [gzs, gzl];
+};
+var zule = function() {
+	return [zls];
+};
+var pbf = function(msg) {
+	return postMessage(msg, [msg.buffer]);
+};
+var gopt = function(o) {
+	return o && {
+		out: o.size && new u8$1(o.size),
+		dictionary: o.dictionary
+	};
+};
+var cbify = function(dat, opts, fns, init, id, cb) {
+	var w = wrkr(fns, init, id, function(err, dat) {
+		w.terminate();
+		cb(err, dat);
+	});
+	w.postMessage([dat, opts], opts.consume ? [dat.buffer] : []);
+	return function() {
+		w.terminate();
+	};
+};
+var gzs = function(d) {
+	if (d[0] != 31 || d[1] != 139 || d[2] != 8) err$1(6, "invalid gzip data");
+	var flg = d[3];
+	var st = 10;
+	if (flg & 4) st += (d[10] | d[11] << 8) + 2;
+	for (var zs = (flg >> 3 & 1) + (flg >> 4 & 1); zs > 0; zs -= !d[st++]);
+	return st + (flg & 2);
+};
+var gzl = function(d) {
+	var l = d.length;
+	return (d[l - 4] | d[l - 3] << 8 | d[l - 2] << 16 | d[l - 1] << 24) >>> 0;
+};
+var zls = function(d, dict) {
+	if ((d[0] & 15) != 8 || d[0] >> 4 > 7 || (d[0] << 8 | d[1]) % 31) err$1(6, "invalid zlib data");
+	if ((d[1] >> 5 & 1) == +!dict) err$1(6, "invalid zlib data: " + (d[1] & 32 ? "need" : "unexpected") + " dictionary");
+	return (d[1] >> 3 & 4) + 2;
+};
+function inflate(data, opts, cb) {
+	if (!cb) cb = opts, opts = {};
+	if (typeof cb != "function") err$1(7);
+	return cbify(data, opts, [bInflt], function(ev) {
+		return pbf(inflateSync(ev.data[0], gopt(ev.data[1])));
+	}, 1, cb);
+}
+function inflateSync(data, opts) {
+	return inflt(data, { i: 2 }, opts && opts.out, opts && opts.dictionary);
+}
+function gunzip(data, opts, cb) {
+	if (!cb) cb = opts, opts = {};
+	if (typeof cb != "function") err$1(7);
+	return cbify(data, opts, [
+		bInflt,
+		guze,
+		function() {
+			return [gunzipSync];
+		}
+	], function(ev) {
+		return pbf(gunzipSync(ev.data[0], ev.data[1]));
+	}, 3, cb);
+}
+function gunzipSync(data, opts) {
+	var st = gzs(data);
+	if (st + 8 > data.length) err$1(6, "invalid gzip data");
+	return inflt(data.subarray(st, -8), { i: 2 }, opts && opts.out || new u8$1(gzl(data)), opts && opts.dictionary);
+}
+function unzlib(data, opts, cb) {
+	if (!cb) cb = opts, opts = {};
+	if (typeof cb != "function") err$1(7);
+	return cbify(data, opts, [
+		bInflt,
+		zule,
+		function() {
+			return [unzlibSync];
+		}
+	], function(ev) {
+		return pbf(unzlibSync(ev.data[0], gopt(ev.data[1])));
+	}, 5, cb);
+}
+function unzlibSync(data, opts) {
+	return inflt(data.subarray(zls(data, opts && opts.dictionary), -4), { i: 2 }, opts && opts.out, opts && opts.dictionary);
+}
+function decompress$1(data, opts, cb) {
+	if (!cb) cb = opts, opts = {};
+	if (typeof cb != "function") err$1(7);
+	return data[0] == 31 && data[1] == 139 && data[2] == 8 ? gunzip(data, opts, cb) : (data[0] & 15) != 8 || data[0] >> 4 > 7 || (data[0] << 8 | data[1]) % 31 ? inflate(data, opts, cb) : unzlib(data, opts, cb);
+}
+var td = typeof TextDecoder != "undefined" && /* @__PURE__ */ new TextDecoder();
+try {
+	td.decode(et, { stream: true });
+} catch (e) {}
+//#endregion
+//#region ../../node_modules/.pnpm/fzstd@0.1.1/node_modules/fzstd/esm/index.mjs
+var ab = ArrayBuffer, u8 = Uint8Array, u16 = Uint16Array, i16 = Int16Array, i32 = Int32Array;
+var slc = function(v, s, e) {
+	if (u8.prototype.slice) return u8.prototype.slice.call(v, s, e);
+	if (s == null || s < 0) s = 0;
+	if (e == null || e > v.length) e = v.length;
+	var n = new u8(e - s);
+	n.set(v.subarray(s, e));
+	return n;
+};
+var fill = function(v, n, s, e) {
+	if (u8.prototype.fill) return u8.prototype.fill.call(v, n, s, e);
+	if (s == null || s < 0) s = 0;
+	if (e == null || e > v.length) e = v.length;
+	for (; s < e; ++s) v[s] = n;
+	return v;
+};
+var cpw = function(v, t, s, e) {
+	if (u8.prototype.copyWithin) return u8.prototype.copyWithin.call(v, t, s, e);
+	if (s == null || s < 0) s = 0;
+	if (e == null || e > v.length) e = v.length;
+	while (s < e) v[t++] = v[s++];
+};
+var ec = [
+	"invalid zstd data",
+	"window size too large (>2046MB)",
+	"invalid block type",
+	"FSE accuracy too high",
+	"match distance too far back",
+	"unexpected EOF"
+];
+var err = function(ind, msg, nt) {
+	var e = new Error(msg || ec[ind]);
+	e.code = ind;
+	if (Error.captureStackTrace) Error.captureStackTrace(e, err);
+	if (!nt) throw e;
+	return e;
+};
+var rb = function(d, b, n) {
+	var i = 0, o = 0;
+	for (; i < n; ++i) o |= d[b++] << (i << 3);
+	return o;
+};
+var b4 = function(d, b) {
+	return (d[b] | d[b + 1] << 8 | d[b + 2] << 16 | d[b + 3] << 24) >>> 0;
+};
+var rzfh = function(dat, w) {
+	var n3 = dat[0] | dat[1] << 8 | dat[2] << 16;
+	if (n3 == 3126568 && dat[3] == 253) {
+		var flg = dat[4];
+		var ss = flg >> 5 & 1, cc = flg >> 2 & 1, df = flg & 3, fcf = flg >> 6;
+		if (flg & 8) err(0);
+		var bt = 6 - ss;
+		var db = df == 3 ? 4 : df;
+		var di = rb(dat, bt, db);
+		bt += db;
+		var fsb = fcf ? 1 << fcf : ss;
+		var fss = rb(dat, bt, fsb) + (fcf == 1 && 256);
+		var ws = fss;
+		if (!ss) {
+			var wb = 1 << 10 + (dat[5] >> 3);
+			ws = wb + (wb >> 3) * (dat[5] & 7);
+		}
+		if (ws > 2145386496) err(1);
+		var buf = new u8((w == 1 ? fss || ws : w ? 0 : ws) + 12);
+		buf[0] = 1, buf[4] = 4, buf[8] = 8;
+		return {
+			b: bt + fsb,
+			y: 0,
+			l: 0,
+			d: di,
+			w: w && w != 1 ? w : buf.subarray(12),
+			e: ws,
+			o: new i32(buf.buffer, 0, 3),
+			u: fss,
+			c: cc,
+			m: Math.min(131072, ws)
+		};
+	} else if ((n3 >> 4 | dat[3] << 20) == 25481893) return b4(dat, 4) + 8;
+	err(0);
+};
+var msb = function(val) {
+	var bits = 0;
+	for (; 1 << bits <= val; ++bits);
+	return bits - 1;
+};
+var rfse = function(dat, bt, mal) {
+	var tpos = (bt << 3) + 4;
+	var al = (dat[bt] & 15) + 5;
+	if (al > mal) err(3);
+	var sz = 1 << al;
+	var probs = sz, sym = -1, re = -1, i = -1, ht = sz;
+	var buf = new ab(512 + (sz << 2));
+	var freq = new i16(buf, 0, 256);
+	var dstate = new u16(buf, 0, 256);
+	var nstate = new u16(buf, 512, sz);
+	var bb1 = 512 + (sz << 1);
+	var syms = new u8(buf, bb1, sz);
+	var nbits = new u8(buf, bb1 + sz);
+	while (sym < 255 && probs > 0) {
+		var bits = msb(probs + 1);
+		var cbt = tpos >> 3;
+		var msk = (1 << bits + 1) - 1;
+		var val = (dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (tpos & 7) & msk;
+		var msk1fb = (1 << bits) - 1;
+		var msv = msk - probs - 1;
+		var sval = val & msk1fb;
+		if (sval < msv) tpos += bits, val = sval;
+		else {
+			tpos += bits + 1;
+			if (val > msk1fb) val -= msv;
+		}
+		freq[++sym] = --val;
+		if (val == -1) {
+			probs += val;
+			syms[--ht] = sym;
+		} else probs -= val;
+		if (!val) do {
+			var rbt = tpos >> 3;
+			re = (dat[rbt] | dat[rbt + 1] << 8) >> (tpos & 7) & 3;
+			tpos += 2;
+			sym += re;
+		} while (re == 3);
+	}
+	if (sym > 255 || probs) err(0);
+	var sympos = 0;
+	var sstep = (sz >> 1) + (sz >> 3) + 3;
+	var smask = sz - 1;
+	for (var s = 0; s <= sym; ++s) {
+		var sf = freq[s];
+		if (sf < 1) {
+			dstate[s] = -sf;
+			continue;
+		}
+		for (i = 0; i < sf; ++i) {
+			syms[sympos] = s;
+			do
+				sympos = sympos + sstep & smask;
+			while (sympos >= ht);
+		}
+	}
+	if (sympos) err(0);
+	for (i = 0; i < sz; ++i) {
+		var ns = dstate[syms[i]]++;
+		nstate[i] = (ns << (nbits[i] = al - msb(ns))) - sz;
+	}
+	return [tpos + 7 >> 3, {
+		b: al,
+		s: syms,
+		n: nbits,
+		t: nstate
+	}];
+};
+var rhu = function(dat, bt) {
+	var i = 0, wc = -1;
+	var buf = new u8(292), hb = dat[bt];
+	var hw = buf.subarray(0, 256);
+	var rc = buf.subarray(256, 268);
+	var ri = new u16(buf.buffer, 268);
+	if (hb < 128) {
+		var _a = rfse(dat, bt + 1, 6), ebt = _a[0], fdt = _a[1];
+		bt += hb;
+		var epos = ebt << 3;
+		var lb = dat[bt];
+		if (!lb) err(0);
+		var st1 = 0, st2 = 0, btr1 = fdt.b, btr2 = btr1;
+		var fpos = (++bt << 3) - 8 + msb(lb);
+		for (;;) {
+			fpos -= btr1;
+			if (fpos < epos) break;
+			var cbt = fpos >> 3;
+			st1 += (dat[cbt] | dat[cbt + 1] << 8) >> (fpos & 7) & (1 << btr1) - 1;
+			hw[++wc] = fdt.s[st1];
+			fpos -= btr2;
+			if (fpos < epos) break;
+			cbt = fpos >> 3;
+			st2 += (dat[cbt] | dat[cbt + 1] << 8) >> (fpos & 7) & (1 << btr2) - 1;
+			hw[++wc] = fdt.s[st2];
+			btr1 = fdt.n[st1];
+			st1 = fdt.t[st1];
+			btr2 = fdt.n[st2];
+			st2 = fdt.t[st2];
+		}
+		if (++wc > 255) err(0);
+	} else {
+		wc = hb - 127;
+		for (; i < wc; i += 2) {
+			var byte = dat[++bt];
+			hw[i] = byte >> 4;
+			hw[i + 1] = byte & 15;
+		}
+		++bt;
+	}
+	var wes = 0;
+	for (i = 0; i < wc; ++i) {
+		var wt = hw[i];
+		if (wt > 11) err(0);
+		wes += wt && 1 << wt - 1;
+	}
+	var mb = msb(wes) + 1;
+	var ts = 1 << mb;
+	var rem = ts - wes;
+	if (rem & rem - 1) err(0);
+	hw[wc++] = msb(rem) + 1;
+	for (i = 0; i < wc; ++i) {
+		var wt = hw[i];
+		++rc[hw[i] = wt && mb + 1 - wt];
+	}
+	var hbuf = new u8(ts << 1);
+	var syms = hbuf.subarray(0, ts), nb = hbuf.subarray(ts);
+	ri[mb] = 0;
+	for (i = mb; i > 0; --i) {
+		var pv = ri[i];
+		fill(nb, i, pv, ri[i - 1] = pv + rc[i] * (1 << mb - i));
+	}
+	if (ri[0] != ts) err(0);
+	for (i = 0; i < wc; ++i) {
+		var bits = hw[i];
+		if (bits) {
+			var code = ri[bits];
+			fill(syms, i, code, ri[bits] = code + (1 << mb - bits));
+		}
+	}
+	return [bt, {
+		n: nb,
+		b: mb,
+		s: syms
+	}];
+};
+var dllt = rfse(/* @__PURE__ */ new u8([
+	81,
+	16,
+	99,
+	140,
+	49,
+	198,
+	24,
+	99,
+	12,
+	33,
+	196,
+	24,
+	99,
+	102,
+	102,
+	134,
+	70,
+	146,
+	4
+]), 0, 6)[1];
+var dmlt = rfse(/* @__PURE__ */ new u8([
+	33,
+	20,
+	196,
+	24,
+	99,
+	140,
+	33,
+	132,
+	16,
+	66,
+	8,
+	33,
+	132,
+	16,
+	66,
+	8,
+	33,
+	68,
+	68,
+	68,
+	68,
+	68,
+	68,
+	68,
+	68,
+	36,
+	9
+]), 0, 6)[1];
+var doct = rfse(/* @__PURE__ */ new u8([
+	32,
+	132,
+	16,
+	66,
+	102,
+	70,
+	68,
+	68,
+	68,
+	68,
+	36,
+	73,
+	2
+]), 0, 5)[1];
+var b2bl = function(b, s) {
+	var len = b.length, bl = new i32(len);
+	for (var i = 0; i < len; ++i) {
+		bl[i] = s;
+		s += 1 << b[i];
+	}
+	return bl;
+};
+var llb = /* @__PURE__ */ new u8((/* @__PURE__ */ new i32([
+	0,
+	0,
+	0,
+	0,
+	16843009,
+	50528770,
+	134678020,
+	202050057,
+	269422093
+])).buffer, 0, 36);
+var llbl = /* @__PURE__ */ b2bl(llb, 0);
+var mlb = /* @__PURE__ */ new u8((/* @__PURE__ */ new i32([
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	16843009,
+	50528770,
+	117769220,
+	185207048,
+	252579084,
+	16
+])).buffer, 0, 53);
+var mlbl = /* @__PURE__ */ b2bl(mlb, 3);
+var dhu = function(dat, out, hu) {
+	var len = dat.length, ss = out.length, lb = dat[len - 1], msk = (1 << hu.b) - 1, eb = -hu.b;
+	if (!lb) err(0);
+	var st = 0, btr = hu.b, pos = (len << 3) - 8 + msb(lb) - btr, i = -1;
+	for (; pos > eb && i < ss;) {
+		var cbt = pos >> 3;
+		var val = (dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (pos & 7);
+		st = (st << btr | val) & msk;
+		out[++i] = hu.s[st];
+		pos -= btr = hu.n[st];
+	}
+	if (pos != eb || i + 1 != ss) err(0);
+};
+var dhu4 = function(dat, out, hu) {
+	var bt = 6;
+	var sz1 = out.length + 3 >> 2, sz2 = sz1 << 1, sz3 = sz1 + sz2;
+	dhu(dat.subarray(bt, bt += dat[0] | dat[1] << 8), out.subarray(0, sz1), hu);
+	dhu(dat.subarray(bt, bt += dat[2] | dat[3] << 8), out.subarray(sz1, sz2), hu);
+	dhu(dat.subarray(bt, bt += dat[4] | dat[5] << 8), out.subarray(sz2, sz3), hu);
+	dhu(dat.subarray(bt), out.subarray(sz3), hu);
+};
+var rzb = function(dat, st, out) {
+	var _a;
+	var bt = st.b;
+	var b0 = dat[bt], btype = b0 >> 1 & 3;
+	st.l = b0 & 1;
+	var sz = b0 >> 3 | dat[bt + 1] << 5 | dat[bt + 2] << 13;
+	var ebt = (bt += 3) + sz;
+	if (btype == 1) {
+		if (bt >= dat.length) return;
+		st.b = bt + 1;
+		if (out) {
+			fill(out, dat[bt], st.y, st.y += sz);
+			return out;
+		}
+		return fill(new u8(sz), dat[bt]);
+	}
+	if (ebt > dat.length) return;
+	if (btype == 0) {
+		st.b = ebt;
+		if (out) {
+			out.set(dat.subarray(bt, ebt), st.y);
+			st.y += sz;
+			return out;
+		}
+		return slc(dat, bt, ebt);
+	}
+	if (btype == 2) {
+		var b3 = dat[bt], lbt = b3 & 3, sf = b3 >> 2 & 3;
+		var lss = b3 >> 4, lcs = 0, s4 = 0;
+		if (lbt < 2) if (sf & 1) lss |= dat[++bt] << 4 | (sf & 2 && dat[++bt] << 12);
+		else lss = b3 >> 3;
+		else {
+			s4 = sf;
+			if (sf < 2) lss |= (dat[++bt] & 63) << 4, lcs = dat[bt] >> 6 | dat[++bt] << 2;
+			else if (sf == 2) lss |= dat[++bt] << 4 | (dat[++bt] & 3) << 12, lcs = dat[bt] >> 2 | dat[++bt] << 6;
+			else lss |= dat[++bt] << 4 | (dat[++bt] & 63) << 12, lcs = dat[bt] >> 6 | dat[++bt] << 2 | dat[++bt] << 10;
+		}
+		++bt;
+		var buf = out ? out.subarray(st.y, st.y + st.m) : new u8(st.m);
+		var spl = buf.length - lss;
+		if (lbt == 0) buf.set(dat.subarray(bt, bt += lss), spl);
+		else if (lbt == 1) fill(buf, dat[bt++], spl);
+		else {
+			var hu = st.h;
+			if (lbt == 2) {
+				var hud = rhu(dat, bt);
+				lcs += bt - (bt = hud[0]);
+				st.h = hu = hud[1];
+			} else if (!hu) err(0);
+			(s4 ? dhu4 : dhu)(dat.subarray(bt, bt += lcs), buf.subarray(spl), hu);
+		}
+		var ns = dat[bt++];
+		if (ns) {
+			if (ns == 255) ns = (dat[bt++] | dat[bt++] << 8) + 32512;
+			else if (ns > 127) ns = ns - 128 << 8 | dat[bt++];
+			var scm = dat[bt++];
+			if (scm & 3) err(0);
+			var dts = [
+				dmlt,
+				doct,
+				dllt
+			];
+			for (var i = 2; i > -1; --i) {
+				var md = scm >> (i << 1) + 2 & 3;
+				if (md == 1) {
+					var rbuf = new u8([
+						0,
+						0,
+						dat[bt++]
+					]);
+					dts[i] = {
+						s: rbuf.subarray(2, 3),
+						n: rbuf.subarray(0, 1),
+						t: new u16(rbuf.buffer, 0, 1),
+						b: 0
+					};
+				} else if (md == 2) _a = rfse(dat, bt, 9 - (i & 1)), bt = _a[0], dts[i] = _a[1];
+				else if (md == 3) {
+					if (!st.t) err(0);
+					dts[i] = st.t[i];
+				}
+			}
+			var _b = st.t = dts, mlt = _b[0], oct = _b[1], llt = _b[2];
+			var lb = dat[ebt - 1];
+			if (!lb) err(0);
+			var spos = (ebt << 3) - 8 + msb(lb) - llt.b, cbt = spos >> 3, oubt = 0;
+			var lst = (dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << llt.b) - 1;
+			cbt = (spos -= oct.b) >> 3;
+			var ost = (dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << oct.b) - 1;
+			cbt = (spos -= mlt.b) >> 3;
+			var mst = (dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << mlt.b) - 1;
+			for (++ns; --ns;) {
+				var llc = llt.s[lst];
+				var lbtr = llt.n[lst];
+				var mlc = mlt.s[mst];
+				var mbtr = mlt.n[mst];
+				var ofc = oct.s[ost];
+				var obtr = oct.n[ost];
+				cbt = (spos -= ofc) >> 3;
+				var ofp = 1 << ofc;
+				var off = ofp + ((dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16 | dat[cbt + 3] << 24) >>> (spos & 7) & ofp - 1);
+				cbt = (spos -= mlb[mlc]) >> 3;
+				var ml = mlbl[mlc] + ((dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (spos & 7) & (1 << mlb[mlc]) - 1);
+				cbt = (spos -= llb[llc]) >> 3;
+				var ll = llbl[llc] + ((dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (spos & 7) & (1 << llb[llc]) - 1);
+				cbt = (spos -= lbtr) >> 3;
+				lst = llt.t[lst] + ((dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << lbtr) - 1);
+				cbt = (spos -= mbtr) >> 3;
+				mst = mlt.t[mst] + ((dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << mbtr) - 1);
+				cbt = (spos -= obtr) >> 3;
+				ost = oct.t[ost] + ((dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << obtr) - 1);
+				if (off > 3) {
+					st.o[2] = st.o[1];
+					st.o[1] = st.o[0];
+					st.o[0] = off -= 3;
+				} else {
+					var idx = off - (ll != 0);
+					if (idx) {
+						off = idx == 3 ? st.o[0] - 1 : st.o[idx];
+						if (idx > 1) st.o[2] = st.o[1];
+						st.o[1] = st.o[0];
+						st.o[0] = off;
+					} else off = st.o[0];
+				}
+				for (var i = 0; i < ll; ++i) buf[oubt + i] = buf[spl + i];
+				oubt += ll, spl += ll;
+				var stin = oubt - off;
+				if (stin < 0) {
+					var len = -stin;
+					var bs = st.e + stin;
+					if (len > ml) len = ml;
+					for (var i = 0; i < len; ++i) buf[oubt + i] = st.w[bs + i];
+					oubt += len, ml -= len, stin = 0;
+				}
+				for (var i = 0; i < ml; ++i) buf[oubt + i] = buf[stin + i];
+				oubt += ml;
+			}
+			if (oubt != spl) while (spl < buf.length) buf[oubt++] = buf[spl++];
+			else oubt = buf.length;
+			if (out) st.y += oubt;
+			else buf = slc(buf, 0, oubt);
+		} else if (out) {
+			st.y += lss;
+			if (spl) for (var i = 0; i < lss; ++i) buf[i] = buf[spl + i];
+		} else if (spl) buf = slc(buf, spl);
+		st.b = ebt;
+		return buf;
+	}
+	err(2);
+};
+var cct = function(bufs, ol) {
+	if (bufs.length == 1) return bufs[0];
+	var buf = new u8(ol);
+	for (var i = 0, b = 0; i < bufs.length; ++i) {
+		var chk = bufs[i];
+		buf.set(chk, b);
+		b += chk.length;
+	}
+	return buf;
+};
+/**
+* Decompresses Zstandard data
+* @param dat The input data
+* @param buf The output buffer. If unspecified, the function will allocate
+*            exactly enough memory to fit the decompressed data. If your
+*            data has multiple frames and you know the output size, specifying
+*            it will yield better performance.
+* @returns The decompressed data
+*/
+function decompress(dat, buf) {
+	var bufs = [], nb = +!buf;
+	var bt = 0, ol = 0;
+	for (; dat.length;) {
+		var st = rzfh(dat, nb || buf);
+		if (typeof st == "object") {
+			if (nb) {
+				buf = null;
+				if (st.w.length == st.u) {
+					bufs.push(buf = st.w);
+					ol += st.u;
+				}
+			} else {
+				bufs.push(buf);
+				st.e = 0;
+			}
+			for (; !st.l;) {
+				var blk = rzb(dat, st, buf);
+				if (!blk) err(5);
+				if (buf) st.e = st.y;
+				else {
+					bufs.push(blk);
+					ol += blk.length;
+					cpw(st.w, 0, blk.length);
+					st.w.set(blk, st.w.length - blk.length);
+				}
+			}
+			bt = st.b + st.c * 4;
+		} else bt = st;
+		dat = dat.subarray(bt);
+	}
+	return cct(bufs, ol);
+}
+//#endregion
+//#region src/client/remote/zstd-worker-code.ts
+/**
+* Zstandard decompression Web Worker code.
+*
+* This file contains the worker code as a string constant, along with
+* the base64-encoded fzstd library. The worker is loaded via Blob URL
+* to work in VSCode webviews which have CORS restrictions.
+*/
+/**
+* The worker script code that handles zstd decompression.
+*/
+var kZstdWorkerCode = `
+// fzstd decompress function, loaded dynamically
+let decompress = null;
+
+self.onmessage = function(e) {
+  const { type } = e.data || {};
+
+  if (type === 'init') {
+    const { scriptContent } = e.data;
+    try {
+      if (!decompress) {
+        // Decode and evaluate the fzstd UMD library
+        const script = atob(scriptContent);
+        // The UMD module self-executes and assigns to self.fzstd
+        new Function(script)();
+        if (!self.fzstd || typeof self.fzstd.decompress !== 'function') {
+          throw new Error('Failed to initialize fzstd decompressor');
+        }
+        decompress = self.fzstd.decompress;
+      }
+      self.postMessage({ type: 'init_complete', success: true });
+    } catch (err) {
+      console.error('fzstd init error in worker:', err);
+      self.postMessage({ type: 'init_complete', success: false, error: err.message || 'Unknown error' });
+    }
+    return;
+  }
+
+  if (type === 'decompress') {
+    const { requestId, data } = e.data;
+    try {
+      if (!decompress) {
+        throw new Error('Worker not initialized');
+      }
+      const result = decompress(data);
+      // Transfer the result buffer back to avoid copying
+      self.postMessage(
+        { requestId, success: true, data: result },
+        [result.buffer]
+      );
+    } catch (err) {
+      self.postMessage({
+        requestId,
+        success: false,
+        error: err instanceof Error ? err.message : 'Unknown error'
+      });
+    }
+  }
+};
+`;
+/**
+* Base64-encoded fzstd library (UMD version, ~8KB).
+* Source: node_modules/fzstd/umd/index.js
+*
+* The UMD format self-executes and assigns to self.fzstd, making
+* fzstd.decompress() available in the worker context.
+*/
+var kFzstdBase64 = `IWZ1bmN0aW9uKGYpe3R5cGVvZiBtb2R1bGUhPSd1bmRlZmluZWQnJiZ0eXBlb2YgZXhwb3J0cz09J29iamVjdCc/bW9kdWxlLmV4cG9ydHM9ZigpOnR5cGVvZiBkZWZpbmUhPSd1bmRlZmluZWQnJiZkZWZpbmUuYW1kP2RlZmluZShbJ2Z6c3RkJyxmXSk6KHR5cGVvZiBzZWxmIT0ndW5kZWZpbmVkJz9zZWxmOnRoaXMpLmZ6c3RkPWYoKX0oZnVuY3Rpb24oKXt2YXIgX2U9e307InVzZSBzdHJpY3QiO3ZhciByPUFycmF5QnVmZmVyLHQ9VWludDhBcnJheSxlPVVpbnQxNkFycmF5LG49SW50MTZBcnJheSxhPVVpbnQzMkFycmF5LHM9SW50MzJBcnJheSxpPWZ1bmN0aW9uKHIsZSxuKXtpZih0LnByb3RvdHlwZS5zbGljZSlyZXR1cm4gdC5wcm90b3R5cGUuc2xpY2UuY2FsbChyLGUsbik7KG51bGw9PWV8fGU8MCkmJihlPTApLChudWxsPT1ufHxuPnIubGVuZ3RoKSYmKG49ci5sZW5ndGgpO3ZhciBhPW5ldyB0KG4tZSk7cmV0dXJuIGEuc2V0KHIuc3ViYXJyYXkoZSxuKSksYX0sbz1mdW5jdGlvbihyLGUsbixhKXtpZih0LnByb3RvdHlwZS5maWxsKXJldHVybiB0LnByb3RvdHlwZS5maWxsLmNhbGwocixlLG4sYSk7Zm9yKChudWxsPT1ufHxuPDApJiYobj0wKSwobnVsbD09YXx8YT5yLmxlbmd0aCkmJihhPXIubGVuZ3RoKTtuPGE7KytuKXJbbl09ZTtyZXR1cm4gcn0sdT1mdW5jdGlvbihyLGUsbixhKXtpZih0LnByb3RvdHlwZS5jb3B5V2l0aGluKXJldHVybiB0LnByb3RvdHlwZS5jb3B5V2l0aGluLmNhbGwocixlLG4sYSk7Zm9yKChudWxsPT1ufHxuPDApJiYobj0wKSwobnVsbD09YXx8YT5yLmxlbmd0aCkmJihhPXIubGVuZ3RoKTtuPGE7KXJbZSsrXT1yW24rK119O19lLlpzdGRFcnJvckNvZGU9e0ludmFsaWREYXRhOjAsV2luZG93U2l6ZVRvb0xhcmdlOjEsSW52YWxpZEJsb2NrVHlwZToyLEZTRUFjY3VyYWN5VG9vSGlnaDozLERpc3RhbmNlVG9vRmFyQmFjazo0LFVuZXhwZWN0ZWRFT0Y6NX07dmFyIGg9WyJpbnZhbGlkIHpzdGQgZGF0YSIsIndpbmRvdyBzaXplIHRvbyBsYXJnZSAoPjIwNDZNQikiLCJpbnZhbGlkIGJsb2NrIHR5cGUiLCJGU0UgYWNjdXJhY3kgdG9vIGhpZ2giLCJtYXRjaCBkaXN0YW5jZSB0b28gZmFyIGJhY2siLCJ1bmV4cGVjdGVkIEVPRiJdLGY9ZnVuY3Rpb24ocix0LGUpe3ZhciBuPUVycm9yKHR8fGhbcl0pO2lmKG4uY29kZT1yLEVycm9yLmNhcHR1cmVTdGFja1RyYWNlJiZFcnJvci5jYXB0dXJlU3RhY2tUcmFjZShuLGYpLCFlKXRocm93IG47cmV0dXJuIG59LGw9ZnVuY3Rpb24ocix0LGUpe2Zvcih2YXIgbj0wLGE9MDtuPGU7KytuKWF8PXJbdCsrXTw8KG48PDMpO3JldHVybiBhfSx2PWZ1bmN0aW9uKHIsdCl7cmV0dXJuKHJbdF18clt0KzFdPDw4fHJbdCsyXTw8MTZ8clt0KzNdPDwyNCk+Pj4wfSxjPWZ1bmN0aW9uKHIsZSl7dmFyIG49clswXXxyWzFdPDw4fHJbMl08PDE2O2lmKDMxMjY1Njg9PW4mJjI1Mz09clszXSl7dmFyIGE9cls0XSxpPWE+PjUmMSxvPWE+PjImMSx1PTMmYSxoPWE+PjY7OCZhJiZmKDApO3ZhciBjPTYtaSxiPTM9PXU/NDp1LHk9bChyLGMsYikscD1oPzE8PGg6aSx3PWwocixjKz1iLHApKygxPT1oJiYyNTYpLGc9dztpZighaSl7dmFyIGQ9MTw8MTArKHJbNV0+PjMpO2c9ZCsoZD4+MykqKDcmcls1XSl9Zz4yMTQ1Mzg2NDk2JiZmKDEpO3ZhciBtPW5ldyB0KCgxPT1lP3d8fGc6ZT8wOmcpKzEyKTtyZXR1cm4gbVswXT0xLG1bNF09NCxtWzhdPTgse2I6YytwLHk6MCxsOjAsZDp5LHc6ZSYmMSE9ZT9lOm0uc3ViYXJyYXkoMTIpLGU6ZyxvOm5ldyBzKG0uYnVmZmVyLDAsMyksdTp3LGM6byxtOk1hdGgubWluKDEzMTA3MixnKX19aWYoMjU0ODE4OTM9PShuPj40fHJbM108PDIwKSlyZXR1cm4gdihyLDQpKzg7ZigwKX0sYj1mdW5jdGlvbihyKXtmb3IodmFyIHQ9MDsxPDx0PD1yOysrdCk7cmV0dXJuIHQtMX0seT1mdW5jdGlvbihhLHMsaSl7dmFyIG89NCsoczw8MyksdT01KygxNSZhW3NdKTt1PmkmJmYoMyk7Zm9yKHZhciBoPTE8PHUsbD1oLHY9LTEsYz0tMSx5PS0xLHA9aCx3PW5ldyByKDUxMisoaDw8MikpLGc9bmV3IG4odywwLDI1NiksZD1uZXcgZSh3LDAsMjU2KSxtPW5ldyBlKHcsNTEyLGgpLHo9NTEyKyhoPDwxKSxFPW5ldyB0KHcseixoKSxrPW5ldyB0KHcseitoKTt2PDI1NSYmbD4wOyl7dmFyIEE9YihsKzEpLFQ9bz4+Myx4PSgxPDxBKzEpLTEsRj0oYVtUXXxhW1QrMV08PDh8YVtUKzJdPDwxNik+Pig3Jm8pJngsUz0oMTw8QSktMSxCPXgtbC0xLEk9RiZTO2lmKEk8Qj8obys9QSxGPUkpOihvKz1BKzEsRj5TJiYoRi09QikpLGdbKyt2XT0tLUYsLTE9PUY/KGwrPUYsRVstLXBdPXYpOmwtPUYsIUYpZG97dmFyIFU9bz4+MztjPShhW1VdfGFbVSsxXTw8OCk+Pig3Jm8pJjMsbys9Mix2Kz1jfXdoaWxlKDM9PWMpfSh2PjI1NXx8bCkmJmYoMCk7Zm9yKHZhciBEPTAsTT0oaD4+MSkrKGg+PjMpKzMsVz1oLTEsTz0wO088PXY7KytPKXt2YXIgaj1nW09dO2lmKGo8MSlkW09dPS1qO2Vsc2UgZm9yKHk9MDt5PGo7Kyt5KXtFW0RdPU87ZG97RD1EK00mV313aGlsZShEPj1wKX19Zm9yKEQmJmYoMCkseT0wO3k8aDsrK3kpe3ZhciBDPWRbRVt5XV0rKyxIPWtbeV09dS1iKEMpO21beV09KEM8PEgpLWh9cmV0dXJuW28rNz4+Myx7Yjp1LHM6RSxuOmssdDptfV19LHA9ZnVuY3Rpb24ocixuKXt2YXIgYT0wLHM9LTEsaT1uZXcgdCgyOTIpLHU9cltuXSxoPWkuc3ViYXJyYXkoMCwyNTYpLGw9aS5zdWJhcnJheSgyNTYsMjY4KSx2PW5ldyBlKGkuYnVmZmVyLDI2OCk7aWYodTwxMjgpe3ZhciBjPXkocixuKzEsNikscD1jWzFdLHc9Y1swXTw8MyxnPXJbbis9dV07Z3x8ZigwKTtmb3IodmFyIGQ9MCxtPTAsej1wLmIsRT16LGs9KCsrbjw8MyktOCtiKGcpOyEoKGstPXopPHcpOyl7dmFyIEE9az4+MztpZihoWysrc109cC5zW2QrPShyW0FdfHJbQSsxXTw8OCk+Pig3JmspJigxPDx6KS0xXSwoay09RSk8dylicmVhaztoWysrc109cC5zW20rPShyW0E9az4+M118cltBKzFdPDw4KT4+KDcmaykmKDE8PEUpLTFdLHo9cC5uW2RdLGQ9cC50W2RdLEU9cC5uW21dLG09cC50W21dfSsrcz4yNTUmJmYoMCl9ZWxzZXtmb3Iocz11LTEyNzthPHM7YSs9Mil7dmFyIFQ9clsrK25dO2hbYV09VD4+NCxoW2ErMV09MTUmVH0rK259dmFyIHg9MDtmb3IoYT0wO2E8czsrK2EpKEk9aFthXSk+MTEmJmYoMCkseCs9SSYmMTw8SS0xO3ZhciBGPWIoeCkrMSxTPTE8PEYsQj1TLXg7Zm9yKEImQi0xJiZmKDApLGhbcysrXT1iKEIpKzEsYT0wO2E8czsrK2Epe3ZhciBJOysrbFtoW2FdPShJPWhbYV0pJiZGKzEtSV19dmFyIFU9bmV3IHQoUzw8MSksRD1VLnN1YmFycmF5KDAsUyksTT1VLnN1YmFycmF5KFMpO2Zvcih2W0ZdPTAsYT1GO2E+MDstLWEpe3ZhciBXPXZbYV07byhNLGEsVyx2W2EtMV09VytsW2FdKigxPDxGLWEpKX1mb3IodlswXSE9UyYmZigwKSxhPTA7YTxzOysrYSl7dmFyIE89aFthXTtpZihPKXt2YXIgaj12W09dO28oRCxhLGosdltPXT1qKygxPDxGLU8pKX19cmV0dXJuW24se246TSxiOkYsczpEfV19LHc9eShuZXcgdChbODEsMTYsOTksMTQwLDQ5LDE5OCwyNCw5OSwxMiwzMywxOTYsMjQsOTksMTAyLDEwMiwxMzQsNzAsMTQ2LDRdKSwwLDYpWzFdLGc9eShuZXcgdChbMzMsMjAsMTk2LDI0LDk5LDE0MCwzMywxMzIsMTYsNjYsOCwzMywxMzIsMTYsNjYsOCwzMyw2OCw2OCw2OCw2OCw2OCw2OCw2OCw2OCwzNiw5XSksMCw2KVsxXSxkPXkobmV3IHQoWzMyLDEzMiwxNiw2NiwxMDIsNzAsNjgsNjgsNjgsNjgsMzYsNzMsMl0pLDAsNSlbMV0sbT1mdW5jdGlvbihyLHQpe2Zvcih2YXIgZT1yLmxlbmd0aCxuPW5ldyBzKGUpLGE9MDthPGU7KythKW5bYV09dCx0Kz0xPDxyW2FdO3JldHVybiBufSx6PW5ldyB0KG5ldyBzKFswLDAsMCwwLDE2ODQzMDA5LDUwNTI4NzcwLDEzNDY3ODAyMCwyMDIwNTAwNTcsMjY5NDIyMDkzXSkuYnVmZmVyLDAsMzYpLEU9bSh6LDApLGs9bmV3IHQobmV3IHMoWzAsMCwwLDAsMCwwLDAsMCwxNjg0MzAwOSw1MDUyODc3MCwxMTc3NjkyMjAsMTg1MjA3MDQ4LDI1MjU3OTA4NCwxNl0pLmJ1ZmZlciwwLDUzKSxBPW0oaywzKSxUPWZ1bmN0aW9uKHIsdCxlKXt2YXIgbj1yLmxlbmd0aCxhPXQubGVuZ3RoLHM9cltuLTFdLGk9KDE8PGUuYiktMSxvPS1lLmI7c3x8ZigwKTtmb3IodmFyIHU9MCxoPWUuYixsPShuPDwzKS04K2IocyktaCx2PS0xO2w+byYmdjxhOyl7dmFyIGM9bD4+Mzt0Wysrdl09ZS5zW3U9KHU8PGh8KHJbY118cltjKzFdPDw4fHJbYysyXTw8MTYpPj4oNyZsKSkmaV0sbC09aD1lLm5bdV19bD09byYmdisxPT1hfHxmKDApfSx4PWZ1bmN0aW9uKHIsdCxlKXt2YXIgbj02LGE9dC5sZW5ndGgrMz4+MixzPWE8PDEsaT1hK3M7VChyLnN1YmFycmF5KG4sbis9clswXXxyWzFdPDw4KSx0LnN1YmFycmF5KDAsYSksZSksVChyLnN1YmFycmF5KG4sbis9clsyXXxyWzNdPDw4KSx0LnN1YmFycmF5KGEscyksZSksVChyLnN1YmFycmF5KG4sbis9cls0XXxyWzVdPDw4KSx0LnN1YmFycmF5KHMsaSksZSksVChyLnN1YmFycmF5KG4pLHQuc3ViYXJyYXkoaSksZSl9LEY9ZnVuY3Rpb24ocixuLGEpe3ZhciBzLHU9bi5iLGg9clt1XSxsPWg+PjEmMztuLmw9MSZoO3ZhciB2PWg+PjN8clt1KzFdPDw1fHJbdSsyXTw8MTMsYz0odSs9MykrdjtpZigxPT1sKXtpZih1Pj1yLmxlbmd0aClyZXR1cm47cmV0dXJuIG4uYj11KzEsYT8obyhhLHJbdV0sbi55LG4ueSs9diksYSk6byhuZXcgdCh2KSxyW3VdKX1pZighKGM+ci5sZW5ndGgpKXtpZigwPT1sKXJldHVybiBuLmI9YyxhPyhhLnNldChyLnN1YmFycmF5KHUsYyksbi55KSxuLnkrPXYsYSk6aShyLHUsYyk7aWYoMj09bCl7dmFyIG09clt1XSxGPTMmbSxTPW0+PjImMyxCPW0+PjQsST0wLFU9MDtGPDI/MSZTP0J8PXJbKyt1XTw8NHwoMiZTJiZyWysrdV08PDEyKTpCPW0+PjM6KFU9UyxTPDI/KEJ8PSg2MyZyWysrdV0pPDw0LEk9clt1XT4+NnxyWysrdV08PDIpOjI9PVM/KEJ8PXJbKyt1XTw8NHwoMyZyWysrdV0pPDwxMixJPXJbdV0+PjJ8clsrK3VdPDw2KTooQnw9clsrK3VdPDw0fCg2MyZyWysrdV0pPDwxMixJPXJbdV0+PjZ8clsrK3VdPDwyfHJbKyt1XTw8MTApKSwrK3U7dmFyIEQ9YT9hLnN1YmFycmF5KG4ueSxuLnkrbi5tKTpuZXcgdChuLm0pLE09RC5sZW5ndGgtQjtpZigwPT1GKUQuc2V0KHIuc3ViYXJyYXkodSx1Kz1CKSxNKTtlbHNlIGlmKDE9PUYpbyhELHJbdSsrXSxNKTtlbHNle3ZhciBXPW4uaDtpZigyPT1GKXt2YXIgTz1wKHIsdSk7SSs9dS0odT1PWzBdKSxuLmg9Vz1PWzFdfWVsc2UgV3x8ZigwKTsoVT94OlQpKHIuc3ViYXJyYXkodSx1Kz1JKSxELnN1YmFycmF5KE0pLFcpfXZhciBqPXJbdSsrXTtpZihqKXsyNTU9PWo/aj0zMjUxMisoclt1KytdfHJbdSsrXTw8OCk6aj4xMjcmJihqPWotMTI4PDw4fHJbdSsrXSk7dmFyIEM9clt1KytdOzMmQyYmZigwKTtmb3IodmFyIEg9W2csZCx3XSxMPTI7TD4tMTstLUwpe3ZhciBaPUM+PjIrKEw8PDEpJjM7aWYoMT09Wil7dmFyIHE9bmV3IHQoWzAsMCxyW3UrK11dKTtIW0xdPXtzOnEuc3ViYXJyYXkoMiwzKSxuOnEuc3ViYXJyYXkoMCwxKSx0Om5ldyBlKHEuYnVmZmVyLDAsMSksYjowfX1lbHNlIDI9PVo/KHU9KHM9eShyLHUsOS0oMSZMKSkpWzBdLEhbTF09c1sxXSk6Mz09WiYmKG4udHx8ZigwKSxIW0xdPW4udFtMXSl9dmFyIEc9bi50PUgsSj1HWzBdLEs9R1sxXSxOPUdbMl0sUD1yW2MtMV07UHx8ZigwKTt2YXIgUT0oYzw8MyktOCtiKFApLU4uYixSPVE+PjMsVj0wLFg9KHJbUl18cltSKzFdPDw4KT4+KDcmUSkmKDE8PE4uYiktMSxZPShyW1I9KFEtPUsuYik+PjNdfHJbUisxXTw8OCk+Pig3JlEpJigxPDxLLmIpLTEsJD0ocltSPShRLT1KLmIpPj4zXXxyW1IrMV08PDgpPj4oNyZRKSYoMTw8Si5iKS0xO2ZvcigrK2o7LS1qOyl7dmFyIF89Ti5zW1hdLHJyPU4ubltYXSx0cj1KLnNbJF0sZXI9Si5uWyRdLG5yPUsuc1tZXSxhcj1LLm5bWV0sc3I9MTw8bnIsaXI9c3IrKChyW1I9KFEtPW5yKT4+M118cltSKzFdPDw4fHJbUisyXTw8MTZ8cltSKzNdPDwyNCk+Pj4oNyZRKSZzci0xKTtSPShRLT1rW3RyXSk+PjM7dmFyIG9yPUFbdHJdKygocltSXXxyW1IrMV08PDh8cltSKzJdPDwxNik+Pig3JlEpJigxPDxrW3RyXSktMSk7Uj0oUS09eltfXSk+PjM7dmFyIHVyPUVbX10rKChyW1JdfHJbUisxXTw8OHxyW1IrMl08PDE2KT4+KDcmUSkmKDE8PHpbX10pLTEpO2lmKFI9KFEtPXJyKT4+MyxYPU4udFtYXSsoKHJbUl18cltSKzFdPDw4KT4+KDcmUSkmKDE8PHJyKS0xKSxSPShRLT1lcik+PjMsJD1KLnRbJF0rKChyW1JdfHJbUisxXTw8OCk+Pig3JlEpJigxPDxlciktMSksUj0oUS09YXIpPj4zLFk9Sy50W1ldKygocltSXXxyW1IrMV08PDgpPj4oNyZRKSYoMTw8YXIpLTEpLGlyPjMpbi5vWzJdPW4ub1sxXSxuLm9bMV09bi5vWzBdLG4ub1swXT1pci09MztlbHNle3ZhciBocj1pci0oMCE9dXIpO2hyPyhpcj0zPT1ocj9uLm9bMF0tMTpuLm9baHJdLGhyPjEmJihuLm9bMl09bi5vWzFdKSxuLm9bMV09bi5vWzBdLG4ub1swXT1pcik6aXI9bi5vWzBdfWZvcihMPTA7TDx1cjsrK0wpRFtWK0xdPURbTStMXTtNKz11cjt2YXIgZnI9KFYrPXVyKS1pcjtpZihmcjwwKXt2YXIgbHI9LWZyLHZyPW4uZStmcjtmb3IobHI+b3ImJihscj1vciksTD0wO0w8bHI7KytMKURbVitMXT1uLndbdnIrTF07Vis9bHIsb3ItPWxyLGZyPTB9Zm9yKEw9MDtMPG9yOysrTClEW1YrTF09RFtmcitMXTtWKz1vcn1pZihWIT1NKWZvcig7TTxELmxlbmd0aDspRFtWKytdPURbTSsrXTtlbHNlIFY9RC5sZW5ndGg7YT9uLnkrPVY6RD1pKEQsMCxWKX1lbHNlIGlmKGEpe2lmKG4ueSs9QixNKWZvcihMPTA7TDxCOysrTClEW0xdPURbTStMXX1lbHNlIE0mJihEPWkoRCxNKSk7cmV0dXJuIG4uYj1jLER9ZigyKX19LFM9ZnVuY3Rpb24ocixlKXtpZigxPT1yLmxlbmd0aClyZXR1cm4gclswXTtmb3IodmFyIG49bmV3IHQoZSksYT0wLHM9MDthPHIubGVuZ3RoOysrYSl7dmFyIGk9clthXTtuLnNldChpLHMpLHMrPWkubGVuZ3RofXJldHVybiBufTtmdW5jdGlvbiBCKHIsdCl7Zm9yKHZhciBlPVtdLG49KyF0LGE9MCxzPTA7ci5sZW5ndGg7KXt2YXIgaT1jKHIsbnx8dCk7aWYoIm9iamVjdCI9PXR5cGVvZiBpKXtmb3Iobj8odD1udWxsLGkudy5sZW5ndGg9PWkudSYmKGUucHVzaCh0PWkudykscys9aS51KSk6KGUucHVzaCh0KSxpLmU9MCk7IWkubDspe3ZhciBvPUYocixpLHQpO298fGYoNSksdD9pLmU9aS55OihlLnB1c2gobykscys9by5sZW5ndGgsdShpLncsMCxvLmxlbmd0aCksaS53LnNldChvLGkudy5sZW5ndGgtby5sZW5ndGgpKX1hPWkuYis0KmkuY31lbHNlIGE9aTtyPXIuc3ViYXJyYXkoYSl9cmV0dXJuIFMoZSxzKX1fZS5kZWNvbXByZXNzPUI7dmFyIEk9ZnVuY3Rpb24oKXtmdW5jdGlvbiByKHIpe3RoaXMub25kYXRhPXIsdGhpcy5jPVtdLHRoaXMubD0wLHRoaXMuej0wfXJldHVybiByLnByb3RvdHlwZS5wdXNoPWZ1bmN0aW9uKHIsZSl7aWYoIm51bWJlciI9PXR5cGVvZiB0aGlzLnMpe3ZhciBuPU1hdGgubWluKHIubGVuZ3RoLHRoaXMucyk7cj1yLnN1YmFycmF5KG4pLHRoaXMucy09bn12YXIgYT1yLmxlbmd0aCt0aGlzLmw7aWYoIXRoaXMucyl7aWYoZSl7aWYoIWEpcmV0dXJuIHZvaWQgdGhpcy5vbmRhdGEobmV3IHQoMCksITApO2E8NSYmZig1KX1lbHNlIGlmKGE8MTgpcmV0dXJuIHRoaXMuYy5wdXNoKHIpLHZvaWQodGhpcy5sPWEpO2lmKHRoaXMubCYmKHRoaXMuYy5wdXNoKHIpLHI9Uyh0aGlzLmMsYSksdGhpcy5jPVtdLHRoaXMubD0wKSwibnVtYmVyIj09dHlwZW9mKHRoaXMucz1jKHIpKSlyZXR1cm4gdGhpcy5wdXNoKHIsZSl9aWYoIm51bWJlciIhPXR5cGVvZiB0aGlzLnMpe2lmKGE8KHRoaXMuenx8MykpcmV0dXJuIGUmJmYoNSksdGhpcy5jLnB1c2gociksdm9pZCh0aGlzLmw9YSk7aWYodGhpcy5sJiYodGhpcy5jLnB1c2gocikscj1TKHRoaXMuYyxhKSx0aGlzLmM9W10sdGhpcy5sPTApLCF0aGlzLnomJmE8KHRoaXMuej0yJnJbdGhpcy5zLmJdPzQ6Mysoclt0aGlzLnMuYl0+PjN8clt0aGlzLnMuYisxXTw8NXxyW3RoaXMucy5iKzJdPDwxMykpKXJldHVybiBlJiZmKDUpLHRoaXMuYy5wdXNoKHIpLHZvaWQodGhpcy5sPWEpO2Zvcih0aGlzLno9MDs7KXt2YXIgcz1GKHIsdGhpcy5zKTtpZighcyl7ZSYmZig1KTt2YXIgaT1yLnN1YmFycmF5KHRoaXMucy5iKTtyZXR1cm4gdGhpcy5zLmI9MCx0aGlzLmMucHVzaChpKSx2b2lkKHRoaXMubCs9aS5sZW5ndGgpfWlmKHRoaXMub25kYXRhKHMsITEpLHUodGhpcy5zLncsMCxzLmxlbmd0aCksdGhpcy5zLncuc2V0KHMsdGhpcy5zLncubGVuZ3RoLXMubGVuZ3RoKSx0aGlzLnMubCl7dmFyIG89ci5zdWJhcnJheSh0aGlzLnMuYik7cmV0dXJuIHRoaXMucz00KnRoaXMucy5jLHZvaWQgdGhpcy5wdXNoKG8sZSl9fX1lbHNlIGUmJmYoNSl9LHJ9KCk7X2UuRGVjb21wcmVzcz1JO3JldHVybiBfZX0p`;
+//#endregion
+//#region src/client/remote/zstd-worker.ts
+/**
+* Zstandard decompression via Web Worker.
+*
+* Provides a simple async interface for zstd decompression that automatically
+* uses a Web Worker for large payloads to avoid blocking the main thread.
+*
+* Uses Blob URL to load the worker, which works in VSCode webviews that have
+* CORS restrictions preventing external worker script loading.
+*/
+/**
+* Threshold for using Web Worker (1MB compressed).
+* Below this, synchronous decompression is fast enough.
+*/
+var WORKER_THRESHOLD = 1024 * 1024;
+/**
+* Maximum window log supported by fzstd (2^25 = 32MB).
+* Ultra compression levels (20+) often use larger windows.
+*/
+var MAX_WINDOW_LOG = 25;
+/**
+* Error thrown when zstd data uses a window size too large for fzstd.
+*/
+var ZstdWindowSizeError = class ZstdWindowSizeError extends Error {
+	windowLog;
+	maxWindowLog;
+	constructor(windowLog) {
+		super(`Zstd window size too large (windowLog=${windowLog}, max=${MAX_WINDOW_LOG}). This file may have been compressed with zstd "ultra" mode (level 20+). Try recompressing with --long=${MAX_WINDOW_LOG} or a lower compression level.`);
+		this.name = "ZstdWindowSizeError";
+		this.windowLog = windowLog;
+		this.maxWindowLog = MAX_WINDOW_LOG;
+		Object.setPrototypeOf(this, ZstdWindowSizeError.prototype);
+	}
+};
+/**
+* Validates that the zstd frame's window size is within fzstd's limits.
+* Parses the frame header to extract the window descriptor.
+*
+* @param data - The zstd-compressed data
+* @throws ZstdWindowSizeError if window size exceeds 2^25 bytes
+*/
+function validateZstdWindowSize(data) {
+	if (data.length < 5) return;
+	if ((data[0] | data[1] << 8 | data[2] << 16 | data[3] << 24) !== 4247762216) return;
+	if (data[4] >> 5 & 1) return;
+	if (data.length < 6) return;
+	const windowLog = 10 + (data[5] >> 3);
+	if (windowLog > MAX_WINDOW_LOG) throw new ZstdWindowSizeError(windowLog);
+}
+/** Cached worker and blob URL */
+var zstdWorker = null;
+var blobURL = null;
+var workerInitPromise = null;
+/** Request ID counter for worker messages */
+var nextRequestId = 0;
+/** Pending decompression requests */
+var pendingRequests = /* @__PURE__ */ new Map();
+/** Whether message handlers have been attached to the worker */
+var handlersAttached = false;
+/**
+* Gets or creates the zstd decompression worker.
+* Uses a Blob URL to work in VSCode webviews which have CORS restrictions.
+* Returns a promise that resolves when the worker is fully initialized.
+*/
+function getZstdWorker() {
+	if (workerInitPromise) return workerInitPromise;
+	workerInitPromise = new Promise((resolve, reject) => {
+		const blob = new Blob([kZstdWorkerCode], { type: "application/javascript" });
+		blobURL = URL.createObjectURL(blob);
+		zstdWorker = new Worker(blobURL);
+		const initHandler = (event) => {
+			if (event.data.type === "init_complete") {
+				zstdWorker.removeEventListener("message", initHandler);
+				if (event.data.success) resolve(zstdWorker);
+				else reject(new Error(event.data.error || "Worker initialization failed"));
+			}
+		};
+		zstdWorker.addEventListener("message", initHandler);
+		zstdWorker.postMessage({
+			type: "init",
+			scriptContent: kFzstdBase64
+		});
+	});
+	return workerInitPromise;
+}
+/**
+* Decompresses zstd-compressed data.
+*
+* For small payloads (< 1MB), uses synchronous decompression.
+* For larger payloads, uses a Web Worker to avoid blocking the main thread.
+*
+* Data transfer efficiency:
+* - Input data is transferred (zero-copy) to the worker
+* - Output data is transferred (zero-copy) back from the worker
+*
+* @param data - The zstd-compressed data
+* @returns Promise resolving to the decompressed data
+*/
+async function decompressZstd(data) {
+	validateZstdWindowSize(data);
+	if (data.length < WORKER_THRESHOLD) return decompress(data);
+	const worker = await getZstdWorker();
+	return new Promise((resolve, reject) => {
+		const requestId = nextRequestId++;
+		pendingRequests.set(requestId, {
+			resolve,
+			reject
+		});
+		if (!handlersAttached) {
+			handlersAttached = true;
+			worker.addEventListener("message", (event) => {
+				const { requestId: respId, success, data: resultData, error } = event.data;
+				const pending = pendingRequests.get(respId);
+				if (!pending) return;
+				pendingRequests.delete(respId);
+				if (success) pending.resolve(resultData);
+				else pending.reject(new Error(error || "Decompression failed"));
+			});
+			worker.addEventListener("error", (error) => {
+				for (const [id, pending] of pendingRequests) {
+					pending.reject(/* @__PURE__ */ new Error(`Worker error: ${error.message}`));
+					pendingRequests.delete(id);
+				}
+			});
+		}
+		worker.postMessage({
+			type: "decompress",
+			requestId,
+			data
+		}, [data.buffer]);
+	});
+}
+//#endregion
+//#region src/client/remote/decompression.ts
+/** Supported ZIP compression methods */
+var CompressionMethod = {
+	STORED: 0,
+	DEFLATE: 8,
+	ZSTANDARD: 93
+};
+/**
+* Error thrown when an unsupported compression method is encountered.
+*/
+var UnsupportedCompressionError = class UnsupportedCompressionError extends Error {
+	method;
+	filename;
+	constructor(method, filename) {
+		super(`Unsupported compression method ${method} for file "${filename}"`);
+		this.name = "UnsupportedCompressionError";
+		this.method = method;
+		this.filename = filename;
+		Object.setPrototypeOf(this, UnsupportedCompressionError.prototype);
+	}
+};
+/**
+* Decompresses data based on the compression method.
+* Handles STORED (0), DEFLATE (8), and ZSTANDARD (93).
+*
+* @param data - The compressed data
+* @param compressionMethod - ZIP compression method code
+* @param uncompressedSize - Expected uncompressed size (used by deflate)
+* @param filename - Filename for error messages
+* @returns Decompressed data
+*/
+async function decompressData(data, compressionMethod, uncompressedSize, filename) {
+	switch (compressionMethod) {
+		case CompressionMethod.STORED: return data;
+		case CompressionMethod.DEFLATE: return decompressDeflate(data, uncompressedSize);
+		case CompressionMethod.ZSTANDARD: return decompressZstd(data);
+		default: throw new UnsupportedCompressionError(compressionMethod, filename);
+	}
+}
+/**
+* Deflate decompression using fflate's async worker-based API.
+*/
+async function decompressDeflate(data, size) {
+	return new Promise((resolve, reject) => {
+		decompress$1(data, { size }, (err, result) => {
+			if (err) reject(err);
+			else resolve(result);
+		});
+	});
+}
+//#endregion
+//#region src/client/remote/remoteZipFile.ts
+/**
+* Represents an error thrown when a file exceeds the maximum allowed size.
+*/
+var FileSizeLimitError = class FileSizeLimitError extends Error {
+	file;
+	maxBytes;
+	constructor(file, maxBytes) {
+		super(`File "${file}" exceeds the maximum size (${maxBytes} bytes) and cannot be loaded.`);
+		this.name = "FileSizeLimitError";
+		this.file = file;
+		this.maxBytes = maxBytes;
+		Object.setPrototypeOf(this, FileSizeLimitError.prototype);
+	}
+};
+var PARALLEL_CHUNK_THRESHOLD = 8 * 1024 * 1024;
+var PARALLEL_CHUNK_SIZE = 8 * 1024 * 1024;
+var MAX_PARALLEL_CHUNKS = 10;
+var fetchBytesParallel = async (fetchFn, url, start, end, onProgress) => {
+	const totalSize = end - start + 1;
+	if (totalSize <= PARALLEL_CHUNK_THRESHOLD) return fetchFn(url, start, end);
+	const chunks = [];
+	let offset = start;
+	while (offset <= end) {
+		const chunkEnd = Math.min(offset + PARALLEL_CHUNK_SIZE - 1, end);
+		chunks.push({
+			start: offset,
+			end: chunkEnd,
+			index: chunks.length
+		});
+		offset = chunkEnd + 1;
+	}
+	const concurrency = Math.min(chunks.length, MAX_PARALLEL_CHUNKS);
+	const results = new Array(chunks.length);
+	let nextChunk = 0;
+	let bytesLoaded = 0;
+	if (onProgress) onProgress(0, totalSize);
+	const worker = async () => {
+		while (nextChunk < chunks.length) {
+			const idx = nextChunk++;
+			const chunk = chunks[idx];
+			results[idx] = await fetchFn(url, chunk.start, chunk.end);
+			if (onProgress) {
+				bytesLoaded += results[idx].length;
+				onProgress(bytesLoaded, totalSize);
+			}
+		}
+	};
+	await Promise.all(Array.from({ length: concurrency }, () => worker()));
+	const combined = new Uint8Array(totalSize);
+	let pos = 0;
+	for (const chunk of results) {
+		combined.set(chunk, pos);
+		pos += chunk.length;
+	}
+	return combined;
+};
+/**
+* Opens a remote ZIP file from the specified URL, fetches and parses the central directory,
+* and provides a method to read files within the ZIP.
+*/
+var openRemoteZipFile = async (url, contentLength, fetchBytes = fetchRange) => {
+	contentLength = contentLength ?? await fetchSize(url);
+	const eocdrBuffer = await fetchBytes(url, contentLength - 22, contentLength - 1);
+	const eocdrView = new DataView(eocdrBuffer.buffer);
+	if (eocdrView.getUint32(0, true) !== 101010256) if (eocdrBuffer.length !== 22) throw new Error("Unexpected central directory size - does the HTTP server serving this file support HTTP range requests?");
+	else throw new Error("End of central directory record not found");
+	let centralDirOffset = eocdrView.getUint32(16, true);
+	let centralDirSize = eocdrView.getUint32(12, true);
+	if (centralDirOffset === 4294967295 || centralDirSize === 4294967295) {
+		const locatorBuffer = await fetchBytes(url, contentLength - 22 - 20, contentLength - 23);
+		const locatorView = new DataView(locatorBuffer.buffer);
+		if (locatorView.getUint32(0, true) !== 117853008) throw new Error("ZIP64 End of central directory locator not found");
+		const zip64EOCDOffset = Number(locatorView.getBigUint64(8, true));
+		const zip64EOCDBuffer = await fetchBytes(url, zip64EOCDOffset, zip64EOCDOffset + 56);
+		const zip64EOCDView = new DataView(zip64EOCDBuffer.buffer);
+		if (zip64EOCDView.getUint32(0, true) !== 101075792) throw new Error("ZIP64 End of central directory record not found");
+		centralDirSize = Number(zip64EOCDView.getBigUint64(40, true));
+		centralDirOffset = Number(zip64EOCDView.getBigUint64(48, true));
+	}
+	const centralDirectory = parseCentralDirectory(await fetchBytesParallel(fetchBytes, url, centralDirOffset, centralDirOffset + centralDirSize - 1));
+	return {
+		centralDirectory,
+		readFile: async (file, maxBytes, onProgress) => {
+			const entry = centralDirectory.get(file);
+			if (!entry) throw new Error(`File not found: ${file}`);
+			const headerSize = 30;
+			const estimatedSize = headerSize + entry.filenameLength + 256 + entry.compressedSize;
+			if (maxBytes && headerSize + entry.filenameLength + entry.compressedSize > maxBytes) throw new FileSizeLimitError(file, maxBytes);
+			let fileData = await fetchBytesParallel(fetchBytes, url, entry.fileOffset, entry.fileOffset + estimatedSize - 1, onProgress);
+			if (fileData.length < headerSize) throw new Error(`File entry header is truncated for ${file}`);
+			const actualExtraFieldLength = fileData[28] + (fileData[29] << 8);
+			const actualTotal = headerSize + entry.filenameLength + actualExtraFieldLength + entry.compressedSize;
+			if (maxBytes && actualTotal > maxBytes) throw new FileSizeLimitError(file, maxBytes);
+			if (actualTotal > estimatedSize) fileData = await fetchBytesParallel(fetchBytes, url, entry.fileOffset, entry.fileOffset + actualTotal - 1);
+			const zipFileEntry = await parseZipFileEntry(file, fileData);
+			return decompressData(zipFileEntry.data, zipFileEntry.compressionMethod, zipFileEntry.uncompressedSize, file);
+		}
+	};
+};
+/**
+* Opens an in-memory ZIP buffer and provides a method to read files within it.
+*/
+var openZipFileFromBuffer = async (bytes) => {
+	const contentLength = bytes.length;
+	if (contentLength < 22) throw new Error("Buffer too small to be a ZIP file");
+	const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+	const eocdrStart = contentLength - 22;
+	if (view.getUint32(eocdrStart, true) !== 101010256) throw new Error("End of central directory record not found");
+	let centralDirOffset = view.getUint32(eocdrStart + 16, true);
+	let centralDirSize = view.getUint32(eocdrStart + 12, true);
+	if (centralDirOffset === 4294967295 || centralDirSize === 4294967295) {
+		const locatorStart = eocdrStart - 20;
+		if (view.getUint32(locatorStart, true) !== 117853008) throw new Error("ZIP64 End of central directory locator not found");
+		const zip64EOCDOffset = Number(view.getBigUint64(locatorStart + 8, true));
+		if (view.getUint32(zip64EOCDOffset, true) !== 101075792) throw new Error("ZIP64 End of central directory record not found");
+		centralDirSize = Number(view.getBigUint64(zip64EOCDOffset + 40, true));
+		centralDirOffset = Number(view.getBigUint64(zip64EOCDOffset + 48, true));
+	}
+	const centralDirectory = parseCentralDirectory(bytes.slice(centralDirOffset, centralDirOffset + centralDirSize));
+	return {
+		centralDirectory,
+		readFile: async (file, maxBytes) => {
+			const entry = centralDirectory.get(file);
+			if (!entry) throw new Error(`File not found: ${file}`);
+			const headerSize = 30;
+			if (entry.fileOffset + headerSize > bytes.length) throw new Error(`File entry header is truncated for ${file}`);
+			const extraFieldLength = bytes[entry.fileOffset + 28] + (bytes[entry.fileOffset + 29] << 8);
+			const totalSize = headerSize + entry.filenameLength + extraFieldLength + entry.compressedSize;
+			if (maxBytes && totalSize > maxBytes) throw new FileSizeLimitError(file, maxBytes);
+			const zipFileEntry = await parseZipFileEntry(file, bytes.slice(entry.fileOffset, entry.fileOffset + totalSize));
+			return decompressData(zipFileEntry.data, zipFileEntry.compressionMethod, zipFileEntry.uncompressedSize, file);
+		}
+	};
+};
+var fetchSize = async (url) => {
+	const acceptResponse = await fetch(url, { method: "HEAD" });
+	if (acceptResponse.headers.get("Accept-Ranges") === "bytes") {
+		const getResponse = await fetch(`${url}`, {
+			method: "GET",
+			headers: { Range: "bytes=0-0" }
+		});
+		const contentRange = getResponse.headers.get("Content-Range");
+		if (contentRange !== null) {
+			const rangeMatch = contentRange.match(/bytes (\d+)-(\d+)\/(\d+)/);
+			if (rangeMatch !== null) {
+				await getResponse.arrayBuffer();
+				return Number(rangeMatch[3]);
+			}
+		}
+		await getResponse.arrayBuffer();
+	}
+	const contentLength = acceptResponse.headers.get("Content-Length");
+	if (contentLength !== null) return Number(contentLength);
+	throw new Error(`Could not determine content length for ${url}`);
+};
+/**
+* Extracts and parses the header and data of a compressed ZIP entry from raw binary data.
+*/
+var parseZipFileEntry = async (file, rawData) => {
+	const view = new DataView(rawData.buffer);
+	let offset = 0;
+	if (view.getUint32(offset, true) !== 67324752) throw new Error(`Invalid ZIP entry signature for ${file}`);
+	offset += 4;
+	const versionNeeded = view.getUint16(offset, true);
+	offset += 2;
+	const bitFlag = view.getUint16(offset, true);
+	offset += 2;
+	const compressionMethod = view.getUint16(offset, true);
+	offset += 2;
+	offset += 4;
+	const crc32 = view.getUint32(offset, true);
+	offset += 4;
+	let compressedSize = view.getUint32(offset, true);
+	offset += 4;
+	let uncompressedSize = view.getUint32(offset, true);
+	offset += 4;
+	const filenameLength = view.getUint16(offset, true);
+	offset += 2;
+	const extraFieldLength = view.getUint16(offset, true);
+	offset += 2;
+	const headerOffset = offset;
+	if (compressedSize === 4294967295 || uncompressedSize === 4294967295) {
+		offset += filenameLength;
+		const extraFieldEnd = offset + extraFieldLength;
+		while (offset < extraFieldEnd) {
+			const tag = view.getUint16(offset, true);
+			const size = view.getUint16(offset + 2, true);
+			if (tag === 1) {
+				let zip64Offset = offset + 4;
+				if (uncompressedSize === 4294967295 && zip64Offset + 8 <= extraFieldEnd) {
+					uncompressedSize = Number(view.getBigUint64(zip64Offset, true));
+					zip64Offset += 8;
+				}
+				if (compressedSize === 4294967295 && zip64Offset + 8 <= extraFieldEnd) compressedSize = Number(view.getBigUint64(zip64Offset, true));
+				break;
+			}
+			offset += 4 + size;
+		}
+		offset = headerOffset;
+	}
+	offset += filenameLength + extraFieldLength;
+	const data = rawData.subarray(offset, offset + compressedSize);
+	return {
+		versionNeeded,
+		bitFlag,
+		compressionMethod,
+		crc32,
+		compressedSize,
+		uncompressedSize,
+		filenameLength,
+		extraFieldLength,
+		data
+	};
+};
+var kFileHeaderSize = 46;
+/**
+* Parses the central directory of a ZIP file from the provided buffer and returns a map of entries.
+*/
+var parseCentralDirectory = (buffer) => {
+	let offset = 0;
+	const view = new DataView(buffer.buffer);
+	const entries = /* @__PURE__ */ new Map();
+	while (offset < buffer.length) {
+		if (view.getUint32(offset, true) !== 33639248) break;
+		const filenameLength = view.getUint16(offset + 28, true);
+		const extraFieldLength = view.getUint16(offset + 30, true);
+		const fileCommentLength = view.getUint16(offset + 32, true);
+		let compressedSize = view.getUint32(offset + 20, true);
+		let uncompressedSize = view.getUint32(offset + 24, true);
+		let fileOffset = view.getUint32(offset + 42, true);
+		const filename = new TextDecoder().decode(buffer.subarray(offset + kFileHeaderSize, offset + kFileHeaderSize + filenameLength));
+		if (fileOffset === 4294967295 || compressedSize === 4294967295 || uncompressedSize === 4294967295) {
+			let extraOffset = offset + kFileHeaderSize + filenameLength;
+			const extraEnd = extraOffset + extraFieldLength;
+			while (extraOffset < extraEnd) {
+				const tag = view.getUint16(extraOffset, true);
+				const size = view.getUint16(extraOffset + 2, true);
+				if (tag === 1) {
+					let zip64Offset = extraOffset + 4;
+					if (uncompressedSize === 4294967295 && zip64Offset + 8 <= extraEnd) {
+						uncompressedSize = Number(view.getBigUint64(zip64Offset, true));
+						zip64Offset += 8;
+					}
+					if (compressedSize === 4294967295 && zip64Offset + 8 <= extraEnd) {
+						compressedSize = Number(view.getBigUint64(zip64Offset, true));
+						zip64Offset += 8;
+					}
+					if (fileOffset === 4294967295 && zip64Offset + 8 <= extraEnd) fileOffset = Number(view.getBigUint64(zip64Offset, true));
+					break;
+				}
+				extraOffset += 4 + size;
+			}
+		}
+		const entry = {
+			filename,
+			compressionMethod: view.getUint16(offset + 10, true),
+			compressedSize,
+			uncompressedSize,
+			fileOffset,
+			filenameLength
+		};
+		entries.set(filename, entry);
+		offset += kFileHeaderSize + filenameLength + extraFieldLength + fileCommentLength;
+	}
+	return entries;
+};
+//#endregion
+//#region src/client/remote/remoteLogFile.ts
+var OPEN_RETRY_LIMIT = 5;
+var MAX_SAMPLE_SIZE_BYTES = 2048 * 1024 * 1024;
+var SampleNotFoundError = class SampleNotFoundError extends Error {
+	constructor(message) {
+		super(message || "Sample not found");
+		this.name = "SampleNotFoundError";
+		Object.setPrototypeOf(this, SampleNotFoundError.prototype);
+	}
+};
+/**
+* Synthesize an EvalHeader from a `_journal/start.json` payload.
+*
+* `header.json` is only written at end-of-eval, so while a log is in
+* progress the viewer falls back to `start.json` (which carries the
+* EvalSpec + EvalPlan). The Python side does the analogous lift via
+* `EvalLog.recompute_tags_and_metadata` on the model validator —
+* `log.tags` / `log.metadata` derive from `eval.tags` / `eval.metadata`
+* until `log_updates` adds edits on top. Mirror that here so a running
+* log's chips and metadata still render in the viewer.
+*
+* Exported for unit testing.
+*/
+var headerFromLogStart = (start) => ({
+	status: "started",
+	eval: start.eval,
+	plan: start.plan,
+	tags: start.eval?.tags ?? [],
+	metadata: start.eval?.metadata ?? {}
+});
+/**
+* Opens a remote log file and provides methods to read its contents.
+*/
+var openRemoteLogFile = async (api, url, concurrency) => {
+	const queue = new AsyncQueue(concurrency);
+	const logInfo = await api.get_log_info(url);
+	const directUrl = logInfo.direct_url;
+	const initialEtag = logInfo.etag ?? void 0;
+	const fetchBytes = async (_url, start, end) => {
+		if (directUrl) try {
+			return await fetchRange(directUrl, start, end);
+		} catch (e) {
+			console.warn("Direct URL fetch failed, falling back to proxy", e);
+		}
+		return api.get_log_bytes(url, start, end);
+	};
+	let remoteZipFile = void 0;
+	let retryCount = 0;
+	while (!remoteZipFile && retryCount < OPEN_RETRY_LIMIT) try {
+		remoteZipFile = await openRemoteZipFile(url, logInfo.size, fetchBytes);
+	} catch {
+		retryCount++;
+		console.warn(`Failed to open remote log file at ${url}, retrying (${retryCount}/${OPEN_RETRY_LIMIT})...`);
+		await new Promise((resolve) => setTimeout(resolve, 100 * (retryCount + retryCount)));
+	}
+	if (!remoteZipFile) throw new Error(`Failed to open remote log file at ${url} after ${OPEN_RETRY_LIMIT} attempts.`);
+	/**
+	* Reads and parses a JSON file from the zip.
+	* Optionally applies a preprocessor to transform bytes before decoding.
+	*/
+	const readJSONFile = async (file, maxBytes, preprocessor, onProgress) => {
+		try {
+			let data = await remoteZipFile.readFile(file, maxBytes, onProgress);
+			if (preprocessor) data = preprocessor.preprocess(data);
+			return asyncJsonParseBytes(data);
+		} catch (error) {
+			if (error instanceof FileSizeLimitError) throw error;
+			else if (error instanceof Error) throw new Error(`Failed to read or parse file ${file}: ${error.message}`);
+			else throw new Error(`Failed to read or parse file ${file} - an unknown error occurred`);
+		}
+	};
+	/**
+	* Lists all samples in the zip file.
+	*/
+	const listSamples = async () => {
+		return Array.from(remoteZipFile.centralDirectory.keys()).filter((filename) => filename.startsWith("samples/") && filename.endsWith(".json")).map((filename) => {
+			const [sampleId, epochStr] = filename.split("/")[1].split("_epoch_");
+			return {
+				sampleId,
+				epoch: parseInt(epochStr.split(".")[0], 10)
+			};
+		});
+	};
+	/**
+	* Reads a specific sample file.
+	*/
+	const readSample = async (sampleId, epoch, onProgress) => {
+		const sampleFile = `samples/${sampleId}_epoch_${epoch}.json`;
+		if (!remoteZipFile.centralDirectory.has(sampleFile)) throw new SampleNotFoundError(`Unable to read sample file ${sampleFile} - it is not present in the manifest.`);
+		if (remoteZipFile.centralDirectory.get(sampleFile).uncompressedSize > MAX_SAMPLE_SIZE_BYTES) throw new FileSizeLimitError(sampleFile, MAX_SAMPLE_SIZE_BYTES);
+		return await readJSONFile(sampleFile, void 0, { preprocess: clearLargeEventsArray }, onProgress);
+	};
+	/**
+	* Reads the results.json file.
+	*/
+	const readHeader = async () => {
+		if (remoteZipFile.centralDirectory.has("header.json")) return await readJSONFile("header.json");
+		else return headerFromLogStart(await readJSONFile("_journal/start.json"));
+	};
+	const readEvalBasicInfo = async () => {
+		return toLogPreview(await readHeader());
+	};
+	/**
+	* Reads individual summary files when summaries.json is not available.
+	*/
+	const readFallbackSummaries = async () => {
+		const summaryFiles = Array.from(remoteZipFile.centralDirectory.keys()).filter((filename) => filename.startsWith("_journal/summaries/") && filename.endsWith(".json"));
+		const summaries = [];
+		const errors = [];
+		await Promise.all(summaryFiles.map((filename) => queue.enqueue(async () => {
+			try {
+				const partialSummary = await readJSONFile(filename);
+				summaries.push(...partialSummary);
+			} catch (error) {
+				errors.push(error);
+			}
+		})));
+		if (errors.length > 0) console.error(`Encountered ${errors.length} errors while reading summary files:`, errors);
+		return summaries;
+	};
+	/**
+	* Reads all summaries, falling back to individual files if necessary.
+	*/
+	const readSampleSummaries = async () => {
+		if (remoteZipFile.centralDirectory.has("summaries.json")) return await readJSONFile("summaries.json");
+		else return readFallbackSummaries();
+	};
+	return {
+		readEvalBasicInfo,
+		readLogSummary: async () => {
+			const [header, sampleSummaries] = await Promise.all([readHeader(), readSampleSummaries()]);
+			return {
+				status: header.status,
+				eval: header.eval,
+				plan: header.plan,
+				results: header.results,
+				stats: header.stats,
+				error: header.error,
+				tags: header.tags,
+				metadata: header.metadata,
+				log_updates: header.log_updates,
+				sampleSummaries,
+				etag: initialEtag
+			};
+		},
+		readSample,
+		/**
+		* Reads the complete log file.
+		*/
+		readCompleteLog: async () => {
+			const [evalLogHeader, samples] = await Promise.all([readHeader(), listSamples().then((sampleIds) => Promise.all(sampleIds.map(({ sampleId, epoch }) => readSample(sampleId, epoch).then((sample) => sample))))]);
+			return {
+				status: evalLogHeader.status,
+				eval: evalLogHeader.eval,
+				plan: evalLogHeader.plan,
+				results: evalLogHeader.results,
+				stats: evalLogHeader.stats,
+				error: evalLogHeader.error,
+				samples
+			};
+		}
+	};
+};
+//#endregion
+//#region src/client/api/client-api.ts
+var isEvalFile = (file) => {
+	return file.endsWith(".eval");
+};
+/**
+* Represents an error thrown when a file exceeds the maximum allowed size.
+*/
+var SampleSizeLimitedExceededError = class SampleSizeLimitedExceededError extends Error {
+	id;
+	epoch;
+	maxBytes;
+	displayStack;
+	constructor(id, epoch, maxBytes) {
+		super(`Sample ${id} in epoch ${epoch} exceeds the maximum supported size (${maxBytes / 1024 / 1024}MB) and cannot be loaded.`);
+		this.name = "SampleSizeLimitedExceededError";
+		this.id = id;
+		this.epoch = epoch;
+		this.maxBytes = maxBytes;
+		this.displayStack = false;
+		Object.setPrototypeOf(this, SampleSizeLimitedExceededError.prototype);
+	}
+};
+/**
+* This provides an API implementation that will serve a single
+* file using an http parameter, designed to be deployed
+* to a webserver without inspect or the ability to enumerate log
+* files
+*/
+var clientApi = (api, log_file, debug = false) => {
+	let current_log = void 0;
+	let current_path = void 0;
+	const loadedEvalFile = {
+		file: void 0,
+		remoteLog: void 0
+	};
+	const remoteEvalFile = async (log_file, cached = false) => {
+		if (cached && loadedEvalFile.file === log_file) return loadedEvalFile.remoteLog;
+		const remoteLog = await openRemoteLogFile(api, encodePathParts(log_file), 5);
+		if (cached) {
+			loadedEvalFile.file = log_file;
+			loadedEvalFile.remoteLog = remoteLog;
+		}
+		return remoteLog;
+	};
+	/**
+	* Gets a log
+	*/
+	const get_log = async (log_file, cached = false) => {
+		if (!cached || log_file !== current_path || !current_log) {
+			if (pending_log_promise) return pending_log_promise;
+			pending_log_promise = api.get_log_contents(log_file, 100).then((log) => {
+				current_log = log;
+				current_path = log_file;
+				pending_log_promise = null;
+				return log;
+			}).catch((err) => {
+				pending_log_promise = null;
+				throw err;
+			});
+			return pending_log_promise;
+		}
+		return current_log;
+	};
+	let pending_log_promise = null;
+	/**
+	* Gets a log summary
+	*/
+	const get_log_details = async (log_file, cached = true) => {
+		if (isEvalFile(log_file)) {
+			const remoteLogFile = await remoteEvalFile(log_file, cached);
+			if (remoteLogFile) return await remoteLogFile.readLogSummary();
+			else throw new Error("Unable to read remote eval file");
+		} else {
+			const logContents = await get_log(log_file);
+			/**
+			* @type {import("./Types.js").SampleSummary[]}
+			*/
+			const sampleSummaries = logContents.parsed.samples ? logContents.parsed.samples?.map((sample) => {
+				return {
+					id: sample.id,
+					epoch: sample.epoch,
+					input: sample.input,
+					target: sample.target,
+					scores: sample.scores,
+					metadata: sample.metadata,
+					error: sample.error?.message
+				};
+			}) : [];
+			const parsed = logContents.parsed;
+			return {
+				version: parsed.version,
+				status: parsed.status,
+				eval: parsed.eval,
+				plan: parsed.plan,
+				results: parsed.results,
+				stats: parsed.stats,
+				error: parsed.error,
+				tags: parsed.tags,
+				metadata: parsed.metadata,
+				log_updates: parsed.log_updates,
+				sampleSummaries
+			};
+		}
+	};
+	/**
+	* Gets a sample
+	*/
+	const get_log_sample = async (log_file, id, epoch, onProgress) => {
+		if (isEvalFile(log_file)) {
+			async function fetchSample(useCache) {
+				const remoteLogFile = await remoteEvalFile(log_file, useCache);
+				if (!remoteLogFile) throw new Error(`Unable to read remote eval file ${log_file}`);
+				return await remoteLogFile.readSample(String(id), epoch, onProgress);
+			}
+			function handleError(error) {
+				if (error instanceof SampleNotFoundError) return void 0;
+				if (error instanceof FileSizeLimitError) throw new SampleSizeLimitedExceededError(id, epoch, error.maxBytes);
+				throw error;
+			}
+			try {
+				return await fetchSample(true);
+			} catch (error) {
+				if (error instanceof SampleNotFoundError) try {
+					return await fetchSample(false);
+				} catch (retryError) {
+					return handleError(retryError);
+				}
+				else return handleError(error);
+			}
+		} else {
+			const logContents = await get_log(log_file, true);
+			if (logContents.parsed.samples && logContents.parsed.samples.length > 0) return logContents.parsed.samples.find((sample) => {
+				return sampleIdsEqual(sample.id, id) && sample.epoch === epoch;
+			});
+		}
+	};
+	const read_eval_file_log_summary = async (log_file) => {
+		if (api.get_log_summary) return api.get_log_summary(log_file);
+		else return (await openRemoteLogFile(api, encodePathParts(log_file), 5)).readEvalBasicInfo();
+	};
+	/**
+	* Gets log headers
+	*/
+	const get_log_summaries = async (log_files) => {
+		const eval_files = {};
+		const json_files = {};
+		let index = 0;
+		for (const file of log_files) {
+			if (isEvalFile(file)) eval_files[file] = index;
+			else json_files[file] = index;
+			index++;
+		}
+		const evalLogHeadersPromises = Object.keys(eval_files).map((file) => read_eval_file_log_summary(file).then((summary) => ({
+			index: eval_files[file],
+			summary
+		})));
+		const jsonLogHeadersPromise = api.get_log_summaries(Object.keys(json_files)).then((summaries) => summaries.map((summary, i) => ({
+			index: json_files[Object.keys(json_files)[i]],
+			summary
+		})));
+		return (await Promise.all([...evalLogHeadersPromises, jsonLogHeadersPromise])).flat().sort((a, b) => a.index - b.index).map(({ summary }) => summary);
+	};
+	const get_log_dir = async () => {
+		if (api.get_log_dir) return await api.get_log_dir();
+		else return (await api.get_log_root())?.log_dir;
+	};
+	const get_logs = async (mtime, clientFileCount) => {
+		if (api.get_logs) return await api.get_logs(mtime, clientFileCount);
+		else return {
+			files: (await api.get_log_root())?.logs || [],
+			response_type: "full"
+		};
+	};
+	const get_log_root = async () => {
+		const logFiles = await api.get_log_root();
+		if (logFiles) return logFiles;
+		else if (log_file) {
+			const summary = await get_log_details(log_file);
+			if (summary) return { logs: [{
+				name: log_file,
+				task: summary.eval.task,
+				task_id: summary.eval.task_id
+			}] };
+		}
+		throw new Error("Unable to determine log paths.");
+	};
+	const get_log_pending_samples = (log_file, etag) => {
+		if (!api.eval_pending_samples) throw new Error("API doesn't support streamed samples");
+		return api.eval_pending_samples(log_file, etag);
+	};
+	const sampleDataPathByLog = /* @__PURE__ */ new Map();
+	const editEtagByLog = /* @__PURE__ */ new Map();
+	const get_log_sample_data = async (log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool) => {
+		if (!api.eval_log_sample_data) throw new Error("API doesn't supported streamed sample data");
+		let path = sampleDataPathByLog.get(log_file);
+		if (path === void 0 && api.eval_log_sample_data_direct) {
+			const probe = await api.eval_log_sample_data_direct(log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool);
+			if (probe !== void 0) {
+				sampleDataPathByLog.set(log_file, "direct");
+				return probe;
+			}
+		}
+		if (path === void 0) {
+			path = "proxy";
+			sampleDataPathByLog.set(log_file, path);
+		}
+		if (path === "direct") {
+			const result = await api.eval_log_sample_data_direct(log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool);
+			if (result === void 0) throw new Error("Direct pending-sample-data path returned 'not supported' after probe");
+			return result;
+		}
+		return api.eval_log_sample_data(log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool);
+	};
+	const middleware = debug ? createMiddlewareWrapper([debugMiddleware]) : (_name, fn) => fn;
+	return {
+		client_events: middleware("client_events", () => {
+			return api.client_events();
+		}),
+		get_log_dir: middleware("get_log_dir", get_log_dir),
+		get_log_dir_handle: middleware("get_log_dir_handle", (log_dir) => {
+			return api.get_log_dir_handle ? api.get_log_dir_handle(log_dir) : log_dir || "default_log_dir";
+		}),
+		get_logs: middleware("get_log_files", get_logs),
+		get_log_root: middleware("get_log_root", get_log_root),
+		get_eval_set: middleware("get_eval_set", (dir) => {
+			return api.get_eval_set(dir);
+		}),
+		get_flow: middleware("get_flow", (dir) => {
+			return api.get_flow(dir);
+		}),
+		get_log_summaries: middleware("get_log_summaries", get_log_summaries),
+		get_log_details: middleware("get_log_details", async (log_file, cached) => {
+			const result = await get_log_details(log_file, cached);
+			if (result.etag) editEtagByLog.set(log_file, result.etag);
+			return result;
+		}),
+		get_log_sample: middleware("get_log_sample", get_log_sample),
+		open_log_file: middleware("open_log_file", (log_file, log_dir) => {
+			return api.open_log_file(log_file, log_dir);
+		}),
+		download_file: middleware("download_file", (download_file, file_contents) => {
+			return api.download_file(download_file, file_contents);
+		}),
+		download_log: api.download_log ? middleware("download_log", (log_file) => {
+			return api.download_log(log_file);
+		}) : void 0,
+		log_message: middleware("log_message", (log_file, message) => {
+			return api.log_message(log_file, message);
+		}),
+		get_log_pending_samples: api.eval_pending_samples ? middleware("get_log_pending_samples", get_log_pending_samples) : void 0,
+		get_log_sample_data: api.eval_log_sample_data ? middleware("get_log_sample_data", get_log_sample_data) : void 0,
+		get_user_info: api.get_user_info ? middleware("get_user_info", () => api.get_user_info()) : void 0,
+		edit_log: api.edit_log ? middleware("edit_log", async (log_file, update, if_match_etag) => {
+			const effective = if_match_etag ?? editEtagByLog.get(log_file);
+			const result = await api.edit_log(log_file, update, effective);
+			if (result.etag) editEtagByLog.set(log_file, result.etag);
+			if (current_path === log_file) {
+				current_log = void 0;
+				current_path = void 0;
+			}
+			if (loadedEvalFile.file === log_file) {
+				loadedEvalFile.file = void 0;
+				loadedEvalFile.remoteLog = void 0;
+			}
+			return result;
+		}) : void 0
+	};
+};
+var debugMiddleware = (name, _fn, args, result) => {
+	if (result instanceof Promise) {
+		const startTime = performance.now();
+		return result.then((returned) => {
+			const duration = performance.now() - startTime;
+			console.log(`[ClientAPI] ${name}`, {
+				args,
+				returned,
+				duration: `${duration.toFixed(2)}ms`
+			});
+			return returned;
+		});
+	} else {
+		console.log(`[ClientAPI] ${name}`, {
+			args,
+			returned: result
+		});
+		return result;
+	}
+};
+var applyMiddleware = (name, fn, middlewares) => {
+	if (middlewares.length === 0) return fn;
+	return ((...args) => {
+		let result = fn(...args);
+		for (const middleware of middlewares) result = middleware(name, fn, args, result);
+		return result;
+	});
+};
+var createMiddlewareWrapper = (middlewares) => {
+	return (name, fn) => {
+		return applyMiddleware(name, fn, middlewares);
+	};
+};
+//#endregion
+//#region src/client/api/shared/api-shared.ts
+/**
+* Downloads the provided content as a file using the browser's DOM API
+*/
+async function download_file$1(filename, filecontents) {
+	let blob;
+	if (typeof filecontents === "string" && filecontents.startsWith("data:")) blob = await (await fetch(filecontents)).blob();
+	else blob = new Blob([filecontents], { type: "text/plain" });
+	const link = document.createElement("a");
+	link.href = URL.createObjectURL(blob);
+	link.download = filename;
+	document.body.appendChild(link);
+	link.click();
+	document.body.removeChild(link);
+	URL.revokeObjectURL(link.href);
+}
+//#endregion
+//#region src/client/api/static-http/fetch.ts
+/**
+* Fetches a file from the specified URL as a string
+*/
+async function fetchTextFile(url, handleError) {
+	const safe_url = encodePathParts(url);
+	const response = await fetch(`${safe_url}`, { method: "GET" });
+	if (response.ok) return await response.text();
+	else if (response.status !== 200) {
+		if (handleError && handleError(response)) return;
+		const message = await response.text() || response.statusText;
+		throw /* @__PURE__ */ new Error(`${response.status}: ${message})`);
+	} else throw new Error(`${response.status} - ${response.statusText} `);
+}
+/**
+* Fetches a file from the specified URL and parses its content.
+*/
+async function fetchFile(url, parse, handleError) {
+	const safe_url = encodePathParts(url);
+	const response = await fetch(`${safe_url}`, { method: "GET" });
+	if (response.ok) return await parse(await response.text());
+	else if (response.status !== 200) {
+		if (handleError && handleError(response)) return;
+		const message = await response.text() || response.statusText;
+		throw /* @__PURE__ */ new Error(`${response.status}: ${message})`);
+	} else throw new Error(`${response.status} - ${response.statusText} `);
+}
+/**
+* Fetches a log file and parses its content, updating the log structure if necessary.
+*/
+var fetchLogFile = async (file) => {
+	return fetchFile(file, async (text) => {
+		const log = await asyncJsonParse(text);
+		if (log.version === 1) {
+			if (log.results) {
+				const untypedLog = log;
+				log.results.scores = [];
+				untypedLog.results.scorer.scorer = untypedLog.results.scorer.name;
+				log.results.scores.push(untypedLog.results.scorer);
+				delete untypedLog.results.scorer;
+				log.results.scores[0].metrics = untypedLog.results.metrics;
+				delete untypedLog.results.metrics;
+				const scorerName = log.results.scores[0].name;
+				log.samples?.forEach((sample) => {
+					const untypedSample = sample;
+					sample.scores = { [scorerName]: untypedSample.score };
+					delete untypedSample.score;
+				});
+			}
+		}
+		return {
+			raw: text,
+			parsed: log
+		};
+	});
+};
+/**
+* Fetches a log file and parses its content, updating the log structure if necessary.
+*/
+var fetchManifest = async (log_dir) => {
+	const parseListing = async (text) => {
+		return {
+			raw: text,
+			parsed: await asyncJsonParse(text)
+		};
+	};
+	return await fetchFile(log_dir + "/listing.json", parseListing);
+};
+/**
+* Fetches a file, parsing its content and returning the result.
+*/
+var fetchJsonFile = async (file, handleError) => {
+	return fetchFile(file, async (text) => {
+		return await asyncJsonParse(text);
+	}, handleError);
+};
+/**
+* Joins multiple URI segments into a single URI string.
+*
+* This function removes any leading or trailing slashes from each segment
+* and then joins them with a single slash (`/`).
+*/
+function joinURI(...segments) {
+	return segments.map((segment) => segment.replace(/(^\/+|\/+$)/g, "")).join("/");
+}
+//#endregion
+//#region src/client/api/static-http/api-static-http.ts
+/**
+* This provides an API implementation that will serve a single
+* file using an http parameter, designed to be deployed
+* to a webserver without inspect or the ability to enumerate log
+* files
+*/
+function staticHttpApi(log_dir, log_file, abs_log_dir) {
+	const resolved_log_dir = log_dir?.replace(" ", "+");
+	return staticHttpApiForLog({
+		log_file: log_file ? log_file.replace(" ", "+") : void 0,
+		log_dir: resolved_log_dir,
+		abs_log_dir
+	});
+}
+/**
+* Fetches a file from the specified URL and parses its content.
+*/
+function staticHttpApiForLog(logInfo) {
+	const log_dir = logInfo.log_dir;
+	const abs_log_dir = logInfo.abs_log_dir;
+	let manifest = void 0;
+	let manifestPromise = void 0;
+	const getManifest = async () => {
+		if (!manifest && log_dir) {
+			if (!manifestPromise) manifestPromise = fetchManifest(log_dir).then((manifestRaw) => {
+				manifest = manifestRaw?.parsed || {};
+				return manifest;
+			});
+			await manifestPromise;
+		}
+		return manifest || {};
+	};
+	async function open_log_file() {}
+	return {
+		client_events: async () => {
+			return Promise.resolve([]);
+		},
+		get_log_root: async () => {
+			if (log_dir) {
+				const manifest = await getManifest();
+				if (manifest) {
+					const logs = Object.keys(manifest).map((key) => {
+						return {
+							name: joinURI(log_dir, key),
+							task: manifest[key].task,
+							task_id: manifest[key].task_id
+						};
+					});
+					return Promise.resolve({
+						logs,
+						log_dir,
+						abs_log_dir
+					});
+				}
+			}
+		},
+		get_log_dir_handle: (log_dir) => {
+			return joinURI(`${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf("/"))}`, log_dir || "default_log_dir");
+		},
+		get_eval_set: async (dir) => {
+			const dirSegments = [];
+			if (log_dir) dirSegments.push(log_dir);
+			if (dir) dirSegments.push(dir);
+			return await fetchJsonFile(joinURI(...dirSegments, "eval-set.json"), (response) => {
+				if (400 <= response.status && response.status < 500) return true;
+				else return false;
+			});
+		},
+		get_flow: async (dir) => {
+			const dirSegments = [];
+			if (log_dir) dirSegments.push(log_dir);
+			if (dir) dirSegments.push(dir);
+			return await fetchTextFile(joinURI(...dirSegments, "flow.yaml"), (response) => {
+				if (400 <= response.status && response.status < 500) return true;
+				else return false;
+			});
+		},
+		log_message: async (log_file, message) => {
+			console.log(`[CLIENT MESSAGE] (${log_file}): ${message}`);
+		},
+		get_log_contents: async (log_file, _headerOnly, _capabilities) => {
+			const response = await fetchLogFile(log_file);
+			if (response) return response;
+			else throw new Error(`"Unable to load eval log ${log_file}`);
+		},
+		get_log_info: async (log_file) => {
+			return { size: await fetchSize(log_file) };
+		},
+		get_log_bytes: async (log_file, start, end) => {
+			return await fetchRange(log_file, start, end);
+		},
+		get_log_summary: async (log_file) => {
+			const manifest = await getManifest();
+			if (manifest) {
+				const manifestAbs = {};
+				Object.keys(manifest).forEach((key) => {
+					manifestAbs[joinURI(log_dir || "", key)] = manifest[key];
+				});
+				const header = manifestAbs[log_file];
+				if (header) return header;
+			}
+			throw new Error(`Unable to load eval log header for ${log_file}`);
+		},
+		get_log_summaries: async (files) => {
+			if (files.length === 0) return [];
+			if (log_dir) {
+				const manifest = await getManifest();
+				if (manifest) {
+					const keys = Object.keys(manifest);
+					const result = [];
+					files.forEach((file) => {
+						const fileKey = keys.find((key) => {
+							return file.endsWith(key);
+						});
+						if (fileKey) result.push(manifest[fileKey]);
+					});
+					return result;
+				}
+			}
+			throw new Error(`Failed to load a listing file using the directory: ${log_dir}. Please be sure you have deployed a manifest file (listing.json).`);
+		},
+		download_file: download_file$1,
+		open_log_file
+	};
+}
+//#endregion
+//#region src/client/remote/remotePendingSampleData.ts
+var SEGMENT_CAP_PER_CALL = 25;
+/**
+* Fetch one chunk of pending-sample data via presigned S3 URLs.
+* Returns `undefined` when this transport isn't supported (404, or any
+* segment lacks a presigned URL); all other failures throw.
+*/
+var fetchPendingSampleDataDirect = async (getUrls, log_file, id, epoch, cursors) => {
+	let urls;
+	try {
+		urls = await getUrls(log_file, id, epoch, cursors.last_event, cursors.last_attachment, cursors.last_message_pool, cursors.last_call_pool, SEGMENT_CAP_PER_CALL);
+	} catch (e) {
+		if (e instanceof ApiError && e.status === 404) return;
+		throw e;
+	}
+	if (urls.segments.length === 0) return {
+		sampleData: {
+			events: [],
+			attachments: [],
+			message_pool: [],
+			call_pool: []
+		},
+		has_more: urls.has_more
+	};
+	if (!urls.segments.every((s) => s.direct_url != null)) return;
+	const parts = await Promise.all(urls.segments.map((seg) => readSegment(seg)));
+	return {
+		sampleData: applyCursorFilter({
+			events: parts.flatMap((p) => p.events),
+			attachments: parts.flatMap((p) => p.attachments),
+			message_pool: parts.flatMap((p) => p.message_pool),
+			call_pool: parts.flatMap((p) => p.call_pool)
+		}, cursors),
+		has_more: urls.has_more
+	};
+};
+var readSegment = async (seg) => {
+	const url = seg.direct_url;
+	const resp = await fetch(url);
+	if (!resp.ok) throw new Error(`Failed to fetch segment: ${resp.status} ${resp.statusText}`);
+	return await asyncJsonParseBytes(await (await openZipFileFromBuffer(new Uint8Array(await resp.arrayBuffer()))).readFile(seg.member_name));
+};
+var applyCursorFilter = (out, cursors) => {
+	const lastEvent = cursors.last_event ?? -1;
+	const lastAttachment = cursors.last_attachment ?? -1;
+	const lastMessagePool = cursors.last_message_pool ?? -1;
+	const lastCallPool = cursors.last_call_pool ?? -1;
+	out.events = out.events.filter((e) => e.id > lastEvent);
+	out.attachments = out.attachments.filter((a) => a.id > lastAttachment);
+	out.message_pool = out.message_pool.filter((m) => m.id > lastMessagePool);
+	out.call_pool = out.call_pool.filter((c) => c.id > lastCallPool);
+	return out;
+};
+//#endregion
+//#region src/client/api/view-server/api-view-server.ts
+var LOADED_TIME = Date.now();
+var lastEvalTime = 0;
+/**
+* Create a view server API with optional server-side log listing
+*/
+function viewServerApi(options = {}) {
+	const { apiBaseUrl, logDir, headerProvider } = options;
+	const requestApi = serverRequestApi(apiBaseUrl || "/api", headerProvider);
+	const client_events = async () => {
+		const params = new URLSearchParams();
+		params.append("loaded_time", String(LOADED_TIME.valueOf()));
+		params.append("last_eval_time", String(lastEvalTime.valueOf()));
+		return (await requestApi.fetchString("GET", `/events?${params.toString()}`)).parsed;
+	};
+	const get_log_dir = async () => {
+		if (logDir) return logDir;
+		return (await requestApi.fetchString("GET", "/log-dir")).parsed.log_dir;
+	};
+	const get_log_root = async () => {
+		const path = logDir ? `/logs?log_dir=${encodeURIComponent(logDir)}` : "/logs";
+		const logs = await requestApi.fetchString("GET", path);
+		lastEvalTime = Date.now();
+		return logs.parsed;
+	};
+	const get_logs = async (mtime, clientFileCount) => {
+		const path = logDir ? `/log-files?log_dir=${encodeURIComponent(logDir)}` : "/log-files";
+		const headers = {};
+		const token = log_file_token(mtime, clientFileCount);
+		if (token) headers["If-None-Match"] = token;
+		lastEvalTime = Date.now();
+		return (await requestApi.fetchString("GET", path, headers)).parsed;
+	};
+	const log_file_token = (mtime, fileCount) => {
+		return `W/"${mtime}-${fileCount}"`;
+	};
+	const get_eval_set = async (dir) => {
+		const basePath = "/eval-set";
+		const params = new URLSearchParams();
+		if (logDir) params.append("log_dir", logDir);
+		if (dir) params.append("dir", dir);
+		const query = params.toString();
+		const path = query ? `${basePath}?${query}` : basePath;
+		try {
+			return (await requestApi.fetchString("GET", path)).parsed;
+		} catch (error) {
+			if (error instanceof ApiError && (error.status === 404 || error.status === 403)) return;
+			throw error;
+		}
+	};
+	const get_flow = async (dir) => {
+		const basePath = "/flow";
+		const params = new URLSearchParams();
+		if (logDir) params.append("log_dir", logDir);
+		if (dir) params.append("dir", dir);
+		const query = params.toString();
+		const path = query ? `${basePath}?${query}` : basePath;
+		try {
+			const bytes = await requestApi.fetchBytes("GET", path);
+			return new TextDecoder().decode(bytes);
+		} catch (error) {
+			if (error instanceof ApiError && (error.status === 404 || error.status === 403)) return;
+			throw error;
+		}
+	};
+	const get_log_contents = async (file, headerOnly, _capabilities) => {
+		return await requestApi.fetchString("GET", `/logs/${encodeURIComponent(file)}?header-only=${headerOnly}`);
+	};
+	const get_log_info = async (file) => {
+		return (await requestApi.fetchString("GET", `/log-info/${encodeURIComponent(file)}`)).parsed;
+	};
+	const toLogPreview = (header) => {
+		const scores = Object.values(header.results?.scores || {});
+		const metric = scores.length > 0 ? scores[0].metrics : void 0;
+		const evalMetrics = Object.values(metric || {});
+		const primary_metric = evalMetrics.length > 0 ? evalMetrics[0] : void 0;
+		const model_roles = header.eval.model_roles ? Object.fromEntries(Object.entries(header.eval.model_roles).map(([role, cfg]) => [role, cfg.model])) : void 0;
+		return {
+			eval_id: header.eval.eval_id,
+			run_id: header.eval.run_id,
+			task: header.eval.task,
+			task_id: header.eval.task_id,
+			task_version: header.eval.task_version,
+			version: header.version,
+			status: header.status,
+			error: header.error,
+			model: header.eval.model,
+			model_roles,
+			started_at: header.stats?.started_at,
+			completed_at: header.stats?.completed_at,
+			primary_metric
+		};
+	};
+	const get_log_bytes = async (file, start, end) => requestApi.fetchBytes("GET", `/log-bytes/${encodeURIComponent(file)}?start=${start}&end=${end}`);
+	const get_log_summaries = async (files) => {
+		const params = new URLSearchParams();
+		for (const file of files) params.append("file", file);
+		return (await requestApi.fetchString("GET", `/log-headers?${params.toString()}`)).parsed.map(toLogPreview);
+	};
+	const log_message = async (log_file, message) => {
+		const params = new URLSearchParams();
+		params.append("log_file", log_file);
+		params.append("message", message);
+		await requestApi.fetchType("GET", `/log-message?${params.toString()}`, {
+			headers: { "Content-Type": "text/plain" },
+			parse: async (text) => {
+				if (text !== "") throw new Error(`Unexpected response from log_message: ${text}`);
+			}
+		});
+	};
+	const eval_pending_samples = async (log_file, etag) => {
+		const params = new URLSearchParams();
+		params.append("log", log_file);
+		const headers = {};
+		if (etag) headers["If-None-Match"] = etag;
+		const request = {
+			headers,
+			parse: async (text) => {
+				return {
+					status: "OK",
+					pendingSamples: await asyncJsonParse(text)
+				};
+			},
+			handleError: (status) => {
+				if (status === 404) return { status: "NotFound" };
+				else if (status === 304) return { status: "NotModified" };
+			}
+		};
+		return (await requestApi.fetchType("GET", `/pending-samples?${params.toString()}`, request)).parsed;
+	};
+	const eval_log_sample_data = async (log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool) => {
+		const params = new URLSearchParams();
+		params.append("log", log_file);
+		params.append("id", String(id));
+		params.append("epoch", String(epoch));
+		if (last_event !== void 0) params.append("last-event-id", String(last_event));
+		if (last_attachment !== void 0) params.append("after-attachment-id", String(last_attachment));
+		if (last_message_pool !== void 0) params.append("after-message-pool-id", String(last_message_pool));
+		if (last_call_pool !== void 0) params.append("after-call-pool-id", String(last_call_pool));
+		return (await requestApi.fetchType("GET", `/pending-sample-data?${params.toString()}`, {
+			headers: {},
+			parse: async (text) => {
+				return {
+					status: "OK",
+					sampleData: await asyncJsonParse(text)
+				};
+			},
+			handleError: (status) => {
+				if (status === 404) return { status: "NotFound" };
+				else if (status === 304) return { status: "NotModified" };
+			}
+		})).parsed;
+	};
+	const get_pending_sample_data_urls = async (log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool, max_segments) => {
+		const params = new URLSearchParams();
+		params.append("log", log_file);
+		params.append("id", String(id));
+		params.append("epoch", String(epoch));
+		if (last_event !== void 0) params.append("last-event-id", String(last_event));
+		if (last_attachment !== void 0) params.append("after-attachment-id", String(last_attachment));
+		if (last_message_pool !== void 0) params.append("after-message-pool-id", String(last_message_pool));
+		if (last_call_pool !== void 0) params.append("after-call-pool-id", String(last_call_pool));
+		if (max_segments !== void 0) params.append("max-segments", String(max_segments));
+		return (await requestApi.fetchType("GET", `/pending-sample-data-urls?${params.toString()}`, {
+			headers: {},
+			parse: async (text) => {
+				return await asyncJsonParse(text);
+			}
+		})).parsed;
+	};
+	const eval_log_sample_data_direct = async (log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool) => {
+		const direct = await fetchPendingSampleDataDirect(get_pending_sample_data_urls, log_file, id, epoch, {
+			last_event,
+			last_attachment,
+			last_message_pool,
+			last_call_pool
+		});
+		if (direct === void 0) return;
+		return {
+			status: "OK",
+			sampleData: direct.sampleData,
+			has_more: direct.has_more
+		};
+	};
+	const edit_log = async (log_file, update, if_match_etag) => {
+		const baseUrl = apiBaseUrl || "/api";
+		const path = `/log-edit/${encodeURIComponent(log_file)}`;
+		const url = baseUrl ? `${baseUrl.replace(/\/$/, "")}${path}` : path;
+		const headers = {
+			Accept: "application/json",
+			"Content-Type": "application/json"
+		};
+		if (if_match_etag) headers["If-Match"] = if_match_etag;
+		if (headerProvider) Object.assign(headers, await headerProvider());
+		const isCrossOrigin = Boolean(apiBaseUrl && (() => {
+			try {
+				return new URL(apiBaseUrl).origin !== window.location.origin;
+			} catch {
+				return false;
+			}
+		})());
+		const response = await fetch(url, {
+			method: "POST",
+			headers,
+			body: JSON.stringify(update),
+			credentials: isCrossOrigin ? "include" : "same-origin"
+		});
+		if (!response.ok) {
+			const message = unwrapFastapiDetail(await response.text()) || response.statusText;
+			throw new ApiError(response.status, message);
+		}
+		return {
+			log: await asyncJsonParse(await response.text()),
+			etag: response.headers.get("ETag") ?? void 0
+		};
+	};
+	const get_user_info = async () => {
+		return (await requestApi.fetchString("GET", "/user-info")).parsed ?? {};
+	};
+	const download_log = async (log_file) => {
+		const url = `${apiBaseUrl || "/api"}/log-download/${encodeURIComponent(log_file)}`;
+		const link = document.createElement("a");
+		link.href = url;
+		link.download = "";
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+	};
+	return {
+		client_events,
+		get_log_root,
+		get_logs,
+		get_log_dir,
+		get_eval_set,
+		get_flow,
+		get_log_contents,
+		get_log_info,
+		get_log_bytes,
+		get_log_summaries,
+		log_message,
+		download_file: download_file$1,
+		download_log,
+		open_log_file: async () => {},
+		eval_pending_samples,
+		eval_log_sample_data,
+		eval_log_sample_data_direct,
+		edit_log,
+		get_user_info
+	};
+}
+//#endregion
+//#region src/client/api/vscode/jsonrpc.ts
+var kMethodEvalLogDir = "eval_log_dir";
+var kMethodEvalLogs = "eval_logs";
+var kMethodEvalLogFiles = "eval_log_files";
+var kMethodEvalLog = "eval_log";
+var kMethodEvalLogInfo = "eval_log_info";
+var kMethodEvalLogBytes = "eval_log_bytes";
+var kMethodEvalLogHeaders = "eval_log_headers";
+var kMethodPendingSamples = "eval_log_pending_samples";
+var kMethodSampleData = "eval_log_sample_data";
+var kMethodLogMessage = "log_message";
+var kMethodEditLog = "edit_log";
+var kMethodGetUserInfo = "get_user_info";
+function webViewJsonRpcClient(vscode) {
+	return jsonRpcPostMessageRequestTransport({
+		postMessage: (data) => {
+			vscode.postMessage(data);
+		},
+		onMessage: (handler) => {
+			const onMessage = (ev) => {
+				handler(ev.data);
+			};
+			window.addEventListener("message", onMessage);
+			return () => {
+				window.removeEventListener("message", onMessage);
+			};
+		}
+	}).request;
+}
+function jsonRpcPostMessageRequestTransport(target) {
+	const requests = /* @__PURE__ */ new Map();
+	return {
+		request: (method, params) => {
+			return new Promise((resolve, reject) => {
+				const requestId = Math.floor(Math.random() * 1e6);
+				requests.set(requestId, {
+					resolve,
+					reject
+				});
+				const request = {
+					jsonrpc: "2.0",
+					id: requestId,
+					method,
+					params
+				};
+				target.postMessage(request);
+			});
+		},
+		disconnect: target.onMessage((ev) => {
+			const response = asJsonRpcResponse(ev);
+			if (response) {
+				const request = requests.get(response.id);
+				if (request) {
+					requests.delete(response.id);
+					if (response.error) request.reject(response.error);
+					else request.resolve(response.result);
+				}
+			}
+		})
+	};
+}
+function isJsonRpcMessage(message) {
+	return message.jsonrpc !== void 0 && message.id !== void 0;
+}
+function asJsonRpcMessage(data) {
+	if (isJsonRpcMessage(data) && data.jsonrpc === "2.0") return data;
+	return null;
+}
+function asJsonRpcResponse(data) {
+	const message = asJsonRpcMessage(data);
+	if (message) return message;
+	return null;
+}
+//#endregion
+//#region src/client/api/vscode/api-vscode.ts
+var kNotFoundSignal = "NotFound";
+var kNotModifiedSignal = "NotModified";
+var vscodeClient = webViewJsonRpcClient(getVscodeApi());
+async function client_events() {
+	return [];
+}
+async function get_log_root() {
+	const response = await vscodeClient(kMethodEvalLogs, []);
+	if (response) {
+		const parsed = import_dist.default.parse(response);
+		if (Array.isArray(parsed)) return {
+			log_dir: "",
+			files: parsed
+		};
+		else return parsed;
+	} else return;
+}
+var get_log_dir = async () => {
+	const response = await vscodeClient(kMethodEvalLogDir, []);
+	if (response) return import_dist.default.parse(response).log_dir;
+};
+var get_logs = async (mtime, clientFileCount) => {
+	const response = await vscodeClient(kMethodEvalLogFiles, [mtime, clientFileCount]);
+	if (response) return import_dist.default.parse(response);
+	else return [];
+};
+async function get_eval_set() {}
+async function get_flow() {}
+async function get_log_contents(log_file, headerOnly, capabilities) {
+	const response = await vscodeClient(kMethodEvalLog, [log_file, headerOnly]);
+	if (response) {
+		let json;
+		if (capabilities?.webWorkers) json = await asyncJsonParse(response);
+		else json = import_dist.default.parse(response);
+		return {
+			parsed: json,
+			raw: response
+		};
+	} else throw new Error(`Unable to load eval log ${log_file}.`);
+}
+async function get_log_info(log_file) {
+	try {
+		return await vscodeClient(kMethodEvalLogInfo, [log_file]);
+	} catch (e) {
+		if (e?.code === -32601) return { size: await vscodeClient("eval_log_size", [log_file]) };
+		throw e;
+	}
+}
+async function get_log_bytes(log_file, start, end) {
+	return await vscodeClient(kMethodEvalLogBytes, [
+		log_file,
+		start,
+		end
+	]);
+}
+async function get_log_summaries(files) {
+	const response = await vscodeClient(kMethodEvalLogHeaders, [files]);
+	if (response) return import_dist.default.parse(response);
+	else return;
+}
+async function eval_pending_samples(log_file, etag) {
+	const response = await vscodeClient(kMethodPendingSamples, [log_file, etag]);
+	if (response) {
+		if (response === kNotModifiedSignal) return { status: "NotModified" };
+		else if (response === kNotFoundSignal) return { status: "NotFound" };
+		return {
+			status: "OK",
+			pendingSamples: await asyncJsonParse(response)
+		};
+	} else throw new Error(`Unable to load pending samples ${log_file}.`);
+}
+async function eval_log_sample_data(log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool) {
+	const response = await vscodeClient(kMethodSampleData, [
+		log_file,
+		id,
+		epoch,
+		last_event,
+		last_attachment,
+		last_message_pool,
+		last_call_pool
+	]);
+	if (response) {
+		if (response === kNotModifiedSignal) return { status: "NotModified" };
+		else if (response === kNotFoundSignal) return { status: "NotFound" };
+		return {
+			status: "OK",
+			sampleData: await asyncJsonParse(response)
+		};
+	} else throw new Error(`Unable to load live sample data ${log_file}.`);
+}
+async function log_message(log_file, message) {
+	await vscodeClient(kMethodLogMessage, [log_file, message]);
+}
+async function download_file() {
+	throw Error("Downloading files is not supported in VS Code");
+}
+/**
+* POSTs a LogUpdate (tag/metadata edits + provenance) to the VS Code
+* extension, which read-modifies-writes the log header and returns the
+* updated EvalLog (plus an ETag for S3-backed logs).
+*
+* Cross-process error mapping:
+*   - HTTP-style status codes (400/409/412/…) thrown by the extension
+*     come back through JSON-RPC with `error.code = <status>`. We
+*     re-throw them as `ApiError` so the existing dialog error mapper
+*     (`formatEditError`) handles 412 stale-ETag and 400 validation
+*     branches identically across the view-server and vscode paths.
+*   - `kJsonRpcMethodNotFound` means the extension predates edit
+*     support; surface an actionable message instead of the raw
+*     JSON-RPC text.
+*/
+async function edit_log(log_file, update, if_match_etag) {
+	try {
+		const response = await vscodeClient(kMethodEditLog, [
+			log_file,
+			update,
+			if_match_etag
+		]);
+		if (!response) throw new Error(`Edit returned no response for ${log_file}.`);
+		return typeof response === "string" ? import_dist.default.parse(response) : response;
+	} catch (e) {
+		if (typeof e?.code === "number" && e.code >= 400 && e.code < 600) throw new ApiError(e.code, e?.message ?? `Edit failed (${e.code})`);
+		if (e?.code === -32601) throw new Error("Log editing requires a newer Inspect VS Code extension.");
+		throw e;
+	}
+}
+/**
+* Best-effort identity of the user editing logs, used to prefill the
+* Author field. Returns an empty object when the extension doesn't
+* expose the method (older extension); the dialog then leaves Author
+* blank and the user types it manually.
+*/
+async function get_user_info() {
+	try {
+		const response = await vscodeClient(kMethodGetUserInfo, []);
+		if (!response) return {};
+		return (typeof response === "string" ? import_dist.default.parse(response) : response) ?? {};
+	} catch (e) {
+		if (e?.code === -32601) return {};
+		throw e;
+	}
+}
+async function open_log_file(log_file, log_dir) {
+	const msg = {
+		type: "displayLogFile",
+		url: log_file,
+		log_dir
+	};
+	getVscodeApi()?.postMessage(msg);
+}
+var api = {
+	client_events,
+	get_log_root,
+	get_log_dir,
+	get_logs,
+	get_eval_set,
+	get_flow,
+	get_log_contents,
+	get_log_info,
+	get_log_bytes,
+	get_log_summaries,
+	log_message,
+	download_file,
+	open_log_file,
+	eval_pending_samples,
+	eval_log_sample_data,
+	edit_log,
+	get_user_info
+};
+//#endregion
+//#region src/client/api/index.ts
+/**
+* Resolves the client API
+*/
+var resolveApi = () => {
+	const debug = false;
+	if (getVscodeApi()) return clientApi(api, void 0, debug);
+	else {
+		const scriptEl = document.getElementById("log_dir_context");
+		if (scriptEl) {
+			const context = scriptEl.textContent;
+			if (context !== null) {
+				const data = import_dist.default.parse(context);
+				if (data.log_dir || data.log_file) return clientApi(staticHttpApi(data.log_dir || dirname(data.log_file), data.log_file, data.abs_log_dir), data.log_file, debug);
+			}
+		}
+		const urlParams = new URLSearchParams(window.location.search);
+		const log_file = urlParams.get("log_file");
+		const log_dir = urlParams.get("log_dir");
+		const forceViewServerApi = urlParams.get("inspect_server") === "true";
+		const resolved_log_dir = log_dir ?? void 0;
+		const resolved_log_file = log_file ?? void 0;
+		if (forceViewServerApi) return clientApi(viewServerApi({ logDir: resolved_log_dir }), resolved_log_file, debug);
+		if (resolved_log_dir !== void 0 || resolved_log_file !== void 0) return clientApi(staticHttpApi(resolved_log_dir, resolved_log_file), resolved_log_file, debug);
+		return clientApi(viewServerApi(), void 0, debug);
+	}
+};
+var api_default = resolveApi();
 //#endregion
 //#region src/client/storage/index.ts
 var resolveStorage = () => {
