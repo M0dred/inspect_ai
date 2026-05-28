@@ -66214,6 +66214,19 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 				}
 			},
 			{
+				field: "sampleLimits",
+				headerName: "Sample Limits",
+				initialWidth: 140,
+				minWidth: 80,
+				sortable: true,
+				filter: true,
+				resizable: true,
+				cellRenderer: (params) => {
+					if (!params.value) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell$1, {});
+					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: params.value });
+				}
+			},
+			{
 				field: "errorMessage",
 				headerName: "Error",
 				initialWidth: 300,
@@ -66352,6 +66365,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 				"completedSamples",
 				"percentCompleted",
 				"sampleErrors",
+				"sampleLimits",
 				"totalTokens",
 				"duration",
 				"errorMessage",
@@ -66378,6 +66392,13 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 		}
 		return allCols;
 	}, [scorerMap, mode]);
+	const hasSampleLimits = (0, import_react.useMemo)(() => {
+		for (const [logName, details] of Object.entries(logDetails)) {
+			if (scopePrefix && !logName.startsWith(scopePrefix)) continue;
+			if (details.sampleSummaries?.some((s) => s.limit)) return true;
+		}
+		return false;
+	}, [logDetails, scopePrefix]);
 	const defaultHiddenFields = (0, import_react.useMemo)(() => {
 		const hidden = /* @__PURE__ */ new Set();
 		if (mode === "tasks") {
@@ -66394,9 +66415,10 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 		}
 		hidden.add("percentCompleted");
 		hidden.add("sampleErrors");
+		if (!hasSampleLimits) hidden.add("sampleLimits");
 		hidden.add("errorMessage");
 		return hidden;
-	}, [mode]);
+	}, [mode, hasSampleLimits]);
 	const matchesActiveMode = (field) => {
 		if (field.startsWith("score_")) return viewMode === "per-scorer";
 		if (field.startsWith("metric_")) return viewMode === "by-metric";
@@ -113512,6 +113534,12 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 			if (total && total > 0 && completed !== void 0) percentCompleted = completed / total * 100;
 			let sampleErrors;
 			if (details?.sampleSummaries) sampleErrors = details.sampleSummaries.filter((s) => s.error).length;
+			let sampleLimits;
+			if (details?.sampleSummaries) {
+				const limits = /* @__PURE__ */ new Set();
+				for (const s of details.sampleSummaries) if (s.limit) limits.add(s.limit);
+				if (limits.size > 0) sampleLimits = Array.from(limits).sort().join(", ");
+			}
 			const row = {
 				id: item.id,
 				name: item.name,
@@ -113538,6 +113566,7 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 				tags: details?.tags,
 				percentCompleted,
 				sampleErrors,
+				sampleLimits,
 				errorMessage: details?.error?.message
 			};
 			if (details?.results?.scores) {
@@ -114988,11 +115017,11 @@ var resolveToolInput = (fn, toolArgs) => {
 	const inputDescriptor = extractInputMetadata(toolName);
 	const { input, description, args } = extractInput(toolArgs, inputDescriptor);
 	const functionCall = args.length > 0 ? `${toolName}(${args.join(", ")})` : toolName;
-	if ((fn === "Task" || fn === "task") && typeof toolArgs.subagent_type === "string") {
+	if ((fn === "Task" || fn === "task" || fn === "Agent" || fn === "agent") && typeof toolArgs.subagent_type === "string") {
 		const subagentType = toolArgs.subagent_type;
 		return {
 			name: fn,
-			functionCall: `Task: ${subagentType}`,
+			functionCall: `${fn}: ${subagentType}`,
 			title: `${fn}: ${subagentType}`,
 			input,
 			description,
@@ -115049,12 +115078,12 @@ var extractInputMetadata = (toolName) => {
 		inputArg: "todos",
 		contentType: kToolTodoContentType
 	};
-	else if (toolName === "Task") return {
+	else if (toolName === "Task" || toolName === "Agent") return {
 		inputArg: "prompt",
 		descriptionArg: "description",
 		contentType: "markdown"
 	};
-	else if (toolName === "task") return {
+	else if (toolName === "task" || toolName === "agent") return {
 		inputArg: "prompt",
 		descriptionArg: "task_description",
 		contentType: "markdown"
@@ -116045,7 +116074,7 @@ var ChatMessage = (0, import_react.memo)(function ChatMessage({ id, message, dis
 	const linkIcon = linking?.icon ?? "bi bi-link-45deg";
 	const messageUrl = getMessageUrl?.(message.id || "");
 	const [mouseOver, setMouseOver] = (0, import_react.useState)(false);
-	const isNonTaskTool = message.role === "tool" && message.function !== "Task" && message.function !== "task";
+	const isNonSubagentTool = message.role === "tool" && message.function !== "Task" && message.function !== "task" && message.function !== "Agent" && message.function !== "agent";
 	const collapse = message.role === "system" || message.role === "user" || message.role === "assistant" || message.role === "tool";
 	const hideRole = unlabeledRoles?.includes(message.role) ?? false;
 	if (hideRole) {
@@ -116080,7 +116109,7 @@ var ChatMessage = (0, import_react.memo)(function ChatMessage({ id, message, dis
 				id: `${id}-message`,
 				collapse,
 				lines: message.role === "tool" ? 30 : message.role === "assistant" ? 25 : collapse ? 15 : 25,
-				children: isNonTaskTool ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolOutput, { output: typeof message.content === "string" ? message.content : message.content.filter((c) => c.type === "text" || c.type === "image") }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageContents, {
+				children: isNonSubagentTool ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolOutput, { output: typeof message.content === "string" ? message.content : message.content.filter((c) => c.type === "text" || c.type === "image") }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageContents, {
 					message,
 					references
 				}, `${id}-contents`)
@@ -129243,7 +129272,7 @@ var sampleStatus_module_default = {
 //#region src/app/samples/status/sampleStatus.tsx
 var sampleStatus = (completed, error) => {
 	if (error) return errorType(error) === "CancelledError" ? "cancelled" : "error";
-	return completed ? "ok" : "running";
+	return completed === false ? "running" : "ok";
 };
 var isCancelled = (sample) => {
 	if ("error" in sample && sample.error) {
@@ -159815,6 +159844,25 @@ function buildSampleColumns(ctx) {
 		filter: true,
 		resizable: true,
 		valueFormatter: (params) => filename(params.value)
+	}, {
+		colId: "completed_at",
+		headerName: "Completed",
+		initialWidth: 140,
+		minWidth: 80,
+		maxWidth: 160,
+		sortable: true,
+		filter: true,
+		resizable: true,
+		cellDataType: "date",
+		valueGetter: (params) => params.data?.data?.completed_at ?? void 0,
+		filterValueGetter: (params) => {
+			const v = params.data?.data?.completed_at;
+			if (!v) return void 0;
+			const d = new Date(v);
+			return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+		},
+		valueFormatter: (params) => params.value ? formatDateTime(new Date(params.value)) : "",
+		comparator: comparators.date
 	});
 	cols.push({
 		colId: "sampleId",
@@ -159960,25 +160008,6 @@ function buildSampleColumns(ctx) {
 		cellRenderer: (params) => params.value === void 0 || params.value === null ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: formatTime(params.value) }),
 		tooltipValueGetter: (params) => params.value === void 0 || params.value === null ? void 0 : formatTime(params.value)
 	});
-	cols.push(...buildScoreColumns(ctx));
-	if (multiLog) cols.push({
-		colId: "created",
-		field: "created",
-		headerName: "Created",
-		initialWidth: 130,
-		minWidth: 80,
-		maxWidth: 140,
-		sortable: true,
-		filter: true,
-		resizable: true,
-		cellDataType: "date",
-		filterValueGetter: (params) => {
-			if (!params.data?.created) return void 0;
-			const d = new Date(params.data.created);
-			return new Date(d.getFullYear(), d.getMonth(), d.getDate());
-		},
-		valueFormatter: (params) => params.value ? formatDateTime(new Date(params.value)) : ""
-	});
 	cols.push({
 		colId: "error",
 		field: "error",
@@ -160023,6 +160052,25 @@ function buildSampleColumns(ctx) {
 		cellStyle: { textAlign: "center" },
 		comparator: comparators.number,
 		valueGetter: (params) => params.data?.retries ?? params.data?.data?.retries
+	});
+	cols.push(...buildScoreColumns(ctx));
+	if (multiLog) cols.push({
+		colId: "created",
+		field: "created",
+		headerName: "Eval Created",
+		initialWidth: 140,
+		minWidth: 80,
+		maxWidth: 160,
+		sortable: true,
+		filter: true,
+		resizable: true,
+		cellDataType: "date",
+		filterValueGetter: (params) => {
+			if (!params.data?.created) return void 0;
+			const d = new Date(params.data.created);
+			return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+		},
+		valueFormatter: (params) => params.value ? formatDateTime(new Date(params.value)) : ""
 	});
 	if (ctx.compactScores) cols.push({
 		colId: "compactSpacer",
@@ -162552,12 +162600,19 @@ var SamplesPanel = () => {
 		return v;
 	}, [allColumns, columnVisibility]);
 	const initialState = (0, import_react.useMemo)(() => {
-		if (previousSamplesPath !== void 0 && previousSamplesPath !== samplesPath) {
+		const base = previousSamplesPath !== void 0 && previousSamplesPath !== samplesPath ? (() => {
 			const result = { ...gridState };
 			delete result?.filter;
 			return result;
-		}
-		return gridState;
+		})() : gridState;
+		if (!base?.sort?.sortModel?.length) return {
+			...base,
+			sort: { sortModel: [{
+				colId: "completed_at",
+				sort: "desc"
+			}] }
+		};
+		return base;
 	}, [
 		previousSamplesPath,
 		samplesPath,
@@ -162600,7 +162655,7 @@ var SamplesPanel = () => {
 					error: sample.error,
 					limit: sample.limit,
 					retries: sample.retries,
-					completed: sample.completed ?? false,
+					completed: sample.completed,
 					tokens,
 					duration: sample.total_time ?? void 0
 				};
