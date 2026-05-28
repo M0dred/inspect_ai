@@ -1,41 +1,6 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./lib-CBtriEt5.js","./chunk-DfAF0w94.js","./wgxpath.install-node-Csk64Aj9.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./AsciinemaPlayerImpl.js","./jsx-runtime.js","./AsciinemaPlayerImpl.css","./lib-CBtriEt5.js","./chunk-DfAF0w94.js","./wgxpath.install-node-Csk64Aj9.js"])))=>i.map(i=>d[i]);
+import { a as __require, i as __exportAll, n as require_react, o as __toESM, r as __commonJSMin, t as require_jsx_runtime } from "./jsx-runtime.js";
 import { t as l$3 } from "./chunk-DfAF0w94.js";
-//#region \0rolldown/runtime.js
-var __create = Object.create;
-var __defProp$1 = Object.defineProperty;
-var __getOwnPropDesc$1 = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames$1 = Object.getOwnPropertyNames;
-var __getProtoOf = Object.getPrototypeOf;
-var __hasOwnProp$1 = Object.prototype.hasOwnProperty;
-var __commonJSMin = (cb, mod) => () => (mod || (cb((mod = { exports: {} }).exports, mod), cb = null), mod.exports);
-var __exportAll = (all, no_symbols) => {
-	let target = {};
-	for (var name in all) __defProp$1(target, name, {
-		get: all[name],
-		enumerable: true
-	});
-	if (!no_symbols) __defProp$1(target, Symbol.toStringTag, { value: "Module" });
-	return target;
-};
-var __copyProps$1 = (to, from, except, desc) => {
-	if (from && typeof from === "object" || typeof from === "function") for (var keys = __getOwnPropNames$1(from), i = 0, n = keys.length, key; i < n; i++) {
-		key = keys[i];
-		if (!__hasOwnProp$1.call(to, key) && key !== except) __defProp$1(to, key, {
-			get: ((k) => from[k]).bind(null, key),
-			enumerable: !(desc = __getOwnPropDesc$1(from, key)) || desc.enumerable
-		});
-	}
-	return to;
-};
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps$1(isNodeMode || !mod || !mod.__esModule ? __defProp$1(target, "default", {
-	value: mod,
-	enumerable: true
-}) : target, mod));
-var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, { get: (a, b) => (typeof require !== "undefined" ? require : a)[b] }) : x)(function(x) {
-	if (typeof require !== "undefined") return require.apply(this, arguments);
-	throw Error("Calling `require` for \"" + x + "\" in an environment that doesn't expose the `require` function. See https://rolldown.rs/in-depth/bundling-cjs#require-external-modules for more details.");
-});
-//#endregion
 //#region \0vite/modulepreload-polyfill.js
 (function polyfill() {
 	const relList = document.createElement("link").relList;
@@ -311,371 +276,6 @@ var require_scheduler_production = /* @__PURE__ */ __commonJSMin(((exports) => {
 //#region ../../node_modules/.pnpm/scheduler@0.27.0/node_modules/scheduler/index.js
 var require_scheduler = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = require_scheduler_production();
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/react@19.2.6/node_modules/react/cjs/react.production.js
-/**
-* @license React
-* react.production.js
-*
-* Copyright (c) Meta Platforms, Inc. and affiliates.
-*
-* This source code is licensed under the MIT license found in the
-* LICENSE file in the root directory of this source tree.
-*/
-var require_react_production = /* @__PURE__ */ __commonJSMin(((exports) => {
-	var REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"), REACT_MEMO_TYPE = Symbol.for("react.memo"), REACT_LAZY_TYPE = Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = Symbol.for("react.activity"), MAYBE_ITERATOR_SYMBOL = Symbol.iterator;
-	function getIteratorFn(maybeIterable) {
-		if (null === maybeIterable || "object" !== typeof maybeIterable) return null;
-		maybeIterable = MAYBE_ITERATOR_SYMBOL && maybeIterable[MAYBE_ITERATOR_SYMBOL] || maybeIterable["@@iterator"];
-		return "function" === typeof maybeIterable ? maybeIterable : null;
-	}
-	var ReactNoopUpdateQueue = {
-		isMounted: function() {
-			return !1;
-		},
-		enqueueForceUpdate: function() {},
-		enqueueReplaceState: function() {},
-		enqueueSetState: function() {}
-	}, assign = Object.assign, emptyObject = {};
-	function Component(props, context, updater) {
-		this.props = props;
-		this.context = context;
-		this.refs = emptyObject;
-		this.updater = updater || ReactNoopUpdateQueue;
-	}
-	Component.prototype.isReactComponent = {};
-	Component.prototype.setState = function(partialState, callback) {
-		if ("object" !== typeof partialState && "function" !== typeof partialState && null != partialState) throw Error("takes an object of state variables to update or a function which returns an object of state variables.");
-		this.updater.enqueueSetState(this, partialState, callback, "setState");
-	};
-	Component.prototype.forceUpdate = function(callback) {
-		this.updater.enqueueForceUpdate(this, callback, "forceUpdate");
-	};
-	function ComponentDummy() {}
-	ComponentDummy.prototype = Component.prototype;
-	function PureComponent(props, context, updater) {
-		this.props = props;
-		this.context = context;
-		this.refs = emptyObject;
-		this.updater = updater || ReactNoopUpdateQueue;
-	}
-	var pureComponentPrototype = PureComponent.prototype = new ComponentDummy();
-	pureComponentPrototype.constructor = PureComponent;
-	assign(pureComponentPrototype, Component.prototype);
-	pureComponentPrototype.isPureReactComponent = !0;
-	var isArrayImpl = Array.isArray;
-	function noop() {}
-	var ReactSharedInternals = {
-		H: null,
-		A: null,
-		T: null,
-		S: null
-	}, hasOwnProperty = Object.prototype.hasOwnProperty;
-	function ReactElement(type, key, props) {
-		var refProp = props.ref;
-		return {
-			$$typeof: REACT_ELEMENT_TYPE,
-			type,
-			key,
-			ref: void 0 !== refProp ? refProp : null,
-			props
-		};
-	}
-	function cloneAndReplaceKey(oldElement, newKey) {
-		return ReactElement(oldElement.type, newKey, oldElement.props);
-	}
-	function isValidElement(object) {
-		return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
-	}
-	function escape(key) {
-		var escaperLookup = {
-			"=": "=0",
-			":": "=2"
-		};
-		return "$" + key.replace(/[=:]/g, function(match) {
-			return escaperLookup[match];
-		});
-	}
-	var userProvidedKeyEscapeRegex = /\/+/g;
-	function getElementKey(element, index) {
-		return "object" === typeof element && null !== element && null != element.key ? escape("" + element.key) : index.toString(36);
-	}
-	function resolveThenable(thenable) {
-		switch (thenable.status) {
-			case "fulfilled": return thenable.value;
-			case "rejected": throw thenable.reason;
-			default: switch ("string" === typeof thenable.status ? thenable.then(noop, noop) : (thenable.status = "pending", thenable.then(function(fulfilledValue) {
-				"pending" === thenable.status && (thenable.status = "fulfilled", thenable.value = fulfilledValue);
-			}, function(error) {
-				"pending" === thenable.status && (thenable.status = "rejected", thenable.reason = error);
-			})), thenable.status) {
-				case "fulfilled": return thenable.value;
-				case "rejected": throw thenable.reason;
-			}
-		}
-		throw thenable;
-	}
-	function mapIntoArray(children, array, escapedPrefix, nameSoFar, callback) {
-		var type = typeof children;
-		if ("undefined" === type || "boolean" === type) children = null;
-		var invokeCallback = !1;
-		if (null === children) invokeCallback = !0;
-		else switch (type) {
-			case "bigint":
-			case "string":
-			case "number":
-				invokeCallback = !0;
-				break;
-			case "object": switch (children.$$typeof) {
-				case REACT_ELEMENT_TYPE:
-				case REACT_PORTAL_TYPE:
-					invokeCallback = !0;
-					break;
-				case REACT_LAZY_TYPE: return invokeCallback = children._init, mapIntoArray(invokeCallback(children._payload), array, escapedPrefix, nameSoFar, callback);
-			}
-		}
-		if (invokeCallback) return callback = callback(children), invokeCallback = "" === nameSoFar ? "." + getElementKey(children, 0) : nameSoFar, isArrayImpl(callback) ? (escapedPrefix = "", null != invokeCallback && (escapedPrefix = invokeCallback.replace(userProvidedKeyEscapeRegex, "$&/") + "/"), mapIntoArray(callback, array, escapedPrefix, "", function(c) {
-			return c;
-		})) : null != callback && (isValidElement(callback) && (callback = cloneAndReplaceKey(callback, escapedPrefix + (null == callback.key || children && children.key === callback.key ? "" : ("" + callback.key).replace(userProvidedKeyEscapeRegex, "$&/") + "/") + invokeCallback)), array.push(callback)), 1;
-		invokeCallback = 0;
-		var nextNamePrefix = "" === nameSoFar ? "." : nameSoFar + ":";
-		if (isArrayImpl(children)) for (var i = 0; i < children.length; i++) nameSoFar = children[i], type = nextNamePrefix + getElementKey(nameSoFar, i), invokeCallback += mapIntoArray(nameSoFar, array, escapedPrefix, type, callback);
-		else if (i = getIteratorFn(children), "function" === typeof i) for (children = i.call(children), i = 0; !(nameSoFar = children.next()).done;) nameSoFar = nameSoFar.value, type = nextNamePrefix + getElementKey(nameSoFar, i++), invokeCallback += mapIntoArray(nameSoFar, array, escapedPrefix, type, callback);
-		else if ("object" === type) {
-			if ("function" === typeof children.then) return mapIntoArray(resolveThenable(children), array, escapedPrefix, nameSoFar, callback);
-			array = String(children);
-			throw Error("Objects are not valid as a React child (found: " + ("[object Object]" === array ? "object with keys {" + Object.keys(children).join(", ") + "}" : array) + "). If you meant to render a collection of children, use an array instead.");
-		}
-		return invokeCallback;
-	}
-	function mapChildren(children, func, context) {
-		if (null == children) return children;
-		var result = [], count = 0;
-		mapIntoArray(children, result, "", "", function(child) {
-			return func.call(context, child, count++);
-		});
-		return result;
-	}
-	function lazyInitializer(payload) {
-		if (-1 === payload._status) {
-			var ctor = payload._result;
-			ctor = ctor();
-			ctor.then(function(moduleObject) {
-				if (0 === payload._status || -1 === payload._status) payload._status = 1, payload._result = moduleObject;
-			}, function(error) {
-				if (0 === payload._status || -1 === payload._status) payload._status = 2, payload._result = error;
-			});
-			-1 === payload._status && (payload._status = 0, payload._result = ctor);
-		}
-		if (1 === payload._status) return payload._result.default;
-		throw payload._result;
-	}
-	var reportGlobalError = "function" === typeof reportError ? reportError : function(error) {
-		if ("object" === typeof window && "function" === typeof window.ErrorEvent) {
-			var event = new window.ErrorEvent("error", {
-				bubbles: !0,
-				cancelable: !0,
-				message: "object" === typeof error && null !== error && "string" === typeof error.message ? String(error.message) : String(error),
-				error
-			});
-			if (!window.dispatchEvent(event)) return;
-		} else if ("object" === typeof process && "function" === typeof process.emit) {
-			process.emit("uncaughtException", error);
-			return;
-		}
-		console.error(error);
-	}, Children = {
-		map: mapChildren,
-		forEach: function(children, forEachFunc, forEachContext) {
-			mapChildren(children, function() {
-				forEachFunc.apply(this, arguments);
-			}, forEachContext);
-		},
-		count: function(children) {
-			var n = 0;
-			mapChildren(children, function() {
-				n++;
-			});
-			return n;
-		},
-		toArray: function(children) {
-			return mapChildren(children, function(child) {
-				return child;
-			}) || [];
-		},
-		only: function(children) {
-			if (!isValidElement(children)) throw Error("React.Children.only expected to receive a single React element child.");
-			return children;
-		}
-	};
-	exports.Activity = REACT_ACTIVITY_TYPE;
-	exports.Children = Children;
-	exports.Component = Component;
-	exports.Fragment = REACT_FRAGMENT_TYPE;
-	exports.Profiler = REACT_PROFILER_TYPE;
-	exports.PureComponent = PureComponent;
-	exports.StrictMode = REACT_STRICT_MODE_TYPE;
-	exports.Suspense = REACT_SUSPENSE_TYPE;
-	exports.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE = ReactSharedInternals;
-	exports.__COMPILER_RUNTIME = {
-		__proto__: null,
-		c: function(size) {
-			return ReactSharedInternals.H.useMemoCache(size);
-		}
-	};
-	exports.cache = function(fn) {
-		return function() {
-			return fn.apply(null, arguments);
-		};
-	};
-	exports.cacheSignal = function() {
-		return null;
-	};
-	exports.cloneElement = function(element, config, children) {
-		if (null === element || void 0 === element) throw Error("The argument must be a React element, but you passed " + element + ".");
-		var props = assign({}, element.props), key = element.key;
-		if (null != config) for (propName in void 0 !== config.key && (key = "" + config.key), config) !hasOwnProperty.call(config, propName) || "key" === propName || "__self" === propName || "__source" === propName || "ref" === propName && void 0 === config.ref || (props[propName] = config[propName]);
-		var propName = arguments.length - 2;
-		if (1 === propName) props.children = children;
-		else if (1 < propName) {
-			for (var childArray = Array(propName), i = 0; i < propName; i++) childArray[i] = arguments[i + 2];
-			props.children = childArray;
-		}
-		return ReactElement(element.type, key, props);
-	};
-	exports.createContext = function(defaultValue) {
-		defaultValue = {
-			$$typeof: REACT_CONTEXT_TYPE,
-			_currentValue: defaultValue,
-			_currentValue2: defaultValue,
-			_threadCount: 0,
-			Provider: null,
-			Consumer: null
-		};
-		defaultValue.Provider = defaultValue;
-		defaultValue.Consumer = {
-			$$typeof: REACT_CONSUMER_TYPE,
-			_context: defaultValue
-		};
-		return defaultValue;
-	};
-	exports.createElement = function(type, config, children) {
-		var propName, props = {}, key = null;
-		if (null != config) for (propName in void 0 !== config.key && (key = "" + config.key), config) hasOwnProperty.call(config, propName) && "key" !== propName && "__self" !== propName && "__source" !== propName && (props[propName] = config[propName]);
-		var childrenLength = arguments.length - 2;
-		if (1 === childrenLength) props.children = children;
-		else if (1 < childrenLength) {
-			for (var childArray = Array(childrenLength), i = 0; i < childrenLength; i++) childArray[i] = arguments[i + 2];
-			props.children = childArray;
-		}
-		if (type && type.defaultProps) for (propName in childrenLength = type.defaultProps, childrenLength) void 0 === props[propName] && (props[propName] = childrenLength[propName]);
-		return ReactElement(type, key, props);
-	};
-	exports.createRef = function() {
-		return { current: null };
-	};
-	exports.forwardRef = function(render) {
-		return {
-			$$typeof: REACT_FORWARD_REF_TYPE,
-			render
-		};
-	};
-	exports.isValidElement = isValidElement;
-	exports.lazy = function(ctor) {
-		return {
-			$$typeof: REACT_LAZY_TYPE,
-			_payload: {
-				_status: -1,
-				_result: ctor
-			},
-			_init: lazyInitializer
-		};
-	};
-	exports.memo = function(type, compare) {
-		return {
-			$$typeof: REACT_MEMO_TYPE,
-			type,
-			compare: void 0 === compare ? null : compare
-		};
-	};
-	exports.startTransition = function(scope) {
-		var prevTransition = ReactSharedInternals.T, currentTransition = {};
-		ReactSharedInternals.T = currentTransition;
-		try {
-			var returnValue = scope(), onStartTransitionFinish = ReactSharedInternals.S;
-			null !== onStartTransitionFinish && onStartTransitionFinish(currentTransition, returnValue);
-			"object" === typeof returnValue && null !== returnValue && "function" === typeof returnValue.then && returnValue.then(noop, reportGlobalError);
-		} catch (error) {
-			reportGlobalError(error);
-		} finally {
-			null !== prevTransition && null !== currentTransition.types && (prevTransition.types = currentTransition.types), ReactSharedInternals.T = prevTransition;
-		}
-	};
-	exports.unstable_useCacheRefresh = function() {
-		return ReactSharedInternals.H.useCacheRefresh();
-	};
-	exports.use = function(usable) {
-		return ReactSharedInternals.H.use(usable);
-	};
-	exports.useActionState = function(action, initialState, permalink) {
-		return ReactSharedInternals.H.useActionState(action, initialState, permalink);
-	};
-	exports.useCallback = function(callback, deps) {
-		return ReactSharedInternals.H.useCallback(callback, deps);
-	};
-	exports.useContext = function(Context) {
-		return ReactSharedInternals.H.useContext(Context);
-	};
-	exports.useDebugValue = function() {};
-	exports.useDeferredValue = function(value, initialValue) {
-		return ReactSharedInternals.H.useDeferredValue(value, initialValue);
-	};
-	exports.useEffect = function(create, deps) {
-		return ReactSharedInternals.H.useEffect(create, deps);
-	};
-	exports.useEffectEvent = function(callback) {
-		return ReactSharedInternals.H.useEffectEvent(callback);
-	};
-	exports.useId = function() {
-		return ReactSharedInternals.H.useId();
-	};
-	exports.useImperativeHandle = function(ref, create, deps) {
-		return ReactSharedInternals.H.useImperativeHandle(ref, create, deps);
-	};
-	exports.useInsertionEffect = function(create, deps) {
-		return ReactSharedInternals.H.useInsertionEffect(create, deps);
-	};
-	exports.useLayoutEffect = function(create, deps) {
-		return ReactSharedInternals.H.useLayoutEffect(create, deps);
-	};
-	exports.useMemo = function(create, deps) {
-		return ReactSharedInternals.H.useMemo(create, deps);
-	};
-	exports.useOptimistic = function(passthrough, reducer) {
-		return ReactSharedInternals.H.useOptimistic(passthrough, reducer);
-	};
-	exports.useReducer = function(reducer, initialArg, init) {
-		return ReactSharedInternals.H.useReducer(reducer, initialArg, init);
-	};
-	exports.useRef = function(initialValue) {
-		return ReactSharedInternals.H.useRef(initialValue);
-	};
-	exports.useState = function(initialState) {
-		return ReactSharedInternals.H.useState(initialState);
-	};
-	exports.useSyncExternalStore = function(subscribe, getSnapshot, getServerSnapshot) {
-		return ReactSharedInternals.H.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
-	};
-	exports.useTransition = function() {
-		return ReactSharedInternals.H.useTransition();
-	};
-	exports.version = "19.2.6";
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/react@19.2.6/node_modules/react/index.js
-var require_react = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = require_react_production();
 }));
 //#endregion
 //#region ../../node_modules/.pnpm/react-dom@19.2.6_react@19.2.6/node_modules/react-dom/cjs/react-dom.production.js
@@ -9983,6 +9583,24 @@ var printArray = (arr, size = 50) => {
 	return envelope[0] + allItems.join(separator) + envelope[1];
 };
 //#endregion
+//#region ../../node_modules/.pnpm/@uwdata+flechette@2.3.0/node_modules/@uwdata/flechette/src/util/arrays.js
+/**
+* @import { Int64ArrayConstructor, IntArrayConstructor, IntegerArray, TypedArray } from '../types.js'
+*/
+var uint8Array = Uint8Array;
+var uint32Array = Uint32Array;
+BigUint64Array;
+var int32Array = Int32Array;
+var int64Array = BigInt64Array;
+var buf = new Float64Array(2).buffer;
+new int64Array(buf);
+new uint32Array(buf);
+new int32Array(buf);
+new uint8Array(buf);
+new TextDecoder("utf-8");
+new TextEncoder();
+new Uint16Array(new Uint8Array([1, 0]).buffer)[0];
+//#endregion
 //#region ../../node_modules/.pnpm/arquero@8.0.3/node_modules/arquero/src/op/functions/bin.js
 /**
 * Truncate a value to a bin boundary.
@@ -10691,7 +10309,7 @@ function to_json(value) {
 //#endregion
 //#region ../../node_modules/.pnpm/arquero@8.0.3/node_modules/arquero/src/util/random.js
 var source = Math.random;
-function random$2() {
+function random$1() {
 	return source();
 }
 //#endregion
@@ -10725,7 +10343,7 @@ var math_exports = /* @__PURE__ */ __exportAll({
 	log2: () => log2,
 	pow: () => pow,
 	radians: () => radians,
-	random: () => random$1,
+	random: () => random,
 	round: () => round$1,
 	sign: () => sign,
 	sin: () => sin,
@@ -10741,8 +10359,8 @@ var math_exports = /* @__PURE__ */ __exportAll({
 * to instead use a seeded random number generator.
 * @return {number} A pseudorandom number between 0 and 1.
 */
-function random$1() {
-	return random$2();
+function random() {
+	return random$1();
 }
 /**
 * Tests if the input *value* is not a number (`NaN`); equivalent
@@ -11441,7 +11059,7 @@ function isBigInt(value) {
 }
 //#endregion
 //#region ../../node_modules/.pnpm/arquero@8.0.3/node_modules/arquero/src/util/to-string.js
-function toString$2(v) {
+function toString$1(v) {
 	return v === void 0 ? v + "" : isBigInt(v) ? v + "n" : JSON.stringify(v);
 }
 (
@@ -11454,7 +11072,7 @@ function toString$2(v) {
 { ...functions });
 //#endregion
 //#region ../../node_modules/.pnpm/arquero@8.0.3/node_modules/arquero/src/util/error.js
-function error$7(message, cause) {
+function error$8(message, cause) {
 	throw Error(message, { cause });
 }
 //#endregion
@@ -11499,16 +11117,16 @@ function bins(min, max, maxbins = 15, nice = true, minstep = 0, step) {
 }
 //#endregion
 //#region ../../node_modules/.pnpm/arquero@8.0.3/node_modules/arquero/src/util/key-function.js
-function key$3(value) {
+function key$4(value) {
 	const type = typeof value;
-	return type === "string" ? `"${value}"` : type !== "object" || !value ? value : isDate(value) ? +value : isArray$2(value) || isTypedArray(value) ? `[${value.map(key$3)}]` : isRegExp$1(value) ? value + "" : objectKey(value);
+	return type === "string" ? `"${value}"` : type !== "object" || !value ? value : isDate(value) ? +value : isArray$2(value) || isTypedArray(value) ? `[${value.map(key$4)}]` : isRegExp$1(value) ? value + "" : objectKey(value);
 }
 function objectKey(value) {
 	let s = "{";
 	let i = -1;
 	for (const k in value) {
 		if (++i > 0) s += ",";
-		s += `"${k}":${key$3(value[k])}`;
+		s += `"${k}":${key$4(value[k])}`;
 	}
 	s += "}";
 	return s;
@@ -11525,7 +11143,7 @@ function distinctMap() {
 			return Array.from(map.values(), (_) => _.v);
 		},
 		increment(v) {
-			const k = key$3(v);
+			const k = key$4(v);
 			const e = map.get(k);
 			e ? ++e.n : map.set(k, {
 				v,
@@ -11533,7 +11151,7 @@ function distinctMap() {
 			});
 		},
 		decrement(v) {
-			const k = key$3(v);
+			const k = key$4(v);
 			const e = map.get(k);
 			e.n === 1 ? map.delete(k) : --e.n;
 		},
@@ -11544,7 +11162,7 @@ function distinctMap() {
 }
 //#endregion
 //#region ../../node_modules/.pnpm/arquero@8.0.3/node_modules/arquero/src/util/no-op.js
-function noop$1() {}
+function noop() {}
 //#endregion
 //#region ../../node_modules/.pnpm/arquero@8.0.3/node_modules/arquero/src/util/product.js
 function product(values, start = 0, stop = values.length) {
@@ -11558,9 +11176,9 @@ function product(values, start = 0, stop = values.length) {
 * Initialize an aggregate operator.
 */
 function initOp(op) {
-	op.init = op.init || noop$1;
-	op.add = op.add || noop$1;
-	op.rem = op.rem || noop$1;
+	op.init = op.init || noop;
+	op.add = op.add || noop;
+	op.rem = op.rem || noop;
 	return op;
 }
 function initProduct(s, value) {
@@ -11960,7 +11578,7 @@ var windowFunctions = {
 	row_number: {
 		create() {
 			return {
-				init: noop$1,
+				init: noop,
 				value: (w) => w.index + 1
 			};
 		},
@@ -12017,7 +11635,7 @@ var windowFunctions = {
 	ntile: {
 		create(num) {
 			num = +num;
-			if (!(num > 0)) error$7("ntile num must be greater than zero.");
+			if (!(num > 0)) error$8("ntile num must be greater than zero.");
 			const { init, value } = cume_dist.create();
 			return {
 				init,
@@ -12031,7 +11649,7 @@ var windowFunctions = {
 		create(offset, defaultValue = void 0) {
 			offset = +offset || 1;
 			return {
-				init: noop$1,
+				init: noop,
 				value: (w, f) => {
 					const i = w.index - offset;
 					return i >= 0 ? w.value(i, f) : defaultValue;
@@ -12045,7 +11663,7 @@ var windowFunctions = {
 		create(offset, defaultValue = void 0) {
 			offset = +offset || 1;
 			return {
-				init: noop$1,
+				init: noop,
 				value: (w, f) => {
 					const i = w.index + offset;
 					return i < w.size ? w.value(i, f) : defaultValue;
@@ -12058,7 +11676,7 @@ var windowFunctions = {
 	first_value: {
 		create() {
 			return {
-				init: noop$1,
+				init: noop,
 				value: (w, f) => w.value(w.i0, f)
 			};
 		},
@@ -12068,7 +11686,7 @@ var windowFunctions = {
 	last_value: {
 		create() {
 			return {
-				init: noop$1,
+				init: noop,
 				value: (w, f) => w.value(w.i1 - 1, f)
 			};
 		},
@@ -12078,9 +11696,9 @@ var windowFunctions = {
 	nth_value: {
 		create(nth) {
 			nth = +nth;
-			if (!(nth > 0)) error$7("nth_value nth must be greater than zero.");
+			if (!(nth > 0)) error$8("nth_value nth must be greater than zero.");
 			return {
-				init: noop$1,
+				init: noop,
 				value: (w, f) => {
 					const i = w.i0 + (nth - 1);
 					return i < w.i1 ? w.value(i, f) : void 0;
@@ -12339,7 +11957,7 @@ function rowObjectExpression(node, table, props = table.columnNames()) {
 			type: Property,
 			key: {
 				type: Literal,
-				raw: toString$2(key)
+				raw: toString$1(key)
 			},
 			value: rewrite({ computed: true }, name, 0, table.column(name))
 		});
@@ -13493,12 +13111,12 @@ var nonASCIIwhitespace = /[\u1680\u2000-\u200a\u202f\u205f\u3000\ufeff]/;
 var skipWhiteSpace = /(?:\s|\/\/.*|\/\*[^]*?\*\/)*/g;
 var ref = Object.prototype;
 var hasOwnProperty$1 = ref.hasOwnProperty;
-var toString$1 = ref.toString;
+var toString = ref.toString;
 var hasOwn = Object.hasOwn || (function(obj, propName) {
 	return hasOwnProperty$1.call(obj, propName);
 });
 var isArray$1 = Array.isArray || (function(obj) {
-	return toString$1.call(obj) === "[object Array]";
+	return toString.call(obj) === "[object Array]";
 });
 var regexpCache = Object.create(null);
 function wordsRegexp(words) {
@@ -15377,7 +14995,7 @@ pp$5.parseParenItem = function(item) {
 pp$5.parseParenArrowList = function(startPos, startLoc, exprList, forInit) {
 	return this.parseArrowExpression(this.startNodeAt(startPos, startLoc), exprList, false, forInit);
 };
-var empty$2 = [];
+var empty$5 = [];
 pp$5.parseNew = function() {
 	if (this.containsEsc) this.raiseRecoverable(this.start, "Escape sequence in keyword new");
 	var node = this.startNode();
@@ -15397,7 +15015,7 @@ pp$5.parseNew = function() {
 	var startPos = this.start, startLoc = this.startLoc;
 	node.callee = this.parseSubscripts(this.parseExprAtom(null, false, true), startPos, startLoc, true, false);
 	if (this.eat(types$1.parenL)) node.arguments = this.parseExprList(types$1.parenR, this.options.ecmaVersion >= 8, false);
-	else node.arguments = empty$2;
+	else node.arguments = empty$5;
 	return this.finishNode(node, "NewExpression");
 };
 pp$5.parseTemplateElement = function(ref) {
@@ -17580,24 +17198,6 @@ function handleDeclaration(node, ctx) {
 	else ctx.error(node.id, ERROR_DECLARATION);
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@uwdata+flechette@2.3.0/node_modules/@uwdata/flechette/src/util/arrays.js
-/**
-* @import { Int64ArrayConstructor, IntArrayConstructor, IntegerArray, TypedArray } from '../types.js'
-*/
-var uint8Array = Uint8Array;
-var uint32Array = Uint32Array;
-BigUint64Array;
-var int32Array = Int32Array;
-var int64Array = BigInt64Array;
-var buf = new Float64Array(2).buffer;
-new int64Array(buf);
-new uint32Array(buf);
-new int32Array(buf);
-new uint8Array(buf);
-new TextDecoder("utf-8");
-new TextEncoder();
-new Uint16Array(new Uint8Array([1, 0]).buffer)[0];
-//#endregion
 //#region ../../node_modules/.pnpm/arquero@8.0.3/node_modules/arquero/src/op/register.js
 /**
 * Aggregate function definition.
@@ -18051,7 +17651,7 @@ var formatDataset = (samples, epochs, name) => {
 /**
 * Formats a duration given in seconds into a human-readable string.
 */
-var formatTime$2 = (seconds) => {
+var formatTime$1 = (seconds) => {
 	if (seconds < 60) return `${Math.round(seconds)} sec`;
 	else if (seconds < 3600) {
 		const min = Math.floor(seconds / 60);
@@ -18137,7 +17737,7 @@ function formatDateTime$1(date) {
 * Returns the formatted duration between two dates.
 */
 function formatDuration$1(start, end) {
-	return formatTime$2((end.getTime() - start.getTime()) / 1e3);
+	return formatTime$1((end.getTime() - start.getTime()) / 1e3);
 }
 /**
 * Compact duration format: "45s", "4m", "2h 5m".
@@ -18406,8 +18006,8 @@ var import_dist = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((expor
 			var IS_PROTO = type & $export.P;
 			var IS_BIND = type & $export.B;
 			var target = IS_GLOBAL ? _global : IS_STATIC ? _global[name] || (_global[name] = {}) : (_global[name] || {})[PROTOTYPE];
-			var exports$5 = IS_GLOBAL ? _core : _core[name] || (_core[name] = {});
-			var expProto = exports$5[PROTOTYPE] || (exports$5[PROTOTYPE] = {});
+			var exports$4 = IS_GLOBAL ? _core : _core[name] || (_core[name] = {});
+			var expProto = exports$4[PROTOTYPE] || (exports$4[PROTOTYPE] = {});
 			var key, own, out, exp;
 			if (IS_GLOBAL) source = name;
 			for (key in source) {
@@ -18415,7 +18015,7 @@ var import_dist = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((expor
 				out = (own ? target : source)[key];
 				exp = IS_BIND && own ? _ctx(out, _global) : IS_PROTO && typeof out == "function" ? _ctx(Function.call, out) : out;
 				if (target) _redefine(target, key, out, type & $export.U);
-				if (exports$5[key] != out) _hide(exports$5, key, exp);
+				if (exports$4[key] != out) _hide(exports$4, key, exp);
 				if (IS_PROTO && expProto[key] != out) expProto[key] = out;
 			}
 		};
@@ -19750,7 +19350,7 @@ var AsyncQueue = class {
 * at most once per every `wait` milliseconds. The throttled function will run as much
 * as it can, without ever going more than once per `wait` duration.
 */
-function throttle$1(func, wait, options = {}) {
+function throttle(func, wait, options = {}) {
 	let args;
 	let result;
 	let timeout = null;
@@ -19783,7 +19383,7 @@ function throttle$1(func, wait, options = {}) {
 * Creates a debounced version of a function that delays invoking the function
 * until after `wait` milliseconds have passed since the last time it was invoked.
 */
-function debounce$2(func, wait, options = {}) {
+function debounce$1(func, wait, options = {}) {
 	let timeout = null;
 	let args;
 	let result;
@@ -22180,14 +21780,14 @@ var require_clipboard = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 					}
 					module$2.exports = delegate;
 				}),
-				879: (function(__unused_webpack_module, exports$3) {
+				879: (function(__unused_webpack_module, exports$2) {
 					/**
 					* Check if argument is a HTML element.
 					*
 					* @param {Object} value
 					* @return {Boolean}
 					*/
-					exports$3.node = function(value) {
+					exports$2.node = function(value) {
 						return value !== void 0 && value instanceof HTMLElement && value.nodeType === 1;
 					};
 					/**
@@ -22196,9 +21796,9 @@ var require_clipboard = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 					* @param {Object} value
 					* @return {Boolean}
 					*/
-					exports$3.nodeList = function(value) {
+					exports$2.nodeList = function(value) {
 						var type = Object.prototype.toString.call(value);
-						return value !== void 0 && (type === "[object NodeList]" || type === "[object HTMLCollection]") && "length" in value && (value.length === 0 || exports$3.node(value[0]));
+						return value !== void 0 && (type === "[object NodeList]" || type === "[object HTMLCollection]") && "length" in value && (value.length === 0 || exports$2.node(value[0]));
 					};
 					/**
 					* Check if argument is a string.
@@ -22206,7 +21806,7 @@ var require_clipboard = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 					* @param {Object} value
 					* @return {Boolean}
 					*/
-					exports$3.string = function(value) {
+					exports$2.string = function(value) {
 						return typeof value === "string" || value instanceof String;
 					};
 					/**
@@ -22215,7 +21815,7 @@ var require_clipboard = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 					* @param {Object} value
 					* @return {Boolean}
 					*/
-					exports$3.fn = function(value) {
+					exports$2.fn = function(value) {
 						return Object.prototype.toString.call(value) === "[object Function]";
 					};
 				}),
@@ -22376,8 +21976,8 @@ var require_clipboard = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				};
 			})();
 			(function() {
-				__webpack_require__.d = function(exports$4, definition) {
-					for (var key in definition) if (__webpack_require__.o(definition, key) && !__webpack_require__.o(exports$4, key)) Object.defineProperty(exports$4, key, {
+				__webpack_require__.d = function(exports$3, definition) {
+					for (var key in definition) if (__webpack_require__.o(definition, key) && !__webpack_require__.o(exports$3, key)) Object.defineProperty(exports$3, key, {
 						enumerable: true,
 						get: definition[key]
 					});
@@ -27460,44 +27060,8 @@ function clsx() {
 	return n;
 }
 //#endregion
-//#region ../../node_modules/.pnpm/react@19.2.6/node_modules/react/cjs/react-jsx-runtime.production.js
-/**
-* @license React
-* react-jsx-runtime.production.js
-*
-* Copyright (c) Meta Platforms, Inc. and affiliates.
-*
-* This source code is licensed under the MIT license found in the
-* LICENSE file in the root directory of this source tree.
-*/
-var require_react_jsx_runtime_production = /* @__PURE__ */ __commonJSMin(((exports) => {
-	var REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
-	function jsxProd(type, config, maybeKey) {
-		var key = null;
-		void 0 !== maybeKey && (key = "" + maybeKey);
-		void 0 !== config.key && (key = "" + config.key);
-		if ("key" in config) {
-			maybeKey = {};
-			for (var propName in config) "key" !== propName && (maybeKey[propName] = config[propName]);
-		} else maybeKey = config;
-		config = maybeKey.ref;
-		return {
-			$$typeof: REACT_ELEMENT_TYPE,
-			type,
-			key,
-			ref: void 0 !== config ? config : null,
-			props: maybeKey
-		};
-	}
-	exports.Fragment = REACT_FRAGMENT_TYPE;
-	exports.jsx = jsxProd;
-	exports.jsxs = jsxProd;
-}));
-//#endregion
 //#region ../../packages/react/src/components/ComponentIconContext.tsx
-var import_jsx_runtime = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = require_react_jsx_runtime_production();
-})))();
+var import_jsx_runtime = require_jsx_runtime();
 var ComponentIconContext = (0, import_react.createContext)(null);
 var ComponentIconProvider = ({ icons, children }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComponentIconContext.Provider, {
 	value: icons,
@@ -27516,10 +27080,10 @@ var import_ansi_output = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
 			var v = factory(__require, exports);
 			if (v !== void 0) module.exports = v;
 		} else if (typeof define === "function" && define.amd) define(["require", "exports"], factory);
-	})(function(require, exports$2) {
+	})(function(require, exports$1) {
 		"use strict";
-		Object.defineProperty(exports$2, "__esModule", { value: true });
-		exports$2.ANSIOutput = exports$2.ANSIColor = exports$2.ANSIFont = exports$2.ANSIStyle = void 0;
+		Object.defineProperty(exports$1, "__esModule", { value: true });
+		exports$1.ANSIOutput = exports$1.ANSIColor = exports$1.ANSIFont = exports$1.ANSIStyle = void 0;
 		/**
 		* The counter used to generate identifiers.
 		*/
@@ -27551,7 +27115,7 @@ var import_ansi_output = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
 			ANSIStyle["Overlined"] = "ansiOverlined";
 			ANSIStyle["Superscript"] = "ansiSuperscript";
 			ANSIStyle["Subscript"] = "ansiSubscript";
-		})(ANSIStyle || (exports$2.ANSIStyle = ANSIStyle = {}));
+		})(ANSIStyle || (exports$1.ANSIStyle = ANSIStyle = {}));
 		/**
 		* ANSIFont enumeration.
 		*/
@@ -27566,7 +27130,7 @@ var import_ansi_output = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
 			ANSIFont["AlternativeFont7"] = "ansiAlternativeFont7";
 			ANSIFont["AlternativeFont8"] = "ansiAlternativeFont8";
 			ANSIFont["AlternativeFont9"] = "ansiAlternativeFont9";
-		})(ANSIFont || (exports$2.ANSIFont = ANSIFont = {}));
+		})(ANSIFont || (exports$1.ANSIFont = ANSIFont = {}));
 		/**
 		* SGRColor enumeration.
 		*/
@@ -27588,7 +27152,7 @@ var import_ansi_output = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
 			ANSIColor["BrightMagenta"] = "ansiBrightMagenta";
 			ANSIColor["BrightCyan"] = "ansiBrightCyan";
 			ANSIColor["BrightWhite"] = "ansiBrightWhite";
-		})(ANSIColor || (exports$2.ANSIColor = ANSIColor = {}));
+		})(ANSIColor || (exports$1.ANSIColor = ANSIColor = {}));
 		/**
 		* ANSIOutput class.
 		*/
@@ -28095,7 +27659,7 @@ var import_ansi_output = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
 				if (!SGRState.equivalent(sgrState, this._sgrState)) this._sgrState = sgrState;
 			}
 		}
-		exports$2.ANSIOutput = ANSIOutput;
+		exports$1.ANSIOutput = ANSIOutput;
 		/**
 		* SGRParam enumeration.
 		*/
@@ -28961,13 +28525,13 @@ var AppErrorBoundary = class extends import_react.Component {
 	}
 };
 var Card_module_default = {
-	headerContainer: "_headerContainer_gh2j2_1",
-	headerModern: "_headerModern_gh2j2_11",
-	headerIcon: "_headerIcon_gh2j2_18",
-	headerIconEmpty: "_headerIconEmpty_gh2j2_18",
-	body: "_body_gh2j2_22",
-	card: "_card_gh2j2_27",
-	noPadding: "_noPadding_gh2j2_34"
+	headerContainer: "_headerContainer_19525_1",
+	headerModern: "_headerModern_19525_17",
+	headerIcon: "_headerIcon_19525_24",
+	headerIconEmpty: "_headerIconEmpty_19525_24",
+	body: "_body_19525_28",
+	card: "_card_19525_33",
+	noPadding: "_noPadding_19525_40"
 };
 //#endregion
 //#region ../../packages/react/src/components/Card.tsx
@@ -29031,5854 +28595,12 @@ var CopyButton = ({ icon, title, value, onCopySuccess, onCopyError, className = 
 	});
 };
 //#endregion
-//#region ../../node_modules/.pnpm/asciinema-player@3.15.1/node_modules/asciinema-player/dist/logging--P0CsEu_.js
-function parseNpt(time) {
-	if (typeof time === "number") return time;
-	else if (typeof time === "string") return time.split(":").reverse().map(parseFloat).reduce((sum, n, i) => sum + n * Math.pow(60, i));
-	else return;
-}
-function debounce$1(f, delay) {
-	let timeout;
-	return function() {
-		for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) args[_key] = arguments[_key];
-		clearTimeout(timeout);
-		timeout = setTimeout(() => f.apply(this, args), delay);
-	};
-}
-function throttle(f, interval) {
-	let enableCall = true;
-	return function() {
-		if (!enableCall) return;
-		enableCall = false;
-		for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) args[_key2] = arguments[_key2];
-		f.apply(this, args);
-		setTimeout(() => enableCall = true, interval);
-	};
-}
-var FULL_HEX_COLOR_REGEX = /^#[0-9a-f]{6}$/;
-var SHORT_HEX_COLOR_REGEX = /^#[0-9a-f]{3}$/;
-function normalizeHexColor(color) {
-	let fallback = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : void 0;
-	if (typeof color !== "string") return fallback;
-	const normalized = color.trim().toLowerCase();
-	if (FULL_HEX_COLOR_REGEX.test(normalized)) return normalized;
-	if (SHORT_HEX_COLOR_REGEX.test(normalized)) return `#${normalized[1]}${normalized[1]}${normalized[2]}${normalized[2]}${normalized[3]}${normalized[3]}`;
-	return fallback;
-}
-function lerpOklab(t, c1, c2) {
-	return [
-		c1[0] + t * (c2[0] - c1[0]),
-		c1[1] + t * (c2[1] - c1[1]),
-		c1[2] + t * (c2[2] - c1[2])
-	];
-}
-function hexToOklab(hex) {
-	const [r, g, b] = hexToSrgb(hex).map(srgbToLinear);
-	const l = .4122214708 * r + .5363325363 * g + .0514459929 * b;
-	const m = .2119034982 * r + .6806995451 * g + .1073969566 * b;
-	const s = .0883024619 * r + .2817188376 * g + .6299787005 * b;
-	const l_ = Math.cbrt(l);
-	const m_ = Math.cbrt(m);
-	const s_ = Math.cbrt(s);
-	return [
-		.2104542553 * l_ + .793617785 * m_ - .0040720468 * s_,
-		1.9779984951 * l_ - 2.428592205 * m_ + .4505937099 * s_,
-		.0259040371 * l_ + .7827717662 * m_ - .808675766 * s_
-	];
-}
-function oklabToHex(lab) {
-	const rgb = oklabToSrgb(lab);
-	if (isSrgbInGamut(rgb)) return srgbToHex(rgb);
-	const [L, C, h] = oklabToOklch(lab);
-	let low = 0;
-	let high = C;
-	let best = [
-		L,
-		0,
-		h
-	];
-	for (let i = 0; i < 24; i += 1) {
-		const mid = (low + high) / 2;
-		const candidate = [
-			L,
-			mid,
-			h
-		];
-		if (isSrgbInGamut(oklabToSrgb(oklchToOklab(candidate)))) {
-			low = mid;
-			best = candidate;
-		} else high = mid;
-	}
-	return srgbToHex(oklabToSrgb(oklchToOklab(best)));
-}
-function oklabToSrgb(lab) {
-	const L = clamp$3(lab[0], 0, 1);
-	const a = lab[1];
-	const b = lab[2];
-	const l_ = L + .3963377774 * a + .2158037573 * b;
-	const m_ = L - .1055613458 * a - .0638541728 * b;
-	const s_ = L - .0894841775 * a - 1.291485548 * b;
-	const l = l_ ** 3;
-	const m = m_ ** 3;
-	const s = s_ ** 3;
-	const r = 4.0767416621 * l - 3.3077115913 * m + .2309699292 * s;
-	const g = -1.2684380046 * l + 2.6097574011 * m - .3413193965 * s;
-	const blue = -.0041960863 * l - .7034186147 * m + 1.707614701 * s;
-	return [
-		linearToSrgb(r),
-		linearToSrgb(g),
-		linearToSrgb(blue)
-	];
-}
-function oklabToOklch(_ref) {
-	let [L, a, b] = _ref;
-	return [
-		L,
-		Math.hypot(a, b),
-		Math.atan2(b, a)
-	];
-}
-function oklchToOklab(_ref2) {
-	let [L, C, h] = _ref2;
-	return [
-		L,
-		C * Math.cos(h),
-		C * Math.sin(h)
-	];
-}
-function hexToSrgb(hex) {
-	return [
-		Number.parseInt(hex.slice(1, 3), 16) / 255,
-		Number.parseInt(hex.slice(3, 5), 16) / 255,
-		Number.parseInt(hex.slice(5, 7), 16) / 255
-	];
-}
-function srgbToHex(rgb) {
-	const toHex = (value) => {
-		return Math.round(clamp$3(value, 0, 1) * 255).toString(16).padStart(2, "0");
-	};
-	return `#${toHex(rgb[0])}${toHex(rgb[1])}${toHex(rgb[2])}`;
-}
-function srgbToLinear(c) {
-	if (c <= .04045) return c / 12.92;
-	return ((c + .055) / 1.055) ** 2.4;
-}
-function linearToSrgb(c) {
-	if (c <= .0031308) return c * 12.92;
-	return 1.055 * c ** (1 / 2.4) - .055;
-}
-function isSrgbInGamut(_ref3) {
-	let [r, g, b] = _ref3;
-	return r >= 0 && r <= 1 && g >= 0 && g <= 1 && b >= 0 && b <= 1;
-}
-function clamp$3(value, min, max) {
-	return Math.max(min, Math.min(max, value));
-}
-var DummyLogger = class {
-	log() {}
-	debug() {}
-	info() {}
-	warn() {}
-	error() {}
-};
-var PrefixedLogger = class {
-	constructor(logger, prefix) {
-		this.logger = logger;
-		this.prefix = prefix;
-	}
-	log(message) {
-		for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) args[_key - 1] = arguments[_key];
-		this.logger.log(`${this.prefix}${message}`, ...args);
-	}
-	debug(message) {
-		for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) args[_key2 - 1] = arguments[_key2];
-		this.logger.debug(`${this.prefix}${message}`, ...args);
-	}
-	info(message) {
-		for (var _len3 = arguments.length, args = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) args[_key3 - 1] = arguments[_key3];
-		this.logger.info(`${this.prefix}${message}`, ...args);
-	}
-	warn(message) {
-		for (var _len4 = arguments.length, args = new Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) args[_key4 - 1] = arguments[_key4];
-		this.logger.warn(`${this.prefix}${message}`, ...args);
-	}
-	error(message) {
-		for (var _len5 = arguments.length, args = new Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1; _key5 < _len5; _key5++) args[_key5 - 1] = arguments[_key5];
-		this.logger.error(`${this.prefix}${message}`, ...args);
-	}
-};
-//#endregion
-//#region ../../node_modules/.pnpm/asciinema-player@3.15.1/node_modules/asciinema-player/dist/core-DnNOMtZn.js
-var wasm;
-function addHeapObject(obj) {
-	if (heap_next === heap.length) heap.push(heap.length + 1);
-	const idx = heap_next;
-	heap_next = heap[idx];
-	heap[idx] = obj;
-	return idx;
-}
-function debugString(val) {
-	const type = typeof val;
-	if (type == "number" || type == "boolean" || val == null) return `${val}`;
-	if (type == "string") return `"${val}"`;
-	if (type == "symbol") {
-		const description = val.description;
-		if (description == null) return "Symbol";
-		else return `Symbol(${description})`;
-	}
-	if (type == "function") {
-		const name = val.name;
-		if (typeof name == "string" && name.length > 0) return `Function(${name})`;
-		else return "Function";
-	}
-	if (Array.isArray(val)) {
-		const length = val.length;
-		let debug = "[";
-		if (length > 0) debug += debugString(val[0]);
-		for (let i = 1; i < length; i++) debug += ", " + debugString(val[i]);
-		debug += "]";
-		return debug;
-	}
-	const builtInMatches = /\[object ([^\]]+)\]/.exec(toString.call(val));
-	let className;
-	if (builtInMatches && builtInMatches.length > 1) className = builtInMatches[1];
-	else return toString.call(val);
-	if (className == "Object") try {
-		return "Object(" + JSON.stringify(val) + ")";
-	} catch (_) {
-		return "Object";
-	}
-	if (val instanceof Error) return `${val.name}: ${val.message}\n${val.stack}`;
-	return className;
-}
-function dropObject(idx) {
-	if (idx < 132) return;
-	heap[idx] = heap_next;
-	heap_next = idx;
-}
-function getArrayU32FromWasm0(ptr, len) {
-	ptr = ptr >>> 0;
-	return getUint32ArrayMemory0().subarray(ptr / 4, ptr / 4 + len);
-}
-var cachedDataViewMemory0 = null;
-function getDataViewMemory0() {
-	if (cachedDataViewMemory0 === null || cachedDataViewMemory0.buffer.detached === true || cachedDataViewMemory0.buffer.detached === void 0 && cachedDataViewMemory0.buffer !== wasm.memory.buffer) cachedDataViewMemory0 = new DataView(wasm.memory.buffer);
-	return cachedDataViewMemory0;
-}
-function getStringFromWasm0(ptr, len) {
-	ptr = ptr >>> 0;
-	return decodeText(ptr, len);
-}
-var cachedUint32ArrayMemory0 = null;
-function getUint32ArrayMemory0() {
-	if (cachedUint32ArrayMemory0 === null || cachedUint32ArrayMemory0.byteLength === 0) cachedUint32ArrayMemory0 = new Uint32Array(wasm.memory.buffer);
-	return cachedUint32ArrayMemory0;
-}
-var cachedUint8ArrayMemory0 = null;
-function getUint8ArrayMemory0() {
-	if (cachedUint8ArrayMemory0 === null || cachedUint8ArrayMemory0.byteLength === 0) cachedUint8ArrayMemory0 = new Uint8Array(wasm.memory.buffer);
-	return cachedUint8ArrayMemory0;
-}
-function getObject(idx) {
-	return heap[idx];
-}
-var heap = new Array(128).fill(void 0);
-heap.push(void 0, null, true, false);
-var heap_next = heap.length;
-function passStringToWasm0(arg, malloc, realloc) {
-	if (realloc === void 0) {
-		const buf = cachedTextEncoder.encode(arg);
-		const ptr = malloc(buf.length, 1) >>> 0;
-		getUint8ArrayMemory0().subarray(ptr, ptr + buf.length).set(buf);
-		WASM_VECTOR_LEN = buf.length;
-		return ptr;
-	}
-	let len = arg.length;
-	let ptr = malloc(len, 1) >>> 0;
-	const mem = getUint8ArrayMemory0();
-	let offset = 0;
-	for (; offset < len; offset++) {
-		const code = arg.charCodeAt(offset);
-		if (code > 127) break;
-		mem[ptr + offset] = code;
-	}
-	if (offset !== len) {
-		if (offset !== 0) arg = arg.slice(offset);
-		ptr = realloc(ptr, len, len = offset + arg.length * 3, 1) >>> 0;
-		const view = getUint8ArrayMemory0().subarray(ptr + offset, ptr + len);
-		const ret = cachedTextEncoder.encodeInto(arg, view);
-		offset += ret.written;
-		ptr = realloc(ptr, len, offset, 1) >>> 0;
-	}
-	WASM_VECTOR_LEN = offset;
-	return ptr;
-}
-function takeObject(idx) {
-	const ret = getObject(idx);
-	dropObject(idx);
-	return ret;
-}
-var cachedTextDecoder = new TextDecoder("utf-8", {
-	ignoreBOM: true,
-	fatal: true
-});
-cachedTextDecoder.decode();
-var MAX_SAFARI_DECODE_BYTES = 2146435072;
-var numBytesDecoded = 0;
-function decodeText(ptr, len) {
-	numBytesDecoded += len;
-	if (numBytesDecoded >= MAX_SAFARI_DECODE_BYTES) {
-		cachedTextDecoder = new TextDecoder("utf-8", {
-			ignoreBOM: true,
-			fatal: true
-		});
-		cachedTextDecoder.decode();
-		numBytesDecoded = len;
-	}
-	return cachedTextDecoder.decode(getUint8ArrayMemory0().subarray(ptr, ptr + len));
-}
-var cachedTextEncoder = new TextEncoder();
-if (!("encodeInto" in cachedTextEncoder)) cachedTextEncoder.encodeInto = function(arg, view) {
-	const buf = cachedTextEncoder.encode(arg);
-	view.set(buf);
-	return {
-		read: arg.length,
-		written: buf.length
-	};
-};
-var WASM_VECTOR_LEN = 0;
-var VtFinalization = typeof FinalizationRegistry === "undefined" ? {
-	register: () => {},
-	unregister: () => {}
-} : new FinalizationRegistry((ptr) => wasm.__wbg_vt_free(ptr >>> 0, 1));
-var Vt = class Vt {
-	static __wrap(ptr) {
-		ptr = ptr >>> 0;
-		const obj = Object.create(Vt.prototype);
-		obj.__wbg_ptr = ptr;
-		VtFinalization.register(obj, obj.__wbg_ptr, obj);
-		return obj;
-	}
-	__destroy_into_raw() {
-		const ptr = this.__wbg_ptr;
-		this.__wbg_ptr = 0;
-		VtFinalization.unregister(this);
-		return ptr;
-	}
-	free() {
-		const ptr = this.__destroy_into_raw();
-		wasm.__wbg_vt_free(ptr, 0);
-	}
-	/**
-	* @param {string} s
-	* @returns {any}
-	*/
-	feed(s) {
-		const ptr0 = passStringToWasm0(s, wasm.__wbindgen_export, wasm.__wbindgen_export2);
-		const len0 = WASM_VECTOR_LEN;
-		return takeObject(wasm.vt_feed(this.__wbg_ptr, ptr0, len0));
-	}
-	/**
-	* @param {number} cols
-	* @param {number} rows
-	* @returns {any}
-	*/
-	resize(cols, rows) {
-		return takeObject(wasm.vt_resize(this.__wbg_ptr, cols, rows));
-	}
-	/**
-	* @returns {Uint32Array}
-	*/
-	getSize() {
-		try {
-			const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-			wasm.vt_getSize(retptr, this.__wbg_ptr);
-			var r0 = getDataViewMemory0().getInt32(retptr + 0, true);
-			var r1 = getDataViewMemory0().getInt32(retptr + 4, true);
-			var v1 = getArrayU32FromWasm0(r0, r1).slice();
-			wasm.__wbindgen_export3(r0, r1 * 4, 4);
-			return v1;
-		} finally {
-			wasm.__wbindgen_add_to_stack_pointer(16);
-		}
-	}
-	/**
-	* @param {number} row
-	* @param {boolean} cursor_on
-	* @returns {any}
-	*/
-	getLine(row, cursor_on) {
-		return takeObject(wasm.vt_getLine(this.__wbg_ptr, row, cursor_on));
-	}
-	/**
-	* @returns {any}
-	*/
-	getCursor() {
-		return takeObject(wasm.vt_getCursor(this.__wbg_ptr));
-	}
-};
-if (Symbol.dispose) Vt.prototype[Symbol.dispose] = Vt.prototype.free;
-/**
-* @param {number} cols
-* @param {number} rows
-* @param {number} scrollback_limit
-* @param {boolean} bold_is_bright
-* @returns {Vt}
-*/
-function create$2(cols, rows, scrollback_limit, bold_is_bright) {
-	const ret = wasm.create(cols, rows, scrollback_limit, bold_is_bright);
-	return Vt.__wrap(ret);
-}
-var EXPECTED_RESPONSE_TYPES = new Set([
-	"basic",
-	"cors",
-	"default"
-]);
-async function __wbg_load(module, imports) {
-	if (typeof Response === "function" && module instanceof Response) {
-		if (typeof WebAssembly.instantiateStreaming === "function") try {
-			return await WebAssembly.instantiateStreaming(module, imports);
-		} catch (e) {
-			if (module.ok && EXPECTED_RESPONSE_TYPES.has(module.type) && module.headers.get("Content-Type") !== "application/wasm") console.warn("`WebAssembly.instantiateStreaming` failed because your server does not serve Wasm with `application/wasm` MIME type. Falling back to `WebAssembly.instantiate` which is slower. Original error:\n", e);
-			else throw e;
-		}
-		const bytes = await module.arrayBuffer();
-		return await WebAssembly.instantiate(bytes, imports);
-	} else {
-		const instance = await WebAssembly.instantiate(module, imports);
-		if (instance instanceof WebAssembly.Instance) return {
-			instance,
-			module
-		};
-		else return instance;
-	}
-}
-function __wbg_get_imports() {
-	const imports = {};
-	imports.wbg = {};
-	imports.wbg.__wbg___wbindgen_debug_string_adfb662ae34724b6 = function(arg0, arg1) {
-		const ptr1 = passStringToWasm0(debugString(getObject(arg1)), wasm.__wbindgen_export, wasm.__wbindgen_export2);
-		const len1 = WASM_VECTOR_LEN;
-		getDataViewMemory0().setInt32(arg0 + 4, len1, true);
-		getDataViewMemory0().setInt32(arg0 + 0, ptr1, true);
-	};
-	imports.wbg.__wbg___wbindgen_throw_dd24417ed36fc46e = function(arg0, arg1) {
-		throw new Error(getStringFromWasm0(arg0, arg1));
-	};
-	imports.wbg.__wbg_new_13317ed16189158e = function() {
-		return addHeapObject(new Array());
-	};
-	imports.wbg.__wbg_new_4ceb6a766bf78b04 = function() {
-		return addHeapObject(/* @__PURE__ */ new Object());
-	};
-	imports.wbg.__wbg_set_3f1d0b984ed272ed = function(arg0, arg1, arg2) {
-		getObject(arg0)[takeObject(arg1)] = takeObject(arg2);
-	};
-	imports.wbg.__wbg_set_8b6a9a61e98a8881 = function(arg0, arg1, arg2) {
-		getObject(arg0)[arg1 >>> 0] = takeObject(arg2);
-	};
-	imports.wbg.__wbindgen_cast_2241b6af4c4b2941 = function(arg0, arg1) {
-		return addHeapObject(getStringFromWasm0(arg0, arg1));
-	};
-	imports.wbg.__wbindgen_cast_4625c577ab2ec9ee = function(arg0) {
-		return addHeapObject(BigInt.asUintN(64, arg0));
-	};
-	imports.wbg.__wbindgen_cast_d6cd19b81560fd6e = function(arg0) {
-		return addHeapObject(arg0);
-	};
-	imports.wbg.__wbindgen_object_clone_ref = function(arg0) {
-		return addHeapObject(getObject(arg0));
-	};
-	imports.wbg.__wbindgen_object_drop_ref = function(arg0) {
-		takeObject(arg0);
-	};
-	return imports;
-}
-function __wbg_finalize_init(instance, module) {
-	wasm = instance.exports;
-	__wbg_init.__wbindgen_wasm_module = module;
-	cachedDataViewMemory0 = null;
-	cachedUint32ArrayMemory0 = null;
-	cachedUint8ArrayMemory0 = null;
-	return wasm;
-}
-function initSync(module) {
-	if (wasm !== void 0) return wasm;
-	if (typeof module !== "undefined") if (Object.getPrototypeOf(module) === Object.prototype) ({module} = module);
-	else console.warn("using deprecated parameters for `initSync()`; pass a single object instead");
-	const imports = __wbg_get_imports();
-	if (!(module instanceof WebAssembly.Module)) module = new WebAssembly.Module(module);
-	return __wbg_finalize_init(new WebAssembly.Instance(module, imports), module);
-}
-async function __wbg_init(module_or_path) {
-	if (wasm !== void 0) return wasm;
-	if (typeof module_or_path !== "undefined") if (Object.getPrototypeOf(module_or_path) === Object.prototype) ({module_or_path} = module_or_path);
-	else console.warn("using deprecated parameters for the initialization function; pass a single object instead");
-	const imports = __wbg_get_imports();
-	if (typeof module_or_path === "string" || typeof Request === "function" && module_or_path instanceof Request || typeof URL === "function" && module_or_path instanceof URL) module_or_path = fetch(module_or_path);
-	const { instance, module } = await __wbg_load(await module_or_path, imports);
-	return __wbg_finalize_init(instance, module);
-}
-var exports$1 = /* @__PURE__ */ Object.freeze({
-	__proto__: null,
-	Vt,
-	create: create$2,
-	default: __wbg_init,
-	initSync
-});
-var base64codes = [
-	62,
-	0,
-	0,
-	0,
-	63,
-	52,
-	53,
-	54,
-	55,
-	56,
-	57,
-	58,
-	59,
-	60,
-	61,
-	0,
-	0,
-	0,
-	0,
-	0,
-	0,
-	0,
-	0,
-	1,
-	2,
-	3,
-	4,
-	5,
-	6,
-	7,
-	8,
-	9,
-	10,
-	11,
-	12,
-	13,
-	14,
-	15,
-	16,
-	17,
-	18,
-	19,
-	20,
-	21,
-	22,
-	23,
-	24,
-	25,
-	0,
-	0,
-	0,
-	0,
-	0,
-	0,
-	26,
-	27,
-	28,
-	29,
-	30,
-	31,
-	32,
-	33,
-	34,
-	35,
-	36,
-	37,
-	38,
-	39,
-	40,
-	41,
-	42,
-	43,
-	44,
-	45,
-	46,
-	47,
-	48,
-	49,
-	50,
-	51
-];
-function getBase64Code(charCode) {
-	return base64codes[charCode - 43];
-}
-function base64Decode(str) {
-	let missingOctets = str.endsWith("==") ? 2 : str.endsWith("=") ? 1 : 0;
-	let n = str.length;
-	let result = new Uint8Array(3 * (n / 4));
-	let buffer;
-	for (let i = 0, j = 0; i < n; i += 4, j += 3) {
-		buffer = getBase64Code(str.charCodeAt(i)) << 18 | getBase64Code(str.charCodeAt(i + 1)) << 12 | getBase64Code(str.charCodeAt(i + 2)) << 6 | getBase64Code(str.charCodeAt(i + 3));
-		result[j] = buffer >> 16;
-		result[j + 1] = buffer >> 8 & 255;
-		result[j + 2] = buffer & 255;
-	}
-	return result.subarray(0, result.length - missingOctets);
-}
-var vtWasmModule = base64Decode("AGFzbQEAAAABnAEXYAJ/fwBgA39/fwBgAn9/AX9gA39/fwF/YAF/AGABfwF/YAR/f39/AGAFf39/f38AYAR/f39/AX9gBn9/f39/fwBgBX9/f39/AX9gAAF/YAZ/f39/f38Bf2ABfAF/YAF+AX9gB39/f39/f38AYAN/f34Bf2AEf39/fgBgA39+fwBgBX9/fH9/AGAFf39+f38AYAV/f31/fwBgAAACoAMLA3diZxpfX3diZ19uZXdfMTMzMTdlZDE2MTg5MTU4ZQALA3diZxpfX3diZ19zZXRfOGI2YTlhNjFlOThhODg4MQABA3diZy5fX3diZ19fX3diaW5kZ2VuX2RlYnVnX3N0cmluZ19hZGZiNjYyYWUzNDcyNGI2AAADd2JnGl9fd2JpbmRnZW5fb2JqZWN0X2Ryb3BfcmVmAAQDd2JnG19fd2JpbmRnZW5fb2JqZWN0X2Nsb25lX3JlZgAFA3diZxpfX3diZ19zZXRfM2YxZDBiOTg0ZWQyNzJlZAABA3diZxpfX3diZ19uZXdfNGNlYjZhNzY2YmY3OGIwNAALA3diZydfX3diZ19fX3diaW5kZ2VuX3Rocm93X2RkMjQ0MTdlZDM2ZmM0NmUAAAN3YmcgX193YmluZGdlbl9jYXN0XzIyNDFiNmFmNGM0YjI5NDEAAgN3YmcgX193YmluZGdlbl9jYXN0X2Q2Y2QxOWI4MTU2MGZkNmUADQN3YmcgX193YmluZGdlbl9jYXN0XzQ2MjVjNTc3YWIyZWM5ZWUADgO7AbkBAwADAQMABAEKAgEDAwMBCA8KBwMJBwAJAQABCQcBAQYBBAEGBQIGAAMCAgcDAQABCQYGAAEEAQAAEAIGBAAFAQEBAAUMBQIABgAAAAEEBQUBBAEAAAcAAwERBAAHAgABAAkHBAQAAQAAAAAGAggCEgECBAgHAQcIAAAAAAABBAAEAQAAAAgBCAwHEwoUFQUGAgQDBAYEBAAAAgIBAQQEBAECAgAAAAIAAQEBBAUWAAIABAAABAIFAgUEBQFwASsrBQMBABEGCQF/AUGAgMAACwfFAQwGbWVtb3J5AgANX193YmdfdnRfZnJlZQA+BmNyZWF0ZQAaB3Z0X2ZlZWQACwl2dF9yZXNpemUAMwp2dF9nZXRTaXplAGYKdnRfZ2V0TGluZQANDHZ0X2dldEN1cnNvcgAvEV9fd2JpbmRnZW5fZXhwb3J0AHcSX193YmluZGdlbl9leHBvcnQyAIIBH19fd2JpbmRnZW5fYWRkX3RvX3N0YWNrX3BvaW50ZXIAtwESX193YmluZGdlbl9leHBvcnQzAKcBCU0BAEEBCyqtAcEBwwFGwAE9wgEJCgilAawBsQEUlgGTATuUAZYBnQGaAZQBlAGYAZUBlwG+AbsBvAEwvQGvAaQBqwG/AXOPAUVdGGi6AQwBIAqD1wK5Ab81ARB/IwBBoAFrIgQkACAEQTBqIAAQXiAEKAIwIQMgBEEoaiIAIAI2AgQgACABNgIAIANB3ABqIQsgA0HQAGohDCADQTBqIQ8gA0EkaiEQIANBDGohESADQbIBaiEHIANBxAFqIQkgBCgCKCINIAQoAiwiDmohEiANIQIDQAJAAkACQAJAAkACQCADAn8CQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAIAIgEkYNAAJ/IAIsAAAiAEEATgRAIABB/wFxIQAgAkEBagwBCyACLQABQT9xIQUgAEEfcSEBIABBX00EQCABQQZ0IAVyIQAgAkECagwBCyACLQACQT9xIAVBBnRyIQUgAEFwSQRAIAUgAUEMdHIhACACQQNqDAELIAFBEnRBgIDwAHEgAi0AA0E/cSAFQQZ0cnIiAEGAgMQARg0BIAJBBGoLIQJBwQAgACAAQZ8BSxshAQJAAkACQCADLQDMBSIGDgUABAQEAQQLIAFBIGtB4ABJDQEMAwsgAUEwa0EMTw0CDCALIAQgADYCQCAEQSE6ADwMAgsgBEHwAGoiASADQeAAaigCACADQeQAaigCABAjIARBCGogAxAkIAQgBCkDCDcCfCAEIAQoAnQgBCgCeBBbIAQoAgQhACAEKAIAQQFxRQRAIAEQbiAOBEAgDUEBIA4QOAsgBCgCNCAEKAI4ELIBIARBoAFqJAAgAA8LIAQgADYCTCAEQcwAakHcwsAAEEIACwJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQCABQf8BcSIFQRtHBEAgBUHbAEYNASAGDg0DBAUGBw4IDg4OAg4JDgsgA0EBOgDMBSAJECwMVAsgBg4NASMDBAUNBg0NDQANBw0LIAFBIGtB3wBJDVIMCwsCQCABQRhJDQAgAUEZRg0AIAFB/AFxQRxHDQsLIARBPGogABBIDDILIAFB8AFxQSBGDQYgAUEwa0EgSQ0IIAFB0QBrQQdJDQgCQCAFQdkAaw4FCQkACR8ACyABQeAAa0EfTw0JDAgLIAFBMGtBzwBPDQggA0EAOgDMBSAEQTxqIAkgABAtDDALIAFBL0sEQCABQTtHIAFBOk9xRQRAIANBBDoAzAUMTwsgAUFAakE/SQ0ECyABQfwBcUE8Rw0HIAMgADYCxAEgA0EEOgDMBQxOCyABQUBqQT9JDQQgAUH8AXFBPEcNBgxLCyABQUBqQT9PDQUMSQsgAUEga0HgAEkNSwJAIAVBGGsOAwcGBwALIAVBmQFrQQJJDQYgBUHQAEYNSyAFQQdGDUgMBQsgA0EAOgDMBSAEQTxqIAkgABAODCsLIAMgADYCxAEgA0ECOgDMBQxJCyADQQA6AMwFIARBPGogCSAAEA4MKQsgA0EAOgDMBSAEQTxqIAkgABAtDCgLAkAgBUEYaw4DAgECAAsgBUGZAWtBAkkNASAFQdAARw0AIAZBAWsOChUDCAkKJAsMDQ5GCyABQfABcSIIQYABRg0AIAFBkQFrQQZLDQELIANBADoAzAUgBEE8aiAAEEgMJQsgCEEgRw0BIAZBBEcNAQw/CyABQfABcSEIDAELIAZBAWsOCgEAAwQFDgYHCAkOCyAIQSBHDQEMOwsgAUEYTw0KDAsLAkAgAUEYSQ0AIAFBGUYNACABQfwBcUEcRw0MCyAEQTxqIAAQSAwfCwJAAkAgAUEYSQ0AIAFBGUYNACABQfwBcUEcRw0BCyAEQTxqIAAQSAwfCyABQfABcUEgRg05DAoLAkAgAUEYSQ0AIAFBGUYNACABQfwBcUEcRw0KCyAEQTxqIAAQSAwdCyABQUBqQT9PBEAgAUHwAXEiCEEgRg03IAhBMEYNOgwJCyADQQA6AMwFIARBPGogCSAAEA4MHAsgAUH8AXFBPEYNAyABQfABcUEgRg0vIAFBQGpBP08NBwwECyABQS9NDQYgAUE6SQ04IAFBO0YNOCABQUBqQT5NDQMMBgsgAUFAakE/SQ0CDAULIAFBGEkNNyABQRlGDTcgAUH8AXFBHEYNNwwECyADIAA2AsQBIANBCDoAzAUMNgsgA0EKOgDMBQw1CyAFQdgAayIIQQdNQQBBASAIdEHBAXEbDQUgBUEZRg0AIAFB/AFxQRxHDQELIARBPGogABBIDBQLIAVBkAFrDhABBQUFBQUFBQMFBQIvAAMDBAsgA0EMOgDMBQwxCyADQQc6AMwFIAkQLAwwCyADQQM6AMwFIAkQLAwvCyADQQ06AMwFDC4LAkAgBUE6aw4CBAIACyAFQRlGDQILIAZBA2sOBwksAwoFCwcsCyAGQQNrDgcIKysJBQoHKwsgBkEDaw4HByoCCCoJBioLIAZBA2sOBwYpKQcJCAUpCyABQRhJDQAgAUH8AXFBHEcNKAsgBEE8aiAAEEgMCAsgAUEwa0EKTw0mCyADQQg6AMwFDCQLIAFB8AFxQSBGDR8LIAFB8AFxQTBHDSMMAwsgAUE6Rw0iDCALAkAgAUEYSQ0AIAFBGUYNACABQfwBcUEcRw0iCyAEQTxqIAAQSAwCCyABQfABcUEgRg0VIAFBOkYNACABQfwBcUE8Rw0gCyADQQs6AMwFDB8LIAQtADwiAEEyRg0fAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQCAAQQFrDjECAwQFBgcICQoLDA0ODyUQJhESExQVFhcYGRobHB0eHwAhIiMkJSYnKCkqKywtMDEyAQsgBCgCQCEADB8LIANBfkF/IAMoAmggAygCnAFGGxCFAQw9CyAELwE+IQAgBCADKAJoNgJMIARBADoAfCAEIANB1ABqKAIAIgE2AnAgBCABIAMoAlhBAnRqNgJ0QQEgACAAQQFNGyEAIAQgBEHMAGo2AngDQCAAQQFrIgAEQCAEQfAAahBQDQEMNgsLIARB8ABqEFAiAEUNNCAAKAIADDULIANBASAELwE+IgAgAEEBTRtBAWsiACADKAKcASIBQQFrIAAgAUkbNgJoDDsLIANBASAELwE+IgAgAEEBTRsQMgw6CyADQQEgBC8BPiIAIABBAU0bEF8gA0EANgJoDDkLIANBASAELwE+IgAgAEEBTRsQYSADQQA2AmgMOAsgA0EANgJoDDcLAkAgBC0APUEBaw4CJgATCyADQQA2AlgMNgsgA0EBIAQvAT4iACAAQQFNGyIAQX9zQQAgAGsgAygCaCADKAKcAUYbEIUBDDULIANBASAELwE+IgAgAEEBTRsQXww0CyADQQEgBC8BPiIAIABBAU0bEIUBDDMLIANBASAELwFAIgAgAEEBTRtBAWsiACADKAKcASIBQQFrIAAgAUkbNgJoIANBASAELwE+IgAgAEEBTRtBAWsQUgwyCyADQQEgBC8BPiIAIABBAU0bEGEMMQsgAygCaCIAIAMoApwBIgFPBEAgAyABQQFrIgA2AmgLQQEgBC8BPiIBIAFBAU0bIgEgAygCGCAAayIFIAEgBUkbIQEgAyADKAJsQbDNwAAQYiIFKAIEIAUoAgggAEGo2cAAEJABKAIERQRAIAUoAgQgBSgCCCAAQQFrQbjZwAAQkAEiBkKggICAEDcCACAGIAcpAQA3AQggBkEQaiAHQQhqLwEAOwEACyAEQRhqIAUoAgQgBSgCCCAAQcjZwAAQfyAEKAIYIAQoAhwgARCIASAFKAIEIAUoAgggAEHY2cAAEJABIgAoAgRFBEAgAEKggICAEDcCACAAIAcpAQA3AQggAEEQaiAHQQhqLwEAOwEACyAEQRBqIAUoAgQgBSgCCCIAIAAgAWtB6NnAABB/IAQoAhAhACAEKAIUIARB+ABqIAdBCGovAQA7AQAgBCAHKQEANwNwQRRsIQEDQCABBEAgAEKggICAEDcCACAAIAQpA3A3AgggAEEQaiAEQfgAai8BADsBACABQRRrIQEgAEEUaiEADAELCyAFQQA6AAwgA0HgAGooAgAgA0HkAGooAgAgAygCbBCRAQwwCyADKAKcASEFIAMoAqABIQZBACEBA0AgASAGRg0wQQAhAANAIAAgBUYEQCADQeAAaigCACADQeQAaigCACABEJEBIAFBAWohAQwCBSAEQQA7AHggBEECOgB0IARBAjoAcCADIAAgAUHFACAEQfAAahATGiAAQQFqIQAMAQsACwALAAsgBCgCSCEBIAQoAkQhACAEIAQoAkA2AnggBCAANgJwIAQgAUEBdCIBIABqIgU2AnwDQCABBEACQAJAAkACQAJAAkACQAJAAkACQCAALwEAIgZBAWsOBwExMTExAgMACyAGQZcIaw4DBAUGAwsgA0EAOgDBAQwHCyADQgA3AmggA0EAOgC+AQwGCyADQQA6AL8BDAULIANBADoAcAwECyADEG8MAgsgAxCJAQwCCyADEG8gAxCJAQsgAxARCyAAQQJqIQAgAUECayEBDAELCyAEIAU2AnQgBEHwAGoQqgEMLgsgBCgCSCEBIAQoAkQhACAEIAQoAkA2AnggBCAANgJwIAQgAUEBdCIBIABqIgY2AnwDQCABBEACQAJAAkACQAJAAkACQAJAAkAgAC8BACIFQQFrDgcBLy8vLwIDAAsgBUGXCGsOAwYEBQMLIANBAToAwQEMBgsgA0EBOgC+ASADQQA2AmggAyADKAKoATYCbAwFCyADQQE6AL8BDAQLIANBAToAcAwDCyADEGUMAgsgAxBlCyMAQTBrIgUkACADLQC8AUUEQCADQQE6ALwBIANB9ABqIANBiAFqEHQgAyADQSRqEHUgBUEMaiIIIAMoApwBIAMoAqABIgpBAUEAIANBsgFqEB8gA0EMahCgASADIAhBJBAWIggoAmAgCCgCZEEAIAoQUwsgBUEwaiQAIAMQEQsgAEECaiEAIAFBAmshAQwBCwsgBCAGNgJ0IARB8ABqEKoBDC0LAkBBASAELwE+IgAgAEEBTRtBAWsiACAELwFAIgEgAygCoAEiBSABG0EBayIBSSABIAVJcUUEQCADKAKoASEADAELIAMgATYCrAEgAyAANgKoAQsgA0EANgJoIAMgAEEAIAMtAL4BGzYCbAwsCyADQQE6AHAgA0EAOwC9ASADQQA7AboBIANBAjoAtgEgA0ECOgCyASADQQA7AbABIANCADcCpAEgA0GAgIAINgKEASADQQI6AIABIANBAjoAfCADQgA3AnQgAyADKAKgAUEBazYCrAEMKwsgAygCoAEgAygCrAEiAEEBaiAAIAMoAmwiAEkbIQEgAyAAIAFBASAELwE+IgUgBUEBTRsgBxAdIANB4ABqKAIAIANB5ABqKAIAIAAgARBTDCoLIAMgAygCaCADKAJsIgBBAEEBIAQvAT4iASABQQFNGyAHECIgA0HgAGooAgAgA0HkAGooAgAgABCRAQwpCwJAAkACQCAELQA9QQFrDgMBAisACyADIAMoAmggAygCbCIAQQEgBCAHECIgA0HgAGooAgAgA0HkAGooAgAgACADKAKgARBTDCoLIAMgAygCaCADKAJsIgBBAiAEIAcQIiADQeAAaigCACADQeQAaigCAEEAIABBAWoQUwwpCyADQQAgAygCHCAHECogA0HgAGooAgAgA0HkAGooAgBBACADKAKgARBTDCgLIAMgAygCaCADKAJsIgAgBC0APUEEciAEIAcQIiADQeAAaigCACADQeQAaigCACAAEJEBDCcLIAMgBC0APToAsQEMJgsgAyAELQA9OgCwAQwlCyADQQEQMgwkCyMAQRBrIgUkAAJAAkACQCADKAJoIghFDQAgCCADKAKcAU8NACAFQQhqIAMoAlQiACADKAJYIgEgCBA8IAUoAghBAUcNACAFKAIMIgYgAUsNASADQdAAaiIKKAIAIAFGBH8gCkG84sAAEGsgAygCVAUgAAsgBkECdGohACABIAZLBEAgAEEEaiAAIAEgBmtBAnQQEgsgACAINgIAIAMgAUEBajYCWAsgBUEQaiQADAELIAYgAUG84sAAEEwACwwjCyADKAJoIgAgAygCnAEiBUYEQCADIABBAWsiADYCaAsgAyAAIAMoAmwiAUEBIAQvAT4iBiAGQQFNGyIGIAUgAGsiBSAFIAZLGyIFIAcQICAAIAAgBWoiBSAAIAVLGyEFA0AgACAFRwRAIAMgACABQSAgBxATGiAAQQFqIQAMAQsLIANB4ABqKAIAIANB5ABqKAIAIAEQkQEMIgsgAygCoAEgAygCrAEiAEEBaiAAIAMoAmwiAEkbIQEgAyAAIAFBASAELwE+IgUgBUEBTRsgBxA2IANB4ABqKAIAIANB5ABqKAIAIAAgARBTDCELIAMQXCADLQDAAUEBRw0gIANBADYCaAwgCyADEFwgA0EANgJoDB8LIAMgABAhDB4LIAMoAmgiBUUNHSAELwE+IQAgAygCbCEBIARBIGogAxBwIAQoAiQiBiABTQ0SQQEgACAAQQFNGyEAIAQoAiAgAUEEdGoiAUEEaigCACABQQhqKAIAIAVBAWtBuOXAABCQASgCACEBA0AgAEUNHiADIAEQISAAQQFrIQAMAAsACyADKAJsIgAgAygCqAFGDRIgAEUNHCADIABBAWsQUgwcCyAEQcwAaiIAIAMoApwBIgUgAygCoAEiASADKAJIIAMoAkxBABAfIARB8ABqIgYgBSABQQFBAEEAEB8gERCgASADIABBJBAWIQAgDxCgASAQIAZBJBAWGiAAQQA6ALwBIARBlAFqIgYgBRA5IAAoAlAgAEHUAGooAgBBBEEEEJ8BIAxBCGogBkEIaiIFKAIANgIAIAwgBCkClAE3AgAgAEEAOwG6ASAAQQI6ALYBIABBAjoAsgEgAEEBOgBwIABCADcCaCAAQQA7AbABIABBgIAENgC9ASAAIAFBAWs2AqwBIABCADcCpAEgAEGAgIAINgKYASAAQQI6AJQBIABBAjoAkAEgAEEANgKMASAAQoCAgAg3AoQBIABBAjoAgAEgAEECOgB8IABCADcCdCAGIAEQVSAAKAJcIABB4ABqKAIAQQFBARCfASALQQhqIAUoAgA2AgAgCyAEKQKUATcCAAwbCyAEKAJIIQEgBCgCRCEAIAQgBCgCQDYCeCAEIAA2AnAgBCABQQF0IgEgAGoiBTYCfANAIAEEQAJAIAAvAQBBFEcEQCADQQA6AL0BDAELIANBADoAwAELIABBAmohACABQQJrIQEMAQsLIAQgBTYCdCAEQfAAahCqAQwaCyADEIkBDBkLIAMQZQwYCyADQQEgBC8BPiIAIABBAU0bEIYBDBcLIAQoAkhBBWwhASADLQC7ASEFIAQoAkAgBCgCRCIKIQADQAJAIAFFDQAgACgAASEGAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkAgAC0AAEEBaw4SAQIDBAUGBwgJCgsMDQ4PEBETAAtBACEFIANBADsBugEgA0ECOgC2ASADQQI6ALIBDBELIANBAToAugEMEAsgA0ECOgC6AQwPCyADIAVBAXIiBToAuwEMDgsgAyAFQQJyIgU6ALsBDA0LIAMgBUEIciIFOgC7AQwMCyADIAVBEHIiBToAuwEMCwsgAyAFQQRyIgU6ALsBDAoLIANBADoAugEMCQsgAyAFQf4BcSIFOgC7AQwICyADIAVB/QFxIgU6ALsBDAcLIAMgBUH3AXEiBToAuwEMBgsgAyAFQe8BcSIFOgC7AQwFCyADIAVB+wFxIgU6ALsBDAQLIAcgBjYBAAwDCyAHQQI6AAAMAgsgAyAGNgG2AQwBCyADQQI6ALYBCyAAQQVqIQAgAUEFayEBDAELCyAKQQFBBRCfAQwWCyADQQA2AqQBDBULIAQoAkghASAEKAJEIQAgBCAEKAJANgJ4IAQgADYCcCAEIAFBAXQiASAAaiIFNgJ8A0AgAQRAAkAgAC8BAEEURwRAIANBAToAvQEMAQsgA0EBOgDAAQsgAEECaiEAIAFBAmshAQwBCwsgBCAFNgJ0IARB8ABqEKoBDBQLIANBATYCpAEMEwsgA0EBIAQvAT4iACAAQQFNGxCHAQwSCyAELQA9DQELIwBBEGsiACQAIABBCGogAygCVCIGIAMoAlgiASADKAJoEDwCQAJAIAAoAghFBEAgACgCDCIFIAFPDQEgBiAFQQJ0aiIGIAZBBGogASAFQX9zakECdBASIAMgAUEBazYCWAsgAEEQaiQADAELIwBBMGsiACQAIAAgATYCBCAAIAU2AgAgAEEDNgIMIABByMXAADYCCCAAQgI3AhQgACAAQQRqrUKAgICA4AGENwMoIAAgAK1CgICAgOABhDcDICAAIABBIGo2AhAgAEEIakHM4sAAEIoBAAsMEAsgA0EANgJYDA8LIANBASAELwE+IgAgAEEBTRtBAWsQUgwOCyADQQEgBC8BPiIAIABBAU0bEF8MDQsgAy0AwgFBAUcNDCADIAQvAT4iACADKAKcASAAGyAELwFAIgAgAygCoAEgABsQJQwMCyADIAA2AsQBIANBCToAzAUMCgsgASAGQbjlwAAQSwALIANBARCGAQwJCwALQQALIgAgAygCnAEiAUEBayAAIAFJGzYCaAwGCyAJIAA2AgAMBAsgAyAANgLEASADQQU6AMwFDAMLIANBADoAzAUMAgsgA0EGOgDMBQwBCyAJKAKEBCEBAkACQAJAAkACQCAAQTprDgIBAAILIAlBHyABQQFqIgAgAEEgRhs2AoQEDAMLIAFBIEkNASABQSBB5NvAABBLAAsgAUEgTwRAIAFBIEH028AAEEsACyAJIAFBBHRqQQRqIgUoAgAiAUEGSQRAIAUgAUEBdGpBBGoiASABLwEAQQpsIABBMGtB/wFxajsBAAwCCyABQQZBtOHAABBLAAsgCSABQQR0akEEaiIBKAIAQQFqIQAgAUEFIAAgAEEFTxs2AgALCyAEQTI6ADwMAAsAC98UAQZ/IwBBwAJrIgIkACABKAIEIQMDQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAIAMEQCACQbgCaiABKAIAEGkgAigCuAIhAyACKAK8AkEBaw4GAQUEBQIDBQsgAEESOgAADAsLAkACQAJAAkACQAJAAkACQAJAAkACQAJAAkACQAJAIAMvAQAiAw4eAAECAwQFDgYOBw4ODg4ODg4ODg4OCAgJCgsODA4NDgsgAkGoAWpBASABKAIAIAEoAgRB1NzAABCBASABIAIpA6gBNwIAIABBADoAAAwYCyACQbABakEBIAEoAgAgASgCBEHk3MAAEIEBIAEgAikDsAE3AgAgAEEBOgAADBcLIAJBuAFqQQEgASgCACABKAIEQfTcwAAQgQEgASACKQO4ATcCACAAQQI6AAAMFgsgAkHAAWpBASABKAIAIAEoAgRBhN3AABCBASABIAIpA8ABNwIAIABBAzoAAAwVCyACQcgBakEBIAEoAgAgASgCBEGU3cAAEIEBIAEgAikDyAE3AgAgAEEEOgAADBQLIAJB0AFqQQEgASgCACABKAIEQaTdwAAQgQEgASACKQPQATcCACAAQQU6AAAMEwsgAkHYAWpBASABKAIAIAEoAgRBtN3AABCBASABIAIpA9gBNwIAIABBBjoAAAwSCyACQeABakEBIAEoAgAgASgCBEHE3cAAEIEBIAEgAikD4AE3AgAgAEEHOgAADBELIAJB6AFqQQEgASgCACABKAIEQdTdwAAQgQEgASACKQPoATcCACAAQQg6AAAMEAsgAkHwAWpBASABKAIAIAEoAgRB5N3AABCBASABIAIpA/ABNwIAIABBCToAAAwPCyACQfgBakEBIAEoAgAgASgCBEH03cAAEIEBIAEgAikD+AE3AgAgAEEKOgAADA4LIAJBgAJqQQEgASgCACABKAIEQYTewAAQgQEgASACKQOAAjcCACAAQQs6AAAMDQsgAkGIAmpBASABKAIAIAEoAgRBlN7AABCBASABIAIpA4gCNwIAIABBDDoAAAwMCyACQZACakEBIAEoAgAgASgCBEGk3sAAEIEBIAEgAikDkAI3AgAgAEENOgAADAsLAkACQCADQR5rQf//A3FBCE8EQCADQSZrDgIBCAILIAJBCGpBASABKAIAIAEoAgRBxODAABCBASABIAIpAwg3AgAgACADQR5rOgACIABBDjsAAAwMCwJAIAEoAgQiA0ECTwRAIAJBmAFqIAEoAgBBEGoQaSACKAKYASIDDQEgASgCBCEDCyACQegAakEBIAEoAgAgA0G03sAAEIEBIAIoAmwhAyACKAJoIQQMDQsCQAJAAkAgAigCnAFBAUcNACADLwEAQQJrDgQBAAACAAsgAkHwAGpBASABKAIAIAEoAgRBhN/AABCB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ACABQQRqIQwgAkFAayENIAJBJWohDiACQRxqIQ8gASgCJCEFIAEoAhQhECABKAIQIQMCQAJAAn8CQANAIAEoAgAhBiABQYCAgIB4NgIAIAEoAgQhCwJAAkACQAJAAkAgBkGAgICAeEcEQCABKQIIIREgCyEHDAELAkAgAyAQRgRAQYCAgIB4IQYMAQsgASADQRBqIgg2AhAgAykCCCERIAMoAgQhByADKAIAIQYgCCEDC0GAgICAeCALEKMBIAZBgICAgHhGDQELIAIgBzYCDCACIAY2AgggAiARNwIQIBFCIIghEkF/IAUgEaciBEcgBCAFSxtB/wFxDgICAwELQYCAgIB4IAcQowEgAEGAgICAeDYCACABQYCAgIB4NgIADAcLAkAgEqdBAXENACAFIAQgByAEEDRrIgMgAyAFSRsiAyAESw0AIAIgAzYCECADIQQLAn9BgICAgHggBCAFTQ0AGgJAAkAgByAEIAVBuNrAABCQASgCBEUEQCACQThqIgMgAkEIaiIIIAVBAWsQPyACQTBqIANBCGooAgA2AgAgAiACKQI4NwMoIAItABQhBCADQRBqIAIoAgwgAigCECIHIAdBAWtB2NrAABCQASIHQRBqLwEAOwEAIAJCoICAgBA3AjggAiAHKQIINwJAIAggA0Ho2sAAEFcgAiAEOgA0IAItABRBAXFFDQEMAgsgAkE4aiIDIAJBCGogBRA/IAJBMGogA0EIaigCADYCACACIAIpAjg3AyggAiACLQAUIgM6ADQgAw0BCyACQShqEIsBCyACKAIwBEAgAkFAayACQTRqKAIANgIAIAJBAToAFCACIAIpAiw3AzggAigCKAwBCyACKAIoIAIoAixBBEEUEJ8BQYCAgIB4CyEDQYCAgIB4IAsQowEgASADNgIAIAwgAikDODcCACAMQQhqIAJBQGsoAgA2AgAgAEEIaiACQRBqKQIANwIAIAAgAikCCDcCAAwGCyAAIBE3AgggACAHNgIEIAAgBjYCAAwFCwJAIAMgEEcEQCABIANBEGoiCDYCECADKAIAIgZBgICAgHhHDQELIAJBADsAQCACQQI6ADwgAkECOgA4IAJBCGoiASAFIAJBOGoQQSAAIAIpAgg3AgAgAkEAOgAUIABBCGogAUEIaikCADcCAAwFCyADQQxqKAIAIQkgDyADKQIENwIAIA9BCGogCTYCACACIAY2AhggBSAEayIJRQ0BIBKnQQFxRQRAIAJBADsAQCACQQI6ADwgAkECOgA4IAJBCGogBSACQThqEEEMAgsgAi0AJEUEQCACQRhqEIsBCyACKAIcIQMgAigCICIKIAlNBEAgAkEIaiIEIAMgChCAAQJAIAItACQiBg0AIAJBADoAFCACKAIQIAVPDQAgAkEAOwBAIAJBAjoAPCACQQI6ADggBCAFIAJBOGoQQQsgAigCGCADQQRBFBCfASAGRQ0EQYCAgIB4IAsQowEgAUEIaiACQRBqKQIANwIAIAEgAikCCDcCAEGAgICAeCACEKMBIAghAwwBCwsgAyAKIAlB+NnAABCQASgCBEUEQCANQQhqIAcgBCAEQQFrQYjawAAQkAEiCEEQai8BADsBACANIAgpAgg3AgAgAkKggICAEDcCOCACQQhqIAJBOGpBmNrAABBXIAlBAWshCQsgCSAKTQRAIAJBCGogAyAJEIABIAIoAhghBiADIAogCRCIASAGQYCAgIB4Rg0DIAogCiAJayIIIAggCksbIQQgAi0AJAwCCyAJIApBqNrAABCzAQALIAJBKmogDkECai0AADoAACACIA4vAAA7ASggAigCICEEIAIoAhwhAyACLQAkCyEIQYCAgIB4IAsQowEgASAIOgAMIAEgBDYCCCABIAM2AgQgASAGNgIAIAEgAi8BKDsADSABQQ9qIAJBKmotAAA6AAALIAAgAikCCDcCACAAQQhqIAJBEGopAgA3AgALIAJB0ABqJAAL5QoCEH8BfiMAQZABayICJAAgACgCbCIFIAAoAhwiBmsiAUEAIAEgACgCFCIHIAZrIAVqTRshDSAFIAdqIQMgB0EEdCIBIAAoAhAiCmohDyAAKAIYIQwgACgCaCEOIAAoAqABIQsgACgCnAEhCCAKIQQDQAJAIAMgBkYNACABRQ0AIAkgDGpBACAELQAMIhAbIQkgA0EBayEDIAFBEGshASAEQRBqIQQgDSAQQQFzaiENDAELCyAIIAxHBEBBACEFIABBADYCFCACIAg2AjggAkEANgI0IAIgBzYCMCACIABBDGoiDDYCLCACIA82AiggAiAKNgIkIAJBgICAgHg2AhQgAkHIAGogAkEUaiIBEBACfyACKAJIQYCAgIB4RgRAIAEQoQFBBCEEQQAMAQsgAkEIakEEQQRBEEGUyMAAEGAgAkHQAGopAgAhESACKAIIIQEgAigCDCIEIAIpAkg3AgAgBEEIaiARNwIAIAJBATYCRCACIAQ2AkAgAiABNgI8IAJB2ABqIAJBFGpBKBAWGkEQIQNBASEFA0AgAkGAAWogAkHYAGoQECACKAKAAUGAgICAeEcEQCACKAI8IAVGBEAgAkE8akEBEI0BIAIoAkAhBAsgAyAEaiIBIAIpAoABNwIAIAFBCGogAkGIAWopAgA3AgAgAiAFQQFqIgU2AkQgA0EQaiEDDAELC0GAgICAeCACKAKEARCjASACQdgAahChASACKAI8CyEHIAkgDmohCSAFQQR0IQMgBCEBAkADQCADRQ0BIANBEGshAyABKAIIIQogAUEQaiEBIAggCkYNAAtB8M/AAEE3QajQwAAQcQALIAwQoAEgACAFNgIUIAAgBDYCECAAIAc2AgwgBSAGSQRAIAJBADsAYCACQQI6AFwgAkECOgBYIAAgBiAFayAIIAJB2ABqEC4gACgCFCEFCyAFQQFrIQRBACEBQQAhAwNAAkAgASANTw0AIAMgBE8NACABIAAoAhAgACgCFCADQbDPwAAQkgEtAAxBAXNqIQEgA0EBaiEDDAELCwJ/A0AgACgCFCIBIAggCUsNARogACgCECABIANBoM/AABCSAS0ADARAIANBAWohAyAJIAhrIQkMAQsLIAAoAhQLIQcgCSAIQQFrIgEgASAJSxshDiADIAYgBWtqIgFBAE4hBCABQQAgBBshBSAGQQAgASAEG2shBgsCQAJAAkBBfyAGIAtHIAYgC0sbQf8BcQ4CAgABCyAHIAZrIgFBACABIAdNGyIEIAsgBmsiASABIARLGyIDQQAgBSAGSRsgBWohBSABIARNDQEgAkEAOwBgIAJBAjoAXCACQQI6AFggACABIANrIAggAkHYAGoQLgwBCwJAIAYgC2siCiAGIAVBf3NqIgEgASAKSxsiBEUNACAAKAIQIQMgBCAHTQRAIAAgByAEayIBNgIUIAMgAUEEdGohAyAEIQEDQCABBEAgAygCACADQQRqKAIAQQRBFBCfASABQQFrIQEgA0EQaiEDDAELCyAAKAIUIQcgACgCECEDCwJAIAdFDQAgAyAHQQR0aiIBQRBGDQAgAUEEa0EAOgAADAELQZDPwAAQtgEACyAFIAprIARqIQULIAAgBTYCbCAAIA42AmggAEEBOgAgIAAgCzYCHCAAIAg2AhgCfyAAKAKgASIDIAAoAmQiAU0EQCAAIAM2AmQgAwwBCyAAQdwAaiADIAFrQQAQOiAAKAJkIQMgACgCoAELIQEgACgCYCADQQAgARBTIAAoApwBIgEgACgCdE0EQCAAIAFBAWs2AnQLIAAoAqABIgEgACgCeE0EQCAAIAFBAWs2AngLIAJBkAFqJAALuwkBB38CQAJAIAIgACABa0sEQCABIAJqIQUgACACaiEAIAJBEEkNAUEAIABBA3EiBmshBwJAIABBfHEiAyAATw0AIAZBAWsCQCAGRQRAIAUhBAwBCyAGIQggBSEEA0AgAEEBayIAIARBAWsiBC0AADoAACAIQQFrIggNAAsLQQNJDQAgBEEEayEEA0AgAEEBayAEQQNqLQAAOgAAIABBAmsgBEECai0AADoAACAAQQNrIARBAWotAAA6AAAgAEEEayIAIAQtAAA6AAAgBEEEayEEIAAgA0sNAAsLIAMgAiAGayIEQXxxIgJrIQBBACACayEGAkAgBSAHaiIFQQNxRQRAIAAgA08NASABIARqQQRrIQEDQCADQQRrIgMgASgCADYCACABQQRrIQEgACADSQ0ACwwBCyAAIANPDQAgBUEDdCICQRhxIQggBUF8cSIHQQRrIQFBACACa0EYcSEJIAcoAgAhAgNAIAIgCXQhByADQQRrIgMgByABKAIAIgIgCHZyNgIAIAFBBGshASAAIANJDQALCyAEQQNxIQIgBSAGaiEFDAELIAJBEE8EQAJAQQAgAGtBA3EiBiAAaiIEIABNDQAgBkEBayABIQMgBgRAIAYhBQNAIAAgAy0AADoAACADQQFqIQMgAEEBaiEAIAVBAWsiBQ0ACwtBB0kNAANAIAAgAy0AADoAACAAQQFqIANBAWotAAA6AAAgAEECaiADQQJqLQAAOgAAIABBA2ogA0EDai0AADoAACAAQQRqIANBBGotAAA6AAAgAEEFaiADQQVqLQAAOgAAIABBBmogA0EGai0AADoAACAAQQdqIANBB2otAAA6AAAgA0EIaiEDIAQgAEEIaiIARw0ACwsgAiAGayIDQXxxIgggBGohAAJAIAEgBmoiBUEDcUUEQCAAIARNDQEgBSEBA0AgBCABKAIANgIAIAFBBGohASAEQQRqIgQgAEkNAAsMAQsgACAETQ0AIAVBA3QiAkEYcSEGIAVBfHEiB0EEaiEBQQAgAmtBGHEhCSAHKAIAIQIDQCACIAZ2IQcgBCAHIAEoAgAiAiAJdHI2AgAgAUEEaiEBIARBBGoiBCAASQ0ACwsgA0EDcSECIAUgCGohAQsgACACaiIFIABNDQEgAkEBayACQQdxIgMEQANAIAAgAS0AADoAACABQQFqIQEgAEEBaiEAIANBAWsiAw0ACwtBB0kNAQNAIAAgAS0AADoAACAAQQFqIAFBAWotAAA6AAAgAEECaiABQQJqLQAAOgAAIABBA2ogAUEDai0AADoAACAAQQRqIAFBBGotAAA6AAAgAEEFaiABQQVqLQAAOgAAIABBBmogAUEGai0AADoAACAAQQdqIAFBB2otAAA6AAAgAUEIaiEBIAUgAEEIaiIARw0ACwwBCyAAIAJrIgQgAE8NACACQQFrIAJBA3EiAQRAA0AgAEEBayIAIAVBAWsiBS0AADoAACABQQFrIgENAAsLQQNJDQAgBUEEayEBA0AgAEEBayABQQNqLQAAOgAAIABBAmsgAUECai0AADoAACAAQQNrIAFBAWotAAA6AAAgAEEEayIAIAEtAAA6AAAgAUEEayEBIAAgBEsNAAsLC7gKAQV/IAAgAkGAzcAAEGIiAigCBCACKAIIIAFB0NXAABCQASgCBCEGQQEhBwJAAkACfwJAAkACQAJAAkACQAJAIANBoAFJDQAgA0ENdkGA7cAAai0AACIAQRVPDQEgA0EHdkE/cSAAQQZ0ckGA78AAai0AACIAQbQBTw0CAkACQCADQQJ2QR9xIABBBXRyQcD5wABqLQAAIANBAXRBBnF2QQNxQQJrDgIBAAILIANBjvwDa0ECSQ0BIANB3AtGDQEgA0HYL0YNASADQZA0Rg0BIANBg5gERg0BIANB/v//AHFB/MkCRg0BIANBogxrQeEESQ0BIANBgC9rQTBJDQEgA0Gx2gBrQT9JDQEgA0Hm4wdrQRpJDQELQQAhBwsgAigCCCIFIAFBf3NqIQACQAJAAkACQCAGDgMDAQIAC0Gg2MAAQShByNjAABBxAAsgAigCBCEGIAcNBwJAAkACQCAADgIAAQILIAYgBSABQfDVwAAQkAEiAkEgNgIAQQAhAEEBIQYMCwtBAiEAIAYgBSABQYDWwAAQkAEiBUECNgIEIAUgAzYCACAFIAQpAAA3AAggBUEQaiAEQQhqLwAAOwAAIAIoAgQgAigCCCABQQFqQZDWwAAQkAEiAkEgNgIADAcLQQIhACAGIAUgAUGg1sAAEJABIgVBAjYCBCAFIAM2AgAgBSAEKQAANwAIIAVBEGogBEEIaiIDLwAAOwAAIAIoAgQgAigCCCABQQFqIgVBsNbAABCQASgCBEECRgRAIAIoAgQgAigCCCABQQJqQcDWwAAQkAEiAUKggICAEDcCACABIAQpAAA3AAggAUEQaiADLwAAOwAACyACKAIEIAIoAgggBUHQ1sAAEJABIgJBIDYCAAwGC0EBIQYgAUEBaiEIIAIoAgQhCSAHDQRBAiEAIAkgBSABQYDXwAAQkAEiAUECNgIEIAEgAzYCACABIAQpAAA3AAggAUEQaiAEQQhqLwAAOwAAIAIoAgQgAigCCCAIQZDXwAAQkAEiAkEgNgIADAULIAcNAgJAAkAgAA4CCgABC0EBIQYgAigCBCAFIAFBAWpBwNfAABCQASICQSA2AgBBACEADAgLIAIoAgQgBSABQQFrQdDXwAAQkAEiAEKggICAEDcCACAAIAQpAAA3AAggAEEQaiAEQQhqIgcvAAA7AABBAiEAIAIoAgQgAigCCCABQeDXwAAQkAEiBUECNgIEIAUgAzYCACAFIAQpAAA3AAggBUEQaiAHLwAAOwAAIAIoAgQgAigCCCABQQFqIgNB8NfAABCQASgCBEECRgRAIAIoAgQgAigCCCABQQJqQYDYwAAQkAEiAUKggICAEDcCACABIAQpAAA3AAggAUEQaiAHLwAAOwAACyACKAIEIAIoAgggA0GQ2MAAEJABIgJBIDYCAAwECyAAQRVB9MbAABBLAAsgAEG0AUGEx8AAEEsACyACKAIEIAUgAUEBa0Gg18AAEJABIgBCoICAgBA3AgAgACAEKQAANwAIIABBEGogBEEIai8AADsAACACKAIEIAIoAgggAUGw18AAEJABDAMLIAkgBSABQeDWwAAQkAEiAEEBNgIEIAAgAzYCACAAIAQpAAA3AAggAEEQaiAEQQhqLwAAOwAAIAIoAgQgAigCCCAIQfDWwAAQkAEiAkEgNgIAQQEhAAwDC0EAIQYMAgsgBiAFIAFB4NXAABCQAQsiAiADNgIAQQEhBkEBIQALIAIgBjYCBCACIAQpAAA3AAggAkEQaiAEQQhqLwAAOwAACyAAC6IGAQx/IwBBEGsiBiQAQQohAwJAIAAoAgAiAEGQzgBJBEAgACECDAELA0AgBkEGaiADaiIEQQRrIABBkM4AbiICQfCxA2wgAGoiB0H//wNxQeQAbiIIQQF0QZXnwABqLwAAOwAAIARBAmsgCEGcf2wgB2pB//8DcUEBdEGV58AAai8AADsAACADQQRrIQMgAEH/wdcvSyACIQANAAsLIAJB4wBLBEAgA0ECayIDIAZBBmpqIAIgAkH//wNxQeQAbiICQZx/bGpB//8DcUEBdEGV58AAai8AADsAAAsCQCACQQpPBEAgA0ECayIAIAZBBmpqIAJBAXRBlefAAGovAAA7AAAMAQsgA0EBayIAIAZBBmpqIAJBMHI6AAALQQogAGshBEEBIQNBK0GAgMQAIAEoAhQiAkEBcSIFGyEHIAJBBHFBAnYhCCAGQQZqIABqIQoCQCABKAIARQRAIAEoAhwiACABKAIgIgEgByAIEHgNASAAIAogBCABKAIMEQMAIQMMAQsgASgCBCIJIAQgBWoiC00EQCABKAIcIgAgASgCICIBIAcgCBB4DQEgACAKIAQgASgCDBEDACEDDAELIAJBCHEEQCABKAIQIQwgAUEwNgIQIAEtABghDSABQQE6ABggASgCHCICIAEoAiAiCyAHIAgQeA0BIAAgCWogBWtBCWshAANAIABBAWsiAARAIAJBMCALKAIQEQIARQ0BDAMLCyACIAogBCALKAIMEQMADQEgASANOgAYIAEgDDYCEEEAIQMMAQsgCSALayECAkACQAJAQQEgAS0AGCIAIABBA0YbIgBBAWsOAgABAgsgAiEAQQAhAgwBCyACQQF2IQAgAkEBakEBdiECCyAAQQFqIQAgASgCECEJIAEoAiAhBSABKAIcIQECQANAIABBAWsiAEUNASABIAkgBSgCEBECAEUNAAsMAQsgASAFIAcgCBB4DQAgASAKIAQgBSgCDBEDAA0AQQAhAANAIAAgAkYEQEEAIQMMAgsgAEEBaiEAIAEgCSAFKAIQEQIARQ0ACyAAQQFrIAJJIQMLIAZBEGokACADC8kFAgp/AX4jAEGQAWsiBCQAAkACQAJAA0BBACACQQR0ayEFAkADQCACRQ0FIABFDQUgACACakEYSQ0DIAAgAiAAIAJJIgMbQQlJDQEgA0UEQCABIQMDQCADIAVqIgEgAyACEGogASEDIAIgACACayIATQ0ACwwBCwtBACAAQQR0IgNrIQUDQCABIAVqIAEgABBqIAEgA2ohASACIABrIgIgAE8NAAsMAQsLIAEgAEEEdCIFayIDIAJBBHQiBmohByAAIAJLDQEgBEEQaiIAIAMgBRAWGiADIAEgBhASIAcgACAFEBYaDAILIARBCGoiByABIABBBHRrIgZBCGopAgA3AwAgBCAGKQIANwMAIAJBBHQhCCACIgUhAQNAIAYgAUEEdGohAwNAIARBGGoiCSADQQhqIgopAgA3AwAgBCADKQIANwMQIAcpAwAhDSADIAQpAwA3AgAgCiANNwIAIAcgCSkDADcDACAEIAQpAxA3AwAgACABSwRAIAMgCGohAyABIAJqIQEMAQsLIAEgAGsiAQRAIAEgBSABIAVJGyEFDAEFIAQpAwAhDSAGQQhqIARBCGoiBykDADcCACAGIA03AgBBASAFIAVBAU0bIQlBASEBA0AgASAJRg0EIAYgAUEEdGoiBSkCACENIAcgBUEIaiIKKQIANwMAIAQgDTcDACABIAJqIQMDQCAEQRhqIgsgBiADQQR0aiIIQQhqIgwpAgA3AwAgBCAIKQIANwMQIAcpAwAhDSAIIAQpAwA3AgAgDCANNwIAIAcgCykDADcDACAEIAQpAxA3AwAgACADSwRAIAIgA2ohAwwBCyADIABrIgMgAUcNAAsgBCkDACENIAogBykDADcCACAFIA03AgAgAUEBaiEBDAALAAsACwALIARBEGoiACABIAYQFhogByADIAUQEiADIAAgBhAWGgsgBEGQAWokAAuQBQEIfwJAIAJBEEkEQCAAIQMMAQsCQEEAIABrQQNxIgYgAGoiBSAATQ0AIAZBAWsgACEDIAEhBCAGBEAgBiEHA0AgAyAELQAAOgAAIARBAWohBCADQQFqIQMgB0EBayIHDQALC0EHSQ0AA0AgAyAELQAAOgAAIANBAWogBEEBai0AADoAACADQQJqIARBAmotAAA6AAAgA0EDaiAEQQNqLQAAOgAAIANBBGogBEEEai0AADoAACADQQVqIARBBWotAAA6AAAgA0EGaiAEQQZqLQAAOgAAIANBB2ogBEEHai0AADoAACAEQQhqIQQgBSADQQhqIgNHDQALCyACIAZr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AygCHCIAIAEgAhAlIANBKGogAEHgAGooAgAgAEHkAGooAgAQIyADQRBqIAAQJCADIAMpAxA3AjQgA0EIaiADKAIsIAMoAjAQWyADKAIMIQAgAygCCEEBcQRAIAMgADYCPCADQTxqQezCwAAQQgALIANBKGoQbiADKAIgIAMoAiQQsgEgA0FAayQAIAALmQEBA38gAUFsbCECIAFB/////wNxIQMgACABQRRsaiEBQQAhAAJAA0AgAkUNAQJAIAFBFGsiBCgCAEEgRw0AIAFBEGsoAgBBAUcNACABQQxrLQAAQQJHDQAgAUEIay0AAEECRw0AIAFBBGstAAANACABQQNrLQAAQR9xDQAgAkEUaiECIABBAWohACAEIQEMAQsLIAAhAwsgAwuxAQECfyMAQRBrIgIkAAJAIAFFDQAgAUEDakECdiEBAkAgAEEETQRAIAFBAWsiA0GAAkkNAQsgAkGsssEAKAIANgIIIAEgACACQQhqQaiqwQBBBEEFEE8hAEGsssEAIAIoAgg2AgAMAQsgAkGsssEANgIEIAIgA0ECdEGsqsEAaiIDKAIANgIMIAEgACACQQxqIAJBBGpBBkEHEE8hACADIAIoAgw2AgALIAJBEGokACAAC6ABAQN/IwBBEGsiBSQAIAVBCGogACABIAJB4M7AABBnIAUoAgwiBiADIAIgAWsiByADIAdJGyIDTwRAIAYgA2siBiAFKAIIIAZBBHRqIAMQFSAAIAEgASADaiAEECogAQRAIAAgAUEBa0HwzsAAEGJBADoADAsgACACQQFrQYDPwAAQYkEAOgAMIAVBEGokAA8LQczJwABBIUHwycAAEHEAC6gBAQF/IwBBQGoiAyQAIANBCGogACgCABACIAMoAgghACADIAMoAgw2AgQgAyAANgIAIANBATYCMCADQQI2AhggA0GYqsEANgIUIANCATcCICADIAMoAgQiADYCPCADIAMoAgA2AjggAyAANgI0IAMgA0E0ajYCLCADIANBLGo2AhwgASACIANBFGoQFyADKAI0IgEEQCADKAI4QQEgARA4CyADQUBrJAALpAEBAX8jAEEQayIDJAACQCAARQ0AIAJFDQACQCABQQRNBEAgAkEDakECdkEBayIBQYACSQ0BCyADQayywQAoAgA2AgggACADQQhqQaiqwQBBAhAxQayywQAgAygC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BDYCBCAAIAE2AgALOAACQCABaUEBRw0AQYCAgIB4IAFrIABJDQAgAARAQeyywQAtAAAaIAEgABA1IgFFDQELIAEPCwALOAACQCACQYCAxABGDQAgACACIAEoAhARAgBFDQBBAQ8LIANFBEBBAA8LIAAgA0EAIAEoAgwRAwALLQEBfyABIAAoAgBPBH8gACgCBCECIAAtAAhFBEAgASACTQ8LIAEgAkkFQQALC3ABA38gACgCACIEIAAoAggiBUYEQCMAQRBrIgMkACADQQhqIAAgBEEBQQJBCBAmIAMoAggiBEGBgICAeEcEQCADKAIMGiAEIAIQrgEACyADQRBqJAALIAAgBUEBajYCCCAAKAIEIAVBA3RqIAE3AQALNAEBfyAAKAIIIgMgACgCAEYEQCAAIAIQawsgACADQQFqNgIIIAAoAgQgA0ECdGogATYCAAsuAQF/IwBBEGsiAiQAIAJBCGogASAAEIwBIAIoAggiAARAIAJBEGokACAADwsACzcBAX8jAEEgayIBJAAgAUEANgIYIAFBATYCDCABQYzpwAA2AgggAUIENwIQIAFBCGogABCKAQALKgEBfyACIAMQNSIEBEAgBCAAIAEgAyABIANJGxAWGiAAIAIgARA4CyAECysAIAIgA0kEQCADIAIgBBC0AQALIAAgAiADazYCBCAAIAEgA0EUbGo2AgALLwEBfyAAIAIQjgEgACgCBCAAKAIIIgNBFGxqIAEgAkEUbBAWGiAAIAIgA2o2AggLKwAgASADSwRAIAEgAyAEELQBAAsgACADIAFrNgIEIAAgAiABQQR0ajYCAAsvAAJAAkAgA2lBAUcNAEGAgICAeCADayABSQ0AIAAgASADIAIQfiIADQELAAsgAAsuAANAIAEEQCAAKAIAIABBBGooAgBBBEEUEJ8BIAFBAWshASAAQRBqIQAMAQsLCzIBAX8gACgCCCECIAEgACgCAEECai0AABCbASEBIAAoAgQgAiABEAEgACACQQFqNgIICyoAIAAgACgCaCABaiIBIAAoApwBIgBBAWsgACABSxtBACABQQBOGzYCaAszAQJ/IAAgACgCqAEiAiAAKAKsAUEBaiIDIAEgAEGyAWoQNiAAKAJgIAAoAmQgAiADEFMLMwECfyAAIAAoAqgBIgIgACgCrAFBAWoiAyABIABBsgFqEB0gACgCYCAAKAJkIAIgAxBTCyoAIAEgAkkEQEGkyMAAQSNBvMnAABBxAAsgAiAAIAJBFGxqIAEgAmsQGQs1ACAAIAApAnQ3AmggACAAKQF8NwGyASAAIAAvAYYBOwG+ASAAQboBaiAAQYQBai8BADsBAAvsAQICfwF+IwBBEGsiAiQAIAJBATsBDCACIAE2AgggAiAANgIEIwBBEGsiASQAIAJBBGoiACkCACEEIAEgADYCDCABIAQ3AgQjAEEQayIAJAAgAUEEaiIBKAIAIgIoAgwhAwJAAkACQAJAIAIoAgQOAgABAgsgAw0BQQEhAkEAIQMMAgsgAw0AIAIoAgAiAigCBCEDIAIoAgAhAgwBCyAAQYCAgIB4NgIAIAAgATYCDCABKAIIIgEtAAkaIABBGyABLQAIEEoACyAAIAM2AgQgACACNgIAIAEoAggiAS0ACRogAEEcIAEtAAgQSgALKwECfwJAIAAoAgQgACgCCCIBEDQiAkUNACABIAJJDQAgACABIAJrNgIICwsmACACBEBB7LLBAC0AABogASACEDUhAQsgACACNgIEIAAgATYCAAsjAQF/IAEgACgCACAAKAIIIgJrSwRAIAAgAiABQQRBEBBtCwsjAQF/IAEgACgCACAAKAIIIgJrSwRAIAAgAiABQQRBFBBtCwslACAAQQE2AgQgACABKAIEIAEoAgBrQQR2IgE2AgggACABNgIACxsAIAEgAk0EQCACIAEgAxBLAAsgACACQRRsagsgACABIAJNBEAgAiABQeTjwAAQSwALIAAgAmpBAToAAAsbACABIAJNBEAgAiABIAMQSwALIAAgAkEEdGoLAwAACwMAAAsDAAALAwAACwMAAAsDAAALGgBB7LLBAC0AABpBBCAAEDUiAARAIAAPCwALIQAgAEUEQEGc68AAQTIQuQEACyAAIAIgAyABKAIQEQEACxYAIAFBAXFFBEAgALgQCQ8LIACtEAoLRgEBfyAAIAAoAgBBAWsiATYCACABRQRAIABBDGoQRwJAIABBf0YNACAAIAAoAgRBAWsiATYCBCABDQAgAEEEQZwGEDgLCwsfACAARQRAQZzrwABBMhC5AQALIAAgAiABKAIQEQIACyEBAX8gACgCECIBIAAoAhQQgwEgACgCDCABQQRBEBCfAQsSACAABEAgASACIAAgA2wQOAsLIQEBfyAAKAIEIgEgACgCCBCDASAAKAIAIAFBBEEQEJ8BCxYAIABBEGoQWCAAKAIAIAAoAgQQowELFAAgACAAKAIAQQFrNgIAIAEQnAELGQAgAEGAgICAeEcEQCAAIAFBBEEUEJ8BCwsUACABBEBBgICAgHggARCjAQsgAQsZACABKAIcQcjlwABBDiABKAIgKAIMEQMACw8AIAIEQCAAIAEgAhA4CwsPACABBEAgACACIAEQOAsLEwAgAARADwtBpKnBAEEbELkBAAsPACAAQYQBTwRAIAAQAwsLEwAgACgCCCAAKAIAQQJBAhCfAQsVACACIAIQpAEaIABBgICAgHg2AgALFAAgACgCACABIAAoAgQoAgwRAgALEAAgASAAKAIEIAAoAggQDws8ACAARQRAIwBBIGsiACQAIABBADYCGCAAQQE2AgwgAEHQxMAANgIIIABCBDcCECAAQQhqIAEQigEACwALFAAgAEEANgIIIABCgICAgBA3AgALEgAgACABQZDNwAAQYkEBOgAMCxAAIAEgACgCACAAKAIEEA8LDgAgAEEANgIAIAEQnAELawEBfyMAQTBrIgMkACADIAE2AgQgAyAANgIAIANBAjYCDCADQejpwAA2AgggA0ICNwIUIAMgA0EEaq1CgICAgOABhDcDKCADIAOtQoCAgIDgAYQ3AyAgAyADQSBqNgIQIANBCGogAhCKAQALawEBfyMAQTBrIgMkACADIAE2AgQgAyAANgIAIANBAjYCDCADQcjpwAA2AgggA0ICNwIUIAMgA0EEaq1CgICAgOABhDcDKCADIAOtQoCAgIDgAYQ3AyAgAyADQSBqNgIQIANBCGogAhCKAQALawEBfyMAQTBrIgMkACADIAE2AgQgAyAANgIAIANBAjYCDCADQZzqwAA2AgggA0ICNwIUIAMgA0EEaq1CgICAgOABhDcDKCADIAOtQoCAgIDgAYQ3AyAgAyADQSBqNgIQIANBCGogAhCKAQALDgBB8OXAAEErIAAQcQALCwAgACMAaiQAIwALDgBBv6nBAEHPABC5AQALCQAgACABEAcACw0AIABB9ObAACABEBcLDAAgACABKQIANwMACwoAIAAoAgAQqQELDQAgAEGAgICAeDYCAAsJACAAQQA2AgALBgAgABBYCwUAQYAECwQAQQELBAAgAQsEAEEACwvSbSAAQYCAwAALQB0AAAAEAAAABAAAAB4AAABjYWxsZWQgYFJlc3VsdDo6dW53cmFwKClgIG9uIGFuIGBFcnJgIHZhbHVlRXJyb3IAQb+JwAALAXgAQeCJwAALEP////////////////////8AQYaKwAALDwEAAAAAACAAAAAAAAAAAgBBwIrAAAsg//////////////////////////////////////////8AQaSLwAALCBAAAAAAAAABAEHAuMAACwL/BwBB1LjAAAsHDwD////1/wBBgLnAAAsW////////////////////////////AwBBoLnAAAsd/////////////////////////////////////w8AQf+5wAALGPz//////////////////////////////wBBoLrAAAs+//////////////////////////////////////////////////////////////////////////////////8AQYy7wAALOP////////////////////////////////////////////////////////////////////////9/AEHgu8AAC9EB/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////wMAQcC9wAALJ///////////////////////////////////////////////////DwBBwMDAAAvBI3NyYy9saWIucnMAAAEADwDwGg8AAAAAAOIlAADlJQAAAAAAALDgAACz4AAAAAAAADz7AQBp+wEAAAAAAGr7AQBs+wEAAAAAAIAlAACfJQAAAAAAAAD7AQA7+wEAAAAAAGF0dGVtcHRlZCB0byB0YWtlIG93bmVyc2hpcCBvZiBSdXN0IHZhbHVlIHdoaWxlIGl0IHdhcyBib3Jyb3dlZGJndGV4dGNvZGVwb2ludHNyYXN0ZXJfc3ltYm9s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FVFVVVVVVVVVAAAAAAAAQFVVVVVVVVVVVdVXVVVVVVVVVVVVVVUFAABUVVVVVVVVVVVVVVVVVRUAAFVVUVVVVVVVBRAAAAEBUFVVVVVVVVVVVVUBVVVVVVX/////f1VVVVBVAABVVVVVVVVVVVVVBQBBwPzAAAuYBEBVVVVVVVVVVVVVVVVVRVQBAFRRAQBVVQVVVVVVVVVVUVVVVVVVVVVVVVVVVVVVRAFUVVFVFVVVBVVVVVVVVUVBVVVVVVVVVVVVVVVVVVVUQRUUUFFVVVVVVVVVUFFVVUFVVVVVVVVVVVVVVVVVVVQBEFRRVVVVVQVVVVVVVQUAUVVVVVVVVVVVVVVVVVVVBAFUVVFVAVVVBVVVVVVVVVVFVVVVVVVVVVVVVVVVVVVFVFVVUVUVVVVVVVVVVVVVVVRUVVVVVVVVVVVVVVVVVQRUBQRQVUFVVQVVVVVVVVVVUVVVVVVVVVVVVVVVVVVVFEQFBFBVQVVVBVVVVVVVVVVQVVVVVVVVVVVVVVVVVRVEAVRVQVUVVVUFVVVVVVVVVVFVVVVVVVVVVVVVVVVVVVVVVUUVBURVFVVVVVVVVVVVVVVVVVVVVVVVVVVVUQBAVVUVAEBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVRAABUVVUAQFVVVVVVVVVVVVVVVVVVVVVVVVBVVVVVVVURUVVVVVVVVVVVVVVVVVUBAABAAARVAQAAAQAAAAAAAAAAVFVFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQEEAEFBVVVVVVVVUAVUVVVVAVRVVUVBVVFVVVVRVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqAEGAgcEAC5ADVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUBVVVVVVVVVVVVVVVVBVRVVVVVVVUFVVVVVVVVVQVVVVVVVVVVBVVVVX///ff//ddfd9bV11UQAFBVRQEAAFVXUVVVVVVVVVVVVVUVAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQVVVVVVVVVVVUVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQBVUVUVVAVVVVVVVVVVVVVVVVVVVVVVVVVVVVVcVFFVVVVVVVVVVVVVVVVVVRQBARAEAVBUAABRVVVVVVVVVVVVVVVUAAAAAAAAAQFVVVVVVVVVVVVVVVQBVVVVVVVVVVVVVVVUAAFAFVVVVVVVVVVVVFQAAVVVVUFVVVVVVVVUFUBBQVVVVVVVVVVVVVVVVVUVQEVBVVVVVVVVVVVVVVVVVVQAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAAAAAQAVFFVVFBVVVVVVVVVVVVVVVVVVVVVVQBBoITBAAuTCFVVFQBVVVVVVVUFQFVVVVVVVVVVVVVVVQAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAAAAAAAAAFRVVVVVVVVVVVX1VVVVaVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV/VfXVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX1VVVVVVV9VVVVVVVVVVVVVVVX///9VVVVVVVVVVVVV1VVVVVXVVVVVXVX1VVVVVX1VX1V1VVdVVVVVdVX1XXVdVV31VVVVVVVVVVdVVVVVVVVVVXfV31VVVVVVVVVVVVVVVVVVVf1VVVVVVVVXVVXVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVdVXVVVVVVVVVVVVVVVVV11VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVFVBVVVVVVVVVVVVVVVVVVVX9////////////////X1XVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAAAAAAAAAAqqqqqqqqmqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpVVVWqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqlpVVVVVVVWqqqqqqqqqqqqqqqqqqgoAqqqqaqmqqqqqqqqqqqqqqqqqqqqqqqqqqmqBqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqlWpqqqqqqqqqqqqqqmqqqqqqqqqqqqqqqqoqqqqqqqqqqqqaqqqqqqqqqqqqqqqqqqqqqqqqqqqqlVVlaqqqqqqqqqqqqqqaqqqqqqqqqqqqqpVVaqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpVVVVVVVVVVVVVVVVVVVVVqqqqVqqqqqqqqqqqqqqqqqpqVVVVVVVVVVVVVVVVVV9VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUVQAAAUFVVVVVVVVUFVVVVVVVVVVVVVVVVVVVVVVVVVVVQVVVVRUUVVVVVVVVVQVVUVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVBVVVVVVVUAAAAAUFVFFVVVVVVVVVVVVQUAUFVVVVVVFQAAUFVVVaqqqqqqqqpWQFVVVVVVVVVVVVVVFQVQUFVVVVVVVVVVVVFVVVVVVVVVVVVVVVVVVVVVAUBBQVVVFVVVVFVVVVVVVVVVVVVVVFVVVVVVVVVVVVVVVQQUVAVRVVVVVVVVVVVVVVBVRVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVFUUVVVVVWqqqqqqqqqqqpVVVUAAAAAAEAVAEG/jMEAC+EMVVVVVVVVVVVFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAA8KqqWlUAAAAAqqqqqqqqqqpqqqqqqmqqVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVFamqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqlZVVVVVVVVVVVVVVVVVVQVUVVVVVVVVVVVVVVVVVVVVqmpVVQAAVFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVRVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUFQFUBQVUAVVVVVVVVVVVVVUAVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVBVVVVVVVV1VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUVVFVVVVVVVVVVVVVVVVVVVVVVVVUBVVVVVVVVVVVVVVVVVVVVVVUFAABUVVVVVVVVVVVVVVUFUFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVFVVVVVVVVVVVVVVVVVAAAAQFVVVVVVVVVVVVUUVFUVUFVVVVVVVVVVVVVVFUBBVUVVVVVVVVVVVVVVVVVVVVVAVVVVVVVVVVUVAAEAVFVVVVVVVVVVVVVVVVVVFVVVVVBVVVVVVVVVVVVVVVUFAEAFVQEUVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUVUARVRVFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVRUVAEBVVVVVVVBVVVVVVVVVVVVVVVVVFURUVVVVVRVVVVUFAFQAVFVVVVVVVVVVVVVVVVVVVVUAAAVEVVVVVVVFVVVVVVVVVVVVVVVVVVVVVVVVVVUUAEQRBFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVFQVQVRBUVVVVVVVVUFVVVVVVVVVVVVVVVVVVVVVVVVVVFQBAEVRVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVFVEAEFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUBBRAAVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUVAABBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUVRUEEVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAFVVRVVVVVVVVVAQBAVVVVVVVVVVVVFQAEQFUVVVUBQAFVVVVVVVVVVVVVAAAAAEBQVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQBAABBVVVVVVVVVVVVVVVVVVVVVVVVVVQUAAAAAAAUABEFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUBQEUQAABVVVVVVVVVVVVVVVVVVVVVVVVQEVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVRVUVVVAVVVVVVVVVVVVVVVVBUBVRFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUFQAAAFBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQBUVVVVVVVVVVVVVVVVVVUAQFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUVVVVVVVVVVVVVVVVVVVVVFUBVVVVVVVVVVVVVVVVVVVVVVVVVqlRVVVpVVVWqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpVVaqqqqqqqqqqqqqqqqqqqqqqqqqqqlpVVVVVVVVVVVVVqqpWVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVqqmqaaqqqqqqqqqqalVVVWVVVVVVVVVVallVVVWqVVWqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqlVVVVVVVVVVQQBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQBBq5nBAAt1UAAAAAAAQFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVRFQBQAAAABAAQBVVVVVVVVVBVBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUFVFVVVVVVVVVVVVVVVVVVAEGtmsEACwJAFQBBu5rBAAvFBlRVUVVVVVRVVVVVFQABAAAAVVVVVVVVVVVVVVVVVVVVVVVVVVUAQAAAAAAUABAEQFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVRVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVFVVVVVVVVVVVVVVVVVVVVAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAEBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAQFVVVVVVVVVVVVVVVVVVV1VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVXVVVVVVVVVVVVVVVVVVVVVdf3/f1VVVVVVVVVVVVVVVVVVVVVVVfX///////9uVVVVqqq6qqqqqur6v79VqqpWVV9VVVWqWlVVVVVVVf//////////V1VV/f/f///////////////////////3//////9VVVX/////////////f9X/VVVV/////1dX//////////////////////9/9//////////////////////////////////////////////////////////////X////////////////////X1VV1X////////9VVVVVdVVVVVVVVX1VVVVXVVVVVVVVVVVVVVVVVVVVVVVVVVXV////////////////////////////VVVVVVVVVVVVVVVV//////////////////////9fVVd//VX/VVXVV1X//1dVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX///9VV1VVVVVVVf//////////////f///3/////////////////////////////////////////////////////////////9VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV////V///V1X//////////////9//X1X1////Vf//V1X//1dVqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqlpVVVVVVVVVVVmWVWGqpVmqVVVVVVWVVVVVVVVVVZVVVQBBjqHBAAsBAwBBnKHBAAuJCVVVVVVVlVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVFQCWalpaaqoFQKZZlWVVVVVVVVVVVQAAAABVVlVVqVZVVVVVVVVVVVVWVVVVVVVVVVUAAAAAAAAAAFRVVVWVWVlVVWVVVWlVVVVVVVVVVVVVVZVWlWqqqqpVqqpaVVVVWVWqqqpVVVVVZVVVWlVVVVWlZVZVVVWVVVVVVVVVppaalllZZamWqqpmVapVWllVWlZlVVVVaqqlpVpVVVWlqlpVVVlZVVVZVVVVVVWVVVVVVVVVVVVVVVVVVVVVVVVVVVVlVfVVVVVpVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpVqqqqqqqqqqqqVVVVqqqqqqVaVVWaqlpVpaVVWlqllqVaVVVVpVpVlVVVVX1VaVmlVV9VZlVVVVVVVVVVZlX///9VVVWammqaVVVV1VVVVVXVVVWlXVX1VVVVVb1Vr6q6qquqqppVuqr6rrquVV31VVVVVVVVVVdVVVVVWVVVVXfV31VVVVVVVVWlqqpVVVVVVVXVV1VVVVVVVVVVVVVVVVetWlVVVVVVVVVVVaqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqAAAAwKqqWlUAAAAAqqqqqqqqqqpqqqqqqmqqVVVVVVVVVVVVVVVVBVRVVVVVVVVVVVVVVVVVVVWqalVVAABUWaqqalWqqqqqqqqqWqqqqqqqqqqqqqqqqqqqWlWqqqqqqqqquv7/v6qqqqpWVVVVVVVVVVVVVVVVVfX///////8vbml4L3N0b3JlLzI4aHl6ZmwzMzhrczRhbWhhN3ZwcG5sYnExczFucWF2LXJ1c3QtZGVmYXVsdC0xLjg1LjAvbGliL3J1c3RsaWIvc3JjL3J1c3QvbGlicmFyeS9hbGxvYy9zcmMvcmF3X3ZlYy5ycy9ob21lL3J1bm5lci8uY2FyZ28vcmVnaXN0cnkvc3JjL2luZGV4LmNyYXRlcy5pby0xOTQ5Y2Y4YzZiNWI1NTdmL3dhc20tYmluZGdlbi0wLjIuMTA2L3NyYy9jb252ZXJ0L3NsaWNlcy5ycy9ob21lL3J1bm5lci8uY2FyZ28vcmVnaXN0cnkvc3JjL2luZGV4LmNyYXRlcy5pby0xOTQ5Y2Y4YzZiNWI1NTdmL3dhc20tYmluZGdlbi0wLjIuMTA2L3NyYy9leHRlcm5yZWYucnMdVBAAZwAAAH8AAAARAAAAHVQQAGcAAACMAAAAEQAAAG51bGwgcG9pbnRlciBwYXNzZWQgdG8gcnVzdHJlY3Vyc2l2ZSB1c2Ugb2YgYW4gb2JqZWN0IGRldGVjdGVkIHdoaWNoIHdvdWxkIGxlYWQgdG8gdW5zYWZlIGFsaWFzaW5nIGluIHJ1c3RKc1ZhbHVlKCkADlUQAAgAAAAWVRAAAQBBqKrBAAsBBABICXByb2R1Y2VycwEMcHJvY2Vzc2VkLWJ5AgZ3YWxydXMGMC4yNC40DHdhc20tYmluZGdlbhMwLjIuMTA2ICgxMTgzMWZiODkp");
-async function init(options) {
-	await __wbg_init({
-		module_or_path: await options.module,
-		memory: options.memory
-	});
-	return exports$1;
-}
-var Clock = class {
-	constructor() {
-		let speed = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : 1;
-		this.speed = speed;
-		this.startTime = performance.now();
-	}
-	getTime() {
-		return this.speed * (performance.now() - this.startTime) / 1e3;
-	}
-	setTime(time) {
-		this.startTime = performance.now() - time / this.speed * 1e3;
-	}
-};
-var NullClock = class {
-	constructor() {}
-	getTime(_speed) {}
-	setTime(_time) {}
-};
-var Stream = class Stream {
-	constructor(input, xfs) {
-		this.input = typeof input.next === "function" ? input : input[Symbol.iterator]();
-		this.xfs = xfs ?? [];
-	}
-	map(f) {
-		return this.transform(Map$1(f));
-	}
-	flatMap(f) {
-		return this.transform(FlatMap(f));
-	}
-	filter(f) {
-		return this.transform(Filter(f));
-	}
-	take(n) {
-		return this.transform(Take(n));
-	}
-	drop(n) {
-		return this.transform(Drop(n));
-	}
-	transform(f) {
-		return new Stream(this.input, this.xfs.concat([f]));
-	}
-	multiplex(other, comparator) {
-		return new Stream(new Multiplexer(this[Symbol.iterator](), other[Symbol.iterator](), comparator));
-	}
-	toArray() {
-		return Array.from(this);
-	}
-	[Symbol.iterator]() {
-		let v = 0;
-		let values = [];
-		let flushed = false;
-		const xf = compose(this.xfs, (val) => values.push(val));
-		return { next: () => {
-			if (v === values.length) {
-				values = [];
-				v = 0;
-			}
-			while (values.length === 0) {
-				const next = this.input.next();
-				if (next.done) break;
-				else xf.step(next.value);
-			}
-			if (values.length === 0 && !flushed) {
-				xf.flush();
-				flushed = true;
-			}
-			if (values.length > 0) return {
-				done: false,
-				value: values[v++]
-			};
-			else return { done: true };
-		} };
-	}
-};
-function Map$1(f) {
-	return (emit) => {
-		return (input) => {
-			emit(f(input));
-		};
-	};
-}
-function FlatMap(f) {
-	return (emit) => {
-		return (input) => {
-			f(input).forEach(emit);
-		};
-	};
-}
-function Filter(f) {
-	return (emit) => {
-		return (input) => {
-			if (f(input)) emit(input);
-		};
-	};
-}
-function Take(n) {
-	let c = 0;
-	return (emit) => {
-		return (input) => {
-			if (c < n) emit(input);
-			c += 1;
-		};
-	};
-}
-function Drop(n) {
-	let c = 0;
-	return (emit) => {
-		return (input) => {
-			c += 1;
-			if (c > n) emit(input);
-		};
-	};
-}
-function compose(xfs, push) {
-	return xfs.reverse().reduce((next, curr) => {
-		const xf = toXf(curr(next.step));
-		return {
-			step: xf.step,
-			flush: () => {
-				xf.flush();
-				next.flush();
-			}
-		};
-	}, toXf(push));
-}
-function toXf(xf) {
-	if (typeof xf === "function") return {
-		step: xf,
-		flush: () => {}
-	};
-	else return xf;
-}
-var Multiplexer = class {
-	constructor(left, right, comparator) {
-		this.left = left;
-		this.right = right;
-		this.comparator = comparator;
-	}
-	[Symbol.iterator]() {
-		let leftItem;
-		let rightItem;
-		return { next: () => {
-			if (leftItem === void 0 && this.left !== void 0) {
-				const result = this.left.next();
-				if (result.done) this.left = void 0;
-				else leftItem = result.value;
-			}
-			if (rightItem === void 0 && this.right !== void 0) {
-				const result = this.right.next();
-				if (result.done) this.right = void 0;
-				else rightItem = result.value;
-			}
-			if (leftItem === void 0 && rightItem === void 0) return { done: true };
-			else if (leftItem === void 0) {
-				const value = rightItem;
-				rightItem = void 0;
-				return {
-					done: false,
-					value
-				};
-			} else if (rightItem === void 0) {
-				const value = leftItem;
-				leftItem = void 0;
-				return {
-					done: false,
-					value
-				};
-			} else if (this.comparator(leftItem, rightItem)) {
-				const value = leftItem;
-				leftItem = void 0;
-				return {
-					done: false,
-					value
-				};
-			} else {
-				const value = rightItem;
-				rightItem = void 0;
-				return {
-					done: false,
-					value
-				};
-			}
-		} };
-	}
-};
-function normalizeTheme(theme) {
-	const foreground = normalizeHexColor(theme.foreground);
-	const background = normalizeHexColor(theme.background);
-	const paletteInput = theme.palette;
-	if (paletteInput === void 0) return;
-	if (!foreground || !background || paletteInput.length < 8) return;
-	const palette = [];
-	const limit = Math.min(paletteInput.length, 16);
-	for (let i = 0; i < limit; i += 1) {
-		const color = normalizeHexColor(paletteInput[i]);
-		if (!color) return;
-		palette.push(color);
-	}
-	for (let i = palette.length; i < 16; i += 1) palette.push(palette[i - 8]);
-	return {
-		foreground,
-		background,
-		palette
-	};
-}
-async function parse$2(data) {
-	if (data instanceof Response) {
-		const text = await data.text();
-		const result = parseJsonl(text);
-		if (result !== void 0) {
-			const { header, events } = result;
-			if (header.version === 2) return parseAsciicastV2(header, events);
-			else if (header.version === 3) return parseAsciicastV3(header, events);
-			else throw new Error(`asciicast v${header.version} format not supported`);
-		} else {
-			const header = JSON.parse(text);
-			if (header.version === 1) return parseAsciicastV1(header);
-		}
-	} else if (typeof data === "object" && data.version === 1) return parseAsciicastV1(data);
-	else if (Array.isArray(data)) {
-		const header = data[0];
-		if (header.version === 2) return parseAsciicastV2(header, data.slice(1, data.length));
-		else if (header.version === 3) return parseAsciicastV3(header, data.slice(1, data.length));
-		else throw new Error(`asciicast v${header.version} format not supported`);
-	}
-	throw new Error("invalid data");
-}
-function parseJsonl(jsonl) {
-	const lines = jsonl.split("\n");
-	let header;
-	try {
-		header = JSON.parse(lines[0]);
-	} catch (_error) {
-		return;
-	}
-	const events = new Stream(lines).drop(1).filter((l) => l[0] === "[").map(JSON.parse);
-	return {
-		header,
-		events
-	};
-}
-function parseAsciicastV1(data) {
-	let time = 0;
-	const events = new Stream(data.stdout).map((e) => {
-		time += e[0];
-		return [
-			time,
-			"o",
-			e[1]
-		];
-	});
-	return {
-		cols: data.width,
-		rows: data.height,
-		events
-	};
-}
-function parseAsciicastV2(header, events) {
-	return {
-		cols: header.width,
-		rows: header.height,
-		theme: parseTheme$1(header.theme),
-		events,
-		idleTimeLimit: header.idle_time_limit
-	};
-}
-function parseAsciicastV3(header, events) {
-	if (!(events instanceof Stream)) events = new Stream(events);
-	let time = 0;
-	events = events.map((e) => {
-		time += e[0];
-		return [
-			time,
-			e[1],
-			e[2]
-		];
-	});
-	return {
-		cols: header.term.cols,
-		rows: header.term.rows,
-		theme: parseTheme$1(header.term?.theme),
-		events,
-		idleTimeLimit: header.idle_time_limit
-	};
-}
-function parseTheme$1(theme) {
-	const palette = typeof theme?.palette === "string" ? theme.palette.split(":") : void 0;
-	return normalizeTheme({
-		foreground: theme?.fg,
-		background: theme?.bg,
-		palette
-	});
-}
-function unparseAsciicastV2(recording) {
-	return `${JSON.stringify({
-		version: 2,
-		width: recording.cols,
-		height: recording.rows
-	})}\n${recording.events.map(JSON.stringify).join("\n")}\n`;
-}
-function recording(src, _ref, _ref2) {
-	let { feed, resize, onInput, onMarker, setState, logger } = _ref;
-	let { speed, idleTimeLimit, startAt, loop, posterTime, markers: markers_, pauseOnMarkers, cols: initialCols, rows: initialRows, audioUrl } = _ref2;
-	let cols;
-	let rows;
-	let events;
-	let markers;
-	let duration;
-	let effectiveStartAt;
-	let eventTimeoutId;
-	let nextEventIndex = 0;
-	let lastEventTime = 0;
-	let startTime;
-	let pauseElapsedTime;
-	let playCount = 0;
-	let waitingForAudio = false;
-	let waitingTimeout;
-	let shouldResumeOnAudioPlaying = false;
-	let now = () => performance.now() * speed;
-	let audioCtx;
-	let audioElement;
-	let audioSeekable = false;
-	async function init() {
-		const timeout = setTimeout(() => {
-			setState("loading");
-		}, 3e3);
-		try {
-			let metadata = loadRecording(src, logger, {
-				idleTimeLimit,
-				startAt,
-				markers_
-			});
-			const hasAudio = await loadAudio(audioUrl);
-			metadata = await metadata;
-			return {
-				...metadata,
-				hasAudio
-			};
-		} finally {
-			clearTimeout(timeout);
-		}
-	}
-	async function loadRecording(src, logger, opts) {
-		const { parser, minFrameTime, inputOffset, dumpFilename, encoding = "utf-8" } = src;
-		const recording = prepare(await parser(await doFetch(src), { encoding }), logger, {
-			...opts,
-			minFrameTime,
-			inputOffset
-		});
-		({cols, rows, events, duration, effectiveStartAt} = recording);
-		initialCols = initialCols ?? cols;
-		initialRows = initialRows ?? rows;
-		if (events.length === 0) throw new Error("recording is missing events");
-		if (dumpFilename !== void 0) dump(recording, dumpFilename);
-		const poster = posterTime !== void 0 ? getPoster(posterTime) : void 0;
-		markers = events.filter((e) => e[1] === "m").map((e) => [e[0], e[2].label]);
-		return {
-			cols,
-			rows,
-			duration,
-			theme: recording.theme,
-			poster,
-			markers
-		};
-	}
-	async function loadAudio(audioUrl) {
-		if (!audioUrl) return false;
-		audioElement = await createAudioElement(audioUrl);
-		audioSeekable = !Number.isNaN(audioElement.duration) && audioElement.duration !== Infinity && audioElement.seekable.length > 0 && audioElement.seekable.end(audioElement.seekable.length - 1) === audioElement.duration;
-		if (audioSeekable) {
-			audioElement.addEventListener("playing", onAudioPlaying);
-			audioElement.addEventListener("waiting", onAudioWaiting);
-		} else logger.warn(`audio is not seekable - you must enable range request support on the server providing ${audioElement.src} for audio seeking to work`);
-		return true;
-	}
-	async function doFetch(_ref3) {
-		let { url, data, fetchOpts = {} } = _ref3;
-		if (typeof url === "string") return await doFetchOne(url, fetchOpts);
-		else if (Array.isArray(url)) return await Promise.all(url.map((url) => doFetchOne(url, fetchOpts)));
-		else if (data !== void 0) {
-			if (typeof data === "function") data = data();
-			if (!(data instanceof Promise)) data = Promise.resolve(data);
-			const value = await data;
-			if (typeof value === "string" || value instanceof ArrayBuffer) return new Response(value);
-			else return value;
-		} else throw new Error("failed fetching recording file: url/data missing in src");
-	}
-	async function doFetchOne(url, fetchOpts) {
-		const response = await fetch(url, fetchOpts);
-		if (!response.ok) throw new Error(`failed fetching recording from ${url}: ${response.status} ${response.statusText}`);
-		return response;
-	}
-	function scheduleNextEvent() {
-		const nextEvent = events[nextEventIndex];
-		if (nextEvent) eventTimeoutId = scheduleAt(runNextEvent, nextEvent[0]);
-		else onEnd();
-	}
-	function scheduleAt(f, targetTime) {
-		let timeout = (targetTime * 1e3 - (now() - startTime)) / speed;
-		if (timeout < 0) timeout = 0;
-		return setTimeout(f, timeout);
-	}
-	function runNextEvent() {
-		let event = events[nextEventIndex];
-		let elapsedWallTime;
-		do {
-			lastEventTime = event[0];
-			nextEventIndex++;
-			if (executeEvent(event)) return;
-			event = events[nextEventIndex];
-			elapsedWallTime = now() - startTime;
-		} while (event && elapsedWallTime > event[0] * 1e3);
-		scheduleNextEvent();
-	}
-	function cancelNextEvent() {
-		clearTimeout(eventTimeoutId);
-		eventTimeoutId = null;
-	}
-	function executeEvent(event) {
-		const [time, type, data] = event;
-		if (type === "o") feed(data);
-		else if (type === "i") onInput(data);
-		else if (type === "r") {
-			const [cols, rows] = data.split("x");
-			resize(cols, rows);
-		} else if (type === "m") {
-			onMarker(data);
-			if (pauseOnMarkers) {
-				pause();
-				pauseElapsedTime = time * 1e3;
-				setState("idle", { reason: "paused" });
-				return true;
-			}
-		}
-		return false;
-	}
-	function onEnd() {
-		cancelNextEvent();
-		playCount++;
-		if (loop === true || typeof loop === "number" && playCount < loop) {
-			nextEventIndex = 0;
-			startTime = now();
-			feed("\x1Bc");
-			resizeTerminalToInitialSize();
-			scheduleNextEvent();
-			if (audioElement) audioElement.currentTime = 0;
-		} else {
-			pauseElapsedTime = duration * 1e3;
-			setState("ended");
-			if (audioElement) audioElement.pause();
-		}
-	}
-	async function play() {
-		if (eventTimeoutId) throw new Error("already playing");
-		if (events[nextEventIndex] === void 0) throw new Error("already ended");
-		if (effectiveStartAt !== null) seek(effectiveStartAt);
-		await resume();
-		return true;
-	}
-	function pause() {
-		shouldResumeOnAudioPlaying = false;
-		if (audioElement) audioElement.pause();
-		if (!eventTimeoutId) return true;
-		cancelNextEvent();
-		pauseElapsedTime = now() - startTime;
-		return true;
-	}
-	async function resume() {
-		if (audioElement && !audioCtx) setupAudioCtx();
-		startTime = now() - pauseElapsedTime;
-		pauseElapsedTime = null;
-		scheduleNextEvent();
-		if (audioElement) await audioElement.play();
-	}
-	async function seek(where) {
-		if (waitingForAudio) return false;
-		const isPlaying = !!eventTimeoutId;
-		pause();
-		if (audioElement) audioElement.pause();
-		const currentTime = (pauseElapsedTime ?? 0) / 1e3;
-		if (typeof where === "string") {
-			if (where === "<<") where = currentTime - 5;
-			else if (where === ">>") where = currentTime + 5;
-			else if (where === "<<<") where = currentTime - .1 * duration;
-			else if (where === ">>>") where = currentTime + .1 * duration;
-			else if (where[where.length - 1] === "%") where = parseFloat(where.substring(0, where.length - 1)) / 100 * duration;
-		} else if (typeof where === "object") {
-			if (where.marker === "prev") {
-				where = findMarkerTimeBefore(currentTime) ?? 0;
-				if (isPlaying && currentTime - where < 1) where = findMarkerTimeBefore(where) ?? 0;
-			} else if (where.marker === "next") where = findMarkerTimeAfter(currentTime) ?? duration;
-			else if (typeof where.marker === "number") {
-				const marker = markers[where.marker];
-				if (marker === void 0) throw new Error(`invalid marker index: ${where.marker}`);
-				else where = marker[0];
-			}
-		}
-		const targetTime = Math.min(Math.max(where, 0), duration);
-		if (targetTime * 1e3 === pauseElapsedTime) return false;
-		if (targetTime < lastEventTime) {
-			feed("\x1Bc");
-			resizeTerminalToInitialSize();
-			nextEventIndex = 0;
-			lastEventTime = 0;
-		}
-		let event = events[nextEventIndex];
-		while (event && event[0] <= targetTime) {
-			if (event[1] === "o" || event[1] === "r") executeEvent(event);
-			lastEventTime = event[0];
-			event = events[++nextEventIndex];
-		}
-		pauseElapsedTime = targetTime * 1e3;
-		effectiveStartAt = null;
-		if (audioElement && audioSeekable) audioElement.currentTime = targetTime / speed;
-		if (isPlaying) await resume();
-		else if (events[nextEventIndex] === void 0) onEnd();
-		return true;
-	}
-	function findMarkerTimeBefore(time) {
-		if (markers.length == 0) return;
-		let i = 0;
-		let marker = markers[i];
-		let lastMarkerTimeBefore;
-		while (marker && marker[0] < time) {
-			lastMarkerTimeBefore = marker[0];
-			marker = markers[++i];
-		}
-		return lastMarkerTimeBefore;
-	}
-	function findMarkerTimeAfter(time) {
-		if (markers.length == 0) return;
-		let i = markers.length - 1;
-		let marker = markers[i];
-		let firstMarkerTimeAfter;
-		while (marker && marker[0] > time) {
-			firstMarkerTimeAfter = marker[0];
-			marker = markers[--i];
-		}
-		return firstMarkerTimeAfter;
-	}
-	function step(n) {
-		if (n === void 0) n = 1;
-		let nextEvent;
-		let targetIndex;
-		if (n > 0) {
-			let index = nextEventIndex;
-			nextEvent = events[index];
-			for (let i = 0; i < n; i++) {
-				while (nextEvent !== void 0 && nextEvent[1] !== "o") nextEvent = events[++index];
-				if (nextEvent !== void 0 && nextEvent[1] === "o") targetIndex = index;
-			}
-		} else {
-			let index = Math.max(nextEventIndex - 2, 0);
-			nextEvent = events[index];
-			for (let i = n; i < 0; i++) {
-				while (nextEvent !== void 0 && nextEvent[1] !== "o") nextEvent = events[--index];
-				if (nextEvent !== void 0 && nextEvent[1] === "o") targetIndex = index;
-			}
-			if (targetIndex !== void 0) {
-				feed("\x1Bc");
-				resizeTerminalToInitialSize();
-				nextEventIndex = 0;
-			}
-		}
-		if (targetIndex === void 0) return;
-		while (nextEventIndex <= targetIndex) {
-			nextEvent = events[nextEventIndex++];
-			if (nextEvent[1] === "o" || nextEvent[1] === "r") executeEvent(nextEvent);
-		}
-		lastEventTime = nextEvent[0];
-		pauseElapsedTime = lastEventTime * 1e3;
-		effectiveStartAt = null;
-		if (audioElement && audioSeekable) audioElement.currentTime = lastEventTime / speed;
-		if (events[targetIndex + 1] === void 0) onEnd();
-	}
-	async function restart() {
-		if (eventTimeoutId) throw new Error("still playing");
-		if (events[nextEventIndex] !== void 0) throw new Error("not ended");
-		seek(0);
-		await resume();
-		return true;
-	}
-	function getPoster(time) {
-		return events.filter((e) => e[0] < time && e[1] === "o").map((e) => e[2]);
-	}
-	function getCurrentTime() {
-		if (eventTimeoutId) return (now() - startTime) / 1e3;
-		else return (pauseElapsedTime ?? 0) / 1e3;
-	}
-	function resizeTerminalToInitialSize() {
-		resize(initialCols, initialRows);
-	}
-	function setupAudioCtx() {
-		audioCtx = new AudioContext({ latencyHint: "interactive" });
-		audioCtx.createMediaElementSource(audioElement).connect(audioCtx.destination);
-		now = audioNow;
-	}
-	function audioNow() {
-		if (!audioCtx) throw new Error("audio context not started - can't tell time!");
-		const { contextTime, performanceTime } = audioCtx.getOutputTimestamp();
-		return performanceTime === 0 ? contextTime * 1e3 : contextTime * 1e3 + (performance.now() - performanceTime);
-	}
-	function onAudioWaiting() {
-		logger.debug("audio buffering");
-		waitingForAudio = true;
-		shouldResumeOnAudioPlaying = !!eventTimeoutId;
-		waitingTimeout = setTimeout(() => setState("loading"), 1e3);
-		if (!eventTimeoutId) return true;
-		logger.debug("pausing session playback");
-		cancelNextEvent();
-		pauseElapsedTime = now() - startTime;
-	}
-	function onAudioPlaying() {
-		logger.debug("audio resumed");
-		clearTimeout(waitingTimeout);
-		setState("playing");
-		if (!waitingForAudio) return;
-		waitingForAudio = false;
-		if (shouldResumeOnAudioPlaying) {
-			logger.debug("resuming session playback");
-			startTime = now() - pauseElapsedTime;
-			pauseElapsedTime = null;
-			scheduleNextEvent();
-		}
-	}
-	function mute() {
-		if (audioElement) {
-			audioElement.muted = true;
-			return true;
-		}
-	}
-	function unmute() {
-		if (audioElement) {
-			audioElement.muted = false;
-			return true;
-		}
-	}
-	return {
-		init,
-		play,
-		pause,
-		seek,
-		step,
-		restart,
-		stop: pause,
-		mute,
-		unmute,
-		getCurrentTime
-	};
-}
-function batcher(logger) {
-	let minFrameTime = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 1 / 60;
-	let prevEvent;
-	return (emit) => {
-		let ic = 0;
-		let oc = 0;
-		return {
-			step: (event) => {
-				ic++;
-				if (prevEvent === void 0) {
-					prevEvent = event;
-					return;
-				}
-				if (event[1] === "o" && prevEvent[1] === "o" && event[0] - prevEvent[0] < minFrameTime) prevEvent[2] += event[2];
-				else {
-					emit(prevEvent);
-					prevEvent = event;
-					oc++;
-				}
-			},
-			flush: () => {
-				if (prevEvent !== void 0) {
-					emit(prevEvent);
-					oc++;
-				}
-				logger.debug(`batched ${ic} frames to ${oc} frames`);
-			}
-		};
-	};
-}
-function prepare(recording, logger, _ref4) {
-	let { startAt = 0, idleTimeLimit, minFrameTime, inputOffset, markers_ } = _ref4;
-	let { events } = recording;
-	if (!(events instanceof Stream)) events = new Stream(events);
-	idleTimeLimit = idleTimeLimit ?? recording.idleTimeLimit ?? Infinity;
-	const limiterOutput = { offset: 0 };
-	events = events.transform(batcher(logger, minFrameTime)).map(timeLimiter(idleTimeLimit, startAt, limiterOutput)).map(markerWrapper());
-	if (markers_ !== void 0) {
-		markers_ = new Stream(markers_).map(normalizeMarker);
-		events = events.filter((e) => e[1] !== "m").multiplex(markers_, (a, b) => a[0] < b[0]).map(markerWrapper());
-	}
-	events = events.toArray();
-	if (inputOffset !== void 0) {
-		events = events.map((e) => e[1] === "i" ? [
-			e[0] + inputOffset,
-			e[1],
-			e[2]
-		] : e);
-		events.sort((a, b) => a[0] - b[0]);
-	}
-	const duration = events[events.length - 1][0];
-	const effectiveStartAt = startAt - limiterOutput.offset;
-	return {
-		...recording,
-		events,
-		duration,
-		effectiveStartAt
-	};
-}
-function normalizeMarker(m) {
-	return typeof m === "number" ? [
-		m,
-		"m",
-		""
-	] : [
-		m[0],
-		"m",
-		m[1]
-	];
-}
-function timeLimiter(idleTimeLimit, startAt, output) {
-	let prevT = 0;
-	let shift = 0;
-	return function(e) {
-		const delta = e[0] - prevT - idleTimeLimit;
-		prevT = e[0];
-		if (delta > 0) {
-			shift += delta;
-			if (e[0] < startAt) output.offset += delta;
-		}
-		return [
-			e[0] - shift,
-			e[1],
-			e[2]
-		];
-	};
-}
-function markerWrapper() {
-	let i = 0;
-	return function(e) {
-		if (e[1] === "m") return [
-			e[0],
-			e[1],
-			{
-				index: i++,
-				time: e[0],
-				label: e[2]
-			}
-		];
-		else return e;
-	};
-}
-function dump(recording, filename) {
-	const link = document.createElement("a");
-	const events = recording.events.map((e) => e[1] === "m" ? [
-		e[0],
-		e[1],
-		e[2].label
-	] : e);
-	const asciicast = unparseAsciicastV2({
-		...recording,
-		events
-	});
-	link.href = URL.createObjectURL(new Blob([asciicast], { type: "text/plain" }));
-	link.download = filename;
-	link.click();
-}
-async function createAudioElement(src) {
-	const audio = new Audio();
-	audio.preload = "metadata";
-	audio.loop = false;
-	audio.crossOrigin = "anonymous";
-	let resolve;
-	const canPlay = new Promise((resolve_) => {
-		resolve = resolve_;
-	});
-	function onCanPlay() {
-		resolve();
-		audio.removeEventListener("canplay", onCanPlay);
-	}
-	audio.addEventListener("canplay", onCanPlay);
-	audio.src = src;
-	audio.load();
-	await canPlay;
-	return audio;
-}
-function clock(_ref, _ref2, _ref3) {
-	let { hourColor = 3, minuteColor = 4, separatorColor = 9 } = _ref;
-	let { feed } = _ref2;
-	let { cols = 5, rows = 1 } = _ref3;
-	const middleRow = Math.floor(rows / 2);
-	const leftPad = Math.floor(cols / 2) - 2;
-	const setupCursor = `\x1b[?25l\x1b[1m\x1b[${middleRow}B`;
-	let intervalId;
-	const getCurrentTime = () => {
-		const d = /* @__PURE__ */ new Date();
-		const h = d.getHours();
-		const m = d.getMinutes();
-		const seqs = [];
-		seqs.push("\r");
-		for (let i = 0; i < leftPad; i++) seqs.push(" ");
-		seqs.push(`\x1b[3${hourColor}m`);
-		if (h < 10) seqs.push("0");
-		seqs.push(`${h}`);
-		seqs.push(`\x1b[3${separatorColor};5m:\x1b[25m`);
-		seqs.push(`\x1b[3${minuteColor}m`);
-		if (m < 10) seqs.push("0");
-		seqs.push(`${m}`);
-		return seqs;
-	};
-	const updateTime = () => {
-		getCurrentTime().forEach(feed);
-	};
-	return {
-		init: () => {
-			return {
-				cols,
-				rows,
-				duration: 1440,
-				poster: [setupCursor].concat(getCurrentTime())
-			};
-		},
-		play: () => {
-			feed(setupCursor);
-			updateTime();
-			intervalId = setInterval(updateTime, 1e3);
-			return true;
-		},
-		stop: () => {
-			clearInterval(intervalId);
-		},
-		getCurrentTime: () => {
-			const d = /* @__PURE__ */ new Date();
-			return d.getHours() * 60 + d.getMinutes();
-		}
-	};
-}
-function random(src, _ref, _ref2) {
-	let { feed } = _ref;
-	let { speed } = _ref2;
-	const base = " ".charCodeAt(0);
-	const range = "~".charCodeAt(0) - base;
-	let timeoutId;
-	const schedule = () => {
-		const t = Math.pow(5, Math.random() * 4);
-		timeoutId = setTimeout(print, t / speed);
-	};
-	const print = () => {
-		schedule();
-		feed(String.fromCharCode(base + Math.floor(Math.random() * range)));
-	};
-	return () => {
-		schedule();
-		return () => clearInterval(timeoutId);
-	};
-}
-function benchmark(_ref, _ref2) {
-	let { url, iterations = 10 } = _ref;
-	let { feed, setState } = _ref2;
-	let data;
-	let byteCount = 0;
-	return {
-		async init() {
-			const { cols, rows, events } = await parse$2(await fetch(url));
-			data = Array.from(events).filter((_ref3) => {
-				let [_time, type, _text] = _ref3;
-				return type === "o";
-			}).map((_ref4) => {
-				let [time, _type, text] = _ref4;
-				return [time, text];
-			});
-			const duration = data[data.length - 1][0];
-			for (const [_, text] of data) byteCount += new Blob([text]).size;
-			return {
-				cols,
-				rows,
-				duration
-			};
-		},
-		play() {
-			const startTime = performance.now();
-			for (let i = 0; i < iterations; i++) {
-				for (const [_, text] of data) feed(text);
-				feed("\x1Bc");
-			}
-			const duration = (performance.now() - startTime) / 1e3;
-			const throughput = byteCount * iterations / duration;
-			const throughputMbs = byteCount / (1024 * 1024) * iterations / duration;
-			console.info("benchmark: result", {
-				byteCount,
-				iterations,
-				duration,
-				throughput,
-				throughputMbs
-			});
-			setTimeout(() => {
-				setState("stopped", { reason: "ended" });
-			}, 0);
-			return true;
-		}
-	};
-}
-var Queue = class {
-	constructor() {
-		this.items = [];
-		this.onPush = void 0;
-	}
-	push(item) {
-		this.items.push(item);
-		if (this.onPush !== void 0) {
-			this.onPush(this.popAll());
-			this.onPush = void 0;
-		}
-	}
-	popAll() {
-		if (this.items.length > 0) {
-			const items = this.items;
-			this.items = [];
-			return items;
-		} else {
-			const thiz = this;
-			return new Promise((resolve) => {
-				thiz.onPush = resolve;
-			});
-		}
-	}
-};
-function getBuffer(bufferTime, feed, resize, onInput, onMarker, setTime, baseStreamTime, minFrameTime, logger) {
-	const execute = executeEvent(feed, resize, onInput, onMarker);
-	if (bufferTime === 0) {
-		logger.debug("using no buffer");
-		return nullBuffer(execute);
-	} else {
-		bufferTime = bufferTime ?? {};
-		let getBufferTime;
-		if (typeof bufferTime === "number") {
-			logger.debug(`using fixed time buffer (${bufferTime} ms)`);
-			getBufferTime = (_latency) => bufferTime;
-		} else if (typeof bufferTime === "function") {
-			logger.debug("using custom dynamic buffer");
-			getBufferTime = bufferTime({ logger });
-		} else {
-			logger.debug("using adaptive buffer", bufferTime);
-			getBufferTime = adaptiveBufferTimeProvider({ logger }, bufferTime);
-		}
-		return buffer(getBufferTime, execute, setTime, logger, baseStreamTime ?? 0, minFrameTime);
-	}
-}
-function nullBuffer(execute) {
-	return {
-		pushEvent(event) {
-			execute(event[1], event[2]);
-		},
-		pushText(text) {
-			execute("o", text);
-		},
-		stop() {}
-	};
-}
-function executeEvent(feed, resize, onInput, onMarker) {
-	return function(code, data) {
-		if (code === "o") feed(data);
-		else if (code === "i") onInput(data);
-		else if (code === "r") resize(data.cols, data.rows);
-		else if (code === "m") onMarker(data);
-	};
-}
-function buffer(getBufferTime, execute, setTime, logger, baseStreamTime) {
-	let minFrameTime = arguments.length > 5 && arguments[5] !== void 0 ? arguments[5] : 1 / 60;
-	let epoch = performance.now() - baseStreamTime * 1e3;
-	let bufferTime = getBufferTime(0);
-	const queue = new Queue();
-	minFrameTime *= 1e3;
-	let prevElapsedStreamTime = -minFrameTime;
-	let stop = false;
-	function elapsedWallTime() {
-		return performance.now() - epoch;
-	}
-	setTimeout(async () => {
-		while (!stop) {
-			const events = await queue.popAll();
-			if (stop) return;
-			for (const event of events) {
-				const elapsedStreamTime = event[0] * 1e3 + bufferTime;
-				if (elapsedStreamTime - prevElapsedStreamTime < minFrameTime) {
-					execute(event[1], event[2]);
-					continue;
-				}
-				const delay = elapsedStreamTime - elapsedWallTime();
-				if (delay > 0) {
-					await sleep(delay);
-					if (stop) return;
-				}
-				setTime(event[0]);
-				execute(event[1], event[2]);
-				prevElapsedStreamTime = elapsedStreamTime;
-			}
-		}
-	}, 0);
-	return {
-		pushEvent(event) {
-			let latency = elapsedWallTime() - event[0] * 1e3;
-			if (latency < 0) {
-				logger.debug(`correcting epoch by ${latency} ms`);
-				epoch += latency;
-				latency = 0;
-			}
-			bufferTime = getBufferTime(latency);
-			queue.push(event);
-		},
-		pushText(text) {
-			queue.push([
-				elapsedWallTime() / 1e3,
-				"o",
-				text
-			]);
-		},
-		stop() {
-			stop = true;
-			queue.push(void 0);
-		}
-	};
-}
-function sleep(t) {
-	return new Promise((resolve) => {
-		setTimeout(resolve, t);
-	});
-}
-function adaptiveBufferTimeProvider() {
-	let { logger } = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
-	let { minBufferTime = 50, bufferLevelStep = 100, maxBufferLevel = 50, transitionDuration = 500, peakHalfLifeUp = 100, peakHalfLifeDown = 1e4, floorHalfLifeUp = 5e3, floorHalfLifeDown = 100, idealHalfLifeUp = 1e3, idealHalfLifeDown = 5e3, safetyMultiplier = 1.2, minImprovementDuration = 3e3 } = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
-	function levelToMs(level) {
-		return level === 0 ? minBufferTime : bufferLevelStep * level;
-	}
-	let bufferLevel = 1;
-	let bufferTime = levelToMs(bufferLevel);
-	let lastUpdateTime = performance.now();
-	let smoothedPeakLatency = null;
-	let smoothedFloorLatency = null;
-	let smoothedIdealBufferTime = null;
-	let stableSince = null;
-	let targetBufferTime = null;
-	let transitionRate = null;
-	return function(latency) {
-		const now = performance.now();
-		const dt = Math.max(0, now - lastUpdateTime);
-		lastUpdateTime = now;
-		if (smoothedPeakLatency === null) smoothedPeakLatency = latency;
-		else if (latency > smoothedPeakLatency) {
-			const alphaUp = 1 - Math.pow(2, -dt / peakHalfLifeUp);
-			smoothedPeakLatency += alphaUp * (latency - smoothedPeakLatency);
-		} else {
-			const alphaDown = 1 - Math.pow(2, -dt / peakHalfLifeDown);
-			smoothedPeakLatency += alphaDown * (latency - smoothedPeakLatency);
-		}
-		smoothedPeakLatency = Math.max(smoothedPeakLatency, 0);
-		if (smoothedFloorLatency === null) smoothedFloorLatency = latency;
-		else if (latency > smoothedFloorLatency) {
-			const alphaUp = 1 - Math.pow(2, -dt / floorHalfLifeUp);
-			smoothedFloorLatency += alphaUp * (latency - smoothedFloorLatency);
-		} else {
-			const alphaDown = 1 - Math.pow(2, -dt / floorHalfLifeDown);
-			smoothedFloorLatency += alphaDown * (latency - smoothedFloorLatency);
-		}
-		smoothedFloorLatency = Math.max(smoothedFloorLatency, 0);
-		const jitter = smoothedPeakLatency - smoothedFloorLatency;
-		const idealBufferTime = safetyMultiplier * (smoothedPeakLatency + jitter);
-		if (smoothedIdealBufferTime === null) smoothedIdealBufferTime = idealBufferTime;
-		else if (idealBufferTime > smoothedIdealBufferTime) {
-			const alphaUp = 1 - Math.pow(2, -dt / idealHalfLifeUp);
-			smoothedIdealBufferTime += +alphaUp * (idealBufferTime - smoothedIdealBufferTime);
-		} else {
-			const alphaDown = 1 - Math.pow(2, -dt / idealHalfLifeDown);
-			smoothedIdealBufferTime += +alphaDown * (idealBufferTime - smoothedIdealBufferTime);
-		}
-		let newBufferLevel;
-		if (smoothedIdealBufferTime <= minBufferTime) newBufferLevel = 0;
-		else newBufferLevel = clamp$2(Math.ceil(smoothedIdealBufferTime / bufferLevelStep), 1, maxBufferLevel);
-		if (latency > bufferTime) logger.debug("buffer underrun", {
-			latency,
-			bufferTime
-		});
-		if (newBufferLevel > bufferLevel) {
-			if (latency > bufferTime) bufferLevel = Math.min(newBufferLevel, bufferLevel + 3);
-			else bufferLevel += 1;
-			targetBufferTime = levelToMs(bufferLevel);
-			transitionRate = (targetBufferTime - bufferTime) / transitionDuration;
-			stableSince = null;
-			logger.debug("raising buffer", {
-				latency,
-				bufferTime,
-				targetBufferTime
-			});
-		} else if (newBufferLevel < bufferLevel) {
-			if (stableSince == null) stableSince = now;
-			if (now - stableSince >= minImprovementDuration) {
-				bufferLevel -= 1;
-				targetBufferTime = levelToMs(bufferLevel);
-				transitionRate = (targetBufferTime - bufferTime) / transitionDuration;
-				stableSince = now;
-				logger.debug("lowering buffer", {
-					latency,
-					bufferTime,
-					targetBufferTime
-				});
-			}
-		} else stableSince = null;
-		if (targetBufferTime !== null) {
-			bufferTime += transitionRate * dt;
-			if (transitionRate >= 0 && bufferTime > targetBufferTime || transitionRate < 0 && bufferTime < targetBufferTime) {
-				bufferTime = targetBufferTime;
-				targetBufferTime = null;
-			}
-		}
-		return bufferTime;
-	};
-}
-function clamp$2(x, lo, hi) {
-	return Math.min(hi, Math.max(lo, x));
-}
-var ONE_SEC_IN_USEC = 1e6;
-function alisHandler(logger) {
-	const outputDecoder = new TextDecoder();
-	const inputDecoder = new TextDecoder();
-	let handler = parseMagicString;
-	let lastEventTime;
-	let markerIndex = 0;
-	function parseMagicString(buffer) {
-		if (new TextDecoder().decode(buffer) === "ALiS") handler = parseFirstFrame;
-		else throw new Error("not an ALiS v1 live stream");
-	}
-	function parseFirstFrame(buffer) {
-		const view = new BinaryReader(new DataView(buffer));
-		const type = view.getUint8();
-		if (type !== 1) throw new Error(`expected reset (0x01) frame, got ${type}`);
-		return parseResetFrame(view, buffer);
-	}
-	function parseResetFrame(view, buffer) {
-		view.decodeVarUint();
-		let time = view.decodeVarUint();
-		lastEventTime = time;
-		time = time / ONE_SEC_IN_USEC;
-		markerIndex = 0;
-		const cols = view.decodeVarUint();
-		const rows = view.decodeVarUint();
-		const themeFormat = view.getUint8();
-		let theme;
-		if (themeFormat === 8) {
-			const len = 30;
-			theme = parseTheme(new Uint8Array(buffer, view.offset, len));
-			view.forward(len);
-		} else if (themeFormat === 16) {
-			const len = 54;
-			theme = parseTheme(new Uint8Array(buffer, view.offset, len));
-			view.forward(len);
-		} else if (themeFormat !== 0) throw new Error(`alis: invalid theme format (${themeFormat})`);
-		const initLen = view.decodeVarUint();
-		let init;
-		if (initLen > 0) init = outputDecoder.decode(new Uint8Array(buffer, view.offset, initLen));
-		handler = parseFrame;
-		return {
-			time,
-			term: {
-				size: {
-					cols,
-					rows
-				},
-				theme,
-				init
-			}
-		};
-	}
-	function parseFrame(buffer) {
-		const view = new BinaryReader(new DataView(buffer));
-		const type = view.getUint8();
-		if (type === 1) return parseResetFrame(view, buffer);
-		else if (type === 111) return parseOutputFrame(view, buffer);
-		else if (type === 105) return parseInputFrame(view, buffer);
-		else if (type === 114) return parseResizeFrame(view);
-		else if (type === 109) return parseMarkerFrame(view, buffer);
-		else if (type === 120) return parseExitFrame(view);
-		else if (type === 4) {
-			handler = parseFirstFrame;
-			return false;
-		} else logger.debug(`alis: unknown frame type: ${type}`);
-	}
-	function parseOutputFrame(view, buffer) {
-		view.decodeVarUint();
-		const relTime = view.decodeVarUint();
-		lastEventTime += relTime;
-		const len = view.decodeVarUint();
-		const text = outputDecoder.decode(new Uint8Array(buffer, view.offset, len));
-		return [
-			lastEventTime / ONE_SEC_IN_USEC,
-			"o",
-			text
-		];
-	}
-	function parseInputFrame(view, buffer) {
-		view.decodeVarUint();
-		const relTime = view.decodeVarUint();
-		lastEventTime += relTime;
-		const len = view.decodeVarUint();
-		const text = inputDecoder.decode(new Uint8Array(buffer, view.offset, len));
-		return [
-			lastEventTime / ONE_SEC_IN_USEC,
-			"i",
-			text
-		];
-	}
-	function parseResizeFrame(view) {
-		view.decodeVarUint();
-		const relTime = view.decodeVarUint();
-		lastEventTime += relTime;
-		const cols = view.decodeVarUint();
-		const rows = view.decodeVarUint();
-		return [
-			lastEventTime / ONE_SEC_IN_USEC,
-			"r",
-			{
-				cols,
-				rows
-			}
-		];
-	}
-	function parseMarkerFrame(view, buffer) {
-		view.decodeVarUint();
-		const relTime = view.decodeVarUint();
-		lastEventTime += relTime;
-		const len = view.decodeVarUint();
-		const decoder = new TextDecoder();
-		const index = markerIndex++;
-		const time = lastEventTime / ONE_SEC_IN_USEC;
-		return [
-			time,
-			"m",
-			{
-				index,
-				time,
-				label: decoder.decode(new Uint8Array(buffer, view.offset, len))
-			}
-		];
-	}
-	function parseExitFrame(view) {
-		view.decodeVarUint();
-		const relTime = view.decodeVarUint();
-		lastEventTime += relTime;
-		const status = view.decodeVarUint();
-		return [
-			lastEventTime / ONE_SEC_IN_USEC,
-			"x",
-			{ status }
-		];
-	}
-	return function(buffer) {
-		return handler(buffer);
-	};
-}
-function parseTheme(arr) {
-	const colorCount = arr.length / 3;
-	const foreground = hexColor(arr[0], arr[1], arr[2]);
-	const background = hexColor(arr[3], arr[4], arr[5]);
-	const palette = [];
-	for (let i = 2; i < colorCount; i++) palette.push(hexColor(arr[i * 3], arr[i * 3 + 1], arr[i * 3 + 2]));
-	return normalizeTheme({
-		foreground,
-		background,
-		palette
-	});
-}
-function hexColor(r, g, b) {
-	return `#${byteToHex(r)}${byteToHex(g)}${byteToHex(b)}`;
-}
-function byteToHex(value) {
-	return value.toString(16).padStart(2, "0");
-}
-var BinaryReader = class {
-	constructor(inner) {
-		let offset = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 0;
-		this.inner = inner;
-		this.offset = offset;
-	}
-	forward(delta) {
-		this.offset += delta;
-	}
-	getUint8() {
-		const value = this.inner.getUint8(this.offset);
-		this.offset += 1;
-		return value;
-	}
-	decodeVarUint() {
-		let number = BigInt(0);
-		let shift = BigInt(0);
-		let byte = this.getUint8();
-		while (byte > 127) {
-			byte &= 127;
-			number += BigInt(byte) << shift;
-			shift += BigInt(7);
-			byte = this.getUint8();
-		}
-		number = number + (BigInt(byte) << shift);
-		return Number(number);
-	}
-};
-function ascicastV2Handler() {
-	let parse = parseHeader;
-	function parseHeader(buffer) {
-		const header = JSON.parse(buffer);
-		if (header.version !== 2) throw new Error("not an asciicast v2 stream");
-		parse = parseEvent;
-		return {
-			time: 0,
-			term: { size: {
-				cols: header.width,
-				rows: header.height
-			} }
-		};
-	}
-	function parseEvent(buffer) {
-		const event = JSON.parse(buffer);
-		if (event[1] === "r") {
-			const [cols, rows] = event[2].split("x");
-			return [
-				event[0],
-				"r",
-				{
-					cols: parseInt(cols, 10),
-					rows: parseInt(rows, 10)
-				}
-			];
-		} else return event;
-	}
-	return function(buffer) {
-		return parse(buffer);
-	};
-}
-function ascicastV3Handler() {
-	let parse = parseHeader;
-	let currentTime = 0;
-	function parseHeader(buffer) {
-		const header = JSON.parse(buffer);
-		if (header.version !== 3) throw new Error("not an asciicast v3 stream");
-		parse = parseEvent;
-		const term = { size: {
-			cols: header.term.cols,
-			rows: header.term.rows
-		} };
-		if (header.term.theme) {
-			const palette = typeof header.term.theme.palette === "string" ? header.term.theme.palette.split(":") : void 0;
-			const theme = normalizeTheme({
-				foreground: header.term.theme.fg,
-				background: header.term.theme.bg,
-				palette
-			});
-			if (theme) term.theme = theme;
-		}
-		return {
-			time: 0,
-			term
-		};
-	}
-	function parseEvent(buffer) {
-		const [interval, eventType, data] = JSON.parse(buffer);
-		currentTime += interval;
-		if (eventType === "r") {
-			const [cols, rows] = data.split("x");
-			return [
-				currentTime,
-				"r",
-				{
-					cols: parseInt(cols, 10),
-					rows: parseInt(rows, 10)
-				}
-			];
-		} else return [
-			currentTime,
-			eventType,
-			data
-		];
-	}
-	return function(buffer) {
-		return parse(buffer);
-	};
-}
-function rawHandler() {
-	const outputDecoder = new TextDecoder();
-	let parse = parseSize;
-	function parseSize(buffer) {
-		const text = outputDecoder.decode(buffer, { stream: true });
-		const [cols, rows] = sizeFromResizeSeq(text) ?? sizeFromScriptStartMessage(text) ?? [80, 24];
-		parse = parseOutput;
-		return {
-			time: 0,
-			term: {
-				size: {
-					cols,
-					rows
-				},
-				init: text
-			}
-		};
-	}
-	function parseOutput(buffer) {
-		return outputDecoder.decode(buffer, { stream: true });
-	}
-	return function(buffer) {
-		return parse(buffer);
-	};
-}
-function sizeFromResizeSeq(text) {
-	const match = text.match(/\x1b\[8;(\d+);(\d+)t/);
-	if (match !== null) return [parseInt(match[2], 10), parseInt(match[1], 10)];
-}
-function sizeFromScriptStartMessage(text) {
-	const match = text.match(/\[.*COLUMNS="(\d{1,3})" LINES="(\d{1,3})".*\]/);
-	if (match !== null) return [parseInt(match[1], 10), parseInt(match[2], 10)];
-}
-var RECONNECT_DELAY_BASE = 500;
-var RECONNECT_DELAY_CAP = 1e4;
-function exponentialDelay(attempt) {
-	const base = Math.min(RECONNECT_DELAY_BASE * Math.pow(2, attempt), RECONNECT_DELAY_CAP);
-	return Math.random() * base;
-}
-function websocket(_ref, _ref2, _ref3) {
-	let { url, bufferTime, reconnectDelay = exponentialDelay, minFrameTime } = _ref;
-	let { feed, reset, resize, onInput, onMarker, setState, logger } = _ref2;
-	let { audioUrl } = _ref3;
-	logger = new PrefixedLogger(logger, "websocket: ");
-	let socket;
-	let buf;
-	let clock = new NullClock();
-	let reconnectAttempt = 0;
-	let successfulConnectionTimeout;
-	let stop = false;
-	let wasOnline = false;
-	let gotExitEvent = false;
-	let gotEotEvent = false;
-	let initTimeout;
-	let audioElement;
-	function connect() {
-		socket = new WebSocket(url, [
-			"v1.alis",
-			"v2.asciicast",
-			"v3.asciicast",
-			"raw"
-		]);
-		socket.binaryType = "arraybuffer";
-		let proto;
-		socket.onopen = () => {
-			proto = socket.protocol || "raw";
-			logger.info("opened");
-			logger.info(`activating ${proto} protocol handler`);
-			if (proto === "v1.alis") socket.onmessage = onMessage(alisHandler(logger));
-			else if (proto === "v2.asciicast") socket.onmessage = onMessage(ascicastV2Handler());
-			else if (proto === "v3.asciicast") socket.onmessage = onMessage(ascicastV3Handler());
-			else if (proto === "raw") socket.onmessage = onMessage(rawHandler());
-			successfulConnectionTimeout = setTimeout(() => {
-				reconnectAttempt = 0;
-			}, 1e3);
-		};
-		socket.onclose = (event) => {
-			clearTimeout(initTimeout);
-			stopBuffer();
-			if (stop) return;
-			let ended = false;
-			let endedMessage = "Stream ended";
-			if (proto === "v1.alis") {
-				if (gotEotEvent || event.code >= 4e3 && event.code <= 4100) {
-					ended = true;
-					endedMessage = event.reason || endedMessage;
-				}
-			} else if (gotExitEvent || event.code === 1e3 || event.code === 1005) ended = true;
-			if (ended) {
-				logger.info("closed");
-				setState("ended", { message: endedMessage });
-			} else if (event.code === 1002) {
-				logger.debug(`close reason: ${event.reason}`);
-				setState("ended", { message: "Err: Player not compatible with the server" });
-			} else {
-				clearTimeout(successfulConnectionTimeout);
-				const delay = reconnectDelay(reconnectAttempt++);
-				logger.info(`unexpected close, reconnecting in ${delay}...`);
-				setState("loading");
-				setTimeout(connect, delay);
-			}
-		};
-		wasOnline = false;
-	}
-	function onMessage(handler) {
-		initTimeout = setTimeout(onStreamEnd, 5e3);
-		return function(event) {
-			try {
-				const result = handler(event.data);
-				if (buf) {
-					if (Array.isArray(result)) {
-						buf.pushEvent(result);
-						if (result[1] === "x") gotExitEvent = true;
-					} else if (typeof result === "string") buf.pushText(result);
-					else if (typeof result === "object" && !Array.isArray(result)) onStreamReset(result);
-					else if (result === false) {
-						onStreamEnd();
-						gotEotEvent = true;
-					} else if (result !== void 0) throw new Error(`unexpected value from protocol handler: ${result}`);
-				} else if (typeof result === "object" && !Array.isArray(result)) {
-					onStreamReset(result);
-					clearTimeout(initTimeout);
-				} else if (result === void 0) {
-					clearTimeout(initTimeout);
-					initTimeout = setTimeout(onStreamEnd, 1e3);
-				} else {
-					clearTimeout(initTimeout);
-					throw new Error(`unexpected value from protocol handler: ${result}`);
-				}
-			} catch (e) {
-				socket.close();
-				throw e;
-			}
-		};
-	}
-	function onStreamReset(_ref4) {
-		let { time, term } = _ref4;
-		const { size, init, theme } = term;
-		const { cols, rows } = size;
-		logger.info(`stream reset (${cols}x${rows} @${time})`);
-		setState("playing");
-		stopBuffer();
-		buf = getBuffer(bufferTime, feed, resize, onInput, onMarker, (t) => clock.setTime(t), time, minFrameTime, logger);
-		reset(cols, rows, init, theme);
-		clock = new Clock();
-		wasOnline = true;
-		gotExitEvent = false;
-		gotEotEvent = false;
-		if (typeof time === "number") clock.setTime(time);
-	}
-	function onStreamEnd() {
-		stopBuffer();
-		if (wasOnline) {
-			logger.info("stream ended");
-			setState("offline", { message: "Stream ended" });
-		} else {
-			logger.info("stream offline");
-			setState("offline", { message: "Stream offline" });
-		}
-		clock = new NullClock();
-	}
-	function stopBuffer() {
-		if (buf) buf.stop();
-		buf = null;
-	}
-	function startAudio() {
-		if (!audioUrl) return;
-		audioElement = new Audio();
-		audioElement.preload = "auto";
-		audioElement.crossOrigin = "anonymous";
-		audioElement.src = audioUrl;
-		audioElement.play();
-	}
-	function stopAudio() {
-		if (!audioElement) return;
-		audioElement.pause();
-	}
-	function mute() {
-		if (audioElement) {
-			audioElement.muted = true;
-			return true;
-		}
-	}
-	function unmute() {
-		if (audioElement) {
-			audioElement.muted = false;
-			return true;
-		}
-	}
-	return {
-		init: () => {
-			return { hasAudio: !!audioUrl };
-		},
-		play: () => {
-			connect();
-			startAudio();
-		},
-		stop: () => {
-			stop = true;
-			stopBuffer();
-			if (socket !== void 0) socket.close();
-			stopAudio();
-		},
-		mute,
-		unmute,
-		getCurrentTime: () => clock.getTime()
-	};
-}
-function eventsource(_ref, _ref2) {
-	let { url, bufferTime, minFrameTime } = _ref;
-	let { feed, reset, resize, onInput, onMarker, setState, logger } = _ref2;
-	logger = new PrefixedLogger(logger, "eventsource: ");
-	let es;
-	let buf;
-	let clock = new NullClock();
-	function initBuffer(baseStreamTime) {
-		if (buf !== void 0) buf.stop();
-		buf = getBuffer(bufferTime, feed, resize, onInput, onMarker, (t) => clock.setTime(t), baseStreamTime, minFrameTime, logger);
-	}
-	return {
-		play: () => {
-			es = new EventSource(url);
-			es.addEventListener("open", () => {
-				logger.info("opened");
-				initBuffer();
-			});
-			es.addEventListener("error", (e) => {
-				logger.info("errored");
-				logger.debug({ e });
-				setState("loading");
-			});
-			es.addEventListener("message", (event) => {
-				const e = JSON.parse(event.data);
-				if (Array.isArray(e)) buf.pushEvent(e);
-				else if (e.cols !== void 0 || e.width !== void 0) {
-					const cols = e.cols ?? e.width;
-					const rows = e.rows ?? e.height;
-					logger.debug(`vt reset (${cols}x${rows})`);
-					setState("playing");
-					initBuffer(e.time);
-					reset(cols, rows, e.init ?? void 0);
-					clock = new Clock();
-					if (typeof e.time === "number") clock.setTime(e.time);
-				} else if (e.state === "offline") {
-					logger.info("stream offline");
-					setState("offline", { message: "Stream offline" });
-					clock = new NullClock();
-				}
-			});
-			es.addEventListener("done", () => {
-				logger.info("closed");
-				es.close();
-				setState("ended", { message: "Stream ended" });
-			});
-		},
-		stop: () => {
-			if (buf !== void 0) buf.stop();
-			if (es !== void 0) es.close();
-		},
-		getCurrentTime: () => clock.getTime()
-	};
-}
-async function parse$1(responses, _ref) {
-	let { encoding } = _ref;
-	const textDecoder = new TextDecoder(encoding);
-	let cols;
-	let rows;
-	let timing = (await responses[0].text()).split("\n").filter((line) => line.length > 0).map((line) => line.split(" "));
-	if (timing[0].length < 3) timing = timing.map((entry) => [
-		"O",
-		entry[0],
-		entry[1]
-	]);
-	const buffer = await responses[1].arrayBuffer();
-	const array = new Uint8Array(buffer);
-	const dataOffset = array.findIndex((byte) => byte == 10) + 1;
-	const sizeMatch = textDecoder.decode(array.subarray(0, dataOffset)).match(/COLUMNS="(\d+)" LINES="(\d+)"/);
-	if (sizeMatch !== null) {
-		cols = parseInt(sizeMatch[1], 10);
-		rows = parseInt(sizeMatch[2], 10);
-	}
-	const stdout = {
-		array,
-		cursor: dataOffset
-	};
-	let stdin = stdout;
-	if (responses[2] !== void 0) {
-		const buffer = await responses[2].arrayBuffer();
-		stdin = {
-			array: new Uint8Array(buffer),
-			cursor: dataOffset
-		};
-	}
-	const events = [];
-	let time = 0;
-	for (const entry of timing) {
-		time += parseFloat(entry[1]);
-		if (entry[0] === "O") {
-			const count = parseInt(entry[2], 10);
-			const bytes = stdout.array.subarray(stdout.cursor, stdout.cursor + count);
-			const text = textDecoder.decode(bytes);
-			events.push([
-				time,
-				"o",
-				text
-			]);
-			stdout.cursor += count;
-		} else if (entry[0] === "I") {
-			const count = parseInt(entry[2], 10);
-			const bytes = stdin.array.subarray(stdin.cursor, stdin.cursor + count);
-			const text = textDecoder.decode(bytes);
-			events.push([
-				time,
-				"i",
-				text
-			]);
-			stdin.cursor += count;
-		} else if (entry[0] === "S" && entry[2] === "SIGWINCH") {
-			const cols = parseInt(entry[4].slice(5), 10);
-			const rows = parseInt(entry[3].slice(5), 10);
-			events.push([
-				time,
-				"r",
-				`${cols}x${rows}`
-			]);
-		} else if (entry[0] === "H" && entry[2] === "COLUMNS") cols = parseInt(entry[3], 10);
-		else if (entry[0] === "H" && entry[2] === "LINES") rows = parseInt(entry[3], 10);
-	}
-	cols = cols ?? 80;
-	rows = rows ?? 24;
-	return {
-		cols,
-		rows,
-		events
-	};
-}
-async function parse(response, _ref) {
-	let { encoding } = _ref;
-	const textDecoder = new TextDecoder(encoding);
-	const buffer = await response.arrayBuffer();
-	const array = new Uint8Array(buffer);
-	const firstFrame = parseFrame(array);
-	const baseTime = firstFrame.time;
-	const sizeMatch = textDecoder.decode(firstFrame.data).match(/\x1b\[8;(\d+);(\d+)t/);
-	const events = [];
-	let cols = 80;
-	let rows = 24;
-	if (sizeMatch !== null) {
-		cols = parseInt(sizeMatch[2], 10);
-		rows = parseInt(sizeMatch[1], 10);
-	}
-	let cursor = 0;
-	let frame = parseFrame(array);
-	while (frame !== void 0) {
-		const time = frame.time - baseTime;
-		const text = textDecoder.decode(frame.data);
-		events.push([
-			time,
-			"o",
-			text
-		]);
-		cursor += frame.len;
-		frame = parseFrame(array.subarray(cursor));
-	}
-	return {
-		cols,
-		rows,
-		events
-	};
-}
-function parseFrame(array) {
-	if (array.length < 13) return;
-	const time = parseTimestamp(array.subarray(0, 8));
-	const len = parseNumber(array.subarray(8, 12));
-	return {
-		time,
-		data: array.subarray(12, 12 + len),
-		len: len + 12
-	};
-}
-function parseNumber(array) {
-	return array[0] + array[1] * 256 + array[2] * 256 * 256 + array[3] * 256 * 256 * 256;
-}
-function parseTimestamp(array) {
-	return parseNumber(array.subarray(0, 4)) + parseNumber(array.subarray(4, 8)) / 1e6;
-}
-var DEFAULT_COLS = 80;
-var DEFAULT_ROWS = 24;
-var vt$1 = init({ module: vtWasmModule });
-var State = class {
-	constructor(core) {
-		this.core = core;
-		this.driver = core.driver;
-	}
-	onEnter(data) {}
-	init() {}
-	play() {}
-	pause() {}
-	togglePlay() {}
-	mute() {
-		if (this.driver && this.driver.mute()) this.core._dispatchEvent("muted", true);
-	}
-	unmute() {
-		if (this.driver && this.driver.unmute()) this.core._dispatchEvent("muted", false);
-	}
-	seek(where) {
-		return false;
-	}
-	step(n) {}
-	stop() {
-		this.driver.stop();
-	}
-};
-var UninitializedState = class extends State {
-	async init() {
-		try {
-			await this.core._initializeDriver();
-			return this.core._setState("idle");
-		} catch (e) {
-			this.core._setState("errored");
-			throw e;
-		}
-	}
-	async play() {
-		this.core._dispatchEvent("play");
-		await (await this.init()).doPlay();
-	}
-	async togglePlay() {
-		await this.play();
-	}
-	async seek(where) {
-		return await (await this.init()).seek(where);
-	}
-	async step(n) {
-		await (await this.init()).step(n);
-	}
-	stop() {}
-};
-var Idle = class extends State {
-	onEnter(_ref) {
-		let { reason, message } = _ref;
-		this.core._dispatchEvent("idle", { message });
-		if (reason === "paused") this.core._dispatchEvent("pause");
-	}
-	async play() {
-		this.core._dispatchEvent("play");
-		await this.doPlay();
-	}
-	async doPlay() {
-		const stop = await this.driver.play();
-		if (stop === true) this.core._setState("playing");
-		else if (typeof stop === "function") {
-			this.core._setState("playing");
-			this.driver.stop = stop;
-		}
-	}
-	async togglePlay() {
-		await this.play();
-	}
-	seek(where) {
-		return this.driver.seek(where);
-	}
-	step(n) {
-		this.driver.step(n);
-	}
-};
-var PlayingState = class extends State {
-	onEnter() {
-		this.core._dispatchEvent("playing");
-	}
-	pause() {
-		if (this.driver.pause() === true) this.core._setState("idle", { reason: "paused" });
-	}
-	togglePlay() {
-		this.pause();
-	}
-	seek(where) {
-		return this.driver.seek(where);
-	}
-};
-var LoadingState = class extends State {
-	onEnter() {
-		this.core._dispatchEvent("loading");
-	}
-};
-var OfflineState = class extends State {
-	onEnter(_ref2) {
-		let { message } = _ref2;
-		this.core._dispatchEvent("offline", { message });
-	}
-};
-var EndedState = class extends State {
-	onEnter(_ref3) {
-		let { message } = _ref3;
-		this.core._dispatchEvent("ended", { message });
-	}
-	async play() {
-		this.core._dispatchEvent("play");
-		if (await this.driver.restart()) this.core._setState("playing");
-	}
-	async togglePlay() {
-		await this.play();
-	}
-	async seek(where) {
-		if (await this.driver.seek(where) === true) {
-			this.core._setState("idle");
-			return true;
-		}
-		return false;
-	}
-};
-var ErroredState = class extends State {
-	onEnter() {
-		this.core._dispatchEvent("errored");
-	}
-};
-var Core$1 = class {
-	constructor(src, opts) {
-		this.logger = opts.logger;
-		this.state = new UninitializedState(this);
-		this.stateName = "uninitialized";
-		this.driver = getDriver(src);
-		this.changedLines = /* @__PURE__ */ new Set();
-		this.duration = void 0;
-		this.cols = opts.cols;
-		this.rows = opts.rows;
-		this.speed = opts.speed;
-		this.loop = opts.loop;
-		this.autoPlay = opts.autoPlay;
-		this.idleTimeLimit = opts.idleTimeLimit;
-		this.preload = opts.preload;
-		this.startAt = parseNpt(opts.startAt);
-		this.poster = this._parsePoster(opts.poster);
-		this.markers = this._normalizeMarkers(opts.markers);
-		this.pauseOnMarkers = opts.pauseOnMarkers;
-		this.audioUrl = opts.audioUrl;
-		this.boldIsBright = opts.boldIsBright ?? false;
-		this.commandQueue = Promise.resolve();
-		this.needsClear = false;
-		this.eventHandlers = new Map([
-			["ended", []],
-			["errored", []],
-			["idle", []],
-			["input", []],
-			["loading", []],
-			["marker", []],
-			["metadata", []],
-			["muted", []],
-			["offline", []],
-			["pause", []],
-			["play", []],
-			["playing", []],
-			["ready", []],
-			["seeked", []],
-			["vtUpdate", []]
-		]);
-	}
-	async init() {
-		this.wasm = await vt$1;
-		const { memory } = await this.wasm.default();
-		this.memory = memory;
-		this._initializeVt(this.cols ?? DEFAULT_COLS, this.rows ?? DEFAULT_ROWS);
-		const feed = this._feed.bind(this);
-		const onInput = (data) => {
-			this._dispatchEvent("input", { data });
-		};
-		const onMarker = (_ref4) => {
-			let { index, time, label } = _ref4;
-			this._dispatchEvent("marker", {
-				index,
-				time,
-				label
-			});
-		};
-		const reset = this._resetVt.bind(this);
-		const resize = this._resizeVt.bind(this);
-		const setState = this._setState.bind(this);
-		const posterTime = this.poster.type === "npt" && !this.autoPlay ? this.poster.value : void 0;
-		this.driver = this.driver({
-			feed,
-			onInput,
-			onMarker,
-			reset,
-			resize,
-			setState,
-			logger: this.logger
-		}, {
-			cols: this.cols,
-			rows: this.rows,
-			speed: this.speed,
-			idleTimeLimit: this.idleTimeLimit,
-			startAt: this.startAt,
-			loop: this.loop,
-			posterTime,
-			markers: this.markers,
-			pauseOnMarkers: this.pauseOnMarkers,
-			audioUrl: this.audioUrl
-		});
-		if (typeof this.driver === "function") this.driver = { play: this.driver };
-		if (this.preload || posterTime !== void 0) this._withState((state) => state.init());
-		const config = {
-			isPausable: !!this.driver.pause,
-			isSeekable: !!this.driver.seek
-		};
-		if (this.driver.init === void 0) this.driver.init = () => {
-			return {};
-		};
-		if (this.driver.pause === void 0) this.driver.pause = () => {};
-		if (this.driver.seek === void 0) this.driver.seek = (where) => false;
-		if (this.driver.step === void 0) this.driver.step = (n) => {};
-		if (this.driver.stop === void 0) this.driver.stop = () => {};
-		if (this.driver.restart === void 0) this.driver.restart = () => {};
-		if (this.driver.mute === void 0) this.driver.mute = () => {};
-		if (this.driver.unmute === void 0) this.driver.unmute = () => {};
-		if (this.driver.getCurrentTime === void 0) {
-			const play = this.driver.play;
-			let clock = new NullClock();
-			this.driver.play = () => {
-				clock = new Clock(this.speed);
-				return play();
-			};
-			this.driver.getCurrentTime = () => clock.getTime();
-		}
-		this._dispatchEvent("ready", config);
-		if (this.autoPlay) this.play();
-		else if (this.poster.type === "text") {
-			this._feed(this.poster.value);
-			this.needsClear = true;
-		}
-	}
-	play() {
-		this._clearIfNeeded();
-		return this._withState((state) => state.play());
-	}
-	pause() {
-		return this._withState((state) => state.pause());
-	}
-	togglePlay() {
-		this._clearIfNeeded();
-		return this._withState((state) => state.togglePlay());
-	}
-	seek(where) {
-		this._clearIfNeeded();
-		return this._withState(async (state) => {
-			if (await state.seek(where)) this._dispatchEvent("seeked");
-		});
-	}
-	step(n) {
-		this._clearIfNeeded();
-		return this._withState((state) => state.step(n));
-	}
-	stop() {
-		return this._withState((state) => state.stop());
-	}
-	mute() {
-		return this._withState((state) => state.mute());
-	}
-	unmute() {
-		return this._withState((state) => state.unmute());
-	}
-	getLine(n, cursorOn) {
-		return this.vt.getLine(n, cursorOn);
-	}
-	getDataView(_ref5, size) {
-		let [ptr, len] = _ref5;
-		return new DataView(this.memory.buffer, ptr, len * size);
-	}
-	getUint32Array(_ref6) {
-		let [ptr, len] = _ref6;
-		return new Uint32Array(this.memory.buffer, ptr, len);
-	}
-	getCursor() {
-		const cursor = this.vt.getCursor();
-		if (cursor) return {
-			col: cursor[0],
-			row: cursor[1],
-			visible: true
-		};
-		return {
-			col: 0,
-			row: 0,
-			visible: false
-		};
-	}
-	getCurrentTime() {
-		return this.driver.getCurrentTime();
-	}
-	getRemainingTime() {
-		if (typeof this.duration === "number") return this.duration - Math.min(this.getCurrentTime(), this.duration);
-	}
-	getProgress() {
-		if (typeof this.duration === "number") return Math.min(this.getCurrentTime(), this.duration) / this.duration;
-	}
-	getDuration() {
-		return this.duration;
-	}
-	addEventListener(eventName, handler) {
-		this.eventHandlers.get(eventName).push(handler);
-	}
-	removeEventListener(eventName, handler) {
-		const handlers = this.eventHandlers.get(eventName);
-		if (!handlers) return;
-		const idx = handlers.indexOf(handler);
-		if (idx !== -1) handlers.splice(idx, 1);
-	}
-	_dispatchEvent(eventName) {
-		let data = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
-		for (const h of this.eventHandlers.get(eventName)) h(data);
-	}
-	_withState(f) {
-		return this._enqueueCommand(() => f(this.state));
-	}
-	_enqueueCommand(f) {
-		this.commandQueue = this.commandQueue.then(f);
-		return this.commandQueue;
-	}
-	_setState(newState) {
-		let data = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
-		if (this.stateName === newState) return this.state;
-		this.stateName = newState;
-		if (newState === "playing") this.state = new PlayingState(this);
-		else if (newState === "idle") this.state = new Idle(this);
-		else if (newState === "loading") this.state = new LoadingState(this);
-		else if (newState === "ended") this.state = new EndedState(this);
-		else if (newState === "offline") this.state = new OfflineState(this);
-		else if (newState === "errored") this.state = new ErroredState(this);
-		else throw new Error(`invalid state: ${newState}`);
-		this.state.onEnter(data);
-		return this.state;
-	}
-	_feed(data) {
-		const changedRows = this.vt.feed(data);
-		this._dispatchEvent("vtUpdate", { changedRows });
-	}
-	async _initializeDriver() {
-		const meta = await this.driver.init();
-		this.cols = this.cols ?? meta.cols ?? DEFAULT_COLS;
-		this.rows = this.rows ?? meta.rows ?? DEFAULT_ROWS;
-		this.duration = this.duration ?? meta.duration;
-		this.markers = this._normalizeMarkers(meta.markers) ?? this.markers ?? [];
-		if (this.cols === 0) this.cols = DEFAULT_COLS;
-		if (this.rows === 0) this.rows = DEFAULT_ROWS;
-		this._initializeVt(this.cols, this.rows);
-		if (meta.poster !== void 0) {
-			meta.poster.forEach((text) => this.vt.feed(text));
-			this.needsClear = true;
-		} else if (this.poster.type === "text") {
-			this.vt.feed(this.poster.value);
-			this.needsClear = true;
-		}
-		this._dispatchEvent("metadata", {
-			size: {
-				cols: this.cols,
-				rows: this.rows
-			},
-			theme: meta.theme ?? null,
-			duration: this.duration,
-			markers: this.markers,
-			hasAudio: meta.hasAudio
-		});
-		this._dispatchEvent("vtUpdate", {
-			size: {
-				cols: this.cols,
-				rows: this.rows
-			},
-			theme: meta.theme ?? null,
-			changedRows: Array.from({ length: this.rows }, (_, i) => i)
-		});
-	}
-	_clearIfNeeded() {
-		if (this.needsClear) {
-			this._feed("\x1Bc");
-			this.needsClear = false;
-		}
-	}
-	_resetVt(cols, rows) {
-		let init = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : void 0;
-		let theme = arguments.length > 3 && arguments[3] !== void 0 ? arguments[3] : void 0;
-		this.logger.debug(`core: vt reset (${cols}x${rows})`);
-		this.cols = cols;
-		this.rows = rows;
-		this._initializeVt(cols, rows);
-		if (init !== void 0 && init !== "") this.vt.feed(init);
-		this._dispatchEvent("metadata", {
-			size: {
-				cols,
-				rows
-			},
-			theme: theme ?? null
-		});
-		this._dispatchEvent("vtUpdate", {
-			size: {
-				cols,
-				rows
-			},
-			theme: theme ?? null,
-			changedRows: Array.from({ length: rows }, (_, i) => i)
-		});
-	}
-	_resizeVt(cols, rows) {
-		if (cols === this.vt.cols && rows === this.vt.rows) return;
-		const changedRows = this.vt.resize(cols, rows);
-		this.vt.cols = cols;
-		this.vt.rows = rows;
-		this.logger.debug(`core: vt resize (${cols}x${rows})`);
-		this._dispatchEvent("metadata", { size: {
-			cols,
-			rows
-		} });
-		this._dispatchEvent("vtUpdate", {
-			size: {
-				cols,
-				rows
-			},
-			changedRows
-		});
-	}
-	_initializeVt(cols, rows) {
-		this.logger.debug("vt init", {
-			cols,
-			rows
-		});
-		this.vt = this.wasm.create(cols, rows, 100, this.boldIsBright);
-		this.vt.cols = cols;
-		this.vt.rows = rows;
-	}
-	_parsePoster(poster) {
-		if (typeof poster !== "string") return {};
-		if (poster.substring(0, 16) == "data:text/plain,") return {
-			type: "text",
-			value: poster.substring(16)
-		};
-		else if (poster.substring(0, 4) == "npt:") return {
-			type: "npt",
-			value: parseNpt(poster.substring(4))
-		};
-		return {};
-	}
-	_normalizeMarkers(markers) {
-		if (Array.isArray(markers)) return markers.map((m) => typeof m === "number" ? [m, ""] : m);
-	}
-};
-var DRIVERS = new Map([
-	["benchmark", benchmark],
-	["clock", clock],
-	["eventsource", eventsource],
-	["random", random],
-	["recording", recording],
-	["websocket", websocket]
-]);
-var PARSERS = new Map([
-	["asciicast", parse$2],
-	["typescript", parse$1],
-	["ttyrec", parse]
-]);
-function getDriver(src) {
-	if (typeof src === "function") return src;
-	if (typeof src === "string") if (src.substring(0, 5) == "ws://" || src.substring(0, 6) == "wss://") src = {
-		driver: "websocket",
-		url: src
-	};
-	else if (src.substring(0, 6) == "clock:") src = { driver: "clock" };
-	else if (src.substring(0, 7) == "random:") src = { driver: "random" };
-	else if (src.substring(0, 10) == "benchmark:") src = {
-		driver: "benchmark",
-		url: src.substring(10)
-	};
-	else src = {
-		driver: "recording",
-		url: src
-	};
-	if (src.driver === void 0) src.driver = "recording";
-	if (src.driver == "recording") {
-		if (src.parser === void 0) src.parser = "asciicast";
-		if (typeof src.parser === "string") if (PARSERS.has(src.parser)) src.parser = PARSERS.get(src.parser);
-		else throw new Error(`unknown parser: ${src.parser}`);
-	}
-	if (DRIVERS.has(src.driver)) {
-		const driver = DRIVERS.get(src.driver);
-		return (callbacks, opts) => driver(src, callbacks, opts);
-	} else throw new Error(`unsupported driver: ${JSON.stringify(src)}`);
-}
-//#endregion
-//#region ../../node_modules/.pnpm/asciinema-player@3.15.1/node_modules/asciinema-player/dist/opts-BtLxsM_6.js
-var equalFn = (a, b) => a === b;
-var $PROXY = Symbol("solid-proxy");
-var $TRACK = Symbol("solid-track");
-var signalOptions = { equals: equalFn };
-var runEffects = runQueue;
-var STALE = 1;
-var PENDING = 2;
-var UNOWNED = {
-	owned: null,
-	cleanups: null,
-	context: null,
-	owner: null
-};
-var Owner = null;
-var Listener = null;
-var Updates = null;
-var Effects = null;
-var ExecCount = 0;
-function createRoot$1(fn, detachedOwner) {
-	const listener = Listener, owner = Owner, unowned = fn.length === 0, current = detachedOwner === void 0 ? owner : detachedOwner, root = unowned ? UNOWNED : {
-		owned: null,
-		cleanups: null,
-		context: current ? current.context : null,
-		owner: current
-	}, updateFn = unowned ? fn : () => fn(() => untrack(() => cleanNode(root)));
-	Owner = root;
-	Listener = null;
-	try {
-		return runUpdates(updateFn, true);
-	} finally {
-		Listener = listener;
-		Owner = owner;
-	}
-}
-function createSignal(value, options) {
-	options = options ? Object.assign({}, signalOptions, options) : signalOptions;
-	const s = {
-		value,
-		observers: null,
-		observerSlots: null,
-		comparator: options.equals || void 0
-	};
-	const setter = (value) => {
-		if (typeof value === "function") value = value(s.value);
-		return writeSignal(s, value);
-	};
-	return [readSignal.bind(s), setter];
-}
-function createComputed(fn, value, options) {
-	updateComputation(createComputation(fn, value, true, STALE));
-}
-function createRenderEffect(fn, value, options) {
-	updateComputation(createComputation(fn, value, false, STALE));
-}
-function createEffect(fn, value, options) {
-	runEffects = runUserEffects;
-	const c = createComputation(fn, value, false, STALE);
-	c.user = true;
-	Effects ? Effects.push(c) : updateComputation(c);
-}
-function createMemo(fn, value, options) {
-	options = options ? Object.assign({}, signalOptions, options) : signalOptions;
-	const c = createComputation(fn, value, true, 0);
-	c.observers = null;
-	c.observerSlots = null;
-	c.comparator = options.equals || void 0;
-	updateComputation(c);
-	return readSignal.bind(c);
-}
-function batch(fn) {
-	return runUpdates(fn, false);
-}
-function untrack(fn) {
-	if (Listener === null) return fn();
-	const listener = Listener;
-	Listener = null;
-	try {
-		return fn();
-	} finally {
-		Listener = listener;
-	}
-}
-function onMount(fn) {
-	createEffect(() => untrack(fn));
-}
-function onCleanup(fn) {
-	if (Owner === null);
-	else if (Owner.cleanups === null) Owner.cleanups = [fn];
-	else Owner.cleanups.push(fn);
-	return fn;
-}
-function getListener() {
-	return Listener;
-}
-function startTransition$1(fn) {
-	const l = Listener;
-	const o = Owner;
-	return Promise.resolve().then(() => {
-		Listener = l;
-		Owner = o;
-		runUpdates(fn, false);
-		Listener = Owner = null;
-	});
-}
-var [transPending, setTransPending] = /* @__PURE__ */ createSignal(false);
-function useTransition() {
-	return [transPending, startTransition$1];
-}
-function children(fn) {
-	const children = createMemo(fn);
-	const memo = createMemo(() => resolveChildren(children()));
-	memo.toArray = () => {
-		const c = memo();
-		return Array.isArray(c) ? c : c != null ? [c] : [];
-	};
-	return memo;
-}
-function readSignal() {
-	if (this.sources && this.state) if (this.state === STALE) updateComputation(this);
-	else {
-		const updates = Updates;
-		Updates = null;
-		runUpdates(() => lookUpstream(this), false);
-		Updates = updates;
-	}
-	if (Listener) {
-		const sSlot = this.observers ? this.observers.length : 0;
-		if (!Listener.sources) {
-			Listener.sources = [this];
-			Listener.sourceSlots = [sSlot];
-		} else {
-			Listener.sources.push(this);
-			Listener.sourceSlots.push(sSlot);
-		}
-		if (!this.observers) {
-			this.observers = [Listener];
-			this.observerSlots = [Listener.sources.length - 1];
-		} else {
-			this.observers.push(Listener);
-			this.observerSlots.push(Listener.sources.length - 1);
-		}
-	}
-	return this.value;
-}
-function writeSignal(node, value, isComp) {
-	let current = node.value;
-	if (!node.comparator || !node.comparator(current, value)) {
-		node.value = value;
-		if (node.observers && node.observers.length) runUpdates(() => {
-			for (let i = 0; i < node.observers.length; i += 1) {
-				const o = node.observers[i];
-				if (!o.state) {
-					if (o.pure) Updates.push(o);
-					else Effects.push(o);
-					if (o.observers) markDownstream(o);
-				}
-				o.state = STALE;
-			}
-			if (Updates.length > 1e6) {
-				Updates = [];
-				throw new Error();
-			}
-		}, false);
-	}
-	return value;
-}
-function updateComputation(node) {
-	if (!node.fn) return;
-	cleanNode(node);
-	const time = ExecCount;
-	runComputation(node, node.value, time);
-}
-function runComputation(node, value, time) {
-	let nextValue;
-	const owner = Owner, listener = Listener;
-	Listener = Owner = node;
-	try {
-		nextValue = node.fn(value);
-	} catch (err) {
-		if (node.pure) {
-			node.state = STALE;
-			node.owned && node.owned.forEach(cleanNode);
-			node.owned = null;
-		}
-		node.updatedAt = time + 1;
-		return handleError(err);
-	} finally {
-		Listener = listener;
-		Owner = owner;
-	}
-	if (!node.updatedAt || node.updatedAt <= time) {
-		if (node.updatedAt != null && "observers" in node) writeSignal(node, nextValue);
-		else node.value = nextValue;
-		node.updatedAt = time;
-	}
-}
-function createComputation(fn, init, pure, state = STALE, options) {
-	const c = {
-		fn,
-		state,
-		updatedAt: null,
-		owned: null,
-		sources: null,
-		sourceSlots: null,
-		cleanups: null,
-		value: init,
-		owner: Owner,
-		context: Owner ? Owner.context : null,
-		pure
-	};
-	if (Owner === null);
-	else if (Owner !== UNOWNED) if (!Owner.owned) Owner.owned = [c];
-	else Owner.owned.push(c);
-	return c;
-}
-function runTop(node) {
-	if (node.state === 0) return;
-	if (node.state === PENDING) return lookUpstream(node);
-	if (node.suspense && untrack(node.suspense.inFallback)) return node.suspense.effects.push(node);
-	const ancestors = [node];
-	while ((node = node.owner) && (!node.updatedAt || node.updatedAt < ExecCount)) if (node.state) ancestors.push(node);
-	for (let i = ancestors.length - 1; i >= 0; i--) {
-		node = ancestors[i];
-		if (node.state === STALE) updateComputation(node);
-		else if (node.state === PENDING) {
-			const updates = Updates;
-			Updates = null;
-			runUpdates(() => lookUpstream(node, ancestors[0]), false);
-			Updates = updates;
-		}
-	}
-}
-function runUpdates(fn, init) {
-	if (Updates) return fn();
-	let wait = false;
-	if (!init) Updates = [];
-	if (Effects) wait = true;
-	else Effects = [];
-	ExecCount++;
-	try {
-		const res = fn();
-		completeUpdates(wait);
-		return res;
-	} catch (err) {
-		if (!wait) Effects = null;
-		Updates = null;
-		handleError(err);
-	}
-}
-function completeUpdates(wait) {
-	if (Updates) {
-		runQueue(Updates);
-		Updates = null;
-	}
-	if (wait) return;
-	const e = Effects;
-	Effects = null;
-	if (e.length) runUpdates(() => runEffects(e), false);
-}
-function runQueue(queue) {
-	for (let i = 0; i < queue.length; i++) runTop(queue[i]);
-}
-function runUserEffects(queue) {
-	let i, userLength = 0;
-	for (i = 0; i < queue.length; i++) {
-		const e = queue[i];
-		if (!e.user) runTop(e);
-		else queue[userLength++] = e;
-	}
-	for (i = 0; i < userLength; i++) runTop(queue[i]);
-}
-function lookUpstream(node, ignore) {
-	node.state = 0;
-	for (let i = 0; i < node.sources.length; i += 1) {
-		const source = node.sources[i];
-		if (source.sources) {
-			const state = source.state;
-			if (state === STALE) {
-				if (source !== ignore && (!source.updatedAt || source.updatedAt < ExecCount)) runTop(source);
-			} else if (state === PENDING) lookUpstream(source, ignore);
-		}
-	}
-}
-function markDownstream(node) {
-	for (let i = 0; i < node.observers.length; i += 1) {
-		const o = node.observers[i];
-		if (!o.state) {
-			o.state = PENDING;
-			if (o.pure) Updates.push(o);
-			else Effects.push(o);
-			o.observers && markDownstream(o);
-		}
-	}
-}
-function cleanNode(node) {
-	let i;
-	if (node.sources) while (node.sources.length) {
-		const source = node.sources.pop(), index = node.sourceSlots.pop(), obs = source.observers;
-		if (obs && obs.length) {
-			const n = obs.pop(), s = source.observerSlots.pop();
-			if (index < obs.length) {
-				n.sourceSlots[s] = index;
-				obs[index] = n;
-				source.observerSlots[index] = s;
-			}
-		}
-	}
-	if (node.tOwned) {
-		for (i = node.tOwned.length - 1; i >= 0; i--) cleanNode(node.tOwned[i]);
-		delete node.tOwned;
-	}
-	if (node.owned) {
-		for (i = node.owned.length - 1; i >= 0; i--) cleanNode(node.owned[i]);
-		node.owned = null;
-	}
-	if (node.cleanups) {
-		for (i = node.cleanups.length - 1; i >= 0; i--) node.cleanups[i]();
-		node.cleanups = null;
-	}
-	node.state = 0;
-}
-function castError(err) {
-	if (err instanceof Error) return err;
-	return new Error(typeof err === "string" ? err : "Unknown error", { cause: err });
-}
-function handleError(err, owner = Owner) {
-	throw castError(err);
-}
-function resolveChildren(children) {
-	if (typeof children === "function" && !children.length) return resolveChildren(children());
-	if (Array.isArray(children)) {
-		const results = [];
-		for (let i = 0; i < children.length; i++) {
-			const result = resolveChildren(children[i]);
-			Array.isArray(result) ? results.push.apply(results, result) : results.push(result);
-		}
-		return results;
-	}
-	return children;
-}
-var FALLBACK = Symbol("fallback");
-function dispose(d) {
-	for (let i = 0; i < d.length; i++) d[i]();
-}
-function mapArray(list, mapFn, options = {}) {
-	let items = [], mapped = [], disposers = [], len = 0, indexes = mapFn.length > 1 ? [] : null;
-	onCleanup(() => dispose(disposers));
-	return () => {
-		let newItems = list() || [], newLen = newItems.length, i, j;
-		newItems[$TRACK];
-		return untrack(() => {
-			let newIndices, newIndicesNext, temp, tempdisposers, tempIndexes, start, end, newEnd, item;
-			if (newLen === 0) {
-				if (len !== 0) {
-					dispose(disposers);
-					disposers = [];
-					items = [];
-					mapped = [];
-					len = 0;
-					indexes && (indexes = []);
-				}
-				if (options.fallback) {
-					items = [FALLBACK];
-					mapped[0] = createRoot$1((disposer) => {
-						disposers[0] = disposer;
-						return options.fallback();
-					});
-					len = 1;
-				}
-			} else if (len === 0) {
-				mapped = new Array(newLen);
-				for (j = 0; j < newLen; j++) {
-					items[j] = newItems[j];
-					mapped[j] = createRoot$1(mapper);
-				}
-				len = newLen;
-			} else {
-				temp = new Array(newLen);
-				tempdisposers = new Array(newLen);
-				indexes && (tempIndexes = new Array(newLen));
-				for (start = 0, end = Math.min(len, newLen); start < end && items[start] === newItems[start]; start++);
-				for (end = len - 1, newEnd = newLen - 1; end >= start && newEnd >= start && items[end] === newItems[newEnd]; end--, newEnd--) {
-					temp[newEnd] = mapped[end];
-					tempdisposers[newEnd] = disposers[end];
-					indexes && (tempIndexes[newEnd] = indexes[end]);
-				}
-				newIndices = /* @__PURE__ */ new Map();
-				newIndicesNext = new Array(newEnd + 1);
-				for (j = newEnd; j >= start; j--) {
-					item = newItems[j];
-					i = newIndices.get(item);
-					newIndicesNext[j] = i === void 0 ? -1 : i;
-					newIndices.set(item, j);
-				}
-				for (i = start; i <= end; i++) {
-					item = items[i];
-					j = newIndices.get(item);
-					if (j !== void 0 && j !== -1) {
-						temp[j] = mapped[i];
-						tempdisposers[j] = disposers[i];
-						indexes && (tempIndexes[j] = indexes[i]);
-						j = newIndicesNext[j];
-						newIndices.set(item, j);
-					} else disposers[i]();
-				}
-				for (j = start; j < newLen; j++) if (j in temp) {
-					mapped[j] = temp[j];
-					disposers[j] = tempdisposers[j];
-					if (indexes) {
-						indexes[j] = tempIndexes[j];
-						indexes[j](j);
-					}
-				} else mapped[j] = createRoot$1(mapper);
-				mapped = mapped.slice(0, len = newLen);
-				items = newItems.slice(0);
-			}
-			return mapped;
-		});
-		function mapper(disposer) {
-			disposers[j] = disposer;
-			if (indexes) {
-				const [s, set] = createSignal(j);
-				indexes[j] = set;
-				return mapFn(newItems[j], s);
-			}
-			return mapFn(newItems[j]);
-		}
-	};
-}
-function createComponent(Comp, props) {
-	return untrack(() => Comp(props || {}));
-}
-var narrowedError = (name) => `Stale read from <${name}>.`;
-function For(props) {
-	const fallback = "fallback" in props && { fallback: () => props.fallback };
-	return createMemo(mapArray(() => props.each, props.children, fallback || void 0));
-}
-function Show(props) {
-	const keyed = props.keyed;
-	const conditionValue = createMemo(() => props.when, void 0, void 0);
-	const condition = keyed ? conditionValue : createMemo(conditionValue, void 0, { equals: (a, b) => !a === !b });
-	return createMemo(() => {
-		const c = condition();
-		if (c) {
-			const child = props.children;
-			return typeof child === "function" && child.length > 0 ? untrack(() => child(keyed ? c : () => {
-				if (!untrack(condition)) throw narrowedError("Show");
-				return conditionValue();
-			})) : child;
-		}
-		return props.fallback;
-	}, void 0, void 0);
-}
-function Switch(props) {
-	const chs = children(() => props.children);
-	const switchFunc = createMemo(() => {
-		const ch = chs();
-		const mps = Array.isArray(ch) ? ch : [ch];
-		let func = () => void 0;
-		for (let i = 0; i < mps.length; i++) {
-			const index = i;
-			const mp = mps[i];
-			const prevFunc = func;
-			const conditionValue = createMemo(() => prevFunc() ? void 0 : mp.when, void 0, void 0);
-			const condition = mp.keyed ? conditionValue : createMemo(conditionValue, void 0, { equals: (a, b) => !a === !b });
-			func = () => prevFunc() || (condition() ? [
-				index,
-				conditionValue,
-				mp
-			] : void 0);
-		}
-		return func;
-	});
-	return createMemo(() => {
-		const sel = switchFunc()();
-		if (!sel) return props.fallback;
-		const [index, conditionValue, mp] = sel;
-		const child = mp.children;
-		return typeof child === "function" && child.length > 0 ? untrack(() => child(mp.keyed ? conditionValue() : () => {
-			if (untrack(switchFunc)()?.[0] !== index) throw narrowedError("Match");
-			return conditionValue();
-		})) : child;
-	}, void 0, void 0);
-}
-function Match$1(props) {
-	return props;
-}
-function reconcileArrays(parentNode, a, b) {
-	let bLength = b.length, aEnd = a.length, bEnd = bLength, aStart = 0, bStart = 0, after = a[aEnd - 1].nextSibling, map = null;
-	while (aStart < aEnd || bStart < bEnd) {
-		if (a[aStart] === b[bStart]) {
-			aStart++;
-			bStart++;
-			continue;
-		}
-		while (a[aEnd - 1] === b[bEnd - 1]) {
-			aEnd--;
-			bEnd--;
-		}
-		if (aEnd === aStart) {
-			const node = bEnd < bLength ? bStart ? b[bStart - 1].nextSibling : b[bEnd - bStart] : after;
-			while (bStart < bEnd) parentNode.insertBefore(b[bStart++], node);
-		} else if (bEnd === bStart) while (aStart < aEnd) {
-			if (!map || !map.has(a[aStart])) a[aStart].remove();
-			aStart++;
-		}
-		else if (a[aStart] === b[bEnd - 1] && b[bStart] === a[aEnd - 1]) {
-			const node = a[--aEnd].nextSibling;
-			parentNode.insertBefore(b[bStart++], a[aStart++].nextSibling);
-			parentNode.insertBefore(b[--bEnd], node);
-			a[aEnd] = b[bEnd];
-		} else {
-			if (!map) {
-				map = /* @__PURE__ */ new Map();
-				let i = bStart;
-				while (i < bEnd) map.set(b[i], i++);
-			}
-			const index = map.get(a[aStart]);
-			if (index != null) if (bStart < index && index < bEnd) {
-				let i = aStart, sequence = 1, t;
-				while (++i < aEnd && i < bEnd) {
-					if ((t = map.get(a[i])) == null || t !== index + sequence) break;
-					sequence++;
-				}
-				if (sequence > index - bStart) {
-					const node = a[aStart];
-					while (bStart < index) parentNode.insertBefore(b[bStart++], node);
-				} else parentNode.replaceChild(b[bStart++], a[aStart++]);
-			} else aStart++;
-			else a[aStart++].remove();
-		}
-	}
-}
-var $$EVENTS = "_$DX_DELEGATE";
-function render(code, element, init, options = {}) {
-	let disposer;
-	createRoot$1((dispose) => {
-		disposer = dispose;
-		element === document ? code() : insert$1(element, code(), element.firstChild ? null : void 0, init);
-	}, options.owner);
-	return () => {
-		disposer();
-		element.textContent = "";
-	};
-}
-function template(html, isImportNode, isSVG, isMathML) {
-	let node;
-	const create = () => {
-		const t = document.createElement("template");
-		t.innerHTML = html;
-		return t.content.firstChild;
-	};
-	const fn = isImportNode ? () => untrack(() => document.importNode(node || (node = create()), true)) : () => (node || (node = create())).cloneNode(true);
-	fn.cloneNode = fn;
-	return fn;
-}
-function delegateEvents(eventNames, document = window.document) {
-	const e = document[$$EVENTS] || (document[$$EVENTS] = /* @__PURE__ */ new Set());
-	for (let i = 0, l = eventNames.length; i < l; i++) {
-		const name = eventNames[i];
-		if (!e.has(name)) {
-			e.add(name);
-			document.addEventListener(name, eventHandler);
-		}
-	}
-}
-function setAttribute(node, name, value) {
-	if (value == null) node.removeAttribute(name);
-	else node.setAttribute(name, value);
-}
-function className(node, value) {
-	if (value == null) node.removeAttribute("class");
-	else node.className = value;
-}
-function addEventListener$2(node, name, handler, delegate) {
-	if (Array.isArray(handler)) {
-		node[`$$${name}`] = handler[0];
-		node[`$$${name}Data`] = handler[1];
-	} else node[`$$${name}`] = handler;
-}
-function style(node, value, prev) {
-	if (!value) return prev ? setAttribute(node, "style") : value;
-	const nodeStyle = node.style;
-	if (typeof value === "string") return nodeStyle.cssText = value;
-	typeof prev === "string" && (nodeStyle.cssText = prev = void 0);
-	prev || (prev = {});
-	value || (value = {});
-	let v, s;
-	for (s in prev) {
-		value[s] ?? nodeStyle.removeProperty(s);
-		delete prev[s];
-	}
-	for (s in value) {
-		v = value[s];
-		if (v !== prev[s]) {
-			nodeStyle.setProperty(s, v);
-			prev[s] = v;
-		}
-	}
-	return prev;
-}
-function use(fn, element, arg) {
-	return untrack(() => fn(element, arg));
-}
-function insert$1(parent, accessor, marker, initial) {
-	if (marker !== void 0 && !initial) initial = [];
-	if (typeof accessor !== "function") return insertExpression(parent, accessor, initial, marker);
-	createRenderEffect((current) => insertExpression(parent, accessor(), current, marker), initial);
-}
-function eventHandler(e) {
-	let node = e.target;
-	const key = `$$${e.type}`;
-	const oriTarget = e.target;
-	const oriCurrentTarget = e.currentTarget;
-	const retarget = (value) => Object.defineProperty(e, "target", {
-		configurable: true,
-		value
-	});
-	const handleNode = () => {
-		const handler = node[key];
-		if (handler && !node.disabled) {
-			const data = node[`${key}Data`];
-			data !== void 0 ? handler.call(node, data, e) : handler.call(node, e);
-			if (e.cancelBubble) return;
-		}
-		node.host && typeof node.host !== "string" && !node.host._$host && node.contains(e.target) && retarget(node.host);
-		return true;
-	};
-	const walkUpTree = () => {
-		while (handleNode() && (node = node._$host || node.parentNode || node.host));
-	};
-	Object.defineProperty(e, "currentTarget", {
-		configurable: true,
-		get() {
-			return node || document;
-		}
-	});
-	if (e.composedPath) {
-		const path = e.composedPath();
-		retarget(path[0]);
-		for (let i = 0; i < path.length - 2; i++) {
-			node = path[i];
-			if (!handleNode()) break;
-			if (node._$host) {
-				node = node._$host;
-				walkUpTree();
-				break;
-			}
-			if (node.parentNode === oriCurrentTarget) break;
-		}
-	} else walkUpTree();
-	retarget(oriTarget);
-}
-function insertExpression(parent, value, current, marker, unwrapArray) {
-	while (typeof current === "function") current = current();
-	if (value === current) return current;
-	const t = typeof value, multi = marker !== void 0;
-	parent = multi && current[0] && current[0].parentNode || parent;
-	if (t === "string" || t === "number") {
-		if (t === "number") {
-			value = value.toString();
-			if (value === current) return current;
-		}
-		if (multi) {
-			let node = current[0];
-			if (node && node.nodeType === 3) node.data !== value && (node.data = value);
-			else node = document.createTextNode(value);
-			current = cleanChildren(parent, current, marker, node);
-		} else if (current !== "" && typeof current === "string") current = parent.firstChild.data = value;
-		else current = parent.textContent = value;
-	} else if (value == null || t === "boolean") current = cleanChildren(parent, current, marker);
-	else if (t === "function") {
-		createRenderEffect(() => {
-			let v = value();
-			while (typeof v === "function") v = v();
-			current = insertExpression(parent, v, current, marker);
-		});
-		return () => current;
-	} else if (Array.isArray(value)) {
-		const array = [];
-		const currentArray = current && Array.isArray(current);
-		if (normalizeIncomingArray(array, value, current, unwrapArray)) {
-			createRenderEffect(() => current = insertExpression(parent, array, current, marker, true));
-			return () => current;
-		}
-		if (array.length === 0) {
-			current = cleanChildren(parent, current, marker);
-			if (multi) return current;
-		} else if (currentArray) if (current.length === 0) appendNodes(parent, array, marker);
-		else reconcileArrays(parent, current, array);
-		else {
-			current && cleanChildren(parent);
-			appendNodes(parent, array);
-		}
-		current = array;
-	} else if (value.nodeType) {
-		if (Array.isArray(current)) {
-			if (multi) return current = cleanChildren(parent, current, marker, value);
-			cleanChildren(parent, current, null, value);
-		} else if (current == null || current === "" || !parent.firstChild) parent.appendChild(value);
-		else parent.replaceChild(value, parent.firstChild);
-		current = value;
-	}
-	return current;
-}
-function normalizeIncomingArray(normalized, array, current, unwrap) {
-	let dynamic = false;
-	for (let i = 0, len = array.length; i < len; i++) {
-		let item = array[i], prev = current && current[normalized.length], t;
-		if (item == null || item === true || item === false);
-		else if ((t = typeof item) === "object" && item.nodeType) normalized.push(item);
-		else if (Array.isArray(item)) dynamic = normalizeIncomingArray(normalized, item, prev) || dynamic;
-		else if (t === "function") if (unwrap) {
-			while (typeof item === "function") item = item();
-			dynamic = normalizeIncomingArray(normalized, Array.isArray(item) ? item : [item], Array.isArray(prev) ? prev : [prev]) || dynamic;
-		} else {
-			normalized.push(item);
-			dynamic = true;
-		}
-		else {
-			const value = String(item);
-			if (prev && prev.nodeType === 3 && prev.data === value) normalized.push(prev);
-			else normalized.push(document.createTextNode(value));
-		}
-	}
-	return dynamic;
-}
-function appendNodes(parent, array, marker = null) {
-	for (let i = 0, len = array.length; i < len; i++) parent.insertBefore(array[i], marker);
-}
-function cleanChildren(parent, current, marker, replacement) {
-	if (marker === void 0) return parent.textContent = "";
-	const node = replacement || document.createTextNode("");
-	if (current.length) {
-		let inserted = false;
-		for (let i = current.length - 1; i >= 0; i--) {
-			const el = current[i];
-			if (node !== el) {
-				const isParent = el.parentNode === parent;
-				if (!inserted && !i) isParent ? parent.replaceChild(node, el) : parent.insertBefore(node, marker);
-				else isParent && el.remove();
-			} else inserted = true;
-		}
-	} else parent.insertBefore(node, marker);
-	return [node];
-}
-var $RAW = Symbol("store-raw"), $NODE = Symbol("store-node"), $HAS = Symbol("store-has"), $SELF = Symbol("store-self");
-function wrap$1(value) {
-	let p = value[$PROXY];
-	if (!p) {
-		Object.defineProperty(value, $PROXY, { value: p = new Proxy(value, proxyTraps$1) });
-		if (!Array.isArray(value)) {
-			const keys = Object.keys(value), desc = Object.getOwnPropertyDescriptors(value);
-			for (let i = 0, l = keys.length; i < l; i++) {
-				const prop = keys[i];
-				if (desc[prop].get) Object.defineProperty(value, prop, {
-					enumerable: desc[prop].enumerable,
-					get: desc[prop].get.bind(p)
-				});
-			}
-		}
-	}
-	return p;
-}
-function isWrappable(obj) {
-	let proto;
-	return obj != null && typeof obj === "object" && (obj[$PROXY] || !(proto = Object.getPrototypeOf(obj)) || proto === Object.prototype || Array.isArray(obj));
-}
-function unwrap$1(item, set = /* @__PURE__ */ new Set()) {
-	let result, unwrapped, v, prop;
-	if (result = item != null && item[$RAW]) return result;
-	if (!isWrappable(item) || set.has(item)) return item;
-	if (Array.isArray(item)) {
-		if (Object.isFrozen(item)) item = item.slice(0);
-		else set.add(item);
-		for (let i = 0, l = item.length; i < l; i++) {
-			v = item[i];
-			if ((unwrapped = unwrap$1(v, set)) !== v) item[i] = unwrapped;
-		}
-	} else {
-		if (Object.isFrozen(item)) item = Object.assign({}, item);
-		else set.add(item);
-		const keys = Object.keys(item), desc = Object.getOwnPropertyDescriptors(item);
-		for (let i = 0, l = keys.length; i < l; i++) {
-			prop = keys[i];
-			if (desc[prop].get) continue;
-			v = item[prop];
-			if ((unwrapped = unwrap$1(v, set)) !== v) item[prop] = unwrapped;
-		}
-	}
-	return item;
-}
-function getNodes(target, symbol) {
-	let nodes = target[symbol];
-	if (!nodes) Object.defineProperty(target, symbol, { value: nodes = Object.create(null) });
-	return nodes;
-}
-function getNode(nodes, property, value) {
-	if (nodes[property]) return nodes[property];
-	const [s, set] = createSignal(value, {
-		equals: false,
-		internal: true
-	});
-	s.$ = set;
-	return nodes[property] = s;
-}
-function proxyDescriptor$1(target, property) {
-	const desc = Reflect.getOwnPropertyDescriptor(target, property);
-	if (!desc || desc.get || !desc.configurable || property === $PROXY || property === $NODE) return desc;
-	delete desc.value;
-	delete desc.writable;
-	desc.get = () => target[$PROXY][property];
-	return desc;
-}
-function trackSelf(target) {
-	getListener() && getNode(getNodes(target, $NODE), $SELF)();
-}
-function ownKeys(target) {
-	trackSelf(target);
-	return Reflect.ownKeys(target);
-}
-var proxyTraps$1 = {
-	get(target, property, receiver) {
-		if (property === $RAW) return target;
-		if (property === $PROXY) return receiver;
-		if (property === $TRACK) {
-			trackSelf(target);
-			return receiver;
-		}
-		const nodes = getNodes(target, $NODE);
-		const tracked = nodes[property];
-		let value = tracked ? tracked() : target[property];
-		if (property === $NODE || property === $HAS || property === "__proto__") return value;
-		if (!tracked) {
-			const desc = Object.getOwnPropertyDescriptor(target, property);
-			if (getListener() && (typeof value !== "function" || target.hasOwnProperty(property)) && !(desc && desc.get)) value = getNode(nodes, property, value)();
-		}
-		return isWrappable(value) ? wrap$1(value) : value;
-	},
-	has(target, property) {
-		if (property === $RAW || property === $PROXY || property === $TRACK || property === $NODE || property === $HAS || property === "__proto__") return true;
-		getListener() && getNode(getNodes(target, $HAS), property)();
-		return property in target;
-	},
-	set() {
-		return true;
-	},
-	deleteProperty() {
-		return true;
-	},
-	ownKeys,
-	getOwnPropertyDescriptor: proxyDescriptor$1
-};
-function setProperty(state, property, value, deleting = false) {
-	if (!deleting && state[property] === value) return;
-	const prev = state[property], len = state.length;
-	if (value === void 0) {
-		delete state[property];
-		if (state[$HAS] && state[$HAS][property] && prev !== void 0) state[$HAS][property].$();
-	} else {
-		state[property] = value;
-		if (state[$HAS] && state[$HAS][property] && prev === void 0) state[$HAS][property].$();
-	}
-	let nodes = getNodes(state, $NODE), node;
-	if (node = getNode(nodes, property, prev)) node.$(() => value);
-	if (Array.isArray(state) && state.length !== len) {
-		for (let i = state.length; i < len; i++) (node = nodes[i]) && node.$();
-		(node = getNode(nodes, "length", len)) && node.$(state.length);
-	}
-	(node = nodes[$SELF]) && node.$();
-}
-function mergeStoreNode(state, value) {
-	const keys = Object.keys(value);
-	for (let i = 0; i < keys.length; i += 1) {
-		const key = keys[i];
-		setProperty(state, key, value[key]);
-	}
-}
-function updateArray(current, next) {
-	if (typeof next === "function") next = next(current);
-	next = unwrap$1(next);
-	if (Array.isArray(next)) {
-		if (current === next) return;
-		let i = 0, len = next.length;
-		for (; i < len; i++) {
-			const value = next[i];
-			if (current[i] !== value) setProperty(current, i, value);
-		}
-		setProperty(current, "length", len);
-	} else mergeStoreNode(current, next);
-}
-function updatePath(current, path, traversed = []) {
-	let part, prev = current;
-	if (path.length > 1) {
-		part = path.shift();
-		const partType = typeof part, isArray = Array.isArray(current);
-		if (Array.isArray(part)) {
-			for (let i = 0; i < part.length; i++) updatePath(current, [part[i]].concat(path), traversed);
-			return;
-		} else if (isArray && partType === "function") {
-			for (let i = 0; i < current.length; i++) if (part(current[i], i)) updatePath(current, [i].concat(path), traversed);
-			return;
-		} else if (isArray && partType === "object") {
-			const { from = 0, to = current.length - 1, by = 1 } = part;
-			for (let i = from; i <= to; i += by) updatePath(current, [i].concat(path), traversed);
-			return;
-		} else if (path.length > 1) {
-			updatePath(current[part], path, [part].concat(traversed));
-			return;
-		}
-		prev = current[part];
-		traversed = [part].concat(traversed);
-	}
-	let value = path[0];
-	if (typeof value === "function") {
-		value = value(prev, traversed);
-		if (value === prev) return;
-	}
-	if (part === void 0 && value == void 0) return;
-	value = unwrap$1(value);
-	if (part === void 0 || isWrappable(prev) && isWrappable(value) && !Array.isArray(value)) mergeStoreNode(prev, value);
-	else setProperty(current, part, value);
-}
-function createStore$1(...[store, options]) {
-	const unwrappedStore = unwrap$1(store || {});
-	const isArray = Array.isArray(unwrappedStore);
-	const wrappedStore = wrap$1(unwrappedStore);
-	function setStore(...args) {
-		batch(() => {
-			isArray && args.length === 1 ? updateArray(unwrappedStore, args[0]) : updatePath(unwrappedStore, args);
-		});
-	}
-	return [wrappedStore, setStore];
-}
-var noop = () => {};
-var noopTransition = (el, done) => done();
-/**
-* Create an element transition interface for switching between single elements.
-* It can be used to implement own transition effect, or a custom `<Transition>`-like component.
-*
-* It will observe {@link source} and return a signal with array of elements to be rendered (current one and exiting ones).
-*
-* @param source a signal with the current element. Any nullish value will mean there is no element.
-* Any object can used as the source, but most likely you will want to use a `HTMLElement` or `SVGElement`.
-* @param options transition options {@link SwitchTransitionOptions}
-* @returns a signal with an array of the current element and exiting previous elements.
-*
-* @see https://github.com/solidjs-community/solid-primitives/tree/main/packages/transition-group#createSwitchTransition
-*
-* @example
-* const [el, setEl] = createSignal<HTMLDivElement>();
-*
-* const rendered = createSwitchTransition(el, {
-*   onEnter(el, done) {
-*     // the enter callback is called before the element is inserted into the DOM
-*     // so run the animation in the next animation frame / microtask
-*     queueMicrotask(() => { ... })
-*   },
-*   onExit(el, done) {
-*     // the exitting element is kept in the DOM until the done() callback is called
-*   },
-* })
-*
-* // change the source to trigger the transition
-* setEl(refToHtmlElement);
-*/
-function createSwitchTransition(source, options) {
-	const initSource = untrack(source);
-	const initReturned = initSource ? [initSource] : [];
-	const { onEnter = noopTransition, onExit = noopTransition } = options;
-	const [returned, setReturned] = createSignal(options.appear ? [] : initReturned);
-	const [isTransitionPending] = useTransition();
-	let next;
-	let isExiting = false;
-	function exitTransition(el, after) {
-		if (!el) return after && after();
-		isExiting = true;
-		onExit(el, () => {
-			batch(() => {
-				isExiting = false;
-				setReturned((p) => p.filter((e) => e !== el));
-				after && after();
-			});
-		});
-	}
-	function enterTransition(after) {
-		const el = next;
-		if (!el) return after && after();
-		next = void 0;
-		setReturned((p) => [el, ...p]);
-		onEnter(el, after ?? noop);
-	}
-	const triggerTransitions = options.mode === "out-in" ? (prev) => isExiting || exitTransition(prev, enterTransition) : options.mode === "in-out" ? (prev) => enterTransition(() => exitTransition(prev)) : (prev) => {
-		exitTransition(prev);
-		enterTransition();
-	};
-	createComputed((prev) => {
-		const el = source();
-		if (untrack(isTransitionPending)) {
-			isTransitionPending();
-			return prev;
-		}
-		if (el !== prev) {
-			next = el;
-			batch(() => untrack(() => triggerTransitions(prev)));
-		}
-		return el;
-	}, options.appear ? void 0 : initSource);
-	return returned;
-}
-/**
-* Default predicate used in `resolveElements()` and `resolveFirst()` to filter Elements.
-*
-* On the client it uses `instanceof Element` check, on the server it checks for the object with `t` property. (generated by compiling JSX)
-*/
-var defaultElementPredicate = (item) => item instanceof Element;
-/**
-* Utility for resolving recursively nested JSX children in search of the first element that matches a predicate.
-*
-* It does **not** create a computation - should be wrapped in one to repeat the resolution on changes.
-*
-* @param value JSX children
-* @param predicate predicate to filter elements
-* @returns single found element or `null` if no elements were found
-*/
-function getFirstChild(value, predicate) {
-	if (predicate(value)) return value;
-	if (typeof value === "function" && !value.length) return getFirstChild(value(), predicate);
-	if (Array.isArray(value)) for (const item of value) {
-		const result = getFirstChild(item, predicate);
-		if (result) return result;
-	}
-	return null;
-}
-function resolveFirst(fn, predicate = defaultElementPredicate, serverPredicate = defaultElementPredicate) {
-	const children = createMemo(fn);
-	return createMemo(() => getFirstChild(children(), predicate));
-}
-function createClassnames(props) {
-	return createMemo(() => {
-		const name = props.name || "s";
-		return {
-			enterActive: (props.enterActiveClass || name + "-enter-active").split(" "),
-			enter: (props.enterClass || name + "-enter").split(" "),
-			enterTo: (props.enterToClass || name + "-enter-to").split(" "),
-			exitActive: (props.exitActiveClass || name + "-exit-active").split(" "),
-			exit: (props.exitClass || name + "-exit").split(" "),
-			exitTo: (props.exitToClass || name + "-exit-to").split(" "),
-			move: (props.moveClass || name + "-move").split(" ")
-		};
-	});
-}
-function nextFrame(fn) {
-	requestAnimationFrame(() => requestAnimationFrame(fn));
-}
-function enterTransition(classes, events, el, done) {
-	const { onBeforeEnter, onEnter, onAfterEnter } = events;
-	onBeforeEnter?.(el);
-	el.classList.add(...classes.enter);
-	el.classList.add(...classes.enterActive);
-	queueMicrotask(() => {
-		if (!el.parentNode) return done?.();
-		onEnter?.(el, () => endTransition());
-	});
-	nextFrame(() => {
-		el.classList.remove(...classes.enter);
-		el.classList.add(...classes.enterTo);
-		if (!onEnter || onEnter.length < 2) {
-			el.addEventListener("transitionend", endTransition);
-			el.addEventListener("animationend", endTransition);
-		}
-	});
-	function endTransition(e) {
-		if (!e || e.target === el) {
-			done?.();
-			el.removeEventListener("transitionend", endTransition);
-			el.removeEventListener("animationend", endTransition);
-			el.classList.remove(...classes.enterActive);
-			el.classList.remove(...classes.enterTo);
-			onAfterEnter?.(el);
-		}
-	}
-}
-function exitTransition(classes, events, el, done) {
-	const { onBeforeExit, onExit, onAfterExit } = events;
-	if (!el.parentNode) return done?.();
-	onBeforeExit?.(el);
-	el.classList.add(...classes.exit);
-	el.classList.add(...classes.exitActive);
-	onExit?.(el, () => endTransition());
-	nextFrame(() => {
-		el.classList.remove(...classes.exit);
-		el.classList.add(...classes.exitTo);
-		if (!onExit || onExit.length < 2) {
-			el.addEventListener("transitionend", endTransition);
-			el.addEventListener("animationend", endTransition);
-		}
-	});
-	function endTransition(e) {
-		if (!e || e.target === el) {
-			done?.();
-			el.removeEventListener("transitionend", endTransition);
-			el.removeEventListener("animationend", endTransition);
-			el.classList.remove(...classes.exitActive);
-			el.classList.remove(...classes.exitTo);
-			onAfterExit?.(el);
-		}
-	}
-}
-var TRANSITION_MODE_MAP = {
-	inout: "in-out",
-	outin: "out-in"
-};
-var Transition = (props) => {
-	const classnames = createClassnames(props);
-	return createSwitchTransition(resolveFirst(() => props.children), {
-		mode: TRANSITION_MODE_MAP[props.mode],
-		appear: props.appear,
-		onEnter(el, done) {
-			enterTransition(classnames(), props, el, done);
-		},
-		onExit(el, done) {
-			exitTransition(classnames(), props, el, done);
-		}
-	});
-};
-var _tmpl$$e = /* @__PURE__ */ template(`<div class="ap-term"><canvas></canvas><svg class="ap-term-symbols" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" width="100%" height="100%" aria-hidden="true"><defs></defs><g></g></svg><pre class="ap-term-text" aria-live="off" tabindex="0"></pre></div>`, 12);
-var SVG_NS = "http://www.w3.org/2000/svg";
-var BLOCK_H_RES = 8;
-var BLOCK_V_RES = 24;
-var BOLD_MASK = 1;
-var FAINT_MASK = 2;
-var ITALIC_MASK = 4;
-var UNDERLINE_MASK = 8;
-var STRIKETHROUGH_MASK = 16;
-var BLINK_MASK = 32;
-var Terminal = ((props) => {
-	const core = props.core;
-	const textRowPool = [];
-	const vectorSymbolRowPool = [];
-	const vectorSymbolUsePool = [];
-	const vectorSymbolDefCache = /* @__PURE__ */ new Set();
-	const colorsCache = /* @__PURE__ */ new Map();
-	const attrClassCache = /* @__PURE__ */ new Map();
-	const [size, setSize] = createSignal({
-		cols: props.cols,
-		rows: props.rows
-	}, { equals: (newVal, oldVal) => newVal.cols === oldVal.cols && newVal.rows === oldVal.rows });
-	const [theme, setTheme] = createSignal(buildTheme$1(FALLBACK_THEME));
-	const lineHeight = () => props.lineHeight ?? 1.3333333333;
-	const [blinkOn, setBlinkOn] = createSignal(true);
-	const cursorOn = createMemo(() => blinkOn() || cursorHold);
-	const style$1 = createMemo(() => {
-		return {
-			width: `${size().cols}ch`,
-			height: `${lineHeight() * size().rows}em`,
-			"font-size": `${(props.scale || 1) * 100}%`,
-			"--term-line-height": `${lineHeight()}em`,
-			"--term-cols": size().cols,
-			"--term-rows": size().rows
-		};
-	});
-	let cursor = {
-		col: 0,
-		row: 0,
-		visible: false
-	};
-	let pendingChanges = {
-		size: void 0,
-		theme: void 0,
-		rows: /* @__PURE__ */ new Set()
-	};
-	let el;
-	let canvasEl;
-	let canvasCtx;
-	let textEl;
-	let vectorSymbolsEl;
-	let vectorSymbolDefsEl;
-	let vectorSymbolRowsEl;
-	let frameRequestId;
-	let blinkIntervalId;
-	let cssTheme;
-	let cursorHold = false;
-	onMount(() => {
-		setupCanvas();
-		setInitialTheme();
-		adjustTextRowNodeCount(size().rows);
-		adjustSymbolRowNodeCount(size().rows);
-		core.addEventListener("vtUpdate", onVtUpdate);
-	});
-	onCleanup(() => {
-		core.removeEventListener("vtUpdate", onVtUpdate);
-		clearInterval(blinkIntervalId);
-		cancelAnimationFrame(frameRequestId);
-	});
-	createEffect(() => {
-		if (props.blinking && blinkIntervalId === void 0) blinkIntervalId = setInterval(toggleBlink, 600);
-		else {
-			clearInterval(blinkIntervalId);
-			blinkIntervalId = void 0;
-			setBlinkOn(true);
-		}
-	});
-	createEffect(() => {
-		cursorOn();
-		if (cursor.visible) {
-			pendingChanges.rows.add(cursor.row);
-			scheduleRender();
-		}
-	});
-	function setupCanvas() {
-		canvasCtx = canvasEl.getContext("2d");
-		if (!canvasCtx) throw new Error("2D ctx not available");
-		const { cols, rows } = size();
-		canvasEl.width = cols * BLOCK_H_RES;
-		canvasEl.height = rows * BLOCK_V_RES;
-		canvasEl.style.imageRendering = "pixelated";
-		canvasCtx.imageSmoothingEnabled = false;
-	}
-	function resizeCanvas(_ref) {
-		let { cols, rows } = _ref;
-		canvasEl.width = cols * BLOCK_H_RES;
-		canvasEl.height = rows * BLOCK_V_RES;
-		canvasCtx.imageSmoothingEnabled = false;
-	}
-	function setInitialTheme() {
-		cssTheme = getCssTheme(el);
-		pendingChanges.theme = cssTheme;
-	}
-	function onVtUpdate(_ref2) {
-		let { size: newSize, theme, changedRows } = _ref2;
-		let activity = false;
-		if (changedRows !== void 0) for (const row of changedRows) {
-			pendingChanges.rows.add(row);
-			cursorHold = true;
-			activity = true;
-		}
-		if (theme !== void 0 && props.preferEmbeddedTheme) {
-			pendingChanges.theme = theme;
-			for (let row = 0; row < size().rows; row++) pendingChanges.rows.add(row);
-		}
-		const newCursor = core.getCursor();
-		if (newCursor.visible != cursor.visible || newCursor.col != cursor.col || newCursor.row != cursor.row) {
-			if (cursor.visible) pendingChanges.rows.add(cursor.row);
-			if (newCursor.visible) pendingChanges.rows.add(newCursor.row);
-			cursor = newCursor;
-			cursorHold = true;
-			activity = true;
-		}
-		if (newSize !== void 0) {
-			pendingChanges.size = newSize;
-			for (const row of pendingChanges.rows) if (row >= newSize.rows) pendingChanges.rows.delete(row);
-		}
-		if (activity && cursor.visible) pendingChanges.rows.add(cursor.row);
-		scheduleRender();
-	}
-	function toggleBlink() {
-		setBlinkOn((blink) => {
-			if (!blink) cursorHold = false;
-			return !blink;
-		});
-	}
-	function scheduleRender() {
-		if (frameRequestId === void 0) frameRequestId = requestAnimationFrame(render);
-	}
-	function render() {
-		frameRequestId = void 0;
-		const { size: newSize, theme: newTheme, rows } = pendingChanges;
-		batch(function() {
-			if (newSize !== void 0) {
-				resizeCanvas(newSize);
-				adjustTextRowNodeCount(newSize.rows);
-				adjustSymbolRowNodeCount(newSize.rows);
-				setSize(newSize);
-			}
-			if (newTheme !== void 0) {
-				if (newTheme === null) setTheme(buildTheme$1(cssTheme));
-				else setTheme(buildTheme$1(newTheme));
-				colorsCache.clear();
-			}
-			const theme_ = theme();
-			const cursorOn_ = blinkOn() || cursorHold;
-			for (const r of rows) renderRow(r, theme_, cursorOn_);
-		});
-		pendingChanges.size = void 0;
-		pendingChanges.theme = void 0;
-		pendingChanges.rows.clear();
-		props.stats.renders += 1;
-	}
-	function renderRow(rowIndex, theme, cursorOn) {
-		const line = core.getLine(rowIndex, cursorOn);
-		clearCanvasRow(rowIndex);
-		renderRowBg(rowIndex, line.bg, theme);
-		renderRowRasterSymbols(rowIndex, line.raster_symbols, theme);
-		renderRowVectorSymbols(rowIndex, line.vector_symbols, theme);
-		renderRowText(rowIndex, line.text, line.codepoints, theme);
-	}
-	function clearCanvasRow(rowIndex) {
-		canvasCtx.clearRect(0, rowIndex * BLOCK_V_RES, size().cols * BLOCK_H_RES, BLOCK_V_RES);
-	}
-	function renderRowBg(rowIndex, spans, theme) {
-		const view = core.getDataView(spans, 8);
-		const y = rowIndex * BLOCK_V_RES;
-		let i = 0;
-		while (i < view.byteLength) {
-			const column = view.getUint16(i + 0, true);
-			const width = view.getUint16(i + 2, true);
-			const color = getColor(view, i + 4, theme);
-			i += 8;
-			canvasCtx.fillStyle = color;
-			canvasCtx.fillRect(column * BLOCK_H_RES, y, width * BLOCK_H_RES, BLOCK_V_RES);
-		}
-	}
-	function renderRowRasterSymbols(rowIndex, symbols, theme) {
-		const view = core.getDataView(symbols, 12);
-		const y = rowIndex * BLOCK_V_RES;
-		let i = 0;
-		while (i < view.byteLength) {
-			const column = view.getUint16(i + 0, true);
-			const codepoint = view.getUint32(i + 4, true);
-			const color = getColor(view, i + 8, theme) || theme.fg;
-			i += 12;
-			canvasCtx.fillStyle = color;
-			drawBlockGlyph(canvasCtx, codepoint, column * BLOCK_H_RES, y);
-		}
-	}
-	function renderRowVectorSymbols(rowIndex, symbols, theme) {
-		const view = core.getDataView(symbols, 16);
-		const frag = document.createDocumentFragment();
-		const symbolRow = vectorSymbolRowsEl.children[rowIndex];
-		let i = 0;
-		while (i < view.byteLength) {
-			const column = view.getUint16(i + 0, true);
-			const codepoint = view.getUint32(i + 4, true);
-			const color = getColor(view, i + 8, theme);
-			const attrs = view.getUint8(i + 12);
-			i += 16;
-			const el = createVectorSymbolNode(codepoint, column, color, (attrs & BLINK_MASK) !== 0);
-			if (el) frag.appendChild(el);
-		}
-		recycleVectorSymbolUses(symbolRow);
-		symbolRow.replaceChildren(frag);
-	}
-	function renderRowText(rowIndex, spans, codepoints, theme) {
-		const spansView = core.getDataView(spans, 12);
-		const codepointsView = core.getUint32Array(codepoints);
-		const frag = document.createDocumentFragment();
-		let i = 0;
-		while (i < spansView.byteLength) {
-			const column = spansView.getUint16(i + 0, true);
-			const codepointsStart = spansView.getUint16(i + 2, true);
-			const len = spansView.getUint16(i + 4, true);
-			const color = getColor(spansView, i + 6, theme);
-			const attrs = spansView.getUint8(i + 10);
-			const text = String.fromCodePoint(...codepointsView.subarray(codepointsStart, codepointsStart + len));
-			i += 12;
-			const el = document.createElement("span");
-			const style = el.style;
-			style.setProperty("--offset", column);
-			el.textContent = text;
-			if (color) style.color = color;
-			const cls = getAttrClass(attrs);
-			if (cls !== null) el.className = cls;
-			frag.appendChild(el);
-		}
-		textEl.children[rowIndex].replaceChildren(frag);
-	}
-	function getAttrClass(attrs) {
-		let c = attrClassCache.get(attrs);
-		if (c === void 0) {
-			c = buildAttrClass(attrs);
-			attrClassCache.set(attrs, c);
-		}
-		return c;
-	}
-	function buildAttrClass(attrs) {
-		let cls = "";
-		if ((attrs & BOLD_MASK) !== 0) cls += "ap-bold ";
-		else if ((attrs & FAINT_MASK) !== 0) cls += "ap-faint ";
-		if ((attrs & ITALIC_MASK) !== 0) cls += "ap-italic ";
-		if ((attrs & UNDERLINE_MASK) !== 0) cls += "ap-underline ";
-		if ((attrs & STRIKETHROUGH_MASK) !== 0) cls += "ap-strike ";
-		if ((attrs & BLINK_MASK) !== 0) cls += "ap-blink ";
-		return cls === "" ? null : cls;
-	}
-	function getColor(view, offset, theme) {
-		const tag = view.getUint8(offset);
-		if (tag === 0) return null;
-		else if (tag === 1) return theme.fg;
-		else if (tag === 2) return theme.bg;
-		else if (tag === 3) return theme.palette[view.getUint8(offset + 1)];
-		else if (tag === 4) {
-			const key = view.getUint32(offset, true);
-			let c = colorsCache.get(key);
-			if (c === void 0) {
-				const r = view.getUint8(offset + 1);
-				const g = view.getUint8(offset + 2);
-				const b = view.getUint8(offset + 3);
-				c = "rgb(" + r + "," + g + "," + b + ")";
-				colorsCache.set(key, c);
-			}
-			return c;
-		} else throw new Error(`invalid color tag: ${tag}`);
-	}
-	function adjustTextRowNodeCount(rows) {
-		let r = textEl.children.length;
-		if (r < rows) {
-			const frag = document.createDocumentFragment();
-			while (r < rows) {
-				const row = getNewRow();
-				row.style.setProperty("--row", r);
-				frag.appendChild(row);
-				r += 1;
-			}
-			textEl.appendChild(frag);
-		}
-		while (textEl.children.length > rows) {
-			const row = textEl.lastElementChild;
-			textEl.removeChild(row);
-			textRowPool.push(row);
-		}
-	}
-	function adjustSymbolRowNodeCount(rows) {
-		let r = vectorSymbolRowsEl.children.length;
-		if (r < rows) {
-			const frag = document.createDocumentFragment();
-			while (r < rows) {
-				const row = getNewSymbolRow();
-				row.setAttribute("transform", `translate(0 ${r})`);
-				frag.appendChild(row);
-				r += 1;
-			}
-			vectorSymbolRowsEl.appendChild(frag);
-		}
-		while (vectorSymbolRowsEl.children.length > rows) {
-			const row = vectorSymbolRowsEl.lastElementChild;
-			vectorSymbolRowsEl.removeChild(row);
-			vectorSymbolRowPool.push(row);
-		}
-	}
-	function getNewRow() {
-		let row = textRowPool.pop();
-		if (row === void 0) {
-			row = document.createElement("span");
-			row.className = "ap-line";
-		}
-		return row;
-	}
-	function getNewSymbolRow() {
-		let row = vectorSymbolRowPool.pop();
-		if (row === void 0) {
-			row = document.createElementNS(SVG_NS, "g");
-			row.setAttribute("class", "ap-symbol-line");
-		}
-		return row;
-	}
-	function createVectorSymbolNode(codepoint, column, fg, blink) {
-		if (!ensureVectorSymbolDef(codepoint)) return null;
-		const isPowerline = POWERLINE_SYMBOLS.has(codepoint);
-		const symbolX = isPowerline ? column - POWERLINE_SYMBOL_NUDGE : column;
-		const symbolWidth = isPowerline ? 1 + POWERLINE_SYMBOL_NUDGE * 2 : 1;
-		const node = getVectorSymbolUse();
-		node.setAttribute("href", `#sym-${codepoint}`);
-		node.setAttribute("x", symbolX);
-		node.setAttribute("y", 0);
-		node.setAttribute("width", symbolWidth);
-		node.setAttribute("height", "1");
-		if (fg) node.style.setProperty("color", fg);
-		else node.style.removeProperty("color");
-		if (blink) node.classList.add("ap-blink");
-		else node.classList.remove("ap-blink");
-		return node;
-	}
-	function recycleVectorSymbolUses(row) {
-		while (row.firstChild) {
-			const child = row.firstChild;
-			row.removeChild(child);
-			vectorSymbolUsePool.push(child);
-		}
-	}
-	function getVectorSymbolUse() {
-		let node = vectorSymbolUsePool.pop();
-		if (node === void 0) node = document.createElementNS(SVG_NS, "use");
-		return node;
-	}
-	function ensureVectorSymbolDef(codepoint) {
-		const content = getVectorSymbolDef(codepoint);
-		if (!content) return false;
-		if (vectorSymbolDefCache.has(codepoint)) return true;
-		const id = `sym-${codepoint}`;
-		const symbol = document.createElementNS(SVG_NS, "symbol");
-		symbol.setAttribute("id", id);
-		symbol.setAttribute("viewBox", "0 0 1 1");
-		symbol.setAttribute("preserveAspectRatio", "none");
-		symbol.setAttribute("overflow", "visible");
-		symbol.innerHTML = content;
-		vectorSymbolDefsEl.appendChild(symbol);
-		vectorSymbolDefCache.add(codepoint);
-		return true;
-	}
-	return (() => {
-		const _el$ = _tmpl$$e.cloneNode(true), _el$2 = _el$.firstChild, _el$3 = _el$2.nextSibling, _el$4 = _el$3.firstChild, _el$5 = _el$4.nextSibling, _el$6 = _el$3.nextSibling;
-		const _ref$ = el;
-		typeof _ref$ === "function" ? use(_ref$, _el$) : el = _el$;
-		const _ref$2 = canvasEl;
-		typeof _ref$2 === "function" ? use(_ref$2, _el$2) : canvasEl = _el$2;
-		const _ref$3 = vectorSymbolsEl;
-		typeof _ref$3 === "function" ? use(_ref$3, _el$3) : vectorSymbolsEl = _el$3;
-		const _ref$4 = vectorSymbolDefsEl;
-		typeof _ref$4 === "function" ? use(_ref$4, _el$4) : vectorSymbolDefsEl = _el$4;
-		const _ref$5 = vectorSymbolRowsEl;
-		typeof _ref$5 === "function" ? use(_ref$5, _el$5) : vectorSymbolRowsEl = _el$5;
-		const _ref$6 = textEl;
-		typeof _ref$6 === "function" ? use(_ref$6, _el$6) : textEl = _el$6;
-		createRenderEffect((_p$) => {
-			const _v$ = style$1(), _v$2 = `0 0 ${size().cols} ${size().rows}`, _v$3 = !!blinkOn(), _v$4 = !!blinkOn();
-			_p$._v$ = style(_el$, _v$, _p$._v$);
-			_v$2 !== _p$._v$2 && setAttribute(_el$3, "viewBox", _p$._v$2 = _v$2);
-			_v$3 !== _p$._v$3 && _el$3.classList.toggle("ap-blink", _p$._v$3 = _v$3);
-			_v$4 !== _p$._v$4 && _el$6.classList.toggle("ap-blink", _p$._v$4 = _v$4);
-			return _p$;
-		}, {
-			_v$: void 0,
-			_v$2: void 0,
-			_v$3: void 0,
-			_v$4: void 0
-		});
-		return _el$;
-	})();
-});
-function buildTheme$1(theme) {
-	return {
-		fg: theme.foreground,
-		bg: theme.background,
-		palette: generate256Palette(theme.palette, theme.background, theme.foreground)
-	};
-}
-function getCssTheme(el) {
-	const style = getComputedStyle(el);
-	const foreground = normalizeHexColor(style.getPropertyValue("--term-color-foreground"), FALLBACK_THEME.foreground);
-	const background = normalizeHexColor(style.getPropertyValue("--term-color-background"), FALLBACK_THEME.background);
-	const palette = [];
-	for (let i = 0; i < 16; i++) {
-		const fallback = i >= 8 ? palette[i - 8] : FALLBACK_THEME.palette[i];
-		palette[i] = normalizeHexColor(style.getPropertyValue(`--term-color-${i}`), fallback);
-	}
-	return {
-		foreground,
-		background,
-		palette
-	};
-}
-function generate256Palette(base16, bg, fg) {
-	const bgLab = hexToOklab(bg);
-	const fgLab = hexToOklab(fg);
-	const c100 = hexToOklab(base16[1]);
-	const c010 = hexToOklab(base16[2]);
-	const c110 = hexToOklab(base16[3]);
-	const c001 = hexToOklab(base16[4]);
-	const c101 = hexToOklab(base16[5]);
-	const c011 = hexToOklab(base16[6]);
-	const palette = [...base16];
-	for (let r = 0; r < 6; r += 1) {
-		const tR = r / 5;
-		const c0 = lerpOklab(tR, bgLab, c100);
-		const c1 = lerpOklab(tR, c010, c110);
-		const c2 = lerpOklab(tR, c001, c101);
-		const c3 = lerpOklab(tR, c011, fgLab);
-		for (let g = 0; g < 6; g += 1) {
-			const tG = g / 5;
-			const c4 = lerpOklab(tG, c0, c1);
-			const c5 = lerpOklab(tG, c2, c3);
-			for (let b = 0; b < 6; b += 1) {
-				const c6 = lerpOklab(b / 5, c4, c5);
-				palette.push(oklabToHex(c6));
-			}
-		}
-	}
-	for (let i = 0; i < 24; i += 1) {
-		const t = (i + 1) / 25;
-		palette.push(oklabToHex(lerpOklab(t, bgLab, fgLab)));
-	}
-	return palette;
-}
-function drawBlockGlyph(ctx, codepoint, x, y) {
-	const unitX = BLOCK_H_RES / 8;
-	const unitY = BLOCK_V_RES / 8;
-	const halfX = BLOCK_H_RES / 2;
-	const halfY = BLOCK_V_RES / 2;
-	const sextantX = BLOCK_H_RES / 2;
-	const sextantY = BLOCK_V_RES / 3;
-	switch (codepoint) {
-		case 9600:
-			ctx.fillRect(x, y, BLOCK_H_RES, halfY);
-			break;
-		case 9601:
-			ctx.fillRect(x, y + unitY * 7, BLOCK_H_RES, unitY);
-			break;
-		case 9602:
-			ctx.fillRect(x, y + unitY * 6, BLOCK_H_RES, unitY * 2);
-			break;
-		case 9603:
-			ctx.fillRect(x, y + unitY * 5, BLOCK_H_RES, unitY * 3);
-			break;
-		case 9604:
-			ctx.fillRect(x, y + halfY, BLOCK_H_RES, halfY);
-			break;
-		case 9605:
-			ctx.fillRect(x, y + unitY * 3, BLOCK_H_RES, unitY * 5);
-			break;
-		case 9606:
-			ctx.fillRect(x, y + unitY * 2, BLOCK_H_RES, unitY * 6);
-			break;
-		case 9607:
-			ctx.fillRect(x, y + unitY, BLOCK_H_RES, unitY * 7);
-			break;
-		case 9608:
-			ctx.fillRect(x, y, BLOCK_H_RES, BLOCK_V_RES);
-			break;
-		case 9632:
-			ctx.fillRect(x, y + unitY * 2, BLOCK_H_RES, unitY * 4);
-			break;
-		case 9609:
-			ctx.fillRect(x, y, unitX * 7, BLOCK_V_RES);
-			break;
-		case 9610:
-			ctx.fillRect(x, y, unitX * 6, BLOCK_V_RES);
-			break;
-		case 9611:
-			ctx.fillRect(x, y, unitX * 5, BLOCK_V_RES);
-			break;
-		case 9612:
-			ctx.fillRect(x, y, halfX, BLOCK_V_RES);
-			break;
-		case 9613:
-			ctx.fillRect(x, y, unitX * 3, BLOCK_V_RES);
-			break;
-		case 9614:
-			ctx.fillRect(x, y, unitX * 2, BLOCK_V_RES);
-			break;
-		case 9615:
-			ctx.fillRect(x, y, unitX, BLOCK_V_RES);
-			break;
-		case 9616:
-			ctx.fillRect(x + halfX, y, halfX, BLOCK_V_RES);
-			break;
-		case 9617:
-			ctx.save();
-			ctx.globalAlpha = .25;
-			ctx.fillRect(x, y, BLOCK_H_RES, BLOCK_V_RES);
-			ctx.restore();
-			break;
-		case 9618:
-			ctx.save();
-			ctx.globalAlpha = .5;
-			ctx.fillRect(x, y, BLOCK_H_RES, BLOCK_V_RES);
-			ctx.restore();
-			break;
-		case 9619:
-			ctx.save();
-			ctx.globalAlpha = .75;
-			ctx.fillRect(x, y, BLOCK_H_RES, BLOCK_V_RES);
-			ctx.restore();
-			break;
-		case 9620:
-			ctx.fillRect(x, y, BLOCK_H_RES, unitY);
-			break;
-		case 9621:
-			ctx.fillRect(x + unitX * 7, y, unitX, BLOCK_V_RES);
-			break;
-		case 9622:
-			ctx.fillRect(x, y + halfY, halfX, halfY);
-			break;
-		case 9623:
-			ctx.fillRect(x + halfX, y + halfY, halfX, halfY);
-			break;
-		case 9624:
-			ctx.fillRect(x, y, halfX, halfY);
-			break;
-		case 9625:
-			ctx.fillRect(x, y, halfX, BLOCK_V_RES);
-			ctx.fillRect(x + halfX, y + halfY, halfX, halfY);
-			break;
-		case 9626:
-			ctx.fillRect(x, y, halfX, halfY);
-			ctx.fillRect(x + halfX, y + halfY, halfX, halfY);
-			break;
-		case 9627:
-			ctx.fillRect(x, y, BLOCK_H_RES, halfY);
-			ctx.fillRect(x, y + halfY, halfX, halfY);
-			break;
-		case 9628:
-			ctx.fillRect(x, y, BLOCK_H_RES, halfY);
-			ctx.fillRect(x + halfX, y + halfY, halfX, halfY);
-			break;
-		case 9629:
-			ctx.fillRect(x + halfX, y, halfX, halfY);
-			break;
-		case 9630:
-			ctx.fillRect(x + halfX, y, halfX, halfY);
-			ctx.fillRect(x, y + halfY, halfX, halfY);
-			break;
-		case 9631:
-			ctx.fillRect(x + halfX, y, halfX, BLOCK_V_RES);
-			ctx.fillRect(x, y + halfY, halfX, halfY);
-			break;
-		case 129792:
-			ctx.fillRect(x, y, sextantX, sextantY);
-			break;
-		case 129793:
-			ctx.fillRect(x + sextantX, y, sextantX, sextantY);
-			break;
-		case 129794:
-			ctx.fillRect(x, y, sextantX * 2, sextantY);
-			break;
-		case 129795:
-			ctx.fillRect(x, y + sextantY, sextantX, sextantY);
-			break;
-		case 129796:
-			ctx.fillRect(x, y, sextantX, sextantY);
-			ctx.fillRect(x, y + sextantY, sextantX, sextantY);
-			break;
-		case 129797:
-			ctx.fillRect(x + sextantX, y, sextantX, sextantY);
-			ctx.fillRect(x, y + sextantY, sextantX, sextantY);
-			break;
-		case 129798:
-			ctx.fillRect(x, y, sextantX * 2, sextantY);
-			ctx.fillRect(x, y + sextantY, sextantX, sextantY);
-			break;
-		case 129799:
-			ctx.fillRect(x + sextantX, y + sextantY, sextantX, sextantY);
-			break;
-		case 129800:
-			ctx.fillRect(x, y, sextantX, sextantY);
-			ctx.fillRect(x + sextantX, y + sextantY, sextantX, sextantY);
-			break;
-		case 129801:
-			ctx.fillRect(x + sextantX, y, sextantX, sextantY);
-			ctx.fillRect(x + sextantX, y + sextantY, sextantX, sextantY);
-			break;
-		case 129802:
-			ctx.fillRect(x, y, sextantX * 2, sextantY);
-			ctx.fillRect(x + sextantX, y + sextantY, sextantX, sextantY);
-			break;
-		case 129803:
-			ctx.fillRect(x, y + sextantY, sextantX * 2, sextantY);
-			break;
-		case 129804:
-			ctx.fillRect(x, y, sextantX, sextantY);
-			ctx.fillRect(x, y + sextantY, sextantX * 2, sextantY);
-			break;
-		case 129805:
-			ctx.fillRect(x + sextantX, y, sextantX, sextantY);
-			ctx.fillRect(x, y + sextantY, sextantX * 2, sextantY);
-			break;
-		case 129806:
-			ctx.fillRect(x, y, sextantX * 2, sextantY);
-			ctx.fillRect(x, y + sextantY, sextantX * 2, sextantY);
-			break;
-		case 129807:
-			ctx.fillRect(x, y + sextantY * 2, sextantX, sextantY);
-			break;
-		case 129808:
-			ctx.fillRect(x, y, sextantX, sextantY);
-			ctx.fillRect(x, y + sextantY * 2, sextantX, sextantY);
-			break;
-		case 129809:
-			ctx.fillRect(x + sextantX, y, sextantX, sextantY);
-			ctx.fillRect(x, y + sextantY * 2, sextantX, sextantY);
-			break;
-		case 129810:
-			ctx.fillRect(x, y, sextantX * 2, sextantY);
-			ctx.fillRect(x, y + sextantY * 2, sextantX, sextantY);
-			break;
-		case 129811:
-			ctx.fillRect(x, y + sextantY, sextantX, sextantY * 2);
-			break;
-		case 129812:
-			ctx.fillRect(x + sextantX, y, sextantX, sextantY);
-			ctx.fillRect(x, y + sextantY, sextantX, sextantY * 2);
-			break;
-		case 129813:
-			ctx.fillRect(x, y, sextantX * 2, sextantY);
-			ctx.fillRect(x, y + sextantY, sextantX, sextantY * 2);
-			break;
-		case 129814:
-			ctx.fillRect(x + sextantX, y + sextantY, sextantX, sextantY);
-			ctx.fillRect(x, y + sextantY * 2, sextantX, sextantY);
-			break;
-		case 129815:
-			ctx.fillRect(x, y, sextantX, sextantY);
-			ctx.fillRect(x + sextantX, y + sextantY, sextantX, sextantY);
-			ctx.fillRect(x, y + sextantY * 2, sextantX, sextantY);
-			break;
-		case 129816:
-			ctx.fillRect(x + sextantX, y, sextantX, sextantY * 2);
-			ctx.fillRect(x, y + sextantY * 2, sextantX, sextantY);
-			break;
-		case 129817:
-			ctx.fillRect(x, y, sextantX * 2, sextantY);
-			ctx.fillRect(x + sextantX, y + sextantY, sextantX, sextantY);
-			ctx.fillRect(x, y + sextantY * 2, sextantX, sextantY);
-			break;
-		case 129818:
-			ctx.fillRect(x, y + sextantY, sextantX * 2, sextantY);
-			ctx.fillRect(x, y + sextantY * 2, sextantX, sextantY);
-			break;
-		case 129819:
-			ctx.fillRect(x, y, sextantX, sextantY * 3);
-			ctx.fillRect(x + sextantX, y + sextantY, sextantX, sextantY);
-			break;
-		case 129820:
-			ctx.fillRect(x + sextantX, y, sextantX, sextantY);
-			ctx.fillRect(x, y + sextantY, sextantX * 2, sextantY);
-			ctx.fillRect(x, y + sextantY * 2, sextantX, sextantY);
-			break;
-		case 129821:
-			ctx.fillRect(x, y, sextantX * 2, sextantY * 2);
-			ctx.fillRect(x, y + sextantY * 2, sextantX, sextantY);
-			break;
-		case 129822:
-			ctx.fillRect(x + sextantX, y + sextantY * 2, sextantX, sextantY);
-			break;
-		case 129823:
-			ctx.fillRect(x, y, sextantX, sextantY);
-			ctx.fillRect(x + sextantX, y + sextantY * 2, sextantX, sextantY);
-			break;
-		case 129824:
-			ctx.fillRect(x + sextantX, y, sextantX, sextantY);
-			ctx.fillRect(x + sextantX, y + sextantY * 2, sextantX, sextantY);
-			break;
-		case 129825:
-			ctx.fillRect(x, y, sextantX * 2, sextantY);
-			ctx.fillRect(x + sextantX, y + sextantY * 2, sextantX, sextantY);
-			break;
-		case 129826:
-			ctx.fillRect(x, y + sextantY, sextantX, sextantY);
-			ctx.fillRect(x + sextantX, y + sextantY * 2, sextantX, sextantY);
-			break;
-		case 129827:
-			ctx.fillRect(x, y, sextantX, sextantY * 2);
-			ctx.fillRect(x + sextantX, y + sextantY * 2, sextantX, sextantY);
-			break;
-		case 129828:
-			ctx.fillRect(x + sextantX, y, sextantX, sextantY);
-			ctx.fillRect(x, y + sextantY, sextantX, sextantY);
-			ctx.fillRect(x + sextantX, y + sextantY * 2, sextantX, sextantY);
-			break;
-		case 129829:
-			ctx.fillRect(x, y, sextantX * 2, sextantY);
-			ctx.fillRect(x, y + sextantY, sextantX, sextantY);
-			ctx.fillRect(x + sextantX, y + sextantY * 2, sextantX, sextantY);
-			break;
-		case 129830:
-			ctx.fillRect(x + sextantX, y + sextantY, sextantX, sextantY * 2);
-			break;
-		case 129831:
-			ctx.fillRect(x, y, sextantX, sextantY);
-			ctx.fillRect(x + sextantX, y + sextantY, sextantX, sextantY * 2);
-			break;
-		case 129832:
-			ctx.fillRect(x, y, sextantX * 2, sextantY);
-			ctx.fillRect(x + sextantX, y + sextantY, sextantX, sextantY * 2);
-			break;
-		case 129833:
-			ctx.fillRect(x, y + sextantY, sextantX * 2, sextantY);
-			ctx.fillRect(x + sextantX, y + sextantY * 2, sextantX, sextantY);
-			break;
-		case 129834:
-			ctx.fillRect(x, y, sextantX, sextantY * 2);
-			ctx.fillRect(x + sextantX, y + sextantY, sextantX, sextantY * 2);
-			break;
-		case 129835:
-			ctx.fillRect(x + sextantX, y, sextantX, sextantY);
-			ctx.fillRect(x, y + sextantY, sextantX * 2, sextantY);
-			ctx.fillRect(x + sextantX, y + sextantY * 2, sextantX, sextantY);
-			break;
-		case 129836:
-			ctx.fillRect(x, y, sextantX * 2, sextantY * 2);
-			ctx.fillRect(x + sextantX, y + sextantY * 2, sextantX, sextantY);
-			break;
-		case 129837:
-			ctx.fillRect(x, y + sextantY * 2, sextantX * 2, sextantY);
-			break;
-		case 129838:
-			ctx.fillRect(x, y, sextantX, sextantY);
-			ctx.fillRect(x, y + sextantY * 2, sextantX * 2, sextantY);
-			break;
-		case 129839:
-			ctx.fillRect(x + sextantX, y, sextantX, sextantY);
-			ctx.fillRect(x, y + sextantY * 2, sextantX * 2, sextantY);
-			break;
-		case 129840:
-			ctx.fillRect(x, y, sextantX * 2, sextantY);
-			ctx.fillRect(x, y + sextantY * 2, sextantX * 2, sextantY);
-			break;
-		case 129841:
-			ctx.fillRect(x, y + sextantY, sextantX, sextantY);
-			ctx.fillRect(x, y + sextantY * 2, sextantX * 2, sextantY);
-			break;
-		case 129842:
-			ctx.fillRect(x, y, sextantX, sextantY * 2);
-			ctx.fillRect(x, y + sextantY * 2, sextantX * 2, sextantY);
-			break;
-		case 129843:
-			ctx.fillRect(x + sextantX, y, sextantX, sextantY);
-			ctx.fillRect(x, y + sextantY, sextantX, sextantY);
-			ctx.fillRect(x, y + sextantY * 2, sextantX * 2, sextantY);
-			break;
-		case 129844:
-			ctx.fillRect(x, y, sextantX * 2, sextantY);
-			ctx.fillRect(x, y + sextantY, sextantX, sextantY);
-			ctx.fillRect(x, y + sextantY * 2, sextantX * 2, sextantY);
-			break;
-		case 129845:
-			ctx.fillRect(x + sextantX, y + sextantY, sextantX, sextantY);
-			ctx.fillRect(x, y + sextantY * 2, sextantX * 2, sextantY);
-			break;
-		case 129846:
-			ctx.fillRect(x, y, sextantX, sextantY);
-			ctx.fillRect(x + sextantX, y + sextantY, sextantX, sextantY);
-			ctx.fillRect(x, y + sextantY * 2, sextantX * 2, sextantY);
-			break;
-		case 129847:
-			ctx.fillRect(x + sextantX, y, sextantX, sextantY * 2);
-			ctx.fillRect(x, y + sextantY * 2, sextantX * 2, sextantY);
-			break;
-		case 129848:
-			ctx.fillRect(x, y, sextantX * 2, sextantY);
-			ctx.fillRect(x + sextantX, y + sextantY, sextantX, sextantY);
-			ctx.fillRect(x, y + sextantY * 2, sextantX * 2, sextantY);
-			break;
-		case 129849:
-			ctx.fillRect(x, y + sextantY, sextantX * 2, sextantY * 2);
-			break;
-		case 129850:
-			ctx.fillRect(x, y, sextantX, sextantY * 3);
-			ctx.fillRect(x + sextantX, y + sextantY, sextantX, sextantY);
-			ctx.fillRect(x + sextantX, y + sextantY * 2, sextantX, sextantY);
-			break;
-		case 129851:
-			ctx.fillRect(x + sextantX, y, sextantX, sextantY);
-			ctx.fillRect(x, y + sextantY, sextantX * 2, sextantY * 2);
-			break;
-	}
-}
-var SYMBOL_STROKE = .05;
-var CELL_RATIO = 9.0375 / 20;
-function getVectorSymbolDef(codepoint) {
-	const stroke = `stroke="currentColor" stroke-width="${SYMBOL_STROKE}" stroke-linejoin="miter" stroke-linecap="square"`;
-	const strokeButt = `stroke="currentColor" stroke-width="${SYMBOL_STROKE}" stroke-linejoin="miter" stroke-linecap="butt"`;
-	const stroked = (d) => `<path d="${d}" fill="none" ${stroke}/>`;
-	const third = 1 / 3;
-	const twoThirds = 2 / 3;
-	switch (codepoint) {
-		case 9698: return "<path d=\"M1,1 L1,0 L0,1 Z\" fill=\"currentColor\"/>" + stroked("M1,1 L1,0 L0,1 Z");
-		case 9699: return "<path d=\"M0,1 L0,0 L1,1 Z\" fill=\"currentColor\"/>" + stroked("M0,1 L0,0 L1,1 Z");
-		case 9700: return "<path d=\"M0,0 L1,0 L0,1 Z\" fill=\"currentColor\"/>" + stroked("M0,0 L1,0 L0,1 Z");
-		case 9701: return "<path d=\"M1,0 L1,1 L0,0 Z\" fill=\"currentColor\"/>" + stroked("M1,0 L1,1 L0,0 Z");
-		case 9871: {
-			const horizontalGap = .15;
-			const verticalGap = .2;
-			const lineHeight = .17;
-			const halfHorizontalGap = horizontalGap / 2;
-			const halfVerticalGap = verticalGap / 2;
-			const toViewBoxY = (offset) => .5 + offset * CELL_RATIO;
-			const leftX1 = .5 - halfHorizontalGap;
-			const rightX0 = .5 + halfHorizontalGap;
-			const rightX1 = 1.02;
-			const topY0 = toViewBoxY(-halfVerticalGap - lineHeight);
-			const topY1 = toViewBoxY(-halfVerticalGap);
-			const bottomY0 = toViewBoxY(halfVerticalGap);
-			const bottomY1 = toViewBoxY(halfVerticalGap + lineHeight);
-			const rect = (x0, x1, y0, y1) => `M${x0},${y0} L${x1},${y0} L${x1},${y1} L${x0},${y1} Z`;
-			return `<path d="${rect(0, leftX1, topY0, topY1)} ${rect(rightX0, rightX1, topY0, topY1)} ${rect(0, leftX1, bottomY0, bottomY1)} ${rect(rightX0, rightX1, bottomY0, bottomY1)}" fill="currentColor"/>`;
-		}
-		case 129852: return `<path d="M0,${twoThirds} L0,1 L0.5,1 Z" fill="currentColor"/>` + stroked(`M0,${twoThirds} L0,1 L0.5,1 Z`);
-		case 129853: return `<path d="M0,${twoThirds} L0,1 L1,1 Z" fill="currentColor"/>` + stroked(`M0,${twoThirds} L0,1 L1,1 Z`);
-		case 129854: return `<path d="M0,${third} L0.5,1 L0,1 Z" fill="currentColor"/>` + stroked(`M0,${third} L0.5,1 L0,1 Z`);
-		case 129855: return `<path d="M0,${third} L1,1 L0,1 Z" fill="currentColor"/>` + stroked(`M0,${third} L1,1 L0,1 Z`);
-		case 129856: return "<path d=\"M0,0 L0.5,1 L0,1 Z\" fill=\"currentColor\"/>" + stroked("M0,0 L0.5,1 L0,1 Z");
-		case 129857: return `<path d="M0,${third} L0,1 L1,1 L1,0 L0.5,0 Z" fill="currentColor"/>` + stroked(`M0,${third} L0,1 L1,1 L1,0 L0.5,0 Z`);
-		case 129858: return `<path d="M0,${third} L0,1 L1,1 L1,0 Z" fill="currentColor"/>` + stroked(`M0,${third} L0,1 L1,1 L1,0 Z`);
-		case 129859: return `<path d="M0,${twoThirds} L0,1 L1,1 L1,0 L0.5,0 Z" fill="currentColor"/>` + stroked(`M0,${twoThirds} L0,1 L1,1 L1,0 L0.5,0 Z`);
-		case 129860: return `<path d="M0,${twoThirds} L0,1 L1,1 L1,0 Z" fill="currentColor"/>` + stroked(`M0,${twoThirds} L0,1 L1,1 L1,0 Z`);
-		case 129861: return "<path d=\"M0.5,0 L1,0 L1,1 L0,1 Z\" fill=\"currentColor\"/>" + stroked("M0.5,0 L1,0 L1,1 L0,1 Z");
-		case 129862: return `<path d="M0,${twoThirds} L0,1 L1,1 L1,${third} Z" fill="currentColor"/>` + stroked(`M0,${twoThirds} L0,1 L1,1 L1,${third} Z`);
-		case 129863: return `<path d="M0.5,1 L1,1 L1,${twoThirds} Z" fill="currentColor"/>` + stroked(`M0.5,1 L1,1 L1,${twoThirds} Z`);
-		case 129864: return `<path d="M0,1 L1,1 L1,${twoThirds} Z" fill="currentColor"/>` + stroked(`M0,1 L1,1 L1,${twoThirds} Z`);
-		case 129865: return `<path d="M0.5,1 L1,1 L1,${third} Z" fill="currentColor"/>` + stroked(`M0.5,1 L1,1 L1,${third} Z`);
-		case 129866: return `<path d="M0,1 L1,1 L1,${third} Z" fill="currentColor"/>` + stroked(`M0,1 L1,1 L1,${third} Z`);
-		case 129867: return "<path d=\"M0.5,1 L1,0 L1,1 Z\" fill=\"currentColor\"/>" + stroked("M0.5,1 L1,0 L1,1 Z");
-		case 129868: return `<path d="M0,0 L0.5,0 L1,${third} L1,1 L0,1 Z" fill="currentColor"/>` + stroked(`M0,0 L0.5,0 L1,${third} L1,1 L0,1 Z`);
-		case 129869: return `<path d="M0,0 L0,1 L1,1 L1,${third} Z" fill="currentColor"/>` + stroked(`M0,0 L0,1 L1,1 L1,${third} Z`);
-		case 129870: return `<path d="M0,0 L0.5,0 L1,${twoThirds} L1,1 L0,1 Z" fill="currentColor"/>` + stroked(`M0,0 L0.5,0 L1,${twoThirds} L1,1 L0,1 Z`);
-		case 129871: return `<path d="M0,0 L1,${twoThirds} L1,1 L0,1 Z" fill="currentColor"/>` + stroked(`M0,0 L1,${twoThirds} L1,1 L0,1 Z`);
-		case 129872: return "<path d=\"M0,0 L0.5,0 L1,1 L0,1 Z\" fill=\"currentColor\"/>" + stroked("M0,0 L0.5,0 L1,1 L0,1 Z");
-		case 129873: return `<path d="M0,${third} L1,${twoThirds} L1,1 L0,1 Z" fill="currentColor"/>` + stroked(`M0,${third} L1,${twoThirds} L1,1 L0,1 Z`);
-		case 129874: return `<path d="M0,${twoThirds} L0,0 L1,0 L1,1 L0.5,1 Z" fill="currentColor"/>` + stroked(`M0,${twoThirds} L0,0 L1,0 L1,1 L0.5,1 Z`);
-		case 129875: return `<path d="M0,${twoThirds} L0,0 L1,0 L1,1 Z" fill="currentColor"/>` + stroked(`M0,${twoThirds} L0,0 L1,0 L1,1 Z`);
-		case 129876: return `<path d="M0,${third} L0,0 L1,0 L1,1 L0.5,1 Z" fill="currentColor"/>` + stroked(`M0,${third} L0,0 L1,0 L1,1 L0.5,1 Z`);
-		case 129877: return `<path d="M0,${third} L0,0 L1,0 L1,1 Z" fill="currentColor"/>` + stroked(`M0,${third} L0,0 L1,0 L1,1 Z`);
-		case 129878: return "<path d=\"M0,0 L1,0 L1,1 L0.5,1 Z\" fill=\"currentColor\"/>" + stroked("M0,0 L1,0 L1,1 L0.5,1 Z");
-		case 129879: return `<path d="M0,${third} L0.5,0 L0,0 Z" fill="currentColor"/>` + stroked(`M0,${third} L0.5,0 L0,0 Z`);
-		case 129880: return `<path d="M0,0 L1,0 L0,${third} Z" fill="currentColor"/>` + stroked(`M0,0 L1,0 L0,${third} Z`);
-		case 129881: return `<path d="M0,0 L0.5,0 L0,${twoThirds} Z" fill="currentColor"/>` + stroked(`M0,0 L0.5,0 L0,${twoThirds} Z`);
-		case 129882: return `<path d="M0,0 L1,0 L0,${twoThirds} Z" fill="currentColor"/>` + stroked(`M0,0 L1,0 L0,${twoThirds} Z`);
-		case 129883: return "<path d=\"M0,0 L0.5,0 L0,1 Z\" fill=\"currentColor\"/>" + stroked("M0,0 L0.5,0 L0,1 Z");
-		case 129884: return `<path d="M0,0 L1,0 L1,${third} L0,${twoThirds} Z" fill="currentColor"/>` + stroked(`M0,0 L1,0 L1,${third} L0,${twoThirds} Z`);
-		case 129885: return `<path d="M0,0 L1,0 L1,${twoThirds} L0.5,1 L0,1 Z" fill="currentColor"/>` + stroked(`M0,0 L1,0 L1,${twoThirds} L0.5,1 L0,1 Z`);
-		case 129886: return `<path d="M0,0 L1,0 L1,${twoThirds} L0,1 Z" fill="currentColor"/>` + stroked(`M0,0 L1,0 L1,${twoThirds} L0,1 Z`);
-		case 129887: return `<path d="M0,0 L1,0 L1,${third} L0.5,1 L0,1 Z" fill="currentColor"/>` + stroked(`M0,0 L1,0 L1,${third} L0.5,1 L0,1 Z`);
-		case 129888: return `<path d="M0,0 L1,0 L1,${third} L0,1 Z" fill="currentColor"/>` + stroked(`M0,0 L1,0 L1,${third} L0,1 Z`);
-		case 129889: return "<path d=\"M0,0 L1,0 L0.5,1 L0,1 Z\" fill=\"currentColor\"/>" + stroked("M0,0 L1,0 L0.5,1 L0,1 Z");
-		case 129890: return `<path d="M0.5,0 L1,0 L1,${third} Z" fill="currentColor"/>` + stroked(`M0.5,0 L1,0 L1,${third} Z`);
-		case 129891: return `<path d="M0,0 L1,0 L1,${third} Z" fill="currentColor"/>` + stroked(`M0,0 L1,0 L1,${third} Z`);
-		case 129892: return `<path d="M0.5,0 L1,0 L1,${twoThirds} Z" fill="currentColor"/>` + stroked(`M0.5,0 L1,0 L1,${twoThirds} Z`);
-		case 129893: return `<path d="M0,0 L1,0 L1,${twoThirds} Z" fill="currentColor"/>` + stroked(`M0,0 L1,0 L1,${twoThirds} Z`);
-		case 129894: return "<path d=\"M0.5,0 L1,0 L1,1 Z\" fill=\"currentColor\"/>" + stroked("M0.5,0 L1,0 L1,1 Z");
-		case 129895: return `<path d="M0,${third} L0,0 L1,0 L1,${twoThirds} Z" fill="currentColor"/>` + stroked(`M0,${third} L0,0 L1,0 L1,${twoThirds} Z`);
-		case 129896: return `<path fill-rule="evenodd" d="M0,0 L1,0 L1,1 L0,1 Z M0,0 L0,1 L0.5,0.5 Z" fill="currentColor"/><path d="M0,0 L1,0 M0,1 L1,1 M1,0 L1,1" fill="none" ${stroke}/><path d="M0,0 L0.5,0.5 M0,1 L0.5,0.5" fill="none" ${strokeButt}/>`;
-		case 129897: return `<path fill-rule="evenodd" d="M0,0 L1,0 L1,1 L0,1 Z M0,0 L1,0 L0.5,0.5 Z" fill="currentColor"/><path d="M0,0 L0,1 M1,0 L1,1 M0,1 L1,1" fill="none" ${stroke}/><path d="M0,0 L0.5,0.5 M1,0 L0.5,0.5" fill="none" ${strokeButt}/>`;
-		case 129898: return `<path fill-rule="evenodd" d="M0,0 L1,0 L1,1 L0,1 Z M1,0 L1,1 L0.5,0.5 Z" fill="currentColor"/><path d="M0,0 L1,0 M0,1 L1,1 M0,0 L0,1" fill="none" ${stroke}/><path d="M1,0 L0.5,0.5 M1,1 L0.5,0.5" fill="none" ${strokeButt}/>`;
-		case 129899: return `<path fill-rule="evenodd" d="M0,0 L1,0 L1,1 L0,1 Z M0,1 L1,1 L0.5,0.5 Z" fill="currentColor"/><path d="M0,0 L1,0 M0,0 L0,1 M1,0 L1,1" fill="none" ${stroke}/><path d="M0,1 L0.5,0.5 M1,1 L0.5,0.5" fill="none" ${strokeButt}/>`;
-		case 129900: return "<path d=\"M0,0 L0,1 L0.5,0.5 Z\" fill=\"currentColor\"/>" + stroked("M0,0 L0,1 L0.5,0.5 Z");
-		case 57520: return "<path d=\"M0,0 L1,0.5 L0,1 Z\" fill=\"currentColor\"/>";
-		case 57521: return "<path d=\"M0,0 L1,0.5 L0,1\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"0.07\" stroke-linejoin=\"miter\"/>";
-		case 57522: return "<path d=\"M1,0 L0,0.5 L1,1 Z\" fill=\"currentColor\"/>";
-		case 57523: return "<path d=\"M1,0 L0,0.5 L1,1\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"0.07\" stroke-linejoin=\"miter\"/>";
-		default: return null;
-	}
-}
-var POWERLINE_SYMBOLS = new Set([
-	57520,
-	57521,
-	57522,
-	57523
-]);
-var POWERLINE_SYMBOL_NUDGE = .02;
-var FALLBACK_THEME = {
-	foreground: "#000000",
-	background: "#000000",
-	palette: [
-		"#000000",
-		"#000000",
-		"#000000",
-		"#000000",
-		"#000000",
-		"#000000",
-		"#000000",
-		"#000000",
-		"#000000",
-		"#000000",
-		"#000000",
-		"#000000",
-		"#000000",
-		"#000000",
-		"#000000",
-		"#000000"
-	]
-};
-var _tmpl$$d = /* @__PURE__ */ template(`<svg version="1.1" viewBox="0 0 12 12" class="ap-icon ap-icon-fullscreen-off"><path d="M7,5 L7,0 L9,2 L11,0 L12,1 L10,3 L12,5 Z"></path><path d="M5,7 L0,7 L2,9 L0,11 L1,12 L3,10 L5,12 Z"></path></svg>`, 6);
-var ExpandIcon = ((props) => {
-	return _tmpl$$d.cloneNode(true);
-});
-var _tmpl$$c = /* @__PURE__ */ template(`<svg version="1.1" viewBox="6 8 14 16" class="ap-icon"><path d="M0.938 8.313h22.125c0.5 0 0.938 0.438 0.938 0.938v13.5c0 0.5-0.438 0.938-0.938 0.938h-22.125c-0.5 0-0.938-0.438-0.938-0.938v-13.5c0-0.5 0.438-0.938 0.938-0.938zM1.594 22.063h20.813v-12.156h-20.813v12.156zM3.844 11.188h1.906v1.938h-1.906v-1.938zM7.469 11.188h1.906v1.938h-1.906v-1.938zM11.031 11.188h1.938v1.938h-1.938v-1.938zM14.656 11.188h1.875v1.938h-1.875v-1.938zM18.25 11.188h1.906v1.938h-1.906v-1.938zM5.656 15.031h1.938v1.938h-1.938v-1.938zM9.281 16.969v-1.938h1.906v1.938h-1.906zM12.875 16.969v-1.938h1.906v1.938h-1.906zM18.406 16.969h-1.938v-1.938h1.938v1.938zM16.531 20.781h-9.063v-1.906h9.063v1.906z"></path></svg>`, 4);
-var KeyboardIcon = ((props) => {
-	return _tmpl$$c.cloneNode(true);
-});
-var _tmpl$$b = /* @__PURE__ */ template(`<svg version="1.1" viewBox="0 0 12 12" class="ap-icon" aria-label="Pause" role="button"><path d="M1,0 L4,0 L4,12 L1,12 Z"></path><path d="M8,0 L11,0 L11,12 L8,12 Z"></path></svg>`, 6);
-var PauseIcon = ((props) => {
-	return _tmpl$$b.cloneNode(true);
-});
-var _tmpl$$a = /* @__PURE__ */ template(`<svg version="1.1" viewBox="0 0 12 12" class="ap-icon" aria-label="Play" role="button"><path d="M1,0 L11,6 L1,12 Z"></path></svg>`, 4);
-var PlayIcon = ((props) => {
-	return _tmpl$$a.cloneNode(true);
-});
-var _tmpl$$9 = /* @__PURE__ */ template(`<svg version="1.1" viewBox="0 0 12 12" class="ap-icon ap-icon-fullscreen-on"><path d="M12,0 L7,0 L9,2 L7,4 L8,5 L10,3 L12,5 Z"></path><path d="M0,12 L0,7 L2,9 L4,7 L5,8 L3,10 L5,12 Z"></path></svg>`, 6);
-var ShrinkIcon = ((props) => {
-	return _tmpl$$9.cloneNode(true);
-});
-var _tmpl$$8 = /* @__PURE__ */ template(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10.5 3.75a.75.75 0 0 0-1.264-.546L5.203 7H2.667a.75.75 0 0 0-.7.48A6.985 6.985 0 0 0 1.5 10c0 .887.165 1.737.468 2.52.111.29.39.48.7.48h2.535l4.033 3.796a.75.75 0 0 0 1.264-.546V3.75ZM16.45 5.05a.75.75 0 0 0-1.06 1.061 5.5 5.5 0 0 1 0 7.778.75.75 0 0 0 1.06 1.06 7 7 0 0 0 0-9.899Z"></path><path d="M14.329 7.172a.75.75 0 0 0-1.061 1.06 2.5 2.5 0 0 1 0 3.536.75.75 0 0 0 1.06 1.06 4 4 0 0 0 0-5.656Z"></path></svg>`, 6);
-var SpeakerOnIcon = ((props) => {
-	return _tmpl$$8.cloneNode(true);
-});
-var _tmpl$$7 = /* @__PURE__ */ template(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5"><path d="M10.047 3.062a.75.75 0 0 1 .453.688v12.5a.75.75 0 0 1-1.264.546L5.203 13H2.667a.75.75 0 0 1-.7-.48A6.985 6.985 0 0 1 1.5 10c0-.887.165-1.737.468-2.52a.75.75 0 0 1 .7-.48h2.535l4.033-3.796a.75.75 0 0 1 .811-.142ZM13.78 7.22a.75.75 0 1 0-1.06 1.06L14.44 10l-1.72 1.72a.75.75 0 0 0 1.06 1.06l1.72-1.72 1.72 1.72a.75.75 0 1 0 1.06-1.06L16.56 10l1.72-1.72a.75.75 0 0 0-1.06-1.06L15.5 8.94l-1.72-1.72Z"></path></svg>`, 4);
-var SpeakerOffIcon = ((props) => {
-	return _tmpl$$7.cloneNode(true);
-});
-var _tmpl$$6 = /* @__PURE__ */ template(`<span class="ap-button ap-playback-button" tabindex="0"></span>`, 2), _tmpl$2$1 = /* @__PURE__ */ template(`<span class="ap-bar"><span class="ap-gutter ap-gutter-empty"></span><span class="ap-gutter ap-gutter-full"></span></span>`, 6), _tmpl$3$1 = /* @__PURE__ */ template(`<span class="ap-tooltip">Unmute (m)</span>`, 2), _tmpl$4$1 = /* @__PURE__ */ template(`<span class="ap-tooltip">Mute (m)</span>`, 2), _tmpl$5$1 = /* @__PURE__ */ template(`<span class="ap-button ap-speaker-button ap-tooltip-container" aria-label="Mute / unmute" role="button" tabindex="0"></span>`, 2), _tmpl$6$1 = /* @__PURE__ */ template(`<div class="ap-control-bar"><span class="ap-timer" aria-readonly="true" role="textbox" tabindex="0"><span class="ap-time-elapsed"></span><span class="ap-time-remaining"></span></span><span class="ap-progressbar"></span><span class="ap-button ap-kbd-button ap-tooltip-container" aria-label="Show keyboard shortcuts" role="button" tabindex="0"><span class="ap-tooltip">Keyboard shortcuts (?)</span></span><span class="ap-button ap-fullscreen-button ap-tooltip-container" aria-label="Toggle fullscreen mode" role="button" tabindex="0"><span class="ap-tooltip">Fullscreen (f)</span></span></div>`, 18), _tmpl$7$1 = /* @__PURE__ */ template(`<span class="ap-marker-container ap-tooltip-container"><span class="ap-marker"></span><span class="ap-tooltip"></span></span>`, 6);
-function formatTime$1(seconds) {
-	let s = Math.floor(seconds);
-	const d = Math.floor(s / 86400);
-	s %= 86400;
-	const h = Math.floor(s / 3600);
-	s %= 3600;
-	const m = Math.floor(s / 60);
-	s %= 60;
-	if (d > 0) return `${zeroPad(d)}:${zeroPad(h)}:${zeroPad(m)}:${zeroPad(s)}`;
-	else if (h > 0) return `${zeroPad(h)}:${zeroPad(m)}:${zeroPad(s)}`;
-	else return `${zeroPad(m)}:${zeroPad(s)}`;
-}
-function zeroPad(n) {
-	return n < 10 ? `0${n}` : n.toString();
-}
-var ControlBar = ((props) => {
-	const e = (f) => {
-		return (e) => {
-			e.preventDefault();
-			f(e);
-		};
-	};
-	const currentTime = () => typeof props.currentTime === "number" ? formatTime$1(props.currentTime) : "--:--";
-	const remainingTime = () => typeof props.remainingTime === "number" ? "-" + formatTime$1(props.remainingTime) : currentTime();
-	const markers = createMemo(() => typeof props.duration === "number" ? props.markers.filter((m) => m[0] < props.duration) : []);
-	const markerPosition = (m) => `${m[0] / props.duration * 100}%`;
-	const markerText = (m) => {
-		if (m[1] === "") return formatTime$1(m[0]);
-		else return `${formatTime$1(m[0])} - ${m[1]}`;
-	};
-	const isPastMarker = (m) => typeof props.currentTime === "number" ? m[0] <= props.currentTime : false;
-	const gutterBarStyle = () => {
-		return { transform: `scaleX(${props.progress || 0}` };
-	};
-	const calcPosition = (e) => {
-		const barWidth = e.currentTarget.offsetWidth;
-		const rect = e.currentTarget.getBoundingClientRect();
-		const mouseX = e.clientX - rect.left;
-		return `${Math.max(0, mouseX / barWidth) * 100}%`;
-	};
-	const [mouseDown, setMouseDown] = createSignal(false);
-	const throttledSeek = throttle(props.onSeekClick, 50);
-	const onMouseDown = (e) => {
-		if (e._marker) return;
-		if (e.altKey || e.shiftKey || e.metaKey || e.ctrlKey || e.button !== 0) return;
-		setMouseDown(true);
-		props.onSeekClick(calcPosition(e));
-	};
-	const seekToMarker = (index) => {
-		return e(() => {
-			props.onSeekClick({ marker: index });
-		});
-	};
-	const onMove = (e) => {
-		if (e.altKey || e.shiftKey || e.metaKey || e.ctrlKey) return;
-		if (mouseDown()) throttledSeek(calcPosition(e));
-	};
-	const onDocumentMouseUp = () => {
-		setMouseDown(false);
-	};
-	document.addEventListener("mouseup", onDocumentMouseUp);
-	onCleanup(() => {
-		document.removeEventListener("mouseup", onDocumentMouseUp);
-	});
-	return (() => {
-		const _el$ = _tmpl$6$1.cloneNode(true), _el$3 = _el$.firstChild, _el$4 = _el$3.firstChild, _el$5 = _el$4.nextSibling, _el$6 = _el$3.nextSibling, _el$13 = _el$6.nextSibling, _el$14 = _el$13.firstChild, _el$15 = _el$13.nextSibling, _el$16 = _el$15.firstChild;
-		const _ref$ = props.ref;
-		typeof _ref$ === "function" ? use(_ref$, _el$) : props.ref = _el$;
-		insert$1(_el$, createComponent(Show, {
-			get when() {
-				return props.isPausable;
-			},
-			get children() {
-				const _el$2 = _tmpl$$6.cloneNode(true);
-				addEventListener$2(_el$2, "click", e(props.onPlayClick));
-				insert$1(_el$2, createComponent(Switch, { get children() {
-					return [createComponent(Match$1, {
-						get when() {
-							return props.isPlaying;
-						},
-						get children() {
-							return createComponent(PauseIcon, {});
-						}
-					}), createComponent(Match$1, {
-						when: true,
-						get children() {
-							return createComponent(PlayIcon, {});
-						}
-					})];
-				} }));
-				return _el$2;
-			}
-		}), _el$3);
-		insert$1(_el$4, currentTime);
-		insert$1(_el$5, remainingTime);
-		insert$1(_el$6, createComponent(Show, {
-			get when() {
-				return typeof props.progress === "number" || props.isSeekable;
-			},
-			get children() {
-				const _el$7 = _tmpl$2$1.cloneNode(true), _el$9 = _el$7.firstChild.nextSibling;
-				_el$7.$$mousemove = onMove;
-				_el$7.$$mousedown = onMouseDown;
-				insert$1(_el$7, createComponent(For, {
-					get each() {
-						return markers();
-					},
-					children: (m, i) => (() => {
-						const _el$17 = _tmpl$7$1.cloneNode(true), _el$18 = _el$17.firstChild, _el$19 = _el$18.nextSibling;
-						_el$17.$$mousedown = (e) => {
-							e._marker = true;
-						};
-						addEventListener$2(_el$17, "click", seekToMarker(i()));
-						insert$1(_el$19, () => markerText(m));
-						createRenderEffect((_p$) => {
-							const _v$ = markerPosition(m), _v$2 = !!isPastMarker(m);
-							_v$ !== _p$._v$ && _el$17.style.setProperty("left", _p$._v$ = _v$);
-							_v$2 !== _p$._v$2 && _el$18.classList.toggle("ap-marker-past", _p$._v$2 = _v$2);
-							return _p$;
-						}, {
-							_v$: void 0,
-							_v$2: void 0
-						});
-						return _el$17;
-					})()
-				}), null);
-				createRenderEffect((_$p) => style(_el$9, gutterBarStyle(), _$p));
-				return _el$7;
-			}
-		}));
-		insert$1(_el$, createComponent(Show, {
-			get when() {
-				return props.isMuted !== void 0;
-			},
-			get children() {
-				const _el$10 = _tmpl$5$1.cloneNode(true);
-				addEventListener$2(_el$10, "click", e(props.onMuteClick));
-				insert$1(_el$10, createComponent(Switch, { get children() {
-					return [createComponent(Match$1, {
-						get when() {
-							return props.isMuted === true;
-						},
-						get children() {
-							return [createComponent(SpeakerOffIcon, {}), _tmpl$3$1.cloneNode(true)];
-						}
-					}), createComponent(Match$1, {
-						get when() {
-							return props.isMuted === false;
-						},
-						get children() {
-							return [createComponent(SpeakerOnIcon, {}), _tmpl$4$1.cloneNode(true)];
-						}
-					})];
-				} }));
-				return _el$10;
-			}
-		}), _el$13);
-		addEventListener$2(_el$13, "click", e(props.onHelpClick));
-		insert$1(_el$13, createComponent(KeyboardIcon, {}), _el$14);
-		addEventListener$2(_el$15, "click", e(props.onFullscreenClick));
-		insert$1(_el$15, createComponent(ShrinkIcon, {}), _el$16);
-		insert$1(_el$15, createComponent(ExpandIcon, {}), _el$16);
-		createRenderEffect(() => _el$.classList.toggle("ap-seekable", !!props.isSeekable));
-		return _el$;
-	})();
-});
-delegateEvents([
-	"click",
-	"mousedown",
-	"mousemove"
-]);
-var _tmpl$$5 = /* @__PURE__ */ template(`<div class="ap-overlay ap-overlay-error"><span>💥</span></div>`, 4);
-var ErrorOverlay = ((props) => {
-	return _tmpl$$5.cloneNode(true);
-});
-var _tmpl$$4 = /* @__PURE__ */ template(`<div class="ap-overlay ap-overlay-loading"><span class="ap-loader"></span></div>`, 4);
-var LoaderOverlay = ((props) => {
-	return _tmpl$$4.cloneNode(true);
-});
-var _tmpl$$3 = /* @__PURE__ */ template(`<div class="ap-overlay ap-overlay-info"><span></span></div>`, 4);
-var InfoOverlay = ((props) => {
-	return (() => {
-		const _el$ = _tmpl$$3.cloneNode(true), _el$2 = _el$.firstChild;
-		insert$1(_el$2, () => props.message);
-		createRenderEffect(() => _el$.classList.toggle("ap-was-playing", !!props.wasPlaying));
-		return _el$;
-	})();
-});
-var _tmpl$$2 = /* @__PURE__ */ template(`<div class="ap-overlay ap-overlay-start"><div class="ap-play-button"><div><span><svg version="1.1" viewBox="0 0 1000.0 1000.0" class="ap-icon"><defs><mask id="small-triangle-mask"><rect width="100%" height="100%" fill="white"></rect><polygon points="700.0 500.0, 400.00000000000006 326.7949192431122, 399.9999999999999 673.2050807568877" fill="black"></polygon></mask></defs><polygon points="1000.0 500.0, 250.0000000000001 66.98729810778059, 249.99999999999977 933.0127018922192" mask="url(#small-triangle-mask)" fill="white" class="ap-play-btn-fill"></polygon><polyline points="673.2050807568878 400.0, 326.7949192431123 600.0" stroke="white" stroke-width="90" class="ap-play-btn-stroke"></polyline></svg></span></div></div></div>`, 22);
-var StartOverlay = ((props) => {
-	const e = (f) => {
-		return (e) => {
-			e.preventDefault();
-			f(e);
-		};
-	};
-	return (() => {
-		const _el$ = _tmpl$$2.cloneNode(true);
-		addEventListener$2(_el$, "click", e(props.onClick));
-		return _el$;
-	})();
-});
-delegateEvents(["click"]);
-var _tmpl$$1 = /* @__PURE__ */ template(`<li><kbd>space</kbd> - pause / resume</li>`, 4), _tmpl$2 = /* @__PURE__ */ template(`<li><kbd>←</kbd> / <kbd>→</kbd> - rewind / fast-forward by 5 seconds</li>`, 6), _tmpl$3 = /* @__PURE__ */ template(`<li><kbd>Shift</kbd> + <kbd>←</kbd> / <kbd>→</kbd> - rewind / fast-forward by 10%</li>`, 8), _tmpl$4 = /* @__PURE__ */ template(`<li><kbd>[</kbd> / <kbd>]</kbd> - jump to the previous / next marker</li>`, 6), _tmpl$5 = /* @__PURE__ */ template(`<li><kbd>0</kbd>, <kbd>1</kbd>, <kbd>2</kbd> ... <kbd>9</kbd> - jump to 0%, 10%, 20% ... 90%</li>`, 10), _tmpl$6 = /* @__PURE__ */ template(`<li><kbd>,</kbd> / <kbd>.</kbd> - step back / forward, a frame at a time (when paused)</li>`, 6), _tmpl$7 = /* @__PURE__ */ template(`<li><kbd>m</kbd> - mute / unmute audio</li>`, 4), _tmpl$8 = /* @__PURE__ */ template(`<div class="ap-overlay ap-overlay-help"><div><div><p>Keyboard shortcuts</p><ul><li><kbd>f</kbd> - toggle fullscreen mode</li><li><kbd>?</kbd> - show this help popup</li></ul></div></div></div>`, 18);
-var HelpOverlay = ((props) => {
-	const e = (f) => {
-		return (e) => {
-			e.preventDefault();
-			f(e);
-		};
-	};
-	return (() => {
-		const _el$ = _tmpl$8.cloneNode(true), _el$2 = _el$.firstChild, _el$5 = _el$2.firstChild.firstChild.nextSibling, _el$12 = _el$5.firstChild, _el$14 = _el$12.nextSibling;
-		addEventListener$2(_el$, "click", e(props.onClose));
-		_el$2.$$click = (e) => {
-			e.stopPropagation();
-		};
-		insert$1(_el$5, createComponent(Show, {
-			get when() {
-				return props.isPausable;
-			},
-			get children() {
-				return _tmpl$$1.cloneNode(true);
-			}
-		}), _el$12);
-		insert$1(_el$5, createComponent(Show, {
-			get when() {
-				return props.isSeekable;
-			},
-			get children() {
-				return [
-					_tmpl$2.cloneNode(true),
-					_tmpl$3.cloneNode(true),
-					_tmpl$4.cloneNode(true),
-					_tmpl$5.cloneNode(true),
-					_tmpl$6.cloneNode(true)
-				];
-			}
-		}), _el$12);
-		insert$1(_el$5, createComponent(Show, {
-			get when() {
-				return props.hasAudio;
-			},
-			get children() {
-				return _tmpl$7.cloneNode(true);
-			}
-		}), _el$14);
-		return _el$;
-	})();
-});
-delegateEvents(["click"]);
-var _tmpl$ = /* @__PURE__ */ template(`<div class="ap-wrapper" tabindex="-1"><div></div></div>`, 4);
-var CONTROL_BAR_HEIGHT = 32;
-var Player = ((props) => {
-	const logger = props.logger;
-	const core = props.core;
-	const autoPlay = props.autoPlay;
-	const charW = props.charW;
-	const charH = props.charH;
-	const bordersW = props.bordersW;
-	const bordersH = props.bordersH;
-	const themeOption = props.theme ?? "auto/asciinema";
-	const preferEmbeddedTheme = themeOption.slice(0, 5) === "auto/";
-	const themeName = preferEmbeddedTheme ? themeOption.slice(5) : themeOption;
-	const [state, setState] = createStore$1({
-		containerW: 0,
-		containerH: 0,
-		isPausable: true,
-		isSeekable: true,
-		isFullscreen: false,
-		currentTime: null,
-		remainingTime: null,
-		progress: null
-	});
-	const [isPlaying, setIsPlaying] = createSignal(false);
-	const [isMuted, setIsMuted] = createSignal(void 0);
-	const [wasPlaying, setWasPlaying] = createSignal(false);
-	const [overlay, setOverlay] = createSignal(!autoPlay ? "start" : null);
-	const [infoMessage, setInfoMessage] = createSignal(null);
-	const [blinking, setBlinking] = createSignal(false);
-	const [terminalSize, setTerminalSize] = createSignal({
-		cols: props.cols,
-		rows: props.rows
-	}, { equals: (newVal, oldVal) => newVal.cols === oldVal.cols && newVal.rows === oldVal.rows });
-	const [duration, setDuration] = createSignal(null);
-	const [markers, setMarkers] = createStore$1([]);
-	const [userActive, setUserActive] = createSignal(false);
-	const [isHelpVisible, setIsHelpVisible] = createSignal(false);
-	const [originalTheme, setOriginalTheme] = createSignal(null);
-	const terminalCols = createMemo(() => terminalSize().cols || 80);
-	const terminalRows = createMemo(() => terminalSize().rows || 24);
-	const controlBarHeight = () => props.controls === false ? 0 : CONTROL_BAR_HEIGHT;
-	const controlsVisible = () => props.controls === true || props.controls === "auto" && userActive();
-	let userActivityTimeoutId;
-	let timeUpdateIntervalId;
-	let wrapperRef;
-	let playerRef;
-	let controlBarRef;
-	let resizeObserver;
-	function onPlaying() {
-		setBlinking(true);
-		startTimeUpdates();
-	}
-	function onStopped() {
-		setBlinking(false);
-		stopTimeUpdates();
-		updateTime();
-	}
-	let resolveCoreReady;
-	const coreReady = new Promise((resolve) => {
-		resolveCoreReady = resolve;
-	});
-	const onCoreReady = (_ref) => {
-		let { isPausable, isSeekable } = _ref;
-		setState({
-			isPausable,
-			isSeekable
-		});
-		resolveCoreReady();
-	};
-	const onCoreMetadata = (meta) => {
-		batch(() => {
-			if (meta.duration !== void 0) setDuration(meta.duration);
-			if (meta.markers !== void 0) setMarkers(meta.markers);
-			if (meta.hasAudio !== void 0) setIsMuted(meta.hasAudio ? false : void 0);
-			if (meta.size !== void 0) setTerminalSize(meta.size);
-			if (meta.theme !== void 0) setOriginalTheme(meta.theme);
-		});
-	};
-	const onCorePlay = () => {
-		setOverlay(null);
-	};
-	const onCorePlaying = () => {
-		batch(() => {
-			setIsPlaying(true);
-			setWasPlaying(true);
-			setOverlay(null);
-			onPlaying();
-		});
-	};
-	const onCoreIdle = () => {
-		batch(() => {
-			setIsPlaying(false);
-			onStopped();
-		});
-	};
-	const onCoreLoading = () => {
-		batch(() => {
-			setIsPlaying(false);
-			onStopped();
-			setOverlay("loader");
-		});
-	};
-	const onCoreOffline = (_ref2) => {
-		let { message } = _ref2;
-		batch(() => {
-			setIsPlaying(false);
-			onStopped();
-			if (message !== void 0) {
-				setInfoMessage(message);
-				setOverlay("info");
-			}
-		});
-	};
-	const onCoreMuted = (muted) => {
-		setIsMuted(muted);
-	};
-	const stats = { terminal: { renders: 0 } };
-	const onCoreEnded = (_ref3) => {
-		let { message } = _ref3;
-		batch(() => {
-			setIsPlaying(false);
-			onStopped();
-			if (message !== void 0) {
-				setInfoMessage(message);
-				setOverlay("info");
-			}
-		});
-		logger.debug("stats", stats.terminal);
-	};
-	const onCoreErrored = () => {
-		setOverlay("error");
-	};
-	const onCoreSeeked = () => {
-		updateTime();
-	};
-	core.addEventListener("ready", onCoreReady);
-	core.addEventListener("metadata", onCoreMetadata);
-	core.addEventListener("play", onCorePlay);
-	core.addEventListener("playing", onCorePlaying);
-	core.addEventListener("idle", onCoreIdle);
-	core.addEventListener("loading", onCoreLoading);
-	core.addEventListener("offline", onCoreOffline);
-	core.addEventListener("muted", onCoreMuted);
-	core.addEventListener("ended", onCoreEnded);
-	core.addEventListener("errored", onCoreErrored);
-	core.addEventListener("seeked", onCoreSeeked);
-	const setupResizeObserver = () => {
-		resizeObserver = new ResizeObserver(debounce$1((_entries) => {
-			setState({
-				containerW: wrapperRef.offsetWidth,
-				containerH: wrapperRef.offsetHeight
-			});
-			wrapperRef.dispatchEvent(new CustomEvent("resize", { detail: { el: playerRef } }));
-		}, 10));
-		resizeObserver.observe(wrapperRef);
-	};
-	onMount(async () => {
-		logger.info("view: mounted");
-		logger.debug("view: font measurements", {
-			charW,
-			charH
-		});
-		setupResizeObserver();
-		setState({
-			containerW: wrapperRef.offsetWidth,
-			containerH: wrapperRef.offsetHeight
-		});
-	});
-	onCleanup(() => {
-		core.removeEventListener("ready", onCoreReady);
-		core.removeEventListener("metadata", onCoreMetadata);
-		core.removeEventListener("play", onCorePlay);
-		core.removeEventListener("playing", onCorePlaying);
-		core.removeEventListener("idle", onCoreIdle);
-		core.removeEventListener("loading", onCoreLoading);
-		core.removeEventListener("offline", onCoreOffline);
-		core.removeEventListener("muted", onCoreMuted);
-		core.removeEventListener("ended", onCoreEnded);
-		core.removeEventListener("errored", onCoreErrored);
-		core.removeEventListener("seeked", onCoreSeeked);
-		core.stop();
-		stopTimeUpdates();
-		resizeObserver.disconnect();
-	});
-	const terminalElementSize = createMemo(() => {
-		const terminalW = charW * terminalCols() + bordersW;
-		const terminalH = charH * terminalRows() + bordersH;
-		let fit = props.fit ?? "width";
-		if (fit === "both" || state.isFullscreen) if (state.containerW / (state.containerH - controlBarHeight()) > terminalW / terminalH) fit = "height";
-		else fit = "width";
-		if (fit === false || fit === "none") return {};
-		else if (fit === "width") {
-			const scale = state.containerW / terminalW;
-			return {
-				scale,
-				width: state.containerW,
-				height: terminalH * scale + controlBarHeight()
-			};
-		} else if (fit === "height") {
-			const scale = (state.containerH - controlBarHeight()) / terminalH;
-			return {
-				scale,
-				width: terminalW * scale,
-				height: state.containerH
-			};
-		} else throw new Error(`unsupported fit mode: ${fit}`);
-	});
-	const onFullscreenChange = () => {
-		setState("isFullscreen", document.fullscreenElement ?? document.webkitFullscreenElement);
-	};
-	const toggleFullscreen = () => {
-		if (state.isFullscreen) (document.exitFullscreen ?? document.webkitExitFullscreen ?? (() => {})).apply(document);
-		else (wrapperRef.requestFullscreen ?? wrapperRef.webkitRequestFullscreen ?? (() => {})).apply(wrapperRef);
-	};
-	const toggleHelp = () => {
-		if (isHelpVisible()) setIsHelpVisible(false);
-		else {
-			core.pause();
-			setIsHelpVisible(true);
-		}
-	};
-	const onKeyDown = (e) => {
-		if (e.altKey || e.metaKey || e.ctrlKey) return;
-		if (e.key == " ") core.togglePlay();
-		else if (e.key == ",") core.step(-1).then(updateTime);
-		else if (e.key == ".") core.step().then(updateTime);
-		else if (e.key == "f") toggleFullscreen();
-		else if (e.key == "m") toggleMuted();
-		else if (e.key == "[") core.seek({ marker: "prev" });
-		else if (e.key == "]") core.seek({ marker: "next" });
-		else if (e.key.charCodeAt(0) >= 48 && e.key.charCodeAt(0) <= 57) {
-			const pos = (e.key.charCodeAt(0) - 48) / 10;
-			core.seek(`${pos * 100}%`);
-		} else if (e.key == "?") toggleHelp();
-		else if (e.key == "ArrowLeft") if (e.shiftKey) core.seek("<<<");
-		else core.seek("<<");
-		else if (e.key == "ArrowRight") if (e.shiftKey) core.seek(">>>");
-		else core.seek(">>");
-		else if (e.key == "Escape") setIsHelpVisible(false);
-		else return;
-		e.stopPropagation();
-		e.preventDefault();
-	};
-	const wrapperOnMouseMove = () => {
-		if (state.isFullscreen) onUserActive(true);
-	};
-	const playerOnMouseLeave = () => {
-		if (!state.isFullscreen) onUserActive(false);
-	};
-	const startTimeUpdates = () => {
-		timeUpdateIntervalId = setInterval(updateTime, 100);
-	};
-	const stopTimeUpdates = () => {
-		clearInterval(timeUpdateIntervalId);
-	};
-	const updateTime = async () => {
-		setState({
-			currentTime: await core.getCurrentTime(),
-			remainingTime: await core.getRemainingTime(),
-			progress: await core.getProgress()
-		});
-	};
-	const onUserActive = (show) => {
-		clearTimeout(userActivityTimeoutId);
-		if (show) userActivityTimeoutId = setTimeout(() => onUserActive(false), 2e3);
-		setUserActive(show);
-	};
-	const embeddedTheme = createMemo(() => preferEmbeddedTheme ? originalTheme() : null);
-	const playerStyle = () => {
-		const style = {};
-		if ((props.fit === false || props.fit === "none") && props.terminalFontSize !== void 0) if (props.terminalFontSize === "small") style["font-size"] = "12px";
-		else if (props.terminalFontSize === "medium") style["font-size"] = "18px";
-		else if (props.terminalFontSize === "big") style["font-size"] = "24px";
-		else style["font-size"] = props.terminalFontSize;
-		const size = terminalElementSize();
-		if (size.width !== void 0) {
-			style["width"] = `${size.width}px`;
-			style["height"] = `${size.height}px`;
-		}
-		if (props.terminalFontFamily !== void 0) style["--term-font-family"] = props.terminalFontFamily;
-		const themeColors = embeddedTheme();
-		if (themeColors) {
-			style["--term-color-foreground"] = themeColors.foreground;
-			style["--term-color-background"] = themeColors.background;
-		}
-		return style;
-	};
-	const play = () => {
-		coreReady.then(() => core.play());
-	};
-	const togglePlay = () => {
-		coreReady.then(() => core.togglePlay());
-	};
-	const toggleMuted = () => {
-		coreReady.then(() => {
-			if (isMuted() === true) core.unmute();
-			else core.mute();
-		});
-	};
-	const seek = (pos) => {
-		coreReady.then(() => core.seek(pos));
-	};
-	const playerClass = () => `ap-player ap-default-term-ff asciinema-player-theme-${themeName}`;
-	const terminalScale = () => terminalElementSize()?.scale;
-	return (() => {
-		const _el$ = _tmpl$.cloneNode(true), _el$2 = _el$.firstChild;
-		const _ref$ = wrapperRef;
-		typeof _ref$ === "function" ? use(_ref$, _el$) : wrapperRef = _el$;
-		_el$.addEventListener("webkitfullscreenchange", onFullscreenChange);
-		_el$.addEventListener("fullscreenchange", onFullscreenChange);
-		_el$.$$mousemove = wrapperOnMouseMove;
-		_el$.$$keydown = onKeyDown;
-		const _ref$2 = playerRef;
-		typeof _ref$2 === "function" ? use(_ref$2, _el$2) : playerRef = _el$2;
-		_el$2.$$mousemove = () => onUserActive(true);
-		_el$2.addEventListener("mouseleave", playerOnMouseLeave);
-		insert$1(_el$2, createComponent(Terminal, {
-			get cols() {
-				return terminalCols();
-			},
-			get rows() {
-				return terminalRows();
-			},
-			get scale() {
-				return terminalScale();
-			},
-			get blinking() {
-				return blinking();
-			},
-			get lineHeight() {
-				return props.terminalLineHeight;
-			},
-			preferEmbeddedTheme,
-			core,
-			get stats() {
-				return stats.terminal;
-			}
-		}), null);
-		insert$1(_el$2, createComponent(Show, {
-			get when() {
-				return props.controls !== false;
-			},
-			get children() {
-				return createComponent(ControlBar, {
-					get duration() {
-						return duration();
-					},
-					get currentTime() {
-						return state.currentTime;
-					},
-					get remainingTime() {
-						return state.remainingTime;
-					},
-					get progress() {
-						return state.progress;
-					},
-					markers,
-					get isPlaying() {
-						return isPlaying() || overlay() == "loader";
-					},
-					get isPausable() {
-						return state.isPausable;
-					},
-					get isSeekable() {
-						return state.isSeekable;
-					},
-					get isMuted() {
-						return isMuted();
-					},
-					onPlayClick: togglePlay,
-					onFullscreenClick: toggleFullscreen,
-					onHelpClick: toggleHelp,
-					onSeekClick: seek,
-					onMuteClick: toggleMuted,
-					ref(r$) {
-						const _ref$3 = controlBarRef;
-						typeof _ref$3 === "function" ? _ref$3(r$) : controlBarRef = r$;
-					}
-				});
-			}
-		}), null);
-		insert$1(_el$2, createComponent(Switch, { get children() {
-			return [
-				createComponent(Match$1, {
-					get when() {
-						return overlay() == "start";
-					},
-					get children() {
-						return createComponent(StartOverlay, { onClick: play });
-					}
-				}),
-				createComponent(Match$1, {
-					get when() {
-						return overlay() == "loader";
-					},
-					get children() {
-						return createComponent(LoaderOverlay, {});
-					}
-				}),
-				createComponent(Match$1, {
-					get when() {
-						return overlay() == "error";
-					},
-					get children() {
-						return createComponent(ErrorOverlay, {});
-					}
-				})
-			];
-		} }), null);
-		insert$1(_el$2, createComponent(Transition, {
-			name: "slide",
-			get children() {
-				return createComponent(Show, {
-					get when() {
-						return overlay() == "info";
-					},
-					get children() {
-						return createComponent(InfoOverlay, {
-							get message() {
-								return infoMessage();
-							},
-							get wasPlaying() {
-								return wasPlaying();
-							}
-						});
-					}
-				});
-			}
-		}), null);
-		insert$1(_el$2, createComponent(Show, {
-			get when() {
-				return isHelpVisible();
-			},
-			get children() {
-				return createComponent(HelpOverlay, {
-					onClose: () => setIsHelpVisible(false),
-					get isPausable() {
-						return state.isPausable;
-					},
-					get isSeekable() {
-						return state.isSeekable;
-					},
-					get hasAudio() {
-						return isMuted() !== void 0;
-					}
-				});
-			}
-		}), null);
-		createRenderEffect((_p$) => {
-			const _v$ = !!controlsVisible(), _v$2 = playerClass(), _v$3 = playerStyle();
-			_v$ !== _p$._v$ && _el$.classList.toggle("ap-hud", _p$._v$ = _v$);
-			_v$2 !== _p$._v$2 && className(_el$2, _p$._v$2 = _v$2);
-			_p$._v$3 = style(_el$2, _v$3, _p$._v$3);
-			return _p$;
-		}, {
-			_v$: void 0,
-			_v$2: void 0,
-			_v$3: void 0
-		});
-		return _el$;
-	})();
-});
-delegateEvents(["keydown", "mousemove"]);
-function mount(core, elem) {
-	let opts = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {};
-	const metrics = measureTerminal(opts.terminalFontFamily, opts.terminalLineHeight);
-	const props = {
-		core,
-		logger: opts.logger,
-		cols: opts.cols,
-		rows: opts.rows,
-		fit: opts.fit,
-		controls: opts.controls,
-		autoPlay: opts.autoPlay,
-		terminalFontSize: opts.terminalFontSize,
-		terminalFontFamily: opts.terminalFontFamily,
-		terminalLineHeight: opts.terminalLineHeight,
-		theme: opts.theme,
-		...metrics
-	};
-	let el;
-	const dispose = render(() => {
-		el = createComponent(Player, props);
-		return el;
-	}, elem);
-	return {
-		el,
-		dispose
-	};
-}
-function measureTerminal(fontFamily, lineHeight) {
-	const cols = 80;
-	const rows = 24;
-	const playerDiv = document.createElement("div");
-	playerDiv.className = "ap-default-term-ff";
-	playerDiv.style.height = "0px";
-	playerDiv.style.overflow = "hidden";
-	playerDiv.style.fontSize = "15px";
-	if (fontFamily !== void 0) playerDiv.style.setProperty("--term-font-family", fontFamily);
-	const termDiv = document.createElement("div");
-	termDiv.className = "ap-term";
-	termDiv.style.width = `${cols}ch`;
-	termDiv.style.height = `${rows * (lineHeight ?? 1.3333333333)}em`;
-	termDiv.style.fontSize = "100%";
-	playerDiv.appendChild(termDiv);
-	document.body.appendChild(playerDiv);
-	const metrics = {
-		charW: termDiv.clientWidth / cols,
-		charH: termDiv.clientHeight / rows,
-		bordersW: termDiv.offsetWidth - termDiv.clientWidth,
-		bordersH: termDiv.offsetHeight - termDiv.clientHeight
-	};
-	document.body.removeChild(playerDiv);
-	return metrics;
-}
-var CORE_OPTS = [
-	"audioUrl",
-	"autoPlay",
-	"autoplay",
-	"boldIsBright",
-	"cols",
-	"idleTimeLimit",
-	"loop",
-	"markers",
-	"pauseOnMarkers",
-	"poster",
-	"preload",
-	"rows",
-	"speed",
-	"startAt"
-];
-var UI_OPTS = [
-	"autoPlay",
-	"autoplay",
-	"cols",
-	"controls",
-	"fit",
-	"rows",
-	"terminalFontFamily",
-	"terminalFontSize",
-	"terminalLineHeight",
-	"theme"
-];
-function coreOpts(inputOpts) {
-	let overrides = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
-	const opts = Object.fromEntries(Object.entries(inputOpts).filter((_ref) => {
-		let [key] = _ref;
-		return CORE_OPTS.includes(key);
-	}));
-	opts.autoPlay ??= opts.autoplay;
-	opts.speed ??= 1;
-	return {
-		...opts,
-		...overrides
-	};
-}
-function uiOpts(inputOpts) {
-	let overrides = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
-	const opts = Object.fromEntries(Object.entries(inputOpts).filter((_ref2) => {
-		let [key] = _ref2;
-		return UI_OPTS.includes(key);
-	}));
-	opts.autoPlay ??= opts.autoplay;
-	opts.controls ??= "auto";
-	return {
-		...opts,
-		...overrides
-	};
-}
-//#endregion
-//#region ../../node_modules/.pnpm/asciinema-player@3.15.1/node_modules/asciinema-player/dist/index.js
-function create$1(src, elem) {
-	let opts = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {};
-	const logger = opts.logger ?? new DummyLogger();
-	const core = new Core$1(src, coreOpts(opts, { logger }));
-	const { el, dispose } = mount(core, elem, uiOpts(opts, { logger }));
-	const ready = core.init();
-	const player = {
-		el,
-		dispose,
-		getCurrentTime: () => ready.then(core.getCurrentTime.bind(core)),
-		getDuration: () => ready.then(core.getDuration.bind(core)),
-		play: () => ready.then(core.play.bind(core)),
-		pause: () => ready.then(core.pause.bind(core)),
-		seek: (pos) => ready.then(() => core.seek(pos))
-	};
-	player.addEventListener = (name, callback) => {
-		return core.addEventListener(name, callback.bind(player));
-	};
-	return player;
-}
-//#endregion
 //#region ../../packages/react/src/components/AsciinemaPlayer.tsx
-var AsciinemaPlayer = ({ id, rows, cols, inputUrl, outputUrl, timingUrl, fit, speed, autoPlay, loop, theme, idleTimeLimit = 2, style }) => {
-	const playerContainerRef = (0, import_react.useRef)(null);
-	(0, import_react.useEffect)(() => {
-		if (!playerContainerRef.current) return;
-		const player = create$1({
-			url: [
-				timingUrl,
-				outputUrl,
-				inputUrl
-			],
-			parser: "typescript"
-		}, playerContainerRef.current, {
-			rows,
-			cols,
-			autoPlay,
-			loop,
-			theme,
-			speed,
-			idleTimeLimit,
-			fit
-		});
-		player.play();
-		return () => {
-			player.dispose();
-		};
-	}, [
-		timingUrl,
-		outputUrl,
-		inputUrl,
-		rows,
-		cols,
-		autoPlay,
-		loop,
-		theme,
-		speed,
-		idleTimeLimit,
-		fit
-	]);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		id: `asciinema-player-${id || "default"}`,
-		ref: playerContainerRef,
-		style: { ...style }
-	});
-};
+var LazyAsciinemaPlayer = (0, import_react.lazy)(() => __vitePreload(() => import("./AsciinemaPlayerImpl.js"), __vite__mapDeps([0,1,2]), import.meta.url));
+var AsciinemaPlayer = (props) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_react.Suspense, {
+	fallback: null,
+	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LazyAsciinemaPlayer, { ...props })
+});
 //#endregion
 //#region ../../node_modules/.pnpm/@lit+react@1.0.8_@types+react@19.2.14/node_modules/@lit/react/create-component.js
 /**
@@ -48655,7 +42377,7 @@ function escapedSplit(str) {
 	result.push(current + str.substring(lastPos));
 	return result;
 }
-function table$2(state, startLine, endLine, silent) {
+function table$3(state, startLine, endLine, silent) {
 	if (startLine + 2 > endLine) return false;
 	let nextLine = startLine + 1;
 	if (state.sCount[nextLine] < state.blkIndent) return false;
@@ -49499,7 +43221,7 @@ function paragraph(state, startLine, endLine) {
 var _rules$1 = [
 	[
 		"table",
-		table$2,
+		table$3,
 		["paragraph", "reference"]
 	],
 	["code", code$5],
@@ -50011,7 +43733,7 @@ var emphasis_default = {
 };
 //#endregion
 //#region ../../node_modules/.pnpm/markdown-it@14.1.1/node_modules/markdown-it/lib/rules_inline/link.mjs
-function link(state, silent) {
+function link$1(state, silent) {
 	let code, label, res, ref;
 	let href = "";
 	let title = "";
@@ -50382,7 +44104,7 @@ var _rules = [
 	["backticks", backtick],
 	["strikethrough", strikethrough_default.tokenize],
 	["emphasis", emphasis_default.tokenize],
-	["link", link],
+	["link", link$1],
 	["image", image$1],
 	["autolink", autolink],
 	["html_inline", html_inline],
@@ -50992,7 +44714,7 @@ var stringFromCharCode = String.fromCharCode;
 * @param {String} type The error type.
 * @returns {Error} Throws a `RangeError` with the applicable error message.
 */
-function error$6(type) {
+function error$7(type) {
 	throw new RangeError(errors[type]);
 }
 /**
@@ -51126,26 +44848,26 @@ var decode = function(input) {
 	let basic = input.lastIndexOf(delimiter);
 	if (basic < 0) basic = 0;
 	for (let j = 0; j < basic; ++j) {
-		if (input.charCodeAt(j) >= 128) error$6("not-basic");
+		if (input.charCodeAt(j) >= 128) error$7("not-basic");
 		output.push(input.charCodeAt(j));
 	}
 	for (let index = basic > 0 ? basic + 1 : 0; index < inputLength;) {
 		const oldi = i;
 		for (let w = 1, k = base$1;; k += base$1) {
-			if (index >= inputLength) error$6("invalid-input");
+			if (index >= inputLength) error$7("invalid-input");
 			const digit = basicToDigit(input.charCodeAt(index++));
-			if (digit >= base$1) error$6("invalid-input");
-			if (digit > floor((maxInt - i) / w)) error$6("overflow");
+			if (digit >= base$1) error$7("invalid-input");
+			if (digit > floor((maxInt - i) / w)) error$7("overflow");
 			i += digit * w;
 			const t = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias;
 			if (digit < t) break;
 			const baseMinusT = base$1 - t;
-			if (w > floor(maxInt / baseMinusT)) error$6("overflow");
+			if (w > floor(maxInt / baseMinusT)) error$7("overflow");
 			w *= baseMinusT;
 		}
 		const out = output.length + 1;
 		bias = adapt(i - oldi, out, oldi == 0);
-		if (floor(i / out) > maxInt - n) error$6("overflow");
+		if (floor(i / out) > maxInt - n) error$7("overflow");
 		n += floor(i / out);
 		i %= out;
 		output.splice(i++, 0, n);
@@ -51174,11 +44896,11 @@ var encode = function(input) {
 		let m = maxInt;
 		for (const currentValue of input) if (currentValue >= n && currentValue < m) m = currentValue;
 		const handledCPCountPlusOne = handledCPCount + 1;
-		if (m - n > floor((maxInt - delta) / handledCPCountPlusOne)) error$6("overflow");
+		if (m - n > floor((maxInt - delta) / handledCPCountPlusOne)) error$7("overflow");
 		delta += (m - n) * handledCPCountPlusOne;
 		n = m;
 		for (const currentValue of input) {
-			if (currentValue < n && ++delta > maxInt) error$6("overflow");
+			if (currentValue < n && ++delta > maxInt) error$7("overflow");
 			if (currentValue === n) {
 				let q = delta;
 				for (let k = base$1;; k += base$1) {
@@ -51820,8 +45542,8 @@ MarkdownIt.prototype.renderInline = function(src, env) {
 //#region ../../node_modules/.pnpm/mathxyjax3@0.8.3/node_modules/mathxyjax3/dist/index.js
 var dist_exports = /* @__PURE__ */ __exportAll({ tex2svgHtml: () => a });
 var t$1 = {
-	"xmldom-sre": await __vitePreload(() => import("./lib-CBtriEt5.js").then(l$3(1)), __vite__mapDeps([0,1]), import.meta.url),
-	"wicked-good-xpath": await __vitePreload(() => import("./wgxpath.install-node-Csk64Aj9.js").then(l$3(1)), __vite__mapDeps([2,1]), import.meta.url),
+	"xmldom-sre": await __vitePreload(() => import("./lib-CBtriEt5.js").then(l$3(1)), __vite__mapDeps([3,4]), import.meta.url),
+	"wicked-good-xpath": await __vitePreload(() => import("./wgxpath.install-node-Csk64Aj9.js").then(l$3(1)), __vite__mapDeps([5,4]), import.meta.url),
 	commander: {},
 	fs: {}
 }, n = (e) => t$1[e];
@@ -54562,7 +48284,7 @@ function useStatefulScrollPosition(elementRef, elementKey, delay = 1e3, scrollab
 		log$13.debug(`Storing scroll position`, elementKey, position);
 		setScrollPosition(position);
 	}, [elementKey, setScrollPosition]);
-	const handleScroll = (0, import_react.useMemo)(() => debounce$2(handleScrollInner, delay), [handleScrollInner, delay]);
+	const handleScroll = (0, import_react.useMemo)(() => debounce$1(handleScrollInner, delay), [handleScrollInner, delay]);
 	const restoreScrollPosition = (0, import_react.useCallback)(() => {
 		const element = elementRef.current;
 		const savedPosition = scrollPositionRef.current;
@@ -54634,7 +48356,7 @@ var useVirtuosoState = (virtuosoRef, elementKey, delay = 1e3) => {
 		setListPosition(state);
 	}, [elementKey, setListPosition]);
 	(0, import_react.useEffect)(() => {
-		debouncedFnRef.current = debounce$2((isScrolling) => {
+		debouncedFnRef.current = debounce$1((isScrolling) => {
 			log$12.debug("List scroll", isScrolling);
 			const element = virtuosoRef.current;
 			if (!element) return;
@@ -55592,7 +49314,7 @@ var HumanBaselineView = ({ started, runtime, answer, completed, running, session
 			children: [
 				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: "asciinema-header-left text-style-label",
-					children: [started ? formatDateTime$1(started) : "", runtime ? ` (${formatTime$2(Math.floor(runtime))})` : ""]
+					children: [started ? formatDateTime$1(started) : "", runtime ? ` (${formatTime$1(Math.floor(runtime))})` : ""]
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "asciinema-header-center text-style-label" }),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -63785,7 +57507,7 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 var DexieSymbol = Symbol.for("Dexie");
 var Dexie = globalThis[DexieSymbol] || (globalThis[DexieSymbol] = import_dexie_min.default);
 if (import_dexie_min.default.semVer !== Dexie.semVer) throw new Error(`Two different versions of Dexie loaded in the same app: ${import_dexie_min.default.semVer} and ${Dexie.semVer}`);
-var { liveQuery, mergeRanges, rangesOverlap, RangeSet: RangeSet$1, cmp, Entity, PropModification, replacePrefix, add: add$1, remove: remove$1, DexieYProvider } = Dexie;
+var { liveQuery, mergeRanges, rangesOverlap, RangeSet: RangeSet$1, cmp, Entity, PropModification, replacePrefix, add: add$1, remove: remove$2, DexieYProvider } = Dexie;
 function resolveDBName(databaseHandle) {
 	return `InspectAI_${databaseHandle.replace(/[^a-zA-Z0-9_-]/g, "_")}`;
 }
@@ -64623,15 +58345,13 @@ var createPolling = (name, callback, options) => {
 var log$9 = createLogger("logPolling");
 var kRetries$1 = 10;
 var kPollingInterval$2 = 2;
-function createLogPolling(get, set) {
+function createLogPolling(get, set, api) {
 	let currentPolling = null;
 	let abortController;
 	const refreshLog = async (logFileName, clearPending = false) => {
 		if (abortController?.signal.aborted) return false;
-		const state = get();
-		const api = state.api;
-		const selectedLogFile = state.logs.selectedLogFile;
-		if (!api || !selectedLogFile) return false;
+		const selectedLogFile = get().logs.selectedLogFile;
+		if (!selectedLogFile) return false;
 		log$9.debug(`refresh: ${selectedLogFile}`);
 		try {
 			const logDetails = await api.get_log_details(selectedLogFile, false);
@@ -64664,8 +58384,7 @@ function createLogPolling(get, set) {
 				log$9.debug(`Component unmounted, stopping poll for: ${logFileName}`);
 				return false;
 			}
-			const api = get().api;
-			if (!api?.get_log_pending_samples) return false;
+			if (!api.get_log_pending_samples) return false;
 			if (abortController.signal.aborted) return false;
 			log$9.debug(`Polling running samples: ${logFileName}`);
 			const currentEtag = get().log.pendingSampleSummaries?.etag;
@@ -64740,8 +58459,8 @@ var initialState$2 = {
 	selectedScores: void 0,
 	scores: void 0
 };
-var createLogSlice = (set, get, _store) => {
-	const logPolling = createLogPolling(get, set);
+var createLogSlice = (set, get, _store, api) => {
+	const logPolling = createLogPolling(get, set, api);
 	const slice = {
 		log: initialState$2,
 		logActions: {
@@ -64811,14 +58530,9 @@ var createLogSlice = (set, get, _store) => {
 			}),
 			syncLog: async (logFileName) => {
 				const state = get();
-				const api = state.api;
 				let logDir = state.logs.logDir;
 				if (state.logs.logDir === void 0) logDir = await state.logsActions.initLogDir();
 				const logAbsPath = !isUri(logFileName) ? join(logFileName, logDir) : logFileName;
-				if (!api) {
-					console.error("API not initialized in Store");
-					return;
-				}
 				log$8.debug(`Load log: ${logAbsPath}`);
 				const dbService = state.databaseService;
 				if (dbService && dbService.opened()) try {
@@ -64869,9 +58583,8 @@ var createLogSlice = (set, get, _store) => {
 			},
 			refreshLog: async () => {
 				const state = get();
-				const api = state.api;
 				const selectedLogFile = state.logs.selectedLogFile;
-				if (!api || !selectedLogFile) return;
+				if (!selectedLogFile) return;
 				log$8.debug(`refresh: ${selectedLogFile}`);
 				try {
 					const logDetails = await api.get_log_details(selectedLogFile);
@@ -64958,7 +58671,7 @@ var initialState$1 = {
 	},
 	showRetriedLogs: false
 };
-var createLogsSlice = (set, get, _store) => {
+var createLogsSlice = (set, get, _store, api) => {
 	const slice = {
 		logs: initialState$1,
 		logsActions: {
@@ -64978,10 +58691,6 @@ var createLogsSlice = (set, get, _store) => {
 			}),
 			syncLogPreviews: async (logs) => {
 				const state = get();
-				if (!state.api) {
-					console.error("API not initialized in LogsStore");
-					return;
-				}
 				if (!state.replicationService) {
 					console.error("Replication service not initialized in LogsStore");
 					return;
@@ -65047,25 +58756,18 @@ var createLogsSlice = (set, get, _store) => {
 				if (isSingleFileMode) {
 					if (state.logs.logDir !== void 0) return state.logs.logDir;
 					logDir = deriveSingleFileLogDir(state.logs.selectedLogFile);
-					if (logDir === void 0 && state.api?.get_log_dir) try {
-						logDir = await state.api.get_log_dir();
+					if (logDir === void 0) try {
+						logDir = await api.get_log_dir();
 					} catch (e) {
 						console.log(e);
 					}
-				} else {
-					const api = state.api;
-					if (!api) {
-						console.error("API not initialized in LogsStore");
-						return;
-					}
-					try {
-						const root = await api.get_log_root();
-						logDir = root.log_dir;
-						absLogDir = root.abs_log_dir;
-					} catch (e) {
-						console.log(e);
-						get().appActions.setLoading(false, e);
-					}
+				} else try {
+					const root = await api.get_log_root();
+					logDir = root.log_dir;
+					absLogDir = root.abs_log_dir;
+				} catch (e) {
+					console.log(e);
+					get().appActions.setLoading(false, e);
 				}
 				if (get().logs.logDir !== logDir) get().logsActions.setLogDir(logDir);
 				if (get().logs.absLogDir !== absLogDir) set((state) => {
@@ -65078,11 +58780,6 @@ var createLogsSlice = (set, get, _store) => {
 				if (state.logs.logDir) await state.logsActions.syncLogs();
 			},
 			syncLogs: async () => {
-				const api = get().api;
-				if (!api) {
-					console.error("API not initialized in LogsStore");
-					return [];
-				}
 				const databaseService = get().databaseService;
 				const useProgress = !!databaseService?.getDatabaseHandle();
 				if (useProgress) get().appActions.setLoading(true);
@@ -65148,15 +58845,11 @@ var createLogsSlice = (set, get, _store) => {
 				return await get().replicationService?.sync(initDatabase) || [];
 			},
 			syncEvalSetInfo: async (logPath) => {
-				const api = get().api;
-				if (!api) {
-					console.error("API not initialized in LogsStore");
-					return;
-				}
 				const info = await api.get_eval_set(logPath);
 				set((state) => {
 					state.logs.evalSet = info;
 				});
+				return info;
 			},
 			updateFlowData: (flowPath, flowData) => {
 				set((state) => {
@@ -65462,7 +59155,7 @@ var log$6 = createLogger("samplePolling");
 var kNoId = -1;
 var kPollingInterval$1 = 2;
 var kPollingMaxRetries = 10;
-function createSamplePolling(store) {
+function createSamplePolling(store, api) {
 	let currentPolling = null;
 	let abortController;
 	const pollingState = {
@@ -65495,10 +59188,7 @@ function createSamplePolling(store) {
 		abortController = localAbort;
 		log$6.debug(`Polling sample: ${summary.id}-${summary.epoch}`);
 		const pollCallback = async () => {
-			const state = store.getState();
-			const { sampleActions } = state;
-			const api = state.api;
-			if (!api) throw new Error("Required API is missing");
+			const { sampleActions } = store.getState();
 			if (!api.get_log_sample_data) throw new Error("Required API get_log_sample_data is undefined.");
 			if (localAbort.signal.aborted) return false;
 			const loadCompletedSample = async (message) => {
@@ -65695,6 +59385,15 @@ var findMaxId = (items, currentMax) => {
 //#endregion
 //#region src/state/samplePollingInstance.ts
 var instance = null;
+var injectedApi = null;
+/**
+* Records the api that the polling singleton should use. Called from
+* initializeStore so the singleton stays consistent with the api the
+* consumer passed into the App tree.
+*/
+function setSamplePollingApi(api) {
+	injectedApi = api;
+}
 /**
 * Get the singleton sample polling instance.
 * Lazily creates the instance on first access.
@@ -65702,7 +59401,8 @@ var instance = null;
 function getSamplePolling() {
 	if (!instance) {
 		if (!storeImplementation) throw new Error("Store must be initialized before accessing samplePolling");
-		instance = createSamplePolling(storeImplementation);
+		if (!injectedApi) throw new Error("samplePolling api must be set via setSamplePollingApi before accessing samplePolling");
+		instance = createSamplePolling(storeImplementation, injectedApi);
 	}
 	return instance;
 }
@@ -65715,6 +59415,7 @@ function cleanupSamplePolling() {
 		instance.cleanup();
 		instance = null;
 	}
+	injectedApi = null;
 }
 //#endregion
 //#region src/state/store_filter.ts
@@ -66108,9 +59809,9 @@ var ReplicationService = class {
 	_throttledUpdateDbStats;
 	constructor() {
 		this._processingCount = 0;
-		this._throttledUpdateDbStats = throttle$1(() => this.updateDbStats(), 1e3);
-		this._throttledFlushPreviewBatch = throttle$1(() => this.flushPreviewBatch(), 100);
-		this._throttledFlushDetailBatch = throttle$1(() => this.flushDetailBatch(), 100);
+		this._throttledUpdateDbStats = throttle(() => this.updateDbStats(), 1e3);
+		this._throttledFlushPreviewBatch = throttle(() => this.flushPreviewBatch(), 100);
+		this._throttledFlushDetailBatch = throttle(() => this.flushDetailBatch(), 100);
 		this._previewQueue = new WorkQueue({
 			name: "Log-Preview-Queue",
 			concurrency: 2,
@@ -66369,7 +60070,7 @@ var initializeStore = (api, capabilities, storage) => {
 		getItem: (name) => {
 			return storage ? storage.getItem(name) : null;
 		},
-		setItem: debounce$2((name, value) => {
+		setItem: debounce$1((name, value) => {
 			if (storage) {
 				const wrapper = value;
 				const filtered = {
@@ -66385,18 +60086,16 @@ var initializeStore = (api, capabilities, storage) => {
 	};
 	const store = create()(devtools(persist(immer((set, get, store) => {
 		const [appSlice, appCleanup] = createAppSlice(set, get, store);
-		const [logsSlice, logsCleanup] = createLogsSlice(set, get, store);
-		const [logSlice, logCleanup] = createLogSlice(set, get, store);
+		const [logsSlice, logsCleanup] = createLogsSlice(set, get, store, api);
+		const [logSlice, logCleanup] = createLogSlice(set, get, store, api);
 		const [sampleSlice, sampleCleanup] = createSampleSlice(set, get, store);
 		const databaseService = createDatabaseService();
 		const replicationService = new ReplicationService();
 		return {
-			api: null,
 			databaseService,
 			replicationService,
-			initialize: (api, capabilities) => {
+			initialize: (capabilities) => {
 				set((state) => {
-					state.api = api;
 					state.databaseService = databaseService;
 					state.replicationService = replicationService;
 				});
@@ -66443,7 +60142,15 @@ var initializeStore = (api, capabilities, storage) => {
 		}
 	})));
 	storeImplementation = store;
-	store.getState().initialize(api, capabilities);
+	setSamplePollingApi(api);
+	store.getState().initialize(capabilities);
+};
+var ApiContext = (0, import_react.createContext)(null);
+var ApiProvider = ApiContext.Provider;
+var useApi = () => {
+	const api = (0, import_react.useContext)(ApiContext);
+	if (!api) throw new Error("useApi must be used within ApiProvider");
+	return api;
 };
 //#endregion
 //#region src/state/componentStateAdapter.ts
@@ -66597,6 +60304,8 @@ var ApplicationIcons = {
 	},
 	turns: "bi bi-chat-left-text",
 	usage: "bi bi-stopwatch",
+	pencil: "bi bi-pencil",
+	trash: "bi bi-trash",
 	fork: "bi bi-signpost-split",
 	pendingTask: "bi bi-clock",
 	columns: "bi bi-layout-three-columns",
@@ -66654,7 +60363,7 @@ var ClientEventsService = class {
 				return false;
 			}
 			log$4.debug(`Polling client events`);
-			const events = await api?.client_events();
+			const events = await api.client_events();
 			log$4.debug(`Received events`, events);
 			if (this.abortController?.signal.aborted) {
 				log$4.debug(`Polling aborted, stopping poll for client events`);
@@ -67131,6 +60840,7 @@ var contentRenderers = (icons, renderObject, externalRenderers) => {
 //#region ../../packages/inspect-components/src/content/MetaDataGrid.tsx
 var isPlainObject = (v) => v !== null && typeof v === "object" && !Array.isArray(v);
 var isNonEmptyObject = (v) => isPlainObject(v) && Object.keys(v).length > 0;
+var hasHtmlEscape = (v) => isPlainObject(v) && "_html" in v && v._html != null;
 /**
 * Renders structured metadata as a grid with section cards.
 *
@@ -67141,8 +60851,8 @@ var isNonEmptyObject = (v) => isPlainObject(v) && Object.keys(v).length > 0;
 var MetaDataGrid = ({ id, entries, className, references, style, maxRows, options, depth = 0 }) => {
 	const baseId = id ?? "metadata-grid";
 	const allEntries = entryRecords(entries);
-	const scalars = allEntries.filter((e) => !isNonEmptyObject(e.value));
-	const groups = allEntries.filter((e) => isNonEmptyObject(e.value));
+	const scalars = allEntries.filter((e) => !isNonEmptyObject(e.value) || hasHtmlEscape(e.value));
+	const groups = allEntries.filter((e) => isNonEmptyObject(e.value) && !hasHtmlEscape(e.value));
 	const [expanded, setExpanded] = (0, import_react.useState)(false);
 	const isCollapsible = maxRows != null && scalars.length > maxRows;
 	const visibleScalars = isCollapsible && !expanded ? scalars.slice(0, maxRows) : scalars;
@@ -70672,6 +64382,27 @@ var useRefreshLog = () => {
 		setLoading
 	]);
 };
+/**
+* Capability + plumbing for an edit-the-current-log surface (tag, metadata,
+* score, …). Each edit dialog kind reads this and renders its own dialog
+* with its own payload — but the gate and the refresh wiring are shared.
+*
+* The in-progress gate mirrors the server: the edit API returns 409 while
+* the recorder still owns the file, so offering the action and failing
+* on save is worse than not offering it.
+*/
+var useLogEditAffordance = () => {
+	const api = useApi();
+	const hasEditApi = Boolean(api.edit_log);
+	const selectedLogFile = useStore((s) => s.logs.selectedLogFile);
+	const logStatus = useStore((s) => s.log.selectedLogDetails?.status);
+	const refreshLog = useRefreshLog();
+	return {
+		canEdit: hasEditApi && !!selectedLogFile && !(logStatus === "started"),
+		selectedLogFile,
+		refreshOnSave: refreshLog
+	};
+};
 var useSampleSummaries = () => {
 	const selectedLogDetails = useStore((state) => state.log.selectedLogDetails);
 	const pendingSampleSummaries = useStore((state) => state.log.pendingSampleSummaries);
@@ -70974,7 +64705,7 @@ var log$2 = createLogger("Client-Events");
 function useClientEvents() {
 	const syncLogs = useStore((state) => state.logsActions.syncLogs);
 	const logPreviews = useStore((state) => state.logs.logPreviews);
-	const api = useStore((state) => state.api);
+	const api = useApi();
 	const { loadLogOverviews } = useLogs();
 	const refreshCallback = (0, import_react.useCallback)(async (logs) => {
 		log$2.debug("Refresh Log Files");
@@ -71304,12 +65035,12 @@ var FlowButton = (0, import_react.forwardRef)((_, ref) => {
 //#endregion
 //#region src/app/flow/hooks.ts
 var useFlowServerData = (dir) => {
-	const api = useStore((state) => state.api);
+	const api = useApi();
 	const flowDir = useStore((state) => state.logs.flowDir);
 	const updateFlowData = useStore((state) => state.logsActions.updateFlowData);
 	(0, import_react.useEffect)(() => {
 		const fetchFlow = async () => {
-			updateFlowData(dir, await api?.get_flow(dir));
+			updateFlowData(dir, await api.get_flow(dir));
 		};
 		if (dir !== flowDir) fetchFlow();
 	}, [
@@ -71710,7 +65441,7 @@ var getFieldKey = (col) => {
 * @returns A debounced function that resizes grid columns to fit
 */
 var createGridColumnResizer = (gridRef, delayMs = 10) => {
-	return debounce$2(() => {
+	return debounce$1(() => {
 		gridRef.current?.api?.sizeColumnsToFit();
 	}, delayMs);
 };
@@ -72507,6 +66238,19 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 				}
 			},
 			{
+				field: "sampleLimits",
+				headerName: "Sample Limits",
+				initialWidth: 140,
+				minWidth: 80,
+				sortable: true,
+				filter: true,
+				resizable: true,
+				cellRenderer: (params) => {
+					if (!params.value) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell$1, {});
+					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: params.value });
+				}
+			},
+			{
 				field: "errorMessage",
 				headerName: "Error",
 				initialWidth: 300,
@@ -72645,6 +66389,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 				"completedSamples",
 				"percentCompleted",
 				"sampleErrors",
+				"sampleLimits",
 				"totalTokens",
 				"duration",
 				"errorMessage",
@@ -72671,6 +66416,13 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 		}
 		return allCols;
 	}, [scorerMap, mode]);
+	const hasSampleLimits = (0, import_react.useMemo)(() => {
+		for (const [logName, details] of Object.entries(logDetails)) {
+			if (scopePrefix && !logName.startsWith(scopePrefix)) continue;
+			if (details.sampleSummaries?.some((s) => s.limit)) return true;
+		}
+		return false;
+	}, [logDetails, scopePrefix]);
 	const defaultHiddenFields = (0, import_react.useMemo)(() => {
 		const hidden = /* @__PURE__ */ new Set();
 		if (mode === "tasks") {
@@ -72687,9 +66439,10 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 		}
 		hidden.add("percentCompleted");
 		hidden.add("sampleErrors");
+		if (!hasSampleLimits) hidden.add("sampleLimits");
 		hidden.add("errorMessage");
 		return hidden;
-	}, [mode]);
+	}, [mode, hasSampleLimits]);
 	const matchesActiveMode = (field) => {
 		if (field.startsWith("score_")) return viewMode === "per-scorer";
 		if (field.startsWith("metric_")) return viewMode === "by-metric";
@@ -119805,6 +113558,12 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 			if (total && total > 0 && completed !== void 0) percentCompleted = completed / total * 100;
 			let sampleErrors;
 			if (details?.sampleSummaries) sampleErrors = details.sampleSummaries.filter((s) => s.error).length;
+			let sampleLimits;
+			if (details?.sampleSummaries) {
+				const limits = /* @__PURE__ */ new Set();
+				for (const s of details.sampleSummaries) if (s.limit) limits.add(s.limit);
+				if (limits.size > 0) sampleLimits = Array.from(limits).sort().join(", ");
+			}
 			const row = {
 				id: item.id,
 				name: item.name,
@@ -119831,6 +113590,7 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 				tags: details?.tags,
 				percentCompleted,
 				sampleErrors,
+				sampleLimits,
 				errorMessage: details?.error?.message
 			};
 			if (details?.results?.scores) {
@@ -120389,7 +114149,7 @@ var loadGeneration = 0;
 function useLoadSample() {
 	const sampleData = useSampleData();
 	const logSelection = useLogSelection();
-	const api = useStore((state) => state.api);
+	const api = useApi();
 	const sampleActions = useStore((state) => state.sampleActions);
 	const clearListPosition = useStore((state) => state.appActions.clearListPosition);
 	const getSelectedSample = useStore((state) => state.sampleActions.getSelectedSample);
@@ -120420,7 +114180,7 @@ function useLoadSample() {
 						total: bytesTotal
 					});
 				};
-				const sample = await api?.get_log_sample(logFile, id, epoch, onProgress) ?? (summary?.error ? synthesizeErroredSampleFromSummary(summary) : void 0);
+				const sample = await api.get_log_sample(logFile, id, epoch, onProgress) ?? (summary?.error ? synthesizeErroredSampleFromSummary(summary) : void 0);
 				sampleActions.setDownloadProgress(void 0);
 				log$1.debug(`LOADED COMPLETED SAMPLE: ${id}-${epoch}`);
 				if (thisGeneration !== loadGeneration) {
@@ -120890,7 +114650,7 @@ var FindBand = () => {
 			input.setSelectionRange(len, len);
 		}
 	}, []);
-	const debouncedSearch = (0, import_react.useMemo)(() => debounce$2(async () => {
+	const debouncedSearch = (0, import_react.useMemo)(() => debounce$1(async () => {
 		if (!searchBoxRef.current) return;
 		await handleSearch(false);
 		needsCursorRestoreRef.current = true;
@@ -121281,11 +115041,11 @@ var resolveToolInput = (fn, toolArgs) => {
 	const inputDescriptor = extractInputMetadata(toolName);
 	const { input, description, args } = extractInput(toolArgs, inputDescriptor);
 	const functionCall = args.length > 0 ? `${toolName}(${args.join(", ")})` : toolName;
-	if ((fn === "Task" || fn === "task") && typeof toolArgs.subagent_type === "string") {
+	if ((fn === "Task" || fn === "task" || fn === "Agent" || fn === "agent") && typeof toolArgs.subagent_type === "string") {
 		const subagentType = toolArgs.subagent_type;
 		return {
 			name: fn,
-			functionCall: `Task: ${subagentType}`,
+			functionCall: `${fn}: ${subagentType}`,
 			title: `${fn}: ${subagentType}`,
 			input,
 			description,
@@ -121342,12 +115102,12 @@ var extractInputMetadata = (toolName) => {
 		inputArg: "todos",
 		contentType: kToolTodoContentType
 	};
-	else if (toolName === "Task") return {
+	else if (toolName === "Task" || toolName === "Agent") return {
 		inputArg: "prompt",
 		descriptionArg: "description",
 		contentType: "markdown"
 	};
-	else if (toolName === "task") return {
+	else if (toolName === "task" || toolName === "agent") return {
 		inputArg: "prompt",
 		descriptionArg: "task_description",
 		contentType: "markdown"
@@ -122338,7 +116098,7 @@ var ChatMessage = (0, import_react.memo)(function ChatMessage({ id, message, dis
 	const linkIcon = linking?.icon ?? "bi bi-link-45deg";
 	const messageUrl = getMessageUrl?.(message.id || "");
 	const [mouseOver, setMouseOver] = (0, import_react.useState)(false);
-	const isNonTaskTool = message.role === "tool" && message.function !== "Task" && message.function !== "task";
+	const isNonSubagentTool = message.role === "tool" && message.function !== "Task" && message.function !== "task" && message.function !== "Agent" && message.function !== "agent";
 	const collapse = message.role === "system" || message.role === "user" || message.role === "assistant" || message.role === "tool";
 	const hideRole = unlabeledRoles?.includes(message.role) ?? false;
 	if (hideRole) {
@@ -122373,7 +116133,7 @@ var ChatMessage = (0, import_react.memo)(function ChatMessage({ id, message, dis
 				id: `${id}-message`,
 				collapse,
 				lines: message.role === "tool" ? 30 : message.role === "assistant" ? 25 : collapse ? 15 : 25,
-				children: isNonTaskTool ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolOutput, { output: typeof message.content === "string" ? message.content : message.content.filter((c) => c.type === "text" || c.type === "image") }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageContents, {
+				children: isNonSubagentTool ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolOutput, { output: typeof message.content === "string" ? message.content : message.content.filter((c) => c.type === "text" || c.type === "image") }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageContents, {
 					message,
 					references
 				}, `${id}-contents`)
@@ -123131,14 +116891,14 @@ var injectScorersSpan = (events) => {
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/event/utils.ts
 var formatTiming = (timestamp, working_start) => {
-	if (working_start) return `${formatDateTime$1(new Date(timestamp))}\n@ working time: ${formatTime$2(working_start)}`;
+	if (working_start) return `${formatDateTime$1(new Date(timestamp))}\n@ working time: ${formatTime$1(working_start)}`;
 	else return formatDateTime$1(new Date(timestamp));
 };
 var formatTitle = (title, total_tokens, working_start, role) => {
 	const titleWithRole = role ? `${title} – ${role} –` : title;
 	const subItems = [];
 	if (total_tokens) subItems.push(`${formatNumber$1(total_tokens)} tokens`);
-	if (working_start) subItems.push(`${formatTime$2(working_start)}`);
+	if (working_start) subItems.push(`${formatTime$1(working_start)}`);
 	return `${titleWithRole}${subItems.length > 0 ? ` (${subItems.join(", ")})` : ""}`;
 };
 //#endregion
@@ -123458,6 +117218,45 @@ var TimelineSpan = class {
 		return computeIdleTime(includeBranches ? [...this.content, ...this.branches] : this.content, this.startTime(includeBranches), this.endTime(includeBranches));
 	}
 };
+/**
+* True if `span` has no visible content and no non-empty nested branches.
+* `anchor`, `branch`, and `step` events are structural and don't count.
+*/
+function isEmptyBranch(span) {
+	return !span.content.some((item) => {
+		if (item.type === "span") return true;
+		const evt = item.event.event;
+		return evt !== "anchor" && evt !== "branch" && evt !== "step";
+	}) && span.branches.length === 0;
+}
+/**
+* Return a copy of `timeline` with empty branches pruned recursively.
+* Walks the span tree, pruning empty branches bottom-up so that branches
+* which only carry other (empty) branches are themselves dropped.
+*/
+function filterEmptyBranches(timeline) {
+	return {
+		name: timeline.name,
+		description: timeline.description,
+		root: pruneEmptyBranches(timeline.root)
+	};
+}
+function pruneEmptyBranches(span) {
+	const content = span.content.map((item) => item.type === "span" ? pruneEmptyBranches(item) : item);
+	const branches = span.branches.map(pruneEmptyBranches).filter((b) => !isEmptyBranch(b));
+	return new TimelineSpan({
+		id: span.id,
+		name: span.name,
+		spanType: span.spanType,
+		content,
+		branches,
+		branchedFrom: span.branchedFrom,
+		description: span.description,
+		utility: span.utility,
+		agentResult: span.agentResult,
+		outline: span.outline
+	});
+}
 /**
 * True if `span` (or any descendant span in its content tree) has branches.
 */
@@ -128591,12 +122390,12 @@ var TimelineMinimap = ({ root, selection, mapping, scrubberProgress, onScrub }) 
 	const showRegion = bar !== null;
 	const useShortFormat = bar !== null && bar.width <= 15;
 	const hasCompression = mapping?.hasCompression ?? false;
-	const timeRightLabel = hasCompression && mapping ? formatTime$2(computeActiveTime(mapping, root.startTime().getTime(), root.endTime().getTime())) : formatDuration$1(root.startTime(false), root.endTime(false));
+	const timeRightLabel = hasCompression && mapping ? formatTime$1(computeActiveTime(mapping, root.startTime().getTime(), root.endTime().getTime())) : formatDuration$1(root.startTime(false), root.endTime(false));
 	const tokenRightLabel = formatTokenCount(root.totalTokens(false));
 	const computeSectionLabel = () => {
 		if (!selection) return "";
 		if (isTokenMode) return formatTokenCount(selection.totalTokens);
-		if (hasCompression && mapping) return formatTime$2(computeActiveTime(mapping, selection.startTime.getTime(), selection.endTime.getTime()));
+		if (hasCompression && mapping) return formatTime$1(computeActiveTime(mapping, selection.startTime.getTime(), selection.endTime.getTime()));
 		return useShortFormat ? formatDurationShort(selection.startTime, selection.endTime) : formatDuration$1(selection.startTime, selection.endTime);
 	};
 	const sectionLabel = computeSectionLabel();
@@ -128665,9 +122464,10 @@ var TimelineMinimap = ({ root, selection, mapping, scrubberProgress, onScrub }) 
 	});
 };
 var TimelineOptionsPopover_module_default = {
-	title: "_title_3h2qq_1",
-	rows: "_rows_3h2qq_8",
-	row: "_row_3h2qq_8"
+	title: "_title_1f23l_1",
+	rows: "_rows_1f23l_8",
+	row: "_row_1f23l_8",
+	groupHeader: "_groupHeader_1f23l_29"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/timeline/components/TimelineOptionsPopover.tsx
@@ -128719,6 +122519,10 @@ var TimelineOptionsPopover = ({ isOpen, setIsOpen, positionEl, config, onToggleB
 						}
 					}), "Utility agents"]
 				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: TimelineOptionsPopover_module_default.groupHeader,
+					children: "Branches"
+				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: TimelineOptionsPopover_module_default.row,
 					onClick: onToggleBranches,
@@ -128729,9 +122533,9 @@ var TimelineOptionsPopover = ({ isOpen, setIsOpen, positionEl, config, onToggleB
 							e.stopPropagation();
 							onToggleBranches();
 						}
-					}), "Branches"]
+					}), "Show branches"]
 				}),
-				config.showBranches && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				config.showBranches && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: TimelineOptionsPopover_module_default.row,
 					onClick: () => config.setForkRelative(!config.forkRelative),
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
@@ -128742,7 +122546,18 @@ var TimelineOptionsPopover = ({ isOpen, setIsOpen, positionEl, config, onToggleB
 							config.setForkRelative(!config.forkRelative);
 						}
 					}), "Fork-relative branches"]
-				})
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: TimelineOptionsPopover_module_default.row,
+					onClick: () => config.setShowEmptyBranches(!config.showEmptyBranches),
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+						type: "checkbox",
+						checked: config.showEmptyBranches,
+						onChange: (e) => {
+							e.stopPropagation();
+							config.setShowEmptyBranches(!config.showEmptyBranches);
+						}
+					}), "Show empty branches"]
+				})] })
 			]
 		})]
 	});
@@ -129182,8 +122997,13 @@ function emitSyntheticSpan(events, opts) {
 		metadata: null
 	});
 }
-/** Outline label for a fork navigator: list children, capped to keep it short. */
-function forkNavLabel(children) {
+/**
+* Outline label for a fork navigator. Flattens all groups' child options
+* (excluding the leading stay-on-segment entry, which is always groups[*].options[0])
+* and caps at "first, second +N".
+*/
+function forkNavLabel(groups) {
+	const children = groups.flatMap((g) => g.options.slice(1));
 	if (children.length <= 2) return children.map((c) => c.label).join(", ");
 	return `${children[0].label} +${children.length - 1}`;
 }
@@ -129195,10 +123015,11 @@ function forkNavLabel(children) {
 * children sharing that anchor. `selectedIndex` is whichever option the
 * current path follows next.
 */
-function collectPathWithNavigators(rows, selectedRowKey) {
+function collectPathWithNavigators(rows, selectedRowKey, rawEvents) {
 	const events = [];
 	const sourceSpans = /* @__PURE__ */ new Map();
 	const path = buildPath(rows, selectedRowKey);
+	let lastNavSegIdx = null;
 	for (let segIdx = 0; segIdx < path.length; segIdx++) {
 		const seg = path[segIdx];
 		const nextRowKey = path[segIdx + 1]?.rowKey;
@@ -129213,18 +123034,32 @@ function collectPathWithNavigators(rows, selectedRowKey) {
 			}, ...children];
 			const isCut = anchorId === seg.cutAnchor;
 			const sel = isCut ? options.findIndex((o) => o.rowKey === nextRowKey) : 0;
+			const group = {
+				anchorId,
+				options,
+				selectedIndex: Math.max(0, sel)
+			};
+			let i = events.length - 1;
+			while (i >= 0 && events[i].event === "anchor") i--;
+			const last = events[i];
+			const prev = events[i - 1];
+			if (lastNavSegIdx === segIdx && last && prev && last.event === "span_end" && prev.event === "span_begin" && prev.type === "fork_nav" && last.span_id === prev.span_id && prev.parent_id === parentId) {
+				const data = prev.metadata?.fork_nav;
+				if (data) {
+					data.groups.push(group);
+					prev.name = forkNavLabel(data.groups);
+					return isCut;
+				}
+			}
 			emitSyntheticSpan(events, {
 				id: `forknav-${seg.span.id}-${anchorId || "restart"}`,
-				name: forkNavLabel(children),
+				name: forkNavLabel([group]),
 				type: "fork_nav",
 				parentId,
 				start: ts,
-				metadata: { fork_nav: {
-					anchorId,
-					options,
-					selectedIndex: Math.max(0, sel)
-				} }
+				metadata: { fork_nav: { groups: [group] } }
 			});
+			lastNavSegIdx = segIdx;
 			return isCut;
 		};
 		const restartForks = forks.get("");
@@ -129255,6 +123090,24 @@ function collectPathWithNavigators(rows, selectedRowKey) {
 			} else if (anchorId === seg.cutAnchor) break;
 		}
 	}
+	const leaf = path[path.length - 1];
+	if (leaf && leaf.span.spanType === "branch") {
+		if (isEmptyBranch(leaf.span)) {
+			const terminator = rawEvents ? findTerminatorTool(rawEvents, leaf.span.id) : null;
+			const startTs = leaf.span.startTime().toISOString();
+			emitSyntheticSpan(events, {
+				id: `emptybranch-${leaf.span.id}`,
+				name: `${leaf.span.name} (empty)`,
+				type: "empty_branch",
+				parentId: null,
+				start: startTs,
+				metadata: { empty_branch: {
+					branchName: leaf.span.name,
+					terminator
+				} }
+			});
+		}
+	}
 	return {
 		events,
 		sourceSpans
@@ -129280,6 +123133,27 @@ function buildSpanSelectKeys(rows) {
 		}
 	}
 	return keys;
+}
+/**
+* Find the most recent tool event whose position sits inside the given
+* trajectory's span_begin/span_end range. Returns the tool's function name,
+* or null when no tool is found in range.
+*/
+function findTerminatorTool(events, trajectorySpanId) {
+	let begin = -1;
+	let end = -1;
+	for (let i = 0; i < events.length; i++) {
+		const e = events[i];
+		if (e.span_id !== trajectorySpanId) continue;
+		if (e.event === "span_begin" && begin === -1) begin = i;
+		else if (e.event === "span_end") end = i;
+	}
+	if (begin === -1 || end === -1) return null;
+	for (let i = end - 1; i > begin; i--) {
+		const e = events[i];
+		if (e.event === "tool") return e.function;
+	}
+	return null;
 }
 /**
 * Walks the EventNode tree and attaches sourceSpan to any span_begin node
@@ -130029,6 +123903,7 @@ var kDefaultMarkerDepth = defaultMarkerConfig.depth;
 var kDefaultIncludeUtility = false;
 var kDefaultShowBranches = false;
 var kDefaultForkRelative = false;
+var kDefaultShowEmptyBranches = false;
 function useTimelineConfig(options = {}) {
 	const { branchesPresent = false } = options;
 	const [storedKinds, setStoredKinds, removeStoredKinds] = useProperty("timeline", "markerKinds");
@@ -130036,11 +123911,13 @@ function useTimelineConfig(options = {}) {
 	const [storedUtility, setStoredUtility, removeStoredUtility] = useProperty("timeline", "includeUtility");
 	const [storedShowBranches, setStoredShowBranches, removeStoredShowBranches] = useProperty("timeline", "showBranches");
 	const [storedForkRelative, setStoredForkRelative, removeStoredForkRelative] = useProperty("timeline", "forkRelative");
+	const [storedShowEmptyBranches, setStoredShowEmptyBranches, removeStoredShowEmptyBranches] = useProperty("timeline", "showEmptyBranches");
 	const markerKinds = storedKinds ?? kDefaultMarkerKinds;
 	const markerDepth = storedDepth ?? kDefaultMarkerDepth;
 	const includeUtility = storedUtility ?? kDefaultIncludeUtility;
 	const showBranches = storedShowBranches ?? (branchesPresent || kDefaultShowBranches);
 	const forkRelative = storedForkRelative ?? (showBranches || kDefaultForkRelative);
+	const showEmptyBranches = storedShowEmptyBranches ?? kDefaultShowEmptyBranches;
 	const markerConfig = (0, import_react.useMemo)(() => ({
 		kinds: markerKinds,
 		depth: markerDepth
@@ -130048,13 +123925,15 @@ function useTimelineConfig(options = {}) {
 	const agentConfig = (0, import_react.useMemo)(() => ({
 		includeUtility,
 		showBranches,
-		forkRelative
+		forkRelative,
+		showEmptyBranches
 	}), [
 		includeUtility,
 		showBranches,
-		forkRelative
+		forkRelative,
+		showEmptyBranches
 	]);
-	const isDefault = storedKinds === void 0 && storedDepth === void 0 && storedUtility === void 0 && storedShowBranches === void 0 && storedForkRelative === void 0;
+	const isDefault = storedKinds === void 0 && storedDepth === void 0 && storedUtility === void 0 && storedShowBranches === void 0 && storedForkRelative === void 0 && storedShowEmptyBranches === void 0;
 	return {
 		markerConfig,
 		agentConfig,
@@ -130063,11 +123942,13 @@ function useTimelineConfig(options = {}) {
 		includeUtility,
 		showBranches,
 		forkRelative,
+		showEmptyBranches,
 		setMarkerKinds: setStoredKinds,
 		setMarkerDepth: setStoredDepth,
 		setIncludeUtility: setStoredUtility,
 		setShowBranches: setStoredShowBranches,
 		setForkRelative: setStoredForkRelative,
+		setShowEmptyBranches: setStoredShowEmptyBranches,
 		toggleMarkerKind: (0, import_react.useCallback)((kind) => {
 			const current = storedKinds ?? kDefaultMarkerKinds;
 			setStoredKinds(current.includes(kind) ? current.filter((k) => k !== kind) : [...current, kind]);
@@ -130078,12 +123959,14 @@ function useTimelineConfig(options = {}) {
 			removeStoredUtility();
 			removeStoredShowBranches();
 			removeStoredForkRelative();
+			removeStoredShowEmptyBranches();
 		}, [
 			removeStoredKinds,
 			removeStoredDepth,
 			removeStoredUtility,
 			removeStoredShowBranches,
-			removeStoredForkRelative
+			removeStoredForkRelative,
+			removeStoredShowEmptyBranches
 		]),
 		isDefault
 	};
@@ -130301,10 +124184,13 @@ function attachOrphanedEvents(timelines, events) {
 		root: newRoot
 	} : tl);
 }
-function useTimelinesArray(events, serverTimelines) {
+function useTimelinesArray(events, serverTimelines, options) {
+	const showEmptyBranches = options?.showEmptyBranches ?? false;
 	const builtTimeline = (0, import_react.useMemo)(() => buildTimeline(events), [events]);
 	const convertedTimelines = (0, import_react.useMemo)(() => serverTimelines && serverTimelines.length > 0 ? serverTimelines.map((tl) => convertServerTimeline(tl, events)) : null, [serverTimelines, events]);
-	return (0, import_react.useMemo)(() => convertedTimelines ? attachOrphanedEvents(convertedTimelines, events) : null, [convertedTimelines, events]) ?? [builtTimeline];
+	const withOrphans = (0, import_react.useMemo)(() => convertedTimelines ? attachOrphanedEvents(convertedTimelines, events) : null, [convertedTimelines, events]);
+	const resolved = (0, import_react.useMemo)(() => withOrphans ?? [builtTimeline], [withOrphans, builtTimeline]);
+	return (0, import_react.useMemo)(() => showEmptyBranches ? resolved : resolved.map(filterEmptyBranches), [resolved, showEmptyBranches]);
 }
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/timeline/hooks/useTranscriptTimeline.ts
@@ -130325,7 +124211,7 @@ function useTranscriptTimeline(options) {
 	const includeUtility = timelineOptions?.includeUtility ?? false;
 	const showBranches = timelineOptions?.showBranches ?? false;
 	const forkRelative = timelineOptions?.forkRelative ?? false;
-	const timelines = useTimelinesArray(events, serverTimelines);
+	const timelines = useTimelinesArray(events, serverTimelines, { showEmptyBranches: timelineOptions?.showEmptyBranches ?? false });
 	const { active: activeTimeline, activeIndex: activeTimelineIndex, setActive: setActiveTimeline } = useActiveTimeline(timelines, activeTimelineProps);
 	const baseTimeline = activeTimeline;
 	const [viewStack, setViewStack] = (0, import_react.useState)([]);
@@ -130380,7 +124266,7 @@ function useTranscriptTimeline(options) {
 		const rowKey = parsed?.rowKey ?? "";
 		const row = state.rows.find((r) => r.key === rowKey);
 		if (spans.length === 1 && (row?.branch || (spans[0]?.branches.length ?? 0) > 0)) {
-			const collected = collectPathWithNavigators(state.rows, rowKey);
+			const collected = collectPathWithNavigators(state.rows, rowKey, events);
 			return {
 				selectedEvents: collected.events,
 				sourceSpans: collected.sourceSpans,
@@ -130625,7 +124511,7 @@ var useEventNodes = (events, running, sourceSpans) => {
 			return eventNodes.filter((node) => {
 				if (node.children && node.children.length > 0) node.children = filterEmpty(node.children);
 				if (node.sourceSpan) return true;
-				if (node.event.event === "span_begin" && node.event.type === "fork_nav") return true;
+				if (node.event.event === "span_begin" && (node.event.type === "fork_nav" || node.event.type === "empty_branch")) return true;
 				return node.event.event !== "span_begin" && node.event.event !== "step" || node.children && node.children.length > 0;
 			});
 		};
@@ -130773,6 +124659,99 @@ var BranchEventView = ({ eventNode, className }) => {
 		})
 	});
 };
+var BranchPoint_module_default = {
+	branchPoint: "_branchPoint_m92x3_1",
+	label: "_label_m92x3_20",
+	glyph: "_glyph_m92x3_27",
+	labelText: "_labelText_m92x3_36",
+	segmented: "_segmented_m92x3_44",
+	segment: "_segment_m92x3_44",
+	continuesGlyph: "_continuesGlyph_m92x3_87"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/transcript/BranchPoint.tsx
+var BranchPoint = ({ parent, spawned, viewing, onSelect, className }) => {
+	if (spawned.length === 0) return null;
+	const options = [parent, ...spawned];
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		role: "group",
+		"aria-label": "Branch point",
+		className: clsx(BranchPoint_module_default.branchPoint, className),
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+			className: BranchPoint_module_default.label,
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", {
+				className: clsx(TranscriptIcons.fork, BranchPoint_module_default.glyph),
+				"aria-hidden": "true"
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: BranchPoint_module_default.labelText,
+				children: "Branch point"
+			})]
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			role: "radiogroup",
+			"aria-label": "Choose branch",
+			className: BranchPoint_module_default.segmented,
+			children: options.map((b) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Segment, {
+				branch: b,
+				isCurrent: b === viewing,
+				isParent: b === parent,
+				onSelect
+			}, b))
+		})]
+	});
+};
+var Segment = ({ branch, isCurrent, isParent, onSelect }) => {
+	const interactive = !!onSelect && !isCurrent;
+	const handleClick = (e) => {
+		if (interactive && onSelect) onSelect(branch, e.currentTarget);
+	};
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+		type: "button",
+		role: "radio",
+		className: BranchPoint_module_default.segment,
+		"data-testid": "bp-segment",
+		"data-branch": branch,
+		"aria-checked": isCurrent,
+		"aria-pressed": isCurrent ? "true" : "false",
+		onClick: interactive ? handleClick : void 0,
+		disabled: !interactive,
+		children: [isParent && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ContinuesGlyph, {}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: branch })]
+	});
+};
+var ContinuesGlyph = () => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+	className: BranchPoint_module_default.continuesGlyph,
+	viewBox: "0 0 9 9",
+	"aria-hidden": "true",
+	"data-testid": "bp-continues",
+	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M 1 1 L 8 4.5 L 1 8 Z" })
+});
+/**
+* Adapt a merged `fork_nav` payload to BranchPoint props.
+*/
+function forkNavToBranchPointProps(data) {
+	const first = data.groups[0];
+	if (!first || first.options.length === 0) return null;
+	const parent = first.options[0].label;
+	const spawned = [];
+	let viewing = parent;
+	for (const group of data.groups) {
+		for (let i = 1; i < group.options.length; i++) spawned.push(group.options[i].label);
+		if (group.selectedIndex > 0) viewing = group.options[group.selectedIndex].label;
+	}
+	if (spawned.length === 0) return null;
+	return {
+		parent,
+		spawned,
+		viewing
+	};
+}
+/**
+* Find the swimlane row key for a clicked branch label. First match wins
+* when labels collide across merged groups.
+*/
+function findRowKeyForLabel(data, label) {
+	for (const group of data.groups) for (const opt of group.options) if (opt.label === label) return opt.rowKey;
+	return null;
+}
 var CheckpointEventView_module_default = {
 	panel: "_panel_1dnhl_1",
 	metric: "_metric_1dnhl_5",
@@ -130885,6 +124864,28 @@ var CompactionEventView = ({ eventNode, className }) => {
 		})
 	});
 };
+var EmptyBranchView_module_default = {
+	empty: "_empty_f9al6_1",
+	headline: "_headline_f9al6_6",
+	detail: "_detail_f9al6_12"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/transcript/EmptyBranchView.tsx
+var EmptyBranchView = ({ eventNode, className }) => {
+	const data = eventNode.event.metadata?.empty_branch;
+	if (!data) return null;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: clsx(EmptyBranchView_module_default.empty, className),
+		role: "note",
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: EmptyBranchView_module_default.headline,
+			children: "No events in this branch"
+		}), data.terminator ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: EmptyBranchView_module_default.detail,
+			children: ["Branch ended via ", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", { children: data.terminator })]
+		}) : null]
+	});
+};
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/ErrorEventView.tsx
 var ErrorEventView = ({ eventNode, className }) => {
@@ -130902,30 +124903,6 @@ var ErrorEventView = ({ eventNode, className }) => {
 				margin: "0.5em 0"
 			}
 		})
-	});
-};
-var ForkNavigatorView_module_default = {
-	nav: "_nav_1tozt_1",
-	icon: "_icon_1tozt_12",
-	pill: "_pill_1tozt_18",
-	selected: "_selected_1tozt_33"
-};
-//#endregion
-//#region ../../packages/inspect-components/src/transcript/ForkNavigatorView.tsx
-var ForkNavigatorView = ({ eventNode, className }) => {
-	const data = eventNode.event.metadata?.fork_nav;
-	const selectRow = useTimelineRowSelect();
-	if (!data || data.options.length < 2) return null;
-	const { options, selectedIndex } = data;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: clsx(ForkNavigatorView_module_default.nav, className),
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(TranscriptIcons.fork, ForkNavigatorView_module_default.icon) }), options.map((opt, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-			type: "button",
-			className: clsx(ForkNavigatorView_module_default.pill, i === selectedIndex && ForkNavigatorView_module_default.selected),
-			onClick: (e) => i === selectedIndex ? void 0 : selectRow?.(opt.rowKey, e.currentTarget.closest("[data-index]") ?? e.currentTarget),
-			"aria-current": i === selectedIndex ? "true" : void 0,
-			children: opt.label
-		}, opt.rowKey))]
 	});
 };
 var InfoEventView_module_default = { panel: "_panel_vz394_1" };
@@ -131728,7 +125705,7 @@ var RetryChip = ({ attempts, selectedKey, onSelect, keyOf }) => {
 };
 function formatAttemptDuration(event) {
 	const sec = attemptDurationSec(event);
-	return sec != null ? formatTime$2(sec) : null;
+	return sec != null ? formatTime$1(sec) : null;
 }
 var ModelEventView_module_default = {
 	container: "_container_1rvau_1",
@@ -131895,7 +125872,7 @@ var ModelEventView = ({ eventNode, showToolCalls, className, context, eventCallb
 };
 function formatFailureTime(event) {
 	const sec = attemptDurationSec(event);
-	return sec != null ? ` · ${formatTime$2(sec)}` : "";
+	return sec != null ? ` · ${formatTime$1(sec)}` : "";
 }
 var APIView = ({ call, className }) => {
 	const requestCode = (0, import_react.useMemo)(() => {
@@ -133051,6 +127028,7 @@ TranscriptVirtualList.displayName = "TranscriptVirtualList";
 * Renders the event based on its type.
 */
 var RenderedEventNodeInner = ({ node, next, className, context, onAutoCollapse, renderAgentCard, eventCallbacks }) => {
+	const selectRow = useTimelineRowSelect();
 	switch (node.event.event) {
 		case "sample_init": return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleInitEventView, {
 			eventNode: node,
@@ -133102,7 +127080,21 @@ var RenderedEventNodeInner = ({ node, next, className, context, onAutoCollapse, 
 			eventCallbacks
 		});
 		case "span_begin":
-			if (node.event.type === "fork_nav") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ForkNavigatorView, {
+			if (node.event.type === "fork_nav") {
+				const data = node.event.metadata?.fork_nav;
+				if (!data) return null;
+				const props = forkNavToBranchPointProps(data);
+				if (!props) return null;
+				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(BranchPoint, {
+					...props,
+					className,
+					onSelect: (label, anchorEl) => {
+						const rowKey = findRowKeyForLabel(data, label);
+						if (rowKey) selectRow?.(rowKey, anchorEl);
+					}
+				});
+			}
+			if (node.event.type === "empty_branch") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyBranchView, {
 				eventNode: node,
 				className
 			});
@@ -135304,7 +129296,7 @@ var sampleStatus_module_default = {
 //#region src/app/samples/status/sampleStatus.tsx
 var sampleStatus = (completed, error) => {
 	if (error) return errorType(error) === "CancelledError" ? "cancelled" : "error";
-	return completed ? "ok" : "running";
+	return completed === false ? "running" : "ok";
 };
 var isCancelled = (sample) => {
 	if ("error" in sample && sample.error) {
@@ -138829,7 +132821,7 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 		setCollapsedMode(isCollapsed(collapsedMode) ? "expanded" : "collapsed");
 	}, [collapsedMode, setCollapsedMode]);
 	const { isDebugFilter, isDefaultFilter, isNoneFilter } = useTranscriptFilter();
-	const api = useStore((state) => state.api);
+	const api = useApi();
 	const downloadFiles = useStore((state) => state.capabilities.downloadFiles);
 	const tools = [];
 	const [icon, setIcon] = (0, import_react.useState)(ApplicationIcons.copy);
@@ -138868,7 +132860,7 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 			}
 		}
 	}, "sample-copy"));
-	if (downloadFiles && sample && api?.download_file) {
+	if (downloadFiles && sample && api.download_file) {
 		const sampleId = sample.id ?? "sample";
 		tools.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolDropdownButton, {
 			label: "Download",
@@ -139641,324 +133633,183 @@ var MessageBand = ({ id, message, type, scope = "eval" }) => {
 		]
 	});
 };
-var DatasetDetailView_module_default = { item: "_item_1uzhd_1" };
-//#endregion
-//#region src/app/plan/DatasetDetailView.tsx
-var DatasetDetailView = ({ dataset, style }) => {
-	const filtered = Object.fromEntries(Object.entries(dataset).filter(([key]) => key !== "sample_ids"));
-	if (!dataset || Object.keys(filtered).length === 0) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-		className: clsx("text-size-base", DatasetDetailView_module_default.item),
-		style,
-		children: "No dataset information available"
-	});
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
-		className: clsx("text-size-base", DatasetDetailView_module_default.item),
-		entries: filtered,
-		style,
-		options: { plain: true }
-	});
-};
-var PlanDetailView_module_default = {
-	floatingCol: "_floatingCol_1n79r_1",
-	wideCol: "_wideCol_1n79r_9",
-	oneCol: "_oneCol_1n79r_16",
-	twoCol: "_twoCol_1n79r_20",
-	planCol: "_planCol_1n79r_24",
-	container: "_container_1n79r_29",
-	grid: "_grid_1n79r_35",
-	row: "_row_1n79r_43"
-};
-var DetailStep_module_default = {
-	icon: "_icon_59zaz_1",
-	container: "_container_59zaz_5",
-	metadata: "_metadata_59zaz_11"
+var EditButton_module_default = {
+	button: "_button_u0dz8_2",
+	link: "_link_u0dz8_1",
+	pill: "_pill_u0dz8_1"
 };
 //#endregion
-//#region src/app/plan/DetailStep.tsx
-var DetailStep = ({ icon, name, params, className }) => {
-	const iconHtml = icon ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(icon, DetailStep_module_default.icon) }) : "";
+//#region src/app/log-view/title-view/EditButton.tsx
+var EditButton = ({ onClick, title, variant = "link", children }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+	type: "button",
+	className: clsx(EditButton_module_default.button, variant === "pill" ? EditButton_module_default.pill : EditButton_module_default.link, "text-size-smallest"),
+	onClick,
+	title: title ?? "edit",
+	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: ApplicationIcons.pencil }), children ?? "edit"]
+});
+var Modal_module_default = {
+	modal: "_modal_8i1ew_1",
+	header: "_header_8i1ew_21",
+	modalTitle: "_modalTitle_8i1ew_26",
+	btnClose: "_btnClose_8i1ew_30",
+	backdrop: "_backdrop_8i1ew_36",
+	overflowVisible: "_overflowVisible_8i1ew_48",
+	overflowHidden: "_overflowHidden_8i1ew_52",
+	overflowScroll: "_overflowScroll_8i1ew_56",
+	overflowAuto: "_overflowAuto_8i1ew_60",
+	noPadding: "_noPadding_8i1ew_64",
+	footerSlot: "_footerSlot_8i1ew_73"
+};
+//#endregion
+//#region src/components/Modal.tsx
+var Modal = ({ id, title, showing, setShowing, children, className, overflow = "visible", padded = true, footer, width }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [showing && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: Modal_module_default.backdrop,
+		onClick: () => setShowing(false)
+	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		id,
+		className: clsx("modal", "fade", showing ? "show" : "", className),
+		tabIndex: -1,
+		style: { display: showing ? "block" : "none" },
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: clsx("modal-dialog", Modal_module_default.modal),
+			style: width ? { maxWidth: width } : void 0,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: "modal-content",
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: clsx("modal-header", Modal_module_default.header),
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: clsx("modal-title", "text-size-base", Modal_module_default.modalTitle),
+							children: title
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+							type: "button",
+							className: clsx("btn-close", "text-size-smaller", Modal_module_default.btnClose),
+							"data-bs-dismiss": "modal",
+							"aria-label": "Close",
+							onClick: () => {
+								setShowing(!showing);
+							}
+						})]
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: clsx("modal-body", !padded && Modal_module_default.noPadding, overflow === "auto" ? Modal_module_default.overflowAuto : overflow === "hidden" ? Modal_module_default.overflowHidden : overflow === "scroll" ? Modal_module_default.overflowScroll : Modal_module_default.overflowVisible),
+						children
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: clsx("modal-footer", footer && Modal_module_default.footerSlot),
+						children: footer ?? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+							type: "button",
+							className: "btn btn-secondary",
+							"data-bs-dismiss": "modal",
+							onClick: () => {
+								setShowing(!showing);
+							},
+							children: "Close"
+						})
+					})
+				]
+			})
+		})
+	})] });
+};
+var AutogrowText_module_default = { textarea: "_textarea_8mbr9_1" };
+//#endregion
+//#region src/app/log-view/title-view/AutogrowText.tsx
+var AutogrowText = ({ value, onChange, disabled, maxHeightPx }) => {
+	const ref = (0, import_react.useRef)(null);
+	(0, import_react.useEffect)(() => {
+		const el = ref.current;
+		if (!el) return;
+		let lastApplied = "";
+		const measure = () => {
+			el.style.height = "0px";
+			const target = maxHeightPx != null ? `${Math.min(el.scrollHeight, maxHeightPx)}px` : `${el.scrollHeight}px`;
+			if (target !== lastApplied) {
+				lastApplied = target;
+				el.style.height = target;
+			} else el.style.height = lastApplied;
+		};
+		measure();
+		const ro = new ResizeObserver(measure);
+		ro.observe(el);
+		return () => ro.disconnect();
+	}, [value, maxHeightPx]);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("textarea", {
+		ref,
+		className: clsx("form-control", AutogrowText_module_default.textarea),
+		value,
+		onChange: (e) => onChange(e.target.value),
+		disabled,
+		spellCheck: false,
+		rows: 1
+	});
+};
+var ChangeSummary_module_default = {
+	container: "_container_13ofn_1",
+	line: "_line_13ofn_18",
+	label: "_label_13ofn_24",
+	items: "_items_13ofn_29",
+	accentAdding: "_accentAdding_13ofn_33",
+	accentEditing: "_accentEditing_13ofn_37",
+	accentRemoving: "_accentRemoving_13ofn_41"
+};
+//#endregion
+//#region src/app/log-view/title-view/ChangeSummary.tsx
+var ChangeSummary = ({ adding = [], editing = [], removing = [] }) => {
+	if (adding.length === 0 && editing.length === 0 && removing.length === 0) return null;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: clsx(className),
+		className: clsx(ChangeSummary_module_default.container, "text-size-smaller"),
 		children: [
-			iconHtml,
-			" ",
-			name,
-			params && Object.keys(params).length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: DetailStep_module_default.container,
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
-					entries: params,
-					className: clsx("text-size-small", DetailStep_module_default.metadata)
-				})
-			}) : ""
+			adding.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Line$1, {
+				label: "Adding",
+				accent: ChangeSummary_module_default.accentAdding,
+				items: adding
+			}),
+			editing.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Line$1, {
+				label: "Editing",
+				accent: ChangeSummary_module_default.accentEditing,
+				items: editing
+			}),
+			removing.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Line$1, {
+				label: "Removing",
+				accent: ChangeSummary_module_default.accentRemoving,
+				items: removing
+			})
 		]
 	});
 };
-var ScorerDetailView_module_default = { item: "_item_leq25_1" };
-//#endregion
-//#region src/app/plan/ScorerDetailView.tsx
-var ScorerDetailView = ({ name, scores, params }) => {
-	if (scores.length > 1) params = {
-		...params,
-		["scores"]: scores
-	};
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DetailStep, {
-		icon: ApplicationIcons.scorer,
-		name,
-		params,
-		className: clsx(ScorerDetailView_module_default.item, "text-size-base")
-	});
-};
-var SolverDetailView_module_default = {
-	container: "_container_12j2k_1",
-	item: "_item_12j2k_7",
-	separator: "_separator_12j2k_11"
-};
-//#endregion
-//#region src/app/plan/SolverDetailView.tsx
-var SolversDetailView = ({ steps }) => {
-	const separator = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: clsx(SolverDetailView_module_default.items, "text-size-small", SolverDetailView_module_default.separator),
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: ApplicationIcons.arrows.right })
-	});
-	const details = steps?.map((step, index) => {
-		return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(DetailStep, {
-			name: step.solver,
-			className: clsx(SolverDetailView_module_default.items, "text-size-small")
-		}), index < steps.length - 1 ? separator : ""] }, `solver-step-${index}`);
-	});
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: SolverDetailView_module_default.container,
-		children: details
-	});
-};
-//#endregion
-//#region src/app/plan/PlanDetailView.tsx
-var PlanDetailView = ({ evaluation, plan, scores }) => {
-	if (!evaluation) return null;
-	const steps = plan?.steps;
-	const taskColumns = [];
-	taskColumns.push({
-		title: "Dataset",
-		className: PlanDetailView_module_default.floatingCol,
-		contents: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DatasetDetailView, { dataset: evaluation.dataset })
-	});
-	if (steps) taskColumns.push({
-		title: "Solvers",
-		className: PlanDetailView_module_default.wideCol,
-		contents: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SolversDetailView, { steps })
-	});
-	if (scores) {
-		const scorers = scores.reduce((accum, score) => {
-			if (!accum[score.scorer]) accum[score.scorer] = {
-				scores: [score.name],
-				params: score.params
-			};
-			else accum[score.scorer].scores.push(score.name);
-			return accum;
-		}, {});
-		if (Object.keys(scorers).length > 0) {
-			const label = Object.keys(scorers).length === 1 ? "Scorer" : "Scorers";
-			const scorerPanels = Object.keys(scorers).map((key) => {
-				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScorerDetailView, {
-					name: key,
-					scores: scorers[key].scores,
-					params: scorers[key].params
-				}, key);
-			});
-			taskColumns.push({
-				title: label,
-				className: PlanDetailView_module_default.floatingCol,
-				contents: scorerPanels
-			});
-		}
-	}
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: PlanDetailView_module_default.container,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: PlanDetailView_module_default.grid,
-			style: { gridTemplateColumns: `repeat(${taskColumns.length}, fit-content(50%))` },
-			children: taskColumns.map((col) => {
-				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PlanColumn, {
-					title: col.title,
-					className: col.className,
-					children: col.contents
-				}, `plan-col-${col.title}`);
-			})
-		})
-	});
-};
-var PlanColumn = ({ title, className, children }) => {
+var Line$1 = ({ label, accent, items }) => {
+	const joined = items.join(", ");
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: clsx(className),
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: clsx("card-subheading", "text-size-small", "text-style-label", "text-style-secondary", PlanDetailView_module_default.planCol),
-			children: title
-		}), children]
-	});
-};
-//#endregion
-//#region src/app/plan/PlanCard.tsx
-/**
-* Renders the plan card
-*/
-var PlanCard = ({ evalSpec, evalPlan, scores, metadata: metadataProp, scrollRef }) => {
-	const metadata = metadataProp || {};
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Card, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardHeader, { label: "Summary" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardBody, {
-		id: "task-plan-card-body",
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PlanDetailView, {
-			evaluation: evalSpec,
-			plan: evalPlan,
-			scores
-		})
-	})] }), Object.keys(metadata).length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Card, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardHeader, { label: "Metadata" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardBody, {
-		id: "task-metadata`",
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
-			id: "plan-md-metadata",
-			record: metadata,
-			scrollRef
-		})
-	})] })] });
-};
-//#endregion
-//#region src/app/log-view/tabs/InfoTab.tsx
-var useInfoTabConfig = (evalSpec, evalPlan, evalError, evalResults, evalStatus, metadata) => {
-	const scrollRef = (0, import_react.useRef)(null);
-	const totalSampleCount = useTotalSampleCount();
-	return (0, import_react.useMemo)(() => {
-		return {
-			id: kLogViewInfoTabId,
-			label: "Info",
-			scrollable: true,
-			component: InfoTab,
-			componentProps: {
-				evalSpec,
-				evalPlan,
-				evalError,
-				evalResults,
-				evalStatus,
-				metadata,
-				sampleCount: totalSampleCount,
-				scrollRef
-			},
-			scrollRef
-		};
-	}, [
-		evalSpec,
-		evalPlan,
-		evalError,
-		evalResults,
-		evalStatus,
-		metadata,
-		totalSampleCount
-	]);
-};
-var InfoTab = ({ evalSpec, evalPlan, evalResults, evalStatus, metadata, sampleCount, scrollRef }) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		style: { width: "100%" },
-		children: [sampleCount === 0 && evalStatus === "success" && evalSpec?.dataset.samples && evalSpec.dataset.samples > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageBand, {
-			id: "sample-too-large",
-			message: "Unable to display samples (this evaluation log may be too large).",
-			type: "warning"
-		}) : "", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			style: {
-				padding: "0.5em 1em 0 1em",
-				width: "100%"
-			},
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PlanCard, {
-				evalSpec,
-				evalPlan,
-				scores: evalResults?.scores,
-				metadata,
-				scrollRef
+		className: ChangeSummary_module_default.line,
+		title: `${label}: ${joined}`,
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+				className: clsx(ChangeSummary_module_default.label, accent),
+				children: [label, ":"]
+			}),
+			" ",
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: ChangeSummary_module_default.items,
+				children: joined
 			})
-		})]
+		]
 	});
 };
-//#endregion
-//#region src/utils/clear-events-preprocessor.ts
-/**
-* JSON preprocessor that clears large events arrays at the byte level.
-* Works directly with Uint8Array to avoid creating gigabyte-sized strings.
-* Discards all events if the events array exceeds 100MB, leaving an empty array.
-*/
-var MAX_EVENTS_SIZE_BYTES = 350 * 1024 * 1024;
-var MAX_TOTAL_SIZE = 512 * 1024 * 1024;
-/**
-* Finds the "events": [ pattern in the byte array.
-* Returns the position of the opening bracket, or -1 if not found.
-*/
-function findEventsArrayStart(data) {
-	const pattern = new TextEncoder().encode("\"events\"");
-	for (let i = 0; i < data.length - pattern.length - 10; i++) {
-		let matches = true;
-		for (let j = 0; j < pattern.length; j++) if (data[i + j] !== pattern[j]) {
-			matches = false;
-			break;
-		}
-		if (matches) {
-			let pos = i + pattern.length;
-			while (pos < data.length && (data[pos] === 32 || data[pos] === 9 || data[pos] === 10 || data[pos] === 13)) pos++;
-			if (pos < data.length && data[pos] === 58) {
-				pos++;
-				while (pos < data.length && (data[pos] === 32 || data[pos] === 9 || data[pos] === 10 || data[pos] === 13)) pos++;
-				if (pos < data.length && data[pos] === 91) return pos;
-			}
-		}
-	}
-	return -1;
-}
-/**
-* Finds the closing bracket of an array starting at arrayStart.
-* Properly handles nested structures and strings.
-*/
-function findArrayEnd(data, arrayStart) {
-	let depth = 0;
-	let inString = false;
-	let escaped = false;
-	for (let i = arrayStart; i < data.length; i++) {
-		const byte = data[i];
-		if (escaped) {
-			escaped = false;
-			continue;
-		}
-		if (byte === 92) {
-			escaped = true;
-			continue;
-		}
-		if (byte === 34) {
-			inString = !inString;
-			continue;
-		}
-		if (inString) continue;
-		if (byte === 91 || byte === 123) depth++;
-		else if (byte === 93 || byte === 125) {
-			depth--;
-			if (depth === 0 && byte === 93) return i;
-		}
-	}
-	return -1;
-}
-/**
-* Clears events array at the byte level if it exceeds the size limits.
-* Replaces the entire events array with an empty array.
-* This allows handling gigabyte-sized files without running out of memory.
-*/
-function clearLargeEventsArray(data) {
-	if (data.length <= MAX_EVENTS_SIZE_BYTES) return data;
-	const arrayStart = findEventsArrayStart(data);
-	if (arrayStart === -1) return data;
-	const arrayEnd = findArrayEnd(data, arrayStart);
-	if (arrayEnd === -1) return data;
-	if (arrayEnd - arrayStart - 1 <= MAX_EVENTS_SIZE_BYTES && data.length <= MAX_TOTAL_SIZE) return data;
-	const before = data.slice(0, arrayStart + 1);
-	const after = data.slice(arrayEnd);
-	const result = new Uint8Array(before.length + after.length);
-	let offset = 0;
-	result.set(before, offset);
-	offset += before.length;
-	result.set(after, offset);
-	return result;
-}
+var EditAnnotationsDialog_module_default = {
+	body: "_body_13gwg_3",
+	section: "_section_13gwg_9",
+	labelRow: "_labelRow_13gwg_15",
+	label: "_label_13gwg_15",
+	hint: "_hint_13gwg_27",
+	required: "_required_13gwg_36",
+	divider: "_divider_13gwg_41",
+	provenance: "_provenance_13gwg_47",
+	error: "_error_13gwg_53",
+	footer: "_footer_13gwg_62",
+	footerActions: "_footerActions_13gwg_62"
+};
 //#endregion
 //#region src/utils/json-worker.ts
 var JsonWorkerPool = class {
@@ -140157,2231 +134008,6 @@ self.onmessage = function (e) {
 };`;
 var kJson5ScriptBase64 = `IWZ1bmN0aW9uKHUsRCl7Im9iamVjdCI9PXR5cGVvZiBleHBvcnRzJiYidW5kZWZpbmVkIiE9dHlwZW9mIG1vZHVsZT9tb2R1bGUuZXhwb3J0cz1EKCk6ImZ1bmN0aW9uIj09dHlwZW9mIGRlZmluZSYmZGVmaW5lLmFtZD9kZWZpbmUoRCk6dS5KU09ONT1EKCl9KHRoaXMsZnVuY3Rpb24oKXsidXNlIHN0cmljdCI7ZnVuY3Rpb24gdSh1LEQpe3JldHVybiB1KEQ9e2V4cG9ydHM6e319LEQuZXhwb3J0cyksRC5leHBvcnRzfXZhciBEPXUoZnVuY3Rpb24odSl7dmFyIEQ9dS5leHBvcnRzPSJ1bmRlZmluZWQiIT10eXBlb2Ygd2luZG93JiZ3aW5kb3cuTWF0aD09TWF0aD93aW5kb3c6InVuZGVmaW5lZCIhPXR5cGVvZiBzZWxmJiZzZWxmLk1hdGg9PU1hdGg/c2VsZjpGdW5jdGlvbigicmV0dXJuIHRoaXMiKSgpOyJudW1iZXIiPT10eXBlb2YgX19nJiYoX19nPUQpfSksZT11KGZ1bmN0aW9uKHUpe3ZhciBEPXUuZXhwb3J0cz17dmVyc2lvbjoiMi42LjUifTsibnVtYmVyIj09dHlwZW9mIF9fZSYmKF9fZT1EKX0pLHI9KGUudmVyc2lvbixmdW5jdGlvbih1KXtyZXR1cm4ib2JqZWN0Ij09dHlwZW9mIHU/bnVsbCE9PXU6ImZ1bmN0aW9uIj09dHlwZW9mIHV9KSx0PWZ1bmN0aW9uKHUpe2lmKCFyKHUpKXRocm93IFR5cGVFcnJvcih1KyIgaXMgbm90IGFuIG9iamVjdCEiKTtyZXR1cm4gdX0sbj1mdW5jdGlvbih1KXt0cnl7cmV0dXJuISF1KCl9Y2F0Y2godSl7cmV0dXJuITB9fSxGPSFuKGZ1bmN0aW9uKCl7cmV0dXJuIDchPU9iamVjdC5kZWZpbmVQcm9wZXJ0eSh7fSwiYSIse2dldDpmdW5jdGlvbigpe3JldHVybiA3fX0pLmF9KSxDPUQuZG9jdW1lbnQsQT1yKEMpJiZyKEMuY3JlYXRlRWxlbWVudCksaT0hRiYmIW4oZnVuY3Rpb24oKXtyZXR1cm4gNyE9T2JqZWN0LmRlZmluZVByb3BlcnR5KCh1PSJkaXYiLEE/Qy5jcmVhdGVFbGVtZW50KHUpOnt9KSwiYSIse2dldDpmdW5jdGlvbigpe3JldHVybiA3fX0pLmE7dmFyIHV9KSxFPU9iamVjdC5kZWZpbmVQcm9wZXJ0eSxvPXtmOkY/T2JqZWN0LmRlZmluZVByb3BlcnR5OmZ1bmN0aW9uKHUsRCxlKXtpZih0KHUpLEQ9ZnVuY3Rpb24odSxEKXtpZighcih1KSlyZXR1cm4gdTt2YXIgZSx0O2lmKEQmJiJmdW5jdGlvbiI9PXR5cGVvZihlPXUudG9TdHJpbmcpJiYhcih0PWUuY2FsbCh1KSkpcmV0dXJuIHQ7aWYoImZ1bmN0aW9uIj09dHlwZW9mKGU9dS52YWx1ZU9mKSYmIXIodD1lLmNhbGwodSkpKXJldHVybiB0O2lmKCFEJiYiZnVuY3Rpb24iPT10eXBlb2YoZT11LnRvU3RyaW5nKSYmIXIodD1lLmNhbGwodSkpKXJldHVybiB0O3Rocm93IFR5cGVFcnJvcigiQ2FuJ3QgY29udmVydCBvYmplY3QgdG8gcHJpbWl0aXZlIHZhbHVlIil9KEQsITApLHQoZSksaSl0cnl7cmV0dXJuIEUodSxELGUpfWNhdGNoKHUpe31pZigiZ2V0ImluIGV8fCJzZXQiaW4gZSl0aHJvdyBUeXBlRXJyb3IoIkFjY2Vzc29ycyBub3Qgc3VwcG9ydGVkISIpO3JldHVybiJ2YWx1ZSJpbiBlJiYodVtEXT1lLnZhbHVlKSx1fX0sYT1GP2Z1bmN0aW9uKHUsRCxlKXtyZXR1cm4gby5mKHUsRCxmdW5jdGlvbih1LEQpe3JldHVybntlbnVtZXJhYmxlOiEoMSZ1KSxjb25maWd1cmFibGU6ISgyJnUpLHdyaXRhYmxlOiEoNCZ1KSx2YWx1ZTpEfX0oMSxlKSl9OmZ1bmN0aW9uKHUsRCxlKXtyZXR1cm4gdVtEXT1lLHV9LGM9e30uaGFzT3duUHJvcGVydHksQj1mdW5jdGlvbih1LEQpe3JldHVybiBjLmNhbGwodSxEKX0scz0wLGY9TWF0aC5yYW5kb20oKSxsPXUoZnVuY3Rpb24odSl7dmFyIHI9RFsiX19jb3JlLWpzX3NoYXJlZF9fIl18fChEWyJfX2NvcmUtanNfc2hhcmVkX18iXT17fSk7KHUuZXhwb3J0cz1mdW5jdGlvbih1LEQpe3JldHVybiByW3VdfHwoclt1XT12b2lkIDAhPT1EP0Q6e30pfSkoInZlcnNpb25zIixbXSkucHVzaCh7dmVyc2lvbjplLnZlcnNpb24sbW9kZToiZ2xvYmFsIixjb3B5cmlnaHQ6IsKpIDIwMTkgRGVuaXMgUHVzaGthcmV2ICh6bG9pcm9jay5ydSkifSl9KSgibmF0aXZlLWZ1bmN0aW9uLXRvLXN0cmluZyIsRnVuY3Rpb24udG9TdHJpbmcpLGQ9dShmdW5jdGlvbih1KXt2YXIgcix0PSJTeW1ib2woIi5jb25jYXQodm9pZCAwPT09KHI9InNyYyIpPyIiOnIsIilfIiwoKytzK2YpLnRvU3RyaW5nKDM2KSksbj0oIiIrbCkuc3BsaXQoInRvU3RyaW5nIik7ZS5pbnNwZWN0U291cmNlPWZ1bmN0aW9uKHUpe3JldHVybiBsLmNhbGwodSl9LCh1LmV4cG9ydHM9ZnVuY3Rpb24odSxlLHIsRil7dmFyIEM9ImZ1bmN0aW9uIj09dHlwZW9mIHI7QyYmKEIociwibmFtZSIpfHxhKHIsIm5hbWUiLGUpKSx1W2VdIT09ciYmKEMmJihCKHIsdCl8fGEocix0LHVbZV0/IiIrdVtlXTpuLmpvaW4oU3RyaW5nKGUpKSkpLHU9PT1EP3VbZV09cjpGP3VbZV0/dVtlXT1yOmEodSxlLHIpOihkZWxldGUgdVtlXSxhKHUsZSxyKSkpfSkoRnVuY3Rpb24ucHJvdG90eXBlLCJ0b1N0cmluZyIsZnVuY3Rpb24oKXtyZXR1cm4iZnVuY3Rpb24iPT10eXBlb2YgdGhpcyYmdGhpc1t0XXx8bC5jYWxsKHRoaXMpfSl9KSx2PWZ1bmN0aW9uKHUsRCxlKXtpZihmdW5jdGlvbih1KXtpZigiZnVuY3Rpb24iIT10eXBlb2YgdSl0aHJvdyBUeXBlRXJyb3IodSsiIGlzIG5vdCBhIGZ1bmN0aW9uISIpfSh1KSx2b2lkIDA9PT1EKXJldHVybiB1O3N3aXRjaChlKXtjYXNlIDE6cmV0dXJuIGZ1bmN0aW9uKGUpe3JldHVybiB1LmNhbGwoRCxlKX07Y2FzZSAyOnJldHVybiBmdW5jdGlvbihlLHIpe3JldHVybiB1LmNhbGwoRCxlLHIpfTtjYXNlIDM6cmV0dXJuIGZ1bmN0aW9uKGUscix0KXtyZXR1cm4gdS5jYWxsKEQsZSxyLHQpfX1yZXR1cm4gZnVuY3Rpb24oKXtyZXR1cm4gdS5hcHBseShELGFyZ3VtZW50cyl9fSxwPWZ1bmN0aW9uKHUscix0KXt2YXIgbixGLEMsQSxpPXUmcC5GLEU9dSZwLkcsbz11JnAuUyxjPXUmcC5QLEI9dSZwLkIscz1FP0Q6bz9EW3JdfHwoRFtyXT17fSk6KERbcl18fHt9KS5wcm90b3R5cGUsZj1FP2U6ZVtyXXx8KGVbcl09e30pLGw9Zi5wcm90b3R5cGV8fChmLnByb3RvdHlwZT17fSk7Zm9yKG4gaW4gRSYmKHQ9ciksdClDPSgoRj0haSYmcyYmdm9pZCAwIT09c1tuXSk/czp0KVtuXSxBPUImJkY/dihDLEQpOmMmJiJmdW5jdGlvbiI9PXR5cGVvZiBDP3YoRnVuY3Rpb24uY2FsbCxDKTpDLHMmJmQocyxuLEMsdSZwLlUpLGZbbl0hPUMmJmEoZixuLEEpLGMmJmxbbl0hPUMmJihsW25dPUMpfTtELmNvcmU9ZSxwLkY9MSxwLkc9MixwLlM9NCxwLlA9OCxwLkI9MTYscC5XPTMyLHAuVT02NCxwLlI9MTI4O3ZhciBoLG09cCxnPU1hdGguY2VpbCx5PU1hdGguZmxvb3Isdz1mdW5jdGlvbih1KXtyZXR1cm4gaXNOYU4odT0rdSk/MDoodT4wP3k6ZykodSl9LGI9KGg9ITEsZnVuY3Rpb24odSxEKXt2YXIgZSxyLHQ9U3RyaW5nKGZ1bmN0aW9uKHUpe2lmKG51bGw9PXUpdGhyb3cgVHlwZUVycm9yKCJDYW4ndCBjYWxsIG1ldGhvZCBvbiAgIit1KTtyZXR1cm4gdX0odSkpLG49dyhEKSxGPXQubGVuZ3RoO3JldHVybiBuPDB8fG4+PUY/aD8iIjp2b2lkIDA6KGU9dC5jaGFyQ29kZUF0KG4pKTw1NTI5Nnx8ZT41NjMxOXx8bisxPT09Rnx8KHI9dC5jaGFyQ29kZUF0KG4rMSkpPDU2MzIwfHxyPjU3MzQzP2g/dC5jaGFyQXQobik6ZTpoP3Quc2xpY2UobixuKzIpOnItNTYzMjArKGUtNTUyOTY8PDEwKSs2NTUzNn0pO20obS5QLCJTdHJpbmciLHtjb2RlUG9pbnRBdDpmdW5jdGlvbih1KXtyZXR1cm4gYih0aGlzLHUpfX0pO2UuU3RyaW5nLmNvZGVQb2ludEF0O3ZhciBTPU1hdGgubWF4LHg9TWF0aC5taW4sTj1TdHJpbmcuZnJvbUNoYXJDb2RlLFA9U3RyaW5nLmZyb21Db2RlUG9pbnQ7bShtLlMrbS5GKighIVAmJjEhPVAubGVuZ3RoKSwiU3RyaW5nIix7ZnJvbUNvZGVQb2ludDpmdW5jdGlvbih1KXtmb3IodmFyIEQsZSxyLHQ9YXJndW1lbnRzLG49W10sRj1hcmd1bWVudHMubGVuZ3RoLEM9MDtGPkM7KXtpZihEPSt0W0MrK10scj0xMTE0MTExLCgoZT13KGU9RCkpPDA/UyhlK3IsMCk6eChlLHIpKSE9PUQpdGhyb3cgUmFuZ2VFcnJvcihEKyIgaXMgbm90IGEgdmFsaWQgY29kZSBwb2ludCIpO24ucHVzaChEPDY1NTM2P04oRCk6Tig1NTI5NisoKEQtPTY1NTM2KT4+MTApLEQlMTAyNCs1NjMyMCkpfXJldHVybiBuLmpvaW4oIiIpfX0pO2UuU3RyaW5nLmZyb21Db2RlUG9pbnQ7dmFyIF8sTyxqLEksVixKLE0sayxMLFQseixILCQsUixHPXtTcGFjZV9TZXBhcmF0b3I6L1tcdTE2ODBcdTIwMDAtXHUyMDBBXHUyMDJGXHUyMDVGXHUzMDAwXS8sSURfU3RhcnQ6L1tceEFBXHhCNVx4QkFceEMwLVx4RDZceEQ4LVx4RjZceEY4LVx1MDJDMVx1MDJDNi1cdTAyRDFcdTAyRTAtXHUwMkU0XHUwMkVDXHUwMkVFXHUwMzcwLVx1MDM3NFx1MDM3Nlx1MDM3N1x1MDM3QS1cdTAzN0RcdTAzN0ZcdTAzODZcdTAzODgtXHUwMzhBXHUwMzhDXHUwMzhFLVx1MDNBMVx1MDNBMy1cdTAzRjVcdTAzRjctXHUwNDgxXHUwNDhBLVx1MDUyRlx1MDUzMS1cdTA1NTZcdTA1NTlcdTA1NjEtXHUwNTg3XHUwNUQwLVx1MDVFQVx1MDVGMC1cdTA1RjJcdTA2MjAtXHUwNjRBXHUwNjZFXHUwNjZGXHUwNjcxLVx1MDZEM1x1MDZENVx1MDZFNVx1MDZFNlx1MDZFRVx1MDZFRlx1MDZGQS1cdTA2RkNcdTA2RkZcdTA3MTBcdTA3MTItXHUwNzJGXHUwNzRELVx1MDdBNVx1MDdCMVx1MDdDQS1cdTA3RUFcdTA3RjRcdTA3RjVcdTA3RkFcdTA4MDAtXHUwODE1XHUwODFBXHUwODI0XHUwODI4XHUwODQwLVx1MDg1OFx1MDg2MC1cdTA4NkFcdTA4QTAtXHUwOEI0XHUwOEI2LVx1MDhCRFx1MDkwNC1cdTA5MzlcdTA5M0RcdTA5NTBcdTA5NTgtXHUwOTYxXHUwOTcxLVx1MDk4MFx1MDk4NS1cdTA5OENcdTA5OEZcdTA5OTBcdTA5OTMtXHUwOUE4XHUwOUFBLVx1MDlCMFx1MDlCMlx1MDlCNi1cdTA5QjlcdTA5QkRcdTA5Q0VcdTA5RENcdTA5RERcdTA5REYtXHUwOUUxXHUwOUYwXHUwOUYxXHUwOUZDXHUwQTA1LVx1MEEwQVx1MEEwRlx1MEExMFx1MEExMy1cdTBBMjhcdTBBMkEtXHUwQTMwXHUwQTMyXHUwQTMzXHUwQTM1XHUwQTM2XHUwQTM4XHUwQTM5XHUwQTU5LVx1MEE1Q1x1MEE1RVx1MEE3Mi1cdTBBNzRcdTBBODUtXHUwQThEXHUwQThGLVx1MEE5MVx1MEE5My1cdTBBQThcdTBBQUEtXHUwQUIwXHUwQUIyXHUwQUIzXHUwQUI1LVx1MEFCOVx1MEFCRFx1MEFEMFx1MEFFMFx1MEFFMVx1MEFGOVx1MEIwNS1cdTBCMENcdTBCMEZcdTBCMTBcdTBCMTMtXHUwQjI4XHUwQjJBLVx1MEIzMFx1MEIzMlx1MEIzM1x1MEIzNS1cdTBCMzlcdTBCM0RcdTBCNUNcdTBCNURcdTBCNUYtXHUwQjYxXHUwQjcxXHUwQjgzXHUwQjg1LVx1MEI4QVx1MEI4RS1cdTBCOTBcdTBCOTItXHUwQjk1XHUwQjk5XHUwQjlBXHUwQjlDXHUwQjlFXHUwQjlGXHUwQkEzXHUwQkE0XHUwQkE4LVx1MEJBQVx1MEJBRS1cdTBCQjlcdTBCRDBcdTBDMDUtXHUwQzBDXHUwQzBFLVx1MEMxMFx1MEMxMi1cdTBDMjhcdTBDMkEtXHUwQzM5XHUwQzNEXHUwQzU4LVx1MEM1QVx1MEM2MFx1MEM2MVx1MEM4MFx1MEM4NS1cdTBDOENcdTBDOEUtXHUwQzkwXHUwQzkyLVx1MENBOFx1MENBQS1cdTBDQjNcdTBDQjUtXHUwQ0I5XHUwQ0JEXHUwQ0RFXHUwQ0UwXHUwQ0UxXHUwQ0YxXHUwQ0YyXHUwRDA1LVx1MEQwQ1x1MEQwRS1cdTBEMTBcdTBEMTItXHUwRDNBXHUwRDNEXHUwRDRFXHUwRDU0LVx1MEQ1Nlx1MEQ1Ri1cdTBENjFcdTBEN0EtXHUwRDdGXHUwRDg1LVx1MEQ5Nlx1MEQ5QS1cdTBEQjFcdTBEQjMtXHUwREJCXHUwREJEXHUwREMwLVx1MERDNlx1MEUwMS1cdTBFMzBcdTBFMzJcdTBFMzNcdTBFNDAtXHUwRTQ2XHUwRTgxXHUwRTgyXHUwRTg0XHUwRTg3XHUwRTg4XHUwRThBXHUwRThEXHUwRTk0LVx1MEU5N1x1MEU5OS1cdTBFOUZcdTBFQTEtXHUwRUEzXHUwRUE1XHUwRUE3XHUwRUFBXHUwRUFCXHUwRUFELVx1MEVCMFx1MEVCMlx1MEVCM1x1MEVCRFx1MEVDMC1cdTBFQzRcdTBFQzZcdTBFREMtXHUwRURGXHUwRjAwXHUwRjQwLVx1MEY0N1x1MEY0OS1cdTBGNkNcdTBGODgtXHUwRjhDXHUxMDAwLVx1MTAyQVx1MTAzRlx1MTA1MC1cdTEwNTVcdTEwNUEtXHUxMDVEXHUxMDYxXHUxMDY1XHUxMDY2XHUxMDZFLVx1MTA3MFx1MTA3NS1cdTEwODFcdTEwOEVcdTEwQTAtXHUxMEM1XHUxMEM3XHUxMENEXHUxMEQwLVx1MTBGQVx1MTBGQy1cdTEyNDhcdTEyNEEtXHUxMjREXHUxMjUwLVx1MTI1Nlx1MTI1OFx1MTI1QS1cdTEyNURcdTEyNjAtXHUxMjg4XHUxMjhBLVx1MTI4RFx1MTI5MC1cdTEyQjBcdTEyQjItXHUxMkI1XHUxMkI4LVx1MTJCRVx1MTJDMFx1MTJDMi1cdTEyQzVcdTEyQzgtXHUxMkQ2XHUxMkQ4LVx1MTMxMFx1MTMxMi1cdTEzMTVcdTEzMTgtXHUxMzVBXHUxMzgwLVx1MTM4Rlx1MTNBMC1cdTEzRjVcdTEzRjgtXHUxM0ZEXHUxNDAxLVx1MTY2Q1x1MTY2Ri1cdTE2N0ZcdTE2ODEtXHUxNjlBXHUxNkEwLVx1MTZFQVx1MTZFRS1cdTE2RjhcdTE3MDAtXHUxNzBDXHUxNzBFLVx1MTcxMVx1MTcyMC1cdTE3MzFcdTE3NDAtXHUxNzUxXHUxNzYwLVx1MTc2Q1x1MTc2RS1cdTE3NzBcdTE3ODAtXHUxN0IzXHUxN0Q3XHUxN0RDXHUxODIwLVx1MTg3N1x1MTg4MC1cdTE4ODRcdTE4ODctXHUxOEE4XHUxOEFBXHUxOEIwLVx1MThGNVx1MTkwMC1cdTE5MUVcdTE5NTAtXHUxOTZEXHUxOTcwLVx1MTk3NFx1MTk4MC1cdTE5QUJcdTE5QjAtXHUxOUM5XHUxQTAwLVx1MUExNlx1MUEyMC1cdTFBNTRcdTFBQTdcdTFCMDUtXHUxQjMzXHUxQjQ1LVx1MUI0Qlx1MUI4My1cdTFCQTBcdTFCQUVcdTFCQUZcdTFCQkEtXHUxQkU1XHUxQzAwLVx1MUMyM1x1MUM0RC1cdTFDNEZcdTFDNUEtXHUxQzdEXHUxQzgwLVx1MUM4OFx1MUNFOS1cdTFDRUNcdTFDRUUtXHUxQ0YxXHUxQ0Y1XHUxQ0Y2XHUxRDAwLVx1MURCRlx1MUUwMC1cdTFGMTVcdTFGMTgtXHUxRjFEXHUxRjIwLVx1MUY0NVx1MUY0OC1cdTFGNERcdTFGNTAtXHUxRjU3XHUxRjU5XHUxRjVCXHUxRjVEXHUxRjVGLVx1MUY3RFx1MUY4MC1cdTFGQjRcdTFGQjYtXHUxRkJDXHUxRkJFXHUxRkMyLVx1MUZDNFx1MUZDNi1cdTFGQ0NcdTFGRDAtXHUxRkQzXHUxRkQ2LVx1MUZEQlx1MUZFMC1cdTFGRUNcdTFGRjItXHUxRkY0XHUxRkY2LVx1MUZGQ1x1MjA3MVx1MjA3Rlx1MjA5MC1cdTIwOUNcdTIxMDJcdTIxMDdcdTIxMEEtXHUyMTEzXHUyMTE1XHUyMTE5LVx1MjExRFx1MjEyNFx1MjEyNlx1MjEyOFx1MjEyQS1cdTIxMkRcdTIxMkYtXHUyMTM5XHUyMTNDLVx1MjEzRlx1MjE0NS1cdTIxNDlcdTIxNEVcdTIxNjAtXHUyMTg4XHUyQzAwLVx1MkMyRVx1MkMzMC1cdTJDNUVcdTJDNjAtXHUyQ0U0XHUyQ0VCLVx1MkNFRVx1MkNGMlx1MkNGM1x1MkQwMC1cdTJEMjVcdTJEMjdcdTJEMkRcdTJEMzAtXHUyRDY3XHUyRDZGXHUyRDgwLVx1MkQ5Nlx1MkRBMC1cdTJEQTZcdTJEQTgtXHUyREFFXHUyREIwLVx1MkRCNlx1MkRCOC1cdTJEQkVcdTJEQzAtXHUyREM2XHUyREM4LVx1MkRDRVx1MkREMC1cdTJERDZcdTJERDgtXHUyRERFXHUyRTJGXHUzMDA1LVx1MzAwN1x1MzAyMS1cdTMwMjlcdTMwMzEtXHUzMDM1XHUzMDM4LVx1MzAzQ1x1MzA0MS1cdTMwOTZcdTMwOUQtXHUzMDlGXHUzMEExLVx1MzBGQVx1MzBGQy1cdTMwRkZcdTMxMDUtXHUzMTJFXHUzMTMxLVx1MzE4RVx1MzFBMC1cdTMxQkFcdTMxRjAtXHUzMUZGXHUzNDAwLVx1NERCNVx1NEUwMC1cdTlGRUFcdUEwMDAtXHVBNDhDXHVBNEQwLVx1QTRGRFx1QTUwMC1cdUE2MENcdUE2MTAtXHVBNjFGXHVBNjJBXHVBNjJCXHVBNjQwLVx1QTY2RVx1QTY3Ri1cdUE2OURcdUE2QTAtXHVBNkVGXHVBNzE3LVx1QTcxRlx1QTcyMi1cdUE3ODhcdUE3OEItXHVBN0FFXHVBN0IwLVx1QTdCN1x1QTdGNy1cdUE4MDFcdUE4MDMtXHVBODA1XHVBODA3LVx1QTgwQVx1QTgwQy1cdUE4MjJcdUE4NDAtXHVBODczXHVBODgyLVx1QThCM1x1QThGMi1cdUE4RjdcdUE4RkJcdUE4RkRcdUE5MEEtXHVBOTI1XHVBOTMwLVx1QTk0Nlx1QTk2MC1cdUE5N0NcdUE5ODQtXHVBOUIyXHVBOUNGXHVBOUUwLVx1QTlFNFx1QTlFNi1cdUE5RUZcdUE5RkEtXHVBOUZFXHVBQTAwLVx1QUEyOFx1QUE0MC1cdUFBNDJcdUFBNDQtXHVBQTRCXHVBQTYwLVx1QUE3Nlx1QUE3QVx1QUE3RS1cdUFBQUZcdUFBQjFcdUFBQjVcdUFBQjZcdUFBQjktXHVBQUJEXHVBQUMwXHVBQUMyXHVBQURCLVx1QUFERFx1QUFFMC1cdUFBRUFcdUFBRjItXHVBQUY0XHVBQjAxLVx1QUIwNlx1QUIwOS1cdUFCMEVcdUFCMTEtXHVBQjE2XHVBQjIwLVx1QUIyNlx1QUIyOC1cdUFCMkVcdUFCMzAtXHVBQjVBXHVBQjVDLVx1QUI2NVx1QUI3MC1cdUFCRTJcdUFDMDAtXHVEN0EzXHVEN0IwLVx1RDdDNlx1RDdDQi1cdUQ3RkJcdUY5MDAtXHVGQTZEXHVGQTcwLVx1RkFEOVx1RkIwMC1cdUZCMDZcdUZCMTMtXHVGQjE3XHVGQjFEXHVGQjFGLVx1RkIyOFx1RkIyQS1cdUZCMzZcdUZCMzgtXHVGQjNDXHVGQjNFXHVGQjQwXHVGQjQxXHVGQjQzXHVGQjQ0XHVGQjQ2LVx1RkJCMVx1RkJEMy1cdUZEM0RcdUZENTAtXHVGRDhGXHVGRDkyLVx1RkRDN1x1RkRGMC1cdUZERkJcdUZFNzAtXHVGRTc0XHVGRTc2LVx1RkVGQ1x1RkYyMS1cdUZGM0FcdUZGNDEtXHVGRjVBXHVGRjY2LVx1RkZCRVx1RkZDMi1cdUZGQzdcdUZGQ0EtXHVGRkNGXHVGRkQyLVx1RkZEN1x1RkZEQS1cdUZGRENdfFx1RDgwMFtcdURDMDAtXHVEQzBCXHVEQzBELVx1REMyNlx1REMyOC1cdURDM0FcdURDM0NcdURDM0RcdURDM0YtXHVEQzREXHVEQzUwLVx1REM1RFx1REM4MC1cdURDRkFcdURENDAtXHVERDc0XHVERTgwLVx1REU5Q1x1REVBMC1cdURFRDBcdURGMDAtXHVERjFGXHVERjJELVx1REY0QVx1REY1MC1cdURGNzVcdURGODAtXHVERjlEXHVERkEwLVx1REZDM1x1REZDOC1cdURGQ0ZcdURGRDEtXHVERkQ1XXxcdUQ4MDFbXHVEQzAwLVx1REM5RFx1RENCMC1cdURDRDNcdURDRDgtXHVEQ0ZCXHVERDAwLVx1REQyN1x1REQzMC1cdURENjNcdURFMDAtXHVERjM2XHVERjQwLVx1REY1NVx1REY2MC1cdURGNjddfFx1RDgwMltcdURDMDAtXHVEQzA1XHVEQzA4XHVEQzBBLVx1REMzNVx1REMzN1x1REMzOFx1REMzQ1x1REMzRi1cdURDNTVcdURDNjAtXHVEQzc2XHVEQzgwLVx1REM5RVx1RENFMC1cdURDRjJcdURDRjRcdURDRjVcdUREMDAtXHVERDE1XHVERDIwLVx1REQzOVx1REQ4MC1cdUREQjdcdUREQkVcdUREQkZcdURFMDBcdURFMTAtXHVERTEzXHVERTE1LVx1REUxN1x1REUxOS1cdURFMzNcdURFNjAtXHVERTdDXHVERTgwLVx1REU5Q1x1REVDMC1cdURFQzdcdURFQzktXHVERUU0XHVERjAwLVx1REYzNVx1REY0MC1cdURGNTVcdURGNjAtXHVERjcyXHVERjgwLVx1REY5MV18XHVEODAzW1x1REMwMC1cdURDNDhcdURDODAtXHVEQ0IyXHVEQ0MwLVx1RENGMl18XHVEODA0W1x1REMwMy1cdURDMzdcdURDODMtXHVEQ0FGXHVEQ0QwLVx1RENFOFx1REQwMy1cdUREMjZcdURENTAtXHVERDcyXHVERDc2XHVERDgzLVx1RERCMlx1RERDMS1cdUREQzRcdUREREFcdURERENcdURFMDAtXHVERTExXHVERTEzLVx1REUyQlx1REU4MC1cdURFODZcdURFODhcdURFOEEtXHVERThEXHVERThGLVx1REU5RFx1REU5Ri1cdURFQThcdURFQjAtXHVERURFXHVERjA1LVx1REYwQ1x1REYwRlx1REYxMFx1REYxMy1cdURGMjhcdURGMkEtXHVERjMwXHVERjMyXHVERjMzXHVERjM1LVx1REYzOVx1REYzRFx1REY1MFx1REY1RC1cdURGNjFdfFx1RDgwNVtcdURDMDAtXHVEQzM0XHVEQzQ3LVx1REM0QVx1REM4MC1cdURDQUZcdURDQzRcdURDQzVcdURDQzdcdUREODAtXHVEREFFXHVEREQ4LVx1REREQlx1REUwMC1cdURFMkZcdURFNDRcdURFODAtXHVERUFBXHVERjAwLVx1REYxOV18XHVEODA2W1x1RENBMC1cdURDREZcdURDRkZcdURFMDBcdURFMEItXHVERTMyXHVERTNBXHVERTUwXHVERTVDLVx1REU4M1x1REU4Ni1cdURFODlcdURFQzAtXHVERUY4XXxcdUQ4MDdbXHVEQzAwLVx1REMwOFx1REMwQS1cdURDMkVcdURDNDBcdURDNzItXHVEQzhGXHVERDAwLVx1REQwNlx1REQwOFx1REQwOVx1REQwQi1cdUREMzBcdURENDZdfFx1RDgwOFtcdURDMDAtXHVERjk5XXxcdUQ4MDlbXHVEQzAwLVx1REM2RVx1REM4MC1cdURENDNdfFtcdUQ4MENcdUQ4MUMtXHVEODIwXHVEODQwLVx1RDg2OFx1RDg2QS1cdUQ4NkNcdUQ4NkYtXHVEODcyXHVEODc0LVx1RDg3OV1bXHVEQzAwLVx1REZGRl18XHVEODBEW1x1REMwMC1cdURDMkVdfFx1RDgxMVtcdURDMDAtXHVERTQ2XXxcdUQ4MUFbXHVEQzAwLVx1REUzOFx1REU0MC1cdURFNUVcdURFRDAtXHVERUVEXHVERjAwLVx1REYyRlx1REY0MC1cdURGNDNcdURGNjMtXHVERjc3XHVERjdELVx1REY4Rl18XHVEODFCW1x1REYwMC1cdURGNDRcdURGNTBcdURGOTMtXHVERjlGXHVERkUwXHVERkUxXXxcdUQ4MjFbXHVEQzAwLVx1REZFQ118XHVEODIyW1x1REMwMC1cdURFRjJdfFx1RDgyQ1tcdURDMDAtXHVERDFFXHVERDcwLVx1REVGQl18XHVEODJGW1x1REMwMC1cdURDNkFcdURDNzAtXHVEQzdDXHVEQzgwLVx1REM4OFx1REM5MC1cdURDOTldfFx1RDgzNVtcdURDMDAtXHVEQzU0XHVEQzU2LVx1REM5Q1x1REM5RVx1REM5Rlx1RENBMlx1RENBNVx1RENBNlx1RENBOS1cdURDQUNcdURDQUUtXHVEQ0I5XHVEQ0JCXHVEQ0JELVx1RENDM1x1RENDNS1cdUREMDVcdUREMDctXHVERDBBXHVERDBELVx1REQxNFx1REQxNi1cdUREMUNcdUREMUUtXHVERDM5XHVERDNCLVx1REQzRVx1REQ0MC1cdURENDRcdURENDZcdURENEEtXHVERDUwXHVERDUyLVx1REVBNVx1REVBOC1cdURFQzBcdURFQzItXHVERURBXHVERURDLVx1REVGQVx1REVGQy1cdURGMTRcdURGMTYtXHVERjM0XHVERjM2LVx1REY0RVx1REY1MC1cdURGNkVcdURGNzAtXHVERjg4XHVERjhBLVx1REZBOFx1REZBQS1cdURGQzJcdURGQzQtXHVERkNCXXxcdUQ4M0FbXHVEQzAwLVx1RENDNFx1REQwMC1cdURENDNdfFx1RDgzQltcdURFMDAtXHVERTAzXHVERTA1LVx1REUxRlx1REUyMVx1REUyMlx1REUyNFx1REUyN1x1REUyOS1cdURFMzJcdURFMzQtXHVERTM3XHVERTM5XHVERTNCXHVERTQyXHVERTQ3XHVERTQ5XHVERTRCXHVERTRELVx1REU0Rlx1REU1MVx1REU1Mlx1REU1NFx1REU1N1x1REU1OVx1REU1Qlx1REU1RFx1REU1Rlx1REU2MVx1REU2Mlx1REU2NFx1REU2Ny1cdURFNkFcdURFNkMtXHVERTcyXHVERTc0LVx1REU3N1x1REU3OS1cdURFN0NcdURFN0VcdURFODAtXHVERTg5XHVERThCLVx1REU5Qlx1REVBMS1cdURFQTNcdURFQTUtXHVERUE5XHVERUFCLVx1REVCQl18XHVEODY5W1x1REMwMC1cdURFRDZcdURGMDAtXHVERkZGXXxcdUQ4NkRbXHVEQzAwLVx1REYzNFx1REY0MC1cdURGRkZdfFx1RDg2RVtcdURDMDAtXHVEQzFEXHVEQzIwLVx1REZGRl18XHVEODczW1x1REMwMC1cdURFQTFcdURFQjAtXHVERkZGXXxcdUQ4N0FbXHVEQzAwLVx1REZFMF18XHVEODdFW1x1REMwMC1cdURFMURdLyxJRF9Db250aW51ZTovW1x4QUFceEI1XHhCQVx4QzAtXHhENlx4RDgtXHhGNlx4RjgtXHUwMkMxXHUwMkM2LVx1MDJEMVx1MDJFMC1cdTAyRTRcdTAyRUNcdTAyRUVcdTAzMDAtXHUwMzc0XHUwMzc2XHUwMzc3XHUwMzdBLVx1MDM3RFx1MDM3Rlx1MDM4Nlx1MDM4OC1cdTAzOEFcdTAzOENcdTAzOEUtXHUwM0ExXHUwM0EzLVx1MDNGNVx1MDNGNy1cdTA0ODFcdTA0ODMtXHUwNDg3XHUwNDhBLVx1MDUyRlx1MDUzMS1cdTA1NTZcdTA1NTlcdTA1NjEtXHUwNTg3XHUwNTkxLVx1MDVCRFx1MDVCRlx1MDVDMVx1MDVDMlx1MDVDNFx1MDVDNVx1MDVDN1x1MDVEMC1cdTA1RUFcdTA1RjAtXHUwNUYyXHUwNjEwLVx1MDYxQVx1MDYyMC1cdTA2NjlcdTA2NkUtXHUwNkQzXHUwNkQ1LVx1MDZEQ1x1MDZERi1cdTA2RThcdTA2RUEtXHUwNkZDXHUwNkZGXHUwNzEwLVx1MDc0QVx1MDc0RC1cdTA3QjFcdTA3QzAtXHUwN0Y1XHUwN0ZBXHUwODAwLVx1MDgyRFx1MDg0MC1cdTA4NUJcdTA4NjAtXHUwODZBXHUwOEEwLVx1MDhCNFx1MDhCNi1cdTA4QkRcdTA4RDQtXHUwOEUxXHUwOEUzLVx1MDk2M1x1MDk2Ni1cdTA5NkZcdTA5NzEtXHUwOTgzXHUwOTg1LVx1MDk4Q1x1MDk4Rlx1MDk5MFx1MDk5My1cdTA5QThcdTA5QUEtXHUwOUIwXHUwOUIyXHUwOUI2LVx1MDlCOVx1MDlCQy1cdTA5QzRcdTA5QzdcdTA5QzhcdTA5Q0ItXHUwOUNFXHUwOUQ3XHUwOURDXHUwOUREXHUwOURGLVx1MDlFM1x1MDlFNi1cdTA5RjFcdTA5RkNcdTBBMDEtXHUwQTAzXHUwQTA1LVx1MEEwQVx1MEEwRlx1MEExMFx1MEExMy1cdTBBMjhcdTBBMkEtXHUwQTMwXHUwQTMyXHUwQTMzXHUwQTM1XHUwQTM2XHUwQTM4XHUwQTM5XHUwQTNDXHUwQTNFLVx1MEE0Mlx1MEE0N1x1MEE0OFx1MEE0Qi1cdTBBNERcdTBBNTFcdTBBNTktXHUwQTVDXHUwQTVFXHUwQTY2LVx1MEE3NVx1MEE4MS1cdTBBODNcdTBBODUtXHUwQThEXHUwQThGLVx1MEE5MVx1MEE5My1cdTBBQThcdTBBQUEtXHUwQUIwXHUwQUIyXHUwQUIzXHUwQUI1LVx1MEFCOVx1MEFCQy1cdTBBQzVcdTBBQzctXHUwQUM5XHUwQUNCLVx1MEFDRFx1MEFEMFx1MEFFMC1cdTBBRTNcdTBBRTYtXHUwQUVGXHUwQUY5LVx1MEFGRlx1MEIwMS1cdTBCMDNcdTBCMDUtXHUwQjBDXHUwQjBGXHUwQjEwXHUwQjEzLVx1MEIyOFx1MEIyQS1cdTBCMzBcdTBCMzJcdTBCMzNcdTBCMzUtXHUwQjM5XHUwQjNDLVx1MEI0NFx1MEI0N1x1MEI0OFx1MEI0Qi1cdTBCNERcdTBCNTZcdTBCNTdcdTBCNUNcdTBCNURcdTBCNUYtXHUwQjYzXHUwQjY2LVx1MEI2Rlx1MEI3MVx1MEI4Mlx1MEI4M1x1MEI4NS1cdTBCOEFcdTBCOEUtXHUwQjkwXHUwQjkyLVx1MEI5NVx1MEI5OVx1MEI5QVx1MEI5Q1x1MEI5RVx1MEI5Rlx1MEJBM1x1MEJBNFx1MEJBOC1cdTBCQUFcdTBCQUUtXHUwQkI5XHUwQkJFLVx1MEJDMlx1MEJDNi1cdTBCQzhcdTBCQ0EtXHUwQkNEXHUwQkQwXHUwQkQ3XHUwQkU2LVx1MEJFRlx1MEMwMC1cdTBDMDNcdTBDMDUtXHUwQzBDXHUwQzBFLVx1MEMxMFx1MEMxMi1cdTBDMjhcdTBDMkEtXHUwQzM5XHUwQzNELVx1MEM0NFx1MEM0Ni1cdTBDNDhcdTBDNEEtXHUwQzREXHUwQzU1XHUwQzU2XHUwQzU4LVx1MEM1QVx1MEM2MC1cdTBDNjNcdTBDNjYtXHUwQzZGXHUwQzgwLVx1MEM4M1x1MEM4NS1cdTBDOENcdTBDOEUtXHUwQzkwXHUwQzkyLVx1MENBOFx1MENBQS1cdTBDQjNcdTBDQjUtXHUwQ0I5XHUwQ0JDLVx1MENDNFx1MENDNi1cdTBDQzhcdTBDQ0EtXHUwQ0NEXHUwQ0Q1XHUwQ0Q2XHUwQ0RFXHUwQ0UwLVx1MENFM1x1MENFNi1cdTBDRUZcdTBDRjFcdTBDRjJcdTBEMDAtXHUwRDAzXHUwRDA1LVx1MEQwQ1x1MEQwRS1cdTBEMTBcdTBEMTItXHUwRDQ0XHUwRDQ2LVx1MEQ0OFx1MEQ0QS1cdTBENEVcdTBENTQtXHUwRDU3XHUwRDVGLVx1MEQ2M1x1MEQ2Ni1cdTBENkZcdTBEN0EtXHUwRDdGXHUwRDgyXHUwRDgzXHUwRDg1LVx1MEQ5Nlx1MEQ5QS1cdTBEQjFcdTBEQjMtXHUwREJCXHUwREJEXHUwREMwLVx1MERDNlx1MERDQVx1MERDRi1cdTBERDRcdTBERDZcdTBERDgtXHUwRERGXHUwREU2LVx1MERFRlx1MERGMlx1MERGM1x1MEUwMS1cdTBFM0FcdTBFNDAtXHUwRTRFXHUwRTUwLVx1MEU1OVx1MEU4MVx1MEU4Mlx1MEU4NFx1MEU4N1x1MEU4OFx1MEU4QVx1MEU4RFx1MEU5NC1cdTBFOTdcdTBFOTktXHUwRTlGXHUwRUExLVx1MEVBM1x1MEVBNVx1MEVBN1x1MEVBQVx1MEVBQlx1MEVBRC1cdTBFQjlcdTBFQkItXHUwRUJEXHUwRUMwLVx1MEVDNFx1MEVDNlx1MEVDOC1cdTBFQ0RcdTBFRDAtXHUwRUQ5XHUwRURDLVx1MEVERlx1MEYwMFx1MEYxOFx1MEYxOVx1MEYyMC1cdTBGMjlcdTBGMzVcdTBGMzdcdTBGMzlcdTBGM0UtXHUwRjQ3XHUwRjQ5LVx1MEY2Q1x1MEY3MS1cdTBGODRcdTBGODYtXHUwRjk3XHUwRjk5LVx1MEZCQ1x1MEZDNlx1MTAwMC1cdTEwNDlcdTEwNTAtXHUxMDlEXHUxMEEwLVx1MTBDNVx1MTBDN1x1MTBDRFx1MTBEMC1cdTEwRkFcdTEwRkMtXHUxMjQ4XHUxMjRBLVx1MTI0RFx1MTI1MC1cdTEyNTZcdTEyNThcdTEyNUEtXHUxMjVEXHUxMjYwLVx1MTI4OFx1MTI4QS1cdTEyOERcdTEyOTAtXHUxMkIwXHUxMkIyLVx1MTJCNVx1MTJCOC1cdTEyQkVcdTEyQzBcdTEyQzItXHUxMkM1XHUxMkM4LVx1MTJENlx1MTJEOC1cdTEzMTBcdTEzMTItXHUxMzE1XHUxMzE4LVx1MTM1QVx1MTM1RC1cdTEzNUZcdTEzODAtXHUxMzhGXHUxM0EwLVx1MTNGNVx1MTNGOC1cdTEzRkRcdTE0MDEtXHUxNjZDXHUxNjZGLVx1MTY3Rlx1MTY4MS1cdTE2OUFcdTE2QTAtXHUxNkVBXHUxNkVFLVx1MTZGOFx1MTcwMC1cdTE3MENcdTE3MEUtXHUxNzE0XHUxNzIwLVx1MTczNFx1MTc0MC1cdTE3NTNcdTE3NjAtXHUxNzZDXHUxNzZFLVx1MTc3MFx1MTc3Mlx1MTc3M1x1MTc4MC1cdTE3RDNcdTE3RDdcdTE3RENcdTE3RERcdTE3RTAtXHUxN0U5XHUxODBCLVx1MTgwRFx1MTgxMC1cdTE4MTlcdTE4MjAtXHUxODc3XHUxODgwLVx1MThBQVx1MThCMC1cdTE4RjVcdTE5MDAtXHUxOTFFXHUxOTIwLVx1MTkyQlx1MTkzMC1cdTE5M0JcdTE5NDYtXHUxOTZEXHUxOTcwLVx1MTk3NFx1MTk4MC1cdTE5QUJcdTE5QjAtXHUxOUM5XHUxOUQwLVx1MTlEOVx1MUEwMC1cdTFBMUJcdTFBMjAtXHUxQTVFXHUxQTYwLVx1MUE3Q1x1MUE3Ri1cdTFBODlcdTFBOTAtXHUxQTk5XHUxQUE3XHUxQUIwLVx1MUFCRFx1MUIwMC1cdTFCNEJcdTFCNTAtXHUxQjU5XHUxQjZCLVx1MUI3M1x1MUI4MC1cdTFCRjNcdTFDMDAtXHUxQzM3XHUxQzQwLVx1MUM0OVx1MUM0RC1cdTFDN0RcdTFDODAtXHUxQzg4XHUxQ0QwLVx1MUNEMlx1MUNENC1cdTFDRjlcdTFEMDAtXHUxREY5XHUxREZCLVx1MUYxNVx1MUYxOC1cdTFGMURcdTFGMjAtXHUxRjQ1XHUxRjQ4LVx1MUY0RFx1MUY1MC1cdTFGNTdcdTFGNTlcdTFGNUJcdTFGNURcdTFGNUYtXHUxRjdEXHUxRjgwLVx1MUZCNFx1MUZCNi1cdTFGQkNcdTFGQkVcdTFGQzItXHUxRkM0XHUxRkM2LVx1MUZDQ1x1MUZEMC1cdTFGRDNcdTFGRDYtXHUxRkRCXHUxRkUwLVx1MUZFQ1x1MUZGMi1cdTFGRjRcdTFGRjYtXHUxRkZDXHUyMDNGXHUyMDQwXHUyMDU0XHUyMDcxXHUyMDdGXHUyMDkwLVx1MjA5Q1x1MjBEMC1cdTIwRENcdTIwRTFcdTIwRTUtXHUyMEYwXHUyMTAyXHUyMTA3XHUyMTBBLVx1MjExM1x1MjExNVx1MjExOS1cdTIxMURcdTIxMjRcdTIxMjZcdTIxMjhcdTIxMkEtXHUyMTJEXHUyMTJGLVx1MjEzOVx1MjEzQy1cdTIxM0ZcdTIxNDUtXHUyMTQ5XHUyMTRFXHUyMTYwLVx1MjE4OFx1MkMwMC1cdTJDMkVcdTJDMzAtXHUyQzVFXHUyQzYwLVx1MkNFNFx1MkNFQi1cdTJDRjNcdTJEMDAtXHUyRDI1XHUyRDI3XHUyRDJEXHUyRDMwLVx1MkQ2N1x1MkQ2Rlx1MkQ3Ri1cdTJEOTZcdTJEQTAtXHUyREE2XHUyREE4LVx1MkRBRVx1MkRCMC1cdTJEQjZcdTJEQjgtXHUyREJFXHUyREMwLVx1MkRDNlx1MkRDOC1cdTJEQ0VcdTJERDAtXHUyREQ2XHUyREQ4LVx1MkRERVx1MkRFMC1cdTJERkZcdTJFMkZcdTMwMDUtXHUzMDA3XHUzMDIxLVx1MzAyRlx1MzAzMS1cdTMwMzVcdTMwMzgtXHUzMDNDXHUzMDQxLVx1MzA5Nlx1MzA5OVx1MzA5QVx1MzA5RC1cdTMwOUZcdTMwQTEtXHUzMEZBXHUzMEZDLVx1MzBGRlx1MzEwNS1cdTMxMkVcdTMxMzEtXHUzMThFXHUzMUEwLVx1MzFCQVx1MzFGMC1cdTMxRkZcdTM0MDAtXHU0REI1XHU0RTAwLVx1OUZFQVx1QTAwMC1cdUE0OENcdUE0RDAtXHVBNEZEXHVBNTAwLVx1QTYwQ1x1QTYxMC1cdUE2MkJcdUE2NDAtXHVBNjZGXHVBNjc0LVx1QTY3RFx1QTY3Ri1cdUE2RjFcdUE3MTctXHVBNzFGXHVBNzIyLVx1QTc4OFx1QTc4Qi1cdUE3QUVcdUE3QjAtXHVBN0I3XHVBN0Y3LVx1QTgyN1x1QTg0MC1cdUE4NzNcdUE4ODAtXHVBOEM1XHVBOEQwLVx1QThEOVx1QThFMC1cdUE4RjdcdUE4RkJcdUE4RkRcdUE5MDAtXHVBOTJEXHVBOTMwLVx1QTk1M1x1QTk2MC1cdUE5N0NcdUE5ODAtXHVBOUMwXHVBOUNGLVx1QTlEOVx1QTlFMC1cdUE5RkVcdUFBMDAtXHVBQTM2XHVBQTQwLVx1QUE0RFx1QUE1MC1cdUFBNTlcdUFBNjAtXHVBQTc2XHVBQTdBLVx1QUFDMlx1QUFEQi1cdUFBRERcdUFBRTAtXHVBQUVGXHVBQUYyLVx1QUFGNlx1QUIwMS1cdUFCMDZcdUFCMDktXHVBQjBFXHVBQjExLVx1QUIxNlx1QUIyMC1cdUFCMjZcdUFCMjgtXHVBQjJFXHVBQjMwLVx1QUI1QVx1QUI1Qy1cdUFCNjVcdUFCNzAtXHVBQkVBXHVBQkVDXHVBQkVEXHVBQkYwLVx1QUJGOVx1QUMwMC1cdUQ3QTNcdUQ3QjAtXHVEN0M2XHVEN0NCLVx1RDdGQlx1RjkwMC1cdUZBNkRcdUZBNzAtXHVGQUQ5XHVGQjAwLVx1RkIwNlx1RkIxMy1cdUZCMTdcdUZCMUQtXHVGQjI4XHVGQjJBLVx1RkIzNlx1RkIzOC1cdUZCM0NcdUZCM0VcdUZCNDBcdUZCNDFcdUZCNDNcdUZCNDRcdUZCNDYtXHVGQkIxXHVGQkQzLVx1RkQzRFx1RkQ1MC1cdUZEOEZcdUZEOTItXHVGREM3XHVGREYwLVx1RkRGQlx1RkUwMC1cdUZFMEZcdUZFMjAtXHVGRTJGXHVGRTMzXHVGRTM0XHVGRTRELVx1RkU0Rlx1RkU3MC1cdUZFNzRcdUZFNzYtXHVGRUZDXHVGRjEwLVx1RkYxOVx1RkYyMS1cdUZGM0FcdUZGM0ZcdUZGNDEtXHVGRjVBXHVGRjY2LVx1RkZCRVx1RkZDMi1cdUZGQzdcdUZGQ0EtXHVGRkNGXHVGRkQyLVx1RkZEN1x1RkZEQS1cdUZGRENdfFx1RDgwMFtcdURDMDAtXHVEQzBCXHVEQzBELVx1REMyNlx1REMyOC1cdURDM0FcdURDM0NcdURDM0RcdURDM0YtXHVEQzREXHVEQzUwLVx1REM1RFx1REM4MC1cdURDRkFcdURENDAtXHVERDc0XHVEREZEXHVERTgwLVx1REU5Q1x1REVBMC1cdURFRDBcdURFRTBcdURGMDAtXHVERjFGXHVERjJELVx1REY0QVx1REY1MC1cdURGN0FcdURGODAtXHVERjlEXHVERkEwLVx1REZDM1x1REZDOC1cdURGQ0ZcdURGRDEtXHVERkQ1XXxcdUQ4MDFbXHVEQzAwLVx1REM5RFx1RENBMC1cdURDQTlcdURDQjAtXHVEQ0QzXHVEQ0Q4LVx1RENGQlx1REQwMC1cdUREMjdcdUREMzAtXHVERDYzXHVERTAwLVx1REYzNlx1REY0MC1cdURGNTVcdURGNjAtXHVERjY3XXxcdUQ4MDJbXHVEQzAwLVx1REMwNVx1REMwOFx1REMwQS1cdURDMzVcdURDMzdcdURDMzhcdURDM0NcdURDM0YtXHVEQzU1XHVEQzYwLVx1REM3Nlx1REM4MC1cdURDOUVcdURDRTAtXHVEQ0YyXHVEQ0Y0XHVEQ0Y1XHVERDAwLVx1REQxNVx1REQyMC1cdUREMzlcdUREODAtXHVEREI3XHVEREJFXHVEREJGXHVERTAwLVx1REUwM1x1REUwNVx1REUwNlx1REUwQy1cdURFMTNcdURFMTUtXHVERTE3XHVERTE5LVx1REUzM1x1REUzOC1cdURFM0FcdURFM0ZcdURFNjAtXHVERTdDXHVERTgwLVx1REU5Q1x1REVDMC1cdURFQzdcdURFQzktXHVERUU2XHVERjAwLVx1REYzNVx1REY0MC1cdURGNTVcdURGNjAtXHVERjcyXHVERjgwLVx1REY5MV18XHVEODAzW1x1REMwMC1cdURDNDhcdURDODAtXHVEQ0IyXHVEQ0MwLVx1RENGMl18XHVEODA0W1x1REMwMC1cdURDNDZcdURDNjYtXHVEQzZGXHVEQzdGLVx1RENCQVx1RENEMC1cdURDRThcdURDRjAtXHVEQ0Y5XHVERDAwLVx1REQzNFx1REQzNi1cdUREM0ZcdURENTAtXHVERDczXHVERDc2XHVERDgwLVx1RERDNFx1RERDQS1cdUREQ0NcdURERDAtXHVERERBXHVERERDXHVERTAwLVx1REUxMVx1REUxMy1cdURFMzdcdURFM0VcdURFODAtXHVERTg2XHVERTg4XHVERThBLVx1REU4RFx1REU4Ri1cdURFOURcdURFOUYtXHVERUE4XHVERUIwLVx1REVFQVx1REVGMC1cdURFRjlcdURGMDAtXHVERjAzXHVERjA1LVx1REYwQ1x1REYwRlx1REYxMFx1REYxMy1cdURGMjhcdURGMkEtXHVERjMwXHVERjMyXHVERjMzXHVERjM1LVx1REYzOVx1REYzQy1cdURGNDRcdURGNDdcdURGNDhcdURGNEItXHVERjREXHVERjUwXHVERjU3XHVERjVELVx1REY2M1x1REY2Ni1cdURGNkNcdURGNzAtXHVERjc0XXxcdUQ4MDVbXHVEQzAwLVx1REM0QVx1REM1MC1cdURDNTlcdURDODAtXHVEQ0M1XHVEQ0M3XHVEQ0QwLVx1RENEOVx1REQ4MC1cdUREQjVcdUREQjgtXHVEREMwXHVEREQ4LVx1RERERFx1REUwMC1cdURFNDBcdURFNDRcdURFNTAtXHVERTU5XHVERTgwLVx1REVCN1x1REVDMC1cdURFQzlcdURGMDAtXHVERjE5XHVERjFELVx1REYyQlx1REYzMC1cdURGMzldfFx1RDgwNltcdURDQTAtXHVEQ0U5XHVEQ0ZGXHVERTAwLVx1REUzRVx1REU0N1x1REU1MC1cdURFODNcdURFODYtXHVERTk5XHVERUMwLVx1REVGOF18XHVEODA3W1x1REMwMC1cdURDMDhcdURDMEEtXHVEQzM2XHVEQzM4LVx1REM0MFx1REM1MC1cdURDNTlcdURDNzItXHVEQzhGXHVEQzkyLVx1RENBN1x1RENBOS1cdURDQjZcdUREMDAtXHVERDA2XHVERDA4XHVERDA5XHVERDBCLVx1REQzNlx1REQzQVx1REQzQ1x1REQzRFx1REQzRi1cdURENDdcdURENTAtXHVERDU5XXxcdUQ4MDhbXHVEQzAwLVx1REY5OV18XHVEODA5W1x1REMwMC1cdURDNkVcdURDODAtXHVERDQzXXxbXHVEODBDXHVEODFDLVx1RDgyMFx1RDg0MC1cdUQ4NjhcdUQ4NkEtXHVEODZDXHVEODZGLVx1RDg3Mlx1RDg3NC1cdUQ4NzldW1x1REMwMC1cdURGRkZdfFx1RDgwRFtcdURDMDAtXHVEQzJFXXxcdUQ4MTFbXHVEQzAwLVx1REU0Nl18XHVEODFBW1x1REMwMC1cdURFMzhcdURFNDAtXHVERTVFXHVERTYwLVx1REU2OVx1REVEMC1cdURFRURcdURFRjAtXHVERUY0XHVERjAwLVx1REYzNlx1REY0MC1cdURGNDNcdURGNTAtXHVERjU5XHVERjYzLVx1REY3N1x1REY3RC1cdURGOEZdfFx1RDgxQltcdURGMDAtXHVERjQ0XHVERjUwLVx1REY3RVx1REY4Ri1cdURGOUZcdURGRTBcdURGRTFdfFx1RDgyMVtcdURDMDAtXHVERkVDXXxcdUQ4MjJbXHVEQzAwLVx1REVGMl18XHVEODJDW1x1REMwMC1cdUREMUVcdURENzAtXHVERUZCXXxcdUQ4MkZbXHVEQzAwLVx1REM2QVx1REM3MC1cdURDN0NcdURDODAtXHVEQzg4XHVEQzkwLVx1REM5OVx1REM5RFx1REM5RV18XHVEODM0W1x1REQ2NS1cdURENjlcdURENkQtXHVERDcyXHVERDdCLVx1REQ4Mlx1REQ4NS1cdUREOEJcdUREQUEtXHVEREFEXHVERTQyLVx1REU0NF18XHVEODM1W1x1REMwMC1cdURDNTRcdURDNTYtXHVEQzlDXHVEQzlFXHVEQzlGXHVEQ0EyXHVEQ0E1XHVEQ0E2XHVEQ0E5LVx1RENBQ1x1RENBRS1cdURDQjlcdURDQkJcdURDQkQtXHVEQ0MzXHVEQ0M1LVx1REQwNVx1REQwNy1cdUREMEFcdUREMEQtXHVERDE0XHVERDE2LVx1REQxQ1x1REQxRS1cdUREMzlcdUREM0ItXHVERDNFXHVERDQwLVx1REQ0NFx1REQ0Nlx1REQ0QS1cdURENTBcdURENTItXHVERUE1XHVERUE4LVx1REVDMFx1REVDMi1cdURFREFcdURFREMtXHVERUZBXHVERUZDLVx1REYxNFx1REYxNi1cdURGMzRcdURGMzYtXHVERjRFXHVERjUwLVx1REY2RVx1REY3MC1cdURGODhcdURGOEEtXHVERkE4XHVERkFBLVx1REZDMlx1REZDNC1cdURGQ0JcdURGQ0UtXHVERkZGXXxcdUQ4MzZbXHVERTAwLVx1REUzNlx1REUzQi1cdURFNkNcdURFNzVcdURFODRcdURFOUItXHVERTlGXHVERUExLVx1REVBRl18XHVEODM4W1x1REMwMC1cdURDMDZcdURDMDgtXHVEQzE4XHVEQzFCLVx1REMyMVx1REMyM1x1REMyNFx1REMyNi1cdURDMkFdfFx1RDgzQVtcdURDMDAtXHVEQ0M0XHVEQ0QwLVx1RENENlx1REQwMC1cdURENEFcdURENTAtXHVERDU5XXxcdUQ4M0JbXHVERTAwLVx1REUwM1x1REUwNS1cdURFMUZcdURFMjFcdURFMjJcdURFMjRcdURFMjdcdURFMjktXHVERTMyXHVERTM0LVx1REUzN1x1REUzOVx1REUzQlx1REU0Mlx1REU0N1x1REU0OVx1REU0Qlx1REU0RC1cdURFNEZcdURFNTFcdURFNTJcdURFNTRcdURFNTdcdURFNTlcdURFNUJcdURFNURcdURFNUZcdURFNjFcdURFNjJcdURFNjRcdURFNjctXHVERTZBXHVERTZDLVx1REU3Mlx1REU3NC1cdURFNzdcdURFNzktXHVERTdDXHVERTdFXHVERTgwLVx1REU4OVx1REU4Qi1cdURFOUJcdURFQTEtXHVERUEzXHVERUE1LVx1REVBOVx1REVBQi1cdURFQkJdfFx1RDg2OVtcdURDMDAtXHVERUQ2XHVERjAwLVx1REZGRl18XHVEODZEW1x1REMwMC1cdURGMzRcdURGNDAtXHVERkZGXXxcdUQ4NkVbXHVEQzAwLVx1REMxRFx1REMyMC1cdURGRkZdfFx1RDg3M1tcdURDMDAtXHVERUExXHVERUIwLVx1REZGRl18XHVEODdBW1x1REMwMC1cdURGRTBdfFx1RDg3RVtcdURDMDAtXHVERTFEXXxcdURCNDBbXHVERDAwLVx1RERFRl0vfSxVPXtpc1NwYWNlU2VwYXJhdG9yOmZ1bmN0aW9uKHUpe3JldHVybiJzdHJpbmciPT10eXBlb2YgdSYmRy5TcGFjZV9TZXBhcmF0b3IudGVzdCh1KX0saXNJZFN0YXJ0Q2hhcjpmdW5jdGlvbih1KXtyZXR1cm4ic3RyaW5nIj09dHlwZW9mIHUmJih1Pj0iYSImJnU8PSJ6Inx8dT49IkEiJiZ1PD0iWiJ8fCIkIj09PXV8fCJfIj09PXV8fEcuSURfU3RhcnQudGVzdCh1KSl9LGlzSWRDb250aW51ZUNoYXI6ZnVuY3Rpb24odSl7cmV0dXJuInN0cmluZyI9PXR5cGVvZiB1JiYodT49ImEiJiZ1PD0ieiJ8fHU+PSJBIiYmdTw9IloifHx1Pj0iMCImJnU8PSI5Inx8IiQiPT09dXx8Il8iPT09dXx8IuKAjCI9PT11fHwi4oCNIj09PXV8fEcuSURfQ29udGludWUudGVzdCh1KSl9LGlzRGlnaXQ6ZnVuY3Rpb24odSl7cmV0dXJuInN0cmluZyI9PXR5cGVvZiB1JiYvWzAtOV0vLnRlc3QodSl9LGlzSGV4RGlnaXQ6ZnVuY3Rpb24odSl7cmV0dXJuInN0cmluZyI9PXR5cGVvZiB1JiYvWzAtOUEtRmEtZl0vLnRlc3QodSl9fTtmdW5jdGlvbiBaKCl7Zm9yKFQ9ImRlZmF1bHQiLHo9IiIsSD0hMSwkPTE7Oyl7Uj1xKCk7dmFyIHU9WFtUXSgpO2lmKHUpcmV0dXJuIHV9fWZ1bmN0aW9uIHEoKXtpZihfW0ldKXJldHVybiBTdHJpbmcuZnJvbUNvZGVQb2ludChfLmNvZGVQb2ludEF0KEkpKX1mdW5jdGlvbiBXKCl7dmFyIHU9cSgpO3JldHVybiJcbiI9PT11PyhWKyssSj0wKTp1P0orPXUubGVuZ3RoOkorKyx1JiYoSSs9dS5sZW5ndGgpLHV9dmFyIFg9e2RlZmF1bHQ6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSJcdCI6Y2FzZSJcdiI6Y2FzZSJcZiI6Y2FzZSIgIjpjYXNlIiAiOmNhc2UiXHVmZWZmIjpjYXNlIlxuIjpjYXNlIlxyIjpjYXNlIlx1MjAyOCI6Y2FzZSJcdTIwMjkiOnJldHVybiB2b2lkIFcoKTtjYXNlIi8iOnJldHVybiBXKCksdm9pZChUPSJjb21tZW50Iik7Y2FzZSB2b2lkIDA6cmV0dXJuIFcoKSxLKCJlb2YiKX1pZighVS5pc1NwYWNlU2VwYXJhdG9yKFIpKXJldHVybiBYW09dKCk7VygpfSxjb21tZW50OmZ1bmN0aW9uKCl7c3dpdGNoKFIpe2Nhc2UiKiI6cmV0dXJuIFcoKSx2b2lkKFQ9Im11bHRpTGluZUNvbW1lbnQiKTtjYXNlIi8iOnJldHVybiBXKCksdm9pZChUPSJzaW5nbGVMaW5lQ29tbWVudCIpfXRocm93IHJ1KFcoKSl9LG11bHRpTGluZUNvbW1lbnQ6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSIqIjpyZXR1cm4gVygpLHZvaWQoVD0ibXVsdGlMaW5lQ29tbWVudEFzdGVyaXNrIik7Y2FzZSB2b2lkIDA6dGhyb3cgcnUoVygpKX1XKCl9LG11bHRpTGluZUNvbW1lbnRBc3RlcmlzazpmdW5jdGlvbigpe3N3aXRjaChSKXtjYXNlIioiOnJldHVybiB2b2lkIFcoKTtjYXNlIi8iOnJldHVybiBXKCksdm9pZChUPSJkZWZhdWx0Iik7Y2FzZSB2b2lkIDA6dGhyb3cgcnUoVygpKX1XKCksVD0ibXVsdGlMaW5lQ29tbWVudCJ9LHNpbmdsZUxpbmVDb21tZW50OmZ1bmN0aW9uKCl7c3dpdGNoKFIpe2Nhc2UiXG4iOmNhc2UiXHIiOmNhc2UiXHUyMDI4IjpjYXNlIlx1MjAyOSI6cmV0dXJuIFcoKSx2b2lkKFQ9ImRlZmF1bHQiKTtjYXNlIHZvaWQgMDpyZXR1cm4gVygpLEsoImVvZiIpfVcoKX0sdmFsdWU6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSJ7IjpjYXNlIlsiOnJldHVybiBLKCJwdW5jdHVhdG9yIixXKCkpO2Nhc2UibiI6cmV0dXJuIFcoKSxRKCJ1bGwiKSxLKCJudWxsIixudWxsKTtjYXNlInQiOnJldHVybiBXKCksUSgicnVlIiksSygiYm9vbGVhbiIsITApO2Nhc2UiZiI6cmV0dXJuIFcoKSxRKCJhbHNlIiksSygiYm9vbGVhbiIsITEpO2Nhc2UiLSI6Y2FzZSIrIjpyZXR1cm4iLSI9PT1XKCkmJigkPS0xKSx2b2lkKFQ9InNpZ24iKTtjYXNlIi4iOnJldHVybiB6PVcoKSx2b2lkKFQ9ImRlY2ltYWxQb2ludExlYWRpbmciKTtjYXNlIjAiOnJldHVybiB6PVcoKSx2b2lkKFQ9Inplcm8iKTtjYXNlIjEiOmNhc2UiMiI6Y2FzZSIzIjpjYXNlIjQiOmNhc2UiNSI6Y2FzZSI2IjpjYXNlIjciOmNhc2UiOCI6Y2FzZSI5IjpyZXR1cm4gej1XKCksdm9pZChUPSJkZWNpbWFsSW50ZWdlciIpO2Nhc2UiSSI6cmV0dXJuIFcoKSxRKCJuZmluaXR5IiksSygibnVtZXJpYyIsMS8wKTtjYXNlIk4iOnJldHVybiBXKCksUSgiYU4iKSxLKCJudW1lcmljIixOYU4pO2Nhc2UnIic6Y2FzZSInIjpyZXR1cm4gSD0nIic9PT1XKCksej0iIix2b2lkKFQ9InN0cmluZyIpfXRocm93IHJ1KFcoKSl9LGlkZW50aWZpZXJOYW1lU3RhcnRFc2NhcGU6ZnVuY3Rpb24oKXtpZigidSIhPT1SKXRocm93IHJ1KFcoKSk7VygpO3ZhciB1PVkoKTtzd2l0Y2godSl7Y2FzZSIkIjpjYXNlIl8iOmJyZWFrO2RlZmF1bHQ6aWYoIVUuaXNJZFN0YXJ0Q2hhcih1KSl0aHJvdyBudSgpfXorPXUsVD0iaWRlbnRpZmllck5hbWUifSxpZGVudGlmaWVyTmFtZTpmdW5jdGlvbigpe3N3aXRjaChSKXtjYXNlIiQiOmNhc2UiXyI6Y2FzZSLigIwiOmNhc2Ui4oCNIjpyZXR1cm4gdm9pZCh6Kz1XKCkpO2Nhc2UiXFwiOnJldHVybiBXKCksdm9pZChUPSJpZGVudGlmaWVyTmFtZUVzY2FwZSIpfWlmKCFVLmlzSWRDb250aW51ZUNoYXIoUikpcmV0dXJuIEsoImlkZW50aWZpZXIiLHopO3orPVcoKX0saWRlbnRpZmllck5hbWVFc2NhcGU6ZnVuY3Rpb24oKXtpZigidSIhPT1SKXRocm93IHJ1KFcoKSk7VygpO3ZhciB1PVkoKTtzd2l0Y2godSl7Y2FzZSIkIjpjYXNlIl8iOmNhc2Ui4oCMIjpjYXNlIuKAjSI6YnJlYWs7ZGVmYXVsdDppZighVS5pc0lkQ29udGludWVDaGFyKHUpKXRocm93IG51KCl9eis9dSxUPSJpZGVudGlmaWVyTmFtZSJ9LHNpZ246ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSIuIjpyZXR1cm4gej1XKCksdm9pZChUPSJkZWNpbWFsUG9pbnRMZWFkaW5nIik7Y2FzZSIwIjpyZXR1cm4gej1XKCksdm9pZChUPSJ6ZXJvIik7Y2FzZSIxIjpjYXNlIjIiOmNhc2UiMyI6Y2FzZSI0IjpjYXNlIjUiOmNhc2UiNiI6Y2FzZSI3IjpjYXNlIjgiOmNhc2UiOSI6cmV0dXJuIHo9VygpLHZvaWQoVD0iZGVjaW1hbEludGVnZXIiKTtjYXNlIkkiOnJldHVybiBXKCksUSgibmZpbml0eSIpLEsoIm51bWVyaWMiLCQqKDEvMCkpO2Nhc2UiTiI6cmV0dXJuIFcoKSxRKCJhTiIpLEsoIm51bWVyaWMiLE5hTil9dGhyb3cgcnUoVygpKX0semVybzpmdW5jdGlvbigpe3N3aXRjaChSKXtjYXNlIi4iOnJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsUG9pbnQiKTtjYXNlImUiOmNhc2UiRSI6cmV0dXJuIHorPVcoKSx2b2lkKFQ9ImRlY2ltYWxFeHBvbmVudCIpO2Nhc2UieCI6Y2FzZSJYIjpyZXR1cm4geis9VygpLHZvaWQoVD0iaGV4YWRlY2ltYWwiKX1yZXR1cm4gSygibnVtZXJpYyIsMCokKX0sZGVjaW1hbEludGVnZXI6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSIuIjpyZXR1cm4geis9VygpLHZvaWQoVD0iZGVjaW1hbFBvaW50Iik7Y2FzZSJlIjpjYXNlIkUiOnJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsRXhwb25lbnQiKX1pZighVS5pc0RpZ2l0KFIpKXJldHVybiBLKCJudW1lcmljIiwkKk51bWJlcih6KSk7eis9VygpfSxkZWNpbWFsUG9pbnRMZWFkaW5nOmZ1bmN0aW9uKCl7aWYoVS5pc0RpZ2l0KFIpKXJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsRnJhY3Rpb24iKTt0aHJvdyBydShXKCkpfSxkZWNpbWFsUG9pbnQ6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSJlIjpjYXNlIkUiOnJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsRXhwb25lbnQiKX1yZXR1cm4gVS5pc0RpZ2l0KFIpPyh6Kz1XKCksdm9pZChUPSJkZWNpbWFsRnJhY3Rpb24iKSk6SygibnVtZXJpYyIsJCpOdW1iZXIoeikpfSxkZWNpbWFsRnJhY3Rpb246ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSJlIjpjYXNlIkUiOnJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsRXhwb25lbnQiKX1pZighVS5pc0RpZ2l0KFIpKXJldHVybiBLKCJudW1lcmljIiwkKk51bWJlcih6KSk7eis9VygpfSxkZWNpbWFsRXhwb25lbnQ6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSIrIjpjYXNlIi0iOnJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsRXhwb25lbnRTaWduIil9aWYoVS5pc0RpZ2l0KFIpKXJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsRXhwb25lbnRJbnRlZ2VyIik7dGhyb3cgcnUoVygpKX0sZGVjaW1hbEV4cG9uZW50U2lnbjpmdW5jdGlvbigpe2lmKFUuaXNEaWdpdChSKSlyZXR1cm4geis9VygpLHZvaWQoVD0iZGVjaW1hbEV4cG9uZW50SW50ZWdlciIpO3Rocm93IHJ1KFcoKSl9LGRlY2ltYWxFeHBvbmVudEludGVnZXI6ZnVuY3Rpb24oKXtpZighVS5pc0RpZ2l0KFIpKXJldHVybiBLKCJudW1lcmljIiwkKk51bWJlcih6KSk7eis9VygpfSxoZXhhZGVjaW1hbDpmdW5jdGlvbigpe2lmKFUuaXNIZXhEaWdpdChSKSlyZXR1cm4geis9VygpLHZvaWQoVD0iaGV4YWRlY2ltYWxJbnRlZ2VyIik7dGhyb3cgcnUoVygpKX0saGV4YWRlY2ltYWxJbnRlZ2VyOmZ1bmN0aW9uKCl7aWYoIVUuaXNIZXhEaWdpdChSKSlyZXR1cm4gSygibnVtZXJpYyIsJCpOdW1iZXIoeikpO3orPVcoKX0sc3RyaW5nOmZ1bmN0aW9uKCl7c3dpdGNoKFIpe2Nhc2UiXFwiOnJldHVybiBXKCksdm9pZCh6Kz1mdW5jdGlvbigpe3N3aXRjaChxKCkpe2Nhc2UiYiI6cmV0dXJuIFcoKSwiXGIiO2Nhc2UiZiI6cmV0dXJuIFcoKSwiXGYiO2Nhc2UibiI6cmV0dXJuIFcoKSwiXG4iO2Nhc2UiciI6cmV0dXJuIFcoKSwiXHIiO2Nhc2UidCI6cmV0dXJuIFcoKSwiXHQiO2Nhc2UidiI6cmV0dXJuIFcoKSwiXHYiO2Nhc2UiMCI6aWYoVygpLFUuaXNEaWdpdChxKCkpKXRocm93IHJ1KFcoKSk7cmV0dXJuIlwwIjtjYXNlIngiOnJldHVybiBXKCksZnVuY3Rpb24oKXt2YXIgdT0iIixEPXEoKTtpZighVS5pc0hleERpZ2l0KEQpKXRocm93IHJ1KFcoKSk7aWYodSs9VygpLEQ9cSgpLCFVLmlzSGV4RGlnaXQoRCkpdGhyb3cgcnUoVygpKTtyZXR1cm4gdSs9VygpLFN0cmluZy5mcm9tQ29kZVBvaW50KHBhcnNlSW50KHUsMTYpKX0oKTtjYXNlInUiOnJldHVybiBXKCksWSgpO2Nhc2UiXG4iOmNhc2UiXHUyMDI4IjpjYXNlIlx1MjAyOSI6cmV0dXJuIFcoKSwiIjtjYXNlIlxyIjpyZXR1cm4gVygpLCJcbiI9PT1xKCkmJlcoKSwiIjtjYXNlIjEiOmNhc2UiMiI6Y2FzZSIzIjpjYXNlIjQiOmNhc2UiNSI6Y2FzZSI2IjpjYXNlIjciOmNhc2UiOCI6Y2FzZSI5IjpjYXNlIHZvaWQgMDp0aHJvdyBydShXKCkpfXJldHVybiBXKCl9KCkpO2Nhc2UnIic6cmV0dXJuIEg/KFcoKSxLKCJzdHJpbmciLHopKTp2b2lkKHorPVcoKSk7Y2FzZSInIjpyZXR1cm4gSD92b2lkKHorPVcoKSk6KFcoKSxLKCJzdHJpbmciLHopKTtjYXNlIlxuIjpjYXNlIlxyIjp0aHJvdyBydShXKCkpO2Nhc2UiXHUyMDI4IjpjYXNlIlx1MjAyOSI6IWZ1bmN0aW9uKHUpe2NvbnNvbGUud2FybigiSlNPTjU6ICciK0Z1KHUpKyInIGluIHN0cmluZ3MgaXMgbm90IHZhbGlkIEVDTUFTY3JpcHQ7IGNvbnNpZGVyIGVzY2FwaW5nIil9KFIpO2JyZWFrO2Nhc2Ugdm9pZCAwOnRocm93IHJ1KFcoKSl9eis9VygpfSxzdGFydDpmdW5jdGlvbigpe3N3aXRjaChSKXtjYXNlInsiOmNhc2UiWyI6cmV0dXJuIEsoInB1bmN0dWF0b3IiLFcoKSl9VD0idmFsdWUifSxiZWZvcmVQcm9wZXJ0eU5hbWU6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSIkIjpjYXNlIl8iOnJldHVybiB6PVcoKSx2b2lkKFQ9ImlkZW50aWZpZXJOYW1lIik7Y2FzZSJcXCI6cmV0dXJuIFcoKSx2b2lkKFQ9ImlkZW50aWZpZXJOYW1lU3RhcnRFc2NhcGUiKTtjYXNlIn0iOnJldHVybiBLKCJwdW5jdHVhdG9yIixXKCkpO2Nhc2UnIic6Y2FzZSInIjpyZXR1cm4gSD0nIic9PT1XKCksdm9pZChUPSJzdHJpbmciKX1pZihVLmlzSWRTdGFydENoYXIoUikpcmV0dXJuIHorPVcoKSx2b2lkKFQ9ImlkZW50aWZpZXJOYW1lIik7dGhyb3cgcnUoVygpKX0sYWZ0ZXJQcm9wZXJ0eU5hbWU6ZnVuY3Rpb24oKXtpZigiOiI9PT1SKXJldHVybiBLKCJwdW5jdHVhdG9yIixXKCkpO3Rocm93IHJ1KFcoKSl9LGJlZm9yZVByb3BlcnR5VmFsdWU6ZnVuY3Rpb24oKXtUPSJ2YWx1ZSJ9LGFmdGVyUHJvcGVydHlWYWx1ZTpmdW5jdGlvbigpe3N3aXRjaChSKXtjYXNlIiwiOmNhc2UifSI6cmV0dXJuIEsoInB1bmN0dWF0b3IiLFcoKSl9dGhyb3cgcnUoVygpKX0sYmVmb3JlQXJyYXlWYWx1ZTpmdW5jdGlvbigpe2lmKCJdIj09PVIpcmV0dXJuIEsoInB1bmN0dWF0b3IiLFcoKSk7VD0idmFsdWUifSxhZnRlckFycmF5VmFsdWU6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSIsIjpjYXNlIl0iOnJldHVybiBLKCJwdW5jdHVhdG9yIixXKCkpfXRocm93IHJ1KFcoKSl9LGVuZDpmdW5jdGlvbigpe3Rocm93IHJ1KFcoKSl9fTtmdW5jdGlvbiBLKHUsRCl7cmV0dXJue3R5cGU6dSx2YWx1ZTpELGxpbmU6Vixjb2x1bW46Sn19ZnVuY3Rpb24gUSh1KXtmb3IodmFyIEQ9MCxlPXU7RDxlLmxlbmd0aDtEKz0xKXt2YXIgcj1lW0RdO2lmKHEoKSE9PXIpdGhyb3cgcnUoVygpKTtXKCl9fWZ1bmN0aW9uIFkoKXtmb3IodmFyIHU9IiIsRD00O0QtLSA+MDspe3ZhciBlPXEoKTtpZighVS5pc0hleERpZ2l0KGUpKXRocm93IHJ1KFcoKSk7dSs9VygpfXJldHVybiBTdHJpbmcuZnJvbUNvZGVQb2ludChwYXJzZUludCh1LDE2KSl9dmFyIHV1PXtzdGFydDpmdW5jdGlvbigpe2lmKCJlb2YiPT09TS50eXBlKXRocm93IHR1KCk7RHUoKX0sYmVmb3JlUHJvcGVydHlOYW1lOmZ1bmN0aW9uKCl7c3dpdGNoKE0udHlwZSl7Y2FzZSJpZGVudGlmaWVyIjpjYXNlInN0cmluZyI6cmV0dXJuIGs9TS52YWx1ZSx2b2lkKE89ImFmdGVyUHJvcGVydHlOYW1lIik7Y2FzZSJwdW5jdHVhdG9yIjpyZXR1cm4gdm9pZCBldSgpO2Nhc2UiZW9mIjp0aHJvdyB0dSgpfX0sYWZ0ZXJQcm9wZXJ0eU5hbWU6ZnVuY3Rpb24oKXtpZigiZW9mIj09PU0udHlwZSl0aHJvdyB0dSgpO089ImJlZm9yZVByb3BlcnR5VmFsdWUifSxiZWZvcmVQcm9wZXJ0eVZhbHVlOmZ1bmN0aW9uKCl7aWYoImVvZiI9PT1NLnR5cGUpdGhyb3cgdHUoKTtEdSgpfSxiZWZvcmVBcnJheVZhbHVlOmZ1bmN0aW9uKCl7aWYoImVvZiI9PT1NLnR5cGUpdGhyb3cgdHUoKTsicHVuY3R1YXRvciIhPT1NLnR5cGV8fCJdIiE9PU0udmFsdWU/RHUoKTpldSgpfSxhZnRlclByb3BlcnR5VmFsdWU6ZnVuY3Rpb24oKXtpZigiZW9mIj09PU0udHlwZSl0aHJvdyB0dSgpO3N3aXRjaChNLnZhbHVlKXtjYXNlIiwiOnJldHVybiB2b2lkKE89ImJlZm9yZVByb3BlcnR5TmFtZSIpO2Nhc2UifSI6ZXUoKX19LGFmdGVyQXJyYXlWYWx1ZTpmdW5jdGlvbigpe2lmKCJlb2YiPT09TS50eXBlKXRocm93IHR1KCk7c3dpdGNoKE0udmFsdWUpe2Nhc2UiLCI6cmV0dXJuIHZvaWQoTz0iYmVmb3JlQXJyYXlWYWx1ZSIpO2Nhc2UiXSI6ZXUoKX19LGVuZDpmdW5jdGlvbigpe319O2Z1bmN0aW9uIER1KCl7dmFyIHU7c3dpdGNoKE0udHlwZSl7Y2FzZSJwdW5jdHVhdG9yIjpzd2l0Y2goTS52YWx1ZSl7Y2FzZSJ7Ijp1PXt9O2JyZWFrO2Nhc2UiWyI6dT1bXX1icmVhaztjYXNlIm51bGwiOmNhc2UiYm9vbGVhbiI6Y2FzZSJudW1lcmljIjpjYXNlInN0cmluZyI6dT1NLnZhbHVlfWlmKHZvaWQgMD09PUwpTD11O2Vsc2V7dmFyIEQ9altqLmxlbmd0aC0xXTtBcnJheS5pc0FycmF5KEQpP0QucHVzaCh1KTpPYmplY3QuZGVmaW5lUHJvcGVydHkoRCxrLHt2YWx1ZTp1LHdyaXRhYmxlOiEwLGVudW1lcmFibGU6ITAsY29uZmlndXJhYmxlOiEwfSl9aWYobnVsbCE9PXUmJiJvYmplY3QiPT10eXBlb2YgdSlqLnB1c2godSksTz1BcnJheS5pc0FycmF5KHUpPyJiZWZvcmVBcnJheVZhbHVlIjoiYmVmb3JlUHJvcGVydHlOYW1lIjtlbHNle3ZhciBlPWpbai5sZW5ndGgtMV07Tz1udWxsPT1lPyJlbmQiOkFycmF5LmlzQXJyYXkoZSk/ImFmdGVyQXJyYXlWYWx1ZSI6ImFmdGVyUHJvcGVydHlWYWx1ZSJ9fWZ1bmN0aW9uIGV1KCl7ai5wb3AoKTt2YXIgdT1qW2oubGVuZ3RoLTFdO089bnVsbD09dT8iZW5kIjpBcnJheS5pc0FycmF5KHUpPyJhZnRlckFycmF5VmFsdWUiOiJhZnRlclByb3BlcnR5VmFsdWUifWZ1bmN0aW9uIHJ1KHUpe3JldHVybiBDdSh2b2lkIDA9PT11PyJKU09ONTogaW52YWxpZCBlbmQgb2YgaW5wdXQgYXQgIitWKyI6IitKOiJKU09ONTogaW52YWxpZCBjaGFyYWN0ZXIgJyIrRnUodSkrIicgYXQgIitWKyI6IitKKX1mdW5jdGlvbiB0dSgpe3JldHVybiBDdSgiSlNPTjU6IGludmFsaWQgZW5kIG9mIGlucHV0IGF0ICIrVisiOiIrSil9ZnVuY3Rpb24gbnUoKXtyZXR1cm4gQ3UoIkpTT041OiBpbnZhbGlkIGlkZW50aWZpZXIgY2hhcmFjdGVyIGF0ICIrVisiOiIrKEotPTUpKX1mdW5jdGlvbiBGdSh1KXt2YXIgRD17IiciOiJcXCciLCciJzonXFwiJywiXFwiOiJcXFxcIiwiXGIiOiJcXGIiLCJcZiI6IlxcZiIsIlxuIjoiXFxuIiwiXHIiOiJcXHIiLCJcdCI6IlxcdCIsIlx2IjoiXFx2IiwiXDAiOiJcXDAiLCJcdTIwMjgiOiJcXHUyMDI4IiwiXHUyMDI5IjoiXFx1MjAyOSJ9O2lmKERbdV0pcmV0dXJuIERbdV07aWYodTwiICIpe3ZhciBlPXUuY2hhckNvZGVBdCgwKS50b1N0cmluZygxNik7cmV0dXJuIlxceCIrKCIwMCIrZSkuc3Vic3RyaW5nKGUubGVuZ3RoKX1yZXR1cm4gdX1mdW5jdGlvbiBDdSh1KXt2YXIgRD1uZXcgU3ludGF4RXJyb3IodSk7cmV0dXJuIEQubGluZU51bWJlcj1WLEQuY29sdW1uTnVtYmVyPUosRH1yZXR1cm57cGFyc2U6ZnVuY3Rpb24odSxEKXtfPVN0cmluZyh1KSxPPSJzdGFydCIsaj1bXSxJPTAsVj0xLEo9MCxNPXZvaWQgMCxrPXZvaWQgMCxMPXZvaWQgMDtkb3tNPVooKSx1dVtPXSgpfXdoaWxlKCJlb2YiIT09TS50eXBlKTtyZXR1cm4iZnVuY3Rpb24iPT10eXBlb2YgRD9mdW5jdGlvbiB1KEQsZSxyKXt2YXIgdD1EW2VdO2lmKG51bGwhPXQmJiJvYmplY3QiPT10eXBlb2YgdClpZihBcnJheS5pc0FycmF5KHQpKWZvcih2YXIgbj0wO248dC5sZW5ndGg7bisrKXt2YXIgRj1TdHJpbmcobiksQz11KHQsRixyKTt2b2lkIDA9PT1DP2RlbGV0ZSB0W0ZdOk9iamVjdC5kZWZpbmVQcm9wZXJ0eSh0LEYse3ZhbHVlOkMsd3JpdGFibGU6ITAsZW51bWVyYWJsZTohMCxjb25maWd1cmFibGU6ITB9KX1lbHNlIGZvcih2YXIgQSBpbiB0KXt2YXIgaT11KHQsQSxyKTt2b2lkIDA9PT1pP2RlbGV0ZSB0W0FdOk9iamVjdC5kZWZpbmVQcm9wZXJ0eSh0LEEse3ZhbHVlOmksd3JpdGFibGU6ITAsZW51bWVyYWJsZTohMCxjb25maWd1cmFibGU6ITB9KX1yZXR1cm4gci5jYWxsKEQsZSx0KX0oeyIiOkx9LCIiLEQpOkx9LHN0cmluZ2lmeTpmdW5jdGlvbih1LEQsZSl7dmFyIHIsdCxuLEY9W10sQz0iIixBPSIiO2lmKG51bGw9PUR8fCJvYmplY3QiIT10eXBlb2YgRHx8QXJyYXkuaXNBcnJheShEKXx8KGU9RC5zcGFjZSxuPUQucXVvdGUsRD1ELnJlcGxhY2VyKSwiZnVuY3Rpb24iPT10eXBlb2YgRCl0PUQ7ZWxzZSBpZihBcnJheS5pc0FycmF5KEQpKXtyPVtdO2Zvcih2YXIgaT0wLEU9RDtpPEUubGVuZ3RoO2krPTEpe3ZhciBvPUVbaV0sYT12b2lkIDA7InN0cmluZyI9PXR5cGVvZiBvP2E9bzooIm51bWJlciI9PXR5cGVvZiBvfHxvIGluc3RhbmNlb2YgU3RyaW5nfHxvIGluc3RhbmNlb2YgTnVtYmVyKSYmKGE9U3RyaW5nKG8pKSx2b2lkIDAhPT1hJiZyLmluZGV4T2YoYSk8MCYmci5wdXNoKGEpfX1yZXR1cm4gZSBpbnN0YW5jZW9mIE51bWJlcj9lPU51bWJlcihlKTplIGluc3RhbmNlb2YgU3RyaW5nJiYoZT1TdHJpbmcoZSkpLCJudW1iZXIiPT10eXBlb2YgZT9lPjAmJihlPU1hdGgubWluKDEwLE1hdGguZmxvb3IoZSkpLEE9IiAgICAgICAgICAiLnN1YnN0cigwLGUpKToic3RyaW5nIj09dHlwZW9mIGUmJihBPWUuc3Vic3RyKDAsMTApKSxjKCIiLHsiIjp1fSk7ZnVuY3Rpb24gYyh1LEQpe3ZhciBlPURbdV07c3dpdGNoKG51bGwhPWUmJigiZnVuY3Rpb24iPT10eXBlb2YgZS50b0pTT041P2U9ZS50b0pTT041KHUpOiJmdW5jdGlvbiI9PXR5cGVvZiBlLnRvSlNPTiYmKGU9ZS50b0pTT04odSkpKSx0JiYoZT10LmNhbGwoRCx1LGUpKSxlIGluc3RhbmNlb2YgTnVtYmVyP2U9TnVtYmVyKGUpOmUgaW5zdGFuY2VvZiBTdHJpbmc/ZT1TdHJpbmcoZSk6ZSBpbnN0YW5jZW9mIEJvb2xlYW4mJihlPWUudmFsdWVPZigpKSxlKXtjYXNlIG51bGw6cmV0dXJuIm51bGwiO2Nhc2UhMDpyZXR1cm4idHJ1ZSI7Y2FzZSExOnJldHVybiJmYWxzZSJ9cmV0dXJuInN0cmluZyI9PXR5cGVvZiBlP0IoZSk6Im51bWJlciI9PXR5cGVvZiBlP1N0cmluZyhlKToib2JqZWN0Ij09dHlwZW9mIGU/QXJyYXkuaXNBcnJheShlKT9mdW5jdGlvbih1KXtpZihGLmluZGV4T2YodSk+PTApdGhyb3cgVHlwZUVycm9yKCJDb252ZXJ0aW5nIGNpcmN1bGFyIHN0cnVjdHVyZSB0byBKU09ONSIpO0YucHVzaCh1KTt2YXIgRD1DO0MrPUE7Zm9yKHZhciBlLHI9W10sdD0wO3Q8dS5sZW5ndGg7dCsrKXt2YXIgbj1jKFN0cmluZyh0KSx1KTtyLnB1c2godm9pZCAwIT09bj9uOiJudWxsIil9aWYoMD09PXIubGVuZ3RoKWU9IltdIjtlbHNlIGlmKCIiPT09QSl7dmFyIGk9ci5qb2luKCIsIik7ZT0iWyIraSsiXSJ9ZWxzZXt2YXIgRT0iLFxuIitDLG89ci5qb2luKEUpO2U9IltcbiIrQytvKyIsXG4iK0QrIl0ifXJldHVybiBGLnBvcCgpLEM9RCxlfShlKTpmdW5jdGlvbih1KXtpZihGLmluZGV4T2YodSk+PTApdGhyb3cgVHlwZUVycm9yKCJDb252ZXJ0aW5nIGNpcmN1bGFyIHN0cnVjdHVyZSB0byBKU09ONSIpO0YucHVzaCh1KTt2YXIgRD1DO0MrPUE7Zm9yKHZhciBlLHQsbj1yfHxPYmplY3Qua2V5cyh1KSxpPVtdLEU9MCxvPW47RTxvLmxlbmd0aDtFKz0xKXt2YXIgYT1vW0VdLEI9YyhhLHUpO2lmKHZvaWQgMCE9PUIpe3ZhciBmPXMoYSkrIjoiOyIiIT09QSYmKGYrPSIgIiksZis9QixpLnB1c2goZil9fWlmKDA9PT1pLmxlbmd0aCllPSJ7fSI7ZWxzZSBpZigiIj09PUEpdD1pLmpvaW4oIiwiKSxlPSJ7Iit0KyJ9IjtlbHNle3ZhciBsPSIsXG4iK0M7dD1pLmpvaW4obCksZT0ie1xuIitDK3QrIixcbiIrRCsifSJ9cmV0dXJuIEYucG9wKCksQz1ELGV9KGUpOnZvaWQgMH1mdW5jdGlvbiBCKHUpe2Zvcih2YXIgRD17IiciOi4xLCciJzouMn0sZT17IiciOiJcXCciLCciJzonXFwiJywiXFwiOiJcXFxcIiwiXGIiOiJcXGIiLCJcZiI6IlxcZiIsIlxuIjoiXFxuIiwiXHIiOiJcXHIiLCJcdCI6IlxcdCIsIlx2IjoiXFx2IiwiXDAiOiJcXDAiLCJcdTIwMjgiOiJcXHUyMDI4IiwiXHUyMDI5IjoiXFx1MjAyOSJ9LHI9IiIsdD0wO3Q8dS5sZW5ndGg7dCsrKXt2YXIgRj11W3RdO3N3aXRjaChGKXtjYXNlIiciOmNhc2UnIic6RFtGXSsrLHIrPUY7Y29udGludWU7Y2FzZSJcMCI6aWYoVS5pc0RpZ2l0KHVbdCsxXSkpe3IrPSJcXHgwMCI7Y29udGludWV9fWlmKGVbRl0pcis9ZVtGXTtlbHNlIGlmKEY8IiAiKXt2YXIgQz1GLmNoYXJDb2RlQXQoMCkudG9TdHJpbmcoMTYpO3IrPSJcXHgiKygiMDAiK0MpLnN1YnN0cmluZyhDLmxlbmd0aCl9ZWxzZSByKz1GfXZhciBBPW58fE9iamVjdC5rZXlzKEQpLnJlZHVjZShmdW5jdGlvbih1LGUpe3JldHVybiBEW3VdPERbZV0/dTplfSk7cmV0dXJuIEErKHI9ci5yZXBsYWNlKG5ldyBSZWdFeHAoQSwiZyIpLGVbQV0pKStBfWZ1bmN0aW9uIHModSl7aWYoMD09PXUubGVuZ3RoKXJldHVybiBCKHUpO3ZhciBEPVN0cmluZy5mcm9tQ29kZVBvaW50KHUuY29kZVBvaW50QXQoMCkpO2lmKCFVLmlzSWRTdGFydENoYXIoRCkpcmV0dXJuIEIodSk7Zm9yKHZhciBlPUQubGVuZ3RoO2U8dS5sZW5ndGg7ZSsrKWlmKCFVLmlzSWRDb250aW51ZUNoYXIoU3RyaW5nLmZyb21Db2RlUG9pbnQodS5jb2RlUG9pbnRBdChlKSkpKXJldHVybiBCKHUpO3JldHVybiB1fX19fSk7`;
 //#endregion
-//#region ../../node_modules/.pnpm/fflate@0.8.3/node_modules/fflate/esm/browser.js
-var ch2 = {};
-var wk = (function(c, id, msg, transfer, cb) {
-	var w = new Worker(ch2[id] || (ch2[id] = URL.createObjectURL(new Blob([c + ";addEventListener(\"error\",function(e){e=e.error;postMessage({$e$:[e.message,e.code,e.stack]})})"], { type: "text/javascript" }))));
-	w.onmessage = function(e) {
-		var d = e.data, ed = d.$e$;
-		if (ed) {
-			var err = new Error(ed[0]);
-			err["code"] = ed[1];
-			err.stack = ed[2];
-			cb(err, null);
-		} else cb(null, d);
-	};
-	w.postMessage(msg, transfer);
-	return w;
-});
-var u8$1 = Uint8Array, u16$1 = Uint16Array, i32$1 = Int32Array;
-var fleb = new u8$1([
-	0,
-	0,
-	0,
-	0,
-	0,
-	0,
-	0,
-	0,
-	1,
-	1,
-	1,
-	1,
-	2,
-	2,
-	2,
-	2,
-	3,
-	3,
-	3,
-	3,
-	4,
-	4,
-	4,
-	4,
-	5,
-	5,
-	5,
-	5,
-	0,
-	0,
-	0,
-	0
-]);
-var fdeb = new u8$1([
-	0,
-	0,
-	0,
-	0,
-	1,
-	1,
-	2,
-	2,
-	3,
-	3,
-	4,
-	4,
-	5,
-	5,
-	6,
-	6,
-	7,
-	7,
-	8,
-	8,
-	9,
-	9,
-	10,
-	10,
-	11,
-	11,
-	12,
-	12,
-	13,
-	13,
-	0,
-	0
-]);
-var clim = new u8$1([
-	16,
-	17,
-	18,
-	0,
-	8,
-	7,
-	9,
-	6,
-	10,
-	5,
-	11,
-	4,
-	12,
-	3,
-	13,
-	2,
-	14,
-	1,
-	15
-]);
-var freb = function(eb, start) {
-	var b = new u16$1(31);
-	for (var i = 0; i < 31; ++i) b[i] = start += 1 << eb[i - 1];
-	var r = new i32$1(b[30]);
-	for (var i = 1; i < 30; ++i) for (var j = b[i]; j < b[i + 1]; ++j) r[j] = j - b[i] << 5 | i;
-	return {
-		b,
-		r
-	};
-};
-var _a$1 = freb(fleb, 2), fl = _a$1.b, revfl = _a$1.r;
-fl[28] = 258, revfl[258] = 28;
-var _b = freb(fdeb, 0), fd = _b.b;
-_b.r;
-var rev = new u16$1(32768);
-for (var i$1 = 0; i$1 < 32768; ++i$1) {
-	var x = (i$1 & 43690) >> 1 | (i$1 & 21845) << 1;
-	x = (x & 52428) >> 2 | (x & 13107) << 2;
-	x = (x & 61680) >> 4 | (x & 3855) << 4;
-	rev[i$1] = ((x & 65280) >> 8 | (x & 255) << 8) >> 1;
-}
-var hMap = (function(cd, mb, r) {
-	var s = cd.length;
-	var i = 0;
-	var l = new u16$1(mb);
-	for (; i < s; ++i) if (cd[i]) ++l[cd[i] - 1];
-	var le = new u16$1(mb);
-	for (i = 1; i < mb; ++i) le[i] = le[i - 1] + l[i - 1] << 1;
-	var co;
-	if (r) {
-		co = new u16$1(1 << mb);
-		var rvb = 15 - mb;
-		for (i = 0; i < s; ++i) if (cd[i]) {
-			var sv = i << 4 | cd[i];
-			var r_1 = mb - cd[i];
-			var v = le[cd[i] - 1]++ << r_1;
-			for (var m = v | (1 << r_1) - 1; v <= m; ++v) co[rev[v] >> rvb] = sv;
-		}
-	} else {
-		co = new u16$1(s);
-		for (i = 0; i < s; ++i) if (cd[i]) co[i] = rev[le[cd[i] - 1]++] >> 15 - cd[i];
-	}
-	return co;
-});
-var flt = new u8$1(288);
-for (var i$1 = 0; i$1 < 144; ++i$1) flt[i$1] = 8;
-for (var i$1 = 144; i$1 < 256; ++i$1) flt[i$1] = 9;
-for (var i$1 = 256; i$1 < 280; ++i$1) flt[i$1] = 7;
-for (var i$1 = 280; i$1 < 288; ++i$1) flt[i$1] = 8;
-var fdt = new u8$1(32);
-for (var i$1 = 0; i$1 < 32; ++i$1) fdt[i$1] = 5;
-var flrm = /* @__PURE__ */ hMap(flt, 9, 1), fdrm = /* @__PURE__ */ hMap(fdt, 5, 1);
-var max = function(a) {
-	var m = a[0];
-	for (var i = 1; i < a.length; ++i) if (a[i] > m) m = a[i];
-	return m;
-};
-var bits = function(d, p, m) {
-	var o = p / 8 | 0;
-	return (d[o] | d[o + 1] << 8) >> (p & 7) & m;
-};
-var bits16 = function(d, p) {
-	var o = p / 8 | 0;
-	return (d[o] | d[o + 1] << 8 | d[o + 2] << 16) >> (p & 7);
-};
-var shft = function(p) {
-	return (p + 7) / 8 | 0;
-};
-var slc$1 = function(v, s, e) {
-	if (s == null || s < 0) s = 0;
-	if (e == null || e > v.length) e = v.length;
-	return new u8$1(v.subarray(s, e));
-};
-var ec$1 = [
-	"unexpected EOF",
-	"invalid block type",
-	"invalid length/literal",
-	"invalid distance",
-	"stream finished",
-	"no stream handler",
-	,
-	"no callback",
-	"invalid UTF-8 data",
-	"extra field too long",
-	"date not in range 1980-2099",
-	"filename too long",
-	"stream finishing",
-	"invalid zip data"
-];
-var err$1 = function(ind, msg, nt) {
-	var e = new Error(msg || ec$1[ind]);
-	e.code = ind;
-	if (Error.captureStackTrace) Error.captureStackTrace(e, err$1);
-	if (!nt) throw e;
-	return e;
-};
-var inflt = function(dat, st, buf, dict) {
-	var sl = dat.length, dl = dict ? dict.length : 0;
-	if (!sl || st.f && !st.l) return buf || new u8$1(0);
-	var noBuf = !buf;
-	var resize = noBuf || st.i != 2;
-	var noSt = st.i;
-	if (noBuf) buf = new u8$1(sl * 3);
-	var cbuf = function(l) {
-		var bl = buf.length;
-		if (l > bl) {
-			var nbuf = new u8$1(Math.max(bl * 2, l));
-			nbuf.set(buf);
-			buf = nbuf;
-		}
-	};
-	var final = st.f || 0, pos = st.p || 0, bt = st.b || 0, lm = st.l, dm = st.d, lbt = st.m, dbt = st.n;
-	var tbts = sl * 8;
-	do {
-		if (!lm) {
-			final = bits(dat, pos, 1);
-			var type = bits(dat, pos + 1, 3);
-			pos += 3;
-			if (!type) {
-				var s = shft(pos) + 4, l = dat[s - 4] | dat[s - 3] << 8, t = s + l;
-				if (t > sl) {
-					if (noSt) err$1(0);
-					break;
-				}
-				if (resize) cbuf(bt + l);
-				buf.set(dat.subarray(s, t), bt);
-				st.b = bt += l, st.p = pos = t * 8, st.f = final;
-				continue;
-			} else if (type == 1) lm = flrm, dm = fdrm, lbt = 9, dbt = 5;
-			else if (type == 2) {
-				var hLit = bits(dat, pos, 31) + 257, hcLen = bits(dat, pos + 10, 15) + 4;
-				var tl = hLit + bits(dat, pos + 5, 31) + 1;
-				pos += 14;
-				var ldt = new u8$1(tl);
-				var clt = new u8$1(19);
-				for (var i = 0; i < hcLen; ++i) clt[clim[i]] = bits(dat, pos + i * 3, 7);
-				pos += hcLen * 3;
-				var clb = max(clt), clbmsk = (1 << clb) - 1;
-				var clm = hMap(clt, clb, 1);
-				for (var i = 0; i < tl;) {
-					var r = clm[bits(dat, pos, clbmsk)];
-					pos += r & 15;
-					var s = r >> 4;
-					if (s < 16) ldt[i++] = s;
-					else {
-						var c = 0, n = 0;
-						if (s == 16) n = 3 + bits(dat, pos, 3), pos += 2, c = ldt[i - 1];
-						else if (s == 17) n = 3 + bits(dat, pos, 7), pos += 3;
-						else if (s == 18) n = 11 + bits(dat, pos, 127), pos += 7;
-						while (n--) ldt[i++] = c;
-					}
-				}
-				var lt = ldt.subarray(0, hLit), dt = ldt.subarray(hLit);
-				lbt = max(lt);
-				dbt = max(dt);
-				lm = hMap(lt, lbt, 1);
-				dm = hMap(dt, dbt, 1);
-			} else err$1(1);
-			if (pos > tbts) {
-				if (noSt) err$1(0);
-				break;
-			}
-		}
-		if (resize) cbuf(bt + 131072);
-		var lms = (1 << lbt) - 1, dms = (1 << dbt) - 1;
-		var lpos = pos;
-		for (;; lpos = pos) {
-			var c = lm[bits16(dat, pos) & lms], sym = c >> 4;
-			pos += c & 15;
-			if (pos > tbts) {
-				if (noSt) err$1(0);
-				break;
-			}
-			if (!c) err$1(2);
-			if (sym < 256) buf[bt++] = sym;
-			else if (sym == 256) {
-				lpos = pos, lm = null;
-				break;
-			} else {
-				var add = sym - 254;
-				if (sym > 264) {
-					var i = sym - 257, b = fleb[i];
-					add = bits(dat, pos, (1 << b) - 1) + fl[i];
-					pos += b;
-				}
-				var d = dm[bits16(dat, pos) & dms], dsym = d >> 4;
-				if (!d) err$1(3);
-				pos += d & 15;
-				var dt = fd[dsym];
-				if (dsym > 3) {
-					var b = fdeb[dsym];
-					dt += bits16(dat, pos) & (1 << b) - 1, pos += b;
-				}
-				if (pos > tbts) {
-					if (noSt) err$1(0);
-					break;
-				}
-				if (resize) cbuf(bt + 131072);
-				var end = bt + add;
-				if (bt < dt) {
-					var shift = dl - dt, dend = Math.min(dt, end);
-					if (shift + bt < 0) err$1(3);
-					for (; bt < dend; ++bt) buf[bt] = dict[shift + bt];
-				}
-				for (; bt < end; ++bt) buf[bt] = buf[bt - dt];
-			}
-		}
-		st.l = lm, st.p = lpos, st.b = bt, st.f = final;
-		if (lm) final = 1, st.m = lbt, st.d = dm, st.n = dbt;
-	} while (!final);
-	return bt != buf.length && noBuf ? slc$1(buf, 0, bt) : buf.subarray(0, bt);
-};
-var et = /* @__PURE__ */ new u8$1(0);
-var mrg = function(a, b) {
-	var o = {};
-	for (var k in a) o[k] = a[k];
-	for (var k in b) o[k] = b[k];
-	return o;
-};
-var wcln = function(fn, fnStr, td) {
-	var dt = fn();
-	var st = fn.toString();
-	var ks = st.slice(st.indexOf("[") + 1, st.lastIndexOf("]")).replace(/\s+/g, "").split(",");
-	for (var i = 0; i < dt.length; ++i) {
-		var v = dt[i], k = ks[i];
-		if (typeof v == "function") {
-			fnStr += ";" + k + "=";
-			var st_1 = v.toString();
-			if (v.prototype) if (st_1.indexOf("[native code]") != -1) {
-				var spInd = st_1.indexOf(" ", 8) + 1;
-				fnStr += st_1.slice(spInd, st_1.indexOf("(", spInd));
-			} else {
-				fnStr += st_1;
-				for (var t in v.prototype) fnStr += ";" + k + ".prototype." + t + "=" + v.prototype[t].toString();
-			}
-			else fnStr += st_1;
-		} else td[k] = v;
-	}
-	return fnStr;
-};
-var ch = [];
-var cbfs = function(v) {
-	var tl = [];
-	for (var k in v) if (v[k].buffer) tl.push((v[k] = new v[k].constructor(v[k])).buffer);
-	return tl;
-};
-var wrkr = function(fns, init, id, cb) {
-	if (!ch[id]) {
-		var fnStr = "", td_1 = {}, m = fns.length - 1;
-		for (var i = 0; i < m; ++i) fnStr = wcln(fns[i], fnStr, td_1);
-		ch[id] = {
-			c: wcln(fns[m], fnStr, td_1),
-			e: td_1
-		};
-	}
-	var td = mrg({}, ch[id].e);
-	return wk(ch[id].c + ";onmessage=function(e){for(var k in e.data)self[k]=e.data[k];onmessage=" + init.toString() + "}", id, td, cbfs(td), cb);
-};
-var bInflt = function() {
-	return [
-		u8$1,
-		u16$1,
-		i32$1,
-		fleb,
-		fdeb,
-		clim,
-		fl,
-		fd,
-		flrm,
-		fdrm,
-		rev,
-		ec$1,
-		hMap,
-		max,
-		bits,
-		bits16,
-		shft,
-		slc$1,
-		err$1,
-		inflt,
-		inflateSync,
-		pbf,
-		gopt
-	];
-};
-var guze = function() {
-	return [gzs, gzl];
-};
-var zule = function() {
-	return [zls];
-};
-var pbf = function(msg) {
-	return postMessage(msg, [msg.buffer]);
-};
-var gopt = function(o) {
-	return o && {
-		out: o.size && new u8$1(o.size),
-		dictionary: o.dictionary
-	};
-};
-var cbify = function(dat, opts, fns, init, id, cb) {
-	var w = wrkr(fns, init, id, function(err, dat) {
-		w.terminate();
-		cb(err, dat);
-	});
-	w.postMessage([dat, opts], opts.consume ? [dat.buffer] : []);
-	return function() {
-		w.terminate();
-	};
-};
-var gzs = function(d) {
-	if (d[0] != 31 || d[1] != 139 || d[2] != 8) err$1(6, "invalid gzip data");
-	var flg = d[3];
-	var st = 10;
-	if (flg & 4) st += (d[10] | d[11] << 8) + 2;
-	for (var zs = (flg >> 3 & 1) + (flg >> 4 & 1); zs > 0; zs -= !d[st++]);
-	return st + (flg & 2);
-};
-var gzl = function(d) {
-	var l = d.length;
-	return (d[l - 4] | d[l - 3] << 8 | d[l - 2] << 16 | d[l - 1] << 24) >>> 0;
-};
-var zls = function(d, dict) {
-	if ((d[0] & 15) != 8 || d[0] >> 4 > 7 || (d[0] << 8 | d[1]) % 31) err$1(6, "invalid zlib data");
-	if ((d[1] >> 5 & 1) == +!dict) err$1(6, "invalid zlib data: " + (d[1] & 32 ? "need" : "unexpected") + " dictionary");
-	return (d[1] >> 3 & 4) + 2;
-};
-function inflate(data, opts, cb) {
-	if (!cb) cb = opts, opts = {};
-	if (typeof cb != "function") err$1(7);
-	return cbify(data, opts, [bInflt], function(ev) {
-		return pbf(inflateSync(ev.data[0], gopt(ev.data[1])));
-	}, 1, cb);
-}
-function inflateSync(data, opts) {
-	return inflt(data, { i: 2 }, opts && opts.out, opts && opts.dictionary);
-}
-function gunzip(data, opts, cb) {
-	if (!cb) cb = opts, opts = {};
-	if (typeof cb != "function") err$1(7);
-	return cbify(data, opts, [
-		bInflt,
-		guze,
-		function() {
-			return [gunzipSync];
-		}
-	], function(ev) {
-		return pbf(gunzipSync(ev.data[0], ev.data[1]));
-	}, 3, cb);
-}
-function gunzipSync(data, opts) {
-	var st = gzs(data);
-	if (st + 8 > data.length) err$1(6, "invalid gzip data");
-	return inflt(data.subarray(st, -8), { i: 2 }, opts && opts.out || new u8$1(gzl(data)), opts && opts.dictionary);
-}
-function unzlib(data, opts, cb) {
-	if (!cb) cb = opts, opts = {};
-	if (typeof cb != "function") err$1(7);
-	return cbify(data, opts, [
-		bInflt,
-		zule,
-		function() {
-			return [unzlibSync];
-		}
-	], function(ev) {
-		return pbf(unzlibSync(ev.data[0], gopt(ev.data[1])));
-	}, 5, cb);
-}
-function unzlibSync(data, opts) {
-	return inflt(data.subarray(zls(data, opts && opts.dictionary), -4), { i: 2 }, opts && opts.out, opts && opts.dictionary);
-}
-function decompress$1(data, opts, cb) {
-	if (!cb) cb = opts, opts = {};
-	if (typeof cb != "function") err$1(7);
-	return data[0] == 31 && data[1] == 139 && data[2] == 8 ? gunzip(data, opts, cb) : (data[0] & 15) != 8 || data[0] >> 4 > 7 || (data[0] << 8 | data[1]) % 31 ? inflate(data, opts, cb) : unzlib(data, opts, cb);
-}
-var td = typeof TextDecoder != "undefined" && /* @__PURE__ */ new TextDecoder();
-try {
-	td.decode(et, { stream: true });
-} catch (e) {}
-//#endregion
-//#region ../../node_modules/.pnpm/fzstd@0.1.1/node_modules/fzstd/esm/index.mjs
-var ab = ArrayBuffer, u8 = Uint8Array, u16 = Uint16Array, i16 = Int16Array, i32 = Int32Array;
-var slc = function(v, s, e) {
-	if (u8.prototype.slice) return u8.prototype.slice.call(v, s, e);
-	if (s == null || s < 0) s = 0;
-	if (e == null || e > v.length) e = v.length;
-	var n = new u8(e - s);
-	n.set(v.subarray(s, e));
-	return n;
-};
-var fill = function(v, n, s, e) {
-	if (u8.prototype.fill) return u8.prototype.fill.call(v, n, s, e);
-	if (s == null || s < 0) s = 0;
-	if (e == null || e > v.length) e = v.length;
-	for (; s < e; ++s) v[s] = n;
-	return v;
-};
-var cpw = function(v, t, s, e) {
-	if (u8.prototype.copyWithin) return u8.prototype.copyWithin.call(v, t, s, e);
-	if (s == null || s < 0) s = 0;
-	if (e == null || e > v.length) e = v.length;
-	while (s < e) v[t++] = v[s++];
-};
-var ec = [
-	"invalid zstd data",
-	"window size too large (>2046MB)",
-	"invalid block type",
-	"FSE accuracy too high",
-	"match distance too far back",
-	"unexpected EOF"
-];
-var err = function(ind, msg, nt) {
-	var e = new Error(msg || ec[ind]);
-	e.code = ind;
-	if (Error.captureStackTrace) Error.captureStackTrace(e, err);
-	if (!nt) throw e;
-	return e;
-};
-var rb = function(d, b, n) {
-	var i = 0, o = 0;
-	for (; i < n; ++i) o |= d[b++] << (i << 3);
-	return o;
-};
-var b4 = function(d, b) {
-	return (d[b] | d[b + 1] << 8 | d[b + 2] << 16 | d[b + 3] << 24) >>> 0;
-};
-var rzfh = function(dat, w) {
-	var n3 = dat[0] | dat[1] << 8 | dat[2] << 16;
-	if (n3 == 3126568 && dat[3] == 253) {
-		var flg = dat[4];
-		var ss = flg >> 5 & 1, cc = flg >> 2 & 1, df = flg & 3, fcf = flg >> 6;
-		if (flg & 8) err(0);
-		var bt = 6 - ss;
-		var db = df == 3 ? 4 : df;
-		var di = rb(dat, bt, db);
-		bt += db;
-		var fsb = fcf ? 1 << fcf : ss;
-		var fss = rb(dat, bt, fsb) + (fcf == 1 && 256);
-		var ws = fss;
-		if (!ss) {
-			var wb = 1 << 10 + (dat[5] >> 3);
-			ws = wb + (wb >> 3) * (dat[5] & 7);
-		}
-		if (ws > 2145386496) err(1);
-		var buf = new u8((w == 1 ? fss || ws : w ? 0 : ws) + 12);
-		buf[0] = 1, buf[4] = 4, buf[8] = 8;
-		return {
-			b: bt + fsb,
-			y: 0,
-			l: 0,
-			d: di,
-			w: w && w != 1 ? w : buf.subarray(12),
-			e: ws,
-			o: new i32(buf.buffer, 0, 3),
-			u: fss,
-			c: cc,
-			m: Math.min(131072, ws)
-		};
-	} else if ((n3 >> 4 | dat[3] << 20) == 25481893) return b4(dat, 4) + 8;
-	err(0);
-};
-var msb = function(val) {
-	var bits = 0;
-	for (; 1 << bits <= val; ++bits);
-	return bits - 1;
-};
-var rfse = function(dat, bt, mal) {
-	var tpos = (bt << 3) + 4;
-	var al = (dat[bt] & 15) + 5;
-	if (al > mal) err(3);
-	var sz = 1 << al;
-	var probs = sz, sym = -1, re = -1, i = -1, ht = sz;
-	var buf = new ab(512 + (sz << 2));
-	var freq = new i16(buf, 0, 256);
-	var dstate = new u16(buf, 0, 256);
-	var nstate = new u16(buf, 512, sz);
-	var bb1 = 512 + (sz << 1);
-	var syms = new u8(buf, bb1, sz);
-	var nbits = new u8(buf, bb1 + sz);
-	while (sym < 255 && probs > 0) {
-		var bits = msb(probs + 1);
-		var cbt = tpos >> 3;
-		var msk = (1 << bits + 1) - 1;
-		var val = (dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (tpos & 7) & msk;
-		var msk1fb = (1 << bits) - 1;
-		var msv = msk - probs - 1;
-		var sval = val & msk1fb;
-		if (sval < msv) tpos += bits, val = sval;
-		else {
-			tpos += bits + 1;
-			if (val > msk1fb) val -= msv;
-		}
-		freq[++sym] = --val;
-		if (val == -1) {
-			probs += val;
-			syms[--ht] = sym;
-		} else probs -= val;
-		if (!val) do {
-			var rbt = tpos >> 3;
-			re = (dat[rbt] | dat[rbt + 1] << 8) >> (tpos & 7) & 3;
-			tpos += 2;
-			sym += re;
-		} while (re == 3);
-	}
-	if (sym > 255 || probs) err(0);
-	var sympos = 0;
-	var sstep = (sz >> 1) + (sz >> 3) + 3;
-	var smask = sz - 1;
-	for (var s = 0; s <= sym; ++s) {
-		var sf = freq[s];
-		if (sf < 1) {
-			dstate[s] = -sf;
-			continue;
-		}
-		for (i = 0; i < sf; ++i) {
-			syms[sympos] = s;
-			do
-				sympos = sympos + sstep & smask;
-			while (sympos >= ht);
-		}
-	}
-	if (sympos) err(0);
-	for (i = 0; i < sz; ++i) {
-		var ns = dstate[syms[i]]++;
-		nstate[i] = (ns << (nbits[i] = al - msb(ns))) - sz;
-	}
-	return [tpos + 7 >> 3, {
-		b: al,
-		s: syms,
-		n: nbits,
-		t: nstate
-	}];
-};
-var rhu = function(dat, bt) {
-	var i = 0, wc = -1;
-	var buf = new u8(292), hb = dat[bt];
-	var hw = buf.subarray(0, 256);
-	var rc = buf.subarray(256, 268);
-	var ri = new u16(buf.buffer, 268);
-	if (hb < 128) {
-		var _a = rfse(dat, bt + 1, 6), ebt = _a[0], fdt = _a[1];
-		bt += hb;
-		var epos = ebt << 3;
-		var lb = dat[bt];
-		if (!lb) err(0);
-		var st1 = 0, st2 = 0, btr1 = fdt.b, btr2 = btr1;
-		var fpos = (++bt << 3) - 8 + msb(lb);
-		for (;;) {
-			fpos -= btr1;
-			if (fpos < epos) break;
-			var cbt = fpos >> 3;
-			st1 += (dat[cbt] | dat[cbt + 1] << 8) >> (fpos & 7) & (1 << btr1) - 1;
-			hw[++wc] = fdt.s[st1];
-			fpos -= btr2;
-			if (fpos < epos) break;
-			cbt = fpos >> 3;
-			st2 += (dat[cbt] | dat[cbt + 1] << 8) >> (fpos & 7) & (1 << btr2) - 1;
-			hw[++wc] = fdt.s[st2];
-			btr1 = fdt.n[st1];
-			st1 = fdt.t[st1];
-			btr2 = fdt.n[st2];
-			st2 = fdt.t[st2];
-		}
-		if (++wc > 255) err(0);
-	} else {
-		wc = hb - 127;
-		for (; i < wc; i += 2) {
-			var byte = dat[++bt];
-			hw[i] = byte >> 4;
-			hw[i + 1] = byte & 15;
-		}
-		++bt;
-	}
-	var wes = 0;
-	for (i = 0; i < wc; ++i) {
-		var wt = hw[i];
-		if (wt > 11) err(0);
-		wes += wt && 1 << wt - 1;
-	}
-	var mb = msb(wes) + 1;
-	var ts = 1 << mb;
-	var rem = ts - wes;
-	if (rem & rem - 1) err(0);
-	hw[wc++] = msb(rem) + 1;
-	for (i = 0; i < wc; ++i) {
-		var wt = hw[i];
-		++rc[hw[i] = wt && mb + 1 - wt];
-	}
-	var hbuf = new u8(ts << 1);
-	var syms = hbuf.subarray(0, ts), nb = hbuf.subarray(ts);
-	ri[mb] = 0;
-	for (i = mb; i > 0; --i) {
-		var pv = ri[i];
-		fill(nb, i, pv, ri[i - 1] = pv + rc[i] * (1 << mb - i));
-	}
-	if (ri[0] != ts) err(0);
-	for (i = 0; i < wc; ++i) {
-		var bits = hw[i];
-		if (bits) {
-			var code = ri[bits];
-			fill(syms, i, code, ri[bits] = code + (1 << mb - bits));
-		}
-	}
-	return [bt, {
-		n: nb,
-		b: mb,
-		s: syms
-	}];
-};
-var dllt = rfse(/* @__PURE__ */ new u8([
-	81,
-	16,
-	99,
-	140,
-	49,
-	198,
-	24,
-	99,
-	12,
-	33,
-	196,
-	24,
-	99,
-	102,
-	102,
-	134,
-	70,
-	146,
-	4
-]), 0, 6)[1];
-var dmlt = rfse(/* @__PURE__ */ new u8([
-	33,
-	20,
-	196,
-	24,
-	99,
-	140,
-	33,
-	132,
-	16,
-	66,
-	8,
-	33,
-	132,
-	16,
-	66,
-	8,
-	33,
-	68,
-	68,
-	68,
-	68,
-	68,
-	68,
-	68,
-	68,
-	36,
-	9
-]), 0, 6)[1];
-var doct = rfse(/* @__PURE__ */ new u8([
-	32,
-	132,
-	16,
-	66,
-	102,
-	70,
-	68,
-	68,
-	68,
-	68,
-	36,
-	73,
-	2
-]), 0, 5)[1];
-var b2bl = function(b, s) {
-	var len = b.length, bl = new i32(len);
-	for (var i = 0; i < len; ++i) {
-		bl[i] = s;
-		s += 1 << b[i];
-	}
-	return bl;
-};
-var llb = /* @__PURE__ */ new u8((/* @__PURE__ */ new i32([
-	0,
-	0,
-	0,
-	0,
-	16843009,
-	50528770,
-	134678020,
-	202050057,
-	269422093
-])).buffer, 0, 36);
-var llbl = /* @__PURE__ */ b2bl(llb, 0);
-var mlb = /* @__PURE__ */ new u8((/* @__PURE__ */ new i32([
-	0,
-	0,
-	0,
-	0,
-	0,
-	0,
-	0,
-	0,
-	16843009,
-	50528770,
-	117769220,
-	185207048,
-	252579084,
-	16
-])).buffer, 0, 53);
-var mlbl = /* @__PURE__ */ b2bl(mlb, 3);
-var dhu = function(dat, out, hu) {
-	var len = dat.length, ss = out.length, lb = dat[len - 1], msk = (1 << hu.b) - 1, eb = -hu.b;
-	if (!lb) err(0);
-	var st = 0, btr = hu.b, pos = (len << 3) - 8 + msb(lb) - btr, i = -1;
-	for (; pos > eb && i < ss;) {
-		var cbt = pos >> 3;
-		var val = (dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (pos & 7);
-		st = (st << btr | val) & msk;
-		out[++i] = hu.s[st];
-		pos -= btr = hu.n[st];
-	}
-	if (pos != eb || i + 1 != ss) err(0);
-};
-var dhu4 = function(dat, out, hu) {
-	var bt = 6;
-	var sz1 = out.length + 3 >> 2, sz2 = sz1 << 1, sz3 = sz1 + sz2;
-	dhu(dat.subarray(bt, bt += dat[0] | dat[1] << 8), out.subarray(0, sz1), hu);
-	dhu(dat.subarray(bt, bt += dat[2] | dat[3] << 8), out.subarray(sz1, sz2), hu);
-	dhu(dat.subarray(bt, bt += dat[4] | dat[5] << 8), out.subarray(sz2, sz3), hu);
-	dhu(dat.subarray(bt), out.subarray(sz3), hu);
-};
-var rzb = function(dat, st, out) {
-	var _a;
-	var bt = st.b;
-	var b0 = dat[bt], btype = b0 >> 1 & 3;
-	st.l = b0 & 1;
-	var sz = b0 >> 3 | dat[bt + 1] << 5 | dat[bt + 2] << 13;
-	var ebt = (bt += 3) + sz;
-	if (btype == 1) {
-		if (bt >= dat.length) return;
-		st.b = bt + 1;
-		if (out) {
-			fill(out, dat[bt], st.y, st.y += sz);
-			return out;
-		}
-		return fill(new u8(sz), dat[bt]);
-	}
-	if (ebt > dat.length) return;
-	if (btype == 0) {
-		st.b = ebt;
-		if (out) {
-			out.set(dat.subarray(bt, ebt), st.y);
-			st.y += sz;
-			return out;
-		}
-		return slc(dat, bt, ebt);
-	}
-	if (btype == 2) {
-		var b3 = dat[bt], lbt = b3 & 3, sf = b3 >> 2 & 3;
-		var lss = b3 >> 4, lcs = 0, s4 = 0;
-		if (lbt < 2) if (sf & 1) lss |= dat[++bt] << 4 | (sf & 2 && dat[++bt] << 12);
-		else lss = b3 >> 3;
-		else {
-			s4 = sf;
-			if (sf < 2) lss |= (dat[++bt] & 63) << 4, lcs = dat[bt] >> 6 | dat[++bt] << 2;
-			else if (sf == 2) lss |= dat[++bt] << 4 | (dat[++bt] & 3) << 12, lcs = dat[bt] >> 2 | dat[++bt] << 6;
-			else lss |= dat[++bt] << 4 | (dat[++bt] & 63) << 12, lcs = dat[bt] >> 6 | dat[++bt] << 2 | dat[++bt] << 10;
-		}
-		++bt;
-		var buf = out ? out.subarray(st.y, st.y + st.m) : new u8(st.m);
-		var spl = buf.length - lss;
-		if (lbt == 0) buf.set(dat.subarray(bt, bt += lss), spl);
-		else if (lbt == 1) fill(buf, dat[bt++], spl);
-		else {
-			var hu = st.h;
-			if (lbt == 2) {
-				var hud = rhu(dat, bt);
-				lcs += bt - (bt = hud[0]);
-				st.h = hu = hud[1];
-			} else if (!hu) err(0);
-			(s4 ? dhu4 : dhu)(dat.subarray(bt, bt += lcs), buf.subarray(spl), hu);
-		}
-		var ns = dat[bt++];
-		if (ns) {
-			if (ns == 255) ns = (dat[bt++] | dat[bt++] << 8) + 32512;
-			else if (ns > 127) ns = ns - 128 << 8 | dat[bt++];
-			var scm = dat[bt++];
-			if (scm & 3) err(0);
-			var dts = [
-				dmlt,
-				doct,
-				dllt
-			];
-			for (var i = 2; i > -1; --i) {
-				var md = scm >> (i << 1) + 2 & 3;
-				if (md == 1) {
-					var rbuf = new u8([
-						0,
-						0,
-						dat[bt++]
-					]);
-					dts[i] = {
-						s: rbuf.subarray(2, 3),
-						n: rbuf.subarray(0, 1),
-						t: new u16(rbuf.buffer, 0, 1),
-						b: 0
-					};
-				} else if (md == 2) _a = rfse(dat, bt, 9 - (i & 1)), bt = _a[0], dts[i] = _a[1];
-				else if (md == 3) {
-					if (!st.t) err(0);
-					dts[i] = st.t[i];
-				}
-			}
-			var _b = st.t = dts, mlt = _b[0], oct = _b[1], llt = _b[2];
-			var lb = dat[ebt - 1];
-			if (!lb) err(0);
-			var spos = (ebt << 3) - 8 + msb(lb) - llt.b, cbt = spos >> 3, oubt = 0;
-			var lst = (dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << llt.b) - 1;
-			cbt = (spos -= oct.b) >> 3;
-			var ost = (dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << oct.b) - 1;
-			cbt = (spos -= mlt.b) >> 3;
-			var mst = (dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << mlt.b) - 1;
-			for (++ns; --ns;) {
-				var llc = llt.s[lst];
-				var lbtr = llt.n[lst];
-				var mlc = mlt.s[mst];
-				var mbtr = mlt.n[mst];
-				var ofc = oct.s[ost];
-				var obtr = oct.n[ost];
-				cbt = (spos -= ofc) >> 3;
-				var ofp = 1 << ofc;
-				var off = ofp + ((dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16 | dat[cbt + 3] << 24) >>> (spos & 7) & ofp - 1);
-				cbt = (spos -= mlb[mlc]) >> 3;
-				var ml = mlbl[mlc] + ((dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (spos & 7) & (1 << mlb[mlc]) - 1);
-				cbt = (spos -= llb[llc]) >> 3;
-				var ll = llbl[llc] + ((dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (spos & 7) & (1 << llb[llc]) - 1);
-				cbt = (spos -= lbtr) >> 3;
-				lst = llt.t[lst] + ((dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << lbtr) - 1);
-				cbt = (spos -= mbtr) >> 3;
-				mst = mlt.t[mst] + ((dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << mbtr) - 1);
-				cbt = (spos -= obtr) >> 3;
-				ost = oct.t[ost] + ((dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << obtr) - 1);
-				if (off > 3) {
-					st.o[2] = st.o[1];
-					st.o[1] = st.o[0];
-					st.o[0] = off -= 3;
-				} else {
-					var idx = off - (ll != 0);
-					if (idx) {
-						off = idx == 3 ? st.o[0] - 1 : st.o[idx];
-						if (idx > 1) st.o[2] = st.o[1];
-						st.o[1] = st.o[0];
-						st.o[0] = off;
-					} else off = st.o[0];
-				}
-				for (var i = 0; i < ll; ++i) buf[oubt + i] = buf[spl + i];
-				oubt += ll, spl += ll;
-				var stin = oubt - off;
-				if (stin < 0) {
-					var len = -stin;
-					var bs = st.e + stin;
-					if (len > ml) len = ml;
-					for (var i = 0; i < len; ++i) buf[oubt + i] = st.w[bs + i];
-					oubt += len, ml -= len, stin = 0;
-				}
-				for (var i = 0; i < ml; ++i) buf[oubt + i] = buf[stin + i];
-				oubt += ml;
-			}
-			if (oubt != spl) while (spl < buf.length) buf[oubt++] = buf[spl++];
-			else oubt = buf.length;
-			if (out) st.y += oubt;
-			else buf = slc(buf, 0, oubt);
-		} else if (out) {
-			st.y += lss;
-			if (spl) for (var i = 0; i < lss; ++i) buf[i] = buf[spl + i];
-		} else if (spl) buf = slc(buf, spl);
-		st.b = ebt;
-		return buf;
-	}
-	err(2);
-};
-var cct = function(bufs, ol) {
-	if (bufs.length == 1) return bufs[0];
-	var buf = new u8(ol);
-	for (var i = 0, b = 0; i < bufs.length; ++i) {
-		var chk = bufs[i];
-		buf.set(chk, b);
-		b += chk.length;
-	}
-	return buf;
-};
-/**
-* Decompresses Zstandard data
-* @param dat The input data
-* @param buf The output buffer. If unspecified, the function will allocate
-*            exactly enough memory to fit the decompressed data. If your
-*            data has multiple frames and you know the output size, specifying
-*            it will yield better performance.
-* @returns The decompressed data
-*/
-function decompress(dat, buf) {
-	var bufs = [], nb = +!buf;
-	var bt = 0, ol = 0;
-	for (; dat.length;) {
-		var st = rzfh(dat, nb || buf);
-		if (typeof st == "object") {
-			if (nb) {
-				buf = null;
-				if (st.w.length == st.u) {
-					bufs.push(buf = st.w);
-					ol += st.u;
-				}
-			} else {
-				bufs.push(buf);
-				st.e = 0;
-			}
-			for (; !st.l;) {
-				var blk = rzb(dat, st, buf);
-				if (!blk) err(5);
-				if (buf) st.e = st.y;
-				else {
-					bufs.push(blk);
-					ol += blk.length;
-					cpw(st.w, 0, blk.length);
-					st.w.set(blk, st.w.length - blk.length);
-				}
-			}
-			bt = st.b + st.c * 4;
-		} else bt = st;
-		dat = dat.subarray(bt);
-	}
-	return cct(bufs, ol);
-}
-//#endregion
-//#region src/client/remote/zstd-worker-code.ts
-/**
-* Zstandard decompression Web Worker code.
-*
-* This file contains the worker code as a string constant, along with
-* the base64-encoded fzstd library. The worker is loaded via Blob URL
-* to work in VSCode webviews which have CORS restrictions.
-*/
-/**
-* The worker script code that handles zstd decompression.
-*/
-var kZstdWorkerCode = `
-// fzstd decompress function, loaded dynamically
-let decompress = null;
-
-self.onmessage = function(e) {
-  const { type } = e.data || {};
-
-  if (type === 'init') {
-    const { scriptContent } = e.data;
-    try {
-      if (!decompress) {
-        // Decode and evaluate the fzstd UMD library
-        const script = atob(scriptContent);
-        // The UMD module self-executes and assigns to self.fzstd
-        new Function(script)();
-        if (!self.fzstd || typeof self.fzstd.decompress !== 'function') {
-          throw new Error('Failed to initialize fzstd decompressor');
-        }
-        decompress = self.fzstd.decompress;
-      }
-      self.postMessage({ type: 'init_complete', success: true });
-    } catch (err) {
-      console.error('fzstd init error in worker:', err);
-      self.postMessage({ type: 'init_complete', success: false, error: err.message || 'Unknown error' });
-    }
-    return;
-  }
-
-  if (type === 'decompress') {
-    const { requestId, data } = e.data;
-    try {
-      if (!decompress) {
-        throw new Error('Worker not initialized');
-      }
-      const result = decompress(data);
-      // Transfer the result buffer back to avoid copying
-      self.postMessage(
-        { requestId, success: true, data: result },
-        [result.buffer]
-      );
-    } catch (err) {
-      self.postMessage({
-        requestId,
-        success: false,
-        error: err instanceof Error ? err.message : 'Unknown error'
-      });
-    }
-  }
-};
-`;
-/**
-* Base64-encoded fzstd library (UMD version, ~8KB).
-* Source: node_modules/fzstd/umd/index.js
-*
-* The UMD format self-executes and assigns to self.fzstd, making
-* fzstd.decompress() available in the worker context.
-*/
-var kFzstdBase64 = `IWZ1bmN0aW9uKGYpe3R5cGVvZiBtb2R1bGUhPSd1bmRlZmluZWQnJiZ0eXBlb2YgZXhwb3J0cz09J29iamVjdCc/bW9kdWxlLmV4cG9ydHM9ZigpOnR5cGVvZiBkZWZpbmUhPSd1bmRlZmluZWQnJiZkZWZpbmUuYW1kP2RlZmluZShbJ2Z6c3RkJyxmXSk6KHR5cGVvZiBzZWxmIT0ndW5kZWZpbmVkJz9zZWxmOnRoaXMpLmZ6c3RkPWYoKX0oZnVuY3Rpb24oKXt2YXIgX2U9e307InVzZSBzdHJpY3QiO3ZhciByPUFycmF5QnVmZmVyLHQ9VWludDhBcnJheSxlPVVpbnQxNkFycmF5LG49SW50MTZBcnJheSxhPVVpbnQzMkFycmF5LHM9SW50MzJBcnJheSxpPWZ1bmN0aW9uKHIsZSxuKXtpZih0LnByb3RvdHlwZS5zbGljZSlyZXR1cm4gdC5wcm90b3R5cGUuc2xpY2UuY2FsbChyLGUsbik7KG51bGw9PWV8fGU8MCkmJihlPTApLChudWxsPT1ufHxuPnIubGVuZ3RoKSYmKG49ci5sZW5ndGgpO3ZhciBhPW5ldyB0KG4tZSk7cmV0dXJuIGEuc2V0KHIuc3ViYXJyYXkoZSxuKSksYX0sbz1mdW5jdGlvbihyLGUsbixhKXtpZih0LnByb3RvdHlwZS5maWxsKXJldHVybiB0LnByb3RvdHlwZS5maWxsLmNhbGwocixlLG4sYSk7Zm9yKChudWxsPT1ufHxuPDApJiYobj0wKSwobnVsbD09YXx8YT5yLmxlbmd0aCkmJihhPXIubGVuZ3RoKTtuPGE7KytuKXJbbl09ZTtyZXR1cm4gcn0sdT1mdW5jdGlvbihyLGUsbixhKXtpZih0LnByb3RvdHlwZS5jb3B5V2l0aGluKXJldHVybiB0LnByb3RvdHlwZS5jb3B5V2l0aGluLmNhbGwocixlLG4sYSk7Zm9yKChudWxsPT1ufHxuPDApJiYobj0wKSwobnVsbD09YXx8YT5yLmxlbmd0aCkmJihhPXIubGVuZ3RoKTtuPGE7KXJbZSsrXT1yW24rK119O19lLlpzdGRFcnJvckNvZGU9e0ludmFsaWREYXRhOjAsV2luZG93U2l6ZVRvb0xhcmdlOjEsSW52YWxpZEJsb2NrVHlwZToyLEZTRUFjY3VyYWN5VG9vSGlnaDozLERpc3RhbmNlVG9vRmFyQmFjazo0LFVuZXhwZWN0ZWRFT0Y6NX07dmFyIGg9WyJpbnZhbGlkIHpzdGQgZGF0YSIsIndpbmRvdyBzaXplIHRvbyBsYXJnZSAoPjIwNDZNQikiLCJpbnZhbGlkIGJsb2NrIHR5cGUiLCJGU0UgYWNjdXJhY3kgdG9vIGhpZ2giLCJtYXRjaCBkaXN0YW5jZSB0b28gZmFyIGJhY2siLCJ1bmV4cGVjdGVkIEVPRiJdLGY9ZnVuY3Rpb24ocix0LGUpe3ZhciBuPUVycm9yKHR8fGhbcl0pO2lmKG4uY29kZT1yLEVycm9yLmNhcHR1cmVTdGFja1RyYWNlJiZFcnJvci5jYXB0dXJlU3RhY2tUcmFjZShuLGYpLCFlKXRocm93IG47cmV0dXJuIG59LGw9ZnVuY3Rpb24ocix0LGUpe2Zvcih2YXIgbj0wLGE9MDtuPGU7KytuKWF8PXJbdCsrXTw8KG48PDMpO3JldHVybiBhfSx2PWZ1bmN0aW9uKHIsdCl7cmV0dXJuKHJbdF18clt0KzFdPDw4fHJbdCsyXTw8MTZ8clt0KzNdPDwyNCk+Pj4wfSxjPWZ1bmN0aW9uKHIsZSl7dmFyIG49clswXXxyWzFdPDw4fHJbMl08PDE2O2lmKDMxMjY1Njg9PW4mJjI1Mz09clszXSl7dmFyIGE9cls0XSxpPWE+PjUmMSxvPWE+PjImMSx1PTMmYSxoPWE+PjY7OCZhJiZmKDApO3ZhciBjPTYtaSxiPTM9PXU/NDp1LHk9bChyLGMsYikscD1oPzE8PGg6aSx3PWwocixjKz1iLHApKygxPT1oJiYyNTYpLGc9dztpZighaSl7dmFyIGQ9MTw8MTArKHJbNV0+PjMpO2c9ZCsoZD4+MykqKDcmcls1XSl9Zz4yMTQ1Mzg2NDk2JiZmKDEpO3ZhciBtPW5ldyB0KCgxPT1lP3d8fGc6ZT8wOmcpKzEyKTtyZXR1cm4gbVswXT0xLG1bNF09NCxtWzhdPTgse2I6YytwLHk6MCxsOjAsZDp5LHc6ZSYmMSE9ZT9lOm0uc3ViYXJyYXkoMTIpLGU6ZyxvOm5ldyBzKG0uYnVmZmVyLDAsMyksdTp3LGM6byxtOk1hdGgubWluKDEzMTA3MixnKX19aWYoMjU0ODE4OTM9PShuPj40fHJbM108PDIwKSlyZXR1cm4gdihyLDQpKzg7ZigwKX0sYj1mdW5jdGlvbihyKXtmb3IodmFyIHQ9MDsxPDx0PD1yOysrdCk7cmV0dXJuIHQtMX0seT1mdW5jdGlvbihhLHMsaSl7dmFyIG89NCsoczw8MyksdT01KygxNSZhW3NdKTt1PmkmJmYoMyk7Zm9yKHZhciBoPTE8PHUsbD1oLHY9LTEsYz0tMSx5PS0xLHA9aCx3PW5ldyByKDUxMisoaDw8MikpLGc9bmV3IG4odywwLDI1NiksZD1uZXcgZSh3LDAsMjU2KSxtPW5ldyBlKHcsNTEyLGgpLHo9NTEyKyhoPDwxKSxFPW5ldyB0KHcseixoKSxrPW5ldyB0KHcseitoKTt2PDI1NSYmbD4wOyl7dmFyIEE9YihsKzEpLFQ9bz4+Myx4PSgxPDxBKzEpLTEsRj0oYVtUXXxhW1QrMV08PDh8YVtUKzJdPDwxNik+Pig3Jm8pJngsUz0oMTw8QSktMSxCPXgtbC0xLEk9RiZTO2lmKEk8Qj8obys9QSxGPUkpOihvKz1BKzEsRj5TJiYoRi09QikpLGdbKyt2XT0tLUYsLTE9PUY/KGwrPUYsRVstLXBdPXYpOmwtPUYsIUYpZG97dmFyIFU9bz4+MztjPShhW1VdfGFbVSsxXTw8OCk+Pig3Jm8pJjMsbys9Mix2Kz1jfXdoaWxlKDM9PWMpfSh2PjI1NXx8bCkmJmYoMCk7Zm9yKHZhciBEPTAsTT0oaD4+MSkrKGg+PjMpKzMsVz1oLTEsTz0wO088PXY7KytPKXt2YXIgaj1nW09dO2lmKGo8MSlkW09dPS1qO2Vsc2UgZm9yKHk9MDt5PGo7Kyt5KXtFW0RdPU87ZG97RD1EK00mV313aGlsZShEPj1wKX19Zm9yKEQmJmYoMCkseT0wO3k8aDsrK3kpe3ZhciBDPWRbRVt5XV0rKyxIPWtbeV09dS1iKEMpO21beV09KEM8PEgpLWh9cmV0dXJuW28rNz4+Myx7Yjp1LHM6RSxuOmssdDptfV19LHA9ZnVuY3Rpb24ocixuKXt2YXIgYT0wLHM9LTEsaT1uZXcgdCgyOTIpLHU9cltuXSxoPWkuc3ViYXJyYXkoMCwyNTYpLGw9aS5zdWJhcnJheSgyNTYsMjY4KSx2PW5ldyBlKGkuYnVmZmVyLDI2OCk7aWYodTwxMjgpe3ZhciBjPXkocixuKzEsNikscD1jWzFdLHc9Y1swXTw8MyxnPXJbbis9dV07Z3x8ZigwKTtmb3IodmFyIGQ9MCxtPTAsej1wLmIsRT16LGs9KCsrbjw8MyktOCtiKGcpOyEoKGstPXopPHcpOyl7dmFyIEE9az4+MztpZihoWysrc109cC5zW2QrPShyW0FdfHJbQSsxXTw8OCk+Pig3JmspJigxPDx6KS0xXSwoay09RSk8dylicmVhaztoWysrc109cC5zW20rPShyW0E9az4+M118cltBKzFdPDw4KT4+KDcmaykmKDE8PEUpLTFdLHo9cC5uW2RdLGQ9cC50W2RdLEU9cC5uW21dLG09cC50W21dfSsrcz4yNTUmJmYoMCl9ZWxzZXtmb3Iocz11LTEyNzthPHM7YSs9Mil7dmFyIFQ9clsrK25dO2hbYV09VD4+NCxoW2ErMV09MTUmVH0rK259dmFyIHg9MDtmb3IoYT0wO2E8czsrK2EpKEk9aFthXSk+MTEmJmYoMCkseCs9SSYmMTw8SS0xO3ZhciBGPWIoeCkrMSxTPTE8PEYsQj1TLXg7Zm9yKEImQi0xJiZmKDApLGhbcysrXT1iKEIpKzEsYT0wO2E8czsrK2Epe3ZhciBJOysrbFtoW2FdPShJPWhbYV0pJiZGKzEtSV19dmFyIFU9bmV3IHQoUzw8MSksRD1VLnN1YmFycmF5KDAsUyksTT1VLnN1YmFycmF5KFMpO2Zvcih2W0ZdPTAsYT1GO2E+MDstLWEpe3ZhciBXPXZbYV07byhNLGEsVyx2W2EtMV09VytsW2FdKigxPDxGLWEpKX1mb3IodlswXSE9UyYmZigwKSxhPTA7YTxzOysrYSl7dmFyIE89aFthXTtpZihPKXt2YXIgaj12W09dO28oRCxhLGosdltPXT1qKygxPDxGLU8pKX19cmV0dXJuW24se246TSxiOkYsczpEfV19LHc9eShuZXcgdChbODEsMTYsOTksMTQwLDQ5LDE5OCwyNCw5OSwxMiwzMywxOTYsMjQsOTksMTAyLDEwMiwxMzQsNzAsMTQ2LDRdKSwwLDYpWzFdLGc9eShuZXcgdChbMzMsMjAsMTk2LDI0LDk5LDE0MCwzMywxMzIsMTYsNjYsOCwzMywxMzIsMTYsNjYsOCwzMyw2OCw2OCw2OCw2OCw2OCw2OCw2OCw2OCwzNiw5XSksMCw2KVsxXSxkPXkobmV3IHQoWzMyLDEzMiwxNiw2NiwxMDIsNzAsNjgsNjgsNjgsNjgsMzYsNzMsMl0pLDAsNSlbMV0sbT1mdW5jdGlvbihyLHQpe2Zvcih2YXIgZT1yLmxlbmd0aCxuPW5ldyBzKGUpLGE9MDthPGU7KythKW5bYV09dCx0Kz0xPDxyW2FdO3JldHVybiBufSx6PW5ldyB0KG5ldyBzKFswLDAsMCwwLDE2ODQzMDA5LDUwNTI4NzcwLDEzNDY3ODAyMCwyMDIwNTAwNTcsMjY5NDIyMDkzXSkuYnVmZmVyLDAsMzYpLEU9bSh6LDApLGs9bmV3IHQobmV3IHMoWzAsMCwwLDAsMCwwLDAsMCwxNjg0MzAwOSw1MDUyODc3MCwxMTc3NjkyMjAsMTg1MjA3MDQ4LDI1MjU3OTA4NCwxNl0pLmJ1ZmZlciwwLDUzKSxBPW0oaywzKSxUPWZ1bmN0aW9uKHIsdCxlKXt2YXIgbj1yLmxlbmd0aCxhPXQubGVuZ3RoLHM9cltuLTFdLGk9KDE8PGUuYiktMSxvPS1lLmI7c3x8ZigwKTtmb3IodmFyIHU9MCxoPWUuYixsPShuPDwzKS04K2IocyktaCx2PS0xO2w+byYmdjxhOyl7dmFyIGM9bD4+Mzt0Wysrdl09ZS5zW3U9KHU8PGh8KHJbY118cltjKzFdPDw4fHJbYysyXTw8MTYpPj4oNyZsKSkmaV0sbC09aD1lLm5bdV19bD09byYmdisxPT1hfHxmKDApfSx4PWZ1bmN0aW9uKHIsdCxlKXt2YXIgbj02LGE9dC5sZW5ndGgrMz4+MixzPWE8PDEsaT1hK3M7VChyLnN1YmFycmF5KG4sbis9clswXXxyWzFdPDw4KSx0LnN1YmFycmF5KDAsYSksZSksVChyLnN1YmFycmF5KG4sbis9clsyXXxyWzNdPDw4KSx0LnN1YmFycmF5KGEscyksZSksVChyLnN1YmFycmF5KG4sbis9cls0XXxyWzVdPDw4KSx0LnN1YmFycmF5KHMsaSksZSksVChyLnN1YmFycmF5KG4pLHQuc3ViYXJyYXkoaSksZSl9LEY9ZnVuY3Rpb24ocixuLGEpe3ZhciBzLHU9bi5iLGg9clt1XSxsPWg+PjEmMztuLmw9MSZoO3ZhciB2PWg+PjN8clt1KzFdPDw1fHJbdSsyXTw8MTMsYz0odSs9MykrdjtpZigxPT1sKXtpZih1Pj1yLmxlbmd0aClyZXR1cm47cmV0dXJuIG4uYj11KzEsYT8obyhhLHJbdV0sbi55LG4ueSs9diksYSk6byhuZXcgdCh2KSxyW3VdKX1pZighKGM+ci5sZW5ndGgpKXtpZigwPT1sKXJldHVybiBuLmI9YyxhPyhhLnNldChyLnN1YmFycmF5KHUsYyksbi55KSxuLnkrPXYsYSk6aShyLHUsYyk7aWYoMj09bCl7dmFyIG09clt1XSxGPTMmbSxTPW0+PjImMyxCPW0+PjQsST0wLFU9MDtGPDI/MSZTP0J8PXJbKyt1XTw8NHwoMiZTJiZyWysrdV08PDEyKTpCPW0+PjM6KFU9UyxTPDI/KEJ8PSg2MyZyWysrdV0pPDw0LEk9clt1XT4+NnxyWysrdV08PDIpOjI9PVM/KEJ8PXJbKyt1XTw8NHwoMyZyWysrdV0pPDwxMixJPXJbdV0+PjJ8clsrK3VdPDw2KTooQnw9clsrK3VdPDw0fCg2MyZyWysrdV0pPDwxMixJPXJbdV0+PjZ8clsrK3VdPDwyfHJbKyt1XTw8MTApKSwrK3U7dmFyIEQ9YT9hLnN1YmFycmF5KG4ueSxuLnkrbi5tKTpuZXcgdChuLm0pLE09RC5sZW5ndGgtQjtpZigwPT1GKUQuc2V0KHIuc3ViYXJyYXkodSx1Kz1CKSxNKTtlbHNlIGlmKDE9PUYpbyhELHJbdSsrXSxNKTtlbHNle3ZhciBXPW4uaDtpZigyPT1GKXt2YXIgTz1wKHIsdSk7SSs9dS0odT1PWzBdKSxuLmg9Vz1PWzFdfWVsc2UgV3x8ZigwKTsoVT94OlQpKHIuc3ViYXJyYXkodSx1Kz1JKSxELnN1YmFycmF5KE0pLFcpfXZhciBqPXJbdSsrXTtpZihqKXsyNTU9PWo/aj0zMjUxMisoclt1KytdfHJbdSsrXTw8OCk6aj4xMjcmJihqPWotMTI4PDw4fHJbdSsrXSk7dmFyIEM9clt1KytdOzMmQyYmZigwKTtmb3IodmFyIEg9W2csZCx3XSxMPTI7TD4tMTstLUwpe3ZhciBaPUM+PjIrKEw8PDEpJjM7aWYoMT09Wil7dmFyIHE9bmV3IHQoWzAsMCxyW3UrK11dKTtIW0xdPXtzOnEuc3ViYXJyYXkoMiwzKSxuOnEuc3ViYXJyYXkoMCwxKSx0Om5ldyBlKHEuYnVmZmVyLDAsMSksYjowfX1lbHNlIDI9PVo/KHU9KHM9eShyLHUsOS0oMSZMKSkpWzBdLEhbTF09c1sxXSk6Mz09WiYmKG4udHx8ZigwKSxIW0xdPW4udFtMXSl9dmFyIEc9bi50PUgsSj1HWzBdLEs9R1sxXSxOPUdbMl0sUD1yW2MtMV07UHx8ZigwKTt2YXIgUT0oYzw8MyktOCtiKFApLU4uYixSPVE+PjMsVj0wLFg9KHJbUl18cltSKzFdPDw4KT4+KDcmUSkmKDE8PE4uYiktMSxZPShyW1I9KFEtPUsuYik+PjNdfHJbUisxXTw8OCk+Pig3JlEpJigxPDxLLmIpLTEsJD0ocltSPShRLT1KLmIpPj4zXXxyW1IrMV08PDgpPj4oNyZRKSYoMTw8Si5iKS0xO2ZvcigrK2o7LS1qOyl7dmFyIF89Ti5zW1hdLHJyPU4ubltYXSx0cj1KLnNbJF0sZXI9Si5uWyRdLG5yPUsuc1tZXSxhcj1LLm5bWV0sc3I9MTw8bnIsaXI9c3IrKChyW1I9KFEtPW5yKT4+M118cltSKzFdPDw4fHJbUisyXTw8MTZ8cltSKzNdPDwyNCk+Pj4oNyZRKSZzci0xKTtSPShRLT1rW3RyXSk+PjM7dmFyIG9yPUFbdHJdKygocltSXXxyW1IrMV08PDh8cltSKzJdPDwxNik+Pig3JlEpJigxPDxrW3RyXSktMSk7Uj0oUS09eltfXSk+PjM7dmFyIHVyPUVbX10rKChyW1JdfHJbUisxXTw8OHxyW1IrMl08PDE2KT4+KDcmUSkmKDE8PHpbX10pLTEpO2lmKFI9KFEtPXJyKT4+MyxYPU4udFtYXSsoKHJbUl18cltSKzFdPDw4KT4+KDcmUSkmKDE8PHJyKS0xKSxSPShRLT1lcik+PjMsJD1KLnRbJF0rKChyW1JdfHJbUisxXTw8OCk+Pig3JlEpJigxPDxlciktMSksUj0oUS09YXIpPj4zLFk9Sy50W1ldKygocltSXXxyW1IrMV08PDgpPj4oNyZRKSYoMTw8YXIpLTEpLGlyPjMpbi5vWzJdPW4ub1sxXSxuLm9bMV09bi5vWzBdLG4ub1swXT1pci09MztlbHNle3ZhciBocj1pci0oMCE9dXIpO2hyPyhpcj0zPT1ocj9uLm9bMF0tMTpuLm9baHJdLGhyPjEmJihuLm9bMl09bi5vWzFdKSxuLm9bMV09bi5vWzBdLG4ub1swXT1pcik6aXI9bi5vWzBdfWZvcihMPTA7TDx1cjsrK0wpRFtWK0xdPURbTStMXTtNKz11cjt2YXIgZnI9KFYrPXVyKS1pcjtpZihmcjwwKXt2YXIgbHI9LWZyLHZyPW4uZStmcjtmb3IobHI+b3ImJihscj1vciksTD0wO0w8bHI7KytMKURbVitMXT1uLndbdnIrTF07Vis9bHIsb3ItPWxyLGZyPTB9Zm9yKEw9MDtMPG9yOysrTClEW1YrTF09RFtmcitMXTtWKz1vcn1pZihWIT1NKWZvcig7TTxELmxlbmd0aDspRFtWKytdPURbTSsrXTtlbHNlIFY9RC5sZW5ndGg7YT9uLnkrPVY6RD1pKEQsMCxWKX1lbHNlIGlmKGEpe2lmKG4ueSs9QixNKWZvcihMPTA7TDxCOysrTClEW0xdPURbTStMXX1lbHNlIE0mJihEPWkoRCxNKSk7cmV0dXJuIG4uYj1jLER9ZigyKX19LFM9ZnVuY3Rpb24ocixlKXtpZigxPT1yLmxlbmd0aClyZXR1cm4gclswXTtmb3IodmFyIG49bmV3IHQoZSksYT0wLHM9MDthPHIubGVuZ3RoOysrYSl7dmFyIGk9clthXTtuLnNldChpLHMpLHMrPWkubGVuZ3RofXJldHVybiBufTtmdW5jdGlvbiBCKHIsdCl7Zm9yKHZhciBlPVtdLG49KyF0LGE9MCxzPTA7ci5sZW5ndGg7KXt2YXIgaT1jKHIsbnx8dCk7aWYoIm9iamVjdCI9PXR5cGVvZiBpKXtmb3Iobj8odD1udWxsLGkudy5sZW5ndGg9PWkudSYmKGUucHVzaCh0PWkudykscys9aS51KSk6KGUucHVzaCh0KSxpLmU9MCk7IWkubDspe3ZhciBvPUYocixpLHQpO298fGYoNSksdD9pLmU9aS55OihlLnB1c2gobykscys9by5sZW5ndGgsdShpLncsMCxvLmxlbmd0aCksaS53LnNldChvLGkudy5sZW5ndGgtby5sZW5ndGgpKX1hPWkuYis0KmkuY31lbHNlIGE9aTtyPXIuc3ViYXJyYXkoYSl9cmV0dXJuIFMoZSxzKX1fZS5kZWNvbXByZXNzPUI7dmFyIEk9ZnVuY3Rpb24oKXtmdW5jdGlvbiByKHIpe3RoaXMub25kYXRhPXIsdGhpcy5jPVtdLHRoaXMubD0wLHRoaXMuej0wfXJldHVybiByLnByb3RvdHlwZS5wdXNoPWZ1bmN0aW9uKHIsZSl7aWYoIm51bWJlciI9PXR5cGVvZiB0aGlzLnMpe3ZhciBuPU1hdGgubWluKHIubGVuZ3RoLHRoaXMucyk7cj1yLnN1YmFycmF5KG4pLHRoaXMucy09bn12YXIgYT1yLmxlbmd0aCt0aGlzLmw7aWYoIXRoaXMucyl7aWYoZSl7aWYoIWEpcmV0dXJuIHZvaWQgdGhpcy5vbmRhdGEobmV3IHQoMCksITApO2E8NSYmZig1KX1lbHNlIGlmKGE8MTgpcmV0dXJuIHRoaXMuYy5wdXNoKHIpLHZvaWQodGhpcy5sPWEpO2lmKHRoaXMubCYmKHRoaXMuYy5wdXNoKHIpLHI9Uyh0aGlzLmMsYSksdGhpcy5jPVtdLHRoaXMubD0wKSwibnVtYmVyIj09dHlwZW9mKHRoaXMucz1jKHIpKSlyZXR1cm4gdGhpcy5wdXNoKHIsZSl9aWYoIm51bWJlciIhPXR5cGVvZiB0aGlzLnMpe2lmKGE8KHRoaXMuenx8MykpcmV0dXJuIGUmJmYoNSksdGhpcy5jLnB1c2gociksdm9pZCh0aGlzLmw9YSk7aWYodGhpcy5sJiYodGhpcy5jLnB1c2gocikscj1TKHRoaXMuYyxhKSx0aGlzLmM9W10sdGhpcy5sPTApLCF0aGlzLnomJmE8KHRoaXMuej0yJnJbdGhpcy5zLmJdPzQ6Mysoclt0aGlzLnMuYl0+PjN8clt0aGlzLnMuYisxXTw8NXxyW3RoaXMucy5iKzJdPDwxMykpKXJldHVybiBlJiZmKDUpLHRoaXMuYy5wdXNoKHIpLHZvaWQodGhpcy5sPWEpO2Zvcih0aGlzLno9MDs7KXt2YXIgcz1GKHIsdGhpcy5zKTtpZighcyl7ZSYmZig1KTt2YXIgaT1yLnN1YmFycmF5KHRoaXMucy5iKTtyZXR1cm4gdGhpcy5zLmI9MCx0aGlzLmMucHVzaChpKSx2b2lkKHRoaXMubCs9aS5sZW5ndGgpfWlmKHRoaXMub25kYXRhKHMsITEpLHUodGhpcy5zLncsMCxzLmxlbmd0aCksdGhpcy5zLncuc2V0KHMsdGhpcy5zLncubGVuZ3RoLXMubGVuZ3RoKSx0aGlzLnMubCl7dmFyIG89ci5zdWJhcnJheSh0aGlzLnMuYik7cmV0dXJuIHRoaXMucz00KnRoaXMucy5jLHZvaWQgdGhpcy5wdXNoKG8sZSl9fX1lbHNlIGUmJmYoNSl9LHJ9KCk7X2UuRGVjb21wcmVzcz1JO3JldHVybiBfZX0p`;
-//#endregion
-//#region src/client/remote/zstd-worker.ts
-/**
-* Zstandard decompression via Web Worker.
-*
-* Provides a simple async interface for zstd decompression that automatically
-* uses a Web Worker for large payloads to avoid blocking the main thread.
-*
-* Uses Blob URL to load the worker, which works in VSCode webviews that have
-* CORS restrictions preventing external worker script loading.
-*/
-/**
-* Threshold for using Web Worker (1MB compressed).
-* Below this, synchronous decompression is fast enough.
-*/
-var WORKER_THRESHOLD = 1024 * 1024;
-/**
-* Maximum window log supported by fzstd (2^25 = 32MB).
-* Ultra compression levels (20+) often use larger windows.
-*/
-var MAX_WINDOW_LOG = 25;
-/**
-* Error thrown when zstd data uses a window size too large for fzstd.
-*/
-var ZstdWindowSizeError = class ZstdWindowSizeError extends Error {
-	windowLog;
-	maxWindowLog;
-	constructor(windowLog) {
-		super(`Zstd window size too large (windowLog=${windowLog}, max=${MAX_WINDOW_LOG}). This file may have been compressed with zstd "ultra" mode (level 20+). Try recompressing with --long=${MAX_WINDOW_LOG} or a lower compression level.`);
-		this.name = "ZstdWindowSizeError";
-		this.windowLog = windowLog;
-		this.maxWindowLog = MAX_WINDOW_LOG;
-		Object.setPrototypeOf(this, ZstdWindowSizeError.prototype);
-	}
-};
-/**
-* Validates that the zstd frame's window size is within fzstd's limits.
-* Parses the frame header to extract the window descriptor.
-*
-* @param data - The zstd-compressed data
-* @throws ZstdWindowSizeError if window size exceeds 2^25 bytes
-*/
-function validateZstdWindowSize(data) {
-	if (data.length < 5) return;
-	if ((data[0] | data[1] << 8 | data[2] << 16 | data[3] << 24) !== 4247762216) return;
-	if (data[4] >> 5 & 1) return;
-	if (data.length < 6) return;
-	const windowLog = 10 + (data[5] >> 3);
-	if (windowLog > MAX_WINDOW_LOG) throw new ZstdWindowSizeError(windowLog);
-}
-/** Cached worker and blob URL */
-var zstdWorker = null;
-var blobURL = null;
-var workerInitPromise = null;
-/** Request ID counter for worker messages */
-var nextRequestId = 0;
-/** Pending decompression requests */
-var pendingRequests = /* @__PURE__ */ new Map();
-/** Whether message handlers have been attached to the worker */
-var handlersAttached = false;
-/**
-* Gets or creates the zstd decompression worker.
-* Uses a Blob URL to work in VSCode webviews which have CORS restrictions.
-* Returns a promise that resolves when the worker is fully initialized.
-*/
-function getZstdWorker() {
-	if (workerInitPromise) return workerInitPromise;
-	workerInitPromise = new Promise((resolve, reject) => {
-		const blob = new Blob([kZstdWorkerCode], { type: "application/javascript" });
-		blobURL = URL.createObjectURL(blob);
-		zstdWorker = new Worker(blobURL);
-		const initHandler = (event) => {
-			if (event.data.type === "init_complete") {
-				zstdWorker.removeEventListener("message", initHandler);
-				if (event.data.success) resolve(zstdWorker);
-				else reject(new Error(event.data.error || "Worker initialization failed"));
-			}
-		};
-		zstdWorker.addEventListener("message", initHandler);
-		zstdWorker.postMessage({
-			type: "init",
-			scriptContent: kFzstdBase64
-		});
-	});
-	return workerInitPromise;
-}
-/**
-* Decompresses zstd-compressed data.
-*
-* For small payloads (< 1MB), uses synchronous decompression.
-* For larger payloads, uses a Web Worker to avoid blocking the main thread.
-*
-* Data transfer efficiency:
-* - Input data is transferred (zero-copy) to the worker
-* - Output data is transferred (zero-copy) back from the worker
-*
-* @param data - The zstd-compressed data
-* @returns Promise resolving to the decompressed data
-*/
-async function decompressZstd(data) {
-	validateZstdWindowSize(data);
-	if (data.length < WORKER_THRESHOLD) return decompress(data);
-	const worker = await getZstdWorker();
-	return new Promise((resolve, reject) => {
-		const requestId = nextRequestId++;
-		pendingRequests.set(requestId, {
-			resolve,
-			reject
-		});
-		if (!handlersAttached) {
-			handlersAttached = true;
-			worker.addEventListener("message", (event) => {
-				const { requestId: respId, success, data: resultData, error } = event.data;
-				const pending = pendingRequests.get(respId);
-				if (!pending) return;
-				pendingRequests.delete(respId);
-				if (success) pending.resolve(resultData);
-				else pending.reject(new Error(error || "Decompression failed"));
-			});
-			worker.addEventListener("error", (error) => {
-				for (const [id, pending] of pendingRequests) {
-					pending.reject(/* @__PURE__ */ new Error(`Worker error: ${error.message}`));
-					pendingRequests.delete(id);
-				}
-			});
-		}
-		worker.postMessage({
-			type: "decompress",
-			requestId,
-			data
-		}, [data.buffer]);
-	});
-}
-//#endregion
-//#region src/client/remote/decompression.ts
-/** Supported ZIP compression methods */
-var CompressionMethod = {
-	STORED: 0,
-	DEFLATE: 8,
-	ZSTANDARD: 93
-};
-/**
-* Error thrown when an unsupported compression method is encountered.
-*/
-var UnsupportedCompressionError = class UnsupportedCompressionError extends Error {
-	method;
-	filename;
-	constructor(method, filename) {
-		super(`Unsupported compression method ${method} for file "${filename}"`);
-		this.name = "UnsupportedCompressionError";
-		this.method = method;
-		this.filename = filename;
-		Object.setPrototypeOf(this, UnsupportedCompressionError.prototype);
-	}
-};
-/**
-* Decompresses data based on the compression method.
-* Handles STORED (0), DEFLATE (8), and ZSTANDARD (93).
-*
-* @param data - The compressed data
-* @param compressionMethod - ZIP compression method code
-* @param uncompressedSize - Expected uncompressed size (used by deflate)
-* @param filename - Filename for error messages
-* @returns Decompressed data
-*/
-async function decompressData(data, compressionMethod, uncompressedSize, filename) {
-	switch (compressionMethod) {
-		case CompressionMethod.STORED: return data;
-		case CompressionMethod.DEFLATE: return decompressDeflate(data, uncompressedSize);
-		case CompressionMethod.ZSTANDARD: return decompressZstd(data);
-		default: throw new UnsupportedCompressionError(compressionMethod, filename);
-	}
-}
-/**
-* Deflate decompression using fflate's async worker-based API.
-*/
-async function decompressDeflate(data, size) {
-	return new Promise((resolve, reject) => {
-		decompress$1(data, { size }, (err, result) => {
-			if (err) reject(err);
-			else resolve(result);
-		});
-	});
-}
-//#endregion
-//#region src/client/remote/remoteZipFile.ts
-/**
-* Represents an error thrown when a file exceeds the maximum allowed size.
-*/
-var FileSizeLimitError = class FileSizeLimitError extends Error {
-	file;
-	maxBytes;
-	constructor(file, maxBytes) {
-		super(`File "${file}" exceeds the maximum size (${maxBytes} bytes) and cannot be loaded.`);
-		this.name = "FileSizeLimitError";
-		this.file = file;
-		this.maxBytes = maxBytes;
-		Object.setPrototypeOf(this, FileSizeLimitError.prototype);
-	}
-};
-var PARALLEL_CHUNK_THRESHOLD = 8 * 1024 * 1024;
-var PARALLEL_CHUNK_SIZE = 8 * 1024 * 1024;
-var MAX_PARALLEL_CHUNKS = 10;
-var fetchBytesParallel = async (fetchFn, url, start, end, onProgress) => {
-	const totalSize = end - start + 1;
-	if (totalSize <= PARALLEL_CHUNK_THRESHOLD) return fetchFn(url, start, end);
-	const chunks = [];
-	let offset = start;
-	while (offset <= end) {
-		const chunkEnd = Math.min(offset + PARALLEL_CHUNK_SIZE - 1, end);
-		chunks.push({
-			start: offset,
-			end: chunkEnd,
-			index: chunks.length
-		});
-		offset = chunkEnd + 1;
-	}
-	const concurrency = Math.min(chunks.length, MAX_PARALLEL_CHUNKS);
-	const results = new Array(chunks.length);
-	let nextChunk = 0;
-	let bytesLoaded = 0;
-	if (onProgress) onProgress(0, totalSize);
-	const worker = async () => {
-		while (nextChunk < chunks.length) {
-			const idx = nextChunk++;
-			const chunk = chunks[idx];
-			results[idx] = await fetchFn(url, chunk.start, chunk.end);
-			if (onProgress) {
-				bytesLoaded += results[idx].length;
-				onProgress(bytesLoaded, totalSize);
-			}
-		}
-	};
-	await Promise.all(Array.from({ length: concurrency }, () => worker()));
-	const combined = new Uint8Array(totalSize);
-	let pos = 0;
-	for (const chunk of results) {
-		combined.set(chunk, pos);
-		pos += chunk.length;
-	}
-	return combined;
-};
-/**
-* Opens a remote ZIP file from the specified URL, fetches and parses the central directory,
-* and provides a method to read files within the ZIP.
-*/
-var openRemoteZipFile = async (url, contentLength, fetchBytes = fetchRange) => {
-	contentLength = contentLength ?? await fetchSize(url);
-	const eocdrBuffer = await fetchBytes(url, contentLength - 22, contentLength - 1);
-	const eocdrView = new DataView(eocdrBuffer.buffer);
-	if (eocdrView.getUint32(0, true) !== 101010256) if (eocdrBuffer.length !== 22) throw new Error("Unexpected central directory size - does the HTTP server serving this file support HTTP range requests?");
-	else throw new Error("End of central directory record not found");
-	let centralDirOffset = eocdrView.getUint32(16, true);
-	let centralDirSize = eocdrView.getUint32(12, true);
-	if (centralDirOffset === 4294967295 || centralDirSize === 4294967295) {
-		const locatorBuffer = await fetchBytes(url, contentLength - 22 - 20, contentLength - 23);
-		const locatorView = new DataView(locatorBuffer.buffer);
-		if (locatorView.getUint32(0, true) !== 117853008) throw new Error("ZIP64 End of central directory locator not found");
-		const zip64EOCDOffset = Number(locatorView.getBigUint64(8, true));
-		const zip64EOCDBuffer = await fetchBytes(url, zip64EOCDOffset, zip64EOCDOffset + 56);
-		const zip64EOCDView = new DataView(zip64EOCDBuffer.buffer);
-		if (zip64EOCDView.getUint32(0, true) !== 101075792) throw new Error("ZIP64 End of central directory record not found");
-		centralDirSize = Number(zip64EOCDView.getBigUint64(40, true));
-		centralDirOffset = Number(zip64EOCDView.getBigUint64(48, true));
-	}
-	const centralDirectory = parseCentralDirectory(await fetchBytesParallel(fetchBytes, url, centralDirOffset, centralDirOffset + centralDirSize - 1));
-	return {
-		centralDirectory,
-		readFile: async (file, maxBytes, onProgress) => {
-			const entry = centralDirectory.get(file);
-			if (!entry) throw new Error(`File not found: ${file}`);
-			const headerSize = 30;
-			const estimatedSize = headerSize + entry.filenameLength + 256 + entry.compressedSize;
-			if (maxBytes && headerSize + entry.filenameLength + entry.compressedSize > maxBytes) throw new FileSizeLimitError(file, maxBytes);
-			let fileData = await fetchBytesParallel(fetchBytes, url, entry.fileOffset, entry.fileOffset + estimatedSize - 1, onProgress);
-			if (fileData.length < headerSize) throw new Error(`File entry header is truncated for ${file}`);
-			const actualExtraFieldLength = fileData[28] + (fileData[29] << 8);
-			const actualTotal = headerSize + entry.filenameLength + actualExtraFieldLength + entry.compressedSize;
-			if (maxBytes && actualTotal > maxBytes) throw new FileSizeLimitError(file, maxBytes);
-			if (actualTotal > estimatedSize) fileData = await fetchBytesParallel(fetchBytes, url, entry.fileOffset, entry.fileOffset + actualTotal - 1);
-			const zipFileEntry = await parseZipFileEntry(file, fileData);
-			return decompressData(zipFileEntry.data, zipFileEntry.compressionMethod, zipFileEntry.uncompressedSize, file);
-		}
-	};
-};
-/**
-* Opens an in-memory ZIP buffer and provides a method to read files within it.
-*/
-var openZipFileFromBuffer = async (bytes) => {
-	const contentLength = bytes.length;
-	if (contentLength < 22) throw new Error("Buffer too small to be a ZIP file");
-	const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
-	const eocdrStart = contentLength - 22;
-	if (view.getUint32(eocdrStart, true) !== 101010256) throw new Error("End of central directory record not found");
-	let centralDirOffset = view.getUint32(eocdrStart + 16, true);
-	let centralDirSize = view.getUint32(eocdrStart + 12, true);
-	if (centralDirOffset === 4294967295 || centralDirSize === 4294967295) {
-		const locatorStart = eocdrStart - 20;
-		if (view.getUint32(locatorStart, true) !== 117853008) throw new Error("ZIP64 End of central directory locator not found");
-		const zip64EOCDOffset = Number(view.getBigUint64(locatorStart + 8, true));
-		if (view.getUint32(zip64EOCDOffset, true) !== 101075792) throw new Error("ZIP64 End of central directory record not found");
-		centralDirSize = Number(view.getBigUint64(zip64EOCDOffset + 40, true));
-		centralDirOffset = Number(view.getBigUint64(zip64EOCDOffset + 48, true));
-	}
-	const centralDirectory = parseCentralDirectory(bytes.slice(centralDirOffset, centralDirOffset + centralDirSize));
-	return {
-		centralDirectory,
-		readFile: async (file, maxBytes) => {
-			const entry = centralDirectory.get(file);
-			if (!entry) throw new Error(`File not found: ${file}`);
-			const headerSize = 30;
-			if (entry.fileOffset + headerSize > bytes.length) throw new Error(`File entry header is truncated for ${file}`);
-			const extraFieldLength = bytes[entry.fileOffset + 28] + (bytes[entry.fileOffset + 29] << 8);
-			const totalSize = headerSize + entry.filenameLength + extraFieldLength + entry.compressedSize;
-			if (maxBytes && totalSize > maxBytes) throw new FileSizeLimitError(file, maxBytes);
-			const zipFileEntry = await parseZipFileEntry(file, bytes.slice(entry.fileOffset, entry.fileOffset + totalSize));
-			return decompressData(zipFileEntry.data, zipFileEntry.compressionMethod, zipFileEntry.uncompressedSize, file);
-		}
-	};
-};
-var fetchSize = async (url) => {
-	const acceptResponse = await fetch(url, { method: "HEAD" });
-	if (acceptResponse.headers.get("Accept-Ranges") === "bytes") {
-		const getResponse = await fetch(`${url}`, {
-			method: "GET",
-			headers: { Range: "bytes=0-0" }
-		});
-		const contentRange = getResponse.headers.get("Content-Range");
-		if (contentRange !== null) {
-			const rangeMatch = contentRange.match(/bytes (\d+)-(\d+)\/(\d+)/);
-			if (rangeMatch !== null) {
-				await getResponse.arrayBuffer();
-				return Number(rangeMatch[3]);
-			}
-		}
-		await getResponse.arrayBuffer();
-	}
-	const contentLength = acceptResponse.headers.get("Content-Length");
-	if (contentLength !== null) return Number(contentLength);
-	throw new Error(`Could not determine content length for ${url}`);
-};
-/**
-* Extracts and parses the header and data of a compressed ZIP entry from raw binary data.
-*/
-var parseZipFileEntry = async (file, rawData) => {
-	const view = new DataView(rawData.buffer);
-	let offset = 0;
-	if (view.getUint32(offset, true) !== 67324752) throw new Error(`Invalid ZIP entry signature for ${file}`);
-	offset += 4;
-	const versionNeeded = view.getUint16(offset, true);
-	offset += 2;
-	const bitFlag = view.getUint16(offset, true);
-	offset += 2;
-	const compressionMethod = view.getUint16(offset, true);
-	offset += 2;
-	offset += 4;
-	const crc32 = view.getUint32(offset, true);
-	offset += 4;
-	let compressedSize = view.getUint32(offset, true);
-	offset += 4;
-	let uncompressedSize = view.getUint32(offset, true);
-	offset += 4;
-	const filenameLength = view.getUint16(offset, true);
-	offset += 2;
-	const extraFieldLength = view.getUint16(offset, true);
-	offset += 2;
-	const headerOffset = offset;
-	if (compressedSize === 4294967295 || uncompressedSize === 4294967295) {
-		offset += filenameLength;
-		const extraFieldEnd = offset + extraFieldLength;
-		while (offset < extraFieldEnd) {
-			const tag = view.getUint16(offset, true);
-			const size = view.getUint16(offset + 2, true);
-			if (tag === 1) {
-				let zip64Offset = offset + 4;
-				if (uncompressedSize === 4294967295 && zip64Offset + 8 <= extraFieldEnd) {
-					uncompressedSize = Number(view.getBigUint64(zip64Offset, true));
-					zip64Offset += 8;
-				}
-				if (compressedSize === 4294967295 && zip64Offset + 8 <= extraFieldEnd) compressedSize = Number(view.getBigUint64(zip64Offset, true));
-				break;
-			}
-			offset += 4 + size;
-		}
-		offset = headerOffset;
-	}
-	offset += filenameLength + extraFieldLength;
-	const data = rawData.subarray(offset, offset + compressedSize);
-	return {
-		versionNeeded,
-		bitFlag,
-		compressionMethod,
-		crc32,
-		compressedSize,
-		uncompressedSize,
-		filenameLength,
-		extraFieldLength,
-		data
-	};
-};
-var kFileHeaderSize = 46;
-/**
-* Parses the central directory of a ZIP file from the provided buffer and returns a map of entries.
-*/
-var parseCentralDirectory = (buffer) => {
-	let offset = 0;
-	const view = new DataView(buffer.buffer);
-	const entries = /* @__PURE__ */ new Map();
-	while (offset < buffer.length) {
-		if (view.getUint32(offset, true) !== 33639248) break;
-		const filenameLength = view.getUint16(offset + 28, true);
-		const extraFieldLength = view.getUint16(offset + 30, true);
-		const fileCommentLength = view.getUint16(offset + 32, true);
-		let compressedSize = view.getUint32(offset + 20, true);
-		let uncompressedSize = view.getUint32(offset + 24, true);
-		let fileOffset = view.getUint32(offset + 42, true);
-		const filename = new TextDecoder().decode(buffer.subarray(offset + kFileHeaderSize, offset + kFileHeaderSize + filenameLength));
-		if (fileOffset === 4294967295 || compressedSize === 4294967295 || uncompressedSize === 4294967295) {
-			let extraOffset = offset + kFileHeaderSize + filenameLength;
-			const extraEnd = extraOffset + extraFieldLength;
-			while (extraOffset < extraEnd) {
-				const tag = view.getUint16(extraOffset, true);
-				const size = view.getUint16(extraOffset + 2, true);
-				if (tag === 1) {
-					let zip64Offset = extraOffset + 4;
-					if (uncompressedSize === 4294967295 && zip64Offset + 8 <= extraEnd) {
-						uncompressedSize = Number(view.getBigUint64(zip64Offset, true));
-						zip64Offset += 8;
-					}
-					if (compressedSize === 4294967295 && zip64Offset + 8 <= extraEnd) {
-						compressedSize = Number(view.getBigUint64(zip64Offset, true));
-						zip64Offset += 8;
-					}
-					if (fileOffset === 4294967295 && zip64Offset + 8 <= extraEnd) fileOffset = Number(view.getBigUint64(zip64Offset, true));
-					break;
-				}
-				extraOffset += 4 + size;
-			}
-		}
-		const entry = {
-			filename,
-			compressionMethod: view.getUint16(offset + 10, true),
-			compressedSize,
-			uncompressedSize,
-			fileOffset,
-			filenameLength
-		};
-		entries.set(filename, entry);
-		offset += kFileHeaderSize + filenameLength + extraFieldLength + fileCommentLength;
-	}
-	return entries;
-};
-//#endregion
-//#region src/client/remote/remoteLogFile.ts
-var OPEN_RETRY_LIMIT = 5;
-var MAX_SAMPLE_SIZE_BYTES = 2048 * 1024 * 1024;
-var SampleNotFoundError = class SampleNotFoundError extends Error {
-	constructor(message) {
-		super(message || "Sample not found");
-		this.name = "SampleNotFoundError";
-		Object.setPrototypeOf(this, SampleNotFoundError.prototype);
-	}
-};
-/**
-* Opens a remote log file and provides methods to read its contents.
-*/
-var openRemoteLogFile = async (api, url, concurrency) => {
-	const queue = new AsyncQueue(concurrency);
-	const logInfo = await api.get_log_info(url);
-	const directUrl = logInfo.direct_url;
-	const fetchBytes = async (_url, start, end) => {
-		if (directUrl) try {
-			return await fetchRange(directUrl, start, end);
-		} catch (e) {
-			console.warn("Direct URL fetch failed, falling back to proxy", e);
-		}
-		return api.get_log_bytes(url, start, end);
-	};
-	let remoteZipFile = void 0;
-	let retryCount = 0;
-	while (!remoteZipFile && retryCount < OPEN_RETRY_LIMIT) try {
-		remoteZipFile = await openRemoteZipFile(url, logInfo.size, fetchBytes);
-	} catch {
-		retryCount++;
-		console.warn(`Failed to open remote log file at ${url}, retrying (${retryCount}/${OPEN_RETRY_LIMIT})...`);
-		await new Promise((resolve) => setTimeout(resolve, 100 * (retryCount + retryCount)));
-	}
-	if (!remoteZipFile) throw new Error(`Failed to open remote log file at ${url} after ${OPEN_RETRY_LIMIT} attempts.`);
-	/**
-	* Reads and parses a JSON file from the zip.
-	* Optionally applies a preprocessor to transform bytes before decoding.
-	*/
-	const readJSONFile = async (file, maxBytes, preprocessor, onProgress) => {
-		try {
-			let data = await remoteZipFile.readFile(file, maxBytes, onProgress);
-			if (preprocessor) data = preprocessor.preprocess(data);
-			return asyncJsonParseBytes(data);
-		} catch (error) {
-			if (error instanceof FileSizeLimitError) throw error;
-			else if (error instanceof Error) throw new Error(`Failed to read or parse file ${file}: ${error.message}`);
-			else throw new Error(`Failed to read or parse file ${file} - an unknown error occurred`);
-		}
-	};
-	/**
-	* Lists all samples in the zip file.
-	*/
-	const listSamples = async () => {
-		return Array.from(remoteZipFile.centralDirectory.keys()).filter((filename) => filename.startsWith("samples/") && filename.endsWith(".json")).map((filename) => {
-			const [sampleId, epochStr] = filename.split("/")[1].split("_epoch_");
-			return {
-				sampleId,
-				epoch: parseInt(epochStr.split(".")[0], 10)
-			};
-		});
-	};
-	/**
-	* Reads a specific sample file.
-	*/
-	const readSample = async (sampleId, epoch, onProgress) => {
-		const sampleFile = `samples/${sampleId}_epoch_${epoch}.json`;
-		if (!remoteZipFile.centralDirectory.has(sampleFile)) throw new SampleNotFoundError(`Unable to read sample file ${sampleFile} - it is not present in the manifest.`);
-		if (remoteZipFile.centralDirectory.get(sampleFile).uncompressedSize > MAX_SAMPLE_SIZE_BYTES) throw new FileSizeLimitError(sampleFile, MAX_SAMPLE_SIZE_BYTES);
-		return await readJSONFile(sampleFile, void 0, { preprocess: clearLargeEventsArray }, onProgress);
-	};
-	/**
-	* Reads the results.json file.
-	*/
-	const readHeader = async () => {
-		if (remoteZipFile.centralDirectory.has("header.json")) return await readJSONFile("header.json");
-		else {
-			const evalSpec = await readJSONFile("_journal/start.json");
-			return {
-				status: "started",
-				eval: evalSpec.eval,
-				plan: evalSpec.plan
-			};
-		}
-	};
-	const readEvalBasicInfo = async () => {
-		return toLogPreview(await readHeader());
-	};
-	/**
-	* Reads individual summary files when summaries.json is not available.
-	*/
-	const readFallbackSummaries = async () => {
-		const summaryFiles = Array.from(remoteZipFile.centralDirectory.keys()).filter((filename) => filename.startsWith("_journal/summaries/") && filename.endsWith(".json"));
-		const summaries = [];
-		const errors = [];
-		await Promise.all(summaryFiles.map((filename) => queue.enqueue(async () => {
-			try {
-				const partialSummary = await readJSONFile(filename);
-				summaries.push(...partialSummary);
-			} catch (error) {
-				errors.push(error);
-			}
-		})));
-		if (errors.length > 0) console.error(`Encountered ${errors.length} errors while reading summary files:`, errors);
-		return summaries;
-	};
-	/**
-	* Reads all summaries, falling back to individual files if necessary.
-	*/
-	const readSampleSummaries = async () => {
-		if (remoteZipFile.centralDirectory.has("summaries.json")) return await readJSONFile("summaries.json");
-		else return readFallbackSummaries();
-	};
-	return {
-		readEvalBasicInfo,
-		readLogSummary: async () => {
-			const [header, sampleSummaries] = await Promise.all([readHeader(), readSampleSummaries()]);
-			return {
-				status: header.status,
-				eval: header.eval,
-				plan: header.plan,
-				results: header.results,
-				stats: header.stats,
-				error: header.error,
-				tags: header.tags,
-				metadata: header.metadata,
-				log_updates: header.log_updates,
-				sampleSummaries
-			};
-		},
-		readSample,
-		/**
-		* Reads the complete log file.
-		*/
-		readCompleteLog: async () => {
-			const [evalLogHeader, samples] = await Promise.all([readHeader(), listSamples().then((sampleIds) => Promise.all(sampleIds.map(({ sampleId, epoch }) => readSample(sampleId, epoch).then((sample) => sample))))]);
-			return {
-				status: evalLogHeader.status,
-				eval: evalLogHeader.eval,
-				plan: evalLogHeader.plan,
-				results: evalLogHeader.results,
-				stats: evalLogHeader.stats,
-				error: evalLogHeader.error,
-				samples
-			};
-		}
-	};
-};
-//#endregion
-//#region src/client/api/client-api.ts
-var isEvalFile = (file) => {
-	return file.endsWith(".eval");
-};
-/**
-* Represents an error thrown when a file exceeds the maximum allowed size.
-*/
-var SampleSizeLimitedExceededError = class SampleSizeLimitedExceededError extends Error {
-	id;
-	epoch;
-	maxBytes;
-	displayStack;
-	constructor(id, epoch, maxBytes) {
-		super(`Sample ${id} in epoch ${epoch} exceeds the maximum supported size (${maxBytes / 1024 / 1024}MB) and cannot be loaded.`);
-		this.name = "SampleSizeLimitedExceededError";
-		this.id = id;
-		this.epoch = epoch;
-		this.maxBytes = maxBytes;
-		this.displayStack = false;
-		Object.setPrototypeOf(this, SampleSizeLimitedExceededError.prototype);
-	}
-};
-/**
-* This provides an API implementation that will serve a single
-* file using an http parameter, designed to be deployed
-* to a webserver without inspect or the ability to enumerate log
-* files
-*/
-var clientApi = (api, log_file, debug = false) => {
-	let current_log = void 0;
-	let current_path = void 0;
-	const loadedEvalFile = {
-		file: void 0,
-		remoteLog: void 0
-	};
-	const remoteEvalFile = async (log_file, cached = false) => {
-		if (cached && loadedEvalFile.file === log_file) return loadedEvalFile.remoteLog;
-		const remoteLog = await openRemoteLogFile(api, encodePathParts(log_file), 5);
-		if (cached) {
-			loadedEvalFile.file = log_file;
-			loadedEvalFile.remoteLog = remoteLog;
-		}
-		return remoteLog;
-	};
-	/**
-	* Gets a log
-	*/
-	const get_log = async (log_file, cached = false) => {
-		if (!cached || log_file !== current_path || !current_log) {
-			if (pending_log_promise) return pending_log_promise;
-			pending_log_promise = api.get_log_contents(log_file, 100).then((log) => {
-				current_log = log;
-				current_path = log_file;
-				pending_log_promise = null;
-				return log;
-			}).catch((err) => {
-				pending_log_promise = null;
-				throw err;
-			});
-			return pending_log_promise;
-		}
-		return current_log;
-	};
-	let pending_log_promise = null;
-	/**
-	* Gets a log summary
-	*/
-	const get_log_details = async (log_file, cached = true) => {
-		if (isEvalFile(log_file)) {
-			const remoteLogFile = await remoteEvalFile(log_file, cached);
-			if (remoteLogFile) return await remoteLogFile.readLogSummary();
-			else throw new Error("Unable to read remote eval file");
-		} else {
-			const logContents = await get_log(log_file);
-			/**
-			* @type {import("./Types.js").SampleSummary[]}
-			*/
-			const sampleSummaries = logContents.parsed.samples ? logContents.parsed.samples?.map((sample) => {
-				return {
-					id: sample.id,
-					epoch: sample.epoch,
-					input: sample.input,
-					target: sample.target,
-					scores: sample.scores,
-					metadata: sample.metadata,
-					error: sample.error?.message
-				};
-			}) : [];
-			const parsed = logContents.parsed;
-			return {
-				version: parsed.version,
-				status: parsed.status,
-				eval: parsed.eval,
-				plan: parsed.plan,
-				results: parsed.results,
-				stats: parsed.stats,
-				error: parsed.error,
-				tags: parsed.tags,
-				metadata: parsed.metadata,
-				log_updates: parsed.log_updates,
-				sampleSummaries
-			};
-		}
-	};
-	/**
-	* Gets a sample
-	*/
-	const get_log_sample = async (log_file, id, epoch, onProgress) => {
-		if (isEvalFile(log_file)) {
-			async function fetchSample(useCache) {
-				const remoteLogFile = await remoteEvalFile(log_file, useCache);
-				if (!remoteLogFile) throw new Error(`Unable to read remote eval file ${log_file}`);
-				return await remoteLogFile.readSample(String(id), epoch, onProgress);
-			}
-			function handleError(error) {
-				if (error instanceof SampleNotFoundError) return void 0;
-				if (error instanceof FileSizeLimitError) throw new SampleSizeLimitedExceededError(id, epoch, error.maxBytes);
-				throw error;
-			}
-			try {
-				return await fetchSample(true);
-			} catch (error) {
-				if (error instanceof SampleNotFoundError) try {
-					return await fetchSample(false);
-				} catch (retryError) {
-					return handleError(retryError);
-				}
-				else return handleError(error);
-			}
-		} else {
-			const logContents = await get_log(log_file, true);
-			if (logContents.parsed.samples && logContents.parsed.samples.length > 0) return logContents.parsed.samples.find((sample) => {
-				return sampleIdsEqual(sample.id, id) && sample.epoch === epoch;
-			});
-		}
-	};
-	const read_eval_file_log_summary = async (log_file) => {
-		if (api.get_log_summary) return api.get_log_summary(log_file);
-		else return (await openRemoteLogFile(api, encodePathParts(log_file), 5)).readEvalBasicInfo();
-	};
-	/**
-	* Gets log headers
-	*/
-	const get_log_summaries = async (log_files) => {
-		const eval_files = {};
-		const json_files = {};
-		let index = 0;
-		for (const file of log_files) {
-			if (isEvalFile(file)) eval_files[file] = index;
-			else json_files[file] = index;
-			index++;
-		}
-		const evalLogHeadersPromises = Object.keys(eval_files).map((file) => read_eval_file_log_summary(file).then((summary) => ({
-			index: eval_files[file],
-			summary
-		})));
-		const jsonLogHeadersPromise = api.get_log_summaries(Object.keys(json_files)).then((summaries) => summaries.map((summary, i) => ({
-			index: json_files[Object.keys(json_files)[i]],
-			summary
-		})));
-		return (await Promise.all([...evalLogHeadersPromises, jsonLogHeadersPromise])).flat().sort((a, b) => a.index - b.index).map(({ summary }) => summary);
-	};
-	const get_log_dir = async () => {
-		if (api.get_log_dir) return await api.get_log_dir();
-		else return (await api.get_log_root())?.log_dir;
-	};
-	const get_logs = async (mtime, clientFileCount) => {
-		if (api.get_logs) return await api.get_logs(mtime, clientFileCount);
-		else return {
-			files: (await api.get_log_root())?.logs || [],
-			response_type: "full"
-		};
-	};
-	const get_log_root = async () => {
-		const logFiles = await api.get_log_root();
-		if (logFiles) return logFiles;
-		else if (log_file) {
-			const summary = await get_log_details(log_file);
-			if (summary) return { logs: [{
-				name: log_file,
-				task: summary.eval.task,
-				task_id: summary.eval.task_id
-			}] };
-		}
-		throw new Error("Unable to determine log paths.");
-	};
-	const get_log_pending_samples = (log_file, etag) => {
-		if (!api.eval_pending_samples) throw new Error("API doesn't support streamed samples");
-		return api.eval_pending_samples(log_file, etag);
-	};
-	const sampleDataPathByLog = /* @__PURE__ */ new Map();
-	const get_log_sample_data = async (log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool) => {
-		if (!api.eval_log_sample_data) throw new Error("API doesn't supported streamed sample data");
-		let path = sampleDataPathByLog.get(log_file);
-		if (path === void 0 && api.eval_log_sample_data_direct) {
-			const probe = await api.eval_log_sample_data_direct(log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool);
-			if (probe !== void 0) {
-				sampleDataPathByLog.set(log_file, "direct");
-				return probe;
-			}
-		}
-		if (path === void 0) {
-			path = "proxy";
-			sampleDataPathByLog.set(log_file, path);
-		}
-		if (path === "direct") {
-			const result = await api.eval_log_sample_data_direct(log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool);
-			if (result === void 0) throw new Error("Direct pending-sample-data path returned 'not supported' after probe");
-			return result;
-		}
-		return api.eval_log_sample_data(log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool);
-	};
-	const middleware = debug ? createMiddlewareWrapper([debugMiddleware]) : (_name, fn) => fn;
-	return {
-		client_events: middleware("client_events", () => {
-			return api.client_events();
-		}),
-		get_log_dir: middleware("get_log_dir", get_log_dir),
-		get_log_dir_handle: middleware("get_log_dir_handle", (log_dir) => {
-			return api.get_log_dir_handle ? api.get_log_dir_handle(log_dir) : log_dir || "default_log_dir";
-		}),
-		get_logs: middleware("get_log_files", get_logs),
-		get_log_root: middleware("get_log_root", get_log_root),
-		get_eval_set: middleware("get_eval_set", (dir) => {
-			return api.get_eval_set(dir);
-		}),
-		get_flow: middleware("get_flow", (dir) => {
-			return api.get_flow(dir);
-		}),
-		get_log_summaries: middleware("get_log_summaries", get_log_summaries),
-		get_log_details: middleware("get_log_details", get_log_details),
-		get_log_sample: middleware("get_log_sample", get_log_sample),
-		open_log_file: middleware("open_log_file", (log_file, log_dir) => {
-			return api.open_log_file(log_file, log_dir);
-		}),
-		download_file: middleware("download_file", (download_file, file_contents) => {
-			return api.download_file(download_file, file_contents);
-		}),
-		download_log: api.download_log ? middleware("download_log", (log_file) => {
-			return api.download_log(log_file);
-		}) : void 0,
-		log_message: middleware("log_message", (log_file, message) => {
-			return api.log_message(log_file, message);
-		}),
-		get_log_pending_samples: api.eval_pending_samples ? middleware("get_log_pending_samples", get_log_pending_samples) : void 0,
-		get_log_sample_data: api.eval_log_sample_data ? middleware("get_log_sample_data", get_log_sample_data) : void 0
-	};
-};
-var debugMiddleware = (name, _fn, args, result) => {
-	if (result instanceof Promise) {
-		const startTime = performance.now();
-		return result.then((returned) => {
-			const duration = performance.now() - startTime;
-			console.log(`[ClientAPI] ${name}`, {
-				args,
-				returned,
-				duration: `${duration.toFixed(2)}ms`
-			});
-			return returned;
-		});
-	} else {
-		console.log(`[ClientAPI] ${name}`, {
-			args,
-			returned: result
-		});
-		return result;
-	}
-};
-var applyMiddleware = (name, fn, middlewares) => {
-	if (middlewares.length === 0) return fn;
-	return ((...args) => {
-		let result = fn(...args);
-		for (const middleware of middlewares) result = middleware(name, fn, args, result);
-		return result;
-	});
-};
-var createMiddlewareWrapper = (middlewares) => {
-	return (name, fn) => {
-		return applyMiddleware(name, fn, middlewares);
-	};
-};
-//#endregion
-//#region src/client/api/shared/api-shared.ts
-/**
-* Downloads the provided content as a file using the browser's DOM API
-*/
-async function download_file$1(filename, filecontents) {
-	let blob;
-	if (typeof filecontents === "string" && filecontents.startsWith("data:")) blob = await (await fetch(filecontents)).blob();
-	else blob = new Blob([filecontents], { type: "text/plain" });
-	const link = document.createElement("a");
-	link.href = URL.createObjectURL(blob);
-	link.download = filename;
-	document.body.appendChild(link);
-	link.click();
-	document.body.removeChild(link);
-	URL.revokeObjectURL(link.href);
-}
-//#endregion
-//#region src/client/api/static-http/fetch.ts
-/**
-* Fetches a file from the specified URL as a string
-*/
-async function fetchTextFile(url, handleError) {
-	const safe_url = encodePathParts(url);
-	const response = await fetch(`${safe_url}`, { method: "GET" });
-	if (response.ok) return await response.text();
-	else if (response.status !== 200) {
-		if (handleError && handleError(response)) return;
-		const message = await response.text() || response.statusText;
-		throw /* @__PURE__ */ new Error(`${response.status}: ${message})`);
-	} else throw new Error(`${response.status} - ${response.statusText} `);
-}
-/**
-* Fetches a file from the specified URL and parses its content.
-*/
-async function fetchFile(url, parse, handleError) {
-	const safe_url = encodePathParts(url);
-	const response = await fetch(`${safe_url}`, { method: "GET" });
-	if (response.ok) return await parse(await response.text());
-	else if (response.status !== 200) {
-		if (handleError && handleError(response)) return;
-		const message = await response.text() || response.statusText;
-		throw /* @__PURE__ */ new Error(`${response.status}: ${message})`);
-	} else throw new Error(`${response.status} - ${response.statusText} `);
-}
-/**
-* Fetches a log file and parses its content, updating the log structure if necessary.
-*/
-var fetchLogFile = async (file) => {
-	return fetchFile(file, async (text) => {
-		const log = await asyncJsonParse(text);
-		if (log.version === 1) {
-			if (log.results) {
-				const untypedLog = log;
-				log.results.scores = [];
-				untypedLog.results.scorer.scorer = untypedLog.results.scorer.name;
-				log.results.scores.push(untypedLog.results.scorer);
-				delete untypedLog.results.scorer;
-				log.results.scores[0].metrics = untypedLog.results.metrics;
-				delete untypedLog.results.metrics;
-				const scorerName = log.results.scores[0].name;
-				log.samples?.forEach((sample) => {
-					const untypedSample = sample;
-					sample.scores = { [scorerName]: untypedSample.score };
-					delete untypedSample.score;
-				});
-			}
-		}
-		return {
-			raw: text,
-			parsed: log
-		};
-	});
-};
-/**
-* Fetches a log file and parses its content, updating the log structure if necessary.
-*/
-var fetchManifest = async (log_dir) => {
-	const parseListing = async (text) => {
-		return {
-			raw: text,
-			parsed: await asyncJsonParse(text)
-		};
-	};
-	return await fetchFile(log_dir + "/listing.json", parseListing);
-};
-/**
-* Fetches a file, parsing its content and returning the result.
-*/
-var fetchJsonFile = async (file, handleError) => {
-	return fetchFile(file, async (text) => {
-		return await asyncJsonParse(text);
-	}, handleError);
-};
-/**
-* Joins multiple URI segments into a single URI string.
-*
-* This function removes any leading or trailing slashes from each segment
-* and then joins them with a single slash (`/`).
-*/
-function joinURI(...segments) {
-	return segments.map((segment) => segment.replace(/(^\/+|\/+$)/g, "")).join("/");
-}
-//#endregion
-//#region src/client/api/static-http/api-static-http.ts
-/**
-* This provides an API implementation that will serve a single
-* file using an http parameter, designed to be deployed
-* to a webserver without inspect or the ability to enumerate log
-* files
-*/
-function staticHttpApi(log_dir, log_file, abs_log_dir) {
-	const resolved_log_dir = log_dir?.replace(" ", "+");
-	return staticHttpApiForLog({
-		log_file: log_file ? log_file.replace(" ", "+") : void 0,
-		log_dir: resolved_log_dir,
-		abs_log_dir
-	});
-}
-/**
-* Fetches a file from the specified URL and parses its content.
-*/
-function staticHttpApiForLog(logInfo) {
-	const log_dir = logInfo.log_dir;
-	const abs_log_dir = logInfo.abs_log_dir;
-	let manifest = void 0;
-	let manifestPromise = void 0;
-	const getManifest = async () => {
-		if (!manifest && log_dir) {
-			if (!manifestPromise) manifestPromise = fetchManifest(log_dir).then((manifestRaw) => {
-				manifest = manifestRaw?.parsed || {};
-				return manifest;
-			});
-			await manifestPromise;
-		}
-		return manifest || {};
-	};
-	async function open_log_file() {}
-	return {
-		client_events: async () => {
-			return Promise.resolve([]);
-		},
-		get_log_root: async () => {
-			if (log_dir) {
-				const manifest = await getManifest();
-				if (manifest) {
-					const logs = Object.keys(manifest).map((key) => {
-						return {
-							name: joinURI(log_dir, key),
-							task: manifest[key].task,
-							task_id: manifest[key].task_id
-						};
-					});
-					return Promise.resolve({
-						logs,
-						log_dir,
-						abs_log_dir
-					});
-				}
-			}
-		},
-		get_log_dir_handle: (log_dir) => {
-			return joinURI(`${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf("/"))}`, log_dir || "default_log_dir");
-		},
-		get_eval_set: async (dir) => {
-			const dirSegments = [];
-			if (log_dir) dirSegments.push(log_dir);
-			if (dir) dirSegments.push(dir);
-			return await fetchJsonFile(joinURI(...dirSegments, "eval-set.json"), (response) => {
-				if (400 <= response.status && response.status < 500) return true;
-				else return false;
-			});
-		},
-		get_flow: async (dir) => {
-			const dirSegments = [];
-			if (log_dir) dirSegments.push(log_dir);
-			if (dir) dirSegments.push(dir);
-			return await fetchTextFile(joinURI(...dirSegments, "flow.yaml"), (response) => {
-				if (400 <= response.status && response.status < 500) return true;
-				else return false;
-			});
-		},
-		log_message: async (log_file, message) => {
-			console.log(`[CLIENT MESSAGE] (${log_file}): ${message}`);
-		},
-		get_log_contents: async (log_file, _headerOnly, _capabilities) => {
-			const response = await fetchLogFile(log_file);
-			if (response) return response;
-			else throw new Error(`"Unable to load eval log ${log_file}`);
-		},
-		get_log_info: async (log_file) => {
-			return { size: await fetchSize(log_file) };
-		},
-		get_log_bytes: async (log_file, start, end) => {
-			return await fetchRange(log_file, start, end);
-		},
-		get_log_summary: async (log_file) => {
-			const manifest = await getManifest();
-			if (manifest) {
-				const manifestAbs = {};
-				Object.keys(manifest).forEach((key) => {
-					manifestAbs[joinURI(log_dir || "", key)] = manifest[key];
-				});
-				const header = manifestAbs[log_file];
-				if (header) return header;
-			}
-			throw new Error(`Unable to load eval log header for ${log_file}`);
-		},
-		get_log_summaries: async (files) => {
-			if (files.length === 0) return [];
-			if (log_dir) {
-				const manifest = await getManifest();
-				if (manifest) {
-					const keys = Object.keys(manifest);
-					const result = [];
-					files.forEach((file) => {
-						const fileKey = keys.find((key) => {
-							return file.endsWith(key);
-						});
-						if (fileKey) result.push(manifest[fileKey]);
-					});
-					return result;
-				}
-			}
-			throw new Error(`Failed to load a listing file using the directory: ${log_dir}. Please be sure you have deployed a manifest file (listing.json).`);
-		},
-		download_file: download_file$1,
-		open_log_file
-	};
-}
-//#endregion
 //#region src/client/api/view-server/request.ts
 var ApiError = class extends Error {
 	status;
@@ -142390,6 +134016,27 @@ var ApiError = class extends Error {
 		this.status = status;
 	}
 };
+/**
+* Unwrap a FastAPI `HTTPException` body — wire-encoded as
+* `{"detail": "..."}` — into the bare detail string.
+*
+* Returns the input unchanged when:
+*   - the body isn't valid JSON (e.g. the server sent plain text), or
+*   - the JSON has no top-level `detail` string (older endpoints,
+*     custom error shapes).
+*
+* Used by callers that build their own `ApiError` from a non-OK
+* response so the dialog renders e.g. `Empty tag is not allowed`
+* instead of `{"detail": "Empty tag is not allowed"}`.
+*/
+function unwrapFastapiDetail(body) {
+	if (!body) return body;
+	try {
+		const parsed = JSON.parse(body);
+		if (parsed && typeof parsed === "object" && "detail" in parsed && typeof parsed.detail === "string") return parsed.detail;
+	} catch {}
+	return body;
+}
 function serverRequestApi(baseUrl, getHeaders) {
 	const apiUrl = baseUrl || "";
 	function buildApiUrl(path) {
@@ -142499,504 +134146,697 @@ function serverRequestApi(baseUrl, getHeaders) {
 	};
 }
 //#endregion
-//#region src/client/remote/remotePendingSampleData.ts
-var SEGMENT_CAP_PER_CALL = 25;
-/**
-* Fetch one chunk of pending-sample data via presigned S3 URLs.
-* Returns `undefined` when this transport isn't supported (404, or any
-* segment lacks a presigned URL); all other failures throw.
-*/
-var fetchPendingSampleDataDirect = async (getUrls, log_file, id, epoch, cursors) => {
-	let urls;
-	try {
-		urls = await getUrls(log_file, id, epoch, cursors.last_event, cursors.last_attachment, cursors.last_message_pool, cursors.last_call_pool, SEGMENT_CAP_PER_CALL);
-	} catch (e) {
-		if (e instanceof ApiError && e.status === 404) return;
-		throw e;
+//#region src/app/log-view/title-view/editErrors.ts
+function formatEditError(err) {
+	if (err instanceof ApiError) {
+		if (err.status === 412) return "This log was modified by someone else. Please reload and try again.";
+		return err.message;
 	}
-	if (urls.segments.length === 0) return {
-		sampleData: {
-			events: [],
-			attachments: [],
-			message_pool: [],
-			call_pool: []
-		},
-		has_more: urls.has_more
-	};
-	if (!urls.segments.every((s) => s.direct_url != null)) return;
-	const parts = await Promise.all(urls.segments.map((seg) => readSegment(seg)));
-	return {
-		sampleData: applyCursorFilter({
-			events: parts.flatMap((p) => p.events),
-			attachments: parts.flatMap((p) => p.attachments),
-			message_pool: parts.flatMap((p) => p.message_pool),
-			call_pool: parts.flatMap((p) => p.call_pool)
-		}, cursors),
-		has_more: urls.has_more
-	};
-};
-var readSegment = async (seg) => {
-	const url = seg.direct_url;
-	const resp = await fetch(url);
-	if (!resp.ok) throw new Error(`Failed to fetch segment: ${resp.status} ${resp.statusText}`);
-	return await asyncJsonParseBytes(await (await openZipFileFromBuffer(new Uint8Array(await resp.arrayBuffer()))).readFile(seg.member_name));
-};
-var applyCursorFilter = (out, cursors) => {
-	const lastEvent = cursors.last_event ?? -1;
-	const lastAttachment = cursors.last_attachment ?? -1;
-	const lastMessagePool = cursors.last_message_pool ?? -1;
-	const lastCallPool = cursors.last_call_pool ?? -1;
-	out.events = out.events.filter((e) => e.id > lastEvent);
-	out.attachments = out.attachments.filter((a) => a.id > lastAttachment);
-	out.message_pool = out.message_pool.filter((m) => m.id > lastMessagePool);
-	out.call_pool = out.call_pool.filter((c) => c.id > lastCallPool);
-	return out;
+	if (err instanceof TypeError) return "Connection lost — view server unreachable.";
+	if (err instanceof Error) return err.message;
+	return String(err);
+}
+var EditMetadataDialog_module_default = {
+	tableScroll: "_tableScroll_1i84k_5",
+	table: "_table_1i84k_5",
+	empty: "_empty_1i84k_23",
+	row: "_row_1i84k_30",
+	rowDivider: "_rowDivider_1i84k_37",
+	rowNew: "_rowNew_1i84k_41",
+	key: "_key_1i84k_54",
+	value: "_value_1i84k_51",
+	remove: "_remove_1i84k_54",
+	addRow: "_addRow_1i84k_87",
+	addKeyInput: "_addKeyInput_1i84k_94",
+	typeSelect: "_typeSelect_1i84k_98",
+	addButton: "_addButton_1i84k_102"
 };
 //#endregion
-//#region src/client/api/view-server/api-view-server.ts
-var LOADED_TIME = Date.now();
-var lastEvalTime = 0;
+//#region src/app/log-view/title-view/ProvenanceFields.tsx
+var ProvenanceFields = ({ author, setAuthor, reason, setReason, disabled }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+	className: EditAnnotationsDialog_module_default.provenance,
+	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: EditAnnotationsDialog_module_default.section,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("label", {
+			className: clsx("text-size-smaller", EditAnnotationsDialog_module_default.label),
+			htmlFor: "edit-annotations-author",
+			children: ["Author ", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: EditAnnotationsDialog_module_default.required,
+				children: "*"
+			})]
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+			id: "edit-annotations-author",
+			type: "text",
+			className: clsx("form-control", "text-size-smaller"),
+			placeholder: "Your name or username",
+			value: author,
+			onChange: (e) => setAuthor(e.target.value),
+			disabled,
+			"aria-required": "true"
+		})]
+	}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: EditAnnotationsDialog_module_default.section,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: EditAnnotationsDialog_module_default.labelRow,
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", {
+				className: clsx("text-size-smaller", EditAnnotationsDialog_module_default.label),
+				htmlFor: "edit-annotations-reason",
+				children: "Reason"
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: clsx("text-size-smaller", EditAnnotationsDialog_module_default.hint),
+				children: "optional"
+			})]
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+			id: "edit-annotations-reason",
+			type: "text",
+			className: clsx("form-control", "text-size-smaller"),
+			value: reason,
+			onChange: (e) => setReason(e.target.value),
+			disabled
+		})]
+	})]
+});
+//#endregion
+//#region src/app/log-view/title-view/EditMetadataDialog.tsx
+var toEditableString = (v) => {
+	if (typeof v === "string") return v;
+	return JSON.stringify(v, null, 2);
+};
 /**
-* Create a view server API with optional server-side log listing
+* Thrown by {@link serializeEntry} when a non-string entry's text
+* isn't well-formed JSON. The dialog's save handler catches this and
+* surfaces a per-key error message so the user knows which row needs
+* to be fixed.
 */
-function viewServerApi(options = {}) {
-	const { apiBaseUrl, logDir, headerProvider } = options;
-	const requestApi = serverRequestApi(apiBaseUrl || "/api", headerProvider);
-	const client_events = async () => {
-		const params = new URLSearchParams();
-		params.append("loaded_time", String(LOADED_TIME.valueOf()));
-		params.append("last_eval_time", String(lastEvalTime.valueOf()));
-		return (await requestApi.fetchString("GET", `/events?${params.toString()}`)).parsed;
-	};
-	const get_log_dir = async () => {
-		if (logDir) return logDir;
-		return (await requestApi.fetchString("GET", "/log-dir")).parsed.log_dir;
-	};
-	const get_log_root = async () => {
-		const path = logDir ? `/logs?log_dir=${encodeURIComponent(logDir)}` : "/logs";
-		const logs = await requestApi.fetchString("GET", path);
-		lastEvalTime = Date.now();
-		return logs.parsed;
-	};
-	const get_logs = async (mtime, clientFileCount) => {
-		const path = logDir ? `/log-files?log_dir=${encodeURIComponent(logDir)}` : "/log-files";
-		const headers = {};
-		const token = log_file_token(mtime, clientFileCount);
-		if (token) headers["If-None-Match"] = token;
-		lastEvalTime = Date.now();
-		return (await requestApi.fetchString("GET", path, headers)).parsed;
-	};
-	const log_file_token = (mtime, fileCount) => {
-		return `W/"${mtime}-${fileCount}"`;
-	};
-	const get_eval_set = async (dir) => {
-		const basePath = "/eval-set";
-		const params = new URLSearchParams();
-		if (logDir) params.append("log_dir", logDir);
-		if (dir) params.append("dir", dir);
-		const query = params.toString();
-		const path = query ? `${basePath}?${query}` : basePath;
-		try {
-			return (await requestApi.fetchString("GET", path)).parsed;
-		} catch (error) {
-			if (error instanceof ApiError && (error.status === 404 || error.status === 403)) return;
-			throw error;
-		}
-	};
-	const get_flow = async (dir) => {
-		const basePath = "/flow";
-		const params = new URLSearchParams();
-		if (logDir) params.append("log_dir", logDir);
-		if (dir) params.append("dir", dir);
-		const query = params.toString();
-		const path = query ? `${basePath}?${query}` : basePath;
-		try {
-			const bytes = await requestApi.fetchBytes("GET", path);
-			return new TextDecoder().decode(bytes);
-		} catch (error) {
-			if (error instanceof ApiError && (error.status === 404 || error.status === 403)) return;
-			throw error;
-		}
-	};
-	const get_log_contents = async (file, headerOnly, _capabilities) => {
-		return await requestApi.fetchString("GET", `/logs/${encodeURIComponent(file)}?header-only=${headerOnly}`);
-	};
-	const get_log_info = async (file) => {
-		return (await requestApi.fetchString("GET", `/log-info/${encodeURIComponent(file)}`)).parsed;
-	};
-	const toLogPreview = (header) => {
-		const scores = Object.values(header.results?.scores || {});
-		const metric = scores.length > 0 ? scores[0].metrics : void 0;
-		const evalMetrics = Object.values(metric || {});
-		const primary_metric = evalMetrics.length > 0 ? evalMetrics[0] : void 0;
-		const model_roles = header.eval.model_roles ? Object.fromEntries(Object.entries(header.eval.model_roles).map(([role, cfg]) => [role, cfg.model])) : void 0;
-		return {
-			eval_id: header.eval.eval_id,
-			run_id: header.eval.run_id,
-			task: header.eval.task,
-			task_id: header.eval.task_id,
-			task_version: header.eval.task_version,
-			version: header.version,
-			status: header.status,
-			error: header.error,
-			model: header.eval.model,
-			model_roles,
-			started_at: header.stats?.started_at,
-			completed_at: header.stats?.completed_at,
-			primary_metric
+var MetadataParseError = class extends Error {
+	key;
+	text;
+	cause;
+	constructor(key, text, cause) {
+		super(`Invalid JSON for "${key}"`);
+		this.key = key;
+		this.text = text;
+		this.cause = cause;
+		this.name = "MetadataParseError";
+	}
+};
+var looksLikeJsonSyntax = (text) => {
+	const trimmed = text.trim();
+	return trimmed.startsWith("{") || trimmed.startsWith("[") || trimmed.startsWith("\"");
+};
+/**
+* Convert a dialog entry to its on-the-wire value, honoring the user's
+* chosen type *unless* the text carries JSON syntax (a leading `{`,
+* `[`, or `"`), in which case the structured intent wins:
+*
+*  - String-typed rows are saved verbatim when the text doesn't look
+*    structural. So a `string` row whose text is `43`, `approved`, or
+*    `true` round-trips as the string `"43"` / `"approved"` / `"true"`.
+*  - Anything else (other types, or string-typed but JSON-looking)
+*    goes through `JSON.parse`. Well-formed input lands as the proper
+*    JS value (`true`, `42`, `[1,2,3]`, `{"a": 1}`, `null`); malformed
+*    input throws {@link MetadataParseError} so the dialog can show a
+*    per-key message instead of saving garbage.
+*
+* Exported for unit testing.
+*/
+var serializeEntry = (entry) => {
+	if (entry.isString && !looksLikeJsonSyntax(entry.text)) return entry.text;
+	try {
+		return JSON.parse(entry.text);
+	} catch (e) {
+		throw new MetadataParseError(entry.key, entry.text, e);
+	}
+};
+var seedFor = (type) => {
+	switch (type) {
+		case "string": return "";
+		case "number": return 0;
+		case "boolean": return false;
+		case "object": return {};
+		case "array": return [];
+		case "null": return null;
+	}
+};
+var EditMetadataDialog = ({ showing, setShowing, currentMetadata, logFile, onSaved }) => {
+	const api = useApi();
+	const initialEntries = (0, import_react.useMemo)(() => Object.entries(currentMetadata).map(([key, value]) => ({
+		key,
+		text: toEditableString(value),
+		isString: typeof value === "string"
+	})), [currentMetadata]);
+	const [entries, setEntries] = (0, import_react.useState)(initialEntries);
+	const [removed, setRemoved] = (0, import_react.useState)([]);
+	const [newKey, setNewKey] = (0, import_react.useState)("");
+	const [newType, setNewType] = (0, import_react.useState)("string");
+	const [author, setAuthor] = (0, import_react.useState)("");
+	const [reason, setReason] = (0, import_react.useState)("");
+	const [submitting, setSubmitting] = (0, import_react.useState)(false);
+	const [error, setError] = (0, import_react.useState)();
+	const [pendingFocusKey, setPendingFocusKey] = (0, import_react.useState)(null);
+	(0, import_react.useEffect)(() => {
+		if (!showing) return;
+		setEntries(initialEntries);
+		setRemoved([]);
+		setNewKey("");
+		setNewType("string");
+		setAuthor("");
+		setReason("");
+		setSubmitting(false);
+		setError(void 0);
+		let cancelled = false;
+		if (api?.get_user_info) api.get_user_info().then((info) => {
+			if (!cancelled && info.name) setAuthor((current) => current || info.name || "");
+		}).catch(() => {});
+		return () => {
+			cancelled = true;
 		};
-	};
-	const get_log_bytes = async (file, start, end) => requestApi.fetchBytes("GET", `/log-bytes/${encodeURIComponent(file)}?start=${start}&end=${end}`);
-	const get_log_summaries = async (files) => {
-		const params = new URLSearchParams();
-		for (const file of files) params.append("file", file);
-		return (await requestApi.fetchString("GET", `/log-headers?${params.toString()}`)).parsed.map(toLogPreview);
-	};
-	const log_message = async (log_file, message) => {
-		const params = new URLSearchParams();
-		params.append("log_file", log_file);
-		params.append("message", message);
-		await requestApi.fetchType("GET", `/log-message?${params.toString()}`, {
-			headers: { "Content-Type": "text/plain" },
-			parse: async (text) => {
-				if (text !== "") throw new Error(`Unexpected response from log_message: ${text}`);
-			}
+	}, [
+		showing,
+		initialEntries,
+		api
+	]);
+	const existingKeys = (0, import_react.useMemo)(() => new Set(entries.map((e) => e.key)), [entries]);
+	const adding = entries.filter((e) => e.isNew).map((e) => e.key);
+	const editing = entries.filter((e) => e.dirty && !e.isNew).map((e) => e.key);
+	const hasChanges = adding.length > 0 || editing.length > 0 || removed.length > 0;
+	const updateValue = (0, import_react.useCallback)((key, text) => {
+		setEntries((prev) => prev.map((e) => e.key === key ? {
+			...e,
+			text,
+			dirty: true
+		} : e));
+	}, []);
+	const removeKey = (0, import_react.useCallback)((key) => {
+		setEntries((prev) => {
+			const entry = prev.find((e) => e.key === key);
+			if (!entry) return prev;
+			if (!entry.isNew) setRemoved((r) => r.includes(key) ? r : [...r, key]);
+			return prev.filter((e) => e.key !== key);
 		});
-	};
-	const eval_pending_samples = async (log_file, etag) => {
-		const params = new URLSearchParams();
-		params.append("log", log_file);
-		const headers = {};
-		if (etag) headers["If-None-Match"] = etag;
-		const request = {
-			headers,
-			parse: async (text) => {
-				return {
-					status: "OK",
-					pendingSamples: await asyncJsonParse(text)
-				};
-			},
-			handleError: (status) => {
-				if (status === 404) return { status: "NotFound" };
-				else if (status === 304) return { status: "NotModified" };
-			}
-		};
-		return (await requestApi.fetchType("GET", `/pending-samples?${params.toString()}`, request)).parsed;
-	};
-	const eval_log_sample_data = async (log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool) => {
-		const params = new URLSearchParams();
-		params.append("log", log_file);
-		params.append("id", String(id));
-		params.append("epoch", String(epoch));
-		if (last_event !== void 0) params.append("last-event-id", String(last_event));
-		if (last_attachment !== void 0) params.append("after-attachment-id", String(last_attachment));
-		if (last_message_pool !== void 0) params.append("after-message-pool-id", String(last_message_pool));
-		if (last_call_pool !== void 0) params.append("after-call-pool-id", String(last_call_pool));
-		return (await requestApi.fetchType("GET", `/pending-sample-data?${params.toString()}`, {
-			headers: {},
-			parse: async (text) => {
-				return {
-					status: "OK",
-					sampleData: await asyncJsonParse(text)
-				};
-			},
-			handleError: (status) => {
-				if (status === 404) return { status: "NotFound" };
-				else if (status === 304) return { status: "NotModified" };
-			}
-		})).parsed;
-	};
-	const get_pending_sample_data_urls = async (log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool, max_segments) => {
-		const params = new URLSearchParams();
-		params.append("log", log_file);
-		params.append("id", String(id));
-		params.append("epoch", String(epoch));
-		if (last_event !== void 0) params.append("last-event-id", String(last_event));
-		if (last_attachment !== void 0) params.append("after-attachment-id", String(last_attachment));
-		if (last_message_pool !== void 0) params.append("after-message-pool-id", String(last_message_pool));
-		if (last_call_pool !== void 0) params.append("after-call-pool-id", String(last_call_pool));
-		if (max_segments !== void 0) params.append("max-segments", String(max_segments));
-		return (await requestApi.fetchType("GET", `/pending-sample-data-urls?${params.toString()}`, {
-			headers: {},
-			parse: async (text) => {
-				return await asyncJsonParse(text);
-			}
-		})).parsed;
-	};
-	const eval_log_sample_data_direct = async (log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool) => {
-		const direct = await fetchPendingSampleDataDirect(get_pending_sample_data_urls, log_file, id, epoch, {
-			last_event,
-			last_attachment,
-			last_message_pool,
-			last_call_pool
-		});
-		if (direct === void 0) return;
-		return {
-			status: "OK",
-			sampleData: direct.sampleData,
-			has_more: direct.has_more
-		};
-	};
-	const download_log = async (log_file) => {
-		const url = `${apiBaseUrl || "/api"}/log-download/${encodeURIComponent(log_file)}`;
-		const link = document.createElement("a");
-		link.href = url;
-		link.download = "";
-		document.body.appendChild(link);
-		link.click();
-		document.body.removeChild(link);
-	};
-	return {
-		client_events,
-		get_log_root,
-		get_logs,
-		get_log_dir,
-		get_eval_set,
-		get_flow,
-		get_log_contents,
-		get_log_info,
-		get_log_bytes,
-		get_log_summaries,
-		log_message,
-		download_file: download_file$1,
-		download_log,
-		open_log_file: async () => {},
-		eval_pending_samples,
-		eval_log_sample_data,
-		eval_log_sample_data_direct
-	};
-}
-//#endregion
-//#region src/client/api/vscode/jsonrpc.ts
-var kMethodEvalLogDir = "eval_log_dir";
-var kMethodEvalLogs = "eval_logs";
-var kMethodEvalLogFiles = "eval_log_files";
-var kMethodEvalLog = "eval_log";
-var kMethodEvalLogInfo = "eval_log_info";
-var kMethodEvalLogBytes = "eval_log_bytes";
-var kMethodEvalLogHeaders = "eval_log_headers";
-var kMethodPendingSamples = "eval_log_pending_samples";
-var kMethodSampleData = "eval_log_sample_data";
-var kMethodLogMessage = "log_message";
-function webViewJsonRpcClient(vscode) {
-	return jsonRpcPostMessageRequestTransport({
-		postMessage: (data) => {
-			vscode.postMessage(data);
-		},
-		onMessage: (handler) => {
-			const onMessage = (ev) => {
-				handler(ev.data);
-			};
-			window.addEventListener("message", onMessage);
-			return () => {
-				window.removeEventListener("message", onMessage);
-			};
+	}, []);
+	const addKey = () => {
+		const k = newKey.trim();
+		if (!k) return;
+		if (existingKeys.has(k)) {
+			setNewKey("");
+			return;
 		}
-	}).request;
-}
-function jsonRpcPostMessageRequestTransport(target) {
-	const requests = /* @__PURE__ */ new Map();
-	return {
-		request: (method, params) => {
-			return new Promise((resolve, reject) => {
-				const requestId = Math.floor(Math.random() * 1e6);
-				requests.set(requestId, {
-					resolve,
-					reject
-				});
-				const request = {
-					jsonrpc: "2.0",
-					id: requestId,
-					method,
-					params
-				};
-				target.postMessage(request);
+		if (removed.includes(k)) setRemoved((r) => r.filter((x) => x !== k));
+		setEntries((prev) => [...prev, {
+			key: k,
+			text: toEditableString(seedFor(newType)),
+			isString: newType === "string",
+			isNew: true,
+			dirty: true
+		}]);
+		setNewKey("");
+		setNewType("string");
+		setPendingFocusKey(k);
+	};
+	(0, import_react.useEffect)(() => {
+		if (pendingFocusKey == null) return;
+		const selector = `[data-meta-key="${CSS.escape(pendingFocusKey)}"]`;
+		const textarea = document.querySelector(selector)?.querySelector("textarea");
+		if (textarea) {
+			textarea.scrollIntoView({
+				behavior: "smooth",
+				block: "nearest"
 			});
-		},
-		disconnect: target.onMessage((ev) => {
-			const response = asJsonRpcResponse(ev);
-			if (response) {
-				const request = requests.get(response.id);
-				if (request) {
-					requests.delete(response.id);
-					if (response.error) request.reject(response.error);
-					else request.resolve(response.result);
-				}
-			}
-		})
-	};
-}
-function isJsonRpcMessage(message) {
-	return message.jsonrpc !== void 0 && message.id !== void 0;
-}
-function asJsonRpcMessage(data) {
-	if (isJsonRpcMessage(data) && data.jsonrpc === "2.0") return data;
-	return null;
-}
-function asJsonRpcResponse(data) {
-	const message = asJsonRpcMessage(data);
-	if (message) return message;
-	return null;
-}
-//#endregion
-//#region src/client/api/vscode/api-vscode.ts
-var kNotFoundSignal = "NotFound";
-var kNotModifiedSignal = "NotModified";
-var vscodeClient = webViewJsonRpcClient(getVscodeApi());
-async function client_events() {
-	return [];
-}
-async function get_log_root() {
-	const response = await vscodeClient(kMethodEvalLogs, []);
-	if (response) {
-		const parsed = import_dist.default.parse(response);
-		if (Array.isArray(parsed)) return {
-			log_dir: "",
-			files: parsed
-		};
-		else return parsed;
-	} else return;
-}
-var get_log_dir = async () => {
-	const response = await vscodeClient(kMethodEvalLogDir, []);
-	if (response) return import_dist.default.parse(response).log_dir;
-};
-var get_logs = async (mtime, clientFileCount) => {
-	const response = await vscodeClient(kMethodEvalLogFiles, [mtime, clientFileCount]);
-	if (response) return import_dist.default.parse(response);
-	else return [];
-};
-async function get_eval_set() {}
-async function get_flow() {}
-async function get_log_contents(log_file, headerOnly, capabilities) {
-	const response = await vscodeClient(kMethodEvalLog, [log_file, headerOnly]);
-	if (response) {
-		let json;
-		if (capabilities?.webWorkers) json = await asyncJsonParse(response);
-		else json = import_dist.default.parse(response);
-		return {
-			parsed: json,
-			raw: response
-		};
-	} else throw new Error(`Unable to load eval log ${log_file}.`);
-}
-async function get_log_info(log_file) {
-	try {
-		return await vscodeClient(kMethodEvalLogInfo, [log_file]);
-	} catch (e) {
-		if (e?.code === -32601) return { size: await vscodeClient("eval_log_size", [log_file]) };
-		throw e;
-	}
-}
-async function get_log_bytes(log_file, start, end) {
-	return await vscodeClient(kMethodEvalLogBytes, [
-		log_file,
-		start,
-		end
-	]);
-}
-async function get_log_summaries(files) {
-	const response = await vscodeClient(kMethodEvalLogHeaders, [files]);
-	if (response) return import_dist.default.parse(response);
-	else return;
-}
-async function eval_pending_samples(log_file, etag) {
-	const response = await vscodeClient(kMethodPendingSamples, [log_file, etag]);
-	if (response) {
-		if (response === kNotModifiedSignal) return { status: "NotModified" };
-		else if (response === kNotFoundSignal) return { status: "NotFound" };
-		return {
-			status: "OK",
-			pendingSamples: await asyncJsonParse(response)
-		};
-	} else throw new Error(`Unable to load pending samples ${log_file}.`);
-}
-async function eval_log_sample_data(log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool) {
-	const response = await vscodeClient(kMethodSampleData, [
-		log_file,
-		id,
-		epoch,
-		last_event,
-		last_attachment,
-		last_message_pool,
-		last_call_pool
-	]);
-	if (response) {
-		if (response === kNotModifiedSignal) return { status: "NotModified" };
-		else if (response === kNotFoundSignal) return { status: "NotFound" };
-		return {
-			status: "OK",
-			sampleData: await asyncJsonParse(response)
-		};
-	} else throw new Error(`Unable to load live sample data ${log_file}.`);
-}
-async function log_message(log_file, message) {
-	await vscodeClient(kMethodLogMessage, [log_file, message]);
-}
-async function download_file() {
-	throw Error("Downloading files is not supported in VS Code");
-}
-async function open_log_file(log_file, log_dir) {
-	const msg = {
-		type: "displayLogFile",
-		url: log_file,
-		log_dir
-	};
-	getVscodeApi()?.postMessage(msg);
-}
-var api = {
-	client_events,
-	get_log_root,
-	get_log_dir,
-	get_logs,
-	get_eval_set,
-	get_flow,
-	get_log_contents,
-	get_log_info,
-	get_log_bytes,
-	get_log_summaries,
-	log_message,
-	download_file,
-	open_log_file,
-	eval_pending_samples,
-	eval_log_sample_data
-};
-//#endregion
-//#region src/client/api/index.ts
-/**
-* Resolves the client API
-*/
-var resolveApi = () => {
-	const debug = false;
-	if (getVscodeApi()) return clientApi(api, void 0, debug);
-	else {
-		const scriptEl = document.getElementById("log_dir_context");
-		if (scriptEl) {
-			const context = scriptEl.textContent;
-			if (context !== null) {
-				const data = import_dist.default.parse(context);
-				if (data.log_dir || data.log_file) return clientApi(staticHttpApi(data.log_dir || dirname(data.log_file), data.log_file, data.abs_log_dir), data.log_file, debug);
-			}
+			textarea.focus();
 		}
-		const urlParams = new URLSearchParams(window.location.search);
-		const log_file = urlParams.get("log_file");
-		const log_dir = urlParams.get("log_dir");
-		const forceViewServerApi = urlParams.get("inspect_server") === "true";
-		const resolved_log_dir = log_dir ?? void 0;
-		const resolved_log_file = log_file ?? void 0;
-		if (forceViewServerApi) return clientApi(viewServerApi({ logDir: resolved_log_dir }), resolved_log_file, debug);
-		if (resolved_log_dir !== void 0 || resolved_log_file !== void 0) return clientApi(staticHttpApi(resolved_log_dir, resolved_log_file), resolved_log_file, debug);
-		return clientApi(viewServerApi(), void 0, debug);
-	}
+		setPendingFocusKey(null);
+	}, [pendingFocusKey]);
+	const handleNewKeyDown = (e) => {
+		if (e.key === "Enter") {
+			e.preventDefault();
+			addKey();
+		}
+	};
+	const canSave = !submitting && hasChanges && author.trim().length > 0 && !!api?.edit_log;
+	const inFlightRef = (0, import_react.useRef)(false);
+	const handleSave = async () => {
+		if (!canSave || inFlightRef.current || !api?.edit_log) return;
+		inFlightRef.current = true;
+		const indicatorTimer = window.setTimeout(() => setSubmitting(true), 200);
+		try {
+			const metadata_set = {};
+			for (const entry of entries) if (entry.isNew || entry.dirty) metadata_set[entry.key] = serializeEntry(entry);
+			const edit = {
+				type: "metadata",
+				metadata_set,
+				metadata_remove: removed
+			};
+			await api.edit_log(logFile, {
+				edits: [edit],
+				provenance: {
+					author: author.trim(),
+					reason: reason.trim() || void 0,
+					metadata: {},
+					timestamp: (/* @__PURE__ */ new Date()).toISOString()
+				}
+			});
+			setShowing(false);
+			onSaved?.();
+		} catch (err) {
+			if (err instanceof MetadataParseError) setError(`Invalid JSON for "${err.key}". Use JSON syntax — quote keys and strings, e.g. {"a": 1} or "yes".`);
+			else setError(formatEditError(err));
+		} finally {
+			window.clearTimeout(indicatorTimer);
+			setSubmitting(false);
+			inFlightRef.current = false;
+		}
+	};
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Modal, {
+		id: "edit-metadata-dialog",
+		showing,
+		setShowing,
+		title: "Edit metadata",
+		width: "820px",
+		footer: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: EditAnnotationsDialog_module_default.footer,
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChangeSummary, {
+				adding,
+				editing,
+				removing: removed
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: EditAnnotationsDialog_module_default.footerActions,
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+					type: "button",
+					className: clsx("btn", "btn-secondary", "text-size-smaller"),
+					onClick: () => setShowing(false),
+					disabled: submitting,
+					children: "Cancel"
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+					type: "button",
+					className: clsx("btn", "btn-primary", "text-size-smaller"),
+					onClick: handleSave,
+					disabled: !canSave,
+					children: submitting ? "Saving…" : "Save"
+				})]
+			})]
+		}),
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: EditAnnotationsDialog_module_default.body,
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: EditAnnotationsDialog_module_default.section,
+					children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: EditAnnotationsDialog_module_default.labelRow,
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", {
+								className: clsx("text-size-smaller", EditAnnotationsDialog_module_default.label),
+								children: "Metadata"
+							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								className: clsx("text-size-smaller", EditAnnotationsDialog_module_default.hint),
+								children: "Values are edited as plain text. Use JSON syntax for nested values."
+							})]
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: EditMetadataDialog_module_default.tableScroll,
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: EditMetadataDialog_module_default.table,
+								children: [entries.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: clsx("text-size-smaller", EditMetadataDialog_module_default.empty),
+									children: "No metadata yet — add a key below."
+								}), entries.map((entry, idx) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaRow, {
+									entry,
+									first: idx === 0,
+									onChange: (text) => updateValue(entry.key, text),
+									onRemove: () => removeKey(entry.key),
+									disabled: submitting
+								}, entry.key))]
+							})
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: EditMetadataDialog_module_default.addRow,
+							children: [
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+									type: "text",
+									className: clsx("form-control", "text-size-smaller", EditMetadataDialog_module_default.addKeyInput),
+									placeholder: "Add a key…",
+									value: newKey,
+									onChange: (e) => setNewKey(e.target.value),
+									onKeyDown: handleNewKeyDown,
+									disabled: submitting
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("select", {
+									className: clsx("form-select", "text-size-smaller", EditMetadataDialog_module_default.typeSelect),
+									value: newType,
+									onChange: (e) => setNewType(e.target.value),
+									"aria-label": "Type for new key",
+									disabled: submitting,
+									children: [
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", {
+											value: "string",
+											children: "string"
+										}),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", {
+											value: "number",
+											children: "number"
+										}),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", {
+											value: "boolean",
+											children: "boolean"
+										}),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", {
+											value: "object",
+											children: "object"
+										}),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", {
+											value: "array",
+											children: "array"
+										}),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", {
+											value: "null",
+											children: "null"
+										})
+									]
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+									type: "button",
+									className: clsx("btn", newKey.trim() ? "btn-primary" : "btn-secondary", "text-size-smaller", EditMetadataDialog_module_default.addButton),
+									onClick: addKey,
+									disabled: submitting || !newKey.trim(),
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: ApplicationIcons.changes.add }), " Add key"]
+								})
+							]
+						})
+					]
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("hr", { className: EditAnnotationsDialog_module_default.divider }),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ProvenanceFields, {
+					author,
+					setAuthor,
+					reason,
+					setReason,
+					disabled: submitting
+				}),
+				error && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: clsx("text-size-smaller", EditAnnotationsDialog_module_default.error),
+					children: error
+				})
+			]
+		})
+	});
 };
-var api_default = resolveApi();
+var MetaRow = ({ entry, first, onChange, onRemove, disabled }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+	className: clsx(EditMetadataDialog_module_default.row, !first && EditMetadataDialog_module_default.rowDivider, entry.isNew && EditMetadataDialog_module_default.rowNew),
+	"data-meta-key": entry.key,
+	children: [
+		/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+			className: clsx("text-size-smaller", EditMetadataDialog_module_default.key),
+			children: entry.key
+		}),
+		/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: EditMetadataDialog_module_default.value,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AutogrowText, {
+				value: entry.text,
+				onChange,
+				disabled
+			})
+		}),
+		/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+			type: "button",
+			className: EditMetadataDialog_module_default.remove,
+			onClick: onRemove,
+			title: `Remove ${entry.key}`,
+			"aria-label": `Remove ${entry.key}`,
+			disabled,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: ApplicationIcons.trash })
+		})
+	]
+});
+var PlanCard_module_default = {
+	headerActions: "_headerActions_1fn25_1",
+	emptyMetadata: "_emptyMetadata_1fn25_10"
+};
+var DatasetDetailView_module_default = { item: "_item_1uzhd_1" };
+//#endregion
+//#region src/app/plan/DatasetDetailView.tsx
+var DatasetDetailView = ({ dataset, style }) => {
+	const filtered = Object.fromEntries(Object.entries(dataset).filter(([key]) => key !== "sample_ids"));
+	if (!dataset || Object.keys(filtered).length === 0) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+		className: clsx("text-size-base", DatasetDetailView_module_default.item),
+		style,
+		children: "No dataset information available"
+	});
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
+		className: clsx("text-size-base", DatasetDetailView_module_default.item),
+		entries: filtered,
+		style,
+		options: { plain: true }
+	});
+};
+var PlanDetailView_module_default = {
+	floatingCol: "_floatingCol_1n79r_1",
+	wideCol: "_wideCol_1n79r_9",
+	oneCol: "_oneCol_1n79r_16",
+	twoCol: "_twoCol_1n79r_20",
+	planCol: "_planCol_1n79r_24",
+	container: "_container_1n79r_29",
+	grid: "_grid_1n79r_35",
+	row: "_row_1n79r_43"
+};
+var DetailStep_module_default = {
+	icon: "_icon_59zaz_1",
+	container: "_container_59zaz_5",
+	metadata: "_metadata_59zaz_11"
+};
+//#endregion
+//#region src/app/plan/DetailStep.tsx
+var DetailStep = ({ icon, name, params, className }) => {
+	const iconHtml = icon ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(icon, DetailStep_module_default.icon) }) : "";
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: clsx(className),
+		children: [
+			iconHtml,
+			" ",
+			name,
+			params && Object.keys(params).length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: DetailStep_module_default.container,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
+					entries: params,
+					className: clsx("text-size-small", DetailStep_module_default.metadata)
+				})
+			}) : ""
+		]
+	});
+};
+var ScorerDetailView_module_default = { item: "_item_leq25_1" };
+//#endregion
+//#region src/app/plan/ScorerDetailView.tsx
+var ScorerDetailView = ({ name, scores, params }) => {
+	if (scores.length > 1) params = {
+		...params,
+		["scores"]: scores
+	};
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DetailStep, {
+		icon: ApplicationIcons.scorer,
+		name,
+		params,
+		className: clsx(ScorerDetailView_module_default.item, "text-size-base")
+	});
+};
+var SolverDetailView_module_default = {
+	container: "_container_12j2k_1",
+	item: "_item_12j2k_7",
+	separator: "_separator_12j2k_11"
+};
+//#endregion
+//#region src/app/plan/SolverDetailView.tsx
+var SolversDetailView = ({ steps }) => {
+	const separator = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: clsx(SolverDetailView_module_default.items, "text-size-small", SolverDetailView_module_default.separator),
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: ApplicationIcons.arrows.right })
+	});
+	const details = steps?.map((step, index) => {
+		return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(DetailStep, {
+			name: step.solver,
+			className: clsx(SolverDetailView_module_default.items, "text-size-small")
+		}), index < steps.length - 1 ? separator : ""] }, `solver-step-${index}`);
+	});
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: SolverDetailView_module_default.container,
+		children: details
+	});
+};
+//#endregion
+//#region src/app/plan/PlanDetailView.tsx
+var PlanDetailView = ({ evaluation, plan, scores }) => {
+	if (!evaluation) return null;
+	const steps = plan?.steps;
+	const taskColumns = [];
+	taskColumns.push({
+		title: "Dataset",
+		className: PlanDetailView_module_default.floatingCol,
+		contents: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DatasetDetailView, { dataset: evaluation.dataset })
+	});
+	if (steps) taskColumns.push({
+		title: "Solvers",
+		className: PlanDetailView_module_default.wideCol,
+		contents: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SolversDetailView, { steps })
+	});
+	if (scores) {
+		const scorers = scores.reduce((accum, score) => {
+			if (!accum[score.scorer]) accum[score.scorer] = {
+				scores: [score.name],
+				params: score.params
+			};
+			else accum[score.scorer].scores.push(score.name);
+			return accum;
+		}, {});
+		if (Object.keys(scorers).length > 0) {
+			const label = Object.keys(scorers).length === 1 ? "Scorer" : "Scorers";
+			const scorerPanels = Object.keys(scorers).map((key) => {
+				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScorerDetailView, {
+					name: key,
+					scores: scorers[key].scores,
+					params: scorers[key].params
+				}, key);
+			});
+			taskColumns.push({
+				title: label,
+				className: PlanDetailView_module_default.floatingCol,
+				contents: scorerPanels
+			});
+		}
+	}
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: PlanDetailView_module_default.container,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: PlanDetailView_module_default.grid,
+			style: { gridTemplateColumns: `repeat(${taskColumns.length}, fit-content(50%))` },
+			children: taskColumns.map((col) => {
+				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PlanColumn, {
+					title: col.title,
+					className: col.className,
+					children: col.contents
+				}, `plan-col-${col.title}`);
+			})
+		})
+	});
+};
+var PlanColumn = ({ title, className, children }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: clsx(className),
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: clsx("card-subheading", "text-size-small", "text-style-label", "text-style-secondary", PlanDetailView_module_default.planCol),
+			children: title
+		}), children]
+	});
+};
+//#endregion
+//#region src/app/plan/PlanCard.tsx
+/**
+* Renders the plan card
+*/
+var PlanCard = ({ evalSpec, evalPlan, scores, metadata: metadataProp, scrollRef }) => {
+	const metadata = metadataProp || {};
+	const hasMetadata = Object.keys(metadata).length > 0;
+	const { canEdit, selectedLogFile, refreshOnSave } = useLogEditAffordance();
+	const [editingMetadata, setEditingMetadata] = (0, import_react.useState)(false);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
+		/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Card, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardHeader, { label: "Summary" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardBody, {
+			id: "task-plan-card-body",
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PlanDetailView, {
+				evaluation: evalSpec,
+				plan: evalPlan,
+				scores
+			})
+		})] }),
+		(hasMetadata || canEdit) && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Card, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardHeader, {
+			label: "Metadata",
+			children: canEdit && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: PlanCard_module_default.headerActions,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EditButton, {
+					onClick: () => setEditingMetadata(true),
+					title: "Edit metadata"
+				})
+			})
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardBody, {
+			id: "task-metadata",
+			children: hasMetadata ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
+				id: "plan-md-metadata",
+				record: metadata,
+				scrollRef
+			}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: clsx("text-size-smaller", PlanCard_module_default.emptyMetadata),
+				children: "No metadata — click Edit to add a key."
+			})
+		})] }),
+		selectedLogFile && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EditMetadataDialog, {
+			showing: editingMetadata,
+			setShowing: setEditingMetadata,
+			currentMetadata: metadata,
+			logFile: selectedLogFile,
+			onSaved: refreshOnSave
+		})
+	] });
+};
+//#endregion
+//#region src/app/log-view/tabs/InfoTab.tsx
+var useInfoTabConfig = (evalSpec, evalPlan, evalError, evalResults, evalStatus, metadata) => {
+	const scrollRef = (0, import_react.useRef)(null);
+	const totalSampleCount = useTotalSampleCount();
+	return (0, import_react.useMemo)(() => {
+		return {
+			id: kLogViewInfoTabId,
+			label: "Info",
+			scrollable: true,
+			component: InfoTab,
+			componentProps: {
+				evalSpec,
+				evalPlan,
+				evalError,
+				evalResults,
+				evalStatus,
+				metadata,
+				sampleCount: totalSampleCount,
+				scrollRef
+			},
+			scrollRef
+		};
+	}, [
+		evalSpec,
+		evalPlan,
+		evalError,
+		evalResults,
+		evalStatus,
+		metadata,
+		totalSampleCount
+	]);
+};
+var InfoTab = ({ evalSpec, evalPlan, evalResults, evalStatus, metadata, sampleCount, scrollRef }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		style: { width: "100%" },
+		children: [sampleCount === 0 && evalStatus === "success" && evalSpec?.dataset.samples && evalSpec.dataset.samples > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageBand, {
+			id: "sample-too-large",
+			message: "Unable to display samples (this evaluation log may be too large).",
+			type: "warning"
+		}) : "", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			style: {
+				padding: "0.5em 1em 0 1em",
+				width: "100%"
+			},
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PlanCard, {
+				evalSpec,
+				evalPlan,
+				scores: evalResults?.scores,
+				metadata,
+				scrollRef
+			})
+		})]
+	});
+};
 //#endregion
 //#region src/components/DownloadButton.tsx
 var DownloadButton = ({ label, fileName, fileContents }) => {
+	const api = useApi();
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 		className: "btn btn-outline-primary download-button",
 		onClick: async () => {
-			await api_default.download_file(fileName, fileContents);
+			await api.download_file(fileName, fileContents);
 		},
 		children: label
 	});
@@ -147158,11 +138998,11 @@ var shift = {
 };
 var mac = typeof navigator != "undefined" && /Mac/.test(navigator.platform);
 var ie$1 = typeof navigator != "undefined" && /MSIE \d|Trident\/(?:[7-9]|\d{2,})\..*rv:(\d+)/.exec(navigator.userAgent);
-for (var i = 0; i < 10; i++) base[48 + i] = base[96 + i] = String(i);
-for (var i = 1; i <= 24; i++) base[i + 111] = "F" + i;
-for (var i = 65; i <= 90; i++) {
-	base[i] = String.fromCharCode(i + 32);
-	shift[i] = String.fromCharCode(i);
+for (var i$1 = 0; i$1 < 10; i$1++) base[48 + i$1] = base[96 + i$1] = String(i$1);
+for (var i$1 = 1; i$1 <= 24; i$1++) base[i$1 + 111] = "F" + i$1;
+for (var i$1 = 65; i$1 <= 90; i$1++) {
+	base[i$1] = String.fromCharCode(i$1 + 32);
+	shift[i$1] = String.fromCharCode(i$1);
 }
 for (var code$1 in base) if (!shift.hasOwnProperty(code$1)) shift[code$1] = base[code$1];
 function keyName(event) {
@@ -159180,7 +151020,7 @@ tagHighlighter([
 ]);
 //#endregion
 //#region ../../node_modules/.pnpm/@codemirror+language@6.12.3/node_modules/@codemirror/language/dist/index.js
-var _a;
+var _a$1;
 /**
 Node prop stored in a parser's top syntax node to provide the
 facet that stores language-specific data for that language.
@@ -159613,7 +151453,7 @@ if (typeof requestIdleCallback != "undefined") requestIdle = (callback) => {
 	}, 100);
 	return () => idle < 0 ? clearTimeout(timeout) : cancelIdleCallback(idle);
 };
-var isInputPending = typeof navigator != "undefined" && ((_a = navigator.scheduling) === null || _a === void 0 ? void 0 : _a.isInputPending) ? () => navigator.scheduling.isInputPending() : null;
+var isInputPending = typeof navigator != "undefined" && ((_a$1 = navigator.scheduling) === null || _a$1 === void 0 ? void 0 : _a$1.isInputPending) ? () => navigator.scheduling.isInputPending() : null;
 var parseWorker = /* @__PURE__ */ ViewPlugin.fromClass(class ParseWorker {
 	constructor(view) {
 		this.view = view;
@@ -166367,7 +158207,7 @@ var SearchCursor = class {
 if (typeof Symbol != "undefined") SearchCursor.prototype[Symbol.iterator] = function() {
 	return this;
 };
-var empty = {
+var empty$1 = {
 	from: -1,
 	to: -1,
 	match: /* @__PURE__ */ /.*/.exec("")
@@ -166398,7 +158238,7 @@ var RegExpCursor = class {
 		match object when [`next`](https://codemirror.net/6/docs/ref/#search.RegExpCursor.next)
 		sucessfully finds a match.
 		*/
-		this.value = empty;
+		this.value = empty$1;
 		if (/\\[sWDnr]|\n|\r|\[\^/.test(query)) return new MultilineRegExpCursor(text, query, options, from, to);
 		this.re = new RegExp(query, baseFlags + ((options === null || options === void 0 ? void 0 : options.ignoreCase) ? "i" : ""));
 		this.test = options === null || options === void 0 ? void 0 : options.test;
@@ -166484,7 +158324,7 @@ var MultilineRegExpCursor = class {
 		this.text = text;
 		this.to = to;
 		this.done = false;
-		this.value = empty;
+		this.value = empty$1;
 		this.matchPos = toCharEnd(text, from);
 		this.re = new RegExp(query, baseFlags + ((options === null || options === void 0 ? void 0 : options.ignoreCase) ? "i" : ""));
 		this.test = options === null || options === void 0 ? void 0 : options.test;
@@ -167951,7 +159791,7 @@ var SampleFilter = () => {
 		activateOnCompletion: (c) => c.label.endsWith(" ")
 	}), [filterItems, samples]);
 	const makeLinter = (0, import_react.useCallback)(() => linter((view) => getLints(view, filterError)), [filterError]);
-	const debounceSetFilter = (0, import_react.useMemo)(() => debounce$2((value) => {
+	const debounceSetFilter = (0, import_react.useMemo)(() => debounce$1((value) => {
 		setFilter(value);
 	}, 200), [setFilter]);
 	const makeUpdateListener = (0, import_react.useCallback)(() => EditorView.updateListener.of((update) => {
@@ -168991,6 +160831,25 @@ function buildSampleColumns(ctx) {
 		filter: true,
 		resizable: true,
 		valueFormatter: (params) => filename(params.value)
+	}, {
+		colId: "completed_at",
+		headerName: "Completed",
+		initialWidth: 140,
+		minWidth: 80,
+		maxWidth: 160,
+		sortable: true,
+		filter: true,
+		resizable: true,
+		cellDataType: "date",
+		valueGetter: (params) => params.data?.data?.completed_at ?? void 0,
+		filterValueGetter: (params) => {
+			const v = params.data?.data?.completed_at;
+			if (!v) return void 0;
+			const d = new Date(v);
+			return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+		},
+		valueFormatter: (params) => params.value ? formatDateTime(new Date(params.value)) : "",
+		comparator: comparators.date
 	});
 	cols.push({
 		colId: "sampleId",
@@ -169136,25 +160995,6 @@ function buildSampleColumns(ctx) {
 		cellRenderer: (params) => params.value === void 0 || params.value === null ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyCell, {}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: formatTime(params.value) }),
 		tooltipValueGetter: (params) => params.value === void 0 || params.value === null ? void 0 : formatTime(params.value)
 	});
-	cols.push(...buildScoreColumns(ctx));
-	if (multiLog) cols.push({
-		colId: "created",
-		field: "created",
-		headerName: "Created",
-		initialWidth: 130,
-		minWidth: 80,
-		maxWidth: 140,
-		sortable: true,
-		filter: true,
-		resizable: true,
-		cellDataType: "date",
-		filterValueGetter: (params) => {
-			if (!params.data?.created) return void 0;
-			const d = new Date(params.data.created);
-			return new Date(d.getFullYear(), d.getMonth(), d.getDate());
-		},
-		valueFormatter: (params) => params.value ? formatDateTime(new Date(params.value)) : ""
-	});
 	cols.push({
 		colId: "error",
 		field: "error",
@@ -169199,6 +161039,25 @@ function buildSampleColumns(ctx) {
 		cellStyle: { textAlign: "center" },
 		comparator: comparators.number,
 		valueGetter: (params) => params.data?.retries ?? params.data?.data?.retries
+	});
+	cols.push(...buildScoreColumns(ctx));
+	if (multiLog) cols.push({
+		colId: "created",
+		field: "created",
+		headerName: "Eval Created",
+		initialWidth: 140,
+		minWidth: 80,
+		maxWidth: 160,
+		sortable: true,
+		filter: true,
+		resizable: true,
+		cellDataType: "date",
+		filterValueGetter: (params) => {
+			if (!params.data?.created) return void 0;
+			const d = new Date(params.data.created);
+			return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+		},
+		valueFormatter: (params) => params.value ? formatDateTime(new Date(params.value)) : ""
 	});
 	if (ctx.compactScores) cols.push({
 		colId: "compactSpacer",
@@ -169811,7 +161670,352 @@ var SamplesTab = ({ running, scrollRef, showColumnSelector, setShowColumnSelecto
 		}) : null
 	] });
 };
-var TaskTab_module_default = { grid: "_grid_er9fb_1" };
+var EditTagsDialog_module_default = {
+	chipBox: "_chipBox_yxwie_1",
+	empty: "_empty_yxwie_12",
+	addRow: "_addRow_yxwie_17",
+	input: "_input_yxwie_23",
+	addButton: "_addButton_yxwie_27"
+};
+var TagChip_module_default = {
+	chip: "_chip_17zs5_1",
+	chipLabel: "_chipLabel_17zs5_31",
+	chipNew: "_chipNew_17zs5_40",
+	chipClickable: "_chipClickable_17zs5_48",
+	chipRemove: "_chipRemove_17zs5_61"
+};
+//#endregion
+//#region src/app/log-view/title-view/TagChip.tsx
+var TagChip = ({ label, isNew, onRemove, onClick }) => {
+	const className = clsx(TagChip_module_default.chip, isNew && TagChip_module_default.chipNew, onClick && TagChip_module_default.chipClickable, "text-size-smallest");
+	const labelNode = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+		className: TagChip_module_default.chipLabel,
+		children: label
+	});
+	if (onClick) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+		type: "button",
+		className,
+		title: label,
+		"aria-label": `Edit tags (${label})`,
+		onClick,
+		children: labelNode
+	});
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+		className,
+		title: label,
+		children: [labelNode, onRemove && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+			type: "button",
+			className: TagChip_module_default.chipRemove,
+			"aria-label": `Remove ${label}`,
+			onClick: onRemove,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: ApplicationIcons.close })
+		})]
+	});
+};
+//#endregion
+//#region src/app/log-view/title-view/EditTagsDialog.tsx
+var EditTagsDialog = ({ showing, setShowing, currentTags, logFile, onSaved }) => {
+	const api = useApi();
+	const [tags, setTags] = (0, import_react.useState)(currentTags);
+	const [pending, setPending] = (0, import_react.useState)("");
+	const [author, setAuthor] = (0, import_react.useState)("");
+	const [reason, setReason] = (0, import_react.useState)("");
+	const [submitting, setSubmitting] = (0, import_react.useState)(false);
+	const [error, setError] = (0, import_react.useState)();
+	(0, import_react.useEffect)(() => {
+		if (!showing) return;
+		setTags(currentTags);
+		setPending("");
+		setAuthor("");
+		setReason("");
+		setError(void 0);
+		setSubmitting(false);
+		let cancelled = false;
+		if (api?.get_user_info) api.get_user_info().then((info) => {
+			if (!cancelled && info.name) setAuthor((current) => current || info.name || "");
+		}).catch(() => {});
+		return () => {
+			cancelled = true;
+		};
+	}, [
+		showing,
+		currentTags,
+		api
+	]);
+	const initialSet = (0, import_react.useMemo)(() => new Set(currentTags), [currentTags]);
+	const currentSet = (0, import_react.useMemo)(() => new Set(tags), [tags]);
+	const tagsAdd = (0, import_react.useMemo)(() => tags.filter((t) => !initialSet.has(t)), [tags, initialSet]);
+	const tagsRemove = (0, import_react.useMemo)(() => currentTags.filter((t) => !currentSet.has(t)), [currentTags, currentSet]);
+	const hasChanges = tagsAdd.length > 0 || tagsRemove.length > 0;
+	const addPendingTag = () => {
+		const next = pending.trim();
+		if (!next) return;
+		if (currentSet.has(next)) {
+			setPending("");
+			return;
+		}
+		setTags((prev) => [...prev, next]);
+		setPending("");
+	};
+	const handleInputKeyDown = (e) => {
+		if (e.key === "Enter") {
+			e.preventDefault();
+			addPendingTag();
+		} else if (e.key === "," && pending.trim()) {
+			e.preventDefault();
+			addPendingTag();
+		}
+	};
+	const removeTag = (tag) => {
+		setTags((prev) => prev.filter((t) => t !== tag));
+	};
+	const canSave = !submitting && hasChanges && author.trim().length > 0 && !!api?.edit_log;
+	const inFlightRef = (0, import_react.useRef)(false);
+	const handleSave = async () => {
+		if (!canSave || inFlightRef.current || !api?.edit_log) return;
+		inFlightRef.current = true;
+		const indicatorTimer = window.setTimeout(() => setSubmitting(true), 200);
+		try {
+			const edit = {
+				type: "tags",
+				tags_add: tagsAdd,
+				tags_remove: tagsRemove
+			};
+			await api.edit_log(logFile, {
+				edits: [edit],
+				provenance: {
+					author: author.trim(),
+					reason: reason.trim() || void 0,
+					metadata: {},
+					timestamp: (/* @__PURE__ */ new Date()).toISOString()
+				}
+			});
+			setShowing(false);
+			onSaved?.();
+		} catch (err) {
+			setError(formatEditError(err));
+		} finally {
+			window.clearTimeout(indicatorTimer);
+			setSubmitting(false);
+			inFlightRef.current = false;
+		}
+	};
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Modal, {
+		id: "edit-tags-dialog",
+		showing,
+		setShowing,
+		title: "Edit tags",
+		width: "580px",
+		footer: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: EditAnnotationsDialog_module_default.footer,
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChangeSummary, {
+				adding: tagsAdd,
+				removing: tagsRemove
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: EditAnnotationsDialog_module_default.footerActions,
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+					type: "button",
+					className: clsx("btn", "btn-secondary", "text-size-smaller"),
+					onClick: () => setShowing(false),
+					disabled: submitting,
+					children: "Cancel"
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+					type: "button",
+					className: clsx("btn", "btn-primary", "text-size-smaller"),
+					onClick: handleSave,
+					disabled: !canSave,
+					children: submitting ? "Saving…" : "Save"
+				})]
+			})]
+		}),
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: EditAnnotationsDialog_module_default.body,
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: EditAnnotationsDialog_module_default.section,
+					children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", {
+							className: clsx("text-size-smaller", EditAnnotationsDialog_module_default.label),
+							children: "Tags"
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: EditTagsDialog_module_default.chipBox,
+							children: [tags.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								className: clsx("text-size-smaller", EditTagsDialog_module_default.empty),
+								children: "No tags yet — add one below."
+							}), tags.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TagChip, {
+								label: tag,
+								isNew: !initialSet.has(tag),
+								onRemove: () => removeTag(tag)
+							}, tag))]
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: EditTagsDialog_module_default.addRow,
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+								type: "text",
+								className: clsx("form-control", "text-size-smaller", EditTagsDialog_module_default.input),
+								placeholder: "Add a tag and press Enter",
+								value: pending,
+								onChange: (e) => setPending(e.target.value),
+								onKeyDown: handleInputKeyDown,
+								disabled: submitting,
+								autoFocus: true
+							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+								type: "button",
+								className: clsx("btn", pending.trim() ? "btn-primary" : "btn-secondary", "text-size-smaller", EditTagsDialog_module_default.addButton),
+								onClick: addPendingTag,
+								disabled: submitting || !pending.trim(),
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: ApplicationIcons.changes.add }), " Add"]
+							})]
+						})
+					]
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("hr", { className: EditAnnotationsDialog_module_default.divider }),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ProvenanceFields, {
+					author,
+					setAuthor,
+					reason,
+					setReason,
+					disabled: submitting
+				}),
+				error && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: clsx("text-size-smaller", EditAnnotationsDialog_module_default.error),
+					children: error
+				})
+			]
+		})
+	});
+};
+var TagStrip_module_default = { tagRow: "_tagRow_pg3wd_4" };
+//#endregion
+//#region src/app/log-view/title-view/TagStrip.tsx
+var MAX_ROWS = 2;
+/**
+* Wrap-aware chip row: tag chips followed by the Edit pill as the
+* last item, so when chips wrap to additional lines the Edit pill
+* follows the last chip onto whichever line it lands on. Layout
+* context (alignment, margin, shrink) is supplied by the consumer via
+* `className`.
+*
+* With {@link TagStripProps.collapseOnWrap} on, the strip allows up to
+* {@link MAX_ROWS} rows of chips; if they would spill onto a third
+* row, it surfaces a "…" overflow pill (with a tooltip listing the
+* hidden tags) before the Edit pill. Sizing is measured via
+* ResizeObserver — when the row widens, the strip restarts from the
+* full set and re-trims, so growth actually surfaces more chips. The
+* same restart happens on tag-set changes (so saving in the edit
+* dialog re-runs the layout against the new tags).
+*/
+var TagStrip = ({ tags, showEdit, onEdit, className, collapseOnWrap = false }) => {
+	const rowRef = (0, import_react.useRef)(null);
+	const [visibleCount, setVisibleCount] = (0, import_react.useState)(tags.length);
+	const lastTagsRef = (0, import_react.useRef)(tags);
+	const enableCollapse = collapseOnWrap && showEdit;
+	if (lastTagsRef.current !== tags) {
+		lastTagsRef.current = tags;
+		if (visibleCount !== tags.length) setVisibleCount(tags.length);
+	}
+	(0, import_react.useLayoutEffect)(() => {
+		if (!enableCollapse || !rowRef.current) return;
+		const el = rowRef.current;
+		const kids = Array.from(el.children);
+		if (kids.length < 2) return;
+		const tops = /* @__PURE__ */ new Set();
+		for (const k of kids) tops.add(k.offsetTop);
+		if (tops.size > MAX_ROWS && visibleCount > 0) setVisibleCount((c) => Math.max(0, c - 1));
+	}, [
+		enableCollapse,
+		visibleCount,
+		tags,
+		showEdit
+	]);
+	(0, import_react.useLayoutEffect)(() => {
+		if (!enableCollapse || !rowRef.current) return;
+		const el = rowRef.current;
+		let lastWidth = el.clientWidth;
+		const ro = new ResizeObserver(() => {
+			const w = el.clientWidth;
+			if (Math.abs(w - lastWidth) > 1) {
+				lastWidth = w;
+				setVisibleCount(tags.length);
+			}
+		});
+		ro.observe(el);
+		return () => ro.disconnect();
+	}, [enableCollapse, tags.length]);
+	if (tags.length === 0 && !showEdit) return null;
+	const effectiveCount = Math.min(visibleCount, tags.length);
+	const hiddenTags = tags.slice(effectiveCount);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		ref: rowRef,
+		className: clsx(TagStrip_module_default.tagRow, className),
+		children: [
+			tags.slice(0, effectiveCount).map((tag) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TagChip, {
+				label: tag,
+				onClick: showEdit ? onEdit : void 0
+			}, tag)),
+			hiddenTags.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(OverflowPill, {
+				hiddenTags,
+				onClick: onEdit
+			}),
+			showEdit && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EditButton, {
+				onClick: onEdit,
+				title: "Edit tags",
+				variant: "pill",
+				children: tags.length === 0 ? "Tags" : "edit"
+			})
+		]
+	});
+};
+/**
+* Outline pill rendered in place of overflowed chips. Matches the
+* Edit pill's visual via composed EditButton styles; the tooltip
+* reveals the hidden tag names. Clicking opens the same edit dialog
+* the Edit pill does, so the full list is one click away.
+*/
+var OverflowPill = ({ hiddenTags, onClick }) => {
+	const count = hiddenTags.length;
+	const title = `${count} more tag${count === 1 ? "" : "s"}: ${hiddenTags.join(", ")}`;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+		type: "button",
+		className: clsx(EditButton_module_default.button, EditButton_module_default.pill, "text-size-smaller"),
+		onClick,
+		title,
+		"aria-label": title,
+		children: "…"
+	});
+};
+//#endregion
+//#region src/app/log-view/title-view/TagsField.tsx
+/**
+* The full editable-tags surface: chip strip + Edit pill + dialog.
+*
+* Edit gating, target log, and post-save refresh come from
+* `useLogEditAffordance`; this component owns only the open/close state
+* for its dialog. Consumers pass the tag list and an optional className
+* for layout context.
+*/
+var TagsField = ({ tags, className, collapseOnWrap }) => {
+	const { canEdit, selectedLogFile, refreshOnSave } = useLogEditAffordance();
+	const [editingTags, setEditingTags] = (0, import_react.useState)(false);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TagStrip, {
+		tags,
+		showEdit: canEdit,
+		onEdit: () => setEditingTags(true),
+		className,
+		collapseOnWrap
+	}), selectedLogFile && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EditTagsDialog, {
+		showing: editingTags,
+		setShowing: setEditingTags,
+		currentTags: tags,
+		logFile: selectedLogFile,
+		onSaved: refreshOnSave
+	})] });
+};
+var TaskTab_module_default = {
+	grid: "_grid_q7chi_1",
+	tagPillAlign: "_tagPillAlign_q7chi_11"
+};
 //#endregion
 //#region src/app/log-view/tabs/TaskTab.tsx
 var useTaskTabConfig = (evalSpec, evalStats, earlyStopping, tags) => {
@@ -169836,6 +162040,9 @@ var useTaskTabConfig = (evalSpec, evalStats, earlyStopping, tags) => {
 	]);
 };
 var TaskTab = ({ evalSpec, evalStats, earlyStopping, tags }) => {
+	const api = useApi();
+	const canEditTags = Boolean(api.edit_log);
+	const tagList = tags ?? [];
 	const config = {};
 	Object.entries(evalSpec?.config || {}).forEach((entry) => {
 		const key = entry[0];
@@ -169858,7 +162065,10 @@ var TaskTab = ({ evalSpec, evalStats, earlyStopping, tags }) => {
 		if (names.length === 1) taskInformation["Inspect"] = names[0];
 		else taskInformation["Inspect"] = names;
 	}
-	if (tags && tags.length > 0) taskInformation["tags"] = tags.join(", ");
+	if (tagList.length > 0 || canEditTags) taskInformation["tags"] = { _html: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TagsField, {
+		tags: tagList,
+		className: TaskTab_module_default.tagPillAlign
+	}) };
 	if (evalSpec?.sandbox) if (Array.isArray(evalSpec?.sandbox)) {
 		taskInformation["sandbox"] = evalSpec.sandbox[0];
 		if (evalSpec.sandbox[1]) taskInformation["sandbox_config"] = evalSpec.sandbox[1];
@@ -169927,70 +162137,6 @@ var LinkButton = ({ id, text, icon, className, onClick }) => {
 			children: text
 		}) : void 0]
 	});
-};
-var Modal_module_default = {
-	modal: "_modal_1tj8p_1",
-	header: "_header_1tj8p_14",
-	modalTitle: "_modalTitle_1tj8p_18",
-	btnClose: "_btnClose_1tj8p_22",
-	backdrop: "_backdrop_1tj8p_28",
-	overflowVisible: "_overflowVisible_1tj8p_40",
-	overflowHidden: "_overflowHidden_1tj8p_44",
-	overflowScroll: "_overflowScroll_1tj8p_48",
-	overflowAuto: "_overflowAuto_1tj8p_52",
-	noPadding: "_noPadding_1tj8p_56"
-};
-//#endregion
-//#region src/components/Modal.tsx
-var Modal = ({ id, title, showing, setShowing, children, className, overflow = "visible", padded = true }) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [showing && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: Modal_module_default.backdrop,
-		onClick: () => setShowing(false)
-	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		id,
-		className: clsx("modal", "fade", showing ? "show" : "", className),
-		tabIndex: -1,
-		style: { display: showing ? "block" : "none" },
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: clsx("modal-dialog", Modal_module_default.modal),
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: "modal-content",
-				children: [
-					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: clsx("modal-header", Modal_module_default.header),
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							className: clsx("modal-title", "text-size-base", Modal_module_default.modalTitle),
-							children: title
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-							type: "button",
-							className: clsx("btn-close", "text-size-smaller", Modal_module_default.btnClose),
-							"data-bs-dismiss": "modal",
-							"aria-label": "Close",
-							onClick: () => {
-								setShowing(!showing);
-							}
-						})]
-					}),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: clsx("modal-body", !padded && Modal_module_default.noPadding, overflow === "auto" ? Modal_module_default.overflowAuto : overflow === "hidden" ? Modal_module_default.overflowHidden : overflow === "scroll" ? Modal_module_default.overflowScroll : Modal_module_default.overflowVisible),
-						children
-					}),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: "modal-footer",
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-							type: "button",
-							className: "btn btn-secondary",
-							"data-bs-dismiss": "modal",
-							onClick: () => {
-								setShowing(!showing);
-							},
-							children: "Close"
-						})
-					})
-				]
-			})
-		})
-	})] });
 };
 //#endregion
 //#region src/scoring/metrics.ts
@@ -170563,9 +162709,9 @@ var DownloadLogButton_module_default = { downloadLogButton: "_downloadLogButton_
 //#region src/components/DownloadLogButton.tsx
 var DownloadLogButton = ({ log_file, className = "", ariaLabel = "Download log as EVAL" }) => {
 	const [downloadState, setDownloadState] = (0, import_react.useState)("idle");
-	const api = useStore((state) => state.api);
+	const api = useApi();
 	const handleClick = async () => {
-		if (!api?.download_log) return;
+		if (!api.download_log) return;
 		setDownloadState("downloading");
 		try {
 			await api.download_log(log_file);
@@ -170634,16 +162780,17 @@ var ModelRolesView = ({ roles }) => {
 	}) : void 0;
 };
 var PrimaryBar_module_default = {
-	container: "_container_17txe_1",
-	wrapper: "_wrapper_17txe_8",
-	toggle: "_toggle_17txe_14",
-	body: "_body_17txe_21",
-	bodyContainer: "_bodyContainer_17txe_27",
-	taskTitle: "_taskTitle_17txe_33",
-	taskModel: "_taskModel_17txe_38",
-	taskStatus: "_taskStatus_17txe_42",
-	secondaryContainer: "_secondaryContainer_17txe_49",
-	buttonGroup: "_buttonGroup_17txe_58"
+	container: "_container_1x0td_1",
+	wrapper: "_wrapper_1x0td_15",
+	toggle: "_toggle_1x0td_21",
+	body: "_body_1x0td_28",
+	bodyContainer: "_bodyContainer_1x0td_40",
+	tagRowHeader: "_tagRowHeader_1x0td_61",
+	taskTitle: "_taskTitle_1x0td_66",
+	taskModel: "_taskModel_1x0td_73",
+	taskStatus: "_taskStatus_1x0td_77",
+	secondaryContainer: "_secondaryContainer_1x0td_84",
+	buttonGroup: "_buttonGroup_1x0td_93"
 };
 var RunningStatusPanel_module_default = {
 	statusContainer: "_statusContainer_1sckj_1",
@@ -170708,7 +162855,7 @@ var StatusPanel = ({ icon, status, sampleCount }) => {
 };
 //#endregion
 //#region src/app/log-view/title-view/PrimaryBar.tsx
-var PrimaryBar = ({ status, evalResults, runningMetrics, evalSpec, sampleCount }) => {
+var PrimaryBar = ({ status, evalResults, runningMetrics, evalSpec, sampleCount, tags }) => {
 	const streamSamples = useStore((state) => state.capabilities.streamSamples);
 	const downloadLogs = useStore((state) => state.capabilities.downloadLogs);
 	const absLogDir = useStore((state) => state.logs.absLogDir);
@@ -170716,6 +162863,7 @@ var PrimaryBar = ({ status, evalResults, runningMetrics, evalSpec, sampleCount }
 	const logDir = useStore((state) => state.logs.logDir);
 	const logFileName = selectedLogFile ? filename(selectedLogFile) : "";
 	const isEvalFile = selectedLogFile?.endsWith(".eval");
+	const tagList = tags ?? [];
 	const copyValue = (() => {
 		if (!absLogDir || !selectedLogFile || !logDir) return selectedLogFile;
 		const prefix = logDir + "/";
@@ -170733,17 +162881,25 @@ var PrimaryBar = ({ status, evalResults, runningMetrics, evalSpec, sampleCount }
 					children: [
 						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							className: PrimaryBar_module_default.bodyContainer,
-							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-								id: "task-title",
-								className: clsx("task-title", "text-truncate", PrimaryBar_module_default.taskTitle),
-								title: evalSpec?.task,
-								children: evalSpec?.task
-							}), evalSpec?.model && evalSpec.model !== "none/none" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-								id: "task-model",
-								className: clsx("task-model", "text-truncate", PrimaryBar_module_default.taskModel, "text-size-base"),
-								title: evalSpec?.model,
-								children: evalSpec?.model
-							}) : ""]
+							children: [
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									id: "task-title",
+									className: clsx("task-title", PrimaryBar_module_default.taskTitle),
+									title: evalSpec?.task,
+									children: evalSpec?.task
+								}),
+								evalSpec?.model && evalSpec.model !== "none/none" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									id: "task-model",
+									className: clsx("task-model", "text-truncate", PrimaryBar_module_default.taskModel, "text-size-base"),
+									title: evalSpec?.model,
+									children: evalSpec?.model
+								}) : "",
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TagsField, {
+									tags: tagList,
+									className: PrimaryBar_module_default.tagRowHeader,
+									collapseOnWrap: true
+								})
+							]
 						}),
 						evalSpec?.model_roles ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ModelRolesView, { roles: evalSpec.model_roles }) : void 0,
 						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -170949,7 +163105,7 @@ var TitleView_module_default = {
 /**
 * Renders the Navbar
 */
-var TitleView = ({ evalSpec, evalPlan, evalResults, evalStats, status, runningMetrics, collapsed }) => {
+var TitleView = ({ evalSpec, evalPlan, evalResults, evalStats, status, runningMetrics, tags, collapsed }) => {
 	const totalSampleCount = useTotalSampleCount();
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("nav", {
 		className: clsx("navbar", "sticky-top", TitleView_module_default.navbarWrapper, collapsed ? TitleView_module_default.collapsed : TitleView_module_default.expanded),
@@ -170963,7 +163119,8 @@ var TitleView = ({ evalSpec, evalPlan, evalResults, evalStats, status, runningMe
 					evalResults,
 					status,
 					runningMetrics,
-					sampleCount: totalSampleCount
+					sampleCount: totalSampleCount,
+					tags
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SecondaryBar, {
 					evalSpec,
 					evalPlan,
@@ -171043,6 +163200,7 @@ var LogView = () => {
 			runningMetrics,
 			evalStats: selectedLogDetails?.stats,
 			status: selectedLogDetails?.status,
+			tags: selectedLogDetails?.tags,
 			collapsed: titleCollapsed
 		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			ref: divRef,
@@ -171728,12 +163886,19 @@ var SamplesPanel = () => {
 		return v;
 	}, [allColumns, columnVisibility]);
 	const initialState = (0, import_react.useMemo)(() => {
-		if (previousSamplesPath !== void 0 && previousSamplesPath !== samplesPath) {
+		const base = previousSamplesPath !== void 0 && previousSamplesPath !== samplesPath ? (() => {
 			const result = { ...gridState };
 			delete result?.filter;
 			return result;
-		}
-		return gridState;
+		})() : gridState;
+		if (!base?.sort?.sortModel?.length) return {
+			...base,
+			sort: { sortModel: [{
+				colId: "completed_at",
+				sort: "desc"
+			}] }
+		};
+		return base;
 	}, [
 		previousSamplesPath,
 		samplesPath,
@@ -171776,7 +163941,7 @@ var SamplesPanel = () => {
 					error: sample.error,
 					limit: sample.limit,
 					retries: sample.retries,
-					completed: sample.completed ?? false,
+					completed: sample.completed,
 					tokens,
 					duration: sample.total_time ?? void 0
 				};
@@ -172115,14 +164280,2941 @@ var App = ({ api }) => {
 		syncLogs,
 		onMessage
 	]);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComponentIconProvider, {
-		icons: componentIcons,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComponentStateProvider, {
-			hooks: inspectStateHooks,
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RouterProvider2, { router: AppRouter })
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ApiProvider, {
+		value: api,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComponentIconProvider, {
+			icons: componentIcons,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComponentStateProvider, {
+				hooks: inspectStateHooks,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RouterProvider2, { router: AppRouter })
+			})
 		})
 	});
 };
+//#endregion
+//#region src/utils/clear-events-preprocessor.ts
+/**
+* JSON preprocessor that clears large events arrays at the byte level.
+* Works directly with Uint8Array to avoid creating gigabyte-sized strings.
+* Discards all events if the events array exceeds 100MB, leaving an empty array.
+*/
+var MAX_EVENTS_SIZE_BYTES = 350 * 1024 * 1024;
+var MAX_TOTAL_SIZE = 512 * 1024 * 1024;
+/**
+* Finds the "events": [ pattern in the byte array.
+* Returns the position of the opening bracket, or -1 if not found.
+*/
+function findEventsArrayStart(data) {
+	const pattern = new TextEncoder().encode("\"events\"");
+	for (let i = 0; i < data.length - pattern.length - 10; i++) {
+		let matches = true;
+		for (let j = 0; j < pattern.length; j++) if (data[i + j] !== pattern[j]) {
+			matches = false;
+			break;
+		}
+		if (matches) {
+			let pos = i + pattern.length;
+			while (pos < data.length && (data[pos] === 32 || data[pos] === 9 || data[pos] === 10 || data[pos] === 13)) pos++;
+			if (pos < data.length && data[pos] === 58) {
+				pos++;
+				while (pos < data.length && (data[pos] === 32 || data[pos] === 9 || data[pos] === 10 || data[pos] === 13)) pos++;
+				if (pos < data.length && data[pos] === 91) return pos;
+			}
+		}
+	}
+	return -1;
+}
+/**
+* Finds the closing bracket of an array starting at arrayStart.
+* Properly handles nested structures and strings.
+*/
+function findArrayEnd(data, arrayStart) {
+	let depth = 0;
+	let inString = false;
+	let escaped = false;
+	for (let i = arrayStart; i < data.length; i++) {
+		const byte = data[i];
+		if (escaped) {
+			escaped = false;
+			continue;
+		}
+		if (byte === 92) {
+			escaped = true;
+			continue;
+		}
+		if (byte === 34) {
+			inString = !inString;
+			continue;
+		}
+		if (inString) continue;
+		if (byte === 91 || byte === 123) depth++;
+		else if (byte === 93 || byte === 125) {
+			depth--;
+			if (depth === 0 && byte === 93) return i;
+		}
+	}
+	return -1;
+}
+/**
+* Clears events array at the byte level if it exceeds the size limits.
+* Replaces the entire events array with an empty array.
+* This allows handling gigabyte-sized files without running out of memory.
+*/
+function clearLargeEventsArray(data) {
+	if (data.length <= MAX_EVENTS_SIZE_BYTES) return data;
+	const arrayStart = findEventsArrayStart(data);
+	if (arrayStart === -1) return data;
+	const arrayEnd = findArrayEnd(data, arrayStart);
+	if (arrayEnd === -1) return data;
+	if (arrayEnd - arrayStart - 1 <= MAX_EVENTS_SIZE_BYTES && data.length <= MAX_TOTAL_SIZE) return data;
+	const before = data.slice(0, arrayStart + 1);
+	const after = data.slice(arrayEnd);
+	const result = new Uint8Array(before.length + after.length);
+	let offset = 0;
+	result.set(before, offset);
+	offset += before.length;
+	result.set(after, offset);
+	return result;
+}
+//#endregion
+//#region ../../node_modules/.pnpm/fflate@0.8.3/node_modules/fflate/esm/browser.js
+var ch2 = {};
+var wk = (function(c, id, msg, transfer, cb) {
+	var w = new Worker(ch2[id] || (ch2[id] = URL.createObjectURL(new Blob([c + ";addEventListener(\"error\",function(e){e=e.error;postMessage({$e$:[e.message,e.code,e.stack]})})"], { type: "text/javascript" }))));
+	w.onmessage = function(e) {
+		var d = e.data, ed = d.$e$;
+		if (ed) {
+			var err = new Error(ed[0]);
+			err["code"] = ed[1];
+			err.stack = ed[2];
+			cb(err, null);
+		} else cb(null, d);
+	};
+	w.postMessage(msg, transfer);
+	return w;
+});
+var u8$1 = Uint8Array, u16$1 = Uint16Array, i32$1 = Int32Array;
+var fleb = new u8$1([
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	1,
+	1,
+	1,
+	1,
+	2,
+	2,
+	2,
+	2,
+	3,
+	3,
+	3,
+	3,
+	4,
+	4,
+	4,
+	4,
+	5,
+	5,
+	5,
+	5,
+	0,
+	0,
+	0,
+	0
+]);
+var fdeb = new u8$1([
+	0,
+	0,
+	0,
+	0,
+	1,
+	1,
+	2,
+	2,
+	3,
+	3,
+	4,
+	4,
+	5,
+	5,
+	6,
+	6,
+	7,
+	7,
+	8,
+	8,
+	9,
+	9,
+	10,
+	10,
+	11,
+	11,
+	12,
+	12,
+	13,
+	13,
+	0,
+	0
+]);
+var clim = new u8$1([
+	16,
+	17,
+	18,
+	0,
+	8,
+	7,
+	9,
+	6,
+	10,
+	5,
+	11,
+	4,
+	12,
+	3,
+	13,
+	2,
+	14,
+	1,
+	15
+]);
+var freb = function(eb, start) {
+	var b = new u16$1(31);
+	for (var i = 0; i < 31; ++i) b[i] = start += 1 << eb[i - 1];
+	var r = new i32$1(b[30]);
+	for (var i = 1; i < 30; ++i) for (var j = b[i]; j < b[i + 1]; ++j) r[j] = j - b[i] << 5 | i;
+	return {
+		b,
+		r
+	};
+};
+var _a = freb(fleb, 2), fl = _a.b, revfl = _a.r;
+fl[28] = 258, revfl[258] = 28;
+var _b = freb(fdeb, 0), fd = _b.b;
+_b.r;
+var rev = new u16$1(32768);
+for (var i = 0; i < 32768; ++i) {
+	var x = (i & 43690) >> 1 | (i & 21845) << 1;
+	x = (x & 52428) >> 2 | (x & 13107) << 2;
+	x = (x & 61680) >> 4 | (x & 3855) << 4;
+	rev[i] = ((x & 65280) >> 8 | (x & 255) << 8) >> 1;
+}
+var hMap = (function(cd, mb, r) {
+	var s = cd.length;
+	var i = 0;
+	var l = new u16$1(mb);
+	for (; i < s; ++i) if (cd[i]) ++l[cd[i] - 1];
+	var le = new u16$1(mb);
+	for (i = 1; i < mb; ++i) le[i] = le[i - 1] + l[i - 1] << 1;
+	var co;
+	if (r) {
+		co = new u16$1(1 << mb);
+		var rvb = 15 - mb;
+		for (i = 0; i < s; ++i) if (cd[i]) {
+			var sv = i << 4 | cd[i];
+			var r_1 = mb - cd[i];
+			var v = le[cd[i] - 1]++ << r_1;
+			for (var m = v | (1 << r_1) - 1; v <= m; ++v) co[rev[v] >> rvb] = sv;
+		}
+	} else {
+		co = new u16$1(s);
+		for (i = 0; i < s; ++i) if (cd[i]) co[i] = rev[le[cd[i] - 1]++] >> 15 - cd[i];
+	}
+	return co;
+});
+var flt = new u8$1(288);
+for (var i = 0; i < 144; ++i) flt[i] = 8;
+for (var i = 144; i < 256; ++i) flt[i] = 9;
+for (var i = 256; i < 280; ++i) flt[i] = 7;
+for (var i = 280; i < 288; ++i) flt[i] = 8;
+var fdt = new u8$1(32);
+for (var i = 0; i < 32; ++i) fdt[i] = 5;
+var flrm = /* @__PURE__ */ hMap(flt, 9, 1), fdrm = /* @__PURE__ */ hMap(fdt, 5, 1);
+var max = function(a) {
+	var m = a[0];
+	for (var i = 1; i < a.length; ++i) if (a[i] > m) m = a[i];
+	return m;
+};
+var bits = function(d, p, m) {
+	var o = p / 8 | 0;
+	return (d[o] | d[o + 1] << 8) >> (p & 7) & m;
+};
+var bits16 = function(d, p) {
+	var o = p / 8 | 0;
+	return (d[o] | d[o + 1] << 8 | d[o + 2] << 16) >> (p & 7);
+};
+var shft = function(p) {
+	return (p + 7) / 8 | 0;
+};
+var slc$1 = function(v, s, e) {
+	if (s == null || s < 0) s = 0;
+	if (e == null || e > v.length) e = v.length;
+	return new u8$1(v.subarray(s, e));
+};
+var ec$1 = [
+	"unexpected EOF",
+	"invalid block type",
+	"invalid length/literal",
+	"invalid distance",
+	"stream finished",
+	"no stream handler",
+	,
+	"no callback",
+	"invalid UTF-8 data",
+	"extra field too long",
+	"date not in range 1980-2099",
+	"filename too long",
+	"stream finishing",
+	"invalid zip data"
+];
+var err$1 = function(ind, msg, nt) {
+	var e = new Error(msg || ec$1[ind]);
+	e.code = ind;
+	if (Error.captureStackTrace) Error.captureStackTrace(e, err$1);
+	if (!nt) throw e;
+	return e;
+};
+var inflt = function(dat, st, buf, dict) {
+	var sl = dat.length, dl = dict ? dict.length : 0;
+	if (!sl || st.f && !st.l) return buf || new u8$1(0);
+	var noBuf = !buf;
+	var resize = noBuf || st.i != 2;
+	var noSt = st.i;
+	if (noBuf) buf = new u8$1(sl * 3);
+	var cbuf = function(l) {
+		var bl = buf.length;
+		if (l > bl) {
+			var nbuf = new u8$1(Math.max(bl * 2, l));
+			nbuf.set(buf);
+			buf = nbuf;
+		}
+	};
+	var final = st.f || 0, pos = st.p || 0, bt = st.b || 0, lm = st.l, dm = st.d, lbt = st.m, dbt = st.n;
+	var tbts = sl * 8;
+	do {
+		if (!lm) {
+			final = bits(dat, pos, 1);
+			var type = bits(dat, pos + 1, 3);
+			pos += 3;
+			if (!type) {
+				var s = shft(pos) + 4, l = dat[s - 4] | dat[s - 3] << 8, t = s + l;
+				if (t > sl) {
+					if (noSt) err$1(0);
+					break;
+				}
+				if (resize) cbuf(bt + l);
+				buf.set(dat.subarray(s, t), bt);
+				st.b = bt += l, st.p = pos = t * 8, st.f = final;
+				continue;
+			} else if (type == 1) lm = flrm, dm = fdrm, lbt = 9, dbt = 5;
+			else if (type == 2) {
+				var hLit = bits(dat, pos, 31) + 257, hcLen = bits(dat, pos + 10, 15) + 4;
+				var tl = hLit + bits(dat, pos + 5, 31) + 1;
+				pos += 14;
+				var ldt = new u8$1(tl);
+				var clt = new u8$1(19);
+				for (var i = 0; i < hcLen; ++i) clt[clim[i]] = bits(dat, pos + i * 3, 7);
+				pos += hcLen * 3;
+				var clb = max(clt), clbmsk = (1 << clb) - 1;
+				var clm = hMap(clt, clb, 1);
+				for (var i = 0; i < tl;) {
+					var r = clm[bits(dat, pos, clbmsk)];
+					pos += r & 15;
+					var s = r >> 4;
+					if (s < 16) ldt[i++] = s;
+					else {
+						var c = 0, n = 0;
+						if (s == 16) n = 3 + bits(dat, pos, 3), pos += 2, c = ldt[i - 1];
+						else if (s == 17) n = 3 + bits(dat, pos, 7), pos += 3;
+						else if (s == 18) n = 11 + bits(dat, pos, 127), pos += 7;
+						while (n--) ldt[i++] = c;
+					}
+				}
+				var lt = ldt.subarray(0, hLit), dt = ldt.subarray(hLit);
+				lbt = max(lt);
+				dbt = max(dt);
+				lm = hMap(lt, lbt, 1);
+				dm = hMap(dt, dbt, 1);
+			} else err$1(1);
+			if (pos > tbts) {
+				if (noSt) err$1(0);
+				break;
+			}
+		}
+		if (resize) cbuf(bt + 131072);
+		var lms = (1 << lbt) - 1, dms = (1 << dbt) - 1;
+		var lpos = pos;
+		for (;; lpos = pos) {
+			var c = lm[bits16(dat, pos) & lms], sym = c >> 4;
+			pos += c & 15;
+			if (pos > tbts) {
+				if (noSt) err$1(0);
+				break;
+			}
+			if (!c) err$1(2);
+			if (sym < 256) buf[bt++] = sym;
+			else if (sym == 256) {
+				lpos = pos, lm = null;
+				break;
+			} else {
+				var add = sym - 254;
+				if (sym > 264) {
+					var i = sym - 257, b = fleb[i];
+					add = bits(dat, pos, (1 << b) - 1) + fl[i];
+					pos += b;
+				}
+				var d = dm[bits16(dat, pos) & dms], dsym = d >> 4;
+				if (!d) err$1(3);
+				pos += d & 15;
+				var dt = fd[dsym];
+				if (dsym > 3) {
+					var b = fdeb[dsym];
+					dt += bits16(dat, pos) & (1 << b) - 1, pos += b;
+				}
+				if (pos > tbts) {
+					if (noSt) err$1(0);
+					break;
+				}
+				if (resize) cbuf(bt + 131072);
+				var end = bt + add;
+				if (bt < dt) {
+					var shift = dl - dt, dend = Math.min(dt, end);
+					if (shift + bt < 0) err$1(3);
+					for (; bt < dend; ++bt) buf[bt] = dict[shift + bt];
+				}
+				for (; bt < end; ++bt) buf[bt] = buf[bt - dt];
+			}
+		}
+		st.l = lm, st.p = lpos, st.b = bt, st.f = final;
+		if (lm) final = 1, st.m = lbt, st.d = dm, st.n = dbt;
+	} while (!final);
+	return bt != buf.length && noBuf ? slc$1(buf, 0, bt) : buf.subarray(0, bt);
+};
+var et = /* @__PURE__ */ new u8$1(0);
+var mrg = function(a, b) {
+	var o = {};
+	for (var k in a) o[k] = a[k];
+	for (var k in b) o[k] = b[k];
+	return o;
+};
+var wcln = function(fn, fnStr, td) {
+	var dt = fn();
+	var st = fn.toString();
+	var ks = st.slice(st.indexOf("[") + 1, st.lastIndexOf("]")).replace(/\s+/g, "").split(",");
+	for (var i = 0; i < dt.length; ++i) {
+		var v = dt[i], k = ks[i];
+		if (typeof v == "function") {
+			fnStr += ";" + k + "=";
+			var st_1 = v.toString();
+			if (v.prototype) if (st_1.indexOf("[native code]") != -1) {
+				var spInd = st_1.indexOf(" ", 8) + 1;
+				fnStr += st_1.slice(spInd, st_1.indexOf("(", spInd));
+			} else {
+				fnStr += st_1;
+				for (var t in v.prototype) fnStr += ";" + k + ".prototype." + t + "=" + v.prototype[t].toString();
+			}
+			else fnStr += st_1;
+		} else td[k] = v;
+	}
+	return fnStr;
+};
+var ch = [];
+var cbfs = function(v) {
+	var tl = [];
+	for (var k in v) if (v[k].buffer) tl.push((v[k] = new v[k].constructor(v[k])).buffer);
+	return tl;
+};
+var wrkr = function(fns, init, id, cb) {
+	if (!ch[id]) {
+		var fnStr = "", td_1 = {}, m = fns.length - 1;
+		for (var i = 0; i < m; ++i) fnStr = wcln(fns[i], fnStr, td_1);
+		ch[id] = {
+			c: wcln(fns[m], fnStr, td_1),
+			e: td_1
+		};
+	}
+	var td = mrg({}, ch[id].e);
+	return wk(ch[id].c + ";onmessage=function(e){for(var k in e.data)self[k]=e.data[k];onmessage=" + init.toString() + "}", id, td, cbfs(td), cb);
+};
+var bInflt = function() {
+	return [
+		u8$1,
+		u16$1,
+		i32$1,
+		fleb,
+		fdeb,
+		clim,
+		fl,
+		fd,
+		flrm,
+		fdrm,
+		rev,
+		ec$1,
+		hMap,
+		max,
+		bits,
+		bits16,
+		shft,
+		slc$1,
+		err$1,
+		inflt,
+		inflateSync,
+		pbf,
+		gopt
+	];
+};
+var guze = function() {
+	return [gzs, gzl];
+};
+var zule = function() {
+	return [zls];
+};
+var pbf = function(msg) {
+	return postMessage(msg, [msg.buffer]);
+};
+var gopt = function(o) {
+	return o && {
+		out: o.size && new u8$1(o.size),
+		dictionary: o.dictionary
+	};
+};
+var cbify = function(dat, opts, fns, init, id, cb) {
+	var w = wrkr(fns, init, id, function(err, dat) {
+		w.terminate();
+		cb(err, dat);
+	});
+	w.postMessage([dat, opts], opts.consume ? [dat.buffer] : []);
+	return function() {
+		w.terminate();
+	};
+};
+var gzs = function(d) {
+	if (d[0] != 31 || d[1] != 139 || d[2] != 8) err$1(6, "invalid gzip data");
+	var flg = d[3];
+	var st = 10;
+	if (flg & 4) st += (d[10] | d[11] << 8) + 2;
+	for (var zs = (flg >> 3 & 1) + (flg >> 4 & 1); zs > 0; zs -= !d[st++]);
+	return st + (flg & 2);
+};
+var gzl = function(d) {
+	var l = d.length;
+	return (d[l - 4] | d[l - 3] << 8 | d[l - 2] << 16 | d[l - 1] << 24) >>> 0;
+};
+var zls = function(d, dict) {
+	if ((d[0] & 15) != 8 || d[0] >> 4 > 7 || (d[0] << 8 | d[1]) % 31) err$1(6, "invalid zlib data");
+	if ((d[1] >> 5 & 1) == +!dict) err$1(6, "invalid zlib data: " + (d[1] & 32 ? "need" : "unexpected") + " dictionary");
+	return (d[1] >> 3 & 4) + 2;
+};
+function inflate(data, opts, cb) {
+	if (!cb) cb = opts, opts = {};
+	if (typeof cb != "function") err$1(7);
+	return cbify(data, opts, [bInflt], function(ev) {
+		return pbf(inflateSync(ev.data[0], gopt(ev.data[1])));
+	}, 1, cb);
+}
+function inflateSync(data, opts) {
+	return inflt(data, { i: 2 }, opts && opts.out, opts && opts.dictionary);
+}
+function gunzip(data, opts, cb) {
+	if (!cb) cb = opts, opts = {};
+	if (typeof cb != "function") err$1(7);
+	return cbify(data, opts, [
+		bInflt,
+		guze,
+		function() {
+			return [gunzipSync];
+		}
+	], function(ev) {
+		return pbf(gunzipSync(ev.data[0], ev.data[1]));
+	}, 3, cb);
+}
+function gunzipSync(data, opts) {
+	var st = gzs(data);
+	if (st + 8 > data.length) err$1(6, "invalid gzip data");
+	return inflt(data.subarray(st, -8), { i: 2 }, opts && opts.out || new u8$1(gzl(data)), opts && opts.dictionary);
+}
+function unzlib(data, opts, cb) {
+	if (!cb) cb = opts, opts = {};
+	if (typeof cb != "function") err$1(7);
+	return cbify(data, opts, [
+		bInflt,
+		zule,
+		function() {
+			return [unzlibSync];
+		}
+	], function(ev) {
+		return pbf(unzlibSync(ev.data[0], gopt(ev.data[1])));
+	}, 5, cb);
+}
+function unzlibSync(data, opts) {
+	return inflt(data.subarray(zls(data, opts && opts.dictionary), -4), { i: 2 }, opts && opts.out, opts && opts.dictionary);
+}
+function decompress$1(data, opts, cb) {
+	if (!cb) cb = opts, opts = {};
+	if (typeof cb != "function") err$1(7);
+	return data[0] == 31 && data[1] == 139 && data[2] == 8 ? gunzip(data, opts, cb) : (data[0] & 15) != 8 || data[0] >> 4 > 7 || (data[0] << 8 | data[1]) % 31 ? inflate(data, opts, cb) : unzlib(data, opts, cb);
+}
+var td = typeof TextDecoder != "undefined" && /* @__PURE__ */ new TextDecoder();
+try {
+	td.decode(et, { stream: true });
+} catch (e) {}
+//#endregion
+//#region ../../node_modules/.pnpm/fzstd@0.1.1/node_modules/fzstd/esm/index.mjs
+var ab = ArrayBuffer, u8 = Uint8Array, u16 = Uint16Array, i16 = Int16Array, i32 = Int32Array;
+var slc = function(v, s, e) {
+	if (u8.prototype.slice) return u8.prototype.slice.call(v, s, e);
+	if (s == null || s < 0) s = 0;
+	if (e == null || e > v.length) e = v.length;
+	var n = new u8(e - s);
+	n.set(v.subarray(s, e));
+	return n;
+};
+var fill = function(v, n, s, e) {
+	if (u8.prototype.fill) return u8.prototype.fill.call(v, n, s, e);
+	if (s == null || s < 0) s = 0;
+	if (e == null || e > v.length) e = v.length;
+	for (; s < e; ++s) v[s] = n;
+	return v;
+};
+var cpw = function(v, t, s, e) {
+	if (u8.prototype.copyWithin) return u8.prototype.copyWithin.call(v, t, s, e);
+	if (s == null || s < 0) s = 0;
+	if (e == null || e > v.length) e = v.length;
+	while (s < e) v[t++] = v[s++];
+};
+var ec = [
+	"invalid zstd data",
+	"window size too large (>2046MB)",
+	"invalid block type",
+	"FSE accuracy too high",
+	"match distance too far back",
+	"unexpected EOF"
+];
+var err = function(ind, msg, nt) {
+	var e = new Error(msg || ec[ind]);
+	e.code = ind;
+	if (Error.captureStackTrace) Error.captureStackTrace(e, err);
+	if (!nt) throw e;
+	return e;
+};
+var rb = function(d, b, n) {
+	var i = 0, o = 0;
+	for (; i < n; ++i) o |= d[b++] << (i << 3);
+	return o;
+};
+var b4 = function(d, b) {
+	return (d[b] | d[b + 1] << 8 | d[b + 2] << 16 | d[b + 3] << 24) >>> 0;
+};
+var rzfh = function(dat, w) {
+	var n3 = dat[0] | dat[1] << 8 | dat[2] << 16;
+	if (n3 == 3126568 && dat[3] == 253) {
+		var flg = dat[4];
+		var ss = flg >> 5 & 1, cc = flg >> 2 & 1, df = flg & 3, fcf = flg >> 6;
+		if (flg & 8) err(0);
+		var bt = 6 - ss;
+		var db = df == 3 ? 4 : df;
+		var di = rb(dat, bt, db);
+		bt += db;
+		var fsb = fcf ? 1 << fcf : ss;
+		var fss = rb(dat, bt, fsb) + (fcf == 1 && 256);
+		var ws = fss;
+		if (!ss) {
+			var wb = 1 << 10 + (dat[5] >> 3);
+			ws = wb + (wb >> 3) * (dat[5] & 7);
+		}
+		if (ws > 2145386496) err(1);
+		var buf = new u8((w == 1 ? fss || ws : w ? 0 : ws) + 12);
+		buf[0] = 1, buf[4] = 4, buf[8] = 8;
+		return {
+			b: bt + fsb,
+			y: 0,
+			l: 0,
+			d: di,
+			w: w && w != 1 ? w : buf.subarray(12),
+			e: ws,
+			o: new i32(buf.buffer, 0, 3),
+			u: fss,
+			c: cc,
+			m: Math.min(131072, ws)
+		};
+	} else if ((n3 >> 4 | dat[3] << 20) == 25481893) return b4(dat, 4) + 8;
+	err(0);
+};
+var msb = function(val) {
+	var bits = 0;
+	for (; 1 << bits <= val; ++bits);
+	return bits - 1;
+};
+var rfse = function(dat, bt, mal) {
+	var tpos = (bt << 3) + 4;
+	var al = (dat[bt] & 15) + 5;
+	if (al > mal) err(3);
+	var sz = 1 << al;
+	var probs = sz, sym = -1, re = -1, i = -1, ht = sz;
+	var buf = new ab(512 + (sz << 2));
+	var freq = new i16(buf, 0, 256);
+	var dstate = new u16(buf, 0, 256);
+	var nstate = new u16(buf, 512, sz);
+	var bb1 = 512 + (sz << 1);
+	var syms = new u8(buf, bb1, sz);
+	var nbits = new u8(buf, bb1 + sz);
+	while (sym < 255 && probs > 0) {
+		var bits = msb(probs + 1);
+		var cbt = tpos >> 3;
+		var msk = (1 << bits + 1) - 1;
+		var val = (dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (tpos & 7) & msk;
+		var msk1fb = (1 << bits) - 1;
+		var msv = msk - probs - 1;
+		var sval = val & msk1fb;
+		if (sval < msv) tpos += bits, val = sval;
+		else {
+			tpos += bits + 1;
+			if (val > msk1fb) val -= msv;
+		}
+		freq[++sym] = --val;
+		if (val == -1) {
+			probs += val;
+			syms[--ht] = sym;
+		} else probs -= val;
+		if (!val) do {
+			var rbt = tpos >> 3;
+			re = (dat[rbt] | dat[rbt + 1] << 8) >> (tpos & 7) & 3;
+			tpos += 2;
+			sym += re;
+		} while (re == 3);
+	}
+	if (sym > 255 || probs) err(0);
+	var sympos = 0;
+	var sstep = (sz >> 1) + (sz >> 3) + 3;
+	var smask = sz - 1;
+	for (var s = 0; s <= sym; ++s) {
+		var sf = freq[s];
+		if (sf < 1) {
+			dstate[s] = -sf;
+			continue;
+		}
+		for (i = 0; i < sf; ++i) {
+			syms[sympos] = s;
+			do
+				sympos = sympos + sstep & smask;
+			while (sympos >= ht);
+		}
+	}
+	if (sympos) err(0);
+	for (i = 0; i < sz; ++i) {
+		var ns = dstate[syms[i]]++;
+		nstate[i] = (ns << (nbits[i] = al - msb(ns))) - sz;
+	}
+	return [tpos + 7 >> 3, {
+		b: al,
+		s: syms,
+		n: nbits,
+		t: nstate
+	}];
+};
+var rhu = function(dat, bt) {
+	var i = 0, wc = -1;
+	var buf = new u8(292), hb = dat[bt];
+	var hw = buf.subarray(0, 256);
+	var rc = buf.subarray(256, 268);
+	var ri = new u16(buf.buffer, 268);
+	if (hb < 128) {
+		var _a = rfse(dat, bt + 1, 6), ebt = _a[0], fdt = _a[1];
+		bt += hb;
+		var epos = ebt << 3;
+		var lb = dat[bt];
+		if (!lb) err(0);
+		var st1 = 0, st2 = 0, btr1 = fdt.b, btr2 = btr1;
+		var fpos = (++bt << 3) - 8 + msb(lb);
+		for (;;) {
+			fpos -= btr1;
+			if (fpos < epos) break;
+			var cbt = fpos >> 3;
+			st1 += (dat[cbt] | dat[cbt + 1] << 8) >> (fpos & 7) & (1 << btr1) - 1;
+			hw[++wc] = fdt.s[st1];
+			fpos -= btr2;
+			if (fpos < epos) break;
+			cbt = fpos >> 3;
+			st2 += (dat[cbt] | dat[cbt + 1] << 8) >> (fpos & 7) & (1 << btr2) - 1;
+			hw[++wc] = fdt.s[st2];
+			btr1 = fdt.n[st1];
+			st1 = fdt.t[st1];
+			btr2 = fdt.n[st2];
+			st2 = fdt.t[st2];
+		}
+		if (++wc > 255) err(0);
+	} else {
+		wc = hb - 127;
+		for (; i < wc; i += 2) {
+			var byte = dat[++bt];
+			hw[i] = byte >> 4;
+			hw[i + 1] = byte & 15;
+		}
+		++bt;
+	}
+	var wes = 0;
+	for (i = 0; i < wc; ++i) {
+		var wt = hw[i];
+		if (wt > 11) err(0);
+		wes += wt && 1 << wt - 1;
+	}
+	var mb = msb(wes) + 1;
+	var ts = 1 << mb;
+	var rem = ts - wes;
+	if (rem & rem - 1) err(0);
+	hw[wc++] = msb(rem) + 1;
+	for (i = 0; i < wc; ++i) {
+		var wt = hw[i];
+		++rc[hw[i] = wt && mb + 1 - wt];
+	}
+	var hbuf = new u8(ts << 1);
+	var syms = hbuf.subarray(0, ts), nb = hbuf.subarray(ts);
+	ri[mb] = 0;
+	for (i = mb; i > 0; --i) {
+		var pv = ri[i];
+		fill(nb, i, pv, ri[i - 1] = pv + rc[i] * (1 << mb - i));
+	}
+	if (ri[0] != ts) err(0);
+	for (i = 0; i < wc; ++i) {
+		var bits = hw[i];
+		if (bits) {
+			var code = ri[bits];
+			fill(syms, i, code, ri[bits] = code + (1 << mb - bits));
+		}
+	}
+	return [bt, {
+		n: nb,
+		b: mb,
+		s: syms
+	}];
+};
+var dllt = rfse(/* @__PURE__ */ new u8([
+	81,
+	16,
+	99,
+	140,
+	49,
+	198,
+	24,
+	99,
+	12,
+	33,
+	196,
+	24,
+	99,
+	102,
+	102,
+	134,
+	70,
+	146,
+	4
+]), 0, 6)[1];
+var dmlt = rfse(/* @__PURE__ */ new u8([
+	33,
+	20,
+	196,
+	24,
+	99,
+	140,
+	33,
+	132,
+	16,
+	66,
+	8,
+	33,
+	132,
+	16,
+	66,
+	8,
+	33,
+	68,
+	68,
+	68,
+	68,
+	68,
+	68,
+	68,
+	68,
+	36,
+	9
+]), 0, 6)[1];
+var doct = rfse(/* @__PURE__ */ new u8([
+	32,
+	132,
+	16,
+	66,
+	102,
+	70,
+	68,
+	68,
+	68,
+	68,
+	36,
+	73,
+	2
+]), 0, 5)[1];
+var b2bl = function(b, s) {
+	var len = b.length, bl = new i32(len);
+	for (var i = 0; i < len; ++i) {
+		bl[i] = s;
+		s += 1 << b[i];
+	}
+	return bl;
+};
+var llb = /* @__PURE__ */ new u8((/* @__PURE__ */ new i32([
+	0,
+	0,
+	0,
+	0,
+	16843009,
+	50528770,
+	134678020,
+	202050057,
+	269422093
+])).buffer, 0, 36);
+var llbl = /* @__PURE__ */ b2bl(llb, 0);
+var mlb = /* @__PURE__ */ new u8((/* @__PURE__ */ new i32([
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	16843009,
+	50528770,
+	117769220,
+	185207048,
+	252579084,
+	16
+])).buffer, 0, 53);
+var mlbl = /* @__PURE__ */ b2bl(mlb, 3);
+var dhu = function(dat, out, hu) {
+	var len = dat.length, ss = out.length, lb = dat[len - 1], msk = (1 << hu.b) - 1, eb = -hu.b;
+	if (!lb) err(0);
+	var st = 0, btr = hu.b, pos = (len << 3) - 8 + msb(lb) - btr, i = -1;
+	for (; pos > eb && i < ss;) {
+		var cbt = pos >> 3;
+		var val = (dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (pos & 7);
+		st = (st << btr | val) & msk;
+		out[++i] = hu.s[st];
+		pos -= btr = hu.n[st];
+	}
+	if (pos != eb || i + 1 != ss) err(0);
+};
+var dhu4 = function(dat, out, hu) {
+	var bt = 6;
+	var sz1 = out.length + 3 >> 2, sz2 = sz1 << 1, sz3 = sz1 + sz2;
+	dhu(dat.subarray(bt, bt += dat[0] | dat[1] << 8), out.subarray(0, sz1), hu);
+	dhu(dat.subarray(bt, bt += dat[2] | dat[3] << 8), out.subarray(sz1, sz2), hu);
+	dhu(dat.subarray(bt, bt += dat[4] | dat[5] << 8), out.subarray(sz2, sz3), hu);
+	dhu(dat.subarray(bt), out.subarray(sz3), hu);
+};
+var rzb = function(dat, st, out) {
+	var _a;
+	var bt = st.b;
+	var b0 = dat[bt], btype = b0 >> 1 & 3;
+	st.l = b0 & 1;
+	var sz = b0 >> 3 | dat[bt + 1] << 5 | dat[bt + 2] << 13;
+	var ebt = (bt += 3) + sz;
+	if (btype == 1) {
+		if (bt >= dat.length) return;
+		st.b = bt + 1;
+		if (out) {
+			fill(out, dat[bt], st.y, st.y += sz);
+			return out;
+		}
+		return fill(new u8(sz), dat[bt]);
+	}
+	if (ebt > dat.length) return;
+	if (btype == 0) {
+		st.b = ebt;
+		if (out) {
+			out.set(dat.subarray(bt, ebt), st.y);
+			st.y += sz;
+			return out;
+		}
+		return slc(dat, bt, ebt);
+	}
+	if (btype == 2) {
+		var b3 = dat[bt], lbt = b3 & 3, sf = b3 >> 2 & 3;
+		var lss = b3 >> 4, lcs = 0, s4 = 0;
+		if (lbt < 2) if (sf & 1) lss |= dat[++bt] << 4 | (sf & 2 && dat[++bt] << 12);
+		else lss = b3 >> 3;
+		else {
+			s4 = sf;
+			if (sf < 2) lss |= (dat[++bt] & 63) << 4, lcs = dat[bt] >> 6 | dat[++bt] << 2;
+			else if (sf == 2) lss |= dat[++bt] << 4 | (dat[++bt] & 3) << 12, lcs = dat[bt] >> 2 | dat[++bt] << 6;
+			else lss |= dat[++bt] << 4 | (dat[++bt] & 63) << 12, lcs = dat[bt] >> 6 | dat[++bt] << 2 | dat[++bt] << 10;
+		}
+		++bt;
+		var buf = out ? out.subarray(st.y, st.y + st.m) : new u8(st.m);
+		var spl = buf.length - lss;
+		if (lbt == 0) buf.set(dat.subarray(bt, bt += lss), spl);
+		else if (lbt == 1) fill(buf, dat[bt++], spl);
+		else {
+			var hu = st.h;
+			if (lbt == 2) {
+				var hud = rhu(dat, bt);
+				lcs += bt - (bt = hud[0]);
+				st.h = hu = hud[1];
+			} else if (!hu) err(0);
+			(s4 ? dhu4 : dhu)(dat.subarray(bt, bt += lcs), buf.subarray(spl), hu);
+		}
+		var ns = dat[bt++];
+		if (ns) {
+			if (ns == 255) ns = (dat[bt++] | dat[bt++] << 8) + 32512;
+			else if (ns > 127) ns = ns - 128 << 8 | dat[bt++];
+			var scm = dat[bt++];
+			if (scm & 3) err(0);
+			var dts = [
+				dmlt,
+				doct,
+				dllt
+			];
+			for (var i = 2; i > -1; --i) {
+				var md = scm >> (i << 1) + 2 & 3;
+				if (md == 1) {
+					var rbuf = new u8([
+						0,
+						0,
+						dat[bt++]
+					]);
+					dts[i] = {
+						s: rbuf.subarray(2, 3),
+						n: rbuf.subarray(0, 1),
+						t: new u16(rbuf.buffer, 0, 1),
+						b: 0
+					};
+				} else if (md == 2) _a = rfse(dat, bt, 9 - (i & 1)), bt = _a[0], dts[i] = _a[1];
+				else if (md == 3) {
+					if (!st.t) err(0);
+					dts[i] = st.t[i];
+				}
+			}
+			var _b = st.t = dts, mlt = _b[0], oct = _b[1], llt = _b[2];
+			var lb = dat[ebt - 1];
+			if (!lb) err(0);
+			var spos = (ebt << 3) - 8 + msb(lb) - llt.b, cbt = spos >> 3, oubt = 0;
+			var lst = (dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << llt.b) - 1;
+			cbt = (spos -= oct.b) >> 3;
+			var ost = (dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << oct.b) - 1;
+			cbt = (spos -= mlt.b) >> 3;
+			var mst = (dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << mlt.b) - 1;
+			for (++ns; --ns;) {
+				var llc = llt.s[lst];
+				var lbtr = llt.n[lst];
+				var mlc = mlt.s[mst];
+				var mbtr = mlt.n[mst];
+				var ofc = oct.s[ost];
+				var obtr = oct.n[ost];
+				cbt = (spos -= ofc) >> 3;
+				var ofp = 1 << ofc;
+				var off = ofp + ((dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16 | dat[cbt + 3] << 24) >>> (spos & 7) & ofp - 1);
+				cbt = (spos -= mlb[mlc]) >> 3;
+				var ml = mlbl[mlc] + ((dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (spos & 7) & (1 << mlb[mlc]) - 1);
+				cbt = (spos -= llb[llc]) >> 3;
+				var ll = llbl[llc] + ((dat[cbt] | dat[cbt + 1] << 8 | dat[cbt + 2] << 16) >> (spos & 7) & (1 << llb[llc]) - 1);
+				cbt = (spos -= lbtr) >> 3;
+				lst = llt.t[lst] + ((dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << lbtr) - 1);
+				cbt = (spos -= mbtr) >> 3;
+				mst = mlt.t[mst] + ((dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << mbtr) - 1);
+				cbt = (spos -= obtr) >> 3;
+				ost = oct.t[ost] + ((dat[cbt] | dat[cbt + 1] << 8) >> (spos & 7) & (1 << obtr) - 1);
+				if (off > 3) {
+					st.o[2] = st.o[1];
+					st.o[1] = st.o[0];
+					st.o[0] = off -= 3;
+				} else {
+					var idx = off - (ll != 0);
+					if (idx) {
+						off = idx == 3 ? st.o[0] - 1 : st.o[idx];
+						if (idx > 1) st.o[2] = st.o[1];
+						st.o[1] = st.o[0];
+						st.o[0] = off;
+					} else off = st.o[0];
+				}
+				for (var i = 0; i < ll; ++i) buf[oubt + i] = buf[spl + i];
+				oubt += ll, spl += ll;
+				var stin = oubt - off;
+				if (stin < 0) {
+					var len = -stin;
+					var bs = st.e + stin;
+					if (len > ml) len = ml;
+					for (var i = 0; i < len; ++i) buf[oubt + i] = st.w[bs + i];
+					oubt += len, ml -= len, stin = 0;
+				}
+				for (var i = 0; i < ml; ++i) buf[oubt + i] = buf[stin + i];
+				oubt += ml;
+			}
+			if (oubt != spl) while (spl < buf.length) buf[oubt++] = buf[spl++];
+			else oubt = buf.length;
+			if (out) st.y += oubt;
+			else buf = slc(buf, 0, oubt);
+		} else if (out) {
+			st.y += lss;
+			if (spl) for (var i = 0; i < lss; ++i) buf[i] = buf[spl + i];
+		} else if (spl) buf = slc(buf, spl);
+		st.b = ebt;
+		return buf;
+	}
+	err(2);
+};
+var cct = function(bufs, ol) {
+	if (bufs.length == 1) return bufs[0];
+	var buf = new u8(ol);
+	for (var i = 0, b = 0; i < bufs.length; ++i) {
+		var chk = bufs[i];
+		buf.set(chk, b);
+		b += chk.length;
+	}
+	return buf;
+};
+/**
+* Decompresses Zstandard data
+* @param dat The input data
+* @param buf The output buffer. If unspecified, the function will allocate
+*            exactly enough memory to fit the decompressed data. If your
+*            data has multiple frames and you know the output size, specifying
+*            it will yield better performance.
+* @returns The decompressed data
+*/
+function decompress(dat, buf) {
+	var bufs = [], nb = +!buf;
+	var bt = 0, ol = 0;
+	for (; dat.length;) {
+		var st = rzfh(dat, nb || buf);
+		if (typeof st == "object") {
+			if (nb) {
+				buf = null;
+				if (st.w.length == st.u) {
+					bufs.push(buf = st.w);
+					ol += st.u;
+				}
+			} else {
+				bufs.push(buf);
+				st.e = 0;
+			}
+			for (; !st.l;) {
+				var blk = rzb(dat, st, buf);
+				if (!blk) err(5);
+				if (buf) st.e = st.y;
+				else {
+					bufs.push(blk);
+					ol += blk.length;
+					cpw(st.w, 0, blk.length);
+					st.w.set(blk, st.w.length - blk.length);
+				}
+			}
+			bt = st.b + st.c * 4;
+		} else bt = st;
+		dat = dat.subarray(bt);
+	}
+	return cct(bufs, ol);
+}
+//#endregion
+//#region src/client/remote/zstd-worker-code.ts
+/**
+* Zstandard decompression Web Worker code.
+*
+* This file contains the worker code as a string constant, along with
+* the base64-encoded fzstd library. The worker is loaded via Blob URL
+* to work in VSCode webviews which have CORS restrictions.
+*/
+/**
+* The worker script code that handles zstd decompression.
+*/
+var kZstdWorkerCode = `
+// fzstd decompress function, loaded dynamically
+let decompress = null;
+
+self.onmessage = function(e) {
+  const { type } = e.data || {};
+
+  if (type === 'init') {
+    const { scriptContent } = e.data;
+    try {
+      if (!decompress) {
+        // Decode and evaluate the fzstd UMD library
+        const script = atob(scriptContent);
+        // The UMD module self-executes and assigns to self.fzstd
+        new Function(script)();
+        if (!self.fzstd || typeof self.fzstd.decompress !== 'function') {
+          throw new Error('Failed to initialize fzstd decompressor');
+        }
+        decompress = self.fzstd.decompress;
+      }
+      self.postMessage({ type: 'init_complete', success: true });
+    } catch (err) {
+      console.error('fzstd init error in worker:', err);
+      self.postMessage({ type: 'init_complete', success: false, error: err.message || 'Unknown error' });
+    }
+    return;
+  }
+
+  if (type === 'decompress') {
+    const { requestId, data } = e.data;
+    try {
+      if (!decompress) {
+        throw new Error('Worker not initialized');
+      }
+      const result = decompress(data);
+      // Transfer the result buffer back to avoid copying
+      self.postMessage(
+        { requestId, success: true, data: result },
+        [result.buffer]
+      );
+    } catch (err) {
+      self.postMessage({
+        requestId,
+        success: false,
+        error: err instanceof Error ? err.message : 'Unknown error'
+      });
+    }
+  }
+};
+`;
+/**
+* Base64-encoded fzstd library (UMD version, ~8KB).
+* Source: node_modules/fzstd/umd/index.js
+*
+* The UMD format self-executes and assigns to self.fzstd, making
+* fzstd.decompress() available in the worker context.
+*/
+var kFzstdBase64 = `IWZ1bmN0aW9uKGYpe3R5cGVvZiBtb2R1bGUhPSd1bmRlZmluZWQnJiZ0eXBlb2YgZXhwb3J0cz09J29iamVjdCc/bW9kdWxlLmV4cG9ydHM9ZigpOnR5cGVvZiBkZWZpbmUhPSd1bmRlZmluZWQnJiZkZWZpbmUuYW1kP2RlZmluZShbJ2Z6c3RkJyxmXSk6KHR5cGVvZiBzZWxmIT0ndW5kZWZpbmVkJz9zZWxmOnRoaXMpLmZ6c3RkPWYoKX0oZnVuY3Rpb24oKXt2YXIgX2U9e307InVzZSBzdHJpY3QiO3ZhciByPUFycmF5QnVmZmVyLHQ9VWludDhBcnJheSxlPVVpbnQxNkFycmF5LG49SW50MTZBcnJheSxhPVVpbnQzMkFycmF5LHM9SW50MzJBcnJheSxpPWZ1bmN0aW9uKHIsZSxuKXtpZih0LnByb3RvdHlwZS5zbGljZSlyZXR1cm4gdC5wcm90b3R5cGUuc2xpY2UuY2FsbChyLGUsbik7KG51bGw9PWV8fGU8MCkmJihlPTApLChudWxsPT1ufHxuPnIubGVuZ3RoKSYmKG49ci5sZW5ndGgpO3ZhciBhPW5ldyB0KG4tZSk7cmV0dXJuIGEuc2V0KHIuc3ViYXJyYXkoZSxuKSksYX0sbz1mdW5jdGlvbihyLGUsbixhKXtpZih0LnByb3RvdHlwZS5maWxsKXJldHVybiB0LnByb3RvdHlwZS5maWxsLmNhbGwocixlLG4sYSk7Zm9yKChudWxsPT1ufHxuPDApJiYobj0wKSwobnVsbD09YXx8YT5yLmxlbmd0aCkmJihhPXIubGVuZ3RoKTtuPGE7KytuKXJbbl09ZTtyZXR1cm4gcn0sdT1mdW5jdGlvbihyLGUsbixhKXtpZih0LnByb3RvdHlwZS5jb3B5V2l0aGluKXJldHVybiB0LnByb3RvdHlwZS5jb3B5V2l0aGluLmNhbGwocixlLG4sYSk7Zm9yKChudWxsPT1ufHxuPDApJiYobj0wKSwobnVsbD09YXx8YT5yLmxlbmd0aCkmJihhPXIubGVuZ3RoKTtuPGE7KXJbZSsrXT1yW24rK119O19lLlpzdGRFcnJvckNvZGU9e0ludmFsaWREYXRhOjAsV2luZG93U2l6ZVRvb0xhcmdlOjEsSW52YWxpZEJsb2NrVHlwZToyLEZTRUFjY3VyYWN5VG9vSGlnaDozLERpc3RhbmNlVG9vRmFyQmFjazo0LFVuZXhwZWN0ZWRFT0Y6NX07dmFyIGg9WyJpbnZhbGlkIHpzdGQgZGF0YSIsIndpbmRvdyBzaXplIHRvbyBsYXJnZSAoPjIwNDZNQikiLCJpbnZhbGlkIGJsb2NrIHR5cGUiLCJGU0UgYWNjdXJhY3kgdG9vIGhpZ2giLCJtYXRjaCBkaXN0YW5jZSB0b28gZmFyIGJhY2siLCJ1bmV4cGVjdGVkIEVPRiJdLGY9ZnVuY3Rpb24ocix0LGUpe3ZhciBuPUVycm9yKHR8fGhbcl0pO2lmKG4uY29kZT1yLEVycm9yLmNhcHR1cmVTdGFja1RyYWNlJiZFcnJvci5jYXB0dXJlU3RhY2tUcmFjZShuLGYpLCFlKXRocm93IG47cmV0dXJuIG59LGw9ZnVuY3Rpb24ocix0LGUpe2Zvcih2YXIgbj0wLGE9MDtuPGU7KytuKWF8PXJbdCsrXTw8KG48PDMpO3JldHVybiBhfSx2PWZ1bmN0aW9uKHIsdCl7cmV0dXJuKHJbdF18clt0KzFdPDw4fHJbdCsyXTw8MTZ8clt0KzNdPDwyNCk+Pj4wfSxjPWZ1bmN0aW9uKHIsZSl7dmFyIG49clswXXxyWzFdPDw4fHJbMl08PDE2O2lmKDMxMjY1Njg9PW4mJjI1Mz09clszXSl7dmFyIGE9cls0XSxpPWE+PjUmMSxvPWE+PjImMSx1PTMmYSxoPWE+PjY7OCZhJiZmKDApO3ZhciBjPTYtaSxiPTM9PXU/NDp1LHk9bChyLGMsYikscD1oPzE8PGg6aSx3PWwocixjKz1iLHApKygxPT1oJiYyNTYpLGc9dztpZighaSl7dmFyIGQ9MTw8MTArKHJbNV0+PjMpO2c9ZCsoZD4+MykqKDcmcls1XSl9Zz4yMTQ1Mzg2NDk2JiZmKDEpO3ZhciBtPW5ldyB0KCgxPT1lP3d8fGc6ZT8wOmcpKzEyKTtyZXR1cm4gbVswXT0xLG1bNF09NCxtWzhdPTgse2I6YytwLHk6MCxsOjAsZDp5LHc6ZSYmMSE9ZT9lOm0uc3ViYXJyYXkoMTIpLGU6ZyxvOm5ldyBzKG0uYnVmZmVyLDAsMyksdTp3LGM6byxtOk1hdGgubWluKDEzMTA3MixnKX19aWYoMjU0ODE4OTM9PShuPj40fHJbM108PDIwKSlyZXR1cm4gdihyLDQpKzg7ZigwKX0sYj1mdW5jdGlvbihyKXtmb3IodmFyIHQ9MDsxPDx0PD1yOysrdCk7cmV0dXJuIHQtMX0seT1mdW5jdGlvbihhLHMsaSl7dmFyIG89NCsoczw8MyksdT01KygxNSZhW3NdKTt1PmkmJmYoMyk7Zm9yKHZhciBoPTE8PHUsbD1oLHY9LTEsYz0tMSx5PS0xLHA9aCx3PW5ldyByKDUxMisoaDw8MikpLGc9bmV3IG4odywwLDI1NiksZD1uZXcgZSh3LDAsMjU2KSxtPW5ldyBlKHcsNTEyLGgpLHo9NTEyKyhoPDwxKSxFPW5ldyB0KHcseixoKSxrPW5ldyB0KHcseitoKTt2PDI1NSYmbD4wOyl7dmFyIEE9YihsKzEpLFQ9bz4+Myx4PSgxPDxBKzEpLTEsRj0oYVtUXXxhW1QrMV08PDh8YVtUKzJdPDwxNik+Pig3Jm8pJngsUz0oMTw8QSktMSxCPXgtbC0xLEk9RiZTO2lmKEk8Qj8obys9QSxGPUkpOihvKz1BKzEsRj5TJiYoRi09QikpLGdbKyt2XT0tLUYsLTE9PUY/KGwrPUYsRVstLXBdPXYpOmwtPUYsIUYpZG97dmFyIFU9bz4+MztjPShhW1VdfGFbVSsxXTw8OCk+Pig3Jm8pJjMsbys9Mix2Kz1jfXdoaWxlKDM9PWMpfSh2PjI1NXx8bCkmJmYoMCk7Zm9yKHZhciBEPTAsTT0oaD4+MSkrKGg+PjMpKzMsVz1oLTEsTz0wO088PXY7KytPKXt2YXIgaj1nW09dO2lmKGo8MSlkW09dPS1qO2Vsc2UgZm9yKHk9MDt5PGo7Kyt5KXtFW0RdPU87ZG97RD1EK00mV313aGlsZShEPj1wKX19Zm9yKEQmJmYoMCkseT0wO3k8aDsrK3kpe3ZhciBDPWRbRVt5XV0rKyxIPWtbeV09dS1iKEMpO21beV09KEM8PEgpLWh9cmV0dXJuW28rNz4+Myx7Yjp1LHM6RSxuOmssdDptfV19LHA9ZnVuY3Rpb24ocixuKXt2YXIgYT0wLHM9LTEsaT1uZXcgdCgyOTIpLHU9cltuXSxoPWkuc3ViYXJyYXkoMCwyNTYpLGw9aS5zdWJhcnJheSgyNTYsMjY4KSx2PW5ldyBlKGkuYnVmZmVyLDI2OCk7aWYodTwxMjgpe3ZhciBjPXkocixuKzEsNikscD1jWzFdLHc9Y1swXTw8MyxnPXJbbis9dV07Z3x8ZigwKTtmb3IodmFyIGQ9MCxtPTAsej1wLmIsRT16LGs9KCsrbjw8MyktOCtiKGcpOyEoKGstPXopPHcpOyl7dmFyIEE9az4+MztpZihoWysrc109cC5zW2QrPShyW0FdfHJbQSsxXTw8OCk+Pig3JmspJigxPDx6KS0xXSwoay09RSk8dylicmVhaztoWysrc109cC5zW20rPShyW0E9az4+M118cltBKzFdPDw4KT4+KDcmaykmKDE8PEUpLTFdLHo9cC5uW2RdLGQ9cC50W2RdLEU9cC5uW21dLG09cC50W21dfSsrcz4yNTUmJmYoMCl9ZWxzZXtmb3Iocz11LTEyNzthPHM7YSs9Mil7dmFyIFQ9clsrK25dO2hbYV09VD4+NCxoW2ErMV09MTUmVH0rK259dmFyIHg9MDtmb3IoYT0wO2E8czsrK2EpKEk9aFthXSk+MTEmJmYoMCkseCs9SSYmMTw8SS0xO3ZhciBGPWIoeCkrMSxTPTE8PEYsQj1TLXg7Zm9yKEImQi0xJiZmKDApLGhbcysrXT1iKEIpKzEsYT0wO2E8czsrK2Epe3ZhciBJOysrbFtoW2FdPShJPWhbYV0pJiZGKzEtSV19dmFyIFU9bmV3IHQoUzw8MSksRD1VLnN1YmFycmF5KDAsUyksTT1VLnN1YmFycmF5KFMpO2Zvcih2W0ZdPTAsYT1GO2E+MDstLWEpe3ZhciBXPXZbYV07byhNLGEsVyx2W2EtMV09VytsW2FdKigxPDxGLWEpKX1mb3IodlswXSE9UyYmZigwKSxhPTA7YTxzOysrYSl7dmFyIE89aFthXTtpZihPKXt2YXIgaj12W09dO28oRCxhLGosdltPXT1qKygxPDxGLU8pKX19cmV0dXJuW24se246TSxiOkYsczpEfV19LHc9eShuZXcgdChbODEsMTYsOTksMTQwLDQ5LDE5OCwyNCw5OSwxMiwzMywxOTYsMjQsOTksMTAyLDEwMiwxMzQsNzAsMTQ2LDRdKSwwLDYpWzFdLGc9eShuZXcgdChbMzMsMjAsMTk2LDI0LDk5LDE0MCwzMywxMzIsMTYsNjYsOCwzMywxMzIsMTYsNjYsOCwzMyw2OCw2OCw2OCw2OCw2OCw2OCw2OCw2OCwzNiw5XSksMCw2KVsxXSxkPXkobmV3IHQoWzMyLDEzMiwxNiw2NiwxMDIsNzAsNjgsNjgsNjgsNjgsMzYsNzMsMl0pLDAsNSlbMV0sbT1mdW5jdGlvbihyLHQpe2Zvcih2YXIgZT1yLmxlbmd0aCxuPW5ldyBzKGUpLGE9MDthPGU7KythKW5bYV09dCx0Kz0xPDxyW2FdO3JldHVybiBufSx6PW5ldyB0KG5ldyBzKFswLDAsMCwwLDE2ODQzMDA5LDUwNTI4NzcwLDEzNDY3ODAyMCwyMDIwNTAwNTcsMjY5NDIyMDkzXSkuYnVmZmVyLDAsMzYpLEU9bSh6LDApLGs9bmV3IHQobmV3IHMoWzAsMCwwLDAsMCwwLDAsMCwxNjg0MzAwOSw1MDUyODc3MCwxMTc3NjkyMjAsMTg1MjA3MDQ4LDI1MjU3OTA4NCwxNl0pLmJ1ZmZlciwwLDUzKSxBPW0oaywzKSxUPWZ1bmN0aW9uKHIsdCxlKXt2YXIgbj1yLmxlbmd0aCxhPXQubGVuZ3RoLHM9cltuLTFdLGk9KDE8PGUuYiktMSxvPS1lLmI7c3x8ZigwKTtmb3IodmFyIHU9MCxoPWUuYixsPShuPDwzKS04K2IocyktaCx2PS0xO2w+byYmdjxhOyl7dmFyIGM9bD4+Mzt0Wysrdl09ZS5zW3U9KHU8PGh8KHJbY118cltjKzFdPDw4fHJbYysyXTw8MTYpPj4oNyZsKSkmaV0sbC09aD1lLm5bdV19bD09byYmdisxPT1hfHxmKDApfSx4PWZ1bmN0aW9uKHIsdCxlKXt2YXIgbj02LGE9dC5sZW5ndGgrMz4+MixzPWE8PDEsaT1hK3M7VChyLnN1YmFycmF5KG4sbis9clswXXxyWzFdPDw4KSx0LnN1YmFycmF5KDAsYSksZSksVChyLnN1YmFycmF5KG4sbis9clsyXXxyWzNdPDw4KSx0LnN1YmFycmF5KGEscyksZSksVChyLnN1YmFycmF5KG4sbis9cls0XXxyWzVdPDw4KSx0LnN1YmFycmF5KHMsaSksZSksVChyLnN1YmFycmF5KG4pLHQuc3ViYXJyYXkoaSksZSl9LEY9ZnVuY3Rpb24ocixuLGEpe3ZhciBzLHU9bi5iLGg9clt1XSxsPWg+PjEmMztuLmw9MSZoO3ZhciB2PWg+PjN8clt1KzFdPDw1fHJbdSsyXTw8MTMsYz0odSs9MykrdjtpZigxPT1sKXtpZih1Pj1yLmxlbmd0aClyZXR1cm47cmV0dXJuIG4uYj11KzEsYT8obyhhLHJbdV0sbi55LG4ueSs9diksYSk6byhuZXcgdCh2KSxyW3VdKX1pZighKGM+ci5sZW5ndGgpKXtpZigwPT1sKXJldHVybiBuLmI9YyxhPyhhLnNldChyLnN1YmFycmF5KHUsYyksbi55KSxuLnkrPXYsYSk6aShyLHUsYyk7aWYoMj09bCl7dmFyIG09clt1XSxGPTMmbSxTPW0+PjImMyxCPW0+PjQsST0wLFU9MDtGPDI/MSZTP0J8PXJbKyt1XTw8NHwoMiZTJiZyWysrdV08PDEyKTpCPW0+PjM6KFU9UyxTPDI/KEJ8PSg2MyZyWysrdV0pPDw0LEk9clt1XT4+NnxyWysrdV08PDIpOjI9PVM/KEJ8PXJbKyt1XTw8NHwoMyZyWysrdV0pPDwxMixJPXJbdV0+PjJ8clsrK3VdPDw2KTooQnw9clsrK3VdPDw0fCg2MyZyWysrdV0pPDwxMixJPXJbdV0+PjZ8clsrK3VdPDwyfHJbKyt1XTw8MTApKSwrK3U7dmFyIEQ9YT9hLnN1YmFycmF5KG4ueSxuLnkrbi5tKTpuZXcgdChuLm0pLE09RC5sZW5ndGgtQjtpZigwPT1GKUQuc2V0KHIuc3ViYXJyYXkodSx1Kz1CKSxNKTtlbHNlIGlmKDE9PUYpbyhELHJbdSsrXSxNKTtlbHNle3ZhciBXPW4uaDtpZigyPT1GKXt2YXIgTz1wKHIsdSk7SSs9dS0odT1PWzBdKSxuLmg9Vz1PWzFdfWVsc2UgV3x8ZigwKTsoVT94OlQpKHIuc3ViYXJyYXkodSx1Kz1JKSxELnN1YmFycmF5KE0pLFcpfXZhciBqPXJbdSsrXTtpZihqKXsyNTU9PWo/aj0zMjUxMisoclt1KytdfHJbdSsrXTw8OCk6aj4xMjcmJihqPWotMTI4PDw4fHJbdSsrXSk7dmFyIEM9clt1KytdOzMmQyYmZigwKTtmb3IodmFyIEg9W2csZCx3XSxMPTI7TD4tMTstLUwpe3ZhciBaPUM+PjIrKEw8PDEpJjM7aWYoMT09Wil7dmFyIHE9bmV3IHQoWzAsMCxyW3UrK11dKTtIW0xdPXtzOnEuc3ViYXJyYXkoMiwzKSxuOnEuc3ViYXJyYXkoMCwxKSx0Om5ldyBlKHEuYnVmZmVyLDAsMSksYjowfX1lbHNlIDI9PVo/KHU9KHM9eShyLHUsOS0oMSZMKSkpWzBdLEhbTF09c1sxXSk6Mz09WiYmKG4udHx8ZigwKSxIW0xdPW4udFtMXSl9dmFyIEc9bi50PUgsSj1HWzBdLEs9R1sxXSxOPUdbMl0sUD1yW2MtMV07UHx8ZigwKTt2YXIgUT0oYzw8MyktOCtiKFApLU4uYixSPVE+PjMsVj0wLFg9KHJbUl18cltSKzFdPDw4KT4+KDcmUSkmKDE8PE4uYiktMSxZPShyW1I9KFEtPUsuYik+PjNdfHJbUisxXTw8OCk+Pig3JlEpJigxPDxLLmIpLTEsJD0ocltSPShRLT1KLmIpPj4zXXxyW1IrMV08PDgpPj4oNyZRKSYoMTw8Si5iKS0xO2ZvcigrK2o7LS1qOyl7dmFyIF89Ti5zW1hdLHJyPU4ubltYXSx0cj1KLnNbJF0sZXI9Si5uWyRdLG5yPUsuc1tZXSxhcj1LLm5bWV0sc3I9MTw8bnIsaXI9c3IrKChyW1I9KFEtPW5yKT4+M118cltSKzFdPDw4fHJbUisyXTw8MTZ8cltSKzNdPDwyNCk+Pj4oNyZRKSZzci0xKTtSPShRLT1rW3RyXSk+PjM7dmFyIG9yPUFbdHJdKygocltSXXxyW1IrMV08PDh8cltSKzJdPDwxNik+Pig3JlEpJigxPDxrW3RyXSktMSk7Uj0oUS09eltfXSk+PjM7dmFyIHVyPUVbX10rKChyW1JdfHJbUisxXTw8OHxyW1IrMl08PDE2KT4+KDcmUSkmKDE8PHpbX10pLTEpO2lmKFI9KFEtPXJyKT4+MyxYPU4udFtYXSsoKHJbUl18cltSKzFdPDw4KT4+KDcmUSkmKDE8PHJyKS0xKSxSPShRLT1lcik+PjMsJD1KLnRbJF0rKChyW1JdfHJbUisxXTw8OCk+Pig3JlEpJigxPDxlciktMSksUj0oUS09YXIpPj4zLFk9Sy50W1ldKygocltSXXxyW1IrMV08PDgpPj4oNyZRKSYoMTw8YXIpLTEpLGlyPjMpbi5vWzJdPW4ub1sxXSxuLm9bMV09bi5vWzBdLG4ub1swXT1pci09MztlbHNle3ZhciBocj1pci0oMCE9dXIpO2hyPyhpcj0zPT1ocj9uLm9bMF0tMTpuLm9baHJdLGhyPjEmJihuLm9bMl09bi5vWzFdKSxuLm9bMV09bi5vWzBdLG4ub1swXT1pcik6aXI9bi5vWzBdfWZvcihMPTA7TDx1cjsrK0wpRFtWK0xdPURbTStMXTtNKz11cjt2YXIgZnI9KFYrPXVyKS1pcjtpZihmcjwwKXt2YXIgbHI9LWZyLHZyPW4uZStmcjtmb3IobHI+b3ImJihscj1vciksTD0wO0w8bHI7KytMKURbVitMXT1uLndbdnIrTF07Vis9bHIsb3ItPWxyLGZyPTB9Zm9yKEw9MDtMPG9yOysrTClEW1YrTF09RFtmcitMXTtWKz1vcn1pZihWIT1NKWZvcig7TTxELmxlbmd0aDspRFtWKytdPURbTSsrXTtlbHNlIFY9RC5sZW5ndGg7YT9uLnkrPVY6RD1pKEQsMCxWKX1lbHNlIGlmKGEpe2lmKG4ueSs9QixNKWZvcihMPTA7TDxCOysrTClEW0xdPURbTStMXX1lbHNlIE0mJihEPWkoRCxNKSk7cmV0dXJuIG4uYj1jLER9ZigyKX19LFM9ZnVuY3Rpb24ocixlKXtpZigxPT1yLmxlbmd0aClyZXR1cm4gclswXTtmb3IodmFyIG49bmV3IHQoZSksYT0wLHM9MDthPHIubGVuZ3RoOysrYSl7dmFyIGk9clthXTtuLnNldChpLHMpLHMrPWkubGVuZ3RofXJldHVybiBufTtmdW5jdGlvbiBCKHIsdCl7Zm9yKHZhciBlPVtdLG49KyF0LGE9MCxzPTA7ci5sZW5ndGg7KXt2YXIgaT1jKHIsbnx8dCk7aWYoIm9iamVjdCI9PXR5cGVvZiBpKXtmb3Iobj8odD1udWxsLGkudy5sZW5ndGg9PWkudSYmKGUucHVzaCh0PWkudykscys9aS51KSk6KGUucHVzaCh0KSxpLmU9MCk7IWkubDspe3ZhciBvPUYocixpLHQpO298fGYoNSksdD9pLmU9aS55OihlLnB1c2gobykscys9by5sZW5ndGgsdShpLncsMCxvLmxlbmd0aCksaS53LnNldChvLGkudy5sZW5ndGgtby5sZW5ndGgpKX1hPWkuYis0KmkuY31lbHNlIGE9aTtyPXIuc3ViYXJyYXkoYSl9cmV0dXJuIFMoZSxzKX1fZS5kZWNvbXByZXNzPUI7dmFyIEk9ZnVuY3Rpb24oKXtmdW5jdGlvbiByKHIpe3RoaXMub25kYXRhPXIsdGhpcy5jPVtdLHRoaXMubD0wLHRoaXMuej0wfXJldHVybiByLnByb3RvdHlwZS5wdXNoPWZ1bmN0aW9uKHIsZSl7aWYoIm51bWJlciI9PXR5cGVvZiB0aGlzLnMpe3ZhciBuPU1hdGgubWluKHIubGVuZ3RoLHRoaXMucyk7cj1yLnN1YmFycmF5KG4pLHRoaXMucy09bn12YXIgYT1yLmxlbmd0aCt0aGlzLmw7aWYoIXRoaXMucyl7aWYoZSl7aWYoIWEpcmV0dXJuIHZvaWQgdGhpcy5vbmRhdGEobmV3IHQoMCksITApO2E8NSYmZig1KX1lbHNlIGlmKGE8MTgpcmV0dXJuIHRoaXMuYy5wdXNoKHIpLHZvaWQodGhpcy5sPWEpO2lmKHRoaXMubCYmKHRoaXMuYy5wdXNoKHIpLHI9Uyh0aGlzLmMsYSksdGhpcy5jPVtdLHRoaXMubD0wKSwibnVtYmVyIj09dHlwZW9mKHRoaXMucz1jKHIpKSlyZXR1cm4gdGhpcy5wdXNoKHIsZSl9aWYoIm51bWJlciIhPXR5cGVvZiB0aGlzLnMpe2lmKGE8KHRoaXMuenx8MykpcmV0dXJuIGUmJmYoNSksdGhpcy5jLnB1c2gociksdm9pZCh0aGlzLmw9YSk7aWYodGhpcy5sJiYodGhpcy5jLnB1c2gocikscj1TKHRoaXMuYyxhKSx0aGlzLmM9W10sdGhpcy5sPTApLCF0aGlzLnomJmE8KHRoaXMuej0yJnJbdGhpcy5zLmJdPzQ6Mysoclt0aGlzLnMuYl0+PjN8clt0aGlzLnMuYisxXTw8NXxyW3RoaXMucy5iKzJdPDwxMykpKXJldHVybiBlJiZmKDUpLHRoaXMuYy5wdXNoKHIpLHZvaWQodGhpcy5sPWEpO2Zvcih0aGlzLno9MDs7KXt2YXIgcz1GKHIsdGhpcy5zKTtpZighcyl7ZSYmZig1KTt2YXIgaT1yLnN1YmFycmF5KHRoaXMucy5iKTtyZXR1cm4gdGhpcy5zLmI9MCx0aGlzLmMucHVzaChpKSx2b2lkKHRoaXMubCs9aS5sZW5ndGgpfWlmKHRoaXMub25kYXRhKHMsITEpLHUodGhpcy5zLncsMCxzLmxlbmd0aCksdGhpcy5zLncuc2V0KHMsdGhpcy5zLncubGVuZ3RoLXMubGVuZ3RoKSx0aGlzLnMubCl7dmFyIG89ci5zdWJhcnJheSh0aGlzLnMuYik7cmV0dXJuIHRoaXMucz00KnRoaXMucy5jLHZvaWQgdGhpcy5wdXNoKG8sZSl9fX1lbHNlIGUmJmYoNSl9LHJ9KCk7X2UuRGVjb21wcmVzcz1JO3JldHVybiBfZX0p`;
+//#endregion
+//#region src/client/remote/zstd-worker.ts
+/**
+* Zstandard decompression via Web Worker.
+*
+* Provides a simple async interface for zstd decompression that automatically
+* uses a Web Worker for large payloads to avoid blocking the main thread.
+*
+* Uses Blob URL to load the worker, which works in VSCode webviews that have
+* CORS restrictions preventing external worker script loading.
+*/
+/**
+* Threshold for using Web Worker (1MB compressed).
+* Below this, synchronous decompression is fast enough.
+*/
+var WORKER_THRESHOLD = 1024 * 1024;
+/**
+* Maximum window log supported by fzstd (2^25 = 32MB).
+* Ultra compression levels (20+) often use larger windows.
+*/
+var MAX_WINDOW_LOG = 25;
+/**
+* Error thrown when zstd data uses a window size too large for fzstd.
+*/
+var ZstdWindowSizeError = class ZstdWindowSizeError extends Error {
+	windowLog;
+	maxWindowLog;
+	constructor(windowLog) {
+		super(`Zstd window size too large (windowLog=${windowLog}, max=${MAX_WINDOW_LOG}). This file may have been compressed with zstd "ultra" mode (level 20+). Try recompressing with --long=${MAX_WINDOW_LOG} or a lower compression level.`);
+		this.name = "ZstdWindowSizeError";
+		this.windowLog = windowLog;
+		this.maxWindowLog = MAX_WINDOW_LOG;
+		Object.setPrototypeOf(this, ZstdWindowSizeError.prototype);
+	}
+};
+/**
+* Validates that the zstd frame's window size is within fzstd's limits.
+* Parses the frame header to extract the window descriptor.
+*
+* @param data - The zstd-compressed data
+* @throws ZstdWindowSizeError if window size exceeds 2^25 bytes
+*/
+function validateZstdWindowSize(data) {
+	if (data.length < 5) return;
+	if ((data[0] | data[1] << 8 | data[2] << 16 | data[3] << 24) !== 4247762216) return;
+	if (data[4] >> 5 & 1) return;
+	if (data.length < 6) return;
+	const windowLog = 10 + (data[5] >> 3);
+	if (windowLog > MAX_WINDOW_LOG) throw new ZstdWindowSizeError(windowLog);
+}
+/** Cached worker and blob URL */
+var zstdWorker = null;
+var blobURL = null;
+var workerInitPromise = null;
+/** Request ID counter for worker messages */
+var nextRequestId = 0;
+/** Pending decompression requests */
+var pendingRequests = /* @__PURE__ */ new Map();
+/** Whether message handlers have been attached to the worker */
+var handlersAttached = false;
+/**
+* Gets or creates the zstd decompression worker.
+* Uses a Blob URL to work in VSCode webviews which have CORS restrictions.
+* Returns a promise that resolves when the worker is fully initialized.
+*/
+function getZstdWorker() {
+	if (workerInitPromise) return workerInitPromise;
+	workerInitPromise = new Promise((resolve, reject) => {
+		const blob = new Blob([kZstdWorkerCode], { type: "application/javascript" });
+		blobURL = URL.createObjectURL(blob);
+		zstdWorker = new Worker(blobURL);
+		const initHandler = (event) => {
+			if (event.data.type === "init_complete") {
+				zstdWorker.removeEventListener("message", initHandler);
+				if (event.data.success) resolve(zstdWorker);
+				else reject(new Error(event.data.error || "Worker initialization failed"));
+			}
+		};
+		zstdWorker.addEventListener("message", initHandler);
+		zstdWorker.postMessage({
+			type: "init",
+			scriptContent: kFzstdBase64
+		});
+	});
+	return workerInitPromise;
+}
+/**
+* Decompresses zstd-compressed data.
+*
+* For small payloads (< 1MB), uses synchronous decompression.
+* For larger payloads, uses a Web Worker to avoid blocking the main thread.
+*
+* Data transfer efficiency:
+* - Input data is transferred (zero-copy) to the worker
+* - Output data is transferred (zero-copy) back from the worker
+*
+* @param data - The zstd-compressed data
+* @returns Promise resolving to the decompressed data
+*/
+async function decompressZstd(data) {
+	validateZstdWindowSize(data);
+	if (data.length < WORKER_THRESHOLD) return decompress(data);
+	const worker = await getZstdWorker();
+	return new Promise((resolve, reject) => {
+		const requestId = nextRequestId++;
+		pendingRequests.set(requestId, {
+			resolve,
+			reject
+		});
+		if (!handlersAttached) {
+			handlersAttached = true;
+			worker.addEventListener("message", (event) => {
+				const { requestId: respId, success, data: resultData, error } = event.data;
+				const pending = pendingRequests.get(respId);
+				if (!pending) return;
+				pendingRequests.delete(respId);
+				if (success) pending.resolve(resultData);
+				else pending.reject(new Error(error || "Decompression failed"));
+			});
+			worker.addEventListener("error", (error) => {
+				for (const [id, pending] of pendingRequests) {
+					pending.reject(/* @__PURE__ */ new Error(`Worker error: ${error.message}`));
+					pendingRequests.delete(id);
+				}
+			});
+		}
+		worker.postMessage({
+			type: "decompress",
+			requestId,
+			data
+		}, [data.buffer]);
+	});
+}
+//#endregion
+//#region src/client/remote/decompression.ts
+/** Supported ZIP compression methods */
+var CompressionMethod = {
+	STORED: 0,
+	DEFLATE: 8,
+	ZSTANDARD: 93
+};
+/**
+* Error thrown when an unsupported compression method is encountered.
+*/
+var UnsupportedCompressionError = class UnsupportedCompressionError extends Error {
+	method;
+	filename;
+	constructor(method, filename) {
+		super(`Unsupported compression method ${method} for file "${filename}"`);
+		this.name = "UnsupportedCompressionError";
+		this.method = method;
+		this.filename = filename;
+		Object.setPrototypeOf(this, UnsupportedCompressionError.prototype);
+	}
+};
+/**
+* Decompresses data based on the compression method.
+* Handles STORED (0), DEFLATE (8), and ZSTANDARD (93).
+*
+* @param data - The compressed data
+* @param compressionMethod - ZIP compression method code
+* @param uncompressedSize - Expected uncompressed size (used by deflate)
+* @param filename - Filename for error messages
+* @returns Decompressed data
+*/
+async function decompressData(data, compressionMethod, uncompressedSize, filename) {
+	switch (compressionMethod) {
+		case CompressionMethod.STORED: return data;
+		case CompressionMethod.DEFLATE: return decompressDeflate(data, uncompressedSize);
+		case CompressionMethod.ZSTANDARD: return decompressZstd(data);
+		default: throw new UnsupportedCompressionError(compressionMethod, filename);
+	}
+}
+/**
+* Deflate decompression using fflate's async worker-based API.
+*/
+async function decompressDeflate(data, size) {
+	return new Promise((resolve, reject) => {
+		decompress$1(data, { size }, (err, result) => {
+			if (err) reject(err);
+			else resolve(result);
+		});
+	});
+}
+//#endregion
+//#region src/client/remote/remoteZipFile.ts
+/**
+* Represents an error thrown when a file exceeds the maximum allowed size.
+*/
+var FileSizeLimitError = class FileSizeLimitError extends Error {
+	file;
+	maxBytes;
+	constructor(file, maxBytes) {
+		super(`File "${file}" exceeds the maximum size (${maxBytes} bytes) and cannot be loaded.`);
+		this.name = "FileSizeLimitError";
+		this.file = file;
+		this.maxBytes = maxBytes;
+		Object.setPrototypeOf(this, FileSizeLimitError.prototype);
+	}
+};
+var PARALLEL_CHUNK_THRESHOLD = 8 * 1024 * 1024;
+var PARALLEL_CHUNK_SIZE = 8 * 1024 * 1024;
+var MAX_PARALLEL_CHUNKS = 10;
+var fetchBytesParallel = async (fetchFn, url, start, end, onProgress) => {
+	const totalSize = end - start + 1;
+	if (totalSize <= PARALLEL_CHUNK_THRESHOLD) return fetchFn(url, start, end);
+	const chunks = [];
+	let offset = start;
+	while (offset <= end) {
+		const chunkEnd = Math.min(offset + PARALLEL_CHUNK_SIZE - 1, end);
+		chunks.push({
+			start: offset,
+			end: chunkEnd,
+			index: chunks.length
+		});
+		offset = chunkEnd + 1;
+	}
+	const concurrency = Math.min(chunks.length, MAX_PARALLEL_CHUNKS);
+	const results = new Array(chunks.length);
+	let nextChunk = 0;
+	let bytesLoaded = 0;
+	if (onProgress) onProgress(0, totalSize);
+	const worker = async () => {
+		while (nextChunk < chunks.length) {
+			const idx = nextChunk++;
+			const chunk = chunks[idx];
+			results[idx] = await fetchFn(url, chunk.start, chunk.end);
+			if (onProgress) {
+				bytesLoaded += results[idx].length;
+				onProgress(bytesLoaded, totalSize);
+			}
+		}
+	};
+	await Promise.all(Array.from({ length: concurrency }, () => worker()));
+	const combined = new Uint8Array(totalSize);
+	let pos = 0;
+	for (const chunk of results) {
+		combined.set(chunk, pos);
+		pos += chunk.length;
+	}
+	return combined;
+};
+/**
+* Opens a remote ZIP file from the specified URL, fetches and parses the central directory,
+* and provides a method to read files within the ZIP.
+*/
+var openRemoteZipFile = async (url, contentLength, fetchBytes = fetchRange) => {
+	contentLength = contentLength ?? await fetchSize(url);
+	const eocdrBuffer = await fetchBytes(url, contentLength - 22, contentLength - 1);
+	const eocdrView = new DataView(eocdrBuffer.buffer);
+	if (eocdrView.getUint32(0, true) !== 101010256) if (eocdrBuffer.length !== 22) throw new Error("Unexpected central directory size - does the HTTP server serving this file support HTTP range requests?");
+	else throw new Error("End of central directory record not found");
+	let centralDirOffset = eocdrView.getUint32(16, true);
+	let centralDirSize = eocdrView.getUint32(12, true);
+	if (centralDirOffset === 4294967295 || centralDirSize === 4294967295) {
+		const locatorBuffer = await fetchBytes(url, contentLength - 22 - 20, contentLength - 23);
+		const locatorView = new DataView(locatorBuffer.buffer);
+		if (locatorView.getUint32(0, true) !== 117853008) throw new Error("ZIP64 End of central directory locator not found");
+		const zip64EOCDOffset = Number(locatorView.getBigUint64(8, true));
+		const zip64EOCDBuffer = await fetchBytes(url, zip64EOCDOffset, zip64EOCDOffset + 56);
+		const zip64EOCDView = new DataView(zip64EOCDBuffer.buffer);
+		if (zip64EOCDView.getUint32(0, true) !== 101075792) throw new Error("ZIP64 End of central directory record not found");
+		centralDirSize = Number(zip64EOCDView.getBigUint64(40, true));
+		centralDirOffset = Number(zip64EOCDView.getBigUint64(48, true));
+	}
+	const centralDirectory = parseCentralDirectory(await fetchBytesParallel(fetchBytes, url, centralDirOffset, centralDirOffset + centralDirSize - 1));
+	return {
+		centralDirectory,
+		readFile: async (file, maxBytes, onProgress) => {
+			const entry = centralDirectory.get(file);
+			if (!entry) throw new Error(`File not found: ${file}`);
+			const headerSize = 30;
+			const estimatedSize = headerSize + entry.filenameLength + 256 + entry.compressedSize;
+			if (maxBytes && headerSize + entry.filenameLength + entry.compressedSize > maxBytes) throw new FileSizeLimitError(file, maxBytes);
+			let fileData = await fetchBytesParallel(fetchBytes, url, entry.fileOffset, entry.fileOffset + estimatedSize - 1, onProgress);
+			if (fileData.length < headerSize) throw new Error(`File entry header is truncated for ${file}`);
+			const actualExtraFieldLength = fileData[28] + (fileData[29] << 8);
+			const actualTotal = headerSize + entry.filenameLength + actualExtraFieldLength + entry.compressedSize;
+			if (maxBytes && actualTotal > maxBytes) throw new FileSizeLimitError(file, maxBytes);
+			if (actualTotal > estimatedSize) fileData = await fetchBytesParallel(fetchBytes, url, entry.fileOffset, entry.fileOffset + actualTotal - 1);
+			const zipFileEntry = await parseZipFileEntry(file, fileData);
+			return decompressData(zipFileEntry.data, zipFileEntry.compressionMethod, zipFileEntry.uncompressedSize, file);
+		}
+	};
+};
+/**
+* Opens an in-memory ZIP buffer and provides a method to read files within it.
+*/
+var openZipFileFromBuffer = async (bytes) => {
+	const contentLength = bytes.length;
+	if (contentLength < 22) throw new Error("Buffer too small to be a ZIP file");
+	const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+	const eocdrStart = contentLength - 22;
+	if (view.getUint32(eocdrStart, true) !== 101010256) throw new Error("End of central directory record not found");
+	let centralDirOffset = view.getUint32(eocdrStart + 16, true);
+	let centralDirSize = view.getUint32(eocdrStart + 12, true);
+	if (centralDirOffset === 4294967295 || centralDirSize === 4294967295) {
+		const locatorStart = eocdrStart - 20;
+		if (view.getUint32(locatorStart, true) !== 117853008) throw new Error("ZIP64 End of central directory locator not found");
+		const zip64EOCDOffset = Number(view.getBigUint64(locatorStart + 8, true));
+		if (view.getUint32(zip64EOCDOffset, true) !== 101075792) throw new Error("ZIP64 End of central directory record not found");
+		centralDirSize = Number(view.getBigUint64(zip64EOCDOffset + 40, true));
+		centralDirOffset = Number(view.getBigUint64(zip64EOCDOffset + 48, true));
+	}
+	const centralDirectory = parseCentralDirectory(bytes.slice(centralDirOffset, centralDirOffset + centralDirSize));
+	return {
+		centralDirectory,
+		readFile: async (file, maxBytes) => {
+			const entry = centralDirectory.get(file);
+			if (!entry) throw new Error(`File not found: ${file}`);
+			const headerSize = 30;
+			if (entry.fileOffset + headerSize > bytes.length) throw new Error(`File entry header is truncated for ${file}`);
+			const extraFieldLength = bytes[entry.fileOffset + 28] + (bytes[entry.fileOffset + 29] << 8);
+			const totalSize = headerSize + entry.filenameLength + extraFieldLength + entry.compressedSize;
+			if (maxBytes && totalSize > maxBytes) throw new FileSizeLimitError(file, maxBytes);
+			const zipFileEntry = await parseZipFileEntry(file, bytes.slice(entry.fileOffset, entry.fileOffset + totalSize));
+			return decompressData(zipFileEntry.data, zipFileEntry.compressionMethod, zipFileEntry.uncompressedSize, file);
+		}
+	};
+};
+var fetchSize = async (url) => {
+	const acceptResponse = await fetch(url, { method: "HEAD" });
+	if (acceptResponse.headers.get("Accept-Ranges") === "bytes") {
+		const getResponse = await fetch(`${url}`, {
+			method: "GET",
+			headers: { Range: "bytes=0-0" }
+		});
+		const contentRange = getResponse.headers.get("Content-Range");
+		if (contentRange !== null) {
+			const rangeMatch = contentRange.match(/bytes (\d+)-(\d+)\/(\d+)/);
+			if (rangeMatch !== null) {
+				await getResponse.arrayBuffer();
+				return Number(rangeMatch[3]);
+			}
+		}
+		await getResponse.arrayBuffer();
+	}
+	const contentLength = acceptResponse.headers.get("Content-Length");
+	if (contentLength !== null) return Number(contentLength);
+	throw new Error(`Could not determine content length for ${url}`);
+};
+/**
+* Extracts and parses the header and data of a compressed ZIP entry from raw binary data.
+*/
+var parseZipFileEntry = async (file, rawData) => {
+	const view = new DataView(rawData.buffer);
+	let offset = 0;
+	if (view.getUint32(offset, true) !== 67324752) throw new Error(`Invalid ZIP entry signature for ${file}`);
+	offset += 4;
+	const versionNeeded = view.getUint16(offset, true);
+	offset += 2;
+	const bitFlag = view.getUint16(offset, true);
+	offset += 2;
+	const compressionMethod = view.getUint16(offset, true);
+	offset += 2;
+	offset += 4;
+	const crc32 = view.getUint32(offset, true);
+	offset += 4;
+	let compressedSize = view.getUint32(offset, true);
+	offset += 4;
+	let uncompressedSize = view.getUint32(offset, true);
+	offset += 4;
+	const filenameLength = view.getUint16(offset, true);
+	offset += 2;
+	const extraFieldLength = view.getUint16(offset, true);
+	offset += 2;
+	const headerOffset = offset;
+	if (compressedSize === 4294967295 || uncompressedSize === 4294967295) {
+		offset += filenameLength;
+		const extraFieldEnd = offset + extraFieldLength;
+		while (offset < extraFieldEnd) {
+			const tag = view.getUint16(offset, true);
+			const size = view.getUint16(offset + 2, true);
+			if (tag === 1) {
+				let zip64Offset = offset + 4;
+				if (uncompressedSize === 4294967295 && zip64Offset + 8 <= extraFieldEnd) {
+					uncompressedSize = Number(view.getBigUint64(zip64Offset, true));
+					zip64Offset += 8;
+				}
+				if (compressedSize === 4294967295 && zip64Offset + 8 <= extraFieldEnd) compressedSize = Number(view.getBigUint64(zip64Offset, true));
+				break;
+			}
+			offset += 4 + size;
+		}
+		offset = headerOffset;
+	}
+	offset += filenameLength + extraFieldLength;
+	const data = rawData.subarray(offset, offset + compressedSize);
+	return {
+		versionNeeded,
+		bitFlag,
+		compressionMethod,
+		crc32,
+		compressedSize,
+		uncompressedSize,
+		filenameLength,
+		extraFieldLength,
+		data
+	};
+};
+var kFileHeaderSize = 46;
+/**
+* Parses the central directory of a ZIP file from the provided buffer and returns a map of entries.
+*/
+var parseCentralDirectory = (buffer) => {
+	let offset = 0;
+	const view = new DataView(buffer.buffer);
+	const entries = /* @__PURE__ */ new Map();
+	while (offset < buffer.length) {
+		if (view.getUint32(offset, true) !== 33639248) break;
+		const filenameLength = view.getUint16(offset + 28, true);
+		const extraFieldLength = view.getUint16(offset + 30, true);
+		const fileCommentLength = view.getUint16(offset + 32, true);
+		let compressedSize = view.getUint32(offset + 20, true);
+		let uncompressedSize = view.getUint32(offset + 24, true);
+		let fileOffset = view.getUint32(offset + 42, true);
+		const filename = new TextDecoder().decode(buffer.subarray(offset + kFileHeaderSize, offset + kFileHeaderSize + filenameLength));
+		if (fileOffset === 4294967295 || compressedSize === 4294967295 || uncompressedSize === 4294967295) {
+			let extraOffset = offset + kFileHeaderSize + filenameLength;
+			const extraEnd = extraOffset + extraFieldLength;
+			while (extraOffset < extraEnd) {
+				const tag = view.getUint16(extraOffset, true);
+				const size = view.getUint16(extraOffset + 2, true);
+				if (tag === 1) {
+					let zip64Offset = extraOffset + 4;
+					if (uncompressedSize === 4294967295 && zip64Offset + 8 <= extraEnd) {
+						uncompressedSize = Number(view.getBigUint64(zip64Offset, true));
+						zip64Offset += 8;
+					}
+					if (compressedSize === 4294967295 && zip64Offset + 8 <= extraEnd) {
+						compressedSize = Number(view.getBigUint64(zip64Offset, true));
+						zip64Offset += 8;
+					}
+					if (fileOffset === 4294967295 && zip64Offset + 8 <= extraEnd) fileOffset = Number(view.getBigUint64(zip64Offset, true));
+					break;
+				}
+				extraOffset += 4 + size;
+			}
+		}
+		const entry = {
+			filename,
+			compressionMethod: view.getUint16(offset + 10, true),
+			compressedSize,
+			uncompressedSize,
+			fileOffset,
+			filenameLength
+		};
+		entries.set(filename, entry);
+		offset += kFileHeaderSize + filenameLength + extraFieldLength + fileCommentLength;
+	}
+	return entries;
+};
+//#endregion
+//#region src/client/remote/remoteLogFile.ts
+var OPEN_RETRY_LIMIT = 5;
+var MAX_SAMPLE_SIZE_BYTES = 2048 * 1024 * 1024;
+var SampleNotFoundError = class SampleNotFoundError extends Error {
+	constructor(message) {
+		super(message || "Sample not found");
+		this.name = "SampleNotFoundError";
+		Object.setPrototypeOf(this, SampleNotFoundError.prototype);
+	}
+};
+/**
+* Synthesize an EvalHeader from a `_journal/start.json` payload.
+*
+* `header.json` is only written at end-of-eval, so while a log is in
+* progress the viewer falls back to `start.json` (which carries the
+* EvalSpec + EvalPlan). The Python side does the analogous lift via
+* `EvalLog.recompute_tags_and_metadata` on the model validator —
+* `log.tags` / `log.metadata` derive from `eval.tags` / `eval.metadata`
+* until `log_updates` adds edits on top. Mirror that here so a running
+* log's chips and metadata still render in the viewer.
+*
+* Exported for unit testing.
+*/
+var headerFromLogStart = (start) => ({
+	status: "started",
+	eval: start.eval,
+	plan: start.plan,
+	tags: start.eval?.tags ?? [],
+	metadata: start.eval?.metadata ?? {}
+});
+/**
+* Opens a remote log file and provides methods to read its contents.
+*/
+var openRemoteLogFile = async (api, url, concurrency) => {
+	const queue = new AsyncQueue(concurrency);
+	const logInfo = await api.get_log_info(url);
+	const directUrl = logInfo.direct_url;
+	const initialEtag = logInfo.etag ?? void 0;
+	const fetchBytes = async (_url, start, end) => {
+		if (directUrl) try {
+			return await fetchRange(directUrl, start, end);
+		} catch (e) {
+			console.warn("Direct URL fetch failed, falling back to proxy", e);
+		}
+		return api.get_log_bytes(url, start, end);
+	};
+	let remoteZipFile = void 0;
+	let retryCount = 0;
+	while (!remoteZipFile && retryCount < OPEN_RETRY_LIMIT) try {
+		remoteZipFile = await openRemoteZipFile(url, logInfo.size, fetchBytes);
+	} catch {
+		retryCount++;
+		console.warn(`Failed to open remote log file at ${url}, retrying (${retryCount}/${OPEN_RETRY_LIMIT})...`);
+		await new Promise((resolve) => setTimeout(resolve, 100 * (retryCount + retryCount)));
+	}
+	if (!remoteZipFile) throw new Error(`Failed to open remote log file at ${url} after ${OPEN_RETRY_LIMIT} attempts.`);
+	/**
+	* Reads and parses a JSON file from the zip.
+	* Optionally applies a preprocessor to transform bytes before decoding.
+	*/
+	const readJSONFile = async (file, maxBytes, preprocessor, onProgress) => {
+		try {
+			let data = await remoteZipFile.readFile(file, maxBytes, onProgress);
+			if (preprocessor) data = preprocessor.preprocess(data);
+			return asyncJsonParseBytes(data);
+		} catch (error) {
+			if (error instanceof FileSizeLimitError) throw error;
+			else if (error instanceof Error) throw new Error(`Failed to read or parse file ${file}: ${error.message}`);
+			else throw new Error(`Failed to read or parse file ${file} - an unknown error occurred`);
+		}
+	};
+	/**
+	* Lists all samples in the zip file.
+	*/
+	const listSamples = async () => {
+		return Array.from(remoteZipFile.centralDirectory.keys()).filter((filename) => filename.startsWith("samples/") && filename.endsWith(".json")).map((filename) => {
+			const [sampleId, epochStr] = filename.split("/")[1].split("_epoch_");
+			return {
+				sampleId,
+				epoch: parseInt(epochStr.split(".")[0], 10)
+			};
+		});
+	};
+	/**
+	* Reads a specific sample file.
+	*/
+	const readSample = async (sampleId, epoch, onProgress) => {
+		const sampleFile = `samples/${sampleId}_epoch_${epoch}.json`;
+		if (!remoteZipFile.centralDirectory.has(sampleFile)) throw new SampleNotFoundError(`Unable to read sample file ${sampleFile} - it is not present in the manifest.`);
+		if (remoteZipFile.centralDirectory.get(sampleFile).uncompressedSize > MAX_SAMPLE_SIZE_BYTES) throw new FileSizeLimitError(sampleFile, MAX_SAMPLE_SIZE_BYTES);
+		return await readJSONFile(sampleFile, void 0, { preprocess: clearLargeEventsArray }, onProgress);
+	};
+	/**
+	* Reads the results.json file.
+	*/
+	const readHeader = async () => {
+		if (remoteZipFile.centralDirectory.has("header.json")) return await readJSONFile("header.json");
+		else return headerFromLogStart(await readJSONFile("_journal/start.json"));
+	};
+	const readEvalBasicInfo = async () => {
+		return toLogPreview(await readHeader());
+	};
+	/**
+	* Reads individual summary files when summaries.json is not available.
+	*/
+	const readFallbackSummaries = async () => {
+		const summaryFiles = Array.from(remoteZipFile.centralDirectory.keys()).filter((filename) => filename.startsWith("_journal/summaries/") && filename.endsWith(".json"));
+		const summaries = [];
+		const errors = [];
+		await Promise.all(summaryFiles.map((filename) => queue.enqueue(async () => {
+			try {
+				const partialSummary = await readJSONFile(filename);
+				summaries.push(...partialSummary);
+			} catch (error) {
+				errors.push(error);
+			}
+		})));
+		if (errors.length > 0) console.error(`Encountered ${errors.length} errors while reading summary files:`, errors);
+		return summaries;
+	};
+	/**
+	* Reads all summaries, falling back to individual files if necessary.
+	*/
+	const readSampleSummaries = async () => {
+		if (remoteZipFile.centralDirectory.has("summaries.json")) return await readJSONFile("summaries.json");
+		else return readFallbackSummaries();
+	};
+	return {
+		readEvalBasicInfo,
+		readLogSummary: async () => {
+			const [header, sampleSummaries] = await Promise.all([readHeader(), readSampleSummaries()]);
+			return {
+				status: header.status,
+				eval: header.eval,
+				plan: header.plan,
+				results: header.results,
+				stats: header.stats,
+				error: header.error,
+				tags: header.tags,
+				metadata: header.metadata,
+				log_updates: header.log_updates,
+				sampleSummaries,
+				etag: initialEtag
+			};
+		},
+		readSample,
+		/**
+		* Reads the complete log file.
+		*/
+		readCompleteLog: async () => {
+			const [evalLogHeader, samples] = await Promise.all([readHeader(), listSamples().then((sampleIds) => Promise.all(sampleIds.map(({ sampleId, epoch }) => readSample(sampleId, epoch).then((sample) => sample))))]);
+			return {
+				status: evalLogHeader.status,
+				eval: evalLogHeader.eval,
+				plan: evalLogHeader.plan,
+				results: evalLogHeader.results,
+				stats: evalLogHeader.stats,
+				error: evalLogHeader.error,
+				samples
+			};
+		}
+	};
+};
+//#endregion
+//#region src/client/api/client-api.ts
+var isEvalFile = (file) => {
+	return file.endsWith(".eval");
+};
+/**
+* Represents an error thrown when a file exceeds the maximum allowed size.
+*/
+var SampleSizeLimitedExceededError = class SampleSizeLimitedExceededError extends Error {
+	id;
+	epoch;
+	maxBytes;
+	displayStack;
+	constructor(id, epoch, maxBytes) {
+		super(`Sample ${id} in epoch ${epoch} exceeds the maximum supported size (${maxBytes / 1024 / 1024}MB) and cannot be loaded.`);
+		this.name = "SampleSizeLimitedExceededError";
+		this.id = id;
+		this.epoch = epoch;
+		this.maxBytes = maxBytes;
+		this.displayStack = false;
+		Object.setPrototypeOf(this, SampleSizeLimitedExceededError.prototype);
+	}
+};
+/**
+* This provides an API implementation that will serve a single
+* file using an http parameter, designed to be deployed
+* to a webserver without inspect or the ability to enumerate log
+* files
+*/
+var clientApi = (api, log_file, debug = false) => {
+	let current_log = void 0;
+	let current_path = void 0;
+	const loadedEvalFile = {
+		file: void 0,
+		remoteLog: void 0
+	};
+	const remoteEvalFile = async (log_file, cached = false) => {
+		if (cached && loadedEvalFile.file === log_file) return loadedEvalFile.remoteLog;
+		const remoteLog = await openRemoteLogFile(api, encodePathParts(log_file), 5);
+		if (cached) {
+			loadedEvalFile.file = log_file;
+			loadedEvalFile.remoteLog = remoteLog;
+		}
+		return remoteLog;
+	};
+	/**
+	* Gets a log
+	*/
+	const get_log = async (log_file, cached = false) => {
+		if (!cached || log_file !== current_path || !current_log) {
+			if (pending_log_promise) return pending_log_promise;
+			pending_log_promise = api.get_log_contents(log_file, 100).then((log) => {
+				current_log = log;
+				current_path = log_file;
+				pending_log_promise = null;
+				return log;
+			}).catch((err) => {
+				pending_log_promise = null;
+				throw err;
+			});
+			return pending_log_promise;
+		}
+		return current_log;
+	};
+	let pending_log_promise = null;
+	/**
+	* Gets a log summary
+	*/
+	const get_log_details = async (log_file, cached = true) => {
+		if (isEvalFile(log_file)) {
+			const remoteLogFile = await remoteEvalFile(log_file, cached);
+			if (remoteLogFile) return await remoteLogFile.readLogSummary();
+			else throw new Error("Unable to read remote eval file");
+		} else {
+			const logContents = await get_log(log_file);
+			/**
+			* @type {import("./Types.js").SampleSummary[]}
+			*/
+			const sampleSummaries = logContents.parsed.samples ? logContents.parsed.samples?.map((sample) => {
+				return {
+					id: sample.id,
+					epoch: sample.epoch,
+					input: sample.input,
+					target: sample.target,
+					scores: sample.scores,
+					metadata: sample.metadata,
+					error: sample.error?.message
+				};
+			}) : [];
+			const parsed = logContents.parsed;
+			return {
+				version: parsed.version,
+				status: parsed.status,
+				eval: parsed.eval,
+				plan: parsed.plan,
+				results: parsed.results,
+				stats: parsed.stats,
+				error: parsed.error,
+				tags: parsed.tags,
+				metadata: parsed.metadata,
+				log_updates: parsed.log_updates,
+				sampleSummaries
+			};
+		}
+	};
+	/**
+	* Gets a sample
+	*/
+	const get_log_sample = async (log_file, id, epoch, onProgress) => {
+		if (isEvalFile(log_file)) {
+			async function fetchSample(useCache) {
+				const remoteLogFile = await remoteEvalFile(log_file, useCache);
+				if (!remoteLogFile) throw new Error(`Unable to read remote eval file ${log_file}`);
+				return await remoteLogFile.readSample(String(id), epoch, onProgress);
+			}
+			function handleError(error) {
+				if (error instanceof SampleNotFoundError) return void 0;
+				if (error instanceof FileSizeLimitError) throw new SampleSizeLimitedExceededError(id, epoch, error.maxBytes);
+				throw error;
+			}
+			try {
+				return await fetchSample(true);
+			} catch (error) {
+				if (error instanceof SampleNotFoundError) try {
+					return await fetchSample(false);
+				} catch (retryError) {
+					return handleError(retryError);
+				}
+				else return handleError(error);
+			}
+		} else {
+			const logContents = await get_log(log_file, true);
+			if (logContents.parsed.samples && logContents.parsed.samples.length > 0) return logContents.parsed.samples.find((sample) => {
+				return sampleIdsEqual(sample.id, id) && sample.epoch === epoch;
+			});
+		}
+	};
+	const read_eval_file_log_summary = async (log_file) => {
+		if (api.get_log_summary) return api.get_log_summary(log_file);
+		else return (await openRemoteLogFile(api, encodePathParts(log_file), 5)).readEvalBasicInfo();
+	};
+	/**
+	* Gets log headers
+	*/
+	const get_log_summaries = async (log_files) => {
+		const eval_files = {};
+		const json_files = {};
+		let index = 0;
+		for (const file of log_files) {
+			if (isEvalFile(file)) eval_files[file] = index;
+			else json_files[file] = index;
+			index++;
+		}
+		const evalLogHeadersPromises = Object.keys(eval_files).map((file) => read_eval_file_log_summary(file).then((summary) => ({
+			index: eval_files[file],
+			summary
+		})));
+		const jsonLogHeadersPromise = api.get_log_summaries(Object.keys(json_files)).then((summaries) => summaries.map((summary, i) => ({
+			index: json_files[Object.keys(json_files)[i]],
+			summary
+		})));
+		return (await Promise.all([...evalLogHeadersPromises, jsonLogHeadersPromise])).flat().sort((a, b) => a.index - b.index).map(({ summary }) => summary);
+	};
+	const get_log_dir = async () => {
+		if (api.get_log_dir) return await api.get_log_dir();
+		else return (await api.get_log_root())?.log_dir;
+	};
+	const get_logs = async (mtime, clientFileCount) => {
+		if (api.get_logs) return await api.get_logs(mtime, clientFileCount);
+		else return {
+			files: (await api.get_log_root())?.logs || [],
+			response_type: "full"
+		};
+	};
+	const get_log_root = async () => {
+		const logFiles = await api.get_log_root();
+		if (logFiles) return logFiles;
+		else if (log_file) {
+			const summary = await get_log_details(log_file);
+			if (summary) return { logs: [{
+				name: log_file,
+				task: summary.eval.task,
+				task_id: summary.eval.task_id
+			}] };
+		}
+		throw new Error("Unable to determine log paths.");
+	};
+	const get_log_pending_samples = (log_file, etag) => {
+		if (!api.eval_pending_samples) throw new Error("API doesn't support streamed samples");
+		return api.eval_pending_samples(log_file, etag);
+	};
+	const sampleDataPathByLog = /* @__PURE__ */ new Map();
+	const editEtagByLog = /* @__PURE__ */ new Map();
+	const get_log_sample_data = async (log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool) => {
+		if (!api.eval_log_sample_data) throw new Error("API doesn't supported streamed sample data");
+		let path = sampleDataPathByLog.get(log_file);
+		if (path === void 0 && api.eval_log_sample_data_direct) {
+			const probe = await api.eval_log_sample_data_direct(log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool);
+			if (probe !== void 0) {
+				sampleDataPathByLog.set(log_file, "direct");
+				return probe;
+			}
+		}
+		if (path === void 0) {
+			path = "proxy";
+			sampleDataPathByLog.set(log_file, path);
+		}
+		if (path === "direct") {
+			const result = await api.eval_log_sample_data_direct(log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool);
+			if (result === void 0) throw new Error("Direct pending-sample-data path returned 'not supported' after probe");
+			return result;
+		}
+		return api.eval_log_sample_data(log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool);
+	};
+	const middleware = debug ? createMiddlewareWrapper([debugMiddleware]) : (_name, fn) => fn;
+	return {
+		client_events: middleware("client_events", () => {
+			return api.client_events();
+		}),
+		get_log_dir: middleware("get_log_dir", get_log_dir),
+		get_log_dir_handle: middleware("get_log_dir_handle", (log_dir) => {
+			return api.get_log_dir_handle ? api.get_log_dir_handle(log_dir) : log_dir || "default_log_dir";
+		}),
+		get_logs: middleware("get_log_files", get_logs),
+		get_log_root: middleware("get_log_root", get_log_root),
+		get_eval_set: middleware("get_eval_set", (dir) => {
+			return api.get_eval_set(dir);
+		}),
+		get_flow: middleware("get_flow", (dir) => {
+			return api.get_flow(dir);
+		}),
+		get_log_summaries: middleware("get_log_summaries", get_log_summaries),
+		get_log_details: middleware("get_log_details", async (log_file, cached) => {
+			const result = await get_log_details(log_file, cached);
+			if (result.etag) editEtagByLog.set(log_file, result.etag);
+			return result;
+		}),
+		get_log_sample: middleware("get_log_sample", get_log_sample),
+		open_log_file: middleware("open_log_file", (log_file, log_dir) => {
+			return api.open_log_file(log_file, log_dir);
+		}),
+		download_file: middleware("download_file", (download_file, file_contents) => {
+			return api.download_file(download_file, file_contents);
+		}),
+		download_log: api.download_log ? middleware("download_log", (log_file) => {
+			return api.download_log(log_file);
+		}) : void 0,
+		log_message: middleware("log_message", (log_file, message) => {
+			return api.log_message(log_file, message);
+		}),
+		get_log_pending_samples: api.eval_pending_samples ? middleware("get_log_pending_samples", get_log_pending_samples) : void 0,
+		get_log_sample_data: api.eval_log_sample_data ? middleware("get_log_sample_data", get_log_sample_data) : void 0,
+		get_user_info: api.get_user_info ? middleware("get_user_info", () => api.get_user_info()) : void 0,
+		edit_log: api.edit_log ? middleware("edit_log", async (log_file, update, if_match_etag) => {
+			const effective = if_match_etag ?? editEtagByLog.get(log_file);
+			const result = await api.edit_log(log_file, update, effective);
+			if (result.etag) editEtagByLog.set(log_file, result.etag);
+			if (current_path === log_file) {
+				current_log = void 0;
+				current_path = void 0;
+			}
+			if (loadedEvalFile.file === log_file) {
+				loadedEvalFile.file = void 0;
+				loadedEvalFile.remoteLog = void 0;
+			}
+			return result;
+		}) : void 0
+	};
+};
+var debugMiddleware = (name, _fn, args, result) => {
+	if (result instanceof Promise) {
+		const startTime = performance.now();
+		return result.then((returned) => {
+			const duration = performance.now() - startTime;
+			console.log(`[ClientAPI] ${name}`, {
+				args,
+				returned,
+				duration: `${duration.toFixed(2)}ms`
+			});
+			return returned;
+		});
+	} else {
+		console.log(`[ClientAPI] ${name}`, {
+			args,
+			returned: result
+		});
+		return result;
+	}
+};
+var applyMiddleware = (name, fn, middlewares) => {
+	if (middlewares.length === 0) return fn;
+	return ((...args) => {
+		let result = fn(...args);
+		for (const middleware of middlewares) result = middleware(name, fn, args, result);
+		return result;
+	});
+};
+var createMiddlewareWrapper = (middlewares) => {
+	return (name, fn) => {
+		return applyMiddleware(name, fn, middlewares);
+	};
+};
+//#endregion
+//#region src/client/api/shared/api-shared.ts
+/**
+* Downloads the provided content as a file using the browser's DOM API
+*/
+async function download_file$1(filename, filecontents) {
+	let blob;
+	if (typeof filecontents === "string" && filecontents.startsWith("data:")) blob = await (await fetch(filecontents)).blob();
+	else blob = new Blob([filecontents], { type: "text/plain" });
+	const link = document.createElement("a");
+	link.href = URL.createObjectURL(blob);
+	link.download = filename;
+	document.body.appendChild(link);
+	link.click();
+	document.body.removeChild(link);
+	URL.revokeObjectURL(link.href);
+}
+//#endregion
+//#region src/client/api/static-http/fetch.ts
+/**
+* Fetches a file from the specified URL as a string
+*/
+async function fetchTextFile(url, handleError) {
+	const safe_url = encodePathParts(url);
+	const response = await fetch(`${safe_url}`, { method: "GET" });
+	if (response.ok) return await response.text();
+	else if (response.status !== 200) {
+		if (handleError && handleError(response)) return;
+		const message = await response.text() || response.statusText;
+		throw /* @__PURE__ */ new Error(`${response.status}: ${message})`);
+	} else throw new Error(`${response.status} - ${response.statusText} `);
+}
+/**
+* Fetches a file from the specified URL and parses its content.
+*/
+async function fetchFile(url, parse, handleError) {
+	const safe_url = encodePathParts(url);
+	const response = await fetch(`${safe_url}`, { method: "GET" });
+	if (response.ok) return await parse(await response.text());
+	else if (response.status !== 200) {
+		if (handleError && handleError(response)) return;
+		const message = await response.text() || response.statusText;
+		throw /* @__PURE__ */ new Error(`${response.status}: ${message})`);
+	} else throw new Error(`${response.status} - ${response.statusText} `);
+}
+/**
+* Fetches a log file and parses its content, updating the log structure if necessary.
+*/
+var fetchLogFile = async (file) => {
+	return fetchFile(file, async (text) => {
+		const log = await asyncJsonParse(text);
+		if (log.version === 1) {
+			if (log.results) {
+				const untypedLog = log;
+				log.results.scores = [];
+				untypedLog.results.scorer.scorer = untypedLog.results.scorer.name;
+				log.results.scores.push(untypedLog.results.scorer);
+				delete untypedLog.results.scorer;
+				log.results.scores[0].metrics = untypedLog.results.metrics;
+				delete untypedLog.results.metrics;
+				const scorerName = log.results.scores[0].name;
+				log.samples?.forEach((sample) => {
+					const untypedSample = sample;
+					sample.scores = { [scorerName]: untypedSample.score };
+					delete untypedSample.score;
+				});
+			}
+		}
+		return {
+			raw: text,
+			parsed: log
+		};
+	});
+};
+/**
+* Fetches a log file and parses its content, updating the log structure if necessary.
+*/
+var fetchManifest = async (log_dir) => {
+	const parseListing = async (text) => {
+		return {
+			raw: text,
+			parsed: await asyncJsonParse(text)
+		};
+	};
+	return await fetchFile(log_dir + "/listing.json", parseListing);
+};
+/**
+* Fetches a file, parsing its content and returning the result.
+*/
+var fetchJsonFile = async (file, handleError) => {
+	return fetchFile(file, async (text) => {
+		return await asyncJsonParse(text);
+	}, handleError);
+};
+/**
+* Joins multiple URI segments into a single URI string.
+*
+* This function removes any leading or trailing slashes from each segment
+* and then joins them with a single slash (`/`).
+*/
+function joinURI(...segments) {
+	return segments.map((segment) => segment.replace(/(^\/+|\/+$)/g, "")).join("/");
+}
+//#endregion
+//#region src/client/api/static-http/api-static-http.ts
+/**
+* This provides an API implementation that will serve a single
+* file using an http parameter, designed to be deployed
+* to a webserver without inspect or the ability to enumerate log
+* files
+*/
+function staticHttpApi(log_dir, log_file, abs_log_dir) {
+	const resolved_log_dir = log_dir?.replace(" ", "+");
+	return staticHttpApiForLog({
+		log_file: log_file ? log_file.replace(" ", "+") : void 0,
+		log_dir: resolved_log_dir,
+		abs_log_dir
+	});
+}
+/**
+* Fetches a file from the specified URL and parses its content.
+*/
+function staticHttpApiForLog(logInfo) {
+	const log_dir = logInfo.log_dir;
+	const abs_log_dir = logInfo.abs_log_dir;
+	let manifest = void 0;
+	let manifestPromise = void 0;
+	const getManifest = async () => {
+		if (!manifest && log_dir) {
+			if (!manifestPromise) manifestPromise = fetchManifest(log_dir).then((manifestRaw) => {
+				manifest = manifestRaw?.parsed || {};
+				return manifest;
+			});
+			await manifestPromise;
+		}
+		return manifest || {};
+	};
+	async function open_log_file() {}
+	return {
+		client_events: async () => {
+			return Promise.resolve([]);
+		},
+		get_log_root: async () => {
+			if (log_dir) {
+				const manifest = await getManifest();
+				if (manifest) {
+					const logs = Object.keys(manifest).map((key) => {
+						return {
+							name: joinURI(log_dir, key),
+							task: manifest[key].task,
+							task_id: manifest[key].task_id
+						};
+					});
+					return Promise.resolve({
+						logs,
+						log_dir,
+						abs_log_dir
+					});
+				}
+			}
+		},
+		get_log_dir_handle: (log_dir) => {
+			return joinURI(`${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf("/"))}`, log_dir || "default_log_dir");
+		},
+		get_eval_set: async (dir) => {
+			const dirSegments = [];
+			if (log_dir) dirSegments.push(log_dir);
+			if (dir) dirSegments.push(dir);
+			return await fetchJsonFile(joinURI(...dirSegments, "eval-set.json"), (response) => {
+				if (400 <= response.status && response.status < 500) return true;
+				else return false;
+			});
+		},
+		get_flow: async (dir) => {
+			const dirSegments = [];
+			if (log_dir) dirSegments.push(log_dir);
+			if (dir) dirSegments.push(dir);
+			return await fetchTextFile(joinURI(...dirSegments, "flow.yaml"), (response) => {
+				if (400 <= response.status && response.status < 500) return true;
+				else return false;
+			});
+		},
+		log_message: async (log_file, message) => {
+			console.log(`[CLIENT MESSAGE] (${log_file}): ${message}`);
+		},
+		get_log_contents: async (log_file, _headerOnly, _capabilities) => {
+			const response = await fetchLogFile(log_file);
+			if (response) return response;
+			else throw new Error(`"Unable to load eval log ${log_file}`);
+		},
+		get_log_info: async (log_file) => {
+			return { size: await fetchSize(log_file) };
+		},
+		get_log_bytes: async (log_file, start, end) => {
+			return await fetchRange(log_file, start, end);
+		},
+		get_log_summary: async (log_file) => {
+			const manifest = await getManifest();
+			if (manifest) {
+				const manifestAbs = {};
+				Object.keys(manifest).forEach((key) => {
+					manifestAbs[joinURI(log_dir || "", key)] = manifest[key];
+				});
+				const header = manifestAbs[log_file];
+				if (header) return header;
+			}
+			throw new Error(`Unable to load eval log header for ${log_file}`);
+		},
+		get_log_summaries: async (files) => {
+			if (files.length === 0) return [];
+			if (log_dir) {
+				const manifest = await getManifest();
+				if (manifest) {
+					const keys = Object.keys(manifest);
+					const result = [];
+					files.forEach((file) => {
+						const fileKey = keys.find((key) => {
+							return file.endsWith(key);
+						});
+						if (fileKey) result.push(manifest[fileKey]);
+					});
+					return result;
+				}
+			}
+			throw new Error(`Failed to load a listing file using the directory: ${log_dir}. Please be sure you have deployed a manifest file (listing.json).`);
+		},
+		download_file: download_file$1,
+		open_log_file
+	};
+}
+//#endregion
+//#region src/client/remote/remotePendingSampleData.ts
+var SEGMENT_CAP_PER_CALL = 25;
+/**
+* Fetch one chunk of pending-sample data via presigned S3 URLs.
+* Returns `undefined` when this transport isn't supported (404, or any
+* segment lacks a presigned URL); all other failures throw.
+*/
+var fetchPendingSampleDataDirect = async (getUrls, log_file, id, epoch, cursors) => {
+	let urls;
+	try {
+		urls = await getUrls(log_file, id, epoch, cursors.last_event, cursors.last_attachment, cursors.last_message_pool, cursors.last_call_pool, SEGMENT_CAP_PER_CALL);
+	} catch (e) {
+		if (e instanceof ApiError && e.status === 404) return;
+		throw e;
+	}
+	if (urls.segments.length === 0) return {
+		sampleData: {
+			events: [],
+			attachments: [],
+			message_pool: [],
+			call_pool: []
+		},
+		has_more: urls.has_more
+	};
+	if (!urls.segments.every((s) => s.direct_url != null)) return;
+	const parts = await Promise.all(urls.segments.map((seg) => readSegment(seg)));
+	return {
+		sampleData: applyCursorFilter({
+			events: parts.flatMap((p) => p.events),
+			attachments: parts.flatMap((p) => p.attachments),
+			message_pool: parts.flatMap((p) => p.message_pool),
+			call_pool: parts.flatMap((p) => p.call_pool)
+		}, cursors),
+		has_more: urls.has_more
+	};
+};
+var readSegment = async (seg) => {
+	const url = seg.direct_url;
+	const resp = await fetch(url);
+	if (!resp.ok) throw new Error(`Failed to fetch segment: ${resp.status} ${resp.statusText}`);
+	return await asyncJsonParseBytes(await (await openZipFileFromBuffer(new Uint8Array(await resp.arrayBuffer()))).readFile(seg.member_name));
+};
+var applyCursorFilter = (out, cursors) => {
+	const lastEvent = cursors.last_event ?? -1;
+	const lastAttachment = cursors.last_attachment ?? -1;
+	const lastMessagePool = cursors.last_message_pool ?? -1;
+	const lastCallPool = cursors.last_call_pool ?? -1;
+	out.events = out.events.filter((e) => e.id > lastEvent);
+	out.attachments = out.attachments.filter((a) => a.id > lastAttachment);
+	out.message_pool = out.message_pool.filter((m) => m.id > lastMessagePool);
+	out.call_pool = out.call_pool.filter((c) => c.id > lastCallPool);
+	return out;
+};
+//#endregion
+//#region src/client/api/view-server/api-view-server.ts
+var LOADED_TIME = Date.now();
+var lastEvalTime = 0;
+/**
+* Create a view server API with optional server-side log listing
+*/
+function viewServerApi(options = {}) {
+	const { apiBaseUrl, logDir, headerProvider } = options;
+	const requestApi = serverRequestApi(apiBaseUrl || "/api", headerProvider);
+	const client_events = async () => {
+		const params = new URLSearchParams();
+		params.append("loaded_time", String(LOADED_TIME.valueOf()));
+		params.append("last_eval_time", String(lastEvalTime.valueOf()));
+		return (await requestApi.fetchString("GET", `/events?${params.toString()}`)).parsed;
+	};
+	const get_log_dir = async () => {
+		if (logDir) return logDir;
+		return (await requestApi.fetchString("GET", "/log-dir")).parsed.log_dir;
+	};
+	const get_log_root = async () => {
+		const path = logDir ? `/logs?log_dir=${encodeURIComponent(logDir)}` : "/logs";
+		const logs = await requestApi.fetchString("GET", path);
+		lastEvalTime = Date.now();
+		return logs.parsed;
+	};
+	const get_logs = async (mtime, clientFileCount) => {
+		const path = logDir ? `/log-files?log_dir=${encodeURIComponent(logDir)}` : "/log-files";
+		const headers = {};
+		const token = log_file_token(mtime, clientFileCount);
+		if (token) headers["If-None-Match"] = token;
+		lastEvalTime = Date.now();
+		return (await requestApi.fetchString("GET", path, headers)).parsed;
+	};
+	const log_file_token = (mtime, fileCount) => {
+		return `W/"${mtime}-${fileCount}"`;
+	};
+	const get_eval_set = async (dir) => {
+		const basePath = "/eval-set";
+		const params = new URLSearchParams();
+		if (logDir) params.append("log_dir", logDir);
+		if (dir) params.append("dir", dir);
+		const query = params.toString();
+		const path = query ? `${basePath}?${query}` : basePath;
+		try {
+			return (await requestApi.fetchString("GET", path)).parsed;
+		} catch (error) {
+			if (error instanceof ApiError && (error.status === 404 || error.status === 403)) return;
+			throw error;
+		}
+	};
+	const get_flow = async (dir) => {
+		const basePath = "/flow";
+		const params = new URLSearchParams();
+		if (logDir) params.append("log_dir", logDir);
+		if (dir) params.append("dir", dir);
+		const query = params.toString();
+		const path = query ? `${basePath}?${query}` : basePath;
+		try {
+			const bytes = await requestApi.fetchBytes("GET", path);
+			return new TextDecoder().decode(bytes);
+		} catch (error) {
+			if (error instanceof ApiError && (error.status === 404 || error.status === 403)) return;
+			throw error;
+		}
+	};
+	const get_log_contents = async (file, headerOnly, _capabilities) => {
+		return await requestApi.fetchString("GET", `/logs/${encodeURIComponent(file)}?header-only=${headerOnly}`);
+	};
+	const get_log_info = async (file) => {
+		return (await requestApi.fetchString("GET", `/log-info/${encodeURIComponent(file)}`)).parsed;
+	};
+	const toLogPreview = (header) => {
+		const scores = Object.values(header.results?.scores || {});
+		const metric = scores.length > 0 ? scores[0].metrics : void 0;
+		const evalMetrics = Object.values(metric || {});
+		const primary_metric = evalMetrics.length > 0 ? evalMetrics[0] : void 0;
+		const model_roles = header.eval.model_roles ? Object.fromEntries(Object.entries(header.eval.model_roles).map(([role, cfg]) => [role, cfg.model])) : void 0;
+		return {
+			eval_id: header.eval.eval_id,
+			run_id: header.eval.run_id,
+			task: header.eval.task,
+			task_id: header.eval.task_id,
+			task_version: header.eval.task_version,
+			version: header.version,
+			status: header.status,
+			error: header.error,
+			model: header.eval.model,
+			model_roles,
+			started_at: header.stats?.started_at,
+			completed_at: header.stats?.completed_at,
+			primary_metric
+		};
+	};
+	const get_log_bytes = async (file, start, end) => requestApi.fetchBytes("GET", `/log-bytes/${encodeURIComponent(file)}?start=${start}&end=${end}`);
+	const get_log_summaries = async (files) => {
+		const params = new URLSearchParams();
+		for (const file of files) params.append("file", file);
+		return (await requestApi.fetchString("GET", `/log-headers?${params.toString()}`)).parsed.map(toLogPreview);
+	};
+	const log_message = async (log_file, message) => {
+		const params = new URLSearchParams();
+		params.append("log_file", log_file);
+		params.append("message", message);
+		await requestApi.fetchType("GET", `/log-message?${params.toString()}`, {
+			headers: { "Content-Type": "text/plain" },
+			parse: async (text) => {
+				if (text !== "") throw new Error(`Unexpected response from log_message: ${text}`);
+			}
+		});
+	};
+	const eval_pending_samples = async (log_file, etag) => {
+		const params = new URLSearchParams();
+		params.append("log", log_file);
+		const headers = {};
+		if (etag) headers["If-None-Match"] = etag;
+		const request = {
+			headers,
+			parse: async (text) => {
+				return {
+					status: "OK",
+					pendingSamples: await asyncJsonParse(text)
+				};
+			},
+			handleError: (status) => {
+				if (status === 404) return { status: "NotFound" };
+				else if (status === 304) return { status: "NotModified" };
+			}
+		};
+		return (await requestApi.fetchType("GET", `/pending-samples?${params.toString()}`, request)).parsed;
+	};
+	const eval_log_sample_data = async (log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool) => {
+		const params = new URLSearchParams();
+		params.append("log", log_file);
+		params.append("id", String(id));
+		params.append("epoch", String(epoch));
+		if (last_event !== void 0) params.append("last-event-id", String(last_event));
+		if (last_attachment !== void 0) params.append("after-attachment-id", String(last_attachment));
+		if (last_message_pool !== void 0) params.append("after-message-pool-id", String(last_message_pool));
+		if (last_call_pool !== void 0) params.append("after-call-pool-id", String(last_call_pool));
+		return (await requestApi.fetchType("GET", `/pending-sample-data?${params.toString()}`, {
+			headers: {},
+			parse: async (text) => {
+				return {
+					status: "OK",
+					sampleData: await asyncJsonParse(text)
+				};
+			},
+			handleError: (status) => {
+				if (status === 404) return { status: "NotFound" };
+				else if (status === 304) return { status: "NotModified" };
+			}
+		})).parsed;
+	};
+	const get_pending_sample_data_urls = async (log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool, max_segments) => {
+		const params = new URLSearchParams();
+		params.append("log", log_file);
+		params.append("id", String(id));
+		params.append("epoch", String(epoch));
+		if (last_event !== void 0) params.append("last-event-id", String(last_event));
+		if (last_attachment !== void 0) params.append("after-attachment-id", String(last_attachment));
+		if (last_message_pool !== void 0) params.append("after-message-pool-id", String(last_message_pool));
+		if (last_call_pool !== void 0) params.append("after-call-pool-id", String(last_call_pool));
+		if (max_segments !== void 0) params.append("max-segments", String(max_segments));
+		return (await requestApi.fetchType("GET", `/pending-sample-data-urls?${params.toString()}`, {
+			headers: {},
+			parse: async (text) => {
+				return await asyncJsonParse(text);
+			}
+		})).parsed;
+	};
+	const eval_log_sample_data_direct = async (log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool) => {
+		const direct = await fetchPendingSampleDataDirect(get_pending_sample_data_urls, log_file, id, epoch, {
+			last_event,
+			last_attachment,
+			last_message_pool,
+			last_call_pool
+		});
+		if (direct === void 0) return;
+		return {
+			status: "OK",
+			sampleData: direct.sampleData,
+			has_more: direct.has_more
+		};
+	};
+	const edit_log = async (log_file, update, if_match_etag) => {
+		const baseUrl = apiBaseUrl || "/api";
+		const path = `/log-edit/${encodeURIComponent(log_file)}`;
+		const url = baseUrl ? `${baseUrl.replace(/\/$/, "")}${path}` : path;
+		const headers = {
+			Accept: "application/json",
+			"Content-Type": "application/json"
+		};
+		if (if_match_etag) headers["If-Match"] = if_match_etag;
+		if (headerProvider) Object.assign(headers, await headerProvider());
+		const isCrossOrigin = Boolean(apiBaseUrl && (() => {
+			try {
+				return new URL(apiBaseUrl).origin !== window.location.origin;
+			} catch {
+				return false;
+			}
+		})());
+		const response = await fetch(url, {
+			method: "POST",
+			headers,
+			body: JSON.stringify(update),
+			credentials: isCrossOrigin ? "include" : "same-origin"
+		});
+		if (!response.ok) {
+			const message = unwrapFastapiDetail(await response.text()) || response.statusText;
+			throw new ApiError(response.status, message);
+		}
+		return {
+			log: await asyncJsonParse(await response.text()),
+			etag: response.headers.get("ETag") ?? void 0
+		};
+	};
+	const get_user_info = async () => {
+		return (await requestApi.fetchString("GET", "/user-info")).parsed ?? {};
+	};
+	const download_log = async (log_file) => {
+		const url = `${apiBaseUrl || "/api"}/log-download/${encodeURIComponent(log_file)}`;
+		const link = document.createElement("a");
+		link.href = url;
+		link.download = "";
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+	};
+	return {
+		client_events,
+		get_log_root,
+		get_logs,
+		get_log_dir,
+		get_eval_set,
+		get_flow,
+		get_log_contents,
+		get_log_info,
+		get_log_bytes,
+		get_log_summaries,
+		log_message,
+		download_file: download_file$1,
+		download_log,
+		open_log_file: async () => {},
+		eval_pending_samples,
+		eval_log_sample_data,
+		eval_log_sample_data_direct,
+		edit_log,
+		get_user_info
+	};
+}
+//#endregion
+//#region src/client/api/vscode/jsonrpc.ts
+var kMethodEvalLogDir = "eval_log_dir";
+var kMethodEvalLogs = "eval_logs";
+var kMethodEvalLogFiles = "eval_log_files";
+var kMethodEvalLog = "eval_log";
+var kMethodEvalLogInfo = "eval_log_info";
+var kMethodEvalLogBytes = "eval_log_bytes";
+var kMethodEvalLogHeaders = "eval_log_headers";
+var kMethodPendingSamples = "eval_log_pending_samples";
+var kMethodSampleData = "eval_log_sample_data";
+var kMethodLogMessage = "log_message";
+var kMethodEditLog = "edit_log";
+var kMethodGetUserInfo = "get_user_info";
+function webViewJsonRpcClient(vscode) {
+	return jsonRpcPostMessageRequestTransport({
+		postMessage: (data) => {
+			vscode.postMessage(data);
+		},
+		onMessage: (handler) => {
+			const onMessage = (ev) => {
+				handler(ev.data);
+			};
+			window.addEventListener("message", onMessage);
+			return () => {
+				window.removeEventListener("message", onMessage);
+			};
+		}
+	}).request;
+}
+function jsonRpcPostMessageRequestTransport(target) {
+	const requests = /* @__PURE__ */ new Map();
+	return {
+		request: (method, params) => {
+			return new Promise((resolve, reject) => {
+				const requestId = Math.floor(Math.random() * 1e6);
+				requests.set(requestId, {
+					resolve,
+					reject
+				});
+				const request = {
+					jsonrpc: "2.0",
+					id: requestId,
+					method,
+					params
+				};
+				target.postMessage(request);
+			});
+		},
+		disconnect: target.onMessage((ev) => {
+			const response = asJsonRpcResponse(ev);
+			if (response) {
+				const request = requests.get(response.id);
+				if (request) {
+					requests.delete(response.id);
+					if (response.error) request.reject(response.error);
+					else request.resolve(response.result);
+				}
+			}
+		})
+	};
+}
+function isJsonRpcMessage(message) {
+	return message.jsonrpc !== void 0 && message.id !== void 0;
+}
+function asJsonRpcMessage(data) {
+	if (isJsonRpcMessage(data) && data.jsonrpc === "2.0") return data;
+	return null;
+}
+function asJsonRpcResponse(data) {
+	const message = asJsonRpcMessage(data);
+	if (message) return message;
+	return null;
+}
+//#endregion
+//#region src/client/api/vscode/api-vscode.ts
+var kNotFoundSignal = "NotFound";
+var kNotModifiedSignal = "NotModified";
+var vscodeClient = webViewJsonRpcClient(getVscodeApi());
+async function client_events() {
+	return [];
+}
+async function get_log_root() {
+	const response = await vscodeClient(kMethodEvalLogs, []);
+	if (response) {
+		const parsed = import_dist.default.parse(response);
+		if (Array.isArray(parsed)) return {
+			log_dir: "",
+			files: parsed
+		};
+		else return parsed;
+	} else return;
+}
+var get_log_dir = async () => {
+	const response = await vscodeClient(kMethodEvalLogDir, []);
+	if (response) return import_dist.default.parse(response).log_dir;
+};
+var get_logs = async (mtime, clientFileCount) => {
+	const response = await vscodeClient(kMethodEvalLogFiles, [mtime, clientFileCount]);
+	if (response) return import_dist.default.parse(response);
+	else return [];
+};
+async function get_eval_set() {}
+async function get_flow() {}
+async function get_log_contents(log_file, headerOnly, capabilities) {
+	const response = await vscodeClient(kMethodEvalLog, [log_file, headerOnly]);
+	if (response) {
+		let json;
+		if (capabilities?.webWorkers) json = await asyncJsonParse(response);
+		else json = import_dist.default.parse(response);
+		return {
+			parsed: json,
+			raw: response
+		};
+	} else throw new Error(`Unable to load eval log ${log_file}.`);
+}
+async function get_log_info(log_file) {
+	try {
+		return await vscodeClient(kMethodEvalLogInfo, [log_file]);
+	} catch (e) {
+		if (e?.code === -32601) return { size: await vscodeClient("eval_log_size", [log_file]) };
+		throw e;
+	}
+}
+async function get_log_bytes(log_file, start, end) {
+	return await vscodeClient(kMethodEvalLogBytes, [
+		log_file,
+		start,
+		end
+	]);
+}
+async function get_log_summaries(files) {
+	const response = await vscodeClient(kMethodEvalLogHeaders, [files]);
+	if (response) return import_dist.default.parse(response);
+	else return;
+}
+async function eval_pending_samples(log_file, etag) {
+	const response = await vscodeClient(kMethodPendingSamples, [log_file, etag]);
+	if (response) {
+		if (response === kNotModifiedSignal) return { status: "NotModified" };
+		else if (response === kNotFoundSignal) return { status: "NotFound" };
+		return {
+			status: "OK",
+			pendingSamples: await asyncJsonParse(response)
+		};
+	} else throw new Error(`Unable to load pending samples ${log_file}.`);
+}
+async function eval_log_sample_data(log_file, id, epoch, last_event, last_attachment, last_message_pool, last_call_pool) {
+	const response = await vscodeClient(kMethodSampleData, [
+		log_file,
+		id,
+		epoch,
+		last_event,
+		last_attachment,
+		last_message_pool,
+		last_call_pool
+	]);
+	if (response) {
+		if (response === kNotModifiedSignal) return { status: "NotModified" };
+		else if (response === kNotFoundSignal) return { status: "NotFound" };
+		return {
+			status: "OK",
+			sampleData: await asyncJsonParse(response)
+		};
+	} else throw new Error(`Unable to load live sample data ${log_file}.`);
+}
+async function log_message(log_file, message) {
+	await vscodeClient(kMethodLogMessage, [log_file, message]);
+}
+async function download_file() {
+	throw Error("Downloading files is not supported in VS Code");
+}
+/**
+* POSTs a LogUpdate (tag/metadata edits + provenance) to the VS Code
+* extension, which read-modifies-writes the log header and returns the
+* updated EvalLog (plus an ETag for S3-backed logs).
+*
+* Cross-process error mapping:
+*   - HTTP-style status codes (400/409/412/…) thrown by the extension
+*     come back through JSON-RPC with `error.code = <status>`. We
+*     re-throw them as `ApiError` so the existing dialog error mapper
+*     (`formatEditError`) handles 412 stale-ETag and 400 validation
+*     branches identically across the view-server and vscode paths.
+*   - `kJsonRpcMethodNotFound` means the extension predates edit
+*     support; surface an actionable message instead of the raw
+*     JSON-RPC text.
+*/
+async function edit_log(log_file, update, if_match_etag) {
+	try {
+		const response = await vscodeClient(kMethodEditLog, [
+			log_file,
+			update,
+			if_match_etag
+		]);
+		if (!response) throw new Error(`Edit returned no response for ${log_file}.`);
+		return typeof response === "string" ? import_dist.default.parse(response) : response;
+	} catch (e) {
+		if (typeof e?.code === "number" && e.code >= 400 && e.code < 600) throw new ApiError(e.code, e?.message ?? `Edit failed (${e.code})`);
+		if (e?.code === -32601) throw new Error("Log editing requires a newer Inspect VS Code extension.");
+		throw e;
+	}
+}
+/**
+* Best-effort identity of the user editing logs, used to prefill the
+* Author field. Returns an empty object when the extension doesn't
+* expose the method (older extension); the dialog then leaves Author
+* blank and the user types it manually.
+*/
+async function get_user_info() {
+	try {
+		const response = await vscodeClient(kMethodGetUserInfo, []);
+		if (!response) return {};
+		return (typeof response === "string" ? import_dist.default.parse(response) : response) ?? {};
+	} catch (e) {
+		if (e?.code === -32601) return {};
+		throw e;
+	}
+}
+async function open_log_file(log_file, log_dir) {
+	const msg = {
+		type: "displayLogFile",
+		url: log_file,
+		log_dir
+	};
+	getVscodeApi()?.postMessage(msg);
+}
+var api = {
+	client_events,
+	get_log_root,
+	get_log_dir,
+	get_logs,
+	get_eval_set,
+	get_flow,
+	get_log_contents,
+	get_log_info,
+	get_log_bytes,
+	get_log_summaries,
+	log_message,
+	download_file,
+	open_log_file,
+	eval_pending_samples,
+	eval_log_sample_data,
+	edit_log,
+	get_user_info
+};
+//#endregion
+//#region src/client/api/index.ts
+/**
+* Resolves the client API
+*/
+var resolveApi = () => {
+	const debug = false;
+	if (getVscodeApi()) return clientApi(api, void 0, debug);
+	else {
+		const scriptEl = document.getElementById("log_dir_context");
+		if (scriptEl) {
+			const context = scriptEl.textContent;
+			if (context !== null) {
+				const data = import_dist.default.parse(context);
+				if (data.log_dir || data.log_file) return clientApi(staticHttpApi(data.log_dir || dirname(data.log_file), data.log_file, data.abs_log_dir), data.log_file, debug);
+			}
+		}
+		const urlParams = new URLSearchParams(window.location.search);
+		const log_file = urlParams.get("log_file");
+		const log_dir = urlParams.get("log_dir");
+		const forceViewServerApi = urlParams.get("inspect_server") === "true";
+		const resolved_log_dir = log_dir ?? void 0;
+		const resolved_log_file = log_file ?? void 0;
+		if (forceViewServerApi) return clientApi(viewServerApi({ logDir: resolved_log_dir }), resolved_log_file, debug);
+		if (resolved_log_dir !== void 0 || resolved_log_file !== void 0) return clientApi(staticHttpApi(resolved_log_dir, resolved_log_file), resolved_log_file, debug);
+		return clientApi(viewServerApi(), void 0, debug);
+	}
+};
+var api_default = resolveApi();
 //#endregion
 //#region src/client/storage/index.ts
 var resolveStorage = () => {
