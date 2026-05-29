@@ -115052,6 +115052,13 @@ var resolveToolInput = (fn, toolArgs) => {
 			contentType: "markdown"
 		};
 	}
+	if (fn === "agent_status" || fn === "agent_wait" || fn === "agent_cancel" || fn === "agent_list") return {
+		name: fn,
+		functionCall,
+		input,
+		description,
+		contentType: "markdown"
+	};
 	return {
 		name: fn,
 		functionCall,
@@ -117189,6 +117196,7 @@ var TimelineSpan = class {
 	branchedFrom;
 	description;
 	utility;
+	toolInvoked;
 	agentResult;
 	outline;
 	constructor(props) {
@@ -117200,6 +117208,7 @@ var TimelineSpan = class {
 		this.branchedFrom = props.branchedFrom ?? null;
 		this.description = props.description;
 		this.utility = props.utility ?? false;
+		this.toolInvoked = props.toolInvoked ?? false;
 		this.agentResult = props.agentResult;
 		this.outline = props.outline;
 	}
@@ -117253,6 +117262,7 @@ function pruneEmptyBranches(span) {
 		branchedFrom: span.branchedFrom,
 		description: span.description,
 		utility: span.utility,
+		toolInvoked: span.toolInvoked,
 		agentResult: span.agentResult,
 		outline: span.outline
 	});
@@ -117284,6 +117294,7 @@ function createBranchSpan(branch, label) {
 		branchedFrom: branch.branchedFrom,
 		description: branch.description,
 		utility: branch.utility,
+		toolInvoked: branch.toolInvoked,
 		agentResult: branch.agentResult,
 		outline: branch.outline
 	});
@@ -117347,6 +117358,7 @@ function convertServerSpan(server, lookup) {
 		branches,
 		description: server.description ?? void 0,
 		utility: server.utility,
+		toolInvoked: server.tool_invoked,
 		agentResult: server.agent_result ?? void 0,
 		outline: server.outline ?? void 0
 	});
@@ -117589,6 +117601,7 @@ function eventToNode(event) {
 			const nestedContent = nestedEvents.map((e) => eventToNode(e));
 			if (nestedContent.length > 0) {
 				const span = createTimelineSpan(`tool-agent-${event.id}`, agentName, "agent", nestedContent);
+				span.toolInvoked = true;
 				const agentResult = extractToolEventResult(event.result);
 				if (agentResult) span.agentResult = agentResult;
 				return span;
@@ -117726,10 +117739,12 @@ function buildAgentFromTree(tree) {
 */
 function unrollSpan(span, into) {
 	into.push(createTimelineEvent(span.beginEvent));
+	const parentIsTool = span.type === "tool";
 	for (const child of span.children) if (isSpanNode(child)) if (isAgentSpan(child)) {
 		const node = treeItemToNode(child);
 		if (node === null) continue;
 		if (node.type === "span" && node.content.length === 0) continue;
+		if (parentIsTool && node.type === "span") node.toolInvoked = true;
 		into.push(node);
 	} else unrollSpan(child, into);
 	else into.push(eventToNode(child));
@@ -117968,7 +117983,7 @@ function isSingleTurn(span) {
 */
 function classifyUtilityAgents(node, parentSystemPrompt = null) {
 	const agentSystemPrompt = getSystemPrompt(node);
-	if (parentSystemPrompt !== null && agentSystemPrompt !== null) {
+	if (parentSystemPrompt !== null && agentSystemPrompt !== null && !node.toolInvoked) {
 		if (agentSystemPrompt !== parentSystemPrompt && isSingleTurn(node)) node.utility = true;
 	}
 	const effectivePrompt = agentSystemPrompt ?? parentSystemPrompt;
