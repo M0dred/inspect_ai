@@ -57873,6 +57873,9 @@ var DatabaseService = class {
 			db.log_details.where("file_path").equals(filePath).delete()
 		]);
 	}
+	async clearPreviewForFile(filePath) {
+		await this.getDb().log_previews.where("file_path").equals(filePath).delete();
+	}
 	/**
 	* Get cache statistics.
 	*/
@@ -59782,6 +59785,9 @@ var WorkQueue = class {
 	clear() {
 		this.itemsById.clear();
 	}
+	removeByIds(ids) {
+		for (const id of ids) this.itemsById.delete(id);
+	}
 	get size() {
 		return this.itemsById.size;
 	}
@@ -59972,6 +59978,8 @@ var ReplicationService = class {
 			}
 			if (invalidate) {
 				for (const file of logFiles) this._database?.clearCacheForFile(file.name);
+				this._previewQueue.clear();
+				this._detailQueue.clear();
 				this._applicationContext?.setLogHandles(serverLogs.files);
 				this.queueLogDetails(serverLogs.files);
 				this.queueLogPreviews(serverLogs.files);
@@ -59979,10 +59987,7 @@ var ReplicationService = class {
 				return serverLogs.files;
 			} else {
 				this._applicationContext?.setLogHandles(logFiles);
-				const previewTasks = [];
-				const previews = await this._database.findMissingPreviews(logFiles);
-				for (const p of previews) if (!previewTasks.find((t) => t.name === p.name)) previewTasks.push(p);
-				this.queueLogPreviews(previewTasks);
+				await this.queueMissingOrStartedPreviews(logFiles);
 				const detailTasks = [];
 				const details = await this._database.findMissingDetails(logFiles);
 				for (const d of details) if (!detailTasks.find((t) => t.name === d.name)) detailTasks.push(d);
@@ -59998,6 +60003,11 @@ var ReplicationService = class {
 				return !updatedLogs.find((f) => f.name === current.name);
 			});
 			for (const file of deletedFiles) this._database?.clearCacheForFile(file.name);
+			if (deletedFiles.length > 0) {
+				const deletedNames = deletedFiles.map((f) => f.name);
+				this._previewQueue.removeByIds(deletedNames);
+				this._detailQueue.removeByIds(deletedNames);
+			}
 		}
 		const toInvalidate = updatedLogs.filter((remoteLog) => {
 			const localCopy = logFiles.find((f) => f.name === remoteLog.name);
@@ -60009,11 +60019,7 @@ var ReplicationService = class {
 		await this._database.writeLogs(updatedLogs);
 		const allLogHandles = await this._database.readLogs() || [];
 		this._applicationContext?.setLogHandles(allLogHandles);
-		const previewTasks = [...toInvalidate];
-		const previews = await this._database.findMissingPreviews(allLogHandles);
-		for (const p of previews) if (!previewTasks.find((t) => t.name === p.name)) previewTasks.push(p);
-		this.queueLogPreviews(previewTasks.slice(0, 25), WorkPriority.High);
-		this.queueLogPreviews(previewTasks.slice(25), WorkPriority.Medium);
+		await this.queueMissingOrStartedPreviews(allLogHandles, toInvalidate);
 		const detailTasks = [...toInvalidate];
 		const details = await this._database.findMissingDetails(allLogHandles);
 		for (const d of details) if (!detailTasks.find((t) => t.name === d.name)) detailTasks.push(d);
@@ -60046,6 +60052,29 @@ var ReplicationService = class {
 	clearData() {
 		this._database?.clearAllCaches();
 		this.updateDbStats();
+	}
+	async queueMissingOrStartedPreviews(logHandles, extraHandles = [], priority = WorkPriority.High) {
+		if (!this._database) return;
+		const tasks = [...extraHandles];
+		const seen = new Set(tasks.map((t) => t.name));
+		const missing = await this._database.findMissingPreviews(logHandles);
+		for (const m of missing) if (!seen.has(m.name)) {
+			seen.add(m.name);
+			tasks.push(m);
+		}
+		const cached = await this._database.readLogPreviews(logHandles);
+		for (const handle of logHandles) {
+			if (seen.has(handle.name)) continue;
+			if (cached[handle.name]?.status === "started") {
+				seen.add(handle.name);
+				await this._database.clearPreviewForFile(handle.name);
+				tasks.push(handle);
+			}
+		}
+		if (tasks.length > 0) {
+			this.queueLogPreviews(tasks.slice(0, 25), priority);
+			this.queueLogPreviews(tasks.slice(25), WorkPriority.Medium);
+		}
 	}
 	queueLogPreviews(logs, priority = WorkPriority.Medium) {
 		this._previewQueue.enqueue(logs, priority);
@@ -60331,29 +60360,20 @@ var ClientEventsService = class {
 	currentPolling = null;
 	abortController = null;
 	isRefreshing = false;
-	pendingLogs = /* @__PURE__ */ new Set();
 	onRefreshCallback = null;
 	setRefreshCallback(callback) {
 		this.onRefreshCallback = callback;
 	}
-	async refreshPendingLogFiles() {
+	async refreshLogFiles(reason) {
 		if (this.isRefreshing || !this.onRefreshCallback) return;
-		do
-			try {
-				const logFiles = [...this.pendingLogs];
-				this.pendingLogs.clear();
-				this.isRefreshing = true;
-				await this.onRefreshCallback(logFiles);
-			} finally {
-				this.isRefreshing = false;
-			}
-		while (this.pendingLogs.size > 0);
+		this.isRefreshing = true;
+		try {
+			await this.onRefreshCallback(reason);
+		} finally {
+			this.isRefreshing = false;
+		}
 	}
-	async refreshLogFiles(logs) {
-		logs.forEach((file) => this.pendingLogs.add(file));
-		await this.refreshPendingLogFiles();
-	}
-	startPolling(logs, api) {
+	startPolling(api) {
 		this.stopPolling();
 		this.abortController = new AbortController();
 		let pollingCount = 1;
@@ -60369,8 +60389,8 @@ var ClientEventsService = class {
 				log$4.debug(`Polling aborted, stopping poll for client events`);
 				return false;
 			}
-			if ((events || []).includes(kRefreshEvent)) await this.refreshLogFiles(logs);
-			if (pollingCount++ % 10 === 0) await this.refreshLogFiles(logs);
+			if ((events || []).includes(kRefreshEvent)) await this.refreshLogFiles("event");
+			if (pollingCount++ % 10 === 0) await this.refreshLogFiles("periodic");
 			return true;
 		}, {
 			maxRetries: kRetries,
@@ -60391,11 +60411,43 @@ var ClientEventsService = class {
 	cleanup() {
 		log$4.debug(`Cleanup`);
 		this.stopPolling();
-		this.pendingLogs.clear();
 		this.onRefreshCallback = null;
 	}
 };
 var clientEventsService = new ClientEventsService();
+//#endregion
+//#region src/state/clientEvents.ts
+var log$3 = createLogger("Client-Events");
+function useClientEvents() {
+	const syncLogs = useStore((state) => state.logsActions.syncLogs);
+	const api = useApi();
+	const refreshCallback = (0, import_react.useCallback)(async (_reason) => {
+		log$3.debug(`Refresh Log Files (${_reason})`);
+		await syncLogs();
+	}, [syncLogs]);
+	(0, import_react.useEffect)(() => {
+		clientEventsService.setRefreshCallback(refreshCallback);
+	}, [refreshCallback]);
+	const startPolling = (0, import_react.useCallback)(() => {
+		clientEventsService.startPolling(api);
+	}, [api]);
+	const stopPolling = (0, import_react.useCallback)(() => {
+		clientEventsService.stopPolling();
+	}, []);
+	const cleanup = (0, import_react.useCallback)(() => {
+		clientEventsService.cleanup();
+	}, []);
+	(0, import_react.useEffect)(() => {
+		return () => {
+			cleanup();
+		};
+	}, [cleanup]);
+	return {
+		startPolling,
+		stopPolling,
+		cleanup
+	};
+}
 //#endregion
 //#region src/app/samples/error/error.ts
 /**
@@ -64358,7 +64410,7 @@ var useEvalScorePanelSort = () => {
 		};
 	}, [stored]);
 };
-var log$3 = createLogger("hooks");
+var log$2 = createLogger("hooks");
 var useEvalSpec = () => {
 	return useStore((state) => state.log.selectedLogDetails)?.eval;
 };
@@ -64559,7 +64611,7 @@ var useMessageVisibility = (id, scope) => {
 			isFirstRender.current = false;
 			return;
 		}
-		log$3.debug("clear message (eval)", id);
+		log$2.debug("clear message (eval)", id);
 		clearVisible(id);
 	}, [
 		useStore((state) => state.logs.selectedLogFile),
@@ -64569,7 +64621,7 @@ var useMessageVisibility = (id, scope) => {
 	(0, import_react.useEffect)(() => {
 		if (isFirstRender.current) return;
 		if (scope === "sample") {
-			log$3.debug("clear message (sample)", id);
+			log$2.debug("clear message (sample)", id);
 			clearVisible(id);
 		}
 	}, [
@@ -64579,9 +64631,9 @@ var useMessageVisibility = (id, scope) => {
 		scope
 	]);
 	return (0, import_react.useMemo)(() => {
-		log$3.debug("visibility", id, visible);
+		log$2.debug("visibility", id, visible);
 		const set = (visible) => {
-			log$3.debug("set visiblity", id);
+			log$2.debug("set visiblity", id);
 			setVisible(id, visible);
 		};
 		return [visible, set];
@@ -64604,7 +64656,7 @@ var useLogs = () => {
 	const setLoading = useStore((state) => state.appActions.setLoading);
 	const loadLogs = (0, import_react.useCallback)(async (logPath) => {
 		await Promise.all([syncEvalSetInfo(logPath), syncLogs()]).catch((e) => {
-			log$3.error("Error loading logs", e);
+			log$2.error("Error loading logs", e);
 			setLoading(false, e);
 		});
 	}, [
@@ -64699,54 +64751,6 @@ var useLogsWithretried = () => {
 	const logPreviews = useStore((state) => state.logs.logPreviews);
 	return (0, import_react.useMemo)(() => computeLogsWithRetried(logs, logPreviews), [logs, logPreviews]);
 };
-//#endregion
-//#region src/state/clientEvents.ts
-var log$2 = createLogger("Client-Events");
-function useClientEvents() {
-	const syncLogs = useStore((state) => state.logsActions.syncLogs);
-	const logPreviews = useStore((state) => state.logs.logPreviews);
-	const api = useApi();
-	const { loadLogOverviews } = useLogs();
-	const refreshCallback = (0, import_react.useCallback)(async (logs) => {
-		log$2.debug("Refresh Log Files");
-		await syncLogs();
-		const toRefresh = [];
-		for (const log of logs) {
-			const header = logPreviews[log.name];
-			if (!header || header.status === "started") toRefresh.push(log);
-		}
-		if (toRefresh.length > 0) {
-			log$2.debug(`Refreshing ${toRefresh.length} log files`, toRefresh);
-			await loadLogOverviews(toRefresh);
-		}
-	}, [
-		logPreviews,
-		syncLogs,
-		loadLogOverviews
-	]);
-	(0, import_react.useEffect)(() => {
-		clientEventsService.setRefreshCallback(refreshCallback);
-	}, [refreshCallback]);
-	const startPolling = (0, import_react.useCallback)((logs) => {
-		clientEventsService.startPolling(logs, api);
-	}, [api]);
-	const stopPolling = (0, import_react.useCallback)(() => {
-		clientEventsService.stopPolling();
-	}, []);
-	const cleanup = (0, import_react.useCallback)(() => {
-		clientEventsService.cleanup();
-	}, []);
-	(0, import_react.useEffect)(() => {
-		return () => {
-			cleanup();
-		};
-	}, [cleanup]);
-	return {
-		startPolling,
-		stopPolling,
-		cleanup
-	};
-}
 //#endregion
 //#region src/app/routing/url.ts
 /**
@@ -113500,11 +113504,10 @@ function useApplyColumnVisibility(gridRef, columnDefs, visibility) {
 var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mode = "logs" }) => {
 	const { gridStateByScope, setGridState, setFilteredCount } = useLogsListing();
 	const gridState = scopeKey ? gridStateByScope[scopeKey] : void 0;
-	const { loadLogOverviews, loadAllLogOverviews } = useLogs();
+	const { loadAllLogOverviews } = useLogs();
 	const loading = useStore((state) => state.app.status.loading);
 	const syncing = useStore((state) => state.app.status.syncing);
 	const setWatchedLogs = useStore((state) => state.logsActions.setWatchedLogs);
-	const logPreviews = useStore((state) => state.logs.logPreviews);
 	const logDetails = useStore((state) => state.logs.logDetails);
 	const navigate = useNavigate();
 	const internalGridRef = (0, import_react.useRef)(null);
@@ -113630,18 +113633,8 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 	}, [handleKeyDown]);
 	const handleCellMouseDown = (0, import_react.useCallback)((_e) => {}, []);
 	(0, import_react.useEffect)(() => {
-		const loadHeaders = async () => {
-			const filesToLoad = logFiles.filter((file) => !logPreviews[file.name]);
-			if (filesToLoad.length > 0) await loadLogOverviews(filesToLoad);
-			setWatchedLogs(logFiles);
-		};
-		loadHeaders();
-	}, [
-		logFiles,
-		loadLogOverviews,
-		setWatchedLogs,
-		logPreviews
-	]);
+		setWatchedLogs(logFiles);
+	}, [logFiles, setWatchedLogs]);
 	const applyVisibility = useApplyColumnVisibility(gridRef, columns, visibility);
 	const handleGridReady = (0, import_react.useCallback)((e) => {
 		applyVisibility();
@@ -113922,7 +113915,7 @@ var LogsPanel = ({ maybeShowSingleLog, mode = "logs" }) => {
 	(0, import_react.useEffect)(() => {
 		if ((watchedLogs?.map((log) => log.name).sort().join(",") || "") !== (previousWatchedLogs.current === void 0 ? void 0 : previousWatchedLogs.current?.map((log) => log.name).sort().join(",") || "")) {
 			stopPolling();
-			if (watchedLogs !== void 0) startPolling(watchedLogs);
+			if (watchedLogs !== void 0) startPolling();
 			previousWatchedLogs.current = watchedLogs;
 		}
 	}, [
@@ -163807,7 +163800,7 @@ var SamplesPanel = () => {
 	const logDetails = useStore((state) => state.logs.logDetails);
 	const { startPolling, stopPolling } = useClientEvents();
 	(0, import_react.useEffect)(() => {
-		startPolling([]);
+		startPolling();
 		return () => {
 			stopPolling();
 		};
