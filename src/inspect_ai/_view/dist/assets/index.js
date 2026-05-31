@@ -17627,6 +17627,17 @@ var clearDocumentSelection = () => {
 		else if (sel.empty) sel.empty();
 	}
 };
+/**
+* True if the element accepts text input (input/textarea/select/contentEditable).
+* Use to skip global keyboard handlers when focus is in a form field.
+*/
+function isEditableTarget(el) {
+	if (!el) return false;
+	const tag = el.tagName;
+	if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return true;
+	if (el.isContentEditable) return true;
+	return false;
+}
 //#endregion
 //#region ../../packages/util/src/format.ts
 /**
@@ -19383,7 +19394,7 @@ function throttle(func, wait, options = {}) {
 * Creates a debounced version of a function that delays invoking the function
 * until after `wait` milliseconds have passed since the last time it was invoked.
 */
-function debounce$1(func, wait, options = {}) {
+function debounce$2(func, wait, options = {}) {
 	let timeout = null;
 	let args;
 	let result;
@@ -25419,7 +25430,7 @@ function useLocation() {
 	return import_react.useContext(LocationContext).location;
 }
 var navigateEffectWarning = `You should call navigate() in a React.useEffect(), not when your component is first rendered.`;
-function useIsomorphicLayoutEffect$1(cb) {
+function useIsomorphicLayoutEffect$2(cb) {
 	if (!import_react.useContext(NavigationContext).static) import_react.useLayoutEffect(cb);
 }
 function useNavigate() {
@@ -25434,7 +25445,7 @@ function useNavigateUnstable() {
 	let { pathname: locationPathname } = useLocation();
 	let routePathnamesJson = JSON.stringify(getResolveToMatches(matches));
 	let activeRef = import_react.useRef(false);
-	useIsomorphicLayoutEffect$1(() => {
+	useIsomorphicLayoutEffect$2(() => {
 		activeRef.current = true;
 	});
 	return import_react.useCallback((to, options = {}) => {
@@ -25759,7 +25770,7 @@ function useNavigateStable() {
 	let { router } = useDataRouterContext("useNavigate");
 	let id = useCurrentRouteId("useNavigate");
 	let activeRef = import_react.useRef(false);
-	useIsomorphicLayoutEffect$1(() => {
+	useIsomorphicLayoutEffect$2(() => {
 		activeRef.current = true;
 	});
 	return import_react.useCallback(async (to, options = {}) => {
@@ -46025,7 +46036,7 @@ var fromEntries = function fromEntries(entries) {
 /**
 * Small wrapper around `useLayoutEffect` to get rid of the warning on SSR envs
 */
-var useIsomorphicLayoutEffect = typeof window !== "undefined" && window.document && window.document.createElement ? import_react.useLayoutEffect : import_react.useEffect;
+var useIsomorphicLayoutEffect$1 = typeof window !== "undefined" && window.document && window.document.createElement ? import_react.useLayoutEffect : import_react.useEffect;
 var bottom = "bottom";
 var right$4 = "right";
 var left$4 = "left";
@@ -47165,7 +47176,7 @@ function orderModifiers(modifiers) {
 }
 //#endregion
 //#region ../../node_modules/.pnpm/@popperjs+core@2.11.8/node_modules/@popperjs/core/lib/utils/debounce.js
-function debounce(fn) {
+function debounce$1(fn) {
 	var pending;
 	return function() {
 		if (!pending) pending = new Promise(function(resolve) {
@@ -47269,7 +47280,7 @@ function popperGenerator(generatorOptions) {
 					}) || state;
 				}
 			},
-			update: debounce(function() {
+			update: debounce$1(function() {
 				return new Promise(function(resolve) {
 					instance.forceUpdate();
 					resolve(state);
@@ -47451,10 +47462,10 @@ var usePopper = function usePopper(referenceElement, popperElement, options) {
 		updateStateModifier
 	]);
 	var popperInstanceRef = import_react.useRef();
-	useIsomorphicLayoutEffect(function() {
+	useIsomorphicLayoutEffect$1(function() {
 		if (popperInstanceRef.current) popperInstanceRef.current.setOptions(popperOptions);
 	}, [popperOptions]);
-	useIsomorphicLayoutEffect(function() {
+	useIsomorphicLayoutEffect$1(function() {
 		if (referenceElement == null || popperElement == null) return;
 		var popperInstance = (options.createPopper || createPopper)(referenceElement, popperElement, popperOptions);
 		popperInstanceRef.current = popperInstance;
@@ -48284,7 +48295,7 @@ function useStatefulScrollPosition(elementRef, elementKey, delay = 1e3, scrollab
 		log$13.debug(`Storing scroll position`, elementKey, position);
 		setScrollPosition(position);
 	}, [elementKey, setScrollPosition]);
-	const handleScroll = (0, import_react.useMemo)(() => debounce$1(handleScrollInner, delay), [handleScrollInner, delay]);
+	const handleScroll = (0, import_react.useMemo)(() => debounce$2(handleScrollInner, delay), [handleScrollInner, delay]);
 	const restoreScrollPosition = (0, import_react.useCallback)(() => {
 		const element = elementRef.current;
 		const savedPosition = scrollPositionRef.current;
@@ -48356,7 +48367,7 @@ var useVirtuosoState = (virtuosoRef, elementKey, delay = 1e3) => {
 		setListPosition(state);
 	}, [elementKey, setListPosition]);
 	(0, import_react.useEffect)(() => {
-		debouncedFnRef.current = debounce$1((isScrolling) => {
+		debouncedFnRef.current = debounce$2((isScrolling) => {
 			log$12.debug("List scroll", isScrolling);
 			const element = virtuosoRef.current;
 			if (!element) return;
@@ -48567,52 +48578,46 @@ function useRevokableUrls() {
 }
 //#endregion
 //#region ../../packages/react/src/hooks/useListKeyboardNavigation.ts
-/**
-* Registers Cmd/Ctrl+ArrowUp/Down keyboard shortcuts on `document` to jump
-* to the top or bottom of a virtualized (or plain-DOM) list.
-*
-* When the Virtuoso handle is available it delegates to `scrollToIndex`;
-* otherwise it falls back to `scrollTo` on the scroll container.
-*/
+function isVirtualListHandle(handle) {
+	return "jumpToStart" in handle;
+}
 function useListKeyboardNavigation({ listHandle, scrollRef, itemCount }) {
 	(0, import_react.useEffect)(() => {
 		const handleKeyDown = (event) => {
-			if (!(event.metaKey || event.ctrlKey)) return;
-			if (event.key === "ArrowUp") {
-				event.preventDefault();
-				if (listHandle.current) listHandle.current.scrollToIndex({
-					index: 0,
+			const hasModifier = event.metaKey || event.ctrlKey;
+			const isUp = event.key === "ArrowUp" && hasModifier || event.key === "Home" && hasModifier;
+			const isDown = event.key === "ArrowDown" && hasModifier || event.key === "End" && hasModifier;
+			if (!isUp && !isDown) return;
+			if (isEditableTarget(document.activeElement)) return;
+			event.preventDefault();
+			event.stopImmediatePropagation();
+			const handle = listHandle.current;
+			if (isUp) if (handle && isVirtualListHandle(handle)) handle.jumpToStart();
+			else if (handle) handle.scrollToIndex({
+				index: 0,
+				align: "center"
+			});
+			else scrollRef?.current?.scrollTo({ top: 0 });
+			else if (handle && isVirtualListHandle(handle)) handle.jumpToEnd();
+			else if (handle) {
+				handle.scrollToIndex({
+					index: Math.max(itemCount - 5, 0),
 					align: "center"
 				});
-				else scrollRef?.current?.scrollTo({
-					top: 0,
-					behavior: "instant"
-				});
-			} else if (event.key === "ArrowDown") {
-				event.preventDefault();
-				if (listHandle.current) {
-					listHandle.current.scrollToIndex({
-						index: Math.max(itemCount - 5, 0),
-						align: "center"
+				setTimeout(() => {
+					listHandle.current?.scrollToIndex({
+						index: Math.max(itemCount - 1, 0),
+						align: "end"
 					});
-					setTimeout(() => {
-						listHandle.current?.scrollToIndex({
-							index: Math.max(itemCount - 1, 0),
-							align: "end"
-						});
-					}, 250);
-				} else {
-					const el = scrollRef?.current;
-					if (el) el.scrollTo({
-						top: el.scrollHeight,
-						behavior: "instant"
-					});
-				}
+				}, 250);
+			} else {
+				const el = scrollRef?.current;
+				if (el) el.scrollTop = el.scrollHeight;
 			}
 		};
-		document.addEventListener("keydown", handleKeyDown);
+		window.addEventListener("keydown", handleKeyDown, { capture: true });
 		return () => {
-			document.removeEventListener("keydown", handleKeyDown);
+			window.removeEventListener("keydown", handleKeyDown, { capture: true });
 		};
 	}, [
 		listHandle,
@@ -52107,7 +52112,7 @@ var LiveVirtualList = ({ id, listHandle, className, data, renderRow, scrollRef, 
 	}, []);
 	const searchInText = (0, import_react.useCallback)((text, searchTerm) => {
 		const lowerText = text.toLowerCase();
-		const prepared = prepareSearchTerm(searchTerm);
+		const prepared = prepareSearchTerm$1(searchTerm);
 		if (lowerText.includes(prepared.simple)) return true;
 		if (prepared.unquoted && lowerText.includes(prepared.unquoted)) return true;
 		if (prepared.jsonEscaped && lowerText.includes(prepared.jsonEscaped)) return true;
@@ -52275,7 +52280,7 @@ var LiveVirtualList = ({ id, listHandle, className, data, renderRow, scrollRef, 
 			width: "100%"
 		},
 		data,
-		defaultItemHeight: 500,
+		defaultItemHeight: 450,
 		itemContent: renderRow,
 		increaseViewportBy: {
 			top: 1e3,
@@ -52300,7 +52305,7 @@ var LiveVirtualList = ({ id, listHandle, className, data, renderRow, scrollRef, 
 		components: mergedComponents
 	});
 };
-var prepareSearchTerm = (term) => {
+var prepareSearchTerm$1 = (term) => {
 	const lower = term.toLowerCase();
 	if (!term.includes("\"") && !term.includes(":")) return { simple: lower };
 	return {
@@ -60099,7 +60104,7 @@ var initializeStore = (api, capabilities, storage) => {
 		getItem: (name) => {
 			return storage ? storage.getItem(name) : null;
 		},
-		setItem: debounce$1((name, value) => {
+		setItem: debounce$2((name, value) => {
 			if (storage) {
 				const wrapper = value;
 				const filtered = {
@@ -65445,7 +65450,7 @@ var getFieldKey = (col) => {
 * @returns A debounced function that resizes grid columns to fit
 */
 var createGridColumnResizer = (gridRef, delayMs = 10) => {
-	return debounce$1(() => {
+	return debounce$2(() => {
 		gridRef.current?.api?.sizeColumnsToFit();
 	}, delayMs);
 };
@@ -114643,7 +114648,7 @@ var FindBand = () => {
 			input.setSelectionRange(len, len);
 		}
 	}, []);
-	const debouncedSearch = (0, import_react.useMemo)(() => debounce$1(async () => {
+	const debouncedSearch = (0, import_react.useMemo)(() => debounce$2(async () => {
 		if (!searchBoxRef.current) return;
 		await handleSearch(false);
 		needsCursorRestoreRef.current = true;
@@ -115045,7 +115050,25 @@ var resolveToolInput = (fn, toolArgs) => {
 			contentType: "markdown"
 		};
 	}
+	if (fn === "spawn_agent" && typeof toolArgs.agent_type === "string") {
+		const agentType = toolArgs.agent_type;
+		return {
+			name: fn,
+			functionCall: `${fn}: ${agentType}`,
+			title: `${fn}: ${agentType}`,
+			input,
+			description,
+			contentType: "markdown"
+		};
+	}
 	if (fn === "agent_status" || fn === "agent_wait" || fn === "agent_cancel" || fn === "agent_list") return {
+		name: fn,
+		functionCall,
+		input,
+		description,
+		contentType: "markdown"
+	};
+	if (fn === "wait_agent" || fn === "close_agent" || fn === "resume_agent") return {
 		name: fn,
 		functionCall,
 		input,
@@ -115112,8 +115135,185 @@ var extractInputMetadata = (toolName) => {
 		descriptionArg: "task_description",
 		contentType: "markdown"
 	};
+	else if (toolName === "exec_command") return {
+		inputArg: "cmd",
+		contentType: "bash"
+	};
+	else if (toolName === "spawn_agent") return {
+		inputArg: "message",
+		contentType: "markdown"
+	};
+	else if (toolName === "send_input") return {
+		inputArg: "message",
+		contentType: "markdown"
+	};
+	else if (toolName === "tool_search") return { contentType: "markdown" };
 	else return;
 };
+var kCodexAgentResultTools = new Set([
+	"wait_agent",
+	"close_agent",
+	"resume_agent"
+]);
+/**
+* Reshapes a Codex sub-agent tool *result* into markdown, or returns undefined
+* when no reshape applies (caller renders the raw output).
+*
+* `spawn_agent` returns `{"agent_id": …, "nickname": …}` — we surface a compact
+* line naming the spawned sub-agent. `wait_agent` / `close_agent` /
+* `resume_agent` return JSON-wrapped status whose `completed` fields hold the
+* sub-agent's markdown final answer — we surface those answers. Accepts a raw
+* string output or structured content (the viewer wraps tool results as
+* `Content[]`), extracting the underlying text either way. The raw output
+* remains in the JSON tab.
+*
+* (`tool_search` is handled separately by `parseToolSearchCatalog` +
+* `ToolSearchView`, which needs real collapsible `<details>` elements that the
+* HTML-escaping markdown pipeline can't produce from a string.)
+*/
+var codexToolMarkdown = (fn, output) => {
+	const text = toolOutputText(output);
+	if (text === void 0) return;
+	if (fn === "spawn_agent") return formatSpawnAgentResult(text);
+	if (kCodexAgentResultTools.has(fn)) return extractCodexAgentAnswers(text);
+};
+var formatSpawnAgentResult = (text) => {
+	let data;
+	try {
+		data = JSON.parse(text);
+	} catch {
+		return;
+	}
+	if (!data || typeof data !== "object") return;
+	const record = data;
+	const nickname = typeof record.nickname === "string" ? record.nickname : void 0;
+	const agentId = typeof record.agent_id === "string" ? record.agent_id : void 0;
+	const parts = [];
+	if (nickname) parts.push(nickname);
+	if (agentId) parts.push(`\`${agentId}\``);
+	return parts.length > 0 ? parts.join(" — ") : void 0;
+};
+var toolOutputText = (output) => {
+	if (typeof output === "string") return output;
+	if (Array.isArray(output)) {
+		const parts = [];
+		for (const item of output) collectContentText(item, parts);
+		return parts.length > 0 ? parts.join("") : void 0;
+	}
+};
+var collectContentText = (item, parts) => {
+	if (!item || typeof item !== "object") return;
+	const record = item;
+	if (record.type === "text" && typeof record.text === "string") parts.push(record.text);
+	else if (record.type === "tool" && Array.isArray(record.content)) for (const child of record.content) collectContentText(child, parts);
+};
+var formatSubagentNotifications = (content) => {
+	const text = toolOutputText(content);
+	if (text === void 0 || !text.includes("<subagent_notification>")) return;
+	const lines = [];
+	const regex = /<subagent_notification>([\s\S]*?)<\/subagent_notification>/g;
+	let match;
+	while ((match = regex.exec(text)) !== null) {
+		const line = formatSubagentNotification(match[1]);
+		if (line) lines.push(line);
+	}
+	return lines.length > 0 ? lines.join("\n\n") : void 0;
+};
+var formatSubagentNotification = (payload) => {
+	let data;
+	try {
+		data = JSON.parse(payload.trim());
+	} catch {
+		return;
+	}
+	if (!data || typeof data !== "object") return;
+	const record = data;
+	const agentPath = typeof record.agent_path === "string" ? record.agent_path : void 0;
+	const status = record.status && typeof record.status === "object" ? Object.keys(record.status)[0] : void 0;
+	if (agentPath === void 0 && status === void 0) return;
+	const statusWord = status ?? "notified";
+	return agentPath ? `agent ${statusWord}: \`${agentPath}\`` : `agent ${statusWord}`;
+};
+var parseToolSearchCatalog = (output) => {
+	const text = toolOutputText(output);
+	if (text === void 0) return;
+	let data;
+	try {
+		data = JSON.parse(text);
+	} catch {
+		return;
+	}
+	if (!Array.isArray(data)) return;
+	const namespaces = [];
+	const looseTools = [];
+	for (const entry of data) {
+		if (!entry || typeof entry !== "object") continue;
+		const record = entry;
+		const rawTools = Array.isArray(record.tools) ? record.tools : void 0;
+		if (record.type === "function" || rawTools === void 0 && "parameters" in record) {
+			const tool = parseToolEntry(record);
+			if (tool) looseTools.push(tool);
+			continue;
+		}
+		const name = typeof record.name === "string" ? record.name : void 0;
+		const description = typeof record.description === "string" ? record.description : "";
+		const toolList = rawTools ?? [];
+		if (name === void 0 && toolList.length === 0) continue;
+		const tools = [];
+		for (const tool of toolList) {
+			if (!tool || typeof tool !== "object") continue;
+			const parsed = parseToolEntry(tool);
+			if (parsed) tools.push(parsed);
+		}
+		namespaces.push({
+			name,
+			description,
+			tools
+		});
+	}
+	if (looseTools.length > 0) namespaces.push({
+		name: void 0,
+		description: "",
+		tools: looseTools
+	});
+	return namespaces.length > 0 ? namespaces : void 0;
+};
+var parseToolEntry = (tool) => {
+	const name = typeof tool.name === "string" ? tool.name : void 0;
+	if (name === void 0) return;
+	return {
+		signature: `${name}(${toolParamNames(tool).join(", ")})`,
+		description: typeof tool.description === "string" ? dedentDescription(tool.description) : ""
+	};
+};
+var toolParamNames = (tool) => {
+	const parameters = tool.parameters;
+	if (parameters && typeof parameters === "object") {
+		const properties = parameters.properties;
+		if (properties && typeof properties === "object") return Object.keys(properties);
+	}
+	return [];
+};
+var dedentDescription = (description) => description.split("\n").map((line) => line.trim()).join("\n").trim();
+var extractCodexAgentAnswers = (output) => {
+	if (typeof output !== "string") return;
+	let data;
+	try {
+		data = JSON.parse(output);
+	} catch {
+		return;
+	}
+	const answers = [];
+	const visit = (node) => {
+		if (Array.isArray(node)) node.forEach(visit);
+		else if (node && typeof node === "object") for (const [key, value] of Object.entries(node)) if ((key === "completed" || key === "failed" || key === "cancelled") && typeof value === "string") answers.push(cleanCodexAnswer(value));
+		else visit(value);
+	};
+	visit(data);
+	const nonEmpty = answers.filter((answer) => answer.length > 0);
+	return nonEmpty.length > 0 ? nonEmpty.join("\n\n---\n\n") : void 0;
+};
+var cleanCodexAnswer = (text) => text.replace(/<content-internal>[\s\S]*?<\/content-internal>/g, "").trimEnd();
 /**
 * Substitutes `{{param_name}}` placeholders in tool call content
 * with actual values from the tool call arguments.
@@ -115839,6 +116039,53 @@ var MessageContents = ({ message, references }) => {
 		references
 	}) });
 };
+var ToolSearchView_module_default = {
+	catalog: "_catalog_gx8eg_1",
+	namespace: "_namespace_gx8eg_7",
+	namespaceName: "_namespaceName_gx8eg_13",
+	namespaceDescription: "_namespaceDescription_gx8eg_17",
+	tool: "_tool_gx8eg_21",
+	summary: "_summary_gx8eg_25",
+	toolNoDetails: "_toolNoDetails_gx8eg_38",
+	description: "_description_gx8eg_42"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/chat/tools/ToolSearchView.tsx
+/**
+* Renders a Codex `tool_search` catalog: each namespace lists its tools, with
+* each tool a collapsible `<details>` — the signature in the summary, the
+* description (markdown) in the body. Compact by default; expand for detail.
+*/
+var ToolSearchView = ({ namespaces }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: ToolSearchView_module_default.catalog,
+		children: namespaces.map((namespace, nsIdx) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: ToolSearchView_module_default.namespace,
+			children: [namespace.name ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: ToolSearchView_module_default.namespaceHeader,
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+					className: ToolSearchView_module_default.namespaceName,
+					children: namespace.name
+				}), namespace.description ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+					className: ToolSearchView_module_default.namespaceDescription,
+					children: [" — ", namespace.description]
+				}) : null]
+			}) : null, namespace.tools.map((tool, toolIdx) => tool.description ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("details", {
+				className: ToolSearchView_module_default.tool,
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("summary", {
+					className: ToolSearchView_module_default.summary,
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", { children: tool.signature })
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownDiv, {
+					className: ToolSearchView_module_default.description,
+					markdown: tool.description
+				})]
+			}, `tool-${toolIdx}`) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: ToolSearchView_module_default.toolNoDetails,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", { children: tool.signature })
+			}, `tool-${toolIdx}`))]
+		}, `ns-${nsIdx}`))
+	});
+};
 //#endregion
 //#region ../../packages/inspect-components/src/chat/tools/customToolRendering.tsx
 /**
@@ -115847,6 +116094,10 @@ var MessageContents = ({ message, references }) => {
 */
 var getDefaultCustomToolView = (props) => {
 	if (props.tool === "answer") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AnswerToolCallView, { ...props });
+	if (props.tool === "tool_search") {
+		const namespaces = parseToolSearchCatalog(props.output);
+		if (namespaces) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolSearchView, { namespaces });
+	}
 };
 var AnswerToolCallView = (props) => {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SourceCodePanel, {
@@ -115969,7 +116220,10 @@ var ToolCallView = ({ id, tool, functionCall, input, description, contentType, v
 		return false;
 	}
 	const collapse = Array.isArray(output) ? output.every((item) => !isContentImage(item)) : !isContentImage(output);
-	const normalizedContent = (0, import_react.useMemo)(() => normalizeContent(output), [output]);
+	const normalizedContent = (0, import_react.useMemo)(() => {
+		const markdown = codexToolMarkdown(tool, output);
+		return normalizeContent(markdown !== void 0 ? markdown : output);
+	}, [tool, output]);
 	const hasContent = normalizedContent.find((c) => {
 		if (c.type === "tool") {
 			for (const t of c.content) if (t.type === "text") {
@@ -116101,6 +116355,11 @@ var ChatMessage = (0, import_react.memo)(function ChatMessage({ id, message, dis
 	const isNonSubagentTool = message.role === "tool" && message.function !== "Task" && message.function !== "task" && message.function !== "Agent" && message.function !== "agent";
 	const collapse = message.role === "system" || message.role === "user" || message.role === "assistant" || message.role === "tool";
 	const hideRole = unlabeledRoles?.includes(message.role) ?? false;
+	let toolSearchNamespaces;
+	let toolMarkdown;
+	if (isNonSubagentTool && message.role === "tool" && message.function) if (message.function === "tool_search") toolSearchNamespaces = parseToolSearchCatalog(message.content);
+	else toolMarkdown = codexToolMarkdown(message.function, message.content);
+	const subagentNotifications = message.role === "user" ? formatSubagentNotifications(message.content) : void 0;
 	if (hideRole) {
 		const content = message.content;
 		const hasVisibleContent = typeof content === "string" ? content.trim().length > 0 : Array.isArray(content) && content.some((c) => c.type !== "tool_use");
@@ -116133,7 +116392,7 @@ var ChatMessage = (0, import_react.memo)(function ChatMessage({ id, message, dis
 				id: `${id}-message`,
 				collapse,
 				lines: message.role === "tool" ? 30 : message.role === "assistant" ? 25 : collapse ? 15 : 25,
-				children: isNonSubagentTool ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolOutput, { output: typeof message.content === "string" ? message.content : message.content.filter((c) => c.type === "text" || c.type === "image") }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageContents, {
+				children: isNonSubagentTool ? toolSearchNamespaces ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolSearchView, { namespaces: toolSearchNamespaces }) : toolMarkdown !== void 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownDiv, { markdown: toolMarkdown }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolOutput, { output: typeof message.content === "string" ? message.content : message.content.filter((c) => c.type === "text" || c.type === "image") }) : subagentNotifications !== void 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownDiv, { markdown: subagentNotifications }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageContents, {
 					message,
 					references
 				}, `${id}-contents`)
@@ -116341,21 +116600,1341 @@ var ChatView = ({ id, messages, className, display, labels, linking, tools, refe
 		})
 	});
 };
-var ChatViewVirtualList_module_default = { list: "_list_1emnm_1" };
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+virtual-core@3.14.0/node_modules/@tanstack/virtual-core/dist/esm/utils.js
+function memo$4(getDeps, fn, opts) {
+	let deps = opts.initialDeps ?? [];
+	let result;
+	let isInitial = true;
+	function memoizedFunction() {
+		var _a, _b, _c;
+		let depTime;
+		if (opts.key && ((_a = opts.debug) == null ? void 0 : _a.call(opts))) depTime = Date.now();
+		const newDeps = getDeps();
+		if (!(newDeps.length !== deps.length || newDeps.some((dep, index) => deps[index] !== dep))) return result;
+		deps = newDeps;
+		let resultTime;
+		if (opts.key && ((_b = opts.debug) == null ? void 0 : _b.call(opts))) resultTime = Date.now();
+		result = fn(...newDeps);
+		if (opts.key && ((_c = opts.debug) == null ? void 0 : _c.call(opts))) {
+			const depEndTime = Math.round((Date.now() - depTime) * 100) / 100;
+			const resultEndTime = Math.round((Date.now() - resultTime) * 100) / 100;
+			const resultFpsPercentage = resultEndTime / 16;
+			const pad = (str, num) => {
+				str = String(str);
+				while (str.length < num) str = " " + str;
+				return str;
+			};
+			console.info(`%c⏱ ${pad(resultEndTime, 5)} /${pad(depEndTime, 5)} ms`, `
+            font-size: .6rem;
+            font-weight: bold;
+            color: hsl(${Math.max(0, Math.min(120 - 120 * resultFpsPercentage, 120))}deg 100% 31%);`, opts == null ? void 0 : opts.key);
+		}
+		if ((opts == null ? void 0 : opts.onChange) && !(isInitial && opts.skipInitialOnChange)) opts.onChange(result);
+		isInitial = false;
+		return result;
+	}
+	memoizedFunction.updateDeps = (newDeps) => {
+		deps = newDeps;
+	};
+	return memoizedFunction;
+}
+function notUndefined(value, msg) {
+	if (value === void 0) throw new Error(`Unexpected undefined${msg ? `: ${msg}` : ""}`);
+	else return value;
+}
+var approxEqual = (a, b) => Math.abs(a - b) < 1.01;
+var debounce = (targetWindow, fn, ms) => {
+	let timeoutId;
+	return function(...args) {
+		targetWindow.clearTimeout(timeoutId);
+		timeoutId = targetWindow.setTimeout(() => fn.apply(this, args), ms);
+	};
+};
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+virtual-core@3.14.0/node_modules/@tanstack/virtual-core/dist/esm/index.js
+var getRect = (element) => {
+	const { offsetWidth, offsetHeight } = element;
+	return {
+		width: offsetWidth,
+		height: offsetHeight
+	};
+};
+var defaultKeyExtractor = (index) => index;
+var defaultRangeExtractor = (range) => {
+	const start = Math.max(range.startIndex - range.overscan, 0);
+	const end = Math.min(range.endIndex + range.overscan, range.count - 1);
+	const arr = [];
+	for (let i = start; i <= end; i++) arr.push(i);
+	return arr;
+};
+var observeElementRect = (instance, cb) => {
+	const element = instance.scrollElement;
+	if (!element) return;
+	const targetWindow = instance.targetWindow;
+	if (!targetWindow) return;
+	const handler = (rect) => {
+		const { width, height } = rect;
+		cb({
+			width: Math.round(width),
+			height: Math.round(height)
+		});
+	};
+	handler(getRect(element));
+	if (!targetWindow.ResizeObserver) return () => {};
+	const observer = new targetWindow.ResizeObserver((entries) => {
+		const run = () => {
+			const entry = entries[0];
+			if (entry == null ? void 0 : entry.borderBoxSize) {
+				const box = entry.borderBoxSize[0];
+				if (box) {
+					handler({
+						width: box.inlineSize,
+						height: box.blockSize
+					});
+					return;
+				}
+			}
+			handler(getRect(element));
+		};
+		instance.options.useAnimationFrameWithResizeObserver ? requestAnimationFrame(run) : run();
+	});
+	observer.observe(element, { box: "border-box" });
+	return () => {
+		observer.unobserve(element);
+	};
+};
+var addEventListenerOptions = { passive: true };
+var supportsScrollend = typeof window == "undefined" ? true : "onscrollend" in window;
+var observeElementOffset = (instance, cb) => {
+	const element = instance.scrollElement;
+	if (!element) return;
+	const targetWindow = instance.targetWindow;
+	if (!targetWindow) return;
+	let offset = 0;
+	const fallback = instance.options.useScrollendEvent && supportsScrollend ? () => void 0 : debounce(targetWindow, () => {
+		cb(offset, false);
+	}, instance.options.isScrollingResetDelay);
+	const createHandler = (isScrolling) => () => {
+		const { horizontal, isRtl } = instance.options;
+		offset = horizontal ? element["scrollLeft"] * (isRtl && -1 || 1) : element["scrollTop"];
+		fallback();
+		cb(offset, isScrolling);
+	};
+	const handler = createHandler(true);
+	const endHandler = createHandler(false);
+	element.addEventListener("scroll", handler, addEventListenerOptions);
+	const registerScrollendEvent = instance.options.useScrollendEvent && supportsScrollend;
+	if (registerScrollendEvent) element.addEventListener("scrollend", endHandler, addEventListenerOptions);
+	return () => {
+		element.removeEventListener("scroll", handler);
+		if (registerScrollendEvent) element.removeEventListener("scrollend", endHandler);
+	};
+};
+var measureElement = (element, entry, instance) => {
+	if (entry == null ? void 0 : entry.borderBoxSize) {
+		const box = entry.borderBoxSize[0];
+		if (box) return Math.round(box[instance.options.horizontal ? "inlineSize" : "blockSize"]);
+	}
+	return element[instance.options.horizontal ? "offsetWidth" : "offsetHeight"];
+};
+var elementScroll = (offset, { adjustments = 0, behavior }, instance) => {
+	var _a, _b;
+	const toOffset = offset + adjustments;
+	(_b = (_a = instance.scrollElement) == null ? void 0 : _a.scrollTo) == null || _b.call(_a, {
+		[instance.options.horizontal ? "left" : "top"]: toOffset,
+		behavior
+	});
+};
+var Virtualizer = class {
+	constructor(opts) {
+		this.unsubs = [];
+		this.scrollElement = null;
+		this.targetWindow = null;
+		this.isScrolling = false;
+		this.scrollState = null;
+		this.measurementsCache = [];
+		this.itemSizeCache = /* @__PURE__ */ new Map();
+		this.laneAssignments = /* @__PURE__ */ new Map();
+		this.pendingMeasuredCacheIndexes = [];
+		this.prevLanes = void 0;
+		this.lanesChangedFlag = false;
+		this.lanesSettling = false;
+		this.scrollRect = null;
+		this.scrollOffset = null;
+		this.scrollDirection = null;
+		this.scrollAdjustments = 0;
+		this.elementsCache = /* @__PURE__ */ new Map();
+		this.now = () => {
+			var _a, _b, _c;
+			return ((_c = (_b = (_a = this.targetWindow) == null ? void 0 : _a.performance) == null ? void 0 : _b.now) == null ? void 0 : _c.call(_b)) ?? Date.now();
+		};
+		this.observer = /* @__PURE__ */ (() => {
+			let _ro = null;
+			const get = () => {
+				if (_ro) return _ro;
+				if (!this.targetWindow || !this.targetWindow.ResizeObserver) return null;
+				return _ro = new this.targetWindow.ResizeObserver((entries) => {
+					entries.forEach((entry) => {
+						const run = () => {
+							const node = entry.target;
+							const index = this.indexFromElement(node);
+							if (!node.isConnected) {
+								this.observer.unobserve(node);
+								return;
+							}
+							if (this.shouldMeasureDuringScroll(index)) this.resizeItem(index, this.options.measureElement(node, entry, this));
+						};
+						this.options.useAnimationFrameWithResizeObserver ? requestAnimationFrame(run) : run();
+					});
+				});
+			};
+			return {
+				disconnect: () => {
+					var _a;
+					(_a = get()) == null || _a.disconnect();
+					_ro = null;
+				},
+				observe: (target) => {
+					var _a;
+					return (_a = get()) == null ? void 0 : _a.observe(target, { box: "border-box" });
+				},
+				unobserve: (target) => {
+					var _a;
+					return (_a = get()) == null ? void 0 : _a.unobserve(target);
+				}
+			};
+		})();
+		this.range = null;
+		this.setOptions = (opts2) => {
+			Object.entries(opts2).forEach(([key, value]) => {
+				if (typeof value === "undefined") delete opts2[key];
+			});
+			this.options = {
+				debug: false,
+				initialOffset: 0,
+				overscan: 1,
+				paddingStart: 0,
+				paddingEnd: 0,
+				scrollPaddingStart: 0,
+				scrollPaddingEnd: 0,
+				horizontal: false,
+				getItemKey: defaultKeyExtractor,
+				rangeExtractor: defaultRangeExtractor,
+				onChange: () => {},
+				measureElement,
+				initialRect: {
+					width: 0,
+					height: 0
+				},
+				scrollMargin: 0,
+				gap: 0,
+				indexAttribute: "data-index",
+				initialMeasurementsCache: [],
+				lanes: 1,
+				isScrollingResetDelay: 150,
+				enabled: true,
+				isRtl: false,
+				useScrollendEvent: false,
+				useAnimationFrameWithResizeObserver: false,
+				laneAssignmentMode: "estimate",
+				...opts2
+			};
+		};
+		this.notify = (sync) => {
+			var _a, _b;
+			(_b = (_a = this.options).onChange) == null || _b.call(_a, this, sync);
+		};
+		this.maybeNotify = memo$4(() => {
+			this.calculateRange();
+			return [
+				this.isScrolling,
+				this.range ? this.range.startIndex : null,
+				this.range ? this.range.endIndex : null
+			];
+		}, (isScrolling) => {
+			this.notify(isScrolling);
+		}, {
+			key: false,
+			debug: () => this.options.debug,
+			initialDeps: [
+				this.isScrolling,
+				this.range ? this.range.startIndex : null,
+				this.range ? this.range.endIndex : null
+			]
+		});
+		this.cleanup = () => {
+			this.unsubs.filter(Boolean).forEach((d) => d());
+			this.unsubs = [];
+			this.observer.disconnect();
+			if (this.rafId != null && this.targetWindow) {
+				this.targetWindow.cancelAnimationFrame(this.rafId);
+				this.rafId = null;
+			}
+			this.scrollState = null;
+			this.scrollElement = null;
+			this.targetWindow = null;
+		};
+		this._didMount = () => {
+			return () => {
+				this.cleanup();
+			};
+		};
+		this._willUpdate = () => {
+			var _a;
+			const scrollElement = this.options.enabled ? this.options.getScrollElement() : null;
+			if (this.scrollElement !== scrollElement) {
+				this.cleanup();
+				if (!scrollElement) {
+					this.maybeNotify();
+					return;
+				}
+				this.scrollElement = scrollElement;
+				if (this.scrollElement && "ownerDocument" in this.scrollElement) this.targetWindow = this.scrollElement.ownerDocument.defaultView;
+				else this.targetWindow = ((_a = this.scrollElement) == null ? void 0 : _a.window) ?? null;
+				this.elementsCache.forEach((cached) => {
+					this.observer.observe(cached);
+				});
+				this.unsubs.push(this.options.observeElementRect(this, (rect) => {
+					this.scrollRect = rect;
+					this.maybeNotify();
+				}));
+				this.unsubs.push(this.options.observeElementOffset(this, (offset, isScrolling) => {
+					this.scrollAdjustments = 0;
+					this.scrollDirection = isScrolling ? this.getScrollOffset() < offset ? "forward" : "backward" : null;
+					this.scrollOffset = offset;
+					this.isScrolling = isScrolling;
+					if (this.scrollState) this.scheduleScrollReconcile();
+					this.maybeNotify();
+				}));
+				this._scrollToOffset(this.getScrollOffset(), {
+					adjustments: void 0,
+					behavior: void 0
+				});
+			}
+		};
+		this.rafId = null;
+		this.getSize = () => {
+			if (!this.options.enabled) {
+				this.scrollRect = null;
+				return 0;
+			}
+			this.scrollRect = this.scrollRect ?? this.options.initialRect;
+			return this.scrollRect[this.options.horizontal ? "width" : "height"];
+		};
+		this.getScrollOffset = () => {
+			if (!this.options.enabled) {
+				this.scrollOffset = null;
+				return 0;
+			}
+			this.scrollOffset = this.scrollOffset ?? (typeof this.options.initialOffset === "function" ? this.options.initialOffset() : this.options.initialOffset);
+			return this.scrollOffset;
+		};
+		this.getFurthestMeasurement = (measurements, index) => {
+			const furthestMeasurementsFound = /* @__PURE__ */ new Map();
+			const furthestMeasurements = /* @__PURE__ */ new Map();
+			for (let m = index - 1; m >= 0; m--) {
+				const measurement = measurements[m];
+				if (furthestMeasurementsFound.has(measurement.lane)) continue;
+				const previousFurthestMeasurement = furthestMeasurements.get(measurement.lane);
+				if (previousFurthestMeasurement == null || measurement.end > previousFurthestMeasurement.end) furthestMeasurements.set(measurement.lane, measurement);
+				else if (measurement.end < previousFurthestMeasurement.end) furthestMeasurementsFound.set(measurement.lane, true);
+				if (furthestMeasurementsFound.size === this.options.lanes) break;
+			}
+			return furthestMeasurements.size === this.options.lanes ? Array.from(furthestMeasurements.values()).sort((a, b) => {
+				if (a.end === b.end) return a.index - b.index;
+				return a.end - b.end;
+			})[0] : void 0;
+		};
+		this.getMeasurementOptions = memo$4(() => [
+			this.options.count,
+			this.options.paddingStart,
+			this.options.scrollMargin,
+			this.options.getItemKey,
+			this.options.enabled,
+			this.options.lanes,
+			this.options.laneAssignmentMode
+		], (count, paddingStart, scrollMargin, getItemKey, enabled, lanes, laneAssignmentMode) => {
+			if (this.prevLanes !== void 0 && this.prevLanes !== lanes) this.lanesChangedFlag = true;
+			this.prevLanes = lanes;
+			this.pendingMeasuredCacheIndexes = [];
+			return {
+				count,
+				paddingStart,
+				scrollMargin,
+				getItemKey,
+				enabled,
+				lanes,
+				laneAssignmentMode
+			};
+		}, { key: false });
+		this.getMeasurements = memo$4(() => [this.getMeasurementOptions(), this.itemSizeCache], ({ count, paddingStart, scrollMargin, getItemKey, enabled, lanes, laneAssignmentMode }, itemSizeCache) => {
+			if (!enabled) {
+				this.measurementsCache = [];
+				this.itemSizeCache.clear();
+				this.laneAssignments.clear();
+				return [];
+			}
+			if (this.laneAssignments.size > count) {
+				for (const index of this.laneAssignments.keys()) if (index >= count) this.laneAssignments.delete(index);
+			}
+			if (this.lanesChangedFlag) {
+				this.lanesChangedFlag = false;
+				this.lanesSettling = true;
+				this.measurementsCache = [];
+				this.itemSizeCache.clear();
+				this.laneAssignments.clear();
+				this.pendingMeasuredCacheIndexes = [];
+			}
+			if (this.measurementsCache.length === 0 && !this.lanesSettling) {
+				this.measurementsCache = this.options.initialMeasurementsCache;
+				this.measurementsCache.forEach((item) => {
+					this.itemSizeCache.set(item.key, item.size);
+				});
+			}
+			const min = this.lanesSettling ? 0 : this.pendingMeasuredCacheIndexes.length > 0 ? Math.min(...this.pendingMeasuredCacheIndexes) : 0;
+			this.pendingMeasuredCacheIndexes = [];
+			if (this.lanesSettling && this.measurementsCache.length === count) this.lanesSettling = false;
+			const measurements = this.measurementsCache.slice(0, min);
+			const laneLastIndex = new Array(lanes).fill(void 0);
+			for (let m = 0; m < min; m++) {
+				const item = measurements[m];
+				if (item) laneLastIndex[item.lane] = m;
+			}
+			for (let i = min; i < count; i++) {
+				const key = getItemKey(i);
+				const cachedLane = this.laneAssignments.get(i);
+				let lane;
+				let start;
+				const shouldCacheLane = laneAssignmentMode === "estimate" || itemSizeCache.has(key);
+				if (cachedLane !== void 0 && this.options.lanes > 1) {
+					lane = cachedLane;
+					const prevIndex = laneLastIndex[lane];
+					const prevInLane = prevIndex !== void 0 ? measurements[prevIndex] : void 0;
+					start = prevInLane ? prevInLane.end + this.options.gap : paddingStart + scrollMargin;
+				} else {
+					const furthestMeasurement = this.options.lanes === 1 ? measurements[i - 1] : this.getFurthestMeasurement(measurements, i);
+					start = furthestMeasurement ? furthestMeasurement.end + this.options.gap : paddingStart + scrollMargin;
+					lane = furthestMeasurement ? furthestMeasurement.lane : i % this.options.lanes;
+					if (this.options.lanes > 1 && shouldCacheLane) this.laneAssignments.set(i, lane);
+				}
+				const measuredSize = itemSizeCache.get(key);
+				const size = typeof measuredSize === "number" ? measuredSize : this.options.estimateSize(i);
+				const end = start + size;
+				measurements[i] = {
+					index: i,
+					start,
+					size,
+					end,
+					key,
+					lane
+				};
+				laneLastIndex[lane] = i;
+			}
+			this.measurementsCache = measurements;
+			return measurements;
+		}, {
+			key: false,
+			debug: () => this.options.debug
+		});
+		this.calculateRange = memo$4(() => [
+			this.getMeasurements(),
+			this.getSize(),
+			this.getScrollOffset(),
+			this.options.lanes
+		], (measurements, outerSize, scrollOffset, lanes) => {
+			return this.range = measurements.length > 0 && outerSize > 0 ? calculateRange({
+				measurements,
+				outerSize,
+				scrollOffset,
+				lanes
+			}) : null;
+		}, {
+			key: false,
+			debug: () => this.options.debug
+		});
+		this.getVirtualIndexes = memo$4(() => {
+			let startIndex = null;
+			let endIndex = null;
+			const range = this.calculateRange();
+			if (range) {
+				startIndex = range.startIndex;
+				endIndex = range.endIndex;
+			}
+			this.maybeNotify.updateDeps([
+				this.isScrolling,
+				startIndex,
+				endIndex
+			]);
+			return [
+				this.options.rangeExtractor,
+				this.options.overscan,
+				this.options.count,
+				startIndex,
+				endIndex
+			];
+		}, (rangeExtractor, overscan, count, startIndex, endIndex) => {
+			return startIndex === null || endIndex === null ? [] : rangeExtractor({
+				startIndex,
+				endIndex,
+				overscan,
+				count
+			});
+		}, {
+			key: false,
+			debug: () => this.options.debug
+		});
+		this.indexFromElement = (node) => {
+			const attributeName = this.options.indexAttribute;
+			const indexStr = node.getAttribute(attributeName);
+			if (!indexStr) {
+				console.warn(`Missing attribute name '${attributeName}={index}' on measured element.`);
+				return -1;
+			}
+			return parseInt(indexStr, 10);
+		};
+		this.shouldMeasureDuringScroll = (index) => {
+			var _a;
+			if (!this.scrollState || this.scrollState.behavior !== "smooth") return true;
+			const scrollIndex = this.scrollState.index ?? ((_a = this.getVirtualItemForOffset(this.scrollState.lastTargetOffset)) == null ? void 0 : _a.index);
+			if (scrollIndex !== void 0 && this.range) {
+				const bufferSize = Math.max(this.options.overscan, Math.ceil((this.range.endIndex - this.range.startIndex) / 2));
+				const minIndex = Math.max(0, scrollIndex - bufferSize);
+				const maxIndex = Math.min(this.options.count - 1, scrollIndex + bufferSize);
+				return index >= minIndex && index <= maxIndex;
+			}
+			return true;
+		};
+		this.measureElement = (node) => {
+			if (!node) {
+				this.elementsCache.forEach((cached, key2) => {
+					if (!cached.isConnected) {
+						this.observer.unobserve(cached);
+						this.elementsCache.delete(key2);
+					}
+				});
+				return;
+			}
+			const index = this.indexFromElement(node);
+			const key = this.options.getItemKey(index);
+			const prevNode = this.elementsCache.get(key);
+			if (prevNode !== node) {
+				if (prevNode) this.observer.unobserve(prevNode);
+				this.observer.observe(node);
+				this.elementsCache.set(key, node);
+			}
+			if ((!this.isScrolling || this.scrollState) && this.shouldMeasureDuringScroll(index)) this.resizeItem(index, this.options.measureElement(node, void 0, this));
+		};
+		this.resizeItem = (index, size) => {
+			var _a;
+			const item = this.measurementsCache[index];
+			if (!item) return;
+			const delta = size - (this.itemSizeCache.get(item.key) ?? item.size);
+			if (delta !== 0) {
+				if (((_a = this.scrollState) == null ? void 0 : _a.behavior) !== "smooth" && (this.shouldAdjustScrollPositionOnItemSizeChange !== void 0 ? this.shouldAdjustScrollPositionOnItemSizeChange(item, delta, this) : item.start < this.getScrollOffset() + this.scrollAdjustments)) this._scrollToOffset(this.getScrollOffset(), {
+					adjustments: this.scrollAdjustments += delta,
+					behavior: void 0
+				});
+				this.pendingMeasuredCacheIndexes.push(item.index);
+				this.itemSizeCache = new Map(this.itemSizeCache.set(item.key, size));
+				this.notify(false);
+			}
+		};
+		this.getVirtualItems = memo$4(() => [this.getVirtualIndexes(), this.getMeasurements()], (indexes, measurements) => {
+			const virtualItems = [];
+			for (let k = 0, len = indexes.length; k < len; k++) {
+				const measurement = measurements[indexes[k]];
+				virtualItems.push(measurement);
+			}
+			return virtualItems;
+		}, {
+			key: false,
+			debug: () => this.options.debug
+		});
+		this.getVirtualItemForOffset = (offset) => {
+			const measurements = this.getMeasurements();
+			if (measurements.length === 0) return;
+			return notUndefined(measurements[findNearestBinarySearch(0, measurements.length - 1, (index) => notUndefined(measurements[index]).start, offset)]);
+		};
+		this.getMaxScrollOffset = () => {
+			if (!this.scrollElement) return 0;
+			if ("scrollHeight" in this.scrollElement) return this.options.horizontal ? this.scrollElement.scrollWidth - this.scrollElement.clientWidth : this.scrollElement.scrollHeight - this.scrollElement.clientHeight;
+			else {
+				const doc = this.scrollElement.document.documentElement;
+				return this.options.horizontal ? doc.scrollWidth - this.scrollElement.innerWidth : doc.scrollHeight - this.scrollElement.innerHeight;
+			}
+		};
+		this.getOffsetForAlignment = (toOffset, align, itemSize = 0) => {
+			if (!this.scrollElement) return 0;
+			const size = this.getSize();
+			const scrollOffset = this.getScrollOffset();
+			if (align === "auto") align = toOffset >= scrollOffset + size ? "end" : "start";
+			if (align === "center") toOffset += (itemSize - size) / 2;
+			else if (align === "end") toOffset -= size;
+			const maxOffset = this.getMaxScrollOffset();
+			return Math.max(Math.min(maxOffset, toOffset), 0);
+		};
+		this.getOffsetForIndex = (index, align = "auto") => {
+			index = Math.max(0, Math.min(index, this.options.count - 1));
+			const size = this.getSize();
+			const scrollOffset = this.getScrollOffset();
+			const item = this.measurementsCache[index];
+			if (!item) return;
+			if (align === "auto") if (item.end >= scrollOffset + size - this.options.scrollPaddingEnd) align = "end";
+			else if (item.start <= scrollOffset + this.options.scrollPaddingStart) align = "start";
+			else return [scrollOffset, align];
+			if (align === "end" && index === this.options.count - 1) return [this.getMaxScrollOffset(), align];
+			const toOffset = align === "end" ? item.end + this.options.scrollPaddingEnd : item.start - this.options.scrollPaddingStart;
+			return [this.getOffsetForAlignment(toOffset, align, item.size), align];
+		};
+		this.scrollToOffset = (toOffset, { align = "start", behavior = "auto" } = {}) => {
+			const offset = this.getOffsetForAlignment(toOffset, align);
+			const now = this.now();
+			this.scrollState = {
+				index: null,
+				align,
+				behavior,
+				startedAt: now,
+				lastTargetOffset: offset,
+				stableFrames: 0
+			};
+			this._scrollToOffset(offset, {
+				adjustments: void 0,
+				behavior
+			});
+			this.scheduleScrollReconcile();
+		};
+		this.scrollToIndex = (index, { align: initialAlign = "auto", behavior = "auto" } = {}) => {
+			index = Math.max(0, Math.min(index, this.options.count - 1));
+			const offsetInfo = this.getOffsetForIndex(index, initialAlign);
+			if (!offsetInfo) return;
+			const [offset, align] = offsetInfo;
+			const now = this.now();
+			this.scrollState = {
+				index,
+				align,
+				behavior,
+				startedAt: now,
+				lastTargetOffset: offset,
+				stableFrames: 0
+			};
+			this._scrollToOffset(offset, {
+				adjustments: void 0,
+				behavior
+			});
+			this.scheduleScrollReconcile();
+		};
+		this.scrollBy = (delta, { behavior = "auto" } = {}) => {
+			const offset = this.getScrollOffset() + delta;
+			const now = this.now();
+			this.scrollState = {
+				index: null,
+				align: "start",
+				behavior,
+				startedAt: now,
+				lastTargetOffset: offset,
+				stableFrames: 0
+			};
+			this._scrollToOffset(offset, {
+				adjustments: void 0,
+				behavior
+			});
+			this.scheduleScrollReconcile();
+		};
+		this.getTotalSize = () => {
+			var _a;
+			const measurements = this.getMeasurements();
+			let end;
+			if (measurements.length === 0) end = this.options.paddingStart;
+			else if (this.options.lanes === 1) end = ((_a = measurements[measurements.length - 1]) == null ? void 0 : _a.end) ?? 0;
+			else {
+				const endByLane = Array(this.options.lanes).fill(null);
+				let endIndex = measurements.length - 1;
+				while (endIndex >= 0 && endByLane.some((val) => val === null)) {
+					const item = measurements[endIndex];
+					if (endByLane[item.lane] === null) endByLane[item.lane] = item.end;
+					endIndex--;
+				}
+				end = Math.max(...endByLane.filter((val) => val !== null));
+			}
+			return Math.max(end - this.options.scrollMargin + this.options.paddingEnd, 0);
+		};
+		this._scrollToOffset = (offset, { adjustments, behavior }) => {
+			this.options.scrollToFn(offset, {
+				behavior,
+				adjustments
+			}, this);
+		};
+		this.measure = () => {
+			this.itemSizeCache = /* @__PURE__ */ new Map();
+			this.laneAssignments = /* @__PURE__ */ new Map();
+			this.notify(false);
+		};
+		this.setOptions(opts);
+	}
+	scheduleScrollReconcile() {
+		if (!this.targetWindow) {
+			this.scrollState = null;
+			return;
+		}
+		if (this.rafId != null) return;
+		this.rafId = this.targetWindow.requestAnimationFrame(() => {
+			this.rafId = null;
+			this.reconcileScroll();
+		});
+	}
+	reconcileScroll() {
+		if (!this.scrollState) return;
+		if (!this.scrollElement) return;
+		if (this.now() - this.scrollState.startedAt > 5e3) {
+			this.scrollState = null;
+			return;
+		}
+		const offsetInfo = this.scrollState.index != null ? this.getOffsetForIndex(this.scrollState.index, this.scrollState.align) : void 0;
+		const targetOffset = offsetInfo ? offsetInfo[0] : this.scrollState.lastTargetOffset;
+		const STABLE_FRAMES = 1;
+		const targetChanged = targetOffset !== this.scrollState.lastTargetOffset;
+		if (!targetChanged && approxEqual(targetOffset, this.getScrollOffset())) {
+			this.scrollState.stableFrames++;
+			if (this.scrollState.stableFrames >= STABLE_FRAMES) {
+				this.scrollState = null;
+				return;
+			}
+		} else {
+			this.scrollState.stableFrames = 0;
+			if (targetChanged) {
+				this.scrollState.lastTargetOffset = targetOffset;
+				this.scrollState.behavior = "auto";
+				this._scrollToOffset(targetOffset, {
+					adjustments: void 0,
+					behavior: "auto"
+				});
+			}
+		}
+		this.scheduleScrollReconcile();
+	}
+};
+var findNearestBinarySearch = (low, high, getCurrentValue, value) => {
+	while (low <= high) {
+		const middle = (low + high) / 2 | 0;
+		const currentValue = getCurrentValue(middle);
+		if (currentValue < value) low = middle + 1;
+		else if (currentValue > value) high = middle - 1;
+		else return middle;
+	}
+	if (low > 0) return low - 1;
+	else return 0;
+};
+function calculateRange({ measurements, outerSize, scrollOffset, lanes }) {
+	const lastIndex = measurements.length - 1;
+	const getOffset = (index) => measurements[index].start;
+	if (measurements.length <= lanes) return {
+		startIndex: 0,
+		endIndex: lastIndex
+	};
+	let startIndex = findNearestBinarySearch(0, lastIndex, getOffset, scrollOffset);
+	let endIndex = startIndex;
+	if (lanes === 1) while (endIndex < lastIndex && measurements[endIndex].end < scrollOffset + outerSize) endIndex++;
+	else if (lanes > 1) {
+		const endPerLane = Array(lanes).fill(0);
+		while (endIndex < lastIndex && endPerLane.some((pos) => pos < scrollOffset + outerSize)) {
+			const item = measurements[endIndex];
+			endPerLane[item.lane] = item.end;
+			endIndex++;
+		}
+		const startPerLane = Array(lanes).fill(scrollOffset + outerSize);
+		while (startIndex >= 0 && startPerLane.some((pos) => pos >= scrollOffset)) {
+			const item = measurements[startIndex];
+			startPerLane[item.lane] = item.start;
+			startIndex--;
+		}
+		startIndex = Math.max(0, startIndex - startIndex % lanes);
+		endIndex = Math.min(lastIndex, endIndex + (lanes - 1 - endIndex % lanes));
+	}
+	return {
+		startIndex,
+		endIndex
+	};
+}
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+react-virtual@3.13.24_react-dom@19.2.6_react@19.2.6__react@19.2.6/node_modules/@tanstack/react-virtual/dist/esm/index.js
+var useIsomorphicLayoutEffect = typeof document !== "undefined" ? import_react.useLayoutEffect : import_react.useEffect;
+function useVirtualizerBase({ useFlushSync = true, ...options }) {
+	const rerender = import_react.useReducer(() => ({}), {})[1];
+	const resolvedOptions = {
+		...options,
+		onChange: (instance2, sync) => {
+			var _a;
+			if (useFlushSync && sync) (0, import_react_dom.flushSync)(rerender);
+			else rerender();
+			(_a = options.onChange) == null || _a.call(options, instance2, sync);
+		}
+	};
+	const [instance] = import_react.useState(() => new Virtualizer(resolvedOptions));
+	instance.setOptions(resolvedOptions);
+	useIsomorphicLayoutEffect(() => {
+		return instance._didMount();
+	}, []);
+	useIsomorphicLayoutEffect(() => {
+		return instance._willUpdate();
+	});
+	return instance;
+}
+function useVirtualizer(options) {
+	return useVirtualizerBase({
+		observeElementRect,
+		observeElementOffset,
+		scrollToFn: elementScroll,
+		...options
+	});
+}
+//#endregion
+//#region ../../packages/react/src/virtual/scale-coordinate-space.ts
+var SAFE_MAX_SPACER = 16e6;
+function computeScale(contentTotal, safeMax) {
+	if (contentTotal <= safeMax) return 1;
+	return contentTotal / safeMax;
+}
+//#endregion
+//#region ../../packages/react/src/virtual/use-scaled-virtualizer.ts
+function useScaledVirtualizer(opts) {
+	const scaleRef = (0, import_react.useRef)(1);
+	const scaledObserveElementOffset = (0, import_react.useMemo)(() => (instance, cb) => {
+		const el = instance.scrollElement;
+		if (!el) return;
+		const onScroll = () => {
+			cb(el.scrollTop * scaleRef.current, true);
+		};
+		const onScrollEnd = () => {
+			cb(el.scrollTop * scaleRef.current, false);
+		};
+		cb(el.scrollTop * scaleRef.current, false);
+		el.addEventListener("scroll", onScroll, { passive: true });
+		el.addEventListener("scrollend", onScrollEnd, { passive: true });
+		return () => {
+			el.removeEventListener("scroll", onScroll);
+			el.removeEventListener("scrollend", onScrollEnd);
+		};
+	}, []);
+	const scaledScrollToFn = (0, import_react.useCallback)((offset, { adjustments, behavior }, instance) => {
+		const el = instance.scrollElement;
+		if (!el) return;
+		const adjusted = offset + (adjustments ?? 0);
+		el.scrollTo({
+			top: adjusted / scaleRef.current,
+			behavior
+		});
+	}, []);
+	const virtualizer = useVirtualizer({
+		count: opts.count,
+		estimateSize: opts.estimateSize,
+		getScrollElement: opts.getScrollElement,
+		overscan: opts.overscan ?? 5,
+		observeElementOffset: scaledObserveElementOffset,
+		scrollToFn: scaledScrollToFn
+	});
+	const contentTotal = virtualizer.getTotalSize();
+	const scale = computeScale(contentTotal, SAFE_MAX_SPACER);
+	scaleRef.current = scale;
+	return {
+		virtualizer,
+		scale,
+		spacerHeight: scale === 1 ? contentTotal : SAFE_MAX_SPACER,
+		toContentScroll: (0, import_react.useCallback)((spacerScroll) => spacerScroll * scale, [scale]),
+		toSpacerScroll: (0, import_react.useCallback)((contentScroll) => contentScroll / scale, [scale])
+	};
+}
+//#endregion
+//#region ../../packages/react/src/virtual/use-virtual-list-state.ts
+var CURRENT_VERSION = 1;
+function useVirtualListState(persistenceKey) {
+	const [stored, setStored] = useProperty(persistenceKey, "snapshot", { defaultValue: null });
+	return {
+		getRestoreSnapshot: (0, import_react.useCallback)(() => {
+			if (!stored) return void 0;
+			if (stored.version !== CURRENT_VERSION) return void 0;
+			return stored;
+		}, [stored]),
+		recordSnapshot: (0, import_react.useCallback)((snapshot) => {
+			setStored(snapshot);
+		}, [setStored])
+	};
+}
+var VirtualList_module_default = {
+	scroller: "_scroller_qi4v2_1",
+	spacer: "_spacer_qi4v2_5"
+};
+//#endregion
+//#region ../../packages/react/src/virtual/VirtualList.tsx
+var BOTTOM_THRESHOLD_PX = 30;
+var SMOOTH_SCROLL_MAX_S = 10;
+var PERSIST_DEBOUNCE_MS = 250;
+var DEFAULT_ITEM_HEIGHT_PX = 400;
+var MAX_CHUNK_HEIGHT = 5e6;
+function PaddingChunks({ height, prefix }) {
+	if (height <= 0) return null;
+	const chunks = [];
+	let remaining = height;
+	let i = 0;
+	while (remaining > 0) {
+		const h = Math.min(remaining, MAX_CHUNK_HEIGHT);
+		chunks.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: h } }, `${prefix}-${i}`));
+		remaining -= h;
+		i++;
+	}
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: chunks });
+}
+function prepareSearchTerm(term) {
+	const lower = term.toLowerCase();
+	if (!term.includes("\"") && !term.includes(":")) return { simple: lower };
+	return {
+		simple: lower,
+		unquoted: lower.replace(/"/g, ""),
+		jsonEscaped: lower.replace(/"/g, "\\\"")
+	};
+}
+function VirtualList({ persistenceKey, ref, className, scrollRef: externalScrollRef, data, renderRow, live, showProgress, initialIndex, stickyHeaderOffset, components, smoothScroll = true, itemSearchText, findScope = "local", scrollToTopOnFinish = false, onVisibleRangeChange }) {
+	const internalScrollRef = (0, import_react.useRef)(null);
+	const [scrollParent, setScrollParent] = (0, import_react.useState)(null);
+	(0, import_react.useEffect)(() => {
+		if (!externalScrollRef) return;
+		const sync = () => {
+			setScrollParent((prev) => prev === externalScrollRef.current ? prev : externalScrollRef.current ?? null);
+		};
+		sync();
+		const observer = new MutationObserver(sync);
+		observer.observe(document.body, {
+			childList: true,
+			subtree: true
+		});
+		return () => observer.disconnect();
+	}, [externalScrollRef]);
+	const getScrollElement = (0, import_react.useCallback)(() => scrollParent ?? internalScrollRef.current, [scrollParent]);
+	const { virtualizer, scale, spacerHeight, toContentScroll, toSpacerScroll } = useScaledVirtualizer({
+		count: data.length,
+		estimateSize: () => DEFAULT_ITEM_HEIGHT_PX,
+		getScrollElement
+	});
+	const { getRestoreSnapshot, recordSnapshot } = useVirtualListState(persistenceKey);
+	const [followOutput, setFollowOutput] = useProperty(persistenceKey, "follow", { defaultValue: null });
+	const isAutoScrollingRef = (0, import_react.useRef)(false);
+	(0, import_react.useEffect)(() => {
+		if (followOutput === null) setFollowOutput(!!live);
+	}, [
+		followOutput,
+		live,
+		setFollowOutput
+	]);
+	const prevLive = usePreviousValue(live);
+	(0, import_react.useEffect)(() => {
+		if (scrollToTopOnFinish && !live && prevLive && followOutput) {
+			const el = getScrollElement();
+			if (el) {
+				setFollowOutput(false);
+				setTimeout(() => el.scrollTo({
+					top: 0,
+					behavior: "auto"
+				}), 100);
+			}
+		}
+	}, [
+		live,
+		prevLive,
+		followOutput,
+		scrollToTopOnFinish,
+		getScrollElement,
+		setFollowOutput
+	]);
+	const handleScroll = useRafThrottle(() => {
+		if (isAutoScrollingRef.current) return;
+		if (!live) return;
+		const el = getScrollElement();
+		if (!el) return;
+		const atBottom = el.scrollHeight - el.scrollTop <= el.clientHeight + BOTTOM_THRESHOLD_PX;
+		if (atBottom && !followOutput) setFollowOutput(true);
+		else if (!atBottom && followOutput) setFollowOutput(false);
+	});
+	(0, import_react.useEffect)(() => {
+		const el = getScrollElement();
+		if (!el) return;
+		el.addEventListener("scroll", handleScroll);
+		return () => el.removeEventListener("scroll", handleScroll);
+	}, [getScrollElement, handleScroll]);
+	const contentTotal = virtualizer.getTotalSize();
+	(0, import_react.useEffect)(() => {
+		if (!followOutput || !live) return;
+		const el = getScrollElement();
+		if (!el) return;
+		requestAnimationFrame(() => {
+			isAutoScrollingRef.current = true;
+			el.scrollTo({ top: el.scrollHeight });
+			requestAnimationFrame(() => {
+				isAutoScrollingRef.current = false;
+			});
+		});
+	}, [
+		contentTotal,
+		followOutput,
+		live,
+		getScrollElement
+	]);
+	const hasInitialScrolledRef = (0, import_react.useRef)(false);
+	const lastInitialKeyRef = (0, import_react.useRef)(null);
+	const lastInitialIndexRef = (0, import_react.useRef)(void 0);
+	(0, import_react.useEffect)(() => {
+		if (lastInitialKeyRef.current !== persistenceKey || lastInitialIndexRef.current !== initialIndex) {
+			hasInitialScrolledRef.current = false;
+			lastInitialKeyRef.current = persistenceKey;
+			lastInitialIndexRef.current = initialIndex ?? void 0;
+		}
+		if (hasInitialScrolledRef.current) return;
+		const el = getScrollElement();
+		if (!el) return;
+		const snapshot = getRestoreSnapshot();
+		requestAnimationFrame(() => {
+			if (initialIndex != null) {
+				virtualizer.scrollToIndex(initialIndex, {
+					align: "start",
+					behavior: "auto"
+				});
+				if (stickyHeaderOffset) el.scrollTop -= stickyHeaderOffset;
+				hasInitialScrolledRef.current = true;
+			} else if (snapshot) {
+				if (el.scrollTop === 0) if (snapshot.totalCount === data.length) el.scrollTop = toSpacerScroll(snapshot.scrollOffset);
+				else {
+					const maxScroll = Math.max(0, contentTotal - el.clientHeight);
+					el.scrollTop = toSpacerScroll(Math.min(snapshot.scrollOffset, maxScroll));
+				}
+				hasInitialScrolledRef.current = true;
+			}
+		});
+	}, [
+		persistenceKey,
+		initialIndex,
+		stickyHeaderOffset,
+		contentTotal,
+		data.length,
+		getRestoreSnapshot,
+		getScrollElement,
+		toSpacerScroll,
+		virtualizer
+	]);
+	const persistTimerRef = (0, import_react.useRef)(null);
+	const persistOnScroll = useRafThrottle(() => {
+		if (isAutoScrollingRef.current) return;
+		if (persistTimerRef.current) clearTimeout(persistTimerRef.current);
+		persistTimerRef.current = setTimeout(() => {
+			const el = getScrollElement();
+			if (!el) return;
+			recordSnapshot({
+				version: 1,
+				scrollOffset: toContentScroll(el.scrollTop),
+				totalCount: data.length
+			});
+		}, PERSIST_DEBOUNCE_MS);
+	});
+	(0, import_react.useEffect)(() => {
+		const el = getScrollElement();
+		if (!el) return;
+		el.addEventListener("scroll", persistOnScroll);
+		return () => el.removeEventListener("scroll", persistOnScroll);
+	}, [getScrollElement, persistOnScroll]);
+	const items = virtualizer.getVirtualItems();
+	const startIndex = items[0]?.index ?? 0;
+	const endIndex = items[items.length - 1]?.index ?? 0;
+	const visibleRangeRef = (0, import_react.useRef)({
+		startIndex: 0,
+		endIndex: 0
+	});
+	(0, import_react.useEffect)(() => {
+		visibleRangeRef.current = {
+			startIndex,
+			endIndex
+		};
+		onVisibleRangeChange?.({
+			startIndex,
+			endIndex
+		});
+	}, [
+		startIndex,
+		endIndex,
+		onVisibleRangeChange
+	]);
+	(0, import_react.useImperativeHandle)(ref, () => ({
+		scrollToIndex(opts) {
+			const behavior = scale > SMOOTH_SCROLL_MAX_S ? "auto" : opts.behavior ?? (smoothScroll ? "smooth" : "auto");
+			virtualizer.scrollToIndex(opts.index, {
+				align: opts.align,
+				behavior
+			});
+			if (opts.offset) {
+				const el = getScrollElement();
+				if (el) el.scrollTop += opts.offset;
+			}
+		},
+		scrollTo(opts) {
+			const el = getScrollElement();
+			if (!el) return;
+			const behavior = scale > SMOOTH_SCROLL_MAX_S ? "auto" : opts.behavior ?? (smoothScroll ? "smooth" : "auto");
+			el.scrollTo({
+				top: opts.top,
+				behavior
+			});
+		},
+		getState(callback) {
+			const el = getScrollElement();
+			callback({
+				version: 1,
+				scrollOffset: el ? toContentScroll(el.scrollTop) : 0,
+				totalCount: data.length
+			});
+		},
+		jumpToStart() {
+			const el = getScrollElement();
+			if (el) el.scrollTop = 0;
+		},
+		jumpToEnd() {
+			const el = getScrollElement();
+			if (el) el.scrollTop = spacerHeight;
+		}
+	}), [
+		virtualizer,
+		scale,
+		spacerHeight,
+		smoothScroll,
+		getScrollElement,
+		toContentScroll,
+		data.length
+	]);
+	const { registerVirtualList, registerMatchCounter } = useExtendedFind();
+	const searchInData = (0, import_react.useCallback)((term, direction, onContentReady) => {
+		if (!term || data.length === 0) return Promise.resolve(false);
+		const isForward = direction === "forward";
+		const len = data.length;
+		const range = visibleRangeRef.current;
+		const current = isForward ? range.endIndex : range.startIndex;
+		const getText = itemSearchText ?? ((item) => JSON.stringify(item));
+		const prepared = prepareSearchTerm(term);
+		for (let offset = 1; offset < len; offset++) {
+			const i = isForward ? (current + offset) % len : (current - offset + len) % len;
+			const item = data[i];
+			if (item === void 0) continue;
+			const texts = getText(item);
+			if ((Array.isArray(texts) ? texts : [texts]).some((text) => {
+				const lower = text.toLowerCase();
+				if (lower.includes(prepared.simple)) return true;
+				if (prepared.unquoted && lower.includes(prepared.unquoted)) return true;
+				if (prepared.jsonEscaped && lower.includes(prepared.jsonEscaped)) return true;
+				return false;
+			})) {
+				virtualizer.scrollToIndex(i, { align: "center" });
+				setTimeout(onContentReady, 200);
+				return Promise.resolve(true);
+			}
+		}
+		return Promise.resolve(false);
+	}, [
+		data,
+		itemSearchText,
+		virtualizer
+	]);
+	const countMatchesInData = (0, import_react.useCallback)((term) => {
+		if (!term || data.length === 0) return 0;
+		const getText = itemSearchText ?? ((item) => JSON.stringify(item));
+		const lower = term.toLowerCase();
+		let total = 0;
+		for (const item of data) {
+			const texts = getText(item);
+			const textArray = Array.isArray(texts) ? texts : [texts];
+			for (const text of textArray) {
+				const lowerText = text.toLowerCase();
+				let pos = 0;
+				while ((pos = lowerText.indexOf(lower, pos)) !== -1) {
+					total++;
+					pos += lower.length;
+				}
+			}
+		}
+		return total;
+	}, [data, itemSearchText]);
+	(0, import_react.useEffect)(() => {
+		if (findScope === "none") return;
+		const u1 = registerVirtualList(persistenceKey, searchInData);
+		const u2 = registerMatchCounter(persistenceKey, countMatchesInData);
+		return () => {
+			u1();
+			u2();
+		};
+	}, [
+		findScope,
+		persistenceKey,
+		registerVirtualList,
+		registerMatchCounter,
+		searchInData,
+		countMatchesInData
+	]);
+	const ItemSlot = components?.Item;
+	const FooterSlot = components?.Footer;
+	const ownsScroll = !externalScrollRef;
+	const firstItem = items.length > 0 ? items[0] : void 0;
+	const lastItem = items.length > 0 ? items[items.length - 1] : void 0;
+	const topPaddingContent = firstItem?.start ?? 0;
+	const topPaddingSpacer = topPaddingContent / scale;
+	const renderedBandHeight = firstItem && lastItem ? lastItem.start + lastItem.size - firstItem.start : 0;
+	const bottomPaddingSpacer = (lastItem ? Math.max(0, virtualizer.getTotalSize() - (lastItem.start + lastItem.size)) : virtualizer.getTotalSize()) / scale;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		ref: (el) => {
+			if (ownsScroll) internalScrollRef.current = el;
+		},
+		className: clsx(VirtualList_module_default.scroller, className),
+		style: ownsScroll ? {
+			height: "100%",
+			width: "100%",
+			overflow: "auto"
+		} : { width: "100%" },
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(PaddingChunks, {
+				height: topPaddingSpacer,
+				prefix: "top"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				style: {
+					position: "relative",
+					height: renderedBandHeight
+				},
+				children: items.map((vItem) => {
+					const item = data[vItem.index];
+					if (item === void 0) return null;
+					const top = vItem.start - topPaddingContent;
+					const child = renderRow(vItem.index, item);
+					if (ItemSlot) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						ref: virtualizer.measureElement,
+						"data-index": vItem.index,
+						style: {
+							position: "absolute",
+							top,
+							left: 0,
+							right: 0
+						},
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ItemSlot, {
+							"data-index": vItem.index,
+							"data-item-index": vItem.index,
+							"data-known-size": vItem.size,
+							style: {},
+							children: child
+						})
+					}, vItem.key);
+					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						ref: virtualizer.measureElement,
+						"data-index": vItem.index,
+						"data-item-index": vItem.index,
+						"data-known-size": vItem.size,
+						style: {
+							position: "absolute",
+							top,
+							left: 0,
+							right: 0
+						},
+						children: child
+					}, vItem.key);
+				})
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(PaddingChunks, {
+				height: bottomPaddingSpacer,
+				prefix: "bot"
+			}),
+			showProgress && (FooterSlot ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FooterSlot, {}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				style: {
+					display: "flex",
+					justifyContent: "center",
+					padding: "1rem"
+				},
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PulsingDots, {
+					subtle: false,
+					size: "medium"
+				})
+			}))
+		]
+	});
+}
+var ChatViewVirtualList_module_default = {
+	list: "_list_ejymp_1",
+	generatingRow: "_generatingRow_ejymp_7",
+	generatingLabel: "_generatingLabel_ejymp_15",
+	generatingContent: "_generatingContent_ejymp_19"
+};
+var GeneratingIndicator_module_default = {
+	bar: "_bar_pg4l8_1",
+	"gen-sweep": "_gen-sweep_pg4l8_1",
+	barLabelOnly: "_barLabelOnly_pg4l8_34",
+	label: "_label_pg4l8_38",
+	ell: "_ell_pg4l8_47",
+	"gen-ell": "_gen-ell_pg4l8_1",
+	attempt: "_attempt_pg4l8_64"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/chat/GeneratingIndicator.tsx
+var GeneratingIndicator = ({ attempt, className }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		role: "status",
+		"aria-live": "polite",
+		className: clsx(GeneratingIndicator_module_default.bar, attempt === void 0 && GeneratingIndicator_module_default.barLabelOnly, className),
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+			className: GeneratingIndicator_module_default.label,
+			children: ["Generating", /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+				className: GeneratingIndicator_module_default.ell,
+				"aria-hidden": "true",
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { children: "." }),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { children: "." }),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { children: "." })
+				]
+			})]
+		}), attempt !== void 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+			className: GeneratingIndicator_module_default.attempt,
+			children: ["attempt ", attempt]
+		})]
+	});
+};
+//#endregion
+//#region ../../packages/inspect-components/src/chat/livePlaceholder.ts
+function isLivePlaceholderMessage(message) {
+	if (message.role !== "assistant") return false;
+	if (message.tool_calls && message.tool_calls.length > 0) return false;
+	return !messageHasVisibleContent(message);
+}
+function messageHasVisibleContent(message) {
+	const content = message.content;
+	if (typeof content === "string") return content.trim().length > 0;
+	if (!Array.isArray(content)) return false;
+	return content.some((c) => {
+		if (c.type === "tool_use") return false;
+		if (c.type === "text") {
+			const hasText = c.text.trim().length > 0;
+			const hasCitations = !!c.citations && c.citations.length > 0;
+			return hasText || hasCitations;
+		}
+		if (c.type === "reasoning") {
+			const hasReasoning = c.reasoning.trim().length > 0;
+			const hasSummary = (c.summary?.trim().length ?? 0) > 0;
+			return hasReasoning || hasSummary;
+		}
+		return true;
+	});
+}
 //#endregion
 //#region ../../packages/inspect-components/src/chat/ChatViewVirtualList.tsx
-var ChatVirtuosoItem = ({ children, ...props }) => {
+var ChatItem = ({ children, ...props }) => {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		className: clsx(ChatViewVirtualList_module_default.item),
 		"data-index": props["data-index"],
-		"data-item-group-index": props["data-item-group-index"],
 		"data-item-index": props["data-item-index"],
 		"data-known-size": props["data-known-size"],
 		style: props.style,
 		children
 	});
 };
-var chatVirtuosoComponents = { Item: ChatVirtuosoItem };
+var chatComponents = { Item: ChatItem };
 var ChatViewVirtualList = (0, import_react.memo)(function ChatViewVirtualList({ id, messages, initialMessageId, offsetTop, className, scrollRef, running, onNativeFindChanged, display, labels, linking, tools }) {
 	const listHandle = (0, import_react.useRef)(null);
 	(0, import_react.useEffect)(() => {
@@ -116382,37 +117961,52 @@ var ChatViewVirtualList = (0, import_react.memo)(function ChatViewVirtualList({ 
 		return index !== -1 ? index : void 0;
 	}, [initialMessageId, collapsedMessages]);
 	const maxLabelLength = (0, import_react.useMemo)(() => computeMaxLabelLength(labels?.messageLabels), [labels?.messageLabels]);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LiveVirtualList, {
-		id: "chat-virtual-list",
-		listHandle,
-		className,
-		scrollRef,
-		data: collapsedMessages,
-		renderRow: (0, import_react.useCallback)((index, item) => {
-			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChatMessageRow, {
-				index,
-				parentName: id || "chat-virtual-list",
-				resolvedMessage: item,
-				display,
-				labels,
-				linking,
-				tools,
-				maxLabelLength
-			});
-		}, [
-			id,
+	const lastIndex = collapsedMessages.length - 1;
+	const renderRow = (0, import_react.useCallback)((index, item) => {
+		if (running && index === lastIndex && isLivePlaceholderMessage(item.message)) return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: ChatViewVirtualList_module_default.generatingRow,
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: clsx("text-size-smaller", "text-style-secondary", ChatViewVirtualList_module_default.generatingLabel),
+				style: { minWidth: `${maxLabelLength ?? 3}ch` },
+				children: index + 1
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: ChatViewVirtualList_module_default.generatingContent,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(GeneratingIndicator, {})
+			})]
+		});
+		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChatMessageRow, {
+			index,
+			parentName: id || "chat-virtual-list",
+			resolvedMessage: item,
 			display,
 			labels,
 			linking,
 			tools,
 			maxLabelLength
-		]),
-		initialTopMostItemIndex: initialMessageIndex,
-		offsetTop,
+		});
+	}, [
+		id,
+		running,
+		lastIndex,
+		display,
+		labels,
+		linking,
+		tools,
+		maxLabelLength
+	]);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(VirtualList, {
+		persistenceKey: `chat-${id}`,
+		ref: listHandle,
+		className: clsx(ChatViewVirtualList_module_default.list, className),
+		scrollRef,
+		data: collapsedMessages,
+		renderRow,
+		initialIndex: initialMessageIndex,
+		stickyHeaderOffset: offsetTop,
 		live: running,
-		showProgress: running,
-		components: chatVirtuosoComponents,
-		animation: false,
+		scrollToTopOnFinish: true,
+		components: chatComponents,
+		smoothScroll: false,
 		itemSearchText: messageSearchText
 	});
 });
@@ -117596,7 +119190,7 @@ function eventToNode(event) {
 				const span = createTimelineSpan(`tool-agent-${event.id}`, agentName, "agent", nestedContent);
 				span.toolInvoked = true;
 				const agentResult = extractToolEventResult(event.result);
-				if (agentResult) span.agentResult = agentResult;
+				if (agentResult) span.agentResult = codexResultText(event.function, event.result, agentResult);
 				return span;
 			}
 		}
@@ -118022,6 +119616,18 @@ function getSpanToolResult(span) {
 	return span.agentResult;
 }
 /**
+* Reshape a Codex sub-agent tool result into nicer markdown when applicable
+* (e.g. `spawn_agent`'s `{agent_id, nickname}` → a compact name line); falls
+* back to the raw extracted text for non-Codex tools.
+*/
+function codexResultText(fn, content, fallback) {
+	if (fn) {
+		const markdown = codexToolMarkdown(fn, content);
+		if (markdown !== void 0) return markdown;
+	}
+	return fallback;
+}
+/**
 * Extract a string result from a ToolEvent result field.
 */
 function extractToolEventResult(result) {
@@ -118055,7 +119661,7 @@ function extractAgentResults(parent) {
 		}
 		for (const sibling of content) if (sibling.type === "event" && sibling.event.event === "tool" && sibling.event.agent_span_id === item.id) {
 			const resultText = extractToolEventResult(sibling.event.result);
-			if (resultText) item.agentResult = resultText;
+			if (resultText) item.agentResult = codexResultText(sibling.event.function, sibling.event.result, resultText);
 			break;
 		}
 		const toolCallId = item.id.startsWith("agent-") ? item.id.slice(6) : null;
@@ -118067,7 +119673,7 @@ function extractAgentResults(parent) {
 				if (modelEvent.input) {
 					for (const msg of modelEvent.input) if (msg.role === "tool" && "tool_call_id" in msg && msg.tool_call_id === toolCallId) {
 						const text = extractToolEventResult(msg.content);
-						if (text) item.agentResult = text;
+						if (text) item.agentResult = codexResultText(msg.function, msg.content, text);
 					}
 				}
 				if (item.agentResult) break;
@@ -121255,7 +122861,7 @@ function recordRowEvents(agent, rowKey, out) {
 */
 function findAllMatches(events, term, eventToRow) {
 	if (!term) return [];
-	const prepared = prepareSearchTerm(term);
+	const prepared = prepareSearchTerm$1(term);
 	const variants = [
 		prepared.simple,
 		...prepared.unquoted ? [prepared.unquoted] : [],
@@ -128082,16 +129688,16 @@ var messagesFromEvents = (events, stateRef) => {
 	return state.lastResult;
 };
 var SampleDisplay_module_default = {
-	tabControls: "_tabControls_1km5i_7",
-	fullWidth: "_fullWidth_1km5i_16",
-	metadataPanel: "_metadataPanel_1km5i_20",
-	padded: "_padded_1km5i_26",
-	error: "_error_1km5i_31",
-	ansi: "_ansi_1km5i_35",
-	noTop: "_noTop_1km5i_39",
-	chat: "_chat_1km5i_43",
-	overflowVisible: "_overflowVisible_1km5i_51",
-	retriedErrors: "_retriedErrors_1km5i_55"
+	tabControls: "_tabControls_1jky3_7",
+	fullWidth: "_fullWidth_1jky3_16",
+	metadataPanel: "_metadataPanel_1jky3_20",
+	padded: "_padded_1jky3_26",
+	error: "_error_1jky3_31",
+	ansi: "_ansi_1jky3_35",
+	noTop: "_noTop_1jky3_39",
+	chat: "_chat_1jky3_43",
+	overflowVisible: "_overflowVisible_1jky3_51",
+	retriedErrors: "_retriedErrors_1jky3_55"
 };
 //#endregion
 //#region src/app/samples/SampleJSONView.tsx
@@ -159799,7 +161405,7 @@ var SampleFilter = () => {
 		activateOnCompletion: (c) => c.label.endsWith(" ")
 	}), [filterItems, samples]);
 	const makeLinter = (0, import_react.useCallback)(() => linter((view) => getLints(view, filterError)), [filterError]);
-	const debounceSetFilter = (0, import_react.useMemo)(() => debounce$1((value) => {
+	const debounceSetFilter = (0, import_react.useMemo)(() => debounce$2((value) => {
 		setFilter(value);
 	}, 200), [setFilter]);
 	const makeUpdateListener = (0, import_react.useCallback)(() => EditorView.updateListener.of((update) => {
