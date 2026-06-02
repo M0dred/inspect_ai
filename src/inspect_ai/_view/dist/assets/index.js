@@ -115723,6 +115723,7 @@ var MessageContents = ({ message, references }) => {
 		references
 	}) });
 };
+var customToolRendering_module_default = { submitView: "_submitView_1ru17_1" };
 var ToolSearchView_module_default = {
 	catalog: "_catalog_gx8eg_1",
 	namespace: "_namespace_gx8eg_7",
@@ -115770,6 +115771,29 @@ var ToolSearchView = ({ namespaces }) => {
 		}, `ns-${nsIdx}`))
 	});
 };
+var ToolTitle_module_default = {
+	image: "_image_1gmrl_1",
+	toolTitle: "_toolTitle_1gmrl_6",
+	description: "_description_1gmrl_11"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/chat/tools/ToolTitle.tsx
+/**
+* Renders the ToolCallView component.
+*/
+var ToolTitle = ({ title, description }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [
+		/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx("bi", "bi-tools", ToolTitle_module_default.image, "text-size-smaller") }),
+		/* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", {
+			className: clsx("text-size-smaller", ToolTitle_module_default.toolTitle),
+			children: title
+		}),
+		description ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+			className: clsx(ToolTitle_module_default.description, "text-size-smallest"),
+			children: ["- ", description]
+		}) : void 0
+	] });
+};
 //#endregion
 //#region ../../packages/inspect-components/src/chat/tools/customToolRendering.tsx
 /**
@@ -115778,6 +115802,7 @@ var ToolSearchView = ({ namespaces }) => {
 */
 var getDefaultCustomToolView = (props) => {
 	if (props.tool === "answer") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AnswerToolCallView, { ...props });
+	if (props.tool === "submit") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SubmitToolCallView, { ...props });
 	if (props.tool === "tool_search") {
 		const namespaces = parseToolSearchCatalog(props.output);
 		if (namespaces) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolSearchView, { namespaces });
@@ -115788,6 +115813,20 @@ var AnswerToolCallView = (props) => {
 		code: props.functionCall,
 		language: "python",
 		id: props.id
+	});
+};
+var SubmitToolCallView = (props) => {
+	const answer = toolOutputText(props.output) ?? toolOutputText(props.input) ?? "";
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: customToolRendering_module_default.submitView,
+		children: [props.mode !== "compact" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolTitle, { title: "submit" }) }) : null, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
+			id: `${props.id}-submit`,
+			collapse: false,
+			border: false,
+			lines: 15,
+			className: "text-size-small",
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownDiv, { markdown: answer })
+		})]
 	});
 };
 var ToolCallView_module_default = { toolCallView: "_toolCallView_x6cus_1" };
@@ -115865,29 +115904,6 @@ var isValidView = (view) => {
 	if (view.content === "```bash\nbash\n```\n") return false;
 	return true;
 };
-var ToolTitle_module_default = {
-	image: "_image_1gmrl_1",
-	toolTitle: "_toolTitle_1gmrl_6",
-	description: "_description_1gmrl_11"
-};
-//#endregion
-//#region ../../packages/inspect-components/src/chat/tools/ToolTitle.tsx
-/**
-* Renders the ToolCallView component.
-*/
-var ToolTitle = ({ title, description }) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [
-		/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx("bi", "bi-tools", ToolTitle_module_default.image, "text-size-smaller") }),
-		/* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", {
-			className: clsx("text-size-smaller", ToolTitle_module_default.toolTitle),
-			children: title
-		}),
-		description ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-			className: clsx(ToolTitle_module_default.description, "text-size-smallest"),
-			children: ["- ", description]
-		}) : void 0
-	] });
-};
 //#endregion
 //#region ../../packages/inspect-components/src/chat/tools/ToolCallView.tsx
 /**
@@ -115923,7 +115939,8 @@ var ToolCallView = ({ id, tool, functionCall, input, description, contentType, v
 		input,
 		description,
 		contentType,
-		output
+		output,
+		mode
 	};
 	const customView = getCustomToolView?.(props) ?? getDefaultCustomToolView(props);
 	if (customView) return customView;
@@ -118161,6 +118178,13 @@ var injectScorersSpan = (events) => {
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/event/utils.ts
+var cancelErrors = new Set([
+	"Cancelled by operator",
+	"Cancelled by limit",
+	"Cancelled by system"
+]);
+/** True when a model error is a cancel sentinel (not a genuine failure). */
+var isCancelError = (error) => !!error && cancelErrors.has(error);
 var formatTiming = (timestamp, working_start) => {
 	if (working_start) return `${formatDateTime$1(new Date(timestamp))}\n@ working time: ${formatTime$1(working_start)}`;
 	else return formatDateTime$1(new Date(timestamp));
@@ -119387,6 +119411,7 @@ function buildTimeline(events) {
 	const topSpans = /* @__PURE__ */ new Map();
 	for (const item of tree) if (isSpanNode(item) && (item.name === "init" || item.name === "solvers" || item.name === "scorers")) topSpans.set(item.name, item);
 	const hasPhaseSpans = topSpans.has("init") || topSpans.has("solvers") || topSpans.has("scorers");
+	const orphanNodes = hasPhaseSpans ? tree.filter((item) => !(isSpanNode(item) && topSpans.get(item.name) === item)).map(treeItemToNode).filter((n) => n !== null) : [];
 	let root;
 	if (hasPhaseSpans) {
 		const initSpan = topSpans.get("init");
@@ -119435,6 +119460,7 @@ function buildTimeline(events) {
 			spanType: null
 		});
 	}
+	if (orphanNodes.length > 0) root.content = [...root.content, ...orphanNodes].sort((a, b) => a.startTime().getTime() - b.startTime().getTime());
 	return {
 		name: "Default",
 		description: "",
@@ -122081,6 +122107,7 @@ function useListPositionManager(baseListId, selected, scrollRef, hasScrollTarget
 var TranscriptIcons = {
 	agent: "bi bi-grid",
 	approve: "bi bi-shield",
+	cancel: "bi bi-x-circle",
 	checkpoint: "bi bi-bookmark-check-fill",
 	approvals: {
 		approve: "bi bi-shield-check",
@@ -126249,14 +126276,14 @@ var INTERRUPTED_DESCRIPTIONS = {
 };
 var InterruptEventView = ({ eventNode, className }) => {
 	const event = eventNode.event;
-	const title = SOURCE_TITLES[event.source];
+	const baseTitle = SOURCE_TITLES[event.source];
+	const title = event.timestamp ? `${baseTitle} — ${formatDateTime$1(new Date(event.timestamp))}` : baseTitle;
 	const detail = INTERRUPTED_DESCRIPTIONS[event.interrupted];
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventPanel, {
 		eventNodeId: eventNode.id,
 		title,
 		icon: TranscriptIcons.interrupt,
 		className,
-		subTitle: event.timestamp ? formatDateTime$1(new Date(event.timestamp)) : void 0,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			className: clsx("text-size-smaller"),
 			children: detail
@@ -126999,19 +127026,20 @@ function formatAttemptDuration(event) {
 	return sec != null ? formatTime$1(sec) : null;
 }
 var ModelEventView_module_default = {
-	container: "_container_15ga9_1",
-	all: "_all_15ga9_6",
-	tableSelection: "_tableSelection_15ga9_12",
-	config: "_config_15ga9_18",
-	tools: "_tools_15ga9_22",
-	codePre: "_codePre_15ga9_26",
-	code: "_code_15ga9_26",
-	progress: "_progress_15ga9_38",
-	error: "_error_15ga9_42",
-	showAllLink: "_showAllLink_15ga9_53",
-	showAllIcon: "_showAllIcon_15ga9_64",
-	toolConfig: "_toolConfig_15ga9_73",
-	toolChoice: "_toolChoice_15ga9_82"
+	container: "_container_v2zov_1",
+	all: "_all_v2zov_6",
+	tableSelection: "_tableSelection_v2zov_12",
+	config: "_config_v2zov_18",
+	tools: "_tools_v2zov_22",
+	codePre: "_codePre_v2zov_26",
+	code: "_code_v2zov_26",
+	progress: "_progress_v2zov_38",
+	error: "_error_v2zov_42",
+	cancelled: "_cancelled_v2zov_53",
+	showAllLink: "_showAllLink_v2zov_66",
+	showAllIcon: "_showAllIcon_v2zov_77",
+	toolConfig: "_toolConfig_v2zov_86",
+	toolChoice: "_toolChoice_v2zov_95"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/ModelEventView.tsx
@@ -127021,7 +127049,8 @@ var ModelEventView = ({ eventNode, showToolCalls, className, context, eventCallb
 	const successKey = retryAttemptKey(successEvent);
 	const [selectedAttemptKey, setSelectedAttemptKey] = useProperty(eventNode.id, "selectedAttempt", { defaultValue: successKey });
 	const event = attempts?.find((a) => retryAttemptKey(a) === selectedAttemptKey) ?? successEvent;
-	const isFailed = !!event.error;
+	const isCancelled = isCancelError(event.error);
+	const isFailed = !!event.error && !isCancelled;
 	const totalUsage = event.output?.usage?.total_tokens;
 	const callTime = event.output?.time;
 	const outputMessages = event.output?.choices?.map((choice) => {
@@ -127046,12 +127075,13 @@ var ModelEventView = ({ eventNode, showToolCalls, className, context, eventCallb
 	const hasHiddenMessages = event.input.length > userMessages.length;
 	const [showAllMessages, setShowAllMessages] = (0, import_react.useState)(false);
 	const summaryMessages = (0, import_react.useMemo)(() => {
-		const outputs = event.pending ? (outputMessages || []).filter((m) => !isLivePlaceholderMessage(m)) : outputMessages || [];
+		const outputs = event.pending || isCancelled ? (outputMessages || []).filter((m) => !isLivePlaceholderMessage(m)) : outputMessages || [];
 		return showAllMessages ? [...event.input, ...outputs] : [...userMessages, ...outputs];
 	}, [
 		showAllMessages,
 		event.input,
 		event.pending,
+		isCancelled,
 		outputMessages,
 		userMessages
 	]);
@@ -127061,7 +127091,7 @@ var ModelEventView = ({ eventNode, showToolCalls, className, context, eventCallb
 		return { messageLabels: map };
 	}, [context?.messageLabels]);
 	const panelTitle = event.role ? `Model Call (${event.role}): ${event.model}` : `Model Call: ${event.model}`;
-	const titleString = isFailed ? `${panelTitle} · FAILED${formatFailureTime(event)}` : formatTitle(panelTitle, totalUsage, callTime);
+	const titleString = isFailed ? `${panelTitle} · FAILED${formatFailureTime(event)}` : isCancelled ? `${panelTitle} · Cancelled${formatFailureTime(event)}` : formatTitle(panelTitle, totalUsage, callTime);
 	const turnLabel = context?.turnInfo ? `turn ${context.turnInfo.turnNumber}/${context.turnInfo.totalTurns}` : void 0;
 	const retryChip = attempts ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RetryChip, {
 		attempts,
@@ -127104,7 +127134,10 @@ var ModelEventView = ({ eventNode, showToolCalls, className, context, eventCallb
 						},
 						labels: summaryLabels
 					}),
-					event.error ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventSection, {
+					isCancelled ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: ModelEventView_module_default.cancelled,
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: TranscriptIcons.cancel }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: event.error })]
+					}) : event.error ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventSection, {
 						title: "Error",
 						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 							className: ModelEventView_module_default.error,
@@ -127315,7 +127348,7 @@ var SampleLimitEventView = ({ eventNode, className }) => {
 			case "time": return "Time Limit Exceeded";
 			case "message": return "Message Limit Exceeded";
 			case "token": return "Token Limit Exceeded";
-			case "operator": return "Operator Canceled";
+			case "operator": return "Operator Cancelled";
 			case "working": return "Execution Time Limit Exceeded";
 			case "cost": return "Cost Limit Exceeded";
 		}
@@ -127331,7 +127364,8 @@ var SampleLimitEventView = ({ eventNode, className }) => {
 			case "cost": return TranscriptIcons.limits.cost;
 		}
 	};
-	const title = resolve_title(eventNode.event.type);
+	const baseTitle = resolve_title(eventNode.event.type);
+	const title = eventNode.event.timestamp ? `${baseTitle} — ${formatDateTime$1(new Date(eventNode.event.timestamp))}` : baseTitle;
 	const icon = resolve_icon(eventNode.event.type);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventPanel, {
 		eventNodeId: eventNode.id,
