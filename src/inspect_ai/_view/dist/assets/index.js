@@ -41981,7 +41981,7 @@ function block(state) {
 }
 //#endregion
 //#region ../../node_modules/.pnpm/markdown-it@14.2.0/node_modules/markdown-it/lib/rules_core/inline.mjs
-function inline$1(state) {
+function inline$2(state) {
 	const tokens = state.tokens;
 	for (let i = 0, l = tokens.length; i < l; i++) {
 		const tok = tokens[i];
@@ -42260,7 +42260,7 @@ function text_join(state) {
 var _rules$2 = [
 	["normalize", normalize],
 	["block", block],
-	["inline", inline$1],
+	["inline", inline$2],
 	["linkify", linkify$1],
 	["replacements", replace$1],
 	["smartquotes", smartquotes],
@@ -55215,6 +55215,11 @@ var createAppSlice = (set, get, _store) => {
 					state.app.propertyBags = rest;
 				});
 			},
+			removeBagsByPrefix: (bagNamePrefix) => {
+				set((state) => {
+					for (const name of Object.keys(state.app.propertyBags)) if (name.startsWith(bagNamePrefix)) delete state.app.propertyBags[name];
+				});
+			},
 			removeByPrefix: (bagName, prefix) => {
 				set((state) => {
 					const bag = state.app.propertyBags[bagName];
@@ -57269,6 +57274,17 @@ var inspectStateHooks = {
 	useRemoveAll: () => useStore((state) => state.appActions.removeAllProperties),
 	useRemoveByPrefix: () => useStore((state) => state.appActions.removeByPrefix)
 };
+//#endregion
+//#region src/state/userSettings.ts
+var useUserSettings = create()(persist((set) => ({
+	themePreference: "readable-system",
+	setThemePreference: (themePreference) => {
+		set({ themePreference });
+	}
+}), {
+	name: "inspect-view-user-settings",
+	storage: createJSONStorage(() => localStorage)
+}));
 //#endregion
 //#region src/app/appearance/icons.ts
 var ApplicationIcons = {
@@ -64809,6 +64825,154 @@ var useFlowServerData = (dir) => {
 		updateFlowData
 	]);
 };
+var ThemeToggle_module_default = {
+	root: "_root_1jsd7_1",
+	button: "_button_1jsd7_6",
+	icon: "_icon_1jsd7_23",
+	menu: "_menu_1jsd7_27",
+	headerRow: "_headerRow_1jsd7_37",
+	srOnly: "_srOnly_1jsd7_48",
+	group: "_group_1jsd7_60",
+	resetButton: "_resetButton_1jsd7_67",
+	option: "_option_1jsd7_82"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/theme/ThemeToggle.tsx
+/**
+* Header control: clicking opens the full theme menu. Purely presentational —
+* the host owns persistence.
+*/
+var ThemeToggle = ({ value, isDark, onChange, className, hideModeSwitch }) => {
+	const id = (0, import_react.useId)();
+	const [buttonEl, setButtonEl] = (0, import_react.useState)(null);
+	const [open, setOpen] = (0, import_react.useState)(false);
+	const stripped = value.startsWith("readable-") ? value.slice(9) : value;
+	const base = stripped === "light" || stripped === "dark" ? stripped : "system";
+	const eventColors = value.startsWith("readable-");
+	const setPreference = (nextBase, nextEventColors = eventColors) => {
+		onChange(nextEventColors ? `readable-${nextBase}` : nextBase);
+	};
+	(0, import_react.useEffect)(() => {
+		if (!open) return;
+		const onKeyDown = (e) => {
+			if (e.key === "Escape") {
+				setOpen(false);
+				buttonEl?.focus();
+			}
+		};
+		document.addEventListener("keydown", onKeyDown);
+		return () => document.removeEventListener("keydown", onKeyDown);
+	}, [buttonEl, open]);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: clsx(ThemeToggle_module_default.root, className),
+		"data-testid": "theme-toggle",
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+			ref: setButtonEl,
+			type: "button",
+			className: ThemeToggle_module_default.button,
+			"aria-label": "Choose theme",
+			"aria-haspopup": "dialog",
+			"aria-expanded": open,
+			onClick: () => setOpen(!open),
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", {
+				className: clsx("bi", isDark ? "bi-moon-stars-fill" : "bi-sun-fill", ThemeToggle_module_default.icon),
+				"aria-hidden": "true"
+			})
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(PopOver, {
+			id: "theme-toggle-popover",
+			isOpen: open,
+			setIsOpen: setOpen,
+			positionEl: buttonEl,
+			placement: "bottom-end",
+			showArrow: false,
+			hoverDelay: -1,
+			closeOnMouseLeave: false,
+			offset: [0, 1],
+			className: ThemeToggle_module_default.menu,
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: ThemeToggle_module_default.headerRow,
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("b", { children: "Theme" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+						type: "button",
+						className: ThemeToggle_module_default.resetButton,
+						onClick: () => onChange("readable-system"),
+						children: "Reset"
+					})]
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("fieldset", {
+					className: ThemeToggle_module_default.group,
+					hidden: hideModeSwitch,
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("legend", {
+						className: ThemeToggle_module_default.srOnly,
+						children: "Theme mode"
+					}), [
+						"system",
+						"light",
+						"dark"
+					].map((themeMode) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("label", {
+						className: ThemeToggle_module_default.option,
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+							type: "radio",
+							name: `${id}-theme-mode`,
+							value: themeMode,
+							checked: base === themeMode,
+							onChange: () => setPreference(themeMode)
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: themeMode.charAt(0).toUpperCase() + themeMode.slice(1) })]
+					}, themeMode))]
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("label", {
+					className: ThemeToggle_module_default.option,
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+						type: "checkbox",
+						checked: eventColors,
+						onChange: () => setPreference(base, !eventColors)
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Event Colors" })]
+				})
+			]
+		})]
+	});
+};
+//#endregion
+//#region ../../packages/theme/src/bootstrap.ts
+/**
+* Resolved dark/light for a preference — drives the toggle's icon and
+* flip direction. For `system` it reads the OS color scheme. (Host
+* query-param overrides are intentionally ignored: the in-app picker is
+* only surfaced standalone.)
+*/
+var resolveIsDark = (value) => {
+	if (value === "dark" || value === "readable-dark") return true;
+	if (value === "light" || value === "readable-light") return false;
+	const hostIsDark = hostIsDarkFromBody();
+	if (hostIsDark !== null) return hostIsDark;
+	return typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches;
+};
+var hostIsDarkFromBody = () => {
+	if (typeof document === "undefined" || !document.body) return null;
+	const cls = document.body.classList;
+	if (cls.contains("vscode-high-contrast-light")) return false;
+	if (cls.contains("vscode-high-contrast")) return true;
+	if (cls.contains("vscode-dark")) return true;
+	if (cls.contains("vscode-light")) return false;
+	return null;
+};
+//#endregion
+//#region ../../packages/inspect-components/src/theme/useResolvedIsDark.ts
+var subscribe = (onChange) => {
+	if (typeof MutationObserver === "undefined" || typeof document === "undefined") return () => {};
+	const observer = new MutationObserver(onChange);
+	observer.observe(document.documentElement, {
+		attributes: true,
+		attributeFilter: ["data-bs-theme"]
+	});
+	return () => observer.disconnect();
+};
+/**
+* Resolved dark/light for the theme toggle icon. The value is derived from the
+* preference (so an in-app pick flips the icon in the same render); the
+* subscription re-renders on external changes the preference can't see.
+*/
+var useResolvedIsDark = (preference) => (0, import_react.useSyncExternalStore)(subscribe, () => resolveIsDark(preference), () => false);
 var ActivityBar_module_default = {
 	wrapper: "_wrapper_44dmw_1",
 	container: "_container_44dmw_12",
@@ -65085,6 +65249,9 @@ var Navbar = ({ fnNavigationUrl, bordered, children, currentPath, breadcrumbsEna
 //#region src/app/navbar/ApplicationNavbar.tsx
 var ApplicationNavbar = ({ currentPath, fnNavigationUrl, bordered, children, showActivity = "log", breadcrumbsEnabled }) => {
 	const optionsRef = (0, import_react.useRef)(null);
+	const themePreference = useUserSettings((s) => s.themePreference);
+	const setThemePreference = useUserSettings((s) => s.setThemePreference);
+	const isDark = useResolvedIsDark(themePreference);
 	const loading = useStore((state) => state.app.status.loading);
 	const sampleStatus = useStore((state) => state.sample.sampleStatus);
 	const isShowing = useStore((state) => state.app.dialogs.options);
@@ -65106,6 +65273,12 @@ var ApplicationNavbar = ({ currentPath, fnNavigationUrl, bordered, children, sho
 		breadcrumbsEnabled,
 		children: [
 			children,
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ThemeToggle, {
+				value: themePreference,
+				isDark,
+				onChange: setThemePreference,
+				hideModeSwitch: isVscode()
+			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ViewerOptionsButton, {
 				showing: isShowing,
 				setShowing,
@@ -114786,7 +114959,7 @@ var kToolTodoContentType = "agent/todo-list";
 */
 var resolveToolInput = (fn, toolArgs) => {
 	const toolName = fn;
-	const inputDescriptor = extractInputMetadata(toolName);
+	const inputDescriptor = extractInputMetadata(toolName, toolArgs);
 	const { input, description, args } = extractInput(toolArgs, inputDescriptor);
 	const functionCall = args.length > 0 ? `${toolName}(${args.join(", ")})` : toolName;
 	if ((fn === "Task" || fn === "task" || fn === "Agent" || fn === "agent") && typeof toolArgs.subagent_type === "string") {
@@ -114833,7 +115006,11 @@ var resolveToolInput = (fn, toolArgs) => {
 		contentType: inputDescriptor?.contentType
 	};
 };
-var extractInputMetadata = (toolName) => {
+var extractInputMetadata = (toolName, toolArgs) => {
+	if (toolName === "text_editor" && toolArgs.command === "create") return {
+		inputArg: "file_text",
+		contentType: prismLanguageForPath(toolArgs.path)
+	};
 	if (toolName === "bash") return {
 		inputArg: ["cmd", "command"],
 		contentType: "bash"
@@ -114899,6 +115076,22 @@ var extractInputMetadata = (toolName) => {
 	};
 	else if (toolName === "tool_search") return { contentType: "markdown" };
 	else return;
+};
+var prismLanguageForPath = (path) => {
+	if (typeof path !== "string") return;
+	switch (path.split(".").pop()?.toLowerCase()) {
+		case "py": return "python";
+		case "js":
+		case "jsx":
+		case "mjs":
+		case "cjs": return "javascript";
+		case "json": return "json";
+		case "sh":
+		case "bash": return "bash";
+		case "yaml":
+		case "yml": return "yaml";
+		default: return;
+	}
 };
 var kCodexAgentResultTools = new Set([
 	"wait_agent",
@@ -115479,10 +115672,10 @@ var ValueDiv = ({ children }) => {
 	});
 };
 var ToolOutput_module_default = {
-	toolImage: "_toolImage_h7uyp_1",
-	output: "_output_h7uyp_6",
-	textOutput: "_textOutput_h7uyp_10",
-	textCode: "_textCode_h7uyp_19"
+	toolImage: "_toolImage_1cvly_1",
+	output: "_output_1cvly_6",
+	textOutput: "_textOutput_1cvly_10",
+	textCode: "_textCode_1cvly_19"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/chat/tools/ToolOutput.tsx
@@ -115611,6 +115804,7 @@ var messageRenderers = {
 		const renderReasoningCode = isOpenRouterReasoning(text);
 		const codeFormatted = renderReasoningCode ? JSON.stringify(jsonParse$1(text), null, 2) : text;
 		return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			"data-content-kind": "reasoning",
 			className: clsx(MessageContent_module_default.reasoning, "text-size-small"),
 			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: clsx("text-style-label", "text-style-secondary", isLast ? "no-last-para-padding" : ""),
@@ -115838,9 +116032,9 @@ var ToolSearchView = ({ namespaces }) => {
 	});
 };
 var ToolTitle_module_default = {
-	image: "_image_1gmrl_1",
-	toolTitle: "_toolTitle_1gmrl_6",
-	description: "_description_1gmrl_11"
+	image: "_image_1evla_1",
+	toolTitle: "_toolTitle_1evla_6",
+	description: "_description_1evla_11"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/chat/tools/ToolTitle.tsx
@@ -115925,9 +116119,9 @@ var TodoWriteInput = ({ contents, parentRef }) => {
 	});
 };
 var ToolInput_module_default = {
-	outputPre: "_outputPre_8cjqa_1",
-	toolView: "_toolView_8cjqa_7",
-	outputCode: "_outputCode_8cjqa_21"
+	outputPre: "_outputPre_7phrr_1",
+	toolView: "_toolView_7phrr_7",
+	outputCode: "_outputCode_7phrr_20"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/chat/tools/ToolInput.tsx
@@ -115940,7 +116134,7 @@ var ToolInput = (props) => {
 	if (useToolView) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedText, {
 		markdown: toolCallView.content || "",
 		ref: sourceCodeRef,
-		className: clsx(ToolInput_module_default.toolView, className)
+		className: clsx("tool-call-input", ToolInput_module_default.toolView, className)
 	});
 	else return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderTool, {
 		contents,
@@ -115958,7 +116152,7 @@ var RenderTool = ({ contents, contentType, parentRef, className }) => {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		ref: parentRef,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", {
-			className: clsx("tool-output", ToolInput_module_default.outputPre, ToolInput_module_default.bottomMargin, className),
+			className: clsx("tool-call-input", ToolInput_module_default.outputPre, ToolInput_module_default.bottomMargin, className),
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", {
 				className: clsx("source-code", "sourceCode", contentType ? `language-${contentType}` : void 0, ToolInput_module_default.outputCode),
 				children: formattedContent
@@ -115975,7 +116169,7 @@ var isValidView = (view) => {
 /**
 * Renders the ToolCallView component.
 */
-var ToolCallView = ({ id, tool, functionCall, input, description, contentType, view, output, mode, collapsible = true, getCustomToolView }) => {
+var ToolCallView = ({ id, tool, functionCall, input, description, contentType, view, output, mode, collapsible = true, section = "all", getCustomToolView }) => {
 	function isContentImage(value) {
 		if (value && typeof value === "object") {
 			if (value.type === "image") return true;
@@ -116009,49 +116203,51 @@ var ToolCallView = ({ id, tool, functionCall, input, description, contentType, v
 		mode
 	};
 	const customView = getCustomToolView?.(props) ?? getDefaultCustomToolView(props);
-	if (customView) return customView;
+	if (customView) return section === "output" ? null : customView;
 	const contents = mode !== "compact" ? input : input || functionCall;
 	const context = defaultContext();
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: clsx(ToolCallView_module_default.toolCallView),
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [mode !== "compact" && (!view || view.title) ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolTitle, {
-			title: view?.title || functionCall,
-			description
-		}) : "", /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
-			id: `${id}-tool-input`,
-			collapse: true,
-			border: false,
-			lines: 20,
-			className: clsx("text-size-small"),
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolInput, {
-				contentType,
-				contents,
-				toolCallView: view
-			})
-		})] }), contentType === "markdown" && hasContent ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
-			id: `${id}-tool-content`,
-			collapse,
-			border: false,
-			lines: 15,
-			className: clsx("text-size-small"),
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownToolOutput, {
-				contents: normalizedContent,
-				context
-			})
-		}) : hasContent && collapsible ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
-			id: `${id}-tool-content`,
-			collapse,
-			border: false,
-			lines: 15,
-			className: clsx("text-size-small"),
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageContent, {
-				contents: normalizedContent,
-				context
-			})
-		}) : hasContent ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageContent, {
+	const callSection = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [mode !== "compact" && (!view || view.title) ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolTitle, {
+		title: view?.title || functionCall,
+		description
+	}) : "", /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
+		id: `${id}-tool-input`,
+		collapse: true,
+		border: false,
+		lines: 20,
+		className: clsx("text-size-small"),
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolInput, {
+			contentType,
+			contents,
+			toolCallView: view
+		})
+	})] });
+	const outputSection = contentType === "markdown" && hasContent ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
+		id: `${id}-tool-content`,
+		collapse,
+		border: false,
+		lines: 15,
+		className: clsx("text-size-small"),
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownToolOutput, {
 			contents: normalizedContent,
 			context
-		}) : null]
+		})
+	}) : hasContent && collapsible ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
+		id: `${id}-tool-content`,
+		collapse,
+		border: false,
+		lines: 15,
+		className: clsx("text-size-small"),
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageContent, {
+			contents: normalizedContent,
+			context
+		})
+	}) : hasContent ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageContent, {
+		contents: normalizedContent,
+		context
+	}) : null;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: clsx(ToolCallView_module_default.toolCallView),
+		children: [section !== "output" ? callSection : null, section !== "call" ? outputSection : null]
 	});
 };
 /**
@@ -116081,9 +116277,9 @@ var normalizeContent = (output) => {
 	}];
 };
 var ToolCallErrorView_module_default = {
-	error: "_error_1lozs_1",
-	type: "_type_1lozs_11",
-	message: "_message_1lozs_17"
+	error: "_error_z9ujs_1",
+	type: "_type_z9ujs_11",
+	message: "_message_z9ujs_17"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/chat/tools/ToolCallErrorView.tsx
@@ -116097,20 +116293,21 @@ var ToolCallErrorView = ({ error, className }) => {
 	});
 };
 var ChatMessage_module_default = {
-	message: "_message_1kuwu_1",
-	systemRole: "_systemRole_1kuwu_9",
-	timestamp: "_timestamp_1kuwu_13",
-	messageGrid: "_messageGrid_1kuwu_19",
-	toolMessageGrid: "_toolMessageGrid_1kuwu_29",
-	messageContents: "_messageContents_1kuwu_33",
-	indented: "_indented_1kuwu_38",
-	copyLink: "_copyLink_1kuwu_42",
-	metadataLabel: "_metadataLabel_1kuwu_53",
-	hover: "_hover_1kuwu_57"
+	message: "_message_1gt9a_1",
+	systemRole: "_systemRole_1gt9a_9",
+	timestamp: "_timestamp_1gt9a_13",
+	messageGrid: "_messageGrid_1gt9a_19",
+	toolMessageGrid: "_toolMessageGrid_1gt9a_29",
+	headerEnd: "_headerEnd_1gt9a_33",
+	messageContents: "_messageContents_1gt9a_40",
+	indented: "_indented_1gt9a_45",
+	copyLink: "_copyLink_1gt9a_49",
+	metadataLabel: "_metadataLabel_1gt9a_60",
+	hover: "_hover_1gt9a_64"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/chat/ChatMessage.tsx
-var ChatMessage = (0, import_react.memo)(function ChatMessage({ id, message, display, linking, references }) {
+var ChatMessage = (0, import_react.memo)(function ChatMessage({ id, message, display, linking, references, label }) {
 	const indented = display?.indented ?? false;
 	const unlabeledRoles = display?.unlabeledRoles;
 	const formatDateTime = display?.formatDateTime;
@@ -116148,11 +116345,14 @@ var ChatMessage = (0, import_react.memo)(function ChatMessage({ id, message, dis
 					value: messageUrl,
 					className: clsx(ChatMessage_module_default.copyLink)
 				}) : ""
-			] }), message.timestamp && formatDateTime && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-				className: ChatMessage_module_default.timestamp,
-				title: message.timestamp,
-				children: formatDateTime(new Date(message.timestamp))
-			})]
+			] }), message.timestamp && formatDateTime || label ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: ChatMessage_module_default.headerEnd,
+				children: [message.timestamp && formatDateTime && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+					className: ChatMessage_module_default.timestamp,
+					title: message.timestamp,
+					children: formatDateTime(new Date(message.timestamp))
+				}), label]
+			}) : null]
 		}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: clsx(ChatMessage_module_default.messageContents, indented ? ChatMessage_module_default.indented : void 0),
 			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
@@ -116176,24 +116376,61 @@ var ChatMessage = (0, import_react.memo)(function ChatMessage({ id, message, dis
 	});
 });
 var ChatMessageRow_module_default = {
-	grid: "_grid_13k8p_1",
-	number: "_number_13k8p_8",
-	user: "_user_13k8p_12",
-	container: "_container_13k8p_18",
-	first: "_first_13k8p_26",
-	last: "_last_13k8p_33",
-	label: "_label_13k8p_40",
-	highlight: "_highlight_13k8p_45",
-	bottomMargin: "_bottomMargin_13k8p_49",
-	codeCompact: "_codeCompact_13k8p_53",
-	simple: "_simple_13k8p_57"
+	grid: "_grid_qa1cd_1",
+	number: "_number_qa1cd_10",
+	user: "_user_qa1cd_14",
+	container: "_container_qa1cd_20",
+	first: "_first_qa1cd_28",
+	last: "_last_qa1cd_35",
+	label: "_label_qa1cd_42",
+	highlight: "_highlight_qa1cd_49",
+	box: "_box_qa1cd_56",
+	attachedGroup: "_attachedGroup_qa1cd_66",
+	attachedBottom: "_attachedBottom_qa1cd_71",
+	attachedTop: "_attachedTop_qa1cd_79",
+	toolLabel: "_toolLabel_qa1cd_87",
+	bottomMargin: "_bottomMargin_qa1cd_94",
+	codeCompact: "_codeCompact_qa1cd_98",
+	simple: "_simple_qa1cd_102"
+};
+var MessageLabel_module_default = {
+	badge: "_badge_10sr6_1",
+	inline: "_inline_10sr6_2"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/chat/MessageLabel.tsx
+/**
+* A filled monospace chip used for message position labels (top-right of a
+* message) and as an inline anchor in summary prose.
+*/
+var MessageLabel = ({ label, mode = "badge", onActivate, className }) => {
+	if (mode === "inline") {
+		const onKeyDown = (e) => {
+			if (onActivate && (e.key === "Enter" || e.key === " ")) {
+				e.preventDefault();
+				onActivate();
+			}
+		};
+		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+			className: clsx(MessageLabel_module_default.inline, className),
+			onClick: onActivate,
+			onKeyDown: onActivate ? onKeyDown : void 0,
+			tabIndex: onActivate ? 0 : void 0,
+			children: label
+		});
+	}
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+		className: clsx(MessageLabel_module_default.badge, className),
+		onClick: onActivate,
+		children: label
+	});
 };
 //#endregion
 //#region ../../packages/inspect-components/src/chat/ChatMessageRow.tsx
 /**
 * Renders the ChatMessage component.
 */
-var ChatMessageRow = ({ index, parentName, resolvedMessage, references, className, display, labels, maxLabelLength, linking, tools }) => {
+var ChatMessageRow = ({ index, parentName, resolvedMessage, references, className, display, labels, linking, tools, startNumber }) => {
 	const highlightUserMessage = display?.highlightUserMessage ?? true;
 	const showLabels = labels?.show ?? true;
 	const labelValues = labels?.messageLabels;
@@ -116201,20 +116438,27 @@ var ChatMessageRow = ({ index, parentName, resolvedMessage, references, classNam
 	const toolCallStyle = tools?.callStyle ?? "complete";
 	const getCustomToolView = tools?.renderToolCall;
 	const views = [];
-	const viewLabels = [];
+	const viewKinds = [];
+	const viewChips = [];
 	const useLabels = showLabels || Object.keys(labelValues || {}).length > 0;
+	const baseNumber = startNumber ?? index + 1;
+	const labelForBlock = (blockId, blockNumber) => labelValues && blockId ? labelValues[blockId] : String(blockNumber);
 	const skipChatMessage = toolCallStyle !== "omit" && resolvedMessage.message.role === "assistant" && !!resolvedMessage.message.tool_calls && resolvedMessage.message.tool_calls.length > 0 && !hasVisibleContent(resolvedMessage.message);
-	const rowLabel = useLabels ? labelValues && resolvedMessage.message.id ? labelValues[resolvedMessage.message.id] : String(index + 1) : void 0;
+	const rowLabel = useLabels ? labelForBlock(resolvedMessage.message.id, baseNumber) : void 0;
+	const messageChip = !skipChatMessage && rowLabel?.trim() ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageLabel, { label: rowLabel }) : void 0;
 	if (!skipChatMessage) {
-		if (useLabels) viewLabels.push(rowLabel);
 		views.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChatMessage, {
 			id: `${parentName}-chat-messages-${index}`,
 			message: resolvedMessage.message,
 			display,
 			linking,
-			references
+			references,
+			label: messageChip
 		}));
+		viewKinds.push("message");
+		viewChips.push(void 0);
 	}
+	let toolNumber = baseNumber + (skipChatMessage ? 0 : 1);
 	if (toolCallStyle !== "omit" && resolvedMessage.message.role === "assistant" && resolvedMessage.message.tool_calls && resolvedMessage.message.tool_calls.length) {
 		const toolMessages = resolvedMessage.toolMessages || [];
 		let idx = 0;
@@ -116223,47 +116467,87 @@ var ChatMessageRow = ({ index, parentName, resolvedMessage, references, classNam
 			let toolMessage;
 			if (tool_call.id) toolMessage = toolMessages.find((msg) => msg.tool_call_id === tool_call.id);
 			else toolMessage = toolMessages[idx];
-			const toolLabel = labelValues?.[toolMessage?.id || ""] || (skipChatMessage && idx === 0 ? rowLabel : void 0);
 			const resolvedToolOutput = resolveToolMessage(toolMessage);
-			if (useLabels) viewLabels.push(toolLabel);
-			if (toolCallStyle === "compact") views.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallViewCompact, {
-				idx,
-				functionCall
-			}));
-			else views.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallView, {
-				id: `${index}-tool-call-${idx}`,
-				tool: name,
-				functionCall,
-				input,
-				description,
-				contentType,
-				output: resolvedToolOutput,
-				view: tool_call.view ? substituteToolCallContent(tool_call.view, tool_call.arguments) : void 0,
-				getCustomToolView
-			}, `tool-call-${idx}`));
-			if (toolMessage?.error) {
-				if (useLabels) viewLabels.push(void 0);
-				views.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallErrorView, { error: toolMessage.error }, `tool-call-${idx}-error`));
+			const resolvedToolView = tool_call.view ? substituteToolCallContent(tool_call.view, tool_call.arguments) : void 0;
+			if (toolCallStyle === "compact") {
+				views.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallViewCompact, {
+					idx,
+					functionCall
+				}));
+				viewKinds.push("tool");
+				viewChips.push(void 0);
+			} else {
+				views.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallView, {
+					id: `${index}-tool-call-${idx}`,
+					tool: name,
+					functionCall,
+					input,
+					description,
+					contentType,
+					output: resolvedToolOutput,
+					view: resolvedToolView,
+					section: "call",
+					getCustomToolView
+				}, `tool-call-${idx}`));
+				viewKinds.push("tool");
+				const toolLabel = useLabels ? labelForBlock(resolvedMessage.message.id, toolNumber) : void 0;
+				viewChips.push(toolLabel?.trim() ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageLabel, { label: toolLabel }) : void 0);
+				if (toolMessage?.error) {
+					views.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallErrorView, { error: toolMessage.error }, `tool-call-${idx}-error`));
+					viewKinds.push("tool-result");
+					viewChips.push(void 0);
+				} else if (hasOutputContent(resolvedToolOutput)) {
+					views.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallView, {
+						id: `${index}-tool-call-${idx}`,
+						tool: name,
+						functionCall,
+						input,
+						description,
+						contentType,
+						output: resolvedToolOutput,
+						view: resolvedToolView,
+						section: "output",
+						getCustomToolView
+					}, `tool-call-${idx}-output`));
+					viewKinds.push("tool-result");
+					viewChips.push(void 0);
+				}
 			}
+			toolNumber++;
 			idx++;
 		}
 	}
-	if (useLabels) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: clsx(ChatMessageRow_module_default.grid, className),
-		children: views.map((view, idx) => {
-			const label = viewLabels[idx];
-			return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: clsx("text-size-smaller", "text-style-secondary", ChatMessageRow_module_default.number, ChatMessageRow_module_default.label),
-				style: { minWidth: `${maxLabelLength ?? 3}ch` },
-				children: label
-			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: clsx(ChatMessageRow_module_default.container, highlightUserMessage && resolvedMessage.message.role === "user" ? ChatMessageRow_module_default.user : void 0, idx === 0 ? ChatMessageRow_module_default.first : void 0, idx === views.length - 1 ? ChatMessageRow_module_default.last : void 0, highlightLabeled && label?.trim() ? ChatMessageRow_module_default.highlight : void 0),
-				children: view
-			})] }, `chat-message-row-${index}-part-${idx}`);
-		})
-	}) });
-	else return views.map((view, idx) => {
+	if (useLabels) {
+		const hasTools = viewKinds.some((k) => k !== "message");
+		const renderPart = (idx, attached) => {
+			const kind = viewKinds[idx];
+			const isMessage = kind === "message";
+			const chip = viewChips[idx];
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				"data-message-role": isMessage ? resolvedMessage.message.role : void 0,
+				"data-message-kind": kind,
+				className: clsx(isMessage && ChatMessageRow_module_default.container, hasTools ? ChatMessageRow_module_default.box : void 0, isMessage && highlightUserMessage && resolvedMessage.message.role === "user" ? ChatMessageRow_module_default.user : void 0, isMessage && !hasTools && idx === 0 ? ChatMessageRow_module_default.first : void 0, isMessage && !hasTools && idx === views.length - 1 ? ChatMessageRow_module_default.last : void 0, attached?.bottom ? ChatMessageRow_module_default.attachedBottom : void 0, attached?.top ? ChatMessageRow_module_default.attachedTop : void 0, highlightLabeled && isMessage && messageChip ? ChatMessageRow_module_default.highlight : void 0),
+				children: [chip ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: ChatMessageRow_module_default.toolLabel,
+					children: chip
+				}) : null, views[idx]]
+			}, `chat-message-row-${index}-part-${idx}`);
+		};
+		const items = [];
+		for (let idx = 0; idx < views.length; idx++) if (viewKinds[idx] === "tool" && viewKinds[idx + 1] === "tool-result") {
+			items.push(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: ChatMessageRow_module_default.attachedGroup,
+				children: [renderPart(idx, { bottom: true }), renderPart(idx + 1, { top: true })]
+			}, `chat-message-row-${index}-toolgroup-${idx}`));
+			idx++;
+		} else items.push(renderPart(idx));
 		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: clsx(ChatMessageRow_module_default.grid, className),
+			children: items
+		});
+	} else return views.map((view, idx) => {
+		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			"data-message-role": resolvedMessage.message.role,
 			className: clsx(ChatMessageRow_module_default.container, idx === 0 ? ChatMessageRow_module_default.first : void 0, idx === views.length - 1 ? ChatMessageRow_module_default.last : void 0, idx === views.length - 1 ? ChatMessageRow_module_default.bottomMargin : void 0, className, ChatMessageRow_module_default.simple, highlightUserMessage && resolvedMessage.message.role === "user" ? ChatMessageRow_module_default.user : void 0),
 			children: view
 		}, `chat-message-row-unlabeled-${index}-part-${idx}`);
@@ -116299,6 +116583,7 @@ var resolveToolMessage = (toolMessage) => {
 		};
 	}).filter((con) => con !== void 0);
 };
+var hasOutputContent = (output) => output.some((tool) => tool.content.some((item) => item.type !== "text" || item.text.trim().length > 0));
 var hasVisibleContent = (message) => {
 	const content = message.content;
 	if (typeof content === "string") return content.trim().length > 0;
@@ -116318,6 +116603,17 @@ var hasVisibleContent = (message) => {
 		return true;
 	});
 };
+/**
+* Number of sequentially-numbered blocks a row renders. Only the full
+* (un-embedded) layout numbers tool calls individually; every other style
+* keeps the legacy one-number-per-row behavior.
+*/
+var countRowBlocks = (resolved, toolCallStyle) => {
+	if (toolCallStyle !== "complete") return 1;
+	const message = resolved.message;
+	const hasToolCalls = message.role === "assistant" && !!message.tool_calls?.length;
+	return (hasToolCalls && !hasVisibleContent(message) ? 0 : 1) + (hasToolCalls ? message.tool_calls.length : 0);
+};
 var ToolCallViewCompact = ({ idx, functionCall }) => {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("code", {
 		className: clsx(ChatMessageRow_module_default.codeCompact),
@@ -116330,6 +116626,11 @@ var ToolCallViewCompact = ({ idx, functionCall }) => {
 * Compute the maximum label length from a label map.
 * Hoisted out of ChatMessageRow so it runs once per message list,
 * not once per row (O(n) vs O(n²)).
+*
+* The width is the widest label across the whole map so the column stays
+* aligned everywhere the map is used (e.g. uniformly across the events of a
+* transcript). Returns 0 for an empty map and a small default when there is no
+* map (rows fall back to numeric labels).
 */
 function computeMaxLabelLength(messageLabels) {
 	if (!messageLabels) return 3;
@@ -116350,6 +116651,16 @@ var ChatView = ({ id, messages, className, display, labels, linking, tools, refe
 		};
 	});
 	const maxLabelLength = (0, import_react.useMemo)(() => computeMaxLabelLength(labels?.messageLabels), [labels?.messageLabels]);
+	const toolCallStyle = tools?.callStyle ?? "complete";
+	const rowStartNumbers = (0, import_react.useMemo)(() => {
+		const starts = [];
+		let next = 1;
+		for (const msg of collapsedMessages) {
+			starts.push(next);
+			next += countRowBlocks(msg, toolCallStyle);
+		}
+		return starts;
+	}, [collapsedMessages, toolCallStyle]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		className: clsx(className),
 		children: collapsedMessages.map((msg, index) => {
@@ -116362,6 +116673,7 @@ var ChatView = ({ id, messages, className, display, labels, linking, tools, refe
 				linking,
 				tools,
 				maxLabelLength,
+				startNumber: rowStartNumbers[index],
 				references
 			}, `${id}-msg-${index}`);
 		})
@@ -117560,6 +117872,7 @@ function VirtualList({ persistenceKey, ref, className, scrollRef: externalScroll
 		requestAnimationFrame(() => {
 			isAutoScrollingRef.current = true;
 			el.scrollTo({ top: el.scrollHeight });
+			lastAutoScrollTopRef.current = el.scrollTop;
 			requestAnimationFrame(() => {
 				isAutoScrollingRef.current = false;
 			});
@@ -117571,11 +117884,14 @@ function VirtualList({ persistenceKey, ref, className, scrollRef: externalScroll
 		getScrollElement
 	]);
 	const hasInitialScrolledRef = (0, import_react.useRef)(false);
+	const userScrolledRef = (0, import_react.useRef)(false);
+	const lastAutoScrollTopRef = (0, import_react.useRef)(null);
 	const lastInitialKeyRef = (0, import_react.useRef)(null);
 	const lastInitialIndexRef = (0, import_react.useRef)(void 0);
 	(0, import_react.useEffect)(() => {
 		if (lastInitialKeyRef.current !== persistenceKey || lastInitialIndexRef.current !== initialIndex) {
 			hasInitialScrolledRef.current = false;
+			userScrolledRef.current = false;
 			lastInitialKeyRef.current = persistenceKey;
 			lastInitialIndexRef.current = initialIndex ?? void 0;
 		}
@@ -117584,6 +117900,13 @@ function VirtualList({ persistenceKey, ref, className, scrollRef: externalScroll
 		if (!el) return;
 		const snapshot = getRestoreSnapshot();
 		requestAnimationFrame(() => {
+			isAutoScrollingRef.current = true;
+			const release = () => {
+				lastAutoScrollTopRef.current = el.scrollTop;
+				requestAnimationFrame(() => {
+					isAutoScrollingRef.current = false;
+				});
+			};
 			if (initialIndex != null) {
 				virtualizer.scrollToIndex(initialIndex, {
 					align: "start",
@@ -117591,14 +117914,18 @@ function VirtualList({ persistenceKey, ref, className, scrollRef: externalScroll
 				});
 				if (stickyHeaderOffset) el.scrollTop -= stickyHeaderOffset;
 				hasInitialScrolledRef.current = true;
+				release();
 			} else if (snapshot) {
-				if (el.scrollTop === 0) if (snapshot.totalCount === data.length) el.scrollTop = toSpacerScroll(snapshot.scrollOffset);
-				else {
-					const maxScroll = Math.max(0, contentTotal - el.clientHeight);
-					el.scrollTop = toSpacerScroll(Math.min(snapshot.scrollOffset, maxScroll));
-				}
 				hasInitialScrolledRef.current = true;
-			}
+				if (!userScrolledRef.current) {
+					const maxScroll = Math.max(0, virtualizer.getTotalSize() - el.clientHeight);
+					el.scrollTop = toSpacerScroll(snapshot.totalCount === data.length ? snapshot.scrollOffset : Math.min(snapshot.scrollOffset, maxScroll));
+				}
+				release();
+			} else if (!userScrolledRef.current) {
+				el.scrollTop = 0;
+				release();
+			} else release();
 		});
 	}, [
 		persistenceKey,
@@ -117611,18 +117938,22 @@ function VirtualList({ persistenceKey, ref, className, scrollRef: externalScroll
 		toSpacerScroll,
 		virtualizer
 	]);
+	const buildSnapshot = (0, import_react.useCallback)((el) => ({
+		version: 1,
+		scrollOffset: toContentScroll(el.scrollTop),
+		totalCount: data.length
+	}), [toContentScroll, data.length]);
 	const persistTimerRef = (0, import_react.useRef)(null);
 	const persistOnScroll = useRafThrottle(() => {
 		if (isAutoScrollingRef.current) return;
+		const elNow = getScrollElement();
+		if (elNow && lastAutoScrollTopRef.current !== null && Math.abs(elNow.scrollTop - lastAutoScrollTopRef.current) <= 2) return;
+		userScrolledRef.current = true;
 		if (persistTimerRef.current) clearTimeout(persistTimerRef.current);
 		persistTimerRef.current = setTimeout(() => {
 			const el = getScrollElement();
 			if (!el) return;
-			recordSnapshot({
-				version: 1,
-				scrollOffset: toContentScroll(el.scrollTop),
-				totalCount: data.length
-			});
+			recordSnapshot(buildSnapshot(el));
 		}, PERSIST_DEBOUNCE_MS);
 	});
 	(0, import_react.useEffect)(() => {
@@ -117631,6 +117962,12 @@ function VirtualList({ persistenceKey, ref, className, scrollRef: externalScroll
 		el.addEventListener("scroll", persistOnScroll);
 		return () => el.removeEventListener("scroll", persistOnScroll);
 	}, [getScrollElement, persistOnScroll]);
+	(0, import_react.useEffect)(() => () => {
+		if (persistTimerRef.current) {
+			clearTimeout(persistTimerRef.current);
+			persistTimerRef.current = null;
+		}
+	}, []);
 	const items = virtualizer.getVirtualItems();
 	const startIndex = items[0]?.index ?? 0;
 	const endIndex = items[items.length - 1]?.index ?? 0;
@@ -117911,10 +118248,10 @@ function messageHasVisibleContent(message) {
 	});
 }
 var ChatViewVirtualList_module_default = {
-	list: "_list_ejymp_1",
-	generatingRow: "_generatingRow_ejymp_7",
-	generatingLabel: "_generatingLabel_ejymp_15",
-	generatingContent: "_generatingContent_ejymp_19"
+	list: "_list_1hs8h_1",
+	generatingRow: "_generatingRow_1hs8h_7",
+	generatingLabel: "_generatingLabel_1hs8h_15",
+	generatingContent: "_generatingContent_1hs8h_21"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/chat/ChatViewVirtualList.tsx
@@ -117955,17 +118292,27 @@ var ChatViewVirtualList = (0, import_react.memo)(function ChatViewVirtualList({ 
 		return index !== -1 ? index : void 0;
 	}, [initialMessageId, collapsedMessages]);
 	const maxLabelLength = (0, import_react.useMemo)(() => computeMaxLabelLength(labels?.messageLabels), [labels?.messageLabels]);
+	const toolCallStyle = tools?.callStyle ?? "complete";
+	const rowStartNumbers = (0, import_react.useMemo)(() => {
+		const starts = [];
+		let next = 1;
+		for (const msg of collapsedMessages) {
+			starts.push(next);
+			next += countRowBlocks(msg, toolCallStyle);
+		}
+		return starts;
+	}, [collapsedMessages, toolCallStyle]);
 	const lastIndex = collapsedMessages.length - 1;
 	const renderRow = (0, import_react.useCallback)((index, item) => {
 		if (running && index === lastIndex && isLivePlaceholderMessage(item.message)) return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: ChatViewVirtualList_module_default.generatingRow,
 			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: clsx("text-size-smaller", "text-style-secondary", ChatViewVirtualList_module_default.generatingLabel),
-				style: { minWidth: `${maxLabelLength ?? 3}ch` },
-				children: index + 1
-			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: ChatViewVirtualList_module_default.generatingContent,
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(GeneratingIndicator, {})
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: ChatViewVirtualList_module_default.generatingLabel,
+				style: { minWidth: `${maxLabelLength ?? 3}ch` },
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageLabel, { label: `${index + 1}` })
 			})]
 		});
 		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChatMessageRow, {
@@ -117976,7 +118323,8 @@ var ChatViewVirtualList = (0, import_react.memo)(function ChatViewVirtualList({ 
 			labels,
 			linking,
 			tools,
-			maxLabelLength
+			maxLabelLength,
+			startNumber: rowStartNumbers[index]
 		});
 	}, [
 		id,
@@ -117986,7 +118334,8 @@ var ChatViewVirtualList = (0, import_react.memo)(function ChatViewVirtualList({ 
 		labels,
 		linking,
 		tools,
-		maxLabelLength
+		maxLabelLength,
+		rowStartNumbers
 	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(VirtualList, {
 		persistenceKey: `chat-${id}`,
@@ -118271,6 +118620,11 @@ var transformers = () => {
 			process: (node) => skipThisNode(node)
 		},
 		{
+			name: "collapse_same_name_spans",
+			matches: (node) => isAgentOrSolverSpan(node) && node.children.some((child) => isSameNameSpanChild(node, child)),
+			process: (node) => collapseSameNameSpans(node)
+		},
+		{
 			name: "discard_solvers_span",
 			matches: (Node) => Node.event.event === "span_begin" && Node.event.type === "solvers",
 			process: (node) => {
@@ -118296,6 +118650,16 @@ var elevateChildNode = (node, childEventType) => {
 	targetNode.depth = node.depth;
 	targetNode.children = setDepth(remainingChildren, node.depth + 1);
 	return targetNode;
+};
+var isAgentOrSolverSpan = (node) => node.event.event === "span_begin" && (node.event.type === "solver" || node.event.type === "agent");
+var unqualifiedSpanName = (name) => {
+	const slash = name.indexOf("/");
+	return slash === -1 ? name : name.slice(slash + 1);
+};
+var isSameNameSpanChild = (parent, child) => isAgentOrSolverSpan(child) && parent.event.event === "span_begin" && child.event.event === "span_begin" && unqualifiedSpanName(parent.event.name) === unqualifiedSpanName(child.event.name);
+var collapseSameNameSpans = (node) => {
+	node.children = node.children.flatMap((child) => isSameNameSpanChild(node, child) ? reduceDepth(child.children, 1) : [child]);
+	return node;
 };
 var unwrapNode = (node) => {
 	return node.children.map((child) => {
@@ -120579,21 +120943,21 @@ var EventNavs = ({ navs, selectedNav, setSelectedNav }) => {
 	});
 };
 var EventPanel_module_default = {
-	stickyWrapper: "_stickyWrapper_14ib7_1",
-	label: "_label_14ib7_18",
-	title: "_title_14ib7_23",
-	titleExtra: "_titleExtra_14ib7_28",
-	navs: "_navs_14ib7_35",
-	turnLabel: "_turnLabel_14ib7_42",
-	card: "_card_14ib7_49",
-	cardContent: "_cardContent_14ib7_57",
-	hidden: "_hidden_14ib7_62",
-	copyLink: "_copyLink_14ib7_70",
-	hover: "_hover_14ib7_80",
-	eventLabel: "_eventLabel_14ib7_87",
-	root: "_root_14ib7_91",
-	bottomDongle: "_bottomDongle_14ib7_96",
-	dongleIcon: "_dongleIcon_14ib7_112"
+	stickyWrapper: "_stickyWrapper_2hmlz_1",
+	label: "_label_2hmlz_20",
+	title: "_title_2hmlz_25",
+	titleExtra: "_titleExtra_2hmlz_30",
+	navs: "_navs_2hmlz_37",
+	turnLabel: "_turnLabel_2hmlz_44",
+	card: "_card_2hmlz_51",
+	cardContent: "_cardContent_2hmlz_59",
+	hidden: "_hidden_2hmlz_64",
+	copyLink: "_copyLink_2hmlz_72",
+	hover: "_hover_2hmlz_82",
+	eventLabel: "_eventLabel_2hmlz_89",
+	root: "_root_2hmlz_93",
+	bottomDongle: "_bottomDongle_2hmlz_98",
+	dongleIcon: "_dongleIcon_2hmlz_114"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/event/EventPanel.tsx
@@ -122665,7 +123029,7 @@ var EventPaddingNode = {
 	depth: 0,
 	children: []
 };
-var TranscriptOutline = ({ eventNodes, defaultCollapsedIds, running, className, scrollRef, style, agentName, onHasNodesChange, onWidthChange, onNavigateToEvent, scrollTrackOffset, getEventUrl, getCollapsed, setCollapsed, collapsedEvents, setCollapsedEvents, selectedOutlineId, setSelectedOutlineId, renderLink }) => {
+var TranscriptOutline = ({ eventNodes, defaultCollapsedIds, running, className, scrollRef, outlineScrollEl, style, agentName, onHasNodesChange, onWidthChange, onNavigateToEvent, scrollTrackOffset, getEventUrl, getCollapsed, setCollapsed, collapsedEvents, setCollapsedEvents, selectedOutlineId, setSelectedOutlineId, renderLink }) => {
 	const id = "transcript-tree";
 	const listHandle = (0, import_react.useRef)(null);
 	const { getRestoreState } = useVirtuosoState(listHandle, id);
@@ -122799,7 +123163,7 @@ var TranscriptOutline = ({ eventNodes, defaultCollapsedIds, running, className, 
 			children: agentName
 		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ns, {
 			ref: listHandle,
-			customScrollParent: scrollRef?.current ? scrollRef.current : void 0,
+			customScrollParent: outlineScrollEl ?? void 0,
 			id,
 			data: [...outlineNodeList, EventPaddingNode],
 			defaultItemHeight: 50,
@@ -128455,13 +128819,17 @@ var None = () => {
 	});
 };
 var ToolEventView_module_default = {
-	summary: "_summary_1xrvi_1",
-	labeledToolCall: "_labeledToolCall_1xrvi_6",
-	label: "_label_1xrvi_6",
-	labeledToolContent: "_labeledToolContent_1xrvi_17",
-	approvalWrap: "_approvalWrap_1xrvi_21",
-	approval: "_approval_1xrvi_21",
-	progress: "_progress_1xrvi_31"
+	summary: "_summary_8xr5q_1",
+	labeledToolCall: "_labeledToolCall_8xr5q_6",
+	label: "_label_8xr5q_6",
+	labeledToolContent: "_labeledToolContent_8xr5q_19",
+	attachedGroup: "_attachedGroup_8xr5q_25",
+	toolBox: "_toolBox_8xr5q_30",
+	attachedBottom: "_attachedBottom_8xr5q_37",
+	attachedTop: "_attachedTop_8xr5q_43",
+	approvalWrap: "_approvalWrap_8xr5q_49",
+	approval: "_approval_8xr5q_49",
+	progress: "_progress_8xr5q_59"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/ToolEventView.tsx
@@ -128490,18 +128858,46 @@ var ToolEventView = ({ eventNode, childNodes, className, context, eventCallbacks
 		event.message_id
 	]);
 	const maxLabelLength = (0, import_react.useMemo)(() => computeMaxLabelLength(context?.messageLabels), [context?.messageLabels]);
-	const toolCallView = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallView, {
-		id: `${eventNode.id}-tool-call`,
-		tool: name,
-		functionCall,
-		input,
-		description,
-		contentType,
-		output: event.error ? "" : event.result || "",
-		mode: "compact",
-		view: resolvedView
+	const showError = !!event.error && event.error.type !== "approval";
+	const showResult = !showError && hasResultContent(event.result);
+	const toolCallView = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: ToolEventView_module_default.attachedGroup,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			"data-message-kind": "tool",
+			className: clsx(ToolEventView_module_default.toolBox, showError || showResult ? ToolEventView_module_default.attachedBottom : void 0),
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallView, {
+				id: `${eventNode.id}-tool-call`,
+				tool: name,
+				functionCall,
+				input,
+				description,
+				contentType,
+				output: "",
+				mode: "compact",
+				view: resolvedView,
+				section: "call"
+			})
+		}), showError ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			"data-message-kind": "tool-result",
+			className: clsx(ToolEventView_module_default.toolBox, ToolEventView_module_default.attachedTop),
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallErrorView, { error: event.error })
+		}) : showResult ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			"data-message-kind": "tool-result",
+			className: clsx(ToolEventView_module_default.toolBox, ToolEventView_module_default.attachedTop),
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallView, {
+				id: `${eventNode.id}-tool-call`,
+				tool: name,
+				functionCall,
+				input,
+				description,
+				contentType,
+				output: event.result || "",
+				mode: "compact",
+				view: resolvedView,
+				section: "output"
+			})
+		}) : null]
 	});
-	const toolCallError = event.error && event.error.type !== "approval" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallErrorView, { error: event.error }) : null;
 	const toolLabel = toolLabels.messageLabels?.[event.id];
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventPanel, {
 		eventNodeId: eventNode.id,
@@ -128517,15 +128913,15 @@ var ToolEventView = ({ eventNode, childNodes, className, context, eventCallbacks
 			"data-name": "Summary",
 			className: ToolEventView_module_default.summary,
 			children: [
-				toolLabels.show === false ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [toolCallView, toolCallError] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				toolLabels.show === false ? toolCallView : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: ToolEventView_module_default.labeledToolCall,
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: clsx("text-size-smaller", "text-style-secondary", ToolEventView_module_default.label),
-						style: { minWidth: `${maxLabelLength}ch` },
-						children: toolLabel
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 						className: ToolEventView_module_default.labeledToolContent,
-						children: [toolCallView, toolCallError]
+						children: toolCallView
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: ToolEventView_module_default.label,
+						style: { minWidth: `${maxLabelLength}ch` },
+						children: toolLabel ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageLabel, { label: toolLabel }) : null
 					})]
 				}),
 				lastModelNode ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChatView, {
@@ -128548,6 +128944,12 @@ var ToolEventView = ({ eventNode, childNodes, className, context, eventCallbacks
 		})
 	});
 };
+function hasResultContent(result) {
+	if (result === null || result === void 0) return false;
+	if (typeof result === "string") return result.trim().length > 0;
+	if (Array.isArray(result)) return result.length > 0;
+	return true;
+}
 var TranscriptVirtualListComponent_module_default = {
 	node: "_node_miohh_1",
 	attached: "_attached_miohh_5",
@@ -129178,6 +129580,17 @@ var buildToolLabels = (events, messageLabels) => {
 	}
 	return Object.keys(toolLabels).length > 0 ? toolLabels : void 0;
 };
+var scopeMessageLabels = (events, messageLabels) => {
+	if (!messageLabels) return void 0;
+	const present = /* @__PURE__ */ new Set();
+	for (const event of events) if (event.event === "model") {
+		for (const message of event.input ?? []) if (message.id) present.add(message.id);
+		for (const choice of event.output?.choices ?? []) if (choice.message?.id) present.add(choice.message.id);
+	} else if (event.event === "tool" && event.message_id) present.add(event.message_id);
+	const scoped = {};
+	for (const [id, label] of Object.entries(messageLabels)) if (present.has(id)) scoped[id] = label;
+	return Object.keys(scoped).length > 0 ? scoped : void 0;
+};
 var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, offsetTop = 0, timelineSelection, activeTimeline, serverTimelines, markerConfig: markerConfigOverride, agentConfig: agentConfigOverride, showSwimlanes: showSwimlanesOption = "auto", onMarkerNavigate, onScrollToTop, headroomHidden, onHeadroomResetAnchor, onHeadroomSetHidden, listId, initialEventId, initialMessageId, eventsListRef, getEventUrl, linkingEnabled, bulkCollapse, collapseState, outline, outlineScrollRef, rightPane, rightPaneScrollRef, eventNodeContext, emptyText = "No events match the current filter", className }) => {
 	const eventsForTimeline = (0, import_react.useMemo)(() => {
 		if (!hiddenEventTypes || hiddenEventTypes.length === 0) return events;
@@ -129214,9 +129627,11 @@ var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, 
 	const eventsForNodes = (0, import_react.useMemo)(() => hiddenEventTypes && hiddenEventTypes.length > 0 ? rawEventsForNodes.filter((e) => !hiddenEventTypes.includes(e.event)) : rawEventsForNodes, [rawEventsForNodes, hiddenEventTypes]);
 	const { eventNodes, defaultCollapsedIds, retryAttempts } = useEventNodes(eventsForNodes, running, showSwimlanes ? sourceSpans : void 0);
 	const mergedEventNodeContext = (0, import_react.useMemo)(() => {
-		const toolLabels = buildToolLabels(eventsForNodes, eventNodeContext?.messageLabels);
+		const messageLabels = scopeMessageLabels(eventsForNodes, eventNodeContext?.messageLabels);
+		const toolLabels = buildToolLabels(eventsForNodes, messageLabels);
 		return {
 			...eventNodeContext,
+			messageLabels,
 			retryAttempts,
 			...toolLabels ? { toolLabels } : {}
 		};
@@ -129454,6 +129869,11 @@ var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, 
 		outlineCollapsedFlag,
 		rightPaneCollapsedFlag
 	]);
+	const [outlineScrollEl, setOutlineScrollEl] = (0, import_react.useState)(null);
+	const handleOutlineScrollRef = (0, import_react.useCallback)((el) => {
+		setOutlineScrollEl(el);
+		if (outlineScrollRef) outlineScrollRef.current = el;
+	}, [outlineScrollRef]);
 	const [scrollerHeight, setScrollerHeight] = (0, import_react.useState)(0);
 	(0, import_react.useEffect)(() => {
 		const el = scrollRef.current;
@@ -129535,7 +129955,7 @@ var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, 
 					},
 					children: [
 						outline && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(StickyScroll, {
-							ref: outlineScrollRef,
+							ref: handleOutlineScrollRef,
 							scrollRef,
 							className: TranscriptLayout_module_default.outline,
 							offsetTop: effectiveOffsetTop,
@@ -129562,6 +129982,7 @@ var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, 
 									eventNodes,
 									defaultCollapsedIds,
 									scrollRef,
+									outlineScrollEl,
 									running,
 									agentName: outline.name ?? (showSwimlanes ? selectedRowName : void 0),
 									scrollTrackOffset: effectiveOffsetTop,
@@ -134357,6 +134778,17 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 	]);
 	const selectedTab = useStore((state) => state.app.tabs.sample);
 	const setSelectedTab = useStore((state) => state.appActions.setSampleTab);
+	const removeBagsByPrefix = useStore((state) => state.appActions.removeBagsByPrefix);
+	(0, import_react.useEffect)(() => {
+		const snapshotBagPrefixes = [`chat-${baseId}-chat-${id}`, `${baseId}-transcript-display-${id}`];
+		return () => {
+			for (const prefix of snapshotBagPrefixes) removeBagsByPrefix(prefix);
+		};
+	}, [
+		baseId,
+		id,
+		removeBagsByPrefix
+	]);
 	const navigate = useNavigate();
 	const tabsRef = (0, import_react.useRef)(null);
 	const [tabsHeight, setTabsHeight] = (0, import_react.useState)(-1);
@@ -134671,7 +135103,6 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 								offsetTop: stickyOffsetTop,
 								display: {
 									indented: true,
-									unlabeledRoles: ["assistant"],
 									formatDateTime
 								},
 								linking: {
@@ -163488,10 +163919,26 @@ var componentIcons = {
 	previous: ApplicationIcons.previous,
 	toggleRight: ApplicationIcons["toggle-right"]
 };
+var useThemePreferenceSync = () => {
+	(0, import_react.useLayoutEffect)(() => {
+		window.__APPLY_BROWSER_THEME__?.();
+	}, [useUserSettings((s) => s.themePreference)]);
+	(0, import_react.useEffect)(() => {
+		const onStorage = (e) => {
+			if (e.key === "inspect-view-user-settings") {
+				window.__APPLY_BROWSER_THEME__?.();
+				useUserSettings.persist.rehydrate();
+			}
+		};
+		window.addEventListener("storage", onStorage);
+		return () => window.removeEventListener("storage", onStorage);
+	}, []);
+};
 /**
 * Renders the Main Application
 */
 var App = ({ api }) => {
+	useThemePreferenceSync();
 	const rehydrated = useStore((state) => state.app.rehydrated);
 	const logDir = useStore((state) => state.logs.logDir);
 	const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
