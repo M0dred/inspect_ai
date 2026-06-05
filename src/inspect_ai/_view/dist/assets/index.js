@@ -117780,6 +117780,16 @@ var VirtualList_module_default = {
 //#endregion
 //#region ../../packages/react/src/virtual/VirtualList.tsx
 var BOTTOM_THRESHOLD_PX = 30;
+var USER_INTERACTION_WINDOW_MS = 400;
+var SCROLL_KEYS = new Set([
+	"ArrowUp",
+	"ArrowDown",
+	"PageUp",
+	"PageDown",
+	"Home",
+	"End",
+	" "
+]);
 var SMOOTH_SCROLL_MAX_S = 10;
 var PERSIST_DEBOUNCE_MS = 250;
 var DEFAULT_ITEM_HEIGHT_PX = 400;
@@ -117822,6 +117832,16 @@ function VirtualList({ persistenceKey, ref, className, scrollRef: externalScroll
 	const { getRestoreSnapshot, recordSnapshot } = useVirtualListState(persistenceKey);
 	const [followOutput, setFollowOutput] = useProperty(persistenceKey, "follow", { defaultValue: null });
 	const isAutoScrollingRef = (0, import_react.useRef)(false);
+	const userInteractingRef = (0, import_react.useRef)(false);
+	const pointerDownRef = (0, import_react.useRef)(false);
+	const interactTimerRef = (0, import_react.useRef)(null);
+	const noteUserInteraction = (0, import_react.useCallback)(() => {
+		userInteractingRef.current = true;
+		if (interactTimerRef.current) clearTimeout(interactTimerRef.current);
+		interactTimerRef.current = setTimeout(() => {
+			userInteractingRef.current = false;
+		}, USER_INTERACTION_WINDOW_MS);
+	}, []);
 	(0, import_react.useEffect)(() => {
 		if (followOutput === null) setFollowOutput(!!live);
 	}, [
@@ -117850,10 +117870,10 @@ function VirtualList({ persistenceKey, ref, className, scrollRef: externalScroll
 		setFollowOutput
 	]);
 	const handleScroll = useRafThrottle(() => {
-		if (isAutoScrollingRef.current) return;
 		if (!live) return;
 		const el = getScrollElement();
 		if (!el) return;
+		if (!userInteractingRef.current && !pointerDownRef.current) return;
 		const atBottom = el.scrollHeight - el.scrollTop <= el.clientHeight + BOTTOM_THRESHOLD_PX;
 		if (atBottom && !followOutput) setFollowOutput(true);
 		else if (!atBottom && followOutput) setFollowOutput(false);
@@ -117864,6 +117884,36 @@ function VirtualList({ persistenceKey, ref, className, scrollRef: externalScroll
 		el.addEventListener("scroll", handleScroll);
 		return () => el.removeEventListener("scroll", handleScroll);
 	}, [getScrollElement, handleScroll]);
+	(0, import_react.useEffect)(() => {
+		const el = getScrollElement();
+		if (!el) return;
+		const onWheel = () => noteUserInteraction();
+		const onTouchMove = () => noteUserInteraction();
+		const onKeyDown = (e) => {
+			if (SCROLL_KEYS.has(e.key)) noteUserInteraction();
+		};
+		const onPointerDown = () => {
+			pointerDownRef.current = true;
+			noteUserInteraction();
+		};
+		const onPointerUp = () => {
+			pointerDownRef.current = false;
+		};
+		el.addEventListener("wheel", onWheel, { passive: true });
+		el.addEventListener("touchmove", onTouchMove, { passive: true });
+		el.addEventListener("keydown", onKeyDown);
+		el.addEventListener("pointerdown", onPointerDown, { passive: true });
+		window.addEventListener("pointerup", onPointerUp, { passive: true });
+		window.addEventListener("pointercancel", onPointerUp, { passive: true });
+		return () => {
+			el.removeEventListener("wheel", onWheel);
+			el.removeEventListener("touchmove", onTouchMove);
+			el.removeEventListener("keydown", onKeyDown);
+			el.removeEventListener("pointerdown", onPointerDown);
+			window.removeEventListener("pointerup", onPointerUp);
+			window.removeEventListener("pointercancel", onPointerUp);
+		};
+	}, [getScrollElement, noteUserInteraction]);
 	const contentTotal = virtualizer.getTotalSize();
 	(0, import_react.useEffect)(() => {
 		if (!followOutput || !live) return;
@@ -117915,6 +117965,9 @@ function VirtualList({ persistenceKey, ref, className, scrollRef: externalScroll
 				if (stickyHeaderOffset) el.scrollTop -= stickyHeaderOffset;
 				hasInitialScrolledRef.current = true;
 				release();
+			} else if (followOutput && live) {
+				hasInitialScrolledRef.current = true;
+				release();
 			} else if (snapshot) {
 				hasInitialScrolledRef.current = true;
 				if (!userScrolledRef.current) {
@@ -117933,6 +117986,8 @@ function VirtualList({ persistenceKey, ref, className, scrollRef: externalScroll
 		stickyHeaderOffset,
 		contentTotal,
 		data.length,
+		followOutput,
+		live,
 		getRestoreSnapshot,
 		getScrollElement,
 		toSpacerScroll,
@@ -117966,6 +118021,10 @@ function VirtualList({ persistenceKey, ref, className, scrollRef: externalScroll
 		if (persistTimerRef.current) {
 			clearTimeout(persistTimerRef.current);
 			persistTimerRef.current = null;
+		}
+		if (interactTimerRef.current) {
+			clearTimeout(interactTimerRef.current);
+			interactTimerRef.current = null;
 		}
 	}, []);
 	const items = virtualizer.getVirtualItems();
@@ -118199,14 +118258,14 @@ var GeneratingIndicator_module_default = {
 };
 //#endregion
 //#region ../../packages/inspect-components/src/indicators/GeneratingIndicator.tsx
-var GeneratingIndicator = ({ attempt, className }) => {
+var GeneratingIndicator = ({ label = "generating", attempt, className }) => {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		role: "status",
 		"aria-live": "polite",
 		className: clsx(GeneratingIndicator_module_default.bar, attempt === void 0 && GeneratingIndicator_module_default.barLabelOnly, className),
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
 			className: GeneratingIndicator_module_default.label,
-			children: ["Generating", /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+			children: [label, /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
 				className: GeneratingIndicator_module_default.ell,
 				"aria-hidden": "true",
 				children: [
@@ -118228,6 +118287,11 @@ function isLivePlaceholderMessage(message) {
 	if (message.tool_calls && message.tool_calls.length > 0) return false;
 	return !messageHasVisibleContent(message);
 }
+function isToolExecutingMessage(message, toolResultCount) {
+	if (message.role !== "assistant") return false;
+	const callCount = message.tool_calls?.length ?? 0;
+	return callCount > 0 && toolResultCount < callCount;
+}
 function messageHasVisibleContent(message) {
 	const content = message.content;
 	if (typeof content === "string") return content.trim().length > 0;
@@ -118248,10 +118312,8 @@ function messageHasVisibleContent(message) {
 	});
 }
 var ChatViewVirtualList_module_default = {
-	list: "_list_1hs8h_1",
-	generatingRow: "_generatingRow_1hs8h_7",
-	generatingLabel: "_generatingLabel_1hs8h_15",
-	generatingContent: "_generatingContent_1hs8h_21"
+	list: "_list_zuqui_1",
+	generatingRow: "_generatingRow_zuqui_7"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/chat/ChatViewVirtualList.tsx
@@ -118304,18 +118366,12 @@ var ChatViewVirtualList = (0, import_react.memo)(function ChatViewVirtualList({ 
 	}, [collapsedMessages, toolCallStyle]);
 	const lastIndex = collapsedMessages.length - 1;
 	const renderRow = (0, import_react.useCallback)((index, item) => {
-		if (running && index === lastIndex && isLivePlaceholderMessage(item.message)) return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		if (running && index === lastIndex && isLivePlaceholderMessage(item.message)) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			className: ChatViewVirtualList_module_default.generatingRow,
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: ChatViewVirtualList_module_default.generatingContent,
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(GeneratingIndicator, {})
-			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: ChatViewVirtualList_module_default.generatingLabel,
-				style: { minWidth: `${maxLabelLength ?? 3}ch` },
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageLabel, { label: `${index + 1}` })
-			})]
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(GeneratingIndicator, {})
 		});
-		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChatMessageRow, {
+		const toolExecuting = running && index === lastIndex && isToolExecutingMessage(item.message, item.toolMessages.length);
+		return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChatMessageRow, {
 			index,
 			parentName: id || "chat-virtual-list",
 			resolvedMessage: item,
@@ -118325,7 +118381,10 @@ var ChatViewVirtualList = (0, import_react.memo)(function ChatViewVirtualList({ 
 			tools,
 			maxLabelLength,
 			startNumber: rowStartNumbers[index]
-		});
+		}), toolExecuting ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: ChatViewVirtualList_module_default.generatingRow,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(GeneratingIndicator, { label: "running" })
+		}) : null] });
 	}, [
 		id,
 		running,
@@ -119567,11 +119626,16 @@ function eventToNode(event) {
 *
 * Agent spans are:
 * - Explicit agent spans (type="agent")
-* - Solver spans (type="solver")
+* - Solver spans that wrap a genuine agent (e.g. an @agent run via as_solver)
 * - Tool spans containing model events (tool-spawned agents)
+*
+* Primitive solver spans (system_message, generate, use_tools, ...) wrap no
+* agent of their own, so they are not agent trajectories — they get unrolled
+* into their parent rather than occupying a swimlane.
 */
 function isAgentSpan(span) {
-	if (span.type === "agent" || span.type === "solver") return true;
+	if (span.type === "agent") return true;
+	if (span.type === "solver") return containsAgentSpan(span);
 	if (span.type === "tool" && containsModelEvents(span) && !containsAgentSpan(span)) return true;
 	return false;
 }
@@ -119959,7 +120023,8 @@ function classifyUtilityAgents(node, parentSystemPrompt = null) {
 *
 * Within the agent section, spans are classified as agents or unrolled:
 * - type="agent"                → TimelineSpan (spanType="agent")
-* - type="solver"               → TimelineSpan (spanType="agent")
+* - type="solver" wrapping agent → TimelineSpan (spanType="agent")
+* - type="solver" (primitive)   → Unrolled into parent
 * - type="tool" + ModelEvents   → TimelineSpan (spanType="agent")
 * - ToolEvent with agent field  → TimelineSpan (spanType="agent")
 * - type="tool" (no models)     → Unrolled into parent
@@ -128938,7 +129003,7 @@ var ToolEventView = ({ eventNode, childNodes, className, context, eventCallbacks
 				}) : "",
 				event.pending ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					className: clsx(ToolEventView_module_default.progress),
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(GeneratingIndicator, {})
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(GeneratingIndicator, { label: "running" })
 				}) : void 0
 			]
 		})
@@ -128951,12 +129016,13 @@ function hasResultContent(result) {
 	return true;
 }
 var TranscriptVirtualListComponent_module_default = {
-	node: "_node_miohh_1",
-	attached: "_attached_miohh_5",
-	attachedParent: "_attachedParent_miohh_9",
-	attachedChild: "_attachedChild_miohh_16",
-	depthRoot: "_depthRoot_miohh_21",
-	last: "_last_miohh_27"
+	node: "_node_t3xlr_1",
+	attached: "_attached_t3xlr_5",
+	attachedParent: "_attachedParent_t3xlr_9",
+	attachedChild: "_attachedChild_t3xlr_16",
+	depthRoot: "_depthRoot_t3xlr_21",
+	last: "_last_t3xlr_27",
+	runningTool: "_runningTool_t3xlr_31"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/TranscriptVirtualListComponent.tsx
@@ -129051,6 +129117,8 @@ var TranscriptVirtualListComponent = ({ id, listHandle, eventNodes, scrollRef, r
 		eventCallbacks,
 		eventLabels
 	]);
+	const toolsRunning = (0, import_react.useMemo)(() => running === true && transcriptToolsRunning(eventNodes), [running, eventNodes]);
+	const components = (0, import_react.useMemo)(() => ({ Footer: ToolRunningFooter }), []);
 	if (useVirtualization) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(VirtualList, {
 		ref: listHandle,
 		className,
@@ -129065,17 +129133,41 @@ var TranscriptVirtualListComponent = ({ id, listHandle, eventNodes, scrollRef, r
 		scrollToTopOnFinish: true,
 		itemSearchText: eventSearchText,
 		findScope: "none",
+		showProgress: toolsRunning,
+		components,
 		onVisibleRangeChange: (range) => {
 			if (visibleRangeRef) visibleRangeRef.current = range;
 		}
 	});
-	else return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+	else return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		ref: nonVirtualGridRef,
-		children: eventNodes.map((node, index) => {
+		children: [eventNodes.map((node, index) => {
 			return renderRow(index, node, { scrollMarginTop: offsetTop });
-		})
+		}), toolsRunning ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolRunningFooter, {}) : null]
 	});
 };
+var ToolRunningFooter = () => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+	className: TranscriptVirtualListComponent_module_default.runningTool,
+	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(GeneratingIndicator, { label: "running" })
+});
+function transcriptToolsRunning(eventNodes) {
+	let lastModelIdx = -1;
+	for (let i = eventNodes.length - 1; i >= 0; i--) if (eventNodes[i]?.event.event === "model") {
+		lastModelIdx = i;
+		break;
+	}
+	if (lastModelIdx === -1) return false;
+	const modelEvent = eventNodes[lastModelIdx].event;
+	if (modelEvent.event !== "model" || modelEvent.pending) return false;
+	const toolCalls = modelEvent.output.choices[0]?.message.tool_calls ?? [];
+	if (toolCalls.length === 0) return false;
+	const completedToolIds = /* @__PURE__ */ new Set();
+	for (let i = lastModelIdx + 1; i < eventNodes.length; i++) {
+		const ev = eventNodes[i].event;
+		if (ev.event === "tool" && !ev.pending) completedToolIds.add(ev.id);
+	}
+	return toolCalls.some((call) => !completedToolIds.has(call.id));
+}
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/TranscriptVirtualList.tsx
 var TranscriptVirtualList = (0, import_react.memo)(TranscriptVirtualListComponent);
@@ -163097,6 +163189,17 @@ var LogViewContainer = () => {
 	const prevLogPath = usePrevious(logPath);
 	const syncLogs = useStore((state) => state.logsActions.syncLogs);
 	const initLogDir = useStore((state) => state.logsActions.initLogDir);
+	(0, import_react.useLayoutEffect)(() => {
+		if (prevLogPath && logPath && logPath !== prevLogPath) {
+			clearSelectedSample();
+			clearSelectedLogSummary();
+		}
+	}, [
+		logPath,
+		prevLogPath,
+		clearSelectedSample,
+		clearSelectedLogSummary
+	]);
 	(0, import_react.useEffect)(() => {
 		if (!logPath) return;
 		setWorkspaceTab(tabId ?? "samples");
@@ -163111,10 +163214,6 @@ var LogViewContainer = () => {
 				await initLogDir();
 				setSelectedLogFile(logPath);
 				syncLogs();
-				if (prevLogPath && logPath !== prevLogPath) {
-					clearSelectedSample();
-					clearSelectedLogSummary();
-				}
 			}
 		};
 		loadLogFromPath();
@@ -163122,10 +163221,7 @@ var LogViewContainer = () => {
 		logPath,
 		setSelectedLogFile,
 		initLogDir,
-		syncLogs,
-		prevLogPath,
-		clearSelectedSample,
-		clearSelectedLogSummary
+		syncLogs
 	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LogViewLayout, {});
 };
