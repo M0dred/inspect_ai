@@ -127817,6 +127817,15 @@ var ModelEventView = ({ eventNode, showToolCalls, className, context, eventCallb
 	});
 	const entries = { ...event.config };
 	delete entries["max_connections"];
+	const firstChoice = event.output?.choices?.[0];
+	const stopDetails = firstChoice?.stop_details;
+	const showStopReason = !!firstChoice && (!!stopDetails || firstChoice.stop_reason !== "stop");
+	const stopEntries = {};
+	if (showStopReason) {
+		stopEntries["stop reason"] = firstChoice.stop_reason;
+		if (stopDetails?.category) stopEntries["category"] = stopDetails.category;
+		if (stopDetails?.explanation) stopEntries["explanation"] = stopDetails.explanation;
+	}
 	const userMessages = (0, import_react.useMemo)(() => {
 		const result = [];
 		if (!!!event.agentResultsFiltered) {
@@ -127913,21 +127922,32 @@ var ModelEventView = ({ eventNode, showToolCalls, className, context, eventCallb
 				className: ModelEventView_module_default.container,
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: ModelEventView_module_default.all,
-					children: [event.output.usage ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ModelUsagePanel, {
-						usage: event.output.usage,
-						timing: {
-							timestamp: event.timestamp,
-							completed: event.completed,
-							working_time: event.working_time
-						}
-					}) : void 0, Object.keys(entries).length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventSection, {
-						title: "Configuration",
-						className: clsx(ModelEventView_module_default.tableSelection, ModelEventView_module_default.config),
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
-							entries,
-							options: { plain: true }
+					children: [
+						event.output.usage ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ModelUsagePanel, {
+							usage: event.output.usage,
+							timing: {
+								timestamp: event.timestamp,
+								completed: event.completed,
+								working_time: event.working_time
+							}
+						}) : void 0,
+						Object.keys(stopEntries).length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventSection, {
+							title: "Stop Reason",
+							className: clsx(ModelEventView_module_default.tableSelection, ModelEventView_module_default.config),
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
+								entries: stopEntries,
+								options: { plain: true }
+							})
+						}),
+						Object.keys(entries).length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventSection, {
+							title: "Configuration",
+							className: clsx(ModelEventView_module_default.tableSelection, ModelEventView_module_default.config),
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
+								entries,
+								options: { plain: true }
+							})
 						})
-					})]
+					]
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventSection, {
 					title: "Messages",
 					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChatView, {
