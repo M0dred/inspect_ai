@@ -46072,18 +46072,28 @@ var MarkdownRenderQueue = class {
 };
 var renderQueue = new MarkdownRenderQueue(10);
 var NoContentsPanel_module_default = {
-	panel: "_panel_twp3v_1",
-	container: "_container_twp3v_7"
+	panel: "_panel_tison_1",
+	container: "_container_tison_7",
+	ellipsis: "_ellipsis_tison_14",
+	"ncp-ellipsis": "_ncp-ellipsis_tison_1"
 };
 //#endregion
 //#region ../../packages/react/src/components/NoContentsPanel.tsx
-var NoContentsPanel = ({ text, icon }) => {
+var NoContentsPanel = ({ text, icon, busy }) => {
 	const icons = useComponentIcons();
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		className: clsx(NoContentsPanel_module_default.panel),
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: clsx(NoContentsPanel_module_default.container, "text-size-smaller"),
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: icon ?? icons.noSamples }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: text })]
+			children: [!busy && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: icon ?? icons.noSamples }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [text, busy && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+				className: clsx(NoContentsPanel_module_default.ellipsis),
+				"aria-hidden": "true",
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { children: "." }),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { children: "." }),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { children: "." })
+				]
+			})] })]
 		})
 	});
 };
@@ -56895,8 +56905,8 @@ var ReplicationService = class {
 	constructor() {
 		this._processingCount = 0;
 		this._throttledUpdateDbStats = throttle(() => this.updateDbStats(), 1e3);
-		this._throttledFlushPreviewBatch = throttle(() => this.flushPreviewBatch(), 100);
-		this._throttledFlushDetailBatch = throttle(() => this.flushDetailBatch(), 100);
+		this._throttledFlushPreviewBatch = throttle(() => this.flushPreviewBatch(), 250);
+		this._throttledFlushDetailBatch = throttle(() => this.flushDetailBatch(), 250);
 		this._previewQueue = new WorkQueue({
 			name: "Log-Preview-Queue",
 			concurrency: 2,
@@ -113295,6 +113305,50 @@ var FindBandUI = ({ onClose, onNext, onPrevious, onKeyDown, onChange, onBeforeIn
 	});
 };
 //#endregion
+//#region src/app/shared/useKeyedMemo.ts
+var shallowEqual = (a, b) => {
+	if (a.length !== b.length) return false;
+	for (let i = 0; i < a.length; i++) if (!Object.is(a[i], b[i])) return false;
+	return true;
+};
+/**
+* Map a list to derived values, reusing the prior output object for any item
+* whose per-item deps are unchanged.
+*
+* `useMemo` is all-or-nothing: any dep change rebuilds every element, handing
+* a consumer (e.g. AG-Grid) all-new identities and forcing a full refresh.
+* This keeps a per-key cache so only the items that actually changed get a new
+* object — the rest keep reference identity. Reuse is gated on `itemDeps`, so
+* the cache must be pure: same deps must always yield the same value.
+*
+* The list is re-walked on every render; reuse keeps that cheap (a shallow dep
+* compare per item, builds only on change). The returned array keeps the same
+* reference when nothing changed, so consumers that key off its identity (deps
+* arrays, AG-Grid's rowData diff) don't re-run on unrelated renders.
+*/
+function useKeyedMemo(source, getKey, itemDeps, build) {
+	const cacheRef = (0, import_react.useRef)(/* @__PURE__ */ new Map());
+	const resultRef = (0, import_react.useRef)([]);
+	const prev = cacheRef.current;
+	const next = /* @__PURE__ */ new Map();
+	let changed = source.length !== resultRef.current.length;
+	const result = source.map((item, i) => {
+		const key = getKey(item);
+		const deps = itemDeps(item);
+		const hit = prev.get(key);
+		const value = hit && shallowEqual(hit.deps, deps) ? hit.value : build(item);
+		next.set(key, {
+			deps,
+			value
+		});
+		if (!changed && resultRef.current[i] !== value) changed = true;
+		return value;
+	});
+	cacheRef.current = next;
+	if (changed) resultRef.current = result;
+	return resultRef.current;
+}
+//#endregion
 //#region src/app/shared/agGrid.ts
 ModuleRegistry.registerModules([AllCommunityModule]);
 //#endregion
@@ -113429,6 +113483,72 @@ function useApplyColumnVisibility(gridRef, columnDefs, visibility) {
 }
 //#endregion
 //#region src/app/log-list/grid/LogListGrid.tsx
+var detailsForItem = (item, logDetails) => item.type === "file" && item.log ? logDetails[item.log.name] : void 0;
+var buildLogListRow = (item, details) => {
+	const preview = item.type === "file" ? item.logPreview : void 0;
+	let totalTokens;
+	if (details?.stats?.model_usage) {
+		totalTokens = 0;
+		for (const usage of Object.values(details.stats.model_usage)) totalTokens += usage.total_tokens;
+	}
+	let duration;
+	if (details?.stats?.started_at && details?.stats?.completed_at) {
+		const start = new Date(details.stats.started_at).getTime();
+		const end = new Date(details.stats.completed_at).getTime();
+		if (start && end && end > start) duration = (end - start) / 1e3;
+	}
+	const taskArgsSource = details?.eval?.task_args_passed ?? details?.eval?.task_args;
+	let taskArgs;
+	if (taskArgsSource) {
+		const entries = Object.entries(taskArgsSource);
+		if (entries.length > 0) taskArgs = entries.map(([k, v]) => `${k}=${JSON.stringify(v)}`).join(", ");
+	}
+	let percentCompleted;
+	const total = details?.results?.total_samples;
+	const completed = details?.results?.completed_samples;
+	if (total && total > 0 && completed !== void 0) percentCompleted = completed / total * 100;
+	let sampleErrors;
+	if (details?.sampleSummaries) sampleErrors = details.sampleSummaries.filter((s) => s.error).length;
+	let sampleLimits;
+	if (details?.sampleSummaries) {
+		const limits = /* @__PURE__ */ new Set();
+		for (const s of details.sampleSummaries) if (s.limit) limits.add(s.limit);
+		if (limits.size > 0) sampleLimits = Array.from(limits).sort().join(", ");
+	}
+	const row = {
+		id: item.id,
+		name: item.name,
+		displayIndex: item.type === "file" || item.type === "pending-task" ? item.displayIndex : void 0,
+		type: item.type,
+		url: item.url,
+		task: item.type === "file" ? preview?.task : item.name,
+		model: item.type === "file" ? preview?.model : item.type === "pending-task" ? item.model : void 0,
+		modelRoles: item.type === "file" ? preview?.model_roles ?? void 0 : void 0,
+		score: preview?.primary_metric?.value,
+		status: preview?.status,
+		completedAt: preview?.completed_at,
+		itemCount: item.type === "folder" ? item.itemCount : void 0,
+		log: item.type === "file" ? item.log : void 0,
+		path: item.type === "file" ? item.name : void 0,
+		totalSamples: details?.results?.total_samples,
+		completedSamples: details?.results?.completed_samples,
+		sandbox: details?.eval?.sandbox?.type,
+		totalTokens,
+		duration,
+		taskFile: details?.eval?.task_file ?? void 0,
+		taskArgs,
+		taskArgsRaw: taskArgsSource ?? void 0,
+		tags: details?.tags,
+		percentCompleted,
+		sampleErrors,
+		sampleLimits,
+		errorMessage: details?.error?.message
+	};
+	if (details?.results?.scores) {
+		for (const evalScore of details.results.scores) if (evalScore.metrics) for (const [metricName, metric] of Object.entries(evalScore.metrics)) row[`score_${evalScore.name}/${metricName}`] = metric.value;
+	}
+	return row;
+};
 var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mode = "logs" }) => {
 	const { gridStateByScope, setGridState, setFilteredCount } = useLogsListing();
 	const gridState = scopeKey ? gridStateByScope[scopeKey] : void 0;
@@ -113436,7 +113556,7 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 	const loading = useStore((state) => state.app.status.loading);
 	const syncing = useStore((state) => state.app.status.syncing);
 	const setWatchedLogs = useStore((state) => state.logsActions.setWatchedLogs);
-	const logDetails = useStore((state) => state.logs.logDetails);
+	const deferredLogDetails = (0, import_react.useDeferredValue)(useStore((state) => state.logs.logDetails));
 	const navigate = useNavigate();
 	const internalGridRef = (0, import_react.useRef)(null);
 	const gridRef = externalGridRef ?? internalGridRef;
@@ -113462,74 +113582,17 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 	(0, import_react.useEffect)(() => {
 		gridContainerRef.current?.focus();
 	}, []);
-	const data = (0, import_react.useMemo)(() => {
-		return items.map((item) => {
-			const preview = item.type === "file" ? item.logPreview : void 0;
-			const details = item.type === "file" && item.log ? logDetails[item.log.name] : void 0;
-			let totalTokens;
-			if (details?.stats?.model_usage) {
-				totalTokens = 0;
-				for (const usage of Object.values(details.stats.model_usage)) totalTokens += usage.total_tokens;
-			}
-			let duration;
-			if (details?.stats?.started_at && details?.stats?.completed_at) {
-				const start = new Date(details.stats.started_at).getTime();
-				const end = new Date(details.stats.completed_at).getTime();
-				if (start && end && end > start) duration = (end - start) / 1e3;
-			}
-			const taskArgsSource = details?.eval?.task_args_passed ?? details?.eval?.task_args;
-			let taskArgs;
-			if (taskArgsSource) {
-				const entries = Object.entries(taskArgsSource);
-				if (entries.length > 0) taskArgs = entries.map(([k, v]) => `${k}=${JSON.stringify(v)}`).join(", ");
-			}
-			let percentCompleted;
-			const total = details?.results?.total_samples;
-			const completed = details?.results?.completed_samples;
-			if (total && total > 0 && completed !== void 0) percentCompleted = completed / total * 100;
-			let sampleErrors;
-			if (details?.sampleSummaries) sampleErrors = details.sampleSummaries.filter((s) => s.error).length;
-			let sampleLimits;
-			if (details?.sampleSummaries) {
-				const limits = /* @__PURE__ */ new Set();
-				for (const s of details.sampleSummaries) if (s.limit) limits.add(s.limit);
-				if (limits.size > 0) sampleLimits = Array.from(limits).sort().join(", ");
-			}
-			const row = {
-				id: item.id,
-				name: item.name,
-				displayIndex: item.type === "file" || item.type === "pending-task" ? item.displayIndex : void 0,
-				type: item.type,
-				url: item.url,
-				task: item.type === "file" ? preview?.task : item.name,
-				model: item.type === "file" ? preview?.model : item.type === "pending-task" ? item.model : void 0,
-				modelRoles: item.type === "file" ? preview?.model_roles ?? void 0 : void 0,
-				score: preview?.primary_metric?.value,
-				status: preview?.status,
-				completedAt: preview?.completed_at,
-				itemCount: item.type === "folder" ? item.itemCount : void 0,
-				log: item.type === "file" ? item.log : void 0,
-				path: item.type === "file" ? item.name : void 0,
-				totalSamples: details?.results?.total_samples,
-				completedSamples: details?.results?.completed_samples,
-				sandbox: details?.eval?.sandbox?.type,
-				totalTokens,
-				duration,
-				taskFile: details?.eval?.task_file ?? void 0,
-				taskArgs,
-				taskArgsRaw: taskArgsSource ?? void 0,
-				tags: details?.tags,
-				percentCompleted,
-				sampleErrors,
-				sampleLimits,
-				errorMessage: details?.error?.message
-			};
-			if (details?.results?.scores) {
-				for (const evalScore of details.results.scores) if (evalScore.metrics) for (const [metricName, metric] of Object.entries(evalScore.metrics)) row[`score_${evalScore.name}/${metricName}`] = metric.value;
-			}
-			return row;
-		});
-	}, [items, logDetails]);
+	const data = useKeyedMemo(items, (item) => item.id, (item) => [
+		item.id,
+		item.type,
+		item.url,
+		item.name,
+		item.displayIndex,
+		item.type === "file" ? item.logPreview : void 0,
+		item.type === "folder" ? item.itemCount : void 0,
+		item.type === "pending-task" ? item.model : void 0,
+		detailsForItem(item, deferredLogDetails)
+	], (item) => buildLogListRow(item, detailsForItem(item, deferredLogDetails)));
 	const handleRowClick = (0, import_react.useCallback)((e) => {
 		if (e.data && e.node && gridRef.current?.api) {
 			gridRef.current.api.deselectAll();
@@ -113824,7 +113887,7 @@ var LogsPanel = ({ maybeShowSingleLog, mode = "logs" }) => {
 	const logDir = useStore((state) => state.logs.logDir);
 	const logFiles = useLogsWithretried();
 	const evalSet = useStore((state) => state.logs.evalSet);
-	const logPreviews = useStore((state) => state.logs.logPreviews);
+	const deferredLogPreviews = (0, import_react.useDeferredValue)(useStore((state) => state.logs.logPreviews));
 	const { filteredCount } = useLogsListing();
 	const syncing = useStore((state) => state.app.status.syncing);
 	const watchedLogs = useStore((state) => state.logs.listing.watchedLogs);
@@ -113868,7 +113931,7 @@ var LogsPanel = ({ maybeShowSingleLog, mode = "logs" }) => {
 						type: "file",
 						url: tasksUrl(decodedPath, logDir),
 						log: logFile,
-						logPreview: logPreviews[logFile.name]
+						logPreview: deferredLogPreviews[logFile.name]
 					});
 				}
 			}
@@ -113879,6 +113942,18 @@ var LogsPanel = ({ maybeShowSingleLog, mode = "logs" }) => {
 		const processedFolders = /* @__PURE__ */ new Set();
 		const existingLogTaskIds = /* @__PURE__ */ new Set();
 		let _hasRetriedLogs = false;
+		const sortedNames = logFiles.map((f) => f.name).sort();
+		const lowerBound = (target) => {
+			let lo = 0;
+			let hi = sortedNames.length;
+			while (lo < hi) {
+				const mid = lo + hi >> 1;
+				if (sortedNames[mid] < target) lo = mid + 1;
+				else hi = mid;
+			}
+			return lo;
+		};
+		const countWithPrefix = (prefix) => lowerBound(prefix + "￿") - lowerBound(prefix);
 		for (const logFile of logFiles) {
 			if (logFile.task_id) existingLogTaskIds.add(logFile.task_id);
 			const name = logFile.name;
@@ -113896,7 +113971,7 @@ var LogsPanel = ({ maybeShowSingleLog, mode = "logs" }) => {
 					type: "file",
 					url: logsUrl(path, logDir),
 					log: logFile,
-					logPreview: logPreviews[logFile.name]
+					logPreview: deferredLogPreviews[logFile.name]
 				});
 			} else if (name.startsWith(dirWithSlash)) {
 				const relativePath = directoryRelativeUrl(name, currentDir);
@@ -113909,7 +113984,7 @@ var LogsPanel = ({ maybeShowSingleLog, mode = "logs" }) => {
 						name: dirName,
 						type: "folder",
 						url: logsUrl(url, logDir),
-						itemCount: logFiles.filter((file) => file.name.startsWith(dirname(name))).length
+						itemCount: countWithPrefix(dirname(name))
 					});
 					processedFolders.add(dirName);
 				}
@@ -113922,7 +113997,7 @@ var LogsPanel = ({ maybeShowSingleLog, mode = "logs" }) => {
 		logFiles,
 		currentDir,
 		logDir,
-		logPreviews,
+		deferredLogPreviews,
 		showRetriedLogs
 	]);
 	const scopePrefix = mode === "logs" ? currentDir : void 0;
@@ -116430,7 +116505,7 @@ var MessageLabel = ({ label, mode = "badge", onActivate, className }) => {
 /**
 * Renders the ChatMessage component.
 */
-var ChatMessageRow = ({ index, parentName, resolvedMessage, references, className, display, labels, linking, tools, startNumber }) => {
+var ChatMessageRow = (0, import_react.memo)(function ChatMessageRow({ index, parentName, resolvedMessage, references, className, display, labels, linking, tools, startNumber }) {
 	const highlightUserMessage = display?.highlightUserMessage ?? true;
 	const showLabels = labels?.show ?? true;
 	const labelValues = labels?.messageLabels;
@@ -116517,8 +116592,8 @@ var ChatMessageRow = ({ index, parentName, resolvedMessage, references, classNam
 			idx++;
 		}
 	}
-	if (useLabels) {
-		const hasTools = viewKinds.some((k) => k !== "message");
+	const hasTools = viewKinds.some((k) => k !== "message");
+	if (useLabels || hasTools) {
 		const renderPart = (idx, attached) => {
 			const kind = viewKinds[idx];
 			const isMessage = kind === "message";
@@ -116552,7 +116627,19 @@ var ChatMessageRow = ({ index, parentName, resolvedMessage, references, classNam
 			children: view
 		}, `chat-message-row-unlabeled-${index}-part-${idx}`);
 	});
-};
+}, chatMessageRowEqual);
+function chatMessageRowEqual(prev, next) {
+	const keys = Object.keys(prev);
+	if (keys.length !== Object.keys(next).length) return false;
+	for (const key of keys) if (key === "resolvedMessage") {
+		const a = prev.resolvedMessage;
+		const b = next.resolvedMessage;
+		if (a.message !== b.message) return false;
+		if (a.toolMessages.length !== b.toolMessages.length) return false;
+		if (!a.toolMessages.every((t, i) => t === b.toolMessages[i])) return false;
+	} else if (prev[key] !== next[key]) return false;
+	return true;
+}
 var resolveToolMessage = (toolMessage) => {
 	if (!toolMessage || toolMessage.error) return [];
 	const content = toolMessage.content;
@@ -117938,10 +118025,12 @@ function VirtualList({ persistenceKey, ref, className, scrollRef: externalScroll
 	const lastAutoScrollTopRef = (0, import_react.useRef)(null);
 	const lastInitialKeyRef = (0, import_react.useRef)(null);
 	const lastInitialIndexRef = (0, import_react.useRef)(void 0);
+	const hasResetTopRef = (0, import_react.useRef)(false);
 	(0, import_react.useEffect)(() => {
 		if (lastInitialKeyRef.current !== persistenceKey || lastInitialIndexRef.current !== initialIndex) {
 			hasInitialScrolledRef.current = false;
 			userScrolledRef.current = false;
+			hasResetTopRef.current = false;
 			lastInitialKeyRef.current = persistenceKey;
 			lastInitialIndexRef.current = initialIndex ?? void 0;
 		}
@@ -117975,8 +118064,9 @@ function VirtualList({ persistenceKey, ref, className, scrollRef: externalScroll
 					el.scrollTop = toSpacerScroll(snapshot.totalCount === data.length ? snapshot.scrollOffset : Math.min(snapshot.scrollOffset, maxScroll));
 				}
 				release();
-			} else if (!userScrolledRef.current) {
+			} else if (!userScrolledRef.current && !hasResetTopRef.current) {
 				el.scrollTop = 0;
+				hasResetTopRef.current = true;
 				release();
 			} else release();
 		});
@@ -118396,6 +118486,10 @@ var ChatViewVirtualList = (0, import_react.memo)(function ChatViewVirtualList({ 
 		maxLabelLength,
 		rowStartNumbers
 	]);
+	if (collapsedMessages.length === 0) return running ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, {
+		text: "Waiting for messages",
+		busy: true
+	}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, { text: "No messages" });
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(VirtualList, {
 		persistenceKey: `chat-${id}`,
 		ref: listHandle,
@@ -118435,7 +118529,11 @@ var kCollapsibleEventTypes = [
 	TYPE_SUBTASK
 ];
 /** Event types whose *content* can be collapsed (panel-level collapse). */
-var kContentCollapsibleEventTypes = ["state", "store"];
+var kContentCollapsibleEventTypes = [
+	"model",
+	"state",
+	"store"
+];
 var EventNode = class {
 	id;
 	event;
@@ -126250,6 +126348,7 @@ function useTimelinesArray(events, serverTimelines, options) {
 * Always runs through collectRawEvents so that sourceSpans (used for
 * agent card rendering) are populated for the selected row.
 */
+var PHASE_SPAN_TYPES = new Set(["init", "scorers"]);
 var emptySourceSpans = /* @__PURE__ */ new Map();
 var emptyHighlightedKeys = /* @__PURE__ */ new Map();
 function useTranscriptTimeline(options) {
@@ -126384,6 +126483,13 @@ function useTranscriptTimeline(options) {
 		sourceSpans,
 		minimapSelection,
 		hasTimeline: timeline.root.content.length > 0 && (timeline.root.content.some((item) => item.type === "span" || item.type === "event" && item.event.event === "span_begin") || timeline.root.branches.length > 0),
+		hasAgentTimeline: visibleRows.some((row) => {
+			if (row.depth < 1) return false;
+			const rowSpan = row.spans[0];
+			if (!rowSpan) return false;
+			const span = getAgents(rowSpan)[0];
+			return !!span && !PHASE_SPAN_TYPES.has(span.spanType ?? "");
+		}),
 		timelines,
 		activeTimelineIndex,
 		setActiveTimeline,
@@ -127784,21 +127890,86 @@ function formatAttemptDuration(event) {
 	const sec = attemptDurationSec(event);
 	return sec != null ? formatTime$1(sec) : null;
 }
+var StopReasonBadge_module_default = {
+	section: "_section_8yqw9_1",
+	header: "_header_8yqw9_5",
+	label: "_label_8yqw9_12",
+	badge: "_badge_8yqw9_16",
+	neutral: "_neutral_8yqw9_31",
+	amber: "_amber_8yqw9_36",
+	blue: "_blue_8yqw9_41",
+	rose: "_rose_8yqw9_46",
+	gray: "_gray_8yqw9_51"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/transcript/event/StopReasonBadge.tsx
+var STOP_TONE = {
+	stop: "neutral",
+	max_tokens: "amber",
+	model_length: "amber",
+	tool_calls: "blue",
+	content_filter: "rose",
+	unknown: "gray"
+};
+var TONE_CLASS = {
+	neutral: StopReasonBadge_module_default.neutral,
+	amber: StopReasonBadge_module_default.amber,
+	blue: StopReasonBadge_module_default.blue,
+	rose: StopReasonBadge_module_default.rose,
+	gray: StopReasonBadge_module_default.gray
+};
+var detailEntries = (details) => {
+	if (!details) return {};
+	const scalars = {};
+	for (const [k, v] of Object.entries(details)) {
+		if (k === "categories" || typeof v !== "string" || v === "") continue;
+		scalars[k] = v;
+	}
+	const ordered = {};
+	for (const k of ["category", "type"]) if (k in scalars) {
+		ordered[k] = scalars[k];
+		delete scalars[k];
+	}
+	return {
+		...ordered,
+		...scalars
+	};
+};
+var StopReasonBadge = ({ reason, details }) => {
+	const toneClass = TONE_CLASS[STOP_TONE[reason] ?? "gray"];
+	const entries = detailEntries(details);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: StopReasonBadge_module_default.section,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: StopReasonBadge_module_default.header,
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: clsx("text-size-small", "text-style-label", "text-style-secondary", StopReasonBadge_module_default.label),
+				children: "Stop Reason"
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: clsx(StopReasonBadge_module_default.badge, toneClass),
+				children: reason
+			})]
+		}), Object.keys(entries).length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
+			entries,
+			options: { plain: true }
+		})]
+	});
+};
 var ModelEventView_module_default = {
-	container: "_container_v2zov_1",
-	all: "_all_v2zov_6",
-	tableSelection: "_tableSelection_v2zov_12",
-	config: "_config_v2zov_18",
-	tools: "_tools_v2zov_22",
-	codePre: "_codePre_v2zov_26",
-	code: "_code_v2zov_26",
-	progress: "_progress_v2zov_38",
-	error: "_error_v2zov_42",
-	cancelled: "_cancelled_v2zov_53",
-	showAllLink: "_showAllLink_v2zov_66",
-	showAllIcon: "_showAllIcon_v2zov_77",
-	toolConfig: "_toolConfig_v2zov_86",
-	toolChoice: "_toolChoice_v2zov_95"
+	container: "_container_2vo8f_1",
+	all: "_all_2vo8f_6",
+	tableSelection: "_tableSelection_2vo8f_12",
+	config: "_config_2vo8f_18",
+	tools: "_tools_2vo8f_22",
+	codePre: "_codePre_2vo8f_26",
+	code: "_code_2vo8f_26",
+	progress: "_progress_2vo8f_38",
+	error: "_error_2vo8f_42",
+	cancelled: "_cancelled_2vo8f_53",
+	showAllLink: "_showAllLink_2vo8f_66",
+	showAllIcon: "_showAllIcon_2vo8f_77",
+	toolConfig: "_toolConfig_2vo8f_86",
+	toolChoice: "_toolChoice_2vo8f_90"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/ModelEventView.tsx
@@ -127820,12 +127991,6 @@ var ModelEventView = ({ eventNode, showToolCalls, className, context, eventCallb
 	const firstChoice = event.output?.choices?.[0];
 	const stopDetails = firstChoice?.stop_details;
 	const showStopReason = !!firstChoice && (!!stopDetails || firstChoice.stop_reason !== "stop");
-	const stopEntries = {};
-	if (showStopReason) {
-		stopEntries["stop reason"] = firstChoice.stop_reason;
-		if (stopDetails?.category) stopEntries["category"] = stopDetails.category;
-		if (stopDetails?.explanation) stopEntries["explanation"] = stopDetails.explanation;
-	}
 	const userMessages = (0, import_react.useMemo)(() => {
 		const result = [];
 		if (!!!event.agentResultsFiltered) {
@@ -127917,10 +128082,10 @@ var ModelEventView = ({ eventNode, showToolCalls, className, context, eventCallb
 					}) : void 0
 				]
 			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				"data-name": "All",
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				"data-name": "Info",
 				className: ModelEventView_module_default.container,
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: ModelEventView_module_default.all,
 					children: [
 						event.output.usage ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ModelUsagePanel, {
@@ -127931,13 +128096,9 @@ var ModelEventView = ({ eventNode, showToolCalls, className, context, eventCallb
 								working_time: event.working_time
 							}
 						}) : void 0,
-						Object.keys(stopEntries).length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventSection, {
-							title: "Stop Reason",
-							className: clsx(ModelEventView_module_default.tableSelection, ModelEventView_module_default.config),
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
-								entries: stopEntries,
-								options: { plain: true }
-							})
+						showStopReason && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StopReasonBadge, {
+							reason: firstChoice.stop_reason,
+							details: stopDetails
 						}),
 						Object.keys(entries).length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventSection, {
 							title: "Configuration",
@@ -127948,15 +128109,17 @@ var ModelEventView = ({ eventNode, showToolCalls, className, context, eventCallb
 							})
 						})
 					]
-				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventSection, {
-					title: "Messages",
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChatView, {
-						id: `${eventNode.id}-model-input-full`,
-						messages: [...event.input, ...outputMessages || []],
-						tools: { collapseToolMessages: context?.hasToolEvents !== false },
-						labels: { show: false }
-					})
-				})]
+				})
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				"data-name": "Messages",
+				className: ModelEventView_module_default.container,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChatView, {
+					id: `${eventNode.id}-model-input-full`,
+					messages: [...event.input, ...outputMessages || []],
+					tools: { collapseToolMessages: context?.hasToolEvents !== false },
+					labels: { show: false }
+				})
 			}),
 			event.tools.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				"data-name": "Tools",
@@ -128016,19 +128179,17 @@ var APICodeCell = ({ id, sourceCode }) => {
 	});
 };
 var ToolsConfig = ({ tools, toolChoice }) => {
-	const toolEls = tools.map((tool, idx) => {
-		return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: clsx("text-style-label", "text-style-secondary"),
-			children: tool.name
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
-			id: `config-${tool.name}-${idx}`,
-			collapse: true,
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownDiv, { markdown: tool.description })
-		})] }, `${tool.name}-${idx}`);
-	});
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: clsx(ModelEventView_module_default.toolConfig, "text-size-small"),
-		children: toolEls
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
+		entries: (0, import_react.useMemo)(() => {
+			const entries = {};
+			tools.forEach((tool, idx) => {
+				const key = entries[tool.name] === void 0 ? tool.name : `${tool.name} (${idx})`;
+				entries[key] = tool.description;
+			});
+			return entries;
+		}, [tools]),
+		options: { plain: true },
+		className: ModelEventView_module_default.toolConfig
 	}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: clsx(ModelEventView_module_default.toolChoice, "text-size-small"),
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -129703,14 +129864,14 @@ var scopeMessageLabels = (events, messageLabels) => {
 	for (const [id, label] of Object.entries(messageLabels)) if (present.has(id)) scoped[id] = label;
 	return Object.keys(scoped).length > 0 ? scoped : void 0;
 };
-var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, offsetTop = 0, timelineSelection, activeTimeline, serverTimelines, markerConfig: markerConfigOverride, agentConfig: agentConfigOverride, showSwimlanes: showSwimlanesOption = "auto", onMarkerNavigate, onScrollToTop, headroomHidden, onHeadroomResetAnchor, onHeadroomSetHidden, listId, initialEventId, initialMessageId, eventsListRef, getEventUrl, linkingEnabled, bulkCollapse, collapseState, outline, outlineScrollRef, rightPane, rightPaneScrollRef, eventNodeContext, emptyText = "No events match the current filter", className }) => {
+var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, offsetTop = 0, timelineSelection, activeTimeline, serverTimelines, markerConfig: markerConfigOverride, agentConfig: agentConfigOverride, showSwimlanes: showSwimlanesOption = "auto", onMarkerNavigate, onScrollToTop, headroomHidden, onHeadroomResetAnchor, onHeadroomSetHidden, listId, initialEventId, initialMessageId, eventsListRef, getEventUrl, linkingEnabled, bulkCollapse, collapseState, outline, outlineScrollRef, rightPane, rightPaneScrollRef, eventNodeContext, emptyText = "No events match the current filter", emptyBusy, className }) => {
 	const eventsForTimeline = (0, import_react.useMemo)(() => {
 		if (!hiddenEventTypes || hiddenEventTypes.length === 0) return events;
 		return events.filter((e) => e.event === "anchor" || !hiddenEventTypes.includes(e.event));
 	}, [events, hiddenEventTypes]);
 	const timelinesForBranchDetection = useTimelinesArray(eventsForTimeline, serverTimelines);
 	const timelineConfig = useTimelineConfig({ branchesPresent: (0, import_react.useMemo)(() => timelinesForBranchDetection.some((tl) => spanHasBranches(tl.root)), [timelinesForBranchDetection]) });
-	const { timeline: timelineData, state: timelineState, layouts: timelineLayouts, rootTimeMapping, selectedEvents, sourceSpans, minimapSelection, hasTimeline, timelines, activeTimelineIndex, setActiveTimeline, regionCounts, branchScrollTarget, highlightedKeys, selectedRowName, viewStack, pushView, popView } = useTranscriptTimeline({
+	const { timeline: timelineData, state: timelineState, layouts: timelineLayouts, rootTimeMapping, selectedEvents, sourceSpans, minimapSelection, hasTimeline, hasAgentTimeline, timelines, activeTimelineIndex, setActiveTimeline, regionCounts, branchScrollTarget, highlightedKeys, selectedRowName, viewStack, pushView, popView } = useTranscriptTimeline({
 		events: eventsForTimeline,
 		markerConfig: markerConfigOverride ?? timelineConfig.markerConfig,
 		timelineOptions: agentConfigOverride ?? timelineConfig.agentConfig,
@@ -129729,10 +129890,11 @@ var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, 
 	]);
 	const swimlanesDefaultCollapsed = (0, import_react.useMemo)(() => {
 		if (showSwimlanesOption === "auto" && !hasTimeline && regionCounts.size === 0) return true;
-		return hasTimeline ? false : void 0;
+		if (hasTimeline) return hasAgentTimeline ? false : true;
 	}, [
 		showSwimlanesOption,
 		hasTimeline,
+		hasAgentTimeline,
 		regionCounts
 	]);
 	const rawEventsForNodes = showSwimlanes ? selectedEvents : events;
@@ -130137,7 +130299,10 @@ var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, 
 							collapsedOutline: collapseState?.outline,
 							onCollapseTranscript,
 							eventNodeContext: mergedEventNodeContext
-						}, effectiveListId) : emptyText !== null ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, { text: emptyText }) : null,
+						}, effectiveListId) : emptyText !== null ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, {
+							text: emptyText,
+							busy: emptyBusy
+						}) : null,
 						rightPane && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: TranscriptLayout_module_default.rightSeparator }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StickyScroll, {
 							ref: rightPaneScrollRef,
 							scrollRef,
@@ -134661,6 +134826,7 @@ var TranscriptPanel = (0, import_react.memo)((props) => {
 		sampleEpoch
 	});
 	const filteredEventTypes = useStore((state) => state.sample.eventFilter.filteredTypes);
+	const { isDefaultFilter } = useTranscriptFilter();
 	const timelineSelected = useStore((state) => state.sample.timelineSelected);
 	const setTimelineSelectedStore = useStore((state) => state.sampleActions.setTimelineSelected);
 	const activeTimelineIndex = useStore((state) => state.sample.activeTimelineIndex);
@@ -134859,7 +135025,8 @@ var TranscriptPanel = (0, import_react.memo)((props) => {
 				onSelectedChange: setSelectedScanner
 			})
 		} : void 0,
-		emptyText: filteredEventTypes.length > 0 ? "The currently applied filter hides all events." : void 0
+		emptyText: running && isDefaultFilter ? "Sample is starting" : filteredEventTypes.length > 0 ? "The currently applied filter hides all events." : void 0,
+		emptyBusy: running && isDefaultFilter
 	});
 });
 //#endregion
@@ -134963,6 +135130,15 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 		urlSampleId,
 		urlEpoch
 	]);
+	const chatDisplay = (0, import_react.useMemo)(() => ({
+		indented: true,
+		formatDateTime
+	}), []);
+	const chatLinking = (0, import_react.useMemo)(() => ({
+		enabled: isHostedEnvironment(),
+		getMessageUrl
+	}), [getMessageUrl]);
+	const chatTools = (0, import_react.useMemo)(() => ({ callStyle: "complete" }), []);
 	const sampleUsages = usageViewsForSample(`${baseId}-${id}`, sample, evalSpec);
 	const sampleMetadatas = metadataViewsForSample(`${baseId}-${id}`, scrollRef, sample);
 	const tabsetId = `task-sample-details-tab-${id}`;
@@ -135213,17 +135389,11 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 								messages: sampleMessages,
 								initialMessageId: sampleDetailNavigation.message,
 								offsetTop: stickyOffsetTop,
-								display: {
-									indented: true,
-									formatDateTime
-								},
-								linking: {
-									enabled: isHostedEnvironment(),
-									getMessageUrl
-								},
+								display: chatDisplay,
+								linking: chatLinking,
 								onNativeFindChanged: setNativeFind,
 								scrollRef,
-								tools: { callStyle: "complete" },
+								tools: chatTools,
 								running,
 								className: SampleDisplay_module_default.fullWidth
 							}, `${baseId}-chat-${id}`)
