@@ -11080,7 +11080,7 @@ function toString$1(v) {
 ({ ...functions });
 //#endregion
 //#region ../../node_modules/.pnpm/arquero@8.0.3/node_modules/arquero/src/util/error.js
-function error$8(message, cause) {
+function error$7(message, cause) {
 	throw Error(message, { cause });
 }
 //#endregion
@@ -11643,7 +11643,7 @@ var windowFunctions = {
 	ntile: {
 		create(num) {
 			num = +num;
-			if (!(num > 0)) error$8("ntile num must be greater than zero.");
+			if (!(num > 0)) error$7("ntile num must be greater than zero.");
 			const { init, value } = cume_dist.create();
 			return {
 				init,
@@ -11704,7 +11704,7 @@ var windowFunctions = {
 	nth_value: {
 		create(nth) {
 			nth = +nth;
-			if (!(nth > 0)) error$8("nth_value nth must be greater than zero.");
+			if (!(nth > 0)) error$7("nth_value nth must be greater than zero.");
 			return {
 				init: noop$1,
 				value: (w, f) => {
@@ -44125,7 +44125,7 @@ function normalize(state) {
 }
 //#endregion
 //#region ../../node_modules/.pnpm/markdown-it@14.2.0/node_modules/markdown-it/lib/rules_core/block.mjs
-function block(state) {
+function block$1(state) {
 	let token;
 	if (state.inlineMode) {
 		token = new state.Token("inline", "", 0);
@@ -44415,7 +44415,7 @@ function text_join(state) {
 **/
 var _rules$2 = [
 	["normalize", normalize],
-	["block", block],
+	["block", block$1],
 	["inline", inline$2],
 	["linkify", linkify$1],
 	["replacements", replace$1],
@@ -46947,7 +46947,7 @@ var stringFromCharCode = String.fromCharCode;
 * @param {String} type The error type.
 * @returns {Error} Throws a `RangeError` with the applicable error message.
 */
-function error$7(type) {
+function error$6(type) {
 	throw new RangeError(errors[type]);
 }
 /**
@@ -47081,26 +47081,26 @@ var decode = function(input) {
 	let basic = input.lastIndexOf(delimiter);
 	if (basic < 0) basic = 0;
 	for (let j = 0; j < basic; ++j) {
-		if (input.charCodeAt(j) >= 128) error$7("not-basic");
+		if (input.charCodeAt(j) >= 128) error$6("not-basic");
 		output.push(input.charCodeAt(j));
 	}
 	for (let index = basic > 0 ? basic + 1 : 0; index < inputLength;) {
 		const oldi = i;
 		for (let w = 1, k = base$1;; k += base$1) {
-			if (index >= inputLength) error$7("invalid-input");
+			if (index >= inputLength) error$6("invalid-input");
 			const digit = basicToDigit(input.charCodeAt(index++));
-			if (digit >= base$1) error$7("invalid-input");
-			if (digit > floor((maxInt - i) / w)) error$7("overflow");
+			if (digit >= base$1) error$6("invalid-input");
+			if (digit > floor((maxInt - i) / w)) error$6("overflow");
 			i += digit * w;
 			const t = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias;
 			if (digit < t) break;
 			const baseMinusT = base$1 - t;
-			if (w > floor(maxInt / baseMinusT)) error$7("overflow");
+			if (w > floor(maxInt / baseMinusT)) error$6("overflow");
 			w *= baseMinusT;
 		}
 		const out = output.length + 1;
 		bias = adapt(i - oldi, out, oldi == 0);
-		if (floor(i / out) > maxInt - n) error$7("overflow");
+		if (floor(i / out) > maxInt - n) error$6("overflow");
 		n += floor(i / out);
 		i %= out;
 		output.splice(i++, 0, n);
@@ -47129,11 +47129,11 @@ var encode = function(input) {
 		let m = maxInt;
 		for (const currentValue of input) if (currentValue >= n && currentValue < m) m = currentValue;
 		const handledCPCountPlusOne = handledCPCount + 1;
-		if (m - n > floor((maxInt - delta) / handledCPCountPlusOne)) error$7("overflow");
+		if (m - n > floor((maxInt - delta) / handledCPCountPlusOne)) error$6("overflow");
 		delta += (m - n) * handledCPCountPlusOne;
 		n = m;
 		for (const currentValue of input) {
-			if (currentValue < n && ++delta > maxInt) error$7("overflow");
+			if (currentValue < n && ++delta > maxInt) error$6("overflow");
 			if (currentValue === n) {
 				let q = delta;
 				for (let k = base$1;; k += base$1) {
@@ -56812,7 +56812,7 @@ var AppDatabase = class extends Dexie {
 				return true;
 			}
 			return false;
-		} catch (error) {
+		} catch {
 			return false;
 		}
 	}
@@ -56977,7 +56977,7 @@ var DatabaseService = class {
 				log$11.debug("Database not open");
 				return null;
 			}
-			let files = await this.getDb().logs.toArray();
+			const files = await this.getDb().logs.toArray();
 			files.sort((a, b) => {
 				if (a.mtime != null && b.mtime != null) return b.mtime - a.mtime;
 				if (a.id != null && b.id != null) return a.id - b.id;
@@ -57841,7 +57841,7 @@ var createLogSlice = (set, get, _store, api) => {
 						logPolling.startPolling(logFileName);
 						return;
 					}
-				} catch (e) {}
+				} catch {}
 				try {
 					const logDetails = await api.get_log_details(logFileName);
 					state.logActions.setSelectedLogDetails(logDetails);
@@ -58203,7 +58203,7 @@ var createLogsSlice = (set, get, _store, api) => {
 					const samples = await dbService.readAllSampleSummaries();
 					log$8.debug(`Retrieved ${samples.length} cached samples`);
 					return samples;
-				} catch (e) {
+				} catch {
 					log$8.debug("No cached samples available");
 					return [];
 				}
@@ -58216,7 +58216,7 @@ var createLogsSlice = (set, get, _store, api) => {
 					const samples = await dbService.querySampleSummaries(filter);
 					log$8.debug(`Query returned ${samples.length} samples`);
 					return samples;
-				} catch (e) {
+				} catch {
 					log$8.debug("Sample query failed, returning empty results");
 					return [];
 				}
@@ -58486,8 +58486,18 @@ function createSamplePolling(store, api) {
 			const { sampleActions } = store.getState();
 			if (!api.get_log_sample_data) throw new Error("Required API get_log_sample_data is undefined.");
 			if (localAbort.signal.aborted) return false;
-			const loadCompletedSample = async (message) => {
-				stopPollingTimer();
+			const loadCompletedSample = async (message, options) => {
+				const keepStreaming = () => {
+					sampleActions.setSampleStatus("streaming");
+					return true;
+				};
+				const failLoad = (error) => {
+					stopPollingTimer();
+					sampleActions.setSampleError(error);
+					sampleActions.setSampleStatus("error");
+					sampleActions.setRunningEvents([]);
+					return false;
+				};
 				try {
 					log$7.debug(message);
 					const sample = await api.get_log_sample(logFile, summary.id, summary.epoch) ?? (() => {
@@ -58496,22 +58506,20 @@ function createSamplePolling(store, api) {
 					})();
 					if (localAbort.signal.aborted) return false;
 					if (sample) {
+						stopPollingTimer();
 						const migratedSample = resolveSample$1(sample);
 						sampleActions.setSelectedSample(migratedSample, logFile);
 						sampleActions.setSampleStatus("ok");
 						sampleActions.setRunningEvents([]);
-					} else {
-						sampleActions.setSampleStatus("error");
-						sampleActions.setSampleError(/* @__PURE__ */ new Error("Unable to load sample - an unknown error occurred"));
-						sampleActions.setRunningEvents([]);
+						return false;
 					}
+					if (!options.missingSampleIsError) return keepStreaming();
+					return failLoad(/* @__PURE__ */ new Error("Unable to load sample - an unknown error occurred"));
 				} catch (e) {
 					if (localAbort.signal.aborted) return false;
-					sampleActions.setSampleError(e);
-					sampleActions.setSampleStatus("error");
-					sampleActions.setRunningEvents([]);
+					if (!options.missingSampleIsError) return keepStreaming();
+					return failLoad(e);
 				}
-				return false;
 			};
 			const priorEventId = pollingState.eventId;
 			const priorAttachmentId = pollingState.attachmentId;
@@ -58519,8 +58527,11 @@ function createSamplePolling(store, api) {
 			const priorCallPoolId = pollingState.callPoolId;
 			const sampleDataResponse = await api.get_log_sample_data(logFile, summary.id, summary.epoch, priorEventId, priorAttachmentId, priorMessagePoolId, priorCallPoolId);
 			if (localAbort.signal.aborted) return false;
-			if (sampleDataResponse?.status === "NotFound") return await loadCompletedSample(`LOADING COMPLETED SAMPLE AFTER FLUSH: ${summary.id}-${summary.epoch}`);
-			if (shouldFinalizeStreamingSample(sampleDataResponse, hasCompletedLogSummary(store.getState(), summary.id, summary.epoch))) return await loadCompletedSample(`LOADING COMPLETED SAMPLE AFTER SUMMARY UPDATE: ${summary.id}-${summary.epoch}`);
+			if (sampleDataResponse?.status === "NotFound") return await loadCompletedSample(`LOADING COMPLETED SAMPLE AFTER FLUSH: ${summary.id}-${summary.epoch}`, { missingSampleIsError: true });
+			if (shouldFinalizeStreamingSample(sampleDataResponse, hasCompletedLogSummary(store.getState(), summary.id, summary.epoch))) {
+				const completedByPendingBuffer = sampleDataResponse?.complete === true;
+				return await loadCompletedSample(completedByPendingBuffer ? `LOADING COMPLETED SAMPLE AFTER BUFFER COMPLETE: ${summary.id}-${summary.epoch}` : `LOADING COMPLETED SAMPLE AFTER SUMMARY UPDATE: ${summary.id}-${summary.epoch}`, { missingSampleIsError: !completedByPendingBuffer });
+			}
 			if (sampleDataResponse?.status === "OK" && sampleDataResponse.sampleData) {
 				if (localAbort.signal.aborted) return false;
 				sampleActions.setSampleStatus("streaming");
@@ -58583,8 +58594,12 @@ var hasSampleDataUpdates = (sampleData) => {
 	return sampleData.events.length > 0 || sampleData.attachments.length > 0 || sampleData.message_pool.length > 0 || sampleData.call_pool.length > 0;
 };
 var shouldFinalizeStreamingSample = (sampleDataResponse, completedInLog) => {
-	if (!completedInLog || !sampleDataResponse) return false;
-	return sampleDataResponse.status === "NotModified" || sampleDataResponse.status === "OK" && !hasSampleDataUpdates(sampleDataResponse.sampleData);
+	if (!sampleDataResponse) return false;
+	if (sampleDataResponse.status === "NotModified") return completedInLog === true;
+	if (sampleDataResponse.status !== "OK") return false;
+	if (sampleDataResponse.has_more === true) return false;
+	if (!completedInLog && sampleDataResponse.complete !== true) return false;
+	return !hasSampleDataUpdates(sampleDataResponse.sampleData);
 };
 var resetPollingState = (state) => {
 	state.eventId = kNoId;
@@ -59005,22 +59020,18 @@ var WorkQueue = class {
 	}
 	enqueue(items, priority = 1) {
 		const now = Date.now();
-		let newItemsCount = 0;
 		for (const item of items) {
 			const id = this.options.getId(item);
 			const existing = this.itemsById.get(id);
 			if (existing) {
 				if (priority > existing.priority) existing.priority = priority;
-			} else {
-				this.itemsById.set(id, {
-					id,
-					data: item,
-					priority,
-					addedAt: now,
-					retries: 0
-				});
-				newItemsCount++;
-			}
+			} else this.itemsById.set(id, {
+				id,
+				data: item,
+				priority,
+				addedAt: now,
+				retries: 0
+			});
 		}
 		this.startProcessing();
 	}
@@ -59432,7 +59443,7 @@ var initializeStore = (api, capabilities, storage) => {
 			cleanup: async () => {
 				await databaseService.closeDatabase();
 				appCleanup();
-				await logsCleanup();
+				logsCleanup();
 				logCleanup();
 				sampleCleanup();
 			}
@@ -66209,8 +66220,8 @@ var sampleFilterItems = (evalDescriptor) => {
 			});
 			return;
 		}
-		var tooltip = `${canonicalName}: ${descriptor.scoreType}`;
-		var categories = [];
+		let tooltip = `${canonicalName}: ${descriptor.scoreType}`;
+		let categories = [];
 		if (descriptor.min !== void 0 || descriptor.max !== void 0) {
 			const rounded = (num) => {
 				return parseFloat(num.toPrecision(3)).toString();
@@ -66683,13 +66694,6 @@ var useMessageVisibility = (id, scope) => {
 		setVisible,
 		id
 	]);
-};
-var usePrevious = (value) => {
-	const ref = (0, import_react.useRef)(void 0);
-	(0, import_react.useEffect)(() => {
-		ref.current = value;
-	}, [value]);
-	return ref.current;
 };
 var useLogs = () => {
 	const syncLogs = useStore((state) => state.logsActions.syncLogs);
@@ -67354,7 +67358,7 @@ var ViewerOptionsPopover = ({ showing, positionEl, setShowing }) => {
 		setIsClearing(true);
 		setClearMessage(null);
 		try {
-			await replicationService.clearData();
+			replicationService.clearData();
 			setClearMessage("Database cleared successfully");
 			setTimeout(() => setClearMessage(null), 3e3);
 		} catch (error) {
@@ -67555,7 +67559,7 @@ var Navbar = ({ fnNavigationUrl, bordered, children, currentPath, breadcrumbsEna
 //#endregion
 //#region src/app/navbar/ApplicationNavbar.tsx
 var ApplicationNavbar = ({ currentPath, fnNavigationUrl, bordered, children, showActivity = "log", breadcrumbsEnabled }) => {
-	const optionsRef = (0, import_react.useRef)(null);
+	const [optionsEl, setOptionsEl] = (0, import_react.useState)(null);
 	const themePreference = useUserSettings((s) => s.themePreference);
 	const setThemePreference = useUserSettings((s) => s.setThemePreference);
 	const isDark = useResolvedIsDark(themePreference);
@@ -67589,10 +67593,10 @@ var ApplicationNavbar = ({ currentPath, fnNavigationUrl, bordered, children, sho
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ViewerOptionsButton, {
 				showing: isShowing,
 				setShowing,
-				ref: optionsRef
+				ref: setOptionsEl
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ViewerOptionsPopover, {
-				positionEl: optionsRef.current,
+				positionEl: optionsEl,
 				showing: isShowing,
 				setShowing
 			})
@@ -115624,6 +115628,7 @@ var shallowEqual = (a, b) => {
 * arrays, AG-Grid's rowData diff) don't re-run on unrelated renders.
 */
 function useKeyedMemo(source, getKey, itemDeps, build) {
+	"use no memo";
 	const cacheRef = (0, import_react.useRef)(/* @__PURE__ */ new Map());
 	const resultRef = (0, import_react.useRef)([]);
 	const prev = cacheRef.current;
@@ -115855,8 +115860,11 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 	const setWatchedLogs = useStore((state) => state.logsActions.setWatchedLogs);
 	const deferredLogDetails = (0, import_react.useDeferredValue)(useStore((state) => state.logs.logDetails));
 	const navigate = useNavigate();
-	const internalGridRef = (0, import_react.useRef)(null);
-	const gridRef = externalGridRef ?? internalGridRef;
+	const gridRef = (0, import_react.useRef)(null);
+	const attachGridRef = (0, import_react.useCallback)((instance) => {
+		gridRef.current = instance;
+		if (externalGridRef) externalGridRef.current = instance;
+	}, [externalGridRef]);
 	const gridContainerRef = (0, import_react.useRef)(null);
 	const [showFind, setShowFind] = (0, import_react.useState)(false);
 	const [findTerm, setFindTerm] = (0, import_react.useState)("");
@@ -115901,24 +115909,24 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 				navigate(url);
 			}, 10);
 		}
-	}, [navigate, gridRef]);
+	}, [navigate]);
 	const handleOpenRow = (0, import_react.useCallback)((rowNode, e) => {
 		if (!rowNode.data?.url) return;
 		if (e.metaKey || e.ctrlKey || e.shiftKey) openInNewTab(rowNode.data.url);
 		else navigate(rowNode.data.url);
 	}, [navigate]);
-	const handleKeyDown = (0, import_react.useMemo)(() => createGridKeyboardHandler({
-		gridRef,
-		onOpenRow: handleOpenRow
-	}), [gridRef, handleOpenRow]);
 	(0, import_react.useEffect)(() => {
 		const gridElement = gridContainerRef.current;
 		if (!gridElement) return;
+		const handleKeyDown = createGridKeyboardHandler({
+			gridRef,
+			onOpenRow: handleOpenRow
+		});
 		gridElement.addEventListener("keydown", handleKeyDown);
 		return () => {
 			gridElement.removeEventListener("keydown", handleKeyDown);
 		};
-	}, [handleKeyDown]);
+	}, [handleOpenRow]);
 	const handleCellMouseDown = (0, import_react.useCallback)((_e) => {}, []);
 	(0, import_react.useEffect)(() => {
 		setWatchedLogs(logFiles);
@@ -115947,7 +115955,11 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 		setFilteredCount(e.api.getDisplayedRowCount());
 	}, [setFilteredCount]);
 	const maxColCount = (0, import_react.useRef)(0);
-	const resizeGridColumns = (0, import_react.useRef)(createGridColumnResizer(gridRef)).current;
+	const resizerRef = (0, import_react.useRef)(null);
+	const resizeGridColumns = (0, import_react.useCallback)(() => {
+		resizerRef.current ??= createGridColumnResizer(gridRef);
+		resizerRef.current();
+	}, []);
 	(0, import_react.useEffect)(() => {
 		resizeGridColumns();
 	}, [columns, resizeGridColumns]);
@@ -116011,11 +116023,7 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 				firstNode.setSelected(true, true);
 			}
 		}
-	}, [
-		data,
-		columns,
-		gridRef
-	]);
+	}, [data, columns]);
 	const goToMatch = (0, import_react.useCallback)((index) => {
 		if (matchIds.length === 0) return;
 		const idx = (index % matchIds.length + matchIds.length) % matchIds.length;
@@ -116028,7 +116036,7 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 			api.ensureNodeVisible(node, "middle");
 			node.setSelected(true, true);
 		}
-	}, [matchIds, gridRef]);
+	}, [matchIds]);
 	const handleInputKeyDown = (0, import_react.useCallback)((e) => {
 		if (e.key === "Escape") closeFind();
 		else if (e.key === "Enter") {
@@ -116054,11 +116062,7 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 		return () => document.removeEventListener("keydown", handleFindKeyDown, true);
 	}, [closeFind, showFind]);
 	(0, import_react.useEffect)(() => {
-		if (findTerm) performSearch(findTerm);
-		else {
-			setMatchIds([]);
-			setCurrentMatchIndex(0);
-		}
+		performSearch(findTerm);
 	}, [findTerm, performSearch]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: clsx(gridCells_module_default.gridWrapper),
@@ -116079,7 +116083,7 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 			className: clsx(gridCells_module_default.gridContainer, SamplesGrid_module_default.gridChrome),
 			tabIndex: 0,
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AgGridReact, {
-				ref: gridRef,
+				ref: attachGridRef,
 				rowData: data,
 				animateRows: false,
 				suppressColumnMoveAnimation: true,
@@ -116178,14 +116182,14 @@ var LogsPanel = ({ maybeShowSingleLog, mode = "logs" }) => {
 	const { loadLogs } = useLogs();
 	const gridRef = (0, import_react.useRef)(null);
 	const [showColumnSelector, setShowColumnSelector] = (0, import_react.useState)(false);
-	const columnButtonRef = (0, import_react.useRef)(null);
+	const [columnButtonEl, setColumnButtonEl] = (0, import_react.useState)(null);
 	const showRetriedLogs = useUserSettings((state) => state.showRetriedLogs);
 	const setShowRetriedLogs = useUserSettings((state) => state.setShowRetriedLogs);
 	const logDir = useStore((state) => state.logs.logDir);
 	const logFiles = useLogsWithretried();
 	const evalSet = useStore((state) => state.logs.evalSet);
 	const deferredLogPreviews = (0, import_react.useDeferredValue)(useStore((state) => state.logs.logPreviews));
-	const { filteredCount } = useLogsListing();
+	const { filteredCount, gridStateByScope } = useLogsListing();
 	const syncing = useStore((state) => state.app.status.syncing);
 	const error = useStore((state) => state.app.status.error);
 	const watchedLogs = useStore((state) => state.logs.listing.watchedLogs);
@@ -116335,8 +116339,8 @@ var LogsPanel = ({ maybeShowSingleLog, mode = "logs" }) => {
 	const handleResetFilters = () => {
 		if (gridRef.current?.api) gridRef.current.api.setFilterModel(null);
 	};
-	const filterModel = gridRef.current?.api?.getFilterModel() || {};
-	const filteredFields = Object.keys(filterModel);
+	const scopeGridState = scopeKey ? gridStateByScope[scopeKey] : void 0;
+	const filteredFields = Object.keys(scopeGridState?.filter?.filterModel ?? {});
 	const hasFilter = filteredFields.length > 0;
 	(0, import_react.useEffect)(() => {
 		if (maybeShowSingleLog && logItems.length === 1) {
@@ -116369,7 +116373,7 @@ var LogsPanel = ({ maybeShowSingleLog, mode = "logs" }) => {
 						onClick: () => setShowRetriedLogs(!showRetriedLogs)
 					}, "show-retried"),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(NavbarButton, {
-						ref: columnButtonRef,
+						ref: setColumnButtonEl,
 						label: "Columns",
 						icon: ApplicationIcons.columns,
 						dropdown: true,
@@ -116389,7 +116393,7 @@ var LogsPanel = ({ maybeShowSingleLog, mode = "logs" }) => {
 				columns: pickerColumns,
 				visibility,
 				onVisibilityChange: handleColumnVisibilityChange,
-				positionEl: columnButtonRef.current,
+				positionEl: columnButtonEl,
 				filteredFields,
 				scoresHeading: "Metrics",
 				groupableScores: true,
@@ -116457,10 +116461,7 @@ function useLoadSample() {
 	const sampleEpoch = logSelection.sample?.epoch;
 	const sampleCompleted = logSelection.sample?.completed;
 	const currentSampleCompleted = sampleCompleted !== void 0 ? sampleCompleted : true;
-	const prevCompleted = usePrevious(currentSampleCompleted);
-	const prevLogFile = usePrevious(logSelection.logFile);
-	const prevSampleId = usePrevious(sampleId);
-	const prevSampleNeedsReload = usePrevious(sampleData.sampleNeedsReload);
+	const prevRef = (0, import_react.useRef)({});
 	const loadSample = (0, import_react.useCallback)(async (logFile, id, epoch, completed, summary) => {
 		const currentId = sampleData.selectedSampleIdentifier;
 		const isSameSample = currentId?.id === id && currentId?.epoch === epoch && currentId?.logFile === logFile;
@@ -116514,16 +116515,23 @@ function useLoadSample() {
 		sampleData.status
 	]);
 	(0, import_react.useEffect)(() => {
+		const prev = prevRef.current;
+		prevRef.current = {
+			completed: currentSampleCompleted,
+			logFile: logSelection.logFile,
+			sampleId,
+			sampleNeedsReload: sampleData.sampleNeedsReload
+		};
 		if (logSelection.logFile && sampleId !== void 0 && sampleEpoch !== void 0) {
 			const identifierMatches = sampleData.selectedSampleIdentifier?.id === sampleId && sampleData.selectedSampleIdentifier?.epoch === sampleEpoch && sampleData.selectedSampleIdentifier?.logFile === logSelection.logFile;
 			const hasSampleData = getSelectedSample() !== void 0;
 			const isCurrentSampleLoaded = identifierMatches && hasSampleData;
 			const isLoading = sampleData.status === "loading" || sampleData.status === "streaming";
 			const isError = sampleData.status === "error";
-			const logFileChanged = prevLogFile !== void 0 && prevLogFile !== logSelection.logFile;
-			const sampleIdChanged = prevSampleId !== void 0 && prevSampleId !== sampleId;
-			const completedChanged = prevCompleted !== void 0 && currentSampleCompleted !== prevCompleted;
-			const needsReloadChanged = prevSampleNeedsReload !== void 0 && prevSampleNeedsReload !== sampleData.sampleNeedsReload;
+			const logFileChanged = prev.logFile !== void 0 && prev.logFile !== logSelection.logFile;
+			const sampleIdChanged = prev.sampleId !== void 0 && prev.sampleId !== sampleId;
+			const completedChanged = prev.completed !== void 0 && currentSampleCompleted !== prev.completed;
+			const needsReloadChanged = prev.sampleNeedsReload !== void 0 && prev.sampleNeedsReload !== sampleData.sampleNeedsReload;
 			if (!isCurrentSampleLoaded && !isLoading && !isError || logFileChanged || sampleIdChanged || completedChanged || needsReloadChanged) loadSample(logSelection.logFile, sampleId, sampleEpoch, sampleCompleted, logSelection.sample);
 		}
 	}, [
@@ -116537,10 +116545,6 @@ function useLoadSample() {
 		sampleData.status,
 		sampleData.sampleNeedsReload,
 		sampleData.getSelectedSample,
-		prevLogFile,
-		prevSampleId,
-		prevCompleted,
-		prevSampleNeedsReload,
 		loadSample,
 		getSelectedSample
 	]);
@@ -116950,14 +116954,18 @@ var FindBand = () => {
 			input.setSelectionRange(len, len);
 		}
 	}, []);
-	const debouncedSearch = (0, import_react.useMemo)(() => debounce$2(async () => {
+	const runDebouncedSearch = (0, import_react.useCallback)(async () => {
 		if (!searchBoxRef.current) return;
 		await handleSearch(false);
 		needsCursorRestoreRef.current = true;
-	}, 300), [handleSearch]);
+	}, [handleSearch]);
+	const debouncedSearchRef = (0, import_react.useRef)(null);
+	(0, import_react.useEffect)(() => {
+		debouncedSearchRef.current = debounce$2(runDebouncedSearch, 300);
+	}, [runDebouncedSearch]);
 	const handleInputChange = (0, import_react.useCallback)(() => {
-		debouncedSearch();
-	}, [debouncedSearch]);
+		debouncedSearchRef.current?.();
+	}, []);
 	const handleBeforeInput = (0, import_react.useCallback)(() => {
 		const input = searchBoxRef.current;
 		if (input) {
@@ -117169,6 +117177,12 @@ var InlineSampleDisplay_module_default = {
 };
 //#endregion
 //#region ../../packages/inspect-components/src/chat/messages.ts
+/** Whether an assistant message carries server-side tool calls (provider
+* executed `tool_use` content blocks) — these render as flush rows of the
+* assistant turn container rather than as message body. */
+var hasServerToolUse = (message) => {
+	return message.role === "assistant" && Array.isArray(message.content) && message.content.some((c) => c.type === "tool_use");
+};
 var resolveMessages = (messages) => {
 	const resolvedMessages = [];
 	let index = 0;
@@ -117333,6 +117347,61 @@ var extractContentText$1 = (content) => {
 //#endregion
 //#region ../../packages/inspect-components/src/chat/tools/tool.ts
 var kToolTodoContentType = "agent/todo-list";
+var kToolIcons = {
+	bash: "bi-terminal",
+	Bash: "bi-terminal",
+	bash_session: "bi-terminal",
+	shell: "bi-terminal",
+	shell_command: "bi-terminal",
+	exec_command: "bi-terminal",
+	python: "bi-code-square",
+	code_execution: "bi-code-square",
+	web_search: "bi-search",
+	WebSearch: "bi-search",
+	web_fetch: "bi-globe2",
+	WebFetch: "bi-globe2",
+	web_browser: "bi-window",
+	text_editor: "bi-pencil-square",
+	str_replace_editor: "bi-pencil-square",
+	str_replace_based_edit_tool: "bi-pencil-square",
+	Edit: "bi-pencil-square",
+	Write: "bi-pencil-square",
+	NotebookEdit: "bi-pencil-square",
+	Read: "bi-file-earmark-text",
+	Glob: "bi-search",
+	Grep: "bi-search",
+	task: "bi-people",
+	Task: "bi-people",
+	agent: "bi-people",
+	Agent: "bi-people",
+	spawn_agent: "bi-people",
+	send_input: "bi-people",
+	wait_agent: "bi-people",
+	resume_agent: "bi-people",
+	close_agent: "bi-people",
+	agent_status: "bi-people",
+	agent_wait: "bi-people",
+	agent_cancel: "bi-people",
+	agent_list: "bi-people",
+	TodoWrite: "bi-list-check",
+	todo_write: "bi-list-check",
+	update_plan: "bi-list-check",
+	think: "bi-lightbulb",
+	computer: "bi-display",
+	tool_search: "bi-search",
+	mcp_list_tools: "bi-plug",
+	mcp_call: "bi-plug"
+};
+/**
+* Header icon for a tool call. Unknown client tools get the general tool
+* icon; unknown server tools keep the globe (the server tell).
+*/
+var iconForTool = (tool, options) => {
+	const icon = kToolIcons[tool];
+	if (icon) return icon;
+	if (tool.startsWith("browser_")) return "bi-window";
+	return options?.server ? "bi-globe2" : "bi-tools";
+};
 /**
 * Resolves the input and metadata for a given tool call.
 */
@@ -117757,7 +117826,7 @@ var WebSearchResults_module_default = {
 };
 //#endregion
 //#region ../../packages/inspect-components/src/chat/content-data/WebSearchResults.tsx
-var WebSearchResults = ({ results }) => {
+var WebSearchResults$1 = ({ results }) => {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		className: clsx(WebSearchResults_module_default.label, "text-style-label", "text-style-secondary", "text-size-smaller"),
 		children: "Results"
@@ -117836,7 +117905,7 @@ var contentDataRenderers = [
 		},
 		render: (_id, data) => {
 			const results = data.content;
-			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WebSearchResults, { results });
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WebSearchResults$1, { results });
 		}
 	},
 	{
@@ -117942,107 +118011,309 @@ var MessageContent_module_default = {
 	codePanel: "_codePanel_gzl77_26",
 	codePanelPre: "_codePanelPre_gzl77_32"
 };
+var ToolBlock_module_default = {
+	block: "_block_ze280_5",
+	standalone: "_standalone_ze280_9",
+	header: "_header_ze280_17",
+	icon: "_icon_ze280_25",
+	title: "_title_ze280_31",
+	summary: "_summary_ze280_39",
+	pill: "_pill_ze280_50",
+	inputZone: "_inputZone_ze280_64",
+	outputWell: "_outputWell_ze280_71"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/chat/tools/ToolBlock.tsx
+/**
+* The shared tool-call block grammar: a tinted header row (tool icon · mono
+* tool name · optional pill · args summary) with the tool's input/output
+* zones stacked beneath it.
+*/
+var ToolBlock = ({ id, icon, title, summary, pill, flush, className, children }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		id,
+		className: clsx(ToolBlock_module_default.block, flush ? void 0 : ToolBlock_module_default.standalone, className),
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: ToolBlock_module_default.header,
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx("bi", icon, ToolBlock_module_default.icon) }),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+					className: ToolBlock_module_default.title,
+					children: title
+				}),
+				summary ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+					className: ToolBlock_module_default.summary,
+					children: summary
+				}) : null,
+				pill ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+					className: ToolBlock_module_default.pill,
+					children: pill
+				}) : null
+			]
+		}), children]
+	});
+};
+/** Input zone (e.g. code) — code fill, hairline top. */
+var ToolBlockInput = ({ className, children }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: clsx(ToolBlock_module_default.inputZone, className),
+		children
+	});
+};
+/** Output well — faint fill, hairline top; content is whatever the tool
+* returned, rendered by the caller. */
+var ToolBlockOutput = ({ className, children }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: clsx(ToolBlock_module_default.outputWell, className),
+		children
+	});
+};
+var ToolCallErrorView_module_default = {
+	error: "_error_z9ujs_1",
+	type: "_type_z9ujs_11",
+	message: "_message_z9ujs_17"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/chat/tools/ToolCallErrorView.tsx
+var ToolCallErrorView = ({ error, className }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: clsx(ToolCallErrorView_module_default.error, "text-size-smallest", className),
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: ToolCallErrorView_module_default.message,
+			children: error.message
+		})
+	});
+};
+var TodoWriteInput_module_default = {
+	todoList: "_todoList_1t8rx_1",
+	inProgress: "_inProgress_1t8rx_9"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/chat/tools/tool-input/TodoWriteInput.tsx
+var isRawTodo = (item) => typeof item === "object" && item !== null && ("content" in item || "step" in item) && "status" in item;
+var toToolTodos = (obj) => {
+	if (Array.isArray(obj) && obj.every(isRawTodo)) return obj.map((o) => ({
+		content: o.content ?? o.step ?? "",
+		status: o.status
+	}));
+	return [];
+};
+var TodoWriteInput = ({ contents, parentRef }) => {
+	const icons = useContentIcons();
+	const todoItems = toToolTodos(contents);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		ref: parentRef,
+		className: clsx(TodoWriteInput_module_default.todoList),
+		children: todoItems.map((todo) => {
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(todo.status === "completed" ? icons.checkbox.checked : icons.checkbox.unchecked, "text-size-smallest") }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: clsx(TodoWriteInput_module_default.todoItem, "text-size-smallest", todo.status === "in_progress" ? TodoWriteInput_module_default.inProgress : void 0),
+				children: todo.content
+			})] });
+		})
+	});
+};
+var ToolInput_module_default = {
+	outputPre: "_outputPre_7phrr_1",
+	toolView: "_toolView_7phrr_7",
+	outputCode: "_outputCode_7phrr_20"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/chat/tools/ToolInput.tsx
+var ToolInput = (props) => {
+	const { contentType, contents, toolCallView, className } = props;
+	const sourceCodeRef = (0, import_react.useRef)(null);
+	const useToolView = toolCallView && isValidView(toolCallView);
+	usePrismHighlight(sourceCodeRef, (useToolView ? toolCallView.content.length : contents ? typeof contents === "string" ? contents.length : JSON.stringify(contents).length : 0) || 0);
+	if (!contents && !useToolView) return null;
+	if (useToolView) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedText, {
+		markdown: toolCallView.content || "",
+		ref: sourceCodeRef,
+		className: clsx("tool-call-input", ToolInput_module_default.toolView, className)
+	});
+	else return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderTool, {
+		contents,
+		contentType: contentType || "",
+		parentRef: sourceCodeRef,
+		className
+	});
+};
+var RenderTool = ({ contents, contentType, parentRef, className }) => {
+	if (contentType === "agent/todo-list") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TodoWriteInput, {
+		contents,
+		parentRef
+	});
+	const formattedContent = typeof contents === "object" ? JSON.stringify(contents) : contents;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		ref: parentRef,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", {
+			className: clsx("tool-call-input", ToolInput_module_default.outputPre, ToolInput_module_default.bottomMargin, className),
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", {
+				className: clsx("source-code", "sourceCode", contentType ? `language-${contentType}` : void 0, ToolInput_module_default.outputCode),
+				children: formattedContent
+			})
+		})
+	});
+};
+var isValidView = (view) => {
+	if (view.content === "```bash\nbash\n```\n") return false;
+	return true;
+};
 var ServerToolCall_module_default = {
-	mcpToolUse: "_mcpToolUse_1792k_1",
-	title: "_title_1792k_9",
-	titleText: "_titleText_1792k_18",
-	args: "_args_1792k_22",
-	argLabel: "_argLabel_1792k_31",
-	error: "_error_1792k_35",
-	toolPanel: "_toolPanel_1792k_40"
+	tool: "_tool_13xcg_1",
+	execOutput: "_execOutput_13xcg_5",
+	execError: "_execError_13xcg_16"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/chat/server-tools/ServerToolCall.tsx
 /**
-* Renders the ToolOutput component.
+* Renders a server-side tool call (web_search, web_fetch, provider-executed
+* MCP tools) as a flush row of the assistant turn: the shared tool block
+* grammar with a globe icon and a neutral "server" pill as the only server
+* signals.
 */
-var ServerToolCall = ({ id, content, className }) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(McpToolUse, {
-		id,
-		content,
-		className
-	});
-};
-var McpToolUse = ({ id, content, className }) => {
-	const icons = useContentIcons();
+var ServerToolCall = ({ id, content, flush = true, className }) => {
 	const args = resolveArgs(content);
-	const titleStr = content.context ? `${content.context} — ${content.name}()` : `${content.name}()`;
+	const title = content.context ? `${content.context} — ${content.name}` : content.name;
+	const summaryArgs = {};
+	const inputArgs = [];
+	for (const [key, value] of Object.entries(args)) if (typeof value === "string" && value.includes("\n")) inputArgs.push([key, value]);
+	else summaryArgs[key] = value;
 	const listToolsResult = maybeListTools(content);
 	const webSearchResult = maybeWebSearchResult(content);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+	const codeExecutionResult = maybeCodeExecution(content);
+	const execHasOutput = !!codeExecutionResult && (!!codeExecutionResult.stdout || !!codeExecutionResult.stderr || codeExecutionResult.encrypted || (codeExecutionResult.returnCode ?? 0) !== 0);
+	const hasResult = !!content.error || !!listToolsResult || !!webSearchResult || (codeExecutionResult ? execHasOutput : hasResultContent(content.result));
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(ToolBlock, {
 		id,
-		className: clsx(ServerToolCall_module_default.mcpToolUse, className),
-		children: [
-			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: clsx(ServerToolCall_module_default.title, "text-size-small", "text-style-secondary"),
-				children: [
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: icons.role.tool }),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", {
-						className: ServerToolCall_module_default.titleText,
-						children: titleStr
-					}),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: ServerToolCall_module_default.type,
-						children: content.type
-					})
-				]
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: ServerToolCall_module_default.args,
-				children: [
-					Object.keys(args).map((key, index) => {
-						const value = args[key];
-						let valueRecord = void 0;
-						if (Array.isArray(value)) {
-							valueRecord = {};
-							for (let i = 0; i < value.length; i++) valueRecord[`[${i}]`] = value[i];
-						} else if (value && typeof value === "object") valueRecord = value;
-						return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabelDiv, { label: key }), valueRecord ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
-							id: `${id}-val-${index}`,
-							record: valueRecord
-						}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ValueDiv, { children: value })] });
-					}),
-					webSearchResult ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabelDiv, { label: "results" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ValueDiv, { children: webSearchResult.result.map((result, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: ServerToolCall_module_default.result,
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-							href: result.url,
-							target: "_blank",
-							rel: "noopener noreferrer",
-							children: result.title
-						})
-					}, index)) })] }) : void 0,
-					listToolsResult ? listToolsResult.result.map((tool, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(ExpandablePanel, {
-						id: `${id}-output`,
-						collapse: true,
-						className: clsx(ServerToolCall_module_default.toolPanel),
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabelDiv, { label: tool.name }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(ValueDiv, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: tool.description }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
-							id: `${id}-tool-${index}`,
-							record: { schema: tool.input_schema },
-							defaultExpandLevel: 0
-						})] })]
-					}) })) : void 0
-				]
-			}),
-			content.error ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: ServerToolCall_module_default.error,
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { children: ["Error: ", content.error] })
-			}) : !listToolsResult && !webSearchResult ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: clsx("text-size-small"),
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
-					id: `${id}-output`,
-					collapse: true,
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedContent, {
-						id: `${id}-output`,
-						entry: {
-							name: "Output",
-							value: content.result
-						},
-						renderOptions: { renderString: "markdown" }
-					})
+		flush,
+		icon: iconForTool(content.name, { server: true }),
+		title,
+		summary: argsSummary(summaryArgs),
+		pill: "server",
+		className,
+		children: [inputArgs.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolBlockInput, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
+			id: `${id}-input`,
+			collapse: true,
+			border: false,
+			lines: 20,
+			className: "text-size-small",
+			children: inputArgs.map(([key, value]) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolInput, {
+				contentType: content.tool_type === "code_execution" ? "python" : void 0,
+				contents: value
+			}, key))
+		}) }) : null, hasResult ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolBlockOutput, { children: content.error ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallErrorView, { error: {
+			type: "unknown",
+			message: content.error
+		} }) : webSearchResult ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WebSearchResults, {
+			id,
+			results: webSearchResult.result
+		}) : listToolsResult ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ListToolsResult, {
+			id,
+			tools: listToolsResult.result
+		}) : codeExecutionResult ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CodeExecutionResult, {
+			id,
+			result: codeExecutionResult
+		}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
+			id: `${id}-output`,
+			collapse: true,
+			border: false,
+			lines: 15,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedContent, {
+				id: `${id}-output`,
+				entry: {
+					name: "Output",
+					value: content.result
+				},
+				renderOptions: { renderString: "markdown" }
+			})
+		}) }) : null]
+	});
+};
+var WebSearchResults = ({ id, results }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
+		id: `${id}-output`,
+		collapse: true,
+		border: false,
+		lines: 15,
+		children: results.map((result, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+			href: result.url,
+			target: "_blank",
+			rel: "noopener noreferrer",
+			children: result.title
+		}) }, index))
+	});
+};
+var ListToolsResult = ({ id, tools }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
+		id: `${id}-output`,
+		collapse: true,
+		border: false,
+		lines: 15,
+		children: tools.map((tool, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: ServerToolCall_module_default.tool,
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", {
+					className: "text-size-smaller",
+					children: tool.name
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "text-size-smaller",
+					children: tool.description
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
+					id: `${id}-tool-${index}`,
+					record: { schema: tool.input_schema },
+					defaultExpandLevel: 0
 				})
-			}) : void 0
+			]
+		}, tool.name))
+	});
+};
+var CodeExecutionResult = ({ id, result }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(ExpandablePanel, {
+		id: `${id}-output`,
+		collapse: true,
+		border: false,
+		lines: 15,
+		children: [
+			result.stdout ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", {
+				className: ServerToolCall_module_default.execOutput,
+				children: result.stdout
+			}) : null,
+			result.stderr ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", {
+				className: clsx(ServerToolCall_module_default.execOutput, ServerToolCall_module_default.execError),
+				children: result.stderr
+			}) : null,
+			!result.stdout && !result.stderr && result.encrypted ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: clsx("text-style-secondary", "text-size-smaller"),
+				children: "Output encrypted by the model provider."
+			}) : null,
+			typeof result.returnCode === "number" && result.returnCode !== 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: clsx("text-style-secondary", "text-size-smaller"),
+				children: ["exit code ", result.returnCode]
+			}) : null
 		]
 	});
+};
+/** Parses a code_execution result payload into stdout/stderr/exit code.
+* Returns undefined when the result isn't the expected JSON shape (the
+* generic markdown rendering applies instead). */
+var maybeCodeExecution = (content) => {
+	if (content.tool_type !== "code_execution" || !isJson(content.result)) return;
+	try {
+		const parsed = JSON.parse(content.result);
+		if (typeof parsed !== "object" || parsed === null) return;
+		const payload = typeof parsed.content === "object" && parsed.content !== null && !Array.isArray(parsed.content) ? parsed.content : parsed;
+		const str = (value) => typeof value === "string" && value.length > 0 ? value : void 0;
+		return {
+			stdout: str(payload.stdout),
+			stderr: str(payload.stderr),
+			returnCode: typeof payload.return_code === "number" ? payload.return_code : void 0,
+			encrypted: typeof payload.encrypted_stdout === "string"
+		};
+	} catch {
+		return;
+	}
 };
 var resolveArgs = (content) => {
 	if (typeof content.arguments === "string") {
@@ -118057,6 +118328,19 @@ var resolveArgs = (content) => {
 	else if (content.arguments) return { arguments: content.arguments };
 	else return {};
 };
+/** Single-line header summary: the lone arg's value (the query for
+* web_search, the URL for web_fetch), or `key: value` pairs otherwise. */
+var argsSummary = (args) => {
+	const entries = Object.entries(args);
+	const single = entries.length === 1 ? entries[0] : void 0;
+	if (single && typeof single[1] === "string") return single[1];
+	return entries.map(([key, value]) => `${key}: ${typeof value === "string" ? value : JSON.stringify(value)}`).join(", ");
+};
+var hasResultContent = (result) => {
+	if (result === null || result === void 0) return false;
+	if (typeof result === "string") return result.trim().length > 0;
+	return true;
+};
 var maybeWebSearchResult = (content) => {
 	if (content.name !== "web_search") return;
 	const objArray = asJsonObjArray(content.result);
@@ -118066,18 +118350,6 @@ var maybeListTools = (content) => {
 	if (content.name !== "mcp_list_tools") return;
 	const objArray = asJsonObjArray(content.result);
 	if (objArray !== void 0) return { result: objArray };
-};
-var LabelDiv = ({ label }) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: clsx(ServerToolCall_module_default.argLabel, "text-style-secondary", "text-size-smaller"),
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", { children: label })
-	});
-};
-var ValueDiv = ({ children }) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: clsx("text-size-smaller"),
-		children
-	});
 };
 var ToolOutput_module_default = {
 	toolImage: "_toolImage_1cvly_1",
@@ -118263,7 +118535,8 @@ var messageRenderers = {
 	tool_use: { render: (key, content) => {
 		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ServerToolCall, {
 			id: key,
-			content
+			content,
+			flush: false
 		});
 	} },
 	data: { render: (key, content) => {
@@ -118498,80 +118771,6 @@ var SubmitToolCallView = (props) => {
 	});
 };
 var ToolCallView_module_default = { toolCallView: "_toolCallView_x6cus_1" };
-var TodoWriteInput_module_default = {
-	todoList: "_todoList_1t8rx_1",
-	inProgress: "_inProgress_1t8rx_9"
-};
-//#endregion
-//#region ../../packages/inspect-components/src/chat/tools/tool-input/TodoWriteInput.tsx
-var isRawTodo = (item) => typeof item === "object" && item !== null && ("content" in item || "step" in item) && "status" in item;
-var toToolTodos = (obj) => {
-	if (Array.isArray(obj) && obj.every(isRawTodo)) return obj.map((o) => ({
-		content: o.content ?? o.step ?? "",
-		status: o.status
-	}));
-	return [];
-};
-var TodoWriteInput = ({ contents, parentRef }) => {
-	const icons = useContentIcons();
-	const todoItems = toToolTodos(contents);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		ref: parentRef,
-		className: clsx(TodoWriteInput_module_default.todoList),
-		children: todoItems.map((todo) => {
-			return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(todo.status === "completed" ? icons.checkbox.checked : icons.checkbox.unchecked, "text-size-smallest") }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-				className: clsx(TodoWriteInput_module_default.todoItem, "text-size-smallest", todo.status === "in_progress" ? TodoWriteInput_module_default.inProgress : void 0),
-				children: todo.content
-			})] });
-		})
-	});
-};
-var ToolInput_module_default = {
-	outputPre: "_outputPre_7phrr_1",
-	toolView: "_toolView_7phrr_7",
-	outputCode: "_outputCode_7phrr_20"
-};
-//#endregion
-//#region ../../packages/inspect-components/src/chat/tools/ToolInput.tsx
-var ToolInput = (props) => {
-	const { contentType, contents, toolCallView, className } = props;
-	const sourceCodeRef = (0, import_react.useRef)(null);
-	const useToolView = toolCallView && isValidView(toolCallView);
-	usePrismHighlight(sourceCodeRef, (useToolView ? toolCallView.content.length : contents ? typeof contents === "string" ? contents.length : JSON.stringify(contents).length : 0) || 0);
-	if (!contents && !useToolView) return null;
-	if (useToolView) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedText, {
-		markdown: toolCallView.content || "",
-		ref: sourceCodeRef,
-		className: clsx("tool-call-input", ToolInput_module_default.toolView, className)
-	});
-	else return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderTool, {
-		contents,
-		contentType: contentType || "",
-		parentRef: sourceCodeRef,
-		className
-	});
-};
-var RenderTool = ({ contents, contentType, parentRef, className }) => {
-	if (contentType === "agent/todo-list") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TodoWriteInput, {
-		contents,
-		parentRef
-	});
-	const formattedContent = typeof contents === "object" ? JSON.stringify(contents) : contents;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		ref: parentRef,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", {
-			className: clsx("tool-call-input", ToolInput_module_default.outputPre, ToolInput_module_default.bottomMargin, className),
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", {
-				className: clsx("source-code", "sourceCode", contentType ? `language-${contentType}` : void 0, ToolInput_module_default.outputCode),
-				children: formattedContent
-			})
-		})
-	});
-};
-var isValidView = (view) => {
-	if (view.content === "```bash\nbash\n```\n") return false;
-	return true;
-};
 //#endregion
 //#region ../../packages/inspect-components/src/chat/tools/ToolCallView.tsx
 /**
@@ -118684,34 +118883,90 @@ var normalizeContent = (output) => {
 		}]
 	}];
 };
-var ToolCallErrorView_module_default = {
-	error: "_error_z9ujs_1",
-	type: "_type_z9ujs_11",
-	message: "_message_z9ujs_17"
-};
+var ClientToolCall_module_default = { custom: "_custom_v2cay_4" };
 //#endregion
-//#region ../../packages/inspect-components/src/chat/tools/ToolCallErrorView.tsx
-var ToolCallErrorView = ({ error, className }) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: clsx(ToolCallErrorView_module_default.error, "text-size-smallest", className),
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: ToolCallErrorView_module_default.message,
-			children: error.message
-		})
+//#region ../../packages/inspect-components/src/chat/tools/ClientToolCall.tsx
+/**
+* A client tool call rendered with the shared tool block grammar: collapsible
+* header (terminal icon · mono tool name · args summary), the input zone
+* (e.g. code) and the output well stacked beneath.
+*/
+var ClientToolCall = ({ id, tool, title, functionCall, input, description, contentType, view, output, error, className, getCustomToolView }) => {
+	const viewProps = {
+		id,
+		tool,
+		functionCall,
+		input,
+		description,
+		contentType,
+		view,
+		output
+	};
+	const customView = getCustomToolView?.(viewProps) ?? getDefaultCustomToolView(viewProps);
+	if (customView) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: clsx(ClientToolCall_module_default.custom, className),
+		children: customView
+	});
+	const hasInput = input !== void 0 && input !== null && input !== "" || !!view?.content;
+	const showError = !!error;
+	const showOutput = !showError && hasOutputContent(output);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(ToolBlock, {
+		id,
+		icon: iconForTool(tool),
+		title: title || tool,
+		summary: description ?? inlineArgs(functionCall, title || tool),
+		className,
+		children: [hasInput ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolBlockInput, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
+			id: `${id}-tool-input`,
+			collapse: true,
+			border: false,
+			lines: 20,
+			className: clsx("text-size-small"),
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolInput, {
+				contentType,
+				contents: input,
+				toolCallView: view
+			})
+		}) }) : null, showError ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolBlockOutput, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallErrorView, { error }) }) : showOutput ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolBlockOutput, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallView, {
+			...viewProps,
+			section: "output"
+		}) }) : null]
+	});
+};
+/** The args portion of the rendered function call (the text inside the
+* parens), as a single-line header summary. */
+var inlineArgs = (functionCall, tool) => {
+	if (functionCall.startsWith(`${tool}(`) && functionCall.endsWith(")")) {
+		const inner = functionCall.slice(tool.length + 1, -1).replace(/\s+/g, " ").trim();
+		return inner.length > 0 ? inner : void 0;
+	}
+	return functionCall !== tool ? functionCall : void 0;
+};
+/** Whether the tool output has anything worth an output well. */
+var hasOutputContent = (output) => {
+	if (output === void 0 || output === null) return false;
+	if (typeof output === "string") return output.trim().length > 0;
+	if (typeof output === "number" || typeof output === "boolean") return true;
+	return (Array.isArray(output) ? output : [output]).some((item) => {
+		if (item.type === "tool") return item.content.some((c) => c.type !== "text" || c.text.trim().length > 0);
+		if (item.type === "text") return item.text.trim().length > 0;
+		return true;
 	});
 };
 var ChatMessage_module_default = {
-	message: "_message_1gt9a_1",
-	systemRole: "_systemRole_1gt9a_9",
-	timestamp: "_timestamp_1gt9a_13",
-	messageGrid: "_messageGrid_1gt9a_19",
-	toolMessageGrid: "_toolMessageGrid_1gt9a_29",
-	headerEnd: "_headerEnd_1gt9a_33",
-	messageContents: "_messageContents_1gt9a_40",
-	indented: "_indented_1gt9a_45",
-	copyLink: "_copyLink_1gt9a_49",
-	metadataLabel: "_metadataLabel_1gt9a_60",
-	hover: "_hover_1gt9a_64"
+	message: "_message_o8d3m_1",
+	systemRole: "_systemRole_o8d3m_9",
+	turnSegments: "_turnSegments_o8d3m_15",
+	proseSegment: "_proseSegment_o8d3m_23",
+	timestamp: "_timestamp_o8d3m_28",
+	messageGrid: "_messageGrid_o8d3m_34",
+	toolMessageGrid: "_toolMessageGrid_o8d3m_44",
+	headerEnd: "_headerEnd_o8d3m_48",
+	messageContents: "_messageContents_o8d3m_55",
+	indented: "_indented_o8d3m_60",
+	copyLink: "_copyLink_o8d3m_64",
+	metadataLabel: "_metadataLabel_o8d3m_75",
+	hover: "_hover_o8d3m_79"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/chat/ChatMessage.tsx
@@ -118734,34 +118989,80 @@ var ChatMessage = (0, import_react.memo)(function ChatMessage({ id, message, dis
 	const subagentNotifications = message.role === "user" ? formatSubagentNotifications(message.content) : void 0;
 	if (hideRole) {
 		const content = message.content;
-		const hasVisibleContent = typeof content === "string" ? content.trim().length > 0 : Array.isArray(content) && content.some((c) => c.type !== "tool_use");
+		const hasVisibleContent = typeof content === "string" ? content.trim().length > 0 : Array.isArray(content) && content.length > 0;
 		const hasToolCalls = "tool_calls" in message && Array.isArray(message.tool_calls) && message.tool_calls.length > 0;
 		if (!hasVisibleContent && !hasToolCalls) return null;
+	}
+	const roleHeader = !hideRole ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: clsx(ChatMessage_module_default.messageGrid, message.role === "tool" ? ChatMessage_module_default.toolMessageGrid : void 0, "text-style-label"),
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
+			message.role,
+			message.role === "tool" ? message.function ? `: ${message.function}` : "" : "",
+			linkingEnabled && messageUrl ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CopyButton, {
+				icon: linkIcon,
+				value: messageUrl,
+				className: clsx(ChatMessage_module_default.copyLink)
+			}) : ""
+		] }), message.timestamp && formatDateTime || label ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: ChatMessage_module_default.headerEnd,
+			children: [message.timestamp && formatDateTime && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: ChatMessage_module_default.timestamp,
+				title: message.timestamp,
+				children: formatDateTime(new Date(message.timestamp))
+			}), label]
+		}) : null]
+	}) : null;
+	const metadataBlock = message.metadata && Object.keys(message.metadata).length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
+		label: "Metadata",
+		className: clsx(ChatMessage_module_default.metadataLabel, "text-size-smaller"),
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
+			record: message.metadata,
+			id: `${id}-metadata`,
+			defaultExpandLevel: 0,
+			copyButton: true
+		})
+	}) : null;
+	const segments = segmentTurnContent(message);
+	if (segments) {
+		const context = defaultContext();
+		return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			"data-message-id": message.id || void 0,
+			className: clsx(message.role, "text-size-base", ChatMessage_module_default.message, ChatMessage_module_default.turnSegments, mouseOver ? ChatMessage_module_default.hover : void 0),
+			onMouseEnter: () => setMouseOver(true),
+			onMouseLeave: () => setMouseOver(false),
+			children: [segments.map((segment, index) => {
+				if (segment.kind === "tool") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ServerToolCall, {
+					id: `${id}-server-tool-${index}`,
+					content: segment.content
+				}, `${id}-segment-${index}`);
+				if (segment.contents.length === 0 && (index > 0 || hideRole)) return null;
+				return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					"data-message-role": message.role,
+					className: ChatMessage_module_default.proseSegment,
+					children: [index === 0 ? roleHeader : null, segment.contents.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
+						id: `${id}-message-${index}`,
+						collapse,
+						lines: 25,
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageContent, {
+							contents: segment.contents,
+							context,
+							references
+						})
+					}) : null]
+				}, `${id}-segment-${index}`);
+			}), metadataBlock ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				"data-message-role": message.role,
+				className: ChatMessage_module_default.proseSegment,
+				children: metadataBlock
+			}) : null]
+		});
 	}
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		"data-message-id": message.id || void 0,
 		className: clsx(message.role, "text-size-base", ChatMessage_module_default.message, message.role === "system" ? ChatMessage_module_default.systemRole : void 0, message.role === "user" ? ChatMessage_module_default.userRole : void 0, mouseOver ? ChatMessage_module_default.hover : void 0),
 		onMouseEnter: () => setMouseOver(true),
 		onMouseLeave: () => setMouseOver(false),
-		children: [!hideRole && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: clsx(ChatMessage_module_default.messageGrid, message.role === "tool" ? ChatMessage_module_default.toolMessageGrid : void 0, "text-style-label"),
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-				message.role,
-				message.role === "tool" ? message.function ? `: ${message.function}` : "" : "",
-				linkingEnabled && messageUrl ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CopyButton, {
-					icon: linkIcon,
-					value: messageUrl,
-					className: clsx(ChatMessage_module_default.copyLink)
-				}) : ""
-			] }), message.timestamp && formatDateTime || label ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: ChatMessage_module_default.headerEnd,
-				children: [message.timestamp && formatDateTime && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-					className: ChatMessage_module_default.timestamp,
-					title: message.timestamp,
-					children: formatDateTime(new Date(message.timestamp))
-				}), label]
-			}) : null]
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		children: [roleHeader, /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: clsx(ChatMessage_module_default.messageContents, indented ? ChatMessage_module_default.indented : void 0),
 			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
 				id: `${id}-message`,
@@ -118771,36 +119072,49 @@ var ChatMessage = (0, import_react.memo)(function ChatMessage({ id, message, dis
 					message,
 					references
 				}, `${id}-contents`)
-			}), message.metadata && Object.keys(message.metadata).length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
-				label: "Metadata",
-				className: clsx(ChatMessage_module_default.metadataLabel, "text-size-smaller"),
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
-					record: message.metadata,
-					id: `${id}-metadata`,
-					defaultExpandLevel: 0,
-					copyButton: true
-				})
-			}) : ""]
+			}), metadataBlock]
 		})]
 	});
 });
+/** Splits an assistant message that carries server-side tool calls into
+* alternating prose / tool-call segments (in content order). Returns
+* undefined for messages that render the regular way. */
+var segmentTurnContent = (message) => {
+	if (!hasServerToolUse(message) || !Array.isArray(message.content)) return;
+	const segments = [{
+		kind: "prose",
+		contents: []
+	}];
+	for (const item of message.content) if (item.type === "tool_use") segments.push({
+		kind: "tool",
+		content: item
+	});
+	else {
+		const last = segments[segments.length - 1];
+		if (last?.kind === "prose") last.contents.push(item);
+		else segments.push({
+			kind: "prose",
+			contents: [item]
+		});
+	}
+	return segments;
+};
 var ChatMessageRow_module_default = {
-	grid: "_grid_qa1cd_1",
-	number: "_number_qa1cd_10",
-	user: "_user_qa1cd_14",
-	container: "_container_qa1cd_20",
-	first: "_first_qa1cd_28",
-	last: "_last_qa1cd_35",
-	label: "_label_qa1cd_42",
-	highlight: "_highlight_qa1cd_49",
-	box: "_box_qa1cd_56",
-	attachedGroup: "_attachedGroup_qa1cd_66",
-	attachedBottom: "_attachedBottom_qa1cd_71",
-	attachedTop: "_attachedTop_qa1cd_79",
-	toolLabel: "_toolLabel_qa1cd_87",
-	bottomMargin: "_bottomMargin_qa1cd_94",
-	codeCompact: "_codeCompact_qa1cd_98",
-	simple: "_simple_qa1cd_102"
+	grid: "_grid_1mah3_1",
+	number: "_number_1mah3_10",
+	user: "_user_1mah3_14",
+	container: "_container_1mah3_20",
+	first: "_first_1mah3_28",
+	last: "_last_1mah3_35",
+	label: "_label_1mah3_42",
+	highlight: "_highlight_1mah3_49",
+	turnContainer: "_turnContainer_1mah3_56",
+	box: "_box_1mah3_66",
+	toolPart: "_toolPart_1mah3_74",
+	toolLabel: "_toolLabel_1mah3_80",
+	bottomMargin: "_bottomMargin_1mah3_87",
+	codeCompact: "_codeCompact_1mah3_91",
+	simple: "_simple_1mah3_95"
 };
 var MessageLabel_module_default = {
 	badge: "_badge_10sr6_1",
@@ -118872,7 +119186,7 @@ var ChatMessageRow = (0, import_react.memo)(function ChatMessageRow({ index, par
 		const toolMessages = resolvedMessage.toolMessages || [];
 		let idx = 0;
 		for (const tool_call of resolvedMessage.message.tool_calls) {
-			const { name, input, description, functionCall, contentType } = resolveToolInput(tool_call.function, tool_call.arguments);
+			const { name, input, description, functionCall, contentType, title } = resolveToolInput(tool_call.function, tool_call.arguments);
 			let toolMessage;
 			if (tool_call.id) toolMessage = toolMessages.find((msg) => msg.tool_call_id === tool_call.id);
 			else toolMessage = toolMessages[idx];
@@ -118886,41 +119200,22 @@ var ChatMessageRow = (0, import_react.memo)(function ChatMessageRow({ index, par
 				viewKinds.push("tool");
 				viewChips.push(void 0);
 			} else {
-				views.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallView, {
+				views.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ClientToolCall, {
 					id: `${index}-tool-call-${idx}`,
 					tool: name,
+					title: resolvedToolView?.title || title,
 					functionCall,
 					input,
 					description,
 					contentType,
 					output: resolvedToolOutput,
+					error: toolMessage?.error ?? void 0,
 					view: resolvedToolView,
-					section: "call",
 					getCustomToolView
 				}, `tool-call-${idx}`));
 				viewKinds.push("tool");
 				const toolLabel = useLabels ? labelForBlock(resolvedMessage.message.id, toolNumber) : void 0;
 				viewChips.push(toolLabel?.trim() ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageLabel, { label: toolLabel }) : void 0);
-				if (toolMessage?.error) {
-					views.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallErrorView, { error: toolMessage.error }, `tool-call-${idx}-error`));
-					viewKinds.push("tool-result");
-					viewChips.push(void 0);
-				} else if (hasOutputContent(resolvedToolOutput)) {
-					views.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallView, {
-						id: `${index}-tool-call-${idx}`,
-						tool: name,
-						functionCall,
-						input,
-						description,
-						contentType,
-						output: resolvedToolOutput,
-						view: resolvedToolView,
-						section: "output",
-						getCustomToolView
-					}, `tool-call-${idx}-output`));
-					viewKinds.push("tool-result");
-					viewChips.push(void 0);
-				}
 			}
 			toolNumber++;
 			idx++;
@@ -118928,39 +119223,35 @@ var ChatMessageRow = (0, import_react.memo)(function ChatMessageRow({ index, par
 	}
 	const hasTools = viewKinds.some((k) => k !== "message");
 	if (useLabels || hasTools) {
-		const renderPart = (idx, attached) => {
+		const renderPart = (idx) => {
 			const kind = viewKinds[idx];
 			const isMessage = kind === "message";
+			const isTurn = isMessage && hasServerToolUse(resolvedMessage.message);
 			const chip = viewChips[idx];
 			return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				"data-message-role": isMessage ? resolvedMessage.message.role : void 0,
-				"data-message-kind": kind,
-				className: clsx(isMessage && ChatMessageRow_module_default.container, hasTools ? ChatMessageRow_module_default.box : void 0, isMessage && highlightUserMessage && resolvedMessage.message.role === "user" ? ChatMessageRow_module_default.user : void 0, isMessage && !hasTools && idx === 0 ? ChatMessageRow_module_default.first : void 0, isMessage && !hasTools && idx === views.length - 1 ? ChatMessageRow_module_default.last : void 0, attached?.bottom ? ChatMessageRow_module_default.attachedBottom : void 0, attached?.top ? ChatMessageRow_module_default.attachedTop : void 0, highlightLabeled && isMessage && messageChip ? ChatMessageRow_module_default.highlight : void 0),
+				"data-message-role": isMessage && !isTurn ? resolvedMessage.message.role : void 0,
+				"data-message-kind": isMessage ? kind : void 0,
+				className: clsx(isMessage && !isTurn && ChatMessageRow_module_default.container, isTurn ? ChatMessageRow_module_default.turnContainer : isMessage && hasTools ? ChatMessageRow_module_default.box : void 0, !isMessage ? ChatMessageRow_module_default.toolPart : void 0, isMessage && !isTurn && highlightUserMessage && resolvedMessage.message.role === "user" ? ChatMessageRow_module_default.user : void 0, isMessage && !isTurn && !hasTools && idx === 0 ? ChatMessageRow_module_default.first : void 0, isMessage && !isTurn && !hasTools && idx === views.length - 1 ? ChatMessageRow_module_default.last : void 0, highlightLabeled && isMessage && messageChip ? ChatMessageRow_module_default.highlight : void 0),
 				children: [chip ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					className: ChatMessageRow_module_default.toolLabel,
 					children: chip
 				}) : null, views[idx]]
 			}, `chat-message-row-${index}-part-${idx}`);
 		};
-		const items = [];
-		for (let idx = 0; idx < views.length; idx++) if (viewKinds[idx] === "tool" && viewKinds[idx + 1] === "tool-result") {
-			items.push(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: ChatMessageRow_module_default.attachedGroup,
-				children: [renderPart(idx, { bottom: true }), renderPart(idx + 1, { top: true })]
-			}, `chat-message-row-${index}-toolgroup-${idx}`));
-			idx++;
-		} else items.push(renderPart(idx));
 		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			className: clsx(ChatMessageRow_module_default.grid, className),
-			children: items
+			children: views.map((_, idx) => renderPart(idx))
 		});
-	} else return views.map((view, idx) => {
-		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			"data-message-role": resolvedMessage.message.role,
-			className: clsx(ChatMessageRow_module_default.container, idx === 0 ? ChatMessageRow_module_default.first : void 0, idx === views.length - 1 ? ChatMessageRow_module_default.last : void 0, idx === views.length - 1 ? ChatMessageRow_module_default.bottomMargin : void 0, className, ChatMessageRow_module_default.simple, highlightUserMessage && resolvedMessage.message.role === "user" ? ChatMessageRow_module_default.user : void 0),
-			children: view
-		}, `chat-message-row-unlabeled-${index}-part-${idx}`);
-	});
+	} else {
+		const isTurn = hasServerToolUse(resolvedMessage.message);
+		return views.map((view, idx) => {
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				"data-message-role": isTurn ? void 0 : resolvedMessage.message.role,
+				className: clsx(isTurn ? ChatMessageRow_module_default.turnContainer : ChatMessageRow_module_default.container, !isTurn && idx === 0 ? ChatMessageRow_module_default.first : void 0, !isTurn && idx === views.length - 1 ? ChatMessageRow_module_default.last : void 0, idx === views.length - 1 ? ChatMessageRow_module_default.bottomMargin : void 0, className, !isTurn && ChatMessageRow_module_default.simple, !isTurn && highlightUserMessage && resolvedMessage.message.role === "user" ? ChatMessageRow_module_default.user : void 0),
+				children: view
+			}, `chat-message-row-unlabeled-${index}-part-${idx}`);
+		});
+	}
 }, chatMessageRowEqual);
 function chatMessageRowEqual(prev, next) {
 	const keys = Object.keys(prev);
@@ -119004,13 +119295,12 @@ var resolveToolMessage = (toolMessage) => {
 		};
 	}).filter((con) => con !== void 0);
 };
-var hasOutputContent = (output) => output.some((tool) => tool.content.some((item) => item.type !== "text" || item.text.trim().length > 0));
 var hasVisibleContent = (message) => {
 	const content = message.content;
 	if (typeof content === "string") return content.trim().length > 0;
 	if (!Array.isArray(content)) return false;
 	return content.some((c) => {
-		if (c.type === "tool_use") return false;
+		if (c.type === "tool_use") return true;
 		if (c.type === "text") {
 			const hasText = c.text.trim().length > 0;
 			const hasCitations = !!c.citations && c.citations.length > 0;
@@ -131512,17 +131802,13 @@ var None = () => {
 	});
 };
 var ToolEventView_module_default = {
-	summary: "_summary_8xr5q_1",
-	labeledToolCall: "_labeledToolCall_8xr5q_6",
-	label: "_label_8xr5q_6",
-	labeledToolContent: "_labeledToolContent_8xr5q_19",
-	attachedGroup: "_attachedGroup_8xr5q_25",
-	toolBox: "_toolBox_8xr5q_30",
-	attachedBottom: "_attachedBottom_8xr5q_37",
-	attachedTop: "_attachedTop_8xr5q_43",
-	approvalWrap: "_approvalWrap_8xr5q_49",
-	approval: "_approval_8xr5q_49",
-	progress: "_progress_8xr5q_59"
+	summary: "_summary_1mtn2_1",
+	labeledToolCall: "_labeledToolCall_1mtn2_6",
+	label: "_label_1mtn2_6",
+	labeledToolContent: "_labeledToolContent_1mtn2_19",
+	approvalWrap: "_approvalWrap_1mtn2_23",
+	approval: "_approval_1mtn2_23",
+	progress: "_progress_1mtn2_33"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/ToolEventView.tsx
@@ -131552,44 +131838,17 @@ var ToolEventView = ({ eventNode, childNodes, className, context, eventCallbacks
 	]);
 	const maxLabelLength = (0, import_react.useMemo)(() => computeMaxLabelLength(context?.messageLabels), [context?.messageLabels]);
 	const showError = !!event.error && event.error.type !== "approval";
-	const showResult = !showError && hasResultContent(event.result);
-	const toolCallView = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: ToolEventView_module_default.attachedGroup,
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			"data-message-kind": "tool",
-			className: clsx(ToolEventView_module_default.toolBox, showError || showResult ? ToolEventView_module_default.attachedBottom : void 0),
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallView, {
-				id: `${eventNode.id}-tool-call`,
-				tool: name,
-				functionCall,
-				input,
-				description,
-				contentType,
-				output: "",
-				mode: "compact",
-				view: resolvedView,
-				section: "call"
-			})
-		}), showError ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			"data-message-kind": "tool-result",
-			className: clsx(ToolEventView_module_default.toolBox, ToolEventView_module_default.attachedTop),
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallErrorView, { error: event.error })
-		}) : showResult ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			"data-message-kind": "tool-result",
-			className: clsx(ToolEventView_module_default.toolBox, ToolEventView_module_default.attachedTop),
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallView, {
-				id: `${eventNode.id}-tool-call`,
-				tool: name,
-				functionCall,
-				input,
-				description,
-				contentType,
-				output: event.result || "",
-				mode: "compact",
-				view: resolvedView,
-				section: "output"
-			})
-		}) : null]
+	const toolCallView = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ClientToolCall, {
+		id: `${eventNode.id}-tool-call`,
+		tool: name,
+		title: displayName,
+		functionCall,
+		input,
+		description,
+		contentType,
+		output: event.result ?? "",
+		error: showError ? event.error : void 0,
+		view: resolvedView
 	});
 	const toolLabel = toolLabels.messageLabels?.[event.id];
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventPanel, {
@@ -131637,12 +131896,6 @@ var ToolEventView = ({ eventNode, childNodes, className, context, eventCallbacks
 		})
 	});
 };
-function hasResultContent(result) {
-	if (result === null || result === void 0) return false;
-	if (typeof result === "string") return result.trim().length > 0;
-	if (Array.isArray(result)) return result.length > 0;
-	return true;
-}
 var TranscriptVirtualListComponent_module_default = {
 	node: "_node_t3xlr_1",
 	attached: "_attached_t3xlr_5",
@@ -133106,9 +133359,6 @@ var SampleRetriedErrors_module_default = {
 //#region src/app/samples/SampleRetriedErrors.tsx
 var SampleRetriedErrors = ({ id, retries, scrollRef }) => {
 	const [expandedIndex, setExpandedIndex] = (0, import_react.useState)(retries.length - 1);
-	(0, import_react.useEffect)(() => {
-		setExpandedIndex(retries.length - 1);
-	}, [id, retries.length]);
 	const onToggleOpen = (index) => {
 		setExpandedIndex((cur) => cur === index ? null : index);
 	};
@@ -133369,8 +133619,7 @@ var SampleErrorView_module_default = {
 /**
 * Component to display a styled error message.
 */
-var SampleErrorView = ({ message, align }) => {
-	align = align || "center";
+var SampleErrorView = ({ message }) => {
 	const type = errorType(message);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: clsx(SampleErrorView_module_default.body, isCanceledError(type) ? SampleErrorView_module_default.safe : void 0),
@@ -133675,19 +133924,21 @@ function useResolvedSamplesView() {
 function useSamplesViewMultiline() {
 	return useResolvedSamplesView().multiline;
 }
+var kNoScoreLabels = Object.freeze({});
+var kNoScoreColorScales = Object.freeze({});
 /** Eval-author-supplied score-label overrides. Read straight from
 *  the wire (no persistence) so a user's stored view from a prior
 *  eval can't shadow the current eval's labels. Returns an empty
 *  object when no overrides are present. */
 function useSamplesViewScoreLabels() {
-	return useEvalDefaultSamplesView()?.score_labels ?? {};
+	return useEvalDefaultSamplesView()?.score_labels ?? kNoScoreLabels;
 }
 /** Eval-author-supplied score-cell colour scales. Same wire-only
 *  access pattern as `useSamplesViewScoreLabels` — never lifted into
 *  the persisted runtime state, so colour scales from a prior eval
 *  can't bleed into the current one. */
 function useSamplesViewScoreColorScales() {
-	return useEvalDefaultSamplesView()?.score_color_scales ?? {};
+	return useEvalDefaultSamplesView()?.score_color_scales ?? kNoScoreColorScales;
 }
 /** Resolved `colorScalesEnabled` — same access pattern as the
 *  multiline companion above. Read in `SamplesTab` so the columns
@@ -134584,7 +134835,7 @@ var SampleScoresGrid = ({ evalSample, className, scrollRef }) => {
 				const scoreData = evalSample.scores[scorer];
 				const explanation = scoreData.explanation || "(No Explanation)";
 				const answer = scoreData.answer;
-				let metadata = scoreData.metadata || {};
+				const metadata = scoreData.metadata || {};
 				return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 						className: clsx("text-size-base", SampleScoresGrid_module_default.cell),
@@ -137759,7 +138010,7 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 	const setShowing = useStore((state) => state.appActions.setShowingTranscriptFilterDialog);
 	const displayMode = useStore((state) => state.app.displayMode);
 	const setDisplayMode = useStore((state) => state.appActions.setDisplayMode);
-	const filterRef = (0, import_react.useRef)(null);
+	const [filterButtonEl, setFilterButtonEl] = (0, import_react.useState)(null);
 	const optionsRef = (0, import_react.useRef)(null);
 	const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
 	const selectedSampleHandle = useStore((state) => state.log.selectedSampleHandle);
@@ -137874,7 +138125,7 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 			label: `Events: ${label}`,
 			icon: ApplicationIcons.filter,
 			onClick: toggleFilter,
-			ref: filterRef,
+			ref: setFilterButtonEl,
 			subtle: true
 		}, "sample-filter-transcript"));
 		tools.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolButton, {
@@ -137975,7 +138226,7 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptFilterPopover, {
 								showing: isShowing,
 								setShowing,
-								positionEl: filterRef.current
+								positionEl: filterButtonEl
 							}), !sampleEvents || sampleEvents.length === 0 ? sampleData.status === "loading" ? null : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, { text: eventsCleared ? "Transcript events were removed because this sample exceeds the browser's size limit. Use the Messages tab to view the conversation." : "No events to display." }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptPanel, {
 								id: `${baseId}-transcript-display-${id}`,
 								scrollRef,
@@ -138075,7 +138326,7 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 									id: sample.uuid || String(sample.id),
 									retries: sample.error_retries,
 									scrollRef
-								})
+								}, sample.uuid || String(sample.id))
 							})
 						}) : null,
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabPanel, {
@@ -139030,7 +139281,7 @@ function serverRequestApi(baseUrl, getHeaders) {
 	function isApiCrossOrigin() {
 		try {
 			return Boolean(apiUrl && new URL(apiUrl).origin !== window.location.origin);
-		} catch (error) {
+		} catch {
 			return false;
 		}
 	}
@@ -139277,17 +139528,29 @@ var EditMetadataDialog = ({ showing, setShowing, currentMetadata, logFile, onSav
 	const [reason, setReason] = (0, import_react.useState)("");
 	const [submitting, setSubmitting] = (0, import_react.useState)(false);
 	const [error, setError] = (0, import_react.useState)();
-	const [pendingFocusKey, setPendingFocusKey] = (0, import_react.useState)(null);
+	const pendingFocusKeyRef = (0, import_react.useRef)(null);
+	const [prevReset, setPrevReset] = (0, import_react.useState)({
+		showing,
+		initialEntries
+	});
+	if (prevReset.showing !== showing || prevReset.initialEntries !== initialEntries) {
+		setPrevReset({
+			showing,
+			initialEntries
+		});
+		if (showing) {
+			setEntries(initialEntries);
+			setRemoved([]);
+			setNewKey("");
+			setNewType("string");
+			setAuthor("");
+			setReason("");
+			setSubmitting(false);
+			setError(void 0);
+		}
+	}
 	(0, import_react.useEffect)(() => {
 		if (!showing) return;
-		setEntries(initialEntries);
-		setRemoved([]);
-		setNewKey("");
-		setNewType("string");
-		setAuthor("");
-		setReason("");
-		setSubmitting(false);
-		setError(void 0);
 		let cancelled = false;
 		if (api?.get_user_info) api.get_user_info().then((info) => {
 			if (!cancelled && info.name) setAuthor((current) => current || info.name || "");
@@ -139336,10 +139599,12 @@ var EditMetadataDialog = ({ showing, setShowing, currentMetadata, logFile, onSav
 		}]);
 		setNewKey("");
 		setNewType("string");
-		setPendingFocusKey(k);
+		pendingFocusKeyRef.current = k;
 	};
 	(0, import_react.useEffect)(() => {
+		const pendingFocusKey = pendingFocusKeyRef.current;
 		if (pendingFocusKey == null) return;
+		pendingFocusKeyRef.current = null;
 		const selector = `[data-meta-key="${CSS.escape(pendingFocusKey)}"]`;
 		const textarea = document.querySelector(selector)?.querySelector("textarea");
 		if (textarea) {
@@ -139349,8 +139614,7 @@ var EditMetadataDialog = ({ showing, setShowing, currentMetadata, logFile, onSav
 			});
 			textarea.focus();
 		}
-		setPendingFocusKey(null);
-	}, [pendingFocusKey]);
+	}, [entries]);
 	const handleNewKeyDown = (e) => {
 		if (e.key === "Enter") {
 			e.preventDefault();
@@ -140004,6 +140268,10 @@ var kGridModeRowHeight = 30;
 var kDefaultHeaderHeight = 25;
 var kRotatedHeaderHeight = 115;
 var rowHeightForMode = (mode) => mode === "list" ? kListModeRowHeight : kGridModeRowHeight;
+var kRowSelection = {
+	mode: "singleRow",
+	checkboxes: false
+};
 var makeKeyboardHandler = (gridRef, onRowOpen) => createGridKeyboardHandler({
 	gridRef,
 	onOpenRow: (rowNode, e) => {
@@ -140018,19 +140286,22 @@ var makeKeyboardHandler = (gridRef, onRowOpen) => createGridKeyboardHandler({
 });
 var SamplesGrid = (props) => {
 	const { rowData, columnDefs, columnVisibility, defaultColDef, viewMode, rowHeight, multiline, getRowId, selectedRowId, onRowOpen, followOutput = false, scrollRef, onFirstDataRendered, initialState, onStateUpdated, onFilterChanged, loading, autoSizeStrategy, refitOnSizeChange = false, gridRef: externalGridRef, className } = props;
-	const internalGridRef = (0, import_react.useRef)(null);
-	const gridRef = externalGridRef ?? internalGridRef;
+	const gridRef = (0, import_react.useRef)(null);
+	const attachGridRef = (0, import_react.useCallback)((instance) => {
+		gridRef.current = instance;
+		if (externalGridRef) externalGridRef.current = instance;
+	}, [externalGridRef]);
 	const gridContainerRef = (0, import_react.useRef)(null);
 	(0, import_react.useEffect)(() => {
 		gridContainerRef.current?.focus();
 	}, []);
-	const handleKeyDown = (0, import_react.useMemo)(() => makeKeyboardHandler(gridRef, onRowOpen), [gridRef, onRowOpen]);
 	(0, import_react.useEffect)(() => {
 		const el = gridContainerRef.current;
 		if (!el) return;
+		const handleKeyDown = makeKeyboardHandler(gridRef, onRowOpen);
 		el.addEventListener("keydown", handleKeyDown);
 		return () => el.removeEventListener("keydown", handleKeyDown);
-	}, [handleKeyDown]);
+	}, [onRowOpen]);
 	const handleRowClick = (0, import_react.useCallback)((e) => {
 		if (!e.data || !e.node || !gridRef.current?.api) return;
 		gridRef.current.api.deselectAll();
@@ -140041,7 +140312,7 @@ var SamplesGrid = (props) => {
 			newWindow,
 			via: "click"
 		});
-	}, [gridRef, onRowOpen]);
+	}, [onRowOpen]);
 	const handleCellMouseDown = (0, import_react.useCallback)((e) => {
 		const me = e.event;
 		if (me?.button === 1 && e.data) {
@@ -140060,7 +140331,7 @@ var SamplesGrid = (props) => {
 			node.setSelected(true);
 			gridRef.current.api.ensureNodeVisible(node, "middle");
 		}
-	}, [gridRef, selectedRowId]);
+	}, [selectedRowId]);
 	(0, import_react.useEffect)(() => {
 		selectExternalRow();
 	}, [selectExternalRow]);
@@ -140072,11 +140343,7 @@ var SamplesGrid = (props) => {
 	(0, import_react.useEffect)(() => {
 		if (followOutput && followingRef.current && rowData.length > prevCountRef.current && gridRef.current?.api) gridRef.current.api.ensureIndexVisible(rowData.length - 1, "bottom");
 		prevCountRef.current = rowData.length;
-	}, [
-		rowData.length,
-		followOutput,
-		gridRef
-	]);
+	}, [rowData.length, followOutput]);
 	const prevFollowRef = (0, import_react.useRef)(followOutput);
 	(0, import_react.useEffect)(() => {
 		if (!followOutput && prevFollowRef.current && gridRef.current?.api) {
@@ -140086,7 +140353,7 @@ var SamplesGrid = (props) => {
 			}, 100);
 		}
 		prevFollowRef.current = followOutput;
-	}, [followOutput, gridRef]);
+	}, [followOutput]);
 	const effectiveRowHeight = rowHeight ?? (multiline !== void 0 ? multiline ? kListModeRowHeight : kGridModeRowHeight : rowHeightForMode(viewMode));
 	const handleBodyScroll = (0, import_react.useCallback)(() => {
 		if (!followOutput || !gridRef.current?.api) return;
@@ -140095,11 +140362,7 @@ var SamplesGrid = (props) => {
 		const totalH = api.getDisplayedRowCount() * effectiveRowHeight;
 		const viewportH = v.bottom - v.top;
 		followingRef.current = v.bottom >= totalH - viewportH * .1;
-	}, [
-		followOutput,
-		gridRef,
-		effectiveRowHeight
-	]);
+	}, [followOutput, effectiveRowHeight]);
 	const applyVisibility = useApplyColumnVisibility(gridRef, columnDefs, columnVisibility);
 	const headerHeight = (0, import_react.useMemo)(() => columnDefs.some((c) => c.headerClass === SamplesGrid_module_default.rotatedHeader) ? kRotatedHeaderHeight : kDefaultHeaderHeight, [columnDefs]);
 	const mergedInitialState = (0, import_react.useMemo)(() => {
@@ -140116,8 +140379,12 @@ var SamplesGrid = (props) => {
 	}, [onStateUpdated]);
 	const handleFilterChanged = (0, import_react.useCallback)(() => {
 		if (gridRef.current?.api) onFilterChanged?.(gridRef.current.api);
-	}, [gridRef, onFilterChanged]);
-	const refitColumns = (0, import_react.useRef)(createGridColumnResizer(gridRef)).current;
+	}, [onFilterChanged]);
+	const resizerRef = (0, import_react.useRef)(null);
+	const refitColumns = (0, import_react.useCallback)(() => {
+		resizerRef.current ??= createGridColumnResizer(gridRef);
+		resizerRef.current();
+	}, []);
 	const maxColCount = (0, import_react.useRef)(0);
 	const handleGridColumnsChanged = (0, import_react.useCallback)((e) => {
 		if (!refitOnSizeChange) return;
@@ -140149,7 +140416,6 @@ var SamplesGrid = (props) => {
 		followOutput,
 		rowData.length,
 		selectExternalRow,
-		gridRef,
 		onFirstDataRendered
 	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -140159,7 +140425,7 @@ var SamplesGrid = (props) => {
 			className: clsx(SamplesGrid_module_default.gridContainer, SamplesGrid_module_default.gridChrome, (multiline !== void 0 ? multiline : viewMode === "list") ? SamplesGrid_module_default.listMode : SamplesGrid_module_default.gridMode),
 			tabIndex: 0,
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AgGridReact, {
-				ref: gridRef,
+				ref: attachGridRef,
 				rowData,
 				columnDefs,
 				defaultColDef,
@@ -140171,10 +140437,7 @@ var SamplesGrid = (props) => {
 				headerHeight,
 				rowHeight: effectiveRowHeight,
 				getRowId,
-				rowSelection: {
-					mode: "singleRow",
-					checkboxes: false
-				},
+				rowSelection: kRowSelection,
 				enableCellTextSelection: true,
 				suppressCellFocus: true,
 				domLayout: "normal",
@@ -140232,6 +140495,12 @@ var SampleList_module_default = {
 //#endregion
 //#region src/app/samples/list/SampleList.tsx
 var makeSampleRowId = (id, epoch) => `${id}-${epoch}`.replace(/\s+/g, "_");
+var kDefaultColDef = {
+	sortable: true,
+	filter: true,
+	resizable: true,
+	headerTooltipValueGetter: (params) => params.colDef?.headerName
+};
 var SampleList = (0, import_react.memo)((props) => {
 	const { items, columns, columnVisibility, earlyStopping, totalItemCount, running, className, listHandle, scrollRef, gridState, onGridStateChange, onFilterChanged, multiline } = props;
 	(0, import_react.useEffect)(() => {
@@ -140295,12 +140564,7 @@ var SampleList = (0, import_react.memo)((props) => {
 				rowData: items,
 				columnDefs: columns,
 				columnVisibility,
-				defaultColDef: {
-					sortable: true,
-					filter: true,
-					resizable: true,
-					headerTooltipValueGetter: (params) => params.colDef?.headerName
-				},
+				defaultColDef: kDefaultColDef,
 				viewMode: "list",
 				multiline,
 				gridRef: listHandle,
@@ -162525,7 +162789,7 @@ var SelectScorer_module_default = {
 //#region src/app/samples/sample-tools/SelectScorer.tsx
 var SelectScorer = ({ scores, selectedScores, setSelectedScores }) => {
 	const [showing, setShowing] = (0, import_react.useState)(false);
-	const buttonRef = (0, import_react.useRef)(null);
+	const [buttonEl, setButtonEl] = (0, import_react.useState)(null);
 	const selectedKeys = (0, import_react.useMemo)(() => {
 		return new Set(selectedScores?.map((s) => `${s.scorer}.${s.name}`));
 	}, [selectedScores]);
@@ -162544,12 +162808,12 @@ var SelectScorer = ({ scores, selectedScores, setSelectedScores }) => {
 				label,
 				icon: ApplicationIcons.metrics,
 				onClick: () => setShowing(!showing),
-				ref: buttonRef,
+				ref: setButtonEl,
 				className: clsx(SelectScorer_module_default.bodyColorButton)
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(PopOver, {
 				id: "score-selector-popover",
-				positionEl: buttonRef.current,
+				positionEl: buttonEl,
 				isOpen: showing,
 				setIsOpen: setShowing,
 				placement: "bottom-start",
@@ -162630,11 +162894,11 @@ var ScoreCheckboxes = ({ scores, selectedKeys, setSelectedScores }) => {
 //#region src/app/samples/SamplesTools.tsx
 var SampleTools = () => {
 	const [showViewOptions, setShowViewOptions] = (0, import_react.useState)(false);
-	const viewButtonRef = (0, import_react.useRef)(null);
+	const [viewButtonEl, setViewButtonEl] = (0, import_react.useState)(null);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [
 		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleFilter, {}),
 		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(NavbarButton, {
-			ref: viewButtonRef,
+			ref: setViewButtonEl,
 			label: "View",
 			icon: ApplicationIcons.options,
 			dropdown: true,
@@ -162647,7 +162911,7 @@ var SampleTools = () => {
 		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SamplesViewOptionsPopover, {
 			showing: showViewOptions,
 			setShowing: setShowViewOptions,
-			positionEl: viewButtonRef.current
+			positionEl: viewButtonEl
 		})
 	] });
 };
@@ -162934,6 +163198,13 @@ var astToFilterModel = (ast, registry) => {
 };
 //#endregion
 //#region src/app/samples/sample-tools/filterAst.ts
+var ParseFailure = class extends Error {
+	position;
+	constructor(message, position) {
+		super(message);
+		this.position = position;
+	}
+};
 var RELATION_OPS = new Set([
 	"==",
 	"!=",
@@ -162967,10 +163238,7 @@ var Parser = class {
 		return this.eat();
 	}
 	error(message) {
-		return {
-			message,
-			position: this.peek()?.from ?? this.tokens.at(-1)?.to ?? 0
-		};
+		return new ParseFailure(message, this.peek()?.from ?? this.tokens.at(-1)?.to ?? 0);
 	}
 	parse() {
 		const expr = this.parseOr();
@@ -163186,9 +163454,12 @@ function parseFilter(text) {
 			error: null
 		};
 	} catch (e) {
-		if (typeof e === "object" && e !== null && "message" in e) return {
+		if (e instanceof ParseFailure) return {
 			ast: null,
-			error: e
+			error: {
+				message: e.message,
+				position: e.position
+			}
 		};
 		return {
 			ast: null,
@@ -164059,7 +164330,7 @@ var useSamplesTabConfig = (evalStatus, refreshLog) => {
 	const streamSamples = useStore((state) => state.capabilities.streamSamples);
 	const scrollRef = (0, import_react.useRef)(null);
 	const [showColumnSelector, setShowColumnSelector] = (0, import_react.useState)(false);
-	const columnButtonRef = (0, import_react.useRef)(null);
+	const [columnButtonEl, setColumnButtonEl] = (0, import_react.useState)(null);
 	const handleToggleColumnSelector = (0, import_react.useCallback)(() => {
 		setShowColumnSelector((p) => !p);
 	}, []);
@@ -164076,7 +164347,7 @@ var useSamplesTabConfig = (evalStatus, refreshLog) => {
 				scrollRef,
 				showColumnSelector,
 				setShowColumnSelector,
-				columnButtonRef
+				columnButtonEl
 			},
 			tools: () => !samplesDescriptor ? void 0 : totalSampleCount === 1 ? [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreFilterTools, {}, "sample-score-tool")] : [
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleTools, {}, "sample-tools"),
@@ -164087,7 +164358,7 @@ var useSamplesTabConfig = (evalStatus, refreshLog) => {
 					onClick: refreshLog
 				}, "refresh"),
 				samplesAvailable && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NavbarButton, {
-					ref: columnButtonRef,
+					ref: setColumnButtonEl,
 					label: "Columns",
 					icon: ApplicationIcons.columns,
 					dropdown: true,
@@ -164103,10 +164374,11 @@ var useSamplesTabConfig = (evalStatus, refreshLog) => {
 		streamSamples,
 		totalSampleCount,
 		showColumnSelector,
+		columnButtonEl,
 		handleToggleColumnSelector
 	]);
 };
-var SamplesTab = ({ running, scrollRef, showColumnSelector, setShowColumnSelector, columnButtonRef }) => {
+var SamplesTab = ({ running, scrollRef, showColumnSelector, setShowColumnSelector, columnButtonEl }) => {
 	const sampleSummaries = useFilteredSamples();
 	const selectedLogDetails = useStore((state) => state.log.selectedLogDetails);
 	const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
@@ -164241,7 +164513,9 @@ var SamplesTab = ({ running, scrollRef, showColumnSelector, setShowColumnSelecto
 	const setFilter = useStore((state) => state.logActions.setFilter);
 	const currentFilter = useStore((state) => state.log.filter);
 	const currentFilterRef = (0, import_react.useRef)(currentFilter);
-	currentFilterRef.current = currentFilter;
+	(0, import_react.useEffect)(() => {
+		currentFilterRef.current = currentFilter;
+	}, [currentFilter]);
 	/** Parse `text` and project it to the FilterModel the column UI
 	*  should be holding — `{}` for empty or non-round-trippable text. */
 	const filterModelFromText = (0, import_react.useCallback)((text) => {
@@ -164336,7 +164610,7 @@ var SamplesTab = ({ running, scrollRef, showColumnSelector, setShowColumnSelecto
 			columns: allColumns,
 			visibility: visibilityForGrid,
 			onVisibilityChange: handleVisibilityChange,
-			positionEl: columnButtonRef.current,
+			positionEl: columnButtonEl,
 			filteredFields,
 			scoresHeading: "Scores",
 			onResetToDefault: resetColumns
@@ -164395,14 +164669,26 @@ var EditTagsDialog = ({ showing, setShowing, currentTags, logFile, onSaved }) =>
 	const [reason, setReason] = (0, import_react.useState)("");
 	const [submitting, setSubmitting] = (0, import_react.useState)(false);
 	const [error, setError] = (0, import_react.useState)();
+	const [prevReset, setPrevReset] = (0, import_react.useState)({
+		showing,
+		currentTags
+	});
+	if (prevReset.showing !== showing || prevReset.currentTags !== currentTags) {
+		setPrevReset({
+			showing,
+			currentTags
+		});
+		if (showing) {
+			setTags(currentTags);
+			setPending("");
+			setAuthor("");
+			setReason("");
+			setError(void 0);
+			setSubmitting(false);
+		}
+	}
 	(0, import_react.useEffect)(() => {
 		if (!showing) return;
-		setTags(currentTags);
-		setPending("");
-		setAuthor("");
-		setReason("");
-		setError(void 0);
-		setSubmitting(false);
 		let cancelled = false;
 		if (api?.get_user_info) api.get_user_info().then((info) => {
 			if (!cancelled && info.name) setAuthor((current) => current || info.name || "");
@@ -164582,10 +164868,10 @@ var MAX_ROWS = 2;
 var TagStrip = ({ tags, showEdit, onEdit, className, collapseOnWrap = false }) => {
 	const rowRef = (0, import_react.useRef)(null);
 	const [visibleCount, setVisibleCount] = (0, import_react.useState)(tags.length);
-	const lastTagsRef = (0, import_react.useRef)(tags);
+	const [lastTags, setLastTags] = (0, import_react.useState)(tags);
 	const enableCollapse = collapseOnWrap && showEdit;
-	if (lastTagsRef.current !== tags) {
-		lastTagsRef.current = tags;
+	if (lastTags !== tags) {
+		setLastTags(tags);
 		if (visibleCount !== tags.length) setVisibleCount(tags.length);
 	}
 	(0, import_react.useLayoutEffect)(() => {
@@ -165439,11 +165725,11 @@ var ModelRolesView_module_default = {
 * Renders the Navbar
 */
 var ModelRolesView = ({ roles }) => {
-	roles = roles || {};
-	const singleLine = Object.keys(roles).length !== 1;
-	const modelEls = Object.keys(roles).map((key) => {
+	const modelRoles = roles || {};
+	const singleLine = Object.keys(modelRoles).length !== 1;
+	const modelEls = Object.keys(modelRoles).map((key) => {
 		const role = key;
-		const model = roles[role].model;
+		const model = modelRoles[role].model;
 		return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: clsx(singleLine ? ModelRolesView_module_default.grid : void 0, "text-style-secondary", "text-size-smallest"),
 			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
@@ -165724,7 +166010,7 @@ var ParamSummary = ({ params }) => {
 	const paraValues = Object.keys(params).map((key) => {
 		const val = params[key];
 		if (Array.isArray(val) || typeof val === "object") return `${key}: ${JSON.stringify(val)}`;
-		else return `${key}: ${val}`;
+		else return `${key}: ${String(val)}`;
 	});
 	if (paraValues.length > 0) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", {
 		style: {
@@ -166021,17 +166307,18 @@ var LogViewContainer = () => {
 		navigate,
 		prefix
 	]);
-	const prevLogPath = usePrevious(logPath);
+	const prevLogPathRef = (0, import_react.useRef)(void 0);
 	const syncLogs = useStore((state) => state.logsActions.syncLogs);
 	const initLogDir = useStore((state) => state.logsActions.initLogDir);
 	(0, import_react.useLayoutEffect)(() => {
+		const prevLogPath = prevLogPathRef.current;
+		prevLogPathRef.current = logPath;
 		if (prevLogPath && logPath && logPath !== prevLogPath) {
 			clearSelectedSample();
 			clearSelectedLogSummary();
 		}
 	}, [
 		logPath,
-		prevLogPath,
 		clearSelectedSample,
 		clearSelectedLogSummary
 	]);
@@ -166470,7 +166757,7 @@ var SamplesPanel = () => {
 	const selectedSampleHandle = useStore((state) => state.log.selectedSampleHandle);
 	const gridRef = (0, import_react.useRef)(null);
 	const [showColumnSelector, setShowColumnSelector] = (0, import_react.useState)(false);
-	const columnButtonRef = (0, import_react.useRef)(null);
+	const [columnButtonEl, setColumnButtonEl] = (0, import_react.useState)(null);
 	const logDetails = useStore((state) => state.logs.logDetails);
 	const { startPolling, stopPolling } = useClientEvents();
 	(0, import_react.useEffect)(() => {
@@ -166685,7 +166972,7 @@ var SamplesPanel = () => {
 						}
 					}, "show-retried"),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(NavbarButton, {
-						ref: columnButtonRef,
+						ref: setColumnButtonEl,
 						label: "Columns",
 						icon: ApplicationIcons.columns,
 						dropdown: true,
@@ -166705,7 +166992,7 @@ var SamplesPanel = () => {
 				columns: allColumns,
 				visibility: visibilityForGrid,
 				onVisibilityChange: setColumnVisibility,
-				positionEl: columnButtonRef.current,
+				positionEl: columnButtonEl,
 				filteredFields,
 				scoresHeading: "Scores"
 			}),
@@ -168821,7 +169108,7 @@ var openRemoteLogFile = async (api, url, concurrency) => {
 		* Reads the complete log file.
 		*/
 		readCompleteLog: async () => {
-			const [evalLogHeader, samples] = await Promise.all([readHeader(), listSamples().then((sampleIds) => Promise.all(sampleIds.map(({ sampleId, epoch }) => readSample(sampleId, epoch).then((sample) => sample))))]);
+			const [evalLogHeader, samples] = await Promise.all([readHeader(), listSamples().then((sampleIds) => Promise.all(sampleIds.map(({ sampleId, epoch }) => readSample(sampleId, epoch))))]);
 			return {
 				status: evalLogHeader.status,
 				eval: evalLogHeader.eval,
@@ -169401,7 +169688,8 @@ var fetchPendingSampleDataDirect = async (getUrls, log_file, id, epoch, cursors)
 			message_pool: [],
 			call_pool: []
 		},
-		has_more: urls.has_more
+		has_more: urls.has_more === true,
+		complete: urls.complete === true
 	};
 	if (!urls.segments.every((s) => s.direct_url != null)) return;
 	const parts = await Promise.all(urls.segments.map((seg) => readSegment(seg)));
@@ -169412,7 +169700,8 @@ var fetchPendingSampleDataDirect = async (getUrls, log_file, id, epoch, cursors)
 			message_pool: parts.flatMap((p) => p.message_pool),
 			call_pool: parts.flatMap((p) => p.call_pool)
 		}, cursors),
-		has_more: urls.has_more
+		has_more: urls.has_more === true,
+		complete: urls.complete === true
 	};
 };
 var readSegment = async (seg) => {
@@ -169614,7 +169903,8 @@ function viewServerApi(options = {}) {
 		return {
 			status: "OK",
 			sampleData: direct.sampleData,
-			has_more: direct.has_more
+			has_more: direct.has_more,
+			complete: direct.complete
 		};
 	};
 	const edit_log = async (log_file, update, if_match_etag) => {
