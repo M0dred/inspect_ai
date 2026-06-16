@@ -51240,18 +51240,18 @@ var flattenChildren$1 = (children) => {
 	});
 };
 var ExpandablePanel_module_default = {
-	outer: "_outer_mnipc_1",
-	expandablePanel: "_expandablePanel_mnipc_8",
-	expandableBordered: "_expandableBordered_mnipc_12",
-	expandableTogglable: "_expandableTogglable_mnipc_17",
-	expandableContents: "_expandableContents_mnipc_21",
-	expandableTruncated: "_expandableTruncated_mnipc_37",
-	moreToggle: "_moreToggle_mnipc_46",
-	bordered: "_bordered_mnipc_56",
-	moreToggleButton: "_moreToggleButton_mnipc_60",
-	inlineToggleHolder: "_inlineToggleHolder_mnipc_71",
-	inlineToggleSticky: "_inlineToggleSticky_mnipc_83",
-	blockLeft: "_blockLeft_mnipc_89"
+	outer: "_outer_1ml7m_1",
+	expandablePanel: "_expandablePanel_1ml7m_8",
+	expandableBordered: "_expandableBordered_1ml7m_12",
+	expandableTogglable: "_expandableTogglable_1ml7m_17",
+	expandableContents: "_expandableContents_1ml7m_21",
+	expandableTruncated: "_expandableTruncated_1ml7m_37",
+	moreToggle: "_moreToggle_1ml7m_46",
+	bordered: "_bordered_1ml7m_56",
+	moreToggleButton: "_moreToggleButton_1ml7m_63",
+	inlineToggleHolder: "_inlineToggleHolder_1ml7m_74",
+	inlineToggleSticky: "_inlineToggleSticky_1ml7m_86",
+	blockLeft: "_blockLeft_1ml7m_92"
 };
 //#endregion
 //#region ../../packages/react/src/components/FindTargetContext.tsx
@@ -67964,6 +67964,27 @@ var comparators = {
 	}
 };
 //#endregion
+//#region src/app/shared/useStableValue.ts
+/**
+* Keep the previous reference when a newly computed value is content-equal.
+*
+* `useMemo` can only key on dependency identity, so a memo that derives
+* from a frequently-replaced store object (e.g. `logDetails` during a
+* directory sync) returns a fresh reference on every flush even when its
+* content is unchanged — cascading identity churn into everything keyed
+* on it. This hook cuts that cascade at the source: callers compute the
+* candidate value as usual and equality decides whether downstream
+* consumers see a new reference.
+*
+* `isEqual` is only consulted when the identity actually changed.
+*/
+function useStableValue(value, isEqual) {
+	"use no memo";
+	const ref = (0, import_react.useRef)(value);
+	if (ref.current !== value && !isEqual(ref.current, value)) ref.current = value;
+	return ref.current;
+}
+//#endregion
 //#region src/app/log-list/grid/PreformattedTooltip.tsx
 var PreformattedTooltip = ({ value }) => {
 	if (!value) return null;
@@ -67998,6 +68019,61 @@ var columns_module_default = {
 	dateCell: "_dateCell_37x2s_78"
 };
 //#endregion
+//#region src/app/log-list/grid/columns/scorerMap.ts
+/**
+* Build a stable, unique column key for a (scorer, metric) pair. The reducer
+* is intentionally omitted so the same logical metric is one column regardless
+* of whether the log recorded `reducer=null` (default, silently mean) or
+* `reducer="mean"` (explicit). "/" is used as separator because ag-grid treats
+* "." in `field` as nested-object access.
+*/
+var scorerMetricKey = (scorerName, metricName) => `${scorerName}/${metricName}`;
+/**
+* Detect all unique (scorer, reducer, metric) combinations across all logs
+* from their results. Collapsing on metric name alone would merge distinct
+* scorers emitting the same metric (e.g. two "accuracy"s) into one column.
+*
+* @param logDetails - Details map keyed by log file name
+* @param scopePrefix - When set, only logs whose name starts with this
+*   prefix contribute (folder view scoping)
+*/
+function computeScorerMap(logDetails, scopePrefix) {
+	const info = {};
+	for (const [logName, details] of Object.entries(logDetails)) {
+		if (scopePrefix && !logName.startsWith(scopePrefix)) continue;
+		if (details.results?.scores) {
+			for (const evalScore of details.results.scores) if (evalScore.metrics) for (const [metricName, metric] of Object.entries(evalScore.metrics)) {
+				const key = scorerMetricKey(evalScore.name, metricName);
+				info[key] = {
+					scorerName: evalScore.name,
+					metricName,
+					valueType: typeof metric.value
+				};
+			}
+		}
+	}
+	return info;
+}
+/**
+* Content equality for two scorer maps, independent of key order.
+*
+* `logDetails` gets a new store identity on every detail flush while a
+* directory is loading, but the set of scorer columns it implies almost
+* never changes. Comparing content lets callers keep a stable map (and
+* thus stable ag-grid column defs) across those flushes.
+*/
+function scorerMapsEqual(a, b) {
+	if (a === b) return true;
+	const aKeys = Object.keys(a);
+	if (aKeys.length !== Object.keys(b).length) return false;
+	for (const key of aKeys) {
+		const av = a[key];
+		const bv = b[key];
+		if (!bv || av.scorerName !== bv.scorerName || av.metricName !== bv.metricName || av.valueType !== bv.valueType) return false;
+	}
+	return true;
+}
+//#endregion
 //#region src/app/log-list/grid/columns/hooks.tsx
 var styles = {
 	...gridCells_module_default,
@@ -68014,14 +68090,6 @@ var primaryModelValue = (row) => {
 	if (row.model && row.model !== "none/none") return row.model;
 	return displayModelRoles(row)[0]?.[1];
 };
-/**
-* Build a stable, unique column key for a (scorer, metric) pair. The reducer
-* is intentionally omitted so the same logical metric is one column regardless
-* of whether the log recorded `reducer=null` (default, silently mean) or
-* `reducer="mean"` (explicit). "/" is used as separator because ag-grid treats
-* "." in `field` as nested-object access.
-*/
-var scorerMetricKey = (scorerName, metricName) => `${scorerName}/${metricName}`;
 /** Human-readable header: "scorer / metric". */
 var scorerMetricHeader = (scorerName, metricName) => `${scorerName} / ${metricName}`;
 /**
@@ -68034,23 +68102,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 	const columnVisibility = useStore((state) => state.logs.listing.columnVisibility);
 	const setColumnVisibility = useStore((state) => state.logsActions.setLogsColumnVisibility);
 	const logDetails = useStore((state) => state.logs.logDetails);
-	const scorerMap = (0, import_react.useMemo)(() => {
-		const info = {};
-		for (const [logName, details] of Object.entries(logDetails)) {
-			if (scopePrefix && !logName.startsWith(scopePrefix)) continue;
-			if (details.results?.scores) {
-				for (const evalScore of details.results.scores) if (evalScore.metrics) for (const [metricName, metric] of Object.entries(evalScore.metrics)) {
-					const key = scorerMetricKey(evalScore.name, metricName);
-					info[key] = {
-						scorerName: evalScore.name,
-						metricName,
-						valueType: typeof metric.value
-					};
-				}
-			}
-		}
-		return info;
-	}, [logDetails, scopePrefix]);
+	const scorerMap = useStableValue((0, import_react.useMemo)(() => computeScorerMap(logDetails, scopePrefix), [logDetails, scopePrefix]), scorerMapsEqual);
 	(0, import_react.useEffect)(() => {
 		const scorerKeys = Object.keys(scorerMap);
 		if (scorerKeys.length === 0) return;
@@ -115784,6 +115836,39 @@ function useApplyColumnVisibility(gridRef, columnDefs, visibility) {
 	return apply;
 }
 //#endregion
+//#region src/app/shared/useGridColumnRefit.ts
+var kRefitDebounceMs = 10;
+var kUserResizeSources = new Set(["uiColumnResized", "autosizeColumns"]);
+/**
+* Auto-fit columns to the grid width, deferring to the user.
+*
+* `sizeColumnsToFit` is wholesale: it redistributes every column, wiping
+* any width the user dragged. Callers re-fit when columns appear or the
+* viewport resizes — but once the user has manually sized a column they
+* have taken control of the layout, so all subsequent auto-fits are
+* suppressed (until the grid remounts, e.g. on a scope change). The guard
+* is checked when the debounce fires, so a fit already pending when the
+* user starts dragging is suppressed too.
+*/
+function useGridColumnRefit(gridRef) {
+	const userResizedRef = (0, import_react.useRef)(false);
+	const resizerRef = (0, import_react.useRef)(null);
+	const handleColumnResized = (0, import_react.useCallback)((e) => {
+		if (kUserResizeSources.has(e.source)) userResizedRef.current = true;
+	}, []);
+	return {
+		refitColumns: (0, import_react.useCallback)(() => {
+			if (userResizedRef.current) return;
+			resizerRef.current ??= debounce$2(() => {
+				if (userResizedRef.current) return;
+				gridRef.current?.api?.sizeColumnsToFit();
+			}, kRefitDebounceMs);
+			resizerRef.current();
+		}, [gridRef]),
+		handleColumnResized
+	};
+}
+//#endregion
 //#region src/app/log-list/grid/LogListGrid.tsx
 var detailsForItem = (item, logDetails) => item.type === "file" && item.log ? logDetails[item.log.name] : void 0;
 var buildLogListRow = (item, details) => {
@@ -115955,21 +116040,17 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 		setFilteredCount(e.api.getDisplayedRowCount());
 	}, [setFilteredCount]);
 	const maxColCount = (0, import_react.useRef)(0);
-	const resizerRef = (0, import_react.useRef)(null);
-	const resizeGridColumns = (0, import_react.useCallback)(() => {
-		resizerRef.current ??= createGridColumnResizer(gridRef);
-		resizerRef.current();
-	}, []);
+	const { refitColumns, handleColumnResized } = useGridColumnRefit(gridRef);
 	(0, import_react.useEffect)(() => {
-		resizeGridColumns();
-	}, [columns, resizeGridColumns]);
+		refitColumns();
+	}, [columns, refitColumns]);
 	const handleGridColumnsChanged = (0, import_react.useCallback)((e) => {
 		const cols = e.api.getColumnDefs();
 		if (cols && cols.length > maxColCount.current) {
 			maxColCount.current = cols.length;
-			resizeGridColumns();
+			refitColumns();
 		}
-	}, [resizeGridColumns]);
+	}, [refitColumns]);
 	const searchCacheRef = (0, import_react.useRef)({
 		data: null,
 		columns: null,
@@ -116105,7 +116186,8 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 				},
 				getRowId: (params) => params.data.id,
 				onGridColumnsChanged: handleGridColumnsChanged,
-				onGridSizeChanged: resizeGridColumns,
+				onGridSizeChanged: refitColumns,
+				onColumnResized: handleColumnResized,
 				theme: themeBalham,
 				enableCellTextSelection: true,
 				initialState: initialGridState,
@@ -118012,15 +118094,15 @@ var MessageContent_module_default = {
 	codePanelPre: "_codePanelPre_gzl77_32"
 };
 var ToolBlock_module_default = {
-	block: "_block_ze280_5",
-	standalone: "_standalone_ze280_9",
-	header: "_header_ze280_17",
-	icon: "_icon_ze280_25",
-	title: "_title_ze280_31",
-	summary: "_summary_ze280_39",
-	pill: "_pill_ze280_50",
-	inputZone: "_inputZone_ze280_64",
-	outputWell: "_outputWell_ze280_71"
+	block: "_block_16fhi_5",
+	standalone: "_standalone_16fhi_9",
+	header: "_header_16fhi_17",
+	icon: "_icon_16fhi_25",
+	title: "_title_16fhi_31",
+	summary: "_summary_16fhi_39",
+	pill: "_pill_16fhi_50",
+	inputZone: "_inputZone_16fhi_64",
+	outputWell: "_outputWell_16fhi_70"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/chat/tools/ToolBlock.tsx
@@ -119117,11 +119199,19 @@ var ChatMessageRow_module_default = {
 	simple: "_simple_1mah3_95"
 };
 var MessageLabel_module_default = {
-	badge: "_badge_10sr6_1",
-	inline: "_inline_10sr6_2"
+	badge: "_badge_15iyu_1",
+	inline: "_inline_15iyu_2",
+	interactive: "_interactive_15iyu_24"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/chat/MessageLabel.tsx
+/**
+* Badge display form of a label: strips the surrounding cite brackets but
+* keeps the type letter, so "[M4]" → "M4" and "[E58]" → "E58". The full
+* cite stays in the badge tooltip; inline anchors keep the original text —
+* they must read like the prose they sit in.
+*/
+var compactLabel = (label) => label.replace(/^\[/, "").replace(/\]$/, "");
 /**
 * A filled monospace chip used for message position labels (top-right of a
 * message) and as an inline anchor in summary prose.
@@ -119135,17 +119225,19 @@ var MessageLabel = ({ label, mode = "badge", onActivate, className }) => {
 			}
 		};
 		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-			className: clsx(MessageLabel_module_default.inline, className),
+			className: clsx(MessageLabel_module_default.inline, onActivate && MessageLabel_module_default.interactive, className),
 			onClick: onActivate,
 			onKeyDown: onActivate ? onKeyDown : void 0,
 			tabIndex: onActivate ? 0 : void 0,
 			children: label
 		});
 	}
+	const compact = compactLabel(label);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-		className: clsx(MessageLabel_module_default.badge, className),
+		className: clsx(MessageLabel_module_default.badge, onActivate && MessageLabel_module_default.interactive, className),
 		onClick: onActivate,
-		children: label
+		title: compact === label ? void 0 : label,
+		children: compact
 	});
 };
 //#endregion
@@ -119341,12 +119433,16 @@ var ToolCallViewCompact = ({ idx, functionCall }) => {
 * The width is the widest label across the whole map so the column stays
 * aligned everywhere the map is used (e.g. uniformly across the events of a
 * transcript). Returns 0 for an empty map and a small default when there is no
-* map (rows fall back to numeric labels).
+* map (rows fall back to numeric labels). Measures the badge display form,
+* which is what the column actually renders.
 */
 function computeMaxLabelLength(messageLabels) {
 	if (!messageLabels) return 3;
 	let max = 0;
-	for (const v of Object.values(messageLabels)) if (v.length > max) max = v.length;
+	for (const v of Object.values(messageLabels)) {
+		const len = compactLabel(v).length;
+		if (len > max) max = len;
+	}
 	return max;
 }
 //#endregion
@@ -121395,6 +121491,36 @@ var createSpanEnd = (name, timestamp) => {
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/transform/flatten.ts
 /**
+* Find the IDs of all ancestors of `eventId` in the EventNode tree.
+* Returns an empty array if `eventId` is not found.
+* Order: outermost ancestor first.
+*/
+function findAncestorIds(nodes, eventId) {
+	const path = [];
+	return walk(nodes, eventId, path) ? path : [];
+	function walk(nodes, target, path) {
+		for (const n of nodes) {
+			if (n.id === target) return true;
+			if (n.children.length > 0) {
+				path.push(n.id);
+				if (walk(n.children, target, path)) return true;
+				path.pop();
+			}
+		}
+		return false;
+	}
+}
+/**
+* Collapsed ancestor ids on the path to `targetId`, outermost first.
+*
+* The target's own collapsed state is irrelevant — a collapsed node still
+* has a row of its own; only collapsed ancestors remove it from the
+* flattened list. Empty when the target is missing or fully visible.
+*/
+function findCollapsedAncestors(eventNodes, targetId, collapsed) {
+	return findAncestorIds(eventNodes, targetId).filter((id) => collapsed?.[id] === true);
+}
+/**
 * Flatten the tree structure into a flat array of EventNode objects
 * Each node in the result will have its children set properly
 * @param eventNodes - The event nodes to flatten
@@ -123294,6 +123420,58 @@ function resolveMessageInBranches(messageId, root) {
 		}
 	}
 }
+/**
+* Resolves an event id (event uuid or span node id) to its swimlane target
+* in the main content tree: the *innermost* enclosing agent span (if any)
+* whose row must be selected before the event list contains the target.
+*
+* The event-id analogue of `resolveMessageToEvent`, but matching node
+* identity instead of message ids, and resolving to the deepest agent row
+* rather than one level down — every nested agent has its own selectable
+* row, so the deepest one is what renders the target inline.
+*/
+function resolveEventToSpan(eventId, root) {
+	return walkContentForEvent(eventId, root.content, null);
+}
+/**
+* Branch fallback for `resolveEventToSpan` — walks every branch row and
+* returns the first hit along with the branch's swimlane row key.
+*/
+function resolveEventInBranches(eventId, root) {
+	const rows = computeFlatSwimlaneRows(root, {
+		includeUtility: true,
+		showBranches: true
+	});
+	for (const row of rows) {
+		if (!row.branch) continue;
+		for (const rowSpan of row.spans) {
+			const agents = isSingleSpan(rowSpan) ? [rowSpan.agent] : rowSpan.agents;
+			for (const agent of agents) {
+				const match = walkContentForEvent(eventId, agent.content, null);
+				if (match) return {
+					...match,
+					branchRowKey: row.key
+				};
+			}
+		}
+	}
+}
+function walkContentForEvent(eventId, content, agentContext) {
+	for (const item of content) if (item.type === "event") {
+		if (item.event.uuid === eventId) return {
+			eventId,
+			agentSpanId: agentContext
+		};
+	} else {
+		const childContext = item.spanType === "agent" ? item.id : agentContext;
+		if (item.id === eventId) return {
+			eventId,
+			agentSpanId: agentContext
+		};
+		const found = walkContentForEvent(eventId, item.content, childContext);
+		if (found) return found;
+	}
+}
 var PRIORITY_MODEL_OUTPUT = 1;
 var PRIORITY_AGENT_CARD_RESULT = 2;
 var PRIORITY_TOOL_MESSAGE_ID = 3;
@@ -123396,6 +123574,35 @@ function matchEvent(messageId, item, agentContext, agentSpanIds, toolCallIdToUui
 		});
 	}
 	return matches;
+}
+//#endregion
+//#region ../../packages/inspect-components/src/transcript/findTimelineForDeepLink.ts
+/**
+* Locates which root timeline contains a deep-link target (`?event=` /
+* `?message=`), so the view can auto-switch to it when the target is not in
+* the active timeline.
+*/
+function itemsContainEvent(eventId, items) {
+	for (const item of items) if (item.type === "event") {
+		if (item.event.uuid === eventId) return true;
+	} else {
+		if (item.id === eventId) return true;
+		if (itemsContainEvent(eventId, item.content)) return true;
+		if (itemsContainEvent(eventId, item.branches)) return true;
+	}
+	return false;
+}
+/** True if the timeline's tree (content and branches) contains the target. */
+function timelineContainsEvent(eventId, timeline) {
+	return timeline.root.id === eventId || itemsContainEvent(eventId, timeline.root.content) || itemsContainEvent(eventId, timeline.root.branches);
+}
+/** Index of the first timeline containing the event/span id, or -1. */
+function findTimelineIndexForEvent(eventId, timelines) {
+	return timelines.findIndex((tl) => timelineContainsEvent(eventId, tl));
+}
+/** Index of the first timeline whose events resolve the message id, or -1. */
+function findTimelineIndexForMessage(messageId, timelines) {
+	return timelines.findIndex((tl) => resolveMessageToEvent(messageId, tl.root) !== void 0 || resolveMessageInBranches(messageId, tl.root) !== void 0);
 }
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/outline/tree-visitors.ts
@@ -123828,21 +124035,21 @@ var EventNavs = ({ navs, selectedNav, setSelectedNav }) => {
 	});
 };
 var EventPanel_module_default = {
-	stickyWrapper: "_stickyWrapper_2hmlz_1",
-	label: "_label_2hmlz_20",
-	title: "_title_2hmlz_25",
-	titleExtra: "_titleExtra_2hmlz_30",
-	navs: "_navs_2hmlz_37",
-	turnLabel: "_turnLabel_2hmlz_44",
-	card: "_card_2hmlz_51",
-	cardContent: "_cardContent_2hmlz_59",
-	hidden: "_hidden_2hmlz_64",
-	copyLink: "_copyLink_2hmlz_72",
-	hover: "_hover_2hmlz_82",
-	eventLabel: "_eventLabel_2hmlz_89",
-	root: "_root_2hmlz_93",
-	bottomDongle: "_bottomDongle_2hmlz_98",
-	dongleIcon: "_dongleIcon_2hmlz_114"
+	stickyWrapper: "_stickyWrapper_1rqn8_1",
+	label: "_label_1rqn8_20",
+	title: "_title_1rqn8_25",
+	titleExtra: "_titleExtra_1rqn8_30",
+	navs: "_navs_1rqn8_37",
+	turnLabel: "_turnLabel_1rqn8_44",
+	card: "_card_1rqn8_51",
+	cardContent: "_cardContent_1rqn8_59",
+	hidden: "_hidden_1rqn8_64",
+	copyLink: "_copyLink_1rqn8_72",
+	hover: "_hover_1rqn8_82",
+	eventLabel: "_eventLabel_1rqn8_87",
+	root: "_root_1rqn8_91",
+	bottomDongle: "_bottomDongle_1rqn8_96",
+	dongleIcon: "_dongleIcon_1rqn8_112"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/event/EventPanel.tsx
@@ -123870,13 +124077,13 @@ var EventPanel = ({ eventNodeId, className, title, subTitle, text, icon, childre
 	const stickyRef = useStickyObserver();
 	const gridColumns = [];
 	if (isCollapsible && !useBottomDongle) gridColumns.push("minmax(0, max-content)");
-	if (eventLabel) gridColumns.push("minmax(0, max-content)");
 	if (icon) gridColumns.push("max-content");
 	gridColumns.push("minmax(0, max-content)");
 	gridColumns.push("minmax(0, 1fr)");
 	gridColumns.push("minmax(0, max-content)");
 	gridColumns.push("auto");
 	if (turnLabel) gridColumns.push("max-content");
+	if (eventLabel) gridColumns.push("max-content");
 	const toggleCollapse = (0, import_react.useCallback)(() => {
 		setCollapsed(!collapsed);
 	}, [setCollapsed, collapsed]);
@@ -123889,6 +124096,7 @@ var EventPanel = ({ eventNodeId, className, title, subTitle, text, icon, childre
 			display: "grid",
 			gridTemplateColumns: gridColumns.join(" "),
 			columnGap: "0.3em",
+			alignItems: "center",
 			cursor: isCollapsible && !useBottomDongle ? "pointer" : void 0
 		},
 		onMouseEnter: () => setMouseOver(true),
@@ -123897,11 +124105,6 @@ var EventPanel = ({ eventNodeId, className, title, subTitle, text, icon, childre
 			isCollapsible && !useBottomDongle ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", {
 				onClick: toggleCollapse,
 				className: collapsed ? kChevronRight : kChevronDown
-			}) : "",
-			eventLabel ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: clsx("text-style-secondary", "text-style-label", EventPanel_module_default.eventLabel),
-				onClick: toggleCollapse,
-				children: [eventLabel, " -"]
 			}) : "",
 			icon ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", {
 				className: clsx(icon || kDefaultIcon$1, "text-style-secondary"),
@@ -123952,6 +124155,10 @@ var EventPanel = ({ eventNodeId, className, title, subTitle, text, icon, childre
 			turnLabel && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 				className: clsx(EventPanel_module_default.turnLabel),
 				children: turnLabel
+			}),
+			eventLabel && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageLabel, {
+				label: eventLabel,
+				className: EventPanel_module_default.eventLabel
 			})
 		]
 	}) : "";
@@ -132192,6 +132399,43 @@ var RenderedEventNodeInner = ({ node, next, className, context, onAutoCollapse, 
 RenderedEventNodeInner.displayName = "RenderedEventNode";
 var RenderedEventNode = (0, import_react.memo)(RenderedEventNodeInner);
 //#endregion
+//#region ../../packages/inspect-components/src/transcript/transform/toolApprovals.ts
+function pairToolApprovals(eventNodes) {
+	const toolNodeIdsByCallId = /* @__PURE__ */ new Map();
+	const walkTools = (nodes) => {
+		for (const n of nodes) {
+			if (n.event.event === "tool" && !toolNodeIdsByCallId.has(n.event.id)) toolNodeIdsByCallId.set(n.event.id, n.id);
+			if (n.children.length) walkTools(n.children);
+		}
+	};
+	walkTools(eventNodes);
+	const toolApprovals = /* @__PURE__ */ new Map();
+	const hiddenApprovalIds = /* @__PURE__ */ new Set();
+	const approvalScrollRedirects = /* @__PURE__ */ new Map();
+	const walkApprovals = (nodes) => {
+		for (const n of nodes) {
+			if (n.event.event === "approval") {
+				const toolNodeId = toolNodeIdsByCallId.get(n.event.call.id);
+				if (n.event.approver === "auto" && n.event.decision === "approve") {
+					hiddenApprovalIds.add(n.id);
+					if (toolNodeId) approvalScrollRedirects.set(n.id, toolNodeId);
+				} else if (toolNodeId) {
+					toolApprovals.set(n.event.call.id, n);
+					hiddenApprovalIds.add(n.id);
+					approvalScrollRedirects.set(n.id, toolNodeId);
+				}
+			}
+			if (n.children.length) walkApprovals(n.children);
+		}
+	};
+	walkApprovals(eventNodes);
+	return {
+		toolApprovals,
+		hiddenApprovalIds,
+		approvalScrollRedirects
+	};
+}
+//#endregion
 //#region ../../packages/inspect-components/src/transcript/TranscriptViewNodes.tsx
 /**
 * Shared component that wraps TranscriptVirtualList with tree flattening,
@@ -132209,26 +132453,6 @@ var kSettleStableFrames = 8;
 *  width — filters out the (also-sticky) outline / right-pane side panels. */
 var kStickyMinWidthRatio = .4;
 var escapeAttr = (id) => typeof CSS !== "undefined" && CSS.escape ? CSS.escape(id) : id.replace(/"/g, "\\\"");
-/**
-* Find the IDs of all ancestors of `eventId` in the EventNode tree.
-* Returns an empty array if `eventId` is not found.
-* Order: outermost ancestor first.
-*/
-function findAncestorIds(nodes, eventId) {
-	const path = [];
-	return walk(nodes, eventId, path) ? path : [];
-	function walk(nodes, target, path) {
-		for (const n of nodes) {
-			if (n.id === target) return true;
-			if (n.children.length > 0) {
-				path.push(n.id);
-				if (walk(n.children, target, path)) return true;
-				path.pop();
-			}
-		}
-		return false;
-	}
-}
 /** Worst-case bottom edge of the top-pinned sticky bar (relative to the
 *  scroll container's top), based on each sticky element's CSS `top` +
 *  measured height. Independent of current scroll state, so iterative
@@ -132302,7 +132526,7 @@ function scrollToEventTarget({ listHandle, index, container, targetSelector, get
 		if (frame !== null) cancelAnimationFrame(frame);
 	};
 }
-var TranscriptViewNodes = (0, import_react.forwardRef)(function TranscriptViewNodes({ id, eventNodes, defaultCollapsedIds, running, scrollRef, initialEventId, initialMessageId, offsetTop = 10, className, renderAgentCard, turnMap, getEventUrl, linkingEnabled, collapsedTranscript, collapsedOutline, onCollapseTranscript, eventNodeContext }, ref) {
+var TranscriptViewNodes = (0, import_react.forwardRef)(function TranscriptViewNodes({ id, eventNodes, defaultCollapsedIds, running, scrollRef, initialEventId, initialMessageId, offsetTop = 10, className, renderAgentCard, turnMap, getEventUrl, linkingEnabled, collapsedTranscript, collapsedOutline, onCollapseTranscript, onExpandNodes, eventNodeContext }, ref) {
 	const listHandle = (0, import_react.useRef)(null);
 	const getCollapsed = (0, import_react.useCallback)((nodeId) => {
 		return (collapsedTranscript || defaultCollapsedIds)[nodeId] === true;
@@ -132318,35 +132542,8 @@ var TranscriptViewNodes = (0, import_react.forwardRef)(function TranscriptViewNo
 		getEventUrl,
 		linkingEnabled
 	]);
-	const { toolApprovals, hiddenApprovalIds } = (0, import_react.useMemo)(() => {
-		const toolIds = /* @__PURE__ */ new Set();
-		const walkTools = (nodes) => {
-			for (const n of nodes) {
-				if (n.event.event === "tool") toolIds.add(n.event.id);
-				if (n.children.length) walkTools(n.children);
-			}
-		};
-		walkTools(eventNodes);
-		const approvals = /* @__PURE__ */ new Map();
-		const hidden = /* @__PURE__ */ new Set();
-		const walkApprovals = (nodes) => {
-			for (const n of nodes) {
-				if (n.event.event === "approval") {
-					if (n.event.approver === "auto" && n.event.decision === "approve") hidden.add(n.id);
-					else if (toolIds.has(n.event.call.id)) {
-						approvals.set(n.event.call.id, n);
-						hidden.add(n.id);
-					}
-				}
-				if (n.children.length) walkApprovals(n.children);
-			}
-		};
-		walkApprovals(eventNodes);
-		return {
-			toolApprovals: approvals,
-			hiddenApprovalIds: hidden
-		};
-	}, [eventNodes]);
+	const { toolApprovals, hiddenApprovalIds, approvalScrollRedirects } = (0, import_react.useMemo)(() => pairToolApprovals(eventNodes), [eventNodes]);
+	const scrollEventId = initialEventId ? approvalScrollRedirects.get(initialEventId) ?? initialEventId : initialEventId;
 	const flattenedNodes = (0, import_react.useMemo)(() => {
 		const all = flatTree(eventNodes, collapsedTranscript || defaultCollapsedIds);
 		return hiddenApprovalIds.size === 0 ? all : all.filter((n) => !hiddenApprovalIds.has(n.id));
@@ -132454,24 +132651,41 @@ var TranscriptViewNodes = (0, import_react.forwardRef)(function TranscriptViewNo
 		getFlattenedNodes: () => flattenedNodesLatest.current,
 		getVisibleRange: () => visibleRangeRef.current
 	}), [scrollToEvent, scrollToIndex]);
+	const expandedForTargetRef = (0, import_react.useRef)(null);
+	(0, import_react.useEffect)(() => {
+		if (!scrollEventId || !onExpandNodes) return;
+		if (expandedForTargetRef.current === scrollEventId) return;
+		if (flattenedNodes.some((n) => n.id === scrollEventId)) return;
+		const collapsedAncestors = findCollapsedAncestors(eventNodes, scrollEventId, collapsedTranscript ?? defaultCollapsedIds);
+		if (collapsedAncestors.length === 0) return;
+		expandedForTargetRef.current = scrollEventId;
+		onExpandNodes(collapsedAncestors);
+	}, [
+		scrollEventId,
+		onExpandNodes,
+		flattenedNodes,
+		eventNodes,
+		collapsedTranscript,
+		defaultCollapsedIds
+	]);
 	const lastScrolledKeyRef = (0, import_react.useRef)(null);
 	const offsetTopRef = (0, import_react.useRef)(offsetTop);
 	(0, import_react.useEffect)(() => {
 		offsetTopRef.current = offsetTop;
 	}, [offsetTop]);
 	(0, import_react.useEffect)(() => {
-		if (!initialEventId) {
+		if (!scrollEventId) {
 			lastScrolledKeyRef.current = null;
 			return;
 		}
-		const targetKey = `${initialEventId}:${initialMessageId ?? ""}`;
+		const targetKey = `${scrollEventId}:${initialMessageId ?? ""}`;
 		if (lastScrolledKeyRef.current === targetKey) return;
-		const idx = flattenedNodes.findIndex((n) => n.id === initialEventId);
+		const idx = flattenedNodes.findIndex((n) => n.id === scrollEventId);
 		if (idx === -1) return;
 		const container = scrollRef?.current;
 		if (!container) return;
 		lastScrolledKeyRef.current = targetKey;
-		const targetSelector = initialMessageId ? `[data-message-id="${escapeAttr(initialMessageId)}"]` : `[id="${escapeAttr(initialEventId)}"]`;
+		const targetSelector = initialMessageId ? `[data-message-id="${escapeAttr(initialMessageId)}"]` : `[id="${escapeAttr(scrollEventId)}"]`;
 		return scrollToEventTarget({
 			listHandle: listHandle.current,
 			index: idx,
@@ -132481,7 +132695,7 @@ var TranscriptViewNodes = (0, import_react.forwardRef)(function TranscriptViewNo
 			paddingBelowSticky: kPaddingBelowSticky
 		});
 	}, [
-		initialEventId,
+		scrollEventId,
 		initialMessageId,
 		flattenedNodes,
 		scrollRef
@@ -132503,7 +132717,7 @@ var TranscriptViewNodes = (0, import_react.forwardRef)(function TranscriptViewNo
 				running,
 				offsetTop,
 				className: clsx(className),
-				initialEventId,
+				initialEventId: scrollEventId,
 				renderAgentCard,
 				turnMap: computedTurnMap,
 				eventCallbacks,
@@ -132710,9 +132924,27 @@ var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, 
 		timelineData.root
 	]);
 	const resolved = resolvedLocal ?? resolvedRoot;
+	const deepLinkTimelineIndex = (0, import_react.useMemo)(() => {
+		if (timelines.length <= 1) return -1;
+		if (initialEventId) {
+			const active = timelines[activeTimelineIndex];
+			if (!active || timelineContainsEvent(initialEventId, active)) return -1;
+			return findTimelineIndexForEvent(initialEventId, timelines);
+		}
+		if (initialMessageId && !resolvedLocal && !resolvedRoot) return findTimelineIndexForMessage(initialMessageId, timelines);
+		return -1;
+	}, [
+		initialEventId,
+		initialMessageId,
+		resolvedLocal,
+		resolvedRoot,
+		timelines,
+		activeTimelineIndex
+	]);
 	const prevMessageIdRef = (0, import_react.useRef)(void 0);
 	(0, import_react.useEffect)(() => {
 		if (prevMessageIdRef.current === initialMessageId) return;
+		if (deepLinkTimelineIndex >= 0) return;
 		prevMessageIdRef.current = initialMessageId;
 		if (!resolvedRoot) return;
 		let targetKey = null;
@@ -132722,7 +132954,58 @@ var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, 
 		timelineState.select(targetKey, { preserveDeepLink: true });
 	}, [
 		initialMessageId,
+		deepLinkTimelineIndex,
 		resolvedRoot,
+		spanSelectKeys,
+		timelineState
+	]);
+	const prevDeepLinkRef = (0, import_react.useRef)(null);
+	(0, import_react.useEffect)(() => {
+		if (timelines.length <= 1) return;
+		const key = initialEventId ?? initialMessageId ?? null;
+		if (key === null) {
+			prevDeepLinkRef.current = null;
+			return;
+		}
+		if (prevDeepLinkRef.current === key) return;
+		if (deepLinkTimelineIndex < 0) return;
+		prevDeepLinkRef.current = key;
+		if (deepLinkTimelineIndex === activeTimelineIndex) return;
+		setActiveTimeline(deepLinkTimelineIndex);
+	}, [
+		initialEventId,
+		initialMessageId,
+		deepLinkTimelineIndex,
+		activeTimelineIndex,
+		setActiveTimeline,
+		timelines.length
+	]);
+	const resolvedEventSpan = (0, import_react.useMemo)(() => {
+		if (!initialEventId || !showSwimlanes) return void 0;
+		if (eventsForNodes.some((e) => e.uuid === initialEventId)) return void 0;
+		return resolveEventToSpan(initialEventId, timelineData.root) ?? resolveEventInBranches(initialEventId, timelineData.root);
+	}, [
+		initialEventId,
+		showSwimlanes,
+		eventsForNodes,
+		timelineData.root
+	]);
+	const prevEventIdRef = (0, import_react.useRef)(void 0);
+	(0, import_react.useEffect)(() => {
+		if (prevEventIdRef.current === initialEventId) return;
+		if (deepLinkTimelineIndex >= 0) return;
+		prevEventIdRef.current = initialEventId;
+		if (!resolvedEventSpan) return;
+		let targetKey = null;
+		if (resolvedEventSpan.branchRowKey) targetKey = resolvedEventSpan.branchRowKey;
+		else if (resolvedEventSpan.agentSpanId) targetKey = spanSelectKeys.get(resolvedEventSpan.agentSpanId)?.key ?? null;
+		if (!targetKey) return;
+		if (timelineState.selected === targetKey) return;
+		timelineState.select(targetKey, { preserveDeepLink: true });
+	}, [
+		initialEventId,
+		deepLinkTimelineIndex,
+		resolvedEventSpan,
 		spanSelectKeys,
 		timelineState
 	]);
@@ -132757,6 +133040,16 @@ var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, 
 		else onCollapseTranscriptRaw(nodeId, collapsed);
 	}, [
 		onCollapseTranscriptRaw,
+		onSetTranscriptCollapsed,
+		collapseState?.transcript,
+		defaultCollapsedIds
+	]);
+	const onExpandNodes = (0, import_react.useCallback)((nodeIds) => {
+		if (!onSetTranscriptCollapsed) return;
+		const next = { ...collapseState?.transcript ?? defaultCollapsedIds };
+		for (const id of nodeIds) next[id] = false;
+		onSetTranscriptCollapsed(next);
+	}, [
 		onSetTranscriptCollapsed,
 		collapseState?.transcript,
 		defaultCollapsedIds
@@ -132998,6 +133291,7 @@ var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, 
 							collapsedTranscript: collapseState?.transcript,
 							collapsedOutline: collapseState?.outline,
 							onCollapseTranscript,
+							onExpandNodes: onSetTranscriptCollapsed ? onExpandNodes : void 0,
 							eventNodeContext: mergedEventNodeContext
 						}, effectiveListId) : emptyText !== null ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, {
 							text: emptyText,
