@@ -125886,6 +125886,7 @@ var TranscriptIcons = {
 		custom: "bi bi-exclamation-triangle",
 		operator: "bi bi-person-workspace",
 		tokens: "bi bi-list",
+		turns: "bi bi-arrow-repeat",
 		time: "bi bi-clock",
 		execution: "bi bi-stopwatch",
 		cost: "bi bi-currency-dollar"
@@ -131207,6 +131208,7 @@ var SampleLimitEventView = ({ eventNode, className }) => {
 			case "time": return "Time Limit Exceeded";
 			case "message": return "Message Limit Exceeded";
 			case "token": return "Token Limit Exceeded";
+			case "turn": return "Turn Limit Exceeded";
 			case "operator": return "Operator Cancelled";
 			case "working": return "Execution Time Limit Exceeded";
 			case "cost": return "Cost Limit Exceeded";
@@ -131218,6 +131220,7 @@ var SampleLimitEventView = ({ eventNode, className }) => {
 			case "time": return TranscriptIcons.limits.time;
 			case "message": return TranscriptIcons.limits.messages;
 			case "token": return TranscriptIcons.limits.tokens;
+			case "turn": return TranscriptIcons.limits.turns;
 			case "operator": return TranscriptIcons.limits.operator;
 			case "working": return TranscriptIcons.limits.execution;
 			case "cost": return TranscriptIcons.limits.cost;
