@@ -278,7 +278,7 @@ var require_scheduler = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = require_scheduler_production();
 }));
 //#endregion
-//#region ../../node_modules/.pnpm/react-dom@19.2.6_react@19.2.6/node_modules/react-dom/cjs/react-dom.production.js
+//#region ../../node_modules/.pnpm/react-dom@19.2.7_react@19.2.7/node_modules/react-dom/cjs/react-dom.production.js
 /**
 * @license React
 * react-dom.production.js
@@ -416,10 +416,10 @@ var require_react_dom_production = /* @__PURE__ */ __commonJSMin(((exports) => {
 	exports.useFormStatus = function() {
 		return ReactSharedInternals.H.useHostTransitionStatus();
 	};
-	exports.version = "19.2.6";
+	exports.version = "19.2.7";
 }));
 //#endregion
-//#region ../../node_modules/.pnpm/react-dom@19.2.6_react@19.2.6/node_modules/react-dom/index.js
+//#region ../../node_modules/.pnpm/react-dom@19.2.7_react@19.2.7/node_modules/react-dom/index.js
 var require_react_dom = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	function checkDCE() {
 		if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === "undefined" || typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== "function") return;
@@ -433,7 +433,7 @@ var require_react_dom = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = require_react_dom_production();
 }));
 //#endregion
-//#region ../../node_modules/.pnpm/react-dom@19.2.6_react@19.2.6/node_modules/react-dom/cjs/react-dom-client.production.js
+//#region ../../node_modules/.pnpm/react-dom@19.2.7_react@19.2.7/node_modules/react-dom/cjs/react-dom-client.production.js
 /**
 * @license React
 * react-dom-client.production.js
@@ -9476,7 +9476,7 @@ var require_react_dom_client_production = /* @__PURE__ */ __commonJSMin(((export
 		}
 	};
 	var isomorphicReactPackageVersion$jscomp$inline_1840 = React.version;
-	if ("19.2.6" !== isomorphicReactPackageVersion$jscomp$inline_1840) throw Error(formatProdErrorMessage(527, isomorphicReactPackageVersion$jscomp$inline_1840, "19.2.6"));
+	if ("19.2.7" !== isomorphicReactPackageVersion$jscomp$inline_1840) throw Error(formatProdErrorMessage(527, isomorphicReactPackageVersion$jscomp$inline_1840, "19.2.7"));
 	ReactDOMSharedInternals.findDOMNode = function(componentOrElement) {
 		var fiber = componentOrElement._reactInternals;
 		if (void 0 === fiber) {
@@ -9491,10 +9491,10 @@ var require_react_dom_client_production = /* @__PURE__ */ __commonJSMin(((export
 	};
 	var internals$jscomp$inline_2347 = {
 		bundleType: 0,
-		version: "19.2.6",
+		version: "19.2.7",
 		rendererPackageName: "react-dom",
 		currentDispatcherRef: ReactSharedInternals,
-		reconcilerVersion: "19.2.6"
+		reconcilerVersion: "19.2.7"
 	};
 	if ("undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__) {
 		var hook$jscomp$inline_2348 = __REACT_DEVTOOLS_GLOBAL_HOOK__;
@@ -9513,7 +9513,7 @@ var require_react_dom_client_production = /* @__PURE__ */ __commonJSMin(((export
 	};
 }));
 //#endregion
-//#region ../../packages/util/src/ansi.ts
+//#region ../../packages/util/src/api-error.ts
 var import_client = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
 	function checkDCE() {
 		if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === "undefined" || typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== "function") return;
@@ -9526,6 +9526,15 @@ var import_client = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
 	checkDCE();
 	module.exports = require_react_dom_client_production();
 })))();
+var ApiError$1 = class extends Error {
+	status;
+	constructor(status, message) {
+		super(message);
+		this.status = status;
+	}
+};
+//#endregion
+//#region ../../packages/util/src/ansi.ts
 /**
 * Detects if text contains ANSI escape sequences.
 *
@@ -11071,7 +11080,7 @@ function toString$1(v) {
 ({ ...functions });
 //#endregion
 //#region ../../node_modules/.pnpm/arquero@8.0.3/node_modules/arquero/src/util/error.js
-function error$8(message, cause) {
+function error$7(message, cause) {
 	throw Error(message, { cause });
 }
 //#endregion
@@ -11161,7 +11170,7 @@ function distinctMap() {
 }
 //#endregion
 //#region ../../node_modules/.pnpm/arquero@8.0.3/node_modules/arquero/src/util/no-op.js
-function noop() {}
+function noop$1() {}
 //#endregion
 //#region ../../node_modules/.pnpm/arquero@8.0.3/node_modules/arquero/src/util/product.js
 function product(values, start = 0, stop = values.length) {
@@ -11175,9 +11184,9 @@ function product(values, start = 0, stop = values.length) {
 * Initialize an aggregate operator.
 */
 function initOp(op) {
-	op.init = op.init || noop;
-	op.add = op.add || noop;
-	op.rem = op.rem || noop;
+	op.init = op.init || noop$1;
+	op.add = op.add || noop$1;
+	op.rem = op.rem || noop$1;
 	return op;
 }
 function initProduct(s, value) {
@@ -11577,7 +11586,7 @@ var windowFunctions = {
 	row_number: {
 		create() {
 			return {
-				init: noop,
+				init: noop$1,
 				value: (w) => w.index + 1
 			};
 		},
@@ -11634,7 +11643,7 @@ var windowFunctions = {
 	ntile: {
 		create(num) {
 			num = +num;
-			if (!(num > 0)) error$8("ntile num must be greater than zero.");
+			if (!(num > 0)) error$7("ntile num must be greater than zero.");
 			const { init, value } = cume_dist.create();
 			return {
 				init,
@@ -11648,7 +11657,7 @@ var windowFunctions = {
 		create(offset, defaultValue = void 0) {
 			offset = +offset || 1;
 			return {
-				init: noop,
+				init: noop$1,
 				value: (w, f) => {
 					const i = w.index - offset;
 					return i >= 0 ? w.value(i, f) : defaultValue;
@@ -11662,7 +11671,7 @@ var windowFunctions = {
 		create(offset, defaultValue = void 0) {
 			offset = +offset || 1;
 			return {
-				init: noop,
+				init: noop$1,
 				value: (w, f) => {
 					const i = w.index + offset;
 					return i < w.size ? w.value(i, f) : defaultValue;
@@ -11675,7 +11684,7 @@ var windowFunctions = {
 	first_value: {
 		create() {
 			return {
-				init: noop,
+				init: noop$1,
 				value: (w, f) => w.value(w.i0, f)
 			};
 		},
@@ -11685,7 +11694,7 @@ var windowFunctions = {
 	last_value: {
 		create() {
 			return {
-				init: noop,
+				init: noop$1,
 				value: (w, f) => w.value(w.i1 - 1, f)
 			};
 		},
@@ -11695,9 +11704,9 @@ var windowFunctions = {
 	nth_value: {
 		create(nth) {
 			nth = +nth;
-			if (!(nth > 0)) error$8("nth_value nth must be greater than zero.");
+			if (!(nth > 0)) error$7("nth_value nth must be greater than zero.");
 			return {
-				init: noop,
+				init: noop$1,
 				value: (w, f) => {
 					const i = w.i0 + (nth - 1);
 					return i < w.i1 ? w.value(i, f) : void 0;
@@ -13111,7 +13120,7 @@ var skipWhiteSpace = /(?:\s|\/\/.*|\/\*[^]*?\*\/)*/g;
 var ref = Object.prototype;
 var hasOwnProperty$1 = ref.hasOwnProperty;
 var toString = ref.toString;
-var hasOwn = Object.hasOwn || (function(obj, propName) {
+var hasOwn$1 = Object.hasOwn || (function(obj, propName) {
 	return hasOwnProperty$1.call(obj, propName);
 });
 var isArray$1 = Array.isArray || (function(obj) {
@@ -13171,7 +13180,7 @@ var defaultOptions$1 = {
 var warnedAboutEcmaVersion = false;
 function getOptions(opts) {
 	var options = {};
-	for (var opt in defaultOptions$1) options[opt] = opts && hasOwn(opts, opt) ? opts[opt] : defaultOptions$1[opt];
+	for (var opt in defaultOptions$1) options[opt] = opts && hasOwn$1(opts, opt) ? opts[opt] : defaultOptions$1[opt];
 	if (options.ecmaVersion === "latest") options.ecmaVersion = 1e8;
 	else if (options.ecmaVersion == null) {
 		if (!warnedAboutEcmaVersion && typeof console === "object" && console.warn) {
@@ -14016,7 +14025,7 @@ pp$8.exitClassBody = function() {
 	var parent = len === 0 ? null : this.privateNameStack[len - 1];
 	for (var i = 0; i < used.length; ++i) {
 		var id = used[i];
-		if (!hasOwn(declared, id.name)) if (parent) parent.used.push(id);
+		if (!hasOwn$1(declared, id.name)) if (parent) parent.used.push(id);
 		else this.raiseRecoverable(id.start, "Private field '#" + id.name + "' must be declared in an enclosing class");
 	}
 };
@@ -14108,7 +14117,7 @@ pp$8.parseExportDefaultDeclaration = function() {
 pp$8.checkExport = function(exports, name, pos) {
 	if (!exports) return;
 	if (typeof name !== "string") name = name.type === "Identifier" ? name.name : name.value;
-	if (hasOwn(exports, name)) this.raiseRecoverable(pos, "Duplicate export '" + name + "'");
+	if (hasOwn$1(exports, name)) this.raiseRecoverable(pos, "Duplicate export '" + name + "'");
 	exports[name] = true;
 };
 pp$8.checkPatternExport = function(exports, pat) {
@@ -14227,7 +14236,7 @@ pp$8.parseWithClause = function() {
 		} else first = false;
 		var attr = this.parseImportAttribute();
 		var keyName = attr.key.type === "Identifier" ? attr.key.name : attr.key.value;
-		if (hasOwn(attributeKeys, keyName)) this.raiseRecoverable(attr.key.start, "Duplicate attribute key '" + keyName + "'");
+		if (hasOwn$1(attributeKeys, keyName)) this.raiseRecoverable(attr.key.start, "Duplicate attribute key '" + keyName + "'");
 		attributeKeys[keyName] = true;
 		nodes.push(attr);
 	}
@@ -14385,7 +14394,7 @@ pp$7.checkLValSimple = function(expr, bindingType, checkClashes) {
 			if (isBind) {
 				if (bindingType === BIND_LEXICAL && expr.name === "let") this.raiseRecoverable(expr.start, "let is disallowed as a lexically bound name");
 				if (checkClashes) {
-					if (hasOwn(checkClashes, expr.name)) this.raiseRecoverable(expr.start, "Argument name clash");
+					if (hasOwn$1(checkClashes, expr.name)) this.raiseRecoverable(expr.start, "Argument name clash");
 					checkClashes[expr.name] = true;
 				}
 				if (bindingType !== BIND_OUTSIDE) this.declareName(expr.name, bindingType, expr.start);
@@ -16067,7 +16076,7 @@ pp$1.regexp_eatUnicodePropertyValueExpression = function(state) {
 	return CharSetNone;
 };
 pp$1.regexp_validateUnicodePropertyNameAndValue = function(state, name, value) {
-	if (!hasOwn(state.unicodeProperties.nonBinary, name)) state.raise("Invalid property name");
+	if (!hasOwn$1(state.unicodeProperties.nonBinary, name)) state.raise("Invalid property name");
 	if (!state.unicodeProperties.nonBinary[name].test(value)) state.raise("Invalid property value");
 };
 pp$1.regexp_validateUnicodePropertyNameOrValue = function(state, nameOrValue) {
@@ -17601,7 +17610,13 @@ var require_xxh32 = /* @__PURE__ */ __commonJSMin(((exports) => {
 function make() {
 	return (value) => value;
 }
-make()({ loading: true });
+//#endregion
+//#region ../../packages/util/src/asyncData.ts
+/**
+* The `loading` constant is an instance of `AsyncDataLoading` that can be shared
+* to provide identity stability. It represents the state when the data is loading.
+*/
+var loading$1 = make()({ loading: true });
 //#endregion
 //#region ../../packages/util/src/base64.ts
 var base64Pattern = /^(?:[A-Za-z0-9+/]{4})*?(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/;
@@ -19353,6 +19368,9 @@ var AsyncQueue = class {
 		}
 	}
 };
+//#endregion
+//#region ../../packages/util/src/retry.ts
+var isRetryableHttpStatus = (status) => status === 408 || status === 429 || status >= 500 && status < 600;
 //#endregion
 //#region ../../packages/util/src/sync.ts
 /**
@@ -21387,6 +21405,2206 @@ Prism.languages.py = Prism.languages.python;
 	Prism.languages.yml = Prism.languages.yaml;
 })(Prism);
 //#endregion
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/subscribable.js
+var Subscribable = class {
+	constructor() {
+		this.listeners = /* @__PURE__ */ new Set();
+		this.subscribe = this.subscribe.bind(this);
+	}
+	subscribe(listener) {
+		this.listeners.add(listener);
+		this.onSubscribe();
+		return () => {
+			this.listeners.delete(listener);
+			this.onUnsubscribe();
+		};
+	}
+	hasListeners() {
+		return this.listeners.size > 0;
+	}
+	onSubscribe() {}
+	onUnsubscribe() {}
+};
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/focusManager.js
+var FocusManager = class extends Subscribable {
+	#focused;
+	#cleanup;
+	#setup;
+	constructor() {
+		super();
+		this.#setup = (onFocus) => {
+			if (typeof window !== "undefined" && window.addEventListener) {
+				const listener = () => onFocus();
+				window.addEventListener("visibilitychange", listener, false);
+				return () => {
+					window.removeEventListener("visibilitychange", listener);
+				};
+			}
+		};
+	}
+	onSubscribe() {
+		if (!this.#cleanup) this.setEventListener(this.#setup);
+	}
+	onUnsubscribe() {
+		if (!this.hasListeners()) {
+			this.#cleanup?.();
+			this.#cleanup = void 0;
+		}
+	}
+	setEventListener(setup) {
+		this.#setup = setup;
+		this.#cleanup?.();
+		this.#cleanup = setup((focused) => {
+			if (typeof focused === "boolean") this.setFocused(focused);
+			else this.onFocus();
+		});
+	}
+	setFocused(focused) {
+		if (this.#focused !== focused) {
+			this.#focused = focused;
+			this.onFocus();
+		}
+	}
+	onFocus() {
+		const isFocused = this.isFocused();
+		this.listeners.forEach((listener) => {
+			listener(isFocused);
+		});
+	}
+	isFocused() {
+		if (typeof this.#focused === "boolean") return this.#focused;
+		return globalThis.document?.visibilityState !== "hidden";
+	}
+};
+var focusManager = new FocusManager();
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/timeoutManager.js
+var defaultTimeoutProvider = {
+	setTimeout: (callback, delay) => setTimeout(callback, delay),
+	clearTimeout: (timeoutId) => clearTimeout(timeoutId),
+	setInterval: (callback, delay) => setInterval(callback, delay),
+	clearInterval: (intervalId) => clearInterval(intervalId)
+};
+var TimeoutManager = class {
+	#provider = defaultTimeoutProvider;
+	#providerCalled = false;
+	setTimeoutProvider(provider) {
+		this.#provider = provider;
+	}
+	setTimeout(callback, delay) {
+		return this.#provider.setTimeout(callback, delay);
+	}
+	clearTimeout(timeoutId) {
+		this.#provider.clearTimeout(timeoutId);
+	}
+	setInterval(callback, delay) {
+		return this.#provider.setInterval(callback, delay);
+	}
+	clearInterval(intervalId) {
+		this.#provider.clearInterval(intervalId);
+	}
+};
+var timeoutManager = new TimeoutManager();
+function systemSetTimeoutZero(callback) {
+	setTimeout(callback, 0);
+}
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/utils.js
+var isServer = typeof window === "undefined" || "Deno" in globalThis;
+function noop() {}
+function functionalUpdate(updater, input) {
+	return typeof updater === "function" ? updater(input) : updater;
+}
+function isValidTimeout(value) {
+	return typeof value === "number" && value >= 0 && value !== Infinity;
+}
+function timeUntilStale(updatedAt, staleTime) {
+	return Math.max(updatedAt + (staleTime || 0) - Date.now(), 0);
+}
+function resolveStaleTime(staleTime, query) {
+	return typeof staleTime === "function" ? staleTime(query) : staleTime;
+}
+function resolveQueryBoolean(option, query) {
+	return typeof option === "function" ? option(query) : option;
+}
+function matchQuery(filters, query) {
+	const { type = "all", exact, fetchStatus, predicate, queryKey, stale } = filters;
+	if (queryKey) {
+		if (exact) {
+			if (query.queryHash !== hashQueryKeyByOptions(queryKey, query.options)) return false;
+		} else if (!partialMatchKey(query.queryKey, queryKey)) return false;
+	}
+	if (type !== "all") {
+		const isActive = query.isActive();
+		if (type === "active" && !isActive) return false;
+		if (type === "inactive" && isActive) return false;
+	}
+	if (typeof stale === "boolean" && query.isStale() !== stale) return false;
+	if (fetchStatus && fetchStatus !== query.state.fetchStatus) return false;
+	if (predicate && !predicate(query)) return false;
+	return true;
+}
+function matchMutation(filters, mutation) {
+	const { exact, status, predicate, mutationKey } = filters;
+	if (mutationKey) {
+		if (!mutation.options.mutationKey) return false;
+		if (exact) {
+			if (hashKey(mutation.options.mutationKey) !== hashKey(mutationKey)) return false;
+		} else if (!partialMatchKey(mutation.options.mutationKey, mutationKey)) return false;
+	}
+	if (status && mutation.state.status !== status) return false;
+	if (predicate && !predicate(mutation)) return false;
+	return true;
+}
+function hashQueryKeyByOptions(queryKey, options) {
+	return (options?.queryKeyHashFn || hashKey)(queryKey);
+}
+function hashKey(queryKey) {
+	return JSON.stringify(queryKey, (_, val) => isPlainObject$3(val) ? Object.keys(val).sort().reduce((result, key) => {
+		result[key] = val[key];
+		return result;
+	}, {}) : val);
+}
+function partialMatchKey(a, b) {
+	if (a === b) return true;
+	if (typeof a !== typeof b) return false;
+	if (a && b && typeof a === "object" && typeof b === "object") return Object.keys(b).every((key) => partialMatchKey(a[key], b[key]));
+	return false;
+}
+var hasOwn = Object.prototype.hasOwnProperty;
+function replaceEqualDeep(a, b, depth = 0) {
+	if (a === b) return a;
+	if (depth > 500) return b;
+	const array = isPlainArray(a) && isPlainArray(b);
+	if (!array && !(isPlainObject$3(a) && isPlainObject$3(b))) return b;
+	const aSize = (array ? a : Object.keys(a)).length;
+	const bItems = array ? b : Object.keys(b);
+	const bSize = bItems.length;
+	const copy = array ? new Array(bSize) : {};
+	let equalItems = 0;
+	for (let i = 0; i < bSize; i++) {
+		const key = array ? i : bItems[i];
+		const aItem = a[key];
+		const bItem = b[key];
+		if (aItem === bItem) {
+			copy[key] = aItem;
+			if (array ? i < aSize : hasOwn.call(a, key)) equalItems++;
+			continue;
+		}
+		if (aItem === null || bItem === null || typeof aItem !== "object" || typeof bItem !== "object") {
+			copy[key] = bItem;
+			continue;
+		}
+		const v = replaceEqualDeep(aItem, bItem, depth + 1);
+		copy[key] = v;
+		if (v === aItem) equalItems++;
+	}
+	return aSize === bSize && equalItems === aSize ? a : copy;
+}
+function shallowEqualObjects(a, b) {
+	if (!b || Object.keys(a).length !== Object.keys(b).length) return false;
+	for (const key in a) if (a[key] !== b[key]) return false;
+	return true;
+}
+function isPlainArray(value) {
+	return Array.isArray(value) && value.length === Object.keys(value).length;
+}
+function isPlainObject$3(o) {
+	if (!hasObjectPrototype(o)) return false;
+	const ctor = o.constructor;
+	if (ctor === void 0) return true;
+	const prot = ctor.prototype;
+	if (!hasObjectPrototype(prot)) return false;
+	if (!prot.hasOwnProperty("isPrototypeOf")) return false;
+	if (Object.getPrototypeOf(o) !== Object.prototype) return false;
+	return true;
+}
+function hasObjectPrototype(o) {
+	return Object.prototype.toString.call(o) === "[object Object]";
+}
+function sleep(timeout) {
+	return new Promise((resolve) => {
+		timeoutManager.setTimeout(resolve, timeout);
+	});
+}
+function replaceData(prevData, data, options) {
+	if (typeof options.structuralSharing === "function") return options.structuralSharing(prevData, data);
+	else if (options.structuralSharing !== false) return replaceEqualDeep(prevData, data);
+	return data;
+}
+function addToEnd(items, item, max = 0) {
+	const newItems = [...items, item];
+	return max && newItems.length > max ? newItems.slice(1) : newItems;
+}
+function addToStart(items, item, max = 0) {
+	const newItems = [item, ...items];
+	return max && newItems.length > max ? newItems.slice(0, -1) : newItems;
+}
+var skipToken = /* @__PURE__ */ Symbol();
+function ensureQueryFn(options, fetchOptions) {
+	if (!options.queryFn && fetchOptions?.initialPromise) return () => fetchOptions.initialPromise;
+	if (!options.queryFn || options.queryFn === skipToken) return () => Promise.reject(/* @__PURE__ */ new Error(`Missing queryFn: '${options.queryHash}'`));
+	return options.queryFn;
+}
+function shouldThrowError(throwOnError, params) {
+	if (typeof throwOnError === "function") return throwOnError(...params);
+	return !!throwOnError;
+}
+function addConsumeAwareSignal(object, getSignal, onCancelled) {
+	let consumed = false;
+	let signal;
+	Object.defineProperty(object, "signal", {
+		enumerable: true,
+		get: () => {
+			signal ??= getSignal();
+			if (consumed) return signal;
+			consumed = true;
+			if (signal.aborted) onCancelled();
+			else signal.addEventListener("abort", onCancelled, { once: true });
+			return signal;
+		}
+	});
+	return object;
+}
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/environmentManager.js
+var environmentManager = /* @__PURE__ */ (() => {
+	let isServerFn = () => isServer;
+	return {
+		/**
+		* Returns whether the current runtime should be treated as a server environment.
+		*/
+		isServer() {
+			return isServerFn();
+		},
+		/**
+		* Overrides the server check globally.
+		*/
+		setIsServer(isServerValue) {
+			isServerFn = isServerValue;
+		}
+	};
+})();
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/thenable.js
+function pendingThenable() {
+	let resolve;
+	let reject;
+	const thenable = new Promise((_resolve, _reject) => {
+		resolve = _resolve;
+		reject = _reject;
+	});
+	thenable.status = "pending";
+	thenable.catch(() => {});
+	function finalize(data) {
+		Object.assign(thenable, data);
+		delete thenable.resolve;
+		delete thenable.reject;
+	}
+	thenable.resolve = (value) => {
+		finalize({
+			status: "fulfilled",
+			value
+		});
+		resolve(value);
+	};
+	thenable.reject = (reason) => {
+		finalize({
+			status: "rejected",
+			reason
+		});
+		reject(reason);
+	};
+	return thenable;
+}
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/notifyManager.js
+var defaultScheduler = systemSetTimeoutZero;
+function createNotifyManager() {
+	let queue = [];
+	let transactions = 0;
+	let notifyFn = (callback) => {
+		callback();
+	};
+	let batchNotifyFn = (callback) => {
+		callback();
+	};
+	let scheduleFn = defaultScheduler;
+	const schedule = (callback) => {
+		if (transactions) queue.push(callback);
+		else scheduleFn(() => {
+			notifyFn(callback);
+		});
+	};
+	const flush = () => {
+		const originalQueue = queue;
+		queue = [];
+		if (originalQueue.length) scheduleFn(() => {
+			batchNotifyFn(() => {
+				originalQueue.forEach((callback) => {
+					notifyFn(callback);
+				});
+			});
+		});
+	};
+	return {
+		batch: (callback) => {
+			let result;
+			transactions++;
+			try {
+				result = callback();
+			} finally {
+				transactions--;
+				if (!transactions) flush();
+			}
+			return result;
+		},
+		/**
+		* All calls to the wrapped function will be batched.
+		*/
+		batchCalls: (callback) => {
+			return (...args) => {
+				schedule(() => {
+					callback(...args);
+				});
+			};
+		},
+		schedule,
+		/**
+		* Use this method to set a custom notify function.
+		* This can be used to for example wrap notifications with `React.act` while running tests.
+		*/
+		setNotifyFunction: (fn) => {
+			notifyFn = fn;
+		},
+		/**
+		* Use this method to set a custom function to batch notifications together into a single tick.
+		* By default React Query will use the batch function provided by ReactDOM or React Native.
+		*/
+		setBatchNotifyFunction: (fn) => {
+			batchNotifyFn = fn;
+		},
+		setScheduler: (fn) => {
+			scheduleFn = fn;
+		}
+	};
+}
+var notifyManager = createNotifyManager();
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/onlineManager.js
+var OnlineManager = class extends Subscribable {
+	#online = true;
+	#cleanup;
+	#setup;
+	constructor() {
+		super();
+		this.#setup = (onOnline) => {
+			if (typeof window !== "undefined" && window.addEventListener) {
+				const onlineListener = () => onOnline(true);
+				const offlineListener = () => onOnline(false);
+				window.addEventListener("online", onlineListener, false);
+				window.addEventListener("offline", offlineListener, false);
+				return () => {
+					window.removeEventListener("online", onlineListener);
+					window.removeEventListener("offline", offlineListener);
+				};
+			}
+		};
+	}
+	onSubscribe() {
+		if (!this.#cleanup) this.setEventListener(this.#setup);
+	}
+	onUnsubscribe() {
+		if (!this.hasListeners()) {
+			this.#cleanup?.();
+			this.#cleanup = void 0;
+		}
+	}
+	setEventListener(setup) {
+		this.#setup = setup;
+		this.#cleanup?.();
+		this.#cleanup = setup(this.setOnline.bind(this));
+	}
+	setOnline(online) {
+		if (this.#online !== online) {
+			this.#online = online;
+			this.listeners.forEach((listener) => {
+				listener(online);
+			});
+		}
+	}
+	isOnline() {
+		return this.#online;
+	}
+};
+var onlineManager = new OnlineManager();
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/retryer.js
+function defaultRetryDelay(failureCount) {
+	return Math.min(1e3 * 2 ** failureCount, 3e4);
+}
+function canFetch(networkMode) {
+	return (networkMode ?? "online") === "online" ? onlineManager.isOnline() : true;
+}
+var CancelledError = class extends Error {
+	constructor(options) {
+		super("CancelledError");
+		this.revert = options?.revert;
+		this.silent = options?.silent;
+	}
+};
+function createRetryer(config) {
+	let isRetryCancelled = false;
+	let failureCount = 0;
+	let continueFn;
+	const thenable = pendingThenable();
+	const isResolved = () => thenable.status !== "pending";
+	const cancel = (cancelOptions) => {
+		if (!isResolved()) {
+			const error = new CancelledError(cancelOptions);
+			reject(error);
+			config.onCancel?.(error);
+		}
+	};
+	const cancelRetry = () => {
+		isRetryCancelled = true;
+	};
+	const continueRetry = () => {
+		isRetryCancelled = false;
+	};
+	const canContinue = () => focusManager.isFocused() && (config.networkMode === "always" || onlineManager.isOnline()) && config.canRun();
+	const canStart = () => canFetch(config.networkMode) && config.canRun();
+	const resolve = (value) => {
+		if (!isResolved()) {
+			continueFn?.();
+			thenable.resolve(value);
+		}
+	};
+	const reject = (value) => {
+		if (!isResolved()) {
+			continueFn?.();
+			thenable.reject(value);
+		}
+	};
+	const pause = () => {
+		return new Promise((continueResolve) => {
+			continueFn = (value) => {
+				if (isResolved() || canContinue()) continueResolve(value);
+			};
+			config.onPause?.();
+		}).then(() => {
+			continueFn = void 0;
+			if (!isResolved()) config.onContinue?.();
+		});
+	};
+	const run = () => {
+		if (isResolved()) return;
+		let promiseOrValue;
+		const initialPromise = failureCount === 0 ? config.initialPromise : void 0;
+		try {
+			promiseOrValue = initialPromise ?? config.fn();
+		} catch (error) {
+			promiseOrValue = Promise.reject(error);
+		}
+		Promise.resolve(promiseOrValue).then(resolve).catch((error) => {
+			if (isResolved()) return;
+			const retry = config.retry ?? (environmentManager.isServer() ? 0 : 3);
+			const retryDelay = config.retryDelay ?? defaultRetryDelay;
+			const delay = typeof retryDelay === "function" ? retryDelay(failureCount, error) : retryDelay;
+			const shouldRetry = retry === true || typeof retry === "number" && failureCount < retry || typeof retry === "function" && retry(failureCount, error);
+			if (isRetryCancelled || !shouldRetry) {
+				reject(error);
+				return;
+			}
+			failureCount++;
+			config.onFail?.(failureCount, error);
+			sleep(delay).then(() => {
+				return canContinue() ? void 0 : pause();
+			}).then(() => {
+				if (isRetryCancelled) reject(error);
+				else run();
+			});
+		});
+	};
+	return {
+		promise: thenable,
+		status: () => thenable.status,
+		cancel,
+		continue: () => {
+			continueFn?.();
+			return thenable;
+		},
+		cancelRetry,
+		continueRetry,
+		canStart,
+		start: () => {
+			if (canStart()) run();
+			else pause().then(run);
+			return thenable;
+		}
+	};
+}
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/removable.js
+var Removable = class {
+	#gcTimeout;
+	destroy() {
+		this.clearGcTimeout();
+	}
+	scheduleGc() {
+		this.clearGcTimeout();
+		if (isValidTimeout(this.gcTime)) this.#gcTimeout = timeoutManager.setTimeout(() => {
+			this.optionalRemove();
+		}, this.gcTime);
+	}
+	updateGcTime(newGcTime) {
+		this.gcTime = Math.max(this.gcTime || 0, newGcTime ?? (environmentManager.isServer() ? Infinity : 300 * 1e3));
+	}
+	clearGcTimeout() {
+		if (this.#gcTimeout !== void 0) {
+			timeoutManager.clearTimeout(this.#gcTimeout);
+			this.#gcTimeout = void 0;
+		}
+	}
+};
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/infiniteQueryBehavior.js
+function infiniteQueryBehavior(pages) {
+	return { onFetch: (context, query) => {
+		const options = context.options;
+		const direction = context.fetchOptions?.meta?.fetchMore?.direction;
+		const oldPages = context.state.data?.pages || [];
+		const oldPageParams = context.state.data?.pageParams || [];
+		let result = {
+			pages: [],
+			pageParams: []
+		};
+		let currentPage = 0;
+		const fetchFn = async () => {
+			let cancelled = false;
+			const addSignalProperty = (object) => {
+				addConsumeAwareSignal(object, () => context.signal, () => cancelled = true);
+			};
+			const queryFn = ensureQueryFn(context.options, context.fetchOptions);
+			const fetchPage = async (data, param, previous) => {
+				if (cancelled) return Promise.reject(context.signal.reason);
+				if (param == null && data.pages.length) return Promise.resolve(data);
+				const createQueryFnContext = () => {
+					const queryFnContext2 = {
+						client: context.client,
+						queryKey: context.queryKey,
+						pageParam: param,
+						direction: previous ? "backward" : "forward",
+						meta: context.options.meta
+					};
+					addSignalProperty(queryFnContext2);
+					return queryFnContext2;
+				};
+				const page = await queryFn(createQueryFnContext());
+				const { maxPages } = context.options;
+				const addTo = previous ? addToStart : addToEnd;
+				return {
+					pages: addTo(data.pages, page, maxPages),
+					pageParams: addTo(data.pageParams, param, maxPages)
+				};
+			};
+			if (direction && oldPages.length) {
+				const previous = direction === "backward";
+				const pageParamFn = previous ? getPreviousPageParam : getNextPageParam;
+				const oldData = {
+					pages: oldPages,
+					pageParams: oldPageParams
+				};
+				result = await fetchPage(oldData, pageParamFn(options, oldData), previous);
+			} else {
+				const remainingPages = pages ?? oldPages.length;
+				do {
+					const param = currentPage === 0 ? oldPageParams[0] ?? options.initialPageParam : getNextPageParam(options, result);
+					if (currentPage > 0 && param == null) break;
+					result = await fetchPage(result, param);
+					currentPage++;
+				} while (currentPage < remainingPages);
+			}
+			return result;
+		};
+		if (context.options.persister) context.fetchFn = () => {
+			return context.options.persister?.(fetchFn, {
+				client: context.client,
+				queryKey: context.queryKey,
+				meta: context.options.meta,
+				signal: context.signal
+			}, query);
+		};
+		else context.fetchFn = fetchFn;
+	} };
+}
+function getNextPageParam(options, { pages, pageParams }) {
+	const lastIndex = pages.length - 1;
+	return pages.length > 0 ? options.getNextPageParam(pages[lastIndex], pages, pageParams[lastIndex], pageParams) : void 0;
+}
+function getPreviousPageParam(options, { pages, pageParams }) {
+	return pages.length > 0 ? options.getPreviousPageParam?.(pages[0], pages, pageParams[0], pageParams) : void 0;
+}
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/query.js
+var Query = class extends Removable {
+	#queryType;
+	#initialState;
+	#revertState;
+	#cache;
+	#client;
+	#retryer;
+	#defaultOptions;
+	#abortSignalConsumed;
+	constructor(config) {
+		super();
+		this.#abortSignalConsumed = false;
+		this.#defaultOptions = config.defaultOptions;
+		this.setOptions(config.options);
+		this.observers = [];
+		this.#client = config.client;
+		this.#cache = this.#client.getQueryCache();
+		this.queryKey = config.queryKey;
+		this.queryHash = config.queryHash;
+		this.#initialState = getDefaultState$1(this.options);
+		this.state = config.state ?? this.#initialState;
+		this.scheduleGc();
+	}
+	get meta() {
+		return this.options.meta;
+	}
+	get queryType() {
+		return this.#queryType;
+	}
+	get promise() {
+		return this.#retryer?.promise;
+	}
+	setOptions(options) {
+		this.options = {
+			...this.#defaultOptions,
+			...options
+		};
+		if (options?._type) this.#queryType = options._type;
+		this.updateGcTime(this.options.gcTime);
+		if (this.state && this.state.data === void 0) {
+			const defaultState = getDefaultState$1(this.options);
+			if (defaultState.data !== void 0) {
+				this.setState(successState(defaultState.data, defaultState.dataUpdatedAt));
+				this.#initialState = defaultState;
+			}
+		}
+	}
+	optionalRemove() {
+		if (!this.observers.length && this.state.fetchStatus === "idle") this.#cache.remove(this);
+	}
+	setData(newData, options) {
+		const data = replaceData(this.state.data, newData, this.options);
+		this.#dispatch({
+			data,
+			type: "success",
+			dataUpdatedAt: options?.updatedAt,
+			manual: options?.manual
+		});
+		return data;
+	}
+	setState(state) {
+		this.#dispatch({
+			type: "setState",
+			state
+		});
+	}
+	cancel(options) {
+		const promise = this.#retryer?.promise;
+		this.#retryer?.cancel(options);
+		return promise ? promise.then(noop).catch(noop) : Promise.resolve();
+	}
+	destroy() {
+		super.destroy();
+		this.cancel({ silent: true });
+	}
+	get resetState() {
+		return this.#initialState;
+	}
+	reset() {
+		this.destroy();
+		this.setState(this.resetState);
+	}
+	isActive() {
+		return this.observers.some((observer) => resolveQueryBoolean(observer.options.enabled, this) !== false);
+	}
+	isDisabled() {
+		if (this.getObserversCount() > 0) return !this.isActive();
+		return this.options.queryFn === skipToken || !this.isFetched();
+	}
+	isFetched() {
+		return this.state.dataUpdateCount + this.state.errorUpdateCount > 0;
+	}
+	isStatic() {
+		if (this.getObserversCount() > 0) return this.observers.some((observer) => resolveStaleTime(observer.options.staleTime, this) === "static");
+		return false;
+	}
+	isStale() {
+		if (this.getObserversCount() > 0) return this.observers.some((observer) => observer.getCurrentResult().isStale);
+		return this.state.data === void 0 || this.state.isInvalidated;
+	}
+	isStaleByTime(staleTime = 0) {
+		if (this.state.data === void 0) return true;
+		if (staleTime === "static") return false;
+		if (this.state.isInvalidated) return true;
+		return !timeUntilStale(this.state.dataUpdatedAt, staleTime);
+	}
+	onFocus() {
+		this.observers.find((x) => x.shouldFetchOnWindowFocus())?.refetch({ cancelRefetch: false });
+		this.#retryer?.continue();
+	}
+	onOnline() {
+		this.observers.find((x) => x.shouldFetchOnReconnect())?.refetch({ cancelRefetch: false });
+		this.#retryer?.continue();
+	}
+	addObserver(observer) {
+		if (!this.observers.includes(observer)) {
+			this.observers.push(observer);
+			this.clearGcTimeout();
+			this.#cache.notify({
+				type: "observerAdded",
+				query: this,
+				observer
+			});
+		}
+	}
+	removeObserver(observer) {
+		if (this.observers.includes(observer)) {
+			this.observers = this.observers.filter((x) => x !== observer);
+			if (!this.observers.length) {
+				if (this.#retryer) if (this.#abortSignalConsumed || this.#isInitialPausedFetch()) this.#retryer.cancel({ revert: true });
+				else this.#retryer.cancelRetry();
+				this.scheduleGc();
+			}
+			this.#cache.notify({
+				type: "observerRemoved",
+				query: this,
+				observer
+			});
+		}
+	}
+	getObserversCount() {
+		return this.observers.length;
+	}
+	#isInitialPausedFetch() {
+		return this.state.fetchStatus === "paused" && this.state.status === "pending";
+	}
+	invalidate() {
+		if (!this.state.isInvalidated) this.#dispatch({ type: "invalidate" });
+	}
+	async fetch(options, fetchOptions) {
+		if (this.state.fetchStatus !== "idle" && this.#retryer?.status() !== "rejected") {
+			if (this.state.data !== void 0 && fetchOptions?.cancelRefetch) this.cancel({ silent: true });
+			else if (this.#retryer) {
+				this.#retryer.continueRetry();
+				return this.#retryer.promise;
+			}
+		}
+		if (options) this.setOptions(options);
+		if (!this.options.queryFn) {
+			const observer = this.observers.find((x) => x.options.queryFn);
+			if (observer) this.setOptions(observer.options);
+		}
+		const abortController = new AbortController();
+		const addSignalProperty = (object) => {
+			Object.defineProperty(object, "signal", {
+				enumerable: true,
+				get: () => {
+					this.#abortSignalConsumed = true;
+					return abortController.signal;
+				}
+			});
+		};
+		const fetchFn = () => {
+			const queryFn = ensureQueryFn(this.options, fetchOptions);
+			const createQueryFnContext = () => {
+				const queryFnContext2 = {
+					client: this.#client,
+					queryKey: this.queryKey,
+					meta: this.meta
+				};
+				addSignalProperty(queryFnContext2);
+				return queryFnContext2;
+			};
+			const queryFnContext = createQueryFnContext();
+			this.#abortSignalConsumed = false;
+			if (this.options.persister) return this.options.persister(queryFn, queryFnContext, this);
+			return queryFn(queryFnContext);
+		};
+		const createFetchContext = () => {
+			const context2 = {
+				fetchOptions,
+				options: this.options,
+				queryKey: this.queryKey,
+				client: this.#client,
+				state: this.state,
+				fetchFn
+			};
+			addSignalProperty(context2);
+			return context2;
+		};
+		const context = createFetchContext();
+		(this.#queryType === "infinite" ? infiniteQueryBehavior(this.options.pages) : this.options.behavior)?.onFetch(context, this);
+		this.#revertState = this.state;
+		if (this.state.fetchStatus === "idle" || this.state.fetchMeta !== context.fetchOptions?.meta) this.#dispatch({
+			type: "fetch",
+			meta: context.fetchOptions?.meta
+		});
+		this.#retryer = createRetryer({
+			initialPromise: fetchOptions?.initialPromise,
+			fn: context.fetchFn,
+			onCancel: (error) => {
+				if (error instanceof CancelledError && error.revert) this.setState({
+					...this.#revertState,
+					fetchStatus: "idle"
+				});
+				abortController.abort();
+			},
+			onFail: (failureCount, error) => {
+				this.#dispatch({
+					type: "failed",
+					failureCount,
+					error
+				});
+			},
+			onPause: () => {
+				this.#dispatch({ type: "pause" });
+			},
+			onContinue: () => {
+				this.#dispatch({ type: "continue" });
+			},
+			retry: context.options.retry,
+			retryDelay: context.options.retryDelay,
+			networkMode: context.options.networkMode,
+			canRun: () => true
+		});
+		try {
+			const data = await this.#retryer.start();
+			if (data === void 0) throw new Error(`${this.queryHash} data is undefined`);
+			this.setData(data);
+			this.#cache.config.onSuccess?.(data, this);
+			this.#cache.config.onSettled?.(data, this.state.error, this);
+			return data;
+		} catch (error) {
+			if (error instanceof CancelledError) {
+				if (error.silent) return this.#retryer.promise;
+				else if (error.revert) {
+					if (this.state.data === void 0) throw error;
+					return this.state.data;
+				}
+			}
+			this.#dispatch({
+				type: "error",
+				error
+			});
+			this.#cache.config.onError?.(error, this);
+			this.#cache.config.onSettled?.(this.state.data, error, this);
+			throw error;
+		} finally {
+			this.scheduleGc();
+		}
+	}
+	#dispatch(action) {
+		const reducer = (state) => {
+			switch (action.type) {
+				case "failed": return {
+					...state,
+					fetchFailureCount: action.failureCount,
+					fetchFailureReason: action.error
+				};
+				case "pause": return {
+					...state,
+					fetchStatus: "paused"
+				};
+				case "continue": return {
+					...state,
+					fetchStatus: "fetching"
+				};
+				case "fetch": return {
+					...state,
+					...fetchState(state.data, this.options),
+					fetchMeta: action.meta ?? null
+				};
+				case "success":
+					const newState = {
+						...state,
+						...successState(action.data, action.dataUpdatedAt),
+						dataUpdateCount: state.dataUpdateCount + 1,
+						...!action.manual && {
+							fetchStatus: "idle",
+							fetchFailureCount: 0,
+							fetchFailureReason: null
+						}
+					};
+					this.#revertState = action.manual ? newState : void 0;
+					return newState;
+				case "error":
+					const error = action.error;
+					return {
+						...state,
+						error,
+						errorUpdateCount: state.errorUpdateCount + 1,
+						errorUpdatedAt: Date.now(),
+						fetchFailureCount: state.fetchFailureCount + 1,
+						fetchFailureReason: error,
+						fetchStatus: "idle",
+						status: "error",
+						isInvalidated: true
+					};
+				case "invalidate": return {
+					...state,
+					isInvalidated: true
+				};
+				case "setState": return {
+					...state,
+					...action.state
+				};
+			}
+		};
+		this.state = reducer(this.state);
+		notifyManager.batch(() => {
+			this.observers.forEach((observer) => {
+				observer.onQueryUpdate();
+			});
+			this.#cache.notify({
+				query: this,
+				type: "updated",
+				action
+			});
+		});
+	}
+};
+function fetchState(data, options) {
+	return {
+		fetchFailureCount: 0,
+		fetchFailureReason: null,
+		fetchStatus: canFetch(options.networkMode) ? "fetching" : "paused",
+		...data === void 0 && {
+			error: null,
+			status: "pending"
+		}
+	};
+}
+function successState(data, dataUpdatedAt) {
+	return {
+		data,
+		dataUpdatedAt: dataUpdatedAt ?? Date.now(),
+		error: null,
+		isInvalidated: false,
+		status: "success"
+	};
+}
+function getDefaultState$1(options) {
+	const data = typeof options.initialData === "function" ? options.initialData() : options.initialData;
+	const hasData = data !== void 0;
+	const initialDataUpdatedAt = hasData ? typeof options.initialDataUpdatedAt === "function" ? options.initialDataUpdatedAt() : options.initialDataUpdatedAt : 0;
+	return {
+		data,
+		dataUpdateCount: 0,
+		dataUpdatedAt: hasData ? initialDataUpdatedAt ?? Date.now() : 0,
+		error: null,
+		errorUpdateCount: 0,
+		errorUpdatedAt: 0,
+		fetchFailureCount: 0,
+		fetchFailureReason: null,
+		fetchMeta: null,
+		isInvalidated: false,
+		status: hasData ? "success" : "pending",
+		fetchStatus: "idle"
+	};
+}
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/queryObserver.js
+var QueryObserver = class extends Subscribable {
+	constructor(client, options) {
+		super();
+		this.options = options;
+		this.#client = client;
+		this.#selectError = null;
+		this.#currentThenable = pendingThenable();
+		this.bindMethods();
+		this.setOptions(options);
+	}
+	#client;
+	#currentQuery = void 0;
+	#currentQueryInitialState = void 0;
+	#currentResult = void 0;
+	#currentResultState;
+	#currentResultOptions;
+	#currentThenable;
+	#selectError;
+	#selectFn;
+	#selectResult;
+	#lastQueryWithDefinedData;
+	#staleTimeoutId;
+	#refetchIntervalId;
+	#currentRefetchInterval;
+	#trackedProps = /* @__PURE__ */ new Set();
+	bindMethods() {
+		this.refetch = this.refetch.bind(this);
+	}
+	onSubscribe() {
+		if (this.listeners.size === 1) {
+			this.#currentQuery.addObserver(this);
+			if (shouldFetchOnMount(this.#currentQuery, this.options)) this.#executeFetch();
+			else this.updateResult();
+			this.#updateTimers();
+		}
+	}
+	onUnsubscribe() {
+		if (!this.hasListeners()) this.destroy();
+	}
+	shouldFetchOnReconnect() {
+		return shouldFetchOn(this.#currentQuery, this.options, this.options.refetchOnReconnect);
+	}
+	shouldFetchOnWindowFocus() {
+		return shouldFetchOn(this.#currentQuery, this.options, this.options.refetchOnWindowFocus);
+	}
+	destroy() {
+		this.listeners = /* @__PURE__ */ new Set();
+		this.#clearStaleTimeout();
+		this.#clearRefetchInterval();
+		this.#currentQuery.removeObserver(this);
+	}
+	setOptions(options) {
+		const prevOptions = this.options;
+		const prevQuery = this.#currentQuery;
+		this.options = this.#client.defaultQueryOptions(options);
+		if (this.options.enabled !== void 0 && typeof this.options.enabled !== "boolean" && typeof this.options.enabled !== "function" && typeof resolveQueryBoolean(this.options.enabled, this.#currentQuery) !== "boolean") throw new Error("Expected enabled to be a boolean or a callback that returns a boolean");
+		this.#updateQuery();
+		this.#currentQuery.setOptions(this.options);
+		if (prevOptions._defaulted && !shallowEqualObjects(this.options, prevOptions)) this.#client.getQueryCache().notify({
+			type: "observerOptionsUpdated",
+			query: this.#currentQuery,
+			observer: this
+		});
+		const mounted = this.hasListeners();
+		if (mounted && shouldFetchOptionally(this.#currentQuery, prevQuery, this.options, prevOptions)) this.#executeFetch();
+		this.updateResult();
+		if (mounted && (this.#currentQuery !== prevQuery || resolveQueryBoolean(this.options.enabled, this.#currentQuery) !== resolveQueryBoolean(prevOptions.enabled, this.#currentQuery) || resolveStaleTime(this.options.staleTime, this.#currentQuery) !== resolveStaleTime(prevOptions.staleTime, this.#currentQuery))) this.#updateStaleTimeout();
+		const nextRefetchInterval = this.#computeRefetchInterval();
+		if (mounted && (this.#currentQuery !== prevQuery || resolveQueryBoolean(this.options.enabled, this.#currentQuery) !== resolveQueryBoolean(prevOptions.enabled, this.#currentQuery) || nextRefetchInterval !== this.#currentRefetchInterval)) this.#updateRefetchInterval(nextRefetchInterval);
+	}
+	getOptimisticResult(options) {
+		const query = this.#client.getQueryCache().build(this.#client, options);
+		const result = this.createResult(query, options);
+		if (shouldAssignObserverCurrentProperties(this, result)) {
+			this.#currentResult = result;
+			this.#currentResultOptions = this.options;
+			this.#currentResultState = this.#currentQuery.state;
+		}
+		return result;
+	}
+	getCurrentResult() {
+		return this.#currentResult;
+	}
+	trackResult(result, onPropTracked) {
+		return new Proxy(result, { get: (target, key) => {
+			this.trackProp(key);
+			onPropTracked?.(key);
+			if (key === "promise") {
+				this.trackProp("data");
+				if (!this.options.experimental_prefetchInRender && this.#currentThenable.status === "pending") this.#currentThenable.reject(/* @__PURE__ */ new Error("experimental_prefetchInRender feature flag is not enabled"));
+			}
+			return Reflect.get(target, key);
+		} });
+	}
+	trackProp(key) {
+		this.#trackedProps.add(key);
+	}
+	getCurrentQuery() {
+		return this.#currentQuery;
+	}
+	refetch({ ...options } = {}) {
+		return this.fetch({ ...options });
+	}
+	fetchOptimistic(options) {
+		const defaultedOptions = this.#client.defaultQueryOptions(options);
+		const query = this.#client.getQueryCache().build(this.#client, defaultedOptions);
+		return query.fetch().then(() => this.createResult(query, defaultedOptions));
+	}
+	fetch(fetchOptions) {
+		return this.#executeFetch({
+			...fetchOptions,
+			cancelRefetch: fetchOptions.cancelRefetch ?? true
+		}).then(() => {
+			this.updateResult();
+			return this.#currentResult;
+		});
+	}
+	#executeFetch(fetchOptions) {
+		this.#updateQuery();
+		let promise = this.#currentQuery.fetch(this.options, fetchOptions);
+		if (!fetchOptions?.throwOnError) promise = promise.catch(noop);
+		return promise;
+	}
+	#updateStaleTimeout() {
+		this.#clearStaleTimeout();
+		const staleTime = resolveStaleTime(this.options.staleTime, this.#currentQuery);
+		if (environmentManager.isServer() || this.#currentResult.isStale || !isValidTimeout(staleTime)) return;
+		const timeout = timeUntilStale(this.#currentResult.dataUpdatedAt, staleTime) + 1;
+		this.#staleTimeoutId = timeoutManager.setTimeout(() => {
+			if (!this.#currentResult.isStale) this.updateResult();
+		}, timeout);
+	}
+	#computeRefetchInterval() {
+		return (typeof this.options.refetchInterval === "function" ? this.options.refetchInterval(this.#currentQuery) : this.options.refetchInterval) ?? false;
+	}
+	#updateRefetchInterval(nextInterval) {
+		this.#clearRefetchInterval();
+		this.#currentRefetchInterval = nextInterval;
+		if (environmentManager.isServer() || resolveQueryBoolean(this.options.enabled, this.#currentQuery) === false || !isValidTimeout(this.#currentRefetchInterval) || this.#currentRefetchInterval === 0) return;
+		this.#refetchIntervalId = timeoutManager.setInterval(() => {
+			if (this.options.refetchIntervalInBackground || focusManager.isFocused()) this.#executeFetch();
+		}, this.#currentRefetchInterval);
+	}
+	#updateTimers() {
+		this.#updateStaleTimeout();
+		this.#updateRefetchInterval(this.#computeRefetchInterval());
+	}
+	#clearStaleTimeout() {
+		if (this.#staleTimeoutId !== void 0) {
+			timeoutManager.clearTimeout(this.#staleTimeoutId);
+			this.#staleTimeoutId = void 0;
+		}
+	}
+	#clearRefetchInterval() {
+		if (this.#refetchIntervalId !== void 0) {
+			timeoutManager.clearInterval(this.#refetchIntervalId);
+			this.#refetchIntervalId = void 0;
+		}
+	}
+	createResult(query, options) {
+		const prevQuery = this.#currentQuery;
+		const prevOptions = this.options;
+		const prevResult = this.#currentResult;
+		const prevResultState = this.#currentResultState;
+		const prevResultOptions = this.#currentResultOptions;
+		const queryInitialState = query !== prevQuery ? query.state : this.#currentQueryInitialState;
+		const { state } = query;
+		let newState = { ...state };
+		let isPlaceholderData = false;
+		let data;
+		if (options._optimisticResults) {
+			const mounted = this.hasListeners();
+			const fetchOnMount = !mounted && shouldFetchOnMount(query, options);
+			const fetchOptionally = mounted && shouldFetchOptionally(query, prevQuery, options, prevOptions);
+			if (fetchOnMount || fetchOptionally) newState = {
+				...newState,
+				...fetchState(state.data, query.options)
+			};
+			if (options._optimisticResults === "isRestoring") newState.fetchStatus = "idle";
+		}
+		let { error, errorUpdatedAt, status } = newState;
+		data = newState.data;
+		let skipSelect = false;
+		if (options.placeholderData !== void 0 && data === void 0 && status === "pending") {
+			let placeholderData;
+			if (prevResult?.isPlaceholderData && options.placeholderData === prevResultOptions?.placeholderData) {
+				placeholderData = prevResult.data;
+				skipSelect = true;
+			} else placeholderData = typeof options.placeholderData === "function" ? options.placeholderData(this.#lastQueryWithDefinedData?.state.data, this.#lastQueryWithDefinedData) : options.placeholderData;
+			if (placeholderData !== void 0) {
+				status = "success";
+				data = replaceData(prevResult?.data, placeholderData, options);
+				isPlaceholderData = true;
+			}
+		}
+		if (options.select && data !== void 0 && !skipSelect) if (prevResult && data === prevResultState?.data && options.select === this.#selectFn) data = this.#selectResult;
+		else try {
+			this.#selectFn = options.select;
+			data = options.select(data);
+			data = replaceData(prevResult?.data, data, options);
+			this.#selectResult = data;
+			this.#selectError = null;
+		} catch (selectError) {
+			this.#selectError = selectError;
+		}
+		if (this.#selectError) {
+			error = this.#selectError;
+			data = this.#selectResult;
+			errorUpdatedAt = Date.now();
+			status = "error";
+		}
+		const isFetching = newState.fetchStatus === "fetching";
+		const isPending = status === "pending";
+		const isError = status === "error";
+		const isLoading = isPending && isFetching;
+		const hasData = data !== void 0;
+		const nextResult = {
+			status,
+			fetchStatus: newState.fetchStatus,
+			isPending,
+			isSuccess: status === "success",
+			isError,
+			isInitialLoading: isLoading,
+			isLoading,
+			data,
+			dataUpdatedAt: newState.dataUpdatedAt,
+			error,
+			errorUpdatedAt,
+			failureCount: newState.fetchFailureCount,
+			failureReason: newState.fetchFailureReason,
+			errorUpdateCount: newState.errorUpdateCount,
+			isFetched: query.isFetched(),
+			isFetchedAfterMount: newState.dataUpdateCount > queryInitialState.dataUpdateCount || newState.errorUpdateCount > queryInitialState.errorUpdateCount,
+			isFetching,
+			isRefetching: isFetching && !isPending,
+			isLoadingError: isError && !hasData,
+			isPaused: newState.fetchStatus === "paused",
+			isPlaceholderData,
+			isRefetchError: isError && hasData,
+			isStale: isStale(query, options),
+			refetch: this.refetch,
+			promise: this.#currentThenable,
+			isEnabled: resolveQueryBoolean(options.enabled, query) !== false
+		};
+		if (this.options.experimental_prefetchInRender) {
+			const hasResultData = nextResult.data !== void 0;
+			const isErrorWithoutData = nextResult.status === "error" && !hasResultData;
+			const finalizeThenableIfPossible = (thenable) => {
+				if (isErrorWithoutData) thenable.reject(nextResult.error);
+				else if (hasResultData) thenable.resolve(nextResult.data);
+			};
+			const recreateThenable = () => {
+				finalizeThenableIfPossible(this.#currentThenable = nextResult.promise = pendingThenable());
+			};
+			const prevThenable = this.#currentThenable;
+			switch (prevThenable.status) {
+				case "pending":
+					if (query.queryHash === prevQuery.queryHash) finalizeThenableIfPossible(prevThenable);
+					break;
+				case "fulfilled":
+					if (isErrorWithoutData || nextResult.data !== prevThenable.value) recreateThenable();
+					break;
+				case "rejected":
+					if (!isErrorWithoutData || nextResult.error !== prevThenable.reason) recreateThenable();
+					break;
+			}
+		}
+		return nextResult;
+	}
+	updateResult() {
+		const prevResult = this.#currentResult;
+		const nextResult = this.createResult(this.#currentQuery, this.options);
+		this.#currentResultState = this.#currentQuery.state;
+		this.#currentResultOptions = this.options;
+		if (this.#currentResultState.data !== void 0) this.#lastQueryWithDefinedData = this.#currentQuery;
+		if (shallowEqualObjects(nextResult, prevResult)) return;
+		this.#currentResult = nextResult;
+		const shouldNotifyListeners = () => {
+			if (!prevResult) return true;
+			const { notifyOnChangeProps } = this.options;
+			const notifyOnChangePropsValue = typeof notifyOnChangeProps === "function" ? notifyOnChangeProps() : notifyOnChangeProps;
+			if (notifyOnChangePropsValue === "all" || !notifyOnChangePropsValue && !this.#trackedProps.size) return true;
+			const includedProps = new Set(notifyOnChangePropsValue ?? this.#trackedProps);
+			if (this.options.throwOnError) includedProps.add("error");
+			return Object.keys(this.#currentResult).some((key) => {
+				const typedKey = key;
+				return this.#currentResult[typedKey] !== prevResult[typedKey] && includedProps.has(typedKey);
+			});
+		};
+		this.#notify({ listeners: shouldNotifyListeners() });
+	}
+	#updateQuery() {
+		const query = this.#client.getQueryCache().build(this.#client, this.options);
+		if (query === this.#currentQuery) return;
+		const prevQuery = this.#currentQuery;
+		this.#currentQuery = query;
+		this.#currentQueryInitialState = query.state;
+		if (this.hasListeners()) {
+			prevQuery?.removeObserver(this);
+			query.addObserver(this);
+		}
+	}
+	onQueryUpdate() {
+		this.updateResult();
+		if (this.hasListeners()) this.#updateTimers();
+	}
+	#notify(notifyOptions) {
+		notifyManager.batch(() => {
+			if (notifyOptions.listeners) this.listeners.forEach((listener) => {
+				listener(this.#currentResult);
+			});
+			this.#client.getQueryCache().notify({
+				query: this.#currentQuery,
+				type: "observerResultsUpdated"
+			});
+		});
+	}
+};
+function shouldLoadOnMount(query, options) {
+	return resolveQueryBoolean(options.enabled, query) !== false && query.state.data === void 0 && !(query.state.status === "error" && resolveQueryBoolean(options.retryOnMount, query) === false);
+}
+function shouldFetchOnMount(query, options) {
+	return shouldLoadOnMount(query, options) || query.state.data !== void 0 && shouldFetchOn(query, options, options.refetchOnMount);
+}
+function shouldFetchOn(query, options, field) {
+	if (resolveQueryBoolean(options.enabled, query) !== false && resolveStaleTime(options.staleTime, query) !== "static") {
+		const value = typeof field === "function" ? field(query) : field;
+		return value === "always" || value !== false && isStale(query, options);
+	}
+	return false;
+}
+function shouldFetchOptionally(query, prevQuery, options, prevOptions) {
+	return (query !== prevQuery || resolveQueryBoolean(prevOptions.enabled, query) === false) && (!options.suspense || query.state.status !== "error") && isStale(query, options);
+}
+function isStale(query, options) {
+	return resolveQueryBoolean(options.enabled, query) !== false && query.isStaleByTime(resolveStaleTime(options.staleTime, query));
+}
+function shouldAssignObserverCurrentProperties(observer, optimisticResult) {
+	if (!shallowEqualObjects(observer.getCurrentResult(), optimisticResult)) return true;
+	return false;
+}
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/mutation.js
+var Mutation = class extends Removable {
+	#client;
+	#observers;
+	#mutationCache;
+	#retryer;
+	constructor(config) {
+		super();
+		this.#client = config.client;
+		this.mutationId = config.mutationId;
+		this.#mutationCache = config.mutationCache;
+		this.#observers = [];
+		this.state = config.state || getDefaultState();
+		this.setOptions(config.options);
+		this.scheduleGc();
+	}
+	setOptions(options) {
+		this.options = options;
+		this.updateGcTime(this.options.gcTime);
+	}
+	get meta() {
+		return this.options.meta;
+	}
+	addObserver(observer) {
+		if (!this.#observers.includes(observer)) {
+			this.#observers.push(observer);
+			this.clearGcTimeout();
+			this.#mutationCache.notify({
+				type: "observerAdded",
+				mutation: this,
+				observer
+			});
+		}
+	}
+	removeObserver(observer) {
+		this.#observers = this.#observers.filter((x) => x !== observer);
+		this.scheduleGc();
+		this.#mutationCache.notify({
+			type: "observerRemoved",
+			mutation: this,
+			observer
+		});
+	}
+	optionalRemove() {
+		if (!this.#observers.length) if (this.state.status === "pending") this.scheduleGc();
+		else this.#mutationCache.remove(this);
+	}
+	continue() {
+		return this.#retryer?.continue() ?? this.execute(this.state.variables);
+	}
+	async execute(variables) {
+		const onContinue = () => {
+			this.#dispatch({ type: "continue" });
+		};
+		const mutationFnContext = {
+			client: this.#client,
+			meta: this.options.meta,
+			mutationKey: this.options.mutationKey
+		};
+		this.#retryer = createRetryer({
+			fn: () => {
+				if (!this.options.mutationFn) return Promise.reject(/* @__PURE__ */ new Error("No mutationFn found"));
+				return this.options.mutationFn(variables, mutationFnContext);
+			},
+			onFail: (failureCount, error) => {
+				this.#dispatch({
+					type: "failed",
+					failureCount,
+					error
+				});
+			},
+			onPause: () => {
+				this.#dispatch({ type: "pause" });
+			},
+			onContinue,
+			retry: this.options.retry ?? 0,
+			retryDelay: this.options.retryDelay,
+			networkMode: this.options.networkMode,
+			canRun: () => this.#mutationCache.canRun(this)
+		});
+		const restored = this.state.status === "pending";
+		const isPaused = !this.#retryer.canStart();
+		try {
+			if (restored) onContinue();
+			else {
+				this.#dispatch({
+					type: "pending",
+					variables,
+					isPaused
+				});
+				if (this.#mutationCache.config.onMutate) await this.#mutationCache.config.onMutate(variables, this, mutationFnContext);
+				const context = await this.options.onMutate?.(variables, mutationFnContext);
+				if (context !== this.state.context) this.#dispatch({
+					type: "pending",
+					context,
+					variables,
+					isPaused
+				});
+			}
+			const data = await this.#retryer.start();
+			await this.#mutationCache.config.onSuccess?.(data, variables, this.state.context, this, mutationFnContext);
+			await this.options.onSuccess?.(data, variables, this.state.context, mutationFnContext);
+			await this.#mutationCache.config.onSettled?.(data, null, this.state.variables, this.state.context, this, mutationFnContext);
+			await this.options.onSettled?.(data, null, variables, this.state.context, mutationFnContext);
+			this.#dispatch({
+				type: "success",
+				data
+			});
+			return data;
+		} catch (error) {
+			try {
+				await this.#mutationCache.config.onError?.(error, variables, this.state.context, this, mutationFnContext);
+			} catch (e) {
+				Promise.reject(e);
+			}
+			try {
+				await this.options.onError?.(error, variables, this.state.context, mutationFnContext);
+			} catch (e) {
+				Promise.reject(e);
+			}
+			try {
+				await this.#mutationCache.config.onSettled?.(void 0, error, this.state.variables, this.state.context, this, mutationFnContext);
+			} catch (e) {
+				Promise.reject(e);
+			}
+			try {
+				await this.options.onSettled?.(void 0, error, variables, this.state.context, mutationFnContext);
+			} catch (e) {
+				Promise.reject(e);
+			}
+			this.#dispatch({
+				type: "error",
+				error
+			});
+			throw error;
+		} finally {
+			this.#mutationCache.runNext(this);
+		}
+	}
+	#dispatch(action) {
+		const reducer = (state) => {
+			switch (action.type) {
+				case "failed": return {
+					...state,
+					failureCount: action.failureCount,
+					failureReason: action.error
+				};
+				case "pause": return {
+					...state,
+					isPaused: true
+				};
+				case "continue": return {
+					...state,
+					isPaused: false
+				};
+				case "pending": return {
+					...state,
+					context: action.context,
+					data: void 0,
+					failureCount: 0,
+					failureReason: null,
+					error: null,
+					isPaused: action.isPaused,
+					status: "pending",
+					variables: action.variables,
+					submittedAt: Date.now()
+				};
+				case "success": return {
+					...state,
+					data: action.data,
+					failureCount: 0,
+					failureReason: null,
+					error: null,
+					status: "success",
+					isPaused: false
+				};
+				case "error": return {
+					...state,
+					data: void 0,
+					error: action.error,
+					failureCount: state.failureCount + 1,
+					failureReason: action.error,
+					isPaused: false,
+					status: "error"
+				};
+			}
+		};
+		this.state = reducer(this.state);
+		notifyManager.batch(() => {
+			this.#observers.forEach((observer) => {
+				observer.onMutationUpdate(action);
+			});
+			this.#mutationCache.notify({
+				mutation: this,
+				type: "updated",
+				action
+			});
+		});
+	}
+};
+function getDefaultState() {
+	return {
+		context: void 0,
+		data: void 0,
+		error: null,
+		failureCount: 0,
+		failureReason: null,
+		isPaused: false,
+		status: "idle",
+		variables: void 0,
+		submittedAt: 0
+	};
+}
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/mutationCache.js
+var MutationCache = class extends Subscribable {
+	constructor(config = {}) {
+		super();
+		this.config = config;
+		this.#mutations = /* @__PURE__ */ new Set();
+		this.#scopes = /* @__PURE__ */ new Map();
+		this.#mutationId = 0;
+	}
+	#mutations;
+	#scopes;
+	#mutationId;
+	build(client, options, state) {
+		const mutation = new Mutation({
+			client,
+			mutationCache: this,
+			mutationId: ++this.#mutationId,
+			options: client.defaultMutationOptions(options),
+			state
+		});
+		this.add(mutation);
+		return mutation;
+	}
+	add(mutation) {
+		this.#mutations.add(mutation);
+		const scope = scopeFor(mutation);
+		if (typeof scope === "string") {
+			const scopedMutations = this.#scopes.get(scope);
+			if (scopedMutations) scopedMutations.push(mutation);
+			else this.#scopes.set(scope, [mutation]);
+		}
+		this.notify({
+			type: "added",
+			mutation
+		});
+	}
+	remove(mutation) {
+		if (this.#mutations.delete(mutation)) {
+			const scope = scopeFor(mutation);
+			if (typeof scope === "string") {
+				const scopedMutations = this.#scopes.get(scope);
+				if (scopedMutations) {
+					if (scopedMutations.length > 1) {
+						const index = scopedMutations.indexOf(mutation);
+						if (index !== -1) scopedMutations.splice(index, 1);
+					} else if (scopedMutations[0] === mutation) this.#scopes.delete(scope);
+				}
+			}
+		}
+		this.notify({
+			type: "removed",
+			mutation
+		});
+	}
+	canRun(mutation) {
+		const scope = scopeFor(mutation);
+		if (typeof scope === "string") {
+			const firstPendingMutation = this.#scopes.get(scope)?.find((m) => m.state.status === "pending");
+			return !firstPendingMutation || firstPendingMutation === mutation;
+		} else return true;
+	}
+	runNext(mutation) {
+		const scope = scopeFor(mutation);
+		if (typeof scope === "string") return (this.#scopes.get(scope)?.find((m) => m !== mutation && m.state.isPaused))?.continue() ?? Promise.resolve();
+		else return Promise.resolve();
+	}
+	clear() {
+		notifyManager.batch(() => {
+			this.#mutations.forEach((mutation) => {
+				this.notify({
+					type: "removed",
+					mutation
+				});
+			});
+			this.#mutations.clear();
+			this.#scopes.clear();
+		});
+	}
+	getAll() {
+		return Array.from(this.#mutations);
+	}
+	find(filters) {
+		const defaultedFilters = {
+			exact: true,
+			...filters
+		};
+		return this.getAll().find((mutation) => matchMutation(defaultedFilters, mutation));
+	}
+	findAll(filters = {}) {
+		return this.getAll().filter((mutation) => matchMutation(filters, mutation));
+	}
+	notify(event) {
+		notifyManager.batch(() => {
+			this.listeners.forEach((listener) => {
+				listener(event);
+			});
+		});
+	}
+	resumePausedMutations() {
+		const pausedMutations = this.getAll().filter((x) => x.state.isPaused);
+		return notifyManager.batch(() => Promise.all(pausedMutations.map((mutation) => mutation.continue().catch(noop))));
+	}
+};
+function scopeFor(mutation) {
+	return mutation.options.scope?.id;
+}
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/queryCache.js
+var QueryCache = class extends Subscribable {
+	constructor(config = {}) {
+		super();
+		this.config = config;
+		this.#queries = /* @__PURE__ */ new Map();
+	}
+	#queries;
+	build(client, options, state) {
+		const queryKey = options.queryKey;
+		const queryHash = options.queryHash ?? hashQueryKeyByOptions(queryKey, options);
+		let query = this.get(queryHash);
+		if (!query) {
+			query = new Query({
+				client,
+				queryKey,
+				queryHash,
+				options: client.defaultQueryOptions(options),
+				state,
+				defaultOptions: client.getQueryDefaults(queryKey)
+			});
+			this.add(query);
+		}
+		return query;
+	}
+	add(query) {
+		if (!this.#queries.has(query.queryHash)) {
+			this.#queries.set(query.queryHash, query);
+			this.notify({
+				type: "added",
+				query
+			});
+		}
+	}
+	remove(query) {
+		const queryInMap = this.#queries.get(query.queryHash);
+		if (queryInMap) {
+			query.destroy();
+			if (queryInMap === query) this.#queries.delete(query.queryHash);
+			this.notify({
+				type: "removed",
+				query
+			});
+		}
+	}
+	clear() {
+		notifyManager.batch(() => {
+			this.getAll().forEach((query) => {
+				this.remove(query);
+			});
+		});
+	}
+	get(queryHash) {
+		return this.#queries.get(queryHash);
+	}
+	getAll() {
+		return [...this.#queries.values()];
+	}
+	find(filters) {
+		const defaultedFilters = {
+			exact: true,
+			...filters
+		};
+		return this.getAll().find((query) => matchQuery(defaultedFilters, query));
+	}
+	findAll(filters = {}) {
+		const queries = this.getAll();
+		return Object.keys(filters).length > 0 ? queries.filter((query) => matchQuery(filters, query)) : queries;
+	}
+	notify(event) {
+		notifyManager.batch(() => {
+			this.listeners.forEach((listener) => {
+				listener(event);
+			});
+		});
+	}
+	onFocus() {
+		notifyManager.batch(() => {
+			this.getAll().forEach((query) => {
+				query.onFocus();
+			});
+		});
+	}
+	onOnline() {
+		notifyManager.batch(() => {
+			this.getAll().forEach((query) => {
+				query.onOnline();
+			});
+		});
+	}
+};
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/queryClient.js
+var QueryClient = class {
+	#queryCache;
+	#mutationCache;
+	#defaultOptions;
+	#queryDefaults;
+	#mutationDefaults;
+	#mountCount;
+	#unsubscribeFocus;
+	#unsubscribeOnline;
+	constructor(config = {}) {
+		this.#queryCache = config.queryCache || new QueryCache();
+		this.#mutationCache = config.mutationCache || new MutationCache();
+		this.#defaultOptions = config.defaultOptions || {};
+		this.#queryDefaults = /* @__PURE__ */ new Map();
+		this.#mutationDefaults = /* @__PURE__ */ new Map();
+		this.#mountCount = 0;
+	}
+	mount() {
+		this.#mountCount++;
+		if (this.#mountCount !== 1) return;
+		this.#unsubscribeFocus = focusManager.subscribe(async (focused) => {
+			if (focused) {
+				await this.resumePausedMutations();
+				this.#queryCache.onFocus();
+			}
+		});
+		this.#unsubscribeOnline = onlineManager.subscribe(async (online) => {
+			if (online) {
+				await this.resumePausedMutations();
+				this.#queryCache.onOnline();
+			}
+		});
+	}
+	unmount() {
+		this.#mountCount--;
+		if (this.#mountCount !== 0) return;
+		this.#unsubscribeFocus?.();
+		this.#unsubscribeFocus = void 0;
+		this.#unsubscribeOnline?.();
+		this.#unsubscribeOnline = void 0;
+	}
+	isFetching(filters) {
+		return this.#queryCache.findAll({
+			...filters,
+			fetchStatus: "fetching"
+		}).length;
+	}
+	isMutating(filters) {
+		return this.#mutationCache.findAll({
+			...filters,
+			status: "pending"
+		}).length;
+	}
+	/**
+	* Imperative (non-reactive) way to retrieve data for a QueryKey.
+	* Should only be used in callbacks or functions where reading the latest data is necessary, e.g. for optimistic updates.
+	*
+	* Hint: Do not use this function inside a component, because it won't receive updates.
+	* Use `useQuery` to create a `QueryObserver` that subscribes to changes.
+	*/
+	getQueryData(queryKey) {
+		const options = this.defaultQueryOptions({ queryKey });
+		return this.#queryCache.get(options.queryHash)?.state.data;
+	}
+	ensureQueryData(options) {
+		const defaultedOptions = this.defaultQueryOptions(options);
+		const query = this.#queryCache.build(this, defaultedOptions);
+		const cachedData = query.state.data;
+		if (cachedData === void 0) return this.fetchQuery(options);
+		if (options.revalidateIfStale && query.isStaleByTime(resolveStaleTime(defaultedOptions.staleTime, query))) this.prefetchQuery(defaultedOptions);
+		return Promise.resolve(cachedData);
+	}
+	getQueriesData(filters) {
+		return this.#queryCache.findAll(filters).map(({ queryKey, state }) => {
+			return [queryKey, state.data];
+		});
+	}
+	setQueryData(queryKey, updater, options) {
+		const defaultedOptions = this.defaultQueryOptions({ queryKey });
+		const prevData = this.#queryCache.get(defaultedOptions.queryHash)?.state.data;
+		const data = functionalUpdate(updater, prevData);
+		if (data === void 0) return;
+		return this.#queryCache.build(this, defaultedOptions).setData(data, {
+			...options,
+			manual: true
+		});
+	}
+	setQueriesData(filters, updater, options) {
+		return notifyManager.batch(() => this.#queryCache.findAll(filters).map(({ queryKey }) => [queryKey, this.setQueryData(queryKey, updater, options)]));
+	}
+	getQueryState(queryKey) {
+		const options = this.defaultQueryOptions({ queryKey });
+		return this.#queryCache.get(options.queryHash)?.state;
+	}
+	removeQueries(filters) {
+		const queryCache = this.#queryCache;
+		notifyManager.batch(() => {
+			queryCache.findAll(filters).forEach((query) => {
+				queryCache.remove(query);
+			});
+		});
+	}
+	resetQueries(filters, options) {
+		const queryCache = this.#queryCache;
+		return notifyManager.batch(() => {
+			queryCache.findAll(filters).forEach((query) => {
+				query.reset();
+			});
+			return this.refetchQueries({
+				type: "active",
+				...filters
+			}, options);
+		});
+	}
+	cancelQueries(filters, cancelOptions = {}) {
+		const defaultedCancelOptions = {
+			revert: true,
+			...cancelOptions
+		};
+		const promises = notifyManager.batch(() => this.#queryCache.findAll(filters).map((query) => query.cancel(defaultedCancelOptions)));
+		return Promise.all(promises).then(noop).catch(noop);
+	}
+	invalidateQueries(filters, options = {}) {
+		return notifyManager.batch(() => {
+			this.#queryCache.findAll(filters).forEach((query) => {
+				query.invalidate();
+			});
+			if (filters?.refetchType === "none") return Promise.resolve();
+			return this.refetchQueries({
+				...filters,
+				type: filters?.refetchType ?? filters?.type ?? "active"
+			}, options);
+		});
+	}
+	refetchQueries(filters, options = {}) {
+		const fetchOptions = {
+			...options,
+			cancelRefetch: options.cancelRefetch ?? true
+		};
+		const promises = notifyManager.batch(() => this.#queryCache.findAll(filters).filter((query) => !query.isDisabled() && !query.isStatic()).map((query) => {
+			let promise = query.fetch(void 0, fetchOptions);
+			if (!fetchOptions.throwOnError) promise = promise.catch(noop);
+			return query.state.fetchStatus === "paused" ? Promise.resolve() : promise;
+		}));
+		return Promise.all(promises).then(noop);
+	}
+	fetchQuery(options) {
+		const defaultedOptions = this.defaultQueryOptions(options);
+		if (defaultedOptions.retry === void 0) defaultedOptions.retry = false;
+		const query = this.#queryCache.build(this, defaultedOptions);
+		return query.isStaleByTime(resolveStaleTime(defaultedOptions.staleTime, query)) ? query.fetch(defaultedOptions) : Promise.resolve(query.state.data);
+	}
+	prefetchQuery(options) {
+		return this.fetchQuery(options).then(noop).catch(noop);
+	}
+	fetchInfiniteQuery(options) {
+		options._type = "infinite";
+		return this.fetchQuery(options);
+	}
+	prefetchInfiniteQuery(options) {
+		return this.fetchInfiniteQuery(options).then(noop).catch(noop);
+	}
+	ensureInfiniteQueryData(options) {
+		options._type = "infinite";
+		return this.ensureQueryData(options);
+	}
+	resumePausedMutations() {
+		if (onlineManager.isOnline()) return this.#mutationCache.resumePausedMutations();
+		return Promise.resolve();
+	}
+	getQueryCache() {
+		return this.#queryCache;
+	}
+	getMutationCache() {
+		return this.#mutationCache;
+	}
+	getDefaultOptions() {
+		return this.#defaultOptions;
+	}
+	setDefaultOptions(options) {
+		this.#defaultOptions = options;
+	}
+	setQueryDefaults(queryKey, options) {
+		this.#queryDefaults.set(hashKey(queryKey), {
+			queryKey,
+			defaultOptions: options
+		});
+	}
+	getQueryDefaults(queryKey) {
+		const defaults = [...this.#queryDefaults.values()];
+		const result = {};
+		defaults.forEach((queryDefault) => {
+			if (partialMatchKey(queryKey, queryDefault.queryKey)) Object.assign(result, queryDefault.defaultOptions);
+		});
+		return result;
+	}
+	setMutationDefaults(mutationKey, options) {
+		this.#mutationDefaults.set(hashKey(mutationKey), {
+			mutationKey,
+			defaultOptions: options
+		});
+	}
+	getMutationDefaults(mutationKey) {
+		const defaults = [...this.#mutationDefaults.values()];
+		const result = {};
+		defaults.forEach((queryDefault) => {
+			if (partialMatchKey(mutationKey, queryDefault.mutationKey)) Object.assign(result, queryDefault.defaultOptions);
+		});
+		return result;
+	}
+	defaultQueryOptions(options) {
+		if (options._defaulted) return options;
+		const defaultedOptions = {
+			...this.#defaultOptions.queries,
+			...this.getQueryDefaults(options.queryKey),
+			...options,
+			_defaulted: true
+		};
+		if (!defaultedOptions.queryHash) defaultedOptions.queryHash = hashQueryKeyByOptions(defaultedOptions.queryKey, defaultedOptions);
+		if (defaultedOptions.refetchOnReconnect === void 0) defaultedOptions.refetchOnReconnect = defaultedOptions.networkMode !== "always";
+		if (defaultedOptions.throwOnError === void 0) defaultedOptions.throwOnError = !!defaultedOptions.suspense;
+		if (!defaultedOptions.networkMode && defaultedOptions.persister) defaultedOptions.networkMode = "offlineFirst";
+		if (defaultedOptions.queryFn === skipToken) defaultedOptions.enabled = false;
+		return defaultedOptions;
+	}
+	defaultMutationOptions(options) {
+		if (options?._defaulted) return options;
+		return {
+			...this.#defaultOptions.mutations,
+			...options?.mutationKey && this.getMutationDefaults(options.mutationKey),
+			...options,
+			_defaulted: true
+		};
+	}
+	clear() {
+		this.#queryCache.clear();
+		this.#mutationCache.clear();
+	}
+};
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+react-query@5.100.14_react@19.2.7/node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js
+var import_react = /* @__PURE__ */ __toESM(require_react(), 1);
+var import_jsx_runtime = require_jsx_runtime();
+var QueryClientContext = import_react.createContext(void 0);
+var useQueryClient = (queryClient) => {
+	const client = import_react.useContext(QueryClientContext);
+	if (queryClient) return queryClient;
+	if (!client) throw new Error("No QueryClient set, use QueryClientProvider to set one");
+	return client;
+};
+var QueryClientProvider = ({ client, children }) => {
+	import_react.useEffect(() => {
+		client.mount();
+		return () => {
+			client.unmount();
+		};
+	}, [client]);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(QueryClientContext.Provider, {
+		value: client,
+		children
+	});
+};
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+react-query@5.100.14_react@19.2.7/node_modules/@tanstack/react-query/build/modern/IsRestoringProvider.js
+var IsRestoringContext = import_react.createContext(false);
+var useIsRestoring = () => import_react.useContext(IsRestoringContext);
+IsRestoringContext.Provider;
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+react-query@5.100.14_react@19.2.7/node_modules/@tanstack/react-query/build/modern/QueryErrorResetBoundary.js
+function createValue() {
+	let isReset = false;
+	return {
+		clearReset: () => {
+			isReset = false;
+		},
+		reset: () => {
+			isReset = true;
+		},
+		isReset: () => {
+			return isReset;
+		}
+	};
+}
+var QueryErrorResetBoundaryContext = import_react.createContext(createValue());
+var useQueryErrorResetBoundary = () => import_react.useContext(QueryErrorResetBoundaryContext);
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+react-query@5.100.14_react@19.2.7/node_modules/@tanstack/react-query/build/modern/errorBoundaryUtils.js
+var ensurePreventErrorBoundaryRetry = (options, errorResetBoundary, query) => {
+	const throwOnError = query?.state.error && typeof options.throwOnError === "function" ? shouldThrowError(options.throwOnError, [query.state.error, query]) : options.throwOnError;
+	if (options.suspense || options.experimental_prefetchInRender || throwOnError) {
+		if (!errorResetBoundary.isReset()) options.retryOnMount = false;
+	}
+};
+var useClearResetErrorBoundary = (errorResetBoundary) => {
+	import_react.useEffect(() => {
+		errorResetBoundary.clearReset();
+	}, [errorResetBoundary]);
+};
+var getHasError = ({ result, errorResetBoundary, throwOnError, query, suspense }) => {
+	return result.isError && !errorResetBoundary.isReset() && !result.isFetching && query && (suspense && result.data === void 0 || shouldThrowError(throwOnError, [result.error, query]));
+};
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+react-query@5.100.14_react@19.2.7/node_modules/@tanstack/react-query/build/modern/suspense.js
+var ensureSuspenseTimers = (defaultedOptions) => {
+	if (defaultedOptions.suspense) {
+		const MIN_SUSPENSE_TIME_MS = 1e3;
+		const clamp = (value) => value === "static" ? value : Math.max(value ?? MIN_SUSPENSE_TIME_MS, MIN_SUSPENSE_TIME_MS);
+		const originalStaleTime = defaultedOptions.staleTime;
+		defaultedOptions.staleTime = typeof originalStaleTime === "function" ? (...args) => clamp(originalStaleTime(...args)) : clamp(originalStaleTime);
+		if (typeof defaultedOptions.gcTime === "number") defaultedOptions.gcTime = Math.max(defaultedOptions.gcTime, MIN_SUSPENSE_TIME_MS);
+	}
+};
+var willFetch = (result, isRestoring) => result.isLoading && result.isFetching && !isRestoring;
+var shouldSuspend = (defaultedOptions, result) => defaultedOptions?.suspense && result.isPending;
+var fetchOptimistic = (defaultedOptions, observer, errorResetBoundary) => observer.fetchOptimistic(defaultedOptions).catch(() => {
+	errorResetBoundary.clearReset();
+});
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+react-query@5.100.14_react@19.2.7/node_modules/@tanstack/react-query/build/modern/useBaseQuery.js
+function useBaseQuery(options, Observer, queryClient) {
+	const isRestoring = useIsRestoring();
+	const errorResetBoundary = useQueryErrorResetBoundary();
+	const client = useQueryClient(queryClient);
+	const defaultedOptions = client.defaultQueryOptions(options);
+	client.getDefaultOptions().queries?._experimental_beforeQuery?.(defaultedOptions);
+	const query = client.getQueryCache().get(defaultedOptions.queryHash);
+	const subscribed = options.subscribed !== false;
+	defaultedOptions._optimisticResults = isRestoring ? "isRestoring" : subscribed ? "optimistic" : void 0;
+	ensureSuspenseTimers(defaultedOptions);
+	ensurePreventErrorBoundaryRetry(defaultedOptions, errorResetBoundary, query);
+	useClearResetErrorBoundary(errorResetBoundary);
+	const isNewCacheEntry = !client.getQueryCache().get(defaultedOptions.queryHash);
+	const [observer] = import_react.useState(() => new Observer(client, defaultedOptions));
+	const result = observer.getOptimisticResult(defaultedOptions);
+	const shouldSubscribe = !isRestoring && subscribed;
+	import_react.useSyncExternalStore(import_react.useCallback((onStoreChange) => {
+		const unsubscribe = shouldSubscribe ? observer.subscribe(notifyManager.batchCalls(onStoreChange)) : noop;
+		observer.updateResult();
+		return unsubscribe;
+	}, [observer, shouldSubscribe]), () => observer.getCurrentResult(), () => observer.getCurrentResult());
+	import_react.useEffect(() => {
+		observer.setOptions(defaultedOptions);
+	}, [defaultedOptions, observer]);
+	if (shouldSuspend(defaultedOptions, result)) throw fetchOptimistic(defaultedOptions, observer, errorResetBoundary);
+	if (getHasError({
+		result,
+		errorResetBoundary,
+		throwOnError: defaultedOptions.throwOnError,
+		query,
+		suspense: defaultedOptions.suspense
+	})) throw result.error;
+	client.getDefaultOptions().queries?._experimental_afterQuery?.(defaultedOptions, result);
+	if (defaultedOptions.experimental_prefetchInRender && !environmentManager.isServer() && willFetch(result, isRestoring)) (isNewCacheEntry ? fetchOptimistic(defaultedOptions, observer, errorResetBoundary) : query?.promise)?.catch(noop).finally(() => {
+		observer.updateResult();
+	});
+	return !defaultedOptions.notifyOnChangeProps ? observer.trackResult(result) : result;
+}
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+react-query@5.100.14_react@19.2.7/node_modules/@tanstack/react-query/build/modern/useQuery.js
+function useQuery(options, queryClient) {
+	return useBaseQuery(options, QueryObserver, queryClient);
+}
+//#endregion
+//#region \0vite/preload-helper.js
+var import_react_dom = /* @__PURE__ */ __toESM(require_react_dom(), 1);
+var scriptRel = "modulepreload";
+var assetsURL = function(dep, importerUrl) {
+	return new URL(dep, importerUrl).href;
+};
+var seen = {};
+var __vitePreload = function preload(baseModule, deps, importerUrl) {
+	let promise = Promise.resolve();
+	if (deps && deps.length > 0) {
+		const links = document.getElementsByTagName("link");
+		const cspNonceMeta = document.querySelector("meta[property=csp-nonce]");
+		const cspNonce = cspNonceMeta?.nonce || cspNonceMeta?.getAttribute("nonce");
+		function allSettled(promises) {
+			return Promise.all(promises.map((p) => Promise.resolve(p).then((value) => ({
+				status: "fulfilled",
+				value
+			}), (reason) => ({
+				status: "rejected",
+				reason
+			}))));
+		}
+		promise = allSettled(deps.map((dep) => {
+			dep = assetsURL(dep, importerUrl);
+			if (dep in seen) return;
+			seen[dep] = true;
+			const isCss = dep.endsWith(".css");
+			const cssSelector = isCss ? "[rel=\"stylesheet\"]" : "";
+			if (!!importerUrl) for (let i = links.length - 1; i >= 0; i--) {
+				const link = links[i];
+				if (link.href === dep && (!isCss || link.rel === "stylesheet")) return;
+			}
+			else if (document.querySelector(`link[href="${dep}"]${cssSelector}`)) return;
+			const link = document.createElement("link");
+			link.rel = isCss ? "stylesheet" : scriptRel;
+			if (!isCss) link.as = "script";
+			link.crossOrigin = "";
+			link.href = dep;
+			if (cspNonce) link.setAttribute("nonce", cspNonce);
+			document.head.appendChild(link);
+			if (isCss) return new Promise((res, rej) => {
+				link.addEventListener("load", res);
+				link.addEventListener("error", () => rej(/* @__PURE__ */ new Error(`Unable to preload CSS for ${dep}`)));
+			});
+		}));
+	}
+	function handlePreloadError(err) {
+		const e = new Event("vite:preloadError", { cancelable: true });
+		e.payload = err;
+		window.dispatchEvent(e);
+		if (!e.defaultPrevented) throw err;
+	}
+	return promise.then((res) => {
+		for (const item of res || []) {
+			if (item.status !== "rejected") continue;
+			handlePreloadError(item.reason);
+		}
+		return baseModule().catch(handlePreloadError);
+	});
+};
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+react-query-devtools@5.100.14_@tanstack+react-query@5.100.14_react@19.2.7__react@19.2.7/node_modules/@tanstack/react-query-devtools/build/modern/index.js
+var ReactQueryDevtools2 = function() {
+	return null;
+};
+//#endregion
 //#region ../../node_modules/.pnpm/clipboard@2.0.11/node_modules/clipboard/dist/clipboard.js
 var require_clipboard = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	/*!
@@ -21409,11 +23627,11 @@ var require_clipboard = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 						return clipboard;
 					} });
 					var tiny_emitter = __webpack_require__(279);
-					var tiny_emitter_default = /* @__PURE__ */ __webpack_require__.n(tiny_emitter);
+					var tiny_emitter_default = /*#__PURE__*/ __webpack_require__.n(tiny_emitter);
 					var listen = __webpack_require__(370);
-					var listen_default = /* @__PURE__ */ __webpack_require__.n(listen);
+					var listen_default = /*#__PURE__*/ __webpack_require__.n(listen);
 					var src_select = __webpack_require__(817);
-					var select_default = /* @__PURE__ */ __webpack_require__.n(src_select);
+					var select_default = /*#__PURE__*/ __webpack_require__.n(src_select);
 					/**
 					* Executes a given operation type.
 					* @param {String} type
@@ -22003,72 +24221,9 @@ var require_clipboard = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	});
 }));
 //#endregion
-//#region \0vite/preload-helper.js
-var import_react = /* @__PURE__ */ __toESM(require_react(), 1);
-var import_react_dom = /* @__PURE__ */ __toESM(require_react_dom(), 1);
-var import_clipboard = /* @__PURE__ */ __toESM(require_clipboard(), 1);
-var scriptRel = "modulepreload";
-var assetsURL = function(dep, importerUrl) {
-	return new URL(dep, importerUrl).href;
-};
-var seen = {};
-var __vitePreload = function preload(baseModule, deps, importerUrl) {
-	let promise = Promise.resolve();
-	if (deps && deps.length > 0) {
-		const links = document.getElementsByTagName("link");
-		const cspNonceMeta = document.querySelector("meta[property=csp-nonce]");
-		const cspNonce = cspNonceMeta?.nonce || cspNonceMeta?.getAttribute("nonce");
-		function allSettled(promises) {
-			return Promise.all(promises.map((p) => Promise.resolve(p).then((value) => ({
-				status: "fulfilled",
-				value
-			}), (reason) => ({
-				status: "rejected",
-				reason
-			}))));
-		}
-		promise = allSettled(deps.map((dep) => {
-			dep = assetsURL(dep, importerUrl);
-			if (dep in seen) return;
-			seen[dep] = true;
-			const isCss = dep.endsWith(".css");
-			const cssSelector = isCss ? "[rel=\"stylesheet\"]" : "";
-			if (!!importerUrl) for (let i = links.length - 1; i >= 0; i--) {
-				const link = links[i];
-				if (link.href === dep && (!isCss || link.rel === "stylesheet")) return;
-			}
-			else if (document.querySelector(`link[href="${dep}"]${cssSelector}`)) return;
-			const link = document.createElement("link");
-			link.rel = isCss ? "stylesheet" : scriptRel;
-			if (!isCss) link.as = "script";
-			link.crossOrigin = "";
-			link.href = dep;
-			if (cspNonce) link.setAttribute("nonce", cspNonce);
-			document.head.appendChild(link);
-			if (isCss) return new Promise((res, rej) => {
-				link.addEventListener("load", res);
-				link.addEventListener("error", () => rej(/* @__PURE__ */ new Error(`Unable to preload CSS for ${dep}`)));
-			});
-		}));
-	}
-	function handlePreloadError(err) {
-		const e = new Event("vite:preloadError", { cancelable: true });
-		e.payload = err;
-		window.dispatchEvent(e);
-		if (!e.defaultPrevented) throw err;
-	}
-	return promise.then((res) => {
-		for (const item of res || []) {
-			if (item.status !== "rejected") continue;
-			handlePreloadError(item.reason);
-		}
-		return baseModule().catch(handlePreloadError);
-	});
-};
-//#endregion
-//#region ../../node_modules/.pnpm/react-router@7.15.1_react-dom@19.2.6_react@19.2.6__react@19.2.6/node_modules/react-router/dist/development/chunk-4N6VE7H7.mjs
+//#region ../../node_modules/.pnpm/react-router@7.16.0_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/react-router/dist/development/chunk-QUQL4437.mjs
 /**
-* react-router v7.15.1
+* react-router v7.16.0
 *
 * Copyright (c) Remix Software Inc.
 *
@@ -22233,7 +24388,7 @@ function getUrlBasedHistory(getLocation, createHref2, validateLocation, options 
 		});
 	}
 	function createURL(to) {
-		return createBrowserURLImpl(to);
+		return createBrowserURLImpl(window2, to);
 	}
 	let history = {
 		get action() {
@@ -22271,9 +24426,9 @@ function getUrlBasedHistory(getLocation, createHref2, validateLocation, options 
 	};
 	return history;
 }
-function createBrowserURLImpl(to, isAbsolute = false) {
+function createBrowserURLImpl(windowImpl, to, isAbsolute = false) {
 	let base = "http://localhost";
-	if (typeof window !== "undefined") base = window.location.origin !== "null" ? window.location.origin : window.location.href;
+	if (windowImpl) base = windowImpl.location.origin !== "null" ? windowImpl.location.origin : windowImpl.location.href;
 	invariant(base, "No window.location.(origin|href) available to create URL");
 	let href = typeof to === "string" ? to : createPath(to);
 	href = href.replace(/ $/, "%20");
@@ -23847,7 +26002,7 @@ function createRouter(init) {
 			let isDocumentReload = false;
 			if (redirect2.response.headers.has("X-Remix-Reload-Document")) isDocumentReload = true;
 			else if (isAbsoluteUrl(location)) {
-				const url = createBrowserURLImpl(location, true);
+				const url = createBrowserURLImpl(routerWindow, location, true);
 				isDocumentReload = url.origin !== routerWindow.location.origin || stripBasename(url.pathname, basename) == null;
 			}
 			if (isDocumentReload) {
@@ -26484,7 +28639,7 @@ function RSCPrefetchPageLinksImpl({ page, matches: nextMatches, ...linkProps }) 
 	let { basename } = useDataRouterContext2();
 	let dataHrefs = import_react.useMemo(() => {
 		if (page === location.pathname + location.search + location.hash) return [];
-		let url = singleFetchUrl(page, basename, future.unstable_trailingSlashAwareDataRequests, "rsc");
+		let url = singleFetchUrl(page, basename, future.v8_trailingSlashAwareDataRequests, "rsc");
 		let hasSomeRoutesWithShouldRevalidate = false;
 		let targetRoutes = [];
 		for (let match of nextMatches) if (typeof match.route.shouldRevalidate === "function") hasSomeRoutesWithShouldRevalidate = true;
@@ -26493,7 +28648,7 @@ function RSCPrefetchPageLinksImpl({ page, matches: nextMatches, ...linkProps }) 
 		return [url.pathname + url.search];
 	}, [
 		basename,
-		future.unstable_trailingSlashAwareDataRequests,
+		future.v8_trailingSlashAwareDataRequests,
 		page,
 		location,
 		nextMatches
@@ -26537,12 +28692,12 @@ function PrefetchPageLinksImpl({ page, matches: nextMatches, ...linkProps }) {
 			else routesParams.add(m.route.id);
 		});
 		if (routesParams.size === 0) return [];
-		let url = singleFetchUrl(page, basename, future.unstable_trailingSlashAwareDataRequests, "data");
+		let url = singleFetchUrl(page, basename, future.v8_trailingSlashAwareDataRequests, "data");
 		if (foundOptOutRoute && routesParams.size > 0) url.searchParams.set("_routes", nextMatches.filter((m) => routesParams.has(m.route.id)).map((m) => m.route.id).join(","));
 		return [url.pathname + url.search];
 	}, [
 		basename,
-		future.unstable_trailingSlashAwareDataRequests,
+		future.v8_trailingSlashAwareDataRequests,
 		loaderData,
 		location,
 		manifest,
@@ -26582,7 +28737,7 @@ function mergeRefs(...refs) {
 import_react.Component;
 var isBrowser2 = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined";
 try {
-	if (isBrowser2) window.__reactRouterVersion = "7.15.1";
+	if (isBrowser2) window.__reactRouterVersion = "7.16.0";
 } catch (e) {}
 function createHashRouter(routes, opts) {
 	return createRouter({
@@ -27037,9 +29192,9 @@ function useViewTransitionState(to, { relative } = {}) {
 	return matchPath(path.pathname, nextPath) != null || matchPath(path.pathname, currentPath) != null;
 }
 //#endregion
-//#region ../../node_modules/.pnpm/react-router@7.15.1_react-dom@19.2.6_react@19.2.6__react@19.2.6/node_modules/react-router/dist/development/dom-export.mjs
+//#region ../../node_modules/.pnpm/react-router@7.16.0_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/react-router/dist/development/dom-export.mjs
 /**
-* react-router v7.15.1
+* react-router v7.16.0
 *
 * Copyright (c) Remix Software Inc.
 *
@@ -27056,6 +29211,7 @@ function RouterProvider2(props) {
 }
 //#endregion
 //#region ../../node_modules/.pnpm/clsx@2.1.1/node_modules/clsx/dist/clsx.mjs
+var import_clipboard = /* @__PURE__ */ __toESM(require_clipboard(), 1);
 function r$8(e) {
 	var t, f, n = "";
 	if ("string" == typeof e || "number" == typeof e) n += e;
@@ -27071,7 +29227,6 @@ function clsx() {
 }
 //#endregion
 //#region ../../packages/react/src/components/ComponentIconContext.tsx
-var import_jsx_runtime = require_jsx_runtime();
 var ComponentIconContext = (0, import_react.createContext)(null);
 var ComponentIconProvider = ({ icons, children }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComponentIconContext.Provider, {
 	value: icons,
@@ -28490,6 +30645,7 @@ var ErrorPanel = ({ title, error }) => {
 	const message = error.message;
 	const stack = error.stack;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		"data-testid": "error-panel",
 		className: clsx(ErrorPanel_module_default.errorPanel, ErrorPanel_module_default.centeredFlex),
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: clsx(ErrorPanel_module_default.heading, ErrorPanel_module_default.centeredFlex),
@@ -28612,7 +30768,7 @@ var AsciinemaPlayer = (props) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(imp
 	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LazyAsciinemaPlayer, { ...props })
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@lit+react@1.0.8_@types+react@19.2.15/node_modules/@lit/react/create-component.js
+//#region ../../node_modules/.pnpm/@lit+react@1.0.8_@types+react@19.2.16/node_modules/@lit/react/create-component.js
 /**
 * @license
 * Copyright 2018 Google LLC
@@ -31137,7 +33293,7 @@ __decorate$32([n$5({
 })], VscodeCollapsible$1.prototype, "open", void 0);
 VscodeCollapsible$1 = __decorate$32([customElement("vscode-collapsible")], VscodeCollapsible$1);
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+react-elements@2.4.0_@types+react@19.2.15_@vscode+codicons@0.0.45_reac_c8ae8b52b2b9935ca72ef324081ce3a4/node_modules/@vscode-elements/react-elements/dist/components/VscodeCollapsible.js
+//#region ../../node_modules/.pnpm/@vscode-elements+react-elements@2.4.0_@types+react@19.2.16_@vscode+codicons@0.0.45_reac_37a60572699deabaa9243f999076aa70/node_modules/@vscode-elements/react-elements/dist/components/VscodeCollapsible.js
 var VscodeCollapsible = o$7({
 	tagName: "vscode-collapsible",
 	elementClass: VscodeCollapsible$1,
@@ -41969,7 +44125,7 @@ function normalize(state) {
 }
 //#endregion
 //#region ../../node_modules/.pnpm/markdown-it@14.2.0/node_modules/markdown-it/lib/rules_core/block.mjs
-function block(state) {
+function block$1(state) {
 	let token;
 	if (state.inlineMode) {
 		token = new state.Token("inline", "", 0);
@@ -42259,7 +44415,7 @@ function text_join(state) {
 **/
 var _rules$2 = [
 	["normalize", normalize],
-	["block", block],
+	["block", block$1],
 	["inline", inline$2],
 	["linkify", linkify$1],
 	["replacements", replace$1],
@@ -44791,7 +46947,7 @@ var stringFromCharCode = String.fromCharCode;
 * @param {String} type The error type.
 * @returns {Error} Throws a `RangeError` with the applicable error message.
 */
-function error$7(type) {
+function error$6(type) {
 	throw new RangeError(errors[type]);
 }
 /**
@@ -44925,26 +47081,26 @@ var decode = function(input) {
 	let basic = input.lastIndexOf(delimiter);
 	if (basic < 0) basic = 0;
 	for (let j = 0; j < basic; ++j) {
-		if (input.charCodeAt(j) >= 128) error$7("not-basic");
+		if (input.charCodeAt(j) >= 128) error$6("not-basic");
 		output.push(input.charCodeAt(j));
 	}
 	for (let index = basic > 0 ? basic + 1 : 0; index < inputLength;) {
 		const oldi = i;
 		for (let w = 1, k = base$1;; k += base$1) {
-			if (index >= inputLength) error$7("invalid-input");
+			if (index >= inputLength) error$6("invalid-input");
 			const digit = basicToDigit(input.charCodeAt(index++));
-			if (digit >= base$1) error$7("invalid-input");
-			if (digit > floor((maxInt - i) / w)) error$7("overflow");
+			if (digit >= base$1) error$6("invalid-input");
+			if (digit > floor((maxInt - i) / w)) error$6("overflow");
 			i += digit * w;
 			const t = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias;
 			if (digit < t) break;
 			const baseMinusT = base$1 - t;
-			if (w > floor(maxInt / baseMinusT)) error$7("overflow");
+			if (w > floor(maxInt / baseMinusT)) error$6("overflow");
 			w *= baseMinusT;
 		}
 		const out = output.length + 1;
 		bias = adapt(i - oldi, out, oldi == 0);
-		if (floor(i / out) > maxInt - n) error$7("overflow");
+		if (floor(i / out) > maxInt - n) error$6("overflow");
 		n += floor(i / out);
 		i %= out;
 		output.splice(i++, 0, n);
@@ -44973,11 +47129,11 @@ var encode = function(input) {
 		let m = maxInt;
 		for (const currentValue of input) if (currentValue >= n && currentValue < m) m = currentValue;
 		const handledCPCountPlusOne = handledCPCount + 1;
-		if (m - n > floor((maxInt - delta) / handledCPCountPlusOne)) error$7("overflow");
+		if (m - n > floor((maxInt - delta) / handledCPCountPlusOne)) error$6("overflow");
 		delta += (m - n) * handledCPCountPlusOne;
 		n = m;
 		for (const currentValue of input) {
-			if (currentValue < n && ++delta > maxInt) error$7("overflow");
+			if (currentValue < n && ++delta > maxInt) error$6("overflow");
 			if (currentValue === n) {
 				let q = delta;
 				for (let k = base$1;; k += base$1) {
@@ -46098,7 +48254,7 @@ var NoContentsPanel = ({ text, icon, busy }) => {
 	});
 };
 //#endregion
-//#region ../../node_modules/.pnpm/react-popper@2.3.0_@popperjs+core@2.11.8_react-dom@19.2.6_react@19.2.6__react@19.2.6/node_modules/react-popper/lib/esm/utils.js
+//#region ../../node_modules/.pnpm/react-popper@2.3.0_@popperjs+core@2.11.8_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/react-popper/lib/esm/utils.js
 /**
 * Simple ponyfill for Object.fromEntries
 */
@@ -46128,10 +48284,10 @@ var clippingParents = "clippingParents";
 var viewport = "viewport";
 var popper = "popper";
 var reference = "reference";
-var variationPlacements = /* @__PURE__ */ basePlacements.reduce(function(acc, placement) {
+var variationPlacements = /*#__PURE__*/ basePlacements.reduce(function(acc, placement) {
 	return acc.concat([placement + "-" + start, placement + "-end"]);
 }, []);
-var placements = /* @__PURE__ */ [].concat(basePlacements, [auto]).reduce(function(acc, placement) {
+var placements = /*#__PURE__*/ [].concat(basePlacements, [auto]).reduce(function(acc, placement) {
 	return acc.concat([
 		placement,
 		placement + "-" + start,
@@ -47394,7 +49550,7 @@ function popperGenerator(generatorOptions) {
 		return instance;
 	};
 }
-var createPopper = /* @__PURE__ */ popperGenerator({ defaultModifiers: [
+var createPopper = /*#__PURE__*/ popperGenerator({ defaultModifiers: [
 	eventListeners_default,
 	popperOffsets_default,
 	computeStyles_default,
@@ -47406,7 +49562,7 @@ var createPopper = /* @__PURE__ */ popperGenerator({ defaultModifiers: [
 	hide_default
 ] });
 //#endregion
-//#region ../../node_modules/.pnpm/react-popper@2.3.0_@popperjs+core@2.11.8_react-dom@19.2.6_react@19.2.6__react@19.2.6/node_modules/react-popper/lib/esm/usePopper.js
+//#region ../../node_modules/.pnpm/react-popper@2.3.0_@popperjs+core@2.11.8_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/react-popper/lib/esm/usePopper.js
 var import_react_fast_compare = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((exports, module) => {
 	var hasElementType = typeof Element !== "undefined";
 	var hasMap = typeof Map === "function";
@@ -48079,6 +50235,37 @@ var SegmentedControl = ({ id, segments, onSegmentChange, selectedId: selectedIdP
 		}, segment.id))
 	});
 };
+//#endregion
+//#region ../../packages/react/src/hooks/useAsyncDataFromQuery.ts
+/**
+* Custom hook that retrieves data using `useQuery` from the `@tanstack/react-query`
+* library. It wraps the `QueryResult` from the hook in a simpler `AsyncData`.
+*
+* @param options - An object of type `UseQueryOptions`.
+* @returns An object of type `AsyncData`. If the query is pending, it returns a
+* loading state. If there's an error, it returns an object with the error and loading
+* state as false. If the query is successful, it returns the data and loading state
+* as false.
+*/
+function useAsyncDataFromQuery(options) {
+	const { isPending, isError, error, data } = useQuery(options);
+	return (0, import_react.useMemo)(() => {
+		if (isPending) return loading$1;
+		if (isError) return {
+			error,
+			loading: false
+		};
+		return {
+			data,
+			loading: false
+		};
+	}, [
+		isPending,
+		isError,
+		error,
+		data
+	]);
+}
 //#endregion
 //#region ../../packages/react/src/hooks/useScrollDirection.ts
 var asArray$1 = (v) => Array.isArray(v) ? v : [v];
@@ -49053,19 +51240,18 @@ var flattenChildren$1 = (children) => {
 	});
 };
 var ExpandablePanel_module_default = {
-	outer: "_outer_1j47y_1",
-	expandablePanel: "_expandablePanel_1j47y_8",
-	expandableBordered: "_expandableBordered_1j47y_12",
-	expandableTogglable: "_expandableTogglable_1j47y_17",
-	expandableContents: "_expandableContents_1j47y_21",
-	expandableTruncated: "_expandableTruncated_1j47y_37",
-	moreToggle: "_moreToggle_1j47y_46",
-	bordered: "_bordered_1j47y_56",
-	moreToggleButton: "_moreToggleButton_1j47y_60",
-	separator: "_separator_1j47y_68",
-	inlineToggleHolder: "_inlineToggleHolder_1j47y_77",
-	inlineToggleSticky: "_inlineToggleSticky_1j47y_89",
-	blockLeft: "_blockLeft_1j47y_95"
+	outer: "_outer_1ml7m_1",
+	expandablePanel: "_expandablePanel_1ml7m_8",
+	expandableBordered: "_expandableBordered_1ml7m_12",
+	expandableTogglable: "_expandableTogglable_1ml7m_17",
+	expandableContents: "_expandableContents_1ml7m_21",
+	expandableTruncated: "_expandableTruncated_1ml7m_37",
+	moreToggle: "_moreToggle_1ml7m_46",
+	bordered: "_bordered_1ml7m_56",
+	moreToggleButton: "_moreToggleButton_1ml7m_63",
+	inlineToggleHolder: "_inlineToggleHolder_1ml7m_74",
+	inlineToggleSticky: "_inlineToggleSticky_1ml7m_86",
+	blockLeft: "_blockLeft_1ml7m_92"
 };
 //#endregion
 //#region ../../packages/react/src/components/FindTargetContext.tsx
@@ -49141,36 +51327,32 @@ var ExpandablePanel = (0, import_react.memo)(({ id, collapse, border, lines = 15
 	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: clsx(ExpandablePanel_module_default.outer, className),
-		children: [
-			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				"data-expandable-panel": "true",
-				className: clsx(ExpandablePanel_module_default.expandablePanel, border ? ExpandablePanel_module_default.expandableBordered : void 0, className),
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					ref: contentRef,
-					style: contentStyles,
-					className: clsx(ExpandablePanel_module_default.expandableContentWrap, effectiveCollapsed && showToggle ? ExpandablePanel_module_default.expandableTruncated : void 0),
-					children
-				}), showToggle && layout === "inline-right" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: ExpandablePanel_module_default.inlineToggleHolder,
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: ExpandablePanel_module_default.inlineToggleSticky,
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MoreToggle, {
-							collapsed,
-							onToggle: handleToggle,
-							border: !border,
-							position: "inline-right"
-						})
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			"data-expandable-panel": "true",
+			className: clsx(ExpandablePanel_module_default.expandablePanel, border ? ExpandablePanel_module_default.expandableBordered : void 0, className),
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				ref: contentRef,
+				style: contentStyles,
+				className: clsx(ExpandablePanel_module_default.expandableContentWrap, effectiveCollapsed && showToggle ? ExpandablePanel_module_default.expandableTruncated : void 0),
+				children
+			}), showToggle && layout === "inline-right" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: ExpandablePanel_module_default.inlineToggleHolder,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: ExpandablePanel_module_default.inlineToggleSticky,
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MoreToggle, {
+						collapsed,
+						onToggle: handleToggle,
+						border: !border,
+						position: "inline-right"
 					})
-				})]
-			}),
-			showToggle && layout === "block-left" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MoreToggle, {
-				collapsed,
-				onToggle: handleToggle,
-				border: !border,
-				position: "block-left"
-			}),
-			showToggle && layout === "inline-right" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: clsx(ExpandablePanel_module_default.separator) })
-		]
+				})
+			})]
+		}), showToggle && layout === "block-left" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MoreToggle, {
+			collapsed,
+			onToggle: handleToggle,
+			border: !border,
+			position: "block-left"
+		})]
 	});
 });
 var MoreToggle = ({ collapsed, border, onToggle, style, position }) => {
@@ -49546,6 +51728,9 @@ function injectReferenceLinks(html, references, citeClass) {
 		});
 	});
 }
+//#endregion
+//#region ../../packages/react/src/react-query.ts
+var defaultRetry = (failureCount, error) => !globalThis.__TEST_DISABLE_RETRY && failureCount < 3 && !(error instanceof ApiError$1 && !isRetryableHttpStatus(error.status));
 //#endregion
 //#region ../../node_modules/.pnpm/immer@11.1.8/node_modules/immer/dist/immer.mjs
 var NOTHING = Symbol.for("immer-nothing");
@@ -50413,7 +52598,7 @@ false);
 }
 var produce = new Immer2().produce;
 //#endregion
-//#region ../../node_modules/.pnpm/zustand@5.0.13_@types+react@19.2.15_immer@11.1.8_react@19.2.6_use-sync-external-store@1.6.0_react@19.2.6_/node_modules/zustand/esm/vanilla.mjs
+//#region ../../node_modules/.pnpm/zustand@5.0.14_@types+react@19.2.16_immer@11.1.8_react@19.2.7_use-sync-external-store@1.6.0_react@19.2.7_/node_modules/zustand/esm/vanilla.mjs
 var createStoreImpl = (createState) => {
 	let state;
 	const listeners = /* @__PURE__ */ new Set();
@@ -50442,7 +52627,7 @@ var createStoreImpl = (createState) => {
 };
 var createStore = ((createState) => createState ? createStoreImpl(createState) : createStoreImpl);
 //#endregion
-//#region ../../node_modules/.pnpm/zustand@5.0.13_@types+react@19.2.15_immer@11.1.8_react@19.2.6_use-sync-external-store@1.6.0_react@19.2.6_/node_modules/zustand/esm/react.mjs
+//#region ../../node_modules/.pnpm/zustand@5.0.14_@types+react@19.2.16_immer@11.1.8_react@19.2.7_use-sync-external-store@1.6.0_react@19.2.7_/node_modules/zustand/esm/react.mjs
 var identity = (arg) => arg;
 function useStore$1(api, selector = identity) {
 	const slice = import_react.useSyncExternalStore(api.subscribe, import_react.useCallback(() => selector(api.getState()), [api, selector]), import_react.useCallback(() => selector(api.getInitialState()), [api, selector]));
@@ -50457,7 +52642,7 @@ var createImpl = (createState) => {
 };
 var create = ((createState) => createState ? createImpl(createState) : createImpl);
 //#endregion
-//#region ../../node_modules/.pnpm/zustand@5.0.13_@types+react@19.2.15_immer@11.1.8_react@19.2.6_use-sync-external-store@1.6.0_react@19.2.6_/node_modules/zustand/esm/middleware.mjs
+//#region ../../node_modules/.pnpm/zustand@5.0.14_@types+react@19.2.16_immer@11.1.8_react@19.2.7_use-sync-external-store@1.6.0_react@19.2.7_/node_modules/zustand/esm/middleware.mjs
 var shouldDispatchFromDevtools = (api) => !!api.dispatchFromDevtools && typeof api.dispatch === "function";
 var trackedConnections = /* @__PURE__ */ new Map();
 var getTrackedConnectionState = (name) => {
@@ -50792,7 +52977,7 @@ var persistImpl = (config, baseOptions) => (set, get, api) => {
 };
 var persist = persistImpl;
 //#endregion
-//#region ../../node_modules/.pnpm/zustand@5.0.13_@types+react@19.2.15_immer@11.1.8_react@19.2.6_use-sync-external-store@1.6.0_react@19.2.6_/node_modules/zustand/esm/middleware/immer.mjs
+//#region ../../node_modules/.pnpm/zustand@5.0.14_@types+react@19.2.16_immer@11.1.8_react@19.2.7_use-sync-external-store@1.6.0_react@19.2.7_/node_modules/zustand/esm/middleware/immer.mjs
 var immerImpl = (initializer) => (set, get, store) => {
 	store.setState = (updater, replace, ...args) => {
 		return set(typeof updater === "function" ? produce(updater) : updater, replace, ...args);
@@ -50801,7 +52986,7 @@ var immerImpl = (initializer) => (set, get, store) => {
 };
 var immer = immerImpl;
 //#endregion
-//#region ../../node_modules/.pnpm/dexie@4.4.2/node_modules/dexie/import-wrapper-prod.mjs
+//#region ../../node_modules/.pnpm/dexie@4.4.3/node_modules/dexie/import-wrapper-prod.mjs
 var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((exports, module) => {
 	((e, t) => {
 		"object" == typeof exports && "undefined" != typeof module ? module.exports = t() : "function" == typeof define && define.amd ? define(t) : (e = "undefined" != typeof globalThis ? globalThis : e || self).Dexie = t();
@@ -50815,12 +53000,12 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 		};
 		var _ = function() {
 			return (_ = Object.assign || function(e) {
-				for (var t, n = 1, r = arguments.length; n < r; n++) for (var o in t = arguments[n]) Object.prototype.hasOwnProperty.call(t, o) && (e[o] = t[o]);
+				for (var t, n = 1, r = arguments.length; n < r; n++) for (var i in t = arguments[n]) Object.prototype.hasOwnProperty.call(t, i) && (e[i] = t[i]);
 				return e;
 			}).apply(this, arguments);
 		};
 		function R(e, t, n) {
-			if (n || 2 === arguments.length) for (var r, o = 0, i = t.length; o < i; o++) !r && o in t || ((r = r || Array.prototype.slice.call(t, 0, o))[o] = t[o]);
+			if (n || 2 === arguments.length) for (var r, i = 0, o = t.length; i < o; i++) !r && i in t || ((r = r || Array.prototype.slice.call(t, 0, i))[i] = t[i]);
 			return e.concat(r || Array.prototype.slice.call(t));
 		}
 		var f = "undefined" != typeof globalThis ? globalThis : "undefined" != typeof self ? self : "undefined" != typeof window ? window : global, O = Object.keys, x = Array.isArray;
@@ -50874,9 +53059,9 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			if ("string" == typeof t && m(e, t)) return e[t];
 			if (!t) return e;
 			if ("string" != typeof t) {
-				for (var n = [], r = 0, o = t.length; r < o; ++r) {
-					var i = c(e, t[r]);
-					n.push(i);
+				for (var n = [], r = 0, i = t.length; r < i; ++r) {
+					var o = c(e, t[r]);
+					n.push(o);
 				}
 				return n;
 			}
@@ -50886,10 +53071,21 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 		function b(e, t, n) {
 			if (e && void 0 !== t && !("isFrozen" in Object && Object.isFrozen(e))) if ("string" != typeof t && "length" in t) {
 				$("string" != typeof n && "length" in n);
-				for (var r = 0, o = t.length; r < o; ++r) b(e, t[r], n[r]);
+				for (var r = 0, i = t.length; r < i; ++r) b(e, t[r], n[r]);
 			} else {
-				var i, a, u = t.indexOf(".");
-				-1 !== u ? (i = t.substr(0, u), "" === (u = t.substr(u + 1)) ? void 0 === n ? x(e) && !isNaN(parseInt(i)) ? e.splice(i, 1) : delete e[i] : e[i] = n : b(a = (a = e[i]) && m(e, i) ? a : e[i] = {}, u, n)) : void 0 === n ? x(e) && !isNaN(parseInt(t)) ? e.splice(t, 1) : delete e[t] : e[t] = n;
+				var o = t.indexOf(".");
+				if (-1 !== o) {
+					var a = t.substr(0, o), o = t.substr(o + 1);
+					if ("" === o) void 0 === n ? x(e) && !isNaN(parseInt(a)) ? e.splice(a, 1) : delete e[a] : e[a] = n;
+					else {
+						var u = e[a];
+						if (!u || !m(e, a)) {
+							if (void 0 === n) return;
+							u = e[a] = {};
+						}
+						b(u, o, n);
+					}
+				} else void 0 === n ? x(e) && !isNaN(parseInt(t)) ? e.splice(t, 1) : delete e[t] : e[t] = n;
 			}
 		}
 		function G(e) {
@@ -50928,11 +53124,11 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				if (n) return n;
 				if (x(t)) {
 					n = [], Z.set(t, n);
-					for (var r = 0, o = t.length; r < o; ++r) n.push(e(t[r]));
+					for (var r = 0, i = t.length; r < i; ++r) n.push(e(t[r]));
 				} else if (J.has(t.constructor)) n = t;
 				else {
-					var i, a = F(t);
-					for (i in n = a === Object.prototype ? {} : Object.create(a), Z.set(t, n), t) m(t, i) && (n[i] = e(t[i]));
+					var o, a = F(t);
+					for (o in n = a === Object.prototype ? {} : Object.create(a), Z.set(t, n), t) m(t, o) && (n[o] = e(t[o]));
 				}
 				return n;
 			}(e);
@@ -50942,23 +53138,23 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 		function ne(e) {
 			return te.call(e).slice(8, -1);
 		}
-		var re = "undefined" != typeof Symbol ? Symbol.iterator : "@@iterator", oe = "symbol" == typeof re ? function(e) {
+		var re = "undefined" != typeof Symbol ? Symbol.iterator : "@@iterator", ie = "symbol" == typeof re ? function(e) {
 			var t;
 			return null != e && (t = e[re]) && t.apply(e);
 		} : function() {
 			return null;
 		};
-		function ie(e, t) {
+		function oe(e, t) {
 			t = e.indexOf(t);
 			0 <= t && e.splice(t, 1);
 		}
 		var ae = {};
 		function n(e) {
-			var t, n, r, o;
+			var t, n, r, i;
 			if (1 === arguments.length) {
 				if (x(e)) return e.slice();
 				if (this === ae && "string" == typeof e) return [e];
-				if (o = oe(e)) for (n = []; !(r = o.next()).done;) n.push(r.value);
+				if (i = ie(e)) for (n = []; !(r = i.next()).done;) n.push(r.value);
 				else {
 					if (null == e) return [e];
 					if ("number" != typeof (t = e.length)) return [e];
@@ -51063,9 +53259,9 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				e.apply(this, arguments), t.apply(this, arguments);
 			};
 		}
-		function ge(o, i) {
-			return o === g ? i : function() {
-				var e = o.apply(this, arguments), t = (void 0 !== e && (arguments[0] = e), this.onsuccess), n = this.onerror, r = (this.onsuccess = null, this.onerror = null, i.apply(this, arguments));
+		function ge(i, o) {
+			return i === g ? o : function() {
+				var e = i.apply(this, arguments), t = (void 0 !== e && (arguments[0] = e), this.onsuccess), n = this.onerror, r = (this.onsuccess = null, this.onerror = null, o.apply(this, arguments));
 				return t && (this.onsuccess = this.onsuccess ? be(t, this.onsuccess) : t), n && (this.onerror = this.onerror ? be(n, this.onerror) : n), void 0 !== r ? r : e;
 			};
 		}
@@ -51076,9 +53272,9 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				this.onsuccess = this.onerror = null, r.apply(this, arguments), e && (this.onsuccess = this.onsuccess ? be(e, this.onsuccess) : e), t && (this.onerror = this.onerror ? be(t, this.onerror) : t);
 			};
 		}
-		function _e(o, i) {
-			return o === g ? i : function(e) {
-				var t = o.apply(this, arguments), e = (a(e, t), this.onsuccess), n = this.onerror, r = (this.onsuccess = null, this.onerror = null, i.apply(this, arguments));
+		function _e(i, o) {
+			return i === g ? o : function(e) {
+				var t = i.apply(this, arguments), e = (a(e, t), this.onsuccess), n = this.onerror, r = (this.onsuccess = null, this.onerror = null, o.apply(this, arguments));
 				return e && (this.onsuccess = this.onsuccess ? be(e, this.onsuccess) : e), n && (this.onerror = this.onerror ? be(n, this.onerror) : n), void 0 === t ? void 0 === r ? void 0 : r : a(t, r);
 			};
 		}
@@ -51087,16 +53283,16 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				return !1 !== t.apply(this, arguments) && e.apply(this, arguments);
 			};
 		}
-		function ke(o, i) {
-			return o === g ? i : function() {
-				var e = o.apply(this, arguments);
+		function ke(i, o) {
+			return i === g ? o : function() {
+				var e = i.apply(this, arguments);
 				if (e && "function" == typeof e.then) {
 					for (var t = this, n = arguments.length, r = new Array(n); n--;) r[n] = arguments[n];
 					return e.then(function() {
-						return i.apply(t, r);
+						return o.apply(t, r);
 					});
 				}
-				return i.apply(this, arguments);
+				return o.apply(this, arguments);
 			};
 		}
 		e.ModifyError = fe, e.DexieError = ce, e.BulkError = he;
@@ -51152,8 +53348,8 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			get: function() {
 				var u = P, t = et;
 				function e(n, r) {
-					var o = this, i = !u.global && (u !== P || t !== et), a = i && !w(), e = new K(function(e, t) {
-						Ve(o, new Le(ut(n, u, i, a), ut(r, u, i, a), e, t, u));
+					var i = this, o = !u.global && (u !== P || t !== et), a = o && !w(), e = new K(function(e, t) {
+						Ve(i, new Le(ut(n, u, o, a), ut(r, u, o, a), e, t, u));
 					});
 					return this._consoleTask && (e._consoleTask = this._consoleTask), e;
 				}
@@ -51168,8 +53364,8 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				});
 			}
 		};
-		function Le(e, t, n, r, o) {
-			this.onFulfilled = "function" == typeof e ? e : null, this.onRejected = "function" == typeof t ? t : null, this.resolve = n, this.reject = r, this.psd = o;
+		function Le(e, t, n, r, i) {
+			this.onFulfilled = "function" == typeof e ? e : null, this.onRejected = "function" == typeof t ? t : null, this.resolve = n, this.reject = r, this.psd = i;
 		}
 		function Ue(e, t) {
 			var n, r;
@@ -51181,8 +53377,8 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			var t = e._listeners;
 			e._listeners = [];
 			for (var n = 0, r = t.length; n < r; ++n) Ve(e, t[n]);
-			var o = e._PSD;
-			--o.ref || o.finalize(), 0 === Fe && (++Fe, je(function() {
+			var i = e._PSD;
+			--i.ref || i.finalize(), 0 === Fe && (++Fe, je(function() {
 				0 == --Fe && Ge();
 			}, []));
 		}
@@ -51200,10 +53396,10 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 		}
 		function We(e, t, n) {
 			try {
-				var r, o = t._value;
+				var r, i = t._value;
 				!t._state && De.length && (De = []), r = l && t._consoleTask ? t._consoleTask.run(function() {
-					return e(o);
-				}) : e(o), t._state || -1 !== De.indexOf(o) || ((e) => {
+					return e(i);
+				}) : e(i), t._state || -1 !== De.indexOf(i) || ((e) => {
 					for (var t = qe.length; t;) if (qe[--t]._value === e._value) return qe.splice(t, 1);
 				})(t), n.resolve(r);
 			} catch (e) {
@@ -51240,11 +53436,11 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			return new K(Pe, !1, e);
 		}
 		function E(n, r) {
-			var o = P;
+			var i = P;
 			return function() {
 				var e = $e(), t = P;
 				try {
-					return h(o, !0), n.apply(this, arguments);
+					return h(i, !0), n.apply(this, arguments);
 				} catch (e) {
 					r && r(e);
 				} finally {
@@ -51276,24 +53472,24 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 					});
 				});
 			},
-			timeout: function(r, o) {
-				var i = this;
+			timeout: function(r, i) {
+				var o = this;
 				return r < Infinity ? new K(function(e, t) {
 					var n = setTimeout(function() {
-						return t(new k.Timeout(o));
+						return t(new k.Timeout(i));
 					}, r);
-					i.then(e, t).finally(clearTimeout.bind(null, n));
+					o.then(e, t).finally(clearTimeout.bind(null, n));
 				}) : this;
 			}
-		}), "undefined" != typeof Symbol && Symbol.toStringTag && u(K.prototype, Symbol.toStringTag, "Dexie.Promise"), s.env = it(), M(K, {
+		}), "undefined" != typeof Symbol && Symbol.toStringTag && u(K.prototype, Symbol.toStringTag, "Dexie.Promise"), s.env = ot(), M(K, {
 			all: function() {
-				var i = n.apply(null, arguments).map(rt);
+				var o = n.apply(null, arguments).map(rt);
 				return new K(function(n, r) {
-					0 === i.length && n([]);
-					var o = i.length;
-					i.forEach(function(e, t) {
+					0 === o.length && n([]);
+					var i = o.length;
+					o.forEach(function(e, t) {
 						return K.resolve(e).then(function(e) {
-							i[t] = e, --o || n(i);
+							o[t] = e, --i || n(o);
 						}, r);
 					});
 				});
@@ -51341,7 +53537,7 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 					Be = e;
 				}
 			},
-			follow: function(o, n) {
+			follow: function(i, n) {
 				return new K(function(e, t) {
 					return v(function(n, r) {
 						var e = P;
@@ -51354,7 +53550,7 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 							}), ++Fe, je(function() {
 								0 == --Fe && Ge();
 							}, []);
-						}, e.finalize), o();
+						}, e.finalize), i();
 					}, n, e, t);
 				});
 			}
@@ -51362,20 +53558,20 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			var e = n.apply(null, arguments).map(rt);
 			return new K(function(n) {
 				0 === e.length && n([]);
-				var r = e.length, o = new Array(r);
+				var r = e.length, i = new Array(r);
 				e.forEach(function(e, t) {
 					return K.resolve(e).then(function(e) {
-						return o[t] = {
+						return i[t] = {
 							status: "fulfilled",
 							value: e
 						};
 					}, function(e) {
-						return o[t] = {
+						return i[t] = {
 							status: "rejected",
 							reason: e
 						};
 					}).then(function() {
-						return --r || n(o);
+						return --r || n(i);
 					});
 				});
 			});
@@ -51383,23 +53579,23 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			var e = n.apply(null, arguments).map(rt);
 			return new K(function(n, r) {
 				0 === e.length && r(/* @__PURE__ */ new AggregateError([]));
-				var o = e.length, i = new Array(o);
+				var i = e.length, o = new Array(i);
 				e.forEach(function(e, t) {
 					return K.resolve(e).then(function(e) {
 						return n(e);
 					}, function(e) {
-						i[t] = e, --o || r(new AggregateError(i));
+						o[t] = e, --i || r(new AggregateError(o));
 					});
 				});
 			});
 		}), Ae.withResolvers) && (K.withResolvers = Ae.withResolvers);
-		var i = {
+		var o = {
 			awaits: 0,
 			echoes: 0,
 			id: 0
 		}, He = 0, Je = [], Ze = 0, et = 0, tt = 0;
 		function v(e, t, n, r) {
-			var o = P, i = Object.create(o), t = (i.parent = o, i.ref = 0, i.global = !1, i.id = ++tt, s.env, i.env = Ce ? {
+			var i = P, o = Object.create(i), t = (o.parent = i, o.ref = 0, o.global = !1, o.id = ++tt, s.env, o.env = Ce ? {
 				Promise: K,
 				PromiseProp: {
 					value: K,
@@ -51412,35 +53608,35 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				any: K.any,
 				resolve: K.resolve,
 				reject: K.reject
-			} : {}, t && a(i, t), ++o.ref, i.finalize = function() {
+			} : {}, t && a(o, t), ++i.ref, o.finalize = function() {
 				--this.parent.ref || this.parent.finalize();
-			}, at(i, e, n, r));
-			return 0 === i.ref && i.finalize(), t;
+			}, at(o, e, n, r));
+			return 0 === o.ref && o.finalize(), t;
 		}
 		function nt() {
-			return i.id || (i.id = ++He), ++i.awaits, i.echoes += Ke, i.id;
+			return o.id || (o.id = ++He), ++o.awaits, o.echoes += Ke, o.id;
 		}
 		function w() {
-			return !!i.awaits && (0 == --i.awaits && (i.id = 0), i.echoes = i.awaits * Ke, !0);
+			return !!o.awaits && (0 == --o.awaits && (o.id = 0), o.echoes = o.awaits * Ke, !0);
 		}
 		function rt(e) {
-			return i.echoes && e && e.constructor === Ae ? (nt(), e.then(function(e) {
+			return o.echoes && e && e.constructor === Ae ? (nt(), e.then(function(e) {
 				return w(), e;
 			}, function(e) {
 				return w(), S(e);
 			})) : e;
 		}
-		function ot() {
+		function it() {
 			var e = Je[Je.length - 1];
 			Je.pop(), h(e, !1);
 		}
 		function h(e, t) {
-			var n, r, o = P;
-			(t ? !i.echoes || Ze++ && e === P : !Ze || --Ze && e === P) || queueMicrotask(t ? function(e) {
-				++et, i.echoes && 0 != --i.echoes || (i.echoes = i.awaits = i.id = 0), Je.push(P), h(e, !0);
-			}.bind(null, e) : ot), e !== P && (P = e, o === s && (s.env = it()), Ce) && (n = s.env.Promise, r = e.env, o.global || e.global) && (Object.defineProperty(f, "Promise", r.PromiseProp), n.all = r.all, n.race = r.race, n.resolve = r.resolve, n.reject = r.reject, r.allSettled && (n.allSettled = r.allSettled), r.any) && (n.any = r.any);
+			var n, r, i = P;
+			(t ? !o.echoes || Ze++ && e === P : !Ze || --Ze && e === P) || queueMicrotask(t ? function(e) {
+				++et, o.echoes && 0 != --o.echoes || (o.echoes = o.awaits = o.id = 0), Je.push(P), h(e, !0);
+			}.bind(null, e) : it), e !== P && (P = e, i === s && (s.env = ot()), Ce) && (n = s.env.Promise, r = e.env, i.global || e.global) && (Object.defineProperty(f, "Promise", r.PromiseProp), n.all = r.all, n.race = r.race, n.resolve = r.resolve, n.reject = r.reject, r.allSettled && (n.allSettled = r.allSettled), r.any) && (n.any = r.any);
 		}
-		function it() {
+		function ot() {
 			var e = f.Promise;
 			return Ce ? {
 				Promise: e,
@@ -51453,27 +53649,27 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				reject: e.reject
 			} : {};
 		}
-		function at(e, t, n, r, o) {
-			var i = P;
+		function at(e, t, n, r, i) {
+			var o = P;
 			try {
-				return h(e, !0), t(n, r, o);
+				return h(e, !0), t(n, r, i);
 			} finally {
-				h(i, !1);
+				h(o, !1);
 			}
 		}
-		function ut(t, n, r, o) {
+		function ut(t, n, r, i) {
 			return "function" != typeof t ? t : function() {
 				var e = P;
 				r && nt(), h(n, !0);
 				try {
 					return t.apply(this, arguments);
 				} finally {
-					h(e, !1), o && queueMicrotask(w);
+					h(e, !1), i && queueMicrotask(w);
 				}
 			};
 		}
 		function st(e) {
-			Promise === Ae && 0 === i.echoes ? 0 === Ze ? e() : enqueueNativeMicroTask(e) : setTimeout(e, 0);
+			Promise === Ae && 0 === o.echoes ? 0 === Ze ? e() : enqueueNativeMicroTask(e) : setTimeout(e, 0);
 		}
 		-1 === ("" + Se).indexOf("[native code]") && (nt = w = g);
 		var S = K.reject;
@@ -51509,7 +53705,7 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 					case "Date":
 					case "string": return t < e ? 1 : e < t ? -1 : 0;
 					case "binary":
-						for (var o = gt(e), i = gt(t), a = o.length, u = i.length, s = a < u ? a : u, c = 0; c < s; ++c) if (o[c] !== i[c]) return o[c] < i[c] ? -1 : 1;
+						for (var i = gt(e), o = gt(t), a = i.length, u = o.length, s = a < u ? a : u, c = 0; c < s; ++c) if (i[c] !== o[c]) return i[c] < o[c] ? -1 : 1;
 						return a === u ? 0 : a < u ? -1 : 1;
 					case "Array":
 						for (var l = e, f = t, h = l.length, d = f.length, p = h < d ? h : d, y = 0; y < p; ++y) {
@@ -51573,17 +53769,17 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			this["@@propmod"] = e;
 		}
 		function kt(e, t) {
-			for (var n = O(t), r = n.length, o = !1, i = 0; i < r; ++i) {
-				var a = n[i], u = t[a], s = c(e, a);
-				u instanceof _t ? (b(e, a, u.execute(s)), o = !0) : s !== u && (b(e, a, u), o = !0);
+			for (var n = O(t), r = n.length, i = !1, o = 0; o < r; ++o) {
+				var a = n[o], u = t[a], s = c(e, a);
+				u instanceof _t ? (b(e, a, u.execute(s)), i = !0) : s !== u && (b(e, a, u), i = !0);
 			}
-			return o;
+			return i;
 		}
 		r.prototype._trans = function(e, r, t) {
-			var n = this._tx || P.trans, o = this.name, i = l && "undefined" != typeof console && console.createTask && console.createTask("Dexie: ".concat("readonly" === e ? "read" : "write", " ").concat(this.name));
+			var n = this._tx || P.trans, i = this.name, o = l && "undefined" != typeof console && console.createTask && console.createTask("Dexie: ".concat("readonly" === e ? "read" : "write", " ").concat(this.name));
 			function a(e, t, n) {
-				if (n.schema[o]) return r(n.idbtrans, n);
-				throw new k.NotFound("Table " + o + " not part of transaction");
+				if (n.schema[i]) return r(n.idbtrans, n);
+				throw new k.NotFound("Table " + i + " not part of transaction");
 			}
 			var u = $e();
 			try {
@@ -51592,19 +53788,19 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				}, {
 					trans: n,
 					transless: P.transless || P
-				}) : function t(n, r, o, i) {
+				}) : function t(n, r, i, o) {
 					if (n.idbdb && (n._state.openComplete || P.letThrough || n._vip)) {
-						var a = n._createTransaction(r, o, n._dbSchema);
+						var a = n._createTransaction(r, i, n._dbSchema);
 						try {
 							a.create(), n._state.PR1398_maxLoop = 3;
 						} catch (e) {
 							return e.name === de.InvalidState && n.isOpen() && 0 < --n._state.PR1398_maxLoop ? (console.warn("Dexie: Need to reopen db"), n.close({ disableAutoOpen: !1 }), n.open().then(function() {
-								return t(n, r, o, i);
+								return t(n, r, i, o);
 							})) : S(e);
 						}
 						return a._promise(r, function(e, t) {
 							return v(function() {
-								return P.trans = a, i(e, t, a);
+								return P.trans = a, o(e, t, a);
 							});
 						}).then(function(e) {
 							if ("readwrite" === r) try {
@@ -51621,10 +53817,10 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 						n.open().catch(g);
 					}
 					return n._state.dbReadyPromise.then(function() {
-						return t(n, r, o, i);
+						return t(n, r, i, o);
 					});
 				}(this.db, e, [this.name], a);
-				return i && (s._consoleTask = i, s = s.catch(function(e) {
+				return o && (s._consoleTask = o, s = s.catch(function(e) {
 					return console.trace(e), S(e);
 				})), s;
 			} finally {
@@ -51640,11 +53836,11 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 					return n.hook.reading.fire(e);
 				});
 			}).then(e);
-		}, r.prototype.where = function(i) {
-			if ("string" == typeof i) return new this.db.WhereClause(this, i);
-			if (x(i)) return new this.db.WhereClause(this, "[".concat(i.join("+"), "]"));
-			var n = O(i);
-			if (1 === n.length) return this.where(n[0]).equals(i[n[0]]);
+		}, r.prototype.where = function(o) {
+			if ("string" == typeof o) return new this.db.WhereClause(this, o);
+			if (x(o)) return new this.db.WhereClause(this, "[".concat(o.join("+"), "]"));
+			var n = O(o);
+			if (1 === n.length) return this.where(n[0]).equals(o[n[0]]);
 			var e = this.schema.indexes.concat(this.schema.primKey).filter(function(t) {
 				if (t.compound && n.every(function(e) {
 					return 0 <= t.keyPath.indexOf(e);
@@ -51657,25 +53853,25 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				return e.keyPath.length - t.keyPath.length;
 			})[0];
 			if (e && this.db._maxKey !== ct) return t = e.keyPath.slice(0, n.length), this.where(t).equals(t.map(function(e) {
-				return i[e];
+				return o[e];
 			}));
-			!e && l && console.warn("The query ".concat(JSON.stringify(i), " on ").concat(this.name, " would benefit from a ") + "compound index [".concat(n.join("+"), "]"));
+			!e && l && console.warn("The query ".concat(JSON.stringify(o), " on ").concat(this.name, " would benefit from a ") + "compound index [".concat(n.join("+"), "]"));
 			var a = this.schema.idxByName;
 			function u(e, t) {
 				return 0 === C(e, t);
 			}
 			var t = n.reduce(function(e, t) {
-				var n = e[0], e = e[1], r = a[t], o = i[t];
+				var n = e[0], e = e[1], r = a[t], i = o[t];
 				return [n || r, n || !r ? pt(e, r && r.multi ? function(e) {
 					e = c(e, t);
 					return x(e) && e.some(function(e) {
-						return u(o, e);
+						return u(i, e);
 					});
 				} : function(e) {
-					return u(o, c(e, t));
+					return u(i, c(e, t));
 				}) : e];
 			}, [null, null]), r = t[0], t = t[1];
-			return r ? this.where(r.name).equals(i[r.keyPath]).filter(t) : e ? this.filter(t) : this.where(n).equals("");
+			return r ? this.where(r.name).equals(o[r.keyPath]).filter(t) : e ? this.filter(t) : this.where(n).equals("");
 		}, r.prototype.filter = function(e) {
 			return this.toCollection().and(e);
 		}, r.prototype.count = function(e) {
@@ -51695,31 +53891,31 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 		}, r.prototype.reverse = function() {
 			return this.toCollection().reverse();
 		}, r.prototype.mapToClass = function(r) {
-			for (var i = this.db, a = this.name, o = ((this.schema.mappedClass = r).prototype instanceof mt && (r = ((e) => {
-				var t = o, n = e;
+			for (var o = this.db, a = this.name, i = ((this.schema.mappedClass = r).prototype instanceof mt && (r = ((e) => {
+				var t = i, n = e;
 				if ("function" != typeof n && null !== n) throw new TypeError("Class extends value " + String(n) + " is not a constructor or null");
 				function r() {
 					this.constructor = t;
 				}
-				function o() {
+				function i() {
 					return null !== e && e.apply(this, arguments) || this;
 				}
-				return B(t, n), t.prototype = null === n ? Object.create(n) : (r.prototype = n.prototype, new r()), Object.defineProperty(o.prototype, "db", {
+				return B(t, n), t.prototype = null === n ? Object.create(n) : (r.prototype = n.prototype, new r()), Object.defineProperty(i.prototype, "db", {
 					get: function() {
-						return i;
+						return o;
 					},
 					enumerable: !1,
 					configurable: !0
-				}), o.prototype.table = function() {
+				}), i.prototype.table = function() {
 					return a;
-				}, o;
+				}, i;
 			})(r)), /* @__PURE__ */ new Set()), e = r.prototype; e; e = F(e)) Object.getOwnPropertyNames(e).forEach(function(e) {
-				return o.add(e);
+				return i.add(e);
 			});
 			function t(e) {
 				if (!e) return e;
 				var t, n = Object.create(r.prototype);
-				for (t in e) if (!o.has(t)) try {
+				for (t in e) if (!i.has(t)) try {
 					n[t] = e[t];
 				} catch (e) {}
 				return n;
@@ -51730,8 +53926,8 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				a(this, e);
 			});
 		}, r.prototype.add = function(t, n) {
-			var r = this, e = this.schema.primKey, o = e.auto, i = e.keyPath, a = t;
-			return i && o && (a = vt(i)(t)), this._trans("readwrite", function(e) {
+			var r = this, e = this.schema.primKey, i = e.auto, o = e.keyPath, a = t;
+			return o && i && (a = vt(o)(t)), this._trans("readwrite", function(e) {
 				return r.core.mutate({
 					trans: e,
 					type: "add",
@@ -51741,20 +53937,20 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			}).then(function(e) {
 				return e.numFailures ? K.reject(e.failures[0]) : e.lastResult;
 			}).then(function(e) {
-				if (i) try {
-					b(t, i, e);
+				if (o) try {
+					b(t, o, e);
 				} catch (e) {}
 				return e;
 			});
-		}, r.prototype.upsert = function(r, o) {
-			var i = this, a = this.schema.primKey.keyPath;
+		}, r.prototype.upsert = function(r, i) {
+			var o = this, a = this.schema.primKey.keyPath;
 			return this._trans("readwrite", function(n) {
-				return i.core.get({
+				return o.core.get({
 					trans: n,
 					key: r
 				}).then(function(t) {
 					var e = null != t ? t : {};
-					return kt(e, o), a && b(e, a, r), i.core.mutate({
+					return kt(e, i), a && b(e, a, r), o.core.mutate({
 						trans: n,
 						type: "put",
 						values: [e],
@@ -51762,7 +53958,7 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 						upsert: !0,
 						updates: {
 							keys: [r],
-							changeSpecs: [o]
+							changeSpecs: [i]
 						}
 					}).then(function(e) {
 						return e.numFailures ? K.reject(e.failures[0]) : !!t;
@@ -51772,8 +53968,8 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 		}, r.prototype.update = function(e, t) {
 			return "object" != typeof e || x(e) ? this.where(":id").equals(e).modify(t) : void 0 === (e = c(e, this.schema.primKey.keyPath)) ? S(new k.InvalidArgument("Given object does not contain its primary key")) : this.where(":id").equals(e).modify(t);
 		}, r.prototype.put = function(t, n) {
-			var r = this, e = this.schema.primKey, o = e.auto, i = e.keyPath, a = t;
-			return i && o && (a = vt(i)(t)), this._trans("readwrite", function(e) {
+			var r = this, e = this.schema.primKey, i = e.auto, o = e.keyPath, a = t;
+			return o && i && (a = vt(o)(t)), this._trans("readwrite", function(e) {
 				return r.core.mutate({
 					trans: e,
 					type: "put",
@@ -51783,8 +53979,8 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			}).then(function(e) {
 				return e.numFailures ? K.reject(e.failures[0]) : e.lastResult;
 			}).then(function(e) {
-				if (i) try {
-					b(t, i, e);
+				if (o) try {
+					b(t, o, e);
 				} catch (e) {}
 				return e;
 			});
@@ -51826,14 +54022,14 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 					});
 				});
 			});
-		}, r.prototype.bulkAdd = function(o, e, t) {
-			var i = this, a = Array.isArray(e) ? e : void 0, u = (t = t || (a ? void 0 : e)) ? t.allKeys : void 0;
+		}, r.prototype.bulkAdd = function(i, e, t) {
+			var o = this, a = Array.isArray(e) ? e : void 0, u = (t = t || (a ? void 0 : e)) ? t.allKeys : void 0;
 			return this._trans("readwrite", function(e) {
-				var t = i.schema.primKey, n = t.auto, t = t.keyPath;
+				var t = o.schema.primKey, n = t.auto, t = t.keyPath;
 				if (t && a) throw new k.InvalidArgument("bulkAdd(): keys argument invalid on tables with inbound keys");
-				if (a && a.length !== o.length) throw new k.InvalidArgument("Arguments objects and keys must have the same length");
-				var r = o.length, n = t && n ? o.map(vt(t)) : o;
-				return i.core.mutate({
+				if (a && a.length !== i.length) throw new k.InvalidArgument("Arguments objects and keys must have the same length");
+				var r = i.length, n = t && n ? i.map(vt(t)) : i;
+				return o.core.mutate({
 					trans: e,
 					type: "add",
 					keys: a,
@@ -51842,17 +54038,17 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				}).then(function(e) {
 					var t = e.numFailures, n = e.failures;
 					if (0 === t) return u ? e.results : e.lastResult;
-					throw new he("".concat(i.name, ".bulkAdd(): ").concat(t, " of ").concat(r, " operations failed"), n);
+					throw new he("".concat(o.name, ".bulkAdd(): ").concat(t, " of ").concat(r, " operations failed"), n);
 				});
 			});
-		}, r.prototype.bulkPut = function(o, e, t) {
-			var i = this, a = Array.isArray(e) ? e : void 0, u = (t = t || (a ? void 0 : e)) ? t.allKeys : void 0;
+		}, r.prototype.bulkPut = function(i, e, t) {
+			var o = this, a = Array.isArray(e) ? e : void 0, u = (t = t || (a ? void 0 : e)) ? t.allKeys : void 0;
 			return this._trans("readwrite", function(e) {
-				var t = i.schema.primKey, n = t.auto, t = t.keyPath;
+				var t = o.schema.primKey, n = t.auto, t = t.keyPath;
 				if (t && a) throw new k.InvalidArgument("bulkPut(): keys argument invalid on tables with inbound keys");
-				if (a && a.length !== o.length) throw new k.InvalidArgument("Arguments objects and keys must have the same length");
-				var r = o.length, n = t && n ? o.map(vt(t)) : o;
-				return i.core.mutate({
+				if (a && a.length !== i.length) throw new k.InvalidArgument("Arguments objects and keys must have the same length");
+				var r = i.length, n = t && n ? i.map(vt(t)) : i;
+				return o.core.mutate({
 					trans: e,
 					type: "put",
 					keys: a,
@@ -51861,13 +54057,13 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				}).then(function(e) {
 					var t = e.numFailures, n = e.failures;
 					if (0 === t) return u ? e.results : e.lastResult;
-					throw new he("".concat(i.name, ".bulkPut(): ").concat(t, " of ").concat(r, " operations failed"), n);
+					throw new he("".concat(o.name, ".bulkPut(): ").concat(t, " of ").concat(r, " operations failed"), n);
 				});
 			});
 		}, r.prototype.bulkUpdate = function(t) {
 			var h = this, n = this.core, r = t.map(function(e) {
 				return e.key;
-			}), o = t.map(function(e) {
+			}), i = t.map(function(e) {
 				return e.changes;
 			}), d = [];
 			return this._trans("readwrite", function(e) {
@@ -51877,15 +54073,15 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 					cache: "clone"
 				}).then(function(c) {
 					var l = [], f = [], s = (t.forEach(function(e, t) {
-						var n = e.key, r = e.changes, o = c[t];
-						if (o) {
-							for (var i = 0, a = Object.keys(r); i < a.length; i++) {
-								var u = a[i], s = r[u];
+						var n = e.key, r = e.changes, i = c[t];
+						if (i) {
+							for (var o = 0, a = Object.keys(r); o < a.length; o++) {
+								var u = a[o], s = r[u];
 								if (u === h.schema.primKey.keyPath) {
 									if (0 !== C(s, n)) throw new k.Constraint("Cannot update primary key in bulkUpdate()");
-								} else b(o, u, s);
+								} else b(i, u, s);
 							}
-							d.push(t), l.push(n), f.push(o);
+							d.push(t), l.push(n), f.push(i);
 						}
 					}), l.length);
 					return n.mutate({
@@ -51895,21 +54091,21 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 						values: f,
 						updates: {
 							keys: r,
-							changeSpecs: o
+							changeSpecs: i
 						}
 					}).then(function(e) {
 						var t = e.numFailures, n = e.failures;
 						if (0 === t) return s;
-						for (var r = 0, o = Object.keys(n); r < o.length; r++) {
-							var i, a = o[r], u = d[Number(a)];
-							null != u && (i = n[a], delete n[a], n[u] = i);
+						for (var r = 0, i = Object.keys(n); r < i.length; r++) {
+							var o, a = i[r], u = d[Number(a)];
+							null != u && (o = n[a], delete n[a], n[u] = o);
 						}
 						throw new he("".concat(h.name, ".bulkUpdate(): ").concat(t, " of ").concat(s, " operations failed"), n);
 					});
 				});
 			});
 		}, r.prototype.bulkDelete = function(t) {
-			var r = this, o = t.length;
+			var r = this, i = t.length;
 			return this._trans("readwrite", function(e) {
 				return r.core.mutate({
 					trans: e,
@@ -51921,16 +54117,16 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			}).then(function(e) {
 				var t = e.numFailures, n = e.failures;
 				if (0 === t) return e.lastResult;
-				throw new he("".concat(r.name, ".bulkDelete(): ").concat(t, " of ").concat(o, " operations failed"), n);
+				throw new he("".concat(r.name, ".bulkDelete(): ").concat(t, " of ").concat(i, " operations failed"), n);
 			});
 		};
 		var Ot = r;
 		function r() {}
-		function Pt(o) {
+		function Pt(i) {
 			function t(e, t) {
 				if (t) {
 					for (var n = arguments.length, r = new Array(n - 1); --n;) r[n - 1] = arguments[n];
-					return a[e].subscribe.apply(null, r), o;
+					return a[e].subscribe.apply(null, r), i;
 				}
 				if ("string" == typeof e) return a[e];
 			}
@@ -51939,22 +54135,22 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			for (var e = 1, n = arguments.length; e < n; ++e) u(arguments[e]);
 			return t;
 			function u(e, n, r) {
-				var o, i;
-				if ("object" != typeof e) return n = n || xe, i = {
+				var i, o;
+				if ("object" != typeof e) return n = n || xe, o = {
 					subscribers: [],
 					fire: r = r || g,
 					subscribe: function(e) {
-						-1 === i.subscribers.indexOf(e) && (i.subscribers.push(e), i.fire = n(i.fire, e));
+						-1 === o.subscribers.indexOf(e) && (o.subscribers.push(e), o.fire = n(o.fire, e));
 					},
 					unsubscribe: function(t) {
-						i.subscribers = i.subscribers.filter(function(e) {
+						o.subscribers = o.subscribers.filter(function(e) {
 							return e !== t;
-						}), i.fire = i.subscribers.reduce(n, r);
+						}), o.fire = o.subscribers.reduce(n, r);
 					}
-				}, a[e] = t[e] = i;
-				O(o = e).forEach(function(e) {
-					var t = o[e];
-					if (x(t)) u(e, o[e][0], o[e][1]);
+				}, a[e] = t[e] = o;
+				O(i = e).forEach(function(e) {
+					var t = i[e];
+					if (x(t)) u(e, i[e][0], i[e][1]);
 					else {
 						if ("asap" !== t) throw new k.InvalidArgument("Invalid event config");
 						var n = u(e, ve, function() {
@@ -52003,21 +54199,21 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				}
 			});
 		}
-		function Tt(e, i, t, n) {
+		function Tt(e, o, t, n) {
 			var a, r, u = e.replayFilter ? pt(e.filter, e.replayFilter()) : e.filter;
 			return e.or ? (a = {}, r = function(e, t, n) {
-				var r, o;
+				var r, i;
 				u && !u(t, n, function(e) {
 					return t.stop(e);
 				}, function(e) {
 					return t.fail(e);
-				}) || ("[object ArrayBuffer]" === (o = "" + (r = t.primaryKey)) && (o = "" + new Uint8Array(r)), m(a, o)) || (a[o] = !0, i(e, t, n));
-			}, Promise.all([e.or._iterate(r, t), It(jt(e, n, t), e.algorithm, r, !e.keysOnly && e.valueMapper)])) : It(jt(e, n, t), pt(e.algorithm, u), i, !e.keysOnly && e.valueMapper);
+				}) || ("[object ArrayBuffer]" === (i = "" + (r = t.primaryKey)) && (i = "" + new Uint8Array(r)), m(a, i)) || (a[i] = !0, o(e, t, n));
+			}, Promise.all([e.or._iterate(r, t), It(jt(e, n, t), e.algorithm, r, !e.keysOnly && e.valueMapper)])) : It(jt(e, n, t), pt(e.algorithm, u), o, !e.keysOnly && e.valueMapper);
 		}
-		function It(e, r, o, i) {
-			var a = E(i ? function(e, t, n) {
-				return o(i(e), t, n);
-			} : o);
+		function It(e, r, i, o) {
+			var a = E(o ? function(e, t, n) {
+				return i(o(e), t, n);
+			} : i);
 			return e.then(function(n) {
 				if (n) return n.start(function() {
 					var t = function() {
@@ -52035,31 +54231,31 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				});
 			});
 		}
-		o.prototype._read = function(e, t) {
+		i.prototype._read = function(e, t) {
 			var n = this._ctx;
 			return n.error ? n.table._trans(null, S.bind(null, n.error)) : n.table._trans("readonly", e).then(t);
-		}, o.prototype._write = function(e) {
+		}, i.prototype._write = function(e) {
 			var t = this._ctx;
 			return t.error ? t.table._trans(null, S.bind(null, t.error)) : t.table._trans("readwrite", e, "locked");
-		}, o.prototype._addAlgorithm = function(e) {
+		}, i.prototype._addAlgorithm = function(e) {
 			var t = this._ctx;
 			t.algorithm = pt(t.algorithm, e);
-		}, o.prototype._iterate = function(e, t) {
+		}, i.prototype._iterate = function(e, t) {
 			return Tt(this._ctx, e, t, this._ctx.table.core);
-		}, o.prototype.clone = function(e) {
+		}, i.prototype.clone = function(e) {
 			var t = Object.create(this.constructor.prototype), n = Object.create(this._ctx);
 			return e && a(n, e), t._ctx = n, t;
-		}, o.prototype.raw = function() {
+		}, i.prototype.raw = function() {
 			return this._ctx.valueMapper = null, this;
-		}, o.prototype.each = function(t) {
+		}, i.prototype.each = function(t) {
 			var n = this._ctx;
 			return this._read(function(e) {
 				return Tt(n, t, e, n.table.core);
 			});
-		}, o.prototype.count = function(e) {
-			var o = this;
+		}, i.prototype.count = function(e) {
+			var i = this;
 			return this._read(function(e) {
-				var t, n = o._ctx, r = n.table.core;
+				var t, n = i._ctx, r = n.table.core;
 				return Et(n, !0) ? r.count({
 					trans: e,
 					query: {
@@ -52074,41 +54270,41 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 					return t;
 				}));
 			}).then(e);
-		}, o.prototype.sortBy = function(e, t) {
-			var n = e.split(".").reverse(), r = n[0], o = n.length - 1;
-			function i(e, t) {
-				return t ? i(e[n[t]], t - 1) : e[r];
+		}, i.prototype.sortBy = function(e, t) {
+			var n = e.split(".").reverse(), r = n[0], i = n.length - 1;
+			function o(e, t) {
+				return t ? o(e[n[t]], t - 1) : e[r];
 			}
 			var a = "next" === this._ctx.dir ? 1 : -1;
 			function u(e, t) {
-				return C(i(e, o), i(t, o)) * a;
+				return C(o(e, i), o(t, i)) * a;
 			}
 			return this.toArray(function(e) {
-				return e.sort(u);
+				return e.slice().sort(u);
 			}).then(t);
-		}, o.prototype.toArray = function(e) {
-			var i = this;
+		}, i.prototype.toArray = function(e) {
+			var o = this;
 			return this._read(function(e) {
-				var t, n, r, o = i._ctx;
-				return Et(o, !0) && 0 < o.limit ? (t = o.valueMapper, n = Ct(o, o.table.core.schema), o.table.core.query({
+				var t, n, r, i = o._ctx;
+				return Et(i, !0) && 0 < i.limit ? (t = i.valueMapper, n = Ct(i, i.table.core.schema), i.table.core.query({
 					trans: e,
-					limit: o.limit,
+					limit: i.limit,
 					values: !0,
-					direction: "prev" === o.dir ? "prev" : void 0,
+					direction: "prev" === i.dir ? "prev" : void 0,
 					query: {
 						index: n,
-						range: o.range
+						range: i.range
 					}
 				}).then(function(e) {
 					e = e.result;
 					return t ? e.map(t) : e;
-				})) : (r = [], Tt(o, function(e) {
+				})) : (r = [], Tt(i, function(e) {
 					return r.push(e);
-				}, e, o.table.core).then(function() {
+				}, e, i.table.core).then(function() {
 					return r;
 				}));
 			}, e);
-		}, o.prototype.offset = function(t) {
+		}, i.prototype.offset = function(t) {
 			var e = this._ctx;
 			return t <= 0 || (e.offset += t, Et(e) ? At(e, function() {
 				var n = t;
@@ -52123,56 +54319,56 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 					return --e < 0;
 				};
 			})), this;
-		}, o.prototype.limit = function(e) {
+		}, i.prototype.limit = function(e) {
 			return this._ctx.limit = Math.min(this._ctx.limit, e), At(this._ctx, function() {
 				var r = e;
 				return function(e, t, n) {
 					return --r <= 0 && t(n), 0 <= r;
 				};
 			}, !0), this;
-		}, o.prototype.until = function(r, o) {
+		}, i.prototype.until = function(r, i) {
 			return St(this._ctx, function(e, t, n) {
-				return !r(e.value) || (t(n), o);
+				return !r(e.value) || (t(n), i);
 			}), this;
-		}, o.prototype.first = function(e) {
+		}, i.prototype.first = function(e) {
 			return this.limit(1).toArray(function(e) {
 				return e[0];
 			}).then(e);
-		}, o.prototype.last = function(e) {
+		}, i.prototype.last = function(e) {
 			return this.reverse().first(e);
-		}, o.prototype.filter = function(t) {
+		}, i.prototype.filter = function(t) {
 			var e;
 			return St(this._ctx, function(e) {
 				return t(e.value);
 			}), (e = this._ctx).isMatch = pt(e.isMatch, t), this;
-		}, o.prototype.and = function(e) {
+		}, i.prototype.and = function(e) {
 			return this.filter(e);
-		}, o.prototype.or = function(e) {
+		}, i.prototype.or = function(e) {
 			return new this.db.WhereClause(this._ctx.table, e, this);
-		}, o.prototype.reverse = function() {
+		}, i.prototype.reverse = function() {
 			return this._ctx.dir = "prev" === this._ctx.dir ? "next" : "prev", this._ondirectionchange && this._ondirectionchange(this._ctx.dir), this;
-		}, o.prototype.desc = function() {
+		}, i.prototype.desc = function() {
 			return this.reverse();
-		}, o.prototype.eachKey = function(n) {
+		}, i.prototype.eachKey = function(n) {
 			var e = this._ctx;
 			return e.keysOnly = !e.isMatch, this.each(function(e, t) {
 				n(t.key, t);
 			});
-		}, o.prototype.eachUniqueKey = function(e) {
+		}, i.prototype.eachUniqueKey = function(e) {
 			return this._ctx.unique = "unique", this.eachKey(e);
-		}, o.prototype.eachPrimaryKey = function(n) {
+		}, i.prototype.eachPrimaryKey = function(n) {
 			var e = this._ctx;
 			return e.keysOnly = !e.isMatch, this.each(function(e, t) {
 				n(t.primaryKey, t);
 			});
-		}, o.prototype.keys = function(e) {
+		}, i.prototype.keys = function(e) {
 			var t = this._ctx, n = (t.keysOnly = !t.isMatch, []);
 			return this.each(function(e, t) {
 				n.push(t.key);
 			}).then(function() {
 				return n;
 			}).then(e);
-		}, o.prototype.primaryKeys = function(e) {
+		}, i.prototype.primaryKeys = function(e) {
 			var n = this._ctx;
 			if (Et(n, !0) && 0 < n.limit) return this._read(function(e) {
 				var t = Ct(n, n.table.core.schema);
@@ -52196,29 +54392,29 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			}).then(function() {
 				return r;
 			}).then(e);
-		}, o.prototype.uniqueKeys = function(e) {
+		}, i.prototype.uniqueKeys = function(e) {
 			return this._ctx.unique = "unique", this.keys(e);
-		}, o.prototype.firstKey = function(e) {
+		}, i.prototype.firstKey = function(e) {
 			return this.limit(1).keys(function(e) {
 				return e[0];
 			}).then(e);
-		}, o.prototype.lastKey = function(e) {
+		}, i.prototype.lastKey = function(e) {
 			return this.reverse().firstKey(e);
-		}, o.prototype.distinct = function() {
+		}, i.prototype.distinct = function() {
 			var n, e = this._ctx, e = e.index && e.table.schema.idxByName[e.index];
 			return e && e.multi && (n = {}, St(this._ctx, function(e) {
 				var e = e.primaryKey.toString(), t = m(n, e);
 				return n[e] = !0, !t;
 			})), this;
-		}, o.prototype.modify = function(x) {
+		}, i.prototype.modify = function(x) {
 			var n = this, k = this._ctx;
 			return this._write(function(p) {
 				function y(e, t) {
 					var n = t.failures;
 					u += e - t.numFailures;
-					for (var r = 0, o = O(n); r < o.length; r++) {
-						var i = o[r];
-						a.push(n[i]);
+					for (var r = 0, i = O(n); r < i.length; r++) {
+						var o = i[r];
+						a.push(n[o]);
 					}
 				}
 				var v = "function" == typeof x ? x : function(e) {
@@ -52232,20 +54428,20 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 							keys: l,
 							cache: "immutable"
 						})).then(function(e) {
-							var n = [], t = [], r = b ? [] : null, o = _ ? l : [];
-							if (!_) for (var i = 0; i < c; ++i) {
-								var a = e[i], u = {
+							var n = [], t = [], r = b ? [] : null, i = _ ? l : [];
+							if (!_) for (var o = 0; o < c; ++o) {
+								var a = e[o], u = {
 									value: ee(a),
-									primKey: f[s + i]
+									primKey: f[s + o]
 								};
-								!1 !== v.call(u, u.value, u) && (null == u.value ? o.push(f[s + i]) : b || 0 === C(g(a), g(u.value)) ? (t.push(u.value), b && r.push(f[s + i])) : (o.push(f[s + i]), n.push(u.value)));
+								!1 !== v.call(u, u.value, u) && (null == u.value ? i.push(f[s + o]) : b || 0 === C(g(a), g(u.value)) ? (t.push(u.value), b && r.push(f[s + o])) : (i.push(f[s + o]), n.push(u.value)));
 							}
 							return Promise.resolve(0 < n.length && m.mutate({
 								trans: p,
 								type: "add",
 								values: n
 							}).then(function(e) {
-								for (var t in e.failures) o.splice(parseInt(t), 1);
+								for (var t in e.failures) i.splice(parseInt(t), 1);
 								y(n.length, e);
 							})).then(function() {
 								return (0 < t.length || d && "object" == typeof x) && m.mutate({
@@ -52260,16 +54456,16 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 									return y(t.length, e);
 								});
 							}).then(function() {
-								return (0 < o.length || d && _) && m.mutate({
+								return (0 < i.length || d && _) && m.mutate({
 									trans: p,
 									type: "delete",
-									keys: o,
+									keys: i,
 									criteria: d,
 									isAdditionalChunk: 0 < s
 								}).then(function(e) {
-									return wt(k.table, o, e);
+									return wt(k.table, i, e);
 								}).then(function(e) {
-									return y(o.length, e);
+									return y(i.length, e);
 								});
 							}).then(function() {
 								return f.length > s + c && h(s + w);
@@ -52286,18 +54482,18 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 					});
 				});
 			});
-		}, o.prototype.delete = function() {
-			var o = this._ctx, n = o.range;
-			return !Et(o) || o.table.schema.yProps || !o.isPrimKey && 3 !== n.type ? this.modify(Dt) : this._write(function(e) {
-				var t = o.table.core.schema.primaryKey, r = n;
-				return o.table.core.count({
+		}, i.prototype.delete = function() {
+			var i = this._ctx, n = i.range;
+			return !Et(i) || i.table.schema.yProps || !i.isPrimKey && 3 !== n.type ? this.modify(Dt) : this._write(function(e) {
+				var t = i.table.core.schema.primaryKey, r = n;
+				return i.table.core.count({
 					trans: e,
 					query: {
 						index: t,
 						range: r
 					}
 				}).then(function(n) {
-					return o.table.core.mutate({
+					return i.table.core.mutate({
 						trans: e,
 						type: "deleteRange",
 						range: r
@@ -52311,8 +54507,8 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				});
 			});
 		};
-		var qt = o;
-		function o() {}
+		var qt = i;
+		function i() {}
 		var Dt = function(e, t) {
 			return t.value = null;
 		};
@@ -52332,12 +54528,12 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			}).limit(0);
 		}
 		function Nt(e, s, n, r) {
-			var o, c, l, f, h, d, p, y = n.length;
+			var i, c, l, f, h, d, p, y = n.length;
 			if (!n.every(function(e) {
 				return "string" == typeof e;
 			})) return j(e, lt);
 			function t(e) {
-				o = "next" === e ? function(e) {
+				i = "next" === e ? function(e) {
 					return e.toUpperCase();
 				} : function(e) {
 					return e.toLowerCase();
@@ -52349,7 +54545,7 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				var t = n.map(function(e) {
 					return {
 						lower: c(e),
-						upper: o(e)
+						upper: i(e)
 					};
 				}).sort(function(e, t) {
 					return l(e.lower, t.lower);
@@ -52369,21 +54565,21 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			return e._addAlgorithm(function(e, t, n) {
 				var r = e.key;
 				if ("string" == typeof r) {
-					var o = c(r);
-					if (s(o, h, v)) return !0;
-					for (var i = null, a = v; a < y; ++a) {
-						var u = ((e, t, n, r, o, i) => {
+					var i = c(r);
+					if (s(i, h, v)) return !0;
+					for (var o = null, a = v; a < y; ++a) {
+						var u = ((e, t, n, r, i, o) => {
 							for (var a = Math.min(e.length, r.length), u = -1, s = 0; s < a; ++s) {
 								var c = t[s];
-								if (c !== r[s]) return o(e[s], n[s]) < 0 ? e.substr(0, s) + n[s] + n.substr(s + 1) : o(e[s], r[s]) < 0 ? e.substr(0, s) + r[s] + n.substr(s + 1) : 0 <= u ? e.substr(0, u) + t[u] + n.substr(u + 1) : null;
-								o(e[s], c) < 0 && (u = s);
+								if (c !== r[s]) return i(e[s], n[s]) < 0 ? e.substr(0, s) + n[s] + n.substr(s + 1) : i(e[s], r[s]) < 0 ? e.substr(0, s) + r[s] + n.substr(s + 1) : 0 <= u ? e.substr(0, u) + t[u] + n.substr(u + 1) : null;
+								i(e[s], c) < 0 && (u = s);
 							}
-							return a < r.length && "next" === i ? e + n.substr(e.length) : a < e.length && "prev" === i ? e.substr(0, n.length) : u < 0 ? null : e.substr(0, u) + r[u] + n.substr(u + 1);
-						})(r, o, f[a], h[a], l, d);
-						null === u && null === i ? v = a + 1 : (null === i || 0 < l(i, u)) && (i = u);
+							return a < r.length && "next" === o ? e + n.substr(e.length) : a < e.length && "prev" === o ? e.substr(0, n.length) : u < 0 ? null : e.substr(0, u) + r[u] + n.substr(u + 1);
+						})(r, i, f[a], h[a], l, d);
+						null === u && null === o ? v = a + 1 : (null === o || 0 < l(o, u)) && (o = u);
 					}
-					t(null !== i ? function() {
-						e.continue(i + p);
+					t(null !== o ? function() {
+						e.continue(o + p);
 					} : n);
 				}
 				return !1;
@@ -52463,20 +54659,20 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				});
 			}, e, ct);
 		}, d.prototype.anyOf = function() {
-			var e, o, t = this, i = n.apply(ae, arguments), a = this._cmp;
+			var e, i, t = this, o = n.apply(ae, arguments), a = this._cmp;
 			try {
-				i.sort(a);
+				o.sort(a);
 			} catch (e) {
 				return j(this, A);
 			}
-			return 0 === i.length ? Ft(this) : ((e = new this.Collection(this, function() {
-				return T(i[0], i[i.length - 1]);
+			return 0 === o.length ? Ft(this) : ((e = new this.Collection(this, function() {
+				return T(o[0], o[o.length - 1]);
 			}))._ondirectionchange = function(e) {
-				a = "next" === e ? t._ascending : t._descending, i.sort(a);
-			}, o = 0, e._addAlgorithm(function(e, t, n) {
-				for (var r = e.key; 0 < a(r, i[o]);) if (++o === i.length) return t(n), !1;
-				return 0 === a(r, i[o]) || (t(function() {
-					e.continue(i[o]);
+				a = "next" === e ? t._ascending : t._descending, o.sort(a);
+			}, i = 0, e._addAlgorithm(function(e, t, n) {
+				for (var r = e.key; 0 < a(r, o[i]);) if (++i === o.length) return t(n), !1;
+				return 0 === a(r, o[i]) || (t(function() {
+					e.continue(o[i]);
 				}), !1);
 			}), e);
 		}, d.prototype.notEqual = function(e) {
@@ -52500,12 +54696,12 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				includeUppers: !1
 			});
 		}, d.prototype.inAnyRange = function(e, t) {
-			var i = this, a = this._cmp, u = this._ascending, n = this._descending, s = this._min, c = this._max;
+			var o = this, a = this._cmp, u = this._ascending, n = this._descending, s = this._min, c = this._max;
 			if (0 === e.length) return Ft(this);
 			if (!e.every(function(e) {
 				return void 0 !== e[0] && void 0 !== e[1] && u(e[0], e[1]) <= 0;
 			})) return j(this, "First argument to inAnyRange() must be an Array of two-value Arrays [lower,upper] where upper must not be lower than lower", k.InvalidArgument);
-			var r = !t || !1 !== t.includeLowers, o = t && !0 === t.includeUppers;
+			var r = !t || !1 !== t.includeLowers, i = t && !0 === t.includeUppers;
 			var l, f = u;
 			function h(e, t) {
 				return f(e[0], t[0]);
@@ -52513,9 +54709,9 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			try {
 				(l = e.reduce(function(e, t) {
 					for (var n = 0, r = e.length; n < r; ++n) {
-						var o = e[n];
-						if (a(t[0], o[1]) < 0 && 0 < a(t[1], o[0])) {
-							o[0] = s(o[0], t[0]), o[1] = c(o[1], t[1]);
+						var i = e[n];
+						if (a(t[0], i[1]) < 0 && 0 < a(t[1], i[0])) {
+							i[0] = s(i[0], t[0]), i[1] = c(i[1], t[1]);
 							break;
 						}
 					}
@@ -52524,7 +54720,7 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			} catch (e) {
 				return j(this, A);
 			}
-			var d = 0, p = o ? function(e) {
+			var d = 0, p = i ? function(e) {
 				return 0 < u(e, l[d][1]);
 			} : function(e) {
 				return 0 <= u(e, l[d][1]);
@@ -52534,13 +54730,13 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				return 0 <= n(e, l[d][0]);
 			};
 			var v = p, t = new this.Collection(this, function() {
-				return T(l[0][0], l[l.length - 1][1], !r, !o);
+				return T(l[0][0], l[l.length - 1][1], !r, !i);
 			});
 			return t._ondirectionchange = function(e) {
 				f = "next" === e ? (v = p, u) : (v = y, n), l.sort(h);
 			}, t._addAlgorithm(function(e, t, n) {
-				for (var r, o = e.key; v(o);) if (++d === l.length) return t(n), !1;
-				return !p(r = o) && !y(r) || (0 === i._cmp(o, l[d][1]) || 0 === i._cmp(o, l[d][0]) || t(function() {
+				for (var r, i = e.key; v(i);) if (++d === l.length) return t(n), !1;
+				return !p(r = i) && !y(r) || (0 === o._cmp(i, l[d][1]) || 0 === o._cmp(i, l[d][0]) || t(function() {
 					f === u ? e.continue(l[d][0]) : e.continue(l[d][1]);
 				}), !1);
 			}), t;
@@ -52593,41 +54789,41 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				});
 			}
 			return this;
-		}, p.prototype._promise = function(n, r, o) {
-			var e, i = this;
+		}, p.prototype._promise = function(n, r, i) {
+			var e, o = this;
 			return "readwrite" === n && "readwrite" !== this.mode ? S(new k.ReadOnly("Transaction is readonly")) : this.active ? this._locked() ? new K(function(e, t) {
-				i._blockedFuncs.push([function() {
-					i._promise(n, r, o).then(e, t);
+				o._blockedFuncs.push([function() {
+					o._promise(n, r, i).then(e, t);
 				}, P]);
-			}) : o ? v(function() {
+			}) : i ? v(function() {
 				var e = new K(function(e, t) {
-					i._lock();
-					var n = r(e, t, i);
+					o._lock();
+					var n = r(e, t, o);
 					n && n.then && n.then(e, t);
 				});
 				return e.finally(function() {
-					return i._unlock();
+					return o._unlock();
 				}), e._lib = !0, e;
 			}) : ((e = new K(function(e, t) {
-				var n = r(e, t, i);
+				var n = r(e, t, o);
 				n && n.then && n.then(e, t);
 			}))._lib = !0, e) : S(new k.TransactionInactive());
 		}, p.prototype._root = function() {
 			return this.parent ? this.parent._root() : this;
 		}, p.prototype.waitFor = function(e) {
-			var t, r = this._root(), o = K.resolve(e), i = (r._waitingFor ? r._waitingFor = r._waitingFor.then(function() {
-				return o;
-			}) : (r._waitingFor = o, r._waitingQueue = [], t = r.idbtrans.objectStore(r.storeNames[0]), function e() {
+			var t, r = this._root(), i = K.resolve(e), o = (r._waitingFor ? r._waitingFor = r._waitingFor.then(function() {
+				return i;
+			}) : (r._waitingFor = i, r._waitingQueue = [], t = r.idbtrans.objectStore(r.storeNames[0]), function e() {
 				for (++r._spinCount; r._waitingQueue.length;) r._waitingQueue.shift()();
 				r._waitingFor && (t.get(-Infinity).onsuccess = e);
 			}()), r._waitingFor);
 			return new K(function(t, n) {
-				o.then(function(e) {
+				i.then(function(e) {
 					return r._waitingQueue.push(E(t.bind(null, e)));
 				}, function(e) {
 					return r._waitingQueue.push(E(n.bind(null, e)));
 				}).finally(function() {
-					r._waitingFor === i && (r._waitingFor = null);
+					r._waitingFor === o && (r._waitingFor = null);
 				});
 			});
 		}, p.prototype.abort = function() {
@@ -52640,15 +54836,15 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			throw new k.NotFound("Table " + e + " not part of transaction");
 		}, p);
 		function p() {}
-		function $t(e, t, n, r, o, i, a, u) {
+		function $t(e, t, n, r, i, o, a, u) {
 			return {
 				name: e,
 				keyPath: t,
 				unique: n,
 				multi: r,
-				auto: o,
-				compound: i,
-				src: (n && !a ? "&" : "") + (r ? "*" : "") + (o ? "++" : "") + Qt(t),
+				auto: i,
+				compound: o,
+				src: (n && !a ? "&" : "") + (r ? "*" : "") + (i ? "++" : "") + Qt(t),
 				type: u
 			};
 		}
@@ -52698,12 +54894,12 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 		function en(e) {
 			return null == e ? ":id" : "string" == typeof e ? e : "[".concat(e.join("+"), "]");
 		}
-		function tn(e, o, t) {
+		function tn(e, i, t) {
 			function _(e) {
 				if (3 === e.type) return null;
 				if (4 === e.type) throw new Error("Cannot convert never type to IDBKeyRange");
 				var t = e.lower, n = e.upper, r = e.lowerOpen, e = e.upperOpen;
-				return void 0 === t ? void 0 === n ? null : o.upperBound(n, !!e) : void 0 === n ? o.lowerBound(t, !!r) : o.bound(t, n, !!r, !!e);
+				return void 0 === t ? void 0 === n ? null : i.upperBound(n, !!e) : void 0 === n ? i.lowerBound(t, !!r) : i.bound(t, n, !!r, !!e);
 			}
 			function n(e) {
 				var p, y, w = e.name;
@@ -52714,9 +54910,9 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 						var y = e.trans, v = e.type, m = e.keys, b = e.values, g = e.range;
 						return new Promise(function(t, e) {
 							t = E(t);
-							var n = y.objectStore(w), r = null == n.keyPath, o = "put" === v || "add" === v;
-							if (!o && "delete" !== v && "deleteRange" !== v) throw new Error("Invalid operation type: " + v);
-							var i, a = (m || b || { length: 1 }).length;
+							var n = y.objectStore(w), r = null == n.keyPath, i = "put" === v || "add" === v;
+							if (!i && "delete" !== v && "deleteRange" !== v) throw new Error("Invalid operation type: " + v);
+							var o, a = (m || b || { length: 1 }).length;
 							if (m && b && m.length !== b.length) throw new Error("Given keys array must have same length as given values array.");
 							if (0 === a) return t({
 								numFailures: 0,
@@ -52735,11 +54931,11 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 									results: [],
 									lastResult: void 0
 								});
-								3 === g.type ? s.push(i = n.clear()) : s.push(i = n.delete(_(g)));
+								3 === g.type ? s.push(o = n.clear()) : s.push(o = n.delete(_(g)));
 							} else {
-								var r = o ? r ? [b, m] : [b, null] : [m, null], f = r[0], h = r[1];
-								if (o) for (var d = 0; d < a; ++d) s.push(i = h && void 0 !== h[d] ? n[v](f[d], h[d]) : n[v](f[d])), i.onerror = u;
-								else for (d = 0; d < a; ++d) s.push(i = n[v](f[d])), i.onerror = u;
+								var r = i ? r ? [b, m] : [b, null] : [m, null], f = r[0], h = r[1];
+								if (i) for (var d = 0; d < a; ++d) s.push(o = h && void 0 !== h[d] ? n[v](f[d], h[d]) : n[v](f[d])), o.onerror = u;
+								else for (d = 0; d < a; ++d) s.push(o = n[v](f[d])), o.onerror = u;
 							}
 							function p(e) {
 								e = e.target.result, s.forEach(function(e, t) {
@@ -52753,27 +54949,27 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 									lastResult: e
 								});
 							}
-							i.onerror = function(e) {
+							o.onerror = function(e) {
 								u(e), p(e);
-							}, i.onsuccess = p;
+							}, o.onsuccess = p;
 						});
 					},
 					getMany: function(e) {
 						var f = e.trans, h = e.keys;
 						return new Promise(function(t, e) {
 							t = E(t);
-							for (var n, r = f.objectStore(w), o = h.length, i = new Array(o), a = 0, u = 0, s = function(e) {
+							for (var n, r = f.objectStore(w), i = h.length, o = new Array(i), a = 0, u = 0, s = function(e) {
 								e = e.target;
-								i[e._pos] = e.result, ++u === a && t(i);
-							}, c = I(e), l = 0; l < o; ++l) null != h[l] && ((n = r.get(h[l]))._pos = l, n.onsuccess = s, n.onerror = c, ++a);
-							0 === a && t(i);
+								o[e._pos] = e.result, ++u === a && t(o);
+							}, c = I(e), l = 0; l < i; ++l) null != h[l] && ((n = r.get(h[l]))._pos = l, n.onsuccess = s, n.onerror = c, ++a);
+							0 === a && t(o);
 						});
 					},
 					get: function(e) {
-						var r = e.trans, o = e.key;
+						var r = e.trans, i = e.key;
 						return new Promise(function(t, e) {
 							t = E(t);
-							var n = r.objectStore(w).get(o);
+							var n = r.objectStore(w).get(i);
 							n.onsuccess = function(e) {
 								return t(e.target.result);
 							}, n.onerror = I(e);
@@ -52782,7 +54978,7 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 					query: (p = a, y = u, function(d) {
 						return new Promise(function(t, e) {
 							t = E(t);
-							var n, r, o, i, a = d.trans, u = d.values, s = d.limit, c = d.query, l = null != (l = d.direction) ? l : "next", f = s === Infinity ? void 0 : s, h = c.index, c = c.range, a = a.objectStore(w), a = h.isPrimaryKey ? a : a.index(h.name), h = _(c);
+							var n, r, i, o, a = d.trans, u = d.values, s = d.limit, c = d.query, l = null != (l = d.direction) ? l : "next", f = s === Infinity ? void 0 : s, h = c.index, c = c.range, a = a.objectStore(w), a = h.isPrimaryKey ? a : a.index(h.name), h = _(c);
 							if (0 === s) return t({ result: [] });
 							y ? (c = {
 								query: h,
@@ -52792,20 +54988,20 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 								return t({ result: e.target.result });
 							}, n.onerror = I(e)) : p && "next" === l ? ((n = u ? a.getAll(h, f) : a.getAllKeys(h, f)).onsuccess = function(e) {
 								return t({ result: e.target.result });
-							}, n.onerror = I(e)) : (r = 0, o = !u && "openKeyCursor" in a ? a.openKeyCursor(h, l) : a.openCursor(h, l), i = [], o.onsuccess = function() {
-								var e = o.result;
-								return !e || (i.push(u ? e.value : e.primaryKey), ++r === s) ? t({ result: i }) : void e.continue();
-							}, o.onerror = I(e));
+							}, n.onerror = I(e)) : (r = 0, i = !u && "openKeyCursor" in a ? a.openKeyCursor(h, l) : a.openCursor(h, l), o = [], i.onsuccess = function() {
+								var e = i.result;
+								return !e || (o.push(u ? e.value : e.primaryKey), ++r === s) ? t({ result: o }) : void e.continue();
+							}, i.onerror = I(e));
 						});
 					}),
 					openCursor: function(e) {
-						var c = e.trans, i = e.values, a = e.query, u = e.reverse, l = e.unique;
+						var c = e.trans, o = e.values, a = e.query, u = e.reverse, l = e.unique;
 						return new Promise(function(t, n) {
 							t = E(t);
-							var e = a.index, r = a.range, o = c.objectStore(w), o = e.isPrimaryKey ? o : o.index(e.name), e = u ? l ? "prevunique" : "prev" : l ? "nextunique" : "next", s = !i && "openKeyCursor" in o ? o.openKeyCursor(_(r), e) : o.openCursor(_(r), e);
+							var e = a.index, r = a.range, i = c.objectStore(w), i = e.isPrimaryKey ? i : i.index(e.name), e = u ? l ? "prevunique" : "prev" : l ? "nextunique" : "next", s = !o && "openKeyCursor" in i ? i.openKeyCursor(_(r), e) : i.openCursor(_(r), e);
 							s.onerror = I(n), s.onsuccess = E(function(e) {
-								var r, o, i, a, u = s.result;
-								u ? (u.___id = ++Zt, u.done = !1, r = u.continue.bind(u), o = (o = u.continuePrimaryKey) && o.bind(u), i = u.advance.bind(u), a = function() {
+								var r, i, o, a, u = s.result;
+								u ? (u.___id = ++Zt, u.done = !1, r = u.continue.bind(u), i = (i = u.continuePrimaryKey) && i.bind(u), o = u.advance.bind(u), a = function() {
 									throw new Error("Cursor not stopped");
 								}, u.trans = c, u.stop = u.continue = u.continuePrimaryKey = u.advance = function() {
 									throw new Error("Cursor not started");
@@ -52834,15 +55030,15 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 									});
 									return s.onsuccess = E(function(e) {
 										s.onsuccess = t, t();
-									}), u.continue = r, u.continuePrimaryKey = o, u.advance = i, t(), n;
+									}), u.continue = r, u.continuePrimaryKey = i, u.advance = o, t(), n;
 								}, t(u)) : t(null);
 							}, n);
 						});
 					},
 					count: function(e) {
-						var t = e.query, o = e.trans, i = t.index, a = t.range;
+						var t = e.query, i = e.trans, o = t.index, a = t.range;
 						return new Promise(function(t, e) {
-							var n = o.objectStore(w), n = i.isPrimaryKey ? n : n.index(i.name), r = _(a), r = r ? n.count(r) : n.count();
+							var n = i.objectStore(w), n = o.isPrimaryKey ? n : n.index(o.name), r = _(a), r = r ? n.count(r) : n.count();
 							r.onsuccess = E(function(e) {
 								return t(e.target.result);
 							}), r.onerror = I(e);
@@ -52850,14 +55046,14 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 					}
 				};
 			}
-			r = t, i = Jt((t = e).objectStoreNames), s = 0 < i.length ? r.objectStore(i[0]) : {};
+			r = t, o = Jt((t = e).objectStoreNames), s = 0 < o.length ? r.objectStore(o[0]) : {};
 			var r, t = {
 				schema: {
 					name: t.name,
-					tables: i.map(function(e) {
+					tables: o.map(function(e) {
 						return r.objectStore(e);
 					}).map(function(t) {
-						var e = t.keyPath, n = t.autoIncrement, r = x(e), o = {}, r = {
+						var e = t.keyPath, n = t.autoIncrement, r = x(e), i = {}, r = {
 							name: t.name,
 							primaryKey: {
 								name: null,
@@ -52880,18 +55076,18 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 									multiEntry: r,
 									extractKey: Ht(e)
 								};
-								return o[en(e)] = t;
+								return i[en(e)] = t;
 							}),
 							getIndexByKeyPath: function(e) {
-								return o[en(e)];
+								return i[en(e)];
 							}
 						};
-						return o[":id"] = r.primaryKey, null != e && (o[en(e)] = r.primaryKey), r;
+						return i[":id"] = r.primaryKey, null != e && (i[en(e)] = r.primaryKey), r;
 					})
 				},
-				hasGetAll: 0 < i.length && "getAll" in s && !("undefined" != typeof navigator && /Safari/.test(navigator.userAgent) && !/(Chrome\/|Edge\/)/.test(navigator.userAgent) && [].concat(navigator.userAgent.match(/Safari\/(\d*)/))[1] < 604),
+				hasGetAll: 0 < o.length && "getAll" in s && !("undefined" != typeof navigator && /Safari/.test(navigator.userAgent) && !/(Chrome\/|Edge\/)/.test(navigator.userAgent) && [].concat(navigator.userAgent.match(/Safari\/(\d*)/))[1] < 604),
 				hasIdb3Features: "getAllRecords" in s
-			}, i = t.schema, a = t.hasGetAll, u = t.hasIdb3Features, s = i.tables.map(n), c = {};
+			}, o = t.schema, a = t.hasGetAll, u = t.hasIdb3Features, s = o.tables.map(n), c = {};
 			return s.forEach(function(e) {
 				return c[e.name] = e;
 			}), {
@@ -52902,8 +55098,8 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 					throw new Error("Table '".concat(e, "' not found"));
 				},
 				MIN_KEY: -Infinity,
-				MAX_KEY: Xt(o),
-				schema: i
+				MAX_KEY: Xt(i),
+				schema: o
 			};
 		}
 		function nn(e, t, n, r) {
@@ -52922,14 +55118,14 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				}) && (e.core = n.core.table(t), n[t] instanceof n.Table) && (n[t].core = e.core);
 			});
 		}
-		function on(o, e, t, i) {
+		function on(i, e, t, o) {
 			t.forEach(function(n) {
-				var r = i[n];
+				var r = o[n];
 				e.forEach(function(e) {
 					var t = function e(t, n) {
 						return z(t, n) || (t = F(t)) && e(t, n);
 					}(e, n);
-					(!t || "value" in t && void 0 === t.value) && (e === o.Transaction.prototype || e instanceof o.Transaction ? u(e, n, {
+					(!t || "value" in t && void 0 === t.value) && (e === i.Transaction.prototype || e instanceof i.Transaction ? u(e, n, {
 						get: function() {
 							return this.table(n);
 						},
@@ -52941,7 +55137,7 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 								enumerable: !0
 							});
 						}
-					}) : e[n] = new o.Table(n, r));
+					}) : e[n] = new i.Table(n, r));
 				});
 			});
 		}
@@ -52953,20 +55149,20 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 		function un(e, t) {
 			return e._cfg.version - t._cfg.version;
 		}
-		function sn(n, r, o, e) {
-			var i = n._dbSchema, a = (o.objectStoreNames.contains("$meta") && !i.$meta && (i.$meta = Gt("$meta", vn("")[0], []), n._storeNames.push("$meta")), n._createTransaction("readwrite", n._storeNames, i)), u = (a.create(o), a._completion.catch(e), a._reject.bind(a)), s = P.transless || P;
+		function sn(n, r, i, e) {
+			var o = n._dbSchema, a = (i.objectStoreNames.contains("$meta") && !o.$meta && (o.$meta = Gt("$meta", vn("")[0], []), n._storeNames.push("$meta")), n._createTransaction("readwrite", n._storeNames, o)), u = (a.create(i), a._completion.catch(e), a._reject.bind(a)), s = P.transless || P;
 			v(function() {
-				if (P.trans = a, P.transless = s, 0 !== r) return rn(n, o), t = r, ((e = a).storeNames.includes("$meta") ? e.table("$meta").get("version").then(function(e) {
+				if (P.trans = a, P.transless = s, 0 !== r) return rn(n, i), t = r, ((e = a).storeNames.includes("$meta") ? e.table("$meta").get("version").then(function(e) {
 					return null != e ? e : t;
 				}) : K.resolve(t)).then(function(e) {
-					var s = n, c = e, l = a, f = o, t = [], e = s._versions, h = s._dbSchema = pn(0, s.idbdb, f);
+					var s = n, c = e, l = a, f = i, t = [], e = s._versions, h = s._dbSchema = pn(0, s.idbdb, f);
 					return 0 === (e = e.filter(function(e) {
 						return e._cfg.version >= c;
 					})).length ? K.resolve() : (e.forEach(function(u) {
 						t.push(function() {
-							var t, n, r, o = h, e = u._cfg.dbschema, i = (yn(s, o, f), yn(s, e, f), h = s._dbSchema = e, ln(o, e)), a = (i.add.forEach(function(e) {
+							var t, n, r, i = h, e = u._cfg.dbschema, o = (yn(s, i, f), yn(s, e, f), h = s._dbSchema = e, ln(i, e)), a = (o.add.forEach(function(e) {
 								fn(f, e[0], e[1].primKey, e[1].indexes);
-							}), i.change.forEach(function(e) {
+							}), o.change.forEach(function(e) {
 								if (e.recreate) throw new k.Upgrade("Not yet support for changing primary key");
 								var t = f.objectStore(e.name);
 								e.add.forEach(function(e) {
@@ -52977,8 +55173,8 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 									return t.deleteIndex(e);
 								});
 							}), u._cfg.contentUpgrade);
-							if (a && u._cfg.version > c) return rn(s, f), l._memoizedTables = {}, t = G(e), i.del.forEach(function(e) {
-								t[e] = o[e];
+							if (a && u._cfg.version > c) return rn(s, f), l._memoizedTables = {}, t = G(e), o.del.forEach(function(e) {
+								t[e] = i[e];
 							}), an(s, [s.Transaction.prototype]), on(s, [s.Transaction.prototype], O(t), t), l.schema = t, (n = ue(a)) && nt(), e = K.follow(function() {
 								var e;
 								(r = a(l)) && n && (e = w.bind(null, null), r.then(e, e));
@@ -53002,9 +55198,9 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 					}));
 				}).catch(u);
 				var e, t;
-				O(i).forEach(function(e) {
-					fn(o, e, i[e].primKey, i[e].indexes);
-				}), rn(n, o), K.follow(function() {
+				O(o).forEach(function(e) {
+					fn(i, e, o[e].primKey, o[e].indexes);
+				}), rn(n, i), K.follow(function() {
 					return n.on.populate.fire(a);
 				}).catch(u);
 			});
@@ -53013,15 +55209,15 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			hn(e._dbSchema, r), r.db.version % 10 != 0 || r.objectStoreNames.contains("$meta") || r.db.createObjectStore("$meta").add(Math.ceil(r.db.version / 10 - 1), "version");
 			var t = pn(0, e.idbdb, r);
 			yn(e, e._dbSchema, r);
-			for (var n = 0, o = ln(t, e._dbSchema).change; n < o.length; n++) {
-				var i = ((t) => {
+			for (var n = 0, i = ln(t, e._dbSchema).change; n < i.length; n++) {
+				var o = ((t) => {
 					if (t.change.length || t.recreate) return console.warn("Unable to patch indexes of table ".concat(t.name, " because it has changes on the type of index or primary key.")), { value: void 0 };
 					var n = r.objectStore(t.name);
 					t.add.forEach(function(e) {
 						l && console.debug("Dexie upgrade patch: Creating missing index ".concat(t.name, ".").concat(e.src)), dn(n, e);
 					});
-				})(o[n]);
-				if ("object" == typeof i) return i.value;
+				})(i[n]);
+				if ("object" == typeof o) return o.value;
 			}
 		}
 		function ln(e, t) {
@@ -53032,19 +55228,19 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			};
 			for (n in e) t[n] || r.del.push(n);
 			for (n in t) {
-				var o = e[n], i = t[n];
-				if (o) {
+				var i = e[n], o = t[n];
+				if (i) {
 					var a = {
 						name: n,
-						def: i,
+						def: o,
 						recreate: !1,
 						del: [],
 						add: [],
 						change: []
 					};
-					if ("" + (o.primKey.keyPath || "") != "" + (i.primKey.keyPath || "") || o.primKey.auto !== i.primKey.auto) a.recreate = !0, r.change.push(a);
+					if ("" + (i.primKey.keyPath || "") != "" + (o.primKey.keyPath || "") || i.primKey.auto !== o.primKey.auto) a.recreate = !0, r.change.push(a);
 					else {
-						var u = o.idxByName, s = i.idxByName, c = void 0;
+						var u = i.idxByName, s = o.idxByName, c = void 0;
 						for (c in u) s[c] || a.del.push(c);
 						for (c in s) {
 							var l = u[c], f = s[c];
@@ -53052,17 +55248,17 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 						}
 						(0 < a.del.length || 0 < a.add.length || 0 < a.change.length) && r.change.push(a);
 					}
-				} else r.add.push([n, i]);
+				} else r.add.push([n, o]);
 			}
 			return r;
 		}
 		function fn(e, t, n, r) {
-			var o = e.db.createObjectStore(t, n.keyPath ? {
+			var i = e.db.createObjectStore(t, n.keyPath ? {
 				keyPath: n.keyPath,
 				autoIncrement: n.auto
 			} : { autoIncrement: n.auto });
 			r.forEach(function(e) {
-				return dn(o, e);
+				return dn(i, e);
 			});
 		}
 		function hn(t, n) {
@@ -53079,43 +55275,43 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 		function pn(e, t, u) {
 			var s = {};
 			return W(t.objectStoreNames, 0).forEach(function(e) {
-				for (var t = u.objectStore(e), n = $t(Qt(a = t.keyPath), a || "", !0, !1, !!t.autoIncrement, a && "string" != typeof a, !0), r = [], o = 0; o < t.indexNames.length; ++o) {
-					var i = t.index(t.indexNames[o]), a = i.keyPath, i = $t(i.name, a, !!i.unique, !!i.multiEntry, !1, a && "string" != typeof a, !1);
-					r.push(i);
+				for (var t = u.objectStore(e), n = $t(Qt(a = t.keyPath), a || "", !0, !1, !!t.autoIncrement, a && "string" != typeof a, !0), r = [], i = 0; i < t.indexNames.length; ++i) {
+					var o = t.index(t.indexNames[i]), a = o.keyPath, o = $t(o.name, a, !!o.unique, !!o.multiEntry, !1, a && "string" != typeof a, !1);
+					r.push(o);
 				}
 				s[e] = Gt(e, n, r);
 			}), s;
 		}
 		function yn(e, t, n) {
-			for (var r = n.db.objectStoreNames, o = 0; o < r.length; ++o) {
-				var i = r[o], a = n.objectStore(i);
+			for (var r = n.db.objectStoreNames, i = 0; i < r.length; ++i) {
+				var o = r[i], a = n.objectStore(o);
 				e._hasGetAll = "getAll" in a;
 				for (var u = 0; u < a.indexNames.length; ++u) {
 					var s, c = a.indexNames[u], l = a.index(c).keyPath, l = "string" == typeof l ? l : "[" + W(l).join("+") + "]";
-					t[i] && (s = t[i].idxByName[l]) && (s.name = c, delete t[i].idxByName[l], t[i].idxByName[c] = s);
+					t[o] && (s = t[o].idxByName[l]) && (s.name = c, delete t[o].idxByName[l], t[o].idxByName[c] = s);
 				}
 			}
 			"undefined" != typeof navigator && /Safari/.test(navigator.userAgent) && !/(Chrome\/|Edge\/)/.test(navigator.userAgent) && f.WorkerGlobalScope && f instanceof f.WorkerGlobalScope && [].concat(navigator.userAgent.match(/Safari\/(\d*)/))[1] < 604 && (e._hasGetAll = !1);
 		}
 		function vn(e) {
 			return e.split(",").map(function(e, t) {
-				var n = e.split(":"), r = null == (r = n[1]) ? void 0 : r.trim(), n = (e = n[0].trim()).replace(/([&*]|\+\+)/g, ""), o = /^\[/.test(n) ? n.match(/^\[(.*)\]$/)[1].split("+") : n;
-				return $t(n, o || null, /\&/.test(e), /\*/.test(e), /\+\+/.test(e), x(o), 0 === t, r);
+				var n = e.split(":"), r = null == (r = n[1]) ? void 0 : r.trim(), n = (e = n[0].trim()).replace(/([&*]|\+\+)/g, ""), i = /^\[/.test(n) ? n.match(/^\[(.*)\]$/)[1].split("+") : n;
+				return $t(n, i || null, /\&/.test(e), /\*/.test(e), /\+\+/.test(e), x(i), 0 === t, r);
 			});
 		}
-		bn.prototype._createTableSchema = Gt, bn.prototype._parseIndexSyntax = vn, bn.prototype._parseStoresSpec = function(r, o) {
-			var i = this;
+		bn.prototype._createTableSchema = Gt, bn.prototype._parseIndexSyntax = vn, bn.prototype._parseStoresSpec = function(r, i) {
+			var o = this;
 			O(r).forEach(function(e) {
 				if (null !== r[e]) {
-					var t = i._parseIndexSyntax(r[e]), n = t.shift();
+					var t = o._parseIndexSyntax(r[e]), n = t.shift();
 					if (!n) throw new k.Schema("Invalid schema for table " + e + ": " + r[e]);
 					if (n.unique = !0, n.multi) throw new k.Schema("Primary key cannot be multiEntry*");
 					t.forEach(function(e) {
 						if (e.auto) throw new k.Schema("Only primary key can be marked as autoIncrement (++)");
 						if (!e.keyPath) throw new k.Schema("Index must have a name and cannot be an empty string");
 					});
-					n = i._createTableSchema(e, n, t);
-					o[e] = n;
+					n = o._createTableSchema(e, n, t);
+					i[e] = n;
 				}
 			});
 		}, bn.prototype.stores = function(e) {
@@ -53138,12 +55334,12 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 		var mn = bn;
 		function bn() {}
 		var gn = (() => {
-			var o, i, t;
-			return "undefined" != typeof FinalizationRegistry && "undefined" != typeof WeakRef ? (o = /* @__PURE__ */ new Set(), i = new FinalizationRegistry(function(e) {
-				o.delete(e);
+			var i, o, t;
+			return "undefined" != typeof FinalizationRegistry && "undefined" != typeof WeakRef ? (i = /* @__PURE__ */ new Set(), o = new FinalizationRegistry(function(e) {
+				i.delete(e);
 			}), {
 				toArray: function() {
-					return Array.from(o).map(function(e) {
+					return Array.from(i).map(function(e) {
 						return e.deref();
 					}).filter(function(e) {
 						return void 0 !== e;
@@ -53151,12 +55347,12 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				},
 				add: function(e) {
 					var t = new WeakRef(e._novip);
-					o.add(t), i.register(e._novip, t, t), o.size > e._options.maxConnections && (t = o.values().next().value, o.delete(t), i.unregister(t));
+					i.add(t), o.register(e._novip, t, t), i.size > e._options.maxConnections && (t = i.values().next().value, i.delete(t), o.unregister(t));
 				},
 				remove: function(e) {
-					if (e) for (var t = o.values(), n = t.next(); !n.done;) {
+					if (e) for (var t = i.values(), n = t.next(); !n.done;) {
 						var r = n.value;
-						if (r.deref() === e._novip) return o.delete(r), void i.unregister(r);
+						if (r.deref() === e._novip) return i.delete(r), void o.unregister(r);
 						n = t.next();
 					}
 				}
@@ -53209,7 +55405,7 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 					to: n,
 					d: 1
 				});
-				var r = e.l, o = e.r;
+				var r = e.l, i = e.r;
 				if (C(n, e.from) < 0) return r ? On(r, t, n) : e.l = {
 					from: t,
 					to: n,
@@ -53217,29 +55413,29 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 					l: null,
 					r: null
 				}, Sn(e);
-				if (0 < C(t, e.to)) return o ? On(o, t, n) : e.r = {
+				if (0 < C(t, e.to)) return i ? On(i, t, n) : e.r = {
 					from: t,
 					to: n,
 					d: 1,
 					l: null,
 					r: null
 				}, Sn(e);
-				C(t, e.from) < 0 && (e.from = t, e.l = null, e.d = o ? o.d + 1 : 1), 0 < C(n, e.to) && (e.to = n, e.r = null, e.d = e.l ? e.l.d + 1 : 1);
+				C(t, e.from) < 0 && (e.from = t, e.l = null, e.d = i ? i.d + 1 : 1), 0 < C(n, e.to) && (e.to = n, e.r = null, e.d = e.l ? e.l.d + 1 : 1);
 				t = !e.r;
-				r && !e.l && Pn(e, r), o && t && Pn(e, o);
+				r && !e.l && Pn(e, r), i && t && Pn(e, i);
 			}
 		}
 		function Pn(e, t) {
 			kn(t) || function e(t, n) {
-				var r = n.from, o = n.l, i = n.r;
-				On(t, r, n.to), o && e(t, o), i && e(t, i);
+				var r = n.from, i = n.l, o = n.r;
+				On(t, r, n.to), i && e(t, i), o && e(t, o);
 			}(e, t);
 		}
 		function Kn(e, t) {
 			var n = En(t), r = n.next();
-			if (!r.done) for (var o = r.value, i = En(e), a = i.next(o.from), u = a.value; !r.done && !a.done;) {
-				if (C(u.from, o.to) <= 0 && 0 <= C(u.to, o.from)) return !0;
-				C(o.from, u.from) < 0 ? o = (r = n.next(u.from)).value : u = (a = i.next(o.from)).value;
+			if (!r.done) for (var i = r.value, o = En(e), a = o.next(i.from), u = a.value; !r.done && !a.done;) {
+				if (C(u.from, i.to) <= 0 && 0 <= C(u.to, i.from)) return !0;
+				C(i.from, u.from) < 0 ? i = (r = n.next(u.from)).value : u = (a = o.next(i.from)).value;
 			}
 			return !1;
 		}
@@ -53278,8 +55474,8 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			} };
 		}
 		function Sn(e) {
-			var t, n, r, o = ((null == (o = e.r) ? void 0 : o.d) || 0) - ((null == (o = e.l) ? void 0 : o.d) || 0), o = 1 < o ? "r" : o < -1 ? "l" : "";
-			o && (t = "r" == o ? "l" : "r", n = _({}, e), r = e[o], e.from = r.from, e.to = r.to, e[o] = r[o], n[o] = r[t], (e[t] = n).d = An(n)), e.d = An(e);
+			var t, n, r, i = ((null == (i = e.r) ? void 0 : i.d) || 0) - ((null == (i = e.l) ? void 0 : i.d) || 0), i = 1 < i ? "r" : i < -1 ? "l" : "";
+			i && (t = "r" == i ? "l" : "r", n = _({}, e), r = e[i], e.from = r.from, e.to = r.to, e[i] = r[i], n[i] = r[t], (e[t] = n).d = An(n)), e.d = An(e);
 		}
 		function An(e) {
 			var t = e.r, e = e.l;
@@ -53288,9 +55484,9 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 		function Cn(t, n) {
 			return O(n).forEach(function(e) {
 				t[e] ? Pn(t[e], n[e]) : t[e] = function e(t) {
-					var n, r, o = {};
-					for (n in t) m(t, n) && (r = t[n], o[n] = !r || "object" != typeof r || J.has(r.constructor) ? r : e(r));
-					return o;
+					var n, r, i = {};
+					for (n in t) m(t, n) && (r = t[n], i[n] = !r || "object" != typeof r || J.has(r.constructor) ? r : e(r));
+					return i;
 				}(n[e]);
 			}), t;
 		}
@@ -53328,26 +55524,26 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 		function Bn(e, t) {
 			void 0 === t && (t = !1);
 			var n = /* @__PURE__ */ new Set();
-			if (e.all) for (var r = 0, o = Object.values(Tn); r < o.length; r++) Rn(u = o[r], e, n, t);
-			else for (var i in e) {
-				var a, u, i = /^idb\:\/\/(.*)\/(.*)\//.exec(i);
-				i && (a = i[1], i = i[2], u = Tn["idb://".concat(a, "/").concat(i)]) && Rn(u, e, n, t);
+			if (e.all) for (var r = 0, i = Object.values(Tn); r < i.length; r++) Rn(u = i[r], e, n, t);
+			else for (var o in e) {
+				var a, u, o = /^idb\:\/\/(.*)\/(.*)\//.exec(o);
+				o && (a = o[1], o = o[2], u = Tn["idb://".concat(a, "/").concat(o)]) && Rn(u, e, n, t);
 			}
 			n.forEach(function(e) {
 				return e();
 			});
 		}
 		function Rn(e, t, n, r) {
-			for (var o = [], i = 0, a = Object.entries(e.queries.query); i < a.length; i++) {
-				for (var u = a[i], s = u[0], c = [], l = 0, f = u[1]; l < f.length; l++) {
+			for (var i = [], o = 0, a = Object.entries(e.queries.query); o < a.length; o++) {
+				for (var u = a[o], s = u[0], c = [], l = 0, f = u[1]; l < f.length; l++) {
 					var h = f[l];
 					jn(t, h.obsSet) ? h.subscribers.forEach(function(e) {
 						return n.add(e);
 					}) : r && c.push(h);
 				}
-				r && o.push([s, c]);
+				r && i.push([s, c]);
 			}
-			if (r) for (var d = 0, p = o; d < p.length; d++) {
+			if (r) for (var d = 0, p = i; d < p.length; d++) {
 				var y = p[d], s = y[0], c = y[1];
 				e.queries.query[s] = c;
 			}
@@ -53374,10 +55570,10 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 						})) : (m.onerror = I(n), t = e.oldVersion > Math.pow(2, 62) ? 0 : e.oldVersion, b = t < 1, h.idbdb = f.result, y && cn(h, m), sn(h, t / 10, m, n));
 					}, n), f.onsuccess = E(function() {
 						m = null;
-						var e, t, n, r, o, i, a = h.idbdb = f.result, u = W(a.objectStoreNames);
+						var e, t, n, r, i, o, a = h.idbdb = f.result, u = W(a.objectStoreNames);
 						if (0 < u.length) try {
-							var s = a.transaction(1 === (o = u).length ? o[0] : o, "readonly");
-							if (d.autoSchema) i = a, r = s, (n = h).verno = i.version / 10, r = n._dbSchema = pn(0, i, r), n._storeNames = W(i.objectStoreNames, 0), on(n, [n._allTables], O(r), r);
+							var s = a.transaction(1 === (i = u).length ? i[0] : i, "readonly");
+							if (d.autoSchema) o = a, r = s, (n = h).verno = o.version / 10, r = n._dbSchema = pn(0, o, r), n._storeNames = W(o.objectStoreNames, 0), on(n, [n._allTables], O(r), r);
 							else if (yn(h, h._dbSchema, s), t = s, ((t = ln(pn(0, (e = h).idbdb, t), e._dbSchema)).add.length || t.change.some(function(e) {
 								return e.add.length || e.change.length;
 							})) && !y) return console.warn("Dexie SchemaDiff: Schema was extended without increasing the number passed to db.version(). Dexie will add missing parts and increment native version number to workaround this."), a.close(), p = a.version + 1, y = !0, c(v());
@@ -53387,7 +55583,7 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 							d.vcFired = !0, h.on("versionchange").fire(e);
 						}), a.onclose = E(function() {
 							h.close({ disableAutoOpen: !1 });
-						}), b && (u = h._deps, o = l, _n(i = u.indexedDB) || o === ft || wn(i, u.IDBKeyRange).put({ name: o }).catch(g)), c();
+						}), b && (u = h._deps, i = l, _n(o = u.indexedDB) || i === ft || wn(o, u.IDBKeyRange).put({ name: i }).catch(g)), c();
 					}, n);
 				}).catch(function(e) {
 					switch (null == e ? void 0 : e.name) {
@@ -53399,7 +55595,7 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 					return K.reject(e);
 				});
 			}
-			var n, o = d.dbReadyResolve, m = null, b = !1;
+			var n, i = d.dbReadyResolve, m = null, b = !1;
 			return K.race([t, ("undefined" == typeof navigator ? K.resolve() : !navigator.userAgentData && /Safari\//.test(navigator.userAgent) && !/Chrom(e|ium)\//.test(navigator.userAgent) && indexedDB.databases ? new Promise(function(e) {
 				function t() {
 					return indexedDB.databases().finally(e);
@@ -53425,7 +55621,7 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				} catch (e) {}
 				return t === d.openCanceller && h._close(), S(e);
 			}).finally(function() {
-				d.openComplete = !0, o();
+				d.openComplete = !0, i();
 			}).then(function() {
 				var n;
 				return b && (n = {}, h.tables.forEach(function(t) {
@@ -53439,19 +55635,19 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			function e(e) {
 				return t.next(e);
 			}
-			var r = n(e), o = n(function(e) {
+			var r = n(e), i = n(function(e) {
 				return t.throw(e);
 			});
 			function n(n) {
 				return function(e) {
 					var e = n(e), t = e.value;
-					return e.done ? t : t && "function" == typeof t.then ? t.then(r, o) : x(t) ? Promise.all(t).then(r, o) : r(t);
+					return e.done ? t : t && "function" == typeof t.then ? t.then(r, i) : x(t) ? Promise.all(t).then(r, i) : r(t);
 				};
 			}
 			return n(e)();
 		}
 		function Mn(e, t, n) {
-			for (var r = x(e) ? e.slice() : [e], o = 0; o < n; ++o) r.push(t);
+			for (var r = x(e) ? e.slice() : [e], i = 0; i < n; ++i) r.push(t);
 			return r;
 		}
 		var Ln = {
@@ -53460,26 +55656,26 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			level: 1,
 			create: function(l) {
 				return _(_({}, l), { table: function(e) {
-					var i = l.table(e), e = i.schema, u = {}, s = [];
+					var o = l.table(e), e = o.schema, u = {}, s = [];
 					function c(e, t, n) {
-						var r = en(e), o = u[r] = u[r] || [], i = null == e ? 0 : "string" == typeof e ? 1 : e.length, a = 0 < t, r = _(_({}, n), {
+						var r = en(e), i = u[r] = u[r] || [], o = null == e ? 0 : "string" == typeof e ? 1 : e.length, a = 0 < t, r = _(_({}, n), {
 							name: a ? "".concat(r, "(virtual-from:").concat(n.name, ")") : n.name,
 							lowLevelIndex: n,
 							isVirtual: a,
 							keyTail: t,
-							keyLength: i,
+							keyLength: o,
 							extractKey: Ht(e),
 							unique: !a && n.unique
 						});
-						return o.push(r), r.isPrimaryKey || s.push(r), 1 < i && c(2 === i ? e[0] : e.slice(0, i - 1), t + 1, n), o.sort(function(e, t) {
+						return i.push(r), r.isPrimaryKey || s.push(r), 1 < o && c(2 === o ? e[0] : e.slice(0, o - 1), t + 1, n), i.sort(function(e, t) {
 							return e.keyTail - t.keyTail;
 						}), r;
 					}
 					var t = c(e.primaryKey.keyPath, 0, e.primaryKey);
 					u[":id"] = [t];
 					for (var n = 0, r = e.indexes; n < r.length; n++) {
-						var o = r[n];
-						c(o.keyPath, 0, o);
+						var i = r[n];
+						c(i.keyPath, 0, i);
 					}
 					function a(e) {
 						var t, n = e.query.index;
@@ -53494,7 +55690,7 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 							})
 						} }) : e;
 					}
-					return _(_({}, i), {
+					return _(_({}, o), {
 						schema: _(_({}, e), {
 							primaryKey: t,
 							indexes: s,
@@ -53503,20 +55699,20 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 							}
 						}),
 						count: function(e) {
-							return i.count(a(e));
+							return o.count(a(e));
 						},
 						query: function(e) {
-							return i.query(a(e));
+							return o.query(a(e));
 						},
 						openCursor: function(t) {
-							var e = t.query.index, r = e.keyTail, o = e.keyLength;
-							return e.isVirtual ? i.openCursor(a(t)).then(function(e) {
+							var e = t.query.index, r = e.keyTail, i = e.keyLength;
+							return e.isVirtual ? o.openCursor(a(t)).then(function(e) {
 								return e && n(e);
-							}) : i.openCursor(t);
+							}) : o.openCursor(t);
 							function n(n) {
 								return Object.create(n, {
 									continue: { value: function(e) {
-										null != e ? n.continue(Mn(e, t.reverse ? l.MAX_KEY : l.MIN_KEY, r)) : t.unique ? n.continue(n.key.slice(0, o).concat(t.reverse ? l.MIN_KEY : l.MAX_KEY, r)) : n.continue();
+										null != e ? n.continue(Mn(e, t.reverse ? l.MAX_KEY : l.MIN_KEY, r)) : t.unique ? n.continue(n.key.slice(0, i).concat(t.reverse ? l.MIN_KEY : l.MAX_KEY, r)) : n.continue();
 									} },
 									continuePrimaryKey: { value: function(e, t) {
 										n.continuePrimaryKey(Mn(e, l.MAX_KEY, r), t);
@@ -53526,7 +55722,7 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 									} },
 									key: { get: function() {
 										var e = n.key;
-										return 1 === o ? e[0] : e.slice(0, o);
+										return 1 === i ? e[0] : e.slice(0, i);
 									} },
 									value: { get: function() {
 										return n.value;
@@ -53538,12 +55734,12 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				} });
 			}
 		};
-		function Un(o, i, a, u) {
-			return a = a || {}, u = u || "", O(o).forEach(function(e) {
+		function Un(i, o, a, u) {
+			return a = a || {}, u = u || "", O(i).forEach(function(e) {
 				var t, n, r;
-				m(i, e) ? (t = o[e], n = i[e], "object" == typeof t && "object" == typeof n && t && n ? (r = ne(t)) !== ne(n) ? a[u + e] = i[e] : "Object" === r ? Un(t, n, a, u + e + ".") : t !== n && (a[u + e] = i[e]) : t !== n && (a[u + e] = i[e])) : a[u + e] = void 0;
-			}), O(i).forEach(function(e) {
-				m(o, e) || (a[u + e] = i[e]);
+				m(o, e) ? (t = i[e], n = o[e], "object" == typeof t && "object" == typeof n && t && n ? (r = ne(t)) !== ne(n) ? a[u + e] = o[e] : "Object" === r ? Un(t, n, a, u + e + ".") : t !== n && (a[u + e] = o[e]) : t !== n && (a[u + e] = o[e])) : a[u + e] = void 0;
+			}), O(o).forEach(function(e) {
+				m(i, e) || (a[u + e] = o[e]);
 			}), a;
 		}
 		function zn(e, t) {
@@ -53577,15 +55773,15 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 							case "deleteRange":
 								if (h.fire === g) break;
 								return t._promise("readwrite", function() {
-									return function n(r, o, i) {
+									return function n(r, i, o) {
 										return y.query({
 											trans: r,
 											values: !1,
 											query: {
 												index: v,
-												range: o
+												range: i
 											},
-											limit: i
+											limit: o
 										}).then(function(e) {
 											var t = e.result;
 											return a({
@@ -53593,14 +55789,14 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 												keys: t,
 												trans: r
 											}).then(function(e) {
-												return 0 < e.numFailures ? Promise.reject(e.failures[0]) : t.length < i ? {
+												return 0 < e.numFailures ? Promise.reject(e.failures[0]) : t.length < o ? {
 													failures: [],
 													numFailures: 0,
 													lastResult: void 0
-												} : n(r, _(_({}, o), {
+												} : n(r, _(_({}, i), {
 													lower: t[t.length - 1],
 													lowerOpen: !0
-												}), i);
+												}), o);
 											});
 										});
 									}(e.trans, e.range, 1e4);
@@ -53615,18 +55811,18 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 								cache: "immutable"
 							})).then(function(u) {
 								var s = f.map(function(e, t) {
-									var n, r, o, i = u[t], a = {
+									var n, r, i, o = u[t], a = {
 										onerror: null,
 										onsuccess: null
 									};
-									return "delete" === c.type ? h.fire.call(a, e, i, l) : "add" === c.type || void 0 === i ? (n = d.fire.call(a, e, c.values[t], l), null == e && null != n && (c.keys[t] = e = n, v.outbound || b(c.values[t], v.keyPath, e))) : (n = Un(i, c.values[t]), (r = p.fire.call(a, n, e, i, l)) && (o = c.values[t], Object.keys(r).forEach(function(e) {
-										m(o, e) ? o[e] = r[e] : b(o, e, r[e]);
+									return "delete" === c.type ? h.fire.call(a, e, o, l) : "add" === c.type || void 0 === o ? (n = d.fire.call(a, e, c.values[t], l), null == e && null != n && (c.keys[t] = e = n, v.outbound || b(c.values[t], v.keyPath, e))) : (n = Un(o, c.values[t]), (r = p.fire.call(a, n, e, o, l)) && (i = c.values[t], Object.keys(r).forEach(function(e) {
+										m(i, e) ? i[e] = r[e] : b(i, e, r[e]);
 									}))), a;
 								});
 								return y.mutate(c).then(function(e) {
-									for (var t = e.failures, n = e.results, r = e.numFailures, e = e.lastResult, o = 0; o < f.length; ++o) {
-										var i = (n || f)[o], a = s[o];
-										null == i ? a.onerror && a.onerror(t[o]) : a.onsuccess && a.onsuccess("put" === c.type && u[o] ? c.values[o] : i);
+									for (var t = e.failures, n = e.results, r = e.numFailures, e = e.lastResult, i = 0; i < f.length; ++i) {
+										var o = (n || f)[i], a = s[i];
+										null == o ? a.onerror && a.onerror(t[i]) : a.onsuccess && a.onsuccess("put" === c.type && u[i] ? c.values[i] : o);
 									}
 									return {
 										failures: t,
@@ -53650,7 +55846,7 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			try {
 				if (!t) return null;
 				if (t.keys.length < e.length) return null;
-				for (var r = [], o = 0, i = 0; o < t.keys.length && i < e.length; ++o) 0 === C(t.keys[o], e[i]) && (r.push(n ? ee(t.values[o]) : t.values[o]), ++i);
+				for (var r = [], i = 0, o = 0; i < t.keys.length && o < e.length; ++i) 0 === C(t.keys[i], e[o]) && (r.push(n ? ee(t.values[i]) : t.values[i]), ++o);
 				return r.length === e.length ? r : null;
 			} catch (e) {
 				return null;
@@ -53713,37 +55909,37 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 							function u(e) {
 								return e = "idb://".concat(g, "/").concat(d, "/").concat(e), n[e] || (n[e] = new q());
 							}
-							var e, i, s, t = a.trans, n = a.mutatedParts || (a.mutatedParts = {}), r = u(""), o = u(":dels"), c = a.type, l = "deleteRange" === a.type ? [a.range] : "delete" === a.type ? [a.keys] : a.values.length < 50 ? [zn(v, a).filter(function(e) {
+							var e, o, s, t = a.trans, n = a.mutatedParts || (a.mutatedParts = {}), r = u(""), i = u(":dels"), c = a.type, l = "deleteRange" === a.type ? [a.range] : "delete" === a.type ? [a.keys] : a.values.length < 50 ? [zn(v, a).filter(function(e) {
 								return e;
 							}), a.values] : [], f = l[0], l = l[1], h = a.trans._cache;
-							return x(f) ? (r.addKeys(f), (c = "delete" === c || f.length === l.length ? Wn(f, h) : null) || o.addKeys(f), (c || l) && (e = u, i = c, s = l, y.indexes.forEach(function(t) {
+							return x(f) ? (r.addKeys(f), (c = "delete" === c || f.length === l.length ? Wn(f, h) : null) || i.addKeys(f), (c || l) && (e = u, o = c, s = l, y.indexes.forEach(function(t) {
 								var n = e(t.name || "");
 								function r(e) {
 									return null != e ? t.extractKey(e) : null;
 								}
-								function o(e) {
+								function i(e) {
 									t.multiEntry && x(e) ? e.forEach(function(e) {
 										return n.addKey(e);
 									}) : n.addKey(e);
 								}
-								(i || s).forEach(function(e, t) {
-									var n = i && r(i[t]), t = s && r(s[t]);
-									0 !== C(n, t) && (null != n && o(n), null != t) && o(t);
+								(o || s).forEach(function(e, t) {
+									var n = o && r(o[t]), t = s && r(s[t]);
+									0 !== C(n, t) && (null != n && i(n), null != t) && i(t);
 								});
 							}))) : f ? (l = {
 								from: null != (h = f.lower) ? h : b.MIN_KEY,
 								to: null != (c = f.upper) ? c : b.MAX_KEY
-							}, o.add(l), r.add(l)) : (r.add(w), o.add(w), y.indexes.forEach(function(e) {
+							}, i.add(l), r.add(l)) : (r.add(w), i.add(w), y.indexes.forEach(function(e) {
 								return u(e.name).add(w);
-							})), p.mutate(a).then(function(i) {
-								return !f || "add" !== a.type && "put" !== a.type || (r.addKeys(i.results), m && m.forEach(function(t) {
+							})), p.mutate(a).then(function(o) {
+								return !f || "add" !== a.type && "put" !== a.type || (r.addKeys(o.results), m && m.forEach(function(t) {
 									for (var e = a.values.map(function(e) {
 										return t.extractKey(e);
 									}), n = t.keyPath.findIndex(function(e) {
 										return e === v.keyPath;
-									}), r = 0, o = i.results.length; r < o; ++r) e[r][n] = i.results[r];
+									}), r = 0, i = o.results.length; r < i; ++r) e[r][n] = o.results[r];
 									u(t.name).addKeys(e);
-								})), t.mutatedParts = Cn(t.mutatedParts || {}, n), i;
+								})), t.mutatedParts = Cn(t.mutatedParts || {}, n), o;
 							});
 						} }), f = {
 							get: function(e) {
@@ -53757,25 +55953,25 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 							openCursor: e
 						};
 						return O(f).forEach(function(s) {
-							n[s] = function(o) {
-								var e = P.subscr, t = !!e, n = $n(P, p) && Qn(s, o) ? o.obsSet = {} : e;
+							n[s] = function(i) {
+								var e = P.subscr, t = !!e, n = $n(P, p) && Qn(s, i) ? i.obsSet = {} : e;
 								if (t) {
-									var i, e = function(e) {
+									var o, e = function(e) {
 										e = "idb://".concat(g, "/").concat(d, "/").concat(e);
 										return n[e] || (n[e] = new q());
-									}, a = e(""), u = e(":dels"), t = f[s](o), r = t[0], t = t[1];
-									if (("query" === s && r.isPrimaryKey && !o.values ? u : e(r.name || "")).add(t), !r.isPrimaryKey) {
-										if ("count" !== s) return i = "query" === s && l && o.values && p.query(_(_({}, o), { values: !1 })), p[s].apply(this, arguments).then(function(t) {
+									}, a = e(""), u = e(":dels"), t = f[s](i), r = t[0], t = t[1];
+									if (("query" === s && r.isPrimaryKey && !i.values ? u : e(r.name || "")).add(t), !r.isPrimaryKey) {
+										if ("count" !== s) return o = "query" === s && l && i.values && p.query(_(_({}, i), { values: !1 })), p[s].apply(this, arguments).then(function(t) {
 											if ("query" === s) {
-												if (l && o.values) return i.then(function(e) {
+												if (l && i.values) return o.then(function(e) {
 													e = e.result;
 													return a.addKeys(e), t;
 												});
-												var e = o.values ? t.result.map(c) : t.result;
-												(o.values ? a : u).addKeys(e);
+												var e = i.values ? t.result.map(c) : t.result;
+												(i.values ? a : u).addKeys(e);
 											} else {
 												var n, r;
-												if ("openCursor" === s) return r = o.values, (n = t) && Object.create(n, {
+												if ("openCursor" === s) return r = i.values, (n = t) && Object.create(n, {
 													key: { get: function() {
 														return u.addKey(n.primaryKey), n.key;
 													} },
@@ -53812,15 +56008,15 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			return n = e, (void 0 === (r = t).lower || (r.lowerOpen ? 0 < C(n, r.lower) : 0 <= C(n, r.lower))) && (n = e, void 0 === (r = t).upper || (r.upperOpen ? C(n, r.upper) < 0 : C(n, r.upper) <= 0));
 			var n, r;
 		}
-		function Jn(e, d, t, n, r, o) {
-			var i, p, y, v, m, a, u;
-			return !t || 0 === t.length || (i = d.query.index, p = i.multiEntry, y = d.query.range, v = n.schema.primaryKey.extractKey, m = i.extractKey, a = (i.lowLevelIndex || i).extractKey, (n = t.reduce(function(e, t) {
+		function Jn(e, d, t, n, r, i) {
+			var o, p, y, v, m, a, u;
+			return !t || 0 === t.length || (o = d.query.index, p = o.multiEntry, y = d.query.range, v = n.schema.primaryKey.extractKey, m = o.extractKey, a = (o.lowLevelIndex || o).extractKey, (n = t.reduce(function(e, t) {
 				var n = e, r = [];
-				if ("add" === t.type || "put" === t.type) for (var o = new q(), i = t.values.length - 1; 0 <= i; --i) {
-					var a, u = t.values[i], s = v(u);
-					!o.hasKey(s) && (a = m(u), p && x(a) ? a.some(function(e) {
+				if ("add" === t.type || "put" === t.type) for (var i = new q(), o = t.values.length - 1; 0 <= o; --o) {
+					var a, u = t.values[o], s = v(u);
+					!i.hasKey(s) && (a = m(u), p && x(a) ? a.some(function(e) {
 						return Hn(e, y);
-					}) : Hn(a, y)) && (o.addKey(s), r.push(u));
+					}) : Hn(a, y)) && (i.addKey(s), r.push(u));
 				}
 				switch (t.type) {
 					case "add":
@@ -53862,7 +56058,7 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				return C(a(e), a(t)) || C(v(e), v(t));
 			}, n.sort("prev" === d.direction || "prevunique" === d.direction ? function(e, t) {
 				return u(t, e);
-			} : u), d.limit && d.limit < Infinity && (n.length > d.limit ? n.length = d.limit : e.length === d.limit && n.length < d.limit && (r.dirty = !0)), o ? Object.freeze(n) : n);
+			} : u), d.limit && d.limit < Infinity && (n.length > d.limit ? n.length = d.limit : e.length === d.limit && n.length < d.limit && (r.dirty = !0)), i ? Object.freeze(n) : n);
 		}
 		function Zn(e, t) {
 			return 0 === C(e.lower, t.lower) && 0 === C(e.upper, t.upper) && !!e.lowerOpen == !!t.lowerOpen && !!e.upperOpen == !!t.upperOpen;
@@ -53888,11 +56084,11 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				return e;
 			})(e.upper, t.upper, e.upperOpen, t.upperOpen);
 		}
-		function tr(n, r, o, e) {
-			n.subscribers.add(o), e.addEventListener("abort", function() {
+		function tr(n, r, i, e) {
+			n.subscribers.add(i), e.addEventListener("abort", function() {
 				var e, t;
-				n.subscribers.delete(o), 0 === n.subscribers.size && (e = n, t = r, setTimeout(function() {
-					0 === e.subscribers.size && ie(t, e);
+				n.subscribers.delete(i), 0 === n.subscribers.size && (e = n, t = r, setTimeout(function() {
+					0 === e.subscribers.size && oe(t, e);
 				}, 3e3));
 			});
 		}
@@ -53909,21 +56105,21 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 							return function() {
 								if (_.abort(), "readwrite" === w) {
 									for (var t = /* @__PURE__ */ new Set(), e = 0, n = g; e < n.length; e++) {
-										var r = n[e], o = Tn["idb://".concat(O, "/").concat(r)];
-										if (o) {
-											var i = k.table(r), a = o.optimisticOps.filter(function(e) {
+										var r = n[e], i = Tn["idb://".concat(O, "/").concat(r)];
+										if (i) {
+											var o = k.table(r), a = i.optimisticOps.filter(function(e) {
 												return e.trans === x;
 											});
-											if (x._explicit && b && x.mutatedParts) for (var u = 0, s = Object.values(o.queries.query); u < s.length; u++) for (var c = 0, l = (d = s[u]).slice(); c < l.length; c++) jn((p = l[c]).obsSet, x.mutatedParts) && (ie(d, p), p.subscribers.forEach(function(e) {
+											if (x._explicit && b && x.mutatedParts) for (var u = 0, s = Object.values(i.queries.query); u < s.length; u++) for (var c = 0, l = (d = s[u]).slice(); c < l.length; c++) jn((p = l[c]).obsSet, x.mutatedParts) && (oe(d, p), p.subscribers.forEach(function(e) {
 												return t.add(e);
 											}));
 											else if (0 < a.length) {
-												o.optimisticOps = o.optimisticOps.filter(function(e) {
+												i.optimisticOps = i.optimisticOps.filter(function(e) {
 													return e.trans !== x;
 												});
-												for (var f = 0, h = Object.values(o.queries.query); f < h.length; f++) for (var d, p, y, v = 0, m = (d = h[f]).slice(); v < m.length; v++) null != (p = m[v]).res && x.mutatedParts && (b && !p.dirty ? (y = Object.isFrozen(p.res), y = Jn(p.res, p.req, a, i, p, y), p.dirty ? (ie(d, p), p.subscribers.forEach(function(e) {
+												for (var f = 0, h = Object.values(i.queries.query); f < h.length; f++) for (var d, p, y, v = 0, m = (d = h[f]).slice(); v < m.length; v++) null != (p = m[v]).res && x.mutatedParts && (b && !p.dirty ? (y = Object.isFrozen(p.res), y = Jn(p.res, p.req, a, o, p, y), p.dirty ? (oe(d, p), p.subscribers.forEach(function(e) {
 													return t.add(e);
-												})) : y !== p.res && (p.res = y, p.promise = K.resolve({ result: y }))) : (p.dirty && ie(d, p), p.subscribers.forEach(function(e) {
+												})) : y !== p.res && (p.res = y, p.promise = K.resolve({ result: y }))) : (p.dirty && oe(d, p), p.subscribers.forEach(function(e) {
 													return t.add(e);
 												})));
 											}
@@ -53937,20 +56133,20 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 						})(!1), { signal: e }), x.addEventListener("error", t(!1), { signal: e }), x.addEventListener("complete", t(!0), { signal: e })), x;
 					},
 					table: function(s) {
-						var c = k.table(s), o = c.schema.primaryKey;
+						var c = k.table(s), i = c.schema.primaryKey;
 						return _(_({}, c), {
 							mutate: function(t) {
 								var n, e = P.trans;
-								return !o.outbound && "disabled" !== e.db._options.cache && !e.explicit && "readwrite" === e.idbtrans.mode && (n = Tn["idb://".concat(O, "/").concat(s)]) ? (e = c.mutate(t), "add" !== t.type && "put" !== t.type || !(50 <= t.values.length || zn(o, t).some(function(e) {
+								return !i.outbound && "disabled" !== e.db._options.cache && !e.explicit && "readwrite" === e.idbtrans.mode && (n = Tn["idb://".concat(O, "/").concat(s)]) ? (e = c.mutate(t), "add" !== t.type && "put" !== t.type || !(50 <= t.values.length || zn(i, t).some(function(e) {
 									return null == e;
 								})) ? (n.optimisticOps.push(t), t.mutatedParts && Dn(t.mutatedParts), e.then(function(e) {
-									0 < e.numFailures && (ie(n.optimisticOps, t), (e = Xn(0, t, e)) && n.optimisticOps.push(e), t.mutatedParts) && Dn(t.mutatedParts);
+									0 < e.numFailures && (oe(n.optimisticOps, t), (e = Xn(0, t, e)) && n.optimisticOps.push(e), t.mutatedParts) && Dn(t.mutatedParts);
 								}), e.catch(function() {
-									ie(n.optimisticOps, t), t.mutatedParts && Dn(t.mutatedParts);
+									oe(n.optimisticOps, t), t.mutatedParts && Dn(t.mutatedParts);
 								})) : e.then(function(r) {
 									var e = Xn(0, _(_({}, t), { values: t.values.map(function(e, t) {
 										var n;
-										return r.failures[t] ? e : (b(n = null != (n = o.keyPath) && n.includes(".") ? ee(e) : _({}, e), o.keyPath, r.results[t]), n);
+										return r.failures[t] ? e : (b(n = null != (n = i.keyPath) && n.includes(".") ? ee(e) : _({}, e), i.keyPath, r.results[t]), n);
 									}) }), r);
 									n.optimisticOps.push(e), queueMicrotask(function() {
 										return t.mutatedParts && Dn(t.mutatedParts);
@@ -53958,63 +56154,63 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 								}), e) : c.mutate(t);
 							},
 							query: function(t) {
-								var o, e, n, r, i, a, u;
-								return $n(P, c) && Qn("query", t) ? (o = "immutable" === (null == (n = P.trans) ? void 0 : n.db._options.cache), e = (n = P).requery, n = n.signal, a = ((e, t, n, r) => {
-									var o = Tn["idb://".concat(e, "/").concat(t)];
-									if (!o) return [];
-									if (!(e = o.queries[n])) return [
+								var i, e, n, r, o, a, u;
+								return $n(P, c) && Qn("query", t) ? (i = "immutable" === (null == (n = P.trans) ? void 0 : n.db._options.cache), e = (n = P).requery, n = n.signal, a = ((e, t, n, r) => {
+									var i = Tn["idb://".concat(e, "/").concat(t)];
+									if (!i) return [];
+									if (!(e = i.queries[n])) return [
 										null,
 										!1,
-										o,
+										i,
 										null
 									];
-									var i = e[(r.query ? r.query.index.name : null) || ""];
-									if (!i) return [
+									var o = e[(r.query ? r.query.index.name : null) || ""];
+									if (!o) return [
 										null,
 										!1,
-										o,
+										i,
 										null
 									];
 									switch (n) {
 										case "query":
-											var a = null != (u = r.direction) ? u : "next", u = i.find(function(e) {
+											var a = null != (u = r.direction) ? u : "next", u = o.find(function(e) {
 												var t;
 												return e.req.limit === r.limit && e.req.values === r.values && (null != (t = e.req.direction) ? t : "next") === a && Zn(e.req.query.range, r.query.range);
 											});
 											return u ? [
 												u,
 												!0,
-												o,
-												i
+												i,
+												o
 											] : [
-												i.find(function(e) {
+												o.find(function(e) {
 													var t;
 													return ("limit" in e.req ? e.req.limit : Infinity) >= r.limit && (null != (t = e.req.direction) ? t : "next") === a && (!r.values || e.req.values) && er(e.req.query.range, r.query.range);
 												}),
 												!1,
-												o,
-												i
+												i,
+												o
 											];
 										case "count":
-											u = i.find(function(e) {
+											u = o.find(function(e) {
 												return Zn(e.req.query.range, r.query.range);
 											});
 											return [
 												u,
 												!!u,
-												o,
-												i
+												i,
+												o
 											];
 									}
-								})(O, s, "query", t), u = a[0], r = a[2], i = a[3], u && a[1] ? u.obsSet = t.obsSet : (a = c.query(t).then(function(e) {
+								})(O, s, "query", t), u = a[0], r = a[2], o = a[3], u && a[1] ? u.obsSet = t.obsSet : (a = c.query(t).then(function(e) {
 									var t = e.result;
-									if (u && (u.res = t), o) {
+									if (u && (u.res = t), i) {
 										for (var n = 0, r = t.length; n < r; ++n) Object.freeze(t[n]);
 										Object.freeze(t);
 									} else e.result = ee(t);
 									return e;
 								}).catch(function(e) {
-									return i && u && ie(i, u), Promise.reject(e);
+									return o && u && oe(o, u), Promise.reject(e);
 								}), u = {
 									obsSet: t.obsSet,
 									promise: a,
@@ -54022,7 +56218,7 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 									type: "query",
 									req: t,
 									dirty: !1
-								}, i ? i.push(u) : (i = [u], (r = r || (Tn["idb://".concat(O, "/").concat(s)] = {
+								}, o ? o.push(u) : (o = [u], (r = r || (Tn["idb://".concat(O, "/").concat(s)] = {
 									queries: {
 										query: {},
 										count: {}
@@ -54030,8 +56226,8 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 									objs: /* @__PURE__ */ new Map(),
 									optimisticOps: [],
 									unsignaledParts: {}
-								})).queries.query[t.query.index.name || ""] = i)), tr(u, i, e, n), u.promise.then(function(e) {
-									return { result: Jn(e.result, t, null == r ? void 0 : r.optimisticOps, c, u, o) };
+								})).queries.query[t.query.index.name || ""] = o)), tr(u, o, e, n), u.promise.then(function(e) {
+									return { result: Jn(e.result, t, null == r ? void 0 : r.optimisticOps, c, u, i) };
 								})) : c.query(t);
 							}
 						});
@@ -54063,16 +56259,16 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				n._state.dbReadyPromise.then(e, t);
 			}).then(e);
 		}, D.prototype.use = function(e) {
-			var t = e.stack, n = e.create, r = e.level, e = e.name, o = (e && this.unuse({
+			var t = e.stack, n = e.create, r = e.level, e = e.name, i = (e && this.unuse({
 				stack: t,
 				name: e
 			}), this._middlewares[t] || (this._middlewares[t] = []));
-			return o.push({
+			return i.push({
 				stack: t,
 				create: n,
 				level: null == r ? 10 : r,
 				name: e
-			}), o.sort(function(e, t) {
+			}), i.sort(function(e, t) {
 				return e.level - t.level;
 			}), this;
 		}, D.prototype.unuse = function(e) {
@@ -54103,17 +56299,17 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			var e = (void 0 === e ? { disableAutoOpen: !0 } : e).disableAutoOpen, t = this._state;
 			e ? (t.isBeingOpened && t.cancelOpen(new k.DatabaseClosed()), this._close(), t.autoOpen = !1, t.dbOpenError = new k.DatabaseClosed()) : (this._close(), t.autoOpen = this._options.autoOpen || t.isBeingOpened, t.openComplete = !1, t.dbOpenError = null);
 		}, D.prototype.delete = function(n) {
-			var o = this, i = (void 0 === n && (n = { disableAutoOpen: !0 }), 0 < arguments.length && "object" != typeof arguments[0]), a = this._state;
+			var i = this, o = (void 0 === n && (n = { disableAutoOpen: !0 }), 0 < arguments.length && "object" != typeof arguments[0]), a = this._state;
 			return new K(function(r, t) {
 				function e() {
-					o.close(n);
-					var e = o._deps.indexedDB.deleteDatabase(o.name);
+					i.close(n);
+					var e = i._deps.indexedDB.deleteDatabase(i.name);
 					e.onsuccess = E(function() {
-						var e = o._deps, t = o.name, n;
+						var e = i._deps, t = i.name, n;
 						_n(n = e.indexedDB) || t === ft || wn(n, e.IDBKeyRange).delete(t).catch(g), r();
-					}), e.onerror = I(t), e.onblocked = o._fireOnBlocked;
+					}), e.onerror = I(t), e.onblocked = i._fireOnBlocked;
 				}
-				if (i) throw new k.InvalidArgument("Invalid closeOptions argument to db.delete()");
+				if (o) throw new k.InvalidArgument("Invalid closeOptions argument to db.delete()");
 				a.isBeingOpened ? a.dbReadyPromise.then(e) : e();
 			});
 		}, D.prototype.backendDB = function() {
@@ -54140,20 +56336,20 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			var e = function(e, t, n) {
 				var r = arguments.length;
 				if (r < 2) throw new k.InvalidArgument("Too few arguments");
-				for (var o = new Array(r - 1); --r;) o[r - 1] = arguments[r];
-				return n = o.pop(), [
+				for (var i = new Array(r - 1); --r;) i[r - 1] = arguments[r];
+				return n = i.pop(), [
 					e,
-					H(o),
+					H(i),
 					n
 				];
 			}.apply(this, arguments);
 			return this._transaction.apply(this, e);
 		}, D.prototype._transaction = function(e, t, n) {
-			var r, o, i = this, a = P.trans, u = (a && a.db === this && -1 === e.indexOf("!") || (a = null), -1 !== e.indexOf("?"));
+			var r, i, o = this, a = P.trans, u = (a && a.db === this && -1 === e.indexOf("!") || (a = null), -1 !== e.indexOf("?"));
 			e = e.replace("!", "").replace("?", "");
 			try {
-				if (o = t.map(function(e) {
-					e = e instanceof i.Table ? e.name : e;
+				if (i = t.map(function(e) {
+					e = e instanceof o.Table ? e.name : e;
 					if ("string" != typeof e) throw new TypeError("Invalid table argument to Dexie.transaction(). Only Table or String are allowed");
 					return e;
 				}), "r" == e || e === ht) r = ht;
@@ -54166,7 +56362,7 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 						if (!u) throw new k.SubTransaction("Cannot enter a sub-transaction with READWRITE mode when parent transaction is READONLY");
 						a = null;
 					}
-					a && o.forEach(function(e) {
+					a && i.forEach(function(e) {
 						if (a && -1 === a.storeNames.indexOf(e)) {
 							if (!u) throw new k.SubTransaction("Table " + e + " not included in parent transaction.");
 							a = null;
@@ -54178,18 +56374,18 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 					t(n);
 				}) : S(n);
 			}
-			var s = function o(i, a, u, s, c) {
+			var s = function i(o, a, u, s, c) {
 				return K.resolve().then(function() {
-					var e = P.transless || P, t = i._createTransaction(a, u, i._dbSchema, s), e = (t.explicit = !0, {
+					var e = P.transless || P, t = o._createTransaction(a, u, o._dbSchema, s), e = (t.explicit = !0, {
 						trans: t,
 						transless: e
 					});
 					if (s) t.idbtrans = s.idbtrans;
 					else try {
-						t.create(), t.idbtrans._explicit = !0, i._state.PR1398_maxLoop = 3;
+						t.create(), t.idbtrans._explicit = !0, o._state.PR1398_maxLoop = 3;
 					} catch (e) {
-						return e.name === de.InvalidState && i.isOpen() && 0 < --i._state.PR1398_maxLoop ? (console.warn("Dexie: Need to reopen db"), i.close({ disableAutoOpen: !1 }), i.open().then(function() {
-							return o(i, a, u, null, c);
+						return e.name === de.InvalidState && o.isOpen() && 0 < --o._state.PR1398_maxLoop ? (console.warn("Dexie: Need to reopen db"), o.close({ disableAutoOpen: !1 }), o.open().then(function() {
+							return i(o, a, u, null, c);
 						})) : S(e);
 					}
 					var n, r = ue(c), e = (r && nt(), K.follow(function() {
@@ -54208,9 +56404,9 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 						return t._reject(e), S(e);
 					});
 				});
-			}.bind(null, this, r, o, a, n);
+			}.bind(null, this, r, i, a, n);
 			return a ? a._promise(r, s, "lock") : P.trans ? at(P.transless, function() {
-				return i._whenReady(s);
+				return o._whenReady(s);
 			}) : this._whenReady(s);
 		}, D.prototype.table = function(e) {
 			if (m(this._allTables, e)) return this._allTables[e];
@@ -54218,7 +56414,7 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 		};
 		var y = D;
 		function D(e, t) {
-			var i, r, a, n, o, u = this, s = (this._middlewares = {}, this.verno = 0, D.dependencies), s = (this._options = t = _({
+			var o, r, a, n, i, u = this, s = (this._middlewares = {}, this.verno = 0, D.dependencies), s = (this._options = t = _({
 				addons: D.addons,
 				autoOpen: !0,
 				indexedDB: s.indexedDB,
@@ -54245,29 +56441,29 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			}), c.openCanceller = new K(function(e, t) {
 				c.cancelOpen = t;
 			}), this._state = c, this.name = e, this.on = Pt(this, "populate", "blocked", "versionchange", "close", { ready: [ke, g] }), this.once = function(n, r) {
-				var o = function() {
+				var i = function() {
 					for (var e = [], t = 0; t < arguments.length; t++) e[t] = arguments[t];
-					u.on(n).unsubscribe(o), r.apply(u, e);
+					u.on(n).unsubscribe(i), r.apply(u, e);
 				};
-				return u.on(n, o);
-			}, this.on.ready.subscribe = Y(this.on.ready.subscribe, function(o) {
+				return u.on(n, i);
+			}, this.on.ready.subscribe = Y(this.on.ready.subscribe, function(i) {
 				return function(n, r) {
 					D.vip(function() {
 						var t, e = u._state;
-						e.openComplete ? (e.dbOpenError || K.resolve().then(n), r && o(n)) : e.onReadyBeingFired ? (e.onReadyBeingFired.push(n), r && o(n)) : (o(n), t = u, r || o(function e() {
+						e.openComplete ? (e.dbOpenError || K.resolve().then(n), r && i(n)) : e.onReadyBeingFired ? (e.onReadyBeingFired.push(n), r && i(n)) : (i(n), t = u, r || i(function e() {
 							t.on.ready.unsubscribe(n), t.on.ready.unsubscribe(e);
 						}));
 					});
 				};
-			}), this.Collection = (i = this, Kt(qt.prototype, function(e, t) {
-				this.db = i;
+			}), this.Collection = (o = this, Kt(qt.prototype, function(e, t) {
+				this.db = o;
 				var n = yt, r = null;
 				if (t) try {
 					n = t();
 				} catch (e) {
 					r = e;
 				}
-				var t = e._ctx, e = t.table, o = e.hook.reading.fire;
+				var t = e._ctx, e = t.table, i = e.hook.reading.fire;
 				this._ctx = {
 					table: e,
 					index: t.index,
@@ -54285,7 +56481,7 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 					limit: Infinity,
 					error: r,
 					or: t.or,
-					valueMapper: o !== ve ? o : null
+					valueMapper: i !== ve ? i : null
 				};
 			})), this.Table = (r = this, Kt(Ot.prototype, function(e, t, n) {
 				this.db = r, this._tx = n, this.name = e, this.schema = t, this.hook = r._allTables[e] ? r._allTables[e].hook : Pt(null, {
@@ -54294,20 +56490,20 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 					updating: [_e, g],
 					deleting: [we, g]
 				});
-			})), this.Transaction = (a = this, Kt(Yt.prototype, function(e, t, n, r, o) {
-				var i = this;
+			})), this.Transaction = (a = this, Kt(Yt.prototype, function(e, t, n, r, i) {
+				var o = this;
 				"readonly" !== e && t.forEach(function(e) {
 					e = null == (e = n[e]) ? void 0 : e.yProps;
 					e && (t = t.concat(e.map(function(e) {
 						return e.updatesTable;
 					})));
-				}), this.db = a, this.mode = e, this.storeNames = t, this.schema = n, this.chromeTransactionDurability = r, this.idbtrans = null, this.on = Pt(this, "complete", "error", "abort"), this.parent = o || null, this.active = !0, this._reculock = 0, this._blockedFuncs = [], this._resolve = null, this._reject = null, this._waitingFor = null, this._waitingQueue = null, this._spinCount = 0, this._completion = new K(function(e, t) {
-					i._resolve = e, i._reject = t;
+				}), this.db = a, this.mode = e, this.storeNames = t, this.schema = n, this.chromeTransactionDurability = r, this.idbtrans = null, this.on = Pt(this, "complete", "error", "abort"), this.parent = i || null, this.active = !0, this._reculock = 0, this._blockedFuncs = [], this._resolve = null, this._reject = null, this._waitingFor = null, this._waitingQueue = null, this._spinCount = 0, this._completion = new K(function(e, t) {
+					o._resolve = e, o._reject = t;
 				}), this._completion.then(function() {
-					i.active = !1, i.on.complete.fire();
+					o.active = !1, o.on.complete.fire();
 				}, function(e) {
-					var t = i.active;
-					return i.active = !1, i.on.error.fire(e), i.parent ? i.parent._reject(e) : t && i.idbtrans && i.idbtrans.abort(), S(e);
+					var t = o.active;
+					return o.active = !1, o.on.error.fire(e), o.parent ? o.parent._reject(e) : t && o.idbtrans && o.idbtrans.abort(), S(e);
 				});
 			})), this.Version = (n = this, Kt(mn.prototype, function(e) {
 				this.db = n, this._cfg = {
@@ -54317,8 +56513,8 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 					tables: {},
 					contentUpgrade: null
 				};
-			})), this.WhereClause = (o = this, Kt(Lt.prototype, function(e, t, n) {
-				if (this.db = o, this._ctx = {
+			})), this.WhereClause = (i = this, Kt(Lt.prototype, function(e, t, n) {
+				if (this.db = i, this._ctx = {
 					table: e,
 					index: ":id" === t ? null : t,
 					or: n
@@ -54328,7 +56524,7 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 					return 0 < C(e, t) ? e : t;
 				}, this._min = function(e, t) {
 					return C(e, t) < 0 ? e : t;
-				}, this._IDBKeyRange = o._deps.IDBKeyRange, !this._IDBKeyRange) throw new k.MissingAPI();
+				}, this._IDBKeyRange = i._deps.IDBKeyRange, !this._IDBKeyRange) throw new k.MissingAPI();
 			})), this.on("versionchange", function(e) {
 				0 < e.newVersion ? console.warn("Another connection wants to upgrade database '".concat(u.name, "'. Closing db now to resume the upgrade.")) : console.warn("Another connection wants to delete database '".concat(u.name, "'. Closing db now to resume the delete request.")), u.close({ disableAutoOpen: !1 });
 			}), this.on("blocked", function(e) {
@@ -54355,7 +56551,7 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 				return e(u);
 			});
 		}
-		var or, Se = "undefined" != typeof Symbol && "observable" in Symbol ? Symbol.observable : "@@observable", ir = (ar.prototype.subscribe = function(e, t, n) {
+		var ir, Se = "undefined" != typeof Symbol && "observable" in Symbol ? Symbol.observable : "@@observable", or = (ar.prototype.subscribe = function(e, t, n) {
 			return this._subscribe(e && "function" != typeof e ? e : {
 				next: e,
 				error: t,
@@ -54368,25 +56564,25 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			this._subscribe = e;
 		}
 		try {
-			or = {
+			ir = {
 				indexedDB: f.indexedDB || f.mozIndexedDB || f.webkitIndexedDB || f.msIndexedDB,
 				IDBKeyRange: f.IDBKeyRange || f.webkitIDBKeyRange
 			};
 		} catch (e) {
-			or = {
+			ir = {
 				indexedDB: null,
 				IDBKeyRange: null
 			};
 		}
 		function ur(d) {
-			var p, y = !1, e = new ir(function(r) {
-				var o = ue(d);
-				var i, a = !1, u = {}, s = {}, e = {
+			var p, y = !1, e = new or(function(r) {
+				var i = ue(d);
+				var o, a = !1, u = {}, s = {}, e = {
 					get closed() {
 						return a;
 					},
 					unsubscribe: function() {
-						a || (a = !0, i && i.abort(), c && Wt.storagemutated.unsubscribe(h));
+						a || (a = !0, o && o.abort(), c && Wt.storagemutated.unsubscribe(h));
 					}
 				}, c = (r.start && r.start(e), !1), l = function() {
 					return st(t);
@@ -54398,22 +56594,22 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 					Cn(u, e), f() && l();
 				}, t = function() {
 					var t, n, e;
-					!a && or.indexedDB && (u = {}, t = {}, i && i.abort(), i = new AbortController(), e = ((e) => {
+					!a && ir.indexedDB && (u = {}, t = {}, o && o.abort(), o = new AbortController(), e = ((e) => {
 						var t = $e();
 						try {
-							o && nt();
+							i && nt();
 							var n = v(d, e);
-							return n = o ? n.finally(w) : n;
+							return n = i ? n.finally(w) : n;
 						} finally {
 							t && Qe();
 						}
 					})(n = {
 						subscr: t,
-						signal: i.signal,
+						signal: o.signal,
 						requery: l,
 						querier: d,
 						trans: null
-					}), c || (Wt(zt, h), c = !0), Promise.resolve(e).then(function(e) {
+					}), c || (Wt.storagemutated.subscribe(h), c = !0), Promise.resolve(e).then(function(e) {
 						y = !0, p = e, a || n.signal.aborted || (f() || (s = t, f()) ? l() : (u = {}, st(function() {
 							return !a && r.next && r.next(e);
 						})));
@@ -54532,10 +56728,10 @@ var import_dexie_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((
 			addons: [],
 			connections: { get: gn.toArray },
 			errnames: de,
-			dependencies: or,
+			dependencies: ir,
 			cache: Tn,
-			semVer: "4.4.2",
-			version: "4.4.2".split(".").map(function(e) {
+			semVer: "4.4.3",
+			version: "4.4.3".split(".").map(function(e) {
 				return parseInt(e);
 			}).reduce(function(e, t, n) {
 				return e + t / Math.pow(10, 2 * n);
@@ -54616,7 +56812,7 @@ var AppDatabase = class extends Dexie {
 				return true;
 			}
 			return false;
-		} catch (error) {
+		} catch {
 			return false;
 		}
 	}
@@ -54781,7 +56977,7 @@ var DatabaseService = class {
 				log$11.debug("Database not open");
 				return null;
 			}
-			let files = await this.getDb().logs.toArray();
+			const files = await this.getDb().logs.toArray();
 			files.sort((a, b) => {
 				if (a.mtime != null && b.mtime != null) return b.mtime - a.mtime;
 				if (a.id != null && b.id != null) return a.id - b.id;
@@ -55645,7 +57841,7 @@ var createLogSlice = (set, get, _store, api) => {
 						logPolling.startPolling(logFileName);
 						return;
 					}
-				} catch (e) {}
+				} catch {}
 				try {
 					const logDetails = await api.get_log_details(logFileName);
 					state.logActions.setSelectedLogDetails(logDetails);
@@ -55760,8 +57956,7 @@ var initialState$1 = {
 	samplesListState: {
 		byScope: { samplesPanel: { columnVisibility: {} } },
 		byLog: {}
-	},
-	showRetriedLogs: false
+	}
 };
 var createLogsSlice = (set, get, _store, api) => {
 	const slice = {
@@ -55873,8 +58068,7 @@ var createLogsSlice = (set, get, _store, api) => {
 			},
 			syncLogs: async () => {
 				const databaseService = get().databaseService;
-				const useProgress = !!databaseService?.getDatabaseHandle();
-				if (useProgress) get().appActions.setLoading(true);
+				get().appActions.setLoading(true);
 				const logDir = await get().logsActions.initLogDir();
 				const databaseHandle = api.get_log_dir_handle(logDir);
 				const initDatabase = !databaseService || databaseService.getDatabaseHandle() !== databaseHandle;
@@ -55888,12 +58082,12 @@ var createLogsSlice = (set, get, _store, api) => {
 							return databaseService;
 						} catch (e) {
 							console.log(e);
-							if (useProgress) get().appActions.setLoading(false, e);
+							get().appActions.setLoading(false, e);
 							return;
 						}
 					};
 					if (!logDir || isSingleFileMode) {
-						if (useProgress) get().appActions.setLoading(false);
+						if (!get().app.status.error) get().appActions.setLoading(false);
 						return [];
 					}
 					const databaseService = await initializeDatabase(logDir);
@@ -55933,7 +58127,7 @@ var createLogsSlice = (set, get, _store, api) => {
 						}
 					});
 				}
-				if (useProgress) get().appActions.setLoading(false);
+				get().appActions.setLoading(false);
 				return await get().replicationService?.sync(initDatabase) || [];
 			},
 			syncEvalSetInfo: async (logPath) => {
@@ -56009,7 +58203,7 @@ var createLogsSlice = (set, get, _store, api) => {
 					const samples = await dbService.readAllSampleSummaries();
 					log$8.debug(`Retrieved ${samples.length} cached samples`);
 					return samples;
-				} catch (e) {
+				} catch {
 					log$8.debug("No cached samples available");
 					return [];
 				}
@@ -56022,15 +58216,10 @@ var createLogsSlice = (set, get, _store, api) => {
 					const samples = await dbService.querySampleSummaries(filter);
 					log$8.debug(`Query returned ${samples.length} samples`);
 					return samples;
-				} catch (e) {
+				} catch {
 					log$8.debug("Sample query failed, returning empty results");
 					return [];
 				}
-			},
-			setShowRetriedLogs: (showRetriedLogs) => {
-				set((state) => {
-					state.logs.showRetriedLogs = showRetriedLogs;
-				});
 			}
 		}
 	};
@@ -56169,6 +58358,16 @@ var inputString = (input) => {
 	});
 };
 //#endregion
+//#region ../../packages/inspect-common/src/utils/modelFallbacks.ts
+/**
+* Total generate calls served via fallback across a sample's rollup.
+*/
+var totalModelFallbacks = (fallbacks) => (fallbacks ?? []).reduce((sum, f) => sum + (f.count ?? 1), 0);
+/**
+* One "requested → served (×N)" line per fallback rollup entry.
+*/
+var modelFallbackLines = (fallbacks) => (fallbacks ?? []).map((f) => `${f.model} → ${f.fallback_model}${(f.count ?? 1) > 1 ? ` (×${f.count})` : ""}`);
+//#endregion
 //#region src/state/sampleUtils.ts
 /**
 * Migrates and resolves attachments for a sample
@@ -56185,6 +58384,10 @@ var resolveSample$1 = (sample) => {
 	sample.input = resolveAttachments(sample.input, sample.attachments);
 	sample.messages = resolveAttachments(sample.messages, sample.attachments);
 	sample.events = resolveAttachments(sample.events, sample.attachments);
+	if (sample.error_retries) sample.error_retries = sample.error_retries.map((retry) => ({
+		...retry,
+		events: resolveAttachments(retry.events, sample.attachments)
+	}));
 	sample.attachments = {};
 	return sample;
 };
@@ -56283,8 +58486,18 @@ function createSamplePolling(store, api) {
 			const { sampleActions } = store.getState();
 			if (!api.get_log_sample_data) throw new Error("Required API get_log_sample_data is undefined.");
 			if (localAbort.signal.aborted) return false;
-			const loadCompletedSample = async (message) => {
-				stopPollingTimer();
+			const loadCompletedSample = async (message, options) => {
+				const keepStreaming = () => {
+					sampleActions.setSampleStatus("streaming");
+					return true;
+				};
+				const failLoad = (error) => {
+					stopPollingTimer();
+					sampleActions.setSampleError(error);
+					sampleActions.setSampleStatus("error");
+					sampleActions.setRunningEvents([]);
+					return false;
+				};
 				try {
 					log$7.debug(message);
 					const sample = await api.get_log_sample(logFile, summary.id, summary.epoch) ?? (() => {
@@ -56293,22 +58506,20 @@ function createSamplePolling(store, api) {
 					})();
 					if (localAbort.signal.aborted) return false;
 					if (sample) {
+						stopPollingTimer();
 						const migratedSample = resolveSample$1(sample);
 						sampleActions.setSelectedSample(migratedSample, logFile);
 						sampleActions.setSampleStatus("ok");
 						sampleActions.setRunningEvents([]);
-					} else {
-						sampleActions.setSampleStatus("error");
-						sampleActions.setSampleError(/* @__PURE__ */ new Error("Unable to load sample - an unknown error occurred"));
-						sampleActions.setRunningEvents([]);
+						return false;
 					}
+					if (!options.missingSampleIsError) return keepStreaming();
+					return failLoad(/* @__PURE__ */ new Error("Unable to load sample - an unknown error occurred"));
 				} catch (e) {
 					if (localAbort.signal.aborted) return false;
-					sampleActions.setSampleError(e);
-					sampleActions.setSampleStatus("error");
-					sampleActions.setRunningEvents([]);
+					if (!options.missingSampleIsError) return keepStreaming();
+					return failLoad(e);
 				}
-				return false;
 			};
 			const priorEventId = pollingState.eventId;
 			const priorAttachmentId = pollingState.attachmentId;
@@ -56316,8 +58527,11 @@ function createSamplePolling(store, api) {
 			const priorCallPoolId = pollingState.callPoolId;
 			const sampleDataResponse = await api.get_log_sample_data(logFile, summary.id, summary.epoch, priorEventId, priorAttachmentId, priorMessagePoolId, priorCallPoolId);
 			if (localAbort.signal.aborted) return false;
-			if (sampleDataResponse?.status === "NotFound") return await loadCompletedSample(`LOADING COMPLETED SAMPLE AFTER FLUSH: ${summary.id}-${summary.epoch}`);
-			if (shouldFinalizeStreamingSample(sampleDataResponse, hasCompletedLogSummary(store.getState(), summary.id, summary.epoch))) return await loadCompletedSample(`LOADING COMPLETED SAMPLE AFTER SUMMARY UPDATE: ${summary.id}-${summary.epoch}`);
+			if (sampleDataResponse?.status === "NotFound") return await loadCompletedSample(`LOADING COMPLETED SAMPLE AFTER FLUSH: ${summary.id}-${summary.epoch}`, { missingSampleIsError: true });
+			if (shouldFinalizeStreamingSample(sampleDataResponse, hasCompletedLogSummary(store.getState(), summary.id, summary.epoch))) {
+				const completedByPendingBuffer = sampleDataResponse?.complete === true;
+				return await loadCompletedSample(completedByPendingBuffer ? `LOADING COMPLETED SAMPLE AFTER BUFFER COMPLETE: ${summary.id}-${summary.epoch}` : `LOADING COMPLETED SAMPLE AFTER SUMMARY UPDATE: ${summary.id}-${summary.epoch}`, { missingSampleIsError: !completedByPendingBuffer });
+			}
 			if (sampleDataResponse?.status === "OK" && sampleDataResponse.sampleData) {
 				if (localAbort.signal.aborted) return false;
 				sampleActions.setSampleStatus("streaming");
@@ -56380,8 +58594,12 @@ var hasSampleDataUpdates = (sampleData) => {
 	return sampleData.events.length > 0 || sampleData.attachments.length > 0 || sampleData.message_pool.length > 0 || sampleData.call_pool.length > 0;
 };
 var shouldFinalizeStreamingSample = (sampleDataResponse, completedInLog) => {
-	if (!completedInLog || !sampleDataResponse) return false;
-	return sampleDataResponse.status === "NotModified" || sampleDataResponse.status === "OK" && !hasSampleDataUpdates(sampleDataResponse.sampleData);
+	if (!sampleDataResponse) return false;
+	if (sampleDataResponse.status === "NotModified") return completedInLog === true;
+	if (sampleDataResponse.status !== "OK") return false;
+	if (sampleDataResponse.has_more === true) return false;
+	if (!completedInLog && sampleDataResponse.complete !== true) return false;
+	return !hasSampleDataUpdates(sampleDataResponse.sampleData);
 };
 var resetPollingState = (state) => {
 	state.eventId = kNoId;
@@ -56802,22 +59020,18 @@ var WorkQueue = class {
 	}
 	enqueue(items, priority = 1) {
 		const now = Date.now();
-		let newItemsCount = 0;
 		for (const item of items) {
 			const id = this.options.getId(item);
 			const existing = this.itemsById.get(id);
 			if (existing) {
 				if (priority > existing.priority) existing.priority = priority;
-			} else {
-				this.itemsById.set(id, {
-					id,
-					data: item,
-					priority,
-					addedAt: now,
-					retries: 0
-				});
-				newItemsCount++;
-			}
+			} else this.itemsById.set(id, {
+				id,
+				data: item,
+				priority,
+				addedAt: now,
+				retries: 0
+			});
 		}
 		this.startProcessing();
 	}
@@ -56910,7 +59124,7 @@ var ReplicationService = class {
 		this._previewQueue = new WorkQueue({
 			name: "Log-Preview-Queue",
 			concurrency: 2,
-			batchSize: 6,
+			batchSize: 24,
 			processingDelay: 20,
 			onProcessingChanged: this.processingChanged,
 			getId: (log) => log.name,
@@ -56927,7 +59141,7 @@ var ReplicationService = class {
 		});
 		this._detailQueue = new WorkQueue({
 			name: "Log-Detail-Queue",
-			concurrency: 10,
+			concurrency: 24,
 			batchSize: 1,
 			processingDelay: 0,
 			onProcessingChanged: this.processingChanged,
@@ -57229,7 +59443,7 @@ var initializeStore = (api, capabilities, storage) => {
 			cleanup: async () => {
 				await databaseService.closeDatabase();
 				appCleanup();
-				await logsCleanup();
+				logsCleanup();
 				logCleanup();
 				sampleCleanup();
 			}
@@ -57290,6 +59504,10 @@ var useUserSettings = create()(persist((set) => ({
 	themePreference: "readable-system",
 	setThemePreference: (themePreference) => {
 		set({ themePreference });
+	},
+	showRetriedLogs: false,
+	setShowRetriedLogs: (showRetriedLogs) => {
+		set({ showRetriedLogs });
 	}
 }), {
 	name: "inspect-view-user-settings",
@@ -57727,25 +59945,46 @@ var IconsContext = (0, import_react.createContext)({
 var useContentIcons = () => {
 	return (0, import_react.useContext)(IconsContext);
 };
+//#endregion
+//#region ../../packages/inspect-components/src/content/copyText.ts
+/**
+* Plain-text form of a metadata value for clipboard copy.
+*
+* Strings copy verbatim; other scalars use their string form; objects
+* and arrays copy as pretty-printed JSON.
+*/
+var copyValueText = (value) => {
+	if (typeof value === "string") return value;
+	if (value === null || value === void 0) return String(value);
+	if (typeof value === "number" || typeof value === "boolean" || typeof value === "bigint" || typeof value === "function") return value.toString();
+	if (typeof value === "symbol") return value.toString();
+	try {
+		return JSON.stringify(value, null, 2) ?? "";
+	} catch {
+		return "";
+	}
+};
 var MetadataGrid_module_default = {
-	grid: "_grid_1qisc_5",
-	rows: "_rows_1qisc_14",
-	row: "_row_1qisc_14",
-	striped: "_striped_1qisc_35",
-	key: "_key_1qisc_43",
-	val: "_val_1qisc_52",
-	empty: "_empty_1qisc_63",
-	numVal: "_numVal_1qisc_69",
-	boolVal: "_boolVal_1qisc_73",
-	group: "_group_1qisc_79",
-	groupHeader: "_groupHeader_1qisc_91",
-	groupKey: "_groupKey_1qisc_99",
-	groupRule: "_groupRule_1qisc_107",
-	depth1: "_depth1_1qisc_115",
-	depth1Group: "_depth1Group_1qisc_128",
-	depth2: "_depth2_1qisc_143",
-	toggleContainer: "_toggleContainer_1qisc_153",
-	toggleButton: "_toggleButton_1qisc_164"
+	grid: "_grid_25rj7_5",
+	rows: "_rows_25rj7_14",
+	row: "_row_25rj7_14",
+	striped: "_striped_25rj7_35",
+	key: "_key_25rj7_43",
+	val: "_val_25rj7_52",
+	empty: "_empty_25rj7_63",
+	numVal: "_numVal_25rj7_69",
+	boolVal: "_boolVal_25rj7_73",
+	rowsCopy: "_rowsCopy_25rj7_79",
+	copyCell: "_copyCell_25rj7_85",
+	group: "_group_25rj7_104",
+	groupHeader: "_groupHeader_25rj7_116",
+	groupKey: "_groupKey_25rj7_124",
+	groupRule: "_groupRule_25rj7_132",
+	depth1: "_depth1_25rj7_140",
+	depth1Group: "_depth1Group_25rj7_153",
+	depth2: "_depth2_25rj7_168",
+	toggleContainer: "_toggleContainer_25rj7_178",
+	toggleButton: "_toggleButton_25rj7_189"
 };
 var RenderedContent_module_default = {
 	query: "_query_seqs2_1",
@@ -58015,33 +60254,43 @@ var MetaDataGrid = ({ id, entries, className, references, style, maxRows, option
 		style: depth === 0 ? style : void 0,
 		children: [
 			visibleScalars.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: MetadataGrid_module_default.rows,
+				className: clsx(MetadataGrid_module_default.rows, options?.copyButton && MetadataGrid_module_default.rowsCopy),
 				children: visibleScalars.map((entry, index) => {
 					const entryId = `${baseId}-value-${index}`;
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 						className: MetadataGrid_module_default.row,
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							className: MetadataGrid_module_default.key,
-							children: entry.name
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							className: MetadataGrid_module_default.val,
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedContent, {
-								id: entryId,
-								entry,
-								references,
-								renderOptions: {
-									renderString: "markdown",
-									previewRefsOnHover: options?.previewRefsOnHover
-								},
-								renderObject: (obj) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
+						children: [
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: MetadataGrid_module_default.key,
+								children: entry.name
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: MetadataGrid_module_default.val,
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedContent, {
 									id: entryId,
-									entries: obj,
-									options,
+									entry,
 									references,
-									depth: depth + 1
+									renderOptions: {
+										renderString: "markdown",
+										previewRefsOnHover: options?.previewRefsOnHover
+									},
+									renderObject: (obj) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
+										id: entryId,
+										entries: obj,
+										options,
+										references,
+										depth: depth + 1
+									})
 								})
-							})
-						})]
+							}),
+							options?.copyButton && !hasHtmlEscape(entry.value) ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: MetadataGrid_module_default.copyCell,
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CopyButton, {
+									value: copyValueText(entry.value),
+									ariaLabel: `Copy ${entry.name}`
+								})
+							}) : void 0
+						]
 					}, entryId);
 				})
 			}),
@@ -58086,7 +60335,7 @@ var entryRecords = (entries) => {
 	else return entries;
 };
 //#endregion
-//#region ../../node_modules/.pnpm/react-virtuoso@4.18.7_react-dom@19.2.6_react@19.2.6__react@19.2.6/node_modules/react-virtuoso/dist/index.mjs
+//#region ../../node_modules/.pnpm/react-virtuoso@4.18.7_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/react-virtuoso/dist/index.mjs
 var we = 0, Pt = 1, Xt = 2, Wn = 4;
 function fn(t) {
 	return () => t;
@@ -59750,7 +61999,7 @@ function Xe(t, e, n) {
 			const H = import_react.useContext(l)[f];
 			Ie(() => Y(H, a), [a, H]);
 		},
-		useEmitterValue: parseInt("19.2.6") >= 18 ? I : w,
+		useEmitterValue: parseInt("19.2.7") >= 18 ? I : w,
 		usePublisher: p
 	};
 }
@@ -60830,11 +63079,13 @@ var storeKey = (storeName, instanceId) => {
 	return `${storeName || ""} (${instanceId})`;
 };
 var RecordTree_module_default = {
-	keyPairContainer: "_keyPairContainer_qjlxf_1",
-	keyPairBordered: "_keyPairBordered_qjlxf_9",
-	key: "_key_qjlxf_1",
-	pre: "_pre_qjlxf_19",
-	treeIcon: "_treeIcon_qjlxf_23"
+	keyPairContainer: "_keyPairContainer_1u1d5_1",
+	keyPairBordered: "_keyPairBordered_1u1d5_9",
+	keyPairCopy: "_keyPairCopy_1u1d5_15",
+	copyCell: "_copyCell_1u1d5_21",
+	key: "_key_1u1d5_1",
+	pre: "_pre_1u1d5_43",
+	treeIcon: "_treeIcon_1u1d5_47"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/content/RecordTree.tsx
@@ -60842,7 +63093,7 @@ var kRecordTreeKey = "record-tree-key";
 /**
 * Renders the MetaDataView component.
 */
-var RecordTree = ({ id, record, className, scrollRef, defaultExpandLevel = 1, processStore = false, useBorders = true }) => {
+var RecordTree = ({ id, record, className, scrollRef, defaultExpandLevel = 1, processStore = false, useBorders = true, copyButton = false }) => {
 	const icons = useContentIcons();
 	const listHandle = (0, import_react.useRef)(null);
 	const { getRestoreState } = useVirtuosoState(listHandle, `metadata-grid-${id}`);
@@ -60909,38 +63160,49 @@ var RecordTree = ({ id, record, className, scrollRef, defaultExpandLevel = 1, pr
 	const renderRow = (index) => {
 		const item = items[index];
 		if (!item) return null;
+		const showValue = item.value !== null && (!item.hasChildren || item.isCollapsed);
 		return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: clsx(RecordTree_module_default.keyPairContainer, index < items.length - 1 && useBorders ? RecordTree_module_default.keyPairBordered : void 0, "text-size-small"),
+			className: clsx(RecordTree_module_default.keyPairContainer, copyButton && RecordTree_module_default.keyPairCopy, index < items.length - 1 && useBorders ? RecordTree_module_default.keyPairBordered : void 0, "text-size-small"),
 			style: { paddingLeft: `${item.depth * 20}px` },
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				"data-index": index,
-				className: clsx(kRecordTreeKey, RecordTree_module_default.key, "font-monospace", "text-style-secondary"),
-				onKeyUp: keyUpHandler(item, index),
-				tabIndex: 0,
-				onClick: () => {
-					setCollapsed(item.id, !item.isCollapsed);
-				},
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: item.hasChildren ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", {
-					className: clsx(RecordTree_module_default.pre),
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(item.isCollapsed ? icons.tree.closed : icons.tree.open, RecordTree_module_default.treeIcon) })
-				}) : void 0 }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("pre", {
-					className: clsx(RecordTree_module_default.pre),
-					children: [item.key, ":"]
-				})]
-			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: item.value !== null && (!item.hasChildren || item.isCollapsed) ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
-				id: `${id}-collapse-${item.id}`,
-				collapse: true,
-				lines: 15,
-				togglePosition: "block-left",
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedContent, {
-					id: `${id}-value-${item.id}`,
-					entry: {
-						name: item.key,
-						value: item.value
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					"data-index": index,
+					className: clsx(kRecordTreeKey, RecordTree_module_default.key, "font-monospace", "text-style-secondary"),
+					onKeyUp: keyUpHandler(item, index),
+					tabIndex: 0,
+					onClick: () => {
+						setCollapsed(item.id, !item.isCollapsed);
 					},
-					renderOptions: { renderString: "pre" }
-				})
-			}) : void 0 })]
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: item.hasChildren ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", {
+						className: clsx(RecordTree_module_default.pre),
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(item.isCollapsed ? icons.tree.closed : icons.tree.open, RecordTree_module_default.treeIcon) })
+					}) : void 0 }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("pre", {
+						className: clsx(RecordTree_module_default.pre),
+						children: [item.key, ":"]
+					})]
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: showValue ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
+					id: `${id}-collapse-${item.id}`,
+					collapse: true,
+					lines: 15,
+					togglePosition: "block-left",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedContent, {
+						id: `${id}-value-${item.id}`,
+						entry: {
+							name: item.key,
+							value: item.value
+						},
+						renderOptions: { renderString: "pre" }
+					})
+				}) : void 0 }),
+				copyButton && showValue ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: RecordTree_module_default.copyCell,
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CopyButton, {
+						value: copyValueText(item.rawValue),
+						ariaLabel: `Copy ${item.key}`
+					})
+				}) : void 0
+			]
 		}, item.id);
 	};
 	if (!scrollRef) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -60995,6 +63257,7 @@ var processNodeRecursive = (key, value, depth, parentPath, thisPath, isCollapsed
 			id,
 			key,
 			value: value === void 0 ? null : value,
+			rawValue: value,
 			depth,
 			hasChildren: false,
 			isCollapsed: false
@@ -61024,6 +63287,7 @@ var processNodeRecursive = (key, value, depth, parentPath, thisPath, isCollapsed
 		id,
 		key,
 		value: displayValue,
+		rawValue: value,
 		depth,
 		hasChildren: processChildren,
 		childCount,
@@ -61295,6 +63559,8 @@ var createSamplesDescriptor = (samples, evalDescriptor, selectedScores) => {
 		shape.idSize = Math.min(10, Math.max(shape.idSize, String(sample.id).length));
 		shape.limitSize = Math.min(10, Math.max(shape.limitSize, sample.limit ? sample.limit.length : 0));
 		shape.retriesSize = Math.min(10, Math.max(shape.retriesSize, sample.retries ? String(sample.retries).length + 2 : 0));
+		const fallbacks = totalModelFallbacks(sample.model_fallbacks);
+		shape.fallbacksSize = Math.min(10, Math.max(shape.fallbacksSize, fallbacks ? String(fallbacks).length + 2 : 0));
 		shape.errorSize = Math.min(10, Math.max(shape.errorSize, sample.error ? errorType(sample.error).length : 0));
 		return shape;
 	}, {
@@ -61304,6 +63570,7 @@ var createSamplesDescriptor = (samples, evalDescriptor, selectedScores) => {
 		answerSize: 0,
 		limitSize: 0,
 		retriesSize: 0,
+		fallbacksSize: 0,
 		errorSize: 0
 	});
 	const firstSelectedScore = selectedScores?.[0];
@@ -63806,6 +66073,7 @@ var SAMPLE_VARIABLES = [
 	["has_error", "Checks if the sample has an error"],
 	["has_limit", "Checks if the sample stopped due to a limit"],
 	["has_retries", "Checks if the sample has been retried"],
+	["has_fallbacks", "Checks if any model fallback occurred in the sample"],
 	["id", "The unique identifier of the sample"],
 	[kSampleUuidVariable, "The globally unique identifier of the sample run"],
 	["input", "The sample input as a string"],
@@ -63814,6 +66082,7 @@ var SAMPLE_VARIABLES = [
 	["error", "The sample error message (or null)"],
 	["limit", "The limit kind that stopped the sample (or null)"],
 	["retries", "The number of times the sample was retried (0 if none)"],
+	["fallbacks", "The number of generate calls served by a fallback model (0 if none)"],
 	["tokens", "Total tokens used across all models (or null)"],
 	["duration", "Total wall-clock time of the sample, in seconds (or null)"],
 	[kSampleMetadataVariable, "Metadata associated with the sample"]
@@ -63908,6 +66177,7 @@ var sampleVariables = (sample, samplesDescriptor) => {
 		has_error: !!sample.error,
 		has_limit: !!sample.limit,
 		has_retries: sample.retries !== void 0 && sample.retries > 0,
+		has_fallbacks: totalModelFallbacks(sample.model_fallbacks) > 0,
 		completed: sample.completed ?? true,
 		id: sample.id,
 		uuid: sample.uuid ?? null,
@@ -63917,6 +66187,7 @@ var sampleVariables = (sample, samplesDescriptor) => {
 		error: sample.error ?? null,
 		limit: sample.limit ?? null,
 		retries: sample.retries ?? 0,
+		fallbacks: totalModelFallbacks(sample.model_fallbacks),
 		tokens: totalTokens(sample),
 		duration: sample.total_time ?? null,
 		metadata: sample.metadata
@@ -63949,8 +66220,8 @@ var sampleFilterItems = (evalDescriptor) => {
 			});
 			return;
 		}
-		var tooltip = `${canonicalName}: ${descriptor.scoreType}`;
-		var categories = [];
+		let tooltip = `${canonicalName}: ${descriptor.scoreType}`;
+		let categories = [];
 		if (descriptor.min !== void 0 || descriptor.max !== void 0) {
 			const rounded = (num) => {
 				return parseFloat(num.toPrecision(3)).toString();
@@ -64423,13 +66694,6 @@ var useMessageVisibility = (id, scope) => {
 		setVisible,
 		id
 	]);
-};
-var usePrevious = (value) => {
-	const ref = (0, import_react.useRef)(void 0);
-	(0, import_react.useEffect)(() => {
-		ref.current = value;
-	}, [value]);
-	return ref.current;
 };
 var useLogs = () => {
 	const syncLogs = useStore((state) => state.logsActions.syncLogs);
@@ -65031,6 +67295,35 @@ var ViewerOptionsButton = (0, import_react.forwardRef)(({ showing, setShowing },
 		})
 	}) });
 });
+//#endregion
+//#region src/app/server/useAppConfig.ts
+/**
+* Loads app config (installed inspect / scout versions) asynchronously at app
+* initialization.
+*
+* Use this hook only at the top of the app before rendering to load config
+* data globally. After it completes, all other components should use
+* useAppConfig to access the loaded value synchronously.
+*/
+var useAppConfigAsync = () => {
+	const api = useApi();
+	return useAsyncDataFromQuery({
+		queryKey: ["app-config"],
+		queryFn: () => api.get_app_config(),
+		staleTime: Infinity
+	});
+};
+/**
+* Returns app config for use in components after data loaded globally.
+*
+* Assumes the async data has already been loaded at app initialization via
+* useAppConfigAsync (App.tsx gates rendering on it). Throws if not yet loaded.
+*/
+var useAppConfig = () => {
+	const { data } = useAppConfigAsync();
+	if (!data) throw new Error("App config not loaded");
+	return data;
+};
 var ViewerOptionsPopover_module_default = {
 	container: "_container_e3s30_1",
 	fullWidth: "_fullWidth_e3s30_9",
@@ -65054,6 +67347,7 @@ var ViewerOptionsPopover = ({ showing, positionEl, setShowing }) => {
 	const [clearMessage, setClearMessage] = (0, import_react.useState)(null);
 	const replicationService = useStore((state) => state.replicationService);
 	const dbStats = useStore((state) => state.logs.dbStats);
+	const appConfig = useAppConfig();
 	const logDir = useStore((state) => state.logs.logDir);
 	const handleClearDatabase = async () => {
 		if (!replicationService) {
@@ -65064,7 +67358,7 @@ var ViewerOptionsPopover = ({ showing, positionEl, setShowing }) => {
 		setIsClearing(true);
 		setClearMessage(null);
 		try {
-			await replicationService.clearData();
+			replicationService.clearData();
 			setClearMessage("Database cleared successfully");
 			setTimeout(() => setClearMessage(null), 3e3);
 		} catch (error) {
@@ -65101,12 +67395,19 @@ var ViewerOptionsPopover = ({ showing, positionEl, setShowing }) => {
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: clsx(ViewerOptionsPopover_module_default.spacer) }),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					className: clsx("text-style-label", "text-style-secondary"),
-					children: "Version"
+					children: "Inspect Version"
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					className: clsx(),
-					children: "unknown"
+					children: appConfig.inspect_version
 				}),
+				appConfig.scout_version && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: clsx("text-style-label", "text-style-secondary"),
+					children: "Scout Version"
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: clsx(),
+					children: appConfig.scout_version
+				})] }),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					className: clsx("text-style-label", "text-style-secondary"),
 					children: "Schema"
@@ -65258,7 +67559,7 @@ var Navbar = ({ fnNavigationUrl, bordered, children, currentPath, breadcrumbsEna
 //#endregion
 //#region src/app/navbar/ApplicationNavbar.tsx
 var ApplicationNavbar = ({ currentPath, fnNavigationUrl, bordered, children, showActivity = "log", breadcrumbsEnabled }) => {
-	const optionsRef = (0, import_react.useRef)(null);
+	const [optionsEl, setOptionsEl] = (0, import_react.useState)(null);
 	const themePreference = useUserSettings((s) => s.themePreference);
 	const setThemePreference = useUserSettings((s) => s.setThemePreference);
 	const isDark = useResolvedIsDark(themePreference);
@@ -65292,10 +67593,10 @@ var ApplicationNavbar = ({ currentPath, fnNavigationUrl, bordered, children, sho
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ViewerOptionsButton, {
 				showing: isShowing,
 				setShowing,
-				ref: optionsRef
+				ref: setOptionsEl
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ViewerOptionsPopover, {
-				positionEl: optionsRef.current,
+				positionEl: optionsEl,
 				showing: isShowing,
 				setShowing
 			})
@@ -65663,6 +67964,27 @@ var comparators = {
 	}
 };
 //#endregion
+//#region src/app/shared/useStableValue.ts
+/**
+* Keep the previous reference when a newly computed value is content-equal.
+*
+* `useMemo` can only key on dependency identity, so a memo that derives
+* from a frequently-replaced store object (e.g. `logDetails` during a
+* directory sync) returns a fresh reference on every flush even when its
+* content is unchanged — cascading identity churn into everything keyed
+* on it. This hook cuts that cascade at the source: callers compute the
+* candidate value as usual and equality decides whether downstream
+* consumers see a new reference.
+*
+* `isEqual` is only consulted when the identity actually changed.
+*/
+function useStableValue(value, isEqual) {
+	"use no memo";
+	const ref = (0, import_react.useRef)(value);
+	if (ref.current !== value && !isEqual(ref.current, value)) ref.current = value;
+	return ref.current;
+}
+//#endregion
 //#region src/app/log-list/grid/PreformattedTooltip.tsx
 var PreformattedTooltip = ({ value }) => {
 	if (!value) return null;
@@ -65697,6 +68019,61 @@ var columns_module_default = {
 	dateCell: "_dateCell_37x2s_78"
 };
 //#endregion
+//#region src/app/log-list/grid/columns/scorerMap.ts
+/**
+* Build a stable, unique column key for a (scorer, metric) pair. The reducer
+* is intentionally omitted so the same logical metric is one column regardless
+* of whether the log recorded `reducer=null` (default, silently mean) or
+* `reducer="mean"` (explicit). "/" is used as separator because ag-grid treats
+* "." in `field` as nested-object access.
+*/
+var scorerMetricKey = (scorerName, metricName) => `${scorerName}/${metricName}`;
+/**
+* Detect all unique (scorer, reducer, metric) combinations across all logs
+* from their results. Collapsing on metric name alone would merge distinct
+* scorers emitting the same metric (e.g. two "accuracy"s) into one column.
+*
+* @param logDetails - Details map keyed by log file name
+* @param scopePrefix - When set, only logs whose name starts with this
+*   prefix contribute (folder view scoping)
+*/
+function computeScorerMap(logDetails, scopePrefix) {
+	const info = {};
+	for (const [logName, details] of Object.entries(logDetails)) {
+		if (scopePrefix && !logName.startsWith(scopePrefix)) continue;
+		if (details.results?.scores) {
+			for (const evalScore of details.results.scores) if (evalScore.metrics) for (const [metricName, metric] of Object.entries(evalScore.metrics)) {
+				const key = scorerMetricKey(evalScore.name, metricName);
+				info[key] = {
+					scorerName: evalScore.name,
+					metricName,
+					valueType: typeof metric.value
+				};
+			}
+		}
+	}
+	return info;
+}
+/**
+* Content equality for two scorer maps, independent of key order.
+*
+* `logDetails` gets a new store identity on every detail flush while a
+* directory is loading, but the set of scorer columns it implies almost
+* never changes. Comparing content lets callers keep a stable map (and
+* thus stable ag-grid column defs) across those flushes.
+*/
+function scorerMapsEqual(a, b) {
+	if (a === b) return true;
+	const aKeys = Object.keys(a);
+	if (aKeys.length !== Object.keys(b).length) return false;
+	for (const key of aKeys) {
+		const av = a[key];
+		const bv = b[key];
+		if (!bv || av.scorerName !== bv.scorerName || av.metricName !== bv.metricName || av.valueType !== bv.valueType) return false;
+	}
+	return true;
+}
+//#endregion
 //#region src/app/log-list/grid/columns/hooks.tsx
 var styles = {
 	...gridCells_module_default,
@@ -65713,14 +68090,6 @@ var primaryModelValue = (row) => {
 	if (row.model && row.model !== "none/none") return row.model;
 	return displayModelRoles(row)[0]?.[1];
 };
-/**
-* Build a stable, unique column key for a (scorer, metric) pair. The reducer
-* is intentionally omitted so the same logical metric is one column regardless
-* of whether the log recorded `reducer=null` (default, silently mean) or
-* `reducer="mean"` (explicit). "/" is used as separator because ag-grid treats
-* "." in `field` as nested-object access.
-*/
-var scorerMetricKey = (scorerName, metricName) => `${scorerName}/${metricName}`;
 /** Human-readable header: "scorer / metric". */
 var scorerMetricHeader = (scorerName, metricName) => `${scorerName} / ${metricName}`;
 /**
@@ -65733,23 +68102,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 	const columnVisibility = useStore((state) => state.logs.listing.columnVisibility);
 	const setColumnVisibility = useStore((state) => state.logsActions.setLogsColumnVisibility);
 	const logDetails = useStore((state) => state.logs.logDetails);
-	const scorerMap = (0, import_react.useMemo)(() => {
-		const info = {};
-		for (const [logName, details] of Object.entries(logDetails)) {
-			if (scopePrefix && !logName.startsWith(scopePrefix)) continue;
-			if (details.results?.scores) {
-				for (const evalScore of details.results.scores) if (evalScore.metrics) for (const [metricName, metric] of Object.entries(evalScore.metrics)) {
-					const key = scorerMetricKey(evalScore.name, metricName);
-					info[key] = {
-						scorerName: evalScore.name,
-						metricName,
-						valueType: typeof metric.value
-					};
-				}
-			}
-		}
-		return info;
-	}, [logDetails, scopePrefix]);
+	const scorerMap = useStableValue((0, import_react.useMemo)(() => computeScorerMap(logDetails, scopePrefix), [logDetails, scopePrefix]), scorerMapsEqual);
 	(0, import_react.useEffect)(() => {
 		const scorerKeys = Object.keys(scorerMap);
 		if (scorerKeys.length === 0) return;
@@ -110560,7 +112913,7 @@ var AllCommunityModule = {
 	]
 };
 //#endregion
-//#region ../../node_modules/.pnpm/ag-grid-react@34.3.1_react-dom@19.2.6_react@19.2.6__react@19.2.6/node_modules/ag-grid-react/dist/package/index.esm.mjs
+//#region ../../node_modules/.pnpm/ag-grid-react@34.3.1_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/ag-grid-react/dist/package/index.esm.mjs
 var BeansContext = import_react.createContext({});
 var RenderModeContext = import_react.createContext("default");
 var showJsComp = (compDetails, context, eParent, ref) => {
@@ -110619,7 +112972,7 @@ var isComponentStateless = (Component2) => {
 	const getMemoType = () => hasSymbol() ? Symbol.for("react.memo") : 60115;
 	return typeof Component2 === "function" && !(Component2.prototype && Component2.prototype.isReactComponent) || typeof Component2 === "object" && Component2.$$typeof === getMemoType();
 };
-var reactVersion = "19.2.6".split(".")[0];
+var reactVersion = "19.2.7".split(".")[0];
 var isReactVersion17Minus = reactVersion === "16" || reactVersion === "17";
 function isReact19() {
 	return reactVersion === "19";
@@ -113327,6 +115680,7 @@ var shallowEqual = (a, b) => {
 * arrays, AG-Grid's rowData diff) don't re-run on unrelated renders.
 */
 function useKeyedMemo(source, getKey, itemDeps, build) {
+	"use no memo";
 	const cacheRef = (0, import_react.useRef)(/* @__PURE__ */ new Map());
 	const resultRef = (0, import_react.useRef)([]);
 	const prev = cacheRef.current;
@@ -113482,6 +115836,39 @@ function useApplyColumnVisibility(gridRef, columnDefs, visibility) {
 	return apply;
 }
 //#endregion
+//#region src/app/shared/useGridColumnRefit.ts
+var kRefitDebounceMs = 10;
+var kUserResizeSources = new Set(["uiColumnResized", "autosizeColumns"]);
+/**
+* Auto-fit columns to the grid width, deferring to the user.
+*
+* `sizeColumnsToFit` is wholesale: it redistributes every column, wiping
+* any width the user dragged. Callers re-fit when columns appear or the
+* viewport resizes — but once the user has manually sized a column they
+* have taken control of the layout, so all subsequent auto-fits are
+* suppressed (until the grid remounts, e.g. on a scope change). The guard
+* is checked when the debounce fires, so a fit already pending when the
+* user starts dragging is suppressed too.
+*/
+function useGridColumnRefit(gridRef) {
+	const userResizedRef = (0, import_react.useRef)(false);
+	const resizerRef = (0, import_react.useRef)(null);
+	const handleColumnResized = (0, import_react.useCallback)((e) => {
+		if (kUserResizeSources.has(e.source)) userResizedRef.current = true;
+	}, []);
+	return {
+		refitColumns: (0, import_react.useCallback)(() => {
+			if (userResizedRef.current) return;
+			resizerRef.current ??= debounce$2(() => {
+				if (userResizedRef.current) return;
+				gridRef.current?.api?.sizeColumnsToFit();
+			}, kRefitDebounceMs);
+			resizerRef.current();
+		}, [gridRef]),
+		handleColumnResized
+	};
+}
+//#endregion
 //#region src/app/log-list/grid/LogListGrid.tsx
 var detailsForItem = (item, logDetails) => item.type === "file" && item.log ? logDetails[item.log.name] : void 0;
 var buildLogListRow = (item, details) => {
@@ -113558,8 +115945,11 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 	const setWatchedLogs = useStore((state) => state.logsActions.setWatchedLogs);
 	const deferredLogDetails = (0, import_react.useDeferredValue)(useStore((state) => state.logs.logDetails));
 	const navigate = useNavigate();
-	const internalGridRef = (0, import_react.useRef)(null);
-	const gridRef = externalGridRef ?? internalGridRef;
+	const gridRef = (0, import_react.useRef)(null);
+	const attachGridRef = (0, import_react.useCallback)((instance) => {
+		gridRef.current = instance;
+		if (externalGridRef) externalGridRef.current = instance;
+	}, [externalGridRef]);
 	const gridContainerRef = (0, import_react.useRef)(null);
 	const [showFind, setShowFind] = (0, import_react.useState)(false);
 	const [findTerm, setFindTerm] = (0, import_react.useState)("");
@@ -113604,24 +115994,24 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 				navigate(url);
 			}, 10);
 		}
-	}, [navigate, gridRef]);
+	}, [navigate]);
 	const handleOpenRow = (0, import_react.useCallback)((rowNode, e) => {
 		if (!rowNode.data?.url) return;
 		if (e.metaKey || e.ctrlKey || e.shiftKey) openInNewTab(rowNode.data.url);
 		else navigate(rowNode.data.url);
 	}, [navigate]);
-	const handleKeyDown = (0, import_react.useMemo)(() => createGridKeyboardHandler({
-		gridRef,
-		onOpenRow: handleOpenRow
-	}), [gridRef, handleOpenRow]);
 	(0, import_react.useEffect)(() => {
 		const gridElement = gridContainerRef.current;
 		if (!gridElement) return;
+		const handleKeyDown = createGridKeyboardHandler({
+			gridRef,
+			onOpenRow: handleOpenRow
+		});
 		gridElement.addEventListener("keydown", handleKeyDown);
 		return () => {
 			gridElement.removeEventListener("keydown", handleKeyDown);
 		};
-	}, [handleKeyDown]);
+	}, [handleOpenRow]);
 	const handleCellMouseDown = (0, import_react.useCallback)((_e) => {}, []);
 	(0, import_react.useEffect)(() => {
 		setWatchedLogs(logFiles);
@@ -113650,17 +116040,17 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 		setFilteredCount(e.api.getDisplayedRowCount());
 	}, [setFilteredCount]);
 	const maxColCount = (0, import_react.useRef)(0);
-	const resizeGridColumns = (0, import_react.useRef)(createGridColumnResizer(gridRef)).current;
+	const { refitColumns, handleColumnResized } = useGridColumnRefit(gridRef);
 	(0, import_react.useEffect)(() => {
-		resizeGridColumns();
-	}, [columns, resizeGridColumns]);
+		refitColumns();
+	}, [columns, refitColumns]);
 	const handleGridColumnsChanged = (0, import_react.useCallback)((e) => {
 		const cols = e.api.getColumnDefs();
 		if (cols && cols.length > maxColCount.current) {
 			maxColCount.current = cols.length;
-			resizeGridColumns();
+			refitColumns();
 		}
-	}, [resizeGridColumns]);
+	}, [refitColumns]);
 	const searchCacheRef = (0, import_react.useRef)({
 		data: null,
 		columns: null,
@@ -113714,11 +116104,7 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 				firstNode.setSelected(true, true);
 			}
 		}
-	}, [
-		data,
-		columns,
-		gridRef
-	]);
+	}, [data, columns]);
 	const goToMatch = (0, import_react.useCallback)((index) => {
 		if (matchIds.length === 0) return;
 		const idx = (index % matchIds.length + matchIds.length) % matchIds.length;
@@ -113731,7 +116117,7 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 			api.ensureNodeVisible(node, "middle");
 			node.setSelected(true, true);
 		}
-	}, [matchIds, gridRef]);
+	}, [matchIds]);
 	const handleInputKeyDown = (0, import_react.useCallback)((e) => {
 		if (e.key === "Escape") closeFind();
 		else if (e.key === "Enter") {
@@ -113757,11 +116143,7 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 		return () => document.removeEventListener("keydown", handleFindKeyDown, true);
 	}, [closeFind, showFind]);
 	(0, import_react.useEffect)(() => {
-		if (findTerm) performSearch(findTerm);
-		else {
-			setMatchIds([]);
-			setCurrentMatchIndex(0);
-		}
+		performSearch(findTerm);
 	}, [findTerm, performSearch]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: clsx(gridCells_module_default.gridWrapper),
@@ -113782,7 +116164,7 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 			className: clsx(gridCells_module_default.gridContainer, SamplesGrid_module_default.gridChrome),
 			tabIndex: 0,
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AgGridReact, {
-				ref: gridRef,
+				ref: attachGridRef,
 				rowData: data,
 				animateRows: false,
 				suppressColumnMoveAnimation: true,
@@ -113804,7 +116186,8 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 				},
 				getRowId: (params) => params.data.id,
 				onGridColumnsChanged: handleGridColumnsChanged,
-				onGridSizeChanged: resizeGridColumns,
+				onGridSizeChanged: refitColumns,
+				onColumnResized: handleColumnResized,
 				theme: themeBalham,
 				enableCellTextSelection: true,
 				initialState: initialGridState,
@@ -113881,15 +116264,16 @@ var LogsPanel = ({ maybeShowSingleLog, mode = "logs" }) => {
 	const { loadLogs } = useLogs();
 	const gridRef = (0, import_react.useRef)(null);
 	const [showColumnSelector, setShowColumnSelector] = (0, import_react.useState)(false);
-	const columnButtonRef = (0, import_react.useRef)(null);
-	const showRetriedLogs = useStore((state) => state.logs.showRetriedLogs);
-	const setShowRetriedLogs = useStore((state) => state.logsActions.setShowRetriedLogs);
+	const [columnButtonEl, setColumnButtonEl] = (0, import_react.useState)(null);
+	const showRetriedLogs = useUserSettings((state) => state.showRetriedLogs);
+	const setShowRetriedLogs = useUserSettings((state) => state.setShowRetriedLogs);
 	const logDir = useStore((state) => state.logs.logDir);
 	const logFiles = useLogsWithretried();
 	const evalSet = useStore((state) => state.logs.evalSet);
 	const deferredLogPreviews = (0, import_react.useDeferredValue)(useStore((state) => state.logs.logPreviews));
-	const { filteredCount } = useLogsListing();
+	const { filteredCount, gridStateByScope } = useLogsListing();
 	const syncing = useStore((state) => state.app.status.syncing);
+	const error = useStore((state) => state.app.status.error);
 	const watchedLogs = useStore((state) => state.logs.listing.watchedLogs);
 	const navigate = useNavigate();
 	const { logPath } = useLogRouteParams();
@@ -114037,8 +116421,8 @@ var LogsPanel = ({ maybeShowSingleLog, mode = "logs" }) => {
 	const handleResetFilters = () => {
 		if (gridRef.current?.api) gridRef.current.api.setFilterModel(null);
 	};
-	const filterModel = gridRef.current?.api?.getFilterModel() || {};
-	const filteredFields = Object.keys(filterModel);
+	const scopeGridState = scopeKey ? gridStateByScope[scopeKey] : void 0;
+	const filteredFields = Object.keys(scopeGridState?.filter?.filterModel ?? {});
 	const hasFilter = filteredFields.length > 0;
 	(0, import_react.useEffect)(() => {
 		if (maybeShowSingleLog && logItems.length === 1) {
@@ -114071,7 +116455,7 @@ var LogsPanel = ({ maybeShowSingleLog, mode = "logs" }) => {
 						onClick: () => setShowRetriedLogs(!showRetriedLogs)
 					}, "show-retried"),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(NavbarButton, {
-						ref: columnButtonRef,
+						ref: setColumnButtonEl,
 						label: "Columns",
 						icon: ApplicationIcons.columns,
 						dropdown: true,
@@ -114091,14 +116475,20 @@ var LogsPanel = ({ maybeShowSingleLog, mode = "logs" }) => {
 				columns: pickerColumns,
 				visibility,
 				onVisibilityChange: handleColumnVisibilityChange,
-				positionEl: columnButtonRef.current,
+				positionEl: columnButtonEl,
 				filteredFields,
 				scoresHeading: "Metrics",
 				groupableScores: true,
 				scoresViewMode,
 				onScoresViewModeChange: setScoresViewMode
 			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			error ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ErrorPanel, {
+				title: "Error",
+				error: {
+					message: error.message,
+					stack: error.stack
+				}
+			}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: clsx(LogsPanel_module_default.list, "text-size-smaller"),
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LogListGrid, {
 					items: logItems,
@@ -114153,10 +116543,7 @@ function useLoadSample() {
 	const sampleEpoch = logSelection.sample?.epoch;
 	const sampleCompleted = logSelection.sample?.completed;
 	const currentSampleCompleted = sampleCompleted !== void 0 ? sampleCompleted : true;
-	const prevCompleted = usePrevious(currentSampleCompleted);
-	const prevLogFile = usePrevious(logSelection.logFile);
-	const prevSampleId = usePrevious(sampleId);
-	const prevSampleNeedsReload = usePrevious(sampleData.sampleNeedsReload);
+	const prevRef = (0, import_react.useRef)({});
 	const loadSample = (0, import_react.useCallback)(async (logFile, id, epoch, completed, summary) => {
 		const currentId = sampleData.selectedSampleIdentifier;
 		const isSameSample = currentId?.id === id && currentId?.epoch === epoch && currentId?.logFile === logFile;
@@ -114210,16 +116597,23 @@ function useLoadSample() {
 		sampleData.status
 	]);
 	(0, import_react.useEffect)(() => {
+		const prev = prevRef.current;
+		prevRef.current = {
+			completed: currentSampleCompleted,
+			logFile: logSelection.logFile,
+			sampleId,
+			sampleNeedsReload: sampleData.sampleNeedsReload
+		};
 		if (logSelection.logFile && sampleId !== void 0 && sampleEpoch !== void 0) {
 			const identifierMatches = sampleData.selectedSampleIdentifier?.id === sampleId && sampleData.selectedSampleIdentifier?.epoch === sampleEpoch && sampleData.selectedSampleIdentifier?.logFile === logSelection.logFile;
 			const hasSampleData = getSelectedSample() !== void 0;
 			const isCurrentSampleLoaded = identifierMatches && hasSampleData;
 			const isLoading = sampleData.status === "loading" || sampleData.status === "streaming";
 			const isError = sampleData.status === "error";
-			const logFileChanged = prevLogFile !== void 0 && prevLogFile !== logSelection.logFile;
-			const sampleIdChanged = prevSampleId !== void 0 && prevSampleId !== sampleId;
-			const completedChanged = prevCompleted !== void 0 && currentSampleCompleted !== prevCompleted;
-			const needsReloadChanged = prevSampleNeedsReload !== void 0 && prevSampleNeedsReload !== sampleData.sampleNeedsReload;
+			const logFileChanged = prev.logFile !== void 0 && prev.logFile !== logSelection.logFile;
+			const sampleIdChanged = prev.sampleId !== void 0 && prev.sampleId !== sampleId;
+			const completedChanged = prev.completed !== void 0 && currentSampleCompleted !== prev.completed;
+			const needsReloadChanged = prev.sampleNeedsReload !== void 0 && prev.sampleNeedsReload !== sampleData.sampleNeedsReload;
 			if (!isCurrentSampleLoaded && !isLoading && !isError || logFileChanged || sampleIdChanged || completedChanged || needsReloadChanged) loadSample(logSelection.logFile, sampleId, sampleEpoch, sampleCompleted, logSelection.sample);
 		}
 	}, [
@@ -114233,10 +116627,6 @@ function useLoadSample() {
 		sampleData.status,
 		sampleData.sampleNeedsReload,
 		sampleData.getSelectedSample,
-		prevLogFile,
-		prevSampleId,
-		prevCompleted,
-		prevSampleNeedsReload,
 		loadSample,
 		getSelectedSample
 	]);
@@ -114646,14 +117036,18 @@ var FindBand = () => {
 			input.setSelectionRange(len, len);
 		}
 	}, []);
-	const debouncedSearch = (0, import_react.useMemo)(() => debounce$2(async () => {
+	const runDebouncedSearch = (0, import_react.useCallback)(async () => {
 		if (!searchBoxRef.current) return;
 		await handleSearch(false);
 		needsCursorRestoreRef.current = true;
-	}, 300), [handleSearch]);
+	}, [handleSearch]);
+	const debouncedSearchRef = (0, import_react.useRef)(null);
+	(0, import_react.useEffect)(() => {
+		debouncedSearchRef.current = debounce$2(runDebouncedSearch, 300);
+	}, [runDebouncedSearch]);
 	const handleInputChange = (0, import_react.useCallback)(() => {
-		debouncedSearch();
-	}, [debouncedSearch]);
+		debouncedSearchRef.current?.();
+	}, []);
 	const handleBeforeInput = (0, import_react.useCallback)(() => {
 		const input = searchBoxRef.current;
 		if (input) {
@@ -114865,6 +117259,12 @@ var InlineSampleDisplay_module_default = {
 };
 //#endregion
 //#region ../../packages/inspect-components/src/chat/messages.ts
+/** Whether an assistant message carries server-side tool calls (provider
+* executed `tool_use` content blocks) — these render as flush rows of the
+* assistant turn container rather than as message body. */
+var hasServerToolUse = (message) => {
+	return message.role === "assistant" && Array.isArray(message.content) && message.content.some((c) => c.type === "tool_use");
+};
 var resolveMessages = (messages) => {
 	const resolvedMessages = [];
 	let index = 0;
@@ -115029,6 +117429,61 @@ var extractContentText$1 = (content) => {
 //#endregion
 //#region ../../packages/inspect-components/src/chat/tools/tool.ts
 var kToolTodoContentType = "agent/todo-list";
+var kToolIcons = {
+	bash: "bi-terminal",
+	Bash: "bi-terminal",
+	bash_session: "bi-terminal",
+	shell: "bi-terminal",
+	shell_command: "bi-terminal",
+	exec_command: "bi-terminal",
+	python: "bi-code-square",
+	code_execution: "bi-code-square",
+	web_search: "bi-search",
+	WebSearch: "bi-search",
+	web_fetch: "bi-globe2",
+	WebFetch: "bi-globe2",
+	web_browser: "bi-window",
+	text_editor: "bi-pencil-square",
+	str_replace_editor: "bi-pencil-square",
+	str_replace_based_edit_tool: "bi-pencil-square",
+	Edit: "bi-pencil-square",
+	Write: "bi-pencil-square",
+	NotebookEdit: "bi-pencil-square",
+	Read: "bi-file-earmark-text",
+	Glob: "bi-search",
+	Grep: "bi-search",
+	task: "bi-people",
+	Task: "bi-people",
+	agent: "bi-people",
+	Agent: "bi-people",
+	spawn_agent: "bi-people",
+	send_input: "bi-people",
+	wait_agent: "bi-people",
+	resume_agent: "bi-people",
+	close_agent: "bi-people",
+	agent_status: "bi-people",
+	agent_wait: "bi-people",
+	agent_cancel: "bi-people",
+	agent_list: "bi-people",
+	TodoWrite: "bi-list-check",
+	todo_write: "bi-list-check",
+	update_plan: "bi-list-check",
+	think: "bi-lightbulb",
+	computer: "bi-display",
+	tool_search: "bi-search",
+	mcp_list_tools: "bi-plug",
+	mcp_call: "bi-plug"
+};
+/**
+* Header icon for a tool call. Unknown client tools get the general tool
+* icon; unknown server tools keep the globe (the server tell).
+*/
+var iconForTool = (tool, options) => {
+	const icon = kToolIcons[tool];
+	if (icon) return icon;
+	if (tool.startsWith("browser_")) return "bi-window";
+	return options?.server ? "bi-globe2" : "bi-tools";
+};
 /**
 * Resolves the input and metadata for a given tool call.
 */
@@ -115397,7 +117852,8 @@ var CompactionData = ({ id, data }) => {
 	else compactionContent = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
 		id: `${id}-compacted-content-metadata`,
 		className: CompactionData_module_default.grid,
-		entries: compactionMetadata
+		entries: compactionMetadata,
+		options: { copyButton: true }
 	});
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: clsx(CompactionData_module_default.content, "text-size-small"),
@@ -115408,6 +117864,25 @@ var CompactionData = ({ id, data }) => {
 	});
 };
 var ContentDataView_module_default = { contentData: "_contentData_1lrx1_1" };
+//#endregion
+//#region ../../packages/inspect-components/src/chat/content-data/FallbackData.tsx
+var kFallbackMetadata = "fallback_metadata";
+/**
+* Marks a server-side model fallback handoff: the requested model's
+* safety classifiers refused and a fallback model served the request.
+*/
+var FallbackData = ({ data }) => {
+	const fallback = data[kFallbackMetadata];
+	const from = fallback.from?.model ?? "unknown";
+	const to = fallback.to?.model ?? "unknown";
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: clsx("text-size-small"),
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: clsx("text-style-label", "text-style-secondary"),
+			children: "Model Fallback"
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: `${from} → ${to}` })]
+	});
+};
 var WebSearch_module_default = {
 	webSearch: "_webSearch_1376z_1",
 	query: "_query_1376z_8"
@@ -115433,7 +117908,7 @@ var WebSearchResults_module_default = {
 };
 //#endregion
 //#region ../../packages/inspect-components/src/chat/content-data/WebSearchResults.tsx
-var WebSearchResults = ({ results }) => {
+var WebSearchResults$1 = ({ results }) => {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		className: clsx(WebSearchResults_module_default.label, "text-style-label", "text-style-secondary", "text-size-smaller"),
 		children: "Results"
@@ -115487,6 +117962,15 @@ var contentDataRenderers = [
 		}
 	},
 	{
+		name: "Fallback",
+		canRender: (data) => {
+			return Object.hasOwn(data, kFallbackMetadata);
+		},
+		render: (_id, data) => {
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FallbackData, { data });
+		}
+	},
+	{
 		name: "WebSearch",
 		canRender: (data) => {
 			return data.type === "server_tool_use" && data.name === "web_search";
@@ -115503,7 +117987,7 @@ var contentDataRenderers = [
 		},
 		render: (_id, data) => {
 			const results = data.content;
-			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WebSearchResults, { results });
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WebSearchResults$1, { results });
 		}
 	},
 	{
@@ -115609,107 +118093,309 @@ var MessageContent_module_default = {
 	codePanel: "_codePanel_gzl77_26",
 	codePanelPre: "_codePanelPre_gzl77_32"
 };
+var ToolBlock_module_default = {
+	block: "_block_16fhi_5",
+	standalone: "_standalone_16fhi_9",
+	header: "_header_16fhi_17",
+	icon: "_icon_16fhi_25",
+	title: "_title_16fhi_31",
+	summary: "_summary_16fhi_39",
+	pill: "_pill_16fhi_50",
+	inputZone: "_inputZone_16fhi_64",
+	outputWell: "_outputWell_16fhi_70"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/chat/tools/ToolBlock.tsx
+/**
+* The shared tool-call block grammar: a tinted header row (tool icon · mono
+* tool name · optional pill · args summary) with the tool's input/output
+* zones stacked beneath it.
+*/
+var ToolBlock = ({ id, icon, title, summary, pill, flush, className, children }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		id,
+		className: clsx(ToolBlock_module_default.block, flush ? void 0 : ToolBlock_module_default.standalone, className),
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: ToolBlock_module_default.header,
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx("bi", icon, ToolBlock_module_default.icon) }),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+					className: ToolBlock_module_default.title,
+					children: title
+				}),
+				summary ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+					className: ToolBlock_module_default.summary,
+					children: summary
+				}) : null,
+				pill ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+					className: ToolBlock_module_default.pill,
+					children: pill
+				}) : null
+			]
+		}), children]
+	});
+};
+/** Input zone (e.g. code) — code fill, hairline top. */
+var ToolBlockInput = ({ className, children }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: clsx(ToolBlock_module_default.inputZone, className),
+		children
+	});
+};
+/** Output well — faint fill, hairline top; content is whatever the tool
+* returned, rendered by the caller. */
+var ToolBlockOutput = ({ className, children }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: clsx(ToolBlock_module_default.outputWell, className),
+		children
+	});
+};
+var ToolCallErrorView_module_default = {
+	error: "_error_z9ujs_1",
+	type: "_type_z9ujs_11",
+	message: "_message_z9ujs_17"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/chat/tools/ToolCallErrorView.tsx
+var ToolCallErrorView = ({ error, className }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: clsx(ToolCallErrorView_module_default.error, "text-size-smallest", className),
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: ToolCallErrorView_module_default.message,
+			children: error.message
+		})
+	});
+};
+var TodoWriteInput_module_default = {
+	todoList: "_todoList_1t8rx_1",
+	inProgress: "_inProgress_1t8rx_9"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/chat/tools/tool-input/TodoWriteInput.tsx
+var isRawTodo = (item) => typeof item === "object" && item !== null && ("content" in item || "step" in item) && "status" in item;
+var toToolTodos = (obj) => {
+	if (Array.isArray(obj) && obj.every(isRawTodo)) return obj.map((o) => ({
+		content: o.content ?? o.step ?? "",
+		status: o.status
+	}));
+	return [];
+};
+var TodoWriteInput = ({ contents, parentRef }) => {
+	const icons = useContentIcons();
+	const todoItems = toToolTodos(contents);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		ref: parentRef,
+		className: clsx(TodoWriteInput_module_default.todoList),
+		children: todoItems.map((todo) => {
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(todo.status === "completed" ? icons.checkbox.checked : icons.checkbox.unchecked, "text-size-smallest") }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: clsx(TodoWriteInput_module_default.todoItem, "text-size-smallest", todo.status === "in_progress" ? TodoWriteInput_module_default.inProgress : void 0),
+				children: todo.content
+			})] });
+		})
+	});
+};
+var ToolInput_module_default = {
+	outputPre: "_outputPre_7phrr_1",
+	toolView: "_toolView_7phrr_7",
+	outputCode: "_outputCode_7phrr_20"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/chat/tools/ToolInput.tsx
+var ToolInput = (props) => {
+	const { contentType, contents, toolCallView, className } = props;
+	const sourceCodeRef = (0, import_react.useRef)(null);
+	const useToolView = toolCallView && isValidView(toolCallView);
+	usePrismHighlight(sourceCodeRef, (useToolView ? toolCallView.content.length : contents ? typeof contents === "string" ? contents.length : JSON.stringify(contents).length : 0) || 0);
+	if (!contents && !useToolView) return null;
+	if (useToolView) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedText, {
+		markdown: toolCallView.content || "",
+		ref: sourceCodeRef,
+		className: clsx("tool-call-input", ToolInput_module_default.toolView, className)
+	});
+	else return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderTool, {
+		contents,
+		contentType: contentType || "",
+		parentRef: sourceCodeRef,
+		className
+	});
+};
+var RenderTool = ({ contents, contentType, parentRef, className }) => {
+	if (contentType === "agent/todo-list") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TodoWriteInput, {
+		contents,
+		parentRef
+	});
+	const formattedContent = typeof contents === "object" ? JSON.stringify(contents) : contents;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		ref: parentRef,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", {
+			className: clsx("tool-call-input", ToolInput_module_default.outputPre, ToolInput_module_default.bottomMargin, className),
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", {
+				className: clsx("source-code", "sourceCode", contentType ? `language-${contentType}` : void 0, ToolInput_module_default.outputCode),
+				children: formattedContent
+			})
+		})
+	});
+};
+var isValidView = (view) => {
+	if (view.content === "```bash\nbash\n```\n") return false;
+	return true;
+};
 var ServerToolCall_module_default = {
-	mcpToolUse: "_mcpToolUse_1792k_1",
-	title: "_title_1792k_9",
-	titleText: "_titleText_1792k_18",
-	args: "_args_1792k_22",
-	argLabel: "_argLabel_1792k_31",
-	error: "_error_1792k_35",
-	toolPanel: "_toolPanel_1792k_40"
+	tool: "_tool_13xcg_1",
+	execOutput: "_execOutput_13xcg_5",
+	execError: "_execError_13xcg_16"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/chat/server-tools/ServerToolCall.tsx
 /**
-* Renders the ToolOutput component.
+* Renders a server-side tool call (web_search, web_fetch, provider-executed
+* MCP tools) as a flush row of the assistant turn: the shared tool block
+* grammar with a globe icon and a neutral "server" pill as the only server
+* signals.
 */
-var ServerToolCall = ({ id, content, className }) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(McpToolUse, {
-		id,
-		content,
-		className
-	});
-};
-var McpToolUse = ({ id, content, className }) => {
-	const icons = useContentIcons();
+var ServerToolCall = ({ id, content, flush = true, className }) => {
 	const args = resolveArgs(content);
-	const titleStr = content.context ? `${content.context} — ${content.name}()` : `${content.name}()`;
+	const title = content.context ? `${content.context} — ${content.name}` : content.name;
+	const summaryArgs = {};
+	const inputArgs = [];
+	for (const [key, value] of Object.entries(args)) if (typeof value === "string" && value.includes("\n")) inputArgs.push([key, value]);
+	else summaryArgs[key] = value;
 	const listToolsResult = maybeListTools(content);
 	const webSearchResult = maybeWebSearchResult(content);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+	const codeExecutionResult = maybeCodeExecution(content);
+	const execHasOutput = !!codeExecutionResult && (!!codeExecutionResult.stdout || !!codeExecutionResult.stderr || codeExecutionResult.encrypted || (codeExecutionResult.returnCode ?? 0) !== 0);
+	const hasResult = !!content.error || !!listToolsResult || !!webSearchResult || (codeExecutionResult ? execHasOutput : hasResultContent(content.result));
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(ToolBlock, {
 		id,
-		className: clsx(ServerToolCall_module_default.mcpToolUse, className),
-		children: [
-			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: clsx(ServerToolCall_module_default.title, "text-size-small", "text-style-secondary"),
-				children: [
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: icons.role.tool }),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", {
-						className: ServerToolCall_module_default.titleText,
-						children: titleStr
-					}),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: ServerToolCall_module_default.type,
-						children: content.type
-					})
-				]
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: ServerToolCall_module_default.args,
-				children: [
-					Object.keys(args).map((key, index) => {
-						const value = args[key];
-						let valueRecord = void 0;
-						if (Array.isArray(value)) {
-							valueRecord = {};
-							for (let i = 0; i < value.length; i++) valueRecord[`[${i}]`] = value[i];
-						} else if (value && typeof value === "object") valueRecord = value;
-						return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabelDiv, { label: key }), valueRecord ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
-							id: `${id}-val-${index}`,
-							record: valueRecord
-						}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ValueDiv, { children: value })] });
-					}),
-					webSearchResult ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabelDiv, { label: "results" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ValueDiv, { children: webSearchResult.result.map((result, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: ServerToolCall_module_default.result,
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-							href: result.url,
-							target: "_blank",
-							rel: "noopener noreferrer",
-							children: result.title
-						})
-					}, index)) })] }) : void 0,
-					listToolsResult ? listToolsResult.result.map((tool, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(ExpandablePanel, {
-						id: `${id}-output`,
-						collapse: true,
-						className: clsx(ServerToolCall_module_default.toolPanel),
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabelDiv, { label: tool.name }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(ValueDiv, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: tool.description }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
-							id: `${id}-tool-${index}`,
-							record: { schema: tool.input_schema },
-							defaultExpandLevel: 0
-						})] })]
-					}) })) : void 0
-				]
-			}),
-			content.error ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: ServerToolCall_module_default.error,
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { children: ["Error: ", content.error] })
-			}) : !listToolsResult && !webSearchResult ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: clsx("text-size-small"),
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
-					id: `${id}-output`,
-					collapse: true,
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedContent, {
-						id: `${id}-output`,
-						entry: {
-							name: "Output",
-							value: content.result
-						},
-						renderOptions: { renderString: "markdown" }
-					})
+		flush,
+		icon: iconForTool(content.name, { server: true }),
+		title,
+		summary: argsSummary(summaryArgs),
+		pill: "server",
+		className,
+		children: [inputArgs.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolBlockInput, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
+			id: `${id}-input`,
+			collapse: true,
+			border: false,
+			lines: 20,
+			className: "text-size-small",
+			children: inputArgs.map(([key, value]) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolInput, {
+				contentType: content.tool_type === "code_execution" ? "python" : void 0,
+				contents: value
+			}, key))
+		}) }) : null, hasResult ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolBlockOutput, { children: content.error ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallErrorView, { error: {
+			type: "unknown",
+			message: content.error
+		} }) : webSearchResult ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WebSearchResults, {
+			id,
+			results: webSearchResult.result
+		}) : listToolsResult ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ListToolsResult, {
+			id,
+			tools: listToolsResult.result
+		}) : codeExecutionResult ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CodeExecutionResult, {
+			id,
+			result: codeExecutionResult
+		}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
+			id: `${id}-output`,
+			collapse: true,
+			border: false,
+			lines: 15,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedContent, {
+				id: `${id}-output`,
+				entry: {
+					name: "Output",
+					value: content.result
+				},
+				renderOptions: { renderString: "markdown" }
+			})
+		}) }) : null]
+	});
+};
+var WebSearchResults = ({ id, results }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
+		id: `${id}-output`,
+		collapse: true,
+		border: false,
+		lines: 15,
+		children: results.map((result, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+			href: result.url,
+			target: "_blank",
+			rel: "noopener noreferrer",
+			children: result.title
+		}) }, index))
+	});
+};
+var ListToolsResult = ({ id, tools }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
+		id: `${id}-output`,
+		collapse: true,
+		border: false,
+		lines: 15,
+		children: tools.map((tool, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: ServerToolCall_module_default.tool,
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", {
+					className: "text-size-smaller",
+					children: tool.name
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "text-size-smaller",
+					children: tool.description
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
+					id: `${id}-tool-${index}`,
+					record: { schema: tool.input_schema },
+					defaultExpandLevel: 0
 				})
-			}) : void 0
+			]
+		}, tool.name))
+	});
+};
+var CodeExecutionResult = ({ id, result }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(ExpandablePanel, {
+		id: `${id}-output`,
+		collapse: true,
+		border: false,
+		lines: 15,
+		children: [
+			result.stdout ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", {
+				className: ServerToolCall_module_default.execOutput,
+				children: result.stdout
+			}) : null,
+			result.stderr ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", {
+				className: clsx(ServerToolCall_module_default.execOutput, ServerToolCall_module_default.execError),
+				children: result.stderr
+			}) : null,
+			!result.stdout && !result.stderr && result.encrypted ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: clsx("text-style-secondary", "text-size-smaller"),
+				children: "Output encrypted by the model provider."
+			}) : null,
+			typeof result.returnCode === "number" && result.returnCode !== 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: clsx("text-style-secondary", "text-size-smaller"),
+				children: ["exit code ", result.returnCode]
+			}) : null
 		]
 	});
+};
+/** Parses a code_execution result payload into stdout/stderr/exit code.
+* Returns undefined when the result isn't the expected JSON shape (the
+* generic markdown rendering applies instead). */
+var maybeCodeExecution = (content) => {
+	if (content.tool_type !== "code_execution" || !isJson(content.result)) return;
+	try {
+		const parsed = JSON.parse(content.result);
+		if (typeof parsed !== "object" || parsed === null) return;
+		const payload = typeof parsed.content === "object" && parsed.content !== null && !Array.isArray(parsed.content) ? parsed.content : parsed;
+		const str = (value) => typeof value === "string" && value.length > 0 ? value : void 0;
+		return {
+			stdout: str(payload.stdout),
+			stderr: str(payload.stderr),
+			returnCode: typeof payload.return_code === "number" ? payload.return_code : void 0,
+			encrypted: typeof payload.encrypted_stdout === "string"
+		};
+	} catch {
+		return;
+	}
 };
 var resolveArgs = (content) => {
 	if (typeof content.arguments === "string") {
@@ -115724,6 +118410,19 @@ var resolveArgs = (content) => {
 	else if (content.arguments) return { arguments: content.arguments };
 	else return {};
 };
+/** Single-line header summary: the lone arg's value (the query for
+* web_search, the URL for web_fetch), or `key: value` pairs otherwise. */
+var argsSummary = (args) => {
+	const entries = Object.entries(args);
+	const single = entries.length === 1 ? entries[0] : void 0;
+	if (single && typeof single[1] === "string") return single[1];
+	return entries.map(([key, value]) => `${key}: ${typeof value === "string" ? value : JSON.stringify(value)}`).join(", ");
+};
+var hasResultContent = (result) => {
+	if (result === null || result === void 0) return false;
+	if (typeof result === "string") return result.trim().length > 0;
+	return true;
+};
 var maybeWebSearchResult = (content) => {
 	if (content.name !== "web_search") return;
 	const objArray = asJsonObjArray(content.result);
@@ -115733,18 +118432,6 @@ var maybeListTools = (content) => {
 	if (content.name !== "mcp_list_tools") return;
 	const objArray = asJsonObjArray(content.result);
 	if (objArray !== void 0) return { result: objArray };
-};
-var LabelDiv = ({ label }) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: clsx(ServerToolCall_module_default.argLabel, "text-style-secondary", "text-size-smaller"),
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", { children: label })
-	});
-};
-var ValueDiv = ({ children }) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: clsx("text-size-smaller"),
-		children
-	});
 };
 var ToolOutput_module_default = {
 	toolImage: "_toolImage_1cvly_1",
@@ -115930,7 +118617,8 @@ var messageRenderers = {
 	tool_use: { render: (key, content) => {
 		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ServerToolCall, {
 			id: key,
-			content
+			content,
+			flush: false
 		});
 	} },
 	data: { render: (key, content) => {
@@ -116165,80 +118853,6 @@ var SubmitToolCallView = (props) => {
 	});
 };
 var ToolCallView_module_default = { toolCallView: "_toolCallView_x6cus_1" };
-var TodoWriteInput_module_default = {
-	todoList: "_todoList_1t8rx_1",
-	inProgress: "_inProgress_1t8rx_9"
-};
-//#endregion
-//#region ../../packages/inspect-components/src/chat/tools/tool-input/TodoWriteInput.tsx
-var isRawTodo = (item) => typeof item === "object" && item !== null && ("content" in item || "step" in item) && "status" in item;
-var toToolTodos = (obj) => {
-	if (Array.isArray(obj) && obj.every(isRawTodo)) return obj.map((o) => ({
-		content: o.content ?? o.step ?? "",
-		status: o.status
-	}));
-	return [];
-};
-var TodoWriteInput = ({ contents, parentRef }) => {
-	const icons = useContentIcons();
-	const todoItems = toToolTodos(contents);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		ref: parentRef,
-		className: clsx(TodoWriteInput_module_default.todoList),
-		children: todoItems.map((todo) => {
-			return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(todo.status === "completed" ? icons.checkbox.checked : icons.checkbox.unchecked, "text-size-smallest") }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-				className: clsx(TodoWriteInput_module_default.todoItem, "text-size-smallest", todo.status === "in_progress" ? TodoWriteInput_module_default.inProgress : void 0),
-				children: todo.content
-			})] });
-		})
-	});
-};
-var ToolInput_module_default = {
-	outputPre: "_outputPre_7phrr_1",
-	toolView: "_toolView_7phrr_7",
-	outputCode: "_outputCode_7phrr_20"
-};
-//#endregion
-//#region ../../packages/inspect-components/src/chat/tools/ToolInput.tsx
-var ToolInput = (props) => {
-	const { contentType, contents, toolCallView, className } = props;
-	const sourceCodeRef = (0, import_react.useRef)(null);
-	const useToolView = toolCallView && isValidView(toolCallView);
-	usePrismHighlight(sourceCodeRef, (useToolView ? toolCallView.content.length : contents ? typeof contents === "string" ? contents.length : JSON.stringify(contents).length : 0) || 0);
-	if (!contents && !useToolView) return null;
-	if (useToolView) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedText, {
-		markdown: toolCallView.content || "",
-		ref: sourceCodeRef,
-		className: clsx("tool-call-input", ToolInput_module_default.toolView, className)
-	});
-	else return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderTool, {
-		contents,
-		contentType: contentType || "",
-		parentRef: sourceCodeRef,
-		className
-	});
-};
-var RenderTool = ({ contents, contentType, parentRef, className }) => {
-	if (contentType === "agent/todo-list") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TodoWriteInput, {
-		contents,
-		parentRef
-	});
-	const formattedContent = typeof contents === "object" ? JSON.stringify(contents) : contents;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		ref: parentRef,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", {
-			className: clsx("tool-call-input", ToolInput_module_default.outputPre, ToolInput_module_default.bottomMargin, className),
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", {
-				className: clsx("source-code", "sourceCode", contentType ? `language-${contentType}` : void 0, ToolInput_module_default.outputCode),
-				children: formattedContent
-			})
-		})
-	});
-};
-var isValidView = (view) => {
-	if (view.content === "```bash\nbash\n```\n") return false;
-	return true;
-};
 //#endregion
 //#region ../../packages/inspect-components/src/chat/tools/ToolCallView.tsx
 /**
@@ -116351,34 +118965,90 @@ var normalizeContent = (output) => {
 		}]
 	}];
 };
-var ToolCallErrorView_module_default = {
-	error: "_error_z9ujs_1",
-	type: "_type_z9ujs_11",
-	message: "_message_z9ujs_17"
-};
+var ClientToolCall_module_default = { custom: "_custom_v2cay_4" };
 //#endregion
-//#region ../../packages/inspect-components/src/chat/tools/ToolCallErrorView.tsx
-var ToolCallErrorView = ({ error, className }) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: clsx(ToolCallErrorView_module_default.error, "text-size-smallest", className),
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: ToolCallErrorView_module_default.message,
-			children: error.message
-		})
+//#region ../../packages/inspect-components/src/chat/tools/ClientToolCall.tsx
+/**
+* A client tool call rendered with the shared tool block grammar: collapsible
+* header (terminal icon · mono tool name · args summary), the input zone
+* (e.g. code) and the output well stacked beneath.
+*/
+var ClientToolCall = ({ id, tool, title, functionCall, input, description, contentType, view, output, error, className, getCustomToolView }) => {
+	const viewProps = {
+		id,
+		tool,
+		functionCall,
+		input,
+		description,
+		contentType,
+		view,
+		output
+	};
+	const customView = getCustomToolView?.(viewProps) ?? getDefaultCustomToolView(viewProps);
+	if (customView) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: clsx(ClientToolCall_module_default.custom, className),
+		children: customView
+	});
+	const hasInput = input !== void 0 && input !== null && input !== "" || !!view?.content;
+	const showError = !!error;
+	const showOutput = !showError && hasOutputContent(output);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(ToolBlock, {
+		id,
+		icon: iconForTool(tool),
+		title: title || tool,
+		summary: description ?? inlineArgs(functionCall, title || tool),
+		className,
+		children: [hasInput ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolBlockInput, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
+			id: `${id}-tool-input`,
+			collapse: true,
+			border: false,
+			lines: 20,
+			className: clsx("text-size-small"),
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolInput, {
+				contentType,
+				contents: input,
+				toolCallView: view
+			})
+		}) }) : null, showError ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolBlockOutput, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallErrorView, { error }) }) : showOutput ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolBlockOutput, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallView, {
+			...viewProps,
+			section: "output"
+		}) }) : null]
+	});
+};
+/** The args portion of the rendered function call (the text inside the
+* parens), as a single-line header summary. */
+var inlineArgs = (functionCall, tool) => {
+	if (functionCall.startsWith(`${tool}(`) && functionCall.endsWith(")")) {
+		const inner = functionCall.slice(tool.length + 1, -1).replace(/\s+/g, " ").trim();
+		return inner.length > 0 ? inner : void 0;
+	}
+	return functionCall !== tool ? functionCall : void 0;
+};
+/** Whether the tool output has anything worth an output well. */
+var hasOutputContent = (output) => {
+	if (output === void 0 || output === null) return false;
+	if (typeof output === "string") return output.trim().length > 0;
+	if (typeof output === "number" || typeof output === "boolean") return true;
+	return (Array.isArray(output) ? output : [output]).some((item) => {
+		if (item.type === "tool") return item.content.some((c) => c.type !== "text" || c.text.trim().length > 0);
+		if (item.type === "text") return item.text.trim().length > 0;
+		return true;
 	});
 };
 var ChatMessage_module_default = {
-	message: "_message_1gt9a_1",
-	systemRole: "_systemRole_1gt9a_9",
-	timestamp: "_timestamp_1gt9a_13",
-	messageGrid: "_messageGrid_1gt9a_19",
-	toolMessageGrid: "_toolMessageGrid_1gt9a_29",
-	headerEnd: "_headerEnd_1gt9a_33",
-	messageContents: "_messageContents_1gt9a_40",
-	indented: "_indented_1gt9a_45",
-	copyLink: "_copyLink_1gt9a_49",
-	metadataLabel: "_metadataLabel_1gt9a_60",
-	hover: "_hover_1gt9a_64"
+	message: "_message_o8d3m_1",
+	systemRole: "_systemRole_o8d3m_9",
+	turnSegments: "_turnSegments_o8d3m_15",
+	proseSegment: "_proseSegment_o8d3m_23",
+	timestamp: "_timestamp_o8d3m_28",
+	messageGrid: "_messageGrid_o8d3m_34",
+	toolMessageGrid: "_toolMessageGrid_o8d3m_44",
+	headerEnd: "_headerEnd_o8d3m_48",
+	messageContents: "_messageContents_o8d3m_55",
+	indented: "_indented_o8d3m_60",
+	copyLink: "_copyLink_o8d3m_64",
+	metadataLabel: "_metadataLabel_o8d3m_75",
+	hover: "_hover_o8d3m_79"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/chat/ChatMessage.tsx
@@ -116401,34 +119071,80 @@ var ChatMessage = (0, import_react.memo)(function ChatMessage({ id, message, dis
 	const subagentNotifications = message.role === "user" ? formatSubagentNotifications(message.content) : void 0;
 	if (hideRole) {
 		const content = message.content;
-		const hasVisibleContent = typeof content === "string" ? content.trim().length > 0 : Array.isArray(content) && content.some((c) => c.type !== "tool_use");
+		const hasVisibleContent = typeof content === "string" ? content.trim().length > 0 : Array.isArray(content) && content.length > 0;
 		const hasToolCalls = "tool_calls" in message && Array.isArray(message.tool_calls) && message.tool_calls.length > 0;
 		if (!hasVisibleContent && !hasToolCalls) return null;
+	}
+	const roleHeader = !hideRole ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: clsx(ChatMessage_module_default.messageGrid, message.role === "tool" ? ChatMessage_module_default.toolMessageGrid : void 0, "text-style-label"),
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
+			message.role,
+			message.role === "tool" ? message.function ? `: ${message.function}` : "" : "",
+			linkingEnabled && messageUrl ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CopyButton, {
+				icon: linkIcon,
+				value: messageUrl,
+				className: clsx(ChatMessage_module_default.copyLink)
+			}) : ""
+		] }), message.timestamp && formatDateTime || label ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: ChatMessage_module_default.headerEnd,
+			children: [message.timestamp && formatDateTime && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: ChatMessage_module_default.timestamp,
+				title: message.timestamp,
+				children: formatDateTime(new Date(message.timestamp))
+			}), label]
+		}) : null]
+	}) : null;
+	const metadataBlock = message.metadata && Object.keys(message.metadata).length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
+		label: "Metadata",
+		className: clsx(ChatMessage_module_default.metadataLabel, "text-size-smaller"),
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
+			record: message.metadata,
+			id: `${id}-metadata`,
+			defaultExpandLevel: 0,
+			copyButton: true
+		})
+	}) : null;
+	const segments = segmentTurnContent(message);
+	if (segments) {
+		const context = defaultContext();
+		return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			"data-message-id": message.id || void 0,
+			className: clsx(message.role, "text-size-base", ChatMessage_module_default.message, ChatMessage_module_default.turnSegments, mouseOver ? ChatMessage_module_default.hover : void 0),
+			onMouseEnter: () => setMouseOver(true),
+			onMouseLeave: () => setMouseOver(false),
+			children: [segments.map((segment, index) => {
+				if (segment.kind === "tool") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ServerToolCall, {
+					id: `${id}-server-tool-${index}`,
+					content: segment.content
+				}, `${id}-segment-${index}`);
+				if (segment.contents.length === 0 && (index > 0 || hideRole)) return null;
+				return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					"data-message-role": message.role,
+					className: ChatMessage_module_default.proseSegment,
+					children: [index === 0 ? roleHeader : null, segment.contents.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
+						id: `${id}-message-${index}`,
+						collapse,
+						lines: 25,
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageContent, {
+							contents: segment.contents,
+							context,
+							references
+						})
+					}) : null]
+				}, `${id}-segment-${index}`);
+			}), metadataBlock ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				"data-message-role": message.role,
+				className: ChatMessage_module_default.proseSegment,
+				children: metadataBlock
+			}) : null]
+		});
 	}
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		"data-message-id": message.id || void 0,
 		className: clsx(message.role, "text-size-base", ChatMessage_module_default.message, message.role === "system" ? ChatMessage_module_default.systemRole : void 0, message.role === "user" ? ChatMessage_module_default.userRole : void 0, mouseOver ? ChatMessage_module_default.hover : void 0),
 		onMouseEnter: () => setMouseOver(true),
 		onMouseLeave: () => setMouseOver(false),
-		children: [!hideRole && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: clsx(ChatMessage_module_default.messageGrid, message.role === "tool" ? ChatMessage_module_default.toolMessageGrid : void 0, "text-style-label"),
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-				message.role,
-				message.role === "tool" ? message.function ? `: ${message.function}` : "" : "",
-				linkingEnabled && messageUrl ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CopyButton, {
-					icon: linkIcon,
-					value: messageUrl,
-					className: clsx(ChatMessage_module_default.copyLink)
-				}) : ""
-			] }), message.timestamp && formatDateTime || label ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: ChatMessage_module_default.headerEnd,
-				children: [message.timestamp && formatDateTime && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-					className: ChatMessage_module_default.timestamp,
-					title: message.timestamp,
-					children: formatDateTime(new Date(message.timestamp))
-				}), label]
-			}) : null]
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		children: [roleHeader, /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: clsx(ChatMessage_module_default.messageContents, indented ? ChatMessage_module_default.indented : void 0),
 			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
 				id: `${id}-message`,
@@ -116438,42 +119154,64 @@ var ChatMessage = (0, import_react.memo)(function ChatMessage({ id, message, dis
 					message,
 					references
 				}, `${id}-contents`)
-			}), message.metadata && Object.keys(message.metadata).length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
-				label: "Metadata",
-				className: clsx(ChatMessage_module_default.metadataLabel, "text-size-smaller"),
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
-					record: message.metadata,
-					id: `${id}-metadata`,
-					defaultExpandLevel: 0
-				})
-			}) : ""]
+			}), metadataBlock]
 		})]
 	});
 });
+/** Splits an assistant message that carries server-side tool calls into
+* alternating prose / tool-call segments (in content order). Returns
+* undefined for messages that render the regular way. */
+var segmentTurnContent = (message) => {
+	if (!hasServerToolUse(message) || !Array.isArray(message.content)) return;
+	const segments = [{
+		kind: "prose",
+		contents: []
+	}];
+	for (const item of message.content) if (item.type === "tool_use") segments.push({
+		kind: "tool",
+		content: item
+	});
+	else {
+		const last = segments[segments.length - 1];
+		if (last?.kind === "prose") last.contents.push(item);
+		else segments.push({
+			kind: "prose",
+			contents: [item]
+		});
+	}
+	return segments;
+};
 var ChatMessageRow_module_default = {
-	grid: "_grid_qa1cd_1",
-	number: "_number_qa1cd_10",
-	user: "_user_qa1cd_14",
-	container: "_container_qa1cd_20",
-	first: "_first_qa1cd_28",
-	last: "_last_qa1cd_35",
-	label: "_label_qa1cd_42",
-	highlight: "_highlight_qa1cd_49",
-	box: "_box_qa1cd_56",
-	attachedGroup: "_attachedGroup_qa1cd_66",
-	attachedBottom: "_attachedBottom_qa1cd_71",
-	attachedTop: "_attachedTop_qa1cd_79",
-	toolLabel: "_toolLabel_qa1cd_87",
-	bottomMargin: "_bottomMargin_qa1cd_94",
-	codeCompact: "_codeCompact_qa1cd_98",
-	simple: "_simple_qa1cd_102"
+	grid: "_grid_1mah3_1",
+	number: "_number_1mah3_10",
+	user: "_user_1mah3_14",
+	container: "_container_1mah3_20",
+	first: "_first_1mah3_28",
+	last: "_last_1mah3_35",
+	label: "_label_1mah3_42",
+	highlight: "_highlight_1mah3_49",
+	turnContainer: "_turnContainer_1mah3_56",
+	box: "_box_1mah3_66",
+	toolPart: "_toolPart_1mah3_74",
+	toolLabel: "_toolLabel_1mah3_80",
+	bottomMargin: "_bottomMargin_1mah3_87",
+	codeCompact: "_codeCompact_1mah3_91",
+	simple: "_simple_1mah3_95"
 };
 var MessageLabel_module_default = {
-	badge: "_badge_10sr6_1",
-	inline: "_inline_10sr6_2"
+	badge: "_badge_15iyu_1",
+	inline: "_inline_15iyu_2",
+	interactive: "_interactive_15iyu_24"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/chat/MessageLabel.tsx
+/**
+* Badge display form of a label: strips the surrounding cite brackets but
+* keeps the type letter, so "[M4]" → "M4" and "[E58]" → "E58". The full
+* cite stays in the badge tooltip; inline anchors keep the original text —
+* they must read like the prose they sit in.
+*/
+var compactLabel = (label) => label.replace(/^\[/, "").replace(/\]$/, "");
 /**
 * A filled monospace chip used for message position labels (top-right of a
 * message) and as an inline anchor in summary prose.
@@ -116487,17 +119225,19 @@ var MessageLabel = ({ label, mode = "badge", onActivate, className }) => {
 			}
 		};
 		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-			className: clsx(MessageLabel_module_default.inline, className),
+			className: clsx(MessageLabel_module_default.inline, onActivate && MessageLabel_module_default.interactive, className),
 			onClick: onActivate,
 			onKeyDown: onActivate ? onKeyDown : void 0,
 			tabIndex: onActivate ? 0 : void 0,
 			children: label
 		});
 	}
+	const compact = compactLabel(label);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-		className: clsx(MessageLabel_module_default.badge, className),
+		className: clsx(MessageLabel_module_default.badge, onActivate && MessageLabel_module_default.interactive, className),
 		onClick: onActivate,
-		children: label
+		title: compact === label ? void 0 : label,
+		children: compact
 	});
 };
 //#endregion
@@ -116538,7 +119278,7 @@ var ChatMessageRow = (0, import_react.memo)(function ChatMessageRow({ index, par
 		const toolMessages = resolvedMessage.toolMessages || [];
 		let idx = 0;
 		for (const tool_call of resolvedMessage.message.tool_calls) {
-			const { name, input, description, functionCall, contentType } = resolveToolInput(tool_call.function, tool_call.arguments);
+			const { name, input, description, functionCall, contentType, title } = resolveToolInput(tool_call.function, tool_call.arguments);
 			let toolMessage;
 			if (tool_call.id) toolMessage = toolMessages.find((msg) => msg.tool_call_id === tool_call.id);
 			else toolMessage = toolMessages[idx];
@@ -116552,41 +119292,22 @@ var ChatMessageRow = (0, import_react.memo)(function ChatMessageRow({ index, par
 				viewKinds.push("tool");
 				viewChips.push(void 0);
 			} else {
-				views.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallView, {
+				views.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ClientToolCall, {
 					id: `${index}-tool-call-${idx}`,
 					tool: name,
+					title: resolvedToolView?.title || title,
 					functionCall,
 					input,
 					description,
 					contentType,
 					output: resolvedToolOutput,
+					error: toolMessage?.error ?? void 0,
 					view: resolvedToolView,
-					section: "call",
 					getCustomToolView
 				}, `tool-call-${idx}`));
 				viewKinds.push("tool");
 				const toolLabel = useLabels ? labelForBlock(resolvedMessage.message.id, toolNumber) : void 0;
 				viewChips.push(toolLabel?.trim() ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageLabel, { label: toolLabel }) : void 0);
-				if (toolMessage?.error) {
-					views.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallErrorView, { error: toolMessage.error }, `tool-call-${idx}-error`));
-					viewKinds.push("tool-result");
-					viewChips.push(void 0);
-				} else if (hasOutputContent(resolvedToolOutput)) {
-					views.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallView, {
-						id: `${index}-tool-call-${idx}`,
-						tool: name,
-						functionCall,
-						input,
-						description,
-						contentType,
-						output: resolvedToolOutput,
-						view: resolvedToolView,
-						section: "output",
-						getCustomToolView
-					}, `tool-call-${idx}-output`));
-					viewKinds.push("tool-result");
-					viewChips.push(void 0);
-				}
 			}
 			toolNumber++;
 			idx++;
@@ -116594,39 +119315,35 @@ var ChatMessageRow = (0, import_react.memo)(function ChatMessageRow({ index, par
 	}
 	const hasTools = viewKinds.some((k) => k !== "message");
 	if (useLabels || hasTools) {
-		const renderPart = (idx, attached) => {
+		const renderPart = (idx) => {
 			const kind = viewKinds[idx];
 			const isMessage = kind === "message";
+			const isTurn = isMessage && hasServerToolUse(resolvedMessage.message);
 			const chip = viewChips[idx];
 			return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				"data-message-role": isMessage ? resolvedMessage.message.role : void 0,
-				"data-message-kind": kind,
-				className: clsx(isMessage && ChatMessageRow_module_default.container, hasTools ? ChatMessageRow_module_default.box : void 0, isMessage && highlightUserMessage && resolvedMessage.message.role === "user" ? ChatMessageRow_module_default.user : void 0, isMessage && !hasTools && idx === 0 ? ChatMessageRow_module_default.first : void 0, isMessage && !hasTools && idx === views.length - 1 ? ChatMessageRow_module_default.last : void 0, attached?.bottom ? ChatMessageRow_module_default.attachedBottom : void 0, attached?.top ? ChatMessageRow_module_default.attachedTop : void 0, highlightLabeled && isMessage && messageChip ? ChatMessageRow_module_default.highlight : void 0),
+				"data-message-role": isMessage && !isTurn ? resolvedMessage.message.role : void 0,
+				"data-message-kind": isMessage ? kind : void 0,
+				className: clsx(isMessage && !isTurn && ChatMessageRow_module_default.container, isTurn ? ChatMessageRow_module_default.turnContainer : isMessage && hasTools ? ChatMessageRow_module_default.box : void 0, !isMessage ? ChatMessageRow_module_default.toolPart : void 0, isMessage && !isTurn && highlightUserMessage && resolvedMessage.message.role === "user" ? ChatMessageRow_module_default.user : void 0, isMessage && !isTurn && !hasTools && idx === 0 ? ChatMessageRow_module_default.first : void 0, isMessage && !isTurn && !hasTools && idx === views.length - 1 ? ChatMessageRow_module_default.last : void 0, highlightLabeled && isMessage && messageChip ? ChatMessageRow_module_default.highlight : void 0),
 				children: [chip ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					className: ChatMessageRow_module_default.toolLabel,
 					children: chip
 				}) : null, views[idx]]
 			}, `chat-message-row-${index}-part-${idx}`);
 		};
-		const items = [];
-		for (let idx = 0; idx < views.length; idx++) if (viewKinds[idx] === "tool" && viewKinds[idx + 1] === "tool-result") {
-			items.push(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: ChatMessageRow_module_default.attachedGroup,
-				children: [renderPart(idx, { bottom: true }), renderPart(idx + 1, { top: true })]
-			}, `chat-message-row-${index}-toolgroup-${idx}`));
-			idx++;
-		} else items.push(renderPart(idx));
 		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			className: clsx(ChatMessageRow_module_default.grid, className),
-			children: items
+			children: views.map((_, idx) => renderPart(idx))
 		});
-	} else return views.map((view, idx) => {
-		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			"data-message-role": resolvedMessage.message.role,
-			className: clsx(ChatMessageRow_module_default.container, idx === 0 ? ChatMessageRow_module_default.first : void 0, idx === views.length - 1 ? ChatMessageRow_module_default.last : void 0, idx === views.length - 1 ? ChatMessageRow_module_default.bottomMargin : void 0, className, ChatMessageRow_module_default.simple, highlightUserMessage && resolvedMessage.message.role === "user" ? ChatMessageRow_module_default.user : void 0),
-			children: view
-		}, `chat-message-row-unlabeled-${index}-part-${idx}`);
-	});
+	} else {
+		const isTurn = hasServerToolUse(resolvedMessage.message);
+		return views.map((view, idx) => {
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				"data-message-role": isTurn ? void 0 : resolvedMessage.message.role,
+				className: clsx(isTurn ? ChatMessageRow_module_default.turnContainer : ChatMessageRow_module_default.container, !isTurn && idx === 0 ? ChatMessageRow_module_default.first : void 0, !isTurn && idx === views.length - 1 ? ChatMessageRow_module_default.last : void 0, idx === views.length - 1 ? ChatMessageRow_module_default.bottomMargin : void 0, className, !isTurn && ChatMessageRow_module_default.simple, !isTurn && highlightUserMessage && resolvedMessage.message.role === "user" ? ChatMessageRow_module_default.user : void 0),
+				children: view
+			}, `chat-message-row-unlabeled-${index}-part-${idx}`);
+		});
+	}
 }, chatMessageRowEqual);
 function chatMessageRowEqual(prev, next) {
 	const keys = Object.keys(prev);
@@ -116670,13 +119387,12 @@ var resolveToolMessage = (toolMessage) => {
 		};
 	}).filter((con) => con !== void 0);
 };
-var hasOutputContent = (output) => output.some((tool) => tool.content.some((item) => item.type !== "text" || item.text.trim().length > 0));
 var hasVisibleContent = (message) => {
 	const content = message.content;
 	if (typeof content === "string") return content.trim().length > 0;
 	if (!Array.isArray(content)) return false;
 	return content.some((c) => {
-		if (c.type === "tool_use") return false;
+		if (c.type === "tool_use") return true;
 		if (c.type === "text") {
 			const hasText = c.text.trim().length > 0;
 			const hasCitations = !!c.citations && c.citations.length > 0;
@@ -116717,12 +119433,16 @@ var ToolCallViewCompact = ({ idx, functionCall }) => {
 * The width is the widest label across the whole map so the column stays
 * aligned everywhere the map is used (e.g. uniformly across the events of a
 * transcript). Returns 0 for an empty map and a small default when there is no
-* map (rows fall back to numeric labels).
+* map (rows fall back to numeric labels). Measures the badge display form,
+* which is what the column actually renders.
 */
 function computeMaxLabelLength(messageLabels) {
 	if (!messageLabels) return 3;
 	let max = 0;
-	for (const v of Object.values(messageLabels)) if (v.length > max) max = v.length;
+	for (const v of Object.values(messageLabels)) {
+		const len = compactLabel(v).length;
+		if (len > max) max = len;
+	}
 	return max;
 }
 //#endregion
@@ -116767,7 +119487,7 @@ var ChatView = ({ id, messages, className, display, labels, linking, tools, refe
 	});
 };
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+virtual-core@3.16.0/node_modules/@tanstack/virtual-core/dist/esm/lazy-measurements.js
+//#region ../../node_modules/.pnpm/@tanstack+virtual-core@3.17.0/node_modules/@tanstack/virtual-core/dist/esm/lazy-measurements.js
 function createLazyMeasurementsView(count, flat, getItemKey) {
 	const cache = new Array(count);
 	return new Proxy(cache, { get(target, prop, receiver) {
@@ -116797,7 +119517,7 @@ function createLazyMeasurementsView(count, flat, getItemKey) {
 	} });
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+virtual-core@3.16.0/node_modules/@tanstack/virtual-core/dist/esm/utils.js
+//#region ../../node_modules/.pnpm/@tanstack+virtual-core@3.17.0/node_modules/@tanstack/virtual-core/dist/esm/utils.js
 function memo$4(getDeps, fn, opts) {
 	let deps = opts.initialDeps ?? [];
 	let result;
@@ -116829,7 +119549,7 @@ var debounce = (targetWindow, fn, ms) => {
 	};
 };
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+virtual-core@3.16.0/node_modules/@tanstack/virtual-core/dist/esm/index.js
+//#region ../../node_modules/.pnpm/@tanstack+virtual-core@3.17.0/node_modules/@tanstack/virtual-core/dist/esm/index.js
 var _isIOSResult;
 var isIOSWebKit = () => {
 	if (_isIOSResult !== void 0) return _isIOSResult;
@@ -116918,9 +119638,20 @@ var observeElementOffset = (instance, cb) => observeOffset(instance, cb, (el) =>
 	return horizontal ? el.scrollLeft * (isRtl && -1 || 1) : el.scrollTop;
 });
 var measureElement = (element, entry, instance) => {
+	if (instance.options.useCachedMeasurements) {
+		const index = instance.indexFromElement(element);
+		const key = instance.options.getItemKey(index);
+		return instance.itemSizeCache.get(key) ?? instance.options.estimateSize(index);
+	}
 	if (entry == null ? void 0 : entry.borderBoxSize) {
 		const box = entry.borderBoxSize[0];
 		if (box) return Math.round(box[instance.options.horizontal ? "inlineSize" : "blockSize"]);
+	}
+	if (!entry) {
+		const index = instance.indexFromElement(element);
+		const key = instance.options.getItemKey(index);
+		const cachedSize = instance.itemSizeCache.get(key);
+		if (cachedSize !== void 0) return cachedSize;
 	}
 	return element[instance.options.horizontal ? "offsetWidth" : "offsetHeight"];
 };
@@ -117036,7 +119767,8 @@ var Virtualizer = class {
 				isRtl: false,
 				useScrollendEvent: false,
 				useAnimationFrameWithResizeObserver: false,
-				laneAssignmentMode: "estimate"
+				laneAssignmentMode: "estimate",
+				useCachedMeasurements: false
 			};
 			for (const key in opts2) {
 				const v = opts2[key];
@@ -117045,6 +119777,7 @@ var Virtualizer = class {
 			const prevOptions = this.options;
 			let anchor = null;
 			let followOnAppend = null;
+			let edgeKeysChanged = false;
 			if (prevOptions !== void 0 && prevOptions.enabled && merged.enabled && merged.anchorTo === "end" && this.scrollElement !== null) {
 				const prevCount = prevOptions.count;
 				const nextCount = merged.count;
@@ -117052,6 +119785,7 @@ var Virtualizer = class {
 				const prevFirstKey = prevCount > 0 ? ((_a = measurements[0]) == null ? void 0 : _a.key) ?? prevOptions.getItemKey(0) : null;
 				const prevLastKey = prevCount > 0 ? ((_b = measurements[prevCount - 1]) == null ? void 0 : _b.key) ?? prevOptions.getItemKey(prevCount - 1) : null;
 				if (nextCount !== prevCount || prevCount > 0 && nextCount > 0 && (merged.getItemKey(0) !== prevFirstKey || merged.getItemKey(nextCount - 1) !== prevLastKey)) {
+					edgeKeysChanged = true;
 					const item = prevCount > 0 ? this.getVirtualItemForOffset(this.getScrollOffset()) ?? measurements[0] : null;
 					if (item) anchor = [item.key, this.getScrollOffset() - item.start];
 					const behavior = merged.followOnAppend === true ? "auto" : merged.followOnAppend || null;
@@ -117059,10 +119793,35 @@ var Virtualizer = class {
 				}
 			}
 			this.options = merged;
-			if (anchor || followOnAppend) this.pendingScrollAnchor = [
-				(anchor == null ? void 0 : anchor[0]) ?? null,
-				(anchor == null ? void 0 : anchor[1]) ?? 0,
-				followOnAppend
+			if (edgeKeysChanged) {
+				this.pendingMin = 0;
+				this.itemSizeCacheVersion++;
+			}
+			let anchorResolved = false;
+			let anchorDelta = 0;
+			if (anchor && this.scrollOffset !== null) {
+				const [anchorKey, anchorOffset] = anchor;
+				const newMeasurements = this.getMeasurements();
+				const { count, getItemKey } = this.options;
+				let idx = 0;
+				while (idx < count && getItemKey(idx) !== anchorKey) idx++;
+				if (idx < count) {
+					const anchorItem = newMeasurements[idx];
+					if (anchorItem) {
+						const newOffset = anchorItem.start + anchorOffset;
+						if (newOffset !== this.scrollOffset) {
+							anchorDelta = newOffset - this.scrollOffset;
+							this.scrollOffset = newOffset;
+							anchorResolved = true;
+						}
+					}
+				}
+			}
+			if (anchorResolved || followOnAppend) this.pendingScrollAnchor = [
+				anchorResolved ? anchor[0] : null,
+				anchorResolved ? anchor[1] : 0,
+				followOnAppend,
+				anchorDelta
 			];
 		};
 		this.notify = (sync) => {
@@ -117173,17 +119932,13 @@ var Virtualizer = class {
 			const anchor = this.pendingScrollAnchor;
 			this.pendingScrollAnchor = null;
 			if (anchor && this.scrollElement && this.options.enabled) {
-				const [key, offset, followOnAppend] = anchor;
-				if (key !== null) {
-					const { count, getItemKey } = this.options;
-					let index = 0;
-					while (index < count && getItemKey(index) !== key) index++;
-					const item = index < count ? this.getMeasurements()[index] : void 0;
-					if (item) {
-						const delta = item.start + offset - this.getScrollOffset();
-						if (!approxEqual(delta, 0)) this.applyScrollAdjustment(delta);
-					}
-				}
+				const [key, _offset, followOnAppend, anchorDelta] = anchor;
+				if (key !== null && !followOnAppend) if (isIOSWebKit() && (this.isScrolling || this._iosTouching || this._iosJustTouchEnded)) {
+					if (anchorDelta !== 0) this._iosDeferredAdjustment += anchorDelta;
+				} else this._scrollToOffset(this.getScrollOffset(), {
+					adjustments: void 0,
+					behavior: void 0
+				});
 				if (followOnAppend) this.scrollToEnd({ behavior: followOnAppend });
 			}
 		};
@@ -117757,26 +120512,89 @@ function calculateRange({ measurements, outerSize, scrollOffset, lanes, flat }) 
 	};
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+react-virtual@3.13.26_react-dom@19.2.6_react@19.2.6__react@19.2.6/node_modules/@tanstack/react-virtual/dist/esm/index.js
+//#region ../../node_modules/.pnpm/@tanstack+react-virtual@3.14.2_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/@tanstack/react-virtual/dist/esm/index.js
 var useIsomorphicLayoutEffect = typeof document !== "undefined" ? import_react.useLayoutEffect : import_react.useEffect;
-function useVirtualizerBase({ useFlushSync = true, ...options }) {
+function useVirtualizerBase({ useFlushSync = true, directDomUpdates = false, directDomUpdatesMode = "transform", ...options }) {
 	const rerender = import_react.useReducer((x) => x + 1, 0)[1];
+	const directRef = import_react.useRef({
+		enabled: directDomUpdates,
+		mode: directDomUpdatesMode,
+		container: null,
+		lastSize: null,
+		lastPositions: /* @__PURE__ */ new WeakMap(),
+		prevRange: null
+	});
+	directRef.current.enabled = directDomUpdates;
+	directRef.current.mode = directDomUpdatesMode;
+	const applyDirectStyles = (instance2) => {
+		const state = directRef.current;
+		if (!state.enabled) return;
+		const totalSize = instance2.getTotalSize();
+		if (state.container && totalSize !== state.lastSize) {
+			state.lastSize = totalSize;
+			const sizeAxis = instance2.options.horizontal ? "width" : "height";
+			state.container.style[sizeAxis] = `${totalSize}px`;
+		}
+		const horizontal = !!instance2.options.horizontal;
+		const useTransform = state.mode === "transform";
+		const posAxis = horizontal ? "left" : "top";
+		const scrollMargin = instance2.options.scrollMargin;
+		const items = instance2.getVirtualItems();
+		for (const item of items) {
+			const next = item.start - scrollMargin;
+			const el = instance2.elementsCache.get(item.key);
+			if (!el) continue;
+			if (state.lastPositions.get(el) === next) continue;
+			state.lastPositions.set(el, next);
+			if (useTransform) el.style.transform = horizontal ? `translate3d(${next}px, 0, 0)` : `translate3d(0, ${next}px, 0)`;
+			else el.style[posAxis] = `${next}px`;
+		}
+	};
 	const resolvedOptions = {
 		...options,
 		onChange: (instance2, sync) => {
 			var _a;
-			if (useFlushSync && sync) (0, import_react_dom.flushSync)(rerender);
+			const state = directRef.current;
+			let shouldRerender = true;
+			if (state.enabled) {
+				applyDirectStyles(instance2);
+				const range = instance2.range;
+				const prev = state.prevRange;
+				shouldRerender = !prev || prev.isScrolling !== instance2.isScrolling || prev.startIndex !== (range == null ? void 0 : range.startIndex) || prev.endIndex !== (range == null ? void 0 : range.endIndex);
+				if (shouldRerender) state.prevRange = range ? {
+					startIndex: range.startIndex,
+					endIndex: range.endIndex,
+					isScrolling: instance2.isScrolling
+				} : null;
+			}
+			if (shouldRerender) if (useFlushSync && sync) (0, import_react_dom.flushSync)(rerender);
 			else rerender();
 			(_a = options.onChange) == null || _a.call(options, instance2, sync);
 		}
 	};
-	const [instance] = import_react.useState(() => new Virtualizer(resolvedOptions));
+	const [instance] = import_react.useState(() => {
+		const v = new Virtualizer(resolvedOptions);
+		return Object.assign(v, { containerRef: (node) => {
+			const state = directRef.current;
+			state.container = node;
+			state.lastSize = null;
+			if (node && state.enabled) {
+				const total = v.getTotalSize();
+				state.lastSize = total;
+				const axis = v.options.horizontal ? "width" : "height";
+				node.style[axis] = `${total}px`;
+			}
+		} });
+	});
 	instance.setOptions(resolvedOptions);
 	useIsomorphicLayoutEffect(() => {
 		return instance._didMount();
 	}, []);
 	useIsomorphicLayoutEffect(() => {
 		return instance._willUpdate();
+	});
+	useIsomorphicLayoutEffect(() => {
+		applyDirectStyles(instance);
 	});
 	return instance;
 }
@@ -118672,6 +121490,36 @@ var createSpanEnd = (name, timestamp) => {
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/transform/flatten.ts
+/**
+* Find the IDs of all ancestors of `eventId` in the EventNode tree.
+* Returns an empty array if `eventId` is not found.
+* Order: outermost ancestor first.
+*/
+function findAncestorIds(nodes, eventId) {
+	const path = [];
+	return walk(nodes, eventId, path) ? path : [];
+	function walk(nodes, target, path) {
+		for (const n of nodes) {
+			if (n.id === target) return true;
+			if (n.children.length > 0) {
+				path.push(n.id);
+				if (walk(n.children, target, path)) return true;
+				path.pop();
+			}
+		}
+		return false;
+	}
+}
+/**
+* Collapsed ancestor ids on the path to `targetId`, outermost first.
+*
+* The target's own collapsed state is irrelevant — a collapsed node still
+* has a row of its own; only collapsed ancestors remove it from the
+* flattened list. Empty when the target is missing or fully visible.
+*/
+function findCollapsedAncestors(eventNodes, targetId, collapsed) {
+	return findAncestorIds(eventNodes, targetId).filter((id) => collapsed?.[id] === true);
+}
 /**
 * Flatten the tree structure into a flat array of EventNode objects
 * Each node in the result will have its children set properly
@@ -120572,6 +123420,58 @@ function resolveMessageInBranches(messageId, root) {
 		}
 	}
 }
+/**
+* Resolves an event id (event uuid or span node id) to its swimlane target
+* in the main content tree: the *innermost* enclosing agent span (if any)
+* whose row must be selected before the event list contains the target.
+*
+* The event-id analogue of `resolveMessageToEvent`, but matching node
+* identity instead of message ids, and resolving to the deepest agent row
+* rather than one level down — every nested agent has its own selectable
+* row, so the deepest one is what renders the target inline.
+*/
+function resolveEventToSpan(eventId, root) {
+	return walkContentForEvent(eventId, root.content, null);
+}
+/**
+* Branch fallback for `resolveEventToSpan` — walks every branch row and
+* returns the first hit along with the branch's swimlane row key.
+*/
+function resolveEventInBranches(eventId, root) {
+	const rows = computeFlatSwimlaneRows(root, {
+		includeUtility: true,
+		showBranches: true
+	});
+	for (const row of rows) {
+		if (!row.branch) continue;
+		for (const rowSpan of row.spans) {
+			const agents = isSingleSpan(rowSpan) ? [rowSpan.agent] : rowSpan.agents;
+			for (const agent of agents) {
+				const match = walkContentForEvent(eventId, agent.content, null);
+				if (match) return {
+					...match,
+					branchRowKey: row.key
+				};
+			}
+		}
+	}
+}
+function walkContentForEvent(eventId, content, agentContext) {
+	for (const item of content) if (item.type === "event") {
+		if (item.event.uuid === eventId) return {
+			eventId,
+			agentSpanId: agentContext
+		};
+	} else {
+		const childContext = item.spanType === "agent" ? item.id : agentContext;
+		if (item.id === eventId) return {
+			eventId,
+			agentSpanId: agentContext
+		};
+		const found = walkContentForEvent(eventId, item.content, childContext);
+		if (found) return found;
+	}
+}
 var PRIORITY_MODEL_OUTPUT = 1;
 var PRIORITY_AGENT_CARD_RESULT = 2;
 var PRIORITY_TOOL_MESSAGE_ID = 3;
@@ -120674,6 +123574,35 @@ function matchEvent(messageId, item, agentContext, agentSpanIds, toolCallIdToUui
 		});
 	}
 	return matches;
+}
+//#endregion
+//#region ../../packages/inspect-components/src/transcript/findTimelineForDeepLink.ts
+/**
+* Locates which root timeline contains a deep-link target (`?event=` /
+* `?message=`), so the view can auto-switch to it when the target is not in
+* the active timeline.
+*/
+function itemsContainEvent(eventId, items) {
+	for (const item of items) if (item.type === "event") {
+		if (item.event.uuid === eventId) return true;
+	} else {
+		if (item.id === eventId) return true;
+		if (itemsContainEvent(eventId, item.content)) return true;
+		if (itemsContainEvent(eventId, item.branches)) return true;
+	}
+	return false;
+}
+/** True if the timeline's tree (content and branches) contains the target. */
+function timelineContainsEvent(eventId, timeline) {
+	return timeline.root.id === eventId || itemsContainEvent(eventId, timeline.root.content) || itemsContainEvent(eventId, timeline.root.branches);
+}
+/** Index of the first timeline containing the event/span id, or -1. */
+function findTimelineIndexForEvent(eventId, timelines) {
+	return timelines.findIndex((tl) => timelineContainsEvent(eventId, tl));
+}
+/** Index of the first timeline whose events resolve the message id, or -1. */
+function findTimelineIndexForMessage(messageId, timelines) {
+	return timelines.findIndex((tl) => resolveMessageToEvent(messageId, tl.root) !== void 0 || resolveMessageInBranches(messageId, tl.root) !== void 0);
 }
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/outline/tree-visitors.ts
@@ -121106,21 +124035,21 @@ var EventNavs = ({ navs, selectedNav, setSelectedNav }) => {
 	});
 };
 var EventPanel_module_default = {
-	stickyWrapper: "_stickyWrapper_2hmlz_1",
-	label: "_label_2hmlz_20",
-	title: "_title_2hmlz_25",
-	titleExtra: "_titleExtra_2hmlz_30",
-	navs: "_navs_2hmlz_37",
-	turnLabel: "_turnLabel_2hmlz_44",
-	card: "_card_2hmlz_51",
-	cardContent: "_cardContent_2hmlz_59",
-	hidden: "_hidden_2hmlz_64",
-	copyLink: "_copyLink_2hmlz_72",
-	hover: "_hover_2hmlz_82",
-	eventLabel: "_eventLabel_2hmlz_89",
-	root: "_root_2hmlz_93",
-	bottomDongle: "_bottomDongle_2hmlz_98",
-	dongleIcon: "_dongleIcon_2hmlz_114"
+	stickyWrapper: "_stickyWrapper_1rqn8_1",
+	label: "_label_1rqn8_20",
+	title: "_title_1rqn8_25",
+	titleExtra: "_titleExtra_1rqn8_30",
+	navs: "_navs_1rqn8_37",
+	turnLabel: "_turnLabel_1rqn8_44",
+	card: "_card_1rqn8_51",
+	cardContent: "_cardContent_1rqn8_59",
+	hidden: "_hidden_1rqn8_64",
+	copyLink: "_copyLink_1rqn8_72",
+	hover: "_hover_1rqn8_82",
+	eventLabel: "_eventLabel_1rqn8_87",
+	root: "_root_1rqn8_91",
+	bottomDongle: "_bottomDongle_1rqn8_96",
+	dongleIcon: "_dongleIcon_1rqn8_112"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/event/EventPanel.tsx
@@ -121148,13 +124077,13 @@ var EventPanel = ({ eventNodeId, className, title, subTitle, text, icon, childre
 	const stickyRef = useStickyObserver();
 	const gridColumns = [];
 	if (isCollapsible && !useBottomDongle) gridColumns.push("minmax(0, max-content)");
-	if (eventLabel) gridColumns.push("minmax(0, max-content)");
 	if (icon) gridColumns.push("max-content");
 	gridColumns.push("minmax(0, max-content)");
 	gridColumns.push("minmax(0, 1fr)");
 	gridColumns.push("minmax(0, max-content)");
 	gridColumns.push("auto");
 	if (turnLabel) gridColumns.push("max-content");
+	if (eventLabel) gridColumns.push("max-content");
 	const toggleCollapse = (0, import_react.useCallback)(() => {
 		setCollapsed(!collapsed);
 	}, [setCollapsed, collapsed]);
@@ -121167,6 +124096,7 @@ var EventPanel = ({ eventNodeId, className, title, subTitle, text, icon, childre
 			display: "grid",
 			gridTemplateColumns: gridColumns.join(" "),
 			columnGap: "0.3em",
+			alignItems: "center",
 			cursor: isCollapsible && !useBottomDongle ? "pointer" : void 0
 		},
 		onMouseEnter: () => setMouseOver(true),
@@ -121175,11 +124105,6 @@ var EventPanel = ({ eventNodeId, className, title, subTitle, text, icon, childre
 			isCollapsible && !useBottomDongle ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", {
 				onClick: toggleCollapse,
 				className: collapsed ? kChevronRight : kChevronDown
-			}) : "",
-			eventLabel ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: clsx("text-style-secondary", "text-style-label", EventPanel_module_default.eventLabel),
-				onClick: toggleCollapse,
-				children: [eventLabel, " -"]
 			}) : "",
 			icon ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", {
 				className: clsx(icon || kDefaultIcon$1, "text-style-secondary"),
@@ -121230,6 +124155,10 @@ var EventPanel = ({ eventNodeId, className, title, subTitle, text, icon, childre
 			turnLabel && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 				className: clsx(EventPanel_module_default.turnLabel),
 				children: turnLabel
+			}),
+			eventLabel && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageLabel, {
+				label: eventLabel,
+				className: EventPanel_module_default.eventLabel
 			})
 		]
 	}) : "";
@@ -122957,6 +125886,7 @@ var TranscriptIcons = {
 		custom: "bi bi-exclamation-triangle",
 		operator: "bi bi-person-workspace",
 		tokens: "bi bi-list",
+		turns: "bi bi-arrow-repeat",
 		time: "bi bi-clock",
 		execution: "bi bi-stopwatch",
 		cost: "bi bi-currency-dollar"
@@ -126694,25 +129624,26 @@ var useEventNodes = (events, running, sourceSpans) => {
 	};
 };
 var TranscriptLayout_module_default = {
-	root: "_root_t7oq7_1",
-	container: "_container_t7oq7_9",
-	outlineCollapsed: "_outlineCollapsed_t7oq7_24",
-	noOutline: "_noOutline_t7oq7_28",
-	rightPaneCollapsed: "_rightPaneCollapsed_t7oq7_32",
-	noRightPane: "_noRightPane_t7oq7_44",
-	outline: "_outline_t7oq7_24",
-	outlineToggle: "_outlineToggle_t7oq7_72",
-	separator: "_separator_t7oq7_86",
-	rightSeparator: "_rightSeparator_t7oq7_90",
-	rightPane: "_rightPane_t7oq7_32",
-	rightPaneResizer: "_rightPaneResizer_t7oq7_109",
-	rightPaneToggle: "_rightPaneToggle_t7oq7_128",
-	eventsList: "_eventsList_t7oq7_137",
-	sidebarHeader: "_sidebarHeader_t7oq7_141",
-	sidebarHeaderIcon: "_sidebarHeaderIcon_t7oq7_149",
-	sidebarHeaderTitle: "_sidebarHeaderTitle_t7oq7_154",
-	sidebarHeaderCloseAnchor: "_sidebarHeaderCloseAnchor_t7oq7_170",
-	sidebarHeaderClose: "_sidebarHeaderClose_t7oq7_170"
+	root: "_root_1qk7q_1",
+	container: "_container_1qk7q_9",
+	embedded: "_embedded_1qk7q_21",
+	outlineCollapsed: "_outlineCollapsed_1qk7q_30",
+	noOutline: "_noOutline_1qk7q_34",
+	rightPaneCollapsed: "_rightPaneCollapsed_1qk7q_38",
+	noRightPane: "_noRightPane_1qk7q_50",
+	outline: "_outline_1qk7q_30",
+	outlineToggle: "_outlineToggle_1qk7q_78",
+	separator: "_separator_1qk7q_92",
+	rightSeparator: "_rightSeparator_1qk7q_96",
+	rightPane: "_rightPane_1qk7q_38",
+	rightPaneResizer: "_rightPaneResizer_1qk7q_115",
+	rightPaneToggle: "_rightPaneToggle_1qk7q_134",
+	eventsList: "_eventsList_1qk7q_143",
+	sidebarHeader: "_sidebarHeader_1qk7q_147",
+	sidebarHeaderIcon: "_sidebarHeaderIcon_1qk7q_155",
+	sidebarHeaderTitle: "_sidebarHeaderTitle_1qk7q_160",
+	sidebarHeaderCloseAnchor: "_sidebarHeaderCloseAnchor_1qk7q_176",
+	sidebarHeaderClose: "_sidebarHeaderClose_1qk7q_176"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/AnchorEventView.tsx
@@ -126906,119 +129837,96 @@ function findRowKeyForLabel(data, label) {
 	return null;
 }
 var CheckpointEventView_module_default = {
-	panel: "_panel_xm787_1",
-	metric: "_metric_xm787_5",
-	label: "_label_xm787_10",
-	section: "_section_xm787_15",
-	sectionTitle: "_sectionTitle_xm787_19",
-	indented: "_indented_xm787_23",
-	files: "_files_xm787_27",
-	file: "_file_xm787_27",
-	fileOverflow: "_fileOverflow_xm787_38"
+	panel: "_panel_1us8t_1",
+	rowValue: "_rowValue_1us8t_10",
+	files: "_files_1us8t_16",
+	file: "_file_1us8t_16",
+	fileOverflow: "_fileOverflow_1us8t_27"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/CheckpointEventView.tsx
-var SizeAndDuration = ({ size_bytes, duration_ms }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
-	label: "Size",
-	layout: "row",
-	children: formatBytes(size_bytes)
-}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
-	label: "Duration",
-	layout: "row",
-	children: formatMs(duration_ms)
-})] });
-var Files = ({ files, additionalFiles }) => {
-	if (!files || files.length === 0) return null;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
-		label: "Files",
-		layout: "column",
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: CheckpointEventView_module_default.files,
-			children: [files.map((file) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: CheckpointEventView_module_default.file,
-				children: file
-			}, file)), additionalFiles ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: CheckpointEventView_module_default.fileOverflow,
-				children: [
-					"+",
-					additionalFiles,
-					" more"
-				]
-			}) : null]
-		})
-	});
+var asNumber = (v) => typeof v === "number" ? v : null;
+var triggerSummary = (event) => {
+	const md = event.trigger_metadata ?? {};
+	switch (event.trigger) {
+		case "token": {
+			const every = asNumber(md["every"]);
+			const since = asNumber(md["tokens_since_last_fire"]);
+			return every !== null && since !== null ? `token — ${formatNumber(every)} (${formatNumber(since)})` : null;
+		}
+		case "time": {
+			const every = asNumber(md["every_seconds"]);
+			const elapsed = asNumber(md["elapsed_seconds"]);
+			return every !== null && elapsed !== null ? `time — ${formatTime$1(every)} (${formatTime$1(elapsed)})` : null;
+		}
+		case "turn": {
+			const every = asNumber(md["every"]);
+			return every !== null ? `turn — ${formatNumber(every)}` : null;
+		}
+		case "manual": return "manual";
+		case "agent_complete": return "agent complete";
+		default: return null;
+	}
 };
-var CheckpointEventView = ({ eventNode, className }) => {
+var Row = ({ label, children }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+	className: clsx("text-style-label", "text-style-secondary"),
+	children: label
+}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+	className: CheckpointEventView_module_default.rowValue,
+	children
+})] });
+var Snapshot = ({ details }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
+	formatBytes(details.size_bytes),
+	" · ",
+	formatMs(details.duration_ms)
+] }), details.files && details.files.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+	className: CheckpointEventView_module_default.files,
+	children: [details.files.map((file) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: CheckpointEventView_module_default.file,
+		children: file
+	}, file)), details.additional_files ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: CheckpointEventView_module_default.fileOverflow,
+		children: [
+			"+",
+			details.additional_files,
+			" more"
+		]
+	}) : null]
+}) : null] });
+var CheckpointEventView = ({ eventNode, className, eventCallbacks }) => {
 	const event = eventNode.event;
+	const summary = triggerSummary(event);
+	const metadata = event.trigger_metadata ?? {};
 	const sandboxEntries = Object.entries(event.sandboxes);
-	const sections = [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: CheckpointEventView_module_default.section,
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: CheckpointEventView_module_default.sectionTitle,
-			children: "Host"
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: CheckpointEventView_module_default.indented,
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SizeAndDuration, {
-				size_bytes: event.host.size_bytes,
-				duration_ms: event.host.duration_ms
-			})
-		})]
-	}, "host")];
-	const onlySandbox = sandboxEntries.length === 1 ? sandboxEntries[0] : null;
-	if (onlySandbox) {
-		const [, details] = onlySandbox;
-		sections.push(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: CheckpointEventView_module_default.section,
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: CheckpointEventView_module_default.sectionTitle,
-				children: "Sandbox"
-			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: CheckpointEventView_module_default.indented,
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SizeAndDuration, {
-					size_bytes: details.size_bytes,
-					duration_ms: details.duration_ms
-				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Files, {
-					files: details.files,
-					additionalFiles: details.additional_files
-				})]
-			})]
-		}, "sandbox"));
-	} else if (sandboxEntries.length > 1) sections.push(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: CheckpointEventView_module_default.section,
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: CheckpointEventView_module_default.sectionTitle,
-			children: "Sandboxes"
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: CheckpointEventView_module_default.indented,
-			children: sandboxEntries.map(([name, details]) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: CheckpointEventView_module_default.section,
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: CheckpointEventView_module_default.sectionTitle,
-					children: name
-				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: CheckpointEventView_module_default.indented,
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SizeAndDuration, {
-						size_bytes: details.size_bytes,
-						duration_ms: details.duration_ms
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Files, {
-						files: details.files,
-						additionalFiles: details.additional_files
-					})]
-				})]
-			}, name))
-		})]
-	}, "sandboxes"));
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventRow, {
-		title: formatTitle(`Checkpoint ${event.checkpoint_id}`, void 0, event.duration_ms / 1e3),
-		icon: TranscriptIcons.checkpoint,
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventPanel, {
+		eventNodeId: eventNode.id,
 		className,
-		below: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: CheckpointEventView_module_default.panel,
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
-				label: "Size",
-				layout: "row",
-				children: formatBytes(event.size_bytes)
-			}), sections]
+		title: `Checkpoint ${event.checkpoint_id} — turn ${event.turn} (${formatBytes(event.size_bytes)}, ${formatTime$1(event.duration_ms / 1e3)})`,
+		icon: TranscriptIcons.checkpoint,
+		eventCallbacks,
+		collapsibleContent: true,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: clsx(CheckpointEventView_module_default.panel, "text-size-small"),
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Row, {
+					label: "Trigger",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: summary ?? event.trigger }), summary === null && Object.keys(metadata).length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
+						entries: metadata,
+						options: {
+							plain: true,
+							size: "mini"
+						}
+					}) : null]
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Row, {
+					label: "Host",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Snapshot, { details: event.host })
+				}),
+				sandboxEntries.map(([name, details]) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Row, {
+					label: sandboxEntries.length === 1 ? "Sandbox" : name,
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Snapshot, { details })
+				}, name))
+			]
 		})
 	});
 };
@@ -127043,7 +129951,8 @@ var CompactionEventView = ({ eventNode, className }) => {
 		icon: TranscriptIcons.compaction,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
 			entries: data,
-			className: CompactionEventView_module_default.panel
+			className: CompactionEventView_module_default.panel,
+			options: { copyButton: true }
 		})
 	});
 };
@@ -127108,7 +130017,11 @@ var InfoEventView = ({ eventNode, className }) => {
 		className,
 		subTitle: event.timestamp ? formatDateTime$1(new Date(event.timestamp)) : void 0,
 		icon: TranscriptIcons.info,
-		children: panels
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
+			id: `${eventNode.id}-info`,
+			collapse: true,
+			children: panels
+		})
 	});
 };
 //#endregion
@@ -127956,20 +130869,21 @@ var StopReasonBadge = ({ reason, details }) => {
 	});
 };
 var ModelEventView_module_default = {
-	container: "_container_2vo8f_1",
-	all: "_all_2vo8f_6",
-	tableSelection: "_tableSelection_2vo8f_12",
-	config: "_config_2vo8f_18",
-	tools: "_tools_2vo8f_22",
-	codePre: "_codePre_2vo8f_26",
-	code: "_code_2vo8f_26",
-	progress: "_progress_2vo8f_38",
-	error: "_error_2vo8f_42",
-	cancelled: "_cancelled_2vo8f_53",
-	showAllLink: "_showAllLink_2vo8f_66",
-	showAllIcon: "_showAllIcon_2vo8f_77",
-	toolConfig: "_toolConfig_2vo8f_86",
-	toolChoice: "_toolChoice_2vo8f_90"
+	container: "_container_qdklk_1",
+	all: "_all_qdklk_6",
+	tableSelection: "_tableSelection_qdklk_12",
+	config: "_config_qdklk_18",
+	tools: "_tools_qdklk_22",
+	codePre: "_codePre_qdklk_26",
+	code: "_code_qdklk_26",
+	progress: "_progress_qdklk_38",
+	error: "_error_qdklk_42",
+	cancelled: "_cancelled_qdklk_53",
+	showAllLink: "_showAllLink_qdklk_66",
+	showAllIcon: "_showAllIcon_qdklk_77",
+	toolConfig: "_toolConfig_qdklk_86",
+	toolChoice: "_toolChoice_qdklk_90",
+	fallbackBadge: "_fallbackBadge_qdklk_100"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/ModelEventView.tsx
@@ -128025,6 +130939,11 @@ var ModelEventView = ({ eventNode, showToolCalls, className, context, eventCallb
 	}, [context?.messageLabels]);
 	const panelTitle = event.role ? `Model Call (${event.role}): ${event.model}` : `Model Call: ${event.model}`;
 	const titleString = isFailed ? `${panelTitle} · FAILED${formatFailureTime(event)}` : isCancelled ? `${panelTitle} · Cancelled${formatFailureTime(event)}` : formatTitle(panelTitle, totalUsage, callTime);
+	const fallback = event.output?.fallback;
+	const fallbackBadge = fallback ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+		className: ModelEventView_module_default.fallbackBadge,
+		children: ["· fallback → ", fallback.fallback_model]
+	}) : void 0;
 	const turnLabel = context?.turnInfo ? `turn ${context.turnInfo.turnNumber}/${context.turnInfo.totalTurns}` : void 0;
 	const retryChip = attempts ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RetryChip, {
 		attempts,
@@ -128039,7 +130958,7 @@ var ModelEventView = ({ eventNode, showToolCalls, className, context, eventCallb
 		subTitle: event.timestamp ? formatTiming(event.timestamp, event.working_start) : void 0,
 		icon: TranscriptIcons.model,
 		turnLabel,
-		headerExtra: retryChip,
+		headerExtra: fallbackBadge || retryChip ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [fallbackBadge, retryChip] }) : void 0,
 		eventCallbacks,
 		collapsibleContent: true,
 		children: [
@@ -128275,7 +131194,8 @@ var SampleInitEventView = ({ eventNode, className }) => {
 		}), event.sample.metadata && Object.keys(event.sample.metadata).length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
 			"data-name": "Metadata",
 			className: SampleInitEventView_module_default.metadata,
-			entries: event.sample.metadata
+			entries: event.sample.metadata,
+			options: { copyButton: true }
 		}) : ""]
 	});
 };
@@ -128288,6 +131208,7 @@ var SampleLimitEventView = ({ eventNode, className }) => {
 			case "time": return "Time Limit Exceeded";
 			case "message": return "Message Limit Exceeded";
 			case "token": return "Token Limit Exceeded";
+			case "turn": return "Turn Limit Exceeded";
 			case "operator": return "Operator Cancelled";
 			case "working": return "Execution Time Limit Exceeded";
 			case "cost": return "Cost Limit Exceeded";
@@ -128299,6 +131220,7 @@ var SampleLimitEventView = ({ eventNode, className }) => {
 			case "time": return TranscriptIcons.limits.time;
 			case "message": return TranscriptIcons.limits.messages;
 			case "token": return TranscriptIcons.limits.tokens;
+			case "turn": return TranscriptIcons.limits.turns;
 			case "operator": return TranscriptIcons.limits.operator;
 			case "working": return TranscriptIcons.limits.execution;
 			case "cost": return TranscriptIcons.limits.cost;
@@ -128559,7 +131481,8 @@ var ScoreEditEventView = ({ eventNode, className }) => {
 						id: `${eventNode.id}-score-metadata`,
 						record: event.edit.metadata || {},
 						className: ScoreEditEventView_module_default.metadataTree,
-						defaultExpandLevel: 0
+						defaultExpandLevel: 0,
+						copyButton: true
 					})
 				}) : void 0
 			]
@@ -128627,7 +131550,8 @@ var ScoreEventView = ({ eventNode, className }) => {
 				id: `${eventNode.id}-score-metadata`,
 				record: event.score.metadata,
 				className: ScoreEventView_module_default.metadataTree,
-				defaultExpandLevel: 0
+				defaultExpandLevel: 0,
+				copyButton: true
 			})
 		}) : void 0]
 	});
@@ -129065,17 +131989,13 @@ var None = () => {
 	});
 };
 var ToolEventView_module_default = {
-	summary: "_summary_8xr5q_1",
-	labeledToolCall: "_labeledToolCall_8xr5q_6",
-	label: "_label_8xr5q_6",
-	labeledToolContent: "_labeledToolContent_8xr5q_19",
-	attachedGroup: "_attachedGroup_8xr5q_25",
-	toolBox: "_toolBox_8xr5q_30",
-	attachedBottom: "_attachedBottom_8xr5q_37",
-	attachedTop: "_attachedTop_8xr5q_43",
-	approvalWrap: "_approvalWrap_8xr5q_49",
-	approval: "_approval_8xr5q_49",
-	progress: "_progress_8xr5q_59"
+	summary: "_summary_1mtn2_1",
+	labeledToolCall: "_labeledToolCall_1mtn2_6",
+	label: "_label_1mtn2_6",
+	labeledToolContent: "_labeledToolContent_1mtn2_19",
+	approvalWrap: "_approvalWrap_1mtn2_23",
+	approval: "_approval_1mtn2_23",
+	progress: "_progress_1mtn2_33"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/ToolEventView.tsx
@@ -129105,44 +132025,17 @@ var ToolEventView = ({ eventNode, childNodes, className, context, eventCallbacks
 	]);
 	const maxLabelLength = (0, import_react.useMemo)(() => computeMaxLabelLength(context?.messageLabels), [context?.messageLabels]);
 	const showError = !!event.error && event.error.type !== "approval";
-	const showResult = !showError && hasResultContent(event.result);
-	const toolCallView = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: ToolEventView_module_default.attachedGroup,
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			"data-message-kind": "tool",
-			className: clsx(ToolEventView_module_default.toolBox, showError || showResult ? ToolEventView_module_default.attachedBottom : void 0),
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallView, {
-				id: `${eventNode.id}-tool-call`,
-				tool: name,
-				functionCall,
-				input,
-				description,
-				contentType,
-				output: "",
-				mode: "compact",
-				view: resolvedView,
-				section: "call"
-			})
-		}), showError ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			"data-message-kind": "tool-result",
-			className: clsx(ToolEventView_module_default.toolBox, ToolEventView_module_default.attachedTop),
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallErrorView, { error: event.error })
-		}) : showResult ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			"data-message-kind": "tool-result",
-			className: clsx(ToolEventView_module_default.toolBox, ToolEventView_module_default.attachedTop),
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolCallView, {
-				id: `${eventNode.id}-tool-call`,
-				tool: name,
-				functionCall,
-				input,
-				description,
-				contentType,
-				output: event.result || "",
-				mode: "compact",
-				view: resolvedView,
-				section: "output"
-			})
-		}) : null]
+	const toolCallView = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ClientToolCall, {
+		id: `${eventNode.id}-tool-call`,
+		tool: name,
+		title: displayName,
+		functionCall,
+		input,
+		description,
+		contentType,
+		output: event.result ?? "",
+		error: showError ? event.error : void 0,
+		view: resolvedView
 	});
 	const toolLabel = toolLabels.messageLabels?.[event.id];
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventPanel, {
@@ -129190,12 +132083,6 @@ var ToolEventView = ({ eventNode, childNodes, className, context, eventCallbacks
 		})
 	});
 };
-function hasResultContent(result) {
-	if (result === null || result === void 0) return false;
-	if (typeof result === "string") return result.trim().length > 0;
-	if (Array.isArray(result)) return result.length > 0;
-	return true;
-}
 var TranscriptVirtualListComponent_module_default = {
 	node: "_node_t3xlr_1",
 	attached: "_attached_t3xlr_5",
@@ -129484,13 +132371,51 @@ var RenderedEventNodeInner = ({ node, next, className, context, onAutoCollapse, 
 		});
 		case "checkpoint": return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CheckpointEventView, {
 			eventNode: node,
-			className
+			className,
+			eventCallbacks
 		});
 		default: return null;
 	}
 };
 RenderedEventNodeInner.displayName = "RenderedEventNode";
 var RenderedEventNode = (0, import_react.memo)(RenderedEventNodeInner);
+//#endregion
+//#region ../../packages/inspect-components/src/transcript/transform/toolApprovals.ts
+function pairToolApprovals(eventNodes) {
+	const toolNodeIdsByCallId = /* @__PURE__ */ new Map();
+	const walkTools = (nodes) => {
+		for (const n of nodes) {
+			if (n.event.event === "tool" && !toolNodeIdsByCallId.has(n.event.id)) toolNodeIdsByCallId.set(n.event.id, n.id);
+			if (n.children.length) walkTools(n.children);
+		}
+	};
+	walkTools(eventNodes);
+	const toolApprovals = /* @__PURE__ */ new Map();
+	const hiddenApprovalIds = /* @__PURE__ */ new Set();
+	const approvalScrollRedirects = /* @__PURE__ */ new Map();
+	const walkApprovals = (nodes) => {
+		for (const n of nodes) {
+			if (n.event.event === "approval") {
+				const toolNodeId = toolNodeIdsByCallId.get(n.event.call.id);
+				if (n.event.approver === "auto" && n.event.decision === "approve") {
+					hiddenApprovalIds.add(n.id);
+					if (toolNodeId) approvalScrollRedirects.set(n.id, toolNodeId);
+				} else if (toolNodeId) {
+					toolApprovals.set(n.event.call.id, n);
+					hiddenApprovalIds.add(n.id);
+					approvalScrollRedirects.set(n.id, toolNodeId);
+				}
+			}
+			if (n.children.length) walkApprovals(n.children);
+		}
+	};
+	walkApprovals(eventNodes);
+	return {
+		toolApprovals,
+		hiddenApprovalIds,
+		approvalScrollRedirects
+	};
+}
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/TranscriptViewNodes.tsx
 /**
@@ -129509,26 +132434,6 @@ var kSettleStableFrames = 8;
 *  width — filters out the (also-sticky) outline / right-pane side panels. */
 var kStickyMinWidthRatio = .4;
 var escapeAttr = (id) => typeof CSS !== "undefined" && CSS.escape ? CSS.escape(id) : id.replace(/"/g, "\\\"");
-/**
-* Find the IDs of all ancestors of `eventId` in the EventNode tree.
-* Returns an empty array if `eventId` is not found.
-* Order: outermost ancestor first.
-*/
-function findAncestorIds(nodes, eventId) {
-	const path = [];
-	return walk(nodes, eventId, path) ? path : [];
-	function walk(nodes, target, path) {
-		for (const n of nodes) {
-			if (n.id === target) return true;
-			if (n.children.length > 0) {
-				path.push(n.id);
-				if (walk(n.children, target, path)) return true;
-				path.pop();
-			}
-		}
-		return false;
-	}
-}
 /** Worst-case bottom edge of the top-pinned sticky bar (relative to the
 *  scroll container's top), based on each sticky element's CSS `top` +
 *  measured height. Independent of current scroll state, so iterative
@@ -129602,7 +132507,7 @@ function scrollToEventTarget({ listHandle, index, container, targetSelector, get
 		if (frame !== null) cancelAnimationFrame(frame);
 	};
 }
-var TranscriptViewNodes = (0, import_react.forwardRef)(function TranscriptViewNodes({ id, eventNodes, defaultCollapsedIds, running, scrollRef, initialEventId, initialMessageId, offsetTop = 10, className, renderAgentCard, turnMap, getEventUrl, linkingEnabled, collapsedTranscript, collapsedOutline, onCollapseTranscript, eventNodeContext }, ref) {
+var TranscriptViewNodes = (0, import_react.forwardRef)(function TranscriptViewNodes({ id, eventNodes, defaultCollapsedIds, running, scrollRef, initialEventId, initialMessageId, offsetTop = 10, className, renderAgentCard, turnMap, getEventUrl, linkingEnabled, collapsedTranscript, collapsedOutline, onCollapseTranscript, onExpandNodes, eventNodeContext }, ref) {
 	const listHandle = (0, import_react.useRef)(null);
 	const getCollapsed = (0, import_react.useCallback)((nodeId) => {
 		return (collapsedTranscript || defaultCollapsedIds)[nodeId] === true;
@@ -129618,35 +132523,8 @@ var TranscriptViewNodes = (0, import_react.forwardRef)(function TranscriptViewNo
 		getEventUrl,
 		linkingEnabled
 	]);
-	const { toolApprovals, hiddenApprovalIds } = (0, import_react.useMemo)(() => {
-		const toolIds = /* @__PURE__ */ new Set();
-		const walkTools = (nodes) => {
-			for (const n of nodes) {
-				if (n.event.event === "tool") toolIds.add(n.event.id);
-				if (n.children.length) walkTools(n.children);
-			}
-		};
-		walkTools(eventNodes);
-		const approvals = /* @__PURE__ */ new Map();
-		const hidden = /* @__PURE__ */ new Set();
-		const walkApprovals = (nodes) => {
-			for (const n of nodes) {
-				if (n.event.event === "approval") {
-					if (n.event.approver === "auto" && n.event.decision === "approve") hidden.add(n.id);
-					else if (toolIds.has(n.event.call.id)) {
-						approvals.set(n.event.call.id, n);
-						hidden.add(n.id);
-					}
-				}
-				if (n.children.length) walkApprovals(n.children);
-			}
-		};
-		walkApprovals(eventNodes);
-		return {
-			toolApprovals: approvals,
-			hiddenApprovalIds: hidden
-		};
-	}, [eventNodes]);
+	const { toolApprovals, hiddenApprovalIds, approvalScrollRedirects } = (0, import_react.useMemo)(() => pairToolApprovals(eventNodes), [eventNodes]);
+	const scrollEventId = initialEventId ? approvalScrollRedirects.get(initialEventId) ?? initialEventId : initialEventId;
 	const flattenedNodes = (0, import_react.useMemo)(() => {
 		const all = flatTree(eventNodes, collapsedTranscript || defaultCollapsedIds);
 		return hiddenApprovalIds.size === 0 ? all : all.filter((n) => !hiddenApprovalIds.has(n.id));
@@ -129754,24 +132632,41 @@ var TranscriptViewNodes = (0, import_react.forwardRef)(function TranscriptViewNo
 		getFlattenedNodes: () => flattenedNodesLatest.current,
 		getVisibleRange: () => visibleRangeRef.current
 	}), [scrollToEvent, scrollToIndex]);
+	const expandedForTargetRef = (0, import_react.useRef)(null);
+	(0, import_react.useEffect)(() => {
+		if (!scrollEventId || !onExpandNodes) return;
+		if (expandedForTargetRef.current === scrollEventId) return;
+		if (flattenedNodes.some((n) => n.id === scrollEventId)) return;
+		const collapsedAncestors = findCollapsedAncestors(eventNodes, scrollEventId, collapsedTranscript ?? defaultCollapsedIds);
+		if (collapsedAncestors.length === 0) return;
+		expandedForTargetRef.current = scrollEventId;
+		onExpandNodes(collapsedAncestors);
+	}, [
+		scrollEventId,
+		onExpandNodes,
+		flattenedNodes,
+		eventNodes,
+		collapsedTranscript,
+		defaultCollapsedIds
+	]);
 	const lastScrolledKeyRef = (0, import_react.useRef)(null);
 	const offsetTopRef = (0, import_react.useRef)(offsetTop);
 	(0, import_react.useEffect)(() => {
 		offsetTopRef.current = offsetTop;
 	}, [offsetTop]);
 	(0, import_react.useEffect)(() => {
-		if (!initialEventId) {
+		if (!scrollEventId) {
 			lastScrolledKeyRef.current = null;
 			return;
 		}
-		const targetKey = `${initialEventId}:${initialMessageId ?? ""}`;
+		const targetKey = `${scrollEventId}:${initialMessageId ?? ""}`;
 		if (lastScrolledKeyRef.current === targetKey) return;
-		const idx = flattenedNodes.findIndex((n) => n.id === initialEventId);
+		const idx = flattenedNodes.findIndex((n) => n.id === scrollEventId);
 		if (idx === -1) return;
 		const container = scrollRef?.current;
 		if (!container) return;
 		lastScrolledKeyRef.current = targetKey;
-		const targetSelector = initialMessageId ? `[data-message-id="${escapeAttr(initialMessageId)}"]` : `[id="${escapeAttr(initialEventId)}"]`;
+		const targetSelector = initialMessageId ? `[data-message-id="${escapeAttr(initialMessageId)}"]` : `[id="${escapeAttr(scrollEventId)}"]`;
 		return scrollToEventTarget({
 			listHandle: listHandle.current,
 			index: idx,
@@ -129781,7 +132676,7 @@ var TranscriptViewNodes = (0, import_react.forwardRef)(function TranscriptViewNo
 			paddingBelowSticky: kPaddingBelowSticky
 		});
 	}, [
-		initialEventId,
+		scrollEventId,
 		initialMessageId,
 		flattenedNodes,
 		scrollRef
@@ -129803,7 +132698,7 @@ var TranscriptViewNodes = (0, import_react.forwardRef)(function TranscriptViewNo
 				running,
 				offsetTop,
 				className: clsx(className),
-				initialEventId,
+				initialEventId: scrollEventId,
 				renderAgentCard,
 				turnMap: computedTurnMap,
 				eventCallbacks,
@@ -129864,7 +132759,7 @@ var scopeMessageLabels = (events, messageLabels) => {
 	for (const [id, label] of Object.entries(messageLabels)) if (present.has(id)) scoped[id] = label;
 	return Object.keys(scoped).length > 0 ? scoped : void 0;
 };
-var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, offsetTop = 0, timelineSelection, activeTimeline, serverTimelines, markerConfig: markerConfigOverride, agentConfig: agentConfigOverride, showSwimlanes: showSwimlanesOption = "auto", onMarkerNavigate, onScrollToTop, headroomHidden, onHeadroomResetAnchor, onHeadroomSetHidden, listId, initialEventId, initialMessageId, eventsListRef, getEventUrl, linkingEnabled, bulkCollapse, collapseState, outline, outlineScrollRef, rightPane, rightPaneScrollRef, eventNodeContext, emptyText = "No events match the current filter", emptyBusy, className }) => {
+var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, offsetTop = 0, embedded = false, timelineSelection, activeTimeline, serverTimelines, markerConfig: markerConfigOverride, agentConfig: agentConfigOverride, showSwimlanes: showSwimlanesOption = "auto", onMarkerNavigate, onScrollToTop, headroomHidden, onHeadroomResetAnchor, onHeadroomSetHidden, listId, initialEventId, initialMessageId, eventsListRef, getEventUrl, linkingEnabled, bulkCollapse, collapseState, outline, outlineScrollRef, rightPane, rightPaneScrollRef, eventNodeContext, emptyText = "No events match the current filter", emptyBusy, className }) => {
 	const eventsForTimeline = (0, import_react.useMemo)(() => {
 		if (!hiddenEventTypes || hiddenEventTypes.length === 0) return events;
 		return events.filter((e) => e.event === "anchor" || !hiddenEventTypes.includes(e.event));
@@ -130010,9 +132905,27 @@ var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, 
 		timelineData.root
 	]);
 	const resolved = resolvedLocal ?? resolvedRoot;
+	const deepLinkTimelineIndex = (0, import_react.useMemo)(() => {
+		if (timelines.length <= 1) return -1;
+		if (initialEventId) {
+			const active = timelines[activeTimelineIndex];
+			if (!active || timelineContainsEvent(initialEventId, active)) return -1;
+			return findTimelineIndexForEvent(initialEventId, timelines);
+		}
+		if (initialMessageId && !resolvedLocal && !resolvedRoot) return findTimelineIndexForMessage(initialMessageId, timelines);
+		return -1;
+	}, [
+		initialEventId,
+		initialMessageId,
+		resolvedLocal,
+		resolvedRoot,
+		timelines,
+		activeTimelineIndex
+	]);
 	const prevMessageIdRef = (0, import_react.useRef)(void 0);
 	(0, import_react.useEffect)(() => {
 		if (prevMessageIdRef.current === initialMessageId) return;
+		if (deepLinkTimelineIndex >= 0) return;
 		prevMessageIdRef.current = initialMessageId;
 		if (!resolvedRoot) return;
 		let targetKey = null;
@@ -130022,7 +132935,58 @@ var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, 
 		timelineState.select(targetKey, { preserveDeepLink: true });
 	}, [
 		initialMessageId,
+		deepLinkTimelineIndex,
 		resolvedRoot,
+		spanSelectKeys,
+		timelineState
+	]);
+	const prevDeepLinkRef = (0, import_react.useRef)(null);
+	(0, import_react.useEffect)(() => {
+		if (timelines.length <= 1) return;
+		const key = initialEventId ?? initialMessageId ?? null;
+		if (key === null) {
+			prevDeepLinkRef.current = null;
+			return;
+		}
+		if (prevDeepLinkRef.current === key) return;
+		if (deepLinkTimelineIndex < 0) return;
+		prevDeepLinkRef.current = key;
+		if (deepLinkTimelineIndex === activeTimelineIndex) return;
+		setActiveTimeline(deepLinkTimelineIndex);
+	}, [
+		initialEventId,
+		initialMessageId,
+		deepLinkTimelineIndex,
+		activeTimelineIndex,
+		setActiveTimeline,
+		timelines.length
+	]);
+	const resolvedEventSpan = (0, import_react.useMemo)(() => {
+		if (!initialEventId || !showSwimlanes) return void 0;
+		if (eventsForNodes.some((e) => e.uuid === initialEventId)) return void 0;
+		return resolveEventToSpan(initialEventId, timelineData.root) ?? resolveEventInBranches(initialEventId, timelineData.root);
+	}, [
+		initialEventId,
+		showSwimlanes,
+		eventsForNodes,
+		timelineData.root
+	]);
+	const prevEventIdRef = (0, import_react.useRef)(void 0);
+	(0, import_react.useEffect)(() => {
+		if (prevEventIdRef.current === initialEventId) return;
+		if (deepLinkTimelineIndex >= 0) return;
+		prevEventIdRef.current = initialEventId;
+		if (!resolvedEventSpan) return;
+		let targetKey = null;
+		if (resolvedEventSpan.branchRowKey) targetKey = resolvedEventSpan.branchRowKey;
+		else if (resolvedEventSpan.agentSpanId) targetKey = spanSelectKeys.get(resolvedEventSpan.agentSpanId)?.key ?? null;
+		if (!targetKey) return;
+		if (timelineState.selected === targetKey) return;
+		timelineState.select(targetKey, { preserveDeepLink: true });
+	}, [
+		initialEventId,
+		deepLinkTimelineIndex,
+		resolvedEventSpan,
 		spanSelectKeys,
 		timelineState
 	]);
@@ -130057,6 +133021,16 @@ var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, 
 		else onCollapseTranscriptRaw(nodeId, collapsed);
 	}, [
 		onCollapseTranscriptRaw,
+		onSetTranscriptCollapsed,
+		collapseState?.transcript,
+		defaultCollapsedIds
+	]);
+	const onExpandNodes = (0, import_react.useCallback)((nodeIds) => {
+		if (!onSetTranscriptCollapsed) return;
+		const next = { ...collapseState?.transcript ?? defaultCollapsedIds };
+		for (const id of nodeIds) next[id] = false;
+		onSetTranscriptCollapsed(next);
+	}, [
 		onSetTranscriptCollapsed,
 		collapseState?.transcript,
 		defaultCollapsedIds
@@ -130221,7 +133195,7 @@ var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, 
 						})
 					})
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: clsx(TranscriptLayout_module_default.container, !outline && TranscriptLayout_module_default.noOutline, outline && isOutlineCollapsed && TranscriptLayout_module_default.outlineCollapsed, !rightPane && TranscriptLayout_module_default.noRightPane, rightPane && rightPane.collapsed && TranscriptLayout_module_default.rightPaneCollapsed),
+					className: clsx(TranscriptLayout_module_default.container, embedded && TranscriptLayout_module_default.embedded, !outline && TranscriptLayout_module_default.noOutline, outline && isOutlineCollapsed && TranscriptLayout_module_default.outlineCollapsed, !rightPane && TranscriptLayout_module_default.noRightPane, rightPane && rightPane.collapsed && TranscriptLayout_module_default.rightPaneCollapsed),
 					style: {
 						"--outline-top": `${effectiveOffsetTop}px`,
 						"--right-pane-width": `${rightPaneWidth}px`,
@@ -130298,6 +133272,7 @@ var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, 
 							collapsedTranscript: collapseState?.transcript,
 							collapsedOutline: collapseState?.outline,
 							onCollapseTranscript,
+							onExpandNodes: onSetTranscriptCollapsed ? onExpandNodes : void 0,
 							eventNodeContext: mergedEventNodeContext
 						}, effectiveListId) : emptyText !== null ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, {
 							text: emptyText,
@@ -130426,16 +133401,16 @@ var messagesFromEvents = (events, stateRef) => {
 	return state.lastResult;
 };
 var SampleDisplay_module_default = {
-	tabControls: "_tabControls_1jky3_7",
-	fullWidth: "_fullWidth_1jky3_16",
-	metadataPanel: "_metadataPanel_1jky3_20",
-	padded: "_padded_1jky3_26",
-	error: "_error_1jky3_31",
-	ansi: "_ansi_1jky3_35",
-	noTop: "_noTop_1jky3_39",
-	chat: "_chat_1jky3_43",
-	overflowVisible: "_overflowVisible_1jky3_51",
-	retriedErrors: "_retriedErrors_1jky3_55"
+	tabControls: "_tabControls_1o8ft_7",
+	fullWidth: "_fullWidth_1o8ft_16",
+	metadataPanel: "_metadataPanel_1o8ft_20",
+	padded: "_padded_1o8ft_26",
+	error: "_error_1o8ft_31",
+	ansi: "_ansi_1o8ft_35",
+	noTop: "_noTop_1o8ft_39",
+	chat: "_chat_1o8ft_43",
+	overflowVisible: "_overflowVisible_1o8ft_51",
+	retriedErrors: "_retriedErrors_1o8ft_55"
 };
 //#endregion
 //#region src/app/samples/SampleJSONView.tsx
@@ -130447,37 +133422,139 @@ var SampleJSONView = ({ sample, className }) => {
 		className
 	});
 };
-var SampleRetriedErrors_module_default = {
-	ansi: "_ansi_45i0c_1",
-	headerRow: "_headerRow_45i0c_6",
-	headerControls: "_headerControls_45i0c_13",
-	card: "_card_45i0c_20",
-	attemptDropdown: "_attemptDropdown_45i0c_24"
+//#endregion
+//#region src/app/samples/retry-display/retryAttempt.ts
+/**
+* Derive the exception class name (e.g. `RuntimeError`) from a Python
+* traceback's final line. `EvalRetryError` has no dedicated field for this.
+* Returns null when the final line doesn't look like `ExceptionClass[: message]`
+* so callers can omit the chip rather than render garbage.
+*/
+function deriveErrorType(retry) {
+	const tb = retry.traceback?.trimEnd();
+	if (!tb) return null;
+	const lines = tb.split("\n");
+	const last = lines[lines.length - 1]?.trim() ?? "";
+	if (!last) return null;
+	const beforeColon = last.split(":")[0]?.trim() ?? "";
+	if (!beforeColon) return null;
+	const cls = beforeColon.split(".").pop() ?? beforeColon;
+	return /^[A-Za-z_]\w*$/.test(cls) ? cls : null;
+}
+/**
+* Best-effort attempt duration in seconds, derived ONLY from the event
+* timestamps. `EvalRetryError` carries no top-level duration; never fabricate
+* one. Returns null when it can't be computed.
+*/
+function attemptDuration(retry) {
+	const events = retry.events;
+	if (!events || events.length === 0) return null;
+	const times = events.map((e) => "timestamp" in e ? e.timestamp : void 0).filter((t) => typeof t === "string").map((t) => Date.parse(t)).filter((n) => Number.isFinite(n));
+	if (times.length < 2) return null;
+	const span = (Math.max(...times) - Math.min(...times)) / 1e3;
+	return span >= 0 ? span : null;
+}
+var RetryAttemptCard_module_default = {
+	card: "_card_zuaa2_1",
+	cardCollapsed: "_cardCollapsed_zuaa2_11",
+	cardOpen: "_cardOpen_zuaa2_15",
+	header: "_header_zuaa2_19",
+	attemptLabel: "_attemptLabel_zuaa2_27",
+	errorChip: "_errorChip_zuaa2_34",
+	message: "_message_zuaa2_48",
+	headerRight: "_headerRight_zuaa2_59",
+	headerToggle: "_headerToggle_zuaa2_66",
+	duration: "_duration_zuaa2_70",
+	chevron: "_chevron_zuaa2_77",
+	body: "_body_zuaa2_84",
+	errorPanel: "_errorPanel_zuaa2_89",
+	ansi: "_ansi_zuaa2_93"
 };
 //#endregion
-//#region src/app/samples/SampleRetriedErrors.tsx
+//#region src/app/samples/retry-display/RetryAttemptCard.tsx
 var kViewSegments = [{
 	id: "error",
-	label: "Error"
+	label: "Error",
+	icon: "bi bi-exclamation-triangle"
 }, {
 	id: "events",
-	label: "Events"
+	label: "Events",
+	icon: "bi bi-list-ul"
 }];
-var SampleRetriedErrors = ({ id, retries, scrollRef }) => {
-	const [selectedIndex, setSelectedIndex] = (0, import_react.useState)(0);
-	const [view, setView] = (0, import_react.useState)("error");
-	const onSegmentChange = (0, import_react.useCallback)((segmentId) => {
-		setView(segmentId);
-	}, []);
-	const dropdownItems = (0, import_react.useMemo)(() => {
-		const items = {};
-		retries.forEach((_, index) => {
-			items[`Attempt ${index + 1}`] = () => setSelectedIndex(index);
-		});
-		return items;
-	}, [retries]);
-	const retry = retries[retries.length === 1 ? 0 : selectedIndex];
+var RetryAttemptCard = ({ retry, attemptNumber, isOpen, onToggleOpen, listId, scrollRef }) => {
+	const errorType = (0, import_react.useMemo)(() => deriveErrorType(retry), [retry]);
+	const durationSec = (0, import_react.useMemo)(() => attemptDuration(retry), [retry]);
 	const hasEvents = !!retry.events?.length;
+	const [view, setView] = (0, import_react.useState)("error");
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: clsx(RetryAttemptCard_module_default.card, isOpen ? RetryAttemptCard_module_default.cardOpen : RetryAttemptCard_module_default.cardCollapsed),
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: RetryAttemptCard_module_default.header,
+			role: "button",
+			tabIndex: 0,
+			"aria-expanded": isOpen,
+			onClick: onToggleOpen,
+			onKeyDown: (e) => {
+				if (e.key === "Enter" || e.key === " ") {
+					e.preventDefault();
+					onToggleOpen();
+				}
+			},
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+					className: RetryAttemptCard_module_default.attemptLabel,
+					children: `Attempt ${attemptNumber}`
+				}),
+				errorType && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+					className: RetryAttemptCard_module_default.errorChip,
+					children: errorType
+				}),
+				retry.message && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+					className: RetryAttemptCard_module_default.message,
+					children: retry.message
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: RetryAttemptCard_module_default.headerRight,
+					children: [
+						isOpen && hasEvents && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: RetryAttemptCard_module_default.headerToggle,
+							onClick: (e) => e.stopPropagation(),
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SegmentedControl, {
+								segments: kViewSegments,
+								selectedId: view,
+								onSegmentChange: (id) => setView(id)
+							})
+						}),
+						durationSec != null && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							className: RetryAttemptCard_module_default.duration,
+							children: formatTime$1(durationSec)
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", {
+							className: clsx("bi", isOpen ? "bi-chevron-down" : "bi-chevron-right", RetryAttemptCard_module_default.chevron),
+							"aria-hidden": "true"
+						})
+					]
+				})
+			]
+		}), isOpen && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: RetryAttemptCard_module_default.body,
+			children: view === "error" || !hasEvents ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
+				id: `retry-error-${listId}`,
+				collapse: true,
+				className: RetryAttemptCard_module_default.errorPanel,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ANSIDisplay, {
+					output: retry.traceback_ansi,
+					className: RetryAttemptCard_module_default.ansi
+				})
+			}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RetryEventsView, {
+				retry,
+				listId,
+				scrollRef
+			})
+		})]
+	});
+};
+var RetryEventsView = ({ retry, listId, scrollRef }) => {
 	const initialCollapsed = (0, import_react.useMemo)(() => {
 		const ids = {};
 		for (const event of retry.events || []) if ((event.event === "state" || event.event === "store") && event.uuid) ids[event.uuid] = true;
@@ -130500,41 +133577,97 @@ var SampleRetriedErrors = ({ id, retries, scrollRef }) => {
 			setBulkCollapse(void 0);
 		}
 	}), [effectiveCollapsed]);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Card, {
-		className: SampleRetriedErrors_module_default.card,
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardHeader, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: SampleRetriedErrors_module_default.headerRow,
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Retry Attempts" }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: SampleRetriedErrors_module_default.headerControls,
-				children: [retries.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolDropdownButton, {
-					label: `Attempt ${selectedIndex + 1}`,
-					items: dropdownItems,
-					className: clsx("text-size-smallest", SampleRetriedErrors_module_default.attemptDropdown),
-					dropdownClassName: "text-size-smallest"
-				}), hasEvents && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SegmentedControl, {
-					segments: kViewSegments,
-					selectedId: view,
-					onSegmentChange
-				})]
-			})]
-		}) }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardBody, { children: view === "error" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RetryTraceback, { retry }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: "text-size-small",
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptLayout, {
-				events: retry.events || [],
-				scrollRef,
-				listId: `sample-error-retries-${id}`,
-				showSwimlanes: false,
-				collapseState,
-				bulkCollapse,
-				eventNodeContext: { inlineExpansionUX: true }
-			})
-		}) })]
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: "text-size-small",
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptLayout, {
+			events: retry.events || [],
+			scrollRef,
+			listId,
+			embedded: true,
+			showSwimlanes: false,
+			collapseState,
+			bulkCollapse,
+			eventNodeContext: { inlineExpansionUX: true }
+		})
 	});
 };
-var RetryTraceback = ({ retry }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ANSIDisplay, {
-	output: retry.traceback_ansi,
-	className: SampleRetriedErrors_module_default.ansi
-});
+var RetryTerminalAnchor_module_default = {
+	row: "_row_iq6ks_1",
+	check: "_check_iq6ks_7",
+	copy: "_copy_iq6ks_23",
+	success: "_success_iq6ks_33",
+	detail: "_detail_iq6ks_40"
+};
+//#endregion
+//#region src/app/samples/retry-display/RetryTerminalAnchor.tsx
+var RetryTerminalAnchor = ({ retryCount }) => {
+	const retriesLabel = retryCount === 1 ? "1 retry" : `${retryCount} retries`;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: RetryTerminalAnchor_module_default.row,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+			className: RetryTerminalAnchor_module_default.check,
+			"aria-hidden": "true",
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: "bi bi-check" })
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: RetryTerminalAnchor_module_default.copy,
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: RetryTerminalAnchor_module_default.success,
+				children: "This run succeeded"
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: RetryTerminalAnchor_module_default.detail,
+				children: `after ${retriesLabel}`
+			})]
+		})]
+	});
+};
+var SampleRetriedErrors_module_default = {
+	panel: "_panel_1n9ws_1",
+	sectionLabel: "_sectionLabel_1n9ws_5",
+	timeline: "_timeline_1n9ws_14",
+	rail: "_rail_1n9ws_19",
+	items: "_items_1n9ws_28",
+	row: "_row_1n9ws_34",
+	dotGutter: "_dotGutter_1n9ws_41",
+	statusIcon: "_statusIcon_1n9ws_49"
+};
+//#endregion
+//#region src/app/samples/SampleRetriedErrors.tsx
+var SampleRetriedErrors = ({ id, retries, scrollRef }) => {
+	const [expandedIndex, setExpandedIndex] = (0, import_react.useState)(retries.length - 1);
+	const onToggleOpen = (index) => {
+		setExpandedIndex((cur) => cur === index ? null : index);
+	};
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: SampleRetriedErrors_module_default.panel,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: SampleRetriedErrors_module_default.sectionLabel,
+			children: "Retry Attempts"
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: SampleRetriedErrors_module_default.timeline,
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: SampleRetriedErrors_module_default.rail,
+				"aria-hidden": "true"
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: SampleRetriedErrors_module_default.items,
+				children: [retries.map((retry, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: SampleRetriedErrors_module_default.row,
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: SampleRetriedErrors_module_default.dotGutter,
+						"aria-hidden": "true",
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(ApplicationIcons.error, SampleRetriedErrors_module_default.statusIcon) })
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RetryAttemptCard, {
+						retry,
+						attemptNumber: index + 1,
+						isOpen: expandedIndex === index,
+						onToggleOpen: () => onToggleOpen(index),
+						listId: `sample-error-retries-${id}-${index}`,
+						scrollRef
+					})]
+				}, index)), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RetryTerminalAnchor, { retryCount: retries.length })]
+			})]
+		})]
+	});
+};
 //#endregion
 //#region src/utils/evalModel.ts
 /**
@@ -130761,8 +133894,7 @@ var SampleErrorView_module_default = {
 /**
 * Component to display a styled error message.
 */
-var SampleErrorView = ({ message, align }) => {
-	align = align || "center";
+var SampleErrorView = ({ message }) => {
 	const type = errorType(message);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: clsx(SampleErrorView_module_default.body, isCanceledError(type) ? SampleErrorView_module_default.safe : void 0),
@@ -131067,19 +134199,21 @@ function useResolvedSamplesView() {
 function useSamplesViewMultiline() {
 	return useResolvedSamplesView().multiline;
 }
+var kNoScoreLabels = Object.freeze({});
+var kNoScoreColorScales = Object.freeze({});
 /** Eval-author-supplied score-label overrides. Read straight from
 *  the wire (no persistence) so a user's stored view from a prior
 *  eval can't shadow the current eval's labels. Returns an empty
 *  object when no overrides are present. */
 function useSamplesViewScoreLabels() {
-	return useEvalDefaultSamplesView()?.score_labels ?? {};
+	return useEvalDefaultSamplesView()?.score_labels ?? kNoScoreLabels;
 }
 /** Eval-author-supplied score-cell colour scales. Same wire-only
 *  access pattern as `useSamplesViewScoreLabels` — never lifted into
 *  the persisted runtime state, so colour scales from a prior eval
 *  can't bleed into the current one. */
 function useSamplesViewScoreColorScales() {
-	return useEvalDefaultSamplesView()?.score_color_scales ?? {};
+	return useEvalDefaultSamplesView()?.score_color_scales ?? kNoScoreColorScales;
 }
 /** Resolved `colorScalesEnabled` — same access pattern as the
 *  multiline companion above. Read in `SamplesTab` so the columns
@@ -131713,6 +134847,7 @@ var resolveSample = (sample, sampleDescriptor) => {
 		answer,
 		limit,
 		retries,
+		model_fallbacks: sample.model_fallbacks,
 		working_time,
 		total_time,
 		error,
@@ -131773,9 +134908,11 @@ var SampleSummaryView = ({ parent_id, sample, collapsed = false }) => {
 		key: "task",
 		content: taskName
 	});
-	if (modelText) metaItems.push({
+	const fallbackModels = [...new Set((fields.model_fallbacks ?? []).map((f) => f.fallback_model))];
+	if (modelText || fallbackModels.length > 0) metaItems.push({
 		key: "model",
-		content: modelText
+		content: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [modelText, fallbackModels.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("em", { children: ` (fallback → ${fallbackModels.join(", ")})` })] }),
+		title: fallbackModels.length > 0 ? "Requests refused by the requested model were served by a fallback model" : void 0
 	});
 	if (fields.total_time) metaItems.push({
 		key: "time",
@@ -131973,7 +135110,7 @@ var SampleScoresGrid = ({ evalSample, className, scrollRef }) => {
 				const scoreData = evalSample.scores[scorer];
 				const explanation = scoreData.explanation || "(No Explanation)";
 				const answer = scoreData.answer;
-				let metadata = scoreData.metadata || {};
+				const metadata = scoreData.metadata || {};
 				return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 						className: clsx("text-size-base", SampleScoresGrid_module_default.cell),
@@ -134292,13 +137429,15 @@ var MetadataValue = ({ id, value, references, options }) => {
 				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
 					id: `metadata-${id}`,
 					record,
-					useBorders: false
+					useBorders: false,
+					copyButton: true
 				});
 			}
 			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
 				id: `metadata-${id}`,
 				record: value,
-				useBorders: false
+				useBorders: false,
+				copyButton: true
 			});
 		default: return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: String(value) });
 	}
@@ -135146,7 +138285,7 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 	const setShowing = useStore((state) => state.appActions.setShowingTranscriptFilterDialog);
 	const displayMode = useStore((state) => state.app.displayMode);
 	const setDisplayMode = useStore((state) => state.appActions.setDisplayMode);
-	const filterRef = (0, import_react.useRef)(null);
+	const [filterButtonEl, setFilterButtonEl] = (0, import_react.useState)(null);
 	const optionsRef = (0, import_react.useRef)(null);
 	const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
 	const selectedSampleHandle = useStore((state) => state.log.selectedSampleHandle);
@@ -135261,7 +138400,7 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 			label: `Events: ${label}`,
 			icon: ApplicationIcons.filter,
 			onClick: toggleFilter,
-			ref: filterRef,
+			ref: setFilterButtonEl,
 			subtle: true
 		}, "sample-filter-transcript"));
 		tools.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolButton, {
@@ -135362,7 +138501,7 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptFilterPopover, {
 								showing: isShowing,
 								setShowing,
-								positionEl: filterRef.current
+								positionEl: filterButtonEl
 							}), !sampleEvents || sampleEvents.length === 0 ? sampleData.status === "loading" ? null : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, { text: eventsCleared ? "Transcript events were removed because this sample exceeds the browser's size limit. Use the Messages tab to view the conversation." : "No events to display." }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptPanel, {
 								id: `${baseId}-transcript-display-${id}`,
 								scrollRef,
@@ -135462,7 +138601,7 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 									id: sample.uuid || String(sample.id),
 									retries: sample.error_retries,
 									scrollRef
-								})
+								}, sample.uuid || String(sample.id))
 							})
 						}) : null,
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabPanel, {
@@ -135563,7 +138702,8 @@ var metadataViewsForSample = (id, scrollRef, sample) => {
 				id: `task-sample-invalidation-${id}`,
 				record: invalidationRecord,
 				className: clsx("tab-pane", SampleDisplay_module_default.noTop),
-				scrollRef
+				scrollRef,
+				copyButton: true
 			})
 		})] }, `sample-invalidation-${id}`));
 	}
@@ -135573,7 +138713,8 @@ var metadataViewsForSample = (id, scrollRef, sample) => {
 			id: `task-sample-metadata-${id}`,
 			record: sample?.metadata,
 			className: clsx("tab-pane", SampleDisplay_module_default.noTop),
-			scrollRef
+			scrollRef,
+			copyButton: true
 		})
 	})] }, `sample-metadata-${id}`));
 	if (Object.keys(sample?.store).length > 0) sampleMetadatas.push(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Card, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardHeader, { label: "Store" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardBody, {
@@ -135583,7 +138724,8 @@ var metadataViewsForSample = (id, scrollRef, sample) => {
 			record: sample?.store,
 			className: clsx("tab-pane", SampleDisplay_module_default.noTop),
 			scrollRef,
-			processStore: true
+			processStore: true,
+			copyButton: true
 		})
 	})] }, `sample-store-${id}`));
 	return sampleMetadatas;
@@ -136414,7 +139556,7 @@ function serverRequestApi(baseUrl, getHeaders) {
 	function isApiCrossOrigin() {
 		try {
 			return Boolean(apiUrl && new URL(apiUrl).origin !== window.location.origin);
-		} catch (error) {
+		} catch {
 			return false;
 		}
 	}
@@ -136661,17 +139803,29 @@ var EditMetadataDialog = ({ showing, setShowing, currentMetadata, logFile, onSav
 	const [reason, setReason] = (0, import_react.useState)("");
 	const [submitting, setSubmitting] = (0, import_react.useState)(false);
 	const [error, setError] = (0, import_react.useState)();
-	const [pendingFocusKey, setPendingFocusKey] = (0, import_react.useState)(null);
+	const pendingFocusKeyRef = (0, import_react.useRef)(null);
+	const [prevReset, setPrevReset] = (0, import_react.useState)({
+		showing,
+		initialEntries
+	});
+	if (prevReset.showing !== showing || prevReset.initialEntries !== initialEntries) {
+		setPrevReset({
+			showing,
+			initialEntries
+		});
+		if (showing) {
+			setEntries(initialEntries);
+			setRemoved([]);
+			setNewKey("");
+			setNewType("string");
+			setAuthor("");
+			setReason("");
+			setSubmitting(false);
+			setError(void 0);
+		}
+	}
 	(0, import_react.useEffect)(() => {
 		if (!showing) return;
-		setEntries(initialEntries);
-		setRemoved([]);
-		setNewKey("");
-		setNewType("string");
-		setAuthor("");
-		setReason("");
-		setSubmitting(false);
-		setError(void 0);
 		let cancelled = false;
 		if (api?.get_user_info) api.get_user_info().then((info) => {
 			if (!cancelled && info.name) setAuthor((current) => current || info.name || "");
@@ -136720,10 +139874,12 @@ var EditMetadataDialog = ({ showing, setShowing, currentMetadata, logFile, onSav
 		}]);
 		setNewKey("");
 		setNewType("string");
-		setPendingFocusKey(k);
+		pendingFocusKeyRef.current = k;
 	};
 	(0, import_react.useEffect)(() => {
+		const pendingFocusKey = pendingFocusKeyRef.current;
 		if (pendingFocusKey == null) return;
+		pendingFocusKeyRef.current = null;
 		const selector = `[data-meta-key="${CSS.escape(pendingFocusKey)}"]`;
 		const textarea = document.querySelector(selector)?.querySelector("textarea");
 		if (textarea) {
@@ -136733,8 +139889,7 @@ var EditMetadataDialog = ({ showing, setShowing, currentMetadata, logFile, onSav
 			});
 			textarea.focus();
 		}
-		setPendingFocusKey(null);
-	}, [pendingFocusKey]);
+	}, [entries]);
 	const handleNewKeyDown = (e) => {
 		if (e.key === "Enter") {
 			e.preventDefault();
@@ -137127,7 +140282,8 @@ var PlanCard = ({ evalSpec, evalPlan, scores, metadata: metadataProp, scrollRef 
 			children: hasMetadata ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
 				id: "plan-md-metadata",
 				record: metadata,
-				scrollRef
+				scrollRef,
+				copyButton: true
 			}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: clsx("text-size-smaller", PlanCard_module_default.emptyMetadata),
 				children: "No metadata — click Edit to add a key."
@@ -137387,6 +140543,10 @@ var kGridModeRowHeight = 30;
 var kDefaultHeaderHeight = 25;
 var kRotatedHeaderHeight = 115;
 var rowHeightForMode = (mode) => mode === "list" ? kListModeRowHeight : kGridModeRowHeight;
+var kRowSelection = {
+	mode: "singleRow",
+	checkboxes: false
+};
 var makeKeyboardHandler = (gridRef, onRowOpen) => createGridKeyboardHandler({
 	gridRef,
 	onOpenRow: (rowNode, e) => {
@@ -137401,19 +140561,22 @@ var makeKeyboardHandler = (gridRef, onRowOpen) => createGridKeyboardHandler({
 });
 var SamplesGrid = (props) => {
 	const { rowData, columnDefs, columnVisibility, defaultColDef, viewMode, rowHeight, multiline, getRowId, selectedRowId, onRowOpen, followOutput = false, scrollRef, onFirstDataRendered, initialState, onStateUpdated, onFilterChanged, loading, autoSizeStrategy, refitOnSizeChange = false, gridRef: externalGridRef, className } = props;
-	const internalGridRef = (0, import_react.useRef)(null);
-	const gridRef = externalGridRef ?? internalGridRef;
+	const gridRef = (0, import_react.useRef)(null);
+	const attachGridRef = (0, import_react.useCallback)((instance) => {
+		gridRef.current = instance;
+		if (externalGridRef) externalGridRef.current = instance;
+	}, [externalGridRef]);
 	const gridContainerRef = (0, import_react.useRef)(null);
 	(0, import_react.useEffect)(() => {
 		gridContainerRef.current?.focus();
 	}, []);
-	const handleKeyDown = (0, import_react.useMemo)(() => makeKeyboardHandler(gridRef, onRowOpen), [gridRef, onRowOpen]);
 	(0, import_react.useEffect)(() => {
 		const el = gridContainerRef.current;
 		if (!el) return;
+		const handleKeyDown = makeKeyboardHandler(gridRef, onRowOpen);
 		el.addEventListener("keydown", handleKeyDown);
 		return () => el.removeEventListener("keydown", handleKeyDown);
-	}, [handleKeyDown]);
+	}, [onRowOpen]);
 	const handleRowClick = (0, import_react.useCallback)((e) => {
 		if (!e.data || !e.node || !gridRef.current?.api) return;
 		gridRef.current.api.deselectAll();
@@ -137424,7 +140587,7 @@ var SamplesGrid = (props) => {
 			newWindow,
 			via: "click"
 		});
-	}, [gridRef, onRowOpen]);
+	}, [onRowOpen]);
 	const handleCellMouseDown = (0, import_react.useCallback)((e) => {
 		const me = e.event;
 		if (me?.button === 1 && e.data) {
@@ -137443,7 +140606,7 @@ var SamplesGrid = (props) => {
 			node.setSelected(true);
 			gridRef.current.api.ensureNodeVisible(node, "middle");
 		}
-	}, [gridRef, selectedRowId]);
+	}, [selectedRowId]);
 	(0, import_react.useEffect)(() => {
 		selectExternalRow();
 	}, [selectExternalRow]);
@@ -137455,11 +140618,7 @@ var SamplesGrid = (props) => {
 	(0, import_react.useEffect)(() => {
 		if (followOutput && followingRef.current && rowData.length > prevCountRef.current && gridRef.current?.api) gridRef.current.api.ensureIndexVisible(rowData.length - 1, "bottom");
 		prevCountRef.current = rowData.length;
-	}, [
-		rowData.length,
-		followOutput,
-		gridRef
-	]);
+	}, [rowData.length, followOutput]);
 	const prevFollowRef = (0, import_react.useRef)(followOutput);
 	(0, import_react.useEffect)(() => {
 		if (!followOutput && prevFollowRef.current && gridRef.current?.api) {
@@ -137469,7 +140628,7 @@ var SamplesGrid = (props) => {
 			}, 100);
 		}
 		prevFollowRef.current = followOutput;
-	}, [followOutput, gridRef]);
+	}, [followOutput]);
 	const effectiveRowHeight = rowHeight ?? (multiline !== void 0 ? multiline ? kListModeRowHeight : kGridModeRowHeight : rowHeightForMode(viewMode));
 	const handleBodyScroll = (0, import_react.useCallback)(() => {
 		if (!followOutput || !gridRef.current?.api) return;
@@ -137478,11 +140637,7 @@ var SamplesGrid = (props) => {
 		const totalH = api.getDisplayedRowCount() * effectiveRowHeight;
 		const viewportH = v.bottom - v.top;
 		followingRef.current = v.bottom >= totalH - viewportH * .1;
-	}, [
-		followOutput,
-		gridRef,
-		effectiveRowHeight
-	]);
+	}, [followOutput, effectiveRowHeight]);
 	const applyVisibility = useApplyColumnVisibility(gridRef, columnDefs, columnVisibility);
 	const headerHeight = (0, import_react.useMemo)(() => columnDefs.some((c) => c.headerClass === SamplesGrid_module_default.rotatedHeader) ? kRotatedHeaderHeight : kDefaultHeaderHeight, [columnDefs]);
 	const mergedInitialState = (0, import_react.useMemo)(() => {
@@ -137499,8 +140654,12 @@ var SamplesGrid = (props) => {
 	}, [onStateUpdated]);
 	const handleFilterChanged = (0, import_react.useCallback)(() => {
 		if (gridRef.current?.api) onFilterChanged?.(gridRef.current.api);
-	}, [gridRef, onFilterChanged]);
-	const refitColumns = (0, import_react.useRef)(createGridColumnResizer(gridRef)).current;
+	}, [onFilterChanged]);
+	const resizerRef = (0, import_react.useRef)(null);
+	const refitColumns = (0, import_react.useCallback)(() => {
+		resizerRef.current ??= createGridColumnResizer(gridRef);
+		resizerRef.current();
+	}, []);
 	const maxColCount = (0, import_react.useRef)(0);
 	const handleGridColumnsChanged = (0, import_react.useCallback)((e) => {
 		if (!refitOnSizeChange) return;
@@ -137532,7 +140691,6 @@ var SamplesGrid = (props) => {
 		followOutput,
 		rowData.length,
 		selectExternalRow,
-		gridRef,
 		onFirstDataRendered
 	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -137542,7 +140700,7 @@ var SamplesGrid = (props) => {
 			className: clsx(SamplesGrid_module_default.gridContainer, SamplesGrid_module_default.gridChrome, (multiline !== void 0 ? multiline : viewMode === "list") ? SamplesGrid_module_default.listMode : SamplesGrid_module_default.gridMode),
 			tabIndex: 0,
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AgGridReact, {
-				ref: gridRef,
+				ref: attachGridRef,
 				rowData,
 				columnDefs,
 				defaultColDef,
@@ -137554,10 +140712,7 @@ var SamplesGrid = (props) => {
 				headerHeight,
 				rowHeight: effectiveRowHeight,
 				getRowId,
-				rowSelection: {
-					mode: "singleRow",
-					checkboxes: false
-				},
+				rowSelection: kRowSelection,
 				enableCellTextSelection: true,
 				suppressCellFocus: true,
 				domLayout: "normal",
@@ -137615,6 +140770,12 @@ var SampleList_module_default = {
 //#endregion
 //#region src/app/samples/list/SampleList.tsx
 var makeSampleRowId = (id, epoch) => `${id}-${epoch}`.replace(/\s+/g, "_");
+var kDefaultColDef = {
+	sortable: true,
+	filter: true,
+	resizable: true,
+	headerTooltipValueGetter: (params) => params.colDef?.headerName
+};
 var SampleList = (0, import_react.memo)((props) => {
 	const { items, columns, columnVisibility, earlyStopping, totalItemCount, running, className, listHandle, scrollRef, gridState, onGridStateChange, onFilterChanged, multiline } = props;
 	(0, import_react.useEffect)(() => {
@@ -137678,12 +140839,7 @@ var SampleList = (0, import_react.memo)((props) => {
 				rowData: items,
 				columnDefs: columns,
 				columnVisibility,
-				defaultColDef: {
-					sortable: true,
-					filter: true,
-					resizable: true,
-					headerTooltipValueGetter: (params) => params.colDef?.headerName
-				},
+				defaultColDef: kDefaultColDef,
 				viewMode: "list",
 				multiline,
 				gridRef: listHandle,
@@ -138145,7 +141301,7 @@ var TextNode = class TextNode extends Text {
 		return chunked.length == 1 ? chunked[0] : new TextNode(chunked, length);
 	}
 };
-Text.empty = /* @__PURE__ */ new TextLeaf([""], 0);
+Text.empty = /*@__PURE__*/ new TextLeaf([""], 0);
 function textLength(text) {
 	let length = -1;
 	for (let line of text) length += line.length + 1;
@@ -138376,7 +141532,7 @@ var DefaultSplit = /\r\n?|\n/;
 /**
 Distinguishes different ways in which positions can be mapped.
 */
-var MapMode = /* @__PURE__ */ (function(MapMode) {
+var MapMode = /*@__PURE__*/ (function(MapMode) {
 	/**
 	Map a position to a valid new position, even when its context
 	was deleted.
@@ -139337,7 +142493,7 @@ function dynamicFacetSlot(addresses, facet, providers) {
 		}
 	};
 }
-var initField = /* @__PURE__ */ Facet.define({ static: true });
+var initField = /*@__PURE__*/ Facet.define({ static: true });
 /**
 Fields can store additional information in an editor state, and
 keep it in sync with the rest of the state.
@@ -139443,26 +142599,26 @@ var Prec = {
 	The highest precedence level, for extensions that should end up
 	near the start of the precedence ordering.
 	*/
-	highest: /* @__PURE__ */ prec(Prec_.highest),
+	highest: /*@__PURE__*/ prec(Prec_.highest),
 	/**
 	A higher-than-default precedence, for extensions that should
 	come before those with default precedence.
 	*/
-	high: /* @__PURE__ */ prec(Prec_.high),
+	high: /*@__PURE__*/ prec(Prec_.high),
 	/**
 	The default precedence, which is also used for extensions
 	without an explicit precedence.
 	*/
-	default: /* @__PURE__ */ prec(Prec_.default),
+	default: /*@__PURE__*/ prec(Prec_.default),
 	/**
 	A lower-than-default precedence.
 	*/
-	low: /* @__PURE__ */ prec(Prec_.low),
+	low: /*@__PURE__*/ prec(Prec_.low),
 	/**
 	The lowest precedence level. Meant for things that should end up
 	near the end of the extension order.
 	*/
-	lowest: /* @__PURE__ */ prec(Prec_.lowest)
+	lowest: /*@__PURE__*/ prec(Prec_.lowest)
 };
 var PrecExtension = class {
 	constructor(inner, prec) {
@@ -139616,19 +142772,19 @@ function ensureAddr(state, addr) {
 function getAddr(state, addr) {
 	return addr & 1 ? state.config.staticValues[addr >> 1] : state.values[addr >> 1];
 }
-var languageData = /* @__PURE__ */ Facet.define();
-var allowMultipleSelections = /* @__PURE__ */ Facet.define({
+var languageData = /*@__PURE__*/ Facet.define();
+var allowMultipleSelections = /*@__PURE__*/ Facet.define({
 	combine: (values) => values.some((v) => v),
 	static: true
 });
-var lineSeparator = /* @__PURE__ */ Facet.define({
+var lineSeparator = /*@__PURE__*/ Facet.define({
 	combine: (values) => values.length ? values[0] : void 0,
 	static: true
 });
-var changeFilter = /* @__PURE__ */ Facet.define();
-var transactionFilter = /* @__PURE__ */ Facet.define();
-var transactionExtender = /* @__PURE__ */ Facet.define();
-var readOnly = /* @__PURE__ */ Facet.define({ combine: (values) => values.length ? values[0] : false });
+var changeFilter = /*@__PURE__*/ Facet.define();
+var transactionFilter = /*@__PURE__*/ Facet.define();
+var transactionExtender = /*@__PURE__*/ Facet.define();
+var readOnly = /*@__PURE__*/ Facet.define({ combine: (values) => values.length ? values[0] : false });
 /**
 Annotations are tagged values that are used to add metadata to
 transactions in an extensible way. They should be used to model
@@ -139743,11 +142899,11 @@ the editor. Doing this will discard any extensions
 the content of [reconfigured](https://codemirror.net/6/docs/ref/#state.Compartment.reconfigure)
 compartments.
 */
-StateEffect.reconfigure = /* @__PURE__ */ StateEffect.define();
+StateEffect.reconfigure = /*@__PURE__*/ StateEffect.define();
 /**
 Append extensions to the top-level configuration of the editor.
 */
-StateEffect.appendConfig = /* @__PURE__ */ StateEffect.define();
+StateEffect.appendConfig = /*@__PURE__*/ StateEffect.define();
 /**
 Changes to the editor state are grouped into transactions.
 Typically, a user action creates a single transaction, which may
@@ -139849,7 +143005,7 @@ var Transaction = class Transaction {
 Annotation used to store transaction timestamps. Automatically
 added to every transaction, holding `Date.now()`.
 */
-Transaction.time = /* @__PURE__ */ Annotation.define();
+Transaction.time = /*@__PURE__*/ Annotation.define();
 /**
 Annotation used to associate a transaction with a user interface
 event. Holds a string identifying the event, using a
@@ -139876,19 +143032,19 @@ information. The events used by the core libraries are:
 Use [`isUserEvent`](https://codemirror.net/6/docs/ref/#state.Transaction.isUserEvent) to check
 whether the annotation matches a given event.
 */
-Transaction.userEvent = /* @__PURE__ */ Annotation.define();
+Transaction.userEvent = /*@__PURE__*/ Annotation.define();
 /**
 Annotation indicating whether a transaction should be added to
 the undo history or not.
 */
-Transaction.addToHistory = /* @__PURE__ */ Annotation.define();
+Transaction.addToHistory = /*@__PURE__*/ Annotation.define();
 /**
 Annotation indicating (when present and true) that a transaction
 represents a change made by some other actor, not the user. This
 is used, for example, to tag other people's changes in
 collaborative editing.
 */
-Transaction.remote = /* @__PURE__ */ Annotation.define();
+Transaction.remote = /*@__PURE__*/ Annotation.define();
 function joinRanges(a, b) {
 	let result = [];
 	for (let iA = 0, iB = 0;;) {
@@ -139995,7 +143151,7 @@ The categories produced by a [character
 categorizer](https://codemirror.net/6/docs/ref/#state.EditorState.charCategorizer). These are used
 do things like selecting by word.
 */
-var CharCategory = /* @__PURE__ */ (function(CharCategory) {
+var CharCategory = /*@__PURE__*/ (function(CharCategory) {
 	/**
 	Word characters.
 	*/
@@ -140013,7 +143169,7 @@ var CharCategory = /* @__PURE__ */ (function(CharCategory) {
 var nonASCIISingleCaseWordChar = /[\u00df\u0587\u0590-\u05f4\u0600-\u06ff\u3040-\u309f\u30a0-\u30ff\u3400-\u4db5\u4e00-\u9fcc\uac00-\ud7af]/;
 var wordChar;
 try {
-	wordChar = /* @__PURE__ */ new RegExp("[\\p{Alphabetic}\\p{Number}_]", "u");
+	wordChar = /*@__PURE__*/ new RegExp("[\\p{Alphabetic}\\p{Number}_]", "u");
 } catch (_) {}
 function hasWordChar(str) {
 	if (wordChar) return wordChar.test(str);
@@ -140351,7 +143507,7 @@ Configures the tab size to use in this state. The first
 (highest-precedence) value of the facet is used. If no value is
 given, this defaults to 4.
 */
-EditorState.tabSize = /* @__PURE__ */ Facet.define({ combine: (values) => values.length ? values[0] : 4 });
+EditorState.tabSize = /*@__PURE__*/ Facet.define({ combine: (values) => values.length ? values[0] : 4 });
 /**
 The line separator to use. By default, any of `"\n"`, `"\r\n"`
 and `"\r"` is treated as a separator when splitting lines, and
@@ -140382,7 +143538,7 @@ Registers translation phrases. The
 all objects registered with this facet to find translations for
 its argument.
 */
-EditorState.phrases = /* @__PURE__ */ Facet.define({ compare(a, b) {
+EditorState.phrases = /*@__PURE__*/ Facet.define({ compare(a, b) {
 	let kA = Object.keys(a), kB = Object.keys(b);
 	return kA.length == kB.length && kA.every((k) => a[k] == b[k]);
 } });
@@ -140440,7 +143596,7 @@ but do want to process every transaction.
 Extenders run _after_ filters, when both are present.
 */
 EditorState.transactionExtender = transactionExtender;
-Compartment.reconfigure = /* @__PURE__ */ StateEffect.define();
+Compartment.reconfigure = /*@__PURE__*/ StateEffect.define();
 /**
 Utility function for combining behaviors to fill in a config
 object from an array of provided configs. `defaults` should hold
@@ -140780,7 +143936,7 @@ var RangeSet = class RangeSet {
 /**
 The empty set of ranges.
 */
-RangeSet.empty = /* @__PURE__ */ new RangeSet([], [], null, -1);
+RangeSet.empty = /*@__PURE__*/ new RangeSet([], [], null, -1);
 function lazySort(ranges) {
 	if (ranges.length > 1) for (let prev = ranges[0], i = 1; i < ranges.length; i++) {
 		let cur = ranges[i];
@@ -141414,31 +144570,31 @@ var nav = typeof navigator != "undefined" ? navigator : {
 	platform: ""
 };
 var doc = typeof document != "undefined" ? document : { documentElement: { style: {} } };
-var ie_edge = /* @__PURE__ */ /Edge\/(\d+)/.exec(nav.userAgent);
-var ie_upto10 = /* @__PURE__ */ /MSIE \d/.test(nav.userAgent);
-var ie_11up = /* @__PURE__ */ /Trident\/(?:[7-9]|\d{2,})\..*rv:(\d+)/.exec(nav.userAgent);
+var ie_edge = /*@__PURE__*/ /Edge\/(\d+)/.exec(nav.userAgent);
+var ie_upto10 = /*@__PURE__*/ /MSIE \d/.test(nav.userAgent);
+var ie_11up = /*@__PURE__*/ /Trident\/(?:[7-9]|\d{2,})\..*rv:(\d+)/.exec(nav.userAgent);
 var ie = !!(ie_upto10 || ie_11up || ie_edge);
-var gecko = !ie && /* @__PURE__ */ /gecko\/(\d+)/i.test(nav.userAgent);
-var chrome = !ie && /* @__PURE__ */ /Chrome\/(\d+)/.exec(nav.userAgent);
+var gecko = !ie && /*@__PURE__*/ /gecko\/(\d+)/i.test(nav.userAgent);
+var chrome = !ie && /*@__PURE__*/ /Chrome\/(\d+)/.exec(nav.userAgent);
 var webkit = "webkitFontSmoothing" in doc.documentElement.style;
-var safari = !ie && /* @__PURE__ */ /Apple Computer/.test(nav.vendor);
-var ios = safari && (/* @__PURE__ */ /Mobile\/\w+/.test(nav.userAgent) || nav.maxTouchPoints > 2);
+var safari = !ie && /*@__PURE__*/ /Apple Computer/.test(nav.vendor);
+var ios = safari && (/*@__PURE__*/ /Mobile\/\w+/.test(nav.userAgent) || nav.maxTouchPoints > 2);
 var browser = {
-	mac: ios || /* @__PURE__ */ /Mac/.test(nav.platform),
-	windows: /* @__PURE__ */ /Win/.test(nav.platform),
-	linux: /* @__PURE__ */ /Linux|X11/.test(nav.platform),
+	mac: ios || /*@__PURE__*/ /Mac/.test(nav.platform),
+	windows: /*@__PURE__*/ /Win/.test(nav.platform),
+	linux: /*@__PURE__*/ /Linux|X11/.test(nav.platform),
 	ie,
 	ie_version: ie_upto10 ? doc.documentMode || 6 : ie_11up ? +ie_11up[1] : ie_edge ? +ie_edge[1] : 0,
 	gecko,
-	gecko_version: gecko ? +(/* @__PURE__ */ /Firefox\/(\d+)/.exec(nav.userAgent) || [0, 0])[1] : 0,
+	gecko_version: gecko ? +(/*@__PURE__*/ /Firefox\/(\d+)/.exec(nav.userAgent) || [0, 0])[1] : 0,
 	chrome: !!chrome,
 	chrome_version: chrome ? +chrome[1] : 0,
 	ios,
-	android: /* @__PURE__ */ /Android\b/.test(nav.userAgent),
+	android: /*@__PURE__*/ /Android\b/.test(nav.userAgent),
 	webkit,
-	webkit_version: webkit ? +(/* @__PURE__ */ /\bAppleWebKit\/(\d+)/.exec(nav.userAgent) || [0, 0])[1] : 0,
+	webkit_version: webkit ? +(/*@__PURE__*/ /\bAppleWebKit\/(\d+)/.exec(nav.userAgent) || [0, 0])[1] : 0,
 	safari,
-	safari_version: safari ? +(/* @__PURE__ */ /\bVersion\/(\d+(\.\d+)?)/.exec(nav.userAgent) || [0, 0])[1] : 0,
+	safari_version: safari ? +(/*@__PURE__*/ /\bVersion\/(\d+(\.\d+)?)/.exec(nav.userAgent) || [0, 0])[1] : 0,
 	tabSize: doc.documentElement.style.tabSize != null ? "tab-size" : "-moz-tab-size"
 };
 function combineAttrs(source, target) {
@@ -141447,7 +144603,7 @@ function combineAttrs(source, target) {
 	else target[name] = source[name];
 	return target;
 }
-var noAttrs$1 = /* @__PURE__ */ Object.create(null);
+var noAttrs$1 = /*@__PURE__*/ Object.create(null);
 function attrsEq(a, b, ignore) {
 	if (a == b) return true;
 	if (!a) a = noAttrs$1;
@@ -141587,7 +144743,7 @@ var WidgetType = class {
 /**
 The different types of blocks that can occur in an editor view.
 */
-var BlockType = /* @__PURE__ */ (function(BlockType) {
+var BlockType = /*@__PURE__*/ (function(BlockType) {
 	/**
 	A line of text.
 	*/
@@ -142108,7 +145264,7 @@ var DOMPos = class DOMPos {
 /**
 Used to indicate [text direction](https://codemirror.net/6/docs/ref/#view.EditorView.textDirection).
 */
-var Direction = /* @__PURE__ */ (function(Direction) {
+var Direction = /*@__PURE__*/ (function(Direction) {
 	/**
 	Left-to-right.
 	*/
@@ -142125,15 +145281,15 @@ function dec(str) {
 	for (let i = 0; i < str.length; i++) result.push(1 << +str[i]);
 	return result;
 }
-var LowTypes = /* @__PURE__ */ dec("88888888888888888888888888888888888666888888787833333333337888888000000000000000000000000008888880000000000000000000000000088888888888888888888888888888888888887866668888088888663380888308888800000000000000000000000800000000000000000000000000000008");
-var ArabicTypes = /* @__PURE__ */ dec("4444448826627288999999999992222222222222222222222222222222222222222222222229999999999999999999994444444444644222822222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222999999949999999229989999223333333333");
-var Brackets = /* @__PURE__ */ Object.create(null), BracketStack = [];
+var LowTypes = /*@__PURE__*/ dec("88888888888888888888888888888888888666888888787833333333337888888000000000000000000000000008888880000000000000000000000000088888888888888888888888888888888888887866668888088888663380888308888800000000000000000000000800000000000000000000000000000008");
+var ArabicTypes = /*@__PURE__*/ dec("4444448826627288999999999992222222222222222222222222222222222222222222222229999999999999999999994444444444644222822222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222999999949999999229989999223333333333");
+var Brackets = /*@__PURE__*/ Object.create(null), BracketStack = [];
 for (let p of [
 	"()",
 	"[]",
 	"{}"
 ]) {
-	let l = /* @__PURE__ */ p.charCodeAt(0), r = /* @__PURE__ */ p.charCodeAt(1);
+	let l = /*@__PURE__*/ p.charCodeAt(0), r = /*@__PURE__*/ p.charCodeAt(1);
 	Brackets[l] = r;
 	Brackets[r] = -l;
 }
@@ -142406,18 +145562,18 @@ function autoDirection(text, from, to) {
 	}
 	return LTR;
 }
-var clickAddsSelectionRange = /* @__PURE__ */ Facet.define();
-var dragMovesSelection$1 = /* @__PURE__ */ Facet.define();
-var mouseSelectionStyle = /* @__PURE__ */ Facet.define();
-var exceptionSink = /* @__PURE__ */ Facet.define();
-var updateListener = /* @__PURE__ */ Facet.define();
-var inputHandler = /* @__PURE__ */ Facet.define();
-var focusChangeEffect = /* @__PURE__ */ Facet.define();
-var clipboardInputFilter = /* @__PURE__ */ Facet.define();
-var clipboardOutputFilter = /* @__PURE__ */ Facet.define();
-var perLineTextDirection = /* @__PURE__ */ Facet.define({ combine: (values) => values.some((x) => x) });
-var nativeSelectionHidden = /* @__PURE__ */ Facet.define({ combine: (values) => values.some((x) => x) });
-var scrollHandler = /* @__PURE__ */ Facet.define();
+var clickAddsSelectionRange = /*@__PURE__*/ Facet.define();
+var dragMovesSelection$1 = /*@__PURE__*/ Facet.define();
+var mouseSelectionStyle = /*@__PURE__*/ Facet.define();
+var exceptionSink = /*@__PURE__*/ Facet.define();
+var updateListener = /*@__PURE__*/ Facet.define();
+var inputHandler = /*@__PURE__*/ Facet.define();
+var focusChangeEffect = /*@__PURE__*/ Facet.define();
+var clipboardInputFilter = /*@__PURE__*/ Facet.define();
+var clipboardOutputFilter = /*@__PURE__*/ Facet.define();
+var perLineTextDirection = /*@__PURE__*/ Facet.define({ combine: (values) => values.some((x) => x) });
+var nativeSelectionHidden = /*@__PURE__*/ Facet.define({ combine: (values) => values.some((x) => x) });
+var scrollHandler = /*@__PURE__*/ Facet.define();
 var ScrollTarget = class ScrollTarget {
 	constructor(range, y, x, yMargin, xMargin, isSnapshot = false) {
 		this.range = range;
@@ -142434,8 +145590,8 @@ var ScrollTarget = class ScrollTarget {
 		return this.range.to <= state.doc.length ? this : new ScrollTarget(EditorSelection.cursor(state.doc.length), this.y, this.x, this.yMargin, this.xMargin, this.isSnapshot);
 	}
 };
-var scrollIntoView$1 = /* @__PURE__ */ StateEffect.define({ map: (t, ch) => t.map(ch) });
-var setEditContextFormatting = /* @__PURE__ */ StateEffect.define();
+var scrollIntoView$1 = /*@__PURE__*/ StateEffect.define({ map: (t, ch) => t.map(ch) });
+var setEditContextFormatting = /*@__PURE__*/ StateEffect.define();
 /**
 Log or report an unhandled exception in client code. Should
 probably only be used by extension code that allows client code to
@@ -142455,9 +145611,9 @@ function logException(state, exception, context) {
 	else if (context) console.error(context + ":", exception);
 	else console.error(exception);
 }
-var editable = /* @__PURE__ */ Facet.define({ combine: (values) => values.length ? values[0] : true });
+var editable = /*@__PURE__*/ Facet.define({ combine: (values) => values.length ? values[0] : true });
 var nextPluginID = 0;
-var viewPlugin = /* @__PURE__ */ Facet.define({ combine(plugins) {
+var viewPlugin = /*@__PURE__*/ Facet.define({ combine(plugins) {
 	return plugins.filter((p, i) => {
 		for (let j = 0; j < i; j++) if (plugins[j].plugin == p.plugin) return false;
 		return true;
@@ -142560,13 +145716,13 @@ var PluginInstance = class {
 		this.spec = this.value = null;
 	}
 };
-var editorAttributes = /* @__PURE__ */ Facet.define();
-var contentAttributes = /* @__PURE__ */ Facet.define();
-var decorations = /* @__PURE__ */ Facet.define();
-var blockWrappers = /* @__PURE__ */ Facet.define();
-var outerDecorations = /* @__PURE__ */ Facet.define();
-var atomicRanges = /* @__PURE__ */ Facet.define();
-var bidiIsolatedRanges = /* @__PURE__ */ Facet.define();
+var editorAttributes = /*@__PURE__*/ Facet.define();
+var contentAttributes = /*@__PURE__*/ Facet.define();
+var decorations = /*@__PURE__*/ Facet.define();
+var blockWrappers = /*@__PURE__*/ Facet.define();
+var outerDecorations = /*@__PURE__*/ Facet.define();
+var atomicRanges = /*@__PURE__*/ Facet.define();
+var bidiIsolatedRanges = /*@__PURE__*/ Facet.define();
 function getIsolatedRanges(view, line) {
 	let isolates = view.state.facet(bidiIsolatedRanges);
 	if (!isolates.length) return isolates;
@@ -142598,7 +145754,7 @@ function getIsolatedRanges(view, line) {
 	});
 	return result;
 }
-var scrollMargins = /* @__PURE__ */ Facet.define();
+var scrollMargins = /*@__PURE__*/ Facet.define();
 function getScrollMargins(view) {
 	let left = 0, right = 0, top = 0, bottom = 0;
 	for (let source of view.state.facet(scrollMargins)) {
@@ -142617,7 +145773,7 @@ function getScrollMargins(view) {
 		bottom
 	};
 }
-var styleModule = /* @__PURE__ */ Facet.define();
+var styleModule = /*@__PURE__*/ Facet.define();
 var ChangedRange = class ChangedRange {
 	constructor(fromA, toA, fromB, toB) {
 		this.fromA = fromA;
@@ -143764,9 +146920,9 @@ var NullWidget = class extends WidgetType {
 		return true;
 	}
 };
-NullWidget.inline = /* @__PURE__ */ new NullWidget("span");
-NullWidget.block = /* @__PURE__ */ new NullWidget("div");
-var BreakWidget = /* @__PURE__ */ new class extends WidgetType {
+NullWidget.inline = /*@__PURE__*/ new NullWidget("span");
+NullWidget.block = /*@__PURE__*/ new NullWidget("div");
+var BreakWidget = /*@__PURE__*/ new class extends WidgetType {
 	toDOM() {
 		return document.createElement("br");
 	}
@@ -145323,8 +148479,8 @@ function eventBelongsToEditor(view, event) {
 	for (let node = event.target, tile; node != view.contentDOM; node = node.parentNode) if (!node || node.nodeType == 11 || (tile = Tile.get(node)) && tile.isWidget() && !tile.isHidden && tile.widget.ignoreEvent(event)) return false;
 	return true;
 }
-var handlers = /* @__PURE__ */ Object.create(null);
-var observers = /* @__PURE__ */ Object.create(null);
+var handlers = /*@__PURE__*/ Object.create(null);
+var observers = /*@__PURE__*/ Object.create(null);
 var brokenClipboardAPI = browser.ie && browser.ie_version < 15 || browser.ios && browser.webkit_version < 604;
 function capturePaste(view) {
 	let parent = view.dom.parentNode;
@@ -145636,7 +148792,7 @@ handlers.copy = handlers.cut = (view, event) => {
 		return false;
 	}
 };
-var isFocusChange = /* @__PURE__ */ Annotation.define();
+var isFocusChange = /*@__PURE__*/ Annotation.define();
 function focusChangeTransaction(state, focus) {
 	let effects = [];
 	for (let getEffect of state.facet(focusChangeEffect)) {
@@ -145727,7 +148883,7 @@ handlers.beforeinput = (view, event) => {
 	if (browser.safari && event.inputType == "insertText" && view.inputState.composing >= 0) setTimeout(() => observers.compositionend(view, event), 20);
 	return false;
 };
-var appliedFirefoxHack = /* @__PURE__ */ new Set();
+var appliedFirefoxHack = /*@__PURE__*/ new Set();
 function firefoxCopyCutHack(doc) {
 	if (!appliedFirefoxHack.has(doc)) {
 		appliedFirefoxHack.add(doc);
@@ -145868,7 +149024,7 @@ var BlockInfo = class BlockInfo {
 		return new BlockInfo(this.from, this.length + other.length, this.top, this.height + other.height, content);
 	}
 };
-var QueryType = /* @__PURE__ */ (function(QueryType) {
+var QueryType = /*@__PURE__*/ (function(QueryType) {
 	QueryType[QueryType["ByPos"] = 0] = "ByPos";
 	QueryType[QueryType["ByHeight"] = 1] = "ByHeight";
 	QueryType[QueryType["ByPosNoHeight"] = 2] = "ByPosNoHeight";
@@ -145966,7 +149122,7 @@ function replace(old, val) {
 	return val;
 }
 HeightMap.prototype.size = 1;
-var SpaceDeco = /* @__PURE__ */ Decoration.replace({});
+var SpaceDeco = /*@__PURE__*/ Decoration.replace({});
 var HeightMapBlock = class extends HeightMap {
 	constructor(length, height, deco) {
 		super(length, height);
@@ -146932,9 +150088,9 @@ function scaleBlock(block, scaler) {
 	let bTop = scaler.toDOM(block.top), bBottom = scaler.toDOM(block.bottom);
 	return new BlockInfo(block.from, block.length, bTop, bBottom - bTop, Array.isArray(block._content) ? block._content.map((b) => scaleBlock(b, scaler)) : block._content);
 }
-var theme = /* @__PURE__ */ Facet.define({ combine: (strs) => strs.join(" ") });
-var darkTheme = /* @__PURE__ */ Facet.define({ combine: (values) => values.indexOf(true) > -1 });
-var baseThemeID = /* @__PURE__ */ StyleModule.newName(), baseLightID = /* @__PURE__ */ StyleModule.newName(), baseDarkID = /* @__PURE__ */ StyleModule.newName();
+var theme = /*@__PURE__*/ Facet.define({ combine: (strs) => strs.join(" ") });
+var darkTheme = /*@__PURE__*/ Facet.define({ combine: (values) => values.indexOf(true) > -1 });
+var baseThemeID = /*@__PURE__*/ StyleModule.newName(), baseLightID = /*@__PURE__*/ StyleModule.newName(), baseDarkID = /*@__PURE__*/ StyleModule.newName();
 var lightDarkIDs = {
 	"&light": "." + baseLightID,
 	"&dark": "." + baseDarkID
@@ -146948,7 +150104,7 @@ function buildTheme(main, spec, scopes) {
 		}) : main + " " + sel;
 	} });
 }
-var baseTheme$1$1 = /* @__PURE__ */ buildTheme("." + baseThemeID, {
+var baseTheme$1$1 = /*@__PURE__*/ buildTheme("." + baseThemeID, {
 	"&": {
 		position: "relative !important",
 		boxSizing: "border-box",
@@ -148752,7 +151908,7 @@ view keeps it away from the sides of the editor, either as a
 single pixel number or two different values for the different
 axes. Defaults to 5 pixels on both axes.
 */
-EditorView.cursorScrollMargin = /* @__PURE__ */ Facet.define({ combine: (inputs) => {
+EditorView.cursorScrollMargin = /*@__PURE__*/ Facet.define({ combine: (inputs) => {
 	let x = 5, y = 5;
 	for (let i of inputs) if (typeof i == "number") x = y = i;
 	else ({x, y} = i);
@@ -148782,7 +151938,7 @@ Provides a Content Security Policy nonce to use when creating
 the style sheets for the editor. Holds the empty string when no
 nonce has been provided.
 */
-EditorView.cspNonce = /* @__PURE__ */ Facet.define({ combine: (values) => values.length ? values[0] : "" });
+EditorView.cspNonce = /*@__PURE__*/ Facet.define({ combine: (values) => values.length ? values[0] : "" });
 /**
 Facet that provides additional DOM attributes for the editor's
 editable DOM element.
@@ -148797,7 +151953,7 @@ EditorView.editorAttributes = editorAttributes;
 An extension that enables line wrapping in the editor (by
 setting CSS `white-space` to `pre-wrap` in the content).
 */
-EditorView.lineWrapping = /* @__PURE__ */ EditorView.contentAttributes.of({ "class": "cm-lineWrapping" });
+EditorView.lineWrapping = /*@__PURE__*/ EditorView.contentAttributes.of({ "class": "cm-lineWrapping" });
 /**
 State effect used to include screen reader announcements in a
 transaction. These will be added to the DOM in a visually hidden
@@ -148806,7 +151962,7 @@ describe effects that are visually obvious but may not be
 noticed by screen reader users (such as moving to the next
 search match).
 */
-EditorView.announce = /* @__PURE__ */ StateEffect.define();
+EditorView.announce = /*@__PURE__*/ StateEffect.define();
 var MaxBidiLine = 4096;
 var BadMeasure = {};
 var CachedOrder = class CachedOrder {
@@ -148864,7 +152020,7 @@ function modifiers(name, event, shift) {
 	if (shift !== false && event.shiftKey) name = "Shift-" + name;
 	return name;
 }
-var handleKeyEvents = /* @__PURE__ */ Prec.default(/* @__PURE__ */ EditorView.domEventHandlers({ keydown(event, view) {
+var handleKeyEvents = /*@__PURE__*/ Prec.default(/*@__PURE__*/ EditorView.domEventHandlers({ keydown(event, view) {
 	return runHandlers(getKeymap(view.state), event, view, "editor");
 } }));
 /**
@@ -148875,8 +152031,8 @@ determine their precedence (the ones specified early or with high
 priority get checked first). When a handler has returned `true`
 for a given key, no further handlers are called.
 */
-var keymap = /* @__PURE__ */ Facet.define({ enables: handleKeyEvents });
-var Keymaps = /* @__PURE__ */ new WeakMap();
+var keymap = /*@__PURE__*/ Facet.define({ enables: handleKeyEvents });
+var Keymaps = /*@__PURE__*/ new WeakMap();
 function getKeymap(state) {
 	let bindings = state.facet(keymap);
 	let map = Keymaps.get(bindings);
@@ -149209,14 +152365,14 @@ var LayerView = class {
 		this.dom.remove();
 	}
 };
-var layerOrder = /* @__PURE__ */ Facet.define();
+var layerOrder = /*@__PURE__*/ Facet.define();
 /**
 Define a layer.
 */
 function layer(config) {
 	return [ViewPlugin.define((v) => new LayerView(v, config)), layerOrder.of(config)];
 }
-var selectionConfig = /* @__PURE__ */ Facet.define({ combine(configs) {
+var selectionConfig = /*@__PURE__*/ Facet.define({ combine(configs) {
 	return combineConfig(configs, {
 		cursorBlinkRate: 1200,
 		drawRangeCursor: true,
@@ -149256,7 +152412,7 @@ function drawSelection(config = {}) {
 function configChanged(update) {
 	return update.startState.facet(selectionConfig) != update.state.facet(selectionConfig);
 }
-var cursorLayer = /* @__PURE__ */ layer({
+var cursorLayer = /*@__PURE__*/ layer({
 	above: true,
 	markers(view) {
 		let { state } = view, conf = state.facet(selectionConfig);
@@ -149285,7 +152441,7 @@ var cursorLayer = /* @__PURE__ */ layer({
 function setBlinkRate(state, dom) {
 	dom.style.animationDuration = state.facet(selectionConfig).cursorBlinkRate + "ms";
 }
-var selectionLayer = /* @__PURE__ */ layer({
+var selectionLayer = /*@__PURE__*/ layer({
 	above: false,
 	markers(view) {
 		let markers = [], { main, ranges } = view.state.selection;
@@ -149301,7 +152457,7 @@ var selectionLayer = /* @__PURE__ */ layer({
 	},
 	class: "cm-selectionLayer"
 });
-var hideNativeSelection = /* @__PURE__ */ Prec.highest(/* @__PURE__ */ EditorView.theme({
+var hideNativeSelection = /*@__PURE__*/ Prec.highest(/*@__PURE__*/ EditorView.theme({
 	".cm-line": {
 		"& ::selection, &::selection": { backgroundColor: "transparent !important" },
 		caretColor: "transparent !important"
@@ -149418,7 +152574,7 @@ var MatchDecorator = class {
 	}
 };
 var UnicodeRegexpSupport = /x/.unicode != null ? "gu" : "g";
-var Specials = /* @__PURE__ */ new RegExp("[\0-\b\n--­؜​‎‏\u2028\u2029‭‮⁦⁧⁩﻿￹-￼]", UnicodeRegexpSupport);
+var Specials = /*@__PURE__*/ new RegExp("[\0-\b\n--­؜​‎‏\u2028\u2029‭‮⁦⁧⁩﻿￹-￼]", UnicodeRegexpSupport);
 var Names = {
 	0: "null",
 	7: "bell",
@@ -149451,7 +152607,7 @@ function supportsTabSize() {
 	}
 	return _supportsTabSize || false;
 }
-var specialCharConfig = /* @__PURE__ */ Facet.define({ combine(configs) {
+var specialCharConfig = /*@__PURE__*/ Facet.define({ combine(configs) {
 	let config = combineConfig(configs, {
 		render: null,
 		specialChars: Specials,
@@ -149612,7 +152768,7 @@ function windowSpace(view) {
 		right: docElt.clientWidth
 	};
 }
-var tooltipConfig = /* @__PURE__ */ Facet.define({ combine: (values) => {
+var tooltipConfig = /*@__PURE__*/ Facet.define({ combine: (values) => {
 	var _a, _b, _c;
 	return {
 		position: browser.ios ? "absolute" : ((_a = values.find((conf) => conf.position)) === null || _a === void 0 ? void 0 : _a.position) || "fixed",
@@ -149620,8 +152776,8 @@ var tooltipConfig = /* @__PURE__ */ Facet.define({ combine: (values) => {
 		tooltipSpace: ((_c = values.find((conf) => conf.tooltipSpace)) === null || _c === void 0 ? void 0 : _c.tooltipSpace) || windowSpace
 	};
 } });
-var knownHeight = /* @__PURE__ */ new WeakMap();
-var tooltipPlugin = /* @__PURE__ */ ViewPlugin.fromClass(class {
+var knownHeight = /*@__PURE__*/ new WeakMap();
+var tooltipPlugin = /*@__PURE__*/ ViewPlugin.fromClass(class {
 	constructor(view) {
 		this.view = view;
 		this.above = [];
@@ -149832,7 +152988,7 @@ function setLeftStyle(elt, value) {
 	let current = parseInt(elt.style.left, 10);
 	if (isNaN(current) || Math.abs(value - current) > 1) elt.style.left = value + "px";
 }
-var baseTheme$3 = /* @__PURE__ */ EditorView.baseTheme({
+var baseTheme$3 = /*@__PURE__*/ EditorView.baseTheme({
 	".cm-tooltip": {
 		zIndex: 500,
 		boxSizing: "border-box"
@@ -149895,8 +153051,8 @@ var noOffset = {
 /**
 Facet to which an extension can add a value to show a tooltip.
 */
-var showTooltip = /* @__PURE__ */ Facet.define({ enables: [tooltipPlugin, baseTheme$3] });
-var showHoverTooltip = /* @__PURE__ */ Facet.define({ combine: (inputs) => inputs.reduce((a, i) => a.concat(i), []) });
+var showTooltip = /*@__PURE__*/ Facet.define({ enables: [tooltipPlugin, baseTheme$3] });
+var showHoverTooltip = /*@__PURE__*/ Facet.define({ combine: (inputs) => inputs.reduce((a, i) => a.concat(i), []) });
 var HoverTooltipHost = class HoverTooltipHost {
 	static create(view) {
 		return new HoverTooltipHost(view);
@@ -149953,7 +153109,7 @@ var HoverTooltipHost = class HoverTooltipHost {
 		return this.passProp("resize");
 	}
 };
-var showHoverTooltipHost = /* @__PURE__ */ showTooltip.compute([showHoverTooltip], (state) => {
+var showHoverTooltipHost = /*@__PURE__*/ showTooltip.compute([showHoverTooltip], (state) => {
 	let tooltips = state.facet(showHoverTooltip);
 	if (tooltips.length === 0) return null;
 	return {
@@ -149967,7 +153123,7 @@ var showHoverTooltipHost = /* @__PURE__ */ showTooltip.compute([showHoverTooltip
 		arrow: tooltips.some((t) => t.arrow)
 	};
 });
-var hoverPlugin = /* @__PURE__ */ Facet.define();
+var hoverPlugin = /*@__PURE__*/ Facet.define();
 var HoverPlugin = class {
 	constructor(view, source, field, locked, setHover, hoverTime) {
 		this.view = view;
@@ -150188,8 +153344,8 @@ function getTooltip(view, tooltip) {
 	let found = plugin.manager.tooltips.indexOf(tooltip);
 	return found < 0 ? null : plugin.manager.tooltipViews[found];
 }
-var closeHoverTooltipEffect = /* @__PURE__ */ StateEffect.define();
-var panelConfig = /* @__PURE__ */ Facet.define({ combine(configs) {
+var closeHoverTooltipEffect = /*@__PURE__*/ StateEffect.define();
+var panelConfig = /*@__PURE__*/ Facet.define({ combine(configs) {
 	let topContainer, bottomContainer;
 	for (let c of configs) {
 		topContainer = topContainer || c.topContainer;
@@ -150200,7 +153356,7 @@ var panelConfig = /* @__PURE__ */ Facet.define({ combine(configs) {
 		bottomContainer
 	};
 } });
-var panelPlugin = /* @__PURE__ */ ViewPlugin.fromClass(class {
+var panelPlugin = /*@__PURE__*/ ViewPlugin.fromClass(class {
 	constructor(view) {
 		this.input = view.state.facet(showPanel);
 		this.specs = this.input.filter((s) => s);
@@ -150320,7 +153476,7 @@ Opening a panel is done by providing a constructor function for
 the panel through this facet. (The panel is closed again when its
 constructor is no longer provided.) Values of `null` are ignored.
 */
-var showPanel = /* @__PURE__ */ Facet.define({ enables: panelPlugin });
+var showPanel = /*@__PURE__*/ Facet.define({ enables: panelPlugin });
 /**
 A gutter marker represents a bit of information attached to a line
 in a specific gutter. Your own custom markers have to extend this
@@ -152735,7 +155891,7 @@ var _a$1;
 Node prop stored in a parser's top syntax node to provide the
 facet that stores language-specific data for that language.
 */
-var languageDataProp = /* @__PURE__ */ new NodeProp$1();
+var languageDataProp = /*@__PURE__*/ new NodeProp$1();
 /**
 Helper function to define a facet (to be added to the top syntax
 node(s) for a language via
@@ -152751,7 +155907,7 @@ function defineLanguageFacet(baseData) {
 Syntax node prop used to register sublanguages. Should be added to
 the top level node type for the language.
 */
-var sublanguageProp = /* @__PURE__ */ new NodeProp$1();
+var sublanguageProp = /*@__PURE__*/ new NodeProp$1();
 /**
 A language object manages parsing and per-language
 [metadata](https://codemirror.net/6/docs/ref/#state.EditorState.languageDataAt). Parse data is
@@ -152854,7 +156010,7 @@ var Language = class {
 /**
 @internal
 */
-Language.setState = /* @__PURE__ */ StateEffect.define();
+Language.setState = /*@__PURE__*/ StateEffect.define();
 function topNodeAt(state, pos, side) {
 	let topLang = state.facet(language$1), tree = syntaxTree(state).topNode;
 	if (!topLang || topLang.allowsNesting) {
@@ -153145,7 +156301,7 @@ var LanguageState = class LanguageState {
 		return new LanguageState(parseState);
 	}
 };
-Language.state = /* @__PURE__ */ StateField.define({
+Language.state = /*@__PURE__*/ StateField.define({
 	create: LanguageState.init,
 	update(value, tr) {
 		for (let e of tr.effects) if (e.is(Language.setState)) return e.value;
@@ -153164,7 +156320,7 @@ if (typeof requestIdleCallback != "undefined") requestIdle = (callback) => {
 	return () => idle < 0 ? clearTimeout(timeout) : cancelIdleCallback(idle);
 };
 var isInputPending = typeof navigator != "undefined" && ((_a$1 = navigator.scheduling) === null || _a$1 === void 0 ? void 0 : _a$1.isInputPending) ? () => navigator.scheduling.isInputPending() : null;
-var parseWorker = /* @__PURE__ */ ViewPlugin.fromClass(class ParseWorker {
+var parseWorker = /*@__PURE__*/ ViewPlugin.fromClass(class ParseWorker {
 	constructor(view) {
 		this.view = view;
 		this.working = null;
@@ -153233,7 +156389,7 @@ by `Language` object's `extension` property (so you don't need to
 manually wrap your languages in this). Can be used to access the
 current language on a state.
 */
-var language$1 = /* @__PURE__ */ Facet.define({
+var language$1 = /*@__PURE__*/ Facet.define({
 	combine(languages) {
 		return languages.length ? languages[0] : null;
 	},
@@ -153255,13 +156411,13 @@ determined, and the line should inherit the indentation of the one
 above it. A return value of `undefined` defers to the next indent
 service.
 */
-var indentService = /* @__PURE__ */ Facet.define();
+var indentService = /*@__PURE__*/ Facet.define();
 /**
 Facet for overriding the unit by which indentation happens. Should
 be a string consisting entirely of the same whitespace character.
 When not set, this defaults to 2 spaces.
 */
-var indentUnit = /* @__PURE__ */ Facet.define({ combine: (values) => {
+var indentUnit = /*@__PURE__*/ Facet.define({ combine: (values) => {
 	if (!values.length) return "  ";
 	let unit = values[0];
 	if (!unit || /\S/.test(unit) || Array.from(unit).some((e) => e != unit[0])) throw new Error("Invalid indent unit: " + JSON.stringify(values[0]));
@@ -153407,7 +156563,7 @@ context to a column number (see also
 [`indentString`](https://codemirror.net/6/docs/ref/#language.indentString)) or null, where null
 indicates that no definitive indentation can be determined.
 */
-var indentNodeProp = /* @__PURE__ */ new NodeProp$1();
+var indentNodeProp = /*@__PURE__*/ new NodeProp$1();
 function syntaxIndentation(cx, ast, pos) {
 	let stack = ast.resolveStack(pos);
 	let inner = ast.resolveInner(pos, -1).resolve(pos, 0).enterUnfinishedNodesBefore(pos);
@@ -153581,8 +156737,8 @@ var HighlightStyle = class HighlightStyle {
 		return new HighlightStyle(specs, options || {});
 	}
 };
-var highlighterFacet = /* @__PURE__ */ Facet.define();
-var fallbackHighlighter = /* @__PURE__ */ Facet.define({ combine(values) {
+var highlighterFacet = /*@__PURE__*/ Facet.define();
+var fallbackHighlighter = /*@__PURE__*/ Facet.define({ combine(values) {
 	return values.length ? [values[0]] : null;
 } });
 function getHighlighters(state) {
@@ -153638,11 +156794,11 @@ var TreeHighlighter = class {
 		return builder.finish();
 	}
 };
-var treeHighlighter = /* @__PURE__ */ Prec.high(/* @__PURE__ */ ViewPlugin.fromClass(TreeHighlighter, { decorations: (v) => v.decorations }));
+var treeHighlighter = /*@__PURE__*/ Prec.high(/*@__PURE__*/ ViewPlugin.fromClass(TreeHighlighter, { decorations: (v) => v.decorations }));
 /**
 A default highlight style (works well with light themes).
 */
-var defaultHighlightStyle = /* @__PURE__ */ HighlightStyle.define([
+var defaultHighlightStyle = /*@__PURE__*/ HighlightStyle.define([
 	{
 		tag: tags.meta,
 		color: "#404740"
@@ -153694,16 +156850,16 @@ var defaultHighlightStyle = /* @__PURE__ */ HighlightStyle.define([
 		tag: [
 			tags.regexp,
 			tags.escape,
-			/* @__PURE__ */ tags.special(tags.string)
+			/*@__PURE__*/ tags.special(tags.string)
 		],
 		color: "#e40"
 	},
 	{
-		tag: /* @__PURE__ */ tags.definition(tags.variableName),
+		tag: /*@__PURE__*/ tags.definition(tags.variableName),
 		color: "#00f"
 	},
 	{
-		tag: /* @__PURE__ */ tags.local(tags.variableName),
+		tag: /*@__PURE__*/ tags.local(tags.variableName),
 		color: "#30a"
 	},
 	{
@@ -153715,11 +156871,11 @@ var defaultHighlightStyle = /* @__PURE__ */ HighlightStyle.define([
 		color: "#167"
 	},
 	{
-		tag: [/* @__PURE__ */ tags.special(tags.variableName), tags.macroName],
+		tag: [/*@__PURE__*/ tags.special(tags.variableName), tags.macroName],
 		color: "#256"
 	},
 	{
-		tag: /* @__PURE__ */ tags.definition(tags.propertyName),
+		tag: /*@__PURE__*/ tags.definition(tags.propertyName),
 		color: "#00c"
 	},
 	{
@@ -153731,12 +156887,12 @@ var defaultHighlightStyle = /* @__PURE__ */ HighlightStyle.define([
 		color: "#f00"
 	}
 ]);
-var baseTheme$2 = /* @__PURE__ */ EditorView.baseTheme({
+var baseTheme$2 = /*@__PURE__*/ EditorView.baseTheme({
 	"&.cm-focused .cm-matchingBracket": { backgroundColor: "#328c8252" },
 	"&.cm-focused .cm-nonmatchingBracket": { backgroundColor: "#bb555544" }
 });
 var DefaultScanDist = 1e4, DefaultBrackets = "()[]{}";
-var bracketMatchingConfig = /* @__PURE__ */ Facet.define({ combine(configs) {
+var bracketMatchingConfig = /*@__PURE__*/ Facet.define({ combine(configs) {
 	return combineConfig(configs, {
 		afterCursor: true,
 		brackets: DefaultBrackets,
@@ -153744,7 +156900,7 @@ var bracketMatchingConfig = /* @__PURE__ */ Facet.define({ combine(configs) {
 		renderMatch: defaultRenderMatch
 	});
 } });
-var matchingMark = /* @__PURE__ */ Decoration.mark({ class: "cm-matchingBracket" }), nonmatchingMark = /* @__PURE__ */ Decoration.mark({ class: "cm-nonmatchingBracket" });
+var matchingMark = /*@__PURE__*/ Decoration.mark({ class: "cm-matchingBracket" }), nonmatchingMark = /*@__PURE__*/ Decoration.mark({ class: "cm-nonmatchingBracket" });
 function defaultRenderMatch(match) {
 	let decorations = [];
 	let mark = match.matched ? matchingMark : nonmatchingMark;
@@ -153794,7 +156950,7 @@ a node, a ‘handle’—the part of the node that is highlighted, and
 that the cursor must be on to activate highlighting in the first
 place.
 */
-var bracketMatchingHandle = /* @__PURE__ */ new NodeProp$1();
+var bracketMatchingHandle = /*@__PURE__*/ new NodeProp$1();
 function matchingNodes(node, dir, brackets) {
 	let byProp = node.prop(dir < 0 ? NodeProp$1.openedBy : NodeProp$1.closedBy);
 	if (byProp) return byProp;
@@ -154087,7 +157243,7 @@ function defaultCopyState(state) {
 	}
 	return newState;
 }
-var IndentedFrom = /* @__PURE__ */ new WeakMap();
+var IndentedFrom = /*@__PURE__*/ new WeakMap();
 /**
 A [language](https://codemirror.net/6/docs/ref/#language.Language) class based on a CodeMirror
 5-style [streaming parser](https://codemirror.net/6/docs/ref/#language.StreamParser).
@@ -154330,12 +157486,12 @@ function readToken(token, stream, state) {
 	}
 	throw new Error("Stream parser failed to advance stream.");
 }
-var noTokens = /* @__PURE__ */ Object.create(null);
+var noTokens = /*@__PURE__*/ Object.create(null);
 var typeArray = [NodeType$1.none];
-var nodeSet = /* @__PURE__ */ new NodeSet(typeArray);
+var nodeSet = /*@__PURE__*/ new NodeSet(typeArray);
 var warned = [];
-var byTag = /* @__PURE__ */ Object.create(null);
-var defaultTable = /* @__PURE__ */ Object.create(null);
+var byTag = /*@__PURE__*/ Object.create(null);
+var defaultTable = /*@__PURE__*/ Object.create(null);
 for (let [legacyName, name] of [
 	["variable", "variableName"],
 	["variable-2", "variableName.special"],
@@ -154349,7 +157505,7 @@ for (let [legacyName, name] of [
 	["error", "invalid"],
 	["header", "heading"],
 	["property", "propertyName"]
-]) defaultTable[legacyName] = /* @__PURE__ */ createTokenType(noTokens, name);
+]) defaultTable[legacyName] = /*@__PURE__*/ createTokenType(noTokens, name);
 var TokenTable = class {
 	constructor(extra) {
 		this.extra = extra;
@@ -154359,7 +157515,7 @@ var TokenTable = class {
 		return !tag ? 0 : this.table[tag] || (this.table[tag] = createTokenType(this.extra, tag));
 	}
 };
-var defaultTokenTable = /* @__PURE__ */ new TokenTable(noTokens);
+var defaultTokenTable = /*@__PURE__*/ new TokenTable(noTokens);
 function warnForPart(part, msg) {
 	if (warned.indexOf(part) > -1) return;
 	warned.push(part);
@@ -154536,7 +157692,7 @@ function ensureAnchor(expr, start) {
 This annotation is added to transactions that are produced by
 picking a completion.
 */
-var pickedCompletion = /* @__PURE__ */ Annotation.define();
+var pickedCompletion = /*@__PURE__*/ Annotation.define();
 /**
 Helper function that returns a transaction spec which inserts a
 completion's text in the main selection range, and any other
@@ -154561,15 +157717,15 @@ function insertCompletionText(state, text, from, to) {
 		userEvent: "input.complete"
 	};
 }
-var SourceCache = /* @__PURE__ */ new WeakMap();
+var SourceCache = /*@__PURE__*/ new WeakMap();
 function asSource(source) {
 	if (!Array.isArray(source)) return source;
 	let known = SourceCache.get(source);
 	if (!known) SourceCache.set(source, known = completeFromList(source));
 	return known;
 }
-var startCompletionEffect = /* @__PURE__ */ StateEffect.define();
-var closeCompletionEffect = /* @__PURE__ */ StateEffect.define();
+var startCompletionEffect = /*@__PURE__*/ StateEffect.define();
+var closeCompletionEffect = /*@__PURE__*/ StateEffect.define();
 var FuzzyMatcher = class {
 	constructor(pattern) {
 		this.pattern = pattern;
@@ -154676,7 +157832,7 @@ var StrictMatcher = class {
 		return this;
 	}
 };
-var completionConfig = /* @__PURE__ */ Facet.define({ combine(configs) {
+var completionConfig = /*@__PURE__*/ Facet.define({ combine(configs) {
 	return combineConfig(configs, {
 		activateOnTyping: true,
 		activateOnCompletion: () => false,
@@ -154736,7 +157892,7 @@ function defaultPositionInfo(view, list, option, info, space, tooltip) {
 		class: "cm-completionInfo-" + (narrow ? rtl ? "left-narrow" : "right-narrow" : left ? "left" : "right")
 	};
 }
-var setSelectedEffect = /* @__PURE__ */ StateEffect.define();
+var setSelectedEffect = /*@__PURE__*/ StateEffect.define();
 function optionContent(config) {
 	let content = config.addToOptions.slice();
 	if (config.icons) content.push({
@@ -155246,10 +158402,10 @@ function checkValid(validFor, state, from, to) {
 	let text = state.sliceDoc(from, to);
 	return typeof validFor == "function" ? validFor(text, from, to, state) : ensureAnchor(validFor, true).test(text);
 }
-var setActiveEffect = /* @__PURE__ */ StateEffect.define({ map(sources, mapping) {
+var setActiveEffect = /*@__PURE__*/ StateEffect.define({ map(sources, mapping) {
 	return sources.map((s) => s.map(mapping));
 } });
-var completionState = /* @__PURE__ */ StateField.define({
+var completionState = /*@__PURE__*/ StateField.define({
 	create() {
 		return CompletionState.start();
 	},
@@ -155269,7 +158425,7 @@ function applyCompletion(view, option) {
 	else apply(view, option.completion, result.from, result.to);
 	return true;
 }
-var createTooltip = /* @__PURE__ */ completionTooltip(completionState, applyCompletion);
+var createTooltip = /*@__PURE__*/ completionTooltip(completionState, applyCompletion);
 /**
 Returns a command that moves the completion selection forward or
 backward by the given amount.
@@ -155323,7 +158479,7 @@ var RunningQuery = class {
 	}
 };
 var MaxUpdateCount = 50, MinAbortTime = 1e3;
-var completionPlugin = /* @__PURE__ */ ViewPlugin.fromClass(class {
+var completionPlugin = /*@__PURE__*/ ViewPlugin.fromClass(class {
 	constructor(view) {
 		this.view = view;
 		this.debounceUpdate = -1;
@@ -155433,8 +158589,8 @@ var completionPlugin = /* @__PURE__ */ ViewPlugin.fromClass(class {
 		this.composing = 0;
 	}
 } });
-var windows = typeof navigator == "object" && /* @__PURE__ */ /Win/.test(navigator.platform);
-var commitCharacters = /* @__PURE__ */ Prec.highest(/* @__PURE__ */ EditorView.domEventHandlers({ keydown(event, view) {
+var windows = typeof navigator == "object" && /*@__PURE__*/ /Win/.test(navigator.platform);
+var commitCharacters = /*@__PURE__*/ Prec.highest(/*@__PURE__*/ EditorView.domEventHandlers({ keydown(event, view) {
 	let field = view.state.field(completionState, false);
 	if (!field || !field.open || field.open.disabled || field.open.selected < 0 || event.key.length > 1 || event.ctrlKey && !(windows && event.altKey) || event.metaKey) return false;
 	let option = field.open.options[field.open.selected];
@@ -155443,7 +158599,7 @@ var commitCharacters = /* @__PURE__ */ Prec.highest(/* @__PURE__ */ EditorView.d
 	if (commitChars && commitChars.indexOf(event.key) > -1) applyCompletion(view, option);
 	return false;
 } }));
-var baseTheme$1 = /* @__PURE__ */ EditorView.baseTheme({
+var baseTheme$1 = /*@__PURE__*/ EditorView.baseTheme({
 	".cm-tooltip.cm-tooltip-autocomplete": { "& > ul": {
 		fontFamily: "monospace",
 		whiteSpace: "nowrap",
@@ -155541,7 +158697,7 @@ var baseTheme$1 = /* @__PURE__ */ EditorView.baseTheme({
 		verticalAlign: "middle"
 	} }
 });
-var closedBracket = /* @__PURE__ */ new class extends RangeValue {}();
+var closedBracket = /*@__PURE__*/ new class extends RangeValue {}();
 closedBracket.startSide = 1;
 closedBracket.endSide = -1;
 typeof navigator == "object" && navigator.userAgent;
@@ -155588,26 +158744,26 @@ var completionKeymap = [
 	},
 	{
 		key: "ArrowDown",
-		run: /* @__PURE__ */ moveCompletionSelection(true)
+		run: /*@__PURE__*/ moveCompletionSelection(true)
 	},
 	{
 		key: "ArrowUp",
-		run: /* @__PURE__ */ moveCompletionSelection(false)
+		run: /*@__PURE__*/ moveCompletionSelection(false)
 	},
 	{
 		key: "PageDown",
-		run: /* @__PURE__ */ moveCompletionSelection(true, "page")
+		run: /*@__PURE__*/ moveCompletionSelection(true, "page")
 	},
 	{
 		key: "PageUp",
-		run: /* @__PURE__ */ moveCompletionSelection(false, "page")
+		run: /*@__PURE__*/ moveCompletionSelection(false, "page")
 	},
 	{
 		key: "Enter",
 		run: acceptCompletion
 	}
 ];
-var completionKeymapExt = /* @__PURE__ */ Prec.highest(/* @__PURE__ */ keymap.computeN([completionConfig], (state) => state.facet(completionConfig).defaultKeymap ? [completionKeymap] : []));
+var completionKeymapExt = /*@__PURE__*/ Prec.highest(/*@__PURE__*/ keymap.computeN([completionConfig], (state) => state.facet(completionConfig).defaultKeymap ? [completionKeymap] : []));
 //#endregion
 //#region ../../node_modules/.pnpm/@codemirror+lint@6.9.6/node_modules/@codemirror/lint/dist/index.js
 var SelectedDiagnostic = class {
@@ -155729,10 +158885,10 @@ function setDiagnostics(state, diagnostics) {
 The state effect that updates the set of active diagnostics. Can
 be useful when writing an extension that needs to track these.
 */
-var setDiagnosticsEffect = /* @__PURE__ */ StateEffect.define();
-var togglePanel = /* @__PURE__ */ StateEffect.define();
-var movePanelSelection = /* @__PURE__ */ StateEffect.define();
-var lintState = /* @__PURE__ */ StateField.define({
+var setDiagnosticsEffect = /*@__PURE__*/ StateEffect.define();
+var togglePanel = /*@__PURE__*/ StateEffect.define();
+var movePanelSelection = /*@__PURE__*/ StateEffect.define();
+var lintState = /*@__PURE__*/ StateField.define({
 	create() {
 		return new LintState(Decoration.none, null, null);
 	},
@@ -155755,7 +158911,7 @@ var lintState = /* @__PURE__ */ StateField.define({
 	},
 	provide: (f) => [showPanel.from(f, (val) => val.panel), EditorView.decorations.from(f, (s) => s.diagnostics)]
 });
-var activeMark = /* @__PURE__ */ Decoration.mark({ class: "cm-lintRange cm-lintRange-active" });
+var activeMark = /*@__PURE__*/ Decoration.mark({ class: "cm-lintRange cm-lintRange-active" });
 function lintTooltip(view, pos, side) {
 	let { diagnostics } = view.state.field(lintState);
 	let found, start = -1, end = -1;
@@ -155791,7 +158947,7 @@ var closeLintPanel = (view) => {
 	view.dispatch({ effects: togglePanel.of(false) });
 	return true;
 };
-var lintPlugin = /* @__PURE__ */ ViewPlugin.fromClass(class {
+var lintPlugin = /*@__PURE__*/ ViewPlugin.fromClass(class {
 	constructor(view) {
 		this.view = view;
 		this.timeout = -1;
@@ -155844,7 +159000,7 @@ function batchResults(promises, sink, error) {
 		else timeout = setTimeout(() => sink(collected), 200);
 	}, error);
 }
-var lintConfig = /* @__PURE__ */ Facet.define({ combine(input) {
+var lintConfig = /*@__PURE__*/ Facet.define({ combine(input) {
 	return {
 		sources: input.map((i) => i.source).filter((x) => x != null),
 		...combineConfig(input.map((i) => i.config), {
@@ -156092,7 +159248,7 @@ function svg(content, attrs = `viewBox="0 0 40 40"`) {
 function underline(color) {
 	return svg(`<path d="m0 2.5 l2 -1.5 l1 0 l2 1.5 l1 0" stroke="${color}" fill="none" stroke-width=".7"/>`, `width="6" height="3"`);
 }
-var baseTheme = /* @__PURE__ */ EditorView.baseTheme({
+var baseTheme = /*@__PURE__*/ EditorView.baseTheme({
 	".cm-diagnostic": {
 		padding: "3px 6px 3px 8px",
 		marginLeft: "-1px",
@@ -156122,10 +159278,10 @@ var baseTheme = /* @__PURE__ */ EditorView.baseTheme({
 		backgroundRepeat: "repeat-x",
 		paddingBottom: "0.7px"
 	},
-	".cm-lintRange-error": { backgroundImage: /* @__PURE__ */ underline("#f11") },
-	".cm-lintRange-warning": { backgroundImage: /* @__PURE__ */ underline("orange") },
-	".cm-lintRange-info": { backgroundImage: /* @__PURE__ */ underline("#999") },
-	".cm-lintRange-hint": { backgroundImage: /* @__PURE__ */ underline("#66d") },
+	".cm-lintRange-error": { backgroundImage: /*@__PURE__*/ underline("#f11") },
+	".cm-lintRange-warning": { backgroundImage: /*@__PURE__*/ underline("orange") },
+	".cm-lintRange-info": { backgroundImage: /*@__PURE__*/ underline("#999") },
+	".cm-lintRange-hint": { backgroundImage: /*@__PURE__*/ underline("#66d") },
 	".cm-lintRange-active": { backgroundColor: "#ffdd9980" },
 	".cm-tooltip-lint": {
 		padding: 0,
@@ -156193,10 +159349,10 @@ function maxSeverity(diagnostics) {
 	}
 	return sev;
 }
-var lintHover = /* @__PURE__ */ hoverTooltip(lintTooltip, { hideOn: hideTooltip });
+var lintHover = /*@__PURE__*/ hoverTooltip(lintTooltip, { hideOn: hideTooltip });
 var lintExtensions = [
 	lintState,
-	/* @__PURE__ */ EditorView.decorations.compute([lintState], (state) => {
+	/*@__PURE__*/ EditorView.decorations.compute([lintState], (state) => {
 		let { selected, panel } = state.field(lintState);
 		return !selected || !panel || selected.from == selected.to ? Decoration.none : Decoration.set([activeMark.range(selected.from, selected.to)]);
 	}),
@@ -157571,19 +160727,19 @@ The line comment syntax is taken from the
 [`commentTokens`](https://codemirror.net/6/docs/ref/#commands.CommentTokens) [language
 data](https://codemirror.net/6/docs/ref/#state.EditorState.languageDataAt).
 */
-var toggleLineComment = /* @__PURE__ */ command(changeLineComment, 0);
+var toggleLineComment = /*@__PURE__*/ command(changeLineComment, 0);
 /**
 Comment or uncomment the current selection using block comments.
 The block comment syntax is taken from the
 [`commentTokens`](https://codemirror.net/6/docs/ref/#commands.CommentTokens) [language
 data](https://codemirror.net/6/docs/ref/#state.EditorState.languageDataAt).
 */
-var toggleBlockComment = /* @__PURE__ */ command(changeBlockComment, 0);
+var toggleBlockComment = /*@__PURE__*/ command(changeBlockComment, 0);
 /**
 Comment or uncomment the lines around the current selection using
 block comments.
 */
-var toggleBlockCommentByLine = /* @__PURE__ */ command((o, s) => changeBlockComment(o, s, selectedLineRanges(s)), 0);
+var toggleBlockCommentByLine = /*@__PURE__*/ command((o, s) => changeBlockComment(o, s, selectedLineRanges(s)), 0);
 function getConfig(state, pos) {
 	let data = state.languageDataAt("commentTokens", pos, 1);
 	return data.length ? data[0] : {};
@@ -157731,7 +160887,7 @@ function changeLineComment(option, state, ranges = state.selection.ranges) {
 	}
 	return null;
 }
-var fromHistory = /* @__PURE__ */ Annotation.define();
+var fromHistory = /*@__PURE__*/ Annotation.define();
 /**
 Transaction annotation that will prevent that transaction from
 being combined with other transactions in the undo history. Given
@@ -157739,7 +160895,7 @@ being combined with other transactions in the undo history. Given
 `"after"`, subsequent transactions won't be combined with this
 one. With `"full"`, the transaction is isolated on both sides.
 */
-var isolateHistory = /* @__PURE__ */ Annotation.define();
+var isolateHistory = /*@__PURE__*/ Annotation.define();
 /**
 This facet provides a way to register functions that, given a
 transaction, provide a set of effects that the history should
@@ -157747,8 +160903,8 @@ store when inverting the transaction. This can be used to
 integrate some kinds of effects in the history, so that they can
 be undone (and redone again).
 */
-var invertedEffects = /* @__PURE__ */ Facet.define();
-var historyConfig = /* @__PURE__ */ Facet.define({ combine(configs) {
+var invertedEffects = /*@__PURE__*/ Facet.define();
+var historyConfig = /*@__PURE__*/ Facet.define({ combine(configs) {
 	return combineConfig(configs, {
 		minDepth: 100,
 		newGroupDelay: 500,
@@ -157759,7 +160915,7 @@ var historyConfig = /* @__PURE__ */ Facet.define({ combine(configs) {
 		joinToEvent: (a, b) => (tr, adj) => a(tr, adj) || b(tr, adj)
 	});
 } });
-var historyField_ = /* @__PURE__ */ StateField.define({
+var historyField_ = /*@__PURE__*/ StateField.define({
 	create() {
 		return HistoryState.empty;
 	},
@@ -157823,20 +160979,20 @@ function cmd(side, selection) {
 Undo a single group of history events. Returns false if no group
 was available.
 */
-var undo = /* @__PURE__ */ cmd(0, false);
+var undo = /*@__PURE__*/ cmd(0, false);
 /**
 Redo a group of history events. Returns false if no group was
 available.
 */
-var redo = /* @__PURE__ */ cmd(1, false);
+var redo = /*@__PURE__*/ cmd(1, false);
 /**
 Undo a change or selection change.
 */
-var undoSelection = /* @__PURE__ */ cmd(0, true);
+var undoSelection = /*@__PURE__*/ cmd(0, true);
 /**
 Redo a change or selection change.
 */
-var redoSelection = /* @__PURE__ */ cmd(1, true);
+var redoSelection = /*@__PURE__*/ cmd(1, true);
 var HistEvent = class HistEvent {
 	constructor(changes, effects, mapped, startSelection, selectionsAfter) {
 		this.changes = changes;
@@ -157997,7 +161153,7 @@ var HistoryState = class HistoryState {
 		}
 	}
 };
-HistoryState.empty = /* @__PURE__ */ new HistoryState(none, none);
+HistoryState.empty = /*@__PURE__*/ new HistoryState(none, none);
 /**
 Default key bindings for the undo history.
 
@@ -158735,11 +161891,11 @@ will also delete that whitespace. When the cursor is between
 matching brackets, an additional newline will be inserted after
 the cursor.
 */
-var insertNewlineAndIndent = /* @__PURE__ */ newlineAndIndent(false);
+var insertNewlineAndIndent = /*@__PURE__*/ newlineAndIndent(false);
 /**
 Create a blank, indented line below the current line.
 */
-var insertBlankLine = /* @__PURE__ */ newlineAndIndent(true);
+var insertBlankLine = /*@__PURE__*/ newlineAndIndent(true);
 function newlineAndIndent(atEof) {
 	return ({ state, dispatch }) => {
 		if (state.readOnly) return false;
@@ -158981,7 +162137,7 @@ property changed to `mac`.)
 - Cmd-Backspace (macOS): [`deleteLineBoundaryBackward`](https://codemirror.net/6/docs/ref/#commands.deleteLineBoundaryBackward).
 - Cmd-Delete (macOS): [`deleteLineBoundaryForward`](https://codemirror.net/6/docs/ref/#commands.deleteLineBoundaryForward).
 */
-var standardKeymap = /* @__PURE__ */ [
+var standardKeymap = /*@__PURE__*/ [
 	{
 		key: "ArrowLeft",
 		run: cursorCharLeft,
@@ -159126,7 +162282,7 @@ var standardKeymap = /* @__PURE__ */ [
 		run: deleteLineBoundaryForward,
 		preventDefault: true
 	}
-].concat(/* @__PURE__ */ emacsStyleKeymap.map((b) => ({
+].concat(/*@__PURE__*/ emacsStyleKeymap.map((b) => ({
 	mac: b.key,
 	run: b.run,
 	shift: b.shift
@@ -159156,7 +162312,7 @@ The default keymap. Includes all bindings from
 - Shift-Alt-a: [`toggleBlockComment`](https://codemirror.net/6/docs/ref/#commands.toggleBlockComment).
 - Ctrl-m (Alt-Shift-m on macOS): [`toggleTabFocusMode`](https://codemirror.net/6/docs/ref/#commands.toggleTabFocusMode).
 */
-var defaultKeymap = /* @__PURE__ */ [
+var defaultKeymap = /*@__PURE__*/ [
 	{
 		key: "Alt-ArrowLeft",
 		mac: "Ctrl-ArrowLeft",
@@ -159255,7 +162411,7 @@ highlighting](https://codemirror.net/6/docs/ref/#view.highlightSpecialChars), [c
 drawing](https://codemirror.net/6/docs/ref/#view.drawSelection), and [default highlight
 style](https://codemirror.net/6/docs/ref/#language.defaultHighlightStyle).
 */
-var minimalSetup = /* @__PURE__ */ (() => [
+var minimalSetup = /*@__PURE__*/ (() => [
 	highlightSpecialChars(),
 	history(),
 	drawSelection(),
@@ -159666,7 +162822,7 @@ function getCompletions(context, filterItems, samples) {
 		if (varName === "id") return discreteRelationCompletions();
 		if (varName === "uuid") return discreteRelationCompletions();
 		if (varName === "metadata") return customRelationCompletions();
-		if (varName === "has_error" || varName === "has_retries") return logicalOpCompletions();
+		if (varName === "has_error" || varName === "has_retries" || varName === "has_fallbacks") return logicalOpCompletions();
 		switch (findFilterItem(1)?.scoreType || "") {
 			case kScoreTypePassFail:
 			case kScoreTypeCategorical: return discreteRelationCompletions();
@@ -159726,6 +162882,7 @@ Filter samples by:
   • Input, target and error regex search: input_contains, target_contains, error_contains
   • Samples with NaN scores: is_nan, e.g. "is_nan(score)" or "not is_nan(score)"
   • Samples that have been retried: has_retries
+  • Samples served by a fallback model: has_fallbacks
   • Sample Id: e.g. "id == 'sample123'"
   • Sample metadata: e.g. "metadata.key == 'value'"
 
@@ -159907,7 +163064,7 @@ var SelectScorer_module_default = {
 //#region src/app/samples/sample-tools/SelectScorer.tsx
 var SelectScorer = ({ scores, selectedScores, setSelectedScores }) => {
 	const [showing, setShowing] = (0, import_react.useState)(false);
-	const buttonRef = (0, import_react.useRef)(null);
+	const [buttonEl, setButtonEl] = (0, import_react.useState)(null);
 	const selectedKeys = (0, import_react.useMemo)(() => {
 		return new Set(selectedScores?.map((s) => `${s.scorer}.${s.name}`));
 	}, [selectedScores]);
@@ -159926,12 +163083,12 @@ var SelectScorer = ({ scores, selectedScores, setSelectedScores }) => {
 				label,
 				icon: ApplicationIcons.metrics,
 				onClick: () => setShowing(!showing),
-				ref: buttonRef,
+				ref: setButtonEl,
 				className: clsx(SelectScorer_module_default.bodyColorButton)
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(PopOver, {
 				id: "score-selector-popover",
-				positionEl: buttonRef.current,
+				positionEl: buttonEl,
 				isOpen: showing,
 				setIsOpen: setShowing,
 				placement: "bottom-start",
@@ -160012,11 +163169,11 @@ var ScoreCheckboxes = ({ scores, selectedKeys, setSelectedScores }) => {
 //#region src/app/samples/SamplesTools.tsx
 var SampleTools = () => {
 	const [showViewOptions, setShowViewOptions] = (0, import_react.useState)(false);
-	const viewButtonRef = (0, import_react.useRef)(null);
+	const [viewButtonEl, setViewButtonEl] = (0, import_react.useState)(null);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [
 		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleFilter, {}),
 		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(NavbarButton, {
-			ref: viewButtonRef,
+			ref: setViewButtonEl,
 			label: "View",
 			icon: ApplicationIcons.options,
 			dropdown: true,
@@ -160029,7 +163186,7 @@ var SampleTools = () => {
 		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SamplesViewOptionsPopover, {
 			showing: showViewOptions,
 			setShowing: setShowViewOptions,
-			positionEl: viewButtonRef.current
+			positionEl: viewButtonEl
 		})
 	] });
 };
@@ -160316,6 +163473,13 @@ var astToFilterModel = (ast, registry) => {
 };
 //#endregion
 //#region src/app/samples/sample-tools/filterAst.ts
+var ParseFailure = class extends Error {
+	position;
+	constructor(message, position) {
+		super(message);
+		this.position = position;
+	}
+};
 var RELATION_OPS = new Set([
 	"==",
 	"!=",
@@ -160349,10 +163513,7 @@ var Parser = class {
 		return this.eat();
 	}
 	error(message) {
-		return {
-			message,
-			position: this.peek()?.from ?? this.tokens.at(-1)?.to ?? 0
-		};
+		return new ParseFailure(message, this.peek()?.from ?? this.tokens.at(-1)?.to ?? 0);
 	}
 	parse() {
 		const expr = this.parseOr();
@@ -160568,9 +163729,12 @@ function parseFilter(text) {
 			error: null
 		};
 	} catch (e) {
-		if (typeof e === "object" && e !== null && "message" in e) return {
+		if (e instanceof ParseFailure) return {
 			ast: null,
-			error: e
+			error: {
+				message: e.message,
+				position: e.position
+			}
 		};
 		return {
 			ast: null,
@@ -161072,6 +164236,22 @@ function buildSampleColumns(ctx) {
 		cellStyle: { textAlign: "center" },
 		comparator: comparators.number,
 		valueGetter: (params) => params.data?.retries ?? params.data?.data?.retries
+	}, {
+		colId: "fallbacks",
+		field: "fallbacks",
+		headerName: "Fallbacks",
+		initialWidth: 95,
+		minWidth: 28,
+		sortable: true,
+		filter: "agNumberColumnFilter",
+		resizable: true,
+		cellStyle: { textAlign: "center" },
+		comparator: comparators.number,
+		valueGetter: (params) => params.data?.fallbacks,
+		tooltipValueGetter: (params) => {
+			const lines = modelFallbackLines(params.data?.data?.model_fallbacks);
+			return lines.length > 0 ? lines.join("\n") : void 0;
+		}
 	});
 	cols.push(...buildScoreColumns(ctx));
 	if (multiLog) cols.push({
@@ -161271,6 +164451,10 @@ var STATIC_ENTRIES = [
 	["retries", {
 		variable: "retries",
 		kind: "number"
+	}],
+	["fallbacks", {
+		variable: "fallbacks",
+		kind: "number"
 	}]
 ];
 /** Build the column↔filtrex-variable registry. Score columns are added
@@ -161421,7 +164605,7 @@ var useSamplesTabConfig = (evalStatus, refreshLog) => {
 	const streamSamples = useStore((state) => state.capabilities.streamSamples);
 	const scrollRef = (0, import_react.useRef)(null);
 	const [showColumnSelector, setShowColumnSelector] = (0, import_react.useState)(false);
-	const columnButtonRef = (0, import_react.useRef)(null);
+	const [columnButtonEl, setColumnButtonEl] = (0, import_react.useState)(null);
 	const handleToggleColumnSelector = (0, import_react.useCallback)(() => {
 		setShowColumnSelector((p) => !p);
 	}, []);
@@ -161438,7 +164622,7 @@ var useSamplesTabConfig = (evalStatus, refreshLog) => {
 				scrollRef,
 				showColumnSelector,
 				setShowColumnSelector,
-				columnButtonRef
+				columnButtonEl
 			},
 			tools: () => !samplesDescriptor ? void 0 : totalSampleCount === 1 ? [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreFilterTools, {}, "sample-score-tool")] : [
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleTools, {}, "sample-tools"),
@@ -161449,7 +164633,7 @@ var useSamplesTabConfig = (evalStatus, refreshLog) => {
 					onClick: refreshLog
 				}, "refresh"),
 				samplesAvailable && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NavbarButton, {
-					ref: columnButtonRef,
+					ref: setColumnButtonEl,
 					label: "Columns",
 					icon: ApplicationIcons.columns,
 					dropdown: true,
@@ -161465,10 +164649,11 @@ var useSamplesTabConfig = (evalStatus, refreshLog) => {
 		streamSamples,
 		totalSampleCount,
 		showColumnSelector,
+		columnButtonEl,
 		handleToggleColumnSelector
 	]);
 };
-var SamplesTab = ({ running, scrollRef, showColumnSelector, setShowColumnSelector, columnButtonRef }) => {
+var SamplesTab = ({ running, scrollRef, showColumnSelector, setShowColumnSelector, columnButtonEl }) => {
 	const sampleSummaries = useFilteredSamples();
 	const selectedLogDetails = useStore((state) => state.log.selectedLogDetails);
 	const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
@@ -161519,6 +164704,7 @@ var SamplesTab = ({ running, scrollRef, showColumnSelector, setShowColumnSelecto
 		if (id === "epoch") return epochs > 1;
 		if (id === "limit") return !!shape?.limitSize;
 		if (id === "retries") return !!shape?.retriesSize;
+		if (id === "fallbacks") return !!shape?.fallbacksSize;
 		if (id === "error") return !!shape?.errorSize;
 		if (id === "sampleUuid") return false;
 		return true;
@@ -161577,6 +164763,7 @@ var SamplesTab = ({ running, scrollRef, showColumnSelector, setShowColumnSelecto
 				error: sample.error,
 				limit: sample.limit,
 				retries: sample.retries,
+				fallbacks: totalModelFallbacks(sample.model_fallbacks) || void 0,
 				tokens,
 				duration: sample.total_time ?? void 0
 			};
@@ -161601,7 +164788,9 @@ var SamplesTab = ({ running, scrollRef, showColumnSelector, setShowColumnSelecto
 	const setFilter = useStore((state) => state.logActions.setFilter);
 	const currentFilter = useStore((state) => state.log.filter);
 	const currentFilterRef = (0, import_react.useRef)(currentFilter);
-	currentFilterRef.current = currentFilter;
+	(0, import_react.useEffect)(() => {
+		currentFilterRef.current = currentFilter;
+	}, [currentFilter]);
 	/** Parse `text` and project it to the FilterModel the column UI
 	*  should be holding — `{}` for empty or non-round-trippable text. */
 	const filterModelFromText = (0, import_react.useCallback)((text) => {
@@ -161696,7 +164885,7 @@ var SamplesTab = ({ running, scrollRef, showColumnSelector, setShowColumnSelecto
 			columns: allColumns,
 			visibility: visibilityForGrid,
 			onVisibilityChange: handleVisibilityChange,
-			positionEl: columnButtonRef.current,
+			positionEl: columnButtonEl,
 			filteredFields,
 			scoresHeading: "Scores",
 			onResetToDefault: resetColumns
@@ -161755,14 +164944,26 @@ var EditTagsDialog = ({ showing, setShowing, currentTags, logFile, onSaved }) =>
 	const [reason, setReason] = (0, import_react.useState)("");
 	const [submitting, setSubmitting] = (0, import_react.useState)(false);
 	const [error, setError] = (0, import_react.useState)();
+	const [prevReset, setPrevReset] = (0, import_react.useState)({
+		showing,
+		currentTags
+	});
+	if (prevReset.showing !== showing || prevReset.currentTags !== currentTags) {
+		setPrevReset({
+			showing,
+			currentTags
+		});
+		if (showing) {
+			setTags(currentTags);
+			setPending("");
+			setAuthor("");
+			setReason("");
+			setError(void 0);
+			setSubmitting(false);
+		}
+	}
 	(0, import_react.useEffect)(() => {
 		if (!showing) return;
-		setTags(currentTags);
-		setPending("");
-		setAuthor("");
-		setReason("");
-		setError(void 0);
-		setSubmitting(false);
 		let cancelled = false;
 		if (api?.get_user_info) api.get_user_info().then((info) => {
 			if (!cancelled && info.name) setAuthor((current) => current || info.name || "");
@@ -161942,10 +165143,10 @@ var MAX_ROWS = 2;
 var TagStrip = ({ tags, showEdit, onEdit, className, collapseOnWrap = false }) => {
 	const rowRef = (0, import_react.useRef)(null);
 	const [visibleCount, setVisibleCount] = (0, import_react.useState)(tags.length);
-	const lastTagsRef = (0, import_react.useRef)(tags);
+	const [lastTags, setLastTags] = (0, import_react.useState)(tags);
 	const enableCollapse = collapseOnWrap && showEdit;
-	if (lastTagsRef.current !== tags) {
-		lastTagsRef.current = tags;
+	if (lastTags !== tags) {
+		setLastTags(tags);
 		if (visibleCount !== tags.length) setVisibleCount(tags.length);
 	}
 	(0, import_react.useLayoutEffect)(() => {
@@ -162128,17 +165329,22 @@ var TaskTab = ({ evalSpec, evalStats, earlyStopping, tags }) => {
 						className: clsx(TaskTab_module_default.grid),
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
 							className: "text-size-small",
-							entries: taskInformation
-						}, `plan-md-task`), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, { entries: {
-							["Start"]: formatDateTime(new Date(evalStats?.started_at || 0)),
-							["End"]: formatDateTime(new Date(evalStats?.completed_at || 0)),
-							["Duration"]: totalDuration
-						} })]
+							entries: taskInformation,
+							options: { copyButton: true }
+						}, `plan-md-task`), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
+							entries: {
+								["Start"]: formatDateTime(new Date(evalStats?.started_at || 0)),
+								["End"]: formatDateTime(new Date(evalStats?.completed_at || 0)),
+								["Duration"]: totalDuration
+							},
+							options: { copyButton: true }
+						})]
 					})
 				})] }),
 				earlyStopping && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Card, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardHeader, { label: `Early Stopping (${earlyStopping.manager} — ${formatNumber(earlyStopping.early_stops.length)} skipped)` }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardBody, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
 					id: `early-stopping-metadata`,
-					record: earlyStopping.metadata
+					record: earlyStopping.metadata,
+					copyButton: true
 				}) })] }),
 				Object.keys(task_args).length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Card, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardHeader, { label: "Task Args" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardBody, {
 					id: "task-card-config",
@@ -162794,11 +166000,11 @@ var ModelRolesView_module_default = {
 * Renders the Navbar
 */
 var ModelRolesView = ({ roles }) => {
-	roles = roles || {};
-	const singleLine = Object.keys(roles).length !== 1;
-	const modelEls = Object.keys(roles).map((key) => {
+	const modelRoles = roles || {};
+	const singleLine = Object.keys(modelRoles).length !== 1;
+	const modelEls = Object.keys(modelRoles).map((key) => {
 		const role = key;
-		const model = roles[role].model;
+		const model = modelRoles[role].model;
 		return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: clsx(singleLine ? ModelRolesView_module_default.grid : void 0, "text-style-secondary", "text-size-smallest"),
 			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
@@ -163079,7 +166285,7 @@ var ParamSummary = ({ params }) => {
 	const paraValues = Object.keys(params).map((key) => {
 		const val = params[key];
 		if (Array.isArray(val) || typeof val === "object") return `${key}: ${JSON.stringify(val)}`;
-		else return `${key}: ${val}`;
+		else return `${key}: ${String(val)}`;
 	});
 	if (paraValues.length > 0) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", {
 		style: {
@@ -163376,17 +166582,18 @@ var LogViewContainer = () => {
 		navigate,
 		prefix
 	]);
-	const prevLogPath = usePrevious(logPath);
+	const prevLogPathRef = (0, import_react.useRef)(void 0);
 	const syncLogs = useStore((state) => state.logsActions.syncLogs);
 	const initLogDir = useStore((state) => state.logsActions.initLogDir);
 	(0, import_react.useLayoutEffect)(() => {
+		const prevLogPath = prevLogPathRef.current;
+		prevLogPathRef.current = logPath;
 		if (prevLogPath && logPath && logPath !== prevLogPath) {
 			clearSelectedSample();
 			clearSelectedLogSummary();
 		}
 	}, [
 		logPath,
-		prevLogPath,
 		clearSelectedSample,
 		clearSelectedLogSummary
 	]);
@@ -163812,8 +167019,8 @@ var SamplesPanel = () => {
 	const logDir = useStore((state) => state.logs.logDir);
 	const loading = useStore((state) => state.app.status.loading);
 	const syncing = useStore((state) => state.app.status.syncing);
-	const showRetriedLogs = useStore((state) => state.logs.showRetriedLogs);
-	const setShowRetriedLogs = useStore((state) => state.logsActions.setShowRetriedLogs);
+	const showRetriedLogs = useUserSettings((state) => state.showRetriedLogs);
+	const setShowRetriedLogs = useUserSettings((state) => state.setShowRetriedLogs);
 	const filteredSamplesCount = useStore((state) => state.log.filteredSampleCount);
 	const setFilteredSampleCount = useStore((state) => state.logActions.setFilteredSampleCount);
 	const setDisplayedSamples = useStore((state) => state.logsActions.setDisplayedSamples);
@@ -163825,7 +167032,7 @@ var SamplesPanel = () => {
 	const selectedSampleHandle = useStore((state) => state.log.selectedSampleHandle);
 	const gridRef = (0, import_react.useRef)(null);
 	const [showColumnSelector, setShowColumnSelector] = (0, import_react.useState)(false);
-	const columnButtonRef = (0, import_react.useRef)(null);
+	const [columnButtonEl, setColumnButtonEl] = (0, import_react.useState)(null);
 	const logDetails = useStore((state) => state.logs.logDetails);
 	const { startPolling, stopPolling } = useClientEvents();
 	(0, import_react.useEffect)(() => {
@@ -163888,17 +167095,19 @@ var SamplesPanel = () => {
 		logDetails: logDetailsInPath
 	}), [logDetailsInPath]);
 	const optionalHasData = (0, import_react.useMemo)(() => {
-		let error = false, limit = false, retries = false;
+		let error = false, limit = false, retries = false, fallbacks = false;
 		outer: for (const details of Object.values(logDetailsInPath)) for (const sample of details.sampleSummaries) {
 			if (sample.error) error = true;
 			if (sample.limit) limit = true;
 			if (sample.retries) retries = true;
-			if (error && limit && retries) break outer;
+			if (sample.model_fallbacks?.length) fallbacks = true;
+			if (error && limit && retries && fallbacks) break outer;
 		}
 		return {
 			error,
 			limit,
-			retries
+			retries,
+			fallbacks
 		};
 	}, [logDetailsInPath]);
 	const { columnVisibility, setColumnVisibility, gridState, setGridState } = useSampleGridState("samplesPanel", allColumns, {
@@ -163907,6 +167116,7 @@ var SamplesPanel = () => {
 			if (id === "error") return optionalHasData.error;
 			if (id === "limit") return optionalHasData.limit;
 			if (id === "retries") return optionalHasData.retries;
+			if (id === "fallbacks") return optionalHasData.fallbacks;
 			if (id === "created") return false;
 			if (id === "sampleUuid") return false;
 			return true;
@@ -163978,6 +167188,7 @@ var SamplesPanel = () => {
 					error: sample.error,
 					limit: sample.limit,
 					retries: sample.retries,
+					fallbacks: totalModelFallbacks(sample.model_fallbacks) || void 0,
 					completed: sample.completed,
 					tokens,
 					duration: sample.total_time ?? void 0
@@ -164036,7 +167247,7 @@ var SamplesPanel = () => {
 						}
 					}, "show-retried"),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(NavbarButton, {
-						ref: columnButtonRef,
+						ref: setColumnButtonEl,
 						label: "Columns",
 						icon: ApplicationIcons.columns,
 						dropdown: true,
@@ -164056,7 +167267,7 @@ var SamplesPanel = () => {
 				columns: allColumns,
 				visibility: visibilityForGrid,
 				onVisibilityChange: setColumnVisibility,
-				positionEl: columnButtonRef.current,
+				positionEl: columnButtonEl,
 				filteredFields,
 				scoresHeading: "Scores"
 			}),
@@ -164189,6 +167400,7 @@ var AppRouter = createHashRouter([{
 }], { basename: "" });
 //#endregion
 //#region src/app/App.tsx
+var queryClient = new QueryClient({ defaultOptions: { queries: { retry: defaultRetry } } });
 var componentIcons = {
 	chevronDown: ApplicationIcons.chevron.down,
 	chevronUp: ApplicationIcons.collapse.up,
@@ -164221,10 +167433,12 @@ var useThemePreferenceSync = () => {
 	}, []);
 };
 /**
-* Renders the Main Application
+* Renders the application content. Mounted below the providers in App so it
+* can read the api context.
 */
-var App = ({ api }) => {
+var AppContent = () => {
 	useThemePreferenceSync();
+	const api = useApi();
 	const rehydrated = useStore((state) => state.app.rehydrated);
 	const logDir = useStore((state) => state.logs.logDir);
 	const selectedLogFile = useStore((state) => state.logs.selectedLogFile);
@@ -164333,15 +167547,40 @@ var App = ({ api }) => {
 		syncLogs,
 		onMessage
 	]);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ApiProvider, {
-		value: api,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComponentIconProvider, {
-			icons: componentIcons,
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComponentStateProvider, {
-				hooks: inspectStateHooks,
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RouterProvider2, { router: AppRouter })
-			})
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComponentIconProvider, {
+		icons: componentIcons,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComponentStateProvider, {
+			hooks: inspectStateHooks,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RouterProvider2, { router: AppRouter })
 		})
+	});
+};
+var AppConfigGate = () => {
+	const appConfig = useAppConfigAsync();
+	if (appConfig.error) return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: "app-config-gate",
+		children: ["Failed to load application configuration: ", appConfig.error.message]
+	});
+	if (!appConfig.data) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: "app-config-gate",
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PulsingDots, {
+			size: "large",
+			text: "Loading application…"
+		})
+	});
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AppContent, {});
+};
+/**
+* Renders the Main Application. Owns the query client + api providers so the
+* exported <App> stays self-contained for external embedders.
+*/
+var App = ({ api }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(QueryClientProvider, {
+		client: queryClient,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ApiProvider, {
+			value: api,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AppConfigGate, {})
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ReactQueryDevtools2, { initialIsOpen: false })]
 	});
 };
 //#endregion
@@ -164587,7 +167826,7 @@ for (var i = 256; i < 280; ++i) flt[i] = 7;
 for (var i = 280; i < 288; ++i) flt[i] = 8;
 var fdt = new u8$1(32);
 for (var i = 0; i < 32; ++i) fdt[i] = 5;
-var flrm = /* @__PURE__ */ hMap(flt, 9, 1), fdrm = /* @__PURE__ */ hMap(fdt, 5, 1);
+var flrm = /*#__PURE__*/ hMap(flt, 9, 1), fdrm = /*#__PURE__*/ hMap(fdt, 5, 1);
 var max = function(a) {
 	var m = a[0];
 	for (var i = 1; i < a.length; ++i) if (a[i] > m) m = a[i];
@@ -164748,7 +167987,7 @@ var inflt = function(dat, st, buf, dict) {
 	} while (!final);
 	return bt != buf.length && noBuf ? slc$1(buf, 0, bt) : buf.subarray(0, bt);
 };
-var et = /* @__PURE__ */ new u8$1(0);
+var et = /*#__PURE__*/ new u8$1(0);
 var mrg = function(a, b) {
 	var o = {};
 	for (var k in a) o[k] = a[k];
@@ -164912,7 +168151,7 @@ function decompress$1(data, opts, cb) {
 	if (typeof cb != "function") err$1(7);
 	return data[0] == 31 && data[1] == 139 && data[2] == 8 ? gunzip(data, opts, cb) : (data[0] & 15) != 8 || data[0] >> 4 > 7 || (data[0] << 8 | data[1]) % 31 ? inflate(data, opts, cb) : unzlib(data, opts, cb);
 }
-var td = typeof TextDecoder != "undefined" && /* @__PURE__ */ new TextDecoder();
+var td = typeof TextDecoder != "undefined" && /*#__PURE__*/ new TextDecoder();
 try {
 	td.decode(et, { stream: true });
 } catch (e) {}
@@ -165146,7 +168385,7 @@ var rhu = function(dat, bt) {
 		s: syms
 	}];
 };
-var dllt = rfse(/* @__PURE__ */ new u8([
+var dllt = (/*#__PURE__*/ rfse(/*#__PURE__*/ new u8([
 	81,
 	16,
 	99,
@@ -165166,8 +168405,8 @@ var dllt = rfse(/* @__PURE__ */ new u8([
 	70,
 	146,
 	4
-]), 0, 6)[1];
-var dmlt = rfse(/* @__PURE__ */ new u8([
+]), 0, 6))[1];
+var dmlt = (/*#__PURE__*/ rfse(/*#__PURE__*/ new u8([
 	33,
 	20,
 	196,
@@ -165195,8 +168434,8 @@ var dmlt = rfse(/* @__PURE__ */ new u8([
 	68,
 	36,
 	9
-]), 0, 6)[1];
-var doct = rfse(/* @__PURE__ */ new u8([
+]), 0, 6))[1];
+var doct = (/*#__PURE__ */ rfse(/*#__PURE__*/ new u8([
 	32,
 	132,
 	16,
@@ -165210,7 +168449,7 @@ var doct = rfse(/* @__PURE__ */ new u8([
 	36,
 	73,
 	2
-]), 0, 5)[1];
+]), 0, 5))[1];
 var b2bl = function(b, s) {
 	var len = b.length, bl = new i32(len);
 	for (var i = 0; i < len; ++i) {
@@ -165219,7 +168458,7 @@ var b2bl = function(b, s) {
 	}
 	return bl;
 };
-var llb = /* @__PURE__ */ new u8((/* @__PURE__ */ new i32([
+var llb = /*#__PURE__ */ new u8((/*#__PURE__ */ new i32([
 	0,
 	0,
 	0,
@@ -165230,8 +168469,8 @@ var llb = /* @__PURE__ */ new u8((/* @__PURE__ */ new i32([
 	202050057,
 	269422093
 ])).buffer, 0, 36);
-var llbl = /* @__PURE__ */ b2bl(llb, 0);
-var mlb = /* @__PURE__ */ new u8((/* @__PURE__ */ new i32([
+var llbl = /*#__PURE__ */ b2bl(llb, 0);
+var mlb = /*#__PURE__ */ new u8((/*#__PURE__ */ new i32([
 	0,
 	0,
 	0,
@@ -165247,7 +168486,7 @@ var mlb = /* @__PURE__ */ new u8((/* @__PURE__ */ new i32([
 	252579084,
 	16
 ])).buffer, 0, 53);
-var mlbl = /* @__PURE__ */ b2bl(mlb, 3);
+var mlbl = /*#__PURE__ */ b2bl(mlb, 3);
 var dhu = function(dat, out, hu) {
 	var len = dat.length, ss = out.length, lb = dat[len - 1], msk = (1 << hu.b) - 1, eb = -hu.b;
 	if (!lb) err(0);
@@ -166144,7 +169383,7 @@ var openRemoteLogFile = async (api, url, concurrency) => {
 		* Reads the complete log file.
 		*/
 		readCompleteLog: async () => {
-			const [evalLogHeader, samples] = await Promise.all([readHeader(), listSamples().then((sampleIds) => Promise.all(sampleIds.map(({ sampleId, epoch }) => readSample(sampleId, epoch).then((sample) => sample))))]);
+			const [evalLogHeader, samples] = await Promise.all([readHeader(), listSamples().then((sampleIds) => Promise.all(sampleIds.map(({ sampleId, epoch }) => readSample(sampleId, epoch))))]);
 			return {
 				status: evalLogHeader.status,
 				eval: evalLogHeader.eval,
@@ -166302,6 +169541,10 @@ var clientApi = (api, log_file, debug = false) => {
 	* Gets log headers
 	*/
 	const get_log_summaries = async (log_files) => {
+		try {
+			const summaries = await api.get_log_summaries(log_files);
+			if (summaries.length === log_files.length) return summaries;
+		} catch {}
 		const eval_files = {};
 		const json_files = {};
 		let index = 0;
@@ -166410,6 +169653,7 @@ var clientApi = (api, log_file, debug = false) => {
 		get_log_pending_samples: api.eval_pending_samples ? middleware("get_log_pending_samples", get_log_pending_samples) : void 0,
 		get_log_sample_data: api.eval_log_sample_data ? middleware("get_log_sample_data", get_log_sample_data) : void 0,
 		get_user_info: api.get_user_info ? middleware("get_user_info", () => api.get_user_info()) : void 0,
+		get_app_config: middleware("get_app_config", () => api.get_app_config()),
 		edit_log: api.edit_log ? middleware("edit_log", async (log_file, update, if_match_etag) => {
 			const effective = if_match_etag ?? editEtagByLog.get(log_file);
 			const result = await api.edit_log(log_file, update, effective);
@@ -166564,18 +169808,23 @@ function joinURI(...segments) {
 }
 //#endregion
 //#region src/client/api/static-http/api-static-http.ts
+var kFallbackAppConfig = {
+	inspect_version: "unknown",
+	scout_version: null
+};
 /**
 * This provides an API implementation that will serve a single
 * file using an http parameter, designed to be deployed
 * to a webserver without inspect or the ability to enumerate log
 * files
 */
-function staticHttpApi(log_dir, log_file, abs_log_dir) {
+function staticHttpApi(log_dir, log_file, abs_log_dir, app_config) {
 	const resolved_log_dir = log_dir?.replace(" ", "+");
 	return staticHttpApiForLog({
 		log_file: log_file ? log_file.replace(" ", "+") : void 0,
 		log_dir: resolved_log_dir,
-		abs_log_dir
+		abs_log_dir,
+		app_config
 	});
 }
 /**
@@ -166584,6 +169833,7 @@ function staticHttpApi(log_dir, log_file, abs_log_dir) {
 function staticHttpApiForLog(logInfo) {
 	const log_dir = logInfo.log_dir;
 	const abs_log_dir = logInfo.abs_log_dir;
+	const app_config = logInfo.app_config ?? kFallbackAppConfig;
 	let manifest = void 0;
 	let manifestPromise = void 0;
 	const getManifest = async () => {
@@ -166685,6 +169935,7 @@ function staticHttpApiForLog(logInfo) {
 			}
 			throw new Error(`Failed to load a listing file using the directory: ${log_dir}. Please be sure you have deployed a manifest file (listing.json).`);
 		},
+		get_app_config: async () => app_config,
 		download_file: download_file$1,
 		open_log_file
 	};
@@ -166712,7 +169963,8 @@ var fetchPendingSampleDataDirect = async (getUrls, log_file, id, epoch, cursors)
 			message_pool: [],
 			call_pool: []
 		},
-		has_more: urls.has_more
+		has_more: urls.has_more === true,
+		complete: urls.complete === true
 	};
 	if (!urls.segments.every((s) => s.direct_url != null)) return;
 	const parts = await Promise.all(urls.segments.map((seg) => readSegment(seg)));
@@ -166723,7 +169975,8 @@ var fetchPendingSampleDataDirect = async (getUrls, log_file, id, epoch, cursors)
 			message_pool: parts.flatMap((p) => p.message_pool),
 			call_pool: parts.flatMap((p) => p.call_pool)
 		}, cursors),
-		has_more: urls.has_more
+		has_more: urls.has_more === true,
+		complete: urls.complete === true
 	};
 };
 var readSegment = async (seg) => {
@@ -166925,7 +170178,8 @@ function viewServerApi(options = {}) {
 		return {
 			status: "OK",
 			sampleData: direct.sampleData,
-			has_more: direct.has_more
+			has_more: direct.has_more,
+			complete: direct.complete
 		};
 	};
 	const edit_log = async (log_file, update, if_match_etag) => {
@@ -166963,6 +170217,9 @@ function viewServerApi(options = {}) {
 	const get_user_info = async () => {
 		return (await requestApi.fetchString("GET", "/user-info")).parsed ?? {};
 	};
+	const get_app_config = async () => {
+		return (await requestApi.fetchString("GET", "/app-config")).parsed;
+	};
 	const download_log = async (log_file) => {
 		const url = `${apiBaseUrl || "/api"}/log-download/${encodeURIComponent(log_file)}`;
 		const link = document.createElement("a");
@@ -166991,7 +170248,8 @@ function viewServerApi(options = {}) {
 		eval_log_sample_data,
 		eval_log_sample_data_direct,
 		edit_log,
-		get_user_info
+		get_user_info,
+		get_app_config
 	};
 }
 //#endregion
@@ -167008,6 +170266,7 @@ var kMethodSampleData = "eval_log_sample_data";
 var kMethodLogMessage = "log_message";
 var kMethodEditLog = "edit_log";
 var kMethodGetUserInfo = "get_user_info";
+var kMethodAppConfig = "app_config";
 function webViewJsonRpcClient(vscode) {
 	return jsonRpcPostMessageRequestTransport({
 		postMessage: (data) => {
@@ -167212,6 +170471,27 @@ async function get_user_info() {
 		throw e;
 	}
 }
+/**
+* Installed inspect / scout versions. Older extensions don't expose the
+* method (kJsonRpcMethodNotFound) — fall back to a placeholder so the
+* startup config gate still resolves and the app renders.
+*/
+async function get_app_config() {
+	try {
+		const response = await vscodeClient(kMethodAppConfig, []);
+		if (!response) return {
+			inspect_version: "unknown",
+			scout_version: null
+		};
+		return typeof response === "string" ? import_dist.default.parse(response) : response;
+	} catch (e) {
+		if (e?.code === -32601) return {
+			inspect_version: "unknown",
+			scout_version: null
+		};
+		throw e;
+	}
+}
 async function open_log_file(log_file, log_dir) {
 	const msg = {
 		type: "displayLogFile",
@@ -167237,7 +170517,8 @@ var api = {
 	eval_pending_samples,
 	eval_log_sample_data,
 	edit_log,
-	get_user_info
+	get_user_info,
+	get_app_config
 };
 //#endregion
 //#region src/client/api/index.ts
@@ -167253,7 +170534,14 @@ var resolveApi = () => {
 			const context = scriptEl.textContent;
 			if (context !== null) {
 				const data = import_dist.default.parse(context);
-				if (data.log_dir || data.log_file) return clientApi(staticHttpApi(data.log_dir || dirname(data.log_file), data.log_file, data.abs_log_dir), data.log_file, debug);
+				if (data.log_dir || data.log_file) {
+					const log_dir = data.log_dir || dirname(data.log_file);
+					const app_config = data.inspect_version !== void 0 ? {
+						inspect_version: data.inspect_version,
+						scout_version: null
+					} : void 0;
+					return clientApi(staticHttpApi(log_dir, data.log_file, data.abs_log_dir, app_config), data.log_file, debug);
+				}
 			}
 		}
 		const urlParams = new URLSearchParams(window.location.search);
