@@ -9592,6 +9592,23 @@ var printArray = (arr, size = 50) => {
 	return envelope[0] + allItems.join(separator) + envelope[1];
 };
 //#endregion
+//#region ../../packages/util/src/autosizeTextarea.ts
+function autosizeTextarea(el, config) {
+	const cs = getComputedStyle(el);
+	const fontSize = parseFloat(cs.fontSize);
+	const rawLineHeight = parseFloat(cs.lineHeight);
+	const lineHeight = Number.isFinite(rawLineHeight) ? rawLineHeight : fontSize * 1.4;
+	const padY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+	const borderY = parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+	const minH = lineHeight * config.minRows + padY + borderY;
+	const maxH = lineHeight * config.maxRows + padY + borderY;
+	el.style.height = "auto";
+	const desired = el.scrollHeight + borderY;
+	const next = Math.min(maxH, Math.max(minH, desired));
+	el.style.height = `${next}px`;
+	el.style.overflowY = desired > maxH ? "auto" : "hidden";
+}
+//#endregion
 //#region ../../node_modules/.pnpm/@uwdata+flechette@2.5.0/node_modules/@uwdata/flechette/src/util/arrays.js
 /**
 * @import { Int64ArrayConstructor, IntArrayConstructor, IntegerArray, TypedArray } from '../types.js'
@@ -17630,6 +17647,34 @@ var isBase64 = (str) => base64Pattern.test(str);
 */
 var maybeBase64 = (str, minLen = 256) => str.length > minLen && isBase64(str);
 //#endregion
+//#region ../../packages/util/src/base64url.ts
+/**
+* Encodes a UTF-8 string to base64url format (RFC 4648 Section 5).
+*
+* Base64url is a URL-safe variant of base64 that uses `-` instead of `+`,
+* `_` instead of `/`, and omits padding `=` characters. This makes encoded
+* values safe for use in URLs and filenames without percent-encoding.
+*
+* Used throughout the app to encode directory paths for URL path segments,
+* e.g., `/scans/{dir}` where `{dir}` is a base64url-encoded path like
+* `/Users/alice/scans` -> `L1VzZXJzL2FsaWNlL3NjYW5z`.
+*
+* @param value - The UTF-8 string to encode
+* @returns The base64url-encoded string (no padding)
+*
+* @example
+* encodeBase64Url("/tmp/scans")  // "L3RtcC9zY2Fucw"
+* encodeBase64Url("hello world") // "aGVsbG8gd29ybGQ"
+*/
+var encodeBase64Url = (value) => {
+	const bytes = new TextEncoder().encode(value);
+	let binary = "";
+	bytes.forEach((byte) => {
+		binary += String.fromCharCode(byte);
+	});
+	return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
+};
+//#endregion
 //#region ../../packages/util/src/browser.ts
 /**
 * Clears the current text selection in the document.
@@ -21405,7 +21450,7 @@ Prism.languages.py = Prism.languages.python;
 	Prism.languages.yml = Prism.languages.yaml;
 })(Prism);
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/subscribable.js
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.101.0/node_modules/@tanstack/query-core/build/modern/subscribable.js
 var Subscribable = class {
 	constructor() {
 		this.listeners = /* @__PURE__ */ new Set();
@@ -21426,7 +21471,7 @@ var Subscribable = class {
 	onUnsubscribe() {}
 };
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/focusManager.js
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.101.0/node_modules/@tanstack/query-core/build/modern/focusManager.js
 var FocusManager = class extends Subscribable {
 	#focused;
 	#cleanup;
@@ -21479,7 +21524,7 @@ var FocusManager = class extends Subscribable {
 };
 var focusManager = new FocusManager();
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/timeoutManager.js
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.101.0/node_modules/@tanstack/query-core/build/modern/timeoutManager.js
 var defaultTimeoutProvider = {
 	setTimeout: (callback, delay) => setTimeout(callback, delay),
 	clearTimeout: (timeoutId) => clearTimeout(timeoutId),
@@ -21510,7 +21555,7 @@ function systemSetTimeoutZero(callback) {
 	setTimeout(callback, 0);
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/utils.js
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.101.0/node_modules/@tanstack/query-core/build/modern/utils.js
 var isServer = typeof window === "undefined" || "Deno" in globalThis;
 function noop() {}
 function functionalUpdate(updater, input) {
@@ -21668,7 +21713,7 @@ function addConsumeAwareSignal(object, getSignal, onCancelled) {
 	return object;
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/environmentManager.js
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.101.0/node_modules/@tanstack/query-core/build/modern/environmentManager.js
 var environmentManager = /* @__PURE__ */ (() => {
 	let isServerFn = () => isServer;
 	return {
@@ -21687,7 +21732,7 @@ var environmentManager = /* @__PURE__ */ (() => {
 	};
 })();
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/thenable.js
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.101.0/node_modules/@tanstack/query-core/build/modern/thenable.js
 function pendingThenable() {
 	let resolve;
 	let reject;
@@ -21719,7 +21764,7 @@ function pendingThenable() {
 	return thenable;
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/notifyManager.js
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.101.0/node_modules/@tanstack/query-core/build/modern/notifyManager.js
 var defaultScheduler = systemSetTimeoutZero;
 function createNotifyManager() {
 	let queue = [];
@@ -21792,7 +21837,7 @@ function createNotifyManager() {
 }
 var notifyManager = createNotifyManager();
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/onlineManager.js
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.101.0/node_modules/@tanstack/query-core/build/modern/onlineManager.js
 var OnlineManager = class extends Subscribable {
 	#online = true;
 	#cleanup;
@@ -21840,7 +21885,7 @@ var OnlineManager = class extends Subscribable {
 };
 var onlineManager = new OnlineManager();
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/retryer.js
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.101.0/node_modules/@tanstack/query-core/build/modern/retryer.js
 function defaultRetryDelay(failureCount) {
 	return Math.min(1e3 * 2 ** failureCount, 3e4);
 }
@@ -21946,7 +21991,7 @@ function createRetryer(config) {
 	};
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/removable.js
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.101.0/node_modules/@tanstack/query-core/build/modern/removable.js
 var Removable = class {
 	#gcTimeout;
 	destroy() {
@@ -21969,7 +22014,7 @@ var Removable = class {
 	}
 };
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/infiniteQueryBehavior.js
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.101.0/node_modules/@tanstack/query-core/build/modern/infiniteQueryBehavior.js
 function infiniteQueryBehavior(pages) {
 	return { onFetch: (context, query) => {
 		const options = context.options;
@@ -22047,7 +22092,7 @@ function getPreviousPageParam(options, { pages, pageParams }) {
 	return pages.length > 0 ? options.getPreviousPageParam?.(pages[0], pages, pageParams[0], pageParams) : void 0;
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/query.js
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.101.0/node_modules/@tanstack/query-core/build/modern/query.js
 var Query = class extends Removable {
 	#queryType;
 	#initialState;
@@ -22419,7 +22464,7 @@ function getDefaultState$1(options) {
 	};
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/queryObserver.js
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.101.0/node_modules/@tanstack/query-core/build/modern/queryObserver.js
 var QueryObserver = class extends Subscribable {
 	constructor(client, options) {
 		super();
@@ -22762,7 +22807,7 @@ function shouldAssignObserverCurrentProperties(observer, optimisticResult) {
 	return false;
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/mutation.js
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.101.0/node_modules/@tanstack/query-core/build/modern/mutation.js
 var Mutation = class extends Removable {
 	#client;
 	#observers;
@@ -22976,7 +23021,7 @@ function getDefaultState() {
 	};
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/mutationCache.js
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.101.0/node_modules/@tanstack/query-core/build/modern/mutationCache.js
 var MutationCache = class extends Subscribable {
 	constructor(config = {}) {
 		super();
@@ -23083,7 +23128,111 @@ function scopeFor(mutation) {
 	return mutation.options.scope?.id;
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/queryCache.js
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.101.0/node_modules/@tanstack/query-core/build/modern/mutationObserver.js
+var MutationObserver$1 = class extends Subscribable {
+	#client;
+	#currentResult = void 0;
+	#currentMutation;
+	#mutateOptions;
+	constructor(client, options) {
+		super();
+		this.#client = client;
+		this.setOptions(options);
+		this.bindMethods();
+		this.#updateResult();
+	}
+	bindMethods() {
+		this.mutate = this.mutate.bind(this);
+		this.reset = this.reset.bind(this);
+	}
+	setOptions(options) {
+		const prevOptions = this.options;
+		this.options = this.#client.defaultMutationOptions(options);
+		if (!shallowEqualObjects(this.options, prevOptions)) this.#client.getMutationCache().notify({
+			type: "observerOptionsUpdated",
+			mutation: this.#currentMutation,
+			observer: this
+		});
+		if (prevOptions?.mutationKey && this.options.mutationKey && hashKey(prevOptions.mutationKey) !== hashKey(this.options.mutationKey)) this.reset();
+		else if (this.#currentMutation?.state.status === "pending") this.#currentMutation.setOptions(this.options);
+	}
+	onUnsubscribe() {
+		if (!this.hasListeners()) this.#currentMutation?.removeObserver(this);
+	}
+	onMutationUpdate(action) {
+		this.#updateResult();
+		this.#notify(action);
+	}
+	getCurrentResult() {
+		return this.#currentResult;
+	}
+	reset() {
+		this.#currentMutation?.removeObserver(this);
+		this.#currentMutation = void 0;
+		this.#updateResult();
+		this.#notify();
+	}
+	mutate(variables, options) {
+		this.#mutateOptions = options;
+		this.#currentMutation?.removeObserver(this);
+		this.#currentMutation = this.#client.getMutationCache().build(this.#client, this.options);
+		this.#currentMutation.addObserver(this);
+		return this.#currentMutation.execute(variables);
+	}
+	#updateResult() {
+		const state = this.#currentMutation?.state ?? getDefaultState();
+		this.#currentResult = {
+			...state,
+			isPending: state.status === "pending",
+			isSuccess: state.status === "success",
+			isError: state.status === "error",
+			isIdle: state.status === "idle",
+			mutate: this.mutate,
+			reset: this.reset
+		};
+	}
+	#notify(action) {
+		notifyManager.batch(() => {
+			if (this.#mutateOptions && this.hasListeners()) {
+				const variables = this.#currentResult.variables;
+				const onMutateResult = this.#currentResult.context;
+				const context = {
+					client: this.#client,
+					meta: this.options.meta,
+					mutationKey: this.options.mutationKey
+				};
+				if (action?.type === "success") {
+					try {
+						this.#mutateOptions.onSuccess?.(action.data, variables, onMutateResult, context);
+					} catch (e) {
+						Promise.reject(e);
+					}
+					try {
+						this.#mutateOptions.onSettled?.(action.data, null, variables, onMutateResult, context);
+					} catch (e) {
+						Promise.reject(e);
+					}
+				} else if (action?.type === "error") {
+					try {
+						this.#mutateOptions.onError?.(action.error, variables, onMutateResult, context);
+					} catch (e) {
+						Promise.reject(e);
+					}
+					try {
+						this.#mutateOptions.onSettled?.(void 0, action.error, variables, onMutateResult, context);
+					} catch (e) {
+						Promise.reject(e);
+					}
+				}
+			}
+			this.listeners.forEach((listener) => {
+				listener(this.#currentResult);
+			});
+		});
+	}
+};
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.101.0/node_modules/@tanstack/query-core/build/modern/queryCache.js
 var QueryCache = class extends Subscribable {
 	constructor(config = {}) {
 		super();
@@ -23175,7 +23324,7 @@ var QueryCache = class extends Subscribable {
 	}
 };
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+query-core@5.100.14/node_modules/@tanstack/query-core/build/modern/queryClient.js
+//#region ../../node_modules/.pnpm/@tanstack+query-core@5.101.0/node_modules/@tanstack/query-core/build/modern/queryClient.js
 var QueryClient = class {
 	#queryCache;
 	#mutationCache;
@@ -23416,7 +23565,7 @@ var QueryClient = class {
 	}
 };
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+react-query@5.100.14_react@19.2.7/node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js
+//#region ../../node_modules/.pnpm/@tanstack+react-query@5.101.0_react@19.2.7/node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js
 var import_react = /* @__PURE__ */ __toESM(require_react(), 1);
 var import_jsx_runtime = require_jsx_runtime();
 var QueryClientContext = import_react.createContext(void 0);
@@ -23439,12 +23588,12 @@ var QueryClientProvider = ({ client, children }) => {
 	});
 };
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+react-query@5.100.14_react@19.2.7/node_modules/@tanstack/react-query/build/modern/IsRestoringProvider.js
+//#region ../../node_modules/.pnpm/@tanstack+react-query@5.101.0_react@19.2.7/node_modules/@tanstack/react-query/build/modern/IsRestoringProvider.js
 var IsRestoringContext = import_react.createContext(false);
 var useIsRestoring = () => import_react.useContext(IsRestoringContext);
 IsRestoringContext.Provider;
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+react-query@5.100.14_react@19.2.7/node_modules/@tanstack/react-query/build/modern/QueryErrorResetBoundary.js
+//#region ../../node_modules/.pnpm/@tanstack+react-query@5.101.0_react@19.2.7/node_modules/@tanstack/react-query/build/modern/QueryErrorResetBoundary.js
 function createValue() {
 	let isReset = false;
 	return {
@@ -23462,7 +23611,7 @@ function createValue() {
 var QueryErrorResetBoundaryContext = import_react.createContext(createValue());
 var useQueryErrorResetBoundary = () => import_react.useContext(QueryErrorResetBoundaryContext);
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+react-query@5.100.14_react@19.2.7/node_modules/@tanstack/react-query/build/modern/errorBoundaryUtils.js
+//#region ../../node_modules/.pnpm/@tanstack+react-query@5.101.0_react@19.2.7/node_modules/@tanstack/react-query/build/modern/errorBoundaryUtils.js
 var ensurePreventErrorBoundaryRetry = (options, errorResetBoundary, query) => {
 	const throwOnError = query?.state.error && typeof options.throwOnError === "function" ? shouldThrowError(options.throwOnError, [query.state.error, query]) : options.throwOnError;
 	if (options.suspense || options.experimental_prefetchInRender || throwOnError) {
@@ -23478,7 +23627,7 @@ var getHasError = ({ result, errorResetBoundary, throwOnError, query, suspense }
 	return result.isError && !errorResetBoundary.isReset() && !result.isFetching && query && (suspense && result.data === void 0 || shouldThrowError(throwOnError, [result.error, query]));
 };
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+react-query@5.100.14_react@19.2.7/node_modules/@tanstack/react-query/build/modern/suspense.js
+//#region ../../node_modules/.pnpm/@tanstack+react-query@5.101.0_react@19.2.7/node_modules/@tanstack/react-query/build/modern/suspense.js
 var ensureSuspenseTimers = (defaultedOptions) => {
 	if (defaultedOptions.suspense) {
 		const MIN_SUSPENSE_TIME_MS = 1e3;
@@ -23494,7 +23643,7 @@ var fetchOptimistic = (defaultedOptions, observer, errorResetBoundary) => observ
 	errorResetBoundary.clearReset();
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+react-query@5.100.14_react@19.2.7/node_modules/@tanstack/react-query/build/modern/useBaseQuery.js
+//#region ../../node_modules/.pnpm/@tanstack+react-query@5.101.0_react@19.2.7/node_modules/@tanstack/react-query/build/modern/useBaseQuery.js
 function useBaseQuery(options, Observer, queryClient) {
 	const isRestoring = useIsRestoring();
 	const errorResetBoundary = useQueryErrorResetBoundary();
@@ -23534,9 +23683,28 @@ function useBaseQuery(options, Observer, queryClient) {
 	return !defaultedOptions.notifyOnChangeProps ? observer.trackResult(result) : result;
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+react-query@5.100.14_react@19.2.7/node_modules/@tanstack/react-query/build/modern/useQuery.js
+//#region ../../node_modules/.pnpm/@tanstack+react-query@5.101.0_react@19.2.7/node_modules/@tanstack/react-query/build/modern/useQuery.js
 function useQuery(options, queryClient) {
 	return useBaseQuery(options, QueryObserver, queryClient);
+}
+//#endregion
+//#region ../../node_modules/.pnpm/@tanstack+react-query@5.101.0_react@19.2.7/node_modules/@tanstack/react-query/build/modern/useMutation.js
+function useMutation(options, queryClient) {
+	const client = useQueryClient(queryClient);
+	const [observer] = import_react.useState(() => new MutationObserver$1(client, options));
+	import_react.useEffect(() => {
+		observer.setOptions(options);
+	}, [observer, options]);
+	const result = import_react.useSyncExternalStore(import_react.useCallback((onStoreChange) => observer.subscribe(notifyManager.batchCalls(onStoreChange)), [observer]), () => observer.getCurrentResult(), () => observer.getCurrentResult());
+	const mutate = import_react.useCallback((variables, mutateOptions) => {
+		observer.mutate(variables, mutateOptions).catch(noop);
+	}, [observer]);
+	if (result.error && shouldThrowError(observer.options.throwOnError, [result.error])) throw result.error;
+	return {
+		...result,
+		mutate,
+		mutateAsync: result.mutate
+	};
 }
 //#endregion
 //#region \0vite/preload-helper.js
@@ -23600,7 +23768,7 @@ var __vitePreload = function preload(baseModule, deps, importerUrl) {
 	});
 };
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+react-query-devtools@5.100.14_@tanstack+react-query@5.100.14_react@19.2.7__react@19.2.7/node_modules/@tanstack/react-query-devtools/build/modern/index.js
+//#region ../../node_modules/.pnpm/@tanstack+react-query-devtools@5.101.0_@tanstack+react-query@5.101.0_react@19.2.7__react@19.2.7/node_modules/@tanstack/react-query-devtools/build/modern/index.js
 var ReactQueryDevtools2 = function() {
 	return null;
 };
@@ -24221,9 +24389,9 @@ var require_clipboard = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	});
 }));
 //#endregion
-//#region ../../node_modules/.pnpm/react-router@7.16.0_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/react-router/dist/development/chunk-QUQL4437.mjs
+//#region ../../node_modules/.pnpm/react-router@7.17.0_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/react-router/dist/development/chunk-6CSD65Y2.mjs
 /**
-* react-router v7.16.0
+* react-router v7.17.0
 *
 * Copyright (c) Remix Software Inc.
 *
@@ -28737,7 +28905,7 @@ function mergeRefs(...refs) {
 import_react.Component;
 var isBrowser2 = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined";
 try {
-	if (isBrowser2) window.__reactRouterVersion = "7.16.0";
+	if (isBrowser2) window.__reactRouterVersion = "7.17.0";
 } catch (e) {}
 function createHashRouter(routes, opts) {
 	return createRouter({
@@ -29192,9 +29360,9 @@ function useViewTransitionState(to, { relative } = {}) {
 	return matchPath(path.pathname, nextPath) != null || matchPath(path.pathname, currentPath) != null;
 }
 //#endregion
-//#region ../../node_modules/.pnpm/react-router@7.16.0_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/react-router/dist/development/dom-export.mjs
+//#region ../../node_modules/.pnpm/react-router@7.17.0_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/react-router/dist/development/dom-export.mjs
 /**
-* react-router v7.16.0
+* react-router v7.17.0
 *
 * Copyright (c) Remix Software Inc.
 *
@@ -29225,6 +29393,15 @@ function clsx() {
 	for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r$8(e)) && (n && (n += " "), n += t);
 	return n;
 }
+var AutocompleteInput_module_default = {
+	container: "_container_uf0p9_1",
+	input: "_input_uf0p9_6",
+	inputWithToggle: "_inputWithToggle_uf0p9_22",
+	toggleButton: "_toggleButton_uf0p9_26",
+	suggestionsList: "_suggestionsList_uf0p9_51",
+	suggestionItem: "_suggestionItem_uf0p9_64",
+	highlighted: "_highlighted_uf0p9_74"
+};
 //#endregion
 //#region ../../packages/react/src/components/ComponentIconContext.tsx
 var ComponentIconContext = (0, import_react.createContext)(null);
@@ -29236,6 +29413,214 @@ var useComponentIcons = () => {
 	const icons = (0, import_react.useContext)(ComponentIconContext);
 	if (!icons) throw new Error("useComponentIcons must be used within a ComponentIconProvider");
 	return icons;
+};
+//#endregion
+//#region ../../packages/react/src/components/AutocompleteInput.tsx
+var AutocompleteInput = ({ id, value, onChange, onCommit, onCancel, disabled, suggestions, placeholder = "Filter", maxSuggestions = 10, charactersBeforeSuggesting = 1, maxSuggestionWidth = 300, autoFocus, className, allowBrowse = false, required = false }) => {
+	const icons = useComponentIcons();
+	const inputRef = (0, import_react.useRef)(null);
+	const [isOpen, setIsOpen] = (0, import_react.useState)(false);
+	const [highlightedIndex, setHighlightedIndex] = (0, import_react.useState)(-1);
+	const [isBrowseMode, setIsBrowseMode] = (0, import_react.useState)(false);
+	const [dropdownPosition, setDropdownPosition] = (0, import_react.useState)(null);
+	const listRef = (0, import_react.useRef)(null);
+	const containerRef = (0, import_react.useRef)(null);
+	const hasTypedRef = (0, import_react.useRef)(false);
+	const filteredSuggestions = (0, import_react.useMemo)(() => {
+		if (isBrowseMode) return suggestions.filter((s) => s !== null);
+		if (value.length < charactersBeforeSuggesting) return [];
+		const lowerValue = value.toLowerCase();
+		return suggestions.filter((s) => {
+			if (s === null) return false;
+			const strValue = String(s).toLowerCase();
+			if (strValue === lowerValue) return false;
+			return strValue.includes(lowerValue);
+		}).slice(0, maxSuggestions);
+	}, [
+		suggestions,
+		value,
+		maxSuggestions,
+		charactersBeforeSuggesting,
+		isBrowseMode
+	]);
+	const showDropdown = isOpen && filteredSuggestions.length > 0;
+	(0, import_react.useEffect)(() => {
+		if (showDropdown && containerRef.current) {
+			const rect = containerRef.current.getBoundingClientRect();
+			setDropdownPosition({
+				top: rect.bottom + 2,
+				left: rect.left,
+				width: rect.width
+			});
+		}
+	}, [showDropdown]);
+	(0, import_react.useEffect)(() => {
+		setHighlightedIndex(-1);
+	}, [filteredSuggestions]);
+	(0, import_react.useEffect)(() => {
+		if (autoFocus && inputRef.current) {
+			inputRef.current.select();
+			inputRef.current.scrollLeft = 0;
+		}
+	}, [autoFocus]);
+	const handleFocus = (0, import_react.useCallback)(() => {
+		if (hasTypedRef.current && filteredSuggestions.length > 0) setIsOpen(true);
+	}, [filteredSuggestions.length]);
+	(0, import_react.useEffect)(() => {
+		const handleClickOutside = (e) => {
+			if (containerRef.current && !containerRef.current.contains(e.target)) setIsOpen(false);
+		};
+		document.addEventListener("mousedown", handleClickOutside);
+		return () => document.removeEventListener("mousedown", handleClickOutside);
+	}, []);
+	const handleInputChange = (0, import_react.useCallback)((e) => {
+		hasTypedRef.current = true;
+		setIsBrowseMode(false);
+		onChange(e.target.value);
+		setIsOpen(true);
+	}, [onChange]);
+	const handleToggleBrowse = (0, import_react.useCallback)(() => {
+		if (isOpen && isBrowseMode) {
+			setIsOpen(false);
+			setIsBrowseMode(false);
+		} else {
+			setIsBrowseMode(true);
+			setIsOpen(true);
+		}
+		inputRef.current?.focus();
+	}, [isOpen, isBrowseMode]);
+	const selectSuggestion = (0, import_react.useCallback)((suggestion) => {
+		onChange(String(suggestion ?? ""));
+		setIsOpen(false);
+		setIsBrowseMode(false);
+		inputRef.current?.focus();
+	}, [onChange, inputRef]);
+	const handleKeyDown = (0, import_react.useCallback)((e) => {
+		if (!showDropdown) {
+			if (e.key === "Escape") {
+				e.preventDefault();
+				e.stopPropagation();
+				onCancel?.();
+			} else if (e.key === "Enter") {
+				e.preventDefault();
+				e.stopPropagation();
+				onCommit?.();
+			} else if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+				const hasOptions = suggestions.some((s) => s !== null);
+				if (filteredSuggestions.length > 0 || hasOptions) {
+					e.preventDefault();
+					e.stopPropagation();
+					if (filteredSuggestions.length === 0) setIsBrowseMode(true);
+					setIsOpen(true);
+				}
+			}
+			return;
+		}
+		switch (e.key) {
+			case "ArrowDown":
+				e.preventDefault();
+				e.stopPropagation();
+				setHighlightedIndex((prev) => Math.min(prev + 1, filteredSuggestions.length - 1));
+				break;
+			case "ArrowUp":
+				e.preventDefault();
+				e.stopPropagation();
+				setHighlightedIndex((prev) => Math.max(prev - 1, -1));
+				break;
+			case "Tab":
+				if (highlightedIndex >= 0 && filteredSuggestions[highlightedIndex] !== void 0) {
+					e.preventDefault();
+					selectSuggestion(filteredSuggestions[highlightedIndex]);
+				}
+				break;
+			case "Enter":
+				e.preventDefault();
+				e.stopPropagation();
+				if (highlightedIndex >= 0 && filteredSuggestions[highlightedIndex] !== void 0) selectSuggestion(filteredSuggestions[highlightedIndex]);
+				onCommit?.();
+				break;
+			case "Escape":
+				e.preventDefault();
+				e.stopPropagation();
+				setIsOpen(false);
+				break;
+		}
+	}, [
+		showDropdown,
+		filteredSuggestions,
+		highlightedIndex,
+		selectSuggestion,
+		onCommit,
+		onCancel,
+		suggestions
+	]);
+	(0, import_react.useEffect)(() => {
+		if (listRef.current && showDropdown && highlightedIndex >= 0) listRef.current.children[highlightedIndex]?.scrollIntoView({ block: "nearest" });
+	}, [highlightedIndex, showDropdown]);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		ref: containerRef,
+		className: AutocompleteInput_module_default.container,
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+				id,
+				ref: inputRef,
+				type: "text",
+				className: clsx(AutocompleteInput_module_default.input, allowBrowse && AutocompleteInput_module_default.inputWithToggle, className),
+				value,
+				required,
+				onChange: handleInputChange,
+				onFocus: handleFocus,
+				onKeyDown: handleKeyDown,
+				disabled,
+				placeholder,
+				spellCheck: "false",
+				autoComplete: "off",
+				role: "combobox",
+				"aria-expanded": showDropdown,
+				"aria-autocomplete": "list",
+				"aria-controls": showDropdown ? `${id}-listbox` : void 0,
+				"aria-activedescendant": showDropdown && highlightedIndex >= 0 ? `${id}-option-${highlightedIndex}` : void 0,
+				autoFocus
+			}),
+			allowBrowse && suggestions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+				type: "button",
+				className: AutocompleteInput_module_default.toggleButton,
+				onClick: handleToggleBrowse,
+				disabled,
+				tabIndex: -1,
+				"aria-label": isOpen && isBrowseMode ? "Hide options" : "Show all options",
+				"aria-expanded": isOpen && isBrowseMode,
+				"aria-controls": showDropdown ? `${id}-listbox` : void 0,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: isOpen && isBrowseMode ? icons.chevronUp : icons.chevronDown })
+			}),
+			showDropdown && dropdownPosition && (0, import_react_dom.createPortal)(/* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
+				id: `${id}-listbox`,
+				ref: listRef,
+				className: AutocompleteInput_module_default.suggestionsList,
+				role: "listbox",
+				style: {
+					position: "fixed",
+					top: dropdownPosition.top,
+					left: dropdownPosition.left,
+					minWidth: dropdownPosition.width,
+					maxWidth: maxSuggestionWidth
+				},
+				children: filteredSuggestions.map((suggestion, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
+					id: `${id}-option-${index}`,
+					className: clsx(AutocompleteInput_module_default.suggestionItem, index === highlightedIndex && AutocompleteInput_module_default.highlighted),
+					role: "option",
+					"aria-selected": index === highlightedIndex,
+					onMouseDown: (e) => {
+						e.preventDefault();
+						e.stopPropagation();
+						selectSuggestion(suggestion);
+					},
+					onMouseEnter: () => setHighlightedIndex(index),
+					children: String(suggestion ?? "(null)")
+				}, String(suggestion)))
+			}), document.body)
+		]
+	});
 };
 //#endregion
 //#region ../../packages/react/src/components/AnsiDisplay.module.css
@@ -30768,7 +31153,7 @@ var AsciinemaPlayer = (props) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(imp
 	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LazyAsciinemaPlayer, { ...props })
 });
 //#endregion
-//#region ../../node_modules/.pnpm/@lit+react@1.0.8_@types+react@19.2.16/node_modules/@lit/react/create-component.js
+//#region ../../node_modules/.pnpm/@lit+react@1.0.8_@types+react@19.2.17/node_modules/@lit/react/create-component.js
 /**
 * @license
 * Copyright 2018 Google LLC
@@ -33293,7 +33678,7 @@ __decorate$32([n$5({
 })], VscodeCollapsible$1.prototype, "open", void 0);
 VscodeCollapsible$1 = __decorate$32([customElement("vscode-collapsible")], VscodeCollapsible$1);
 //#endregion
-//#region ../../node_modules/.pnpm/@vscode-elements+react-elements@2.4.0_@types+react@19.2.16_@vscode+codicons@0.0.45_reac_37a60572699deabaa9243f999076aa70/node_modules/@vscode-elements/react-elements/dist/components/VscodeCollapsible.js
+//#region ../../node_modules/.pnpm/@vscode-elements+react-elements@2.4.0_@types+react@19.2.17_@vscode+codicons@0.0.45_reac_ce11574049b06a386403f8ba797ece40/node_modules/@vscode-elements/react-elements/dist/components/VscodeCollapsible.js
 var VscodeCollapsible = o$7({
 	tagName: "vscode-collapsible",
 	elementClass: VscodeCollapsible$1,
@@ -36465,7 +36850,9 @@ o$7({
 		onVscMultiSelectCreateOption: "vsc-multi-select-create-option"
 	}
 });
-o$7({
+//#endregion
+//#region ../../node_modules/.pnpm/@vscode-elements+react-elements@2.4.0_@types+react@19.2.17_@vscode+codicons@0.0.45_reac_ce11574049b06a386403f8ba797ece40/node_modules/@vscode-elements/react-elements/dist/components/VscodeOption.js
+var VscodeOption = o$7({
 	tagName: "vscode-option",
 	elementClass: VscodeOption$1,
 	react: import_react.default,
@@ -37529,7 +37916,9 @@ __decorate$16([n$5({
 })], VscodeSingleSelect$1.prototype, "required", void 0);
 __decorate$16([e$6(".face")], VscodeSingleSelect$1.prototype, "_face", void 0);
 VscodeSingleSelect$1 = __decorate$16([customElement("vscode-single-select")], VscodeSingleSelect$1);
-o$7({
+//#endregion
+//#region ../../node_modules/.pnpm/@vscode-elements+react-elements@2.4.0_@types+react@19.2.17_@vscode+codicons@0.0.45_reac_ce11574049b06a386403f8ba797ece40/node_modules/@vscode-elements/react-elements/dist/components/VscodeSingleSelect.js
+var VscodeSingleSelect = o$7({
 	tagName: "vscode-single-select",
 	elementClass: VscodeSingleSelect$1,
 	react: import_react.default,
@@ -40038,7 +40427,9 @@ __decorate$5([r$3()], VscodeTextarea$1.prototype, "_value", void 0);
 __decorate$5([r$3()], VscodeTextarea$1.prototype, "_textareaPointerCursor", void 0);
 __decorate$5([r$3()], VscodeTextarea$1.prototype, "_shadow", void 0);
 VscodeTextarea$1 = __decorate$5([customElement("vscode-textarea")], VscodeTextarea$1);
-o$7({
+//#endregion
+//#region ../../node_modules/.pnpm/@vscode-elements+react-elements@2.4.0_@types+react@19.2.17_@vscode+codicons@0.0.45_reac_ce11574049b06a386403f8ba797ece40/node_modules/@vscode-elements/react-elements/dist/components/VscodeTextarea.js
+var VscodeTextarea = o$7({
 	tagName: "vscode-textarea",
 	elementClass: VscodeTextarea$1,
 	react: import_react.default,
@@ -42175,6 +42566,126 @@ o$7({
 	react: import_react.default,
 	displayName: "VscodeTreeItem"
 });
+var Modal_module_default = {
+	backdrop: "_backdrop_1hn8l_1",
+	modal: "_modal_1hn8l_15",
+	header: "_header_1hn8l_28",
+	title: "_title_1hn8l_37",
+	closeButton: "_closeButton_1hn8l_44",
+	body: "_body_1hn8l_60",
+	overflowAuto: "_overflowAuto_1hn8l_66",
+	overflowHidden: "_overflowHidden_1hn8l_70",
+	overflowScroll: "_overflowScroll_1hn8l_74",
+	overflowVisible: "_overflowVisible_1hn8l_78",
+	noPadding: "_noPadding_1hn8l_82",
+	footer: "_footer_1hn8l_86"
+};
+//#endregion
+//#region ../../packages/react/src/components/Modal.tsx
+var TABBABLE_SELECTOR = "a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex=\"-1\"])";
+var tabbableElements = (container) => Array.from(container.querySelectorAll(TABBABLE_SELECTOR)).filter((el) => el.getAttribute("aria-hidden") !== "true");
+var TEXT_INPUT_SELECTOR = "input:not([type=\"button\"]):not([type=\"checkbox\"]):not([type=\"color\"]):not([type=\"file\"]):not([type=\"image\"]):not([type=\"radio\"]):not([type=\"range\"]):not([type=\"reset\"]):not([type=\"submit\"]),textarea,vscode-textfield";
+var shouldSubmitOnEnter = (event, modal) => {
+	if (event.defaultPrevented || !modal) return false;
+	const target = event.target;
+	if (!(target instanceof Element)) return true;
+	if (!modal.contains(target)) return false;
+	if (target === modal) return true;
+	return target.matches(TEXT_INPUT_SELECTOR);
+};
+var Modal = ({ show, onHide, onSubmit, title, children, footer, className, id, width, overflow = "auto", padded = true, bodyClassName }) => {
+	const icons = useComponentIcons();
+	const modalRef = (0, import_react.useRef)(null);
+	const fallbackTitleId = (0, import_react.useId)();
+	(0, import_react.useEffect)(() => {
+		const handleKeyDown = (e) => {
+			if (!show) return;
+			if (e.key === "Escape") onHide();
+			else if (e.key === "Enter" && onSubmit) {
+				if (!shouldSubmitOnEnter(e, modalRef.current)) return;
+				e.preventDefault();
+				onSubmit();
+			} else if (e.key === "Tab" && modalRef.current) {
+				const tabbables = tabbableElements(modalRef.current);
+				const first = tabbables[0];
+				const last = tabbables[tabbables.length - 1];
+				if (!first || !last) return;
+				const active = document.activeElement;
+				if (e.shiftKey && active === first) {
+					e.preventDefault();
+					last.focus();
+				} else if (!e.shiftKey && active === last) {
+					e.preventDefault();
+					first.focus();
+				}
+			}
+		};
+		document.addEventListener("keydown", handleKeyDown);
+		return () => document.removeEventListener("keydown", handleKeyDown);
+	}, [
+		show,
+		onHide,
+		onSubmit
+	]);
+	(0, import_react.useEffect)(() => {
+		if (!show || !modalRef.current) return;
+		const previouslyFocused = document.activeElement;
+		const modal = modalRef.current;
+		const timer = window.setTimeout(() => {
+			const autofocusEl = modal.querySelector("[autofocus], [data-autofocus]");
+			if (autofocusEl) autofocusEl.focus();
+			else (tabbableElements(modal)[0] ?? modal).focus();
+		}, 0);
+		return () => {
+			window.clearTimeout(timer);
+			previouslyFocused?.focus?.();
+		};
+	}, [show]);
+	if (!show) return null;
+	const titleId = id ? `${id}-title` : fallbackTitleId;
+	return (0, import_react_dom.createPortal)(/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: Modal_module_default.backdrop,
+		onClick: onHide,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			ref: modalRef,
+			id,
+			role: "dialog",
+			"aria-modal": "true",
+			"aria-labelledby": titleId,
+			tabIndex: -1,
+			className: clsx(Modal_module_default.modal, className),
+			style: width ? { maxWidth: width } : void 0,
+			onClick: (e) => e.stopPropagation(),
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: Modal_module_default.header,
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
+						id: titleId,
+						className: Modal_module_default.title,
+						children: title
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+						type: "button",
+						className: Modal_module_default.closeButton,
+						onClick: onHide,
+						"aria-label": "Close",
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", {
+							className: icons.close,
+							"aria-hidden": "true"
+						})
+					})]
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: clsx(Modal_module_default.body, Modal_module_default[`overflow${overflow.charAt(0).toUpperCase()}${overflow.slice(1)}`], !padded && Modal_module_default.noPadding, bodyClassName),
+					children
+				}),
+				footer && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: Modal_module_default.footer,
+					children: footer
+				})
+			]
+		})
+	}), document.body);
+};
 //#endregion
 //#region ../../packages/react/src/components/EmptyPanel.tsx
 var EmptyPanel = ({ children }) => {
@@ -42346,6 +42857,28 @@ var LabeledValue = ({ layout = "column", style, label, children, valueStyle, cla
 			style: { ...valueStyle },
 			children
 		})]
+	});
+};
+var LoadingBar_module_default = {
+	wrapper: "_wrapper_1tajk_1",
+	container: "_container_1tajk_12",
+	animate: "_animate_1tajk_21",
+	leftToRight: "_leftToRight_1tajk_1"
+};
+//#endregion
+//#region ../../packages/react/src/components/LoadingBar.tsx
+var LoadingBar = ({ loading }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: clsx(LoadingBar_module_default.wrapper),
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: clsx(LoadingBar_module_default.container),
+			role: "progressbar",
+			"aria-label": "Progress bar",
+			"aria-valuenow": 25,
+			"aria-valuemin": 0,
+			"aria-valuemax": 100,
+			children: loading && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: LoadingBar_module_default.animate })
+		})
 	});
 };
 //#endregion
@@ -44583,7 +45116,7 @@ function escapedSplit(str) {
 	result.push(current + str.substring(lastPos));
 	return result;
 }
-function table$3(state, startLine, endLine, silent) {
+function table$2(state, startLine, endLine, silent) {
 	if (startLine + 2 > endLine) return false;
 	let nextLine = startLine + 1;
 	if (state.sCount[nextLine] < state.blkIndent) return false;
@@ -45432,7 +45965,7 @@ function paragraph(state, startLine, endLine) {
 var _rules$1 = [
 	[
 		"table",
-		table$3,
+		table$2,
 		["paragraph", "reference"]
 	],
 	["code", code$5],
@@ -50206,6 +50739,184 @@ var PulsingDots = ({ text = "Loading...", dotsCount = 3, subtle = true, size = "
 		})]
 	});
 };
+var RailDock_module_default = {
+	separator: "_separator_ts678_1",
+	rail: "_rail_ts678_6",
+	railSticky: "_railSticky_ts678_11"
+};
+//#endregion
+//#region ../../packages/react/src/hooks/useElementHeight.ts
+/**
+* Tracks an element's on-screen height via ResizeObserver (plus a window
+* resize listener for viewport-driven changes the observer can miss).
+*
+* Uses getBoundingClientRect().height — this matches what's actually on
+* screen (clientHeight can report slightly different values depending on
+* scrollbar / box-sizing quirks). Returns 0 until the element mounts.
+*
+* Pass enabled=false to skip observing (e.g. when a parent already measures
+* the same element and provides the value).
+*/
+var useElementHeight = (ref, enabled = true) => {
+	const [height, setHeight] = (0, import_react.useState)(0);
+	(0, import_react.useEffect)(() => {
+		if (!enabled) return;
+		const el = ref.current;
+		if (!el) return;
+		const update = () => {
+			const current = ref.current;
+			if (current) setHeight(current.getBoundingClientRect().height);
+		};
+		update();
+		const observer = new ResizeObserver(update);
+		observer.observe(el);
+		window.addEventListener("resize", update);
+		return () => {
+			observer.disconnect();
+			window.removeEventListener("resize", update);
+		};
+	}, [ref, enabled]);
+	return height;
+};
+var ResizablePanel_module_default = {
+	divider: "_divider_1538e_3",
+	resizer: "_resizer_1538e_10",
+	panel: "_panel_1538e_47"
+};
+//#endregion
+//#region ../../packages/react/src/components/ResizablePanel.tsx
+/**
+* A side panel with a draggable left-edge resizer and independent sticky
+* scroll. Renders as a fragment — a full-height 1px divider hosting the
+* resizer, then the sticky panel — so it drops into a flex-row layout beside
+* the content it docks against. Shared by the transcript and messages tabs so
+* the docked Search / Scans panel is identical on both.
+*/
+var ResizablePanel = ({ children, scrollRef, scrollerHeight: providedScrollerHeight, offsetTop = 0, panelScrollRef, width: controlledWidth, defaultWidth = 360, minWidth = 240, maxWidth = 800, onWidthChange, label }) => {
+	const [internalWidth, setInternalWidth] = (0, import_react.useState)(defaultWidth);
+	const width = controlledWidth ?? internalWidth;
+	const dragRef = (0, import_react.useRef)(null);
+	const onPointerDown = (0, import_react.useCallback)((e) => {
+		e.preventDefault();
+		e.currentTarget.setPointerCapture(e.pointerId);
+		dragRef.current = {
+			startX: e.clientX,
+			startWidth: width
+		};
+	}, [width]);
+	const onPointerMove = (0, import_react.useCallback)((e) => {
+		if (!dragRef.current) return;
+		const { startX, startWidth } = dragRef.current;
+		const next = startWidth - (e.clientX - startX);
+		const clamped = Math.max(minWidth, Math.min(maxWidth, next));
+		setInternalWidth(clamped);
+		onWidthChange?.(clamped);
+	}, [
+		minWidth,
+		maxWidth,
+		onWidthChange
+	]);
+	const onPointerUp = (0, import_react.useCallback)((e) => {
+		dragRef.current = null;
+		try {
+			e.currentTarget.releasePointerCapture(e.pointerId);
+		} catch {}
+	}, []);
+	const measuredScrollerHeight = useElementHeight(scrollRef, providedScrollerHeight === void 0);
+	const scrollerHeight = providedScrollerHeight ?? measuredScrollerHeight;
+	const maxHeight = scrollerHeight > 0 ? `${scrollerHeight - offsetTop}px` : `calc(100vh - ${offsetTop}px)`;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: ResizablePanel_module_default.divider,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: ResizablePanel_module_default.resizer,
+			role: "separator",
+			"aria-orientation": "vertical",
+			"aria-label": `Resize ${label ?? "panel"}`,
+			onPointerDown,
+			onPointerMove,
+			onPointerUp,
+			onPointerCancel: onPointerUp
+		})
+	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		ref: panelScrollRef,
+		className: ResizablePanel_module_default.panel,
+		style: {
+			flex: `0 0 ${width}px`,
+			top: offsetTop,
+			maxHeight
+		},
+		children
+	})] });
+};
+//#endregion
+//#region ../../packages/react/src/components/RailDock.tsx
+/**
+* An always-visible vertical rail with an optional resizable panel docked to
+* its left, separated from the content by a 1px divider. Renders as a
+* fragment so it drops into a flex-row layout beside the content it docks
+* against (same contract as <ResizablePanel>).
+*/
+var RailDock = ({ rail, panel, scrollRef, scrollerHeight, offsetTop = 0, panelScrollRef, railWidth = 44, panelWidth, onPanelWidthChange, panelMinWidth, panelMaxWidth, label }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
+	panel != null && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ResizablePanel, {
+		scrollRef,
+		scrollerHeight,
+		offsetTop,
+		panelScrollRef,
+		width: panelWidth,
+		onWidthChange: onPanelWidthChange,
+		minWidth: panelMinWidth,
+		maxWidth: panelMaxWidth,
+		label,
+		children: panel
+	}),
+	/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: RailDock_module_default.separator }),
+	/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: RailDock_module_default.rail,
+		style: { flex: `0 0 ${railWidth}px` },
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: RailDock_module_default.railSticky,
+			style: { top: offsetTop },
+			children: rail
+		})
+	})
+] });
+var ActivityRail_module_default = {
+	rail: "_rail_1llfi_1",
+	item: "_item_1llfi_9",
+	itemActive: "_itemActive_1llfi_35",
+	icon: "_icon_1llfi_41",
+	label: "_label_1llfi_46"
+};
+//#endregion
+//#region ../../packages/react/src/components/ActivityRail.tsx
+/**
+* Vertical activity bar (VS Code style) hosting sidebar entries. Always
+* visible; the active item's panel opens to its left.
+*/
+var ActivityRail = ({ items, active, onSelect, className }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+	className: clsx(ActivityRail_module_default.rail, className),
+	role: "tablist",
+	"aria-orientation": "vertical",
+	children: items.map((item) => {
+		const isActive = active === item.id;
+		return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+			type: "button",
+			role: "tab",
+			"aria-selected": isActive,
+			disabled: item.disabled,
+			title: item.title ?? item.label,
+			className: clsx(ActivityRail_module_default.item, isActive && ActivityRail_module_default.itemActive),
+			onClick: () => onSelect(item.id),
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", {
+				className: clsx(item.icon, ActivityRail_module_default.icon),
+				"aria-hidden": "true"
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: clsx(ActivityRail_module_default.label, "text-size-smallest"),
+				children: item.label
+			})]
+		}, item.id);
+	})
+});
 var SegmentedControl_module_default = {
 	rootControl: "_rootControl_1d1i3_1",
 	segment: "_segment_1d1i3_10",
@@ -50233,6 +50944,45 @@ var SegmentedControl = ({ id, segments, onSegmentChange, selectedId: selectedIdP
 			title: compact ? segment.label : void 0,
 			children: [segment.icon && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: segment.icon }), !compact && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: segment.label })]
 		}, segment.id))
+	});
+};
+var SidebarHeader_module_default = {
+	header: "_header_2b98m_1",
+	headerTitle: "_headerTitle_2b98m_12",
+	headerIcon: "_headerIcon_2b98m_20",
+	headerSecondary: "_headerSecondary_2b98m_24",
+	headerActions: "_headerActions_2b98m_29",
+	closeButton: "_closeButton_2b98m_35"
+};
+//#endregion
+//#region ../../packages/react/src/components/SidebarHeader.tsx
+var SidebarHeader = ({ icon, title, secondary, actions, onClose, closeIcon = "bi bi-x" }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: SidebarHeader_module_default.header,
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h3", {
+				className: SidebarHeader_module_default.headerTitle,
+				children: [icon && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: clsx(icon, SidebarHeader_module_default.headerIcon) }), title]
+			}),
+			secondary && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: SidebarHeader_module_default.headerSecondary,
+				children: secondary
+			}),
+			(actions || onClose) && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: SidebarHeader_module_default.headerActions,
+				children: [actions, onClose && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+					type: "button",
+					className: SidebarHeader_module_default.closeButton,
+					onClick: onClose,
+					"aria-label": title ? `Close ${title}` : "Close",
+					title: title ? `Close ${title}` : "Close",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", {
+						className: closeIcon,
+						"aria-hidden": "true"
+					})
+				})]
+			})
+		]
 	});
 };
 //#endregion
@@ -52598,7 +53348,7 @@ false);
 }
 var produce = new Immer2().produce;
 //#endregion
-//#region ../../node_modules/.pnpm/zustand@5.0.14_@types+react@19.2.16_immer@11.1.8_react@19.2.7_use-sync-external-store@1.6.0_react@19.2.7_/node_modules/zustand/esm/vanilla.mjs
+//#region ../../node_modules/.pnpm/zustand@5.0.14_@types+react@19.2.17_immer@11.1.8_react@19.2.7_use-sync-external-store@1.6.0_react@19.2.7_/node_modules/zustand/esm/vanilla.mjs
 var createStoreImpl = (createState) => {
 	let state;
 	const listeners = /* @__PURE__ */ new Set();
@@ -52627,7 +53377,7 @@ var createStoreImpl = (createState) => {
 };
 var createStore = ((createState) => createState ? createStoreImpl(createState) : createStoreImpl);
 //#endregion
-//#region ../../node_modules/.pnpm/zustand@5.0.14_@types+react@19.2.16_immer@11.1.8_react@19.2.7_use-sync-external-store@1.6.0_react@19.2.7_/node_modules/zustand/esm/react.mjs
+//#region ../../node_modules/.pnpm/zustand@5.0.14_@types+react@19.2.17_immer@11.1.8_react@19.2.7_use-sync-external-store@1.6.0_react@19.2.7_/node_modules/zustand/esm/react.mjs
 var identity = (arg) => arg;
 function useStore$1(api, selector = identity) {
 	const slice = import_react.useSyncExternalStore(api.subscribe, import_react.useCallback(() => selector(api.getState()), [api, selector]), import_react.useCallback(() => selector(api.getInitialState()), [api, selector]));
@@ -52642,7 +53392,7 @@ var createImpl = (createState) => {
 };
 var create = ((createState) => createState ? createImpl(createState) : createImpl);
 //#endregion
-//#region ../../node_modules/.pnpm/zustand@5.0.14_@types+react@19.2.16_immer@11.1.8_react@19.2.7_use-sync-external-store@1.6.0_react@19.2.7_/node_modules/zustand/esm/middleware.mjs
+//#region ../../node_modules/.pnpm/zustand@5.0.14_@types+react@19.2.17_immer@11.1.8_react@19.2.7_use-sync-external-store@1.6.0_react@19.2.7_/node_modules/zustand/esm/middleware.mjs
 var shouldDispatchFromDevtools = (api) => !!api.dispatchFromDevtools && typeof api.dispatch === "function";
 var trackedConnections = /* @__PURE__ */ new Map();
 var getTrackedConnectionState = (name) => {
@@ -52977,7 +53727,7 @@ var persistImpl = (config, baseOptions) => (set, get, api) => {
 };
 var persist = persistImpl;
 //#endregion
-//#region ../../node_modules/.pnpm/zustand@5.0.14_@types+react@19.2.16_immer@11.1.8_react@19.2.7_use-sync-external-store@1.6.0_react@19.2.7_/node_modules/zustand/esm/middleware/immer.mjs
+//#region ../../node_modules/.pnpm/zustand@5.0.14_@types+react@19.2.17_immer@11.1.8_react@19.2.7_use-sync-external-store@1.6.0_react@19.2.7_/node_modules/zustand/esm/middleware/immer.mjs
 var immerImpl = (initializer) => (set, get, store) => {
 	store.setState = (updater, replace, ...args) => {
 		return set(typeof updater === "function" ? produce(updater) : updater, replace, ...args);
@@ -58997,6 +59747,958 @@ var initializeSampleSlice = (set) => {
 		if (!state.sample) state.sample = initialState;
 	});
 };
+/**
+* Bootstrap-icon class names shared by both apps. App-specific extras
+* (and overrides for `fork` / `pendingTask`) live in each app's
+* `ApplicationIcons` object.
+*/
+var baseApplicationIcons = {
+	add: "bi bi-plus-lg",
+	agent: "bi bi-grid",
+	approve: "bi bi-shield",
+	approvals: {
+		approve: "bi bi-shield-check",
+		reject: "bi bi-shield-x",
+		terminate: "bi bi-shield-exclamation",
+		escalate: "bi bi-box-arrow-up",
+		modify: "bi bi-pencil-square"
+	},
+	arrows: {
+		right: "bi bi-arrow-right",
+		down: "bi bi-arrow-down",
+		up: "bi bi-arrow-up"
+	},
+	cancelled: "bi bi-x-circle",
+	caret: {
+		right: "bi bi-caret-right",
+		down: "bi bi-caret-down"
+	},
+	changes: {
+		add: "bi bi-plus",
+		remove: "bi bi-dash",
+		replace: "bi bi-plus-slash-minus"
+	},
+	checkbox: {
+		checked: "bi bi-check-circle",
+		unchecked: "bi bi-circle"
+	},
+	chevron: {
+		right: "bi bi-chevron-right",
+		down: "bi bi-chevron-down"
+	},
+	"clear-text": "bi bi-x-circle-fill",
+	close: "bi bi-x",
+	code: "bi bi-code-slash",
+	collapse: {
+		all: "bi bi-arrows-collapse",
+		up: "bi bi-chevron-up"
+	},
+	config: "bi bi-gear",
+	confirm: "bi bi-check",
+	copy: "bi bi-copy",
+	display: "bi bi-card-text",
+	epoch: (epoch) => `bi bi-${epoch}-circle`,
+	edit: "bi bi-pencil-square",
+	error: "bi bi-exclamation-circle-fill",
+	eval: "bi bi-info-circle-fill",
+	"eval-set": "bi bi-list-task",
+	expand: {
+		all: "bi bi-arrows-expand",
+		down: "bi bi-chevron-down"
+	},
+	file: "bi bi-file-code",
+	filter: "bi bi-funnel",
+	folder: "bi bi-folder",
+	history: "bi bi-clock-history",
+	home: "bi bi-house",
+	info: "bi bi-info-circle",
+	input: "bi bi-terminal",
+	inspect: "ii inspect-icon-16",
+	inspectFile: "ii inspect-icon-file",
+	json: "bi bi-filetype-json",
+	limits: {
+		messages: "bi bi-chat-right-text",
+		custom: "bi bi-exclamation-triangle",
+		operator: "bi bi-person-workspace",
+		tokens: "bi bi-list",
+		time: "bi bi-clock",
+		execution: "bi bi-stopwatch",
+		cost: "bi bi-currency-dollar"
+	},
+	link: "bi bi-link-45deg",
+	logging: {
+		notset: "bi bi-card-text",
+		debug: "bi bi-bug",
+		http: "bi bi-download",
+		info: "bi bi-info-square",
+		warning: "bi bi-exclamation-triangle",
+		error: "bi bi-x-circle",
+		critical: "bi bi-fire"
+	},
+	menu: "bi bi-list",
+	messages: "bi bi-chat-right-text",
+	metadata: "bi bi-table",
+	metrics: "bi bi-clipboard-data",
+	model: "bi bi-grid-3x3-gap",
+	"toggle-right": "bi bi-chevron-right",
+	more: "bi bi-zoom-in",
+	"multiple-choice": "bi bi-card-list",
+	navbar: {
+		home: "ii inspect-icon-home",
+		back: "ii inspect-icon-back",
+		forward: "ii inspect-icon-forward",
+		inspectLogo: "ii inspect-icon-16",
+		tasks: "ii inspect-icon-tasks"
+	},
+	next: "bi bi-chevron-right",
+	noSamples: "bi bi-ban",
+	options: "bi bi-gear",
+	play: "bi bi-play-fill",
+	previous: "bi bi-chevron-left",
+	refresh: "bi bi-arrow-clockwise",
+	retry: "bi bi-arrow-repeat",
+	role: {
+		user: "bi bi-person",
+		system: "bi bi-cpu",
+		assistant: "bi bi-robot",
+		tool: "bi bi-tools",
+		unknown: "bi bi-patch-question"
+	},
+	running: "bi bi-stars",
+	sample: "bi bi-database",
+	samples: "bi bi-file-spreadsheet",
+	sandbox: "bi bi-box-seam",
+	scorer: "bi bi-calculator",
+	search: "bi bi-search",
+	sidebar: "bi bi-list",
+	solvers: {
+		default: "bi bi-arrow-return-right",
+		generate: "bi bi-share",
+		chain_of_thought: "bi bi-link",
+		self_critique: "bi bi-arrow-left-right",
+		system_message: "bi bi-cpu",
+		use_tools: "bi bi-tools"
+	},
+	step: "bi bi-fast-forward-btn",
+	subtask: "bi bi-subtract",
+	success: "bi bi-check-circle-fill",
+	threeDots: "bi bi-three-dots",
+	transcript: "bi bi-list-columns-reverse",
+	tree: {
+		open: "bi bi-caret-down-fill",
+		closed: "bi bi-caret-right-fill"
+	},
+	turns: "bi bi-chat-left-text",
+	usage: "bi bi-stopwatch"
+};
+var SearchPanel_module_default = {
+	container: "_container_1sdtt_1",
+	body: "_body_1sdtt_8",
+	searchArea: "_searchArea_1sdtt_15",
+	inputShell: "_inputShell_1sdtt_23",
+	controlsRow: "_controlsRow_1sdtt_33",
+	topRow: "_topRow_1sdtt_40",
+	typeToggle: "_typeToggle_1sdtt_47",
+	topActions: "_topActions_1sdtt_52",
+	textarea: "_textarea_1sdtt_58",
+	modeRow: "_modeRow_1sdtt_65",
+	modeControls: "_modeControls_1sdtt_71",
+	modeToggle: "_modeToggle_1sdtt_77",
+	modeToggleActive: "_modeToggleActive_1sdtt_100",
+	modelPill: "_modelPill_1sdtt_105",
+	modelInputShell: "_modelInputShell_1sdtt_123",
+	modelInput: "_modelInput_1sdtt_123",
+	iconAction: "_iconAction_1sdtt_144",
+	iconActionActive: "_iconActionActive_1sdtt_166",
+	runButton: "_runButton_1sdtt_171",
+	results: "_results_1sdtt_192",
+	sectionHeader: "_sectionHeader_1sdtt_202",
+	resultCard: "_resultCard_1sdtt_214",
+	matchCount: "_matchCount_1sdtt_222",
+	recentList: "_recentList_1sdtt_228",
+	recentItem: "_recentItem_1sdtt_234",
+	recentEmpty: "_recentEmpty_1sdtt_249",
+	emptyState: "_emptyState_1sdtt_256",
+	searchingText: "_searchingText_1sdtt_267",
+	searchingElapsed: "_searchingElapsed_1sdtt_271"
+};
+//#endregion
+//#region ../../packages/inspect-components/src/transcript-search/searchPanelState.ts
+var createInitialSearchPanelState = () => ({
+	searchType: "llm",
+	searches: {
+		grep: {
+			query: "",
+			searchId: null,
+			grepOptions: {
+				ignoreCase: true,
+				regex: false,
+				wordBoundary: false
+			}
+		},
+		llm: {
+			query: "",
+			searchId: null,
+			model: ""
+		}
+	}
+});
+var applySearchTypeChange = (prev, type) => {
+	if (type === prev.searchType) return prev;
+	const source = prev.searches[prev.searchType];
+	const target = prev.searches[type];
+	const sourceIsDraft = source.searchId === null && source.query.trim() !== "";
+	const targetIsEmpty = target.query === "" && target.searchId === null;
+	if (!sourceIsDraft || !targetIsEmpty) return {
+		...prev,
+		searchType: type
+	};
+	if (type === "llm") return {
+		...prev,
+		searchType: "llm",
+		searches: {
+			...prev.searches,
+			grep: {
+				...prev.searches.grep,
+				query: ""
+			},
+			llm: {
+				...prev.searches.llm,
+				query: source.query
+			}
+		}
+	};
+	return {
+		...prev,
+		searchType: "grep",
+		searches: {
+			...prev.searches,
+			grep: {
+				...prev.searches.grep,
+				query: source.query
+			},
+			llm: {
+				...prev.searches.llm,
+				query: ""
+			}
+		}
+	};
+};
+var mergeGrepOptions = (options) => ({
+	ignoreCase: options?.ignoreCase ?? true,
+	regex: options?.regex ?? false,
+	wordBoundary: options?.wordBoundary ?? false
+});
+var normalizeSearchPanelState = (state) => {
+	const initial = createInitialSearchPanelState();
+	if (!state) return initial;
+	return {
+		searchType: state.searchType ?? initial.searchType,
+		searches: {
+			grep: {
+				query: state.searches?.grep?.query ?? initial.searches.grep.query,
+				searchId: state.searches?.grep?.searchId ?? initial.searches.grep.searchId,
+				grepOptions: mergeGrepOptions(state.searches?.grep?.grepOptions)
+			},
+			llm: {
+				query: state.searches?.llm?.query ?? initial.searches.llm.query,
+				model: state.searches?.llm?.model ?? initial.searches.llm.model,
+				searchId: state.searches?.llm?.searchId ?? initial.searches.llm.searchId
+			}
+		}
+	};
+};
+//#endregion
+//#region ../../packages/inspect-components/src/transcript-search/searchRequest.ts
+var buildSearchScope = (scope) => {
+	return scope === "messages" ? { messages: "all" } : { events: "all" };
+};
+var buildSearchRequest = ({ grepOptions, model, query, scope, searchType }) => {
+	const scopeFields = buildSearchScope(scope);
+	if (searchType === "grep") return {
+		...scopeFields,
+		ignore_case: grepOptions.ignoreCase,
+		query,
+		regex: grepOptions.regex,
+		type: "grep",
+		word_boundary: grepOptions.wordBoundary
+	};
+	return {
+		...scopeFields,
+		model: model || null,
+		query,
+		type: "llm"
+	};
+};
+var searchQueryKeys = {
+	searches: ({ searchType, count = 20 }) => [
+		"searches",
+		searchType,
+		count
+	],
+	cachedResult: ({ cacheKey, scope, searchId }) => [
+		"search-result",
+		cacheKey,
+		scope,
+		searchId
+	]
+};
+var useSearches = ({ api, searchType, count = 20 }) => {
+	return useQuery({
+		queryKey: searchQueryKeys.searches({
+			searchType,
+			count
+		}),
+		queryFn: () => api.listRecentSearches(searchType, count),
+		staleTime: 60 * 1e3
+	});
+};
+var useCreateSearch = ({ api }) => {
+	const queryClient = useQueryClient();
+	return useMutation({
+		mutationFn: (request) => api.createSearch(request),
+		onSuccess: (_response, request) => {
+			queryClient.invalidateQueries({ queryKey: searchQueryKeys.searches({ searchType: request.type }) });
+		}
+	});
+};
+var useCachedSearchResult = ({ api, scope, searchId }) => {
+	const enabled = !!api && !!searchId;
+	return useQuery({
+		queryKey: api && searchId ? searchQueryKeys.cachedResult({
+			cacheKey: api.cacheKey,
+			scope,
+			searchId
+		}) : ["search-result", "disabled"],
+		queryFn: () => api.getCachedResult(searchId, scope),
+		enabled,
+		staleTime: Infinity
+	});
+};
+//#endregion
+//#region ../../packages/inspect-components/src/transcript-search/SearchPanel.tsx
+function hasStringValue$1(target) {
+	return target !== null && "value" in target && typeof target.value === "string";
+}
+function getInputValue(e) {
+	return hasStringValue$1(e.target) ? e.target.value : "";
+}
+var SEARCH_TEXTAREA_AUTOSIZE = {
+	minRows: 2,
+	maxRows: 10
+};
+function getInnerTextarea(el) {
+	const inner = el?.shadowRoot?.querySelector("textarea");
+	return inner instanceof HTMLTextAreaElement ? inner : null;
+}
+function isSearchType(value) {
+	return value === "llm" || value === "grep";
+}
+function applyRecentSearch(prev, search) {
+	if (search.type === "llm") return {
+		...prev,
+		searchType: "llm",
+		searches: {
+			...prev.searches,
+			llm: {
+				...prev.searches.llm,
+				query: search.query,
+				model: search.model ?? "",
+				searchId: search.search_id
+			}
+		}
+	};
+	return {
+		...prev,
+		searchType: "grep",
+		searches: {
+			...prev.searches,
+			grep: {
+				...prev.searches.grep,
+				query: search.query,
+				grepOptions: {
+					ignoreCase: search.ignore_case,
+					regex: search.regex,
+					wordBoundary: search.word_boundary
+				},
+				searchId: search.search_id
+			}
+		}
+	};
+}
+var NOOP_MODEL_HISTORY = {
+	history: [],
+	record: () => {}
+};
+var SearchPanel = ({ scope, api, stateController, navigation, defaultModel, modelHistory = NOOP_MODEL_HISTORY, onClose }) => {
+	const { getMessageUrl, getEventUrl, getEventMessageUrl } = navigation;
+	const modelInputId = (0, import_react.useId)();
+	const queryClient = useQueryClient();
+	const { state, setState } = stateController;
+	const { searchType } = state;
+	const { query, searchId } = state.searches[searchType];
+	const grepOptions = state.searches.grep.grepOptions;
+	const model = state.searches.llm.model;
+	const createSearchMutation = useCreateSearch({ api });
+	const cachedSearchQuery = useCachedSearchResult({
+		api,
+		scope: buildSearchScope(scope),
+		searchId
+	});
+	const [isRecentOpen, setIsRecentOpen] = (0, import_react.useState)(false);
+	const recentButtonRef = (0, import_react.useRef)(null);
+	const loading = createSearchMutation.isPending || cachedSearchQuery.isFetching;
+	const error = createSearchMutation.error || cachedSearchQuery.error;
+	const currentSearch = cachedSearchQuery.data ?? null;
+	const hasSearched = !!searchId || createSearchMutation.isPending || !!createSearchMutation.error;
+	const clearSearchIdForCurrentType = (0, import_react.useCallback)(() => {
+		createSearchMutation.reset();
+		setState((prev) => ({
+			...prev,
+			searches: {
+				...prev.searches,
+				[prev.searchType]: {
+					...prev.searches[prev.searchType],
+					searchId: null
+				}
+			}
+		}));
+	}, [createSearchMutation, setState]);
+	const cacheKey = api.cacheKey;
+	const handleSubmit = (0, import_react.useCallback)((e) => {
+		e.preventDefault();
+		const text = query.trim();
+		if (!text || loading) return;
+		clearSearchIdForCurrentType();
+		const resolvedModel = searchType === "llm" ? (model.trim() || defaultModel?.trim()) ?? "" : "";
+		const request = buildSearchRequest({
+			grepOptions,
+			model: resolvedModel,
+			query: text,
+			scope,
+			searchType
+		});
+		createSearchMutation.mutate(request, { onSuccess: (response) => {
+			queryClient.setQueryData(searchQueryKeys.cachedResult({
+				cacheKey,
+				scope: buildSearchScope(scope),
+				searchId: response.id
+			}), response.result);
+			setState((prev) => ({
+				...prev,
+				searches: {
+					...prev.searches,
+					[searchType]: {
+						...prev.searches[searchType],
+						searchId: response.id
+					}
+				}
+			}));
+			if (searchType === "llm" && resolvedModel) modelHistory.record(resolvedModel);
+		} });
+	}, [
+		cacheKey,
+		clearSearchIdForCurrentType,
+		createSearchMutation,
+		defaultModel,
+		grepOptions,
+		loading,
+		model,
+		modelHistory,
+		query,
+		queryClient,
+		scope,
+		searchType,
+		setState
+	]);
+	const handleKeyDown = (0, import_react.useCallback)((e) => {
+		if (e.key === "Enter" && !e.shiftKey) {
+			e.preventDefault();
+			e.currentTarget.closest("form")?.requestSubmit();
+		}
+	}, []);
+	const handleSelectRecent = (0, import_react.useCallback)((search) => {
+		createSearchMutation.reset();
+		setIsRecentOpen(false);
+		setState((prev) => applyRecentSearch(prev, search));
+	}, [createSearchMutation, setState]);
+	const handleNewSearch = (0, import_react.useCallback)(() => {
+		createSearchMutation.reset();
+		setState(() => createInitialSearchPanelState());
+	}, [createSearchMutation, setState]);
+	const toggleGrepOption = (0, import_react.useCallback)((key) => {
+		createSearchMutation.reset();
+		setState((prev) => ({
+			...prev,
+			searches: {
+				...prev.searches,
+				grep: {
+					...prev.searches.grep,
+					grepOptions: {
+						...prev.searches.grep.grepOptions,
+						[key]: !prev.searches.grep.grepOptions[key]
+					},
+					searchId: null
+				}
+			}
+		}));
+	}, [createSearchMutation, setState]);
+	const handleSearchTypeChange = (0, import_react.useCallback)((type) => {
+		setState((prev) => applySearchTypeChange(prev, type));
+	}, [setState]);
+	const formRef = (0, import_react.useRef)(null);
+	const handleModelCommit = (0, import_react.useCallback)(() => {
+		formRef.current?.requestSubmit();
+	}, []);
+	const searchTextareaRef = (0, import_react.useRef)(null);
+	const handleSearchTextareaRef = (0, import_react.useCallback)((el) => {
+		searchTextareaRef.current = el;
+	}, []);
+	(0, import_react.useLayoutEffect)(() => {
+		const inner = getInnerTextarea(searchTextareaRef.current);
+		if (inner !== null) autosizeTextarea(inner, SEARCH_TEXTAREA_AUTOSIZE);
+	}, [query]);
+	const handleQueryInput = (0, import_react.useCallback)((e) => {
+		const value = getInputValue(e);
+		setState((prev) => ({
+			...prev,
+			searches: {
+				...prev.searches,
+				[prev.searchType]: {
+					...prev.searches[prev.searchType],
+					query: value
+				}
+			}
+		}));
+	}, [setState]);
+	const handleModelChange = (0, import_react.useCallback)((value) => {
+		setState((prev) => ({
+			...prev,
+			searches: {
+				...prev.searches,
+				llm: {
+					...prev.searches.llm,
+					model: value
+				}
+			}
+		}));
+	}, [setState]);
+	const didPrefillModelRef = (0, import_react.useRef)(false);
+	(0, import_react.useEffect)(() => {
+		if (didPrefillModelRef.current) return;
+		didPrefillModelRef.current = true;
+		const mostRecent = modelHistory.history[0];
+		if (model === "" && mostRecent !== void 0) handleModelChange(mostRecent);
+	}, [
+		model,
+		modelHistory.history,
+		handleModelChange
+	]);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: SearchPanel_module_default.container,
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SidebarHeader, {
+				icon: baseApplicationIcons.search,
+				title: `Search: ${scope}`,
+				onClose,
+				closeIcon: baseApplicationIcons.close
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: SearchPanel_module_default.body,
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("form", {
+						ref: formRef,
+						className: SearchPanel_module_default.searchArea,
+						onSubmit: handleSubmit,
+						children: [
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: SearchPanel_module_default.topRow,
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: SearchPanel_module_default.typeToggle,
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SegmentedControl, {
+										selectedId: searchType,
+										segments: [{
+											id: "llm",
+											label: "LLM"
+										}, {
+											id: "grep",
+											label: "Grep"
+										}],
+										onSegmentChange: (segmentId) => {
+											if (isSearchType(segmentId)) handleSearchTypeChange(segmentId);
+										}
+									})
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: SearchPanel_module_default.topActions,
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+										ref: recentButtonRef,
+										type: "button",
+										className: clsx(SearchPanel_module_default.iconAction, isRecentOpen && SearchPanel_module_default.iconActionActive),
+										onClick: () => setIsRecentOpen((prev) => !prev),
+										title: "Recent searches",
+										"aria-label": "Recent searches",
+										"aria-expanded": isRecentOpen,
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", {
+											className: baseApplicationIcons.history,
+											"aria-hidden": "true"
+										})
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+										type: "button",
+										className: SearchPanel_module_default.iconAction,
+										onClick: handleNewSearch,
+										title: "New search",
+										"aria-label": "New search",
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", {
+											className: baseApplicationIcons.add,
+											"aria-hidden": "true"
+										})
+									})]
+								})]
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: SearchPanel_module_default.inputShell,
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(VscodeTextarea, {
+									ref: handleSearchTextareaRef,
+									className: SearchPanel_module_default.textarea,
+									placeholder: searchType === "grep" ? "Search for text..." : "Ask a question about this transcript...",
+									value: query,
+									onInput: handleQueryInput,
+									onKeyDown: handleKeyDown,
+									spellCheck: false,
+									autocomplete: "off"
+								})
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: SearchPanel_module_default.controlsRow,
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: SearchPanel_module_default.modeRow,
+									children: searchType === "grep" ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: SearchPanel_module_default.modeControls,
+										children: [
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ModeToggle, {
+												icon: "case-sensitive",
+												title: "Ignore Case",
+												active: grepOptions.ignoreCase,
+												onClick: () => toggleGrepOption("ignoreCase")
+											}),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ModeToggle, {
+												icon: "regex",
+												title: "Regex",
+												active: grepOptions.regex,
+												onClick: () => toggleGrepOption("regex")
+											}),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ModeToggle, {
+												icon: "whole-word",
+												title: "Whole Word",
+												active: grepOptions.wordBoundary,
+												onClick: () => toggleGrepOption("wordBoundary")
+											})
+										]
+									}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+										className: SearchPanel_module_default.modelPill,
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+											className: SearchPanel_module_default.modelInputShell,
+											children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AutocompleteInput, {
+												id: modelInputId,
+												className: SearchPanel_module_default.modelInput,
+												placeholder: defaultModel ?? "e.g., openai/gpt-5.4",
+												value: model,
+												onChange: handleModelChange,
+												onCommit: handleModelCommit,
+												suggestions: modelHistory.history,
+												allowBrowse: modelHistory.history.length > 0,
+												required: true
+											})
+										})
+									})
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+									type: "submit",
+									className: SearchPanel_module_default.runButton,
+									disabled: loading || !query.trim(),
+									children: "Run"
+								})]
+							})
+						]
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LoadingBar, { loading }),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: SearchPanel_module_default.results,
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SearchResults, {
+							loading,
+							error,
+							hasSearched,
+							currentSearch,
+							scope,
+							searchType,
+							getMessageUrl,
+							getEventUrl,
+							getEventMessageUrl
+						})
+					})
+				]
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopOver, {
+				id: `recent-searches-${api.cacheKey}`,
+				isOpen: isRecentOpen,
+				setIsOpen: setIsRecentOpen,
+				positionEl: recentButtonRef.current,
+				placement: "bottom-end",
+				offset: [0, 2],
+				hoverDelay: -1,
+				closeOnMouseLeave: false,
+				showArrow: false,
+				styles: {
+					padding: 0,
+					width: "20rem",
+					maxWidth: "calc(100vw - 1rem)",
+					maxHeight: "60vh",
+					overflowY: "auto"
+				},
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecentSearches, {
+					api,
+					searchType,
+					onSelect: handleSelectRecent
+				})
+			})
+		]
+	});
+};
+var ModeToggle = ({ active, icon, title, onClick }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+	type: "button",
+	className: clsx(SearchPanel_module_default.modeToggle, active && SearchPanel_module_default.modeToggleActive),
+	onClick,
+	"aria-pressed": active,
+	title,
+	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: `codicon codicon-${icon}` })
+});
+var RecentSearches = ({ api, searchType, onSelect }) => {
+	const searches = useSearches({
+		api,
+		searchType
+	});
+	if (searches.isLoading) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: SearchPanel_module_default.recentEmpty,
+		children: "Loading recent searches…"
+	});
+	if (searches.error) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: SearchPanel_module_default.recentEmpty,
+		children: "Unable to load recent searches."
+	});
+	const items = searches.data?.items ?? [];
+	if (items.length === 0) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: SearchPanel_module_default.recentEmpty,
+		children: "No recent searches."
+	});
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
+		className: SearchPanel_module_default.recentList,
+		role: "listbox",
+		children: items.map((search) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
+			role: "option",
+			"aria-selected": false,
+			className: SearchPanel_module_default.recentItem,
+			onMouseDown: (e) => {
+				e.preventDefault();
+				onSelect(search);
+			},
+			children: search.query
+		}, search.search_id))
+	});
+};
+var SEARCHING_STAGES = [
+	{
+		after: 45,
+		message: "Still working through the corpus"
+	},
+	{
+		after: 31,
+		message: "Checking the answer"
+	},
+	{
+		after: 22,
+		message: "Asking the model"
+	},
+	{
+		after: 14,
+		message: "Reading long passages"
+	},
+	{
+		after: 9,
+		message: "Scanning relevant sections"
+	},
+	{
+		after: 0,
+		message: "Searching"
+	}
+];
+var SearchingIndicator = ({ searchType }) => {
+	const [start] = (0, import_react.useState)(() => performance.now());
+	const [elapsed, setElapsed] = (0, import_react.useState)(0);
+	(0, import_react.useEffect)(() => {
+		const id = setInterval(() => {
+			setElapsed(Math.floor((performance.now() - start) / 1e3));
+		}, 1e3);
+		return () => clearInterval(id);
+	}, [start]);
+	const message = searchType === "grep" ? "Searching" : SEARCHING_STAGES.find((stage) => elapsed >= stage.after)?.message ?? "Searching";
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: SearchPanel_module_default.emptyState,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
+			className: SearchPanel_module_default.searchingText,
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", {
+					className: baseApplicationIcons.search,
+					"aria-hidden": "true"
+				}),
+				" ",
+				message,
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+					className: SearchPanel_module_default.searchingElapsed,
+					children: [
+						" · ",
+						elapsed,
+						"s"
+					]
+				})
+			]
+		})
+	});
+};
+var SearchResults = ({ loading, error, hasSearched, currentSearch, scope, searchType, getMessageUrl, getEventUrl, getEventMessageUrl }) => {
+	if (loading) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SearchingIndicator, { searchType });
+	if (error) return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: SearchPanel_module_default.emptyState,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { children: [error instanceof ApiError$1 ? error.status : "", " Something went wrong"] }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: error.message })]
+	});
+	if (!hasSearched) return null;
+	if (currentSearch === null) return null;
+	const result = currentSearch;
+	const numericValue = typeof result.value === "number" ? result.value : null;
+	if (numericValue === 0 && !result.explanation && typeof result.value !== "string") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: SearchPanel_module_default.emptyState,
+		children: "No results found"
+	});
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: SearchPanel_module_default.sectionHeader,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Results" }), numericValue !== null && numericValue > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+			className: SearchPanel_module_default.matchCount,
+			children: [
+				numericValue,
+				" ",
+				numericValue === 1 ? "match" : "matches"
+			]
+		})]
+	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SearchResult, {
+		result,
+		scope,
+		searchType,
+		getMessageUrl,
+		getEventUrl,
+		getEventMessageUrl
+	})] });
+};
+var SearchResult = ({ result, scope, searchType, getMessageUrl, getEventUrl, getEventMessageUrl }) => {
+	const markdownRefs = (0, import_react.useMemo)(() => {
+		const seen = /* @__PURE__ */ new Set();
+		const refs = [];
+		for (const ref of result.references ?? []) if (ref.cite && !seen.has(ref.cite)) {
+			seen.add(ref.cite);
+			const route = ref.type === "message" ? scope === "events" ? getEventMessageUrl(ref.id) : getMessageUrl(ref.id) : ref.type === "event" ? getEventUrl(ref.id) : void 0;
+			refs.push({
+				id: ref.id,
+				cite: ref.cite,
+				citeUrl: route ? `#${route}` : void 0
+			});
+		}
+		return refs;
+	}, [
+		result.references,
+		scope,
+		getMessageUrl,
+		getEventUrl,
+		getEventMessageUrl
+	]);
+	if (searchType === "grep") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: SearchPanel_module_default.resultCard,
+		children: result.explanation && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownDivWithReferences, {
+			markdown: result.explanation,
+			references: markdownRefs,
+			renderer: "textOnly"
+		})
+	});
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: SearchPanel_module_default.resultCard,
+		children: [typeof result.value === "string" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownDivWithReferences, {
+			markdown: result.value,
+			references: markdownRefs,
+			renderer: "textOnly"
+		}), result.explanation && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: SearchPanel_module_default.sectionHeader,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Explanation" })
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownDivWithReferences, {
+			markdown: result.explanation,
+			references: markdownRefs,
+			renderer: "textOnly"
+		})] })]
+	});
+};
+//#endregion
+//#region ../../packages/inspect-components/src/transcript-search/referenceLabels.ts
+/**
+* Projects a search result's citations onto transcript labels: `message`
+* references become `messageLabels`, `event` references become `eventLabels`,
+* both keyed by reference id. Returns undefined when nothing carries a cite so
+* callers can treat "no labels" as a single absence.
+*/
+var deriveSearchReferenceLabels = (result) => {
+	const messageLabels = {};
+	const eventLabels = {};
+	for (const ref of result?.references ?? []) {
+		if (!ref.cite) continue;
+		if (ref.type === "message") messageLabels[ref.id] = ref.cite;
+		else if (ref.type === "event") eventLabels[ref.id] = ref.cite;
+	}
+	const hasMessageLabels = Object.keys(messageLabels).length > 0;
+	const hasEventLabels = Object.keys(eventLabels).length > 0;
+	if (!hasMessageLabels && !hasEventLabels) return void 0;
+	return {
+		...hasMessageLabels ? { messageLabels } : {},
+		...hasEventLabels ? { eventLabels } : {}
+	};
+};
+/**
+* Reads the cached result for an active search and derives transcript labels
+* from its citations. Host apps resolve `searchId` from their own store and
+* supply the matching `api`; passing a null api or searchId yields undefined.
+*/
+var useCachedSearchReferenceLabels = ({ api, scope, searchId }) => {
+	const cachedResult = useCachedSearchResult({
+		api,
+		scope: buildSearchScope(scope),
+		searchId: api ? searchId : null
+	});
+	return (0, import_react.useMemo)(() => deriveSearchReferenceLabels(cachedResult.data), [cachedResult.data]);
+};
+//#endregion
+//#region src/state/searchSlice.ts
+var createSearchSlice = (set) => {
+	return [{
+		search: { panelStates: {} },
+		searchActions: {
+			setSearchPanelState: (key, updater) => {
+				set((state) => {
+					const prev = normalizeSearchPanelState(state.search.panelStates[key] ?? createInitialSearchPanelState());
+					state.search.panelStates[key] = typeof updater === "function" ? updater(prev) : updater;
+				});
+			},
+			clearSearchPanelState: (key) => {
+				set((state) => {
+					const { [key]: _removed, ...remaining } = state.search.panelStates;
+					state.search.panelStates = remaining;
+				});
+			}
+		}
+	}, () => {}];
+};
 //#endregion
 //#region src/utils/workQueue.ts
 var WorkPriority = /* @__PURE__ */ function(WorkPriority) {
@@ -59421,6 +61123,7 @@ var initializeStore = (api, capabilities, storage) => {
 		const [logsSlice, logsCleanup] = createLogsSlice(set, get, store, api);
 		const [logSlice, logCleanup] = createLogSlice(set, get, store, api);
 		const [sampleSlice, sampleCleanup] = createSampleSlice(set, get, store);
+		const [searchSlice, searchCleanup] = createSearchSlice(set);
 		const databaseService = createDatabaseService();
 		const replicationService = new ReplicationService();
 		return {
@@ -59440,12 +61143,14 @@ var initializeStore = (api, capabilities, storage) => {
 			...logsSlice,
 			...logSlice,
 			...sampleSlice,
+			...searchSlice,
 			cleanup: async () => {
 				await databaseService.closeDatabase();
 				appCleanup();
 				logsCleanup();
 				logCleanup();
 				sampleCleanup();
+				searchCleanup();
 			}
 		};
 	}), {
@@ -59499,7 +61204,11 @@ var inspectStateHooks = {
 	useRemoveByPrefix: () => useStore((state) => state.appActions.removeByPrefix)
 };
 //#endregion
+//#region src/theme/constants.ts
+var SETTINGS_STORAGE_KEY = "inspect-view-user-settings";
+//#endregion
 //#region src/state/userSettings.ts
+var MAX_SEARCH_MODEL_HISTORY = 25;
 var useUserSettings = create()(persist((set) => ({
 	themePreference: "readable-system",
 	setThemePreference: (themePreference) => {
@@ -59508,149 +61217,25 @@ var useUserSettings = create()(persist((set) => ({
 	showRetriedLogs: false,
 	setShowRetriedLogs: (showRetriedLogs) => {
 		set({ showRetriedLogs });
+	},
+	searchModelHistory: [],
+	recordSearchModel: (model) => {
+		const trimmedModel = model.trim();
+		if (!trimmedModel) return;
+		const normalizedModel = trimmedModel.toLowerCase();
+		set((state) => ({ searchModelHistory: [trimmedModel, ...state.searchModelHistory.filter((existingModel) => existingModel.trim().toLowerCase() !== normalizedModel)].slice(0, MAX_SEARCH_MODEL_HISTORY) }));
+	},
+	clearSearchModelHistory: () => {
+		set({ searchModelHistory: [] });
 	}
 }), {
-	name: "inspect-view-user-settings",
+	name: SETTINGS_STORAGE_KEY,
 	storage: createJSONStorage(() => localStorage)
 }));
 //#endregion
 //#region src/app/appearance/icons.ts
 var ApplicationIcons = {
-	agent: "bi bi-grid",
-	approve: "bi bi-shield",
-	approvals: {
-		approve: "bi bi-shield-check",
-		reject: "bi bi-shield-x",
-		terminate: "bi bi-shield-exclamation",
-		escalate: "bi bi-box-arrow-up",
-		modify: "bi bi-pencil-square"
-	},
-	arrows: {
-		right: "bi bi-arrow-right",
-		down: "bi bi-arrow-down",
-		up: "bi bi-arrow-up"
-	},
-	cancelled: "bi bi-x-circle",
-	caret: {
-		right: "bi bi-caret-right",
-		down: "bi bi-caret-down"
-	},
-	changes: {
-		add: "bi bi-plus",
-		remove: "bi bi-dash",
-		replace: "bi bi-plus-slash-minus"
-	},
-	checkbox: {
-		checked: "bi bi-check-circle",
-		unchecked: "bi bi-circle"
-	},
-	chevron: {
-		right: "bi bi-chevron-right",
-		down: "bi bi-chevron-down"
-	},
-	"clear-text": "bi bi-x-circle-fill",
-	close: "bi bi-x",
-	code: "bi bi-code-slash",
-	collapse: {
-		all: "bi bi-arrows-collapse",
-		up: "bi bi-chevron-up"
-	},
-	config: "bi bi-gear",
-	confirm: "bi bi-check",
-	copy: "bi bi-copy",
-	display: "bi bi-card-text",
-	epoch: (epoch) => `bi bi-${epoch}-circle`,
-	edit: "bi bi-pencil-square",
-	error: "bi bi-exclamation-circle-fill",
-	eval: "bi bi-info-circle-fill",
-	"eval-set": "bi bi-list-task",
-	expand: {
-		all: "bi bi-arrows-expand",
-		down: "bi bi-chevron-down"
-	},
-	file: "bi bi-file-code",
-	filter: "bi bi-funnel",
-	folder: "bi bi-folder",
-	home: "bi bi-house",
-	info: "bi bi-info-circle",
-	input: "bi bi-terminal",
-	inspect: "ii inspect-icon-16",
-	inspectFile: "ii inspect-icon-file",
-	json: "bi bi-filetype-json",
-	limits: {
-		messages: "bi bi-chat-right-text",
-		custom: "bi bi-exclamation-triangle",
-		operator: "bi bi-person-workspace",
-		tokens: "bi bi-list",
-		time: "bi bi-clock",
-		execution: "bi bi-stopwatch",
-		cost: "bi bi-currency-dollar"
-	},
-	link: "bi bi-link-45deg",
-	logging: {
-		notset: "bi bi-card-text",
-		debug: "bi bi-bug",
-		http: "bi bi-download",
-		info: "bi bi-info-square",
-		warning: "bi bi-exclamation-triangle",
-		error: "bi bi-x-circle",
-		critical: "bi bi-fire"
-	},
-	menu: "bi bi-list",
-	messages: "bi bi-chat-right-text",
-	metadata: "bi bi-table",
-	metrics: "bi bi-clipboard-data",
-	model: "bi bi-grid-3x3-gap",
-	"toggle-right": "bi bi-chevron-right",
-	more: "bi bi-zoom-in",
-	"multiple-choice": "bi bi-card-list",
-	navbar: {
-		home: "ii inspect-icon-home",
-		back: "ii inspect-icon-back",
-		forward: "ii inspect-icon-forward",
-		inspectLogo: "ii inspect-icon-16",
-		tasks: "ii inspect-icon-tasks"
-	},
-	next: "bi bi-chevron-right",
-	noSamples: "bi bi-ban",
-	options: "bi bi-gear",
-	play: "bi bi-play-fill",
-	previous: "bi bi-chevron-left",
-	refresh: "bi bi-arrow-clockwise",
-	retry: "bi bi-arrow-repeat",
-	role: {
-		user: "bi bi-person",
-		system: "bi bi-cpu",
-		assistant: "bi bi-robot",
-		tool: "bi bi-tools",
-		unknown: "bi bi-patch-question"
-	},
-	running: "bi bi-stars",
-	sample: "bi bi-database",
-	samples: "bi bi-file-spreadsheet",
-	sandbox: "bi bi-box-seam",
-	scorer: "bi bi-calculator",
-	search: "bi bi-search",
-	sidebar: "bi bi-list",
-	solvers: {
-		default: "bi bi-arrow-return-right",
-		generate: "bi bi-share",
-		chain_of_thought: "bi bi-link",
-		self_critique: "bi bi-arrow-left-right",
-		system_message: "bi bi-cpu",
-		use_tools: "bi bi-tools"
-	},
-	step: "bi bi-fast-forward-btn",
-	subtask: "bi bi-subtract",
-	success: "bi bi-check-circle-fill",
-	threeDots: "bi bi-three-dots",
-	transcript: "bi bi-list-columns-reverse",
-	tree: {
-		open: "bi bi-caret-down-fill",
-		closed: "bi bi-caret-right-fill"
-	},
-	turns: "bi bi-chat-left-text",
-	usage: "bi bi-stopwatch",
+	...baseApplicationIcons,
 	pencil: "bi bi-pencil",
 	trash: "bi bi-trash",
 	fork: "bi bi-signpost-split",
@@ -129624,26 +131209,21 @@ var useEventNodes = (events, running, sourceSpans) => {
 	};
 };
 var TranscriptLayout_module_default = {
-	root: "_root_1qk7q_1",
-	container: "_container_1qk7q_9",
-	embedded: "_embedded_1qk7q_21",
-	outlineCollapsed: "_outlineCollapsed_1qk7q_30",
-	noOutline: "_noOutline_1qk7q_34",
-	rightPaneCollapsed: "_rightPaneCollapsed_1qk7q_38",
-	noRightPane: "_noRightPane_1qk7q_50",
-	outline: "_outline_1qk7q_30",
-	outlineToggle: "_outlineToggle_1qk7q_78",
-	separator: "_separator_1qk7q_92",
-	rightSeparator: "_rightSeparator_1qk7q_96",
-	rightPane: "_rightPane_1qk7q_38",
-	rightPaneResizer: "_rightPaneResizer_1qk7q_115",
-	rightPaneToggle: "_rightPaneToggle_1qk7q_134",
-	eventsList: "_eventsList_1qk7q_143",
-	sidebarHeader: "_sidebarHeader_1qk7q_147",
-	sidebarHeaderIcon: "_sidebarHeaderIcon_1qk7q_155",
-	sidebarHeaderTitle: "_sidebarHeaderTitle_1qk7q_160",
-	sidebarHeaderCloseAnchor: "_sidebarHeaderCloseAnchor_1qk7q_176",
-	sidebarHeaderClose: "_sidebarHeaderClose_1qk7q_176"
+	root: "_root_1t7mh_1",
+	main: "_main_1t7mh_12",
+	container: "_container_1t7mh_19",
+	embedded: "_embedded_1t7mh_28",
+	outlineCollapsed: "_outlineCollapsed_1t7mh_37",
+	noOutline: "_noOutline_1t7mh_41",
+	outline: "_outline_1t7mh_37",
+	outlineToggle: "_outlineToggle_1t7mh_61",
+	separator: "_separator_1t7mh_75",
+	eventsList: "_eventsList_1t7mh_79",
+	sidebarHeader: "_sidebarHeader_1t7mh_83",
+	sidebarHeaderIcon: "_sidebarHeaderIcon_1t7mh_91",
+	sidebarHeaderTitle: "_sidebarHeaderTitle_1t7mh_96",
+	sidebarHeaderCloseAnchor: "_sidebarHeaderCloseAnchor_1t7mh_112",
+	sidebarHeaderClose: "_sidebarHeaderClose_1t7mh_112"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/AnchorEventView.tsx
@@ -132759,7 +134339,7 @@ var scopeMessageLabels = (events, messageLabels) => {
 	for (const [id, label] of Object.entries(messageLabels)) if (present.has(id)) scoped[id] = label;
 	return Object.keys(scoped).length > 0 ? scoped : void 0;
 };
-var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, offsetTop = 0, embedded = false, timelineSelection, activeTimeline, serverTimelines, markerConfig: markerConfigOverride, agentConfig: agentConfigOverride, showSwimlanes: showSwimlanesOption = "auto", onMarkerNavigate, onScrollToTop, headroomHidden, onHeadroomResetAnchor, onHeadroomSetHidden, listId, initialEventId, initialMessageId, eventsListRef, getEventUrl, linkingEnabled, bulkCollapse, collapseState, outline, outlineScrollRef, rightPane, rightPaneScrollRef, eventNodeContext, emptyText = "No events match the current filter", emptyBusy, className }) => {
+var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, offsetTop = 0, embedded = false, timelineSelection, activeTimeline, serverTimelines, markerConfig: markerConfigOverride, agentConfig: agentConfigOverride, showSwimlanes: showSwimlanesOption = "auto", onMarkerNavigate, onScrollToTop, headroomHidden, onHeadroomResetAnchor, onHeadroomSetHidden, listId, initialEventId, initialMessageId, eventsListRef, getEventUrl, linkingEnabled, bulkCollapse, collapseState, outline, outlineScrollRef, rightRail, rightRailPanelScrollRef, eventNodeContext, emptyText = "No events match the current filter", emptyBusy, className }) => {
 	const eventsForTimeline = (0, import_react.useMemo)(() => {
 		if (!hiddenEventTypes || hiddenEventTypes.length === 0) return events;
 		return events.filter((e) => e.event === "anchor" || !hiddenEventTypes.includes(e.event));
@@ -133058,7 +134638,7 @@ var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, 
 	}, []);
 	const handleLayoutShift = (0, import_react.useCallback)((debounce) => onHeadroomResetAnchor?.(debounce), [onHeadroomResetAnchor]);
 	const outlineCollapsedFlag = outline?.collapsed ?? null;
-	const rightPaneCollapsedFlag = rightPane?.collapsed ?? null;
+	const railPanelOpenFlag = rightRail?.panel != null;
 	(0, import_react.useEffect)(() => {
 		const el = scrollRef.current;
 		if (!el) return;
@@ -133068,22 +134648,26 @@ var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, 
 		return () => clearTimeout(timer);
 	}, [
 		outlineCollapsedFlag,
-		rightPaneCollapsedFlag,
+		railPanelOpenFlag,
 		scrollRef
 	]);
 	const effectiveOffsetTopRef = (0, import_react.useRef)(effectiveOffsetTop);
 	(0, import_react.useEffect)(() => {
 		effectiveOffsetTopRef.current = effectiveOffsetTop;
 	}, [effectiveOffsetTop]);
+	const offsetTopRef = (0, import_react.useRef)(offsetTop);
+	(0, import_react.useEffect)(() => {
+		offsetTopRef.current = offsetTop;
+	}, [offsetTop]);
 	(0, import_react.useEffect)(() => {
 		const main = scrollRef.current;
 		const outlineEl = outlineScrollRef?.current ?? null;
-		const rightEl = rightPaneScrollRef?.current ?? null;
+		const railPanelEl = rightRailPanelScrollRef?.current ?? null;
 		if (!main) return;
-		const makeHandler = (sidebar) => (e) => {
+		const makeHandler = (sidebar, stickyTopRef) => (e) => {
 			const mainMaxTop = main.scrollHeight - main.clientHeight;
 			const mainRect = main.getBoundingClientRect();
-			if (!(sidebar.getBoundingClientRect().top - mainRect.top <= effectiveOffsetTopRef.current + 1)) {
+			if (!(sidebar.getBoundingClientRect().top - mainRect.top <= stickyTopRef.current + 1)) {
 				if (e.deltaY > 0 && main.scrollTop < mainMaxTop - .5 || e.deltaY < 0 && main.scrollTop > .5) {
 					e.preventDefault();
 					main.scrollBy({
@@ -133099,110 +134683,76 @@ var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, 
 				});
 			}
 		};
-		const entries = [outlineEl, rightEl].filter((el) => el != null).map((t) => {
-			const handler = makeHandler(t);
-			t.addEventListener("wheel", handler, { passive: false });
+		const targets = [];
+		if (outlineEl) targets.push({
+			el: outlineEl,
+			stickyTopRef: effectiveOffsetTopRef
+		});
+		if (railPanelEl) targets.push({
+			el: railPanelEl,
+			stickyTopRef: offsetTopRef
+		});
+		const entries = targets.map(({ el, stickyTopRef }) => {
+			const handler = makeHandler(el, stickyTopRef);
+			el.addEventListener("wheel", handler, { passive: false });
 			return {
-				t,
+				el,
 				handler
 			};
 		});
 		return () => {
-			for (const { t, handler } of entries) t.removeEventListener("wheel", handler);
+			for (const { el, handler } of entries) el.removeEventListener("wheel", handler);
 		};
 	}, [
 		scrollRef,
 		outlineScrollRef,
-		rightPaneScrollRef,
+		rightRailPanelScrollRef,
 		outlineCollapsedFlag,
-		rightPaneCollapsedFlag
+		railPanelOpenFlag
 	]);
 	const [outlineScrollEl, setOutlineScrollEl] = (0, import_react.useState)(null);
 	const handleOutlineScrollRef = (0, import_react.useCallback)((el) => {
 		setOutlineScrollEl(el);
 		if (outlineScrollRef) outlineScrollRef.current = el;
 	}, [outlineScrollRef]);
-	const [scrollerHeight, setScrollerHeight] = (0, import_react.useState)(0);
-	(0, import_react.useEffect)(() => {
-		const el = scrollRef.current;
-		if (!el) return;
-		const update = () => setScrollerHeight(el.getBoundingClientRect().height);
-		update();
-		const observer = new ResizeObserver(update);
-		observer.observe(el);
-		window.addEventListener("resize", update);
-		return () => {
-			observer.disconnect();
-			window.removeEventListener("resize", update);
-		};
-	}, [scrollRef]);
-	const rightPaneWidth = rightPane?.width ?? 360;
-	const rightPaneMinWidth = rightPane?.minWidth ?? 240;
-	const rightPaneMaxWidth = rightPane?.maxWidth ?? 800;
-	const rightPaneOnWidthChange = rightPane?.onWidthChange;
-	const rightPaneDragRef = (0, import_react.useRef)(null);
-	const handleRightPanePointerDown = (0, import_react.useCallback)((e) => {
-		if (!rightPaneOnWidthChange) return;
-		e.preventDefault();
-		e.target.setPointerCapture(e.pointerId);
-		rightPaneDragRef.current = {
-			startX: e.clientX,
-			startWidth: rightPaneWidth
-		};
-	}, [rightPaneOnWidthChange, rightPaneWidth]);
-	const handleRightPanePointerMove = (0, import_react.useCallback)((e) => {
-		if (!rightPaneOnWidthChange || !rightPaneDragRef.current) return;
-		const { startX, startWidth } = rightPaneDragRef.current;
-		const next = startWidth - (e.clientX - startX);
-		rightPaneOnWidthChange(Math.max(rightPaneMinWidth, Math.min(rightPaneMaxWidth, next)));
-	}, [
-		rightPaneOnWidthChange,
-		rightPaneMinWidth,
-		rightPaneMaxWidth
-	]);
-	const handleRightPanePointerUp = (0, import_react.useCallback)((e) => {
-		rightPaneDragRef.current = null;
-		try {
-			e.target.releasePointerCapture(e.pointerId);
-		} catch {}
-	}, []);
+	const scrollerHeight = useElementHeight(scrollRef);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TimelineSelectContext.Provider, {
 		value: selectBySpanId,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TimelineRowSelectContext.Provider, {
 			value: selectByRowKey,
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 				className: clsx(TranscriptLayout_module_default.root, className),
-				children: [showSwimlanes && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StickyScroll, {
-					scrollRef,
-					offsetTop,
-					zIndex: 500,
-					preserveHeight: true,
-					onStickyChange: handleSwimLaneStickyChange,
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						ref: swimLaneStickyContentRef,
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TimelineSwimLanes, {
-							layouts: timelineLayouts,
-							timeline: timelineState,
-							header: swimlaneHeader,
-							onMarkerNavigate,
-							isSticky: isSwimLaneSticky,
-							headroomCollapsed: !!headroomHidden && isSwimLaneSticky,
-							onLayoutShift: handleLayoutShift,
-							defaultCollapsed: swimlanesDefaultCollapsed,
-							regionCounts,
-							highlightedKeys,
-							onPunchDown: handlePunchDown
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: TranscriptLayout_module_default.main,
+					children: [showSwimlanes && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StickyScroll, {
+						scrollRef,
+						offsetTop,
+						zIndex: 500,
+						preserveHeight: true,
+						onStickyChange: handleSwimLaneStickyChange,
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							ref: swimLaneStickyContentRef,
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TimelineSwimLanes, {
+								layouts: timelineLayouts,
+								timeline: timelineState,
+								header: swimlaneHeader,
+								onMarkerNavigate,
+								isSticky: isSwimLaneSticky,
+								headroomCollapsed: !!headroomHidden && isSwimLaneSticky,
+								onLayoutShift: handleLayoutShift,
+								defaultCollapsed: swimlanesDefaultCollapsed,
+								regionCounts,
+								highlightedKeys,
+								onPunchDown: handlePunchDown
+							})
 						})
-					})
-				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: clsx(TranscriptLayout_module_default.container, embedded && TranscriptLayout_module_default.embedded, !outline && TranscriptLayout_module_default.noOutline, outline && isOutlineCollapsed && TranscriptLayout_module_default.outlineCollapsed, !rightPane && TranscriptLayout_module_default.noRightPane, rightPane && rightPane.collapsed && TranscriptLayout_module_default.rightPaneCollapsed),
-					style: {
-						"--outline-top": `${effectiveOffsetTop}px`,
-						"--right-pane-width": `${rightPaneWidth}px`,
-						"--scroller-height": scrollerHeight ? `${scrollerHeight}px` : "100vh"
-					},
-					children: [
-						outline && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(StickyScroll, {
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: clsx(TranscriptLayout_module_default.container, embedded && TranscriptLayout_module_default.embedded, !outline && TranscriptLayout_module_default.noOutline, outline && isOutlineCollapsed && TranscriptLayout_module_default.outlineCollapsed),
+						style: {
+							"--outline-top": `${effectiveOffsetTop}px`,
+							"--scroller-height": scrollerHeight ? `${scrollerHeight}px` : "100vh"
+						},
+						children: [outline && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(StickyScroll, {
 							ref: handleOutlineScrollRef,
 							scrollRef,
 							className: TranscriptLayout_module_default.outline,
@@ -133254,8 +134804,7 @@ var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, 
 								"aria-label": "Show outline",
 								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: outline.toggleIcon })
 							})
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: TranscriptLayout_module_default.separator })] }),
-						hasMatchingEvents ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptViewNodes, {
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: TranscriptLayout_module_default.separator })] }), hasMatchingEvents ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptViewNodes, {
 							ref: eventsListRef,
 							id: effectiveListId,
 							eventNodes,
@@ -133277,52 +134826,21 @@ var TranscriptLayout = ({ events, hiddenEventTypes, running = false, scrollRef, 
 						}, effectiveListId) : emptyText !== null ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, {
 							text: emptyText,
 							busy: emptyBusy
-						}) : null,
-						rightPane && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: TranscriptLayout_module_default.rightSeparator }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StickyScroll, {
-							ref: rightPaneScrollRef,
-							scrollRef,
-							className: TranscriptLayout_module_default.rightPane,
-							offsetTop: effectiveOffsetTop,
-							children: !rightPane.collapsed ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
-								rightPaneOnWidthChange && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-									className: TranscriptLayout_module_default.rightPaneResizer,
-									role: "separator",
-									"aria-orientation": "vertical",
-									"aria-label": `Resize ${rightPane.label ?? "pane"}`,
-									onPointerDown: handleRightPanePointerDown,
-									onPointerMove: handleRightPanePointerMove,
-									onPointerUp: handleRightPanePointerUp,
-									onPointerCancel: handleRightPanePointerUp
-								}),
-								rightPane.title && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-									className: TranscriptLayout_module_default.sidebarHeader,
-									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-										className: clsx(TranscriptLayout_module_default.sidebarHeaderTitle, "text-size-smaller"),
-										children: rightPane.title
-									})
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-									className: TranscriptLayout_module_default.sidebarHeaderCloseAnchor,
-									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-										type: "button",
-										className: TranscriptLayout_module_default.sidebarHeaderClose,
-										onClick: () => rightPane.onCollapsedChange(true),
-										"aria-label": `Hide ${rightPane.label ?? "pane"}`,
-										title: rightPane.toggleTitle ?? `Hide ${rightPane.label ?? "pane"}`,
-										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: "bi bi-x" })
-									})
-								}),
-								rightPane.content
-							] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-								type: "button",
-								className: TranscriptLayout_module_default.rightPaneToggle,
-								onClick: () => rightPane.onCollapsedChange(false),
-								title: rightPane.toggleTitle ?? `Show ${rightPane.label ?? "pane"}`,
-								"aria-label": `Show ${rightPane.label ?? "pane"}`,
-								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: rightPane.toggleIcon })
-							})
-						})] })
-					]
+						}) : null]
+					})]
+				}), rightRail && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RailDock, {
+					rail: rightRail.rail,
+					panel: rightRail.panel,
+					scrollRef,
+					scrollerHeight,
+					offsetTop,
+					panelScrollRef: rightRailPanelScrollRef,
+					railWidth: rightRail.railWidth,
+					panelWidth: rightRail.panelWidth,
+					onPanelWidthChange: rightRail.onPanelWidthChange,
+					panelMinWidth: rightRail.panelMinWidth,
+					panelMaxWidth: rightRail.panelMaxWidth,
+					label: rightRail.label
 				})]
 			})
 		})
@@ -133401,16 +134919,19 @@ var messagesFromEvents = (events, stateRef) => {
 	return state.lastResult;
 };
 var SampleDisplay_module_default = {
-	tabControls: "_tabControls_1o8ft_7",
-	fullWidth: "_fullWidth_1o8ft_16",
-	metadataPanel: "_metadataPanel_1o8ft_20",
-	padded: "_padded_1o8ft_26",
-	error: "_error_1o8ft_31",
-	ansi: "_ansi_1o8ft_35",
-	noTop: "_noTop_1o8ft_39",
-	chat: "_chat_1o8ft_43",
-	overflowVisible: "_overflowVisible_1o8ft_51",
-	retriedErrors: "_retriedErrors_1o8ft_55"
+	tabControls: "_tabControls_fvnsu_1",
+	fullWidth: "_fullWidth_fvnsu_10",
+	metadataPanel: "_metadataPanel_fvnsu_14",
+	padded: "_padded_fvnsu_20",
+	error: "_error_fvnsu_25",
+	ansi: "_ansi_fvnsu_29",
+	noTop: "_noTop_fvnsu_33",
+	chat: "_chat_fvnsu_37",
+	railHost: "_railHost_fvnsu_41",
+	tabContent: "_tabContent_fvnsu_49",
+	overflowVisible: "_overflowVisible_fvnsu_60",
+	toolSeparator: "_toolSeparator_fvnsu_68",
+	retriedErrors: "_retriedErrors_fvnsu_77"
 };
 //#endregion
 //#region src/app/samples/SampleJSONView.tsx
@@ -135065,321 +136586,62 @@ var InvalidationBanner = ({ invalidation }) => {
 	});
 };
 //#endregion
-//#region src/app/samples/scores/SampleScores.tsx
-var SampleScores = ({ sample, scorer }) => {
-	const scoreData = sample.scores?.[scorer];
-	if (!scoreData) return;
-	return getScoreDescriptorForValues([scoreData.value], [typeof scoreData.value])?.render(scoreData.value);
-};
-var SampleScoresGrid_module_default = {
-	container: "_container_uifeh_1",
-	cell: "_cell_uifeh_9",
-	fullWidth: "_fullWidth_uifeh_15",
-	heading: "_heading_uifeh_19",
-	padded: "_padded_uifeh_23",
-	separator: "_separator_uifeh_27",
-	separatorPadded: "_separatorPadded_uifeh_32",
-	headerSep: "_headerSep_uifeh_37"
-};
-//#endregion
-//#region src/app/samples/scores/SampleScoresGrid.tsx
-var SampleScoresGrid = ({ evalSample, className, scrollRef }) => {
-	if (!useEvalDescriptor()) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyPanel, { children: "No Sample Selected" });
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: clsx(className, SampleScoresGrid_module_default.container),
-		children: [
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: clsx("text-size-smaller", "text-style-label", "text-style-secondary"),
-				children: "Scorer"
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: clsx("text-size-smaller", "text-style-label", "text-style-secondary"),
-				children: "Answer"
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: clsx("text-size-smaller", "text-style-label", "text-style-secondary"),
-				children: "Score"
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: clsx("text-size-smaller", "text-style-label", "text-style-secondary"),
-				children: "Explanation"
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: clsx(SampleScoresGrid_module_default.separator, SampleScoresGrid_module_default.fullWidth, SampleScoresGrid_module_default.headerSep) }),
-			Object.keys(evalSample.scores || {}).map((scorer) => {
-				if (!evalSample.scores) return;
-				const scoreData = evalSample.scores[scorer];
-				const explanation = scoreData.explanation || "(No Explanation)";
-				const answer = scoreData.answer;
-				const metadata = scoreData.metadata || {};
-				return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: clsx("text-size-base", SampleScoresGrid_module_default.cell),
-						children: scorer
-					}),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: clsx(SampleScoresGrid_module_default.cell, "text-size-base"),
-						children: answer
-					}),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: clsx(SampleScoresGrid_module_default.cell, "text-size-base"),
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleScores, {
-							sample: evalSample,
-							scorer
-						})
-					}),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: clsx("text-size-base", SampleScoresGrid_module_default.cell),
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedContent, {
-							id: `${scorer}-explanation`,
-							entry: {
-								name: "Explanation",
-								value: explanation
-							}
-						})
-					}),
-					Object.keys(metadata).length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							className: clsx("text-size-smaller", "text-style-label", "text-style-secondary", SampleScoresGrid_module_default.fullWidth),
-							children: "Metadata"
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							className: clsx(SampleScoresGrid_module_default.fullWidth),
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
-								id: `${scorer}-metadataa`,
-								scrollRef,
-								record: metadata,
-								defaultExpandLevel: 0
-							})
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: clsx(SampleScoresGrid_module_default.separator, SampleScoresGrid_module_default.separatorPadded, SampleScoresGrid_module_default.fullWidth) })
-					] }, `${scorer}-metadata`) : void 0
-				] }, `${scorer}-row`);
-			})
-		]
+//#region ../../packages/scout-components/src/scanner-result-detail/Explanation.tsx
+var Explanation = ({ explanation, references, options }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownDivWithReferences, {
+		markdown: explanation ?? "",
+		references,
+		options
 	});
 };
-var SampleScoresView_module_default = {
-	label: "_label_las07_1",
-	wordBreak: "_wordBreak_las07_9",
-	scoreTable: "_scoreTable_las07_13",
-	bottomBorder: "_bottomBorder_las07_18",
-	headerScore: "_headerScore_las07_22",
-	targetValue: "_targetValue_las07_26",
-	answerValue: "_answerValue_las07_32",
-	scoreValue: "_scoreValue_las07_37",
-	noLeft: "_noLeft_las07_42",
-	noTop: "_noTop_las07_46",
-	scoreCard: "_scoreCard_las07_50",
-	scores: "_scores_las07_54"
-};
+var Metadata_module_default = { entry: "_entry_a2fxh_1" };
 //#endregion
-//#region src/app/samples/scores/SampleScoresView.tsx
-var SampleScoresView = ({ sample, className, scrollRef }) => {
-	if (!useEvalDescriptor()) return;
-	if (!sample) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, { text: "Scoring data not available" });
-	const scoreInput = inputString(sample.input);
-	if (sample.choices && sample.choices.length > 0) {
-		scoreInput.push("");
-		scoreInput.push(...sample.choices.map((choice, index) => {
-			return `${String.fromCharCode(65 + index)}) ${choice}`;
-		}));
-	}
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: clsx("container-fluid", className, "font-size-base", SampleScoresView_module_default.container),
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Card, {
-			className: clsx(SampleScoresView_module_default.scoreCard),
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(CardBody, { children: [
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: clsx("text-size-small", "text-style-label", "text-style-secondary"),
-					children: "Input"
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
-					lines: 10,
-					id: `sample-score-${sample.id}-${sample.epoch}`,
-					collapse: true,
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedText, {
-						markdown: scoreInput.join("\n"),
-						className: clsx(SampleScoresView_module_default.wordBreak, "text-size-base")
-					})
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleScoresGrid, {
-					evalSample: sample,
-					className: clsx(SampleScoresView_module_default.scores),
-					scrollRef
-				})
-			] })
+//#region ../../packages/scout-components/src/scanner-result-detail/Metadata.tsx
+var Metadata = ({ metadata, references, options, excludeKeys }) => {
+	const excluded = excludeKeys ? new Set(excludeKeys) : null;
+	const entries = Object.entries(metadata).filter(([key]) => !excluded?.has(key));
+	if (entries.length === 0) return null;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: entries.map(([key, value]) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
+		label: key,
+		className: Metadata_module_default.entry,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetadataValue, {
+			id: key,
+			value,
+			references,
+			options
 		})
-	});
+	}, key)) });
 };
-//#endregion
-//#region src/app/samples/transcript/hooks.ts
-var eventTypes = {
-	sample_init: "Sample Init",
-	sample_limit: "Sample Limit",
-	sandbox: "Sandbox",
-	state: "State",
-	store: "Store",
-	model: "Model",
-	tool: "Tool",
-	approval: "Approval",
-	input: "Input",
-	interrupt: "Interrupt",
-	score: "Score",
-	score_edit: "Score Edit",
-	error: "Error",
-	logger: "Logger",
-	compaction: "Compaction",
-	info: "Info",
-	subtask: "Subtask",
-	anchor: "Anchor",
-	branch: "Branch",
-	checkpoint: "Checkpoint",
-	step: "Step"
-};
-var useTranscriptFilter = () => {
-	const filtered = useStore((state) => state.sample.eventFilter.filteredTypes);
-	const setFilteredEventTypes = useStore((state) => state.sampleActions.setFilteredEventTypes);
-	const filterEventType = (0, import_react.useCallback)((type, isFiltered) => {
-		const newFiltered = new Set(filtered);
-		if (isFiltered) newFiltered.delete(type);
-		else newFiltered.add(type);
-		setFilteredEventTypes(Array.from(newFiltered));
-	}, [filtered, setFilteredEventTypes]);
-	const setDebugFilter = (0, import_react.useCallback)(() => {
-		setFilteredEventTypes([]);
-	}, [setFilteredEventTypes]);
-	const setDefaultFilter = (0, import_react.useCallback)(() => {
-		setFilteredEventTypes([...kDefaultExcludeEvents]);
-	}, [setFilteredEventTypes]);
-	const setNoneFilter = (0, import_react.useCallback)(() => {
-		setFilteredEventTypes(Object.keys(eventTypes));
-	}, [setFilteredEventTypes]);
-	return {
-		filtered,
-		isDefaultFilter: (0, import_react.useMemo)(() => {
-			return filtered.length === kDefaultExcludeEvents.length && [...filtered].every((type) => kDefaultExcludeEvents.includes(type));
-		}, [filtered]),
-		isDebugFilter: (0, import_react.useMemo)(() => {
-			return filtered.length === 0;
-		}, [filtered]),
-		isNoneFilter: (0, import_react.useMemo)(() => {
-			const allTypes = Object.keys(eventTypes);
-			return filtered.length === allTypes.length && allTypes.every((type) => filtered.includes(type));
-		}, [filtered]),
-		setDefaultFilter,
-		setDebugFilter,
-		setNoneFilter,
-		filterEventType,
-		eventTypes,
-		arrangedEventTypes: (0, import_react.useCallback)((columns = 1) => {
-			const sortedKeys = Object.keys(eventTypes).sort((a, b) => {
-				const aIsDefault = kDefaultExcludeEvents.includes(a);
-				const bIsDefault = kDefaultExcludeEvents.includes(b);
-				if (aIsDefault && !bIsDefault) return 1;
-				if (!aIsDefault && bIsDefault) return -1;
-				return eventTypes[a].localeCompare(eventTypes[b]);
-			});
-			if (columns === 1) return sortedKeys;
-			const itemsPerColumn = Math.ceil(sortedKeys.length / columns);
-			const columnArrays = [];
-			for (let col = 0; col < columns; col++) {
-				const start = col * itemsPerColumn;
-				const end = Math.min(start + itemsPerColumn, sortedKeys.length);
-				columnArrays.push(sortedKeys.slice(start, end));
-			}
-			const arrangedKeys = [];
-			const maxItemsInColumn = Math.max(...columnArrays.map((col) => col.length));
-			for (let row = 0; row < maxItemsInColumn; row++) for (let col = 0; col < columns; col++) if (row < columnArrays[col].length) arrangedKeys.push(columnArrays[col][row]);
-			return arrangedKeys;
-		}, [])
-	};
-};
-var TranscriptFilter_module_default = {
-	grid: "_grid_1ml4j_1",
-	row: "_row_1ml4j_8",
-	links: "_links_1ml4j_22",
-	selected: "_selected_1ml4j_40"
-};
-//#endregion
-//#region src/app/samples/transcript/TranscriptFilter.tsx
-var TranscriptFilterPopover = ({ showing, positionEl, setShowing }) => {
-	const { isDefaultFilter, isDebugFilter, isNoneFilter, setDefaultFilter, setDebugFilter, setNoneFilter, filterEventType, eventTypes, filtered, arrangedEventTypes } = useTranscriptFilter();
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(PopOver, {
-		id: `transcript-filter-popover`,
-		positionEl,
-		isOpen: showing,
-		setIsOpen: setShowing,
-		placement: "bottom-end",
-		hoverDelay: -1,
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: clsx(TranscriptFilter_module_default.links, "text-size-smaller"),
-			children: [
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-					className: clsx(TranscriptFilter_module_default.link, isDefaultFilter ? TranscriptFilter_module_default.selected : void 0),
-					onClick: () => setDefaultFilter(),
-					children: "Default"
-				}),
-				"|",
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-					className: clsx(TranscriptFilter_module_default.link, isDebugFilter ? TranscriptFilter_module_default.selected : void 0),
-					onClick: () => setDebugFilter(),
-					children: "Debug"
-				}),
-				"|",
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-					className: clsx(TranscriptFilter_module_default.link, isNoneFilter ? TranscriptFilter_module_default.selected : void 0),
-					onClick: () => setNoneFilter(),
-					children: "None"
-				})
-			]
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: clsx(TranscriptFilter_module_default.grid, "text-size-smaller"),
-			children: arrangedEventTypes(2).map((eventType) => {
-				return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: clsx(TranscriptFilter_module_default.row),
-					onClick: () => {
-						filterEventType(eventType, filtered.includes(eventType));
-					},
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
-						type: "checkbox",
-						checked: !filtered.includes(eventType),
-						onChange: (e) => {
-							filterEventType(eventType, e.target.checked);
-						}
-					}), eventTypes[eventType]]
-				}, eventType);
-			})
-		})]
-	});
-};
-//#endregion
-//#region ../../packages/scout-components/src/sentinels/scannerReferences.ts
-var kScannerReferencesKey = "scanner_references";
-var kScannerContentKey = "scanner_content";
-function isScannerScore(metadata) {
-	return !!metadata && kScannerReferencesKey in metadata;
-}
-function metadataWithoutScannerKeys(metadata) {
-	if (!metadata) return {};
-	const { [kScannerReferencesKey]: _refs, [kScannerContentKey]: _content, ...rest } = metadata;
-	return rest;
-}
-function readScannerReferences(metadata) {
-	if (!metadata) return [];
-	const raw = metadata[kScannerReferencesKey];
-	if (!Array.isArray(raw)) return [];
-	const entries = [];
-	for (const item of raw) {
-		if (!item || typeof item !== "object") continue;
-		const { type, id, cite } = item;
-		if ((type === "message" || type === "event") && typeof id === "string" && typeof cite === "string" && cite.length > 0) entries.push({
-			type,
-			id,
-			cite
+var MetadataValue = ({ id, value, references, options }) => {
+	switch (typeof value) {
+		case "string": return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownDivWithReferences, {
+			markdown: value,
+			references,
+			options
 		});
+		case "object":
+			if (value === null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", { children: "null" });
+			if (Array.isArray(value)) {
+				const record = {};
+				value.forEach((item, i) => {
+					record[`[${i}]`] = item;
+				});
+				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
+					id: `metadata-${id}`,
+					record,
+					useBorders: false,
+					copyButton: true
+				});
+			}
+			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
+				id: `metadata-${id}`,
+				record: value,
+				useBorders: false,
+				copyButton: true
+			});
+		default: return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: String(value) });
 	}
-	return entries;
-}
+};
 //#endregion
 //#region ../../node_modules/.pnpm/picomatch@4.0.4/node_modules/picomatch/lib/constants.js
 var require_constants = /* @__PURE__ */ __commonJSMin(((exports, module) => {
@@ -137385,63 +138647,6 @@ function coerceField(entry) {
 	if (entry.kind === "metadata") return entry;
 	return null;
 }
-//#endregion
-//#region ../../packages/scout-components/src/scanner-result-detail/Explanation.tsx
-var Explanation = ({ explanation, references, options }) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownDivWithReferences, {
-		markdown: explanation ?? "",
-		references,
-		options
-	});
-};
-var Metadata_module_default = { entry: "_entry_a2fxh_1" };
-//#endregion
-//#region ../../packages/scout-components/src/scanner-result-detail/Metadata.tsx
-var Metadata = ({ metadata, references, options, excludeKeys }) => {
-	const excluded = excludeKeys ? new Set(excludeKeys) : null;
-	const entries = Object.entries(metadata).filter(([key]) => !excluded?.has(key));
-	if (entries.length === 0) return null;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: entries.map(([key, value]) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
-		label: key,
-		className: Metadata_module_default.entry,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetadataValue, {
-			id: key,
-			value,
-			references,
-			options
-		})
-	}, key)) });
-};
-var MetadataValue = ({ id, value, references, options }) => {
-	switch (typeof value) {
-		case "string": return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownDivWithReferences, {
-			markdown: value,
-			references,
-			options
-		});
-		case "object":
-			if (value === null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", { children: "null" });
-			if (Array.isArray(value)) {
-				const record = {};
-				value.forEach((item, i) => {
-					record[`[${i}]`] = item;
-				});
-				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
-					id: `metadata-${id}`,
-					record,
-					useBorders: false,
-					copyButton: true
-				});
-			}
-			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
-				id: `metadata-${id}`,
-				record: value,
-				useBorders: false,
-				copyButton: true
-			});
-		default: return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: String(value) });
-	}
-};
 var ScannerResultDetailView_module_default = {
 	container: "_container_15g5f_1",
 	header: "_header_15g5f_8",
@@ -137789,35 +138994,65 @@ function renderField(field, data, references, options, interactive, config, coll
 		}
 	}
 }
+//#endregion
+//#region ../../packages/scout-components/src/sentinels/scannerReferences.ts
+var kScannerReferencesKey = "scanner_references";
+var kScannerContentKey = "scanner_content";
+function isScannerScore(metadata) {
+	return !!metadata && kScannerReferencesKey in metadata;
+}
+function metadataWithoutScannerKeys(metadata) {
+	if (!metadata) return {};
+	const { [kScannerReferencesKey]: _refs, [kScannerContentKey]: _content, ...rest } = metadata;
+	return rest;
+}
+function readScannerReferences(metadata) {
+	if (!metadata) return [];
+	const raw = metadata[kScannerReferencesKey];
+	if (!Array.isArray(raw)) return [];
+	const entries = [];
+	for (const item of raw) {
+		if (!item || typeof item !== "object") continue;
+		const { type, id, cite } = item;
+		if ((type === "message" || type === "event") && typeof id === "string" && typeof cite === "string" && cite.length > 0) entries.push({
+			type,
+			id,
+			cite
+		});
+	}
+	return entries;
+}
 var SampleScannerPicker_module_default = {
-	picker: "_picker_vehgx_1",
-	select: "_select_vehgx_7"
+	picker: "_picker_zkjwy_1",
+	select: "_select_zkjwy_9"
 };
 //#endregion
 //#region src/app/samples/scans/SampleScannerPicker.tsx
+function hasStringValue(target) {
+	return target !== null && "value" in target && typeof target.value === "string";
+}
 var SampleScannerPicker = ({ scanners, selected, onChange }) => {
-	const handleChange = (0, import_react.useCallback)((e) => onChange(e.target.value), [onChange]);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+	const handleChange = (0, import_react.useCallback)((e) => {
+		if (hasStringValue(e.target)) onChange(e.target.value);
+	}, [onChange]);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		className: SampleScannerPicker_module_default.picker,
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-			className: clsx("text-size-smaller", "text-style-secondary"),
-			children: "scanner:"
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", {
-			className: clsx("form-select", "form-select-sm", "text-size-smaller", SampleScannerPicker_module_default.select),
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(VscodeSingleSelect, {
+			className: SampleScannerPicker_module_default.select,
 			"aria-label": "Select scanner",
+			name: "scanner",
 			value: selected,
 			onChange: handleChange,
-			children: scanners.map((scanner) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", {
+			children: scanners.map((scanner) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(VscodeOption, {
 				value: scanner,
 				children: scanner
 			}, scanner))
-		})]
+		})
 	});
 };
 var SampleScansSidebar_module_default = {
-	sidebar: "_sidebar_ei072_1",
-	header: "_header_ei072_10",
-	singleScanner: "_singleScanner_ei072_19"
+	header: "_header_1ge26_1",
+	singleScanner: "_singleScanner_1ge26_10"
 };
 //#endregion
 //#region src/app/samples/scans/scanReferencePreviews.tsx
@@ -137934,7 +139169,6 @@ var SampleScansSidebar = ({ scores, events, makeCiteUrl, selected, onSelectedCha
 		children: scanners[0]
 	}) : null;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: SampleScansSidebar_module_default.sidebar,
 		"aria-label": "Sample scans",
 		children: [header ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			className: SampleScansSidebar_module_default.header,
@@ -137946,6 +139180,604 @@ var SampleScansSidebar = ({ scores, events, makeCiteUrl, selected, onSelectedCha
 		})]
 	});
 };
+var ScansSidebarPanel_module_default = {
+	container: "_container_t8xq0_1",
+	body: "_body_t8xq0_8"
+};
+//#endregion
+//#region src/app/samples/scans/ScansSidebarPanel.tsx
+/**
+* Docked scans panel — wraps SampleScansSidebar in the shared SidebarHeader so
+* it presents and closes like the SearchPanel it sits alongside.
+*/
+var ScansSidebarPanel = ({ scores, events, makeCiteUrl, selected, onSelectedChange, onClose }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: ScansSidebarPanel_module_default.container,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SidebarHeader, {
+			icon: ApplicationIcons.scoringSidebar,
+			title: "Scans",
+			onClose
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: ScansSidebarPanel_module_default.body,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleScansSidebar, {
+				scores,
+				events,
+				makeCiteUrl,
+				selected,
+				onSelectedChange
+			})
+		})]
+	});
+};
+//#endregion
+//#region src/app/samples/scans/useSampleScans.ts
+/**
+* Owns the scanner-scores concern for a sample: filters to scanner scores,
+* tracks the selected scanner, and derives the transcript cite-label context.
+* `open` mirrors the scans sidebar's visibility — labels are only computed
+* while the sidebar is showing.
+*/
+function useSampleScans(opts) {
+	const { allScores, sampleId, sampleEpoch, open } = opts;
+	const scores = (0, import_react.useMemo)(() => {
+		const filtered = {};
+		if (allScores) {
+			for (const [key, score] of Object.entries(allScores)) if (isScannerScore(score.metadata)) filtered[key] = score;
+		}
+		return filtered;
+	}, [allScores]);
+	const scanners = Object.keys(scores);
+	const hasScans = scanners.length > 0;
+	const [storedSelection, setSelected] = (0, import_react.useState)("");
+	const selected = scanners.includes(storedSelection) ? storedSelection : scanners[0] ?? "";
+	return {
+		scores,
+		hasScans,
+		selected,
+		setSelected,
+		makeCiteUrl: useMakeCiteUrl({
+			sampleId,
+			sampleEpoch
+		}),
+		eventNodeContext: (0, import_react.useMemo)(() => {
+			if (!open || !hasScans) return void 0;
+			const refs = readScannerReferences((selected ? scores[selected] : void 0)?.metadata);
+			const messageLabels = {};
+			for (const r of refs) if (r.type === "message" && r.id && r.cite) messageLabels[r.id] = r.cite;
+			return Object.keys(messageLabels).length > 0 ? { messageLabels } : void 0;
+		}, [
+			open,
+			hasScans,
+			scores,
+			selected
+		])
+	};
+}
+//#endregion
+//#region src/app/samples/scores/SampleScores.tsx
+var SampleScores = ({ sample, scorer }) => {
+	const scoreData = sample.scores?.[scorer];
+	if (!scoreData) return;
+	return getScoreDescriptorForValues([scoreData.value], [typeof scoreData.value])?.render(scoreData.value);
+};
+var SampleScoresGrid_module_default = {
+	container: "_container_uifeh_1",
+	cell: "_cell_uifeh_9",
+	fullWidth: "_fullWidth_uifeh_15",
+	heading: "_heading_uifeh_19",
+	padded: "_padded_uifeh_23",
+	separator: "_separator_uifeh_27",
+	separatorPadded: "_separatorPadded_uifeh_32",
+	headerSep: "_headerSep_uifeh_37"
+};
+//#endregion
+//#region src/app/samples/scores/SampleScoresGrid.tsx
+var SampleScoresGrid = ({ evalSample, className, scrollRef }) => {
+	if (!useEvalDescriptor()) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmptyPanel, { children: "No Sample Selected" });
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: clsx(className, SampleScoresGrid_module_default.container),
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: clsx("text-size-smaller", "text-style-label", "text-style-secondary"),
+				children: "Scorer"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: clsx("text-size-smaller", "text-style-label", "text-style-secondary"),
+				children: "Answer"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: clsx("text-size-smaller", "text-style-label", "text-style-secondary"),
+				children: "Score"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: clsx("text-size-smaller", "text-style-label", "text-style-secondary"),
+				children: "Explanation"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: clsx(SampleScoresGrid_module_default.separator, SampleScoresGrid_module_default.fullWidth, SampleScoresGrid_module_default.headerSep) }),
+			Object.keys(evalSample.scores || {}).map((scorer) => {
+				if (!evalSample.scores) return;
+				const scoreData = evalSample.scores[scorer];
+				const explanation = scoreData.explanation || "(No Explanation)";
+				const answer = scoreData.answer;
+				const metadata = scoreData.metadata || {};
+				return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: clsx("text-size-base", SampleScoresGrid_module_default.cell),
+						children: scorer
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: clsx(SampleScoresGrid_module_default.cell, "text-size-base"),
+						children: answer
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: clsx(SampleScoresGrid_module_default.cell, "text-size-base"),
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleScores, {
+							sample: evalSample,
+							scorer
+						})
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: clsx("text-size-base", SampleScoresGrid_module_default.cell),
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedContent, {
+							id: `${scorer}-explanation`,
+							entry: {
+								name: "Explanation",
+								value: explanation
+							}
+						})
+					}),
+					Object.keys(metadata).length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: clsx("text-size-smaller", "text-style-label", "text-style-secondary", SampleScoresGrid_module_default.fullWidth),
+							children: "Metadata"
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: clsx(SampleScoresGrid_module_default.fullWidth),
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecordTree, {
+								id: `${scorer}-metadataa`,
+								scrollRef,
+								record: metadata,
+								defaultExpandLevel: 0
+							})
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: clsx(SampleScoresGrid_module_default.separator, SampleScoresGrid_module_default.separatorPadded, SampleScoresGrid_module_default.fullWidth) })
+					] }, `${scorer}-metadata`) : void 0
+				] }, `${scorer}-row`);
+			})
+		]
+	});
+};
+var SampleScoresView_module_default = {
+	label: "_label_las07_1",
+	wordBreak: "_wordBreak_las07_9",
+	scoreTable: "_scoreTable_las07_13",
+	bottomBorder: "_bottomBorder_las07_18",
+	headerScore: "_headerScore_las07_22",
+	targetValue: "_targetValue_las07_26",
+	answerValue: "_answerValue_las07_32",
+	scoreValue: "_scoreValue_las07_37",
+	noLeft: "_noLeft_las07_42",
+	noTop: "_noTop_las07_46",
+	scoreCard: "_scoreCard_las07_50",
+	scores: "_scores_las07_54"
+};
+//#endregion
+//#region src/app/samples/scores/SampleScoresView.tsx
+var SampleScoresView = ({ sample, className, scrollRef }) => {
+	if (!useEvalDescriptor()) return;
+	if (!sample) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, { text: "Scoring data not available" });
+	const scoreInput = inputString(sample.input);
+	if (sample.choices && sample.choices.length > 0) {
+		scoreInput.push("");
+		scoreInput.push(...sample.choices.map((choice, index) => {
+			return `${String.fromCharCode(65 + index)}) ${choice}`;
+		}));
+	}
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: clsx("container-fluid", className, "font-size-base", SampleScoresView_module_default.container),
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Card, {
+			className: clsx(SampleScoresView_module_default.scoreCard),
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(CardBody, { children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: clsx("text-size-small", "text-style-label", "text-style-secondary"),
+					children: "Input"
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExpandablePanel, {
+					lines: 10,
+					id: `sample-score-${sample.id}-${sample.epoch}`,
+					collapse: true,
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RenderedText, {
+						markdown: scoreInput.join("\n"),
+						className: clsx(SampleScoresView_module_default.wordBreak, "text-size-base")
+					})
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleScoresGrid, {
+					evalSample: sample,
+					className: clsx(SampleScoresView_module_default.scores),
+					scrollRef
+				})
+			] })
+		})
+	});
+};
+//#endregion
+//#region src/app/samples/transcript/hooks.ts
+var eventTypes = {
+	sample_init: "Sample Init",
+	sample_limit: "Sample Limit",
+	sandbox: "Sandbox",
+	state: "State",
+	store: "Store",
+	model: "Model",
+	tool: "Tool",
+	approval: "Approval",
+	input: "Input",
+	interrupt: "Interrupt",
+	score: "Score",
+	score_edit: "Score Edit",
+	error: "Error",
+	logger: "Logger",
+	compaction: "Compaction",
+	info: "Info",
+	subtask: "Subtask",
+	anchor: "Anchor",
+	branch: "Branch",
+	checkpoint: "Checkpoint",
+	step: "Step"
+};
+var useTranscriptFilter = () => {
+	const filtered = useStore((state) => state.sample.eventFilter.filteredTypes);
+	const setFilteredEventTypes = useStore((state) => state.sampleActions.setFilteredEventTypes);
+	const filterEventType = (0, import_react.useCallback)((type, isFiltered) => {
+		const newFiltered = new Set(filtered);
+		if (isFiltered) newFiltered.delete(type);
+		else newFiltered.add(type);
+		setFilteredEventTypes(Array.from(newFiltered));
+	}, [filtered, setFilteredEventTypes]);
+	const setDebugFilter = (0, import_react.useCallback)(() => {
+		setFilteredEventTypes([]);
+	}, [setFilteredEventTypes]);
+	const setDefaultFilter = (0, import_react.useCallback)(() => {
+		setFilteredEventTypes([...kDefaultExcludeEvents]);
+	}, [setFilteredEventTypes]);
+	const setNoneFilter = (0, import_react.useCallback)(() => {
+		setFilteredEventTypes(Object.keys(eventTypes));
+	}, [setFilteredEventTypes]);
+	return {
+		filtered,
+		isDefaultFilter: (0, import_react.useMemo)(() => {
+			return filtered.length === kDefaultExcludeEvents.length && [...filtered].every((type) => kDefaultExcludeEvents.includes(type));
+		}, [filtered]),
+		isDebugFilter: (0, import_react.useMemo)(() => {
+			return filtered.length === 0;
+		}, [filtered]),
+		isNoneFilter: (0, import_react.useMemo)(() => {
+			const allTypes = Object.keys(eventTypes);
+			return filtered.length === allTypes.length && allTypes.every((type) => filtered.includes(type));
+		}, [filtered]),
+		setDefaultFilter,
+		setDebugFilter,
+		setNoneFilter,
+		filterEventType,
+		eventTypes,
+		arrangedEventTypes: (0, import_react.useCallback)((columns = 1) => {
+			const sortedKeys = Object.keys(eventTypes).sort((a, b) => {
+				const aIsDefault = kDefaultExcludeEvents.includes(a);
+				const bIsDefault = kDefaultExcludeEvents.includes(b);
+				if (aIsDefault && !bIsDefault) return 1;
+				if (!aIsDefault && bIsDefault) return -1;
+				return eventTypes[a].localeCompare(eventTypes[b]);
+			});
+			if (columns === 1) return sortedKeys;
+			const itemsPerColumn = Math.ceil(sortedKeys.length / columns);
+			const columnArrays = [];
+			for (let col = 0; col < columns; col++) {
+				const start = col * itemsPerColumn;
+				const end = Math.min(start + itemsPerColumn, sortedKeys.length);
+				columnArrays.push(sortedKeys.slice(start, end));
+			}
+			const arrangedKeys = [];
+			const maxItemsInColumn = Math.max(...columnArrays.map((col) => col.length));
+			for (let row = 0; row < maxItemsInColumn; row++) for (let col = 0; col < columns; col++) if (row < columnArrays[col].length) arrangedKeys.push(columnArrays[col][row]);
+			return arrangedKeys;
+		}, [])
+	};
+};
+//#endregion
+//#region src/app/samples/transcript/search/inspectSearchAdapters.ts
+/**
+* inspect_scout's search endpoints (proxied by inspect_ai under /scout/...)
+* are backed by transcripts_view(dir), which:
+*   - accepts a `.eval` file path (file:// prefix stripped) as `dir`
+*   - looks up rows by `transcript_id`, which equals `eval_sample.uuid`
+*
+* Samples without a UUID can't be searched (the human-readable sample.id
+* isn't what the schema indexes by).
+*/
+var stripFileScheme = (path) => path.startsWith("file://") ? path.slice(7) : path;
+/**
+* Resolves everything a search panel needs from a sample + ambient store /
+* route state, or returns null when the sample can't be searched. Callers
+* pass the result straight to `SearchPanelSlot` and use it as the single
+* gate on the toolbar Search button.
+*
+* Requirements: the backend exposes the search endpoints, the sample carries
+* a UUID (the schema indexes by `eval_sample.uuid`), and we can derive an
+* absolute `.eval` path plus a URL-shaped log path for deep links.
+*/
+var useInspectSearchContext = (sample) => {
+	const api = useApi();
+	const selectedLogFile = useStore((s) => s.logs.selectedLogFile);
+	const logDir = useStore((s) => s.logs.logDir);
+	const { logPath: urlLogPath } = useLogOrSampleRouteParams();
+	const sampleUuid = sample?.uuid;
+	const sampleId = sample?.id;
+	const sampleEpoch = sample?.epoch;
+	return (0, import_react.useMemo)(() => {
+		if (!sampleUuid || sampleId === void 0 || sampleEpoch === void 0) return null;
+		if (!api.post_search || !api.get_search_result || !api.list_searches) return null;
+		const logFile = selectedLogFile ?? urlLogPath;
+		if (!logFile) return null;
+		const logPath = urlLogPath ?? makeLogsPath(logFile, logDir);
+		if (!logPath) return null;
+		return {
+			transcriptId: sampleUuid,
+			logFile,
+			logPath,
+			sampleId,
+			sampleEpoch
+		};
+	}, [
+		api,
+		sampleUuid,
+		sampleId,
+		sampleEpoch,
+		selectedLogFile,
+		urlLogPath,
+		logDir
+	]);
+};
+var getInspectSearchPanelStateKey = ({ scope, logFile, transcriptId }) => `inspect-search-panel:${logFile}:${transcriptId}:${scope}`;
+var useInspectSearchApi = (logFile, transcriptId) => {
+	const api = useApi();
+	return (0, import_react.useMemo)(() => {
+		const { post_search, get_search_result, list_searches } = api;
+		if (!post_search || !get_search_result || !list_searches || !transcriptId) return null;
+		const transcriptDir = stripFileScheme(logFile);
+		return {
+			cacheKey: `${transcriptDir}\u0000${transcriptId}`,
+			createSearch: (request) => post_search(transcriptDir, transcriptId, request),
+			getCachedResult: (searchId, scope) => get_search_result(transcriptDir, transcriptId, searchId, scope),
+			listRecentSearches: (searchType, count) => list_searches(searchType, count ?? 20)
+		};
+	}, [
+		api,
+		logFile,
+		transcriptId
+	]);
+};
+var useInspectSearchPanelState = ({ scope, logFile, transcriptId }) => {
+	const key = (0, import_react.useMemo)(() => getInspectSearchPanelStateKey({
+		scope,
+		logFile,
+		transcriptId
+	}), [
+		scope,
+		logFile,
+		transcriptId
+	]);
+	const stored = useStore((s) => s.search.panelStates[key]);
+	const setSearchPanelState = useStore((s) => s.searchActions.setSearchPanelState);
+	const state = (0, import_react.useMemo)(() => normalizeSearchPanelState(stored), [stored]);
+	const setState = (0, import_react.useCallback)((updater) => setSearchPanelState(key, updater), [key, setSearchPanelState]);
+	return (0, import_react.useMemo)(() => ({
+		state,
+		setState
+	}), [state, setState]);
+};
+var useInspectSearchModelHistory = () => {
+	const history = useUserSettings((s) => s.searchModelHistory);
+	const record = useUserSettings((s) => s.recordSearchModel);
+	return (0, import_react.useMemo)(() => ({
+		history,
+		record
+	}), [history, record]);
+};
+var useInspectSearchNavigation = ({ logPath, sampleId, sampleEpoch }) => {
+	const builder = useSampleUrlBuilder();
+	return (0, import_react.useMemo)(() => ({
+		getEventUrl: (eventId) => sampleEventUrl(builder, eventId, logPath, sampleId, sampleEpoch),
+		getMessageUrl: (messageId) => sampleMessageUrl(builder, messageId, logPath, sampleId, sampleEpoch, kSampleMessagesTabId),
+		getEventMessageUrl: (messageId) => sampleMessageUrl(builder, messageId, logPath, sampleId, sampleEpoch, kSampleTranscriptTabId)
+	}), [
+		builder,
+		logPath,
+		sampleId,
+		sampleEpoch
+	]);
+};
+//#endregion
+//#region src/app/samples/transcript/search/mergeTranscriptLabelContext.ts
+/**
+* Folds search-derived cite labels into an existing transcript event context
+* (e.g. the scanner-cite context). Message labels from both sources combine,
+* with search labels winning on id conflicts; event labels come from search.
+* Returns undefined only when neither source contributes anything.
+*/
+var mergeTranscriptLabelContext = (base, searchLabels) => {
+	const messageLabels = {
+		...base?.messageLabels,
+		...searchLabels?.messageLabels
+	};
+	const eventLabels = {
+		...base?.eventLabels,
+		...searchLabels?.eventLabels
+	};
+	const hasMessageLabels = Object.keys(messageLabels).length > 0;
+	const hasEventLabels = Object.keys(eventLabels).length > 0;
+	if (!base && !hasMessageLabels && !hasEventLabels) return void 0;
+	return {
+		...base,
+		...hasMessageLabels ? { messageLabels } : {},
+		...hasEventLabels ? { eventLabels } : {}
+	};
+};
+var SearchScoutUnavailable_module_default = {
+	container: "_container_15sk8_1",
+	body: "_body_15sk8_8"
+};
+//#endregion
+//#region src/app/samples/transcript/search/SearchScoutUnavailable.tsx
+var SCOUT_DOCS_URL = "https://meridianlabs-ai.github.io/inspect_scout/";
+/**
+* Shown in place of the search panel when the backend reports that
+* inspect_scout (which powers the search endpoints) is not installed.
+*/
+var SearchScoutUnavailable = ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+	className: SearchScoutUnavailable_module_default.container,
+	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SidebarHeader, {
+		icon: baseApplicationIcons.search,
+		title: "Search",
+		onClose,
+		closeIcon: baseApplicationIcons.close
+	}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: SearchScoutUnavailable_module_default.body,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: "Please install Inspect Scout to enable search" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+			href: SCOUT_DOCS_URL,
+			target: "_blank",
+			rel: "noreferrer",
+			children: "Learn more"
+		}) })]
+	})]
+});
+//#endregion
+//#region src/app/samples/transcript/search/SearchPanelSlot.tsx
+/**
+* Renders the shared SearchPanel, or an "install Inspect Scout" notice when
+* the backend reports scout isn't installed (search endpoints proxy to it).
+* Callers obtain `context` from `useInspectSearchContext(sample)`, which
+* encapsulates the "is this sample searchable + can we build URLs?" decision.
+*/
+var SearchPanelSlot = ({ scope, context, onClose }) => {
+	if (useAppConfig().scout_version == null) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SearchScoutUnavailable, { onClose });
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ConnectedSearchPanel, {
+		scope,
+		context,
+		onClose
+	});
+};
+/** Bundles the four adapter hooks and renders the shared SearchPanel. */
+var ConnectedSearchPanel = ({ scope, context, onClose }) => {
+	const { transcriptId, logFile, logPath, sampleId, sampleEpoch } = context;
+	const api = useInspectSearchApi(logFile, transcriptId);
+	const stateController = useInspectSearchPanelState({
+		scope,
+		logFile,
+		transcriptId
+	});
+	const navigation = useInspectSearchNavigation({
+		logPath,
+		sampleId,
+		sampleEpoch
+	});
+	const modelHistory = useInspectSearchModelHistory();
+	if (!api) return null;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SearchPanel, {
+		scope,
+		api,
+		stateController,
+		navigation,
+		modelHistory,
+		onClose
+	});
+};
+//#endregion
+//#region src/app/samples/transcript/search/useInspectSearchReferenceLabels.ts
+/**
+* Derives transcript cite labels from the active search for `scope`, reading
+* the same panel state the SearchPanel writes to. Returns undefined when the
+* sample isn't searchable or no search has run, so callers can merge it into
+* the transcript context without extra gating.
+*/
+var useInspectSearchReferenceLabels = ({ scope, context }) => {
+	const logFile = context?.logFile;
+	const transcriptId = context?.transcriptId;
+	const key = (0, import_react.useMemo)(() => logFile && transcriptId ? getInspectSearchPanelStateKey({
+		scope,
+		logFile,
+		transcriptId
+	}) : null, [
+		scope,
+		logFile,
+		transcriptId
+	]);
+	const stored = useStore((s) => key ? s.search.panelStates[key] : void 0);
+	const state = (0, import_react.useMemo)(() => normalizeSearchPanelState(stored), [stored]);
+	const searchId = state.searches[state.searchType].searchId;
+	return useCachedSearchReferenceLabels({
+		api: useInspectSearchApi(logFile ?? "", transcriptId ?? ""),
+		scope,
+		searchId: context ? searchId : null
+	});
+};
+var TranscriptFilter_module_default = {
+	grid: "_grid_1ml4j_1",
+	row: "_row_1ml4j_8",
+	links: "_links_1ml4j_22",
+	selected: "_selected_1ml4j_40"
+};
+//#endregion
+//#region src/app/samples/transcript/TranscriptFilter.tsx
+var TranscriptFilterPopover = ({ showing, positionEl, setShowing }) => {
+	const { isDefaultFilter, isDebugFilter, isNoneFilter, setDefaultFilter, setDebugFilter, setNoneFilter, filterEventType, eventTypes, filtered, arrangedEventTypes } = useTranscriptFilter();
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(PopOver, {
+		id: `transcript-filter-popover`,
+		positionEl,
+		isOpen: showing,
+		setIsOpen: setShowing,
+		placement: "bottom-end",
+		hoverDelay: -1,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: clsx(TranscriptFilter_module_default.links, "text-size-smaller"),
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+					className: clsx(TranscriptFilter_module_default.link, isDefaultFilter ? TranscriptFilter_module_default.selected : void 0),
+					onClick: () => setDefaultFilter(),
+					children: "Default"
+				}),
+				"|",
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+					className: clsx(TranscriptFilter_module_default.link, isDebugFilter ? TranscriptFilter_module_default.selected : void 0),
+					onClick: () => setDebugFilter(),
+					children: "Debug"
+				}),
+				"|",
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+					className: clsx(TranscriptFilter_module_default.link, isNoneFilter ? TranscriptFilter_module_default.selected : void 0),
+					onClick: () => setNoneFilter(),
+					children: "None"
+				})
+			]
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: clsx(TranscriptFilter_module_default.grid, "text-size-smaller"),
+			children: arrangedEventTypes(2).map((eventType) => {
+				return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: clsx(TranscriptFilter_module_default.row),
+					onClick: () => {
+						filterEventType(eventType, filtered.includes(eventType));
+					},
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+						type: "checkbox",
+						checked: !filtered.includes(eventType),
+						onChange: (e) => {
+							filterEventType(eventType, e.target.checked);
+						}
+					}), eventTypes[eventType]]
+				}, eventType);
+			})
+		})]
+	});
+};
 //#endregion
 //#region src/app/samples/transcript/TranscriptPanel.tsx
 /**
@@ -137953,17 +139785,7 @@ var SampleScansSidebar = ({ scores, events, makeCiteUrl, selected, onSelectedCha
 * when the sample provides timeline data.
 */
 var TranscriptPanel = (0, import_react.memo)((props) => {
-	const { id, scrollRef, events, running, initialEventId, initialMessageId, offsetTop, timelines: serverTimelines, scans: allScores, sampleId, sampleEpoch } = props;
-	const scores = (0, import_react.useMemo)(() => {
-		if (!allScores) return null;
-		const filtered = {};
-		for (const [key, score] of Object.entries(allScores)) if (isScannerScore(score.metadata)) filtered[key] = score;
-		return filtered;
-	}, [allScores]);
-	const makeCiteUrl = useMakeCiteUrl({
-		sampleId,
-		sampleEpoch
-	});
+	const { id, scrollRef, events, running, initialEventId, initialMessageId, offsetTop, timelines: serverTimelines, eventNodeContext, rightRail, rightRailPanelScrollRef } = props;
 	const filteredEventTypes = useStore((state) => state.sample.eventFilter.filteredTypes);
 	const { isDefaultFilter } = useTranscriptFilter();
 	const timelineSelected = useStore((state) => state.sample.timelineSelected);
@@ -138019,12 +139841,7 @@ var TranscriptPanel = (0, import_react.memo)((props) => {
 		if (collapsedMode === "expanded") return "expand";
 	}, [collapsedMode]);
 	const outlineScrollRef = (0, import_react.useRef)(null);
-	const rightPaneScrollRef = (0, import_react.useRef)(null);
-	const { hidden: headroomHidden, resetAnchor: headroomResetAnchor, setHidden: setHeadroomHidden } = useScrollDirection((0, import_react.useMemo)(() => [
-		scrollRef,
-		outlineScrollRef,
-		rightPaneScrollRef
-	], [scrollRef]));
+	const { hidden: headroomHidden, resetAnchor: headroomResetAnchor, setHidden: setHeadroomHidden } = useScrollDirection((0, import_react.useMemo)(() => [scrollRef, outlineScrollRef], [scrollRef]));
 	const onHeadroomResetAnchor = (0, import_react.useCallback)((debounce) => headroomResetAnchor(debounce), [headroomResetAnchor]);
 	const { logPath } = useLogRouteParams();
 	const outlineKey = `transcript-panel-${logPath || "na"}`;
@@ -138036,41 +139853,6 @@ var TranscriptPanel = (0, import_react.memo)((props) => {
 		setPropertyValue("collapse-state-scope", outlineKey, value);
 	}, [setPropertyValue, outlineKey]);
 	const outlineCollapsed = outlineCollapsedRaw ?? false;
-	const scoresKey = `transcript-scores-${logPath || "na"}`;
-	const scoresCollapsedRaw = useStore((state) => {
-		return state.app.propertyBags["collapse-state-scope"]?.[scoresKey];
-	});
-	const setScoresCollapsed = (0, import_react.useCallback)((value) => {
-		setPropertyValue("collapse-state-scope", scoresKey, value);
-	}, [setPropertyValue, scoresKey]);
-	const scoresCollapsed = scoresCollapsedRaw ?? false;
-	const scoresWidth = useStore((state) => {
-		return state.app.propertyBags["sidebar-widths"]?.["scores"];
-	}) ?? 380;
-	const setScoresWidth = (0, import_react.useCallback)((value) => {
-		setPropertyValue("sidebar-widths", "scores", value);
-	}, [setPropertyValue]);
-	const hasScores = !!scores && Object.keys(scores).length > 0;
-	const [selectedScanner, setSelectedScanner] = (0, import_react.useState)("");
-	(0, import_react.useEffect)(() => {
-		const scanners = scores ? Object.keys(scores) : [];
-		if (scanners.length === 0) {
-			if (selectedScanner !== "") setSelectedScanner("");
-		} else if (!scanners.includes(selectedScanner)) setSelectedScanner(scanners[0]);
-	}, [scores, selectedScanner]);
-	const messageLabels = (0, import_react.useMemo)(() => {
-		if (!hasScores || scoresCollapsed) return {};
-		const refs = readScannerReferences((selectedScanner ? scores?.[selectedScanner] : void 0)?.metadata);
-		const map = {};
-		for (const r of refs) if (r.type === "message" && r.id && r.cite) map[r.id] = r.cite;
-		return map;
-	}, [
-		hasScores,
-		scoresCollapsed,
-		scores,
-		selectedScanner
-	]);
-	const eventNodeContext = (0, import_react.useMemo)(() => Object.keys(messageLabels).length > 0 ? { messageLabels } : void 0, [messageLabels]);
 	const selectedOutlineId = useStore((state) => state.sample.selectedOutlineId);
 	const setSelectedOutlineId = useStore((state) => state.sampleActions.setSelectedOutlineId);
 	(0, import_react.useEffect)(() => {
@@ -138137,7 +139919,8 @@ var TranscriptPanel = (0, import_react.memo)((props) => {
 		collapseState,
 		eventsListRef,
 		outlineScrollRef,
-		rightPaneScrollRef,
+		rightRail,
+		rightRailPanelScrollRef,
 		outline: {
 			collapsed: outlineCollapsed,
 			onCollapsedChange: setOutlineCollapsed,
@@ -138148,22 +139931,6 @@ var TranscriptPanel = (0, import_react.memo)((props) => {
 			selectedId: selectedOutlineId,
 			setSelectedId: setSelectedOutlineId
 		},
-		rightPane: hasScores && scores ? {
-			collapsed: scoresCollapsed,
-			onCollapsedChange: setScoresCollapsed,
-			toggleIcon: ApplicationIcons.scoringSidebar,
-			toggleTitle: scoresCollapsed ? "Show scan results" : "Hide scan results",
-			label: "scans",
-			width: scoresWidth,
-			onWidthChange: setScoresWidth,
-			content: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SampleScansSidebar, {
-				scores,
-				events,
-				makeCiteUrl,
-				selected: selectedScanner,
-				onSelectedChange: setSelectedScanner
-			})
-		} : void 0,
 		emptyText: running && isDefaultFilter ? "Sample is starting" : filteredEventTypes.length > 0 ? "The currently applied filter hides all events." : void 0,
 		emptyBusy: running && isDefaultFilter
 	});
@@ -138209,16 +139976,7 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 	]);
 	const navigate = useNavigate();
 	const tabsRef = (0, import_react.useRef)(null);
-	const [tabsHeight, setTabsHeight] = (0, import_react.useState)(-1);
-	(0, import_react.useEffect)(() => {
-		const el = tabsRef.current;
-		if (!el) return;
-		const apply = () => setTabsHeight(el.getBoundingClientRect().height);
-		apply();
-		const ro = new ResizeObserver(apply);
-		ro.observe(el);
-		return () => ro.disconnect();
-	}, []);
+	const tabsHeight = useElementHeight(tabsRef);
 	const selectedSampleSummary = useSelectedSampleSummary();
 	const sampleEvents = sample?.events || runningSampleData;
 	const messagesRef = (0, import_react.useRef)(null);
@@ -138232,7 +139990,6 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 			return [];
 		}
 	}, [sample?.messages, runningSampleData]);
-	const hasSampleData = sample !== void 0 || sampleEvents !== void 0 || sampleMessages !== void 0;
 	const { logPath: urlLogPath, id: urlSampleId, epoch: urlEpoch, sampleTabId } = useLogOrSampleRouteParams();
 	const clearSampleTab = useStore((state) => state.appActions.clearSampleTab);
 	(0, import_react.useEffect)(() => {
@@ -138337,9 +140094,79 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 	const { isDebugFilter, isDefaultFilter, isNoneFilter } = useTranscriptFilter();
 	const api = useApi();
 	const downloadFiles = useStore((state) => state.capabilities.downloadFiles);
-	const tools = [];
 	const [icon, setIcon] = (0, import_react.useState)(ApplicationIcons.copy);
-	tools.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolDropdownButton, {
+	const setPropertyValue = useStore((state) => state.appActions.setPropertyValue);
+	const dockKey = urlLogPath || "na";
+	const storedDock = useStore((state) => {
+		const value = state.app.propertyBags["rail-dock"]?.[dockKey];
+		return value === "none" || value === "search" || value === "scans" ? value : void 0;
+	});
+	const rightDock = storedDock ?? "none";
+	const setRightDock = (0, import_react.useCallback)((value) => setPropertyValue("rail-dock", dockKey, value), [setPropertyValue, dockKey]);
+	const searchScope = effectiveSelectedTab === kSampleTranscriptTabId ? "events" : effectiveSelectedTab === kSampleMessagesTabId ? "messages" : void 0;
+	const searchContext = useInspectSearchContext(sample);
+	const canSearch = searchContext !== null && searchScope !== void 0;
+	const closeDock = (0, import_react.useCallback)(() => setRightDock("none"), [setRightDock]);
+	const onRailSelect = (0, import_react.useCallback)((id) => setRightDock(rightDock === id ? "none" : id), [rightDock, setRightDock]);
+	const railPanelScrollRef = (0, import_react.useRef)(null);
+	const railPanelWidth = useStore((state) => {
+		const value = state.app.propertyBags["sidebar-widths"]?.["rail-panel"];
+		return typeof value === "number" ? value : void 0;
+	});
+	const setRailPanelWidth = (0, import_react.useCallback)((value) => setPropertyValue("sidebar-widths", "rail-panel", value), [setPropertyValue]);
+	const scans = useSampleScans({
+		allScores: sample?.scores ?? null,
+		sampleId: sample?.id ?? void 0,
+		sampleEpoch: sample?.epoch ?? void 0,
+		open: rightDock === "scans"
+	});
+	const searchReferenceLabels = useInspectSearchReferenceLabels({
+		scope: searchScope ?? "events",
+		context: searchContext
+	});
+	const transcriptSearchLabels = searchScope === "events" ? searchReferenceLabels : void 0;
+	const messagesSearchLabels = searchScope === "messages" ? searchReferenceLabels : void 0;
+	const transcriptEventNodeContext = (0, import_react.useMemo)(() => mergeTranscriptLabelContext(scans.eventNodeContext, transcriptSearchLabels), [scans.eventNodeContext, transcriptSearchLabels]);
+	const scansDefaultedForKeyRef = (0, import_react.useRef)(void 0);
+	(0, import_react.useEffect)(() => {
+		if (scans.hasScans && scansDefaultedForKeyRef.current !== dockKey) {
+			scansDefaultedForKeyRef.current = dockKey;
+			if (storedDock === void 0) setRightDock("scans");
+		}
+	}, [
+		scans.hasScans,
+		storedDock,
+		setRightDock,
+		dockKey
+	]);
+	const tools = [];
+	if (effectiveSelectedTab === kSampleTranscriptTabId) {
+		const label = isNoneFilter ? "None" : isDebugFilter ? "Debug" : isDefaultFilter ? "Default" : "Custom";
+		tools.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolButton, {
+			label: `Events: ${label}`,
+			icon: ApplicationIcons.filter,
+			onClick: toggleFilter,
+			ref: setFilterButtonEl,
+			subtle: true
+		}, "sample-filter-transcript"), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolButton, {
+			label: isCollapsed(collapsedMode) ? "Expand" : "Collapse",
+			icon: isCollapsed(collapsedMode) ? ApplicationIcons.expand.all : ApplicationIcons.collapse.all,
+			onClick: toggleCollapsedMode,
+			subtle: true
+		}, "sample-collapse-transcript"));
+	}
+	tools.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolButton, {
+		label: "Raw",
+		icon: ApplicationIcons.display,
+		onClick: toggleDisplayMode,
+		ref: optionsRef,
+		latched: displayMode === "raw",
+		subtle: true
+	}, "options-button"));
+	tools.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+		className: SampleDisplay_module_default.toolSeparator,
+		"aria-hidden": "true"
+	}, "actions-separator"), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolDropdownButton, {
 		label: "Copy",
 		icon,
 		subtle: true,
@@ -138394,30 +140221,6 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 			}
 		}, "sample-download"));
 	}
-	if (effectiveSelectedTab === kSampleTranscriptTabId) {
-		const label = isNoneFilter ? "None" : isDebugFilter ? "Debug" : isDefaultFilter ? "Default" : "Custom";
-		tools.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolButton, {
-			label: `Events: ${label}`,
-			icon: ApplicationIcons.filter,
-			onClick: toggleFilter,
-			ref: setFilterButtonEl,
-			subtle: true
-		}, "sample-filter-transcript"));
-		tools.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolButton, {
-			label: isCollapsed(collapsedMode) ? "Expand" : "Collapse",
-			icon: isCollapsed(collapsedMode) ? ApplicationIcons.expand.all : ApplicationIcons.collapse.all,
-			onClick: toggleCollapsedMode,
-			subtle: true
-		}, "sample-collapse-transcript"));
-	}
-	tools.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolButton, {
-		label: "Raw",
-		icon: ApplicationIcons.display,
-		onClick: toggleDisplayMode,
-		ref: optionsRef,
-		latched: displayMode === "raw",
-		subtle: true
-	}, "options-button"));
 	if (!isVscode() && printLogPath && printSampleId && printEpoch) tools.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolButton, {
 		label: "Print",
 		icon: ApplicationIcons.copy,
@@ -138443,23 +140246,71 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 	}, []);
 	const headerCollapsed = isHeaderSticky && headroomHidden;
 	const headerWrapperRef = (0, import_react.useRef)(null);
-	const tabsContainerRef = (0, import_react.useRef)(null);
-	const [headerHeight, setHeaderHeight] = (0, import_react.useState)(0);
-	(0, import_react.useEffect)(() => {
-		const wrapper = headerWrapperRef.current;
-		const container = tabsContainerRef.current;
-		if (!wrapper || !container) return;
-		const apply = () => {
-			const h = wrapper.getBoundingClientRect().height;
-			setHeaderHeight(h);
-			container.style.setProperty("--inspect-sample-header-height", `${h}px`);
-		};
-		apply();
-		const ro = new ResizeObserver(apply);
-		ro.observe(wrapper);
-		return () => ro.disconnect();
-	}, [selectedSampleSummary]);
-	const stickyOffsetTop = tabsHeight + headerHeight;
+	const headerHeight = useElementHeight(headerWrapperRef, !!selectedSampleSummary);
+	const effectiveHeaderHeight = selectedSampleSummary ? headerHeight : 0;
+	const stickyOffsetTop = tabsHeight + effectiveHeaderHeight;
+	const tabsContainerStyle = (0, import_react.useMemo)(() => ({ "--inspect-sample-header-height": `${effectiveHeaderHeight}px` }), [effectiveHeaderHeight]);
+	const activeRailId = rightDock === "scans" && scans.hasScans ? "scans" : rightDock === "search" && searchContext ? "search" : null;
+	const railItems = (0, import_react.useMemo)(() => {
+		const items = [];
+		if (canSearch) items.push({
+			id: "search",
+			label: "Search",
+			icon: ApplicationIcons.search
+		});
+		if (scans.hasScans) items.push({
+			id: "scans",
+			label: "Scans",
+			icon: ApplicationIcons.scoringSidebar
+		});
+		return items;
+	}, [canSearch, scans.hasScans]);
+	const hasRail = railItems.length > 0;
+	const railNode = (0, import_react.useMemo)(() => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ActivityRail, {
+		items: railItems,
+		active: activeRailId,
+		onSelect: onRailSelect
+	}), [
+		railItems,
+		activeRailId,
+		onRailSelect
+	]);
+	const railPanel = (0, import_react.useMemo)(() => activeRailId === "scans" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScansSidebarPanel, {
+		scores: scans.scores,
+		events: sampleEvents,
+		makeCiteUrl: scans.makeCiteUrl,
+		selected: scans.selected,
+		onSelectedChange: scans.setSelected,
+		onClose: closeDock
+	}) : activeRailId === "search" && searchContext && searchScope ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SearchPanelSlot, {
+		scope: searchScope,
+		context: searchContext,
+		onClose: closeDock
+	}) : null, [
+		activeRailId,
+		scans.scores,
+		scans.makeCiteUrl,
+		scans.selected,
+		scans.setSelected,
+		sampleEvents,
+		searchContext,
+		searchScope,
+		closeDock
+	]);
+	const railLabel = activeRailId === "scans" ? "Scans" : "Search";
+	const transcriptRail = (0, import_react.useMemo)(() => ({
+		rail: railNode,
+		panel: railPanel,
+		label: railLabel,
+		panelWidth: railPanelWidth,
+		onPanelWidthChange: setRailPanelWidth
+	}), [
+		railNode,
+		railPanel,
+		railLabel,
+		railPanelWidth,
+		setRailPanelWidth
+	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DisplayModeContext.Provider, {
 		value: displayModeContext,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [
@@ -138481,8 +140332,8 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 				animating: showActivity,
 				progress
 			}),
-			hasSampleData && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				ref: tabsContainerRef,
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				style: tabsContainerStyle,
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(TabSet, {
 					id: tabsetId,
 					tabsRef,
@@ -138502,40 +140353,54 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 								showing: isShowing,
 								setShowing,
 								positionEl: filterButtonEl
-							}), !sampleEvents || sampleEvents.length === 0 ? sampleData.status === "loading" ? null : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, { text: eventsCleared ? "Transcript events were removed because this sample exceeds the browser's size limit. Use the Messages tab to view the conversation." : "No events to display." }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptPanel, {
-								id: `${baseId}-transcript-display-${id}`,
-								scrollRef,
-								offsetTop: stickyOffsetTop,
-								sampleId: sample?.id ?? void 0,
-								sampleEpoch: sample?.epoch ?? void 0,
-								running,
-								events: sampleEvents,
-								timelines: sample?.timelines ?? void 0,
-								scans: sample?.scores ?? void 0,
-								initialEventId: sampleDetailNavigation.event,
-								initialMessageId: sampleDetailNavigation.message
-							}, `${baseId}-transcript-display-${id}`)]
+							}), !sampleEvents || sampleEvents.length === 0 ? sampleData.status === "loading" ? null : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NoContentsPanel, { text: eventsCleared ? "Transcript events were removed because this sample exceeds the browser's size limit. Use the Messages tab to view the conversation." : "No events to display." }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: SampleDisplay_module_default.tabContent,
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TranscriptPanel, {
+									id: `${baseId}-transcript-display-${id}`,
+									scrollRef,
+									offsetTop: stickyOffsetTop,
+									running,
+									events: sampleEvents,
+									timelines: sample?.timelines ?? void 0,
+									eventNodeContext: transcriptEventNodeContext,
+									initialEventId: sampleDetailNavigation.event,
+									initialMessageId: sampleDetailNavigation.message,
+									rightRail: hasRail ? transcriptRail : void 0,
+									rightRailPanelScrollRef: railPanelScrollRef
+								}, `${baseId}-transcript-display-${id}`)
+							})]
 						}, kSampleTranscriptTabId),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabPanel, {
 							id: kSampleMessagesTabId,
-							className: clsx("sample-tab", SampleDisplay_module_default.fullWidth, SampleDisplay_module_default.chat, SampleDisplay_module_default.overflowVisible),
+							className: clsx("sample-tab", SampleDisplay_module_default.fullWidth, SampleDisplay_module_default.overflowVisible),
 							title: "Messages",
 							onSelected: onSelectedTab,
 							selected: effectiveSelectedTab === kSampleMessagesTabId,
 							scrollable: false,
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChatViewVirtualList, {
-								id: `${baseId}-chat-${id}`,
-								messages: sampleMessages,
-								initialMessageId: sampleDetailNavigation.message,
-								offsetTop: stickyOffsetTop,
-								display: chatDisplay,
-								linking: chatLinking,
-								onNativeFindChanged: setNativeFind,
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RailSidebarHost, {
+								contentClassName: SampleDisplay_module_default.chat,
 								scrollRef,
-								tools: chatTools,
-								running,
-								className: SampleDisplay_module_default.fullWidth
-							}, `${baseId}-chat-${id}`)
+								panelTop: stickyOffsetTop,
+								panelWidth: railPanelWidth,
+								onPanelWidthChange: setRailPanelWidth,
+								rail: hasRail ? railNode : void 0,
+								panel: hasRail ? railPanel : void 0,
+								label: railLabel,
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChatViewVirtualList, {
+									id: `${baseId}-chat-${id}`,
+									messages: sampleMessages,
+									initialMessageId: sampleDetailNavigation.message,
+									offsetTop: stickyOffsetTop,
+									display: chatDisplay,
+									labels: messagesSearchLabels,
+									linking: chatLinking,
+									onNativeFindChanged: setNativeFind,
+									scrollRef,
+									tools: chatTools,
+									running,
+									className: SampleDisplay_module_default.fullWidth
+								}, `${baseId}-chat-${id}`)
+							})
 						}, kSampleMessagesTabId),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabPanel, {
 							id: kSampleScoringTabId,
@@ -138624,6 +140489,26 @@ var SampleDisplay = ({ id, scrollRef, showActivity, progress, focusOnLoad }) => 
 		] })
 	});
 };
+/**
+* Flex host for tabs without a swimlane timeline (Messages): main content,
+* then the shared <RailDock> (optional resizable panel + always-visible rail)
+* pinned right. Mirrors the transcript tab's rail layout.
+*/
+var RailSidebarHost = ({ rail, panel, scrollRef, panelTop, panelWidth, onPanelWidthChange, label, contentClassName, children }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+	className: SampleDisplay_module_default.railHost,
+	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: clsx(SampleDisplay_module_default.tabContent, contentClassName),
+		children
+	}), rail != null && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RailDock, {
+		rail,
+		panel,
+		scrollRef,
+		offsetTop: panelTop,
+		panelWidth,
+		onPanelWidthChange,
+		label
+	})]
+});
 var SampleUsagePanel = ({ id, sample, evalSpec }) => {
 	const roleAliases = (0, import_react.useMemo)(() => {
 		if (!evalSpec?.model_roles) return void 0;
@@ -138833,8 +140718,9 @@ var SampleDetailComponent = ({ sampleId, epoch, tabId, navigation, navbarConfig 
 		if (tabId) setSampleTab(tabId);
 	}, [tabId, setSampleTab]);
 	const handleKeyDown = (0, import_react.useCallback)((e) => {
-		const activeElement = document.activeElement;
-		const isInputFocused = activeElement && (activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA" || activeElement.tagName === "SELECT");
+		let activeElement = document.activeElement;
+		while (activeElement?.shadowRoot?.activeElement) activeElement = activeElement.shadowRoot.activeElement;
+		const isInputFocused = activeElement && (activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA" || activeElement.tagName === "SELECT" || activeElement instanceof HTMLElement && activeElement.isContentEditable);
 		if ((e.ctrlKey || e.metaKey) && e.key === "f") {
 			if (!nativeFind) {
 				e.preventDefault();
@@ -139157,72 +141043,6 @@ var EditButton = ({ onClick, title, variant = "link", children }) => /* @__PURE_
 	title: title ?? "edit",
 	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: ApplicationIcons.pencil }), children ?? "edit"]
 });
-var Modal_module_default = {
-	modal: "_modal_8i1ew_1",
-	header: "_header_8i1ew_21",
-	modalTitle: "_modalTitle_8i1ew_26",
-	btnClose: "_btnClose_8i1ew_30",
-	backdrop: "_backdrop_8i1ew_36",
-	overflowVisible: "_overflowVisible_8i1ew_48",
-	overflowHidden: "_overflowHidden_8i1ew_52",
-	overflowScroll: "_overflowScroll_8i1ew_56",
-	overflowAuto: "_overflowAuto_8i1ew_60",
-	noPadding: "_noPadding_8i1ew_64",
-	footerSlot: "_footerSlot_8i1ew_73"
-};
-//#endregion
-//#region src/components/Modal.tsx
-var Modal = ({ id, title, showing, setShowing, children, className, overflow = "visible", padded = true, footer, width }) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [showing && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: Modal_module_default.backdrop,
-		onClick: () => setShowing(false)
-	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		id,
-		className: clsx("modal", "fade", showing ? "show" : "", className),
-		tabIndex: -1,
-		style: { display: showing ? "block" : "none" },
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: clsx("modal-dialog", Modal_module_default.modal),
-			style: width ? { maxWidth: width } : void 0,
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: "modal-content",
-				children: [
-					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: clsx("modal-header", Modal_module_default.header),
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							className: clsx("modal-title", "text-size-base", Modal_module_default.modalTitle),
-							children: title
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-							type: "button",
-							className: clsx("btn-close", "text-size-smaller", Modal_module_default.btnClose),
-							"data-bs-dismiss": "modal",
-							"aria-label": "Close",
-							onClick: () => {
-								setShowing(!showing);
-							}
-						})]
-					}),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: clsx("modal-body", !padded && Modal_module_default.noPadding, overflow === "auto" ? Modal_module_default.overflowAuto : overflow === "hidden" ? Modal_module_default.overflowHidden : overflow === "scroll" ? Modal_module_default.overflowScroll : Modal_module_default.overflowVisible),
-						children
-					}),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: clsx("modal-footer", footer && Modal_module_default.footerSlot),
-						children: footer ?? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-							type: "button",
-							className: "btn btn-secondary",
-							"data-bs-dismiss": "modal",
-							onClick: () => {
-								setShowing(!showing);
-							},
-							children: "Close"
-						})
-					})
-				]
-			})
-		})
-	})] });
-};
 var AutogrowText_module_default = { textarea: "_textarea_8mbr9_1" };
 //#endregion
 //#region src/app/log-view/title-view/AutogrowText.tsx
@@ -139932,8 +141752,8 @@ var EditMetadataDialog = ({ showing, setShowing, currentMetadata, logFile, onSav
 	};
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Modal, {
 		id: "edit-metadata-dialog",
-		showing,
-		setShowing,
+		show: showing,
+		onHide: () => setShowing(false),
 		title: "Edit metadata",
 		width: "820px",
 		footer: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -157559,7 +159379,7 @@ function docID(data, lang) {
 }
 Direction.RTL, Direction.LTR;
 //#endregion
-//#region ../../node_modules/.pnpm/@codemirror+autocomplete@6.20.2/node_modules/@codemirror/autocomplete/dist/index.js
+//#region ../../node_modules/.pnpm/@codemirror+autocomplete@6.20.3/node_modules/@codemirror/autocomplete/dist/index.js
 /**
 An instance of this is passed to completion source functions.
 */
@@ -158390,8 +160210,9 @@ var ActiveResult = class ActiveResult extends ActiveSource {
 	}
 	map(mapping) {
 		if (mapping.empty) return this;
-		if (!(this.result.map ? this.result.map(this.result, mapping) : this.result)) return new ActiveSource(this.source, 0);
-		return new ActiveResult(this.source, this.explicit, mapping.mapPos(this.limit), this.result, mapping.mapPos(this.from), mapping.mapPos(this.to, 1));
+		let result = this.result.map ? this.result.map(this.result, mapping) : this.result;
+		if (!result) return new ActiveSource(this.source, 0);
+		return new ActiveResult(this.source, this.explicit, mapping.mapPos(this.limit), result, mapping.mapPos(this.from), mapping.mapPos(this.to, 1));
 	}
 	touches(tr) {
 		return tr.changes.touchesRange(this.from, this.to);
@@ -165036,8 +166857,8 @@ var EditTagsDialog = ({ showing, setShowing, currentTags, logFile, onSaved }) =>
 	};
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Modal, {
 		id: "edit-tags-dialog",
-		showing,
-		setShowing,
+		show: showing,
+		onHide: () => setShowing(false),
 		title: "Edit tags",
 		width: "580px",
 		footer: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -165093,7 +166914,7 @@ var EditTagsDialog = ({ showing, setShowing, currentTags, logFile, onSaved }) =>
 								onChange: (e) => setPending(e.target.value),
 								onKeyDown: handleInputKeyDown,
 								disabled: submitting,
-								autoFocus: true
+								"data-autofocus": true
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
 								type: "button",
 								className: clsx("btn", pending.trim() ? "btn-primary" : "btn-secondary", "text-size-smaller", EditTagsDialog_module_default.addButton),
@@ -165411,6 +167232,7 @@ var toDisplayScorers = (scores) => {
 				const metric = score.metrics[key];
 				return {
 					name: metric.name,
+					group: metric.group,
 					value: metric.value,
 					params: metric.params
 				};
@@ -165478,6 +167300,24 @@ var expandGroupedMetrics = (scorers) => {
 };
 //#endregion
 //#region src/scoring/scores.ts
+/**
+* Partition metrics into runs of consecutive entries sharing the same
+* `group`. Used to render grouped column headers for dict-returning metrics
+* (e.g. one "frequency" header spanning per-category sub-columns).
+*/
+var groupMetricRuns = (metrics) => {
+	const runs = [];
+	for (const m of metrics) {
+		const last = runs[runs.length - 1];
+		if (last && (last.group ?? null) === (m.group ?? null)) last.metrics.push(m);
+		else runs.push({
+			group: m.group,
+			metrics: [m]
+		});
+	}
+	return runs;
+};
+var isGroupRun = (r) => r.group != null && r.metrics.length > 1;
 var groupScorers = (scorers) => {
 	const results = {};
 	scorers.forEach((scorer) => {
@@ -165490,46 +167330,50 @@ var groupScorers = (scorers) => {
 	return Object.values(results);
 };
 var metricsKey = (metrics) => {
-	return metrics.map((m) => m.name).join("");
+	return metrics.map((m) => `${m.group ?? ""}::${m.name}`).join("|");
 };
 var CollapsedTitleBar_module_default = {
-	container: "_container_w43k4_1",
-	left: "_left_w43k4_11",
-	task: "_task_w43k4_19",
-	model: "_model_w43k4_24",
-	right: "_right_w43k4_30",
-	inlineMetrics: "_inlineMetrics_w43k4_38",
-	inlineMetric: "_inlineMetric_w43k4_38",
-	inlineMetricLabel: "_inlineMetricLabel_w43k4_50",
-	inlineMetricValue: "_inlineMetricValue_w43k4_54",
-	statusBadge: "_statusBadge_w43k4_58",
-	statusIcon: "_statusIcon_w43k4_64",
-	statusCount: "_statusCount_w43k4_68",
-	scoringDetailModal: "_scoringDetailModal_w43k4_72"
+	container: "_container_1jo7v_1",
+	left: "_left_1jo7v_11",
+	task: "_task_1jo7v_19",
+	model: "_model_1jo7v_24",
+	right: "_right_1jo7v_30",
+	inlineMetrics: "_inlineMetrics_1jo7v_38",
+	inlineMetric: "_inlineMetric_1jo7v_38",
+	inlineMetricLabel: "_inlineMetricLabel_1jo7v_50",
+	inlineMetricValue: "_inlineMetricValue_1jo7v_54",
+	statusBadge: "_statusBadge_1jo7v_58",
+	statusIcon: "_statusIcon_1jo7v_64",
+	statusCount: "_statusCount_1jo7v_68",
+	scoringDetailModal: "_scoringDetailModal_1jo7v_74"
 };
 var ResultsPanel_module_default = {
-	simpleMetricsRows: "_simpleMetricsRows_13tuz_1",
-	multiMetricsRows: "_multiMetricsRows_13tuz_12",
-	verticalMetricReducer: "_verticalMetricReducer_13tuz_26",
-	verticalMetricName: "_verticalMetricName_13tuz_33",
-	verticalMetricValue: "_verticalMetricValue_13tuz_41",
-	multiScorer: "_multiScorer_13tuz_46",
-	multiScorerIndent: "_multiScorerIndent_13tuz_53",
-	multiScorerReducer: "_multiScorerReducer_13tuz_57",
-	multiScorerLabel: "_multiScorerLabel_13tuz_63",
-	multiScorerValue: "_multiScorerValue_13tuz_69",
-	multiScorerValueContent: "_multiScorerValueContent_13tuz_78",
-	multiScoreMetricGrid: "_multiScoreMetricGrid_13tuz_83",
-	moreButton: "_moreButton_13tuz_91",
-	metricsSummary: "_metricsSummary_13tuz_97",
-	scoringDetailModal: "_scoringDetailModal_13tuz_104"
+	simpleMetricsRows: "_simpleMetricsRows_z2l7l_1",
+	multiMetricsRows: "_multiMetricsRows_z2l7l_12",
+	verticalMetricReducer: "_verticalMetricReducer_z2l7l_26",
+	verticalMetricName: "_verticalMetricName_z2l7l_33",
+	verticalMetricValue: "_verticalMetricValue_z2l7l_41",
+	multiScorer: "_multiScorer_z2l7l_46",
+	multiScorerIndent: "_multiScorerIndent_z2l7l_53",
+	multiScorerReducer: "_multiScorerReducer_z2l7l_57",
+	multiScorerLabel: "_multiScorerLabel_z2l7l_63",
+	multiScorerValue: "_multiScorerValue_z2l7l_69",
+	multiScorerValueContent: "_multiScorerValueContent_z2l7l_78",
+	multiScoreMetricGrid: "_multiScoreMetricGrid_z2l7l_83",
+	moreButton: "_moreButton_z2l7l_91",
+	metricsSummary: "_metricsSummary_z2l7l_97",
+	scoringDetailModal: "_scoringDetailModal_z2l7l_108"
 };
 var ScoreAgGrid_module_default = {
-	gridContainer: "_gridContainer_2wkq3_1",
-	firstCell: "_firstCell_2wkq3_12",
-	firstHeader: "_firstHeader_2wkq3_13",
-	lastCell: "_lastCell_2wkq3_17",
-	lastHeader: "_lastHeader_2wkq3_18"
+	gridContainer: "_gridContainer_v19e7_1",
+	cardContainer: "_cardContainer_v19e7_9",
+	firstCell: "_firstCell_v19e7_52",
+	firstHeader: "_firstHeader_v19e7_74",
+	lastCell: "_lastCell_v19e7_78",
+	lastHeader: "_lastHeader_v19e7_79",
+	groupHeader: "_groupHeader_v19e7_83",
+	noGroupBorder: "_noGroupBorder_v19e7_90",
+	groupGrid: "_groupGrid_v19e7_94"
 };
 var UnscoredSamplesView_module_default = { unscoredSamples: "_unscoredSamples_1h85z_1" };
 //#endregion
@@ -165551,157 +167395,158 @@ var UnscoredSamples = ({ scoredSamples, unscoredSamples }) => {
 };
 //#endregion
 //#region src/app/log-view/title-view/ScoreAgGrid.tsx
-var ScoreAgGrid = ({ scoreGroups, showReducer, className }) => {
-	const kScorerColWidth = 280;
-	const kMetricColWidth = 120;
-	const { rowData, columnDefs, naturalWidth } = (0, import_react.useMemo)(() => {
-		const metricNames = [];
-		const metricNameSet = /* @__PURE__ */ new Set();
-		for (const group of scoreGroups) for (const score of group) for (const metric of score.metrics) if (!metricNameSet.has(metric.name)) {
-			metricNameSet.add(metric.name);
-			metricNames.push(metric.name);
-		}
-		const rows = [];
-		for (const group of scoreGroups) for (const score of group) {
+var scoreGridTheme = themeBalham.withParams({
+	fontFamily: "inherit",
+	backgroundColor: "transparent",
+	foregroundColor: "var(--bs-body-color)",
+	headerBackgroundColor: "transparent",
+	headerTextColor: "var(--bs-secondary-color)",
+	oddRowBackgroundColor: "transparent",
+	borderColor: "var(--bs-border-color)",
+	rowBorder: {
+		width: 1,
+		color: "var(--bs-border-color-translucent)"
+	},
+	headerRowBorder: {
+		width: 1,
+		color: "var(--bs-border-color)"
+	},
+	wrapperBorder: false,
+	columnBorder: false,
+	headerColumnBorder: false
+});
+var scoreGridThemeCompact = scoreGridTheme.withParams({
+	fontSize: 12,
+	headerFontSize: 11,
+	cellHorizontalPadding: 8
+});
+var kScorerColWidth = 180;
+var kMetricColWidth = 120;
+var kScorerColWidthCompact = 110;
+var kMetricColWidthCompact = 64;
+var ScoreAgGrid = ({ scoreGroups, showReducer, className, compact }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: clsx(className, compact ? ScoreAgGrid_module_default.cardContainer : ScoreAgGrid_module_default.gridContainer),
+		children: scoreGroups.map((group, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreGroupGrid, {
+			scoreGroup: group,
+			showReducer,
+			compact
+		}, i))
+	});
+};
+var ScoreGroupGrid = ({ scoreGroup, showReducer, compact }) => {
+	const scorerColWidth = compact ? kScorerColWidthCompact : kScorerColWidth;
+	const metricColWidth = compact ? kMetricColWidthCompact : kMetricColWidth;
+	const resizable = !compact;
+	const sortable = !compact;
+	const { rowData, columnDefs, hasGroups, naturalWidth } = (0, import_react.useMemo)(() => {
+		const metrics = scoreGroup[0]?.metrics ?? [];
+		const field = (i) => `metric_${i}`;
+		const rows = scoreGroup.map((score) => {
 			const row = {
 				scorer: score.scorer + (showReducer && score.reducer ? ` (${score.reducer})` : ""),
 				scoredSamples: score.scoredSamples,
 				unscoredSamples: score.unscoredSamples
 			};
-			for (const metric of score.metrics) row[`metric_${metric.name}`] = metric.value;
-			rows.push(row);
+			score.metrics.forEach((m, i) => {
+				row[field(i)] = m.value;
+			});
+			return row;
+		});
+		const lastIdx = metrics.length - 1;
+		const runs = groupMetricRuns(metrics);
+		const grouped = runs.some(isGroupRun);
+		const leafCol = (name, i, inGroup) => ({
+			headerName: name,
+			field: field(i),
+			sortable,
+			resizable,
+			width: metricColWidth,
+			cellClass: clsx("ag-right-aligned-cell", i === lastIdx && ScoreAgGrid_module_default.lastCell),
+			headerClass: clsx("ag-right-aligned-header", i === lastIdx && ScoreAgGrid_module_default.lastHeader, grouped && !inGroup && ScoreAgGrid_module_default.noGroupBorder),
+			valueFormatter: (params) => {
+				if (params.value == null) return "";
+				return formatPrettyDecimal(params.value);
+			},
+			type: "numericColumn"
+		});
+		const metricColumns = [];
+		let idx = 0;
+		for (const run of runs) {
+			const inGroup = isGroupRun(run);
+			const children = run.metrics.map((m) => leafCol(m.name, idx++, inGroup));
+			if (inGroup) metricColumns.push({
+				headerName: run.group ?? "",
+				headerClass: ScoreAgGrid_module_default.groupHeader,
+				suppressStickyLabel: true,
+				children
+			});
+			else metricColumns.push(...children);
 		}
-		const lastIdx = metricNames.length - 1;
+		const scorerCol = {
+			headerName: "Scorer",
+			field: "scorer",
+			sortable,
+			resizable,
+			width: scorerColWidth,
+			minWidth: compact ? 90 : 150,
+			cellClass: ScoreAgGrid_module_default.firstCell,
+			headerClass: clsx(ScoreAgGrid_module_default.firstHeader, grouped && ScoreAgGrid_module_default.noGroupBorder),
+			cellRenderer: (params) => {
+				const data = params.data;
+				if (!data) return null;
+				return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { children: [
+					data.scorer,
+					" ",
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(UnscoredSamples, {
+						scoredSamples: data.scoredSamples || 0,
+						unscoredSamples: data.unscoredSamples || 0
+					})
+				] });
+			}
+		};
 		return {
 			rowData: rows,
-			columnDefs: [{
-				headerName: "Scorer",
-				field: "scorer",
-				sortable: true,
-				resizable: true,
-				width: kScorerColWidth,
-				minWidth: 150,
-				cellClass: ScoreAgGrid_module_default.firstCell,
-				headerClass: ScoreAgGrid_module_default.firstHeader,
-				cellRenderer: (params) => {
-					const data = params.data;
-					if (!data) return null;
-					return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { children: [
-						data.scorer,
-						" ",
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(UnscoredSamples, {
-							scoredSamples: data.scoredSamples || 0,
-							unscoredSamples: data.unscoredSamples || 0
-						})
-					] });
-				}
-			}, ...metricNames.map((name, i) => ({
-				headerName: name,
-				field: `metric_${name}`,
-				sortable: true,
-				resizable: true,
-				width: kMetricColWidth,
-				cellClass: i === lastIdx ? ScoreAgGrid_module_default.lastCell : void 0,
-				headerClass: i === lastIdx ? ScoreAgGrid_module_default.lastHeader : void 0,
-				valueFormatter: (params) => {
-					if (params.value == null) return "";
-					return formatPrettyDecimal(params.value);
-				},
-				type: "numericColumn"
-			}))],
-			naturalWidth: kScorerColWidth + metricNames.length * kMetricColWidth
+			columnDefs: [grouped ? {
+				headerName: "",
+				children: [scorerCol]
+			} : scorerCol, ...metricColumns],
+			hasGroups: grouped,
+			naturalWidth: scorerColWidth + metrics.length * metricColWidth
 		};
-	}, [scoreGroups, showReducer]);
+	}, [
+		scoreGroup,
+		showReducer,
+		compact,
+		resizable,
+		sortable,
+		scorerColWidth,
+		metricColWidth
+	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: clsx(className, ScoreAgGrid_module_default.gridContainer),
-		style: { width: naturalWidth },
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AgGridReact, {
-			rowData,
-			columnDefs,
-			theme: themeBalham,
-			domLayout: "autoHeight",
-			headerHeight: 28,
-			rowHeight: 32,
-			suppressCellFocus: true,
-			enableCellTextSelection: true,
-			animateRows: false
-		})
-	});
-};
-var ScoreGrid_module_default = {
-	table: "_table_12koy_1",
-	scorer: "_scorer_12koy_5",
-	value: "_value_12koy_6",
-	label: "_label_12koy_11",
-	groupSeparator: "_groupSeparator_12koy_28",
-	tableBody: "_tableBody_12koy_33",
-	tableSeparator: "_tableSeparator_12koy_45"
-};
-//#endregion
-//#region src/app/log-view/title-view/ScoreGrid.tsx
-var ScoreGrid = ({ scoreGroups, showReducer, className, striped }) => {
-	const columnCount = scoreGroups.reduce((prev, group) => {
-		return Math.max(prev, group[0].metrics.length);
-	}, 0);
-	const subTables = [];
-	let index = 0;
-	for (const scoreGroup of scoreGroups) {
-		const metrics = scoreGroup[0].metrics;
-		const cells = [];
-		for (let i = 0; i < columnCount; i++) if (metrics.length > i) cells.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)("th", {
-			className: clsx("text-style-label", "text-style-secondary", "text-size-small", ScoreGrid_module_default.label),
-			children: metrics[i].name
-		}, i));
-		else cells.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {}, i));
-		const headerRow = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("tr", {
-			className: clsx(ScoreGrid_module_default.headerRow),
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {}), cells]
-		}) });
-		const rows = [];
-		scoreGroup.forEach((g, rowIndex) => {
-			const cells = [];
-			for (let i = 0; i < columnCount; i++) if (metrics.length > i) cells.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
-				className: clsx(ScoreGrid_module_default.value, "text-size-small"),
-				children: formatPrettyDecimal(g.metrics[i].value)
-			}, i));
-			else cells.push(/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { className: clsx(ScoreGrid_module_default.value) }, i));
-			rows.push(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("tr", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("th", {
-				className: clsx(ScoreGrid_module_default.scorer, "text-size-small"),
-				children: [
-					g.scorer,
-					" ",
-					showReducer && g.reducer ? `(${g.reducer})` : void 0,
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(UnscoredSamples, {
-						scoredSamples: g.scoredSamples || 0,
-						unscoredSamples: g.unscoredSamples || 0
-					})
-				]
-			}), cells] }, rowIndex));
-		});
-		subTables.push(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.Fragment, { children: [
-			index > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tbody", {
-				className: clsx(ScoreGrid_module_default.tableSeparator),
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
-					colSpan: columnCount + 1,
-					className: clsx(ScoreGrid_module_default.groupSeparator)
-				}) })
-			}) : void 0,
-			headerRow,
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("tbody", {
-				className: clsx("table-group-divider", ScoreGrid_module_default.tableBody),
-				children: rows
+		className: ScoreAgGrid_module_default.groupGrid,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			style: { width: naturalWidth },
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AgGridReact, {
+				rowData,
+				columnDefs,
+				theme: compact ? scoreGridThemeCompact : scoreGridTheme,
+				domLayout: "autoHeight",
+				headerHeight: compact ? 24 : 28,
+				groupHeaderHeight: hasGroups ? compact ? 20 : 24 : 0,
+				rowHeight: compact ? 26 : 32,
+				suppressCellFocus: true,
+				suppressRowHoverHighlight: true,
+				suppressFieldDotNotation: true,
+				enableCellTextSelection: true,
+				animateRows: false
 			})
-		] }, index));
-		index++;
-	}
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("table", {
-		className: clsx(className, "table", striped ? "table-striped" : void 0, ScoreGrid_module_default.table, "table-bordered"),
-		children: subTables
+		})
 	});
 };
 //#endregion
 //#region src/app/log-view/title-view/ResultsPanel.tsx
-var kMaxPrimaryScoreRows = 4;
+var kMaxPrimaryScoreRows = 3;
 var displayScorersFromRunningMetrics = (metrics) => {
 	if (!metrics) return [];
 	const getKey = (metric) => {
@@ -165770,17 +167615,25 @@ var ResultsPanel = ({ scorers }) => {
 		}
 		return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: clsx(ResultsPanel_module_default.metricsSummary),
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreGrid, {
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreAgGrid, {
 				scoreGroups: [primaryResults],
-				showReducer
+				showReducer,
+				compact: true
 			}), showMore ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Modal, {
 				id: "results-metrics",
-				showing,
-				setShowing,
+				show: showing,
+				onHide: () => setShowing(false),
 				title: "Scoring Detail",
+				width: "min(1000px, 90vw)",
 				overflow: "hidden",
 				padded: false,
 				className: ResultsPanel_module_default.scoringDetailModal,
+				footer: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+					type: "button",
+					className: "btn btn-secondary",
+					onClick: () => setShowing(false),
+					children: "Close"
+				}),
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreAgGrid, {
 					scoreGroups: grouped,
 					showReducer
@@ -165929,19 +167782,26 @@ var MetricsLink = ({ scorers }) => {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LinkButton, {
 		text: "View metrics…",
 		onClick: () => setShowing(true)
-	}), (0, import_react_dom.createPortal)(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Modal, {
+	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Modal, {
 		id: "collapsed-title-bar-metrics",
-		showing,
-		setShowing,
+		show: showing,
+		onHide: () => setShowing(false),
 		title: "Scoring Detail",
+		width: "min(1000px, 90vw)",
 		overflow: "hidden",
 		padded: false,
 		className: CollapsedTitleBar_module_default.scoringDetailModal,
+		footer: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+			type: "button",
+			className: "btn btn-secondary",
+			onClick: () => setShowing(false),
+			children: "Close"
+		}),
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreAgGrid, {
 			scoreGroups: grouped,
 			showReducer
 		})
-	}), document.body)] });
+	})] });
 };
 var DownloadLogButton_module_default = { downloadLogButton: "_downloadLogButton_fi3zx_1" };
 //#endregion
@@ -169667,7 +171527,10 @@ var clientApi = (api, log_file, debug = false) => {
 				loadedEvalFile.remoteLog = void 0;
 			}
 			return result;
-		}) : void 0
+		}) : void 0,
+		list_searches: api.list_searches ? middleware("list_searches", (search_type, count) => api.list_searches(search_type, count)) : void 0,
+		post_search: api.post_search ? middleware("post_search", (transcriptDir, transcriptId, request) => api.post_search(transcriptDir, transcriptId, request)) : void 0,
+		get_search_result: api.get_search_result ? middleware("get_search_result", (transcriptDir, transcriptId, search_id, scope) => api.get_search_result(transcriptDir, transcriptId, search_id, scope)) : void 0
 	};
 };
 var debugMiddleware = (name, _fn, args, result) => {
@@ -170220,6 +172083,28 @@ function viewServerApi(options = {}) {
 	const get_app_config = async () => {
 		return (await requestApi.fetchString("GET", "/app-config")).parsed;
 	};
+	const list_searches = async (search_type, count) => {
+		const params = new URLSearchParams();
+		params.append("type", search_type);
+		params.append("count", String(count));
+		return (await requestApi.fetchString("GET", `/scout/searches?${params.toString()}`)).parsed;
+	};
+	const post_search = async (transcriptDir, transcriptId, request) => {
+		return (await requestApi.fetchString("POST", `/scout/transcripts/${encodeBase64Url(transcriptDir)}/${encodeURIComponent(transcriptId)}/search`, { "Content-Type": "application/json" }, JSON.stringify(request))).parsed;
+	};
+	const get_search_result = async (transcriptDir, transcriptId, search_id, scope) => {
+		const params = new URLSearchParams();
+		if (scope.messages) params.set("messages", scope.messages);
+		if (scope.events) params.set("events", scope.events);
+		const query = params.toString();
+		const path = `/scout/transcripts/${encodeBase64Url(transcriptDir)}/${encodeURIComponent(transcriptId)}/searches/${encodeURIComponent(search_id)}${query ? `?${query}` : ""}`;
+		try {
+			return (await requestApi.fetchString("GET", path)).parsed;
+		} catch (error) {
+			if (error instanceof ApiError && error.status === 404) return null;
+			throw error;
+		}
+	};
 	const download_log = async (log_file) => {
 		const url = `${apiBaseUrl || "/api"}/log-download/${encodeURIComponent(log_file)}`;
 		const link = document.createElement("a");
@@ -170249,7 +172134,10 @@ function viewServerApi(options = {}) {
 		eval_log_sample_data_direct,
 		edit_log,
 		get_user_info,
-		get_app_config
+		get_app_config,
+		list_searches,
+		post_search,
+		get_search_result
 	};
 }
 //#endregion
