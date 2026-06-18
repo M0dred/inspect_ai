@@ -125886,6 +125886,7 @@ var TranscriptIcons = {
 		custom: "bi bi-exclamation-triangle",
 		operator: "bi bi-person-workspace",
 		tokens: "bi bi-list",
+		turns: "bi bi-arrow-repeat",
 		time: "bi bi-clock",
 		execution: "bi bi-stopwatch",
 		cost: "bi bi-currency-dollar"
@@ -129836,119 +129837,96 @@ function findRowKeyForLabel(data, label) {
 	return null;
 }
 var CheckpointEventView_module_default = {
-	panel: "_panel_xm787_1",
-	metric: "_metric_xm787_5",
-	label: "_label_xm787_10",
-	section: "_section_xm787_15",
-	sectionTitle: "_sectionTitle_xm787_19",
-	indented: "_indented_xm787_23",
-	files: "_files_xm787_27",
-	file: "_file_xm787_27",
-	fileOverflow: "_fileOverflow_xm787_38"
+	panel: "_panel_1us8t_1",
+	rowValue: "_rowValue_1us8t_10",
+	files: "_files_1us8t_16",
+	file: "_file_1us8t_16",
+	fileOverflow: "_fileOverflow_1us8t_27"
 };
 //#endregion
 //#region ../../packages/inspect-components/src/transcript/CheckpointEventView.tsx
-var SizeAndDuration = ({ size_bytes, duration_ms }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
-	label: "Size",
-	layout: "row",
-	children: formatBytes(size_bytes)
-}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
-	label: "Duration",
-	layout: "row",
-	children: formatMs(duration_ms)
-})] });
-var Files = ({ files, additionalFiles }) => {
-	if (!files || files.length === 0) return null;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
-		label: "Files",
-		layout: "column",
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: CheckpointEventView_module_default.files,
-			children: [files.map((file) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: CheckpointEventView_module_default.file,
-				children: file
-			}, file)), additionalFiles ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: CheckpointEventView_module_default.fileOverflow,
-				children: [
-					"+",
-					additionalFiles,
-					" more"
-				]
-			}) : null]
-		})
-	});
+var asNumber = (v) => typeof v === "number" ? v : null;
+var triggerSummary = (event) => {
+	const md = event.trigger_metadata ?? {};
+	switch (event.trigger) {
+		case "token": {
+			const every = asNumber(md["every"]);
+			const since = asNumber(md["tokens_since_last_fire"]);
+			return every !== null && since !== null ? `token — ${formatNumber(every)} (${formatNumber(since)})` : null;
+		}
+		case "time": {
+			const every = asNumber(md["every_seconds"]);
+			const elapsed = asNumber(md["elapsed_seconds"]);
+			return every !== null && elapsed !== null ? `time — ${formatTime$1(every)} (${formatTime$1(elapsed)})` : null;
+		}
+		case "turn": {
+			const every = asNumber(md["every"]);
+			return every !== null ? `turn — ${formatNumber(every)}` : null;
+		}
+		case "manual": return "manual";
+		case "agent_complete": return "agent complete";
+		default: return null;
+	}
 };
-var CheckpointEventView = ({ eventNode, className }) => {
+var Row = ({ label, children }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+	className: clsx("text-style-label", "text-style-secondary"),
+	children: label
+}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+	className: CheckpointEventView_module_default.rowValue,
+	children
+})] });
+var Snapshot = ({ details }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
+	formatBytes(details.size_bytes),
+	" · ",
+	formatMs(details.duration_ms)
+] }), details.files && details.files.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+	className: CheckpointEventView_module_default.files,
+	children: [details.files.map((file) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: CheckpointEventView_module_default.file,
+		children: file
+	}, file)), details.additional_files ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: CheckpointEventView_module_default.fileOverflow,
+		children: [
+			"+",
+			details.additional_files,
+			" more"
+		]
+	}) : null]
+}) : null] });
+var CheckpointEventView = ({ eventNode, className, eventCallbacks }) => {
 	const event = eventNode.event;
+	const summary = triggerSummary(event);
+	const metadata = event.trigger_metadata ?? {};
 	const sandboxEntries = Object.entries(event.sandboxes);
-	const sections = [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: CheckpointEventView_module_default.section,
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: CheckpointEventView_module_default.sectionTitle,
-			children: "Host"
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: CheckpointEventView_module_default.indented,
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SizeAndDuration, {
-				size_bytes: event.host.size_bytes,
-				duration_ms: event.host.duration_ms
-			})
-		})]
-	}, "host")];
-	const onlySandbox = sandboxEntries.length === 1 ? sandboxEntries[0] : null;
-	if (onlySandbox) {
-		const [, details] = onlySandbox;
-		sections.push(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: CheckpointEventView_module_default.section,
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: CheckpointEventView_module_default.sectionTitle,
-				children: "Sandbox"
-			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: CheckpointEventView_module_default.indented,
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SizeAndDuration, {
-					size_bytes: details.size_bytes,
-					duration_ms: details.duration_ms
-				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Files, {
-					files: details.files,
-					additionalFiles: details.additional_files
-				})]
-			})]
-		}, "sandbox"));
-	} else if (sandboxEntries.length > 1) sections.push(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: CheckpointEventView_module_default.section,
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: CheckpointEventView_module_default.sectionTitle,
-			children: "Sandboxes"
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: CheckpointEventView_module_default.indented,
-			children: sandboxEntries.map(([name, details]) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: CheckpointEventView_module_default.section,
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: CheckpointEventView_module_default.sectionTitle,
-					children: name
-				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: CheckpointEventView_module_default.indented,
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SizeAndDuration, {
-						size_bytes: details.size_bytes,
-						duration_ms: details.duration_ms
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Files, {
-						files: details.files,
-						additionalFiles: details.additional_files
-					})]
-				})]
-			}, name))
-		})]
-	}, "sandboxes"));
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventRow, {
-		title: formatTitle(`Checkpoint ${event.checkpoint_id}`, void 0, event.duration_ms / 1e3),
-		icon: TranscriptIcons.checkpoint,
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventPanel, {
+		eventNodeId: eventNode.id,
 		className,
-		below: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: CheckpointEventView_module_default.panel,
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LabeledValue, {
-				label: "Size",
-				layout: "row",
-				children: formatBytes(event.size_bytes)
-			}), sections]
+		title: `Checkpoint ${event.checkpoint_id} — turn ${event.turn} (${formatBytes(event.size_bytes)}, ${formatTime$1(event.duration_ms / 1e3)})`,
+		icon: TranscriptIcons.checkpoint,
+		eventCallbacks,
+		collapsibleContent: true,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: clsx(CheckpointEventView_module_default.panel, "text-size-small"),
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Row, {
+					label: "Trigger",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: summary ?? event.trigger }), summary === null && Object.keys(metadata).length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetaDataGrid, {
+						entries: metadata,
+						options: {
+							plain: true,
+							size: "mini"
+						}
+					}) : null]
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Row, {
+					label: "Host",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Snapshot, { details: event.host })
+				}),
+				sandboxEntries.map(([name, details]) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Row, {
+					label: sandboxEntries.length === 1 ? "Sandbox" : name,
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Snapshot, { details })
+				}, name))
+			]
 		})
 	});
 };
@@ -131230,6 +131208,7 @@ var SampleLimitEventView = ({ eventNode, className }) => {
 			case "time": return "Time Limit Exceeded";
 			case "message": return "Message Limit Exceeded";
 			case "token": return "Token Limit Exceeded";
+			case "turn": return "Turn Limit Exceeded";
 			case "operator": return "Operator Cancelled";
 			case "working": return "Execution Time Limit Exceeded";
 			case "cost": return "Cost Limit Exceeded";
@@ -131241,6 +131220,7 @@ var SampleLimitEventView = ({ eventNode, className }) => {
 			case "time": return TranscriptIcons.limits.time;
 			case "message": return TranscriptIcons.limits.messages;
 			case "token": return TranscriptIcons.limits.tokens;
+			case "turn": return TranscriptIcons.limits.turns;
 			case "operator": return TranscriptIcons.limits.operator;
 			case "working": return TranscriptIcons.limits.execution;
 			case "cost": return TranscriptIcons.limits.cost;
@@ -132391,7 +132371,8 @@ var RenderedEventNodeInner = ({ node, next, className, context, onAutoCollapse, 
 		});
 		case "checkpoint": return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CheckpointEventView, {
 			eventNode: node,
-			className
+			className,
+			eventCallbacks
 		});
 		default: return null;
 	}
