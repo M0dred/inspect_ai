@@ -10743,7 +10743,7 @@ function isMapOrSet(value) {
 //#endregion
 //#region ../../node_modules/.pnpm/arquero@8.0.3/node_modules/arquero/src/op/functions/object.js
 var object_exports = /* @__PURE__ */ __exportAll({
-	entries: () => entries$1,
+	entries: () => entries$2,
 	has: () => has$2,
 	keys: () => keys,
 	object: () => object,
@@ -10803,7 +10803,7 @@ function values$1(object) {
 *  or Set value.
 * @return {[K, V][]} An array of property values.
 */
-function entries$1(object) {
+function entries$2(object) {
 	return isMapOrSet(object) ? array(object.entries()) : object != null ? Object.entries(object) : [];
 }
 /**
@@ -11808,7 +11808,7 @@ function getWindow$1(name) {
 }
 //#endregion
 //#region ../../node_modules/.pnpm/arquero@8.0.3/node_modules/arquero/src/util/entries.js
-function entries(value) {
+function entries$1(value) {
 	return isArray$2(value) ? value : isMap$1(value) ? value.entries() : value ? Object.entries(value) : [];
 }
 var Literal = "Literal";
@@ -11976,7 +11976,7 @@ var ROW_OBJECT = "row_object";
 function rowObjectExpression(node, table, props = table.columnNames()) {
 	node.type = ObjectExpression;
 	const p = node.properties = [];
-	for (const prop of entries(props)) {
+	for (const prop of entries$1(props)) {
 		const [name, key] = isArray$2(prop) ? prop : [prop, prop];
 		p.push({
 			type: Property,
@@ -17859,10 +17859,19 @@ function formatBytes(bytes) {
 //#endregion
 //#region ../../packages/util/src/git.ts
 /**
-* Generates a GitHub commit URL based on the repository origin URL and the commit hash.
+* Builds a GitHub commit URL from a repository origin and commit hash.
+*
+* Accepts the GitHub origin forms that appear in eval `revision.origin`:
+* https, `ssh://git@github.com/…`, scp `git@github.com:…`, `git://…`, an
+* optional `git+` prefix, optional credentials, and an optional `.git` suffix.
+* Returns undefined when the origin is not a GitHub repository URL, so callers
+* can render the commit as plain text instead of a broken link.
 */
 var ghCommitUrl = (origin, commit) => {
-	return `${origin.replace(/\.git$/, "").replace(/^git@github.com:/, "https://github.com/")}/commit/${commit}`;
+	const match = origin.match(/(?:^|[@/])github\.com[/:]([^/]+)\/([^/]+?)(?:\.git)?\/?$/i);
+	if (!match) return;
+	const [, owner, repo] = match;
+	return `https://github.com/${owner}/${repo}/commit/${commit}`;
 };
 //#endregion
 //#region ../../packages/util/src/http.ts
@@ -46201,7 +46210,7 @@ function isTerminatorChar(ch) {
 		default: return false;
 	}
 }
-function text$3(state, silent) {
+function text$4(state, silent) {
 	let pos = state.pos;
 	while (pos < state.posMax && !isTerminatorChar(state.src.charCodeAt(pos))) pos++;
 	if (pos === state.pos) return false;
@@ -46856,7 +46865,7 @@ function fragments_join(state) {
 * Tokenizes paragraph content.
 **/
 var _rules = [
-	["text", text$3],
+	["text", text$4],
 	["linkify", linkify],
 	["newline", newline],
 	["escape", escape],
@@ -48529,7 +48538,7 @@ var getMarkdownInstance = (renderer) => {
 	mdInstanceCache[renderer] = md;
 	return md;
 };
-var escapeHtmlCharacters = (content) => {
+var escapeHtmlCharacters$1 = (content) => {
 	if (!content) return content;
 	return content.replace(/[<>&'"]/g, (c) => {
 		switch (c) {
@@ -48616,7 +48625,7 @@ function unescapeCodeHtmlEntities(str) {
 	});
 }
 var renderFullPipelineMarkdown = (markdown, renderer) => {
-	const preparedForMarkdown = restoreBackslashesForLatex(protectMarkdown(preRenderText(escapeHtmlCharacters(protectBackslashesInLatex(markdown)))));
+	const preparedForMarkdown = restoreBackslashesForLatex(protectMarkdown(preRenderText(escapeHtmlCharacters$1(protectBackslashesInLatex(markdown)))));
 	let html = preparedForMarkdown;
 	try {
 		html = getMarkdownInstance(renderer).render(preparedForMarkdown);
@@ -48632,7 +48641,7 @@ var renderTextOnlyMarkdown = (markdown) => {
 	} catch (ex) {
 		console.log("Unable to markdown render content");
 		console.error(ex);
-		return escapeHtmlCharacters(markdown).replace(/\n/g, "<br/>");
+		return escapeHtmlCharacters$1(markdown).replace(/\n/g, "<br/>");
 	}
 };
 var markdownRenderers = {
@@ -48642,16 +48651,2310 @@ var markdownRenderers = {
 };
 var renderMarkdown = (markdown, renderer = defaultMarkdownRenderer) => markdownRenderers[renderer](markdown);
 //#endregion
+//#region ../../node_modules/.pnpm/dompurify@3.4.11/node_modules/dompurify/dist/purify.es.mjs
+/*! @license DOMPurify 3.4.11 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/3.4.11/LICENSE */
+function _arrayLikeToArray(r, a) {
+	(null == a || a > r.length) && (a = r.length);
+	for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+	return n;
+}
+function _arrayWithHoles(r) {
+	if (Array.isArray(r)) return r;
+}
+function _iterableToArrayLimit(r, l) {
+	var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+	if (null != t) {
+		var e, n, i, u, a = [], f = true, o = false;
+		try {
+			if (i = (t = t.call(r)).next, 0 === l);
+			else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+		} catch (r) {
+			o = true, n = r;
+		} finally {
+			try {
+				if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return;
+			} finally {
+				if (o) throw n;
+			}
+		}
+		return a;
+	}
+}
+function _nonIterableRest() {
+	throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _slicedToArray(r, e) {
+	return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest();
+}
+function _unsupportedIterableToArray(r, a) {
+	if (r) {
+		if ("string" == typeof r) return _arrayLikeToArray(r, a);
+		var t = {}.toString.call(r).slice(8, -1);
+		return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
+	}
+}
+var entries = Object.entries, setPrototypeOf = Object.setPrototypeOf, isFrozen$1 = Object.isFrozen, getPrototypeOf$1 = Object.getPrototypeOf, getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+var freeze$1 = Object.freeze, seal = Object.seal, create$1 = Object.create;
+var _ref = typeof Reflect !== "undefined" && Reflect, apply = _ref.apply, construct = _ref.construct;
+if (!freeze$1) freeze$1 = function freeze(x) {
+	return x;
+};
+if (!seal) seal = function seal(x) {
+	return x;
+};
+if (!apply) apply = function apply(func, thisArg) {
+	for (var _len = arguments.length, args = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) args[_key - 2] = arguments[_key];
+	return func.apply(thisArg, args);
+};
+if (!construct) construct = function construct(Func) {
+	for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) args[_key2 - 1] = arguments[_key2];
+	return new Func(...args);
+};
+var arrayForEach = unapply(Array.prototype.forEach);
+var arrayLastIndexOf = unapply(Array.prototype.lastIndexOf);
+var arrayPop = unapply(Array.prototype.pop);
+var arrayPush = unapply(Array.prototype.push);
+var arraySplice = unapply(Array.prototype.splice);
+var arrayIsArray = Array.isArray;
+var stringToLowerCase = unapply(String.prototype.toLowerCase);
+var stringToString = unapply(String.prototype.toString);
+var stringMatch = unapply(String.prototype.match);
+var stringReplace = unapply(String.prototype.replace);
+var stringIndexOf = unapply(String.prototype.indexOf);
+var stringTrim = unapply(String.prototype.trim);
+var numberToString = unapply(Number.prototype.toString);
+var booleanToString = unapply(Boolean.prototype.toString);
+var bigintToString = typeof BigInt === "undefined" ? null : unapply(BigInt.prototype.toString);
+var symbolToString = typeof Symbol === "undefined" ? null : unapply(Symbol.prototype.toString);
+var objectHasOwnProperty = unapply(Object.prototype.hasOwnProperty);
+var objectToString = unapply(Object.prototype.toString);
+var regExpTest = unapply(RegExp.prototype.test);
+var typeErrorCreate = unconstruct(TypeError);
+/**
+* Creates a new function that calls the given function with a specified thisArg and arguments.
+*
+* @param func - The function to be wrapped and called.
+* @returns A new function that calls the given function with a specified thisArg and arguments.
+*/
+function unapply(func) {
+	return function(thisArg) {
+		if (thisArg instanceof RegExp) thisArg.lastIndex = 0;
+		for (var _len3 = arguments.length, args = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) args[_key3 - 1] = arguments[_key3];
+		return apply(func, thisArg, args);
+	};
+}
+/**
+* Creates a new function that constructs an instance of the given constructor function with the provided arguments.
+*
+* @param func - The constructor function to be wrapped and called.
+* @returns A new function that constructs an instance of the given constructor function with the provided arguments.
+*/
+function unconstruct(Func) {
+	return function() {
+		for (var _len4 = arguments.length, args = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) args[_key4] = arguments[_key4];
+		return construct(Func, args);
+	};
+}
+/**
+* Add properties to a lookup table
+*
+* @param set - The set to which elements will be added.
+* @param array - The array containing elements to be added to the set.
+* @param transformCaseFunc - An optional function to transform the case of each element before adding to the set.
+* @returns The modified set with added elements.
+*/
+function addToSet(set, array) {
+	let transformCaseFunc = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : stringToLowerCase;
+	if (setPrototypeOf) setPrototypeOf(set, null);
+	if (!arrayIsArray(array)) return set;
+	let l = array.length;
+	while (l--) {
+		let element = array[l];
+		if (typeof element === "string") {
+			const lcElement = transformCaseFunc(element);
+			if (lcElement !== element) {
+				if (!isFrozen$1(array)) array[l] = lcElement;
+				element = lcElement;
+			}
+		}
+		set[element] = true;
+	}
+	return set;
+}
+/**
+* Clean up an array to harden against CSPP
+*
+* @param array - The array to be cleaned.
+* @returns The cleaned version of the array
+*/
+function cleanArray(array) {
+	for (let index = 0; index < array.length; index++) if (!objectHasOwnProperty(array, index)) array[index] = null;
+	return array;
+}
+/**
+* Shallow clone an object
+*
+* @param object - The object to be cloned.
+* @returns A new object that copies the original.
+*/
+function clone$1(object) {
+	const newObject = create$1(null);
+	for (const _ref2 of entries(object)) {
+		var _ref3 = _slicedToArray(_ref2, 2);
+		const property = _ref3[0];
+		const value = _ref3[1];
+		if (objectHasOwnProperty(object, property)) if (arrayIsArray(value)) newObject[property] = cleanArray(value);
+		else if (value && typeof value === "object" && value.constructor === Object) newObject[property] = clone$1(value);
+		else newObject[property] = value;
+	}
+	return newObject;
+}
+/**
+* Convert non-node values into strings without depending on direct property access.
+*
+* @param value - The value to stringify.
+* @returns A string representation of the provided value.
+*/
+function stringifyValue$1(value) {
+	switch (typeof value) {
+		case "string": return value;
+		case "number": return numberToString(value);
+		case "boolean": return booleanToString(value);
+		case "bigint": return bigintToString ? bigintToString(value) : "0";
+		case "symbol": return symbolToString ? symbolToString(value) : "Symbol()";
+		case "undefined": return objectToString(value);
+		case "function":
+		case "object": {
+			if (value === null) return objectToString(value);
+			const valueAsRecord = value;
+			const valueToString = lookupGetter(valueAsRecord, "toString");
+			if (typeof valueToString === "function") {
+				const stringified = valueToString(valueAsRecord);
+				return typeof stringified === "string" ? stringified : objectToString(stringified);
+			}
+			return objectToString(value);
+		}
+		default: return objectToString(value);
+	}
+}
+/**
+* This method automatically checks if the prop is function or getter and behaves accordingly.
+*
+* @param object - The object to look up the getter function in its prototype chain.
+* @param prop - The property name for which to find the getter function.
+* @returns The getter function found in the prototype chain or a fallback function.
+*/
+function lookupGetter(object, prop) {
+	while (object !== null) {
+		const desc = getOwnPropertyDescriptor(object, prop);
+		if (desc) {
+			if (desc.get) return unapply(desc.get);
+			if (typeof desc.value === "function") return unapply(desc.value);
+		}
+		object = getPrototypeOf$1(object);
+	}
+	function fallbackValue() {
+		return null;
+	}
+	return fallbackValue;
+}
+function isRegex(value) {
+	try {
+		regExpTest(value, "");
+		return true;
+	} catch (_unused) {
+		return false;
+	}
+}
+var html$1 = freeze$1([
+	"a",
+	"abbr",
+	"acronym",
+	"address",
+	"area",
+	"article",
+	"aside",
+	"audio",
+	"b",
+	"bdi",
+	"bdo",
+	"big",
+	"blink",
+	"blockquote",
+	"body",
+	"br",
+	"button",
+	"canvas",
+	"caption",
+	"center",
+	"cite",
+	"code",
+	"col",
+	"colgroup",
+	"content",
+	"data",
+	"datalist",
+	"dd",
+	"decorator",
+	"del",
+	"details",
+	"dfn",
+	"dialog",
+	"dir",
+	"div",
+	"dl",
+	"dt",
+	"element",
+	"em",
+	"fieldset",
+	"figcaption",
+	"figure",
+	"font",
+	"footer",
+	"form",
+	"h1",
+	"h2",
+	"h3",
+	"h4",
+	"h5",
+	"h6",
+	"head",
+	"header",
+	"hgroup",
+	"hr",
+	"html",
+	"i",
+	"img",
+	"input",
+	"ins",
+	"kbd",
+	"label",
+	"legend",
+	"li",
+	"main",
+	"map",
+	"mark",
+	"marquee",
+	"menu",
+	"menuitem",
+	"meter",
+	"nav",
+	"nobr",
+	"ol",
+	"optgroup",
+	"option",
+	"output",
+	"p",
+	"picture",
+	"pre",
+	"progress",
+	"q",
+	"rp",
+	"rt",
+	"ruby",
+	"s",
+	"samp",
+	"search",
+	"section",
+	"select",
+	"shadow",
+	"slot",
+	"small",
+	"source",
+	"spacer",
+	"span",
+	"strike",
+	"strong",
+	"style",
+	"sub",
+	"summary",
+	"sup",
+	"table",
+	"tbody",
+	"td",
+	"template",
+	"textarea",
+	"tfoot",
+	"th",
+	"thead",
+	"time",
+	"tr",
+	"track",
+	"tt",
+	"u",
+	"ul",
+	"var",
+	"video",
+	"wbr"
+]);
+var svg$1 = freeze$1([
+	"svg",
+	"a",
+	"altglyph",
+	"altglyphdef",
+	"altglyphitem",
+	"animatecolor",
+	"animatemotion",
+	"animatetransform",
+	"circle",
+	"clippath",
+	"defs",
+	"desc",
+	"ellipse",
+	"enterkeyhint",
+	"exportparts",
+	"filter",
+	"font",
+	"g",
+	"glyph",
+	"glyphref",
+	"hkern",
+	"image",
+	"inputmode",
+	"line",
+	"lineargradient",
+	"marker",
+	"mask",
+	"metadata",
+	"mpath",
+	"part",
+	"path",
+	"pattern",
+	"polygon",
+	"polyline",
+	"radialgradient",
+	"rect",
+	"stop",
+	"style",
+	"switch",
+	"symbol",
+	"text",
+	"textpath",
+	"title",
+	"tref",
+	"tspan",
+	"view",
+	"vkern"
+]);
+var svgFilters = freeze$1([
+	"feBlend",
+	"feColorMatrix",
+	"feComponentTransfer",
+	"feComposite",
+	"feConvolveMatrix",
+	"feDiffuseLighting",
+	"feDisplacementMap",
+	"feDistantLight",
+	"feDropShadow",
+	"feFlood",
+	"feFuncA",
+	"feFuncB",
+	"feFuncG",
+	"feFuncR",
+	"feGaussianBlur",
+	"feImage",
+	"feMerge",
+	"feMergeNode",
+	"feMorphology",
+	"feOffset",
+	"fePointLight",
+	"feSpecularLighting",
+	"feSpotLight",
+	"feTile",
+	"feTurbulence"
+]);
+var svgDisallowed = freeze$1([
+	"animate",
+	"color-profile",
+	"cursor",
+	"discard",
+	"font-face",
+	"font-face-format",
+	"font-face-name",
+	"font-face-src",
+	"font-face-uri",
+	"foreignobject",
+	"hatch",
+	"hatchpath",
+	"mesh",
+	"meshgradient",
+	"meshpatch",
+	"meshrow",
+	"missing-glyph",
+	"script",
+	"set",
+	"solidcolor",
+	"unknown",
+	"use"
+]);
+var mathMl$1 = freeze$1([
+	"math",
+	"menclose",
+	"merror",
+	"mfenced",
+	"mfrac",
+	"mglyph",
+	"mi",
+	"mlabeledtr",
+	"mmultiscripts",
+	"mn",
+	"mo",
+	"mover",
+	"mpadded",
+	"mphantom",
+	"mroot",
+	"mrow",
+	"ms",
+	"mspace",
+	"msqrt",
+	"mstyle",
+	"msub",
+	"msup",
+	"msubsup",
+	"mtable",
+	"mtd",
+	"mtext",
+	"mtr",
+	"munder",
+	"munderover",
+	"mprescripts"
+]);
+var mathMlDisallowed = freeze$1([
+	"maction",
+	"maligngroup",
+	"malignmark",
+	"mlongdiv",
+	"mscarries",
+	"mscarry",
+	"msgroup",
+	"mstack",
+	"msline",
+	"msrow",
+	"semantics",
+	"annotation",
+	"annotation-xml",
+	"mprescripts",
+	"none"
+]);
+var text$3 = freeze$1(["#text"]);
+var html = freeze$1([
+	"accept",
+	"action",
+	"align",
+	"alt",
+	"autocapitalize",
+	"autocomplete",
+	"autopictureinpicture",
+	"autoplay",
+	"background",
+	"bgcolor",
+	"border",
+	"capture",
+	"cellpadding",
+	"cellspacing",
+	"checked",
+	"cite",
+	"class",
+	"clear",
+	"color",
+	"cols",
+	"colspan",
+	"command",
+	"commandfor",
+	"controls",
+	"controlslist",
+	"coords",
+	"crossorigin",
+	"datetime",
+	"decoding",
+	"default",
+	"dir",
+	"disabled",
+	"disablepictureinpicture",
+	"disableremoteplayback",
+	"download",
+	"draggable",
+	"enctype",
+	"enterkeyhint",
+	"exportparts",
+	"face",
+	"for",
+	"headers",
+	"height",
+	"hidden",
+	"high",
+	"href",
+	"hreflang",
+	"id",
+	"inert",
+	"inputmode",
+	"integrity",
+	"ismap",
+	"kind",
+	"label",
+	"lang",
+	"list",
+	"loading",
+	"loop",
+	"low",
+	"max",
+	"maxlength",
+	"media",
+	"method",
+	"min",
+	"minlength",
+	"multiple",
+	"muted",
+	"name",
+	"nonce",
+	"noshade",
+	"novalidate",
+	"nowrap",
+	"open",
+	"optimum",
+	"part",
+	"pattern",
+	"placeholder",
+	"playsinline",
+	"popover",
+	"popovertarget",
+	"popovertargetaction",
+	"poster",
+	"preload",
+	"pubdate",
+	"radiogroup",
+	"readonly",
+	"rel",
+	"required",
+	"rev",
+	"reversed",
+	"role",
+	"rows",
+	"rowspan",
+	"spellcheck",
+	"scope",
+	"selected",
+	"shape",
+	"size",
+	"sizes",
+	"slot",
+	"span",
+	"srclang",
+	"start",
+	"src",
+	"srcset",
+	"step",
+	"style",
+	"summary",
+	"tabindex",
+	"title",
+	"translate",
+	"type",
+	"usemap",
+	"valign",
+	"value",
+	"width",
+	"wrap",
+	"xmlns"
+]);
+var svg$2 = freeze$1([
+	"accent-height",
+	"accumulate",
+	"additive",
+	"alignment-baseline",
+	"amplitude",
+	"ascent",
+	"attributename",
+	"attributetype",
+	"azimuth",
+	"basefrequency",
+	"baseline-shift",
+	"begin",
+	"bias",
+	"by",
+	"class",
+	"clip",
+	"clippathunits",
+	"clip-path",
+	"clip-rule",
+	"color",
+	"color-interpolation",
+	"color-interpolation-filters",
+	"color-profile",
+	"color-rendering",
+	"cx",
+	"cy",
+	"d",
+	"dx",
+	"dy",
+	"diffuseconstant",
+	"direction",
+	"display",
+	"divisor",
+	"dur",
+	"edgemode",
+	"elevation",
+	"end",
+	"exponent",
+	"fill",
+	"fill-opacity",
+	"fill-rule",
+	"filter",
+	"filterunits",
+	"flood-color",
+	"flood-opacity",
+	"font-family",
+	"font-size",
+	"font-size-adjust",
+	"font-stretch",
+	"font-style",
+	"font-variant",
+	"font-weight",
+	"fx",
+	"fy",
+	"g1",
+	"g2",
+	"glyph-name",
+	"glyphref",
+	"gradientunits",
+	"gradienttransform",
+	"height",
+	"href",
+	"id",
+	"image-rendering",
+	"in",
+	"in2",
+	"intercept",
+	"k",
+	"k1",
+	"k2",
+	"k3",
+	"k4",
+	"kerning",
+	"keypoints",
+	"keysplines",
+	"keytimes",
+	"lang",
+	"lengthadjust",
+	"letter-spacing",
+	"kernelmatrix",
+	"kernelunitlength",
+	"lighting-color",
+	"local",
+	"marker-end",
+	"marker-mid",
+	"marker-start",
+	"markerheight",
+	"markerunits",
+	"markerwidth",
+	"maskcontentunits",
+	"maskunits",
+	"max",
+	"mask",
+	"mask-type",
+	"media",
+	"method",
+	"mode",
+	"min",
+	"name",
+	"numoctaves",
+	"offset",
+	"operator",
+	"opacity",
+	"order",
+	"orient",
+	"orientation",
+	"origin",
+	"overflow",
+	"paint-order",
+	"path",
+	"pathlength",
+	"patterncontentunits",
+	"patterntransform",
+	"patternunits",
+	"points",
+	"preservealpha",
+	"preserveaspectratio",
+	"primitiveunits",
+	"r",
+	"rx",
+	"ry",
+	"radius",
+	"refx",
+	"refy",
+	"repeatcount",
+	"repeatdur",
+	"restart",
+	"result",
+	"rotate",
+	"scale",
+	"seed",
+	"shape-rendering",
+	"slope",
+	"specularconstant",
+	"specularexponent",
+	"spreadmethod",
+	"startoffset",
+	"stddeviation",
+	"stitchtiles",
+	"stop-color",
+	"stop-opacity",
+	"stroke-dasharray",
+	"stroke-dashoffset",
+	"stroke-linecap",
+	"stroke-linejoin",
+	"stroke-miterlimit",
+	"stroke-opacity",
+	"stroke",
+	"stroke-width",
+	"style",
+	"surfacescale",
+	"systemlanguage",
+	"tabindex",
+	"tablevalues",
+	"targetx",
+	"targety",
+	"transform",
+	"transform-origin",
+	"text-anchor",
+	"text-decoration",
+	"text-rendering",
+	"textlength",
+	"type",
+	"u1",
+	"u2",
+	"unicode",
+	"values",
+	"viewbox",
+	"visibility",
+	"version",
+	"vert-adv-y",
+	"vert-origin-x",
+	"vert-origin-y",
+	"width",
+	"word-spacing",
+	"wrap",
+	"writing-mode",
+	"xchannelselector",
+	"ychannelselector",
+	"x",
+	"x1",
+	"x2",
+	"xmlns",
+	"y",
+	"y1",
+	"y2",
+	"z",
+	"zoomandpan"
+]);
+var mathMl = freeze$1([
+	"accent",
+	"accentunder",
+	"align",
+	"bevelled",
+	"close",
+	"columnalign",
+	"columnlines",
+	"columnspacing",
+	"columnspan",
+	"denomalign",
+	"depth",
+	"dir",
+	"display",
+	"displaystyle",
+	"encoding",
+	"fence",
+	"frame",
+	"height",
+	"href",
+	"id",
+	"largeop",
+	"length",
+	"linethickness",
+	"lquote",
+	"lspace",
+	"mathbackground",
+	"mathcolor",
+	"mathsize",
+	"mathvariant",
+	"maxsize",
+	"minsize",
+	"movablelimits",
+	"notation",
+	"numalign",
+	"open",
+	"rowalign",
+	"rowlines",
+	"rowspacing",
+	"rowspan",
+	"rspace",
+	"rquote",
+	"scriptlevel",
+	"scriptminsize",
+	"scriptsizemultiplier",
+	"selection",
+	"separator",
+	"separators",
+	"stretchy",
+	"subscriptshift",
+	"supscriptshift",
+	"symmetric",
+	"voffset",
+	"width",
+	"xmlns"
+]);
+var xml = freeze$1([
+	"xlink:href",
+	"xml:id",
+	"xlink:title",
+	"xml:space",
+	"xmlns:xlink"
+]);
+var MUSTACHE_EXPR = seal(/{{[\w\W]*|^[\w\W]*}}/g);
+var ERB_EXPR = seal(/<%[\w\W]*|^[\w\W]*%>/g);
+var TMPLIT_EXPR = seal(/\${[\w\W]*/g);
+var DATA_ATTR = seal(/^data-[\-\w.\u00B7-\uFFFF]+$/);
+var ARIA_ATTR = seal(/^aria-[\-\w]+$/);
+var IS_ALLOWED_URI = seal(/^(?:(?:(?:f|ht)tps?|mailto|tel|callto|sms|cid|xmpp|matrix):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i);
+var IS_SCRIPT_OR_DATA = seal(/^(?:\w+script|data):/i);
+var ATTR_WHITESPACE = seal(/[\u0000-\u0020\u00A0\u1680\u180E\u2000-\u2029\u205F\u3000]/g);
+var DOCTYPE_NAME = seal(/^html$/i);
+var CUSTOM_ELEMENT = seal(/^[a-z][.\w]*(-[.\w]+)+$/i);
+var ELEMENT_MARKUP_PROBE = seal(/<[/\w!]/g);
+var COMMENT_MARKUP_PROBE = seal(/<[/\w]/g);
+var FALLBACK_TAG_CLOSE = seal(/<\/no(script|embed|frames)/i);
+var SELF_CLOSING_TAG = seal(/\/>/i);
+var NODE_TYPE = {
+	element: 1,
+	attribute: 2,
+	text: 3,
+	cdataSection: 4,
+	entityReference: 5,
+	entityNode: 6,
+	processingInstruction: 7,
+	comment: 8,
+	document: 9,
+	documentType: 10,
+	documentFragment: 11,
+	notation: 12
+};
+var getGlobal = function getGlobal() {
+	return typeof window === "undefined" ? null : window;
+};
+/**
+* Creates a no-op policy for internal use only.
+* Don't export this function outside this module!
+* @param trustedTypes The policy factory.
+* @param purifyHostElement The Script element used to load DOMPurify (to determine policy name suffix).
+* @return The policy created (or null, if Trusted Types
+* are not supported or creating the policy failed).
+*/
+var _createTrustedTypesPolicy = function _createTrustedTypesPolicy(trustedTypes, purifyHostElement) {
+	if (typeof trustedTypes !== "object" || typeof trustedTypes.createPolicy !== "function") return null;
+	let suffix = null;
+	const ATTR_NAME = "data-tt-policy-suffix";
+	if (purifyHostElement && purifyHostElement.hasAttribute(ATTR_NAME)) suffix = purifyHostElement.getAttribute(ATTR_NAME);
+	const policyName = "dompurify" + (suffix ? "#" + suffix : "");
+	try {
+		return trustedTypes.createPolicy(policyName, {
+			createHTML(html) {
+				return html;
+			},
+			createScriptURL(scriptUrl) {
+				return scriptUrl;
+			}
+		});
+	} catch (_) {
+		console.warn("TrustedTypes policy " + policyName + " could not be created.");
+		return null;
+	}
+};
+var _createHooksMap = function _createHooksMap() {
+	return {
+		afterSanitizeAttributes: [],
+		afterSanitizeElements: [],
+		afterSanitizeShadowDOM: [],
+		beforeSanitizeAttributes: [],
+		beforeSanitizeElements: [],
+		beforeSanitizeShadowDOM: [],
+		uponSanitizeAttribute: [],
+		uponSanitizeElement: [],
+		uponSanitizeShadowNode: []
+	};
+};
+/**
+* Resolve a set-valued configuration option: a fresh set built from
+* cfg[key] when it is an own array property (seeded with a clone of
+* options.base when given, case-normalized via options.transform),
+* the fallback set otherwise.
+*
+* @param cfg the cloned, prototype-free configuration object
+* @param key the configuration property to read
+* @param fallback the set to use when the option is absent or not an array
+* @param options transform and optional base set to merge into
+* @returns the resolved set
+*/
+var _resolveSetOption = function _resolveSetOption(cfg, key, fallback, options) {
+	return objectHasOwnProperty(cfg, key) && arrayIsArray(cfg[key]) ? addToSet(options.base ? clone$1(options.base) : {}, cfg[key], options.transform) : fallback;
+};
+function createDOMPurify() {
+	let window = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : getGlobal();
+	const DOMPurify = (root) => createDOMPurify(root);
+	DOMPurify.version = "3.4.11";
+	DOMPurify.removed = [];
+	if (!window || !window.document || window.document.nodeType !== NODE_TYPE.document || !window.Element) {
+		DOMPurify.isSupported = false;
+		return DOMPurify;
+	}
+	let document = window.document;
+	const originalDocument = document;
+	const currentScript = originalDocument.currentScript;
+	window.DocumentFragment;
+	const HTMLTemplateElement = window.HTMLTemplateElement, Node = window.Node, Element = window.Element, NodeFilter = window.NodeFilter;
+	window.NamedNodeMap === void 0 && (window.NamedNodeMap || window.MozNamedAttrMap);
+	window.HTMLFormElement;
+	const DOMParser = window.DOMParser, trustedTypes = window.trustedTypes;
+	const ElementPrototype = Element.prototype;
+	const cloneNode = lookupGetter(ElementPrototype, "cloneNode");
+	const remove = lookupGetter(ElementPrototype, "remove");
+	const getNextSibling = lookupGetter(ElementPrototype, "nextSibling");
+	const getChildNodes = lookupGetter(ElementPrototype, "childNodes");
+	const getParentNode = lookupGetter(ElementPrototype, "parentNode");
+	const getShadowRoot = lookupGetter(ElementPrototype, "shadowRoot");
+	const getAttributes = lookupGetter(ElementPrototype, "attributes");
+	const getNodeType = Node && Node.prototype ? lookupGetter(Node.prototype, "nodeType") : null;
+	const getNodeName = Node && Node.prototype ? lookupGetter(Node.prototype, "nodeName") : null;
+	if (typeof HTMLTemplateElement === "function") {
+		const template = document.createElement("template");
+		if (template.content && template.content.ownerDocument) document = template.content.ownerDocument;
+	}
+	let trustedTypesPolicy;
+	let emptyHTML = "";
+	let defaultTrustedTypesPolicy;
+	let defaultTrustedTypesPolicyResolved = false;
+	let IN_TRUSTED_TYPES_POLICY = 0;
+	const _assertNotInTrustedTypesPolicy = function _assertNotInTrustedTypesPolicy() {
+		if (IN_TRUSTED_TYPES_POLICY > 0) throw typeErrorCreate("A configured TRUSTED_TYPES_POLICY callback (createHTML or createScriptURL) must not call DOMPurify.sanitize, as that causes infinite recursion. Do not pass a policy whose callbacks wrap DOMPurify as TRUSTED_TYPES_POLICY; see the \"DOMPurify and Trusted Types\" section of the README.");
+	};
+	const _createTrustedHTML = function _createTrustedHTML(html) {
+		_assertNotInTrustedTypesPolicy();
+		IN_TRUSTED_TYPES_POLICY++;
+		try {
+			return trustedTypesPolicy.createHTML(html);
+		} finally {
+			IN_TRUSTED_TYPES_POLICY--;
+		}
+	};
+	const _createTrustedScriptURL = function _createTrustedScriptURL(scriptUrl) {
+		_assertNotInTrustedTypesPolicy();
+		IN_TRUSTED_TYPES_POLICY++;
+		try {
+			return trustedTypesPolicy.createScriptURL(scriptUrl);
+		} finally {
+			IN_TRUSTED_TYPES_POLICY--;
+		}
+	};
+	const _getDefaultTrustedTypesPolicy = function _getDefaultTrustedTypesPolicy() {
+		if (!defaultTrustedTypesPolicyResolved) {
+			defaultTrustedTypesPolicy = _createTrustedTypesPolicy(trustedTypes, currentScript);
+			defaultTrustedTypesPolicyResolved = true;
+		}
+		return defaultTrustedTypesPolicy;
+	};
+	const _document = document, implementation = _document.implementation, createNodeIterator = _document.createNodeIterator, createDocumentFragment = _document.createDocumentFragment, getElementsByTagName = _document.getElementsByTagName;
+	const importNode = originalDocument.importNode;
+	let hooks = _createHooksMap();
+	/**
+	* Expose whether this browser supports running the full DOMPurify.
+	*/
+	DOMPurify.isSupported = typeof entries === "function" && typeof getParentNode === "function" && implementation && implementation.createHTMLDocument !== void 0;
+	const MUSTACHE_EXPR$1 = MUSTACHE_EXPR, ERB_EXPR$1 = ERB_EXPR, TMPLIT_EXPR$1 = TMPLIT_EXPR, DATA_ATTR$1 = DATA_ATTR, ARIA_ATTR$1 = ARIA_ATTR, IS_SCRIPT_OR_DATA$1 = IS_SCRIPT_OR_DATA, ATTR_WHITESPACE$1 = ATTR_WHITESPACE, CUSTOM_ELEMENT$1 = CUSTOM_ELEMENT;
+	let IS_ALLOWED_URI$1 = IS_ALLOWED_URI;
+	/**
+	* We consider the elements and attributes below to be safe. Ideally
+	* don't add any new ones but feel free to remove unwanted ones.
+	*/
+	let ALLOWED_TAGS = null;
+	const DEFAULT_ALLOWED_TAGS = addToSet({}, [
+		...html$1,
+		...svg$1,
+		...svgFilters,
+		...mathMl$1,
+		...text$3
+	]);
+	let ALLOWED_ATTR = null;
+	const DEFAULT_ALLOWED_ATTR = addToSet({}, [
+		...html,
+		...svg$2,
+		...mathMl,
+		...xml
+	]);
+	let CUSTOM_ELEMENT_HANDLING = Object.seal(create$1(null, {
+		tagNameCheck: {
+			writable: true,
+			configurable: false,
+			enumerable: true,
+			value: null
+		},
+		attributeNameCheck: {
+			writable: true,
+			configurable: false,
+			enumerable: true,
+			value: null
+		},
+		allowCustomizedBuiltInElements: {
+			writable: true,
+			configurable: false,
+			enumerable: true,
+			value: false
+		}
+	}));
+	let FORBID_TAGS = null;
+	let FORBID_ATTR = null;
+	const EXTRA_ELEMENT_HANDLING = Object.seal(create$1(null, {
+		tagCheck: {
+			writable: true,
+			configurable: false,
+			enumerable: true,
+			value: null
+		},
+		attributeCheck: {
+			writable: true,
+			configurable: false,
+			enumerable: true,
+			value: null
+		}
+	}));
+	let ALLOW_ARIA_ATTR = true;
+	let ALLOW_DATA_ATTR = true;
+	let ALLOW_UNKNOWN_PROTOCOLS = false;
+	let ALLOW_SELF_CLOSE_IN_ATTR = true;
+	let SAFE_FOR_TEMPLATES = false;
+	let SAFE_FOR_XML = true;
+	let WHOLE_DOCUMENT = false;
+	let SET_CONFIG = false;
+	let SET_CONFIG_ALLOWED_TAGS = null;
+	let SET_CONFIG_ALLOWED_ATTR = null;
+	let FORCE_BODY = false;
+	let RETURN_DOM = false;
+	let RETURN_DOM_FRAGMENT = false;
+	let RETURN_TRUSTED_TYPE = false;
+	let SANITIZE_DOM = true;
+	let SANITIZE_NAMED_PROPS = false;
+	const SANITIZE_NAMED_PROPS_PREFIX = "user-content-";
+	let KEEP_CONTENT = true;
+	let IN_PLACE = false;
+	let USE_PROFILES = {};
+	let FORBID_CONTENTS = null;
+	const DEFAULT_FORBID_CONTENTS = addToSet({}, [
+		"annotation-xml",
+		"audio",
+		"colgroup",
+		"desc",
+		"foreignobject",
+		"head",
+		"iframe",
+		"math",
+		"mi",
+		"mn",
+		"mo",
+		"ms",
+		"mtext",
+		"noembed",
+		"noframes",
+		"noscript",
+		"plaintext",
+		"script",
+		"selectedcontent",
+		"style",
+		"svg",
+		"template",
+		"thead",
+		"title",
+		"video",
+		"xmp"
+	]);
+	let DATA_URI_TAGS = null;
+	const DEFAULT_DATA_URI_TAGS = addToSet({}, [
+		"audio",
+		"video",
+		"img",
+		"source",
+		"image",
+		"track"
+	]);
+	let URI_SAFE_ATTRIBUTES = null;
+	const DEFAULT_URI_SAFE_ATTRIBUTES = addToSet({}, [
+		"alt",
+		"class",
+		"for",
+		"id",
+		"label",
+		"name",
+		"pattern",
+		"placeholder",
+		"role",
+		"summary",
+		"title",
+		"value",
+		"style",
+		"xmlns"
+	]);
+	const MATHML_NAMESPACE = "http://www.w3.org/1998/Math/MathML";
+	const SVG_NAMESPACE = "http://www.w3.org/2000/svg";
+	const HTML_NAMESPACE = "http://www.w3.org/1999/xhtml";
+	let NAMESPACE = HTML_NAMESPACE;
+	let IS_EMPTY_INPUT = false;
+	let ALLOWED_NAMESPACES = null;
+	const DEFAULT_ALLOWED_NAMESPACES = addToSet({}, [
+		MATHML_NAMESPACE,
+		SVG_NAMESPACE,
+		HTML_NAMESPACE
+	], stringToString);
+	const DEFAULT_MATHML_TEXT_INTEGRATION_POINTS = freeze$1([
+		"mi",
+		"mo",
+		"mn",
+		"ms",
+		"mtext"
+	]);
+	let MATHML_TEXT_INTEGRATION_POINTS = addToSet({}, DEFAULT_MATHML_TEXT_INTEGRATION_POINTS);
+	const DEFAULT_HTML_INTEGRATION_POINTS = freeze$1(["annotation-xml"]);
+	let HTML_INTEGRATION_POINTS = addToSet({}, DEFAULT_HTML_INTEGRATION_POINTS);
+	const COMMON_SVG_AND_HTML_ELEMENTS = addToSet({}, [
+		"title",
+		"style",
+		"font",
+		"a",
+		"script"
+	]);
+	let PARSER_MEDIA_TYPE = null;
+	const SUPPORTED_PARSER_MEDIA_TYPES = ["application/xhtml+xml", "text/html"];
+	const DEFAULT_PARSER_MEDIA_TYPE = "text/html";
+	let transformCaseFunc = null;
+	let CONFIG = null;
+	const formElement = document.createElement("form");
+	const isRegexOrFunction = function isRegexOrFunction(testValue) {
+		return testValue instanceof RegExp || testValue instanceof Function;
+	};
+	/**
+	* _parseConfig
+	*
+	* @param cfg optional config literal
+	*/
+	const _parseConfig = function _parseConfig() {
+		let cfg = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
+		if (CONFIG && CONFIG === cfg) return;
+		if (!cfg || typeof cfg !== "object") cfg = {};
+		cfg = clone$1(cfg);
+		PARSER_MEDIA_TYPE = SUPPORTED_PARSER_MEDIA_TYPES.indexOf(cfg.PARSER_MEDIA_TYPE) === -1 ? DEFAULT_PARSER_MEDIA_TYPE : cfg.PARSER_MEDIA_TYPE;
+		transformCaseFunc = PARSER_MEDIA_TYPE === "application/xhtml+xml" ? stringToString : stringToLowerCase;
+		ALLOWED_TAGS = _resolveSetOption(cfg, "ALLOWED_TAGS", DEFAULT_ALLOWED_TAGS, { transform: transformCaseFunc });
+		ALLOWED_ATTR = _resolveSetOption(cfg, "ALLOWED_ATTR", DEFAULT_ALLOWED_ATTR, { transform: transformCaseFunc });
+		ALLOWED_NAMESPACES = _resolveSetOption(cfg, "ALLOWED_NAMESPACES", DEFAULT_ALLOWED_NAMESPACES, { transform: stringToString });
+		URI_SAFE_ATTRIBUTES = _resolveSetOption(cfg, "ADD_URI_SAFE_ATTR", DEFAULT_URI_SAFE_ATTRIBUTES, {
+			transform: transformCaseFunc,
+			base: DEFAULT_URI_SAFE_ATTRIBUTES
+		});
+		DATA_URI_TAGS = _resolveSetOption(cfg, "ADD_DATA_URI_TAGS", DEFAULT_DATA_URI_TAGS, {
+			transform: transformCaseFunc,
+			base: DEFAULT_DATA_URI_TAGS
+		});
+		FORBID_CONTENTS = _resolveSetOption(cfg, "FORBID_CONTENTS", DEFAULT_FORBID_CONTENTS, { transform: transformCaseFunc });
+		FORBID_TAGS = _resolveSetOption(cfg, "FORBID_TAGS", clone$1({}), { transform: transformCaseFunc });
+		FORBID_ATTR = _resolveSetOption(cfg, "FORBID_ATTR", clone$1({}), { transform: transformCaseFunc });
+		USE_PROFILES = objectHasOwnProperty(cfg, "USE_PROFILES") ? cfg.USE_PROFILES && typeof cfg.USE_PROFILES === "object" ? clone$1(cfg.USE_PROFILES) : cfg.USE_PROFILES : false;
+		ALLOW_ARIA_ATTR = cfg.ALLOW_ARIA_ATTR !== false;
+		ALLOW_DATA_ATTR = cfg.ALLOW_DATA_ATTR !== false;
+		ALLOW_UNKNOWN_PROTOCOLS = cfg.ALLOW_UNKNOWN_PROTOCOLS || false;
+		ALLOW_SELF_CLOSE_IN_ATTR = cfg.ALLOW_SELF_CLOSE_IN_ATTR !== false;
+		SAFE_FOR_TEMPLATES = cfg.SAFE_FOR_TEMPLATES || false;
+		SAFE_FOR_XML = cfg.SAFE_FOR_XML !== false;
+		WHOLE_DOCUMENT = cfg.WHOLE_DOCUMENT || false;
+		RETURN_DOM = cfg.RETURN_DOM || false;
+		RETURN_DOM_FRAGMENT = cfg.RETURN_DOM_FRAGMENT || false;
+		RETURN_TRUSTED_TYPE = cfg.RETURN_TRUSTED_TYPE || false;
+		FORCE_BODY = cfg.FORCE_BODY || false;
+		SANITIZE_DOM = cfg.SANITIZE_DOM !== false;
+		SANITIZE_NAMED_PROPS = cfg.SANITIZE_NAMED_PROPS || false;
+		KEEP_CONTENT = cfg.KEEP_CONTENT !== false;
+		IN_PLACE = cfg.IN_PLACE || false;
+		IS_ALLOWED_URI$1 = isRegex(cfg.ALLOWED_URI_REGEXP) ? cfg.ALLOWED_URI_REGEXP : IS_ALLOWED_URI;
+		NAMESPACE = typeof cfg.NAMESPACE === "string" ? cfg.NAMESPACE : HTML_NAMESPACE;
+		MATHML_TEXT_INTEGRATION_POINTS = objectHasOwnProperty(cfg, "MATHML_TEXT_INTEGRATION_POINTS") && cfg.MATHML_TEXT_INTEGRATION_POINTS && typeof cfg.MATHML_TEXT_INTEGRATION_POINTS === "object" ? clone$1(cfg.MATHML_TEXT_INTEGRATION_POINTS) : addToSet({}, DEFAULT_MATHML_TEXT_INTEGRATION_POINTS);
+		HTML_INTEGRATION_POINTS = objectHasOwnProperty(cfg, "HTML_INTEGRATION_POINTS") && cfg.HTML_INTEGRATION_POINTS && typeof cfg.HTML_INTEGRATION_POINTS === "object" ? clone$1(cfg.HTML_INTEGRATION_POINTS) : addToSet({}, DEFAULT_HTML_INTEGRATION_POINTS);
+		const customElementHandling = objectHasOwnProperty(cfg, "CUSTOM_ELEMENT_HANDLING") && cfg.CUSTOM_ELEMENT_HANDLING && typeof cfg.CUSTOM_ELEMENT_HANDLING === "object" ? clone$1(cfg.CUSTOM_ELEMENT_HANDLING) : create$1(null);
+		CUSTOM_ELEMENT_HANDLING = create$1(null);
+		if (objectHasOwnProperty(customElementHandling, "tagNameCheck") && isRegexOrFunction(customElementHandling.tagNameCheck)) CUSTOM_ELEMENT_HANDLING.tagNameCheck = customElementHandling.tagNameCheck;
+		if (objectHasOwnProperty(customElementHandling, "attributeNameCheck") && isRegexOrFunction(customElementHandling.attributeNameCheck)) CUSTOM_ELEMENT_HANDLING.attributeNameCheck = customElementHandling.attributeNameCheck;
+		if (objectHasOwnProperty(customElementHandling, "allowCustomizedBuiltInElements") && typeof customElementHandling.allowCustomizedBuiltInElements === "boolean") CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements = customElementHandling.allowCustomizedBuiltInElements;
+		seal(CUSTOM_ELEMENT_HANDLING);
+		if (SAFE_FOR_TEMPLATES) ALLOW_DATA_ATTR = false;
+		if (RETURN_DOM_FRAGMENT) RETURN_DOM = true;
+		if (USE_PROFILES) {
+			ALLOWED_TAGS = addToSet({}, text$3);
+			ALLOWED_ATTR = create$1(null);
+			if (USE_PROFILES.html === true) {
+				addToSet(ALLOWED_TAGS, html$1);
+				addToSet(ALLOWED_ATTR, html);
+			}
+			if (USE_PROFILES.svg === true) {
+				addToSet(ALLOWED_TAGS, svg$1);
+				addToSet(ALLOWED_ATTR, svg$2);
+				addToSet(ALLOWED_ATTR, xml);
+			}
+			if (USE_PROFILES.svgFilters === true) {
+				addToSet(ALLOWED_TAGS, svgFilters);
+				addToSet(ALLOWED_ATTR, svg$2);
+				addToSet(ALLOWED_ATTR, xml);
+			}
+			if (USE_PROFILES.mathMl === true) {
+				addToSet(ALLOWED_TAGS, mathMl$1);
+				addToSet(ALLOWED_ATTR, mathMl);
+				addToSet(ALLOWED_ATTR, xml);
+			}
+		}
+		EXTRA_ELEMENT_HANDLING.tagCheck = null;
+		EXTRA_ELEMENT_HANDLING.attributeCheck = null;
+		if (objectHasOwnProperty(cfg, "ADD_TAGS")) {
+			if (typeof cfg.ADD_TAGS === "function") EXTRA_ELEMENT_HANDLING.tagCheck = cfg.ADD_TAGS;
+			else if (arrayIsArray(cfg.ADD_TAGS)) {
+				if (ALLOWED_TAGS === DEFAULT_ALLOWED_TAGS) ALLOWED_TAGS = clone$1(ALLOWED_TAGS);
+				addToSet(ALLOWED_TAGS, cfg.ADD_TAGS, transformCaseFunc);
+			}
+		}
+		if (objectHasOwnProperty(cfg, "ADD_ATTR")) {
+			if (typeof cfg.ADD_ATTR === "function") EXTRA_ELEMENT_HANDLING.attributeCheck = cfg.ADD_ATTR;
+			else if (arrayIsArray(cfg.ADD_ATTR)) {
+				if (ALLOWED_ATTR === DEFAULT_ALLOWED_ATTR) ALLOWED_ATTR = clone$1(ALLOWED_ATTR);
+				addToSet(ALLOWED_ATTR, cfg.ADD_ATTR, transformCaseFunc);
+			}
+		}
+		if (objectHasOwnProperty(cfg, "ADD_URI_SAFE_ATTR") && arrayIsArray(cfg.ADD_URI_SAFE_ATTR)) addToSet(URI_SAFE_ATTRIBUTES, cfg.ADD_URI_SAFE_ATTR, transformCaseFunc);
+		if (objectHasOwnProperty(cfg, "FORBID_CONTENTS") && arrayIsArray(cfg.FORBID_CONTENTS)) {
+			if (FORBID_CONTENTS === DEFAULT_FORBID_CONTENTS) FORBID_CONTENTS = clone$1(FORBID_CONTENTS);
+			addToSet(FORBID_CONTENTS, cfg.FORBID_CONTENTS, transformCaseFunc);
+		}
+		if (objectHasOwnProperty(cfg, "ADD_FORBID_CONTENTS") && arrayIsArray(cfg.ADD_FORBID_CONTENTS)) {
+			if (FORBID_CONTENTS === DEFAULT_FORBID_CONTENTS) FORBID_CONTENTS = clone$1(FORBID_CONTENTS);
+			addToSet(FORBID_CONTENTS, cfg.ADD_FORBID_CONTENTS, transformCaseFunc);
+		}
+		if (KEEP_CONTENT) ALLOWED_TAGS["#text"] = true;
+		if (WHOLE_DOCUMENT) addToSet(ALLOWED_TAGS, [
+			"html",
+			"head",
+			"body"
+		]);
+		if (ALLOWED_TAGS.table) {
+			addToSet(ALLOWED_TAGS, ["tbody"]);
+			delete FORBID_TAGS.tbody;
+		}
+		if (cfg.TRUSTED_TYPES_POLICY) {
+			if (typeof cfg.TRUSTED_TYPES_POLICY.createHTML !== "function") throw typeErrorCreate("TRUSTED_TYPES_POLICY configuration option must provide a \"createHTML\" hook.");
+			if (typeof cfg.TRUSTED_TYPES_POLICY.createScriptURL !== "function") throw typeErrorCreate("TRUSTED_TYPES_POLICY configuration option must provide a \"createScriptURL\" hook.");
+			const previousTrustedTypesPolicy = trustedTypesPolicy;
+			trustedTypesPolicy = cfg.TRUSTED_TYPES_POLICY;
+			try {
+				emptyHTML = _createTrustedHTML("");
+			} catch (error) {
+				trustedTypesPolicy = previousTrustedTypesPolicy;
+				throw error;
+			}
+		} else if (cfg.TRUSTED_TYPES_POLICY === null) {
+			trustedTypesPolicy = void 0;
+			emptyHTML = "";
+		} else {
+			if (trustedTypesPolicy === void 0) trustedTypesPolicy = _getDefaultTrustedTypesPolicy();
+			if (trustedTypesPolicy && typeof emptyHTML === "string") emptyHTML = _createTrustedHTML("");
+		}
+		if (freeze$1) freeze$1(cfg);
+		CONFIG = cfg;
+	};
+	const ALL_SVG_TAGS = addToSet({}, [
+		...svg$1,
+		...svgFilters,
+		...svgDisallowed
+	]);
+	const ALL_MATHML_TAGS = addToSet({}, [...mathMl$1, ...mathMlDisallowed]);
+	/**
+	* Namespace rules for an element in the SVG namespace.
+	*
+	* @param tagName the element's lowercase tag name
+	* @param parent the (possibly simulated) parent node
+	* @param parentTagName the parent's lowercase tag name
+	* @returns true if a spec-compliant parser could produce this element
+	*/
+	const _checkSvgNamespace = function _checkSvgNamespace(tagName, parent, parentTagName) {
+		if (parent.namespaceURI === HTML_NAMESPACE) return tagName === "svg";
+		if (parent.namespaceURI === MATHML_NAMESPACE) return tagName === "svg" && (parentTagName === "annotation-xml" || MATHML_TEXT_INTEGRATION_POINTS[parentTagName]);
+		return Boolean(ALL_SVG_TAGS[tagName]);
+	};
+	/**
+	* Namespace rules for an element in the MathML namespace.
+	*
+	* @param tagName the element's lowercase tag name
+	* @param parent the (possibly simulated) parent node
+	* @param parentTagName the parent's lowercase tag name
+	* @returns true if a spec-compliant parser could produce this element
+	*/
+	const _checkMathMlNamespace = function _checkMathMlNamespace(tagName, parent, parentTagName) {
+		if (parent.namespaceURI === HTML_NAMESPACE) return tagName === "math";
+		if (parent.namespaceURI === SVG_NAMESPACE) return tagName === "math" && HTML_INTEGRATION_POINTS[parentTagName];
+		return Boolean(ALL_MATHML_TAGS[tagName]);
+	};
+	/**
+	* Namespace rules for an element in the HTML namespace.
+	*
+	* @param tagName the element's lowercase tag name
+	* @param parent the (possibly simulated) parent node
+	* @param parentTagName the parent's lowercase tag name
+	* @returns true if a spec-compliant parser could produce this element
+	*/
+	const _checkHtmlNamespace = function _checkHtmlNamespace(tagName, parent, parentTagName) {
+		if (parent.namespaceURI === SVG_NAMESPACE && !HTML_INTEGRATION_POINTS[parentTagName]) return false;
+		if (parent.namespaceURI === MATHML_NAMESPACE && !MATHML_TEXT_INTEGRATION_POINTS[parentTagName]) return false;
+		return !ALL_MATHML_TAGS[tagName] && (COMMON_SVG_AND_HTML_ELEMENTS[tagName] || !ALL_SVG_TAGS[tagName]);
+	};
+	/**
+	* @param element a DOM element whose namespace is being checked
+	* @returns Return false if the element has a
+	*  namespace that a spec-compliant parser would never
+	*  return. Return true otherwise.
+	*/
+	const _checkValidNamespace = function _checkValidNamespace(element) {
+		let parent = getParentNode(element);
+		if (!parent || !parent.tagName) parent = {
+			namespaceURI: NAMESPACE,
+			tagName: "template"
+		};
+		const tagName = stringToLowerCase(element.tagName);
+		const parentTagName = stringToLowerCase(parent.tagName);
+		if (!ALLOWED_NAMESPACES[element.namespaceURI]) return false;
+		if (element.namespaceURI === SVG_NAMESPACE) return _checkSvgNamespace(tagName, parent, parentTagName);
+		if (element.namespaceURI === MATHML_NAMESPACE) return _checkMathMlNamespace(tagName, parent, parentTagName);
+		if (element.namespaceURI === HTML_NAMESPACE) return _checkHtmlNamespace(tagName, parent, parentTagName);
+		if (PARSER_MEDIA_TYPE === "application/xhtml+xml" && ALLOWED_NAMESPACES[element.namespaceURI]) return true;
+		return false;
+	};
+	/**
+	* _forceRemove
+	*
+	* @param node a DOM node
+	*/
+	const _forceRemove = function _forceRemove(node) {
+		arrayPush(DOMPurify.removed, { element: node });
+		try {
+			getParentNode(node).removeChild(node);
+		} catch (_) {
+			remove(node);
+			if (!getParentNode(node)) throw typeErrorCreate("a node selected for removal could not be detached from its tree and cannot be safely returned; refusing to sanitize in place");
+		}
+	};
+	/**
+	* _neutralizeRoot
+	*
+	* Fail-closed teardown of an in-place root after the sanitize walk aborts
+	* (campaign-3 F2). An internal throw mid-walk — e.g. a page-registered
+	* custom element's reaction detaches a node so `_forceRemove`'s deliberate
+	* parentless guard throws, or any other re-entrant engine mutation — would
+	* otherwise leave the caller's *live* tree half-sanitized, with everything
+	* after the abort point still carrying its handlers. There is no safe way
+	* to resume the walk (the tree mutated under us), so we strip the root bare:
+	* remove every child and every attribute, then let the caller's catch see
+	* the original error. Clobber-safe (cached `remove`/`childNodes`/`attributes`
+	* getters; the root was already clobber-pre-flighted at the IN_PLACE entry).
+	*
+	* @param root the in-place root to empty
+	*/
+	const _neutralizeRoot = function _neutralizeRoot(root) {
+		const childNodes = getChildNodes(root);
+		if (childNodes) {
+			const snapshot = [];
+			arrayForEach(childNodes, (child) => {
+				arrayPush(snapshot, child);
+			});
+			arrayForEach(snapshot, (child) => {
+				try {
+					remove(child);
+				} catch (_) {}
+			});
+		}
+		const attributes = getAttributes(root);
+		if (attributes) for (let i = attributes.length - 1; i >= 0; --i) {
+			const attribute = attributes[i];
+			const name = attribute && attribute.name;
+			if (typeof name === "string") try {
+				root.removeAttribute(name);
+			} catch (_) {}
+		}
+	};
+	/**
+	* _removeAttribute
+	*
+	* @param name an Attribute name
+	* @param element a DOM node
+	*/
+	const _removeAttribute = function _removeAttribute(name, element) {
+		try {
+			arrayPush(DOMPurify.removed, {
+				attribute: element.getAttributeNode(name),
+				from: element
+			});
+		} catch (_) {
+			arrayPush(DOMPurify.removed, {
+				attribute: null,
+				from: element
+			});
+		}
+		element.removeAttribute(name);
+		if (name === "is") if (RETURN_DOM || RETURN_DOM_FRAGMENT) try {
+			_forceRemove(element);
+		} catch (_) {}
+		else try {
+			element.setAttribute(name, "");
+		} catch (_) {}
+	};
+	/**
+	* _stripDisallowedAttributes
+	*
+	* Removes every attribute the active configuration does not allow from a
+	* single element, using the same allowlist as the main attribute pass (so
+	* `on*` handlers go, but no `/^on/` blocklist is introduced). Used only to
+	* neutralise nodes that are being discarded from an in-place tree.
+	*
+	* @param element the element to strip
+	*/
+	const _stripDisallowedAttributes = function _stripDisallowedAttributes(element) {
+		const attributes = getAttributes(element);
+		if (!attributes) return;
+		for (let i = attributes.length - 1; i >= 0; --i) {
+			const attribute = attributes[i];
+			const name = attribute && attribute.name;
+			if (typeof name !== "string" || ALLOWED_ATTR[transformCaseFunc(name)]) continue;
+			try {
+				element.removeAttribute(name);
+			} catch (_) {}
+		}
+	};
+	/**
+	* _neutralizeSubtree
+	*
+	* Completes the audit-5 F1 fix across every removal path. The KEEP_CONTENT
+	* move-hoist neutralises only disallowed-tag removals; clobber, mXSS-canary,
+	* namespace, comment, processing-instruction and KEEP_CONTENT:false removals
+	* all drop their subtree wholesale via `_forceRemove`. On the IN_PLACE path
+	* those dropped nodes are detached from the caller's LIVE tree but a
+	* handler-bearing original among them (an `<img onerror>`/`<video>` that was
+	* loading) keeps its queued resource event, which fires in page scope after
+	* sanitize returns. This walks a removed subtree and strips every attribute
+	* the active configuration does not allow — so `on*` handlers are cancelled
+	* through the SAME allowlist that governs kept nodes, not a separate `/^on/`
+	* blocklist. Run synchronously before sanitize returns, i.e. before any
+	* queued event can fire. Hook-free by design: these nodes leave the output,
+	* so firing attribute hooks for them would be surprising. Clobber-safe reads;
+	* a doomed clobbered node may shadow `removeAttribute` (its own attributes are
+	* irrelevant — it is discarded — while its non-clobbered descendants, e.g.
+	* the `<img>`, are reached and scrubbed).
+	*
+	* @param root the root of a removed subtree to neutralise
+	*/
+	const _neutralizeSubtree = function _neutralizeSubtree(root) {
+		const stack = [root];
+		while (stack.length > 0) {
+			const node = stack.pop();
+			if ((getNodeType ? getNodeType(node) : node.nodeType) === NODE_TYPE.element) _stripDisallowedAttributes(node);
+			const childNodes = getChildNodes(node);
+			if (childNodes) for (let i = childNodes.length - 1; i >= 0; --i) stack.push(childNodes[i]);
+		}
+	};
+	/**
+	* _initDocument
+	*
+	* @param dirty - a string of dirty markup
+	* @return a DOM, filled with the dirty markup
+	*/
+	const _initDocument = function _initDocument(dirty) {
+		let doc = null;
+		let leadingWhitespace = null;
+		if (FORCE_BODY) dirty = "<remove></remove>" + dirty;
+		else {
+			const matches = stringMatch(dirty, /^[\r\n\t ]+/);
+			leadingWhitespace = matches && matches[0];
+		}
+		if (PARSER_MEDIA_TYPE === "application/xhtml+xml" && NAMESPACE === HTML_NAMESPACE) dirty = "<html xmlns=\"http://www.w3.org/1999/xhtml\"><head></head><body>" + dirty + "</body></html>";
+		const dirtyPayload = trustedTypesPolicy ? _createTrustedHTML(dirty) : dirty;
+		if (NAMESPACE === HTML_NAMESPACE) try {
+			doc = new DOMParser().parseFromString(dirtyPayload, PARSER_MEDIA_TYPE);
+		} catch (_) {}
+		if (!doc || !doc.documentElement) {
+			doc = implementation.createDocument(NAMESPACE, "template", null);
+			try {
+				doc.documentElement.innerHTML = IS_EMPTY_INPUT ? emptyHTML : dirtyPayload;
+			} catch (_) {}
+		}
+		const body = doc.body || doc.documentElement;
+		if (dirty && leadingWhitespace) body.insertBefore(document.createTextNode(leadingWhitespace), body.childNodes[0] || null);
+		if (NAMESPACE === HTML_NAMESPACE) return getElementsByTagName.call(doc, WHOLE_DOCUMENT ? "html" : "body")[0];
+		return WHOLE_DOCUMENT ? doc.documentElement : body;
+	};
+	/**
+	* Creates a NodeIterator object that you can use to traverse filtered lists of nodes or elements in a document.
+	*
+	* @param root The root element or node to start traversing on.
+	* @return The created NodeIterator
+	*/
+	const _createNodeIterator = function _createNodeIterator(root) {
+		return createNodeIterator.call(root.ownerDocument || root, root, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_TEXT | NodeFilter.SHOW_PROCESSING_INSTRUCTION | NodeFilter.SHOW_CDATA_SECTION, null);
+	};
+	/**
+	* Replace template expression syntax (mustache, ERB, template
+	* literal) with a space; shared by all SAFE_FOR_TEMPLATES scrub
+	* sites. Order matters: mustache, then ERB, then template literal.
+	*
+	* @param value the string to scrub
+	* @returns the scrubbed string
+	*/
+	const _stripTemplateExpressions = function _stripTemplateExpressions(value) {
+		value = stringReplace(value, MUSTACHE_EXPR$1, " ");
+		value = stringReplace(value, ERB_EXPR$1, " ");
+		value = stringReplace(value, TMPLIT_EXPR$1, " ");
+		return value;
+	};
+	/**
+	* Strip template-engine expressions ({{...}}, ${...}, <%...%>) from the
+	* character data of an element subtree. Used as the final safety net for
+	* SAFE_FOR_TEMPLATES on every DOM-returning code path so that expressions
+	* which only form after text-node normalization (e.g. fragments split across
+	* stripped elements) cannot survive into a template-evaluating framework.
+	*
+	* Walks text/comment/CDATA/processing-instruction nodes and mutates `.data`
+	* in place rather than round-tripping through innerHTML. This preserves
+	* descendant node references (important for IN_PLACE callers), avoids a
+	* serialize/reparse cycle, and reads literal character data — which means
+	* `<%...%>` in text content matches the ERB regex against its real bytes
+	* instead of the HTML-entity-escaped form innerHTML would produce.
+	*
+	* Attribute values are not visited here; SAFE_FOR_TEMPLATES handling for
+	* attributes is performed during the per-node `_sanitizeAttributes` pass.
+	*
+	* @param node The root element whose character data should be scrubbed.
+	*/
+	const _scrubTemplateExpressions2 = function _scrubTemplateExpressions(node) {
+		var _node$querySelectorAl;
+		node.normalize();
+		const walker = createNodeIterator.call(node.ownerDocument || node, node, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_CDATA_SECTION | NodeFilter.SHOW_PROCESSING_INSTRUCTION, null);
+		let currentNode = walker.nextNode();
+		while (currentNode) {
+			currentNode.data = _stripTemplateExpressions(currentNode.data);
+			currentNode = walker.nextNode();
+		}
+		const templates = (_node$querySelectorAl = node.querySelectorAll) === null || _node$querySelectorAl === void 0 ? void 0 : _node$querySelectorAl.call(node, "template");
+		if (templates) arrayForEach(templates, (tmpl) => {
+			if (_isDocumentFragment(tmpl.content)) _scrubTemplateExpressions2(tmpl.content);
+		});
+	};
+	/**
+	* _isClobbered
+	*
+	* Detect DOM-clobbering on HTMLFormElement nodes. Form is the only HTML
+	* interface with [LegacyOverrideBuiltIns]; a descendant element with a
+	* `name` attribute matching a prototype property shadows that property
+	* on direct reads. We use this check at the IN_PLACE entry-point and
+	* during attribute sanitization to refuse clobbered forms.
+	*
+	* @param element element to check for clobbering attacks
+	* @return true if clobbered, false if safe
+	*/
+	const _isClobbered = function _isClobbered(element) {
+		const realTagName = getNodeName ? getNodeName(element) : null;
+		if (typeof realTagName !== "string") return false;
+		if (transformCaseFunc(realTagName) !== "form") return false;
+		return typeof element.nodeName !== "string" || typeof element.textContent !== "string" || typeof element.removeChild !== "function" || element.attributes !== getAttributes(element) || typeof element.removeAttribute !== "function" || typeof element.setAttribute !== "function" || typeof element.namespaceURI !== "string" || typeof element.insertBefore !== "function" || typeof element.hasChildNodes !== "function" || element.nodeType !== getNodeType(element) || element.childNodes !== getChildNodes(element);
+	};
+	/**
+	* Checks whether the given value is a DocumentFragment from any realm.
+	*
+	* The realm-independent replacement reads `nodeType` through the cached
+	* Node.prototype getter and compares to the DOCUMENT_FRAGMENT_NODE
+	* constant (11). nodeType is a numeric value resolved from the node's
+	* internal slot, identical across realms for the same kind of node.
+	*
+	* @param value object to check
+	* @return true if value is a DocumentFragment-shaped node from any realm
+	*/
+	const _isDocumentFragment = function _isDocumentFragment(value) {
+		if (!getNodeType || typeof value !== "object" || value === null) return false;
+		try {
+			return getNodeType(value) === NODE_TYPE.documentFragment;
+		} catch (_) {
+			return false;
+		}
+	};
+	/**
+	* Checks whether the given object is a DOM node, including nodes that
+	* originate from a different window/realm (e.g. an iframe's
+	* contentDocument). The previous `value instanceof Node` check was
+	* realm-bound: nodes from a different window failed it, causing
+	* sanitize() to silently stringify them and reset IN_PLACE to false,
+	* returning the original node unsanitized. See GHSA-4w3q-35jp-p934.
+	*
+	* @param value object to check whether it's a DOM node
+	* @return true if value is a DOM node from any realm
+	*/
+	const _isNode = function _isNode(value) {
+		if (!getNodeType || typeof value !== "object" || value === null) return false;
+		try {
+			return typeof getNodeType(value) === "number";
+		} catch (_) {
+			return false;
+		}
+	};
+	function _executeHooks(hooks, currentNode, data) {
+		if (hooks.length === 0) return;
+		arrayForEach(hooks, (hook) => {
+			hook.call(DOMPurify, currentNode, data, CONFIG);
+		});
+	}
+	/**
+	* Structural-threat checks that condemn a node regardless of the
+	* allowlists: mXSS via namespace confusion, risky CSS construction,
+	* processing instructions, markup-bearing comments. Pure predicate;
+	* the caller removes. Check order is load-bearing.
+	*
+	* @param currentNode the node to inspect
+	* @param tagName the node's transformCaseFunc'd tag name
+	* @return true if the node must be removed
+	*/
+	const _isUnsafeNode = function _isUnsafeNode(currentNode, tagName) {
+		if (SAFE_FOR_XML && currentNode.hasChildNodes() && !_isNode(currentNode.firstElementChild) && regExpTest(ELEMENT_MARKUP_PROBE, currentNode.textContent) && regExpTest(ELEMENT_MARKUP_PROBE, currentNode.innerHTML)) return true;
+		if (SAFE_FOR_XML && currentNode.namespaceURI === HTML_NAMESPACE && tagName === "style" && _isNode(currentNode.firstElementChild)) return true;
+		if (currentNode.nodeType === NODE_TYPE.processingInstruction) return true;
+		if (SAFE_FOR_XML && currentNode.nodeType === NODE_TYPE.comment && regExpTest(COMMENT_MARKUP_PROBE, currentNode.data)) return true;
+		return false;
+	};
+	/**
+	* Handle a node whose tag is forbidden or not allowlisted: keep
+	* allowed custom elements (false return exits _sanitizeElements
+	* early - namespace/fallback checks and the afterSanitizeElements
+	* hook are intentionally skipped for kept custom elements), else
+	* hoist content per KEEP_CONTENT and remove.
+	*
+	* @param currentNode the disallowed node
+	* @param tagName the node's transformCaseFunc'd tag name
+	* @return true if the node was removed, false if kept
+	*/
+	const _sanitizeDisallowedNode = function _sanitizeDisallowedNode(currentNode, tagName) {
+		if (!FORBID_TAGS[tagName] && _isBasicCustomElement(tagName)) {
+			if (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, tagName)) return false;
+			if (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(tagName)) return false;
+		}
+		if (KEEP_CONTENT && !FORBID_CONTENTS[tagName]) {
+			const parentNode = getParentNode(currentNode);
+			const childNodes = getChildNodes(currentNode);
+			if (childNodes && parentNode) {
+				const childCount = childNodes.length;
+				for (let i = childCount - 1; i >= 0; --i) {
+					const hoisted = IN_PLACE ? childNodes[i] : cloneNode(childNodes[i], true);
+					parentNode.insertBefore(hoisted, getNextSibling(currentNode));
+				}
+			}
+		}
+		_forceRemove(currentNode);
+		return true;
+	};
+	/**
+	* _sanitizeElements
+	*
+	* @protect nodeName
+	* @protect textContent
+	* @protect removeChild
+	* @param currentNode to check for permission to exist
+	* @return true if node was killed, false if left alive
+	*/
+	const _sanitizeElements = function _sanitizeElements(currentNode) {
+		_executeHooks(hooks.beforeSanitizeElements, currentNode, null);
+		if (_isClobbered(currentNode)) {
+			_forceRemove(currentNode);
+			return true;
+		}
+		const tagName = transformCaseFunc(getNodeName ? getNodeName(currentNode) : currentNode.nodeName);
+		_executeHooks(hooks.uponSanitizeElement, currentNode, {
+			tagName,
+			allowedTags: ALLOWED_TAGS
+		});
+		if (_isUnsafeNode(currentNode, tagName)) {
+			_forceRemove(currentNode);
+			return true;
+		}
+		if (FORBID_TAGS[tagName] || !(EXTRA_ELEMENT_HANDLING.tagCheck instanceof Function && EXTRA_ELEMENT_HANDLING.tagCheck(tagName)) && !ALLOWED_TAGS[tagName]) return _sanitizeDisallowedNode(currentNode, tagName);
+		if ((getNodeType ? getNodeType(currentNode) : currentNode.nodeType) === NODE_TYPE.element && !_checkValidNamespace(currentNode)) {
+			_forceRemove(currentNode);
+			return true;
+		}
+		if ((tagName === "noscript" || tagName === "noembed" || tagName === "noframes") && regExpTest(FALLBACK_TAG_CLOSE, currentNode.innerHTML)) {
+			_forceRemove(currentNode);
+			return true;
+		}
+		if (SAFE_FOR_TEMPLATES && currentNode.nodeType === NODE_TYPE.text) {
+			const content = _stripTemplateExpressions(currentNode.textContent);
+			if (currentNode.textContent !== content) {
+				arrayPush(DOMPurify.removed, { element: currentNode.cloneNode() });
+				currentNode.textContent = content;
+			}
+		}
+		_executeHooks(hooks.afterSanitizeElements, currentNode, null);
+		return false;
+	};
+	/**
+	* _isValidAttribute
+	*
+	* @param lcTag Lowercase tag name of containing element.
+	* @param lcName Lowercase attribute name.
+	* @param value Attribute value.
+	* @return Returns true if `value` is valid, otherwise false.
+	*/
+	const _isValidAttribute = function _isValidAttribute(lcTag, lcName, value) {
+		if (FORBID_ATTR[lcName]) return false;
+		if (SANITIZE_DOM && (lcName === "id" || lcName === "name") && (value in document || value in formElement)) return false;
+		const nameIsPermitted = ALLOWED_ATTR[lcName] || EXTRA_ELEMENT_HANDLING.attributeCheck instanceof Function && EXTRA_ELEMENT_HANDLING.attributeCheck(lcName, lcTag);
+		if (ALLOW_DATA_ATTR && regExpTest(DATA_ATTR$1, lcName));
+		else if (ALLOW_ARIA_ATTR && regExpTest(ARIA_ATTR$1, lcName));
+		else if (!nameIsPermitted) if (_isBasicCustomElement(lcTag) && (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, lcTag) || CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(lcTag)) && (CUSTOM_ELEMENT_HANDLING.attributeNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.attributeNameCheck, lcName) || CUSTOM_ELEMENT_HANDLING.attributeNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.attributeNameCheck(lcName, lcTag)) || lcName === "is" && CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements && (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, value) || CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(value)));
+		else return false;
+		else if (URI_SAFE_ATTRIBUTES[lcName]);
+		else if (regExpTest(IS_ALLOWED_URI$1, stringReplace(value, ATTR_WHITESPACE$1, "")));
+		else if ((lcName === "src" || lcName === "xlink:href" || lcName === "href") && lcTag !== "script" && stringIndexOf(value, "data:") === 0 && DATA_URI_TAGS[lcTag]);
+		else if (ALLOW_UNKNOWN_PROTOCOLS && !regExpTest(IS_SCRIPT_OR_DATA$1, stringReplace(value, ATTR_WHITESPACE$1, "")));
+		else if (value) return false;
+		return true;
+	};
+	const RESERVED_CUSTOM_ELEMENT_NAMES = addToSet({}, [
+		"annotation-xml",
+		"color-profile",
+		"font-face",
+		"font-face-format",
+		"font-face-name",
+		"font-face-src",
+		"font-face-uri",
+		"missing-glyph"
+	]);
+	/**
+	* _isBasicCustomElement
+	* checks if at least one dash is included in tagName, and it's not the first char
+	* for more sophisticated checking see https://github.com/sindresorhus/validate-element-name
+	*
+	* @param tagName name of the tag of the node to sanitize
+	* @returns Returns true if the tag name meets the basic criteria for a custom element, otherwise false.
+	*/
+	const _isBasicCustomElement = function _isBasicCustomElement(tagName) {
+		return !RESERVED_CUSTOM_ELEMENT_NAMES[stringToLowerCase(tagName)] && regExpTest(CUSTOM_ELEMENT$1, tagName);
+	};
+	/**
+	* Wrap an attribute value in the matching Trusted Types object when
+	* the active policy requires it. Namespaced attributes pass through
+	* unchanged (no TT support yet, see
+	* https://bugs.chromium.org/p/chromium/issues/detail?id=1305293).
+	*
+	* @param lcTag lowercase tag name of the containing element
+	* @param lcName lowercase attribute name
+	* @param namespaceURI the attribute's namespace, if any
+	* @param value the attribute value to wrap
+	* @return the value, wrapped when Trusted Types demand it
+	*/
+	const _applyTrustedTypesToAttribute = function _applyTrustedTypesToAttribute(lcTag, lcName, namespaceURI, value) {
+		if (trustedTypesPolicy && typeof trustedTypes === "object" && typeof trustedTypes.getAttributeType === "function" && !namespaceURI) switch (trustedTypes.getAttributeType(lcTag, lcName)) {
+			case "TrustedHTML": return _createTrustedHTML(value);
+			case "TrustedScriptURL": return _createTrustedScriptURL(value);
+		}
+		return value;
+	};
+	/**
+	* Write a modified attribute value back onto the element. On
+	* success, re-probe for clobbering introduced by the new value and
+	* remove the element when found; otherwise pop the removal entry
+	* recorded by the earlier _removeAttribute (long-standing pairing
+	* with the SANITIZE_NAMED_PROPS path - do not "fix" casually). On
+	* failure, remove the attribute instead.
+	*
+	* @param currentNode the element carrying the attribute
+	* @param name the attribute name as present on the element
+	* @param namespaceURI the attribute's namespace, if any
+	* @param value the new attribute value
+	*/
+	const _setAttributeValue = function _setAttributeValue(currentNode, name, namespaceURI, value) {
+		try {
+			if (namespaceURI) currentNode.setAttributeNS(namespaceURI, name, value);
+			else currentNode.setAttribute(name, value);
+			if (_isClobbered(currentNode)) _forceRemove(currentNode);
+			else arrayPop(DOMPurify.removed);
+		} catch (_) {
+			_removeAttribute(name, currentNode);
+		}
+	};
+	/**
+	* _sanitizeAttributes
+	*
+	* @protect attributes
+	* @protect nodeName
+	* @protect removeAttribute
+	* @protect setAttribute
+	*
+	* @param currentNode to sanitize
+	*/
+	const _sanitizeAttributes = function _sanitizeAttributes(currentNode) {
+		_executeHooks(hooks.beforeSanitizeAttributes, currentNode, null);
+		const attributes = currentNode.attributes;
+		if (!attributes || _isClobbered(currentNode)) return;
+		const hookEvent = {
+			attrName: "",
+			attrValue: "",
+			keepAttr: true,
+			allowedAttributes: ALLOWED_ATTR,
+			forceKeepAttr: void 0
+		};
+		let l = attributes.length;
+		const lcTag = transformCaseFunc(currentNode.nodeName);
+		while (l--) {
+			const attr = attributes[l];
+			const name = attr.name, namespaceURI = attr.namespaceURI, attrValue = attr.value;
+			const lcName = transformCaseFunc(name);
+			const initValue = attrValue;
+			let value = name === "value" ? initValue : stringTrim(initValue);
+			hookEvent.attrName = lcName;
+			hookEvent.attrValue = value;
+			hookEvent.keepAttr = true;
+			hookEvent.forceKeepAttr = void 0;
+			_executeHooks(hooks.uponSanitizeAttribute, currentNode, hookEvent);
+			value = hookEvent.attrValue;
+			if (SANITIZE_NAMED_PROPS && (lcName === "id" || lcName === "name") && stringIndexOf(value, SANITIZE_NAMED_PROPS_PREFIX) !== 0) {
+				_removeAttribute(name, currentNode);
+				value = SANITIZE_NAMED_PROPS_PREFIX + value;
+			}
+			if (SAFE_FOR_XML && regExpTest(/((--!?|])>)|<\/(style|script|title|xmp|textarea|noscript|iframe|noembed|noframes)/i, value)) {
+				_removeAttribute(name, currentNode);
+				continue;
+			}
+			if (lcName === "attributename" && stringMatch(value, "href")) {
+				_removeAttribute(name, currentNode);
+				continue;
+			}
+			if (hookEvent.forceKeepAttr) continue;
+			if (!hookEvent.keepAttr) {
+				_removeAttribute(name, currentNode);
+				continue;
+			}
+			if (!ALLOW_SELF_CLOSE_IN_ATTR && regExpTest(SELF_CLOSING_TAG, value)) {
+				_removeAttribute(name, currentNode);
+				continue;
+			}
+			if (SAFE_FOR_TEMPLATES) value = _stripTemplateExpressions(value);
+			if (!_isValidAttribute(lcTag, lcName, value)) {
+				_removeAttribute(name, currentNode);
+				continue;
+			}
+			value = _applyTrustedTypesToAttribute(lcTag, lcName, namespaceURI, value);
+			if (value !== initValue) _setAttributeValue(currentNode, name, namespaceURI, value);
+		}
+		_executeHooks(hooks.afterSanitizeAttributes, currentNode, null);
+	};
+	/**
+	* _sanitizeShadowDOM
+	*
+	* @param fragment to iterate over recursively
+	*/
+	const _sanitizeShadowDOM2 = function _sanitizeShadowDOM(fragment) {
+		let shadowNode = null;
+		const shadowIterator = _createNodeIterator(fragment);
+		_executeHooks(hooks.beforeSanitizeShadowDOM, fragment, null);
+		while (shadowNode = shadowIterator.nextNode()) {
+			_executeHooks(hooks.uponSanitizeShadowNode, shadowNode, null);
+			_sanitizeElements(shadowNode);
+			_sanitizeAttributes(shadowNode);
+			if (_isDocumentFragment(shadowNode.content)) _sanitizeShadowDOM2(shadowNode.content);
+			if ((getNodeType ? getNodeType(shadowNode) : shadowNode.nodeType) === NODE_TYPE.element) {
+				const innerSr = getShadowRoot(shadowNode);
+				if (_isDocumentFragment(innerSr)) {
+					_sanitizeAttachedShadowRoots(innerSr);
+					_sanitizeShadowDOM2(innerSr);
+				}
+			}
+		}
+		_executeHooks(hooks.afterSanitizeShadowDOM, fragment, null);
+	};
+	/**
+	* _sanitizeAttachedShadowRoots
+	*
+	* Walks `root` and feeds every attached shadow root we encounter into
+	* the existing _sanitizeShadowDOM pipeline. The default node iterator
+	* does not descend into shadow trees, so nodes inside an attached
+	* shadow root would otherwise be skipped entirely.
+	*
+	* Two real input paths put attached shadow roots in front of us:
+	*   1. IN_PLACE on a DOM node that already has shadow roots attached.
+	*   2. DOM-node input where importNode(dirty, true) deep-clones the
+	*      shadow root because it was created with `clonable: true`.
+	*
+	* This pass runs once, up front, so the main iteration loop (and the
+	* existing _sanitizeShadowDOM template-content recursion) stay
+	* untouched — string-input paths are not affected.
+	*
+	* @param root the subtree root to walk for attached shadow roots
+	*/
+	const _sanitizeAttachedShadowRoots = function _sanitizeAttachedShadowRoots(root) {
+		const stack = [{
+			node: root,
+			shadow: null
+		}];
+		while (stack.length > 0) {
+			const item = stack.pop();
+			if (item.shadow) {
+				_sanitizeShadowDOM2(item.shadow);
+				continue;
+			}
+			const node = item.node;
+			const isElement = (getNodeType ? getNodeType(node) : node.nodeType) === NODE_TYPE.element;
+			const childNodes = getChildNodes(node);
+			if (childNodes) for (let i = childNodes.length - 1; i >= 0; --i) stack.push({
+				node: childNodes[i],
+				shadow: null
+			});
+			if (isElement) {
+				const rootName = getNodeName ? getNodeName(node) : null;
+				if (typeof rootName === "string" && transformCaseFunc(rootName) === "template") {
+					const content = node.content;
+					if (_isDocumentFragment(content)) stack.push({
+						node: content,
+						shadow: null
+					});
+				}
+			}
+			if (isElement) {
+				const sr = getShadowRoot(node);
+				if (_isDocumentFragment(sr)) stack.push({
+					node: null,
+					shadow: sr
+				}, {
+					node: sr,
+					shadow: null
+				});
+			}
+		}
+	};
+	DOMPurify.sanitize = function(dirty) {
+		let cfg = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+		let body = null;
+		let importedNode = null;
+		let currentNode = null;
+		let returnNode = null;
+		IS_EMPTY_INPUT = !dirty;
+		if (IS_EMPTY_INPUT) dirty = "<!-->";
+		if (typeof dirty !== "string" && !_isNode(dirty)) {
+			dirty = stringifyValue$1(dirty);
+			if (typeof dirty !== "string") throw typeErrorCreate("dirty is not a string, aborting");
+		}
+		if (!DOMPurify.isSupported) return dirty;
+		if (SET_CONFIG) {
+			ALLOWED_TAGS = SET_CONFIG_ALLOWED_TAGS;
+			ALLOWED_ATTR = SET_CONFIG_ALLOWED_ATTR;
+		} else _parseConfig(cfg);
+		if (hooks.uponSanitizeElement.length > 0 || hooks.uponSanitizeAttribute.length > 0) ALLOWED_TAGS = clone$1(ALLOWED_TAGS);
+		if (hooks.uponSanitizeAttribute.length > 0) ALLOWED_ATTR = clone$1(ALLOWED_ATTR);
+		DOMPurify.removed = [];
+		const inPlace = IN_PLACE && typeof dirty !== "string" && _isNode(dirty);
+		if (inPlace) {
+			const nn = getNodeName ? getNodeName(dirty) : dirty.nodeName;
+			if (typeof nn === "string") {
+				const tagName = transformCaseFunc(nn);
+				if (!ALLOWED_TAGS[tagName] || FORBID_TAGS[tagName]) throw typeErrorCreate("root node is forbidden and cannot be sanitized in-place");
+			}
+			if (_isClobbered(dirty)) throw typeErrorCreate("root node is clobbered and cannot be sanitized in-place");
+			try {
+				_sanitizeAttachedShadowRoots(dirty);
+			} catch (error) {
+				_neutralizeRoot(dirty);
+				throw error;
+			}
+		} else if (_isNode(dirty)) {
+			body = _initDocument("<!---->");
+			importedNode = body.ownerDocument.importNode(dirty, true);
+			if (importedNode.nodeType === NODE_TYPE.element && importedNode.nodeName === "BODY") body = importedNode;
+			else if (importedNode.nodeName === "HTML") body = importedNode;
+			else body.appendChild(importedNode);
+			_sanitizeAttachedShadowRoots(importedNode);
+		} else {
+			if (!RETURN_DOM && !SAFE_FOR_TEMPLATES && !WHOLE_DOCUMENT && dirty.indexOf("<") === -1) return trustedTypesPolicy && RETURN_TRUSTED_TYPE ? _createTrustedHTML(dirty) : dirty;
+			body = _initDocument(dirty);
+			if (!body) return RETURN_DOM ? null : RETURN_TRUSTED_TYPE ? emptyHTML : "";
+		}
+		if (body && FORCE_BODY) _forceRemove(body.firstChild);
+		const nodeIterator = _createNodeIterator(inPlace ? dirty : body);
+		try {
+			while (currentNode = nodeIterator.nextNode()) {
+				_sanitizeElements(currentNode);
+				_sanitizeAttributes(currentNode);
+				if (_isDocumentFragment(currentNode.content)) _sanitizeShadowDOM2(currentNode.content);
+			}
+		} catch (error) {
+			if (inPlace) _neutralizeRoot(dirty);
+			throw error;
+		}
+		if (inPlace) {
+			arrayForEach(DOMPurify.removed, (entry) => {
+				if (entry.element) _neutralizeSubtree(entry.element);
+			});
+			if (SAFE_FOR_TEMPLATES) _scrubTemplateExpressions2(dirty);
+			return dirty;
+		}
+		if (RETURN_DOM) {
+			if (SAFE_FOR_TEMPLATES) _scrubTemplateExpressions2(body);
+			if (RETURN_DOM_FRAGMENT) {
+				returnNode = createDocumentFragment.call(body.ownerDocument);
+				while (body.firstChild) returnNode.appendChild(body.firstChild);
+			} else returnNode = body;
+			if (ALLOWED_ATTR.shadowroot || ALLOWED_ATTR.shadowrootmode) returnNode = importNode.call(originalDocument, returnNode, true);
+			return returnNode;
+		}
+		let serializedHTML = WHOLE_DOCUMENT ? body.outerHTML : body.innerHTML;
+		if (WHOLE_DOCUMENT && ALLOWED_TAGS["!doctype"] && body.ownerDocument && body.ownerDocument.doctype && body.ownerDocument.doctype.name && regExpTest(DOCTYPE_NAME, body.ownerDocument.doctype.name)) serializedHTML = "<!DOCTYPE " + body.ownerDocument.doctype.name + ">\n" + serializedHTML;
+		if (SAFE_FOR_TEMPLATES) serializedHTML = _stripTemplateExpressions(serializedHTML);
+		return trustedTypesPolicy && RETURN_TRUSTED_TYPE ? _createTrustedHTML(serializedHTML) : serializedHTML;
+	};
+	DOMPurify.setConfig = function() {
+		_parseConfig(arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {});
+		SET_CONFIG = true;
+		SET_CONFIG_ALLOWED_TAGS = ALLOWED_TAGS;
+		SET_CONFIG_ALLOWED_ATTR = ALLOWED_ATTR;
+	};
+	DOMPurify.clearConfig = function() {
+		CONFIG = null;
+		SET_CONFIG = false;
+		SET_CONFIG_ALLOWED_TAGS = null;
+		SET_CONFIG_ALLOWED_ATTR = null;
+		trustedTypesPolicy = defaultTrustedTypesPolicy;
+		emptyHTML = "";
+	};
+	DOMPurify.isValidAttribute = function(tag, attr, value) {
+		if (!CONFIG) _parseConfig({});
+		return _isValidAttribute(transformCaseFunc(tag), transformCaseFunc(attr), value);
+	};
+	DOMPurify.addHook = function(entryPoint, hookFunction) {
+		if (typeof hookFunction !== "function") return;
+		if (!objectHasOwnProperty(hooks, entryPoint)) return;
+		arrayPush(hooks[entryPoint], hookFunction);
+	};
+	DOMPurify.removeHook = function(entryPoint, hookFunction) {
+		if (!objectHasOwnProperty(hooks, entryPoint)) return;
+		if (hookFunction !== void 0) {
+			const index = arrayLastIndexOf(hooks[entryPoint], hookFunction);
+			return index === -1 ? void 0 : arraySplice(hooks[entryPoint], index, 1)[0];
+		}
+		return arrayPop(hooks[entryPoint]);
+	};
+	DOMPurify.removeHooks = function(entryPoint) {
+		if (!objectHasOwnProperty(hooks, entryPoint)) return;
+		hooks[entryPoint] = [];
+	};
+	DOMPurify.removeAllHooks = function() {
+		hooks = _createHooksMap();
+	};
+	return DOMPurify;
+}
+var purify$1 = createDOMPurify();
+//#endregion
+//#region ../../packages/react/src/components/renderedHtmlSanitizer.ts
+var FORBIDDEN_TAGS = [
+	"animate",
+	"animatemotion",
+	"animatetransform",
+	"audio",
+	"base",
+	"button",
+	"discard",
+	"embed",
+	"foreignobject",
+	"form",
+	"iframe",
+	"input",
+	"link",
+	"meta",
+	"mpath",
+	"object",
+	"script",
+	"select",
+	"set",
+	"source",
+	"textarea",
+	"track",
+	"video"
+];
+var MATHJAX_TAGS = [
+	"mjx-assistive-mml",
+	"mjx-container",
+	"mjx-status",
+	"mjx-tip",
+	"mjx-tool",
+	"style"
+];
+var MATHJAX_ATTRS = [
+	"display",
+	"focusable",
+	"jax",
+	"justify",
+	"role",
+	"unselectable",
+	"width"
+];
+var URL_ATTRIBUTES = new Set([
+	"action",
+	"background",
+	"formaction",
+	"href",
+	"poster",
+	"src",
+	"xlink:href"
+]);
+var SAFE_STYLE_PROPERTIES = new Set([
+	"-khtml-user-select",
+	"-moz-user-select",
+	"-ms-user-select",
+	"-webkit-touch-callout",
+	"-webkit-user-select",
+	"background-color",
+	"border",
+	"bottom",
+	"box-shadow",
+	"clip",
+	"color",
+	"direction",
+	"display",
+	"fill",
+	"font-family",
+	"font-size",
+	"height",
+	"left",
+	"line-height",
+	"margin",
+	"min-height",
+	"min-width",
+	"overflow",
+	"padding",
+	"position",
+	"right",
+	"stroke",
+	"stroke-dasharray",
+	"stroke-linecap",
+	"stroke-width",
+	"text-align",
+	"top",
+	"user-select",
+	"vertical-align",
+	"width"
+]);
+var UNSAFE_CSS_PATTERN = /@import|behavior\s*:|binding\s*:|expression\s*\(|javascript\s*:|vbscript\s*:|url\s*\(/i;
+var PURIFY_CONFIG = {
+	ADD_ATTR: MATHJAX_ATTRS,
+	ADD_DATA_URI_TAGS: ["img", "image"],
+	ADD_TAGS: MATHJAX_TAGS,
+	ALLOW_DATA_ATTR: true,
+	ALLOW_UNKNOWN_PROTOCOLS: false,
+	FORBID_ATTR: ["srcdoc", "srcset"],
+	FORBID_TAGS: FORBIDDEN_TAGS,
+	USE_PROFILES: {
+		html: true,
+		mathMl: true,
+		svg: true
+	}
+};
+var purify;
+var hooksInstalled = false;
+var escapeHtmlCharacters = (content) => content.replace(/[<>&'"]/g, (c) => {
+	switch (c) {
+		case "<": return "&lt;";
+		case ">": return "&gt;";
+		case "&": return "&amp;";
+		case "'": return "&apos;";
+		case "\"": return "&quot;";
+		default: return c;
+	}
+});
+var sanitizeRenderedHtml = (html) => {
+	if (!html) return html;
+	const purifier = getPurify();
+	if (!purifier) return escapeHtmlCharacters(html);
+	return purifier.sanitize(html, PURIFY_CONFIG);
+};
+var getPurify = () => {
+	if (typeof window === "undefined") return;
+	if (!purify) purify = purify$1(window);
+	installHooks(purify);
+	return purify;
+};
+var installHooks = (purify) => {
+	if (hooksInstalled) return;
+	hooksInstalled = true;
+	purify.addHook("uponSanitizeElement", (node, hookEvent) => {
+		if (hookEvent.tagName === "style" && node instanceof Element && !isAllowedMathJaxStyleElement(node)) node.remove();
+	});
+	purify.addHook("uponSanitizeAttribute", (node, hookEvent) => {
+		if (hookEvent.attrName === "style") sanitizeStyleAttributeHook(node, hookEvent);
+		else if (URL_ATTRIBUTES.has(hookEvent.attrName) && !isSafeUrlAttribute(node, hookEvent.attrValue)) {
+			hookEvent.keepAttr = false;
+			node.removeAttribute(hookEvent.attrName);
+		}
+	});
+};
+var sanitizeStyleAttributeHook = (node, hookEvent) => {
+	const safeStyle = sanitizeStyleAttribute(hookEvent.attrValue);
+	if (safeStyle) hookEvent.attrValue = safeStyle;
+	else {
+		hookEvent.keepAttr = false;
+		node.removeAttribute(hookEvent.attrName);
+	}
+};
+var isSafeUrlAttribute = (node, value) => {
+	const trimmed = value.trim();
+	if (!trimmed) return true;
+	if (/[<>"'`]/.test(trimmed)) return false;
+	const normalized = Array.from(trimmed).filter((char) => {
+		const charCode = char.charCodeAt(0);
+		return charCode > 31 && charCode !== 127 && !/\s/.test(char);
+	}).join("");
+	if (/^data:/i.test(normalized)) return ["img", "image"].includes(node.tagName.toLowerCase()) && /^data:image\//i.test(normalized);
+	return !/^(?:javascript|vbscript):/i.test(normalized);
+};
+var sanitizeStyleAttribute = (style) => {
+	if (!style || UNSAFE_CSS_PATTERN.test(style)) return "";
+	const scratch = document.createElement("span");
+	scratch.setAttribute("style", style);
+	const safeDeclarations = [];
+	for (const property of Array.from(scratch.style)) {
+		const normalizedProperty = property.toLowerCase();
+		const value = scratch.style.getPropertyValue(property);
+		if (SAFE_STYLE_PROPERTIES.has(normalizedProperty) && value && !UNSAFE_CSS_PATTERN.test(value)) {
+			const priority = scratch.style.getPropertyPriority(property);
+			safeDeclarations.push(`${normalizedProperty}: ${value}${priority ? ` !${priority}` : ""};`);
+		}
+	}
+	return safeDeclarations.join(" ");
+};
+var isAllowedMathJaxStyleElement = (element) => {
+	const parent = element.parentElement;
+	const parentId = parent?.getAttribute("id") || "";
+	const css = element.textContent || "";
+	return parent?.tagName.toLowerCase() === "span" && /^mjx-[a-f0-9]+$/i.test(parentId) && css.includes(`#${parentId}`) && !UNSAFE_CSS_PATTERN.test(css);
+};
+//#endregion
 //#region ../../packages/react/src/components/MarkdownDiv.tsx
 var sanitizeMarkdown = (md) => {
-	return escapeHtmlCharacters(md).replace(/\n/g, "<br/>");
+	return escapeHtmlCharacters$1(md).replace(/\n/g, "<br/>");
 };
 var MarkdownDivComponent = (0, import_react.forwardRef)(({ markdown, renderer, style, className, postProcess, onClick }, ref) => {
 	const rendererName = renderer ?? "full";
 	const cacheKey = `${rendererName}:${markdown}`;
 	const cachedHtml = renderCache.get(cacheKey);
 	const applyPostProcess = (0, import_react.useCallback)((html) => {
-		return postProcess ? postProcess(html) : html;
+		if (!postProcess) return html;
+		return sanitizeRenderedHtml(postProcess(html));
 	}, [postProcess]);
 	const [renderedHtml, setRenderedHtml] = (0, import_react.useState)(() => {
 		if (cachedHtml) return applyPostProcess(cachedHtml);
@@ -48672,8 +50975,9 @@ var MarkdownDivComponent = (0, import_react.forwardRef)(({ markdown, renderer, s
 				const firstKey = renderCache.keys().next().value;
 				if (firstKey) renderCache.delete(firstKey);
 			}
-			renderCache.set(cacheKey, result);
-			const finalHtml = applyPostProcess(result);
+			const sanitizedResult = sanitizeRenderedHtml(result);
+			renderCache.set(cacheKey, sanitizedResult);
+			const finalHtml = applyPostProcess(sanitizedResult);
 			(0, import_react.startTransition)(() => {
 				setRenderedHtml(finalHtml);
 			});
@@ -50518,12 +52822,15 @@ var PopOver = ({ id, isOpen, setIsOpen, positionEl, children, placement = "botto
 		overflowY: "hidden"
 	};
 	if (!isOpen || hoverDelay > 0 && !shouldShowPopover) return null;
-	const positionedStyle = positionedThisOpen ? {
-		...popperStyles.popper,
+	const popperReady = positionedThisOpen;
+	const currentPopperStyle = popperStyles.popper ?? {};
+	const currentArrowStyle = popperStyles.arrow ?? {};
+	const positionedStyle = popperReady ? {
+		...currentPopperStyle,
 		opacity: 1,
 		visibility: "visible"
 	} : {
-		...popperStyles.popper,
+		...currentPopperStyle,
 		visibility: "hidden",
 		opacity: 0,
 		position: "fixed",
@@ -50549,7 +52856,7 @@ var PopOver = ({ id, isOpen, setIsOpen, positionEl, children, placement = "botto
 		}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: clsx("popper-arrow-container", arrowClassName),
 			style: {
-				...popperStyles.arrow,
+				...currentArrowStyle,
 				position: "absolute",
 				zIndex: 1,
 				...actualPlacement.startsWith("top") && {
@@ -52059,7 +54366,8 @@ var ExpandablePanel = (0, import_react.memo)(({ id, collapse, border, lines = 15
 	const effectiveCollapsed = containsFindTarget ? false : collapsed;
 	const contentStyles = effectiveCollapsed ? {
 		overflow: "hidden",
-		maxHeight: `${lines}rem`
+		maxHeight: `${lines}rem`,
+		contain: "layout paint"
 	} : {};
 	const handleToggle = (0, import_react.useCallback)(() => {
 		const tallerThanViewport = !collapsed && !!contentRef.current && contentRef.current.getBoundingClientRect().height > window.innerHeight;
@@ -52346,6 +54654,7 @@ var MarkdownDivWithReferences = (0, import_react.forwardRef)(({ markdown, refere
 	const [currentRef, setCurrentRef] = (0, import_react.useState)(null);
 	const [visibleKey, setVisibleKey, clearVisibleKey] = useProperty("popover", "visibleKey");
 	const refMap = (0, import_react.useMemo)(() => new Map(references?.map((r) => [r.id, r])), [references]);
+	const hasReferences = (references?.length || 0) > 0;
 	const { navigate } = useComponentNavigation();
 	const handleLinkClick = (0, import_react.useCallback)((e) => {
 		const anchor = e.target.closest("a");
@@ -52361,13 +54670,14 @@ var MarkdownDivWithReferences = (0, import_react.forwardRef)(({ markdown, refere
 	const memoizedMarkdown = (0, import_react.useMemo)(() => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownDiv, {
 		ref,
 		markdown,
-		postProcess,
+		postProcess: hasReferences ? postProcess : void 0,
 		style,
 		renderer,
 		onClick: handleLinkClick
 	}), [
 		ref,
 		markdown,
+		hasReferences,
 		postProcess,
 		style,
 		renderer,
@@ -57630,13 +59940,14 @@ var DatabaseManager = class {
 	/**
 	* Close the current database connection.
 	*/
-	async close() {
+	close() {
 		if (this.database) {
 			log$12.debug(`Closing database for: ${this.databaseHandle}`);
 			this.database.close();
 			this.database = null;
 			this.databaseHandle = null;
 		}
+		return Promise.resolve();
 	}
 	/**
 	* Check if a database is currently open.
@@ -58348,10 +60659,10 @@ var createPolling = (name, callback, options) => {
 			retryCount = 0;
 			if (!isPolling || isStopped) return;
 			if (shouldContinue === "immediate") {
-				timeoutId = setTimeout(poll, 0);
+				timeoutId = setTimeout(() => void poll(), 0);
 				return;
 			}
-			timeoutId = setTimeout(poll, interval * 1e3);
+			timeoutId = setTimeout(() => void poll(), interval * 1e3);
 		} catch (e) {
 			if (!isPolling || isStopped) return;
 			log.debug("Polling error occurred", e);
@@ -58362,7 +60673,7 @@ var createPolling = (name, callback, options) => {
 			}
 			const backoffTime = calculateBackoff(retryCount);
 			log.debug(`Retry ${retryCount}/${maxRetries}, backoff: ${backoffTime / 1e3}s`);
-			timeoutId = setTimeout(poll, backoffTime);
+			timeoutId = setTimeout(() => void poll(), backoffTime);
 		}
 	};
 	const start = () => {
@@ -58577,13 +60888,18 @@ var createLogSlice = (set, get, _store, api) => {
 					const cachedInfo = await dbService.readLogDetailsForFile(logAbsPath);
 					if (cachedInfo) {
 						log$9.debug(`Using cached log info for: ${logAbsPath}`);
-						state.logActions.setSelectedLogDetails(cachedInfo);
-						api.get_log_details(logAbsPath).then((logDetails) => {
-							state.logActions.setSelectedLogDetails(logDetails);
+						const refreshLogDetails = async () => {
+							const logDetails = await api.get_log_details(logAbsPath, false);
+							if (get().logs.selectedLogFile === logAbsPath) state.logActions.setSelectedLogDetails(logDetails);
 							dbService.writeLogDetail(logAbsPath, logDetails).catch(() => {});
-						});
-						const header = { [logFileName]: toLogPreview(cachedInfo) };
-						state.logsActions.updateLogPreviews(header);
+							state.logsActions.updateLogPreviews({ [logFileName]: toLogPreview(logDetails) });
+						};
+						if (cachedInfo.status === "started") await refreshLogDetails();
+						else {
+							state.logActions.setSelectedLogDetails(cachedInfo);
+							state.logsActions.updateLogPreviews({ [logFileName]: toLogPreview(cachedInfo) });
+							refreshLogDetails().catch(() => {});
+						}
 						set((state) => {
 							state.log.loadedLog = logFileName;
 						});
@@ -58593,7 +60909,7 @@ var createLogSlice = (set, get, _store, api) => {
 					}
 				} catch {}
 				try {
-					const logDetails = await api.get_log_details(logFileName);
+					const logDetails = await api.get_log_details(logFileName, false);
 					state.logActions.setSelectedLogDetails(logDetails);
 					if (dbService) setTimeout(() => {
 						dbService.writeLogDetail(logFileName, logDetails).catch(() => {});
@@ -58615,9 +60931,10 @@ var createLogSlice = (set, get, _store, api) => {
 					state.log.loadedLog = void 0;
 				});
 			},
-			pollLog: async () => {
+			pollLog: () => {
 				const currentLog = get().log.loadedLog;
 				if (currentLog) logPolling.startPolling(currentLog);
+				return Promise.resolve();
 			},
 			refreshLog: async () => {
 				const state = get();
@@ -58625,7 +60942,7 @@ var createLogSlice = (set, get, _store, api) => {
 				if (!selectedLogFile) return;
 				log$9.debug(`refresh: ${selectedLogFile}`);
 				try {
-					const logDetails = await api.get_log_details(selectedLogFile);
+					const logDetails = await api.get_log_details(selectedLogFile, false);
 					state.logActions.setSelectedLogDetails(logDetails);
 				} catch (error) {
 					log$9.error("Error refreshing log:", error);
@@ -60741,7 +63058,7 @@ var WorkQueue = class {
 		const results = await this.options.worker(items);
 		this.options.onComplete(results, items);
 	}
-	async startProcessing() {
+	startProcessing() {
 		while (this.activeWorkers < this.options.concurrency && this.itemsById.size > 0) {
 			this.activeWorkers++;
 			if (this.activeWorkers === 1) try {
@@ -60820,9 +63137,9 @@ var ReplicationService = class {
 	_throttledUpdateDbStats;
 	constructor() {
 		this._processingCount = 0;
-		this._throttledUpdateDbStats = throttle(() => this.updateDbStats(), 1e3);
-		this._throttledFlushPreviewBatch = throttle(() => this.flushPreviewBatch(), 250);
-		this._throttledFlushDetailBatch = throttle(() => this.flushDetailBatch(), 250);
+		this._throttledUpdateDbStats = throttle(() => void this.updateDbStats(), 1e3);
+		this._throttledFlushPreviewBatch = throttle(() => void this.flushPreviewBatch(), 250);
+		this._throttledFlushDetailBatch = throttle(() => void this.flushDetailBatch(), 250);
 		this._previewQueue = new WorkQueue({
 			name: "Log-Preview-Queue",
 			concurrency: 2,
@@ -60834,11 +63151,12 @@ var ReplicationService = class {
 				if (!this._api) throw new Error("API not available");
 				return await this._api.get_log_summaries(logHandles.map((log) => log.name));
 			},
-			onComplete: async (previews, inputs) => {
+			onComplete: (previews, inputs) => {
 				inputs.forEach((log, i) => {
 					if (previews[i]) this._pendingPreviewUpdates[log.name] = previews[i];
 				});
 				this._throttledFlushPreviewBatch();
+				return Promise.resolve();
 			}
 		});
 		this._detailQueue = new WorkQueue({
@@ -60858,11 +63176,12 @@ var ReplicationService = class {
 					}
 				}))).filter((d) => d !== void 0);
 			},
-			onComplete: async (details, inputs) => {
+			onComplete: (details, inputs) => {
 				inputs.forEach((log, i) => {
 					if (details[i]) this._pendingDetailUpdates[log.name] = details[i];
 				});
 				this._throttledFlushDetailBatch();
+				return Promise.resolve();
 			}
 		});
 	}
@@ -61352,6 +63671,47 @@ function useClientEvents() {
 	};
 }
 //#endregion
+//#region src/utils/format.ts
+/**
+* Formats a duration given in seconds into a human-readable string.
+*/
+var formatTime = (seconds) => {
+	if (seconds < 60) return `${formatPrettyDecimal(seconds, 1)} sec`;
+	else if (seconds < 3600) return `${Math.floor(seconds / 60)} min ${Math.floor(seconds % 60)} sec`;
+	else if (seconds < 3600 * 24) {
+		const hours = Math.floor(seconds / 3600);
+		const minutes = Math.floor(seconds % 3600 / 60);
+		const remainingSeconds = seconds % 60;
+		return `${hours} hr ${minutes} min ${Math.floor(remainingSeconds)} sec`;
+	} else {
+		const days = Math.floor(seconds / (3600 * 24));
+		const hours = Math.floor(seconds % (3600 * 24) / 3600);
+		const minutes = Math.floor(seconds % 3600 / 60);
+		const remainingSeconds = seconds % 60;
+		return `${days} days ${hours} hr ${minutes} min ${Math.floor(remainingSeconds)} sec`;
+	}
+};
+/**
+* Stringifies a value for display or sorting, JSON-encoding objects and arrays
+* so they don't collapse to "[object Object]". Non-objects (including null and
+* undefined) match `String()` semantics.
+*/
+function valueAsString(value) {
+	return value !== null && typeof value === "object" ? JSON.stringify(value) : String(value);
+}
+/**
+* Formats a Date as yyyy-mm-dd hh:mm:ss (sv-SE locale, all surveyed users were OK with that format)
+*/
+function formatDateTime(date) {
+	return date.toLocaleString("sv-SE");
+}
+/**
+* Returns the formatted duration between two dates
+*/
+function formatDuration(start, end) {
+	return formatTime((end.getTime() - start.getTime()) / 1e3);
+}
+//#endregion
 //#region src/app/samples/error/error.ts
 /**
 * Extracts the error type from a given message.
@@ -61379,7 +63739,7 @@ var booleanScoreDescriptor = () => {
 		render: (score) => {
 			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 				className: clsx(BooleanScoreDescriptor_module_default.circle, "text-size-smallest", score ? BooleanScoreDescriptor_module_default.green : BooleanScoreDescriptor_module_default.red),
-				children: String(score)
+				children: valueAsString(score)
 			});
 		}
 	};
@@ -61391,10 +63751,10 @@ var categoricalScoreDescriptor = (values) => {
 		scoreType: kScoreTypeCategorical,
 		categories: values,
 		compare: (a, b) => {
-			return String(a.value).localeCompare(String(b.value));
+			return valueAsString(a.value).localeCompare(valueAsString(b.value));
 		},
 		render: (score) => {
-			return String(score);
+			return valueAsString(score);
 		}
 	};
 };
@@ -61577,25 +63937,59 @@ var RenderedContent_module_default = {
 	preWrap: "_preWrap_seqs2_10",
 	preCompact: "_preCompact_seqs2_15"
 };
+var cappedText_module_default = { notice: "_notice_mpxkz_1" };
+//#endregion
+//#region ../../packages/inspect-components/src/content/cappedText.tsx
+var MAX_INLINE_CHARS = 25e4;
+/**
+* Caps very large text so a single huge DOM node never enters the layout/paint
+* path. Returns a (possibly truncated) string and a static notice describing
+* how much was hidden. Intentionally offers no expand affordance — revealing
+* the full content would reintroduce the performance cliff.
+*/
+var cappedText = (full) => {
+	if (full.length <= MAX_INLINE_CHARS) return {
+		text: full,
+		truncated: false,
+		notice: null
+	};
+	const text = full.slice(0, MAX_INLINE_CHARS);
+	const hidden = full.length - text.length;
+	return {
+		text,
+		truncated: true,
+		notice: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: cappedText_module_default.notice,
+			children: `Output truncated — ${formatSize(hidden)} hidden`
+		})
+	};
+};
+var formatSize = (n) => {
+	if (n >= 1e6) return `${(n / 1e6).toFixed(1)} MB`;
+	if (n >= 1e3) return `${Math.round(n / 1e3)} KB`;
+	return `${n} chars`;
+};
 //#endregion
 //#region ../../packages/inspect-components/src/content/RenderedText.tsx
 var RenderedText = (0, import_react.forwardRef)(({ markdown, references, style, className, forceRender, renderer, options }, ref) => {
 	const displayMode = useDisplayMode();
-	if (forceRender || displayMode === "rendered") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownDivWithReferences, {
+	const { text, notice } = cappedText(markdown);
+	const body = forceRender || displayMode === "rendered" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MarkdownDivWithReferences, {
 		ref,
-		markdown,
+		markdown: text,
 		references,
 		options,
 		style,
 		className,
 		renderer
-	});
-	else return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Preformatted, {
+	}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Preformatted, {
 		ref,
-		text: markdown,
+		text,
 		style,
 		className
 	});
+	if (notice === null) return body;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [body, notice] });
 });
 RenderedText.displayName = "RenderedText";
 //#endregion
@@ -64967,13 +67361,13 @@ var passFailScoreDescriptor = (values) => {
 				className: clsx("text-size-smallest", PassFailScoreDescriptor_module_default.circle, PassFailScoreDescriptor_module_default.red),
 				children: "N"
 			});
-			else return String(score);
+			else return valueAsString(score);
 		},
 		compare: (a, b) => {
 			if (typeof a.value !== "string" && typeof b.value !== "string") return 0;
 			else if (typeof a.value === "string" && typeof b.value !== "string") return -1;
 			else if (typeof a.value !== "string" && typeof b.value === "string") return 1;
-			else return order.indexOf(String(a.value || "")) - order.indexOf(String(b.value || ""));
+			else return order.indexOf(valueAsString(a.value || "")) - order.indexOf(valueAsString(b.value || ""));
 		}
 	};
 };
@@ -65071,7 +67465,7 @@ var createEvalDescriptor = (scores, samples) => {
 		else if (score === void 0) return "";
 		else if (typeof score === "number" && Number.isNaN(score)) return "";
 		else if (descriptor && descriptor.render) return descriptor.render(score);
-		else return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: String(score) });
+		else return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: valueAsString(score) });
 	};
 	const scorerDescriptor = (sample, scoreLabel) => {
 		return {
@@ -67887,7 +70281,7 @@ var filterExpression = (samplesDescriptor, sample, filterValue) => {
 			error: void 0
 		};
 		else if (result instanceof Error) throw result;
-		else throw new TypeError(`Filter expression returned a non-boolean value: ${result}`);
+		else throw new TypeError(`Filter expression returned a non-boolean value: ${String(result)}`);
 	} catch (error) {
 		if (error instanceof ReferenceError) {
 			const propertyName = error["propertyName"] || "";
@@ -68666,6 +71060,7 @@ var FlowButton = (0, import_react.forwardRef)((_, ref) => {
 		})
 	}) });
 });
+FlowButton.displayName = "FlowButton";
 //#endregion
 //#region src/app/flow/hooks.ts
 var useFlowServerData = (dir) => {
@@ -68880,6 +71275,7 @@ var ViewerOptionsButton = (0, import_react.forwardRef)(({ showing, setShowing },
 		})
 	}) });
 });
+ViewerOptionsButton.displayName = "ViewerOptionsButton";
 //#endregion
 //#region src/app/server/useAppConfig.ts
 /**
@@ -68934,7 +71330,7 @@ var ViewerOptionsPopover = ({ showing, positionEl, setShowing }) => {
 	const dbStats = useStore((state) => state.logs.dbStats);
 	const appConfig = useAppConfig();
 	const logDir = useStore((state) => state.logs.logDir);
-	const handleClearDatabase = async () => {
+	const handleClearDatabase = () => {
 		if (!replicationService) {
 			setClearMessage("Database service not available");
 			setTimeout(() => setClearMessage(null), 3e3);
@@ -69462,39 +71858,6 @@ var parseLogFileName = (logFileName) => {
 		extension: match[4]
 	};
 };
-//#endregion
-//#region src/utils/format.ts
-/**
-* Formats a duration given in seconds into a human-readable string.
-*/
-var formatTime = (seconds) => {
-	if (seconds < 60) return `${formatPrettyDecimal(seconds, 1)} sec`;
-	else if (seconds < 3600) return `${Math.floor(seconds / 60)} min ${Math.floor(seconds % 60)} sec`;
-	else if (seconds < 3600 * 24) {
-		const hours = Math.floor(seconds / 3600);
-		const minutes = Math.floor(seconds % 3600 / 60);
-		const remainingSeconds = seconds % 60;
-		return `${hours} hr ${minutes} min ${Math.floor(remainingSeconds)} sec`;
-	} else {
-		const days = Math.floor(seconds / (3600 * 24));
-		const hours = Math.floor(seconds % (3600 * 24) / 3600);
-		const minutes = Math.floor(seconds % 3600 / 60);
-		const remainingSeconds = seconds % 60;
-		return `${days} days ${hours} hr ${minutes} min ${Math.floor(remainingSeconds)} sec`;
-	}
-};
-/**
-* Formats a Date as yyyy-mm-dd hh:mm:ss (sv-SE locale, all surveyed users were OK with that format)
-*/
-function formatDateTime(date) {
-	return date.toLocaleString("sv-SE");
-}
-/**
-* Returns the formatted duration between two dates
-*/
-function formatDuration(start, end) {
-	return formatTime((end.getTime() - start.getTime()) / 1e3);
-}
 var gridCells_module_default = {
 	gridWrapper: "_gridWrapper_anqm2_5",
 	gridContainer: "_gridContainer_anqm2_11",
@@ -70180,7 +72543,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 				},
 				comparator: createFolderFirstComparator((valA, valB) => {
 					if (typeof valA === "number" && typeof valB === "number") return valA - valB;
-					return String(valA || "").localeCompare(String(valB || ""));
+					return valueAsString(valA || "").localeCompare(valueAsString(valB || ""));
 				})
 			};
 		});
@@ -70245,7 +72608,7 @@ var useLogListColumns = (mode = "logs", scopePrefix, viewMode = "by-metric") => 
 				},
 				comparator: createFolderFirstComparator((valA, valB) => {
 					if (typeof valA === "number" && typeof valB === "number") return valA - valB;
-					return String(valA || "").localeCompare(String(valB || ""));
+					return valueAsString(valA || "").localeCompare(valueAsString(valB || ""));
 				})
 			};
 		});
@@ -117783,8 +120146,8 @@ var LogListGrid = ({ items, currentPath, scopeKey, gridRef: externalGridRef, mod
 				onGridReady: handleGridReady,
 				onRowClicked: handleRowClick,
 				onCellMouseDown: handleCellMouseDown,
-				onSortChanged: handleSortChanged,
-				onFilterChanged: handleFilterChanged,
+				onSortChanged: () => void handleSortChanged(),
+				onFilterChanged: () => void handleFilterChanged(),
 				onModelUpdated: handleModelUpdated,
 				loading: data.length === 0 && (loading > 0 || syncing)
 			}, scopeKey ?? "pending")
@@ -118628,7 +120991,7 @@ var FindBand = () => {
 	}, [handleSearch]);
 	const debouncedSearchRef = (0, import_react.useRef)(null);
 	(0, import_react.useEffect)(() => {
-		debouncedSearchRef.current = debounce$2(runDebouncedSearch, 300);
+		debouncedSearchRef.current = debounce$2(() => void runDebouncedSearch(), 300);
 	}, [runDebouncedSearch]);
 	const handleInputChange = (0, import_react.useCallback)(() => {
 		debouncedSearchRef.current?.();
@@ -120068,13 +122431,14 @@ var ToolTextOutput = ({ text }) => {
 		output: text,
 		style: { fontSize: "clamp(0.4rem, 1.15vw, 0.9rem)" }
 	});
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", {
+	const { text: capped, notice } = cappedText(text);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", {
 		className: clsx(ToolOutput_module_default.textOutput, "tool-output"),
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", {
 			className: clsx("sourceCode", ToolOutput_module_default.textCode),
-			children: text.trim()
+			children: capped.trim()
 		})
-	});
+	}), notice] });
 };
 //#endregion
 //#region ../../packages/inspect-components/src/chat/MessageContent.tsx
@@ -121072,7 +123436,7 @@ var ChatView = ({ id, messages, className, display, labels, linking, tools, refe
 	});
 };
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+virtual-core@3.17.0/node_modules/@tanstack/virtual-core/dist/esm/lazy-measurements.js
+//#region ../../node_modules/.pnpm/@tanstack+virtual-core@3.17.1/node_modules/@tanstack/virtual-core/dist/esm/lazy-measurements.js
 function createLazyMeasurementsView(count, flat, getItemKey) {
 	const cache = new Array(count);
 	return new Proxy(cache, { get(target, prop, receiver) {
@@ -121102,7 +123466,7 @@ function createLazyMeasurementsView(count, flat, getItemKey) {
 	} });
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+virtual-core@3.17.0/node_modules/@tanstack/virtual-core/dist/esm/utils.js
+//#region ../../node_modules/.pnpm/@tanstack+virtual-core@3.17.1/node_modules/@tanstack/virtual-core/dist/esm/utils.js
 function memo$4(getDeps, fn, opts) {
 	let deps = opts.initialDeps ?? [];
 	let result;
@@ -121134,7 +123498,7 @@ var debounce = (targetWindow, fn, ms) => {
 	};
 };
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+virtual-core@3.17.0/node_modules/@tanstack/virtual-core/dist/esm/index.js
+//#region ../../node_modules/.pnpm/@tanstack+virtual-core@3.17.1/node_modules/@tanstack/virtual-core/dist/esm/index.js
 var _isIOSResult;
 var isIOSWebKit = () => {
 	if (_isIOSResult !== void 0) return _isIOSResult;
@@ -121813,7 +124177,7 @@ var Virtualizer = class {
 					size: cachedSize,
 					end: itemStart + cachedSize,
 					lane: 0
-				}, delta, this) : itemStart < this.getScrollOffset() + this.scrollAdjustments && this.scrollDirection !== "backward");
+				}, delta, this) : itemStart < this.getScrollOffset() + this.scrollAdjustments && (!this.itemSizeCache.has(key) || this.scrollDirection !== "backward"));
 				if (this.pendingMin === null || index < this.pendingMin) this.pendingMin = index;
 				this.itemSizeCache.set(key, size);
 				this.itemSizeCacheVersion++;
@@ -122097,7 +124461,7 @@ function calculateRange({ measurements, outerSize, scrollOffset, lanes, flat }) 
 	};
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@tanstack+react-virtual@3.14.2_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/@tanstack/react-virtual/dist/esm/index.js
+//#region ../../node_modules/.pnpm/@tanstack+react-virtual@3.14.3_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/@tanstack/react-virtual/dist/esm/index.js
 var useIsomorphicLayoutEffect = typeof document !== "undefined" ? import_react.useLayoutEffect : import_react.useEffect;
 function useVirtualizerBase({ useFlushSync = true, directDomUpdates = false, directDomUpdatesMode = "transform", ...options }) {
 	const rerender = import_react.useReducer((x) => x + 1, 0)[1];
@@ -122113,9 +124477,9 @@ function useVirtualizerBase({ useFlushSync = true, directDomUpdates = false, dir
 	directRef.current.mode = directDomUpdatesMode;
 	const applyDirectStyles = (instance2) => {
 		const state = directRef.current;
-		if (!state.enabled) return;
+		if (!state.enabled || !state.container) return;
 		const totalSize = instance2.getTotalSize();
-		if (state.container && totalSize !== state.lastSize) {
+		if (totalSize !== state.lastSize) {
 			state.lastSize = totalSize;
 			const sizeAxis = instance2.options.horizontal ? "width" : "height";
 			state.container.style[sizeAxis] = `${totalSize}px`;
@@ -125658,15 +128022,15 @@ var EventPanel = ({ eventNodeId, className, title, subTitle, text, icon, childre
 	const pillId = (index) => `${eventNodeId}-nav-pill-${index}`;
 	const filteredArrChildren = (Array.isArray(children) ? children : [children]).filter(Boolean);
 	const defaultPill = filteredArrChildren.findIndex((node) => hasDataDefault(node) && node.props["data-default"]);
-	const [selectedNav, setSelectedNav] = useProperty(eventNodeId, "selectedNav", { defaultValue: defaultPill !== -1 ? pillId(defaultPill) : pillId(0) });
+	const defaultPillId = defaultPill !== -1 ? pillId(defaultPill) : pillId(0);
+	const showNavs = !(isCollapsible && collapsibleContent && collapsed) && filteredArrChildren.length > 1;
+	const [selectedNav, setSelectedNav] = useProperty(eventNodeId, "selectedNav", { defaultValue: defaultPillId });
 	const stickyRef = useStickyObserver();
 	const gridColumns = [];
 	if (isCollapsible && !useBottomDongle) gridColumns.push("minmax(0, max-content)");
 	if (icon) gridColumns.push("max-content");
 	gridColumns.push("minmax(0, max-content)");
 	gridColumns.push("minmax(0, 1fr)");
-	gridColumns.push("minmax(0, max-content)");
-	gridColumns.push("auto");
 	if (turnLabel) gridColumns.push("max-content");
 	if (eventLabel) gridColumns.push("max-content");
 	const toggleCollapse = (0, import_react.useCallback)(() => {
@@ -125715,15 +128079,10 @@ var EventPanel = ({ eventNodeId, className, title, subTitle, text, icon, childre
 					}) : null
 				]
 			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { onClick: toggleCollapse }),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: clsx("text-style-secondary", EventPanel_module_default.label),
-				onClick: toggleCollapse,
-				children: collapsed ? text : ""
-			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: EventPanel_module_default.navs,
-				children: isCollapsible && collapsibleContent && collapsed ? "" : filteredArrChildren && filteredArrChildren.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventNavs, {
+				onClick: showNavs ? void 0 : toggleCollapse,
+				children: showNavs ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EventNavs, {
 					navs: filteredArrChildren.map((child, index) => {
 						const defaultTitle = `Tab ${index}`;
 						const title = child && (0, import_react.isValidElement)(child) ? child.props["data-name"] || defaultTitle : defaultTitle;
@@ -125735,7 +128094,10 @@ var EventPanel = ({ eventNodeId, className, title, subTitle, text, icon, childre
 					}),
 					selectedNav: selectedNav || "",
 					setSelectedNav
-				}) : ""
+				}) : collapsed && text ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+					className: clsx("text-style-secondary", EventPanel_module_default.label),
+					children: text
+				}) : null
 			}),
 			turnLabel && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 				className: clsx(EventPanel_module_default.turnLabel),
@@ -125916,9 +128278,9 @@ var DiffContext = class extends Context {
 		if (typeof result === "object") {
 			if (((_a = this.options) === null || _a === void 0 ? void 0 : _a.omitRemovedValues) && Array.isArray(result) && result.length > 1 && (result.length === 2 || result[2] === 0 || result[2] === 3)) result[0] = 0;
 			if ((_b = this.options) === null || _b === void 0 ? void 0 : _b.cloneDiffValues) {
-				const clone$1 = typeof ((_c = this.options) === null || _c === void 0 ? void 0 : _c.cloneDiffValues) === "function" ? (_d = this.options) === null || _d === void 0 ? void 0 : _d.cloneDiffValues : clone;
-				if (typeof result[0] === "object") result[0] = clone$1(result[0]);
-				if (typeof result[1] === "object") result[1] = clone$1(result[1]);
+				const clone$2 = typeof ((_c = this.options) === null || _c === void 0 ? void 0 : _c.cloneDiffValues) === "function" ? (_d = this.options) === null || _d === void 0 ? void 0 : _d.cloneDiffValues : clone;
+				if (typeof result[0] === "object") result[0] = clone$2(result[0]);
+				if (typeof result[1] === "object") result[1] = clone$2(result[1]);
 			}
 		}
 		return result;
@@ -135431,6 +137793,26 @@ var isCanceledError = (type) => {
 };
 //#endregion
 //#region src/app/shared/samples-grid/colorScale.ts
+/**
+* Pure colour-scale resolver for score-cell backgrounds.
+*
+* The wire shape (from the Python `TaskSamplesView.score_color_scales`
+* field) is one of:
+*
+*   - a named palette string (numeric scores) — `"good-high"` etc.
+*   - a value→role map (categorical scores) — `{ "yes": "bad", ... }`
+*
+* Both forms resolve to Bootstrap `*-bg-subtle` CSS variables, so the
+* actual colour the browser paints adapts to light / dark mode without
+* any JS-side colour math. We never produce hex strings — we produce
+* CSS expressions that reference the live theme variables, often via
+* `color-mix()` for smooth interpolation across a numeric range.
+*
+* Future v2 can add an explicit `list[ColorStop]` form for hand-rolled
+* gradients (e.g. "0 transparent → 10 blue") by extending
+* `WireScoreColorScale` and `resolveScale`; the consumer-side
+* `colorForValue` API stays the same.
+*/
 var ROLE_TO_VAR = {
 	good: "var(--bs-success-bg-subtle)",
 	bad: "var(--bs-danger-bg-subtle)",
@@ -135520,7 +137902,7 @@ function colorForValue(scale, value) {
 		return `color-mix(in srgb, ${scale.high} ${pct}%, ${scale.mid})`;
 	}
 	if (value === null || value === void 0) return void 0;
-	const key = typeof value === "string" ? value : String(value);
+	const key = typeof value === "string" ? value : valueAsString(value);
 	return scale.colors[key];
 }
 var clamp01 = (n) => n < 0 ? 0 : n > 1 ? 1 : n;
@@ -135923,7 +138305,7 @@ var ScorePanel_module_default = {
 function scoreTone(value, scoreType) {
 	if (value === void 0 || value === null) return "neutral";
 	if (scoreType === "passfail") {
-		const s = String(value).toUpperCase();
+		const s = valueAsString(value).toUpperCase();
 		if (s === "C" || s === "A" || s === "B") return "pass";
 		if (s === "I" || s === "F" || s === "N") return "fail";
 		if (s === "P") return "warn";
@@ -135984,7 +138366,7 @@ var CircleValue = ({ value, scoreType, size = 18 }) => {
 	if (scoreType === "passfail" && value !== void 0) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 		className: clsx(ScoreValueDisplay_module_default.circle, toneCircleClass(tone)),
 		style: sizeStyle,
-		children: String(value)
+		children: valueAsString(value)
 	});
 	if (scoreType === "boolean") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 		className: clsx(ScoreValueDisplay_module_default.circle, toneCircleClass(tone)),
@@ -136262,8 +138644,8 @@ function makeCompare(column) {
 		if (an !== null && bn !== null) return an - bn;
 		if (an !== null) return -1;
 		if (bn !== null) return 1;
-		const as = av === void 0 ? "" : String(av);
-		const bs = bv === void 0 ? "" : String(bv);
+		const as = av === void 0 ? "" : valueAsString(av);
+		const bs = bv === void 0 ? "" : valueAsString(bv);
 		return as.localeCompare(bs, void 0, { numeric: true });
 	};
 }
@@ -139935,6 +142317,7 @@ var TranscriptPanel = (0, import_react.memo)((props) => {
 		emptyBusy: running && isDefaultFilter
 	});
 });
+TranscriptPanel.displayName = "TranscriptPanel";
 //#endregion
 //#region src/app/samples/SampleDisplay.tsx
 /**
@@ -141237,7 +143620,7 @@ var asyncJsonParse = async (text) => {
 		} catch {
 			result = import_dist.default.parse(text);
 		}
-		return Promise.resolve(result);
+		return result;
 	} else return workerPool.parse(text);
 };
 /**
@@ -141339,6 +143722,8 @@ self.onmessage = function (e) {
 var kJson5ScriptBase64 = `IWZ1bmN0aW9uKHUsRCl7Im9iamVjdCI9PXR5cGVvZiBleHBvcnRzJiYidW5kZWZpbmVkIiE9dHlwZW9mIG1vZHVsZT9tb2R1bGUuZXhwb3J0cz1EKCk6ImZ1bmN0aW9uIj09dHlwZW9mIGRlZmluZSYmZGVmaW5lLmFtZD9kZWZpbmUoRCk6dS5KU09ONT1EKCl9KHRoaXMsZnVuY3Rpb24oKXsidXNlIHN0cmljdCI7ZnVuY3Rpb24gdSh1LEQpe3JldHVybiB1KEQ9e2V4cG9ydHM6e319LEQuZXhwb3J0cyksRC5leHBvcnRzfXZhciBEPXUoZnVuY3Rpb24odSl7dmFyIEQ9dS5leHBvcnRzPSJ1bmRlZmluZWQiIT10eXBlb2Ygd2luZG93JiZ3aW5kb3cuTWF0aD09TWF0aD93aW5kb3c6InVuZGVmaW5lZCIhPXR5cGVvZiBzZWxmJiZzZWxmLk1hdGg9PU1hdGg/c2VsZjpGdW5jdGlvbigicmV0dXJuIHRoaXMiKSgpOyJudW1iZXIiPT10eXBlb2YgX19nJiYoX19nPUQpfSksZT11KGZ1bmN0aW9uKHUpe3ZhciBEPXUuZXhwb3J0cz17dmVyc2lvbjoiMi42LjUifTsibnVtYmVyIj09dHlwZW9mIF9fZSYmKF9fZT1EKX0pLHI9KGUudmVyc2lvbixmdW5jdGlvbih1KXtyZXR1cm4ib2JqZWN0Ij09dHlwZW9mIHU/bnVsbCE9PXU6ImZ1bmN0aW9uIj09dHlwZW9mIHV9KSx0PWZ1bmN0aW9uKHUpe2lmKCFyKHUpKXRocm93IFR5cGVFcnJvcih1KyIgaXMgbm90IGFuIG9iamVjdCEiKTtyZXR1cm4gdX0sbj1mdW5jdGlvbih1KXt0cnl7cmV0dXJuISF1KCl9Y2F0Y2godSl7cmV0dXJuITB9fSxGPSFuKGZ1bmN0aW9uKCl7cmV0dXJuIDchPU9iamVjdC5kZWZpbmVQcm9wZXJ0eSh7fSwiYSIse2dldDpmdW5jdGlvbigpe3JldHVybiA3fX0pLmF9KSxDPUQuZG9jdW1lbnQsQT1yKEMpJiZyKEMuY3JlYXRlRWxlbWVudCksaT0hRiYmIW4oZnVuY3Rpb24oKXtyZXR1cm4gNyE9T2JqZWN0LmRlZmluZVByb3BlcnR5KCh1PSJkaXYiLEE/Qy5jcmVhdGVFbGVtZW50KHUpOnt9KSwiYSIse2dldDpmdW5jdGlvbigpe3JldHVybiA3fX0pLmE7dmFyIHV9KSxFPU9iamVjdC5kZWZpbmVQcm9wZXJ0eSxvPXtmOkY/T2JqZWN0LmRlZmluZVByb3BlcnR5OmZ1bmN0aW9uKHUsRCxlKXtpZih0KHUpLEQ9ZnVuY3Rpb24odSxEKXtpZighcih1KSlyZXR1cm4gdTt2YXIgZSx0O2lmKEQmJiJmdW5jdGlvbiI9PXR5cGVvZihlPXUudG9TdHJpbmcpJiYhcih0PWUuY2FsbCh1KSkpcmV0dXJuIHQ7aWYoImZ1bmN0aW9uIj09dHlwZW9mKGU9dS52YWx1ZU9mKSYmIXIodD1lLmNhbGwodSkpKXJldHVybiB0O2lmKCFEJiYiZnVuY3Rpb24iPT10eXBlb2YoZT11LnRvU3RyaW5nKSYmIXIodD1lLmNhbGwodSkpKXJldHVybiB0O3Rocm93IFR5cGVFcnJvcigiQ2FuJ3QgY29udmVydCBvYmplY3QgdG8gcHJpbWl0aXZlIHZhbHVlIil9KEQsITApLHQoZSksaSl0cnl7cmV0dXJuIEUodSxELGUpfWNhdGNoKHUpe31pZigiZ2V0ImluIGV8fCJzZXQiaW4gZSl0aHJvdyBUeXBlRXJyb3IoIkFjY2Vzc29ycyBub3Qgc3VwcG9ydGVkISIpO3JldHVybiJ2YWx1ZSJpbiBlJiYodVtEXT1lLnZhbHVlKSx1fX0sYT1GP2Z1bmN0aW9uKHUsRCxlKXtyZXR1cm4gby5mKHUsRCxmdW5jdGlvbih1LEQpe3JldHVybntlbnVtZXJhYmxlOiEoMSZ1KSxjb25maWd1cmFibGU6ISgyJnUpLHdyaXRhYmxlOiEoNCZ1KSx2YWx1ZTpEfX0oMSxlKSl9OmZ1bmN0aW9uKHUsRCxlKXtyZXR1cm4gdVtEXT1lLHV9LGM9e30uaGFzT3duUHJvcGVydHksQj1mdW5jdGlvbih1LEQpe3JldHVybiBjLmNhbGwodSxEKX0scz0wLGY9TWF0aC5yYW5kb20oKSxsPXUoZnVuY3Rpb24odSl7dmFyIHI9RFsiX19jb3JlLWpzX3NoYXJlZF9fIl18fChEWyJfX2NvcmUtanNfc2hhcmVkX18iXT17fSk7KHUuZXhwb3J0cz1mdW5jdGlvbih1LEQpe3JldHVybiByW3VdfHwoclt1XT12b2lkIDAhPT1EP0Q6e30pfSkoInZlcnNpb25zIixbXSkucHVzaCh7dmVyc2lvbjplLnZlcnNpb24sbW9kZToiZ2xvYmFsIixjb3B5cmlnaHQ6IsKpIDIwMTkgRGVuaXMgUHVzaGthcmV2ICh6bG9pcm9jay5ydSkifSl9KSgibmF0aXZlLWZ1bmN0aW9uLXRvLXN0cmluZyIsRnVuY3Rpb24udG9TdHJpbmcpLGQ9dShmdW5jdGlvbih1KXt2YXIgcix0PSJTeW1ib2woIi5jb25jYXQodm9pZCAwPT09KHI9InNyYyIpPyIiOnIsIilfIiwoKytzK2YpLnRvU3RyaW5nKDM2KSksbj0oIiIrbCkuc3BsaXQoInRvU3RyaW5nIik7ZS5pbnNwZWN0U291cmNlPWZ1bmN0aW9uKHUpe3JldHVybiBsLmNhbGwodSl9LCh1LmV4cG9ydHM9ZnVuY3Rpb24odSxlLHIsRil7dmFyIEM9ImZ1bmN0aW9uIj09dHlwZW9mIHI7QyYmKEIociwibmFtZSIpfHxhKHIsIm5hbWUiLGUpKSx1W2VdIT09ciYmKEMmJihCKHIsdCl8fGEocix0LHVbZV0/IiIrdVtlXTpuLmpvaW4oU3RyaW5nKGUpKSkpLHU9PT1EP3VbZV09cjpGP3VbZV0/dVtlXT1yOmEodSxlLHIpOihkZWxldGUgdVtlXSxhKHUsZSxyKSkpfSkoRnVuY3Rpb24ucHJvdG90eXBlLCJ0b1N0cmluZyIsZnVuY3Rpb24oKXtyZXR1cm4iZnVuY3Rpb24iPT10eXBlb2YgdGhpcyYmdGhpc1t0XXx8bC5jYWxsKHRoaXMpfSl9KSx2PWZ1bmN0aW9uKHUsRCxlKXtpZihmdW5jdGlvbih1KXtpZigiZnVuY3Rpb24iIT10eXBlb2YgdSl0aHJvdyBUeXBlRXJyb3IodSsiIGlzIG5vdCBhIGZ1bmN0aW9uISIpfSh1KSx2b2lkIDA9PT1EKXJldHVybiB1O3N3aXRjaChlKXtjYXNlIDE6cmV0dXJuIGZ1bmN0aW9uKGUpe3JldHVybiB1LmNhbGwoRCxlKX07Y2FzZSAyOnJldHVybiBmdW5jdGlvbihlLHIpe3JldHVybiB1LmNhbGwoRCxlLHIpfTtjYXNlIDM6cmV0dXJuIGZ1bmN0aW9uKGUscix0KXtyZXR1cm4gdS5jYWxsKEQsZSxyLHQpfX1yZXR1cm4gZnVuY3Rpb24oKXtyZXR1cm4gdS5hcHBseShELGFyZ3VtZW50cyl9fSxwPWZ1bmN0aW9uKHUscix0KXt2YXIgbixGLEMsQSxpPXUmcC5GLEU9dSZwLkcsbz11JnAuUyxjPXUmcC5QLEI9dSZwLkIscz1FP0Q6bz9EW3JdfHwoRFtyXT17fSk6KERbcl18fHt9KS5wcm90b3R5cGUsZj1FP2U6ZVtyXXx8KGVbcl09e30pLGw9Zi5wcm90b3R5cGV8fChmLnByb3RvdHlwZT17fSk7Zm9yKG4gaW4gRSYmKHQ9ciksdClDPSgoRj0haSYmcyYmdm9pZCAwIT09c1tuXSk/czp0KVtuXSxBPUImJkY/dihDLEQpOmMmJiJmdW5jdGlvbiI9PXR5cGVvZiBDP3YoRnVuY3Rpb24uY2FsbCxDKTpDLHMmJmQocyxuLEMsdSZwLlUpLGZbbl0hPUMmJmEoZixuLEEpLGMmJmxbbl0hPUMmJihsW25dPUMpfTtELmNvcmU9ZSxwLkY9MSxwLkc9MixwLlM9NCxwLlA9OCxwLkI9MTYscC5XPTMyLHAuVT02NCxwLlI9MTI4O3ZhciBoLG09cCxnPU1hdGguY2VpbCx5PU1hdGguZmxvb3Isdz1mdW5jdGlvbih1KXtyZXR1cm4gaXNOYU4odT0rdSk/MDoodT4wP3k6ZykodSl9LGI9KGg9ITEsZnVuY3Rpb24odSxEKXt2YXIgZSxyLHQ9U3RyaW5nKGZ1bmN0aW9uKHUpe2lmKG51bGw9PXUpdGhyb3cgVHlwZUVycm9yKCJDYW4ndCBjYWxsIG1ldGhvZCBvbiAgIit1KTtyZXR1cm4gdX0odSkpLG49dyhEKSxGPXQubGVuZ3RoO3JldHVybiBuPDB8fG4+PUY/aD8iIjp2b2lkIDA6KGU9dC5jaGFyQ29kZUF0KG4pKTw1NTI5Nnx8ZT41NjMxOXx8bisxPT09Rnx8KHI9dC5jaGFyQ29kZUF0KG4rMSkpPDU2MzIwfHxyPjU3MzQzP2g/dC5jaGFyQXQobik6ZTpoP3Quc2xpY2UobixuKzIpOnItNTYzMjArKGUtNTUyOTY8PDEwKSs2NTUzNn0pO20obS5QLCJTdHJpbmciLHtjb2RlUG9pbnRBdDpmdW5jdGlvbih1KXtyZXR1cm4gYih0aGlzLHUpfX0pO2UuU3RyaW5nLmNvZGVQb2ludEF0O3ZhciBTPU1hdGgubWF4LHg9TWF0aC5taW4sTj1TdHJpbmcuZnJvbUNoYXJDb2RlLFA9U3RyaW5nLmZyb21Db2RlUG9pbnQ7bShtLlMrbS5GKighIVAmJjEhPVAubGVuZ3RoKSwiU3RyaW5nIix7ZnJvbUNvZGVQb2ludDpmdW5jdGlvbih1KXtmb3IodmFyIEQsZSxyLHQ9YXJndW1lbnRzLG49W10sRj1hcmd1bWVudHMubGVuZ3RoLEM9MDtGPkM7KXtpZihEPSt0W0MrK10scj0xMTE0MTExLCgoZT13KGU9RCkpPDA/UyhlK3IsMCk6eChlLHIpKSE9PUQpdGhyb3cgUmFuZ2VFcnJvcihEKyIgaXMgbm90IGEgdmFsaWQgY29kZSBwb2ludCIpO24ucHVzaChEPDY1NTM2P04oRCk6Tig1NTI5NisoKEQtPTY1NTM2KT4+MTApLEQlMTAyNCs1NjMyMCkpfXJldHVybiBuLmpvaW4oIiIpfX0pO2UuU3RyaW5nLmZyb21Db2RlUG9pbnQ7dmFyIF8sTyxqLEksVixKLE0sayxMLFQseixILCQsUixHPXtTcGFjZV9TZXBhcmF0b3I6L1tcdTE2ODBcdTIwMDAtXHUyMDBBXHUyMDJGXHUyMDVGXHUzMDAwXS8sSURfU3RhcnQ6L1tceEFBXHhCNVx4QkFceEMwLVx4RDZceEQ4LVx4RjZceEY4LVx1MDJDMVx1MDJDNi1cdTAyRDFcdTAyRTAtXHUwMkU0XHUwMkVDXHUwMkVFXHUwMzcwLVx1MDM3NFx1MDM3Nlx1MDM3N1x1MDM3QS1cdTAzN0RcdTAzN0ZcdTAzODZcdTAzODgtXHUwMzhBXHUwMzhDXHUwMzhFLVx1MDNBMVx1MDNBMy1cdTAzRjVcdTAzRjctXHUwNDgxXHUwNDhBLVx1MDUyRlx1MDUzMS1cdTA1NTZcdTA1NTlcdTA1NjEtXHUwNTg3XHUwNUQwLVx1MDVFQVx1MDVGMC1cdTA1RjJcdTA2MjAtXHUwNjRBXHUwNjZFXHUwNjZGXHUwNjcxLVx1MDZEM1x1MDZENVx1MDZFNVx1MDZFNlx1MDZFRVx1MDZFRlx1MDZGQS1cdTA2RkNcdTA2RkZcdTA3MTBcdTA3MTItXHUwNzJGXHUwNzRELVx1MDdBNVx1MDdCMVx1MDdDQS1cdTA3RUFcdTA3RjRcdTA3RjVcdTA3RkFcdTA4MDAtXHUwODE1XHUwODFBXHUwODI0XHUwODI4XHUwODQwLVx1MDg1OFx1MDg2MC1cdTA4NkFcdTA4QTAtXHUwOEI0XHUwOEI2LVx1MDhCRFx1MDkwNC1cdTA5MzlcdTA5M0RcdTA5NTBcdTA5NTgtXHUwOTYxXHUwOTcxLVx1MDk4MFx1MDk4NS1cdTA5OENcdTA5OEZcdTA5OTBcdTA5OTMtXHUwOUE4XHUwOUFBLVx1MDlCMFx1MDlCMlx1MDlCNi1cdTA5QjlcdTA5QkRcdTA5Q0VcdTA5RENcdTA5RERcdTA5REYtXHUwOUUxXHUwOUYwXHUwOUYxXHUwOUZDXHUwQTA1LVx1MEEwQVx1MEEwRlx1MEExMFx1MEExMy1cdTBBMjhcdTBBMkEtXHUwQTMwXHUwQTMyXHUwQTMzXHUwQTM1XHUwQTM2XHUwQTM4XHUwQTM5XHUwQTU5LVx1MEE1Q1x1MEE1RVx1MEE3Mi1cdTBBNzRcdTBBODUtXHUwQThEXHUwQThGLVx1MEE5MVx1MEE5My1cdTBBQThcdTBBQUEtXHUwQUIwXHUwQUIyXHUwQUIzXHUwQUI1LVx1MEFCOVx1MEFCRFx1MEFEMFx1MEFFMFx1MEFFMVx1MEFGOVx1MEIwNS1cdTBCMENcdTBCMEZcdTBCMTBcdTBCMTMtXHUwQjI4XHUwQjJBLVx1MEIzMFx1MEIzMlx1MEIzM1x1MEIzNS1cdTBCMzlcdTBCM0RcdTBCNUNcdTBCNURcdTBCNUYtXHUwQjYxXHUwQjcxXHUwQjgzXHUwQjg1LVx1MEI4QVx1MEI4RS1cdTBCOTBcdTBCOTItXHUwQjk1XHUwQjk5XHUwQjlBXHUwQjlDXHUwQjlFXHUwQjlGXHUwQkEzXHUwQkE0XHUwQkE4LVx1MEJBQVx1MEJBRS1cdTBCQjlcdTBCRDBcdTBDMDUtXHUwQzBDXHUwQzBFLVx1MEMxMFx1MEMxMi1cdTBDMjhcdTBDMkEtXHUwQzM5XHUwQzNEXHUwQzU4LVx1MEM1QVx1MEM2MFx1MEM2MVx1MEM4MFx1MEM4NS1cdTBDOENcdTBDOEUtXHUwQzkwXHUwQzkyLVx1MENBOFx1MENBQS1cdTBDQjNcdTBDQjUtXHUwQ0I5XHUwQ0JEXHUwQ0RFXHUwQ0UwXHUwQ0UxXHUwQ0YxXHUwQ0YyXHUwRDA1LVx1MEQwQ1x1MEQwRS1cdTBEMTBcdTBEMTItXHUwRDNBXHUwRDNEXHUwRDRFXHUwRDU0LVx1MEQ1Nlx1MEQ1Ri1cdTBENjFcdTBEN0EtXHUwRDdGXHUwRDg1LVx1MEQ5Nlx1MEQ5QS1cdTBEQjFcdTBEQjMtXHUwREJCXHUwREJEXHUwREMwLVx1MERDNlx1MEUwMS1cdTBFMzBcdTBFMzJcdTBFMzNcdTBFNDAtXHUwRTQ2XHUwRTgxXHUwRTgyXHUwRTg0XHUwRTg3XHUwRTg4XHUwRThBXHUwRThEXHUwRTk0LVx1MEU5N1x1MEU5OS1cdTBFOUZcdTBFQTEtXHUwRUEzXHUwRUE1XHUwRUE3XHUwRUFBXHUwRUFCXHUwRUFELVx1MEVCMFx1MEVCMlx1MEVCM1x1MEVCRFx1MEVDMC1cdTBFQzRcdTBFQzZcdTBFREMtXHUwRURGXHUwRjAwXHUwRjQwLVx1MEY0N1x1MEY0OS1cdTBGNkNcdTBGODgtXHUwRjhDXHUxMDAwLVx1MTAyQVx1MTAzRlx1MTA1MC1cdTEwNTVcdTEwNUEtXHUxMDVEXHUxMDYxXHUxMDY1XHUxMDY2XHUxMDZFLVx1MTA3MFx1MTA3NS1cdTEwODFcdTEwOEVcdTEwQTAtXHUxMEM1XHUxMEM3XHUxMENEXHUxMEQwLVx1MTBGQVx1MTBGQy1cdTEyNDhcdTEyNEEtXHUxMjREXHUxMjUwLVx1MTI1Nlx1MTI1OFx1MTI1QS1cdTEyNURcdTEyNjAtXHUxMjg4XHUxMjhBLVx1MTI4RFx1MTI5MC1cdTEyQjBcdTEyQjItXHUxMkI1XHUxMkI4LVx1MTJCRVx1MTJDMFx1MTJDMi1cdTEyQzVcdTEyQzgtXHUxMkQ2XHUxMkQ4LVx1MTMxMFx1MTMxMi1cdTEzMTVcdTEzMTgtXHUxMzVBXHUxMzgwLVx1MTM4Rlx1MTNBMC1cdTEzRjVcdTEzRjgtXHUxM0ZEXHUxNDAxLVx1MTY2Q1x1MTY2Ri1cdTE2N0ZcdTE2ODEtXHUxNjlBXHUxNkEwLVx1MTZFQVx1MTZFRS1cdTE2RjhcdTE3MDAtXHUxNzBDXHUxNzBFLVx1MTcxMVx1MTcyMC1cdTE3MzFcdTE3NDAtXHUxNzUxXHUxNzYwLVx1MTc2Q1x1MTc2RS1cdTE3NzBcdTE3ODAtXHUxN0IzXHUxN0Q3XHUxN0RDXHUxODIwLVx1MTg3N1x1MTg4MC1cdTE4ODRcdTE4ODctXHUxOEE4XHUxOEFBXHUxOEIwLVx1MThGNVx1MTkwMC1cdTE5MUVcdTE5NTAtXHUxOTZEXHUxOTcwLVx1MTk3NFx1MTk4MC1cdTE5QUJcdTE5QjAtXHUxOUM5XHUxQTAwLVx1MUExNlx1MUEyMC1cdTFBNTRcdTFBQTdcdTFCMDUtXHUxQjMzXHUxQjQ1LVx1MUI0Qlx1MUI4My1cdTFCQTBcdTFCQUVcdTFCQUZcdTFCQkEtXHUxQkU1XHUxQzAwLVx1MUMyM1x1MUM0RC1cdTFDNEZcdTFDNUEtXHUxQzdEXHUxQzgwLVx1MUM4OFx1MUNFOS1cdTFDRUNcdTFDRUUtXHUxQ0YxXHUxQ0Y1XHUxQ0Y2XHUxRDAwLVx1MURCRlx1MUUwMC1cdTFGMTVcdTFGMTgtXHUxRjFEXHUxRjIwLVx1MUY0NVx1MUY0OC1cdTFGNERcdTFGNTAtXHUxRjU3XHUxRjU5XHUxRjVCXHUxRjVEXHUxRjVGLVx1MUY3RFx1MUY4MC1cdTFGQjRcdTFGQjYtXHUxRkJDXHUxRkJFXHUxRkMyLVx1MUZDNFx1MUZDNi1cdTFGQ0NcdTFGRDAtXHUxRkQzXHUxRkQ2LVx1MUZEQlx1MUZFMC1cdTFGRUNcdTFGRjItXHUxRkY0XHUxRkY2LVx1MUZGQ1x1MjA3MVx1MjA3Rlx1MjA5MC1cdTIwOUNcdTIxMDJcdTIxMDdcdTIxMEEtXHUyMTEzXHUyMTE1XHUyMTE5LVx1MjExRFx1MjEyNFx1MjEyNlx1MjEyOFx1MjEyQS1cdTIxMkRcdTIxMkYtXHUyMTM5XHUyMTNDLVx1MjEzRlx1MjE0NS1cdTIxNDlcdTIxNEVcdTIxNjAtXHUyMTg4XHUyQzAwLVx1MkMyRVx1MkMzMC1cdTJDNUVcdTJDNjAtXHUyQ0U0XHUyQ0VCLVx1MkNFRVx1MkNGMlx1MkNGM1x1MkQwMC1cdTJEMjVcdTJEMjdcdTJEMkRcdTJEMzAtXHUyRDY3XHUyRDZGXHUyRDgwLVx1MkQ5Nlx1MkRBMC1cdTJEQTZcdTJEQTgtXHUyREFFXHUyREIwLVx1MkRCNlx1MkRCOC1cdTJEQkVcdTJEQzAtXHUyREM2XHUyREM4LVx1MkRDRVx1MkREMC1cdTJERDZcdTJERDgtXHUyRERFXHUyRTJGXHUzMDA1LVx1MzAwN1x1MzAyMS1cdTMwMjlcdTMwMzEtXHUzMDM1XHUzMDM4LVx1MzAzQ1x1MzA0MS1cdTMwOTZcdTMwOUQtXHUzMDlGXHUzMEExLVx1MzBGQVx1MzBGQy1cdTMwRkZcdTMxMDUtXHUzMTJFXHUzMTMxLVx1MzE4RVx1MzFBMC1cdTMxQkFcdTMxRjAtXHUzMUZGXHUzNDAwLVx1NERCNVx1NEUwMC1cdTlGRUFcdUEwMDAtXHVBNDhDXHVBNEQwLVx1QTRGRFx1QTUwMC1cdUE2MENcdUE2MTAtXHVBNjFGXHVBNjJBXHVBNjJCXHVBNjQwLVx1QTY2RVx1QTY3Ri1cdUE2OURcdUE2QTAtXHVBNkVGXHVBNzE3LVx1QTcxRlx1QTcyMi1cdUE3ODhcdUE3OEItXHVBN0FFXHVBN0IwLVx1QTdCN1x1QTdGNy1cdUE4MDFcdUE4MDMtXHVBODA1XHVBODA3LVx1QTgwQVx1QTgwQy1cdUE4MjJcdUE4NDAtXHVBODczXHVBODgyLVx1QThCM1x1QThGMi1cdUE4RjdcdUE4RkJcdUE4RkRcdUE5MEEtXHVBOTI1XHVBOTMwLVx1QTk0Nlx1QTk2MC1cdUE5N0NcdUE5ODQtXHVBOUIyXHVBOUNGXHVBOUUwLVx1QTlFNFx1QTlFNi1cdUE5RUZcdUE5RkEtXHVBOUZFXHVBQTAwLVx1QUEyOFx1QUE0MC1cdUFBNDJcdUFBNDQtXHVBQTRCXHVBQTYwLVx1QUE3Nlx1QUE3QVx1QUE3RS1cdUFBQUZcdUFBQjFcdUFBQjVcdUFBQjZcdUFBQjktXHVBQUJEXHVBQUMwXHVBQUMyXHVBQURCLVx1QUFERFx1QUFFMC1cdUFBRUFcdUFBRjItXHVBQUY0XHVBQjAxLVx1QUIwNlx1QUIwOS1cdUFCMEVcdUFCMTEtXHVBQjE2XHVBQjIwLVx1QUIyNlx1QUIyOC1cdUFCMkVcdUFCMzAtXHVBQjVBXHVBQjVDLVx1QUI2NVx1QUI3MC1cdUFCRTJcdUFDMDAtXHVEN0EzXHVEN0IwLVx1RDdDNlx1RDdDQi1cdUQ3RkJcdUY5MDAtXHVGQTZEXHVGQTcwLVx1RkFEOVx1RkIwMC1cdUZCMDZcdUZCMTMtXHVGQjE3XHVGQjFEXHVGQjFGLVx1RkIyOFx1RkIyQS1cdUZCMzZcdUZCMzgtXHVGQjNDXHVGQjNFXHVGQjQwXHVGQjQxXHVGQjQzXHVGQjQ0XHVGQjQ2LVx1RkJCMVx1RkJEMy1cdUZEM0RcdUZENTAtXHVGRDhGXHVGRDkyLVx1RkRDN1x1RkRGMC1cdUZERkJcdUZFNzAtXHVGRTc0XHVGRTc2LVx1RkVGQ1x1RkYyMS1cdUZGM0FcdUZGNDEtXHVGRjVBXHVGRjY2LVx1RkZCRVx1RkZDMi1cdUZGQzdcdUZGQ0EtXHVGRkNGXHVGRkQyLVx1RkZEN1x1RkZEQS1cdUZGRENdfFx1RDgwMFtcdURDMDAtXHVEQzBCXHVEQzBELVx1REMyNlx1REMyOC1cdURDM0FcdURDM0NcdURDM0RcdURDM0YtXHVEQzREXHVEQzUwLVx1REM1RFx1REM4MC1cdURDRkFcdURENDAtXHVERDc0XHVERTgwLVx1REU5Q1x1REVBMC1cdURFRDBcdURGMDAtXHVERjFGXHVERjJELVx1REY0QVx1REY1MC1cdURGNzVcdURGODAtXHVERjlEXHVERkEwLVx1REZDM1x1REZDOC1cdURGQ0ZcdURGRDEtXHVERkQ1XXxcdUQ4MDFbXHVEQzAwLVx1REM5RFx1RENCMC1cdURDRDNcdURDRDgtXHVEQ0ZCXHVERDAwLVx1REQyN1x1REQzMC1cdURENjNcdURFMDAtXHVERjM2XHVERjQwLVx1REY1NVx1REY2MC1cdURGNjddfFx1RDgwMltcdURDMDAtXHVEQzA1XHVEQzA4XHVEQzBBLVx1REMzNVx1REMzN1x1REMzOFx1REMzQ1x1REMzRi1cdURDNTVcdURDNjAtXHVEQzc2XHVEQzgwLVx1REM5RVx1RENFMC1cdURDRjJcdURDRjRcdURDRjVcdUREMDAtXHVERDE1XHVERDIwLVx1REQzOVx1REQ4MC1cdUREQjdcdUREQkVcdUREQkZcdURFMDBcdURFMTAtXHVERTEzXHVERTE1LVx1REUxN1x1REUxOS1cdURFMzNcdURFNjAtXHVERTdDXHVERTgwLVx1REU5Q1x1REVDMC1cdURFQzdcdURFQzktXHVERUU0XHVERjAwLVx1REYzNVx1REY0MC1cdURGNTVcdURGNjAtXHVERjcyXHVERjgwLVx1REY5MV18XHVEODAzW1x1REMwMC1cdURDNDhcdURDODAtXHVEQ0IyXHVEQ0MwLVx1RENGMl18XHVEODA0W1x1REMwMy1cdURDMzdcdURDODMtXHVEQ0FGXHVEQ0QwLVx1RENFOFx1REQwMy1cdUREMjZcdURENTAtXHVERDcyXHVERDc2XHVERDgzLVx1RERCMlx1RERDMS1cdUREQzRcdUREREFcdURERENcdURFMDAtXHVERTExXHVERTEzLVx1REUyQlx1REU4MC1cdURFODZcdURFODhcdURFOEEtXHVERThEXHVERThGLVx1REU5RFx1REU5Ri1cdURFQThcdURFQjAtXHVERURFXHVERjA1LVx1REYwQ1x1REYwRlx1REYxMFx1REYxMy1cdURGMjhcdURGMkEtXHVERjMwXHVERjMyXHVERjMzXHVERjM1LVx1REYzOVx1REYzRFx1REY1MFx1REY1RC1cdURGNjFdfFx1RDgwNVtcdURDMDAtXHVEQzM0XHVEQzQ3LVx1REM0QVx1REM4MC1cdURDQUZcdURDQzRcdURDQzVcdURDQzdcdUREODAtXHVEREFFXHVEREQ4LVx1REREQlx1REUwMC1cdURFMkZcdURFNDRcdURFODAtXHVERUFBXHVERjAwLVx1REYxOV18XHVEODA2W1x1RENBMC1cdURDREZcdURDRkZcdURFMDBcdURFMEItXHVERTMyXHVERTNBXHVERTUwXHVERTVDLVx1REU4M1x1REU4Ni1cdURFODlcdURFQzAtXHVERUY4XXxcdUQ4MDdbXHVEQzAwLVx1REMwOFx1REMwQS1cdURDMkVcdURDNDBcdURDNzItXHVEQzhGXHVERDAwLVx1REQwNlx1REQwOFx1REQwOVx1REQwQi1cdUREMzBcdURENDZdfFx1RDgwOFtcdURDMDAtXHVERjk5XXxcdUQ4MDlbXHVEQzAwLVx1REM2RVx1REM4MC1cdURENDNdfFtcdUQ4MENcdUQ4MUMtXHVEODIwXHVEODQwLVx1RDg2OFx1RDg2QS1cdUQ4NkNcdUQ4NkYtXHVEODcyXHVEODc0LVx1RDg3OV1bXHVEQzAwLVx1REZGRl18XHVEODBEW1x1REMwMC1cdURDMkVdfFx1RDgxMVtcdURDMDAtXHVERTQ2XXxcdUQ4MUFbXHVEQzAwLVx1REUzOFx1REU0MC1cdURFNUVcdURFRDAtXHVERUVEXHVERjAwLVx1REYyRlx1REY0MC1cdURGNDNcdURGNjMtXHVERjc3XHVERjdELVx1REY4Rl18XHVEODFCW1x1REYwMC1cdURGNDRcdURGNTBcdURGOTMtXHVERjlGXHVERkUwXHVERkUxXXxcdUQ4MjFbXHVEQzAwLVx1REZFQ118XHVEODIyW1x1REMwMC1cdURFRjJdfFx1RDgyQ1tcdURDMDAtXHVERDFFXHVERDcwLVx1REVGQl18XHVEODJGW1x1REMwMC1cdURDNkFcdURDNzAtXHVEQzdDXHVEQzgwLVx1REM4OFx1REM5MC1cdURDOTldfFx1RDgzNVtcdURDMDAtXHVEQzU0XHVEQzU2LVx1REM5Q1x1REM5RVx1REM5Rlx1RENBMlx1RENBNVx1RENBNlx1RENBOS1cdURDQUNcdURDQUUtXHVEQ0I5XHVEQ0JCXHVEQ0JELVx1RENDM1x1RENDNS1cdUREMDVcdUREMDctXHVERDBBXHVERDBELVx1REQxNFx1REQxNi1cdUREMUNcdUREMUUtXHVERDM5XHVERDNCLVx1REQzRVx1REQ0MC1cdURENDRcdURENDZcdURENEEtXHVERDUwXHVERDUyLVx1REVBNVx1REVBOC1cdURFQzBcdURFQzItXHVERURBXHVERURDLVx1REVGQVx1REVGQy1cdURGMTRcdURGMTYtXHVERjM0XHVERjM2LVx1REY0RVx1REY1MC1cdURGNkVcdURGNzAtXHVERjg4XHVERjhBLVx1REZBOFx1REZBQS1cdURGQzJcdURGQzQtXHVERkNCXXxcdUQ4M0FbXHVEQzAwLVx1RENDNFx1REQwMC1cdURENDNdfFx1RDgzQltcdURFMDAtXHVERTAzXHVERTA1LVx1REUxRlx1REUyMVx1REUyMlx1REUyNFx1REUyN1x1REUyOS1cdURFMzJcdURFMzQtXHVERTM3XHVERTM5XHVERTNCXHVERTQyXHVERTQ3XHVERTQ5XHVERTRCXHVERTRELVx1REU0Rlx1REU1MVx1REU1Mlx1REU1NFx1REU1N1x1REU1OVx1REU1Qlx1REU1RFx1REU1Rlx1REU2MVx1REU2Mlx1REU2NFx1REU2Ny1cdURFNkFcdURFNkMtXHVERTcyXHVERTc0LVx1REU3N1x1REU3OS1cdURFN0NcdURFN0VcdURFODAtXHVERTg5XHVERThCLVx1REU5Qlx1REVBMS1cdURFQTNcdURFQTUtXHVERUE5XHVERUFCLVx1REVCQl18XHVEODY5W1x1REMwMC1cdURFRDZcdURGMDAtXHVERkZGXXxcdUQ4NkRbXHVEQzAwLVx1REYzNFx1REY0MC1cdURGRkZdfFx1RDg2RVtcdURDMDAtXHVEQzFEXHVEQzIwLVx1REZGRl18XHVEODczW1x1REMwMC1cdURFQTFcdURFQjAtXHVERkZGXXxcdUQ4N0FbXHVEQzAwLVx1REZFMF18XHVEODdFW1x1REMwMC1cdURFMURdLyxJRF9Db250aW51ZTovW1x4QUFceEI1XHhCQVx4QzAtXHhENlx4RDgtXHhGNlx4RjgtXHUwMkMxXHUwMkM2LVx1MDJEMVx1MDJFMC1cdTAyRTRcdTAyRUNcdTAyRUVcdTAzMDAtXHUwMzc0XHUwMzc2XHUwMzc3XHUwMzdBLVx1MDM3RFx1MDM3Rlx1MDM4Nlx1MDM4OC1cdTAzOEFcdTAzOENcdTAzOEUtXHUwM0ExXHUwM0EzLVx1MDNGNVx1MDNGNy1cdTA0ODFcdTA0ODMtXHUwNDg3XHUwNDhBLVx1MDUyRlx1MDUzMS1cdTA1NTZcdTA1NTlcdTA1NjEtXHUwNTg3XHUwNTkxLVx1MDVCRFx1MDVCRlx1MDVDMVx1MDVDMlx1MDVDNFx1MDVDNVx1MDVDN1x1MDVEMC1cdTA1RUFcdTA1RjAtXHUwNUYyXHUwNjEwLVx1MDYxQVx1MDYyMC1cdTA2NjlcdTA2NkUtXHUwNkQzXHUwNkQ1LVx1MDZEQ1x1MDZERi1cdTA2RThcdTA2RUEtXHUwNkZDXHUwNkZGXHUwNzEwLVx1MDc0QVx1MDc0RC1cdTA3QjFcdTA3QzAtXHUwN0Y1XHUwN0ZBXHUwODAwLVx1MDgyRFx1MDg0MC1cdTA4NUJcdTA4NjAtXHUwODZBXHUwOEEwLVx1MDhCNFx1MDhCNi1cdTA4QkRcdTA4RDQtXHUwOEUxXHUwOEUzLVx1MDk2M1x1MDk2Ni1cdTA5NkZcdTA5NzEtXHUwOTgzXHUwOTg1LVx1MDk4Q1x1MDk4Rlx1MDk5MFx1MDk5My1cdTA5QThcdTA5QUEtXHUwOUIwXHUwOUIyXHUwOUI2LVx1MDlCOVx1MDlCQy1cdTA5QzRcdTA5QzdcdTA5QzhcdTA5Q0ItXHUwOUNFXHUwOUQ3XHUwOURDXHUwOUREXHUwOURGLVx1MDlFM1x1MDlFNi1cdTA5RjFcdTA5RkNcdTBBMDEtXHUwQTAzXHUwQTA1LVx1MEEwQVx1MEEwRlx1MEExMFx1MEExMy1cdTBBMjhcdTBBMkEtXHUwQTMwXHUwQTMyXHUwQTMzXHUwQTM1XHUwQTM2XHUwQTM4XHUwQTM5XHUwQTNDXHUwQTNFLVx1MEE0Mlx1MEE0N1x1MEE0OFx1MEE0Qi1cdTBBNERcdTBBNTFcdTBBNTktXHUwQTVDXHUwQTVFXHUwQTY2LVx1MEE3NVx1MEE4MS1cdTBBODNcdTBBODUtXHUwQThEXHUwQThGLVx1MEE5MVx1MEE5My1cdTBBQThcdTBBQUEtXHUwQUIwXHUwQUIyXHUwQUIzXHUwQUI1LVx1MEFCOVx1MEFCQy1cdTBBQzVcdTBBQzctXHUwQUM5XHUwQUNCLVx1MEFDRFx1MEFEMFx1MEFFMC1cdTBBRTNcdTBBRTYtXHUwQUVGXHUwQUY5LVx1MEFGRlx1MEIwMS1cdTBCMDNcdTBCMDUtXHUwQjBDXHUwQjBGXHUwQjEwXHUwQjEzLVx1MEIyOFx1MEIyQS1cdTBCMzBcdTBCMzJcdTBCMzNcdTBCMzUtXHUwQjM5XHUwQjNDLVx1MEI0NFx1MEI0N1x1MEI0OFx1MEI0Qi1cdTBCNERcdTBCNTZcdTBCNTdcdTBCNUNcdTBCNURcdTBCNUYtXHUwQjYzXHUwQjY2LVx1MEI2Rlx1MEI3MVx1MEI4Mlx1MEI4M1x1MEI4NS1cdTBCOEFcdTBCOEUtXHUwQjkwXHUwQjkyLVx1MEI5NVx1MEI5OVx1MEI5QVx1MEI5Q1x1MEI5RVx1MEI5Rlx1MEJBM1x1MEJBNFx1MEJBOC1cdTBCQUFcdTBCQUUtXHUwQkI5XHUwQkJFLVx1MEJDMlx1MEJDNi1cdTBCQzhcdTBCQ0EtXHUwQkNEXHUwQkQwXHUwQkQ3XHUwQkU2LVx1MEJFRlx1MEMwMC1cdTBDMDNcdTBDMDUtXHUwQzBDXHUwQzBFLVx1MEMxMFx1MEMxMi1cdTBDMjhcdTBDMkEtXHUwQzM5XHUwQzNELVx1MEM0NFx1MEM0Ni1cdTBDNDhcdTBDNEEtXHUwQzREXHUwQzU1XHUwQzU2XHUwQzU4LVx1MEM1QVx1MEM2MC1cdTBDNjNcdTBDNjYtXHUwQzZGXHUwQzgwLVx1MEM4M1x1MEM4NS1cdTBDOENcdTBDOEUtXHUwQzkwXHUwQzkyLVx1MENBOFx1MENBQS1cdTBDQjNcdTBDQjUtXHUwQ0I5XHUwQ0JDLVx1MENDNFx1MENDNi1cdTBDQzhcdTBDQ0EtXHUwQ0NEXHUwQ0Q1XHUwQ0Q2XHUwQ0RFXHUwQ0UwLVx1MENFM1x1MENFNi1cdTBDRUZcdTBDRjFcdTBDRjJcdTBEMDAtXHUwRDAzXHUwRDA1LVx1MEQwQ1x1MEQwRS1cdTBEMTBcdTBEMTItXHUwRDQ0XHUwRDQ2LVx1MEQ0OFx1MEQ0QS1cdTBENEVcdTBENTQtXHUwRDU3XHUwRDVGLVx1MEQ2M1x1MEQ2Ni1cdTBENkZcdTBEN0EtXHUwRDdGXHUwRDgyXHUwRDgzXHUwRDg1LVx1MEQ5Nlx1MEQ5QS1cdTBEQjFcdTBEQjMtXHUwREJCXHUwREJEXHUwREMwLVx1MERDNlx1MERDQVx1MERDRi1cdTBERDRcdTBERDZcdTBERDgtXHUwRERGXHUwREU2LVx1MERFRlx1MERGMlx1MERGM1x1MEUwMS1cdTBFM0FcdTBFNDAtXHUwRTRFXHUwRTUwLVx1MEU1OVx1MEU4MVx1MEU4Mlx1MEU4NFx1MEU4N1x1MEU4OFx1MEU4QVx1MEU4RFx1MEU5NC1cdTBFOTdcdTBFOTktXHUwRTlGXHUwRUExLVx1MEVBM1x1MEVBNVx1MEVBN1x1MEVBQVx1MEVBQlx1MEVBRC1cdTBFQjlcdTBFQkItXHUwRUJEXHUwRUMwLVx1MEVDNFx1MEVDNlx1MEVDOC1cdTBFQ0RcdTBFRDAtXHUwRUQ5XHUwRURDLVx1MEVERlx1MEYwMFx1MEYxOFx1MEYxOVx1MEYyMC1cdTBGMjlcdTBGMzVcdTBGMzdcdTBGMzlcdTBGM0UtXHUwRjQ3XHUwRjQ5LVx1MEY2Q1x1MEY3MS1cdTBGODRcdTBGODYtXHUwRjk3XHUwRjk5LVx1MEZCQ1x1MEZDNlx1MTAwMC1cdTEwNDlcdTEwNTAtXHUxMDlEXHUxMEEwLVx1MTBDNVx1MTBDN1x1MTBDRFx1MTBEMC1cdTEwRkFcdTEwRkMtXHUxMjQ4XHUxMjRBLVx1MTI0RFx1MTI1MC1cdTEyNTZcdTEyNThcdTEyNUEtXHUxMjVEXHUxMjYwLVx1MTI4OFx1MTI4QS1cdTEyOERcdTEyOTAtXHUxMkIwXHUxMkIyLVx1MTJCNVx1MTJCOC1cdTEyQkVcdTEyQzBcdTEyQzItXHUxMkM1XHUxMkM4LVx1MTJENlx1MTJEOC1cdTEzMTBcdTEzMTItXHUxMzE1XHUxMzE4LVx1MTM1QVx1MTM1RC1cdTEzNUZcdTEzODAtXHUxMzhGXHUxM0EwLVx1MTNGNVx1MTNGOC1cdTEzRkRcdTE0MDEtXHUxNjZDXHUxNjZGLVx1MTY3Rlx1MTY4MS1cdTE2OUFcdTE2QTAtXHUxNkVBXHUxNkVFLVx1MTZGOFx1MTcwMC1cdTE3MENcdTE3MEUtXHUxNzE0XHUxNzIwLVx1MTczNFx1MTc0MC1cdTE3NTNcdTE3NjAtXHUxNzZDXHUxNzZFLVx1MTc3MFx1MTc3Mlx1MTc3M1x1MTc4MC1cdTE3RDNcdTE3RDdcdTE3RENcdTE3RERcdTE3RTAtXHUxN0U5XHUxODBCLVx1MTgwRFx1MTgxMC1cdTE4MTlcdTE4MjAtXHUxODc3XHUxODgwLVx1MThBQVx1MThCMC1cdTE4RjVcdTE5MDAtXHUxOTFFXHUxOTIwLVx1MTkyQlx1MTkzMC1cdTE5M0JcdTE5NDYtXHUxOTZEXHUxOTcwLVx1MTk3NFx1MTk4MC1cdTE5QUJcdTE5QjAtXHUxOUM5XHUxOUQwLVx1MTlEOVx1MUEwMC1cdTFBMUJcdTFBMjAtXHUxQTVFXHUxQTYwLVx1MUE3Q1x1MUE3Ri1cdTFBODlcdTFBOTAtXHUxQTk5XHUxQUE3XHUxQUIwLVx1MUFCRFx1MUIwMC1cdTFCNEJcdTFCNTAtXHUxQjU5XHUxQjZCLVx1MUI3M1x1MUI4MC1cdTFCRjNcdTFDMDAtXHUxQzM3XHUxQzQwLVx1MUM0OVx1MUM0RC1cdTFDN0RcdTFDODAtXHUxQzg4XHUxQ0QwLVx1MUNEMlx1MUNENC1cdTFDRjlcdTFEMDAtXHUxREY5XHUxREZCLVx1MUYxNVx1MUYxOC1cdTFGMURcdTFGMjAtXHUxRjQ1XHUxRjQ4LVx1MUY0RFx1MUY1MC1cdTFGNTdcdTFGNTlcdTFGNUJcdTFGNURcdTFGNUYtXHUxRjdEXHUxRjgwLVx1MUZCNFx1MUZCNi1cdTFGQkNcdTFGQkVcdTFGQzItXHUxRkM0XHUxRkM2LVx1MUZDQ1x1MUZEMC1cdTFGRDNcdTFGRDYtXHUxRkRCXHUxRkUwLVx1MUZFQ1x1MUZGMi1cdTFGRjRcdTFGRjYtXHUxRkZDXHUyMDNGXHUyMDQwXHUyMDU0XHUyMDcxXHUyMDdGXHUyMDkwLVx1MjA5Q1x1MjBEMC1cdTIwRENcdTIwRTFcdTIwRTUtXHUyMEYwXHUyMTAyXHUyMTA3XHUyMTBBLVx1MjExM1x1MjExNVx1MjExOS1cdTIxMURcdTIxMjRcdTIxMjZcdTIxMjhcdTIxMkEtXHUyMTJEXHUyMTJGLVx1MjEzOVx1MjEzQy1cdTIxM0ZcdTIxNDUtXHUyMTQ5XHUyMTRFXHUyMTYwLVx1MjE4OFx1MkMwMC1cdTJDMkVcdTJDMzAtXHUyQzVFXHUyQzYwLVx1MkNFNFx1MkNFQi1cdTJDRjNcdTJEMDAtXHUyRDI1XHUyRDI3XHUyRDJEXHUyRDMwLVx1MkQ2N1x1MkQ2Rlx1MkQ3Ri1cdTJEOTZcdTJEQTAtXHUyREE2XHUyREE4LVx1MkRBRVx1MkRCMC1cdTJEQjZcdTJEQjgtXHUyREJFXHUyREMwLVx1MkRDNlx1MkRDOC1cdTJEQ0VcdTJERDAtXHUyREQ2XHUyREQ4LVx1MkRERVx1MkRFMC1cdTJERkZcdTJFMkZcdTMwMDUtXHUzMDA3XHUzMDIxLVx1MzAyRlx1MzAzMS1cdTMwMzVcdTMwMzgtXHUzMDNDXHUzMDQxLVx1MzA5Nlx1MzA5OVx1MzA5QVx1MzA5RC1cdTMwOUZcdTMwQTEtXHUzMEZBXHUzMEZDLVx1MzBGRlx1MzEwNS1cdTMxMkVcdTMxMzEtXHUzMThFXHUzMUEwLVx1MzFCQVx1MzFGMC1cdTMxRkZcdTM0MDAtXHU0REI1XHU0RTAwLVx1OUZFQVx1QTAwMC1cdUE0OENcdUE0RDAtXHVBNEZEXHVBNTAwLVx1QTYwQ1x1QTYxMC1cdUE2MkJcdUE2NDAtXHVBNjZGXHVBNjc0LVx1QTY3RFx1QTY3Ri1cdUE2RjFcdUE3MTctXHVBNzFGXHVBNzIyLVx1QTc4OFx1QTc4Qi1cdUE3QUVcdUE3QjAtXHVBN0I3XHVBN0Y3LVx1QTgyN1x1QTg0MC1cdUE4NzNcdUE4ODAtXHVBOEM1XHVBOEQwLVx1QThEOVx1QThFMC1cdUE4RjdcdUE4RkJcdUE4RkRcdUE5MDAtXHVBOTJEXHVBOTMwLVx1QTk1M1x1QTk2MC1cdUE5N0NcdUE5ODAtXHVBOUMwXHVBOUNGLVx1QTlEOVx1QTlFMC1cdUE5RkVcdUFBMDAtXHVBQTM2XHVBQTQwLVx1QUE0RFx1QUE1MC1cdUFBNTlcdUFBNjAtXHVBQTc2XHVBQTdBLVx1QUFDMlx1QUFEQi1cdUFBRERcdUFBRTAtXHVBQUVGXHVBQUYyLVx1QUFGNlx1QUIwMS1cdUFCMDZcdUFCMDktXHVBQjBFXHVBQjExLVx1QUIxNlx1QUIyMC1cdUFCMjZcdUFCMjgtXHVBQjJFXHVBQjMwLVx1QUI1QVx1QUI1Qy1cdUFCNjVcdUFCNzAtXHVBQkVBXHVBQkVDXHVBQkVEXHVBQkYwLVx1QUJGOVx1QUMwMC1cdUQ3QTNcdUQ3QjAtXHVEN0M2XHVEN0NCLVx1RDdGQlx1RjkwMC1cdUZBNkRcdUZBNzAtXHVGQUQ5XHVGQjAwLVx1RkIwNlx1RkIxMy1cdUZCMTdcdUZCMUQtXHVGQjI4XHVGQjJBLVx1RkIzNlx1RkIzOC1cdUZCM0NcdUZCM0VcdUZCNDBcdUZCNDFcdUZCNDNcdUZCNDRcdUZCNDYtXHVGQkIxXHVGQkQzLVx1RkQzRFx1RkQ1MC1cdUZEOEZcdUZEOTItXHVGREM3XHVGREYwLVx1RkRGQlx1RkUwMC1cdUZFMEZcdUZFMjAtXHVGRTJGXHVGRTMzXHVGRTM0XHVGRTRELVx1RkU0Rlx1RkU3MC1cdUZFNzRcdUZFNzYtXHVGRUZDXHVGRjEwLVx1RkYxOVx1RkYyMS1cdUZGM0FcdUZGM0ZcdUZGNDEtXHVGRjVBXHVGRjY2LVx1RkZCRVx1RkZDMi1cdUZGQzdcdUZGQ0EtXHVGRkNGXHVGRkQyLVx1RkZEN1x1RkZEQS1cdUZGRENdfFx1RDgwMFtcdURDMDAtXHVEQzBCXHVEQzBELVx1REMyNlx1REMyOC1cdURDM0FcdURDM0NcdURDM0RcdURDM0YtXHVEQzREXHVEQzUwLVx1REM1RFx1REM4MC1cdURDRkFcdURENDAtXHVERDc0XHVEREZEXHVERTgwLVx1REU5Q1x1REVBMC1cdURFRDBcdURFRTBcdURGMDAtXHVERjFGXHVERjJELVx1REY0QVx1REY1MC1cdURGN0FcdURGODAtXHVERjlEXHVERkEwLVx1REZDM1x1REZDOC1cdURGQ0ZcdURGRDEtXHVERkQ1XXxcdUQ4MDFbXHVEQzAwLVx1REM5RFx1RENBMC1cdURDQTlcdURDQjAtXHVEQ0QzXHVEQ0Q4LVx1RENGQlx1REQwMC1cdUREMjdcdUREMzAtXHVERDYzXHVERTAwLVx1REYzNlx1REY0MC1cdURGNTVcdURGNjAtXHVERjY3XXxcdUQ4MDJbXHVEQzAwLVx1REMwNVx1REMwOFx1REMwQS1cdURDMzVcdURDMzdcdURDMzhcdURDM0NcdURDM0YtXHVEQzU1XHVEQzYwLVx1REM3Nlx1REM4MC1cdURDOUVcdURDRTAtXHVEQ0YyXHVEQ0Y0XHVEQ0Y1XHVERDAwLVx1REQxNVx1REQyMC1cdUREMzlcdUREODAtXHVEREI3XHVEREJFXHVEREJGXHVERTAwLVx1REUwM1x1REUwNVx1REUwNlx1REUwQy1cdURFMTNcdURFMTUtXHVERTE3XHVERTE5LVx1REUzM1x1REUzOC1cdURFM0FcdURFM0ZcdURFNjAtXHVERTdDXHVERTgwLVx1REU5Q1x1REVDMC1cdURFQzdcdURFQzktXHVERUU2XHVERjAwLVx1REYzNVx1REY0MC1cdURGNTVcdURGNjAtXHVERjcyXHVERjgwLVx1REY5MV18XHVEODAzW1x1REMwMC1cdURDNDhcdURDODAtXHVEQ0IyXHVEQ0MwLVx1RENGMl18XHVEODA0W1x1REMwMC1cdURDNDZcdURDNjYtXHVEQzZGXHVEQzdGLVx1RENCQVx1RENEMC1cdURDRThcdURDRjAtXHVEQ0Y5XHVERDAwLVx1REQzNFx1REQzNi1cdUREM0ZcdURENTAtXHVERDczXHVERDc2XHVERDgwLVx1RERDNFx1RERDQS1cdUREQ0NcdURERDAtXHVERERBXHVERERDXHVERTAwLVx1REUxMVx1REUxMy1cdURFMzdcdURFM0VcdURFODAtXHVERTg2XHVERTg4XHVERThBLVx1REU4RFx1REU4Ri1cdURFOURcdURFOUYtXHVERUE4XHVERUIwLVx1REVFQVx1REVGMC1cdURFRjlcdURGMDAtXHVERjAzXHVERjA1LVx1REYwQ1x1REYwRlx1REYxMFx1REYxMy1cdURGMjhcdURGMkEtXHVERjMwXHVERjMyXHVERjMzXHVERjM1LVx1REYzOVx1REYzQy1cdURGNDRcdURGNDdcdURGNDhcdURGNEItXHVERjREXHVERjUwXHVERjU3XHVERjVELVx1REY2M1x1REY2Ni1cdURGNkNcdURGNzAtXHVERjc0XXxcdUQ4MDVbXHVEQzAwLVx1REM0QVx1REM1MC1cdURDNTlcdURDODAtXHVEQ0M1XHVEQ0M3XHVEQ0QwLVx1RENEOVx1REQ4MC1cdUREQjVcdUREQjgtXHVEREMwXHVEREQ4LVx1RERERFx1REUwMC1cdURFNDBcdURFNDRcdURFNTAtXHVERTU5XHVERTgwLVx1REVCN1x1REVDMC1cdURFQzlcdURGMDAtXHVERjE5XHVERjFELVx1REYyQlx1REYzMC1cdURGMzldfFx1RDgwNltcdURDQTAtXHVEQ0U5XHVEQ0ZGXHVERTAwLVx1REUzRVx1REU0N1x1REU1MC1cdURFODNcdURFODYtXHVERTk5XHVERUMwLVx1REVGOF18XHVEODA3W1x1REMwMC1cdURDMDhcdURDMEEtXHVEQzM2XHVEQzM4LVx1REM0MFx1REM1MC1cdURDNTlcdURDNzItXHVEQzhGXHVEQzkyLVx1RENBN1x1RENBOS1cdURDQjZcdUREMDAtXHVERDA2XHVERDA4XHVERDA5XHVERDBCLVx1REQzNlx1REQzQVx1REQzQ1x1REQzRFx1REQzRi1cdURENDdcdURENTAtXHVERDU5XXxcdUQ4MDhbXHVEQzAwLVx1REY5OV18XHVEODA5W1x1REMwMC1cdURDNkVcdURDODAtXHVERDQzXXxbXHVEODBDXHVEODFDLVx1RDgyMFx1RDg0MC1cdUQ4NjhcdUQ4NkEtXHVEODZDXHVEODZGLVx1RDg3Mlx1RDg3NC1cdUQ4NzldW1x1REMwMC1cdURGRkZdfFx1RDgwRFtcdURDMDAtXHVEQzJFXXxcdUQ4MTFbXHVEQzAwLVx1REU0Nl18XHVEODFBW1x1REMwMC1cdURFMzhcdURFNDAtXHVERTVFXHVERTYwLVx1REU2OVx1REVEMC1cdURFRURcdURFRjAtXHVERUY0XHVERjAwLVx1REYzNlx1REY0MC1cdURGNDNcdURGNTAtXHVERjU5XHVERjYzLVx1REY3N1x1REY3RC1cdURGOEZdfFx1RDgxQltcdURGMDAtXHVERjQ0XHVERjUwLVx1REY3RVx1REY4Ri1cdURGOUZcdURGRTBcdURGRTFdfFx1RDgyMVtcdURDMDAtXHVERkVDXXxcdUQ4MjJbXHVEQzAwLVx1REVGMl18XHVEODJDW1x1REMwMC1cdUREMUVcdURENzAtXHVERUZCXXxcdUQ4MkZbXHVEQzAwLVx1REM2QVx1REM3MC1cdURDN0NcdURDODAtXHVEQzg4XHVEQzkwLVx1REM5OVx1REM5RFx1REM5RV18XHVEODM0W1x1REQ2NS1cdURENjlcdURENkQtXHVERDcyXHVERDdCLVx1REQ4Mlx1REQ4NS1cdUREOEJcdUREQUEtXHVEREFEXHVERTQyLVx1REU0NF18XHVEODM1W1x1REMwMC1cdURDNTRcdURDNTYtXHVEQzlDXHVEQzlFXHVEQzlGXHVEQ0EyXHVEQ0E1XHVEQ0E2XHVEQ0E5LVx1RENBQ1x1RENBRS1cdURDQjlcdURDQkJcdURDQkQtXHVEQ0MzXHVEQ0M1LVx1REQwNVx1REQwNy1cdUREMEFcdUREMEQtXHVERDE0XHVERDE2LVx1REQxQ1x1REQxRS1cdUREMzlcdUREM0ItXHVERDNFXHVERDQwLVx1REQ0NFx1REQ0Nlx1REQ0QS1cdURENTBcdURENTItXHVERUE1XHVERUE4LVx1REVDMFx1REVDMi1cdURFREFcdURFREMtXHVERUZBXHVERUZDLVx1REYxNFx1REYxNi1cdURGMzRcdURGMzYtXHVERjRFXHVERjUwLVx1REY2RVx1REY3MC1cdURGODhcdURGOEEtXHVERkE4XHVERkFBLVx1REZDMlx1REZDNC1cdURGQ0JcdURGQ0UtXHVERkZGXXxcdUQ4MzZbXHVERTAwLVx1REUzNlx1REUzQi1cdURFNkNcdURFNzVcdURFODRcdURFOUItXHVERTlGXHVERUExLVx1REVBRl18XHVEODM4W1x1REMwMC1cdURDMDZcdURDMDgtXHVEQzE4XHVEQzFCLVx1REMyMVx1REMyM1x1REMyNFx1REMyNi1cdURDMkFdfFx1RDgzQVtcdURDMDAtXHVEQ0M0XHVEQ0QwLVx1RENENlx1REQwMC1cdURENEFcdURENTAtXHVERDU5XXxcdUQ4M0JbXHVERTAwLVx1REUwM1x1REUwNS1cdURFMUZcdURFMjFcdURFMjJcdURFMjRcdURFMjdcdURFMjktXHVERTMyXHVERTM0LVx1REUzN1x1REUzOVx1REUzQlx1REU0Mlx1REU0N1x1REU0OVx1REU0Qlx1REU0RC1cdURFNEZcdURFNTFcdURFNTJcdURFNTRcdURFNTdcdURFNTlcdURFNUJcdURFNURcdURFNUZcdURFNjFcdURFNjJcdURFNjRcdURFNjctXHVERTZBXHVERTZDLVx1REU3Mlx1REU3NC1cdURFNzdcdURFNzktXHVERTdDXHVERTdFXHVERTgwLVx1REU4OVx1REU4Qi1cdURFOUJcdURFQTEtXHVERUEzXHVERUE1LVx1REVBOVx1REVBQi1cdURFQkJdfFx1RDg2OVtcdURDMDAtXHVERUQ2XHVERjAwLVx1REZGRl18XHVEODZEW1x1REMwMC1cdURGMzRcdURGNDAtXHVERkZGXXxcdUQ4NkVbXHVEQzAwLVx1REMxRFx1REMyMC1cdURGRkZdfFx1RDg3M1tcdURDMDAtXHVERUExXHVERUIwLVx1REZGRl18XHVEODdBW1x1REMwMC1cdURGRTBdfFx1RDg3RVtcdURDMDAtXHVERTFEXXxcdURCNDBbXHVERDAwLVx1RERFRl0vfSxVPXtpc1NwYWNlU2VwYXJhdG9yOmZ1bmN0aW9uKHUpe3JldHVybiJzdHJpbmciPT10eXBlb2YgdSYmRy5TcGFjZV9TZXBhcmF0b3IudGVzdCh1KX0saXNJZFN0YXJ0Q2hhcjpmdW5jdGlvbih1KXtyZXR1cm4ic3RyaW5nIj09dHlwZW9mIHUmJih1Pj0iYSImJnU8PSJ6Inx8dT49IkEiJiZ1PD0iWiJ8fCIkIj09PXV8fCJfIj09PXV8fEcuSURfU3RhcnQudGVzdCh1KSl9LGlzSWRDb250aW51ZUNoYXI6ZnVuY3Rpb24odSl7cmV0dXJuInN0cmluZyI9PXR5cGVvZiB1JiYodT49ImEiJiZ1PD0ieiJ8fHU+PSJBIiYmdTw9IloifHx1Pj0iMCImJnU8PSI5Inx8IiQiPT09dXx8Il8iPT09dXx8IuKAjCI9PT11fHwi4oCNIj09PXV8fEcuSURfQ29udGludWUudGVzdCh1KSl9LGlzRGlnaXQ6ZnVuY3Rpb24odSl7cmV0dXJuInN0cmluZyI9PXR5cGVvZiB1JiYvWzAtOV0vLnRlc3QodSl9LGlzSGV4RGlnaXQ6ZnVuY3Rpb24odSl7cmV0dXJuInN0cmluZyI9PXR5cGVvZiB1JiYvWzAtOUEtRmEtZl0vLnRlc3QodSl9fTtmdW5jdGlvbiBaKCl7Zm9yKFQ9ImRlZmF1bHQiLHo9IiIsSD0hMSwkPTE7Oyl7Uj1xKCk7dmFyIHU9WFtUXSgpO2lmKHUpcmV0dXJuIHV9fWZ1bmN0aW9uIHEoKXtpZihfW0ldKXJldHVybiBTdHJpbmcuZnJvbUNvZGVQb2ludChfLmNvZGVQb2ludEF0KEkpKX1mdW5jdGlvbiBXKCl7dmFyIHU9cSgpO3JldHVybiJcbiI9PT11PyhWKyssSj0wKTp1P0orPXUubGVuZ3RoOkorKyx1JiYoSSs9dS5sZW5ndGgpLHV9dmFyIFg9e2RlZmF1bHQ6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSJcdCI6Y2FzZSJcdiI6Y2FzZSJcZiI6Y2FzZSIgIjpjYXNlIiAiOmNhc2UiXHVmZWZmIjpjYXNlIlxuIjpjYXNlIlxyIjpjYXNlIlx1MjAyOCI6Y2FzZSJcdTIwMjkiOnJldHVybiB2b2lkIFcoKTtjYXNlIi8iOnJldHVybiBXKCksdm9pZChUPSJjb21tZW50Iik7Y2FzZSB2b2lkIDA6cmV0dXJuIFcoKSxLKCJlb2YiKX1pZighVS5pc1NwYWNlU2VwYXJhdG9yKFIpKXJldHVybiBYW09dKCk7VygpfSxjb21tZW50OmZ1bmN0aW9uKCl7c3dpdGNoKFIpe2Nhc2UiKiI6cmV0dXJuIFcoKSx2b2lkKFQ9Im11bHRpTGluZUNvbW1lbnQiKTtjYXNlIi8iOnJldHVybiBXKCksdm9pZChUPSJzaW5nbGVMaW5lQ29tbWVudCIpfXRocm93IHJ1KFcoKSl9LG11bHRpTGluZUNvbW1lbnQ6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSIqIjpyZXR1cm4gVygpLHZvaWQoVD0ibXVsdGlMaW5lQ29tbWVudEFzdGVyaXNrIik7Y2FzZSB2b2lkIDA6dGhyb3cgcnUoVygpKX1XKCl9LG11bHRpTGluZUNvbW1lbnRBc3RlcmlzazpmdW5jdGlvbigpe3N3aXRjaChSKXtjYXNlIioiOnJldHVybiB2b2lkIFcoKTtjYXNlIi8iOnJldHVybiBXKCksdm9pZChUPSJkZWZhdWx0Iik7Y2FzZSB2b2lkIDA6dGhyb3cgcnUoVygpKX1XKCksVD0ibXVsdGlMaW5lQ29tbWVudCJ9LHNpbmdsZUxpbmVDb21tZW50OmZ1bmN0aW9uKCl7c3dpdGNoKFIpe2Nhc2UiXG4iOmNhc2UiXHIiOmNhc2UiXHUyMDI4IjpjYXNlIlx1MjAyOSI6cmV0dXJuIFcoKSx2b2lkKFQ9ImRlZmF1bHQiKTtjYXNlIHZvaWQgMDpyZXR1cm4gVygpLEsoImVvZiIpfVcoKX0sdmFsdWU6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSJ7IjpjYXNlIlsiOnJldHVybiBLKCJwdW5jdHVhdG9yIixXKCkpO2Nhc2UibiI6cmV0dXJuIFcoKSxRKCJ1bGwiKSxLKCJudWxsIixudWxsKTtjYXNlInQiOnJldHVybiBXKCksUSgicnVlIiksSygiYm9vbGVhbiIsITApO2Nhc2UiZiI6cmV0dXJuIFcoKSxRKCJhbHNlIiksSygiYm9vbGVhbiIsITEpO2Nhc2UiLSI6Y2FzZSIrIjpyZXR1cm4iLSI9PT1XKCkmJigkPS0xKSx2b2lkKFQ9InNpZ24iKTtjYXNlIi4iOnJldHVybiB6PVcoKSx2b2lkKFQ9ImRlY2ltYWxQb2ludExlYWRpbmciKTtjYXNlIjAiOnJldHVybiB6PVcoKSx2b2lkKFQ9Inplcm8iKTtjYXNlIjEiOmNhc2UiMiI6Y2FzZSIzIjpjYXNlIjQiOmNhc2UiNSI6Y2FzZSI2IjpjYXNlIjciOmNhc2UiOCI6Y2FzZSI5IjpyZXR1cm4gej1XKCksdm9pZChUPSJkZWNpbWFsSW50ZWdlciIpO2Nhc2UiSSI6cmV0dXJuIFcoKSxRKCJuZmluaXR5IiksSygibnVtZXJpYyIsMS8wKTtjYXNlIk4iOnJldHVybiBXKCksUSgiYU4iKSxLKCJudW1lcmljIixOYU4pO2Nhc2UnIic6Y2FzZSInIjpyZXR1cm4gSD0nIic9PT1XKCksej0iIix2b2lkKFQ9InN0cmluZyIpfXRocm93IHJ1KFcoKSl9LGlkZW50aWZpZXJOYW1lU3RhcnRFc2NhcGU6ZnVuY3Rpb24oKXtpZigidSIhPT1SKXRocm93IHJ1KFcoKSk7VygpO3ZhciB1PVkoKTtzd2l0Y2godSl7Y2FzZSIkIjpjYXNlIl8iOmJyZWFrO2RlZmF1bHQ6aWYoIVUuaXNJZFN0YXJ0Q2hhcih1KSl0aHJvdyBudSgpfXorPXUsVD0iaWRlbnRpZmllck5hbWUifSxpZGVudGlmaWVyTmFtZTpmdW5jdGlvbigpe3N3aXRjaChSKXtjYXNlIiQiOmNhc2UiXyI6Y2FzZSLigIwiOmNhc2Ui4oCNIjpyZXR1cm4gdm9pZCh6Kz1XKCkpO2Nhc2UiXFwiOnJldHVybiBXKCksdm9pZChUPSJpZGVudGlmaWVyTmFtZUVzY2FwZSIpfWlmKCFVLmlzSWRDb250aW51ZUNoYXIoUikpcmV0dXJuIEsoImlkZW50aWZpZXIiLHopO3orPVcoKX0saWRlbnRpZmllck5hbWVFc2NhcGU6ZnVuY3Rpb24oKXtpZigidSIhPT1SKXRocm93IHJ1KFcoKSk7VygpO3ZhciB1PVkoKTtzd2l0Y2godSl7Y2FzZSIkIjpjYXNlIl8iOmNhc2Ui4oCMIjpjYXNlIuKAjSI6YnJlYWs7ZGVmYXVsdDppZighVS5pc0lkQ29udGludWVDaGFyKHUpKXRocm93IG51KCl9eis9dSxUPSJpZGVudGlmaWVyTmFtZSJ9LHNpZ246ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSIuIjpyZXR1cm4gej1XKCksdm9pZChUPSJkZWNpbWFsUG9pbnRMZWFkaW5nIik7Y2FzZSIwIjpyZXR1cm4gej1XKCksdm9pZChUPSJ6ZXJvIik7Y2FzZSIxIjpjYXNlIjIiOmNhc2UiMyI6Y2FzZSI0IjpjYXNlIjUiOmNhc2UiNiI6Y2FzZSI3IjpjYXNlIjgiOmNhc2UiOSI6cmV0dXJuIHo9VygpLHZvaWQoVD0iZGVjaW1hbEludGVnZXIiKTtjYXNlIkkiOnJldHVybiBXKCksUSgibmZpbml0eSIpLEsoIm51bWVyaWMiLCQqKDEvMCkpO2Nhc2UiTiI6cmV0dXJuIFcoKSxRKCJhTiIpLEsoIm51bWVyaWMiLE5hTil9dGhyb3cgcnUoVygpKX0semVybzpmdW5jdGlvbigpe3N3aXRjaChSKXtjYXNlIi4iOnJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsUG9pbnQiKTtjYXNlImUiOmNhc2UiRSI6cmV0dXJuIHorPVcoKSx2b2lkKFQ9ImRlY2ltYWxFeHBvbmVudCIpO2Nhc2UieCI6Y2FzZSJYIjpyZXR1cm4geis9VygpLHZvaWQoVD0iaGV4YWRlY2ltYWwiKX1yZXR1cm4gSygibnVtZXJpYyIsMCokKX0sZGVjaW1hbEludGVnZXI6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSIuIjpyZXR1cm4geis9VygpLHZvaWQoVD0iZGVjaW1hbFBvaW50Iik7Y2FzZSJlIjpjYXNlIkUiOnJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsRXhwb25lbnQiKX1pZighVS5pc0RpZ2l0KFIpKXJldHVybiBLKCJudW1lcmljIiwkKk51bWJlcih6KSk7eis9VygpfSxkZWNpbWFsUG9pbnRMZWFkaW5nOmZ1bmN0aW9uKCl7aWYoVS5pc0RpZ2l0KFIpKXJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsRnJhY3Rpb24iKTt0aHJvdyBydShXKCkpfSxkZWNpbWFsUG9pbnQ6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSJlIjpjYXNlIkUiOnJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsRXhwb25lbnQiKX1yZXR1cm4gVS5pc0RpZ2l0KFIpPyh6Kz1XKCksdm9pZChUPSJkZWNpbWFsRnJhY3Rpb24iKSk6SygibnVtZXJpYyIsJCpOdW1iZXIoeikpfSxkZWNpbWFsRnJhY3Rpb246ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSJlIjpjYXNlIkUiOnJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsRXhwb25lbnQiKX1pZighVS5pc0RpZ2l0KFIpKXJldHVybiBLKCJudW1lcmljIiwkKk51bWJlcih6KSk7eis9VygpfSxkZWNpbWFsRXhwb25lbnQ6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSIrIjpjYXNlIi0iOnJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsRXhwb25lbnRTaWduIil9aWYoVS5pc0RpZ2l0KFIpKXJldHVybiB6Kz1XKCksdm9pZChUPSJkZWNpbWFsRXhwb25lbnRJbnRlZ2VyIik7dGhyb3cgcnUoVygpKX0sZGVjaW1hbEV4cG9uZW50U2lnbjpmdW5jdGlvbigpe2lmKFUuaXNEaWdpdChSKSlyZXR1cm4geis9VygpLHZvaWQoVD0iZGVjaW1hbEV4cG9uZW50SW50ZWdlciIpO3Rocm93IHJ1KFcoKSl9LGRlY2ltYWxFeHBvbmVudEludGVnZXI6ZnVuY3Rpb24oKXtpZighVS5pc0RpZ2l0KFIpKXJldHVybiBLKCJudW1lcmljIiwkKk51bWJlcih6KSk7eis9VygpfSxoZXhhZGVjaW1hbDpmdW5jdGlvbigpe2lmKFUuaXNIZXhEaWdpdChSKSlyZXR1cm4geis9VygpLHZvaWQoVD0iaGV4YWRlY2ltYWxJbnRlZ2VyIik7dGhyb3cgcnUoVygpKX0saGV4YWRlY2ltYWxJbnRlZ2VyOmZ1bmN0aW9uKCl7aWYoIVUuaXNIZXhEaWdpdChSKSlyZXR1cm4gSygibnVtZXJpYyIsJCpOdW1iZXIoeikpO3orPVcoKX0sc3RyaW5nOmZ1bmN0aW9uKCl7c3dpdGNoKFIpe2Nhc2UiXFwiOnJldHVybiBXKCksdm9pZCh6Kz1mdW5jdGlvbigpe3N3aXRjaChxKCkpe2Nhc2UiYiI6cmV0dXJuIFcoKSwiXGIiO2Nhc2UiZiI6cmV0dXJuIFcoKSwiXGYiO2Nhc2UibiI6cmV0dXJuIFcoKSwiXG4iO2Nhc2UiciI6cmV0dXJuIFcoKSwiXHIiO2Nhc2UidCI6cmV0dXJuIFcoKSwiXHQiO2Nhc2UidiI6cmV0dXJuIFcoKSwiXHYiO2Nhc2UiMCI6aWYoVygpLFUuaXNEaWdpdChxKCkpKXRocm93IHJ1KFcoKSk7cmV0dXJuIlwwIjtjYXNlIngiOnJldHVybiBXKCksZnVuY3Rpb24oKXt2YXIgdT0iIixEPXEoKTtpZighVS5pc0hleERpZ2l0KEQpKXRocm93IHJ1KFcoKSk7aWYodSs9VygpLEQ9cSgpLCFVLmlzSGV4RGlnaXQoRCkpdGhyb3cgcnUoVygpKTtyZXR1cm4gdSs9VygpLFN0cmluZy5mcm9tQ29kZVBvaW50KHBhcnNlSW50KHUsMTYpKX0oKTtjYXNlInUiOnJldHVybiBXKCksWSgpO2Nhc2UiXG4iOmNhc2UiXHUyMDI4IjpjYXNlIlx1MjAyOSI6cmV0dXJuIFcoKSwiIjtjYXNlIlxyIjpyZXR1cm4gVygpLCJcbiI9PT1xKCkmJlcoKSwiIjtjYXNlIjEiOmNhc2UiMiI6Y2FzZSIzIjpjYXNlIjQiOmNhc2UiNSI6Y2FzZSI2IjpjYXNlIjciOmNhc2UiOCI6Y2FzZSI5IjpjYXNlIHZvaWQgMDp0aHJvdyBydShXKCkpfXJldHVybiBXKCl9KCkpO2Nhc2UnIic6cmV0dXJuIEg/KFcoKSxLKCJzdHJpbmciLHopKTp2b2lkKHorPVcoKSk7Y2FzZSInIjpyZXR1cm4gSD92b2lkKHorPVcoKSk6KFcoKSxLKCJzdHJpbmciLHopKTtjYXNlIlxuIjpjYXNlIlxyIjp0aHJvdyBydShXKCkpO2Nhc2UiXHUyMDI4IjpjYXNlIlx1MjAyOSI6IWZ1bmN0aW9uKHUpe2NvbnNvbGUud2FybigiSlNPTjU6ICciK0Z1KHUpKyInIGluIHN0cmluZ3MgaXMgbm90IHZhbGlkIEVDTUFTY3JpcHQ7IGNvbnNpZGVyIGVzY2FwaW5nIil9KFIpO2JyZWFrO2Nhc2Ugdm9pZCAwOnRocm93IHJ1KFcoKSl9eis9VygpfSxzdGFydDpmdW5jdGlvbigpe3N3aXRjaChSKXtjYXNlInsiOmNhc2UiWyI6cmV0dXJuIEsoInB1bmN0dWF0b3IiLFcoKSl9VD0idmFsdWUifSxiZWZvcmVQcm9wZXJ0eU5hbWU6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSIkIjpjYXNlIl8iOnJldHVybiB6PVcoKSx2b2lkKFQ9ImlkZW50aWZpZXJOYW1lIik7Y2FzZSJcXCI6cmV0dXJuIFcoKSx2b2lkKFQ9ImlkZW50aWZpZXJOYW1lU3RhcnRFc2NhcGUiKTtjYXNlIn0iOnJldHVybiBLKCJwdW5jdHVhdG9yIixXKCkpO2Nhc2UnIic6Y2FzZSInIjpyZXR1cm4gSD0nIic9PT1XKCksdm9pZChUPSJzdHJpbmciKX1pZihVLmlzSWRTdGFydENoYXIoUikpcmV0dXJuIHorPVcoKSx2b2lkKFQ9ImlkZW50aWZpZXJOYW1lIik7dGhyb3cgcnUoVygpKX0sYWZ0ZXJQcm9wZXJ0eU5hbWU6ZnVuY3Rpb24oKXtpZigiOiI9PT1SKXJldHVybiBLKCJwdW5jdHVhdG9yIixXKCkpO3Rocm93IHJ1KFcoKSl9LGJlZm9yZVByb3BlcnR5VmFsdWU6ZnVuY3Rpb24oKXtUPSJ2YWx1ZSJ9LGFmdGVyUHJvcGVydHlWYWx1ZTpmdW5jdGlvbigpe3N3aXRjaChSKXtjYXNlIiwiOmNhc2UifSI6cmV0dXJuIEsoInB1bmN0dWF0b3IiLFcoKSl9dGhyb3cgcnUoVygpKX0sYmVmb3JlQXJyYXlWYWx1ZTpmdW5jdGlvbigpe2lmKCJdIj09PVIpcmV0dXJuIEsoInB1bmN0dWF0b3IiLFcoKSk7VD0idmFsdWUifSxhZnRlckFycmF5VmFsdWU6ZnVuY3Rpb24oKXtzd2l0Y2goUil7Y2FzZSIsIjpjYXNlIl0iOnJldHVybiBLKCJwdW5jdHVhdG9yIixXKCkpfXRocm93IHJ1KFcoKSl9LGVuZDpmdW5jdGlvbigpe3Rocm93IHJ1KFcoKSl9fTtmdW5jdGlvbiBLKHUsRCl7cmV0dXJue3R5cGU6dSx2YWx1ZTpELGxpbmU6Vixjb2x1bW46Sn19ZnVuY3Rpb24gUSh1KXtmb3IodmFyIEQ9MCxlPXU7RDxlLmxlbmd0aDtEKz0xKXt2YXIgcj1lW0RdO2lmKHEoKSE9PXIpdGhyb3cgcnUoVygpKTtXKCl9fWZ1bmN0aW9uIFkoKXtmb3IodmFyIHU9IiIsRD00O0QtLSA+MDspe3ZhciBlPXEoKTtpZighVS5pc0hleERpZ2l0KGUpKXRocm93IHJ1KFcoKSk7dSs9VygpfXJldHVybiBTdHJpbmcuZnJvbUNvZGVQb2ludChwYXJzZUludCh1LDE2KSl9dmFyIHV1PXtzdGFydDpmdW5jdGlvbigpe2lmKCJlb2YiPT09TS50eXBlKXRocm93IHR1KCk7RHUoKX0sYmVmb3JlUHJvcGVydHlOYW1lOmZ1bmN0aW9uKCl7c3dpdGNoKE0udHlwZSl7Y2FzZSJpZGVudGlmaWVyIjpjYXNlInN0cmluZyI6cmV0dXJuIGs9TS52YWx1ZSx2b2lkKE89ImFmdGVyUHJvcGVydHlOYW1lIik7Y2FzZSJwdW5jdHVhdG9yIjpyZXR1cm4gdm9pZCBldSgpO2Nhc2UiZW9mIjp0aHJvdyB0dSgpfX0sYWZ0ZXJQcm9wZXJ0eU5hbWU6ZnVuY3Rpb24oKXtpZigiZW9mIj09PU0udHlwZSl0aHJvdyB0dSgpO089ImJlZm9yZVByb3BlcnR5VmFsdWUifSxiZWZvcmVQcm9wZXJ0eVZhbHVlOmZ1bmN0aW9uKCl7aWYoImVvZiI9PT1NLnR5cGUpdGhyb3cgdHUoKTtEdSgpfSxiZWZvcmVBcnJheVZhbHVlOmZ1bmN0aW9uKCl7aWYoImVvZiI9PT1NLnR5cGUpdGhyb3cgdHUoKTsicHVuY3R1YXRvciIhPT1NLnR5cGV8fCJdIiE9PU0udmFsdWU/RHUoKTpldSgpfSxhZnRlclByb3BlcnR5VmFsdWU6ZnVuY3Rpb24oKXtpZigiZW9mIj09PU0udHlwZSl0aHJvdyB0dSgpO3N3aXRjaChNLnZhbHVlKXtjYXNlIiwiOnJldHVybiB2b2lkKE89ImJlZm9yZVByb3BlcnR5TmFtZSIpO2Nhc2UifSI6ZXUoKX19LGFmdGVyQXJyYXlWYWx1ZTpmdW5jdGlvbigpe2lmKCJlb2YiPT09TS50eXBlKXRocm93IHR1KCk7c3dpdGNoKE0udmFsdWUpe2Nhc2UiLCI6cmV0dXJuIHZvaWQoTz0iYmVmb3JlQXJyYXlWYWx1ZSIpO2Nhc2UiXSI6ZXUoKX19LGVuZDpmdW5jdGlvbigpe319O2Z1bmN0aW9uIER1KCl7dmFyIHU7c3dpdGNoKE0udHlwZSl7Y2FzZSJwdW5jdHVhdG9yIjpzd2l0Y2goTS52YWx1ZSl7Y2FzZSJ7Ijp1PXt9O2JyZWFrO2Nhc2UiWyI6dT1bXX1icmVhaztjYXNlIm51bGwiOmNhc2UiYm9vbGVhbiI6Y2FzZSJudW1lcmljIjpjYXNlInN0cmluZyI6dT1NLnZhbHVlfWlmKHZvaWQgMD09PUwpTD11O2Vsc2V7dmFyIEQ9altqLmxlbmd0aC0xXTtBcnJheS5pc0FycmF5KEQpP0QucHVzaCh1KTpPYmplY3QuZGVmaW5lUHJvcGVydHkoRCxrLHt2YWx1ZTp1LHdyaXRhYmxlOiEwLGVudW1lcmFibGU6ITAsY29uZmlndXJhYmxlOiEwfSl9aWYobnVsbCE9PXUmJiJvYmplY3QiPT10eXBlb2YgdSlqLnB1c2godSksTz1BcnJheS5pc0FycmF5KHUpPyJiZWZvcmVBcnJheVZhbHVlIjoiYmVmb3JlUHJvcGVydHlOYW1lIjtlbHNle3ZhciBlPWpbai5sZW5ndGgtMV07Tz1udWxsPT1lPyJlbmQiOkFycmF5LmlzQXJyYXkoZSk/ImFmdGVyQXJyYXlWYWx1ZSI6ImFmdGVyUHJvcGVydHlWYWx1ZSJ9fWZ1bmN0aW9uIGV1KCl7ai5wb3AoKTt2YXIgdT1qW2oubGVuZ3RoLTFdO089bnVsbD09dT8iZW5kIjpBcnJheS5pc0FycmF5KHUpPyJhZnRlckFycmF5VmFsdWUiOiJhZnRlclByb3BlcnR5VmFsdWUifWZ1bmN0aW9uIHJ1KHUpe3JldHVybiBDdSh2b2lkIDA9PT11PyJKU09ONTogaW52YWxpZCBlbmQgb2YgaW5wdXQgYXQgIitWKyI6IitKOiJKU09ONTogaW52YWxpZCBjaGFyYWN0ZXIgJyIrRnUodSkrIicgYXQgIitWKyI6IitKKX1mdW5jdGlvbiB0dSgpe3JldHVybiBDdSgiSlNPTjU6IGludmFsaWQgZW5kIG9mIGlucHV0IGF0ICIrVisiOiIrSil9ZnVuY3Rpb24gbnUoKXtyZXR1cm4gQ3UoIkpTT041OiBpbnZhbGlkIGlkZW50aWZpZXIgY2hhcmFjdGVyIGF0ICIrVisiOiIrKEotPTUpKX1mdW5jdGlvbiBGdSh1KXt2YXIgRD17IiciOiJcXCciLCciJzonXFwiJywiXFwiOiJcXFxcIiwiXGIiOiJcXGIiLCJcZiI6IlxcZiIsIlxuIjoiXFxuIiwiXHIiOiJcXHIiLCJcdCI6IlxcdCIsIlx2IjoiXFx2IiwiXDAiOiJcXDAiLCJcdTIwMjgiOiJcXHUyMDI4IiwiXHUyMDI5IjoiXFx1MjAyOSJ9O2lmKERbdV0pcmV0dXJuIERbdV07aWYodTwiICIpe3ZhciBlPXUuY2hhckNvZGVBdCgwKS50b1N0cmluZygxNik7cmV0dXJuIlxceCIrKCIwMCIrZSkuc3Vic3RyaW5nKGUubGVuZ3RoKX1yZXR1cm4gdX1mdW5jdGlvbiBDdSh1KXt2YXIgRD1uZXcgU3ludGF4RXJyb3IodSk7cmV0dXJuIEQubGluZU51bWJlcj1WLEQuY29sdW1uTnVtYmVyPUosRH1yZXR1cm57cGFyc2U6ZnVuY3Rpb24odSxEKXtfPVN0cmluZyh1KSxPPSJzdGFydCIsaj1bXSxJPTAsVj0xLEo9MCxNPXZvaWQgMCxrPXZvaWQgMCxMPXZvaWQgMDtkb3tNPVooKSx1dVtPXSgpfXdoaWxlKCJlb2YiIT09TS50eXBlKTtyZXR1cm4iZnVuY3Rpb24iPT10eXBlb2YgRD9mdW5jdGlvbiB1KEQsZSxyKXt2YXIgdD1EW2VdO2lmKG51bGwhPXQmJiJvYmplY3QiPT10eXBlb2YgdClpZihBcnJheS5pc0FycmF5KHQpKWZvcih2YXIgbj0wO248dC5sZW5ndGg7bisrKXt2YXIgRj1TdHJpbmcobiksQz11KHQsRixyKTt2b2lkIDA9PT1DP2RlbGV0ZSB0W0ZdOk9iamVjdC5kZWZpbmVQcm9wZXJ0eSh0LEYse3ZhbHVlOkMsd3JpdGFibGU6ITAsZW51bWVyYWJsZTohMCxjb25maWd1cmFibGU6ITB9KX1lbHNlIGZvcih2YXIgQSBpbiB0KXt2YXIgaT11KHQsQSxyKTt2b2lkIDA9PT1pP2RlbGV0ZSB0W0FdOk9iamVjdC5kZWZpbmVQcm9wZXJ0eSh0LEEse3ZhbHVlOmksd3JpdGFibGU6ITAsZW51bWVyYWJsZTohMCxjb25maWd1cmFibGU6ITB9KX1yZXR1cm4gci5jYWxsKEQsZSx0KX0oeyIiOkx9LCIiLEQpOkx9LHN0cmluZ2lmeTpmdW5jdGlvbih1LEQsZSl7dmFyIHIsdCxuLEY9W10sQz0iIixBPSIiO2lmKG51bGw9PUR8fCJvYmplY3QiIT10eXBlb2YgRHx8QXJyYXkuaXNBcnJheShEKXx8KGU9RC5zcGFjZSxuPUQucXVvdGUsRD1ELnJlcGxhY2VyKSwiZnVuY3Rpb24iPT10eXBlb2YgRCl0PUQ7ZWxzZSBpZihBcnJheS5pc0FycmF5KEQpKXtyPVtdO2Zvcih2YXIgaT0wLEU9RDtpPEUubGVuZ3RoO2krPTEpe3ZhciBvPUVbaV0sYT12b2lkIDA7InN0cmluZyI9PXR5cGVvZiBvP2E9bzooIm51bWJlciI9PXR5cGVvZiBvfHxvIGluc3RhbmNlb2YgU3RyaW5nfHxvIGluc3RhbmNlb2YgTnVtYmVyKSYmKGE9U3RyaW5nKG8pKSx2b2lkIDAhPT1hJiZyLmluZGV4T2YoYSk8MCYmci5wdXNoKGEpfX1yZXR1cm4gZSBpbnN0YW5jZW9mIE51bWJlcj9lPU51bWJlcihlKTplIGluc3RhbmNlb2YgU3RyaW5nJiYoZT1TdHJpbmcoZSkpLCJudW1iZXIiPT10eXBlb2YgZT9lPjAmJihlPU1hdGgubWluKDEwLE1hdGguZmxvb3IoZSkpLEE9IiAgICAgICAgICAiLnN1YnN0cigwLGUpKToic3RyaW5nIj09dHlwZW9mIGUmJihBPWUuc3Vic3RyKDAsMTApKSxjKCIiLHsiIjp1fSk7ZnVuY3Rpb24gYyh1LEQpe3ZhciBlPURbdV07c3dpdGNoKG51bGwhPWUmJigiZnVuY3Rpb24iPT10eXBlb2YgZS50b0pTT041P2U9ZS50b0pTT041KHUpOiJmdW5jdGlvbiI9PXR5cGVvZiBlLnRvSlNPTiYmKGU9ZS50b0pTT04odSkpKSx0JiYoZT10LmNhbGwoRCx1LGUpKSxlIGluc3RhbmNlb2YgTnVtYmVyP2U9TnVtYmVyKGUpOmUgaW5zdGFuY2VvZiBTdHJpbmc/ZT1TdHJpbmcoZSk6ZSBpbnN0YW5jZW9mIEJvb2xlYW4mJihlPWUudmFsdWVPZigpKSxlKXtjYXNlIG51bGw6cmV0dXJuIm51bGwiO2Nhc2UhMDpyZXR1cm4idHJ1ZSI7Y2FzZSExOnJldHVybiJmYWxzZSJ9cmV0dXJuInN0cmluZyI9PXR5cGVvZiBlP0IoZSk6Im51bWJlciI9PXR5cGVvZiBlP1N0cmluZyhlKToib2JqZWN0Ij09dHlwZW9mIGU/QXJyYXkuaXNBcnJheShlKT9mdW5jdGlvbih1KXtpZihGLmluZGV4T2YodSk+PTApdGhyb3cgVHlwZUVycm9yKCJDb252ZXJ0aW5nIGNpcmN1bGFyIHN0cnVjdHVyZSB0byBKU09ONSIpO0YucHVzaCh1KTt2YXIgRD1DO0MrPUE7Zm9yKHZhciBlLHI9W10sdD0wO3Q8dS5sZW5ndGg7dCsrKXt2YXIgbj1jKFN0cmluZyh0KSx1KTtyLnB1c2godm9pZCAwIT09bj9uOiJudWxsIil9aWYoMD09PXIubGVuZ3RoKWU9IltdIjtlbHNlIGlmKCIiPT09QSl7dmFyIGk9ci5qb2luKCIsIik7ZT0iWyIraSsiXSJ9ZWxzZXt2YXIgRT0iLFxuIitDLG89ci5qb2luKEUpO2U9IltcbiIrQytvKyIsXG4iK0QrIl0ifXJldHVybiBGLnBvcCgpLEM9RCxlfShlKTpmdW5jdGlvbih1KXtpZihGLmluZGV4T2YodSk+PTApdGhyb3cgVHlwZUVycm9yKCJDb252ZXJ0aW5nIGNpcmN1bGFyIHN0cnVjdHVyZSB0byBKU09ONSIpO0YucHVzaCh1KTt2YXIgRD1DO0MrPUE7Zm9yKHZhciBlLHQsbj1yfHxPYmplY3Qua2V5cyh1KSxpPVtdLEU9MCxvPW47RTxvLmxlbmd0aDtFKz0xKXt2YXIgYT1vW0VdLEI9YyhhLHUpO2lmKHZvaWQgMCE9PUIpe3ZhciBmPXMoYSkrIjoiOyIiIT09QSYmKGYrPSIgIiksZis9QixpLnB1c2goZil9fWlmKDA9PT1pLmxlbmd0aCllPSJ7fSI7ZWxzZSBpZigiIj09PUEpdD1pLmpvaW4oIiwiKSxlPSJ7Iit0KyJ9IjtlbHNle3ZhciBsPSIsXG4iK0M7dD1pLmpvaW4obCksZT0ie1xuIitDK3QrIixcbiIrRCsifSJ9cmV0dXJuIEYucG9wKCksQz1ELGV9KGUpOnZvaWQgMH1mdW5jdGlvbiBCKHUpe2Zvcih2YXIgRD17IiciOi4xLCciJzouMn0sZT17IiciOiJcXCciLCciJzonXFwiJywiXFwiOiJcXFxcIiwiXGIiOiJcXGIiLCJcZiI6IlxcZiIsIlxuIjoiXFxuIiwiXHIiOiJcXHIiLCJcdCI6IlxcdCIsIlx2IjoiXFx2IiwiXDAiOiJcXDAiLCJcdTIwMjgiOiJcXHUyMDI4IiwiXHUyMDI5IjoiXFx1MjAyOSJ9LHI9IiIsdD0wO3Q8dS5sZW5ndGg7dCsrKXt2YXIgRj11W3RdO3N3aXRjaChGKXtjYXNlIiciOmNhc2UnIic6RFtGXSsrLHIrPUY7Y29udGludWU7Y2FzZSJcMCI6aWYoVS5pc0RpZ2l0KHVbdCsxXSkpe3IrPSJcXHgwMCI7Y29udGludWV9fWlmKGVbRl0pcis9ZVtGXTtlbHNlIGlmKEY8IiAiKXt2YXIgQz1GLmNoYXJDb2RlQXQoMCkudG9TdHJpbmcoMTYpO3IrPSJcXHgiKygiMDAiK0MpLnN1YnN0cmluZyhDLmxlbmd0aCl9ZWxzZSByKz1GfXZhciBBPW58fE9iamVjdC5rZXlzKEQpLnJlZHVjZShmdW5jdGlvbih1LGUpe3JldHVybiBEW3VdPERbZV0/dTplfSk7cmV0dXJuIEErKHI9ci5yZXBsYWNlKG5ldyBSZWdFeHAoQSwiZyIpLGVbQV0pKStBfWZ1bmN0aW9uIHModSl7aWYoMD09PXUubGVuZ3RoKXJldHVybiBCKHUpO3ZhciBEPVN0cmluZy5mcm9tQ29kZVBvaW50KHUuY29kZVBvaW50QXQoMCkpO2lmKCFVLmlzSWRTdGFydENoYXIoRCkpcmV0dXJuIEIodSk7Zm9yKHZhciBlPUQubGVuZ3RoO2U8dS5sZW5ndGg7ZSsrKWlmKCFVLmlzSWRDb250aW51ZUNoYXIoU3RyaW5nLmZyb21Db2RlUG9pbnQodS5jb2RlUG9pbnRBdChlKSkpKXJldHVybiBCKHUpO3JldHVybiB1fX19fSk7`;
 //#endregion
 //#region src/client/api/view-server/request.ts
+var VIEW_REQUEST_HEADER = "X-Inspect-View-Request";
+var VIEW_REQUEST_HEADER_VALUE = "true";
 var ApiError = class extends Error {
 	status;
 	constructor(status, message) {
@@ -141369,6 +143754,9 @@ function unwrapFastapiDetail(body) {
 }
 function serverRequestApi(baseUrl, getHeaders) {
 	const apiUrl = baseUrl || "";
+	function addViewRequestHeader(method, headers) {
+		if (method !== "GET") headers[VIEW_REQUEST_HEADER] = VIEW_REQUEST_HEADER_VALUE;
+	}
 	function buildApiUrl(path) {
 		if (!apiUrl) return path;
 		return (apiUrl.endsWith("/") ? apiUrl.slice(0, -1) : apiUrl) + (path.startsWith("/") ? path : `/${path}`);
@@ -141394,6 +143782,7 @@ function serverRequestApi(baseUrl, getHeaders) {
 			Object.assign(responseHeaders, globalHeaders);
 		}
 		if (request.body) responseHeaders["Content-Type"] = "application/json";
+		addViewRequestHeader(method, responseHeaders);
 		const response = await fetch(url, {
 			method,
 			headers: responseHeaders,
@@ -141429,6 +143818,7 @@ function serverRequestApi(baseUrl, getHeaders) {
 			Object.assign(requestHeaders, globalHeaders);
 		}
 		if (body) requestHeaders["Content-Type"] = "application/json";
+		addViewRequestHeader(method, requestHeaders);
 		const response = await fetch(url, {
 			method,
 			headers: requestHeaders,
@@ -141457,6 +143847,7 @@ function serverRequestApi(baseUrl, getHeaders) {
 			const globalHeaders = await getHeaders();
 			Object.assign(headers, globalHeaders);
 		}
+		addViewRequestHeader(method, headers);
 		const response = await fetch(url, {
 			method,
 			headers,
@@ -141773,7 +144164,7 @@ var EditMetadataDialog = ({ showing, setShowing, currentMetadata, logFile, onSav
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 					type: "button",
 					className: clsx("btn", "btn-primary", "text-size-smaller"),
-					onClick: handleSave,
+					onClick: () => void handleSave(),
 					disabled: !canSave,
 					children: submitting ? "Saving…" : "Save"
 				})]
@@ -142179,8 +144570,8 @@ var DownloadButton = ({ label, fileName, fileContents }) => {
 	const api = useApi();
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 		className: "btn btn-outline-primary download-button",
-		onClick: async () => {
-			await api.download_file(fileName, fileContents);
+		onClick: () => {
+			api.download_file(fileName, fileContents);
 		},
 		children: label
 	});
@@ -142681,6 +145072,7 @@ var SampleList = (0, import_react.memo)((props) => {
 		]
 	});
 });
+SampleList.displayName = "SampleList";
 var SamplesViewOptionsPopover_module_default = {
 	container: "_container_1tduz_1",
 	row: "_row_1tduz_8",
@@ -146383,7 +148775,7 @@ function add(elt, child) {
 	else throw new RangeError("Unsupported child node: " + child);
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@codemirror+view@6.43.0/node_modules/@codemirror/view/dist/index.js
+//#region ../../node_modules/.pnpm/@codemirror+view@6.43.1/node_modules/@codemirror/view/dist/index.js
 var nav = typeof navigator != "undefined" ? navigator : {
 	userAgent: "",
 	vendor: "",
@@ -148537,6 +150929,7 @@ var TileUpdate = class {
 			if (composition && next.fromA <= composition.range.fromA && next.toA >= composition.range.toA) {
 				this.forward(next.fromA, composition.range.fromA, composition.range.fromA < composition.range.toA ? 1 : -1);
 				this.emit(posB, composition.range.fromB);
+				this.builder.flushBuffer();
 				this.cache.clear();
 				this.builder.addComposition(composition, compositionContext);
 				this.text.skip(composition.range.toB - composition.range.fromB);
@@ -149578,6 +151971,10 @@ var InlineCoordsScan = class {
 			}
 		}
 		if (!closestRect) {
+			if (!below && !above) return {
+				i: positions[0],
+				after: false
+			};
 			let side = above && (!below || this.y - above.bottom < below.top - this.y) ? above : below;
 			this.y = (side.top + side.bottom) / 2;
 			return this.scan(positions, getRects, true);
@@ -151970,6 +154367,7 @@ var baseTheme$1$1 = /*@__PURE__*/ buildTheme("." + baseThemeID, {
 		padding: "0 2px 0 6px"
 	},
 	".cm-layer": {
+		userSelect: "none",
 		position: "absolute",
 		left: 0,
 		top: 0,
@@ -160586,7 +162984,7 @@ var completionKeymap = [
 ];
 var completionKeymapExt = /*@__PURE__*/ Prec.highest(/*@__PURE__*/ keymap.computeN([completionConfig], (state) => state.facet(completionConfig).defaultKeymap ? [completionKeymap] : []));
 //#endregion
-//#region ../../node_modules/.pnpm/@codemirror+lint@6.9.6/node_modules/@codemirror/lint/dist/index.js
+//#region ../../node_modules/.pnpm/@codemirror+lint@6.9.7/node_modules/@codemirror/lint/dist/index.js
 var SelectedDiagnostic = class {
 	constructor(from, to, diagnostic) {
 		this.from = from;
@@ -160750,7 +163148,7 @@ function lintTooltip(view, pos, side) {
 	return {
 		pos: start,
 		end,
-		above: view.state.doc.lineAt(start).to < end,
+		above: true,
 		create() {
 			return { dom: diagnosticsTooltip(view, found) };
 		}
@@ -164482,11 +166880,11 @@ var makeMetadataValueCompletion = (value) => {
 	if (typeof value === "string") label = `"${value}"`;
 	else if (typeof value === "boolean") label = value ? "True" : "False";
 	else if (value === null) label = "None";
-	else label = String(value);
+	else label = valueAsString(value);
 	return {
 		label,
 		type: "text",
-		info: `Metadata value: ${value}`,
+		info: `Metadata value: ${String(value)}`,
 		boost: 25
 	};
 };
@@ -164660,7 +167058,7 @@ function getCompletions(context, filterItems, samples) {
 			const metadataValues = Array.from(getMetadataPropertyValues(samples, metadataPropertyPath));
 			const currentQuery = currentToken?.text || "";
 			return makeCompletions((currentQuery ? metadataValues.filter((value) => {
-				return (typeof value === "string" ? `"${value}"` : typeof value === "boolean" ? value ? "True" : "False" : value === null ? "None" : String(value)).toLowerCase().startsWith(currentQuery.toLowerCase());
+				return (typeof value === "string" ? `"${value}"` : typeof value === "boolean" ? value ? "True" : "False" : value === null ? "None" : valueAsString(value)).toLowerCase().startsWith(currentQuery.toLowerCase());
 			}) : metadataValues).map(makeMetadataValueCompletion), { includeDefault: false });
 		}
 		if (varName === "id" && samples) {
@@ -166155,7 +168553,7 @@ function buildScoreColumns(ctx) {
 				filter: isNumeric ? "agNumberColumnFilter" : "agTextColumnFilter",
 				resizable: true,
 				cellStyle,
-				comparator: isNumeric ? comparators.number : (a, b) => String(a ?? "").localeCompare(String(b ?? "")),
+				comparator: isNumeric ? comparators.number : (a, b) => valueAsString(a ?? "").localeCompare(valueAsString(b ?? "")),
 				valueGetter: (params) => {
 					const data = params.data?.data;
 					if (!data) return void 0;
@@ -166222,7 +168620,7 @@ function buildScoreColumns(ctx) {
 				if (typeof v === "number") return v.toFixed(3);
 				return String(v);
 			},
-			comparator: isUniformNumber ? comparators.number : (a, b) => String(a ?? "").localeCompare(String(b ?? ""))
+			comparator: isUniformNumber ? comparators.number : (a, b) => valueAsString(a ?? "").localeCompare(valueAsString(b ?? ""))
 		};
 	});
 }
@@ -166877,7 +169275,7 @@ var EditTagsDialog = ({ showing, setShowing, currentTags, logFile, onSaved }) =>
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 					type: "button",
 					className: clsx("btn", "btn-primary", "text-size-smaller"),
-					onClick: handleSave,
+					onClick: () => void handleSave(),
 					disabled: !canSave,
 					children: submitting ? "Saving…" : "Save"
 				})]
@@ -167109,10 +169507,14 @@ var TaskTab = ({ evalSpec, evalStats, earlyStopping, tags }) => {
 		["Task ID"]: evalSpec?.task_id,
 		["Run ID"]: evalSpec?.run_id
 	};
-	if (revision) taskInformation[`${revision.type ? `${toTitleCase(revision.type)} ` : ""}Revision`] = { _html: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-		href: ghCommitUrl(revision.origin, revision.commit),
-		children: revision.commit
-	}) };
+	if (revision) {
+		const revisionKey = `${revision.type ? `${toTitleCase(revision.type)} ` : ""}Revision`;
+		const commitUrl = ghCommitUrl(revision.origin, revision.commit);
+		taskInformation[revisionKey] = commitUrl ? { _html: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+			href: commitUrl,
+			children: revision.commit
+		}) } : revision.commit;
+	}
 	if (packages) {
 		const names = Object.keys(packages).map((key) => {
 			return `${key} ${packages[key]}`;
@@ -167210,14 +169612,14 @@ var metricDisplayName = (metric) => {
 };
 var clusterMetricModifier = (metric) => {
 	if (metric.name !== "stderr") return;
-	const clusterValue = (metric.params || {})["cluster"];
+	const clusterValue = metric.params?.["cluster"];
 	if (clusterValue === void 0 || typeof clusterValue !== "string") return;
 	return clusterValue;
 };
 var groupMetricModifier = (metric) => {
-	const groupKey = (metric.params || {})["group_key"];
+	const groupKey = metric.params?.["group_key"];
 	if (groupKey === void 0 || typeof groupKey !== "string") return;
-	const metricRaw = (metric.params || {})["metric"];
+	const metricRaw = metric.params?.["metric"];
 	if (metricRaw === void 0 || typeof metricRaw !== "object") return;
 	return metricRaw["name"];
 };
@@ -167841,7 +170243,7 @@ var DownloadLogButton = ({ log_file, className = "", ariaLabel = "Download log a
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 		type: "button",
 		className: clsx("download-log-button", DownloadLogButton_module_default.downloadLogButton, className),
-		onClick: handleClick,
+		onClick: () => void handleClick(),
 		"aria-label": ariaLabel,
 		disabled: downloadState !== "idle",
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", {
@@ -168145,7 +170547,7 @@ var ParamSummary = ({ params }) => {
 	const paraValues = Object.keys(params).map((key) => {
 		const val = params[key];
 		if (Array.isArray(val) || typeof val === "object") return `${key}: ${JSON.stringify(val)}`;
-		else return `${key}: ${String(val)}`;
+		else return `${key}: ${valueAsString(val)}`;
 	});
 	if (paraValues.length > 0) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", {
 		style: {
@@ -169340,7 +171742,7 @@ var AppContent = () => {
 		};
 		if (selectedLogDetails?.status === "started") doPoll();
 	}, [pollLog, selectedLogDetails?.status]);
-	const onMessage = (0, import_react.useCallback)(async (e) => {
+	const onMessage = (0, import_react.useCallback)((e) => {
 		switch (e.data.type) {
 			case "updateState":
 				if (e.data.url) {
@@ -170712,10 +173114,11 @@ function getZstdWorker() {
 		blobURL = URL.createObjectURL(blob);
 		zstdWorker = new Worker(blobURL);
 		const initHandler = (event) => {
-			if (event.data.type === "init_complete") {
+			const message = event.data;
+			if (message.type === "init_complete") {
 				zstdWorker.removeEventListener("message", initHandler);
-				if (event.data.success) resolve(zstdWorker);
-				else reject(new Error(event.data.error || "Worker initialization failed"));
+				if (message.success) resolve(zstdWorker);
+				else reject(new Error(message.error || "Worker initialization failed"));
 			}
 		};
 		zstdWorker.addEventListener("message", initHandler);
@@ -170756,7 +173159,7 @@ async function decompressZstd(data) {
 				const pending = pendingRequests.get(respId);
 				if (!pending) return;
 				pendingRequests.delete(respId);
-				if (success) pending.resolve(resultData);
+				if (success && resultData) pending.resolve(resultData);
 				else pending.reject(new Error(error || "Decompression failed"));
 			});
 			worker.addEventListener("error", (error) => {
@@ -170928,7 +173331,7 @@ var openRemoteZipFile = async (url, contentLength, fetchBytes = fetchRange) => {
 /**
 * Opens an in-memory ZIP buffer and provides a method to read files within it.
 */
-var openZipFileFromBuffer = async (bytes) => {
+var openZipFileFromBuffer = (bytes) => {
 	const contentLength = bytes.length;
 	if (contentLength < 22) throw new Error("Buffer too small to be a ZIP file");
 	const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
@@ -170945,7 +173348,7 @@ var openZipFileFromBuffer = async (bytes) => {
 		centralDirOffset = Number(view.getBigUint64(zip64EOCDOffset + 48, true));
 	}
 	const centralDirectory = parseCentralDirectory(bytes.slice(centralDirOffset, centralDirOffset + centralDirSize));
-	return {
+	return Promise.resolve({
 		centralDirectory,
 		readFile: async (file, maxBytes) => {
 			const entry = centralDirectory.get(file);
@@ -170958,7 +173361,7 @@ var openZipFileFromBuffer = async (bytes) => {
 			const zipFileEntry = await parseZipFileEntry(file, bytes.slice(entry.fileOffset, entry.fileOffset + totalSize));
 			return decompressData(zipFileEntry.data, zipFileEntry.compressionMethod, zipFileEntry.uncompressedSize, file);
 		}
-	};
+	});
 };
 var fetchSize = async (url) => {
 	const acceptResponse = await fetch(url, { method: "HEAD" });
@@ -170984,7 +173387,7 @@ var fetchSize = async (url) => {
 /**
 * Extracts and parses the header and data of a compressed ZIP entry from raw binary data.
 */
-var parseZipFileEntry = async (file, rawData) => {
+var parseZipFileEntry = (file, rawData) => {
 	const view = new DataView(rawData.buffer);
 	let offset = 0;
 	if (view.getUint32(offset, true) !== 67324752) throw new Error(`Invalid ZIP entry signature for ${file}`);
@@ -171028,7 +173431,7 @@ var parseZipFileEntry = async (file, rawData) => {
 	}
 	offset += filenameLength + extraFieldLength;
 	const data = rawData.subarray(offset, offset + compressedSize);
-	return {
+	return Promise.resolve({
 		versionNeeded,
 		bitFlag,
 		compressionMethod,
@@ -171038,7 +173441,7 @@ var parseZipFileEntry = async (file, rawData) => {
 		filenameLength,
 		extraFieldLength,
 		data
-	};
+	});
 };
 var kFileHeaderSize = 46;
 /**
@@ -171167,14 +173570,14 @@ var openRemoteLogFile = async (api, url, concurrency) => {
 	/**
 	* Lists all samples in the zip file.
 	*/
-	const listSamples = async () => {
-		return Array.from(remoteZipFile.centralDirectory.keys()).filter((filename) => filename.startsWith("samples/") && filename.endsWith(".json")).map((filename) => {
+	const listSamples = () => {
+		return Promise.resolve(Array.from(remoteZipFile.centralDirectory.keys()).filter((filename) => filename.startsWith("samples/") && filename.endsWith(".json")).map((filename) => {
 			const [sampleId, epochStr] = filename.split("/")[1].split("_epoch_");
 			return {
 				sampleId,
 				epoch: parseInt(epochStr.split(".")[0], 10)
 			};
-		});
+		}));
 	};
 	/**
 	* Reads a specific sample file.
@@ -171754,8 +174157,9 @@ function staticHttpApiForLog(logInfo) {
 				else return false;
 			});
 		},
-		log_message: async (log_file, message) => {
+		log_message: (log_file, message) => {
 			console.log(`[CLIENT MESSAGE] (${log_file}): ${message}`);
+			return Promise.resolve();
 		},
 		get_log_contents: async (log_file, _headerOnly, _capabilities) => {
 			const response = await fetchLogFile(log_file);
@@ -171798,7 +174202,7 @@ function staticHttpApiForLog(logInfo) {
 			}
 			throw new Error(`Failed to load a listing file using the directory: ${log_dir}. Please be sure you have deployed a manifest file (listing.json).`);
 		},
-		get_app_config: async () => app_config,
+		get_app_config: () => Promise.resolve(app_config),
 		download_file: download_file$1,
 		open_log_file
 	};
@@ -171963,10 +174367,11 @@ function viewServerApi(options = {}) {
 		const params = new URLSearchParams();
 		params.append("log_file", log_file);
 		params.append("message", message);
-		await requestApi.fetchType("GET", `/log-message?${params.toString()}`, {
+		await requestApi.fetchType("POST", `/log-message?${params.toString()}`, {
 			headers: { "Content-Type": "text/plain" },
-			parse: async (text) => {
+			parse: (text) => {
 				if (text !== "") throw new Error(`Unexpected response from log_message: ${text}`);
+				return Promise.resolve();
 			}
 		});
 	};
@@ -172055,6 +174460,7 @@ function viewServerApi(options = {}) {
 		};
 		if (if_match_etag) headers["If-Match"] = if_match_etag;
 		if (headerProvider) Object.assign(headers, await headerProvider());
+		headers[VIEW_REQUEST_HEADER] = VIEW_REQUEST_HEADER_VALUE;
 		const isCrossOrigin = Boolean(apiBaseUrl && (() => {
 			try {
 				return new URL(apiBaseUrl).origin !== window.location.origin;
@@ -172105,7 +174511,7 @@ function viewServerApi(options = {}) {
 			throw error;
 		}
 	};
-	const download_log = async (log_file) => {
+	const download_log = (log_file) => {
 		const url = `${apiBaseUrl || "/api"}/log-download/${encodeURIComponent(log_file)}`;
 		const link = document.createElement("a");
 		link.href = url;
@@ -172113,6 +174519,7 @@ function viewServerApi(options = {}) {
 		document.body.appendChild(link);
 		link.click();
 		document.body.removeChild(link);
+		return Promise.resolve();
 	};
 	return {
 		client_events,
@@ -172158,7 +174565,7 @@ var kMethodAppConfig = "app_config";
 function webViewJsonRpcClient(vscode) {
 	return jsonRpcPostMessageRequestTransport({
 		postMessage: (data) => {
-			vscode.postMessage(data);
+			vscode?.postMessage(data);
 		},
 		onMessage: (handler) => {
 			const onMessage = (ev) => {
@@ -172204,7 +174611,7 @@ function jsonRpcPostMessageRequestTransport(target) {
 	};
 }
 function isJsonRpcMessage(message) {
-	return message.jsonrpc !== void 0 && message.id !== void 0;
+	return typeof message === "object" && message !== null && "jsonrpc" in message && "id" in message;
 }
 function asJsonRpcMessage(data) {
 	if (isJsonRpcMessage(data) && data.jsonrpc === "2.0") return data;
@@ -172219,9 +174626,10 @@ function asJsonRpcResponse(data) {
 //#region src/client/api/vscode/api-vscode.ts
 var kNotFoundSignal = "NotFound";
 var kNotModifiedSignal = "NotModified";
+var asRpcError = (e) => typeof e === "object" && e !== null ? e : {};
 var vscodeClient = webViewJsonRpcClient(getVscodeApi());
-async function client_events() {
-	return [];
+function client_events() {
+	return Promise.resolve([]);
 }
 async function get_log_root() {
 	const response = await vscodeClient(kMethodEvalLogs, []);
@@ -172241,10 +174649,17 @@ var get_log_dir = async () => {
 var get_logs = async (mtime, clientFileCount) => {
 	const response = await vscodeClient(kMethodEvalLogFiles, [mtime, clientFileCount]);
 	if (response) return import_dist.default.parse(response);
-	else return [];
+	else return {
+		files: [],
+		response_type: "incremental"
+	};
 };
-async function get_eval_set() {}
-async function get_flow() {}
+function get_eval_set() {
+	return Promise.resolve(void 0);
+}
+function get_flow() {
+	return Promise.resolve(void 0);
+}
 async function get_log_contents(log_file, headerOnly, capabilities) {
 	const response = await vscodeClient(kMethodEvalLog, [log_file, headerOnly]);
 	if (response) {
@@ -172261,7 +174676,7 @@ async function get_log_info(log_file) {
 	try {
 		return await vscodeClient(kMethodEvalLogInfo, [log_file]);
 	} catch (e) {
-		if (e?.code === -32601) return { size: await vscodeClient("eval_log_size", [log_file]) };
+		if (asRpcError(e).code === -32601) return { size: await vscodeClient("eval_log_size", [log_file]) };
 		throw e;
 	}
 }
@@ -172275,7 +174690,7 @@ async function get_log_bytes(log_file, start, end) {
 async function get_log_summaries(files) {
 	const response = await vscodeClient(kMethodEvalLogHeaders, [files]);
 	if (response) return import_dist.default.parse(response);
-	else return;
+	else return [];
 }
 async function eval_pending_samples(log_file, etag) {
 	const response = await vscodeClient(kMethodPendingSamples, [log_file, etag]);
@@ -172310,7 +174725,7 @@ async function eval_log_sample_data(log_file, id, epoch, last_event, last_attach
 async function log_message(log_file, message) {
 	await vscodeClient(kMethodLogMessage, [log_file, message]);
 }
-async function download_file() {
+function download_file() {
 	throw Error("Downloading files is not supported in VS Code");
 }
 /**
@@ -172338,8 +174753,9 @@ async function edit_log(log_file, update, if_match_etag) {
 		if (!response) throw new Error(`Edit returned no response for ${log_file}.`);
 		return typeof response === "string" ? import_dist.default.parse(response) : response;
 	} catch (e) {
-		if (typeof e?.code === "number" && e.code >= 400 && e.code < 600) throw new ApiError(e.code, e?.message ?? `Edit failed (${e.code})`);
-		if (e?.code === -32601) throw new Error("Log editing requires a newer Inspect VS Code extension.");
+		const err = asRpcError(e);
+		if (typeof err.code === "number" && err.code >= 400 && err.code < 600) throw new ApiError(err.code, err.message ?? `Edit failed (${err.code})`);
+		if (err.code === -32601) throw new Error("Log editing requires a newer Inspect VS Code extension.");
 		throw e;
 	}
 }
@@ -172355,7 +174771,7 @@ async function get_user_info() {
 		if (!response) return {};
 		return (typeof response === "string" ? import_dist.default.parse(response) : response) ?? {};
 	} catch (e) {
-		if (e?.code === -32601) return {};
+		if (asRpcError(e).code === -32601) return {};
 		throw e;
 	}
 }
@@ -172373,20 +174789,21 @@ async function get_app_config() {
 		};
 		return typeof response === "string" ? import_dist.default.parse(response) : response;
 	} catch (e) {
-		if (e?.code === -32601) return {
+		if (asRpcError(e).code === -32601) return {
 			inspect_version: "unknown",
 			scout_version: null
 		};
 		throw e;
 	}
 }
-async function open_log_file(log_file, log_dir) {
+function open_log_file(log_file, log_dir) {
 	const msg = {
 		type: "displayLogFile",
 		url: log_file,
 		log_dir
 	};
 	getVscodeApi()?.postMessage(msg);
+	return Promise.resolve();
 }
 var api = {
 	client_events,
@@ -172423,7 +174840,7 @@ var resolveApi = () => {
 			if (context !== null) {
 				const data = import_dist.default.parse(context);
 				if (data.log_dir || data.log_file) {
-					const log_dir = data.log_dir || dirname(data.log_file);
+					const log_dir = data.log_dir || dirname(data.log_file ?? "");
 					const app_config = data.inspect_version !== void 0 ? {
 						inspect_version: data.inspect_version,
 						scout_version: null
